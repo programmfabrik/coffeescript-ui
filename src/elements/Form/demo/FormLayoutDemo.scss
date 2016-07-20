@@ -1,0 +1,15 @@
+
+.cui-form-layout-demo {
+
+    &-example-maximize-center {
+        .cui-form-table {
+            @include maximize_form_column(center)
+        }
+    }
+
+    &-example-maximize-right {
+        .cui-form-table {
+            @include maximize_form_column(right)
+        }
+    }
+}

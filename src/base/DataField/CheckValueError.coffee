@@ -1,0 +1,1 @@
+class CheckValueError extends Error

@@ -1,0 +1,36 @@
+
+
+//can be used to format other text then only labels
+@mixin format_block_header_text($text_selector: "div") {
+	@for $i from 1 through 3 {
+		&.appearance-#{nth($block_type,$i)} {
+
+			@include ASSERT_TYPE(cui-block);
+
+			//we dont put in the header so it can be easier overwritten, see mixin vertical_list_separator_line
+			margin-top: nth($block_top_margin, $i);
+
+			> .cui-block-header {
+				margin-bottom: nth($block_bottom_margin, $i);
+
+				#{unquote($text_selector)} {
+					//TODO could use the label extends for appearance and size here !?, this way we would cover icons without much hazzle
+					font-weight: nth($block_font_weight, $i);
+					font-size: nth($block_font_size, $i);
+				}
+			}
+		}
+	}
+}
+
+.cui-block {
+	//leave shrinking to children
+	@include flex(0,0);
+
+	//header text container can be any div with text ... not only labels
+	@include format_block_header_text();
+
+	&:first-child > .cui-block-header {
+		margin-top: 0;
+	}
+}

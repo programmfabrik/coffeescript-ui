@@ -1,0 +1,7 @@
+
+.cui-popover {
+	&.cui-layer > .cui-pane {
+		@include pane_header_colors( $popover_header_background_color, $popover_header_font_color );
+		@include outer_pane_padding(big);
+	}
+}

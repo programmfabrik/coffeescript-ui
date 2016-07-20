@@ -1,0 +1,14 @@
+
+.cui-data-field-output-label {
+	@include ASSERT_TYPE(cui-label);
+
+	&.cui-output-empty {
+		color:	$control_placeholder_font_color;
+		font-style: $control_placeholder_font_style;
+	}
+
+	//fillout parent datafield
+	@include flex(1,1);
+
+	@extend %label_multiline;
+}

@@ -1,0 +1,35 @@
+
+
+.cui-border-layout-demo {
+
+
+	.cui-layout-cell {
+		min-width: 300px;
+		min-height: 300px;
+	}
+
+	.cui-border-layout-demo-handle {
+
+		> span {
+			display: none;
+			@include transform( rotate(-90deg) translateY(100%) );
+			@include transform_origin( bottom left );
+		}
+
+		&.cui-flex-handle-closed {
+			background-color: #FFD0D0 !important;
+
+			> span {
+				display: block;
+				line-height: 15px;
+				font-weight: bold;
+				bottom: 0;
+				position: absolute;
+			}
+		}
+
+	}
+
+
+
+}

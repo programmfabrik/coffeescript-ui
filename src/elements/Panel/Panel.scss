@@ -1,0 +1,69 @@
+
+$panel-header-border-color: #5e5e5e;
+
+
+.cui-panel {
+
+	border: 1px solid $panel-header-border-color;
+	margin-bottom: $grid_size;
+
+	@include flex(0, 0);
+	@include flex_direction(column);
+	@include flex_display(flex);
+
+	.cui-panel-header {
+		display: inline-block;
+
+		.cui-panel-header-button {
+			width: 100%;
+			border: 0;
+
+			@include button_flat_skin(
+				$background_color: inherit,
+				$font_color: $button_font_color,
+				$highlighted_background_color: $button_highlight_background_color,
+				$highlighted_font_color: $button_highlight_font_color,
+				$active_background_color: $button_highlight_background_color,
+				$active_font_color: $button_font_color
+			);
+
+			.cui-button-center {
+				text-align: left;
+			}
+
+			> div > .cui-button-left {
+				@include ERROR_MARKER("pane header nested buttons not supported anymore");
+			}
+		}
+	}
+
+	.cui-panel-body {
+		padding: 0 $grid_size $grid_size $grid_size;
+
+		.cui-panel-content {
+			//make panels compatible with flex content
+			@include flex_display(flex);
+			@include flex_direction(column);
+		}
+
+		.cui-panel-footer {
+			&-left {
+				display: inline-block;
+				float: left;
+			}
+			&-right {
+				display: inline-block;
+				float: right;
+			}
+		}
+	}
+
+	&.cui-panel-closed {
+		> .cui-panel-body {
+			overflow: hidden;
+			height: 0;
+			padding: 0;
+		}
+	}
+
+}

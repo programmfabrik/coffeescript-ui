@@ -1,0 +1,17 @@
+.cui-markdown-input-demo {
+	.cui-horizontal-layout-left {
+		width: 400px;
+	}
+	.cui-markdown-input-demo-md-input {
+		textarea {
+			flex: 1 1 auto;
+			font-family: monospace;
+		}
+	}
+
+	.cui-markdown-input-preview {
+		padding: 10px;
+		background-color: #F1F1F1;
+		flex: 1 1 auto;
+	}
+}

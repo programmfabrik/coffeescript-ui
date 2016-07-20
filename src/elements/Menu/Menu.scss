@@ -1,0 +1,100 @@
+
+
+
+.cui-layer.cui-menu {
+	border-width: 1px;
+
+	//show that there is something
+	min-width: 50px;
+
+	//TODO try 0 margin?
+	margin: $grid_size;
+
+	//avoid scrollbars and show the layer that he should take the menu layer not as viewport! //TODO more details
+	overflow: visible;
+	& > .cui-item-list  {
+		overflow: visible;
+		& > .cui-vertical-layout-center {
+			height: 100%; //make sure the content is not overflowing. setting overflow to hidden would hide away our submenus!!!
+			overflow: visible;
+		}
+	}
+
+	//make sure that also the items in the submenus are filling the full width.
+	.cui-item-list {
+		width: 100%;
+		height: 100%; //needed for scrollbar
+
+		.cui-tmpl-item-list-body {
+			overflow: auto;
+
+			//we use flex here to work around a refresh bug in chrome.
+			@include flex_display(flex);
+			@include flex_direction(column);
+			@include flex_align_items(stretch);
+		}
+	}
+
+
+	& .cui-menu-divider {
+		height: 2px;
+		//overflow: hidden;
+		background-color: $menu_item_divider_color;
+		width: 100%;
+	}
+
+	//show a column for icons only in context menus.
+	&:not(.cui-button-select) .cui-tmpl-item-list-body {
+		//these are cui-menu-item, but they dont need the class... TODO remove the class !?
+		> .cui-button,
+		> .cui-label,
+		> .cui-data-field {
+
+			$icon_column_width: 16px;
+			> .cui-button-left,
+			> .cui-label-icon {
+				min-width: $icon_column_width;
+			}
+
+			//keep width of icon when icon is not there
+			> .cui-label-icon:empty + .cui-label-content,
+			.cui-button-center:first-child {
+				padding-left: $icon_column_width + $button_content_distance;
+			}
+		}
+
+		> .cui-button {
+			white-space: normal; //firefox needs this to not wrap the submenu icon into the next line
+		}
+	}
+}
+
+.cui-tmpl-item-list-body {
+	//these are cui-menuitems, but they dont need the class... TODO remove the class !?
+	> .cui-button,
+	> .cui-label,
+	> .cui-data-field {
+		display: block;
+
+		//width: 100%;
+
+		&.cui-button.cui-button-appearance-normal {
+			@include button_flat_skin();
+		}
+
+		&.cui-label {
+			font-weight: bold;
+			padding: $button_and_input_padding_x;
+		}
+	}
+
+}
+
+
+//show a scrollbar while measuring to avoid a x-scrollbar if the y-scrollbar appears after measuring
+.cui-layer.cui-menu.cui-layer-measure {
+	.cui-item-list .cui-tmpl-item-list-body {
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+}

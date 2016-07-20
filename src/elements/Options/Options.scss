@@ -1,0 +1,45 @@
+
+.cui-options-sortable-drag-handle {
+	margin-right: $grid_size * 0.5;
+	width: $grid_size;
+	height: 24px;
+	display: inline-block;
+
+	@extend %list_view_move_handle_skin;
+
+	&:hover {
+		cursor: ns-resize;
+	}
+}
+
+
+//the form options have their own padding rules
+.cui-form-options {
+
+	.cui-form-tr {
+
+		//outer padding
+		&:first-child {
+			padding-top: $form_cell_padding;
+		}
+		&:last-child {
+			padding-bottom: $form_cell_padding;
+		}
+
+		//separator padding
+		.cui-padding.cui-form-td:not(:empty) {
+			padding: 0;
+		}
+	}
+
+}
+
+.cui-options-order-hint {
+	span {
+		font-style: italic;
+	}
+}
+
+.cui-options-title  {
+	font-weight: bold;
+}

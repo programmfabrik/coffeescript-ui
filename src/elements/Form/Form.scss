@@ -1,0 +1,213 @@
+
+$form_cell_padding: $list_view_cell_padding; //same as in listview
+$form_data_field_input_max_width: 300px;
+
+
+@mixin debug_show_form_components_by_color(){
+
+    .cui-vertical-layout-top {
+        background-color: greenyellow;
+    }
+    .cui-vertical-layout-center {
+        background-color: green;
+        //can hold a nested form
+    }
+    .cui-vertical-layout-bottom {
+        background-color: lightblue;
+    }
+
+    //cui form table can stand alone!
+    .cui-form-table {
+        .cui-form-left {
+            background-color: yellow;
+        }
+
+        .cui-form-center {
+            background-color: orange;
+        }
+
+        .cui-form-right {
+            background-color: red;
+        }
+    }
+
+    //datafield can be everywhere
+    .cui-data-field {
+        background-color: #5180d2;
+
+        &.cui-data-field-input {
+            background-color: #7db9e8;
+        }
+    }
+}
+
+
+@mixin form_set_options_checkbox_width($options_data_field_name, $min_max_width ){
+    .cui-options[cui-data-field-name="#{$options_data_field_name}"] .cui-checkbox {
+        min-width: $min_max_width !important; //need '!important' to avoid huge selectors, cause we have to overwrite form defaults
+        max-width: $min_max_width !important;
+    }
+}
+//@include debug_show_form_components_by_color();
+
+
+.cui-form {
+
+    //validate structure
+
+    @include ASSERT_TYPE(cui-vertical-layout);
+
+    > .cui-vertical-layout-center {
+        > div {
+            @include ASSERT_TYPE(cui-form-table);
+        }
+    }
+
+    //multiline is default in forms
+    .cui-label:not(.cui-label-rotate-90) { //rotate90 is not compatible to multiline
+        @extend %label_multiline;
+    }
+
+    //table header skin
+    .cui-form-tr-head .cui-label {
+        font-weight: bold;
+    }
+
+    //binding padding and padding-reset to form to not accidently address other layout elements
+    .cui-padding.cui-form-td {
+        &:not(:empty) {
+            padding: $form_cell_padding;
+        }
+
+        > .cui-form.cui-padding-reset {
+            margin: -$form_cell_padding;
+        }
+    }
+
+    //basic alignment
+    .cui-form-td {
+        .cui-label,
+        .cui-data-field {
+            vertical-align: top;
+        }
+    }
+}
+
+
+//there are situations inside flex were width:100% is getting infinite. setting width here fixes this..
+@mixin form_hack_for_avoiding_infinite_width() {
+    //only needed for maximized forms
+    //width: 1px;
+}
+
+//@mixin disable_default_form_column_maximize() {
+//
+//}
+
+//TODO should this address nested elements or not!?
+@mixin set_form_column_width($column_postfix, $width ) {
+    @include ASSERT_TYPE(cui-form-table);
+
+    > tbody > .cui-form-tr-vertical {
+
+        //need a min width to make sure columns are not shrinked to 0
+        .cui-form-td.cui-form-#{$column_postfix}
+        {
+            //exclude row-handles and empty cells
+            .cui-data-field-input,
+            .cui-label {
+                min-width: $width; //make sure a 100% column cant shrink this columns to 0
+                max-width: $width; //make sure it looks horizontally aligned
+            }
+        }
+    }
+
+    &.cui-form-options-table,
+    .cui-form-options-table {
+        > tbody > .cui-form-tr > .cui-form-td { //specific selector needed for overwriting
+            width: auto;
+        }
+    }
+}
+
+//TODO reenable maximized forms
+//default maximize behaviour layout, center gets maximized if form is maximized
+@mixin maximize_form_column($column_postfix, $overwrite: true ) {
+    @include ASSERT_TYPE(cui-form-table);
+
+    > tbody > .cui-form-tr-vertical {
+
+        //need a min width to make sure columns are not shrinked to 0
+        //TODO use set form width mixin here
+        .cui-form-td:not(.cui-form-#{$column_postfix})
+        {
+            //exclude row-handles and empty cells
+            .cui-data-field-input,
+            .cui-label {
+                $form_label_default_column_width: 120px;//TODO make a mixin so the width can be easily customized
+                min-width: $form_label_default_column_width; //make sure a 100% column cant shrink this columns to 0
+                max-width: $form_label_default_column_width; //make sure it looks horizontally aligned
+            }
+
+            //@if $overwrite {
+            //    width: auto;
+            //    > .cui-form {
+            //        width: auto;
+            //        > .cui-vertical-layout-center > .cui-form-table {
+            //            width: auto;
+            //        }
+            //    }
+            //    > .cui-data-field-proxy,
+            //    > .cui-data-field-input {
+            //        width: auto;
+            //    }
+            //}
+        }
+
+        //.cui-form-#{$column_postfix} {
+        //    width: 100%;
+        //    > .cui-form {
+        //        width: 100%;
+        //        > .cui-vertical-layout-center > .cui-form-table {
+        //            width: 100%;
+        //        }
+        //    }
+        //    > .cui-data-field-proxy,
+        //    > .cui-data-field-input {
+        //        //width: 100%;
+        //        max-width: $form_data_field_input_max_width;
+        //    }
+        //}
+    }
+
+    &.cui-form-options-table,
+    .cui-form-options-table {
+        > tbody > .cui-form-tr > .cui-form-td { //specific selector needed for overwriting
+            width: auto;
+        }
+    }
+}
+
+.cui-form.cui-maximize-horizontal {
+    .cui-form-table {
+        @include maximize_form_column(center, $overwrite: false);
+    }
+}
+
+
+
+
+// TODO -------------- OLD scss , needs recreation ---------------------
+
+$form_label_line_height: 21px; //needed to make this manually for a nice alignment TODO try using grid_size , also try to set this for the button
+$line_height_beside_input_field: 20px; //used for text labels beside datum range
+
+$form_input_column-width: $grid_size*50;
+$form_label_column-width: $grid_size*20;
+
+$form_head_background_color: $button_background_color*.8;
+$form_depth_0_separator_color: $white*0.65;
+$form_depth_1_separator_color: $white*0.8;
+
+
+

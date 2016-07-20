@@ -1,0 +1,190 @@
+
+
+.cui-pane.cui-simple-pane.cui-tabs {
+	> .cui-vertical-layout-center {
+		> .cui-tmpl-tabs-bodies {
+			> .cui-tab
+			{
+				> .cui-maximize {
+					//needed when not using flex
+					height: 100%;
+				}
+			}
+		}
+	}
+
+	//tab button style
+	& > .cui-vertical-layout-top > .cui-pane-header.cui-toolbar {
+
+		position: relative;
+		background-color: $default_background_color; //get rid of paneheader color
+
+		//make a small border line from left to right that stays behind tab buttons
+		&::before {
+			position: absolute;
+			left: 0px;
+			right: 0px;
+			bottom: 0px;
+			background-color: $tab_border_color;
+			content: '';
+			height: 1px;
+		}
+
+		//distance between buttons
+		> div > .cui-buttonbar > .cui-button.cui-button-appearance-auto:not(:last-child) {
+			margin-right: 0;
+		}
+
+		height: 5*$grid_size + 2px;
+
+		& > .cui-horizontal-layout-right {
+			@include flex(0,0);
+		}
+
+		& > .cui-horizontal-layout-left {
+
+			//make sure the left side can shrink, so we can scroll
+			@include flex(0,1);
+
+			padding-bottom: 0px; //buttons should touch bottom
+
+			& > .cui-buttonbar {
+				//allow to shrink below min content width.
+				min-width: 10px; //some value
+
+				//make sure the buttonbar cannot shrink
+				@include flex(0,0);
+				@include flex_display(flex);
+			}
+
+			& > .cui-buttonbar > .cui-button,
+			& > .cui-button {
+				//overwrite reset of padding for flat buttons in pane headers
+				padding-left: $grid_size;
+				padding-right: $grid_size;
+
+				//TODO ??????????could a button mixin help here!?????????????
+				//TODO disable paneheader buttons in tab context?
+				background-color: transparent !important; //important for seeing a grey line but not seeing the panebutton background
+
+				//allow to shrink below min content width.
+				min-width: 10px; //some value
+
+				// make a nice ButtonNa... text
+				& > .cui-button-center {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					vertical-align: bottom; //compensate overflow: hidden
+				}
+
+				//REMARKED ani looks broken
+				//transition: all $default_animation_speed ease ;
+
+
+				color: #5F5F5F;
+				font-size: map_get($button_font_sizes,normal);
+
+				//push down button
+				height: 25px;
+				margin-top: 8px;
+
+				//border: 1px solid black;
+				border: none;
+				border-bottom: 1px solid $tab_border_color;
+
+				&:hover:not(.cui-active) {
+					border-bottom: 1px solid $tab_border_color;
+					border-color: $tab_border_color !important; //huge selector when not using 'important'
+					background-color: transparent !important;
+					color: #222;
+				}
+
+				&.cui-active {
+					//REMARKED ani looks broken
+					//transition: all  $default_animation_speed ease ;
+
+					background-color: $default_background_color !important;
+
+					border: 1px solid $tab_border_color;
+					border-bottom-width: 0px;
+
+					height: 27px;
+					margin-top: 6px;
+
+					font-weight: bold;
+
+					color: $tab_button_font_color;
+
+					@include flex(0,0);
+
+				}
+
+				&.cui-button-appearance-auto:not(.cui-disabled):not(.cui-active):not(.cui-pressed):hover {
+					//REMARKED ani looks broken
+					//transition: all  $default_animation_speed ease ;
+					background-color: $tab_button_highlight_background_color;
+					border-color: $tab_button_highlight_background_color;
+					color: $tab_button_highlight_font_color;
+
+					@include flex(0,0);
+				}
+			}
+		}
+	}
+}
+
+.cui-tabs.cui-maximize {
+	> div > div {
+		width: 100%;
+		height: 100%;
+
+		> .cui-tmpl-tab-body {
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+}
+
+.cui-tmpl-tabs-bodies {
+	// was @include flex(1,0) before. we have to allow shrinking for datenmodell, felder and many other examples like that
+	@include flex(1,1);
+
+	display: block;
+	/* @include flex_display(flex);
+	@include flex_direction(row);
+	@if $better_performance == 1 {
+		//was stretching items before, this caused a performance impact
+		@include flex_align_items(flex-start);
+	}
+	*/
+
+	box-sizing: border-box;
+	overflow: hidden;
+	position: relative;
+	background-color: $default_background_color;
+
+	.cui-tmpl-tab-body.cui-tab {
+		position: absolute;
+		box-sizing: border-box;
+		vertical-align: top;
+		// white-space: normal;
+		overflow: auto;
+
+	}
+
+}
+
+
+.cui-tab-hidden {
+	/* it is important to not use display: none here,
+	   if we do, the list views inside us, cannot measure
+	   themselves properly */
+	visibility: hidden;
+}
+
+
+
+
+

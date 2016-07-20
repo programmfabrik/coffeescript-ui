@@ -1,0 +1,128 @@
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------cui head structure--------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+//defines structure of CUI, used as a fallback when a theme forgot to set all properties
+
+$grid_size: 6px;
+$half_grid_size: 3px;
+
+$font_size: 2*$grid_size;
+
+$outer_padding_x: (
+    normal: $grid_size,
+    big: $grid_size * 2,
+    bigger: $grid_size * 4
+);
+
+$outer_padding_y: (
+    normal: $grid_size * .5,
+    big: $grid_size * 1,
+    bigger: $grid_size * 2
+);
+
+
+$flex_handle_size: $grid_size;
+$flex_handle_closed_size: $grid_size*4;
+
+
+// -------- buttons ------------
+$button_line_height: 18px;
+$button_and_input_padding_x: 5px;
+$button_and_input_padding_y: 2px;
+$button_icon_font_size: 16px; //minimum size to see a vertical center effect in a button, some buttons will render uneven pixel-rows with size
+
+$button_font_sizes: (
+    mini: $font_size * 0.75,
+    normal: $font_size,
+    big: 15px,
+    bigger: 18px //was 17
+);
+
+$button_line_heights: (
+        mini: 12px,
+        normal: $button_line_height,
+        big: 24px,
+        bigger: 26px
+);
+
+$button_icon_font_sizes: (
+        mini: 12px,
+        normal: 16px,
+        big: 17px,
+        bigger: 24px //19px make root menu button looking uneven scaled 21px looks good but is not centered correctly
+);
+
+
+// ----- label -------
+$label_padding_y: 2px;
+$label_horizontal_separator_padding: $grid_size * .5;
+
+
+// ----- checkbox -------
+$checkmark_icon_sizes: (
+    mini: 10px,
+    normal: 14px,
+    big: 16px,
+    bigger: 18px
+);
+
+//needed for positioning , baseline and centering are not nice
+$checkmark_icon_margin_top: (
+    mini: 0,
+    normal: 1px,
+    big: 2px,
+    bigger: 3px
+);
+
+// ------- input ------------
+
+//REMARKED need to be elastic so we have no minwidth for input!
+//trying to align the inputs. a bit bigger then the default input elements width on chrome/windows. seems to be different on each system/browser
+//$min_input_width: 180px;
+
+
+//---------- text line break----------
+%default_line_break {
+    white-space: pre-line;
+    word-wrap: break-word;
+    word-break: break-word; //is necessary when width is set by flex.
+}
+
+// -------- block --------------------
+$block_type: "title", "subtitle", "normal";
+$block_font_size: map_get($button_font_sizes,bigger),map_get($button_font_sizes,big), map_get($button_font_sizes,normal);
+$block_font_weight: bold, bold, bold;
+//TODO try line height instead of margins.
+$block_top_margin: 20px, 10px, 5px;
+$block_bottom_margin: 10px, 5px, 0px;
+
+// ------------- toolbar ------------------
+$toolbar_padding_y: $grid_size*0.5;
+$toolbar_paddings_y: (
+        normal: $toolbar_padding_y,
+        big:    $grid_size*1,
+        bigger: $grid_size*2
+);
+
+$toolbar_min_height: $grid_size *5;
+
+
+// ------------- pane header --------------
+$pane_header_heights: (
+        normal: $toolbar_min_height - 2 * map-get($toolbar_paddings_y,normal),
+        big:    $grid_size *6 - 2 * map-get($toolbar_paddings_y,big),
+        bigger: $grid_size *8 - 2 * map-get($toolbar_paddings_y,bigger)
+);
+
+
+//---------------listview-------------------
+$list_view_cell_padding: 4px;
+
+//TODO get rid of one
+$list_view_row_handle_width: 9px;
+$list_view_move_handle_width: 9px;

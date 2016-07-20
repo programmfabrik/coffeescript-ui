@@ -1,0 +1,75 @@
+
+.cui-padding:not(:empty) {
+	//padding: 10px !important;
+}
+
+.cui-padding > .cui-padding-reset {
+	//margin: -10px !important;
+}
+
+
+@mixin three_pane_layout( $orientation,$child_orientation: column ) {
+
+	@include flex_display(flex);
+
+	@if $orientation == 'horizontal'{
+		@include flex_direction(row);
+	}@else {
+		@include flex_direction(column);
+	}
+
+	box-sizing: border-box;
+	position: relative;
+
+	@include flex(0,0); //just show the content (not maximized)
+	@include flex_align_self(flex-start);
+
+	overflow: hidden;
+
+	//REMARKED for debugging
+	//&:not(.cui-absolute) {
+	//	background-color: #F00 !important;
+	//	padding: 1px;
+	//}
+
+	//maximize pushes bottom and top away until there is a limit.
+	&.cui-maximize {
+		@include flex(1,1);
+		@include flex_align_self(stretch);
+		> .cui-#{$orientation}-layout-center{
+			@include flex(1,1);
+		}
+	}
+
+	& > .cui-layout-cell {
+		position: relative;
+
+		@include flex_display(flex);
+		@include flex_direction($child_orientation);
+		@include flex(0,0);
+
+		overflow: auto;
+	}
+}
+
+body > .cui-vertical-layout,
+body > .cui-horizontal-layout,
+.cui-absolute > div > .cui-vertical-layout,
+.cui-absolute > div > .cui-horizontal-layout {
+	
+	width: 100%;
+	height: 100%;
+}
+
+.cui-absolute {
+	& > .cui-vertical-layout-bottom.cui-flex-handle-stretched-north,
+	& > .cui-vertical-layout-top.cui-flex-handle-stretched-south
+	{
+		height: 100%;
+	}
+	& > .cui-horizontal-layout-left.cui-flex-handle-stretched-east,
+	& > .cui-horizontal-layout-right.cui-flex-handle-stretched-west
+	{
+		width: 100%;
+	}
+}

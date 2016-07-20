@@ -1,0 +1,12 @@
+
+.cui-form-popover-popover {
+	min-width: 200px;
+	min-height: 140px;
+
+	&.cui-layer.cui-layer-measure {
+		.cui-vertical-layout-center {
+			overflow-y: scroll;
+		}
+	}
+}
+

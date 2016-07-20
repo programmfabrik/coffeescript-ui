@@ -1,0 +1,109 @@
+
+@mixin checkbox_size($size) {
+    @include ASSERT_TYPE(cui-button-checkbox);
+
+    line-height: map_get($button_line_heights,$size) + 2px; //compensate missing border
+
+    .cui-button-left {
+        width: map_get($checkmark_icon_sizes,$size);
+        height: map_get($checkmark_icon_sizes,$size);
+        margin-top: map_get($checkmark_icon_margin_top,$size);
+
+        > .fa {
+            font-size: map_get($checkmark_icon_sizes,$size);
+        }
+    }
+
+    //radio button checkboxes are round
+    &[role="radio"] .cui-button-left {
+        border-radius: map_get($checkmark_icon_sizes,$size);
+        -moz-outline-radius: map_get($checkmark_icon_sizes,$size);
+    }
+}
+
+
+//REMARKED we dont need the full path here, its much harder to overwrite
+//.cui-checkbox >
+.cui-button-checkbox.cui-button {
+
+    @include flex(1,1); //wanted default, growing is not necessary , but made to be consistent with all other data-field-inputs
+
+    //make a flat button that shows no state change, we only need this on the left icon
+    @include button_flat_skin(
+        $background_color: inherit,
+        $font_color: $button_font_color,
+        $highlighted_background_color: inherit,
+        $highlighted_font_color: $button_font_color,
+        $active_background_color: inherit,
+        $active_font_color: $button_font_color,
+        $disabled_background_color: inherit,
+        $disabled_font_color: $button_disabled_font_color
+    );
+
+    padding-left: 0;
+
+    //use button center as clickable label
+    .cui-button-center {
+        @extend %default_line_break;
+        text-align: left;
+    }
+
+    // --------------------
+    // use cui-button-left as the checkmark box
+
+    .cui-button-left {
+        //TODO check if we need this when there is no content?
+        //margin-bottom: 1px;
+
+        //could be used on a different background
+        background-color: $default_background_color;
+        border: $button_border;
+
+        > .fa {
+            position: absolute; //cant see another way to place it nicely
+            vertical-align: baseline;
+        }
+    }
+
+    // -------button states states on icon-------------
+
+    //disabled
+    &.cui-disabled > .cui-button-left{
+        border-color: $button_disabled_border_color;
+        cursor: default;
+    }
+
+    // highlight
+    &:not(.cui-disabled):not(.cui-pressed):hover .cui-button-left {
+        color: $button_highlight_font_color;
+        border-color: $button_highlight_border_color;
+        background-color: $button_highlight_background_color;
+        transition: background-color ease $default_animation_speed, color ease $default_animation_speed;
+    }
+
+    //pressed
+    &.cui-pressed:not(.cui-disabled) > .cui-button-left {
+        color: $button_pressed_font_color;
+        border-color: $button_border_color;
+        background-color: $button_background_color;
+    }
+
+    // ------------- sizes ----------------------
+    &.cui-button-size-bigger {
+        @include checkbox_size(bigger);
+    }
+
+    &.cui-button-size-big {
+        @include checkbox_size(big);
+    }
+
+    &.cui-button-size-mini {
+        @include checkbox_size(mini);
+    }
+
+    &.cui-button-size-normal {
+        @include checkbox_size(normal);
+    }
+
+
+}

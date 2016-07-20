@@ -1,0 +1,11 @@
+
+@import "../../header.scss"; //base file
+
+
+//----- root menu
+$root_menu_background_color: #333;
+$root_menu_background_color_bottom: #000;
+$root_menu_background_color_gradient: -webkit-linear-gradient(bottom,  $root_menu_background_color_bottom 0%,#2989d8 50%,#207cca 61%,$root_menu_background_color 100%);
+$root_menu_font_color: $white*.98;
+$root_menu_header_font_color: $white*.98;
+

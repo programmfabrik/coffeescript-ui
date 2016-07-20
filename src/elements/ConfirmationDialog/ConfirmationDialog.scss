@@ -1,0 +1,25 @@
+
+@mixin short_message_dialog() {
+	min-width: 400px;
+	min-height: 140px;
+	max-width: 800px;
+}
+
+//this covers .cui-prompt ,.cui-confirm
+.cui-progress-info-dialog.cui-modal,
+.cui-alert.cui-layer,
+.cui-confirmation-choice > .cui-layer,
+.cui-confirmation-dialog > .cui-layer {
+	 > .cui-pane {
+		@include outer_pane_padding(big);
+		@include short_message_dialog();
+		@include pane_control_sizes(big, big);
+		@include pane_header_colors($marker_color, $font_color);
+	}
+}
+
+.cui-alert {
+	&.cui-layer > .cui-pane {
+		@include pane_header_colors(tomato, white);
+	}
+}

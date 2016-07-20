@@ -1,0 +1,9 @@
+//show a scrollbar while measuring to avoid a x-scrollbar if the y-scrollbar appears after measuring
+.cui-layer.cui-layer-measure {
+
+	& .cui-tmpl-item-list-body {
+		overflow-y: scroll;
+	}
+}
+
+

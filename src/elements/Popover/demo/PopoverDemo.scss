@@ -1,0 +1,35 @@
+
+
+.cui-demo-popover-demo .ez-tmpl-modal[role="popover"] {
+	width: 250px;
+	margin: 5px 10px 15px 20px;
+    /*margin: 5px*/
+}
+
+.cui-demo-popover-demo {
+	position: absolute;
+    left: 1000px;
+    top: 1000px; /*move the object to the center of the parent object*/
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.cui-demo-popover-demo-bottom-box
+{
+    position: absolute;
+    top: 3000px;
+    left: 3000px;
+    width: 1px;
+    height: 1px;
+}
+
+
+.cui-popover-demo-small-layer {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+

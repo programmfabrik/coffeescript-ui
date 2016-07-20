@@ -1,0 +1,218 @@
+
+// --------- label size mixins ----------
+
+%label_or_button_shrink_with_ellipsis {
+	flex-shrink: 1;
+	overflow: hidden;
+}
+
+
+@mixin label_size($size) {
+	font-size: map_get($button_font_sizes,$size);
+	line-height: map_get($button_line_heights,$size) + 2px; // compensate non existing border
+
+	> .cui-label-icon {
+		font-size: map_get($button_icon_font_sizes,$size);
+	}
+};
+
+
+// ---------- label appearance mixins
+
+%label_appearance_normal {
+	font-weight: normal;
+}
+
+%label_appearance_important {
+	font-weight: bold;
+}
+
+%label_appearance_title {
+	font-weight: bold;
+}
+
+// --------- other feature mixins -------------
+
+%label_multiline {
+	@include ASSERT_TYPE(cui-label);
+
+	@include flex(0,1); //make label shrinkable otherwise there will be no line break
+
+	& > .cui-label-icon {
+		vertical-align: top;
+		@include flex(0,0);
+	}
+
+	& > .cui-label-content {
+		@extend %default_line_break;
+		//REMARKED this should be default anyway
+		//@include flex(0,1); //empty labels dont like growing when they are in a layout-cell context
+	}
+}
+
+%label_rotate_90deg {
+	//align to bottom in a flex context
+	@include flex_align_self(flex-end);
+
+	& > .cui-label-icon {
+		vertical-align: middle;
+		position: absolute;
+		left: 5px; //TODO make this automatically and compatible to different sizes!!!
+		bottom: 0;
+	}
+	& > .cui-label-content {
+		display: inline-block;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+
+		//overwrite multiline
+		white-space: nowrap;
+
+		@include transform(rotate(-90deg));
+		@include transform_origin(left top 0);
+	}
+}
+
+
+.cui-label {
+
+	//------ structure--------
+	position: relative;
+
+	//REMARKED cause css developer datafield output labels are not showing multiline. TODO check this again! ... we use flex here so we only need to check this if we want to get rid of it.
+	//display: inline-block;
+	@include flex_display(inline-flex); //using flex for making sure icon and content are nicely distributed over the width of a label
+	@include flex-direction(row);
+	@include flex_align_items(center);
+	//only shrink this explicitly, doesnt work in vertical layouts!
+	@include flex(0,0);
+
+	white-space: nowrap;
+
+	//REMARKED using overflow here will lead to baseline alignment errors in firefox
+	//overflow: hidden;
+
+	//need padding to get same size as button (with same size type), same size helps with text alignment on the whole screen (grid style)
+	padding: $label_padding_y 0;
+
+	box-sizing: border-box;
+
+	//nice to have this centering in toolbars! or in .ez5-title
+	//vertical-align: middle;
+
+	&-icon,
+	&-content {
+		display: inline;
+	}
+
+	&-content {
+		//adapt to parent size and show ellipsis if not fitting
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: pre;
+
+		// should be no performance problem. the layouter should ignore this when the parent is not shrinking
+		@include flex(0,1);
+	}
+
+	&-icon {
+		&:not(:empty) + .cui-label-content:not(:empty) {
+			padding-left: $label_horizontal_separator_padding;
+		}
+
+		&:empty {
+			display: none;
+		}
+
+		//should not be always font awesome //TODO OPTI could go into reset.scss
+		> i {
+			display: inline;
+		}
+	}
+
+	&-rotate-90 {
+		@extend %label_rotate_90deg;
+	}
+
+	// ------- skin ------------
+	color: $font_color;
+
+	//styles
+	&-appearance-normal {
+		@extend %label_appearance_normal;
+	}
+
+	&-appearance-important {
+		@extend %label_appearance_important;
+	}
+
+	&-appearance-title {
+		@extend %label_appearance_title;
+	}
+
+	&-centered.cui-empty-label, //make sure we overwrite empty label setting
+	&-centered {
+		@extend %center_div;
+	}
+
+	//need to be specific for overwriting label settings
+	&.cui-label-multiline {
+		@extend %label_multiline;
+	}
+
+	&-manage-overflow {
+		> .cui-label-content {
+			transition: height ease 0.5s, max-height ease 0.5s;
+			max-height: 56px; // three rows
+			overflow: hidden;
+			position: relative;
+			> .cui-label-manage-overflow-content-container {
+				transition: height ease 0.5s, max-height ease 0.5s;
+				overflow: hidden;
+			}
+			> .cui-label-manage-overflow-button-container {
+				text-align: right;
+				> .cui-label-manage-overflow-button {
+					// only here for easier designability
+				}
+			}
+		}
+	}
+
+	&-font-italic {
+		font-style: italic;
+	}
+
+	// ---------
+
+	&.cui-dom-element-has-tooltip {
+		.cui-label-icon,
+		.cui-label-content {
+			cursor: help;
+		}
+	}
+
+	// -------- sizes-------------
+
+	&-size-normal {
+		@include label_size(normal);
+	}
+
+	&-size-mini {
+		@include label_size(mini);
+	}
+
+	&-size-big {
+		@include label_size(big);
+	}
+
+	&-size-bigger {
+		@include label_size(bigger);
+	}
+
+}
+
+.cui-selected .cui-label {
+	color: $active_font_color;
+}

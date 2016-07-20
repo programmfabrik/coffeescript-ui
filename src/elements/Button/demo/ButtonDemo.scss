@@ -1,0 +1,67 @@
+
+
+
+.cui-button-demo {
+
+	// ----------------------- demo framework ----------------------------------------------
+
+	.cui-button-demo-pic {
+		width: 20px;
+		height: 20px;
+		background: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7) left center no-repeat;
+	}
+
+	// ----------------------- examples ----------------------------------------------
+
+	.cui-button-demo-limit-width {
+		max-width: 120px;
+	}
+
+	//example for switching an auto size button to a big button style.
+	.cui-button-demo-auto-switch-to-big.cui-button.cui-button-size-auto {
+		@include button_size(big);
+	}
+
+	//example for switching an auto appearance button to an important button style.
+	.cui-button-demo-auto-switch-to-important.cui-button.cui-button-size-auto {
+		@extend %button_appearance_important;
+	}
+
+	.cui-button.cui-button-demo-centered-fixed-width {
+
+		display: table;
+
+		width: 300px;
+
+		//content
+		.cui-button-left {
+			display: table-cell;
+			text-align: left;
+		}
+
+		.cui-button-center {
+			display: table-cell;
+			text-align: center;
+		}
+
+		.cui-button-right {
+			display: table-cell;
+			text-align: right;
+		}
+
+	}
+
+
+}
+
+
+.cui-button-demo-custom-colors-a {
+	@include button_flat_auto_colored( #ffecfc, #7a9aff);
+}
+.cui-button-demo-custom-colors-b {
+	@include button_flat_auto_colored( #0c0c0c, #68ff83);
+}
+.cui-button-demo-custom-colors-c {
+	@include button_flat_auto_colored( #2c0d53, #ff2f5d);
+
+}

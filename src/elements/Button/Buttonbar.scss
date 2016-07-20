@@ -1,0 +1,121 @@
+
+
+
+.cui-buttonbar {
+
+	display: inline-block;
+
+	//when we dont make the labels inline it will not align correctly
+	.cui-label {
+		display: inline;
+	}
+
+	&.cui-buttonbar-vertical{
+		> .cui-button,
+		> .cui-buttonbar-group,
+		> .cui-buttonbar-group > .cui-button {
+			&:not(:empty) {
+				@include flex_display(flex);
+				@include flex_direction(column);
+			}
+		}
+	}
+
+	&.cui-buttonbar-horizontal {
+		@include horizontal_separator_paddings();
+
+		white-space: nowrap;
+		> .cui-buttonbar-group {
+			white-space: nowrap;
+			display: inline-block; // needed for having a nice border
+		}
+
+		> .cui-button,
+		> .cui-buttonbar-group > .cui-button {
+			&:not(:empty) {
+				display: inline-block;
+			}
+		}
+
+		//every element in the bar has to be set to center, otherwise it doesnt work
+		> .cui-button,
+		> .cui-label {
+			vertical-align: middle;
+		}
+	}
+
+	// ------------ separators --------------------
+
+	&.cui-buttonbar-horizontal > .cui-buttonbar-group {
+
+		vertical-align: middle;
+
+		> .cui-data-field {
+			vertical-align: middle;
+		}
+
+		> .cui-button,
+		> .cui-data-field:not(.cui-first-visible-child) > .cui-button, // for dropdown list in buttonbars ... supports only some simple fields
+		> .cui-data-field:not(.cui-first-visible-child) > .cui-input // for input fields , like in a navigation button bar with page input
+		{
+			vertical-align: middle;
+
+			&:not(.cui-disabled):not(.cui-active):not(.cui-pressed):not(.cui-first-visible-child):hover,
+			&.cui-active:not(.cui-disabled):not(.cui-first-visible-child):hover,
+			&:not(.cui-first-visible-child) {
+				border-left: 1px solid $buttonbar_separator_color;
+			}
+		}
+	}
+
+	&.cui-buttonbar-vertical > .cui-buttonbar-group {
+		& > .cui-button,
+		& > .cui-data-field:not(.cui-first-visible-child) > .cui-button, // for dropdown list in buttonbars
+		& > .cui-data-field:not(.cui-first-visible-child) > .cui-input // for input fields , like in a navigation button bar with page input
+		{
+			&:not(.cui-disabled):not(.cui-active):not(.cui-pressed):not(.cui-first-visible-child):hover,
+			&.cui-active:not(.cui-disabled):not(.cui-first-visible-child):hover,
+			&:not(.cui-first-visible-child) {
+				border-top: 1px solid $buttonbar_separator_color;
+			}
+		}
+	}
+
+	> .cui-buttonbar-group {
+
+		border: 1px solid $button_border_color;
+		box-sizing: border-box;
+
+		> .cui-button,
+		> .cui-select .cui-button-select
+		{
+			box-shadow: none !important;
+
+			border: 0; // buttonbar-group gets the border
+
+			//REMARKED we use !important instead
+			//&:not(.cui-disabled) {
+			//	&:not(.cui-active):not(.cui-pressed):hover,
+			//	&.cui-active:hover,
+			//	&.cui-active {
+			//		box-shadow: none;
+			//	}
+			//}
+		}
+	}
+
+}
+
+@mixin buttonbar_horizontal_shrinkable {
+	@include ASSERT_TYPE(cui-buttonbar-horizontal);
+
+	&.cui-buttonbar.cui-buttonbar-horizontal { //need to make it specific
+		&,
+		.cui-buttonbar-group,
+		.cui-button {
+			@include flex(0,1);
+			@include flex_display(flex); //cant make this important! some code sets buttons invisible without using !important.
+			overflow: hidden;
+		}
+	}
+}

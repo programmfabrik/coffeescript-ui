@@ -1,0 +1,5 @@
+/* default is to hide all templates as they are loaded
+   in the DOM tree, when they are used, we remove the ez-tmpl class */
+.cui-tmpl {
+	display: none !important;
+}

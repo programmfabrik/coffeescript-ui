@@ -1,0 +1,24 @@
+
+.cui-tmpl-form-demo {
+
+	@include flex_display(flex);
+	@include flex_direction(row);
+
+	.cui-form-demo-form {
+		@include flex(1,1);
+	}
+
+	.cui-form-data-pane {
+		@include flex(0,0);
+
+		max-width: 400px;
+	}
+}
+
+.cui-form-demo-data-viewer {
+	min-height: 400px;
+}
+
+.cui-form-demo-data {
+	overflow: auto;
+}

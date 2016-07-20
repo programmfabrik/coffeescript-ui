@@ -1,0 +1,1051 @@
+class Input extends DataFieldInput
+	constructor: (@opts={}) ->
+		super(@opts)
+		@addClass("cui-input")
+
+		if @_overwrite
+			@__getCursorBlocks = @__overwriteBlocks
+		else
+			@__getCursorBlocks = @_getCursorBlocks
+
+		if @_content_size
+			@addClass("cui-input-content-size")
+
+	initOpts: ->
+		super()
+		@addOpts
+			spellcheck:
+				default: false
+				check: Boolean
+			autocomplete:
+				default: false
+				check: Boolean
+			overwrite:
+				check: Boolean
+			checkInput:
+				check: Function
+			checkInputLeaveHint:
+				check: String
+			invalidHint:
+				check: String
+			onFocus:
+				check: Function
+			onClick:
+				check: Function
+			onKeyup:
+				check: Function
+			onSelectionchange:
+				check: Function
+			incNumbers:
+				default: true
+				check: Boolean
+			onBlur:
+				check: Function
+			regexp:
+				check: String
+			regexp_flags:
+				default: ""
+				check: String
+			getInputBlocks:
+				check: Function
+			# if cursor blocks are provived, no automatic incNumberBlocks
+			# takes place
+			getCursorBlocks:
+				check: (v) ->
+					$.isFunction(v) and not @_overwrite
+			placeholder:
+				check: String
+			readonly:
+				check: Boolean
+			readonly_select_all:
+				default: true
+				check: Boolean
+			textarea:
+				check: Boolean
+			content_size:
+				default: false
+				check: Boolean
+
+	readOpts: ->
+		if not isEmpty(@opts.regexp)
+			assert(not (@opts.checkInput), "new Input", "opts.regexp conflicts with opts.checkInput.")
+
+		if @opts.readonly
+			assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
+
+		if @opts.textarea
+			assert(not @opts.autocomplete, "new Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
+			assert(not @opts.incNumbers, "new Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
+
+		super()
+
+		if @_readonly and @_readonly_select_all
+			@_getCursorBlocks = (v) =>
+				[ new InputBlock(start: 0, string: v) ]
+
+		if @_regexp
+			@__regexp = new RegExp(@_regexp, @_regexp_flags)
+			@_checkInput = @__checkInputRegexp
+
+		if @_spellcheck == false
+			@__spellcheck = "false"
+		else
+			@__spellcheck = "default"
+
+		if @_autocomplete == true
+			@__autocomplete = "on"
+		else if @_autocomplete == false
+			@__autocomplete = "off"
+		@
+
+	__checkInputRegexp: (opts) ->
+		if isEmpty(opts.value) or @__regexp.exec(opts.value)
+			return true
+		else if opts.leave
+			return false
+		else
+			return "invalid"
+
+	getTemplateKeyForRender: ->
+		null
+
+	setPlaceholder: (placeholder) ->
+		DOM.setAttribute(@__input[0], "placeholder", placeholder)
+
+	# MISSING FEATURES:
+	# - tab block advance
+	# - up/down cursor number decrement/increment
+	# - input masking
+
+	__createElement: (input_type="text") ->
+		if @_textarea ==  true
+			@__input = $element "textarea", "cui-textarea",
+				placeholder: @_placeholder
+				tabindex: "0"
+				spellcheck: @__spellcheck
+		else
+			@__input = $element "input", "cui-input",
+				type: input_type
+				placeholder: @_placeholder
+				tabindex: "0"
+				spellcheck: @__spellcheck
+				autocomplete: @__autocomplete
+
+		Events.listen
+			node: @__input
+			type: "dragstart"
+			call: (ev) ->
+				ev.preventDefault()
+
+		handleReadOnly = (ev) =>
+			@initCursor(ev)
+			@showCursor(ev)
+			ev.stopPropagation()
+			ev.preventDefault()
+			return false
+
+		Events.listen
+			node: @__input
+			type: "keydown"
+			call: (ev) =>
+				# CUI.debug "keydown on input", ev.shiftKey, ev.which, @_incNumbers
+				@lastKeyDownEvent = ev
+
+				if @_incNumbers and not @_textarea and not @_readonly
+					@incNumberBounds(ev)
+
+				if ev.keyCode() in [37, 39, 36, 35] # LEFT, RIGHT, POS1, END
+					@moveCursor(ev)
+					@showCursor(ev)
+					return
+
+				if ev.hasModifierKey()
+					return
+
+				if @_readonly
+					return handleReadOnly(ev)
+
+				if ev.keyCode() in [9, 16, 17, 18, 27, 33, 34, 35, 36, 38, 40]
+					return
+
+				if not @_textarea and ev.keyCode() == 13
+					return
+
+				# backspace and the cursor is slim and at the beginning
+				if ev.keyCode() == 8 and 0 == @__input0.selectionStart == @__input0.selectionEnd
+					return
+
+				@focusShadowInput()
+				return
+
+		Events.listen
+			type: "focus"
+			node: @__input
+			call: (ev) =>
+				# CUI.debug "input focus event", @DOM[0], "immediate:", @hasImmediateFocus(), "shadow:", @hasShadowFocus()
+				if @hasShadowFocus()
+					return
+
+				@__initShadowInput()
+
+				if @_checkInput
+					v = @__input0.value
+					opts =
+						enter: true
+						value: v
+
+					@_checkInput.call(@, opts)
+
+					if v != opts.value
+						s = @__input0.selectionStart
+						e = @__input0.selectionEnd
+						@__input0.value = opts.value
+						@__input0.setSelectionRange(s,e)
+
+				@_onFocus?(@, ev)
+				@__invalidTooltip?.show()
+				@__setCursor(ev)
+				return
+
+		Events.listen
+			type: "mouseup"
+			node: @__input
+			call: (ev) =>
+				@__setCursor(ev)
+
+
+
+		Events.listen
+			type: "blur"
+			node: @__input
+			call: (ev) =>
+				if @hasShadowFocus()
+					return
+
+				@__removeShadowInput()
+
+				if @_checkInput
+					opts =
+						value: @__input0.value
+						leave: true
+
+					if @_checkInput.call(@, opts) == false
+						CUI.setTimeout =>
+							@focus()
+							@showJailHint(opts)
+						,
+							0
+						# CUI.debug "not hiding jail hint", opts
+						return
+					else
+						@__input0.value = opts.value
+					@hideJailHint()
+
+				@__invalidTooltip?.hide()
+				@_onBlur?(@, ev)
+				return
+
+		Events.listen
+			type: "input"
+			node: @__input
+			call: (ev, info) =>
+				# CUI.debug "#{@__cls}", ev.type, ev.isDefaultPrevented()
+				if not ev.isDefaultPrevented()
+					# this can happen thru CTRL-X, so we need to check again
+					if @_checkInput
+						v = @_checkInput.call(@, value: @__input0.value)
+						if v != "invalid" and v != false
+							@removeInvalid()
+
+					@moveCursor(ev)
+					@showCursor(ev)
+					@storeValue(@__input0.value)
+				return
+
+		Events.listen
+			type: "keyup"
+			node: @__input
+			call: (ev) =>
+				if ev.keyCode() in [37, 39, 36, 35] # LEFT, RIGHT, POS1, END
+					ev.preventDefault()
+
+					# movement was already done by us
+					if not @cursor
+						# if we dont have a cursor, we still call showCursor
+						# because after a cursor movement was done by the browser
+						# a derived class might overwrite showCursor and do stuff
+						# although we (this Input class) does not do anything
+						@showCursor(ev)
+
+					return
+				@initCursor(ev)
+				@showCursor(ev)
+
+				if @_onKeyup
+					@_onKeyup(@, ev)
+				return
+
+		Events.listen
+			type: "paste"
+			node: @__input
+			call: =>
+				if @_readonly
+					return handleReadOnly(ev)
+				@focusShadowInput()
+
+		Events.listen
+			type: "click"
+			node: @__input
+			call: (ev) =>
+				ev.stopPropagation()
+				@_onClick?(@, ev)
+				return
+
+		@__input0 = @__input[0]
+
+		# CUI.debug "listening for dom insert on ", @__input
+		#
+		if @_content_size
+			DOM.waitForDOMInsert(node: @__input)
+			.done =>
+				if @isDestroyed()
+					return
+
+				# CUI.debug("running dom insert..")
+				assert( DOM.isInDOM(@__input[0]),"Input is getting DOM insert event without being in DOM." )
+				@setContentSize()
+
+		@__input
+
+	__setCursor: (ev) ->
+		# CUI.debug "setting timeout"
+		CUI.setTimeout =>
+			# CUI.debug "focus?", @hasClass("focus")
+			@initCursor(ev)
+			if @cursor == null and
+				(s = @__input0.selectionStart) == @__input0.selectionEnd and
+				@__input0.selectionEnd != @__input0.value.length
+					blocks = @getInputBlocks()
+					if blocks.length > 0
+						for block in blocks
+							if block.start <= s <= block.end
+								@markBlock(ev, block)
+								break
+
+			@showCursor(ev)
+		,
+			0
+
+	handleSelectionChange: ->
+		@_onSelectionchange?.apply(@, arguments)
+
+	getElement: ->
+		@__input
+
+	markBlock: (ev, bl) ->
+		@__input0.setSelectionRange(bl.start, bl.end)
+		@initCursor(ev)
+
+	showJailHint: (opts={}) ->
+		@hideJailHint()
+		if opts.hasOwnProperty("jail_hint_class")
+			@__jailHintClass = opts.jail_hint_class
+		else
+			@__jailHintClass = "cui-input-jailed"
+
+		if isEmpty(@__jailHintClass)
+			@__jailHintClass = null
+		else
+			@addClass(@__jailHintClass)
+
+		if @_checkInputLeaveHint
+			@jailHint = new Tooltip
+				element: @DOM
+				onHide: =>
+					@hideJailHint()
+				text: @_checkInputLeaveHint
+			@jailHint.show()
+		@
+
+	hideJailHint: ->
+		if @__jailHintClass
+			@removeClass(@__jailHintClass)
+			@__jailHintClass = null
+
+		@jailHint?.destroy()
+		@jailHint = null
+
+	remove: ->
+		@hideJailHint()
+		@__removeShadowInput()
+		super()
+
+
+	focusShadowInput: ->
+		if not @__shadow
+			return
+		# CUI.debug "focus shadow input"
+		@__shadow_focused = true
+		@__shadow0.value = @__input0.value
+		@__shadow0.focus()
+		@__shadow0.setSelectionRange(@__input0.selectionStart, @__input0.selectionEnd)
+
+	unfocusShadowInput: ->
+		if not @hasShadowFocus()
+			return
+		# CUI.debug "unfocus shadow input"
+		@__input0.focus()
+		@showCursor()
+		@__setContentSize()
+		@__shadow_focused = false
+
+	hasShadowFocus: ->
+		@__shadow_focused
+
+	__initContentSize: ->
+
+		style = window.getComputedStyle(@__input0)
+
+		# CUI.debug style
+
+		css = {}
+		for k in [
+			"fontFamily"
+			"fontKerning"
+			"fontSize"
+			"wordBreak"
+			"wordSpacing"
+			"wordWrap"
+			"fontStretch"
+			"lineHeight"
+			"fontStyle"
+			"fontVariant"
+			"fontVariantLigatures"
+			"fontWeight"
+		]
+			# CUI.debug k, style[k]
+			css[k] = style[k]
+
+
+		@__shadow.css(css)
+
+		if @_textarea
+			@__shadow.height(1)
+			@__shadow.width(@__input.width())
+
+			@__max_height = parseInt(@__input.css("max-height"))
+			@__input0.style.overflow = "hidden"
+
+			if isNaN(@__max_height)
+				@__max_height = null
+			else
+				correct_height = parseInt(@__input.css("width")) - @__input.width()
+				@__max_height -= correct_height
+
+		else
+			@__shadow.width(1)
+
+		@__shadow0.value = @__input0.value
+		@__setContentSize()
+		@
+
+	setContentSize: ->
+		# when called from the "outside", we need to
+		# copy the input value to the shadow before measuring
+		if @__shadow
+			@__shadow0.value = @__input0.value
+			@__setContentSize()
+		else
+			@__initShadowInput() # this does a set size
+			@__removeShadowInput()
+		@
+
+	__setContentSize: ->
+		if not @_content_size
+			return @
+
+		# CUI.error "__setContentSize", @_textarea, @__input0.value, @__shadow0.value
+
+		changed = false
+		if @_textarea
+
+			if @__input.width() != @__shadow.width()
+				@__shadow.width(@__input.width())
+
+			h = @__shadow0.scrollHeight
+
+			if @__max_height == null or h <= @__max_height
+				@__input0.style.overflow = "hidden"
+			else
+				@__input0.style.overflow = ""
+
+			previous_height = @__input.height()
+			@__input.height(h)
+
+			if @__input.height() != previous_height
+				changed = true
+
+		else
+			w = @__shadow0.scrollWidth
+			if @__input.width() != w
+				changed = true
+			@__input.width(w)
+			# CUI.debug "setting width to", @__shadow0.value, @__input0.value, w
+
+		if changed
+			Events.trigger
+				type: "content-resize"
+				node: @__input
+		@
+
+	checkBlocks: (blocks) ->
+		if not $.isArray(blocks)
+			return false
+		for b, idx in blocks
+			assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)
+			b.idx = idx
+		blocks
+
+	getInputBlocks: ->
+		if @_getInputBlocks
+			blocks = @_getInputBlocks(@__input0.value)
+		else if @_getCursorBlocks
+			blocks = @_getCursorBlocks(@__input0.value)
+		else
+			blocks = @__getInputBlocks(@__input0.value)
+		@checkBlocks(blocks)
+
+	__getInputBlocks: (v) ->
+		blocks = []
+		v =  @__input0.value
+		re = /[0-9]+/g
+		blocks = []
+		while (match = re.exec(v)) != null
+			match_str = match[0]
+			match_start = match.index
+			if match_start > 0
+				char_1_before = v.substr(match_start-1, 1)
+			else
+				char_1_before = null
+
+			if match_start > 1
+				char_2_before = v.substr(match_start-2, 1)
+			else
+				char_2_before = null
+
+			if char_1_before == "-" and not char_2_before?.match(/[0-9]/)
+				match_str = "-"+match_str
+				match_start -= 1
+
+			blocks.push new NumberInputBlock
+				start: match_start
+				string: match_str
+		# CUI.debug "blocks", blocks
+		blocks
+
+	__overwriteBlocks: (v) ->
+		blocks = []
+		for i in [0...v.length]
+			blocks.push new InputBlock
+				start: i
+				string: v.substr(i, 1)
+		blocks.push new InputBlock
+			start: v.length
+			string: ""
+		blocks
+
+	# returns the currently exactly marked block
+	# if no block is found, returns null
+	getMarkedBlock: ->
+		blocks = @getInputBlocks()
+		if blocks == false or blocks.length == 0
+			return null
+
+		s = @__input0.selectionStart
+		e = @__input0.selectionEnd
+
+		for block, idx in blocks
+			# CUI.debug match_start, match_end, match_str
+			if block.start == s and block.end == e
+				return block
+		return null
+
+	getSelection: ->
+		s = @__input0.selectionStart
+		e = @__input0.selectionEnd
+
+		start: s
+		end: e
+		value: @__input0.value
+		before: @__input0.value.substring(0, s)
+		selected: @__input0.value.substring(s, e)
+		after: @__input0.value.substring(e)
+
+	setSelection: (selection) ->
+		@__input0.selectionStart = selection.start
+		@__input0.selectionEnd = selection.end
+
+	updateSelection: (txt="") ->
+		sel = @getSelection()
+		@setValue(sel.before + txt + sel.after)
+		start = sel.before.length
+		end = start + txt.length
+		if sel.start == sel.end
+			start = end
+		@setSelection(start: start, end: end)
+
+
+	incNumberBounds: (ev) ->
+		if ev.keyCode() not in [38, 40, 9, 33, 34]
+			return
+
+		s = @__input0.selectionStart
+		e = @__input0.selectionEnd
+		v =  @__input0.value
+
+		blocks = @getInputBlocks()
+		if blocks == false or blocks.length == 0
+			return
+
+		parts_inbetween = [v.substring(0, blocks[0].start)]
+		for block, idx in blocks
+			if idx == blocks.length-1
+				break
+			# CUI.debug idx, block.end, blocks[idx+1].start
+			parts_inbetween.push(v.substring(block.end, blocks[idx+1].start))
+
+		last_block = blocks[blocks.length-1]
+		parts_inbetween.push(v.substring(last_block.end))
+
+		# CUI.debug "blocks:", blocks
+		# CUI.debug "parts_inbetween:", parts_inbetween
+		# CUI.debug "s", s, "e", e, "v", v
+		block_move = 0
+		if ev.keyCode() in [9, 33, 34]
+			# TAB, PAGE UP/DOWN
+			if ev.shiftKey() or
+				ev.keyCode() == 33
+					block_move = -1
+			else
+				block_move = 1
+
+		for block, idx in blocks
+			# CUI.debug match_start, match_end, match_str
+			if block.start == s and block.end == e
+				if block_move
+					block_jump_to = idx+block_move
+					break
+
+				if ev.keyCode() == 38
+					block.incrementBlock(block, blocks)
+				else
+					block.decrementBlock(block, blocks)
+
+				block_jump_to = idx
+				break
+
+			if (s == e or (@cursor and @cursor.start == @cursor.end)) and block.start <= s <= block.end
+				# mark block
+				# CUI.debug "cursor in block", s, e
+				block_jump_to = idx
+				continue
+
+		if block_move and s == 0 and e == v.length and blocks.length > 1
+			if block_move == -1
+				block_jump_to = blocks.length-1
+			else
+				block_jump_to = 0
+
+		if bl = blocks[block_jump_to]
+			new_str = [parts_inbetween[0]]
+			# CUI.debug "new blocks"+blocks
+			for block, idx in blocks
+				new_str.push(block.string)
+				new_str.push(parts_inbetween[idx+1])
+
+			new_value = new_str.join("")
+
+			if @_checkInput
+				if @_checkInput.call(@, value: new_value) == false
+					ev.preventDefault()
+					return
+
+			@__input0.value = new_value
+			@markBlock(ev, bl)
+			@storeValue(@__input0.value)
+			ev.preventDefault()
+
+		return
+
+
+	__removeShadowInput: ->
+		# CUI.debug "removeShadowInput", @getUniqueId()
+
+		@__shadow?.remove()
+		@__shadow = null
+		@__shadow_focused = false
+		@
+
+	__initShadowInput: ->
+		if not (@_checkInput or @_content_size)
+			# CUI.debug @getUniqueId(), "shadow init: not set"
+			return
+
+		if @__shadow
+			# CUI.debug @getUniqueId(), "shadow alrady active"
+			return
+
+		# CUI.debug "initShadowInput", @getUniqueId()
+
+		if @_textarea
+			@__shadow = $element("textarea", "cui-input-shadow")
+		else
+			@__shadow = $element("input", "cui-input-shadow", type: "text")
+
+		@__shadow.prop("tabindex", "-1")
+		@__shadow.appendTo(document.body)
+		@__shadow0 = @__shadow[0]
+
+		if @_content_size
+			@__initContentSize()
+
+		Events.listen
+			type: "input"
+			node: @__shadow
+			call: (ev) =>
+				@shadowInput(ev)
+				# CUI.debug ev.type, "unfocus shadow input"
+				@unfocusShadowInput()
+				new CUI.Event
+					type: "input"
+					node: @__input
+				.dispatch()
+				return
+
+		Events.listen
+			type: "keyup"
+			node: @__shadow
+			call: (ev) =>
+				# CUI.debug ev.type, "unfocus shadow input"
+				@unfocusShadowInput()
+				# CUI.debug "shadow", ev.type
+				return
+		@
+
+	showInvalid: ->
+		@__invalidTooltip?.destroy()
+		if @_invalidHint
+			@__invalidTooltip = new Tooltip
+				element: @DOM
+				text: @_invalidHint
+				on_hover: true
+			@__invalidTooltip.show()
+		@addClass("cui-input-invalid")
+		@
+
+	removeInvalid: ->
+		@removeClass("cui-input-invalid")
+		@__invalidTooltip?.destroy()
+		@__invalidTooltip = null
+		@
+
+	isInvalid: ->
+		@hasClass("cui-input-invalid")
+
+	shadowInput: (ev) ->
+		shadow_v = @__shadow0.value
+
+		opts =
+			leave: false
+			old_value: @__input0.value
+			value: shadow_v
+
+		if @_checkInput
+			v = @_checkInput.call(@, opts)
+
+			# CUI.debug "SHADOW", ev.type, opts, "ret:", v
+			if v == false
+				# CUI.debug "value refused"
+				return
+
+			value = opts.value
+
+			# console.debug "Input.shadowInput", ev.getType(), shadow_v, opts
+
+			# fake a leave of input, so we can remove jail hint
+			opts.leave = true
+			if (ret = @_checkInput.call(@, opts)) != false
+				@hideJailHint()
+
+			if v == "invalid"
+				@showInvalid()
+			else
+				@removeInvalid()
+		else
+			value = shadow_v
+
+		@__input0.value = value
+		# @storeValue(value)
+		@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
+
+
+		# CUI.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
+		@initCursor(ev)
+		# CUI.debug "shadow after init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
+		return
+
+	checkValue: (v) ->
+		if not isString(v) or null
+			throw new Error("#{@__cls}.setValue(value): Value needs to be String or null.")
+		@
+
+	render: ->
+		super()
+		@replace(@__createElement(), @getTemplateKeyForRender())
+		@append(@getChangedMarker(), @getTemplateKeyForRender())
+		@
+
+	displayValue: ->
+		super()
+		if not @hasData()
+			return
+
+		if @_checkInput
+			opts =
+				leave: true
+				value: @getValue()
+
+			v = @_checkInput.call(@, opts)
+			@__input0.value = opts.value
+
+			if v == false or v == "invalid"
+				@addClass("cui-input-invalid")
+		else
+			@__input0.value = @getValue()
+
+
+	getDefaultValue: ->
+		""
+
+	enable: ->
+		super()
+		@__input?.prop("disabled", false)
+
+	disable: ->
+		super()
+		@__input?.prop("disabled", true)
+
+	focus: ->
+		@__input0?.focus()
+
+	getCursorBlocks: ->
+		blocks = @__getCursorBlocks?(@__input0.value)
+		@checkBlocks(blocks)
+
+	findBlock: (blocks, idx, cut) ->
+		for block in blocks
+			if idx == block.start == block.end
+				return block
+			if cut == "full" and idx >= block.start and idx <= block.end
+				return block
+			if cut == "left" and idx >= block.start and idx < block.end
+				return block
+			if cut == "right" and idx > block.start and idx <= block.end
+				return block
+			if cut == "touch" and idx >= block.start and idx <= block.end
+				return block
+		return null
+
+	initCursor: (ev) ->
+		blocks = @getCursorBlocks()
+		if blocks == false
+			@cursor = null
+			return
+
+		if blocks.length == 0
+			CUI.warn "initCursor: 0 cursor blocks"
+			@cursor = null
+			return
+
+		# CUI.debug "initCursor", ev.type, ev.which, ev.shiftKey # , blocks
+
+		# find block which fits the current selection
+		# positions
+		#
+		s = @__input0.selectionStart
+		e = @__input0.selectionEnd
+		len = @__input0.value.length
+
+		# CUI.debug "requested: start: ",s, "end: ",e
+
+		@cursor =
+			shift: @cursor?.shift
+			start: null
+			end: null
+
+		if ev.getType() == "keyup" and ev.keyCode() == 16
+			@cursor.shift = null
+
+		if ev.getType() == "keydown" and ev.keyCode() in [46, 8]
+			@cursor.shift = null
+
+		if isUndef(@cursor.shift)
+			@cursor.shift = null
+
+		@cursor.start = @findBlock(blocks, s, "left")
+		@cursor.end = @findBlock(blocks, e, "right")
+
+		# CUI.debug "found cursors", @cursor.start, @cursor.end
+
+		if @cursor.end?.idx < @cursor.start?.idx
+			@cursor.end = @cursor.start
+
+		if s == e and not @cursor.start and not @cursor.end
+			# find closest blocks to the left and right
+			dist_left = null
+			dist_right = null
+			for i in [s..0] by -1
+				block_left = @findBlock(blocks, i, "left")
+				if block_left
+					dist_left = (s-i)
+					break
+			for i in [s...len] by 1
+				block_right = @findBlock(blocks, i, "left")
+				if block_right
+					dist_right = (i-s)
+					break
+			if block_right and not block_left
+				@cursor.start = block_right
+			else if block_left and not block_right
+				@cursor.start = block_left
+			else if block_left and block_right
+				if dist_left > dist_right
+					@cursor.start = block_right
+				else
+					@cursor.start = block_left
+			# CUI.debug "found block in dist:", dist_left, dist_right
+
+		range = @getRangeFromCursor()
+
+		# CUI.debug "cursor", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
+		if not @cursor.start and not @cursor.end
+			@cursor.start = @cursor.end = blocks[blocks.length-1]
+		else if not @cursor.start
+			@cursor.start = @cursor.end
+		else if not @cursor.end
+			@cursor.end = @cursor.start
+
+		# CUI.debug "cursor CLEANED", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
+		# CUI.debug "range", range
+
+		if range[0] == s and range[1] == e
+			1
+			# CUI.debug "cursor is good"
+		return
+
+	showCursor: (ev) ->
+
+		if @cursor
+			r = @getRangeFromCursor()
+			@__input0.setSelectionRange(r[0], r[1])
+		@
+
+	checkSelectionChange: ->
+		sel = @getSelection()
+
+		if @__currentSelection and (
+			@__currentSelection.start != sel.start or
+			@__currentSelection.end != sel.end )
+				@handleSelectionChange()
+
+		@__currentSelection = sel
+		@
+
+	getRangeFromCursor: ->
+		[ @cursor.start?.start, @cursor.end?.end ]
+
+
+	moveCursor: (ev) ->
+		if not @cursor
+			return
+
+		ev.preventDefault()
+
+		# CUI.debug "moveCursor", ev.type, ev.which
+		blocks = @getCursorBlocks()
+		if blocks == false or blocks.length == 0
+			# CUI.debug "no block found"
+			@cursor = null
+			return
+
+		if ev.keyCode() == 36 # POS1
+			@cursor.start = blocks[0]
+			@cursor.end = blocks[0]
+			return
+
+		if ev.keyCode() == 35 # END
+			@cursor.start = blocks[blocks.length-1]
+			@cursor.end = blocks[blocks.length-1]
+			return
+
+		if @lastKeyDownEvent.keyCode() == 46 # DELETE
+			# dont move cursor, positioning will be down
+			# in keyup
+			@initCursor(@lastKeyDownEvent)
+			return
+
+		if @lastKeyDownEvent.keyCode() == 8 # BACKSPACE
+			@initCursor(@lastKeyDownEvent)
+			return
+
+		left = ev.keyCode() == 37
+		right = (ev.keyCode() == 39 or ev.getType() == "input")
+
+		s_idx = @cursor.start.idx
+		e_idx = @cursor.end.idx
+
+		if not blocks[s_idx] or not blocks[e_idx]
+			CUI.warn "repositioning cursor, not executing cursor move"
+			@initCursor(ev)
+			return
+
+		if ev.keyCode() == 46 # DELETE
+			return
+
+
+		if ev.shiftKey() and @cursor.shift == null
+			@cursor.shift = @cursor.end.idx
+
+		if @cursor.shift == null
+			if s_idx == e_idx # move only if we have a single cursor
+				if left
+					if s_idx > 0
+						@cursor.start = blocks[s_idx-1]
+				else if right
+					if s_idx < blocks.length-1
+						@cursor.start = blocks[s_idx+1]
+				@cursor.end = @cursor.start
+			else if left
+				@cursor.end = @cursor.start
+			else if right
+				@cursor.start = @cursor.end
+		else
+			c_idx = @cursor.shift
+			# CUI.debug "SHIFT ME! ", "start:", s_idx, "end:", e_idx, "shift:", c_idx
+			if left
+				if c_idx >= e_idx
+					if s_idx > 0
+						@cursor.start = blocks[s_idx-1]
+				else
+					@cursor.end = blocks[e_idx-1]
+			else if right
+				if c_idx > s_idx
+					@cursor.start = blocks[s_idx+1]
+				else
+					if e_idx < blocks.length-1
+						@cursor.end = blocks[e_idx+1]
+
+		#CUI.debug "moveCursor new range", @getRangeFromCursor()
+		@
+
+

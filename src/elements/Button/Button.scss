@@ -1,0 +1,385 @@
+
+//TODO vertical align check
+
+$button_content_distance: $grid_size*.5;
+
+
+
+@mixin button_skin (
+	$_font_color: $button_font_color,
+	$_background_color: $button_background_color,
+
+	$_disabled_font_color: $button_disabled_font_color,
+	$_disabled_background_color: $button_disabled_background_color,
+
+	$_active_font_color: $button_active_font_color,
+	$_active_background_color: $button_active_background_color,
+
+	$_highlight_font_color: $button_highlight_font_color,
+	$_highlight_background_color: $button_highlight_background_color,
+
+	$_active_highlight_font_color: $button_active_highlight_font_color,
+	$_active_highlight_background_color: $button_active_highlight_background_color,
+
+	$_pressed_font_color: $button_pressed_font_color,
+	$_pressed_background_color: $button_pressed_background_color,
+
+	//padding , turn off in label or flat styles
+	$_disable_padding: false,
+	//shadow
+	$_box_shadow: $button_box_shadow,
+	//borders
+	$_border: $button_border,
+	$_border_radius: $button_border_radius,
+	$_border_color: $button_border_color,
+	$_disabled_border_color: $button_disabled_border_color,
+	$_pressed_border_color: $button_pressed_border_color,
+	$_highlight_border_color: $button_highlight_border_color,
+	$_active_highlight_border_color: $button_active_highlight_border_color,
+	$_active_border_color: $button_active_border_color
+) {
+	@include ASSERT_TYPE(cui-button);
+
+	@if ($button_border == 0) {
+		// we have to keep the border for avoiding lineheight changes (if we change it it will be overwritten when the custom css forces another size)
+		$_border_radius: 0;
+		$_border_color: transparent;
+		$_disabled_border_color: transparent;
+		$_pressed_border_color: transparent;
+		$_highlight_border_color: transparent;
+		$_active_highlight_border_color: transparent;
+		$_active_border_color: transparent;
+	}
+
+	//TODO move to structure OR remove it completely
+	@if $_disable_padding {
+		padding: $button_and_input_padding_y 0;
+		&.cui-active {
+			padding: $button_and_input_padding_y $button_and_input_padding_x;
+		}
+	}
+	@else {
+		padding: $button_and_input_padding_y $button_and_input_padding_x;
+	}
+
+	border: $_border;
+	border-radius: $_border_radius;
+
+	box-shadow: $_box_shadow;
+
+	color: $_font_color;
+	border-color: $_border_color;
+	background-color: $_background_color;
+
+
+	// ----- states -------
+
+	&.cui-pressed:not(.cui-disabled) {
+		color: $_pressed_font_color;
+		border-color: $_pressed_border_color;
+		background-color: $_pressed_background_color;
+	}
+
+	&.cui-disabled {
+		cursor: default;
+
+		color: $_disabled_font_color;
+		border-color: $_disabled_border_color;
+		background-color: $_disabled_background_color;
+
+		.cui-button-left {
+			//we have to use opacity for images, we cant use opacity for all cause sometimes the buttons has to cover its background. TODO try to get an example
+			opacity: .5;
+		}
+
+		& .fa {
+			color: $_disabled_font_color;
+		}
+	}
+
+	//used in switch or radio buttons for showing the selected/active button --- Maybe we could use :enabled instead!?
+	&.cui-active {
+		color: $_active_font_color;
+		border-color: $_active_border_color;
+		background-color: $_active_background_color;
+	}
+
+	//hover states
+	&:not(.cui-disabled) {
+		&:not(.cui-active):not(.cui-pressed):hover {
+			//%button_highlight
+
+			color: $_highlight_font_color;
+			border-color: $_highlight_border_color;
+			background-color: $_highlight_background_color;
+
+			transition: background-color ease $default_animation_speed, color ease $default_animation_speed;
+		}
+
+		// make it darker than active to show active switches while hovering
+		&.cui-active:hover {
+			//%button_active_highlight
+			color: $_active_highlight_font_color;
+			border-color: $_active_highlight_border_color;
+			background-color: $_active_highlight_background_color;
+
+			//no animation , inverse anims are flashing too much
+		}
+	}
+}
+
+//mixin for flat button style, TODO add pressed/active-highlighted
+@mixin button_flat_skin(
+	$background_color: $button_background_color,
+	$font_color: $button_font_color,
+	$highlighted_background_color: $button_highlight_background_color,
+	$highlighted_font_color: $button_highlight_font_color,
+	$active_background_color: $button_active_background_color,
+	$active_font_color: $button_active_font_color,
+	$disabled_background_color: $button_background_color,
+	$disabled_font_color: $button_disabled_font_color,
+	$disable_padding: false
+){
+	//TODO find out if this is necessary
+	@if $disable_padding {
+		$highlighted_background_color: transparent;
+		$disabled_background_color: transparent;
+	}
+
+	@include button_skin(
+		$_font_color: $font_color,
+		$_background_color: $background_color,
+
+		$_disabled_font_color: $disabled_font_color,
+		$_disabled_background_color: $disabled_background_color,
+
+		$_active_font_color: $active_font_color,
+		$_active_background_color: $active_background_color,
+
+		$_highlight_font_color: $highlighted_font_color,
+		$_highlight_background_color: $highlighted_background_color,
+
+		$_active_highlight_font_color: $active_font_color,
+		$_active_highlight_background_color: $active_background_color,
+
+		$_pressed_font_color: $active_font_color,
+		$_pressed_background_color: $active_background_color,
+
+		$_disable_padding: $disable_padding,
+		$_box_shadow: none,
+		$_border: 0
+	);
+}
+
+//shared between checkbox and button
+%button_basics {
+	box-sizing: border-box;
+	white-space: nowrap;
+	@include flex(0,0);
+	//REMARKED flex is needed for layouting left center right correctly TODO check if we have to use tables in firefox for performance.
+	//TODO try to avoid flex, vertical buttonbars are also setting flex here!
+	//display: inline-block;
+	@include flex_display(inline-flex);
+	@include flex-direction(row);
+	@include flex_align_items(center);
+
+	color: $button_font_color;
+
+	cursor: pointer;
+	@extend %disable_text_selection_by_user;
+
+}
+
+
+// --------- button size mixins
+
+// providing mixins for the button appearance and size options, so buttons can be easily tuned in css
+@mixin button_size($size) {
+	font-size: map_get($button_font_sizes,$size);
+	line-height: map_get($button_line_heights,$size);
+
+	//center the icon by making the icon-font bigger then the text
+	.fa {
+		font-size: map_get($button_icon_font_sizes,$size);
+
+		//keep it square by default
+		min-width: map_get($button_icon_font_sizes,$size);
+	}
+
+}
+
+// --------- button appearance mixins
+
+%button_appearance_normal {
+	@include button_skin();
+}
+
+%button_appearance_flat {
+	//means background is inherited and border is 0
+	@include button_flat_skin(transparent);
+}
+
+%button_appearance_link {
+	@include button_flat_skin(
+			inherit,
+			$link_font_color,
+			inherit,
+			$link_highlight_font_color,
+			inherit,
+			$active_font_color,
+			$disabled_background_color: $button_background_color,
+			$disabled_font_color: $button_disabled_font_color,
+			$disable_padding: true
+	);
+
+	.cui-button-center {
+		text-decoration: underline;
+	}
+}
+
+%button_appearance_important {
+	//TODO fill with nice colors
+	@include button_skin();
+	background-color: $marker_color;
+}
+
+//TODO use transparent backgrounds for the different button states
+// @param $background_is_transparent is used for backgrounds that have gradients or images
+@mixin button_flat_auto_colored( $font_color: #535353, $background_color: #76ff7e, $background_is_transparent: false ) {
+
+	@include ASSERT_TYPE(cui-button);
+
+	$normal_background_color: $background_color;
+	$disabled_background_color: desaturate($normal_background_color,50%);
+	@if ($background_is_transparent) {
+		$normal_background_color: transparent;
+		$disabled_background_color: transparent;
+	}
+
+	$active_background_color: darken($background_color,30%);
+	$active_font_color: darken($font_color,5%);
+
+	&.cui-button.cui-button-appearance-flat,
+	&.cui-button.cui-button-appearance-auto { //need specific selector and should be auto anyway
+		@include button_skin(
+				$_font_color: $font_color,
+				$_background_color: $normal_background_color,
+
+				$_disabled_font_color: desaturate($font_color,50%) ,
+				$_disabled_background_color: $disabled_background_color,
+
+				$_active_font_color: $active_font_color,
+				$_active_background_color: $active_background_color,
+
+				$_highlight_font_color: lighten($font_color,5%),
+				$_highlight_background_color: lighten($background_color,5%),
+
+				$_active_highlight_font_color: lighten($active_font_color,5%),
+				$_active_highlight_background_color: lighten($active_background_color,5%),
+
+				$_pressed_font_color: darken($font_color,10%),
+				$_pressed_background_color: darken($background_color,10%),
+				$_disable_padding: false,
+				$_box_shadow: none,
+				$_border: 0
+		);
+	}
+}
+
+
+.cui-button {
+
+	@extend %button_basics;
+
+	// ------------ structure ----------------------------
+	&-left,
+	&-right,
+	&-center {
+		//just setting this to make sure we put multiples spans into a line
+		display: inline;
+		//seems that it doesnt matter if we use middle or bottom. at least in size-mini it looks a bit better with bottom, but that could be caused by y-padding.
+		//vertical-align: bottom;
+	}
+
+	&-left {
+		@include flex(0,0);
+		text-align: left;
+	}
+
+	&-center {
+		//adapt to parent size and show ellipsis if not fitting
+		@include flex(1,1);
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: pre;
+		text-align: center;
+	}
+
+	&-right {
+		@include flex(0,1);
+		text-align: right;
+		float: right;
+	}
+
+	// ------ set horizontal separator paddings only when needed
+
+	&-left:not(:empty) + .cui-button-center:not(:empty) {
+		padding-left: $button_content_distance;
+	}
+
+	&-center:not(:empty) + .cui-button-right:not(:empty),
+	&-left:not(:empty) + .cui-button-center:empty + .cui-button-right:not(:empty) {
+		padding-left: $button_content_distance;
+	}
+
+	.fa {
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	//hide empty spans and divs , otherwise the parent div is getting a strange width (empty div renders with 1 pixel bug!?)
+	> span:empty,
+	> div:empty {
+		display: none;
+	}
+
+
+	//styles
+	&-appearance-normal {
+		@extend %button_appearance_normal;
+	}
+
+	&-appearance-flat {
+		@extend %button_appearance_flat;
+	}
+
+	&-appearance-link {
+		@extend %button_appearance_link;
+	}
+
+	&-appearance-important {
+		@extend %button_appearance_important;
+	}
+
+	// ------------- sizes ----------------------
+	//this works for both, checkbox and button
+	&-size-bigger {
+		@include button_size(bigger);
+	}
+
+	&-size-big {
+		@include button_size(big);
+	}
+
+	&-size-mini {
+		@include button_size(mini);
+	}
+
+	&-size-normal {
+		@include button_size(normal);
+	}
+
+}
+
+
+

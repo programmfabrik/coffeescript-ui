@@ -1,0 +1,1 @@
+class CUI.CUIEvent extends CUI.Event

@@ -1,0 +1,21 @@
+
+.cui-bounding-box-demo-bounding-box {
+	display: inline-block;
+	position: absolute;
+	background: #F3F3F3;
+    top: 50%;
+    left: 50%;
+    font-size: 0;
+    transform: translate(-50%, -50%);
+}
+.cui-bounding-box-demo-inner {
+	display: inline-block;
+	border: 1px solid #F16161;
+	text-align: center;
+	color: #F16161;
+	font-size: 20px;
+	line-height: 188px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}

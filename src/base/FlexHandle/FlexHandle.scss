@@ -1,0 +1,172 @@
+
+.cui-flex-handle {
+    position: relative;
+
+    @include flex_shrink(0); //!important needed?
+
+    background-color: $default_background_color;
+    opacity: 0;
+    transition: opacity ease $default_animation_speed;
+
+    &:hover {
+        opacity: 0.5;
+    }
+
+    //styles
+    :after {
+        background-color: $flex_handle_color;
+        transition: background-color ease $default_animation_speed;
+    }
+
+    &.cui-flex-handle-row {
+        cursor: ew-resize;
+        width: $flex_handle_size;
+    }
+    &.cui-flex-handle-column {
+        cursor: ns-resize;
+        height: $flex_handle_size;
+    }
+
+    &.cui-flex-handle-hidden {
+        display: none !important;
+    }
+    &.cui-flex-handle-closed {
+        cursor: inherit !important;
+
+        &:hover {
+            background-color: inherit;
+        }
+    }
+
+
+
+    &.drag-drop-select-helper {
+        opacity: .5;
+        background-color: $flex_handle_closed_label_background_color;
+        transition: background-color ease $default_animation_speed opacity ease $default_animation_speed;
+    }
+
+    // ---- closed + label style ------------
+
+    > .cui-label {
+        display: none;
+    }
+
+    &.cui-flex-handle-has-label.cui-flex-handle-closed {
+
+        &:hover {
+			opacity: 0.8;
+		}
+
+
+        > .cui-label {
+            display: block;
+            background: 0;
+            color: $flex_handle_closed_label_font_color;
+        }
+
+        border: 0;
+        border-style: solid;
+        border-color: $flex_handle_color;
+        //background-color: $flex_handle_closed_label_background_color;
+
+        //stay transparent but show the childs
+        opacity: 1;
+        background-color: rgba(0,0,0,0);
+
+        &.cui-flex-handle-row {
+            width: $flex_handle_closed_size + $flex_handle_size;
+
+            //need to this caus layout.absolute is ignoring flexhandle margin
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: 0;
+                background-color: $flex_handle_closed_label_background_color;
+
+            }
+
+            &.cui-flex-handle-right:before {
+                //border-left: $grid_size solid $flex_handle_color;
+                left: $flex_handle_size;
+            }
+            &.cui-flex-handle-left:before {
+                //border-right: $grid_size solid $flex_handle_color;
+                right: $flex_handle_size;
+            }
+
+
+
+            //90 degree rotated label
+            > .cui-label {
+                margin-top: $grid_size + 4px; //TODO why +4px cause  ... 90 degree label height calculation is correct !
+                //manually centered , cant find an automatic way
+                line-height: 22px;
+				cursor: default;
+            }
+
+            &.cui-flex-handle-right > .cui-label {
+                margin-left: $flex_handle_size;
+            }
+            &.cui-flex-handle-left > .cui-label {
+                margin-right: $flex_handle_size;
+            }
+
+        }
+
+        &.cui-flex-handle-column {
+            @include WARNING_MARKER("closed column style needed");
+        }
+    }
+}
+
+.cui-flex-handle-stretched {
+    @include WARNING_MARKER("what is stretched?");
+    background-color: yellow;
+    @include flex_grow(1 !important); //!important needed?
+}
+
+.cui-flex-handle-hide-for-stretch {
+    @include WARNING_MARKER("what is hide/stretched?");
+    @include flex_shrink(1 !important); //!important needed?
+    overflow: hidden;
+}
+
+//show small nontransparent flex-handles inside panes
+.cui-pane .cui-flex-handle {
+
+    opacity: 1;
+
+    &:after {
+        position: absolute;
+        display: block;
+
+        content: '';
+
+        background-color: $flex_handle_color;
+        transition: background-color ease $default_animation_speed;
+
+        &:hover {
+            background-color: $flex_handle_highlight_background_color;
+        }
+    }
+
+    &.cui-flex-handle-row {
+        &:after {
+            width: 2px;
+            height: 100%;
+            margin: 0 2px;
+        }
+    }
+    &.cui-flex-handle-column {
+        &:after {
+            height: 2px;
+            width: 100%;
+            margin: 2px 0;
+        }
+    }
+}

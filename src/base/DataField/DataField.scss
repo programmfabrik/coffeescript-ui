@@ -1,0 +1,86 @@
+
+
+@mixin controls_min_width($width) {
+    .cui-label,
+    .cui-button {
+        min-width: $width;
+    }
+
+    .cui-data-field-input {
+        //text inputs follow this
+        min-width: $width;
+    }
+}
+
+@mixin disable_stretching_for_select_form_checkbox() {
+
+    .cui-button-checkbox.cui-button {
+        @include flex(0, 1);
+    }
+    .cui-select > .cui-button-select,
+    .cui-button-form-button {
+        width: auto;
+    }
+}
+
+//first usage in toolbar
+@mixin datafield_shrinkable_non_multiline() {
+    .cui-data-field {
+        overflow: hidden;
+        > .cui-label {
+            width: 100%;
+            > .cui-label-content {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+
+%debug_datafield_left_right_deprecated_marker {
+    .lala {
+        color: pink;
+    }
+}
+
+.cui-data-field {
+    position: relative;
+
+	&-hidden {
+		display: none !important;
+	}
+
+    //need inline for making sure our datafields are not taking the full width of a table cell when they are inside on
+    display: inline-block;
+
+    //avoid layout confusions
+    &-bottom,
+    &-top,
+    &-right,
+    &-center,
+    &-left {
+        @include ERROR_MARKER("Remove Datafield left/right..");
+    }
+
+    //REMARKED gone forever
+    //&-center {
+    //    position: relative;
+    //    display: inline-block;
+    //    vertical-align: middle;
+    //
+    //    line-height: 0; //avoid whitespace problems
+    //
+    //    //when we have no flex and left and right, the 100% will not work anymore
+    //    @extend %debug_datafield_left_right_deprecated_marker;
+    //    width: 100%; //follov the width that is set on cui-data-field
+    //
+    //    //this is used by form-button, select, checkbox, output ...
+    //    > .cui-button,
+    //    > .cui-label
+    //    {
+    //        width: 100%; //follov the width that is set on cui-data-field
+    //    }
+    //}
+}

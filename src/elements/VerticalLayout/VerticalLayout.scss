@@ -1,0 +1,41 @@
+
+@mixin absolute_vertical_layout {
+	&.cui-absolute {
+		display: block;
+		position: relative;
+
+		width: 100%;
+		height: 100%;
+
+		& > div {
+			position: absolute !important;
+			display: block;
+			left: 0;
+			right: 0;
+		}
+
+		& > .cui-vertical-layout-top {
+			top: 0;
+		}
+
+		& > .cui-vertical-layout-center {
+			top: 0; //overwritten by absolute positioning
+			bottom: 0; //overwritten by absolute positioning
+		}
+
+		& > .cui-vertical-layout-bottom {
+			bottom: 0;
+		}
+
+	}
+}
+
+.cui-vertical-layout{
+	@include three_pane_layout(vertical);
+
+	//replace flex with absolute positioned divs
+	@include absolute_vertical_layout();
+}
+
+
+

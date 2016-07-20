@@ -1,0 +1,6 @@
+
+.cui-form-modal-modal {
+	> .cui-simple-pane {
+		@include outer_pane_padding(bigger);
+	}
+}

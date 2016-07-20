@@ -1,0 +1,42 @@
+.cui-modal-demo .modal-demo-min-max { //TODO why is the pane included
+    min-width: 200px;
+	min-height: 150px;
+	max-width: 500px;
+	max-height: 400px;
+}
+
+
+.cui-modal-demo .modal-demo-custom {
+	width: 800px;
+	height: 800px;
+
+	//only for testing purposes , setting minimal is not needed
+	min-width: 800px;
+	min-height: 800px;
+}
+
+@mixin modal_demo_dialog_size($size) {
+
+	&.cui-modal > .cui-pane {
+		@include outer_pane_padding($size);
+		@include pane_control_sizes($size, $size);
+
+		width: 600px;
+		height: 600px;
+		//@include pane_header_colors($marker_color, $font_color);
+	}
+}
+
+.cui-modal-demo-normal-sizes {
+	@include modal_demo_dialog_size(normal);
+}
+
+.cui-modal-demo-big-sizes {
+	@include modal_demo_dialog_size(big);
+}
+
+.cui-modal-demo-bigger-sizes {
+	@include modal_demo_dialog_size(bigger);
+}
+
+

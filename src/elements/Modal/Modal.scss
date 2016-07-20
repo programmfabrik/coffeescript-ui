@@ -1,0 +1,88 @@
+
+@mixin set_control_size($size) {
+
+	&.cui-textarea,
+	&.cui-input,
+	&.cui-password,
+	&.cui-date-time,
+	&.cui-button,
+	&.cui-label {
+		@include ERROR_MARKER("set_control_size mixin cant be used directly on control elements.");
+	}
+
+	.cui-button.cui-button-size-auto {
+		@include button_size($size);
+	}
+	.cui-button-checkbox.cui-button-size-auto {
+		@include checkbox_size($size);
+	}
+	.cui-label.cui-label-size-auto {
+		@include label_size($size);
+	}
+	//TODO inputs dont have a size , we size them anyway with the button mixins
+	//TODO select the datafields!?
+	.cui-textarea,
+	.cui-input,
+	.cui-password,
+	.cui-date-time {
+		@include button_size($size);
+	}
+}
+
+@mixin pane_control_sizes( $header_footer_size, $content_size: 0 ) {
+	&:not(.cui-pane) {
+		@include ERROR_MARKER("pane_toolbar_control_size need to be inside of pane!");
+	}
+
+	> .cui-vertical-layout-top {
+		> .cui-pane-header {
+			@include set_control_size($header_footer_size);
+
+			//put height into cell so toolbar can collapse
+			.cui-layout-cell {
+				$height: map_get($pane_header_heights,$header_footer_size);
+				height: $height;
+				min-height: $height;
+			}
+		}
+	}
+
+	> .cui-vertical-layout-bottom > .cui-pane-footer {
+		@include set_control_size($header_footer_size);
+	}
+
+	@if $content_size != 0 {
+		> .cui-vertical-layout-center {
+			@include set_control_size($content_size);
+		}
+	}
+}
+
+@mixin pane_header_colors($header_background_color, $header_font_color ) {
+	&:not(.cui-pane) {
+		@include ERROR_MARKER("pane_toolbar_control_size need to be inside of pane!");
+	}
+
+	> .cui-vertical-layout-top {
+		> .cui-pane-header {
+			background-color: $header_background_color;
+
+			.cui-label.cui-label-appearance-auto {
+				color: $header_font_color;
+			}
+
+			.cui-button {
+				@include button_flat_auto_colored($header_font_color,$header_background_color);
+			}
+		}
+	}
+}
+
+
+.cui-modal {
+	> .cui-pane {
+		@include pane_control_sizes(big);
+		@include pane_header_colors($modal_header_background_color, $modal_header_font_color);
+		@include outer_pane_padding("bigger");
+	}
+}

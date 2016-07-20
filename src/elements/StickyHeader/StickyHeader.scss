@@ -1,0 +1,67 @@
+
+
+.ez-tmpl-sticky-header {
+	box-sizing: border-box;
+
+	.ez-sticky-header-center {
+
+		height: 20px;
+
+		font-weight: bold;
+		line-height: normal;
+		//TODO padding: use the current padding
+		padding: 2px map_get($outer_padding_x,normal);
+		
+		border: 0;
+
+		background-color: $sticky_header_background_color;
+
+	}
+
+	.cui-label {
+		padding: 0;
+	}
+}
+
+.ez-sticky-header-level-1 {
+	font-weight: normal;
+}
+
+.ez-sticky-header-level-2 {
+	border: 0;
+	font-size: 11px;
+}
+
+.ez-sticky-header-control {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+
+	.ez-tmpl-sticky-header {
+
+		margin-top: 0px !important;
+
+		position: absolute;
+		left: 0;
+		right: 0;
+
+		z-index: 2;
+	}
+	.ez-sticky-header-level-1 {
+		z-index: 1;
+	}
+	.ez-sticky-header-level-2 {
+		z-index: 0;
+	}
+}
+
+.ez-sticky-header-control + .ez-tmpl-sticky-header {
+	margin-top: 0px !important;
+}
+
+
+.cui-sticky-header {
+	@include flex(0,0);
+}
+

@@ -1,0 +1,9 @@
+
+//select should look like a button, so no scss is needed!? , need to be specific cause the opened menu has a cui-button-select
+.cui-select > .cui-button-select {
+    width: 100%; //behave like every other data-field-input , size is set on container
+
+    > .cui-button-center {
+        text-align: left;
+    }
+}

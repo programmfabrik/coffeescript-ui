@@ -1,0 +1,20 @@
+
+// layout =
+//     north
+//     main = west center east
+// 	   south
+
+
+.cui-border-layout-row,
+.cui-tmpl-border-layout {
+	@include flex(1,1);
+}
+
+
+
+
+
+
+
+
+

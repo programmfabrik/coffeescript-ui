@@ -1,0 +1,34 @@
+
+//centered in the parent container
+.cui-empty-label {
+	color:	$control_placeholder_font_color;
+	font-style: $control_placeholder_font_style;
+
+	position: relative;
+	//REMARKED should be not necessary, remarked cause label sizes were not able to overwrite it
+	//font-size: $font_size;
+	top: 0;
+	left: 0;
+	transform: initial;
+}
+
+//make sure we cover root backround when a empty label is used instead of a pane in a layout-cell
+.cui-layout-cell > .cui-empty-label {
+	background-color: $default_background_color;
+	width: 100%;
+	height: 100%;
+	@include flex_display(flex);
+	@include flex_direction(column);
+	@include flex_align_items(center);
+	@include justify_content(center);
+}
+
+.cui-selected {
+	.cui-layout-cell > .cui-empty-label {
+		background-color: transparent;
+	}
+
+	.cui-empty-label {
+		color: $active_font_color;
+	}
+}

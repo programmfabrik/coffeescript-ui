@@ -1,0 +1,22 @@
+
+.cui-tooltip-demo-table {
+
+	.tooltip {
+		border-bottom: 1px solid black;
+		cursor: pointer;
+	}
+
+	.tooltip.cui-layer-active {
+		background-color: $root_menu_background_color;
+		color: #ffffff;
+	}
+
+
+	.tooltip.tooltip-on-hover {
+		border-bottom: 1px dotted black;
+	}
+
+	.text-block {
+		max-width: 600px;
+	}
+}

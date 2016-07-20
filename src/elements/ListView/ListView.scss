@@ -1,0 +1,457 @@
+
+//TODO rename listviewtest to grid
+//TODO add cui to td and row
+
+@mixin list_view_disable_cell_border_right() {
+	//need to be this specific to overwrite the border
+	.cui-list-view-grid-cell-td ,
+	.cui-list-view-grid-cell-fill,
+	.cui-list-view-grid-cell-div {
+		border-right: 0 !important;
+	}
+}
+
+.cui-list-view.cui-simple-pane {
+
+	&:not(.cui-absolute) {
+		@include flex_display(flex);
+	}
+
+	&.cui-absolute > div > .cui-list-view-grid {
+		width: 100%;
+		height: 100%;
+	}
+
+
+	> .cui-vertical-layout-top {
+
+		//modify standard pane header, should appear like a toolbar
+		.cui-pane-header {
+			background-color: $list_view_row_color;
+			.cui-label {
+				color: $font_color;
+				font-weight: bold;
+			}
+		}
+	}
+
+	> .cui-vertical-layout-center {
+		font-size: 0;
+		line-height: 0;
+		overflow: hidden;
+	}
+
+
+
+}
+
+
+@mixin __row_background_color($color) {
+	@include ASSERT_TYPE(cui-list-view-grid-row);
+
+	background-color: $color;
+
+	//NOTE we have to color the cell in a div list-view for working around the problem that hidden areas get no background when scrolling makes them visible
+	> .cui-list-view-grid-cell-div {
+		background-color: $color;
+	}
+}
+
+@mixin listview_row_background_color_including_header( $color, $highlighted_color ) {
+
+	@include __row_background_color($color);
+
+	//highlight row
+	&.cui-list-view-row-selectable:hover {
+		@include __row_background_color($highlighted_color);
+	}
+
+	// select row
+	&.cui-selected {
+		@include __row_background_color($active_background_color);
+
+		&:hover {
+			@include __row_background_color($active_highlight_background_color);
+		}
+	}
+}
+
+@mixin listview_row_background_color( $color, $highlighted_color ) {
+	&:not(.list-view-header-row) {
+		@include listview_row_background_color_including_header( $color, $highlighted_color );
+	}
+}
+
+
+//set header background color
+.cui-list-view-grid > .cui-list-view-grid-inner-top .cui-list-view-grid-row,
+.cui-list-view-grid .list-view-header-row {
+	@include listview_row_background_color_including_header( $listview_header_background_color, $listview_header_background_color );
+}
+
+
+//let cell div fill the height of its td, we need a hack cause their are no specs that describe the wanted behaviour
+
+//works in webkits..
+.cui-list-view-grid {
+	transition: opacity 0.5s ease;
+
+	//chrome hack for fixing 'fill td with div' problem
+	tbody > .cui-list-view-grid-row {
+		height: 1px;
+		> .cui-list-view-grid-cell-td {
+			height: inherit;
+		}
+	}
+
+	//REMARKED not working since chrome 50.1
+	//.cui-list-view-grid-quadrant-table {
+	//	height: 100%;
+	//}
+
+	.cui-list-view-grid-cell-td > .cui-list-view-grid-cell,
+	.cui-list-view-grid-cell-div > .cui-list-view-grid-cell {
+		height: calc( 100% + 2 * #{$list_view_cell_padding} + 1px );
+	}
+
+	//row move handle has no padding, so the height is different .. strange thing cause box-sizing is border-box
+	.cui-list-view-grid-cell-td.cui-list-view-row-move-handle-column > .cui-list-view-grid-cell {
+		height: calc( 100% + 1px );
+	}
+}
+
+//special for ff and ie
+.ez5-browser-firefox,
+.ez5-browser-msie {
+	.cui-list-view-grid {
+		tbody > .cui-list-view-grid-row {
+			height: auto; //get rid of chrome hack
+		}
+		.cui-list-view-grid-cell-td > .cui-list-view-grid-cell,
+		.cui-list-view-grid-cell-div > .cui-list-view-grid-cell {
+			//height: calc( 100% - 2 * #{$list_view_cell_padding} );
+			height: 100%;
+		}
+	}
+}
+
+.cui-list-view-grid {
+	position: relative;
+
+
+	.cui-list-view-grid-row {
+		// this is removed right before layout
+		&.list-view-row-new {
+			display: none !important;
+		}
+		@include flex_display(flex);
+		@include flex_direction(row);
+
+		transition: background-color ease $default_animation_speed;
+	}
+
+	@include flex_display(flex);
+	@include flex_direction(column);
+
+	@include flex_align_items(flex-start);
+
+	.cui-list-view-grid-inner-bottom {
+		@include flex_display(flex);
+		@include flex_direction(row);
+
+		@include flex(1,1);
+		overflow: hidden;
+
+		position: relative;
+		box-sizing: border-box;
+	}
+
+	.cui-list-view-grid-inner-top {
+		@include flex_display(flex);
+		@include flex_direction(row);
+		@include flex(0,0);
+
+		position: relative;
+		box-sizing: border-box;
+
+		//TODO why do we need row header backgrounds when we have this here... strange scrolling issues with background!?
+		background-color: $listview_header_background_color;
+	}
+
+	//vertical separators
+	&.cui-list-view-grid-has-fixed-cols:not(.cui-list-view-grid-fixed-col-has-only-row-move-handle) > div {
+		& > .cui-list-view-grid-quadrant-0,
+		& > .cui-list-view-grid-quadrant-2 {
+			border-right: 2px solid $list_view_vertical_separator_color ;
+		}
+	}
+
+	//horizontal separator
+	&.cui-list-view-grid-has-fixed-rows > .cui-list-view-grid-inner-top {
+		@if( $list_view_horizontal_separator_color != 0 ) {
+			border-bottom: 2px solid $list_view_horizontal_separator_color ;
+		}
+	}
+
+	.cui-list-view-grid-quadrant {
+		@include flex_display(flex);
+		@include flex_direction(column);
+		box-sizing: border-box;
+		font-size: $font_size;
+	}
+
+	.cui-list-view-grid-quadrant-0 {
+		@include flex(0,0);
+		position: relative;
+
+	}
+	.cui-list-view-grid-quadrant-1 {
+		@include flex(0,0);
+		overflow: hidden;
+		position: relative;
+	}
+
+	.cui-list-view-grid-quadrant-2 {
+		@include flex(0,0);
+		overflow: hidden;
+		position: relative;
+	}
+
+	.cui-list-view-grid-row {
+		@include flex(0,0);
+
+		//REMARKED we need fills for measuring in code, even when they are not visible
+		//only visible when listview is maximized
+		//&.cui-list-view-grid-fills {
+		//	display: none;
+		//}
+	}
+
+
+	.cui-list-view-grid-quadrant-rows {
+		//TODO check if needed!
+		z-index: 1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	.cui-list-view-grid-fills {
+		@include flex(1,1);
+
+		overflow: hidden;
+	}
+
+	.cui-list-view-grid-quadrant-3 {
+		@include flex(0,0);
+
+		overflow: hidden;
+		position: relative;
+	}
+
+	//shared cell / fill cell features
+	.cui-list-view-grid-cell,
+	.cui-list-view-grid-cell-fill {
+		padding: $list_view_cell_padding;
+		@include flex(0,0);
+	}
+
+
+	.cui-list-view-grid-cell-td {
+		//TODO still needed!?  (connected to .cui-list-view-grid-quadrant-table 1px hack)
+		height: 100%;
+	}
+
+	&-cell {
+		position: relative;
+	}
+
+	.cui-list-view-grid-cell-fill,
+	.cui-list-view-grid-cell-div,
+	.cui-list-view-grid-cell-td {
+		&:not(:last-child):not(.cui-list-view-row-move-handle-column) {
+			border-right: 1px solid $list_view_cell_grid_color;
+		}
+	}
+
+	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > table {
+		border-collapse: separate;
+	}
+
+	//set row horizontal separators, avoid header rows that can also exist in q3!
+	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > table > tbody > .cui-list-view-grid-row:not(.list-view-header-row)  > .cui-list-view-grid-cell-td,
+	.cui-list-view-grid-cell-fill,
+	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-list-view-grid-row:not(.list-view-header-row)  > .cui-list-view-grid-cell-div {
+		@if($list_view_row_separator_color != 0) {
+			border-bottom: 1px solid $list_view_row_separator_color;
+		}
+	}
+
+
+	.cui-list-view-grid-cell-td,
+	.cui-list-view-grid-cell-fill,
+	.cui-list-view-grid-cell {
+		box-sizing: border-box;
+	}
+
+	.cui-list-view-grid-cell-fill {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	//TODO really needed for cell and cell-td!?
+	& :not(.cui-list-view-grid-cell-td) > .cui-list-view-grid-cell,
+	.cui-list-view-grid-cell-td {
+		&.cui-list-view-row-move-handle-column {
+			position: relative; //needed for rowhandle to fill table cell
+			min-width: $list_view_move_handle_width; //table is able to shrink a cell that has only set a width
+			width: $list_view_move_handle_width;
+		}
+	}
+
+	.cui-list-view-grid-cell {
+		//REMARKED extrem slowdown in firefox when using flex here
+		//@include flex_display(flex);
+		@include flex_direction(row); // keep it for inherited usage
+
+		display: block;
+
+		line-height: normal;
+		vertical-align: top;
+		overflow: hidden;
+
+		&.cui-list-view-row-move-handle {
+			padding: 0; //cell should measure 0 when .cui-tmpl-list-view-tool-row-move-handle is away
+			cursor: move;
+
+			&[allow-row-move] {
+				background-color: red !important;
+			}
+
+			.cui-tmpl-list-view-tool-row-move-handle {
+				//cant use height:100% inside tables , so we blow up the border with position absolute
+				position: absolute;
+				top: 1px;
+				left: 0;
+				right: 1px;
+				bottom: 1px;
+				@extend %list_view_move_handle_skin;
+
+				$border: 1px;
+				width: $list_view_move_handle_width - $border;
+			}
+		}
+	}
+
+
+	//set colors for our non header cells
+	& > div > .cui-list-view-grid-quadrant-3 > table > tbody > .cui-list-view-grid-row:not(.cui-list-view-grid-fills),
+	& > div > .cui-list-view-grid-quadrant-2 > table > tbody > .cui-list-view-grid-row:not(.cui-list-view-grid-fills),
+	& > div > .cui-list-view-grid-quadrant-3 > .cui-list-view-grid-row:not(.cui-list-view-grid-fills),
+	& > div > .cui-list-view-grid-quadrant-2 > .cui-list-view-grid-row:not(.cui-list-view-grid-fills) {
+		@include listview_row_background_color( $list_view_row_color, $list_view_row_highlighted_color );
+	}
+}
+
+
+
+
+
+// maximize listview
+.cui-list-view.cui-maximize > div > .cui-list-view-grid {
+
+	@include flex_align_items(stretch);
+	@include flex(1,1);
+
+	overflow: hidden; //chromebrowser made this mandatory
+
+	& > div > .cui-list-view-grid-quadrant-3 {
+		overflow: auto;
+	}
+
+	& > div > .cui-list-view-grid-quadrant-3,
+	& > div > .cui-list-view-grid-quadrant-1
+	{
+		@include flex(1,1);
+	}
+
+	& > div > .cui-list-view-grid-quadrant > .cui-list-view-grid-row.cui-list-view-grid-fills {
+		@include flex_display(flex);
+		@include flex(1, 1);
+	}
+}
+
+//special layout mode , listview can grow but can also fill the given space
+.cui-list-view.cui-maximize.cui-listview-maximize-without-horizontal-shrinking {
+	& > .cui-vertical-layout-center > .cui-list-view-grid {
+		& > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant-3 {
+			@include flex(1,0);
+		}
+	}
+}
+
+.cui-list-view.cui-maximize.cui-listview-maximize-without-vertical-shrinking {
+	@include flex(1,0);
+}
+
+
+.cui-list-view.cui-maximize.cui-maximize-without-horizontal-grow {
+	& > .cui-vertical-layout-center > .cui-list-view-grid {
+		@include flex_align_items(flex-start);
+	}
+}
+
+//REMARKED started to try a maximize-without-horizontal-shrinking without maximize:true in order to get content-resize events
+// TODO this cant work! find another solution
+//.cui-list-view.cui-listview-maximize-without-horizontal-shrinking {
+//	//maximize horizontally
+//
+//	@include flex(1,1);
+//	height: 100%;
+//
+//	& > .cui-vertical-layout-center > .cui-list-view-grid {
+//		& > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant-3 {
+//			@include flex(1,0);
+//		}
+//	}
+//
+//	> div > .cui-list-view-grid {
+//
+//		@include flex_align_items(stretch);
+//		@include flex(1,1);
+//
+//		overflow: hidden; //chromebrowser made this mandatory
+//
+//		& > div > .cui-list-view-grid-quadrant-3 {
+//			overflow: auto;
+//		}
+//
+//		& > div > .cui-list-view-grid-quadrant-3,
+//		& > div > .cui-list-view-grid-quadrant-1
+//		{
+//			@include flex(1,1);
+//		}
+//
+//		& > div > .cui-list-view-grid-quadrant > .cui-list-view-grid-row.cui-list-view-grid-fills {
+//			@include flex_display(flex);
+//			@include flex(1, 1);
+//		}
+//	}
+//}
+
+//labels should be the bottom of the cell
+.list-view-header-row > .cui-list-view-grid-cell {
+	//TODO find out how to make vertically Align bottom work here!
+	@include flex_display(flex);
+	@include flex(0,0); //avoid shrink/grow explicitly for performance reasons
+
+	@include flex_align_items(flex-end);
+}
+
+
+.cui-list-view-grid-cell-fill.cui-list-view-grid-cell-max {
+	@include flex(1,0);
+	min-width: 50px;
+}

@@ -1,0 +1,231 @@
+
+
+// -----------------------------------
+// padding
+//
+
+@mixin horizontal_separator_paddings( $distance: $grid_size )
+{
+    & > *:not(:first-child) {
+        margin-left: $distance;
+    }
+}
+
+
+//@mixin cell_padding( $padding, $quadrant, $side:"left" ) {
+//
+//	$cell_selector: "last-child";
+//	@if $side == "left" {
+//		$cell_selector: "first-child";
+//	}
+//
+//	> .cui-list-view-grid-inner-top,
+//	> .cui-list-view-grid-inner-bottom {
+//		> .cui-list-view-grid-quadrant-#{$quadrant} {
+//			> .cui-list-view-grid-quadrant-table > tbody > tr:not(.nested-table-list-view-row) > td:#{$cell_selector} > .cui-list-view-grid-cell,
+//			> .cui-list-view-grid-row:not(.nested-table-list-view-row) > .cui-list-view-grid-cell:#{$cell_selector},
+//			> .cui-list-view-grid-fills > .cui-list-view-grid-cell-fill:#{$cell_selector} //OPTI could exclude that in q0 and q1
+//			{
+//				padding-#{$side}: $padding;
+//			}
+//		}
+//	}
+//}
+//
+//@mixin content_padding( $padding_x,$padding_y ) {
+//	//expecting padding layout as parent
+//	> div //center / bottom / top / left / right
+//	{
+//		//TODO automate by using cui-padding-by-margin
+//		&.cui-vertical-layout-center,
+//		&.cui-horizontal-layout-center {
+//			//we have to use the margins, otherwise the y-scrollbars get no padding
+//			margin-top:    $padding_y;
+//			margin-bottom: $padding_y;
+//		}
+//
+//		//give content a padding , except if it has a padding itself
+//		> *:not(.cui-toolbar):not(.cui-layout-padding) {
+//			&.cui-list-view-grid {
+//
+//				@if	$padding_x > $global_alignment_padding_x {
+//					$padding: $padding_x - $global_alignment_padding_x;
+//					padding-left: $padding;
+//					padding-right: $padding;
+//				}
+//
+//				//padding left
+//				&.cui-list-view-grid-has-fixed-cols {
+//					@include cell_padding($global_alignment_padding_x,0);
+//					@include cell_padding($global_alignment_padding_x,2);
+//				}
+//
+//				&:not(.cui-list-view-grid-has-fixed-cols) {
+//					@include cell_padding($global_alignment_padding_x,1);
+//					@include cell_padding($global_alignment_padding_x,3);
+//				}
+//
+//				//padding right
+//				@include cell_padding($global_alignment_padding_x,1, "right");
+//				@include cell_padding($global_alignment_padding_x,3, "right");
+//			}
+//
+//			//TODO get rid of cui-list-view-grid by using layout-container
+//			&:not(.cui-list-view-grid) {
+//
+//				// a absolute layout will ignore padding , so we use margins instead
+//
+//				&:not(.cui-absolute) {
+//					padding-left: $padding_x;
+//					padding-right: $padding_x;
+//				}
+//
+//				&.cui-absolute {
+//					margin-left: $padding_x;
+//					margin-right: $padding_x;
+//
+//					width: calc( 100% - #{$padding_x} * 2 );
+//				}
+//			}
+//
+//			//padding doesnt work on tables
+//			&.cui-form-table {
+//				margin-left: $padding_x;
+//				margin-right: $padding_x;
+//			}
+//		}
+//
+//		//TODO automate by putting cui-padding into toolbar
+//		> .cui-toolbar {
+//			& > .cui-horizontal-layout-right {
+//				padding-right: $padding_x;
+//			}
+//			& > .cui-horizontal-layout-left {
+//				padding-left: $padding_x;
+//			}
+//		}
+//	}
+//
+//	// tabs
+//	//
+//
+//	&.cui-maximize > div > .cui-tmpl-tabs-bodies > .cui-tab {
+//		right: $padding_x;
+//		left: $padding_x;
+//	}
+//	&:not(.cui-maximize) > div > .cui-tmpl-tabs-bodies > .cui-tab {
+//		margin-left: $padding_x;
+//		margin-right: $padding_x;
+//	}
+//
+//}
+//
+//
+//
+//.cui-layout-padding-normal,
+//{
+//	@include content_padding($global_alignment_padding_x, $global_alignment_padding_y);
+//}
+//
+//.cui-layout-padding-big {
+//
+//	@include content_padding($global_alignment_padding_big_x, $global_alignment_padding_big_y);
+//}
+//
+//.cui-layout-padding-bigger {
+//	@include content_padding($global_alignment_padding_bigger_x, $global_alignment_padding_bigger_y);
+//}
+//
+//
+//%disableLayoutPaddingX {
+//	margin-left:  0 !important;
+//	margin-right: 0 !important;
+//
+//	&.cui-absolute {
+//		width: 100% !important;
+//	}
+//}
+//
+
+//pane needs special padding cause of toolbars
+// $size = "normal","big" or "bigger"
+@mixin outer_pane_padding($size) {
+    @if not(map_has_key($outer_padding_x,$size)) {
+        @error "size is not supported";
+    }
+    @if not(map_has_key($toolbar_paddings_y,$size)) {
+        @error "size is not supported";
+    }
+
+    &:not(.cui-pane) {
+        @include ERROR_MARKER("outer_pane_padding needs to be inside pane!");
+    }
+
+    > .cui-vertical-layout-top,
+    > .cui-vertical-layout-bottom
+    {
+        //toolbars need special padding so that they can show their background color over the full width of the pane
+        > .cui-toolbar {
+            padding-left: map_get($outer_padding_x,$size);
+            padding-right: map_get($outer_padding_x,$size);
+
+            //we have to make the y padding in the cells to make sure it can be hidden when the toolbar is empty
+            > .cui-layout-cell {
+                padding-top: map_get($toolbar_paddings_y,$size);
+                padding-bottom: map_get($toolbar_paddings_y,$size);
+            }
+        }
+    }
+
+    > .cui-vertical-layout-center {
+        //by using the margin we make sure that the scrollbar gets the padding
+        margin-left: map_get($outer_padding_x,$size);
+        margin-right: map_get($outer_padding_x,$size);
+
+        margin-top: map_get($outer_padding_y,$size);
+        margin-bottom: map_get($outer_padding_y,$size);
+
+        //REMARKED cant have scrolling with this
+        //overflow: visible;
+    }
+}
+
+@mixin outer_padding_reset($size: "normal") {
+    margin-left: map_get($outer_padding_x,$size) * -1;
+    margin-right: map_get($outer_padding_x,$size) * -1;
+}
+
+@mixin outer_pane_padding_by_class($size) {
+
+    #{"&.cui-padding-"+$size} {
+        @include outer_pane_padding($size);
+    }
+}
+
+// inserts a separating line and some padding by setting the elements margin
+// @param $list_item_type needed for differentiating between item and sticky header
+@mixin vertical_list_separator_line( $list_item_type: ".cui-block", $line_padding_x: 0px, $separator_height: 12px ) {
+    #{unquote($list_item_type)} {
+
+        $separator_half_height: $separator_height * 0.5;
+
+        &:not(last-child) {
+            margin-bottom: $separator_half_height;
+        }
+        & + #{unquote($list_item_type)} {
+            margin-top: $separator_half_height;
+            &:before {
+                content: '';
+
+                position: absolute;
+                line-height: 0;
+
+                margin-top: -$separator_half_height;
+                border-top: 1px solid $group_border_color;
+
+                left: $line_padding_x;
+                right: $line_padding_x;
+            }
+        }
+    }
+}

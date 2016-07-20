@@ -1,0 +1,16 @@
+.cui-demo-layout.cui-demo-show-me {
+	.cui-vertical-layout, .cui-horizontal-layout {
+		> div:nth-child(1) {
+			background-color: #c0c0c0 !important;
+		}
+		> div:nth-child(2) {
+			background-color: #DBDBDB !important;
+		}
+		> div:nth-child(3) {
+			background-color: #c2c2c2 !important;
+		}
+	}
+	.cui-form-table {
+		//border: 1px black dotted;
+	}
+}

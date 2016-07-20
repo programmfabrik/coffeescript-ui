@@ -1,0 +1,136 @@
+div.tree {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+div.tree > table {
+	width: 100%;
+}
+
+table.tree-node > tbody > tr > td {
+	width: 17px;
+	empty-cells: show;
+	vertical-align: middle;
+	padding: 0;
+	margin: 0;
+}
+
+
+div.tree .ez-tree-label {
+	width: 100%;
+}
+
+
+div.tree table.ez-tree-label > tbody > tr > td {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.ez-tree {
+    width: 17px;
+    max-width: 17px;
+    height: 17px;
+    font-size: 0px;
+    word-spacing: 0px;
+}
+
+td.lv {
+    min-width:17px;
+    max-width:17px;
+}
+td.lv2 {
+    min-width:17px;
+    max-width:17px;
+}
+
+td.spcr {
+    min-width:17px;
+    max-width:17px;
+    height:1px;
+}
+
+
+.ez-open, .ez-close {
+	cursor: pointer;
+	font-size: 14px;
+	margin-top: 3px;
+}
+
+.ez-tree.no-children {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.ez-tree.zweig,
+.ez-tree.ecke {
+	opacity: 0.3;
+	background-image: url("/static/external/bootstrap/img/glyphicons-halflings.png");
+	background-position: -456px -72px;
+	background-repeat: no-repeat;
+	margin-top: 3px;
+}
+
+.tree tr.node.selected {
+	background-color: #f0f0f0;
+}
+
+.tree .ez-tree {
+//	visibility: hidden;
+	opacity: 0.8;
+}
+
+.tree:hover .ez-tree {
+//	visibility: visible;
+}
+
+table.tree-node td.ez-tree-content {
+ 	width: 100%;
+}
+
+.list-view-tree .waffle-row.selected:not(.ui-drop-hover) {
+	background-color: $active_background_color !important;
+}
+
+
+table.ez-list-view-header-col {
+	height: 100%;
+	width: 100%;
+	border-spacing: 0;
+}
+
+table.ez-list-view-header-col td {
+	vertical-align: bottom;
+	text-align: center;
+	padding: 0;
+}
+
+.ez-list-view-header-col-text-outer.ez-rotate-90 {
+	width: 18px;
+	overflow: hidden;
+	height: 120px;
+}
+
+.ez-list-view-header-col-text-outer.ez-rotate-90 .ez-list-view-header-col-text {
+	display: inline-block;
+	text-align: left;
+	white-space: nowrap;
+	margin-bottom: -104px;
+	-webkit-transform-origin: bottom left;
+	-webkit-transform:rotate(-90deg) translateY(100%) translateX(-102px);
+	transform-origin: bottom left;
+	transform:rotate(-90deg) translateY(100%) translateX(-102px);
+}
+
+.ez-tree > i {
+	width: 17px;
+	height: 17px;
+}
+
+.waffle-cell > table.tree-node {
+	width: 100%;
+}

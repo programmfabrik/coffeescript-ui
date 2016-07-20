@@ -1,0 +1,9 @@
+
+
+
+.cui-horizontal-list {
+	> .cui-horizontal-layout-center {
+		@include flex_display(flex);
+		@include flex_direction(row);
+	}
+}

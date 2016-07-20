@@ -1,0 +1,51 @@
+
+
+
+//we use the same style for textarea and input element
+
+
+
+//for the case of a label rename
+.cui-label-content > .cui-input {
+    white-space: nowrap !important;
+}
+
+.cui-input-shadow {
+	padding: 0 !important;
+	margin: 0 !important;
+	position: absolute;
+	overflow: hidden;
+	top: -100px;
+	resize: none;
+}
+
+.cui-data-field-input.cui-input {
+
+	//REMARKED needs to be elastic all the time, more important than a aligned width
+	//min-width: $min_input_width;
+
+	//TODO use color variables
+	&-jailed input,
+	&-jailed textarea {
+		background-color: #F5D3D3;
+	}
+
+	&-invalid input,
+	&-invalid textarea {
+		background-color: #F5D3D3 !important;
+	}
+
+}
+
+
+//TODO sort in
+.cui-input.cui-input-break-all {
+	textarea {
+		word-break: break-all;
+	}
+}
+
+//TODO sort in
+textarea.cui-textarea {
+	resize: none;
+}

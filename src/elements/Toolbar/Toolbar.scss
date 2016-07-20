@@ -1,0 +1,98 @@
+
+.cui-toolbar {
+    > .cui-layout-cell:empty + .cui-layout-cell:empty + .cui-layout-cell:empty {
+        @include ERROR_MARKER("Empty Toolbar needs to be removed");
+    }
+}
+
+.cui-toolbar {
+    @include ASSERT_TYPE(cui-maximize);
+
+    @include justify_content(space-between); //left center right
+
+    //make sure that all child layout containers are in a row
+    .cui-layout-cell {
+        @include flex_direction(row);
+
+        //Centering is the best default option , before it was baseline... next time we should make it customizable by a class
+        // baseline should still work!
+        @include flex-align_items(center);
+    }
+
+    //nested layouts
+    .cui-horizontal-layout {
+        @include flex-align_items(center);
+        flex-shrink: 1; //every content has the same priority to show itself.
+        overflow: hidden;
+        > .cui-layout-cell {
+            @include flex_display(flex);
+            flex-shrink: 1; //every content has the same priority to show itself.
+            overflow: hidden;
+        }
+    }
+
+    > .cui-layout-cell {
+
+        //TODO find a solution for aligning small and big labels (cui demo header) - lineheight should work when buttonbar are inlined (needs a second try)
+
+        //REMARKED is default
+        //@include flex_display(flex);
+        @include flex(0, 1); //every content has the same priority to show itself.
+        overflow: hidden;
+
+        padding-bottom: $toolbar_padding_y;
+        padding-top: $toolbar_padding_y;
+
+        &:empty { //collapse toolbar completely when empty
+            display: none;
+        }
+
+        //separate toolbar content
+        @include horizontal_separator_paddings();
+
+        //no max height , so tools can grow
+        min-height: $toolbar_min_height - 2 * $toolbar_padding_y;
+    }
+
+    //make sure padding inbetween layout-cells works with empty cells
+    > .cui-horizontal-layout-left:not(:empty) + .cui-horizontal-layout-center:not(:empty) {
+        padding-left: $grid_size;
+    }
+    > .cui-horizontal-layout-left:not(:empty) + .cui-horizontal-layout-center:empty + .cui-horizontal-layout-right:not(:empty),
+    > .cui-horizontal-layout-center:not(:empty) + .cui-horizontal-layout-right:not(:empty) {
+        padding-left: $grid_size;
+    }
+
+    //center and stretch the center
+    > .cui-horizontal-layout-center {
+        @include flex(1, 1);
+        @include justify_content(center);
+    }
+
+    //make sure right cell content is always aligned to the right.
+    .cui-horizontal-layout-center:empty + .cui-horizontal-layout-right {
+        @include justify_content(flex-end);
+        @include flex(1, 1); //center cant push us
+    }
+
+    .cui-toolbar {
+        @include WARNING_MARKER("nested toolbars are not supported!");
+    }
+
+    //make sure controls shrink in toolbars, icons are excluded from this behaviour
+
+    .cui-data-field,
+    .cui-button,
+    .cui-label {
+        @extend %label_or_button_shrink_with_ellipsis;
+    }
+
+    @include datafield_shrinkable_non_multiline();
+
+    .cui-buttonbar-horizontal {
+        @include buttonbar_horizontal_shrinkable();
+    }
+
+    // ------------
+
+}

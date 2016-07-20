@@ -1,0 +1,154 @@
+
+
+
+
+.cui-drag-drop-select-resizable {
+	position: relative;
+}
+
+.cui-drag-drop-select-movable {
+	cursor: move;
+}
+
+.cui-drag-drop-select-sortable {
+	> div {
+		cursor: move;
+	}
+}
+
+.cui-drag-drop-select-lasso-element-in-lasso {
+	opacity: 0.8;
+}
+
+.cui-resizable-handle {
+	position: absolute;
+
+	&.cui-resizable-handle-se {
+		bottom: -8px;
+		right: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-nw {
+		top: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-sw {
+		bottom: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-ne {
+		right: -8px;
+		top: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-s {
+		left: 8px;
+		right: 8px;
+		bottom: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-n {
+		left: 8px;
+		right: 8px;
+		top: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-e {
+		right: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+
+	&.cui-resizable-handle-w {
+		left: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+}
+
+.cui-droppable {
+	background-color: $dropzone_highlighted_color;
+	opacity: 0.5;
+}
+
+.cui-lasso {
+	position: absolute;
+	z-index: 100;
+	border: 1px dotted black;
+	opacity: 0.5;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+
+.cui-lasso-area {
+	position: relative;
+}
+
+.cui-lasso.red-lasso {
+	background-color: red;
+}
+
+
+.cui-pushframe {
+	opacity: 0.6;
+	border: 4px solid #FF0000;
+}
+
+.cui-positioner {
+	&.break {
+		position: absolute;
+		background-color: #ff8800;
+
+		&.vertical {
+			width: 3px;
+			&.after {
+				margin-left: 4px;
+			}
+			&.before {
+				margin-right: 3px;
+			}
+		}
+		&.horizontal {
+			height: 3px;
+			&.after {
+				margin-top: 4px;
+			}
+			&.before {
+				margin-bottom: 3px;
+			}
+		}
+	}
+}
+
+.cui-drag-drop-select-transparent {
+	pointer-events: none !important;
+	* {
+		pointer-events: none !important;
+	}
+}
+
+.cui-droppable-drop-helper {
+	box-sizing: border-box;
+}

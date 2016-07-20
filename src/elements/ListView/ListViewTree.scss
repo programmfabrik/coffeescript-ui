@@ -1,0 +1,112 @@
+$enable_flex: 1;
+
+$tree_node_handle_width: 17px;
+$list_view_tree_indent_width: $tree_node_handle_width;
+
+.cui-tree-node {
+	@include flex(1,0);
+
+
+	@include flex_display(flex);
+	@include flex_direction(row);
+
+	@include flex_align_items(flex-start); //made that for Tag&Workflows/tags tab to align first checkbox
+
+	white-space: nowrap;
+	min-height: 24px; //in order to reach a row height of 32
+
+
+	> div {
+		display: inline-block;
+	}
+
+	& > .cui-tree-node-handle {
+		@include flex(0,0);
+
+		width: $tree_node_handle_width;
+		height: $tree_node_handle_width;
+
+		line-height: 24px;
+
+		vertical-align: middle;
+
+		cursor: pointer;
+
+		&.cui-tree-node-is-leaf {
+			cursor: inherit;
+		}
+
+		//special centering and sizing for our collapse/extend icons
+		.fa.fa-caret-down {
+			padding-left: 4px;
+			font-size: 16px;
+		}
+		.fa.fa-caret-right {
+			padding-left: 6px;
+			font-size: 16px;
+		}
+	}
+
+	@for $i from 2 through 30 {
+		&.level-#{$i} {
+			//make sure width 100% is still working
+			padding-left: $list_view_tree_indent_width * ($i - 1);
+			box-sizing: border-box;
+		}
+	}
+
+	& > .cui-tree-node-content {
+		@include flex(1,0);
+		@include flex_display(flex);
+
+		cursor: default;
+
+		vertical-align: middle; //compatible with labels and straight text
+
+		& > table > tbody > tr > td {
+			vertical-align: middle;
+		}
+	}
+
+	@if $enable_flex == 0 {
+		display: inline-block;
+		& > .cui-tree-node-content,
+		& > .cui-tree-node-handle
+		{
+			display: inline-block;
+		}
+	}
+}
+
+.cui-tree-node-no-children {
+	opacity: 0.6;
+}
+
+//no hierachy == no handles
+
+.cui-list-view-grid.cui-list-view-tree-no-hierarchy > div > .cui-list-view-grid-quadrant > table > tbody > .cui-list-view-grid-row > td,
+.cui-list-view-grid.cui-list-view-tree-no-hierarchy > div > .cui-list-view-grid-quadrant > .cui-list-view-grid-row {
+	& > .cui-list-view-grid-cell > .cui-tree-node > .cui-tree-node-handle {
+		display: none;
+	}
+}
+
+.cui-selected .cui-tree-node-handle {
+	color: $active_font_color;
+}
+
+
+@mixin list_view_tree_tree_content_min_width($min_width) {
+
+	//$list_view_tree_indent_width
+	@for $i from 1 through 30 {
+		.cui-tree-node-level-#{$i} {
+			min-width: ($list_view_tree_indent_width * ($i - 1)) + $min_width;
+		}
+	}
+}
+
+.cui-list-view-grid-quadrant-table > tbody > tr.cui-list-view-grid-row {
+	display: table-row;
+}
+
