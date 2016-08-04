@@ -39,7 +39,7 @@ class TabsDemo extends Demo
 			footer_left: "Left"
 			tabs: _tabs
 
-		tabs.setHeaderRight(createButtonbar(tabs))
+		tabs.setFooterRight(createButtonbar(tabs))
 
 		# --------- tab 2
 
@@ -55,7 +55,7 @@ class TabsDemo extends Demo
 			footer_right: "Right"
 			footer_left: "Left"
 
-		tabs2.setHeaderRight(createButtonbar(tabs2))
+		tabs2.setFooterRight(createButtonbar(tabs2))
 
 
 		tabs3 = new Tabs
@@ -78,7 +78,7 @@ Very very short. 2
 			]
 			maximize: false
 
-		tabs3.setHeaderRight(createButtonbar(tabs))
+		tabs3.setFooterRight(createButtonbar(tabs))
 
 		@demo_elements = [
 							new Label

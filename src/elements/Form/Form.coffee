@@ -139,7 +139,15 @@ class Form extends DataField
 		@table
 
 	renderTable: ->
-		@table = $table("cui-form-table")
+		if CUI.getActiveTheme().getName() == "ng"
+			use_table = false
+		else
+			use_table = true
+
+		if use_table
+			@table = $table("cui-form-table")
+		else
+			@table = $div("cui-form-table")
 
 		Events.listen
 			node: @table
@@ -162,15 +170,20 @@ class Form extends DataField
 				continue
 			@table[0].classList.add(cls+"-table")
 
-		td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center", "right"])
+		if use_table
+			td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center", "right"])
+		else
+			td_classes = ("cui-form-td-#{k}" for k in ["left", "center", "right"])
 
 		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
 		getAppend = (v, info=@) =>
 			if $.isPlainObject(v) # assume a label constructor
-				new Label(v).DOM
+				# new Label(v).DOM
+				new MultilineLabel(v).DOM
 			else if isString(v)
-				new Label(text: v).DOM
+				# new Label(text: v).DOM
+				new MultilineLabel(text: v).DOM
 			else if v?.DOM
 				v.DOM
 			else if $.isFunction(v)
@@ -178,12 +191,19 @@ class Form extends DataField
 			else
 				v
 
-
 		if @_header
-			tr_head = $tr("cui-form-tr-head").appendTo(@table)
+			if use_table
+				tr_head = $div("cui-form-tr").appendTo($div("cui-form-tr-outer").appendTo(@table))
+			else
+				tr_head = $tr("cui-form-tr-head").appendTo(@table)
+
 			for td_class, idx in td_classes
 				head = @_header[idx]
-				th = $th(td_class).appendTo(tr_head)
+				if CUI.getActiveTheme().getName() == "ng"
+					th = $div("cui-form-th "+td_class).appendTo(tr_head)
+				else
+					th = $th(td_class).appendTo(tr_head)
+
 				if not head
 					continue
 				th.append(getAppend(head.label))
@@ -199,7 +219,6 @@ class Form extends DataField
 					tr_rights = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-rights").appendTo(@table)
 
 			fopts = _field._form or {}
-
 
 			tds = []
 			if _field.__form_data_field_right
@@ -228,14 +247,24 @@ class Form extends DataField
 				if idx == 0 and content
 					has_left = true
 
-				tds.push($td(td_classes[idx], attrs).append(content))
+				if idx == 2 and content
+					has_right = true
+
+				if use_table
+					tds.push($td(td_classes[idx], attrs).append(content))
+				else
+					tds.push($div("cui-form-td "+td_classes[idx], attrs).append(content))
 
 			if @__horizontal
 				tr_labels.append(tds[0])
 				tr_fields.append(tds[1])
 				tr_rights.append(tds[2])
 			else
-				tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
+				if use_table
+					tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
+				else
+					tr = $div("cui-form-tr cui-form-tr-vertical").appendTo($div("cui-form-tr-outer").appendTo(@table))
+
 				# used to set row visibility
 				DOM.data(tr[0], "data-field", _field)
 				tr.append(tds)
@@ -245,6 +274,12 @@ class Form extends DataField
 				@table.addClass("cui-form-table-has-left-column")
 			else
 				@table.addClass("cui-form-table-has-not-left-column")
+
+			if has_right
+				@table.addClass("cui-form-table-has-right-column")
+			else
+				@table.addClass("cui-form-table-has-not-right-column")
+
 
 		Events.listen
 			type: "data-changed"
@@ -362,7 +397,7 @@ class Form extends DataField
 		# set the form depth on us
 		super()
 		# set form depth on our children
-		for f in @getFields()
+		for f in @getFields("setFormDepth")
 			f.setFormDepth()
 		@
 

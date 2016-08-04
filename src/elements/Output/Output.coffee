@@ -48,6 +48,9 @@ class Output extends DataFieldInput
 		else
 			@__textSpan.setText(txt, markdown)
 
+	checkValue: ->
+		# Output does not care about values
+
 	displayValue: ->
 		super()
 		if @getName()

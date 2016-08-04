@@ -92,16 +92,6 @@ class MenuDemo extends Demo
 				)
 				return
 
-		Events.listen
-			node: demoLabel
-			type: "contextmenu"
-			call: (ev) =>
-				CUI.debug "contextmenu", ev
-				if ev.ctrlKey()
-					return
-				ev.preventDefault()
-				return false
-
 		@demo_table.addExample("Context Menu", demoLabel.DOM)
 		@demo_table.table
 
@@ -110,12 +100,10 @@ class MenuDemo extends Demo
 Events.listen
 	node: document
 	type: "contextmenu"
-	selector: ".cui-tmpl-layer-backdrop,.ez-tmpl-layer"
 	call: (ev) =>
 		if ev.ctrlKey()
 			return
 		ev.preventDefault()
-
 
 
 Demo.register(new MenuDemo())

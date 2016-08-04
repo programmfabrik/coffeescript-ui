@@ -43,8 +43,8 @@
 
 		& > .cui-horizontal-layout-left {
 
-			//make sure the left side can shrink, so we can scroll
-			@include flex(0,1);
+			//make sure the left side can shrink, so we can scroll, let it grow to make sure its not centered in firefox
+			@include flex(1,1);
 
 			padding-bottom: 0px; //buttons should touch bottom
 

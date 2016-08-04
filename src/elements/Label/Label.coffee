@@ -14,7 +14,8 @@ class Label extends DOM
 		super(@opts)
 
 		@__label = new Template
-			name: "label"
+			name: if @_rotate_90 then "label-rotate-90" else "label"
+			map_prefix: "label"
 			map:
 				icon: true
 				content: true
@@ -45,9 +46,6 @@ class Label extends DOM
 
 		if @_manage_overflow
 			@addClass("cui-label-manage-overflow")
-
-		if @_rotate_90
-			@setRotate90()
 
 		if @_size == "auto"
 			@addClass("cui-label-size-normal") #additionally used as a fallback
@@ -98,41 +96,6 @@ class Label extends DOM
 			manage_overflow:
 				check: (v) ->
 					$.isPlainObject(v) or v == true or v == false
-
-
-	setRotate90: ->
-		@addClass("cui-label-rotate-90")
-		DOM.waitForDOMInsert
-			node: @DOM
-		.done =>
-			@__rotate90()
-			Events.trigger
-				type: "content-resize"
-				node: @DOM
-			return
-
-	__rotate90: ->
-		assert( DOM.isInDOM(@DOM[0]),"label gets DOM insert event without being in DOM." )
-		# CUI.error("label rotation 90!", @opts)
-		#set the rotated dimensions
-		content_div = @__label.map.content
-		content_div_rect = content_div.rect()
-		icon_div_rect = @__label.map.icon.rect()
-		dom_div_rect = @DOM.rect()
-
-		new_height = content_div_rect.height
-		new_bottom = 0
-		if @_icon
-			new_height += icon_div_rect.height
-		else
-			new_bottom -= content_div_rect.width #compensate top-left origin of rotation by moving it down
-
-		@DOM.css
-			height: new_height
-			width: content_div_rect.width
-
-		content_div.css
-			bottom: new_bottom
 
 
 	readOpts: ->

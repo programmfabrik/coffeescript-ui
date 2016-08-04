@@ -131,7 +131,7 @@
 		}
 	}
 
-	&-rotate-90 {
+	&.cui-label-rotate-90 { //need to be specific here
 		@extend %label_rotate_90deg;
 	}
 
@@ -164,7 +164,7 @@
 	&-manage-overflow {
 		> .cui-label-content {
 			transition: height ease 0.5s, max-height ease 0.5s;
-			max-height: 56px; // three rows
+			max-height: 62px; // three rows , 2 text lines + 'more' button
 			overflow: hidden;
 			position: relative;
 			> .cui-label-manage-overflow-content-container {

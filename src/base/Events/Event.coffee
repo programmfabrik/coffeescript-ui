@@ -122,6 +122,9 @@ class CUI.Event extends Element
 	getNativeEvent: ->
 		@__NativeEvent
 
+	getPointTarget: ->
+		document.elementFromPoint(@clientX(), @clientY())
+
 	getTarget: ->
 		@__target or @getNativeEvent()?.target
 

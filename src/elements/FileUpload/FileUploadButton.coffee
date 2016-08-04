@@ -4,6 +4,7 @@ class FileUploadButton extends Button
 		if @_drop
 			@_fileUpload.initDropZone(dropZone: @DOM)
 
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -19,20 +20,27 @@ class FileUploadButton extends Button
 			drop:
 				check: Boolean
 
+	getTemplateName: ->
+		@__has_left = true
+		@__has_right = true
+		return "file-upload-button"
+
 	readOpts: ->
 		@__ownClick = @opts.onClick
 		@opts.onClick = @__onClick
 		super()
 
 	__onClick: (ev, btn) =>
-		# CUI.debug "click", @, ev, btn
+
 		@__ownClick?.call(@, ev, btn)
 
-		if ev.ctrlKey()
+		if ev.isDefaultPrevented() or ev.isImmediatePropagationStopped()
 			return
 
-		@_fileUpload.openFilePicker
-			directory: ev.altKey() or ev.shiftKey() or btn._directory
+		@_fileUpload.initFilePicker
+			directory: (ev.altKey() or ev.shiftKey() and @_multiple) or @_directory
 			multiple: @_multiple
+			fileUpload: document.getElementById("cui-file-upload-button")
+
 		return
 

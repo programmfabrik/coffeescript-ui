@@ -283,7 +283,7 @@ class Positioner
 
 	#cuts away a portion of the given rectangle
 	#instead of just setting the position, this function takes care that the cutting is inside the rectangle
-	# side_to_cut: that should be cuttet away
+	# side_to_cut: side that should be cut away
 	# cut_position:
 	# returns result as Positioner
 	cutSide: ( side_to_cut, cut_position ) ->
@@ -300,17 +300,14 @@ class Positioner
 			end_pos = start_pos
 			start_pos = v
 
-		if Positioner.__directions[side_to_cut_index] > 0
-			if cut_position > end_pos
-				cut_position = end_pos
-		else if Positioner.__directions[side_to_cut_index] < 0
-			if cut_position < start_pos
-				cut_position = start_pos
+		if cut_position > end_pos
+			cut_position = end_pos
+		if cut_position < start_pos
+			cut_position = start_pos
 
 		result = new Positioner(@)
-		if cut_position >= start_pos and cut_position <= end_pos
-			result.getPos()[Positioner.__sideIndices[side_to_cut_index]] = cut_position
-			result.updateHeightAndWidthAndCenter()
+		result.getPos()[Positioner.__sideIndices[side_to_cut_index]] = cut_position
+		result.updateHeightAndWidthAndCenter()
 
 		return result
 

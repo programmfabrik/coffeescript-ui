@@ -88,13 +88,16 @@ class DataTable extends DataFieldInput
 				cls.push("cui-data-table-column-field-name-"+name)
 
 			cls.push("cui-data-table-column-field-type-"+toDash(f.getElementClass()))
+			if f._form?.rotate_90
+				cls.push("cui-lv-td-rotate-90")
+
 			colClasses.push(cls)
 
 			@headerRow.addColumn new ListViewHeaderColumn
+				rotate_90: f._form?.rotate_90
 				label:
 					text: label
 					multiline: true
-					rotate_90: f._form?.rotate_90
 
 		buttons = []
 		if @_new_rows != "none"

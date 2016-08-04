@@ -295,20 +295,21 @@ class FileUpload extends Element
 				el.classList.remove("cui-file-upload-drag-over")
 		@
 
-	openFilePicker: (opts) ->
+	initFilePicker: (opts) ->
 		# opts.directory
 		# opts.multiple
-		inp = CUI.fileUpload
+		# opts.fileUpload (input)
+		inp = opts.fileUpload
 		for k in ["webkitdirectory", "mozdirectory", "directory"]
 			if opts.directory
-				inp.attr(k, "")
+				DOM.setAttribute(inp, k)
 			else
-				inp.removeAttr(k)
+				DOM.removeAttribute(inp, k)
 
 		if opts.multiple
-			inp.attr("multiple", "")
+			DOM.setAttribute(inp, "multiple")
 		else
-			inp.removeAttr("multiple")
+			DOM.removeAttribute(inp, "multiple")
 
 		dfr = new CUI.Deferred()
 
@@ -319,15 +320,11 @@ class FileUpload extends Element
 			type: "change"
 			node: inp
 			call: =>
-				files = (file for file in inp[0].files)
+				files = (file for file in inp.files)
 				@queueFiles(files)
-				inp[0].form.reset()
+				inp.form.reset()
 				dfr.resolve()
 				return
-
-		Events.trigger
-			node: inp
-			type: "click"
 
 		dfr.promise()
 

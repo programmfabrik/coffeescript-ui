@@ -1,12 +1,12 @@
 
 class ListviewDemoTable extends DemoTable
-	
+
 	constructor: () ->
 		super("demo-table")
 
 	addListview: (description, listview) ->
 		listview.addClass("cui-list-view-demo-frame")
-		@addExample(description,listview.DOM)
+		@addExample(description, $div("cui-demo-td-abs").append(listview.DOM))
 
 
 
@@ -65,7 +65,7 @@ class ListViewDemo extends Demo
 				index = column+row*options.num_columns
 				text = "Cell "+index
 				if index in options.oversized_cells
-					text = "Oversized Oversized Oversized "+text
+					text = text+":\nOversized Oversized Oversized\nMore Text\nEven more\nYes!"
 
 				colspan = options.colspans[row]?[column]
 				custom = options.custom_cells[row]?[column]
@@ -75,7 +75,7 @@ class ListViewDemo extends Demo
 				else
 					if colspan > 1
 						text += " (COLSPAN: "+colspan+")"
-					dataRow.addColumn(new ListViewColumn(colspan: colspan, text: text ))
+					dataRow.addColumn(new ListViewColumn(colspan: colspan, element: new Label(text: text, multiline: true)))
 
 				if colspan > 1
 					column += colspan - 1
@@ -90,6 +90,9 @@ class ListViewDemo extends Demo
 
 
 		tests = [
+			text: "Ng Examples"
+			content: @createNextGenTab
+		,
 			text: "Simple Examples"
 			content: @createSimpleTab
 		 ,
@@ -123,11 +126,12 @@ class ListViewDemo extends Demo
 
 		for test in tests
 			txt = "ListViewDemo.display[#{test.text}]"
-			console.time(txt)
-			tabs.push
-				text: test.text
-				content: test.content.call(@)
-			console.timeEnd(txt)
+			do (test) =>
+				tabs.push
+					text: test.text
+					load_on_show: true
+					content: =>
+						test.content.call(@)
 
 		tabs = new Tabs
 			tabs: tabs
@@ -255,6 +259,30 @@ class ListViewDemo extends Demo
 		demo_table.table
 
 
+
+	createNextGenTab: ->
+		demo_table = new ListviewDemoTable()
+		options = {
+			maximize_column: [1]
+			listViewOptions:
+				setOpacity: false
+				autoLayout: 2
+				fixedRows: 1
+				fixedCols: 1
+				colResize: true
+
+			colspans:
+				5: 2: 2
+
+			custom_cells:
+				10: 2: new Input(textarea: true, content_size: true).start().DOM
+				13: 1: new Input(textarea: true).start().DOM
+			num_rows: 30
+			oversized_cells: [5,10]
+		}
+		list_view = @createListView(options)
+		demo_table.addListview(dump(options),list_view)
+		demo_table.table
 
 	createSimpleTab: ->
 		demo_table = new ListviewDemoTable()
@@ -583,7 +611,7 @@ class ListViewDemo extends Demo
 				content: list_view.DOM
 
 		demo_table.addListview("maximized Listview inside VerticalLayout",vertical_layout)
-		
+
 
 		# -------------------
 
@@ -700,7 +728,7 @@ class ListViewDemo extends Demo
 				0: 1: child_list_view.DOM
 
 		list_view = @createListView(options2)
-		
+
 
 		demo_table.addListview(dump(options)+dump(options2),list_view)
 

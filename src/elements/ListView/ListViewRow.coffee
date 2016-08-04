@@ -35,6 +35,9 @@ class ListViewRow extends Element
 
 		@row_i = null
 
+		@__addedToListView = false
+		@listView = null
+
 	addColumn: (column) ->
 		assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.push(column)
@@ -63,6 +66,12 @@ class ListViewRow extends Element
 	isMovable: (ev) ->
 		@listView.hasMovableRows()
 
+	# overwrite with a function for an alternative
+	# row move implementation
+	# signature: (listView, target_node, after)
+	# called in ListViewRowMoveTool
+	moveRow: null
+
 	removeColumns: ->
 		# CUI.debug "this", @, @columns
 		for c in @columns
@@ -89,6 +98,10 @@ class ListViewRow extends Element
 		@listView?.getDisplayRowIdx(@row_i)
 
 	addedToListView: ->
+		@__addedToListView = true
+
+	isAddedToListView: ->
+		@__addedToListView
 
 	setListView: (@listView) ->
 

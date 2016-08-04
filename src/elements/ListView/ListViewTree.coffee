@@ -94,25 +94,23 @@ class ListViewTree extends ListView
 		if do_open
 			@root.open()
 
+		# this uses the capture phase, don't interfer with the
+		# click, if we have nothing to do
 		Events.listen
 			node: @DOM
+			capture: true
 			type: ["click", "dragover-scroll"]
-			call: (ev, info)  =>
+			call: (ev, info) =>
 				# CUI.debug "ListViewTree[event]",ev.getType(),info
 				# dragover fires multiple times, so we need to prevent
 				# this node from open multiple times
 				$target = $(ev.getTarget())
-
-				_row = $target.closest(".#{@__lvClass}-row")
+				_row = $target.closest(".cui-list-view-grid-row")
+				# _row = $target.closest(".#{@__lvClass}-row")
 				_handle = $target.closest(".cui-tree-node-handle")
-
 				node = DOM.data(_row[0], "listViewRow")
-				# CUI.debug "_handle", _handle, node, $target
-				# CUI.debug "click on grid", ev.type, _row, node
-				# CUI.debug "tree table caugght click", $target, node_element, node
-				# CUI.debug "tree event", ev.type, ev, ev._counter, $target, div, node
 
-				# CUI.debug "tree event", ev, $target[0], node
+				# console.error "tree event", ev, _row, _handle, node
 
 				if not node or node.isLoading?()
 					return
@@ -182,14 +180,28 @@ class ListViewTree extends ListView
 						run_trigger("close")
 						return
 
-				if ev.getType() == "dragover-scroll"
+		# this is the bubble phase, note that the click
+		# is stopped here by "select" and "deselect" below
+		Events.listen
+			node: @DOM
+			type: ["click"]
+			call: (ev, info)  =>
+				if ev.hasModifierKey(true)
+					return
+
+				$target = $(ev.getTarget())
+				_row = $target.closest(".cui-list-view-grid-row")
+				# _row = $target.closest(".#{@__lvClass}-row")
+				node = DOM.data(_row[0], "listViewRow")
+
+				# console.error "tree event", ev, _row, node
+
+				if not node or node.isLoading?()
 					return
 
 				# FIXME: This code needs to go away and use the select/deselect mechanism
 				# of ListView
 				#
-				if ev.hasModifierKey(true)
-					return
 
 				if node.isSelected?()
 					node.deselect?(ev)
@@ -222,7 +234,7 @@ class ListViewTree extends ListView
 		[ from_node, to_node, new_father ]
 
 	moveRow: (from_i, to_i, after) ->
-		# console.debug "moveRow", "from_i:", from_i, "to_i:", to_i, "after:", after, "display_from_i:", @getDisplayRowIdx(from_i), "display_to_i:", @getDisplayRowIdx(to_i)
+		# console.error "moveRow", "from_i:", from_i, "to_i:", to_i, "after:", after, "display_from_i:", @getDisplayRowIdx(from_i), "display_to_i:", @getDisplayRowIdx(to_i)
 		[ from_node, to_node, new_father ] = @getNodesForMove(from_i, to_i, after)
 
 		promise = from_node.moveNodeBefore(to_node, new_father, after)

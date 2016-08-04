@@ -207,13 +207,45 @@ class Input extends DataFieldInput
 				@__setCursor(ev)
 				return
 
+		oldSizes = null
+
+		Events.listen
+			type: "mousedown"
+			node: @__input
+			call: (ev) =>
+				oldSizes = [@__input0.offsetWidth, @__input0.offsetHeight]
+
+				trigger = =>
+					if oldSizes[0] != @__input0.offsetWidth or
+						oldSizes[1] != @__input0.offsetHeight
+							console.debug "triggering content-resize!"
+							Events.trigger
+								type: "content-resize"
+								node: @__input
+
+				mev = Events.listen
+					type: "mousemove"
+					call: =>
+						console.debug "mousemove on input"
+						trigger()
+						return
+
+				Events.listen
+					type: "mouseup"
+					only_once: true
+					capture: true
+					call: (ev) =>
+						Events.ignore(mev)
+						return
+
+
+
 		Events.listen
 			type: "mouseup"
 			node: @__input
 			call: (ev) =>
 				@__setCursor(ev)
-
-
+				return
 
 		Events.listen
 			type: "blur"
@@ -288,7 +320,7 @@ class Input extends DataFieldInput
 		Events.listen
 			type: "paste"
 			node: @__input
-			call: =>
+			call: (ev) =>
 				if @_readonly
 					return handleReadOnly(ev)
 				@focusShadowInput()

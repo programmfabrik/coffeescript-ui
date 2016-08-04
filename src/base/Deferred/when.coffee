@@ -22,6 +22,7 @@ CUI.when = =>
 	for promise, idx in promises
 		do (idx) =>
 			promise.done =>
+				# console.error "CUI.when, resolve...", dfr.getUniqueId(), done_count, promises.length
 				# CUI.debug "promise done", done_count, promises.length
 				done_count++
 				switch arguments.length
@@ -40,8 +41,10 @@ CUI.when = =>
 				return
 
 			promise.fail =>
-				# pass this through
-				dfr.reject.apply(dfr, arguments)
+				# console.error "CUI.when, reject...", dfr.getUniqueId()
+				if dfr.state() != "rejected"
+					# pass this through
+					dfr.reject.apply(dfr, arguments)
 				return
 
 			promise.progress =>

@@ -138,6 +138,7 @@ html_files = \
 	src/base/Layer/Layer.html \
 	src/base/DataField/DataField.html \
 	src/elements/Button/Button.html \
+	src/elements/FileUpload/FileUploadButton.html \
 	src/elements/Button/ButtonHref.html \
 	src/elements/Button/Buttonbar.html \
 	src/elements/BorderLayout/BorderLayout.html \
@@ -180,6 +181,7 @@ css:
 	mkdir -p $(css_target)
 	$(call_scss) src/scss/themes/light/main.scss $(css_target)/cui_light.css
 	$(call_scss) src/scss/themes/dark/main.scss $(css_target)/cui_dark.css
+	$(call_scss) src/scss/themes/ng/main.scss $(css_target)/cui_ng.css
 	$(MAKE) --directory demo css
 
 code: $(easydbui_js) $(thirdparty_files)

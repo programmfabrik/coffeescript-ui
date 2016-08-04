@@ -159,21 +159,20 @@ class ItemList extends VerticalLayout
 						@__body.DOM.append(item.content.DOM or item.content)
 						return
 
-					listenMouseup = (btn) =>
-						btn.setClickType("mouseup")
+					listenButtonClick = (btn) =>
 
 						Events.listen
-							type: "mouseup"
+							type: "cui-button-click"
 							node: btn
-							call: (ev) =>
+							call: (ev, info) =>
 								btn.getTooltip()?.destroy()
-								@_onClick?(ev, btn, item, idx)
+								@_onClick?(info.event, btn, item, idx)
 
 								if not menu?.isAutoCloseAfterClick()
 									return
 
 								hide = =>
-									menu.hideAll(ev)
+									menu.hideAll(info.event)
 
 								el = menu.getElement()
 								if el
@@ -191,7 +190,7 @@ class ItemList extends VerticalLayout
 						return
 
 					if item instanceof Button
-						listenMouseup(item)
+						listenButtonClick(item)
 
 					if item instanceof Button or
 						item instanceof DataField or
@@ -227,7 +226,7 @@ class ItemList extends VerticalLayout
 
 					btn = new CUI.defaults.class.Button(opts)
 
-					listenMouseup(btn)
+					listenButtonClick(btn)
 
 					# DOM.data(btn.DOM[0], "itemListIdx", idx)
 					@__body.append(btn)

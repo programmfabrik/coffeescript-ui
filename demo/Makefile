@@ -40,7 +40,7 @@ coffee_files = src/demo.coffee \
 files = $(addsuffix .js, $(coffee_files) )
 
 
-code: $(files)
+code: $(files) css
 	#
     # $@
 	mkdir -p $(target)
@@ -64,8 +64,9 @@ css:
 	# $@
 	mkdir -p $(target)/css
 	# make css TODO make demo css for each theme
-	$(call_scss) src/scss/themes/light/main.scss $(target)/css/cui_demo_light.css
-	$(call_scss) src/scss/themes/dark/main.scss $(target)/css/cui_demo_dark.css
+	# $(call_scss) src/scss/themes/light/main.scss $(target)/css/cui_demo_light.css
+	# $(call_scss) src/scss/themes/dark/main.scss $(target)/css/cui_demo_dark.css
+	$(call_scss) src/scss/themes/ng/main.scss $(target)/css/cui_demo_ng.css
 
 all: code html css
 	#

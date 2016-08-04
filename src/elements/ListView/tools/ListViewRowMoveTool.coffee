@@ -64,7 +64,6 @@ class ListViewRowMoveTool extends ListViewHoverTool
 
 
 	showHorizontalTargetMarker: (cell) ->
-		# CUI.debug "showHorizontalTargetMarker", cell, @target
 
 		@showHorizontalTargetMarkerSetTarget(cell)
 
@@ -78,11 +77,9 @@ class ListViewRowMoveTool extends ListViewHoverTool
 			(@target.before_row_i == @info.cell.row_i and @target.after == false) or
 				(@target.after_row_i == @info.cell.row_i and @target.before == false)
 
-			# CUI.debug "hiding movable target div.."
 			@target = null
 			@movableTargetDiv.hide()
 		else
-			# CUI.debug "setting css on movable target div.."
 			@movableTargetDiv.css
 				display: "block"
 				left: @target.left
@@ -119,8 +116,6 @@ class ListViewRowMoveTool extends ListViewHoverTool
 
 		@target.width = row_rect.width
 		@target.left = row_rect.left
-
-		# CUI.debug "target", @target
 
 		return
 

@@ -366,6 +366,8 @@ class CUI.Events extends Element
 				dragleave: {}
 				dragenter: {}
 				message: {}
+				fullscreenchange:
+					alias: "fullscreenchange mozfullscreenchange webkitfullscreenchange MSFullscreenChange".split(" ")
 				hashchange:
 					bubble: false
 				change:

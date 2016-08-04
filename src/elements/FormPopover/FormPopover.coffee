@@ -59,7 +59,16 @@ class FormPopover extends Form
 		if func in ["render", "displayValue"]
 			return []
 
-		if func in ["show", "hide", "enable", "disable", "getFieldsByName", "getFieldByIdx"]
+		if func in [
+			"show"
+			"hide"
+			"enable"
+			"disable"
+			"getFieldsByName"
+			"getFieldByIdx"
+			"setFormDepth"
+			"getDataFields"
+		]
 			return @__fields or []
 
 		assert(@__fields, "FormPopover.getFields("+func+")", "Fields not rendered yet. This is a programming error in CUI.")
@@ -80,7 +89,7 @@ class FormPopover extends Form
 
 		button_opts = copyObject(@_button, true)
 		button_opts.onClick = =>
-			@openPopover()
+			@__openPopover()
 
 		CUI.mergeMap button_opts,
 			left: true
@@ -177,7 +186,7 @@ class FormPopover extends Form
 		# CUI.debug "getPopoverOpts", pop_opts
 		pop_opts
 
-	openPopover: ->
+	__openPopover: ->
 		# console.time "FormPopover"
 
 		# CUI.debug "open popover", @__data, @table, @__fields
@@ -199,7 +208,7 @@ class FormPopover extends Form
 
 		onHide = pop_opts.onHide
 		pop_opts.onHide = (pop, ev) =>
-			@closePopover()
+			@__closePopover()
 			onHide?(pop, ev)
 
 		onShow = pop_opts.onShow
@@ -227,13 +236,21 @@ class FormPopover extends Form
 		@addClass("focus")
 		# console.timeEnd "FormPopover"
 
-	closePopover: ->
+	__closePopover: ->
 		@getLayout().DOM.detach()
 		@__popover.destroy()
 		@removeClass("focus")
 		@__popover = null
 		@__triggerDataChanged()
 		@
+
+	# this call the "onHide" function
+	closePopover: ->
+		@__popover?.hide()
+
+	hide: (trigger_event=false) ->
+		@closePopover()
+		super(trigger_event)
 
 	__triggerDataChanged: ->
 		if @__dataChanged

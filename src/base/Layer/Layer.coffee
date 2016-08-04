@@ -26,16 +26,15 @@ class Layer extends DOM
 		# not affect the layer's opacity as it would to if the layer would be
 		# a child of backdrop
 		@__layer_root = new Template
-				name: "layer-root"
+			class: "cui-layer-root-"+("cui-"+toDash(@__cls)+" "+@_class).trim().split(/\s+/).join(" cui-layer-root-")
+			name: "layer-root"
 
 		@__backdropClickDisabled = false
 
 		if @_backdrop or @_modal
-			if @_class
-				cls = "layer-backdrop-"+@_class.split(/\s+/).join(" layer-backdrop-")
 
 			@__backdrop = new Template
-				class: cls
+				class: "cui-layer-backdrop"
 				name: "layer-backdrop"
 
 			@__backdrop.DOM.appendTo(@__layer_root.DOM)
@@ -1134,8 +1133,10 @@ class Layer extends DOM
 	# use element to temporarily overwrite element used
 	# for positioning
 	show: (element, ev) ->
-
 		assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer is already destroyed", layer: @)
+
+		if Tooltip.current and @ not instanceof Tooltip
+			Tooltip.current.hide()
 
 		@clearTimeout()
 		if @isShown()

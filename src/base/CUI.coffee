@@ -50,9 +50,6 @@ class CUI
 
 		$body[0].scrollTop=0
 
-		@ready =>
-			@fileUpload = $("#easydbui-file-upload")
-
 		if not $(".ez-tmpl-dummy").length
 			@loadHTMLFile("easydbui.html")
 			.done =>
@@ -104,6 +101,7 @@ class CUI
 		new_theme = @getTheme(name)
 		assert(new_theme, "CUI.loadThemeByName", "Theme #{name} not found", themes: @getThemeNames())
 		new_theme.load().done =>
+			DOM.setAttribute(document.body, "cui-theme", name)
 			@__activeTheme = new_theme
 
 	@getActiveTheme: ->

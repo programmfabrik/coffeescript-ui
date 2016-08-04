@@ -38,7 +38,8 @@ class Layout extends DOM
 			)
 
 	readOpts: ->
-		# FIX until this is stable
+		# DEBUG
+		# without absolute "help", FF and Safari perform badly, Chrome & IE (Edge) are fine
 		# delete(@opts.absolute)
 		@initDefaultPanes()
 		super()
@@ -315,11 +316,11 @@ class Layout extends DOM
 		direction = layout.attr("cui-absolute-container")
 		switch direction
 			when "row"
-				rect_key = "width"
-				rect_check_key = "height"
+				rect_key = "marginBoxWidth"
+				rect_check_key = "marginBoxHeight"
 			when "column"
-				rect_key = "height"
-				rect_check_key = "width"
+				rect_key = "marginBoxHeight"
+				rect_check_key = "marginBoxWidth"
 			else
 				assert(false, "Layout.setAbsolute", "cui-absolute-container is not set for .cui-absolute container or not set to row or column.", container: layout[0], direction: direction)
 
@@ -329,12 +330,12 @@ class Layout extends DOM
 
 		for _child, idx in layout.children()
 			child = children[idx] = $(_child)
-			values[idx] = child.rect()[rect_key]
+			values[idx] = DOM.getDimensions(_child)[rect_key]
 
 			# CUI.debug idx, values[idx], func, child[0]
 
 		abs_values = values.join(",")
-		check_value = layout.rect()[rect_check_key]+""
+		check_value = DOM.getDimensions(layout[0])[rect_check_key]+""
 
 		if layout.attr("cui-absolute-values") == abs_values and
 			layout.attr("cui-absolute-check-value") == check_value

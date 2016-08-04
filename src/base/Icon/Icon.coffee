@@ -111,6 +111,7 @@ class Icon extends Element
 		down: "fa-caret-down"
 		camera: "fa-camera"
 		expert_search: "fa-list-ul" #"fa-binoculars" #"fa-mortar-board"
+		image: "fa-picture-o"
 
 
 CUI.proxyMethods(Icon, Button, ["hide", "show", "isShown","isHidden"])

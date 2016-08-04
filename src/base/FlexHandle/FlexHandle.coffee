@@ -398,9 +398,7 @@ class FlexHandle extends Element
 	addLabel: (opts={}) ->
 		if opts instanceof Label
 			@__label = opts
-			@__label.setRotate90()
 		else
-			opts.rotate_90 = true
 			@__label = new Label(opts)
 		@_element.append(@__label.DOM)
 		@_element.addClass("cui-flex-handle-has-label")

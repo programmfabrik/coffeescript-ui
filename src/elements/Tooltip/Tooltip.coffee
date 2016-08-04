@@ -33,11 +33,8 @@ class Tooltip extends LayerPane
 				call: (ev) =>
 					if window.globalDrag
 						@hide(ev)
-						Tooltip.current = null
 					else
 						@hideTimeout(null, ev)
-						.done =>
-							Tooltip.current = null
 					return
 
 			@__element.addClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-hover")
@@ -47,10 +44,13 @@ class Tooltip extends LayerPane
 			@__element.addClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-click")
 
 			Events.listen
-				type: "mouseup"
+				type: "click"
 				instance: @__dummyInst
 				node: @__element
 				call: (ev) =>
+					if ev.hasModifierKey()
+						return
+
 					@show()
 					return
 
@@ -115,12 +115,17 @@ class Tooltip extends LayerPane
 			Tooltip.current.hide(ev)
 			@show(ev)
 		else
+			Tooltip.current = @
 			super(null, ev)
 		@
 
-	hide: (ev) ->
-		super(ev)
+	hideTimeout: (ms=@_show_ms, ev) ->
 		Tooltip.current = null
+		super(ev)
+
+	hide: (ev) ->
+		Tooltip.current = null
+		super(ev)
 
 	show: (ev) ->
 		Tooltip.current = @

@@ -30,7 +30,12 @@ class CSS extends Element
 	reload: ->
 		@load(true)
 
-	setUrl: (@__url) ->
+	setUrl: (url) ->
+		if url == @getUrl()
+			CUI.info("CSS.setUrl: URL already the same", url)
+			return CUI.resolvedPromise()
+
+		@__url = url
 		if @__cssNode
 			CUI.info("CSS.setUrl: new URL", @__url)
 			# reload
@@ -99,8 +104,6 @@ class CSS extends Element
 				CUI.info("CSS.load: loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				Events.trigger
 					type: "viewport-resize"
-
-				document.body.setAttribute("cui-theme", @__cssName+"-"+@_name)
 
 				@__loadedUrl = url
 				@__cssNode = cssNode

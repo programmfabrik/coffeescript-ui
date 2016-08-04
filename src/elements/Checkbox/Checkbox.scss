@@ -5,6 +5,7 @@
     line-height: map_get($button_line_heights,$size) + 2px; //compensate missing border
 
     .cui-button-left {
+        @include flex_align_self(baseline); //make sure it stays at top in multiline
         width: map_get($checkmark_icon_sizes,$size);
         height: map_get($checkmark_icon_sizes,$size);
         margin-top: map_get($checkmark_icon_margin_top,$size);

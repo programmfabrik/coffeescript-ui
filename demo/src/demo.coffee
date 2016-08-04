@@ -124,6 +124,8 @@ class RunDemo extends Element
 			menu:
 				onClick: (ev, btn, item) ->
 					CUI.loadTheme(item.value)
+					.done =>
+						window.localStorage.setItem("theme", item.value)
 
 				active_item_idx: null
 				items: ->
@@ -284,6 +286,7 @@ class DemoTable
 		@example_counter+=1
 		label = new Label
 			text: @example_counter+". "+description
+			multiline: true
 
 		row_elements = [label,div]
 		if controls
@@ -293,10 +296,10 @@ class DemoTable
 
 CUI.ready ->
 	CUI.debug "this:", @
-	for k in ["light", "dark"]
+	for k in ["light", "dark", "ng"]
 		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 
-	CUI.loadTheme("light")
+	CUI.loadTheme(window.localStorage.getItem("theme") or "light")
 	new RunDemo()
 
 Object.values = (obj) =>

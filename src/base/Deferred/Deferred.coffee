@@ -65,7 +65,7 @@ class CUI.Deferred
 	__resolve: ->
 		assert(@__state == "pending", "CUI.Deferred.resolve", "Cannot resolve state #{@__state}.")
 		@__finished_args = arguments
-		# console.error "deferred.resolve", @getUniqueId(), @__finished_args
+		# console.error "Deferred.resolve", @getUniqueId(), @__finished_args
 		@__state = "resolved"
 		# CUI.error("Deferred.resolve: calling done")
 		@__callback(["done", "always"], arguments)
@@ -74,6 +74,7 @@ class CUI.Deferred
 	__reject: ->
 		assert(@__state == "pending", "CUI.Deferred.reject", "Cannot reject state #{@__state}.")
 		@__finished_args = arguments
+		# console.error "Deferred.reject", @getUniqueId(), @__finished_args
 		@__state = "rejected"
 		@__callback(["fail", "always"], arguments)
 		@

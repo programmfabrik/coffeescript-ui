@@ -15,6 +15,7 @@ class CUI.MouseIsDownListener extends CUI.Listener
 		Events.listen
 			type: "mousedown"
 			node: @getNode()
+			capture: true
 			call: (ev) =>
 				if ev.isImmediatePropagationStopped()
 					return

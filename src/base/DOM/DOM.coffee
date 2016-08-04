@@ -7,6 +7,7 @@ class CUI.DOM extends Element
 		super()
 		@addOpts
 			class:
+				default: ""
 				check: String
 
 	registerTemplate: (template) ->
@@ -345,6 +346,13 @@ class CUI.DOM extends Element
 				# CUI.debug "destroy", getObjectClass(_el), _el
 				_el.destroy()
 		@
+
+	# checks if any of the classes are set
+	@hasClass: (element, cls) ->
+		for _cls in cls.trim().split(/\s+/)
+			if element.classList.contains(_cls)
+				return true
+		return false
 
 	@addClass: (element, cls) ->
 		for _cls in cls.trim().split(/\s+/)
@@ -921,7 +929,6 @@ class CUI.DOM extends Element
 
 	@requestFullscreen: (elem) ->
 		assert(elem instanceof HTMLElement, "startFullscreen", "element needs to be instance of HTMLElement", element: elem)
-
 		if elem.requestFullscreen
 			elem.requestFullscreen()
 		else if elem.webkitRequestFullscreen
@@ -930,7 +937,24 @@ class CUI.DOM extends Element
 			elem.mozRequestFullScreen()
 		else if elem.msRequestFullscreen
 			elem.msRequestFullscreen()
-		return
+
+		dfr = new CUI.Deferred()
+
+		# send notifiy on open and done on exit
+
+		fsc_ev = Events.listen
+			type: "fullscreenchange"
+			node: window
+			call: (ev) =>
+				# console.debug "fullscreenchange caught...", ev, DOM.isFullscreen()
+				if DOM.isFullscreen()
+					dfr.notify()
+				else
+					Events.ignore(fsc_ev)
+					dfr.resolve()
+				return
+
+		dfr.promise()
 
 	@exitFullscreen: ->
 

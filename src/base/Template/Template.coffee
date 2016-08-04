@@ -51,6 +51,7 @@ class Template extends Element
 		if @_class
 			@DOM.addClass(@_class)
 		DOM.setElement(@DOM, @)
+		DOM.addClass(@DOM[0], "cui-template-empty")
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
@@ -120,12 +121,12 @@ class Template extends Element
 				report.push("* #{k}: not found (#{sel})")
 				misses++
 			else if map_obj.length > 1
-				CUI.debug k, v, "found more than once", map_obj, @DOM[0]
+				CUI.debug(k, v, "found more than once", map_obj, @DOM[0])
 				report.push("* #{k}: found more than once (#{sel})")
 				misses++
 			else
 				report.push("+ #{k}: found")
-				el_map[k] = $(map_obj)
+				el_map[k] = $(map_obj[0])
 
 		if misses
 			alert("Not all required elements were found for Template:\n\n\"#{@_name}\"\n\n"+report.join("\n"))
@@ -175,13 +176,29 @@ class Template extends Element
 			assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			# CUI.debug "Template.destroyingChildren", key, @map[key]
 			DOM.empty(@map[key])
-		else if $.isEmptyObject(@map)
-			DOM.empty(@DOM)
-		else
+
+			is_empty = true
 			for key of @map
-				CUI.debug "emptying", key
+				if not @isEmpty(key)
+					is_empty = false
+					break
+
+			if is_empty
+				DOM.addClass(@DOM[0], "cui-template-empty")
+
+			return @map[key]
+
+		if $.isEmptyObject(@map)
+			# without map we empty the whole @DOM
+			DOM.empty(@DOM)
+			DOM.addClass(@DOM[0], "cui-template-empty")
+		else
+			# with map we empty each individual map entry
+			for key of @map
 				DOM.empty(@map[key])
-			@DOM
+			DOM.addClass(@DOM[0], "cui-template-empty")
+
+		return @DOM
 
 	replace: (value, key, element) ->
 		assert(@map, "Template[#{@_name}].replace [#{@getUniqueId()}]", "Already destroyed")
@@ -221,11 +238,17 @@ class Template extends Element
 				appends.push(_value.DOM)
 			else
 				assert(not isPromise(_value), "Template.append", "value cannot be Promise", value: value)
-				appends.push(_value)
+				if _value
+					appends.push(_value)
+
 		if key
-			node = @map[key][fn](appends)
+			node = @map[key]
 		else
-			node = @DOM[fn](appends)
+			node = @DOM
+
+		if appends.length > 0
+			node[fn](appends)
+			DOM.removeClass(@DOM[0], "cui-template-empty")
 
 		node
 

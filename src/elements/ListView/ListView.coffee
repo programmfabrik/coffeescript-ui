@@ -33,10 +33,17 @@ class ListView extends SimplePane
 		@__deferredRows = []
 		@__isInDOM = false
 
-		if @_autoLayout
-			@addClass("cui-list-view cui-padding-reset cui-list-view-div-layout")
-		else
-			@addClass("cui-list-view cui-padding-reset cui-list-view-table-layout")
+		if CUI.getActiveTheme().getName() == "ng"
+			# always use next gen layout
+			@_autoLayout = 2
+
+		switch @_autoLayout
+			when true
+				@addClass("cui-list-view cui-padding-reset cui-list-view-div-layout")
+			when 2
+				@addClass("cui-list-view")
+			else
+				@addClass("cui-list-view cui-padding-reset cui-list-view-table-layout")
 
 
 	initOpts: ->
@@ -85,7 +92,11 @@ class ListView extends SimplePane
 				deprecated: true
 			autoLayout:
 				default: true
-				check: Boolean
+				check: (v) ->
+					if v == true or v == false or v == 2
+						true
+					else
+						false
 			setOpacity:
 				default: true
 				check: Boolean
@@ -197,21 +208,35 @@ class ListView extends SimplePane
 		html.push("<div class=\"")
 		html.push(cls.join(" "))
 		html.push("\">")
-		if @_autoLayout == false
-			html.push("<style></style>")
+		switch @_autoLayout
+			when false, 2
+				html.push("<style></style>")
 
 		add_quadrant = (qi) =>
-			html.push("<div class=\"cui-list-view-grid-quadrant cui-list-view-grid-quadrant-#{qi}\">")
+			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi}\">")
 			if @_autoLayout == false
 				html.push("<table class=\"cui-list-view-grid-quadrant-table\"><tbody></tbody></table>")
 
 			if qi in [2, 3]
-				html.push("<div class=\"cui-list-view-grid-fills cui-list-view-grid-fills-#{qi} cui-list-view-grid-row\">")
+				switch @_autoLayout
+					when 2
+						html.push("<div class=\"cui-lv-tr-fill-outer\"><div class=\"cui-lv-tr\">")
+					else
+						html.push("<div class=\"cui-list-view-grid-fills cui-list-view-grid-fills-#{qi} cui-list-view-grid-row\">")
 				ft = @__getColsFromAndTo(qi)
 				for col_i in [ft.from..ft.to] by 1
 					cls = @__getColClass(col_i)
-					html.push("<div class=\"cui-list-view-grid-cell-fill #{cls} cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i} cui-list-view-grid-fill-col-#{col_i}\"></div>")
-				html.push("</div>")
+					switch @_autoLayout
+						when 2
+							html.push("<div class=\"#{cls} cui-lv-td cui-lv-td-fill cui-list-view-grid-fill-col-#{col_i}\"></div>")
+						else
+							html.push("<div class=\"cui-list-view-grid-cell-fill #{cls} cui-lv-td cui-lv-td-fill cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i} cui-list-view-grid-fill-col-#{col_i}\"></div>")
+
+				switch @_autoLayout
+					when 2
+						html.push("</div></div>")
+					else
+						html.push("</div>")
 
 			html.push("</div>")
 			return
@@ -240,6 +265,8 @@ class ListView extends SimplePane
 
 		if @_autoLayout
 			@quadrantRows = @quadrant
+			if @_autoLayout == 2
+				@styleElement = CUI.DOM.matchSelector(outer, "style")[0]
 		else
 			@quadrantRows = [
 				CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-0 > table > tbody")[0]
@@ -334,8 +361,16 @@ class ListView extends SimplePane
 					return
 
 				cell = DOM.closest(ev.getNode(), ".cui-list-view-grid-cell")
-				col = parseInt(cell.getAttribute("col"))
 				row = parseInt(cell.getAttribute("row"))
+				col = parseInt(cell.getAttribute("col"))
+
+				if @_autoLayout == 2
+					if DOM.getAttribute(cell.parentNode,"cui-lv-tr-unmeasured")
+						# row has not been measured
+						return
+					@__resetRowDim(row)
+					@__doLayout()
+					return
 
 				if not @__cellDims.hasOwnProperty(row)
 					# row has not been measured
@@ -365,7 +400,7 @@ class ListView extends SimplePane
 
 		@appendDeferredRows()
 
-		if @_setOpacity
+		if @_setOpacity and @_autoLayout != 2
 			@grid[0].style.opacity = "0"
 		DOM.waitForDOMInsert(node: @DOM)
 		.done =>
@@ -377,7 +412,7 @@ class ListView extends SimplePane
 			# 	@__scheduleLayout()
 			# else
 			@__doLayout()
-			if @_setOpacity
+			if @_setOpacity and @_autoLayout != 2
 				@grid[0].style.opacity = "1"
 		@DOM
 
@@ -388,6 +423,8 @@ class ListView extends SimplePane
 			height: @quadrant[3].scrollHeight
 		dim
 
+	getScrollingContainer: ->
+		@quadrant[3]
 
 	__setScrolling: (scroll) ->
 		@quadrant[3].scrollTop = scroll.top
@@ -403,134 +440,17 @@ class ListView extends SimplePane
 		if @fixedRowsCount > 0
 			@quadrant[1].scrollLeft = @__currentScroll.left
 
-		@__fillRowQ3.style.width = ""
-		@__fillRowQ3.style.width = @__getValue(@__fillRowQ3.scrollWidth)
+		if @__fillRowQ3
+			@__fillRowQ3.style.width = ""
+			@__fillRowQ3.style.width = @__getValue(@__fillRowQ3.scrollWidth)
 		@
 
-	__fixLayout: ->
+	__setMargins: ->
 		width = @quadrant[3].offsetWidth - @quadrant[3].clientWidth
 		height = @quadrant[3].offsetHeight -  @quadrant[3].clientHeight
 
 		@quadrant[1].style.marginRight = @__getValue(width)
 		@quadrant[2].style.marginBottom = @__getValue(height)
-		@
-
-	__debugCall: (name, func) ->
-		if not CUI.defaults.debug
-			return func()
-
-		start = getMs()
-		func()
-		end = getMs()
-		@__debugRect(name, end - start)
-
-	__addDebugControl: ->
-		Events.listen
-			type: "contextmenu"
-			node: @DOM
-			call: (ev) =>
-				if not (ev.altKey() and not (ev.ctrlKey() or ev.shiftKey() or ev.metaKey()))
-					return
-
-				ev.preventDefault()
-				ev.stopPropagation()
-
-				@grid.rect(true, 500)
-
-				get_maximize_text = (name, on_off) =>
-					name+": "+(if on_off then "ON" else "OFF")
-
-				items = [
-					label: "ListView[##{@listViewCounter}] Debug Menu"
-				# ,
-				# 	text: "removeCss"
-				# 	onClick: (ev) =>
-				# 		@__debugCall "__removeCss", =>
-				# 			@__manualColWidths = []
-				# 			@__removeCss(ev)
-				,
-					text: "measure"
-					onClick: =>
-						@__debugCall "__measureCellDims", =>
-							@__resetCellDims()
-							@__measureCellDims()
-							@__calculateDims()
-							CUI.debug(@__cellDims)
-							CUI.debug("colWidths:", @__colWidths, "rowHeights:", @__rowHeights)
-				,
-				# 	text: "addCss"
-				# 	onClick: (ev) =>
-				# 		@__debugCall "__addCss", =>
-				# 			@__addCss(ev)
-				# ,
-					text: "addStyle"
-					onClick: (ev) =>
-						@__debugCall "__addStyle", =>
-							@__addStyle(ev)
-				,
-					text: "removeStyle"
-					onClick: (ev) =>
-						@__debugCall "__removeStyle", =>
-							@__removeStyle(ev)
-				,
-					text: "layout"
-					onClick: =>
-						@__debugCall "__scheduleLayout", =>
-							@__scheduleLayout()
-				,
-					text: "flash"
-					onClick: =>
-						@grid.rect(true, 1000, "ListView[##{@listViewCounter}]")
-				,
-					text: "showWaitBlock"
-					onClick: (ev) =>
-						@showWaitBlock()
-				,
-					text: "hideWaitBlock"
-					onClick: (ev) =>
-						@hideWaitBlock()
-				,
-					text: "debug"
-					onClick: =>
-						@__debugCall "debug", =>
-							CUI.debug("ListView[##{@listViewCounter}]", @)
-							CUI.debug("opts:", @opts)
-							CUI.debug("manualColWidths:", dump(@__manualColWidths))
-							CUI.debug("colWidths:", dump(@__colWidths), "rowHeights:", @__rowHeights)
-				,
-					text: "appendRow"
-					onClick: =>
-						lv = new ListViewRow()
-						for col, display_col_i in @_cols
-							col_i = @getColIdx(display_col_i)
-							lv.addColumn(new ListViewColumn(text: @getColdef(col_i)+" "+@rowsCount))
-						@appendRow(lv)
-				,
-					text: "removeRow"
-					onClick: =>
-						@removeRow(@getRowIdx(@rowsCount-1))
-				,
-					text: "close"
-					onClick: =>
-						@__control.destroy()
-				#,
-				#	content:
-				#		$pre().html(dump(@opts))
-				]
-
-				(new Menu
-					auto_close_after_click: false
-					itemList:
-						items: items
-				).show(
-					new Positioner(
-						top: ev.pageY()
-						left: ev.pageX()
-						width: 0
-						height: 0
-					)
-				)
-				return false
 		@
 
 	getSelectedRows: ->
@@ -584,7 +504,7 @@ class ListView extends SimplePane
 			null
 
 	toolCellSelector: ->
-		".#{@__lvClass}-cell"
+		"."+@__lvClass+"-cell"
 
 
 	__registerTools: ->
@@ -596,7 +516,7 @@ class ListView extends SimplePane
 			type: "mousemove"
 			selector: @toolCellSelector()
 			call: (ev) =>
-				if globalDrag
+				if window.globalDrag
 					return
 
 				info = $target: $(ev.getCurrentTarget())
@@ -690,14 +610,14 @@ class ListView extends SimplePane
 		# CUI.debug "resetColWidth", col_i
 		delete(@__manualColWidths[col_i])
 		@__resetColWidth(col_i)
-		@__doLayout()
+		@__doLayout(resetRows: true)
 		@
 
 	setColWidth: (col_i, width) ->
 		# CUI.debug "setColWidth", col_i, width
 		@__manualColWidths[col_i] = width
 		delete(@__colWidths[col_i])
-		@__doLayout()
+		@__doLayout(resetRows: true)
 		@
 
 	getRowHeight: (row_i) ->
@@ -869,7 +789,7 @@ class ListView extends SimplePane
 		@__topQuadrants
 
 	__scheduleLayout: ->
-
+		# console.error "ListView.__scheduleLayout", @__lvClass
 		if not @__isInDOM
 			return
 
@@ -915,14 +835,19 @@ class ListView extends SimplePane
 		@__layoutIsStopped = null
 		@
 
-	__doLayout: ->
+	__doLayout: (opts={}) ->
 		for el in DOM.findElements(@getGrid()[0], ".list-view-row-new")
 			el.classList.remove("list-view-row-new")
 
-		if @_autoLayout
-			@__doAutoLayout()
-		else
-			@__doManualLayout()
+		# console.error "ListView.__doLayout...", @__lvClass
+
+		switch @_autoLayout
+			when true
+				@__doAutoLayout()
+			when 2
+				@__doNextGenLayout(opts)
+			else
+				@__doManualLayout()
 
 		@hideWaitBlock(true)
 
@@ -940,6 +865,79 @@ class ListView extends SimplePane
 			@__layoutDim = dim
 
 		@__hasLayout = true
+		@
+
+
+	__doNextGenLayout: (opts={}) ->
+		console.time "next-gen-layout"
+		# FIXME: improve selectors, so they only catch the current table not nested ones
+		#
+
+		css = []
+		add_css = (col_i, width) =>
+			css.push("."+@__lvClass+"-cell[col=\""+col_i+"\"] { width: #{width}px !important; flex: 0 0 auto !important;}")
+
+		# set width on colspan cells
+		col_width = []
+		for fc, display_col_i in @__fillCells
+			col_i = @getColIdx(display_col_i)
+			manual_col_width = @__manualColWidths[col_i]
+			console.debug "fillCells", fc, display_col_i, manual_col_width
+			if manual_col_width > 0
+				add_css(col_i, manual_col_width)
+				col_width[col_i] = manual_col_width
+				fc.style.setProperty("width", manual_col_width+"px")
+				fc.style.setProperty("flex", "0 0 auto")
+			else
+				col_width[col_i] = fc.offsetWidth
+				fc.style.removeProperty("width")
+				fc.style.removeProperty("flex")
+
+		for row_i, row_info of @__colspanRows
+			for col_i, colspan of row_info
+				cell = DOM.matchSelector(@grid[0], "[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				width = 0
+				for i in [0...colspan] by 1
+					# we assume that colspanned columns
+					# are never torn apart, so it is
+					# safe to add "1" here
+					width = width + col_width[parseInt(col_i)+i]
+
+				console.debug row_i, col_i, colspan, width
+				cell.style.setProperty("width", width+"px", "important")
+
+
+		CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
+
+		@styleElement.innerHTML = css.join("\n")
+		CUI.info("ListView#"+@listViewCounter, "Set manual col widths.")
+
+		if @fixedColsCount >  0
+			# find unmeasured rows in Q2 & Q3 and set height
+			# in Q2
+			for qi in [0, 2]
+				rows = []
+				if opts.resetRows
+					sel = ".cui-lv-tr-outer"
+				else
+					sel = "[cui-lv-tr-unmeasured]"
+
+				for row in DOM.matchSelector(@grid[0], "[cui-lv-quadrant='#{qi}'] "+sel)
+					rows[parseInt(DOM.getAttribute(row, "row"))] = row
+					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
+
+				for row in DOM.matchSelector(@grid[0], "[cui-lv-quadrant='#{qi+1}'] "+sel)
+					row_i2 = parseInt(DOM.getAttribute(row, "row"))
+
+					DOM.setDimensions(rows[row_i2], borderBoxHeight: row.offsetHeight)
+					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
+
+			CUI.info("ListView#"+@listViewCounter, "Synced row heights in Q0 and Q1.")
+
+		@__setMargins()
+		CUI.info("ListView#"+@listViewCounter, "Set margins on Q1 and Q2.")
+
+		console.timeEnd "next-gen-layout"
 		@
 
 	__doManualLayout: ->
@@ -1002,7 +1000,7 @@ class ListView extends SimplePane
 
 		@styleElement.innerHTML = css.join("\n")
 		@__addRowsOddEvenClasses()
-		@__fixLayout()
+		@__setMargins()
 		@
 
 	__addRowsOddEvenClasses: ->
@@ -1033,7 +1031,7 @@ class ListView extends SimplePane
 		@__addRowsOddEvenClasses()
 
 		# set margins on q2 and q1 to reflect for a scrollbar in q3
-		@__fixLayout()
+		@__setMargins()
 		# set scroll height
 		if @__currentScroll.top > 0 or @__currentScroll.left > 0
 			@__setScrolling(@__currentScroll)
@@ -1105,6 +1103,14 @@ class ListView extends SimplePane
 	__addRow: (row_i, listViewRow=null, mode="append", sibling_row_i=null) ->
 		@__addRows(row_i, [listViewRow], mode, sibling_row_i)
 
+	# return the two quadrant pairs for the
+	# given row.
+	__getQuadrants: (row_i) ->
+		if @getDisplayRowIdx(row_i) < @fixedRowsCount
+			[0,1]
+		else
+			[2,3]
+
 	__addRows: (_row_i, listViewRows=[], mode="append", sibling_row_i=null) ->
 		assert(@grid, "ListView.__addRows", "ListView.render has not been called yet.", row_i: _row_i, listView: @)
 
@@ -1115,12 +1121,6 @@ class ListView extends SimplePane
 		# CUI.debug("__addRows", _row_i, listViewRows, mode, sibling_row_i)
 
 		html = [[],[],[],[]]
-
-		get_quadrants = (row_i) =>
-			if @getDisplayRowIdx(row_i) < @fixedRowsCount
-				[0,1]
-			else
-				[2,3]
 
 		# if @__hasLayout
 		#	@__prepareForLayout()
@@ -1156,29 +1156,38 @@ class ListView extends SimplePane
 			@__cells[row_i] = []
 			@__rows[row_i] = []
 
-			for qi, idx in get_quadrants(row_i)
+			for qi, idx in @__getQuadrants(row_i)
 				ft = @__getColsFromAndTo(qi)
 				if ft.to < ft.from
 					continue
 
-				if @_autoLayout
-					html[qi].push("<div class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
-				else
-					html[qi].push("<tr class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
+				switch @_autoLayout
+					when true
+						html[qi].push("<div class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
+					when 2
+						html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" cui-lv-tr-unmeasured=\"1\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
+					else
+						html[qi].push("<tr class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
 
 				for display_col_i in [ft.from..ft.to] by 1
 					col_i = @getColIdx(display_col_i)
 					[width, maxi] = @__getColWidth(row_i, col_i)
 					cls = @__getColClass(col_i)
-					if @_autoLayout
-						html[qi].push("<div class=\"cui-list-view-grid-cell cui-list-view-grid-cell-div #{@__lvClass}-cell cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i} #{cls}\" col=#{col_i} row=#{row_i}></div>")
-					else
-						html[qi].push("<td class=\"cui-list-view-grid-cell-td #{cls}\" col=#{col_i} row=#{row_i}><div class=\"cui-list-view-grid-cell #{cls} #{@__lvClass}-cell cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i}\" col=#{col_i} row=#{row_i}></div></td>")
+					switch @_autoLayout
+						when true
+							html[qi].push("<div class=\"cui-list-view-grid-cell cui-list-view-grid-cell-div #{@__lvClass}-cell cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i} #{cls}\" col=\"#{col_i}\" row=\"#{row_i}\"></div>")
+						when 2
+							html[qi].push("<div class=\"cui-lv-td #{cls} #{@__lvClass}-cell cui-list-view-grid-cell\" col=\"#{col_i}\" row=\"#{row_i}\"></div>")
+						else
+							html[qi].push("<td class=\"cui-list-view-grid-cell-td #{cls}\" col=#{col_i} row=#{row_i}><div class=\"cui-list-view-grid-cell #{cls} #{@__lvClass}-cell cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i}\" col=#{col_i} row=#{row_i}></div></td>")
 
-				if @_autoLayout
-					html[qi].push("</div>")
-				else
-					html[qi].push("</tr>")
+				switch @_autoLayout
+					when true
+						html[qi].push("</div>")
+					when 2
+						html[qi].push("</div></div>")
+					else
+						html[qi].push("</tr>")
 
 		find_cells_and_rows = (top) =>
 			# find rows and cells in newly prepared html
@@ -1274,7 +1283,7 @@ class ListView extends SimplePane
 
 		listViewRow.setRowIdx(row_i).setListView(@)
 
-		for row in @getRow(row_i)
+		for row in @__rows[row_i]
 			DOM.data(row, "listViewRow", listViewRow)
 
 		listViewRow.addClass((listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
@@ -1300,7 +1309,7 @@ class ListView extends SimplePane
 			col.setElement(cell)
 
 			colspan = col.getColspan()
-			assert(col_i+colspan_offset+colspan-1 < @colsCount, "ListView.__appendCells", "Colspan #{colspan} exceeds cols count #{@colsCount}, unable to append cell.", row_i: row_i, col_i: col_i, colspan_offset: colspan_offset, colspan: colspan, column: col, ListView: @)
+			assert(col_i+colspan_offset+colspan-1 < @colsCount, "ListView.__appendCells", "Colspan #{colspan} exceeds cols count #{@colsCount}, unable to append cell.", row_i: row_i, col_i: col_i, colspan_offset: colspan_offset, colspan: colspan, column: col, row: listViewRow, ListView: @)
 			if colspan > 1
 				cell.attr("colspan", colspan)
 
@@ -1340,15 +1349,25 @@ class ListView extends SimplePane
 		else if not isEmpty(col_cls)
 			cls.push(col_cls)
 
-		if col_i in @__maxCols
-			cls.push("cui-list-view-grid-cell-max")
-		else
-			cls.push("cui-list-view-grid-cell-standard")
+		switch @_autoLayout
+			when 2
+				if col_i in @__maxCols
+					cls.push("cui-lv-td-max")
+			else
+				if col_i in @__maxCols
+					cls.push("cui-list-view-grid-cell-max")
+				else
+					cls.push("cui-list-view-grid-cell-standard")
 		cls.join(" ")
 
 	__resetRowDim: (row_i) ->
 		delete(@__cellDims[row_i])
 		delete(@__rowHeights[row_i])
+
+		if @__rows[row_i]
+			for row in @__rows[row_i]
+				DOM.setAttribute(row, "cui-lv-tr-unmeasured", 1)
+
 		for display_col_i in [0..@colsCount-1]
 			col_i = @getColIdx(display_col_i)
 			@__resetCellStyle(row_i, col_i)
@@ -1611,3 +1630,122 @@ class ListView extends SimplePane
 		else
 			[@__colWidths[col_i], @__isMaximizedCol(col_i)]
 
+
+
+	__debugCall: (name, func) ->
+		if not CUI.defaults.debug
+			return func()
+
+		start = getMs()
+		func()
+		end = getMs()
+		@__debugRect(name, end - start)
+
+	__addDebugControl: ->
+		Events.listen
+			type: "contextmenu"
+			node: @DOM
+			call: (ev) =>
+				if not (ev.altKey() and not (ev.ctrlKey() or ev.shiftKey() or ev.metaKey()))
+					return
+
+				ev.preventDefault()
+				ev.stopPropagation()
+
+				@grid.rect(true, 500)
+
+				get_maximize_text = (name, on_off) =>
+					name+": "+(if on_off then "ON" else "OFF")
+
+				items = [
+					label: "ListView[##{@listViewCounter}] Debug Menu"
+				# ,
+				# 	text: "removeCss"
+				# 	onClick: (ev) =>
+				# 		@__debugCall "__removeCss", =>
+				# 			@__manualColWidths = []
+				# 			@__removeCss(ev)
+				,
+					text: "measure"
+					onClick: =>
+						@__debugCall "__measureCellDims", =>
+							@__resetCellDims()
+							@__measureCellDims()
+							@__calculateDims()
+							CUI.debug(@__cellDims)
+							CUI.debug("colWidths:", @__colWidths, "rowHeights:", @__rowHeights)
+				,
+				# 	text: "addCss"
+				# 	onClick: (ev) =>
+				# 		@__debugCall "__addCss", =>
+				# 			@__addCss(ev)
+				# ,
+					text: "addStyle"
+					onClick: (ev) =>
+						@__debugCall "__addStyle", =>
+							@__addStyle(ev)
+				,
+					text: "removeStyle"
+					onClick: (ev) =>
+						@__debugCall "__removeStyle", =>
+							@__removeStyle(ev)
+				,
+					text: "layout"
+					onClick: =>
+						@__debugCall "__doLayout", =>
+							@__doLayout(resetRows: true)
+				,
+					text: "flash"
+					onClick: =>
+						@grid.rect(true, 1000, "ListView[##{@listViewCounter}]")
+				,
+					text: "showWaitBlock"
+					onClick: (ev) =>
+						@showWaitBlock()
+				,
+					text: "hideWaitBlock"
+					onClick: (ev) =>
+						@hideWaitBlock()
+				,
+					text: "debug"
+					onClick: =>
+						@__debugCall "debug", =>
+							CUI.debug("ListView[##{@listViewCounter}]", @)
+							CUI.debug("opts:", @opts)
+							CUI.debug("manualColWidths:", dump(@__manualColWidths))
+							CUI.debug("colWidths:", dump(@__colWidths), "rowHeights:", @__rowHeights)
+				,
+					text: "appendRow"
+					onClick: =>
+						lv = new ListViewRow()
+						for col, display_col_i in @_cols
+							col_i = @getColIdx(display_col_i)
+							lv.addColumn(new ListViewColumn(text: @getColdef(col_i)+" "+@rowsCount))
+						@appendRow(lv)
+				,
+					text: "removeRow"
+					onClick: =>
+						@removeRow(@getRowIdx(@rowsCount-1))
+				,
+					text: "close"
+					onClick: =>
+						@__control.destroy()
+				#,
+				#	content:
+				#		$pre().html(dump(@opts))
+				]
+
+				(new Menu
+					auto_close_after_click: false
+					itemList:
+						items: items
+				).show(
+					new Positioner(
+						top: ev.pageY()
+						left: ev.pageX()
+						width: 0
+						height: 0
+					)
+				)
+				return false
+		@

@@ -127,10 +127,10 @@ class LabelDemo extends Demo
 			multiline: true
 			manage_overflow: true
 			text: """
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			"""
 			icon: "rotate_left"
 		@__addLabel("multiline: true, manage_overflow: true, Icon", label)
@@ -145,10 +145,10 @@ class LabelDemo extends Demo
 				text_active: "Less..."
 				icon_active: "up"
 			text: """
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
-			A very long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			"""
 		@__addLabel("multiline: true, manage_overflow: text", label)
 

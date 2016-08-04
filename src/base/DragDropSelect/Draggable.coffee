@@ -107,10 +107,22 @@ class Draggable extends DragDropSelect
 						# hint possible click event listeners like Sidebar to
 						# not execute the click anymore...
 						#
+						position = elementGetPosition(getCoordinatesFromEvent(ev), $(ev.getTarget()))
+						dim = DOM.getDimensions(ev.getTarget())
+
+						if position.left - dim.scrollLeftScaled > dim.clientWidthScaled
+							console.warn "mouseisdown on a vertical scrollbar..."
+							return
+
+						if position.top - dim.scrollTopScaled > dim.clientHeightScaled
+							console.warn "mouseisdown on a horizontal scrollbar..."
+							return
+
 						target = ev.getCurrentTarget()
 						target_dim = DOM.getDimensions(target)
 						if not DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
 							return
+
 
 						$target = $(target)
 
@@ -124,21 +136,6 @@ class Draggable extends DragDropSelect
 	startDrag: (ev, $target) ->
 
 		position = elementGetPosition(getCoordinatesFromEvent(ev), $target)
-
-		# CUI.debug "dragstart position", position, $target[0], $target[0].clientWidth, $target[0].clientHeight
-		# check if we are above scrollbars
-		# assert $target[0].clientWidth*$target[0].clientWidth, "Draggable", "Cannot start drag on object with no clientWidth or clientHeight", target: $target[0]
-		assert($target.outerWidth()*$target.outerHeight(), "Draggable", "Cannot start drag on object with no clientWidth or clientHeight", target: $target[0])
-
-		dim = DOM.getDimensions($target[0])
-
-		if position.left - dim.scrollLeftScaled > dim.clientWidthScaled
-			# console.warn "mouseisdown on a vertical scrollbar..."
-			return
-
-		if position.top - dim.scrollTopScaled > dim.clientHeightScaled
-			# console.warn "mouseisdown on a horizontal scrollbar..."
-			return
 
 		overwrite_options = {}
 		globalDrag = @_create?(ev, overwrite_options, $target)
@@ -217,16 +214,26 @@ class Draggable extends DragDropSelect
 				if not globalDrag
 					return
 
-				$target = $(ev.getTarget())
+				# this prevents chrome from focussing element while
+				# we drag
+				ev.preventDefault()
+
+				# remove selection in firefox
+				if document.selection
+					document.selection.empty()
+				else
+					window.getSelection().removeAllRanges()
+
+				# ok, in firefox the target of the mousemove
+				# event is WRONG while dragging. we need to overwrite
+				# this with elementFromPoint, true story :(
+				$target = $(ev.getPointTarget())
 
 				kill_timeout()
 				dragover_scroll(ev)
 
-				if not globalDrag or globalDrag.dragend
+				if globalDrag.dragend
 					return
-
-				# $target = @find_target(ev)
-				# CUI.debug "finding target for event", ev.getTarget(), $target
 
 				@set_cursor($target)
 				coordinates = getCoordinatesFromEvent(ev)
@@ -260,6 +267,7 @@ class Draggable extends DragDropSelect
 		Events.listen
 			node: document
 			type: ["mouseup", "keyup"]
+			capture: true
 			instance: ref
 			call: (ev) =>
 				if ev.getType() == "keyup" and ev.keyCode() == 83 and ev.altKey() # ALT-S

@@ -87,7 +87,6 @@ class Checkbox extends DataFieldInput
 		for k in [
 			"text"
 			"radio_allow_null"
-			"tooltip"
 			"active"
 		]
 			if not isUndef(btn_opts[k])
@@ -103,7 +102,7 @@ class Checkbox extends DataFieldInput
 
 		btn_opts.class = ((@_class or "")+" "+@getCheckboxClass()).trim()
 
-		@__checkbox = new Button(btn_opts)
+		@__checkbox = new CUI.defaults.class.Button(btn_opts)
 
 		@proxy(@__checkbox, [
 			"activate"

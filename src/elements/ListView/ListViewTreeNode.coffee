@@ -548,13 +548,15 @@ class ListViewTreeNode extends ListViewRow
 
 	removeChild: (child, keep_children_array=false) ->
 		removeFromArray(child, @children)
-		child.setFather(null)
 		if @children.length == 0 and not @isRoot()
 			@is_open = false
 			if not keep_children_array
 				# this hides the "open" icon
 				@children = null
+
+		# console.error "removeChild...", @children?.length, keep_children_array, @isRoot()
 		@update()
+		child.setFather(null)
 
 	deselect: (ev) ->
 		if not @getTree().isSelectable()

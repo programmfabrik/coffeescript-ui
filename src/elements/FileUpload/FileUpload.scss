@@ -62,3 +62,11 @@ tr,
 		height: 100%;
 	}
 }
+
+//make sure browser upload input is visible while testing. needed for firefox to make sendkeys work
+.cui-webdriver-test #browser-native-upload {
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+}

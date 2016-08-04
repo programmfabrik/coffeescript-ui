@@ -20,24 +20,13 @@ class Tabs extends SimplePane
 			#footer_right: {}
 			#footer_left: {}
 
-	__doLayout: ->
-		if @__maximize_horizontal and @__maximize_vertical
-			return
-
-		if @__measureAndSetBodyWidth()
-			# size has changed
-			Events.trigger
-				type: "content-resize"
-				node: @DOM.parent()
-		@
-
 	__checkOverflowButton: ->
 		if not @__maximize_horizontal
 			return
 
-		header_left_dim = DOM.getDimensions(@__header_left)
-		# console.debug "header_left", header_left_dim.scrollWidth, header_left_dim.clientWidth
-		if header_left_dim.scrollWidth > header_left_dim.clientWidth
+		header_dim = DOM.getDimensions(@__header)
+		# console.debug "header_dim", header_dim.scrollWidth, header_dim.clientWidth
+		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
 		else
 			@__overflowBtn.hide()
@@ -61,14 +50,19 @@ class Tabs extends SimplePane
 			ms: 200
 			axis: "x"
 			dragstart: =>
-				startScrollLeft = @__header_left.scrollLeft
+				startScrollLeft = @__header.scrollLeft
 			dragging: (ev, $target, diff) =>
-				@__header_left.scrollLeft = startScrollLeft - diff.x
+				@__header.scrollLeft = startScrollLeft - diff.x
 			helper: null
 
-		@__pane_header.append(@__buttonbar, "left")
+		if CUI.getActiveTheme().getName() == "ng"
+			pane_key = "center"
+		else
+			pane_key = "left"
 
-		@__header_left = @__pane_header.left()[0]
+		@__pane_header.append(@__buttonbar, pane_key)
+
+		@__header = @__pane_header[pane_key]()[0]
 
 		@__overflowBtn = new Button
 			icon: "ellipsis_h"
@@ -91,16 +85,17 @@ class Tabs extends SimplePane
 
 		@getLayout().append(@__tabs_bodies, "center")
 
-		if not @__maximize_horizontal or not @__maximize_vertical
-			Events.listen
-				node: @getLayout()
-				type: "content-resize"
-				call: (event, info) =>
-					event.stopPropagation()
-					@__doLayout()
+		if CUI.getActiveTheme().getName() != "ng"
+			if not @__maximize_horizontal or not @__maximize_vertical
+				Events.listen
+					node: @getLayout()
+					type: "content-resize"
+					call: (event, info) =>
+						event.stopPropagation()
+						@__doLayout()
 
-		# if not @_footer_left and not @_footer_right
-		#	@tabs.map.footer.css("display","none")
+			# if not @_footer_left and not @_footer_right
+			#       @tabs.map.footer.css("display","none")
 
 		@__tabs = []
 		for tab, idx in @_tabs
@@ -128,17 +123,14 @@ class Tabs extends SimplePane
 
 			assert( DOM.isInDOM(@getLayout().DOM[0]),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
-			@__doLayout()
-
+			if CUI.getActiveTheme().getName() != "ng"
+				@__doLayout()
 
 		@addClass("cui-tabs")
 
 		@__max_width = -1
 		@__max_height = -1
 		@
-
-	setHeaderRight: (content) ->
-		@replace(content, "header_right")
 
 	setFooterRight: (content) ->
 		# @tabs.map.footer.css("display","")
@@ -148,6 +140,16 @@ class Tabs extends SimplePane
 		# @tabs.map.footer.css("display","")
 		@replace(content, "footer_left")
 
+	__doLayout: ->
+		if @__maximize_horizontal and @__maximize_vertical
+			return
+
+		if @__measureAndSetBodyWidth()
+			# size has changed
+			Events.trigger
+				type: "content-resize"
+				node: @DOM.parent()
+		@
 
 	addTab: (tab) ->
 		assert(tab instanceof Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{getObjectClass(tab)}", tab: tab)
@@ -159,7 +161,15 @@ class Tabs extends SimplePane
 				call: =>
 					if @__overflowBtn.isShown()
 						DOM.scrollIntoView(tab.getButton().DOM[0])
+
+					if CUI.getActiveTheme().getName() == "ng"
+						if not @_maximize_vertical
+							# set left margin on first tab
+							console.debug "style", @__tabs[0].DOM[0], -100*idxInArray(tab, @__tabs)+"%"
+							DOM.setStyle(@__tabs[0].DOM[0], marginLeft: -100*idxInArray(tab, @__tabs)+"%")
+
 					@__active_tab = tab
+					DOM.setAttribute(@DOM[0], "active-tab-idx", idxInArray(tab, @__tabs))
 					# CUI.error @__uniqueId, "activate"
 
 			Events.listen
@@ -168,6 +178,7 @@ class Tabs extends SimplePane
 				call: =>
 					# CUI.error @__uniqueId, "deactivate"
 					@__active_tab = null
+					DOM.setAttribute(@DOM[0], "active-tab-idx", "")
 
 			Events.listen
 				node: tab
@@ -184,58 +195,61 @@ class Tabs extends SimplePane
 		@__tabs_bodies.append(tab)
 		tab
 
+
 	__measureAndSetBodyWidth: ->
 
-		for parent in @DOM.parents()
-			if parent.scrollTop or parent.scrollLeft
-				scrollSaveParent =
-					node: parent
-					top: parent.scrollTop
-					left: parent.scrollLeft
-				break
+			for parent in @DOM.parents()
+					if parent.scrollTop or parent.scrollLeft
+							scrollSaveParent =
+									node: parent
+									top: parent.scrollTop
+									left: parent.scrollLeft
+							break
 
-		# measure and set body
-		#
+			# measure and set body
+			#
 
-		# remove previously set dimensions
-		for tab in @__tabs
-			tab.getBody().css("min-width": "", height: "")
+			# remove previously set dimensions
+			for tab in @__tabs
+					tab.getBody().css("min-width": "", height: "")
 
-		@__tabs_bodies.DOM.css("min-width": "", height: "")
+			@__tabs_bodies.DOM.css("min-width": "", height: "")
 
-		# measure
-		max_width = -1
-		max_height = -1
+			# measure
+			max_width = -1
+			max_height = -1
 
-		for tab in @__tabs
-			dim =
-				width: tab.getBody().outerWidth(true)
-				height: tab.getBody().outerHeight(true)
+			for tab in @__tabs
+					dim =
+							width: tab.getBody().outerWidth(true)
+							height: tab.getBody().outerHeight(true)
 
-			if dim.width > max_width
-				max_width = dim.width
-			if dim.height > max_height
-				max_height = dim.height
+					if dim.width > max_width
+							max_width = dim.width
+					if dim.height > max_height
+							max_height = dim.height
 
-		@__tabs_bodies.DOM.css("min-width": max_width, height: max_height)
+			@__tabs_bodies.DOM.css("min-width": max_width, height: max_height)
 
-		for tab in @__tabs
-			tab.getBody().css("min-width": max_width, height: max_height)
+			for tab in @__tabs
+					tab.getBody().css("min-width": max_width, height: max_height)
 
-		if @max_width != @__max_width or @max_height != @__max_height
-			@__max_width = max_width
-			@__max_height = max_height
+			if @max_width != @__max_width or @max_height != @__max_height
+					@__max_width = max_width
+					@__max_height = max_height
 
-			size_has_changed = true
-		else
-			size_has_changed = false
+					size_has_changed = true
+			else
+					size_has_changed = false
 
-		# set back scroll position
-		if scrollSaveParent
-			scrollSaveParent.node.scrollTop = scrollSaveParent.top
-			scrollSaveParent.node.scrollLeft = scrollSaveParent.left
+			# set back scroll position
+			if scrollSaveParent
+					scrollSaveParent.node.scrollTop = scrollSaveParent.top
+					scrollSaveParent.node.scrollLeft = scrollSaveParent.left
 
-		return size_has_changed
+			return size_has_changed
+
+
 
 
 	# true or false if a tab exists

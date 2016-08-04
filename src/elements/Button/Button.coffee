@@ -209,7 +209,7 @@ class Button extends DOM
 					if ev.isDefaultPrevented()
 						CUI.debug "preventing click..."
 						@__prevent_btn_click = true
-					ev.stopPropagation()
+				ev.stopPropagation()
 
 		Events.listen
 			type: "keydown"
@@ -270,7 +270,7 @@ class Button extends DOM
 				if not @__disabled
 					@DOM.addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
-				# ev.stopPropagation()
+				ev.stopPropagation()
 				return
 
 		Events.listen
@@ -278,15 +278,15 @@ class Button extends DOM
 			node: @DOM
 			call: (ev) =>
 
-				if ev.getType() != @__click_type
+				if ev.getType() != @_click_type
 					# click type can be changed after
 					# button is created, so we
 					# need to check if the
 					# event is the desired one
-					ev.stop()
+					ev.stopPropagation()
 					return
 
-				# console.debug @__click_type, ev, ev.getButton(), @__prevent_btn_click
+				# console.debug @_click_type, ev, ev.getButton(), @__prevent_btn_click
 				if window.globalDrag
 					ev.stop()
 					return
@@ -359,22 +359,41 @@ class Button extends DOM
 			not @_menu_on_hover and
 			@getMenu().hasItems()
 				@getMenu().show(null, ev)
+
+				# in some contexts (like FileUploadButton), this
+				# is necessary, so we stop the file upload
+				# to open
+				#
+				ev.preventDefault()
 				return
 
 		if ev.isImmediatePropagationStopped()
 			return
 
+		@DOM.addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+
+		remove_click_class = =>
+			@DOM.removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+
 		do_click = =>
+			if ev.isImmediatePropagationStopped()
+				remove_click_class()
+				return
+
+			Events.trigger
+				type: "cui-button-click"
+				node: @
+				info:
+					event: ev
+
 			if ev.isImmediatePropagationStopped() or not @_onClick
+				remove_click_class()
 				return
 
 			CUI.decide(@_onClick.call(@, ev, @))
 			.always =>
-				@DOM.removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+				remove_click_class()
 			return
-
-		if @_onClick
-			@DOM.addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 		if @_onClick and @_confirm_on_click and not ev.ctrlKey()
 			btns = []
@@ -384,6 +403,7 @@ class Button extends DOM
 					text: CUI.defaults.class.Button.defaults.confirm_cancel
 					onClick: =>
 						dialog.destroy()
+						remove_click_class()
 
 			btns.push
 				text: CUI.defaults.class.Button.defaults.confirm_ok
@@ -551,11 +571,6 @@ class Button extends DOM
 			@__active_css_class = @_active_css_class
 		else
 			@__active_css_class = CUI.defaults.class.Button.defaults.active_css_class
-
-		@setClickType(@_click_type)
-
-	setClickType: (@__click_type) ->
-		assert(@__click_type in ["click", "mouseup", "dblclick"], "Button.setClickType", "Click type for button needs to be click or mouseup.", click_type: @__click_type)
 
 	getCenter: ->
 		return @__box.map.center;
@@ -856,6 +871,7 @@ class Button extends DOM
 
 	show: ->
 		@__hidden = false
+		DOM.removeClass(@DOM[0], "cui-button-hidden")
 		DOM.showElement(@DOM[0])
 		Events.trigger
 			type: "show"
@@ -863,6 +879,7 @@ class Button extends DOM
 
 	hide: ->
 		@__hidden = true
+		DOM.addClass(@DOM[0], "cui-button-hidden")
 		DOM.hideElement(@DOM[0])
 		Events.trigger
 			type: "hide"
@@ -872,5 +889,5 @@ class Button extends DOM
 CUI.defaults.class.Button = Button
 
 CUI.Events.registerEvent
-	type: ["show", "hide"]
+	type: ["show", "hide", "cui-button-click"]
 	bubble: true
