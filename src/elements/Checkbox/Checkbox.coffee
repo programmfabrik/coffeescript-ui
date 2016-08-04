@@ -110,6 +110,8 @@ class Checkbox extends DataFieldInput
 			"isActive"
 			"getGroup"
 			"setGroup"
+			"setText"
+			"getText"
 		])
 
 		@replace(@__checkbox)
