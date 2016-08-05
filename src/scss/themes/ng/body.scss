@@ -36,9 +36,6 @@ body {
 	font-family: arial;
 	font-size: 12px;
 	line-height: 12px;
-}
-
-#cui-body {
 	width: 100%;
     height: 100%;
     padding: 0;
@@ -953,7 +950,7 @@ a[role="button"].cui-button-appearance-link {
 		> .cui-form-table {
 			> .cui-form-tr-outer:last-child {
 				> .cui-form-tr {
-					border: 1px dotted #c0c0c0;
+					border-color: #ff44ee;
 				}
 			}
 		}

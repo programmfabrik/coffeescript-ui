@@ -141,7 +141,8 @@ class Tooltip extends LayerPane
 		dfr = new CUI.Deferred()
 
 		dfr.fail =>
-			@__pane.empty("center")
+			if not @__pane.isDestroyed()
+				@__pane.empty("center")
 
 		fill_text = (text) =>
 			if isEmpty(text)
@@ -150,7 +151,7 @@ class Tooltip extends LayerPane
 			fill_content(new Label(markdown: @_markdown, text: text, multiline: true))
 
 		fill_content = (content) =>
-			if not content
+			if not content or @__pane.isDestroyed()
 				return dfr.reject()
 
 			@__pane.replace(content, "center")
