@@ -622,6 +622,9 @@ class Button extends DOM
 	hasMenu: ->
 		!!@__menu_opts
 
+	hasLeft: ->
+		@__has_left
+
 	getMenu: ->
 		if not @hasMenu()
 			return

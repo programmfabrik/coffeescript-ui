@@ -102,8 +102,8 @@ class ItemList extends VerticalLayout
 			items.length > 0
 
 	__getItems: (event) ->
-		if $.isFunction(@_items)
-			@_items(event)
+		if CUI.isFunction(@_items)
+			@_items(event, @)
 		else
 			@_items
 
@@ -125,6 +125,8 @@ class ItemList extends VerticalLayout
 		.done (items) =>
 
 			opt_keys = CUI.defaults.class.Button.getOptKeys()
+			list_has_button_left = false
+
 			for _item, idx in items
 				if $.isFunction(_item)
 					item = _item(@, menu, event)
@@ -191,6 +193,8 @@ class ItemList extends VerticalLayout
 
 					if item instanceof Button
 						listenButtonClick(item)
+						if item.hasLeft()
+							list_has_button_left = true
 
 					if item instanceof Button or
 						item instanceof DataField or
@@ -228,9 +232,19 @@ class ItemList extends VerticalLayout
 
 					listenButtonClick(btn)
 
+					if btn.hasLeft()
+						list_has_button_left = true
+
 					# DOM.data(btn.DOM[0], "itemListIdx", idx)
 					@__body.append(btn)
 					return
+
+				if list_has_button_left
+					@__body.addClass("cui-item-list-has-button-left")
+				else
+					@__body.removeClass("cui-item-list-has-button-left")
+
+			return
 
 	destroy: ->
 		super()

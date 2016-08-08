@@ -59,6 +59,7 @@ input {
 
 div {
 	display: flex;
+	flex: 0 0 auto;
 	align-items: stretch;
 	box-sizing: border-box;
 	flex-direction: column;
@@ -82,7 +83,21 @@ div {
 	> .cui-horizontal-layout-center {
 		flex: 1 1 auto;
 		overflow: hidden;
-		flex-direction: row;
+
+	}
+	&.cui-maximize-vertical {
+		> .cui-horizontal-layout-center {
+			// this is needed to overwrite .cui-toolbar > div, which
+			// centers all items
+			align-items: stretch;
+		}
+	}
+	&:not(.cui-maximize-vertical) {
+		> .cui-horizontal-layout-center {
+			// only if we are slim, we align out center
+			// as row
+			flex-direction: row;
+		}
 	}
 }
 
@@ -272,6 +287,10 @@ div {
 	padding: 3px;
 	> div {
 		align-items: center;
+		> .cui-toolbar {
+			// nested toolbars do not get a padding
+			padding: 0;
+		}
 	}
 	&.cui-template-empty {
 		display: none;
@@ -323,6 +342,7 @@ a[role="button"],.cui-button
 	overflow: hidden;
 	flex-direction: row;
 	flex: 0 0 auto;
+	align-self: flex-start;
 	height: 20px;
 	line-height: 20px;
 	background-color: #ffdbb3;
@@ -496,7 +516,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-label-multiline {
-		flex: 1 1 auto;
 		&.cui-tmpl-label-rotate-90 {
 			// we can't break word here
 			.cui-label-content {
@@ -530,6 +549,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-buttonbar {
 	display: inline-flex;
 	flex-direction: row;
+	align-self: flex-start;
 	> div:not(:last-child) {
 		margin-right: 4px;
 	}
@@ -553,14 +573,11 @@ a[role="button"].cui-button-appearance-link {
 // DataField
 .cui-data-field {
 	flex: 1 1 auto;
+	flex-direction: row;
 }
 
 .cui-data-field:not(.cui-form) {
-	background-color: rgba(89, 169, 249, 0.71);
-}
-
-.cui-data-field-input {
-	flex-direction: row;
+	background-color: rgba(235, 205, 255, 0.71);
 }
 
 // Input
@@ -585,14 +602,16 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 }
 
-.cui-tmpl-layer-pointer {
+.cui-tmpl-layer-pointer
+{
 	position: absolute;
 	width: 7px;
 	height: 7px;
 	background-color: #4a4a4a;
 }
 
-.cui-tmpl-layer-backdrop {
+.cui-tmpl-layer-backdrop
+{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -600,12 +619,34 @@ a[role="button"].cui-button-appearance-link {
 	bottom: 0;
 }
 
-.cui-layer-root {
-	&:not(.layer-backdrop-cui-button-select),
-	&:not(.layer-backdrop-cui-menu) {
-		> .cui-tmpl-layer-backdrop {
-			background-color: #000000;
-			opacity: 0.1;
+.cui-layer-backdrop-body-clone
+{
+	position: absolute;
+	overflow: hidden;
+
+	> *:first-child {
+		position: absolute;
+	}
+}
+
+.cui-tmpl-layer-root.cui-layer-root-backdrop-crop
+{
+	> .cui-tmpl-layer-backdrop
+	{
+		-webkit-filter: blur(5px);
+		-moz-filter: blur(5px);
+		-ms-filter: blur(5px);
+		filter: blur(5px);
+	}
+
+	> .cui-layer {
+		// blur effect, make layer transparent
+		background-color: transparent;
+
+		.cui-tmpl-item-list-body {
+			.cui-button {
+				background-color: transparent;
+			}
 		}
 	}
 }
@@ -631,21 +672,32 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ItemList
-.cui-tmpl-item-list-body {
+.cui-tmpl-item-list-body
+{
 	flex-direction: column;
 	> div {
 		flex: 0 0 auto;
 	}
+	a[role="button"],.cui-button
+	{
+		// stretch'em
+		align-self: stretch;
+	}
+
 	// always make space for item in buttons
 	.cui-button-center {
 		flex: 1 1 auto;
 	}
-	.cui-tmpl-button-center,
-	.cui-tmpl-button-center-right {
-		.cui-button-center {
-			padding-left: 20px;
+	&.cui-item-list-has-button-left
+	{
+		.cui-tmpl-button-center,
+		.cui-tmpl-button-center-right {
+			.cui-button-center {
+				padding-left: 23px;
+			}
 		}
 	}
+
 	.cui-button-left {
 		width: 20px;
 	}
@@ -927,20 +979,24 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-.cui-form-table-has-not-left-column {
-	> .cui-form-tr-outer > .cui-form-tr {
-		> .cui-form-td-left {
+.cui-form-table-has-not-left-column
+{
+	> .cui-form-tr-outer > .cui-form-tr
+	{
+		> .cui-form-td-left
+		{
 			display: none;
 		}
 	}
 }
 
-.cui-form-table-has-not-right-column {
-	&.cui-form-table-has-not-left-column {
-		> .cui-form-tr-outer > .cui-form-tr {
-			> .cui-form-td-right {
-				display: none;
-			}
+.cui-form-table-has-not-right-column
+{
+	> .cui-form-tr-outer > .cui-form-tr
+	{
+		> .cui-form-td-right
+		{
+			display: none;
 		}
 	}
 }
@@ -1015,8 +1071,11 @@ a[role="button"].cui-button-appearance-link {
 
 // DateTime
 .cui-date-time {
+	flex-direction: row;
+
 	.cui-date-time-input-center {
 		flex: 1 1 auto;
+		flex-direction: row;
 	}
 }
 
@@ -1024,7 +1083,6 @@ a[role="button"].cui-button-appearance-link {
 // MultiInput
 
 .cui-multi-input .cui-multi-input-container {
-    flex-direction: column;
     align-items: stretch;
 	flex: 1 1 auto;
 
