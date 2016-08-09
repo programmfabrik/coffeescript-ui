@@ -114,10 +114,10 @@ class Tooltip extends LayerPane
 		if Tooltip.current
 			Tooltip.current.hide(ev)
 			@show(ev)
+			return CUI.resolvedPromise()
 		else
 			Tooltip.current = @
-			super(null, ev)
-		@
+			return super(ms, ev)
 
 	hideTimeout: (ms=@_show_ms, ev) ->
 		Tooltip.current = null
