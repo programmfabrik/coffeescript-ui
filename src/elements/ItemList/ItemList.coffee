@@ -170,7 +170,7 @@ class ItemList extends VerticalLayout
 								btn.getTooltip()?.destroy()
 								@_onClick?(info.event, btn, item, idx)
 
-								if not menu?.isAutoCloseAfterClick()
+								if not menu?.isAutoCloseAfterClick() or btn.hasMenu()
 									return
 
 								hide = =>

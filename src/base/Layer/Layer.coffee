@@ -465,8 +465,8 @@ class Layer extends DOM
 		fits
 
 	#called inside fillspace when layer is shrunk , menu overwrites it
-	__compensateScrollbars: ( new_dimension_in_out ) ->
-		@
+	# __compensateScrollbars: ( new_dimension_in_out ) ->
+	# 	@
 
 	__fillSpace: (dir, placement, shrink_only = false) ->
 
@@ -507,7 +507,7 @@ class Layer extends DOM
 			if not (@_fill_space in ["both", "horizontal"]) and shrink_only
 				new_dimension.width =  Math.min(@__layer_dim._css_width ,new_dimension.width)
 
-			@__compensateScrollbars( new_dimension )
+			# @__compensateScrollbars( new_dimension )
 
 			if dir in ["both", "vertical"]
 				# CUI.debug(@__layer.DOM.cssEdgeSpace("vertical", true))

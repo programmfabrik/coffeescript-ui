@@ -67,24 +67,7 @@ div {
 
 
 // HorizontalLayout
-.cui-horizontal-layout.cui-maximize-horizontal {
-	flex-direction: row;
-	flex: 1 1 auto;
-	align-items: stretch;
-	overflow: hidden;
-	> .cui-horizontal-layout-left,
-	> .cui-horizontal-layout-right
-	{
-		position: relative;
-		flex: 0 0 auto;
-		flex-direction: row;
-		overflow: hidden;
-	}
-	> .cui-horizontal-layout-center {
-		flex: 1 1 auto;
-		overflow: hidden;
-
-	}
+.cui-horizontal-layout {
 	&.cui-maximize-vertical {
 		> .cui-horizontal-layout-center {
 			// this is needed to overwrite .cui-toolbar > div, which
@@ -111,6 +94,29 @@ div {
 		flex: 0 0 auto;
 	}
 }
+
+.cui-horizontal-layout.cui-maximize-horizontal {
+	flex-direction: row;
+	flex: 1 1 auto;
+	align-items: stretch;
+	overflow: hidden;
+	> .cui-horizontal-layout-left,
+	> .cui-horizontal-layout-right
+	{
+		position: relative;
+		flex: 0 0 auto;
+		flex-direction: row;
+		overflow: hidden;
+	}
+	> .cui-horizontal-layout-center {
+		flex: 1 1 auto;
+		overflow: hidden;
+
+	}
+}
+
+
+
 
 // Layout Absolute Horizontal
 .cui-horizontal-layout{
@@ -600,6 +606,9 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	background-color: #ffffff;
 	flex-direction: column;
+	// e.g. in cui-menu this happens, that
+	// the layer overflows
+	overflow: auto;
 }
 
 .cui-tmpl-layer-pointer
@@ -617,6 +626,11 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	> div {
+		flex: 1 1 auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
 }
 
 .cui-layer-backdrop-body-clone
@@ -690,9 +704,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 	&.cui-item-list-has-button-left
 	{
-		.cui-tmpl-button-center,
-		.cui-tmpl-button-center-right {
-			.cui-button-center {
+		> .cui-tmpl-button-center,
+		 >.cui-tmpl-button-center-right {
+			> .cui-button-center {
 				padding-left: 23px;
 			}
 		}

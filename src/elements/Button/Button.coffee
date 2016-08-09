@@ -173,7 +173,10 @@ class Button extends DOM
 			@__menu_opts.itemList = itemList_opts
 
 			@__menu_opts.element = @
-			@__menu_opts.set_element_width = true
+
+			if not @__menu_opts.hasOwnProperty("set_element_width")
+				if not @_menu_parent
+					@__menu_opts.set_element_width = true
 
 			@__menu_opts.onHide = =>
 				@DOM.removeClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
@@ -183,14 +186,19 @@ class Button extends DOM
 				@DOM.addClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onShow?()
 
-			if @_menu_on_hover
-				@__menu_opts.backdrop = false
-				@__menu_opts.anchor = @__menu_opts.element
-			else
-				@__menu_opts.backdrop = policy: "click"
+			if not @__menu_opts.hasOwnProperty("backdrop")
+				if @_menu_on_hover
+					@__menu_opts.backdrop = false
+				else
+					@__menu_opts.backdrop = policy: "click"
 
 			if @_menu_parent
 				@__menu_opts.parent_menu = @_menu_parent
+
+			if not @__menu_opts.hasOwnProperty("anchor")
+				if @_menu_on_hover
+					@__menu_opts.anchor = @__menu_opts.element
+
 
 		@__prevent_btn_click = false
 

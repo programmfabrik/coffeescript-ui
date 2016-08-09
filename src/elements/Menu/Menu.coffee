@@ -118,21 +118,21 @@ class Menu extends Layer
 		DOM.data(@getElement()?[0], "element")
 
 	#we compensate the vertical scrollbar here
-	__compensateScrollbars: ( new_dimension_in_out ) ->
+	# __compensateScrollbars: ( new_dimension_in_out ) ->
 
-		#have scrollbar ?
-		if new_dimension_in_out.height < @__layer_dim._css_height
-			# we shrunk, set new height and watch if scrollbar appears
-			@__layer.DOM.height(new_dimension_in_out.height)
+	# 	#have scrollbar ?
+	# 	if new_dimension_in_out.height < @__layer_dim._css_height
+	# 		# we shrunk, set new height and watch if scrollbar appears
+	# 		@__layer.DOM.height(new_dimension_in_out.height)
 
-			scrolling_div = @__layer.DOM.find(".cui-tmpl-item-list-body")
+	# 		scrolling_div = @__layer.DOM.find(".cui-tmpl-item-list-body")
 
-			scrollbar_width = scrolling_div.width() - scrolling_div[0].clientWidth
+	# 		scrollbar_width = scrolling_div.width() - scrolling_div[0].clientWidth
 
-			#give space for scrollbar
-			new_dimension_in_out.width += scrollbar_width
+	# 		#give space for scrollbar
+	# 		new_dimension_in_out.width += scrollbar_width
 
-			#dont touch the underlying logic, revert size.
-			@__layer.DOM.height(@__layer_dim._css_width)
+	# 		#dont touch the underlying logic, revert size.
+	# 		@__layer.DOM.height(@__layer_dim._css_width)
 
-		@
+	# 	@
