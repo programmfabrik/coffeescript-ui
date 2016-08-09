@@ -54,23 +54,29 @@
 	//align to bottom in a flex context
 	@include flex_align_self(flex-end);
 
-	& > .cui-label-icon {
-		vertical-align: middle;
-		position: absolute;
-		left: 5px; //TODO make this automatically and compatible to different sizes!!!
-		bottom: 0;
-	}
-	& > .cui-label-content {
-		display: inline-block;
-		position: absolute;
-		left: 0;
-		bottom: 0;
+	$width: $grid_size*3;
+	$height: $grid_size*25;
+	width: $width;
+	height: $height;
 
-		//overwrite multiline
-		white-space: nowrap;
+	> .cui-label-transform {
+		align-self: flex-end;
+		width: $height;
+		height: $width;
+		display: flex;
+		padding-left: 5px;
 
-		@include transform(rotate(-90deg));
-		@include transform_origin(left top 0);
+		> .cui-label-icon {
+			flex: 0 0 auto;
+		}
+		> .cui-label-content {
+			flex: 0 1 auto;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		@include transform(rotate(-90deg) translateY($width));//TODO change origin instead of using translate !?
+		@include transform_origin(left bottom 0);
 	}
 }
 
@@ -131,7 +137,8 @@
 		}
 	}
 
-	&.cui-label-rotate-90 { //need to be specific here
+
+	&.cui-tmpl-label-rotate-90 { //need to be specific here
 		@extend %label_rotate_90deg;
 	}
 

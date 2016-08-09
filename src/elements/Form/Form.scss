@@ -64,7 +64,7 @@ $form_data_field_input_max_width: 300px;
     }
 
     //multiline is default in forms
-    .cui-label:not(.cui-label-rotate-90) { //rotate90 is not compatible to multiline
+    .cui-label:not(.cui-tmpl-label-rotate-90) { //rotate90 is not compatible to multiline
         @extend %label_multiline;
     }
 
