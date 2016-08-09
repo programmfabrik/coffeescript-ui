@@ -8,7 +8,7 @@
 }
 
 
-@mixin three_pane_layout( $orientation,$child_orientation: column ) {
+@mixin three_pane_layout( $orientation ) {
 
 	@include flex_display(flex);
 
@@ -45,10 +45,21 @@
 		position: relative;
 
 		@include flex_display(flex);
-		@include flex_direction($child_orientation);
+		@include flex_direction(column);
 		@include flex(0,0);
 
 		overflow: auto;
+
+		//TODO enable maximize on axis TODO make sure center cells are stretched!!!
+		//@if $child_orientation == 'column' {
+		//	> .cui-layout.cui-maximize-horizontal {
+		//		align-self: stretch;
+		//	}
+		//	> .cui-layout.cui-maximize-vertical {
+		//		flex: 1 1 auto;
+		//	}
+		//}
+
 	}
 }
 

@@ -360,6 +360,20 @@
 
 
 // maximize listview
+.cui-list-view.cui-maximize-horizontal > div > .cui-list-view-grid {
+	//TODO same code as in maximize , reuse!!!
+	@include flex_align_items(stretch);
+	> div > .cui-list-view-grid-quadrant-3,
+	> div > .cui-list-view-grid-quadrant-1
+	{
+		@include flex(1,1);
+	}
+
+	> div > .cui-list-view-grid-quadrant-3 {
+		overflow-x: auto;
+	}
+}
+
 .cui-list-view.cui-maximize > div > .cui-list-view-grid {
 
 	@include flex_align_items(stretch);
