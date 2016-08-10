@@ -43,7 +43,7 @@ jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 files = $(addsuffix .js, $(coffee_files) )
 
 
-code: $(files) css
+code: $(files)
 	#
     # $@
 	mkdir -p $(target)
