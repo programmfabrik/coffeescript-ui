@@ -34,6 +34,7 @@ class Button extends DOM
 	#   "normal", standard button with border and its own background color.
 	#   "link", standard button without border and a underlined text.
 	#   "important", emphasized button , to show the user that the button is important.
+
 	constructor: (@opts={}) ->
 
 		super(@opts)
@@ -159,7 +160,12 @@ class Button extends DOM
 			# rescue options for menu and separate them
 			# from itemlist
 			for k, v of @_menu
-				if k in ["onShow", "onHide", "class"]
+				if k in [
+					"onShow"
+					"onHide"
+					"class"
+					"backdrop"
+				]
 					@__menu_opts[k] = v
 				else
 					itemList_opts[k] = v
@@ -194,10 +200,6 @@ class Button extends DOM
 
 			if @_menu_parent
 				@__menu_opts.parent_menu = @_menu_parent
-
-			if not @__menu_opts.hasOwnProperty("anchor")
-				if @_menu_on_hover
-					@__menu_opts.anchor = @__menu_opts.element
 
 
 		@__prevent_btn_click = false
@@ -314,6 +316,27 @@ class Button extends DOM
 				@onClickAction(ev)
 				return
 
+		if @_menu_on_hover
+			menu = @getMenu()
+			Button.menu_timeout = null
+			Button.menu_shown = null
+
+			menu_stop_hide = =>
+				if not Button.menu_timeout
+					return
+
+				CUI.clearTimeout(Button.menu_timeout)
+				Button.menu_timeout = null
+
+			menu_start_hide = (ev) =>
+				# we set a timeout, if during the time
+				# the focus enters the menu, we cancel the timeout
+				Button.menu_timeout = CUI.setTimeout
+					ms: 700
+					call: =>
+						menu.hide(ev)
+
+
 		if @_menu_on_hover or @_tooltip
 			Events.listen
 				type: "mouseenter"
@@ -326,8 +349,38 @@ class Button extends DOM
 						@__initTooltip()
 						@getTooltip().showTimeout(null, ev)
 
-					if @_menu_on_hover and not @__disabled and @getMenu().hasItems()
-						@getMenu().show(null, ev)
+					if @_menu_on_hover
+						menu_stop_hide()
+
+						if not @__disabled and menu.hasItems()
+
+							if Button.menu_shown and Button.menu_shown != menu
+								menu_stop_hide()
+								Button.menu_shown.hide(ev)
+
+							menu.show(null, ev)
+
+							Button.menu_shown = menu
+
+							Events.ignore
+								instance: @
+								node: menu
+
+							Events.listen
+								type: "mouseenter"
+								node: menu
+								instance: @
+								only_once: true
+								call: =>
+									menu_stop_hide()
+
+							Events.listen
+								type: "mouseleave"
+								node: menu
+								instance: @
+								only_once: true
+								call: =>
+									menu.hide(ev)
 
 					return
 
@@ -345,8 +398,7 @@ class Button extends DOM
 				@getTooltip()?.hideTimeout(ev)
 
 				if @_menu_on_hover
-					@getMenu().hideTimeout(null, ev)
-
+					menu_start_hide(ev)
 				return
 
 

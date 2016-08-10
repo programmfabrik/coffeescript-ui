@@ -8,13 +8,16 @@ class Element
 		@__mapped_keys = []
 
 		@initOpts()
+
 		if Element.__dont_read_opts
 			return
+
 		@readOpts()
 		if not @__initOptsCalled
 			CUI.warn("new "+@__cls+": Element::initOpts not called.", opts: @opts)
 
 		@_onConstruct?(@)
+		return
 
 	getElementClass: ->
 		@__cls

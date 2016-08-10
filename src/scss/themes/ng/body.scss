@@ -606,9 +606,7 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	background-color: #ffffff;
 	flex-direction: column;
-	// e.g. in cui-menu this happens, that
-	// the layer overflows
-	overflow: auto;
+	overflow: hidden;
 }
 
 .cui-tmpl-layer-pointer
@@ -689,6 +687,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-tmpl-item-list-body
 {
 	flex-direction: column;
+
 	> div {
 		flex: 0 0 auto;
 	}

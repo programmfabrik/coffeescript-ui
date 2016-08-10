@@ -84,6 +84,9 @@ class Checkbox extends DataFieldInput
 				@_onClick(ev, @)
 				return
 
+		# tooltip is managed by "DataField", so do not pass it
+		# to the Button
+
 		for k in [
 			"text"
 			"radio_allow_null"

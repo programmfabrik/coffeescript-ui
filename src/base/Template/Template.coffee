@@ -51,11 +51,14 @@ class Template extends Element
 		if @_class
 			@DOM.addClass(@_class)
 		DOM.setElement(@DOM, @)
-		DOM.addClass(@DOM[0], "cui-template-empty")
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
 
+		if not $.isEmptyObject(@map)
+			DOM.addClass(@DOM[0], "cui-template-empty")
+
+		return
 
 	initOpts: ->
 		super()
@@ -191,7 +194,6 @@ class Template extends Element
 		if $.isEmptyObject(@map)
 			# without map we empty the whole @DOM
 			DOM.empty(@DOM)
-			DOM.addClass(@DOM[0], "cui-template-empty")
 		else
 			# with map we empty each individual map entry
 			for key of @map

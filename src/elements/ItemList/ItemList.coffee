@@ -69,8 +69,6 @@ class ItemList extends VerticalLayout
 		@
 
 	readOpts: ->
-		if not @opts.hasOwnProperty("maximize")
-			@opts.maximize = false
 		super()
 		if @_orientation == "horizontal"
 			CUI.error("new ItemList, orientation == horizontal needs implementation!")

@@ -9,8 +9,6 @@ class Layer extends DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		assert(not((@_backdrop or @_modal) and @_anchor), "new #{@__cls}", "opts.backdrop/opts.modal and opts.anchor are mutally exclusive.", opts: @opts)
-
 		@__layer = @getTemplate()
 
 		@__placement = null
@@ -39,12 +37,19 @@ class Layer extends DOM
 
 			@__backdrop.DOM.appendTo(@__layer_root.DOM)
 
-			if @_backdrop.content
-				@setBackdropContent(@_backdrop.content)
 
 			if @_backdrop.background_effect
 				@__body_effect_class = "cui-layer-effect-" + @_backdrop.background_effect
 				$(document.body).addClass(@__body_effect_class)
+
+			if @_backdrop.content
+				@setBackdropContent(@_backdrop.content)
+			# else if @_backdrop.crop
+			# 	# clone body
+			# 	@__backdrop_body_clone = $div("cui-layer-backdrop-body-clone")[0]
+			# 	@__backdrop_body_clone.appendChild(document.body.firstChild.cloneNode(true))
+			# 	@setBackdropContent(@__backdrop_body_clone)
+			# 	@__layer_root.addClass("cui-layer-root-backdrop-crop")
 
 			# @__backdrop.DOM.attr("role", @_role)
 
@@ -65,6 +70,8 @@ class Layer extends DOM
 								return
 
 							if @__backdropClickDisabled
+								# this is used in Popover when all buttons are disabled
+								# we need to eat this
 								return
 
 							@hide(ev)
@@ -241,13 +248,6 @@ class Layer extends DOM
 				default: true
 				check: Boolean
 
-			# set to a DOM element in order to anchor the
-			# layer to this element
-			# anchor and backdrop are mutually
-			# exclusive
-			anchor:
-				check: (v) ->
-					(v instanceof jQuery and v.length == 1) or !!(v?.DOM)
 
 			# a rectangle box to position the layer to
 			# a pointer is a helper to show the position of the layer
@@ -365,7 +365,6 @@ class Layer extends DOM
 					width: CUI.getViewport().width
 					height: CUI.getViewport().height
 		else
-			# @__debug.push("getViewport: using anchor.parent "+parent.attr("class")+" viewport")
 			rect = parent.rect()
 			return new Positioner(
 				top: rect.top
@@ -909,7 +908,21 @@ class Layer extends DOM
 
 		DOM.setAbsolutePosition(@__layer.DOM, offset)
 
-		# CUI.debug "SetPosition:",offset
+		# CUI.debug "SetPosition:",offset, @__viewport
+
+		# if @__backdrop_body_clone
+		# 	DOM.setStylePx(@__backdrop_body_clone,
+		# 		top: offset.top
+		# 		left: offset.left
+		# 		width: offset.width
+		# 		height: offset.height
+		# 	)
+		# 	DOM.setStylePx(@__backdrop_body_clone.firstChild,
+		# 		width: @__viewport.width
+		# 		height: @__viewport.height
+		# 		top: -offset.top
+		# 		left: -offset.left
+		# 	)
 
 		#REMARKED TODO why?
 #		# set right and bottom positions for our animations
@@ -1148,13 +1161,7 @@ class Layer extends DOM
 			@__element = element
 
 		# get @__appendToElement
-		if @__backdrop or !@_anchor
-			@__appendToElement = $(document.body)
-		else
-			if @_anchor.DOM
-				@__appendToElement = @_anchor.DOM
-			else
-				@__appendToElement = @_anchor
+		@__appendToElement = $(document.body)
 
 		@__layer.DOM.css
 			top: 0

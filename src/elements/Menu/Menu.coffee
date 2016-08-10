@@ -39,13 +39,6 @@ class Menu extends Layer
 		else
 			super()
 
-	resetLayer: ->
-		super()
-		if not @__show_at_position
-			@__layer.DOM.css("min-width", @__element.outerWidth())
-		@
-
-
 	show: (@__show_at_position, @__event) ->
 		assert(not @__show_at_position or @__show_at_position instanceof Positioner, "#{@__cls}.show", "position needs to be instance of Positioner.", position: @__show_at_position)
 
