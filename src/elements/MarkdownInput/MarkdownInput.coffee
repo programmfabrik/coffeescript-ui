@@ -207,3 +207,15 @@ class MarkdownInput extends Input
 
 	renderHTML: ->
 		@_renderFunction(@getElement().val())
+
+	@__escape_regexp: new RegExp('[\\'+('*-_\\![]()'.split("").join("\\"))+']','g')
+
+	@escape: (obj) ->
+		assert(typeof(obj) in ["string", "object"], "MarkdownInput.escape", "Object needs to be typof 'string' or 'object'.", obj: obj)
+		if typeof(obj) == "string"
+			return obj.replace(@__escape_regexp, "\\$&")
+
+		new_obj = {}
+		for k, v of obj
+			new_obj[k] = @escape(v)
+		return new_obj
