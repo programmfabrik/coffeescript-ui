@@ -77,6 +77,11 @@
         &.cui-flex-handle-row {
             width: $flex_handle_closed_size + $flex_handle_size;
 
+            //make sure label is aligned right, so it can rotate and show huge texts
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+
             //need to this caus layout.absolute is ignoring flexhandle margin
             &:before {
                 content: '';
@@ -99,13 +104,16 @@
                 right: $flex_handle_size;
             }
 
-
-
             //90 degree rotated label
             > .cui-label {
-                margin-top: $grid_size + 4px; //TODO why +4px cause  ... 90 degree label height calculation is correct !
-                //manually centered , cant find an automatic way
-                line-height: 22px;
+                display: flex;
+                justify-content: flex-end;
+
+                height: 24px;
+                width: auto;
+                @include transform(rotate(-90deg));
+                @include transform_origin(right bottom 0);
+
 				cursor: default;
             }
 
