@@ -198,6 +198,15 @@ class Button extends DOM
 				else
 					@__menu_opts.backdrop = policy: "click"
 
+			if not @__menu_opts.backdrop.hasOwnProperty("blur")
+				if @_menu_parent and @_menu_parent.getOpt("backdrop").blur
+					if @_menu_on_hover
+						@__menu_opts.backdrop =
+							policy: "click-thru"
+							blur: true
+					else
+						@__menu_opts.backdrop.blur = true
+
 			if @_menu_parent
 				@__menu_opts.parent_menu = @_menu_parent
 

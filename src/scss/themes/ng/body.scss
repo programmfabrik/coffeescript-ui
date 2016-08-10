@@ -641,7 +641,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-layer-root.cui-layer-root-backdrop-crop
+.cui-tmpl-layer-root.cui-layer-root-backdrop-blur
 {
 	> .cui-tmpl-layer-backdrop
 	{
@@ -649,11 +649,12 @@ a[role="button"].cui-button-appearance-link {
 		-moz-filter: blur(5px);
 		-ms-filter: blur(5px);
 		filter: blur(5px);
+		overflow: hidden;
 	}
 
 	> .cui-layer {
 		// blur effect, make layer transparent
-		background-color: transparent;
+		background-color: rgba(255, 255, 255, 0.39);
 
 		.cui-tmpl-item-list-body {
 			.cui-button {

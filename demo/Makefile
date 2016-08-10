@@ -37,6 +37,9 @@ coffee_files = src/demo.coffee \
 	../src/elements/ListView/demo/TreeListViewDemo.coffee \
 	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee
 
+jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
+
+
 files = $(addsuffix .js, $(coffee_files) )
 
 
@@ -59,14 +62,28 @@ html:
 	@cat ../src/base/*/demo/*html > $(target)/easydbui_demo.html
 	@cat ../src/elements/*/demo/*html >> $(target)/easydbui_demo.html
 
-css:
+css_ng:
+	#
+	# $@
+	mkdir -p $(target)/css
+	$(call_scss) src/scss/themes/ng/main.scss $(target)/css/cui_demo_ng.css
+
+css_other:
 	#
 	# $@
 	mkdir -p $(target)/css
 	# make css TODO make demo css for each theme
 	$(call_scss) src/scss/themes/light/main.scss $(target)/css/cui_demo_light.css
 	$(call_scss) src/scss/themes/dark/main.scss $(target)/css/cui_demo_dark.css
-	$(call_scss) src/scss/themes/ng/main.scss $(target)/css/cui_demo_ng.css
+
+
+css: css_ng css_other jpg
+
+jpg: $(jpg_files)
+	#
+	#
+	mkdir -p $(target)/css/pics
+	cp $(jpg_files) $(target)/css/pics
 
 all: code html css
 	#

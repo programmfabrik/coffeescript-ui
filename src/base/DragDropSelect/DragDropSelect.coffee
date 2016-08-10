@@ -71,19 +71,20 @@ CUI.ready =>
 		bubble: true
 
 
-	# FIXME: this does not work in Text input fields (chrome)
-	Events.listen
-		type: "selectstart"
-		node: document.documentElement
-		capture: true
-		call: (ev) =>
-			$target = $(ev.getTarget())
-			if not globalDrag and $target.closest("span,input,textarea,pre,i").length and
-				not $target.closest(".btn,.drag-drop-select-cursor,.no-user-select").length
-					return
-			ev.preventDefault()
-			ev.stopPropagation()
-			return false
+	# # FIXME: this does not work in Text input fields (chrome)
+	# Events.listen
+	# 	type: "selectstart"
+	# 	node: document.documentElement
+	# 	capture: true
+	# 	call: (ev) =>
+	# 		console.debug "selectstart"
+	# 		$target = $(ev.getTarget())
+	# 		if not globalDrag and $target.closest("span,input,textarea,pre,i").length and
+	# 			not $target.closest(".btn,.drag-drop-select-cursor,.no-user-select").length
+	# 				return
+	# 		ev.preventDefault()
+	# 		ev.stopPropagation()
+	# 		return false
 
 
 	Events.listen

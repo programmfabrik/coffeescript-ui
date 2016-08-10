@@ -175,14 +175,22 @@ all: code demo css
 demo:
 	$(MAKE) --directory demo all
 
-css:
+css_ng:
+	#
+	# $@
+	mkdir -p $(css_target)
+	$(call_scss) src/scss/themes/ng/main.scss $(css_target)/cui_ng.css
+	$(MAKE) --directory demo css_ng
+
+css_other:
 	#
 	# $@
 	mkdir -p $(css_target)
 	$(call_scss) src/scss/themes/light/main.scss $(css_target)/cui_light.css
 	$(call_scss) src/scss/themes/dark/main.scss $(css_target)/cui_dark.css
-	$(call_scss) src/scss/themes/ng/main.scss $(css_target)/cui_ng.css
-	$(MAKE) --directory demo css
+	$(MAKE) --directory demo css_other
+
+css: css_ng css_other
 
 code: $(easydbui_js) $(thirdparty_files)
 	$(MAKE) --directory demo code

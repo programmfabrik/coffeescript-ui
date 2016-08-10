@@ -1,18 +1,18 @@
 class MenuDemo extends Demo
 	display: ->
 
-		demoLabel = new Label
-				class: "menu-demo-click-here"
-				text: "Right-Click-Within"
+		demoLabel = $img("", src: "css/pics/Schmetterling.jpg")
 
 		@demo_table = new DemoTable('cui-menu-demo')
 
 		Events.listen
-			type: "mousedown"
+			type: "contextmenu"
 			node: demoLabel
+
 			call: (ev) ->
-				if ev.getButton() != 2 or ev.ctrlKey()
+				if ev.ctrlKey()
 					return
+
 				ev.preventDefault()
 				mouse_coordinates = getCoordinatesFromEvent(ev)
 				CUI.debug "mouse coordinates", mouse_coordinates
@@ -42,7 +42,6 @@ class MenuDemo extends Demo
 					menu_on_hover: true
 					# icon_right: new Icon(class: "fa-angle-double-down")
 					menu:
-						placement: "es"
 						items: [
 							text: "Sweet"
 							onClick: ->
@@ -78,10 +77,14 @@ class MenuDemo extends Demo
 				]
 
 				(new Menu
+					backdrop:
+						policy: "click"
+						blur: true
 					itemList:
 						onClick: (ev, btn) ->
 							alert(btn.getText())
 						items: menu_items
+
 				).show(
 					new Positioner(
 						top: mouse_coordinates.pageY
@@ -92,7 +95,7 @@ class MenuDemo extends Demo
 				)
 				return
 
-		@demo_table.addExample("Context Menu", demoLabel.DOM)
+		@demo_table.addExample("Context Menu", demoLabel)
 		@demo_table.table
 
 

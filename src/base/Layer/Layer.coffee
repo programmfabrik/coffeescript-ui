@@ -31,12 +31,16 @@ class Layer extends DOM
 
 		if @_backdrop or @_modal
 
+			if @_modal
+				@__bd_policy = "modal"
+			else
+				@__bd_policy = @_backdrop.policy or "click-thru"
+
 			@__backdrop = new Template
 				class: "cui-layer-backdrop"
 				name: "layer-backdrop"
 
-			@__backdrop.DOM.appendTo(@__layer_root.DOM)
-
+			@__backdrop.addClass("cui-layer-backdrop-policy-"+@__bd_policy)
 
 			if @_backdrop.background_effect
 				@__body_effect_class = "cui-layer-effect-" + @_backdrop.background_effect
@@ -44,21 +48,26 @@ class Layer extends DOM
 
 			if @_backdrop.content
 				@setBackdropContent(@_backdrop.content)
-			# else if @_backdrop.crop
-			# 	# clone body
-			# 	@__backdrop_body_clone = $div("cui-layer-backdrop-body-clone")[0]
-			# 	@__backdrop_body_clone.appendChild(document.body.firstChild.cloneNode(true))
-			# 	@setBackdropContent(@__backdrop_body_clone)
-			# 	@__layer_root.addClass("cui-layer-root-backdrop-crop")
+			else if @_backdrop.blur
+				# clone body
+				body_clone = document.body.firstChild.cloneNode(true)
+
+				if @__bd_policy == "click-thru"
+					# backdrop needs to be cropped
+					@__backdrop_crop = @__backdrop.DOM[0]
+					@setBackdropContent(body_clone)
+				else
+					@__backdrop_crop = $div("cui-layer-backdrop-body-clone")[0]
+					@__backdrop_crop.appendChild(body_clone)
+					@setBackdropContent(@__backdrop_crop)
+
+				console.error "crop this:", @__backdrop_crop
+
+				@__layer_root.addClass("cui-layer-root-backdrop-blur")
+
+			@__backdrop.DOM.appendTo(@__layer_root.DOM)
 
 			# @__backdrop.DOM.attr("role", @_role)
-
-			if @_modal
-				@__bd_policy = "modal"
-			else
-				@__bd_policy = @_backdrop.policy or "click-thru"
-
-			@__backdrop.addClass("cui-layer-backdrop-policy-"+@__bd_policy)
 
 			switch @__bd_policy
 				when "click-thru"
@@ -92,7 +101,7 @@ class Layer extends DOM
 
 				when "click"
 					Events.listen
-						type: "click"
+						type: ["click", "contextmenu"]
 						node: @__backdrop
 						call: (ev) =>
 							if ev.ctrlKey() and ev.getButton() == 2
@@ -910,19 +919,19 @@ class Layer extends DOM
 
 		# CUI.debug "SetPosition:",offset, @__viewport
 
-		# if @__backdrop_body_clone
-		# 	DOM.setStylePx(@__backdrop_body_clone,
-		# 		top: offset.top
-		# 		left: offset.left
-		# 		width: offset.width
-		# 		height: offset.height
-		# 	)
-		# 	DOM.setStylePx(@__backdrop_body_clone.firstChild,
-		# 		width: @__viewport.width
-		# 		height: @__viewport.height
-		# 		top: -offset.top
-		# 		left: -offset.left
-		# 	)
+		if @__backdrop_crop
+			DOM.setStylePx(@__backdrop_crop,
+				top: offset.top
+				left: offset.left
+				width: offset.width
+				height: offset.height
+			)
+			DOM.setStylePx(@__backdrop_crop.firstChild,
+				width: @__viewport.width
+				height: @__viewport.height
+				top: -offset.top
+				left: -offset.left
+			)
 
 		#REMARKED TODO why?
 #		# set right and bottom positions for our animations

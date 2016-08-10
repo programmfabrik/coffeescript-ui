@@ -300,6 +300,7 @@ CUI.ready ->
 		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 
 	CUI.loadTheme(window.localStorage.getItem("theme") or "light")
+
 	new RunDemo()
 
 Object.values = (obj) =>
