@@ -16,29 +16,45 @@ class CUI.Deferred
 		@__uniqueId
 
 	__callback: (types, args) ->
+		# CUI.error("callback:", @getUniqueId(), types, @__callbacks.length)
 		@__runningCallbacks = true
 		idx = 0
 		while idx < @__callbacks.length
 			cb = @__callbacks[idx]
 			if cb.type in types
+				# console.info @getUniqueId(), idx, cb.type, @__callbacks.length
 				cb.func.apply(@, args)
+
+				if cb.type in ["done", "always", "fail"]
+					# remove from callback queue
+					@__callbacks.splice(idx, 1)
+					continue
+
 			idx++
+
 		@__runningCallbacks = false
+		# CUI.error("callback DONE:", @getUniqueId(), types, @__callbacks.length)
 		@
 
 	__register: (type, func) ->
 		# CUI.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
-		if not @__runningCallbacks and @__state != "pending"
-			# console.debug "Deferred.__register", @getUniqueId(), type, func, @__state, @__finished_args
+		#
+		if @__state == "rejected" and type == "done"
+			# nothing to do
+			return
+
+		if @__state == "resolved" and type == "fail"
+			# nothing to do
+			return
+
+		@__callbacks.push(type: type, func: func)
+
+		if @__state != "pending" and not @__runningCallbacks
 			switch @__state
 				when "resolved"
-					if type in ["done", "always"]
-						func.apply(@, @__finished_args)
+					@__callback(["done", "always"], @__finished_args)
 				when "rejected"
-					if type in ["fail", "always"]
-						func.apply(@, @__finished_args)
-		else
-			@__callbacks.push(type: type, func: func)
+					@__callback(["fail", "always"], @__finished_args)
 		@
 
 	done: (func) ->
