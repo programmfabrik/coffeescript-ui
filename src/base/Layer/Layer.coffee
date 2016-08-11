@@ -1202,6 +1202,10 @@ class Layer extends DOM
 			instance: @
 			node: @__layer
 			call: (ev) =>
+				if @__element and not @elementIsInDOM()
+					# ignore the event
+					return
+
 				# CUI.debug "Layer caught event: \"#{ev.getType()}\", executing \"position\".", "destroyed:", @isDestroyed(), "in DOM:", DOM.isInDOM(@__layer_root.DOM[0])
 
 				@__placement = null # reset placement so it cant be used as previous placement.
@@ -1211,6 +1215,7 @@ class Layer extends DOM
 				@__placement = null # reset placement so it cant be used as previous placement.
 				@__resetFixedLayerDim()
 				@position()
+				return
 
 		@_onBeforeShow?(@, ev)
 		@__shown = true
