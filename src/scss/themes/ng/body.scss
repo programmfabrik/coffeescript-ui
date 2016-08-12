@@ -564,12 +564,42 @@ a[role="button"].cui-button-appearance-link {
 				}
 			}
 		}
-		.cui-label-content {
+
+		> .cui-label-content {
 			flex: 0 1 auto;
 			> span {
 				white-space: pre-wrap;
-				word-break: break-all;
+				word-break: normal;
 			}
+		}
+
+		&.cui-label-manage-overflow {
+			> .cui-label-content {
+				transition: height ease 0.5s, max-height ease 0.5s;
+				max-height: 62px;
+				position: relative;
+				flex-direction: column;
+				overflow: hidden;
+
+				> .cui-label-manage-overflow-content-container {
+					transition: height ease 0.5s, max-height ease 0.5s;
+					overflow: hidden;
+
+					> span {
+						white-space: pre-wrap;
+						word-break: normal;
+					}
+				}
+
+				> .cui-label-manage-overflow-button-container {
+					align-self: flex-end;
+					.cui-button {
+						border-style: none;
+						background-color: transparent;
+					}
+				}
+			}
+
 		}
 	}
 	.cui-label-content {
@@ -717,7 +747,7 @@ a[role="button"].cui-button-appearance-link {
 		transform: translateY(-2px);
 	}
 	.cui-tmpl-item-list-body {
-		aligns-self: stretch;
+		align-self: stretch;
 	}
 }
 
@@ -727,7 +757,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 
 	// in case this is used outside a menu
-	aligns-self: flex-start;
+	align-self: flex-start;
 	> div {
 		flex: 0 0 auto;
 	}
