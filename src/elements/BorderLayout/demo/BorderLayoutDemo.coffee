@@ -124,7 +124,11 @@ class BorderLayoutDemo extends Demo
 
 		@annotate()
 
-		@borderLayout.DOM
+		[
+			Demo.dividerLabel("borderlayout")
+		,
+			@borderLayout
+		]
 
 	annotate: ->
 		for d in @borderLayout.DOM.find("[cui-flex-handle]")

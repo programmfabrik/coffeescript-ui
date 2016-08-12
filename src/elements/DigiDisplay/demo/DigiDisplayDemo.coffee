@@ -24,7 +24,11 @@ class DigiDisplayDemo extends Demo
 		,
 			1000
 
-		dd
+		[
+			Demo.dividerLabel("digi time")
+		,
+			dd
+		]
 
 	undisplay: ->
 		CUI.clearInterval(@__digiInterval)

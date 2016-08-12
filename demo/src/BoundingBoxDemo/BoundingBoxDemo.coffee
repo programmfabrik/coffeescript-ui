@@ -35,11 +35,15 @@ class BoundingBoxDemo extends Demo
 			]
 		.start()
 
-		new VerticalLayout
-			top:
-				content: form
-			center:
-				content: [@bb, @bb_inner]
+		[
+			Demo.dividerLabel("bounding box")
+		,
+			new VerticalLayout
+				top:
+					content: form
+				center:
+					content: [@bb, @bb_inner]
+		]
 
 	rotateCorner: (x,y,degree) ->
 		radian = degree / 180 * Math.PI

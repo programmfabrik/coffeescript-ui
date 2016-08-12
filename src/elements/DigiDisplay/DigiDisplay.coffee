@@ -37,12 +37,12 @@ class DigiDisplay extends DOM
 		@
 
 	createMarkup: ->
-		@__displayDiv = $div("ez-digi-display")
+		@__displayDiv = $div("cui-digi-display")
 
 		for digit, digit_idx in @_digits
 			if digit.static
 				@__displayDiv.append(
-					container = $div("ez-digi-display-static ez-digi-display-#{digit_idx}")
+					container = $div("cui-digi-display-static cui-digi-display-#{digit_idx}")
 
 				)
 				container.append($text(digit.static)).addClass(digit.class)
@@ -51,7 +51,7 @@ class DigiDisplay extends DOM
 				continue
 			digit.__regexp = new RegExp(digit.mask)
 			@__displayDiv.append(
-				container = $div("ez-digi-display-container ez-digi-display-#{digit_idx}")
+				container = $div("cui-digi-display-container cui-digi-display-#{digit_idx}")
 			)
 			container.addClass(digit.class)
 			if digit.attr
@@ -60,16 +60,16 @@ class DigiDisplay extends DOM
 			@__digitsMap[digit_idx] = map: (map = {})
 
 			# for the "unknown character
-			container.append(fc = $div("ez-digi-display-digit").html("&nbsp;"))
+			container.append(fc = $div("cui-digi-display-digit").html("&nbsp;"))
 			@__digitsMap[digit_idx].first_div = fc
 			idx = 1
 			matched = false
 			for i in [32..128]
 				if digit.__regexp.exec(c = String.fromCharCode(i))
 					if i == 32
-						container.append($div("ez-digi-display-digit").html("&nbsp;"))
+						container.append($div("cui-digi-display-digit").html("&nbsp;"))
 					else
-						container.append($div("ez-digi-display-digit").text(c))
+						container.append($div("cui-digi-display-digit").text(c))
 					map[c] = idx
 					idx++
 					matched = true

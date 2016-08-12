@@ -716,6 +716,9 @@ a[role="button"].cui-button-appearance-link {
 		// compansate border
 		transform: translateY(-2px);
 	}
+	.cui-tmpl-item-list-body {
+		aligns-self: stretch;
+	}
 }
 
 // ItemList
@@ -723,6 +726,8 @@ a[role="button"].cui-button-appearance-link {
 {
 	flex-direction: column;
 
+	// in case this is used outside a menu
+	aligns-self: flex-start;
 	> div {
 		flex: 0 0 auto;
 	}
@@ -1269,12 +1274,56 @@ a[role="button"].cui-button-appearance-link {
 // Block
 
 .cui-tmpl-block {
-	background-color: #b7ecec;
-	border: 1px solid blue;
+	background-color: rgba(183, 236, 236, 0.57);
+	&.cui-block-level-1 {
+		border: 1px solid blue;
+		> .cui-block-header {
+			font-size: 15px;
+		}
+	}
+	&.cui-block-level-2 {
+		> .cui-block-header {
+			font-size: 13px;
+		}
+	}
 	> .cui-block-header {
 		font-weight: bold;
 	}
 }
+
+// DigiDisplay
+
+.cui-digi-display {
+	border: 1px solid black;
+	align-self: flex-start;
+	flex-direction: row;
+
+	> div {
+		vertical-align: bottom;
+		height: 20px;
+		border-right: 1px solid #c0c0c0;
+		&:last-child {
+			border-right: 0;
+		}
+		text-align: center;
+		overflow: hidden;
+		padding: 1px;
+		font-family: monospace;
+		font-size: 16px;
+		line-height: 18px;
+	}
+
+	.cui-digi-display-digit {
+		transition: margin-top 0.3s ease;
+		height: 18px;
+	}
+
+	.cui-digi-display-static {
+		height: 20px;
+	}
+
+}
+
 
 // CUI technical stuff
 .cui-tmpl {

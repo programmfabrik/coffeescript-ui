@@ -12,6 +12,43 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 	display: flex;
 }
 
+.cui-demo-header {
+	padding: 10px;
+	.cui-demo-menu-button,
+	.theme-switch  {
+		font-size: 20px;
+		background-color: transparent;
+		border-style: none;
+		padding: 2px 20px 2px 0;
+	}
+	.theme-switch  {
+		font-size: 15px;
+	}
+	.cui-demo-title {
+		font-size: 20px;
+		color: #fff;
+		background-color: #000;
+		padding: 2px 7px;
+	}
+	.cui-demo-sub-title {
+		font-size: 20px;
+		padding: 2px 7px;
+	}
+}
+
+.cui-demo-pane-center {
+	padding: 10px;
+}
+
+// Demo Table
+
+.cui-demo-divider-label {
+	font-weight: bold;
+	font-size: 14px;
+	border-bottom: 2px solid black;
+	margin-bottom: 5px;
+}
+
 .cui-demo-table {
 	width: 100%;
 	height: 100%;
@@ -23,38 +60,35 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 		right: 0;
 	}
 
-	> tbody > tr > td {
+	> tbody {
+		> tr {
+			+ .cui-demo-divider {
+				> td {
+					padding-top: 20px;
+				}
+			}
 
-		vertical-align: top;
+			> td {
+				vertical-align: top;
 
-		&:nth-child(1) {
-			min-width: 200px;
-			font-weight: bold;
-		}
+				&:nth-child(1) {
+					min-width: 200px;
+					font-weight: bold;
+				}
 
-		&:nth-child(2) {
-			position: relative;
-			width: 100%;
-		}
-	}
-}
-
-// Demo Table
-
-.cui-demo-table > tbody {
-	> tr {
-		> td {
-			padding: 2px;
-		}
-		&.cui-demo-divider {
-			background-color: #c0c0c0;
-			font-weight: bold;
+				&:nth-child(2) {
+					position: relative;
+					width: 100%;
+				}
+				padding: 2px;
+			}
 		}
 	}
 }
+
 
 .cui-demo-console {
-	width: 200px;
+	width: 300px;
 	.cui-demo-console-log {
 		> div {
 			display: block;
@@ -110,10 +144,24 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 	}
 }
 
+// FileUpload
+.cui-tmpl-file-upload-demo {
+	width: 100px;
+	height: 100px;
+	border: 1px solid blue;
+	padding: 4px;
+	margin: 0 4px 4px 0;
+	justify-content: space-between;
+	.cui-file-upload-demo-info {
+		word-break: break-all;
+	}
+}
+
 // DragDropSelectDemo
 .drag-drop-select-demo-draggable-container,
 .drag-drop-select-demo-droppable-container,
-.drag-drop-select-demo-sortable-container
+.drag-drop-select-demo-sortable-container,
+.cui-file-upload-demo-drop-zone
 {
 	flex-flow: row;
 	flex-wrap: wrap;

@@ -4,6 +4,8 @@ class DragDropSelectDemo extends Demo
 
 		demo_table = new DemoTable('cui-drag-drop-select-demo-table')
 
+		demo_table.addDivider("drag & drop")
+
 		drag_container = $div("drag-drop-select-demo-draggable-container")
 
 		for i in [0..400]

@@ -32,6 +32,12 @@ class Demo extends DOM
 		else
 			s
 
+	@dividerLabel: (txt) ->
+		new Label
+			class: "cui-demo-divider-label"
+			text: txt
+
+
 Demo.demos = []
 
 Demo.register = (demo) ->
@@ -94,26 +100,24 @@ class RunDemo extends Element
 			map:
 				body: true
 
-		items = []
-		for demo in @demos
-			do (demo) =>
-				items.push
-					text: demo.getName()
-					onClick: =>
-						document.location.hash = "##{demo.getName()}"
-
-		items.sort (a,b) ->
-			if a.text < b.text
-				-1
-			else if a.text > b.text
-				1
-			else
-				0
 
 		@menuBtn = new Button
+			class: "cui-demo-menu-button"
 			menu:
 				active_item_idx: null
-				items: items
+				items: =>
+					items = []
+					for demo in @demos
+						do (demo) =>
+							items.push
+								active: demo == @current_demo
+								text: demo.getName()
+								onClick: =>
+									document.location.hash = "##{demo.getName()}"
+					items.sort (a,b) ->
+						compareIndex(a.text, b.text)
+					items
+
 			icon: new Icon
 				icon: "menu"
 			icon_right: false
@@ -142,7 +146,7 @@ class RunDemo extends Element
 			text: "CUI"
 
 		@menu_sub_title_label = new Label
-			#class: "title title-2"
+			class: "cui-demo-sub-title"
 			text: ""
 
 		@center_layout = new HorizontalLayout
@@ -171,6 +175,7 @@ class RunDemo extends Element
 				content:
 					[
 						new PaneHeader
+							class: "cui-demo-header"
 							left:
 								content:
 									[
@@ -265,11 +270,7 @@ class DemoTable
 
 	addDivider: (text) ->
 
-		label = new Label
-			appearance: "title"
-			size: "big"
-			text: text
-		tr = $tr_one_row(label.DOM).addClass("cui-demo-divider")
+		tr = $tr_one_row(Demo.dividerLabel(text).DOM).addClass("cui-demo-divider")
 
 		tr.append($td())
 		tr.append($td())

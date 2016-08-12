@@ -88,48 +88,54 @@ class FileUploadDemo extends Demo
 			onClick: ->
 				fu.clear()
 
-		t = $table()
-		t.append($tr_one_row("Pick Multiple Files", new FileUploadButton(
+		demo_table = new DemoTable()
+
+		demo_table.addDivider("upload examples")
+
+		demo_table.addExample("Pick Multiple Files", new FileUploadButton(
 			fileUpload: fu
 			text: "Upload Multiple & Drop"
 			drop: true
 			icon: "upload"
-		).DOM))
-		t.append($tr_one_row("Pick One File", new FileUploadButton(
+		).DOM)
+
+		demo_table.addExample("Pick One File", new FileUploadButton(
 			fileUpload: fu
 			text: "Upload One"
 			multiple: false
 			icon: "upload"
-		).DOM))
-		t.append($tr_one_row("Pick Directory (Chrome/Safari)", new FileUploadButton(
+		).DOM)
+
+		demo_table.addExample("Pick Directory (Chrome/Safari)", new FileUploadButton(
 			fileUpload: fu
 			text: "Upload Directory"
 			directory: true
 			icon: "upload"
-		).DOM))
-		t.append($tr_one_row("Pick One File (local upload)", new FileUploadButton(
+		).DOM)
+
+		demo_table.addExample("Pick One File (local upload)", new FileUploadButton(
 			fileUpload: fr
 			text: "Upload One"
 			multiple: false
 			icon: "upload"
-		).DOM))
+		).DOM)
 
 		browserUploadInput = $element("input", "", id: "browser-native-upload", type: "file")[0]
 
-		t.append($tr_one_row("Browser Upload", browserUploadInput,
-				new Button
-					text: "Drop"
-					tooltip:
-						text: "FileUploadDemo.dropChosenFile()"
-					onClick: =>
-						FileUploadDemo.dropChosenFile()
-			))
+		demo_table.addExample("Browser Upload", browserUploadInput,
+			new Button
+				text: "Upload"
+				tooltip:
+					text: "FileUploadDemo.dropChosenFile()"
+				onClick: =>
+					FileUploadDemo.dropChosenFile()
+		)
 
-		t.append($tr_one_row("Drop Zone", drop_zone_parent))
-		t.append($tr_one_row("Abort", abort.DOM))
-		t.append($tr_one_row("Clear", clear.DOM))
+		demo_table.addExample("Drop Zone", drop_zone_parent)
+		demo_table.addExample("Abort", abort.DOM)
+		demo_table.addExample("Clear", clear.DOM)
 
-		t
+		demo_table.table
 
 	@dropChosenFile: ->
 		ev = document.createEvent("Event")

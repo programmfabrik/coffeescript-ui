@@ -23,6 +23,7 @@ class Block extends DOM
 			@setContent(@_content)
 
 		@addClass("appearance-"+@_appearance)
+		@addClass("cui-block-level-"+@_level)
 
 	initOpts: ->
 		super()
@@ -37,7 +38,13 @@ class Block extends DOM
 			content:
 				check: (v) ->
 					!!(isContent(v) or isString(v) or v?.DOM)
+			level:
+				mandatory: true
+				default: 1
+				check: [1, 2, 3]
+
 			appearance:
+				deprectated: true
 				default: "normal"
 				mandatory: true
 				check: ["title","subtitle","normal"]
