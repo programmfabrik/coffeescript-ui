@@ -66,7 +66,7 @@ $label_horizontal_separator_padding: $grid_size * .5;
 // ----- checkbox -------
 $checkmark_icon_sizes: (
     mini: 10px,
-    normal: 14px,
+    normal: 15px, //14px cant be centered
     big: 16px,
     bigger: 18px
 );
@@ -75,8 +75,8 @@ $checkmark_icon_sizes: (
 $checkmark_icon_margin_top: (
     mini: 0,
     normal: 1px,
-    big: 2px,
-    bigger: 3px
+    big: 4px,
+    bigger: 4px
 );
 
 // ------- input ------------
