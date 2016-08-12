@@ -126,7 +126,8 @@ coffee_files = src/base/Common.coffee \
 files = $(addsuffix .js, $(coffee_files))
 
 test_files = src/tests/Test.coffee.js \
-	src/tests/Test_MoveInArray.coffee.js
+	src/tests/Test_MoveInArray.coffee.js \
+	src/tests/Test_Promise.coffee.js
 
 thirdparty_files = thirdparty/*/jquery-2.1.0.js \
 	thirdparty/moment/*js \

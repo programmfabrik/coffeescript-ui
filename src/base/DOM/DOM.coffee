@@ -180,6 +180,12 @@ class CUI.DOM extends Element
 	@findPreviousVisibleElement: (node, selector) ->
 		@findNextVisibleElement(node, selector, false)
 
+	@findNextSiblings: (node, selector, nodeFilter=false) ->
+		@findElements(node, selector, nodeFilter, null, true, true)
+
+	@findPreviousSiblings: (node, selector, nodeFilter=false) ->
+		@findElements(node, selector, nodeFilter, null, false, true)
+
 	# find the next node starting from node start
 	# which matches the selector
 	@findElements: (node=document.documentElement, selector=null, nodeFilter=false, maxEls=null, forward=true, siblingOnly=false, elements) ->
@@ -216,13 +222,13 @@ class CUI.DOM extends Element
 
 		if child and not siblingOnly and accept_node
 			# CUI.debug "dive to", node
-			@findElements(child, selector, nodeFilter, maxEls, forward, false, elements)
+			@findElements(child, selector, nodeFilter, maxEls, forward, siblingOnly, elements)
 			if elements.length == maxEls
 				return elements
 
 		if sibling
 			# CUI.debug "sibling to", sibling
-			@findElements(sibling, selector, nodeFilter, maxEls, forward, false, elements)
+			@findElements(sibling, selector, nodeFilter, maxEls, forward, siblingOnly, elements)
 			if elements.length == maxEls
 				return elements
 
@@ -661,6 +667,7 @@ class CUI.DOM extends Element
 		window.getComputedStyle(docElem)
 
 	@setStyle: (docElem, style, append="") ->
+		assert(docElem instanceof HTMLElement, "CUI.DOM.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		for k, v of style
 			switch v
 				when "", null

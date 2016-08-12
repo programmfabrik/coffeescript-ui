@@ -80,8 +80,6 @@ class FlexHandle extends Element
 
 		@_element.addClass("cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
 
-		cursor = @_element.css("cursor")
-
 		if @__closed
 			@close()
 
@@ -127,7 +125,6 @@ class FlexHandle extends Element
 		new Draggable
 			element: @_element
 			axis: axis
-			cursor: cursor
 			create: =>
 				if @isClosed()
 					return false
@@ -220,8 +217,10 @@ class FlexHandle extends Element
 				CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
 				@__pane[@__css_value](100)
 
+			@_element.removeClass("cui-flex-handle-manual-size")
 			@__size = null
 		else
+			@_element.addClass("cui-flex-handle-manual-size")
 			@__pane[@__css_value](size)
 			@__size = @__pane[@__css_value]()
 
@@ -330,56 +329,54 @@ class FlexHandle extends Element
 	stretch: (direction, do_stretch = true) ->
 
 		if do_stretch
-			if @isStretched()  == direction
+			if @isStretched() == direction
 				return
 			else
 				@unstretch()
 
+		pane = @getPane()[0]
+
 		switch direction
 			when "west", "north"
-				els = @getPane().prevAll()
+				els = DOM.findPreviousSiblings(pane)
 			when "east", "south"
-				els = @getPane().nextAll()
+				els = DOM.findNextSiblings(pane)
 
 		switch direction
 			when "west", "east"
-				style = "maxWidth"
 				set = "width"
+
 			when "north", "south"
-				style = "maxHeight"
 				set = "height"
 
-		Events.wait
-			type: "transitionend"
-			maxWait: 0
-			node: els
-		.always =>
-			if do_stretch
-				@getPane().addClass("cui-flex-handle-stretched cui-flex-handle-stretched-#{direction}")
-				Events.trigger
-					node: @getPane()
-					type: "flex-stretch-start"
-			else
-				@getPane().removeClass("cui-flex-handle-stretched cui-flex-handle-stretched-#{direction}")
-				Events.trigger
-					node: @getPane()
-					type: "flex-stretch-end"
-				@__resize()
-
 		if do_stretch
+
+			# first we set all the value to explicit "px"
+			# so that the transition works
+			#
 			for el in els
-				$el = $(el)
-				$el.css(style, $el[set]())
-			els.addClass("cui-flex-handle-hide-for-stretch cui-flex-handle-hide-for-stretch-#{direction}")
-			els.css(style, 0)
-			@getPane().css(set,"")
+				el.classList.add("cui-flex-handle-hide-for-stretch", "cui-flex-handle-hide-for-stretch-#{direction}")
+
+			@__pane[set]("")
+
+			pane.classList.add("cui-flex-handle-stretched", "cui-flex-handle-stretched-#{direction}")
+			Events.trigger
+				node: pane
+				type: "flex-stretch-start"
+
 			@__stretched = direction
 		else
-			els.removeClass("cui-flex-handle-hide-for-stretch cui-flex-handle-hide-for-stretch-#{direction}")
-			els.css(style, "")
+			for el in els
+				el.classList.remove("cui-flex-handle-hide-for-stretch", "cui-flex-handle-hide-for-stretch-#{direction}")
+
 			@__stretched = null
 			if @__size
-				@getPane().css(set,@__size)
+				@__pane[set](@__size)
+
+			pane.classList.remove("cui-flex-handle-stretched", "cui-flex-handle-stretched-#{direction}")
+			Events.trigger
+				node: pane
+				type: "flex-stretch-end"
 			@__resize()
 
 		@
@@ -396,9 +393,13 @@ class FlexHandle extends Element
 		@__label
 
 	addLabel: (opts={}) ->
+
 		if opts instanceof Label
 			@__label = opts
 		else
+			if @__direction == "row"
+				opts.rotate_90 = true
+
 			@__label = new Label(opts)
 		@_element.append(@__label.DOM)
 		@_element.addClass("cui-flex-handle-has-label")

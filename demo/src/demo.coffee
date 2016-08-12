@@ -271,8 +271,8 @@ class DemoTable
 			text: text
 		tr = $tr_one_row(label.DOM).addClass("cui-demo-divider")
 
-		tr.append($tr())
-		tr.append($tr())
+		tr.append($td())
+		tr.append($td())
 
 		@table.append( tr )
 

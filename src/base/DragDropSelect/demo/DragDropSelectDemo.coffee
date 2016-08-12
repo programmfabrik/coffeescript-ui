@@ -7,7 +7,7 @@ class DragDropSelectDemo extends Demo
 		drag_container = $div("drag-drop-select-demo-draggable-container")
 
 		for i in [0..400]
-			drag_container.append($div("drag-drop-select-demo-draggable-container-item").text(i))
+			drag_container.append($div("drag-drop-select-demo-draggable-container-item").append(new Label(text: ""+i).DOM))
 
 		demo_table.addExample("Draggable, Lasso select", drag_container)
 
@@ -74,7 +74,7 @@ class DragDropSelectDemo extends Demo
 		sort_container = $div("drag-drop-select-demo-sortable-container")
 
 		for i in [0..10]
-			sort_container.append($div("drag-drop-select-demo-sortable-container-item").text(i))
+			sort_container.append($div("drag-drop-select-demo-sortable-container-item").append(new Label(text: ""+i).DOM))
 
 		demo_table.addExample("Sortable", sort_container)
 

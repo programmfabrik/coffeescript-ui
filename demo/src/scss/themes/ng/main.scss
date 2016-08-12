@@ -12,10 +12,6 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 	display: flex;
 }
 
-.cui-demo-table > tbody > tr > td:first-child {
-	min-width: 200px;
-}
-
 .cui-demo-table {
 	width: 100%;
 	height: 100%;
@@ -28,10 +24,127 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 	}
 
 	> tbody > tr > td {
+
 		vertical-align: top;
+
+		&:nth-child(1) {
+			min-width: 200px;
+			font-weight: bold;
+		}
+
 		&:nth-child(2) {
 			position: relative;
 			width: 100%;
 		}
 	}
+}
+
+// Demo Table
+
+.cui-demo-table > tbody {
+	> tr {
+		> td {
+			padding: 2px;
+		}
+		&.cui-demo-divider {
+			background-color: #c0c0c0;
+			font-weight: bold;
+		}
+	}
+}
+
+.cui-demo-console {
+	width: 200px;
+	.cui-demo-console-log {
+		> div {
+			display: block;
+			padding: 2px;
+		}
+	}
+}
+
+// BoundingBoxDemo
+.cui-bounding-box-demo-bounding-box {
+  display: inline-block;
+  position: absolute;
+  background: #F3F3F3;
+  top: 50%;
+  left: 50%;
+  font-size: 0;
+  transform: translate(-50%, -50%);
+}
+
+.cui-bounding-box-demo-inner {
+  display: inline-block;
+  border: 1px solid #F16161;
+  text-align: center;
+  color: #F16161;
+  font-size: 20px;
+  line-height: 188px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+
+// EventsDemo
+.cui-events-demo-ring,
+.cui-events-demo-inner-ring
+{
+	border: 2px solid red;
+	margin: 10px;
+	padding: 5px;
+	display: inline-block;
+	min-width: 100px;
+	background-color: #ffffff;
+	&:not(.node-ring) {
+		font-weight: normal;
+	}
+	&.node-ring {
+		font-weight: bold;
+		border-color: green;
+		background-color: #bef5be;
+	}
+	&.flash-ring {
+		background-color: rgba(36, 96, 255, 0.32) !important;
+	}
+}
+
+// DragDropSelectDemo
+.drag-drop-select-demo-draggable-container,
+.drag-drop-select-demo-droppable-container,
+.drag-drop-select-demo-sortable-container
+{
+	flex-flow: row;
+	flex-wrap: wrap;
+	height: 200px;
+	overflow: auto;
+	background-color: #f0f8ff;
+	padding: 5px;
+	border: 2px solid blue;
+}
+
+.drag-drop-select-demo-draggable-container-item,
+.drag-drop-select-demo-droppable-container-inner,
+.drag-drop-select-demo-sortable-container-item
+{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	margin: 0 3px 3px 0;
+	border: 2px solid red;
+	background-color: #f3d6e4;
+}
+
+.drag-drop-select-demo-sortable-container {
+	width: 120px;
+	height: 250px;
+	.drag-drop-select-demo-sortable-container-item {
+		display: block;
+		width: 80px;
+	}
+}
+
+.mark-lassoed {
+	background-color: red;
 }

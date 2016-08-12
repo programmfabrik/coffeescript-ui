@@ -5,7 +5,6 @@ class Lasso extends Draggable
 
 	initOpts: ->
 		super()
-		@mergeOpt("cursor", default: "crosshair")
 		@addOpts
 			filter:
 				default: "*"

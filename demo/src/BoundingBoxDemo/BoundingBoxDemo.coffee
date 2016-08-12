@@ -11,35 +11,35 @@ class BoundingBoxDemo extends Demo
 		CUI.setTimeout =>
 			@setDegrees()
 
-		[
-			new Form
-				data: @data
-				onDataChanged: =>
-					@setDegrees()
-				fields: [
-					form:
-						label: "Degrees"
-					type: NumberInput
-					name: "degrees"
-				,
-					form:
-						label: "Width"
-					type: NumberInput
-					min: 0
-					name: "width"
-				,
-					form:
-						label: "Height"
-					type: NumberInput
-					min: 0
-					name: "height"
-				]
-			.start()
-		,
-			@bb
-		,
-			@bb_inner
-		]
+		form = new Form
+			data: @data
+			onDataChanged: =>
+				@setDegrees()
+			fields: [
+				form:
+					label: "Degrees"
+				type: NumberInput
+				name: "degrees"
+			,
+				form:
+					label: "Width"
+				type: NumberInput
+				min: 0
+				name: "width"
+			,
+				form:
+					label: "Height"
+				type: NumberInput
+				min: 0
+				name: "height"
+			]
+		.start()
+
+		new VerticalLayout
+			top:
+				content: form
+			center:
+				content: [@bb, @bb_inner]
 
 	rotateCorner: (x,y,degree) ->
 		radian = degree / 180 * Math.PI

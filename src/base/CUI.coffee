@@ -100,9 +100,20 @@ class CUI
 	@loadTheme: (name) ->
 		new_theme = @getTheme(name)
 		assert(new_theme, "CUI.loadThemeByName", "Theme #{name} not found", themes: @getThemeNames())
-		new_theme.load().done =>
-			DOM.setAttribute(document.body, "cui-theme", name)
-			@__activeTheme = new_theme
+
+		old_theme = @__activeTheme
+
+		set_active_theme = (theme) =>
+			DOM.setAttribute(document.body, "cui-theme", theme?.getName())
+			@__activeTheme = theme
+
+		# we set this before the load, so users can access the
+		# active theme right from the start
+		set_active_theme(new_theme)
+
+		new_theme.load().fail =>
+			set_active_theme(old_theme)
+
 
 	@getActiveTheme: ->
 		@__activeTheme

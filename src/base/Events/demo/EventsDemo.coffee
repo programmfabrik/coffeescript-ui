@@ -46,6 +46,7 @@ class EventsDemo extends Demo
 			do (k, v) =>
 				Events.listen
 					type: "click"
+					instance: @
 					node: tmpl.map[k][0]
 					call: (ev) =>
 						CUI.debug "clicked on ", k, v
@@ -106,6 +107,7 @@ class EventsDemo extends Demo
 				Events.listen
 					type: "flash-ring"
 					node: window
+					instance: @
 					capture: capture
 					call: (ev) =>
 						if capture and not data.listen_to_capture
@@ -117,6 +119,7 @@ class EventsDemo extends Demo
 				Events.listen
 					type: "flash-ring"
 					node: document
+					instance: @
 					capture: capture
 					call: (ev) =>
 						if capture and not data.listen_to_capture
@@ -128,6 +131,7 @@ class EventsDemo extends Demo
 				Events.listen
 					type: "flash-ring"
 					node: document.documentElement
+					instance: @
 					capture: capture
 					call: (ev) =>
 						if capture and not data.listen_to_capture
@@ -140,6 +144,7 @@ class EventsDemo extends Demo
 				Events.listen
 					type: "flash-ring"
 					node: document.body
+					instance: @
 					capture: capture
 					call: (ev) =>
 						if capture and not data.listen_to_capture
@@ -154,6 +159,7 @@ class EventsDemo extends Demo
 				Events.listen
 					type: "flash-ring"
 					capture: true
+					instance: @
 					node: node
 					call: (ev) =>
 						if not data.listen_to_capture
@@ -164,6 +170,7 @@ class EventsDemo extends Demo
 
 				Events.listen
 					type: "flash-ring"
+					instance: @
 					node: node
 					call: (ev) =>
 						@flash(node)
@@ -184,6 +191,7 @@ class EventsDemo extends Demo
 			Events.listen
 				node: node
 				type: k
+				instance: @
 				capture: true
 				call: (ev) =>
 					if data.listen[ev.getType()]
@@ -208,6 +216,9 @@ class EventsDemo extends Demo
 
 		tmpl.append(button_test, "pointer_events")
 		tmpl
+
+	undisplay: ->
+		Events.ignore(instance: @)
 
 	flashQueue: []
 

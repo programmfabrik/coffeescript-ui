@@ -26,3 +26,4 @@ class CUI.Test
 		for test in @tests
 			CUI.info("Running Test", getObjectClass(test))
 			test.run()
+		return

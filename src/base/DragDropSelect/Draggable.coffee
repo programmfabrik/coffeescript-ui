@@ -34,9 +34,6 @@ class Draggable extends DragDropSelect
 			axis:
 				check: ["x","y"]
 
-			cursor:
-				check: String
-
 			helper_remove_always:
 				check: Boolean
 
@@ -58,19 +55,6 @@ class Draggable extends DragDropSelect
 			selector:
 				check: (v) =>
 					isString(v) or CUI.isFunction(v)
-
-
-	readOpts: ->
-		super()
-		if not @_cursor
-			@_cursor = switch @_axis
-				when "x"
-					"ew-resize"
-				when "y"
-					"ns-resize"
-				else
-					"move"
-
 
 	destroy: ->
 		super()
@@ -160,7 +144,6 @@ class Draggable extends DragDropSelect
 				left: $target[0].scrollLeft
 			start: position
 			threshold: @_threshold
-			cursor: @_cursor
 
 		# CUI.debug "drag drop init", init
 
@@ -227,15 +210,18 @@ class Draggable extends DragDropSelect
 				# ok, in firefox the target of the mousemove
 				# event is WRONG while dragging. we need to overwrite
 				# this with elementFromPoint, true story :(
-				$target = $(ev.getPointTarget())
-
+				pointTarget = ev.getPointTarget()
 				kill_timeout()
+
+				if not pointTarget
+					return
+
+				$target = $(pointTarget)
 				dragover_scroll(ev)
 
 				if globalDrag.dragend
 					return
 
-				@set_cursor($target)
 				coordinates = getCoordinatesFromEvent(ev)
 				diff =
 					x: coordinates.pageX - globalDrag.startCoordinates.pageX
@@ -283,7 +269,6 @@ class Draggable extends DragDropSelect
 				# CUI.debug "draggable", ev.type
 				#
 				globalDrag.dragend = true
-				@reset_cursor()
 				if globalDrag.dragStarted
 					@end_drag(ev)
 					@_dragend?(ev, globalDrag, @)
@@ -291,25 +276,6 @@ class Draggable extends DragDropSelect
 				# CUI.debug "mouseup, resetting drag stuff"
 				#
 		return
-
-
-	set_cursor: ($target) ->
-		# CUI.debug "set cursor on ", $target[0], @options.cursor
-		# set cursor
-		if isUndef $target[0]._cursor
-			$target[0]._cursor = $target.prop("style").cursor || ""
-			$target.addClass("drag-drop-select-cursor")
-		# always set cursor in style
-		$target.css cursor: globalDrag.cursor
-
-	reset_cursor: ->
-		# reset all cursors added by us
-		for el in $(".drag-drop-select-cursor")
-			# CUI.debug "reset set cursor on",el
-			$el = $(el)
-			$el.removeClass("drag-drop-select-cursor")
-			$el.css(cursor: el._cursor)
-			delete(el._cursor)
 
 	# call after first mousedown
 	before_drag: ->
@@ -498,6 +464,13 @@ class Draggable extends DragDropSelect
 			# marginBottom: 0
 			width: "#{$el.width()}px"
 			height: "#{$el.height()}px"
+
+		dim = DOM.getDimensions($el[0])
+					# fix width / height
+		DOM.setDimensions clone[0],
+			marginBoxWidth: dim.marginBoxWidth
+			marginBoxHeight: dim.marginBoxHeight
+
 		clone
 
 	init_helper: ->
@@ -522,11 +495,7 @@ class Draggable extends DragDropSelect
 			globalDrag.helperNode = null
 
 		if globalDrag.helperNode
-			globalDrag.helperNode.css(cursor: @_cursor)
 			globalDrag.helperNode.addClass("drag-drop-select-helper")
-
-			globalDrag.helperNode.find("*").css(cursor: @_cursor)
-
 
 			Events.listen
 				type: "contextmenu"
@@ -570,21 +539,19 @@ class Draggable extends DragDropSelect
 				left: -1000
 				position: "absolute"
 
-			# fix width / height
-			globalDrag.helperNode.css
-				width: globalDrag.helperNode.width()+1 # compansate for possible floats
-				height: globalDrag.helperNode.height()+1 # compansate for possible floats
 
 			globalDrag.helperNode.css
 				top: "#{relPos.top}px"
 				left: "#{relPos.left}px"
 				zIndex: 99999
 
-			relPos.width = globalDrag.helperNode.outerWidth(true)
-			relPos.height = globalDrag.helperNode.outerHeight(true)
+			dim = DOM.getDimensions(globalDrag.helperNode[0])
 
-			relPos.marginTop = globalDrag.helperNode.cssInt("marginTop")
-			relPos.marginLeft = globalDrag.helperNode.cssInt("marginLeft")
+			relPos.width = dim.marginBoxWidth
+			relPos.height = dim.marginBoxHeight
+
+			relPos.marginTop = dim.marginTop
+			relPos.marginLeft = dim.marginLeft
 
 			globalDrag.helperNodeStart = relPos
 

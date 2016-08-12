@@ -150,7 +150,6 @@ div {
 
 // VerticalLayout
 .cui-vertical-layout.cui-maximize-vertical {
-	flex-direction: column;
 	flex: 1 1 auto;
 	align-items: stretch;
 	overflow: hidden;
@@ -161,12 +160,10 @@ div {
 		position: relative;
 		flex: 0 0 auto;
 		overflow: hidden;
-		flex-direction: column;
 	}
 	> .cui-vertical-layout-center {
 		position: relative;
 		flex: 1 1 auto;
-		flex-direction: column;
 		overflow: auto;
 	}
 }
@@ -221,38 +218,65 @@ div {
 	display: none;
 }
 
+.cui-flex-handle {
+	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
+		.cui-label {
+			display: none;
+		}
+	}
+}
 
 .cui-flex-handle-row {
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
 		width: 20px;
-		margin: 0 3px;
-		background-color: #ffc3c3;
-		.cui-label {
-			transform: rotateZ(-90deg) translateX(-100%);
-			transform-origin: top left;
-			display: inline-block;
+		.cui-label.cui-tmpl-label-rotate-90 {
+			.cui-label-transform {
+				// the difference to the normal rotate-90 is that
+				// we want to touch the label the "top" and not
+				// start from the "bottom"
+				transform: rotateZ(-90deg) translateY(-3px) translate(calc(-100% - 3px));
+				transform-origin: left top;
+			}
 		}
-	}
-
-	.cui-label {
-		display: none;
 	}
 
 	width: 6px;
 	flex: 0 0 auto;
 	overflow: hidden;
-	border: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 	background-color: #64b6fd;
 	cursor: ew-resize;
+	&.cui-flex-handle-manual-size {
+		background-color: #64fdd8;
+	}
 }
 
 .cui-flex-handle-column {
+	&.cui-flex-handle-has-label.cui-flex-handle-closed {
+		height: 20px;
+	}
+
+	&.cui-flex-handle-manual-size {
+		background-color: #64fdd8;
+	}
+
 	height: 6px;
 	flex: 0 0 auto;
 	overflow: hidden;
-	border: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
 	background-color: #64b6fd;
 	cursor: ns-resize;
+}
+
+
+.cui-flex-handle-stretched {
+	flex: 1 1 auto !important;
+}
+
+.cui-flex-handle-hide-for-stretch {
+	display: none;
 }
 
 
@@ -286,6 +310,17 @@ div {
         }
 }
 
+// BorderLayout
+
+.cui-border-layout-north,
+.cui-border-layout-south {
+	background-color: #ffd890;
+}
+
+.cui-border-layout-west,
+.cui-border-layout-east {
+	background-color: #ffefd1;
+}
 
 // Toolbar
 .cui-toolbar {
@@ -495,16 +530,15 @@ a[role="button"].cui-button-appearance-link {
 	padding: 0 3px;
 	&.cui-tmpl-label-rotate-90 {
 		// rotate by 90 degrees
-		width: 20px;
-		height: 150px;
-		overflow: hidden;
 		white-space: nowrap;
-		align-self: center;
+		align-self: flex-start;
 		> .cui-label-transform {
-			width: 150px;
-			height: 20px;
-			transform: rotateZ(-90deg) translateX(-150px);
-			transform-origin: left top 0;
+			// the transform-origin is the corner
+			// of the content, so the padding
+			// moved the origin to the right.
+			// we need to compensate for that
+			transform: rotateZ(-90deg) translateY(calc(100% - 3px)) translateX(3px);
+			transform-origin: left bottom;
 		}
 	}
 	> .cui-label-icon {
@@ -886,6 +920,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-td {
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
+		height: 100px;
 	}
 	&:not(.cui-lv-td-fill) {
 		padding: 1px;
@@ -1115,10 +1150,127 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// Drag & Drop
+
+.cui-drag-drop-select-transparent {
+	pointer-events: none !important;
+	* {
+		pointer-events: none !important;
+	}
+}
+
+
+
+// Droppable
+
+.cui-droppable {
+	// marks an active droppable
+	opacity: 0.5;
+}
+
+// Movable
+.cui-drag-drop-select-movable {
+	cursor: move;
+}
+
+// Resizable
+.cui-drag-drop-select-resizable {
+	position: relative;
+}
+
+.cui-resizable-handle {
+	position: absolute;
+
+	&.cui-resizable-handle-se {
+		bottom: -8px;
+		right: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-nw {
+		top: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-sw {
+		bottom: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-ne {
+		right: -8px;
+		top: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-s {
+		left: 8px;
+		right: 8px;
+		bottom: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-n {
+		left: 8px;
+		right: 8px;
+		top: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-e {
+		right: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+
+	&.cui-resizable-handle-w {
+		left: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+}
+
+
+// Lasso
+.cui-lasso-area {
+	position: relative;
+}
+
+.cui-lasso {
+	position: absolute;
+	background-color: rgba(135, 198, 253, 0.35);
+	display: block;
+	border: 2px dotted rgba(135, 198, 253, 0.8);
+}
+
+.cui-drag-drop-select-lasso-element-in-lasso {
+	opacity: 0.8;
+}
+
+
+
+
 // Block
 
 .cui-tmpl-block {
 	background-color: #b7ecec;
+	border: 1px solid blue;
 	> .cui-block-header {
 		font-weight: bold;
 	}

@@ -4,23 +4,25 @@ class BorderLayoutDemo extends Demo
 			class: "cui-border-layout-demo"
 			east:
 				flexHandle: {}
-				content: "East"
+				content: new Label(text: "East")
 			west:
 				flexHandle: {}
-				content: "West"
+				content: new Label(text: "West")
 			center:
-				content: "Center"
+				content: new Label(text: "Center")
 			south:
-				flexHandle: {}
+				flexHandle:
+					label:
+						text: "South"
 				content: [
-					"South"
+					new Label(text: "South")
 					FlexHandle.getStretchButton
 						direction: "north"
 				]
 			north:
 				flexHandle: {}
 				content: [
-					"North"
+					new Label(text: "North")
 				,
 					FlexHandle.getStretchButton
 						direction: "south"
@@ -33,9 +35,11 @@ class BorderLayoutDemo extends Demo
 		opts_inner =
 			class: "border-layout-demo-inner"
 			east:
-				flexHandle: {}
+				flexHandle:
+					label:
+						text: "East"
 				content: [
-					"East"
+					new Label(text: "East")
 				,
 					new Label
 						text: "Horst Label"
@@ -43,12 +47,12 @@ class BorderLayoutDemo extends Demo
 				]
 			west:
 				flexHandle: {}
-				content: "West"
+				content: new Label(text: "West")
 			center:
-				content: "Center"
+				content: new Label(text: "Center")
 			north:
 				flexHandle: {}
-				content: "North"
+				content: new Label(text: "North")
 
 
 		@border_layout_inner = new BorderLayout(opts_inner)
@@ -57,18 +61,22 @@ class BorderLayoutDemo extends Demo
 
 		@borderLayout = new BorderLayout(opts)
 
+		flex_handle_south = @borderLayout.getFlexHandle("south")
+
 		flex_handle_west = @border_layout_inner.getFlexHandle("west")
 
 		flex_handle_east = @border_layout_inner.getFlexHandle("east")
 
 		show_hide_west_button = new Button
 			text: "West"
+			switch: true
 			active: flex_handle_west.isShown()
-			radio: "hideme"
 			onClick: =>
 				if not show_hide_west_button.isActive()
+					flex_handle_west.close()
 					flex_handle_west.hide()
 				else
+					flex_handle_west.open()
 					flex_handle_west.show()
 
 		show_hide_east_button = new Button
@@ -81,6 +89,19 @@ class BorderLayoutDemo extends Demo
 				else
 					flex_handle_east.open()
 					show_hide_east_button.setText("Close East")
+
+
+		show_hide_south_button = new Button
+			class: "big-button"
+			text: "Close South"
+			onClick: =>
+				if flex_handle_south.isOpen()
+					flex_handle_south.close()
+					show_hide_south_button.setText("Open South")
+				else
+					flex_handle_south.open()
+					show_hide_south_button.setText("Close South")
+
 
 		stretch_east_button = FlexHandle.getStretchButton
 			flexHandle: flex_handle_east
@@ -96,9 +117,11 @@ class BorderLayoutDemo extends Demo
 		@border_layout_inner.replace(new Buttonbar(buttons: [
 			show_hide_west_button
 			show_hide_east_button
+			show_hide_south_button
 			stretch_east_button
 			stretch_west_button
 		]), "north")
+
 		@annotate()
 
 		@borderLayout.DOM
