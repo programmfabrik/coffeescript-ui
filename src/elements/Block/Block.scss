@@ -3,7 +3,7 @@
 //can be used to format other text then only labels
 @mixin format_block_header_text($text_selector: "div") {
 	@for $i from 1 through 3 {
-		&.appearance-#{nth($block_type,$i)} {
+		&.cui-block-level-#{$i} {
 
 			@include ASSERT_TYPE(cui-block);
 
