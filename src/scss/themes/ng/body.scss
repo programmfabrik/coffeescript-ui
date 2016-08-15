@@ -68,7 +68,7 @@ div {
 // Flex for selected TABLE
 
 table {
-	&.cui-form,
+	&.cui-form-table,
 	&.cui-date-time-date {
 
 		display: flex; // yes, this is fun :)
@@ -81,21 +81,21 @@ table {
 			box-sizing: border-box;
 			flex: 1 1 auto;
 			flex-direction: column;
-		}
 
-		> tr {
-			display: flex; // yes, this is fun :)
-			box-sizing: border-box;
-			flex: 1 1 auto;
-			flex-direction: row;
-		}
+			> tr {
+				display: flex; // yes, this is fun :)
+				box-sizing: border-box;
+				flex: 1 1 auto;
+				flex-direction: row;
 
-		> td {
-			display: flex; // yes, this is fun :)
-			box-sizing: border-box;
-			flex: 0 0 auto;
-			flex-direction: column;
-			align-items: stretch;
+				> td {
+					display: flex; // yes, this is fun :)
+					box-sizing: border-box;
+					flex: 0 0 auto;
+					flex-direction: column;
+					align-items: stretch;
+				}
+			}
 		}
 	}
 }
