@@ -1,4 +1,7 @@
 class MarkdownInputDemo extends Demo
+	getGroup: ->
+		"Extra"
+
 	display: ->
 		data = {}
 

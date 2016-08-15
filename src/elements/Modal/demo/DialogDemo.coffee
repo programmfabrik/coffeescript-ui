@@ -1,4 +1,4 @@
-class ModalDemo extends Demo
+class DialogDemo extends Demo
 
 	__addDivider: (text) ->
 		@demo_table.addDivider(text)
@@ -450,4 +450,4 @@ class ModalDemo extends Demo
 				]
 
 
-Demo.register(new ModalDemo())
+Demo.register(new DialogDemo())

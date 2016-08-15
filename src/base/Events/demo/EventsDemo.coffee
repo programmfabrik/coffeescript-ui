@@ -1,4 +1,7 @@
 class EventsDemo extends Demo
+	getGroup: ->
+		"Core"
+
 	display: ->
 		display = []
 

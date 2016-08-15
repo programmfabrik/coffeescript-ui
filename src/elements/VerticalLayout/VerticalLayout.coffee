@@ -1,5 +1,5 @@
 
-class VerticalLayout extends Layout
+class CUI.VerticalLayout extends CUI.Layout
 
 	# @return [String] css name of this class , excluding namespace prefix
 	getName: ->
@@ -39,3 +39,5 @@ class VerticalLayout extends Layout
 
 	getSupportedPanes: ->
 		["top", "bottom"]
+
+VerticalLayout = CUI.VerticalLayout

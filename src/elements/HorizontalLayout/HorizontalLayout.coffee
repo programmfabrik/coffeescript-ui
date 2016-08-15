@@ -1,5 +1,5 @@
 
-class HorizontalLayout extends Layout
+class CUI.HorizontalLayout extends CUI.Layout
 
 	# @return [String] css name of this class , excluding namespace prefix
 	getName: ->
@@ -39,3 +39,5 @@ class HorizontalLayout extends Layout
 
 	getSupportedPanes: ->
 		["left", "right"]
+
+HorizontalLayout = CUI.HorizontalLayout

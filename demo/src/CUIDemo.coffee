@@ -1,4 +1,10 @@
 class CUIDemo extends Demo
+	getName: ->
+		"Form Elements"
+
+	getGroup: ->
+		"Test"
+
 	display: ->
 
 		# output a control bar

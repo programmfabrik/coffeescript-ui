@@ -1,4 +1,5 @@
 class DigiDisplay extends DOM
+
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__digitsMap = []

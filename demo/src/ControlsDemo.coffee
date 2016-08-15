@@ -1,4 +1,6 @@
 class ControlsDemo extends Demo
+	getGroup: ->
+		"Test"
 
 	addControlExample: (text,control) ->
 		control.addClass("cui-control")

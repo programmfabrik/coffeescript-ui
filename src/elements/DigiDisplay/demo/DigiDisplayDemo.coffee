@@ -1,4 +1,7 @@
 class DigiDisplayDemo extends Demo
+	getGroup: ->
+		"Extra"
+
 	display: ->
 		dd = new DigiDisplay
 			digits: [

@@ -1,4 +1,4 @@
-class TreeListViewDemo extends Demo
+class ListViewTreeDemo extends Demo
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -58,7 +58,7 @@ class TreeListViewDemo extends Demo
 						group: "plus-minus"
 						icon: new Icon(class: "fa-plus")
 						onClick: =>
-							_lv.addNode(new TreeListViewDemoDummyNode(demo: @, date: new Date()))
+							_lv.addNode(new ListViewTreeDemoDummyNode(demo: @, date: new Date()))
 					new Button
 						group: "plus-minus"
 						icon: new Icon(class: "fa-plus")
@@ -92,7 +92,7 @@ class TreeListViewDemo extends Demo
 		maximized_list_viewOptions = copyObject(first_list_viewOptions, true)
 		plaintableListviewOptions = copyObject(first_list_viewOptions, true)
 
-		first_list_viewOptions.root = new TreeListViewDemoNode(demo: @)
+		first_list_viewOptions.root = new ListViewTreeDemoNode(demo: @)
 		first_list_viewOptions.selectable = true
 		first_list_viewOptions.header_center = "Fill Space ListView:"
 		first_list_viewOptions.footer_left = get_footer
@@ -105,32 +105,32 @@ class TreeListViewDemo extends Demo
 				content: $div()
 
 
-		connected_list_view1_option.root = new TreeListViewDemoNode(demo: @)
+		connected_list_view1_option.root = new ListViewTreeDemoNode(demo: @)
 		connected_list_view1_option.cols = ["auto", "auto", "auto", "auto"]
 		connected_list_view1_option.class = "list-view-demo-fixed-width"
 		connected_list_view1_option.header_left = "1:"
 		connected_list_view1_option.maximize = false
 
-		connected_list_view2_option.root = new TreeListViewDemoNode(demo: @)
+		connected_list_view2_option.root = new ListViewTreeDemoNode(demo: @)
 		connected_list_view2_option.class = "list-view-demo-fixed-width"
 		connected_list_view2_option.header_left = "2:"
 		connected_list_view2_option.cols = ["auto", "auto", "auto", "auto"]
 		connected_list_view2_option.maximize = false
 
-		connected_list_view3_option.root = new TreeListViewDemoNode(demo: @)
+		connected_list_view3_option.root = new ListViewTreeDemoNode(demo: @)
 		connected_list_view3_option.class = "list-view-demo-fixed-width"
 		connected_list_view3_option.header_left = "3:"
 		connected_list_view3_option.cols = ["auto", "auto", "auto", "auto"]
 		connected_list_view3_option.maximize = false
 
-		unmaximized_list_viewOptions.root = new TreeListViewDemoNode(demo: @)
+		unmaximized_list_viewOptions.root = new ListViewTreeDemoNode(demo: @)
 		unmaximized_list_viewOptions.cols = ["auto", "auto", "auto", "auto"]
 		unmaximized_list_viewOptions.maximize = false
 		#unmaximized_list_viewOptions.header_center = "Unmaximized ListView"
 		unmaximized_list_viewOptions.selectable = true
 		unmaximized_list_viewOptions.footer_left = get_footer
 
-		maximized_list_viewOptions.root = new TreeListViewDemoNode(demo: @)
+		maximized_list_viewOptions.root = new ListViewTreeDemoNode(demo: @)
 		maximized_list_viewOptions.class = "list-view-demo-fixed-width"
 		#maximized_list_viewOptions.header_center = "Maximized ListView"
 		maximized_list_viewOptions.selectable = true
@@ -168,23 +168,23 @@ class TreeListViewDemo extends Demo
 
 
 		@root_layout.getLayout().replace(first_list_view.render(),"left")
-		first_list_view.appendRow(new TreeListViewDemoHeaderNode())
+		first_list_view.appendRow(new ListViewTreeDemoHeaderNode())
 		return @root_layout.DOM
 
 		@root_layout.getLayout().map.center.append(connected_list_view_layout.DOM)
 		@root_layout.getLayout().replace(tabs.DOM,"right")
 
 
-		connected_list_view1.appendRow(new TreeListViewDemoHeaderNode())
-		connected_list_view2.appendRow(new TreeListViewDemoHeaderNode())
-		connected_list_view3.appendRow(new TreeListViewDemoHeaderNode())
-		unmaximized_list_view.appendRow(new TreeListViewDemoHeaderNode())
-		#maximized_list_view.appendRow(new TreeListViewDemoHeaderNode())
+		connected_list_view1.appendRow(new ListViewTreeDemoHeaderNode())
+		connected_list_view2.appendRow(new ListViewTreeDemoHeaderNode())
+		connected_list_view3.appendRow(new ListViewTreeDemoHeaderNode())
+		unmaximized_list_view.appendRow(new ListViewTreeDemoHeaderNode())
+		#maximized_list_view.appendRow(new ListViewTreeDemoHeaderNode())
 
 		@root_layout.DOM
 
 
-class TreeListViewDemoDummyNode extends ListViewTreeNode
+class ListViewTreeDemoDummyNode extends ListViewTreeNode
 	constructor: (@opts={}) ->
 		@demo = @opts.demo
 		super(@opts)
@@ -193,7 +193,7 @@ class TreeListViewDemoDummyNode extends ListViewTreeNode
 		super()
 		@addOpts
 			demo:
-				check: TreeListViewDemo
+				check: ListViewTreeDemo
 			date:
 				check: (v) ->
 					v instanceof Date
@@ -225,7 +225,7 @@ class TreeListViewDemoDummyNode extends ListViewTreeNode
 		# @addColumn(new ListViewColumn(text: dateToString(@opts.date)))
 		"Added Manually"
 
-class TreeListViewDemoHeaderNode extends ListViewRow
+class ListViewTreeDemoHeaderNode extends ListViewRow
 	constructor: ->
 		super()
 		@addColumn(new ListViewColumn(text: "Node"))
@@ -234,7 +234,7 @@ class TreeListViewDemoHeaderNode extends ListViewRow
 		@addColumn(new ListViewColumn(text: "Date"))
 
 
-class TreeListViewDemoNode extends ListViewTreeNode
+class ListViewTreeDemoNode extends ListViewTreeNode
 	constructor: (@opts={}) ->
 
 		@demo = @opts.demo
@@ -245,7 +245,7 @@ class TreeListViewDemoNode extends ListViewTreeNode
 		super()
 		@addOpts
 			demo:
-				check: TreeListViewDemo
+				check: ListViewTreeDemo
 			file:
 				check: "PlainObject"
 			leaf:
@@ -257,7 +257,7 @@ class TreeListViewDemoNode extends ListViewTreeNode
 		children = []
 
 		push_file = (file) =>
-			children.push(new TreeListViewDemoNode(demo: @demo, file: file, leaf: file.type == "f"))
+			children.push(new ListViewTreeDemoNode(demo: @demo, file: file, leaf: file.type == "f"))
 
 		if not @file
 			@demo.loadFiles()
@@ -285,7 +285,7 @@ class TreeListViewDemoNode extends ListViewTreeNode
 		@addColumn(new ListViewColumn(text: dateToString(@file.date)))
 		@file.name
 
-class ListViewNestedNode extends TreeListViewDemoNode
+class ListViewNestedNode extends ListViewTreeDemoNode
 	constructor: (@opts={}) ->
 		@cols = @opts.cols
 		@opts.leaf = true
@@ -349,4 +349,4 @@ dateToString = (d) ->
 	d.toLocaleDateString()+" "+d.toLocaleTimeString()
 
 
-Demo.register(new TreeListViewDemo())
+Demo.register(new ListViewTreeDemo())

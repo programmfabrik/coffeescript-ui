@@ -196,3 +196,45 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 .mark-lassoed {
 	background-color: red;
 }
+
+
+// LayoutDemo
+
+.cui-layout-demo-playground {
+	border-width: 2px;
+	background-color: #eff5ff;
+	padding: 10px;
+	.cui-horizontal-list,
+	.cui-vertical-list {
+		> div > .cui-label {
+			border-color: blue;
+			border-style: dotted;
+			border-width: 2px;
+		}
+	}
+	.cui-label {
+		font-weight: bold;
+	}
+	.cui-layout-demo-child {
+		> div {
+			border-color: green;
+			border-style: dotted;
+			padding: 5px;
+			border-width: 1px;
+			margin: 2px;
+		}
+		border-color: green;
+		border-style: solid;
+	}
+	.cui-layout-demo-parent {
+		border-color: red;
+		border-style: solid;
+		> div {
+			padding: 5px;
+			border-width: 1px;
+			border-style: dotted;
+			border-color: red;
+			margin: 2px;
+		}
+	}
+}

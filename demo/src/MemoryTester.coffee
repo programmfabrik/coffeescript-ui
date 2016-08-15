@@ -1,4 +1,6 @@
 class MemoryTester extends Demo
+	getGroup: ->
+		"Test"
 
 	display: ->
 		@vl = new VerticalLayout(top: {})

@@ -1,4 +1,4 @@
-class HorizontalList extends HorizontalLayout
+class CUI.HorizontalList extends CUI.HorizontalLayout
 	initOpts: ->
 		super()
 		@mergeOpt("maximize", default: false)
@@ -14,3 +14,5 @@ class HorizontalList extends HorizontalLayout
 	getSupportedPanes: ->
 		[]
 
+
+HorizontalList = CUI.HorizontalList

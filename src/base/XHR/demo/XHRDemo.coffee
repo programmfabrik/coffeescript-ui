@@ -1,4 +1,7 @@
 class XHRDemo extends Demo
+	getGroup: ->
+		"Core"
+
 	display: ->
 		log_xhr = (xhr) =>
 			html = []

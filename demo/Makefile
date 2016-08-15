@@ -4,12 +4,11 @@ call_scss = sass --scss --no-cache --sourcemap=inline
 coffee_files = src/demo.coffee \
 	src/CUIDemo.coffee \
 	src/ControlsDemo.coffee \
-	src/CUIPlayground.coffee \
-	src/PaddingDemo.coffee \
 	src/MemoryTester.coffee \
 	src/BoundingBoxDemo/BoundingBoxDemo.coffee \
 	../src/base/DragDropSelect/demo/DragDropSelectDemo.coffee \
 	../src/base/Events/demo/EventsDemo.coffee \
+	../src/base/Layout/demo/LayoutDemo.coffee \
 	../src/base/XHR/demo/XHRDemo.coffee \
 	../src/elements/Button/demo/ButtonDemo.coffee \
 	../src/elements/Label/demo/LabelDemo.coffee \
@@ -17,16 +16,13 @@ coffee_files = src/demo.coffee \
 	../src/elements/ProgressMeter/demo/ProgressMeterDemo.coffee \
     ../src/elements/Button/demo/ButtonbarDemo.coffee \
 	../src/elements/Menu/demo/MenuDemo.coffee \
-	../src/elements/ItemList/demo/ItemListDemo.coffee \
 	../src/elements/Input/demo/InputDemo.coffee \
 	../src/elements/MarkdownInput/demo/MarkdownInputDemo.coffee \
 	../src/elements/FileUpload/demo/FileUploadDemo.coffee \
-	../src/elements/Modal/demo/ModalDemo.coffee \
+	../src/elements/Modal/demo/DialogDemo.coffee \
 	../src/elements/Popover/demo/PopoverDemo.coffee \
 	../src/elements/Tooltip/demo/TooltipDemo.coffee \
 	../src/elements/BorderLayout/demo/BorderLayoutDemo.coffee \
-	../src/elements/HorizontalLayout/demo/HorizontalLayoutDemo.coffee \
-	../src/elements/VerticalLayout/demo/VerticalLayoutDemo.coffee \
 	../src/elements/Pane/demo/PaneDemo.coffee \
 	../src/elements/Tabs/demo/TabsDemo.coffee \
 	../src/elements/Panel/demo/PanelDemo.coffee \
@@ -34,7 +30,7 @@ coffee_files = src/demo.coffee \
 	../src/elements/Form/demo/FormDemo.coffee \
 	../src/elements/Form/demo/FormLayoutDemo.coffee \
 	../src/elements/ListView/demo/ListViewDemo.coffee \
-	../src/elements/ListView/demo/TreeListViewDemo.coffee \
+	../src/elements/ListView/demo/ListViewTreeDemo.coffee \
 	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee
 
 jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
@@ -62,7 +58,7 @@ html:
 	@cat ../src/base/*/demo/*html > $(target)/easydbui_demo.html
 	@cat ../src/elements/*/demo/*html >> $(target)/easydbui_demo.html
 
-css_ng:
+css_ng: jpg
 	#
 	# $@
 	mkdir -p $(target)/css
@@ -77,7 +73,7 @@ css_other:
 	$(call_scss) src/scss/themes/dark/main.scss $(target)/css/cui_demo_dark.css
 
 
-css: css_ng css_other jpg
+css: css_ng css_other
 
 jpg: $(jpg_files)
 	#

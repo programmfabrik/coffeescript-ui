@@ -1,4 +1,7 @@
 class CUI.XHR extends Element
+	getGroup: ->
+		"Core"
+
 	initOpts: ->
 		super()
 		@addOpts

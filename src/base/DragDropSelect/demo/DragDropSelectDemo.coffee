@@ -1,4 +1,7 @@
 class DragDropSelectDemo extends Demo
+	getName: ->
+		"Drag & Drop"
+
 	display: ->
 
 

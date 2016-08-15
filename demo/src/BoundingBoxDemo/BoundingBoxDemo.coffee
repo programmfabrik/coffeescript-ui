@@ -1,4 +1,7 @@
 class BoundingBoxDemo extends Demo
+	getGroup: ->
+		"Demo"
+
 	display: ->
 		@bb = $div("cui-bounding-box-demo-bounding-box")
 		@bb_inner = $div("cui-bounding-box-demo-inner")

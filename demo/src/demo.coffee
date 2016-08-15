@@ -25,6 +25,9 @@ class Demo extends DOM
 			rs.push(r)
 		rs.join(" ")
 
+	getGroup: ->
+		"Base"
+
 	getName: ->
 		s = getObjectClass(@)
 		if s.endsWith("Demo")
@@ -100,6 +103,7 @@ class RunDemo extends Element
 			map:
 				body: true
 
+		groups = ["Core", "Base", "Extra", "Demo", "Test"].reverse()
 
 		@menuBtn = new Button
 			class: "cui-demo-menu-button"
@@ -107,15 +111,33 @@ class RunDemo extends Element
 				active_item_idx: null
 				items: =>
 					items = []
-					for demo in @demos
+					demos = @demos.slice(0)
+
+					demos.sort (a, b) ->
+
+						a_group_id = 1000-(idxInArray(a.getGroup(), groups)+1)
+						b_group_id = 1000-(idxInArray(b.getGroup(), groups)+1)
+
+						compareIndex(a_group_id+"_"+a.getName(), b_group_id+"_"+b.getName())
+
+					old_group = null
+
+					for demo in demos
+						demo.getGroup()
+						if old_group != demo.getGroup()
+							old_group = demo.getGroup()
+							items.push(label: old_group)
+
+						group_sort = (1000-(idxInArray(demo.getGroup(), groups)+1))+""
+
 						do (demo) =>
 							items.push
 								active: demo == @current_demo
+								# text: demo.getGroup()+" - "+demo.getName()
 								text: demo.getName()
+								_demo: demo
 								onClick: =>
 									document.location.hash = "##{demo.getName()}"
-					items.sort (a,b) ->
-						compareIndex(a.text, b.text)
 					items
 
 			icon: new Icon
@@ -297,6 +319,10 @@ class DemoTable
 		if controls
 			row_elements.push(controls)
 		@table.append($tr_one_row( row_elements ))
+
+	addRow: ->
+		@table.append($tr_one_row.apply(@, argumnets))
+
 
 
 CUI.ready ->

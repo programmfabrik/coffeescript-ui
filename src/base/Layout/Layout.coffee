@@ -2,7 +2,7 @@
 # {VerticalLayout}, {BorderLayout}, {Toolbar}, {Pane}, etc.
 #
 # It features an automatic {Buttonbar} generation for all panes (see {Layout#append})
-class Layout extends DOM
+class CUI.Layout extends DOM
 
 	#Construct a new Layout.
 	#
@@ -26,6 +26,10 @@ class Layout extends DOM
 			maximize_horizontal:
 				check: Boolean
 			maximize_vertical:
+				check: Boolean
+			auto_buttonbar:
+				default: true
+				mandatory: true
 				check: Boolean
 			center:
 				default: {}
@@ -291,13 +295,13 @@ class Layout extends DOM
 	# @param [Boolean] auto_buttonbar if set to true (default), automatically generate a {Buttonbar} for Buttons passed directly, in an Array or thru a Function
 	#
 	# @return [jQuery] the DOM node (created and) appended
-	append: (value, key, auto_buttonbar = true) ->
+	append: (value, key, auto_buttonbar = @_auto_buttonbar) ->
 		if auto_buttonbar
 			return @__callAutoButtonbar(value, key)
 		else
 			return super(value, key)
 
-	replace: (value, key, auto_buttonbar = true) ->
+	replace: (value, key, auto_buttonbar = @_auto_buttonbar) ->
 		if auto_buttonbar
 			delete(@__buttonbars[key])
 			@empty(key)
@@ -401,6 +405,8 @@ class Layout extends DOM
 
 	@all: ->
 		CUI.scheduleCallback(call: Layout.__all)
+
+Layout = CUI.Layout
 
 
 CUI.ready ->

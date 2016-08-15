@@ -413,6 +413,8 @@ class DataField extends DOM
 		@
 
 	setValue: (v, flags = {}) ->
+		if v == @getValue()
+			return
 		try
 			@checkValue(v, flags)
 		catch e

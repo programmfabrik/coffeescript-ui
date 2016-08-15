@@ -672,7 +672,7 @@ class Layer extends DOM
 				width = dim.borderBoxWidth
 			else
 				width = rect.width
-			console.error "Layer.__getLayoutDim: Set min-width on layer:", rect.width, dim.borderBoxWidth
+			# console.error "Layer.__getLayoutDim: Set min-width on layer:", rect.width, dim.borderBoxWidth
 		else
 			width = rect.width
 
@@ -986,7 +986,7 @@ class Layer extends DOM
 			@__fixed_layer_dim.height = @__layer_dim.height
 			@__fixed_layer_dim._css_height = @__layer_dim.height - @__layer.DOM.cssEdgeSpace("vertical", true)
 
-		console.error "set fixed dimensions", @__fixed_layer_dim, @_fill_space
+		# console.error "set fixed dimensions", @__fixed_layer_dim, @_fill_space
 
 		@__setLayerSizeFromFixedDimensions()
 

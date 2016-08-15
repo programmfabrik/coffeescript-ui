@@ -1,4 +1,4 @@
-class VerticalList extends VerticalLayout
+class CUI.VerticalList extends CUI.VerticalLayout
 	initOpts: ->
 		super()
 		@mergeOpt("maximize", default: false)
@@ -13,3 +13,6 @@ class VerticalList extends VerticalLayout
 
 	getSupportedPanes: ->
 		[]
+
+
+VerticalList = CUI.VerticalList

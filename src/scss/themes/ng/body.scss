@@ -2,9 +2,9 @@
 
 // reset
 
+
 table {
 	border-collapse: collapse;
-
 }
 
 td {
@@ -65,53 +65,99 @@ div {
 	flex-direction: column;
 }
 
+// Flex for selected TABLE
+
+table {
+	&.cui-form,
+	&.cui-date-time-date {
+
+		display: flex; // yes, this is fun :)
+		box-sizing: border-box;
+		flex: 0 0 auto;
+		flex-direction: column;
+
+		> tbody {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 1 1 auto;
+			flex-direction: column;
+		}
+
+		> tr {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 1 1 auto;
+			flex-direction: row;
+		}
+
+		> td {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 0 0 auto;
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+}
+
+
 
 // HorizontalLayout
 .cui-horizontal-layout {
 	&.cui-maximize-horizontal {
 		flex-direction: row;
-		flex: 1 1 auto;
-		align-items: stretch;
 		overflow: hidden;
+
 		> .cui-horizontal-layout-left,
 		> .cui-horizontal-layout-right
 		{
 			position: relative;
-			flex: 0 0 auto;
-			flex-direction: row;
 			overflow: hidden;
 		}
 		> .cui-horizontal-layout-center {
+			position: relative;
 			flex: 1 1 auto;
-			overflow: hidden;
-
+			overflow: auto;
 		}
 	}
 
 	&.cui-maximize-vertical {
-		> .cui-horizontal-layout-center {
-			// this is needed to overwrite .cui-toolbar > div, which
-			// centers all items
-			align-items: stretch;
-		}
-	}
-
-	&:not(.cui-maximize-vertical) {
-		align-items: flex-start;
-
-		> .cui-horizontal-layout-center {
-			// only if we are slim, we align out center
-			// as row
-			flex-direction: row;
-		}
+		flex: 1 1 auto;
 	}
 
 	&:not(.cui-maximize-horizontal) {
 		flex-direction: row;
-		flex: 0 0 auto;
-		> div {
-			flex: 0 0 auto;
+		align-self: flex-start;
+	}
+}
+
+
+// VerticalLayout
+.cui-vertical-layout {
+	&.cui-maximize-vertical {
+		flex: 1 1 auto;
+		overflow: hidden;
+
+		> .cui-vertical-layout-top,
+		> .cui-vertical-layout-bottom {
+			position: relative;
+			overflow: hidden;
 		}
+		> .cui-vertical-layout-center {
+			position: relative;
+			flex: 1 1 auto;
+			overflow: auto;
+		}
+	}
+
+	&:not(.cui-maximize-horizontal) {
+		align-self: flex-start;
+	}
+}
+
+.cui-horizontal-list {
+	> .cui-horizontal-layout-center {
+		flex-direction: row;
 	}
 }
 
@@ -146,38 +192,6 @@ div {
 
 
 
-// VerticalLayout
-.cui-vertical-layout {
-	&.cui-maximize-vertical {
-		flex: 1 1 auto;
-		align-items: stretch;
-		overflow: hidden;
-		// height: 100%; <- solve a problem on Safari?
-
-		> .cui-vertical-layout-top,
-		> .cui-vertical-layout-bottom {
-			position: relative;
-			flex: 0 0 auto;
-			overflow: hidden;
-		}
-		> .cui-vertical-layout-center {
-			position: relative;
-			flex: 1 1 auto;
-			overflow: auto;
-		}
-	}
-
-	&:not(.cui-maximize-horizontal) {
-		align-items: flex-start;
-	}
-
-	&:not(.cui-maximize-vertical) {
-		flex: 0 0 auto;
-		> div {
-			flex: 0 0 auto;
-		}
-	}
-}
 
 
 // Layout Absolute Vertical
@@ -327,6 +341,7 @@ div {
 	background-color: rgba(34, 139, 243, 0.43);
 	padding: 3px;
 	> div {
+		flex-direction: row;
 		align-items: center;
 		> .cui-toolbar {
 			// nested toolbars do not get a padding
@@ -379,7 +394,7 @@ a[role="button"],.cui-button
 		background-color: #ff5200;
 	}
 	cursor: default;
-	display: flex;
+	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	overflow: hidden;
 	white-space: nowrap;
 	flex-direction: row;
@@ -529,6 +544,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: row;
 	flex: 0 0 auto;
 	align-items: stretch;
+	align-self: flex-start;
 
 	padding: 0 3px;
 	&.cui-tmpl-label-rotate-90 {
@@ -559,6 +575,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-label-multiline {
+		align-self: stretch;
 		white-space: pre-wrap;
 		word-break: normal;
 
@@ -1056,39 +1073,26 @@ a[role="button"].cui-button-appearance-link {
 
 // Form
 .cui-form {
-	background: rgba(187, 187, 54, 0.71);
+	background: rgba(187, 187, 54, 0.5);
 }
 
-
-.cui-form-table-has-not-left-column
-{
-	> .cui-form-tr-outer > .cui-form-tr
-	{
-		> .cui-form-td-left
-		{
+.cui-form-table-has-not-left-column {
+	> tbody > tr > .cui-form-td.cui-form-left {
 			display: none;
-		}
 	}
 }
 
-.cui-form-table-has-not-right-column
-{
-	> .cui-form-tr-outer > .cui-form-tr
-	{
-		> .cui-form-td-right
-		{
-			display: none;
-		}
+.cui-form-table-has-not-right-column {
+	> tbody > tr > .cui-form-td.cui-form-right {
+		display: none;
 	}
 }
 
 .cui-form[cui-data-field-form-depth="0"] {
 	> .cui-vertical-layout-center {
 		> .cui-form-table {
-			> .cui-form-tr-outer:last-child {
-				> .cui-form-tr {
-					border-color: #ff44ee;
-				}
+			> tbody > tr:last-child {
+				border-color: #ff44ee;
 			}
 		}
 	}
@@ -1097,52 +1101,44 @@ a[role="button"].cui-button-appearance-link {
 .cui-form:not([cui-data-field-form-depth="0"]) {
 	> .cui-vertical-layout-center {
 		> .cui-form-table {
-			> .cui-form-tr-outer:last-child {
-				> .cui-form-tr {
-					border-style: none;
-				}
+			> tbody > tr:last-child {
+				border-style: none;
 			}
 		}
 	}
 
 }
 
-.cui-form-table {
-	flex-direction: column;
-	flex: 0 0 auto;
+.cui-form-td {
+	&.cui-form-left,
+	&.cui-form-right {
+		width: 100px;
+	}
+	&.cui-form-center {
+		width: 200px;
+	}
 }
 
-.cui-form-tr-outer {
-	flex-direction: row;
-	flex: 0 0 auto;
-}
-
-// only the tr has the full width!
-.cui-form-tr {
-	flex: 1 1 auto;
-	flex-direction: row;
-	border-bottom: dotted 1px #c0c0c0;
-}
-
-.cui-form-td-left,
-.cui-form-td-right {
-	flex: 0 0 auto;
-	width: 100px;
-}
-
-.cui-form-td-center {
-	flex: 1 1 auto;
+.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table > tbody > tr {
+	> .cui-form-td.cui-form-center {
+		flex: 1 1 auto;
+		width: 200px;
+	}
 }
 
 
 // Options
 .cui-options-form-table {
-	&.cui-drag-drop-select-sortable {
-		> .cui-form-tr-outer > .cui-form-tr {
-			> .cui-form-td-left {
+	> tbody.cui-drag-drop-select-sortable {
+		> tr {
+			> .cui-form-td.cui-form-left {
 				width: 10px !important;
 				.cui-options-sortable-drag-handle {
+					&:hover {
+						opacity: 0.8;
+					}
 					flex: 1 1 auto;
+					cursor: move;
 					background: yellow;
 				}
 			}
@@ -1177,6 +1173,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 }
+
 
 .cui-date-time-popover {
 	width: 250px;
@@ -1222,32 +1219,6 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	table, tbody, tr, td {
-		display: flex; // yes, this is fun :)
-		box-sizing: border-box;
-	}
-
-	table {
-		flex: 0 0 auto;
-		flex-direction: column;
-	}
-
-	tbody {
-		flex: 1 1 auto;
-		flex-direction: column;
-	}
-
-	td {
-		flex: 0 0 auto;
-		flex-direction: row;
-		align-items: center;
-	}
-
-	tr {
-		flex: 1 1 auto;
-		flex-direction: row;
-	}
-
 	.cui-date-time-date {
 		margin: 5px 0;
 		height: 100% / 8 * 6.5;
@@ -1261,6 +1232,8 @@ a[role="button"].cui-button-appearance-link {
 		}
 		td {
 			width: 12.5%; // 8 columns
+			text-align: center;
+
 			&.cui-date-time-day:hover {
 				background-color: #c0c0c0;
 			}

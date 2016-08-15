@@ -1,7 +1,9 @@
 class FormLayoutDemo extends Demo
 
+	getGroup: ->
+		"Test"
 
-    display: ->
+	display: ->
         @demo_table = new DemoTable("cui-form-layout-demo")
 
         form_options=

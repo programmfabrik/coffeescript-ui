@@ -1,4 +1,4 @@
-class PopoverDemo extends ModalDemo
+class PopoverDemo extends DialogDemo
 
 	display: ->
 		tp = $table("cui-demo-popover-demo")

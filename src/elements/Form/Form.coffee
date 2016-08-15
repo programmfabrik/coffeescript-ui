@@ -139,15 +139,7 @@ class Form extends DataField
 		@table
 
 	renderTable: ->
-		if CUI.getActiveTheme().getName() == "ng"
-			use_table = false
-		else
-			use_table = true
-
-		if use_table
-			@table = $table("cui-form-table")
-		else
-			@table = $div("cui-form-table")
+		@table = $table("cui-form-table")
 
 		Events.listen
 			node: @table
@@ -170,10 +162,7 @@ class Form extends DataField
 				continue
 			@table[0].classList.add(cls+"-table")
 
-		if use_table
-			td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center", "right"])
-		else
-			td_classes = ("cui-form-td-#{k}" for k in ["left", "center", "right"])
+		td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center", "right"])
 
 		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
@@ -192,10 +181,7 @@ class Form extends DataField
 				v
 
 		if @_header
-			if use_table
-				tr_head = $div("cui-form-tr").appendTo($div("cui-form-tr-outer").appendTo(@table))
-			else
-				tr_head = $tr("cui-form-tr-head").appendTo(@table)
+			tr_head = $tr("cui-form-tr-head").appendTo(@table)
 
 			for td_class, idx in td_classes
 				head = @_header[idx]
@@ -250,20 +236,14 @@ class Form extends DataField
 				if idx == 2 and content
 					has_right = true
 
-				if use_table
-					tds.push($td(td_classes[idx], attrs).append(content))
-				else
-					tds.push($div("cui-form-td "+td_classes[idx], attrs).append(content))
+				tds.push($td(td_classes[idx], attrs).append(content))
 
 			if @__horizontal
 				tr_labels.append(tds[0])
 				tr_fields.append(tds[1])
 				tr_rights.append(tds[2])
 			else
-				if use_table
-					tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
-				else
-					tr = $div("cui-form-tr cui-form-tr-vertical").appendTo($div("cui-form-tr-outer").appendTo(@table))
+				tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
 
 				# used to set row visibility
 				DOM.data(tr[0], "data-field", _field)
