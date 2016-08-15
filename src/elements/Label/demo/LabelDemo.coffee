@@ -127,7 +127,7 @@ class LabelDemo extends Demo
 			multiline: true
 			manage_overflow: true
 			text: """
-			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			A good and long text that includes a veryverysuperlongword to show that it can break into lines.

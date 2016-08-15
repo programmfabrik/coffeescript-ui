@@ -183,6 +183,9 @@ class Select extends Checkbox
 	displayValue: ->
 		DataFieldInput::displayValue.call(@)
 
+		if not @__optionsPromise and CUI.isFunction(@_options)
+			@__loadOptions()
+
 		@__optionsPromise
 		.done =>
 			found_opt = null

@@ -31,6 +31,8 @@ class ListViewHeaderColumn extends ListViewColumn
 		super(@__element)
 		if @_rotate_90
 			@addClass("cui-lv-td-rotate-90")
+
+		@addClass("cui-lv-th")
 		@__element
 
 	render: ->

@@ -76,6 +76,11 @@ class Menu extends Layer
 		if @_itemList instanceof ItemList
 			@__itemList = itemList
 		else
+
+			delete(itemList.maximize)
+			itemList.maximize_vertical = false
+			itemList.maximize_horizontal = true
+
 			@__itemList = new ItemList(itemList)
 
 		@__itemList.__init()

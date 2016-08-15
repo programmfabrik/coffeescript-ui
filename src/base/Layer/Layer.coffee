@@ -662,21 +662,29 @@ class Layer extends DOM
 	__getLayerDim: ->
 		@__layer.addClass("cui-layer-measure")
 		rect = @__layer.DOM.rect()
+		@__minimumElementWidthUsed = false
+
+		# let's see if we need to put a minium size
+		if @_set_element_width and @__element
+			dim = DOM.getDimensions(@__element[0])
+			if dim.borderBoxWidth >= rect.width
+				@__minimumElementWidthUsed = true
+				width = dim.borderBoxWidth
+			else
+				width = rect.width
+			console.error "Layer.__getLayoutDim: Set min-width on layer:", rect.width, dim.borderBoxWidth
+		else
+			width = rect.width
+
 		@__layer.removeClass("cui-layer-measure")
 
 		if isUndef(@__layer_dim)
 			@__layer_dim = {}
 
-		if @_set_element_width and @__element
-			dim = DOM.getDimensions(@__element[0])
-			# evtl ne andere width hier? zB borderBoxWidth ?
-			width_for_layer = dim.marginBoxWidth
-			console.error "Layer.__getLayoutDim: Set min-width on layer:", width_for_layer, dim
-
 		# if our axis wants to be filled then we don't use its fixed size
 
 		if isUndef(@__fixed_layer_dim) or @_fill_space in ["both","horizontal"]
-			@__layer_dim.width = rect.width + @__layer_margin.left + @__layer_margin.right
+			@__layer_dim.width = width + @__layer_margin.left + @__layer_margin.right
 			@__layer_dim._css_width = rect.width - @__layer.DOM.cssEdgeSpace("horizontal")
 		else
 			@__layer_dim.width = @__fixed_layer_dim.width
@@ -978,7 +986,17 @@ class Layer extends DOM
 			@__fixed_layer_dim.height = @__layer_dim.height
 			@__fixed_layer_dim._css_height = @__layer_dim.height - @__layer.DOM.cssEdgeSpace("vertical", true)
 
+		console.error "set fixed dimensions", @__fixed_layer_dim, @_fill_space
+
 		@__setLayerSizeFromFixedDimensions()
+
+		# lets check if we can get rid of a very short
+		# horizontal scrollbar
+		if @__minimumElementWidthUsed
+			layer_dim = DOM.getDimensions(@__layer.DOM[0])
+			if layer_dim.verticalScrollbarWidth > 0
+				# add width
+				@__layer.DOM.width(@__fixed_layer_dim._css_width + layer_dim.verticalScrollbarWidth)
 
 		@_onPosition?(@)
 		@

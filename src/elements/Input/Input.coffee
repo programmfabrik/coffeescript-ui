@@ -124,8 +124,15 @@ class Input extends DataFieldInput
 				tabindex: "0"
 				spellcheck: @__spellcheck
 		else
+			if CUI.getActiveTheme().getName() == "ng"
+				# this is the way to make input not behave irratically
+				size = 1
+			else
+				size = undefined
+
 			@__input = $element "input", "cui-input",
 				type: input_type
+				size: size
 				placeholder: @_placeholder
 				tabindex: "0"
 				spellcheck: @__spellcheck

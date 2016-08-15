@@ -44,9 +44,9 @@ class Layout extends DOM
 		@initDefaultPanes()
 		super()
 
-		if not @opts.hasOwnProperty("maximize") and
-			not @opts.hasOwnProperty("maximize_horizontal") and
-			not @opts.hasOwnProperty("maximize_vertical")
+		if isNull(@_maximize) and
+			isNull(@_maximize_horizontal) and
+			isNull(@_maximize_vertical)
 				@_maximize = true
 
 		if @_maximize

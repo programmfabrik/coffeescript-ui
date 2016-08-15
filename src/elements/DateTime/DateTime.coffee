@@ -629,17 +629,154 @@ class DateTime extends Input
 		else
 			mom = _mom
 
-		@__calendar.empty()
-		@__calendar.append(@drawYearMonthsSelect(mom))
-		@updateMonthTable(mom)
-		@markDay()
+		@updateCalendar(mom, false)
 
-	updateMonthTable: (mom) ->
-		if @__month_table
-			@__month_table.remove()
-		@__month_table = @drawMonthTable(mom)
-		@__calendar.append(@__month_table)
+	updateCalendar: (mom, update_current_moment = true) ->
+		@__calendar.empty()
+
+		if CUI.getActiveTheme().getName() == "ng"
+			@__calendar.append(@getDateTimeDrawer(mom))
+			@__calendar.append(@drawMonthTable(mom))
+			@__calendar.append(@drawYearMonthsSelect(mom))
+		else
+			@__calendar.append(@drawYearMonthsSelect(mom))
+			@__calendar.append(@drawMonthTable(mom))
+
+		if update_current_moment
+			@__current_moment = mom.clone()
+			@setInputFromMoment()
+
+		@markDay()
 		@
+
+	getDateTimeDrawer: (mom) ->
+
+		data =
+			month: mom.month()
+			year: mom.year()
+			date: mom.date()
+			hour: mom.hour()
+			minute: mom.minute()
+			second: mom.second()
+
+		pad0 = (n) ->
+			if n < 10
+				"0"+n
+			else
+				""+n
+
+		date_sel = new Select(
+			name: "date"
+			data: data
+			onDataChanged: =>
+				@updateCalendar(mom.date(data.date))
+			options: =>
+				opts = []
+				for day in [1..mom.daysInMonth()]
+					opts.push
+						text: pad0(day)
+						value: day
+
+				opts
+		).start()
+
+		month_sel = new Select(
+			name: "month"
+			data: data
+			onDataChanged: =>
+				@updateCalendar(mom.month(data.month))
+			options: =>
+				opts = []
+				for month in [0..11]
+					opts.push
+						text: pad0(month+1)
+						value: month
+
+				opts
+		).start()
+
+		year_sel = new Select(
+			name: "year"
+			data: data
+			onDataChanged: =>
+				@updateCalendar(mom.year(data.year))
+			options: =>
+				opts = []
+				for year in [data.year-20..data.year+20]
+					opts.push
+						text: ""+year
+						value: year
+
+				opts
+		).start()
+
+		if @__input_format.clock
+			hour_sel = new Select(
+				name: "hour"
+				data: data
+				onDataChanged: =>
+					@updateCalendar(mom.hour(data.hour))
+				options: =>
+
+					opts = []
+					for hour in [0..23]
+						opts.push
+							text: pad0(hour)
+							value: hour
+
+					opts
+			).start()
+
+			minute_colon = new Label(text: ":")
+
+			minute_sel = new Select(
+				class: "cui-date-time-60-select"
+				name: "minute"
+				data: data
+				onDataChanged: =>
+					@updateCalendar(mom.minute(data.minute))
+				options: =>
+
+					opts = []
+					for minute in [0..59]
+						opts.push
+							text: pad0(minute)
+							value: minute
+
+					opts
+			).start()
+
+			second_colon = new Label(text: ":")
+
+			second_sel = new Select(
+				class: "cui-date-time-60-select"
+				name: "second"
+				data: data
+				onDataChanged: =>
+					@updateCalendar(mom.second(data.second))
+				options: =>
+					opts = []
+					for second in [0..59]
+						opts.push
+							text: pad0(second)
+							value: second
+
+					opts
+			).start()
+
+		new Buttonbar(
+			buttons: [
+				date_sel
+				month_sel
+				year_sel
+				hour_sel
+				minute_colon
+				minute_sel
+				second_colon
+				second_sel
+			]
+		).DOM
+
 
 	drawYearMonthsSelect: (mom) ->
 
@@ -672,22 +809,24 @@ class DateTime extends Input
 								mom.subtract(1, "months")
 								@drawDate(mom)
 						,
-							new Select(
-								attr:
-									cursor: "month"
-								class: "cui-date-time-month-select"
-								data: data
-								name: "month"
-								onShow: =>
-									@setCursor("month")
-								onHide: =>
-									@setCursor("month")
-								mark_changed: false
-								onDataChanged: (_data, element, ev) =>
-									@updateMonthTable(mom.month(data.month))
-								options: month_opts
+							new Label
+								text: month_opts[data.month].text
+							# new Select(
+							# 	attr:
+							# 		cursor: "month"
+							# 	class: "cui-date-time-month-select"
+							# 	data: data
+							# 	name: "month"
+							# 	onShow: =>
+							# 		@setCursor("month")
+							# 	onHide: =>
+							# 		@setCursor("month")
+							# 	mark_changed: false
+							# 	onDataChanged: (_data, element, ev) =>
+							# 		@updateCalendar(mom.month(data.month))
+							# 	options: month_opts
 
-							).start()
+							# ).start()
 						,
 							appearance: "flat"
 							size: "mini"
@@ -707,7 +846,7 @@ class DateTime extends Input
 						size: "mini"
 						icon: "left"
 						onClick: (ev) =>
-							if date.year-1 < @_min_year
+							if data.year-1 < @_min_year
 								return
 							mom.subtract(1, "years")
 							@drawDate(mom)
@@ -725,14 +864,14 @@ class DateTime extends Input
 									year = now_year
 								else
 									year = data.year
-								@updateMonthTable(mom.year(year))
+								@updateCalendar(mom.year(year))
 						).start()
 					,
 						appearance: "flat"
 						size: "mini"
 						icon: "right"
 						onClick: (ev) =>
-							if date.year+1 > @_max_year
+							if data.year+1 > @_max_year
 								return
 							mom.add(1, "years")
 							@drawDate(mom)
@@ -771,14 +910,13 @@ class DateTime extends Input
 					@__current_moment.date(data.date)
 					@__current_moment.month(data.month)
 					@__current_moment.year(data.year)
-					delete(@__current_moment.__now)
-					@markDay()
-					@setInputFromMoment()
-					if @__input_format.type.match(/time/)
-						@setCursor("hour")
-					else
-						@closePopover()
-					# _mom = _mom.clone()
+					@updateCalendar(@__current_moment)
+
+					if CUI.getActiveTheme().getName() != "ng"
+						if @__input_format.type.match(/time/)
+							@setCursor("hour")
+						else
+							@closePopover()
 				return
 
 		# Wk, Mo, Tu, We, Th...
@@ -805,9 +943,16 @@ class DateTime extends Input
 					break
 				tr = $tr().appendTo(month_table)
 				week_no = mom.week() #@start_day==0)
-				tr.append($td("cui-date-time-week").text(week_no))
+				tr.append($td("cui-date-time-week").append($text(week_no)))
 				weeks++
-			day_div = $div("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-")).text(day_no)
+
+			if CUI.getActiveTheme().getName() == "ng"
+				div_type = $td
+			else
+				div_type = $div
+
+			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-")).text(day_no)
+
 			if curr_m < month
 				day_div.addClass("cui-date-time-previous-month")
 			else if curr_m > month
@@ -818,7 +963,11 @@ class DateTime extends Input
 					day_div.addClass("cui-date-time-now")
 
 			day_div.addClass("cui-date-time-day-"+mom.format("dd").toLowerCase())
-			td = $td().append(day_div).appendTo(tr)
+
+			if CUI.getActiveTheme().getName() == "ng"
+				td = day_div.appendTo(tr)
+			else
+				td = $td().append(day_div).appendTo(tr)
 
 			DOM.data(td[0],
 				date: day_no

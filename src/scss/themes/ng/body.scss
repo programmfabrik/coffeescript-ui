@@ -49,7 +49,7 @@ input, textarea {
 	font-family: arial;
 	padding: 2px;
 	flex: 1 1 auto;
-	width: 100%;
+	// width: 100%;
 	box-sizing: border-box;
 }
 
@@ -68,6 +68,26 @@ div {
 
 // HorizontalLayout
 .cui-horizontal-layout {
+	&.cui-maximize-horizontal {
+		flex-direction: row;
+		flex: 1 1 auto;
+		align-items: stretch;
+		overflow: hidden;
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-right
+		{
+			position: relative;
+			flex: 0 0 auto;
+			flex-direction: row;
+			overflow: hidden;
+		}
+		> .cui-horizontal-layout-center {
+			flex: 1 1 auto;
+			overflow: hidden;
+
+		}
+	}
+
 	&.cui-maximize-vertical {
 		> .cui-horizontal-layout-center {
 			// this is needed to overwrite .cui-toolbar > div, which
@@ -75,47 +95,25 @@ div {
 			align-items: stretch;
 		}
 	}
+
 	&:not(.cui-maximize-vertical) {
+		align-items: flex-start;
+
 		> .cui-horizontal-layout-center {
 			// only if we are slim, we align out center
 			// as row
 			flex-direction: row;
 		}
 	}
-}
 
-.cui-horizontal-layout:not(.cui-maximize-horizontal) {
-	flex-direction: row;
-	&.cui-maximize-vertical {
-		align-items: stretch;
-	}
-	flex: 0 0 auto;
-	> div {
-		flex: 0 0 auto;
-	}
-}
-
-.cui-horizontal-layout.cui-maximize-horizontal {
-	flex-direction: row;
-	flex: 1 1 auto;
-	align-items: stretch;
-	overflow: hidden;
-	> .cui-horizontal-layout-left,
-	> .cui-horizontal-layout-right
-	{
-		position: relative;
-		flex: 0 0 auto;
+	&:not(.cui-maximize-horizontal) {
 		flex-direction: row;
-		overflow: hidden;
-	}
-	> .cui-horizontal-layout-center {
-		flex: 1 1 auto;
-		overflow: hidden;
-
+		flex: 0 0 auto;
+		> div {
+			flex: 0 0 auto;
+		}
 	}
 }
-
-
 
 
 // Layout Absolute Horizontal
@@ -149,33 +147,35 @@ div {
 
 
 // VerticalLayout
-.cui-vertical-layout.cui-maximize-vertical {
-	flex: 1 1 auto;
-	align-items: stretch;
-	overflow: hidden;
-    // height: 100%; <- solve a problem on Safari?
-
-	> .cui-vertical-layout-top,
-	> .cui-vertical-layout-bottom {
-		position: relative;
-		flex: 0 0 auto;
-		overflow: hidden;
-	}
-	> .cui-vertical-layout-center {
-		position: relative;
+.cui-vertical-layout {
+	&.cui-maximize-vertical {
 		flex: 1 1 auto;
-		overflow: auto;
-	}
-}
-
-.cui-vertical-layout:not(.cui-maximize-vertical) {
-	flex-direction: column;
-	&.cui-maximize-horizontal {
 		align-items: stretch;
+		overflow: hidden;
+		// height: 100%; <- solve a problem on Safari?
+
+		> .cui-vertical-layout-top,
+		> .cui-vertical-layout-bottom {
+			position: relative;
+			flex: 0 0 auto;
+			overflow: hidden;
+		}
+		> .cui-vertical-layout-center {
+			position: relative;
+			flex: 1 1 auto;
+			overflow: auto;
+		}
 	}
-	flex: 0 0 auto;
-	> div {
+
+	&:not(.cui-maximize-horizontal) {
+		align-items: flex-start;
+	}
+
+	&:not(.cui-maximize-vertical) {
 		flex: 0 0 auto;
+		> div {
+			flex: 0 0 auto;
+		}
 	}
 }
 
@@ -379,8 +379,9 @@ a[role="button"],.cui-button
 		background-color: #ff5200;
 	}
 	cursor: default;
-	display: inline-flex;
+	display: flex;
 	overflow: hidden;
+	white-space: nowrap;
 	flex-direction: row;
 	flex: 0 0 auto;
 	align-self: flex-start;
@@ -421,6 +422,7 @@ a[role="button"],.cui-button
 	{
 		text-align: center;
 		flex: 0 0 auto;
+		min-width: 12px;
 	}
 	> .cui-button-center
 	{
@@ -430,6 +432,7 @@ a[role="button"],.cui-button
 	{
 		text-align: center;
 		flex: 0 0 auto;
+		min-width: 12px;
 	}
 }
 
@@ -556,21 +559,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-label-multiline {
-		&.cui-tmpl-label-rotate-90 {
-			// we can't break word here
-			.cui-label-content {
-				> span {
-					word-break: normal;
-				}
-			}
-		}
+		white-space: pre-wrap;
+		word-break: normal;
 
 		> .cui-label-content {
 			flex: 0 1 auto;
-			> span {
-				white-space: pre-wrap;
-				word-break: normal;
-			}
 		}
 
 		&.cui-label-manage-overflow {
@@ -592,10 +585,14 @@ a[role="button"].cui-button-appearance-link {
 				}
 
 				> .cui-label-manage-overflow-button-container {
+					height: 0;
 					align-self: flex-end;
 					.cui-button {
+						transform: translateY(-100%);
 						border-style: none;
-						background-color: transparent;
+						background-color: #8a8a8a;
+						color: #ffffff;
+						border-radius: 3px;
 					}
 				}
 			}
@@ -617,7 +614,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Buttonbar
 .cui-buttonbar {
-	display: inline-flex;
 	flex-direction: row;
 	align-self: flex-start;
 	> div:not(:last-child) {
@@ -634,9 +630,8 @@ a[role="button"].cui-button-appearance-link {
 	margin-left: 4px;
 }
 
-
 .cui-buttonbar-group {
-	display: inline-flex;
+	// display: inline-flex;
 	flex-direction: row;
 }
 
@@ -670,7 +665,8 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	background-color: #ffffff;
 	flex-direction: column;
-	overflow: hidden;
+	// overflow: hidden;
+	overflow: auto;
 }
 
 .cui-tmpl-layer-pointer
@@ -742,12 +738,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-menu {
 	border: 2px solid green;
 	background-color: #bcf7bc;
-	.cui-menu {
-		// compansate border
-		transform: translateY(-2px);
-	}
 	.cui-tmpl-item-list-body {
-		align-self: stretch;
+		border: 2px solid yellow;
 	}
 }
 
@@ -756,8 +748,6 @@ a[role="button"].cui-button-appearance-link {
 {
 	flex-direction: column;
 
-	// in case this is used outside a menu
-	align-self: flex-start;
 	> div {
 		flex: 0 0 auto;
 	}
@@ -955,7 +945,14 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-td {
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
-		height: 100px;
+		> .cui-tmpl-label-rotate-90 {
+			word-break: break-all;
+			height: 100px;
+			> .cui-label-transform {
+				width: 100px;
+			}
+
+		}
 	}
 	&:not(.cui-lv-td-fill) {
 		padding: 1px;
@@ -1160,6 +1157,130 @@ a[role="button"].cui-button-appearance-link {
 	.cui-date-time-input-center {
 		flex: 1 1 auto;
 		flex-direction: row;
+	}
+}
+
+// DateTime Popover
+
+.cui-menu.cui-date-time-60-select {
+	.cui-tmpl-item-list-body {
+		box-sizing: content-box;
+		width: 300px;
+		flex-direction: row;
+		flex-wrap: wrap;
+		> * {
+			box-sizing: border-box;
+		}
+		.cui-button {
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+.cui-date-time-popover {
+	width: 250px;
+	height: 250px;
+
+	.cui-tmpl-date-time {
+		padding: 5px;
+		flex: 1 1 auto;
+
+		.cui-date-time-header {
+			display: none;
+		}
+
+		&[browser="time"] {
+			.cui-date-time-calendar {
+				margin-left: -100%;
+			}
+		}
+
+		.cui-date-time-browser {
+			.cui-date-time-calendar,
+			.cui-date-time-clock {
+				width: 100%;
+			}
+
+			.cui-date-time-calendar {
+				transition: margin-left 0.5s ease-out;
+				// this is the horizontal layout for
+				// month & year picker
+				> div {
+					align-items: center;
+				}
+			}
+			flex-direction: row;
+			overflow: hidden;
+			flex: 1 1 auto;
+			.cui-number-input {
+				input {
+					width: 40px;
+					text-align: center;
+				}
+			}
+		}
+	}
+
+	table, tbody, tr, td {
+		display: flex; // yes, this is fun :)
+		box-sizing: border-box;
+	}
+
+	table {
+		flex: 0 0 auto;
+		flex-direction: column;
+	}
+
+	tbody {
+		flex: 1 1 auto;
+		flex-direction: column;
+	}
+
+	td {
+		flex: 0 0 auto;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	tr {
+		flex: 1 1 auto;
+		flex-direction: row;
+	}
+
+	.cui-date-time-date {
+		margin: 5px 0;
+		height: 100% / 8 * 6.5;
+		border: 1px solid red;
+		tr:not(:first-child) > td {
+			border-top: 1px solid green;
+		}
+		tr.cui-date-time-month-header {
+			height: 100% / (6 * 2 + 1);
+			flex: 0 0 auto;
+		}
+		td {
+			width: 12.5%; // 8 columns
+			&.cui-date-time-day:hover {
+				background-color: #c0c0c0;
+			}
+			&.cui-date-time-previous-month,
+			&.cui-date-time-next-month {
+				color: #c9c9c9;
+			}
+			&.cui-date-time-selected {
+				background-color: #2a9cff !important;
+				color: #ffffff !important;
+			}
+			&.cui-date-time-now {
+				background-color: #cef7ce;
+			}
+			cursor: default;
+			&:not(:first-child) {
+				border-left: 1px solid green;
+			}
+			justify-content: center;
+		}
 	}
 }
 

@@ -393,7 +393,7 @@ class DataField extends DOM
 		if isPromise(ret)
 			ret
 		else
-			new CUI.Deferred().resolve(ret)
+			CUI.resolvedPromise(ret)
 
 	getName: ->
 		@_name

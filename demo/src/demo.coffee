@@ -127,9 +127,13 @@ class RunDemo extends Element
 			text: "Theme"
 			menu:
 				onClick: (ev, btn, item) ->
-					CUI.loadTheme(item.value)
-					.done =>
-						window.localStorage.setItem("theme", item.value)
+					window.localStorage.setItem("theme", item.value)
+					document.location.reload()
+
+					# FIXME: once "ng" is finished, we can remove the reload
+					# CUI.loadTheme(item.value)
+					# .done =>
+					# 	window.localStorage.setItem("theme", item.value)
 
 				active_item_idx: null
 				items: ->

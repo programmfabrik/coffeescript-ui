@@ -743,8 +743,8 @@ class CUI.DOM extends Element
 		]
 			dim[k] = docElem[k]
 
-		dim.scaleX = dim.borderBoxWidth / dim.offsetWidth
-		dim.scaleY = dim.borderBoxHeight / dim.offsetHeight
+		dim.scaleX = dim.borderBoxWidth / dim.offsetWidth or 1
+		dim.scaleY = dim.borderBoxHeight / dim.offsetHeight or 1
 
 		for k in [
 			"offsetWidth"
@@ -761,6 +761,17 @@ class CUI.DOM extends Element
 			"scrollTop"
 		]
 			dim[k+"Scaled"] = dim[k] * dim.scaleY
+
+
+		if dim.scrollHeight > dim.clientHeight
+			dim.verticalScrollbarWidth = dim.contentBoxWidth - dim.clientWidth
+		else
+			dim.verticalScrollbarWidth = 0
+
+		if dim.scrollWidth > dim.clientWidth
+			dim.horizontalScrollbarHeight = dim.contentBoxHeight - dim.clientHeight
+		else
+			dim.horizontalScrollbarHeight = 0
 
 		dim
 
