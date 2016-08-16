@@ -88,7 +88,7 @@ $checkmark_icon_margin_top: (
 
 //---------- text line break----------
 %default_line_break {
-    white-space: pre-line;
+    white-space: pre-wrap;
     word-wrap: break-word;
     word-break: break-word; //is necessary when width is set by flex.
 }

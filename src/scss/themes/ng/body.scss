@@ -443,7 +443,9 @@ a[role="button"],.cui-button
 	{
 		text-align: center;
 		flex: 0 0 auto;
-		min-width: 12px;
+		> i.fa:not(.fa-ellipsis-v) {
+			min-width: 12px;
+		}
 	}
 	> .cui-button-center
 	{
@@ -453,7 +455,9 @@ a[role="button"],.cui-button
 	{
 		text-align: center;
 		flex: 0 0 auto;
-		min-width: 12px;
+		> i.fa:not(.fa-ellipsis-v) {
+			min-width: 12px;
+		}
 	}
 }
 
