@@ -104,24 +104,20 @@
                 right: $flex_handle_size;
             }
 
-            //90 degree rotated label
             > .cui-label {
-                display: flex;
-                justify-content: flex-end;
-
-                height: 24px;
                 width: auto;
-                @include transform(rotate(-90deg));
-                @include transform_origin(right bottom 0);
-
-				cursor: default;
+                > .cui-label-transform {
+                    width: auto;
+                    @include transform_origin(right bottom 0 ) ;
+                    @include transform(rotate(-90deg)) ;
+                }
             }
 
             &.cui-flex-handle-right > .cui-label {
-                margin-left: $flex_handle_size;
+                margin-right: 4px; //TODO center label 90 automatically
             }
             &.cui-flex-handle-left > .cui-label {
-                margin-right: $flex_handle_size;
+                margin-right: 9px; //TODO center label 90 automatically
             }
 
         }
