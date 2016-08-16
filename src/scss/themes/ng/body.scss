@@ -343,6 +343,12 @@ table {
 	> div {
 		flex-direction: row;
 		align-items: center;
+		> .cui-maximize-horizontal {
+			// in column direction this is solved by
+			// align-items: stretch, but here
+			// we need to overwrite this
+			flex: 1 1 auto;
+		}
 		> .cui-toolbar {
 			// nested toolbars do not get a padding
 			padding: 0;

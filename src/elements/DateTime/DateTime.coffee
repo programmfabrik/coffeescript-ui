@@ -12,7 +12,7 @@ class DateTime extends Input
 		@__locale_format = DateTimeFormats[@_locale]
 
 		@__input_formats = []
-		if not @_input_types
+		if not @_input_types?.length
 			@__input_formats = @__input_formats_known.slice(0)
 		else
 			for type in @_input_types
@@ -1170,8 +1170,20 @@ class DateTime extends Input
 		# CUI.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
 
+	@display: (datestr_or_moment, opts={}) ->
+		if not opts.hasOwnProperty("input_types")
+			opts.input_types = null
+
+		dt = new DateTime(opts)
+		mom = dt.parse(datestr_or_moment)
+
+		if not mom.isValid()
+			return null
+
+		return mom.format(dt.getCurrentFormatDisplay())
+
 	@toMoment: (datestr) ->
 		if isEmpty(datestr)
 			return null
-		dt = new DateTime()
-		dt.parse(datestr, dt.__input_formats_known)
+		dt = new DateTime(input_types: null)
+		dt.parse(datestr)
