@@ -508,11 +508,11 @@ class ListViewTreeNode extends ListViewRow
 		else
 			CUI.resolvedPromise(node)
 
-	remove: (keep_children_array=false) =>
+	remove: (keep_children_array=false, select_after=true) ->
 		dfr = new CUI.Deferred()
 
 		select_after_node = null
-		if @isSelected()
+		if @isSelected() and select_after
 			if not @isRoot()
 				children = @getFather().children
 				if children.length > 1
