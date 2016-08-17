@@ -32,6 +32,10 @@ html {
     height: 100%;
 }
 
+label {
+	box-sizing: border-box;
+}
+
 body {
 	font-family: arial;
 	font-size: 12px;
@@ -390,9 +394,16 @@ i.fa {
 	line-height: 20px;
 }
 
+i.cui-spin-stepped {
+	-webkit-animation: fa-spin 1s steps(8) infinite;
+    -moz-animation: fa-spin 1s steps(8) infinite;
+    -ms-animation: fa-spin 1s steps(8) infinite;
+    -o-animation: fa-spin 1s steps(8) infinite;
+    animation: fa-spin 1s steps(8) infinite;
+}
 
 // Button / Select
-a[role="button"],.cui-button
+a[role="button"],label[role="button"],.cui-button
 {
 	&:not(.cui-disabled):hover {
 		// we need to set opacity on our children
@@ -1477,7 +1488,6 @@ a[role="button"].cui-button-appearance-link {
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 1;
 	> .cui-tmpl-sticky-header {
 		margin-top: 2px;
 		margin-bottom: 0;
