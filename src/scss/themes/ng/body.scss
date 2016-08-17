@@ -35,7 +35,7 @@ html {
 body {
 	font-family: arial;
 	font-size: 12px;
-	line-height: 12px;
+	line-height: normal;
 	width: 100%;
     height: 100%;
     padding: 0;
@@ -63,6 +63,14 @@ div {
 	align-items: stretch;
 	box-sizing: border-box;
 	flex-direction: column;
+}
+
+li > div {
+	display: inline-flex;
+}
+
+span {
+	display: inline;
 }
 
 // Flex for selected TABLE
@@ -123,6 +131,7 @@ table {
 
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
+		overflow: hidden;
 	}
 
 	&:not(.cui-maximize-horizontal) {
@@ -148,6 +157,10 @@ table {
 			flex: 1 1 auto;
 			overflow: auto;
 		}
+	}
+
+	&.cui-maximize-horizontal {
+		overflow: hidden;
 	}
 
 	&:not(.cui-maximize-horizontal) {
@@ -486,13 +499,16 @@ a[role="button"].cui-button-appearance-link {
 	// outside borders are from the buttongroup
 	border: 1px solid #f00;
 
-	.cui-button {
+	// cui-select has a button inside a data-field
+	// so we cannot use ">" here
+	.cui-button, .cui-input {
 		border-style: none;
 		// make the height 2 * border lower
 		height: 18px;
 	}
 
-	.cui-button:not(.cui-first-visible-child) {
+	> div:not(.cui-first-visible-child) .cui-button,
+	> .cui-button:not(.cui-first-visible-child) {
 		border-left-style: dotted;
 		border-left-color: blue;
 	}
@@ -672,6 +688,16 @@ a[role="button"].cui-button-appearance-link {
 	background-color: rgba(235, 205, 255, 0.71);
 }
 
+// Checkbox
+.cui-checkbox {
+	flex-direction: column;
+	> .cui-button-checkbox {
+		align-self: stretch;
+		height: auto;
+		white-space: initial;
+	}
+}
+
 // Input
 .cui-input input {
 	height: 20px;
@@ -832,8 +858,11 @@ a[role="button"].cui-button-appearance-link {
 // Tabs
 .cui-tabs {
 	> .cui-vertical-layout-top {
-		> .cui-toolbar {
+		> .cui-pane-header {
 			background-color: #d2ffc3;
+			.cui-horizontal-layout-center {
+				overflow: hidden;
+			}
 		}
 	}
 	> .cui-vertical-layout-center {
@@ -842,15 +871,16 @@ a[role="button"].cui-button-appearance-link {
 			flex-direction: row;
 			overflow: hidden;
 			> .cui-tmpl-tab-body {
+				// disable the javascript overwrite here
+				margin-left: 0 !important;
 				// transition: margin-left 0.5s ease;
 				border: 2px solid green;
-				flex-direction: column;
 				background-color: #d3ffd3;
-				// each tab needs to fill its parent body
-				min-width: 100%;
-				max-width: 100%;
-				flex: 0 0 auto;
+				flex: 1 1 auto;
 				overflow: auto;
+				&.cui-tab-hidden {
+					display: none;
+				}
 			}
 		}
 	}

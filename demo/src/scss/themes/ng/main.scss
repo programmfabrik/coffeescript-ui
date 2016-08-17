@@ -240,3 +240,18 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 		}
 	}
 }
+
+
+// TooltipDemo
+
+.cui-tooltip-demo-table .text-block {
+	display: block;
+	.cui-dom-element-has-tooltip-on-hover {
+		cursor: pointer;
+		border-bottom: 1px dotted #000000;
+	}
+	.cui-dom-element-has-tooltip-on-click {
+		cursor: pointer;
+		border-bottom: 1px solid #000000;
+	}
+}

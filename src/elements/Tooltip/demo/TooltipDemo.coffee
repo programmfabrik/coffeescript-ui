@@ -18,7 +18,7 @@ class TooltipDemo extends Demo
 				continue
 
 			s.addClass("tooltip")
-			hover = idx % 2 == 0
+			hover = idx % 20 == 0
 			if hover
 				s.addClass("tooltip-on-hover")
 
@@ -42,9 +42,9 @@ class TooltipDemo extends Demo
 			on_click: not hover
 			text: "little Text"
 
+		demo_table.addDivider("showing Tooltips on hover and on click.")
 
-
-		demo_table.addExample("showing Tooltips on hover and on click.", text)
+		demo_table.addRow(text)
 
 
 Demo.register(new TooltipDemo())
