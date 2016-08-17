@@ -70,7 +70,10 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 
 			> td {
 				vertical-align: top;
+				padding: 2px;
+			}
 
+			&:not(.cui-demo-full-row) > td {
 				&:nth-child(1) {
 					min-width: 200px;
 					font-weight: bold;
@@ -80,14 +83,13 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 					position: relative;
 					width: 100%;
 				}
-				padding: 2px;
 			}
 		}
 	}
 }
 
-
-.cui-demo-console {
+// console pane
+.cui-demo-pane-right {
 	width: 300px;
 	.cui-demo-console-log {
 		> div {

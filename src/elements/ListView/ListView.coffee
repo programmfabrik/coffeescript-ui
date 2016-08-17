@@ -882,7 +882,6 @@ class ListView extends SimplePane
 		for fc, display_col_i in @__fillCells
 			col_i = @getColIdx(display_col_i)
 			manual_col_width = @__manualColWidths[col_i]
-			console.debug "fillCells", fc, display_col_i, manual_col_width
 			if manual_col_width > 0
 				add_css(col_i, manual_col_width)
 				col_width[col_i] = manual_col_width

@@ -184,7 +184,7 @@ class RunDemo extends Element
 						centered: true
 						text: "Choose a demo."
 			right:
-				class: "cui-demo-console"
+				class: "cui-demo-pane-right"
 				content:
 					@__console.render()
 				flexHandle:
@@ -296,12 +296,9 @@ class DemoTable
 
 	addDivider: (text) ->
 
-		tr = $tr_one_row(Demo.dividerLabel(text).DOM).addClass("cui-demo-divider")
-
-		tr.append($td())
-		tr.append($td())
-
-		@table.append( tr )
+		td = $td("", colspan: 3)
+		td.append(Demo.dividerLabel(text).DOM)
+		@table.append($tr("cui-demo-divider").append(td))
 
 
 	# Adds an example row
@@ -321,7 +318,9 @@ class DemoTable
 		@table.append($tr_one_row( row_elements ))
 
 	addRow: ->
-		@table.append($tr_one_row.apply(@, argumnets))
+		td = $td("", colspan: 3)
+		td.append.apply(td, arguments)
+		@table.append($tr("cui-demo-full-row").append(td))
 
 
 
