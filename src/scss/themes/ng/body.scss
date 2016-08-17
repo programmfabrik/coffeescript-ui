@@ -1455,6 +1455,38 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// StickyHeader
+
+.cui-sticky-header {
+	background-color: #404040;
+	color: #ffffff;
+	padding: 2px 3px;
+	margin: 10px;
+	border: 2px solid green;
+	&.cui-sticky-header-level-1 {
+		background-color: rgba(64, 64, 64, 0.86);
+	}
+	&.cui-sticky-header-level-2 {
+		background-color: rgba(64, 64, 64, 0.56);
+	}
+}
+
+
+.cui-sticky-header-control {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	> .cui-tmpl-sticky-header {
+		margin-top: 2px;
+		margin-bottom: 0;
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+}
+
 // DigiDisplay
 
 .cui-digi-display {

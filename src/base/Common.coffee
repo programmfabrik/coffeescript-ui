@@ -37,10 +37,8 @@ assert = (condition, caller, message, debug_output) ->
 		msg += ": #{message}"
 
 	# msg += "\nCallstack:\n"+stack+"\n"
-
-	alert("ASSERT: #{msg}")
+	CUI.problem(title:"ASSERT", text: msg)
 	throw new Error(msg)
-	return msg
 
 assertImplements = (inst, methods) ->
 	if not CUI.defaults.asserts

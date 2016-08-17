@@ -6,7 +6,7 @@ class StickyHeaderDemo extends Demo
 			node: document
 			call: (ev) =>
 				delta = 4
-				CUI.debug(ev.keyCode(), ev.ctrlKey(), ev.altKey(), ev.shiftKey())
+				# CUI.debug(ev.keyCode(), ev.ctrlKey(), ev.altKey(), ev.shiftKey())
 				if ev.ctrlKey()
 					delta--
 				if ev.altKey()
@@ -16,7 +16,6 @@ class StickyHeaderDemo extends Demo
 				if delta < 4
 					switch ev.keyCode()
 						when 40
-							CUI.debug "delta:",delta
 							@__pane.center()[0].scrollTop += delta
 						when 38
 							@__pane.center()[0].scrollTop -= delta
@@ -26,14 +25,13 @@ class StickyHeaderDemo extends Demo
 
 
 		draw_pane = (level) =>
-			@__pane.center().empty()
+			@__pane.empty("center")
 			shc = new StickyHeaderControl(element: @__pane.center())
 
 			header_c = 0
 			subheader_c = 0
 			subsubheader_c = 0
 			for i in [0...1000]
-
 				if i%36 == 0
 					header_c++
 					sh = new StickyHeader
@@ -60,7 +58,8 @@ class StickyHeaderDemo extends Demo
 						text: "Sub-Sub-Header #{header_c}.#{subheader_c}.#{subsubheader_c}"
 					sh.DOM.appendTo(@__pane.center())
 
-				@__pane.center().append($div().text("Row: #{i}"))
+				@__pane.append(new Label(text: "Row: #{i}"), "center")
+			shc.position()
 
 
 		pane_toolbar = new PaneToolbar

@@ -9,7 +9,7 @@ class StickyHeader extends DOM
 
 		@registerTemplate(@header)
 
-		@addClass("ez-sticky-header-level-#{@_level}")
+		@addClass("cui-sticky-header-level-#{@_level}")
 		if not isEmpty(@_text)
 			@replace($text(@_text), "center")
 		else

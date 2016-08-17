@@ -11,11 +11,14 @@ class StickyHeaderControl extends Element
 		if @_element.css("position") not in ["absolute", "fixed", "relative"]
 			@_element.css("position", "relative")
 
-		@__control = $div("ez-sticky-header-control")
+		@__control = $div("cui-sticky-header-control")
+
 		@_element.append(@__control)
 
 		@headers = []
 		@newStickyHeaders = []
+		@__hiddenHeaders = []
+		@__positioned = false
 
 		Events.listen
 			node: @_element
@@ -23,8 +26,6 @@ class StickyHeaderControl extends Element
 			instance: @
 			call: (ev) =>
 				# console.time "scroll"
-				@__scrolled = true
-				@initNewStickyHeaders()
 				@position()
 				# console.timeEnd "scroll"
 				return
@@ -39,30 +40,38 @@ class StickyHeaderControl extends Element
 					v instanceof jQuery and v.length == 1
 
 	isInDOM: ->
-		@__control and $elementIsInDOM(@__control)
+		@__control and DOM.isInDOM(@__control[0])
 
 	addStickyHeader: (stickyHeader) ->
-		assert(not @__scrolled or $elementIsInDOM(@__control), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
-
+		assert(not @__positioned or DOM.isInDOM(@__control[0]), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
 
 		assert(stickyHeader instanceof StickyHeader, "#{@__cls}.addStickyHeader", "Needs to be instance of StickyHeader but is #{getObjectClass(stickyHeader)}", stickyHeader: stickyHeader)
 		@newStickyHeaders.push(stickyHeader)
 
 	initNewStickyHeaders: ->
+		measure_headers = []
 		for nsh in @newStickyHeaders
 			dom = nsh.DOM
-			assert dom[0].offsetParent == @_element[0], "StickyHeaderControl.addStickyHeader", "StickyHeader has a different node as offsetParent than expected.", stickyHeader: dom[0], control: @_element[0], offsetParent: dom[0].offsetParent
-			rect = dom.rect()
+			assert(dom[0].offsetParent == @_element[0], "StickyHeaderControl.addStickyHeader", "StickyHeader has a different node as offsetParent than expected.", stickyHeader: dom[0], control: @_element[0], offsetParent: dom[0].offsetParent)
 
 			header =
 				stickyHeader: nsh
-				height: rect.height # + dom.cssFloat("marginTop") + dom.cssFloat("marginBottom")
 				level: nsh.getLevel()
-				offsetTop: dom[0].offsetTop
+				# offsetTop: dom[0].offsetTop
 				node: dom[0].cloneNode(true)
 
 			@headers.push(header)
+
+			measure_headers.push(header)
+			header.node.style.visiblity = "hidden"
+			@__control.prepend(header.node)
+
 		@newStickyHeaders.splice(0)
+
+		for header in measure_headers
+			header.dimInControl = DOM.getDimensions(header.node)
+			@__control[0].removeChild(header.node)
+			header.node.style.visiblity = ""
 		@
 
 	destroy: ->
@@ -77,6 +86,15 @@ class StickyHeaderControl extends Element
 
 
 	position: ->
+		if not @isInDOM()
+			return
+
+
+		@__positioned = true
+		@initNewStickyHeaders()
+		# make sure the control is at the end
+		@_element.append(@__control)
+
 		scrollTop = @_element[0].scrollTop
 		slots = []
 		extraTop = 0
@@ -86,8 +104,9 @@ class StickyHeaderControl extends Element
 				slot = slots[i]
 				if slot == null
 					break
-				extraTop += slots[i].height
-			if header.offsetTop < scrollTop+extraTop
+				extraTop += slots[i].dimInControl.marginBoxHeight
+
+			if header.stickyHeader.DOM[0].offsetTop < scrollTop + extraTop + header.dimInControl.marginTop
 				slots[header.level] = header
 				for i in [header.level+1...slots.length] by 1
 					slots[i] = null
@@ -97,26 +116,43 @@ class StickyHeaderControl extends Element
 				for slot in slots
 					if slot == null
 						break
-					top_space += slot.height
+					top_space += slot.dimInControl.marginBoxHeight
 				break
 
 		if next_header
-			cut = next_header.offsetTop - scrollTop - top_space
+			cut = next_header.stickyHeader.DOM[0].offsetTop - scrollTop - top_space
+			cut = cut - next_header.dimInControl.marginTop
+			# console.debug cut, next_header.stickyHeader.DOM[0], next_header.stickyHeader.DOM[0].offsetTop, scrollTop, top_space
 		else
 			cut = 0
 
+		for hiddenHeader in @__hiddenHeaders
+			hiddenHeader.style.visibility = ""
+
+		@__hiddenHeaders.splice(0)
+
 		@__control.empty()
+
 		top = 0
-		for slot in slots
+		for slot, idx in slots
 			if slot == null
 				break
+
+			@__control.prepend(slot.node)
+
 			if cut < 0 and slot.level == next_header.level
 				top += cut
-			@__control.append(slot.node)
+
+			hideHeader = slot.stickyHeader.DOM[0]
+			hideHeader.style.visibility = "hidden"
+
+			@__hiddenHeaders.push(hideHeader)
+
 			slot.node.style.top = top+"px"
-			top += slot.height
+			top += slot.dimInControl.marginBoxHeight
 
 		@__control.css
 			top: scrollTop
 			height: top
 
+		@
