@@ -414,13 +414,13 @@ class DataField extends DOM
 
 	setValue: (v, flags = {}) ->
 		if v == @getValue()
-			return
+			return @
 		try
 			@checkValue(v, flags)
 		catch e
 			if e not instanceof CheckValueError
-				throw e
-			throw new Error("#{@__cls}.setValue: "+v+", Error: "+e)
+				throw(e)
+			throw(new Error("#{@__cls}.setValue: "+v+", Error: "+e))
 
 		if flags.no_trigger not in [false, true]
 			flags.no_trigger = true

@@ -734,6 +734,8 @@ class CUI.DOM extends Element
 		for k in [
 			"offsetWidth"
 			"offsetHeight"
+			"offsetTop"
+			"offsetLeft"
 			"clientWidth"
 			"clientHeight"
 			"scrollWidth"
@@ -748,6 +750,7 @@ class CUI.DOM extends Element
 
 		for k in [
 			"offsetWidth"
+			"offsetLeft"
 			"clientWidth"
 			"scrollWidth"
 			"scrollLeft"
@@ -756,6 +759,7 @@ class CUI.DOM extends Element
 
 		for k in [
 			"offsetHeight"
+			"offsetTop"
 			"clientHeight"
 			"scrollHeight"
 			"scrollTop"
