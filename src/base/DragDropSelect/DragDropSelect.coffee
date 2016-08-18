@@ -32,6 +32,7 @@ class DragDropSelect extends Element
 		@element.removeClass(@__getClass())
 		Events.ignore
 			instance: @
+		super()
 
 	init: ->
 		throw "overwrite Drag.init"
@@ -41,6 +42,8 @@ class DragDropSelect extends Element
 	# 		ele.css(position: "relative")
 
 	@destroy: (node, cls=@cls) ->
+		inst = @getInstance(node, cls)
+		inst?.destroy()
 
 	@getInstance: (node, cls=@cls) ->
 		assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
