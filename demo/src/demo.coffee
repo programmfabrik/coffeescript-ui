@@ -251,6 +251,9 @@ class RunDemo extends Element
 		dfr = new CUI.Deferred()
 
 		demo_content = demo.display()
+		if demo_content.DOM
+			demo_content = demo_content.DOM
+
 		if not $(demo_content).hasClass("cui-pane")
 			demo_content = new Pane
 				center:
@@ -321,7 +324,6 @@ class DemoTable
 		td = $td("", colspan: 3)
 		td.append.apply(td, arguments)
 		@table.append($tr("cui-demo-full-row").append(td))
-
 
 
 CUI.ready ->

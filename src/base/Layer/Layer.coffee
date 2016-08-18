@@ -4,7 +4,7 @@
 # other dialogs
 
 
-class Layer extends DOM
+class CUI.Layer extends CUI.DOM
 
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -199,7 +199,7 @@ class Layer extends DOM
 		@
 
 	setBackdropContent: (content) ->
-		assert(@__backdrop, "Layer.setBackdropContent", "No backdrop found in layer", layer: @)
+		assert(@__backdrop, "CUI.Layer.setBackdropContent", "No backdrop found in layer", layer: @)
 		@__backdrop.DOM.append(content)
 
 	getTemplate: ->
@@ -271,7 +271,7 @@ class Layer extends DOM
 					if not $.isArray(v)
 						return false
 					for a in v
-						if @knownPlacements.indexOf(a) == -1
+						if CUI.Layer.knownPlacements.indexOf(a) == -1
 							return false
 					return true
 
@@ -332,7 +332,7 @@ class Layer extends DOM
 		if @_placements
 			@_placements
 		else
-			@knownPlacements
+			CUI.Layer.knownPlacements
 
 	setVisible: (on_off=true) ->
 		if on_off
@@ -340,7 +340,7 @@ class Layer extends DOM
 		else
 			DOM.setStyleOne(@__layer_root.DOM[0], "visibility", "hidden")
 
-	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
+	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
 	# returns a list of all possible placements starting with @__placement and ending with "c"
 	__getPlacements: ->
@@ -1306,6 +1306,8 @@ class Layer extends DOM
 
 		@__backdrop?.destroy()
 		@__backdrop = null
+
+Layer = CUI.Layer
 
 
 CUI.ready ->

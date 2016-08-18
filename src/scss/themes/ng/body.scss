@@ -79,36 +79,39 @@ span {
 
 // Flex for selected TABLE
 
-table {
-	&.cui-form-table,
-	&.cui-date-time-date {
+@mixin flex-table() {
+	display: flex; // yes, this is fun :)
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	flex-direction: column;
 
+	> tbody {
 		display: flex; // yes, this is fun :)
 		box-sizing: border-box;
-		flex: 0 0 auto;
+		flex: 1 1 auto;
 		flex-direction: column;
 
-		> tbody {
+		> tr {
 			display: flex; // yes, this is fun :)
 			box-sizing: border-box;
 			flex: 1 1 auto;
-			flex-direction: column;
+			flex-direction: row;
 
-			> tr {
+			> td {
 				display: flex; // yes, this is fun :)
 				box-sizing: border-box;
-				flex: 1 1 auto;
-				flex-direction: row;
-
-				> td {
-					display: flex; // yes, this is fun :)
-					box-sizing: border-box;
-					flex: 0 0 auto;
-					flex-direction: column;
-					align-items: stretch;
-				}
+				flex: 0 0 auto;
+				flex-direction: column;
+				align-items: stretch;
 			}
 		}
+	}
+}
+
+table {
+	&.cui-form-table,
+	&.cui-date-time-date {
+		@include flex-table()
 	}
 }
 

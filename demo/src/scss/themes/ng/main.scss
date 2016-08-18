@@ -50,15 +50,7 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 }
 
 .cui-demo-table {
-	width: 100%;
-	height: 100%;
-	div.cui-demo-td-abs {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-	}
+	@include flex-table();
 
 	> tbody {
 		> tr {
@@ -73,15 +65,20 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 				padding: 2px;
 			}
 
+			&.cui-demo-full-row > td {
+				flex: 1 1 auto;
+			}
+
 			&:not(.cui-demo-full-row) > td {
 				&:nth-child(1) {
-					min-width: 200px;
+					width: 200px;
+					flex: 0 0 auto;
 					font-weight: bold;
 				}
 
 				&:nth-child(2) {
 					position: relative;
-					width: 100%;
+					flex: 1 1 auto;
 				}
 			}
 		}
@@ -239,6 +236,49 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 			margin: 2px;
 		}
 	}
+}
+
+// LayerDemo
+
+.cui-layer-demo-center {
+	margin: 10px 0px;
+	border: 2px solid red;
+
+	background-image: url(pics/Schmetterling.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+	.cui-layer-demo-start-button {
+		margin: 4px;
+		position: absolute;
+	}
+
+	.cui-layer-demo-start-button-nw {
+		top: 0;
+		left: 0;
+	}
+
+	.cui-layer-demo-start-button-sw {
+		bottom: 0;
+		left: 0;
+	}
+
+	.cui-layer-demo-start-button-se {
+		right: 0;
+		bottom: 0;
+	}
+
+	.cui-layer-demo-start-button-ne {
+		top: 0;
+		right: 0;
+	}
+
+	.cui-layer-demo-start-button-c {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%)
+	}
+
 }
 
 

@@ -9,6 +9,7 @@ coffee_files = src/demo.coffee \
 	../src/base/DragDropSelect/demo/DragDropSelectDemo.coffee \
 	../src/base/Events/demo/EventsDemo.coffee \
 	../src/base/Layout/demo/LayoutDemo.coffee \
+	../src/base/Layer/demo/LayerDemo.coffee \
 	../src/base/XHR/demo/XHRDemo.coffee \
 	../src/elements/Button/demo/ButtonDemo.coffee \
 	../src/elements/Label/demo/LabelDemo.coffee \
@@ -20,7 +21,6 @@ coffee_files = src/demo.coffee \
 	../src/elements/MarkdownInput/demo/MarkdownInputDemo.coffee \
 	../src/elements/FileUpload/demo/FileUploadDemo.coffee \
 	../src/elements/Modal/demo/DialogDemo.coffee \
-	../src/elements/Popover/demo/PopoverDemo.coffee \
 	../src/elements/Tooltip/demo/TooltipDemo.coffee \
 	../src/elements/BorderLayout/demo/BorderLayoutDemo.coffee \
 	../src/elements/Pane/demo/PaneDemo.coffee \

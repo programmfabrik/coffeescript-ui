@@ -261,7 +261,6 @@ class ListViewDemo extends Demo
 
 
 	createNextGenTab: ->
-		demo_table = new ListviewDemoTable()
 		options = {
 			maximize_column: [1]
 			listViewOptions:
@@ -281,8 +280,6 @@ class ListViewDemo extends Demo
 			oversized_cells: [5,10]
 		}
 		list_view = @createListView(options)
-		demo_table.addListview(dump(options),list_view)
-		demo_table.table
 
 	createSimpleTab: ->
 		demo_table = new ListviewDemoTable()
