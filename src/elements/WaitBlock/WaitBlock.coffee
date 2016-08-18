@@ -51,7 +51,7 @@ class WaitBlock extends Block
 
 	show: ->
 		position = @__element[0].style.position
-		if DOM.isPositioned(@__element[0])
+		if not DOM.isPositioned(@__element[0])
 			@__savedPosition = @__element[0].style.position
 			@__element[0].style.position = "relative"
 		else
