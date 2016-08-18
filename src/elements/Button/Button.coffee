@@ -180,9 +180,10 @@ class Button extends DOM
 
 			@__menu_opts.element = @
 
-			if not @__menu_opts.hasOwnProperty("set_element_width")
-				if not @_menu_parent
-					@__menu_opts.set_element_width = true
+			if not @__menu_opts.hasOwnProperty("use_element_width_as_min_width")
+				#submenus should always have the size of their parentmenus
+				if @_menu_parent
+					@__menu_opts.use_element_width_as_min_width = true
 
 			@__menu_opts.onHide = =>
 				@DOM.removeClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
