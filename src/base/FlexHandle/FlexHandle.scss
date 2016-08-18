@@ -105,6 +105,7 @@
             }
 
             > .cui-label {
+                pointer-events: none; //rotated labels can have strange positions so we disable hover effects
                 width: auto;
                 > .cui-label-transform {
                     width: auto;
