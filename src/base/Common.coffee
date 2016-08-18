@@ -430,10 +430,21 @@ $table_one_row = ->
 $tr_one_row = ->
 	tr = $tr()
 	append = (__a) ->
-		if window.DOM and __a instanceof window.DOM
-			tr.append($td().append(__a.DOM))
-		else if not isNull(__a)
-			tr.append($td().append(__a))
+		td = $td().appendTo(tr)
+
+		add_content = (___a) =>
+			if $.isArray(___a)
+				for a in ___a
+					add_content(a)
+			else if ___a.DOM
+				td.append(___a.DOM)
+			else if not isNull(___a)
+				td.append(___a)
+			return
+
+
+		add_content(__a)
+		return
 
 	for a in arguments
 		if $.isArray(a)

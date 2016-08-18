@@ -397,6 +397,10 @@ i.fa {
 	line-height: 20px;
 }
 
+i.fa-spinner {
+	width: 12px;
+}
+
 i.cui-spin-stepped {
 	-webkit-animation: fa-spin 1s steps(8) infinite;
     -moz-animation: fa-spin 1s steps(8) infinite;
@@ -864,9 +868,32 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #000000;
-	opacity: 0.1;
-	z-index: 1;
+	// z-index: 1;
+	.cui-wait-block-glass {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #000000;
+		opacity: 0.3;
+	}
+	.cui-wait-block-inner {
+		flex: 1 1 auto;
+		.cui-wait-block-header {
+			flex: 1 1 auto;
+			justify-content: center;
+			align-self: center;
+			.cui-label > .cui-label-icon > i {
+				font-size: 24px;
+				color: #000000;
+			}
+
+		}
+		.cui-wait-block-content {
+			display: none;
+		}
+	}
 }
 
 // Tabs
@@ -1497,6 +1524,64 @@ a[role="button"].cui-button-appearance-link {
 		position: absolute;
 		left: 0;
 		right: 0;
+	}
+}
+
+// ProgressMeter
+.cui-tmpl-progress-meter {
+	.cui-progress-meter-bar {
+		height: 20px;
+		position: relative;
+		.cui-progress-meter-fill-background,
+		.cui-progress-meter-fill,
+		.cui-progress-meter-text {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+		.cui-progress-meter-fill-background {
+			background-color: #7dc3ff;
+		}
+		.cui-progress-meter-fill {
+			display: none;
+			background-color: blue;
+		}
+		.cui-progress-meter-text {
+			display: none;
+			color: #ffffff;
+			align-items: center;
+			line-height: 20px;
+		}
+		.cui-progress-meter-icon {
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			color: white;
+			align-items: center;
+		}
+
+	}
+	&[state="waiting"] {
+		.cui-progress-meter-fill-background {
+			// reddish
+			background-color: #ff6054;
+		}
+	}
+
+	&[state="percent"] {
+		.cui-progress-meter-icon {
+			display: none;
+		}
+		.cui-progress-meter-text {
+			display: flex;
+		}
+		.cui-progress-meter-fill {
+			display: flex;
+		}
 	}
 }
 

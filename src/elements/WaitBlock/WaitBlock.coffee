@@ -13,6 +13,9 @@ class WaitBlock extends Block
 			check: (v) ->
 				v instanceof Icon or isString(v)
 
+		@removeOpt("header")
+		@removeOpt("content")
+
 		@addOpts
 			# inactive is used to block content
 			# from being accessed
@@ -48,9 +51,9 @@ class WaitBlock extends Block
 
 	show: ->
 		position = @__element[0].style.position
-		if false and @__element.css("position") in ["absolute", "relative"]
+		if DOM.isPositioned(@__element[0])
+			@__savedPosition = @__element[0].style.position
 			@__element[0].style.position = "relative"
-			@__savedPosition = position
 		else
 			@__savedPosition = null
 
@@ -58,7 +61,7 @@ class WaitBlock extends Block
 		if @_fullscreen
 			@DOM.appendTo(@__element)
 		else
-			@__element.prepend(@DOM)
+			@__element.append(@DOM)
 		@__shown = true
 		@
 

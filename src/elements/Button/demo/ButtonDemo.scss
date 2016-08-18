@@ -65,3 +65,19 @@
 	@include button_flat_auto_colored( #2c0d53, #ff2f5d);
 
 }
+
+
+.cui-buttonbar-demo-margin-testers {
+	display: inline-block;
+}
+
+.cui-progress-meter-demo-container {
+
+	position: relative;
+	width: 200px;
+	height: 200px;
+
+	background: $default_background_color;
+	border: 1px solid $group_border_color;
+
+}

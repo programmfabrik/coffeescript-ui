@@ -14,8 +14,6 @@ coffee_files = src/demo.coffee \
 	../src/elements/Button/demo/ButtonDemo.coffee \
 	../src/elements/Label/demo/LabelDemo.coffee \
 	../src/elements/Block/demo/BlockDemo.coffee \
-	../src/elements/ProgressMeter/demo/ProgressMeterDemo.coffee \
-    ../src/elements/Button/demo/ButtonbarDemo.coffee \
 	../src/elements/Menu/demo/MenuDemo.coffee \
 	../src/elements/Input/demo/InputDemo.coffee \
 	../src/elements/MarkdownInput/demo/MarkdownInputDemo.coffee \

@@ -180,6 +180,8 @@ class EventsDemo extends Demo
 						log = "flash ring ("+ev.getPhase()+"): "+ring
 						@log(log)
 
+		tmpl.append(Demo.dividerLabel("events playground"), "buttons")
+
 		tmpl.append(f, "buttons")
 
 		node = tmpl.map.pointer_events[0]
@@ -202,7 +204,13 @@ class EventsDemo extends Demo
 						@log(ev.toHtml())
 					return
 
-		tmpl.append(new Form(fields: fields, data: data.listen).start(), "pointer_events")
+		tmpl.map.pointer_events.before(Demo.dividerLabel("pointer events").DOM)
+
+		tmpl.append(new Form(
+			maximize: false
+			fields: fields
+			data: data.listen
+		).start(), "pointer_events")
 
 		button_test = new Button
 			text: "Hold Me > 200ms"

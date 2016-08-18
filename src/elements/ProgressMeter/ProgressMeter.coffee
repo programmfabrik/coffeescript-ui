@@ -17,7 +17,7 @@ class ProgressMeter extends DOM
 			@setState(@_states[0])
 
 	__checkState: (state) ->
-		state in @_states or (state >= 0 and state <= 100 and isInteger(state))
+		state in @_states or (typeof(state) == "number" and state >= 0 and state <= 100)
 
 	initOpts: ->
 		super()
@@ -63,6 +63,9 @@ class ProgressMeter extends DOM
 	setState: (state) ->
 
 		assert(@__checkState(state), "ProgressMeter.setState", "state needs to be "+@_states.join(",")+" or between 0 and 100.", state: state)
+		if typeof(state) == "number"
+			state = Math.round(state*100)/100
+
 		if @__state == state
 			return
 
@@ -84,7 +87,7 @@ class ProgressMeter extends DOM
 		else
 			@__meter.DOM.attr("state", "percent")
 			@__meter.empty("icon")
-			@__meter.replace(@__state+"%", "text")
+			@__meter.replace(Math.round(@__state)+"%", "text")
 			fill_css = {} #display: ""
 			fill_css[@_css_property_percent] = @__state+"%"
 
