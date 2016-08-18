@@ -181,8 +181,7 @@ class Button extends DOM
 			@__menu_opts.element = @
 
 			if not @__menu_opts.hasOwnProperty("use_element_width_as_min_width")
-				#submenus should always have the size of their parentmenus
-				if @_menu_parent
+				if not @_menu_parent
 					@__menu_opts.use_element_width_as_min_width = true
 
 			@__menu_opts.onHide = =>
