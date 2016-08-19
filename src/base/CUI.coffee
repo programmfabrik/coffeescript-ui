@@ -468,7 +468,7 @@ class CUI
 			timeoutID: timeoutID
 			promise: dfr.promise()
 
-		# CUI.info("scheduleCallback", cb.timeoutID)
+		# console.error "scheduleCallback", cb.timeoutID, opts.call
 
 		dfr.done =>
 			# remove this callback after we are done

@@ -1,7 +1,12 @@
 class CUI.Event extends Element
 
-	contstructor: (@opts={}) ->
+	constructor: (@opts={}) ->
 		super(@opts)
+
+		if @_require_node_in_dom
+			console.debug "require node in dom", @isInDOM(), @__node
+			assert(@isInDOM(), "new Event", "node is not in DOM, unable to create event.", opts: @opts)
+
 		@__propagationStopped = false
 		@__propagationImmediateStopped = false
 		@__preventDefault = false
@@ -20,6 +25,11 @@ class CUI.Event extends Element
 				mandatory: true
 				check: (v) ->
 					DOM.isNode(v)
+
+			require_node_in_dom:
+				default: false
+				mandatory: true
+				check: Boolean
 
 			bubble:
 				default: false
@@ -62,6 +72,7 @@ class CUI.Event extends Element
 		@__progress_counter = 0
 
 		@__isInDOM = null
+
 		# assert(not @isDOMEvent() or @_bubble, "DOMEvent needs opts.bubble set.", opts: @opts)
 
 	setListener: (listener) ->

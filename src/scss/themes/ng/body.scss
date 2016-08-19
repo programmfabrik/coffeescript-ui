@@ -621,7 +621,11 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-label-multiline {
 		align-self: stretch;
 		white-space: pre-wrap;
-		word-break: normal;
+		// word-break: normal;
+		word-break: break-all;
+		// this does not work in IE, but will
+		// be ignored by IE, so we are good
+		word-break: break-word;
 
 		> .cui-label-content {
 			flex: 0 1 auto;
@@ -834,8 +838,18 @@ a[role="button"].cui-button-appearance-link {
 	}
 	&.cui-item-list-has-button-left
 	{
+		// this button always has a left side
+		.cui-file-upload-button {
+			> .cui-button-left {
+				display: flex;
+				width: 20px;
+			}
+			> .cui-button-center:not(:empty) {
+				padding-left: 3px;
+			}
+		}
 		> .cui-tmpl-button-center,
-		 >.cui-tmpl-button-center-right {
+		> .cui-tmpl-button-center-right {
 			> .cui-button-center {
 				padding-left: 23px;
 			}
@@ -853,12 +867,21 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ConfirmationDialog
-.cui-layer.cui-confirmation-dialog {
-	border: 2px solid black;
+.cui-tmpl-layer-root.cui-confirmation-dialog {
+	> .cui-layer {
+		text-align: center;
+		max-width: 400px;
+		border: 2px solid black;
+		&.cui-alert-problem {
+			border-color: red;
+		}
+	}
 }
 
-.cui-layer.cui-popover {
-	border: 2px solid black;
+.cui-layer {
+	&.cui-popover {
+		border: 2px solid green;
+	}
 }
 
 // WaitBlock
@@ -1519,8 +1542,9 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	> .cui-tmpl-sticky-header {
-		margin-top: 2px;
-		margin-bottom: 0;
+		// margin-top: 2px;
+		// margin-bottom: 0;
+		margin: 0;
 		position: absolute;
 		left: 0;
 		right: 0;

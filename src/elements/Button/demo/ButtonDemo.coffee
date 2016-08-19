@@ -430,9 +430,6 @@ class ButtonDemo extends Demo
 		@
 		progress_meter = new ProgressMeter
 			class: "cui-progress-meter-demo"
-			#TODO demo is not showing this icons currently
-			icon_waiting: "fa-hourglass"
-			icon_spinning: "fa-spinner cui-spin-stepped"
 			onUpdate: (pm) ->
 				console.info "update on progress meter", pm.getState()
 

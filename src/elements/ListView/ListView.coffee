@@ -869,7 +869,7 @@ class ListView extends SimplePane
 
 
 	__doNextGenLayout: (opts={}) ->
-		console.time "next-gen-layout"
+		# console.time "next-gen-layout"
 		# FIXME: improve selectors, so they only catch the current table not nested ones
 		#
 
@@ -902,14 +902,16 @@ class ListView extends SimplePane
 					# safe to add "1" here
 					width = width + col_width[parseInt(col_i)+i]
 
-				console.debug row_i, col_i, colspan, width
+				if width == 0
+					console.error "col width == 0", row_i, col_i, colspan, col_width
+				# console.debug row_i, col_i, colspan, width
 				cell.style.setProperty("width", width+"px", "important")
 
 
-		CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
+		# CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
 
 		@styleElement.innerHTML = css.join("\n")
-		CUI.info("ListView#"+@listViewCounter, "Set manual col widths.")
+		# CUI.info("ListView#"+@listViewCounter, "Set manual col widths.")
 
 		if @fixedColsCount >  0
 			# find unmeasured rows in Q2 & Q3 and set height
@@ -931,12 +933,12 @@ class ListView extends SimplePane
 					DOM.setDimensions(rows[row_i2], borderBoxHeight: row.offsetHeight)
 					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
-			CUI.info("ListView#"+@listViewCounter, "Synced row heights in Q0 and Q1.")
+			# CUI.info("ListView#"+@listViewCounter, "Synced row heights in Q0 and Q1.")
 
 		@__setMargins()
-		CUI.info("ListView#"+@listViewCounter, "Set margins on Q1 and Q2.")
+		# CUI.info("ListView#"+@listViewCounter, "Set margins on Q1 and Q2.")
 
-		console.timeEnd "next-gen-layout"
+		# console.timeEnd "next-gen-layout"
 		@
 
 	__doManualLayout: ->

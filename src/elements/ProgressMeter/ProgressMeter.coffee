@@ -98,5 +98,5 @@ class ProgressMeter extends DOM
 
 CUI.defaults.ProgressMeter =
 	states:
-		waiting: "fa-spinner"
-		spinning: "fa-spinner fa-spin"
+		waiting: "fa-hourglass"
+		spinning: "fa-spinner cui-spin-stepped"

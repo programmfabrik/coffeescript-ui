@@ -389,23 +389,44 @@ class CUI.Layer extends CUI.DOM
 		if @__element
 			new Positioner(@__element)
 
-	__getMaxLayerWidth: ->
+	__getMaxLayerWidth: (return_null_if_own=false) ->
+		@__initOwnDimensions()
+
+		if @__ownDimensions.maxWidth
+			if return_null_if_own
+				return null
+
+			return @__ownDimensions?.maxWidth
+
 		margin_x = @__layer_margin.left + @__layer_margin.right
 		@__viewport.width - margin_x
 
-	__getMaxLayerHeight: ->
+	__getMaxLayerHeight: (return_null_if_own=false) ->
+		@__initOwnDimensions()
+
+		if @__ownDimensions.maxHeight
+			if return_null_if_own
+				return null
+
+			return @__ownDimensions?.maxHeight
+
 		margin_y = @__layer_margin.bottom + @__layer_margin.top
 		@__viewport.height - margin_y
 
+	__initOwnDimensions: ->
+		if @__ownDimensions
+			return
+
+		@__ownDimensions = DOM.getDimensions(@__layer.DOM[0])
+
 	__setMaxDimensionsOnLayer: ->
+		@__initOwnDimensions()
 
 		new_max_dimension =
-			width: @__getMaxLayerWidth()
-			height: @__getMaxLayerHeight()
-		@__layer.DOM.css
-			"max-width": new_max_dimension.width
-			"max-height": new_max_dimension.height
+			maxWidth: @__getMaxLayerWidth(true)
+			maxHeight: @__getMaxLayerHeight(true)
 
+		@__layer.DOM.css(new_max_dimension)
 		return new_max_dimension
 
 
