@@ -436,7 +436,7 @@ $tr_one_row = ->
 			if $.isArray(___a)
 				for a in ___a
 					add_content(a)
-			else if ___a.DOM
+			else if ___a?.DOM
 				td.append(___a.DOM)
 			else if not isNull(___a)
 				td.append(___a)
