@@ -8,7 +8,6 @@ class CUI
 	@__readyFuncs = []
 	@__themes = []
 
-
 	@start: ->
 		@getPathToScript()
 

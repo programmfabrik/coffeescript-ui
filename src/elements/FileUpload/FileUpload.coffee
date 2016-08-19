@@ -237,6 +237,7 @@ class FileUpload extends Element
 		Events.listen
 			node: dropZone
 			type: ["dragover"]
+			instance: @
 			selector: selector
 			call: (ev) =>
 				FileUpload.setDropClassByEvent(ev)
@@ -247,6 +248,7 @@ class FileUpload extends Element
 		Events.listen
 			node: dropZone
 			type: "drop"
+			instance: @
 			selector: selector
 			call: (ev) =>
 				FileUpload.setDropClassByEvent(ev)
@@ -272,7 +274,7 @@ class FileUpload extends Element
 	@setDropClassByEvent: (ev) ->
 		el = ev.getCurrentTarget()
 
-		console.debug "FileUpload.setDropClassbyEvent", ev.getType(), el.nodeName, DOM.getAttribute(el, "row")
+		# console.debug "FileUpload.setDropClassbyEvent", ev.getType(), el.nodeName, DOM.getAttribute(el, "row")
 		switch ev.getType()
 			when "dragover"
 
