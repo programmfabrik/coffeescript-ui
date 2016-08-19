@@ -355,12 +355,16 @@ class ListView extends SimplePane
 				if not @_autoLayout
 					return
 
-				ev.stopPropagation()
-
 				if not @__isInDOM
 					return
 
 				cell = DOM.closest(ev.getNode(), ".cui-list-view-grid-cell")
+
+				if not cell
+					return
+
+				ev.stopPropagation()
+
 				row = parseInt(cell.getAttribute("row"))
 				col = parseInt(cell.getAttribute("col"))
 
