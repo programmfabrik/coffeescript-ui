@@ -15,6 +15,7 @@ class CUI.MouseIsDownListener extends CUI.Listener
 		Events.listen
 			type: "mousedown"
 			node: @getNode()
+			instance: @
 			capture: true
 			call: (ev) =>
 				if ev.isImmediatePropagationStopped()
@@ -33,6 +34,10 @@ class CUI.MouseIsDownListener extends CUI.Listener
 
 				@__scheduleNextEvent()
 				return
+
+	destroy: ->
+		Events.ignore(instance: @)
+		super()
 
 	__reset: ->
 		if @__mouseisdown_interval

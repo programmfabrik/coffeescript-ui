@@ -30,6 +30,7 @@ class DragDropSelect extends Element
 
 	destroy: ->
 		@element.removeClass(@__getClass())
+		DOM.removeData(@element[0], "drag-drop-select-"+@cls)
 		Events.ignore
 			instance: @
 		super()
