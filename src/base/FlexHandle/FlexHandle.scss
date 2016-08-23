@@ -19,10 +19,12 @@
     }
 
     &.cui-flex-handle-row {
+        overflow: hidden;
         cursor: ew-resize;
         width: $flex_handle_size;
     }
     &.cui-flex-handle-column {
+        overflow: hidden;
         cursor: ns-resize;
         height: $flex_handle_size;
     }
