@@ -395,12 +395,12 @@ tr.cui-date-time-year-month > td {
 	background-color: $active_background_color !important;
 	color: $active_font_color;
 	&.cui-date-time-now {
-		background-color: $marker_color !important;
+		background-color: $marker_background_color !important;
 		border: $active_background_color !important;
 	}
 }
 
 .cui-date-time-now {
-	background-color: $marker_color;
+	background-color: $marker_background_color;
 }
 

@@ -240,7 +240,7 @@ $button_content_distance: $grid_size*.5;
 %button_appearance_important {
 	//TODO fill with nice colors
 	@include button_skin();
-	background-color: $marker_color;
+	background-color: $marker_background_color;
 }
 
 //TODO use transparent backgrounds for the different button states

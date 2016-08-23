@@ -48,9 +48,11 @@ $active_highlight_font_color: $highlight_font_color;
 $group_border_color: $default_background_color*0.85;
 
 // special colors
-$marker_color: $orange; //e.g. used by datetime to show current day
+$marker_background_color: $orange; //e.g. used by datetime to show current day or autocompletion to show found text
+$marker_color: #443c00;
 
-$dropzone_highlighted_color: $marker_color;
+
+$dropzone_highlighted_color: $marker_background_color;
 
 $focus_color: #4D90FE;
 
