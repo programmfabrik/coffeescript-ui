@@ -42,6 +42,7 @@
     );
 
     padding-left: 0;
+    padding-right: 0; //resetting right so that labelless checkboxes can be nicely centered (e.g. tables)
 
     //use button center as clickable label
     .cui-button-center {
