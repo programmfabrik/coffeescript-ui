@@ -30,6 +30,8 @@ class Tab extends DOM
 		@__button = new Button
 			role: "tab-header"
 			radio: "tabs"
+			class: "tab-header-button"
+			size: "big"
 			text: @_text
 			attr: attr
 			active: false

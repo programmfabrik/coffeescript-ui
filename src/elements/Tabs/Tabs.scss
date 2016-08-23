@@ -1,5 +1,6 @@
 
 
+
 .cui-pane.cui-simple-pane.cui-tabs {
 	> .cui-vertical-layout-center {
 		> .cui-tmpl-tabs-bodies {
@@ -46,7 +47,8 @@
 			//make sure the left side can shrink, so we can scroll, let it grow to make sure its not centered in firefox
 			@include flex(1,1);
 
-			padding-bottom: 0px; //buttons should touch bottom
+			//REMARKED be free
+			//padding-bottom: 0px; //buttons should touch bottom
 
 			& > .cui-buttonbar {
 				//allow to shrink below min content width.
@@ -57,8 +59,8 @@
 				@include flex_display(flex);
 			}
 
-			& > .cui-buttonbar > .cui-button,
-			& > .cui-button {
+			> .cui-buttonbar > .tab-header-button,
+			> .tab-header-button {
 				//overwrite reset of padding for flat buttons in pane headers
 				padding-left: $grid_size;
 				padding-right: $grid_size;
@@ -80,17 +82,22 @@
 				//REMARKED ani looks broken
 				//transition: all $default_animation_speed ease ;
 
-
-				color: #5F5F5F;
-				font-size: map_get($button_font_sizes,normal);
+				$tab_button_inactive_color: #5F5F5F;
+				color: $tab_button_inactive_color;
+				//REMARKED should be flexible
+				//font-size: map_get($button_font_sizes,normal);
 
 				//push down button
-				height: 25px;
-				margin-top: 8px;
+				//height: 25px;
+				//margin-top: 8px;
 
-				//border: 1px solid black;
-				border: none;
+
+				height: 27px;
+				margin-top: 6px;
+
+				border: 1px solid transparent;
 				border-bottom: 1px solid $tab_border_color;
+
 
 				&:hover:not(.cui-active) {
 					border-bottom: 1px solid $tab_border_color;
@@ -106,16 +113,12 @@
 					background-color: $default_background_color !important;
 
 					border: 1px solid $tab_border_color;
-					border-bottom-width: 0px;
-
-					height: 27px;
-					margin-top: 6px;
-
-					font-weight: bold;
+					border-bottom: 1px solid transparent;
 
 					color: $tab_button_font_color;
 
 					@include flex(0,0);
+					font-weight: bold;
 
 				}
 
@@ -184,7 +187,14 @@
 	visibility: hidden;
 }
 
+//TODO this should be made as a option tabs.coffee
+@mixin tabs_set_font_size_normal() {
+	@include ASSERT_TYPE(cui-tabs);
 
-
+	> .cui-vertical-layout-top > .cui-pane-header.cui-toolbar  > .cui-horizontal-layout-left > .cui-buttonbar > .tab-header-button
+	{
+		@include button_size(normal);
+	}
+}
 
 
