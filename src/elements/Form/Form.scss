@@ -94,6 +94,31 @@ $form_data_field_input_max_width: 300px;
 }
 
 
+//REMARKED doesnt work, forms too different.
+@mixin form_maximize_center($table_width: auto, $center_width: 100%) {
+
+    //make sure options (.cui-form-tr-right) in 2nd table level are aligned
+    .cui-maximize-horizontal {
+        //background-color: lightgrey;
+        > .cui-layout-cell {
+            overflow: hidden; //TODO needs to be in here cause of problems with padding reset and this size setting
+            > .cui-form-table {
+                width: $table_width;
+                //background-color: palegoldenrod;
+                > tbody > .cui-form-tr {
+                    //background-color: purple;
+                    > .cui-form-center {
+                        width: $center_width;
+                        .cui-data-field {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 //there are situations inside flex were width:100% is getting infinite. setting width here fixes this..
 @mixin form_hack_for_avoiding_infinite_width() {
     //only needed for maximized forms
