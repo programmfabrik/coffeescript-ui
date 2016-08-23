@@ -1,7 +1,7 @@
 
 //TODO vertical align check
 
-$button_content_distance: $grid_size*.5;
+$button_label_horizontal_separator_padding: $grid_size;
 
 
 
@@ -324,12 +324,12 @@ $button_content_distance: $grid_size*.5;
 	// ------ set horizontal separator paddings only when needed
 
 	&-left:not(:empty) + .cui-button-center:not(:empty) {
-		padding-left: $button_content_distance;
+		padding-left: $button_label_horizontal_separator_padding;
 	}
 
 	&-center:not(:empty) + .cui-button-right:not(:empty),
 	&-left:not(:empty) + .cui-button-center:empty + .cui-button-right:not(:empty) {
-		padding-left: $button_content_distance;
+		padding-left: $button_label_horizontal_separator_padding;
 	}
 
 	.fa {

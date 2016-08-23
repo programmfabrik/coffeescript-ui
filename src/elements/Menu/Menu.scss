@@ -59,7 +59,7 @@
 			//keep width of icon when icon is not there
 			> .cui-label-icon:empty + .cui-label-content,
 			.cui-button-center:first-child {
-				padding-left: $icon_column_width + $button_content_distance;
+				padding-left: $icon_column_width + $button_label_horizontal_separator_padding;
 			}
 		}
 

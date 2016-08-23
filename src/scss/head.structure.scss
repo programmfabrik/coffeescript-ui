@@ -60,7 +60,9 @@ $button_icon_font_sizes: (
 
 // ----- label -------
 $label_padding_y: 2px;
-$label_horizontal_separator_padding: $grid_size * .5;
+
+// ------ button / label --------
+$button_label_horizontal_separator_padding: $grid_size;
 
 
 // ----- checkbox -------

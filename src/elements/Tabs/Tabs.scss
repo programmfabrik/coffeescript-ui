@@ -98,11 +98,15 @@
 				border: 1px solid transparent;
 				border-bottom: 1px solid $tab_border_color;
 
+				$default_animation_speed: 1s;
+				transition: border-color ease $default_animation_speed;
+
 
 				&:hover:not(.cui-active) {
 					border-bottom: 1px solid $tab_border_color;
 					border-color: $tab_border_color !important; //huge selector when not using 'important'
 					background-color: transparent !important;
+					transition: border-color ease $default_animation_speed;
 					color: #222;
 				}
 

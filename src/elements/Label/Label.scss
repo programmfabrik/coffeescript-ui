@@ -124,7 +124,7 @@
 
 	&-icon {
 		&:not(:empty) + .cui-label-content:not(:empty) {
-			padding-left: $label_horizontal_separator_padding;
+			padding-left: $button_label_horizontal_separator_padding;
 		}
 
 		&:empty {

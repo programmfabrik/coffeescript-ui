@@ -60,6 +60,7 @@
 	background-color: $color;
 
 	//NOTE we have to color the cell in a div list-view for working around the problem that hidden areas get no background when scrolling makes them visible
+	//TODO this leads to the problem of overlapping transparent selections ...could be solved by not using transperencies but then we have a problem with nested highlighting
 	> .cui-list-view-grid-cell-div {
 		background-color: $color;
 	}
