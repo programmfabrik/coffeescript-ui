@@ -243,11 +243,11 @@ class CUI.Event extends Element
 		node.dispatchEvent(ev)
 		ev
 
-	toHtml: ->
-		html = @__cls+": <b>"+@getType()+"</b>"
+	dump: ->
+		txt = @__cls+": **"+@getType()+"**"
 		for k in ["altKey", "ctrlKey", "shiftKey", "metaKey", "keyCode"]
-			html += " <b>"+k+"</b>: "+@[k]()
-		html
+			txt += " **"+k+"**: "+@[k]()
+		txt
 
 	stop: ->
 		@preventDefault()

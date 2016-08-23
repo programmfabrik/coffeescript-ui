@@ -14,7 +14,7 @@ class Demo extends DOM
 		@__console.log(txt.join(" "))
 
 	logTxt: (txt...) ->
-		@log(toHtml(txt.join(" ")))
+		@log(txt.join(" "), false)
 
 	undisplay: ->
 
@@ -47,43 +47,36 @@ Demo.register = (demo) ->
 	assert(demo instanceof Demo, "Demo.register", "demo must be instanceof Demo", demo: demo)
 	Demo.demos.push(demo)
 
-class DemoConsole extends DOM
-	readOpts: ->
-		super()
-		@__logDiv = $div("cui-demo-console-log")[0]
+class DemoConsole extends CUI.SimplePane
+	constructor: (@opts = {}) ->
+		super(@opts)
 
-	render: ->
-		pane = new Pane
-			top:
-				content: new PaneHeader
-					left:
-						content: [
-							new Button
-								icon: "east"
-								onClick: =>
-									@__getPaneFlexHandle().close()
-						,
-							new Label(text: "Console")
-						]
-					right:
-						content:
-							icon: "trash"
-							onClick: =>
-								@__logDiv.innerHTML = ""
+		@__console = new CUI.Console()
 
-			center:
-				content: @__logDiv
+		btn1 = new Button
+				icon: "east"
+				onClick: =>
+					@__getPaneFlexHandle().close()
 
-		@registerDOMElement(pane.DOM)
-		pane
+		@append(btn1, "header_left")
+
+		btn2 = new Button
+				icon: "trash"
+				onClick: =>
+					@__console.clear()
+
+		@append(btn2, "header_right")
+
+		@append(new Label(text: "Console"), "header_center")
+
+		@append(@__console, "content")
 
 	__getPaneFlexHandle: ->
 		DOM.data(@DOM.closest("[flex-handled-pane]")[0], "flexHandle")
 
+	log: (txt, markdown) ->
+		@__console.log(txt, markdown)
 
-	log: (txt) ->
-		@__logDiv.appendChild($div().html(txt)[0])
-		@__logDiv.scrollTop = @__logDiv.scrollHeight
 
 class RunDemo extends Element
 	constructor: (@opts={}) ->
@@ -186,7 +179,7 @@ class RunDemo extends Element
 			right:
 				class: "cui-demo-pane-right"
 				content:
-					@__console.render()
+					@__console
 				flexHandle:
 					label:
 						text: "Console"
@@ -327,7 +320,6 @@ class DemoTable
 
 
 CUI.ready ->
-	CUI.debug "this:", @
 	for k in ["light", "dark", "ng"]
 		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 

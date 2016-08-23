@@ -50,6 +50,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/Block/Block.coffee \
 	src/elements/WaitBlock/WaitBlock.coffee \
 	src/elements/BorderLayout/BorderLayout.coffee \
+	src/elements/Console/Console.coffee \
 	src/elements/HorizontalLayout/HorizontalLayout.coffee \
 	src/elements/VerticalLayout/VerticalLayout.coffee \
 	src/elements/VerticalList/VerticalList.coffee \

@@ -22,6 +22,9 @@ class CUI.DOM extends Element
 		return "cui-dom-element ez-#{toDash(@__cls)} cui-#{toDash(@__cls)}"
 
 	registerDOMElement: (_dom) ->
+		if _dom instanceof HTMLElement
+			# FIXME: remove when jQuery is removed
+			_dom = jQuery(_dom)
 		@DOM = _dom
 		DOM.addClass(@DOM[0], @getDOMElementClasses())
 		@DOM.attr("cui-unique-id", @getUniqueId())
@@ -257,7 +260,6 @@ class CUI.DOM extends Element
 			child = node.previousElementSibling
 			if not child
 				return null
-
 
 	@nextElementSibling: (node, nodeFilter) ->
 		while true

@@ -1,5 +1,5 @@
 # Pane with Header and Footer
-class SimplePane extends Pane
+class CUI.SimplePane extends CUI.Pane
 
 	# @param [Object] options for pane creation
 	# @option options [Array, Element, jQuery] header_left access the "left" of the PaneHeader
@@ -99,3 +99,5 @@ class SimplePane extends Pane
 		[ pane, _key ] = @getPaneAndKey(key)
 		pane.replace(content, _key)
 		@
+
+SimplePane = CUI.SimplePane

@@ -1,4 +1,4 @@
-class Pane extends VerticalLayout
+class CUI.Pane extends CUI.VerticalLayout
 
 	__init: ->
 		super()
@@ -167,3 +167,5 @@ class Pane extends VerticalLayout
 CUI.Events.registerEvent
 	type: ["start-fill-screen", "end-fill-screen"]
 	sink: true
+
+Pane = CUI.Pane

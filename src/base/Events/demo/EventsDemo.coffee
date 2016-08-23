@@ -201,7 +201,7 @@ class EventsDemo extends Demo
 				call: (ev) =>
 					if data.listen[ev.getType()]
 						@flash(node)
-						@log(ev.toHtml())
+						@log(ev.dump())
 					return
 
 		tmpl.map.pointer_events.before(Demo.dividerLabel("pointer events").DOM)
@@ -215,7 +215,7 @@ class EventsDemo extends Demo
 		button_test = new Button
 			text: "Hold Me > 200ms"
 			onMouseisdown: (ev) =>
-				@log(ev.toHtml())
+				@log(ev.dump())
 				if ev.getMilliseconds() == 200
 					@log("preventing click after 200ms")
 					ev.preventNext()

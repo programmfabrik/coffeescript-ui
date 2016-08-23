@@ -95,7 +95,7 @@ class Draggable extends DragDropSelect
 						dim = DOM.getDimensions(ev.getTarget())
 
 						if position.left - dim.scrollLeftScaled > dim.clientWidthScaled
-							console.warn "mouseisdown on a vertical scrollbar..."
+							console.warn "mouseisdown on a vertical scrollbar...", position.left, dim.scrollLeftScaled, dim.clientWidthScaled, dim
 							return
 
 						if position.top - dim.scrollTopScaled > dim.clientHeightScaled

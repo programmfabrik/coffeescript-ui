@@ -19,7 +19,6 @@ class CUI
 			Events.trigger
 				type: "viewport-resize"
 
-
 		Events.listen
 			type: "resize"
 			node: window
@@ -809,8 +808,7 @@ CUI.ready =>
 	CUI.__downloadDataElement.style.display = "none"
 	document.body.appendChild(CUI.__downloadDataElement)
 
-jQuery =>
+window.addEventListener "load", =>
 	CUI.start()
-
 
 

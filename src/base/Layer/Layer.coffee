@@ -61,7 +61,7 @@ class CUI.Layer extends CUI.DOM
 					@__backdrop_crop.appendChild(body_clone)
 					@setBackdropContent(@__backdrop_crop)
 
-				console.error "crop this:", @__backdrop_crop
+				# console.error "crop this:", @__backdrop_crop
 
 				@__layer_root.addClass("cui-layer-root-backdrop-blur")
 
@@ -153,11 +153,7 @@ class CUI.Layer extends CUI.DOM
 			DOM.setAttribute(@__layer.DOM[0], "tabindex", "0")
 
 		if @_element
-			if @_element.DOM
-				@__element = @_element.DOM
-			else
-				@__element = @_element
-			assert(@__element.closest(".ez-tmpl").length == 0, "new #{@__cls}", "opts.element is inside a Template.", element: @__element)
+			@__setElement(@_element)
 
 		if @_use_element_width_as_min_width
 			assert(@__element, "new Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", opts: @opts)
@@ -341,6 +337,17 @@ class CUI.Layer extends CUI.DOM
 			DOM.setStyleOne(@__layer_root.DOM[0], "visibility", "hidden")
 
 	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
+
+	__setElement: (element) ->
+		if element.DOM
+			@__element = element.DOM
+		else
+			@__element = element
+
+		assert(@__element.closest(".ez-tmpl").length == 0, "Layer.__setElement", "element cannot be inside a Template.", element: element)
+		assert(isElement(@__element), "Layer.__setElement", "element needs to be jQuery.", element: element)
+		@__element
+
 
 	# returns a list of all possible placements starting with @__placement and ending with "c"
 	__getPlacements: ->
@@ -1201,7 +1208,7 @@ class CUI.Layer extends CUI.DOM
 
 		if element
 			@__orig_element = @__element
-			@__element = element
+			@__setElement(element)
 
 		# get @__appendToElement
 		@__appendToElement = $(document.body)
@@ -1294,6 +1301,7 @@ class CUI.Layer extends CUI.DOM
 		@
 
 	elementIsInDOM: ->
+		# console.debug "element:", @__element, @, @_element, @getUniqueId()
 		@__element and DOM.isInDOM(@__element[0])
 
 	getElement: ->
