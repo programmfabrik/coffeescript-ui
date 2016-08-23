@@ -351,6 +351,14 @@ class ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
+		@__addButton("size: \"bigger\"",
+			icon_left: new Icon(class: "fa-bank")
+			size: "bigger"
+			text: "Bigger Button"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)
+
 		@__addButton("size: \"auto\", defaults to \"normal\".",
 			icon_left: new Icon(class: "fa-bank")
 			size: "auto"
