@@ -11,6 +11,14 @@
 	}
 }
 
+@mixin list_view_center_cell_content($column_class) {
+	.#{$column_class} {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+}
+
 .cui-list-view.cui-simple-pane {
 
 	&:not(.cui-absolute) {
@@ -283,7 +291,8 @@
 	//set row horizontal separators, avoid header rows that can also exist in q3!
 	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > table > tbody > .cui-list-view-grid-row:not(.list-view-header-row)  > .cui-list-view-grid-cell-td,
 	.cui-list-view-grid-cell-fill,
-	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-list-view-grid-row:not(.list-view-header-row)  > .cui-list-view-grid-cell-div {
+	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > div.cui-list-view-grid-row:not(.list-view-header-row) //on a div we can use the row
+	{
 		@if($list_view_row_separator_color != 0) {
 			border-bottom: 1px solid $list_view_row_separator_color;
 		}
