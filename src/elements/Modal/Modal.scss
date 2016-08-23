@@ -84,5 +84,18 @@
 		@include pane_control_sizes(big);
 		@include pane_header_colors($modal_header_background_color, $modal_header_font_color);
 		@include outer_pane_padding("bigger");
+
+		//title icon styling TODO get a title class !?
+		> .cui-vertical-layout-top {
+			> .cui-pane-header {
+				> .cui-horizontal-layout-left {
+					.cui-label {
+						> .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+							padding-left: $grid_size*2;
+						}
+					}
+				}
+			}
+		}
 	}
 }
