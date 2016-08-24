@@ -124,7 +124,7 @@ class Input extends DataFieldInput
 				tabindex: "0"
 				spellcheck: @__spellcheck
 		else
-			if CUI.getActiveTheme().getName() == "ng"
+			if CUI.__ng__
 				# this is the way to make input not behave irratically
 				size = 1
 			else

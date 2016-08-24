@@ -634,7 +634,7 @@ class DateTime extends Input
 	updateCalendar: (mom, update_current_moment = true) ->
 		@__calendar.empty()
 
-		if CUI.getActiveTheme().getName() == "ng"
+		if CUI.__ng__
 			@__calendar.append(@getDateTimeDrawer(mom))
 			@__calendar.append(@drawMonthTable(mom))
 			@__calendar.append(@drawYearMonthsSelect(mom))
@@ -912,7 +912,7 @@ class DateTime extends Input
 					@__current_moment.year(data.year)
 					@updateCalendar(@__current_moment)
 
-					if CUI.getActiveTheme().getName() != "ng"
+					if not CUI.__ng__
 						if @__input_format.type.match(/time/)
 							@setCursor("hour")
 						else
@@ -946,7 +946,7 @@ class DateTime extends Input
 				tr.append($td("cui-date-time-week").append($text(week_no)))
 				weeks++
 
-			if CUI.getActiveTheme().getName() == "ng"
+			if CUI.__ng__
 				div_type = $td
 			else
 				div_type = $div
@@ -964,7 +964,7 @@ class DateTime extends Input
 
 			day_div.addClass("cui-date-time-day-"+mom.format("dd").toLowerCase())
 
-			if CUI.getActiveTheme().getName() == "ng"
+			if CUI.__ng__
 				td = day_div.appendTo(tr)
 			else
 				td = $td().append(day_div).appendTo(tr)

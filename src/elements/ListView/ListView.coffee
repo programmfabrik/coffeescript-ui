@@ -33,7 +33,7 @@ class ListView extends SimplePane
 		@__deferredRows = []
 		@__isInDOM = false
 
-		if CUI.getActiveTheme().getName() == "ng"
+		if CUI.__ng__
 			# always use next gen layout
 			@_autoLayout = 2
 

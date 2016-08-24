@@ -185,10 +185,7 @@ class Form extends DataField
 
 			for td_class, idx in td_classes
 				head = @_header[idx]
-				if CUI.getActiveTheme().getName() == "ng"
-					th = $div("cui-form-th "+td_class).appendTo(tr_head)
-				else
-					th = $th(td_class).appendTo(tr_head)
+				th = $th(td_class).appendTo(tr_head)
 
 				if not head
 					continue

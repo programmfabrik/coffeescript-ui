@@ -104,6 +104,10 @@ class CUI
 		set_active_theme = (theme) =>
 			DOM.setAttribute(document.body, "cui-theme", theme?.getName())
 			@__activeTheme = theme
+			if theme.getName().startsWith("ng")
+				CUI.__ng__ = true
+			else
+				CUI.__ng__ = false
 
 		# we set this before the load, so users can access the
 		# active theme right from the start

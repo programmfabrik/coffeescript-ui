@@ -55,7 +55,7 @@ class Tabs extends SimplePane
 				@__header.scrollLeft = startScrollLeft - diff.x
 			helper: null
 
-		if CUI.getActiveTheme().getName() == "ng"
+		if CUI.__ng__
 			pane_key = "center"
 		else
 			pane_key = "left"
@@ -85,7 +85,7 @@ class Tabs extends SimplePane
 
 		@getLayout().append(@__tabs_bodies, "center")
 
-		if CUI.getActiveTheme().getName() != "ng"
+		if not CUI.__ng__
 			if not @__maximize_horizontal or not @__maximize_vertical
 				Events.listen
 					node: @getLayout()
@@ -123,7 +123,7 @@ class Tabs extends SimplePane
 
 			assert( DOM.isInDOM(@getLayout().DOM[0]),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
-			if CUI.getActiveTheme().getName() != "ng"
+			if not CUI.__ng__
 				@__doLayout()
 
 		@addClass("cui-tabs")
@@ -162,7 +162,7 @@ class Tabs extends SimplePane
 					if @__overflowBtn.isShown()
 						DOM.scrollIntoView(tab.getButton().DOM[0])
 
-					if CUI.getActiveTheme().getName() == "ng"
+					if CUI.__ng__
 						if not @_maximize_vertical
 							# set left margin on first tab
 							console.debug "style", @__tabs[0].DOM[0], -100*idxInArray(tab, @__tabs)+"%"

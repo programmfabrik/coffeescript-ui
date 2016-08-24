@@ -620,12 +620,15 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label-multiline {
 		align-self: stretch;
-		white-space: pre-wrap;
-		// word-break: normal;
-		word-break: break-all;
-		// this does not work in IE, but will
-		// be ignored by IE, so we are good
-		word-break: break-word;
+
+		&:not(.cui-label-markdown) {
+			white-space: pre-wrap;
+			// word-break: normal;
+			word-break: break-all;
+			// this does not work in IE, but will
+			// be ignored by IE, so we are good
+			word-break: break-word;
+		}
 
 		> .cui-label-content {
 			flex: 0 1 auto;
@@ -742,6 +745,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 	// overflow: hidden;
 	overflow: auto;
+	margin: 10px;
 }
 
 .cui-tmpl-layer-pointer
@@ -967,21 +971,21 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&.cui-maximize-vertical {
-		> .cui-vertical-layout-center {
-			> .cui-list-view-grid {
-				height: 100%;
-			}
-		}
-	}
+	// &.cui-maximize-vertical {
+	//	> .cui-vertical-layout-center {
+	//		> .cui-list-view-grid {
+	//			height: 100%;
+	//		}
+	//	}
+	// }
 
-	&.cui-maximize-horizontal {
-		> .cui-vertical-layout-center {
-			> .cui-list-view-grid {
-				width: 100%;
-			}
-		}
-	}
+	// &.cui-maximize-horizontal {
+	//	> .cui-vertical-layout-center {
+	//		> .cui-list-view-grid {
+	//			width: 100%;
+	//		}
+	//	}
+	// }
 
 
 	.cui-list-view-grid {
@@ -990,34 +994,38 @@ a[role="button"].cui-button-appearance-link {
 		// needed for resize tool to position the resize
 		// handles properly
 		position: relative;
-
-		.cui-list-view-grid-inner-top {
-			flex: 0 0 auto;
-			flex-direction: row;
-			.cui-list-view-grid-quadrant-0 {
-				flex: 0 0 auto;
-				overflow: hidden;
-			}
-			.cui-list-view-grid-quadrant-1 {
-				flex: 1 1 auto;
-				overflow: hidden;
-			}
-		}
-
-		.cui-list-view-grid-inner-bottom {
-			flex: 1 1 auto;
-			flex-direction: row;
-			.cui-list-view-grid-quadrant-2 {
-				flex: 0 0 auto;
-				overflow: hidden;
-			}
-			.cui-list-view-grid-quadrant-3 {
-				flex: 1 1 auto;
-				overflow: auto;
-				background-color: #f0f8ff;
-			}
-		}
 	}
+
+	.cui-list-view-grid-inner-top {
+		flex: 0 0 auto;
+		flex-direction: row;
+	}
+
+	.cui-list-view-grid-inner-bottom {
+		flex: 1 1 auto;
+		flex-direction: row;
+	}
+
+	.cui-list-view-grid-quadrant-0 {
+		flex: 0 0 auto;
+		overflow: hidden;
+	}
+
+	.cui-list-view-grid-quadrant-1 {
+		flex: 1 1 auto;
+		overflow: hidden;
+	}
+
+	.cui-list-view-grid-quadrant-2 {
+		flex: 0 0 auto;
+		overflow: hidden;
+	}
+	.cui-list-view-grid-quadrant-3 {
+		flex: 1 1 auto;
+		overflow: auto;
+		background-color: #f0f8ff;
+	}
+
 }
 
 // outside .cui-list-liew, we can use
@@ -1048,11 +1056,16 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-list-view-row-move-handle-column.cui-lv-td {
-	width: 10px;
-	> div {
-		background: yellow;
-		flex: 1 1 auto;
+.cui-list-view-row-move-handle-column {
+	&.cui-lv-td {
+		width: 10px;
+		&.cui-list-view-row-move-handle {
+			cursor: move;
+			> div {
+				background: yellow;
+				flex: 1 1 auto;
+			}
+		}
 	}
 }
 
