@@ -30,13 +30,26 @@ class Tabs extends SimplePane
 			@__overflowBtn.show()
 		else
 			@__overflowBtn.hide()
+		@
 
+	__setActiveMarker: ->
+		btn = @getActiveTab()?.getButton().DOM[0]
+
+		if not btn
+			CUI.DOM.hideElement(@__tabs_marker)
+			return
+
+		CUI.DOM.showElement(@__tabs_marker)
+		btn_dim = DOM.getDimensions(btn)
+		DOM.setStylePx @__tabs_marker,
+			left: btn_dim.offsetLeft
+			width: btn_dim.borderBoxWidth
+		@
 
 	init: ->
 		super()
 		# slider to mark active tab
-		@tabs_marker = $div("cui-active-tab-marker")
-		@getLayout().DOM.append(@tabs_marker)
+		@__tabs_marker = CUI.DOM.element("DIV", class: "cui-tabs-active-marker")
 
 		@__tabs_bodies = new Template
 			name: "tabs-bodies"
@@ -47,7 +60,7 @@ class Tabs extends SimplePane
 
 		new Draggable
 			element: @__buttonbar.DOM
-			ms: 200
+			ms: 0
 			axis: "x"
 			dragstart: =>
 				startScrollLeft = @__header.scrollLeft
@@ -61,6 +74,8 @@ class Tabs extends SimplePane
 			pane_key = "left"
 
 		@__pane_header.append(@__buttonbar, pane_key)
+
+		@__pane_header.append(@__tabs_marker, pane_key)
 
 		@__header = @__pane_header[pane_key]()[0]
 
@@ -120,9 +135,12 @@ class Tabs extends SimplePane
 				type: "viewport-resize"
 				call: =>
 					@__checkOverflowButton()
+					@__setActiveMarker()
 
 			assert( DOM.isInDOM(@getLayout().DOM[0]),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
+			@__setActiveMarker()
+
 			if not CUI.__ng__
 				@__doLayout()
 
@@ -159,16 +177,19 @@ class Tabs extends SimplePane
 				node: tab
 				type: "tab_activate"
 				call: =>
+
 					if @__overflowBtn.isShown()
 						DOM.scrollIntoView(tab.getButton().DOM[0])
 
 					if CUI.__ng__
 						if not @_maximize_vertical
 							# set left margin on first tab
-							console.debug "style", @__tabs[0].DOM[0], -100*idxInArray(tab, @__tabs)+"%"
+							# console.debug "style", @__tabs[0].DOM[0], -100*idxInArray(tab, @__tabs)+"%"
 							DOM.setStyle(@__tabs[0].DOM[0], marginLeft: -100*idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
+					@__setActiveMarker()
+
 					DOM.setAttribute(@DOM[0], "active-tab-idx", idxInArray(tab, @__tabs))
 					# CUI.error @__uniqueId, "activate"
 

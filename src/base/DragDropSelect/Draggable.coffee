@@ -47,10 +47,10 @@ class Draggable extends DragDropSelect
 					v >= 0
 
 			ms:
-				default: 50
+				default: CUI.MouseIsDownListener.interval_ms
 				check: (v) ->
-					# must be multiple of 50
-					v % 50 == 0 and v > 0
+					# must be multiple of MouseIsDownListener.interval_ms or 0
+					v % CUI.MouseIsDownListener.interval_ms == 0
 
 			selector:
 				check: (v) =>
@@ -73,6 +73,7 @@ class Draggable extends DragDropSelect
 		Events.listen
 			type: "mouseisdown"
 			node: @element
+			capture: true
 			instance: @
 			selector: @_selector
 			call: (ev) =>
@@ -84,7 +85,6 @@ class Draggable extends DragDropSelect
 				if window.globalDrag
 					# ignore if dragging is in progress
 					return
-
 
 				switch ev.getMilliseconds()
 					when @_ms

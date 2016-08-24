@@ -16,7 +16,7 @@ class CUI.MouseIsDownEvent extends CUI.MouseEvent
 			counter:
 				mandatory: true
 				check: (v) ->
-					v > 0
+					v >= 0
 
 			mousedownEvent:
 				mandatory: true

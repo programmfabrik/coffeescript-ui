@@ -4,9 +4,11 @@ class CUI.MouseIsDownListener extends CUI.Listener
 		super()
 		@addOpts
 			interval_ms:
-				default: 50
+				default: CUI.MouseIsDownListener.interval_ms
 				check: (v) =>
 					v > 10
+
+	@interval_ms: 50
 
 	readOpts: ->
 		super()
@@ -32,7 +34,7 @@ class CUI.MouseIsDownListener extends CUI.Listener
 					call: (ev) =>
 						@__reset()
 
-				@__scheduleNextEvent()
+				@__triggerEvent()
 				return
 
 	destroy: ->

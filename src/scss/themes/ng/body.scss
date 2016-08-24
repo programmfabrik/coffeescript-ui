@@ -925,6 +925,14 @@ a[role="button"].cui-button-appearance-link {
 
 // Tabs
 .cui-tabs {
+	.cui-tabs-active-marker {
+		position: absolute;
+		bottom: 0;
+		// left + width are set by javascript
+		height: 3px;
+		background: yellow;
+		transition: width 0.3s ease, left 0.3s ease;
+	}
 	> .cui-vertical-layout-top {
 		> .cui-pane-header {
 			background-color: #d2ffc3;
