@@ -94,12 +94,12 @@ class Draggable extends DragDropSelect
 						position = elementGetPosition(getCoordinatesFromEvent(ev), $(ev.getTarget()))
 						dim = DOM.getDimensions(ev.getTarget())
 
-						if position.left - dim.scrollLeftScaled > dim.clientWidthScaled
-							console.warn "mouseisdown on a vertical scrollbar...", position.left, dim.scrollLeftScaled, dim.clientWidthScaled, dim
+						if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
+							CUI.warn("Mouseisdown on a vertical scrollbar, not starting drag.")
 							return
 
-						if position.top - dim.scrollTopScaled > dim.clientHeightScaled
-							console.warn "mouseisdown on a horizontal scrollbar..."
+						if dim.clientHeightScaled > 0 and position.top - dim.scrollTopScaled > dim.clientHeightScaled
+							CUI.warn("Mouseisdown on a horizontal scrollbar, not starting drag.")
 							return
 
 						target = ev.getCurrentTarget()
