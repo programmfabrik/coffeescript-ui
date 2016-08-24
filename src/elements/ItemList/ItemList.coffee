@@ -145,9 +145,9 @@ class ItemList extends VerticalLayout
 						if item.label instanceof Label
 							label = item.label
 						else if $.isPlainObject(item.label)
-							label = new Label(item.label)
+							label = new CUI.defaults.class.Label(item.label)
 						else
-							label = new Label(text: item.label)
+							label = new CUI.defaults.class.Label(text: item.label)
 
 						# DOM.data(label.DOM[0], "itemListIdx", idx)
 						label.addClass("cui-menu-item")

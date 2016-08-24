@@ -2,7 +2,7 @@
 
 # @param [Object] options for {Label} creation
 # @option options [boolean] centered , label will be centered with css style 'position: absolute'.
-class Label extends DOM
+class CUI.Label extends CUI.DOM
 
 	@defaults:
 		manage_overflow:
@@ -247,4 +247,6 @@ class Label extends DOM
 		super()
 
 
-CUI.defaults.class.Label = Label
+CUI.defaults.class.Label = CUI.Label
+
+Label = CUI.Label
