@@ -713,7 +713,7 @@ class Input extends DataFieldInput
 		return
 
 	__removeContentSize: ->
-		@__contentSize.remove()
+		@__contentSize?.remove()
 		@__contentSize = null
 		@__contentSize0 = null
 		@
