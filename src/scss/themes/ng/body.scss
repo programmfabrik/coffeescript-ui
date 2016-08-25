@@ -618,6 +618,15 @@ a[role="button"].cui-button-appearance-link {
 		padding-left: 3px;
 	}
 
+	// Markdown
+
+	&.cui-label-markdown {
+		p {
+			margin: 0;
+		}
+	}
+
+
 	&.cui-label-multiline {
 		align-self: stretch;
 
@@ -629,6 +638,7 @@ a[role="button"].cui-button-appearance-link {
 			// be ignored by IE, so we are good
 			word-break: break-word;
 		}
+
 
 		> .cui-label-content {
 			flex: 0 1 auto;
@@ -703,12 +713,6 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: row;
 }
 
-// DataField
-.cui-data-field {
-	flex: 1 1 auto;
-	flex-direction: row;
-}
-
 .cui-data-field:not(.cui-form) {
 	background-color: rgba(235, 205, 255, 0.71);
 }
@@ -724,8 +728,47 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Input
-.cui-input input {
-	height: 20px;
+.cui-input {
+	// state classes:
+	// cui-input-invalid
+	// cui-input-has-no-user-input
+	// cui-input-has-user-input
+	// cui-has-focus
+	// cui-has-check-input
+	//
+	// hint:
+	// cui-input-has-invalid-hint
+	// cui-input-has-valid-hint
+	// cui-input-has-input-hin:
+	//
+
+	&.cui-input-has-check-input:not(.cui-input-has-prevent-invalid-input) {
+		&.cui-input-invalid.cui-input-has-user-input {
+			input {
+				border-color: red;
+				background: rgba(255, 131, 122, 0.28);
+			}
+		}
+
+		&.cui-input-has-valid-hint.cui-input-has-user-input:not(.cui-input-invalid) {
+			input {
+				border-color: green;
+				background: rgba(131, 255, 122, 0.28);
+			}
+		}
+	}
+
+	&.cui-input-has-no-user-input.cui-input-required {
+		input {
+			border-color: rgb(255, 117, 215);
+			background: rgba(255, 117, 215, 0.28);
+		}
+	}
+
+
+	input {
+		height: 20px;
+	}
 }
 
 .cui-input-shadow {
@@ -1274,11 +1317,10 @@ a[role="button"].cui-button-appearance-link {
 // DateTime
 .cui-date-time {
 	flex-direction: row;
-
 	.cui-date-time-input-center {
 		flex: 1 1 auto;
-		flex-direction: row;
 	}
+
 }
 
 // DateTime Popover
@@ -1662,6 +1704,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 }
+
+
 
 
 // CUI technical stuff

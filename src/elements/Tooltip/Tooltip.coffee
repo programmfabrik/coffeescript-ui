@@ -111,8 +111,12 @@ class Tooltip extends LayerPane
 	focusOnShow: (ev) ->
 
 	showTimeout: (ms=@_show_ms, ev) ->
+		# console.error "Tooltip.showTimeout ", @getUniqueId(), !!Tooltip.current
+
 		if Tooltip.current
-			Tooltip.current.hide(ev)
+			if Tooltip.current != @
+				Tooltip.current.hide(ev)
+
 			@show(ev)
 			return CUI.resolvedPromise()
 		else
@@ -193,6 +197,7 @@ class Tooltip extends LayerPane
 		@DOM.css("max-width", @__viewport.width/2)
 
 	destroy: ->
+		# console.error "destroying ", @getUniqueId()
 		Events.ignore(instance: @__dummyInst)
 		super()
 		@__element.removeClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")

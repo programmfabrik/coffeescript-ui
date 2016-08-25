@@ -129,19 +129,22 @@ class InputDemo extends Demo
 						string: ""
 					blocks
 			,
-				form: label: "Needs Integer < 100: jail, > 1000: ok"
+				form:
+					label: "Needs Integer between 100 and 1000"
 				type: Input
-				checkInputLeaveHint: "To break out of this jail, enter a number > 100"
+				emptyHint:
+					text: "Needs Integer between 100 and 1000"
+				invalidHint:
+					text: "Enter something valid!"
+				validHint:
+					text: "Thank you"
 				checkInput: (opts) ->
-					if opts.leave
-						CUI.debug "check input", opts
-						if getInt(opts.value) > 100 or isEmpty(opts.value.trim())
-							return true
-						else
-							return false
-
-					if getInt(opts.value) <= 1000
-						return "invalid"
+					CUI.debug "check input", opts
+					if 100 <= getInt(opts.value) <= 1000
+						true
+					else
+						null
+				required: true
 			,
 				form: label: "NumberInput(0)"
 				type: NumberInput
@@ -176,7 +179,8 @@ class InputDemo extends Demo
 			,
 				form: label: "Email"
 				type: EmailInput
-				checkInputLeaveHint: "Valid Email required"
+				invalidHint:
+					text: "Valid Email required"
 				placeholder: "Email"
 				name: "email"
 			,
@@ -184,7 +188,7 @@ class InputDemo extends Demo
 				type: Input
 				regexp: "^[a-z0-9]*$"
 				regexp_flags: "i"
-				placeholder: "/^[a-z0-9]*$/i"
+				placeholder: "/^[a-z0-9]+$/i"
 				name: "regexp"
 			,
 				form: label: "Input with Multi Input Control"

@@ -1126,6 +1126,8 @@ class CUI.Layer extends CUI.DOM
 		@
 
 	showTimeout: (ms=@_show_ms, ev) ->
+		# console.error "Layer.showTimeout ", @getUniqueId()
+
 		@clearTimeout()
 		dfr = new CUI.Deferred()
 		@__timeout = CUI.setTimeout
@@ -1201,7 +1203,9 @@ class CUI.Layer extends CUI.DOM
 	# use element to temporarily overwrite element used
 	# for positioning
 	show: (element, ev) ->
-		assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer is already destroyed", layer: @)
+		# console.error "show ", @getUniqueId()
+
+		assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer ##{@getUniqueId()} is already destroyed", layer: @)
 
 		if Tooltip.current and @ not instanceof Tooltip
 			Tooltip.current.hide()

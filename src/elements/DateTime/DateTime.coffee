@@ -175,7 +175,7 @@ class DateTime extends Input
 			else
 				@__input_format.__display = @__input_format.display
 
-		@_invalidHint = @__input_format.invalid
+		@_invalidHint = text: @__input_format.invalid
 
 		for k, v of @__regexpMatcher
 			v.match_str = k

@@ -898,11 +898,15 @@ class CUI.DOM extends Element
 		CUI.DOM.getBoxSizing() == "content-box"
 
 	@hideElement: (docElem) ->
+		if not docElem
+			return
 		if docElem.style.display != "none"
 			docElem.__saved_display = docElem.style.display
 		docElem.style.display = "none"
 
 	@showElement: (docElem) ->
+		if not docElem
+			return
 		docElem.style.display = docElem.__saved_display or ""
 		delete(docElem.__saved_display)
 

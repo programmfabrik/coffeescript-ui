@@ -37,36 +37,24 @@ class NumberInput extends Input
 				check: (v) ->
 					isNumber(v)
 
-
 		@removeOpt("checkInput")
+		@removeOpt("prevent_invalid_input")
 
 	readOpts: ->
 		super()
 		@_checkInput = @__checkInput
+		@_prevent_invalid_input = true
 
-	formatValueForInput: (value) ->
-		if @_store_as_integer
-			if isEmpty(value)
-				""
-			else
-				(value / Math.pow(10, @_decimals)).toFixed(@_decimals)
+	formatValueForDisplay: (value) ->
+		if isEmpty(value)
+			""
+		else if @_store_as_integer
+			(value / Math.pow(10, @_decimals)).toFixed(@_decimals)
 		else
 			value+""
 
-	displayValue: ->
-		DataField::displayValue.call(@)
-		if not @hasData()
-			return
-
-		opts =
-			leave: true
-			value: @formatValueForInput(@getValue())
-
-		if @_checkInput(opts) != false
-			@__input.val(opts.value)
-		else
-			@__input.val("")
-		@
+	getValueForDisplay: ->
+		@formatValueForDisplay(@getValue())
 
 	storeValue: (value, flags={}) ->
 		if not isString(value)
@@ -186,7 +174,7 @@ class NumberInput extends Input
 			v = ""+v
 
 		ni = new NumberInput(_opts)
-		opts = leave: true, value: ni.formatValueForInput(v)
+		opts = leave: true, value: ni.formatValueForDisplay(v)
 		if not ni.__checkInput(opts)
 			null
 		else

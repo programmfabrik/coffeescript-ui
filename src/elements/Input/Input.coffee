@@ -11,6 +11,38 @@ class Input extends DataFieldInput
 		if @_content_size
 			@addClass("cui-input-content-size")
 
+		if @isRequired()
+			@addClass("cui-input-required")
+
+		if @_checkInput
+			@addClass("cui-input-has-check-input")
+
+		if @_prevent_invalid_input
+			@addClass("cui-input-has-prevent-invalid-input")
+
+		@__inputHints = {}
+		@__inputHintTexts = {}
+
+		for k in ["empty", "invalid", "valid"]
+			hint = @["_"+k+"Hint"]
+
+			if not hint
+				continue
+
+			@__inputHints[k]
+			if hint instanceof Label
+				@__inputHints[k] = hint
+			else
+				@__inputHints[k] = new CUI.defaults.class.Label(hint)
+
+			@__inputHints[k].addClass("cui-input-"+k+"-hint")
+			@__inputHintTexts[k] = @__inputHints[k].getText()
+
+			@addClass("cui-input-has-"+k+"-hint")
+
+		return
+
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -24,10 +56,15 @@ class Input extends DataFieldInput
 				check: Boolean
 			checkInput:
 				check: Function
-			checkInputLeaveHint:
-				check: String
+			emptyHint:
+				check: (v) ->
+					isString(v) or v instanceof Label or CUI.isPlainObject(v)
 			invalidHint:
-				check: String
+				check: (v) ->
+					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+			validHint:
+				check: (v) ->
+					isString(v) or v instanceof Label or CUI.isPlainObject(v)
 			onFocus:
 				check: Function
 			onClick:
@@ -65,10 +102,17 @@ class Input extends DataFieldInput
 			content_size:
 				default: false
 				check: Boolean
+			prevent_invalid_input:
+				default: false
+				check: Boolean
+			required:
+				default: false
+				check: Boolean
 
 	readOpts: ->
 		if not isEmpty(@opts.regexp)
 			assert(not (@opts.checkInput), "new Input", "opts.regexp conflicts with opts.checkInput.")
+			assert(not @opts.hasOwnProperty("prevent_invalid_input"), "new Input", "opts.prevent_invalid_input conflicts with opts.regexp.")
 
 		if @opts.readonly
 			assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
@@ -85,7 +129,12 @@ class Input extends DataFieldInput
 
 		if @_regexp
 			@__regexp = new RegExp(@_regexp, @_regexp_flags)
+			@_prevent_invalid_input = false
 			@_checkInput = @__checkInputRegexp
+
+		if @_required and not @_checkInput
+			@_checkInput = (opts) =>
+				opts.value.trim().lengt > 0
 
 		if @_spellcheck == false
 			@__spellcheck = "false"
@@ -99,12 +148,10 @@ class Input extends DataFieldInput
 		@
 
 	__checkInputRegexp: (opts) ->
-		if isEmpty(opts.value) or @__regexp.exec(opts.value)
-			return true
-		else if opts.leave
-			return false
+		if @__regexp.exec(opts.value)
+			true
 		else
-			return "invalid"
+			false
 
 	getTemplateKeyForRender: ->
 		null
@@ -182,7 +229,30 @@ class Input extends DataFieldInput
 				if ev.keyCode() == 8 and 0 == @__input0.selectionStart == @__input0.selectionEnd
 					return
 
-				@focusShadowInput()
+				@__focusShadowInput()
+				return
+
+		Events.listen
+			type: "keyup"
+			node: @__input
+			call: (ev) =>
+				if ev.keyCode() in [37, 39, 36, 35] # LEFT, RIGHT, POS1, END
+					ev.preventDefault()
+
+					# movement was already done by us
+					if not @cursor
+						# if we dont have a cursor, we still call showCursor
+						# because after a cursor movement was done by the browser
+						# a derived class might overwrite showCursor and do stuff
+						# although we (this Input class) does not do anything
+						@showCursor(ev)
+
+					return
+				@initCursor(ev)
+				@showCursor(ev)
+
+				if @_onKeyup
+					@_onKeyup(@, ev)
 				return
 
 		Events.listen
@@ -193,22 +263,9 @@ class Input extends DataFieldInput
 				if @hasShadowFocus()
 					return
 
+				@enterInput()
+				@addClass("cui-has-focus")
 				@__initShadowInput()
-
-				if @_checkInput
-					v = @__input0.value
-					opts =
-						enter: true
-						value: v
-
-					@_checkInput.call(@, opts)
-
-					if v != opts.value
-						s = @__input0.selectionStart
-						e = @__input0.selectionEnd
-						@__input0.value = opts.value
-						@__input0.setSelectionRange(s,e)
-
 				@_onFocus?(@, ev)
 				@__invalidTooltip?.show()
 				@__setCursor(ev)
@@ -261,26 +318,9 @@ class Input extends DataFieldInput
 				if @hasShadowFocus()
 					return
 
+				@removeClass("cui-has-focus")
+				@leaveInput()
 				@__removeShadowInput()
-
-				if @_checkInput
-					opts =
-						value: @__input0.value
-						leave: true
-
-					if @_checkInput.call(@, opts) == false
-						CUI.setTimeout =>
-							@focus()
-							@showJailHint(opts)
-						,
-							0
-						# CUI.debug "not hiding jail hint", opts
-						return
-					else
-						@__input0.value = opts.value
-					@hideJailHint()
-
-				@__invalidTooltip?.hide()
 				@_onBlur?(@, ev)
 				return
 
@@ -291,37 +331,10 @@ class Input extends DataFieldInput
 				# CUI.debug "#{@__cls}", ev.type, ev.isDefaultPrevented()
 				if not ev.isDefaultPrevented()
 					# this can happen thru CTRL-X, so we need to check again
-					if @_checkInput
-						v = @_checkInput.call(@, value: @__input0.value)
-						if v != "invalid" and v != false
-							@removeInvalid()
-
+					@checkInput()
 					@moveCursor(ev)
 					@showCursor(ev)
 					@storeValue(@__input0.value)
-				return
-
-		Events.listen
-			type: "keyup"
-			node: @__input
-			call: (ev) =>
-				if ev.keyCode() in [37, 39, 36, 35] # LEFT, RIGHT, POS1, END
-					ev.preventDefault()
-
-					# movement was already done by us
-					if not @cursor
-						# if we dont have a cursor, we still call showCursor
-						# because after a cursor movement was done by the browser
-						# a derived class might overwrite showCursor and do stuff
-						# although we (this Input class) does not do anything
-						@showCursor(ev)
-
-					return
-				@initCursor(ev)
-				@showCursor(ev)
-
-				if @_onKeyup
-					@_onKeyup(@, ev)
 				return
 
 		Events.listen
@@ -330,7 +343,7 @@ class Input extends DataFieldInput
 			call: (ev) =>
 				if @_readonly
 					return handleReadOnly(ev)
-				@focusShadowInput()
+				@__focusShadowInput()
 
 		Events.listen
 			type: "click"
@@ -385,42 +398,11 @@ class Input extends DataFieldInput
 		@__input0.setSelectionRange(bl.start, bl.end)
 		@initCursor(ev)
 
-	showJailHint: (opts={}) ->
-		@hideJailHint()
-		if opts.hasOwnProperty("jail_hint_class")
-			@__jailHintClass = opts.jail_hint_class
-		else
-			@__jailHintClass = "cui-input-jailed"
-
-		if isEmpty(@__jailHintClass)
-			@__jailHintClass = null
-		else
-			@addClass(@__jailHintClass)
-
-		if @_checkInputLeaveHint
-			@jailHint = new Tooltip
-				element: @DOM
-				onHide: =>
-					@hideJailHint()
-				text: @_checkInputLeaveHint
-			@jailHint.show()
-		@
-
-	hideJailHint: ->
-		if @__jailHintClass
-			@removeClass(@__jailHintClass)
-			@__jailHintClass = null
-
-		@jailHint?.destroy()
-		@jailHint = null
-
 	remove: ->
-		@hideJailHint()
 		@__removeShadowInput()
 		super()
 
-
-	focusShadowInput: ->
+	__focusShadowInput: ->
 		if not @__shadow
 			return
 		# CUI.debug "focus shadow input"
@@ -429,7 +411,7 @@ class Input extends DataFieldInput
 		@__shadow0.focus()
 		@__shadow0.setSelectionRange(@__input0.selectionStart, @__input0.selectionEnd)
 
-	unfocusShadowInput: ->
+	__unfocusShadowInput: ->
 		if not @hasShadowFocus()
 			return
 		# CUI.debug "unfocus shadow input"
@@ -704,10 +686,9 @@ class Input extends DataFieldInput
 
 			new_value = new_str.join("")
 
-			if @_checkInput
-				if @_checkInput.call(@, value: new_value) == false
-					ev.preventDefault()
-					return
+			if not @checkInput(new_value)
+				ev.preventDefault()
+				return
 
 			@__input0.value = new_value
 			@markBlock(ev, bl)
@@ -715,7 +696,6 @@ class Input extends DataFieldInput
 			ev.preventDefault()
 
 		return
-
 
 	__removeShadowInput: ->
 		# CUI.debug "removeShadowInput", @getUniqueId()
@@ -725,8 +705,14 @@ class Input extends DataFieldInput
 		@__shadow_focused = false
 		@
 
+	preventInvalidInput: ->
+		if @_checkInput and @_prevent_invalid_input
+			true
+		else
+			false
+
 	__initShadowInput: ->
-		if not (@_checkInput or @_content_size)
+		if not (@preventInvalidInput() or @_content_size)
 			# CUI.debug @getUniqueId(), "shadow init: not set"
 			return
 
@@ -752,9 +738,9 @@ class Input extends DataFieldInput
 			type: "input"
 			node: @__shadow
 			call: (ev) =>
-				@shadowInput(ev)
+				@__shadowInput(ev)
 				# CUI.debug ev.type, "unfocus shadow input"
-				@unfocusShadowInput()
+				@__unfocusShadowInput()
 				new CUI.Event
 					type: "input"
 					node: @__input
@@ -766,64 +752,21 @@ class Input extends DataFieldInput
 			node: @__shadow
 			call: (ev) =>
 				# CUI.debug ev.type, "unfocus shadow input"
-				@unfocusShadowInput()
+				@__unfocusShadowInput()
 				# CUI.debug "shadow", ev.type
 				return
 		@
 
-	showInvalid: ->
-		@__invalidTooltip?.destroy()
-		if @_invalidHint
-			@__invalidTooltip = new Tooltip
-				element: @DOM
-				text: @_invalidHint
-				on_hover: true
-			@__invalidTooltip.show()
-		@addClass("cui-input-invalid")
-		@
 
-	removeInvalid: ->
-		@removeClass("cui-input-invalid")
-		@__invalidTooltip?.destroy()
-		@__invalidTooltip = null
-		@
-
-	isInvalid: ->
-		@hasClass("cui-input-invalid")
-
-	shadowInput: (ev) ->
+	__shadowInput: (ev) ->
 		shadow_v = @__shadow0.value
 
-		opts =
-			leave: false
-			old_value: @__input0.value
-			value: shadow_v
-
-		if @_checkInput
-			v = @_checkInput.call(@, opts)
-
-			# CUI.debug "SHADOW", ev.type, opts, "ret:", v
-			if v == false
-				# CUI.debug "value refused"
+		if @preventInvalidInput() and shadow_v.length > 0
+			ret = @checkInput(shadow_v)
+			if ret != true and ret != undefined
 				return
 
-			value = opts.value
-
-			# console.debug "Input.shadowInput", ev.getType(), shadow_v, opts
-
-			# fake a leave of input, so we can remove jail hint
-			opts.leave = true
-			if (ret = @_checkInput.call(@, opts)) != false
-				@hideJailHint()
-
-			if v == "invalid"
-				@showInvalid()
-			else
-				@removeInvalid()
-		else
-			value = shadow_v
-
-		@__input0.value = value
+		@__input0.value = shadow_v
 		# @storeValue(value)
 		@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
 
@@ -841,27 +784,122 @@ class Input extends DataFieldInput
 	render: ->
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
+
+		for k in ["empty", "invalid", "valid"]
+			@append(@__inputHints[k], @getTemplateKeyForRender())
+
 		@append(@getChangedMarker(), @getTemplateKeyForRender())
 		@
+
+	isRequired: ->
+		@_required
+
+	updateInputState: ->
+		switch @getInputState()
+			when true, undefined
+				state = "valid"
+			else
+				state = "invalid"
+
+		if not @hasUserInput()
+			if @isRequired()
+				state = "invalid"
+			else
+				state = "empty"
+
+			@removeClass("cui-input-has-user-input")
+			@addClass("cui-input-has-no-user-input")
+		else
+			@addClass("cui-input-has-user-input")
+			@removeClass("cui-input-has-no-user-input")
+
+		if @_debug
+			console.error "updateInputState", state, @isRequired(), @hasUserInput(), @__input0.value
+
+		switch state
+			when "empty", "valid"
+				@removeClass("cui-input-invalid")
+			when "invalid"
+				@addClass("cui-input-invalid")
+
+		for k in ["empty", "invalid", "valid"]
+			DOM.hideElement(@__inputHints[k]?.DOM[0])
+
+		DOM.showElement(@__inputHints[state]?.DOM[0])
+		@
+
+	getInputState: ->
+		@__inputState
+
+	leaveInput: ->
+		@checkInput(null, true)
+
+	enterInput: ->
+		@checkInput()
+
+	hasUserInput: ->
+		@__input0.value.length > 0
+
+	checkInput: (value, leave = false) ->
+
+		if @_checkInput
+			if isNull(value)
+				value = @__input0.value
+				input_value = true
+			else
+				input_value = false
+
+			opts =
+				leave: leave
+				old_value: @__input0.value
+				value: value
+
+			ret = @_checkInput(opts)
+
+			if @hasShadowFocus()
+				return ret
+
+			if input_value and opts.value != value
+				@__input0.value = opts.value
+
+			@__inputState = ret
+		else
+			@__inputState = true
+
+		@updateInputState()
+		ret
+
+	setInputHint: (txt) ->
+		@__inputHints.input?.setText(txt)
+
+	setInvalidHint: (txt) ->
+		@__inputHints.invalid?.setText(txt)
+
+	setValidHint: (txt) ->
+		@__inputHints.valid?.setText(txt)
 
 	displayValue: ->
 		super()
 		if not @hasData()
+			@checkInput()
 			return
 
-		if @_checkInput
-			opts =
-				leave: true
-				value: @getValue()
+		if @_debug
+			console.error "value for display:", @getValueForDisplay()
 
-			v = @_checkInput.call(@, opts)
-			@__input0.value = opts.value
+		@__input0.value = @getValueForDisplay()
+		# we need to prevent we are leaving
+		# the field, as there is no focus on us
+		ret = @leaveInput()
+		if not (ret == true or ret == undefined) and @preventInvalidInput()
+			# empty input if we try to display an
+			# invalid input
+			@__input0.value = ""
 
-			if v == false or v == "invalid"
-				@addClass("cui-input-invalid")
-		else
-			@__input0.value = @getValue()
+		@
 
+	getValueForDisplay: ->
+		@getValue()
 
 	getDefaultValue: ->
 		""
@@ -1086,5 +1124,4 @@ class Input extends DataFieldInput
 
 		#CUI.debug "moveCursor new range", @getRangeFromCursor()
 		@
-
 
