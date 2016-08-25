@@ -771,14 +771,18 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+::-ms-clear {
+    display: none;
+}
+
 .cui-input-shadow {
 	position: absolute;
 	display: block;
 	padding: 0;
+	border: none;
 	top: -1000px;
 	left: -1000px;
 }
-
 
 // Layer
 

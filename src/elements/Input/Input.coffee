@@ -282,7 +282,6 @@ class Input extends DataFieldInput
 				trigger = =>
 					if oldSizes[0] != @__input0.offsetWidth or
 						oldSizes[1] != @__input0.offsetHeight
-							console.debug "triggering content-resize!"
 							Events.trigger
 								type: "content-resize"
 								node: @__input
@@ -290,7 +289,6 @@ class Input extends DataFieldInput
 				mev = Events.listen
 					type: "mousemove"
 					call: =>
-						console.debug "mousemove on input"
 						trigger()
 						return
 
@@ -301,7 +299,6 @@ class Input extends DataFieldInput
 					call: (ev) =>
 						Events.ignore(mev)
 						return
-
 
 
 		Events.listen
@@ -405,6 +402,7 @@ class Input extends DataFieldInput
 	__focusShadowInput: ->
 		if not @__shadow
 			return
+
 		# CUI.debug "focus shadow input"
 		@__shadow_focused = true
 		@__shadow0.value = @__input0.value
@@ -415,15 +413,37 @@ class Input extends DataFieldInput
 		if not @hasShadowFocus()
 			return
 		# CUI.debug "unfocus shadow input"
+		@setContentSize()
 		@__input0.focus()
 		@showCursor()
-		@__setContentSize()
 		@__shadow_focused = false
 
 	hasShadowFocus: ->
 		@__shadow_focused
 
+
+	setContentSize: ->
+		if not @_content_size
+			return @
+
+		if @__contentSize
+			@__setContentSize()
+		else
+			@__initShadowInput()
+			@__focusShadowInput()
+			@__setContentSize()
+			@__unfocusShadowInput()
+			@__removeShadowInput()
+		@
+
 	__initContentSize: ->
+
+		if @__contentsize
+			return
+
+		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1")
+		@__contentSize.appendTo(document.body)
+		@__contentSize0 = @__contentSize[0]
 
 		style = window.getComputedStyle(@__input0)
 
@@ -447,13 +467,14 @@ class Input extends DataFieldInput
 			# CUI.debug k, style[k]
 			css[k] = style[k]
 
+		if not @_textarea
+			css.whiteSpace = "nowrap"
 
-		@__shadow.css(css)
+		@__contentSize.css(css)
+		@__contentSize.height(1)
 
 		if @_textarea
-			@__shadow.height(1)
-			@__shadow.width(@__input.width())
-
+			@__contentSize.width(@__contentSize.width())
 			@__max_height = parseInt(@__input.css("max-height"))
 			@__input0.style.overflow = "hidden"
 
@@ -462,38 +483,25 @@ class Input extends DataFieldInput
 			else
 				correct_height = parseInt(@__input.css("width")) - @__input.width()
 				@__max_height -= correct_height
-
 		else
-			@__shadow.width(1)
-
-		@__shadow0.value = @__input0.value
-		@__setContentSize()
-		@
-
-	setContentSize: ->
-		# when called from the "outside", we need to
-		# copy the input value to the shadow before measuring
-		if @__shadow
-			@__shadow0.value = @__input0.value
-			@__setContentSize()
-		else
-			@__initShadowInput() # this does a set size
-			@__removeShadowInput()
+			@__contentSize.width(1)
 		@
 
 	__setContentSize: ->
-		if not @_content_size
-			return @
 
-		# CUI.error "__setContentSize", @_textarea, @__input0.value, @__shadow0.value
+		@__contentSize0.value = @__input0.value
+		@__contentSize0.focus()
 
 		changed = false
+
 		if @_textarea
+			if @__input0.value.length == 0
+				@__contentSize0.value = "A" # help IE out, so we get a height
 
-			if @__input.width() != @__shadow.width()
-				@__shadow.width(@__input.width())
+			if @__input.width() != @__contentSize.width()
+				@__contentSize.width(@__input.width())
 
-			h = @__shadow0.scrollHeight
+			h = @__contentSize0.scrollHeight
 
 			if @__max_height == null or h <= @__max_height
 				@__input0.style.overflow = "hidden"
@@ -506,8 +514,13 @@ class Input extends DataFieldInput
 			if @__input.height() != previous_height
 				changed = true
 
+			# CUI.error "__setContentSize", @_textarea, @__input0.value, @__contentSize0.value, h
 		else
-			w = @__shadow0.scrollWidth
+			w = @__contentSize0.scrollWidth
+			if @__contentSize0.value.length == 0
+				# help IE out here, IE measures one " "
+				w = 1
+
 			if @__input.width() != w
 				changed = true
 			@__input.width(w)
@@ -526,6 +539,8 @@ class Input extends DataFieldInput
 			assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)
 			b.idx = idx
 		blocks
+
+
 
 	getInputBlocks: ->
 		if @_getInputBlocks
@@ -697,8 +712,15 @@ class Input extends DataFieldInput
 
 		return
 
+	__removeContentSize: ->
+		@__contentSize.remove()
+		@__contentSize = null
+		@__contentSize0 = null
+		@
+
 	__removeShadowInput: ->
 		# CUI.debug "removeShadowInput", @getUniqueId()
+		@__removeContentSize()
 
 		@__shadow?.remove()
 		@__shadow = null
@@ -713,15 +735,13 @@ class Input extends DataFieldInput
 
 	__initShadowInput: ->
 		if not (@preventInvalidInput() or @_content_size)
-			# CUI.debug @getUniqueId(), "shadow init: not set"
 			return
 
 		if @__shadow
-			# CUI.debug @getUniqueId(), "shadow alrady active"
 			return
 
 		# CUI.debug "initShadowInput", @getUniqueId()
-
+		#
 		if @_textarea
 			@__shadow = $element("textarea", "cui-input-shadow")
 		else
@@ -733,6 +753,7 @@ class Input extends DataFieldInput
 
 		if @_content_size
 			@__initContentSize()
+
 
 		Events.listen
 			type: "input"
@@ -755,6 +776,7 @@ class Input extends DataFieldInput
 				@__unfocusShadowInput()
 				# CUI.debug "shadow", ev.type
 				return
+
 		@
 
 
@@ -769,7 +791,6 @@ class Input extends DataFieldInput
 		@__input0.value = shadow_v
 		# @storeValue(value)
 		@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
-
 
 		# CUI.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
 		@initCursor(ev)
@@ -812,9 +833,6 @@ class Input extends DataFieldInput
 		else
 			@addClass("cui-input-has-user-input")
 			@removeClass("cui-input-has-no-user-input")
-
-		if @_debug
-			console.error "updateInputState", state, @isRequired(), @hasUserInput(), @__input0.value
 
 		switch state
 			when "empty", "valid"
@@ -883,9 +901,6 @@ class Input extends DataFieldInput
 		if not @hasData()
 			@checkInput()
 			return
-
-		if @_debug
-			console.error "value for display:", @getValueForDisplay()
 
 		@__input0.value = @getValueForDisplay()
 		# we need to prevent we are leaving
@@ -1125,3 +1140,7 @@ class Input extends DataFieldInput
 		#CUI.debug "moveCursor new range", @getRangeFromCursor()
 		@
 
+
+	destroy: ->
+		@__removeShadowInput()
+		super()
