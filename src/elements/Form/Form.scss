@@ -2,6 +2,8 @@
 $form_cell_padding: $list_view_cell_padding; //same as in listview
 $form_data_field_input_max_width: 300px;
 
+$default_form_center_width: 360px; //TODO replace $form_data_field_input_max_width with this here!?
+
 
 @mixin debug_show_form_components_by_color(){
 
@@ -95,10 +97,10 @@ $form_data_field_input_max_width: 300px;
 
 
 //REMARKED doesnt work, forms too different.
-@mixin form_maximize_center($table_width: auto, $center_width: 100%) {
+@mixin form_maximize_center($table_width: auto, $center_width: 100%, $form_selector: "") {
 
     //make sure options (.cui-form-tr-right) in 2nd table level are aligned
-    .cui-maximize-horizontal {
+    .cui-maximize-horizontal#{$form_selector} {
         //background-color: lightgrey;
         > .cui-layout-cell {
             overflow: hidden; //TODO needs to be in here cause of problems with padding reset and this size setting

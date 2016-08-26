@@ -101,10 +101,10 @@
 
 
 				height: 27px;
-				margin-top: 1px; //one pixel to overlap with header/body separator line
+				margin-top: 2px; //one pixel to overlap with header/body separator line
 
 				border: 1px solid transparent;
-				border-bottom: 1px solid $tab_border_color;
+				//border-bottom: 1px solid $tab_border_color;
 
 				transition: border-color ease $default_animation_speed;
 
