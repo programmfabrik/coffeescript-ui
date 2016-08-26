@@ -20,7 +20,14 @@
 		position: relative;
 		background-color: $default_background_color; //get rid of paneheader color
 
+		//make sure the button bottom is aligned with header/body separator line
+		padding-bottom: 0;
+		.cui-layout-cell {
+			padding-bottom: 0;
+		}
+
 		//make a small border line from left to right that stays behind tab buttons
+		//header/body separator line
 		&::before {
 			position: absolute;
 			left: 0px;
@@ -53,6 +60,7 @@
 			& > .cui-buttonbar {
 				//allow to shrink below min content width.
 				min-width: 10px; //some value
+				padding-left: 1px; //make sure the left border of the first tab button is visible
 
 				//make sure the buttonbar cannot shrink
 				@include flex(0,0);
@@ -93,7 +101,7 @@
 
 
 				height: 27px;
-				margin-top: 6px;
+				margin-top: 1px; //one pixel to overlap with header/body separator line
 
 				border: 1px solid transparent;
 				border-bottom: 1px solid $tab_border_color;
