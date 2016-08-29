@@ -1,4 +1,3 @@
-$enable_flex: 1;
 
 $tree_node_handle_width: 17px;
 $list_view_tree_indent_width: $tree_node_handle_width;
@@ -14,6 +13,34 @@ $list_view_tree_indent_width: $tree_node_handle_width;
 
 	white-space: nowrap;
 	min-height: 24px; //in order to reach a row height of 32
+
+	//make line breaks for long name entries
+	> .cui-tree-node-content {
+		@include flex(1, 1);
+		@include flex_display(flex);
+		@include flex_direction(row);
+		@include flex_align_items(center);
+
+		cursor: default;
+
+		& > table > tbody > tr > td {
+			vertical-align: middle;
+		}
+
+		> .cui-label {
+			@include flex(1, 1);
+			@include flex_display(flex);
+			@include flex_direction(row);
+
+			> .cui-label-content {
+				@include flex(1, 1);
+				@include flex_display(flex);
+				@include flex_direction(row);
+
+				@extend %default_line_break;
+			}
+		}
+	}
 
 
 	> div {
@@ -55,27 +82,7 @@ $list_view_tree_indent_width: $tree_node_handle_width;
 		}
 	}
 
-	& > .cui-tree-node-content {
-		@include flex(1,0);
-		@include flex_display(flex);
 
-		cursor: default;
-
-		vertical-align: middle; //compatible with labels and straight text
-
-		& > table > tbody > tr > td {
-			vertical-align: middle;
-		}
-	}
-
-	@if $enable_flex == 0 {
-		display: inline-block;
-		& > .cui-tree-node-content,
-		& > .cui-tree-node-handle
-		{
-			display: inline-block;
-		}
-	}
 }
 
 .cui-tree-node-no-children {
@@ -109,4 +116,5 @@ $list_view_tree_indent_width: $tree_node_handle_width;
 .cui-list-view-grid-quadrant-table > tbody > tr.cui-list-view-grid-row {
 	display: table-row;
 }
+
 

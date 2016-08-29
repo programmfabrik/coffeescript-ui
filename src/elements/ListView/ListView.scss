@@ -479,3 +479,23 @@
 	@include flex(1,0);
 	min-width: 50px;
 }
+
+
+//is forcing a listview with a maxed column to shrink into its given space
+@mixin listview_shrink_horizontal_no_header() {
+	.cui-list-view-grid-has-maximized-columns {
+		> .cui-list-view-grid-inner-bottom {
+			> .cui-list-view-grid-quadrant-3 {
+				overflow: hidden;
+				> .cui-list-view-grid-row {
+					flex: 1 1 auto;
+					overflow: hidden;
+					> .cui-list-view-grid-cell-max {
+						flex: 1 1 auto;
+					}
+				}
+
+			}
+		}
+	}
+}
