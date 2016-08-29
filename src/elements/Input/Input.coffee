@@ -229,6 +229,13 @@ class Input extends DataFieldInput
 				if ev.keyCode() == 8 and 0 == @__input0.selectionStart == @__input0.selectionEnd
 					return
 
+				# if @_content_size and @_textarea and not @preventInvalidInput()
+				# 	# in this case we are not focussing the shadow input,
+				# 	# so that spellchecking gets not confused when
+				# 	# we set the value of our textarea when unfocusing the shadow
+				# 	# input.
+				# 	return
+
 				@__focusShadowInput()
 				return
 
@@ -250,6 +257,9 @@ class Input extends DataFieldInput
 					return
 				@initCursor(ev)
 				@showCursor(ev)
+
+				# if @_content_size and @_textarea and not @preventInvalidInput()
+				# 	@__setContentSize()
 
 				if @_onKeyup
 					@_onKeyup(@, ev)
@@ -421,8 +431,9 @@ class Input extends DataFieldInput
 	hasShadowFocus: ->
 		@__shadow_focused
 
-
 	setContentSize: ->
+		# console.error "setting content size", !!@__contentSize, @getUniqueId()
+
 		if not @_content_size
 			return @
 
@@ -437,8 +448,9 @@ class Input extends DataFieldInput
 		@
 
 	__initContentSize: ->
+		# CUI.debug "initContentSize", @getUniqueId(), @__contentSize
 
-		if @__contentsize
+		if @__contentSize
 			return
 
 		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1")
@@ -490,7 +502,12 @@ class Input extends DataFieldInput
 	__setContentSize: ->
 
 		@__contentSize0.value = @__input0.value
-		@__contentSize0.focus()
+
+		if @hasShadowFocus()
+			# we can only do this when shadow is focused,
+			# otherwise the "blur" event on @__input0
+			# will remove @__contentSize and we will run into errors
+			@__contentSize0.focus()
 
 		changed = false
 
@@ -630,6 +647,12 @@ class Input extends DataFieldInput
 			start = end
 		@setSelection(start: start, end: end)
 
+	setValue: (v, flags = {}) ->
+		if not @hasData()
+			@__input0.value = v
+			@setContentSize()
+
+		super(v, flags)
 
 	incNumberBounds: (ev) ->
 		if ev.keyCode() not in [38, 40, 9, 33, 34]
@@ -719,7 +742,7 @@ class Input extends DataFieldInput
 		@
 
 	__removeShadowInput: ->
-		# CUI.debug "removeShadowInput", @getUniqueId()
+		# CUI.error "removeShadowInput", @getUniqueId()
 		@__removeContentSize()
 
 		@__shadow?.remove()

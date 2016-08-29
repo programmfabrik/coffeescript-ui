@@ -1,8 +1,4 @@
 class ListViewHoverTool extends ListViewTool
-	constructor: (@opts={}) ->
-		@opts.cursor = @opts.cursor or "move"
-		@opts.cursorHover = @opts.cursorHover or "move"
-		super @opts
 
 	threshold: 5
 
@@ -44,7 +40,6 @@ class ListViewHoverTool extends ListViewTool
 		# CUI.debug("createMovableDiv", css, @movableDiv[0])
 		new Movable
 			element: md
-			cursor: md.css("cursor")
 			do_drag: (ev, $target, diff, movable) =>
 				if not globalDrag.dragStarted
 					@startDrag(ev, $target, diff, movable)
