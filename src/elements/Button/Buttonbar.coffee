@@ -3,7 +3,6 @@
 class Buttonbar extends DOM
 
 	# @param [Object] options for {Buttonbar} creation
-	# @option options [String] orientation controls the layout of the {Button}.
 	#   "horizontal", this is the default.
 	#   "vertical"
 	# @option options [Array] buttons is an array of {Button} Objects. Use thie 'group' option in {Button} to let {Buttonbar} sort the buttons into groups.
@@ -22,12 +21,15 @@ class Buttonbar extends DOM
 		@__buttons = @__box.DOM
 		@__groupDivs = {}
 
+		# FIXME: this needs to be removed, once the SCSS is fixed
+		@DOM.addClass("cui-buttonbar-horizontal")
+
 		if @_tooltip
 			tt_opts = copyObject(@_tooltip)
 			tt_opts.element = @__buttons
 			@__tooltip = new Tooltip(tt_opts)
 
-		@DOM.addClass("cui-buttonbar-"+@_orientation)
+		# @DOM.addClass("cui-buttonbar-"+@_orientation)
 
 		for btn, idx in @_buttons
 			@addButton(btn, false)
@@ -43,10 +45,6 @@ class Buttonbar extends DOM
 				check: Array
 			tooltip:
 				check: "PlainObject"
-			orientation:
-				default: "horizontal"
-				mandatory: true
-				check: ["horizontal", "vertical"]
 
 	__proxy: (func, args...) ->
 		for el in @__buttons.find(".cui-button,.cui-select")
