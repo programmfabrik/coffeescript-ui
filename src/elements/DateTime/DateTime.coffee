@@ -5,6 +5,42 @@ class DateTime extends Input
 		super(@opts)
 		@init()
 
+	initOpts: ->
+		super()
+
+		if DateTime.__locale
+			locale = DateTime.__locale
+		else
+			for locale of DateTimeFormats
+				break
+
+		@addOpts
+			locale:
+				mandatory: true
+				default: locale
+				check: (v) ->
+					$.isArray(DateTimeFormats[v]?.formats)
+			input_types:
+				default: ["date_time"]
+				check: Array
+			display_type:
+				default: "long"
+				check: ["long", "short"]
+			min_year:
+				mandatory: true
+				default: 0
+				check: "Integer"
+			max_year:
+				mandatory: true
+				default: 2499
+				check: "Integer"
+
+		@removeOpt("getValueForDisplay")
+		@removeOpt("getValueForInput")
+		@removeOpt("checkInput")
+		@removeOpt("getInputBlocks")
+
+
 	init: ->
 		@__regexpMatcher = @regexpMatcher()
 
@@ -103,38 +139,6 @@ class DateTime extends Input
 				center: true
 				right: true
 
-	initOpts: ->
-		super()
-
-		if DateTime.__locale
-			locale = DateTime.__locale
-		else
-			for locale of DateTimeFormats
-				break
-
-		@addOpts
-			locale:
-				mandatory: true
-				default: locale
-				check: (v) ->
-					$.isArray(DateTimeFormats[v]?.formats)
-			input_types:
-				default: ["date_time"]
-				check: Array
-			display_type:
-				default: "long"
-				check: ["long", "short"]
-			min_year:
-				mandatory: true
-				default: 0
-				check: "Integer"
-			max_year:
-				mandatory: true
-				default: 2499
-				check: "Integer"
-
-		@removeOpt("checkInput")
-		@removeOpt("getInputBlocks")
 
 	readOpts: ->
 		super()
@@ -275,10 +279,6 @@ class DateTime extends Input
 
 		mom.format(output_format[type])
 
-	showInvalid: ->
-		super()
-		@initFormat(0)
-
 	regexpMatcher: ->
 		YYYY:
 			regexp: "(?:-|)[0-9]{1,}"
@@ -325,40 +325,38 @@ class DateTime extends Input
 		else
 			mom.subtract(12,"hour")
 
-	__checkInput: (opts) ->
 
-		if not isEmpty(opts.value?.trim())
+	getValueForDisplay: ->
+		mom = @parse(@getValue())
+		if mom.isValid()
+			mom.format(@getCurrentFormatDisplay())
+		else
+			""
+
+	getValueForInput: ->
+		v = @getValue()
+		if isEmpty(v.trim())
+			return ""
+
+		mom = @parse(v)
+		if mom.isValid()
+			return mom.format(@__input_format.input)
+		else
+			return ""
+
+
+	__checkInput: (value) ->
+
+		if not isEmpty(value?.trim())
 			input_formats = @__input_formats.slice(0)
 			for format in @__input_formats_known
 				pushOntoArray(format, input_formats)
-			mom = @parse(opts.value, input_formats, @__input_formats)
+			mom = @parse(value, input_formats, @__input_formats)
+			if not mom.isValid()
+				return false
 		else
-			mom = null
-
-		if opts.leave
-			if not mom
-				opts.value = ""
-			else if mom.isValid()
-				opts.value = mom.format(@getCurrentFormatDisplay())
-			else
-				return "invalid"
-			return
-
-		if not mom
-			opts.value = ""
 			@initFormat(0)
-			return
-
-		if not mom.isValid()
-			CUI.warn("DateTime.__checkInput: Moment is not valid: "+opts.value)
-			return "invalid"
-
-		# console.debug "DateTime.__checkInput: ", opts.value, mom.format(@__input_format.input)
-
-		# if opts.enter
-		opts.value = mom.format(@__input_format.input)
-
-		return
+		return true
 
 	__getInputBlocks: (v) ->
 		CUI.debug "getInputBlocks", v, @__input_format.regexp
@@ -616,7 +614,6 @@ class DateTime extends Input
 		@__clearOverwriteMonthAndYear()
 		@__input0.value = @__current_moment.format(@__input_format.input)
 		@storeValue(@__input.val())
-		@removeInvalid()
 		@
 
 	__clearOverwriteMonthAndYear: ->

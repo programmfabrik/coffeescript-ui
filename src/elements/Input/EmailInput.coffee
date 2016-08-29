@@ -7,12 +7,10 @@ class EmailInput extends Input
 		super()
 		@_checkInput = @__checkInput
 
-	__checkInput: (opts) ->
-		if isEmpty(opts.value) or EmailInput.regexp.exec(opts.value)
+	__checkInput: (value) ->
+		if isEmpty(value) or EmailInput.regexp.exec(value)
 			return true
-		else if opts.leave
-			return false
 		else
-			return "invalid"
+			return false
 
 	@regexp: new RegExp("^[a-z0-9!\#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!\#$%&'*+/=?^_`{|}~-]+)*@(([a-z0-9][a-z0-9-]*[a-z0-9]\.)+[a-z0-9][a-z0-9-]*[a-z0-9]|localhost)$", "i")

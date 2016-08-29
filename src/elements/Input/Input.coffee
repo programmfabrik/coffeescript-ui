@@ -56,6 +56,12 @@ class Input extends DataFieldInput
 				check: Boolean
 			checkInput:
 				check: Function
+			getValueForDisplay:
+				check: Function
+			getValueForInput:
+				check: Function
+			correctValueForInput:
+				check: Function
 			emptyHint:
 				check: (v) ->
 					isString(v) or v instanceof Label or CUI.isPlainObject(v)
@@ -147,8 +153,8 @@ class Input extends DataFieldInput
 			@__autocomplete = "off"
 		@
 
-	__checkInputRegexp: (opts) ->
-		if @__regexp.exec(opts.value)
+	__checkInputRegexp: (value) ->
+		if @__regexp.exec(value)
 			true
 		else
 			false
@@ -273,7 +279,7 @@ class Input extends DataFieldInput
 				if @hasShadowFocus()
 					return
 
-				@enterInput()
+				@__enterInput()
 				@addClass("cui-has-focus")
 				@__initShadowInput()
 				@_onFocus?(@, ev)
@@ -326,7 +332,7 @@ class Input extends DataFieldInput
 					return
 
 				@removeClass("cui-has-focus")
-				@leaveInput()
+				@__leaveInput()
 				@__removeShadowInput()
 				@_onBlur?(@, ev)
 				return
@@ -649,7 +655,7 @@ class Input extends DataFieldInput
 
 	setValue: (v, flags = {}) ->
 		if not @hasData()
-			@__input0.value = v
+			@__input0?.value = v
 			@setContentSize()
 
 		super(v, flags)
@@ -757,7 +763,7 @@ class Input extends DataFieldInput
 			false
 
 	__initShadowInput: ->
-		if not (@preventInvalidInput() or @_content_size)
+		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput)
 			return
 
 		if @__shadow
@@ -808,10 +814,11 @@ class Input extends DataFieldInput
 
 		if @preventInvalidInput() and shadow_v.length > 0
 			ret = @checkInput(shadow_v)
-			if ret != true and ret != undefined
+			console.debug "checking shadow input", ret, shadow_v
+			if ret == false
 				return
 
-		@__input0.value = shadow_v
+		@__input0.value = @correctValueForInput(shadow_v)
 		# @storeValue(value)
 		@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
 
@@ -838,24 +845,16 @@ class Input extends DataFieldInput
 	isRequired: ->
 		@_required
 
-	updateInputState: ->
-		switch @getInputState()
-			when true, undefined
-				state = "valid"
-			else
-				state = "invalid"
+	updateInputState: (@__inputState=@__inputState) ->
 
-		if not @hasUserInput()
-			if @isRequired()
-				state = "invalid"
-			else
-				state = "empty"
-
-			@removeClass("cui-input-has-user-input")
-			@addClass("cui-input-has-no-user-input")
-		else
+		if @hasUserInput()
 			@addClass("cui-input-has-user-input")
 			@removeClass("cui-input-has-no-user-input")
+		else
+			@removeClass("cui-input-has-user-input")
+			@addClass("cui-input-has-no-user-input")
+
+		state = @getInputState()
 
 		switch state
 			when "empty", "valid"
@@ -866,49 +865,43 @@ class Input extends DataFieldInput
 		for k in ["empty", "invalid", "valid"]
 			DOM.hideElement(@__inputHints[k]?.DOM[0])
 
-		DOM.showElement(@__inputHints[state]?.DOM[0])
+		if not @hasUserInput() and state == "invalid"
+			DOM.showElement(@__inputHints.empty?.DOM[0])
+		else
+			DOM.showElement(@__inputHints[state]?.DOM[0])
 		@
 
 	getInputState: ->
-		@__inputState
+		if @__inputState != false
+			return "valid"
 
-	leaveInput: ->
-		@checkInput(null, true)
+		if @hasUserInput() or @isRequired()
+			return "invalid"
 
-	enterInput: ->
+		return "empty"
+
+	__leaveInput: ->
+		@__input0.value = @getValueForDisplay()
+		@checkInput()
+
+	__enterInput: ->
+		@__input0.value = @getValueForInput()
 		@checkInput()
 
 	hasUserInput: ->
 		@__input0.value.length > 0
 
-	checkInput: (value, leave = false) ->
+	checkInput: (value) ->
+		state = @__checkInputInternal(value)
+		if not @hasShadowFocus()
+			@updateInputState(state)
+		state
 
+	__checkInputInternal: (value = @__input0.value) ->
 		if @_checkInput
-			if isNull(value)
-				value = @__input0.value
-				input_value = true
-			else
-				input_value = false
-
-			opts =
-				leave: leave
-				old_value: @__input0.value
-				value: value
-
-			ret = @_checkInput(opts)
-
-			if @hasShadowFocus()
-				return ret
-
-			if input_value and opts.value != value
-				@__input0.value = opts.value
-
-			@__inputState = ret
+			@_checkInput(value)
 		else
-			@__inputState = true
-
-		@updateInputState()
-		ret
+			true
 
 	setInputHint: (txt) ->
 		@__inputHints.input?.setText(txt)
@@ -921,26 +914,36 @@ class Input extends DataFieldInput
 
 	displayValue: ->
 		super()
-		if not @hasData()
-			@checkInput()
-			return
-
 		@__input0.value = @getValueForDisplay()
-		# we need to prevent we are leaving
-		# the field, as there is no focus on us
-		ret = @leaveInput()
-		if not (ret == true or ret == undefined) and @preventInvalidInput()
-			# empty input if we try to display an
-			# invalid input
-			@__input0.value = ""
-
+		@checkInput()
 		@
 
 	getValueForDisplay: ->
-		@getValue()
+		if @_getValueForDisplay
+			@_getValueForDisplay(@, @getValue())
+		else
+			@getValue()
+
+	getValueForInput: ->
+		if @_getValueForInput
+			@_getValueForInput(@, @getValue())
+		else
+			@getValue()
+
+	correctValueForInput: (value) ->
+		if @_correctValueForInput
+			@_correctValueForInput(@, value)
+		else
+			value
 
 	getDefaultValue: ->
 		""
+
+	getValue: ->
+		if @hasData()
+			super()
+		else
+			@__input0?.value
 
 	enable: ->
 		super()

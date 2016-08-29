@@ -38,6 +38,9 @@ class NumberInput extends Input
 					isNumber(v)
 
 		@removeOpt("checkInput")
+		@removeOpt("getValueForDisplay")
+		@removeOpt("getValueForInput")
+		@removeOpt("correctValueForInput")
 		@removeOpt("prevent_invalid_input")
 
 	readOpts: ->
@@ -45,31 +48,76 @@ class NumberInput extends Input
 		@_checkInput = @__checkInput
 		@_prevent_invalid_input = true
 
-	formatValueForDisplay: (value) ->
+	formatValueForDisplay: (value=@getValue(), forInput = false) ->
+		assert(typeof(value) == "number" or value == null, "NumberInput.formatValueForDisplay", "value needs to be Number or null", value: value, type: typeof(value))
 		if isEmpty(value)
-			""
-		else if @_store_as_integer
-			(value / Math.pow(10, @_decimals)).toFixed(@_decimals)
+			return ""
+
+		if @_store_as_integer
+			v = (value / Math.pow(10, @_decimals)).toFixed(@_decimals)
 		else
-			value+""
+			v = value+""
+
+		# decimal is a "."
+		v0 = v.split(".")
+		if v0.length > 1
+			number = v0[0]
+			decimals = v0[1]
+		else
+			number = v0[0]
+			decimals = ""
+
+		if @_decimals > 0
+			while decimals.length < @_decimals
+				decimals = decimals + "0"
+
+		if forInput
+			if @_decimals > 0
+				return number + @_decimalpoint + decimals
+			else
+				return number
+
+		if @_decimals > 0
+			v1 = @__addSeparator(number)+@_decimalpoint+decimals
+		else
+			v1 = @__addSeparator(number)
+
+		# console.debug "v: ", v, value, @__addSeparator(v), v1
+		@__addSymbol(v1)
+
+	getValue: ->
+		v = super()
+		if @hasData()
+			return v
+
+		# value is as string in our input
+		@getValueForStore(v)
 
 	getValueForDisplay: ->
+		console.debug @getData()
 		@formatValueForDisplay(@getValue())
 
-	storeValue: (value, flags={}) ->
+	getValueForStore: (value) ->
 		if not isString(value)
 			value = value + ""
 		number = parseFloat(value.replace(/,/,"."))
 		if isNaN(number)
-			super(null, flags)
-		else
-			if @_store_as_integer
-				number = parseInt((number * Math.pow(10, @_decimals)).toFixed(0))
-			super(number, flags)
-		@
+			return null
+
+		if @_store_as_integer
+			return parseInt((number * Math.pow(10, @_decimals)).toFixed(0))
+
+		return number
+
+	storeValue: (value, flags={}) ->
+		super(@getValueForStore(value), flags)
 
 	getDefaultValue: ->
 		null
+
+	setValue: (v, flags = {}) ->
+		@checkValue(v)
+		super(v, flags)
 
 	checkValue: (v) ->
 		if v == null
@@ -81,25 +129,54 @@ class NumberInput extends Input
 		else
 			throw new Error("#{@__cls}.setValue(value): Value needs to be Number or null.")
 
-	__checkInput: (opts) ->
-		opts.value = opts.value.replace(@_symbol, "")
-		opts.value = opts.value.trim()
-		v = opts.value
-		if @_separator and opts.enter
-			v = v.split(@_separator).join("")
-		if v == ""
-			return
-		# CUI.debug "v", v, @_decimalpoint
-		if @_decimalpoint == "."
-			v = v.replace(",",".")
-		else if @_decimalpoint == ","
-			v = v.replace(".",",")
+	__addSymbol: (str) ->
+		if isEmpty(@_symbol)
+			return str
 
-		chars = v.split(@_decimalpoint)
+		if @_symbol_before
+			@_symbol+" "+str
+		else
+			str+" "+@_symbol
+
+	__addSeparator: (str) ->
+		if isEmpty(@_separator)
+			return str
+
+		nn = []
+		for n,idx in str.split("").reverse()
+			if idx%3 == 0 and idx > 0
+				nn.push(@_separator)
+			nn.push(n)
+		nn.reverse()
+		nn.join("")
+
+	correctValueForInput: (value) ->
+		value.replace(/[,\.]/, @_decimalpoint)
+
+	getValueForInput: ->
+		@formatValueForDisplay(null, true)
+
+	checkInput: (value) ->
+		if value == null
+			return true
+		else
+			return super(value)
+
+	__checkInput: (value) ->
+		v = value.replace(@_symbol, "")
+		v = v.trim()
+
+		if v == ""
+			return true
+
+		v = v.replace(",",".")
+		chars = v.split(".")
+
 		# CUI.debug "first", v, @_decimalpoint, dump(chars)
 		if chars.length > 2
 			# CUI.debug "more splits", chars.length
 			return false
+
 		if chars.length > 1 and @_decimals == 0
 			# CUI.debug "more splits", chars.length, @_decimals
 			return false
@@ -126,56 +203,27 @@ class NumberInput extends Input
 			# CUI.debug "points not matched", points
 			return false
 
+		if points.length > @_decimals
+			return false
 
-		if number.length == 0
-			number = "0"
-		# CUI.debug "second", number, points, dump(chars)
-
-		if points.length < @_decimals
-			if opts.leave
-				p = points.split("")
-				for i in [points.length...@_decimals]
-					p.push("0")
-				points = p.join("")
-		else if points.length > @_decimals
-			p = points.split("")
-			p.splice(@_decimals)
-			points = p.join("")
-
-		if opts.leave and @_separator
-			nn = []
-			for n,idx in number.split("").reverse()
-				if idx%3 == 0 and idx > 0
-					nn.push(@_separator)
-				nn.push(n)
-			nn.reverse()
-			number = nn.join("")
-
-		if points.length > 0 or chars[1] == ""
-			opts.value = number + @_decimalpoint + points
-		else
-			opts.value = number
-
-		if opts.leave and @_symbol
-			if @_symbol_before
-				opts.value = @_symbol+" "+opts.value
-			else
-				opts.value = opts.value+" "+@_symbol
-
-		# CUI.debug "new value", opts.value
-		return true
+		CUI.debug "value ok", value
+		return v.replace(".", @_decimalpoint)
 
 
-	@format: (v, _opts={}) ->
+	@format: (v, opts={}) ->
 		if isEmpty(v)
 			v = ""
+		else
+			_v = v+""
 
-		if isNumber(v)
-			v = ""+v
+		# automatically set decimals
+		if isFloat(v) and not opts.hasOwnProperty("decimals")
+			opts.decimals = _v.length - _v.indexOf(".") - 1
 
-		ni = new NumberInput(_opts)
-		opts = leave: true, value: ni.formatValueForDisplay(v)
-		if not ni.__checkInput(opts)
+		ni = new NumberInput(opts)
+		ni.start()
+
+		if not ni.checkInput(_v)
 			null
 		else
-			opts.value
+			ni.formatValueForDisplay(v)

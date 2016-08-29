@@ -8,11 +8,11 @@ class InputDemo extends Demo
 			plain_input_over: "123---3423-121--22"
 			plain_textarea: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
 			plain_textarea_over: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
-			dollars: "12345589"
+			dollars: 12345589
 			content_size_textarea: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
 			date_and_time_short: "2014-11-14T15:57:00+01:00"
 			date_only: "2014-10-19"
-			euros: "12345"
+			euros: 123456
 
 		multi_input_control = new MultiInputControl
 			user_control: true
@@ -90,30 +90,37 @@ class InputDemo extends Demo
 			,
 				form: label: "Checked, Numbers + Spaces"
 				type: Input
-				checkInput: (opts) ->
-					CUI.debug "check input", opts
-					if opts.value.match(/^[\s0-9]*$/)
-						opts.value = opts.value.replace(/[\s]/g, "\u2007")
+				correctValueForInput: (df, value) =>
+					# replace spaces this with a wide space
+					value.replace(/\s+/g, "\u2007")
+
+				checkInput: (value) ->
+					if value.match(/^[\s0-9]*$/)
 						return true
 					else
 						return false
 			,
 				form: label: "Two for 2"
 				type: Input
-				checkInput: (opts) =>
-					CUI.debug "check input", opts, InputDemo.numbers
-					if opts.leave
-						for k, v of InputDemo.numbers
-							re = new RegExp(""+v, "g")
-							opts.value = opts.value.replace(re, k)
-					else
-						for k, v of InputDemo.numbers
-							re = new RegExp(""+k, "g")
-							opts.value = opts.value.replace(re, v+" ")
-						opts.value = opts.value.replace(/\s{2,}/g, " ")
-						if opts.value.trim() == ""
-							opts.value = ""
-					return
+
+				getValueForDisplay: (df, value) =>
+					for k, v of InputDemo.numbers
+						re = new RegExp(""+v, "g")
+						value = value.replace(re, k)
+					value
+
+				getValueForInput: (df, value) =>
+					df.correctValueForInput(value)
+
+				correctValueForInput: (df, value) =>
+					for k, v of InputDemo.numbers
+						re = new RegExp(""+k, "g")
+						value = value.replace(re, v+" ")
+					value = value.replace(/\s{2,}/g, " ")
+					if value.trim() == ""
+						value = ""
+					value
+
 				getCursorBlocks: (v) =>
 					blocks = []
 					re = new RegExp("("+Object.values(InputDemo.numbers).join("|")+")","g")
@@ -134,17 +141,18 @@ class InputDemo extends Demo
 				type: Input
 				emptyHint:
 					text: "Needs Integer between 100 and 1000"
+				required: true
 				invalidHint:
 					text: "Enter something valid!"
 				validHint:
 					text: "Thank you"
-				checkInput: (opts) ->
-					CUI.debug "check input", opts
-					if 100 <= getInt(opts.value) <= 1000
-						true
+				checkInput: (value) ->
+					CUI.debug "check input", value
+					if not (100 <= getInt(value) <= 1000)
+						false
 					else
-						null
-				required: true
+						true
+
 			,
 				form: label: "NumberInput(0)"
 				type: NumberInput
