@@ -32,3 +32,10 @@
 		color: $active_font_color;
 	}
 }
+
+//used when label is inside layout-cells but should not be centered TODO do this with css classes
+@mixin empty_label_flow_like_text() {
+	@include ASSERT_TYPE(cui-empty-label);
+	align-self: flex-start;
+	width: auto;
+}
