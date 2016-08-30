@@ -281,7 +281,12 @@ table {
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	background-color: #64b6fd;
-	cursor: ew-resize;
+	&:not(.cui-flex-handle-closed) {
+		cursor: ew-resize;
+	}
+	&.cui-flex-handle-closed {
+		cursor: pointer;
+	}
 	&.cui-flex-handle-manual-size {
 		background-color: #64fdd8;
 	}
@@ -302,7 +307,12 @@ table {
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	background-color: #64b6fd;
-	cursor: ns-resize;
+	&:not(.cui-flex-handle-closed) {
+		cursor: ns-resize;
+	}
+	&.cui-flex-handle-closed {
+		cursor: pointer;
+	}
 }
 
 
