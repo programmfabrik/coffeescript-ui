@@ -661,6 +661,12 @@ class CUI
 	@isPlainObject: (v) ->
 		jQuery.isPlainObject(v)
 
+	@isMap: (v) ->
+		jQuery.isPlainObject(v)
+
+	@isArray: (v) ->
+		jQuery.isArray(v)
+
 	@downloadData: (data, fileName) ->
 		json = JSON.stringify(data)
 		blob = new Blob([json], type: "octet/stream")

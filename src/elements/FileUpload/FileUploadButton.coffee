@@ -37,10 +37,13 @@ class FileUploadButton extends Button
 		if ev.isDefaultPrevented() or ev.isImmediatePropagationStopped()
 			return
 
+		uploadBtn = document.getElementById("cui-file-upload-button")
+		uploadBtn.form.reset()
+
 		@_fileUpload.initFilePicker
 			directory: (ev.altKey() or ev.shiftKey() and @_multiple) or @_directory
 			multiple: @_multiple
-			fileUpload: document.getElementById("cui-file-upload-button")
+			fileUpload: uploadBtn
 
 		return
 

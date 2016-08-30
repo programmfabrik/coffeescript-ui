@@ -1,4 +1,4 @@
-class Element
+class CUI.Element
 
 	constructor: (@opts={}) ->
 		@__uniqueId = "cui-element-"+Element.uniqueId++
@@ -57,7 +57,7 @@ class Element
 		@addOpts
 			onConstruct:
 				check: Function
-			onDestruct:
+			onDestroy:
 				check: Function
 
 	# create a new instance from the same opts
@@ -246,10 +246,13 @@ class Element
 		for k in @__mapped_keys
 			delete("@_#{k}")
 		@__mapped_keys = []
-		@_onDestruct?(@)
+		@_onDestroy?(@)
 		@__destroyed = true
 
 	isDestroyed: ->
 		@__destroyed
 
 	@uniqueId: 0
+
+
+Element = CUI.Element

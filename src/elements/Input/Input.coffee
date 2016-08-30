@@ -376,8 +376,6 @@ class Input extends DataFieldInput
 				if @isDestroyed()
 					return
 
-				# CUI.debug("running dom insert..")
-				assert( DOM.isInDOM(@__input[0]),"Input is getting DOM insert event without being in DOM." )
 				@setContentSize()
 
 		@__input
@@ -428,6 +426,7 @@ class Input extends DataFieldInput
 	__unfocusShadowInput: ->
 		if not @hasShadowFocus()
 			return
+
 		# CUI.debug "unfocus shadow input"
 		@setContentSize()
 		@__input0.focus()
@@ -446,11 +445,9 @@ class Input extends DataFieldInput
 		if @__contentSize
 			@__setContentSize()
 		else
-			@__initShadowInput()
-			@__focusShadowInput()
+			@__initContentSize()
 			@__setContentSize()
-			@__unfocusShadowInput()
-			@__removeShadowInput()
+			@__removeContentSize()
 		@
 
 	__initContentSize: ->
@@ -460,6 +457,7 @@ class Input extends DataFieldInput
 			return
 
 		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1")
+
 		@__contentSize.appendTo(document.body)
 		@__contentSize0 = @__contentSize[0]
 
@@ -543,11 +541,14 @@ class Input extends DataFieldInput
 			if @__contentSize0.value.length == 0
 				# help IE out here, IE measures one " "
 				w = 1
+			else
+				# for now, add 1 pixel to the measurement
+				# Chrome measures a Textarea width different than an Input width
+				w = w + 1
 
 			if @__input.width() != w
 				changed = true
 			@__input.width(w)
-			# CUI.debug "setting width to", @__shadow0.value, @__input0.value, w
 
 		if changed
 			Events.trigger

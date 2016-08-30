@@ -1,4 +1,4 @@
-class CUI.Event extends Element
+class CUI.Event extends CUI.Element
 
 	constructor: (@opts={}) ->
 		super(@opts)
