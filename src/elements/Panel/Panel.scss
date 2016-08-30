@@ -1,10 +1,12 @@
 
-$panel-header-border-color: #5e5e5e;
+//REMARKED too many lines
+//$panel-header-border-color: #5e5e5e;
 
 
 .cui-panel {
 
-	border: 1px solid $panel-header-border-color;
+	//REMARKED too many lines
+	//border: 1px solid $panel-header-border-color;
 	margin-bottom: $grid_size;
 
 	@include flex(0, 0);
@@ -16,16 +18,30 @@ $panel-header-border-color: #5e5e5e;
 
 		.cui-panel-header-button {
 			width: 100%;
-			border: 0;
 
-			@include button_flat_skin(
-				$background_color: inherit,
-				$font_color: $button_font_color,
-				$highlighted_background_color: $button_highlight_background_color,
-				$highlighted_font_color: $button_highlight_font_color,
-				$active_background_color: $button_highlight_background_color,
-				$active_font_color: $button_font_color
+			border: 0 !important;
+			box-shadow: none !important;
+
+			//TODO all this for disabling highlight color
+			@include button_skin(
+				$_font_color: $font_color,
+				$_background_color: inherit,
+
+				$_disabled_font_color: $button_disabled_font_color,
+				$_disabled_background_color: $button_disabled_background_color,
+
+				$_active_font_color: $font_color,
+				$_active_background_color: inherit,
+
+				$_highlight_font_color: $button_highlight_font_color,
+				$_highlight_background_color: $button_highlight_background_color,
+
+				$_active_highlight_font_color: $button_highlight_font_color,
+				$_active_highlight_background_color: $button_highlight_background_color
+
 			);
+
+			font-weight: bold;
 
 			.cui-button-center {
 				text-align: left;

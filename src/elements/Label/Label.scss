@@ -39,7 +39,7 @@
 	@include flex(0,1); //make label shrinkable otherwise there will be no line break
 
 	& > .cui-label-icon {
-		vertical-align: top;
+		align-self: flex-start;
 		@include flex(0,0);
 	}
 
