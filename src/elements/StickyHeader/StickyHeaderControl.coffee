@@ -52,12 +52,10 @@ class StickyHeaderControl extends Element
 		measure_headers = []
 		for nsh in @newStickyHeaders
 			dom = nsh.DOM
-			assert(dom[0].offsetParent == @_element[0], "StickyHeaderControl.addStickyHeader", "StickyHeader has a different node as offsetParent than expected.", stickyHeader: dom[0], control: @_element[0], offsetParent: dom[0].offsetParent)
 
 			header =
 				stickyHeader: nsh
 				level: nsh.getLevel()
-				# offsetTop: dom[0].offsetTop
 				node: dom[0].cloneNode(true)
 
 			@headers.push(header)
