@@ -6,14 +6,16 @@ class Toolbar extends HorizontalLayout
 
 	initOpts: ->
 		super()
-		@removeOpt("maximize")
-		@removeOpt("maximize_horizontal")
-		@removeOpt("maximize_vertical")
-		@addOpts
-			maximize_horizontal:
-				default: true
-				mandatory: true
-				check: Boolean
+
+		if CUI.__ng__
+			@removeOpt("maximize")
+			@removeOpt("maximize_horizontal")
+			@removeOpt("maximize_vertical")
+			@addOpts
+				maximize_horizontal:
+					default: true
+					mandatory: true
+					check: Boolean
 
 	hasFlexHandles: ->
 		false
