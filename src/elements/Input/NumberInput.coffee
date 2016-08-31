@@ -94,7 +94,6 @@ class NumberInput extends Input
 		@getValueForStore(v)
 
 	getValueForDisplay: ->
-		console.debug @getData()
 		@formatValueForDisplay(@getValue())
 
 	getValueForStore: (value) ->
@@ -206,24 +205,22 @@ class NumberInput extends Input
 		if points.length > @_decimals
 			return false
 
-		CUI.debug "value ok", value
 		return v.replace(".", @_decimalpoint)
 
 
 	@format: (v, opts={}) ->
 		if isEmpty(v)
-			v = ""
-		else
-			_v = v+""
+			v = null
 
 		# automatically set decimals
 		if isFloat(v) and not opts.hasOwnProperty("decimals")
+			_v = v+""
 			opts.decimals = _v.length - _v.indexOf(".") - 1
 
 		ni = new NumberInput(opts)
 		ni.start()
 
-		if not ni.checkInput(_v)
+		if not ni.checkInput(v+"")
 			null
 		else
 			ni.formatValueForDisplay(v)
