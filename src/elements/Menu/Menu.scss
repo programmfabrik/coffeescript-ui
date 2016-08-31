@@ -12,8 +12,13 @@
 
 	//make sure that also the items in the submenus are filling the full width.
 	.cui-item-list {
+
 		width: 100%;
 		height: 100%; //needed for scrollbar
+
+		> .cui-vertical-layout-center {
+			height: 100%; //needed for scrollbar
+		}
 
 		.cui-tmpl-item-list-body {
 			overflow: auto;
