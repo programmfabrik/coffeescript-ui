@@ -3,7 +3,18 @@ class Toolbar extends HorizontalLayout
 	init: ->
 		super()
 		@addClass("cui-toolbar")
-		
+
+	initOpts: ->
+		super()
+		@removeOpt("maximize")
+		@removeOpt("maximize_horizontal")
+		@removeOpt("maximize_vertical")
+		@addOpts
+			maximize_horizontal:
+				default: true
+				mandatory: true
+				check: Boolean
+
 	hasFlexHandles: ->
 		false
 

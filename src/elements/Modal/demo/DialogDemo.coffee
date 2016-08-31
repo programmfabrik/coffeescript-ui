@@ -108,7 +108,7 @@ class DialogDemo extends Demo
 		@__add_btn("Confirmation Dialog",
 			text: "Open"
 			onClick: =>
-				@mod = new ConfirmationDialog
+				@mod = new CUI.ConfirmationDialog
 					text: multiline_text
 					title: "Confirm"
 					icon: "question"

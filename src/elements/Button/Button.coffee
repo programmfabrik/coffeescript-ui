@@ -480,7 +480,7 @@ class Button extends DOM
 					dialog.destroy()
 					do_click()
 
-			dialog = new ConfirmationDialog
+			dialog = new CUI.ConfirmationDialog
 				text: @_confirm_on_click
 				icon: CUI.defaults.class.Button.defaults.confirm_icon
 				title: CUI.defaults.class.Button.defaults.confirm_title

@@ -148,6 +148,20 @@ class CUI.Event extends CUI.Element
 	setCurrentTarget: (ct) ->
 		@__currentTarget = ct
 
+	getModifiers: =>
+		mods = []
+
+		for k in [
+			"meta"
+			"ctrl"
+			"alt"
+			"shift"
+		]
+			if @[k+"Key"]()
+				mods.push(k)
+
+		mods
+
 	hasModifierKey: (includeShift=false) ->
 		@metaKey() or
 			@ctrlKey() or

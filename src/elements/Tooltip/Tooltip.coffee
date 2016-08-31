@@ -1,4 +1,4 @@
-class Tooltip extends LayerPane
+class CUI.Tooltip extends CUI.LayerPane
 	constructor: (@opts = {}) ->
 		super(@opts)
 		assert(xor(@_text, @_content), "new #{@__cls}", "One of opts.text or opts.content must be set.", opts: @opts)
@@ -113,26 +113,26 @@ class Tooltip extends LayerPane
 	showTimeout: (ms=@_show_ms, ev) ->
 		# console.error "Tooltip.showTimeout ", @getUniqueId(), !!Tooltip.current
 
-		if Tooltip.current
-			if Tooltip.current != @
-				Tooltip.current.hide(ev)
+		if CUI.Tooltip.current
+			if CUI.Tooltip.current != @
+				CUI.Tooltip.current.hide(ev)
 
 			@show(ev)
 			return CUI.resolvedPromise()
 		else
-			Tooltip.current = @
+			CUI.Tooltip.current = @
 			return super(ms, ev)
 
 	hideTimeout: (ms=@_show_ms, ev) ->
-		Tooltip.current = null
+		CUI.Tooltip.current = null
 		super(ev)
 
 	hide: (ev) ->
-		Tooltip.current = null
+		CUI.Tooltip.current = null
 		super(ev)
 
 	show: (ev) ->
-		Tooltip.current = @
+		CUI.Tooltip.current = @
 		if @__static
 			super(null, ev)
 		else
@@ -203,3 +203,4 @@ class Tooltip extends LayerPane
 		@__element.removeClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")
 
 
+Tooltip = CUI.Tooltip

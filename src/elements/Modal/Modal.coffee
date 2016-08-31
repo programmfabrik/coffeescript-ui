@@ -1,6 +1,6 @@
 # Modal
 #
-class Modal extends LayerPane
+class CUI.Modal extends CUI.LayerPane
 
 	#Construct a new Modal.
 	#
@@ -137,3 +137,4 @@ class Modal extends LayerPane
 			super(immediate)
 
 
+Modal = CUI.Modal

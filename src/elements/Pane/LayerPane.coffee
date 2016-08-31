@@ -1,4 +1,4 @@
-class LayerPane extends Layer
+class CUI.LayerPane extends CUI.Layer
 
 	constructor: (@opts={}) ->
 		super(@opts)

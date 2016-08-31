@@ -1,4 +1,4 @@
-class CUI.ConfirmationChoice extends ConfirmationDialog
+class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 	constructor: (@opts) ->
 		super(@opts)
 		@__layer_root.addClass("cui-confirmation-choice")
@@ -27,7 +27,7 @@ class CUI.ConfirmationChoice extends ConfirmationDialog
 						return false
 
 					for choice in v
-						Element.readOpts(choice, "new ConfirmationDialog", @choiceOpts)
+						Element.readOpts(choice, "new ConfirmationChoice", @choiceOpts)
 					return true
 
 	choiceOpts:
@@ -99,7 +99,7 @@ class CUI.ConfirmationChoice extends ConfirmationDialog
 	# promise fails if the user cancels
 	open: ->
 		@__deferred = new CUI.Deferred()
-		ConfirmationDialog::show.call(@)
+		CUI.ConfirmationDialog::show.call(@)
 		return @__deferred.promise()
 
 
