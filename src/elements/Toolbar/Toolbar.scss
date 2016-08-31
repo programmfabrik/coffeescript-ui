@@ -89,7 +89,7 @@
 
     @include datafield_shrinkable_non_multiline();
 
-    .cui-buttonbar-horizontal {
+    .cui-buttonbar {
         @include buttonbar_horizontal_shrinkable();
     }
 

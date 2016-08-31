@@ -10,43 +10,31 @@
 		display: inline;
 	}
 
-	&.cui-buttonbar-vertical{
-		> .cui-button,
-		> .cui-buttonbar-group,
-		> .cui-buttonbar-group > .cui-button {
-			&:not(:empty) {
-				@include flex_display(flex);
-				@include flex_direction(column);
-			}
+
+	@include horizontal_separator_paddings();
+
+	white-space: nowrap;
+	> .cui-buttonbar-group {
+		white-space: nowrap;
+		display: inline-block; // needed for having a nice border
+	}
+
+	> .cui-button,
+	> .cui-buttonbar-group > .cui-button {
+		&:not(:empty) {
+			display: inline-block;
 		}
 	}
 
-	&.cui-buttonbar-horizontal {
-		@include horizontal_separator_paddings();
-
-		white-space: nowrap;
-		> .cui-buttonbar-group {
-			white-space: nowrap;
-			display: inline-block; // needed for having a nice border
-		}
-
-		> .cui-button,
-		> .cui-buttonbar-group > .cui-button {
-			&:not(:empty) {
-				display: inline-block;
-			}
-		}
-
-		//every element in the bar has to be set to center, otherwise it doesnt work
-		> .cui-button,
-		> .cui-label {
-			vertical-align: middle;
-		}
+	//every element in the bar has to be set to center, otherwise it doesnt work
+	> .cui-button,
+	> .cui-label {
+		vertical-align: middle;
 	}
 
 	// ------------ separators --------------------
 
-	&.cui-buttonbar-horizontal > .cui-buttonbar-group {
+	> .cui-buttonbar-group {
 
 		vertical-align: middle;
 
@@ -66,22 +54,6 @@
 				border-left: 1px solid $buttonbar_separator_color;
 			}
 		}
-	}
-
-	&.cui-buttonbar-vertical > .cui-buttonbar-group {
-		& > .cui-button,
-		& > .cui-data-field:not(.cui-first-visible-child) > .cui-button, // for dropdown list in buttonbars
-		& > .cui-data-field:not(.cui-first-visible-child) > .cui-input // for input fields , like in a navigation button bar with page input
-		{
-			&:not(.cui-disabled):not(.cui-active):not(.cui-pressed):not(.cui-first-visible-child):hover,
-			&.cui-active:not(.cui-disabled):not(.cui-first-visible-child):hover,
-			&:not(.cui-first-visible-child) {
-				border-top: 1px solid $buttonbar_separator_color;
-			}
-		}
-	}
-
-	> .cui-buttonbar-group {
 
 		border: 1px solid $button_border_color;
 		box-sizing: border-box;
@@ -107,9 +79,9 @@
 }
 
 @mixin buttonbar_horizontal_shrinkable {
-	@include ASSERT_TYPE(cui-buttonbar-horizontal);
+	@include ASSERT_TYPE(cui-buttonbar);
 
-	&.cui-buttonbar.cui-buttonbar-horizontal { //need to make it specific
+	&.cui-buttonbar { //need to make it specific
 		&,
 		.cui-buttonbar-group,
 		.cui-button {

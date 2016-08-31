@@ -132,7 +132,6 @@ class ControlsDemo extends Demo
 
 
 		button_bar = new Buttonbar(
-			orientation: "horizontal"
 			tooltip:
 				text: "mixed buttons and labels"
 			buttons: [
