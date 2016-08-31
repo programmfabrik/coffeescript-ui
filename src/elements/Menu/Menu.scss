@@ -10,16 +10,6 @@
 	//TODO try 0 margin?
 	margin: $grid_size;
 
-	//avoid scrollbars and show the layer that he should take the menu layer not as viewport! //TODO more details
-	overflow: visible;
-	& > .cui-item-list  {
-		overflow: visible;
-		& > .cui-vertical-layout-center {
-			height: 100%; //make sure the content is not overflowing. setting overflow to hidden would hide away our submenus!!!
-			overflow: visible;
-		}
-	}
-
 	//make sure that also the items in the submenus are filling the full width.
 	.cui-item-list {
 		width: 100%;
