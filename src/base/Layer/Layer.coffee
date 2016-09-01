@@ -54,7 +54,7 @@ class CUI.Layer extends CUI.DOM
 
 				if @__bd_policy == "click-thru"
 					# backdrop needs to be cropped
-					@__backdrop_crop = @__backdrop.DOM[0]
+					@__backdrop_crop = @__backdrop.DOM
 					@setBackdropContent(body_clone)
 				else
 					@__backdrop_crop = $div("cui-layer-backdrop-body-clone")[0]
@@ -65,7 +65,7 @@ class CUI.Layer extends CUI.DOM
 
 				@__layer_root.addClass("cui-layer-root-backdrop-blur")
 
-			@__backdrop.DOM.appendTo(@__layer_root.DOM)
+			@__layer_root.DOM.appendChild(@__backdrop.DOM)
 
 			# @__backdrop.DOM.attr("role", @_role)
 
@@ -147,10 +147,19 @@ class CUI.Layer extends CUI.DOM
 		if @_visible == false
 			@setVisible(@_visible)
 
-		@__layer.DOM.appendTo( @__layer_root.DOM )
+		@__layer_root.DOM.appendChild(@__layer.DOM)
+
+		Events.listen
+			type: "click"
+			node: @__layer
+			call: (ev) =>
+				if not ev.altKey()
+					return
+				@hide()
+				@show()
 
 		if @_handle_focus
-			DOM.setAttribute(@__layer.DOM[0], "tabindex", "0")
+			DOM.setAttribute(@__layer.DOM, "tabindex", "0")
 
 		if @_element
 			@__setElement(@_element)
@@ -168,7 +177,7 @@ class CUI.Layer extends CUI.DOM
 			.DOM
 
 			#append pointer and make sure pointer is rendered beneath layer.
-			@__pointer.insertBefore(@__layer.DOM)
+			DOM.insertBefore(@__layer.DOM, @__pointer)
 
 			# @__pointer.attr("role", @_pointer)
 
@@ -223,7 +232,7 @@ class CUI.Layer extends CUI.DOM
 					content: null
 
 				check: (v) ->
-					if $.isPlainObject(v) or v == false
+					if CUI.isPlainObject(v) or v == false
 						return true
 
 			# if added, a bounce class will be added and after a css transition
@@ -344,10 +353,9 @@ class CUI.Layer extends CUI.DOM
 		else
 			@__element = element
 
-		assert(@__element.closest(".ez-tmpl").length == 0, "Layer.__setElement", "element cannot be inside a Template.", element: element)
-		assert(isElement(@__element), "Layer.__setElement", "element needs to be jQuery.", element: element)
+		assert(not DOM.closest(@__element, ".ez-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
+		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
-
 
 	# returns a list of all possible placements starting with @__placement and ending with "c"
 	__getPlacements: ->
@@ -370,24 +378,24 @@ class CUI.Layer extends CUI.DOM
 
 	# returns Positioner
 	getViewport: ->
-		parent = @__layer.DOM.offsetParent()
+		parent = @__layer.DOM.offsetParent
 
-		#if overflow is visible then get use our document as the viewport  (needed by submenus)
-		if parent.css("overflow-x") == "visible" or parent.css("overflow-y") == "visible"
-				# @__debug.push("getViewport: using document viewport")
-				return new Positioner
-					top: 0
-					left: 0
-					width: CUI.getViewport().width
-					height: CUI.getViewport().height
-		else
-			rect = parent.rect()
-			return new Positioner(
-				top: rect.top
-				left: rect.left
-				width: parent[0].clientWidth
-				height: parent[0].clientHeight
-			)
+		# #if overflow is visible then get use our document as the viewport  (needed by submenus)
+		# if DOM.hasOverflow(parent)
+		# @__debug.push("getViewport: using document viewport")
+		return new Positioner
+			top: 0
+			left: 0
+			width: CUI.getViewport().width
+			height: CUI.getViewport().height
+		# else
+		# 	rect = parent.rect()
+		# 	return new Positioner(
+		# 		top: rect.top
+		# 		left: rect.left
+		# 		width: parent[0].clientWidth
+		# 		height: parent[0].clientHeight
+		# 	)
 
 
 	getPositioner: ->
@@ -956,13 +964,13 @@ class CUI.Layer extends CUI.DOM
 		# CUI.debug "SetPosition:",offset, @__viewport
 
 		if @__backdrop_crop
-			DOM.setStylePx(@__backdrop_crop,
+			DOM.setStyle(@__backdrop_crop,
 				top: offset.top
 				left: offset.left
 				width: offset.width
 				height: offset.height
 			)
-			DOM.setStylePx(@__backdrop_crop.firstChild,
+			DOM.setStyle(@__backdrop_crop.firstChild,
 				width: @__viewport.width
 				height: @__viewport.height
 				top: -offset.top
@@ -1049,7 +1057,7 @@ class CUI.Layer extends CUI.DOM
 			DOM.data(@__pointer[0], "placement", placement)
 
 			#make sure pointer is visible and measurable
-			@__pointer.insertBefore(@__layer.DOM) # TODO not sure if this code is needed
+			DOM.insertBefore(@__layer.DOM, @__pointer) # TODO not sure if this code is needed
 
 			rect = @__pointer.rect()
 			@__pointer_margin = @__getMargin(@__pointer)
@@ -1220,13 +1228,13 @@ class CUI.Layer extends CUI.DOM
 			@__setElement(element)
 
 		# get @__appendToElement
-		@__appendToElement = $(document.body)
+		@__appendToElement = document.body
 
 		@__layer.DOM.css
 			top: 0
 			left: 0
 
-		@__layer_root.DOM.appendTo(@__appendToElement)
+		@__appendToElement.appendChild(@__layer_root.DOM)
 
 		if @_element
 			@_element.addClass("cui-layer-active")

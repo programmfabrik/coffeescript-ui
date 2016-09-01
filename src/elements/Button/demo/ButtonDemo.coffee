@@ -600,7 +600,6 @@ class ButtonDemo extends Demo
 		@__addDivider("Horizontal Layout with mixed controls")
 
 		bb = new Buttonbar(
-			orientation: "horizontal"
 			tooltip:
 				text: "mixed buttons and labels"
 			buttons: [
@@ -634,7 +633,6 @@ class ButtonDemo extends Demo
 		select.start()
 
 		bb2 = new Buttonbar(
-			orientation: "horizontal"
 			tooltip:
 				text: "mixed buttons and selects"
 			buttons: [
@@ -651,7 +649,6 @@ class ButtonDemo extends Demo
 		@__addDivider("Horizontal Layout in different grouping Variations")
 
 		bb = new Buttonbar(
-			orientation: "horizontal"
 			tooltip:
 				text: "example 1"
 			buttons: [
@@ -730,7 +727,6 @@ class ButtonDemo extends Demo
 		@__addDivider("Vertical Layout in different grouping Variations")
 
 		bb = new Buttonbar(
-			orientation: "vertical"
 			tooltip:
 				text: "example 1"
 			buttons: [
@@ -745,7 +741,6 @@ class ButtonDemo extends Demo
 		@__addDivider("Vertical Layout in with one group")
 
 		bb = new Buttonbar(
-			orientation: "vertical"
 			tooltip:
 				text: "example 1"
 			buttons: [

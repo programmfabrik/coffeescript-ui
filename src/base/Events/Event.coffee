@@ -270,7 +270,7 @@ class CUI.Event extends CUI.Element
 		false
 
 	@require: (event, func) ->
-		if $.isPlainObject(event)
+		if CUI.isPlainObject(event)
 			ev_info = Events.getEventType(event.type)
 			if ev_info.eventClass
 				eventClass = ev_info.eventClass

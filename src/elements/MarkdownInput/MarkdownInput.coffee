@@ -206,7 +206,7 @@ class MarkdownInput extends Input
 		@__preview.innerHTML = @renderHTML()
 
 	renderHTML: ->
-		@_renderFunction(@getElement().val())
+		@_renderFunction(@getElement().value)
 
 	@__escape_regexp: new RegExp('[\\'+('*-_\\![]()'.split("").join("\\"))+']','g')
 

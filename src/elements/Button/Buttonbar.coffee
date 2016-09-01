@@ -22,7 +22,7 @@ class Buttonbar extends DOM
 		@__groupDivs = {}
 
 		# FIXME: this needs to be removed, once the SCSS is fixed
-		@DOM.addClass("cui-buttonbar-horizontal")
+		@addClass("cui-buttonbar-horizontal")
 
 		if @_tooltip
 			tt_opts = copyObject(@_tooltip)
@@ -47,7 +47,7 @@ class Buttonbar extends DOM
 				check: "PlainObject"
 
 	__proxy: (func, args...) ->
-		for el in @__buttons.find(".cui-button,.cui-select")
+		for el in DOM.matchSelector(@__buttons, ".cui-button,.cui-select")
 			ele = DOM.data(el, "element")
 			ele[func].apply(ele, args)
 		@
@@ -61,37 +61,38 @@ class Buttonbar extends DOM
 
 	# hide the group if no children
 	__checkVisibility: ->
-		@__buttons.css("display", "")
+		DOM.showElement(@__buttons)
+
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
 			count = 0
-			for _c in d.children()
-				c = $(_c)
-				c.removeClass("cui-first-visible-child")
-				el = DOM.data(_c, "element")
+			for c, idx in d.children
+				c.classList.remove("cui-first-visible-child")
+				el = DOM.data(c, "element")
+
 				if el
 					count += el.isShown()
 				else
-					count += c.is(":visible")
+					count += CUI.DOM.isVisible(c)
 
 				if count == 1
-					c.addClass("cui-first-visible-child")
+					c.classList.add("cui-first-visible-child")
 
 			if count > 0
-				d.css("display", "")
+				DOM.showElement(d)
 			else
-				d.css("display", "none")
+				DOM.hideElement(d)
 
 		visible = 0
 
 		# Hide the entire Buttonbar, if everything inside is hidden
-		for _el in @__buttons.children(".cui-buttonbar-group,.cui-button,.cui-select")
-			el = $(_el)
-			el.removeClass("cui-first-visible-child")
-			if el.css("display") != "none"
+		for el in DOM.matchSelector(@__buttons, ".cui-buttonbar-group,.cui-button,.cui-select")
+			# el = $(_el)
+			DOM.removeClass(el, "cui-first-visible-child")
+			if DOM.isVisible(el)
 				visible++
 				if visible == 1
-					el.addClass("cui-first-visible-child")
+					DOM.addClass(el, "cui-first-visible-child")
 				break
 
 		# CUI.debug "Buttonbar.__checkVisibility", visible, @, @DOM[0]
@@ -100,7 +101,7 @@ class Buttonbar extends DOM
 			if @__tooltip?.isShown()
 				@__tooltip.position()
 		else
-			@__buttons.css("display", "none")
+			DOM.showElement(@__buttons)
 		@
 
 	removeButtons: ->
@@ -113,7 +114,7 @@ class Buttonbar extends DOM
 		if isNull(btn)
 			return
 
-		if $.isPlainObject(btn)
+		if CUI.isPlainObject(btn)
 			btn = new CUI.defaults.class.Button(btn)
 
 		if btn instanceof Button or btn instanceof DataFieldInput
@@ -121,12 +122,12 @@ class Buttonbar extends DOM
 			grp = btn.getGroup()
 		else if btn instanceof Label
 			btn_dom = btn.DOM
-		else if btn?.hasClass?("cui-button")
+		else if btn?.classList?.contains("cui-button")
 			# FIXME: this should be not needed
 			btn_dom = btn
 			grp = btn.group or null
 		else
-			assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{getObjectClass(btn)}.", button: btn, opts: @opts, )
+			assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{getObjectClass(btn)}.", button: btn, opts: @opts)
 
 		Events.listen
 			type: ["show", "hide"]
@@ -135,17 +136,19 @@ class Buttonbar extends DOM
 				@__checkVisibility()
 
 		if prepend
-			func = "prependTo"
+			func = "prepend"
 		else
-			func = "appendTo"
+			func = "append"
 
 		if grp
 			if not @__groupDivs[grp]
-				@__groupDivs[grp] = $div("cui-buttonbar-group cui-buttonbar-group-#{grp}").appendTo(@__buttons)
+				div = $div("cui-buttonbar-group cui-buttonbar-group-#{grp}")
+				DOM.append(@__buttons, div)
+				@__groupDivs[grp] = div
 
-			btn_dom[func](@__groupDivs[grp])
+			CUI.DOM[func](@__groupDivs[grp], btn_dom)
 		else
-			btn_dom[func](@__buttons)
+			CUI.DOM[func](@__buttons,btn_dom)
 
 		if check_visibility
 			@__checkVisibility()

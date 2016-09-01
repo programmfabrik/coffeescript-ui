@@ -7,7 +7,7 @@ class CUI.Listener extends Element
 			type:
 				mandatory: true
 				check: (v) ->
-					isString(v) or $.isArray(v)
+					isString(v) or CUI.isArray(v)
 
 			# an optional element to bind this listener to
 			# if given, the event will only be triggered
@@ -224,7 +224,7 @@ class CUI.Listener extends Element
 		if filter instanceof CUI.Listener
 			return filter == @
 
-		assert($.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.")
+		assert(CUI.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.")
 		match = true
 		filtered = false
 
@@ -251,7 +251,7 @@ class CUI.Listener extends Element
 
 
 	@require: (listener, func) ->
-		if $.isPlainObject(listener)
+		if CUI.isPlainObject(listener)
 			listenerFunc = null
 			if listener.type not instanceof Array
 				types = [listener.type]

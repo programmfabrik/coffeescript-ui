@@ -19,7 +19,7 @@ class CUI.LayerPane extends CUI.Layer
 
 
 	setPane: (pane) ->
-		if $.isPlainObject(pane)
+		if CUI.isPlainObject(pane)
 			@__pane = new SimplePane(pane)
 		else
 			@__pane = pane

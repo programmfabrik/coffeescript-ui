@@ -219,7 +219,7 @@ class CUI.Label extends CUI.DOM
 		CUI.DOM.setDimensions(@__label.map.content[0],
 			height: content_height + @__overflow_heights.button
 		)
-		CUI.DOM.setStylePx(@__label.map.content[0],
+		CUI.DOM.setStyle(@__label.map.content[0],
 			maxHeight: content_height + @__overflow_heights.button
 		)
 		Events.wait

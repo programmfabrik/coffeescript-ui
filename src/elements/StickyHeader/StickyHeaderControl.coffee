@@ -37,7 +37,7 @@ class StickyHeaderControl extends Element
 			element:
 				mandatory: true
 				check: (v) ->
-					v instanceof jQuery and v.length == 1
+					isElement(v)
 
 	isInDOM: ->
 		@__control and DOM.isInDOM(@__control[0])

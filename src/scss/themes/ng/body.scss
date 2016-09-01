@@ -85,25 +85,18 @@ span {
 	flex: 0 0 auto;
 	flex-direction: column;
 
-	> tbody {
+	> tr {
 		display: flex; // yes, this is fun :)
 		box-sizing: border-box;
 		flex: 1 1 auto;
-		flex-direction: column;
+		flex-direction: row;
 
-		> tr {
+		> td {
 			display: flex; // yes, this is fun :)
 			box-sizing: border-box;
-			flex: 1 1 auto;
-			flex-direction: row;
-
-			> td {
-				display: flex; // yes, this is fun :)
-				box-sizing: border-box;
-				flex: 0 0 auto;
-				flex-direction: column;
-				align-items: stretch;
-			}
+			flex: 0 0 auto;
+			flex-direction: column;
+			align-items: stretch;
 		}
 	}
 }
@@ -1260,13 +1253,13 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-table-has-not-left-column {
-	> tbody > tr > .cui-form-td.cui-form-left {
+	> tr > .cui-form-td.cui-form-left {
 			display: none;
 	}
 }
 
 .cui-form-table-has-not-right-column {
-	> tbody > tr > .cui-form-td.cui-form-right {
+	> tr > .cui-form-td.cui-form-right {
 		display: none;
 	}
 }
@@ -1274,7 +1267,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-form[cui-data-field-form-depth="0"] {
 	> .cui-vertical-layout-center {
 		> .cui-form-table {
-			> tbody > tr:last-child {
+			> tr:last-child {
 				border-color: #ff44ee;
 			}
 		}
@@ -1284,7 +1277,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-form:not([cui-data-field-form-depth="0"]) {
 	> .cui-vertical-layout-center {
 		> .cui-form-table {
-			> tbody > tr:last-child {
+			> tr:last-child {
 				border-style: none;
 			}
 		}
@@ -1302,17 +1295,19 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table > tbody > tr {
-	> .cui-form-td.cui-form-center {
-		flex: 1 1 auto;
-		width: 200px;
+.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
+	> tr {
+		> .cui-form-td.cui-form-center {
+			flex: 1 1 auto;
+			width: 200px;
+		}
 	}
 }
 
 
 // Options
 .cui-options-form-table {
-	> tbody.cui-drag-drop-select-sortable {
+	&.cui-drag-drop-select-sortable {
 		> tr {
 			> .cui-form-td.cui-form-left {
 				width: 10px !important;

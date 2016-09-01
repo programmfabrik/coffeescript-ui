@@ -71,7 +71,7 @@ class Lasso extends Draggable
 
 		@resetLassoedElements()
 		for el in @get_lassoed_elements()
-			$(el).addClass(@lasso_cls)
+			el.classList.add(@lasso_cls)
 
 		# set_css.top += @position.top
 		# set_css.left += @position.left
@@ -79,14 +79,13 @@ class Lasso extends Draggable
 		globalDrag.lasso.css(set_css)
 
 	resetLassoedElements: ->
-		@element.find("."+@lasso_cls).removeClass(@lasso_cls)
-
+		for el in DOM.matchSelector(@element, "."+@lasso_cls)
+			el.classList.remove(@lasso_cls)
+		@
 
 	get_lassoed_elements: ->
 		get_dim = ($el) ->
-			dim = $el.offset()
-			dim.width = $el.outerWidth(false)
-			dim.height = $el.outerHeight(false)
+			dim = DOM.getRect($el)
 			dim
 
 		do_overlap = (dims1, dims2) ->

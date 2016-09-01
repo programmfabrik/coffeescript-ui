@@ -169,7 +169,7 @@ class CUI.XHR extends Element
 
 	statusText: ->
 		if @__status < 0
-			XHR.statusText[@__status+""]
+			CUI.XHR.statusText[@__status+""]
 		else
 			@__xhr.statusText
 

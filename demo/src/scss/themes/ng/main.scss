@@ -52,34 +52,32 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 .cui-demo-table {
 	@include flex-table();
 
-	> tbody {
-		> tr {
-			+ .cui-demo-divider {
-				> td {
-					padding-top: 20px;
-				}
-			}
-
+	> tr {
+		+ .cui-demo-divider {
 			> td {
-				vertical-align: top;
-				padding: 2px;
+				padding-top: 20px;
+			}
+		}
+
+		> td {
+			vertical-align: top;
+			padding: 2px;
+		}
+
+		&.cui-demo-full-row > td {
+			flex: 1 1 auto;
+		}
+
+		&:not(.cui-demo-full-row) > td {
+			&:nth-child(1) {
+				width: 200px;
+				flex: 0 0 auto;
+				font-weight: bold;
 			}
 
-			&.cui-demo-full-row > td {
+			&:nth-child(2) {
+				position: relative;
 				flex: 1 1 auto;
-			}
-
-			&:not(.cui-demo-full-row) > td {
-				&:nth-child(1) {
-					width: 200px;
-					flex: 0 0 auto;
-					font-weight: bold;
-				}
-
-				&:nth-child(2) {
-					position: relative;
-					flex: 1 1 auto;
-				}
 			}
 		}
 	}

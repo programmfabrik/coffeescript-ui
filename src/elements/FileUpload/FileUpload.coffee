@@ -227,7 +227,7 @@ class FileUpload extends Element
 		else
 			multiple = true
 
-		assert(dropZone instanceof jQuery and dropZone.length == 1, "FileUpload.initDropZone", "Drop Zone needs to be jQuery object with one DOM element or contain such an element in its property \"DOM\".", dropZone: dropZone)
+		assert(isElement(dropZone) or isElement(dropZone?.DOM), "FileUpload.initDropZone", "Drop Zone needs to be instanceof HTMLElement or contain such an element in its property \"DOM\".", dropZone: dropZone)
 
 		Events.ignore
 			instance: @

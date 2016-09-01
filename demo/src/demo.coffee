@@ -116,17 +116,16 @@ class RunDemo extends Element
 					old_group = null
 
 					for demo in demos
-						demo.getGroup()
 						if old_group != demo.getGroup()
 							old_group = demo.getGroup()
 							items.push(label: old_group)
 
-						group_sort = (1000-(idxInArray(demo.getGroup(), groups)+1))+""
+						# group_sort = (1000-(idxInArray(demo.getGroup(), groups)+1))+"_"+demo.getName()
 
 						do (demo) =>
 							items.push
 								active: demo == @current_demo
-								# text: demo.getGroup()+" - "+demo.getName()
+								# text: demo.getGroup() + group_sort
 								text: demo.getName()
 								_demo: demo
 								onClick: =>
@@ -211,7 +210,7 @@ class RunDemo extends Element
 			center:
 				content: @center_layout
 
-		@root.DOM.prependTo(document.body)
+		DOM.prepend(document.body, @root.DOM)
 		@root.append( @main_menu_pane )
 
 		CUI.loadHTMLFile("demo/easydbui_demo.html")
@@ -247,7 +246,9 @@ class RunDemo extends Element
 		if demo_content.DOM
 			demo_content = demo_content.DOM
 
-		if not $(demo_content).hasClass("cui-pane")
+		console.debug "received demo content", demo, demo_content
+
+		if CUI.isArray(demo_content) or not demo_content.classList.contains("cui-pane")
 			demo_content = new Pane
 				center:
 					content:

@@ -68,7 +68,7 @@ class Draggable extends DragDropSelect
 	init: ->
 		# CUI.debug "Draggable", @options.selector
 
-		@element.addClass("no-user-select")
+		DOM.addClass(@element, "no-user-select")
 
 		Events.listen
 			type: "mouseisdown"
@@ -359,14 +359,18 @@ class Draggable extends DragDropSelect
 			else
 				gd = globalDrag
 				helperNode = gd.helperNode
-				gd.helperNode.animate
-					top: "#{globalDrag.helperNodeStart.top}px"
-					left: "#{globalDrag.helperNodeStart.left}px"
-				,
-					duration: 400
-					complete: =>
-						helperNode.remove()
-						gd.$source.removeClass(@_dragClass)
+
+				helperNode.remove()
+				gd.$source.removeClass(@_dragClass)
+
+				# gd.helperNode.animate
+				# 	top: "#{globalDrag.helperNodeStart.top}px"
+				# 	left: "#{globalDrag.helperNodeStart.left}px"
+				# ,
+				# 	duration: 400
+				# 	complete: =>
+				# 		helperNode.remove()
+				# 		gd.$source.removeClass(@_dragClass)
 			globalDrag.helperNode = null
 		else
 			globalDrag.$source.removeClass(@_dragClass)
@@ -382,26 +386,28 @@ class Draggable extends DragDropSelect
 			if (ev.pageY() or ev.pageX()) == 0
 				globalDrag.helperNode.css(display: "none")
 			else
-				$p = globalDrag.helperNode.parent()
-				if not CUI.DOM.isPositioned($p[0])
-					parentRelPos = $p.relativePosition()
+				pn = globalDrag.helperNode.parentNode
+				if not CUI.DOM.isPositioned(pn)
+					parentRelPos = CUI.DOM.getRelativePosition(pn)
 				else
 					parentRelPos = top: 0, left: 0
 
-				position = elementGetPosition(getCoordinatesFromEvent(ev), $p)
+				position = elementGetPosition(getCoordinatesFromEvent(ev), pn)
 
 				if @_helper_parent == "parent"
-					$contain = globalDrag.helperNode.parent()
+					$contain = globalDrag.helperNode.parentNode
 				else
-					$contain = $(document.body)
+					$contain = document.body
+
+				dim = CUI.DOM.getDimensions($contain)
 
 				# CUI.debug @_helper_parent, position, $contain[0].scrollHeight, globalDrag.helperNodeStart
 				if @_axis == "x"
 					top = globalDrag.helperNodeStart.top
 				else
 					top = position.top + (globalDrag.helperOffset?.top or 0) - globalDrag.helperNode.cssInt("border-top-width")
-					top_overlap = top - ($contain[0].scrollHeight - globalDrag.helperNodeStart.height - $contain.cssInt("paddingBottom"))
-					top_underlap = $contain.cssInt("paddingTop") - top
+					top_overlap = top - (dim.scrollHeight - globalDrag.helperNodeStart.height - dim.paddingBottom)
+					top_underlap = dim.paddingTop - top
 					# CUI.debug "top", $contain[0].scrollHeight, top, top_overlap, top_underlap
 
 					# dont let the helper overlap the containment
@@ -416,8 +422,8 @@ class Draggable extends DragDropSelect
 					left = globalDrag.helperNodeStart.left
 				else
 					left = position.left + (globalDrag.helperOffset?.left or 0) - globalDrag.helperNode.cssInt("border-left-width")
-					left_overlap = left - ($contain[0].scrollWidth - globalDrag.helperNodeStart.width - $contain.cssInt("paddingRight"))
-					left_underlap = $contain.cssInt("paddingLeft") - left
+					left_overlap = left - (dim.scrollWidth - globalDrag.helperNodeStart.width - dim.paddingRight)
+					left_underlap = dim.paddingLeft - left
 
 					# CUI.debug "left", $contain[0].scrollWidth, globalDrag.helperNodeStart.width, left, left_overlap, left_underlap
 					# dont let the helper overlap the containment
@@ -427,8 +433,6 @@ class Draggable extends DragDropSelect
 						left += left_underlap
 
 					left += parentRelPos.left
-
-				# CUI.debug "FINAL:", "top", top, "left", left
 
 				get_diff = =>
 					x: helper_pos.left - globalDrag.helperNodeStart.left
@@ -449,10 +453,12 @@ class Draggable extends DragDropSelect
 
 				globalDrag.dragDiff = get_diff()
 
+				CUI.debug "FINAL:", "top", top, "left", left, dump(helper_pos)
+
 				globalDrag.helperNode.css
 					display: ""
-					top: "#{helper_pos.top}px"
-					left: "#{helper_pos.left}px"
+					top: helper_pos.top+"px"
+					left: helper_pos.left+"px"
 
 
 	get_clone: ($el) ->
@@ -508,7 +514,7 @@ class Draggable extends DragDropSelect
 			switch @_helper_parent
 				when "document"
 					relPos = $el.offset()
-					$(document.body).append(globalDrag.helperNode)
+					document.body.appendChild(globalDrag.helperNode)
 				when "parent"
 					parents = CUI.DOM.parentsUntil($el[0], (node) => CUI.DOM.isPositioned(node))
 					assert(parents.length > 0, "Draggable.init_helper", "no parents found for DOM node", node: $el[0])
@@ -522,14 +528,13 @@ class Draggable extends DragDropSelect
 					relPos.top -= scroll.top
 					relPos.left -= scroll.left
 
-					parents[parents.length-1].appendChild(globalDrag.helperNode[0])
+					parents[parents.length-1].appendChild(globalDrag.helperNode)
 
-			CUI.debug @_helper_parent, "relative position", relPos
+			CUI.debug @_helper_parent, "relative position", relPos, globalDrag.helperNode
 
 			if @_helper != "clone"
 				relPos.left += globalDrag.start.left
 				relPos.top += globalDrag.start.top
-
 
 			globalDrag.helperNode.addClass("cui-drag-drop-select-transparent")
 			globalDrag.helperNode.addClass("no-user-select")

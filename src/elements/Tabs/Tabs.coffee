@@ -41,7 +41,7 @@ class Tabs extends SimplePane
 
 		CUI.DOM.showElement(@__tabs_marker)
 		btn_dim = DOM.getDimensions(btn)
-		DOM.setStylePx @__tabs_marker,
+		DOM.setStyle @__tabs_marker,
 			left: btn_dim.offsetLeft
 			width: btn_dim.borderBoxWidth
 		@

@@ -66,7 +66,7 @@ class Tab extends DOM
 			content:
 				mandatory: true
 				check: (v) ->
-					v instanceof jQuery or $.isFunction(v) or isString(v) or $.isArray(v) or v instanceof Element
+					isContent(v) or isString(v)
 			onFirstActivate:
 				check: Function
 			onActivate:

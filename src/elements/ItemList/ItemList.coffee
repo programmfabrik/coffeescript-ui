@@ -43,7 +43,7 @@ class ItemList extends VerticalLayout
 			items:
 				mandatory: true
 				check: (v) ->
-					$.isFunction(v) or $.isArray(v)
+					CUI.isFunction(v) or CUI.isArray(v)
 			active_item_idx:
 				check: "Integer"
 
@@ -126,7 +126,7 @@ class ItemList extends VerticalLayout
 			list_has_button_left = false
 
 			for _item, idx in items
-				if $.isFunction(_item)
+				if CUI.isFunction(_item)
 					item = _item(@, menu, event)
 				else
 					item = _item
@@ -144,7 +144,7 @@ class ItemList extends VerticalLayout
 					if item.label
 						if item.label instanceof Label
 							label = item.label
-						else if $.isPlainObject(item.label)
+						else if CUI.isPlainObject(item.label)
 							label = new CUI.defaults.class.Label(item.label)
 						else
 							label = new CUI.defaults.class.Label(text: item.label)

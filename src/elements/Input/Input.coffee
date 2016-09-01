@@ -487,20 +487,20 @@ class Input extends DataFieldInput
 			css.whiteSpace = "nowrap"
 
 		@__contentSize.css(css)
-		@__contentSize.height(1)
+		DOM.height(@__contentSize, 1)
 
 		if @_textarea
-			@__contentSize.width(@__contentSize.width())
+			DOM.width(@__contentSize, DOM.width(@__contentSize))
 			@__max_height = parseInt(@__input.css("max-height"))
 			@__input0.style.overflow = "hidden"
 
 			if isNaN(@__max_height)
 				@__max_height = null
 			else
-				correct_height = parseInt(@__input.css("width")) - @__input.width()
+				correct_height = parseInt(@__input.css("height")) - DOM.height()
 				@__max_height -= correct_height
 		else
-			@__contentSize.width(1)
+			DOM.width(@__contentSize, 1)
 		@
 
 	__setContentSize: ->
@@ -519,8 +519,8 @@ class Input extends DataFieldInput
 			if @__input0.value.length == 0
 				@__contentSize0.value = "A" # help IE out, so we get a height
 
-			if @__input.width() != @__contentSize.width()
-				@__contentSize.width(@__input.width())
+			if DOM.width(@__input) != DOM.width(@__contentSize)
+				DOM.width(@__contentSize, DOM.width(@__input))
 
 			h = @__contentSize0.scrollHeight
 
@@ -529,10 +529,10 @@ class Input extends DataFieldInput
 			else
 				@__input0.style.overflow = ""
 
-			previous_height = @__input.height()
-			@__input.height(h)
+			previous_height = DOM.height(@__input)
+			DOM.height(@__input, h)
 
-			if @__input.height() != previous_height
+			if DOM.height(@__input) != previous_height
 				changed = true
 
 			# CUI.error "__setContentSize", @_textarea, @__input0.value, @__contentSize0.value, h
@@ -546,9 +546,9 @@ class Input extends DataFieldInput
 				# Chrome measures a Textarea width different than an Input width
 				w = w + 1
 
-			if @__input.width() != w
+			if DOM.width(@__input) != w
 				changed = true
-			@__input.width(w)
+			DOM.width(@__input, w)
 
 		if changed
 			Events.trigger

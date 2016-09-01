@@ -599,10 +599,14 @@ class ListView extends SimplePane
 
 
 	rowAddClass: (row_i, cls) ->
-		@getRow(row_i).addClass(cls)
+		for row in @getRow(row_i)
+			DOM.addClass(row, cls)
+		@
 
 	rowRemoveClass: (row_i, cls) ->
-		@getRow(row_i).removeClass(cls)
+		for row in @getRow(row_i)
+			DOM.removeClass(row, cls)
+		@
 
 	getColdef: (col_i) ->
 		@__cols[col_i]
@@ -784,7 +788,7 @@ class ListView extends SimplePane
 		@
 
 	getRow: (row_i) ->
-		jQuery(@__rows[row_i])
+		@__rows[row_i]
 
 	getBottom: ->
 		@__bottomQuadrants

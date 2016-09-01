@@ -19,18 +19,17 @@ class DragDropSelect extends Element
 		@cls = window[@__cls].cls
 		assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
 
-		@element = $(@_element)
-		DragDropSelect.getInstance(@element[0], @cls)?.destroy()
-		DOM.data(@element[0], "drag-drop-select-"+@cls, @)
-		@element.addClass(@__getClass())
-
+		@element = @_element
+		DragDropSelect.getInstance(@element, @cls)?.destroy()
+		DOM.data(@element, "drag-drop-select-"+@cls, @)
+		DOM.addClass(@element, @__getClass())
 
 	__getClass: ->
 		"cui-drag-drop-select cui-drag-drop-select-"+@cls
 
 	destroy: ->
-		@element.removeClass(@__getClass())
-		DOM.removeData(@element[0], "drag-drop-select-"+@cls)
+		DOM.removeClass(@element, @__getClass())
+		DOM.removeData(@element, "drag-drop-select-"+@cls)
 		Events.ignore
 			instance: @
 		super()
@@ -105,12 +104,12 @@ CUI.ready =>
 				rect =
 					top: 0
 					left: 0
-					height: $(window).height()
-					bottom: $(window).height()
-					width: $(window).width()
-					right: $(window).width()
+					bottom: 0
+					right: 0
+					height: window.innerHeight
+					width: window.innerWidth
 			else
-				rect = $el[0].getBoundingClientRect()
+				rect = CUI.DOM.getRect($el)
 
 			scrollTop = 0
 			scrollLeft = 0

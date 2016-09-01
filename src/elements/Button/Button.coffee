@@ -63,16 +63,16 @@ class Button extends DOM
 		if @_role == "minor"
 			@_size = "mini"
 		else if @_role == "menu-item"
-			@DOM.addClass("cui-menu-item")
+			@addClass("cui-menu-item")
 
-		DOM.setAttributeMap(@DOM[0], @_attr)
-		DOM.setAttribute(@DOM[0], "tabindex", "0")
+		DOM.setAttributeMap(@DOM, @_attr)
+		DOM.setAttribute(@DOM, "tabindex", "0")
 
 		if not @_attr?.role
-			DOM.setAttribute(@DOM[0], "role", @_role)
+			DOM.setAttribute(@DOM, "role", @_role)
 
 		#add this to make sure our base css classes are in. e.g. ButtonHRef
-		@DOM.addClass("cui-button") #seems unnecessary
+		@addClass("cui-button") #seems unnecessary
 
 		if not @_left or @_left == true
 			if @_icon
@@ -109,13 +109,13 @@ class Button extends DOM
 
 		assert(@_size)
 		if @_size == "auto"
-			@DOM.addClass("cui-button-size-normal") #additionally used as a fallback
-		@DOM.addClass("cui-button-size-"+@_size)
+			@addClass("cui-button-size-normal") #additionally used as a fallback
+		@addClass("cui-button-size-"+@_size)
 
 		assert(@_appearance)
 		if @_appearance == "auto"
-			@DOM.addClass("cui-button-appearance-normal") #additionally used as a fallback
-		@DOM.addClass("cui-button-appearance-"+@_appearance)
+			@addClass("cui-button-appearance-normal") #additionally used as a fallback
+		@addClass("cui-button-appearance-"+@_appearance)
 
 		if @_center
 			@append(@_center, "center")
@@ -149,7 +149,7 @@ class Button extends DOM
 
 		if @__radio
 			assert(not @_attr?.radio, "new Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
-			DOM.setAttribute(@DOM[0], "radio", @__radio)
+			DOM.setAttribute(@DOM, "radio", @__radio)
 
 		@setGroup(@_group)
 
@@ -185,11 +185,11 @@ class Button extends DOM
 					@__menu_opts.use_element_width_as_min_width = true
 
 			@__menu_opts.onHide = =>
-				@DOM.removeClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
+				@removeClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onHide?()
 
 			@__menu_opts.onShow = =>
-				@DOM.addClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
+				@addClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onShow?()
 
 			if not @__menu_opts.hasOwnProperty("backdrop")
@@ -246,17 +246,17 @@ class Button extends DOM
 
 				if ev.keyCode() == 27
 					# blur button
-					@DOM[0].blur()
+					@DOM.blur()
 					ev.stop()
 					return
 
 				el = null
 
 				right = =>
-					el = DOM.findNextVisibleElement(@DOM[0], "[tabindex]")
+					el = DOM.findNextVisibleElement(@DOM, "[tabindex]")
 
 				left = =>
-					el = DOM.findPreviousVisibleElement(@DOM[0], "[tabindex]")
+					el = DOM.findPreviousVisibleElement(@DOM, "[tabindex]")
 
 				switch ev.keyCode()
 					when 39 # right cursor
@@ -287,7 +287,7 @@ class Button extends DOM
 					return
 
 				if not @__disabled
-					@DOM.addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+					CUI.DOM.addClass(@DOM, CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				ev.stopPropagation()
 				return
@@ -314,7 +314,7 @@ class Button extends DOM
 					ev.stop()
 					return
 
-				@DOM.removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				if @__prevent_btn_click
 					ev.stop()
@@ -402,7 +402,7 @@ class Button extends DOM
 				if window.globalDrag
 					return
 
-				@DOM.removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				@getTooltip()?.hideTimeout(ev)
 
@@ -439,10 +439,10 @@ class Button extends DOM
 		if ev.isImmediatePropagationStopped()
 			return
 
-		@DOM.addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+		@addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 		remove_click_class = =>
-			@DOM.removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+			@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 		do_click = =>
 			if ev.isImmediatePropagationStopped()
@@ -537,7 +537,7 @@ class Button extends DOM
 					if v == true
 						return true
 
-					((v instanceof jQuery and v.length == 1) or
+					(isElement(v) or
 						v instanceof Element or
 						isString(v)) and
 						not @_icon and
@@ -546,10 +546,10 @@ class Button extends DOM
 						not @_icon_inactive
 			right:
 				check: (v) ->
-					((v instanceof jQuery and v.length == 1) or v instanceof Element or v == true) and not @_icon_right
+					(isElement(v) or v instanceof Element or v == true) and not @_icon_right
 			center:
 				check: (v) ->
-					((v instanceof jQuery and v.length == 1) or v instanceof Element)
+					(isElement(v) or isString(v) or v instanceof Element)
 			icon:
 				check: (v) ->
 					v instanceof Icon or isString(v)
@@ -679,13 +679,16 @@ class Button extends DOM
 
 	# returns other buttons
 	__getButtons: (key, value) ->
-		div = @DOM.parents(".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer")
-		if not div.length
-			div = $(document.body) # @DOM.parent()
-		else
-			div = div.last()
+		parents = @DOM.parents(".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer")
 
-		(DOM.data(c, "element") for c in div.find(".cui-button[#{key}=\"#{value}\"]"))
+		if parents.length == 0
+			# buttons are not grouped by anything, so we
+			# have no other buttons
+			docElem = document.body
+		else
+			docElem = parents[parents.length-1]
+
+		(DOM.data(c, "element") for c in DOM.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
 
 
 	hasMenu: ->
@@ -731,7 +734,7 @@ class Button extends DOM
 		# CUI.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
 
 		activate = =>
-			@DOM.addClass(@__active_css_class)
+			@addClass(@__active_css_class)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -772,7 +775,7 @@ class Button extends DOM
 		# CUI.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
 
 		deactivate = =>
-			@DOM.removeClass(@__active_css_class)
+			@removeClass(@__active_css_class)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -882,13 +885,13 @@ class Button extends DOM
 
 	disable: ->
 		@DOM.addClass(CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.removeAttribute(@DOM[0], "tabindex")
+		DOM.removeAttribute(@DOM, "tabindex")
 		@__disabled = true
 		@
 
 	enable: ->
 		@DOM.removeClass(CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.setAttribute(@DOM[0], "tabindex", "0")
+		DOM.setAttribute(@DOM, "tabindex", "0")
 		@__disabled = false
 		@
 
@@ -906,9 +909,9 @@ class Button extends DOM
 
 	setGroup: (@__group) ->
 		if @__group
-			DOM.setAttribute(@DOM[0], "button-group", @__group)
+			DOM.setAttribute(@DOM, "button-group", @__group)
 		else
-			DOM.removeAttribute(@DOM[0], "button-group")
+			DOM.removeAttribute(@DOM, "button-group")
 
 	__initTooltip: ->
 		if @__tooltip
@@ -943,16 +946,16 @@ class Button extends DOM
 
 	show: ->
 		@__hidden = false
-		DOM.removeClass(@DOM[0], "cui-button-hidden")
-		DOM.showElement(@DOM[0])
+		DOM.removeClass(@DOM, "cui-button-hidden")
+		DOM.showElement(@DOM)
 		Events.trigger
 			type: "show"
 			node: @DOM
 
 	hide: ->
 		@__hidden = true
-		DOM.addClass(@DOM[0], "cui-button-hidden")
-		DOM.hideElement(@DOM[0])
+		DOM.addClass(@DOM, "cui-button-hidden")
+		DOM.hideElement(@DOM)
 		Events.trigger
 			type: "hide"
 			node: @DOM
