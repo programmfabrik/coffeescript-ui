@@ -7,10 +7,9 @@
 
 			@include ASSERT_TYPE(cui-block);
 
-			//we dont put in the header so it can be easier overwritten, see mixin vertical_list_separator_line
-			margin-top: nth($block_top_margin, $i);
 
 			> .cui-block-header {
+
 				margin-bottom: nth($block_bottom_margin, $i);
 
 				#{unquote($text_selector)} {
@@ -19,6 +18,11 @@
 					font-size: nth($block_font_size, $i);
 				}
 			}
+		}
+
+		&:not(:first-of-type){
+			//we dont put in the header so it can be easier overwritten, see mixin vertical_list_separator_line
+			margin-top: nth($block_top_margin, $i);
 		}
 	}
 }
