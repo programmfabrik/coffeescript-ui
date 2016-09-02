@@ -232,7 +232,7 @@ class FileUpload extends Element
 		Events.ignore
 			instance: @
 
-		dropZone.addClass("cui-file-upload-drop-zone")
+		dropZone.classList.add("cui-file-upload-drop-zone")
 
 		Events.listen
 			node: dropZone

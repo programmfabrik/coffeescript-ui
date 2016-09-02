@@ -77,7 +77,7 @@ class ItemList extends VerticalLayout
 	setActiveIdx: (@__active_idx) ->
 
 	getItemByValue: (value) ->
-		for el in @__body.DOM.children()
+		for el in @__body.DOM.children
 			btn = DOM.data(el, "element")
 
 			if btn not instanceof Button

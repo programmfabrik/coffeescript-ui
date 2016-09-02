@@ -37,7 +37,7 @@ assert = (condition, caller, message, debug_output) ->
 		msg += ": #{message}"
 
 	# msg += "\nCallstack:\n"+stack+"\n"
-	if CUI.problem
+	if false and CUI.problem
 		CUI.problem(title: "ASSERT", text: msg)
 	else
 		alert(msg)
@@ -169,7 +169,7 @@ isElement = (obj) ->
 	obj instanceof HTMLElement
 
 isContent = (obj) ->
-	isElement(obj) or CUI.isArray(obj) or CUI.isFunction(obj) or isElement(obj?.DOM)
+	isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or isElement(obj?.DOM)
 
 isNumber = (n) ->
 	isInteger(n) or isFloat(n)
@@ -234,7 +234,7 @@ toHtml = (data, space2nbsp) ->
 	else
 		data
 
-copyObject = (obj, deep) ->
+copyObject = (obj, deep = false, level = 0) ->
 	if typeof(obj) in ["string", "number", "boolean", "function"]
 		return obj
 
@@ -242,12 +242,19 @@ copyObject = (obj, deep) ->
 		return obj
 
 	if obj instanceof CUI.Element
-		return obj.copy()
+		if level == 0 or deep
+			return obj.copy()
+		else
+			return obj
 
 	if CUI.isPlainObject(obj)
 		new_obj = {}
 		for k, v of obj
-			new_obj[k] = copyObject(v, deep)
+			if deep
+				new_obj[k] = copyObject(v, true, level+1)
+			else
+				new_obj[k] = v
+
 		return new_obj
 
 	if CUI.isArray(obj)
@@ -256,7 +263,7 @@ copyObject = (obj, deep) ->
 
 		new_arr = []
 		for o in obj
-			new_arr.push(copyObject(o, deep))
+			new_arr.push(copyObject(o, true, level+1))
 
 		return new_arr
 
@@ -397,77 +404,6 @@ addToArray = (value, arr, compFunc) ->
 		return idx
 
 
-$element = (tagName, cls, attrs={}) ->
-	if not isEmpty(cls)
-		attrs.class = cls
-	node = CUI.DOM.element(tagName, attrs)
-	jQueryNode(node)
-
-
-$div = (cls, attrs) -> $element("div", cls, attrs)
-$video = (cls, attrs) -> $element("video", cls, attrs)
-$audio = (cls, attrs) -> $element("audio", cls, attrs)
-$source = (cls, attrs) -> $element("source", cls, attrs)
-$span = (cls, attrs) -> $element("span", cls, attrs)
-$table = (cls, attrs) -> $element("table", cls, attrs)
-$img = (cls, attrs) -> $element("img", cls, attrs)
-$tr = (cls, attrs) -> $element("tr", cls, attrs)
-$th = (cls, attrs) -> $element("th", cls, attrs)
-$td = (cls, attrs) -> $element("td", cls, attrs)
-$i = (cls, attrs) -> $element("i", cls, attrs)
-$p = (cls, attrs) -> $element("p", cls, attrs)
-$pre = (cls, attrs) -> $element("pre", cls, attrs)
-$ul = (cls, attrs) -> $element("ul", cls, attrs)
-$a = (cls, attrs) -> $element("a", cls, attrs)
-$b = (cls, attrs) -> $element("b", cls, attrs)
-$li = (cls, attrs) -> $element("li", cls, attrs)
-$label = (cls, attrs) -> $element("label", cls, attrs)
-$h1 = (cls, attrs) -> $element("h1", cls, attrs)
-$h2 = (cls, attrs) -> $element("h2", cls, attrs)
-$h3 = (cls, attrs) -> $element("h3", cls, attrs)
-$h4 = (cls, attrs) -> $element("h4", cls, attrs)
-$h5 = (cls, attrs) -> $element("h5", cls, attrs)
-$h6 = (cls, attrs) -> $element("h6", cls, attrs)
-$text = (text, cls, attrs) ->
-	s = $span(cls, attrs)
-	s.textContent = text
-	s
-
-$textEmpty = (text) ->
-	s = $span("italic")
-	s.textContent = text
-	s
-
-$table_one_row = ->
-	$table().append($tbody().append($tr_one_row.apply(@, arguments)))
-
-$tr_one_row = ->
-	tr = $tr()
-	append = (__a) ->
-		td = $td().appendTo(tr)
-
-		add_content = (___a) =>
-			if CUI.isArray(___a)
-				for a in ___a
-					add_content(a)
-			else if ___a?.DOM
-				td.append(___a.DOM)
-			else if not isNull(___a)
-				td.append(___a)
-			return
-
-
-		add_content(__a)
-		return
-
-	for a in arguments
-		if CUI.isArray(a)
-			for _a in a
-				append(_a)
-		else
-			append(a)
-
-	tr
 
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s

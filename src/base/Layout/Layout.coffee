@@ -228,7 +228,7 @@ class CUI.Layout extends DOM
 				fh_inst.close()
 
 			if fh.class
-				fh_inst.getHandle().addClass(fh.class)
+				CUI.DOM.addClass(fh_inst.getHandle(), fh.class)
 
 		if opts.class
 			@__layout.addClass(opts.class, pane_name)
@@ -315,7 +315,7 @@ class CUI.Layout extends DOM
 
 	@setAbsolute: (layout) ->
 		# CUI.error "Layout.setAbsolute", layout[0]
-		assert(isElement(layout), "Layout.setAbsolute", "layout needs to be instanceof jQuery", layout: layout)
+		assert(isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
 
 		direction = CUI.DOM.getAttribute(layout, "cui-absolute-container")
 		switch direction

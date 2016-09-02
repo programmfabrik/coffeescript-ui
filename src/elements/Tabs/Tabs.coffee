@@ -166,7 +166,7 @@ class Tabs extends SimplePane
 			# size has changed
 			Events.trigger
 				type: "content-resize"
-				node: @DOM.parent()
+				node: @DOM.parentNode
 		@
 
 	addTab: (tab) ->

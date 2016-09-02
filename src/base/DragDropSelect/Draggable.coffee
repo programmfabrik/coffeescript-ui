@@ -453,7 +453,7 @@ class Draggable extends DragDropSelect
 
 				globalDrag.dragDiff = get_diff()
 
-				CUI.debug "FINAL:", "top", top, "left", left, dump(helper_pos)
+				# CUI.debug "FINAL:", "top", top, "left", left, dump(helper_pos)
 
 				globalDrag.helperNode.css
 					display: ""
@@ -468,8 +468,8 @@ class Draggable extends DragDropSelect
 			# marginRight: 0
 			# marginTop: 0
 			# marginBottom: 0
-			width: "#{$el.width()}px"
-			height: "#{$el.height()}px"
+			width: CUI.DOM.width($el)
+			height: CUI.DOM.height($el)
 
 		dim = DOM.getDimensions($el[0])
 					# fix width / height
@@ -516,8 +516,9 @@ class Draggable extends DragDropSelect
 					relPos = $el.offset()
 					document.body.appendChild(globalDrag.helperNode)
 				when "parent"
-					parents = CUI.DOM.parentsUntil($el[0], (node) => CUI.DOM.isPositioned(node))
+					parents = CUI.DOM.parents($el[0], (node) => CUI.DOM.isPositioned(node))
 					assert(parents.length > 0, "Draggable.init_helper", "no parents found for DOM node", node: $el[0])
+
 					scroll = top: 0, left: 0
 					for p in parents
 						scroll.top += p.scrollTop

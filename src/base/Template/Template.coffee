@@ -129,7 +129,7 @@ class Template extends Element
 				misses++
 			else
 				report.push("+ #{k}: found")
-				el_map[k] = jQueryNode(map_obj[0])
+				el_map[k] = CUI.jQueryCompat(map_obj[0])
 
 		if misses
 			alert("Not all required elements were found for Template:\n\n\"#{@_name}\"\n\n"+report.join("\n"))

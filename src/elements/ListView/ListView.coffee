@@ -1254,8 +1254,7 @@ class ListView extends SimplePane
 
 			if mode == "replace"
 				node = outer.firstChild
-				DOM.destroy(row[0])
-				row.replaceWith(node)
+				CUI.DOM.replaceWith(row, node)
 
 		# check for overflow in fixed qudrant
 		if @fixedRowsCount > 0

@@ -520,13 +520,13 @@ class CUI.Layer extends CUI.DOM
 
 			#remove content and check if the layer still has a size , manually set dimensions are locked for us
 			#TODO we should be able to get this info without disabling the children!?
-			for c in @__layer.DOM.children()
+			for c in @__layer.DOM.children
 				$(c).css("display", "none")
 
 			w = @__layer.DOM.width()
 			h = @__layer.DOM.height()
 
-			for c in @__layer.DOM.children()
+			for c in @__layer.DOM.children
 				$(c).css("display", "")
 
 			if w and h

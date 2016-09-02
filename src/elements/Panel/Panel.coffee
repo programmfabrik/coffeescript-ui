@@ -51,7 +51,7 @@ class Panel extends DOM
 			content:
 				# mandatory: true
 				check: (v) ->
-					v instanceof jQuery or $.isFunction(v) or isString(v) or $.isArray(v) or v instanceof DOM
+					isContent(v) or isString(v)
 			content_placeholder:
 				check: (v) ->
 					isContent(v)

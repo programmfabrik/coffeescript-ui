@@ -217,7 +217,6 @@ class CUI
 				"files[]"
 
 		debug: true
-		jQueryCompatWarningLevel: 0 # 2 # 0: off, 1: warn, 2: error with more info
 		asserts: true
 		class: {}
 
@@ -657,7 +656,7 @@ class CUI
 		v instanceof Function
 
 	@isPlainObject: (v) ->
-		typeof(v) == "object" and v.constructor == Object
+		v and typeof(v) == "object" and v.constructor == Object
 
 	@isEmptyObject: (v) ->
 		for k of v

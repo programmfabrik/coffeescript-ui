@@ -98,7 +98,7 @@ class CUI.DOM extends CUI.Element
 
 
 	@setElement: (element, inst) ->
-		jQueryNode(element)
+		CUI.jQueryCompat(element)
 		DOM.data(element, "element", inst)
 
 	@data: (node, key, data) ->
@@ -249,16 +249,10 @@ class CUI.DOM extends CUI.Element
 				return null
 
 	@children: (node, filter) ->
-		if isString(filter)
-			nodeFilter = (node) =>
-				@matches(node, filter)
-		else
-			nodeFilter = filter
-
 		children = []
 
 		for child in node.children
-			if not nodeFilter or nodeFilter(child)
+			if not filter or @is(node, filter)
 				children.push(child)
 
 		children
@@ -332,32 +326,37 @@ class CUI.DOM extends CUI.Element
 		else
 			@setDimension(docElem, "contentBoxHeight", value)
 
-	@append: (node, content) ->
+	@__append: (node, content, append=true) ->
 		if isNull(content)
 			return node
 
-		if content instanceof Array
+		if content instanceof Array or content instanceof HTMLCollection or content instanceof NodeList
 			for item in content
-				@append(node, item)
-		else if CUI.isString(content)
-			node.innerHTML = content
+				CUI.DOM.append(node, item)
 			return node
+
+		switch typeof(content)
+			when "number", "boolean"
+				append_node = document.createTextNode(content + "")
+			when "string"
+				append_node = document.createTextNode(content)
+			else
+				append_node = content
+
+		if append
+			assert(append_node instanceof Node, "DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			node.appendChild(append_node)
 		else
-			assert(content instanceof HTMLElement, "DOM.append", "Node needs to be instanceof HTMLelement.", node: content)
-			node.appendChild(content)
-			return node
+			assert(append_node instanceof Node, "DOM.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			node.insertBefore(content, node.firstChild)
+
+		return node
 
 	@prepend: (node, content) ->
-		if isNull(content)
-			return node
+		@__append(node, content, false)
 
-		if content instanceof Array
-			for item in content
-				@prepend(node, item)
-		else
-			assert(content instanceof HTMLElement, "DOM.prepend", "Node needs to be instanceof HTMLelement.", node: content)
-			node.insertBefore(content, node.firstChild)
-		@
+	@append: (node, content) ->
+		@__append(node, content)
 
 	@getCUIElementById: (uniqueId) ->
 		dom_el = DOM.matchSelector(document.documentElement, "[cui-unique-id=\"cui-element-"+uniqueId+"\"]")[0]
@@ -566,6 +565,12 @@ class CUI.DOM extends CUI.Element
 		if selector instanceof HTMLElement
 			return node == selector
 
+		if CUI.isFunction(selector)
+			return !!selector(node)
+
+		if node not instanceof HTMLElement
+			return null
+
 		@matches(node, selector)
 
 
@@ -611,7 +616,7 @@ class CUI.DOM extends CUI.Element
 						return path
 				else
 					# CUI.error testDocElem, selector
-					if testDocElem instanceof HTMLElement and testDocElem[@matchFunc](selector)
+					if @is(testDocElem, selector)
 						return path
 
 			if testDocElem == untilDocElem or
@@ -661,20 +666,31 @@ class CUI.DOM extends CUI.Element
 
 		last_element
 
+	# selector is a stopper (like untiDocElem)
 	@parentsUntil: (docElem, selector, untilDocElem) ->
 		parentElem = CUI.DOM.parent(docElem)
 		if not parentElem
 			return []
 
-		path = @elementsUntil(parentElem, selector, untilDocElem)
-		if not path
-			[]
-		else
-			path
+		path = @elementsUntil(parentElem, null, untilDocElem)
+		if not path?.length
+			return []
+		path
 
+	# selector is a filter
 	@parents: (docElem, selector) ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.parents", "element needs to be instanceof HTMLElement", element: docElem)
-		@parentsUntil(docElem, selector, document.documentElement)
+		path = @parentsUntil(docElem, selector, document.documentElement)
+		if not selector
+			return path
+
+		# filter parents
+		parents = []
+		for parent in path
+			if @is(parent, selector)
+				parents.push(parent)
+		parents
+
 
 	@preventEvent: (docElem, type) ->
 		# CUI.debug "DOM.preventEvent on element:", docElem, type
@@ -715,6 +731,10 @@ class CUI.DOM extends CUI.Element
 		else
 			false
 
+	@replaceWith: (node, new_node) ->
+		assert(node instanceof HTMLElement and new_node instanceof HTMLElement, "CUI.DOM.replaceWidth", "nodes need to be instanceof HTMLElement.", node: node, newNode: node)
+		node.parentNode.replaceChild(new_node, node)
+
 	@getRect: (docElem) ->
 		docElem.getBoundingClientRect()
 
@@ -732,7 +752,7 @@ class CUI.DOM extends CUI.Element
 						docElem.style[k] = v
 					else
 						docElem.style[k] = v + append
-		@
+		docElem
 
 	@setStyleOne: (docElem, key, value) ->
 		map = {}
@@ -749,7 +769,6 @@ class CUI.DOM extends CUI.Element
 		dim = CUI.DOM.getDimensions(docElem)
 		top: dim.offsetTopScrolled
 		left: dim.offsetLeftScrolled
-
 
 	@getDimensions: (docElem) ->
 		if isNull(docElem)
@@ -988,12 +1007,21 @@ class CUI.DOM extends CUI.Element
 		if docElem.style.display != "none"
 			docElem.__saved_display = docElem.style.display
 		docElem.style.display = "none"
+		docElem
+
+	# remove all children from a DOM node (detach)
+	@removeChildren: (docElem) ->
+		assert(docElem instanceof HTMLElement, "CUI.DOM.removeChildren", "element needs to be instance of HTMLElement", element: docElem)
+		while docElem.children.length
+			docElem.removeChild(docElem.firstChild)
+		return docElem
 
 	@showElement: (docElem) ->
 		if not docElem
 			return
 		docElem.style.display = docElem.__saved_display or ""
 		delete(docElem.__saved_display)
+		docElem
 
 	@element: (tagName, attrs={}) ->
 		DOM.setAttributeMap(document.createElement(tagName), attrs)

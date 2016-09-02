@@ -4,8 +4,8 @@ call_scss = sass --scss --no-cache --sourcemap=inline
 easydbui_js = $(target)/easydbui.js
 
 coffee_files = src/base/Common.coffee \
-	src/base/jQueryCompat.coffee \
 	src/base/CUI.coffee \
+	src/base/jQueryCompat.coffee \
 	src/base/Deferred/Deferred.coffee \
 	src/base/Deferred/Promise.coffee \
 	src/base/Deferred/when.coffee \
