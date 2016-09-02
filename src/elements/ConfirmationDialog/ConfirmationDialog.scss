@@ -15,6 +15,10 @@
 		@include short_message_dialog();
 		@include pane_control_sizes(big, big);
 		@include pane_header_colors($marker_background_color, $font_color);
+
+		 > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-layout-cell {
+			 padding-bottom: map_get($outer_padding_x,big);
+		 }
 	}
 }
 

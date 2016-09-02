@@ -97,5 +97,9 @@
 				}
 			}
 		}
+
+		> .cui-vertical-layout-bottom > .cui-pane-footer > .cui-layout-cell {
+			padding-bottom: map_get($outer_padding_x,'bigger');
+		}
 	}
 }
