@@ -11,7 +11,7 @@ class Select extends Checkbox
 			options:
 				mandatory: true
 				check: (v) ->
-					$.isArray(v) or $.isFunction(v)
+					CUI.isArray(v) or CUI.isFunction(v)
 			#group can be used for buttonbars to specify a group css style
 			group:
 				check: String
@@ -23,7 +23,7 @@ class Select extends Checkbox
 
 	init: ->
 		@__value = null
-		if not $.isFunction(@_options)
+		if not CUI.isFunction(@_options)
 			@__loadOptions()
 
 		# @DOM.prop("title", @getName()+":"+@__uniqueId)
@@ -105,7 +105,7 @@ class Select extends Checkbox
 
 	setData: (data) ->
 		super(data, false)  # dont init data, only set
-		if $.isFunction(@_options)
+		if CUI.isFunction(@_options)
 			@__loadOptions()
 			.done =>
 				@initData()
@@ -169,7 +169,7 @@ class Select extends Checkbox
 		true
 
 	reload: ->
-		if $.isFunction(@_options)
+		if CUI.isFunction(@_options)
 			@__loadOptions()
 		super()
 

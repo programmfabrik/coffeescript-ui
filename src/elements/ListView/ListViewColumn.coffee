@@ -1,4 +1,4 @@
-class ListViewColumn extends Element
+class ListViewColumn extends CUI.Element
 
 	readOpts: ->
 		super()

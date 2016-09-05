@@ -1,5 +1,5 @@
 # this class initializes a flex handle
-class FlexHandle extends Element
+class FlexHandle extends CUI.Element
 	constructor: (@opts={}) ->
 		@addOptsFromAttr(CUI.DOM.getAttribute(@opts.element, "cui-flex-handle"))
 		super(@opts)

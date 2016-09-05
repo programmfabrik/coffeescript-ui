@@ -2,7 +2,7 @@
 # {VerticalLayout}, {BorderLayout}, {Toolbar}, {Pane}, etc.
 #
 # It features an automatic {Buttonbar} generation for all panes (see {Layout#append})
-class CUI.Layout extends DOM
+class CUI.Layout extends CUI.DOM
 
 	#Construct a new Layout.
 	#

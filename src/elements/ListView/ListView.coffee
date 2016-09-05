@@ -552,7 +552,7 @@ class ListView extends SimplePane
 		@rowsOrder.indexOf(parseInt(row_i))
 
 	getColIdx: (display_col_i) ->
-		assert($.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
+		assert(CUI.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
 		@colsOrder[display_col_i]
 
 	getRowIdx: (display_row_i) ->
@@ -671,13 +671,13 @@ class ListView extends SimplePane
 			rect.width = _rect.width
 			break
 
-		if $.isEmptyObject(rect)
+		if CUI.isEmptyObject(rect)
 			return null
 
 		rect
 
 	getCellGridRectByNode: (_cell) ->
-		assert(isElement(_cell), "ListView.getCellGridRectByNode", "Cell node needs to be instance of jQuery.", cell: _cell)
+		assert(isElement(_cell), "ListView.getCellGridRectByNode", "Cell node needs to be instance of HTMLElement.", cell: _cell)
 
 		if not @_autoLayout
 			cell = _cell.parent() # this is the TD, we can measure
@@ -1352,7 +1352,7 @@ class ListView extends SimplePane
 	__getColClass: (col_i) ->
 		col_cls = @__colClasses?[col_i]
 		cls = []
-		if $.isArray(col_cls)
+		if CUI.isArray(col_cls)
 			cls.push.apply(cls, col_cls)
 		else if not isEmpty(col_cls)
 			cls.push(col_cls)

@@ -19,7 +19,7 @@ class DateTime extends Input
 				mandatory: true
 				default: locale
 				check: (v) ->
-					$.isArray(DateTimeFormats[v]?.formats)
+					CUI.isArray(DateTimeFormats[v]?.formats)
 			input_types:
 				default: ["date_time"]
 				check: Array
@@ -523,7 +523,7 @@ class DateTime extends Input
 	setTimezone: ->
 
 
-	getTimezoneData: ->
+	UNUSEDgetTimezoneData: ->
 		if @__tz_data
 			return CUI.resolvedPromise()
 

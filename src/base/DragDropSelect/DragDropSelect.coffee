@@ -1,6 +1,6 @@
 globalDrag = null
 
-class DragDropSelect extends Element
+class DragDropSelect extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@init()

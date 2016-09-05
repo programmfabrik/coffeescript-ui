@@ -23,7 +23,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 				mandatory: true
 				default: []
 				check: (v) ->
-					if not $.isArray(v)
+					if not CUI.isArray(v)
 						return false
 
 					for choice in v

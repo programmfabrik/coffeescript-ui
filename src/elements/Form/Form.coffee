@@ -6,7 +6,7 @@ class Form extends DataField
 			fields:
 				mandatory: true
 				check: (v) ->
-					$.isFunction(v) or $.isArray(v)
+					CUI.isFunction(v) or CUI.isArray(v)
 			class_table:
 				check: String
 			header:
@@ -70,7 +70,7 @@ class Form extends DataField
 		for field, idx in fields
 			if not field
 				continue
-			if $.isFunction(field)
+			if CUI.isFunction(field)
 				_field = DataField.new(field(@))
 			else
 				_field = DataField.new(field)
@@ -90,7 +90,7 @@ class Form extends DataField
 		@__fields = @__createFields()
 
 	setData: (data) ->
-		if @_name and not $.isFunction(data)
+		if @_name and not CUI.isFunction(data)
 			# CUI.debug "init data ", @_name, data, 1
 			if isUndef(data[@_name])
 				data[@_name] = {}
@@ -110,7 +110,7 @@ class Form extends DataField
 		# it can happen, like in FormPopover, that fields
 		# are not yet initialized
 		#
-		if $.isFunction(@_fields) and @__fields and @__fields.length == 0
+		if CUI.isFunction(@_fields) and @__fields and @__fields.length == 0
 			# CUI.debug "fields depends on data...", @__data
 			@initFields()
 			@callOnOthers("setData", @__data)
@@ -167,7 +167,7 @@ class Form extends DataField
 		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
 		getAppend = (v, info=@) =>
-			if $.isPlainObject(v) # assume a label constructor
+			if CUI.isPlainObject(v) # assume a label constructor
 				# new Label(v).DOM
 				new MultilineLabel(v).DOM
 			else if isString(v)
@@ -175,7 +175,7 @@ class Form extends DataField
 				new MultilineLabel(text: v).DOM
 			else if v?.DOM
 				v.DOM
-			else if $.isFunction(v)
+			else if CUI.isFunction(v)
 				getAppend(v(info))
 			else
 				v

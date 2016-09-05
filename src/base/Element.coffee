@@ -163,7 +163,7 @@ class CUI.Element
 				else if v.check == Boolean or v.check == String or v.check == Function or v.check == Array
 					assertInstanceOf.call(@, k, v.check, undefined, value)
 				else if CUI.isFunction(v.check) and not v.check.__super__ # super is from coffeescript and shows us that we have a "class" here
-					assert(isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends Element\" or \"extends Dummy\" to fix that.", opts: opts, key: k, value: v)
+					assert(isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", opts: opts, key: k, value: v)
 					check = v.check.call(@, value)
 					if not(isNull(check) or isBoolean(check) or isString(check))
 						_check = check
@@ -254,6 +254,3 @@ class CUI.Element
 		@__destroyed
 
 	@uniqueId: 0
-
-
-Element = CUI.Element

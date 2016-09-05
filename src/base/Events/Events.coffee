@@ -35,7 +35,7 @@
 #    bubble: true|false
 #
 #
-class CUI.Events extends Element
+class CUI.Events extends CUI.Element
 
 	@defaults:
 		maxWait: 1500

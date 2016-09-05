@@ -1,4 +1,4 @@
-class ListViewRow extends Element
+class ListViewRow extends CUI.Element
 
 	initOpts: ->
 		super()

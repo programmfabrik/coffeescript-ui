@@ -120,7 +120,7 @@ class MemoryTester extends Demo
 
 
 	testLayer: (i, tooltip = @__tooltip) ->
-		l = new Layer
+		l = new CUI.Layer
 			element: $(document.body)
 			placement: "c"
 
@@ -164,7 +164,7 @@ class MemoryTester extends Demo
 
 	runSimpleTemplate: (txt) ->
 
-class MemTest extends DOM
+class MemTest extends CUI.DOM
 	readOpts: ->
 		super()
 		d = $div()

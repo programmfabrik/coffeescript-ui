@@ -27,7 +27,7 @@ class Movable extends Draggable
 			@_limitRect
 
 	setElementCss: (pos) ->
-		assert($.isPlainObject(pos), getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
+		assert(CUI.isPlainObject(pos), getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
 		setCss = {}
 		if not isEmpty(pos.x)
 			setCss.left = pos.x

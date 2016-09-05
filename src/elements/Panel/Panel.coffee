@@ -1,4 +1,4 @@
-class Panel extends DOM
+class Panel extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 		@panel = new Template
@@ -13,7 +13,7 @@ class Panel extends DOM
 			@append(@_content_placeholder, "content")
 			@__has_placeholder = true
 
-		if $.isFunction(@_content)
+		if CUI.isFunction(@_content)
 			if not @_load_on_open
 				@loadContent()
 		else if @_content
@@ -102,7 +102,7 @@ class Panel extends DOM
 		@
 
 	loadContent: ->
-		if $.isFunction(@_content)
+		if CUI.isFunction(@_content)
 			ret = @_content()
 		else
 			ret = @_content

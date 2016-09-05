@@ -1,4 +1,4 @@
-class StickyHeaderControl extends Element
+class StickyHeaderControl extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 

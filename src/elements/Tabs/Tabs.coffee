@@ -10,7 +10,7 @@ class Tabs extends SimplePane
 			tabs:
 				mandatory: true
 				check: (v) ->
-					$.isArray(v) and v.length > 0
+					CUI.isArray(v) and v.length > 0
 			#autoSizeY:
 			#	default: false
 			#	check: Boolean
@@ -118,7 +118,7 @@ class Tabs extends SimplePane
 				continue
 			if tab instanceof Tab
 				@addTab(tab)
-			else if $.isPlainObject(tab)
+			else if CUI.isPlainObject(tab)
 				@addTab(new Tab(tab))
 			else
 				assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{getObjectClass(tab)}", opts: @opts)

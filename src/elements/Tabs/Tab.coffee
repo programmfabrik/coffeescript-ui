@@ -1,4 +1,4 @@
-class Tab extends DOM
+class Tab extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -19,7 +19,7 @@ class Tab extends DOM
 			@append(@_content_placeholder)
 			@__has_placeholder = true
 
-		if $.isFunction(@_content)
+		if CUI.isFunction(@_content)
 			if not @_load_on_show
 				@loadContent()
 		else if @_content

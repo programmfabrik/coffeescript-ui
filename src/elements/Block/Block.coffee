@@ -1,4 +1,4 @@
-class Block extends DOM
+class Block extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 

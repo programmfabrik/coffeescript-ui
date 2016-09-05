@@ -26,7 +26,7 @@ class Options extends DataField
 			options:
 				mandatory: true
 				check: (v) ->
-					$.isArray(v) or $.isFunction(v)
+					CUI.isArray(v) or CUI.isFunction(v)
 
 			# true: all fields horizontal
 			# int: n fields horizontal
@@ -73,7 +73,7 @@ class Options extends DataField
 	setData: (data) ->
 		super(data)
 		if @_radio
-			if $.isArray(@getValue())
+			if CUI.isArray(@getValue())
 				@__radio_use_array = true
 			else
 				@__radio_use_array = false
@@ -155,7 +155,7 @@ class Options extends DataField
 
 	checkValue: (_value) ->
 		if @__radio_use_array or not @_radio
-			if not $.isArray(_value)
+			if not CUI.isArray(_value)
 				throw new CheckValueError("Value must be Array.")
 			check = _value
 		else

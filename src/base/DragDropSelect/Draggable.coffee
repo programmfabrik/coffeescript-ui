@@ -134,7 +134,7 @@ class Draggable extends DragDropSelect
 		if isNull(globalDrag) or globalDrag == true
 			globalDrag = {}
 
-		assert($.isPlainObject(globalDrag), "DragDropSelect.create", "returned data must be a plain object", data: globalDrag)
+		assert(CUI.isPlainObject(globalDrag), "DragDropSelect.create", "returned data must be a plain object", data: globalDrag)
 		init =
 			$source: $target
 			startEvent: ev
@@ -157,7 +157,7 @@ class Draggable extends DragDropSelect
 
 		@before_drag(ev, $target)
 
-		ref = new Dummy() # instance to easily remove events
+		ref = new CUI.Dummy() # instance to easily remove events
 
 		kill_timeout = =>
 			if globalDrag.autoRepeatTimeout

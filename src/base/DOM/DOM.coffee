@@ -708,7 +708,7 @@ class CUI.DOM extends CUI.Element
 		if not docElem.__cui_prevent_event
 			return
 		delete(docElem.__cui_prevent_event[type])
-		if $.isEmptyObject(docElem.__cui_prevent_event)
+		if CUI.isEmptyObject(docElem.__cui_prevent_event)
 			delete(docElem.__cui_prevent_event)
 		@
 

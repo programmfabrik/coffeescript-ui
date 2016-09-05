@@ -26,7 +26,7 @@ class DateTimeInputBlock extends InputBlock
 
 		mom = moment(@_datetime, @_input_format.input)
 
-		if $.isFunction(@_matcher.inc_func)
+		if CUI.isFunction(@_matcher.inc_func)
 			@_matcher.inc_func(mom, diff)
 		else
 			if diff < 0

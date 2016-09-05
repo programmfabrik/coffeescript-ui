@@ -165,7 +165,7 @@ class CUI.Layer extends CUI.DOM
 			@__setElement(@_element)
 
 		if @_use_element_width_as_min_width
-			assert(@__element, "new Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", opts: @opts)
+			assert(@__element, "new CUI.Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", opts: @opts)
 
 		if @_pointer
 			if @_class
@@ -273,7 +273,7 @@ class CUI.Layer extends CUI.DOM
 				check: String
 			placements:
 				check: (v) ->
-					if not $.isArray(v)
+					if not CUI.isArray(v)
 						return false
 					for a in v
 						if CUI.Layer.knownPlacements.indexOf(a) == -1
@@ -1347,8 +1347,6 @@ class CUI.Layer extends CUI.DOM
 
 		@__backdrop?.destroy()
 		@__backdrop = null
-
-Layer = CUI.Layer
 
 
 CUI.ready ->

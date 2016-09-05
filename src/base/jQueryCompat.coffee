@@ -1,12 +1,11 @@
 # CUI jQueryCompat Layer
 #
 
-CUI.defaults.jQueryCompat = 1 # 0: off, 1: as warning, 2: as error, 3: ... with args
+CUI.defaults.jQueryCompat = 1 # 0: off, 1: on, 2: as warnings, 3: as error, 4: ... with args
 
 class CUI.jQueryCompat
 
 	constructor: (input) ->
-		CUI.jQueryCompat.__warn("jQuery|$", input)
 		if not input
 			return CUI.jQueryCompat.__noopNode()
 
@@ -65,7 +64,15 @@ class CUI.jQueryCompat
 									item[key].apply(item, arguments)
 								return nodes
 							else
-								return nodes[0].attr.apply(nodes[0], arguments)
+								return nodes[0]?.attr.apply(nodes[0], arguments)
+
+						return
+
+					if key in [
+						"scrollIntoView"
+					]
+						nodes[key] = =>
+							return nodes[0]?.scrollIntoView()
 
 						return
 
@@ -92,7 +99,7 @@ class CUI.jQueryCompat
 
 		error_args = ["jQueryCompat: "+prop]
 
-		if CUI.defaults.jQueryCompat >= 3
+		if CUI.defaults.jQueryCompat >= 4
 			error_args.push.apply(error_args, args)
 
 		if CUI.defaults.jQueryCompat == 2
@@ -119,6 +126,7 @@ class CUI.jQueryCompat
 		"html"
 		"val"
 		"replaceWidth"
+		"scrollIntoView"
 		"empty"
 		"append"
 		"prepend"
@@ -214,6 +222,13 @@ class CUI.jQueryCompat
 			node.remove = =>
 				CUI.jQueryCompat.__warn("remove", node)
 				CUI.DOM.remove(node)
+
+		node.parent = =>
+			CUI.jQueryCompat.__warn("parent", node)
+			parent = node.parentNode
+			if not parent
+				return CUI.jQueryCompat.__noopNode()
+			return CUI.jQueryCompat(parent)
 
 		node.last = =>
 			CUI.jQueryCompat.__warn("last", node)
@@ -410,19 +425,19 @@ class CUI.jQueryCompat
 
 
 	@isPlainObject: (obj) ->
-		CUI.jQueryCompat.__warn("$.isPlainObject")
+		CUI.jQueryCompat.__warn("isPlainObject")
 		CUI.isPlainObject(obj)
 
 	@isEmptyObject: (obj) ->
-		CUI.jQueryCompat.__warn("$.isEmptyObject")
+		CUI.jQueryCompat.__warn("isEmptyObject")
 		CUI.isEmptyObject(obj)
 
 	@isFunction: (obj) ->
-		CUI.jQueryCompat.__warn("$.isFunction")
+		CUI.jQueryCompat.__warn("isFunction")
 		CUI.isFunction(obj)
 
 	@isArray: (obj) ->
-		CUI.jQueryCompat.__warn("$.isArray")
+		CUI.jQueryCompat.__warn("isArray")
 		CUI.isArray(obj)
 
 	@inArray: (value, arr) ->
@@ -439,11 +454,16 @@ class CUI.jQueryCompat
 				callback(key, value)
 			return
 
-		assert(false, "jQueryCompat: jQuery.each: obj needs to be Array or Map.", obj: obj)
+		assert(false, "jQueryCompat.each: obj needs to be Array or Map.", obj: obj)
 
 
 
-jQuery = $ = CUI.jQueryCompat
+class jQuery extends CUI.jQueryCompat
+	constructor: (input) ->
+		CUI.jQueryCompat.__warn("jQuery|$", input)
+		return super(input)
+
+$ = jQuery
 
 
 $element = (tagName, cls, attrs={}) ->

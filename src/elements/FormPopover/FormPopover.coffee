@@ -16,7 +16,7 @@ class FormPopover extends Form
 			button:
 				default: {}
 				check: (v) ->
-					$.isPlainObject(v) and not v.onClick
+					CUI.isPlainObject(v) and not v.onClick
 			trigger_data_changed_while_open:
 				default: false
 				check: Boolean
@@ -178,7 +178,7 @@ class FormPopover extends Form
 		if not pop_opts.hasOwnProperty("auto_size")
 			pop_opts.auto_size = true
 
-		assert($.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
 
 		if isEmpty(pop_opts.class)
 			pop_opts.class = ""

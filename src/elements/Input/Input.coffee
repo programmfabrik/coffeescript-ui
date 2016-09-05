@@ -95,7 +95,7 @@ class Input extends DataFieldInput
 			# takes place
 			getCursorBlocks:
 				check: (v) ->
-					$.isFunction(v) and not @_overwrite
+					CUI.isFunction(v) and not @_overwrite
 			placeholder:
 				check: String
 			readonly:
@@ -554,7 +554,7 @@ class Input extends DataFieldInput
 		@
 
 	checkBlocks: (blocks) ->
-		if not $.isArray(blocks)
+		if not CUI.isArray(blocks)
 			return false
 		for b, idx in blocks
 			assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)

@@ -12,7 +12,7 @@ class CUI.LayerPane extends CUI.Layer
 				default:
 					new SimplePane()
 				check: (v) ->
-					v instanceof Pane or $.isPlainObject(v)
+					v instanceof Pane or CUI.isPlainObject(v)
 
 	getPane: ->
 		@__pane

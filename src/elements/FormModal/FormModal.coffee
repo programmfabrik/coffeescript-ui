@@ -33,7 +33,7 @@ class FormModal extends FormPopover
 			pop_opts.class = ""
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		assert($.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)
+		assert(CUI.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)
 		pop_opts.class += " cui-form-modal-modal"
 		pop_opts
 

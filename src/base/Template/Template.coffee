@@ -15,7 +15,7 @@
 # Template.obj: the actual DOM element
 #
 
-class Template extends Element
+class Template extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 

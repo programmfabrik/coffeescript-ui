@@ -95,7 +95,7 @@ class CUI.Label extends CUI.DOM
 				check: Boolean
 			manage_overflow:
 				check: (v) ->
-					$.isPlainObject(v) or v == true or v == false
+					CUI.isPlainObject(v) or v == true or v == false
 
 
 	readOpts: ->

@@ -1,4 +1,4 @@
-class CUI.Listener extends Element
+class CUI.Listener extends CUI.Element
 
 	initOpts: ->
 		super()

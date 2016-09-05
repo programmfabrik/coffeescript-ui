@@ -1,4 +1,4 @@
-class MultiInputControl extends Element
+class MultiInputControl extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__body = $(document.body)
@@ -34,7 +34,7 @@ class MultiInputControl extends Element
 				check: String
 			keys:
 				check: (v) ->
-					$.isArray(v) and v.length > 0
+					CUI.isArray(v) and v.length > 0
 			user_control:
 				default: true
 				check: Boolean

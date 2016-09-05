@@ -8,7 +8,7 @@
 #Button.DOM: the actual button object
 #Button.disable: disable button
 #Button.enable: enable button
-class Button extends DOM
+class Button extends CUI.DOM
 
 	@defaults:
 		confirm_ok: "Ok"
@@ -529,7 +529,7 @@ class Button extends DOM
 			disabled:
 				default: false
 				check: (v) ->
-					isBoolean(v) or $.isFunction(v)
+					isBoolean(v) or CUI.isFunction(v)
 			active_css_class:
 				check: String
 			left:
@@ -578,7 +578,7 @@ class Button extends DOM
 				check: String
 			hidden:
 				check: (v) ->
-					isBoolean(v) or $.isFunction(v)
+					isBoolean(v) or CUI.isFunction(v)
 			menu:
 				check: "PlainObject"
 			menu_on_hover:
@@ -752,7 +752,7 @@ class Button extends DOM
 			activate()
 			return @
 
-		if @__active == true and $.isEmptyObject(flags)
+		if @__active == true and CUI.isEmptyObject(flags)
 			return @
 
 		if @__radio
@@ -792,7 +792,7 @@ class Button extends DOM
 			deactivate()
 			return @
 
-		if @__active == false and $.isEmptyObject(flags)
+		if @__active == false and CUI.isEmptyObject(flags)
 			return @
 
 		@__active = false

@@ -3,14 +3,14 @@ class CUI.Tooltip extends CUI.LayerPane
 		super(@opts)
 		assert(xor(@_text, @_content), "new #{@__cls}", "One of opts.text or opts.content must be set.", opts: @opts)
 
-		if not $.isFunction(@_text) and not $.isFunction(@_content)
+		if not CUI.isFunction(@_text) and not CUI.isFunction(@_content)
 			@__static = true
 			@fillContent()
 		else
 			@__static = false
 
 		# object to register events on the element
-		@__dummyInst = new Dummy()
+		@__dummyInst = new CUI.Dummy()
 
 		if @_on_hover
 			assert( @__element, "Element not set in Tooltip." )
@@ -59,14 +59,14 @@ class CUI.Tooltip extends CUI.LayerPane
 		@addOpts
 			text:
 				check: (v) ->
-					isString(v) or $.isFunction(v)
+					isString(v) or CUI.isFunction(v)
 			markdown:
 				mandatory: true
 				default: false
 				check: Boolean
 			content:
 				check: (v) ->
-					isString(v) or $.isFunction(v) or isElement(v) or $.isArray(v) or isElement(v?.DOM)
+					isString(v) or CUI.isFunction(v) or isElement(v) or CUI.isArray(v) or isElement(v?.DOM)
 			# hide/show on click on element
 			on_click:
 				mandatory: true
@@ -75,7 +75,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			# hide/show on click on hover
 			on_hover:
 				check: (v) ->
-					isBoolean(v) or $.isFunction(v)
+					isBoolean(v) or CUI.isFunction(v)
 
 		return
 
@@ -161,7 +161,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			@__pane.replace(content, "center")
 			dfr.resolve()
 
-		if $.isFunction(@_text)
+		if CUI.isFunction(@_text)
 			ret = @_text.call(@, @)
 			if isPromise(ret)
 				ret.done (text) ->
@@ -170,7 +170,7 @@ class CUI.Tooltip extends CUI.LayerPane
 					dfr.reject()
 			else
 				fill_text(ret)
-		else if $.isFunction(@_content)
+		else if CUI.isFunction(@_content)
 			ret = @_content.call(@, @)
 			if isPromise(ret)
 				ret.done (text) ->

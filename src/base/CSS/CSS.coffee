@@ -2,7 +2,7 @@
 #REMARKED hack used for debugging scss without additional customer css
 #css_loaded = false
 
-class CSS extends Element
+class CSS extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		# use basename of file

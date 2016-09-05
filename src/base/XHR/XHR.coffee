@@ -1,4 +1,4 @@
-class CUI.XHR extends Element
+class CUI.XHR extends CUI.Element
 	getGroup: ->
 		"Core"
 

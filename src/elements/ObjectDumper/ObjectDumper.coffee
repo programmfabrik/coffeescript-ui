@@ -1,4 +1,4 @@
-class ObjectDumper extends Element
+class ObjectDumper extends CUI.Element
 
 	initOpts: ->
 		super()
@@ -6,7 +6,7 @@ class ObjectDumper extends Element
 			object:
 				mandatory: true
 				check: (v) ->
-					not $.isFunction(v)
+					not CUI.isFunction(v)
 					try
 						JSON.stringify(v)
 					catch e
@@ -22,13 +22,13 @@ class ObjectDumper extends Element
 		label = (txt) =>
 			new Label(text: txt).DOM
 
-		if $.isPlainObject(obj)
+		if CUI.isPlainObject(obj)
 			node = $table()
 			for k, v of obj
 				tr = $tr().appendTo(node)
 				tr.append($td().append(new Label(text: k).DOM))
 				tr.append($td().append(@__dumpToDiv(v, depth+1)))
-		else if $.isArray(obj)
+		else if CUI.isArray(obj)
 			node = $ul()
 			for k in obj
 				node.append($li().append(@__dumpToDiv(k, depth+1)))

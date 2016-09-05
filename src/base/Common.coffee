@@ -247,11 +247,21 @@ copyObject = (obj, deep = false, level = 0) ->
 		else
 			return obj
 
+	if obj instanceof HTMLElement
+		return obj
+
+	if obj instanceof CUI.Dummy
+		return obj
+
 	if CUI.isPlainObject(obj)
 		new_obj = {}
 		for k, v of obj
 			if deep
-				new_obj[k] = copyObject(v, true, level+1)
+				try
+					new_obj[k] = copyObject(v, true, level+1)
+				catch e
+					console.error "Error during Object copy:", e.toString(), "Key:", k, "Object:", obj
+					throw(e)
 			else
 				new_obj[k] = v
 

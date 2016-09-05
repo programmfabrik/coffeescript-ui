@@ -1,4 +1,4 @@
-class Demo extends DOM
+class Demo extends CUI.DOM
 
 	display: ->
 		"#{@__cls}.display: needs implementation."
@@ -78,7 +78,7 @@ class DemoConsole extends CUI.SimplePane
 		@__console.log(txt, markdown)
 
 
-class RunDemo extends Element
+class RunDemo extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@demos = []
