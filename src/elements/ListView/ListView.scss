@@ -105,13 +105,14 @@
 .cui-list-view-grid {
 	transition: opacity 0.5s ease;
 
+	//REMARKED fixed with chrome 53.0.2785.89 m
 	//chrome hack for fixing 'fill td with div' problem
-	tbody > .cui-list-view-grid-row {
-		height: 1px;
-		> .cui-list-view-grid-cell-td {
-			height: inherit;
-		}
-	}
+	//tbody > .cui-list-view-grid-row {
+	//	height: 1px;
+	//	> .cui-list-view-grid-cell-td {
+	//		height: inherit;
+	//	}
+	//}
 
 	//REMARKED not working since chrome 50.1
 	//.cui-list-view-grid-quadrant-table {
