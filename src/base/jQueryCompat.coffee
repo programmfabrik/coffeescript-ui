@@ -290,6 +290,8 @@ class CUI.jQueryCompat
 
 		node.append = (content) ->
 			CUI.jQueryCompat.__warn("append", node, content)
+			if isString(content) and content.trim().startsWith("<") and content.indexOf(">") > -1
+				console.error("jQueryCompat.append: Unable to append HTML. Use CUI.DOM.htmlToNodes(...). Possible HTML: ", content)
 			CUI.DOM.append(node, content)
 
 		node.prepend = (content) ->
@@ -299,10 +301,12 @@ class CUI.jQueryCompat
 		node.appendTo = (node_appendTo) ->
 			CUI.jQueryCompat.__warn("appendTo", node, node_appendTo)
 			CUI.DOM.append(node_appendTo, node)
+			node
 
 		node.prependTo = (node_prependTo) ->
 			CUI.jQueryCompat.__warn("prependTo", node, node_prependTo)
 			CUI.DOM.prepend(node_prependTo, node)
+			node
 
 		node.parents = (selector) ->
 			CUI.jQueryCompat.__warn("parents", node, selector)

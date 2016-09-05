@@ -592,13 +592,13 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: row;
 	flex: 0 0 auto;
 	align-items: stretch;
-	align-self: flex-start;
+	// align-self: flex-start;
 
 	padding: 0 3px;
 	&.cui-tmpl-label-rotate-90 {
 		// rotate by 90 degrees
 		white-space: nowrap;
-		align-self: flex-start;
+		// align-self: flex-start;
 		> .cui-label-transform {
 			// the transform-origin is the corner
 			// of the content, so the padding
@@ -643,7 +643,6 @@ a[role="button"].cui-button-appearance-link {
 			word-break: break-word;
 		}
 
-
 		> .cui-label-content {
 			flex: 0 1 auto;
 		}
@@ -653,7 +652,7 @@ a[role="button"].cui-button-appearance-link {
 				transition: height ease 0.5s, max-height ease 0.5s;
 				max-height: 62px;
 				position: relative;
-				flex-direction: column;
+				// flex-direction: column;
 				overflow: hidden;
 
 				> .cui-label-manage-overflow-content-container {
@@ -682,9 +681,9 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 	.cui-label-content {
-		display: inline-flex;
+		// display: inline-flex;
 		flex: 0 0 auto;
-		flex-direction: row;
+		// flex-direction: row;
 	}
 	.cui-label-content:empty {
 		display: none;

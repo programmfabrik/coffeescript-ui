@@ -244,6 +244,7 @@ class Form extends DataField
 
 				# used to set row visibility
 				DOM.data(tr[0], "data-field", _field)
+
 				tr.append(tds)
 
 		if @__horizontal == false

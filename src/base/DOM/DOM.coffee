@@ -960,7 +960,10 @@ class CUI.DOM extends CUI.Element
 		@setStyle(docElem, cssFloat)
 		cssFloat
 
-
+	@htmlToNodes: (html) ->
+		d = @element("DIV")
+		d.innerHTML = html
+		d.childNodes
 
 
 	# turns 14.813px into a float

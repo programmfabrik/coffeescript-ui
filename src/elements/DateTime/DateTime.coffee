@@ -234,7 +234,7 @@ class DateTime extends Input
 		btn = new CUI.defaults.class.Button
 			icon: "calendar"
 			onClick: =>
-				@openPopover()
+				@openPopover(btn)
 
 		@replace(btn, "right")
 		# @append(@__status = $div("cui-date-time-status"), "center")
@@ -414,10 +414,10 @@ class DateTime extends Input
 		@__digiDisplay = new DigiDisplay(digits: digits)
 
 
-	openPopover: ->
+	openPopover: (btn) ->
 		@initDateTimePicker()
 		@__popover = new Popover
-			element: @__input
+			element: btn
 			handle_focus: false
 			onHide: =>
 				@displayValue()
