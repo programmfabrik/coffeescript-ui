@@ -61,7 +61,7 @@ input {
 	overflow: hidden;
 }
 
-div {
+div, a {
 	display: flex;
 	flex: 0 0 auto;
 	align-items: stretch;
@@ -622,6 +622,17 @@ a[role="button"].cui-button-appearance-link {
 		padding-left: 3px;
 	}
 
+	&:not(cui-label-multiline) {
+		> .cui-label-content {
+			flex-direction: row;
+		}
+	}
+
+	> .cui-label-content {
+		// display: inline-flex;
+		flex: 0 0 auto;
+	}
+
 	// Markdown
 
 	&.cui-label-markdown {
@@ -679,11 +690,6 @@ a[role="button"].cui-button-appearance-link {
 			}
 
 		}
-	}
-	.cui-label-content {
-		// display: inline-flex;
-		flex: 0 0 auto;
-		// flex-direction: row;
 	}
 	.cui-label-content:empty {
 		display: none;
@@ -1094,6 +1100,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-lv-tr-outer {
+	// avoid the text select cursor on list items
+	cursor: default;
 	flex-direction: row;
 	flex: 0 0 auto;
 	&.cui-selected {
