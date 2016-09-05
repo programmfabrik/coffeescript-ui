@@ -453,3 +453,5 @@ Date.prototype.getWeek = (us=false) ->
 getMs = ->
 	(new Date()).getTime()
 
+RegExp.escape= (s) ->
+    s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')

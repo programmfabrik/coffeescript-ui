@@ -219,9 +219,6 @@ class Input extends DataFieldInput
 					@showCursor(ev)
 					return
 
-				if ev.hasModifierKey()
-					return
-
 				if @_readonly
 					return handleReadOnly(ev)
 
@@ -814,7 +811,7 @@ class Input extends DataFieldInput
 		shadow_v = @__shadow0.value
 
 		if @preventInvalidInput() and shadow_v.length > 0
-			ret = @checkInput(shadow_v)
+			ret = @checkInput(@correctValueForInput(shadow_v))
 			console.debug "checking shadow input", ret, shadow_v
 			if ret == false
 				return

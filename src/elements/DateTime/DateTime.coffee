@@ -346,7 +346,6 @@ class DateTime extends Input
 
 
 	__checkInput: (value) ->
-
 		if not isEmpty(value?.trim())
 			input_formats = @__input_formats.slice(0)
 			for format in @__input_formats_known

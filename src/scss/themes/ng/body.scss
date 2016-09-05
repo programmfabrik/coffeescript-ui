@@ -745,7 +745,7 @@ a[role="button"].cui-button-appearance-link {
 	// cui-input-has-input-hin:
 	//
 
-	&.cui-input-has-check-input:not(.cui-input-has-prevent-invalid-input) {
+	&.cui-input-has-check-input {
 		&.cui-input-invalid.cui-input-has-user-input {
 			input {
 				border-color: red;

@@ -19,10 +19,12 @@ $outer_padding_x: (
     bigger: $grid_size * 4
 );
 
+//2px is the label padding. nice for confirmation dialogs. there we have a title with 6px y-padding .. the content gets now the same padding 4px(outerpadding) + 2px(label padding)
+//TODO check if buttons like that approach
 $outer_padding_y: (
-    normal: $grid_size * 1,
-    big: $grid_size * 1,
-    bigger: $grid_size * 2
+    normal: $grid_size * 1 - 2px,
+    big: $grid_size * 1 - 2px,
+    bigger: $grid_size * 2 - 2px
 );
 
 

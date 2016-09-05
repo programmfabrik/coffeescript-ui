@@ -162,26 +162,36 @@ class NumberInput extends Input
 			return super(value)
 
 	__checkInput: (value) ->
-		v = value.replace(@_symbol, "")
+
+		if not @hasShadowFocus()
+			v = value.replace(@_symbol, "")
+		else
+			v = value
+
 		v = v.trim()
 
 		if v == ""
 			return true
 
-		v = v.replace(",",".")
-		chars = v.split(".")
+		if @_separator
+			re = new RegExp(RegExp.escape(@_separator), "g")
+			v = v.replace(re, "")
 
-		# CUI.debug "first", v, @_decimalpoint, dump(chars)
-		if chars.length > 2
-			# CUI.debug "more splits", chars.length
+		point_idx = v.lastIndexOf(@_decimalpoint)
+		if point_idx == -1
+			number = v
+			points = ""
+		else
+			if @_decimals == 0
+				return false
+
+			number = v.substring(0, point_idx)
+			points = v.substring(point_idx+1)
+
+		# console.debug "v:", v, "number:", number, "points:", points, "decimalpoint", @_decimalpoint, "separator", @_separator
+
+		if points.length > @_decimals
 			return false
-
-		if chars.length > 1 and @_decimals == 0
-			# CUI.debug "more splits", chars.length, @_decimals
-			return false
-
-		number = chars[0]
-		points = chars[1] or ""
 
 		if not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
 			# CUI.debug "number not matched", number

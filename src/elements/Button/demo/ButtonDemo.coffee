@@ -597,7 +597,7 @@ class ButtonDemo extends Demo
 
 		@__demo_table.addExample("Buttonbar FAILS needs last-visible-child-info", [	bb.DOM,	rb.DOM ])
 
-		@__addDivider("Horizontal Layout with mixed controls")
+		@__addDivider("Buttonbar with mixed controls")
 
 		bb = new Buttonbar(
 			tooltip:
@@ -646,7 +646,7 @@ class ButtonDemo extends Demo
 		@__demo_table.addExample("Buttonbar", [	bb.DOM ])
 		@__demo_table.addExample("Buttonbar", [	bb2.DOM ])
 
-		@__addDivider("Horizontal Layout in different grouping Variations")
+		@__addDivider("Buttonbar in different grouping Variations")
 
 		bb = new Buttonbar(
 			tooltip:
@@ -722,36 +722,6 @@ class ButtonDemo extends Demo
 		)
 
 		@__demo_table.addExample("example 6", [ $div().append($div("cui-buttonbar-demo-margin-testers")).append(bb.DOM).append($div("cui-buttonbar-demo-margin-testers"))] )
-
-
-		@__addDivider("Vertical Layout in different grouping Variations")
-
-		bb = new Buttonbar(
-			tooltip:
-				text: "example 1"
-			buttons: [
-				new Button(text: "groupA", group: "groupA")
-				new Button(text: "groupB", group: "groupB")
-				new Button(text: "groupB", group: "groupB")
-			]
-		)
-
-		@__demo_table.addExample("example 1", [ $div().append($div("cui-buttonbar-demo-margin-testers")).append(bb.DOM).append($div("cui-buttonbar-demo-margin-testers"))] )
-
-		@__addDivider("Vertical Layout in with one group")
-
-		bb = new Buttonbar(
-			tooltip:
-				text: "example 1"
-			buttons: [
-				new Button(text: "groupA", group: "groupA")
-				new Button(text: "groupA", group: "groupA")
-				new Button(text: "groupA", group: "groupA")
-			]
-		)
-
-		@__demo_table.addExample("example 1", [ $div().append($div("cui-buttonbar-demo-margin-testers")).append(bb.DOM).append($div("cui-buttonbar-demo-margin-testers"))] )
-
 
 		@__addDivider("Using Styles on Buttons inside buttonbar")
 
