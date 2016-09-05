@@ -1,7 +1,7 @@
 # Template needs to be called like this:
 #
 # new Template
-#    name: "name-of-template"  // a .ez-tmpl.ez-tmpl-name-of-template has to exist in the DOM tree
+#    name: "name-of-template"  // a .cui-tmpl.cui-tmpl-name-of-template has to exist in the DOM tree
 #    map:
 #       key: selector    // selector can be "true", than key is used like ".key", "_" is replaced by "-"
 #    layout:
@@ -25,7 +25,7 @@ class Template extends Element
 		if not node
 			name = "cui-tmpl-"+@_name
 
-			selector = ".cui-tmpl.#{name},.ez-tmpl.ez-tmpl-#{@_name}"
+			selector = ".cui-tmpl.cui-tmpl.#{name}"
 
 			# find the template in the DOM tree
 			nodeList = CUI.DOM.matchSelector(document.body, selector)
@@ -47,7 +47,7 @@ class Template extends Element
 
 
 		@DOM = node.cloneNode(true)
-		@DOM.classList.remove("ez-tmpl", "cui-tmpl")
+		@DOM.classList.remove("cui-tmpl")
 		if @_class
 			DOM.addClass(@DOM, @_class)
 		CUI.DOM.setElement(@DOM, @)

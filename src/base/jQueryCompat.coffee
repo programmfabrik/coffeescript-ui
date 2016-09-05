@@ -38,7 +38,6 @@ class CUI.jQueryCompat
 
 				do (key) =>
 					if key in [
-						"attr"
 						"css"
 						"hide"
 						"show"
@@ -53,9 +52,25 @@ class CUI.jQueryCompat
 							for node in nodes
 								item[key].apply(item, arguments)
 							return nodes
-					else
-						nodes[key] = =>
-							console.error "Unsupported Function on jQuery Compat Array:", key
+
+						return
+
+					if key in [
+						"attr"
+					]
+						nodes[key] = (prop, value) =>
+							# only allow "set" on bulk
+							if value != undefined
+								for node in nodes
+									item[key].apply(item, arguments)
+								return nodes
+							else
+								return nodes[0].attr.apply(nodes[0], arguments)
+
+						return
+
+					nodes[key] = =>
+						console.error "Unsupported Function on jQuery Compat Array:", key
 
 			return nodes
 
@@ -161,6 +176,16 @@ class CUI.jQueryCompat
 
 		node.__jQueryCompatNode__ = true
 
+		Object.defineProperty node, "length",
+			enumerable: false
+			get: =>
+				CUI.jQueryCompat.__warn(".length", node)
+				console.error("jQueryCompat: .length accessed on node. Returning 1.", node)
+				return 1
+
+			set: =>
+				throw new TypeError("jQueryCompat[length] unable to set value.")
+
 		Object.defineProperty node, "0",
 			enumerable: true
 			get: =>
@@ -179,11 +204,16 @@ class CUI.jQueryCompat
 				CUI.DOM.setStyleOne(node, style, value)
 
 		if node.nodeName not in ["BODY", "A"]
-
 			node.text = (value) =>
 				CUI.jQueryCompat.__warn("text", node)
 				node.textContent = value
 				node
+
+		if not node.remove
+			# IE does not implement "remove"
+			node.remove = =>
+				CUI.jQueryCompat.__warn("remove", node)
+				CUI.DOM.remove(node)
 
 		node.last = =>
 			CUI.jQueryCompat.__warn("last", node)

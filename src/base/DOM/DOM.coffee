@@ -369,6 +369,7 @@ class CUI.DOM extends CUI.Element
 
 	@remove: (element) ->
 		element.parentNode?.removeChild(element)
+		element
 
 	@empty: (element) ->
 		assert(isElement(element), "DOM.empty", "top needs to be Element", element: element)

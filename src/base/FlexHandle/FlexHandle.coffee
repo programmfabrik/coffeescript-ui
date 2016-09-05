@@ -355,11 +355,13 @@ class FlexHandle extends Element
 			# so that the transition works
 			#
 			for el in els
-				el.classList.add("cui-flex-handle-hide-for-stretch", "cui-flex-handle-hide-for-stretch-#{direction}")
+				el.classList.add("cui-flex-handle-hide-for-stretch")
+				el.classList.add("cui-flex-handle-hide-for-stretch-#{direction}")
 
 			@__pane[set]("")
 
-			pane.classList.add("cui-flex-handle-stretched", "cui-flex-handle-stretched-#{direction}")
+			pane.classList.add("cui-flex-handle-stretched")
+			pane.classList.add("cui-flex-handle-stretched-#{direction}")
 			Events.trigger
 				node: pane
 				type: "flex-stretch-start"
@@ -367,13 +369,15 @@ class FlexHandle extends Element
 			@__stretched = direction
 		else
 			for el in els
-				el.classList.remove("cui-flex-handle-hide-for-stretch", "cui-flex-handle-hide-for-stretch-#{direction}")
+				el.classList.remove("cui-flex-handle-hide-for-stretch")
+				el.classList.remove("cui-flex-handle-hide-for-stretch-#{direction}")
 
 			@__stretched = null
 			if @__size
 				@__pane[set](@__size)
 
-			pane.classList.remove("cui-flex-handle-stretched", "cui-flex-handle-stretched-#{direction}")
+			pane.classList.remove("cui-flex-handle-stretched")
+			pane.classList.remove("cui-flex-handle-stretched-#{direction}")
 			Events.trigger
 				node: pane
 				type: "flex-stretch-end"

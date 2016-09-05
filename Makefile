@@ -156,7 +156,6 @@ html_files = \
 	src/elements/Block/Block.html \
 	src/elements/WaitBlock/WaitBlock.html \
 	src/elements/ItemList/ItemList.html \
-	src/elements/Modal/Modal.html \
 	src/elements/Panel/Panel.html \
 	src/elements/Pane/Pane.html \
 	src/elements/StickyHeader/StickyHeader.html \

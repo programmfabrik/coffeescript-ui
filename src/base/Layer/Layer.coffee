@@ -353,7 +353,7 @@ class CUI.Layer extends CUI.DOM
 		else
 			@__element = element
 
-		assert(not DOM.closest(@__element, ".ez-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
+		assert(not DOM.closest(@__element, ".cui-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
 		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
 

@@ -45,7 +45,7 @@ class CUI
 
 		document.body.scrollTop=0
 
-		if not DOM.matchSelector(document.documentElement, ".ez-tmpl-dummy").length
+		if not DOM.matchSelector(document.documentElement, ".cui-tmpl-dummy").length
 			@loadHTMLFile("easydbui.html")
 			.done =>
 				@ready()
