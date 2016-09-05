@@ -360,7 +360,7 @@ class CUI.Layer extends CUI.DOM
 	# returns a list of all possible placements starting with @__placement and ending with "c"
 	__getPlacements: ->
 		pls = @getPlacements()
-		all_pls = Layer::getPlacements.call(@)
+		all_pls = CUI.Layer::getPlacements.call(@)
 
 		for p in pls
 			assert(all_pls.indexOf(p) > -1, "#{@__cls}", "Unsupported placement \"#{p}\"")

@@ -368,6 +368,7 @@ class Options extends DataField
 			@__optionsForm.render()
 			if @_sortable
 				new Sortable
+					axis: "y"
 					element: @__optionsForm.getTable() # this is the tbody
 					sorted: (ev, from_idx, to_idx) =>
 						# CUI.debug "options order before sort", @__options_order.join(", ")

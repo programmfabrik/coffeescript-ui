@@ -425,7 +425,7 @@ class CUI
 	# returns a deferred, which resolves when
 	# the callback is done
 	@scheduleCallback: (_opts) ->
-		opts = Element.readOpts _opts, "CUI.scheduleCallback",
+		opts = CUI.Element.readOpts _opts, "CUI.scheduleCallback",
 			call:
 				mandatory: true
 				check: Function
@@ -478,7 +478,7 @@ class CUI
 	# call: function callback to cancel
 	# return: true if found, false if not
 	@scheduleCallbackCancel: (_opts) ->
-		opts = Element.readOpts _opts, "CUI.scheduleCallbackCancel",
+		opts = CUI.Element.readOpts _opts, "CUI.scheduleCallbackCancel",
 			call:
 				mandatory: true
 				check: Function

@@ -1,5 +1,5 @@
 # dummy class so we can use "extend" to mark
-# our classes for use in Element.readOpts
+# our classes for use in CUI.Element.readOpts
 class CUI.Dummy
 	constructor: ->
 		@__uniqueId = "cui-dummy-"+CUI.Dummy.uniqueId++

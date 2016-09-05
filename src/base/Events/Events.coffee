@@ -84,7 +84,7 @@ class CUI.Events extends CUI.Element
 
 	# wait for an event on a node
 	@wait: (_opts) ->
-		opts = Element.readOpts _opts, "Events.wait",
+		opts = CUI.Element.readOpts _opts, "Events.wait",
 			# event type
 			type:
 				mandatory: true

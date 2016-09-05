@@ -26,7 +26,7 @@ class CUI.LayerPane extends CUI.Layer
 		@__pane.addClass("cui-layer-pane");
 		# add pane to layer, using the layers append
 		# method, so subclasses (like Modal does!) cannot interfer
-		Layer::replace.call(@, @__pane)
+		CUI.Layer::replace.call(@, @__pane)
 
 	destroy: ->
 		# CUI.debug "destroying pane", @__pane

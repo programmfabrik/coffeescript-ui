@@ -9,12 +9,12 @@ class CUI.Element
 
 		@initOpts()
 
-		if Element.__dont_read_opts
+		if CUI.Element.__dont_read_opts
 			return
 
 		@readOpts()
 		if not @__initOptsCalled
-			CUI.warn("new "+@__cls+": Element::initOpts not called.", opts: @opts)
+			CUI.warn("new "+@__cls+": CUI.Element::initOpts not called.", opts: @opts)
 
 		@_onConstruct?(@)
 		return
@@ -47,9 +47,9 @@ class CUI.Element
 	# this is a hackery function to return just
 	# the opts keys for a given class
 	@getOptKeys: ->
-		Element.__dont_read_opt = true
+		CUI.Element.__dont_read_opt = true
 		element = new(@)
-		delete(Element.__dont_read_opts)
+		delete(CUI.Element.__dont_read_opts)
 		Object.keys(element.getCheckMap())
 
 	initOpts: ->
@@ -100,12 +100,12 @@ class CUI.Element
 		@__check_map
 
 	readOpts: (opts = @opts, cls = @__cls, check_map = @__check_map) ->
-		Element.readOpts.call(@, opts, cls, check_map, true)
+		CUI.Element.readOpts.call(@, opts, cls, check_map, true)
 
 	@readOpts: (opts, cls, check_map, map_values) ->
 		if map_values != true and map_values != false
 			if @ != Element
-				assert(@ != window, "Element.readOpts", "this cannot be window.")
+				assert(@ != window, "CUI.Element.readOpts", "this cannot be window.")
 				map_values = true
 
 		if not CUI.defaults.asserts
@@ -167,7 +167,7 @@ class CUI.Element
 					check = v.check.call(@, value)
 					if not(isNull(check) or isBoolean(check) or isString(check))
 						_check = check
-						CUI.error("Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
+						CUI.error("CUI.Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
 						if _check
 							check = true
 						else
@@ -179,7 +179,7 @@ class CUI.Element
 							err = "needs to match\n\n"+v.check.toString()
 						assert(false, cls, "opts.#{k}: #{err}.", opts: opts)
 				else if CUI.isPlainObject(v.check)
-					value = Element.readOpts(value, cls+" [opts."+k+"]", v.check)
+					value = CUI.Element.readOpts(value, cls+" [opts."+k+"]", v.check)
 				else if isNull(value) and mandatory
 					assert(false, cls, "opts.#{k} is mandatory, but is #{value}.", opts: opts)
 				else
@@ -188,7 +188,7 @@ class CUI.Element
 			# convenient mapping this to our space
 			if map_values
 				@["_#{k}"] = value
-				if @ instanceof Element
+				if @ instanceof CUI.Element
 					@__mapped_keys.push(k)
 
 			set_opts[k] = value
@@ -232,7 +232,7 @@ class CUI.Element
 
 	# proxy given methods to given element
 	proxy: (element, methods) ->
-		assert(element instanceof Element, "Element.proxy", "element given must be instance of Element.", element: element, methods: methods)
+		assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
 		assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
 		for method in methods
 			do (method) =>

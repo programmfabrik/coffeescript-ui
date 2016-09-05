@@ -449,7 +449,7 @@ class CUI.DOM extends CUI.Element
 
 	@waitForDOMInsert: (_opts) ->
 
-		opts = Element.readOpts _opts, "DOM.waitForDOMInsert",
+		opts = CUI.Element.readOpts _opts, "DOM.waitForDOMInsert",
 			node:
 				mandatory: true
 				check: (v) ->
@@ -504,7 +504,7 @@ class CUI.DOM extends CUI.Element
 
 	# small experiment, testing...
 	@printElement: (_opts) ->
-		opts = Element.readOpts _opts, "DOM.printElement",
+		opts = CUI.Element.readOpts _opts, "DOM.printElement",
 			docElem:
 				check: (v) ->
 					v instanceof HTMLElement
@@ -1034,7 +1034,7 @@ class CUI.DOM extends CUI.Element
 		docElem.scrollIntoView()
 
 	@setClassOnMousemove: (_opts={}) ->
-		opts = Element.readOpts _opts, "DOM.setClassOnMousemove",
+		opts = CUI.Element.readOpts _opts, "DOM.setClassOnMousemove",
 			delayRemove:
 				check: Function
 			class:

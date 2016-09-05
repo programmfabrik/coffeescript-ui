@@ -4,7 +4,7 @@ class CUI.FileReader extends FileUpload
 		@removeOpt("url")
 
 	readOpts: ->
-		Element::readOpts.call(@)
+		CUI.Element::readOpts.call(@)
 
 	getUploadFileClass: ->
 		FileReaderFile

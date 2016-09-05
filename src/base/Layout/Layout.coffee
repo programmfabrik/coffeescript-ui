@@ -211,7 +211,7 @@ class CUI.Layout extends CUI.DOM
 	# @param [String] pane_name name of the pane
 	__initPane: (options, pane_name) ->
 		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
-		opts = Element.readOpts(options, "new Layout.__initPane", @getPaneCheckMap())
+		opts = CUI.Element.readOpts(options, "new Layout.__initPane", @getPaneCheckMap())
 
 		@append(opts.content, pane_name)
 		fh = opts.flexHandle

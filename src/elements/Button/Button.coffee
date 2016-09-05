@@ -538,7 +538,7 @@ class Button extends CUI.DOM
 						return true
 
 					(isElement(v) or
-						v instanceof Element or
+						v instanceof CUI.Element or
 						isString(v)) and
 						not @_icon and
 						not @_icon_left and
@@ -546,10 +546,10 @@ class Button extends CUI.DOM
 						not @_icon_inactive
 			right:
 				check: (v) ->
-					(isElement(v) or v instanceof Element or v == true) and not @_icon_right
+					(isElement(v) or v instanceof CUI.Element or v == true) and not @_icon_right
 			center:
 				check: (v) ->
-					(isElement(v) or isString(v) or v instanceof Element)
+					(isElement(v) or isString(v) or v instanceof CUI.Element)
 			icon:
 				check: (v) ->
 					v instanceof Icon or isString(v)

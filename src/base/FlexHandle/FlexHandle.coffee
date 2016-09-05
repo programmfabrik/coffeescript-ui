@@ -477,7 +477,7 @@ class FlexHandle extends CUI.Element
 
 
 	@getStretchButton: (_opts={}) ->
-		opts = Element.readOpts _opts, "FlexHandle.getPushButton",
+		opts = CUI.Element.readOpts _opts, "FlexHandle.getPushButton",
 			direction:
 				check: ["west","east","north","south"]
 			text:
