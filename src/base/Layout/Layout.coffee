@@ -146,7 +146,7 @@ class CUI.Layout extends CUI.DOM
 		else
 			has_flex_handles = false
 
-		CUI.DOM.setAttribute(@__layout.DOM, "has-flex-handles", (if has_flex_handles then "true" else "false"))
+		CUI.DOM.setAttribute(@__layout.DOM, "has-flex-handles", (if has_flex_handles then true else false))
 
 		# every pane gets a method "<pane>: ->" to retrieve
 		# the DOM element from the template

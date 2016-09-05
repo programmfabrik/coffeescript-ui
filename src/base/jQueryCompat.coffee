@@ -72,7 +72,22 @@ class CUI.jQueryCompat
 						"scrollIntoView"
 					]
 						nodes[key] = =>
-							return nodes[0]?.scrollIntoView()
+							nodes[0]?.scrollIntoView()
+							return nodes
+
+						return
+
+					if key in [
+						"find"
+					]
+						nodes[key] = =>
+							if nodes.length == 0
+								return nodes
+
+							found_nodes = []
+							for node in nodes
+								found_nodes.push.apply(found_nodes, node.find.apply(node, arguments))
+							return found_nodes
 
 						return
 

@@ -292,8 +292,15 @@ class CUI.DOM extends CUI.Element
 		node.removeAttribute(key)
 		node
 
-	@setAttribute: (node, key, value=key) ->
-		node.setAttribute(key, value)
+	@setAttribute: (node, key, value) ->
+		if isNull(value) or value == false
+			return @removeAttribute(node, key)
+
+		if value == true
+			node.setAttribute(key, key)
+		else
+			node.setAttribute(key, value)
+
 		node
 
 	@hasAttribute: (node, key) ->
