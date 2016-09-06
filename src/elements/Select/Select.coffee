@@ -201,7 +201,7 @@ class Select extends Checkbox
 					@__checkbox.setText(null)
 				else
 					@__checkbox.setIcon(null)
-					@__checkbox.setText(found_opt.text)
+					@__checkbox.setText(found_opt.text_selected or found_opt.text)
 
 				@__checkbox.menuSetActiveIdx(found_opt._idx)
 			else

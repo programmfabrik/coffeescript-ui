@@ -40,6 +40,14 @@ class DataTable extends DataFieldInput
 	getFieldList: ->
 		@__fieldList
 
+	getFieldsByName: (name, found_fields = []) ->
+		for field in @getFieldList()
+			if field.getName() == name
+				found_fields.push(field)
+
+			field.getFieldsByName?(name, found_fields)
+		found_fields
+
 	debug: ->
 		super()
 		@listView?.debug()

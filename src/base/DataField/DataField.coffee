@@ -541,7 +541,7 @@ class DataField extends DOM
 		@
 
 	setCheckChangedValue: (value) ->
-		assert(@hasData(), "#{@__cls}.setCheckChangedValue", "Cannot set without data hasData.", opts: @opts, value: value)
+		assert(@hasData(), "#{@__cls}.setCheckChangedValue", "Cannot set without data.", opts: @opts, value: value, dataField: @)
 		if @_check_changed == false
 			return undefined
 		@__checkChangedValue = JSON.stringify(value)
