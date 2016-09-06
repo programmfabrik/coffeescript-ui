@@ -1,4 +1,4 @@
-class Options extends DataField
+class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->
 		super(@opts)
 		@DOM.addClass("cui-padding-reset")
@@ -133,7 +133,7 @@ class Options extends DataField
 		for opt, idx in @__options
 			if opt.value == value
 				found = idx
-		assert(found != null, "Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
+		assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
 		@__checkboxes[found]
 
 
@@ -398,3 +398,4 @@ class Options extends DataField
 		else
 			[]
 
+Options = CUI.Options

@@ -172,5 +172,5 @@ class MemTest extends CUI.DOM
 		@registerDOMElement(d)
 
 
-
-Demo.register(new MemoryTester())
+# this needs fixing, so disable it for now
+# Demo.register(new MemoryTester())

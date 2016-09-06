@@ -5,6 +5,7 @@ coffee_files = src/demo.coffee \
 	src/CUIDemo.coffee \
 	src/ControlsDemo.coffee \
 	src/MemoryTester.coffee \
+	src/Playground.coffee \
 	src/BoundingBoxDemo/BoundingBoxDemo.coffee \
 	../src/base/DragDropSelect/demo/DragDropSelectDemo.coffee \
 	../src/base/Events/demo/EventsDemo.coffee \

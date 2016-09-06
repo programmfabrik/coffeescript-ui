@@ -1,6 +1,4 @@
 class ListViewTreeDemo extends Demo
-	constructor: (@opts={}) ->
-		super(@opts)
 
 	#load filesystem tree, used as example content for list views
 	loadFiles: ->

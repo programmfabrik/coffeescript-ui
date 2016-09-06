@@ -8,7 +8,7 @@
 #Button.DOM: the actual button object
 #Button.disable: disable button
 #Button.enable: enable button
-class Button extends CUI.DOM
+class CUI.Button extends CUI.DOM
 
 	@defaults:
 		confirm_ok: "Ok"
@@ -327,20 +327,20 @@ class Button extends CUI.DOM
 
 		if @_menu_on_hover
 			menu = @getMenu()
-			Button.menu_timeout = null
-			Button.menu_shown = null
+			CUI.Button.menu_timeout = null
+			CUI.Button.menu_shown = null
 
 			menu_stop_hide = =>
-				if not Button.menu_timeout
+				if not CUI.Button.menu_timeout
 					return
 
-				CUI.clearTimeout(Button.menu_timeout)
-				Button.menu_timeout = null
+				CUI.clearTimeout(CUI.Button.menu_timeout)
+				CUI.Button.menu_timeout = null
 
 			menu_start_hide = (ev) =>
 				# we set a timeout, if during the time
 				# the focus enters the menu, we cancel the timeout
-				Button.menu_timeout = CUI.setTimeout
+				CUI.Button.menu_timeout = CUI.setTimeout
 					ms: 700
 					call: =>
 						menu.hide(ev)
@@ -363,13 +363,13 @@ class Button extends CUI.DOM
 
 						if not @__disabled and menu.hasItems()
 
-							if Button.menu_shown and Button.menu_shown != menu
+							if CUI.Button.menu_shown and CUI.Button.menu_shown != menu
 								menu_stop_hide()
-								Button.menu_shown.hide(ev)
+								CUI.Button.menu_shown.hide(ev)
 
 							menu.show(null, ev)
 
-							Button.menu_shown = menu
+							CUI.Button.menu_shown = menu
 
 							Events.ignore
 								instance: @
@@ -807,7 +807,7 @@ class Button extends CUI.DOM
 
 	setIcon: (icon=null) ->
 		@__icon = @__getIcon(icon)
-		assert(@__icon == null or @__icon instanceof Icon, "Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+		assert(@__icon == null or @__icon instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
 		if @__icon == null
 			@empty("left")
 		else
@@ -815,7 +815,7 @@ class Button extends CUI.DOM
 		@
 
 	startSpinner: ->
-		assert(@__has_left, "Button.startSpinner", "No space for Icon found, make sure the Button was created with opts.left set.", opts: @opts)
+		assert(@__has_left, "CUI.Button.startSpinner", "No space for Icon found, make sure the Button was created with opts.left set.", opts: @opts)
 		if @__hasSpinner
 			return
 
@@ -923,7 +923,7 @@ class Button extends CUI.DOM
 
 		# make sure the tooltip does not register any listeners
 		for k in ["on_hover", "on_click"]
-			assert(not tt_opts.hasOwnProperty(k), "Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
+			assert(not tt_opts.hasOwnProperty(k), "CUI.Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
 			tt_opts[k] = false
 
 		@__tooltip = new Tooltip(tt_opts)
@@ -961,8 +961,10 @@ class Button extends CUI.DOM
 			node: @DOM
 
 
-CUI.defaults.class.Button = Button
+CUI.defaults.class.Button = CUI.Button
 
 CUI.Events.registerEvent
 	type: ["show", "hide", "cui-button-click"]
 	bubble: true
+
+Button = CUI.Button

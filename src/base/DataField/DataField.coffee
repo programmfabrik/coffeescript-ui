@@ -1,4 +1,4 @@
-class DataField extends CUI.DOM
+class CUI.DataField extends CUI.DOM
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"
 
@@ -15,7 +15,7 @@ class DataField extends CUI.DOM
 		if @_form
 			assert(not (@_form.right and @_form.data_field_right), "#{@__cls}.renderTable", "opts.form.right and opts.form.data_field_right cannot be set together.", opts: @opts)
 			if @_form.data_field_right
-				@__form_data_field_right = DataField.new(@_form.data_field_right)
+				@__form_data_field_right = CUI.DataField.new(@_form.data_field_right)
 
 		@initTemplate()
 
@@ -171,7 +171,7 @@ class DataField extends CUI.DOM
 		@DOM.attr(name, depth)
 
 	getFormPath: (include_self=false, path=[], call=0) ->
-		assert(call < 100, "DataField.getPath", "Recursion detected.")
+		assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
 
 		if @getForm()?.getFormPath
 			@getForm().getFormPath(true, path, call+1)
@@ -364,7 +364,7 @@ class DataField extends CUI.DOM
 
 		for df in other_fields
 			if not df or not CUI.isFunction(df[func])
-				assert(false, "DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
+				assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
 				return @
 
 			df[func].apply(df, args)
@@ -616,7 +616,7 @@ class DataField extends CUI.DOM
 		if @_mark_changed == false or @_check_changed == false
 			return
 		@checkChanged()
-		$div(DataField.changed_marker_css_class)
+		$div(CUI.DataField.changed_marker_css_class)
 
 	destroy: ->
 		@remove(true)
@@ -627,7 +627,7 @@ class DataField extends CUI.DOM
 		if field instanceof DataField
 			return field
 
-		assert(CUI.isPlainObject(field), "DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
+		assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
 
 		field_opts = {}
 		for k, v of field
@@ -646,10 +646,12 @@ class DataField extends CUI.DOM
 				continue
 			field_opts[k] = v
 
-		assert(CUI.isFunction(type), "DataField.new", "type is unknown: \"#{type}\".", field: field)
+		assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
 		_field = new type(field_opts)
-		assert(_field instanceof DataField, "DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
+		assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
 		return _field
+
+DataField = CUI.DataField
 
 
 CUI.Events.registerEvent

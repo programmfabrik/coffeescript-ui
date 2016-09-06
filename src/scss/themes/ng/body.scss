@@ -2,7 +2,6 @@
 
 // reset
 
-
 table {
 	border-collapse: collapse;
 }
@@ -40,6 +39,7 @@ body {
 	font-family: arial;
 	font-size: 12px;
 	line-height: normal;
+	display: flex;
 	width: 100%;
     height: 100%;
     padding: 0;
@@ -370,8 +370,16 @@ table {
 	background-color: rgba(34, 139, 243, 0.43);
 	padding: 3px;
 	> div {
-		flex-direction: row;
-		align-items: center;
+		&.cui-horizontal-layout-left,
+		&.cui-horizontal-layout-right {
+			flex-direction: row;
+		}
+
+		&.cui-horizontal-layout-center {
+			align-items: center;
+		}
+		// flex-direction: row;
+		// align-items: center;
 		> .cui-maximize-horizontal {
 			// in column direction this is solved by
 			// align-items: stretch, but here
@@ -448,8 +456,11 @@ a[role="button"],label[role="button"],.cui-button
 	align-self: flex-start;
 	height: 20px;
 	line-height: 20px;
-	background-color: #ffdbb3;
-	border: 1px solid #b3895b;
+
+	&:not(.cui-button-appearance-flat) {
+		background-color: #ffdbb3;
+		border: 1px solid #b3895b;
+	}
 
 	// add padding around the whole button
 	padding: 0 3px;
@@ -936,6 +947,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-layer {
 		text-align: center;
 		max-width: 400px;
+		min-width: 200px;
 		border: 2px solid black;
 		&.cui-alert-problem {
 			border-color: red;

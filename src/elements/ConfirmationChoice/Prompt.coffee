@@ -31,8 +31,6 @@ class CUI.Prompt extends CUI.ConfirmationChoice
 		@__data = input: @_default+""
 		@_content = new Form
 			fields: [
-				form:
-					use_field_as_label: true
 				type: Output
 				multiline: true
 				text: text

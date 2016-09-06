@@ -3,15 +3,6 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 @import "../../../../../src/scss/themes/ng/body.scss";
 @import "../../../../../src/scss/themes/ng/footer.scss";
 
-.cui-tmpl-demo-root {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-	display: flex;
-}
-
 .cui-demo-header {
 	padding: 10px;
 	.cui-demo-menu-button,
@@ -33,6 +24,16 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 	.cui-demo-sub-title {
 		font-size: 20px;
 		padding: 2px 7px;
+	}
+}
+
+body.cui-demo-playground {
+	// hide console
+	.cui-demo-root-center > .cui-horizontal-layout {
+		> .cui-flex-handle,
+		> .cui-demo-pane-right {
+			display: none;
+		}
 	}
 }
 
