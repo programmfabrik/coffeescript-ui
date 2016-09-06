@@ -30,10 +30,11 @@ class DataTableNode extends ListViewRow
 			_f = new window[f.__cls](fopts)
 			_f.setForm(@)
 			_f.setData(@__data)
-			if @__check_changed_data
-				_f.setCheckChangedValue(@__check_changed_data[f.getName()])
-			else
-				_f.setCheckChangedValue(f.getDefaultValue())
+			if f.hasData()
+				if @__check_changed_data
+					_f.setCheckChangedValue(@__check_changed_data[f.getName()])
+				else
+					_f.setCheckChangedValue(f.getDefaultValue())
 			@__fields.push(_f)
 			@addColumn(new ListViewColumn(element: _f.DOM))
 		@
@@ -42,6 +43,9 @@ class DataTableNode extends ListViewRow
 		super()
 		@_dataTable._onRowRemove?.call(@, @__data)
 		removeFromArray(@__data, @__rows)
+
+	getDataTable: ->
+		@_dataTable
 
 	getFieldByIdx: (idx) ->
 		@__fields[idx]
