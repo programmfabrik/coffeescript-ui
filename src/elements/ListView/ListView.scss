@@ -99,57 +99,14 @@
 }
 
 
-//let cell div fill the height of its td, we need a hack cause their are no specs that describe the wanted behaviour
-
-//works in webkits..
-.cui-list-view-grid {
-	transition: opacity 0.5s ease;
-
-	//REMARKED fixed with chrome 53.0.2785.89 m
-	//chrome hack for fixing 'fill td with div' problem
-	//tbody > .cui-list-view-grid-row {
-	//	height: 1px;
-	//	> .cui-list-view-grid-cell-td {
-	//		height: inherit;
-	//	}
-	//}
-
-	//REMARKED not working since chrome 50.1
-	//.cui-list-view-grid-quadrant-table {
-	//	height: 100%;
-	//}
-
-	.cui-list-view-grid-cell-td > .cui-list-view-grid-cell,
-	.cui-list-view-grid-cell-div > .cui-list-view-grid-cell {
-		height: calc( 100% + 2 * #{$list_view_cell_padding} + 1px );
-	}
-
-	//row move handle has no padding, so the height is different .. strange thing cause box-sizing is border-box
-	.cui-list-view-grid-cell-td.cui-list-view-row-move-handle-column > .cui-list-view-grid-cell {
-		height: calc( 100% + 1px );
-	}
-}
-
-//special for ff and ie
-.ez5-browser-firefox,
-.ez5-browser-msie {
-	.cui-list-view-grid {
-		tbody > .cui-list-view-grid-row {
-			height: auto; //get rid of chrome hack
-		}
-		.cui-list-view-grid-cell-td > .cui-list-view-grid-cell,
-		.cui-list-view-grid-cell-div > .cui-list-view-grid-cell {
-			//height: calc( 100% - 2 * #{$list_view_cell_padding} );
-			height: 100%;
-		}
-	}
-}
 
 .cui-list-view-grid {
 	position: relative;
 
+  transition: opacity 0.5s ease;
 
-	.cui-list-view-grid-row {
+
+  .cui-list-view-grid-row {
 		// this is removed right before layout
 		&.list-view-row-new {
 			display: none !important;
@@ -334,6 +291,12 @@
 		overflow: hidden;
 
 		&.cui-list-view-row-move-handle {
+            position: absolute;
+            top: 0;
+            right:0;
+            bottom:0;
+            left:0;
+
 			padding: 0; //cell should measure 0 when .cui-tmpl-list-view-tool-row-move-handle is away
 			cursor: move;
 
@@ -343,15 +306,16 @@
 
 			.cui-tmpl-list-view-tool-row-move-handle {
 				//cant use height:100% inside tables , so we blow up the border with position absolute
-				position: absolute;
-				top: 1px;
-				left: 0;
-				right: 1px;
-				bottom: 1px;
-				@extend %list_view_move_handle_skin;
+              position: absolute;
+              top: 1px;
+              left: 0;
+              right: 1px;
+              bottom: 1px;
+              @extend %list_view_move_handle_skin;
 
-				$border: 1px;
-				width: $list_view_move_handle_width - $border;
+              $border: 1px;
+              width: $list_view_move_handle_width - $border;
+
 			}
 		}
 	}
