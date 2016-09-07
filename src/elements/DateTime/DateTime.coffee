@@ -37,9 +37,9 @@ class DateTime extends Input
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
+		@removeOpt("correctValueForInput")
 		@removeOpt("checkInput")
 		@removeOpt("getInputBlocks")
-
 
 	init: ->
 		@__regexpMatcher = @regexpMatcher()
@@ -144,6 +144,13 @@ class DateTime extends Input
 		super()
 		@_checkInput = @__checkInput
 		@_getInputBlocks = @__getInputBlocks
+		@_correctValueForInput = (dateTime, value) =>
+			corrected_value = @format(value, "input", @__input_formats[0].type)
+			if corrected_value
+				corrected_value
+			else
+				# keep the invalid value
+				value
 
 	getCurrentFormat: ->
 		@__input_format
@@ -275,7 +282,7 @@ class DateTime extends Input
 
 		assert(output_format, "DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
-		# CUI.debug "display format", s, output_type, output_format, output_format[type], type
+		# CUI.debug "display format", s, output_type, dump(output_format), output_format[type], type
 
 		mom.format(output_format[type])
 
@@ -333,9 +340,8 @@ class DateTime extends Input
 		else
 			""
 
-	getValueForInput: ->
-		v = @getValue()
-		if isEmpty(v.trim())
+	getValueForInput: (v = @getValue()) ->
+		if isEmpty(v?.trim())
 			return ""
 
 		mom = @parse(v)
