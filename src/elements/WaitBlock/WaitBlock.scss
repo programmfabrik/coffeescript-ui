@@ -57,6 +57,10 @@
 			@include flex_align_items(center);
 			color: $wait_block_color;
 
+			.cui-label-icon {
+				align-self: center;
+			}
+
 			i {
 				padding: 20px;
 				@extend %__waiting_symbol_icon_rendering;
