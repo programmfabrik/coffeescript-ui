@@ -597,6 +597,8 @@ class CUI.DOM extends CUI.Element
 	)()
 
 	@matchSelector: (docElem, sel, trySelf=false) ->
+		assert(docElem instanceof HTMLElement or docElem == document, "CUI.DOM.matchSelector", "docElem needs to be instanceof HTMLElement or document.", docElem: docElem)
+
 		# CUI.error "matchSelector", docElem, sel, trySelf
 		list = docElem.querySelectorAll(sel)
 		# CUI.debug "DONE"
