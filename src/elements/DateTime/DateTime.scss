@@ -21,6 +21,13 @@ $date_next_month_color: #b2b2b2;
 	}
 }
 
+.cui-date-time-header-year {
+	.cui-number-input {
+		max-width: 42px;
+	}
+}
+
+
 .cui-date-time-popover {
 	//manually measured and set, cause content is filling layer after its size is already fixed
 	width: $date_time_width;

@@ -3,78 +3,67 @@
 
 .cui-buttonbar {
 
-	display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-	//when we dont make the labels inline it will not align correctly
-	.cui-label {
-		display: inline;
-	}
+  //when we dont make the labels inline it will not align correctly
+  .cui-label {
+	  display: inline-flex;
+  }
+
+  @include horizontal_separator_paddings();
+
+  > .cui-button,
+  > .cui-buttonbar-group > .cui-button {
+	  &:not(:empty) {
+		  display: inline-flex;
+	  }
+  }
 
 
-	@include horizontal_separator_paddings();
+  > .cui-buttonbar-group {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 
-	white-space: nowrap;
-	> .cui-buttonbar-group {
-		white-space: nowrap;
-		display: inline-block; // needed for having a nice border
-	}
-
-	> .cui-button,
-	> .cui-buttonbar-group > .cui-button {
-		&:not(:empty) {
-			display: inline-block;
-		}
-	}
-
-	//every element in the bar has to be set to center, otherwise it doesnt work
-	> .cui-button,
-	> .cui-label {
+	> .cui-data-field {
 		vertical-align: middle;
 	}
 
-	// ------------ separators --------------------
-
-	> .cui-buttonbar-group {
-
+	> .cui-button,
+	> .cui-data-field:not(.cui-first-visible-child) > .cui-button, // for dropdown list in buttonbars ... supports only some simple fields
+	> .cui-data-field:not(.cui-first-visible-child) > .cui-input // for input fields , like in a navigation button bar with page input
+	{
 		vertical-align: middle;
 
-		> .cui-data-field {
-			vertical-align: middle;
-		}
-
-		> .cui-button,
-		> .cui-data-field:not(.cui-first-visible-child) > .cui-button, // for dropdown list in buttonbars ... supports only some simple fields
-		> .cui-data-field:not(.cui-first-visible-child) > .cui-input // for input fields , like in a navigation button bar with page input
-		{
-			vertical-align: middle;
-
-			&:not(.cui-disabled):not(.cui-active):not(.cui-pressed):not(.cui-first-visible-child):hover,
-			&.cui-active:not(.cui-disabled):not(.cui-first-visible-child):hover,
-			&:not(.cui-first-visible-child) {
-				border-left: 1px solid $buttonbar_separator_color;
-			}
-		}
-
-		border: 1px solid $button_border_color;
-		box-sizing: border-box;
-
-		> .cui-button,
-		> .cui-select .cui-button-select
-		{
-			box-shadow: none !important;
-
-			border: 0; // buttonbar-group gets the border
-
-			//REMARKED we use !important instead
-			//&:not(.cui-disabled) {
-			//	&:not(.cui-active):not(.cui-pressed):hover,
-			//	&.cui-active:hover,
-			//	&.cui-active {
-			//		box-shadow: none;
-			//	}
-			//}
+		&:not(.cui-disabled):not(.cui-active):not(.cui-pressed):not(.cui-first-visible-child):hover,
+		&.cui-active:not(.cui-disabled):not(.cui-first-visible-child):hover,
+		&:not(.cui-first-visible-child) {
+			border-left: 1px solid $buttonbar_separator_color;
 		}
 	}
+
+	border: 1px solid $button_border_color;
+	box-sizing: border-box;
+
+	> .cui-button,
+	> .cui-select .cui-button-select
+	{
+		box-shadow: none !important;
+
+		border: 0; // buttonbar-group gets the border
+
+		//REMARKED we use !important instead
+		//&:not(.cui-disabled) {
+		//	&:not(.cui-active):not(.cui-pressed):hover,
+		//	&.cui-active:hover,
+		//	&.cui-active {
+		//		box-shadow: none;
+		//	}
+		//}
+	}
+  }
 
 }
 
@@ -82,7 +71,7 @@
 	@include ASSERT_TYPE(cui-buttonbar);
 
 	&.cui-buttonbar { //need to make it specific
-		&,
+	  	&,
 		.cui-buttonbar-group,
 		.cui-button {
 			@include flex(0,1);
