@@ -62,6 +62,7 @@ css_ng: jpg
 	# $@
 	mkdir -p $(target)/css
 	$(call_scss) src/scss/themes/ng/main.scss $(target)/css/cui_demo_ng.css
+	$(call_scss) src/scss/themes/ng/main_debug.scss $(target)/css/cui_demo_ng_debug.css
 
 css_other:
 	#
@@ -80,12 +81,11 @@ jpg: $(jpg_files)
 	mkdir -p $(target)/css/pics
 	cp $(jpg_files) $(target)/css/pics
 
-all: code html css
+all: code html css files.txt
 	#
 	# ---- $@ ----
 	mkdir -p $(target)
-	# make file list
-	find -O1 -not -name '*~' -not -name '.*' -printf '%P %d %y %s %A@\n' > $(target)/files.txt
+	cp files.txt $(target)/
 
 clean:
 	find . -name '*.coffee.js' | xargs rm -f

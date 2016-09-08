@@ -138,13 +138,14 @@ class RunDemo extends CUI.Element
 			text: "Theme"
 			menu:
 				onClick: (ev, btn, item) ->
-					window.localStorage.setItem("theme", item.value)
-					document.location.reload()
-
-					# FIXME: once "ng" is finished, we can remove the reload
-					# CUI.loadTheme(item.value)
-					# .done =>
-					# 	window.localStorage.setItem("theme", item.value)
+					if xor(CUI.getActiveTheme().getName().startsWith("ng"), item.value.startsWith("ng"))
+						# FIXME: once "ng" is finished, we can remove the reload
+						window.localStorage.setItem("theme", item.value)
+						document.location.reload()
+					else
+						CUI.loadTheme(item.value)
+						.done =>
+							window.localStorage.setItem("theme", item.value)
 
 				active_item_idx: null
 				items: ->
@@ -314,7 +315,7 @@ class DemoTable
 
 
 CUI.ready ->
-	for k in ["light", "dark", "ng"]
+	for k in ["light", "dark", "ng", "ng_debug"]
 		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 
 	CUI.loadTheme(window.localStorage.getItem("theme") or "light")

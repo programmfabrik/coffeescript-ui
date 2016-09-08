@@ -54,6 +54,7 @@ class CUI.Options extends CUI.DataField
 		assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
 		assert(not @_sortable or not @_horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
 
+
 	init: ->
 		switch @_radio
 			when false
@@ -208,7 +209,12 @@ class CUI.Options extends CUI.DataField
 
 			# CUI.debug "order_value_array:", arr.join(", ")
 
-		order_options_by_value_array = (arr) =>
+		order_options_by_value_array = =>
+			if @hasData()
+				arr = @getValue()
+			else
+				arr = []
+
 			@__options_order = []
 
 			# first put the active values
@@ -238,7 +244,7 @@ class CUI.Options extends CUI.DataField
 
 
 		if @_sortable and not @__options_order
-			order_options_by_value_array(@getValue())
+			order_options_by_value_array()
 
 		@__options = unsorted_options.slice(0)
 
@@ -281,7 +287,7 @@ class CUI.Options extends CUI.DataField
 							order_value_array(arr)
 							@storeValue(arr, flags)
 							if @_sortable
-								order_options_by_value_array(arr)
+								order_options_by_value_array()
 								@reload()
 
 					_opt.onActivate?(_cb, flags)
@@ -304,7 +310,7 @@ class CUI.Options extends CUI.DataField
 							removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
 							@storeValue(arr, flags)
 							if @_sortable
-								order_options_by_value_array(arr)
+								order_options_by_value_array()
 								@reload()
 					_opt.onDeactivate?(_cb, flags)
 					return
@@ -371,20 +377,23 @@ class CUI.Options extends CUI.DataField
 					axis: "y"
 					element: @__optionsForm.getTable() # this is the tbody
 					sorted: (ev, from_idx, to_idx) =>
+						console.debug "from:", from_idx, "to:", to_idx
 						# CUI.debug "options order before sort", @__options_order.join(", ")
 						moveInArray(from_idx, to_idx, @__options_order)
 						# CUI.debug "sort", from_idx, " > ", to_idx
 						# CUI.debug "options order after sort", @__options_order.join(", ")
 						# re order options
 						sort_options()
-						# set value to new order
-						arr = @getValue().slice(0)
 
-						order_value_array(arr)
-						@storeValue(arr)
+						# set value to new order
+						if @hasData()
+							arr = @getValue().slice(0)
+							order_value_array(arr)
+							@storeValue(arr)
+
 						# re order again by value in case we have sorted
 						# an inactive
-						order_options_by_value_array(arr)
+						order_options_by_value_array()
 						@reload()
 
 		else

@@ -210,6 +210,7 @@ class Playground extends Demo
 			input: ""
 			textarea: ""
 			password: ""
+			options_sorted: []
 			table: []
 
 
@@ -224,6 +225,16 @@ class Playground extends Demo
 				label: "Options[Checkbox]"
 			radio: false
 		)
+
+		fields.push @getOptions(
+			form:
+				label: "Options[Sortable]"
+			radio: false
+			name: "options_sorted"
+			sortable: true
+			sortable_hint: "Sort checked options, unchecked are sorted alphabetically"
+		)
+
 
 		fields.push @getOptions(
 			form:
