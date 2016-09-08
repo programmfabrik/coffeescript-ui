@@ -86,6 +86,8 @@ all: code html css files.txt
 	# ---- $@ ----
 	mkdir -p $(target)
 	cp files.txt $(target)/
+	# make file list on Linux
+	# find -O1 -not -name '*~' -not -name '.*' -printf '%P %d %y %s %A@\n' files.txt
 
 clean:
 	find . -name '*.coffee.js' | xargs rm -f

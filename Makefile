@@ -161,7 +161,7 @@ html_files = \
 	src/elements/StickyHeader/StickyHeader.html \
 	src/elements/Tabs/Tab.html
 
-all: code demo css
+all: code demo css_ng
 	#
 	# $@
 	mkdir -p $(target)
