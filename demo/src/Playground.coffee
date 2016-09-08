@@ -310,6 +310,24 @@ class Playground extends Demo
 				text: "Checkbox"
 			]
 
+		fields.push new DataTable
+			name: "table"
+			rowMove: true
+			form:
+				label: "DataTable [sortable]"
+			fields: [
+				form:
+					label: "Column A"
+				type: Input
+			,
+				form:
+					rotate_90: true
+					label: "Column B"
+				type: Checkbox
+				text: "Checkbox"
+			]
+
+
 		form = [
 			new Form(data: data, maximize: false, fields: fields).start()
 		]
