@@ -96,7 +96,7 @@ class CUI
 		new_theme = @getTheme(name)
 		assert(new_theme, "CUI.loadThemeByName", "Theme #{name} not found", themes: @getThemeNames())
 
-		old_theme = @__activeTheme
+		old_theme = @getActiveTheme()
 
 		set_active_theme = (theme) =>
 			DOM.setAttribute(document.body, "cui-theme", theme?.getName())
@@ -111,7 +111,8 @@ class CUI
 		set_active_theme(new_theme)
 
 		new_theme.load().fail =>
-			set_active_theme(old_theme)
+			if old_theme
+				set_active_theme(old_theme)
 
 
 	@getActiveTheme: ->

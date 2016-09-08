@@ -138,14 +138,24 @@ class RunDemo extends CUI.Element
 			text: "Theme"
 			menu:
 				onClick: (ev, btn, item) ->
-					if xor(CUI.getActiveTheme().getName().startsWith("ng"), item.value.startsWith("ng"))
-						# FIXME: once "ng" is finished, we can remove the reload
-						window.localStorage.setItem("theme", item.value)
-						document.location.reload()
+					old_theme = CUI.getActiveTheme().getName()
+
+					if xor(old_theme.startsWith("ng"), item.value.startsWith("ng"))
+						reload = true
 					else
-						CUI.loadTheme(item.value)
-						.done =>
-							window.localStorage.setItem("theme", item.value)
+						reload = false
+
+					CUI.loadTheme(item.value)
+					.done =>
+						console.debug "load theme done, setting item", item.value
+						window.localStorage.setItem("theme", item.value)
+						# FIXME: once "ng" is finished, we can remove the reload
+						if reload
+							document.location.reload()
+					.fail =>
+						CUI.alert
+							title: "Error"
+							text: "There was an error loading the \""+item.value+"\". Use 'make css_other' to produce the necessary files."
 
 				active_item_idx: null
 				items: ->
@@ -318,7 +328,7 @@ CUI.ready ->
 	for k in ["light", "dark", "ng", "ng_debug"]
 		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 
-	CUI.loadTheme(window.localStorage.getItem("theme") or "light")
+	CUI.loadTheme(window.localStorage.getItem("theme") or "ng")
 
 	new RunDemo()
 
