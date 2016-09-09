@@ -81,7 +81,7 @@ jpg: $(jpg_files)
 	mkdir -p $(target)/css/pics
 	cp $(jpg_files) $(target)/css/pics
 
-all: code html css_ng files.txt
+all: code html css files.txt
 	#
 	# ---- $@ ----
 	mkdir -p $(target)

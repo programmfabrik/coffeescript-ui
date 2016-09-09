@@ -169,7 +169,7 @@ class CUI.Layer extends CUI.DOM
 
 		if @_pointer
 			if @_class
-				cls = "layer-pointer-"+@_class.split(/\s+/).join(" layer-pointer-")
+				cls = "cui-layer-pointer-"+@_class.split(/\s+/).join(" cui-layer-pointer-")
 
 			@__pointer = new Template
 				class: cls
@@ -178,10 +178,6 @@ class CUI.Layer extends CUI.DOM
 
 			#append pointer and make sure pointer is rendered beneath layer.
 			DOM.insertBefore(@__layer.DOM, @__pointer)
-
-			# @__pointer.attr("role", @_pointer)
-
-			@__pointer.addClass("layer-pointer") # layer-pointer-#{@_role}")
 
 		if @_fill_space
 			assert(@_placement, "new #{@__cls}", "opts.fill_space requires opts.placement to be set.", opts: @opts)
@@ -1052,8 +1048,8 @@ class CUI.Layer extends CUI.DOM
 			placement = placement[0]
 			p = DOM.data(@__pointer[0], "placement")
 			if p
-				@__pointer.removeClass("ez-pointer-placement-#{p}")
-			@__pointer.addClass("ez-pointer-placement-#{placement}")
+				@__pointer.removeClass("cui-pointer-placement-#{p}")
+			@__pointer.addClass("cui-pointer-placement-#{placement}")
 			DOM.data(@__pointer[0], "placement", placement)
 
 			#make sure pointer is visible and measurable
@@ -1206,7 +1202,6 @@ class CUI.Layer extends CUI.DOM
 
 		@_onHide?(@, ev)
 		@
-
 
 	# use element to temporarily overwrite element used
 	# for positioning

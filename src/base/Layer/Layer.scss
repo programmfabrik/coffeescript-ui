@@ -72,7 +72,7 @@ body {
 
 //invisible pointer to get some distance to anchor element
 @mixin layer_distance_to_anchor_with_invisible_pointer($distance) {
-	@include ASSERT_TYPE(layer-pointer);
+	@include ASSERT_TYPE(cui-layer-pointer);
 	opacity: 0 !important;
 	margin: 0 !important;
 	border-bottom: $distance solid !important;
@@ -80,13 +80,13 @@ body {
 }
 
 
-.layer-pointer {
+.cui-layer-pointer {
 	position: absolute;
 	margin: $grid_size;
 	opacity: 0.8;
 	z-index: 2;
 
-  	&.ez-pointer-placement {
+	&.cui-pointer-placement {
 	  width: 0;
 	  height: 0;
 	  border-color: #000000;

@@ -41,10 +41,7 @@ class Playground extends Demo
 	getMultiLabel: ->
 		@getLabel(
 			multiline: true
-			text: """Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-					Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-
-					Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim."""
+			text: Playground.longText
 		)
 
 	getElements: (cls, opts={}, ele_opts) ->
@@ -109,12 +106,10 @@ class Playground extends Demo
 
 	getLayerTab: ->
 		dt = new DemoTable()
-		dt.addExample("Buttons & Tooltips",
-			new Buttonbar(buttons: @getButtons
-				tooltip:
-					text: "Tooltip!"
-			)
+		dt.addExample("Buttons",
+			new Buttonbar(buttons: @getButtons())
 		)
+
 		dt.addExample("Layer",
 			new Buttonbar(buttons: [
 				text: "Popover"
@@ -150,7 +145,34 @@ class Playground extends Demo
 								onClick: =>
 									mod.destroy()
 					mod.show()
-
+			,
+				text: "Tooltip (Short)"
+				switch: true
+				activate_initial: false
+				onActivate: (btn) =>
+					btn.___tt = new Tooltip
+						element: btn
+						text: "Tooltip with short Text"
+						on_click: false
+						on_hover: false
+					.show()
+				onDeactivate: (btn) =>
+					btn.___tt.destroy()
+					delete(btn.___tt)
+			,
+				text: "Tooltip (Long)"
+				switch: true
+				activate_initial: false
+				onActivate: (btn) =>
+					btn.___tt = new Tooltip
+						element: btn
+						text: Playground.longText
+						on_click: false
+						on_hover: false
+					.show()
+				onDeactivate: (btn) =>
+					btn.___tt.destroy()
+					delete(btn.___tt)
 			])
 		)
 
@@ -389,6 +411,10 @@ class Playground extends Demo
 		md.listenOnNode(tabs)
 		tabs
 
+	@longText: """Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+					Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+
+					Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim."""
 
 
 
