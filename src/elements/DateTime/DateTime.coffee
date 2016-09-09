@@ -801,6 +801,7 @@ class DateTime extends Input
 		header_year_month = new HorizontalLayout
 			maximize_vertical: false
 			maximize_horizontal: true
+			class: "cui-date-time-footer"
 			left:
 				content: new Buttonbar
 					class: "cui-date-time-header-month"

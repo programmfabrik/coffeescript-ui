@@ -471,7 +471,6 @@ i.cui-spin-stepped {
 .cui-button {
 	cursor: pointer;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
-	overflow: hidden;
 	white-space: nowrap;
 	flex-direction: row;
 	flex: 0 0 auto;
@@ -505,16 +504,26 @@ i.cui-spin-stepped {
 
 	&.cui-button-appearance-flat {
 		&,
-		&:active {
+		&:active,
+		&.cui-active {
 			color: unset;
 			background: none;
 			border: none;
 			box-shadow: none;
 		}
+
+		.cui-button-left,
+		.cui-button-right {
+			color: hsl(0,0%,30%);
+		}
 	}
 
 	// add padding around the whole button
 	border-radius: $border-radius;
+}
+
+.cui-button-size-mini {
+	font-size: 12px;
 }
 
 .cui-button-left,
@@ -541,6 +550,10 @@ i.cui-spin-stepped {
 
 .cui-button-center {
 	flex: 1 1 auto;
+	
+	&:first-child {
+		padding-left: 6px;
+	}
 
 	&:last-child {
 		padding-right: 6px;
@@ -559,6 +572,10 @@ i.cui-spin-stepped {
 		display: block;
 		padding: 0 3px;
 	}
+}
+
+.cui-button-select {
+	flex-direction: row;
 }
 
 a[role="button"].cui-button-appearance-link {
@@ -649,16 +666,18 @@ a[role="button"].cui-button-appearance-link {
 
 
 // Checkbox
-.cui-button[role="checkbox"],
-.cui-button[role="radio"] {
+.cui-checkbox {
 	padding: 0 4px;
 
 	&,
-	&:active,
-	&.cui-active {
+	&:active {
 		@include button-reset();
 	}
+}
 
+.cui-button-checkbox {
+	flex-direction: row;
+	
 	&.cui-active {
 		.cui-button-left i {
 			position: relative;
@@ -666,6 +685,32 @@ a[role="button"].cui-button-appearance-link {
 			border-color: hsl(240,3%,58%);
 			color: white;
 			text-shadow: 0 1px rgba(0,0,0,.2);
+		}
+
+		&[role="radio"] {
+			.cui-button-left i {
+				color: transparent;
+				text-shadow: none;
+				
+				// use radial gradient instead of border-radius
+				// for a nice round form (otherwise its more of an egg)
+				border-radius: none;
+				border-color: transparent;
+				background: radial-gradient(hsl(240,2%,61%), hsl(240,3%,58%));
+				
+				&:after { // radio dot
+					content: "";
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					width: 6px;
+					height: 6px;
+					margin: -3px 0 0 -3px;
+					border-radius: 100%;
+					background: white;
+					box-shadow: 0 1px rgba(0,0,0,.2);
+				}
+			}
 		}
 	}
 	
@@ -690,44 +735,20 @@ a[role="button"].cui-button-appearance-link {
 			box-shadow: 0 1px rgba(0,0,0,.05) inset;
 		}
 	}
-}
 
-.cui-button[role="radio"] {
-	.cui-button-left {
-		span,
-		i {
-			width: 14px;
-			height: 14px;
-			border-radius: 100%;
-		}
-	}
-	
-	&.cui-active {
-		.cui-button-left i {
-			color: transparent;
-			text-shadow: none;
-			
-			// use radial gradient instead of border-radius
-			// for a nice round form (otherwise its more of an egg)
-			border-radius: none;
-			border-color: transparent;
-			background: radial-gradient(hsl(240,2%,61%), hsl(240,3%,58%));
-			
-			&:after { // radio dot
-				content: "";
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				width: 6px;
-				height: 6px;
-				margin: -3px 0 0 -3px;
+	&[role="radio"] {
+		.cui-button-left {
+			span,
+			i {
+				width: 14px;
+				height: 14px;
 				border-radius: 100%;
-				background: white;
-				box-shadow: 0 1px rgba(0,0,0,.2);
+				margin-top: 1px;
 			}
 		}
 	}
 }
+
 // Panel
 .cui-panel-header {
 	background-color: #e6e6e6;
@@ -994,13 +1015,16 @@ a[role="button"].cui-button-appearance-link {
 
 // Layer
 
+.cui-tmpl-layer-root {
+	z-index: 1;
+}
+
 .cui-layer {
 	position: absolute;
 	background-color: white;
 	flex-direction: column;
 	overflow: auto;
 	margin: 10px;
-	z-index: 1;
 }
 
 .cui-layer-pointer {
@@ -1557,14 +1581,18 @@ a[role="button"].cui-button-appearance-link {
 
 // Form
 
+.cui-form-tr {
+	flex-direction: row;
+}
+
 .cui-form-table-has-not-left-column {
-	> tr > .cui-form-td.cui-form-left {
+	> .cui-form-tr > .cui-form-td.cui-form-left {
 		display: none;
 	}
 }
 
 .cui-form-table-has-not-right-column {
-	> tr > .cui-form-td.cui-form-right {
+	> .cui-form-tr > .cui-form-td.cui-form-right {
 		display: none;
 	}
 }
@@ -1572,7 +1600,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-form[cui-data-field-form-depth="0"] {
 	> .cui-vertical-layout-center {
 		> .cui-form-table {
-			> tr:last-child {
+			> .cui-form-tr:last-child {
 				border-color: #ff44ee;
 			}
 		}
@@ -1582,7 +1610,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-form:not([cui-data-field-form-depth="0"]) {
 	> .cui-vertical-layout-center {
 		> .cui-form-table {
-			> tr:last-child {
+			> .cui-form-tr:last-child {
 				border-style: none;
 			}
 		}
@@ -1627,6 +1655,10 @@ a[role="button"].cui-button-appearance-link {
 	& & {
 		margin: 0;
 	}
+}
+
+.cui-tr {
+	flex-direction: row;
 }
 
 .cui-form-td {
@@ -1718,6 +1750,22 @@ a[role="button"].cui-button-appearance-link {
 	background: hsl(0,0%,92%);
 }
 
+.cui-date-time-footer {
+	> .cui-horizontal-layout-left {
+		flex-grow: 1;
+		margin-right: $padding;
+		
+		.cui-label { // June, September
+			flex-grow: 1;
+    	justify-content: center;
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		flex-grow: 0 !important;
+	}
+}
+
 
 // DateTimeDate
 
@@ -1727,7 +1775,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-grow: 1;
 	font-size: 12px;
 
-	td {
+	.cui-td {
 		width: calc(100% / 8 - 1px); // 8 columns
 		text-align: right;
 		cursor: default;
@@ -1759,7 +1807,6 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-date-time-popover {
 	width: 250px;
-	height: 250px;
 
 	.cui-tmpl-date-time {
 		@include padding();
@@ -1783,11 +1830,6 @@ a[role="button"].cui-button-appearance-link {
 
 			.cui-date-time-calendar {
 				transition: margin-left 0.5s ease-out;
-				// this is the horizontal layout for
-				// month & year picker
-				> div {
-					align-items: center;
-				}
 			}
 			flex-direction: row;
 			overflow: hidden;
