@@ -483,9 +483,21 @@ class jQuery extends CUI.jQueryCompat
 $ = jQuery
 
 
-$element = (tagName, cls, attrs={}) ->
+$element = (tagName, cls, attrs={}, no_tables=false) ->
+	if not CUI.__ng__
+		no_tables = false
+
 	if not isEmpty(cls)
 		attrs.class = cls
+
+	if no_tables
+		if isEmpty(cls)
+			attrs.class = "cui-"+tagName
+		else
+			attrs.class = "cui-"+tagName+" "+attrs.class
+
+		tagName = "div"
+
 	node = CUI.DOM.element(tagName, attrs)
 	CUI.jQueryCompat.__wrapNode(node)
 
@@ -494,11 +506,11 @@ $video = (cls, attrs) -> $element("video", cls, attrs)
 $audio = (cls, attrs) -> $element("audio", cls, attrs)
 $source = (cls, attrs) -> $element("source", cls, attrs)
 $span = (cls, attrs) -> $element("span", cls, attrs)
-$table = (cls, attrs) -> $element("table", cls, attrs)
+$table = (cls, attrs) -> $element("table", cls, attrs, true)
 $img = (cls, attrs) -> $element("img", cls, attrs)
-$tr = (cls, attrs) -> $element("tr", cls, attrs)
-$th = (cls, attrs) -> $element("th", cls, attrs)
-$td = (cls, attrs) -> $element("td", cls, attrs)
+$tr = (cls, attrs) -> $element("tr", cls, attrs, true)
+$th = (cls, attrs) -> $element("th", cls, attrs, true)
+$td = (cls, attrs) -> $element("td", cls, attrs, true)
 $i = (cls, attrs) -> $element("i", cls, attrs)
 $p = (cls, attrs) -> $element("p", cls, attrs)
 $pre = (cls, attrs) -> $element("pre", cls, attrs)
@@ -524,7 +536,7 @@ $textEmpty = (text) ->
 	s
 
 $table_one_row = ->
-	$table().append($tbody().append($tr_one_row.apply(@, arguments)))
+	$table().append($tr_one_row.apply(@, arguments))
 
 $tr_one_row = ->
 	tr = $tr()

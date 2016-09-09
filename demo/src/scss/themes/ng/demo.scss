@@ -58,25 +58,24 @@ body.cui-demo-playground {
 }
 
 .cui-demo-table {
-	@include flex-table();
 
-	> tr {
+	> .cui-tr {
 		+ .cui-demo-divider {
-			> td {
+			> .cui-td {
 				padding-top: 20px;
 			}
 		}
 
-		> td {
+		> .cui-td {
 			vertical-align: top;
 			padding: 2px;
 		}
 
-		&.cui-demo-full-row > td {
+		&.cui-demo-full-row > .cui-td {
 			flex: 1 1 auto;
 		}
 
-		&:not(.cui-demo-full-row) > td {
+		&:not(.cui-demo-full-row) > .cui-td {
 			&:nth-child(1) {
 				width: 200px;
 				flex: 0 0 auto;

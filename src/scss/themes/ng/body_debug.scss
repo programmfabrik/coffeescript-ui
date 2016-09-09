@@ -84,38 +84,10 @@ span {
 	display: inline;
 }
 
-// Flex for selected TABLE
-
-@mixin flex-table() {
-	display: flex; // yes, this is fun :)
-	box-sizing: border-box;
-	flex: 0 0 auto;
-	flex-direction: column;
-
-	> tr {
-		display: flex; // yes, this is fun :)
-		box-sizing: border-box;
-		flex: 1 1 auto;
-		flex-direction: row;
-
-		> td {
-			display: flex; // yes, this is fun :)
-			box-sizing: border-box;
-			flex: 0 0 auto;
-			flex-direction: column;
-			align-items: stretch;
-		}
-	}
+.cui-tr {
+	flex: 1 1 auto;
+	flex-direction: row;
 }
-
-table {
-	&.cui-form-table,
-	&.cui-date-time-date {
-		@include flex-table()
-	}
-}
-
-
 
 // HorizontalLayout
 .cui-horizontal-layout {
