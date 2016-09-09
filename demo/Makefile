@@ -75,6 +75,9 @@ css_other:
 
 css: css_ng css_other
 
+watch:
+	watch 'sass --scss --sourcemap=inline src/scss/themes/ng/main.scss:$(target)/css/cui_demo_ng.css' ../src/scss/themes/ng
+
 jpg: $(jpg_files)
 	#
 	#
