@@ -24,7 +24,7 @@ class CUI.Layer extends CUI.DOM
 		# not affect the layer's opacity as it would to if the layer would be
 		# a child of backdrop
 		@__layer_root = new Template
-			class: "cui-layer-root-"+("cui-"+toDash(@__cls)+" "+@_class).trim().split(/\s+/).join(" cui-layer-root-")
+			class: "cui-layer-root-"+(toDash(@__cls)+" "+@_class).trim().split(/\s+/).join(" cui-layer-root-")
 			name: "layer-root"
 
 		@__backdropClickDisabled = false
