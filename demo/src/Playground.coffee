@@ -238,19 +238,19 @@ class Playground extends Demo
 
 		fields.push @getOptions(
 			form:
-				label: "Options[Radio]"
+				label: "Options [Radio]"
 			radio: true
 		)
 
 		fields.push @getOptions(
 			form:
-				label: "Options[Checkbox]"
+				label: "Options [Checkbox]"
 			radio: false
 		)
 
 		fields.push @getOptions(
 			form:
-				label: "Options[Sortable]"
+				label: "Options [Sortable]"
 			radio: false
 			name: "options_sorted"
 			sortable: true
@@ -260,7 +260,7 @@ class Playground extends Demo
 
 		fields.push @getOptions(
 			form:
-				label: "Options[Horizontal]"
+				label: "Options [Horizontal]"
 			radio: true
 			horizontal: true
 		)
@@ -274,10 +274,10 @@ class Playground extends Demo
 
 		fields.push new Input
 			form:
-				label: "Input[Textarea]"
+				label: "Input [Textarea]"
 			name: "textarea"
 			textarea: true
-			placeholder: "CUI.Input[Textarea]"
+			placeholder: "CUI.Input [Textarea]"
 
 		fields.push new Output
 			form:
@@ -286,7 +286,7 @@ class Playground extends Demo
 
 		fields.push new Password
 			form:
-				label: "Input[Password]"
+				label: "Input [Password]"
 			name: "password"
 
 		fields.push new MultiInput
@@ -297,7 +297,7 @@ class Playground extends Demo
 
 		fields.push new MultiInput
 			form:
-				label: "MultiInput[Textarea]"
+				label: "MultiInput [Textarea]"
 			spellcheck: true
 			textarea: true
 			control: multi_input_control
