@@ -9,12 +9,12 @@ class CUI.Element
 
 		@initOpts()
 
-		if Element.__dont_read_opts
+		if CUI.Element.__dont_read_opts
 			return
 
 		@readOpts()
 		if not @__initOptsCalled
-			CUI.warn("new "+@__cls+": Element::initOpts not called.", opts: @opts)
+			CUI.warn("new "+@__cls+": CUI.Element::initOpts not called.", opts: @opts)
 
 		@_onConstruct?(@)
 		return
@@ -47,14 +47,15 @@ class CUI.Element
 	# this is a hackery function to return just
 	# the opts keys for a given class
 	@getOptKeys: ->
-		Element.__dont_read_opt = true
+		CUI.Element.__dont_read_opt = true
 		element = new(@)
-		delete(Element.__dont_read_opts)
+		delete(CUI.Element.__dont_read_opts)
 		Object.keys(element.getCheckMap())
 
 	initOpts: ->
 		@__initOptsCalled = true
 		@addOpts
+			debug: {}
 			onConstruct:
 				check: Function
 			onDestroy:
@@ -78,18 +79,18 @@ class CUI.Element
 		assert(isString(key), "#{@__cls}.#{fn}", "key needs to be String", key: key, check_map: check_map)
 		if isNull(check_map)
 			return
-		assert($.isPlainObject(check_map), "#{@__cls}.#{fn}", "check_map needs to be Map", key: key, check_map: check_map)
+		assert(CUI.isPlainObject(check_map), "#{@__cls}.#{fn}", "check_map needs to be Map", key: key, check_map: check_map)
 		@__check_map[key] = check_map
 		@
 
 	addOpts: (map) ->
-		assert($.isPlainObject(map), "#{@__cls}.addOpts", "Parameter needs to be Map", map: map)
+		assert(CUI.isPlainObject(map), "#{@__cls}.addOpts", "Parameter needs to be Map", map: map)
 		for k, v of map
 			@addOpt(k, v)
 		@
 
 	mergeOpts: (map) ->
-		assert($.isPlainObject(map), "#{@__cls}.mergeOpts", "Parameter needs to be Map", map: map)
+		assert(CUI.isPlainObject(map), "#{@__cls}.mergeOpts", "Parameter needs to be Map", map: map)
 		for k, v of map
 			@mergeOpt(k, v)
 		@
@@ -99,12 +100,12 @@ class CUI.Element
 		@__check_map
 
 	readOpts: (opts = @opts, cls = @__cls, check_map = @__check_map) ->
-		Element.readOpts.call(@, opts, cls, check_map, true)
+		CUI.Element.readOpts.call(@, opts, cls, check_map, true)
 
 	@readOpts: (opts, cls, check_map, map_values) ->
 		if map_values != true and map_values != false
 			if @ != Element
-				assert(@ != window, "Element.readOpts", "this cannot be window.")
+				assert(@ != window, "CUI.Element.readOpts", "this cannot be window.")
 				map_values = true
 
 		if not CUI.defaults.asserts
@@ -123,8 +124,8 @@ class CUI.Element
 			return set_opts
 
 		# @__time("readOpts")
-		assert($.isPlainObject(opts), cls, "opts needs to be PlainObject.", opts: opts, check_map: check_map)
-		assert($.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
+		assert(CUI.isPlainObject(opts), cls, "opts needs to be PlainObject.", opts: opts, check_map: check_map)
+		assert(CUI.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
 		set_opts = {}
 		for k, v of check_map
 			# CUI.debug "check map", cls, k, v.check, v.check?.name
@@ -137,7 +138,7 @@ class CUI.Element
 			else
 				exists = false
 
-			if $.isFunction(v.mandatory)
+			if CUI.isFunction(v.mandatory)
 				mandatory = v.mandatory.call(@, value)
 			else
 				mandatory = v.mandatory
@@ -157,16 +158,16 @@ class CUI.Element
 				CUI.error("#{cls}: opts.#{k} is deprecated.", value)
 
 			if v.check and (not isNull(value) or mandatory)
-				if $.isArray(v.check)
+				if CUI.isArray(v.check)
 					assert(v.check.indexOf(value) > -1, cls, "opts.#{k} needs to be one of [\"#{v.check.join('\",\"')}\"].", opts: opts)
-				else if v.check == Boolean or v.check == String or v.check == jQuery or v.check == Function or v.check == Array
+				else if v.check == Boolean or v.check == String or v.check == Function or v.check == Array
 					assertInstanceOf.call(@, k, v.check, undefined, value)
-				else if $.isFunction(v.check) and not v.check.__super__ # super is from coffeescript and shows us that we have a "class" here
-					assert(isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends Element\" or \"extends Dummy\" to fix that.", opts: opts, key: k, value: v)
+				else if CUI.isFunction(v.check) and not v.check.__super__ # super is from coffeescript and shows us that we have a "class" here
+					assert(isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", opts: opts, key: k, value: v)
 					check = v.check.call(@, value)
 					if not(isNull(check) or isBoolean(check) or isString(check))
 						_check = check
-						CUI.error("Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
+						CUI.error("CUI.Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
 						if _check
 							check = true
 						else
@@ -177,8 +178,8 @@ class CUI.Element
 						else
 							err = "needs to match\n\n"+v.check.toString()
 						assert(false, cls, "opts.#{k}: #{err}.", opts: opts)
-				else if $.isPlainObject(v.check)
-					value = Element.readOpts(value, cls+" [opts."+k+"]", v.check)
+				else if CUI.isPlainObject(v.check)
+					value = CUI.Element.readOpts(value, cls+" [opts."+k+"]", v.check)
 				else if isNull(value) and mandatory
 					assert(false, cls, "opts.#{k} is mandatory, but is #{value}.", opts: opts)
 				else
@@ -187,7 +188,7 @@ class CUI.Element
 			# convenient mapping this to our space
 			if map_values
 				@["_#{k}"] = value
-				if @ instanceof Element
+				if @ instanceof CUI.Element
 					@__mapped_keys.push(k)
 
 			set_opts[k] = value
@@ -231,8 +232,8 @@ class CUI.Element
 
 	# proxy given methods to given element
 	proxy: (element, methods) ->
-		assert(element instanceof Element, "Element.proxy", "element given must be instance of Element.", element: element, methods: methods)
-		assert($.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
+		assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
+		assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
 		for method in methods
 			do (method) =>
 				@[method] = =>
@@ -253,6 +254,3 @@ class CUI.Element
 		@__destroyed
 
 	@uniqueId: 0
-
-
-Element = CUI.Element

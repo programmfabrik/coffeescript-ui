@@ -26,7 +26,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 					v instanceof Icon or isString(v)
 			buttons:
 				check: (v) ->
-					($.isArray(v) and v.length > 0) or $.isFunction(v)
+					(CUI.isArray(v) and v.length > 0) or CUI.isFunction(v)
 			footer_left: {}
 			header_right: {}
 

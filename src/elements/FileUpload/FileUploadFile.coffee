@@ -1,4 +1,4 @@
-class FileUploadFile extends Element
+class FileUploadFile extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 

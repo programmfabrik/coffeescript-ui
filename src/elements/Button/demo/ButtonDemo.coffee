@@ -723,7 +723,6 @@ class ButtonDemo extends Demo
 
 		@__demo_table.addExample("example 6", [ $div().append($div("cui-buttonbar-demo-margin-testers")).append(bb.DOM).append($div("cui-buttonbar-demo-margin-testers"))] )
 
-
 		@__addDivider("Using Styles on Buttons inside buttonbar")
 
 		bb = new Buttonbar(

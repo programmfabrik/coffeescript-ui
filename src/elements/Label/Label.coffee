@@ -95,7 +95,7 @@ class CUI.Label extends CUI.DOM
 				check: Boolean
 			manage_overflow:
 				check: (v) ->
-					$.isPlainObject(v) or v == true or v == false
+					CUI.isPlainObject(v) or v == true or v == false
 
 
 	readOpts: ->
@@ -122,7 +122,7 @@ class CUI.Label extends CUI.DOM
 		if isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(marked(@__currentText))
+			@setContent(CUI.DOM.htmlToNodes(marked(@__currentText)))
 		else
 			@setContent($text(@__currentText))
 		@
@@ -219,7 +219,7 @@ class CUI.Label extends CUI.DOM
 		CUI.DOM.setDimensions(@__label.map.content[0],
 			height: content_height + @__overflow_heights.button
 		)
-		CUI.DOM.setStylePx(@__label.map.content[0],
+		CUI.DOM.setStyle(@__label.map.content[0],
 			maxHeight: content_height + @__overflow_heights.button
 		)
 		Events.wait

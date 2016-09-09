@@ -11,9 +11,6 @@ class CUI
 	@start: ->
 		@getPathToScript()
 
-		$window = $(window)
-		$body = $(document.body)
-
 		trigger_viewport_resize = =>
 			CUI.info("CUI: trigger viewport resize.")
 			Events.trigger
@@ -46,9 +43,9 @@ class CUI
 						ev.preventDefault()
 				return
 
-		$body[0].scrollTop=0
+		document.body.scrollTop=0
 
-		if not $(".ez-tmpl-dummy").length
+		if not DOM.matchSelector(document.documentElement, ".cui-tmpl-dummy").length
 			@loadHTMLFile("easydbui.html")
 			.done =>
 				@ready()
@@ -122,7 +119,7 @@ class CUI
 
 	@getPathToScript: ->
 		if not @pathToScript
-			for s, idx in $("script")
+			for s, idx in DOM.matchSelector(document.documentElement, "script")
 				if m = s.src.match("(.*)/easydbui.js")
 					@pathToScript = m[1]
 					@script = s
@@ -142,14 +139,14 @@ class CUI
 			responseType: "text"
 		.start()
 		.done (data) ->
-			div.html(data)
-			div.appendTo(document.body)
+			div.innerHTML = data
+			document.body.appendChild(div)
 		.fail (xhr) ->
 			CUI.error("CUI.loadHTMLFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
 
 	@getViewport: ->
-		width: $(window).width()
-		height: $(window).height()
+		width: window.innerWidth
+		height: window.innerHeight
 
 	@ready: (func) ->
 		if func instanceof Function
@@ -212,7 +209,7 @@ class CUI
 
 			scroll()
 
-		jQuery.when.apply($, promises)
+		CUI.when(promises)
 
 	@defaults:
 		FileUpload:
@@ -273,7 +270,7 @@ class CUI
 				return
 
 
-			if $.isFunction(args[idx])
+			if CUI.isFunction(args[idx])
 				if __this != CUI
 					ret = args[idx].call(__this)
 				else
@@ -385,7 +382,7 @@ class CUI
 
 
 	@setTimeout: (_func, ms=0, track) ->
-		if $.isPlainObject(_func)
+		if CUI.isPlainObject(_func)
 			ms = _func.ms or 0
 			track = _func.track
 			func = _func.call
@@ -400,7 +397,7 @@ class CUI
 			else
 				track = true
 
-		assert($.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
+		assert(CUI.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
 		timeout =
 			call: =>
 				timeout.__isRunning = true
@@ -428,7 +425,7 @@ class CUI
 	# returns a deferred, which resolves when
 	# the callback is done
 	@scheduleCallback: (_opts) ->
-		opts = Element.readOpts _opts, "CUI.scheduleCallback",
+		opts = CUI.Element.readOpts _opts, "CUI.scheduleCallback",
 			call:
 				mandatory: true
 				check: Function
@@ -481,7 +478,7 @@ class CUI
 	# call: function callback to cancel
 	# return: true if found, false if not
 	@scheduleCallbackCancel: (_opts) ->
-		opts = Element.readOpts _opts, "CUI.scheduleCallbackCancel",
+		opts = CUI.Element.readOpts _opts, "CUI.scheduleCallbackCancel",
 			call:
 				mandatory: true
 				check: Function
@@ -569,7 +566,7 @@ class CUI
 		for k, v of mergeMap
 			if not targetMap.hasOwnProperty(k)
 				targetMap[k] = v
-			else if $.isPlainObject(targetMap[k]) and $.isPlainObject(v)
+			else if CUI.isPlainObject(targetMap[k]) and CUI.isPlainObject(v)
 				CUI.mergeMap(targetMap[k], v)
 		targetMap
 
@@ -593,7 +590,7 @@ class CUI
 			encode_func = (v) -> encodeURIComponent(v)
 
 		for k, v of params
-			if $.isArray(v)
+			if CUI.isArray(v)
 				for _v in v
 					url.push(encode_func(k) + connect_pair + encode_func(_v))
 			else
@@ -659,13 +656,21 @@ class CUI
 		v instanceof Function
 
 	@isPlainObject: (v) ->
-		jQuery.isPlainObject(v)
+		v and typeof(v) == "object" and v.constructor == Object
+
+	@isEmptyObject: (v) ->
+		for k of v
+			return false
+		return true
 
 	@isMap: (v) ->
-		jQuery.isPlainObject(v)
+		@isPlainObject(v)
 
 	@isArray: (v) ->
-		jQuery.isArray(v)
+		v instanceof Array
+
+	@isString: (s) ->
+		typeof(s) == "string"
 
 	@downloadData: (data, fileName) ->
 		json = JSON.stringify(data)
@@ -795,8 +800,6 @@ class CUI
 	@warn: ->
 		console.warn.apply(console, arguments)
 
-
-assert(jQuery().jquery >= "2.1.0", "easydbui", "You need jQuery version >= 2.1.0 loaded before loading easydbui.js. Your version is \"#{jQuery().jquery}\".")
 
 CUI.ready =>
 

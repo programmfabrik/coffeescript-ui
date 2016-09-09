@@ -1,13 +1,25 @@
 class MenuDemo extends Demo
+	initOpts: ->
+		super()
+		@addOpts
+			blur:
+				mandatory: true
+				default: false
+				check: Boolean
+
 	display: ->
 
 		demoLabel = $img("", src: "css/pics/Schmetterling.jpg")
-
 		@demo_table = new DemoTable('cui-menu-demo')
+		@listenOnNode(demoLabel)
+		@demo_table.addExample("Context Menu", demoLabel)
+		@demo_table.table
 
+
+	listenOnNode: (node) ->
 		Events.listen
 			type: "contextmenu"
-			node: demoLabel
+			node: node
 
 			call: (ev) ->
 				if ev.ctrlKey()
@@ -17,8 +29,8 @@ class MenuDemo extends Demo
 				mouse_coordinates = getCoordinatesFromEvent(ev)
 				CUI.debug "mouse coordinates", mouse_coordinates
 
-
 				menu_items = [
+					icon_left: "play"
 					text: "Starter"
 					icon_right: new Icon(class: "fa-angle-double-down")
 					menu:
@@ -34,7 +46,8 @@ class MenuDemo extends Demo
 				,
 					text: "A really really really long Main Course"
 				,
-					text: "A shorty."
+					icon: "trash"
+					text: "Trash"
 				,
 					divider: true
 				,
@@ -79,7 +92,7 @@ class MenuDemo extends Demo
 				(new Menu
 					backdrop:
 						policy: "click"
-						blur: true
+						blur: @_blur
 					itemList:
 						onClick: (ev, btn) ->
 							alert(btn.getText())
@@ -95,10 +108,6 @@ class MenuDemo extends Demo
 				)
 				return
 
-		@demo_table.addExample("Context Menu", demoLabel)
-		@demo_table.table
-
-
 
 Events.listen
 	node: document
@@ -109,4 +118,4 @@ Events.listen
 		ev.preventDefault()
 
 
-Demo.register(new MenuDemo())
+Demo.register(new MenuDemo(blur: true))

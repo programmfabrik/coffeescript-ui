@@ -9,7 +9,7 @@ class LayerDemo extends Demo
 			catch ex
 				console.error "LayerDemo", ex
 
-			if not $.isPlainObject(@__data)
+			if not CUI.isPlainObject(@__data)
 				@__data = {}
 				@saveData()
 
@@ -169,7 +169,7 @@ class LayerDemo extends Demo
 					backdrop = {}
 				backdrop.blur = true
 
-		layer = new Layer
+		layer = new CUI.Layer
 			element: element
 			placements: @__data.placements
 			placement: @__data.placement

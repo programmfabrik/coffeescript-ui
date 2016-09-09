@@ -552,7 +552,7 @@ class ListView extends SimplePane
 		@rowsOrder.indexOf(parseInt(row_i))
 
 	getColIdx: (display_col_i) ->
-		assert($.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
+		assert(CUI.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
 		@colsOrder[display_col_i]
 
 	getRowIdx: (display_row_i) ->
@@ -599,10 +599,14 @@ class ListView extends SimplePane
 
 
 	rowAddClass: (row_i, cls) ->
-		@getRow(row_i).addClass(cls)
+		for row in @getRow(row_i)
+			DOM.addClass(row, cls)
+		@
 
 	rowRemoveClass: (row_i, cls) ->
-		@getRow(row_i).removeClass(cls)
+		for row in @getRow(row_i)
+			DOM.removeClass(row, cls)
+		@
 
 	getColdef: (col_i) ->
 		@__cols[col_i]
@@ -667,13 +671,13 @@ class ListView extends SimplePane
 			rect.width = _rect.width
 			break
 
-		if $.isEmptyObject(rect)
+		if CUI.isEmptyObject(rect)
 			return null
 
 		rect
 
 	getCellGridRectByNode: (_cell) ->
-		assert(isElement(_cell), "ListView.getCellGridRectByNode", "Cell node needs to be instance of jQuery.", cell: _cell)
+		assert(isElement(_cell), "ListView.getCellGridRectByNode", "Cell node needs to be instance of HTMLElement.", cell: _cell)
 
 		if not @_autoLayout
 			cell = _cell.parent() # this is the TD, we can measure
@@ -784,7 +788,7 @@ class ListView extends SimplePane
 		@
 
 	getRow: (row_i) ->
-		jQuery(@__rows[row_i])
+		@__rows[row_i]
 
 	getBottom: ->
 		@__bottomQuadrants
@@ -1250,8 +1254,7 @@ class ListView extends SimplePane
 
 			if mode == "replace"
 				node = outer.firstChild
-				DOM.destroy(row[0])
-				row.replaceWith(node)
+				CUI.DOM.replaceWith(row, node)
 
 		# check for overflow in fixed qudrant
 		if @fixedRowsCount > 0
@@ -1349,7 +1352,7 @@ class ListView extends SimplePane
 	__getColClass: (col_i) ->
 		col_cls = @__colClasses?[col_i]
 		cls = []
-		if $.isArray(col_cls)
+		if CUI.isArray(col_cls)
 			cls.push.apply(cls, col_cls)
 		else if not isEmpty(col_cls)
 			cls.push(col_cls)

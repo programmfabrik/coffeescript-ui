@@ -2,7 +2,7 @@
 # {VerticalLayout}, {BorderLayout}, {Toolbar}, {Pane}, etc.
 #
 # It features an automatic {Buttonbar} generation for all panes (see {Layout#append})
-class CUI.Layout extends DOM
+class CUI.Layout extends CUI.DOM
 
 	#Construct a new Layout.
 	#
@@ -38,7 +38,7 @@ class CUI.Layout extends DOM
 		for pn in @getSupportedPanes()
 			@addOpt(pn,
 				check: (v) ->
-					$.isPlainObject(v) or v == false
+					CUI.isPlainObject(v) or v == false
 			)
 
 	readOpts: ->
@@ -110,7 +110,7 @@ class CUI.Layout extends DOM
 
 		if @_absolute
 			@addClass("cui-absolute")
-			assert(@DOM.attr("cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
+			assert(CUI.DOM.getAttribute(@DOM, "cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
 
 			DOM.waitForDOMInsert(node: @DOM)
 			.done =>
@@ -146,7 +146,7 @@ class CUI.Layout extends DOM
 		else
 			has_flex_handles = false
 
-		@__layout.DOM.attr("has-flex-handles", (if has_flex_handles then "true" else "false"))
+		CUI.DOM.setAttribute(@__layout.DOM, "has-flex-handles", (if has_flex_handles then true else false))
 
 		# every pane gets a method "<pane>: ->" to retrieve
 		# the DOM element from the template
@@ -190,7 +190,7 @@ class CUI.Layout extends DOM
 				check:
 					label:
 						check: (v) ->
-							v instanceof Label or $.isPlainObject(v)
+							v instanceof Label or CUI.isPlainObject(v)
 					hidden:
 						default: false
 						check: Boolean
@@ -211,7 +211,7 @@ class CUI.Layout extends DOM
 	# @param [String] pane_name name of the pane
 	__initPane: (options, pane_name) ->
 		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
-		opts = Element.readOpts(options, "new Layout.__initPane", @getPaneCheckMap())
+		opts = CUI.Element.readOpts(options, "new Layout.__initPane", @getPaneCheckMap())
 
 		@append(opts.content, pane_name)
 		fh = opts.flexHandle
@@ -228,7 +228,7 @@ class CUI.Layout extends DOM
 				fh_inst.close()
 
 			if fh.class
-				fh_inst.getHandle().addClass(fh.class)
+				CUI.DOM.addClass(fh_inst.getHandle(), fh.class)
 
 		if opts.class
 			@__layout.addClass(opts.class, pane_name)
@@ -265,18 +265,18 @@ class CUI.Layout extends DOM
 
 
 	__callAutoButtonbar: (value, key) ->
-		if $.isFunction(value)
+		if CUI.isFunction(value)
 			value = value(@)
 
 		get_value = (v) ->
-			if $.isPlainObject(v)
+			if CUI.isPlainObject(v)
 				return new CUI.defaults.class.Button(v)
 			else
 				return v
 
 		value = get_value(value)
 
-		if $.isArray(value)
+		if CUI.isArray(value)
 			for _v in value
 				v = get_value(_v)
 				if v instanceof Button
@@ -315,9 +315,9 @@ class CUI.Layout extends DOM
 
 	@setAbsolute: (layout) ->
 		# CUI.error "Layout.setAbsolute", layout[0]
-		assert(isElement(layout), "Layout.setAbsolute", "layout needs to be instanceof jQuery", layout: layout)
+		assert(isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
 
-		direction = layout.attr("cui-absolute-container")
+		direction = CUI.DOM.getAttribute(layout, "cui-absolute-container")
 		switch direction
 			when "row"
 				rect_key = "marginBoxWidth"
@@ -326,51 +326,50 @@ class CUI.Layout extends DOM
 				rect_key = "marginBoxHeight"
 				rect_check_key = "marginBoxWidth"
 			else
-				assert(false, "Layout.setAbsolute", "cui-absolute-container is not set for .cui-absolute container or not set to row or column.", container: layout[0], direction: direction)
+				assert(false, "Layout.setAbsolute", "cui-absolute-container is not set for .cui-absolute container or not set to row or column.", container: layout, direction: direction)
 
 		# measure all children
 		values = []
-		children = []
+		children = DOM.children(layout)
 
-		for _child, idx in layout.children()
-			child = children[idx] = $(_child)
-			values[idx] = DOM.getDimensions(_child)[rect_key]
-
-			# CUI.debug idx, values[idx], func, child[0]
+		for child, idx in children
+			values[idx] = DOM.getDimensions(child)[rect_key]
 
 		abs_values = values.join(",")
-		check_value = DOM.getDimensions(layout[0])[rect_check_key]+""
+		check_value = DOM.getDimensions(layout)[rect_check_key]+""
 
-		if layout.attr("cui-absolute-values") == abs_values and
-			layout.attr("cui-absolute-check-value") == check_value
+		# console.error "abs_value:", CUI.DOM.getAttribute(layout, "cui-absolute-values"), abs_values, CUI.DOM.getAttribute(layout, "cui-absolute-check-value"), check_value
+
+		if CUI.DOM.getAttribute(layout, "cui-absolute-values") == abs_values and
+			CUI.DOM.getAttribute(layout, "cui-absolute-check-value") == check_value
 				# nothing to do
 				return false
 
 		# CUI.debug layout.attr("cui-absolute-values"), abs_values
 		# CUI.debug layout.attr("cui-absolute-check-value"), check_value
 
-		if layout.attr("cui-absolute-check-value") != check_value
-			layout.attr("cui-absolute-check-value", check_value)
+		if CUI.DOM.getAttribute(layout, "cui-absolute-check-value") != check_value
+			CUI.DOM.setAttribute(layout, "cui-absolute-check-value", check_value)
 
-		if layout.attr("cui-absolute-values") != abs_values
-			layout.attr("cui-absolute-values", abs_values)
+		if CUI.DOM.getAttribute(layout, "cui-absolute-values") != abs_values
+			CUI.DOM.setAttribute(layout, "cui-absolute-values", abs_values)
 			# CUI.debug(txt, values)
 
 			for child, idx in children
-				set = child.attr("cui-absolute-set")
+				set = CUI.DOM.getAttribute(child, "cui-absolute-set")
 				if not set
 					continue
 
 				css = {}
 				for key in set.split(",")
 					switch key
-						when "left","top"
+						when "left", "top"
 							# this is left hand
 							if idx > 0
 								value = values.slice(0, idx).reduce((a,b) -> a+b)
 							else
 								value = 0
-						when "right","bottom"
+						when "right", "bottom"
 							if idx + 1 < values.length
 								value = values.slice(idx+1).reduce((a,b) -> a+b)
 							else
@@ -379,8 +378,7 @@ class CUI.Layout extends DOM
 							assert(false, "Layout.setAbsolute: Unknown key #{key} in cui-absolute-set.")
 					# CUI.debug idx, key, value
 					css[key] = value
-				# CUI.debug "setting layout on container", css, child[0]
-				child.css(css)
+				DOM.setStyle(child, css)
 
 		# Events.trigger
 		# 	type: "viewport-resize"
@@ -391,8 +389,7 @@ class CUI.Layout extends DOM
 	@__all: ->
 		layouts = []
 		changed = 0
-		for _layout in jQuery(".cui-layout.cui-absolute")
-			layout = $(_layout)
+		for layout, idx in DOM.matchSelector(document.documentElement, ".cui-layout.cui-absolute")
 			if Layout.setAbsolute(layout)
 				changed++
 
@@ -412,5 +409,5 @@ Layout = CUI.Layout
 CUI.ready ->
 	Events.listen
 		type: ["viewport-resize", "content-resize"]
-		call: =>
+		call: (ev) ->
 			Layout.all()

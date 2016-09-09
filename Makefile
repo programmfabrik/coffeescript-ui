@@ -5,7 +5,7 @@ easydbui_js = $(target)/easydbui.js
 
 coffee_files = src/base/Common.coffee \
 	src/base/CUI.coffee \
-	src/base/jQuery.fn.coffee \
+	src/base/jQueryCompat.coffee \
 	src/base/Deferred/Deferred.coffee \
 	src/base/Deferred/Promise.coffee \
 	src/base/Deferred/when.coffee \
@@ -130,8 +130,9 @@ test_files = src/tests/Test.coffee.js \
 	src/tests/Test_MoveInArray.coffee.js \
 	src/tests/Test_Promise.coffee.js
 
-thirdparty_files = thirdparty/*/jquery-2.1.0.js \
-	thirdparty/moment/*js \
+# thirdparty/*/jquery-2.1.0.js \
+
+thirdparty_files = thirdparty/moment/*js \
 	thirdparty/moment/*json \
 	thirdparty/marked/lib/marked.js
 
@@ -155,7 +156,6 @@ html_files = \
 	src/elements/Block/Block.html \
 	src/elements/WaitBlock/WaitBlock.html \
 	src/elements/ItemList/ItemList.html \
-	src/elements/Modal/Modal.html \
 	src/elements/Panel/Panel.html \
 	src/elements/Pane/Pane.html \
 	src/elements/StickyHeader/StickyHeader.html \

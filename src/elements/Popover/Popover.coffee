@@ -22,8 +22,8 @@ class Popover extends Modal
 		@enableBackdropClick()
 
 	getPlacements: ->
-		return Layer::getPlacements.apply(@, arguments)
+		return CUI.Layer::getPlacements.apply(@, arguments)
 
 	getPositioner: ->
-		Layer::getPositioner.apply(@, arguments)
+		CUI.Layer::getPositioner.apply(@, arguments)
 

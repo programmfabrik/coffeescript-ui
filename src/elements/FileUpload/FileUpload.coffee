@@ -1,4 +1,4 @@
-class FileUpload extends Element
+class FileUpload extends CUI.Element
 	constructor: (@opts = {}) ->
 		super(@opts)
 		@__files = []
@@ -227,12 +227,12 @@ class FileUpload extends Element
 		else
 			multiple = true
 
-		assert(dropZone instanceof jQuery and dropZone.length == 1, "FileUpload.initDropZone", "Drop Zone needs to be jQuery object with one DOM element or contain such an element in its property \"DOM\".", dropZone: dropZone)
+		assert(isElement(dropZone) or isElement(dropZone?.DOM), "FileUpload.initDropZone", "Drop Zone needs to be instanceof HTMLElement or contain such an element in its property \"DOM\".", dropZone: dropZone)
 
 		Events.ignore
 			instance: @
 
-		dropZone.addClass("cui-file-upload-drop-zone")
+		dropZone.classList.add("cui-file-upload-drop-zone")
 
 		Events.listen
 			node: dropZone

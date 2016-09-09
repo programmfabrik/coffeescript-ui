@@ -1,4 +1,4 @@
-class DigiDisplay extends DOM
+class DigiDisplay extends CUI.DOM
 
 	constructor: (@opts={}) ->
 		super(@opts)

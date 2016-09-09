@@ -1,4 +1,4 @@
-class Tab extends DOM
+class Tab extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -19,7 +19,7 @@ class Tab extends DOM
 			@append(@_content_placeholder)
 			@__has_placeholder = true
 
-		if $.isFunction(@_content)
+		if CUI.isFunction(@_content)
 			if not @_load_on_show
 				@loadContent()
 		else if @_content
@@ -32,6 +32,7 @@ class Tab extends DOM
 			radio: "tabs"
 			class: "tab-header-button"
 			size: "big"
+			group: "tabs"
 			text: @_text
 			attr: attr
 			active: false
@@ -66,7 +67,7 @@ class Tab extends DOM
 			content:
 				mandatory: true
 				check: (v) ->
-					v instanceof jQuery or $.isFunction(v) or isString(v) or $.isArray(v) or v instanceof Element
+					isContent(v) or isString(v)
 			onFirstActivate:
 				check: Function
 			onActivate:

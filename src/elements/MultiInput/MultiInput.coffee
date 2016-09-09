@@ -129,7 +129,7 @@ class MultiInput extends DataFieldInput
 		@__inputs = []
 
 		for key, idx in @_control.getKeys()
-			assert($.isPlainObject(key), "new #{@__cls}", "opts.keys[#{idx}] needs to be PlainObject.", opts: @opts)
+			assert(CUI.isPlainObject(key), "new #{@__cls}", "opts.keys[#{idx}] needs to be PlainObject.", opts: @opts)
 			assert(isString(key.name), "new #{@__cls}", "opts.keys[#{idx}].name needs to be String.", opts: @opts)
 			assert(isString(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag needs to be String.", opts: @opts)
 

@@ -16,7 +16,7 @@ class Checkbox extends DataFieldInput
 				check: String
 			content:
 				check: (v) ->
-					((v instanceof jQuery and v.length == 1) or v instanceof Element)
+					!!(isElement(v) or v instanceof CUI.Element)
 			active:
 				default: false
 				check: Boolean

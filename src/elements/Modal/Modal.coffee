@@ -57,7 +57,7 @@ class CUI.Modal extends CUI.LayerPane
 		if not @["_#{pname}"]
 			return
 
-		if $.isPlainObject(_btn)
+		if CUI.isPlainObject(_btn)
 			btn = new Button(_btn)
 		else
 			btn = _btn

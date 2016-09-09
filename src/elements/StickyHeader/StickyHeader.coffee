@@ -1,4 +1,4 @@
-class StickyHeader extends DOM
+class StickyHeader extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 

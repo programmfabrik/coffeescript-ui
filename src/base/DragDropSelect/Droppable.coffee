@@ -166,7 +166,7 @@ class Droppable extends DragDropSelect
 		@after = null
 
 	preparePositioners: ($el) ->
-		@parent = $el.offsetParent()
+		@parent = $($el.offsetParent)
 		assert @parent.length, "Droppable.preparePositioners", "No parent found for element", element: $el
 		# @makeElementRelative @parent
 

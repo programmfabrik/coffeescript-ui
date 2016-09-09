@@ -9,7 +9,7 @@ class DataTable extends DataFieldInput
 			fields:
 				mandatory: true
 				check: (v) ->
-					$.isArray(v) or $.isFunction(v)
+					CUI.isArray(v) or CUI.isFunction(v)
 			new_rows:
 				default: "edit"
 				check: ["edit", "append", "remove_only", "none"]
@@ -196,7 +196,7 @@ class DataTable extends DataFieldInput
 
 		@rows = copyObject(@getValue(), true)
 
-		assert($.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
+		assert(CUI.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
 
 		if @rows
 			for row, idx in @rows

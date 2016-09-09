@@ -32,14 +32,14 @@ class Sortable extends Draggable
 		@_helper_remove_always = true
 
 	get_child_number: (child) ->
-		for c, idx in @element.children()
+		for c, idx in @element.children
 			if c == child
 				return idx
 		null
 
 	move_element: (source_idx, dest_idx) ->
-		$source = @element.children(":nth-child(#{source_idx+1})")
-		$dest = @element.children(":nth-child(#{dest_idx+1})")
+		$source = @element.children[source_idx]
+		$dest = @element.children[dest_idx]
 		# CUI.debug "moving from", source_idx, $source[0], "to", dest_idx, $dest[0]
 		if source_idx < dest_idx
 			$dest.after($source)
@@ -49,19 +49,19 @@ class Sortable extends Draggable
 	do_drag: (ev, $target, diff) ->
 		if not globalDrag.dragStarted
 			@init_helper()
-			globalDrag.start_idx = @get_child_number(globalDrag.$source[0])
+			globalDrag.start_idx = @get_child_number(globalDrag.$source)
 			# CUI.debug "INIT HELPER", globalDrag
 
 		@position_helper(ev)
 
 		# find the closest child of the target
-		if $target.closest(@element).length
-			target_child = $target[0]
-			while target_child != @element[0]
-				if target_child.parentNode == @element[0]
-					if globalDrag.$source[0] != target_child  and not $(target_child).hasClass(@_ignoreClass)
+		if DOM.closest($target, @element)
+			target_child = $target
+			while target_child != @element
+				if target_child.parentNode == @element
+					if globalDrag.$source != target_child  and not target_child.hasClass(@_ignoreClass)
 
-						source_idx = @get_child_number(globalDrag.$source[0])
+						source_idx = @get_child_number(globalDrag.$source)
 						dest_idx = @get_child_number(target_child)
 
 						@move_element(source_idx, dest_idx)
@@ -71,8 +71,10 @@ class Sortable extends Draggable
 
 	end_drag: (ev) ->
 		# move dragged object into position
-		@element.children(".drag-drop-select-transparent").remove()
-		curr_idx = @get_child_number(globalDrag.$source[0])
+		for el in CUI.DOM.children(@element, ".drag-drop-select-transparent")
+			CUI.DOM.remove(el)
+
+		curr_idx = @get_child_number(globalDrag.$source)
 		if ev.getType() == "mouseup"
 			globalDrag.helperNode.remove()
 			globalDrag.helperNode = null
@@ -80,7 +82,7 @@ class Sortable extends Draggable
 				if globalDrag.start_idx != curr_idx
 					@_sorted(ev, globalDrag.start_idx, curr_idx)
 		else
-			curr_idx = @get_child_number(globalDrag.$source[0])
+			curr_idx = @get_child_number(globalDrag.$source)
 			@move_element(curr_idx, globalDrag.start_idx)
 			# super will animate the helper class back to
 			# its origin

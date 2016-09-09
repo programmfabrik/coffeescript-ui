@@ -1,10 +1,10 @@
-class Demo extends DOM
+class Demo extends CUI.DOM
 
 	display: ->
 		"#{@__cls}.display: needs implementation."
 
 	getRootCls: ->
-		"ez-demo-#{toDash(@__cls)}"
+		"cui-demo-#{toDash(@__cls)}"
 
 	setConsole: (console) ->
 		assert(console instanceof DemoConsole, "Demo.setConsole", "console needs to be instance of DemoConsole.")
@@ -41,11 +41,11 @@ class Demo extends DOM
 			text: txt
 
 
-Demo.demos = []
+	@demos: []
 
-Demo.register = (demo) ->
-	assert(demo instanceof Demo, "Demo.register", "demo must be instanceof Demo", demo: demo)
-	Demo.demos.push(demo)
+	@register: (demo) ->
+		assert(demo instanceof Demo, "Demo.register", "demo must be instanceof Demo", demo: demo)
+		@demos.push(demo)
 
 class DemoConsole extends CUI.SimplePane
 	constructor: (@opts = {}) ->
@@ -78,7 +78,7 @@ class DemoConsole extends CUI.SimplePane
 		@__console.log(txt, markdown)
 
 
-class RunDemo extends Element
+class RunDemo extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@demos = []
@@ -90,11 +90,6 @@ class RunDemo extends Element
 			node: window
 			call: (ev) =>
 				@displayDemo()
-
-		@root = new Template
-			name: "demo-root"
-			map:
-				body: true
 
 		groups = ["Core", "Base", "Extra", "Demo", "Test"].reverse()
 
@@ -116,17 +111,18 @@ class RunDemo extends Element
 					old_group = null
 
 					for demo in demos
-						demo.getGroup()
 						if old_group != demo.getGroup()
 							old_group = demo.getGroup()
-							items.push(label: old_group)
 
-						group_sort = (1000-(idxInArray(demo.getGroup(), groups)+1))+""
+							if not isEmpty(old_group)
+								items.push(label: old_group)
+
+						# group_sort = (1000-(idxInArray(demo.getGroup(), groups)+1))+"_"+demo.getName()
 
 						do (demo) =>
 							items.push
 								active: demo == @current_demo
-								# text: demo.getGroup()+" - "+demo.getName()
+								# text: demo.getGroup() + group_sort
 								text: demo.getName()
 								_demo: demo
 								onClick: =>
@@ -169,7 +165,6 @@ class RunDemo extends Element
 			text: ""
 
 		@center_layout = new HorizontalLayout
-			absolute: true
 			center:
 				class: "cui-demo-pane-center"
 				content:
@@ -209,10 +204,10 @@ class RunDemo extends Element
 										]
 					]
 			center:
+				class: "cui-demo-root-center"
 				content: @center_layout
 
-		@root.DOM.prependTo(document.body)
-		@root.append( @main_menu_pane )
+		CUI.DOM.prepend(document.body, @main_menu_pane.DOM)
 
 		CUI.loadHTMLFile("demo/easydbui_demo.html")
 		.done =>
@@ -234,7 +229,7 @@ class RunDemo extends Element
 		#bd = @root.map.body.empty()
 
 		if @current_demo
-			bd.removeClass(@current_demo.getRootCls())
+			CUI.DOM.removeClass(document.body, @current_demo.getRootCls())
 			@current_demo.undisplay()
 
 		txt = "Demo.displayDemo #{demo_name}"
@@ -247,7 +242,9 @@ class RunDemo extends Element
 		if demo_content.DOM
 			demo_content = demo_content.DOM
 
-		if not $(demo_content).hasClass("cui-pane")
+		console.debug "received demo content", demo, demo_content
+
+		if CUI.isArray(demo_content) or not demo_content.classList.contains("cui-pane")
 			demo_content = new Pane
 				center:
 					content:
@@ -266,11 +263,8 @@ class RunDemo extends Element
 					0
 
 		CUI.setTimeout(end_wall_time, 0)
-
-		#@root.append(, "body").addClass(demo.getRootCls())
-		# @root.triggerDOMInsert()
-
 		@current_demo = demo
+		CUI.DOM.addClass(document.body, @current_demo.getRootCls())
 		@
 
 
@@ -305,7 +299,7 @@ class DemoTable
 	addExample: (description, div, controls=null) ->
 		@example_counter+=1
 		label = new Label
-			text: @example_counter+". "+description
+			text: description # @example_counter+". "+description
 			multiline: true
 
 		row_elements = [label,div]

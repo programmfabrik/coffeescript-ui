@@ -1,12 +1,13 @@
 class ListViewTreeDemo extends Demo
-	constructor: (@opts={}) ->
-		super(@opts)
 
 	#load filesystem tree, used as example content for list views
 	loadFiles: ->
 		dfr = new CUI.Deferred()
 
-		jQuery.get(CUI.pathToScript+"/demo/files.txt")
+		new CUI.XHR
+			responseType: "text"
+			url: CUI.pathToScript+"/demo/files.txt"
+		.start()
 		.done (data) =>
 			@files = []
 			for line in data.split("\n")
@@ -150,25 +151,32 @@ class ListViewTreeDemo extends Demo
 			footer_left: "This Footer belongs to the Tabs"
 			tabs: [
 				text: "ListView not maximized"
-				content: unmaximized_list_view.render()
+				content: unmaximized_list_view.render(false)
 #			,
 #				text: "ListView maximized"
 #				content: maximized_list_view.render()
 			]
+
+		unmaximized_list_view.root.open()
 
 		connected_list_view_layout = new VerticalLayout
 			class: "cui-tree-list-view-demo-connected-layout"
 			maximize: true
 			center:
 				content: [
-					connected_list_view1.render()
-					connected_list_view2.render()
-					connected_list_view3.render()
+					connected_list_view1.render(false)
+					connected_list_view2.render(false)
+					connected_list_view3.render(false)
 				]
 
+		connected_list_view1.root.open()
+		connected_list_view2.root.open()
+		connected_list_view3.root.open()
 
-		@root_layout.getLayout().replace(first_list_view.render(),"left")
+
+		@root_layout.getLayout().replace(first_list_view.render(false),"left")
 		first_list_view.appendRow(new ListViewTreeDemoHeaderNode())
+		first_list_view.root.open()
 		return @root_layout.DOM
 
 		@root_layout.getLayout().map.center.append(connected_list_view_layout.DOM)
@@ -223,7 +231,7 @@ class ListViewTreeDemoDummyNode extends ListViewTreeNode
 
 		@addColumn(new ListViewColumn(element: d, colspan: 2))
 		# @addColumn(new ListViewColumn(text: dateToString(@opts.date)))
-		"Added Manually"
+		new Label(text: "Added Manually")
 
 class ListViewTreeDemoHeaderNode extends ListViewRow
 	constructor: ->
@@ -283,7 +291,7 @@ class ListViewTreeDemoNode extends ListViewTreeNode
 		@columns.splice(0,0, new ListViewColumn(text: @getNodeId()))
 		@addColumn(new ListViewColumn(text: @file.size))
 		@addColumn(new ListViewColumn(text: dateToString(@file.date)))
-		@file.name
+		new Label(text: @file.name)
 
 class ListViewNestedNode extends ListViewTreeDemoNode
 	constructor: (@opts={}) ->
@@ -341,7 +349,7 @@ class ListViewNestedNode extends ListViewTreeDemoNode
 		@addColumn(new ListViewColumn(colspan: 2, element: lv.render()))
 		lv.appendRow(new ListViewRow(columns: columns))
 
-		"Nested"
+		new Label(text: "Nested")
 
 
 

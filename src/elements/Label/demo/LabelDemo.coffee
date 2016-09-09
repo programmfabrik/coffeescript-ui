@@ -173,6 +173,12 @@ class LabelDemo extends Demo
 			appearance: "important"
 		@__addLabel("multiline: true, apperance: important",label)
 
+		@__addDivider("Markdown Label")
+		label = new Label
+			multiline: true
+			markdown: true
+			text: "# Markdown Test\n**Markdown List:**\n\n* 1\n* 2\* 3"
+		@__addLabel("markdown: true", label)
 
 
 

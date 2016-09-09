@@ -1,7 +1,4 @@
-class CUI.DOM extends Element
-	constructor: (@opts={}) ->
-		super(@opts)
-		@DOM = null
+class CUI.DOM extends CUI.Element
 
 	initOpts: ->
 		super()
@@ -22,24 +19,21 @@ class CUI.DOM extends Element
 		return "cui-dom-element ez-#{toDash(@__cls)} cui-#{toDash(@__cls)}"
 
 	registerDOMElement: (_dom) ->
-		if _dom instanceof HTMLElement
-			# FIXME: remove when jQuery is removed
-			_dom = jQuery(_dom)
 		@DOM = _dom
-		DOM.addClass(@DOM[0], @getDOMElementClasses())
-		@DOM.attr("cui-unique-id", @getUniqueId())
+		CUI.DOM.addClass(@DOM, @getDOMElementClasses())
+		CUI.DOM.setAttribute(@DOM, "cui-unique-id", @getUniqueId())
 		if @_class
 			# CUI.debug DOM, @DOM, @_class
-			DOM.addClass(@DOM[0], @_class) # @DOM.addClass(@_class)
-		DOM.setElement(@DOM, @, @_dummy)
+			CUI.DOM.addClass(@DOM, @_class) # @DOM.addClass(@_class)
+		CUI.DOM.setElement(@DOM, @)
 		@
 
 	unregisterDOMElement: (@DOM) ->
-		@DOM.removeClass(@getDOMElementClasses())
-		@DOM.removeAttr("cui-unique-id")
+		CUI.removeClass(@DOM, @getDOMElementClasses())
+		CUI.DOM.removeAttribute(@DOM, "cui-unique-id")
 		if @_class
-			@DOM.removeClass(@_class)
-		DOM.removeData(@DOM[0], "element")
+			CUI.DOM.removeClass(@DOM, @_class)
+		DOM.removeData(@DOM, "element")
 		@
 
 	assertDOMElement: (func) ->
@@ -48,17 +42,22 @@ class CUI.DOM extends Element
 	assertTemplateElement: (func) ->
 		assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
 
-	addClass: ->
+	addClass: (cls) ->
+		assert(arguments.length == 1, "DOM.addClass", "Only one parameter allowed.")
+
 		@assertDOMElement("addClass")
-		@DOM.addClass.apply(@DOM, arguments)
+		CUI.DOM.addClass(@DOM, cls)
 
-	removeClass: ->
+	removeClass: (cls) ->
+		assert(arguments.length == 1, "DOM.removeClass", "Only one parameter allowed.")
+
 		@assertDOMElement("removeClass")
-		@DOM.removeClass.apply(@DOM, arguments)
+		CUI.DOM.removeClass(@DOM, cls)
 
-	hasClass:  ->
+	hasClass: (cls) ->
+		assert(arguments.length == 1, "DOM.hasClass", "Only one parameter allowed.")
 		@assertDOMElement("hasClass")
-		@DOM.hasClass.apply(@DOM, arguments)
+		CUI.DOM.hasClass(@DOM, cls)
 
 	isDestroyed: (key) ->
 		@__template?.isDestroyed.call(@__template, key)
@@ -93,15 +92,14 @@ class CUI.DOM extends Element
 		if @__template
 			@__template?.destroy()
 		else if @DOM
-			DOM.empty(@DOM)
-			@DOM.remove()
+			DOM.remove(@DOM)
 		@
 		# Events.ignore(node: @DOM)
 
 
-	@setElement: (element, inst, dummy) ->
-		DOM.data(element[0], "element", inst)
-
+	@setElement: (element, inst) ->
+		CUI.jQueryCompat(element)
+		DOM.data(element, "element", inst)
 
 	@data: (node, key, data) ->
 		if not node
@@ -112,7 +110,7 @@ class CUI.DOM extends Element
 		if key == undefined
 			return node.__dom_data
 
-		if $.isPlainObject(key)
+		if CUI.isPlainObject(key)
 			for k, v of key
 				DOM.data(node, k, v)
 			return node
@@ -132,7 +130,7 @@ class CUI.DOM extends Element
 
 		if node.__dom_data
 			delete(node.__dom_data[key])
-			if $.isEmptyObject(node.__dom_data)
+			if CUI.isEmptyObject(node.__dom_data)
 				delete(node.__dom_data)
 		DOM
 
@@ -246,9 +244,18 @@ class CUI.DOM extends Element
 			if not nodeFilter or nodeFilter(child)
 				return child
 
-			child = node.nextElementSibling
+			child = child.nextElementSibling
 			if not child
 				return null
+
+	@children: (node, filter) ->
+		children = []
+
+		for child in node.children
+			if not filter or @is(node, filter)
+				children.push(child)
+
+		children
 
 
 	@lastElementChild: (node, nodeFilter) ->
@@ -257,7 +264,7 @@ class CUI.DOM extends Element
 			if not nodeFilter or nodeFilter(child)
 				return child
 
-			child = node.previousElementSibling
+			child = child.previousElementSibling
 			if not child
 				return null
 
@@ -285,8 +292,15 @@ class CUI.DOM extends Element
 		node.removeAttribute(key)
 		node
 
-	@setAttribute: (node, key, value=key) ->
-		node.setAttribute(key, value)
+	@setAttribute: (node, key, value) ->
+		if isNull(value) or value == false
+			return @removeAttribute(node, key)
+
+		if value == true
+			node.setAttribute(key, key)
+		else
+			node.setAttribute(key, value)
+
 		node
 
 	@hasAttribute: (node, key) ->
@@ -297,6 +311,60 @@ class CUI.DOM extends Element
 			DOM.setAttribute(node, key, value)
 		node
 
+	@width: (docElem, value) ->
+		if docElem == document or docElem == window
+			if value != undefined
+				assert(false, "DOM.width", "Unable to set width on a non HTMLElement", docElem: docElem)
+			return window.innerWidth
+
+		if value == undefined
+			@getDimension(docElem, "contentBoxWidth")
+		else
+			@setDimension(docElem, "contentBoxWidth", value)
+
+	@height: (docElem, value) ->
+		if docElem == document or docElem == window
+			if value != undefined
+				assert(false, "DOM.height", "Unable to set width on a non HTMLElement", docElem: docElem)
+			return window.innerHeight
+
+		if value == undefined
+			@getDimension(docElem, "contentBoxHeight")
+		else
+			@setDimension(docElem, "contentBoxHeight", value)
+
+	@__append: (node, content, append=true) ->
+		if isNull(content)
+			return node
+
+		if content instanceof Array or content instanceof HTMLCollection or content instanceof NodeList
+			for item in content
+				CUI.DOM.append(node, item)
+			return node
+
+		switch typeof(content)
+			when "number", "boolean"
+				append_node = document.createTextNode(content + "")
+			when "string"
+				append_node = document.createTextNode(content)
+			else
+				append_node = content
+
+		if append
+			assert(append_node instanceof Node, "DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			node.appendChild(append_node)
+		else
+			assert(append_node instanceof Node, "DOM.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			node.insertBefore(content, node.firstChild)
+
+		return node
+
+	@prepend: (node, content) ->
+		@__append(node, content, false)
+
+	@append: (node, content) ->
+		@__append(node, content)
+
 	@getCUIElementById: (uniqueId) ->
 		dom_el = DOM.matchSelector(document.documentElement, "[cui-unique-id=\"cui-element-"+uniqueId+"\"]")[0]
 		if not dom_el
@@ -306,69 +374,44 @@ class CUI.DOM extends Element
 	@getAttribute: (node, key) ->
 		node.getAttribute(key)
 
-	@empty: (element) ->
-		assert(isElement(element), "DOM.empty", "top needs to be jQuery Element", element: element)
-		DOM.destroy(element[0], true)
-		element.empty()
-
-
 	@remove: (element) ->
-		# assert(isElement(element), "DOM.empty", "top needs to be jQuery Element", element: element)
-		@destroy(element[0])
-		element.remove()
-		@
+		element.parentNode?.removeChild(element)
+		element
 
-	@destroy: (element, childrenOnly=false) ->
-		return
-		assert(element instanceof HTMLElement, "DOM.destroy", "top needs to be HTMLElement", element: element)
-
-		$element = $(element)
-		if $element.closest("[destroy-in-progress]").length > 0
-			# CUI.error("DOM.destroyChildren: loop call, avoid loop")
-			return
-		$element.attr("destroy-in-progress", 1)
-		DOM.destroyElements(CUI.DOM.matchSelector(element, ".cui-dom-element,.cui-events-listener-element"))
-		if not childrenOnly
-			DOM.destroyElements([element])
-		$element.removeAttr("destroy-in-progress")
-		@
-
-	@destroyElements: (dom_els) ->
-		destroy_els = []
-		for dom_el in dom_els
-			listeners = DOM.data(dom_el, "listeners")
-			if listeners?.length > 0
-				while listeners.length > 0
-					listener = listeners.shift()
-					listener.destroy()
-
-			_el = DOM.data(dom_el, "element")
-			if not _el
-				continue
-
-			assert(_el instanceof Element, "DOM.destroyChildren", "Element found is not instance of DOM.", element: _el)
-			destroy_els.push(_el)
-
-		for _el in destroy_els
-			if not _el.isDestroyed()
-				# CUI.debug "destroy", getObjectClass(_el), _el
-				_el.destroy()
-		@
+	@empty: (element) ->
+		assert(isElement(element), "DOM.empty", "top needs to be Element", element: element)
+		element.innerHTML = ""
+		element
 
 	# checks if any of the classes are set
 	@hasClass: (element, cls) ->
+		if not cls
+			return element
+
 		for _cls in cls.trim().split(/\s+/)
+			if _cls == ""
+				continue
 			if element.classList.contains(_cls)
 				return true
 		return false
 
 	@addClass: (element, cls) ->
+		if not cls
+			return element
+
 		for _cls in cls.trim().split(/\s+/)
+			if _cls == ""
+				continue
 			element.classList.add(_cls)
 		element
 
 	@removeClass: (element, cls) ->
+		if not cls
+			return element
+
 		for _cls in cls.trim().split(/\s+/)
+			if _cls == ""
+				continue
 			element.classList.remove(_cls)
 		element
 
@@ -378,9 +421,9 @@ class CUI.DOM extends Element
 		assert(isNumber(offset?.left) and isNumber(offset?.top), "DOM.setAbsolutePosition", "offset.left and offset.top must be >= 0", element: element, offset: offset)
 		# the offset needs to be corrected by the parent offset
 		# of our DOM element
-		offsetParent = element.offsetParent()
+		offsetParent = element.offsetParent
 
-		if offsetParent.is("html")
+		if offsetParent == document.documentElement
 			layer_parent_offset =
 				top: 0
 				left: 0
@@ -389,20 +432,20 @@ class CUI.DOM extends Element
 				top: document.body.scrollTop
 				left: document.body.scrollLeft
 		else
-			rect = offsetParent.rect()
+			dim = DOM.getDimensions(offsetParent)
 			layer_parent_offset =
-				top: rect.top
-				left: rect.left
+				top: dim.top
+				left: dim.left
 
 			# position: relative/absolute anchor
 			# is the point between padding and border,
 			# we need to adjust this to the border
-			layer_parent_offset.top += offsetParent.cssInt("border-top-width")
-			layer_parent_offset.left += offsetParent.cssInt("border-left-width")
+			layer_parent_offset.top += dim.borderTopWidth
+			layer_parent_offset.left += dim.borderLeftWidth
 
 			correct_offset =
-				top: offsetParent[0].scrollTop
-				left: offsetParent[0].scrollLeft
+				top: dim.scrollTop
+				left: dim.scrollLeft
 
 		element.css
 			top: offset.top - layer_parent_offset.top + correct_offset.top
@@ -413,7 +456,7 @@ class CUI.DOM extends Element
 
 	@waitForDOMInsert: (_opts) ->
 
-		opts = Element.readOpts _opts, "DOM.waitForDOMInsert",
+		opts = CUI.Element.readOpts _opts, "DOM.waitForDOMInsert",
 			node:
 				mandatory: true
 				check: (v) ->
@@ -460,21 +503,15 @@ class CUI.DOM extends Element
 		dfr.promise()
 
 
-	@isJQueryElement: (el) ->
-		el instanceof jQuery and el.length == 1
-
-
 	@getNode: (node) ->
-		if DOM.isJQueryElement(node)
-			node[0]
-		else if node.DOM and node != window
-			node.DOM[0]
+		if node.DOM and node != window
+			node.DOM
 		else
 			node
 
 	# small experiment, testing...
 	@printElement: (_opts) ->
-		opts = Element.readOpts _opts, "DOM.printElement",
+		opts = CUI.Element.readOpts _opts, "DOM.printElement",
 			docElem:
 				check: (v) ->
 					v instanceof HTMLElement
@@ -518,15 +555,37 @@ class CUI.DOM extends Element
 			node == window or
 			node == document or
 			node.nodeType or
-			DOM.isJQueryElement(node) or
 			node.DOM
 				true
 		else
 			false
 
+	@insertBefore: (node, node_before) ->
+		node.parentNode.insertBefore(node_before, node)
+
+	@insertAfter: (node, node_after) ->
+		node.parentNode.insertBefore(node_before, node_after.nextElementSibling)
+
+	@is: (node, selector) ->
+		if not node
+			return null
+
+		if selector instanceof HTMLElement
+			return node == selector
+
+		if CUI.isFunction(selector)
+			return !!selector(node)
+
+		if node not instanceof HTMLElement
+			return null
+
+		@matches(node, selector)
+
+
 	@matches: (node, selector) ->
 		if not node
 			return null
+
 		node[CUI.DOM.matchFunc](selector)
 
 	@matchFunc: (->
@@ -565,9 +624,9 @@ class CUI.DOM extends Element
 				if sel_func
 					if selector(testDocElem)
 						return path
-				else if testDocElem != document and testDocElem != window
+				else
 					# CUI.error testDocElem, selector
-					if testDocElem[@matchFunc](selector)
+					if @is(testDocElem, selector)
 						return path
 
 			if testDocElem == untilDocElem or
@@ -598,7 +657,10 @@ class CUI.DOM extends Element
 			docElem.parentNode
 
 	@closest: (docElem, selector) ->
-		@closestUntil(docElem, selector)
+		if selector instanceof HTMLElement
+			@closestUntil(docElem, null, selector)
+		else
+			@closestUntil(docElem, selector, document.documentElement)
 
 	@closestUntil: (docElem, selector, untilDocElem) ->
 		path = @elementsUntil(docElem, selector, untilDocElem)
@@ -606,24 +668,39 @@ class CUI.DOM extends Element
 			return null
 
 		last_element = path[path.length-1]
-		if last_element == window and untilDocElem != last_element
+
+		# we return last_element "window", if untilDocElem
+		# was set to window
+		if last_element == window and untilDocElem != window
 			return null
 
 		last_element
 
-
+	# selector is a stopper (like untiDocElem)
 	@parentsUntil: (docElem, selector, untilDocElem) ->
-		parentElem = DOM.parent(docElem)
+		parentElem = CUI.DOM.parent(docElem)
 		if not parentElem
 			return []
-		path = @elementsUntil(parentElem, selector, untilDocElem)
-		if not path
-			[]
-		else
-			path
 
+		path = @elementsUntil(parentElem, null, untilDocElem)
+		if not path?.length
+			return []
+		path
+
+	# selector is a filter
 	@parents: (docElem, selector) ->
-		@parentsUntil(docElem, selector)
+		assert(docElem instanceof HTMLElement, "CUI.DOM.parents", "element needs to be instanceof HTMLElement", element: docElem)
+		path = @parentsUntil(docElem, selector, document.documentElement)
+		if not selector
+			return path
+
+		# filter parents
+		parents = []
+		for parent in path
+			if @is(parent, selector)
+				parents.push(parent)
+		parents
+
 
 	@preventEvent: (docElem, type) ->
 		# CUI.debug "DOM.preventEvent on element:", docElem, type
@@ -640,7 +717,7 @@ class CUI.DOM extends Element
 		if not docElem.__cui_prevent_event
 			return
 		delete(docElem.__cui_prevent_event[type])
-		if $.isEmptyObject(docElem.__cui_prevent_event)
+		if CUI.isEmptyObject(docElem.__cui_prevent_event)
 			delete(docElem.__cui_prevent_event)
 		@
 
@@ -664,24 +741,28 @@ class CUI.DOM extends Element
 		else
 			false
 
+	@replaceWith: (node, new_node) ->
+		assert(node instanceof HTMLElement and new_node instanceof HTMLElement, "CUI.DOM.replaceWidth", "nodes need to be instanceof HTMLElement.", node: node, newNode: node)
+		node.parentNode.replaceChild(new_node, node)
+
 	@getRect: (docElem) ->
 		docElem.getBoundingClientRect()
 
 	@getComputedStyle: (docElem) ->
 		window.getComputedStyle(docElem)
 
-	@setStyle: (docElem, style, append="") ->
+	@setStyle: (docElem, style, append="px") ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		for k, v of style
 			switch v
 				when "", null
 					docElem.style[k] = ""
 				else
-					if isNaN(parseFloat(v))
+					if isNaN(Number(v))
 						docElem.style[k] = v
 					else
 						docElem.style[k] = v + append
-		@
+		docElem
 
 	@setStyleOne: (docElem, key, value) ->
 		map = {}
@@ -690,7 +771,14 @@ class CUI.DOM extends Element
 		@setStyle(docElem, map)
 
 	@setStylePx: (docElem, style) ->
-		@setStyle(docElem, style, "px")
+		console.error("DOM.setStylePx is deprectaed, use DOM.setStyle.")
+		@setStyle(docElem, style)
+
+	@getRelativePosition: (docElem) ->
+		assert(docElem instanceof HTMLElement, "CUI.DOM.getRelativePosition", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
+		dim = CUI.DOM.getDimensions(docElem)
+		top: dim.offsetTopScrolled
+		left: dim.offsetLeftScrolled
 
 	@getDimensions: (docElem) ->
 		if isNull(docElem)
@@ -732,6 +820,10 @@ class CUI.DOM extends Element
 			"marginLeft"
 			"marginTop"
 			"marginBottom"
+			"borderTopWidth"
+			"borderLeftWidth"
+			"borderBottomWidth"
+			"borderRightWidth"
 		]
 			dim[k] = @getCSSFloatValue(cs[k])
 
@@ -751,6 +843,13 @@ class CUI.DOM extends Element
 
 		dim.scaleX = dim.borderBoxWidth / dim.offsetWidth or 1
 		dim.scaleY = dim.borderBoxHeight / dim.offsetHeight or 1
+
+		if docElem.offsetParent
+			dim.offsetTopScrolled = dim.offsetTop + docElem.offsetParent.scrollTop
+			dim.offsetLeftScrolled = dim.offsetLeft + docElem.offsetParent.scrollLeft
+		else
+			dim.offsetTopScrolled = dim.offsetTop + document.body.scrollTop
+			dim.offsetLeftScrolled = dim.offsetLeft + document.body.scrollLeft
 
 		for k in [
 			"offsetWidth"
@@ -782,6 +881,14 @@ class CUI.DOM extends Element
 			dim.horizontalScrollbarHeight = 0
 
 		dim
+
+	@setDimension: (docElem, key, value) ->
+		set = {}
+		set[key] = value
+		@setDimensions(docElem, set)
+
+	@getDimension: (docElem, key) ->
+		@getDimensions(docElem)[key]
 
 	@setDimensions: (docElem, _dim) ->
 		borderBox = @isBorderBox(docElem)
@@ -860,10 +967,13 @@ class CUI.DOM extends Element
 
 		assert(left_over_keys.length == 0, "DOM.setDimensions", "Unknown keys in dimension: \""+left_over_keys.join("\", \"")+"\".", docElem: docElem, dim: _dim)
 
-		@setStylePx(docElem, cssFloat)
+		@setStyle(docElem, cssFloat)
 		cssFloat
 
-
+	@htmlToNodes: (html) ->
+		d = @element("DIV")
+		d.innerHTML = html
+		d.childNodes
 
 
 	# turns 14.813px into a float
@@ -875,11 +985,9 @@ class CUI.DOM extends Element
 		fl
 
 	@isPositioned: (docElem) ->
-		if docElem == document.body
+		assert(docElem instanceof HTMLElement, "DOM.isPositioned", "docElem needs to be instance of HTMLElement.", docElem: docElem)
+		if docElem == document.body or docElem == document.documentElement
 			return true
-
-		if docElem == document.documentElement or docElem == document or docElem == window
-			assert(false, "DOM.isPositioned", "docElem needs to be at least document.body.", docElem: docElem)
 
 		@getComputedStyle(docElem).position in ["relative", "absolute", "fixed"]
 
@@ -889,6 +997,13 @@ class CUI.DOM extends Element
 			false
 		else
 			true
+
+	# @hasOverflow: (docElem) ->
+	# 	style = @getComputedStyle(docElem)
+	# 	if style.overflowX == "visible" and style.overflowY == "visible"
+	# 		true
+	# 	else
+	# 		false
 
 	@getBoxSizing: (docElem) ->
 		@getComputedStyle(docElem).boxSizing
@@ -905,12 +1020,21 @@ class CUI.DOM extends Element
 		if docElem.style.display != "none"
 			docElem.__saved_display = docElem.style.display
 		docElem.style.display = "none"
+		docElem
+
+	# remove all children from a DOM node (detach)
+	@removeChildren: (docElem) ->
+		assert(docElem instanceof HTMLElement, "CUI.DOM.removeChildren", "element needs to be instance of HTMLElement", element: docElem)
+		while docElem.children.length
+			docElem.removeChild(docElem.firstChild)
+		return docElem
 
 	@showElement: (docElem) ->
 		if not docElem
 			return
 		docElem.style.display = docElem.__saved_display or ""
 		delete(docElem.__saved_display)
+		docElem
 
 	@element: (tagName, attrs={}) ->
 		DOM.setAttributeMap(document.createElement(tagName), attrs)
@@ -919,7 +1043,7 @@ class CUI.DOM extends Element
 		docElem.scrollIntoView()
 
 	@setClassOnMousemove: (_opts={}) ->
-		opts = Element.readOpts _opts, "DOM.setClassOnMousemove",
+		opts = CUI.Element.readOpts _opts, "DOM.setClassOnMousemove",
 			delayRemove:
 				check: Function
 			class:

@@ -2,7 +2,7 @@
 #REMARKED hack used for debugging scss without additional customer css
 #css_loaded = false
 
-class CSS extends Element
+class CSS extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		# use basename of file
@@ -85,7 +85,7 @@ class CSS extends Element
 			href: url
 		)
 
-		DOM.data(cssNode[0], "element", @)
+		DOM.data(cssNode, "element", @)
 
 		Events.listen
 			node: cssNode
@@ -97,8 +97,8 @@ class CSS extends Element
 
 				old_css_nodes = []
 				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']")
-					if css_node != cssNode[0]
-						css_node.parentNode.removeChild(css_node)
+					if css_node != cssNode
+						DOM.remove(css_node)
 						old_css_nodes.push(css_node)
 
 				CUI.info("CSS.load: loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
@@ -119,7 +119,7 @@ class CSS extends Element
 				dfr.reject()
 				return
 
-		document.head.appendChild(cssNode[0])
+		document.head.appendChild(cssNode)
 
 		# anchor_node.after(@__cssNode)
 		dfr.promise()

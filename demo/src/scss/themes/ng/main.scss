@@ -3,23 +3,22 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 @import "../../../../../src/scss/themes/ng/body.scss";
 @import "../../../../../src/scss/themes/ng/footer.scss";
 
-.cui-tmpl-demo-root {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-	display: flex;
-}
-
 .cui-demo-header {
 	padding: 10px;
+	
 	.cui-demo-menu-button,
 	.theme-switch  {
+		&,
+		&:active {
+			color: inherit;
+			background: transparent;
+			border-style: none;
+			box-shadow: none;
+			padding: 2px 10px 2px 4px;
+		}
+	}
+	.cui-demo-menu-button {
 		font-size: 20px;
-		background-color: transparent;
-		border-style: none;
-		padding: 2px 20px 2px 0;
 	}
 	.theme-switch  {
 		font-size: 15px;
@@ -33,6 +32,16 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 	.cui-demo-sub-title {
 		font-size: 20px;
 		padding: 2px 7px;
+	}
+}
+
+body.cui-demo-playground {
+	// hide console
+	.cui-demo-root-center > .cui-horizontal-layout {
+		> .cui-flex-handle,
+		> .cui-demo-pane-right {
+			display: none;
+		}
 	}
 }
 
@@ -52,34 +61,32 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 .cui-demo-table {
 	@include flex-table();
 
-	> tbody {
-		> tr {
-			+ .cui-demo-divider {
-				> td {
-					padding-top: 20px;
-				}
-			}
-
+	> tr {
+		+ .cui-demo-divider {
 			> td {
-				vertical-align: top;
-				padding: 2px;
+				padding-top: 20px;
+			}
+		}
+
+		> td {
+			vertical-align: top;
+			padding: 2px;
+		}
+
+		&.cui-demo-full-row > td {
+			flex: 1 1 auto;
+		}
+
+		&:not(.cui-demo-full-row) > td {
+			&:nth-child(1) {
+				width: 200px;
+				flex: 0 0 auto;
+				font-weight: bold;
 			}
 
-			&.cui-demo-full-row > td {
+			&:nth-child(2) {
+				position: relative;
 				flex: 1 1 auto;
-			}
-
-			&:not(.cui-demo-full-row) > td {
-				&:nth-child(1) {
-					width: 200px;
-					flex: 0 0 auto;
-					font-weight: bold;
-				}
-
-				&:nth-child(2) {
-					position: relative;
-					flex: 1 1 auto;
-				}
 			}
 		}
 	}

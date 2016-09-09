@@ -37,7 +37,11 @@ assert = (condition, caller, message, debug_output) ->
 		msg += ": #{message}"
 
 	# msg += "\nCallstack:\n"+stack+"\n"
-	CUI.problem(title:"ASSERT", text: msg)
+	if false and CUI.problem
+		CUI.problem(title: "ASSERT", text: msg)
+	else
+		alert(msg)
+
 	throw new Error(msg)
 
 assertImplements = (inst, methods) ->
@@ -46,7 +50,7 @@ assertImplements = (inst, methods) ->
 
 	needs = []
 	for method in methods
-		if not $.isFunction(inst[method])
+		if not CUI.isFunction(inst[method])
 			needs.push(method)
 	assert(needs.length == 0, "#{getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
 	return
@@ -56,17 +60,14 @@ assertInstanceOf = (variableName, classClass, opts, value=undefined) ->
 	if not CUI.defaults.asserts
 		return
 
-	if not $.isFunction(classClass) and not classClass == "PlainObject"
+	if not CUI.isFunction(classClass) and not classClass == "PlainObject"
 		throw "assertInstanceOf: class is not a Function"
 
 	if value == undefined
 		value = opts[variableName]
-		assert($.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{getObjectClass(opts)}.", opts: opts)
+		assert(CUI.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{getObjectClass(opts)}.", opts: opts)
 
-	if classClass == jQuery
-		cond = value instanceof jQuery
-		cn = "jQuery"
-	else if classClass == "Array"
+	if classClass == "Array"
 		cn = "Array"
 		cond = value instanceof Array
 	else if classClass == "Integer"
@@ -74,7 +75,7 @@ assertInstanceOf = (variableName, classClass, opts, value=undefined) ->
 		cond = isInteger(value)
 	else if classClass == "PlainObject"
 		cn = "PlainObject"
-		cond = $.isPlainObject(value)
+		cond = CUI.isPlainObject(value)
 	else if (new String) instanceof classClass
 		cn = "String"
 		cond = isString(value)
@@ -118,17 +119,17 @@ getCoordinatesFromEvent = (ev) ->
 
 # return the difference of the absolute position
 # of coordinates and element
-elementGetPosition = (coordinates, $el) ->
-	rect = $el.rect()
+elementGetPosition = (coordinates, el) ->
+	rect = DOM.getRect(el)
 	# CUI.debug(coordinates.pageX, coordinates.pageY, offset);
 	position =
 		left: coordinates.pageX  - rect.left # (offset.left + $el.cssInt("border-left-width"))
 		top: coordinates.pageY - rect.top # (offset.top + $el.cssInt("border-top-width"))
 
-	if not $el.is("body")
-		# dont do this for the top level
-		position.left += $el[0].scrollLeft
-		position.top += $el[0].scrollTop
+	if el != document.body
+		position.left += el.scrollLeft
+		position.top += el.scrollTop
+
 	return position
 
 
@@ -136,16 +137,12 @@ elementGetPosition = (coordinates, $el) ->
 # Returns the class name of the argument or undefined if
 # it's not a valid JavaScript object.
 getObjectClass = (obj) ->
-	if obj instanceof jQuery
-		return "jQuery[#{obj.length}]"
-
 	if obj and obj.constructor and obj.constructor.toString
         arr = obj.constructor.toString().match(/function\s*(\w+)/)
 
         if arr and arr.length == 2
             return arr[1]
     return undefined
-
 
 isUndef = (obj) ->
 	(typeof obj == "undefined")
@@ -169,10 +166,10 @@ isBoolean = (obj) ->
 	obj == true or obj == false
 
 isElement = (obj) ->
-	obj instanceof jQuery and obj.length == 1
+	obj instanceof HTMLElement
 
 isContent = (obj) ->
-	isElement(obj) or $.isArray(obj) or $.isFunction(obj) or isElement(obj?.DOM)
+	isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or isElement(obj?.DOM)
 
 isNumber = (n) ->
 	isInteger(n) or isFloat(n)
@@ -184,7 +181,7 @@ isInteger = (n) ->
 	`n===+n && n===(n|0)`
 
 isPromise = (n) ->
-	if $.isFunction(n?.then) or n instanceof CUI.Promise or n instanceof CUI.Deferred
+	if n instanceof CUI.Promise or n instanceof CUI.Deferred
 		true
 	else
 		false
@@ -237,36 +234,59 @@ toHtml = (data, space2nbsp) ->
 	else
 		data
 
-copyObject = (obj, deep) ->
+copyObject = (obj, deep = false, level = 0) ->
+	if typeof(obj) in ["string", "number", "boolean", "function"]
+		return obj
+
 	if isNull(obj)
 		return obj
 
-	if jQuery.isPlainObject(obj)
-		return jQuery.extend((if deep then true else false), {}, obj)
+	if obj instanceof CUI.Element
+		if level == 0 or deep
+			return obj.copy()
+		else
+			return obj
 
-	if jQuery.isArray(obj)
+	if obj instanceof HTMLElement
+		return obj
+
+	if obj instanceof CUI.Dummy
+		return obj
+
+	if CUI.isPlainObject(obj)
+		new_obj = {}
+		for k, v of obj
+			if deep
+				try
+					new_obj[k] = copyObject(v, true, level+1)
+				catch e
+					console.error "Error during Object copy:", e.toString(), "Key:", k, "Object:", obj
+					throw(e)
+			else
+				new_obj[k] = v
+
+		return new_obj
+
+	if CUI.isArray(obj)
 		if !deep
 			return obj.slice(0)
 
 		new_arr = []
 		for o in obj
-			new_arr.push(copyObject(o, deep))
+			new_arr.push(copyObject(o, true, level+1))
 
 		return new_arr
-
-	if typeof(obj) in ["string", "number", "boolean"]
-		return obj
 
 	assert(false, "copyObject", "Only {},[],string, boolean, and number can be copied. Object is: #{getObjectClass(obj)}", obj: obj, deep: deep)
 
 dump = (obj, space="\t") ->
 	clean_obj = (obj) ->
-		if $.isArray(obj)
+		if CUI.isArray(obj)
 			result = []
 			for item in obj
 				result.push(clean_obj(item))
 			return result
-		else if $.isPlainObject(obj)
+		else if CUI.isPlainObject(obj)
 			result = {}
 			for k, v of obj
 				result[k] = clean_obj(v)
@@ -315,7 +335,7 @@ toCamel = (s, includeFirst=false) ->
 # remove all occurrances of value from array
 # returns the number of items removed
 removeFromArray = (value, arr, compFunc) ->
-	assert($.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
+	assert(CUI.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
 	removed = 0
 	while true
 		idx = idxInArray(value, arr, compFunc)
@@ -362,19 +382,19 @@ pushOntoArray = (value, arr, compFunc) ->
 		return idx
 
 idxInArray = (value, arr, compFunc) ->
-	idx = -1
 	if not compFunc
-		idx = $.inArray(value, arr)
-	else
-		# compFunc needs to be a method name or a function
-		for a, i in arr
-			if $.isFunction(compFunc)
-				if compFunc(a, value)
-					idx = i
-					break
-			else if a[compFunc](value)
+		return arr.indexOf(value)
+
+	idx = -1
+	# compFunc needs to be a method name or a function
+	for a, i in arr
+		if CUI.isFunction(compFunc)
+			if compFunc(a, value)
 				idx = i
 				break
+		else if a[compFunc](value)
+			idx = i
+			break
 	idx
 
 findInArray = (value, arr, compFunc) ->
@@ -385,7 +405,7 @@ findInArray = (value, arr, compFunc) ->
 		arr[idx]
 
 addToArray = (value, arr, compFunc) ->
-	assert($.isArray(arr), "addToArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
+	assert(CUI.isArray(arr), "addToArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
 	idx = idxInArray(value, arr, compFunc)
 	if idx == -1
 		arr.push(value)
@@ -394,66 +414,6 @@ addToArray = (value, arr, compFunc) ->
 		return idx
 
 
-$element = (tagName, cls, attrs={}) -> $(document.createElement(tagName)).addClass(cls).attr(attrs)
-$div = (cls, attrs) -> $element("div", cls, attrs)
-$video = (cls, attrs) -> $element("video", cls, attrs)
-$audio = (cls, attrs) -> $element("audio", cls, attrs)
-$source = (cls, attrs) -> $element("source", cls, attrs)
-$span = (cls, attrs) -> $element("span", cls, attrs)
-$table = (cls, attrs) -> $element("table", cls, attrs)
-$img = (cls, attrs) -> $element("img", cls, attrs)
-$tbody = (cls, attrs) -> $element("tbody", cls, attrs)
-$thead = (cls, attrs) -> $element("thead", cls, attrs)
-$tr = (cls, attrs) -> $element("tr", cls, attrs)
-$th = (cls, attrs) -> $element("th", cls, attrs)
-$td = (cls, attrs) -> $element("td", cls, attrs)
-$i = (cls, attrs) -> $element("i", cls, attrs)
-$p = (cls, attrs) -> $element("p", cls, attrs)
-$pre = (cls, attrs) -> $element("pre", cls, attrs)
-$ul = (cls, attrs) -> $element("ul", cls, attrs)
-$a = (cls, attrs) -> $element("a", cls, attrs)
-$b = (cls, attrs) -> $element("b", cls, attrs)
-$li = (cls, attrs) -> $element("li", cls, attrs)
-$label = (cls, attrs) -> $element("label", cls, attrs)
-$h1 = (cls, attrs) -> $element("h1", cls, attrs)
-$h2 = (cls, attrs) -> $element("h2", cls, attrs)
-$h3 = (cls, attrs) -> $element("h3", cls, attrs)
-$h4 = (cls, attrs) -> $element("h4", cls, attrs)
-$h5 = (cls, attrs) -> $element("h5", cls, attrs)
-$h6 = (cls, attrs) -> $element("h6", cls, attrs)
-$text = (text, cls, attrs) -> $span(cls, attrs).text(text)
-$textEmpty = (text) -> $span("italic").text(text)
-
-$table_one_row = ->
-	$table().append($tbody().append($tr_one_row.apply(@, arguments)))
-
-$tr_one_row = ->
-	tr = $tr()
-	append = (__a) ->
-		td = $td().appendTo(tr)
-
-		add_content = (___a) =>
-			if $.isArray(___a)
-				for a in ___a
-					add_content(a)
-			else if ___a?.DOM
-				td.append(___a.DOM)
-			else if not isNull(___a)
-				td.append(___a)
-			return
-
-
-		add_content(__a)
-		return
-
-	for a in arguments
-		if $.isArray(a)
-			for _a in a
-				append(_a)
-		else
-			append(a)
-
-	tr
 
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s

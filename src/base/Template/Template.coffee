@@ -1,7 +1,7 @@
 # Template needs to be called like this:
 #
 # new Template
-#    name: "name-of-template"  // a .ez-tmpl.ez-tmpl-name-of-template has to exist in the DOM tree
+#    name: "name-of-template"  // a .cui-tmpl.cui-tmpl-name-of-template has to exist in the DOM tree
 #    map:
 #       key: selector    // selector can be "true", than key is used like ".key", "_" is replaced by "-"
 #    layout:
@@ -15,7 +15,7 @@
 # Template.obj: the actual DOM element
 #
 
-class Template extends Element
+class Template extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -25,10 +25,10 @@ class Template extends Element
 		if not node
 			name = "cui-tmpl-"+@_name
 
-			selector = ".cui-tmpl.#{name},.ez-tmpl.ez-tmpl-#{@_name}"
+			selector = ".cui-tmpl.cui-tmpl.#{name}"
 
 			# find the template in the DOM tree
-			nodeList = document.querySelectorAll(selector)
+			nodeList = CUI.DOM.matchSelector(document.body, selector)
 
 			#expecting parent domNode of template
 			if nodeList.length != 1
@@ -46,17 +46,17 @@ class Template extends Element
 			node = Template.nodeByName[@_name] = nodeList[0]
 
 
-		@DOM = $(node.cloneNode(true))
-		@DOM.removeClass("ez-tmpl cui-tmpl")
+		@DOM = node.cloneNode(true)
+		@DOM.classList.remove("cui-tmpl")
 		if @_class
-			@DOM.addClass(@_class)
-		DOM.setElement(@DOM, @)
+			DOM.addClass(@DOM, @_class)
+		CUI.DOM.setElement(@DOM, @)
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
 
-		if not $.isEmptyObject(@map)
-			DOM.addClass(@DOM[0], "cui-template-empty")
+		if not CUI.isEmptyObject(@map)
+			CUI.DOM.addClass(@DOM, "cui-template-empty")
 
 		return
 
@@ -81,7 +81,7 @@ class Template extends Element
 		@__flexHandles = {}
 		# txt = "Template.initFlexHandles[name=#{@_name}]"
 		# console.time(txt)
-		for fh_el in ($(el) for el in CUI.DOM.matchSelector(@DOM[0], "[cui-flex-handle]"))
+		for fh_el in CUI.DOM.matchSelector(@DOM, "[cui-flex-handle]")
 			fh = new FlexHandle(element: fh_el)
 			if not isEmpty(fh_name = fh.getName())
 				# CUI.warn("Template.initFlexHandles", fh_name)
@@ -118,50 +118,50 @@ class Template extends Element
 			else
 				sel = v
 
-			map_obj = CUI.DOM.matchSelector(@DOM[0], sel, true)
+			map_obj = CUI.DOM.matchSelector(@DOM, sel, true)
 
 			if map_obj.length == 0
 				report.push("* #{k}: not found (#{sel})")
 				misses++
 			else if map_obj.length > 1
-				CUI.debug(k, v, "found more than once", map_obj, @DOM[0])
+				CUI.debug(k, v, "found more than once", map_obj, @DOM)
 				report.push("* #{k}: found more than once (#{sel})")
 				misses++
 			else
 				report.push("+ #{k}: found")
-				el_map[k] = $(map_obj[0])
+				el_map[k] = CUI.jQueryCompat(map_obj[0])
 
 		if misses
 			alert("Not all required elements were found for Template:\n\n\"#{@_name}\"\n\n"+report.join("\n"))
 		el_map
 
 	destroy: ->
-		# CUI.error "destroying...", getObjectClass(DOM.data(@DOM[0], "element")), getObjectClass(@DOM[0])
+		# CUI.error "destroying...", getObjectClass(DOM.data(@DOM, "element")), getObjectClass(@DOM[0])
 		DOM.remove(@DOM)
 		delete(@map)
 		super()
 
 	addClass: (cls, key) ->
 		if key
-			assert(@map[key], "#{@__cls}.addClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
-			DOM.addClass(@map[key][0], cls)
+			assert(@map[key], "#{@__cls}.addClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			DOM.addClass(@map[key], cls)
 		else
-			DOM.addClass(@DOM[0], cls)
+			DOM.addClass(@DOM, cls)
 		# @DOM.addClass.apply(@DOM, arguments)
 
 	removeClass: (cls, key) ->
 		if key
-			assert(@map[key], "#{@__cls}.removeClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
-			@map[key].removeClass(cls)
+			assert(@map[key], "#{@__cls}.removeClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			DOM.removeClass(@map[key], cls)
 		else
-			@DOM.removeClass(cls)
+			DOM.removeClass(@DOM, cls)
 
 	hasClass: (cls, key) ->
 		if key
-			assert(@map[key], "#{@__cls}.hasClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
-			@map[key].hasClass(cls)
+			assert(@map[key], "#{@__cls}.hasClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			DOM.hasClass(@map[key], cls)
 		else
-			@DOM.hasClass(cls)
+			DOM.hasClass(@DOM, cls)
 
 	has: (key) ->
 		!!@map[key]
@@ -187,25 +187,25 @@ class Template extends Element
 					break
 
 			if is_empty
-				DOM.addClass(@DOM[0], "cui-template-empty")
+				DOM.addClass(@DOM, "cui-template-empty")
 
 			return @map[key]
 
-		if $.isEmptyObject(@map)
+		if CUI.isEmptyObject(@map)
 			# without map we empty the whole @DOM
 			DOM.empty(@DOM)
 		else
 			# with map we empty each individual map entry
 			for key of @map
 				DOM.empty(@map[key])
-			DOM.addClass(@DOM[0], "cui-template-empty")
+			DOM.addClass(@DOM, "cui-template-empty")
 
 		return @DOM
 
 	replace: (value, key, element) ->
 		assert(@map, "Template[#{@_name}].replace [#{@getUniqueId()}]", "Already destroyed")
 		if key
-			assert(@map[key], "#{@__cls}.replace", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
+			assert(@map[key], "#{@__cls}.replace", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
 		@empty(key)
 		@append(value, key, element)
 
@@ -228,10 +228,10 @@ class Template extends Element
 		if key
 			assert(@map[key], "#{@__cls}.#{fn}", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 
-		if $.isFunction(value)
+		if CUI.isFunction(value)
 			value = value(element)
 
-		if not $.isArray(value)
+		if not CUI.isArray(value)
 			value = [value]
 
 		appends = []
@@ -249,17 +249,17 @@ class Template extends Element
 			node = @DOM
 
 		if appends.length > 0
-			node[fn](appends)
-			DOM.removeClass(@DOM[0], "cui-template-empty")
+			CUI.DOM[fn](node, appends)
+			CUI.DOM.removeClass(@DOM, "cui-template-empty")
 
 		node
 
 	isEmpty: (key) ->
 		if not key
-			!@DOM[0].firstChild
+			!@DOM.firstChild
 		else
 			assert(@map[key], "#{@__cls}.isEmpty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
-			!@map[key][0].firstChild
+			!@map[key].firstChild
 			# if fc
 			# 	CUI.debug "isEmpty: false", key, fc
 			# !fc

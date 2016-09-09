@@ -1,4 +1,4 @@
-class Icon extends Element
+class Icon extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_icon

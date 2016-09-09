@@ -1,4 +1,4 @@
-class DataField extends DOM
+class CUI.DataField extends CUI.DOM
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"
 
@@ -15,7 +15,7 @@ class DataField extends DOM
 		if @_form
 			assert(not (@_form.right and @_form.data_field_right), "#{@__cls}.renderTable", "opts.form.right and opts.form.data_field_right cannot be set together.", opts: @opts)
 			if @_form.data_field_right
-				@__form_data_field_right = DataField.new(@_form.data_field_right)
+				@__form_data_field_right = CUI.DataField.new(@_form.data_field_right)
 
 		@initTemplate()
 
@@ -36,7 +36,7 @@ class DataField extends DOM
 			@DOM.attr("cui-data-field-name", @getName())
 
 		@init()
-		if @_data and not $.isFunction(@_data)
+		if @_data and not CUI.isFunction(@_data)
 			# CUI.debug "setting private data: "+@, @_data
 			@setData(@_data)
 
@@ -61,14 +61,14 @@ class DataField extends DOM
 			name: @getNameOpt()
 			data:
 				check: (v) ->
-					$.isFunction(v?.hasOwnProperty) or $.isFunction(v)
+					CUI.isFunction(v?.hasOwnProperty) or CUI.isFunction(v)
 			data_not_for_others:
 				default: false
 				check: Boolean
 			disabled:
 				default: false
 				check: (v) ->
-					isBoolean(v) or $.isFunction(v)
+					isBoolean(v) or CUI.isFunction(v)
 			disabled_depends_on_data:
 				check: Function
 			tooltip:
@@ -171,7 +171,7 @@ class DataField extends DOM
 		@DOM.attr(name, depth)
 
 	getFormPath: (include_self=false, path=[], call=0) ->
-		assert(call < 100, "DataField.getPath", "Recursion detected.")
+		assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
 
 		if @getForm()?.getFormPath
 			@getForm().getFormPath(true, path, call+1)
@@ -230,14 +230,14 @@ class DataField extends DOM
 		@
 
 	updateData: (data) ->
-		if $.isFunction(@_data)
+		if CUI.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 		@displayValue()
 
 	setData: (data, init_data=true) ->
-		if @__data and @_data and not $.isFunction(@_data)
+		if @__data and @_data and not CUI.isFunction(@_data)
 			# CUI.debug "private data already set", @_data
 			# we have private data set, ignore a setData from
 			# e.g. a Form, as the private data is more important
@@ -246,12 +246,12 @@ class DataField extends DOM
 
 		assert(not @__data, "#{@}.setData", "data is already set.", opts: @opts, data: @__data)
 
-		if $.isFunction(@_data)
+		if CUI.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 
-		assert($.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
+		assert(CUI.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
 
 		# CUI.debug "initData", @__data, @__data.hasOwnProperty
 
@@ -354,7 +354,7 @@ class DataField extends DOM
 
 		# 	if other instanceof DataField
 		# 		other_fields.push(other)
-		# 	else if $.isArray(other)
+		# 	else if CUI.isArray(other)
 		# 		for r in other
 		# 			if r instanceof DataField
 		# 				other_fields.push(r)
@@ -363,8 +363,8 @@ class DataField extends DOM
 		# 	other_fields.push(@__form_data_field_right)
 
 		for df in other_fields
-			if not df or not $.isFunction(df[func])
-				assert(false, "DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
+			if not df or not CUI.isFunction(df[func])
+				assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
 				return @
 
 			df[func].apply(df, args)
@@ -381,9 +381,9 @@ class DataField extends DOM
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]
-		if $.isFunction(v)
+		if CUI.isFunction(v)
 			arr = v.call(@, @, event)
-			assert($.isArray(arr) or (isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
+			assert(CUI.isArray(arr) or (isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
 		else
 			arr = v
 		return arr
@@ -517,7 +517,7 @@ class DataField extends DOM
 		@initValue()
 
 		undo = @getUndo()
-		if $.isPlainObject(undo) and $.isEmptyObject(undo)
+		if CUI.isPlainObject(undo) and CUI.isEmptyObject(undo)
 			undo.values = [ @getValue() ]
 			undo.idx = 0
 
@@ -616,7 +616,7 @@ class DataField extends DOM
 		if @_mark_changed == false or @_check_changed == false
 			return
 		@checkChanged()
-		$div(DataField.changed_marker_css_class)
+		$div(CUI.DataField.changed_marker_css_class)
 
 	destroy: ->
 		@remove(true)
@@ -627,7 +627,7 @@ class DataField extends DOM
 		if field instanceof DataField
 			return field
 
-		assert($.isPlainObject(field), "DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
+		assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
 
 		field_opts = {}
 		for k, v of field
@@ -646,10 +646,12 @@ class DataField extends DOM
 				continue
 			field_opts[k] = v
 
-		assert($.isFunction(type), "DataField.new", "type is unknown: \"#{type}\".", field: field)
+		assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
 		_field = new type(field_opts)
-		assert(_field instanceof DataField, "DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
+		assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
 		return _field
+
+DataField = CUI.DataField
 
 
 CUI.Events.registerEvent

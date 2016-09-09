@@ -308,7 +308,7 @@ class ListViewTreeNode extends ListViewRow
 			return
 
 		load_children = =>
-			assert($.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
+			assert(CUI.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
 
 			if @children.length == 0
 				@is_open = true
@@ -364,7 +364,7 @@ class ListViewTreeNode extends ListViewRow
 			func = @opts.getChildren or @getChildren
 			if func
 				ret = func.call(@)
-				if $.isArray(ret)
+				if CUI.isArray(ret)
 					@children = ret
 					load_children()
 				else
@@ -418,7 +418,7 @@ class ListViewTreeNode extends ListViewRow
 		if not @children
 			@children = []
 
-		assert($.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
+		assert(CUI.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
 		if append == true
 			@children.push(node)
 		else
@@ -693,7 +693,7 @@ class ListViewTreeNode extends ListViewRow
 			@father.level()+1
 
 	renderContent: ->
-		if $.isFunction(@html)
+		if CUI.isFunction(@html)
 			@html.call(@opts, @)
 		else if @html
 			@html
@@ -787,7 +787,7 @@ class ListViewTreeNode extends ListViewRow
 		# append Content
 		contentDiv = $div("cui-tree-node-content")
 		content = @renderContent()
-		if $.isArray(content)
+		if CUI.isArray(content)
 			for con in content
 				contentDiv.append(con?.DOM or content)
 		else

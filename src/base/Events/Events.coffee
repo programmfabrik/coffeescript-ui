@@ -35,7 +35,7 @@
 #    bubble: true|false
 #
 #
-class CUI.Events extends Element
+class CUI.Events extends CUI.Element
 
 	@defaults:
 		maxWait: 1500
@@ -84,7 +84,7 @@ class CUI.Events extends Element
 
 	# wait for an event on a node
 	@wait: (_opts) ->
-		opts = Element.readOpts _opts, "Events.wait",
+		opts = CUI.Element.readOpts _opts, "Events.wait",
 			# event type
 			type:
 				mandatory: true
@@ -261,7 +261,7 @@ class CUI.Events extends Element
 	@ignore: (filter) ->
 		# CUI.debug "Events.ignore?", filter, listener.getTypes()
 		for listener in @getActiveListeners()
-			if not filter or $.isEmptyObject(filter) or listener.matchesFilter(filter)
+			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
 				# CUI.info("Events.ignore", filter, listener.getTypes())
 				listener.destroy()
 		@
@@ -285,7 +285,7 @@ class CUI.Events extends Element
 		@getEventType(type).alias or [type]
 
 	@registerEvent: (event, allow_array=true) ->
-		if not $.isArray(event.type) or not allow_array
+		if not CUI.isArray(event.type) or not allow_array
 			assert(isString(event?.type) and event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", event: event)
 
 		register_other_type = (_type) =>
@@ -293,7 +293,7 @@ class CUI.Events extends Element
 			_event.type = _type
 			@registerEvent(_event, false)
 
-		if $.isArray(event.type)
+		if CUI.isArray(event.type)
 			for type in event.type
 				register_other_type(type)
 		else
@@ -311,7 +311,6 @@ class CUI.Events extends Element
 				for type in event.alias
 					if not @__eventRegistry[type]
 						register_other_type(type)
-
 		@
 
 	@init: ->

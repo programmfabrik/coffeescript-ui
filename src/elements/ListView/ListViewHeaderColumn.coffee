@@ -12,7 +12,7 @@ class ListViewHeaderColumn extends ListViewColumn
 			label:
 				mandatory: true
 				check: (v) ->
-					if $.isPlainObject(v) or v instanceof Label
+					if CUI.isPlainObject(v) or v instanceof Label
 						true
 					else
 						false

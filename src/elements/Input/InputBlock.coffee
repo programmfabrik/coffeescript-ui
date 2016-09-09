@@ -1,4 +1,4 @@
-class InputBlock extends Element
+class InputBlock extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__start = @_start

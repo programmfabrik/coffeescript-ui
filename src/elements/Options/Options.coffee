@@ -1,4 +1,4 @@
-class Options extends DataField
+class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->
 		super(@opts)
 		@DOM.addClass("cui-padding-reset")
@@ -26,7 +26,7 @@ class Options extends DataField
 			options:
 				mandatory: true
 				check: (v) ->
-					$.isArray(v) or $.isFunction(v)
+					CUI.isArray(v) or CUI.isFunction(v)
 
 			# true: all fields horizontal
 			# int: n fields horizontal
@@ -73,7 +73,7 @@ class Options extends DataField
 	setData: (data) ->
 		super(data)
 		if @_radio
-			if $.isArray(@getValue())
+			if CUI.isArray(@getValue())
 				@__radio_use_array = true
 			else
 				@__radio_use_array = false
@@ -133,7 +133,7 @@ class Options extends DataField
 		for opt, idx in @__options
 			if opt.value == value
 				found = idx
-		assert(found != null, "Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
+		assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
 		@__checkboxes[found]
 
 
@@ -155,7 +155,7 @@ class Options extends DataField
 
 	checkValue: (_value) ->
 		if @__radio_use_array or not @_radio
-			if not $.isArray(_value)
+			if not CUI.isArray(_value)
 				throw new CheckValueError("Value must be Array.")
 			check = _value
 		else
@@ -368,7 +368,8 @@ class Options extends DataField
 			@__optionsForm.render()
 			if @_sortable
 				new Sortable
-					element: @__optionsForm.getTable().children()[0] # this is the tbody
+					axis: "y"
+					element: @__optionsForm.getTable() # this is the tbody
 					sorted: (ev, from_idx, to_idx) =>
 						# CUI.debug "options order before sort", @__options_order.join(", ")
 						moveInArray(from_idx, to_idx, @__options_order)
@@ -397,3 +398,4 @@ class Options extends DataField
 		else
 			[]
 
+Options = CUI.Options

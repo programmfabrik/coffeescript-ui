@@ -1,4 +1,4 @@
-class ListViewRow extends Element
+class ListViewRow extends CUI.Element
 
 	initOpts: ->
 		super()
@@ -85,7 +85,7 @@ class ListViewRow extends Element
 		@
 
 	getDOMNodes: ->
-		@listView?.getRow(@row_i)
+		CUI.jQueryCompat(@listView?.getRow(@row_i))
 
 	getRowIdx: ->
 		@row_i

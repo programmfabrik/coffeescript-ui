@@ -1,5 +1,5 @@
 
-class ProgressMeter extends DOM
+class ProgressMeter extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 

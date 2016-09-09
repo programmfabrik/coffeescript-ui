@@ -1,4 +1,4 @@
-class Menu extends Layer
+class CUI.Menu extends CUI.Layer
 	constructor: (@opts={}) ->
 		# @opts.role = "menu"
 		super(@opts)
@@ -10,7 +10,7 @@ class Menu extends Layer
 		@addOpts
 			itemList:
 				check: (v) ->
-					v instanceof ItemList or $.isPlainObject(v)
+					v instanceof ItemList or CUI.isPlainObject(v)
 
 			auto_close_after_click:
 				default: true
@@ -134,3 +134,6 @@ class Menu extends Layer
 	# 		@__layer.DOM.height(@__layer_dim._css_width)
 
 	# 	@
+
+
+Menu = CUI.Menu

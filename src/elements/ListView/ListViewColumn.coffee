@@ -1,4 +1,4 @@
-class ListViewColumn extends Element
+class ListViewColumn extends CUI.Element
 
 	readOpts: ->
 		super()
@@ -56,13 +56,13 @@ class ListViewColumn extends Element
 	addClass: (cls) ->
 		if not @__element
 			@__cl += " "+cls
-		else if @__element instanceof jQuery
-			@__element.addClass(cls)
+		else if @__element instanceof HTMLElement
+			CUI.DOM.addClass(@__element, cls)
 		@
 
 	removeClass: (cls) ->
-		if @__element instanceof jQuery
-			@__element.removeClass(cls)
+		if @__element instanceof HTMLElement
+			CUI.DOM.removeClass(@__element, cls)
 		@
 
 	swapWidthAndHeight: ->
