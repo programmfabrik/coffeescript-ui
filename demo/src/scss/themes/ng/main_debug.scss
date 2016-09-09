@@ -1,12 +1,10 @@
 $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
-@import "../../../../../src/scss/themes/ng/header_debug.scss";
+@import "../../../../../src/scss/themes/ng/header.scss";
 
 // put debug demo ng stuff here
-$bgColor: #dfdfff;
+$bgColor: yellow;
 
-@import "../../../../../src/scss/themes/ng/body.scss";
+@import "../../../../../src/scss/themes/ng/body_debug.scss";
 @import "../../../../../src/scss/themes/ng/footer.scss";
 
 @import "demo.scss";
-
-
