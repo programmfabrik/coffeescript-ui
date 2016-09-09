@@ -913,7 +913,7 @@ class DateTime extends Input
 				$target = $(ev.getTarget())
 				# CUI.debug "click on date table", ev.getTarget()
 				if $target.closest(".cui-date-time-day").length
-					data = DOM.data($target.closest("td")[0])
+					data = DOM.data($target.closest("td,.cui-td")[0])
 					@__current_moment.date(data.date)
 					@__current_moment.month(data.month)
 					@__current_moment.year(data.year)
@@ -928,12 +928,18 @@ class DateTime extends Input
 
 		# Wk, Mo, Tu, We, Th...
 		tr = $tr("cui-date-time-month-header").appendTo(month_table)
-		tr.append($td("cui-date-time-week-title").append($div("cui-date-time-dow").text(@__locale_format.tab_week)))
+
+		if CUI.__ng__
+			td_func = $th
+		else
+			td_func = $td
+
+		tr.append(td_func("cui-date-time-week-title").append($div("cui-date-time-dow").text(@__locale_format.tab_week)))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
 			day_div = $div("cui-date-time-dow").text(weekday)
 			day_div.addClass("cui-date-time-day-"+weekday.toLowerCase())
-			tr.append($td().append(day_div))
+			tr.append(td_func().append(day_div))
 
 		# Weeks
 		mom.subtract((mom.day()-@start_day+7)%7, "days")
@@ -1022,7 +1028,7 @@ class DateTime extends Input
 				$target = $(ev.getTarget())
 				# CUI.debug "clicked on ", $target
 				if $target.closest(".cui-date-time-grid-hour").length
-					hour = DOM.data($target.closest("td")[0], "hour")
+					hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
 					if @__input_format.clock_am_pm
 						current_hour = @__current_moment.hour()
 						if current_hour < 12 # AM
@@ -1042,7 +1048,7 @@ class DateTime extends Input
 
 				if $target.closest(".cui-date-time-grid-am-pm").length
 					current_hour = @__current_moment.hour()
-					am_pm = $target.closest("td").data("am_pm")
+					am_pm = $target.closest("td,.cui-td").data("am_pm")
 					if am_pm == "AM"
 						if current_hour >= 12
 							@__current_moment.hour(current_hour-12)
@@ -1053,7 +1059,7 @@ class DateTime extends Input
 					cursor = "minute"
 
 				if $target.closest(".cui-date-time-grid-minute").length
-					@__current_moment.minute(DOM.data($target.closest("td")[0], "minute"))
+					@__current_moment.minute(DOM.data($target.closest("td,.cui-td")[0], "minute"))
 					@__current_moment.second(0)
 					cursor = "blur"
 
