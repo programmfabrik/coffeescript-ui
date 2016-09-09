@@ -5,12 +5,20 @@ $font_awesome_url: '../../font-awesome/css/font-awesome.min.css';
 
 .cui-demo-header {
 	padding: 10px;
+	
 	.cui-demo-menu-button,
 	.theme-switch  {
+		&,
+		&:active {
+			color: inherit;
+			background: transparent;
+			border-style: none;
+			box-shadow: none;
+			padding: 2px 10px 2px 4px;
+		}
+	}
+	.cui-demo-menu-button {
 		font-size: 20px;
-		background-color: transparent;
-		border-style: none;
-		padding: 2px 20px 2px 0;
 	}
 	.theme-switch  {
 		font-size: 15px;
