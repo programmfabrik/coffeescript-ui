@@ -1,8 +1,11 @@
 @import url($font_awesome_url);
 
 $padding: 10px;
+$line-height-compensating-padding: 7px;
 $gap: 7px;
 $border-radius: 3px;
+$highlight-color: hsl(217,97%,57%);
+$on-highlight-color: white;
 
 @mixin margin($factor: 1) {
 	margin-bottom: $padding * $factor;
@@ -27,6 +30,30 @@ $border-radius: 3px;
 	box-shadow: none;
 	color: inherit;
 }
+
+// Flex for selected TABLE
+@mixin flex-table() {
+	display: flex; // yes, this is fun :)
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	flex-direction: column;
+
+	> tr {
+		display: flex; // yes, this is fun :)
+		box-sizing: border-box;
+		flex: 1 1 auto;
+		flex-direction: row;
+
+		> td {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 0 0 auto;
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+}
+
 
 // reset
 
@@ -67,7 +94,7 @@ body {
 	font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
 	font-size: 13px;
 	line-height: normal;
-	background: hsl(106,0%,93%);
+	background: hsl(0,0%,93%);
 	display: flex;
 	width: 100%;
   height: 100%;
@@ -84,6 +111,7 @@ textarea {
 	padding: 2px 3px;
 	flex: 1 1 auto;
 	box-sizing: border-box;
+	resize: vertical;
 }
 
 input {
@@ -102,35 +130,8 @@ li > div {
 	display: inline-flex;
 }
 
-// Flex for selected TABLE
-
-@mixin flex-table() {
-	display: flex; // yes, this is fun :)
-	box-sizing: border-box;
-	flex: 0 0 auto;
-	flex-direction: column;
-
-	> tr {
-		display: flex; // yes, this is fun :)
-		box-sizing: border-box;
-		flex: 1 1 auto;
-		flex-direction: row;
-
-		> td {
-			display: flex; // yes, this is fun :)
-			box-sizing: border-box;
-			flex: 0 0 auto;
-			flex-direction: column;
-			align-items: stretch;
-		}
-	}
-}
-
-table {
-	&.cui-form-table,
-	&.cui-date-time-date {
-		@include flex-table()
-	}
+table.cui-form-table {
+	@include flex-table()
 }
 
 
@@ -449,29 +450,25 @@ i.cui-spin-stepped {
 }
 
 // Button / Select
-a[role="button"],label[role="button"],.cui-button
-{
-	&:not(.cui-disabled):hover {
-		// we need to set opacity on our children
-		// because in submenus we get a Layer
-		// as child and we don't want it to inherit
-		// the opacity
-		> .cui-button-right,
-		> .cui-button-center,
-		> .cui-button-left {
-			// opacity: 0.7;
-		}
-	}
-	&.cui-disabled {
-		box-shadow: none;
-		opacity: 0.5;
-		cursor: default;
-	}
 
-	&.cui-active {
-		background-color: #ff5200;
-	}
+@mixin button-style() {
+	color: inherit;
+	background: white;
+	border: 1px solid hsl(0,0%,73%);
+	border-bottom-color: hsl(0,0%,65%);
+	border-top-color: hsl(0,0%,76%);
+	box-shadow: 0 1px rgba(0,0,0,.05);
+}
 
+@mixin button-active-style() {
+	color: white;
+	background: linear-gradient(hsl(240,3%,70%), hsl(240,2%,58%));
+	border-color: hsl(240,3%,59%);
+	border-top-color: hsl(240,3%,66%);
+	border-bottom-color: hsl(240,2%,51%);
+}
+
+.cui-button {
 	cursor: pointer;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	overflow: hidden;
@@ -481,11 +478,7 @@ a[role="button"],label[role="button"],.cui-button
 	align-self: flex-start;
 	height: 21px;
 	line-height: 19px;
-	background-color: white;
-	border: 1px solid hsl(0,0%,73%);
-	border-bottom-color: hsl(0,0%,65%);
-	border-top-color: hsl(0,0%,76%);
-	box-shadow: 0 1px rgba(0,0,0,.05);
+	@include button-style();
 	
 	&:active {
 		color: white;
@@ -493,14 +486,21 @@ a[role="button"],label[role="button"],.cui-button
 		border-color: hsl(238,5%,34%);
 		border-bottom-color: hsl(238,5%,26%);
 		border-top-color: hsl(238,5%,37%);
+		
+		&.cui-disabled {
+			@include button-style();
+		}
 	}
 
-	&.cui-active {
-		color: white;
-		background: linear-gradient(hsl(240,3%,70%), hsl(240,2%,58%));
-		border-color: hsl(240,3%,59%);
-		border-top-color: hsl(240,3%,66%);
-		border-bottom-color: hsl(240,2%,51%);
+	&.cui-disabled {
+		box-shadow: none;
+		opacity: 0.5;
+		cursor: default;
+	}
+
+	&.cui-active,
+	&.cui-active.cui-disabled {
+		@include button-active-style();
 	}
 
 	&.cui-button-appearance-flat {
@@ -515,40 +515,49 @@ a[role="button"],label[role="button"],.cui-button
 
 	// add padding around the whole button
 	border-radius: $border-radius;
+}
 
-	.cui-button-left,
-	.cui-button-center,
-	.cui-button-right {
-		&:empty {
-			display: none;
-		}
+.cui-button-left,
+.cui-button-center,
+.cui-button-right {
+	&:empty {
+		display: none;
 	}
+}
 
-	.cui-button-left,
-	.cui-button-right {
-		text-align: center;
-		flex: 0 0 auto;
-		padding: 0 7px;
-		
-		i.fa:not(.fa-ellipsis-v) {
-			min-width: 12px;
-		}
+.cui-button-left,
+.cui-button-right {
+	text-align: center;
+	flex: 0 0 auto;
+}
+
+.cui-button-left {
+	padding: 0 5px 0 6px;
+
+	&:empty + .cui-button-center {
+		padding-left: 6px;
 	}
+}
 
-	.cui-button-left:empty + .cui-button-center {
-		padding-left: 12px;
+.cui-button-center {
+	flex: 1 1 auto;
+
+	&:last-child {
+		padding-right: 6px;
 	}
 	
-	.cui-button-center {
-		flex: 1 1 auto;
-		
-		&:first-child {
-			padding-left: 12px;
-		}
-		
-		&:last-child {
-			padding-right: 12px;
-		}
+	&:only-child {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+}
+
+.cui-button-right {
+	padding: 0 6px 0 5px;
+	
+	&:empty {
+		display: block;
+		padding: 0 3px;
 	}
 }
 
@@ -570,6 +579,13 @@ a[role="button"].cui-button-appearance-link {
 	border: 1px solid red;
 }
 
+// Href Button e.g. Link
+.cui-button-href {
+	color: $highlight-color;
+	display: inline-flex;
+	flex-direction: row;
+}
+
 .tab-header-button {
 	&.cui-active {		
 		& + .tab-header-button:before,
@@ -588,12 +604,11 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-
 // Buttonbar
 .cui-buttonbar-group {
 	.cui-button {
 		position: relative;
-		
+			
 		&:not(:last-child) {
 			border-right: none;
 		}
@@ -856,7 +871,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: row;
 	@include margin();
 	
-	> div:not(:last-child) {
+	> *:not(:last-child) {
 		margin-right: $gap;
 	}
 }
@@ -990,7 +1005,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-layer-pointer {
 	position: absolute;
-	z-index: 2;
+	z-index: 1;
 	width: 33px;
   height: 16px;
 	overflow: hidden;
@@ -1106,35 +1121,23 @@ a[role="button"].cui-button-appearance-link {
 		0 0 0 1px rgba(0,0,0,.06),
 		0 1px 10px rgba(0,0,0,.43);
 	border-radius: 4px;
-
-	.cui-tmpl-item-list-body {
-
-	}
+	padding: $line-height-compensating-padding 0;
 }
 
-.cui-menu-item {
-	background: none;
-	border-radius: 0;
-	border: none;
-	box-shadow: none;
-	height: 18px;
-  line-height: 16px;
-	
-	&:first-child {
-		border-top-left-radius: 4px;
-		border-top-right-radius: 4px;
-	}
-	
-	&:last-child {
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
-	}
+.cui-item-list-button {
+  line-height: 18px;
+  padding: 0 $padding;
+  cursor: pointer;
 
 	&:hover,
 	&:active,
 	&.cui-active {
 		color: white;
 		background: hsl(238,3%,65%);
+	}
+
+	.cui-button-center {
+		padding: 0;
 	}
 }
 
@@ -1211,7 +1214,6 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	// z-index: 1;
 	.cui-wait-block-glass {
 		position: absolute;
 		top: 0;
@@ -1269,7 +1271,7 @@ a[role="button"].cui-button-appearance-link {
 				// disable the javascript overwrite here
 				margin-left: 0 !important;
 				// transition: margin-left 0.5s ease;
-				background: hsl(106, 0%, 89%);
+				background: hsl(0,0%,89%);
 				border: 1px solid hsl(106,0%,87%);
 				border-top-color: hsl(106,0%,83%);
 				border-radius: 3px;
@@ -1610,6 +1612,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-output {
+	.cui-label {
+		padding: 0;
+	}
+}
+
 
 // Table
 .cui-form-table,
@@ -1683,6 +1691,53 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-date-time-month-header {
+	border-bottom: 1px solid hsl(0,0%,75%);
+}
+
+.cui-date-time-day {
+	border-radius: $border-radius;
+}
+
+.cui-date-time-same-month {
+	cursor: pointer;
+}
+
+.cui-date-time-previous-month,
+.cui-date-time-next-month,
+.cui-date-time-week {
+	color: hsl(0,0%,79%);
+}
+
+.cui-date-time-selected {
+	background: $highlight-color;
+	color: $on-highlight-color;
+}
+
+.cui-date-time-now {
+	background: hsl(0,0%,92%);
+}
+
+
+// DateTimeDate
+
+.cui-date-time-date {
+	@include flex-table();
+	@include margin();
+	flex-grow: 1;
+	font-size: 12px;
+
+	td {
+		width: calc(100% / 8 - 1px); // 8 columns
+		text-align: right;
+		cursor: default;
+		justify-content: center;
+		padding: 0 7px;
+		line-height: 21px;
+		margin: 0 1px 1px 0;
+	}
+}
+
 // DateTime Popover
 
 .cui-menu.cui-date-time-60-select {
@@ -1707,7 +1762,7 @@ a[role="button"].cui-button-appearance-link {
 	height: 250px;
 
 	.cui-tmpl-date-time {
-		padding: 5px;
+		@include padding();
 		flex: 1 1 auto;
 
 		.cui-date-time-header {
@@ -1743,43 +1798,6 @@ a[role="button"].cui-button-appearance-link {
 					text-align: center;
 				}
 			}
-		}
-	}
-
-	.cui-date-time-date {
-		margin: 5px 0;
-		height: 100% / 8 * 6.5;
-		// border: 1px solid red;
-		tr:not(:first-child) > td {
-			// border-top: 1px solid green;
-		}
-		tr.cui-date-time-month-header {
-			height: 100% / (6 * 2 + 1);
-			flex: 0 0 auto;
-		}
-		td {
-			width: 12.5%; // 8 columns
-			text-align: center;
-
-			&.cui-date-time-day:hover {
-				background-color: #c0c0c0;
-			}
-			&.cui-date-time-previous-month,
-			&.cui-date-time-next-month {
-				color: #c9c9c9;
-			}
-			&.cui-date-time-selected {
-				background-color: #2a9cff !important;
-				color: #ffffff !important;
-			}
-			&.cui-date-time-now {
-				background-color: #cef7ce;
-			}
-			cursor: default;
-			&:not(:first-child) {
-				// border-left: 1px solid green;
-			}
-			justify-content: center;
 		}
 	}
 }
@@ -1820,12 +1838,15 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	right: 0;
 	top: 0;
+}
 	
-	.cui-multi-input-tag-button {
-		@include button-reset();
-		color: hsl(0,0%,30%);
-		font-size: 10px;
-    line-height: 20px;
+.cui-multi-input-tag-button {
+	color: hsl(0,0%,30%);
+	font-size: 10px;
+  line-height: 20px;
+    
+  .cui-button-center {
+  	padding: 0 5px;
 	}
 }
 
