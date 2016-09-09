@@ -670,6 +670,7 @@ class DateTime extends Input
 		date_sel = new Select(
 			name: "date"
 			data: data
+			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.date(data.date))
 			options: =>
@@ -685,6 +686,7 @@ class DateTime extends Input
 		month_sel = new Select(
 			name: "month"
 			data: data
+			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.month(data.month))
 			options: =>
@@ -700,6 +702,7 @@ class DateTime extends Input
 		year_sel = new Select(
 			name: "year"
 			data: data
+			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.year(data.year))
 			options: =>
@@ -796,6 +799,8 @@ class DateTime extends Input
 
 		##### HEADER includes YEAR and MONTH
 		header_year_month = new HorizontalLayout
+			maximize_vertical: false
+			maximize_horizontal: true
 			left:
 				content: new Buttonbar
 					class: "cui-date-time-header-month"
