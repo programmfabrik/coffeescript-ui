@@ -32,6 +32,7 @@ class Tab extends CUI.DOM
 			radio: "tabs"
 			class: "tab-header-button"
 			size: "big"
+			group: "tabs"
 			text: @_text
 			attr: attr
 			active: false
