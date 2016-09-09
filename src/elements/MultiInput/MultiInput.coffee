@@ -150,7 +150,7 @@ class MultiInput extends DataFieldInput
 			input.render()
 
 			do (input, key) =>
-				btn = new Button
+				btn = new CUI.defaults.class.MultiInputButton
 					text: key.tag
 					disabled: !@_control.hasUserControl()
 					onClick: (ev, btn) =>

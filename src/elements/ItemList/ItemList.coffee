@@ -1,4 +1,4 @@
-class ItemList extends VerticalLayout
+class CUI.ItemList extends CUI.VerticalLayout
 
 	init: ->
 		# we postpone the init until we are rendered
@@ -71,7 +71,7 @@ class ItemList extends VerticalLayout
 	readOpts: ->
 		super()
 		if @_orientation == "horizontal"
-			CUI.error("new ItemList, orientation == horizontal needs implementation!")
+			CUI.error("new CUI.ItemList, orientation == horizontal needs implementation!")
 		@
 
 	setActiveIdx: (@__active_idx) ->
@@ -122,7 +122,7 @@ class ItemList extends VerticalLayout
 		@getItems(event)
 		.done (items) =>
 
-			opt_keys = CUI.defaults.class.Button.getOptKeys()
+			opt_keys = CUI.defaults.class.ItemListButton.getOptKeys()
 			list_has_button_left = false
 
 			for _item, idx in items
@@ -226,7 +226,7 @@ class ItemList extends VerticalLayout
 					if menu
 						opts.menu_parent = menu
 
-					btn = new CUI.defaults.class.Button(opts)
+					btn = new CUI.defaults.class.ItemListButton(opts)
 
 					listenButtonClick(btn)
 
@@ -247,3 +247,6 @@ class ItemList extends VerticalLayout
 	destroy: ->
 		super()
 		@__body?.destroy()
+
+
+ItemList = CUI.ItemList
