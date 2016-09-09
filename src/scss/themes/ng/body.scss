@@ -668,7 +668,7 @@ a[role="button"].cui-button-appearance-link {
 			border-top-color: hsl(0,0%,65%);
 			border-bottom-color: hsl(0,0%,72%);
 			background: white;
-			margin-top: 2px;
+			margin-top: 3px;
 			font-size: 11px;
 			line-height: 13px;
 			border-radius: 2px;
@@ -885,9 +885,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-checkbox {
 	flex-direction: column;
 	
-	> .cui-button-checkbox {
+	.cui-button-checkbox {
 		align-self: stretch;
 		height: 20px;
+		line-height: 20px;
 		white-space: initial;
 	}
 }
@@ -982,29 +983,45 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	background-color: white;
 	flex-direction: column;
-	// overflow: hidden;
 	overflow: auto;
 	margin: 10px;
+	z-index: 1;
 }
 
-.cui-tmpl-layer-pointer {
+.cui-layer-pointer {
 	position: absolute;
-	z-index: 1;
-	width: 23px;
-	height: 11px;
+	z-index: 2;
+	width: 33px;
+  height: 16px;
 	overflow: hidden;
 	
-	&:after { // arrow
+	&:after { // arrow (south)
 		content: "";
 		position: absolute;
-		left: 2px;
-    top: 4px;
+		left: 8px;
+    top: 7px;
     width: 18px;
     height: 18px;
 		background: white;
-		box-shadow: 0 0 0 1px rgba(0,0,0,.06);
+		box-shadow: 
+			0 0 0 1px rgba(0,0,0,.06),
+			0 1px 10px rgba(0,0,0,.43);
 		transform: rotate(45deg);
 	}
+}
+
+.cui-pointer-placement-n:after {
+	top: -9px;
+}
+
+.cui-pointer-placement-e,
+.cui-pointer-placement-w {
+	width: 16px;
+	height: 33px;
+}
+
+.cui-pointer-placement-e:after {
+	left: -9px;
 }
 
 .cui-tmpl-layer-backdrop
@@ -1055,11 +1072,29 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Tooltip
+.cui-layer-root-cui-tooltip .cui-layer-pointer {
+	width: $padding / 2;
+	height: $padding / 2;
+
+	&:after {
+		display: none;
+	}
+}
+
 .cui-tooltip {
-	background-color: #4a4a4a;
-	color: white;
-  padding: 0 4px;
-  border-radius: $border-radius;
+	background: hsl(0,0%,94%);
+	max-width: 260px;
+	max-height: 100px;
+	overflow: auto;
+	box-shadow:
+		0 0 0 1px rgba(0,0,0,.06),
+		0 1px 10px rgba(0,0,0,.43);
+	
+	.cui-label {
+		font-size: 11px;
+    line-height: 14px;
+    padding: 3px 6px;
+	}
 }
 
 
@@ -1259,100 +1294,98 @@ a[role="button"].cui-button-appearance-link {
 	[cui-lv-quadrant="1"] {
 		color: hsl(0,0%,30%);
 	}
+}
 
-	.cui-list-view-grid-inner-top {
-		border-bottom: 1px solid hsl(0,0%,84%);
-	}
+.cui-list-view-grid-inner-top {
+	border-bottom: 1px solid hsl(0,0%,84%);
+}
 
-	
-	.cui-list-view-grid-quadrant-0,
-	.cui-list-view-grid-quadrant-1 {
-		.cui-lv-td {
-			position: relative;
-			
-			&:after { // table-head line
-				content: "";
-				position: absolute;
-				right: 0;
-				top: 2px;
-				bottom: 2px;
-				width: 1px;
-				background: hsl(0,0%,90%);
-			}
+
+.cui-list-view-grid-quadrant-0,
+.cui-list-view-grid-quadrant-1 {
+	.cui-lv-td {
+		position: relative;
+		
+		&:after { // table-head line
+			content: "";
+			position: absolute;
+			right: 0;
+			top: 2px;
+			bottom: 2px;
+			width: 1px;
+			background: hsl(0,0%,90%);
 		}
 	}
+}
 
-	.cui-list-view-grid-quadrant-1 {
-		.cui-lv-td:last-child:after {
-			display: none;
-		} 	
+.cui-list-view-grid-quadrant-1 {
+	.cui-lv-td:last-child:after {
+		display: none;
+	} 	
+}
+
+.cui-list-view-grid-has-fixed-rows {
+}
+
+// &.cui-maximize-vertical {
+//	> .cui-vertical-layout-center {
+//		> .cui-list-view-grid {
+//			height: 100%;
+//		}
+//	}
+// }
+
+// &.cui-maximize-horizontal {
+//	> .cui-vertical-layout-center {
+//		> .cui-list-view-grid {
+//			width: 100%;
+//		}
+//	}
+// }
+
+.cui-list-view-grid {
+	flex: 1 1 auto;
+	flex-direction: column;
+	// needed for resize tool to position the resize
+	// handles properly
+	position: relative;
+}
+
+.cui-list-view-grid-inner-top {
+	flex: 0 0 auto;
+	flex-direction: row;
+}
+
+.cui-list-view-grid-inner-bottom {
+	flex: 1 1 auto;
+	flex-direction: row;
+}
+
+.cui-list-view-grid-quadrant-0 {
+	flex: 0 0 auto;
+	overflow: hidden;
+}
+
+.cui-list-view-grid-quadrant-1 {
+	flex: 1 1 auto;
+	overflow: hidden;
+}
+
+.cui-list-view-grid-quadrant-2 {
+	flex: 0 0 auto;
+	overflow: hidden;
+}
+
+.cui-list-view-grid-quadrant-3 {
+	flex: 1 1 auto;
+	overflow: auto;
+}
+
+.cui-list-view-grid-quadrant-2,
+.cui-list-view-grid-quadrant-3 {
+	.cui-lv-tr-outer:nth-child(even) {
+		background: hsl(0,0%,96%);
 	}
-
-	.cui-list-view-grid-has-fixed-rows {
-	}
-
-	// &.cui-maximize-vertical {
-	//	> .cui-vertical-layout-center {
-	//		> .cui-list-view-grid {
-	//			height: 100%;
-	//		}
-	//	}
-	// }
-
-	// &.cui-maximize-horizontal {
-	//	> .cui-vertical-layout-center {
-	//		> .cui-list-view-grid {
-	//			width: 100%;
-	//		}
-	//	}
-	// }
-	
-	.cui-lv-tr-outer {
-		
-	}
-
-
-	.cui-list-view-grid {
-		flex: 1 1 auto;
-		flex-direction: column;
-		// needed for resize tool to position the resize
-		// handles properly
-		position: relative;
-	}
-
-	.cui-list-view-grid-inner-top {
-		flex: 0 0 auto;
-		flex-direction: row;
-	}
-
-	.cui-list-view-grid-inner-bottom {
-		flex: 1 1 auto;
-		flex-direction: row;
-	}
-
-	.cui-list-view-grid-quadrant-0 {
-		flex: 0 0 auto;
-		overflow: hidden;
-	}
-
-	.cui-list-view-grid-quadrant-1 {
-		flex: 1 1 auto;
-		overflow: hidden;
-	}
-
-	.cui-list-view-grid-quadrant-2 {
-		flex: 0 0 auto;
-		overflow: hidden;
-		
-		// background: linear-gradient(white 50%, hsl(0,0%,96%) 50%);
-		// background-size: 100% 36px;
-	}
-
-	.cui-list-view-grid-quadrant-3 {
-		flex: 1 1 auto;
-		overflow: auto;
-	}
-
 }
 
 // outside .cui-list-liew, we can use
@@ -1367,6 +1400,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: default;
 	flex-direction: row;
 	flex: 0 0 auto;
+	
 	&.cui-selected {
 		background-color: #2a9cff;
 		color: #ffffff;
@@ -1450,6 +1484,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	flex-direction: row;
+	background: linear-gradient(hsl(0,0%,96%) 50%, white 50%);
+	background-size: 100% 36px;
 
 	> .cui-lv-tr {
 		border-style: none;
@@ -1607,17 +1643,23 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-drag-drop-select-sortable {
-		> tr {
-			> .cui-form-td.cui-form-left {
-				width: 10px !important;
-				.cui-options-sortable-drag-handle {
-					&:hover {
-						opacity: 0.8;
-					}
-					flex: 1 1 auto;
-					cursor: move;
-					background: yellow;
+		.cui-form-td.cui-form-left {
+			width: 10px;
+			flex-direction: row;
+				
+			.cui-options-sortable-drag-handle {
+				&:hover {
+					opacity: 0.8;
 				}
+
+				flex: 1 1 auto;
+				cursor: move;
+				height: 11px;
+				width: 100%;
+				align-self: center;
+				
+				background: linear-gradient(hsl(0,0%,50%) 1px, transparent 1px);
+				background-size: 100% 3px;
 			}
 		}
 	}
