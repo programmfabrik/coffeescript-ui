@@ -8,9 +8,18 @@ class Playground extends Demo
 	getButtons: (opts ={}) ->
 		@getElements(CUI.Button, opts, [
 			text: "Button"
+			onClick: (evt, btn) => new Tooltip(
+				element: btn
+				on_click: true
+				on_hover: false
+				hover: false
+				text: 'Thorsten'
+			).show()
 		,
 			disabled: true
 			text: "Disabled"
+			tooltip:
+				text: "Tooltip!"
 		,
 			switch: true
 			active: true
@@ -110,10 +119,7 @@ class Playground extends Demo
 	getLayerTab: ->
 		dt = new DemoTable()
 		dt.addExample("Buttons & Tooltips",
-			new Buttonbar(buttons: @getButtons
-				tooltip:
-					text: "Tooltip!"
-			)
+			new Buttonbar(buttons: @getButtons())
 		)
 		dt.addExample("Layer",
 			new Buttonbar(buttons: [
