@@ -177,7 +177,7 @@ class CUI.Layer extends CUI.DOM
 			.DOM
 
 			#append pointer and make sure pointer is rendered beneath layer.
-			DOM.insertBefore(@__layer.DOM, @__pointer)
+			@__layer_root.DOM.appendChild(@__pointer)
 
 		if @_fill_space
 			assert(@_placement, "new #{@__cls}", "opts.fill_space requires opts.placement to be set.", opts: @opts)
@@ -563,21 +563,12 @@ class CUI.Layer extends CUI.DOM
 	resetLayer: ->
 		# @__debug.push("resetLayer")
 
-		# if @__appendToElement
-		# 	previous_element = @__layer_root.DOM.prev()
-		# 	@__layer_root.DOM.detach()
-
 		@__layer.DOM.css
 			height: ""
 			width: ""
 			"max-width": ""
 			"max-height": ""
 
-		# if @__appendToElement
-		# 	if previous_element.length > 0
-		# 		previous_element.after(@__layer_root.DOM)
-		# 	else
-		# 		@__layer_root.DOM.appendTo(@__appendToElement)
 		@
 
 
@@ -1052,9 +1043,6 @@ class CUI.Layer extends CUI.DOM
 			@__pointer.addClass("cui-pointer-placement-#{placement}")
 			DOM.data(@__pointer[0], "placement", placement)
 
-			#make sure pointer is visible and measurable
-			DOM.insertBefore(@__layer.DOM, @__pointer) # TODO not sure if this code is needed
-
 			rect = @__pointer.rect()
 			@__pointer_margin = @__getMargin(@__pointer)
 			@__pointer_dim =
@@ -1222,14 +1210,11 @@ class CUI.Layer extends CUI.DOM
 			@__orig_element = @__element
 			@__setElement(element)
 
-		# get @__appendToElement
-		@__appendToElement = document.body
-
 		@__layer.DOM.css
 			top: 0
 			left: 0
 
-		@__appendToElement.appendChild(@__layer_root.DOM)
+		document.body.appendChild(@__layer_root.DOM)
 
 		if @_element
 			@_element.addClass("cui-layer-active")
@@ -1355,8 +1340,6 @@ CUI.ready ->
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root > .cui-layer")
 			layer_element = layer_elements[layer_elements.length-1]
 			element = DOM.closest(ev.getTarget(), "[tabindex],input,textarea")
-
-			console.debug "keyup", ev, ev.getTarget()
 
 			if (element and element != layer_element) or not layer_element
 				# ignore this

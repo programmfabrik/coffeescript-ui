@@ -107,6 +107,11 @@ class Checkbox extends DataFieldInput
 
 		@__checkbox = new CUI.defaults.class.Button(btn_opts)
 
+		# move "cui-button" to us, this allows for easier CSS
+		if CUI.__ng__
+			@addClass("cui-button")
+			@__checkbox.removeClass("cui-button")
+
 		@proxy(@__checkbox, [
 			"activate"
 			"deactivate"
