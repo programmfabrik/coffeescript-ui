@@ -355,6 +355,8 @@ class Playground extends Demo
 		]
 
 	getControlsTab: ->
+		fu = new FileUpload
+			url: "FileUpload.php"
 
 		controls = [
 			new Block
@@ -369,6 +371,33 @@ class Playground extends Demo
 					new Buttonbar(buttons: @getButtons(icon: "refresh"))
 				,
 					new Buttonbar(buttons: @getButtons(icon: "play", appearance: "flat"))
+				,
+					new Buttonbar(buttons: [
+						new FileUploadButton
+							icon: "upload"
+							fileUpload: fu
+							text: "File Upload"
+					,
+						new ButtonHref
+							icon: "share"
+							href: "https://www.programmfabrik.de"
+							target: "_blank"
+							text: "www.programmfabrik.de"
+					])
+				,
+					new Buttonbar(buttons: [
+						new FileUploadButton
+							appearance: "flat"
+							fileUpload: fu
+							text: "File Upload"
+					,
+						new ButtonHref
+							appearance: "flat"
+							href: "https://www.programmfabrik.de"
+							target: "_blank"
+							text: "www.programmfabrik.de"
+					])
+
 				]
 		,
 			new Block

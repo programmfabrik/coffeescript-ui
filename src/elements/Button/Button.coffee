@@ -71,9 +71,6 @@ class CUI.Button extends CUI.DOM
 		if not @_attr?.role
 			DOM.setAttribute(@DOM, "role", @_role)
 
-		#add this to make sure our base css classes are in. e.g. ButtonHRef
-		@addClass("cui-button") #seems unnecessary
-
 		if not @_left or @_left == true
 			if @_icon
 				assert(isUndef(@_icon_left), "new #{@__cls}", "opts.icon conflicts with opts.icon_left", opts: @opts)

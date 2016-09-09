@@ -87,6 +87,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ListView/tools/ListViewColResizeTool.coffee \
 	src/elements/ListView/tools/ListViewTreeRowMoveTool.coffee \
 	src/elements/ItemList/ItemList.coffee \
+	src/elements/ItemList/ItemListButton.coffee \
 	src/elements/Menu/Menu.coffee \
 	src/elements/Panel/Panel.coffee \
 	src/elements/Input/Input.coffee \
@@ -107,6 +108,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/MultiInput/MultiInputControl.coffee \
 	src/elements/MultiInput/MultiInput.coffee \
 	src/elements/MultiInput/MultiInputInput.coffee \
+	src/elements/MultiInput/MultiInputButton.coffee \
 	src/elements/Checkbox/Checkbox.coffee \
 	src/elements/Options/Options.coffee \
 	src/elements/ObjectDumper/ObjectDumper.coffee \

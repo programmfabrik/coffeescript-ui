@@ -10,7 +10,7 @@ class CUI.Menu extends CUI.Layer
 		@addOpts
 			itemList:
 				check: (v) ->
-					v instanceof ItemList or CUI.isPlainObject(v)
+					v instanceof CUI.ItemList or CUI.isPlainObject(v)
 
 			auto_close_after_click:
 				default: true
@@ -73,7 +73,7 @@ class CUI.Menu extends CUI.Layer
 		@__itemList
 
 	setItemList: (itemList) ->
-		if @_itemList instanceof ItemList
+		if @_itemList instanceof CUI.ItemList
 			@__itemList = itemList
 		else
 
@@ -81,7 +81,7 @@ class CUI.Menu extends CUI.Layer
 			itemList.maximize_vertical = false
 			itemList.maximize_horizontal = true
 
-			@__itemList = new ItemList(itemList)
+			@__itemList = new CUI.ItemList(itemList)
 
 		@__itemList.__init()
 		@replace(@__itemList)

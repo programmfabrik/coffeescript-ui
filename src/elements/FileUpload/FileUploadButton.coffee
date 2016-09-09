@@ -1,6 +1,7 @@
 class FileUploadButton extends Button
 	constructor: (@opts={}) ->
 		super(@opts)
+		@addClass("cui-button")
 		if @_drop
 			@_fileUpload.initDropZone(dropZone: @DOM)
 
