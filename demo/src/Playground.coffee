@@ -28,6 +28,7 @@ class Playground extends Demo
 			options: [
 				text: "One"
 			,
+				disabled: true
 				text: "Two"
 			,
 				text: "Three"

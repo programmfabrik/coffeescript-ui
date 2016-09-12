@@ -65,6 +65,8 @@ class CUI.Button extends CUI.DOM
 		else if @_role == "menu-item"
 			@addClass("cui-menu-item")
 
+		@addClass("cui-button-element")
+
 		DOM.setAttributeMap(@DOM, @_attr)
 		DOM.setAttribute(@DOM, "tabindex", "0")
 

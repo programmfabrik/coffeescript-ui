@@ -400,19 +400,11 @@ i.cui-spin-stepped {
     animation: fa-spin 1s steps(8) infinite;
 }
 
-// Button / Select
+// Button / Select / Checkbox
 a[role="button"],label[role="button"],.cui-button
 {
 	&:not(.cui-disabled):hover {
-		// we need to set opacity on our children
-		// because in submenus we get a Layer
-		// as child and we don't want it to inherit
-		// the opacity
-		> .cui-button-right,
-		> .cui-button-center,
-		> .cui-button-left {
-			opacity: 0.7;
-		}
+		opacity: 0.7;
 	}
 	cursor: default;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
@@ -436,7 +428,6 @@ a[role="button"],label[role="button"],.cui-button
 	&.cui-active {
 		background-color: #ff5200 !important;
 	}
-
 
 	// add padding around the whole button
 	padding: 0 3px;
@@ -1253,13 +1244,13 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-table-has-not-left-column {
-	> tr > .cui-form-td.cui-form-left {
+	> .cui-tr > .cui-td.cui-form-left {
 			display: none;
 	}
 }
 
 .cui-form-table-has-not-right-column {
-	> tr > .cui-form-td.cui-form-right {
+	> .cui-tr > .cui-td.cui-form-right {
 		display: none;
 	}
 }
@@ -1308,7 +1299,7 @@ a[role="button"].cui-button-appearance-link {
 // Options
 .cui-options-form-table {
 	&.cui-drag-drop-select-sortable {
-		> tr {
+		> .cui-tr {
 			> .cui-form-td.cui-form-left {
 				width: 10px !important;
 				.cui-options-sortable-drag-handle {
@@ -1378,11 +1369,6 @@ a[role="button"].cui-button-appearance-link {
 
 			.cui-date-time-calendar {
 				transition: margin-left 0.5s ease-out;
-				// this is the horizontal layout for
-				// month & year picker
-				> div {
-					align-items: center;
-				}
 			}
 			flex-direction: row;
 			overflow: hidden;
@@ -1400,14 +1386,14 @@ a[role="button"].cui-button-appearance-link {
 		margin: 5px 0;
 		height: 100% / 8 * 6.5;
 		border: 1px solid red;
-		tr:not(:first-child) > td {
+		.cui-tr:not(:first-child) > .cui-td {
 			border-top: 1px solid green;
 		}
-		tr.cui-date-time-month-header {
+		.cui-tr.cui-date-time-month-header {
 			height: 100% / (6 * 2 + 1);
 			flex: 0 0 auto;
 		}
-		td {
+		.cui-td, .cui-th {
 			width: 12.5%; // 8 columns
 			text-align: center;
 

@@ -122,7 +122,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 		@getItems(event)
 		.done (items) =>
 
-			opt_keys = CUI.defaults.class.ItemListButton.getOptKeys()
+			opt_keys = CUI.defaults.class.Button.getOptKeys()
 			list_has_button_left = false
 
 			for _item, idx in items
