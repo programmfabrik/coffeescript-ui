@@ -1,18 +1,11 @@
 
-$date_time_width: 270px;
+$date_time_width: 300px;
 
 $date_next_month_color: #b2b2b2;
 
+$browser_padding: $grid_size*2;
+
 .cui-date-time {
-	//REMARKED needs to be elastic all the time, more important than a aligned width
-	//min-width: $min_input_width;
-
-	//REMARKED TODO why was this remarked!?  ..cause we need it again in controls demo
-	//reset whitespace
-	//line-height: 0;
-	//font-size: 0;
-
-
 	&.cui-data-field {
 		//this cant be a flex, cause it would not fill a width of 100%, but this way the container can be 100% or flex-grow:1 both would work
 		display: inline-block;
@@ -30,8 +23,7 @@ $date_next_month_color: #b2b2b2;
 
 .cui-date-time-popover {
 	//manually measured and set, cause content is filling layer after its size is already fixed
-	width: $date_time_width;
-	height: 188px;
+	//width: $date_time_width;
 
 	> .cui-pane > .cui-vertical-layout-center {
 		margin: 0 !important;
@@ -92,6 +84,17 @@ $date_next_month_color: #b2b2b2;
 	}
 }
 
+.cui-date-time-header-month {
+	.cui-label{
+		min-width: $grid_size*10; //make sure the size is static so the buttons dont jump
+		flex: 1 1 auto;
+		.cui-label-content {
+			flex: 1 1 auto;
+			text-align: center;
+		}
+	}
+}
+
 .cui-tmpl-date-time * {
 	transition: opacity 0.5s ease;
 }
@@ -101,8 +104,12 @@ $date_next_month_color: #b2b2b2;
 	@include flex_direction(row);
 	@include justify_content(space-between);
 
-	border-bottom: 2px solid black;
-	background-color: #DBDBDB;
+	background-color: $pane_header_background_color;
+
+	.cui-label {
+		font-weight: bold;
+	}
+
 	padding: 4px 0 4px 0;
 	.cui-date-time-browser-time,
 	.cui-date-time-browser-date {
@@ -131,14 +138,16 @@ tr.cui-date-time-year-month > td {
 }
 
 [browser="time"] .cui-date-time-calendar {
-	margin-left: -100%;
+	margin-left: -100% ;
 }
 
 .cui-date-time-browser {
 
-	width: 100%;
+	//width: 100%;
 	white-space: nowrap;
 	overflow: hidden;
+	margin: $browser_padding;
+	margin-top: $grid_size;
 
 	& .cui-date-time-year-month .cui-data-field > div {
 		display: inline-block;
@@ -151,8 +160,14 @@ tr.cui-date-time-year-month > td {
 		vertical-align: top;
 	}
 	.cui-date-time-calendar {
+
+		.cui-horizontal-layout {
+			margin-bottom: $grid_size;
+		}
+
 		table.cui-date-time-date {
 			width: 100%;
+			line-height: 20px;
  			td {
 				text-align: center;
 				vertical-align: middle;

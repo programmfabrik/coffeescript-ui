@@ -126,6 +126,9 @@ class CUI.Listener extends CUI.Element
 
 
 	destroy: ->
+		if @isDestroyed()
+			return
+
 		Events.unregisterListener(@)
 
 		for _type in @getTypes()

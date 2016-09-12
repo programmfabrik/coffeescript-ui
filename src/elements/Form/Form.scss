@@ -93,6 +93,17 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
             vertical-align: top;
         }
     }
+
+    .cui-data-field:not(.cui-checkbox) {
+        min-width: 180px;
+    }
+
+    .cui-form-options-table {
+
+        .cui-checkbox {
+            margin-right: $grid_size;
+        }
+    }
 }
 
 
