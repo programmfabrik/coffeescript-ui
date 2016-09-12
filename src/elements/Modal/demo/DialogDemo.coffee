@@ -112,8 +112,6 @@ class DialogDemo extends Demo
 					text: multiline_text
 					title: "Confirm"
 					icon: "question"
-					backdrop:
-						background_effect: "darken"
 					buttons: [
 						text: "Cancel"
 						onClick: =>

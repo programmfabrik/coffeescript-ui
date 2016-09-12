@@ -793,7 +793,40 @@ a[role="button"].cui-button-appearance-link {
 	width: 7px;
 	height: 7px;
 	margin: 5px;
-	background-color: #5df9ff;
+
+	$pointerColor: #ff9800;
+
+	&.cui-layer-pointer-s {
+		width: 0;
+		height: 0;
+		border-left: 7px solid transparent;
+		border-right: 7px solid transparent;
+		border-top: 7px solid $pointerColor;
+	}
+
+	&.cui-layer-pointer-n {
+		width: 0;
+		height: 0;
+		border-left: 7px solid transparent;
+		border-right: 7px solid transparent;
+		border-bottom: 7px solid $pointerColor;
+	}
+
+	&.cui-layer-pointer-w {
+		width: 0;
+		height: 0;
+		border-top: 7px solid transparent;
+		border-bottom: 7px solid transparent;
+		border-right: 7px solid $pointerColor;
+	}
+
+	&.cui-layer-pointer-e {
+		width: 0;
+		height: 0;
+		border-top: 7px solid transparent;
+		border-bottom: 7px solid transparent;
+		border-left: 7px solid $pointerColor;
+	}
 }
 
 .cui-tmpl-layer-backdrop
@@ -804,6 +837,7 @@ a[role="button"].cui-button-appearance-link {
 	right: 0;
 	bottom: 0;
 	> div {
+		position: absolute;
 		flex: 1 1 auto;
 		background-size: cover;
 		background-repeat: no-repeat;

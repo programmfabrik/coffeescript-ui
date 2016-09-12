@@ -25,7 +25,7 @@ class CUI.Layer extends CUI.DOM
 			class: "cui-layer-root-"+(toDash(@__cls)+" "+@_class).trim().split(/\s+/).join(" cui-layer-root-")
 			name: "layer-root"
 
-		@__backdropClickDisabled = false
+		# @__backdropClickDisabled = false
 
 		if @_backdrop or @_modal
 
@@ -40,14 +40,9 @@ class CUI.Layer extends CUI.DOM
 
 			@__backdrop.addClass("cui-layer-backdrop-policy-"+@__bd_policy)
 
-			if @_backdrop.background_effect
-				@__body_effect_class = "cui-layer-effect-" + @_backdrop.background_effect
-				$(document.body).addClass(@__body_effect_class)
-
 			if @_backdrop.content
 				@setBackdropContent(@_backdrop.content)
 			else if @_backdrop.blur
-
 				# clone body
 				body_clone = document.body.firstChild.cloneNode(true)
 
@@ -61,42 +56,44 @@ class CUI.Layer extends CUI.DOM
 					@setBackdropContent(@__backdrop_crop)
 
 				# console.error "crop this:", @__backdrop_crop
-
 				@__layer_root.addClass("cui-layer-root-backdrop-blur")
 
-			@__layer_root.DOM.appendChild(@__backdrop.DOM)
+
+			click_thru_listener = =>
+				Events.listen
+					type: "mousedown"
+					capture: true
+					node: window
+					only_once: true
+					call: (ev) =>
+						console.debug "ev", ev.getTarget()
+
+						if ev.ctrlKey() and ev.getButton() == 2
+							return
+
+						if CUI.DOM.closest(ev.getTarget(), @__layer.DOM) or
+							(@__pointer and CUI.DOM.closest(ev.getTarget(), @__pointer))
+								return
+
+						# if @__backdropClickDisabled
+						# 	# this is used in Popover when all buttons are disabled
+						# 	# we need to eat this
+						# 	return
+
+						@hide(ev)
+						return
+
+
+			if @__bd_policy == "click-thru" and not @_backdrop.blur and not @_backdrop.content
+				click_thru_listener()
+			else
+				@__layer_root.DOM.appendChild(@__backdrop.DOM)
 
 			# @__backdrop.DOM.attr("role", @_role)
 
 			switch @__bd_policy
 				when "click-thru"
-					Events.listen
-						type: "mousedown"
-						node: @__backdrop
-						call: (ev) =>
-							if ev.ctrlKey() and ev.getButton() == 2
-								return
-
-							if @__backdropClickDisabled
-								# this is used in Popover when all buttons are disabled
-								# we need to eat this
-								return
-
-							@hide(ev)
-
-							CUI.setTimeout
-								ms: 0
-								call: =>
-									Events.trigger
-										node: document.elementFromPoint(ev.clientX(), ev.clientY())
-										type: "mousedown"
-										button: ev.getButton()
-										pageX: ev.pageX()
-										pageY: ev.pageY()
-
-							ev.stopPropagation()
-							return
-
+					click_thru_listener()
 
 				when "click"
 					Events.listen
@@ -106,8 +103,8 @@ class CUI.Layer extends CUI.DOM
 							if ev.ctrlKey() and ev.getButton() == 2
 								return
 
-							if @__backdropClickDisabled
-								return
+							# if @__backdropClickDisabled
+							# 	return
 
 							@hide(ev)
 							ev.stopPropagation()
@@ -182,13 +179,13 @@ class CUI.Layer extends CUI.DOM
 		@__shown = false
 
 
-	disableBackdropClick: ->
-		@__backdropClickDisabled = true
-		@
+	# disableBackdropClick: ->
+	# 	@__backdropClickDisabled = true
+	# 	@
 
-	enableBackdropClick: ->
-		@__backdropClickDisabled = false
-		@
+	# enableBackdropClick: ->
+	# 	@__backdropClickDisabled = false
+	# 	@
 
 	setBackdropContent: (content) ->
 		assert(@__backdrop, "CUI.Layer.setBackdropContent", "No backdrop found in layer", layer: @)
@@ -215,7 +212,6 @@ class CUI.Layer extends CUI.DOM
 				default:
 					policy: "click-thru"
 					add_bounce_class: true
-					background_effect: null
 					content: null
 
 				check: (v) ->
@@ -363,6 +359,10 @@ class CUI.Layer extends CUI.DOM
 
 			# reset pointer margin
 			CUI.DOM.setStyle(@__pointer, margin: "")
+
+			for direction in ["w", "s", "e", "n"]
+				CUI.DOM.removeClass(@__pointer, "cui-layer-pointer-"+direction)
+
 		else
 			dim_pointer =
 				borderBoxWidth: 0
@@ -514,6 +514,9 @@ class CUI.Layer extends CUI.DOM
 			layer_pos = vp.layer_pos = {}
 			pointer_pos = vp.pointer_pos = {}
 
+			layer_pos.set_width = false
+			layer_pos.set_height = false
+
 			# number of times we need to cut the layer
 			# to make it fit into the viewport
 			vp.cuts = 0
@@ -528,12 +531,16 @@ class CUI.Layer extends CUI.DOM
 				when "both"
 					layer_pos.width = vp.width
 					layer_pos.height = vp.height
+					layer_pos.set_height = true
+					layer_pos.set_width = true
 				when "vertical"
 					layer_pos.height = vp.height
 					layer_pos.width = dim_layer.borderBoxWidth
+					layer_pos.set_height = true
 				when "horizontal"
 					layer_pos.width = vp.width
 					layer_pos.height = dim_layer.borderBoxHeight
+					layer_pos.set_width = true
 				else
 					layer_pos.width = dim_layer.borderBoxWidth
 					layer_pos.height = dim_layer.borderBoxHeight
@@ -613,12 +620,15 @@ class CUI.Layer extends CUI.DOM
 		else if available_placements.length == 1
 			placement = available_placements[0]
 		else
+			console.debug "sorting placements BEFORE", available_placements.join(", ")
 			# sort available placements
-			available_placements.sort (a, b) ->
-				compareIndex(a.width * a.height, b.width * b.height)
+			available_placements.sort (pl1, pl2) ->
+				a = idxInArray(pl1, allowed_placements)
+				b = idxInArray(pl2, allowed_placements)
+				compareIndex(a, b)
 
-			# first is "c", so take it only if it is the only one
-			placement = available_placements[1]
+			console.debug "sorting placements AFTER", available_placements.join(", ")
+			placement = available_placements[0]
 
 		if ev?.hasModifierKey()
 			console.debug "layer", dim_layer
@@ -724,8 +734,8 @@ class CUI.Layer extends CUI.DOM
 		CUI.DOM.setStyle @__layer.DOM,
 			top: vp.layer_pos.top
 			left: vp.layer_pos.left
-			width: vp.layer_pos.width
-			height: vp.layer_pos.height
+			width: if vp.layer_pos.set_width then vp.layer_pos.width else ""
+			height: if vp.layer_pos.set_height then vp.layer_pos.height else ""
 			maxWidth: vp.width
 			maxHeight: vp.height
 			margin: 0
@@ -736,6 +746,8 @@ class CUI.Layer extends CUI.DOM
 				top: vp.pointer_pos.top
 				left: vp.pointer_pos.left
 				margin: 0
+
+			CUI.DOM.addClass(@__pointer, "cui-layer-pointer-"+vp.pointer_pos.direction)
 
 		if @__backdrop_crop
 			DOM.setStyle @__backdrop_crop,
@@ -750,6 +762,9 @@ class CUI.Layer extends CUI.DOM
 				top: -vp.layer_pos.top
 				left: -vp.layer_pos.left
 
+		# We could re-read the layer width & height here to actually
+		# set it in Style. By doing that we could have support for transitions
+		# when Layer content size changes.
 		return
 
 	__removeDebugDivs: ->
@@ -817,10 +832,6 @@ class CUI.Layer extends CUI.DOM
 			if @__check_for_element
 				CUI.clearInterval(@__check_for_element)
 			@__element.removeClass("cui-layer-active")
-
-		if @__body_effect_class
-			$(document.body).removeClass(@__body_effect_class)
-			@__body_effect_class = null
 
 		@__layer_root.DOM.detach()
 		@__shown = false
@@ -908,7 +919,7 @@ class CUI.Layer extends CUI.DOM
 		@
 
 	isKeyboardCancellable: (ev) ->
-		if @__bd_policy in ["click", "click-thru"] and not @__backdropClickDisabled
+		if @__bd_policy in ["click", "click-thru"] # and not @__backdropClickDisabled
 			true
 		else
 			false

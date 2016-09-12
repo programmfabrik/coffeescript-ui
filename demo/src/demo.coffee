@@ -136,6 +136,8 @@ class RunDemo extends CUI.Element
 		@themeSwitch = new Button
 			class: "theme-switch"
 			text: "Theme"
+			tooltip:
+				text: "Pick a theme!"
 			menu:
 				onClick: (ev, btn, item) ->
 					old_theme = CUI.getActiveTheme().getName()

@@ -15,12 +15,12 @@ class Popover extends Modal
 		if not @opts.backdrop?.policy
 			@_backdrop.policy = "click-thru"
 
-	disableAllButtons: ->
-		super()
-		@disableBackdropClick()
+	# disableAllButtons: ->
+	# 	super()
+	# 	@disableBackdropClick()
 
-	enableAllButtons: ->
-		super()
-		@enableBackdropClick()
+	# enableAllButtons: ->
+	# 	super()
+	# 	@enableBackdropClick()
 
 

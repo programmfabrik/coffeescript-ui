@@ -130,6 +130,28 @@ class Playground extends Demo
 									pop.destroy()
 					pop.show()
 			,
+				text: "Popover (Blur)"
+				onClick: (ev, btn) =>
+					pop = new Popover
+						element: btn
+						placement: "n"
+						cancel: true
+						backdrop:
+							policy: "click-thru"
+							blur: true
+						pane:
+							header_left:
+								new Label(text: "Popover")
+							content: new MultilineLabel
+								markdown: true
+								text: """# Markdown\n\nYo Test Test"""
+							footer_right:
+								text: "Ok"
+								onClick: =>
+									pop.destroy()
+					pop.show()
+
+			,
 				text: "Modal"
 				onClick: (ev, btn) =>
 					mod = new Modal
