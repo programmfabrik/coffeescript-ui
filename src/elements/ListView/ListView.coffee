@@ -1746,14 +1746,10 @@ class ListView extends SimplePane
 				(new Menu
 					auto_close_after_click: false
 					itemList:
-						items: items
-				).show(
-					new Positioner(
+						items: itemse
+					show_at_position:
 						top: ev.pageY()
 						left: ev.pageX()
-						width: 0
-						height: 0
-					)
-				)
+				).show()
 				return false
 		@

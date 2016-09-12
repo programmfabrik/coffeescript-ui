@@ -27,9 +27,6 @@ class CUI.Modal extends CUI.LayerPane
 
 
 	readOpts: ->
-		if isUndef(@opts.placement)
-			@opts.placement = "c"
-
 		super()
 
 		if not @opts.backdrop?.policy
@@ -53,6 +50,10 @@ class CUI.Modal extends CUI.LayerPane
 			onToggleFillScreen:
 				check: Function
 
+		@mergeOpt "placement",
+			default: "c"
+
+
 	__addHeaderButton: (pname, _btn) ->
 		if not @["_#{pname}"]
 			return
@@ -68,17 +69,6 @@ class CUI.Modal extends CUI.LayerPane
 
 		@append(btn, "header_right")
 		@
-
-	getPlacements: ->
-		["c"]
-
-	getPositioner: ->
-		new Positioner
-			left: @__viewport.width / 2
-			top: @__viewport.height / 2
-			width: 0
-			height: 0
-
 
 	__runOnAllButtons: (func) ->
 		for el in @__layer.DOM.find(".cui-button")

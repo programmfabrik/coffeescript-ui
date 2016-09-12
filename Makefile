@@ -35,7 +35,6 @@ coffee_files = src/base/Common.coffee \
 	src/base/FlexHandle/FlexHandle.coffee \
 	src/base/Layout/Layout.coffee \
 	src/base/Layer/Layer.coffee \
-	src/base/Layer/Positioner.coffee \
 	src/base/DataField/DataField.coffee \
 	src/base/DataField/CheckValueError.coffee \
 	src/base/DataField/DataFieldInput.coffee \
@@ -87,7 +86,6 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ListView/tools/ListViewColResizeTool.coffee \
 	src/elements/ListView/tools/ListViewTreeRowMoveTool.coffee \
 	src/elements/ItemList/ItemList.coffee \
-	src/elements/ItemList/ItemListButton.coffee \
 	src/elements/Menu/Menu.coffee \
 	src/elements/Panel/Panel.coffee \
 	src/elements/Input/Input.coffee \

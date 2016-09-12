@@ -1,12 +1,14 @@
 class Popover extends Modal
 
+	initOpts: ->
+		super()
+		@mergeOpt "placement",
+			default: null
+
+		@mergeOpt "pointer",
+			default: "arrow"
+
 	readOpts: ->
-
-		if isUndef(@opts.pointer)
-			@opts.pointer = "arrow"
-
-		if isUndef(@opts.placement)
-			@opts.placement = null
 
 		super()
 
@@ -21,9 +23,4 @@ class Popover extends Modal
 		super()
 		@enableBackdropClick()
 
-	getPlacements: ->
-		return CUI.Layer::getPlacements.apply(@, arguments)
-
-	getPositioner: ->
-		CUI.Layer::getPositioner.apply(@, arguments)
 

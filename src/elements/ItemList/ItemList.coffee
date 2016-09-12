@@ -226,7 +226,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 					if menu
 						opts.menu_parent = menu
 
-					btn = new CUI.defaults.class.ItemListButton(opts)
+					btn = new CUI.defaults.class.Button(opts)
 
 					listenButtonClick(btn)
 

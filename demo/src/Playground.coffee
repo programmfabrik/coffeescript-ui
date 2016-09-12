@@ -133,7 +133,7 @@ class Playground extends Demo
 				text: "Modal"
 				onClick: (ev, btn) =>
 					mod = new Modal
-						element: btn
+						# element: btn
 						cancel: true
 						pane:
 							header_left:

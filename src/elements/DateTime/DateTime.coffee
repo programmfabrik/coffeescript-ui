@@ -670,7 +670,7 @@ class DateTime extends Input
 		date_sel = new Select(
 			name: "date"
 			data: data
-			group: "date"
+			group: if CUI.__ng__ then "date" else null
 			onDataChanged: =>
 				@updateCalendar(mom.date(data.date))
 			options: =>
@@ -686,7 +686,7 @@ class DateTime extends Input
 		month_sel = new Select(
 			name: "month"
 			data: data
-			group: "date"
+			group: if CUI.__ng__ then "date" else null
 			onDataChanged: =>
 				@updateCalendar(mom.month(data.month))
 			options: =>
@@ -702,7 +702,7 @@ class DateTime extends Input
 		year_sel = new Select(
 			name: "year"
 			data: data
-			group: "date"
+			group: if CUI.__ng__ then "date" else null
 			onDataChanged: =>
 				@updateCalendar(mom.year(data.year))
 			options: =>

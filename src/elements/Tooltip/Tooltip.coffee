@@ -134,11 +134,11 @@ class CUI.Tooltip extends CUI.LayerPane
 	show: (ev) ->
 		CUI.Tooltip.current = @
 		if @__static
-			super(null, ev)
+			super(ev)
 		else
 			@fillContent()
 			.done =>
-				super(null, ev)
+				super(ev)
 		@
 
 	fillContent: ->

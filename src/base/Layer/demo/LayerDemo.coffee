@@ -1,6 +1,6 @@
 class LayerDemo extends Demo
 	display: ->
-		placements = Layer.kn
+		placements = CUI.Layer.knownPlacements
 		@__data = {}
 
 		if window.localStorage.CUILayerDemo
@@ -12,7 +12,6 @@ class LayerDemo extends Demo
 			if not CUI.isPlainObject(@__data)
 				@__data = {}
 				@saveData()
-
 
 		if not @__data.placements?.length
 			init_placements = true
@@ -39,9 +38,8 @@ class LayerDemo extends Demo
 		form = new Form
 			maximize: false
 			data: @__data
-			onDataChanged: =>
-				@saveData()
-
+			onDataChanged: (data, element, ev) =>
+				@saveData(ev)
 			fields: [
 				form:
 					label: "placement"
@@ -115,32 +113,43 @@ class LayerDemo extends Demo
 		form2 = new Form
 			maximize: false
 			data: @__data
-			onDataChanged: =>
-				@saveData()
+			onDataChanged: (data, element, ev) =>
+				@saveData(ev)
 			fields: [
 				form:
-					label: "Auto Close (500ms)"
+					label: "Auto Open & Close (500ms)"
 				type: Checkbox
-				name: "auto_close"
+				name: "auto_open_close"
 			]
 
 		dt.addRow(form2.start().DOM)
 
+		@__buttons = []
 
-		buttons = []
+		if @__data.hasOwnProperty("button_idx")
+			button_idx = @__data.button_idx
+		else
+			button_idx = 0
 
-		for btn in [
+		for btn, idx in [
 			["nw", "North West"]
 			["sw", "South West"]
 			["ne", "North East"]
 			["se", "South East"]
 			["c", "Center"]
 		]
-			buttons.push new Button
-				class: "cui-layer-demo-start-button cui-layer-demo-start-button-"+btn[0]
-				text: btn[1]
-				onClick: (ev, btn) =>
-					@openLayer(btn)
+			do (btn, idx) =>
+				@__buttons.push new Button
+					radio: "a"
+					active: idx == button_idx
+					onActivate: =>
+						@__data.button_idx = idx
+					onDeactivate: (btn) =>
+						@__data.button_idx = idx
+					class: "cui-layer-demo-start-button cui-layer-demo-start-button-"+btn[0]
+					text: btn[1]
+					onClick: (ev, btn) =>
+						@openLayer(ev, btn)
 
 		vl = new VerticalLayout
 			maximize: true
@@ -148,14 +157,16 @@ class LayerDemo extends Demo
 			top:
 				content: dt.table
 			center:
-				content: buttons
+				content: @__buttons
 				class: "cui-layer-demo-center"
 		vl
 
-	saveData: ->
+	saveData: (ev) ->
 		window.localStorage.CUILayerDemo = JSON.stringify(@__data)
+		if @__data.auto_open_close
+			@openLayer(ev, @__buttons[@__data.button_idx])
 
-	openLayer: (element) ->
+	openLayer: (ev, element) ->
 
 		if @__data.backdrop_policy == false
 			backdrop = false
@@ -177,7 +188,7 @@ class LayerDemo extends Demo
 			pointer: @__data.pointer
 			backdrop: backdrop
 
-		content = new Label
+		content = new CUI.Label
 			multiline: true
 			text: "A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines."
 
@@ -190,9 +201,9 @@ class LayerDemo extends Demo
 				onClick: =>
 					layer.destroy()
 
-		layer.show()
+		layer.show(ev)
 
-		if @__data.auto_close
+		if @__data.auto_open_close
 			CUI.setTimeout
 				ms: 500
 				call: =>

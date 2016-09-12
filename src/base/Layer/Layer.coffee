@@ -11,8 +11,6 @@ class CUI.Layer extends CUI.DOM
 
 		@__layer = @getTemplate()
 
-		@__placement = null
-
 		# layer is registered as our main layer TODO register layer_root as our main layer!
 		@registerTemplate(@__layer)
 		# @__layer.DOM.attr("role", @_role)
@@ -49,6 +47,7 @@ class CUI.Layer extends CUI.DOM
 			if @_backdrop.content
 				@setBackdropContent(@_backdrop.content)
 			else if @_backdrop.blur
+
 				# clone body
 				body_clone = document.body.firstChild.cloneNode(true)
 
@@ -179,17 +178,9 @@ class CUI.Layer extends CUI.DOM
 			#append pointer and make sure pointer is rendered beneath layer.
 			@__layer_root.DOM.appendChild(@__pointer)
 
-		if @_fill_space
-			assert(@_placement, "new #{@__cls}", "opts.fill_space requires opts.placement to be set.", opts: @opts)
 
 		@__shown = false
 
-		@__auto_size_transition_active = false
-		@__trigger_auto_size_again_at_transitionend = false
-
-		#this is defined in show. if its defined the layer size should never change anymore
-		# in fill_screen mode this dimensions are ignored
-		@__resetFixedLayerDim()
 
 	disableBackdropClick: ->
 		@__backdropClickDisabled = true
@@ -285,6 +276,10 @@ class CUI.Layer extends CUI.DOM
 				default: false
 				check: Boolean
 
+			show_at_position:
+				check: (v) ->
+					CUI.isPlainObject(v) and v.top >= 0 and v.left >= 0
+
 			# fills the available space to the maximum
 			# if used with "placement", the placement is not
 			# chosen
@@ -328,12 +323,6 @@ class CUI.Layer extends CUI.DOM
 			#
 		@
 
-	# known placements
-	getPlacements: ->
-		if @_placements
-			@_placements
-		else
-			CUI.Layer.knownPlacements
 
 	setVisible: (on_off=true) ->
 		if on_off
@@ -353,762 +342,423 @@ class CUI.Layer extends CUI.DOM
 		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
 
-	# returns a list of all possible placements starting with @__placement and ending with "c"
-	__getPlacements: ->
-		pls = @getPlacements()
-		all_pls = CUI.Layer::getPlacements.call(@)
+	autoSize: ->
+		@position()
 
-		for p in pls
-			assert(all_pls.indexOf(p) > -1, "#{@__cls}", "Unsupported placement \"#{p}\"")
+	position: (ev) ->
+		#
+		set_more_dim = (dim) ->
+			if dim == null
+				return
 
-		if @_placement
-			idx = pls.indexOf(@_placement)
-			assert(idx > -1, "#{@__cls}.getPlacements", "placement \"#{@_placement}\" is not supported. Possible placements are [\"#{pls.join('\", \"')}\"].", opts: @opts)
-			_pls = pls.slice(idx)
-			_pls.push.apply(_pls, pls.slice(0, idx))
+			dim.halfHeight = dim.borderBoxHeight / 2
+			dim.halfWidth = dim.borderBoxWidth / 2
+			dim.viewportCenterHorizontal = dim.viewportLeft + dim.halfWidth
+			dim.viewportCenterVertical = dim.viewportTop + dim.halfHeight
+
+		dim_window = CUI.getViewport()
+
+		if @__pointer
+			dim_pointer = CUI.DOM.getDimensions(@__pointer)
+
+			# reset pointer margin
+			CUI.DOM.setStyle(@__pointer, margin: "")
 		else
-			idx = 0
-			_pls = pls.slice(0)
+			dim_pointer =
+				borderBoxWidth: 0
+				borderBoxHeight: 0
+				marginLeft: 0
+				marginRight: 0
+				marginTop: 0
+				marginBottom: 0
 
-		_pls
-
-	# returns Positioner
-	getViewport: ->
-		parent = @__layer.DOM.offsetParent
-
-		# #if overflow is visible then get use our document as the viewport  (needed by submenus)
-		# if DOM.hasOverflow(parent)
-		# @__debug.push("getViewport: using document viewport")
-		return new Positioner
+		# reset previously set layer dimensions
+		CUI.DOM.setStyle @__layer.DOM,
 			top: 0
 			left: 0
-			width: CUI.getViewport().width
-			height: CUI.getViewport().height
-		# else
-		# 	rect = parent.rect()
-		# 	return new Positioner(
-		# 		top: rect.top
-		# 		left: rect.left
-		# 		width: parent[0].clientWidth
-		# 		height: parent[0].clientHeight
-		# 	)
-
-
-	getPositioner: ->
-		assert(@__element, "#{@__cls}.getPositioner", "opts.element needs to be set", opts: @opts)
-		# CUI.debug "getPositioner", @, "destroyed:", @isDestroyed(), @__element, "dom:", $elementIsInDOM(@__element)
-		if @__element
-			new Positioner(@__element)
-
-	__getMaxLayerWidth: (return_null_if_own=false) ->
-		@__initOwnDimensions()
-
-		if @__ownDimensions.maxWidth
-			if return_null_if_own
-				return null
-
-			return @__ownDimensions?.maxWidth
-
-		margin_x = @__layer_margin.left + @__layer_margin.right
-		@__viewport.width - margin_x
-
-	__getMaxLayerHeight: (return_null_if_own=false) ->
-		@__initOwnDimensions()
-
-		if @__ownDimensions.maxHeight
-			if return_null_if_own
-				return null
-
-			return @__ownDimensions?.maxHeight
-
-		margin_y = @__layer_margin.bottom + @__layer_margin.top
-		@__viewport.height - margin_y
-
-	__initOwnDimensions: ->
-		if @__ownDimensions
-			return
-
-		@__ownDimensions = DOM.getDimensions(@__layer.DOM[0])
-
-	__setMaxDimensionsOnLayer: ->
-		@__initOwnDimensions()
-
-		new_max_dimension =
-			maxWidth: @__getMaxLayerWidth(true)
-			maxHeight: @__getMaxLayerHeight(true)
-
-		@__layer.DOM.css(new_max_dimension)
-		return new_max_dimension
-
-
-	__setLayerSizeFromFixedDimensions: ->
-
-		# CUI.debug "setLayerSizeFromFixedDimensions",@__fixed_layer_dim
-
-		@__layer.DOM.width( @__fixed_layer_dim._css_width)
-		@__layer.DOM.height( @__fixed_layer_dim._css_height)
-
-		new_max_dimension = @__setMaxDimensionsOnLayer()
-
-		@
-
-
-	__findMostSpacePlacement: ->
-		most_space =
-			placement: null
-
-			area: 0
-
-			width: 0
-			height: 0
-
-		for p, idx in @__getPlacements()
-			#calculate visible area of the layer in the current placement
-
-			space = @__getAvailableSpace(p)
-
-			if @_fill_space in ["both", "vertical"]
-				max_height = space.height
-			else
-				max_height = Math.min(@__layer_dim.height, space.height)
-
-			if @_fill_space in ["both", "horizontal"]
-				max_width = space.width
-			else
-				max_width = Math.min(@__layer_dim.width, space.width)
-
-			area = max_height * max_width
-
-			if area > most_space.area
-				most_space.area = area
-				most_space.placement = p
-				most_space.width = space.width
-				most_space.height = space.height
-
-		most_space
-
-	__getFirstPlacementThatFits: ->
-		fits = null
-
-		#layer with width 200.4 was not fitting into 200 , fixed that with math.floor
-		layer_width  = Math.min(@__getMaxLayerWidth(), @__layer_dim.width)
-		layer_height = Math.min(@__getMaxLayerHeight(),@__layer_dim.height)
-		layer_width  = Math.floor(layer_width)
-		layer_height = Math.floor(layer_height)
-
-		for p, idx in @__getPlacements()
-			space = @__getAvailableSpace(p)
-			if layer_width <= space.width and layer_height <= space.height
-				fits  = p
-				break
-
-		fits
-
-	#called inside fillspace when layer is shrunk , menu overwrites it
-	# __compensateScrollbars: ( new_dimension_in_out ) ->
-	# 	@
-
-	__fillSpace: (dir, placement, shrink_only = false) ->
-
-		if dir == "auto"
-			# lets see if we can change the width or height or need
-			# to change both
-
-			#remove content and check if the layer still has a size , manually set dimensions are locked for us
-			#TODO we should be able to get this info without disabling the children!?
-			for c in @__layer.DOM.children
-				$(c).css("display", "none")
-
-			w = @__layer.DOM.width()
-			h = @__layer.DOM.height()
-
-			for c in @__layer.DOM.children
-				$(c).css("display", "")
-
-			if w and h
-				dir = null
-			else if not w and not h # both are set or not set
-				dir = "both"
-			else if w
-				dir = "vertical"
-			else
-				dir = "horizontal"
-
-		if dir
-			space = @__getAvailableSpace(placement)
-
-			new_dimension =
-				height: space.height - @__layer.DOM.cssEdgeSpace("vertical", true)
-				width: space.width - @__layer.DOM.cssEdgeSpace("horizontal", true)
-
-			#we only limit shrinking when no fillspace is set
-			if not (@_fill_space in ["both", "vertical"]) and shrink_only
-				new_dimension.height = Math.min(@__layer_dim._css_height,new_dimension.height)
-			if not (@_fill_space in ["both", "horizontal"]) and shrink_only
-				new_dimension.width =  Math.min(@__layer_dim._css_width ,new_dimension.width)
-
-			# @__compensateScrollbars( new_dimension )
-
-			if dir in ["both", "vertical"]
-				# CUI.debug(@__layer.DOM.cssEdgeSpace("vertical", true))
-				@__layer.DOM.height(new_dimension.height)
-
-			if dir in ["both", "horizontal"]
-				@__layer.DOM.width(new_dimension.width)
-
-			# @__debug.push("fillSpace: dir:#{dir}, placement:#{placement}, space: "+space.width+" x "+space.height);
-		@
-
-
-	resetLayer: ->
-		# @__debug.push("resetLayer")
-
-		@__layer.DOM.css
-			height: ""
 			width: ""
+			height: ""
+			margin: ""
 			"max-width": ""
 			"max-height": ""
 
-		@
+		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
+		allowed_placements = @_placements or CUI.Layer.knownPlacements
+		wanted_placement = @_placement or allowed_placements[0]
+
+		if @__element
+			dim_element = CUI.DOM.getDimensions(@__element)
+
+			if @_use_element_width_as_min_width
+				dim_layer.borderBoxWidth = Math.max(dim_layer.borderBoxWidth, dim_element.borderBoxWidth)
+
+		else if @_show_at_position
+			dim_element =
+				viewportTop: @_show_at_position.top
+				viewportLeft: @_show_at_position.left
+
+			dim_element.viewportBottom = dim_element.viewportTop
+			dim_element.viewportRight = dim_element.viewportLeft
+		else
+			dim_element =
+				viewportTop: 0
+				viewportLeft: 0
+				viewportBottom: dim_window.height
+				viewportRight: dim_window.width
+				borderBoxWidth: dim_window.width
+				borderBoxHeight: dim_window.height
+
+		set_more_dim(dim_element)
+		set_more_dim(dim_pointer)
+		set_more_dim(dim_layer)
+
+		vp_pl = {}
+
+		# calc all possible layer viewports
+		for placement in CUI.Layer.knownPlacements
+			if placement not in ["n", "s", "e", "w", "c"]
+				continue
+
+			vp_pl[placement] = vp = {}
+
+			switch placement
+				when "c"
+					vp.top = dim_layer.marginTop
+					vp.left = dim_layer.marginLeft
+					vp.right = dim_window.width - dim_layer.marginRight
+					vp.bottom = dim_window.height - dim_layer.marginBottom
+					vp.align_vertical = "center"
+					vp.align_horizontal = "center"
+				when "n"
+					vp.top = dim_layer.marginTop
+					vp.left = dim_layer.marginLeft
+					vp.right = dim_window.width - dim_layer.marginRight
+					vp.bottom = dim_element.viewportTop - dim_pointer.borderBoxHeight - dim_pointer.marginBottom
+					vp.align_vertical = "bottom"
+					vp.align_horizontal = "center"
+				when "s"
+					vp.top = dim_element.viewportBottom + dim_pointer.borderBoxHeight + dim_pointer.marginTop
+					vp.left = dim_layer.marginLeft
+					vp.right = dim_window.width - dim_layer.marginRight
+					vp.bottom = dim_window.height - dim_layer.marginBottom
+					vp.align_vertical = "top"
+					vp.align_horizontal = "center"
+				when "e"
+					vp.top = dim_layer.marginTop
+					vp.right = dim_window.width - dim_layer.marginRight
+					vp.bottom = dim_window.height - dim_layer.marginBottom
+					vp.left = dim_element.viewportRight + dim_pointer.borderBoxWidth + dim_pointer.marginLeft
+					vp.align_vertical = "center"
+					vp.align_horizontal = "left"
+				when "w"
+					vp.top = dim_layer.marginTop
+					vp.bottom = dim_window.height - dim_layer.marginBottom
+					vp.right = dim_element.viewportLeft - dim_pointer.borderBoxWidth - dim_pointer.marginRight
+					vp.left = dim_layer.marginLeft
+					vp.align_vertical = "center"
+					vp.align_horizontal = "right"
+
+			vp.layer_align_vertical = vp.align_vertical
+			vp.layer_align_horizontal = vp.align_horizontal
 
 
-	__getMargin: (el) ->
-		margin =
-			left: el.cssFloat("marginLeft")
-			top: el.cssFloat("marginTop")
-			right: el.cssFloat("marginRight")
-			bottom: el.cssFloat("marginBottom")
-		margin
+		# add two-direction placements
+		for placement in CUI.Layer.knownPlacements
+			if placement in ["n", "s", "e", "w", "c"]
+				continue
+
+			placement_parts = placement.split("")
+			vp_pl[placement] = vp = copyObject(vp_pl[placement_parts[0]])
+
+			if not vp
+				continue
+
+			switch placement_parts[1]
+				when "s"
+					vp.top = dim_element.viewportTop
+					vp.align_vertical = "top"
+					vp.layer_align_vertical = "center"
+				when "n"
+					vp.bottom = dim_element.viewportBottom
+					vp.align_vertical = "bottom"
+					vp.layer_align_vertical = "center"
+				when "e"
+					vp.left = dim_element.viewportLeft
+					vp.align_horizontal = "left"
+					vp.layer_align_horizontal = "center"
+				when "w"
+					vp.right = dim_element.viewportRight
+					vp.align_horizontal = "right"
+					vp.layer_align_horizontal = "center"
 
 
-	# let the layer find a new size based on its content
-	# @param immediate , skips animation
-	autoSize: ( immediate=false ) ->
-		if not @isShown()
-			return
+		# throw out placements which are too small
+		for placement in CUI.Layer.knownPlacements
+			if placement not in allowed_placements
+				delete(vp_pl[placement])
+				continue
 
-		focused = @__layer.DOM.find(":focus")
+			vp = vp_pl[placement]
+			vp.width = vp.right - vp.left
+			vp.height = vp.bottom - vp.top
 
-		#need to take care of multiple autosize calls
-		if @__auto_size_transition_active and not immediate
-			@__trigger_auto_size_again_at_transitionend = true
-			return
+			# placement might not be available, no space
+			# FIXME: we can read minWidth & minHeight from layer
+			# here, so the design can decide on a minimum
+			if vp.width < 10 or vp.height < 10
+				delete(vp_pl[placement])
 
-		@__trigger_auto_size_again_at_transitionend = false
-		@__auto_size_transition_active = true
+		# now we need to position the layer within the available viewport
+		for placement, vp of vp_pl
 
-		@__layer.DOM.removeClass("cui-layer-autosize-transition")
+			layer_pos = vp.layer_pos = {}
+			pointer_pos = vp.pointer_pos = {}
 
-		layer_start_transform =
-			left: @__layer.DOM.cssFloat("left")
-			top: @__layer.DOM.cssFloat("top")
-			width: @__layer.DOM.width()
-			height: @__layer.DOM.height()
+			# number of times we need to cut the layer
+			# to make it fit into the viewport
+			vp.cuts = 0
 
-		#calculate new layer transform
-		immediate = immediate or isUndef(@__fixed_layer_dim)
-		@__resetFixedLayerDim()
+			pointer_pos.width = dim_pointer.borderBoxWidth
+			pointer_pos.height = dim_pointer.borderBoxHeight
 
-		@position()
+			# set width on height on the layer
+			# depending on the available viewport and the
+			# fill space policy
+			switch @_fill_space
+				when "both"
+					layer_pos.width = vp.width
+					layer_pos.height = vp.height
+				when "vertical"
+					layer_pos.height = vp.height
+					layer_pos.width = dim_layer.borderBoxWidth
+				when "horizontal"
+					layer_pos.width = vp.width
+					layer_pos.height = dim_layer.borderBoxHeight
+				else
+					layer_pos.width = dim_layer.borderBoxWidth
+					layer_pos.height = dim_layer.borderBoxHeight
 
-		if not immediate
-			#start transition
+			if layer_pos.width > vp.width
+				layer_pos.width = vp.width
+				vp.cuts++
 
-			layer_offset =
-				left: @__layer.DOM.cssFloat("left")
-				top: @__layer.DOM.cssFloat("top")
+			if layer_pos.height > vp.height
+				layer_pos.height = vp.height
+				vp.cuts++
 
-			#set animation start transform
-			@__layer.DOM.css
-				top: layer_start_transform.top
-				left: layer_start_transform.left
-				width: layer_start_transform.width
-				height: layer_start_transform.height
+			# now align the layer within the available viewport
+			switch vp.align_horizontal
+				when "left"
+					layer_pos.left = vp.left
+				when "right"
+					layer_pos.left = vp.right - layer_pos.width
+				when "center"
+					layer_pos.left = dim_element.viewportCenterHorizontal - layer_pos.width / 2
 
-			#trigger layout to make sure the browser is using our animation start values!
-			@__layer.DOM.width()
+			switch vp.align_vertical
+				when "top"
+					layer_pos.top = vp.top
+				when "bottom"
+					layer_pos.top = vp.bottom - layer_pos.height
+				when "center"
+					layer_pos.top = dim_element.viewportCenterVertical - layer_pos.height / 2
 
-			# set autosize transition when window has moved
+			# move layer into viewport in case we overlap
+			if layer_pos.top < vp.top
+				layer_pos.top = vp.top
+				vp.cuts++
 
-			# find biggest movement in our transition
-			max_movement = 0
-			calc_max_movement = (start,end) =>
-				max_movement = Math.max( max_movement, Math.abs(start-end) )
-			calc_max_movement( layer_start_transform.left, layer_offset.left )
-			calc_max_movement( layer_start_transform.top, layer_offset.top )
-			calc_max_movement( layer_start_transform.width, @__fixed_layer_dim._css_width )
-			calc_max_movement( layer_start_transform.height, @__fixed_layer_dim._css_height )
+			if layer_pos.left < vp.left
+				layer_pos.left = vp.left
+				vp.cuts++
 
-			animation_threshold = 3
-			if max_movement > animation_threshold
-				#enable transition
-				@__layer.DOM.addClass("cui-layer-autosize-transition")
+			overlap_bottom = layer_pos.top + layer_pos.height - vp.bottom
+			if overlap_bottom > 0
+				layer_pos.top = layer_pos.top - overlap_bottom
 
-			# make sure we clean up our animation class, otherwise it overwrites animation speeds
+			overlap_right = layer_pos.left + layer_pos.width - vp.right
+			if overlap_right > 0
+				layer_pos.left = layer_pos.left - overlap_right
 
-			focused[0]?.focus()
 
-			Events.wait
-				type: "transitionend"
-				node: @__layer
-			.always =>
-				if @isDestroyed()
+			# now align the pointer within the available viewport
+			switch vp.layer_align_horizontal
+				when "left"
+					pointer_pos.left = dim_element.viewportRight + dim_pointer.marginLeft
+					pointer_pos.direction = "w"
+				when "right"
+					pointer_pos.left = dim_element.viewportLeft - dim_pointer.borderBoxWidth - dim_pointer.marginLeft
+					pointer_pos.direction = "e"
+				when "center"
+					pointer_pos.left = dim_element.viewportCenterHorizontal - dim_pointer.borderBoxWidth / 2
+
+			switch vp.layer_align_vertical
+				when "top"
+					pointer_pos.top = dim_element.viewportBottom + dim_pointer.marginTop
+					pointer_pos.direction = "n"
+				when "bottom"
+					pointer_pos.top = dim_element.viewportTop - dim_pointer.marginBoxHeight + dim_pointer.marginTop
+					pointer_pos.direction = "s"
+				when "center"
+					pointer_pos.top = dim_element.viewportCenterVertical - dim_pointer.borderBoxHeight / 2
+
+		# pick best placement
+		available_placements = []
+		for placement, vp of vp_pl
+			available_placements.push(placement)
+
+		if vp_pl[wanted_placement]
+			# wanted placement is available, we take it
+			placement = wanted_placement
+		else if available_placements.length == 1
+			placement = available_placements[0]
+		else
+			# sort available placements
+			available_placements.sort (a, b) ->
+				compareIndex(a.width * a.height, b.width * b.height)
+
+			# first is "c", so take it only if it is the only one
+			placement = available_placements[1]
+
+		if ev?.hasModifierKey()
+			console.debug "layer", dim_layer
+			console.debug "element", dim_element
+			console.debug "pointer", dim_pointer
+			console.debug "window", dim_window
+
+			console.debug "placements", placement, vp_pl
+
+			show_dbg_div = (placement) =>
+
+				@__removeDebugDivs()
+
+				_vp = vp_pl[placement]
+
+				console.info("Layer: Placement", placement, _vp)
+
+				@__dbg_div1 = CUI.DOM.element("DIV")
+				@__dbg_div2 = CUI.DOM.element("DIV")
+				@__dbg_div3 = CUI.DOM.element("DIV")
+
+				style1 =
+					position: "absolute"
+					zIndex: 2
+					border: "2px solid #ff0032"
+					backgroundColor: "rgba(255, 0, 0, 0.4)"
+					top: _vp.top
+					left: _vp.left
+					width: _vp.width
+					height: _vp.height
+
+				DOM.setStyle(@__dbg_div1, style1)
+
+				style2 =
+					position: "absolute"
+					zIndex: 2
+					border: "2px solid #00ff32"
+					backgroundColor: "rgba(0, 255, 0, 0.4)"
+					top: _vp.layer_pos.top
+					left: _vp.layer_pos.left
+					width: _vp.layer_pos.width
+					height: _vp.layer_pos.height
+					alignItems: "center"
+					justifyContent: "center"
+					fontSize: 40
+					color: "rgb(0,255,50)"
+
+				span = CUI.DOM.element("SPAN")
+				span.textContent = placement
+
+				@__dbg_div2.appendChild(span)
+				DOM.setStyle(@__dbg_div2, style2)
+
+				style3 =
+					position: "absolute"
+					zIndex: 2
+					border: "2px solid #0032ff"
+					backgroundColor: "rgba(0, 0, 255, 0.4)"
+					top: _vp.pointer_pos.top
+					left: _vp.pointer_pos.left
+					width: _vp.pointer_pos.width
+					height: _vp.pointer_pos.height
+
+				DOM.setStyle(@__dbg_div3, style3)
+
+				@__layer_root.DOM.appendChild(@__dbg_div1)
+				@__layer_root.DOM.appendChild(@__dbg_div2)
+
+				if @__pointer
+					@__layer_root.DOM.appendChild(@__dbg_div3)
+
+			dbg_pl = 0
+
+			listener = Events.listen
+				node: window
+				type: "keyup"
+				call: (ev, info) =>
+					if ev.keyCode() != 32
+						return
+
+					while (true)
+						dbg_pl = dbg_pl + 1
+						if dbg_pl == CUI.Layer.knownPlacements.length
+							@__removeDebugDivs()
+							listener.destroy()
+							return
+
+						_placement = CUI.Layer.knownPlacements[dbg_pl]
+
+						if vp_pl[_placement]
+							show_dbg_div(_placement)
+							return
+
+						console.warn("Placement", _placement, "is unavailable.")
 					return
 
-				@__auto_size_transition_active = false
 
-				if @__layer.DOM.hasClass("cui-layer-autosize-transition")
-					@__layer.DOM.removeClass("cui-layer-autosize-transition")
-
-					# make sure viewport resize is called at the end without 'cui-layer-autosize-transition' being set,
-					# 'cui-layer-autosize-transition' is setting a oversize to avoid irritating content relayouts during the transition
-					Events.trigger
-						type: "viewport-resize"
-						exclude_self: true
-						node: @__layer
-
-				if @__trigger_auto_size_again_at_transitionend
-					@autoSize()
-
-			#set animation end transform
-			@__layer.DOM.css
-				left: layer_offset.left
-				top: layer_offset.top
-			@__setLayerSizeFromFixedDimensions()
-		else
-			@__auto_size_transition_active = false
-
-
-
-
-	#updates and returns @__layer_dim
-	__getLayerDim: ->
-		@__layer.addClass("cui-layer-measure")
-		rect = @__layer.DOM.rect()
-		@__minimumElementWidthUsed = false
-
-		# let's see if we need to put a minimum size
-		if @_use_element_width_as_min_width and @__element
-			dim = DOM.getDimensions(@__element[0])
-			if dim.borderBoxWidth >= rect.width
-				@__minimumElementWidthUsed = true
-				width = dim.borderBoxWidth
-			else
-				width = rect.width
-			# console.error "Layer.__getLayoutDim: Set min-width on layer:", rect.width, dim.borderBoxWidth
-		else
-			width = rect.width
-
-		@__layer.removeClass("cui-layer-measure")
-
-		if isUndef(@__layer_dim)
-			@__layer_dim = {}
-
-		# if our axis wants to be filled then we don't use its fixed size
-
-		if isUndef(@__fixed_layer_dim) or @_fill_space in ["both","horizontal"]
-			@__layer_dim.width = width + @__layer_margin.left + @__layer_margin.right
-			@__layer_dim._css_width = rect.width - @__layer.DOM.cssEdgeSpace("horizontal")
-		else
-			@__layer_dim.width = @__fixed_layer_dim.width
-			@__layer_dim._css_width = @__fixed_layer_dim._css_width
-
-		if isUndef(@__fixed_layer_dim) or @_fill_space in ["both","vertical"]
-			@__layer_dim.height = rect.height + @__layer_margin.top + @__layer_margin.bottom
-			@__layer_dim._css_height = rect.height - @__layer.DOM.cssEdgeSpace("vertical")
-		else
-			@__layer_dim.height = @__fixed_layer_dim.height
-			@__layer_dim._css_height = @__fixed_layer_dim._css_height
-
-		# @__debug.push("getLayerDim: "+@__layer_dim.width+" x "+@__layer_dim.height)
-		# @__debug.push("getLayerDim [rect]: "+rect.width+" x "+rect.height)
-		# @__debug.push("getLayerDim [inner] : "+@__layer_dim._css_width+" x "+@__layer_dim._css_height)
-		# @__debug.push("width:"+@__layer.DOM.width())
-		# @__debug.push("max-width:"+@__layer.DOM.css("max-width"))
-		@__layer_dim
-
-	__resetFixedLayerDim: ->
-		@__fixed_layer_dim = undefined
-
-
-	__isPreviousPlacementBetter: ( previous_placement, current_placement ) ->
-		assert( previous_placement and isString(previous_placement) )
-		assert( current_placement and isString(current_placement) )
-
-		current_space = @__getAvailableSpace(current_placement)
-		previous_space = @__getAvailableSpace(previous_placement)
-
-		return (
-				(@__layer_dim.width  <= previous_space.width  or previous_space.width  >= @__viewport.width  or previous_space.width  >= current_space.width-1 ) and
-			   	(@__layer_dim.height <= previous_space.height or previous_space.height >= @__viewport.height or previous_space.height >= current_space.height-1 )
-		)
-
-
-	position: ->
-		if not @isShown()
-			return
-
-		# @__debug = []
-
-		# Window Viewport
-		@__window = CUI.getViewport()
-		# @__debug.push("window: "+@__window.width+" x "+@__window.height)
-
-		# Viewport of Layer
-		viewport = @getViewport()
-		assert(viewport instanceof Positioner, "#{@__cls}.getViewport", "Returned value is not instance of Positioner", return: viewport)
-		@__viewport = viewport.getPos()
-
-		# @__debug.push("viewport: "+@__viewport.width+" x "+@__viewport.height)
-
-		#if @__fixed_layer_dim
-		#	CUI.debug "have fixed layer dim: ",@__fixed_layer_dim
-
-		# Rectangle of Positioner
-		rect = @getPositioner()
-		assert(rect instanceof Positioner, "#{@__cls}.getPositioner()", "Returned value is not instance of Positioner", return: rect)
-		@__rect = rect.getPos()
-		# @__debug.push("positioner: left:"+@__rect.left+" top:"+@__rect.top+" width:"+@__rect.width+" height:"+@__rect.height+" right:"+@__rect.right+" bottom:"+@__rect.bottom)
-
-		@resetLayer()
-		@__layer_margin = @__getMargin(@__layer.DOM)
-
-		# TODO fill_space can be undefined, behaviour is different from fill_space==null, document this behaviour
-		# TODO undefined and null should be the same, use null as default in readopts
-		if isUndef(@_fill_space)
-			@_fill_space = null
-		fill_space = @_fill_space
-
-		#get real need of dimensions, needed to have an idea for the minimum size
-		@__getLayerDim()
-		@__setMaxDimensionsOnLayer() #make sure we limit its size by the viewport
-
-		previous_placement = @__placement
-
-		if fill_space == "both"
-			@__placement = "c"
-		else
-			@__placement = @__getFirstPlacementThatFits()
-
-		# @__debug.push("best placement: "+@__placement)
-		if @__placement
-			if fill_space != null
-				@__updatePointerOrientation()
-				#this is filling space even when there is no, manipulates dom and can set negative dimensions, thats why we call it after findBestPlacement
-				@__fillSpace( fill_space, @__placement )
-			else
-				#check if we can stay on the old placement
-				if previous_placement
-					if @__isPreviousPlacementBetter(previous_placement,@__placement)
-						@__placement = previous_placement
-		else
-			#nothing fits, try again
-			most_space = @__findMostSpacePlacement()
-
-			#check if our previous placement was better, __findMostSpacePlacement is not necessarily returning the best option
-			if previous_placement and @__isPreviousPlacementBetter(previous_placement, most_space.placement)
-				most_space = @__getAvailableSpace(previous_placement)
-				most_space.placement = previous_placement
-
-			@__placement = most_space.placement
-
-			@__updatePointerOrientation()
-
-			#find the axis that has not enough space, only interesting if its not bigger than the viewport
-			if fill_space == null
-				if @__layer_dim.width > most_space.width and most_space.width < @__viewport.width
-					fill_space = "horizontal"
-				if @__layer_dim.height > most_space.height and most_space.height < @__viewport.height
-					if fill_space == "horizontal"
-						fill_space = "auto"
-					else
-						fill_space = "vertical"
-
-				if fill_space != null
-					@__fillSpace( fill_space, @__placement, true )
-
-#			#found no fitting
-#			shrink_layer_to_fit = true
-#
-#			#we dont try 'auto' if we have a 'c' placement , in most cases there is not enough space.
-#			if fill_space == null and @__placement != "c"
-#				# when fill_space is undefined we shrink the layer as much as we want
-#				fill_space = "auto"
-#				@__fillSpace( fill_space, @__placement )
-#				#did it fit?
-#				@__getLayerDim()
-#				shrink_layer_to_fit =
-#						@__layer_dim.width > @__viewport.width or
-#						@__layer_dim.height > @__viewport.height
-#
-#			if shrink_layer_to_fit
-#				#should work always
-#				assert(@__placement != "","we cant have 'c' as a fallback anymore.")
-#				@__updatePointerOrientation()
-#				@__fillSpace( "both", @__placement, true )
-
-
-		#update @__layer_dim after possible change of @__layer.DOM with fillspace
-		@__getLayerDim()
-
-
-
-		offset = {}
-		pointer_off = {}
-
-		#align everything at @__rect
-
-		# @__debug.push("Align Layer and Pointer to Rect")
-
-		pointer_off = {}
-
-		first_placement = @__placement[0]
-		second_placement = null
-		if @__placement.length == 2
-			second_placement = @__placement[1]
-			assert( Positioner.getAxis(first_placement) != Positioner.getAxis(second_placement) )
-
-		layer_rect = @__layer_dim
-		layer_rect.left = 0
-		layer_rect.top = 0
-		layer_rect = new Positioner(layer_rect)
-		new_layer_rect = null
-
-		if first_placement == "c"
-			#center on both axis
-			new_layer_rect = layer_rect.slideAlignToCenter(@__rect, "n")
-			new_layer_rect = new_layer_rect.slideAlignToCenter(@__rect, "w")
-			pointer_off = null #hide pointer
-		else
-			#convert to Positioners
-			layer_rect = @__layer_dim
-			layer_rect.left = 0
-			layer_rect.top = 0
-			layer_rect = new Positioner(layer_rect)
-			@__pointer_dim.left = 0
-			@__pointer_dim.top = 0
-			pointer_dim = new Positioner(@__pointer_dim)
-
-			first_placement = Positioner.getIndex( first_placement )
-			first_placement_opposite = Positioner.getOppositeIndex( first_placement )
-
-			#remove margins on the slide sides
-			new_pointer_rect = pointer_dim.extendSide( first_placement, @__pointer_margin, -1 )
-
-			if second_placement == null
-				#remove side margins when centering pointer
-				new_pointer_rect = new_pointer_rect.extendSide( Positioner.getIndex(first_placement+1), @__pointer_margin, -1 )
-				new_pointer_rect = new_pointer_rect.extendSide( Positioner.getIndex(first_placement+3), @__pointer_margin, -1 )
-
-			#align pointer to rect and layer to pointer
-			new_pointer_rect = new_pointer_rect.align( first_placement_opposite, @__rect, first_placement )
-			new_layer_rect = layer_rect.align( first_placement_opposite, new_pointer_rect, first_placement, @__layer_margin )
-
-			#align to second pole
-			if second_placement
-				second_placement_opposite = Positioner.getOppositeIndex( second_placement )
-				new_layer_rect = new_layer_rect.align( second_placement_opposite , @__rect, second_placement_opposite  , @__layer_margin )
-
-			#put out new layer position
-			if second_placement == null
-				new_layer_rect = new_layer_rect.slideAlignToCenter(@__rect, first_placement)
-
-			#center pointer on align side between layer and rect
-			layer_side_len = new_layer_rect.getSideLength(first_placement)
-			rect_side_len = new Positioner(@__rect).getSideLength(first_placement)
-
-			if second_placement
-				#align to edge
-				new_pointer_rect = new_pointer_rect.align( second_placement_opposite, @__rect, second_placement_opposite )
-			else
-				new_pointer_rect = new_pointer_rect.slideAlignToCenter(@__rect,first_placement)
-
-				#re-add side margins when centering
-				side_index = Positioner.getIndex(first_placement)
-				new_pointer_rect = new_pointer_rect.extendSide( Positioner.getIndex(first_placement+1), @__pointer_margin )
-				new_pointer_rect = new_pointer_rect.extendSide( Positioner.getIndex(first_placement+3), @__pointer_margin )
-
-			#re-add margins that we removed in the beginning
-			new_pointer_rect = new_pointer_rect.extendSide( first_placement, @__pointer_margin )
-
-
-			pointer_off.top = new_pointer_rect.getPos().top
-			pointer_off.left = new_pointer_rect.getPos().left
-
-		new_layer_rect = new_layer_rect.keepInside( @__viewport )
-		offset = new_layer_rect.getPos()
-
-		# @__debug.push("offset: top:"+offset.top+" left:"+offset.left)
-		# @__debug.push("pointer: top:"+pointer_off?.top+" left:"+pointer_off?.left)
-
-		#REMARKED use for debug output
-#		CUI.debug "#{@__cls}.position()", @__layer.DOM[0], @__pointer?[0], @
-#		CUI.debug @__pointer_dim, @__pointer_margin, @__rect, @__layer_dim, @__layer_margin
-#		CUI.debug @__debug.join("\n")
-
-		DOM.setAbsolutePosition(@__layer.DOM, offset)
-
-		# CUI.debug "SetPosition:",offset, @__viewport
-
-		if @__backdrop_crop
-			DOM.setStyle(@__backdrop_crop,
-				top: offset.top
-				left: offset.left
-				width: offset.width
-				height: offset.height
-			)
-			DOM.setStyle(@__backdrop_crop.firstChild,
-				width: @__viewport.width
-				height: @__viewport.height
-				top: -offset.top
-				left: -offset.left
-			)
-
-		#REMARKED TODO why?
-#		# set right and bottom positions for our animations
-#		viewport_width =  $("body").width()
-#		viewport_height =  $("body").height()
-#		layer_width = @__layer.DOM.cssEdgeSpace("horizontal", true) + @__layer.DOM.width()
-#		layer_height = @__layer.DOM.cssEdgeSpace("vertical", true) + @__layer.DOM.height()
-#
-#		layer_right = viewport_width - (offset.left + layer_width)
-#		layer_bottom = viewport_height - (offset.top + layer_height)
-#		@__layer.DOM.css
-#			right: layer_right+"px"
-#			bottom: layer_bottom+"px"
-
-
+		vp = vp_pl[placement]
+
+		console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
+
+		# set layer
+		CUI.DOM.setStyle @__layer.DOM,
+			top: vp.layer_pos.top
+			left: vp.layer_pos.left
+			width: vp.layer_pos.width
+			height: vp.layer_pos.height
+			maxWidth: vp.width
+			maxHeight: vp.height
+			margin: 0
 
 		if @__pointer
-			if pointer_off
-				#hide pointer if outside of viewport
-				if pointer_off.top + @__pointer_dim.height + @__pointer_margin.top > @__viewport.top + @__viewport.height or
-					pointer_off.top < @__viewport.top or
-					pointer_off.left + @__pointer_dim.width + @__pointer_margin.left > @__viewport.left + @__viewport.width or
-					pointer_off.left < @__viewport.left
-						pointer_off = null
-						@__pointer.detach()
-				else
-					DOM.setAbsolutePosition(@__pointer, pointer_off)
-			else
-				@__pointer.detach()
+			# set pointer
+			CUI.DOM.setStyle @__pointer,
+				top: vp.pointer_pos.top
+				left: vp.pointer_pos.left
+				margin: 0
 
-		@__getLayerDim()
+		if @__backdrop_crop
+			DOM.setStyle @__backdrop_crop,
+				top: vp.layer_pos.top
+				left: vp.layer_pos.left
+				width: vp.layer_pos.width
+				height: vp.layer_pos.height
 
-		set_fixed_dimensions = false
-		if isUndef(@__fixed_layer_dim)
-			@__fixed_layer_dim = {}
-			set_fixed_dimensions = true
+			DOM.setStyle @__backdrop_crop.firstChild,
+				width: dim_window.width
+				height: dim_window.height
+				top: -vp.layer_pos.top
+				left: -vp.layer_pos.left
 
-		if set_fixed_dimensions or @_fill_space in ["both","horizontal"]
-			@__fixed_layer_dim.width = @__layer_dim.width
-			@__fixed_layer_dim._css_width = @__layer_dim.width - @__layer.DOM.cssEdgeSpace("horizontal", true)
+		return
 
-
-		if set_fixed_dimensions or @_fill_space in ["both","vertical"]
-			@__fixed_layer_dim.height = @__layer_dim.height
-			@__fixed_layer_dim._css_height = @__layer_dim.height - @__layer.DOM.cssEdgeSpace("vertical", true)
-
-		# console.error "set fixed dimensions", @__fixed_layer_dim, @_fill_space
-
-		@__setLayerSizeFromFixedDimensions()
-
-		# lets check if we can get rid of a very short
-		# horizontal scrollbar
-		if @__minimumElementWidthUsed
-			layer_dim = DOM.getDimensions(@__layer.DOM[0])
-			if layer_dim.verticalScrollbarWidth > 0
-				# add width
-				@__layer.DOM.width(@__fixed_layer_dim._css_width + layer_dim.verticalScrollbarWidth)
-
-		@_onPosition?(@)
-		@
-
-	#this updates the different pointer style classes depending on current placement direction
-	#placement: if null the @__placement is used
-	__updatePointerOrientation: (placement = null) ->
-
-		if placement == null
-			placement = @__placement
-
-		if @__pointer and placement
-			assert(isString(placement))
-			assert( placement.length > 0 && placement.length < 3 )
-
-
-			placement = placement[0]
-			p = DOM.data(@__pointer[0], "placement")
-			if p
-				@__pointer.removeClass("cui-pointer-placement-#{p}")
-			@__pointer.addClass("cui-pointer-placement-#{placement}")
-			DOM.data(@__pointer[0], "placement", placement)
-
-			rect = @__pointer.rect()
-			@__pointer_margin = @__getMargin(@__pointer)
-			@__pointer_dim =
-				width: rect.width + @__pointer_margin.left + @__pointer_margin.right
-				height: rect.height + @__pointer_margin.top + @__pointer_margin.bottom
-
-		else
-			@__pointer_dim = width: 0, height: 0
-			@__pointer_margin = left: 0, right: 0, bottom: 0, top: 0, width: 0, height: 0
-
-
-
-	# returns the rectangle of available space
-	# the dimension is the width and height including
-	# padding and border but without space for margin
-	# relative to the anchor
-	__getAvailableSpace: (placement) ->
-		assert( isString(placement) )
-		assert( placement.length > 0 && placement.length < 3 )
-
-		@__updatePointerOrientation(placement)
-
-		max_space_dim = {}
-		first_placement = placement[0]
-		if first_placement == "c"
-			#need rect relative to viewport
-#			rect = new Positioner(@__rect)
-#			rect.move( -@__viewport.top, -@__viewport.left )
-#			local_rect = rect.getPos()
-#			max_space_dim.height = Math.min(@__viewport.height - local_rect.middle, local_rect.middle) * 2
-#			max_space_dim.width  = Math.min(@__viewport.width - local_rect.center, local_rect.center) * 2
-
-			#we dont calculate the space of a centered rectangle anymore. we just say that it can use the whole space. its always better than switching to any pole later!
-			max_space_dim.height = @__viewport.height
-			max_space_dim.width  = @__viewport.width
-		else
-			first_placement_opposite = Positioner.getOppositeIndex(first_placement)
-			cut_position = @__rect[ Positioner.getSide(first_placement) ]
-
-			#remove pointer size from space TODO this is copy paste from position!
-			@__pointer_dim.left = 0
-			@__pointer_dim.top = 0
-			pointer_dim = new Positioner(@__pointer_dim)
-
-			#remove margins on the slide sides
-			pointer_dim = pointer_dim.extendSide( first_placement, @__pointer_margin, -1 )
-
-			cut_position += pointer_dim.getSideLength( Positioner.getIndex(first_placement)+1 ) * Positioner.getDirection(first_placement)
-
-			viewPort = new Positioner(@__viewport)
-			space_rect = viewPort.cutSide( first_placement_opposite, cut_position )
-			if placement.length > 1
-				second_placement = placement[1]
-				second_placement_opposite = Positioner.getOppositeIndex(second_placement)
-				cut_position = @__rect[ Positioner.getSide(second_placement_opposite) ]
-				space_rect = space_rect.cutSide( second_placement_opposite, cut_position )
-
-				space_rect = space_rect.extendSide( second_placement_opposite, @__layer_margin )
-
-			space_rect = space_rect.extendSide( first_placement_opposite, @__layer_margin,1 )
-
-			# make sure dimensions are inside viewport, space_rect.extendSide( first_placement_opposite, @__layer_margin )  could overshoot
-			max_space_dim.height = Math.min( space_rect.getPos().height, @__viewport.height )
-			max_space_dim.width  = Math.min( space_rect.getPos().width,  @__viewport.width  )
-
-		return max_space_dim
+	__removeDebugDivs: ->
+		@__dbg_div1?.remove()
+		@__dbg_div2?.remove()
+		@__dbg_div3?.remove()
+		@__dbg_div1 = null
+		@__dbg_div2 = null
+		@__dbg_div3 = null
 
 
 	clearTimeout: ->
@@ -1158,13 +808,10 @@ class CUI.Layer extends CUI.DOM
 		if @isDestroyed()
 			return
 
-		@__resetFixedLayerDim()
-		@__layer.DOM.css
-			width: ""
-			height: ""
-
 		if not @isShown()
 			return @
+
+		@__removeDebugDivs()
 
 		if @__element
 			if @__check_for_element
@@ -1181,9 +828,9 @@ class CUI.Layer extends CUI.DOM
 		if @_handle_focus
 			@focusOnHide(ev)
 
-		if @__orig_element
-			@__element = @__orig_element
-			delete(@__orig_element)
+		# if @__orig_element
+		# 	@__element = @__orig_element
+		# 	delete(@__orig_element)
 
 		Events.ignore
 			instance: @
@@ -1193,8 +840,10 @@ class CUI.Layer extends CUI.DOM
 
 	# use element to temporarily overwrite element used
 	# for positioning
-	show: (element, ev) ->
+	show: (ev) ->
 		# console.error "show ", @getUniqueId()
+
+		# "element" as first parameter is gone, i don't think we need this
 
 		assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer ##{@getUniqueId()} is already destroyed", layer: @)
 
@@ -1203,16 +852,16 @@ class CUI.Layer extends CUI.DOM
 
 		@clearTimeout()
 		if @isShown()
-			@autoSize()
+			@position()
 			return @
 
-		if element
-			@__orig_element = @__element
-			@__setElement(element)
+		# if element
+		# 	@__orig_element = @__element
+		# 	@__setElement(element)
 
-		@__layer.DOM.css
-			top: 0
-			left: 0
+		# @__layer.DOM.css
+		# 	top: 0
+		# 	left: 0
 
 		document.body.appendChild(@__layer_root.DOM)
 
@@ -1232,8 +881,8 @@ class CUI.Layer extends CUI.DOM
 				instance: @
 				node: @__layer
 				call: (ev) =>
-					# CUI.debug "Layer caught event: \"#{ev.getType()}\", executing \"autoSize\"."
-					@autoSize()
+					console.info("Layer caught event:", ev.getType)
+					@position()
 
 		Events.listen
 			type: "viewport-resize"
@@ -1244,24 +893,14 @@ class CUI.Layer extends CUI.DOM
 					# ignore the event
 					return
 
-				# CUI.debug "Layer caught event: \"#{ev.getType()}\", executing \"position\".", "destroyed:", @isDestroyed(), "in DOM:", DOM.isInDOM(@__layer_root.DOM[0])
-
-				@__placement = null # reset placement so it cant be used as previous placement.
-				# in theory we could just refresh the maximum values on our layer and its position, currently thats not working (buggy or execution path is not prepared).
-				# its also stupid cause we could end up with a 0 size and that would be strange
-				# so its best to recalculate the whole thing
-				@__placement = null # reset placement so it cant be used as previous placement.
-				@__resetFixedLayerDim()
+				console.info("Layer caught event:", ev.getType)
 				@position()
 				return
 
 		@_onBeforeShow?(@, ev)
 		@__shown = true
 
-		#call position twice to force a refresh of the layer div
-		#otherwise we could get wrong dimensions (when scrolling bars are added to late etc.)
-		@position()
-
+		@position(ev)
 		if @_handle_focus
 			@focusOnShow(ev)
 

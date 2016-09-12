@@ -1,18 +1,11 @@
 class MenuDemo extends Demo
-	initOpts: ->
-		super()
-		@addOpts
-			blur:
-				mandatory: true
-				default: false
-				check: Boolean
 
 	display: ->
 
 		demoLabel = $img("", src: "css/pics/Schmetterling.jpg")
 		@demo_table = new DemoTable('cui-menu-demo')
 		@listenOnNode(demoLabel)
-		@demo_table.addExample("Context Menu", demoLabel)
+		@demo_table.addExample("Context Menu (Use ALT for blurry background)", demoLabel)
 		@demo_table.table
 
 
@@ -92,20 +85,16 @@ class MenuDemo extends Demo
 				(new Menu
 					backdrop:
 						policy: "click"
-						blur: @_blur
+						blur: ev.altKey()
+					show_at_position:
+						top: mouse_coordinates.pageY
+						left: mouse_coordinates.pageX
 					itemList:
 						onClick: (ev, btn) ->
 							alert(btn.getText())
 						items: menu_items
 
-				).show(
-					new Positioner(
-						top: mouse_coordinates.pageY
-						left: mouse_coordinates.pageX
-						width: 0
-						height: 0
-					)
-				)
+				).show(ev)
 				return
 
 
@@ -118,4 +107,4 @@ Events.listen
 		ev.preventDefault()
 
 
-Demo.register(new MenuDemo(blur: true))
+Demo.register(new MenuDemo())

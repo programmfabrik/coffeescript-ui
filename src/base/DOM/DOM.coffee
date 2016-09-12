@@ -808,6 +808,11 @@ class CUI.DOM extends CUI.Element
 		dim.marginBoxWidth = rect.width + dim.marginHorizontal
 		dim.marginBoxHeight = rect.height + dim.marginVertical
 
+		dim.viewportTop = rect.top
+		dim.viewportLeft = rect.left
+		dim.viewportBottom = rect.bottom
+		dim.viewportRight = rect.right
+
 		# passthru keys
 		for k in [
 			"left"
