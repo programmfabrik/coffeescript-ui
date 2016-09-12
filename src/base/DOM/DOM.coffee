@@ -16,7 +16,10 @@ class CUI.DOM extends CUI.Element
 		@registerDOMElement(@__template.DOM)
 
 	getDOMElementClasses: ->
-		return "cui-dom-element cui-#{toDash(@__cls)}"
+		if CUI.__ng__
+			return "cui-dom-element cui-#{toDash(@__cls)}"
+		else
+			return "cui-dom-element cui-#{toDash(@__cls)} ez-#{toDash(@__cls)}"
 
 	registerDOMElement: (_dom) ->
 		@DOM = _dom

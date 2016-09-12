@@ -265,6 +265,7 @@ class CUI.Layout extends CUI.DOM
 
 
 	__callAutoButtonbar: (value, key) ->
+
 		if CUI.isFunction(value)
 			value = value(@)
 

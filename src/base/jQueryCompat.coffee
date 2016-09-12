@@ -176,6 +176,8 @@ class CUI.jQueryCompat
 			set: =>
 				throw new TypeError("jQueryCompat[0] unable to set value.")
 
+		node.length = 0
+
 		for key in @__noopKeys
 			node[key] = =>
 				@__warn(key, "Noop node.")

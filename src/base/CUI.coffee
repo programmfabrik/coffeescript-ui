@@ -654,10 +654,10 @@ class CUI
 		return s.replace(new RegExp(regex.join('|'),"g"), (word) -> map[word])
 
 	@isFunction: (v) ->
-		v instanceof Function
+		v and typeof(v) == "function"
 
 	@isPlainObject: (v) ->
-		v and typeof(v) == "object" and v.constructor == Object
+		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
 
 	@isEmptyObject: (v) ->
 		for k of v
@@ -668,7 +668,7 @@ class CUI
 		@isPlainObject(v)
 
 	@isArray: (v) ->
-		v instanceof Array
+		Array.isArray(v)
 
 	@isString: (s) ->
 		typeof(s) == "string"
