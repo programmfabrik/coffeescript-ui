@@ -197,13 +197,6 @@ class Input extends DataFieldInput
 			call: (ev) ->
 				ev.preventDefault()
 
-		handleReadOnly = (ev) =>
-			@initCursor(ev)
-			@showCursor(ev)
-			ev.stopPropagation()
-			ev.preventDefault()
-			return false
-
 		Events.listen
 			node: @__input
 			type: "keydown"
@@ -218,9 +211,6 @@ class Input extends DataFieldInput
 					@moveCursor(ev)
 					@showCursor(ev)
 					return
-
-				if @_readonly
-					return handleReadOnly(ev)
 
 				if ev.keyCode() in [9, 16, 17, 18, 27, 33, 34, 35, 36, 38, 40]
 					return
@@ -351,8 +341,6 @@ class Input extends DataFieldInput
 			type: "paste"
 			node: @__input
 			call: (ev) =>
-				if @_readonly
-					return handleReadOnly(ev)
 				@__focusShadowInput()
 
 		Events.listen
@@ -761,7 +749,7 @@ class Input extends DataFieldInput
 			false
 
 	__initShadowInput: ->
-		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput)
+		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput or @_readonly)
 			return
 
 		if @__shadow
@@ -816,9 +804,9 @@ class Input extends DataFieldInput
 			if ret == false
 				return
 
-		@__input0.value = @correctValueForInput(shadow_v)
-		# @storeValue(value)
-		@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
+		if not @_readonly
+			@__input0.value = @correctValueForInput(shadow_v)
+			@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
 
 		# CUI.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
 		@initCursor(ev)
