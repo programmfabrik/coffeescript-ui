@@ -360,7 +360,10 @@ class CUI.Layer extends CUI.DOM
 			)
 
 			for direction in ["w", "s", "e", "n"]
-				CUI.DOM.removeClass(@__pointer, "cui-layer-pointer-"+direction)
+				if CUI.__ng__
+					CUI.DOM.removeClass(@__pointer, "cui-layer-pointer--"+direction)
+				else
+					CUI.DOM.removeClass(@__pointer, "cui-pointer-placement-"+direction)
 
 		# measure all 4 directions for all pointers
 		dim_pointer = {}
@@ -374,9 +377,17 @@ class CUI.Layer extends CUI.DOM
 			}[placement]
 
 			if @__pointer
-				CUI.DOM.addClass(@__pointer, "cui-layer-pointer-"+pointer_direction)
+				if CUI.__ng__
+					CUI.DOM.addClass(@__pointer, "cui-layer-pointer--"+pointer_direction)
+				else
+					CUI.DOM.addClass(@__pointer, "cui-pointer-placement-"+pointer_direction)
+
 				dim_pointer[placement] = CUI.DOM.getDimensions(@__pointer)
-				CUI.DOM.removeClass(@__pointer, "cui-layer-pointer-"+pointer_direction)
+
+				if CUI.__ng__
+					CUI.DOM.addClass(@__pointer, "cui-pointer-placement-"+pointer_direction)
+				else
+					CUI.DOM.removeClass(@__pointer, "cui-layer-pointer--"+pointer_direction)
 
 			else
 				dim_pointer[placement] =
