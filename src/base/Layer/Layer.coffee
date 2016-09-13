@@ -640,7 +640,7 @@ class CUI.Layer extends CUI.DOM
 			vp.overlap_height = 0
 			vp.overlap_width = 0
 
-			if CUI.__ng__ or @_show_at_position
+			if @__pointer or @_show_at_position
 				# we allow an overlap push for certain placements,
 				# that means, if we cut the layer we allow it to
 				# be positioned outside the viewport (but inside the window)
