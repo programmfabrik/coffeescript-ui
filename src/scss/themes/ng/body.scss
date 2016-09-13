@@ -1194,11 +1194,25 @@ a[role="button"].cui-button-appearance-link {
 		0 1px 10px rgba(0,0,0,.43);
 	border-radius: 4px;
 	padding: $line-height-compensating-padding 0;
+}
+
+// ItemList
+.cui-item-list {
+	font-size: 11px;
+
+	.cui-label {
+		color: gray;
+		cursor: default;
+		
+		& ~ .cui-button { // TODO change when group class is there
+			padding-left: $padding * 2;
+		}
+	}
 
 	.cui-button {
 		@include button-reset;
 		
-	  line-height: 18px;
+	  line-height: 19px;
 	  padding: 0 $padding;
 	  cursor: pointer;
 
@@ -1212,10 +1226,9 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-center {
 			padding: 0;
 		}
-	}
+	}	
 }
 
-// ItemList
 .cui-tmpl-item-list-body
 {
 	flex-direction: column;
