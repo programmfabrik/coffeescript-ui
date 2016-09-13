@@ -648,10 +648,14 @@ class DateTime extends Input
 			@__current_moment = mom.clone()
 			@setInputFromMoment()
 
+		console.info("DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
+
 		@markDay()
 		@
 
 	getDateTimeDrawer: (mom) ->
+
+		am_pm = @__input_format.clock_am_pm or true
 
 		data =
 			month: mom.month()
@@ -660,6 +664,11 @@ class DateTime extends Input
 			hour: mom.hour()
 			minute: mom.minute()
 			second: mom.second()
+			am_pm: null
+
+		if am_pm
+			data.am_pm = Math.floor(data.hour / 12)*12
+			data.hour = data.hour%12
 
 		pad0 = (n) ->
 			if n < 10
@@ -716,20 +725,28 @@ class DateTime extends Input
 		).start()
 
 		if @__input_format.clock
+
 			hour_sel = new Select(
 				name: "hour"
 				data: data
 				group: "time"
 				onDataChanged: =>
-					@updateCalendar(mom.hour(data.hour))
+					if am_pm
+						@updateCalendar(mom.hour(data.hour+data.am_pm))
+					else
+						@updateCalendar(mom.hour(data.hour))
 				options: =>
-
 					opts = []
-					for hour in [0..23]
-						opts.push
-							text: pad0(hour)
-							value: hour
-
+					if am_pm
+						for hour in [1..12]
+							opts.push
+								text: pad0(hour)
+								value: hour%12
+					else
+						for hour in [0..23]
+							opts.push
+								text: pad0(hour)
+								value: hour
 					opts
 			).start()
 
@@ -753,20 +770,20 @@ class DateTime extends Input
 					opts
 			).start()
 
-			if @__input_format.clock_am_pm or true
+			if am_pm
 				am_pm_sel = new Select(
 					class: "cui-date-time-am-pm-select"
 					name: "am_pm"
 					group: "time"
 					data: data
 					onDataChanged: =>
-						# @updateCalendar(mom.second(data.second))
+						@updateCalendar(mom.hour(data.hour+data.am_pm))
 					options: =>
 						opts = []
 						for am_pm in ["AM", "PM"]
 							opts.push
 								text: am_pm
-								value: am_pm
+								value: if am_pm == "AM" then 0 else 12 # offset in hours
 						opts
 				).start()
 

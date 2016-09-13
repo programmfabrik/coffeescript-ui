@@ -159,7 +159,7 @@ class CUI.Layer extends CUI.DOM
 			capture: true
 			node: window
 			call: (ev) =>
-				console.debug "ev", ev.getTarget(), CUI.DOM.parents(ev.getTarget())
+				# console.debug "ev", ev.getTarget(), CUI.DOM.parents(ev.getTarget())
 
 				if ev.ctrlKey() and ev.getButton() == 2
 					return
@@ -810,7 +810,7 @@ class CUI.Layer extends CUI.DOM
 
 		vp = vp_pl[placement]
 
-		console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
+		# console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
 
 		# set layer
 		CUI.DOM.setStyle @__layer.DOM,
