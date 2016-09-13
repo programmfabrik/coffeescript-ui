@@ -22,27 +22,29 @@ class CUI.Menu extends CUI.Layer
 			onBeforeItemListInit:
 				check: Function
 
-		@removeOpt("placements")
-		@removeOpt("placement")
 		@
 
 	readOpts: ->
 		super()
-		if @_parent_menu
-			@_placements = ["es", "en", "ws", "wn"]
-		else
-			@_placements = ["se", "sw", "ne", "nw"]
 
-		@_placement = @_placements[0]
+		if not @opts.placements
+			if @_parent_menu
+				@_placements = ["es", "en", "ws", "wn"]
+			else if @_show_at_position # the element has not width and height
+				@_placements = ["es", "en", "ws", "wn"]
+			else
+				@_placements = ["se", "sw", "ne", "nw"]
+
+		if not @opts.placement
+			@_placement = @_placements[0]
+
+		return
 
 	show: (@__event) ->
 		assert(not @isDestroyed(), "#{getObjectClass(@)}.show", "Element is already destroyed.")
 
 		if not @isShown() and @__itemList
 			@__itemList.render(@, @__event)
-			.done =>
-				# FIXME: this can go, once #30529 is fixed
-				; # autoSize()
 
 		super(@__event)
 
@@ -70,7 +72,6 @@ class CUI.Menu extends CUI.Layer
 		if @_itemList instanceof CUI.ItemList
 			@__itemList = itemList
 		else
-
 			delete(itemList.maximize)
 			itemList.maximize_vertical = false
 			itemList.maximize_horizontal = true
@@ -84,8 +85,7 @@ class CUI.Menu extends CUI.Layer
 		if @isShown()
 			@__itemList.render(@, @__event)
 			.done =>
-				# FIXME: this can go, once #30529 is fixed
-				; # @autoSize()
+				@position()
 		@
 
 	isAutoCloseAfterClick: ->

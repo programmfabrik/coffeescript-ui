@@ -76,6 +76,12 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	setActiveIdx: (@__active_idx) ->
 
+	getActiveIdx: ->
+		@__active_idx
+
+	getBody: ->
+		@__body
+
 	getItemByValue: (value) ->
 		for el in @__body.DOM.children
 			btn = DOM.data(el, "element")

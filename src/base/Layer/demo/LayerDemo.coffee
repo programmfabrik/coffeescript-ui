@@ -120,6 +120,12 @@ class LayerDemo extends Demo
 					label: "Auto Open & Close (500ms)"
 				type: Checkbox
 				name: "auto_open_close"
+			,
+				form:
+					label: "Layer Width"
+				type: Select
+				name: "layer_width"
+				options: (text: k, value: k for k in ["", "25%", "50%", "75%"])
 			]
 
 		dt.addRow(form2.start().DOM)
@@ -192,14 +198,20 @@ class LayerDemo extends Demo
 			multiline: true
 			text: "A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines."
 
-
-		layer.append new SimplePane
+		sp = new SimplePane
 			header_left: new Label(text: "Test-Layer")
+			maximize: false
 			content: content
 			footer_right:
 				text: "Done"
 				onClick: =>
 					layer.destroy()
+
+		CUI.DOM.setStyle(sp.DOM,
+			width: @__data.layer_width
+		)
+
+		layer.append(sp.DOM)
 
 		layer.show(ev)
 

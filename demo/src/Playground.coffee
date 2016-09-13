@@ -257,6 +257,8 @@ class Playground extends Demo
 			password: ""
 			options_sorted: []
 			table: []
+			select: 20
+			select_mini: 5
 
 
 		fields.push @getOptions(
@@ -333,12 +335,26 @@ class Playground extends Demo
 		for i in [0...100]
 			select_opts.push
 				text: "Opt "+(i+1)
-				value: ""+i
+				value: i
 
 		fields.push new Select
 			form:
 				label: "Select"
+			name: "select"
 			options: select_opts
+
+		select_mini_opts = []
+		for i in [0...10]
+			select_mini_opts.push
+				text: "Mini "+(i+1)
+				value: i
+
+		fields.push new Select
+			form:
+				label: "Select"
+			name: "select_mini"
+			options: select_mini_opts
+
 
 		fields.push new DataTable
 			name: "table"

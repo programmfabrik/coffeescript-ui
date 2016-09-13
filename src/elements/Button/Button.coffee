@@ -159,15 +159,13 @@ class CUI.Button extends CUI.DOM
 			# rescue options for menu and separate them
 			# from itemlist
 			for k, v of @_menu
-				if k in [
-					"onShow"
-					"onHide"
-					"class"
-					"backdrop"
-				]
-					@__menu_opts[k] = v
-				else
-					itemList_opts[k] = v
+				switch k
+					when "onShow", "onHide"
+						continue
+					when "class", "backdrop", "onPosition", "placement", "placements"
+						@__menu_opts[k] = v
+					else
+						itemList_opts[k] = v
 
 			if not isEmpty(@_class)
 				if @__menu_opts.class
@@ -366,7 +364,7 @@ class CUI.Button extends CUI.DOM
 								menu_stop_hide()
 								CUI.Button.menu_shown.hide(ev)
 
-							menu.show(null, ev)
+							menu.show(ev)
 
 							CUI.Button.menu_shown = menu
 
@@ -426,7 +424,7 @@ class CUI.Button extends CUI.DOM
 			# not (ev.ctrlKey or ev.shiftKey or ev.altKey or ev.metaKey) and
 			not @_menu_on_hover and
 			@getMenu().hasItems()
-				@getMenu().show(null, ev)
+				@getMenu().show(ev)
 
 				# in some contexts (like FileUploadButton), this
 				# is necessary, so we stop the file upload

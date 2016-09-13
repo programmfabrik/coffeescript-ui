@@ -124,6 +124,20 @@ class Select extends Checkbox
 			active_item_idx: @default_opt?._idx or null
 			allow_null: not isEmpty(@_empty_text)
 			class: "ez-menu-select"
+			# placements: ["c"]
+			# onPosition: (menu, vp) =>
+			# 	il = menu.getItemList()
+
+			# 	active_item = il.getBody().DOM.children[il.getActiveIdx()]
+			# 	if not active_item
+			# 		return
+
+			# 	item_top = vp.layer_pos.top - vp.dim_layer.marginTop + DOM.getDimensions(active_item).viewportTop
+			# 	adjust = vp.dim_element.viewportTop - item_top
+			# 	console.debug "adjust", adjust, item_top, vp.dim_element.viewportTop, vp.layer_pos.top, DOM.getDimensions(active_item).viewportTop
+			# 	vp.layer_pos.top = vp.layer_pos.top + adjust
+			# 	vp.layer_pos.left += 20
+
 			onDeactivate: (btn, item, idx, flags) =>
 				@storeValue(null, flags)
 				if @isDestroyed()

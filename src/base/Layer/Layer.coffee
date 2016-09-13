@@ -59,86 +59,60 @@ class CUI.Layer extends CUI.DOM
 				@__layer_root.addClass("cui-layer-root-backdrop-blur")
 
 
-			click_thru_listener = =>
-				Events.listen
-					type: "mousedown"
-					capture: true
-					node: window
-					only_once: true
-					call: (ev) =>
-						console.debug "ev", ev.getTarget()
-
-						if ev.ctrlKey() and ev.getButton() == 2
-							return
-
-						if CUI.DOM.closest(ev.getTarget(), @__layer.DOM) or
-							(@__pointer and CUI.DOM.closest(ev.getTarget(), @__pointer))
-								return
-
-						# if @__backdropClickDisabled
-						# 	# this is used in Popover when all buttons are disabled
-						# 	# we need to eat this
-						# 	return
-
-						@hide(ev)
-						return
-
-
 			if @__bd_policy == "click-thru" and not @_backdrop.blur and not @_backdrop.content
-				click_thru_listener()
+				@__addClickThruListenerOnShow = true
 			else
 				@__layer_root.DOM.appendChild(@__backdrop.DOM)
 
-			# @__backdrop.DOM.attr("role", @_role)
+				# @__backdrop.DOM.attr("role", @_role)
 
-			switch @__bd_policy
-				when "click-thru"
-					click_thru_listener()
-
-				when "click"
-					Events.listen
-						type: ["click", "contextmenu"]
-						node: @__backdrop
-						call: (ev) =>
-							if ev.ctrlKey() and ev.getButton() == 2
-								return
-
-							# if @__backdropClickDisabled
-							# 	return
-
-							@hide(ev)
-							ev.stopPropagation()
-
-				when "modal"
-					@__backdrop.addClass("layer-backdrop-modal")
-					if @_backdrop.add_bounce_class != false
-						if isString(@_backdrop.add_bounce_class)
-							bc = @_backdrop.add_bounce_class
-						else
-							bc = "cui-layer-bounce"
-
+				switch @__bd_policy
+					when "click-thru"
+						@__addClickThruListener()
+					when "click"
 						Events.listen
-							type: "click"
+							type: ["click", "contextmenu"]
 							node: @__backdrop
 							call: (ev) =>
-								CUI.debug "clicked on modal backdrop", bc, @_backdrop
-								if not @__layer
+								if ev.ctrlKey() and ev.getButton() == 2
 									return
 
-								Events.wait
-									type: "transitionend"
-									node: @__layer
-								.always =>
-									if @isDestroyed()
+								# if @__backdropClickDisabled
+								# 	return
+
+								@hide(ev)
+								ev.stopPropagation()
+
+					when "modal"
+						@__backdrop.addClass("layer-backdrop-modal")
+						if @_backdrop.add_bounce_class != false
+							if isString(@_backdrop.add_bounce_class)
+								bc = @_backdrop.add_bounce_class
+							else
+								bc = "cui-layer-bounce"
+
+							Events.listen
+								type: "click"
+								node: @__backdrop
+								call: (ev) =>
+									CUI.debug "clicked on modal backdrop", bc, @_backdrop
+									if not @__layer
 										return
 
-									@__layer.removeClass(bc)
+									Events.wait
+										type: "transitionend"
+										node: @__layer
+									.always =>
+										if @isDestroyed()
+											return
 
-								@__layer.addClass(bc)
-								return
+										@__layer.removeClass(bc)
 
-				else
-					assert("new #{@__cls}", "Unknown backdrop policy: \"#{@__bd_policy}\".")
+									@__layer.addClass(bc)
+									return
+
+					else
+						assert("new #{@__cls}", "Unknown backdrop policy: \"#{@__bd_policy}\".")
 
 		if @_visible == false
 			@setVisible(@_visible)
@@ -177,6 +151,31 @@ class CUI.Layer extends CUI.DOM
 
 
 		@__shown = false
+
+
+	__addClickThruListener: ->
+		Events.listen
+			type: "mousedown"
+			capture: true
+			node: window
+			call: (ev) =>
+				console.debug "ev", ev.getTarget()
+
+				if ev.ctrlKey() and ev.getButton() == 2
+					return
+
+				if CUI.DOM.closest(ev.getTarget(), @__layer.DOM) or
+					(@__pointer and CUI.DOM.closest(ev.getTarget(), @__pointer))
+						return
+
+				# if @__backdropClickDisabled
+				# 	# this is used in Popover when all buttons are disabled
+				# 	# we need to eat this
+				# 	return
+
+				@hide(ev)
+				return
+
 
 
 	# disableBackdropClick: ->
@@ -355,22 +354,43 @@ class CUI.Layer extends CUI.DOM
 		dim_window = CUI.getViewport()
 
 		if @__pointer
-			dim_pointer = CUI.DOM.getDimensions(@__pointer)
-
-			# reset pointer margin
-			CUI.DOM.setStyle(@__pointer, margin: "")
+			# reset pointer
+			CUI.DOM.setStyle(@__pointer,
+				top: 0
+				left: 0
+				margin: ""
+			)
 
 			for direction in ["w", "s", "e", "n"]
 				CUI.DOM.removeClass(@__pointer, "cui-layer-pointer-"+direction)
 
-		else
-			dim_pointer =
-				borderBoxWidth: 0
-				borderBoxHeight: 0
-				marginLeft: 0
-				marginRight: 0
-				marginTop: 0
-				marginBottom: 0
+		# measure all 4 directions for all pointers
+		dim_pointer = {}
+		for placement in ["n", "s", "e", "w"]
+
+			pointer_direction = {
+				n: "s"
+				s: "n"
+				e: "w"
+				w: "e"
+			}[placement]
+
+			if @__pointer
+				CUI.DOM.addClass(@__pointer, "cui-layer-pointer-"+pointer_direction)
+				dim_pointer[placement] = CUI.DOM.getDimensions(@__pointer)
+				CUI.DOM.removeClass(@__pointer, "cui-layer-pointer-"+pointer_direction)
+
+			else
+				dim_pointer[placement] =
+					borderBoxWidth: 0
+					borderBoxHeight: 0
+					marginLeft: 0
+					marginRight: 0
+					marginTop: 0
+					marginBottom: 0
+
+			dim_pointer[placement].direction = pointer_direction
+			set_more_dim(dim_pointer[placement])
 
 		# reset previously set layer dimensions
 		CUI.DOM.setStyle @__layer.DOM,
@@ -383,7 +403,7 @@ class CUI.Layer extends CUI.DOM
 			"max-height": ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
-		allowed_placements = @_placements or CUI.Layer.knownPlacements
+		allowed_placements = (@_placements or CUI.Layer.knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
 		if @__element
@@ -409,7 +429,6 @@ class CUI.Layer extends CUI.DOM
 				borderBoxHeight: dim_window.height
 
 		set_more_dim(dim_element)
-		set_more_dim(dim_pointer)
 		set_more_dim(dim_layer)
 
 		vp_pl = {}
@@ -421,23 +440,39 @@ class CUI.Layer extends CUI.DOM
 
 			vp_pl[placement] = vp = {}
 
+			vp.window_top = dim_layer.marginTop
+			vp.window_left = dim_layer.marginLeft
+			vp.window_right = dim_window.width - dim_layer.marginRight
+			vp.window_bottom = dim_window.height - dim_layer.marginBottom
+			vp.dim_window = dim_window
+			vp.dim_layer = dim_layer
+			vp.dim_element = dim_element
+			vp.dim_pointer = dim_pointer[placement]
+
+			if @_use_element_width_as_min_width
+				vp.set_width = false
+			else
+				vp.set_width = true
+
+			#
+
 			switch placement
 				when "c"
-					vp.top = dim_layer.marginTop
-					vp.left = dim_layer.marginLeft
-					vp.right = dim_window.width - dim_layer.marginRight
-					vp.bottom = dim_window.height - dim_layer.marginBottom
+					vp.top = vp.window_top
+					vp.left = vp.window_left
+					vp.right = vp.window_right
+					vp.bottom = vp.window_bottom
 					vp.align_vertical = "center"
 					vp.align_horizontal = "center"
 				when "n"
 					vp.top = dim_layer.marginTop
 					vp.left = dim_layer.marginLeft
 					vp.right = dim_window.width - dim_layer.marginRight
-					vp.bottom = dim_element.viewportTop - dim_pointer.borderBoxHeight - dim_pointer.marginBottom
+					vp.bottom = dim_element.viewportTop - vp.dim_pointer.borderBoxHeight - vp.dim_pointer.marginBottom
 					vp.align_vertical = "bottom"
 					vp.align_horizontal = "center"
 				when "s"
-					vp.top = dim_element.viewportBottom + dim_pointer.borderBoxHeight + dim_pointer.marginTop
+					vp.top = dim_element.viewportBottom + vp.dim_pointer.borderBoxHeight + vp.dim_pointer.marginTop
 					vp.left = dim_layer.marginLeft
 					vp.right = dim_window.width - dim_layer.marginRight
 					vp.bottom = dim_window.height - dim_layer.marginBottom
@@ -447,20 +482,21 @@ class CUI.Layer extends CUI.DOM
 					vp.top = dim_layer.marginTop
 					vp.right = dim_window.width - dim_layer.marginRight
 					vp.bottom = dim_window.height - dim_layer.marginBottom
-					vp.left = dim_element.viewportRight + dim_pointer.borderBoxWidth + dim_pointer.marginLeft
+					vp.left = dim_element.viewportRight + vp.dim_pointer.borderBoxWidth + vp.dim_pointer.marginLeft
 					vp.align_vertical = "center"
 					vp.align_horizontal = "left"
 				when "w"
 					vp.top = dim_layer.marginTop
 					vp.bottom = dim_window.height - dim_layer.marginBottom
-					vp.right = dim_element.viewportLeft - dim_pointer.borderBoxWidth - dim_pointer.marginRight
+					vp.right = dim_element.viewportLeft - vp.dim_pointer.borderBoxWidth - vp.dim_pointer.marginRight
 					vp.left = dim_layer.marginLeft
 					vp.align_vertical = "center"
 					vp.align_horizontal = "right"
 
-			vp.layer_align_vertical = vp.align_vertical
-			vp.layer_align_horizontal = vp.align_horizontal
+			vp.pointer_align_vertical = vp.align_vertical
+			vp.pointer_align_horizontal = vp.align_horizontal
 
+			vp.overlap_align = null
 
 		# add two-direction placements
 		for placement in CUI.Layer.knownPlacements
@@ -470,6 +506,8 @@ class CUI.Layer extends CUI.DOM
 			placement_parts = placement.split("")
 			vp_pl[placement] = vp = copyObject(vp_pl[placement_parts[0]])
 
+			vp.dim_pointer = dim_pointer[placement_parts[0]]
+
 			if not vp
 				continue
 
@@ -477,20 +515,23 @@ class CUI.Layer extends CUI.DOM
 				when "s"
 					vp.top = dim_element.viewportTop
 					vp.align_vertical = "top"
-					vp.layer_align_vertical = "center"
+					vp.pointer_align_vertical = "center"
+					vp.overlap_align = "bottom"
 				when "n"
 					vp.bottom = dim_element.viewportBottom
 					vp.align_vertical = "bottom"
-					vp.layer_align_vertical = "center"
+					vp.pointer_align_vertical = "center"
+					vp.overlap_align = "top"
 				when "e"
 					vp.left = dim_element.viewportLeft
 					vp.align_horizontal = "left"
-					vp.layer_align_horizontal = "center"
+					vp.pointer_align_horizontal = "center"
+					vp.overlap_align = "right"
 				when "w"
 					vp.right = dim_element.viewportRight
 					vp.align_horizontal = "right"
-					vp.layer_align_horizontal = "center"
-
+					vp.pointer_align_horizontal = "center"
+					vp.overlap_align = "left"
 
 		# throw out placements which are too small
 		for placement in CUI.Layer.knownPlacements
@@ -514,15 +555,12 @@ class CUI.Layer extends CUI.DOM
 			layer_pos = vp.layer_pos = {}
 			pointer_pos = vp.pointer_pos = {}
 
-			layer_pos.set_width = false
-			layer_pos.set_height = false
+			# layer_pos.set_width = false
+			# layer_pos.set_height = false
 
 			# number of times we need to cut the layer
 			# to make it fit into the viewport
 			vp.cuts = 0
-
-			pointer_pos.width = dim_pointer.borderBoxWidth
-			pointer_pos.height = dim_pointer.borderBoxHeight
 
 			# set width on height on the layer
 			# depending on the available viewport and the
@@ -531,16 +569,16 @@ class CUI.Layer extends CUI.DOM
 				when "both"
 					layer_pos.width = vp.width
 					layer_pos.height = vp.height
-					layer_pos.set_height = true
-					layer_pos.set_width = true
+					# layer_pos.set_height = true
+					# layer_pos.set_width = true
 				when "vertical"
 					layer_pos.height = vp.height
 					layer_pos.width = dim_layer.borderBoxWidth
-					layer_pos.set_height = true
+					# layer_pos.set_height = true
 				when "horizontal"
 					layer_pos.width = vp.width
 					layer_pos.height = dim_layer.borderBoxHeight
-					layer_pos.set_width = true
+					# layer_pos.set_width = true
 				else
 					layer_pos.width = dim_layer.borderBoxWidth
 					layer_pos.height = dim_layer.borderBoxHeight
@@ -587,48 +625,94 @@ class CUI.Layer extends CUI.DOM
 			if overlap_right > 0
 				layer_pos.left = layer_pos.left - overlap_right
 
+			vp.overlap_height = 0
+			vp.overlap_width = 0
 
-			# now align the pointer within the available viewport
-			switch vp.layer_align_horizontal
-				when "left"
-					pointer_pos.left = dim_element.viewportRight + dim_pointer.marginLeft
-					pointer_pos.direction = "w"
-				when "right"
-					pointer_pos.left = dim_element.viewportLeft - dim_pointer.borderBoxWidth - dim_pointer.marginLeft
-					pointer_pos.direction = "e"
-				when "center"
-					pointer_pos.left = dim_element.viewportCenterHorizontal - dim_pointer.borderBoxWidth / 2
+			# we allow an overlap push for certain placements,
+			# that means, if we cut the layer we allow it to
+			# be positioned outside the viewport (but inside the window)
+			overlap_height = dim_layer.borderBoxHeight - layer_pos.height
 
-			switch vp.layer_align_vertical
-				when "top"
-					pointer_pos.top = dim_element.viewportBottom + dim_pointer.marginTop
-					pointer_pos.direction = "n"
-				when "bottom"
-					pointer_pos.top = dim_element.viewportTop - dim_pointer.marginBoxHeight + dim_pointer.marginTop
-					pointer_pos.direction = "s"
-				when "center"
-					pointer_pos.top = dim_element.viewportCenterVertical - dim_pointer.borderBoxHeight / 2
+			if overlap_height > 0
+				switch vp.overlap_align
+					when "bottom"
+						vp.overlap_height = Math.min(layer_pos.top - vp.window_top, overlap_height)
+						layer_pos.top = layer_pos.top - vp.overlap_height
+						layer_pos.height = layer_pos.height + vp.overlap_height
+					when "top"
+						vp.overlap_height = Math.min(vp.window_bottom - layer_pos.top - layer_pos.height, overlap_height)
+						layer_pos.height = layer_pos.height + vp.overlap_height
+
+
+			overlap_width = dim_layer.borderBoxWidth - layer_pos.width
+			if overlap_width > 0
+				switch vp.overlap_align
+					when "right"
+						vp.overlap_width = Math.min(layer_pos.left - vp.window_left, overlap_width)
+						layer_pos.left = layer_pos.left - vp.overlap_width
+						layer_pos.width = layer_pos.width + vp.overlap_width
+					when "left"
+						vp.overlap_height = Math.min(vp.window_right - layer_pos.right, overlap_width)
+						layer_pos.width = layer_pos.width + vp.overlap_width
+
+			if vp.dim_pointer
+				# now align the pointer within the available viewport
+				switch vp.pointer_align_horizontal
+					when "left"
+						pointer_pos.left = dim_element.viewportRight + vp.dim_pointer.marginLeft
+					when "right"
+						pointer_pos.left = dim_element.viewportLeft - vp.dim_pointer.borderBoxWidth - vp.dim_pointer.marginLeft
+					when "center"
+						pointer_pos.left = dim_element.viewportCenterHorizontal - vp.dim_pointer.borderBoxWidth / 2
+
+				switch vp.pointer_align_vertical
+					when "top"
+						pointer_pos.top = dim_element.viewportBottom + vp.dim_pointer.marginTop
+					when "bottom"
+						pointer_pos.top = dim_element.viewportTop - vp.dim_pointer.marginBoxHeight + vp.dim_pointer.marginTop
+					when "center"
+						pointer_pos.top = dim_element.viewportCenterVertical - vp.dim_pointer.borderBoxHeight / 2
+
+				pointer_pos.width = vp.dim_pointer.borderBoxWidth
+				pointer_pos.height = vp.dim_pointer.borderBoxHeight
+				pointer_pos.direction = vp.dim_pointer.direction
+
+			if @_onPosition
+				# link dimensions, so the callback can
+				# use it
+
+				@_onPosition?(@, vp)
+				# overflow cutting
+
+			# the higher this number, the better
+			vp.layer_pos.estate = vp.layer_pos.width * vp.layer_pos.height
+			vp.layer_pos.aspect_ratio = vp.layer_pos.width / vp.layer_pos.height
+			vp.dim_layer.aspect_ratio = vp.dim_layer.borderBoxWidth / vp.dim_layer.borderBoxHeight
+
+			vp.ranking =
+				(allowed_placements.length - idxInArray(placement, allowed_placements))*10 +
+				1 - Math.abs(vp.layer_pos.aspect_ratio - vp.dim_layer.aspect_ratio) +
+				vp.layer_pos.estate
 
 		# pick best placement
 		available_placements = []
 		for placement, vp of vp_pl
 			available_placements.push(placement)
 
-		if vp_pl[wanted_placement]
-			# wanted placement is available, we take it
-			placement = wanted_placement
-		else if available_placements.length == 1
-			placement = available_placements[0]
-		else
-			console.debug "sorting placements BEFORE", available_placements.join(", ")
-			# sort available placements
-			available_placements.sort (pl1, pl2) ->
-				a = idxInArray(pl1, allowed_placements)
-				b = idxInArray(pl2, allowed_placements)
-				compareIndex(a, b)
+		assert(available_placements.length > 0, "Layer.position", "No available placements found.", vp_pl: vp_pl)
 
-			console.debug "sorting placements AFTER", available_placements.join(", ")
-			placement = available_placements[0]
+		# console.debug "sorting placements BEFORE", ((pl+"["+vp_pl[pl].ranking+"]") for pl in available_placements).join(", ")
+		# sort available placements
+		available_placements.sort (pl1, pl2) ->
+			value = (pl) ->
+				vp_pl[pl].ranking
+
+			compareIndex(value(pl1), value(pl2))
+
+		available_placements.reverse()
+		# console.debug "sorting placements AFTER", available_placements.join(", ")
+
+		placement = available_placements[0]
 
 		if ev?.hasModifierKey()
 			console.debug "layer", dim_layer
@@ -734,10 +818,10 @@ class CUI.Layer extends CUI.DOM
 		CUI.DOM.setStyle @__layer.DOM,
 			top: vp.layer_pos.top
 			left: vp.layer_pos.left
-			width: if vp.layer_pos.set_width then vp.layer_pos.width else ""
-			height: if vp.layer_pos.set_height then vp.layer_pos.height else ""
-			maxWidth: vp.width
-			maxHeight: vp.height
+			width: if vp.set_width then vp.layer_pos.width else ""
+			height: vp.layer_pos.height
+			maxWidth: vp.width + vp.overlap_width
+			maxHeight: vp.height + vp.overlap_height
 			margin: 0
 
 		if @__pointer
@@ -843,8 +927,10 @@ class CUI.Layer extends CUI.DOM
 		# 	@__element = @__orig_element
 		# 	delete(@__orig_element)
 
-		Events.ignore
-			instance: @
+		Events.ignore(instance: @)
+
+		@__clickThruListener?.destroy()
+		@__clickThruListener = null
 
 		@_onHide?(@, ev)
 		@
@@ -908,8 +994,15 @@ class CUI.Layer extends CUI.DOM
 				@position()
 				return
 
+		if @__addClickThruListenerOnShow
+			@__clickThruListener = @__addClickThruListener()
+		else
+			@__clickThruListener = null
+
 		@_onBeforeShow?(@, ev)
 		@__shown = true
+
+		console.debug "event", ev, ev.hasModifierKey()
 
 		@position(ev)
 		if @_handle_focus
@@ -956,7 +1049,6 @@ class CUI.Layer extends CUI.DOM
 
 	isShown: ->
 		@__shown
-
 
 	destroy: ->
 		# CUI.error "Layer.destroy",@, @isDestroyed()
