@@ -3,7 +3,7 @@
 $padding: 10px;
 $line-height-compensating-padding: 7px;
 $gap: 7px;
-$border-radius: 3px;
+$border-radius: 4px;
 $highlight-color: hsl(217,97%,57%);
 $on-highlight-color: white;
 
@@ -456,6 +456,10 @@ table.cui-form-table {
 			color: inherit;
 			background: hsl(0,0%,75%);
 		}
+	}
+
+	.cui-buttonbar .cui-button {
+		margin: 0;
 	}
 }
 
@@ -1073,6 +1077,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 	overflow: auto;
 	margin: 10px;
+	outline: none;
 }
 
 .cui-layer-pointer {
@@ -1176,6 +1181,7 @@ a[role="button"].cui-button-appearance-link {
 	box-shadow:
 		0 0 0 1px rgba(0,0,0,.06),
 		0 1px 10px rgba(0,0,0,.43);
+	cursor: default;
 	
 	.cui-label {
 		font-size: 11px;
@@ -1188,12 +1194,25 @@ a[role="button"].cui-button-appearance-link {
 
 // Menu
 .cui-menu {
-	background: hsl(0,0%,93%);
+	background: hsl(0,0%,96%);
 	box-shadow:
 		0 0 0 1px rgba(0,0,0,.06),
 		0 1px 10px rgba(0,0,0,.43);
 	border-radius: 4px;
-	padding: $line-height-compensating-padding 0;
+	padding: $border-radius 0;
+	
+	.cui-item-list {
+		font-size: inherit;
+	}
+}
+
+.cui-menu-item {
+	height: 20px;
+	line-height: 20px;
+}
+
+.cui-menu-divider {
+	margin: 6px 0;
 }
 
 // ItemList
@@ -1201,12 +1220,9 @@ a[role="button"].cui-button-appearance-link {
 	font-size: 11px;
 
 	.cui-label {
-		color: gray;
 		cursor: default;
-		
-		& ~ .cui-button { // TODO change when group class is there
-			padding-left: $padding * 2;
-		}
+		margin: 1px 0;
+		font-weight: bold;
 	}
 
 	.cui-button {
@@ -1214,13 +1230,12 @@ a[role="button"].cui-button-appearance-link {
 		
 	  line-height: 19px;
 	  padding: 0 $padding;
-	  cursor: pointer;
 
-		&:hover,
+		&:hover:not(.cui-disabled),
 		&:active,
 		&.cui-active {
 			color: white;
-			background: hsl(238,3%,65%);
+			background: hsl(0,0%,68%);
 		}
 
 		.cui-button-center {
@@ -1229,21 +1244,24 @@ a[role="button"].cui-button-appearance-link {
 	}	
 }
 
-.cui-tmpl-item-list-body
-{
+.cui-item-list-divider {
+	height: 2px;
+	background: hsl(0,0%,90%);
+}
+
+.cui-tmpl-item-list-body {
 	flex-direction: column;
 
 	> div {
 		flex: 0 0 auto;
 	}
+
 	a[role="button"],.cui-button
 	{
-		// stretch'em
 		align-self: stretch;
 	}
 
-	&.cui-item-list-has-button-left
-	{
+	&.cui-item-list-has-button-left {
 		// this button always has a left side
 		.cui-file-upload-button {
 			> .cui-button-left {
@@ -1256,7 +1274,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 		> .cui-tmpl-button-center,
 		> .cui-tmpl-button-center-right {
-			> .cui-button-center {
+			.cui-button-center {
 				padding-left: 23px;
 			}
 		}
@@ -1512,13 +1530,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-row-move-handle-column {
 	&.cui-lv-td {
 		width: 10px;
-		&.cui-list-view-row-move-handle {
-			cursor: move;
-			> div {
-				background: yellow;
-				flex: 1 1 auto;
-			}
-		}
+		flex-direction: row;
 	}
 }
 
@@ -1722,50 +1734,51 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-tr {
 	flex-direction: row;
-}
-
-.cui-form-td {
 	@include padding-y(0.5);
-	
-	// .cui-padding-reset {
-	// 	margin-top: -$padding/2;
-	// 	margin-bottom: -$padding/2;
-		
-	// 	& > & {
-	// 		margin-top: unset; // bugfix where .cui-padding-reset is in .cui-padding-reset
-	// 		margin-bottom: unset;
-	// 	}
-	// }
 }
 
 
 // Options
 .cui-options-form-table {
-	.cui-form-td {
+	.cui-form-tr {
 		padding: 0;
 	}
+}
 
-	&.cui-drag-drop-select-sortable {
-		.cui-form-td.cui-form-left {
-			width: 10px;
-			flex-direction: row;
-				
-			.cui-options-sortable-drag-handle {
-				&:hover {
-					opacity: 0.8;
-				}
-
-				flex: 1 1 auto;
-				cursor: move;
-				height: 11px;
-				width: 100%;
-				align-self: center;
-				
-				background: linear-gradient(hsl(0,0%,50%) 1px, transparent 1px);
-				background-size: 100% 3px;
-			}
-		}
+.cui-drag-drop-select-sortable,
+.drag-drop-select-helper {
+	.cui-form-td.cui-form-left {
+		width: 10px;
+		flex-direction: row;
 	}
+}
+
+.cui-drag-handle-row {
+	&:hover {
+		opacity: 0.8;
+	}
+
+	flex: 1 1 auto;
+	cursor: move;
+	height: 12px;
+	margin-top: 2px;
+	width: 100%;
+	align-self: center;
+
+	background: linear-gradient(hsl(0,0%,50%) 1px, transparent 1px);
+	background-size: 100% 3px;
+}
+
+// Drag and Drop
+
+.drag-drop-select-helper {
+	&.cui-tr {
+		padding: 0;
+	}
+}
+
+.cui-dragging {
+	opacity: 0;
 }
 
 // DateTime
@@ -2003,6 +2016,7 @@ a[role="button"].cui-button-appearance-link {
 	color: hsl(0,0%,30%);
 	font-size: 10px;
   line-height: 20px;
+  cursor: pointer;
     
   .cui-button-center {
   	padding: 0 5px;
