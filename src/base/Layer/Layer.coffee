@@ -351,11 +351,22 @@ class CUI.Layer extends CUI.DOM
 
 		dim_window = CUI.getViewport()
 
+		get_pointer_direction = (placement) ->
+			# return direction
+			{
+				n: "s"
+				s: "n"
+				e: "w"
+				w: "e"
+			}[placement]
+
 		get_pointer_class = (direction) =>
 			if CUI.__ng__
 				"cui-layer-pointer--"+direction
 			else
-				"cui-pointer-placement-"+pointer_direction
+				# we need to map this back, the interpretatin
+				# in old css was different
+				"cui-pointer-placement-"+get_pointer_direction(direction)
 
 		if @__pointer
 			# reset pointer
@@ -368,16 +379,12 @@ class CUI.Layer extends CUI.DOM
 			for direction in ["w", "s", "e", "n"]
 				CUI.DOM.removeClass(@__pointer, get_pointer_class(direction))
 
+
 		# measure all 4 directions for all pointers
 		dim_pointer = {}
 		for placement in ["n", "s", "e", "w"]
 
-			pointer_direction = {
-				n: "s"
-				s: "n"
-				e: "w"
-				w: "e"
-			}[placement]
+			pointer_direction = get_pointer_direction(placement)
 
 			if @__pointer
 				CUI.DOM.addClass(@__pointer, get_pointer_class(pointer_direction))
@@ -633,32 +640,34 @@ class CUI.Layer extends CUI.DOM
 			vp.overlap_height = 0
 			vp.overlap_width = 0
 
-			# we allow an overlap push for certain placements,
-			# that means, if we cut the layer we allow it to
-			# be positioned outside the viewport (but inside the window)
-			overlap_height = dim_layer.borderBoxHeight - layer_pos.height
+			if CUI.__ng__ or @_show_at_position
+				# we allow an overlap push for certain placements,
+				# that means, if we cut the layer we allow it to
+				# be positioned outside the viewport (but inside the window)
+				overlap_height = dim_layer.borderBoxHeight - layer_pos.height
 
-			if overlap_height > 0
-				switch vp.overlap_align
-					when "bottom"
-						vp.overlap_height = Math.min(layer_pos.top - vp.window_top, overlap_height)
-						layer_pos.top = layer_pos.top - vp.overlap_height
-						layer_pos.height = layer_pos.height + vp.overlap_height
-					when "top"
-						vp.overlap_height = Math.min(vp.window_bottom - layer_pos.top - layer_pos.height, overlap_height)
-						layer_pos.height = layer_pos.height + vp.overlap_height
+				if overlap_height > 0
+					switch vp.overlap_align
+						when "bottom"
+							vp.overlap_height = Math.min(layer_pos.top - vp.window_top, overlap_height)
+							layer_pos.top = layer_pos.top - vp.overlap_height
+							layer_pos.height = layer_pos.height + vp.overlap_height
+						when "top"
+							vp.overlap_height = Math.min(vp.window_bottom - layer_pos.top - layer_pos.height, overlap_height)
+							layer_pos.height = layer_pos.height + vp.overlap_height
 
 
-			overlap_width = dim_layer.borderBoxWidth - layer_pos.width
-			if overlap_width > 0
-				switch vp.overlap_align
-					when "right"
-						vp.overlap_width = Math.min(layer_pos.left - vp.window_left, overlap_width)
-						layer_pos.left = layer_pos.left - vp.overlap_width
-						layer_pos.width = layer_pos.width + vp.overlap_width
-					when "left"
-						vp.overlap_height = Math.min(vp.window_right - layer_pos.right, overlap_width)
-						layer_pos.width = layer_pos.width + vp.overlap_width
+				overlap_width = dim_layer.borderBoxWidth - layer_pos.width
+
+				if overlap_width > 0
+					switch vp.overlap_align
+						when "right"
+							vp.overlap_width = Math.min(layer_pos.left - vp.window_left, overlap_width)
+							layer_pos.left = layer_pos.left - vp.overlap_width
+							layer_pos.width = layer_pos.width + vp.overlap_width
+						when "left"
+							vp.overlap_height = Math.min(vp.window_right - layer_pos.right, overlap_width)
+							layer_pos.width = layer_pos.width + vp.overlap_width
 
 			if vp.dim_pointer
 				# now align the pointer within the available viewport
@@ -694,8 +703,12 @@ class CUI.Layer extends CUI.DOM
 			vp.layer_pos.aspect_ratio = vp.layer_pos.width / vp.layer_pos.height
 			vp.dim_layer.aspect_ratio = vp.dim_layer.borderBoxWidth / vp.dim_layer.borderBoxHeight
 
+			wanted_rank = (allowed_placements.length - idxInArray(placement, allowed_placements))
+			if wanted_placement == placement
+				wanted_rank = allowed_placements.length + 1
+
 			vp.ranking =
-				(allowed_placements.length - idxInArray(placement, allowed_placements))*10 +
+				wanted_rank*10 +
 				1 - Math.abs(vp.layer_pos.aspect_ratio - vp.dim_layer.aspect_ratio) +
 				vp.layer_pos.estate
 
