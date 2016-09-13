@@ -172,7 +172,6 @@ all: code demo css
 	rsync -r thirdparty/font-awesome-4.5.0/css $(target)/font-awesome/
 	rsync -r thirdparty/font-awesome-4.5.0/fonts $(target)/font-awesome/
 	cp $(thirdparty_files) $(target)
-	@cat $(html_files) > $(target)/easydbui.html
 
 demo:
 	$(MAKE) --directory demo all
@@ -195,8 +194,14 @@ css_other:
 
 css: css_ng css_other
 
-code: $(easydbui_js) $(thirdparty_files)
+code: $(easydbui_js) $(thirdparty_files) html
 	$(MAKE) --directory demo code
+
+html: $(html_files)
+	#
+	# $@
+	mkdir -p $(target)
+	@cat $(html_files) > $(target)/easydbui.html
 
 docs: $(files)
 	#

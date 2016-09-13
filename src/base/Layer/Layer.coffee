@@ -159,14 +159,13 @@ class CUI.Layer extends CUI.DOM
 			capture: true
 			node: window
 			call: (ev) =>
-				console.debug "ev", ev.getTarget()
+				console.debug "ev", ev.getTarget(), CUI.DOM.parents(ev.getTarget())
 
 				if ev.ctrlKey() and ev.getButton() == 2
 					return
 
-				if CUI.DOM.closest(ev.getTarget(), @__layer.DOM) or
-					(@__pointer and CUI.DOM.closest(ev.getTarget(), @__pointer))
-						return
+				if CUI.DOM.closest(ev.getTarget(), ".cui-tmpl-layer-root")
+					return
 
 				# if @__backdropClickDisabled
 				# 	# this is used in Popover when all buttons are disabled
@@ -175,7 +174,6 @@ class CUI.Layer extends CUI.DOM
 
 				@hide(ev)
 				return
-
 
 
 	# disableBackdropClick: ->
@@ -1001,8 +999,6 @@ class CUI.Layer extends CUI.DOM
 
 		@_onBeforeShow?(@, ev)
 		@__shown = true
-
-		console.debug "event", ev, ev.hasModifierKey()
 
 		@position(ev)
 		if @_handle_focus

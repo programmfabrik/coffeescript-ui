@@ -135,6 +135,7 @@ class Playground extends Demo
 					pop = new Popover
 						element: btn
 						placement: "n"
+						placements: ["n"] # force north, so we see the blur effect
 						cancel: true
 						backdrop:
 							policy: "click-thru"
@@ -257,8 +258,28 @@ class Playground extends Demo
 			password: ""
 			options_sorted: []
 			table: []
-			select: 20
+			select: 21
 			select_mini: 5
+			data_table: [
+				a: "Henk"
+				b: true
+			,
+				a: "Henk 1"
+				b: true
+			,
+				a: "Henk 2"
+				b: false
+			]
+			data_table_sortable: [
+				a: "Thomas"
+				b: true
+			,
+				a: "Henk"
+				b: false
+			,
+				a: "Torsten"
+				b: true
+			]
 
 
 		fields.push @getOptions(
@@ -332,10 +353,23 @@ class Playground extends Demo
 				label: "DateTime"
 
 		select_opts = []
+		icons = ["", "play", "audio", "left", "right"]
+
 		for i in [0...100]
-			select_opts.push
-				text: "Opt "+(i+1)
-				value: i
+			if i % 20 == 0
+				select_opts.push
+					divider: true
+
+			else if i % 10 == 0
+				select_opts.push
+					label:
+						text: "Group "+i
+
+			else
+				select_opts.push
+					text: "Opt "+(i+1)
+					value: i
+					icon: icons[Math.floor(Math.random()*4)]
 
 		fields.push new Select
 			form:
@@ -360,32 +394,38 @@ class Playground extends Demo
 			name: "table"
 			form:
 				label: "DataTable"
+			name: "data_table"
 			fields: [
 				form:
 					label: "Column A"
 				type: Input
+				name: "a"
 			,
 				form:
 					label: "Column B"
 				type: Checkbox
 				text: "Checkbox"
+				name: "b"
 			]
 
 		fields.push new DataTable
 			name: "table"
 			rowMove: true
+			name: "data_table_sortable"
 			form:
 				label: "DataTable [sortable]"
 			fields: [
 				form:
 					label: "Column A"
 				type: Input
+				name: "a"
 			,
 				form:
 					rotate_90: true
 					label: "Column B"
 				type: Checkbox
 				text: "Checkbox"
+				name: "b"
 			]
 
 

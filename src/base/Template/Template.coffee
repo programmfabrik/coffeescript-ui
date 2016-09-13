@@ -114,7 +114,7 @@ class Template extends CUI.Element
 				else
 					prefix = toDash(@_name)
 
-				sel = ".#{Template.cssPrefix}#{prefix}-#{clean_k},.#{Template.css_ui_prefix}#{prefix}-#{clean_k}"
+				sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
 			else
 				sel = v
 
@@ -264,7 +264,4 @@ class Template extends CUI.Element
 			# 	CUI.debug "isEmpty: false", key, fc
 			# !fc
 
-#TODO this prefix should be configured by the user of the UI
-Template.cssPrefix = "ez-"
-Template.css_ui_prefix = "cui-"
-Template.nodeByName = {}
+	@nodeByName: {}

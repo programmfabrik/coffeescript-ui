@@ -910,6 +910,12 @@ a[role="button"].cui-button-appearance-link {
 		align-self: stretch;
 	}
 
+	.cui-item-list-divider {
+		height: 2px;
+		background: red;
+		margin: 10px 0;
+	}
+
 	// always make space for item in buttons
 	.cui-button-center {
 		flex: 1 1 auto;

@@ -203,19 +203,24 @@ class Select extends Checkbox
 		@__optionsPromise
 		.done =>
 			found_opt = null
+			max_chars = 0
+
 			for opt, idx in @__options
-				if opt.value == @getValue()
+				if found_opt == null and opt.value == @getValue()
 					found_opt = opt
 					break
+
+				if opt.text?.length > max_chars
+					max_chars = opt.text?.length
 
 			# CUI.debug "Select.displayValue", @__options, @getData(), @getValue(), found_opt
 			if found_opt
 				if found_opt.icon
 					@__checkbox.setIcon(found_opt.icon)
-					@__checkbox.setText(null)
 				else
 					@__checkbox.setIcon(null)
-					@__checkbox.setText(found_opt.text_selected or found_opt.text)
+
+				@__checkbox.setText(found_opt.text_selected or found_opt.text)
 
 				@__checkbox.menuSetActiveIdx(found_opt._idx)
 			else
@@ -226,6 +231,7 @@ class Select extends Checkbox
 					@__checkbox.setText(@_not_found_text+":"+@getValue())
 				@__checkbox.menuSetActiveIdx(null)
 
+			CUI.DOM.setAttribute(@DOM, "max-chars", max_chars)
 		@
 
 

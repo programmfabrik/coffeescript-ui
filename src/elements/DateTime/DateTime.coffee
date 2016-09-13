@@ -670,7 +670,7 @@ class DateTime extends Input
 		date_sel = new Select(
 			name: "date"
 			data: data
-			group: if CUI.__ng__ then "date" else null
+			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.date(data.date))
 			options: =>
@@ -686,7 +686,7 @@ class DateTime extends Input
 		month_sel = new Select(
 			name: "month"
 			data: data
-			group: if CUI.__ng__ then "date" else null
+			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.month(data.month))
 			options: =>
@@ -702,7 +702,7 @@ class DateTime extends Input
 		year_sel = new Select(
 			name: "year"
 			data: data
-			group: if CUI.__ng__ then "date" else null
+			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.year(data.year))
 			options: =>
@@ -719,6 +719,7 @@ class DateTime extends Input
 			hour_sel = new Select(
 				name: "hour"
 				data: data
+				group: "time"
 				onDataChanged: =>
 					@updateCalendar(mom.hour(data.hour))
 				options: =>
@@ -732,11 +733,12 @@ class DateTime extends Input
 					opts
 			).start()
 
-			minute_colon = new Label(text: ":")
+			# minute_colon = new Label(text: ":")
 
 			minute_sel = new Select(
 				class: "cui-date-time-60-select"
 				name: "minute"
+				group: "time"
 				data: data
 				onDataChanged: =>
 					@updateCalendar(mom.minute(data.minute))
@@ -751,23 +753,40 @@ class DateTime extends Input
 					opts
 			).start()
 
-			second_colon = new Label(text: ":")
+			if @__input_format.clock_am_pm or true
+				am_pm_sel = new Select(
+					class: "cui-date-time-am-pm-select"
+					name: "am_pm"
+					group: "time"
+					data: data
+					onDataChanged: =>
+						# @updateCalendar(mom.second(data.second))
+					options: =>
+						opts = []
+						for am_pm in ["AM", "PM"]
+							opts.push
+								text: am_pm
+								value: am_pm
+						opts
+				).start()
 
-			second_sel = new Select(
-				class: "cui-date-time-60-select"
-				name: "second"
-				data: data
-				onDataChanged: =>
-					@updateCalendar(mom.second(data.second))
-				options: =>
-					opts = []
-					for second in [0..59]
-						opts.push
-							text: pad0(second)
-							value: second
+			# second_colon = new Label(text: ":")
 
-					opts
-			).start()
+			# second_sel = new Select(
+			# 	class: "cui-date-time-60-select"
+			# 	name: "second"
+			# 	data: data
+			# 	onDataChanged: =>
+			# 		@updateCalendar(mom.second(data.second))
+			# 	options: =>
+			# 		opts = []
+			# 		for second in [0..59]
+			# 			opts.push
+			# 				text: pad0(second)
+			# 				value: second
+
+			# 		opts
+			# ).start()
 
 		new Buttonbar(
 			buttons: [
@@ -775,10 +794,11 @@ class DateTime extends Input
 				month_sel
 				year_sel
 				hour_sel
-				minute_colon
+				# minute_colon
 				minute_sel
-				second_colon
-				second_sel
+				am_pm_sel
+				# second_colon
+				# second_sel
 			]
 		).DOM
 
