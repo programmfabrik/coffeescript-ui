@@ -351,6 +351,12 @@ class CUI.Layer extends CUI.DOM
 
 		dim_window = CUI.getViewport()
 
+		get_pointer_class = (direction) =>
+			if CUI.__ng__
+				"cui-layer-pointer--"+direction
+			else
+				"cui-pointer-placement-"+pointer_direction
+
 		if @__pointer
 			# reset pointer
 			CUI.DOM.setStyle(@__pointer,
@@ -360,10 +366,7 @@ class CUI.Layer extends CUI.DOM
 			)
 
 			for direction in ["w", "s", "e", "n"]
-				if CUI.__ng__
-					CUI.DOM.removeClass(@__pointer, "cui-layer-pointer--"+direction)
-				else
-					CUI.DOM.removeClass(@__pointer, "cui-pointer-placement-"+direction)
+				CUI.DOM.removeClass(@__pointer, get_pointer_class(direction))
 
 		# measure all 4 directions for all pointers
 		dim_pointer = {}
@@ -377,18 +380,11 @@ class CUI.Layer extends CUI.DOM
 			}[placement]
 
 			if @__pointer
-				if CUI.__ng__
-					CUI.DOM.addClass(@__pointer, "cui-layer-pointer--"+pointer_direction)
-				else
-					CUI.DOM.addClass(@__pointer, "cui-pointer-placement-"+pointer_direction)
+				CUI.DOM.addClass(@__pointer, get_pointer_class(pointer_direction))
 
 				dim_pointer[placement] = CUI.DOM.getDimensions(@__pointer)
 
-				if CUI.__ng__
-					CUI.DOM.addClass(@__pointer, "cui-pointer-placement-"+pointer_direction)
-				else
-					CUI.DOM.removeClass(@__pointer, "cui-layer-pointer--"+pointer_direction)
-
+				CUI.DOM.removeClass(@__pointer, get_pointer_class(pointer_direction))
 			else
 				dim_pointer[placement] =
 					borderBoxWidth: 0
@@ -840,7 +836,7 @@ class CUI.Layer extends CUI.DOM
 				left: vp.pointer_pos.left
 				margin: 0
 
-			CUI.DOM.addClass(@__pointer, "cui-layer-pointer-"+vp.pointer_pos.direction)
+			CUI.DOM.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
 
 		if @__backdrop_crop
 			DOM.setStyle @__backdrop_crop,
