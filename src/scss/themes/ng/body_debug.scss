@@ -1242,11 +1242,26 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-list-view-tool-marker {
+.cui-list-view-tool {
 	position: absolute;
-	border: 1px solid blue;
-	background-color: blue;
-	opacity: 0.3;
+
+	&.cui-tmpl-list-view-tool-row-move-marker {
+		border: 1px solid green;
+		background-color: green;
+		opacity: 0.3;
+	}
+
+	// marker to show the insert drop target
+	&.cui-tmpl-list-view-tool-row-move-target {
+		height: 3px;
+		background: green;
+	}
+
+	&.cui-list-view-tool-marker {
+		border: 1px solid blue;
+		background-color: blue;
+		opacity: 0.3;
+	}
 }
 
 // ListViewTree

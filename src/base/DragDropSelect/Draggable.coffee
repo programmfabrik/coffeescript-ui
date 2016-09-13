@@ -501,7 +501,7 @@ class Draggable extends DragDropSelect
 			globalDrag.helperNode = null
 
 		if globalDrag.helperNode
-			globalDrag.helperNode.addClass("drag-drop-select-helper")
+			globalDrag.helperNode.addClass("drag-drop-select-helper cui-demo-node-copyable")
 
 			Events.listen
 				type: "contextmenu"
@@ -516,7 +516,7 @@ class Draggable extends DragDropSelect
 					relPos = $el.offset()
 					document.body.appendChild(globalDrag.helperNode)
 				when "parent"
-					parents = CUI.DOM.parents($el[0], (node) => CUI.DOM.isPositioned(node))
+					parents = CUI.DOM.parents($el[0], ((node) => CUI.DOM.isPositioned(node)), document.body)
 					assert(parents.length > 0, "Draggable.init_helper", "no parents found for DOM node", node: $el[0])
 
 					scroll = top: 0, left: 0

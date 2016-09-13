@@ -409,10 +409,10 @@ class CUI.jQueryCompat
 			CUI.jQueryCompat(CUI.DOM.matchSelector(node, selector))
 
 		node.before = (node_before) ->
-			node.parentNode.insertBefore(node_before, node)
+			CUI.DOM.insertBefore(node, node_before)
 
 		node.after = (node_after) ->
-			node.parentNode.insertBefore(node_after, node.nextElementSibling)
+			CUI.DOM.insertAfter(node, node_after)
 
 		node.attr = (prop, value) ->
 			CUI.jQueryCompat.__warn("attr|prop", node, prop, value)

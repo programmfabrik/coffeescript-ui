@@ -148,7 +148,7 @@ class CUI.Event extends CUI.Element
 	setCurrentTarget: (ct) ->
 		@__currentTarget = ct
 
-	getModifiers: =>
+	getModifiers: ->
 		mods = []
 
 		for k in [

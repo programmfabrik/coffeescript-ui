@@ -18,7 +18,6 @@ class CUI.Alert extends CUI.ConfirmationChoice
 			text: @_button_text_ok
 		]
 
-
 CUI.alert = (opts=text: "CUI.alert") ->
 	new CUI.Alert(opts).open()
 

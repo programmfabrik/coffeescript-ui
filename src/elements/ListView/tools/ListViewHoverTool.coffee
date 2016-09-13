@@ -71,7 +71,7 @@ class ListViewHoverTool extends ListViewTool
 
 	appendMarker: (tname, transparent=true, css=null) ->
 		tmpl = new Template(name: "list-view-tool-#{tname}")
-		tmpl.addClass("cui-list-view-tool")
+		tmpl.addClass("cui-list-view-tool cui-demo-node-copyable")
 		if transparent
 			tmpl.addClass("cui-list-view-tool cui-drag-drop-select-transparent")
 		if css
@@ -83,6 +83,9 @@ class ListViewHoverTool extends ListViewTool
 	removeMarker: (force = false) ->
 		if not force and globalDrag
 			return false
+
 		@__hasMarker = false
-		$(".cui-list-view-tool").remove()
+		for el in CUI.DOM.matchSelector(document.documentElement, ".cui-list-view-tool:not(.cui-demo-node-copy)")
+			el.remove()
+
 		return true

@@ -209,6 +209,12 @@ class Playground extends Demo
 						text: "Alert!"
 					)
 			,
+				text: "CUI.toast"
+				onClick: =>
+					CUI.toast(
+						text: "Toast!"
+					)
+			,
 				text: "CUI.problem"
 				onClick: =>
 					CUI.problem(
@@ -363,7 +369,7 @@ class Playground extends Demo
 			else if i % 10 == 0
 				select_opts.push
 					label:
-						text: "Group "+i
+						text: "Label "+i
 
 			else
 				select_opts.push

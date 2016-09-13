@@ -567,7 +567,7 @@ class CUI.DOM extends CUI.Element
 		node.parentNode.insertBefore(node_before, node)
 
 	@insertAfter: (node, node_after) ->
-		node.parentNode.insertBefore(node_before, node_after.nextElementSibling)
+		node.parentNode.insertBefore(node_after, node.nextElementSibling)
 
 	@is: (node, selector) ->
 		if not node
@@ -691,9 +691,9 @@ class CUI.DOM extends CUI.Element
 		path
 
 	# selector is a filter
-	@parents: (docElem, selector) ->
+	@parents: (docElem, selector, untilDocElem=document.documentElement) ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.parents", "element needs to be instanceof HTMLElement", element: docElem)
-		path = @parentsUntil(docElem, selector, document.documentElement)
+		path = @parentsUntil(docElem, selector, untilDocElem)
 		if not selector
 			return path
 

@@ -208,7 +208,6 @@ class Select extends Checkbox
 			for opt, idx in @__options
 				if found_opt == null and opt.value == @getValue()
 					found_opt = opt
-					break
 
 				if opt.text?.length > max_chars
 					max_chars = opt.text?.length

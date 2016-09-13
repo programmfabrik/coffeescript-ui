@@ -325,12 +325,49 @@ class DemoTable
 		td.append.apply(td, arguments)
 		@table.append($tr("cui-demo-full-row").append(td))
 
-
 CUI.ready ->
 	for k in ["light", "dark", "ng", "ng_debug"]
 		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 
 	CUI.loadTheme(window.localStorage.getItem("theme") or "ng")
+
+	mouse_pos = null
+
+	Events.listen
+		type: "mousemove"
+		capture: true
+		call: (ev) =>
+			# store mouse position
+			mouse_pos = x: ev.pageX(), y: ev.pageY()
+
+	Events.listen
+		type: "keyup"
+		capture: true
+		call: (ev) =>
+			if not (ev.altKey() and ev.keyCode() == 67) # ALT-C
+				return
+
+			if ev.shiftKey()
+				# remove all nodes
+				i = 0
+				for el in DOM.matchSelector(document.documentElement, ".cui-demo-node-copy")
+					el.remove()
+					i++
+
+				CUI.toast(text: i+" Node(s) removed.")
+				return
+
+			i = 0
+			for node in CUI.DOM.matchSelector(document.documentElement, ".cui-demo-node-copyable")
+				node_copy = node.cloneNode(true)
+				node.parentNode.appendChild(node_copy)
+				CUI.DOM.insertAfter(node, node_copy)
+				node_copy.classList.add("cui-demo-node-copy")
+				console.debug "Node copied. Original:", node.parentNode, node, "Copy:", node_copy
+				i++
+
+			CUI.toast(text: i+" Node(s) copied.")
+			return
 
 	new RunDemo()
 
