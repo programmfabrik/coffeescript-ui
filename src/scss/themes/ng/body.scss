@@ -1312,10 +1312,14 @@ a[role="button"].cui-button-appearance-link {
 
 // Toast
 .cui-layer-root-toast .cui-layer {
-	color: white;
-	background: rgba(0,0,0,.75);
-	font-size: 16px;
+	color: hsl(0,0%,33%);
+	background: hsl(0,0%,94%);
+	font-size: 14px;
 	width: auto;
+	box-shadow:
+		0 0 0 1px rgba(0,0,0,.06),
+		0 1px 15px rgba(0,0,0,.23);
+	user-select: none;
 
 	> .cui-layout > .cui-vertical-layout-center {
 		padding: 0 $padding;
