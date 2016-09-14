@@ -1,11 +1,12 @@
 @import url($font_awesome_url);
 
 $padding: 10px;
-$line-height-compensating-padding: 7px;
-$gap: 7px;
+$compensating-padding: 7px;
+$gap: 12px;
 $border-radius: 4px;
 $highlight-color: hsl(217,97%,57%);
 $on-highlight-color: white;
+$pane-header-height: 30px;
 
 @mixin margin($factor: 1) {
 	margin-bottom: $padding * $factor;
@@ -118,6 +119,7 @@ textarea {
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	resize: vertical;
+	box-shadow: 0 1px rgba(0,0,0,.05) inset;
 }
 
 input {
@@ -146,13 +148,13 @@ table.cui-form-table {
 .cui-horizontal-layout {
 	&.cui-maximize-horizontal {
 		flex-direction: row;
-		overflow: hidden;
+		// overflow: hidden; cuts off outline in date-time picker: year picker
 
 		> .cui-horizontal-layout-left,
 		> .cui-horizontal-layout-right
 		{
 			position: relative;
-			overflow: hidden;
+			// overflow: hidden; cuts off outline in date-time picker: year picker
 			// max-width: 45%; breaks CUI.confirm
 		}
 		> .cui-horizontal-layout-center {
@@ -437,29 +439,31 @@ table.cui-form-table {
 	}
 }
 
-.cui-pane-footer {
-	background: hsl(0,0%,98%);
-	padding: 0;
-	border-top: 1px solid hsl(0,0%,71%);
-	
-	.cui-button {
-		@include button-reset;
-		padding: 0 2px;
-		height: 19px;
-		border-right: 1px solid hsl(0,0%,71%) !important;
+.cui-data-table {
+	.cui-pane-footer {
+		background: hsl(0,0%,98%);
+		padding: 0;
+		border-top: 1px solid hsl(0,0%,71%);
 		
-		&:before {
-			display: none;
+		.cui-button {
+			@include button-reset;
+			padding: 0 2px;
+			height: 19px;
+			border-right: 1px solid hsl(0,0%,71%) !important;
+			
+			&:before {
+				display: none;
+			}
+			
+			&:active {
+				color: inherit;
+				background: hsl(0,0%,75%);
+			}
 		}
-		
-		&:active {
-			color: inherit;
-			background: hsl(0,0%,75%);
-		}
-	}
 
-	.cui-buttonbar .cui-button {
-		margin: 0;
+		.cui-buttonbar .cui-button {
+			margin: 0;
+		}
 	}
 }
 
@@ -561,9 +565,7 @@ i.cui-spin-stepped {
 	font-size: 12px;
 }
 
-.cui-button-left,
-.cui-button-center,
-.cui-button-right {
+.cui-button-left {
 	&:empty {
 		display: none;
 	}
@@ -577,10 +579,11 @@ i.cui-spin-stepped {
 }
 
 .cui-button-left {
-	padding: 0 5px;
+	padding-left: 10px;
+	padding-right: 5px;
 
 	&:empty + .cui-button-center {
-		padding-left: 5px;
+		padding-left: 12px;
 	}
 }
 
@@ -588,16 +591,21 @@ i.cui-spin-stepped {
 	flex: 1 1 auto;
 	
 	&:first-child {
-		padding-left: 6px;
+		padding-left: 12px;
 	}
 
 	&:last-child {
-		padding-right: 6px;
+		padding-right: 12px;
 	}
 	
 	&:only-child {
 		padding-left: 12px;
 		padding-right: 12px;
+	}
+
+	&:empty {
+		padding: 0;
+		width: 5px;
 	}
 }
 
@@ -605,8 +613,8 @@ i.cui-spin-stepped {
 	padding: 0 5px;
 	
 	&:empty {
-		display: block;
-		padding: 0 3px;
+		padding: 0;
+		width: 9px;
 	}
 }
 
@@ -651,7 +659,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Buttonbar
 .cui-buttonbar-group {
-	.cui-button {
+	> .cui-button {
 		position: relative;
 		
 		&:active:not(.cui-active) {
@@ -692,6 +700,12 @@ a[role="button"].cui-button-appearance-link {
 			height: 100%;
 			background: rgba(0,0,0,.1);
 			width: 1px;
+		}
+	}
+
+	> .cui-data-field {
+		& + *:before {
+			display: none;
 		}
 	}
 }
@@ -788,10 +802,6 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&[max-chars] .cui-button-center span {
-		text-align: center;
-	}
-
 	&[max-chars="2"] .cui-button-center span {
 		width: 2.5ch;
 	}
@@ -831,8 +841,6 @@ a[role="button"].cui-button-appearance-link {
 	flex: 0 0 auto;
 	align-items: stretch;
 	// align-self: flex-start;
-
-	padding: 0 $padding;
 	
 	&.cui-tmpl-label-rotate-90 {
 		// rotate by 90 degrees
@@ -874,10 +882,70 @@ a[role="button"].cui-button-appearance-link {
 
 	// Markdown
 
-	&.cui-label-markdown {
-		p {
-			margin: 0;
+	&.cui-label-markdown .cui-label-content {
+		display: block;
+		
+		h1, h2, h3, h4, h5, h6 {
+		  font-weight: normal;
+		  margin: 0;
 		}
+
+		h1 {
+		  font-size: 24px;
+		  line-height: 30px;
+		}
+
+		h2 {
+		  font-size: 20px;
+		  line-height: 25px;
+		}
+		
+		p,
+	  pre,
+	  blockquote {
+	    margin: 0 0 16px;
+	  }
+
+	  & > p,
+	  & > pre,
+	  & > blockquote {	  	
+	    &:first-child {
+	      margin-top: 6px;
+	    }
+
+	    &:last-child {
+	      margin-bottom: 6px;
+	    }
+	  }
+
+	  blockquote {
+	    padding: 8px 12px;
+	    border-left: 5px solid #eee;
+	  }
+
+	  code {
+	    border: none;
+	    background: hsl(0,0%,97%);
+	    white-space: pre-wrap;
+	  }
+
+	  pre {
+	    padding: 12px 15px;
+	    font-size: 13px;
+	    line-height: 1.45;
+	    background: hsl(0,0%,97%);
+	    white-space: pre-wrap;
+	    border-radius: 3px;
+	    border: none;
+	    overflow: auto;
+	  }
+
+	  hr {
+	    margin-top: 6px;
+	    margin-bottom: 6px;
+	    border: 0;
+	    border-top: 1px solid #dfdfdf;
+	  }
 	}
 
 
@@ -973,8 +1041,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-checkbox {
 	flex-direction: column;
 	
-	.cui-button-checkbox {
-		align-self: stretch;
+	.cui-button {
 		height: 20px;
 		line-height: 20px;
 		white-space: initial;
@@ -1073,11 +1140,54 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-layer {
 	position: absolute;
-	background-color: white;
 	flex-direction: column;
 	overflow: auto;
 	margin: 10px;
 	outline: none;
+	background: hsl(0,0%,93%);
+	border-radius: 6px;
+	box-shadow:
+		0 0 0 1px rgba(0,0,0,.06),
+		0 1px 10px rgba(0,0,0,.43);
+		
+	> .cui-layout > .cui-vertical-layout-center {
+		padding: $compensating-padding $padding;
+		
+		> .cui-multiline-label {
+			padding: $compensating-padding $padding;
+		}
+
+		.cui-table {
+			margin: $compensating-padding/2 $padding;
+		}
+	}
+		
+	.cui-pane-footer {
+		padding: $padding $padding*2 $padding*2;
+	}
+}
+
+.cui-confirmation-dialog,
+.cui-layer-root-modal {
+	.cui-pane-header {
+		background: linear-gradient(hsl(0,0%,93%),hsl(0,0%,84%));
+		border-bottom: 1px solid hsl(300,1%,70%);
+		box-shadow: 0 1px hsl(300,5%,96%) inset;
+		border-radius: 6px 6px 0 0;
+		padding: 0;
+		height: $pane-header-height;
+		
+		.cui-label {
+			padding-left: $padding*2;
+			line-height: $pane-header-height;
+		}
+		
+		.cui-button {
+			align-self: stretch;
+			height: auto;
+			padding: 0 8px;
+		}
+	}
 }
 
 .cui-layer-pointer {
@@ -1116,13 +1226,13 @@ a[role="button"].cui-button-appearance-link {
 	left: -9px;
 }
 
-.cui-tmpl-layer-backdrop
-{
+.cui-layer-backdrop {
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
+	
 	> div {
 		flex: 1 1 auto;
 		background-size: cover;
@@ -1130,8 +1240,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-layer-backdrop-body-clone
-{
+.cui-layer-backdrop-body-clone {
 	position: absolute;
 	overflow: hidden;
 
@@ -1140,8 +1249,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-layer-root.cui-layer-root-backdrop-blur
-{
+.cui-tmpl-layer-root.cui-layer-root-backdrop-blur {
 	> .cui-tmpl-layer-backdrop
 	{
 		-webkit-filter: blur(5px);
@@ -1178,6 +1286,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 260px;
 	max-height: 100px;
 	overflow: auto;
+	border-radius: 2px;
 	box-shadow:
 		0 0 0 1px rgba(0,0,0,.06),
 		0 1px 10px rgba(0,0,0,.43);
@@ -1188,9 +1297,30 @@ a[role="button"].cui-button-appearance-link {
     line-height: 14px;
     padding: 3px 6px;
 	}
+
+	> .cui-layout > .cui-vertical-layout-center {
+		padding: 0;
+	}
 }
 
 
+
+// ConfirmationDialog
+.cui-confirmation-dialog .cui-layer {
+	width: 347px;
+}
+
+// Toast
+.cui-layer-root-toast .cui-layer {
+	color: white;
+	background: rgba(0,0,0,.75);
+	font-size: 16px;
+	width: auto;
+
+	> .cui-layout > .cui-vertical-layout-center {
+		padding: 0 $padding;
+	}
+}
 
 // Menu
 .cui-menu {
@@ -1221,7 +1351,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label {
 		cursor: default;
-		margin: 1px 0;
+		margin: 1px $padding;
 		font-weight: bold;
 	}
 
@@ -1285,31 +1415,30 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// ConfirmationDialog
-.cui-tmpl-layer-root.cui-confirmation-dialog {
-	> .cui-layer {
-		text-align: center;
-		max-width: 400px;
-		min-width: 200px;
+// Popover
+.cui-popover {
+	background: white;
+	min-width: 247px;
+}
+
+// Popover: hide header
+.cui-popover > .cui-layout > .cui-vertical-layout-top {
+	display: none;
+}
+
+// Backdrop
+.cui-layer-root-modal,
+.cui-layer-root-alert,
+.cui-layer-root-confirm,
+.cui-layer-root-prompt {
+	.cui-layer-backdrop {
+		background: radial-gradient(rgba(0,0,0,.2), rgba(0,0,0,.3));
 	}
 }
 
-// Popover
-.cui-alert,
-.cui-problem,
-.cui-confirm,
-.cui-prompt,
-.cui-layer.cui-popover,
-.cui-layer.cui-modal {
-	border-radius: 6px;
-	box-shadow:
-		0 0 0 1px rgba(0,0,0,.06),
-		0 1px 10px rgba(0,0,0,.43);
-}
-
 // Modal
-.cui-layer.cui-modal {
-	
+.cui-layer-root-modal .cui-layer {
+	width: 417px;
 }
 
 // WaitBlock
@@ -1401,6 +1530,10 @@ a[role="button"].cui-button-appearance-link {
 	[cui-lv-quadrant="0"],
 	[cui-lv-quadrant="1"] {
 		color: hsl(0,0%,30%);
+	}
+
+	.cui-label {
+		padding: 0 $padding;
 	}
 }
 
@@ -1715,12 +1848,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-output {
-	.cui-label {
-		padding: 0;
-	}
-}
-
 
 // Table
 .cui-form-table,
@@ -1797,6 +1924,10 @@ a[role="button"].cui-button-appearance-link {
 			border-right-width: 1px;
 			border-top-right-radius: $border-radius;
 			border-bottom-right-radius: $border-radius;
+			
+			.cui-button-right {
+				padding-right: 6px;
+			}
 		}
 
 		&:not(:first-child) .cui-button {
@@ -1822,11 +1953,12 @@ a[role="button"].cui-button-appearance-link {
 		}
 		
 		.cui-button-center {
-			padding-left: 2px;
+			padding-left: 1px;
+			text-align: right;
 		}
 
 		.cui-button-right {
-			padding: 0 2px 0 4px;
+			padding: 0 3px;
 		}
 	}
 }
@@ -1876,9 +2008,17 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-date-time-footer {
+	.cui-buttonbar > *:not(:last-child) {
+		margin-right: 0;
+	}
+
+	.cui-label {
+		cursor: default;
+	}
+
 	> .cui-horizontal-layout-left {
-		flex: 1 1 auto;
-		margin-right: $padding;
+		flex: 1 0 auto;
+		margin-right: $gap;
 		
 		.cui-label { // June, September
 			flex: 1 1 auto;
@@ -1892,6 +2032,10 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-date-time-header-year {
+	
+}
+
 
 // DateTimeDate
 
@@ -1900,6 +2044,10 @@ a[role="button"].cui-button-appearance-link {
 	@include margin();
 	flex-grow: 1;
 	font-size: 12px;
+	
+	.cui-tr {
+		padding: 0;
+	}
 
 	.cui-td,
 	.cui-th {
@@ -1962,7 +2110,7 @@ a[role="button"].cui-button-appearance-link {
 				transition: margin-left 0.5s ease-out;
 			}
 			flex-direction: row;
-			overflow: hidden;
+			// overflow: hidden; cuts off year-picker outline
 			flex: 1 1 auto;
 			.cui-number-input {
 				input {
@@ -1972,6 +2120,10 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+}
+
+.cui-date-time-clock {
+	display: none;
 }
 
 
