@@ -342,7 +342,11 @@ class DateTime extends Input
 		@
 
 	getValueForDisplay: ->
-		value = @getValue().trim()
+		value = @getValue()?.trim?()
+
+		if isEmpty(value)
+			return ""
+
 		mom = @parse(value)
 
 		if mom.isValid()
