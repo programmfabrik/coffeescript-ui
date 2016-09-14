@@ -815,7 +815,7 @@ class Input extends DataFieldInput
 
 	checkValue: (v) ->
 		if not isString(v) or null
-			throw new Error("#{@__cls}.setValue(value): Value needs to be String or null.")
+			throw new Error("#{@__cls}.checkValue(value): Value needs to be String or null.")
 		@
 
 	render: ->

@@ -11,7 +11,7 @@ class InputDemo extends Demo
 			dollars: 12345589
 			content_size_textarea: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
 			date_and_time_short: "2014-11-14T15:57:00+01:00"
-			date_only: "2014-10-19"
+			date_only: "2010-05-29T13:14:24Z"
 			euros: 123456
 
 		multi_input_control = new MultiInputControl
@@ -263,7 +263,7 @@ class InputDemo extends Demo
 				name: "date_only"
 				type: DateTime
 				locale: "de-DE"
-				input_types: [ "date" ]
+				input_types: [ "date", "year_month", "year" ]
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
 			,

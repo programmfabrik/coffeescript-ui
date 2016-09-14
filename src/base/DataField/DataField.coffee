@@ -398,7 +398,6 @@ class DataField extends DOM
 	getName: ->
 		@_name
 
-
 	# data field needs to return the empty value
 	# to init data
 	#

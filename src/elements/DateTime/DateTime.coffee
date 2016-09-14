@@ -332,13 +332,23 @@ class DateTime extends Input
 		else
 			mom.subtract(12,"hour")
 
+	initValue: ->
+		super()
+		value = @getValue()
+		corrected_value = @parseValueForStore(value)
+		if corrected_value and corrected_value != value
+			CUI.warn("DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
+			@__data[@_name] = corrected_value
+		@
 
 	getValueForDisplay: ->
-		mom = @parse(@getValue())
+		value = @getValue().trim()
+		mom = @parse(value)
+
 		if mom.isValid()
 			mom.format(@getCurrentFormatDisplay())
 		else
-			""
+			value
 
 	getValueForInput: (v = @getValue()) ->
 		if isEmpty(v?.trim())
@@ -348,15 +358,11 @@ class DateTime extends Input
 		if mom.isValid()
 			return mom.format(@__input_format.input)
 		else
-			return ""
-
+			return v
 
 	__checkInput: (value) ->
 		if not isEmpty(value?.trim())
-			input_formats = @__input_formats.slice(0)
-			for format in @__input_formats_known
-				pushOntoArray(format, input_formats)
-			mom = @parse(value, input_formats, @__input_formats)
+			mom = @parseValue(value)
 			if not mom.isValid()
 				return false
 		else
@@ -572,8 +578,11 @@ class DateTime extends Input
 	# formats: format to check
 	# use_formats: formats which are used to call our "initFormat", if format
 	#              matched is not among them, init to the first check format.
+	#              these formats are the "allowed" formats, this is used in __checkInput
 
 	parse: (s, formats = @__input_formats, use_formats = formats) ->
+		if not (s?.trim?().length > 0)
+			return moment.invalid()
 
 		for format in formats
 			mom = @__parseFormat(format, s)
@@ -587,6 +596,22 @@ class DateTime extends Input
 				return mom
 
 		return moment.invalid()
+
+	parseValueForStore: (value) ->
+		mom = @parseValue(value)
+		if mom.isValid()
+			mom.format(@__input_format.store)
+		else
+			null
+
+	# like parse, but it used all known input formats
+	# to recognize the value
+	parseValue: (value) ->
+		input_formats = @__input_formats.slice(0)
+		for format in @__input_formats_known
+			pushOntoArray(format, input_formats)
+		@parse(value, input_formats, @__input_formats)
+
 
 	__parseFormat: (f, s) ->
 		for k in ["store", "input", "display"]

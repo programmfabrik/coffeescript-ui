@@ -320,10 +320,16 @@ class DemoTable
 
 
 CUI.ready ->
-	for k in ["light", "dark", "ng"]
-		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 
-	CUI.loadTheme(window.localStorage.getItem("theme") or "light")
+	for k in ["light", "dark", "ng"]
+		if not theme
+			theme = k
+
+		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
+		if k == window.localStorage.getItem("theme")
+			theme = k
+
+	CUI.loadTheme(theme)
 
 	new RunDemo()
 
