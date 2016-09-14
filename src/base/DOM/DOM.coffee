@@ -340,9 +340,20 @@ class CUI.DOM extends CUI.Element
 		if isNull(content)
 			return node
 
-		if content instanceof Array or content instanceof HTMLCollection or content instanceof NodeList
-			for item in content
-				CUI.DOM.append(node, item)
+		if CUI.isArray(content) or content instanceof HTMLCollection or content instanceof NodeList
+			idx = 0
+			len = content.length
+
+			while idx < len
+				CUI.DOM.append(node, content[idx], append)
+				if len > content.length
+					# leave idx == 0, list is live
+				else
+					idx++
+
+				len = content.length
+
+
 			return node
 
 		switch typeof(content)
