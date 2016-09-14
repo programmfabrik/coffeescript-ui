@@ -3,9 +3,13 @@
 $padding: 10px;
 $compensating-padding: 7px;
 $gap: 12px;
-$border-radius: 4px;
+
+$button-border-radius: 4px;
+$menu-border-radius: 4px;
+
 $highlight-color: hsl(217,97%,57%);
 $on-highlight-color: white;
+
 $pane-header-height: 30px;
 
 @mixin margin($factor: 1) {
@@ -558,7 +562,7 @@ i.cui-spin-stepped {
 	}
 
 	// add padding around the whole button
-	border-radius: $border-radius;
+	border-radius: $button-border-radius;
 }
 
 .cui-button-size-mini {
@@ -833,7 +837,6 @@ a[role="button"].cui-button-appearance-link {
 
 
 // Label
-
 .cui-label {
 	line-height: 20px;
 	display: inline-flex;
@@ -879,126 +882,6 @@ a[role="button"].cui-button-appearance-link {
 		// display: inline-flex;
 		flex: 0 0 auto;
 	}
-
-	// Markdown
-
-	&.cui-label-markdown .cui-label-content {
-		display: block;
-		
-		h1, h2, h3, h4, h5, h6 {
-		  font-weight: normal;
-		  margin: 0;
-		}
-
-		h1 {
-		  font-size: 24px;
-		  line-height: 30px;
-		}
-
-		h2 {
-		  font-size: 20px;
-		  line-height: 25px;
-		}
-		
-		p,
-	  pre,
-	  blockquote {
-	    margin: 0 0 16px;
-	  }
-
-	  & > p,
-	  & > pre,
-	  & > blockquote {	  	
-	    &:first-child {
-	      margin-top: 6px;
-	    }
-
-	    &:last-child {
-	      margin-bottom: 6px;
-	    }
-	  }
-
-	  blockquote {
-	    padding: 8px 12px;
-	    border-left: 5px solid #eee;
-	  }
-
-	  code {
-	    border: none;
-	    background: hsl(0,0%,97%);
-	    white-space: pre-wrap;
-	  }
-
-	  pre {
-	    padding: 12px 15px;
-	    font-size: 13px;
-	    line-height: 1.45;
-	    background: hsl(0,0%,97%);
-	    white-space: pre-wrap;
-	    border-radius: 3px;
-	    border: none;
-	    overflow: auto;
-	  }
-
-	  hr {
-	    margin-top: 6px;
-	    margin-bottom: 6px;
-	    border: 0;
-	    border-top: 1px solid #dfdfdf;
-	  }
-	}
-
-
-	&.cui-label-multiline {
-		align-self: stretch;
-		@includ margin();
-
-		&:not(.cui-label-markdown) {
-			white-space: pre-wrap;
-			// word-break: normal;
-			word-break: break-all;
-			// this does not work in IE, but will
-			// be ignored by IE, so we are good
-			word-break: break-word;
-		}
-
-		> .cui-label-content {
-			flex: 0 1 auto;
-		}
-
-		&.cui-label-manage-overflow {
-			> .cui-label-content {
-				transition: height ease 0.5s, max-height ease 0.5s;
-				max-height: 62px;
-				position: relative;
-				// flex-direction: column;
-				overflow: hidden;
-
-				> .cui-label-manage-overflow-content-container {
-					transition: height ease 0.5s, max-height ease 0.5s;
-					overflow: hidden;
-
-					> span {
-						white-space: pre-wrap;
-						word-break: normal;
-					}
-				}
-
-				> .cui-label-manage-overflow-button-container {
-					height: 0;
-					align-self: flex-end;
-					.cui-button {
-						transform: translateY(-100%);
-						border-style: none;
-						background-color: #8a8a8a;
-						color: #ffffff;
-						border-radius: 3px;
-					}
-				}
-			}
-
-		}
-	}
 	.cui-label-content:empty {
 		display: none;
 	}
@@ -1006,6 +889,129 @@ a[role="button"].cui-button-appearance-link {
 		display: none;
 	}
 }
+
+.cui-layout-cell > .cui-label {
+	padding: 0 $padding;
+}
+
+// Label: Markdown
+.cui-label-markdown .cui-label-content {
+	display: block;
+	
+	h1, h2, h3, h4, h5, h6 {
+	  font-weight: normal;
+	  margin: 0;
+	}
+
+	h1 {
+	  font-size: 24px;
+	  line-height: 30px;
+	}
+
+	h2 {
+	  font-size: 20px;
+	  line-height: 25px;
+	}
+	
+	p,
+  pre,
+  blockquote {
+    margin: 0 0 16px;
+  }
+
+  & > p,
+  & > pre,
+  & > blockquote {	  	
+    &:first-child {
+      margin-top: 6px;
+    }
+
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
+
+  blockquote {
+    padding: 8px 12px;
+    border-left: 5px solid #eee;
+  }
+
+  code {
+    border: none;
+    background: hsl(0,0%,97%);
+    white-space: pre-wrap;
+  }
+
+  pre {
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 1.45;
+    background: hsl(0,0%,97%);
+    white-space: pre-wrap;
+    border-radius: 3px;
+    border: none;
+    overflow: auto;
+  }
+
+  hr {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border: 0;
+    border-top: 1px solid #dfdfdf;
+  }
+}
+
+// Label: Multiline
+.cui-label-multiline {
+	align-self: stretch;
+	@includ margin();
+
+	&:not(.cui-label-markdown) {
+		white-space: pre-wrap;
+		// word-break: normal;
+		word-break: break-all;
+		// this does not work in IE, but will
+		// be ignored by IE, so we are good
+		word-break: break-word;
+	}
+
+	> .cui-label-content {
+		flex: 0 1 auto;
+	}
+
+	&.cui-label-manage-overflow {
+		> .cui-label-content {
+			transition: height ease 0.5s, max-height ease 0.5s;
+			max-height: 62px;
+			position: relative;
+			// flex-direction: column;
+			overflow: hidden;
+
+			> .cui-label-manage-overflow-content-container {
+				transition: height ease 0.5s, max-height ease 0.5s;
+				overflow: hidden;
+
+				> span {
+					white-space: pre-wrap;
+					word-break: normal;
+				}
+			}
+
+			> .cui-label-manage-overflow-button-container {
+				height: 0;
+				align-self: flex-end;
+				.cui-button {
+					transform: translateY(-100%);
+					border-style: none;
+					background-color: #8a8a8a;
+					color: #ffffff;
+					border-radius: 3px;
+				}
+			}
+		}
+	}
+}
+
 
 // Buttonbar
 .cui-buttonbar {
@@ -1333,7 +1339,7 @@ a[role="button"].cui-button-appearance-link {
 		0 0 0 1px rgba(0,0,0,.06),
 		0 1px 10px rgba(0,0,0,.43);
 	border-radius: 4px;
-	padding: $border-radius 0;
+	padding: $menu-border-radius 0;
 	
 	.cui-item-list {
 		font-size: inherit;
@@ -1900,6 +1906,10 @@ a[role="button"].cui-button-appearance-link {
 	background-size: 100% 3px;
 }
 
+.cui-selected .cui-drag-handle-row {
+	background-image: linear-gradient(white 1px, transparent 1px);
+}
+
 // Drag and Drop
 
 .drag-drop-select-helper {
@@ -1926,8 +1936,8 @@ a[role="button"].cui-button-appearance-link {
 
 		&:last-child .cui-button {
 			border-right-width: 1px;
-			border-top-right-radius: $border-radius;
-			border-bottom-right-radius: $border-radius;
+			border-top-right-radius: $button-border-radius;
+			border-bottom-right-radius: $button-border-radius;
 			
 			.cui-button-right {
 				padding-right: 6px;
@@ -1989,7 +1999,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-date-time-day {
-	border-radius: $border-radius;
+	border-radius: $button-border-radius;
 }
 
 .cui-date-time-same-month {
