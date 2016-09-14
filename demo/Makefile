@@ -62,7 +62,7 @@ css_ng: jpg
 	# $@
 	mkdir -p $(target)/css
 	$(call_scss) src/scss/themes/ng/main.scss $(target)/css/cui_demo_ng.css
-	$(call_scss) src/scss/themes/ng/main_debug.scss $(target)/css/cui_demo_ng_debug.css
+	$(call_scss) src/scss/themes/ng_debug/main.scss $(target)/css/cui_demo_ng_debug.css
 
 css_other:
 	#

@@ -182,7 +182,7 @@ css_ng:
 	# $@
 	mkdir -p $(css_target)
 	$(call_scss) src/scss/themes/ng/main.scss $(css_target)/cui_ng.css
-	$(call_scss) src/scss/themes/ng/main_debug.scss $(css_target)/cui_ng_debug.css
+	$(call_scss) src/scss/themes/ng_debug/main.scss $(css_target)/cui_ng_debug.css
 	$(MAKE) --directory demo css_ng
 
 css_other:
