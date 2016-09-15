@@ -10,8 +10,6 @@ class InputDemo extends Demo
 			plain_textarea_over: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
 			dollars: 12345589
 			content_size_textarea: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
-			date_and_time_short: "2014-11-14T15:57:00+01:00"
-			date_only: "2010-05-29T13:14:24Z"
 			euros: 123456
 
 		multi_input_control = new MultiInputControl
@@ -236,44 +234,6 @@ class InputDemo extends Demo
 				type: Input
 				textarea: true
 				content_size: true
-			,
-				form: label: "Date+Time+Seconds [default]"
-				name: "date_time_secs"
-				type: DateTime
-				input_types: null # use all
-				onDataChanged: (data, df) =>
-					@log(df.getName()+": value: "+data[df.getName()])
-			,
-				form: label: "Date+Time+Seconds (Short) [de-DE]"
-				type: DateTime
-				name: "date_and_time_short"
-				display_type: "short"
-				locale: "de-DE"
-				onDataChanged: (data, df) =>
-					@log(df.getName()+": value: "+data[df.getName()])
-			,
-				form: label: "Date+Time [de-DE]"
-				name: "date_and_time"
-				type: DateTime
-				locale: "de-DE"
-				onDataChanged: (data, df) =>
-					@log(df.getName()+": value: "+data[df.getName()])
-			,
-				form: label: "Date [de-DE]"
-				name: "date_only"
-				type: DateTime
-				locale: "de-DE"
-				input_types: [ "date", "year_month", "year" ]
-				onDataChanged: (data, df) =>
-					@log(df.getName()+": value: "+data[df.getName()])
-			,
-				form: label: "Date+Time+Seconds [en-US]"
-				name: "date_time_secs"
-				type: DateTime
-				input_types: null # use all
-				locale: "en-US"
-				onDataChanged: (data, df) =>
-					@log(df.getName()+": value: "+data[df.getName()])
 			]
 
 

@@ -16,6 +16,7 @@ coffee_files = src/demo.coffee \
 	../src/elements/Block/demo/BlockDemo.coffee \
 	../src/elements/Menu/demo/MenuDemo.coffee \
 	../src/elements/Input/demo/InputDemo.coffee \
+	../src/elements/DateTime/demo/DateTimeDemo.coffee \
 	../src/elements/MarkdownInput/demo/MarkdownInputDemo.coffee \
 	../src/elements/FileUpload/demo/FileUploadDemo.coffee \
 	../src/elements/Modal/demo/DialogDemo.coffee \

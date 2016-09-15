@@ -37,7 +37,7 @@ class DateTime extends Input
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
-		@removeOpt("correctValueForInput")
+		# @removeOpt("correctValueForInput")
 		@removeOpt("checkInput")
 		@removeOpt("getInputBlocks")
 
@@ -144,13 +144,13 @@ class DateTime extends Input
 		super()
 		@_checkInput = @__checkInput
 		@_getInputBlocks = @__getInputBlocks
-		@_correctValueForInput = (dateTime, value) =>
-			corrected_value = @format(value, "input", @__input_formats[0].type)
-			if corrected_value
-				corrected_value
-			else
-				# keep the invalid value
-				value
+		# @_correctValueForInput = (dateTime, value) =>
+		# 	corrected_value = @parseAndFormatValue(value, "input")
+		# 	if corrected_value
+		# 		corrected_value
+		# 	else
+		# 		# keep the invalid value
+		# 		value
 
 	getCurrentFormat: ->
 		@__input_format
@@ -335,7 +335,7 @@ class DateTime extends Input
 	initValue: ->
 		super()
 		value = @getValue()
-		corrected_value = @parseValueForStore(value)
+		corrected_value = @parseValue(value, "store")
 		if corrected_value and corrected_value != value
 			CUI.warn("DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
 			@__data[@_name] = corrected_value
@@ -366,7 +366,7 @@ class DateTime extends Input
 
 	__checkInput: (value) ->
 		if not isEmpty(value?.trim())
-			mom = @parseValue(value)
+			mom = @parse(value)
 			if not mom.isValid()
 				return false
 		else
@@ -601,21 +601,20 @@ class DateTime extends Input
 
 		return moment.invalid()
 
-	parseValueForStore: (value) ->
-		mom = @parseValue(value)
-		if mom.isValid()
-			mom.format(@__input_format.store)
-		else
-			null
-
 	# like parse, but it used all known input formats
 	# to recognize the value
-	parseValue: (value) ->
+	parseValue: (value, output_format = null) ->
 		input_formats = @__input_formats.slice(0)
 		for format in @__input_formats_known
 			pushOntoArray(format, input_formats)
-		@parse(value, input_formats, @__input_formats)
+		mom = @parse(value, input_formats, @__input_formats)
+		if not output_format
+			return mom
 
+		if mom.isValid()
+			mom.format(@__input_format[output_format])
+		else
+			null
 
 	__parseFormat: (f, s) ->
 		for k in ["store", "input", "display"]
