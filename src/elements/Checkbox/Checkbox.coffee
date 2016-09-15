@@ -1,6 +1,4 @@
 class Checkbox extends DataFieldInput
-	constructor: (@opts={}) ->
-		super(@opts)
 
 	initOpts: ->
 
@@ -108,7 +106,7 @@ class Checkbox extends DataFieldInput
 		@__checkbox = new CUI.defaults.class.Button(btn_opts)
 
 		if CUI.__ng__
-			@addClass("cui-button-element")
+			@__checkbox.removeClass("cui-button-button")
 
 		@proxy(@__checkbox, [
 			"activate"

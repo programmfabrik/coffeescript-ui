@@ -416,7 +416,12 @@ a[role="button"],label[role="button"],.cui-button
 	height: 20px;
 	line-height: 20px;
 
+
 	&:not(.cui-button-appearance-flat) {
+		&.cui-button--primary {
+			border-color: blue;
+			border-width: 2px;
+		}
 		background-color: #ffdbb3;
 		border: 1px solid #b3895b;
 	}

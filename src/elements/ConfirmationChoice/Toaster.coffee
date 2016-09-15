@@ -1,11 +1,12 @@
-class CUI.Toast extends CUI.ConfirmationChoice
+class CUI.Toaster extends CUI.ConfirmationChoice
 	initOpts: ->
 		super()
 		@removeOpt("choices")
-
+		@removeOpt("backdrop")
 
 	readOpts: ->
 		super()
+		@_backdrop = false
 		@_choices = []
 
 	open: ->
@@ -18,5 +19,5 @@ class CUI.Toast extends CUI.ConfirmationChoice
 				@__deferred.resolve()
 		return @__deferred.promise()
 
-CUI.toast = (opts=text: "CUI.toast") ->
-	new CUI.Toast(opts).open()
+CUI.toaster = (opts=text: "CUI.toaster") ->
+	new CUI.Toaster(opts).open()

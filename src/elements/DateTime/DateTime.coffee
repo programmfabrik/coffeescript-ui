@@ -126,8 +126,8 @@ class DateTime extends Input
 
 		@setCursor("day")
 
-		if @__input_format.digi_clock
-			@__dateTimeTmpl.append(@getDigiDisplay(@__input_format.digi_clock), "digi_clock")
+		# if @__input_format.digi_clock
+		# 	@__dateTimeTmpl.append(@getDigiDisplay(@__input_format.digi_clock), "digi_clock")
 
 		@__dateTimeTmpl
 
@@ -683,7 +683,7 @@ class DateTime extends Input
 
 	getDateTimeDrawer: (mom) ->
 
-		am_pm = @__input_format.clock_am_pm or true
+		am_pm = @__input_formats[0].clock_am_pm
 
 		data =
 			month: mom.month()
@@ -752,7 +752,7 @@ class DateTime extends Input
 				opts
 		).start()
 
-		if @__input_format.clock
+		if @__input_formats[0].clock
 
 			hour_sel = new Select(
 				name: "hour"
@@ -872,8 +872,8 @@ class DateTime extends Input
 					class: "cui-date-time-header-month"
 					buttons:
 						[
-							appearance: "flat"
-							size: "mini"
+							appearance: if CUI.__ng__ then undefined else "flat"
+							size: if CUI.__ng__ then undefined else "mini"
 							icon: "left"
 							onClick: (ev) =>
 								if mom.clone().subtract(1, "months").year() < @_min_year
@@ -901,8 +901,8 @@ class DateTime extends Input
 
 							# ).start()
 						,
-							appearance: "flat"
-							size: "mini"
+							appearance: if CUI.__ng__ then undefined else "flat"
+							size: if CUI.__ng__ then undefined else "mini"
 							icon: "right"
 							onClick: (ev) =>
 								if mom.clone().add(1, "months").year() > @_max_year
@@ -915,8 +915,8 @@ class DateTime extends Input
 				content: new Buttonbar
 					class: "cui-date-time-header-year"
 					buttons: [
-						appearance: "flat"
-						size: "mini"
+						appearance: if CUI.__ng__ then undefined else "flat"
+						size: if CUI.__ng__ then undefined else "mini"
 						icon: "left"
 						onClick: (ev) =>
 							if data.year-1 < @_min_year
@@ -940,8 +940,8 @@ class DateTime extends Input
 								@updateCalendar(mom.year(year))
 						).start()
 					,
-						appearance: "flat"
-						size: "mini"
+						appearance: if CUI.__ng__ then undefined else "flat"
+						size: if CUI.__ng__ then undefined else "mini"
 						icon: "right"
 						onClick: (ev) =>
 							if data.year+1 > @_max_year
@@ -986,7 +986,7 @@ class DateTime extends Input
 					@updateCalendar(@__current_moment)
 
 					if not CUI.__ng__
-						if @__input_format.type.match(/time/)
+						if @__input_formats[0].type.match(/time/)
 							@setCursor("hour")
 						else
 							@closePopover()
@@ -1095,7 +1095,7 @@ class DateTime extends Input
 				# CUI.debug "clicked on ", $target
 				if $target.closest(".cui-date-time-grid-hour").length
 					hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
-					if @__input_format.clock_am_pm
+					if @__input_formats[0].clock_am_pm
 						current_hour = @__current_moment.hour()
 						if current_hour < 12 # AM
 							@__current_moment.hour(hour%12)
@@ -1107,7 +1107,7 @@ class DateTime extends Input
 					if @__current_moment.minute() % 5 != 0
 						@__current_moment.minute(0)
 
-					if @__input_format.clock_am_pm
+					if @__input_formats[0].clock_am_pm
 						cursor = "am_pm"
 					else
 						cursor = "minute"
@@ -1143,7 +1143,7 @@ class DateTime extends Input
 		#$tr().appendTo(table).append(
 		#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Hour"))
 		#)
-		if not @__input_format.clock_am_pm
+		if not @__input_formats[0].clock_am_pm
 			for hour in [0..23]
 				if hour % 6 == 0
 					tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
@@ -1210,7 +1210,7 @@ class DateTime extends Input
 				continue
 
 			units = @__current_moment[k]()
-			if k == "hour" and @__input_format.clock_am_pm
+			if k == "hour" and @__input_formats[0].clock_am_pm
 				units = (units+11)%12+1 # convert hours in visible hour format
 
 			if k == "minute"
@@ -1219,7 +1219,7 @@ class DateTime extends Input
 			@__gridTable.find("[#{k}=\"#{units}\"]").addClass("cui-date-time-selected")
 
 
-		if @__input_format.clock_am_pm
+		if @__input_formats[0].clock_am_pm
 			for _c in @__gridTable.find("[am_pm]")
 				c = $(_c)
 				if @__current_moment.__now

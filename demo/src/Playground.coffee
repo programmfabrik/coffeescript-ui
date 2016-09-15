@@ -209,11 +209,26 @@ class Playground extends Demo
 						text: "Alert!"
 					)
 			,
-				text: "CUI.toast"
+				text: "CUI.toaster"
 				onClick: =>
-					CUI.toast(
-						text: "Toast!"
-					)
+					ms = 3000
+					steps = 100
+					toaster = new CUI.Toaster
+						show_ms: ms
+						text: "Toaster 100!"
+
+					toaster.open()
+
+					c = 0
+					counter = =>
+						c = c + 1
+						CUI.setTimeout
+							ms: ms / steps
+							call: =>
+								toaster.setText("Toaster! "+(steps-c))
+								if c < steps
+									counter()
+					counter()
 			,
 				text: "CUI.problem"
 				onClick: =>
@@ -304,6 +319,20 @@ class Playground extends Demo
 			form:
 				label: "Options [Sortable]"
 			radio: false
+			options: [
+				text: "One"
+			,
+				text: "Two"
+			,
+				text: "Three"
+			,
+				text: "Four"
+			,
+				text: "Five"
+			,
+				text: "Six"
+			]
+
 			name: "options_sorted"
 			sortable: true
 			sortable_hint: "Sort checked options, unchecked are sorted alphabetically"
@@ -326,10 +355,25 @@ class Playground extends Demo
 
 		fields.push new Input
 			form:
+				label: "Input [Content-Size]"
+			name: "input"
+			content_size: true
+
+		fields.push new Input
+			form:
 				label: "Input [Textarea]"
 			name: "textarea"
 			textarea: true
 			placeholder: "CUI.Input [Textarea]"
+
+		fields.push new Input
+			form:
+				label: "Input [Textarea|Content-Size]"
+			name: "textarea"
+			textarea: true
+			content_size: true
+			placeholder: "CUI.Input [Textarea|Content-Size]"
+
 
 		fields.push new Output
 			form:

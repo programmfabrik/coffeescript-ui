@@ -41,6 +41,10 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		cancel:
 			default: false
 			check: Boolean
+		primary:
+			mandatory: true
+			default: false
+			check: Boolean
 
 	readOpts: ->
 		super()

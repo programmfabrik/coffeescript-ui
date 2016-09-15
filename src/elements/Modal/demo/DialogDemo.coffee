@@ -392,7 +392,8 @@ class DialogDemo extends Demo
 			icon_left: new Icon(class: "fa-arrows-alt")
 			onClick: =>
 				@foreground_dialog = new Modal(
-					modal: false
+					backdrop:
+						policy: "click"
 					pane:
 						content: $text("You can click outside to close this Dialog. Checkout the Popover Demo for examples of non modal dialogs.")
 						footer_right: =>

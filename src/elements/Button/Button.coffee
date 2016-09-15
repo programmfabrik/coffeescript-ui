@@ -49,7 +49,6 @@ class CUI.Button extends CUI.DOM
 				center: ".cui-button-center"
 				right: if @__has_right then ".cui-button-right" else undefined
 
-
 		@registerTemplate(@__box)
 
 		@__active = null
@@ -65,7 +64,8 @@ class CUI.Button extends CUI.DOM
 		else if @_role == "menu-item"
 			@addClass("cui-menu-item")
 
-		@addClass("cui-button-element")
+		if CUI.__ng__
+			@addClass("cui-button-button")
 
 		DOM.setAttributeMap(@DOM, @_attr)
 		DOM.setAttribute(@DOM, "tabindex", "0")
@@ -115,6 +115,9 @@ class CUI.Button extends CUI.DOM
 		if @_appearance == "auto"
 			@addClass("cui-button-appearance-normal") #additionally used as a fallback
 		@addClass("cui-button-appearance-"+@_appearance)
+
+		if @_primary
+			@addClass("cui-button--primary")
 
 		if @_center
 			@append(@_center, "center")
@@ -505,6 +508,10 @@ class CUI.Button extends CUI.DOM
 				mandatory: true
 				default: "auto"
 				check: ["auto","link","flat","normal","important"]
+			primary:
+				mandatory: true
+				default: false
+				check: Boolean
 			onClick:
 				check: Function
 			confirm_on_click:

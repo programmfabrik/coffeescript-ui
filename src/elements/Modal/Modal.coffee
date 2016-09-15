@@ -26,17 +26,13 @@ class CUI.Modal extends CUI.LayerPane
 			onClick: (ev) =>
 				@doCancel(ev)
 
-
-	readOpts: ->
-		super()
-
-		if not @opts.backdrop?.policy
-			@_backdrop.policy = "modal"
-
-		@
-
 	initOpts: ->
 		super()
+		@mergeOpt "backdrop",
+			default:
+				policy: "modal"
+				add_bounce_class: true
+				content: null
 		@addOpts
 			cancel:
 				check: Boolean
@@ -53,7 +49,6 @@ class CUI.Modal extends CUI.LayerPane
 
 		@mergeOpt "placement",
 			default: "c"
-
 
 	__addHeaderButton: (pname, _btn) ->
 		if not @["_#{pname}"]

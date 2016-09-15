@@ -1,21 +1,10 @@
-class CUI.Prompt extends CUI.ConfirmationChoice
+class CUI.Prompt extends CUI.Confirm
 	initOpts: ->
 		super()
 		@removeOpt("choices")
-		@removeOpt("content")
 		@addOpts
 			default:
 				default: ""
-				check: String
-
-			button_text_ok:
-				mandatory: true
-				default: CUI.defaults.class.ConfirmationChoice.defaults.ok
-				check: String
-
-			button_text_cancel:
-				mandatory: true
-				default: CUI.defaults.class.ConfirmationChoice.defaults.cancel
 				check: String
 
 	readOpts: ->
@@ -28,6 +17,7 @@ class CUI.Prompt extends CUI.ConfirmationChoice
 		text = @_text
 
 		delete(@_text) # delete so the ConfirmationDialog does not warn us
+
 		@__data = input: @_default+""
 		@_content = new Form
 			fields: [
@@ -50,8 +40,10 @@ class CUI.Prompt extends CUI.ConfirmationChoice
 		@_choices = [
 			text: @_button_text_cancel
 			cancel: true
+			primary: @_button_primary == "cancel"
 		,
 			text: @_button_text_ok
+			primary: @_button_primary == "ok"
 		]
 
 	open: ->

@@ -61,6 +61,10 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			pane.append(content, key)
 		return
 
+	setText: (text, markdown = @_markdown) ->
+		c = new MultilineLabel(markdown: markdown, text: text)
+		@getPane().replace(c, "content")
+
 	getButtons: ->
 		[pane, key] = @getPane().getPaneAndKey("footer_right")
 		els = DOM.findElements(pane[key]()[0], ".cui-button")

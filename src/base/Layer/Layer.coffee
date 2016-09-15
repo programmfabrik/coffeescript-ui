@@ -27,12 +27,9 @@ class CUI.Layer extends CUI.DOM
 
 		# @__backdropClickDisabled = false
 
-		if @_backdrop or @_modal
+		if @_backdrop
 
-			if @_modal
-				@__bd_policy = "modal"
-			else
-				@__bd_policy = @_backdrop.policy or "click-thru"
+			@__bd_policy = @_backdrop.policy or "click-thru"
 
 			@__backdrop = new Template
 				class: "cui-layer-backdrop"
@@ -221,13 +218,6 @@ class CUI.Layer extends CUI.DOM
 			add_bounce_class:
 				deprecated: "use backdrop.add_bounce_class instead"
 
-
-			# set to true, if a mousedown on the backdrop
-			# does not destroy the layer
-			# modal implies backdrop
-			modal:
-				deprecated: true
-				check: Boolean
 			onBeforeShow:
 				check: Function
 			onShow:
