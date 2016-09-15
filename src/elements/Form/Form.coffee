@@ -204,10 +204,10 @@ class Form extends DataField
 			fopts = _field._form or {}
 
 			tds = []
-			if _field.__form_data_field_right
-				right = _field.__form_data_field_right
-			else
-				right = fopts.right
+			right = fopts.right
+
+			if right
+				console.error("Form.renderTable: form.right is deprecated. Remove this from your code.")
 
 			for app, idx in [fopts, _field, right]
 				attrs = {}

@@ -12,11 +12,6 @@ class DataField extends DOM
 
 		@__checkChangedValue = undefined
 
-		if @_form
-			assert(not (@_form.right and @_form.data_field_right), "#{@__cls}.renderTable", "opts.form.right and opts.form.data_field_right cannot be set together.", opts: @opts)
-			if @_form.data_field_right
-				@__form_data_field_right = DataField.new(@_form.data_field_right)
-
 		@initTemplate()
 
 		@addClass("cui-data-field")
@@ -347,21 +342,6 @@ class DataField extends DOM
 		else
 			other_fields = []
 
-		# for p in ["right", "top", "bottom"]
-		# 	other = @["__#{p}"]
-		# 	if not other
-		# 		continue
-
-		# 	if other instanceof DataField
-		# 		other_fields.push(other)
-		# 	else if $.isArray(other)
-		# 		for r in other
-		# 			if r instanceof DataField
-		# 				other_fields.push(r)
-
-		# if @__form_data_field_right
-		# 	other_fields.push(@__form_data_field_right)
-
 		for df in other_fields
 			if not df or not $.isFunction(df[func])
 				assert(false, "DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
@@ -369,9 +349,6 @@ class DataField extends DOM
 
 			df[func].apply(df, args)
 		@
-
-	# getFormDataFieldRight: ->
-	# 	@__form_data_field_right
 
 	getData: ->
 		@__data
