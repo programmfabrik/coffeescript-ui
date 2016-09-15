@@ -1,4 +1,4 @@
-class Form extends DataField
+class CUI.Form extends CUI.DataField
 
 	initOpts: ->
 		super()
@@ -35,7 +35,7 @@ class Form extends DataField
 	readOpts: ->
 		super()
 		if @_horizontal == 1
-			@__horizontal = false
+			@__horizontal = null
 		else
 			@__horizontal = @_horizontal
 
@@ -85,6 +85,7 @@ class Form extends DataField
 	init: ->
 		@__initUndo()
 		@initFields()
+		@setFormDepth()
 
 	initFields: ->
 		@__fields = @__createFields()
@@ -141,6 +142,11 @@ class Form extends DataField
 	renderTable: ->
 		@table = $table("cui-form-table")
 
+		if @_horizontal
+			@table.addClass("cui-form-table-horizontal")
+		else
+			@table.addClass("cui-form-table-vertical")
+
 		Events.listen
 			node: @table
 			type: "form-check-row-visibility"
@@ -162,7 +168,16 @@ class Form extends DataField
 				continue
 			@table[0].classList.add(cls+"-table")
 
-		td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center"]) # , "right"])
+		if @_horizontal and CUI.__ng__
+			td_classes = [
+				"cui-padding cui-form-left cui-form-th"
+				"cui-padding cui-form-center cui-form-td"
+			]
+		else
+			td_classes = [
+				"cui-padding cui-form-left cui-form-td"
+				"cui-padding cui-form-center cui-form-td"
+			]
 
 		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
@@ -187,67 +202,110 @@ class Form extends DataField
 
 			for td_class, idx in td_classes
 				head = @_header[idx]
-				th = $th(td_class).appendTo(tr_head)
-
 				if not head
 					continue
+
+				th = $th(td_class).appendTo(tr_head)
 				th.append(getAppend(head.label))
 
 		has_left = false
 
-		for _field, idx in @getFields()
-			if @__horizontal and
-				(((@__horizontal == true) and idx == 0) or
-				(@__horizontal > 1 and idx % @__horizontal == 0))
-					tr_labels = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-labels").appendTo(@table)
-					tr_fields = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-fields").appendTo(@table)
-					tr_rights = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-rights").appendTo(@table)
+		_fields = @getFields()
+		if @__horizontal > 1
+			# re-sort fields
+			fields = []
+			cols = []
 
-			fopts = _field._form or {}
+			fields_per_column = Math.ceil(_fields.length / @__horizontal)
+			col_i = 0
+			for _idx in [0..._fields.length]
+				if not cols[col_i]
+					cols[col_i] = []
+				cols[col_i].push(_idx)
+				if cols[col_i].length == fields_per_column
+					col_i = col_i + 1
+
+			for row_i in [0...fields_per_column]
+				for col_i in [0...@__horizontal]
+					_idx = cols[col_i][row_i]
+					# console.debug "row_i", row_i, "col_i", col_i, "idx:", _idx
+					fields.push(_fields[_idx])
+
+		else
+			fields = _fields
+
+		for _field, idx in fields
+
+			# _field can be undefined in @__horizontal > 1 tables
+
+			if @__horizontal and (idx == 0 or (@__horizontal > 1 and idx % @__horizontal == 0))
+				tr_labels = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-labels")
+
+				if not CUI.__ng__
+					tr_labels.appendTo(@table)
+
+				tr_fields = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-fields").appendTo(@table)
+				# tr_rights = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-rights").appendTo(@table)
+
+			fopts = _field?._form or {}
 
 			tds = []
-			right = fopts.right
+			right = null
 
-			if right
-				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx)
+			if fopts.hasOwnProperty("right")
+				right = fopts.right
+				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx, "Right:", right)
 
 			append_content = []
-			append_left = null
+			append_left = []
 			use_field_as_label = false
 
 			for app, idx in [fopts, _field, right]
-				attrs = {}
-				if skip_next
-					skip_next = false
-					continue
 
 				if idx == 0
+					content = null
+
 					if app.label
-						append_left = getAppend(app.label, _field)
-					else if app.use_field_as_label
+						content = getAppend(app.label, _field)
+
+					if app.use_field_as_label
+						assert(not @_horizontal, "Form.renderTable", "field.form.use_field_as_label is not supported with opts.horizontal.", opts: @opts, field: _field)
+
 						use_field_as_label = true
-						assert(not @__horizontal, "Form.render", "form.use_field_as_label not supported for horizontal Forms", opts: @opts)
-						append_left = getAppend(_field, _field)
-						skip_next = true
-					else
-						append_left = null
 				else
 					content = getAppend(app, _field)
-					if content != null
+
+				if content != null
+					if use_field_as_label or idx == 0
+						append_left.push(content)
+					else
 						append_content.push(content)
 
-			if append_left != null
+			if append_left.length > 0
+				if @_horizontal
+					if CUI.__ng__
+						console.error("Form.renderTable", "field.form.label in horizontal tables is obsolete.")
+					else
+						console.error("Form.renderTable", "field.form.label in horizontal tables is deprectated.")
+
 				has_left = true
 
 			if use_field_as_label
-				td = $td(td_classes[0], colspan: 2)
-				td.append(append_left)
-				for a_c in append_content
-					td.append(a_c)
-				tds.push(td)
+				tds.push($td(td_classes[0], colspan: 2).append(append_left))
 			else
-				tds.push($td(td_classes[0]).append(append_left))
-				tds.push($td(td_classes[1]).append(append_content))
+				td2 = $td(td_classes[1])
+
+				if @_horizontal and CUI.__ng__
+					td1 = $th(td_classes[0])
+					td1.addClass("cui-form-th")
+					if fopts.th_rotate_90
+						td1.addClass("cui-form-rotate-90")
+						td2.addClass("cui-form-rotate-90")
+				else
+					td1 = $td(td_classes[0])
+
+				tds.push(td1.append(append_left))
+				tds.push(td2.append(append_content))
 
 			if @__horizontal
 				tr_labels.append(tds[0])
@@ -255,23 +313,20 @@ class Form extends DataField
 				# tr_rights.append(tds[2])
 			else
 				tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
+				# mark this row special, if our content includes another vertical form
+				if getObjectClass(_field) == "Form" and _field instanceof CUI.Form
+					if not _field.getOpt("horizontal") or not has_left
+						tr.addClass("cui-form-tr-content-is-form-vertical")
 
 				# used to set row visibility
 				DOM.data(tr[0], "data-field", _field)
 
 				tr.append(tds)
 
-		if @__horizontal == false
-			if has_left
-				@table.addClass("cui-form-table-has-left-column")
-			else
-				@table.addClass("cui-form-table-has-not-left-column")
-
-			# if has_right
-			# 	@table.addClass("cui-form-table-has-right-column")
-			# else
-			# 	@table.addClass("cui-form-table-has-not-right-column")
-
+		if has_left
+			@table.addClass("cui-form-table-has-left-column")
+		else
+			@table.addClass("cui-form-table-has-not-left-column")
 
 		Events.listen
 			type: "data-changed"
@@ -294,30 +349,8 @@ class Form extends DataField
 				return
 
 		@getLayout().replace(@table, "center")
-		@__setChildDepths()
+		CUI.DOM.setAttribute(@table, "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
 		@table
-
-	__setChildDepths: (unique_id = @getUniqueId()) ->
-		# checks all children for their depth levels, takes the
-		# max
-		#
-		max_depth = 0
-		forms = [@]
-		for dom_el in CUI.DOM.matchSelector(@getLayout().DOM[0], "[cui-data-field-form-depth][cui-data-field-form-root=\"#{unique_id}\"]")
-			df = DOM.data(dom_el, "element")
-			if df instanceof Form
-				forms.push(df)
-
-			depth = parseInt(dom_el.getAttribute("cui-data-field-form-depth"))
-			# CUI.debug depth, df
-			if depth > max_depth
-				max_depth = depth
-
-		for df in forms
-			curr_depth = df.DOM.attr("cui-data-field-form-depth")
-			df.updateDepthAttribute("cui-data-field-form-child-depth", max_depth - curr_depth)
-
-		@
 
 
 	__initUndo: ->
@@ -385,14 +418,6 @@ class Form extends DataField
 
 		return found_fields
 
-	setFormDepth: ->
-		# set the form depth on us
-		super()
-		# set form depth on our children
-		for f in @getFields("setFormDepth")
-			f.setFormDepth()
-		@
-
 	getFields: (func) ->
 		# CUI.debug "form get fields", @__fields
 		@__fields
@@ -436,3 +461,5 @@ class Form extends DataField
 CUI.Events.registerEvent
 	type: "form-check-row-visibility"
 	bubble: true
+
+Form = CUI.Form

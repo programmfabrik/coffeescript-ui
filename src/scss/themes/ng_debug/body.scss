@@ -1304,54 +1304,61 @@ a[role="button"].cui-button-appearance-link {
 	background: rgba(187, 187, 54, 0.5);
 }
 
-.cui-form-table-has-not-left-column {
+.cui-form-table-has-not-left-column[cui-form-depth="0"] {
+	// on top level for, hide left column
 	> .cui-tr > .cui-td.cui-form-left {
-			display: none;
-	}
-}
-
-.cui-form-table-has-not-right-column {
-	> .cui-tr > .cui-td.cui-form-right {
 		display: none;
 	}
 }
 
-.cui-form[cui-data-field-form-depth="0"] {
-	> .cui-vertical-layout-center {
-		> .cui-form-table {
-			> tr:last-child {
-				border-color: #ff44ee;
-			}
-		}
+.cui-form-table-vertical[cui-form-depth="0"] {
+	> .cui-form-tr {
+		border-bottom: 2px solid orange;
+		margin-bottom: 10px;
 	}
-}
-
-.cui-form:not([cui-data-field-form-depth="0"]) {
-	> .cui-vertical-layout-center {
-		> .cui-form-table {
-			> tr:last-child {
-				border-style: none;
-			}
-		}
-	}
-
 }
 
 .cui-form-td {
-	&.cui-form-left,
-	&.cui-form-right {
-		width: 100px;
-	}
-	&.cui-form-center {
-		width: 200px;
+	&.cui-form-left {
+		width: 120px;
 	}
 }
 
-.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
-	> tr {
-		> .cui-form-td.cui-form-center {
+// is a form is inside a form (vertical only)
+// the tr containing the inner form is marked with
+// .cui-form-tr-content-is-form-vertical
+
+.cui-form-tr-content-is-form-vertical {
+	flex-direction: column;
+	> .cui-form-left {
+		font-weight: bold;
+	}
+	> .cui-form-center {
+		margin-left: 10px;
+	}
+	.cui-form-table[cui-form-depth="1"] > .cui-tr > .cui-form-left {
+		width: 110px;
+	}
+	.cui-form-table[cui-form-depth="2"] > .cui-tr > .cui-form-left {
+		width: 100px;
+	}
+}
+
+.cui-form-table-horizontal {
+	.cui-form-tr-horizontal {
+		flex-wrap: wrap;
+	}
+	.cui-form-td {
+		width: 80px;
+	}
+}
+
+.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table-vertical {
+	> .cui-tr {
+		> .cui-form-left[colspan="2"],
+		> .cui-form-center {
 			flex: 1 1 auto;
-			width: 200px;
+			min-width: 0;
 		}
 	}
 }

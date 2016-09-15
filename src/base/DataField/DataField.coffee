@@ -15,7 +15,6 @@ class CUI.DataField extends CUI.DOM
 		@initTemplate()
 
 		@addClass("cui-data-field")
-		@updateDepthAttribute("cui-data-field-form-depth", 0)
 
 		Events.listen
 			type: "data-changed"
@@ -157,13 +156,9 @@ class CUI.DataField extends CUI.DOM
 	setFormDepth: ->
 		# update depth
 		path = @getFormPath()
-		@updateDepthAttribute("cui-data-field-form-depth", path.length)
-		@DOM.attr("cui-data-field-form-root", path[0].getUniqueId())
-		# update our children
+		CUI.DOM.setAttribute(@DOM, "cui-form-depth", path.length)
+		@callOnOthers("setFormDepth")
 		@
-
-	updateDepthAttribute: (name, depth) ->
-		@DOM.attr(name, depth)
 
 	getFormPath: (include_self=false, path=[], call=0) ->
 		assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")

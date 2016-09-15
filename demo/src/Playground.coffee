@@ -254,7 +254,107 @@ class Playground extends Demo
 		)
 		dt.table
 
-	getFormTab: ->
+	getFormsTab: ->
+		form = new Form
+			header: [
+				label: "Label"
+			,
+				label: "Content"
+			]
+			fields: [
+				form:
+					label: "Output"
+				type: Output
+				text: "Output"
+			,
+				form:
+					label: "Input"
+				type: Input
+				placeholder: "Placeholder"
+			,
+				form:
+					label: "Textarea (Wide)"
+					use_field_as_label: true
+				type: Input
+				textarea: true
+				placeholder: "Long Output"
+			,
+				form:
+					label: "Options (Horizontal)"
+				type: CUI.Options
+				horizontal: true
+				options: @getNumberOptions((v) -> text: ""+v, value: v)
+			,
+				form:
+					label: "Options (Horizontal 4)"
+				type: CUI.Options
+				horizontal: 4
+				options: @getNumberOptions((v) -> text: ""+v, value: v)
+			,
+				form:
+					label: "Form (Horizontal)"
+				type: Form
+				horizontal: true
+				fields: =>
+					fields = []
+					for i in [0..10]
+						fields.push
+							type: Checkbox
+							text: "H "+i
+					fields
+			,
+				form:
+					label: "Form (Horizontal 4)"
+				type: Form
+				horizontal: 4
+				fields: =>
+					fields = []
+					for i in [0..10]
+						fields.push
+							type: Checkbox
+							text: "H4 - "+i
+					fields
+			,
+				form:
+					label: "Inline Form"
+				type: Form
+				fields: =>
+					fields = []
+					for i in [0..10]
+						if i % 4 == 0
+							fields.push
+								type: Form
+								fields:
+									({
+										type: Input
+										form:
+											label: "Inner Input "+i
+									} for i in [0..5])
+						else if i % 7 == 0
+							fields.push
+								type: Form
+								fields:
+									({
+										type: Input
+									} for i in [0..5])
+						else
+							fields.push
+								type: Input
+								form:
+									label: "Input "+i
+					fields
+			]
+
+		form.start()
+
+	getNumberOptions: (func) ->
+		opts = []
+		for i in [100..120]
+			opts.push(func(i))
+		opts
+
+
+	getInputsTab: ->
 		fields = []
 
 		multi_input_control = new MultiInputControl
@@ -554,8 +654,11 @@ class Playground extends Demo
 				text: "Controls"
 				content: @getControlsTab()
 			,
-				text: "Form"
-				content: @getFormTab()
+				text: "Inputs"
+				content: @getInputsTab()
+			,
+				text: "Forms"
+				content: @getFormsTab()
 			,
 				text: "Layer"
 				content: @getLayerTab()

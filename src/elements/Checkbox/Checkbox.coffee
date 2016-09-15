@@ -98,12 +98,12 @@ class Checkbox extends DataFieldInput
 			btn_opts.text = ""
 
 		btn_opts.disabled = @isDisabled()
-
 		btn_opts.center = @_content
-
-		btn_opts.class = ((@_class or "")+" "+@getCheckboxClass()).trim()
+		btn_opts.class = @_class
 
 		@__checkbox = new CUI.defaults.class.Button(btn_opts)
+
+		@__checkbox.addClass(@getCheckboxClass())
 
 		if CUI.__ng__
 			@__checkbox.removeClass("cui-button-button")
