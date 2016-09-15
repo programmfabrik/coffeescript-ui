@@ -162,7 +162,7 @@ class Form extends DataField
 				continue
 			@table[0].classList.add(cls+"-table")
 
-		td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center", "right"])
+		td_classes = ("cui-padding cui-form-td cui-form-#{k}" for k in ["left", "center"]) # , "right"])
 
 		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
@@ -177,6 +177,8 @@ class Form extends DataField
 				v.DOM
 			else if $.isFunction(v)
 				getAppend(v(info))
+			else if isEmpty(v)
+				null
 			else
 				v
 
@@ -207,38 +209,50 @@ class Form extends DataField
 			right = fopts.right
 
 			if right
-				console.error("Form.renderTable: form.right is deprecated. Remove this from your code.")
+				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx)
+
+			append_content = []
+			append_left = null
+			use_field_as_label = false
 
 			for app, idx in [fopts, _field, right]
 				attrs = {}
 				if skip_next
 					skip_next = false
 					continue
+
 				if idx == 0
 					if app.label
-						content = getAppend(app.label, _field)
+						append_left = getAppend(app.label, _field)
 					else if app.use_field_as_label
+						use_field_as_label = true
 						assert(not @__horizontal, "Form.render", "form.use_field_as_label not supported for horizontal Forms", opts: @opts)
-						content = getAppend(_field, _field)
-						attrs.colspan = 2
+						append_left = getAppend(_field, _field)
 						skip_next = true
 					else
-						content = null
+						append_left = null
 				else
 					content = getAppend(app, _field)
+					if content != null
+						append_content.push(content)
 
-				if idx == 0 and content
-					has_left = true
+			if append_left != null
+				has_left = true
 
-				if idx == 2 and content
-					has_right = true
-
-				tds.push($td(td_classes[idx], attrs).append(content))
+			if use_field_as_label
+				td = $td(td_classes[0], colspan: 2)
+				td.append(append_left)
+				for a_c in append_content
+					td.append(a_c)
+				tds.push(td)
+			else
+				tds.push($td(td_classes[0]).append(append_left))
+				tds.push($td(td_classes[1]).append(append_content))
 
 			if @__horizontal
 				tr_labels.append(tds[0])
 				tr_fields.append(tds[1])
-				tr_rights.append(tds[2])
+				# tr_rights.append(tds[2])
 			else
 				tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
 
@@ -252,10 +266,10 @@ class Form extends DataField
 			else
 				@table.addClass("cui-form-table-has-not-left-column")
 
-			if has_right
-				@table.addClass("cui-form-table-has-right-column")
-			else
-				@table.addClass("cui-form-table-has-not-right-column")
+			# if has_right
+			# 	@table.addClass("cui-form-table-has-right-column")
+			# else
+			# 	@table.addClass("cui-form-table-has-not-right-column")
 
 
 		Events.listen
