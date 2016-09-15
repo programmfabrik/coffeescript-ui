@@ -3,12 +3,19 @@
 $padding: 10px;
 $compensating-padding: 7px;
 $gap: 12px;
+$background: white;
 
+$button-text-color: hsl(205,10%,34%);
 $button-border-radius: 4px;
-$menu-border-radius: 4px;
 
-$highlight-color: hsl(217,97%,57%);
+$drag-handle-color: hsl(0,0%,50%);
+
+$highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
+
+// Table Colors
+$zebra-color: hsl(216,33%,97%);
+$table-border-color: hsl(205,8%,90%);
 
 $pane-header-height: 30px;
 
@@ -20,6 +27,14 @@ $pane-header-height: 30px;
 	}
 }
 
+@mixin margin-top($factor: 1) {
+	margin-top: $padding * $factor;
+	
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
 @mixin padding($factor: 1) {
 	padding: $padding * $factor;
 }
@@ -27,19 +42,6 @@ $pane-header-height: 30px;
 @mixin padding-y($factor: 1) {
 	padding-top: $padding * $factor;
 	padding-bottom: $padding * $factor;
-}
-
-@mixin button-reset() {
-	&,
-	&:active,
-	&.cui-active,
-	&:active.cui-disabled {
-		background: none;
-		border: none;
-		box-shadow: none;
-		color: inherit;
-		border-radius: 0;
-	}
 }
 
 // Flex for selected TABLE
@@ -65,6 +67,20 @@ $pane-header-height: 30px;
 	}
 }
 
+@mixin focus() {
+	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
+	border-color: $highlight-color;
+}
+
+@mixin button-reset() {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  border-radius: 0;
+  height: auto;
+  line-height: inherit;
+}
 
 // reset
 
@@ -105,7 +121,7 @@ body {
 	font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
 	font-size: 13px;
 	line-height: normal;
-	background: hsl(0,0%,93%);
+	background: $background;
 	display: flex;
 	width: 100%;
   height: 100%;
@@ -215,30 +231,29 @@ table.cui-form-table {
 
 // Layout Absolute Horizontal
 .cui-horizontal-layout{
-    &.cui-absolute {
-        position: relative;
+  &.cui-absolute {
+    position: relative;
 
-        width: 100%;
-        height: 100%;
+    width: 100%;
+    height: 100%;
 
-        & > div {
+    & > div {
 			position: absolute !important; // overwrite "relative" from above
-            top: 0;
-            bottom: 0;
-			// height: 100%;
-        }
-        & > .cui-horizontal-layout-left {
-            left: 0;
-        }
-        & > .cui-horizontal-layout-center {
-            left: 0;  // overwritten by Layout.coffee
-            right: 0;  // overwritten by Layout.coffee
-        }
-
-        & > .cui-horizontal-layout-right {
-            right: 0;
-        }
+      top: 0;
+      bottom: 0;
     }
+    & > .cui-horizontal-layout-left {
+      left: 0;
+    }
+    & > .cui-horizontal-layout-center {
+      left: 0;  // overwritten by Layout.coffee
+      right: 0;  // overwritten by Layout.coffee
+    }
+
+    & > .cui-horizontal-layout-right {
+      right: 0;
+    }
+  }
 }
 
 
@@ -298,6 +313,7 @@ table.cui-form-table {
 	overflow: hidden;
 	position: relative;
 	z-index: 1;
+	
 	&:after {
 		content: "";
 		position: absolute;
@@ -305,7 +321,7 @@ table.cui-form-table {
 		height: 100%;
 		top: 0;
 		width: 1px;
-		background: linear-gradient(hsl(0,0%,83%), hsl(0,0%,87%));
+		background: hsl(210,11%,93%);
 	}
 	&:not(.cui-flex-handle-closed) {
 		cursor: ew-resize;
@@ -407,7 +423,26 @@ table.cui-form-table {
 
 // Toolbar
 .cui-toolbar {
-	padding: $padding;
+	min-height: 33px;
+
+	.cui-label {
+		font-size: 17px;
+		height: 100%;
+    align-items: center;
+	}
+
+	.cui-button-button { // dont target buttongroup buttons
+		border: none;
+		padding: 0 $padding;
+		height: 100%;
+		background: none;
+		border-radius: 0;
+		
+		&.cui-active {
+			color: $button-text-color;
+			background: hsl(205,40%,93%);
+		}
+	}
 	
 	> div {
 		&.cui-horizontal-layout-left,
@@ -438,31 +473,47 @@ table.cui-form-table {
 
 // Pane
 .cui-pane-header {
+	// bottom line as box-shadow instead of border
+	// so that the tab border can overlap it
+	box-shadow: 0 -1px hsl(210,11%,93%) inset;
+	background: hsl(205,29%,97%);
+
 	.cui-buttonbar {
 		margin-bottom: 0;
 	}
+
+	.cui-horizontal-layout-left {
+		.cui-label:first-child {
+			padding-left: $padding;
+		}
+	}
+
+	.cui-horizontal-layout-right {
+		.cui-label:last-child {
+			padding-right: $padding;
+		}
+	}
+}
+
+.cui-demo-pane-right {
+	background: hsl(205,17%,99%);
 }
 
 .cui-data-table {
 	.cui-pane-footer {
-		background: hsl(0,0%,98%);
 		padding: 0;
-		border-top: 1px solid hsl(0,0%,71%);
+		border-top: 1px solid hsl(205,8%,77%);
 		
-		.cui-button {
+		.cui-button-button {
 			@include button-reset;
-			padding: 0 2px;
-			height: 19px;
-			border-right: 1px solid hsl(0,0%,71%) !important;
-			
-			&:before {
-				display: none;
-			}
-			
-			&:active {
-				color: inherit;
-				background: hsl(0,0%,75%);
-			}
+			color: hsl(205,11%,29%);
+		  height: 20px;
+		  padding: 0 $padding/2;
+		  border-right: 1px solid hsl(205,8%,77%) !important;
+		  
+		  &:before {
+		    display: none;
+		  }
 		}
 
 		.cui-buttonbar .cui-button {
@@ -485,141 +536,100 @@ i.cui-spin-stepped {
 }
 
 // Button / Select
-
-@mixin button-style() {
-	color: inherit;
-	background: white;
-	border: 1px solid hsl(0,0%,73%);
-	border-bottom-color: hsl(0,0%,65%);
-	border-top-color: hsl(0,0%,76%);
-	box-shadow: 0 1px rgba(0,0,0,.05);
-}
-
-@mixin button-active-style() {
-	color: white;
-	background: linear-gradient(hsl(240,3%,70%), hsl(240,2%,58%));
-	border-color: hsl(240,3%,59%);
-	border-top-color: hsl(240,3%,66%);
-	border-bottom-color: hsl(240,2%,51%);
-}
-
-@mixin button-simple-active() {
-	color: inherit;
-	background: hsl(106,0%,94%);
-	border-color: hsl(0,0%,73%);
-	border-bottom-color: hsl(0,0%,65%);
-	border-top-color: hsl(0,0%,76%);
-}
-
-.cui-button {
+.cui-button-button,
+.cui-button-select {
 	cursor: pointer;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
 	flex-direction: row;
 	flex: 0 0 auto;
 	align-self: flex-start;
-	height: 21px;
-	line-height: 19px;
-	@include button-style();
+	align-items: center;
+	justify-content: center;
+  padding: 0 16px;
+  height: 30px;
+  line-height: 29px;
+  color: $button-text-color;
+  background: hsl(0,0%,100%);
+  border: 1px solid hsl(205,10%,75%);
+  border-radius: $button-border-radius;
 	
-	&:active {
-		color: white;
-		background: linear-gradient(hsl(238,2%,58%), hsl(238,3%,35%));
-		border-color: hsl(238,5%,34%);
-		border-bottom-color: hsl(238,5%,26%);
-		border-top-color: hsl(238,5%,37%);
+	&:hover {
+	  border-color: hsl(205,100%,45%);
+	  color: hsl(205,100%,45%);
+	}
 		
-		&.cui-disabled {
-			@include button-style();
-		}
+	&:active {
+	  border-color: hsl(205,100%,35%);
+	  color: hsl(205,100%,35%);
 	}
 
 	&.cui-disabled {
-		box-shadow: none;
-		opacity: 0.5;
-		cursor: default;
+	  opacity: 0.5;
+	  cursor: default;
+	  color: $button-text-color;
+	  border-color: hsl(205,10%,75%);
+	  background: none;
 	}
 
-	&.cui-active,
-	&.cui-active.cui-disabled {
-		@include button-active-style();
+	&.cui-button-appearance-important[role],
+	&.cui-button--primary,
+	&.cui-active {
+	  color: white;
+	  background: $highlight-color;
+	  border-color: $highlight-color;
 	}
 
 	&.cui-button-appearance-flat {
-		&,
-		&:active,
-		&.cui-active {
-			color: unset;
-			background: none;
-			border: none;
-			box-shadow: none;
-		}
-
-		.cui-button-left,
-		.cui-button-right {
-			color: hsl(0,0%,30%);
-		}
+		align-self: auto;
+	  &,
+	  &:hover,
+	  &.cui-active {
+	    @include button-reset;
+	    color: $highlight-color;
+	  }
 	}
 
-	// add padding around the whole button
-	border-radius: $button-border-radius;
+	&:focus {
+		outline: none;
+		@include focus;
+	}
 }
 
-.cui-button-size-mini {
-	font-size: 12px;
+.cui-button-select {
+	padding: 0 4px 0 8px;
+
+	.cui-button-center {
+		padding-right: 6px;
+	}
 }
 
-.cui-button-left {
+.cui-button-left,
+.cui-button-center,
+.cui-button-right {
+	text-align: center;
+	flex: 0 0 auto;
+	justify-content: center;
+	padding: 0 3px;
+	
 	&:empty {
 		display: none;
 	}
 }
 
-.cui-button-left,
-.cui-button-right {
-	text-align: center;
-	flex: 0 0 auto;
-	justify-content: center;
+.cui-button-size-mini {
+	font-size: 12px;
+  height: 26px;
 }
 
-.cui-button-left {
-	padding-left: 10px;
-	padding-right: 5px;
-
-	&:empty + .cui-button-center {
-		padding-left: 12px;
-	}
+.cui-button-size-big {
+	font-size: 15px;
+	height: 37px;
 }
 
-.cui-button-center {
-	flex: 1 1 auto;
-	
-	&:first-child {
-		padding-left: 12px;
-	}
-
-	&:last-child {
-		padding-right: 12px;
-	}
-	
-	&:only-child {
-		padding-left: 12px;
-		padding-right: 12px;
-	}
-
-	&:empty {
-		padding: 0;
-		width: 5px;
-	}
-}
-
-.cui-button-right {
-	padding: 0 5px;
-	
-	&:empty {
-		padding: 0;
-		width: 9px;
-	}
+.cui-button-size-bigger {
+	font-size: 18px;
+	height: 43px;
 }
 
 .cui-button-select {
@@ -633,50 +643,24 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-
-.cui-button-appearance-link[role] {
-	background-color: transparent;
-	border-style: none;
-}
-
-.cui-button-appearance-important[role] {
-	background-color: #ff8800;
-	border: 1px solid red;
-}
-
-// Href Button e.g. Link
+.cui-button-appearance-link[role],
 .cui-button-href {
+	@include button-reset;
 	color: $highlight-color;
 	display: inline-flex;
 	flex-direction: row;
 }
 
-.tab-header-button {
-	&.cui-active {		
-		& + .tab-header-button:before,
-		&:before {
-			display: none;
-		}
-	}
-}
-
 
 // Buttonbar
 .cui-buttonbar-group {
-	> .cui-button {
+	> .cui-input {
+		margin-left: -1px;	
+	}
+
+	.cui-button {
 		position: relative;
-		
-		&:active:not(.cui-active) {
-			@include button-simple-active;
-		}
-			
-		&:not(:last-child) {
-			border-right-width: 0;
-		}
-		
-		&:not(:first-child) {
-			border-left-width: 0;
-		}
+		margin-left: -1px;
 
 		&:first-child {
 			border-top-right-radius: 0;
@@ -696,14 +680,13 @@ a[role="button"].cui-button-appearance-link {
 			border-radius: 0;
 		}
 
-		&:before {
-			content: "";
-			position: absolute;
-			left: 0;
-			top: 0;
-			height: 100%;
-			background: rgba(0,0,0,.1);
-			width: 1px;
+		&:only-child {
+			border-radius: $button-border-radius;
+		}
+
+		&:hover,
+		&.cui-active {
+			z-index: 1;
 		}
 	}
 
@@ -717,15 +700,29 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
-	padding: 0 4px;
+	height: 100%;
+	justify-content: center;
 }
 
 .cui-button-checkbox {
 	flex-direction: row;
+	cursor: pointer;
 	
-	@include button-reset;
+	&.cui-disabled {
+		opacity: 0.5;
+		cursor: default;
+	}
+
+	&:focus {
+		outline: none;
+		
+		.cui-button-left span,
+		.cui-button-left i {
+			@include focus;
+		}
+	}
 	
-	&.cui-active {
+	&.cui-active {		
 		.cui-button-left i {
 			position: relative;
 			background: hsl(240,2%,61%);
@@ -762,8 +759,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 	
 	.cui-button-left {
-		padding-left: 0;
-		padding-right: 4px;
+		padding: 0 1px 0 0;
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -817,20 +813,13 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel-header {
-	background-color: #e6e6e6;
+	padding: $padding $padding $padding/2;
 }
 
 .cui-panel-body {
-	background-color: #f3f3f3;
+	padding: $padding/2 $padding $padding;
 }
 
-.cui-button[role="button"].cui-panel-header-button {
-	border: none;
-	background-color: transparent;
-	.cui-button-left {
-		width: 15px;
-	}
-}
 .cui-panel-closed > .cui-panel-body {
 	display: none;
 }
@@ -838,7 +827,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Label
 .cui-label {
-	line-height: 20px;
 	display: inline-flex;
 	flex-direction: row;
 	flex: 0 0 auto;
@@ -890,8 +878,16 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-layout-cell > .cui-label {
+.cui-vertical-layout-center.cui-layout-cell > .cui-label {
 	padding: 0 $padding;
+	
+	&:first-child {
+		padding-top: $compensating-padding;
+	}
+
+	&:last-child {
+		padding-bottom: $compensating-padding;
+	}
 }
 
 // Label: Markdown
@@ -900,7 +896,7 @@ a[role="button"].cui-button-appearance-link {
 	
 	h1, h2, h3, h4, h5, h6 {
 	  font-weight: normal;
-	  margin: 0;
+	  margin: 0 0 $padding;
 	}
 
 	h1 {
@@ -964,7 +960,7 @@ a[role="button"].cui-button-appearance-link {
 // Label: Multiline
 .cui-label-multiline {
 	align-self: stretch;
-	@includ margin();
+	@include margin;
 
 	&:not(.cui-label-markdown) {
 		white-space: pre-wrap;
@@ -976,7 +972,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-label-content {
-		flex: 0 1 auto;
+		flex: 1 1 auto;
 	}
 
 	&.cui-label-manage-overflow {
@@ -1016,17 +1012,16 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar {
 	flex-direction: row;
-	@include margin();
+	align-items: center;
+	@include margin;
 	
 	> *:not(:last-child) {
 		margin-right: $gap;
 	}
-}
 
-// hacky for demo-tabs-menu
-.cui-demo-pane-center > * > .cui-vertical-layout-top.cui-layout-cell {
-	margin-bottom: -20px;
-	z-index: 1;
+	.cui-label-content {
+		align-self: center; // Date-Time picker month label in footer
+	}
 }
 
 // Buttonbar & Button
@@ -1051,6 +1046,7 @@ a[role="button"].cui-button-appearance-link {
 		height: 20px;
 		line-height: 20px;
 		white-space: initial;
+		align-self: flex-start;
 	}
 }
 
@@ -1068,65 +1064,44 @@ a[role="button"].cui-button-appearance-link {
 	// cui-input-has-valid-hint
 	// cui-input-has-input-hin:
 	//
-	position: relative;
-		
-	&:after { // outline
-		content: "";
-		position: absolute;
-		left: -3px;
-		top: -3px;
-		right: -3px;
-		bottom: -3px;
-		pointer-events: none;
-		border: 4px solid rgba(0,0,0,.15);
-		border-radius: 3px;
-		transform: scale(1.2);
-		opacity: 0;
-		transition: none;
-		z-index: 1;
-	}
 
 	&.cui-input-has-check-input {
-		&.cui-input-invalid.cui-input-has-user-input {
+		&.cui-input-invalid:not(.cui-input-has-user-input) {
 			input {
-				border-color: red;
-				background: rgba(255, 131, 122, 0.28);
+				border-color: hsl(0,90%,60%);
+				background: hsla(0,90%,74%, 0.15);
 			}
 		}
-
-		&.cui-input-has-valid-hint.cui-input-has-user-input:not(.cui-input-invalid) {
-			input {
-				border-color: green;
-				background: rgba(131, 255, 122, 0.28);
-			}
-		}
-	}
-
-	&.cui-input-has-no-user-input.cui-input-required {
-		input {
-			border-color: rgb(255, 117, 215);
-			background: rgba(255, 117, 215, 0.28);
-		}
-	}
-
-	input {
-		height: 20px;
 	}
 
 	input,
 	textarea {
+		padding: 0 7px;
+		line-height: 28px;
 		outline: none;
 	}
 
-	&.cui-has-focus:after {
-		opacity: 1;
-		transform: none;
-		transition: 200ms ease-out;
+	textarea {
+		padding-top: $padding/2;
+		padding-bottom: $padding/2;
+		line-height: 18px;
+	}
+
+	&.cui-has-focus {
+		input,
+		textarea {
+			@include focus;
+		}
 	}
 }
 
+.cui-input-valid-hint {
+	font-size: 11px;
+	margin-top: $padding/4;
+}
+
 ::-ms-clear {
-    display: none;
+   display: none;
 }
 
 .cui-input-shadow {
@@ -1145,19 +1120,21 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-layer {
+	min-width: 200px;
 	position: absolute;
 	flex-direction: column;
 	overflow: auto;
 	margin: 10px;
 	outline: none;
-	background: hsl(0,0%,93%);
-	border-radius: 6px;
+	background: hsl(0,0%,98%);
+	border-radius: 5px;
 	box-shadow:
-		0 0 0 1px rgba(0,0,0,.06),
-		0 1px 10px rgba(0,0,0,.43);
-		
-	> .cui-layout > .cui-vertical-layout-center {
-		padding: $compensating-padding $padding;
+		0 0 0 1px hsla(0,0%,0%,0.1),
+		0 7px 14px hsla(0,0%,0%,0.1);
+	
+	.cui-simple-pane > .cui-vertical-layout-center {
+		padding: $padding;
+		overflow: auto;
 		
 		> .cui-multiline-label {
 			padding: $compensating-padding $padding;
@@ -1169,30 +1146,43 @@ a[role="button"].cui-button-appearance-link {
 	}
 		
 	.cui-pane-footer {
-		padding: $padding $padding*2 $padding*2;
+		.cui-button-button {
+			flex: 1;
+			border-top: 1px solid hsl(210,11%,93%);
+			border-left: 1px solid hsl(210,11%,93%);
+			margin: 0;
+			
+			&:active {
+				
+			}
+		}
+
+		.cui-buttonbar {
+			flex: 1;
+		}
+
+		.cui-horizontal-layout-left,
+		.cui-horizontal-layout-center,
+		.cui-horizontal-layout-right {
+			flex: 1;
+			
+			&:empty {
+				display: none;
+			}
+		}
+
+		.cui-horizontal-layout-left {
+			.cui-button:first-child {
+				border-left-width: 0;
+			}
+		}
 	}
 }
 
 .cui-confirmation-dialog,
 .cui-layer-root-modal {
 	.cui-pane-header {
-		background: linear-gradient(hsl(0,0%,93%),hsl(0,0%,84%));
-		border-bottom: 1px solid hsl(300,1%,70%);
-		box-shadow: 0 1px hsl(300,5%,96%) inset;
-		border-radius: 6px 6px 0 0;
-		padding: 0;
-		height: $pane-header-height;
-		
-		.cui-label {
-			padding-left: $padding*2;
-			line-height: $pane-header-height;
-		}
-		
-		.cui-button {
-			align-self: stretch;
-			height: auto;
-			padding: 0 8px;
-		}
+		display: none;
 	}
 }
 
@@ -1212,8 +1202,8 @@ a[role="button"].cui-button-appearance-link {
     height: 18px;
 		background: white;
 		box-shadow: 
-			0 0 0 1px rgba(0,0,0,.06),
-			0 1px 10px rgba(0,0,0,.43);
+			0 0 0 1px hsla(0,0%,0%,0.1),
+			3px 3px 14px hsla(0,0%,0%,0.1);
 		transform: rotate(45deg);
 	}
 }
@@ -1225,7 +1215,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-pointer--e,
 .cui-layer-pointer--w {
 	width: 16px;
-	height: 33px;
+	height: 37px;
 }
 
 .cui-layer-pointer--e:after {
@@ -1288,14 +1278,14 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tooltip {
-	background: hsl(0,0%,94%);
 	max-width: 260px;
 	max-height: 100px;
 	overflow: auto;
+	background: hsl(0,0%,98%);
 	border-radius: 2px;
 	box-shadow:
-		0 0 0 1px rgba(0,0,0,.06),
-		0 1px 10px rgba(0,0,0,.43);
+		0 0 0 1px hsla(0,0%,0%,0.1),
+		0 7px 14px hsla(0,0%,0%,0.1);
 	cursor: default;
 	
 	.cui-label {
@@ -1310,14 +1300,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-
-// ConfirmationDialog
-.cui-confirmation-dialog .cui-layer {
-	width: 347px;
-}
-
-// Toast
-.cui-layer-root-toast .cui-layer {
+// Toaster
+.cui-layer-root-toaster .cui-layer {
 	color: hsl(0,0%,33%);
 	background: hsl(0,0%,94%);
 	font-size: 14px;
@@ -1334,21 +1318,16 @@ a[role="button"].cui-button-appearance-link {
 
 // Menu
 .cui-menu {
-	background: hsl(0,0%,96%);
-	box-shadow:
-		0 0 0 1px rgba(0,0,0,.06),
-		0 1px 10px rgba(0,0,0,.43);
-	border-radius: 4px;
-	padding: $menu-border-radius 0;
+  background: white;
+  box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  border-radius: 4px;
+  border: 1px solid hsl(0,0%,87%);
+  padding: 4px 0;
+	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
 	
 	.cui-item-list {
 		font-size: inherit;
 	}
-}
-
-.cui-menu-item {
-	height: 20px;
-	line-height: 20px;
 }
 
 .cui-menu-divider {
@@ -1357,36 +1336,41 @@ a[role="button"].cui-button-appearance-link {
 
 // ItemList
 .cui-item-list {
-	font-size: 11px;
-
 	.cui-label {
-		cursor: default;
-		margin: 1px $padding;
-		font-weight: bold;
+	  cursor: default;
+	  margin: 6px $padding;
+	  color: hsl(205,8%,76%);
 	}
 
-	.cui-button {
-		@include button-reset;
-		
-	  line-height: 19px;
+	.cui-button-button {
 	  padding: 0 $padding;
+		border: none;
+		border-radius: 0;
+		height: 28px;
+		line-height: 28px;
+	  color: hsl(205,12%,27%);
+	  justify-content: flex-start;
 
-		&:hover:not(.cui-disabled),
-		&:active,
-		&.cui-active {
-			color: white;
-			background: hsl(0,0%,68%);
-		}
+	  &:hover:not(.cui-disabled),
+	  &:active {
+	  	color: hsl(205,12%,27%);
+			background: hsl(205,17%,98%);
+	  }
 
-		.cui-button-center {
-			padding: 0;
-		}
+	  &.cui-active {
+	  	color: $on-highlight-color;
+	  	background: $highlight-color;
+	  }
+
+	  .cui-button-center {
+	    padding: 0;
+	  }
 	}	
 }
 
 .cui-item-list-divider {
-	height: 2px;
-	background: hsl(0,0%,90%);
+	height: 1px;
+	background: hsl(210,11%,93%);
 }
 
 .cui-tmpl-item-list-body {
@@ -1404,19 +1388,6 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-item-list-has-button-left {
 		// this button always has a left side
 		.cui-file-upload-button {
-			> .cui-button-left {
-				display: flex;
-				width: 20px;
-			}
-			> .cui-button-center:not(:empty) {
-				padding-left: 3px;
-			}
-		}
-		> .cui-tmpl-button-center,
-		> .cui-tmpl-button-center-right {
-			.cui-button-center {
-				padding-left: 23px;
-			}
 		}
 	}
 
@@ -1442,13 +1413,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-root-confirm,
 .cui-layer-root-prompt {
 	.cui-layer-backdrop {
-		background: radial-gradient(rgba(0,0,0,.2), rgba(0,0,0,.3));
+		background: radial-gradient(hsla(205,20%,20%,.5), hsla(205,20%,20%,.6));
 	}
-}
-
-// Modal
-.cui-layer-root-modal .cui-layer {
-	width: 417px;
 }
 
 // WaitBlock
@@ -1499,13 +1465,11 @@ a[role="button"].cui-button-appearance-link {
 		background: yellow;
 		transition: width 0.3s ease, left 0.3s ease;
 	}
-	> .cui-vertical-layout-top {
-		> .cui-pane-header {
-			.cui-horizontal-layout-center {
-				overflow: hidden;
-			}
-		}
-	}
+	// > .cui-vertical-layout-top{
+	// 	> .cui-pane-header {
+	// 		background: hsl(205,29%,97%);
+	// 	}
+	// }
 	> .cui-vertical-layout-center {
 		> .cui-tmpl-tabs-bodies {
 			flex: 1 1 auto;
@@ -1514,11 +1478,7 @@ a[role="button"].cui-button-appearance-link {
 			> .cui-tmpl-tab-body {
 				// disable the javascript overwrite here
 				margin-left: 0 !important;
-				// transition: margin-left 0.5s ease;
-				background: hsl(0,0%,89%);
-				border: 1px solid hsl(106,0%,87%);
-				border-top-color: hsl(106,0%,83%);
-				border-radius: 3px;
+  			border-bottom: 1px solid hsl(210,11%,93%);
 				flex: 1 1 auto;
 				overflow: auto;
 				&.cui-tab-hidden {
@@ -1529,13 +1489,37 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.tab-header-button {
+	border: none;
+	margin: 0;
+	background: none;
+	color: hsl(205,10%,53%);
+	height: 100%;
+	min-width: 80px;
+	min-height: 36px;
+	padding: 0 $padding/2;
+	border-radius: 0;
+	font-size: inherit;
+	
+	&:hover {
+		color: hsl(205,10%,53%);
+	}
+	
+	&.cui-active {
+		font-weight: bold;
+		background: none;
+		color: hsl(205,100%,40%);
+	}
+}
 
+$table-data-height: 26px;
+$table-data-padding: 4px;
 
 // ListView
 .cui-list-view {
 	background: white;
-	font-size: 11px;
-	border: 1px solid hsl(0,0%,77%);
+	font-size: 12px;
+	border: 1px solid $table-border-color;
 	
 	[cui-lv-quadrant="0"],
 	[cui-lv-quadrant="1"] {
@@ -1544,11 +1528,12 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label {
 		padding: 0 $padding;
+		line-height: $table-data-height - $table-data-padding*2;
 	}
 }
 
 .cui-list-view-grid-inner-top {
-	border-bottom: 1px solid hsl(0,0%,84%);
+	border-bottom: 1px solid $table-border-color;
 }
 
 
@@ -1564,7 +1549,7 @@ a[role="button"].cui-button-appearance-link {
 			top: 2px;
 			bottom: 2px;
 			width: 1px;
-			background: hsl(0,0%,90%);
+			background: lighten($table-border-color, 10%);
 		}
 	}
 }
@@ -1635,7 +1620,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
 	.cui-lv-tr-outer:nth-child(even) {
-		background: hsl(0,0%,96%);
+		background: $zebra-color;
 	}
 }
 
@@ -1651,6 +1636,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: default;
 	flex-direction: row;
 	flex: 0 0 auto;
+	min-width: 0;
 	
 	&.cui-list-view-row-selectable.cui-selected {
 		background: $highlight-color !important;
@@ -1671,8 +1657,13 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-list-view-row-move-handle-column {
+	&:after {
+		display: none;
+	}
+
 	&.cui-lv-td {
-		width: 10px;
+		width: 10px + $table-data-padding*2+4;
+		padding: 0 2px 0 $table-data-padding+2;
 		flex-direction: row;
 	}
 }
@@ -1685,6 +1676,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-lv-td {
+	padding: $table-data-padding;
+	
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
 		> .cui-tmpl-label-rotate-90 {
@@ -1696,18 +1689,12 @@ a[role="button"].cui-button-appearance-link {
 
 		}
 	}
-	&:not(.cui-lv-td-fill) {
-		padding: 1px;
-	}
 	&.cui-lv-td-fill {
 		padding: 2px;
+		
 		&:not(:last-child) {
 			// border-right-style: dotted;
 		}
-	}
-
-	&[colspan] {
-		background-color: #e7ffff;
 	}
 
 	// border-right: solid 1px black;
@@ -1718,7 +1705,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 
 	&:not(.cui-lv-td-fill) {
-		min-height: 22px;
+		min-height: $table-data-height;
 	}
 
 	&.cui-lv-td-max {
@@ -1729,8 +1716,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	flex-direction: row;
-	background: linear-gradient(hsl(0,0%,96%) 50%, white 50%);
-	background-size: 100% 36px;
+	background: linear-gradient($zebra-color 50%, white 50%);
+	background-size: 100% $table-data-height*2;
 
 	> .cui-lv-tr {
 		border-style: none;
@@ -1757,13 +1744,13 @@ a[role="button"].cui-button-appearance-link {
 		width: 1px;
 		margin-left: -1px;
 		height: 100%;
-		background: hsl(0,0%,90%);
+		background: lighten($table-border-color, 10%);
 	}
 }
 
 .cui-list-view-tool-marker {
 	position: absolute;
-	background: hsl(106,0%,96%);
+	background: $zebra-color;
 	opacity: 0.5;
 }
 
@@ -1844,6 +1831,18 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-form-right {
 		width: 100px;
 	}
+	&.cui-form-left {
+		padding-right: $padding;
+		text-align: right;
+		
+		.cui-label {
+			margin-top: $padding/2;
+		}
+
+		.cui-label-content {
+			justify-content: flex-end;
+		}
+	}
 	&.cui-form-center {
 		width: 200px;
 	}
@@ -1885,7 +1884,9 @@ a[role="button"].cui-button-appearance-link {
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
 	.cui-form-td.cui-form-left {
-		width: 10px;
+		width: 12px;
+		padding: 0;
+		margin-right: $padding/2;
 		flex-direction: row;
 	}
 }
@@ -1902,12 +1903,12 @@ a[role="button"].cui-button-appearance-link {
 	width: 100%;
 	align-self: center;
 
-	background: linear-gradient(hsl(0,0%,50%) 1px, transparent 1px);
+	background: linear-gradient($drag-handle-color 1px, transparent 1px);
 	background-size: 100% 3px;
 }
 
 .cui-selected .cui-drag-handle-row {
-	background-image: linear-gradient(white 1px, transparent 1px);
+	background-image: linear-gradient($on-highlight-color 1px, transparent 1px);
 }
 
 // Drag and Drop
@@ -1938,10 +1939,7 @@ a[role="button"].cui-button-appearance-link {
 			border-right-width: 1px;
 			border-top-right-radius: $button-border-radius;
 			border-bottom-right-radius: $button-border-radius;
-			
-			.cui-button-right {
-				padding-right: 6px;
-			}
+			padding-right: 7px;
 		}
 
 		&:not(:first-child) .cui-button {
@@ -1965,45 +1963,46 @@ a[role="button"].cui-button-appearance-link {
 		&:not(:first-child):not(:last-child) .cui-button {
 			border-radius: 0;
 		}
+
+		.cui-button {
+			padding: 0;
+		}
 		
 		.cui-button-center {
-			padding-left: 1px;
 			text-align: right;
-		}
-
-		.cui-button-right {
-			padding: 0 3px;
+			padding-right: 3px;
 		}
 	}
 }
 
 .cui-date-time-input-center {
 	flex: 1 1 auto;
+	
+	&:focus {
+		z-index: 1;
+	}
 }
 
 .cui-date-time-input-right {
 	position: relative;
 	
 	.cui-button {
-		border-left: none;
+		margin-left: -1px;
 		border-radius: 0;
+		padding: 0 $padding/2;
 		
-		&:active {
-			@include button-simple-active;
+		&:focus {
+			z-index: 1;
 		}
 	}
 }
 
 .cui-date-time-month-header {
-	border-bottom: 1px solid hsl(0,0%,75%);
+	border-bottom: 1px solid hsl(205,11%,93%);
 }
 
 .cui-date-time-day {
 	border-radius: $button-border-radius;
-}
-
-.cui-date-time-same-month {
-	cursor: pointer;
 }
 
 .cui-date-time-previous-month,
@@ -2044,20 +2043,18 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-horizontal-layout-center {
 		flex-grow: 0 !important;
 	}
-}
 
-.cui-date-time-header-year {
-	
+	.cui-button {
+		padding: 0 $padding/2;
+	}
 }
-
 
 // DateTimeDate
 
 .cui-date-time-date {
-	@include flex-table();
-	@include margin();
+	@include flex-table;
+	margin: 0 0 $padding !important;
 	flex-grow: 1;
-	font-size: 12px;
 	
 	.cui-tr {
 		padding: 0;
@@ -2070,8 +2067,12 @@ a[role="button"].cui-button-appearance-link {
 		cursor: default;
 		justify-content: center;
 		padding: 0 7px;
-		line-height: 21px;
+		line-height: 25px;
 		margin: 0 1px 1px 0;
+
+		&.cui-date-time-same-month {
+			cursor: pointer;
+		}
 	}
 }
 
@@ -2097,11 +2098,12 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-.cui-date-time-popover {
-	width: 270px;
+.cui-date-time-popover {	
+	.cui-simple-pane > .cui-vertical-layout-center {
+		padding: $padding;
+	}
 
 	.cui-tmpl-date-time {
-		@include padding();
 		flex: 1 1 auto;
 
 		.cui-date-time-header {
@@ -2128,7 +2130,7 @@ a[role="button"].cui-button-appearance-link {
 			flex: 1 1 auto;
 			.cui-number-input {
 				input {
-					width: 40px;
+					width: 43px;
 					text-align: center;
 				}
 			}
@@ -2163,7 +2165,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-multi-input-input {
-	@include margin(0.25);
+	@include margin-top(0.25);
 	position: relative;
 	
 	.cui-input,
@@ -2179,14 +2181,12 @@ a[role="button"].cui-button-appearance-link {
 }
 	
 .cui-multi-input-tag-button {
+	@include button-reset;
 	color: hsl(0,0%,30%);
 	font-size: 10px;
   line-height: 20px;
   cursor: pointer;
-    
-  .cui-button-center {
-  	padding: 0 5px;
-	}
+  padding: 0 3px;
 }
 
 // Drag & Drop
@@ -2360,7 +2360,7 @@ a[role="button"].cui-button-appearance-link {
 		left: 0;
 		right: 0;
 		font-weight: 600;
-		background: hsla(0,0%,100%,.75);
+		background: hsla(0,0%,100%,.94);
 		border-top: none;
 		box-shadow: 0 1px hsla(0,0%,50%,.5);
 		margin-bottom: 1px;
@@ -2370,8 +2370,11 @@ a[role="button"].cui-button-appearance-link {
 // ProgressMeter
 .cui-tmpl-progress-meter {
 	.cui-progress-meter-bar {
-		height: 20px;
+		height: 30px;
 		position: relative;
+		border-radius: $button-border-radius;
+		overflow: hidden;
+		
 		.cui-progress-meter-fill-background,
 		.cui-progress-meter-fill,
 		.cui-progress-meter-text {
@@ -2382,17 +2385,18 @@ a[role="button"].cui-button-appearance-link {
 			bottom: 0;
 		}
 		.cui-progress-meter-fill-background {
-			background-color: #7dc3ff;
+			border-radius: $button-border-radius;
+			background: lighten(desaturate($highlight-color, 85%), 40%);
 		}
 		.cui-progress-meter-fill {
 			display: none;
-			background-color: blue;
+			background: $highlight-color;
 		}
 		.cui-progress-meter-text {
 			display: none;
-			color: #ffffff;
+			color: white;
 			align-items: center;
-			line-height: 20px;
+			line-height: 28px;
 		}
 		.cui-progress-meter-icon {
 			position: absolute;
@@ -2402,13 +2406,14 @@ a[role="button"].cui-button-appearance-link {
 			right: 0;
 			color: white;
 			align-items: center;
+			justify-content: center;
 		}
 
 	}
 	&[state="waiting"] {
 		.cui-progress-meter-fill-background {
 			// reddish
-			background-color: #ff6054;
+			// background-color: #ff6054;
 		}
 	}
 
@@ -2459,6 +2464,19 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
+// Console
+.cui-console {
+	padding: $padding;
+	font-family: monospace;
+	
+	.cui-label-multiline {
+		margin: 0;
+	}
+	
+	.cui-label:not(:last-child) {
+		border-bottom: 1px solid hsl(0,0%,94%);
+	}
+}
 
 
 // CUI technical stuff

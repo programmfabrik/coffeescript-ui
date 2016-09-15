@@ -20,6 +20,9 @@ class Playground extends Demo
 			disabled: true
 			active: true
 			text: "Disabled & Active"
+		,
+			primary: true
+			text: "Primary"
 		])
 
 	getOptions: (opts = {}) ->

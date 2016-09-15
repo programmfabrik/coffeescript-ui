@@ -918,6 +918,7 @@ class DateTime extends Input
 						appearance: if CUI.__ng__ then undefined else "flat"
 						size: if CUI.__ng__ then undefined else "mini"
 						icon: "left"
+						group: if CUI.__ng__ then "year" else null
 						onClick: (ev) =>
 							if data.year-1 < @_min_year
 								return
@@ -932,6 +933,7 @@ class DateTime extends Input
 							placeholder: ""+now_year
 							data: data
 							name: "year"
+							group: if CUI.__ng__ then "year" else null
 							onDataChanged: (data) =>
 								if isEmpty(data.year)
 									year = now_year
@@ -943,6 +945,7 @@ class DateTime extends Input
 						appearance: if CUI.__ng__ then undefined else "flat"
 						size: if CUI.__ng__ then undefined else "mini"
 						icon: "right"
+						group: if CUI.__ng__ then "year" else null
 						onClick: (ev) =>
 							if data.year+1 > @_max_year
 								return

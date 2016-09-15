@@ -76,10 +76,10 @@ css_other:
 
 css: css_ng css_other
 
-watch-ng:
+watch_ng:
 	watch 'sass --scss --sourcemap=inline src/scss/themes/ng/main.scss:$(target)/css/cui_demo_ng.css' ../src/scss/themes/ng
 
-watch-code:
+watch_code:
 	watch 'make code' ../src/elements
 
 jpg: $(jpg_files)
