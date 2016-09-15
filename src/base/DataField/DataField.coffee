@@ -398,7 +398,6 @@ class CUI.DataField extends CUI.DOM
 	getName: ->
 		@_name
 
-
 	# data field needs to return the empty value
 	# to init data
 	#

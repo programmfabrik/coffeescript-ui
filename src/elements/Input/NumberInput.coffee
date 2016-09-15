@@ -189,11 +189,10 @@ class NumberInput extends Input
 			points = v.substring(point_idx+1)
 
 		# console.debug "v:", v, "number:", number, "points:", points, "decimalpoint", @_decimalpoint, "separator", @_separator
-
 		if points.length > @_decimals
 			return false
 
-		if not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
+		if number.length > 0 and not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
 			# CUI.debug "number not matched", number
 			return false
 
@@ -215,7 +214,7 @@ class NumberInput extends Input
 		if points.length > @_decimals
 			return false
 
-		return v.replace(".", @_decimalpoint)
+		return true # v.replace(".", @_decimalpoint)
 
 
 	@format: (v, opts={}) ->

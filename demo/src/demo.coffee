@@ -327,9 +327,14 @@ class DemoTable
 
 CUI.ready ->
 	for k in ["light", "dark", "ng", "ng_debug"]
-		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
+		if not theme
+			theme = k
 
-	CUI.loadTheme(window.localStorage.getItem("theme") or "ng")
+		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
+		if k == window.localStorage.getItem("theme")
+			theme = k
+
+	CUI.loadTheme(theme)
 
 	mouse_pos = null
 

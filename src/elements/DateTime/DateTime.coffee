@@ -37,7 +37,7 @@ class DateTime extends Input
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
-		@removeOpt("correctValueForInput")
+		# @removeOpt("correctValueForInput")
 		@removeOpt("checkInput")
 		@removeOpt("getInputBlocks")
 
@@ -144,13 +144,13 @@ class DateTime extends Input
 		super()
 		@_checkInput = @__checkInput
 		@_getInputBlocks = @__getInputBlocks
-		@_correctValueForInput = (dateTime, value) =>
-			corrected_value = @format(value, "input", @__input_formats[0].type)
-			if corrected_value
-				corrected_value
-			else
-				# keep the invalid value
-				value
+		# @_correctValueForInput = (dateTime, value) =>
+		# 	corrected_value = @parseAndFormatValue(value, "input")
+		# 	if corrected_value
+		# 		corrected_value
+		# 	else
+		# 		# keep the invalid value
+		# 		value
 
 	getCurrentFormat: ->
 		@__input_format
@@ -332,13 +332,27 @@ class DateTime extends Input
 		else
 			mom.subtract(12,"hour")
 
+	initValue: ->
+		super()
+		value = @getValue()
+		corrected_value = @parseValue(value, "store")
+		if corrected_value and corrected_value != value
+			CUI.warn("DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
+			@__data[@_name] = corrected_value
+		@
 
 	getValueForDisplay: ->
-		mom = @parse(@getValue())
+		value = @getValue()?.trim?()
+
+		if isEmpty(value)
+			return ""
+
+		mom = @parse(value)
+
 		if mom.isValid()
 			mom.format(@getCurrentFormatDisplay())
 		else
-			""
+			value
 
 	getValueForInput: (v = @getValue()) ->
 		if isEmpty(v?.trim())
@@ -348,15 +362,11 @@ class DateTime extends Input
 		if mom.isValid()
 			return mom.format(@__input_format.input)
 		else
-			return ""
-
+			return v
 
 	__checkInput: (value) ->
 		if not isEmpty(value?.trim())
-			input_formats = @__input_formats.slice(0)
-			for format in @__input_formats_known
-				pushOntoArray(format, input_formats)
-			mom = @parse(value, input_formats, @__input_formats)
+			mom = @parse(value)
 			if not mom.isValid()
 				return false
 		else
@@ -572,8 +582,11 @@ class DateTime extends Input
 	# formats: format to check
 	# use_formats: formats which are used to call our "initFormat", if format
 	#              matched is not among them, init to the first check format.
+	#              these formats are the "allowed" formats, this is used in __checkInput
 
 	parse: (s, formats = @__input_formats, use_formats = formats) ->
+		if not (s?.trim?().length > 0)
+			return moment.invalid()
 
 		for format in formats
 			mom = @__parseFormat(format, s)
@@ -587,6 +600,21 @@ class DateTime extends Input
 				return mom
 
 		return moment.invalid()
+
+	# like parse, but it used all known input formats
+	# to recognize the value
+	parseValue: (value, output_format = null) ->
+		input_formats = @__input_formats.slice(0)
+		for format in @__input_formats_known
+			pushOntoArray(format, input_formats)
+		mom = @parse(value, input_formats, @__input_formats)
+		if not output_format
+			return mom
+
+		if mom.isValid()
+			mom.format(@__input_format[output_format])
+		else
+			null
 
 	__parseFormat: (f, s) ->
 		for k in ["store", "input", "display"]
