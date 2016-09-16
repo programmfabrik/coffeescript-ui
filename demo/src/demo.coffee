@@ -326,6 +326,17 @@ class DemoTable
 		@table.append($tr("cui-demo-full-row").append(td))
 
 CUI.ready ->
+	splash_node = document.getElementById("cui-demo-splash")
+	console.warn("splash node", splash_node)
+	Events.wait
+		type: "transitionend"
+		node: splash_node
+		maxWait: -1
+	.done =>
+		console.warn "transitionend..."
+		splash_node.remove()
+		splash_node = null
+
 	for k in ["light", "dark", "ng", "ng_debug"]
 		if not theme
 			theme = k
@@ -335,6 +346,10 @@ CUI.ready ->
 			theme = k
 
 	CUI.loadTheme(theme)
+	.done =>
+		CUI.DOM.setStyle(splash_node,
+			opacity: 0
+		)
 
 	mouse_pos = null
 

@@ -198,15 +198,16 @@ class CUI.Form extends CUI.DataField
 				v
 
 		if @_header
-			tr_head = $tr("cui-form-tr-head").appendTo(@table)
+			tr_head = $tr("cui-form-tr-header").appendTo(@table)
+
+			console.error "adding header..", @_header
+
+			assert(not @_horizontal, "Form.renderTable", "opts.header cannot be used with opts.horizontal", opts: @opts)
 
 			for td_class, idx in td_classes
 				head = @_header[idx]
-				if not head
-					continue
-
 				th = $th(td_class).appendTo(tr_head)
-				th.append(getAppend(head.label))
+				th.append(getAppend(head?.label))
 
 		has_left = false
 
@@ -214,22 +215,14 @@ class CUI.Form extends CUI.DataField
 		if @__horizontal > 1
 			# re-sort fields
 			fields = []
-			cols = []
-
 			fields_per_column = Math.ceil(_fields.length / @__horizontal)
-			col_i = 0
-			for _idx in [0..._fields.length]
-				if not cols[col_i]
-					cols[col_i] = []
-				cols[col_i].push(_idx)
-				if cols[col_i].length == fields_per_column
-					col_i = col_i + 1
-
-			for row_i in [0...fields_per_column]
-				for col_i in [0...@__horizontal]
-					_idx = cols[col_i][row_i]
-					# console.debug "row_i", row_i, "col_i", col_i, "idx:", _idx
-					fields.push(_fields[_idx])
+			for col_i in [0...@__horizontal]
+				for row_i in [0...fields_per_column]
+					target_idx = col_i+row_i*@_horizontal
+					source_idx = col_i*fields_per_column+row_i
+					if source_idx >= _fields.length
+						continue
+					fields[target_idx] = _fields[source_idx]
 
 		else
 			fields = _fields

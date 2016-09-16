@@ -321,6 +321,12 @@ class Playground extends Demo
 				form:
 					label: "Inline Form"
 				type: Form
+				header: [
+					label: "Inner Label"
+				,
+					label: "Inner Input"
+				]
+
 				fields: =>
 					fields = []
 					for i in [0..10]

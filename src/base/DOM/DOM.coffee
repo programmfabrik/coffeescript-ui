@@ -774,6 +774,8 @@ class CUI.DOM extends CUI.Element
 				else
 					if isNaN(Number(v))
 						docElem.style[k] = v
+					else if v == 0 or v == "0"
+						docElem.style[k] = 0
 					else
 						docElem.style[k] = v + append
 		docElem

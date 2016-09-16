@@ -2,21 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>easydbui - demo</title>
+	<link href="http://fonts.googleapis.com/css?family=Quicksand:300|Ubuntu+Mono" rel="stylesheet" type="text/css"></link>
 	<script src="../moment-with-locales.js" type="text/javascript" charset="utf-8"></script>
 	<!-- <script src="../moment-timezone-with-data.min.js" type="text/javascript" charset="utf-8"></script> -->
 	<script src="../easydbui.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../marked.js" type="text/javascript" charset="utf-8"></script>
 	<script src="easydbui_demo.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+		html {
+		overflow:hidden;
+		}
+	#cui-demo-splash {
+		position: absolute;
+		top: 0;
+		display: flex;
+		font-weight: bold;
+		align-items: center;
+		justify-content: center;
+		font-size: 40px;
+		font-family: Quicksand, sans-serif;
+		font-weight: bold;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		color: white;
+		background: linear-gradient(45deg, hsla(343, 100%, 55%, 1) 0%, hsla(343, 100%, 55%, 0) 70%), linear-gradient(135deg, hsla(66, 95%, 50%, 1) 10%, hsla(66, 95%, 50%, 0) 80%), linear-gradient(225deg, hsla(18, 90%, 50%, 1) 10%, hsla(18, 90%, 50%, 0) 80%), linear-gradient(315deg, hsla(257, 54%, 83%, 1) 100%, hsla(257, 54%, 83%, 0) 70%);
+		transition: opacity 2s ease;
+		opacity: 1;
+	}
+	</style>
 </head>
 <body class="cui-body">
-	<!--
-	<div class="cui-tmpl cui-tmpl-demo-root">
-        <div class="cui-demo-root-body">
-		</div>
+	<div id="cui-demo-splash">
+		CUI.Demo
 	</div>
-	<div class="cui-tmpl cui-tmpl-memory-tester">
-		<span class="txt"></span>
-	</div>
-	-->
 </body>
 </html>
