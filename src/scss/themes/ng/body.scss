@@ -3,7 +3,8 @@
 $padding: 10px;
 $compensating-padding: 7px;
 $gap: 12px;
-$background: white;
+$background: hsl(205,10%,98%);
+$foreground: white;
 
 $button-text-color: hsl(205,10%,34%);
 $button-border-radius: 4px;
@@ -14,7 +15,7 @@ $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
 
 // Table Colors
-$zebra-color: hsl(216,33%,97%);
+$zebra-color: hsl(205,33%,97%);
 $table-border-color: hsl(205,8%,90%);
 
 $pane-header-height: 30px;
@@ -118,7 +119,7 @@ label {
 }
 
 body {
-	font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
 	font-size: 13px;
 	line-height: normal;
 	background: $background;
@@ -131,9 +132,10 @@ body {
 
 input,
 textarea {
-	display: flex;
+	min-width: 200px;
 	font-size: 12px;
-	border: 1px solid hsl(0,0%,75%);
+	border: 1px solid hsl(0,0%,72%);
+	border-top-color: hsl(0,0%,65%);
 	font-family: inherit;
 	padding: 2px 3px;
 	flex: 1 1 auto;
@@ -162,7 +164,9 @@ table.cui-form-table {
 	@include flex-table()
 }
 
-
+.cui-root-layout {
+	overflow: hidden;
+}
 
 // HorizontalLayout
 .cui-horizontal-layout {
@@ -191,6 +195,22 @@ table.cui-form-table {
 	&:not(.cui-maximize-horizontal) {
 		flex-direction: row;
 		align-self: flex-start;
+	}
+}
+
+.cui-horizontal-layout-left,
+.cui-horizontal-layout-center,
+.cui-horizontal-layout-right {
+	> .cui-label {
+		padding: 0 $padding;
+	
+		&:first-child {
+			padding-top: $compensating-padding;
+		}
+
+		&:last-child {
+			padding-bottom: $compensating-padding;
+		}
 	}
 }
 
@@ -453,8 +473,7 @@ table.cui-form-table {
 		&.cui-horizontal-layout-center {
 			align-items: center;
 		}
-		// flex-direction: row;
-		// align-items: center;
+
 		> .cui-maximize-horizontal {
 			// in column direction this is solved by
 			// align-items: stretch, but here
@@ -473,10 +492,8 @@ table.cui-form-table {
 
 // Pane
 .cui-pane-header {
-	// bottom line as box-shadow instead of border
-	// so that the tab border can overlap it
-	box-shadow: 0 -1px hsl(210,11%,93%) inset;
-	background: hsl(205,29%,97%);
+	background: $foreground;
+	border-bottom: 1px solid hsl(180,9%,93%);
 
 	.cui-buttonbar {
 		margin-bottom: 0;
@@ -501,13 +518,14 @@ table.cui-form-table {
 
 .cui-data-table {
 	.cui-pane-footer {
+		min-height: 0;
 		padding: 0;
 		border-top: 1px solid hsl(205,8%,77%);
 		
 		.cui-button-button {
 			@include button-reset;
 			color: hsl(205,11%,29%);
-		  height: 20px;
+		  height: 23px;
 		  padding: 0 $padding/2;
 		  border-right: 1px solid hsl(205,8%,77%) !important;
 		  
@@ -546,9 +564,9 @@ i.cui-spin-stepped {
 	align-self: flex-start;
 	align-items: center;
 	justify-content: center;
-  padding: 0 16px;
-  height: 30px;
-  line-height: 29px;
+  padding: 0 $padding;
+  height: 24px;
+  line-height: 22px;
   color: $button-text-color;
   background: hsl(0,0%,100%);
   border: 1px solid hsl(205,10%,75%);
@@ -878,18 +896,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-vertical-layout-center.cui-layout-cell > .cui-label {
-	padding: 0 $padding;
-	
-	&:first-child {
-		padding-top: $compensating-padding;
-	}
-
-	&:last-child {
-		padding-bottom: $compensating-padding;
-	}
-}
-
 // Label: Markdown
 .cui-label-markdown .cui-label-content {
 	display: block;
@@ -1077,7 +1083,7 @@ a[role="button"].cui-button-appearance-link {
 	input,
 	textarea {
 		padding: 0 7px;
-		line-height: 28px;
+		line-height: 22px;
 		outline: none;
 	}
 
@@ -1146,14 +1152,17 @@ a[role="button"].cui-button-appearance-link {
 	}
 		
 	.cui-pane-footer {
+		justify-content: space-between;
+		
 		.cui-button-button {
 			flex: 1;
 			border-top: 1px solid hsl(210,11%,93%);
 			border-left: 1px solid hsl(210,11%,93%);
 			margin: 0;
 			
-			&:active {
-				
+			&.cui-button--primary {
+				border-top-color: $highlight-color;
+				border-left-width: 0;
 			}
 		}
 
@@ -1171,9 +1180,15 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
+		.cui-horizontal-layout-left:empty +
+		.cui-horizontal-layout-center:not(:empty),
+		.cui-horizontal-layout-left:empty +
+		.cui-horizontal-layout-center:empty +
+		.cui-horizontal-layout-right,
 		.cui-horizontal-layout-left {
 			.cui-button:first-child {
 				border-left-width: 0;
+				border-bottom-left-radius: 4px;
 			}
 		}
 	}
@@ -1302,13 +1317,9 @@ a[role="button"].cui-button-appearance-link {
 
 // Toaster
 .cui-layer-root-toaster .cui-layer {
-	color: hsl(0,0%,33%);
-	background: hsl(0,0%,94%);
 	font-size: 14px;
 	width: auto;
-	box-shadow:
-		0 0 0 1px rgba(0,0,0,.06),
-		0 1px 15px rgba(0,0,0,.23);
+	min-width: 0;
 	user-select: none;
 
 	> .cui-layout > .cui-vertical-layout-center {
@@ -1348,7 +1359,6 @@ a[role="button"].cui-button-appearance-link {
 		border-radius: 0;
 		height: 28px;
 		line-height: 28px;
-	  color: hsl(205,12%,27%);
 	  justify-content: flex-start;
 
 	  &:hover:not(.cui-disabled),
@@ -1453,9 +1463,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Tabs
 .cui-tabs {
-	.cui-tab {
-		padding-top: $padding*2;
-	}
 	.cui-tabs-active-marker {
 		display: none;
 		position: absolute;
@@ -1465,11 +1472,11 @@ a[role="button"].cui-button-appearance-link {
 		background: yellow;
 		transition: width 0.3s ease, left 0.3s ease;
 	}
-	// > .cui-vertical-layout-top{
-	// 	> .cui-pane-header {
-	// 		background: hsl(205,29%,97%);
-	// 	}
-	// }
+	> .cui-vertical-layout-top {
+		> .cui-pane-header .cui-horizontal-layout-center {
+			overflow: hidden;
+		}
+	}
 	> .cui-vertical-layout-center {
 		> .cui-tmpl-tabs-bodies {
 			flex: 1 1 auto;
@@ -1489,11 +1496,10 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.tab-header-button {
+.cui-toolbar .tab-header-button {
 	border: none;
-	margin: 0;
 	background: none;
-	color: hsl(205,10%,53%);
+	color: $highlight-color;
 	height: 100%;
 	min-width: 80px;
 	min-height: 36px;
@@ -1501,14 +1507,34 @@ a[role="button"].cui-button-appearance-link {
 	border-radius: 0;
 	font-size: inherit;
 	
-	&:hover {
-		color: hsl(205,10%,53%);
+	&:after {
+		content: "";
+		position: absolute;
+		top: 5px;
+		bottom: 5px;
+		left: 0;
+		right: 0;
+		border: 1px solid $highlight-color;
+	}
+
+	&:first-child:after {
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
+
+	&:last-child:after {
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
 	}
 	
 	&.cui-active {
-		font-weight: bold;
+		color: $on-highlight-color;
 		background: none;
-		color: hsl(205,100%,40%);
+		
+		&:after {
+			background: $highlight-color;
+			z-index: -1;
+		}
 	}
 }
 
@@ -1784,10 +1810,111 @@ $table-data-padding: 4px;
 	}
 }
 
+// Table
+.cui-tr {
+	flex-direction: row;
+	@include padding-y(0.5);
+}
+
+.cui-td {
+	&[colspan]{
+		flex: 1;
+		
+		label,
+		.cui-label {
+			margin-bottom: $padding/2;
+		}
+	}
+}
+
 // Form
+.cui-form {
+	align-self: stretch !important;
+}
+
+.cui-form-tr,
+.cui-form-tr-header {
+	flex-direction: row;
+	padding: $padding 0;
+	background: $foreground;
+}
 
 .cui-form-tr {
-	flex-direction: row;
+	position: relative;
+	
+	.cui-form-options-table,
+	.cui-form-table-horizontal {
+		margin-top: -$padding;
+		margin-bottom: -$padding;
+		
+		.cui-tr.cui-form-tr {
+			background: none;
+		}
+	}
+	
+	&:before {
+		content: "";
+		position: absolute;
+		left: $padding;
+		right: $padding;
+		height: 1px;
+		top: 0;
+		background: $background;
+	}
+
+	& &:before {
+		left: 0;
+		right: 0;
+	}
+}
+
+.cui-form-tr-content-is-form-vertical > .cui-form-left {
+	background: $background;
+	width: auto;
+	@include padding(0.5);
+	
+	.cui-label,
+	label {
+		padding-top: 2*$padding;
+		text-transform: uppercase;
+		color: hsl(205,10%,60%);
+		letter-spacing: 0.01em;
+	}
+
+	.cui-form-center {
+		display: none;
+	}
+}
+
+.cui-form-tr.cui-form-tr-content-is-form-vertical {
+	flex-direction: column;
+	padding-top: 0;
+
+	> .cui-form-center {
+		flex-grow: 1;
+		margin-left: 10px;
+	}
+	
+	.cui-form-table[cui-form-depth="1"] > .cui-tr > .cui-form-left {
+		width: 110px;
+	}
+	.cui-form-table[cui-form-depth="2"] > .cui-tr > .cui-form-left {
+		width: 100px;
+	}
+}
+	
+[cui-form-depth="1"] .cui-form-tr-content-is-form-vertical:not(.cui-form-table-has-left-column){
+	> .cui-form-left {
+		display: none;
+	}
+}
+
+.cui-form-left {
+	padding-left: $padding;
+}
+
+.cui-form-center {
+	justify-content: center;
 }
 
 .cui-form-table-has-not-left-column {
@@ -1826,26 +1953,14 @@ $table-data-padding: 4px;
 	display: none;
 }
 
-.cui-form-td {
-	&.cui-form-left,
-	&.cui-form-right {
-		width: 100px;
-	}
-	&.cui-form-left {
-		padding-right: $padding;
-		text-align: right;
-		
-		.cui-label {
-			margin-top: $padding/2;
-		}
+.cui-form-left,
+.cui-form-right {
+	width: 120px;
+}
 
-		.cui-label-content {
-			justify-content: flex-end;
-		}
-	}
-	&.cui-form-center {
-		width: 200px;
-	}
+.cui-form-left {
+	padding-right: $padding;
+	justify-content: center;
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
@@ -1858,26 +1973,12 @@ $table-data-padding: 4px;
 }
 
 
-// Table
-.cui-form-table,
-.cui-demo-table {
-	margin: $padding;
-	
-	& & {
-		margin: 0;
-	}
-}
-
-.cui-tr {
-	flex-direction: row;
-	@include padding-y(0.5);
-}
-
-
 // Options
-.cui-options-form-table {
-	.cui-form-tr {
-		padding: 0;
+
+.cui-form-options-table,
+.cui-form-table-horizontal  {
+	.cui-button-checkbox {
+		margin-right: $padding;
 	}
 }
 
@@ -1928,6 +2029,10 @@ $table-data-padding: 4px;
 	flex-direction: row;
 }
 
+.cui-date-time-calendar .cui-buttonbar {
+	justify-content: space-between;
+}
+
 .cui-buttonbar-group-date,
 .cui-buttonbar-group-time { // DateTime Day:Month:Year Hour:Minute
 	.cui-select {
@@ -1939,7 +2044,7 @@ $table-data-padding: 4px;
 			border-right-width: 1px;
 			border-top-right-radius: $button-border-radius;
 			border-bottom-right-radius: $button-border-radius;
-			padding-right: 7px;
+			padding-right: 4px;
 		}
 
 		&:not(:first-child) .cui-button {
@@ -2308,6 +2413,8 @@ $table-data-padding: 4px;
 // Block
 
 .cui-block {
+	background: $foreground;
+	
 	&.cui-block-level-1 {
 		// border: 1px solid blue;
 		> .cui-block-header {
@@ -2325,12 +2432,12 @@ $table-data-padding: 4px;
 }
 
 .cui-block-header {
-	@include padding();
-	border-bottom: 1px solid hsl(0,0%,87%);
+	@include padding;
+	border-bottom: 1px solid hsl(180,9%,95%);
 }
 
 .cui-block-content {
-	@include padding();
+	@include padding;
 }
 
 // StickyHeader

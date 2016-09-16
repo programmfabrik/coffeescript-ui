@@ -477,11 +477,11 @@ class Playground extends Demo
 
 		fields.push new Input
 			form:
-				label: "Input [Textarea|Content-Size]"
+				label: "Input [Textarea | Content-Size]"
 			name: "textarea"
 			textarea: true
 			content_size: true
-			placeholder: "CUI.Input [Textarea|Content-Size]"
+			placeholder: "CUI.Input [Textarea | Content-Size]"
 
 
 		fields.push new Output
