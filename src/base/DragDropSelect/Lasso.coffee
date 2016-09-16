@@ -29,17 +29,17 @@ class Lasso extends Draggable
 		# assert @element.css("position") in ["relative","absolute","fixed"], "Lasso.init", "Element needs to be positioned (relative, absolute, fixed)", element: @element
 		@position = null
 
+	start_drag: (ev, $target, diff) ->
+		if not CUI.DOM.isInDOM(@element[0])
+			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
+
+		globalDrag.lasso = $div(@_lassoClass)
+		# CUI.debug "create lasso", @_lassoClass
+		#
+		globalDrag.lasso.appendTo(@element)
+
 	do_drag: (ev, $target, diff) ->
 		# CUI.debug "Lasso do drag", globalDrag.start, globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
-		if not globalDrag.dragStarted
-			if not CUI.DOM.isInDOM(@element[0])
-				throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
-
-			globalDrag.lasso = $div(@_lassoClass)
-			# CUI.debug "create lasso", @_lassoClass
-			#
-			globalDrag.lasso.appendTo(@element)
-
 		set_css =  {}
 		if diff.x <= 0
 			set_css.left = globalDrag.start.left + diff.x

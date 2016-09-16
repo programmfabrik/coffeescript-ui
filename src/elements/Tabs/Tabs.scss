@@ -67,8 +67,8 @@
 				@include flex_display(flex);
 			}
 
-			> .cui-buttonbar > .tab-header-button,
-			> .tab-header-button {
+			> .cui-buttonbar > .cui-tab-header-button,
+			> .cui-tab-header-button {
 				//overwrite reset of padding for flat buttons in pane headers
 				padding-left: $grid_size;
 				padding-right: $grid_size;
@@ -202,7 +202,7 @@
 @mixin tabs_set_font_size_normal() {
 	@include ASSERT_TYPE(cui-tabs);
 
-	> .cui-vertical-layout-top > .cui-pane-header.cui-toolbar  > .cui-horizontal-layout-left > .cui-buttonbar > .tab-header-button
+	> .cui-vertical-layout-top > .cui-pane-header.cui-toolbar  > .cui-horizontal-layout-left > .cui-buttonbar > .cui-tab-header-button
 	{
 		@include button_size(normal);
 	}

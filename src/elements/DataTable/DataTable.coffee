@@ -160,10 +160,11 @@ class DataTable extends DataFieldInput
 			fixedRows: if @_no_header then 0 else 1
 			footer_left: footer
 			footer_right: @_footer_right
-			fixedCols: if @_rowMove then 1 else 0
+			fixedCols: 1
 			colResize: if @_no_header then false else true
 			colClasses: colClasses
 			rowMove: @_rowMove
+			rowMovePlaceholder: not @_rowMove
 			maximize: @_maximize
 			maximize_horizontal: @_maximize_horizontal
 			maximize_vertical: @_maximize_vertical

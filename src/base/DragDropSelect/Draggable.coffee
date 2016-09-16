@@ -107,17 +107,16 @@ class Draggable extends DragDropSelect
 						if not DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
 							return
 
-
 						$target = $(target)
 
 						# CUI.debug "attempting to start drag", ev.getUniqueId(), $target[0]
 
-						@startDrag(ev, $target)
+						@init_drag(ev, $target)
 					else
 						return
 				return
 
-	startDrag: (ev, $target) ->
+	init_drag: (ev, $target) ->
 
 		position = elementGetPosition(getCoordinatesFromEvent(ev), $target)
 
@@ -234,13 +233,9 @@ class Draggable extends DragDropSelect
 					Math.abs(diff.y) >= globalDrag.threshold or
 					globalDrag.dragStarted
 						if not globalDrag.dragStarted
-							CUI.DOM.preventEvent(globalDrag.startEvent.getCurrentTarget(), "click")
-							# CUI.debug "start drag", diff
-							@_dragstart?(ev, globalDrag)
-							@do_drag(ev, $target, diff)
-							globalDrag.dragStarted = true
-						else
-							@do_drag(ev, $target, diff)
+							@__startDrag(ev, $target, diff)
+
+						@do_drag(ev, $target, diff)
 						@_dragging?(ev, $target, diff)
 				return
 
@@ -261,7 +256,7 @@ class Draggable extends DragDropSelect
 					cleanup()
 					return
 
-				if not (ev.getType() != "keyup" or ev.keyCode() == 27)
+				if not (ev.getType() == "mouseup" or ev.keyCode() == 27)
 					return
 
 				# CUI.debug "mouseup/keyup: ", ev.getType()
@@ -277,8 +272,26 @@ class Draggable extends DragDropSelect
 				#
 		return
 
+
+	__startDrag: (ev, $target, diff) ->
+		Events.listen
+			type: "click"
+			node: window.globalDrag.startEvent.getCurrentTarget()
+			capture: true
+			only_once: true
+			call: (ev, info) ->
+				ev.stopPropagation()
+				return
+
+		# CUI.debug "start drag", diff
+		@_dragstart?(ev, window.globalDrag)
+		@start_drag(ev, $target, diff)
+		globalDrag.dragStarted = true
+
 	# call after first mousedown
 	before_drag: ->
+
+	start_drag: (ev, $target, diff) ->
 
 	# do drag
 	# first call

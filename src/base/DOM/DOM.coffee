@@ -715,39 +715,6 @@ class CUI.DOM extends CUI.Element
 				parents.push(parent)
 		parents
 
-
-	@preventEvent: (docElem, type) ->
-		# CUI.debug "DOM.preventEvent on element:", docElem, type
-		if not docElem.__cui_prevent_event
-			docElem.__cui_prevent_event = {}
-
-		docElem.__cui_prevent_event[type] = true
-		@
-
-	@unpreventEvent: (event) ->
-		docElem = event.getCurrentTarget()
-		type = event.getType()
-		# CUI.debug "unprevent event...", event, docElem, docElem.__cui_prevent_event, type
-		if not docElem.__cui_prevent_event
-			return
-		delete(docElem.__cui_prevent_event[type])
-		if CUI.isEmptyObject(docElem.__cui_prevent_event)
-			delete(docElem.__cui_prevent_event)
-		@
-
-	@isEventPrevented: (event) ->
-		docElem = event.getCurrentTarget()
-		# if event.getType() == "click"
-		# 	CUI.debug "is event prevented?", event, docElem, docElem.__cui_prevent_event
-		if not docElem
-			return false
-		else if not docElem.__cui_prevent_event
-			false
-		else if docElem.__cui_prevent_event[event.getType()]
-			true
-		else
-			false
-
 	@isInDOM: (docElem) ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.isInDOM", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		if @closestUntil(docElem, null, document.documentElement)
@@ -902,6 +869,15 @@ class CUI.DOM extends CUI.Element
 			dim.horizontalScrollbarHeight = 0
 
 		dim
+
+	# returns the scrollable parent
+	@parentsScrollable: (node) ->
+		parents = []
+		for parent, idx in DOM.parents(node)
+			dim = DOM.getDimensions(parent)
+			if dim.horizontalScrollbarHeight > 0 or dim.verticalScrollbarWidth > 0
+				parents.push(parent)
+		parents
 
 	@setDimension: (docElem, key, value) ->
 		set = {}

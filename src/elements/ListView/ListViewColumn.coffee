@@ -21,7 +21,6 @@ class ListViewColumn extends CUI.Element
 			element: {}
 
 
-
 	setRow: (@listViewRow) ->
 
 	getRow: ->

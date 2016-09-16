@@ -81,6 +81,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ListView/ListViewColumnEmpty.coffee \
 	src/elements/ListView/ListViewHeaderColumn.coffee \
 	src/elements/ListView/tools/ListViewColumnRowMoveHandle.coffee \
+	src/elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee \
 	src/elements/ListView/tools/ListViewTool.coffee \
 	src/elements/ListView/tools/ListViewHoverTool.coffee \
 	src/elements/ListView/tools/ListViewRowMoveTool.coffee \

@@ -887,7 +887,7 @@ class CUI.Layer extends CUI.DOM
 			onDone: =>
 				dfr.resolve()
 			call: =>
-				if @__element and not @elementIsInDOM()
+				if @__element and not CUI.DOM.isInDOM(@__element)
 					@destroy()
 					return
 				@show(null, ev)
@@ -970,12 +970,20 @@ class CUI.Layer extends CUI.DOM
 
 		document.body.appendChild(@__layer_root.DOM)
 
-		if @_element
-			@_element.addClass("cui-layer-active")
+		if @__element
+			@__element.addClass("cui-layer-active")
+
+			for scroll_parent in CUI.DOM.parentsScrollable(@__element)
+				Events.listen
+					type: "scroll"
+					instance: @
+					node: scroll_parent
+					call: =>
+						@position()
 
 			if @_check_for_element
 				@__check_for_element = CUI.setInterval =>
-					if not @elementIsInDOM()
+					if not CUI.DOM.isInDOM(@__element)
 						@destroy()
 				,
 					200
@@ -994,13 +1002,14 @@ class CUI.Layer extends CUI.DOM
 			instance: @
 			node: @__layer
 			call: (ev) =>
-				if @__element and not @elementIsInDOM()
+				if @__element and not CUI.DOM.isInDOM(@__element)
 					# ignore the event
 					return
 
 				console.info("Layer caught event:", ev.getType)
 				@position()
 				return
+
 
 		if @__addClickThruListenerOnShow
 			@__clickThruListener = @__addClickThruListener()
@@ -1045,10 +1054,6 @@ class CUI.Layer extends CUI.DOM
 		if ev == CUI.KeyboardEvent or @__focused_on_show
 			DOM.findElement(@__element[0], "[tabindex]")?.focus()
 		@
-
-	elementIsInDOM: ->
-		# console.debug "element:", @__element, @, @_element, @getUniqueId()
-		@__element and DOM.isInDOM(@__element[0])
 
 	getElement: ->
 		@__element

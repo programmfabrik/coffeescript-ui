@@ -22,7 +22,7 @@ $pane-header-height: 30px;
 
 @mixin margin($factor: 1) {
 	margin-bottom: $padding * $factor;
-	
+
 	&:last-child {
 		margin-bottom: 0;
 	}
@@ -30,7 +30,7 @@ $pane-header-height: 30px;
 
 @mixin margin-top($factor: 1) {
 	margin-top: $padding * $factor;
-	
+
 	&:first-child {
 		margin-top: 0;
 	}
@@ -203,7 +203,7 @@ table.cui-form-table {
 .cui-horizontal-layout-right {
 	> .cui-label {
 		padding: 0 $padding;
-	
+
 		&:first-child {
 			padding-top: $compensating-padding;
 		}
@@ -333,7 +333,7 @@ table.cui-form-table {
 	overflow: hidden;
 	position: relative;
 	z-index: 1;
-	
+
 	&:after {
 		content: "";
 		position: absolute;
@@ -457,13 +457,13 @@ table.cui-form-table {
 		height: 100%;
 		background: none;
 		border-radius: 0;
-		
+
 		&.cui-active {
 			color: $button-text-color;
 			background: hsl(205,40%,93%);
 		}
 	}
-	
+
 	> div {
 		&.cui-horizontal-layout-left,
 		&.cui-horizontal-layout-right {
@@ -521,14 +521,14 @@ table.cui-form-table {
 		min-height: 0;
 		padding: 0;
 		border-top: 1px solid hsl(205,8%,77%);
-		
+
 		.cui-button-button {
 			@include button-reset;
 			color: hsl(205,11%,29%);
 		  height: 23px;
 		  padding: 0 $padding/2;
 		  border-right: 1px solid hsl(205,8%,77%) !important;
-		  
+
 		  &:before {
 		    display: none;
 		  }
@@ -571,12 +571,12 @@ i.cui-spin-stepped {
   background: hsl(0,0%,100%);
   border: 1px solid hsl(205,10%,75%);
   border-radius: $button-border-radius;
-	
+
 	&:hover {
 	  border-color: hsl(205,100%,45%);
 	  color: hsl(205,100%,45%);
 	}
-		
+
 	&:active {
 	  border-color: hsl(205,100%,35%);
 	  color: hsl(205,100%,35%);
@@ -629,7 +629,7 @@ i.cui-spin-stepped {
 	flex: 0 0 auto;
 	justify-content: center;
 	padding: 0 3px;
-	
+
 	&:empty {
 		display: none;
 	}
@@ -673,7 +673,7 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar-group {
 	> .cui-input {
-		margin-left: -1px;	
+		margin-left: -1px;
 	}
 
 	.cui-button {
@@ -683,7 +683,7 @@ a[role="button"].cui-button-appearance-link {
 		&:first-child {
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
-			
+
 			&:before {
 				display: none;
 			}
@@ -725,7 +725,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-button-checkbox {
 	flex-direction: row;
 	cursor: pointer;
-	
+
 	&.cui-disabled {
 		opacity: 0.5;
 		cursor: default;
@@ -733,14 +733,14 @@ a[role="button"].cui-button-appearance-link {
 
 	&:focus {
 		outline: none;
-		
+
 		.cui-button-left span,
 		.cui-button-left i {
 			@include focus;
 		}
 	}
-	
-	&.cui-active {		
+
+	&.cui-active {
 		.cui-button-left i {
 			position: relative;
 			background: hsl(240,2%,61%);
@@ -753,13 +753,13 @@ a[role="button"].cui-button-appearance-link {
 			.cui-button-left i {
 				color: transparent;
 				text-shadow: none;
-				
+
 				// use radial gradient instead of border-radius
 				// for a nice round form (otherwise its more of an egg)
 				border-radius: none;
 				border-color: transparent;
 				background: radial-gradient(hsl(240,2%,61%), hsl(240,3%,58%));
-				
+
 				&:after { // radio dot
 					content: "";
 					position: absolute;
@@ -775,7 +775,7 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
-	
+
 	.cui-button-left {
 		padding: 0 1px 0 0;
 		// empty checkbox: span
@@ -813,7 +813,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-select {
 	.cui-button-center:empty {
 		display: flex;
-		
+
 		&:after {
 			content: '-';
 			padding: 0 $padding/4;
@@ -850,7 +850,7 @@ a[role="button"].cui-button-appearance-link {
 	flex: 0 0 auto;
 	align-items: stretch;
 	// align-self: flex-start;
-	
+
 	&.cui-tmpl-label-rotate-90 {
 		// rotate by 90 degrees
 		white-space: nowrap;
@@ -899,7 +899,7 @@ a[role="button"].cui-button-appearance-link {
 // Label: Markdown
 .cui-label-markdown .cui-label-content {
 	display: block;
-	
+
 	h1, h2, h3, h4, h5, h6 {
 	  font-weight: normal;
 	  margin: 0 0 $padding;
@@ -914,7 +914,7 @@ a[role="button"].cui-button-appearance-link {
 	  font-size: 20px;
 	  line-height: 25px;
 	}
-	
+
 	p,
   pre,
   blockquote {
@@ -923,7 +923,7 @@ a[role="button"].cui-button-appearance-link {
 
   & > p,
   & > pre,
-  & > blockquote {	  	
+  & > blockquote {
     &:first-child {
       margin-top: 6px;
     }
@@ -1020,7 +1020,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: row;
 	align-items: center;
 	@include margin;
-	
+
 	> *:not(:last-child) {
 		margin-right: $gap;
 	}
@@ -1047,7 +1047,7 @@ a[role="button"].cui-button-appearance-link {
 // Checkbox
 .cui-checkbox {
 	flex-direction: column;
-	
+
 	.cui-button {
 		height: 20px;
 		line-height: 20px;
@@ -1137,11 +1137,11 @@ a[role="button"].cui-button-appearance-link {
 	box-shadow:
 		0 0 0 1px hsla(0,0%,0%,0.1),
 		0 7px 14px hsla(0,0%,0%,0.1);
-	
+
 	.cui-simple-pane > .cui-vertical-layout-center {
 		padding: $padding;
 		overflow: auto;
-		
+
 		> .cui-multiline-label {
 			padding: $compensating-padding $padding;
 		}
@@ -1150,16 +1150,16 @@ a[role="button"].cui-button-appearance-link {
 			margin: $compensating-padding/2 $padding;
 		}
 	}
-		
+
 	.cui-pane-footer {
 		justify-content: space-between;
-		
+
 		.cui-button-button {
 			flex: 1;
 			border-top: 1px solid hsl(210,11%,93%);
 			border-left: 1px solid hsl(210,11%,93%);
 			margin: 0;
-			
+
 			&.cui-button--primary {
 				border-top-color: $highlight-color;
 				border-left-width: 0;
@@ -1174,7 +1174,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-horizontal-layout-center,
 		.cui-horizontal-layout-right {
 			flex: 1;
-			
+
 			&:empty {
 				display: none;
 			}
@@ -1207,7 +1207,7 @@ a[role="button"].cui-button-appearance-link {
 	width: 33px;
   height: 16px;
 	overflow: hidden;
-	
+
 	&:after { // arrow (north)
 		content: "";
 		position: absolute;
@@ -1216,7 +1216,7 @@ a[role="button"].cui-button-appearance-link {
     width: 18px;
     height: 18px;
 		background: white;
-		box-shadow: 
+		box-shadow:
 			0 0 0 1px hsla(0,0%,0%,0.1),
 			3px 3px 14px hsla(0,0%,0%,0.1);
 		transform: rotate(45deg);
@@ -1243,7 +1243,7 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	
+
 	> div {
 		flex: 1 1 auto;
 		background-size: cover;
@@ -1302,7 +1302,7 @@ a[role="button"].cui-button-appearance-link {
 		0 0 0 1px hsla(0,0%,0%,0.1),
 		0 7px 14px hsla(0,0%,0%,0.1);
 	cursor: default;
-	
+
 	.cui-label {
 		font-size: 11px;
     line-height: 14px;
@@ -1336,7 +1336,7 @@ a[role="button"].cui-button-appearance-link {
   border: 1px solid hsl(0,0%,87%);
   padding: 4px 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
-	
+
 	.cui-item-list {
 		font-size: inherit;
 	}
@@ -1376,7 +1376,7 @@ a[role="button"].cui-button-appearance-link {
 	  .cui-button-center {
 	    padding: 0;
 	  }
-	}	
+	}
 }
 
 .cui-item-list-divider {
@@ -1497,7 +1497,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-toolbar .tab-header-button {
+.cui-toolbar .cui-tab-header-button {
 	border: none;
 	background: none;
 	color: $highlight-color;
@@ -1507,7 +1507,7 @@ a[role="button"].cui-button-appearance-link {
 	padding: 0 $padding/2;
 	border-radius: 0;
 	font-size: inherit;
-	
+
 	&:after {
 		content: "";
 		position: absolute;
@@ -1527,11 +1527,11 @@ a[role="button"].cui-button-appearance-link {
 		border-top-right-radius: 3px;
 		border-bottom-right-radius: 3px;
 	}
-	
+
 	&.cui-active {
 		color: $on-highlight-color;
 		background: none;
-		
+
 		&:after {
 			background: $highlight-color;
 			z-index: -1;
@@ -1547,7 +1547,7 @@ $table-data-padding: 4px;
 	background: white;
 	font-size: 12px;
 	border: 1px solid $table-border-color;
-	
+
 	[cui-lv-quadrant="0"],
 	[cui-lv-quadrant="1"] {
 		color: hsl(0,0%,30%);
@@ -1568,7 +1568,7 @@ $table-data-padding: 4px;
 .cui-list-view-grid-quadrant-1 {
 	.cui-lv-td {
 		position: relative;
-		
+
 		&:after { // table-head line
 			content: "";
 			position: absolute;
@@ -1584,7 +1584,7 @@ $table-data-padding: 4px;
 .cui-list-view-grid-quadrant-1 {
 	.cui-lv-td:last-child:after {
 		display: none;
-	} 	
+	}
 }
 
 .cui-list-view-grid-has-fixed-rows {
@@ -1664,7 +1664,7 @@ $table-data-padding: 4px;
 	flex-direction: row;
 	flex: 0 0 auto;
 	min-width: 0;
-	
+
 	&.cui-list-view-row-selectable.cui-selected {
 		background: $highlight-color !important;
 		color: white;
@@ -1704,7 +1704,7 @@ $table-data-padding: 4px;
 
 .cui-lv-td {
 	padding: $table-data-padding;
-	
+
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
 		> .cui-tmpl-label-rotate-90 {
@@ -1718,7 +1718,7 @@ $table-data-padding: 4px;
 	}
 	&.cui-lv-td-fill {
 		padding: 2px;
-		
+
 		&:not(:last-child) {
 			// border-right-style: dotted;
 		}
@@ -1820,7 +1820,7 @@ $table-data-padding: 4px;
 .cui-td {
 	&[colspan]{
 		flex: 1;
-		
+
 		label,
 		.cui-label {
 			margin-bottom: $padding/2;
@@ -1839,7 +1839,7 @@ $table-data-padding: 4px;
 	padding: $padding 0;
 	background: $foreground;
 	position: relative;
-	
+
 	&:before {
 		content: "";
 		position: absolute;
@@ -1849,7 +1849,7 @@ $table-data-padding: 4px;
 		top: 0;
 		background: $background;
 	}
-	
+
 	&:first-child:before {
 		display: none;
 	}
@@ -1861,12 +1861,12 @@ $table-data-padding: 4px;
 }
 
 .cui-form-tr {
-	
+
 	.cui-form-options-table,
 	.cui-form-table-horizontal {
 		margin-top: -$padding;
 		margin-bottom: -$padding;
-		
+
 		.cui-tr.cui-form-tr {
 			background: none;
 		}
@@ -1877,7 +1877,7 @@ $table-data-padding: 4px;
 	background: $background;
 	width: auto;
 	@include padding(0.5);
-	
+
 	.cui-label,
 	label {
 		padding-top: 2*$padding;
@@ -1899,7 +1899,7 @@ $table-data-padding: 4px;
 		flex-grow: 1;
 		margin-left: 10px;
 	}
-	
+
 	.cui-form-table[cui-form-depth="1"] > .cui-tr > .cui-form-left {
 		width: 110px;
 	}
@@ -1907,7 +1907,7 @@ $table-data-padding: 4px;
 		width: 100px;
 	}
 }
-	
+
 [cui-form-depth="1"] .cui-form-tr-content-is-form-vertical:not(.cui-form-table-has-left-column){
 	> .cui-form-left {
 		display: none;
@@ -2059,7 +2059,7 @@ $table-data-padding: 4px;
 		&:first-child .cui-button {
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
-			
+
 			&:before {
 				display: none;
 			}
@@ -2077,7 +2077,7 @@ $table-data-padding: 4px;
 		.cui-button {
 			padding: 0;
 		}
-		
+
 		.cui-button-center {
 			text-align: right;
 			padding-right: 3px;
@@ -2087,7 +2087,7 @@ $table-data-padding: 4px;
 
 .cui-date-time-input-center {
 	flex: 1 1 auto;
-	
+
 	&:focus {
 		z-index: 1;
 	}
@@ -2095,12 +2095,12 @@ $table-data-padding: 4px;
 
 .cui-date-time-input-right {
 	position: relative;
-	
+
 	.cui-button {
 		margin-left: -1px;
 		border-radius: 0;
 		padding: 0 $padding/2;
-		
+
 		&:focus {
 			z-index: 1;
 		}
@@ -2142,7 +2142,7 @@ $table-data-padding: 4px;
 	> .cui-horizontal-layout-left {
 		flex: 1 0 auto;
 		margin-right: $gap;
-		
+
 		.cui-label { // June, September
 			flex: 1 1 auto;
     	justify-content: center;
@@ -2165,7 +2165,7 @@ $table-data-padding: 4px;
 	@include flex-table;
 	margin: 0 0 $padding !important;
 	flex-grow: 1;
-	
+
 	.cui-tr {
 		padding: 0;
 	}
@@ -2208,7 +2208,7 @@ $table-data-padding: 4px;
 }
 
 
-.cui-date-time-popover {	
+.cui-date-time-popover {
 	.cui-simple-pane > .cui-vertical-layout-center {
 		padding: $padding;
 	}
@@ -2278,7 +2278,7 @@ $table-data-padding: 4px;
 .cui-multi-input-input {
 	@include margin-top(0.25);
 	position: relative;
-	
+
 	.cui-input,
 	.cui-textarea {
 		padding-right: 20px;
@@ -2290,7 +2290,7 @@ $table-data-padding: 4px;
 	right: 0;
 	top: 0;
 }
-	
+
 .cui-multi-input-tag-button {
 	@include button-reset;
 	color: hsl(0,0%,30%);
@@ -2420,7 +2420,7 @@ $table-data-padding: 4px;
 
 .cui-block {
 	background: $foreground;
-	
+
 	&.cui-block-level-1 {
 		// border: 1px solid blue;
 		> .cui-block-header {
@@ -2453,7 +2453,7 @@ $table-data-padding: 4px;
 	font-size: 11px;
 	height: 22px;
 	margin-bottom: 10px;
-	
+
 	&:not(:first-child) {
 		margin-top: $padding*2;
 		border-top: 1px solid hsl(0,0%,80%);
@@ -2466,7 +2466,7 @@ $table-data-padding: 4px;
 	top: 0;
 	left: 0;
 	right: 0;
-	
+
 	.cui-tmpl-sticky-header {
 		margin: 0;
 		position: absolute;
@@ -2487,7 +2487,7 @@ $table-data-padding: 4px;
 		position: relative;
 		border-radius: $button-border-radius;
 		overflow: hidden;
-		
+
 		.cui-progress-meter-fill-background,
 		.cui-progress-meter-fill,
 		.cui-progress-meter-text {
@@ -2581,11 +2581,11 @@ $table-data-padding: 4px;
 .cui-console {
 	padding: $padding;
 	font-family: monospace;
-	
+
 	.cui-label-multiline {
 		margin: 0;
 	}
-	
+
 	.cui-label:not(:last-child) {
 		border-bottom: 1px solid hsl(0,0%,94%);
 	}

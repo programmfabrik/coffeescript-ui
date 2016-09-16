@@ -61,7 +61,14 @@ class ListViewRow extends CUI.Element
 		@__selectable = on_off
 
 	isSelectable: ->
-		@__selectable and @listView?.hasSelectableRows()
+		if @listView
+			if not @listView.hasSelectableRows()
+				return false
+
+			if @getRowIdx() < @listView.fixedRowsCount
+				return false
+
+		@__selectable
 
 	isMovable: (ev) ->
 		@listView.hasMovableRows()

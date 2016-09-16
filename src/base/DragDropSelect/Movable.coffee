@@ -16,7 +16,8 @@ class Movable extends Draggable
 
 			position:
 				check: Function
-
+			start_drag:
+				check: Function
 			do_drag:
 				check: Function
 
@@ -42,11 +43,11 @@ class Movable extends Draggable
 		@_positioned?(pos)
 
 
-	startDrag: (ev, $target) ->
-		# CUI.debug "startDrag target", ev.getTarget(), $target[0]
+	init_drag: (ev, $target) ->
+		# CUI.debug "init_drag target", ev.getTarget(), $target[0]
 		if CUI.DOM.closest(ev.getTarget(), ".cui-resizable-handle")
 			return
-		# CUI.debug "startDrag on #{@cls}", ev, $target[0]
+		# CUI.debug "init_drag on #{@cls}", ev, $target[0]
 		super(ev, $target)
 
 
@@ -59,9 +60,15 @@ class Movable extends Draggable
 			h: dim.marginBoxHeight
 		@
 
+	start_drag: (ev, $target, diff) ->
+		if @_start_drag
+			@_start_drag(ev, $target, diff, @)
+		@
+
 	do_drag: (ev, $target, diff) ->
 		if @_do_drag
-			return @_do_drag(ev, $target, diff, @)
+			@_do_drag(ev, $target, diff, @)
+			return @
 
 		pos =
 			x: diff.x+@start.x
@@ -75,6 +82,7 @@ class Movable extends Draggable
 			@limitRect(pos, @start)
 
 		@setElementCss(pos)
+		@
 
 	# keep pos inside certain constraints
 	# pos.fix is an Array containing any of "n","w","e","s"

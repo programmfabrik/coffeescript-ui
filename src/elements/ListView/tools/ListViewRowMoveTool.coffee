@@ -17,7 +17,7 @@ class ListViewRowMoveTool extends ListViewHoverTool
 			rect = @lV.getCellGridRectByNode(@info.$target)
 			rect.width = @lV.getGrid().width()
 			@movableDiv = @createMovableDiv("row-move-marker", true, rect)
-			Movable.getInstance(@movableDiv[0]).startDrag(ev, @movableDiv)
+			Movable.getInstance(@movableDiv[0]).init_drag(ev, @movableDiv)
 
 		return
 

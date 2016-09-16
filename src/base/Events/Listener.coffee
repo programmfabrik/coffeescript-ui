@@ -192,13 +192,6 @@ class CUI.Listener extends CUI.Element
 		event.setPhase(phase)
 		event.setListener(@)
 
-		if CUI.DOM.isEventPrevented(event)
-			CUI.DOM.unpreventEvent(event)
-			CUI.debug("Event #{event.getType()} is prevented on element, ignoring.")
-			event.stopImmediatePropagation()
-			event.preventDefault()
-			return false
-
 		if @isOnlyOnce()
 			# CUI.debug "destroying one time event listener...", event, @
 			@destroy()

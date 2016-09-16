@@ -40,10 +40,10 @@ class ListViewHoverTool extends ListViewTool
 		# CUI.debug("createMovableDiv", css, @movableDiv[0])
 		new Movable
 			element: md
-			do_drag: (ev, $target, diff, movable) =>
-				if not globalDrag.dragStarted
-					@startDrag(ev, $target, diff, movable)
+			start_drag: (ev, $target, diff, movable) =>
+				@startDrag(ev, $target, diff, movable)
 
+			do_drag: (ev, $target, diff, movable) =>
 				@doDrag(ev, $target, diff, movable)
 
 			dragend: (ev, globalDrag, movable) =>

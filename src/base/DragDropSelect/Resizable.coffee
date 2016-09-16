@@ -20,14 +20,18 @@ class Resizable extends Movable
 		super(ev, $target)
 		globalDrag.resize = $target.attr("cui-drag-drop-select-resizable")
 
-	startDrag: (ev, $target) ->
-		# CUI.debug "Resiztable.startDrag", ev, $target
+	init_drag: (ev, $target) ->
+		# CUI.debug "Resiztable.init_drag", ev, $target
 		if $target.is(".cui-resizable-handle")
-			Draggable::startDrag.call(@, ev, $target)
+			Draggable::init_drag.call(@, ev, $target)
 			# CUI.debug "resize it is!", globalDrag.resize
 		else
 			# ignore this
 			return
+
+	start_drag: (ev, $target, diff) ->
+		if @_start_drag
+			return @_start_drag(ev, $target, diff, @)
 
 	do_drag: (ev, $target, diff) ->
 		if @_do_drag

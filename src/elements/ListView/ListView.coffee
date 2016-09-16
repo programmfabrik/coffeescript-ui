@@ -70,6 +70,11 @@ class ListView extends SimplePane
 			rowMoveFixedRows:
 				default: 0
 				check: "Integer"
+			# if set, add a rowMovePlaceholder to
+			# all rows
+			rowMovePlaceholder:
+				default: false
+				check: Boolean
 			colResize:
 				check: Boolean
 			selectableRows:
@@ -120,12 +125,14 @@ class ListView extends SimplePane
 			@__colClasses = @_colClasses.slice(0)
 
 		if @_rowMove
+			assert(not @_rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
+			@tools.push(new ListViewRowMoveTool())
+
+		if @_rowMove or @_rowMovePlaceholder
 			@__cols.splice(0,0, "fixed")
 			if not @__colClasses
 				@__colClasses = []
 			@__colClasses.splice(0,0, "cui-list-view-row-move-handle-column")
-
-			@tools.push(new ListViewRowMoveTool())
 
 		assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
 
@@ -193,8 +200,14 @@ class ListView extends SimplePane
 
 		cls = ["cui-list-view-grid", @__lvClass]
 
-		if @_fixedCols == 0 and @_rowMove
+		if @_fixedCols == 1 and (@_rowMove or @_rowMovePlaceholder)
 			cls.push("cui-list-view-grid-fixed-col-has-only-row-move-handle")
+
+		if @_rowMovePlaceholder
+			cls.push("cui-list-view-has-row-move-placeholder")
+
+		if @_rowMove
+			cls.push("cui-list-view-has-row-move")
 
 		if @__maxCols.length > 0
 			cls.push("cui-list-view-grid-has-maximized-columns")
@@ -1300,7 +1313,9 @@ class ListView extends SimplePane
 			if row_i >= @fixedRowsCount + @_rowMoveFixedRows
 				listViewRow.prependColumn(new ListViewColumnRowMoveHandle())
 			else
-				listViewRow.prependColumn(new ListViewColumnEmpty(class: "cui-list-view-no-row-move-placeholder"))
+				listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
+		else if @_rowMovePlaceholder
+			listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
 
 		_cols = listViewRow.getColumns()
 

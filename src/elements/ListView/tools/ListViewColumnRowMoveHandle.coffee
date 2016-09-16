@@ -23,14 +23,6 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 					capture: true
 					call: ->
 						cell.removeAttr("allow-row-move")
-
-				Events.listen
-					type: "click"
-					node: cell
-					only_once: true
-					call: (ev, info) ->
-						ev.stopPropagation()
-						return
 		return
 
 	render: ->

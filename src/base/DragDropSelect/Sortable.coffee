@@ -46,14 +46,13 @@ class Sortable extends Draggable
 		else if source_idx > dest_idx
 			$dest.before($source)
 
+	start_drag: (ev, $target, diff) ->
+		@init_helper()
+		globalDrag.start_idx = @get_child_number(globalDrag.$source)
+		# CUI.debug "INIT HELPER", globalDrag
+
 	do_drag: (ev, $target, diff) ->
-		if not globalDrag.dragStarted
-			@init_helper()
-			globalDrag.start_idx = @get_child_number(globalDrag.$source)
-			# CUI.debug "INIT HELPER", globalDrag
-
 		@position_helper(ev)
-
 		# find the closest child of the target
 		if DOM.closest($target, @element)
 			target_child = $target
@@ -67,7 +66,6 @@ class Sortable extends Draggable
 						@move_element(source_idx, dest_idx)
 					break
 				target_child = target_child.parentNode
-
 
 	end_drag: (ev) ->
 		# move dragged object into position
