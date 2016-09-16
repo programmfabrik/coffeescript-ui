@@ -1329,6 +1329,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Menu
 .cui-menu {
+	min-width: 0;
   background: white;
   box-shadow: 0 1px 10px rgba(0,0,0,.1);
   border-radius: 4px;
@@ -1852,7 +1853,7 @@ $table-data-padding: 4px;
 	&:first-child:before {
 		display: none;
 	}
-	
+
 	& &:before {
 		left: 0;
 		right: 0;
@@ -2239,7 +2240,8 @@ $table-data-padding: 4px;
 			flex: 1 1 auto;
 			.cui-number-input {
 				input {
-					width: 43px;
+					width: 44px;
+					min-width: 0;
 					text-align: center;
 				}
 			}
