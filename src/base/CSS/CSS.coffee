@@ -104,6 +104,8 @@ class CSS extends CUI.Element
 				CUI.info("CSS.load: loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				Events.trigger
 					type: "viewport-resize"
+					info:
+						css_load: true
 
 				@__loadedUrl = url
 				@__cssNode = cssNode

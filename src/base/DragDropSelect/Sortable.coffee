@@ -16,6 +16,9 @@ class Sortable extends Draggable
 					alert("You sorted item #{from_idx} to #{to_idx}.")
 				check: Function
 
+		@mergeOpt "dragClass",
+			default: "cui-sortable-placeholder"
+
 		@removeOpt("helper_parent")
 		@mergeOpt "selector", default:
 			(target, node) ->

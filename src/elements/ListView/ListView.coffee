@@ -350,14 +350,16 @@ class ListView extends SimplePane
 		Events.listen
 			type: "viewport-resize"
 			node: @grid
-			call: (ev) =>
-				# CUI.error "ListView[##{@listViewCounter}][#{ev.getDebug()}]:",@DOM[0],"hasLayout: ", @__hasLayout, "maximize:", @_maximize, @
+			call: (ev, info) =>
+				# console.error "ListView[##{@listViewCounter}][#{ev.getDebug()}]:",@DOM[0],"hasLayout: ", @__hasLayout, @
 
-				ev.stopPropagation()
-				if not @__hasLayout or not (@__maximize_horizontal or @__maximize_vertical)
+				if not @__hasLayout
 					return
 
-				@__scheduleLayout()
+				if @_autoLayout == 2
+					@__doNextGenLayout(resetRows: !!info.css_load)
+				else
+					@__scheduleLayout()
 				return
 
 		Events.listen
@@ -860,7 +862,7 @@ class ListView extends SimplePane
 		for el in DOM.findElements(@getGrid()[0], ".list-view-row-new")
 			el.classList.remove("list-view-row-new")
 
-		# console.error "ListView.__doLayout...", @__lvClass
+		# console.error "ListView.__doLayout...", @__lvClass, @_autoLayout
 
 		switch @_autoLayout
 			when true
@@ -893,6 +895,8 @@ class ListView extends SimplePane
 		# console.time "next-gen-layout"
 		# FIXME: improve selectors, so they only catch the current table not nested ones
 		#
+
+		# console.error "doing next gen layout", @listViewCounter
 
 		css = []
 		add_css = (col_i, width) =>

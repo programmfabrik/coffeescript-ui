@@ -81,6 +81,7 @@ class Tabs extends SimplePane
 
 		@__overflowBtn = new Button
 			icon: "ellipsis_h"
+			class: "cui-tab-header-button-overflow"
 			icon_right: false
 			menu:
 				items: =>
