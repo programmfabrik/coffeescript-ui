@@ -1837,20 +1837,7 @@ $table-data-padding: 4px;
 	flex-direction: row;
 	padding: $padding 0;
 	background: $foreground;
-}
-
-.cui-form-tr {
 	position: relative;
-	
-	.cui-form-options-table,
-	.cui-form-table-horizontal {
-		margin-top: -$padding;
-		margin-bottom: -$padding;
-		
-		.cui-tr.cui-form-tr {
-			background: none;
-		}
-	}
 	
 	&:before {
 		content: "";
@@ -1861,10 +1848,27 @@ $table-data-padding: 4px;
 		top: 0;
 		background: $background;
 	}
-
+	
+	&:first-child:before {
+		display: none;
+	}
+	
 	& &:before {
 		left: 0;
 		right: 0;
+	}
+}
+
+.cui-form-tr {
+	
+	.cui-form-options-table,
+	.cui-form-table-horizontal {
+		margin-top: -$padding;
+		margin-bottom: -$padding;
+		
+		.cui-tr.cui-form-tr {
+			background: none;
+		}
 	}
 }
 
