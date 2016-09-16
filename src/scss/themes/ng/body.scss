@@ -1212,7 +1212,8 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	z-index: 1;
 	width: 33px;
-  height: 16px;
+	height: 16px;
+	margin: 5px;
 	overflow: hidden;
 
 	&:after { // arrow (north)
