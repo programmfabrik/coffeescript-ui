@@ -610,6 +610,30 @@ class CUI.Layer extends CUI.DOM
 				when "center"
 					layer_pos.top = dim_element.viewportCenterVertical - layer_pos.height / 2
 
+
+			if vp.dim_pointer
+				# now align the pointer within the available viewport
+				switch vp.pointer_align_horizontal
+					when "left"
+						pointer_pos.left = dim_element.viewportRight + vp.dim_pointer.marginLeft
+					when "right"
+						pointer_pos.left = dim_element.viewportLeft - vp.dim_pointer.borderBoxWidth - vp.dim_pointer.marginLeft
+					when "center"
+						pointer_pos.left = dim_element.viewportCenterHorizontal - vp.dim_pointer.borderBoxWidth / 2
+
+				switch vp.pointer_align_vertical
+					when "top"
+						pointer_pos.top = dim_element.viewportBottom + vp.dim_pointer.marginTop
+					when "bottom"
+						pointer_pos.top = dim_element.viewportTop - vp.dim_pointer.marginBoxHeight + vp.dim_pointer.marginTop
+					when "center"
+						pointer_pos.top = dim_element.viewportCenterVertical - vp.dim_pointer.borderBoxHeight / 2
+
+				pointer_pos.width = vp.dim_pointer.borderBoxWidth
+				pointer_pos.height = vp.dim_pointer.borderBoxHeight
+				pointer_pos.direction = vp.dim_pointer.direction
+
+
 			# move layer into viewport in case we overlap
 			if layer_pos.top < vp.top
 				layer_pos.top = vp.top
@@ -659,27 +683,52 @@ class CUI.Layer extends CUI.DOM
 							vp.overlap_height = Math.min(vp.window_right - layer_pos.right, overlap_width)
 							layer_pos.width = layer_pos.width + vp.overlap_width
 
-			if vp.dim_pointer
-				# now align the pointer within the available viewport
-				switch vp.pointer_align_horizontal
-					when "left"
-						pointer_pos.left = dim_element.viewportRight + vp.dim_pointer.marginLeft
-					when "right"
-						pointer_pos.left = dim_element.viewportLeft - vp.dim_pointer.borderBoxWidth - vp.dim_pointer.marginLeft
-					when "center"
-						pointer_pos.left = dim_element.viewportCenterHorizontal - vp.dim_pointer.borderBoxWidth / 2
 
-				switch vp.pointer_align_vertical
-					when "top"
-						pointer_pos.top = dim_element.viewportBottom + vp.dim_pointer.marginTop
-					when "bottom"
-						pointer_pos.top = dim_element.viewportTop - vp.dim_pointer.marginBoxHeight + vp.dim_pointer.marginTop
-					when "center"
-						pointer_pos.top = dim_element.viewportCenterVertical - vp.dim_pointer.borderBoxHeight / 2
+			if @__pointer
 
-				pointer_pos.width = vp.dim_pointer.borderBoxWidth
-				pointer_pos.height = vp.dim_pointer.borderBoxHeight
-				pointer_pos.direction = vp.dim_pointer.direction
+				layer_pos_right = vp.layer_pos.left + vp.layer_pos.width
+				layer_pos_bottom = vp.layer_pos.top + vp.layer_pos.height
+
+				pointer_pos_right = vp.pointer_pos.left + vp.pointer_pos.width
+				pointer_pos_bottom = vp.pointer_pos.top + vp.pointer_pos.height
+
+				# push layer further, so the pointer has enough margin to the
+				# edge of the layer
+				switch vp.pointer_pos.direction
+					when "n", "s"
+						marginLeft = vp.pointer_pos.left - vp.layer_pos.left
+						pushNeeded = marginLeft - vp.dim_pointer.marginLeft
+
+						if pushNeeded < 0
+							spaceAvailable = vp.layer_pos.left - vp.window_left
+							vp.push_left = Math.min(spaceAvailable, -pushNeeded)
+							vp.layer_pos.left = vp.layer_pos.left - vp.push_left
+
+						marginRight = layer_pos_right - pointer_pos_right
+						pushNeeded = marginRight - vp.dim_pointer.marginRight
+
+						if pushNeeded < 0
+							spaceAvailable = vp.window_right - layer_pos_right
+							vp.push_right = Math.min(spaceAvailable, -pushNeeded)
+							vp.layer_pos.left = vp.layer_pos.left + vp.push_right
+
+					when "e", "w"
+						marginTop = vp.pointer_pos.top - vp.layer_pos.top
+						pushNeeded = marginTop - vp.dim_pointer.marginTop
+
+						if pushNeeded < 0
+							spaceAvailable = vp.layer_pos.top - vp.window_top
+							vp.push_top = Math.min(spaceAvailable, -pushNeeded)
+							vp.layer_pos.top = vp.layer_pos.top - vp.push_top
+
+						marginBottom = layer_pos_bottom - pointer_pos_bottom
+						pushNeeded = marginBottom - vp.dim_pointer.marginBottom
+
+						if pushNeeded < 0
+							spaceAvailable = vp.window_bottom - layer_pos_bottom
+							vp.push_bottom = Math.min(spaceAvailable, -pushNeeded)
+							vp.layer_pos.top = vp.layer_pos.top + vp.push_bottom
+
 
 			if @_onPosition
 				# link dimensions, so the callback can
@@ -821,6 +870,10 @@ class CUI.Layer extends CUI.DOM
 		vp = vp_pl[placement]
 
 		# console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
+
+		# console.info "PLACEMENT --- ", placement, "---"
+		# console.debug "Layer POS", vp.layer_pos, "align:", vp.align_horizontal, "/", vp.align_vertical, "overlap:", vp.overlap_align, vp.push_left, vp.push_right
+		# console.debug "Pointer POS", vp.pointer_pos, "align:", vp.pointer_align_horizontal, "/", vp.pointer_align_vertical
 
 		# set layer
 		CUI.DOM.setStyle @__layer.DOM,
