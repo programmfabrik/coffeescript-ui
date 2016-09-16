@@ -459,10 +459,10 @@ table.cui-form-table {
 		height: 100%;
 		background: none;
 		border-radius: 0;
+		color: $highlight-color;
 
 		&.cui-active {
-			color: $button-text-color;
-			background: hsl(205,40%,93%);
+			color: $highlight-color;
 		}
 	}
 
@@ -539,6 +539,11 @@ table.cui-form-table {
 		.cui-buttonbar .cui-button {
 			margin: 0;
 		}
+	}
+
+	input,
+	textarea {
+		min-width: 0;
 	}
 }
 
@@ -1370,7 +1375,8 @@ a[role="button"].cui-button-appearance-link {
 			background: hsl(205,17%,98%);
 	  }
 
-	  &.cui-active {
+	  &.cui-active,
+	  &.cui-active:hover {
 	  	color: $on-highlight-color;
 	  	background: $highlight-color;
 	  }
@@ -1505,8 +1511,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tabs > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-right .cui-button,
-.cui-toolbar .tab-header-button {
+.cui-toolbar .cui-tab-header-button-overflow,
+.cui-toolbar .cui-tab-header-button {
 	border: none;
 	background: none;
 	color: $highlight-color;
@@ -1534,10 +1540,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tabs > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-right .cui-button {
+.cui-toolbar .cui-tab-header-button-overflow {
 	border-top-left-radius: 0 !important;
 	border-bottom-left-radius: 0 !important;
 	min-width: 0;
+	align-self: center;
 	box-shadow:
 		-1px 0 hsla(0,0%,0%,.08),
 		-2px 0 hsla(0,0%,0%,.04),
@@ -1826,9 +1833,7 @@ $table-data-padding: 4px;
 }
 
 .cui-td {
-	&[colspan]{
-		flex: 1;
-
+	&[colspan]{		
 		label,
 		.cui-label {
 			margin-bottom: $padding/2;
@@ -1855,84 +1860,109 @@ $table-data-padding: 4px;
 		right: $padding;
 		height: 1px;
 		top: 0;
-		background: $background;
+		background: hsl(205,10%,95%);
 	}
 
 	&:first-child:before {
 		display: none;
 	}
-
-	& &:before {
-		left: 0;
-		right: 0;
-	}
 }
 
 .cui-form-tr {
-
 	.cui-form-options-table,
 	.cui-form-table-horizontal {
 		margin-top: -$padding;
 		margin-bottom: -$padding;
 
-		.cui-tr.cui-form-tr {
+		.cui-form-tr {
 			background: none;
+			
+			&:before {
+				left: 0;
+				right: 0;
+			}
 		}
+
+		.cui-form-left,
+		.cui-form-right {
+			width: auto;
+		}
+
+		.cui-form-left {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+	
+	.cui-form-options-table .cui-form-center {
+		width: 70px;
 	}
 }
 
+[cui-form-depth="0"] > .cui-form-tr-header,
 .cui-form-tr-content-is-form-vertical > .cui-form-left {
 	background: $background;
 	width: auto;
-	@include padding(0.5);
+	padding: 3*$padding $padding $padding/2;
+	border-bottom: 1px solid hsl(205,10%,95%);
 
 	.cui-label,
 	label {
-		padding-top: 2*$padding;
 		text-transform: uppercase;
 		color: hsl(205,10%,60%);
 		letter-spacing: 0.01em;
 	}
 
+	.cui-form-left {
+		padding: 0;
+	}
+
 	.cui-form-center {
+		display: none;
+	}
+
+	& + .cui-form-tr:before {
 		display: none;
 	}
 }
 
 .cui-form-tr.cui-form-tr-content-is-form-vertical {
 	flex-direction: column;
-	padding-top: 0;
+	padding: 0;
+	
+	.cui-form-table[cui-form-depth="2"] > .cui-form-tr {
+		&:before {
+			left: $padding*2.5;
+		}
 
-	> .cui-form-center {
-		flex-grow: 1;
-		margin-left: 10px;
+		> .cui-form-left {
+			padding-left: $padding*2.5;
+		}
 	}
+	
+	.cui-form-table[cui-form-depth="3"] > .cui-form-tr {
+		&:before {
+			left: $padding*5;
+		}
 
-	.cui-form-table[cui-form-depth="1"] > .cui-tr > .cui-form-left {
-		width: 110px;
-	}
-	.cui-form-table[cui-form-depth="2"] > .cui-tr > .cui-form-left {
-		width: 100px;
+		> .cui-form-left {
+			padding-left: $padding*5;
+		}
 	}
 }
 
+// hacky 1px line instead of empty form-left that shouln't be here
 [cui-form-depth="1"] .cui-form-tr-content-is-form-vertical:not(.cui-form-table-has-left-column){
 	> .cui-form-left {
-		display: none;
-	}
-}
-
-.cui-form-left {
-	padding-left: $padding;
-}
-
-.cui-form-center {
-	justify-content: center;
-}
-
-.cui-form-table-has-not-left-column {
-	> .cui-form-tr > .cui-form-td.cui-form-left {
-		display: none;
+		height: 1px;
+		margin: 0 $padding;
+		padding: 0;
+		overflow: hidden;
+		background: hsl(205,10%,95%);
+		
+		&:before {
+			display: none;
+		}
 	}
 }
 
@@ -1962,6 +1992,10 @@ $table-data-padding: 4px;
 	}
 }
 
+.cui-data-field-output-label {
+	line-height: 24px;
+}
+
 .cui-data-field-hidden {
 	display: none;
 }
@@ -1972,15 +2006,25 @@ $table-data-padding: 4px;
 }
 
 .cui-form-left {
-	padding-right: $padding;
-	justify-content: center;
+	padding: 4px $padding;
 }
 
-.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
-	> tr {
-		> .cui-form-td.cui-form-center {
-			flex: 1 1 auto;
-			width: 200px;
+.cui-maximize-horizontal > .cui-vertical-layout-center {
+	> .cui-form-table {
+		> tr {
+			> .cui-form-td.cui-form-center {
+				flex: 1 1 auto;
+				width: 200px;
+			}
+		}
+	}
+
+	> .cui-form-table-vertical {
+		> .cui-tr {
+			> .cui-form-center {
+				flex-shrink: 1;
+				min-width: 0;
+			}
 		}
 	}
 }
@@ -1992,6 +2036,10 @@ $table-data-padding: 4px;
 .cui-form-table-horizontal  {
 	.cui-button-checkbox {
 		margin-right: $padding;
+	}
+
+	.cui-form-tr-horizontal {
+		flex-wrap: wrap;
 	}
 }
 
@@ -2033,7 +2081,7 @@ $table-data-padding: 4px;
 	}
 }
 
-.cui-dragging {
+.cui-sortable-placeholder {
 	opacity: 0;
 }
 
@@ -2428,14 +2476,15 @@ $table-data-padding: 4px;
 
 .cui-block {
 	background: $foreground;
+	border-bottom: 1px solid hsl(180,9%,93%);
 
 	&.cui-block-level-1 {
-		// border: 1px solid blue;
 		> .cui-block-header {
 			font-size: 15px;
 		}
 	}
 	&.cui-block-level-2 {
+		border-bottom-width: 0;
 		> .cui-block-header {
 			font-size: 13px;
 		}
@@ -2446,8 +2495,7 @@ $table-data-padding: 4px;
 }
 
 .cui-block-header {
-	@include padding;
-	border-bottom: 1px solid hsl(180,9%,95%);
+	padding: $padding $padding 0;
 }
 
 .cui-block-content {

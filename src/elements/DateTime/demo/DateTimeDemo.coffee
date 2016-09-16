@@ -11,14 +11,14 @@ class DateTimeDemo extends Demo
 				#  CUI.debug dump(data)
 
 			fields: [
-				form: label: "Date+Time+Seconds [default]"
+				form: label: "Date + Time + Seconds [default]"
 				name: "date_time_secs"
 				type: DateTime
 				input_types: null # use all
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
 			,
-				form: label: "Date+Time+Seconds (Short) [de-DE]"
+				form: label: "Date + Time + Seconds (Short) [de-DE]"
 				type: DateTime
 				name: "date_and_time_short"
 				display_type: "short"
@@ -26,7 +26,7 @@ class DateTimeDemo extends Demo
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
 			,
-				form: label: "Date+Time [de-DE]"
+				form: label: "Date + Time + [de-DE]"
 				name: "date_and_time"
 				type: DateTime
 				locale: "de-DE"
@@ -41,7 +41,7 @@ class DateTimeDemo extends Demo
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
 			,
-				form: label: "Date+Time+Seconds [en-US]"
+				form: label: "Date + Time + Seconds [en-US]"
 				name: "date_time_secs"
 				type: DateTime
 				input_types: null # use all
