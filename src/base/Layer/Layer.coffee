@@ -1184,6 +1184,13 @@ class CUI.Layer extends CUI.DOM
 			@__body_effect_class = null
 
 		@__layer_root.DOM.detach()
+
+		CUI.DOM.setAttributeMap @__layer_root.DOM[0],
+			"cui-layer-stack-number": null
+			"cui-layer-stack-count": null
+
+		@__updateLayerStackCounter()
+
 		@__shown = false
 
 		if @_handle_focus
@@ -1199,6 +1206,19 @@ class CUI.Layer extends CUI.DOM
 		@_onHide?(@, ev)
 		@
 
+	__updateLayerStackCounter: ->
+		# count all active layers and set a counter to the body
+		# and to each, so a layer knows its stack number
+
+		layer_elements = CUI.DOM.matchSelector(document.documentElement, "body > .cui-tmpl-layer-root")
+		total = layer_elements.length
+
+		for el, idx in layer_elements
+			CUI.DOM.setAttributeMap el,
+				"cui-layer-stack-number": idx
+				"cui-layer-stack-count": total
+
+		@
 
 	# use element to temporarily overwrite element used
 	# for positioning
@@ -1227,6 +1247,8 @@ class CUI.Layer extends CUI.DOM
 			left: 0
 
 		@__layer_root.DOM.appendTo(@__appendToElement)
+
+		@__updateLayerStackCounter()
 
 		if @_element
 			@_element.addClass("cui-layer-active")
