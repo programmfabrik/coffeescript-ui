@@ -98,6 +98,9 @@ class CUI.DataField extends CUI.DOM
 					@opts[k] = @opts.undo_and_changed_support
 		super()
 
+	getUniqueIdForLabel: ->
+		null
+
 	initTemplate: ->
 		@registerTemplate(@getTemplate())
 

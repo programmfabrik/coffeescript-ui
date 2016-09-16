@@ -1,7 +1,7 @@
 class CUI.Element
 
 	constructor: (@opts={}) ->
-		@__uniqueId = "cui-element-"+Element.uniqueId++
+		@__uniqueId = CUI.Element.uniqueId++
 		@__cls = getObjectClass(@)
 		@__destroyed = false
 		@__check_map = {}

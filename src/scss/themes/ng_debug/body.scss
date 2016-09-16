@@ -31,10 +31,6 @@ html {
     height: 100%;
 }
 
-label {
-	box-sizing: border-box;
-}
-
 body {
 	// this is to test debug / non-debug theme
 	font-family: arial;
@@ -68,12 +64,16 @@ input {
 	overflow: hidden;
 }
 
-div, a {
+div, a, label {
 	display: flex;
 	flex: 0 0 auto;
 	align-items: stretch;
 	box-sizing: border-box;
 	flex-direction: column;
+}
+
+label {
+	padding: 3px;
 }
 
 li > div {

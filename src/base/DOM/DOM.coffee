@@ -24,7 +24,7 @@ class CUI.DOM extends CUI.Element
 	registerDOMElement: (_dom) ->
 		@DOM = _dom
 		CUI.DOM.addClass(@DOM, @getDOMElementClasses())
-		CUI.DOM.setAttribute(@DOM, "cui-unique-id", @getUniqueId())
+		CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
 		if @_class
 			# CUI.debug DOM, @DOM, @_class
 			CUI.DOM.addClass(@DOM, @_class) # @DOM.addClass(@_class)
@@ -33,7 +33,7 @@ class CUI.DOM extends CUI.Element
 
 	unregisterDOMElement: (@DOM) ->
 		CUI.removeClass(@DOM, @getDOMElementClasses())
-		CUI.DOM.removeAttribute(@DOM, "cui-unique-id")
+		CUI.DOM.removeAttribute(@DOM, "id")
 		if @_class
 			CUI.DOM.removeClass(@DOM, @_class)
 		DOM.removeData(@DOM, "element")
@@ -379,8 +379,8 @@ class CUI.DOM extends CUI.Element
 	@append: (node, content) ->
 		@__append(node, content)
 
-	@getCUIElementById: (uniqueId) ->
-		dom_el = DOM.matchSelector(document.documentElement, "[cui-unique-id=\"cui-element-"+uniqueId+"\"]")[0]
+	@getById: (uniqueId) ->
+		dom_el = document.getElementById("cui-dom-element-"+uniqueId)
 		if not dom_el
 			return null
 		DOM.data(dom_el, "element")

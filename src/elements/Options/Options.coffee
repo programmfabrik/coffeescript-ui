@@ -60,7 +60,7 @@ class CUI.Options extends CUI.DataField
 			when false
 				@__radio = undefined
 			when true
-				@__radio = "options--#{@__uniqueId}"
+				@__radio = "options--"+@getUniqueId()
 			else
 				@__radio = @_radio
 		@__options_data = {}
@@ -322,8 +322,8 @@ class CUI.Options extends CUI.DataField
 						opt.name = @__radio
 						opt.group = @__radio
 					else
-						opt.name = "#{@__uniqueId}--#{idx}"
-						opt.group = @__uniqueId
+						opt.group = "options-"+@getUniqueId()
+						opt.name = opt.group+"--"+idx
 
 					opt.data = @__options_data
 					opt.data_not_for_others = true

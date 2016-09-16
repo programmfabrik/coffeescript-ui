@@ -30,7 +30,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		if not isUndef(active_idx)
 			@__active_idx = active_idx
-			@__radio = "item-list-#{@__uniqueId}"
+			@__radio = "item-list--"+@getUniqueId()
 
 		@__body = new Template(name: "item-list-body")
 		@append(@__body, "center")

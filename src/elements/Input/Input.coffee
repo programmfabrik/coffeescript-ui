@@ -1,4 +1,4 @@
-class Input extends DataFieldInput
+class CUI.Input extends CUI.DataFieldInput
 	constructor: (@opts={}) ->
 		super(@opts)
 		@addClass("cui-input")
@@ -159,9 +159,6 @@ class Input extends DataFieldInput
 		else
 			false
 
-	getTemplateKeyForRender: ->
-		null
-
 	setPlaceholder: (placeholder) ->
 		DOM.setAttribute(@__input[0], "placeholder", placeholder)
 
@@ -175,6 +172,7 @@ class Input extends DataFieldInput
 			@__input = $element "textarea", "cui-textarea",
 				placeholder: @_placeholder
 				tabindex: "0"
+				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 		else
 			if CUI.__ng__
@@ -188,6 +186,7 @@ class Input extends DataFieldInput
 				size: size
 				placeholder: @_placeholder
 				tabindex: "0"
+				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				autocomplete: @__autocomplete
 
@@ -389,6 +388,9 @@ class Input extends DataFieldInput
 
 	getElement: ->
 		@__input
+
+	getUniqueIdForLabel: ->
+		"cui-input-"+@getUniqueId()
 
 	markBlock: (ev, bl) ->
 		@__input0.setSelectionRange(bl.start, bl.end)
@@ -822,11 +824,14 @@ class Input extends DataFieldInput
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
 
+		@append(@getChangedMarker(), @getTemplateKeyForRender())
+
 		for k in ["empty", "invalid", "valid"]
 			@append(@__inputHints[k], @getTemplateKeyForRender())
-
-		@append(@getChangedMarker(), @getTemplateKeyForRender())
 		@
+
+	getTemplateKeyForRender: ->
+		null
 
 	isRequired: ->
 		@_required
@@ -1152,7 +1157,10 @@ class Input extends DataFieldInput
 		#CUI.debug "moveCursor new range", @getRangeFromCursor()
 		@
 
-
 	destroy: ->
 		@__removeShadowInput()
 		super()
+
+	@uniqueId: 0
+
+Input = CUI.Input

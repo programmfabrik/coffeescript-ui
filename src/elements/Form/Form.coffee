@@ -132,8 +132,16 @@ class CUI.Form extends CUI.DataField
 		tr.css("display", "none")
 
 	render: ->
-		@renderTable()
-		super()
+		if CUI.__ng__
+			# we need fields rendered before we render
+			# us, so that <label for=...> can work, just
+			# to be safe, for "ng" only until we know
+			# it does not break anything
+			super()
+			@renderTable()
+		else
+			@renderTable()
+			super()
 		@
 
 	getTable: ->
@@ -259,7 +267,13 @@ class CUI.Form extends CUI.DataField
 					content = null
 
 					if app.label
-						content = getAppend(app.label, _field)
+						if isString(app.label) and CUI.__ng__
+							# use a HTML label and link it to the field
+							# if possible
+							content = CUI.DOM.element("label", for: _field.getUniqueIdForLabel())
+							content.textContent = app.label
+						else
+							content = getAppend(app.label, _field)
 
 					if app.use_field_as_label
 						assert(not @_horizontal, "Form.renderTable", "field.form.use_field_as_label is not supported with opts.horizontal.", opts: @opts, field: _field)

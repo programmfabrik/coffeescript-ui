@@ -98,6 +98,11 @@ class MultiInput extends DataFieldInput
 			type: "content-resize"
 			node: inp.DOM # last one
 
+	getUniqueIdForLabel: ->
+		for inp in @__inputs
+			if @_control.isEnabled(inp.getName())
+				return inp.getUniqueIdForLabel()
+		null
 
 	focus: ->
 		for inp in @__inputs
@@ -150,8 +155,9 @@ class MultiInput extends DataFieldInput
 			input.render()
 
 			do (input, key) =>
-				btn = new CUI.defaults.class.MultiInputButton
+				btn = new CUI.defaults.class.Button
 					text: key.tag
+					tabindex: null
 					disabled: !@_control.hasUserControl()
 					onClick: (ev, btn) =>
 						@_control.showUserControl(ev, btn, @__multiInputDiv)

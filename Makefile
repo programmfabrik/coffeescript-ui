@@ -107,7 +107,6 @@ coffee_files = src/base/Common.coffee \
 	src/elements/MultiInput/MultiInputControl.coffee \
 	src/elements/MultiInput/MultiInput.coffee \
 	src/elements/MultiInput/MultiInputInput.coffee \
-	src/elements/MultiInput/MultiInputButton.coffee \
 	src/elements/Checkbox/Checkbox.coffee \
 	src/elements/Options/Options.coffee \
 	src/elements/ObjectDumper/ObjectDumper.coffee \

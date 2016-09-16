@@ -2,7 +2,7 @@
 # our classes for use in CUI.Element.readOpts
 class CUI.Dummy
 	constructor: ->
-		@__uniqueId = "cui-dummy-"+CUI.Dummy.uniqueId++
+		@__uniqueId = CUI.Dummy.uniqueId++
 		@__cls = getObjectClass(@)
 
 	getUniqueId: ->

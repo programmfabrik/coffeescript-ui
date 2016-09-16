@@ -68,7 +68,7 @@ class CUI.Button extends CUI.DOM
 			@addClass("cui-button-button")
 
 		DOM.setAttributeMap(@DOM, @_attr)
-		DOM.setAttribute(@DOM, "tabindex", "0")
+		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 
 		if not @_attr?.role
 			DOM.setAttribute(@DOM, "role", @_role)
@@ -142,11 +142,11 @@ class CUI.Button extends CUI.DOM
 		if @_radio
 			assert(isUndef(@_switch), "new Button", "opts.switch conflicts with opts.radio.", opts: @opts)
 			if @_radio == true
-				@__radio = "radio--#{@__uniqueId}"
+				@__radio = "radio--"+@getUniqueId()
 			else
 				@__radio = @_radio
 		else if not isNull(@_switch)
-			@__radio = "switch--#{@__uniqueId}"
+			@__radio = "switch--"+@getUniqueId()
 			@__radio_allow_null = true
 
 		if @__radio
@@ -497,6 +497,8 @@ class CUI.Button extends CUI.DOM
 	initOpts: ->
 		super()
 		@addOpts
+			tabindex:
+				default: "0"
 			role:
 				default: "button"
 				check: String
@@ -895,7 +897,7 @@ class CUI.Button extends CUI.DOM
 
 	enable: ->
 		@DOM.removeClass(CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.setAttribute(@DOM, "tabindex", "0")
+		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 		@__disabled = false
 		@
 
