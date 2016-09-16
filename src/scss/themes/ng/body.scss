@@ -15,7 +15,7 @@ $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
 
 // Table Colors
-$zebra-color: hsl(205,33%,97%);
+$zebra-color: hsl(205,10%,98%);
 $table-border-color: hsl(205,8%,90%);
 
 $pane-header-height: 30px;
@@ -71,6 +71,7 @@ $pane-header-height: 30px;
 @mixin focus() {
 	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
 	border-color: $highlight-color;
+	z-index: 1; // put forward to see outline
 }
 
 @mixin button-reset() {
@@ -444,6 +445,7 @@ table.cui-form-table {
 // Toolbar
 .cui-toolbar {
 	min-height: 33px;
+	justify-content: space-between;
 
 	.cui-label {
 		font-size: 17px;
@@ -681,6 +683,7 @@ a[role="button"].cui-button-appearance-link {
 		margin-left: -1px;
 
 		&:first-child {
+			margin-left: 0;
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
 
@@ -1018,7 +1021,6 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar {
 	flex-direction: row;
-	align-items: center;
 	@include margin;
 
 	> *:not(:last-child) {
@@ -1474,8 +1476,14 @@ a[role="button"].cui-button-appearance-link {
 		transition: width 0.3s ease, left 0.3s ease;
 	}
 	> .cui-vertical-layout-top {
-		> .cui-pane-header .cui-horizontal-layout-center {
-			overflow: hidden;
+		> .cui-pane-header {
+			padding-right: $padding/2;
+
+			.cui-horizontal-layout-center {
+				overflow: hidden;
+				flex-grow: 0;
+				justify-content: center;
+			}
 		}
 	}
 	> .cui-vertical-layout-center {
@@ -1497,47 +1505,47 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-toolbar .cui-tab-header-button {
+.cui-tabs > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-right .cui-button,
+.cui-toolbar .tab-header-button {
 	border: none;
 	background: none;
 	color: $highlight-color;
-	height: 100%;
+	height: 24px;
+	line-height: 22px;
 	min-width: 80px;
-	min-height: 36px;
 	padding: 0 $padding/2;
 	border-radius: 0;
 	font-size: inherit;
+	border: 1px solid $highlight-color;
 
-	&:after {
-		content: "";
-		position: absolute;
-		top: 5px;
-		bottom: 5px;
-		left: 0;
-		right: 0;
-		border: 1px solid $highlight-color;
-	}
-
-	&:first-child:after {
+	&:first-child {
 		border-top-left-radius: 3px;
 		border-bottom-left-radius: 3px;
 	}
 
-	&:last-child:after {
+	&:last-child {
 		border-top-right-radius: 3px;
 		border-bottom-right-radius: 3px;
 	}
 
 	&.cui-active {
 		color: $on-highlight-color;
-		background: none;
-
-		&:after {
-			background: $highlight-color;
-			z-index: -1;
-		}
+		background: $highlight-color;
 	}
 }
+
+.cui-tabs > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-right .cui-button {
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	min-width: 0;
+	box-shadow:
+		-1px 0 hsla(0,0%,0%,.08),
+		-2px 0 hsla(0,0%,0%,.04),
+		-3px 0 hsla(0,0%,0%,.02),
+		-4px 0 hsla(0,0%,0%,.01),
+		-5px 0 hsla(0,0%,0%,.01);
+}
+
 
 $table-data-height: 26px;
 $table-data-padding: 4px;

@@ -153,10 +153,11 @@ body.cui-demo-playground {
 .cui-tmpl-file-upload-demo {
 	width: 100px;
 	height: 100px;
-	border: 1px solid blue;
+	border: 1px solid hsl(205,10%,75%);
 	padding: 4px;
 	margin: 0 4px 4px 0;
 	justify-content: space-between;
+	
 	.cui-file-upload-demo-info {
 		word-break: break-all;
 	}
@@ -172,9 +173,9 @@ body.cui-demo-playground {
 	flex-wrap: wrap;
 	height: 200px;
 	overflow: auto;
-	background-color: #f0f8ff;
+	background: hsl(205,9%,93%);
 	padding: 5px;
-	border: 2px solid blue;
+	border: 1px solid hsl(205,10%,75%);
 }
 
 .drag-drop-select-demo-draggable-container-item,
