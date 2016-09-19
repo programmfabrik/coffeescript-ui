@@ -144,6 +144,7 @@ html_files = \
 	src/elements/Button/Button.html \
 	src/elements/FileUpload/FileUploadButton.html \
 	src/elements/Button/ButtonHref.html \
+	src/elements/Options/Options.html \
 	src/elements/Button/Buttonbar.html \
 	src/elements/BorderLayout/BorderLayout.html \
 	src/elements/HorizontalLayout/HorizontalLayout.html \

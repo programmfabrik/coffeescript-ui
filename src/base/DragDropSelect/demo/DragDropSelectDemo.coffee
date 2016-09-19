@@ -68,7 +68,6 @@ class DragDropSelectDemo extends Demo
 			max_h: height
 
 		new Movable
-			helper_parent: "parent"
 			element: drop_container_inner
 			limitRect: getLimitRect
 
@@ -79,13 +78,15 @@ class DragDropSelectDemo extends Demo
 		sort_container = $div("drag-drop-select-demo-sortable-container")
 
 		for i in [0..10]
-			sort_container.append($div("drag-drop-select-demo-sortable-container-item").append(new Label(text: ""+i).DOM))
+			sort_container.append($div("drag-drop-select-demo-sortable-container-item item-"+i, item: ""+i).append(new Label(text: ""+i).DOM))
 
 		demo_table.addExample("Sortable", sort_container)
 
 		new Sortable
 			element: sort_container
-			sorted: ->
+			axis: "y"
+			sorted: (ev, from_idx, to_idx) =>
+				@log("You sorted **"+from_idx+"** to **"+to_idx+"**.")
 
 
 		demo_table.table

@@ -129,7 +129,7 @@ class FlexHandle extends CUI.Element
 				if @isClosed()
 					return false
 
-			helper_remove_always: true
+			# helper_remove_always: true
 
 			dragstart: (ev, gd) =>
 				if @__pane_idx < @__element_idx
@@ -164,14 +164,14 @@ class FlexHandle extends CUI.Element
 				gd.isFlexHandleDrag = true
 				gd
 
-			set_helper_pos: (gd, helper_pos) ->
+			helper_set_pos: (gd, helper_pos) ->
 				data = gd.__pane_data
 				if data.axis == "x"
 					key = "left"
 				else
 					key = "top"
 
-				new_value = data.value + helper_pos.dragDiff[data.axis] * data.flip
+				new_value = data.value + gd.dragDiff[data.axis] * data.flip
 				if new_value < data.min
 					new_value = data.min
 				else if new_value > data.max

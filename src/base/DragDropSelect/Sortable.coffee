@@ -1,25 +1,18 @@
 globalDrag = null
 
-class Sortable extends Draggable
+class CUI.Sortable extends CUI.Draggable
 	@cls = "sortable"
 
 	initOpts: ->
 		super()
 		@addOpts
-			ignoreClass:
-				default: "cui-sortable-ignore"
-				check: String
-
 			sorted:
 				mandatory: true
 				default: (ev, from_idx, to_idx) ->
 					alert("You sorted item #{from_idx} to #{to_idx}.")
 				check: Function
 
-		@mergeOpt "dragClass",
-			default: "cui-sortable-placeholder"
-
-		@removeOpt("helper_parent")
+		@removeOpt("helper_contain_element")
 		@mergeOpt "selector", default:
 			(target, node) ->
 				els = CUI.DOM.elementsUntil(target, null, node)
@@ -31,8 +24,7 @@ class Sortable extends Draggable
 					return null
 	readOpts: ->
 		super()
-		@_helper_parent = "parent"
-		@_helper_remove_always = true
+		@_helper_contain_element = @_element
 
 	get_child_number: (child) ->
 		for c, idx in @element.children
@@ -43,39 +35,62 @@ class Sortable extends Draggable
 	move_element: (source_idx, dest_idx) ->
 		$source = @element.children[source_idx]
 		$dest = @element.children[dest_idx]
-		# CUI.debug "moving from", source_idx, $source[0], "to", dest_idx, $dest[0]
+		if source_idx == dest_idx
+			return
+
 		if source_idx < dest_idx
-			$dest.after($source)
+			CUI.DOM.insertAfter($dest, $source)
 		else if source_idx > dest_idx
-			$dest.before($source)
+			CUI.DOM.insertBefore($dest, $source)
+
+		CUI.DOM.syncAnimatedClone(@element)
+		@
 
 	start_drag: (ev, $target, diff) ->
-		@init_helper()
-		globalDrag.start_idx = @get_child_number(globalDrag.$source)
+		globalDrag.sort_source = @__findClosestSon(globalDrag.$source)
+		globalDrag.sort_source.classList.add("cui-sortable-placeholder")
+		globalDrag.start_idx = @get_child_number(globalDrag.sort_source)
+
+		CUI.DOM.initAnimatedClone(@element)
+
 		# CUI.debug "INIT HELPER", globalDrag
 
-	do_drag: (ev, $target, diff) ->
-		@position_helper(ev)
+	getSourceCloneForHelper: ->
+		@__findClosestSon(globalDrag.$source).cloneNode(true)
+
+	__findClosestSon: ($target) ->
 		# find the closest child of the target
-		if DOM.closest($target, @element)
-			target_child = $target
-			while target_child != @element
-				if target_child.parentNode == @element
-					if globalDrag.$source != target_child  and not target_child.hasClass(@_ignoreClass)
+		parents = CUI.DOM.parentsUntil($target, null, @element)
 
-						source_idx = @get_child_number(globalDrag.$source)
-						dest_idx = @get_child_number(target_child)
+		if parents[parents.length-1] == window
+			return null
 
-						@move_element(source_idx, dest_idx)
-					break
-				target_child = target_child.parentNode
+		switch parents.length
+			when 0
+				return null
+			when 1
+				return $target
+			else
+				return parents[parents.length - 2]
+
+	do_drag: (ev, $target, diff) ->
+		@position_helper(ev, $target, diff)
+
+		target_child = @__findClosestSon($target)
+		if not target_child
+			return
+
+		source_idx = @get_child_number(globalDrag.sort_source)
+		dest_idx = @get_child_number(target_child)
+		@move_element(source_idx, dest_idx)
 
 	end_drag: (ev) ->
 		# move dragged object into position
-		for el in CUI.DOM.children(@element, ".drag-drop-select-transparent")
-			CUI.DOM.remove(el)
+		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
 
-		curr_idx = @get_child_number(globalDrag.$source)
+		CUI.DOM.removeAnimatedClone(@element)
+
+		curr_idx = @get_child_number(globalDrag.sort_source)
 		if ev.getType() == "mouseup"
 			globalDrag.helperNode.remove()
 			globalDrag.helperNode = null
@@ -83,8 +98,7 @@ class Sortable extends Draggable
 				if globalDrag.start_idx != curr_idx
 					@_sorted(ev, globalDrag.start_idx, curr_idx)
 		else
-			curr_idx = @get_child_number(globalDrag.$source)
 			@move_element(curr_idx, globalDrag.start_idx)
-			# super will animate the helper class back to
-			# its origin
 		super(ev)
+
+Sortable = CUI.Sortable

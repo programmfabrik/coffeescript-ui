@@ -1,6 +1,6 @@
 globalDrag = null
 
-class Movable extends Draggable
+class CUI.Movable extends CUI.Draggable
 	@cls = "movable"
 
 	initOpts: ->
@@ -20,6 +20,12 @@ class Movable extends Draggable
 				check: Function
 			do_drag:
 				check: Function
+
+		@removeOpt("helper")
+
+	readOpts: ->
+		super()
+		@_helper = null
 
 	getLimitRect: ->
 		if CUI.isFunction(@_limitRect)
@@ -84,73 +90,8 @@ class Movable extends Draggable
 		@setElementCss(pos)
 		@
 
-	# keep pos inside certain constraints
-	# pos.fix is an Array containing any of "n","w","e","s"
-	# limitRect: min_w, min_h, max_w, max_h, min_x, max_x, min_y, max_y
-	limitRect: (pos, defaults={}, limitRect = @getLimitRect()) =>
-		pos.fix = pos.fix or []
-		for k,v of defaults
-			if isUndef(pos[k])
-				pos[k] = v
+	limitRect: (pos, defaults={}, limitRect = @getLimitRect()) ->
+		# !!! The order in Draggable.limitRect is different, but better
+		Draggable.limitRect(pos, limitRect, defaults)
 
-		# CUI.debug "limitRect BEFORE ", pos, defaults, limitRect
-
-		for key in [
-			"min_w"
-			"max_w"
-			"min_h"
-			"max_h"
-			"min_x"
-			"max_x"
-			"min_y"
-			"max_y"
-			]
-			value = limitRect[key]
-			if isUndef(value)
-				continue
-
-			assert(not isNaN(value), "#{getObjectClass(@)}.limitRect", "key #{key} in pos isNaN", pos: pos, defaults: defaults, limitRect: limitRect)
-
-			skey = key.substring(4)
-			mkey = key.substring(0,3)
-			if key == "max_x"
-				value -= pos.w
-			if key == "max_y"
-				value -= pos.h
-
-			diff = pos[skey] - value
-			if mkey == "min"
-				if diff >= 0
-					continue
-			if mkey == "max"
-				if diff <= 0
-					continue
-
-			if skey == "y" and "n" in pos.fix
-				pos.h -= diff
-				continue
-			if skey == "x" and "w" in pos.fix
-				pos.w -= diff
-				continue
-
-			# CUI.debug "correcting #{skey} by #{diff} from #{pos[skey]}"
-
-			pos[skey]-=diff
-
-			if skey == "h" and "s" in pos.fix
-				# CUI.debug "FIX y"
-				pos.y += diff
-			if skey == "w" and "e" in pos.fix
-				# CUI.debug "FIX x"
-				pos.x += diff
-			if skey == "x" and "e" in pos.fix
-				# CUI.debug "FIX w"
-				pos.w += diff
-			if skey == "y" and "s" in pos.fix
-				# CUI.debug "FIX h"
-				pos.h += diff
-
-		# CUI.debug "limitRect AFTER", pos, diff
-
-		pos
-
+Movable = CUI.Movable

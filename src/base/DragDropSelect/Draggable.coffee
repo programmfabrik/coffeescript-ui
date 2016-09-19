@@ -1,6 +1,6 @@
 globalDrag = null
 
-class Draggable extends DragDropSelect
+class CUI.Draggable extends CUI.DragDropSelect
 	@cls = "draggable"
 
 	initOpts: ->
@@ -15,7 +15,11 @@ class Draggable extends DragDropSelect
 				check: (v) ->
 					v == "clone" or isElement(v) or CUI.isFunction(v)
 
-			set_helper_pos:
+			helper_contain_element:
+				check: (v) ->
+					isElement(v)
+
+			helper_set_pos:
 				check: Function
 
 			dragend:
@@ -32,14 +36,14 @@ class Draggable extends DragDropSelect
 				check: Function
 
 			axis:
-				check: ["x","y"]
+				check: ["x", "y"]
 
-			helper_remove_always:
-				check: Boolean
+			# helper_remove_always:
+			# 	check: Boolean
 
-			helper_parent:
-				default: "document"
-				check: ["document", "parent"]
+			# helper_parent:
+			# 	default: "document"
+			# 	check: ["document", "parent"]
 
 			threshold:
 				default: 2
@@ -56,17 +60,28 @@ class Draggable extends DragDropSelect
 				check: (v) =>
 					isString(v) or CUI.isFunction(v)
 
-	destroy: ->
-		super()
-		if not globalDrag
-			return
-		# CUI.debug "element remove during globalDrag, removing event handlers"
-		globalDrag.helperNode?.remove()
+	__killTimeout: ->
+		if globalDrag?.autoRepeatTimeout
+			CUI.clearTimeout(globalDrag.autoRepeatTimeout)
+			globalDrag.autoRepeatTimeout = null
+		@
+
+	__cleanup: ->
+		@__killTimeout()
+		if @__ref
+			Events.ignore(instance: @__ref)
+			@__ref = null
 		globalDrag = null
 
+	destroy: ->
+		super()
+		globalDrag?.helperNode?.remove()
+		@__cleanup()
+		@
 
 	init: ->
 		# CUI.debug "Draggable", @options.selector
+		assert(not @_helper_contain_element or CUI.DOM.closest(@_element, @_helper_contain_element), "new Draggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
 
 		DOM.addClass(@element, "no-user-select")
 
@@ -118,8 +133,6 @@ class Draggable extends DragDropSelect
 
 	init_drag: (ev, $target) ->
 
-		position = elementGetPosition(getCoordinatesFromEvent(ev), $target)
-
 		overwrite_options = {}
 		globalDrag = @_create?(ev, overwrite_options, $target)
 
@@ -133,19 +146,21 @@ class Draggable extends DragDropSelect
 		if isNull(globalDrag) or globalDrag == true
 			globalDrag = {}
 
-		assert(CUI.isPlainObject(globalDrag), "DragDropSelect.create", "returned data must be a plain object", data: globalDrag)
+		assert(CUI.isPlainObject(globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: globalDrag)
+		point = getCoordinatesFromEvent(ev)
+		position = elementGetPosition(point, $target)
+
 		init =
 			$source: $target
 			startEvent: ev
-			startCoordinates: getCoordinatesFromEvent(ev)
+			startCoordinates: point
 			startScroll:
 				top: $target[0].scrollTop
 				left: $target[0].scrollLeft
-			start: position
+			start: position # offset to the $target
 			threshold: @_threshold
 
 		# CUI.debug "drag drop init", init
-
 		for k, v of init
 			globalDrag[k] = v
 
@@ -156,12 +171,7 @@ class Draggable extends DragDropSelect
 
 		@before_drag(ev, $target)
 
-		ref = new CUI.Dummy() # instance to easily remove events
-
-		kill_timeout = =>
-			if globalDrag.autoRepeatTimeout
-				CUI.clearTimeout(globalDrag.autoRepeatTimeout)
-				globalDrag.autoRepeatTimeout = null
+		@__ref = new CUI.Dummy() # instance to easily remove events
 
 		$target = null
 
@@ -191,7 +201,7 @@ class Draggable extends DragDropSelect
 		Events.listen
 			node: document
 			type: "mousemove"
-			instance: ref
+			instance: @__ref
 			call: (ev) =>
 				if not globalDrag
 					return
@@ -210,7 +220,7 @@ class Draggable extends DragDropSelect
 				# event is WRONG while dragging. we need to overwrite
 				# this with elementFromPoint, true story :(
 				pointTarget = ev.getPointTarget()
-				kill_timeout()
+				@__killTimeout()
 
 				if not pointTarget
 					return
@@ -222,38 +232,44 @@ class Draggable extends DragDropSelect
 					return
 
 				coordinates = getCoordinatesFromEvent(ev)
+
 				diff =
 					x: coordinates.pageX - globalDrag.startCoordinates.pageX
 					y: coordinates.pageY - globalDrag.startCoordinates.pageY
+					eventPoint: coordinates
 
-				diff.x += globalDrag.$source[0].scrollLeft - globalDrag.startScroll.left
-				diff.y += globalDrag.$source[0].scrollTop - globalDrag.startScroll.top
+				switch @_axis
+					when"x"
+						diff.y = 0
+					when "y"
+						diff.x = 0
+
+				diff.x += globalDrag.$source.scrollLeft - globalDrag.startScroll.left
+				diff.y += globalDrag.$source.scrollTop - globalDrag.startScroll.top
 
 				if Math.abs(diff.x) >= globalDrag.threshold or
 					Math.abs(diff.y) >= globalDrag.threshold or
 					globalDrag.dragStarted
+
 						if not globalDrag.dragStarted
 							@__startDrag(ev, $target, diff)
+
+						globalDrag.dragDiff = diff
 
 						@do_drag(ev, $target, diff)
 						@_dragging?(ev, $target, diff)
 				return
 
-		cleanup = =>
-			kill_timeout()
-			Events.ignore
-				instance: ref
-			globalDrag = null
 
 		Events.listen
 			node: document
 			type: ["mouseup", "keyup"]
 			capture: true
-			instance: ref
+			instance: @__ref
 			call: (ev) =>
 				if ev.getType() == "keyup" and ev.keyCode() == 83 and ev.altKey() # ALT-S
 					CUI.warn("Stopping Drag and Drop")
-					cleanup()
+					@__cleanup()
 					return
 
 				if not (ev.getType() == "mouseup" or ev.keyCode() == 27)
@@ -267,7 +283,7 @@ class Draggable extends DragDropSelect
 				if globalDrag.dragStarted
 					@end_drag(ev)
 					@_dragend?(ev, globalDrag, @)
-				cleanup()
+				@__cleanup()
 				# CUI.debug "mouseup, resetting drag stuff"
 				#
 		return
@@ -285,6 +301,8 @@ class Draggable extends DragDropSelect
 
 		# CUI.debug "start drag", diff
 		@_dragstart?(ev, window.globalDrag)
+		@init_helper(ev, $target, diff)
+		globalDrag.$source.addClass(@_dragClass)
 		@start_drag(ev, $target, diff)
 		globalDrag.dragStarted = true
 
@@ -296,11 +314,9 @@ class Draggable extends DragDropSelect
 	# do drag
 	# first call
 	do_drag: (ev, $target, diff) ->
-		if isUndef(globalDrag.helperNode)
-			@init_helper()
 
 		# position helper
-		@position_helper(ev)
+		@position_helper(ev, $target, diff)
 
 		if globalDrag.dragoverTarget and globalDrag.dragoverTarget[0] != $target[0]
 			Events.trigger
@@ -311,6 +327,7 @@ class Draggable extends DragDropSelect
 
 		if not globalDrag.dragoverTarget
 			globalDrag.dragoverTarget = $target
+			# console.debug "target:", $target
 			Events.trigger
 				type: "cui-dragenter"
 				node: globalDrag.dragoverTarget
@@ -337,6 +354,11 @@ class Draggable extends DragDropSelect
 	end_drag: (ev) ->
 		# CUI.debug globalDrag.dragoverTarget, ev.getType(), ev
 
+		if @isDestroyed()
+			return
+
+		helper_animate_back = false
+
 		if globalDrag.dragoverTarget
 			# CUI.debug "sending pf_dragleave", globalDrag.dragoverTarget
 			# CUI.debug "pf_dragleave.event", globalDrag.dragoverTarget[0]
@@ -354,226 +376,204 @@ class Draggable extends DragDropSelect
 
 				CUI.Events.trigger(drop_event)
 
-				if drop_event.isPropagationStopped()
-					remove_helper = true
-
 				# it can happen that the trigger deletes globalDrag by removing the
 				# draggable element, so we need to check if that has happened and
 				# do nothing in case
 				if not globalDrag
 					return
 
+				if drop_event.isPropagationStopped()
+					# currently unimplemented
+					helper_animate_back = false
+
 			globalDrag.dragoverTarget = null
 
 		# animate the helperNode back to its origin
-		if globalDrag.helperNode
-			if (remove_helper or @_helper_remove_always) and globalDrag.helperNode
-				globalDrag.helperNode.remove()
-			else
-				gd = globalDrag
-				helperNode = gd.helperNode
-
-				helperNode.remove()
-				gd.$source.removeClass(@_dragClass)
-
-				# gd.helperNode.animate
-				# 	top: "#{globalDrag.helperNodeStart.top}px"
-				# 	left: "#{globalDrag.helperNodeStart.left}px"
-				# ,
-				# 	duration: 400
-				# 	complete: =>
-				# 		helperNode.remove()
-				# 		gd.$source.removeClass(@_dragClass)
-			globalDrag.helperNode = null
-		else
-			globalDrag.$source.removeClass(@_dragClass)
-
+		globalDrag.$source.removeClass(@_dragClass)
+		globalDrag.helperNode?.remove()
 		@
 
-	# FIXME: the helper needs to use the "diff" provided by do_drag to
-	# position itself. by doing that we are then able
-	# to put axis/x and axis/y in do_drag as a featured functionality
+	position_helper: (ev, $target, diff) ->
+		if not globalDrag.helperNode
+			return
 
-	position_helper: (ev) ->
-		if globalDrag.helperNode
-			if (ev.pageY() or ev.pageX()) == 0
-				globalDrag.helperNode.css(display: "none")
-			else
-				pn = globalDrag.helperNode.parentNode
-				if not CUI.DOM.isPositioned(pn)
-					parentRelPos = CUI.DOM.getRelativePosition(pn)
-				else
-					parentRelPos = top: 0, left: 0
+		top = globalDrag.helperNodeStart.top + diff.y
+		left = globalDrag.helperNodeStart.left + diff.x
 
-				position = elementGetPosition(getCoordinatesFromEvent(ev), pn)
+		helper_pos =
+			top: top
+			left: left
+			start:
+				top: globalDrag.helperNodeStart.top
+				left: globalDrag.helperNodeStart.left
 
-				if @_helper_parent == "parent"
-					$contain = globalDrag.helperNode.parentNode
-				else
-					$contain = document.body
+		if @_helper_contain_element
+			dim_contain = CUI.DOM.getDimensions(@_helper_contain_element)
 
-				dim = CUI.DOM.getDimensions($contain)
+			pos =
+				x: helper_pos.left
+				y: helper_pos.top
+				w: globalDrag.helperNodeStart.width
+				h: globalDrag.helperNodeStart.height
 
-				# CUI.debug @_helper_parent, position, $contain[0].scrollHeight, globalDrag.helperNodeStart
-				if @_axis == "x"
-					top = globalDrag.helperNodeStart.top
-				else
-					top = position.top + (globalDrag.helperOffset?.top or 0) - globalDrag.helperNode.cssInt("border-top-width")
-					top_overlap = top - (dim.scrollHeight - globalDrag.helperNodeStart.height - dim.paddingBottom)
-					top_underlap = dim.paddingTop - top
-					# CUI.debug "top", $contain[0].scrollHeight, top, top_overlap, top_underlap
+			# pos is changed in place
+			Draggable.limitRect pos,
+				min_x: dim_contain.viewportLeft + dim_contain.borderLeftWidth
+				max_x: dim_contain.viewportRight - dim_contain.borderRightWidth
+				min_y: dim_contain.viewportTop + dim_contain.borderTopWidth
+				max_y: dim_contain.viewportBottom - dim_contain.borderBottomWidth
 
-					# dont let the helper overlap the containment
-					if top_overlap > 0
-						top -= top_overlap
-					else if top_underlap > 0
-						top += top_underlap
+			helper_pos =
+				top: pos.y
+				left: pos.x
 
-					top += parentRelPos.top
+			helper_pos.dragDiff =
+				y: helper_pos.top - globalDrag.helperNodeStart.top
+				x: helper_pos.left - globalDrag.helperNodeStart.left
 
-				if @_axis == "y"
-					left = globalDrag.helperNodeStart.left
-				else
-					left = position.left + (globalDrag.helperOffset?.left or 0) - globalDrag.helperNode.cssInt("border-left-width")
-					left_overlap = left - (dim.scrollWidth - globalDrag.helperNodeStart.width - dim.paddingRight)
-					left_underlap = dim.paddingLeft - left
-
-					# CUI.debug "left", $contain[0].scrollWidth, globalDrag.helperNodeStart.width, left, left_overlap, left_underlap
-					# dont let the helper overlap the containment
-					if left_overlap > 0
-						left -= left_overlap
-					else if left_underlap > 0
-						left += left_underlap
-
-					left += parentRelPos.left
-
-				get_diff = =>
-					x: helper_pos.left - globalDrag.helperNodeStart.left
-					y: helper_pos.top - globalDrag.helperNodeStart.top
-
-				# top = ev.originalEvent.pageY + globalDrag.helperOffset.top - offset.top
-				# left = ev.originalEvent.pageX + globalDrag.helperOffset.left - offset.left
-				helper_pos =
-					left: left
-					top: top
-					start:
-						left: globalDrag.helperNodeStart.left
-						top: globalDrag.helperNodeStart.top
-
-				helper_pos.dragDiff = get_diff()
-
-				@_set_helper_pos?(globalDrag, helper_pos)
-
-				globalDrag.dragDiff = get_diff()
-
-				# CUI.debug "FINAL:", "top", top, "left", left, dump(helper_pos)
-
-				globalDrag.helperNode.css
-					display: ""
-					top: helper_pos.top+"px"
-					left: helper_pos.left+"px"
-
-
-	get_clone: ($el) ->
-		clone = $($el[0].cloneNode(true))
-		clone.css
-			# marginLeft: 0
-			# marginRight: 0
-			# marginTop: 0
-			# marginBottom: 0
-			width: CUI.DOM.width($el)
-			height: CUI.DOM.height($el)
-
-		dim = DOM.getDimensions($el[0])
-					# fix width / height
-		DOM.setDimensions clone[0],
-			marginBoxWidth: dim.marginBoxWidth
-			marginBoxHeight: dim.marginBoxHeight
-
-		clone
-
-	init_helper: ->
-		$el = globalDrag.$source
-		# CUI.debug "init helper", $el[0]
-		if @_helper == "clone"
-			globalDrag.helperNode = @get_clone($el)
-
-			globalDrag.helperOffset =
-				top: -globalDrag.start.top
-				left: -globalDrag.start.left
-
-		else if CUI.isFunction(@_helper)
-			try
-				globalDrag.helperNode = @_helper(globalDrag)
-				if isEmpty(globalDrag.helperNode)
-					throw new Error("opts.helper did not return a helper node.")
-			catch e
-				CUI.error(e)
-				globalDrag.helperNode = $span().text("Helper Node Not Found")
 		else
-			globalDrag.helperNode = null
+			helper_pos.dragDiff =
+				y: diff.y
+				x: diff.x
 
-		if globalDrag.helperNode
-			globalDrag.helperNode.addClass("drag-drop-select-helper cui-demo-node-copyable")
+		@_helper_set_pos?(globalDrag, helper_pos)
 
-			Events.listen
-				type: "contextmenu"
-				node: globalDrag.helperNode
-				call: (ev) =>
-					ev.preventDefault()
-					ev.stopPropagation()
-					return false
+		CUI.DOM.setStyle globalDrag.helperNode,
+			top: helper_pos.top
+			left: helper_pos.left
 
-			switch @_helper_parent
-				when "document"
-					relPos = $el.offset()
-					document.body.appendChild(globalDrag.helperNode)
-				when "parent"
-					parents = CUI.DOM.parents($el[0], ((node) => CUI.DOM.isPositioned(node)), document.body)
-					assert(parents.length > 0, "Draggable.init_helper", "no parents found for DOM node", node: $el[0])
+		# console.debug "FINAL helper pos:", globalDrag, diff,  "top", top, "left", left, dump(helper_pos)
 
-					scroll = top: 0, left: 0
-					for p in parents
-						scroll.top += p.scrollTop
-						scroll.left += p.scrollLeft
+	getSourceCloneForHelper: ->
+		globalDrag.$source.cloneNode(true)
 
-					relPos = $el.relativePosition()
+	init_helper: (ev, $target, diff) ->
+		drag_source = globalDrag.$source
 
-					relPos.top -= scroll.top
-					relPos.left -= scroll.left
+		if @_helper == "clone"
+			hn = CUI.jQueryCompat(@getSourceCloneForHelper())
+			# offset the layer to the click
+			offset =
+				top: globalDrag.start.top
+				left: globalDrag.start.left
 
-					parents[parents.length-1].appendChild(globalDrag.helperNode)
+		if CUI.isFunction(@_helper)
+			hn = globalDrag.helperNode = @_helper(globalDrag)
+			offset =
+				top: 0
+				left: 0
+			set_dim = null
 
-			CUI.debug @_helper_parent, "relative position", relPos, globalDrag.helperNode
+		if not hn
+			return
 
-			if @_helper != "clone"
-				relPos.left += globalDrag.start.left
-				relPos.top += globalDrag.start.top
+		globalDrag.helperNode = hn
 
-			globalDrag.helperNode.addClass("cui-drag-drop-select-transparent")
-			globalDrag.helperNode.addClass("no-user-select")
+		hn.addClass("drag-drop-select-helper cui-demo-node-copyable cui-drag-drop-select-transparent")
 
-			globalDrag.helperNode.css
-				top: -1000
-				left: -1000
-				position: "absolute"
+		start =
+			top: globalDrag.startCoordinates.pageY - offset.top
+			left: globalDrag.startCoordinates.pageX - offset.left
+
+		CUI.DOM.setStyle hn,
+			position: "absolute"
+			top: start.top
+			left: start.left
+			zIndex: 1000
+
+		# console.debug "INITIAL POS", globalDrag.startCoordinates.pageY - offset.top, globalDrag.startCoordinates.pageX - offset.left
+		document.body.appendChild(hn)
+
+		if @_helper == "clone"
+			# set width & height
+			set_dim = DOM.getDimensions(drag_source)
+
+			DOM.setDimensions hn,
+				marginBoxWidth: set_dim.marginBoxWidth
+				marginBoxHeight: set_dim.marginBoxHeight
+
+		dim = DOM.getDimensions(hn)
+
+		# console.debug "globalDrag", globalDrag, offset, hn, set_dim.marginBoxWidth, set_dim.marginBoxHeight
+
+		start.width = dim.borderBoxWidth
+		start.height = dim.borderBoxHeight
+		start.marginTop = dim.marginTop
+		start.marginLeft = dim.marginLeft
+
+		globalDrag.helperNodeStart = start
 
 
-			globalDrag.helperNode.css
-				top: "#{relPos.top}px"
-				left: "#{relPos.left}px"
-				zIndex: 99999
+	# keep pos inside certain constraints
+	# pos.fix is an Array containing any of "n","w","e","s"
+	# limitRect: min_w, min_h, max_w, max_h, min_x, max_x, min_y, max_y
+	# !!! The order of the parameters is how we want them, in Movable it
+	# is different for compability reasons
+	@limitRect: (pos, limitRect, defaults={}) ->
+		pos.fix = pos.fix or []
+		for k, v of defaults
+			if isUndef(pos[k])
+				pos[k] = v
 
-			dim = DOM.getDimensions(globalDrag.helperNode[0])
+		# CUI.debug "limitRect", pos, defaults, limitRect
 
-			relPos.width = dim.marginBoxWidth
-			relPos.height = dim.marginBoxHeight
+		for key in [
+			"min_w"
+			"max_w"
+			"min_h"
+			"max_h"
+			"min_x"
+			"max_x"
+			"min_y"
+			"max_y"
+			]
+			value = limitRect[key]
+			if isUndef(value)
+				continue
 
-			relPos.marginTop = dim.marginTop
-			relPos.marginLeft = dim.marginLeft
+			assert(not isNaN(value), "#{getObjectClass(@)}.limitRect", "key #{key} in pos isNaN", pos: pos, defaults: defaults, limitRect: limitRect)
 
-			globalDrag.helperNodeStart = relPos
+			skey = key.substring(4)
+			mkey = key.substring(0,3)
+			if key == "max_x"
+				value -= pos.w
+			if key == "max_y"
+				value -= pos.h
+
+			diff = pos[skey] - value
+			if mkey == "min"
+				if diff >= 0
+					continue
+			if mkey == "max"
+				if diff <= 0
+					continue
+
+			if skey == "y" and "n" in pos.fix
+				pos.h -= diff
+				continue
+			if skey == "x" and "w" in pos.fix
+				pos.w -= diff
+				continue
+
+			# CUI.debug "correcting #{skey} by #{diff} from #{pos[skey]}"
+
+			pos[skey]-=diff
+
+			if skey == "h" and "s" in pos.fix
+				# CUI.debug "FIX y"
+				pos.y += diff
+			if skey == "w" and "e" in pos.fix
+				# CUI.debug "FIX x"
+				pos.x += diff
+			if skey == "x" and "e" in pos.fix
+				# CUI.debug "FIX w"
+				pos.w += diff
+			if skey == "y" and "s" in pos.fix
+				# CUI.debug "FIX h"
+				pos.h += diff
+
+		# CUI.debug "limitRect AFTER", pos, diff
+		return pos
 
 
-		# CUI.debug "drag class", @options.dragClass
-		$el.addClass(@_dragClass)
+Draggable = CUI.Draggable

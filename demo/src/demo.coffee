@@ -153,6 +153,7 @@ class RunDemo extends CUI.Element
 						window.localStorage.setItem("theme", item.value)
 						# FIXME: once "ng" is finished, we can remove the reload
 						if reload
+							CUI.toaster(text: "Reloading...", show_ms: null)
 							document.location.reload()
 					.fail =>
 						CUI.alert
@@ -376,7 +377,7 @@ CUI.ready ->
 					el.remove()
 					i++
 
-				CUI.toast(text: i+" Node(s) removed.")
+				CUI.toaster(text: i+" Node(s) removed.")
 				return
 
 			i = 0
@@ -388,7 +389,7 @@ CUI.ready ->
 				console.debug "Node copied. Original:", node.parentNode, node, "Copy:", node_copy
 				i++
 
-			CUI.toast(text: i+" Node(s) copied.")
+			CUI.toaster(text: i+" Node(s) copied.")
 			return
 
 	new RunDemo()

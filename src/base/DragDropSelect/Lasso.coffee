@@ -1,6 +1,6 @@
 globalDrag = null
 
-class Lasso extends Draggable
+class CUI.Lasso extends CUI.Draggable
 	@cls = "lasso"
 
 	initOpts: ->
@@ -19,6 +19,11 @@ class Lasso extends Draggable
 				default: "cui-lasso"
 				check: String
 
+		@removeOpt("helper")
+
+	readOpts: ->
+		super()
+		@_helper = null
 
 	lasso_cls: "cui-drag-drop-select-lasso-element-in-lasso"
 
@@ -112,3 +117,6 @@ class Lasso extends Draggable
 			globalDrag.elements = @get_lassoed_elements()
 			@_selected(ev, globalDrag)
 		globalDrag.lasso.remove()
+
+
+Lasso = CUI.Lasso

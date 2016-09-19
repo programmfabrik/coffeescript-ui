@@ -429,6 +429,119 @@ class CUI.DOM extends CUI.Element
 			element.classList.remove(_cls)
 		element
 
+
+	# returns the relative position of either
+	# the next scrollable parent or positioned parent
+	@getRelativeOffset: (node, untilElem = null) ->
+		assert(isElement(node), "CUI.DOM.getRelativePosition", "Node needs to HTMLElement.", node: node)
+		dim_node = CUI.DOM.getDimensions(node)
+		parent = node.parentNode
+		while true
+			dim = CUI.DOM.getDimensions(parent)
+
+			if parent == document.body or
+				parent == document.documentElement or
+				parent == document
+					offset =
+						parent: parent
+						top: dim_node.viewportTopMargin + document.body.scrollTop
+						left: dim_node.viewportLeftMargin + document.body.scrollLeft
+					break
+
+			if dim.canHaveScrollbar or
+				parent == node.offsetParent or
+				parent == untilElem
+					offset =
+						parent: parent
+						top: dim_node.viewportTopMargin - (dim.viewportTop + dim.borderTop) + dim.scrollTop
+						left: dim_node.viewportLeftMargin - (dim.viewportLeft + dim.borderTop) + dim.scrollLeft
+
+					break
+
+			parent = parent.parentNode
+
+
+		# console.debug parent, node, offset.top, offset.left
+		return offset
+
+
+	@initAnimatedClone: (node) ->
+
+		@removeAnimatedClone(node)
+
+
+		clone = node.cloneNode(true)
+
+		node.__clone = clone
+
+		CUI.DOM.setStyle clone,
+			position: "absolute"
+			"pointer-events": "none"
+			# left: "300px"
+
+		node.style.opacity = "0"
+
+		dim = DOM.getDimensions(node)
+		CUI.DOM.setDimension(clone, "marginBoxWidth", dim.marginBoxWidth)
+		CUI.DOM.setDimension(clone, "marginBoxHeight", dim.marginBoxHeight)
+
+		CUI.DOM.addClass(clone, "cui-dom-animated-clone cui-demo-node-copyable")
+
+		div = CUI.DOM.element("div", style: "position: absolute; opacity: 0; width: 1px; height: 1px;")
+		clone.appendChild(div)
+
+		# measure
+		for child, idx in node.children
+			clone_child = clone.children[idx]
+			offset = @getRelativeOffset(child, node)
+
+			child.__idx = idx
+			CUI.DOM.setStyle clone_child,
+				position: "absolute"
+				# transition: "all 0.5s ease-out"
+				top: offset.top
+				left: offset.left
+
+
+		CUI.DOM.insertAfter(node, clone)
+
+		node.__clone.__syncScroll = =>
+			div.style.top = (node.scrollHeight-1)+"px";
+			div.style.left = (node.scrollWidth-1)+"px";
+			clone.scrollTop = node.scrollTop
+			clone.scrollLeft = node.scrollLeft
+
+		Events.listen
+			type: "scroll"
+			instance: clone
+			node: node
+			call: =>
+				node.__clone.__syncScroll()
+
+		node.__clone.__syncScroll()
+		node
+
+	@syncAnimatedClone: (node) ->
+		clone = node.__clone
+
+		for child, idx in node.children
+			offset_new = @getRelativeOffset(child, node)
+			clone_child = clone.children[child.__idx]
+			CUI.DOM.setStyle clone_child,
+				top: offset_new.top
+				left: offset_new.left
+		node
+
+	@removeAnimatedClone: (node) ->
+		if not node.__clone
+			return
+
+		Events.ignore(instance: node.__clone)
+		node.style.opacity = ""
+		node.__clone.remove()
+		node
+
+
 	# sets the absolute position of an element
 	@setAbsolutePosition: (element, offset) ->
 		assert(isElement(element), "DOM.setAbsolutePosition", "element needs to be a jQuery element", element: element, offset: offset)
@@ -574,11 +687,21 @@ class CUI.DOM extends CUI.Element
 		else
 			false
 
+	# Inserts the node like array "slice"
+	@insertChildAtPosition: (node, node_insert, pos) ->
+		assert(isInteger(pos) and pos >= 0 and pos <= node.children.length, "CUI.DOM.insertAtPosition", "Unable to insert node at position ##{pos}.", node: node, node_insert: node_insert, pos: pos)
+		if pos == node.children.length
+			node.appendChild(node_insert)
+		else if node.children[pos] != node_insert
+			@insertBefore(node.children[pos], node_insert)
+
 	@insertBefore: (node, node_before) ->
 		node.parentNode.insertBefore(node_before, node)
+		node
 
 	@insertAfter: (node, node_after) ->
 		node.parentNode.insertBefore(node_after, node.nextElementSibling)
+		node
 
 	@is: (node, selector) ->
 		if not node
@@ -628,20 +751,13 @@ class CUI.DOM extends CUI.Element
 	# returns the element matching first the selector
 	# upwards, ends at untilDocElem
 	@elementsUntil: (docElem, selector, untilDocElem) ->
-		sel_func = CUI.isFunction(selector)
 
 		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof HTMLElement.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
 		testDocElem = docElem
 		path = [testDocElem]
 		while true
-			if selector
-				if sel_func
-					if selector(testDocElem)
-						return path
-				else
-					# CUI.error testDocElem, selector
-					if @is(testDocElem, selector)
-						return path
+			if selector and @is(testDocElem, selector)
+				return path
 
 			if testDocElem == untilDocElem or
 				testDocElem == window
@@ -792,9 +908,16 @@ class CUI.DOM extends CUI.Element
 		dim.marginBoxHeight = rect.height + dim.marginVertical
 
 		dim.viewportTop = rect.top
+		dim.viewportTopMargin = rect.top - dim.marginTop
 		dim.viewportLeft = rect.left
+		dim.viewportLeftMargin = rect.left - dim.marginLeft
 		dim.viewportBottom = rect.bottom
+		dim.viewportBottomMargin = rect.bottom + dim.marginBottom
 		dim.viewportRight = rect.right
+		dim.viewportBottomMargin = rect.bottom + dim.marginRight
+
+		dim.viewportCenterTop = rect.top + ((rect.bottom - rect.top) / 2)
+		dim.viewportCenterLeft = rect.left + ((rect.right - rect.left) / 2)
 
 		# passthru keys
 		for k in [
@@ -859,15 +982,19 @@ class CUI.DOM extends CUI.Element
 
 
 		if dim.scrollHeight > dim.clientHeight
+			dim.hasVerticalScrollbar = true
 			dim.verticalScrollbarWidth = dim.contentBoxWidth - dim.clientWidth
 		else
 			dim.verticalScrollbarWidth = 0
 
 		if dim.scrollWidth > dim.clientWidth
+			dim.hasHorizontalScrollbar = true
 			dim.horizontalScrollbarHeight = dim.contentBoxHeight - dim.clientHeight
 		else
 			dim.horizontalScrollbarHeight = 0
 
+		dim.hasScrollbar = dim.hasVerticalScrollbar or dim.hasHorizontalScrollbar
+		dim.canHaveScrollbar = cs.overflowX in ["auto", "scroll"] or cs.overflowY in ["auto", "scroll"]
 		dim
 
 	# returns the scrollable parent
@@ -875,7 +1002,7 @@ class CUI.DOM extends CUI.Element
 		parents = []
 		for parent, idx in DOM.parents(node)
 			dim = DOM.getDimensions(parent)
-			if dim.horizontalScrollbarHeight > 0 or dim.verticalScrollbarWidth > 0
+			if dim.canHaveScrollbar
 				parents.push(parent)
 		parents
 

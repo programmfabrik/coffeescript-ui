@@ -1368,25 +1368,26 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-
 // Options
-.cui-options-form-table {
-	&.cui-drag-drop-select-sortable {
-		> .cui-tr {
-			> .cui-form-td.cui-form-left {
-				width: 10px !important;
-				.cui-options-sortable-drag-handle {
-					&:hover {
-						opacity: 0.8;
-					}
-					flex: 1 1 auto;
-					cursor: move;
-					background: yellow;
-				}
-			}
-		}
+.cui-tmpl-options-activatable {
+	.cui-options-active,
+	.cui-options-inactive {
+		border: 1px solid blue;
 	}
 }
+
+.cui-options-sortable-option {
+	flex-direction: row;
+	.cui-options-sortable-drag-handle {
+		width: 10px;
+		&:hover {
+			opacity: 0.8;
+		}
+		cursor: move;
+		background: yellow;
+	}
+}
+
 
 // DateTime
 .cui-date-time {
@@ -1524,7 +1525,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-
+.cui-dom-animated-clone * {
+	transition: all 0.3s ease;
+}
 
 // Droppable
 
@@ -1628,6 +1631,11 @@ a[role="button"].cui-button-appearance-link {
 	opacity: 0.8;
 }
 
+// Sortable
+
+.cui-sortable-placeholder {
+	opacity: 0;
+}
 
 
 

@@ -1,6 +1,6 @@
 globalDrag = null
 
-class Droppable extends DragDropSelect
+class CUI.Droppable extends CUI.DragDropSelect
 	@cls = "droppable"
 
 	initOpts: ->
@@ -76,6 +76,14 @@ class Droppable extends DragDropSelect
 		super()
 
 	init: ->
+		# console.error "register droppable on", @element
+		Events.listen
+			node: @element
+			type: ["cui-dragenter", "cui-drop", "cui-dragleave", "cui-dragover"]
+			call: (ev) =>
+				console.debug ev.getType(), ev
+
+
 		Events.listen
 			node: @element
 			type: "cui-drop"
@@ -253,3 +261,5 @@ class Droppable extends DragDropSelect
 		else
 			position: "before", distance: dist_before
 
+
+Droppable = CUI.Droppable

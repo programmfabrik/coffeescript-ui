@@ -216,12 +216,9 @@ class Playground extends Demo
 				onClick: =>
 					ms = 3000
 					steps = 100
-					toaster = new CUI.Toaster
+					toaster = CUI.toaster
 						show_ms: ms
 						text: "Toaster 100!"
-
-					toaster.open()
-
 					c = 0
 					counter = =>
 						c = c + 1
@@ -386,7 +383,7 @@ class Playground extends Demo
 			input: ""
 			textarea: ""
 			password: ""
-			options_sorted: []
+			options_sorted: [2,4]
 			table: []
 			select: 21
 			select_mini: 5
@@ -430,16 +427,22 @@ class Playground extends Demo
 			radio: false
 			options: [
 				text: "One"
+				value: 1
 			,
 				text: "Two"
+				value: 2
 			,
 				text: "Three"
+				value: 3
 			,
 				text: "Four"
+				value: 4
 			,
 				text: "Five"
+				value: 5
 			,
 				text: "Six"
+				value: 6
 			]
 
 			name: "options_sorted"

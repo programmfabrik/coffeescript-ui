@@ -289,7 +289,6 @@ class CUI.Layer extends CUI.DOM
 				default: false
 				check: Boolean
 
-
 			show_ms:
 				default: 700
 				check: (v) =>
@@ -330,14 +329,6 @@ class CUI.Layer extends CUI.DOM
 
 	position: (ev) ->
 		#
-		set_more_dim = (dim) ->
-			if dim == null
-				return
-
-			dim.halfHeight = dim.borderBoxHeight / 2
-			dim.halfWidth = dim.borderBoxWidth / 2
-			dim.viewportCenterHorizontal = dim.viewportLeft + dim.halfWidth
-			dim.viewportCenterVertical = dim.viewportTop + dim.halfHeight
 
 		dim_window = CUI.getViewport()
 
@@ -392,7 +383,6 @@ class CUI.Layer extends CUI.DOM
 					marginBottom: 0
 
 			dim_pointer[placement].direction = pointer_direction
-			set_more_dim(dim_pointer[placement])
 
 		# reset previously set layer dimensions
 		CUI.DOM.setStyle @__layer.DOM,
@@ -427,11 +417,10 @@ class CUI.Layer extends CUI.DOM
 				viewportLeft: 0
 				viewportBottom: dim_window.height
 				viewportRight: dim_window.width
+				viewportCenterLeft: dim_window.width / 2
+				viewportCenterTop: dim_window.height / 2
 				borderBoxWidth: dim_window.width
 				borderBoxHeight: dim_window.height
-
-		set_more_dim(dim_element)
-		set_more_dim(dim_layer)
 
 		vp_pl = {}
 
@@ -600,7 +589,7 @@ class CUI.Layer extends CUI.DOM
 				when "right"
 					layer_pos.left = vp.right - layer_pos.width
 				when "center"
-					layer_pos.left = dim_element.viewportCenterHorizontal - layer_pos.width / 2
+					layer_pos.left = dim_element.viewportCenterLeft - layer_pos.width / 2
 
 			switch vp.align_vertical
 				when "top"
@@ -608,7 +597,7 @@ class CUI.Layer extends CUI.DOM
 				when "bottom"
 					layer_pos.top = vp.bottom - layer_pos.height
 				when "center"
-					layer_pos.top = dim_element.viewportCenterVertical - layer_pos.height / 2
+					layer_pos.top = dim_element.viewportCenterTop - layer_pos.height / 2
 
 
 			if vp.dim_pointer
@@ -619,7 +608,7 @@ class CUI.Layer extends CUI.DOM
 					when "right"
 						pointer_pos.left = dim_element.viewportLeft - vp.dim_pointer.borderBoxWidth - vp.dim_pointer.marginLeft
 					when "center"
-						pointer_pos.left = dim_element.viewportCenterHorizontal - vp.dim_pointer.borderBoxWidth / 2
+						pointer_pos.left = dim_element.viewportCenterLeft - vp.dim_pointer.borderBoxWidth / 2
 
 				switch vp.pointer_align_vertical
 					when "top"
@@ -627,7 +616,7 @@ class CUI.Layer extends CUI.DOM
 					when "bottom"
 						pointer_pos.top = dim_element.viewportTop - vp.dim_pointer.marginBoxHeight + vp.dim_pointer.marginTop
 					when "center"
-						pointer_pos.top = dim_element.viewportCenterVertical - vp.dim_pointer.borderBoxHeight / 2
+						pointer_pos.top = dim_element.viewportCenterTop - vp.dim_pointer.borderBoxHeight / 2
 
 				pointer_pos.width = vp.dim_pointer.borderBoxWidth
 				pointer_pos.height = vp.dim_pointer.borderBoxHeight

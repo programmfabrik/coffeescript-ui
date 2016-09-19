@@ -3,7 +3,7 @@ class CUI.Options extends CUI.DataField
 		super(@opts)
 		@DOM.addClass("cui-padding-reset")
 		if @_sortable
-			@DOM.addClass("cui-options-sortable")
+			@DOM.addClass("cui-options--sortable")
 
 	initOpts: ->
 		super()
@@ -37,6 +37,9 @@ class CUI.Options extends CUI.DataField
 			title:
 				check: String
 
+			activatable:
+				check: Boolean
+
 			sortable:
 				check: Boolean
 
@@ -54,6 +57,32 @@ class CUI.Options extends CUI.DataField
 		assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
 		assert(not @_sortable or not @_horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
 
+		if @_sortable and @_activatable == undefined
+			@_activatable = true
+
+		assert(not (@_sortable and not @_activatable), "new Options", "opts.sortable needs opts.activatable to be set.", opts: @opts)
+
+
+	getTemplate: ->
+		if not CUI.__ng__
+			return super()
+
+		if @_activatable
+			@__tmpl = new Template
+				name: "options-activatable"
+				map_prefix: "options"
+				map:
+					top: true
+					bottom: true
+					active: true
+					inactive: true
+		else
+			@__tmpl = new Template
+				name: "options"
+				map:
+					top: true
+					bottom: true
+					center: true
 
 	init: ->
 		switch @_radio
@@ -64,12 +93,6 @@ class CUI.Options extends CUI.DataField
 			else
 				@__radio = @_radio
 		@__options_data = {}
-
-	disable: ->
-		# proxy
-
-	enable: ->
-		# proxy
 
 	setData: (data) ->
 		super(data)
@@ -168,6 +191,16 @@ class CUI.Options extends CUI.DataField
 					CUI.debug "value is ok.", @hasData(), @getData()[@_name]
 					return
 		throw new CheckValueError("Value is not in the options.")
+
+	disable: ->
+		if not CUI.__ng__
+			return
+		super()
+
+	enable: ->
+		if not CUI.__ng__
+			return
+		super()
 
 	render: ->
 		super()
@@ -360,22 +393,56 @@ class CUI.Options extends CUI.DataField
 			else
 				top = undefined
 
-			@__optionsForm = new Form
-				class: "cui-options-form cui-form-options" # form-options needed by old design
-				horizontal: @_horizontal
-				top: top
-				bottom: bottom
-				fields: @__checkboxes
+			if CUI.__ng__
+				@replace(bottom, "bottom")
+				@replace(top, "top")
 
-			# CUI.debug "Options", @__checkboxes.length, @__options.length, @__options
+				if @_activatable
+					@empty("active")
+					@empty("inactive")
+				else
+					@empty("center")
 
-			@replace(@__optionsForm)
-			@proxy(@__optionsForm, ["disable", "enable"])
-			@__optionsForm.render()
+				for cb in @__checkboxes
+					cb.start()
+					if @_sortable and cb.isActive()
+						# we need extra markup around our checkbox
+						el = CUI.DOM.element("DIV", class: "cui-options-sortable-option")
+						drag_handle = CUI.DOM.element("DIV", class: "cui-options-sortable-drag-handle")
+						el.appendChild(drag_handle)
+						el.appendChild(cb.DOM)
+					else
+						el = cb.DOM
+
+					if cb.isActive() and @_activatable
+						@append(el, "active")
+					else if @_activatable
+						@append(el, "inactive")
+					else
+						@append(el, "center")
+
+				sortable_element = @__tmpl.map.active
+				sortable_selector = ".cui-options-sortable-drag-handle"
+			else
+				@__optionsForm = new Form
+					class: "cui-options-form cui-form-options" # form-options needed by old design
+					horizontal: @_horizontal
+					top: top
+					bottom: bottom
+					fields: @__checkboxes
+
+				@replace(@__optionsForm)
+				@proxy(@__optionsForm, ["disable", "enable"])
+				@__optionsForm.render()
+
+				sortable_element = @__optionsForm.getTable()
+				sortable_selector = undefined
+
 			if @_sortable
 				new Sortable
 					axis: "y"
-					element: @__optionsForm.getTable() # this is the tbody
+					element: sortable_element
+					selector: sortable_selector
 					sorted: (ev, from_idx, to_idx) =>
 						console.debug "from:", from_idx, "to:", to_idx
 						# CUI.debug "options order before sort", @__options_order.join(", ")

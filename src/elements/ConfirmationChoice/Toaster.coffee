@@ -12,12 +12,15 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 	open: ->
 		# super sets a deferred
 		super()
-		CUI.setTimeout
-			ms: @_show_ms
-			call: =>
-				@hide()
-				@__deferred.resolve()
+		if @_show_ms > 0
+			CUI.setTimeout
+				ms: @_show_ms
+				call: =>
+					@hide()
+					@__deferred.resolve()
 		return @__deferred.promise()
 
 CUI.toaster = (opts=text: "CUI.toaster") ->
-	new CUI.Toaster(opts).open()
+	toaster = new CUI.Toaster(opts)
+	toaster.open()
+	toaster
