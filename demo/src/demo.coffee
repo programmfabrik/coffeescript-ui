@@ -367,34 +367,7 @@ CUI.ready ->
 			# store mouse position
 			mouse_pos = x: ev.pageX(), y: ev.pageY()
 
-	Events.listen
-		type: "keyup"
-		capture: true
-		call: (ev) =>
-			if not (ev.altKey() and ev.keyCode() == 67) # ALT-C
-				return
-
-			if ev.shiftKey()
-				# remove all nodes
-				i = 0
-				for el in DOM.matchSelector(document.documentElement, ".cui-demo-node-copy")
-					el.remove()
-					i++
-
-				CUI.toaster(text: i+" Node(s) removed.")
-				return
-
-			i = 0
-			for node in CUI.DOM.matchSelector(document.documentElement, ".cui-demo-node-copyable")
-				node_copy = node.cloneNode(true)
-				node.parentNode.appendChild(node_copy)
-				CUI.DOM.insertAfter(node, node_copy)
-				node_copy.classList.add("cui-demo-node-copy")
-				console.debug "Node copied. Original:", node.parentNode, node, "Copy:", node_copy
-				i++
-
-			CUI.toaster(text: i+" Node(s) copied.")
-			return
+	CUI.initNodeDebugCopy()
 
 	new RunDemo()
 

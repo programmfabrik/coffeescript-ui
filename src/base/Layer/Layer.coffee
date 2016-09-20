@@ -1036,7 +1036,7 @@ class CUI.Layer extends CUI.DOM
 				instance: @
 				node: @__layer
 				call: (ev) =>
-					console.info("Layer caught event:", ev.getType)
+					# console.info("Layer caught event:", ev.getType)
 					@position()
 
 		Events.listen
@@ -1048,7 +1048,7 @@ class CUI.Layer extends CUI.DOM
 					# ignore the event
 					return
 
-				console.info("Layer caught event:", ev.getType)
+				# console.info("Layer caught event:", ev.getType)
 				@position()
 				return
 

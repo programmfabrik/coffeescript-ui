@@ -7,8 +7,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 		super()
 		@addOpts
 			accept:
-				default: (ev, globalDrag, $target) ->
-					true
 				check: Function
 
 			drop:
@@ -35,13 +33,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 				check: (v) =>
 					isString(v) or CUI.isFunction(v)
 
-			axis:
-				mandatory: true
-				default: "x"
-				check: ["x", "y"]
-
 	accept: (ev, info) ->
-		@_accept(ev, info)
+		@_accept?(ev, info)
 
 	destroy: ->
 		@removeHelper()
@@ -54,7 +47,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if @_dropHelper
 			assert(not @_selector or @_targetHelper, "new Droppable", "opts.dropHelper does only work without opts.selector or with opts.targetHelper and opts.selector. needs opts.selector to be set.", opts: @opts)
-			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper cui-demo-node-copyable")
+			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper cui-debug-node-copyable")
 
 		return
 
@@ -63,15 +56,23 @@ class CUI.Droppable extends CUI.DragDropSelect
 		if @__selectedTarget
 			CUI.DOM.removeClass(@__selectedTarget, @_hoverClass)
 			@__selectedTarget = null
+
 		if @__dropHelper
 			@__dropHelper.remove()
-		CUI.DOM.removeAnimatedClone(@_element)
+
+		if @_targetHelper
+			for el in CUI.DOM.findElements(@_element, @_selector)
+				el.classList.remove("cui-droppable-target-helper")
+
+		@__dropTarget = undefined
+		@__dropTargetPos = undefined
 
 	resetMargin: ->
 		if not @__resetMargin
 			return
 
-		CUI.DOM.setStyleOne(@__resetMargin, "margin", "")
+		@__resetMargin.classList.remove(@__resetMargin.__target_helper_class)
+		delete(@__resetMargin.__target_helper_class)
 		delete(@__resetMargin)
 		delete(@__saveZoneDims)
 
@@ -79,7 +80,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 		if not @__saveZoneDims
 			return false
 
-		buf = 10 # add extra 10 pixels
+		buf = 5 # add extra pixels
 		for zone in @__saveZoneDims
 			if (zone.viewportTopMargin - buf) <= coord.pageY <= (zone.viewportBottomMargin + buf) and
 				(zone.viewportLeftMargin - buf) <= coord.pageX <= (zone.viewportRightMargin + buf)
@@ -112,18 +113,41 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 			if CUI.DOM.closest(new_target, ".cui-drag-drop-select-droppable") != @_element
 				# outside us
-				@__dropTargetPos = undefined
-				@__dropTarget = undefined
 				@removeHelper()
-				return
+				return true
 
 			if @_targetHelper or not @_selector
 				# ignore the event
 				return
 
+		acceptable = =>
+			if @accept(ev, info) == false
+				@removeHelper()
+				# console.error("Cannot accept drop here...")
+				return false
+			else
+				return true
+
 		if @__dropTarget == undefined
+			# check axis
+			last_dim = null
+			@__axis = null
 			for el in CUI.DOM.findElements(@_element, @_selector)
-				el.__orig_dim = CUI.DOM.getDimensions(el)
+				dim = CUI.DOM.getDimensions(el)
+				if last_dim and not @__axis
+					if last_dim.viewportLeft == dim.viewportLeft
+						@__axis = "y"
+
+					if last_dim.viewportTop == dim.viewportTop
+						@__axis = "x"
+
+				if @_targetHelper
+					el.classList.add("cui-droppable-target-helper")
+
+				last_dim = dim
+
+			if not @__axis
+				@__axis = "x"
 
 			@__dropTargetPos = null
 			@__dropTarget = null
@@ -135,6 +159,14 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@__selectedTarget = @_element
 
 		if not @_targetHelper
+
+			if not acceptable()
+				@removeHelper()
+				if @_selector and not @__selectedTarget
+					# bubble
+					return true
+				return
+
 			@__dropTarget = @__selectedTarget
 			@__dropTargetPos = null
 
@@ -142,72 +174,54 @@ class CUI.Droppable extends CUI.DragDropSelect
 				CUI.DOM.addClass(@__selectedTarget, @_hoverClass)
 			else
 				@syncDropHelper()
-			return
 
-		# We have a targetHelper from here below
-		if not CUI.DOM.hasAnimatedClone(@_element)
-			CUI.DOM.initAnimatedClone(@_element)
+			return
 
 		if not @__selectedTarget
 			if @insideSaveZone(coord)
+				console.info("Inside save zone...")
 				return
 
 			@resetMargin()
 			if @__dropHelper
+				if not acceptable()
+					return
+
 				@__dropTarget = "last"
 				@__dropTargetPos = "after"
 				@syncDropHelper()
 			else
-				@__dropTargetPos = null
-				@__dropTarget = null
+				console.info("No selected target, no dropHelper...")
+				@removeHelper()
+				# bubble
+				return true
 
-			CUI.DOM.syncAnimatedClone(@_element)
 			return
 
 		@__dropHelper?.remove()
 
 		dim = CUI.DOM.getDimensions(@__selectedTarget)
 
-		if (@_axis == "x" and coord.pageX > dim.viewportCenterLeft) or
-			(@_axis == "y" and coord.pageY > dim.viewportCenterTop)
+		if (@__axis == "x" and coord.pageX > dim.viewportCenterLeft) or
+			(@__axis == "y" and coord.pageY > dim.viewportCenterTop)
 				@__dropTargetPos = "after"
 		else
 			@__dropTargetPos = "before"
 
-		# reset this after we measure, so that the
-		# viewport is as the user sees it
-		@resetMargin()
-
-		dim = @__selectedTarget.__orig_dim
-
-		if @_axis == "x"
-			margin = dim.borderBoxWidth / 2
-		else
-			margin = dim.borderBoxHeight / 2
-
-		if @_axis == "x"
-			if  @__dropTargetPos == "after"
-				margin_key = "marginRight"
-			else
-				margin_key = "marginLeft"
-		else
-			if  @__dropTargetPos == "after"
-				margin_key = "marginBottom"
-			else
-				margin_key = "marginTop"
-
-		# console.debug "margin_key", margin_key, "margin", margin, @__dropTargetPos, @_axis
-
-		margin = margin + dim[margin_key]
-
-		CUI.DOM.setStyleOne(@__selectedTarget, margin_key, margin)
-
-		@__resetMargin = @__selectedTarget
 		@__dropTarget = @__selectedTarget
 
-		@__saveZoneDims = [dim, CUI.DOM.getDimensions(@__selectedTarget)]
+		helper_cls = "cui-droppable-target-helper-"+@__axis+"--"+@__dropTargetPos
 
-		CUI.DOM.syncAnimatedClone(@_element)
+		if @__resetMargin == @__selectedTarget and @__selectedTarget.__target_helper_class == helper_cls
+			; # target helper is still ok
+		else
+			@resetMargin()
+			@__saveZoneDims = [ CUI.DOM.getDimensions(@__selectedTarget) ]
+			@__selectedTarget.__target_helper_class = helper_cls
+			@__selectedTarget.addClass(@__selectedTarget.__target_helper_class)
+			@__saveZoneDims.push(CUI.DOM.getDimensions(@__selectedTarget))
+			@__resetMargin = @__selectedTarget
+
 		return
 
 	init: ->
@@ -217,11 +231,11 @@ class CUI.Droppable extends CUI.DragDropSelect
 			node: @element
 			type: "cui-drop"
 			instance: @
-			call: (ev) =>
-				@removeHelper()
+			call: (ev, info) =>
 
 				# CUI.debug "cui-drop", ev.getCurrentTarget()
 				if not @__dropTarget
+					@removeHelper()
 					console.warn("No drop target.")
 					return
 
@@ -231,20 +245,17 @@ class CUI.Droppable extends CUI.DragDropSelect
 				else
 					dropTarget = @__dropTarget
 
-				info =
-					globalDrag: globalDrag
-					dropTarget: dropTarget
+				info.dropTarget = dropTarget
 
 				if @_targetHelper
 					info.dropTargetPos = @__dropTargetPos
 
+				@removeHelper()
 				console.debug "cui-drop", info
 				if @accept(ev, info) != false
 					ev.stopPropagation()
 					@_drop(ev, info)
 
-				@__dropTarget = undefined
-				@__dropTargetPos = undefined
 				return
 
 		Events.listen
@@ -252,9 +263,11 @@ class CUI.Droppable extends CUI.DragDropSelect
 			type: ["cui-dragover", "cui-dragenter", "cui-dragleave"]
 			instance: @
 			call: (ev, info) =>
-				ev.stopPropagation()
 
 				@syncTargetHelper(ev, info)
+				ev.stopPropagation()
+				return
+
 
 
 Droppable = CUI.Droppable

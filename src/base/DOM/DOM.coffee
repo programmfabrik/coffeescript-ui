@@ -254,8 +254,8 @@ class CUI.DOM extends CUI.Element
 	@children: (node, filter) ->
 		children = []
 
-		for child in node.children
-			if not filter or @is(node, filter)
+		for child, idx in node.children
+			if not filter or @is(child, filter)
 				children.push(child)
 
 		children
@@ -475,13 +475,22 @@ class CUI.DOM extends CUI.Element
 	@hasAnimatedClone: (node) ->
 		!!node.__clone
 
-	@initAnimatedClone: (node) ->
+	# if selector is set, watch matched nodes
+	#
+	@initAnimatedClone: (node, selector) ->
 
 		@removeAnimatedClone(node)
 
 		clone = node.cloneNode(true)
 
 		node.__clone = clone
+
+		if selector
+			watched_nodes = CUI.DOM.matchSelector(node, selector)
+			clone.__watched_nodes = CUI.DOM.matchSelector(clone, selector)
+		else
+			watched_nodes = CUI.DOM.children(node)
+			clone.__watched_nodes = CUI.DOM.children(clone)
 
 		offset = CUI.DOM.getRelativeOffset(node)
 
@@ -499,7 +508,7 @@ class CUI.DOM extends CUI.Element
 		node.style.opacity = "0"
 
 		dim = DOM.getDimensions(node)
-		CUI.DOM.addClass(clone, "cui-dom-animated-clone cui-demo-node-copyable")
+		CUI.DOM.addClass(clone, "cui-dom-animated-clone cui-debug-node-copyable")
 
 		# We need this micro DIV to push the scroll height / left
 		div = CUI.DOM.element("div", style: "position: absolute; opacity: 0; width: 1px; height: 1px;")
@@ -510,9 +519,8 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.setDimension(clone, "marginBoxWidth", dim.marginBoxWidth)
 		CUI.DOM.setDimension(clone, "marginBoxHeight", dim.marginBoxHeight)
 
-		for child, idx in node.children
-			child.__idx = idx
-			clone_child = clone.children[idx]
+		for clone_child, idx in clone.__watched_nodes
+			clone_child.__watched_node = watched_nodes[idx]
 
 			CUI.DOM.setStyle clone_child,
 				position: "absolute"
@@ -542,11 +550,12 @@ class CUI.DOM extends CUI.Element
 		if not clone
 			return
 
-		for child, idx in node.children
+		for clone_child, idx in clone.__watched_nodes
 
-			clone_child = clone.children[child.__idx]
-			if not clone_child
-				continue
+			child = clone_child.__watched_node
+
+			# We don't check if the child is still in DOM, for
+			# now this case is being ignored.
 
 			offset_new = @getRelativeOffset(child, node, true)
 
@@ -916,7 +925,10 @@ class CUI.DOM extends CUI.Element
 		cs = @getComputedStyle(docElem)
 		rect = @getRect(docElem)
 
-		dim = {}
+		dim =
+			computedStyle: cs
+			clientBoundingRect: rect
+
 		for k1 in ["margin", "padding", "border"]
 			for k2 in ["Top", "Right", "Bottom", "Left"]
 
@@ -1113,7 +1125,7 @@ class CUI.DOM extends CUI.Element
 			if borderBox
 				set("height", set_dim.marginBoxHeight - dim.marginVertical)
 			else
-				set("height", set_dim.marginBoxHeight - dim.marginVertical - dim.paddingHorizontal - dim.borderHorizontal)
+				set("height", set_dim.marginBoxHeight - dim.marginVertical - dim.paddingVertical - dim.borderHorizontal)
 
 			delete(set_dim.marginBoxHeight)
 
@@ -1177,10 +1189,10 @@ class CUI.DOM extends CUI.Element
 		docElem
 
 	# remove all children from a DOM node (detach)
-	@removeChildren: (docElem) ->
+	@removeChildren: (docElem, filter) ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.removeChildren", "element needs to be instance of HTMLElement", element: docElem)
-		while docElem.children.length
-			docElem.removeChild(docElem.firstChild)
+		for child in @children(docElem, filter)
+			docElem.removeChild(child)
 		return docElem
 
 	@showElement: (docElem) ->

@@ -114,7 +114,6 @@ class DragDropSelectDemo extends Demo
 			element: sort_container
 			targetHelper: true
 			selector: ".drag-drop-select-demo-sortable-container-item"
-			axis: "y"
 
 		demo_table.addExample("Sortable & Droppable", [sort_container, sort_container2], null, "cui-demo-sortable")
 		demo_table.table

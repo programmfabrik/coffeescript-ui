@@ -323,6 +323,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				type: "cui-dragleave"
 				node: globalDrag.dragoverTarget
 				info:
+					globalDrag: globalDrag
 					originalEvent: ev
 
 			globalDrag.dragoverTarget = null
@@ -334,6 +335,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				type: "cui-dragenter"
 				node: globalDrag.dragoverTarget
 				info:
+					globalDrag: globalDrag
 					originalEvent: ev
 
 		# trigger our own dragover event on the correct target
@@ -341,6 +343,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			node: globalDrag.dragoverTarget
 			type: "cui-dragover"
 			info:
+				globalDrag: globalDrag
 				originalEvent: ev
 
 		return
@@ -373,6 +376,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				node: globalDrag.dragoverTarget
 				type: "cui-dragleave"
 				info:
+					globalDrag: globalDrag
 					originalEvent: ev
 
 			if ev.getType() == "mouseup"
@@ -380,6 +384,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					type: "cui-drop"
 					node: globalDrag.dragoverTarget
 					info:
+						globalDrag: globalDrag
 						originalEvent: ev
 
 				CUI.Events.trigger(drop_event)
@@ -477,7 +482,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		globalDrag.helperNode = hn
 
-		hn.addClass("drag-drop-select-helper cui-demo-node-copyable cui-drag-drop-select-transparent")
+		hn.addClass("drag-drop-select-helper cui-debug-node-copyable cui-drag-drop-select-transparent")
 
 		start =
 			top: globalDrag.startCoordinates.pageY - offset.top
