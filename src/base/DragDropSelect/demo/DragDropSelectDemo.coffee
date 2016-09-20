@@ -80,7 +80,10 @@ class DragDropSelectDemo extends Demo
 		for i in [0..10]
 			sort_container.append($div("drag-drop-select-demo-sortable-container-item item-"+i, item: ""+i).append(new Label(text: ""+i).DOM))
 
-		demo_table.addExample("Sortable", sort_container)
+		sort_container2 = $div("drag-drop-select-demo-sortable-container2")
+
+		for i in [0..100]
+			sort_container2.append($div("drag-drop-select-demo-sortable-container-item item-"+i, item: ""+i).append(new Label(text: ""+i).DOM))
 
 		new Sortable
 			element: sort_container
@@ -88,7 +91,28 @@ class DragDropSelectDemo extends Demo
 			sorted: (ev, from_idx, to_idx) =>
 				@log("You sorted **"+from_idx+"** to **"+to_idx+"**.")
 
+		new Sortable
+			element: sort_container2
+			sorted: (ev, from_idx, to_idx) =>
+				@log("You sorted **"+from_idx+"** to **"+to_idx+"**.")
 
+		new Sortable
+			element: sort_container
+			axis: "y"
+
+		new Droppable
+			element: sort_container2
+			targetHelper: true
+			dropHelper: true
+			selector: ".drag-drop-select-demo-sortable-container-item"
+
+		new Droppable
+			element: sort_container
+			targetHelper: true
+			selector: ".drag-drop-select-demo-sortable-container-item"
+			axis: "y"
+
+		demo_table.addExample("Sortable & Droppable", [sort_container, sort_container2], null, "cui-demo-sortable")
 		demo_table.table
 
 Demo.register(new DragDropSelectDemo())

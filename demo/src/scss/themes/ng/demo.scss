@@ -166,6 +166,7 @@ body.cui-demo-playground {
 .drag-drop-select-demo-draggable-container,
 .drag-drop-select-demo-droppable-container,
 .drag-drop-select-demo-sortable-container,
+.drag-drop-select-demo-sortable-container2,
 .cui-file-upload-demo-drop-zone
 {
 	flex-flow: row;
@@ -189,12 +190,28 @@ body.cui-demo-playground {
 	background-color: #f3d6e4;
 }
 
+.cui-tr.cui-demo-sortable {
+	.cui-demo-example-content {
+		flex-direction: row;
+	}
+}
+
 .drag-drop-select-demo-sortable-container {
 	width: 120px;
+	margin-right: 10px;
 	height: 250px;
 	.drag-drop-select-demo-sortable-container-item {
 		display: block;
 		width: 80px;
+	}
+}
+
+.drag-drop-select-demo-sortable-container2 {
+	height: 250px;
+	flex: 1 1 auto;
+	.drag-drop-select-demo-sortable-container-item {
+		flex-wrap: wrap;
+		width: 60px;
 	}
 }
 

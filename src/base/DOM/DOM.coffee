@@ -410,7 +410,7 @@ class CUI.DOM extends CUI.Element
 		return false
 
 	@addClass: (element, cls) ->
-		if not cls
+		if not cls or not element
 			return element
 
 		for _cls in cls.trim().split(/\s+/)
@@ -420,7 +420,7 @@ class CUI.DOM extends CUI.Element
 		element
 
 	@removeClass: (element, cls) ->
-		if not cls
+		if not cls or not element
 			return element
 
 		for _cls in cls.trim().split(/\s+/)
@@ -432,10 +432,18 @@ class CUI.DOM extends CUI.Element
 
 	# returns the relative position of either
 	# the next scrollable parent or positioned parent
-	@getRelativeOffset: (node, untilElem = null) ->
+	@getRelativeOffset: (node, untilElem = null, ignore_margin = false) ->
 		assert(isElement(node), "CUI.DOM.getRelativePosition", "Node needs to HTMLElement.", node: node)
 		dim_node = CUI.DOM.getDimensions(node)
 		parent = node.parentNode
+
+		if ignore_margin
+			margin_key_top = "viewportTop"
+			margin_key_left = "viewportLeft"
+		else
+			margin_key_top = "viewportTopMargin"
+			margin_key_left = "viewportLeftMargin"
+
 		while true
 			dim = CUI.DOM.getDimensions(parent)
 
@@ -444,8 +452,8 @@ class CUI.DOM extends CUI.Element
 				parent == document
 					offset =
 						parent: parent
-						top: dim_node.viewportTopMargin + document.body.scrollTop
-						left: dim_node.viewportLeftMargin + document.body.scrollLeft
+						top: dim_node[margin_key_top] + document.body.scrollTop
+						left: dim_node[margin_key_left] + document.body.scrollLeft
 					break
 
 			if dim.canHaveScrollbar or
@@ -453,8 +461,8 @@ class CUI.DOM extends CUI.Element
 				parent == untilElem
 					offset =
 						parent: parent
-						top: dim_node.viewportTopMargin - (dim.viewportTop + dim.borderTop) + dim.scrollTop
-						left: dim_node.viewportLeftMargin - (dim.viewportLeft + dim.borderTop) + dim.scrollLeft
+						top: dim_node[margin_key_top] - (dim.viewportTop + dim.borderTop) + dim.scrollTop
+						left: dim_node[margin_key_left] - (dim.viewportLeft + dim.borderTop) + dim.scrollLeft
 
 					break
 
@@ -464,46 +472,53 @@ class CUI.DOM extends CUI.Element
 		# console.debug parent, node, offset.top, offset.left
 		return offset
 
+	@hasAnimatedClone: (node) ->
+		!!node.__clone
 
 	@initAnimatedClone: (node) ->
 
 		@removeAnimatedClone(node)
 
-
 		clone = node.cloneNode(true)
 
 		node.__clone = clone
 
+		offset = CUI.DOM.getRelativeOffset(node)
+
+		if not CUI.DOM.isPositioned(offset.parent)
+			node.__parent_saved_position = offset.parent.style.position
+			offset.parent.style.position = "relative"
+
 		CUI.DOM.setStyle clone,
 			position: "absolute"
 			"pointer-events": "none"
+			top: offset.top
+			left: offset.left
 			# left: "300px"
 
 		node.style.opacity = "0"
 
 		dim = DOM.getDimensions(node)
-		CUI.DOM.setDimension(clone, "marginBoxWidth", dim.marginBoxWidth)
-		CUI.DOM.setDimension(clone, "marginBoxHeight", dim.marginBoxHeight)
-
 		CUI.DOM.addClass(clone, "cui-dom-animated-clone cui-demo-node-copyable")
 
+		# We need this micro DIV to push the scroll height / left
 		div = CUI.DOM.element("div", style: "position: absolute; opacity: 0; width: 1px; height: 1px;")
 		clone.appendChild(div)
 
-		# measure
-		for child, idx in node.children
-			clone_child = clone.children[idx]
-			offset = @getRelativeOffset(child, node)
+		CUI.DOM.insertAfter(node, clone)
 
+		CUI.DOM.setDimension(clone, "marginBoxWidth", dim.marginBoxWidth)
+		CUI.DOM.setDimension(clone, "marginBoxHeight", dim.marginBoxHeight)
+
+		for child, idx in node.children
 			child.__idx = idx
+			clone_child = clone.children[idx]
+
 			CUI.DOM.setStyle clone_child,
 				position: "absolute"
-				# transition: "all 0.5s ease-out"
-				top: offset.top
-				left: offset.left
+				margin: 0
 
-
-		CUI.DOM.insertAfter(node, clone)
+		@syncAnimatedClone(node)
 
 		node.__clone.__syncScroll = =>
 			div.style.top = (node.scrollHeight-1)+"px";
@@ -522,23 +537,36 @@ class CUI.DOM extends CUI.Element
 		node
 
 	@syncAnimatedClone: (node) ->
+
 		clone = node.__clone
+		if not clone
+			return
 
 		for child, idx in node.children
-			offset_new = @getRelativeOffset(child, node)
+
 			clone_child = clone.children[child.__idx]
+			if not clone_child
+				continue
+
+			offset_new = @getRelativeOffset(child, node, true)
+
 			CUI.DOM.setStyle clone_child,
 				top: offset_new.top
 				left: offset_new.left
 		node
 
 	@removeAnimatedClone: (node) ->
+		if node.hasOwnProperty("__parent_saved_position")
+			node.style.position = node.__parent_saved_position or ""
+			delete(node.__parent_saved_position)
+
 		if not node.__clone
 			return
 
 		Events.ignore(instance: node.__clone)
 		node.style.opacity = ""
 		node.__clone.remove()
+		delete(node.__clone)
 		node
 
 
@@ -696,11 +724,13 @@ class CUI.DOM extends CUI.Element
 			@insertBefore(node.children[pos], node_insert)
 
 	@insertBefore: (node, node_before) ->
-		node.parentNode.insertBefore(node_before, node)
+		if node_before
+			node.parentNode.insertBefore(node_before, node)
 		node
 
 	@insertAfter: (node, node_after) ->
-		node.parentNode.insertBefore(node_after, node.nextElementSibling)
+		if node_after
+			node.parentNode.insertBefore(node_after, node.nextElementSibling)
 		node
 
 	@is: (node, selector) ->
@@ -914,7 +944,7 @@ class CUI.DOM extends CUI.Element
 		dim.viewportBottom = rect.bottom
 		dim.viewportBottomMargin = rect.bottom + dim.marginBottom
 		dim.viewportRight = rect.right
-		dim.viewportBottomMargin = rect.bottom + dim.marginRight
+		dim.viewportRightMargin = rect.right + dim.marginRight
 
 		dim.viewportCenterTop = rect.top + ((rect.bottom - rect.top) / 2)
 		dim.viewportCenterLeft = rect.left + ((rect.right - rect.left) / 2)

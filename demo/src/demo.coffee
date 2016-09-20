@@ -310,7 +310,7 @@ class DemoTable
 	# @param [String] description
 	# @param [Element] example
 	# @param [Element] buttons or other controls for controlling the example
-	addExample: (description, div, controls=null) ->
+	addExample: (description, div, controls=null, tr_class="") ->
 		@example_counter+=1
 		label = new Label
 			text: description # @example_counter+". "+description
@@ -319,7 +319,11 @@ class DemoTable
 		row_elements = [label,div]
 		if controls
 			row_elements.push(controls)
-		@table.append($tr_one_row( row_elements ))
+		tr = $tr_one_row( row_elements )
+		tr.addClass(tr_class)
+		tr.children[0].addClass("cui-demo-example-label")
+		tr.children[1].addClass("cui-demo-example-content")
+		@table.append(tr)
 
 	addRow: ->
 		td = $td("", colspan: 3)

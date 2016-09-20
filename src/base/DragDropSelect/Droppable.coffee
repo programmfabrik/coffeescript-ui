@@ -7,12 +7,14 @@ class CUI.Droppable extends CUI.DragDropSelect
 		super()
 		@addOpts
 			accept:
-				default: ->
+				default: (ev, globalDrag, $target) ->
+					true
 				check: Function
 
 			drop:
-				default: (ev, info, $el) =>
-					CUI.alert(text: "You dropped me on: "+$el.attr("class"))
+				default: (ev, info) =>
+					pos = info.dropTargetPos or "on"
+					CUI.alert(text: "You dropped me "+pos+": " + CUI.DOM.getAttribute(info.dropTarget, "class"))
 				check: Function
 
 			hoverClass:
@@ -20,10 +22,12 @@ class CUI.Droppable extends CUI.DragDropSelect
 				check: String
 
 			dropHelper:
-				default: ""
-				check: String
+				mandatory: true
+				default: false
+				check: Boolean
 
-			positioners:
+			targetHelper:
+				mandatory: true
 				default: false
 				check: Boolean
 
@@ -31,235 +35,226 @@ class CUI.Droppable extends CUI.DragDropSelect
 				check: (v) =>
 					isString(v) or CUI.isFunction(v)
 
-	accept: (ev) ->
-		if @_positioners
-			globalDrag.positioner = @getPositioner(ev)
+			axis:
+				mandatory: true
+				default: "x"
+				check: ["x", "y"]
 
-		$target = $(ev.getCurrentTarget())
-		@_accept(ev, globalDrag, $target)
-
-	initDropHelper: ($target) ->
-		@dropHelper = $div("#{@_dropHelper} cui-droppable-drop-helper cui-drag-drop-select-transparent")
-		# CUI.debug "adding drop helper", $target[0], @dropHelper[0]
-		@dropHelper.css(position: "absolute")
-		if CUI.DOM.isPositioned($target[0])
-			@dropHelper.css(top: 0, left: 0)
-		else
-			@dropHelper.css($target.relativePosition())
-		@dropHelper.appendTo($target)
-		@dropHelper.css
-			width: $target.outerWidth(true)
-			height: $target.outerHeight(true)
-		@
-
-	hideDropHelper: ->
-		if not @dropHelper
-			return
-		DOM.hideElement(@dropHelper[0])
-
-	showDropHelper: ($target) ->
-		if not @dropHelper
-			if @_dropHelper
-				@initDropHelper($target)
-			return
-		DOM.showElement(@dropHelper[0])
-
-	removeDropHelper: ->
-		# CUI.debug "removing drop helper", @getUniqueId(), @dropHelper?[0]
-		if not @dropHelper
-			return
-		@dropHelper.remove()
-		@dropHelper = null
+	accept: (ev, info) ->
+		@_accept(ev, info)
 
 	destroy: ->
-		@removeDropHelper()
+		@removeHelper()
 		super()
+
+	readOpts: ->
+		super()
+		if @_targetHelper
+			assert(@_selector, "new Droppable", "opts.targetHelper needs opts.selector to be set.", opts: @opts)
+
+		if @_dropHelper
+			assert(not @_selector or @_targetHelper, "new Droppable", "opts.dropHelper does only work without opts.selector or with opts.targetHelper and opts.selector. needs opts.selector to be set.", opts: @opts)
+			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper cui-demo-node-copyable")
+
+		return
+
+	removeHelper: ->
+		@resetMargin()
+		if @__selectedTarget
+			CUI.DOM.removeClass(@__selectedTarget, @_hoverClass)
+			@__selectedTarget = null
+		if @__dropHelper
+			@__dropHelper.remove()
+		CUI.DOM.removeAnimatedClone(@_element)
+
+	resetMargin: ->
+		if not @__resetMargin
+			return
+
+		CUI.DOM.setStyleOne(@__resetMargin, "margin", "")
+		delete(@__resetMargin)
+		delete(@__saveZoneDims)
+
+	insideSaveZone: (coord) ->
+		if not @__saveZoneDims
+			return false
+
+		buf = 10 # add extra 10 pixels
+		for zone in @__saveZoneDims
+			if (zone.viewportTopMargin - buf) <= coord.pageY <= (zone.viewportBottomMargin + buf) and
+				(zone.viewportLeftMargin - buf) <= coord.pageX <= (zone.viewportRightMargin + buf)
+					return true
+
+		return false
+
+	syncDropHelper: ->
+		# drop helper goes on top
+		dim = CUI.DOM.getDimensions(@_element)
+		CUI.DOM.setDimensions @__dropHelper,
+			contentBoxWidth: dim.borderBoxWidth
+			contentBoxHeight: dim.borderBoxHeight
+
+		document.body.appendChild(@__dropHelper)
+
+		drop_helper_dim = CUI.DOM.getDimensions(@__dropHelper)
+
+		CUI.DOM.setStyle @__dropHelper,
+			position: "absolute"
+			top: dim.viewportTop - drop_helper_dim.borderTopWidth - drop_helper_dim.marginTop
+			left: dim.viewportLeft - drop_helper_dim.borderLeftWidth - drop_helper_dim.marginLeft
+
+	syncTargetHelper: (ev, info) ->
+		target = ev.getTarget()
+		coord = getCoordinatesFromEvent(info.originalEvent)
+
+		if ev.getType() == "cui-dragleave"
+			new_target = info.originalEvent.getTarget()
+			if not CUI.DOM.closest(new_target, @_element)
+				# outside us
+				@__dropTargetPos = undefined
+				@__dropTarget = undefined
+				@removeHelper()
+				return
+
+			if @_targetHelper or not @_selector
+				# ignore the event
+				return
+
+		if not CUI.DOM.hasAnimatedClone(@_element)
+			CUI.DOM.initAnimatedClone(@_element)
+
+		if @__dropTarget == undefined
+			for el in CUI.DOM.findElements(@_element, @_selector)
+				el.__orig_dim = CUI.DOM.getDimensions(el)
+
+			@__dropTargetPos = null
+			@__dropTarget = null
+
+		CUI.DOM.removeClass(@__selectedTarget, @_hoverClass)
+		if @_selector
+			@__selectedTarget = CUI.DOM.closest(target, @_selector)
+		else
+			@__selectedTarget = @_element
+
+		if not @_targetHelper
+			@__dropTarget = @__selectedTarget
+			@__dropTargetPos = null
+
+			if @_selector or not @__dropHelper
+				CUI.DOM.addClass(@__selectedTarget, @_hoverClass)
+			else
+				@syncDropHelper()
+			return
+
+		# We have a targetHelper from here below
+
+		if not @__selectedTarget
+			if @insideSaveZone(coord)
+				return
+
+			@resetMargin()
+			if @__dropHelper
+				@__dropTarget = "last"
+				@__dropTargetPos = "after"
+				@syncDropHelper()
+			else
+				@__dropTargetPos = null
+				@__dropTarget = null
+
+			CUI.DOM.syncAnimatedClone(@_element)
+			return
+
+		@__dropHelper?.remove()
+
+		dim = CUI.DOM.getDimensions(@__selectedTarget)
+
+		if (@_axis == "x" and coord.pageX > dim.viewportCenterLeft) or
+			(@_axis == "y" and coord.pageY > dim.viewportCenterTop)
+				@__dropTargetPos = "after"
+		else
+			@__dropTargetPos = "before"
+
+		# reset this after we measure, so that the
+		# viewport is as the user sees it
+		@resetMargin()
+
+		dim = @__selectedTarget.__orig_dim
+
+		if @_axis == "x"
+			margin = dim.borderBoxWidth / 2
+		else
+			margin = dim.borderBoxHeight / 2
+
+		if @_axis == "x"
+			if  @__dropTargetPos == "after"
+				margin_key = "marginRight"
+			else
+				margin_key = "marginLeft"
+		else
+			if  @__dropTargetPos == "after"
+				margin_key = "marginBottom"
+			else
+				margin_key = "marginTop"
+
+		# console.debug "margin_key", margin_key, "margin", margin, @__dropTargetPos, @_axis
+
+		margin = margin + dim[margin_key]
+
+		CUI.DOM.setStyleOne(@__selectedTarget, margin_key, margin)
+
+		@__resetMargin = @__selectedTarget
+		@__dropTarget = @__selectedTarget
+
+		@__saveZoneDims = [dim, CUI.DOM.getDimensions(@__selectedTarget)]
+
+		CUI.DOM.syncAnimatedClone(@_element)
+		return
 
 	init: ->
 		# console.error "register droppable on", @element
-		Events.listen
-			node: @element
-			type: ["cui-dragenter", "cui-drop", "cui-dragleave", "cui-dragover"]
-			call: (ev) =>
-				console.debug ev.getType(), ev
-
 
 		Events.listen
 			node: @element
 			type: "cui-drop"
 			instance: @
-			selector: @_selector
 			call: (ev) =>
+				@removeHelper()
+
 				# CUI.debug "cui-drop", ev.getCurrentTarget()
-				if @accept(ev) != false
-					ev.stopPropagation()
-					# this registered for any of the available droppable
-					@_drop(ev, globalDrag, $(ev.getCurrentTarget()))
-				return
-
-		Events.listen
-			node: @element
-			type: "cui-dragenter"
-			instance: @
-			selector: @_selector
-			call: (ev, info) =>
-				ev.stopPropagation()
-				$target = $(ev.getCurrentTarget())
-				# CUI.debug "cui-dragenter", ev.getCurrentTarget()
-				if @_positioners
-					@preparePositioners($target)
-
-				if @accept(ev) == false
+				if not @__dropTarget
+					console.warn("No drop target.")
 					return
 
-				$target.addClass(@_hoverClass)
-				@showDropHelper($target)
+				if @__dropTarget == "last"
+					els = CUI.DOM.findElements(@_element, @_selector)
+					dropTarget = els[els.length - 1]
+				else
+					dropTarget = @__dropTarget
+
+				info =
+					globalDrag: globalDrag
+					dropTarget: dropTarget
+
+				if @_targetHelper
+					info.dropTargetPos = @__dropTargetPos
+
+				console.debug "cui-drop", info
+				if @accept(ev, info) != false
+					ev.stopPropagation()
+					@_drop(ev, info)
+
+				@__dropTarget = undefined
+				@__dropTargetPos = undefined
 				return
 
 		Events.listen
 			node: @element
-			type: "cui-dragleave"
+			type: ["cui-dragover", "cui-dragenter", "cui-dragleave"]
 			instance: @
-			selector: @_selector
-			call: (ev, info) =>
-				# CUI.debug ev.type, ev.currentTarget, @element[0], @dropHelper?[0]
-				ev.stopPropagation()
-				$target = $(ev.getCurrentTarget())
-				# CUI.debug "cui-dragleave", ev.getCurrentTarget()
-				if @_positioners
-					@removePositioners()
-				$target.removeClass(@_hoverClass)
-				@removeDropHelper()
-				return
-
-		Events.listen
-			node: @element
-			type: "cui-dragover"
-			instance: @
-			selector: @_selector
 			call: (ev, info) =>
 				ev.stopPropagation()
-				$target = $(ev.getCurrentTarget())
-				# CUI.debug "cui-dragover", ev.getCurrentTarget()
 
-				switch @accept(ev)
-					when false
-						$target.removeClass(@_hoverClass)
-						@hideDropHelper()
-						if @_positioners
-							@before.remove()
-							@after.remove()
-					when "positioner"
-						$target.removeClass(@_hoverClass)
-						@hideDropHelper()
-						switch globalDrag.positioner.position
-							when "before"
-								@after.remove()
-								@parent.append(@before)
-							when "after"
-								@before.remove()
-								@parent.append(@after)
-					else
-						if @_positioners
-							@before.remove()
-							@after.remove()
-						$target.addClass(@_hoverClass)
-						@showDropHelper()
-				return
-
-
-	removePositioners: ->
-		@parent.find(".cui-positioner.break").remove()
-		@before = null
-		@after = null
-
-	preparePositioners: ($el) ->
-		@parent = $($el.offsetParent)
-		assert @parent.length, "Droppable.preparePositioners", "No parent found for element", element: $el
-		# @makeElementRelative @parent
-
-		if @before
-			return
-
-		#CUI.debug "preparing positioners", @parent
-
-		# determine if horizontal or vertical
-		if Math.floor(@parent[0].clientWidth / $el.outerWidth(true)) > 1
-			@direction = "vertical"
-		else
-			@direction = "horizontal"
-
-
-		# add a before and after break
-		@before = $div("break cui-positioner before #{@direction}")
-		@after = $div("break cui-positioner after #{@direction}")
-
-		@offset = $el.offset()
-
-		pos = $el.position()
-		pos.left += @parent[0].scrollLeft
-		pos.left += parseInt($el.css("margin-left"))
-		pos.top += @parent[0].scrollTop
-		pos.top += parseInt($el.css("margin-top"))
-		dim =
-			width: $el.outerWidth(false)
-			height: $el.outerHeight(false)
-
-		@offset.bottom = @offset.top + dim.height
-		@offset.right = @offset.left + dim.width
-
-		# append to DOM tree, so we get the correct measurements
-		@before.css(opacity: 0)
-		@after.css(opacity: 0)
-
-		@parent.append(@after)
-		@parent.append(@before)
-
-		# CUI.debug @before, @before.outerHeight(true), @before.outerWidth(true)
-		switch @direction
-			when "horizontal"
-				@before.css
-					top: pos.top - @before.outerHeight(true)
-					left: pos.left
-					width: dim.width
-
-				@after.css
-					top: pos.top + dim.height
-					left: pos.left
-					width: dim.width
-			when "vertical"
-				@before.css
-					top: pos.top
-					left: pos.left - @before.outerWidth(true)
-					height: dim.height
-
-				@after.css
-					top: pos.top
-					left: pos.left + dim.width
-					height: dim.height
-
-		@after.remove()
-		@before.remove()
-
-		@after.css opacity: ""
-		@before.css opacity: ""
-
-
-	# returns distance and name of the active positioner
-	getPositioner: (ev) ->
-		# CUI.debug "getPositioner", ev.originalEvent.pageX, ev.originalEvent.pageY, @offset
-		switch @direction
-			when "horizontal"
-				dist_before = ev.pageY() - @offset.top
-				dist_after = @offset.bottom - ev.pageY()
-			when "vertical"
-				dist_before = ev.pageX() - @offset.left
-				dist_after = @offset.right - ev.pageX()
-
-		if dist_before > dist_after
-			position: "after", distance: dist_after
-		else
-			position: "before", distance: dist_before
+				@syncTargetHelper(ev, info)
 
 
 Droppable = CUI.Droppable

@@ -1530,10 +1530,21 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Droppable
-
 .cui-droppable {
 	// marks an active droppable
 	opacity: 0.5;
+}
+
+// this needs to take space, but also
+// be invisble
+.cui-droppable-target-helper {
+	// this if for debug only
+	background: green;
+}
+
+.cui-droppable-drop-helper {
+	border: solid 3px rgba(0, 255, 0, 0.7);
+	pointer-events: none;
 }
 
 // Movable

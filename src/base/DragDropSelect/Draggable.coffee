@@ -322,6 +322,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 			Events.trigger
 				type: "cui-dragleave"
 				node: globalDrag.dragoverTarget
+				info:
+					originalEvent: ev
 
 			globalDrag.dragoverTarget = null
 
@@ -331,11 +333,15 @@ class CUI.Draggable extends CUI.DragDropSelect
 			Events.trigger
 				type: "cui-dragenter"
 				node: globalDrag.dragoverTarget
+				info:
+					originalEvent: ev
 
 		# trigger our own dragover event on the correct target
 		Events.trigger
 			node: globalDrag.dragoverTarget
 			type: "cui-dragover"
+			info:
+				originalEvent: ev
 
 		return
 
@@ -366,6 +372,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 			CUI.Events.trigger
 				node: globalDrag.dragoverTarget
 				type: "cui-dragleave"
+				info:
+					originalEvent: ev
 
 			if ev.getType() == "mouseup"
 				drop_event = CUI.Event.require
