@@ -55,6 +55,10 @@ class DragDropSelectDemo extends Demo
 		new Droppable
 			element: drop_container_inner
 
+		new Droppable
+			element: drop_container
+			dropHelper: true
+
 		getLimitRect = =>
 			width = drop_container.width()
 			height = drop_container.height()

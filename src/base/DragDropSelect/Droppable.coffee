@@ -109,7 +109,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if ev.getType() == "cui-dragleave"
 			new_target = info.originalEvent.getTarget()
-			if not CUI.DOM.closest(new_target, @_element)
+
+			if CUI.DOM.closest(new_target, ".cui-drag-drop-select-droppable") != @_element
 				# outside us
 				@__dropTargetPos = undefined
 				@__dropTarget = undefined
@@ -119,9 +120,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 			if @_targetHelper or not @_selector
 				# ignore the event
 				return
-
-		if not CUI.DOM.hasAnimatedClone(@_element)
-			CUI.DOM.initAnimatedClone(@_element)
 
 		if @__dropTarget == undefined
 			for el in CUI.DOM.findElements(@_element, @_selector)
@@ -147,6 +145,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			return
 
 		# We have a targetHelper from here below
+		if not CUI.DOM.hasAnimatedClone(@_element)
+			CUI.DOM.initAnimatedClone(@_element)
 
 		if not @__selectedTarget
 			if @insideSaveZone(coord)
