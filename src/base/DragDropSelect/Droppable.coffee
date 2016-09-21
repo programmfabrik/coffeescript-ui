@@ -58,6 +58,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@__selectedTarget = null
 
 		if @__dropHelper
+			# console.error "removing drop helper.."
 			@__dropHelper.remove()
 
 		if @_targetHelper
@@ -91,11 +92,12 @@ class CUI.Droppable extends CUI.DragDropSelect
 	syncDropHelper: ->
 		# drop helper goes on top
 		dim = CUI.DOM.getDimensions(@_element)
+
+		document.body.appendChild(@__dropHelper)
+
 		CUI.DOM.setDimensions @__dropHelper,
 			contentBoxWidth: dim.borderBoxWidth
 			contentBoxHeight: dim.borderBoxHeight
-
-		document.body.appendChild(@__dropHelper)
 
 		drop_helper_dim = CUI.DOM.getDimensions(@__dropHelper)
 
@@ -103,6 +105,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			position: "absolute"
 			top: dim.viewportTop - drop_helper_dim.borderTopWidth - drop_helper_dim.marginTop
 			left: dim.viewportLeft - drop_helper_dim.borderLeftWidth - drop_helper_dim.marginLeft
+
+
 
 	syncTargetHelper: (ev, info) ->
 		target = ev.getTarget()
@@ -120,7 +124,11 @@ class CUI.Droppable extends CUI.DragDropSelect
 				# ignore the event
 				return
 
-		acceptable = =>
+		acceptable = (dropTarget, dropTargetPos) =>
+			info.dropTarget = dropTarget
+			if @_targetHelper
+				info.dropTargetPos = dropTargetPos
+
 			if @accept(ev, info) == false
 				@removeHelper()
 				# console.error("Cannot accept drop here...")
@@ -160,7 +168,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if not @_targetHelper
 
-			if not acceptable()
+			if not acceptable(@__selectedTarget)
 				@removeHelper()
 				if @_selector and not @__selectedTarget
 					# bubble
@@ -184,12 +192,13 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 			@resetMargin()
 			if @__dropHelper
-				if not acceptable()
+				if not acceptable(@_element)
 					return
 
-				@__dropTarget = "last"
-				@__dropTargetPos = "after"
+				@__dropTarget = @_element
+				@__dropTargetPos = null
 				@syncDropHelper()
+				# console.debug "is acceptable..", @__dropHelper, DOM.isInDOM(@__dropHelper)
 			else
 				console.info("No selected target, no dropHelper...")
 				@removeHelper()
@@ -198,17 +207,25 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 			return
 
+		# console.error "removing drop helper.."
 		@__dropHelper?.remove()
 
 		dim = CUI.DOM.getDimensions(@__selectedTarget)
 
 		if (@__axis == "x" and coord.pageX > dim.viewportCenterLeft) or
 			(@__axis == "y" and coord.pageY > dim.viewportCenterTop)
-				@__dropTargetPos = "after"
+				dropTargetPos = "after"
 		else
-			@__dropTargetPos = "before"
+			dropTargetPos = "before"
 
-		@__dropTarget = @__selectedTarget
+		dropTarget = @__selectedTarget
+
+		if not acceptable(dropTarget, dropTargetPos)
+			@removeHelper()
+			return
+
+		@__dropTarget = dropTarget
+		@__dropTargetPos = dropTargetPos
 
 		helper_cls = "cui-droppable-target-helper-"+@__axis+"--"+@__dropTargetPos
 
@@ -239,19 +256,13 @@ class CUI.Droppable extends CUI.DragDropSelect
 					console.warn("No drop target.")
 					return
 
-				if @__dropTarget == "last"
-					els = CUI.DOM.findElements(@_element, @_selector)
-					dropTarget = els[els.length - 1]
-				else
-					dropTarget = @__dropTarget
+				@removeHelper()
+				# console.debug "cui-drop", info
 
-				info.dropTarget = dropTarget
-
+				info.dropTarget = @__dropTarget
 				if @_targetHelper
 					info.dropTargetPos = @__dropTargetPos
 
-				@removeHelper()
-				console.debug "cui-drop", info
 				if @accept(ev, info) != false
 					ev.stopPropagation()
 					@_drop(ev, info)
