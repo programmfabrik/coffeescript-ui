@@ -922,6 +922,12 @@ class CUI.DOM extends CUI.Element
 		if isNull(docElem)
 			return null
 
+		if docElem == window or docElem == document.documentElement
+			return {
+				width: window.innerWidth
+				height: window.innerHeight
+			}
+
 		cs = @getComputedStyle(docElem)
 		rect = @getRect(docElem)
 

@@ -30,7 +30,7 @@ coffee_files = src/base/Common.coffee \
 	src/base/MouseIsDownEvent/MouseIsDownEvent.coffee \
 	src/base/MouseIsDownEvent/MouseIsDownListener.coffee \
 	src/base/DOM/DOM.coffee \
-	src/base/CSS/CSS.coffee \
+	src/base/CSSLoader/CSSLoader.coffee \
 	src/base/Template/Template.coffee \
 	src/base/FlexHandle/FlexHandle.coffee \
 	src/base/Layout/Layout.coffee \

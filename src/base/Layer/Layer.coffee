@@ -330,7 +330,7 @@ class CUI.Layer extends CUI.DOM
 	position: (ev) ->
 		#
 
-		dim_window = CUI.getViewport()
+		dim_window = CUI.DOM.getDimensions(window)
 
 		get_pointer_direction = (placement) ->
 			# return direction

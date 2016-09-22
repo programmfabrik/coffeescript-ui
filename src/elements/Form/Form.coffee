@@ -255,7 +255,7 @@ class CUI.Form extends CUI.DataField
 
 			if fopts.hasOwnProperty("right")
 				right = fopts.right
-				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx, "Right:", right)
+				# console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx, "Right:", right)
 
 			append_content = []
 			append_left = []

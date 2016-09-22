@@ -9,6 +9,9 @@ class CUI
 	@__themes = []
 
 	@start: ->
+
+		@CSS = new CUI.CSSLoader()
+
 		@getPathToScript()
 
 		trigger_viewport_resize = =>
@@ -53,71 +56,6 @@ class CUI
 			@ready()
 		@
 
-	# @return [Array<Theme>] themes Array of Theme instances
-	@getThemes: ->
-		@__themes
-
-	@getTheme: (name) ->
-		for t in @__themes
-			if t.getName() == name
-				return t
-		undefined
-
-	# Get a list of theme names
-	#
-	# @return [Array<String>] themes Array of theme names
-	@getThemeNames: ->
-		t.getName() for t in @__themes
-
-	# Register a theme
-	#
-	# @return [Array<Theme>]
-	@registerTheme: (name, url) ->
-		theme = new CSS(group: "cui-theme", name: name, url: url)
-
-		# overwrite existing theme
-		if removeFromArray(null, @__themes, (v) -> v.getName() == name)
-			update = "[overwrite]"
-		else
-			update = ""
-
-		CUI.info("CUI.registerTheme:", name+update, url)
-
-		@__themes.push(theme)
-		@__themes
-
-	@resetThemes: ->
-		@__themes = []
-
-	# Make a theme the active theme
-	#
-
-	@loadTheme: (name) ->
-		new_theme = @getTheme(name)
-		assert(new_theme, "CUI.loadThemeByName", "Theme #{name} not found", themes: @getThemeNames())
-
-		old_theme = @getActiveTheme()
-
-		set_active_theme = (theme) =>
-			DOM.setAttribute(document.body, "cui-theme", theme?.getName())
-			@__activeTheme = theme
-			if theme.getName().startsWith("ng")
-				CUI.__ng__ = true
-			else
-				CUI.__ng__ = false
-
-		# we set this before the load, so users can access the
-		# active theme right from the start
-		set_active_theme(new_theme)
-
-		new_theme.load().fail =>
-			if old_theme
-				set_active_theme(old_theme)
-
-
-	@getActiveTheme: ->
-		@__activeTheme
-
 	@getPathToScript: ->
 		if not @pathToScript
 			for s, idx in DOM.matchSelector(document.documentElement, "script")
@@ -126,6 +64,7 @@ class CUI
 					@script = s
 					break
 			assert(@pathToScript, "easydbui", "Could not determine script path.")
+
 		@pathToScript
 
 	@loadHTMLFile: (filename) ->
@@ -145,10 +84,6 @@ class CUI
 		.fail (xhr) ->
 			CUI.error("CUI.loadHTMLFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
 
-	@getViewport: ->
-		width: window.innerWidth
-		height: window.innerHeight
-
 	@ready: (func) ->
 		if func instanceof Function
 			if @__ready
@@ -159,58 +94,6 @@ class CUI
 			@__ready = true
 			for func in @__readyFuncs
 				func.call(@)
-
-	@reachValue: (key, reach, ms) ->
-		if not @length
-			return null
-
-		if isNull(reach)
-			# return current scroll
-			return @[0][key]
-
-		timeout_key = "_reach_timeout_"+key
-		promises = []
-
-		for el in @
-			dfr = new CUI.Deferred()
-			promises.push(dfr.promise())
-
-			if el[timeout_key]
-				CUI.clearTimeout(el[timeout_key])
-				el[timeout_key] = null
-
-			if ms == 0
-				el[key] = reach
-				dfr.resolve()
-				continue
-
-			scroll = ->
-				current = el[key]
-				inc = Math.max(2, Math.ceil(Math.abs(el[key]-reach) / 10))
-				# CUI.debug key, reach, current, inc, ms
-				if el[key] < reach
-					el[key] = Math.min(reach, el[key] + inc)
-				else if el[key] > reach
-					el[key] = Math.max(reach, el[key] - inc)
-				else
-					dfr.notify(current)
-					dfr.resolve(current)
-					return
-
-				dfr.notify(el[key])
-				if el[key] == current
-					# our setting did not change anything
-					# so we leave the value alone
-					dfr.resolve(current)
-					return
-
-				if el[timeout_key]
-					CUI.clearTimeout(el[timeout_key])
-				el[timeout_key] = CUI.setTimeout(scroll, ms)
-
-			scroll()
-
-		CUI.when(promises)
 
 	@defaults:
 		FileUpload:
@@ -230,7 +113,6 @@ class CUI
 		dfr = new CUI.Deferred()
 		dfr.reject.apply(dfr, arguments)
 		dfr.promise()
-
 
 	# calls the as argument passed functions in order
 	# of appearance. if a function returns
@@ -847,9 +729,6 @@ CUI.ready =>
 		sanitize: true
 		smartLists: true
 		smartypants: false
-
-	for k in ["light", "dark"]
-		CUI.registerTheme(k, CUI.pathToScript+"/css/cui_#{k}.css")
 
 	CUI.__downloadDataElement = document.createElement("a")
 	CUI.__downloadDataElement.style.display = "none"

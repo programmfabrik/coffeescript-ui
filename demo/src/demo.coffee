@@ -35,6 +35,8 @@ class Demo extends CUI.DOM
 		else
 			s
 
+	@themeNames: ["light", "dark", "ng", "ng_debug"]
+
 	@dividerLabel: (txt) ->
 		new Label
 			class: "cui-demo-divider-label"
@@ -140,14 +142,14 @@ class RunDemo extends CUI.Element
 				text: "Pick a theme!"
 			menu:
 				onClick: (ev, btn, item) ->
-					old_theme = CUI.getActiveTheme().getName()
+					old_theme = CUI.CSS.getActiveTheme()?.name
 
 					if xor(old_theme.startsWith("ng"), item.value.startsWith("ng"))
 						reload = true
 					else
 						reload = false
 
-					CUI.loadTheme(item.value)
+					CUI.CSS.loadTheme(item.value)
 					.done =>
 						console.debug "load theme done, setting item", item.value
 						window.localStorage.setItem("theme", item.value)
@@ -163,11 +165,12 @@ class RunDemo extends CUI.Element
 				active_item_idx: null
 				items: ->
 					theme_items = []
-					for theme in CUI.getThemeNames()
+					for theme in Demo.themeNames
 						theme_items.push
 							text: theme
 							value: theme
-							active: theme == CUI.getActiveTheme().getName()
+							active: theme == CUI.CSS.getActiveTheme()?.name
+
 					theme_items
 
 		@menu_title_label = new Label
@@ -330,17 +333,18 @@ class DemoTable
 		td.append.apply(td, arguments)
 		@table.append($tr("cui-demo-full-row").append(td))
 
+
 CUI.ready ->
 
-	for k in ["light", "dark", "ng", "ng_debug"]
+	for k in Demo.themeNames
 		if not theme
 			theme = k
 
-		CUI.registerTheme(k, CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
+		CUI.CSS.registerTheme(name: k, url: CUI.pathToScript+"/demo/css/cui_demo_#{k}.css")
 		if k == window.localStorage.getItem("theme")
 			theme = k
 
-	CUI.loadTheme(theme)
+	CUI.CSS.loadTheme(theme)
 	.done =>
 		splash_node = document.getElementById("cui-demo-splash")
 

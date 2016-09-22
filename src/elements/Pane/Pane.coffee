@@ -61,7 +61,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		# measure DOM start position
 		rect = @DOM.rect()
 
-		vp = CUI.getViewport()
+		vp = CUI.DOM.getDimensions(window)
 		@__placeholderTmpl = new Template
 			name: "pane-fill-screen-placeholder"
 
