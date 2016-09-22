@@ -311,7 +311,7 @@ class CUI.DOM extends CUI.Element
 
 	@setAttributeMap: (node, map) ->
 		for key, value of map
-			DOM.setAttribute(node, key, value)
+			CUI.DOM.setAttribute(node, key, value)
 		node
 
 	@width: (docElem, value) ->
