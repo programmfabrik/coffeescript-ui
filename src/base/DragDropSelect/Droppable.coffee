@@ -12,7 +12,10 @@ class CUI.Droppable extends CUI.DragDropSelect
 			drop:
 				default: (ev, info) =>
 					pos = info.dropTargetPos or "on"
-					CUI.alert(text: "You dropped me "+pos+": " + CUI.DOM.getAttribute(info.dropTarget, "class"))
+					CUI.alert(
+						markdown: true,
+						text: "You dropped me **"+pos+"**: " + CUI.DOM.getAttribute(info.dropTarget, "class")
+					)
 				check: Function
 
 			hoverClass:
@@ -256,12 +259,13 @@ class CUI.Droppable extends CUI.DragDropSelect
 					console.warn("No drop target.")
 					return
 
-				@removeHelper()
 				# console.debug "cui-drop", info
 
 				info.dropTarget = @__dropTarget
 				if @_targetHelper
 					info.dropTargetPos = @__dropTargetPos
+
+				@removeHelper()
 
 				if @accept(ev, info) != false
 					ev.stopPropagation()

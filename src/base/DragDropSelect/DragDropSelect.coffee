@@ -151,5 +151,3 @@ CUI.ready =>
 
 					# CUI.debug ev.mousemoveEvent.originalEvent.scrollPageY
 				ev.stopPropagation()
-
-
