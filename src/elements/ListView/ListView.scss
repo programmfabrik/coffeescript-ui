@@ -249,7 +249,6 @@
 
 	//set row horizontal separators, avoid header rows that can also exist in q3!
 	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > table > tbody > .cui-list-view-grid-row:not(.list-view-header-row)  > .cui-list-view-grid-cell-td,
-	.cui-list-view-grid-cell-fill,
 	.cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > div.cui-list-view-grid-row:not(.list-view-header-row) //on a div we can use the row
 	{
 		@if($list_view_row_separator_color != 0) {
@@ -329,8 +328,6 @@
 		@include listview_row_background_color( $list_view_row_color, $list_view_row_highlighted_color );
 	}
 }
-
-
 
 
 

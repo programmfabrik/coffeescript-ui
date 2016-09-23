@@ -118,7 +118,7 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
             > .cui-form-table {
                 width: $table_width;
                 //background-color: palegoldenrod;
-                > tbody > .cui-form-tr {
+                > .cui-form-tr {
                     //background-color: purple;
                     > .cui-form-center {
                         width: $center_width;
@@ -142,11 +142,11 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
 //
 //}
 
-//TODO should this address nested elements or not!?
-@mixin set_form_column_width($column_postfix, $width ) {
+//TODO should this address nested elements or not!? bold is not set in nested forms
+@mixin set_form_column_width($column_postfix, $width, $bold: false ) {
     @include ASSERT_TYPE(cui-form-table);
 
-    > tbody > .cui-form-tr-vertical {
+    > .cui-form-tr-vertical {
 
         //need a min width to make sure columns are not shrinked to 0
         .cui-form-td.cui-form-#{$column_postfix}
@@ -154,15 +154,28 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
             //exclude row-handles and empty cells
             .cui-data-field-input,
             .cui-label {
+                @if($bold) {
+                    font-weight: bold;
+                }
                 min-width: $width; //make sure a 100% column cant shrink this columns to 0
                 max-width: $width; //make sure it looks horizontally aligned
+            }
+
+
+        }
+    }
+
+    @if($bold) {
+        .cui-form-table {
+            .cui-label {
+                font-weight: normal !important;
             }
         }
     }
 
     &.cui-form-options-table,
     .cui-form-options-table {
-        > tbody > .cui-form-tr > .cui-form-td { //specific selector needed for overwriting
+        > .cui-form-tr > .cui-form-td { //specific selector needed for overwriting
             width: auto;
         }
     }
@@ -178,7 +191,7 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
 @mixin maximize_form_column($column_postfix, $overwrite: true ) {
     @include ASSERT_TYPE(cui-form-table);
 
-    > tbody > .cui-form-tr-vertical {
+    > .cui-form-tr-vertical {
 
         //need a min width to make sure columns are not shrinked to 0
         //TODO use set form width mixin here
@@ -225,7 +238,7 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
 
     &.cui-form-options-table,
     .cui-form-options-table {
-        > tbody > .cui-form-tr > .cui-form-td { //specific selector needed for overwriting
+        > .cui-form-tr > .cui-form-td { //specific selector needed for overwriting
             width: auto;
         }
     }
