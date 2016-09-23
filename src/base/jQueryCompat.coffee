@@ -358,7 +358,7 @@ class CUI.jQueryCompat
 				console.error("jQueryCompat.append: Unable to append HTML. Use CUI.DOM.htmlToNodes(...). Possible HTML: ", content)
 			CUI.DOM.append(node, content)
 			if more_content.length > 0
-				console.warning("jQueryCompat.append: Multiple parameters are deprecated.", more_content: more_content)
+				console.warn("jQueryCompat.append: Multiple parameters are deprecated.", more_content: more_content)
 				CUI.DOM.append(node, more_content)
 			node
 
