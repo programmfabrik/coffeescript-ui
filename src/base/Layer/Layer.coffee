@@ -35,7 +35,7 @@ class CUI.Layer extends CUI.DOM
 				class: "cui-layer-backdrop"
 				name: "layer-backdrop"
 
-			@__backdrop.addClass("cui-layer-backdrop-policy-"+@__bd_policy)
+			@__layer_root.addClass("cui-layer-backdrop-policy-"+@__bd_policy)
 
 			if @_backdrop.content
 				@setBackdropContent(@_backdrop.content)
@@ -57,7 +57,7 @@ class CUI.Layer extends CUI.DOM
 
 
 			if @__bd_policy == "click-thru" and not @_backdrop.blur and not @_backdrop.content
-				@__addClickThruListenerOnShow = true
+				; # @__addClickThruListenerOnShow = true
 			else
 				@__layer_root.DOM.appendChild(@__backdrop.DOM)
 
@@ -65,7 +65,7 @@ class CUI.Layer extends CUI.DOM
 
 				switch @__bd_policy
 					when "click-thru"
-						@__addClickThruListener()
+						; # @__addClickThruListener()
 					when "click"
 						Events.listen
 							type: ["click", "contextmenu"]
@@ -150,27 +150,28 @@ class CUI.Layer extends CUI.DOM
 		@__shown = false
 
 
-	__addClickThruListener: ->
-		Events.listen
-			type: "mousedown"
-			capture: true
-			node: window
-			call: (ev) =>
-				# console.debug "ev", ev.getTarget(), CUI.DOM.parents(ev.getTarget())
+	# __addClickThruListener: ->
+	# 	Events.listen
+	# 		type: "mousedown"
+	# 		capture: true
+	# 		node: window
+	# 		call: (ev) =>
+	# 			console.debug "ev", ev.getTarget(), CUI.DOM.parents(ev.getTarget())
 
-				if ev.ctrlKey() and ev.getButton() == 2
-					return
+	# 			if ev.ctrlKey() and ev.getButton() == 2
+	# 				return
 
-				if CUI.DOM.closest(ev.getTarget(), ".cui-tmpl-layer-root")
-					return
+	# 			if CUI.DOM.closest(ev.getTarget(), ".cui-tmpl-layer-root")
+	# 				console.debug "ignoring click on layer 'backdrop'"
+	# 				return
 
-				# if @__backdropClickDisabled
-				# 	# this is used in Popover when all buttons are disabled
-				# 	# we need to eat this
-				# 	return
+	# 			# if @__backdropClickDisabled
+	# 			# 	# this is used in Popover when all buttons are disabled
+	# 			# 	# we need to eat this
+	# 			# 	return
 
-				@hide(ev)
-				return
+	# 			@hide(ev)
+	# 			return
 
 
 	# disableBackdropClick: ->
@@ -1076,10 +1077,10 @@ class CUI.Layer extends CUI.DOM
 				return
 
 
-		if @__addClickThruListenerOnShow
-			@__clickThruListener = @__addClickThruListener()
-		else
-			@__clickThruListener = null
+		# if @__addClickThruListenerOnShow
+		# 	@__clickThruListener = @__addClickThruListener()
+		# else
+		# 	@__clickThruListener = null
 
 		@_onBeforeShow?(@, ev)
 		@__shown = true
@@ -1148,25 +1149,51 @@ class CUI.Layer extends CUI.DOM
 
 
 CUI.ready ->
+
 	Events.listen
-		type: "keyup"
-		node: document
+		type: ["mousedown"]
+		capture: true
+		node: window
+		call: (ev) ->
+
+			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root")
+			target = ev.getTarget()
+
+			while layer_element = layer_elements.pop()
+
+				if not layer_element.hasClass("cui-layer-backdrop-policy-click-thru")
+					return
+
+				if CUI.DOM.closest(target, layer_element)
+					return
+
+				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
+
+				layer.hide(ev)
+			return
+
+	Events.listen
+		type: ["keyup"]
+		capture: true
+		node: window
 		call: (ev) ->
 			if ev.keyCode() != 27
 				return
 
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root > .cui-layer")
 			layer_element = layer_elements[layer_elements.length-1]
-			element = DOM.closest(ev.getTarget(), "[tabindex],input,textarea")
+
+			element = CUI.DOM.closest(ev.getTarget(), "[tabindex],input,textarea")
 
 			if (element and element != layer_element) or not layer_element
 				# ignore this
 				return
 
+			layer = DOM.data(layer_element, "element")
+
 			ev.stopImmediatePropagation()
 			ev.preventDefault()
 
-			layer = DOM.data(layer_element, "element")
 			if layer.isKeyboardCancellable(ev)
 				layer.doCancel(ev)
 				return false

@@ -464,8 +464,7 @@ class FormDemo extends Demo
 					[
 						form:
 							label: "Date"
-						type: Output
-						text: ""+(new Date()).toUTCString()
+						type: DateTime
 					,
 						form:
 							label: "Input"
@@ -526,7 +525,9 @@ class FormDemo extends Demo
 					icon: new Icon(icon: "email")
 					text: "henk"
 				modal:
-					header_left: "Form Modal"
+					cancel: true
+					pane:
+						header_left: "Form Modal"
 				ok_button_opts:
 					text: "Yo - Custom Text"
 
@@ -539,8 +540,7 @@ class FormDemo extends Demo
 					[
 						form:
 							label: "Date"
-						type: Output
-						text: ""+(new Date()).toUTCString()
+						type: DateTime
 					,
 						form:
 							label: "Input"
