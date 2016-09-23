@@ -123,7 +123,7 @@ class ListViewTreeNode extends ListViewRow
 			our_idx = @getChildIdx()
 			filtered_nodes.push(@)
 			father = @getFather()
-			ListViewTreeNode::remove.call(@, true)  # keep children array
+			ListViewTreeNode::remove.call(@, true, false)  # keep children array, no de-select
 			for c, idx in save_children
 				father.children.splice(our_idx+idx, 0, c)
 				c.setFather(father)
@@ -510,39 +510,43 @@ class ListViewTreeNode extends ListViewRow
 
 	remove: (keep_children_array=false, select_after=true) ->
 		dfr = new CUI.Deferred()
-
 		select_after_node = null
-		if @isSelected() and select_after
-			if not @isRoot()
-				children = @getFather().children
-				if children.length > 1
-					child_idx = @getChildIdx()
-					if child_idx == 0
-						select_after = 1
-					else
-						select_after = Math.min(children.length-2, child_idx-1)
 
-				if select_after != null
-					select_after_node = children[select_after]
+		remove_node = =>
+			# CUI.debug "remove", @getNodeId(), @father.getNodeId(), @element
+			@removeFromDOM()
+			@father?.removeChild(@, keep_children_array)
 
-			@deselect().fail(dfr.reject)
+			if tree = @getTree()
+				Events.trigger
+					node: tree
+					type: "row_removed"
 
-		# CUI.debug "remove", @getNodeId(), @father.getNodeId(), @element
-		@removeFromDOM()
-		@father?.removeChild(@, keep_children_array)
-
-		if tree = @getTree()
-			Events.trigger
-				node: tree
-				type: "row_removed"
-
-			if select_after_node
-				select_after_node.select()
-					.done(dfr.resolve).fail(dfr.reject)
+				if select_after_node
+					select_after_node.select()
+						.done(dfr.resolve).fail(dfr.reject)
+				else
+					dfr.resolve()
 			else
 				dfr.resolve()
+			return
+
+		if select_after and not @isRoot()
+			children = @getFather().children
+			if children.length > 1
+				child_idx = @getChildIdx()
+				if child_idx == 0
+					select_after = 1
+				else
+					select_after = Math.min(children.length-2, child_idx-1)
+
+			if select_after != null
+				select_after_node = children[select_after]
+
+		if @isSelected()
+			@deselect().fail(dfr.reject).done(remove_node)
 		else
-			dfr.resolve()
+			remove_node()
 
 		dfr.promise()
 
@@ -766,7 +770,7 @@ class ListViewTreeNode extends ListViewRow
 			@__handleIcon = "tree_open"
 			cls.push("cui-tree-node-is-closed")
 
-		if @children?.length == 0
+		if not @children?.length
 			cls.push("cui-tree-node-no-children")
 
 		@__handleDiv = $div(cls.join(" "))
