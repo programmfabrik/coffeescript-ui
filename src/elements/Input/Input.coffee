@@ -159,6 +159,12 @@ class CUI.Input extends CUI.DataFieldInput
 		else
 			false
 
+	setSpellcheck: (spellcheck) ->
+		if spellcheck
+			DOM.setAttribute(@__input0, "spellcheck", "default")
+		else
+			DOM.setAttribute(@__input0, "spellcheck", "false")
+
 	setPlaceholder: (placeholder) ->
 		DOM.setAttribute(@__input[0], "placeholder", placeholder)
 
