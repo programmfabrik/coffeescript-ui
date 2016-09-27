@@ -139,17 +139,6 @@ class ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 
 
-		s = $span()
-		btn = @__addButton("On Press",
-			text: "Hold Button"
-			onMouseisdown: (ev) ->
-				s.text(ev.getMilliseconds()+"ms")
-
-			onClick: ->
-				s.text("")
-		)
-		btn.DOM.after(s)
-
 		@__addButton("Counter (use Shift)",
 			text: "1"
 			onClick: (ev, btn) ->

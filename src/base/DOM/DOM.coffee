@@ -858,7 +858,7 @@ class CUI.DOM extends CUI.Element
 
 	# selector is a filter
 	@parents: (docElem, selector, untilDocElem=document.documentElement) ->
-		assert(docElem instanceof HTMLElement, "CUI.DOM.parents", "element needs to be instanceof HTMLElement", element: docElem)
+		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.parents", "element needs to be instanceof HTMLElement, document, or window.", element: docElem)
 		path = @parentsUntil(docElem, selector, untilDocElem)
 		if not selector
 			return path

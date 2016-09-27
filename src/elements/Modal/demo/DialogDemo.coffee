@@ -437,9 +437,8 @@ class DialogDemo extends Demo
 					new Button
 						text: "Fill"
 						class: "cui-dialog"
-						onMouseisdown: (ev) =>
-							if ev.getMilliseconds() % 200 == 0
-								@mod.append(@getBlindText())
+						onClick: (ev) =>
+							@mod.append(@getBlindText())
 				,
 					new Button
 						text: "Ok"

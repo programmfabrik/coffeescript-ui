@@ -290,14 +290,15 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 
 	__startDrag: (ev, $target, diff) ->
-		Events.listen
-			type: "click"
-			node: window.globalDrag.startEvent.getCurrentTarget()
-			capture: true
-			only_once: true
-			call: (ev, info) ->
-				ev.stopPropagation()
-				return
+		for type in ["click", "mouseup"]
+			Events.listen
+				type: type
+				node: document
+				capture: true
+				only_once: true
+				call: (ev, info) ->
+					console.error "stopping ", ev.getType()
+					return ev.stop()
 
 		# CUI.debug "start drag", diff
 		@_dragstart?(ev, window.globalDrag)

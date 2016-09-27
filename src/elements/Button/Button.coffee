@@ -211,25 +211,6 @@ class CUI.Button extends CUI.DOM
 				@__menu_opts.parent_menu = @_menu_parent
 
 
-		@__prevent_btn_click = false
-
-		Events.listen
-			type: "mouseisdown"
-			node: @DOM
-			call: (ev) =>
-
-				if window.globalDrag?.dragStarted
-					@__prevent_btn_click = true
-					return
-
-				if @_onMouseisdown
-					@_onMouseisdown(ev, @)
-					# this callback might prevent the event
-					if ev.isDefaultPrevented()
-						CUI.debug "preventing click..."
-						@__prevent_btn_click = true
-				ev.stopPropagation()
-
 		Events.listen
 			type: "keydown"
 			node: @DOM
@@ -278,7 +259,6 @@ class CUI.Button extends CUI.DOM
 			type: "mousedown"
 			node: @DOM
 			call: (ev) =>
-				@__prevent_btn_click = false
 
 				# don't focus element
 				ev.preventDefault()
@@ -315,11 +295,6 @@ class CUI.Button extends CUI.DOM
 					return
 
 				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
-
-				if @__prevent_btn_click
-					ev.stop()
-					@__prevent_btn_click = false
-					return
 
 				ev.stopPropagation()
 				@onClickAction(ev)
@@ -397,7 +372,7 @@ class CUI.Button extends CUI.DOM
 			type: "mouseleave"
 			node: @DOM
 			call: (ev) =>
-				@__prevent_btn_click = false
+				# @__prevent_btn_click = false
 
 				if window.globalDrag
 					return
@@ -518,8 +493,6 @@ class CUI.Button extends CUI.DOM
 				check: Function
 			confirm_on_click:
 				check: String
-			onMouseisdown:
-				check: Function
 			onMouseover:
 				check: Function
 			onMouseout:

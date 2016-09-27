@@ -212,20 +212,6 @@ class EventsDemo extends Demo
 			data: data.listen
 		).start(), "pointer_events")
 
-		button_test = new Button
-			text: "Hold Me > 200ms"
-			onMouseisdown: (ev) =>
-				@log(ev.dump())
-				if ev.getMilliseconds() == 200
-					@log("preventing click after 200ms")
-					ev.preventNext()
-					ev.preventDefault()
-				return
-
-			onClick: (ev) =>
-				@log("click on button")
-
-		tmpl.append(button_test, "pointer_events")
 		tmpl
 
 	undisplay: ->
