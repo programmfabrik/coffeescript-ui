@@ -54,6 +54,10 @@ class ListViewTreeNode extends ListViewRow
 		if new_father
 			assert(@ not in new_father.getPath(true), "#{getObjectClass(@)}.setFather", "father cannot any of the node's children", node: @, father: new_father)
 
+		if not new_father and @selected
+			@getRoot()?.selectedNode = null
+			@selected = false
+
 		if @father and not new_father
 			# copy tree, since we are a new root node
 			tree = @getTree()
@@ -210,14 +214,20 @@ class ListViewTreeNode extends ListViewRow
 		else
 			@do_open = false
 
-		if @element and remove_self
-			if @getRowIdx() == null
-				if not @isRoot()
-					@getTree().removeDeferredRow(@)
-			else
-				@getTree().removeRow(@getRowIdx())
+		if remove_self
 
-			@element = null
+			if @selected
+				@getRoot()?.selectedNode = null
+				@selected = false
+
+			if @element
+				if @getRowIdx() == null
+					if not @isRoot()
+						@getTree().removeDeferredRow(@)
+				else
+					@getTree().removeRow(@getRowIdx())
+
+				@element = null
 
 		@is_open = false
 		@
