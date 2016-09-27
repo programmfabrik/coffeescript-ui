@@ -50,7 +50,7 @@ class ListViewTree extends ListView
 			if t instanceof ListViewRowMoveTool
 				@tools[idx] = new ListViewTreeRowMoveTool
 					rowMoveWithinNodesOnly: @_rowMoveWithinNodesOnly
-					tree: @
+					# tree: @
 		@
 
 	isSelectable: ->

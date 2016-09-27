@@ -1,8 +1,10 @@
 class ListViewTreeRowMoveTool extends ListViewRowMoveTool
-	constructor: (opts={}) ->
-		opts.rowMove = true
-		# opts.rowMoveWithinNodesOnly
-		super (opts)
+
+	initOpts: ->
+		super()
+		@addOpts
+			rowMoveWithinNodesOnly:
+				check: Boolean
 
 	mousemove: (ev) ->
 		return if not @info.cell
@@ -65,7 +67,7 @@ class ListViewTreeRowMoveTool extends ListViewRowMoveTool
 
 		[ from_node, to_node, new_father ] = @lV.getNodesForMove(@info.cell.row_i, @target.row_i, @target.after)
 
-		if @opts.rowMoveWithinNodesOnly and new_father
+		if @_rowMoveWithinNodesOnly and new_father
 			return false
 
 		# ask the source node, if it is ok to move it
