@@ -18,7 +18,7 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 
 				Events.listen
 					type: "mouseup"
-					node: document.documentElement
+					node: window
 					only_once: true
 					capture: true
 					call: ->

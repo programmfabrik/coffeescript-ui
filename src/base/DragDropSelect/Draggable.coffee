@@ -136,7 +136,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		overwrite_options = {}
 		globalDrag = @_create?(ev, overwrite_options, $target)
 
-		ev.getMousedownEvent().preventDefault()
+		ev.getMousedownEvent?().preventDefault()
 
 		if globalDrag == false
 			CUI.debug("not creating drag handle, opts.create returned 'false'.", ev)
@@ -278,7 +278,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 					return
 
 				# CUI.debug "mouseup/keyup: ", ev.getType()
-				ev.preventDefault()
 				# CUI.debug "draggable", ev.type
 				#
 				globalDrag.dragend = true
@@ -300,7 +299,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 									return ev.stop()
 
 				@__cleanup()
-
 				return ev.stop()
 				# CUI.debug "mouseup, resetting drag stuff"
 				#
