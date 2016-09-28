@@ -50,7 +50,7 @@ class CUI.jQueryCompat
 					]
 						nodes[key] = =>
 							for node in nodes
-								item[key].apply(item, arguments)
+								node[key].apply(node, arguments)
 							return nodes
 
 						return
@@ -62,7 +62,7 @@ class CUI.jQueryCompat
 							# only allow "set" on bulk
 							if value != undefined
 								for node in nodes
-									item[key].apply(item, arguments)
+									node[key].apply(node, arguments)
 								return nodes
 							else
 								return nodes[0]?.attr.apply(nodes[0], arguments)
