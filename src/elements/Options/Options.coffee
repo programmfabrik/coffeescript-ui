@@ -409,6 +409,8 @@ class CUI.Options extends CUI.DataField
 						# we need extra markup around our checkbox
 						el = CUI.DOM.element("DIV", class: "cui-options-sortable-option")
 						drag_handle = CUI.DOM.element("DIV", class: "cui-options-sortable-drag-handle")
+						drag_handle_inner = CUI.DOM.element("DIV", class: "cui-drag-handle-row")
+						drag_handle.appendChild(drag_handle_inner)
 						el.appendChild(drag_handle)
 						el.appendChild(cb.DOM)
 					else

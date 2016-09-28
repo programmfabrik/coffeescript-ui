@@ -396,6 +396,10 @@ class CUI.Layer extends CUI.DOM
 			"max-height": ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
+
+		if dim_layer.borderBoxWidth < 10 or dim_layer.borderBoxHeight < 10
+			console.warn("Layer: DIM is very small, layer might not be visible.", dim_layer, @__layer.DOM)
+
 		allowed_placements = (@_placements or CUI.Layer.knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
@@ -834,7 +838,7 @@ class CUI.Layer extends CUI.DOM
 			dbg_pl = 0
 
 			listener = Events.listen
-				node: window
+				node: document
 				type: "keyup"
 				call: (ev, info) =>
 					if ev.keyCode() != 32
@@ -1153,7 +1157,8 @@ CUI.ready ->
 	Events.listen
 		type: ["mousedown"]
 		capture: true
-		node: window
+		# install not do high, do Drag & Drop can be on top
+		node: document.body
 		call: (ev) ->
 
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root")
@@ -1176,7 +1181,8 @@ CUI.ready ->
 	Events.listen
 		type: ["keyup"]
 		capture: true
-		node: window
+		# install not do high, do Drag & Drop can be on top
+		node: document.body
 		call: (ev) ->
 			if ev.keyCode() != 27
 				return

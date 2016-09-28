@@ -490,7 +490,7 @@ class CUI.Input extends CUI.DataFieldInput
 			if isNaN(@__max_height)
 				@__max_height = null
 			else
-				correct_height = parseInt(@__input.css("height")) - DOM.height()
+				correct_height = parseInt(@__input.css("height")) - DOM.height(@__input)
 				@__max_height -= correct_height
 		else
 			DOM.width(@__contentSize, 1)
