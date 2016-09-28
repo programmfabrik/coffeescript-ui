@@ -19,6 +19,8 @@
 	resize: none;
 }
 
+
+
 .cui-data-field-input.cui-input {
 
 	//REMARKED needs to be elastic all the time, more important than a aligned width
@@ -27,12 +29,12 @@
 	//TODO use color variables
 	&-jailed input,
 	&-jailed textarea {
-		background-color: #F5D3D3;
+		background-color: $invalid_input_background_color;
 	}
 
 	&-invalid input,
 	&-invalid textarea {
-		background-color: #F5D3D3 !important;
+		background-color: $invalid_input_background_color !important;
 	}
 
 }
@@ -49,3 +51,26 @@
 textarea.cui-textarea {
 	resize: none;
 }
+
+.cui-input-invalid-hint {
+
+	position: absolute;
+	z-index: 1; //is only visible when user has focus , so z-index should be okay.
+	background: $invalid_input_background_color;
+	border: 1px solid black;
+	padding: 2px 5px;
+	margin-top: 2px;
+	margin-left: -1px;
+	opacity: 0;
+	//TODO transition doesnt work , maybe due to display setting in code!?
+	transition: opacity ease $default_animation_speed;
+	pointer-events: none;
+}
+
+.cui-input-invalid {
+	.cui-input-invalid-hint {
+		transition: opacity ease $default_animation_speed;
+		opacity: 1;
+	}
+}
+
