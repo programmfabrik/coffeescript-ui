@@ -57,7 +57,7 @@ textarea.cui-textarea {
 	position: absolute;
 	z-index: 1; //is only visible when user has focus , so z-index should be okay.
 	background: $invalid_input_background_color;
-	border: 1px solid black;
+	border: 2px solid $error_color;
 	padding: 2px 5px;
 	margin-top: 2px;
 	margin-left: -1px;

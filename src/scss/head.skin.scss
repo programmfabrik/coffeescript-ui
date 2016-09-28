@@ -51,6 +51,7 @@ $group_border_color: $default_background_color*0.85;
 $marker_background_color: $orange; //e.g. used by datetime to show current day or autocompletion to show found text
 $marker_color: #443c00;
 $invalid_input_background_color: #F5D3D3;
+$error_color: red;
 
 $dropzone_highlighted_color: $marker_background_color;
 
