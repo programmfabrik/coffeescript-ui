@@ -602,7 +602,7 @@ i.cui-spin-stepped {
 	&.cui-active {
 	  color: white;
 	  background: $highlight-color;
-	  border-color: $highlight-color;
+	  border-color: darken($highlight-color, 7%);
 	}
 
 	&.cui-button-appearance-flat {
@@ -1199,6 +1199,11 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
+	.cui-form-tr,
+	.cui-form-tr-header {
+		background: none;
+	}
 }
 
 .cui-confirmation-dialog,
@@ -1213,7 +1218,7 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 	width: 33px;
 	height: 16px;
-	margin: 5px;
+	margin: 0 5px;
 	overflow: hidden;
 
 	&:after { // arrow (north)
@@ -1239,6 +1244,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-pointer--w {
 	width: 16px;
 	height: 37px;
+	margin: 5px 0;
 }
 
 .cui-layer-pointer--e:after {
@@ -1303,6 +1309,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-tooltip {
 	max-width: 260px;
 	max-height: 100px;
+	min-width: 0;
 	overflow: auto;
 	background: hsl(0,0%,98%);
 	border-radius: 2px;
@@ -2166,6 +2173,7 @@ $table-data-padding: 4px;
 
 .cui-date-time-month-header {
 	border-bottom: 1px solid hsl(205,11%,93%);
+	margin-bottom: $padding/4;
 }
 
 .cui-date-time-day {
@@ -2233,7 +2241,7 @@ $table-data-padding: 4px;
 		text-align: right;
 		cursor: default;
 		justify-content: center;
-		padding: 0 7px;
+		padding-right: 7px;
 		line-height: 25px;
 		margin: 0 1px 1px 0;
 
