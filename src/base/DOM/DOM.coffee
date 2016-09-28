@@ -409,6 +409,12 @@ class CUI.DOM extends CUI.Element
 				return true
 		return false
 
+	@setClass: (element, cls, on_off) ->
+		if on_off
+			@addClass(element, cls)
+		else
+			@removeClass(element, cls)
+
 	@addClass: (element, cls) ->
 		if not cls or not element
 			return element
@@ -1043,6 +1049,10 @@ class CUI.DOM extends CUI.Element
 
 		dim.hasScrollbar = dim.hasVerticalScrollbar or dim.hasHorizontalScrollbar
 		dim.canHaveScrollbar = cs.overflowX in ["auto", "scroll"] or cs.overflowY in ["auto", "scroll"]
+		dim.horizontalScrollbarAtStart = dim.scrollLeft == 0
+		dim.horizontalScrollbarAtEnd = dim.scrollWidth - dim.scrollLeft - dim.clientWidth - dim.verticalScrollbarWidth < 1
+		dim.verticalScrollbarAtStart = dim.scrollTop == 0
+		dim.verticalScrollbarAtEnd = dim.scrollHeight - dim.scrollTop - dim.clientHeight - dim.horizontalScrollbarHeight < 1
 		dim
 
 	# returns the scrollable parent

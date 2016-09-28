@@ -136,6 +136,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 		overwrite_options = {}
 		globalDrag = @_create?(ev, overwrite_options, $target)
 
+		ev.getMousedownEvent().preventDefault()
+
 		if globalDrag == false
 			CUI.debug("not creating drag handle, opts.create returned 'false'.", ev)
 			return
@@ -290,13 +292,20 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 
 	__startDrag: (ev, $target, diff) ->
+
+		# It's ok to stop the events here, the "mouseup" and "keyup"
+		# we need to end the drag are initialized before in init drag,
+		# so they are executed before
 		for type in ["click", "mouseup"]
 			Events.listen
-				type: type
+				type: [type, "keyup"]
 				node: document
 				capture: true
 				only_once: true
 				call: (ev, info) ->
+					if ev.keyCode() != 27
+						return
+
 					console.error "stopping ", ev.getType()
 					return ev.stop()
 

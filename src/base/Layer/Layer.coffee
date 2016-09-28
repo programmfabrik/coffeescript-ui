@@ -1170,6 +1170,7 @@ CUI.ready ->
 				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
 
 				layer.hide(ev)
+
 			return
 
 	Events.listen

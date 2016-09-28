@@ -304,12 +304,12 @@ class FileUpload extends CUI.Element
 		inp = opts.fileUpload
 		for k in ["webkitdirectory", "mozdirectory", "directory"]
 			if opts.directory
-				DOM.setAttribute(inp, k)
+				DOM.setAttribute(inp, k, true)
 			else
 				DOM.removeAttribute(inp, k)
 
 		if opts.multiple
-			DOM.setAttribute(inp, "multiple")
+			DOM.setAttribute(inp, "multiple", true)
 		else
 			DOM.removeAttribute(inp, "multiple")
 

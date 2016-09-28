@@ -28,8 +28,10 @@ class Tabs extends SimplePane
 		# console.debug "header_dim", header_dim.scrollWidth, header_dim.clientWidth
 		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
+			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 		else
 			@__overflowBtn.hide()
+			CUI.DOM.removeClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 		@
 
 	__setActiveMarker: ->
@@ -68,6 +70,7 @@ class Tabs extends SimplePane
 				@__header.scrollLeft = startScrollLeft - diff.x
 			helper: null
 
+
 		if CUI.__ng__
 			pane_key = "center"
 		else
@@ -78,6 +81,14 @@ class Tabs extends SimplePane
 		@__pane_header.append(@__tabs_marker, pane_key)
 
 		@__header = @__pane_header[pane_key]()[0]
+
+		Events.listen
+			type: "scroll"
+			node: @__header
+			call: (ev) =>
+				dim = CUI.DOM.getDimensions(@__header)
+				CUI.DOM.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-end", dim.horizontalScrollbarAtEnd)
+				CUI.DOM.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-start", dim.horizontalScrollbarAtStart)
 
 		@__overflowBtn = new Button
 			icon: "ellipsis_h"
@@ -97,7 +108,7 @@ class Tabs extends SimplePane
 
 		@__overflowBtn.hide()
 
-		@__pane_header.append(@__overflowBtn, "right")
+		@__pane_header.append(@__overflowBtn, "right", false)
 
 		@getLayout().append(@__tabs_bodies, "center")
 
