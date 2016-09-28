@@ -43,13 +43,12 @@ body.cui-demo-playground {
 // Demo Table
 
 .cui-demo-divider-label {
-	font-weight: bold;
-	font-size: 14px;
-	border-bottom: 2px solid black;
-	margin-bottom: 5px;
+	font-size: 18px;
+	margin: 10px 0;
 }
 
 .cui-demo-table {
+	margin: 10px;
 
 	> .cui-tr {
 		+ .cui-demo-divider {
@@ -71,7 +70,6 @@ body.cui-demo-playground {
 			&:nth-child(1) {
 				width: 200px;
 				flex: 0 0 auto;
-				font-weight: bold;
 			}
 
 			&:nth-child(2) {
@@ -82,9 +80,15 @@ body.cui-demo-playground {
 	}
 }
 
+.cui-demo-pane-center {
+	margin: 10px;
+}
+
 // console pane
 .cui-demo-pane-right {
 	width: 300px;
+	background: hsl(205,17%,99%);
+	
 	.cui-demo-console-log {
 		> div {
 			display: block;
@@ -173,9 +177,17 @@ body.cui-demo-playground {
 	flex-wrap: wrap;
 	height: 200px;
 	overflow: auto;
-	background: hsl(205,9%,93%);
 	padding: 5px;
-	border: 1px solid hsl(205,10%,75%);
+	font-size: 1.5em;
+	color: hsl(205,10%,75%);
+	border: 1px dashed hsl(205,10%,75%);
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+	
+	&:empty:after {
+		content: "Drop here";
+	}
 }
 
 .drag-drop-select-demo-draggable-container-item,
