@@ -205,13 +205,13 @@ table.cui-form-table {
 	> .cui-label {
 		padding: 0 $padding;
 
-		&:first-child {
-			padding-top: $compensating-padding;
-		}
+		// &:first-child { makes no sense because this is not a vertical layout
+		// 	padding-top: $compensating-padding;
+		// }
 
-		&:last-child {
-			padding-bottom: $compensating-padding;
-		}
+		// &:last-child {
+		// 	padding-bottom: $compensating-padding;
+		// }
 	}
 }
 
@@ -512,10 +512,6 @@ table.cui-form-table {
 			padding-right: $padding;
 		}
 	}
-}
-
-.cui-demo-pane-right {
-	background: hsl(205,17%,99%);
 }
 
 .cui-data-table {
@@ -1842,8 +1838,8 @@ $table-data-padding: 4px;
 
 .cui-td {
 	&[colspan]{		
-		label,
-		.cui-label {
+		> label,
+		> .cui-label {
 			margin-bottom: $padding/2;
 		}
 	}
@@ -1857,7 +1853,7 @@ $table-data-padding: 4px;
 .cui-form-tr,
 .cui-form-tr-header {
 	flex-direction: row;
-	padding: $padding 0;
+	padding: $padding 0 $padding - 1px;
 	background: $foreground;
 	position: relative;
 
@@ -1868,7 +1864,7 @@ $table-data-padding: 4px;
 		right: $padding;
 		height: 1px;
 		top: 0;
-		background: hsl(205,10%,95%);
+		background: hsl(205,10%,96%);
 	}
 
 	&:first-child:before {
@@ -2564,7 +2560,7 @@ $table-data-padding: 4px;
 		}
 		.cui-progress-meter-fill-background {
 			border-radius: $button-border-radius;
-			background: lighten(desaturate($highlight-color, 85%), 40%);
+			background: lighten(desaturate($highlight-color, 90%), 43%);
 		}
 		.cui-progress-meter-fill {
 			display: none;
