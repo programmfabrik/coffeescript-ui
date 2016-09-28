@@ -461,9 +461,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# console.debug "limitRect", dump(pos), dim_contain
 
-		helper_pos =
-			top: pos.y
-			left: pos.x
+		helper_pos.top = pos.y
+		helper_pos.left = pos.x
 
 		helper_pos.dragDiff =
 			x: helper_pos.left - globalDrag.helperNodeStart.left
