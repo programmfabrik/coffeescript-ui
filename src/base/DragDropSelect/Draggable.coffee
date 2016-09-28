@@ -430,34 +430,39 @@ class CUI.Draggable extends CUI.DragDropSelect
 				top: globalDrag.helperNodeStart.top
 				left: globalDrag.helperNodeStart.left
 
+		pos =
+			x: helper_pos.left
+			y: helper_pos.top
+			w: globalDrag.helperNodeStart.width
+			h: globalDrag.helperNodeStart.height
+
 		if @_helper_contain_element
 			dim_contain = CUI.DOM.getDimensions(@_helper_contain_element)
-
-			pos =
-				x: helper_pos.left
-				y: helper_pos.top
-				w: globalDrag.helperNodeStart.width
-				h: globalDrag.helperNodeStart.height
 
 			# pos is changed in place
 			Draggable.limitRect pos,
 				min_x: dim_contain.viewportLeft + dim_contain.borderLeftWidth
-				max_x: dim_contain.viewportRight - dim_contain.borderRightWidth
+				max_x: dim_contain.viewportRight - dim_contain.borderRightWidth - globalDrag.helperNodeStart.marginHorizontal
 				min_y: dim_contain.viewportTop + dim_contain.borderTopWidth
-				max_y: dim_contain.viewportBottom - dim_contain.borderBottomWidth
-
-			helper_pos =
-				top: pos.y
-				left: pos.x
-
-			helper_pos.dragDiff =
-				y: helper_pos.top - globalDrag.helperNodeStart.top
-				x: helper_pos.left - globalDrag.helperNodeStart.left
-
+				max_y: dim_contain.viewportBottom - dim_contain.borderBottomWidth - globalDrag.helperNodeStart.marginVertical
 		else
-			helper_pos.dragDiff =
-				y: diff.y
-				x: diff.x
+			dim_contain = globalDrag.helperNodeStart.body_dim
+
+			Draggable.limitRect pos,
+				min_x: dim_contain.borderLeftWidth
+				max_x: dim_contain.scrollWidth - dim_contain.borderRightWidth - globalDrag.helperNodeStart.marginHorizontal
+				min_y: dim_contain.borderTopWidth
+				max_y: dim_contain.scrollHeight - dim_contain.borderBottomWidth - globalDrag.helperNodeStart.marginVertical
+
+		# console.debug "limitRect", dump(pos), dim_contain
+
+		helper_pos =
+			top: pos.y
+			left: pos.x
+
+		helper_pos.dragDiff =
+			x: helper_pos.left - globalDrag.helperNodeStart.left
+			y: helper_pos.top - globalDrag.helperNodeStart.top
 
 		@_helper_set_pos?(globalDrag, helper_pos)
 
@@ -523,6 +528,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 		start.height = dim.borderBoxHeight
 		start.marginTop = dim.marginTop
 		start.marginLeft = dim.marginLeft
+		start.marginVertical = dim.marginVertical
+		start.marginHorizontal = dim.marginHorizontal
+		start.body_dim = CUI.DOM.getDimensions(document.body)
 
 		globalDrag.helperNodeStart = start
 
@@ -578,7 +586,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				pos.w -= diff
 				continue
 
-			# CUI.debug "correcting #{skey} by #{diff} from #{pos[skey]}"
+			# console.debug "correcting #{skey} by #{diff} from #{pos[skey]}"
 
 			pos[skey]-=diff
 
