@@ -1494,6 +1494,20 @@ a[role="button"].cui-button-appearance-link {
 				flex-grow: 0;
 				justify-content: center;
 			}
+
+			/* overflowing tabs */
+			&.cui-tabs-pane-header--overflow {
+				.cui-horizontal-layout-center {
+					align-items: flex-start;
+					padding-left: $padding/2;
+					
+					.cui-tab-header-button:last-child {
+						border-top-right-radius: 0;
+						border-bottom-right-radius: 0;
+						border-right: none;
+					}
+				}
+			}
 		}
 	}
 	> .cui-vertical-layout-center {
@@ -1544,17 +1558,29 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-toolbar .cui-tab-header-button-overflow {
-	border-top-left-radius: 0 !important;
-	border-bottom-left-radius: 0 !important;
-	min-width: 0;
-	align-self: center;
-	box-shadow:
-		-1px 0 hsla(0,0%,0%,.08),
-		-2px 0 hsla(0,0%,0%,.04),
-		-3px 0 hsla(0,0%,0%,.02),
-		-4px 0 hsla(0,0%,0%,.01),
-		-5px 0 hsla(0,0%,0%,.01);
+.cui-toolbar {
+	&.cui-tabs-pane-header--scroll-at-end {
+		.cui-tab-header-button-overflow {
+			box-shadow: none;
+		}
+	}
+
+	.cui-tab-header-button-overflow {
+		border-top-left-radius: 0 !important;
+		border-bottom-left-radius: 0 !important;
+		min-width: 0;
+		align-self: center;
+		padding: 0 $padding;
+		font-size: 14px;
+		position: relative;
+		z-index: 1; // to overlap active buttons
+		box-shadow:
+			-1px 0 hsla(0,0%,0%,.10),
+			-2px 0 hsla(0,0%,0%,.08),
+			-3px 0 hsla(0,0%,0%,.05),
+			-4px 0 hsla(0,0%,0%,.02),
+			-5px 0 hsla(0,0%,0%,.01);
+	}
 }
 
 
