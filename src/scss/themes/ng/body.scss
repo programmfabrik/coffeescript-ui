@@ -494,6 +494,11 @@ table.cui-form-table {
 .cui-pane-header {
 	background: $foreground;
 	border-bottom: 1px solid hsl(180,9%,93%);
+	
+	.fa-angle-right,
+	.fa-angle-left {
+		font-size: 17px;
+	}
 
 	.cui-buttonbar {
 		margin-bottom: 0;
