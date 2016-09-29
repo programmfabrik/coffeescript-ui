@@ -21,23 +21,24 @@
 }
 
 .cui-droppable-target-helper {
-	transition: transform 0.5s ease;
+	//overwrite any other animation, its just temporary
+	transition: transform $default_animation_speed ease !important;
 }
 
 .cui-droppable-target-helper-y--after {
-	transform: translateY(-30%)
+	transform: translateY(-30%);
 }
 
 .cui-droppable-target-helper-y--before {
-	transform: translateY(30%)
+	transform: translateY(30%);
 }
 
 .cui-droppable-target-helper-x--after {
-	transform: translateX(-30%)
+	transform: translateX(-30%);
 }
 
 .cui-droppable-target-helper-x--before {
-	transform: translateX(30%)
+	transform: translateX(30%);
 }
 
 
