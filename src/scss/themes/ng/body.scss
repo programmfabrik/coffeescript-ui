@@ -335,6 +335,7 @@ table.cui-form-table {
 	position: relative;
 	z-index: 1;
 
+	// handle
 	&:after {
 		content: "";
 		position: absolute;
@@ -354,13 +355,23 @@ table.cui-form-table {
 		// background-color: #64fdd8;
 	}
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
-		width: 20px;
+		width: 32px;
+		margin: 0;
+		background: white;
+		
+		// remove handle
+		&:after {
+			left: 0;
+		}
+		
 		.cui-label.cui-tmpl-label-rotate-90 {
+			font-size: 14px;
+			
 			.cui-label-transform {
 				// the difference to the normal rotate-90 is that
 				// we want to touch the label the "top" and not
 				// start from the "bottom"
-				transform: rotateZ(-90deg) translateY(-3px) translate(calc(-100% - 3px));
+				transform: rotateZ(-90deg) translateY(7px) translate(calc(-100% - #{$padding}));
 				transform-origin: left top;
 			}
 		}
@@ -552,6 +563,10 @@ table.cui-form-table {
 }
 
 // Icons
+.fa {
+	font-size: 14px;
+}
+
 i.fa-spinner {
 	width: 12px;
 }
@@ -1192,7 +1207,7 @@ a[role="button"].cui-button-appearance-link {
     top: 7px;
     width: 18px;
     height: 18px;
-		background: white;
+		background: hsl(0,0%,98%);
 		box-shadow:
 			0 0 0 1px hsla(0,0%,0%,0.1),
 			3px 3px 14px hsla(0,0%,0%,0.1);
