@@ -48,6 +48,7 @@ code: $(files)
 	cp -rv scratch $(target)
 	cp ../src/elements/FileUpload/demo/FileUpload.php $(target)/FileUpload.php
 	cp ../src/base/XHR/demo/XHRTest.php $(target)/XHRTest.php
+	cp -r ../build/font-awesome $(target)
 	cat demo.html > $(target)/index.html
 
 html:

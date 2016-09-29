@@ -400,7 +400,7 @@ class CUI.DOM extends CUI.Element
 	# checks if any of the classes are set
 	@hasClass: (element, cls) ->
 		if not cls
-			return element
+			return null
 
 		for _cls in cls.trim().split(/\s+/)
 			if _cls == ""
