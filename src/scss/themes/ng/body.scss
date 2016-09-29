@@ -448,22 +448,9 @@ table.cui-form-table {
 	justify-content: space-between;
 
 	.cui-label {
-		font-size: 17px;
+		font-size: 16px;
 		height: 100%;
     align-items: center;
-	}
-
-	.cui-button-button { // dont target buttongroup buttons
-		border: none;
-		padding: 0 $padding;
-		height: 100%;
-		background: none;
-		border-radius: 0;
-		color: $highlight-color;
-
-		&.cui-active {
-			color: $highlight-color;
-		}
 	}
 
 	> div {
@@ -512,6 +499,19 @@ table.cui-form-table {
 			padding-right: $padding;
 		}
 	}
+
+	.cui-button-button { // dont target buttongroup buttons
+		border: none;
+		padding: 0 $padding;
+		height: 100%;
+		background: none;
+		border-radius: 0;
+		color: $highlight-color;
+
+		&.cui-active {
+			color: $highlight-color;
+		}
+	}
 }
 
 .cui-data-table {
@@ -526,6 +526,14 @@ table.cui-form-table {
 		  height: 23px;
 		  padding: 0 $padding/2;
 		  border-right: 1px solid hsl(205,8%,77%) !important;
+		  
+		  &:cui-disabled {
+		  	opacity: 1;
+		  	
+		  	* {
+		  		opacity: 0.5;
+		  	}
+		  }
 
 		  &:before {
 		    display: none;
@@ -1123,7 +1131,6 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Layer
-
 .cui-tmpl-layer-root {
 	z-index: 1;
 }
@@ -1133,14 +1140,22 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	flex-direction: column;
 	overflow: auto;
+	background: white;
 	margin: 10px;
 	outline: none;
-	background: hsl(0,0%,98%);
 	border-radius: 5px;
 	box-shadow:
 		0 0 0 1px hsla(0,0%,0%,0.1),
 		0 7px 14px hsla(0,0%,0%,0.1);
+	
+	// layer-header
+	.cui-pane-header {
+		background: hsl(0,0%,98%);
+		padding: $compensating-padding $padding;
+		padding-left: 0; // label has its own padding
+	}
 
+	// layer-body
 	.cui-simple-pane > .cui-vertical-layout-center {
 		padding: $padding;
 		overflow: auto;
@@ -1154,58 +1169,11 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	// layer-footer
 	.cui-pane-footer {
-		justify-content: space-between;
-
-		.cui-button-button {
-			flex: 1;
-			border-top: 1px solid hsl(210,11%,93%);
-			border-left: 1px solid hsl(210,11%,93%);
-			margin: 0;
-
-			&.cui-button--primary {
-				border-top-color: $highlight-color;
-				border-left-width: 0;
-			}
-		}
-
-		.cui-buttonbar {
-			flex: 1;
-		}
-
-		.cui-horizontal-layout-left,
-		.cui-horizontal-layout-center,
-		.cui-horizontal-layout-right {
-			flex: 1;
-
-			&:empty {
-				display: none;
-			}
-		}
-
-		.cui-horizontal-layout-left:empty +
-		.cui-horizontal-layout-center:not(:empty),
-		.cui-horizontal-layout-left:empty +
-		.cui-horizontal-layout-center:empty +
-		.cui-horizontal-layout-right,
-		.cui-horizontal-layout-left {
-			.cui-button:first-child {
-				border-left-width: 0;
-				border-bottom-left-radius: 4px;
-			}
-		}
-	}
-
-	.cui-form-tr,
-	.cui-form-tr-header {
-		background: none;
-	}
-}
-
-.cui-confirmation-dialog,
-.cui-layer-root-modal {
-	.cui-pane-header {
-		display: none;
+		border-top: 1px solid hsl(180,9%,93%);
+		background: hsl(0,0%,98%);
+		padding: $compensating-padding $padding;
 	}
 }
 
@@ -1291,6 +1259,85 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 }
+
+// Confirmation
+
+.cui-confirmation-dialog,
+.cui-layer-root-popover {
+	.cui-layer {
+		max-width: 400px;
+		background: hsl(0,0%,98%);
+
+		.cui-form-tr,
+		.cui-form-tr-header {
+			background: none;
+		}
+		
+		> .cui-pane {
+			> .cui-vertical-layout-top {
+				display: none;
+			}
+		}
+	}
+
+	.cui-pane-footer {
+		justify-content: space-between;
+		border: none;
+		background: none;
+		padding: 0;
+
+		.cui-button-button {
+			flex: 1;
+			border: none;
+			border-top: 1px solid hsl(210,11%,93%);
+			border-left: 1px solid hsl(210,11%,93%);
+			margin: 0;
+			padding: 0 $padding;
+			height: 100%;
+			border-radius: 0;
+			color: $highlight-color;
+			background: none;
+
+			&.cui-active {
+				color: $highlight-color;
+			}
+
+			&.cui-button--primary {
+				background: $highlight-color;
+				color: $on-highlight-color;
+				border-top-color: $highlight-color;
+				border-left-width: 0;
+			}
+		}
+
+		.cui-buttonbar {
+			flex: 1;
+		}
+
+		.cui-horizontal-layout-left,
+		.cui-horizontal-layout-center,
+		.cui-horizontal-layout-right {
+			flex: 1;
+
+			&:empty {
+				display: none;
+			}
+		}
+
+		.cui-horizontal-layout-left:empty +
+		.cui-horizontal-layout-center:not(:empty),
+		.cui-horizontal-layout-left:empty +
+		.cui-horizontal-layout-center:empty +
+		.cui-horizontal-layout-right,
+		.cui-horizontal-layout-left {
+			.cui-button:first-child {
+				border-left-width: 0;
+				border-bottom-left-radius: 4px;
+			}
+		}
+	}
+}
+
 
 // Tooltip
 .cui-layer-root-tooltip .cui-layer-pointer {
@@ -1802,7 +1849,7 @@ $table-data-padding: 4px;
 
 // do this on top level, so its easier to overwrite
 .cui-lv-td {
-	width: 100px;
+	width: 135px;
 }
 
 .cui-tmpl-list-view-tool-col-resize-marker {
@@ -1879,23 +1926,8 @@ $table-data-padding: 4px;
 .cui-form-tr,
 .cui-form-tr-header {
 	flex-direction: row;
-	padding: $padding 0 $padding - 1px;
 	background: $foreground;
 	position: relative;
-
-	&:before {
-		content: "";
-		position: absolute;
-		left: $padding;
-		right: $padding;
-		height: 1px;
-		top: 0;
-		background: hsl(205,10%,96%);
-	}
-
-	&:first-child:before {
-		display: none;
-	}
 }
 
 .cui-form-tr {
@@ -2030,13 +2062,34 @@ $table-data-padding: 4px;
 	display: none;
 }
 
-.cui-form-left,
-.cui-form-right {
-	width: 120px;
-}
+.cui-form-table-has-left-column {
+	.cui-form-left,
+	.cui-form-right {
+		width: 135px;
+	}
 
-.cui-form-left {
-	padding: 4px $padding;
+	.cui-form-left {
+		padding: 4px $padding;
+	}
+
+	.cui-form-tr,
+	.cui-form-tr-header {
+		padding: $padding 0 $padding - 1px;
+
+		&:before {
+			content: "";
+			position: absolute;
+			left: $padding;
+			right: $padding;
+			height: 1px;
+			top: 0;
+			background: hsl(205,10%,96%);
+		}
+
+		&:first-child:before {
+			display: none;
+		}
+	}
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center {
@@ -2062,15 +2115,27 @@ $table-data-padding: 4px;
 
 // Options
 
-.cui-form-options-table,
-.cui-form-table-horizontal  {
-	.cui-button-checkbox {
-		margin-right: $padding;
-	}
+.cui-options-active {
+	margin-bottom: $padding;
+}
 
-	.cui-form-tr-horizontal {
-		flex-wrap: wrap;
+.cui-options-sortable-option {
+	flex-direction: row;
+	
+	.cui-options-sortable-drag-handle {
+		width: 16px;
+		display: flex;
+    flex-direction: row;
+		margin-right: 2px;
+    padding: 0 3px 0 1px;
 	}
+}
+
+.cui-options-order-hint {
+	font-size: 11px;
+	margin-top: $compensating-padding;
+	margin-left: 18px;
+	margin-bottom: 2px !important;
 }
 
 .cui-drag-drop-select-sortable,
@@ -2376,6 +2441,7 @@ $table-data-padding: 4px;
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: 1; // put in front of focused input field
 }
 
 .cui-multi-input-tag-button {
