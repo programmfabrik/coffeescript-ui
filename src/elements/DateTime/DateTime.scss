@@ -426,3 +426,9 @@ tr.cui-date-time-year-month > td {
 	background-color: $marker_background_color;
 }
 
+//never show the warning it destroys our design. would be best to have this hint as a tooltip.
+.cui-date-time {
+	.cui-input-invalid-hint {
+		display: none !important;
+	}
+}

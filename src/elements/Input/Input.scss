@@ -52,24 +52,20 @@ textarea.cui-textarea {
 	resize: none;
 }
 
+//current use in datetime, and there its hidden
 .cui-input-invalid-hint {
 
-	position: absolute;
-	z-index: 1; //is only visible when user has focus , so z-index should be okay.
 	background: $invalid_input_background_color;
 	border: 2px solid $error_color;
 	padding: 2px 5px;
-	margin-top: 2px;
-	margin-left: -1px;
 	opacity: 0;
 	//TODO transition doesnt work , maybe due to display setting in code!?
-	transition: opacity ease $default_animation_speed;
+	transition: opacity ease $default_animation_speed !important;
 	pointer-events: none;
 }
 
 .cui-input-invalid {
 	.cui-input-invalid-hint {
-		transition: opacity ease $default_animation_speed;
 		opacity: 1;
 	}
 }
