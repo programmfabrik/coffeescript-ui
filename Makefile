@@ -163,10 +163,14 @@ html_files = \
 	src/elements/StickyHeader/StickyHeader.html \
 	src/elements/Tabs/Tab.html
 
-all: code demo css
+all: code font_awesome demo css
 	#
 	# $@
 	mkdir -p $(target)
+
+font_awesome:
+	mkdir -p $(target)
+
 	rm -rf $(target)/font-awesome
 	mkdir -p $(target)/font-awesome/css
 	mkdir -p $(target)/font-awesome/fonts
@@ -175,7 +179,7 @@ all: code demo css
 	rsync -r thirdparty/font-awesome-4.5.0/fonts $(target)/font-awesome/
 	cp $(thirdparty_files) $(target)
 
-demo:
+demo: font_awesome
 	$(MAKE) --directory demo all
 
 css_ng:
@@ -234,4 +238,4 @@ wipe: clean
 %.coffee.js: %.coffee
 	coffee -b -p --compile $^ > $@ || ( rm -f $@ ; false )
 
-.PHONY: all demo clean clean-build wipe
+.PHONY: all demo clean clean-build wipe font_awesome
