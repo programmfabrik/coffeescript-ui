@@ -76,16 +76,11 @@ css_other:
 
 css: css_ng css_other
 
-watch_ng: ; ${MAKE} -j3 watch_ng_body watch_ng_demo
-
-watch_ng_body:
-	watch 'sass --scss --sourcemap=inline src/scss/themes/ng/main.scss:$(target)/css/cui_demo_ng.css' ../src/scss/themes/ng
-
-watch_ng_demo:
-	watch 'sass --scss --sourcemap=inline src/scss/themes/ng/main.scss:$(target)/css/cui_demo_ng.css' src/scss/themes/ng
+watch_ng:
+	watch 'sass --scss --sourcemap=inline src/scss/themes/ng/main.scss:$(target)/css/cui_demo_ng.css' ../src/scss/themes/ng src/scss/themes/ng
 
 watch_code:
-	watch 'make code' ../src/elements
+	watch 'make code' ../src/elements ../src/base
 
 jpg: $(jpg_files)
 	#
