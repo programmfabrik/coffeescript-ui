@@ -458,12 +458,6 @@ table.cui-form-table {
 	min-height: 33px;
 	justify-content: space-between;
 
-	.cui-label {
-		font-size: 16px;
-		height: 100%;
-    align-items: center;
-	}
-
 	> div {
 		&.cui-horizontal-layout-left,
 		&.cui-horizontal-layout-right {
@@ -495,6 +489,12 @@ table.cui-form-table {
 	background: $foreground;
 	border-bottom: 1px solid hsl(180,9%,93%);
 	
+	.cui-label {
+		font-size: 16px;
+		height: 100%;
+    align-items: center;
+	}
+	
 	.fa-angle-right,
 	.fa-angle-left {
 		font-size: 17px;
@@ -505,13 +505,13 @@ table.cui-form-table {
 	}
 
 	.cui-horizontal-layout-left {
-		.cui-label:first-child {
+		> .cui-label:first-child {
 			padding-left: $padding;
 		}
 	}
 
 	.cui-horizontal-layout-right {
-		.cui-label:last-child {
+		> .cui-label:last-child {
 			padding-right: $padding;
 		}
 	}
