@@ -46,6 +46,7 @@
         opacity: .5;
         background-color: $flex_handle_closed_label_background_color;
         transition: background-color ease $default_animation_speed opacity ease $default_animation_speed;
+        z-index: 2; //otherwise handle is not visible while dragging inside modal dialocs
     }
 
     // ---- closed + label style ------------
