@@ -32,6 +32,13 @@
 		}
 	}
 
+	.cui-form {
+		//handle nested forms
+		.cui-padding.cui-form-td:not(:empty) {
+			padding: $form_cell_padding;
+		}
+	}
+
 }
 
 .cui-options-order-hint {
