@@ -84,9 +84,6 @@ class FormPopover extends Form
 
 
 	render: ->
-		DataField::render.call(@)
-		@addClass("cui-data-field-input")
-
 		button_opts = copyObject(@_button, true)
 		button_opts.onClick = =>
 			@__openPopover()
@@ -96,13 +93,19 @@ class FormPopover extends Form
 
 		@__button = new CUI.defaults.class.Button(button_opts)
 
+		@addClass("cui-data-field-input")
+
 		# this means the button's text is rendered by
 		# the "renderDisplay" function
 		if @_renderDisplayButton
 			@addClass("cui-form-popover-has-button-text")
 		@append(@__button, "center")
 		@append(@getChangedMarker(), "center")
+		DataField::render.call(@)
 		@
+
+	getButton: ->
+		@__button
 
 	displayValue: ->
 		DataField::displayValue.call(@)
@@ -128,24 +131,23 @@ class FormPopover extends Form
 			# CUI.debug("display", display,@__formPopover.getGroupData())
 
 		if @_renderDisplayButton
-			if @__old_render == null or @__old_render != render
-				if render == false
-					@__button.deactivate()
-				else if render == true
-					@__button.activate()
-				else if render instanceof Icon
-					@__button.setIcon(render)
-					@__button.setText()
-				else
-					@__button.setIcon()
-					@__button.setText(render)
+			if render == false
+				@__button.deactivate()
+			else if render == true
+				@__button.activate()
+			else if render instanceof Icon
+				@__button.setIcon(render)
+				@__button.setText()
+			else
+				@__button.setIcon()
+				@__button.setText(render)
 
-				if @__old_render != null
-					# CUI.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
-					Events.trigger
-						type: "content-resize"
-						node: @DOM
-				@__old_render = render
+			if @__old_render != null
+				# CUI.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
+				Events.trigger
+					type: "content-resize"
+					node: @DOM
+			@__old_render = render
 
 		else
 			if @__old_display == null or @__old_display != display
