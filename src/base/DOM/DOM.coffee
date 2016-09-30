@@ -877,6 +877,9 @@ class CUI.DOM extends CUI.Element
 		parents
 
 	@isInDOM: (docElem) ->
+		if not docElem
+			return null
+
 		assert(docElem instanceof HTMLElement, "CUI.DOM.isInDOM", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		if @closestUntil(docElem, null, document.documentElement)
 			true
