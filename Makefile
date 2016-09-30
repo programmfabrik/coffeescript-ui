@@ -163,12 +163,14 @@ html_files = \
 	src/elements/StickyHeader/StickyHeader.html \
 	src/elements/Tabs/Tab.html
 
-all: code font_awesome demo css
+all: code demo css
 	#
 	# $@
 	mkdir -p $(target)
 
 font_awesome:
+	#
+	# $@
 	mkdir -p $(target)
 
 	rm -rf $(target)/font-awesome

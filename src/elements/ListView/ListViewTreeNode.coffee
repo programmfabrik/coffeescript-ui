@@ -216,10 +216,6 @@ class ListViewTreeNode extends ListViewRow
 
 		if remove_self
 
-			if @selected
-				@getRoot()?.selectedNode = null
-				@selected = false
-
 			if @element
 				if @getRowIdx() == null
 					if not @isRoot()
