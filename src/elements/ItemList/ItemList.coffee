@@ -248,9 +248,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 					return
 
 				if list_has_button_left
-					@__body.addClass("cui-item-list-has-button-left")
+					@__body.addClass("cui-item-list--has-button-left")
 				else
-					@__body.removeClass("cui-item-list-has-button-left")
+					@__body.removeClass("cui-item-list--has-button-left")
 
 			return
 
