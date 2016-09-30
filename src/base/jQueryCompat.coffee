@@ -79,6 +79,20 @@ class CUI.jQueryCompat
 						return
 
 					if key in [
+						"hasClass"
+					]
+						nodes[key] = =>
+							for node in nodes
+								has_class =	node[key].apply(node, arguments)
+								if has_class
+									return true
+
+							return false
+
+						return
+
+
+					if key in [
 						"find"
 					]
 						nodes[key] = =>
@@ -179,6 +193,11 @@ class CUI.jQueryCompat
 		node.length = 0
 
 		for key in @__noopKeys
+			if key == "find"
+				node[key] = =>
+					@__warn(key, "Noop node.")
+					return []
+
 			node[key] = =>
 				@__warn(key, "Noop node.")
 				return
@@ -207,7 +226,8 @@ class CUI.jQueryCompat
 			enumerable: false
 			get: =>
 				CUI.jQueryCompat.__warn(".length", node)
-				console.error("jQueryCompat: .length accessed on node. Returning 1.", node)
+				if CUI.defaults.jQueryCompat > 1
+					console.error("jQueryCompat: .length accessed on node. Returning 1.", node)
 				return 1
 
 			set: =>
