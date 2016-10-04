@@ -84,7 +84,7 @@ class Icon extends CUI.Element
 		tree_close: "fa-caret-down"
 		ellipsis_h: "fa-ellipsis-h"
 		ellipsis_v: "fa-ellipsis-v" #used for sidemenu buttons
-		close: "fa-times"
+		close: if CUI.__ng__ then "fa-times-thin" else "fa-times"
 		menu: "fa-bars"
 		info: "fa-info-circle"
 		bolt: "fa-bolt"

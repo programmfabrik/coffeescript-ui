@@ -14,6 +14,9 @@ $drag-handle-color: hsl(0,0%,50%);
 $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
 
+$muted-color: hsl(205,8%,50%);
+$disabled-color: hsl(205,7%,73%);
+
 // Table Colors
 $zebra-color: hsl(205,10%,98%);
 $table-border-color: hsl(205,8%,90%);
@@ -455,8 +458,17 @@ table.cui-form-table {
 
 // Toolbar
 .cui-toolbar {
-	min-height: 33px;
+	min-height: 42px;
 	justify-content: space-between;
+	align-items: center;
+	padding: 0 $padding;
+	
+	// prevent outline cutoff
+	&.cui-maximize-horizontal {
+		> .cui-horizontal-layout-center {
+			overflow: visible;
+		}
+	}
 
 	> div {
 		&.cui-horizontal-layout-left,
@@ -473,7 +485,18 @@ table.cui-form-table {
 			// align-items: stretch, but here
 			// we need to overwrite this
 			flex: 1 1 auto;
+			align-self: stretch;
+			
+			// prevent outline cutoff
+			> .cui-horizontal-layout-center {
+				overflow: visible;
+			}
+
+			.cui-input {
+				width: 100%;
+			}
 		}
+
 		> .cui-toolbar {
 			// nested toolbars do not get a padding
 			padding: 0;
@@ -481,6 +504,15 @@ table.cui-form-table {
 	}
 	&.cui-template-empty {
 		display: none;
+	}
+
+	.cui-data-field-input {
+		height: 100%;
+		justify-content: center;
+		
+		.cui-input {
+			flex-grow: 0;
+		}
 	}
 }
 
@@ -505,14 +537,14 @@ table.cui-form-table {
 	}
 
 	.cui-horizontal-layout-left {
-		> .cui-label:first-child {
-			padding-left: $padding;
+		> *:first-child {
+			padding-left: 0;
 		}
 	}
 
 	.cui-horizontal-layout-right {
-		> .cui-label:last-child {
-			padding-right: $padding;
+		> *:last-child {
+			padding-right: 0;
 		}
 	}
 
@@ -523,6 +555,7 @@ table.cui-form-table {
 		background: none;
 		border-radius: 0;
 		color: $highlight-color;
+		align-self: center;
 
 		&.cui-active {
 			color: $highlight-color;
@@ -530,6 +563,26 @@ table.cui-form-table {
 	}
 }
 
+// Simple Pane
+.cui-simple-pane {
+	> .cui-vertical-layout-center {
+		> .cui-label:only-child {
+			margin: $padding;
+		}
+	}
+}
+
+
+// Table
+.cui-table {
+	margin: $compensating-padding/2 $padding;
+	
+	&:empty {
+		margin: 0;
+	}
+}
+
+// Data Table
 .cui-data-table {
 	.cui-pane-footer {
 		min-height: 0;
@@ -585,12 +638,15 @@ i.cui-spin-stepped {
 }
 
 // Button / Select
+.cui-button {
+	flex-direction: row;
+}
+
 .cui-button-button,
 .cui-button-select {
 	cursor: pointer;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
-	flex-direction: row;
 	flex: 0 0 auto;
 	align-self: flex-start;
 	align-items: center;
@@ -703,6 +759,8 @@ a[role="button"].cui-button-appearance-link {
 
 // Buttonbar
 .cui-buttonbar-group {
+	flex-direction: row;
+	
 	> .cui-input {
 		margin-left: -1px;
 	}
@@ -750,7 +808,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
-	height: 100%;
 	justify-content: center;
 }
 
@@ -759,8 +816,12 @@ a[role="button"].cui-button-appearance-link {
 	cursor: pointer;
 
 	&.cui-disabled {
-		opacity: 0.5;
 		cursor: default;
+		color: $disabled-color;
+		
+		.cui-button-left {
+			opacity: 0.27;	
+		}
 	}
 
 	&:focus {
@@ -1046,10 +1107,17 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// Label: Placeholder
+.cui-empty-label {
+	color: $muted-color;
+	font-style: italic;
+}
+
 
 // Buttonbar
 .cui-buttonbar {
 	flex-direction: row;
+	align-items: center;
 	@include margin;
 
 	> *:not(:last-child) {
@@ -1058,6 +1126,10 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label-content {
 		align-self: center; // Date-Time picker month label in footer
+	}
+
+	.cui-button {
+		align-self: unset;
 	}
 }
 
@@ -1068,11 +1140,6 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-button + .cui-buttonbar {
 	margin-left: 4px;
-}
-
-.cui-buttonbar-group {
-	// display: inline-flex;
-	flex-direction: row;
 }
 
 // Checkbox
@@ -1172,7 +1239,6 @@ a[role="button"].cui-button-appearance-link {
 	.cui-pane-header {
 		background: hsl(0,0%,98%);
 		padding: $compensating-padding $padding;
-		padding-left: 0; // label has its own padding
 	}
 
 	// layer-body
@@ -1182,10 +1248,11 @@ a[role="button"].cui-button-appearance-link {
 
 		> .cui-multiline-label {
 			padding: $compensating-padding $padding;
+			margin: 0;
 		}
 
-		.cui-table {
-			margin: $compensating-padding/2 $padding;
+		.cui-form-table-has-left-column {
+			margin: 0;
 		}
 	}
 
@@ -1300,11 +1367,16 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-pane-footer {
+	.cui-toolbar {
+		min-height: 0;
 		justify-content: space-between;
 		border: none;
 		background: none;
 		padding: 0;
+		
+		.cui-buttonbar {
+			height: 33px;
+		}
 
 		.cui-button-button {
 			flex: 1;
@@ -1408,6 +1480,7 @@ a[role="button"].cui-button-appearance-link {
 // Menu
 .cui-menu {
 	min-width: 0;
+	max-width: 300px;
   background: white;
   box-shadow: 0 1px 10px rgba(0,0,0,.1);
   border-radius: 4px;
@@ -1432,7 +1505,8 @@ a[role="button"].cui-button-appearance-link {
 	  color: hsl(205,8%,76%);
 	}
 
-	.cui-button-button {
+	.cui-button,
+	.cui-button-href {
 	  padding: 0 $padding;
 		border: none;
 		border-radius: 0;
@@ -1456,6 +1530,12 @@ a[role="button"].cui-button-appearance-link {
 	    padding: 0;
 	  }
 	}
+
+	.cui-button-href {
+		&:hover:not(.cui-disabled) {
+			color: $highlight-color;
+		}
+	}
 }
 
 .cui-item-list-divider {
@@ -1477,12 +1557,11 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-item-list--has-button-left {
 		// this button always has a left side
-		.cui-file-upload-button {
+		.cui-button-left {
+			padding-right: $padding;
+			width: 13px;
+			box-sizing: content-box;
 		}
-	}
-
-	.cui-button-left {
-		width: 20px;
 	}
 }
 
@@ -1514,27 +1593,29 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	
 	.cui-wait-block-glass {
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: #000000;
-		opacity: 0.3;
 	}
+
 	.cui-wait-block-inner {
 		flex: 1 1 auto;
+		
 		.cui-wait-block-header {
 			flex: 1 1 auto;
 			justify-content: center;
 			align-self: center;
+			
 			.cui-label > .cui-label-icon > i {
 				font-size: 24px;
-				color: #000000;
+				color: black;
 			}
-
 		}
+
 		.cui-wait-block-content {
 			display: none;
 		}
@@ -1656,25 +1737,51 @@ $table-data-padding: 4px;
 
 // ListView
 .cui-list-view {
-	background: white;
-	font-size: 12px;
-	border: 1px solid $table-border-color;
-
 	[cui-lv-quadrant="0"],
 	[cui-lv-quadrant="1"] {
 		color: hsl(0,0%,30%);
 	}
 
 	.cui-label {
-		padding: 0 $padding;
 		line-height: $table-data-height - $table-data-padding*2;
+	}
+
+	> .cui-vertical-layout-bottom {
+		.cui-toolbar {
+			border-top: 1px solid $table-border-color;
+			box-sizing: content-box;
+		}
 	}
 }
 
-.cui-list-view-grid-inner-top {
-	border-bottom: 1px solid $table-border-color;
-}
+.cui-lv-td {
+	padding: $table-data-padding $table-data-padding + $padding;
+	width: 135px;
+	min-height: $table-data-height;
+	flex: 0 0 auto;
+	overflow: hidden;
+	justify-content: center;
 
+	&.cui-lv-td-rotate-90 {
+		width: 25px;
+		> .cui-tmpl-label-rotate-90 {
+			word-break: break-all;
+			height: 100px;
+			> .cui-label-transform {
+				width: 100px;
+			}
+		}
+	}
+
+	&.cui-lv-td-fill {
+		padding: 2px;
+		min-height: 0;
+	}
+
+	&.cui-lv-td-max {
+		flex: 1 1 auto;
+	}
+}
 
 .cui-list-view-grid-quadrant-0,
 .cui-list-view-grid-quadrant-1 {
@@ -1719,6 +1826,8 @@ $table-data-padding: 4px;
 // }
 
 .cui-list-view-grid {
+	background: white;
+	font-size: 12px;
 	flex: 1 1 auto;
 	flex-direction: column;
 	// needed for resize tool to position the resize
@@ -1729,6 +1838,11 @@ $table-data-padding: 4px;
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
 	flex-direction: row;
+	border-bottom: 1px solid $table-border-color;
+	
+	.cui-lv-td {
+		justify-content: flex-end;
+	}
 }
 
 .cui-list-view-grid-inner-bottom {
@@ -1779,7 +1893,11 @@ $table-data-padding: 4px;
 
 	&.cui-list-view-row-selectable.cui-selected {
 		background: $highlight-color !important;
-		color: white;
+		color: $on-highlight-color;
+		
+		.cui-empty-label {
+			color: $on-highlight-color;
+		}
 	}
 }
 
@@ -1787,12 +1905,6 @@ $table-data-padding: 4px;
 	flex: 1 1 auto;
 	flex-direction: row;
 	// border-bottom: dotted 1px #c0c0c0;
-}
-
-.cui-list-view-grid-inner-top {
-	.cui-lv-td {
-		justify-content: flex-end;
-	}
 }
 
 .cui-list-view-row-move-handle-column {
@@ -1814,44 +1926,6 @@ $table-data-padding: 4px;
 	}
 }
 
-.cui-lv-td {
-	padding: $table-data-padding;
-
-	&.cui-lv-td-rotate-90 {
-		width: 25px;
-		> .cui-tmpl-label-rotate-90 {
-			word-break: break-all;
-			height: 100px;
-			> .cui-label-transform {
-				width: 100px;
-			}
-
-		}
-	}
-	&.cui-lv-td-fill {
-		padding: 2px;
-
-		&:not(:last-child) {
-			// border-right-style: dotted;
-		}
-	}
-
-	// border-right: solid 1px black;
-
-	// align-items: flex-start;
-	flex: 0 0 auto;
-	overflow: hidden;
-	flex-direction: column;
-
-	&:not(.cui-lv-td-fill) {
-		min-height: $table-data-height;
-	}
-
-	&.cui-lv-td-max {
-		flex: 1 1 auto;
-	}
-}
-
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	flex-direction: row;
@@ -1865,11 +1939,6 @@ $table-data-padding: 4px;
 	.cui-lv-td.cui-lv-td-fill {
 		padding: 0;
 	}
-}
-
-// do this on top level, so its easier to overwrite
-.cui-lv-td {
-	width: 135px;
 }
 
 .cui-tmpl-list-view-tool-col-resize-marker {
@@ -2092,6 +2161,10 @@ $table-data-padding: 4px;
 		padding: 4px $padding;
 	}
 
+	.cui-form-center {
+		padding-right: $padding;
+	}
+
 	.cui-form-tr,
 	.cui-form-tr-header {
 		padding: $padding 0 $padding - 1px;
@@ -2148,6 +2221,16 @@ $table-data-padding: 4px;
     flex-direction: row;
 		margin-right: 2px;
     padding: 0 3px 0 1px;
+	}
+}
+
+// align options with label if there is only one option
+.cui-options-center {
+	min-height: 24px;
+	justify-content: center;
+	
+	&:empty {
+		min-height: 0;
 	}
 }
 
