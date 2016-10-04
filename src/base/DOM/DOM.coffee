@@ -959,6 +959,8 @@ class CUI.DOM extends CUI.Element
 
 		dim.contentBoxWidth = rect.width - dim.borderHorizontal - dim.paddingHorizontal
 		dim.contentBoxHeight = rect.height - dim.borderVertical - dim.paddingVertical
+		dim.innerBoxWidth = rect.width - dim.borderHorizontal
+		dim.innerBoxHeight = rect.height - dim.borderVertical
 		dim.borderBoxWidth = rect.width
 		dim.borderBoxHeight = rect.height
 		dim.marginBoxWidth = rect.width + dim.marginHorizontal

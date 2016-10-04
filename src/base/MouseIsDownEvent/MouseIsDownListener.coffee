@@ -28,10 +28,11 @@ class CUI.MouseIsDownListener extends CUI.Listener
 
 				listen = Events.listen
 					type: "mouseup"
-					node: document.documentElement
+					node: window
 					only_once: true
 					capture: true
 					call: (ev) =>
+						console.debug "capture mouse up"
 						@__reset()
 
 				@__triggerEvent()

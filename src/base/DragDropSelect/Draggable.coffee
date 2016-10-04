@@ -92,7 +92,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 			instance: @
 			selector: @_selector
 			call: (ev) =>
-				# CUI.debug getObjectClass(@), "drag drop mouseisdown...", ev.getUniqueId(), ev.getMilliseconds(), ev.isImmediatePropagationStopped()
 				if ev.getButton() > 0
 					# ignore if not the main button
 					return
@@ -103,6 +102,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				switch ev.getMilliseconds()
 					when @_ms
+
+						# console.debug getObjectClass(@), "[mouseisdown]", ev.getUniqueId(), @element
+
 						# hint possible click event listeners like Sidebar to
 						# not execute the click anymore...
 						#
@@ -139,7 +141,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		ev.getMousedownEvent?().preventDefault()
 
 		if globalDrag == false
-			CUI.debug("not creating drag handle, opts.create returned 'false'.", ev)
+			CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
 			return
 
 		for k, v of overwrite_options
