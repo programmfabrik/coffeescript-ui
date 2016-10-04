@@ -539,25 +539,36 @@ table.cui-form-table {
 	.cui-horizontal-layout-left {
 		> *:first-child {
 			padding-left: 0;
+
+			.cui-button-visual {
+				padding-left: 0;
+			}
 		}
 	}
 
 	.cui-horizontal-layout-right {
 		> *:last-child {
 			padding-right: 0;
+
+			.cui-button-visual {
+				padding-right: 0;
+			}
 		}
 	}
 
 	.cui-button-button { // dont target buttongroup buttons
-		border: none;
-		padding: 0 $padding;
 		height: 100%;
-		background: none;
-		border-radius: 0;
-		color: $highlight-color;
 		align-self: center;
+		
+		.cui-button-visual {
+			border: none;
+			padding: 0 $padding;
+			background: none;
+			border-radius: 0;
+			color: $highlight-color;
+		}
 
-		&.cui-active {
+		&.cui-active .cui-button-visual {
 			color: $highlight-color;
 		}
 	}
@@ -590,16 +601,18 @@ table.cui-form-table {
 		border-top: 1px solid hsl(205,8%,77%);
 
 		.cui-button-button {
-			@include button-reset;
-			color: hsl(205,11%,29%);
-		  height: 23px;
-		  padding: 0 $padding/2;
-		  border-right: 1px solid hsl(205,8%,77%) !important;
+			.cui-button-visual {
+				@include button-reset;
+				color: hsl(205,11%,29%);
+			  height: 23px;
+			  padding: 0 $padding/2;
+			  border-right: 1px solid hsl(205,8%,77%) !important;
+			}
 		  
 		  &:cui-disabled {
 		  	opacity: 1;
 		  	
-		  	* {
+		  	.cui-button-visual * {
 		  		opacity: 0.5;
 		  	}
 		  }
@@ -638,38 +651,43 @@ i.cui-spin-stepped {
 }
 
 // Button / Select
-.cui-button {
+.cui-button-visual {
 	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 .cui-button-button,
 .cui-button-select {
 	cursor: pointer;
-	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
-	white-space: nowrap;
 	flex: 0 0 auto;
 	align-self: flex-start;
 	align-items: center;
 	justify-content: center;
-  padding: 0 $padding;
-  height: 24px;
-  line-height: 22px;
-  color: $button-text-color;
-  background: hsl(0,0%,100%);
-  border: 1px solid hsl(205,10%,75%);
-  border-radius: $button-border-radius;
+	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
+	white-space: nowrap;
+	
+	.cui-button-visual {
+	  padding: 0 $padding;
+	  height: 24px;
+	  line-height: 22px;
+	  color: $button-text-color;
+	  background: hsl(0,0%,100%);
+	  border: 1px solid hsl(205,10%,75%);
+	  border-radius: $button-border-radius;
+	}
 
-	&:hover {
+	&:hover .cui-button-visual {
 	  border-color: hsl(205,100%,45%);
 	  color: hsl(205,100%,45%);
 	}
 
-	&:active {
+	&:active .cui-button-visual {
 	  border-color: hsl(205,100%,35%);
 	  color: hsl(205,100%,35%);
 	}
 
-	&.cui-disabled {
+	&.cui-disabled .cui-button-visual {
 	  opacity: 0.5;
 	  cursor: default;
 	  color: $button-text-color;
@@ -680,9 +698,11 @@ i.cui-spin-stepped {
 	&.cui-button-appearance-important[role],
 	&.cui-button--primary,
 	&.cui-active {
-	  color: white;
-	  background: $highlight-color;
-	  border-color: darken($highlight-color, 7%);
+		.cui-button-visual {
+	  	color: white;
+	  	background: $highlight-color;
+	  	border-color: darken($highlight-color, 7%);
+	  }
 	}
 
 	&.cui-button-appearance-flat {
@@ -690,19 +710,23 @@ i.cui-spin-stepped {
 	  &,
 	  &:hover,
 	  &.cui-active {
-	    @include button-reset;
-	    color: $highlight-color;
+	  	.cui-button-visual {
+	    	@include button-reset;
+	    	color: $highlight-color;
+	    }
 	  }
 	}
 
-	&:focus {
+	&:focus .cui-button-visual {
 		outline: none;
 		@include focus;
 	}
 }
 
 .cui-button-select {
-	padding: 0 4px 0 8px;
+	.cui-button-visual {
+		padding: 0 4px 0 8px;
+	}
 
 	.cui-button-center {
 		padding-right: 6px;
@@ -737,10 +761,6 @@ i.cui-spin-stepped {
 	height: 43px;
 }
 
-.cui-button-select {
-	flex-direction: row;
-}
-
 a[role="button"].cui-button-appearance-link {
 	height: initial;
 	> .cui-button-center {
@@ -750,10 +770,12 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-button-appearance-link[role],
 .cui-button-href {
-	@include button-reset;
-	color: $highlight-color;
 	display: inline-flex;
-	flex-direction: row;
+	
+	.cui-button-visual {
+		@include button-reset;
+		color: $highlight-color;
+	}
 }
 
 
@@ -771,24 +793,27 @@ a[role="button"].cui-button-appearance-link {
 
 		&:first-child {
 			margin-left: 0;
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
+			
+			.cui-button-visual {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
 
 			&:before {
 				display: none;
 			}
 		}
 
-		&:last-child {
+		&:last-child .cui-button-visual {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
 
-		&:not(:first-child):not(:last-child) {
+		&:not(:first-child):not(:last-child) .cui-button-visual {
 			border-radius: 0;
 		}
 
-		&:only-child {
+		&:only-child .cui-button-visual {
 			border-radius: $button-border-radius;
 		}
 
@@ -1380,21 +1405,26 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-button-button {
 			flex: 1;
-			border: none;
-			border-top: 1px solid hsl(210,11%,93%);
-			border-left: 1px solid hsl(210,11%,93%);
 			margin: 0;
-			padding: 0 $padding;
 			height: 100%;
-			border-radius: 0;
-			color: $highlight-color;
-			background: none;
+			align-items: stretch;
+			
+			.cui-button-visual {
+				height: 100%;
+				border: none;
+				border-top: 1px solid hsl(210,11%,93%);
+				border-left: 1px solid hsl(210,11%,93%);
+				padding: 0 $padding;
+				border-radius: 0;
+				color: $highlight-color;
+				background: none;
+			}
 
-			&.cui-active {
+			&.cui-active .cui-button-visual {
 				color: $highlight-color;
 			}
 
-			&.cui-button--primary {
+			&.cui-button--primary .cui-button-visual {
 				background: $highlight-color;
 				color: $on-highlight-color;
 				border-top-color: $highlight-color;
@@ -1422,7 +1452,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-horizontal-layout-center:empty +
 		.cui-horizontal-layout-right,
 		.cui-horizontal-layout-left {
-			.cui-button:first-child {
+			.cui-button:first-child .cui-button-visual {
 				border-left-width: 0;
 				border-bottom-left-radius: 4px;
 			}
@@ -1459,8 +1489,12 @@ a[role="button"].cui-button-appearance-link {
     padding: 3px 6px;
 	}
 
-	> .cui-layout > .cui-vertical-layout-center {
+	> .cui-simple-pane > .cui-vertical-layout-center {
 		padding: 0;
+		
+		> .cui-label:only-child {
+			margin: 0;
+		}
 	}
 }
 
@@ -1507,23 +1541,31 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button,
 	.cui-button-href {
-	  padding: 0 $padding;
-		border: none;
-		border-radius: 0;
-		height: 28px;
-		line-height: 28px;
-	  justify-content: flex-start;
+	  align-items: stretch;
+	  
+	  .cui-button-visual {
+	  	justify-content: flex-start;
+		  padding: 0 $padding;
+			border: none;
+			border-radius: 0;
+			height: 28px;
+			line-height: 28px;
+	  }
 
 	  &:hover:not(.cui-disabled),
 	  &:active {
-	  	color: hsl(205,12%,27%);
-			background: hsl(205,17%,98%);
+	  	.cui-button-visual {
+	  		color: hsl(205,12%,27%);
+				background: hsl(205,17%,98%);
+			}
 	  }
 
 	  &.cui-active,
 	  &.cui-active:hover {
-	  	color: $on-highlight-color;
-	  	background: $highlight-color;
+	  	.cui-button-visual {
+	  		color: $on-highlight-color;
+	  		background: $highlight-color;
+	  	}
 	  }
 
 	  .cui-button-center {
@@ -1532,7 +1574,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-button-href {
-		&:hover:not(.cui-disabled) {
+		&:hover:not(.cui-disabled) .cui-button-visual {
 			color: $highlight-color;
 		}
 	}
@@ -1650,9 +1692,11 @@ a[role="button"].cui-button-appearance-link {
 					padding-left: $padding/2;
 					
 					.cui-tab-header-button:last-child {
-						border-top-right-radius: 0;
-						border-bottom-right-radius: 0;
-						border-right: none;
+						.cui-button-visual {
+							border-top-right-radius: 0;
+							border-bottom-right-radius: 0;
+							border-right: none;
+						}
 					}
 				}
 			}
@@ -1679,28 +1723,31 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-toolbar .cui-tab-header-button-overflow,
 .cui-toolbar .cui-tab-header-button {
-	border: none;
-	background: none;
-	color: $highlight-color;
-	height: 24px;
-	line-height: 22px;
-	min-width: 80px;
-	padding: 0 $padding/2;
-	border-radius: 0;
 	font-size: inherit;
-	border: 1px solid $highlight-color;
+		
+	.cui-button-visual {
+		border: none;
+		background: none;
+		color: $highlight-color;
+		height: 24px;
+		line-height: 22px;
+		min-width: 80px;
+		padding: 0 $padding;
+		border-radius: 0;
+		border: 1px solid $highlight-color;	
+	}
 
-	&:first-child {
+	&:first-child .cui-button-visual {
 		border-top-left-radius: 3px;
 		border-bottom-left-radius: 3px;
 	}
 
-	&:last-child {
+	&:last-child .cui-button-visual {
 		border-top-right-radius: 3px;
 		border-bottom-right-radius: 3px;
 	}
 
-	&.cui-active {
+	&.cui-active .cui-button-visual {
 		color: $on-highlight-color;
 		background: $highlight-color;
 	}
@@ -2295,40 +2342,42 @@ $table-data-padding: 4px;
 .cui-buttonbar-group-date,
 .cui-buttonbar-group-time { // DateTime Day:Month:Year Hour:Minute
 	.cui-select {
-		&:not(:last-child) .cui-button {
+		&:not(:last-child) .cui-button .cui-button-visual {
 			border-right-width: 0;
 		}
 
-		&:last-child .cui-button {
+		&:last-child .cui-button .cui-button-visual {
 			border-right-width: 1px;
 			border-top-right-radius: $button-border-radius;
 			border-bottom-right-radius: $button-border-radius;
 			padding-right: 4px;
 		}
 
-		&:not(:first-child) .cui-button {
+		&:not(:first-child) .cui-button .cui-button-visual {
 			border-left-width: 0;
 		}
 
 		&:first-child .cui-button {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
+			.cui-button-visual {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
 
 			&:before {
 				display: none;
 			}
 		}
 
-		&:last-child .cui-button {
+		&:last-child .cui-button .cui-button-visual {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 		}
 
-		&:not(:first-child):not(:last-child) .cui-button {
+		&:not(:first-child):not(:last-child) .cui-button .cui-button-visual {
 			border-radius: 0;
 		}
 
-		.cui-button {
+		.cui-button .cui-button-visual {
 			padding: 0;
 		}
 
@@ -2352,8 +2401,11 @@ $table-data-padding: 4px;
 
 	.cui-button {
 		margin-left: -1px;
-		border-radius: 0;
-		padding: 0 $padding/2;
+		
+		.cui-button-visual {
+			border-radius: 0;
+			padding: 0 $padding/2;
+		}
 
 		&:focus {
 			z-index: 1;
@@ -2409,7 +2461,7 @@ $table-data-padding: 4px;
 		flex-grow: 0 !important;
 	}
 
-	.cui-button {
+	.cui-button-visual {
 		padding: 0 $padding/2;
 	}
 }
@@ -2548,12 +2600,14 @@ $table-data-padding: 4px;
 }
 
 .cui-multi-input-tag-button {
-	@include button-reset;
-	color: hsl(0,0%,30%);
-	font-size: 10px;
-  line-height: 20px;
-  cursor: pointer;
-  padding: 0 3px;
+	.cui-button-visual {
+		@include button-reset;
+		color: hsl(0,0%,30%);
+		font-size: 10px;
+  	line-height: 20px;
+  	cursor: pointer;
+  	padding: 0 3px;
+  }
 }
 
 // Drag & Drop

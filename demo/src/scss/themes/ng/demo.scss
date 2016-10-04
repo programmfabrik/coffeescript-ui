@@ -4,12 +4,15 @@
 	.cui-demo-menu-button,
 	.theme-switch  {
 		&,
-		&:active {
-			color: inherit;
-			background: transparent;
-			border-style: none;
-			box-shadow: none;
-			padding: 2px 10px 2px 4px;
+		&:active,
+		&.cui-active {
+			.cui-button-visual {
+				color: inherit;
+				background: transparent;
+				border-style: none;
+				box-shadow: none;
+				padding: 2px 10px 2px 0;
+			}
 		}
 	}
 	.cui-demo-menu-button .fa {
