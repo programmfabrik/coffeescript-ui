@@ -624,6 +624,36 @@ class CUI.DOM extends CUI.Element
 
 	@__failedDOMInserts = 0
 
+
+	@waitForDOMRemove: (_opts) ->
+
+		opts = CUI.Element.readOpts _opts, "DOM.waitForDOMRemove",
+			node:
+				mandatory: true
+				check: (v) ->
+					DOM.isNode(v)
+			ms:
+				default: 200
+				check: (v) ->
+					v > 0
+
+		node = DOM.getNode(opts.node)
+
+		dfr = new CUI.Deferred()
+		check_in_dom = =>
+			if not CUI.DOM.isInDOM(node)
+				dfr.resolve()
+				return
+
+			CUI.setTimeout
+				call: check_in_dom
+				ms: opts.ms
+				track: false
+
+		check_in_dom()
+		dfr.promise()
+
+
 	@waitForDOMInsert: (_opts) ->
 
 		opts = CUI.Element.readOpts _opts, "DOM.waitForDOMInsert",
@@ -816,7 +846,10 @@ class CUI.DOM extends CUI.Element
 
 			testDocElem = CUI.DOM.parent(testDocElem)
 			if testDocElem == null
-				return null
+				if selector
+					return null
+				else
+					return path
 
 			path.push(testDocElem)
 
@@ -959,6 +992,8 @@ class CUI.DOM extends CUI.Element
 
 		dim.contentBoxWidth = rect.width - dim.borderHorizontal - dim.paddingHorizontal
 		dim.contentBoxHeight = rect.height - dim.borderVertical - dim.paddingVertical
+		dim.innerBoxWidth = rect.width - dim.borderHorizontal
+		dim.innerBoxHeight = rect.height - dim.borderVertical
 		dim.borderBoxWidth = rect.width
 		dim.borderBoxHeight = rect.height
 		dim.marginBoxWidth = rect.width + dim.marginHorizontal
