@@ -102,13 +102,16 @@ class ListViewTree extends ListView
 			type: ["click", "dragover-scroll"]
 			call: (ev, info) =>
 				# CUI.debug "ListViewTree[event]",ev.getType(),info
+				# console.warn "ListViewTree", ev.getType(), @DOM
 				# dragover fires multiple times, so we need to prevent
 				# this node from open multiple times
 				$target = $(ev.getTarget())
+
+
 				_row = $target.closest(".cui-list-view-grid-row")
 				# _row = $target.closest(".#{@__lvClass}-row")
 				_handle = $target.closest(".cui-tree-node-handle")
-				node = DOM.data(_row[0], "listViewRow")
+				node = DOM.data(_row, "listViewRow")
 
 				# console.error "tree event", ev, _row, _handle, node
 
@@ -192,9 +195,7 @@ class ListViewTree extends ListView
 				$target = $(ev.getTarget())
 				_row = $target.closest(".cui-list-view-grid-row")
 				# _row = $target.closest(".#{@__lvClass}-row")
-				node = DOM.data(_row[0], "listViewRow")
-
-				# console.error "tree event", ev, _row, node
+				node = DOM.data(_row, "listViewRow")
 
 				if not node or node.isLoading?()
 					return

@@ -294,7 +294,8 @@ class CUI.Button extends CUI.DOM
 					ev.stop()
 					return
 
-				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+				if not CUI.__ng__
+					@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				ev.stopPropagation()
 				@onClickAction(ev)
@@ -377,7 +378,8 @@ class CUI.Button extends CUI.DOM
 				if window.globalDrag
 					return
 
-				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+				if not CUI.__ng__
+					@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				@getTooltip()?.hideTimeout(ev)
 
@@ -414,10 +416,13 @@ class CUI.Button extends CUI.DOM
 		if ev.isImmediatePropagationStopped()
 			return
 
-		@addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+		if not CUI.__ng__
+			@addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 		remove_click_class = =>
-			@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+			if not CUI.__ng__
+				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+			return
 
 		do_click = =>
 			if ev.isImmediatePropagationStopped()

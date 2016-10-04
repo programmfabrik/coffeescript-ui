@@ -287,7 +287,7 @@ class CUI.Layer extends CUI.DOM
 			# if set to true the Layer listens to content-resize events
 			# and adjusts its size
 			auto_size:
-				default: false
+				default: true
 				check: Boolean
 
 			show_ms:
@@ -875,8 +875,8 @@ class CUI.Layer extends CUI.DOM
 			left: vp.layer_pos.left
 			width: if vp.set_width then vp.layer_pos.width else ""
 			height: vp.layer_pos.height
-			maxWidth: vp.width + vp.overlap_width
-			maxHeight: vp.height + vp.overlap_height
+			# maxWidth: vp.width + vp.overlap_width
+			# maxHeight: vp.height + vp.overlap_height
 			margin: 0
 
 		if @__pointer
