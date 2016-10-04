@@ -846,7 +846,10 @@ class CUI.DOM extends CUI.Element
 
 			testDocElem = CUI.DOM.parent(testDocElem)
 			if testDocElem == null
-				return null
+				if selector
+					return null
+				else
+					return path
 
 			path.push(testDocElem)
 
