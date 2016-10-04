@@ -628,7 +628,7 @@ class CUI.Button extends CUI.DOM
 	getCenter: ->
 		return @__box.map.center;
 
-	getTemplateName: ->
+	__getTemplateName: ->
 		if @_icon or @_icon_left or @_icon_active or @_icon_inactive or @_left
 			@__has_left = true
 		else
@@ -647,6 +647,12 @@ class CUI.Button extends CUI.DOM
 			return "button-center-right"
 		else
 			return "button-center"
+
+	getTemplateName: ->
+		if CUI.__ng__
+			@__getTemplateName() + "-ng"
+		else
+			@__getTemplateName()
 
 	getValue: ->
 		@_value

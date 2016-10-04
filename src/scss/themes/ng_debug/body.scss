@@ -400,6 +400,10 @@ i.cui-spin-stepped {
     animation: fa-spin 1s steps(8) infinite;
 }
 
+.cui-button-visual {
+	flex-direction: row;
+}
+
 // Button / Select / Checkbox
 a[role="button"],label[role="button"],.cui-button
 {
@@ -437,32 +441,32 @@ a[role="button"],label[role="button"],.cui-button
 	// add padding around the whole button
 	padding: 0 3px;
 
-	> .cui-button-left,
-	> .cui-button-center,
-	> .cui-button-right
+	.cui-button-left,
+	.cui-button-center,
+	.cui-button-right
 	{
 		&:empty {
 			display: none;
 		}
 	}
 	// add in-between padding
-	> .cui-button-left:not(:empty) + .cui-button-center:not(:empty)
+	.cui-button-left:not(:empty) + .cui-button-center:not(:empty)
 	{
 		padding-left: 3px;
 	}
 
-	> .cui-button-center:not(:empty) + .cui-button-right:not(:empty)
+	.cui-button-center:not(:empty) + .cui-button-right:not(:empty)
 	{
 		padding-left: 3px;
 	}
 
-	> .cui-button-left:not(:empty) + .cui-button-center:empty + .cui-button-right:not(:empty)
+	.cui-button-left:not(:empty) + .cui-button-center:empty + .cui-button-right:not(:empty)
 	{
 		padding-left: 3px;
 	}
 
 
-	> .cui-button-left
+	.cui-button-left
 	{
 		text-align: center;
 		flex: 0 0 auto;
@@ -470,11 +474,11 @@ a[role="button"],label[role="button"],.cui-button
 			min-width: 12px;
 		}
 	}
-	> .cui-button-center
+	.cui-button-center
 	{
 		flex: 1 1 auto; // was 1 0
 	}
-	> .cui-button-right
+	.cui-button-right
 	{
 		text-align: center;
 		flex: 0 0 auto;
@@ -530,7 +534,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-button[role="radio"] {
 	background-color: transparent;
 	border: none;
-	> .cui-button-left {
+	.cui-button-left {
 		// empty checkbox: span
 		// filled checkbox: i
 		> span, > i {
@@ -545,7 +549,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-button[role="radio"] {
-	> .cui-button-left {
+	.cui-button-left {
 		> span, > i {
 			border-radius: 7px;
 		}
@@ -929,17 +933,17 @@ a[role="button"].cui-button-appearance-link {
 	{
 		// this button always has a left side
 		.cui-file-upload-button {
-			> .cui-button-left {
+			.cui-button-left {
 				display: flex;
 				width: 20px;
 			}
-			> .cui-button-center:not(:empty) {
+			.cui-button-center:not(:empty) {
 				padding-left: 3px;
 			}
 		}
 		> .cui-tmpl-button-center,
 		> .cui-tmpl-button-center-right {
-			> .cui-button-center {
+			.cui-button-center {
 				padding-left: 23px;
 			}
 		}

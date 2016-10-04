@@ -142,6 +142,7 @@ html_files = \
 	src/base/Layer/Layer.html \
 	src/base/DataField/DataField.html \
 	src/elements/Button/Button.html \
+	src/elements/Button/Button_ng.html \
 	src/elements/FileUpload/FileUploadButton.html \
 	src/elements/Button/ButtonHref.html \
 	src/elements/Options/Options.html \
