@@ -164,10 +164,6 @@ li > div {
 	display: inline-flex;
 }
 
-table.cui-form-table {
-	@include flex-table()
-}
-
 .cui-root-layout {
 	overflow: hidden;
 }
@@ -779,58 +775,6 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-// Buttonbar
-.cui-buttonbar-group {
-	flex-direction: row;
-	
-	> .cui-input {
-		margin-left: -1px;
-	}
-
-	.cui-button {
-		position: relative;
-		margin-left: -1px;
-
-		&:first-child {
-			margin-left: 0;
-			
-			.cui-button-visual {
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-			}
-
-			&:before {
-				display: none;
-			}
-		}
-
-		&:last-child .cui-button-visual {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-
-		&:not(:first-child):not(:last-child) .cui-button-visual {
-			border-radius: 0;
-		}
-
-		&:only-child .cui-button-visual {
-			border-radius: $button-border-radius;
-		}
-
-		&:hover,
-		&.cui-active {
-			z-index: 1;
-		}
-	}
-
-	> .cui-data-field {
-		& + *:before {
-			display: none;
-		}
-	}
-}
-
-
 // Checkbox
 .cui-checkbox {
 	justify-content: center;
@@ -982,18 +926,23 @@ a[role="button"].cui-button-appearance-link {
 			transform-origin: left bottom;
 		}
 	}
+
 	> .cui-label-icon {
-		flex: 0 0 auto;
-		width: 20px;
-		text-align: center;
-		> i {
-			font-size: 16px;
-			line-height: 20px;
+		.fa {
+			line-height: 18px;
+		}
+	}
+
+	&.cui-label-size-big {
+		> .cui-label-icon {
+			.fa {
+				font-size: 21px;
+			}
 		}
 	}
 
 	> .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-		padding-left: 3px;
+		padding-left: $padding/2;
 	}
 
 	&:not(cui-label-multiline) {
@@ -1136,6 +1085,14 @@ a[role="button"].cui-button-appearance-link {
 .cui-empty-label {
 	color: $muted-color;
 	font-style: italic;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	
+	.cui-label-content {
+		display: inline-block;
+		flex-grow: 0;
+	}
 }
 
 
@@ -1165,6 +1122,53 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-button + .cui-buttonbar {
 	margin-left: 4px;
+}
+
+// Buttonbar
+.cui-buttonbar-group {
+	flex-direction: row;
+
+	> * {
+		position: relative;
+		margin-left: -1px;
+
+		&:first-child {
+			margin-left: 0;
+			
+			.cui-button-visual {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+			&:before {
+				display: none;
+			}
+		}
+
+		&:last-child .cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+
+		&:not(:first-child):not(:last-child) .cui-button-visual {
+			border-radius: 0;
+		}
+
+		&:only-child .cui-button-visual {
+			border-radius: $button-border-radius;
+		}
+
+		&:hover,
+		&.cui-active {
+			z-index: 1;
+		}
+	}
+
+	> .cui-data-field {
+		& + *:before {
+			display: none;
+		}
+	}
 }
 
 // Checkbox
@@ -1285,7 +1289,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-pane-footer {
 		border-top: 1px solid hsl(180,9%,93%);
 		background: hsl(0,0%,98%);
-		padding: $compensating-padding $padding;
+		padding: 0;
 	}
 }
 
@@ -1367,6 +1371,32 @@ a[role="button"].cui-button-appearance-link {
 		.cui-tmpl-item-list-body {
 			.cui-button {
 				background-color: transparent;
+			}
+		}
+	}
+}
+
+// Modal
+
+.cui-modal {
+	// layer footer
+	.cui-pane-footer {
+		border-radius: 0 0 5px 5px;
+		
+		// unset normal spacing
+		.cui-buttonbar > *:not(:last-child) {
+			margin-right: 0;
+		}
+		
+		.cui-button {
+			padding: $compensating-padding $padding/2;
+			
+			&:last-child {
+				padding-right: $padding;
+			}
+			
+			&:first-child {
+				padding-left: $padding;
 			}
 		}
 	}
@@ -2026,13 +2056,19 @@ $table-data-padding: 4px;
 			width: 14px;
 			flex: 0 0 auto;
 		}
+
 		.cui-tree-node-handle {
 			text-align: center;
+			
 			> i {
-				font-size: 16px;
-				line-height: 20px;
+				line-height: 17px;
+			}
+
+			.fa-caret-down {
+				margin-left: -3px;
 			}
 		}
+
 		.cui-tree-node-content {
 			flex: 1 1 auto;
 		}
@@ -2058,6 +2094,14 @@ $table-data-padding: 4px;
 .cui-form {
 	align-self: stretch !important;
 }
+
+table.cui-form-table {
+	@include flex-table();
+}
+
+// .cui-form-table {
+// 	margin: 0;
+// }
 
 .cui-form-tr,
 .cui-form-tr-header {
@@ -2425,7 +2469,7 @@ $table-data-padding: 4px;
 .cui-date-time-previous-month,
 .cui-date-time-next-month,
 .cui-date-time-week {
-	color: hsl(0,0%,79%);
+	color: hsl(205,10%,79%);
 }
 
 .cui-date-time-selected {
@@ -2434,7 +2478,7 @@ $table-data-padding: 4px;
 }
 
 .cui-date-time-now {
-	background: hsl(0,0%,92%);
+	background: hsl(205,20%,92%);
 }
 
 .cui-date-time-footer {
