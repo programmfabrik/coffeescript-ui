@@ -32,7 +32,6 @@ class CUI.MouseIsDownListener extends CUI.Listener
 					only_once: true
 					capture: true
 					call: (ev) =>
-						console.debug "capture mouse up"
 						@__reset()
 
 				@__triggerEvent()

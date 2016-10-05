@@ -896,6 +896,9 @@ class ListView extends SimplePane
 		# FIXME: improve selectors, so they only catch the current table not nested ones
 		#
 
+		if @grid.clientWidth == 0 or @grid.clientHeight == 0
+			return
+
 		# console.error "doing next gen layout", @listViewCounter
 
 		css = []
@@ -1765,7 +1768,7 @@ class ListView extends SimplePane
 				(new Menu
 					auto_close_after_click: false
 					itemList:
-						items: itemse
+						items: items
 					show_at_position:
 						top: ev.pageY()
 						left: ev.pageX()
