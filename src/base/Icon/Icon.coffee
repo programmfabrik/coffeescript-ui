@@ -64,7 +64,7 @@ class Icon extends CUI.Element
 		envelope_active: "fa-envelope"
 		save: "fa-floppy-o"
 		heart: "fa-heart"
-		remove: "fa-times"
+		remove: if CUI.__ng__ then "fa-times-thin" else "fa-times"
 		user: "fa-user"
 		clock: "fa-clock-o"
 		plus: "fa-plus"
