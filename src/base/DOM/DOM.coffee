@@ -825,6 +825,10 @@ class CUI.DOM extends CUI.Element
 
 	# returns the element matching first the selector
 	# upwards, ends at untilDocElem
+	# selector & untilDocElem: collect everything until selector matches, but
+	#                          not further than untilDocElem
+	# selector: collection eveverything until selector matches, null if no match
+	# untilDocElem: collect everything untilDocElem, null if not found
 	@elementsUntil: (docElem, selector, untilDocElem) ->
 
 		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof HTMLElement.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
@@ -834,19 +838,19 @@ class CUI.DOM extends CUI.Element
 			if selector and @is(testDocElem, selector)
 				return path
 
-			if testDocElem == untilDocElem or
-				testDocElem == window
-					if selector
-						# this means we have not found any
-						# elements which match the selector, so we
-						# return null
-						return null
-					else
-						return path
+			if testDocElem == untilDocElem
+				if selector
+					# this means we have not found any
+					# elements which match the selector, so we
+					# return null
+					return null
+				else
+					return path
 
 			testDocElem = CUI.DOM.parent(testDocElem)
+
 			if testDocElem == null
-				if selector
+				if selector or untilDocElem
 					return null
 				else
 					return path
@@ -872,17 +876,10 @@ class CUI.DOM extends CUI.Element
 
 	@closestUntil: (docElem, selector, untilDocElem) ->
 		path = @elementsUntil(docElem, selector, untilDocElem)
-		if not path or path.length == 0
+		if not path
 			return null
 
-		last_element = path[path.length-1]
-
-		# we return last_element "window", if untilDocElem
-		# was set to window
-		if last_element == window and untilDocElem != window
-			return null
-
-		last_element
+		path[path.length-1]
 
 	# selector is a stopper (like untiDocElem)
 	@parentsUntil: (docElem, selector, untilDocElem) ->

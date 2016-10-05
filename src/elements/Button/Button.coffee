@@ -95,6 +95,8 @@ class CUI.Button extends CUI.DOM
 				else
 					icon_right = new Icon(class: "fa-angle-down")
 
+				@addClass("cui-button--has-caret")
+
 			if icon_right
 				@append(icon_right, "right")
 		else if @_right != true
@@ -266,7 +268,7 @@ class CUI.Button extends CUI.DOM
 				if window.globalDrag
 					return
 
-				if not @__disabled
+				if not @__disabled and not CUI.__ng__
 					CUI.DOM.addClass(@DOM, CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				ev.stopPropagation()

@@ -24,7 +24,10 @@ class FileUploadButton extends Button
 	getTemplateName: ->
 		@__has_left = true
 		@__has_right = true
-		return "file-upload-button"
+		if CUI.__ng__
+			return "file-upload-button-ng"
+		else
+			return "file-upload-button"
 
 	readOpts: ->
 		@__ownClick = @opts.onClick
