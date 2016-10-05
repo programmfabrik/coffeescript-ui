@@ -203,7 +203,7 @@ css_other:
 
 css: css_ng css_other
 
-code: $(easydbui_js) $(thirdparty_files) html
+code: $(easydbui_js) $(thirdparty_files) html font_awesome
 	$(MAKE) --directory demo code
 
 html: $(html_files)
