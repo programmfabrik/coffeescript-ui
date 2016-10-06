@@ -68,6 +68,7 @@ class CUI.Button extends CUI.DOM
 			@addClass("cui-button-button")
 
 		DOM.setAttributeMap(@DOM, @_attr)
+
 		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 
 		if not @_attr?.role
@@ -480,7 +481,9 @@ class CUI.Button extends CUI.DOM
 		super()
 		@addOpts
 			tabindex:
-				default: "0"
+				default: 0
+				check: (v) ->
+					isInteger(v) or v == false
 			role:
 				default: "button"
 				check: String
