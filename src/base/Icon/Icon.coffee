@@ -68,7 +68,7 @@ class Icon extends CUI.Element
 		user: "fa-user"
 		clock: "fa-clock-o"
 		plus: "fa-plus"
-		edit: "fa-edit"
+		edit: if CUI.__ng__ then "fa-pencil" else "fa-edit"
 		copy: "fa-files-o"
 		search: "fa-search"
 		share: "fa-share"

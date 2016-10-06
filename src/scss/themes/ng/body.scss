@@ -1,6 +1,7 @@
 @import url($font_awesome_url);
 
 $padding: 10px;
+// compensating padding compensates for line-height
 $compensating-padding: 7px;
 $gap: 12px;
 $background: hsl(205,10%,98%);
@@ -13,6 +14,7 @@ $drag-handle-color: hsl(0,0%,50%);
 
 $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
+$on-highlight-muted-color: hsl(205,50%,85%);
 
 $muted-color: hsl(205,8%,50%);
 $disabled-color: hsl(205,7%,73%);
@@ -383,17 +385,10 @@ li > div {
 	}
 	
 	user-select: none;
-	height: 13px;
-  padding: 1px 0;
-	flex: 0 0 auto;
-	background: white;
-	border-top: 1px solid hsl(180,9%,93%);
-	border-bottom: 1px solid hsl(180,9%,93%);
-  background: linear-gradient(hsl(180,9%,70%) 1px, transparent 1px);
-  background-size: 26px 3px;
-  background-position: center 2px;
-  background-repeat: repeat-y;
-  background-clip: content-box;
+	height: 20px;
+	margin: -10px 0;
+	position: relative;
+	z-index: 1;
 	
 	&:not(.cui-flex-handle-closed) {
 		cursor: ns-resize;
@@ -1502,6 +1497,13 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
+	// maximise form table rows
+	.cui-form-table-has-not-left-column {
+		.cui-form-center {
+			flex-grow: 1;
+		}
+	}
 }
 
 
@@ -1575,12 +1577,30 @@ a[role="button"].cui-button-appearance-link {
 	margin: 6px 0;
 }
 
+.cui-button--has-caret {
+	.cui-button-right {
+		margin-left: auto;
+	}
+}
+
 // ItemList
 .cui-item-list {
 	.cui-label {
 	  cursor: default;
-	  margin: 6px $padding;
+	  padding: 9px $padding 3px;
 	  color: hsl(205,8%,76%);
+	  
+	  &.cui-empty-label {
+	  	padding: 6px $padding;
+	  }
+	  
+	  &:first-child {
+	  	padding-top: 6px;
+	  }
+	  
+	  &:last-child {
+	  	padding-bottom: 6px;
+	  }
 	}
 
 	.cui-button,
@@ -1677,6 +1697,7 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	z-index: 1;
 	
 	.cui-wait-block-glass {
 		position: absolute;
@@ -1684,6 +1705,8 @@ a[role="button"].cui-button-appearance-link {
 		left: 0;
 		right: 0;
 		bottom: 0;
+		background: $foreground;
+		opacity: 0.8;
 	}
 
 	.cui-wait-block-inner {
