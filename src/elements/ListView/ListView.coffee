@@ -351,13 +351,13 @@ class ListView extends SimplePane
 			type: "viewport-resize"
 			node: @grid
 			call: (ev, info) =>
-				# console.error "ListView[##{@listViewCounter}][#{ev.getDebug()}]:",@DOM[0],"hasLayout: ", @__hasLayout, @
+				# console.error "ListView[##{@listViewCounter}][#{ev.getDebug()}]:",@DOM[0],"hasLayout: ", @__hasLayout, @, info
 
 				if not @__hasLayout
 					return
 
 				if @_autoLayout == 2
-					@__doNextGenLayout(resetRows: !!info.css_load)
+					@__doNextGenLayout(resetRows: !!(info.css_load or info.tab))
 				else
 					@__scheduleLayout()
 				return
@@ -862,7 +862,7 @@ class ListView extends SimplePane
 		for el in DOM.findElements(@getGrid()[0], ".list-view-row-new")
 			el.classList.remove("list-view-row-new")
 
-		# console.error "ListView.__doLayout...", @__lvClass, @_autoLayout
+		# console.error "ListView.__doLayout...##{@listViewCounter}", @, @__lvClass, @_autoLayout
 
 		switch @_autoLayout
 			when true
@@ -896,7 +896,10 @@ class ListView extends SimplePane
 		# FIXME: improve selectors, so they only catch the current table not nested ones
 		#
 
+		console.debug "ListView##{@listViewCounter}.__doNextGenLayout..."
+
 		if @grid.clientWidth == 0 or @grid.clientHeight == 0
+			console.warn("ListView##{@listViewCounter}.__doNextGenLayout: clientWidth or clientHeight is 0, not layouting.")
 			return
 
 		# console.error "doing next gen layout", @listViewCounter
@@ -955,9 +958,10 @@ class ListView extends SimplePane
 					rows[parseInt(DOM.getAttribute(row, "row"))] = row
 					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
-				for row in DOM.matchSelector(@grid[0], "[cui-lv-quadrant='#{qi+1}'] "+sel)
+				for row, idx in DOM.matchSelector(@grid[0], "[cui-lv-quadrant='#{qi+1}'] "+sel)
 					row_i2 = parseInt(DOM.getAttribute(row, "row"))
 
+					# console.debug "Set ROW", idx, row_i2, row.offsetHeight
 					DOM.setDimensions(rows[row_i2], borderBoxHeight: row.offsetHeight)
 					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
@@ -1194,7 +1198,7 @@ class ListView extends SimplePane
 					when true
 						html[qi].push("<div class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
 					when 2
-						html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" cui-lv-tr-unmeasured=\"@listViewCounter\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
+						html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" cui-lv-tr-unmeasured=\"#{@listViewCounter}\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
 					else
 						html[qi].push("<tr class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
 

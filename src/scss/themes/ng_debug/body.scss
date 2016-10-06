@@ -1308,7 +1308,7 @@ a[role="button"].cui-button-appearance-link {
 	background: rgba(187, 187, 54, 0.5);
 }
 
-.cui-form-table-has-not-left-column[cui-form-depth="0"] {
+.cui-form-table-has-not-left-column {
 	// on top level for, hide left column
 	> .cui-tr > .cui-td.cui-form-left {
 		display: none;
@@ -1496,6 +1496,12 @@ a[role="button"].cui-button-appearance-link {
 			justify-content: center;
 		}
 	}
+}
+
+// DataField
+
+.cui-data-field-hidden {
+	display: none;
 }
 
 

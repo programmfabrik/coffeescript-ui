@@ -202,16 +202,6 @@ class FormDemo extends Demo
 				@log("onDataChanged", field.getName(), field.getLastValue(), field.getValue())
 				show_data()
 			data: data
-			header: [
-				label:
-					text: "Name"
-					tooltip:
-						text: "A tooltip hides here"
-			,
-				label: "Field"
-			,
-				label: "Actions"
-			]
 			fields: [
 				form:
 					label: "Simple Input"

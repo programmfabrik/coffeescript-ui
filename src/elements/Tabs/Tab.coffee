@@ -104,6 +104,8 @@ class Tab extends CUI.DOM
 			Events.trigger
 				type: "viewport-resize"
 				node: @DOM
+				info:
+					tab: true
 		@
 
 	destroy: ->

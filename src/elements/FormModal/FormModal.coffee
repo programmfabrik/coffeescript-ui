@@ -31,6 +31,9 @@ class FormModal extends FormPopover
 		pop_opts = copyObject(@_modal, true)
 		if isEmpty(pop_opts.class)
 			pop_opts.class = ""
+
+		# don't center this to an element
+		pop_opts.element = null
 		if not pop_opts.pane
 			pop_opts.pane = {}
 		assert(CUI.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)

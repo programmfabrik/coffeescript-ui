@@ -256,11 +256,6 @@ class Playground extends Demo
 
 	getFormsTab: ->
 		form = new Form
-			header: [
-				label: "Label"
-			,
-				label: "Content"
-			]
 			fields: [
 				form:
 					label: "Output"
@@ -318,11 +313,6 @@ class Playground extends Demo
 				form:
 					label: "Inline Form"
 				type: Form
-				header: [
-					label: "Inner Label"
-				,
-					label: "Inner Input"
-				]
 
 				fields: =>
 					fields = []

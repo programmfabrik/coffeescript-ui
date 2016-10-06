@@ -42,6 +42,7 @@ class FormPopover extends Form
 
 		@__initUndo()
 		# don't initFields here, if fields are a function
+		@setFormDepth()
 
 	setDataOnOthers: ->
 		if @__fields_is_func
@@ -162,7 +163,6 @@ class FormPopover extends Form
 		@
 
 	renderTable: ->
-		console.error "FormPopover.renderTable..."
 		super()
 		@getLayout().addClass(@__class)
 		@table
@@ -206,7 +206,8 @@ class FormPopover extends Form
 			@renderTable()
 			@callOnFields("start")
 
-		pop_opts.element = @__button
+		if not pop_opts.hasOwnProperty("element")
+			pop_opts.element = @__button
 
 		onHide = pop_opts.onHide
 		pop_opts.onHide = (pop, ev) =>
