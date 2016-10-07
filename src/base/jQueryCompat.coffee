@@ -253,6 +253,9 @@ class CUI.jQueryCompat
 		if node.nodeName not in ["BODY", "A"]
 			node.text = (value) =>
 				CUI.jQueryCompat.__warn("text", node)
+				if isEmpty(value)
+					return node.textContent
+
 				node.textContent = value
 				node
 
