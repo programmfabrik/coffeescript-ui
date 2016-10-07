@@ -135,7 +135,7 @@ class CUI.Label extends CUI.DOM
 			@__overflow_content_div = $div("cui-label-manage-overflow-content-container").append(content)
 			@replace(@__overflow_content_div, "content")
 
-			@__overflow_button_div = $div("cui-label-manage-overflow-button-container")
+			@__overflow_button_div = $div("cui-label-manage-overflow-button-container", style: "display: none;")
 
 			if @_manage_overflow == true
 				btn_opts = CUI.defaults.class.Label.defaults.manage_overflow
