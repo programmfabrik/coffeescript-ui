@@ -687,15 +687,20 @@ class CUI.DOM extends CUI.Element
 
 			c = @__failedDOMInserts++
 
-			CUI.warn("[##{c}] Element received animationstart event but is not in DOM yet. We poll with timeout 0.")
+			console.warn("[##{c}] Element received animationstart event but is not in DOM yet. We poll with timeout 0.")
+
+			tries = 0
 
 			check_for_node = ->
 				if DOM.isInDOM(node)
-					CUI.warn("[##{c}] Poll done, element is in DOM now.")
+					console.warn("[##{c}] Poll done, element is in DOM now.")
 					dfr.resolve()
-				else
-					CUI.warn("[##{c}] Checking for node failed, waiting another 0 seconds...")
+				else if tries < 10
+					console.warn("[##{c}] Checking for node failed, try: ", tries)
+					tries = tries + 1
 					CUI.setTimeout(check_for_node, 0)
+				else
+					console.error("[##{c}] Checking for node failed. Giving up.", node)
 
 			CUI.setTimeout(check_for_node, 0)
 
@@ -828,9 +833,8 @@ class CUI.DOM extends CUI.Element
 	# selector & untilDocElem: collect everything until selector matches, but
 	#                          not further than untilDocElem
 	# selector: collection eveverything until selector matches, null if no match
-	# untilDocElem: collect everything untilDocElem, null if not found
+	# untilDocElem: stop collecting at docElem
 	@elementsUntil: (docElem, selector, untilDocElem) ->
-
 		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof HTMLElement.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
 		testDocElem = docElem
 		path = [testDocElem]
@@ -850,7 +854,7 @@ class CUI.DOM extends CUI.Element
 			testDocElem = CUI.DOM.parent(testDocElem)
 
 			if testDocElem == null
-				if selector or untilDocElem
+				if selector
 					return null
 				else
 					return path
@@ -869,33 +873,34 @@ class CUI.DOM extends CUI.Element
 			docElem.parentNode
 
 	@closest: (docElem, selector) ->
-		if selector instanceof HTMLElement
-			@closestUntil(docElem, null, selector)
-		else
-			@closestUntil(docElem, selector, document.documentElement)
+		@closestUntil(docElem, selector)
 
 	@closestUntil: (docElem, selector, untilDocElem) ->
+		if not selector
+			return null
+
 		path = @elementsUntil(docElem, selector, untilDocElem)
-		if not path
+		if path == null or path.length == 0
 			return null
 
 		path[path.length-1]
 
 	# selector is a stopper (like untiDocElem)
-	@parentsUntil: (docElem, selector, untilDocElem) ->
+	@parentsUntil: (docElem, selector, untilDocElem=document.documentElement) ->
 		parentElem = CUI.DOM.parent(docElem)
 		if not parentElem
 			return []
 
-		path = @elementsUntil(parentElem, null, untilDocElem)
+		path = @elementsUntil(parentElem, selector, untilDocElem)
 		if not path?.length
 			return []
 		path
 
 	# selector is a filter
-	@parents: (docElem, selector, untilDocElem=document.documentElement) ->
+	@parents: (docElem, selector) ->
 		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.parents", "element needs to be instanceof HTMLElement, document, or window.", element: docElem)
-		path = @parentsUntil(docElem, selector, untilDocElem)
+		path = @parentsUntil(docElem)
+
 		if not selector
 			return path
 
@@ -904,6 +909,7 @@ class CUI.DOM extends CUI.Element
 		for parent in path
 			if @is(parent, selector)
 				parents.push(parent)
+
 		parents
 
 	@isInDOM: (docElem) ->
@@ -911,7 +917,7 @@ class CUI.DOM extends CUI.Element
 			return null
 
 		assert(docElem instanceof HTMLElement, "CUI.DOM.isInDOM", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
-		if @closestUntil(docElem, null, document.documentElement)
+		if @closestUntil(docElem, document.documentElement)
 			true
 		else
 			false

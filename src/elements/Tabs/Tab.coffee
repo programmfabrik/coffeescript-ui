@@ -1,13 +1,11 @@
-class Tab extends CUI.DOM
+class CUI.Tab extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
 		if not isEmpty(@_name)
 			cls = "ez-tab-#{toClass(@_name)}"
-			attr = tab: @_name
 		else
 			cls = null
-			attr = undefined
 
 		@__body = new Template
 			name: "tab-body"
@@ -27,6 +25,9 @@ class Tab extends CUI.DOM
 
 		@__activations = 0
 
+	initButton: (tabs) ->
+		assert(tabs instanceof CUI.Tabs, "Tab.initButton", "Parameter #1 need to be instance of Tabs.", tabs: tabs)
+
 		@__button = new Button
 			role: "tab-header"
 			radio: "tabs"
@@ -34,9 +35,10 @@ class Tab extends CUI.DOM
 			size: "big"
 			group: if CUI.__ng__ then "tabs" else null
 			text: @_text
-			attr: attr
+			attr:
+				tab: @_name
 			active: false
-			onActivate: =>
+			onActivate: (btn) =>
 				@__activations++
 				if @_load_on_show and not @__content_loaded
 					@loadContent()
@@ -44,17 +46,20 @@ class Tab extends CUI.DOM
 				@show()
 				if @__activations == 1
 					@_onFirstActivate?(@)
+
 				@_onActivate?(@)
 				Events.trigger
 					type: "tab_activate"
 					node: @DOM
 
-			onDeactivate: =>
+			onDeactivate: (btn) =>
 				@hide()
 				@_onDeactivate?(@)
 				Events.trigger
 					type: "tab_deactivate"
 					node: @DOM
+
+		@
 
 	initOpts: ->
 		super()
@@ -93,10 +98,12 @@ class Tab extends CUI.DOM
 		@_text
 
 	hide: ->
+		# console.error "hiding tab...", @getUniqueId(), @DOM
 		@DOM.addClass("cui-tab-hidden")
 		@
 
 	show: ->
+		# console.error "showing tab...", @getUniqueId(), @DOM
 		# move to first position
 		@DOM.removeClass("cui-tab-hidden")
 
@@ -141,3 +148,5 @@ CUI.ready =>
 	Events.registerEvent
 		type: "tab_activate"
 
+
+Tab = CUI.Tab

@@ -397,9 +397,6 @@ class CUI.Layer extends CUI.DOM
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
-		if dim_layer.borderBoxWidth < 10 or dim_layer.borderBoxHeight < 10
-			console.warn("Layer: DIM is very small, layer might not be visible.", dim_layer, @__layer.DOM)
-
 		allowed_placements = (@_placements or CUI.Layer.knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
@@ -868,6 +865,9 @@ class CUI.Layer extends CUI.DOM
 		# console.info "PLACEMENT --- ", placement, "---"
 		# console.debug "Layer POS", vp.layer_pos, "align:", vp.align_horizontal, "/", vp.align_vertical, "overlap:", vp.overlap_align, vp.push_left, vp.push_right
 		# console.debug "Pointer POS", vp.pointer_pos, "align:", vp.pointer_align_horizontal, "/", vp.pointer_align_vertical
+
+		if vp.layer_pos.width < 10 or vp.layer_pos.height < 10
+			console.warn("Layer: DIM is very small, layer might not be visible. Placement:", placement, "Dimensions:", vp, "Layer:", @__layer.DOM)
 
 		# set layer
 		CUI.DOM.setStyle @__layer.DOM,

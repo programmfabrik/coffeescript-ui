@@ -896,7 +896,7 @@ class ListView extends SimplePane
 		# FIXME: improve selectors, so they only catch the current table not nested ones
 		#
 
-		console.debug "ListView##{@listViewCounter}.__doNextGenLayout..."
+		# console.debug "ListView##{@listViewCounter}.__doNextGenLayout..."
 
 		if @grid.clientWidth == 0 or @grid.clientHeight == 0
 			console.warn("ListView##{@listViewCounter}.__doNextGenLayout: clientWidth or clientHeight is 0, not layouting.")

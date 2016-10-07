@@ -1,4 +1,4 @@
-class Tabs extends SimplePane
+class CUI.Tabs extends CUI.SimplePane
 
 	initOpts: ->
 		super()
@@ -224,6 +224,7 @@ class Tabs extends SimplePane
 
 
 		tab.hide()
+		tab.initButton(@)
 		@__buttonbar.addButton(tab.getButton())
 		@__tabs_bodies.append(tab)
 		tab
@@ -313,3 +314,5 @@ class Tabs extends SimplePane
 		tab = @getTab(tab_or_idx_or_name)
 		tab.activate()
 		@
+
+Tabs = CUI.Tabs

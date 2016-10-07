@@ -678,8 +678,9 @@ class CUI.Button extends CUI.DOM
 
 		if parents.length == 0
 			# buttons are not grouped by anything, so we
-			# have no other buttons
-			docElem = document.body
+			# have no other buttons, so we use the top level element
+			all_parents = @DOM.parents()
+			docElem = all_parents[all_parents.length-1]
 		else
 			docElem = parents[parents.length-1]
 
@@ -732,7 +733,7 @@ class CUI.Button extends CUI.DOM
 			@addClass(@__active_css_class)
 			@__setState()
 			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl
+			if not group or not event?.ctrlKey() or flags.ignore_ctrl or @__radio
 				return
 
 			flags.ignore_ctrl = true
@@ -773,7 +774,7 @@ class CUI.Button extends CUI.DOM
 			@removeClass(@__active_css_class)
 			@__setState()
 			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl
+			if not group or not event?.ctrlKey() or flags.ignore_ctrl or @__radio
 				return
 
 			flags.ignore_ctrl = true

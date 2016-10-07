@@ -227,7 +227,7 @@ class CUI.Listener extends CUI.Element
 		if filter.node
 			filter_node = DOM.getNode(filter.node)
 			filtered = true
-			match = DOM.closestUntil(@__node, null, filter_node)
+			match = DOM.closestUntil(@__node, filter_node)
 
 		if match and filter.type
 			filtered = true
