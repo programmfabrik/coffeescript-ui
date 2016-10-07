@@ -776,7 +776,7 @@ class ListViewTreeNode extends ListViewRow
 			@__handleIcon = "tree_open"
 			cls.push("cui-tree-node-is-closed")
 
-		if not @children?.length
+		if @children?.length == 0
 			cls.push("cui-tree-node-no-children")
 
 		@__handleDiv = $div(cls.join(" "))
