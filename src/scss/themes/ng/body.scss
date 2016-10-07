@@ -381,7 +381,7 @@ li > div {
 
 .cui-flex-handle-column {
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
-		height: 20px;
+		margin: 0;
 	}
 	
 	user-select: none;
@@ -933,21 +933,21 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	> .cui-label-icon {
+	.cui-label-icon {
 		.fa {
 			line-height: 18px;
 		}
 	}
 
 	&.cui-label-size-big {
-		> .cui-label-icon {
+		.cui-label-icon {
 			.fa {
 				font-size: 21px;
 			}
 		}
 	}
 
-	> .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
 		padding-left: $padding/2;
 	}
 
@@ -1717,7 +1717,7 @@ a[role="button"].cui-button-appearance-link {
 			justify-content: center;
 			align-self: center;
 			
-			.cui-label > .cui-label-icon > i {
+			.cui-label .cui-label-icon i {
 				font-size: 24px;
 				color: black;
 			}
