@@ -403,9 +403,6 @@ class CUI.Layer extends CUI.DOM
 		if @__element
 			dim_element = CUI.DOM.getDimensions(@__element)
 
-			if @_use_element_width_as_min_width
-				dim_layer.borderBoxWidth = Math.max(dim_layer.borderBoxWidth, dim_element.borderBoxWidth)
-
 		else if @_show_at_position
 			dim_element =
 				viewportTop: @_show_at_position.top
@@ -442,12 +439,6 @@ class CUI.Layer extends CUI.DOM
 			vp.dim_element = dim_element
 			vp.dim_pointer = dim_pointer[placement]
 
-			if @_use_element_width_as_min_width
-				vp.set_width = false
-			else
-				vp.set_width = true
-
-			#
 
 			switch placement
 				when "c"
@@ -548,9 +539,6 @@ class CUI.Layer extends CUI.DOM
 			layer_pos = vp.layer_pos = {}
 			pointer_pos = vp.pointer_pos = {}
 
-			# layer_pos.set_width = false
-			# layer_pos.set_height = false
-
 			# number of times we need to cut the layer
 			# to make it fit into the viewport
 			vp.cuts = 0
@@ -562,16 +550,12 @@ class CUI.Layer extends CUI.DOM
 				when "both"
 					layer_pos.width = vp.width
 					layer_pos.height = vp.height
-					# layer_pos.set_height = true
-					# layer_pos.set_width = true
 				when "vertical"
 					layer_pos.height = vp.height
 					layer_pos.width = dim_layer.borderBoxWidth
-					# layer_pos.set_height = true
 				when "horizontal"
 					layer_pos.width = vp.width
 					layer_pos.height = dim_layer.borderBoxHeight
-					# layer_pos.set_width = true
 				else
 					layer_pos.width = dim_layer.borderBoxWidth
 					layer_pos.height = dim_layer.borderBoxHeight
@@ -869,12 +853,18 @@ class CUI.Layer extends CUI.DOM
 		if vp.layer_pos.width < 10 or vp.layer_pos.height < 10
 			console.warn("Layer: DIM is very small, layer might not be visible. Placement:", placement, "Dimensions:", vp, "Layer:", @__layer.DOM)
 
+		if @_element and @_use_element_width_as_min_width
+			minWidth = dim_element.borderBoxWidth
+		else
+			minWidth = undefined
+
 		# set layer
 		CUI.DOM.setStyle @__layer.DOM,
 			top: vp.layer_pos.top
 			left: vp.layer_pos.left
-			width: if vp.set_width then vp.layer_pos.width else ""
+			width: vp.layer_pos.width
 			height: vp.layer_pos.height
+			minWidth: minWidth
 			# maxWidth: vp.width + vp.overlap_width
 			# maxHeight: vp.height + vp.overlap_height
 			margin: 0
