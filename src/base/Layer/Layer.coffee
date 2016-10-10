@@ -1156,7 +1156,7 @@ CUI.ready ->
 
 			while layer_element = layer_elements.pop()
 
-				if not layer_element.hasClass("cui-layer-backdrop-policy-click-thru")
+				if not CUI.DOM.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")
 					return
 
 				if CUI.DOM.closest(target, layer_element)
