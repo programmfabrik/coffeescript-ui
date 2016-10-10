@@ -116,10 +116,10 @@ class CUI.CSSLoader extends CUI.Element
 					return
 
 				old_css_nodes = []
-				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']")
-					if css_node != cssNode
-						CUI.DOM.remove(css_node)
-						old_css_nodes.push(css_node)
+				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']:not([loading])")
+					console.warn("CSSLoader.loadTheme: Removing old css node:", css_node, "New Node is:", cssNode, CUI.DOM.getAttribute(cssNode, "loading"))
+					CUI.DOM.remove(css_node)
+					old_css_nodes.push(css_node)
 
 				CUI.DOM.setAttribute(document.body, "cui-theme", name)
 

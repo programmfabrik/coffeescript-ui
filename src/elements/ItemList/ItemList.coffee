@@ -1,41 +1,10 @@
 class CUI.ItemList extends CUI.VerticalLayout
 
 	init: ->
-		# we postpone the init until we are rendered
-
-	__init: ->
 		super()
 		@addClass("cui-item-list")
-
-		if not isUndef(@__active_idx)
-			active_idx = @__active_idx
-		else
-			active_idx = @_active_item_idx
-
-		if isUndef(active_idx)
-			items = @__getItems()
-			if isPromise(items)
-				active_idx = null
-
-			for item, idx in items
-				if not item
-					continue
-				if isUndef(item.active)
-					continue
-				if item.active
-					active_idx = idx
-					break
-				if isUndef(active_idx)
-					active_idx = null
-
-		if not isUndef(active_idx)
-			@__active_idx = active_idx
-			@__radio = "item-list--"+@getUniqueId()
-
 		@__body = new Template(name: "item-list-body")
 		@append(@__body, "center")
-		@__isInit = true
-
 
 	initOpts: ->
 		super()
@@ -119,9 +88,40 @@ class CUI.ItemList extends CUI.VerticalLayout
 		else
 			new CUI.Deferred().resolve(items)
 
+
+	__initActiveIdx: ->
+
+		if not isUndef(@__active_idx)
+			active_idx = @__active_idx
+		else
+			active_idx = @_active_item_idx
+
+		if isUndef(active_idx)
+			items = @__getItems()
+			if isPromise(items)
+				active_idx = null
+
+			for item, idx in items
+				if not item
+					continue
+				if isUndef(item.active)
+					continue
+				if item.active
+					active_idx = idx
+					break
+				if isUndef(active_idx)
+					active_idx = null
+
+		if not isUndef(active_idx)
+			@__active_idx = active_idx
+			@__radio = "item-list--"+@getUniqueId()
+
+		@__isInitActiveIdx = true
+
+
 	render: (menu, event) ->
-		if not @__isInit
-			@__init()
+		if not @__isInitActiveIdx
+			@__initActiveIdx()
 
 		@__body.empty()
 

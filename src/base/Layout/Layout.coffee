@@ -197,6 +197,9 @@ class CUI.Layout extends CUI.DOM
 					closed:
 						default: false
 						check: Boolean
+					closable:
+						default: true
+						check: Boolean
 					class:
 						check: String
 		map
@@ -220,6 +223,8 @@ class CUI.Layout extends CUI.DOM
 			fh_inst = @__layout.getFlexHandle(pane_name)
 			if fh.label
 				fh_inst.addLabel(fh.label)
+
+			fh_inst.setClosable(fh.closable)
 
 			if fh.hidden
 				fh_inst.hide()

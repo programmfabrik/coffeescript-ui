@@ -69,7 +69,7 @@ class CUI.Menu extends CUI.Layer
 		@__itemList
 
 	setItemList: (itemList) ->
-		if @_itemList instanceof CUI.ItemList
+		if itemList instanceof CUI.ItemList
 			@__itemList = itemList
 		else
 			delete(itemList.maximize)
@@ -78,7 +78,6 @@ class CUI.Menu extends CUI.Layer
 
 			@__itemList = new CUI.ItemList(itemList)
 
-		@__itemList.__init()
 		@replace(@__itemList)
 		@proxy(@__itemList, ["setActiveIdx"])
 

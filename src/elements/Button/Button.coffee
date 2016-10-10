@@ -179,7 +179,11 @@ class CUI.Button extends CUI.DOM
 				else
 					@__menu_opts.class = @_class
 
-			@__menu_opts.itemList = itemList_opts
+
+			if @_menu.itemList
+				@__menu_opts.itemList = @_menu.itemList
+			else
+				@__menu_opts.itemList = itemList_opts
 
 			@__menu_opts.element = @
 
@@ -305,7 +309,6 @@ class CUI.Button extends CUI.DOM
 				return
 
 		if @_menu_on_hover
-			menu = @getMenu()
 			CUI.Button.menu_timeout = null
 			CUI.Button.menu_shown = null
 
@@ -322,7 +325,7 @@ class CUI.Button extends CUI.DOM
 				CUI.Button.menu_timeout = CUI.setTimeout
 					ms: 700
 					call: =>
-						menu.hide(ev)
+						@getMenu().hide(ev)
 
 
 		if @_menu_on_hover or @_tooltip
@@ -338,6 +341,7 @@ class CUI.Button extends CUI.DOM
 						@getTooltip().showTimeout(null, ev)
 
 					if @_menu_on_hover
+						menu = @getMenu()
 						menu_stop_hide()
 
 						if not @__disabled and menu.hasItems()
@@ -368,7 +372,7 @@ class CUI.Button extends CUI.DOM
 								instance: @
 								only_once: true
 								call: =>
-									menu.hide(ev)
+									menu_start_hide(ev)
 
 					return
 
@@ -503,10 +507,6 @@ class CUI.Button extends CUI.DOM
 				check: Function
 			confirm_on_click:
 				check: String
-			onMouseover:
-				check: Function
-			onMouseout:
-				check: Function
 			click_type:
 				default: "click"
 				mandatory: true
@@ -696,6 +696,7 @@ class CUI.Button extends CUI.DOM
 	getMenu: ->
 		if not @hasMenu()
 			return
+
 		if @__menu
 			@__menu
 		else

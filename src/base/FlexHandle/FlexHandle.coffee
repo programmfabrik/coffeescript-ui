@@ -42,6 +42,7 @@ class FlexHandle extends CUI.Element
 			@__direction = "column"
 
 		assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element[0])
+		@setClosable(@_closable)
 
 		if @_label
 			@addLabel(@_label)
@@ -62,6 +63,10 @@ class FlexHandle extends CUI.Element
 				mandatory: true
 				check: String
 			closed:
+				check: Boolean
+			closable:
+				mandatory: true
+				default: true
 				check: Boolean
 			label:
 				check: (v) ->
@@ -101,10 +106,11 @@ class FlexHandle extends CUI.Element
 				if @__size == null # isEmpty(@__pane[0].style[@__css_value])
 					if @isClosed()
 						@open()
-					else
+					else if @getClosable()
 						@close()
 				else
 					@resetSize()
+
 				@storeState()
 				return
 
@@ -226,6 +232,11 @@ class FlexHandle extends CUI.Element
 
 		@storeState()
 		@__resize()
+
+	setClosable: (@__closable) ->
+
+	getClosable: ->
+		!!@__closable
 
 	resetSize: ->
 		@__setSize(null)
