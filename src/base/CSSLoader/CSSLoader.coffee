@@ -57,23 +57,24 @@ class CUI.CSSLoader extends CUI.Element
 		if overload_url
 			url = overload_url
 
-		oldCssNode = @__getCSSNodes()[0]
+		# console.error "nodes:", @__getCSSNodes()
 
-		if oldCssNode
+		for oldCssNode in @__getCSSNodes()
 			same_theme = CUI.DOM.getAttribute(oldCssNode, "theme") == name
 			same_url = CUI.DOM.getAttribute(oldCssNode, "href") == url
 			is_loading = CUI.DOM.getAttribute(oldCssNode, "loading")
 
+			# console.debug same_theme, same_url, is_loading
+
 			if is_loading
 				loader_deferred = CUI.DOM.data(oldCssNode, "css-loader-deferred")
 				if same_theme and same_url
-					console.warn("CSSLoader.loadTheme:", name, ". Theme already loadeding, returning Promise.")
-					return load_deferred.promise()
+					console.warn("CSSLoader.loadTheme:", name, ". Theme already loading, returning Promise.")
+					return loader_deferred.promise()
 
-				console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting load.")
+				console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting other load.")
 				# reject loading, this removed the old node
 				load_deferred.reject()
-				oldCssNode = null
 			else
 				if same_theme and same_url
 					# all good
@@ -82,7 +83,7 @@ class CUI.CSSLoader extends CUI.Element
 
 				# in all other cases we simply "overload"
 
-		console.info("CSSLoader: Loading:", url, "Replacing Node:", oldCssNode)
+		console.info("CSSLoader: Loading:", url)
 
 		if name.startsWith("ng")
 			CUI.__ng__ = true
@@ -116,10 +117,11 @@ class CUI.CSSLoader extends CUI.Element
 					return
 
 				old_css_nodes = []
-				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']:not([loading])")
-					console.warn("CSSLoader.loadTheme: Removing old css node:", css_node, "New Node is:", cssNode, CUI.DOM.getAttribute(cssNode, "loading"))
-					CUI.DOM.remove(css_node)
-					old_css_nodes.push(css_node)
+				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
+					if css_node != cssNode
+						console.warn("CSSLoader.loadTheme: Removing old css node:", css_node, "New Node is:", cssNode, CUI.DOM.getAttribute(cssNode, "loading"))
+						CUI.DOM.remove(css_node)
+						old_css_nodes.push(css_node)
 
 				CUI.DOM.setAttribute(document.body, "cui-theme", name)
 
@@ -142,5 +144,3 @@ class CUI.CSSLoader extends CUI.Element
 
 		document.head.appendChild(cssNode)
 		dfr.promise()
-
-

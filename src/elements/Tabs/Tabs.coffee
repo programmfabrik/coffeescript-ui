@@ -232,58 +232,56 @@ class CUI.Tabs extends CUI.SimplePane
 
 	__measureAndSetBodyWidth: ->
 
-			for parent in @DOM.parents()
-					if parent.scrollTop or parent.scrollLeft
-							scrollSaveParent =
-									node: parent
-									top: parent.scrollTop
-									left: parent.scrollLeft
-							break
+		for parent in @DOM.parents()
+			if parent.scrollTop or parent.scrollLeft
+				scrollSaveParent =
+						node: parent
+						top: parent.scrollTop
+						left: parent.scrollLeft
+				break
 
-			# measure and set body
-			#
+		# measure and set body
+		#
 
-			# remove previously set dimensions
-			for tab in @__tabs
-					tab.getBody().css("min-width": "", height: "")
+		# remove previously set dimensions
+		for tab in @__tabs
+			tab.getBody().css("min-width": "", height: "")
 
-			@__tabs_bodies.DOM.css("min-width": "", height: "")
+		@__tabs_bodies.DOM.css("min-width": "", height: "")
 
-			# measure
-			max_width = -1
-			max_height = -1
+		# measure
+		max_width = -1
+		max_height = -1
 
-			for tab in @__tabs
-					dim =
-							width: tab.getBody().outerWidth(true)
-							height: tab.getBody().outerHeight(true)
+		for tab in @__tabs
+			dim =
+				width: tab.getBody().outerWidth(true)
+				height: tab.getBody().outerHeight(true)
 
-					if dim.width > max_width
-							max_width = dim.width
-					if dim.height > max_height
-							max_height = dim.height
+			if dim.width > max_width
+				max_width = dim.width
+			if dim.height > max_height
+				max_height = dim.height
 
-			@__tabs_bodies.DOM.css("min-width": max_width, height: max_height)
+		@__tabs_bodies.DOM.css("min-width": max_width, height: max_height)
 
-			for tab in @__tabs
-					tab.getBody().css("min-width": max_width, height: max_height)
+		for tab in @__tabs
+			tab.getBody().css("min-width": max_width, height: max_height)
 
-			if @max_width != @__max_width or @max_height != @__max_height
-					@__max_width = max_width
-					@__max_height = max_height
+		if @max_width != @__max_width or @max_height != @__max_height
+			@__max_width = max_width
+			@__max_height = max_height
 
-					size_has_changed = true
-			else
-					size_has_changed = false
+			size_has_changed = true
+		else
+			size_has_changed = false
 
-			# set back scroll position
-			if scrollSaveParent
-					scrollSaveParent.node.scrollTop = scrollSaveParent.top
-					scrollSaveParent.node.scrollLeft = scrollSaveParent.left
+		# set back scroll position
+		if scrollSaveParent
+			scrollSaveParent.node.scrollTop = scrollSaveParent.top
+			scrollSaveParent.node.scrollLeft = scrollSaveParent.left
 
-			return size_has_changed
-
-
+		return size_has_changed
 
 
 	# true or false if a tab exists
