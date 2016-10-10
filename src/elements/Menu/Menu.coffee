@@ -45,6 +45,10 @@ class CUI.Menu extends CUI.Layer
 
 		if not @isShown() and @__itemList
 			@__itemList.render(@, @__event)
+			.done =>
+				Events.trigger
+					type: "content-resize"
+					node: @__itemList
 
 		super(@__event)
 
