@@ -21,6 +21,7 @@
 	@include flex_direction(column);
 	@include flex_align_items(center);
 	@include justify_content(center);
+	text-align: center;
 }
 
 .cui-selected {

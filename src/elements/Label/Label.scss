@@ -44,6 +44,7 @@
 	}
 
 	& > .cui-label-content {
+		display: inline; //have the case that <em> is breaking the flow in multiline. inline-flex doesnt work. see #38759
 		@extend %default_line_break;
 		//REMARKED this should be default anyway
 		//@include flex(0,1); //empty labels dont like growing when they are in a layout-cell context
