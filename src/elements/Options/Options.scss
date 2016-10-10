@@ -18,13 +18,14 @@
 
 	.cui-form-tr {
 
+		//REMARKED seems to have no impact, but its a problem when dragging (sorting) rows. see #38626
 		//outer padding
-		&:first-child {
-			padding-top: $form_cell_padding;
-		}
-		&:last-child {
-			padding-bottom: $form_cell_padding;
-		}
+		//&:first-child {
+		//	padding-top: $form_cell_padding;
+		//}
+		//&:last-child {
+		//	padding-bottom: $form_cell_padding;
+		//}
 
 		//separator padding
 		.cui-padding.cui-form-td:not(:empty) {
