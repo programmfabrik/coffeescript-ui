@@ -2,7 +2,7 @@ class Icon extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_icon
-			@__class = @icon_map[@_icon]
+			@__class = @icon_map()[@_icon]
 			if isEmpty(@__class)
 				@__class = @_icon
 			if not isEmpty(@_class)
@@ -37,7 +37,7 @@ class Icon extends CUI.Element
 	copy: ->
 		new Icon(@opts)
 
-	icon_map:
+	icon_map: ->
 		crop: "fa-crop"
 		fullscreen: "fa-arrows-alt"
 		trash: "fa-trash-o"
