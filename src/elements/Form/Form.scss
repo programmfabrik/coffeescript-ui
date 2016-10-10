@@ -83,6 +83,9 @@ $default_form_center_width: 360px; //TODO replace $form_data_field_input_max_wid
 
         > .cui-form.cui-padding-reset {
             margin: -$form_cell_padding;
+            > .cui-layout-cell > .cui-form-table:empty {
+                margin: $form_cell_padding; //compensating reset when having no content
+            }
         }
     }
 
