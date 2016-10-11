@@ -25,6 +25,12 @@ $table-border-color: hsl(205,8%,90%);
 
 $pane-header-height: 30px;
 
+@mixin ellipsis(){
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 @mixin margin($factor: 1) {
 	margin-bottom: $padding * $factor;
 
@@ -154,6 +160,24 @@ input {
 	overflow: hidden;
 }
 
+[max-chars] {
+	min-width: auto;
+}
+
+[max-chars="1"] {
+	width: 1.5ch;
+}
+
+[max-chars="2"] {
+	width: 2.5ch;
+}
+
+@for $i from 3 through 10 {
+	[max-chars="#{$i}"] {
+		width: #{$i}ch;
+	}
+}
+
 div, a {
 	display: flex;
 	flex: 0 0 auto;
@@ -172,14 +196,15 @@ li > div {
 
 // HorizontalLayout
 .cui-horizontal-layout {
+	flex-shrink: 1;
+	
 	&.cui-maximize-horizontal {
 		flex-direction: row;
 		// overflow: hidden; cuts off outline in date-time picker: year picker
 
-		> .cui-horizontal-layout-left,
-		> .cui-horizontal-layout-right
-		{
+		> .cui-horizontal-layout-left {
 			position: relative;
+			flex-shrink: 1;
 			// overflow: hidden; cuts off outline in date-time picker: year picker
 			// max-width: 45%; breaks CUI.confirm
 		}
@@ -196,7 +221,7 @@ li > div {
 
 	&:not(.cui-maximize-horizontal) {
 		flex-direction: row;
-		align-self: flex-start;
+		// align-self: flex-start; anyoing in toolbar where you want align stretch
 	}
 }
 
@@ -455,7 +480,6 @@ li > div {
 .cui-toolbar {
 	min-height: 42px;
 	justify-content: space-between;
-	align-items: center;
 	padding: 0 $padding;
 	
 	// prevent outline cutoff
@@ -469,6 +493,7 @@ li > div {
 		&.cui-horizontal-layout-left,
 		&.cui-horizontal-layout-right {
 			flex-direction: row;
+			min-width: 0;
 		}
 
 		&.cui-horizontal-layout-center {
@@ -486,10 +511,6 @@ li > div {
 			> .cui-horizontal-layout-center {
 				overflow: visible;
 			}
-
-			.cui-input {
-				width: 100%;
-			}
 		}
 
 		> .cui-toolbar {
@@ -497,6 +518,7 @@ li > div {
 			padding: 0;
 		}
 	}
+
 	&.cui-template-empty {
 		display: none;
 	}
@@ -507,6 +529,45 @@ li > div {
 		
 		.cui-input {
 			flex-grow: 0;
+		}
+	}
+
+	.cui-button {
+		align-self: stretch;
+	}
+
+	.cui-buttonbar {
+		margin-bottom: 0;
+		height: 100%;
+		
+		.cui-button {
+			// &:not(:first-child){
+			.cui-button-visual {
+				padding-left: $padding/2;
+			}
+			// }
+			
+			&:not(:last-child){
+				.cui-button-visual {
+					padding-right: $padding/2;
+				}
+			}
+		}
+	}
+
+	.cui-label {
+		flex-shrink: 1;
+		min-width: 0;
+		align-self: center;
+
+		.cui-label-content {
+			flex-shrink: 1;
+			min-width: 0;
+			
+			span {
+				display: inline-block;
+				@include ellipsis;
+			}
 		}
 	}
 }
@@ -524,30 +585,29 @@ li > div {
 	
 	.fa-angle-right,
 	.fa-angle-left {
-		font-size: 17px;
+		&:before {
+			font-size: 1.34em;
+		}
+	}
+	
+	// gain back padding
+	> .cui-horizontal-layout-left > .cui-buttonbar:first-child {
+		margin-left: -$padding;
 	}
 
-	.cui-buttonbar {
-		margin-bottom: 0;
+	> .cui-horizontal-layout-right > .cui-buttonbar:last-child {
+		margin-right: -$padding;
 	}
 
 	.cui-horizontal-layout-left {
 		> *:first-child {
 			padding-left: 0;
-
-			.cui-button-visual {
-				padding-left: 0;
-			}
 		}
 	}
 
 	.cui-horizontal-layout-right {
 		> *:last-child {
 			padding-right: 0;
-
-			.cui-button-visual {
-				padding-right: 0;
-			}
 		}
 	}
 
@@ -564,7 +624,7 @@ li > div {
 		}
 
 		&.cui-active .cui-button-visual {
-			color: $highlight-color;
+			border-radius: $button-border-radius;
 		}
 	}
 
@@ -649,6 +709,13 @@ i.cui-spin-stepped {
 	        animation: fa-spin 1s steps(8) infinite;
 }
 
+.fa-times-thin:before {
+	font-size: 1.58em;
+	content: '\00d7';
+	display: block;
+  margin-top: -0.09em;
+}
+
 // Button / Select
 .cui-button-visual {
 	flex-direction: row;
@@ -706,13 +773,22 @@ i.cui-spin-stepped {
 
 	&.cui-button-appearance-flat {
 		align-self: auto;
-	  &,
-	  &:hover,
+		
+		.cui-button-visual {
+			@include button-reset;
+			color: $highlight-color;
+		}
+		
+	  &:hover {
+	  	.cui-button-visual {
+	  		color: $highlight-color;
+	  	}
+	  }
+
 	  &.cui-active {
 	  	.cui-button-visual {
-	    	@include button-reset;
-	    	color: $highlight-color;
-	    }
+	  		color: $highlight-color;
+	  	}
 	  }
 	}
 
@@ -888,12 +964,20 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&[max-chars="2"] .cui-button-center span {
-		width: 2.5ch;
+	&[max-chars="2"] {
+		width: auto;
+
+		.cui-button-center span {
+			width: 2.5ch;
+		}
 	}
 
-	&[max-chars="4"] .cui-button-center span {
-		width: 4ch;
+	&[max-chars="4"] {
+		width: auto;
+
+		.cui-button-center span {
+			width: 4ch;
+		}
 	}
 }
 
@@ -957,13 +1041,14 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	> .cui-label-content {
-		// display: inline-flex;
+	.cui-label-content {
 		flex: 0 0 auto;
+
+		&:empty {
+			display: none;
+		}
 	}
-	.cui-label-content:empty {
-		display: none;
-	}
+
 	.cui-label-icon:empty {
 		display: none;
 	}
@@ -1110,9 +1195,9 @@ a[role="button"].cui-button-appearance-link {
 	align-items: center;
 	@include margin;
 
-	> *:not(:last-child) {
-		margin-right: $gap;
-	}
+	// > *:not(:last-child) {
+	// 	margin-right: $gap;
+	// }
 
 	.cui-label-content {
 		align-self: center; // Date-Time picker month label in footer
