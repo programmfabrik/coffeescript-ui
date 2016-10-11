@@ -716,9 +716,18 @@ class CUI
 	@warn: ->
 		console.warn.apply(console, arguments)
 
+# http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+CUI.browser =
+	opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
+	firefox: `typeof InstallTrigger !== 'undefined'`
+	safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
+	ie: `/*@cc_on!@*/false || !!document.documentMode`
+	chrome: `!!window.chrome && !!window.chrome.webstore`
+
+CUI.browser.edge = `!CUI.browser.isIE && !!window.StyleMedia`
+CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
 CUI.ready =>
-
 	# initialize a markdown renderer
 	marked?.setOptions
 		renderer: new marked.Renderer()
@@ -736,5 +745,3 @@ CUI.ready =>
 
 window.addEventListener "load", =>
 	CUI.start()
-
-
