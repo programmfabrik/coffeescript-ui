@@ -4,7 +4,7 @@ $padding: 10px;
 // compensating padding compensates for line-height
 $compensating-padding: 7px;
 $gap: 12px;
-$background: hsl(205,10%,98%);
+$background: hsl(205,0%,95%);
 $foreground: white;
 
 $button-text-color: hsl(205,10%,34%);
@@ -360,17 +360,6 @@ li > div {
 	overflow: hidden;
 	position: relative;
 	z-index: 1;
-
-	// handle
-	&:after {
-		content: "";
-		position: absolute;
-		left: 10px;
-		height: 100%;
-		top: 0;
-		width: 1px;
-		background: hsl(210,11%,93%);
-	}
 	&:not(.cui-flex-handle-closed) {
 		cursor: ew-resize;
 	}
@@ -384,11 +373,6 @@ li > div {
 		width: 32px;
 		margin: 0;
 		background: white;
-		
-		// remove handle
-		&:after {
-			left: 0;
-		}
 		
 		.cui-label.cui-tmpl-label-rotate-90 {
 			font-size: 14px;
@@ -541,17 +525,23 @@ li > div {
 		height: 100%;
 		
 		.cui-button {
-			// &:not(:first-child){
+			padding-right: $padding/2;
+			
+			&:last-child {
+				padding-right: $padding;
+			}
+			
 			.cui-button-visual {
 				padding-left: $padding/2;
+				padding-right: $padding/2;
 			}
-			// }
-			
-			&:not(:last-child){
-				.cui-button-visual {
-					padding-right: $padding/2;
-				}
-			}
+		}
+	}
+
+	.cui-buttonbar-group {
+		.cui-button,
+		.cui-button:last-child {
+			padding-right: 0;
 		}
 	}
 
@@ -578,7 +568,7 @@ li > div {
 	border-bottom: 1px solid hsl(180,9%,93%);
 	
 	.cui-label {
-		font-size: 16px;
+		font-size: 14px;
 		height: 100%;
     align-items: center;
 	}
@@ -608,23 +598,6 @@ li > div {
 	.cui-horizontal-layout-right {
 		> *:last-child {
 			padding-right: 0;
-		}
-	}
-
-	.cui-button-button { // dont target buttongroup buttons
-		height: 100%;
-		align-self: center;
-		
-		.cui-button-visual {
-			border: none;
-			padding: 0 $padding;
-			background: none;
-			border-radius: 0;
-			color: $highlight-color;
-		}
-
-		&.cui-active .cui-button-visual {
-			border-radius: $button-border-radius;
 		}
 	}
 
