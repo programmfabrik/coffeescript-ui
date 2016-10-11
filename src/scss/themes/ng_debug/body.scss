@@ -404,6 +404,13 @@ i.cui-spin-stepped {
 	flex-direction: row;
 }
 
+.fa-times-thin:before {
+	font-size: 1.58em;
+	content: '\00d7';
+	display: block;
+  margin-top: -0.09em;
+}
+
 // Button / Select / Checkbox
 a[role="button"],label[role="button"],.cui-button
 {
