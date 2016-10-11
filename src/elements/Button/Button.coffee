@@ -734,7 +734,7 @@ class CUI.Button extends CUI.DOM
 			@addClass(@__active_css_class)
 			@__setState()
 			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl or @__radio
+			if not group or not event?.ctrlKey() or flags.ignore_ctrl
 				return
 
 			flags.ignore_ctrl = true
@@ -775,7 +775,7 @@ class CUI.Button extends CUI.DOM
 			@removeClass(@__active_css_class)
 			@__setState()
 			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl or @__radio
+			if not group or not event?.ctrlKey() or flags.ignore_ctrl
 				return
 
 			flags.ignore_ctrl = true

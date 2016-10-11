@@ -76,7 +76,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	__getItems: (event) ->
 		if CUI.isFunction(@_items)
-			@_items(event, @)
+			@_items(event, @) or []
 		else
 			@_items
 
