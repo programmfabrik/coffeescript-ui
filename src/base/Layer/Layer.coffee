@@ -330,6 +330,8 @@ class CUI.Layer extends CUI.DOM
 
 	position: (ev) ->
 		#
+		if not @isShown()
+			return
 
 		dim_window = CUI.DOM.getDimensions(window)
 
