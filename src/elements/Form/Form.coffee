@@ -55,8 +55,20 @@ class CUI.Form extends CUI.DataField
 		if @hasSetOpt("bottom")
 			vl_opts.bottom = content: @_bottom
 
+		if @_form?.checkbox
+			# the form has a checkbox (for form context)
+			assert(CUI.isPlainObject(@_form.checkbox, "new Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
+			cb_opts = copyObject(@_form.checkbox, true)
+
+			@__checkbox = new Checkbox(cb_opts)
+		else
+			@__checkbox = null
+
 		@__verticalLayout = new VerticalLayout(vl_opts)
 		@__verticalLayout
+
+	getCheckbox: ->
+		@__checkbox
 
 	initTemplate: ->
 		@registerTemplate(@__verticalLayout.getLayout())
@@ -74,6 +86,7 @@ class CUI.Form extends CUI.DataField
 				_field = DataField.new(field(@))
 			else
 				_field = DataField.new(field)
+
 			_field.setForm(@)
 			fs.push(_field)
 		fs

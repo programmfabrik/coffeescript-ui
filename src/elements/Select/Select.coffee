@@ -203,7 +203,7 @@ class Select extends Checkbox
 		@__optionsPromise
 		.done =>
 			found_opt = null
-			max_chars = 0
+			max_chars = null
 
 			for opt, idx in @__options
 				if found_opt == null and opt.value == @getValue()
@@ -230,7 +230,7 @@ class Select extends Checkbox
 					@__checkbox.setText(@_not_found_text+":"+@getValue())
 				@__checkbox.menuSetActiveIdx(null)
 
-			CUI.DOM.setAttribute(@DOM, "max-chars", max_chars)
+			@__checkbox.setTextMaxChars(max_chars)
 		@
 
 

@@ -898,6 +898,9 @@ class CUI.Button extends CUI.DOM
 		else
 			@replace($text(@__txt), "center")
 
+	setTextMaxChars: (max_chars) ->
+		CUI.DOM.setAttribute(@getCenter().firstChild, "max-chars", max_chars)
+
 	getText: ->
 		@__txt
 

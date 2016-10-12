@@ -292,10 +292,16 @@ class CUI.DOM extends CUI.Element
 
 
 	@removeAttribute: (node, key) ->
+		if not node
+			return null
+
 		node.removeAttribute(key)
 		node
 
 	@setAttribute: (node, key, value) ->
+		if not node
+			return null
+
 		if isNull(value) or value == false
 			return @removeAttribute(node, key)
 
@@ -307,9 +313,15 @@ class CUI.DOM extends CUI.Element
 		node
 
 	@hasAttribute: (node, key) ->
+		if not node
+			return false
+
 		node.hasAttribute(key)
 
 	@setAttributeMap: (node, map) ->
+		if not node
+			return null
+
 		for key, value of map
 			CUI.DOM.setAttribute(node, key, value)
 		node
