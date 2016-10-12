@@ -83,7 +83,7 @@
 	> .cui-pane {
 		@include pane_control_sizes(big);
 		@include pane_header_colors($modal_header_background_color, $modal_header_font_color);
-		@include outer_pane_padding("bigger");
+		@include outer_pane_padding("big");
 
 		//title icon styling TODO get a title class !?
 		> .cui-vertical-layout-top {
@@ -99,7 +99,7 @@
 		}
 
 		> .cui-vertical-layout-bottom > .cui-pane-footer > .cui-layout-cell {
-			padding-bottom: map_get($outer_padding_x,'bigger');
+			padding-bottom: map_get($outer_padding_x,'big');
 		}
 	}
 }
