@@ -361,7 +361,8 @@ li > div {
 	flex: 0 0 auto;
 	overflow: hidden;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
+	
 	&:not(.cui-flex-handle-closed) {
 		cursor: ew-resize;
 	}
@@ -467,6 +468,7 @@ li > div {
 	min-height: 42px;
 	justify-content: space-between;
 	padding: 0 $padding;
+	background: hsl(205,2%,98%);
 	
 	// prevent outline cutoff
 	&.cui-maximize-horizontal {
@@ -555,10 +557,11 @@ li > div {
 		.cui-label-content {
 			flex-shrink: 1;
 			min-width: 0;
+			display: block;
+			@include ellipsis;
 			
 			span {
-				display: inline-block;
-				@include ellipsis;
+				display: inline;
 			}
 		}
 	}
@@ -605,6 +608,7 @@ li > div {
 
 	.cui-toolbar {
 		min-height: 0;
+		background: none;
 	}
 }
 
@@ -789,7 +793,6 @@ i.cui-spin-stepped {
 .cui-button-left,
 .cui-button-center,
 .cui-button-right {
-	text-align: center;
 	flex: 0 0 auto;
 	justify-content: center;
 	padding: 0 3px;
@@ -802,16 +805,28 @@ i.cui-spin-stepped {
 .cui-button-size-mini {
 	font-size: 12px;
   height: 26px;
+
+  &.cui-button-appearance-flat {
+  	height: auto;
+  }
 }
 
 .cui-button-size-big {
 	font-size: 15px;
 	height: 37px;
+
+	&.cui-button-appearance-flat {
+		height: auto;
+	}
 }
 
 .cui-button-size-bigger {
 	font-size: 18px;
 	height: 43px;
+
+	&.cui-button-appearance-flat {
+		height: auto;
+	}
 }
 
 a[role="button"].cui-button-appearance-link {
@@ -2867,7 +2882,6 @@ table.cui-form-table {
 .cui-drag-drop-select-lasso-element-in-lasso {
 	opacity: 0.8;
 }
-
 
 
 
