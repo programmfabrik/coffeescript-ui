@@ -1647,8 +1647,9 @@ a[role="button"].cui-button-appearance-link {
 .cui-item-list {
 	.cui-label {
 	  cursor: default;
-	  padding: 9px $padding 3px;
-	  color: hsl(205,8%,76%);
+	  padding: $padding+3px $padding 3px;
+	  font-size: 0.9em;
+	  color: hsl(205,3%,50%);
 	  
 	  &.cui-empty-label {
 	  	padding: 6px $padding;
@@ -1672,8 +1673,8 @@ a[role="button"].cui-button-appearance-link {
 		  padding: 0 $padding;
 			border: none;
 			border-radius: 0;
-			height: 28px;
-			line-height: 28px;
+			height: 26px;
+			line-height: 26px;
 	  }
 
 	  &:hover:not(.cui-disabled),
