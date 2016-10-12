@@ -187,7 +187,7 @@ class EventsDemo extends Demo
 		node = tmpl.map.pointer_events[0]
 		data.listen = mousedown: true
 		fields = []
-		for k, idx in ["mousedown", "mouseup", "click", "dblclick", "mouseisdown", "keydown", "keyup", "keypress"]
+		for k, idx in ["mousedown", "wheel", "mouseup", "click", "dblclick", "mouseisdown", "keydown", "keyup", "keypress"]
 			fields.push
 				type: Checkbox
 				name: k
@@ -199,7 +199,11 @@ class EventsDemo extends Demo
 				instance: @
 				capture: true
 				call: (ev) =>
+					if ev.getTarget() != node
+						return
+
 					if data.listen[ev.getType()]
+						ev.preventDefault()
 						@flash(node)
 						@log(ev.dump())
 					return

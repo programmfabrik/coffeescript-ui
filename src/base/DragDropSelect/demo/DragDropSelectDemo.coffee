@@ -36,9 +36,9 @@ class DragDropSelectDemo extends Demo
 
 			element: drag_container
 
-		drop_container = $div("drag-drop-select-demo-droppable-container")
+		drop_container = $div("drag-drop-select-demo-droppable-container", style: "position: relative;")
 
-		drop_container_inner = $div("drag-drop-select-demo-droppable-container-inner henk").appendTo(drop_container)
+		drop_container_inner = $div("drag-drop-select-demo-droppable-container-inner", style: "position: absolute;").appendTo(drop_container)
 
 		Events.listen
 			type: "dblclick"
@@ -59,17 +59,27 @@ class DragDropSelectDemo extends Demo
 			element: drop_container
 			dropHelper: true
 
+		dim_inner = null
+		dim_outer = null
+
 		getLimitRect = =>
+
+			dim = DOM.getDimensions(drop_container)
+
 			width = drop_container.width()
 			height = drop_container.height()
-			min_x: 0
-			min_y: 0
-			min_w: 1
-			min_h: 1
-			max_x: width
-			max_w: width
-			max_y: height
-			max_h: height
+
+			rect =
+				min_x: dim.paddingLeft
+				min_y: dim.paddingRight
+				min_w: 10
+				min_h: 10
+				max_x: width + dim.paddingLeft
+				max_w: width
+				max_y: height + dim.paddingTop
+				max_h: height
+
+			rect
 
 		new Movable
 			element: drop_container_inner

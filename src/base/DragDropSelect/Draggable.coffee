@@ -51,7 +51,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					v >= 0
 
 			ms:
-				default: CUI.MouseIsDownListener.interval_ms
+				default: 0
 				check: (v) ->
 					# must be multiple of MouseIsDownListener.interval_ms or 0
 					v % CUI.MouseIsDownListener.interval_ms == 0
@@ -122,6 +122,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 						target = ev.getCurrentTarget()
 						target_dim = DOM.getDimensions(target)
 						if not DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
+							return
+
+						if CUI.DOM.closest(ev.getTarget(), "input,textarea,select")
 							return
 
 						$target = $(target)

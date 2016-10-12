@@ -91,7 +91,7 @@ body.cui-demo-playground {
 .cui-demo-pane-right {
 	width: 300px;
 	background: hsl(205,17%,99%);
-	
+
 	.cui-demo-console-log {
 		> div {
 			display: block;
@@ -153,6 +153,9 @@ body.cui-demo-playground {
 	&:hover {
 		cursor: pointer;
 	}
+	&.flash-ring {
+		background-color: #ffe4f4;
+	}
 }
 
 // FileUpload
@@ -163,7 +166,7 @@ body.cui-demo-playground {
 	padding: 4px;
 	margin: 0 4px 4px 0;
 	justify-content: space-between;
-	
+
 	.cui-file-upload-demo-info {
 		word-break: break-all;
 	}
@@ -187,7 +190,7 @@ body.cui-demo-playground {
 	align-items: center;
 	justify-content: center;
 	border-radius: 5px;
-	
+
 	&:empty:after {
 		content: "Drop here";
 	}

@@ -340,7 +340,7 @@ class CUI.Events extends CUI.Element
 				mouseout: {}
 				mouseleave: {}
 				mouseenter: {}
-				mousewheel:
+				wheel:
 					bubble: false
 				mousedown: {}
 				mouseup: {}

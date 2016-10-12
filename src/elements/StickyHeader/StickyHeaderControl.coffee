@@ -82,11 +82,9 @@ class StickyHeaderControl extends CUI.Element
 		@__headers = null
 		@newStickyHeaders = null
 
-
 	position: ->
 		if not @isInDOM()
 			return
-
 
 		@__positioned = true
 		@initNewStickyHeaders()

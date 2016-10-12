@@ -10,11 +10,9 @@ class CUI.Movable extends CUI.Draggable
 				default: {}
 				check: (v) ->
 					CUI.isPlainObject(v) or v instanceof Function
-
-			positioned:
+			onPositioned:
 				check: Function
-
-			position:
+			onPosition:
 				check: Function
 			start_drag:
 				check: Function
@@ -46,7 +44,7 @@ class CUI.Movable extends CUI.Draggable
 			setCss.marginBoxHeight = pos.h
 
 		CUI.DOM.setDimensions(@element[0], setCss)
-		@_positioned?(pos)
+		@_onPositioned?(pos)
 
 
 	init_drag: (ev, $target) ->
@@ -82,8 +80,8 @@ class CUI.Movable extends CUI.Draggable
 			w: @start.w
 			h: @start.h
 
-		if @_position
-			[pos.x, pos.y] = @_position(pos.x, pos.y, @start, diff)
+		if @_onPosition
+			[pos.x, pos.y] = @_onPosition(pos.x, pos.y, @start, diff)
 		else
 			@limitRect(pos, @start)
 

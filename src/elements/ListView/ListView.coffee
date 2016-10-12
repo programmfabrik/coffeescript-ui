@@ -335,7 +335,7 @@ class ListView extends SimplePane
 
 
 		Events.listen
-			type: "mousewheel"
+			type: "wheel"
 			node: $(@quadrant[2])
 			call: (ev) =>
 				ev.preventDefault()
@@ -1340,6 +1340,7 @@ class ListView extends SimplePane
 
 			if not isNull(node)
 				cell.append(node)
+
 			col.setElement(cell)
 
 			colspan = col.getColspan()

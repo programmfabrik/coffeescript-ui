@@ -186,11 +186,11 @@ class CUI.Event extends CUI.Element
 	shiftKey: ->
 		@getNativeEvent()?.shiftKey
 
-	wheelDeltaX: ->
-		@getNativeEvent()?.wheelDeltaX
-
 	wheelDeltaY: ->
-		@getNativeEvent()?.wheelDeltaY
+		ne = @getNativeEvent()
+		if not ne
+			return
+		ne.deltaY
 
 	clientX: ->
 		@getNativeEvent()?.clientX

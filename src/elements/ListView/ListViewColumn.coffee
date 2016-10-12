@@ -18,8 +18,11 @@ class ListViewColumn extends CUI.Element
 				check: String
 			colspan:
 				check: "Integer"
-			element: {}
-
+			element:
+				check: (v) ->
+					isContent(v)
+			onSetElement:
+				check: Function
 
 	setRow: (@listViewRow) ->
 
@@ -32,8 +35,10 @@ class ListViewColumn extends CUI.Element
 				@_element.DOM
 			else
 				@_element
-		else
+		else if not isEmpty(@_text)
 			new Label(text: @_text).DOM
+		else
+			null
 
 	getAttrs: ->
 		@__attrs or {}
@@ -42,8 +47,8 @@ class ListViewColumn extends CUI.Element
 	setElement: (@__element) ->
 		@addClass(@getClass())
 		if @__attrs
-			for k, v of @__attrs
-				@__element.attr(k, v)
+			CUI.DOM.setAttributeMap(@__element, @__attrs)
+		@_onSetElement?(@)
 		@__element
 
 	getElement: ->
@@ -63,9 +68,6 @@ class ListViewColumn extends CUI.Element
 		if @__element instanceof HTMLElement
 			CUI.DOM.removeClass(@__element, cls)
 		@
-
-	swapWidthAndHeight: ->
-		false
 
 	setColspan: (colspan) =>
 		@_colspan = colspan

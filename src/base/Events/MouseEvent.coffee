@@ -31,3 +31,6 @@ class CUI.MouseEvent extends CUI.Event
 				ev[k] = @[prop]
 
 		super(ev)
+
+	dump: ->
+		super()+" **wheelY**:"+@wheelDeltaY()
