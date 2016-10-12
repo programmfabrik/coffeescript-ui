@@ -162,6 +162,8 @@ input {
 
 [max-chars] {
 	min-width: auto;
+	box-sizing: content-box;
+	text-align: center;
 }
 
 [max-chars="1"] {
