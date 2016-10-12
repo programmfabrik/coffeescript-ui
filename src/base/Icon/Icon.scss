@@ -1,3 +1,13 @@
 .cui-icon-fixed-width {
 	width: 16px;
 }
+
+.fa-times-thin:before {
+	content: '\00d7';
+	//font-size: 1.58em;
+
+	font-size: 1.9em;
+	line-height: 16px;
+	vertical-align: sub; //workaround centering problems
+}
+
