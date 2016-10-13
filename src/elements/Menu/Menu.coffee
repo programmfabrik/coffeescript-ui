@@ -66,8 +66,8 @@ class CUI.Menu extends CUI.Layer
 					ev.stop()
 		@
 
-	hasItems: ->
-		@__itemList?.hasItems()
+	hasItems: (event) ->
+		@__itemList?.hasItems(event)
 
 	getItemList: ->
 		@__itemList

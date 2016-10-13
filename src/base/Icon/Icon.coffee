@@ -37,6 +37,12 @@ class Icon extends CUI.Element
 	copy: ->
 		new Icon(@opts)
 
+	hide: ->
+		CUI.DOM.hideElement(@DOM)
+
+	show: ->
+		CUI.DOM.showElement(@DOM)
+
 	icon_map: ->
 		crop: "fa-crop"
 		fullscreen: "fa-arrows-alt"

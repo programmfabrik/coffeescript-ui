@@ -344,7 +344,7 @@ class CUI.Button extends CUI.DOM
 						menu = @getMenu()
 						menu_stop_hide()
 
-						if not @__disabled and menu.hasItems()
+						if not @__disabled and menu.hasItems(ev)
 
 							if CUI.Button.menu_shown and CUI.Button.menu_shown != menu
 								menu_stop_hide()
@@ -410,7 +410,7 @@ class CUI.Button extends CUI.DOM
 		if @hasMenu() and
 			# not (ev.ctrlKey or ev.shiftKey or ev.altKey or ev.metaKey) and
 			not @_menu_on_hover and
-			@getMenu().hasItems()
+			@getMenu().hasItems(ev)
 				@getMenu().show(ev)
 
 				# in some contexts (like FileUploadButton), this
@@ -535,7 +535,7 @@ class CUI.Button extends CUI.DOM
 						not @_icon_inactive
 			right:
 				check: (v) ->
-					(isElement(v) or v instanceof CUI.Element or v == true) and not @_icon_right
+					(v == true or isContent(v)) and not @_icon_right
 			center:
 				check: (v) ->
 					(isElement(v) or isString(v) or v instanceof CUI.Element)

@@ -427,11 +427,15 @@ class CUI.DOM extends CUI.Element
 				return true
 		return false
 
+	@toggleClass: (element, cls, on_off) ->
+		@setClass(element, cls, not @hasClass(element, cls))
+
 	@setClass: (element, cls, on_off) ->
 		if on_off
 			@addClass(element, cls)
 		else
 			@removeClass(element, cls)
+		return on_off
 
 	@addClass: (element, cls) ->
 		if not cls or not element

@@ -63,11 +63,11 @@ class CUI.ItemList extends CUI.VerticalLayout
 		null
 
 	# returns immediately, if "Promise" we assume yes
-	hasItems: ->
+	hasItems: (event) ->
 		if @_has_items
 			return true
 
-		items = @__getItems()
+		items = @__getItems(event)
 		if isPromise(items)
 			CUI.warn("ItemList.hasItems: opts.items Function returned a Promise. Set opts.has_items to true, in order to avoid the call of that Function.")
 			true
