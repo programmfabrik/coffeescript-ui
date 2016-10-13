@@ -18,20 +18,27 @@ class DateTimeDemo extends Demo
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
 			,
-				form: label: "Date + Time + Seconds (Short) [de-DE]"
 				type: DateTime
+				form: label: "Date + Time + Seconds (Short) [de-DE]"
 				name: "date_and_time_short"
 				display_type: "short"
 				locale: "de-DE"
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
 			,
+				type: DateTime
 				form: label: "Date + Time + [de-DE]"
 				name: "date_and_time"
-				type: DateTime
 				locale: "de-DE"
 				onDataChanged: (data, df) =>
 					@log(df.getName()+": value: "+data[df.getName()])
+			,
+				type: DateTime
+				form: label: "Date [de-DE]"
+				name: "date_month_year"
+				locale: "de-DE"
+				display_type: "short"
+				input_types: ["date", "year_month", "year"]
 			,
 				form: label: "Date (year allowed) [de-DE]"
 				name: "date_only"

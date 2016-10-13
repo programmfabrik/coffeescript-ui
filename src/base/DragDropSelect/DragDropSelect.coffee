@@ -51,7 +51,6 @@ class CUI.DragDropSelect extends CUI.Element
 
 
 
-# scroller
 CUI.ready =>
 	Events.registerEvent
 		type: "cui-drop"
@@ -59,6 +58,10 @@ CUI.ready =>
 
 	Events.registerEvent
 		type: "cui-dragenter"
+		bubble: true
+
+	Events.registerEvent
+		type: "cui-dragend"
 		bubble: true
 
 	Events.registerEvent
@@ -88,7 +91,6 @@ CUI.ready =>
 	# 		ev.preventDefault()
 	# 		ev.stopPropagation()
 	# 		return false
-
 
 	Events.listen
 		type: "dragover-scroll"

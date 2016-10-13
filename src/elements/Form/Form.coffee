@@ -58,14 +58,31 @@ class CUI.Form extends CUI.DataField
 		if @_form?.checkbox
 			# the form has a checkbox (for form context)
 			assert(CUI.isPlainObject(@_form.checkbox, "new Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
+			assert(@_name, "new Form", "opts.form.checkbox requires opts.name to be set.", opts: @opts)
+			assert(not @_form.checkbox.data, "new Form", "opts.form.checkbox cannot have 'data' set.", opts: @opts)
+			assert(not @_form.checkbox.name, "new Form", "opts.form.checkbox cannot have 'name' set.", opts: @opts)
+
 			cb_opts = copyObject(@_form.checkbox, true)
 
-			@__checkbox = new Checkbox(cb_opts)
+			cb_opts.data = @__checkbox_data = checkbox: false
+			cb_opts.name = "checkbox"
+
+			@__checkbox = new Checkbox(cb_opts).start()
+			Events.listen
+				type: "data-changed"
+				node: @__checkbox
+				call: =>
+					if @__checkbox_data.checkbox
+						@__checkbox_set_data[@_name] = @__checkbox_form_data
+					else
+						delete(@__checkbox_set_data[@_name])
+
 		else
-			@__checkbox = null
+			@checkbox = null
 
 		@__verticalLayout = new VerticalLayout(vl_opts)
 		@__verticalLayout
+
 
 	getCheckbox: ->
 		@__checkbox
@@ -102,13 +119,39 @@ class CUI.Form extends CUI.DataField
 
 	initFields: ->
 		@__fields = @__createFields()
+		@__fields
+
+	displayValue: ->
+		if @__checkbox
+			@__checkbox.displayValue()
+		super()
 
 	setData: (data) ->
+		if @_name and @__checkbox
+			assert(not CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
+
 		if @_name and not CUI.isFunction(data)
 			# CUI.debug "init data ", @_name, data, 1
-			if isUndef(data[@_name])
-				data[@_name] = {}
-			super(data[@_name])
+			#
+
+			if @__checkbox
+				@__checkbox_set_data = data
+				if data[@_name]
+					@__checkbox_form_data = data[@_name]
+					@__checkbox_data.checkbox = true
+					@show()
+				else
+					@__checkbox_form_data = {}
+					@__checkbox_data.checkbox = false
+					@hide()
+
+				super(@__checkbox_form_data)
+
+			else
+				if isUndef(data[@_name])
+					data[@_name] = {}
+
+				super(data[@_name])
 		else
 			super(data)
 		# sometimes fields depend on data, we need to see if
@@ -173,7 +216,6 @@ class CUI.Form extends CUI.DataField
 			type: "form-check-row-visibility"
 			call: (ev) =>
 				tr = $(ev.getNode()).closest(".cui-form-tr")
-				# CUI.debug "form check row visibiltiy", ev, tr
 				ev.stopPropagation()
 				if not tr.hasClass("cui-form-tr-vertical")
 					return
@@ -268,7 +310,7 @@ class CUI.Form extends CUI.DataField
 
 			if fopts.hasOwnProperty("right")
 				right = fopts.right
-				# console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx, "Right:", right)
+				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx)
 
 			append_content = []
 			append_left = []
@@ -279,19 +321,33 @@ class CUI.Form extends CUI.DataField
 				if idx == 0
 					content = null
 
-					if app.label
-						if isString(app.label) and CUI.__ng__
-							# use a HTML label and link it to the field
-							# if possible
-							content = CUI.DOM.element("label", for: _field.getUniqueIdForLabel())
-							content.textContent = app.label
-						else
-							content = getAppend(app.label, _field)
+					if _field instanceof Form and _field.getCheckbox()
+						cb = _field.getCheckbox()
+						content = _field.getCheckbox().DOM
 
-					if app.use_field_as_label
-						assert(not @_horizontal, "Form.renderTable", "field.form.use_field_as_label is not supported with opts.horizontal.", opts: @opts, field: _field)
+						do (cb, _field) =>
+							Events.listen
+								type: "data-changed"
+								node: cb
+								call: =>
+									if cb.getValue()
+										_field.show()
+									else
+										_field.hide()
+					else
+						if app.label
+							if isString(app.label) and CUI.__ng__
+								# use a HTML label and link it to the field
+								# if possible
+								content = CUI.DOM.element("label", for: _field.getUniqueIdForLabel())
+								content.textContent = app.label
+							else
+								content = getAppend(app.label, _field)
 
-						use_field_as_label = true
+						if app.use_field_as_label
+							assert(not @_horizontal, "Form.renderTable", "field.form.use_field_as_label is not supported with opts.horizontal.", opts: @opts, field: _field)
+
+							use_field_as_label = true
 				else
 					content = getAppend(app, _field)
 

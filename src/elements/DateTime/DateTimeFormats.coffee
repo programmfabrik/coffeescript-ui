@@ -74,12 +74,12 @@ DateTimeFormats["de-DE"] =
 		invalid: "Datum ungültig"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM YYYY"
+		display_short: "MM.YYYY"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"M.YYYY"
+			"MM YYYY"
 		]
 	,
 		text: "Jahr"
@@ -167,12 +167,12 @@ DateTimeFormats["it-IT"] =
 		invalid: "Datum ungültig"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM YYYY"
+		display_short: "MM.YYYY"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"M.YYYY"
+			"MM YYYY"
 		]
 	,
 		text: "Jahr"
@@ -260,12 +260,12 @@ DateTimeFormats["es-ES"] =
 		invalid: "Datum ungültig"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM YYYY"
+		display_short: "MM.YYYY"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"M.YYYY"
+			"MM YYYY"
 		]
 	,
 		text: "Jahr"
@@ -356,12 +356,12 @@ DateTimeFormats["en-US"] =
 		invalid: "Invalid date"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM YYYY"
+		display_short: "MM/YYYY"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"M.YYYY"
+			"MM YYYY"
 		]
 	,
 		text: "Jahr"

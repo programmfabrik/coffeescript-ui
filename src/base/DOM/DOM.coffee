@@ -401,10 +401,16 @@ class CUI.DOM extends CUI.Element
 		node.getAttribute(key)
 
 	@remove: (element) ->
+		if not element
+			return null
+
 		element.parentNode?.removeChild(element)
 		element
 
 	@empty: (element) ->
+		if not element
+			return null
+
 		assert(isElement(element), "DOM.empty", "top needs to be Element", element: element)
 		element.innerHTML = ""
 		element
@@ -1005,14 +1011,15 @@ class CUI.DOM extends CUI.Element
 			dim[k1+"Vertical"] = dim[k1+"Top"] + dim[k1+"Bottom"]
 			dim[k1+"Horizontal"] = dim[k1+"Left"] + dim[k1+"Right"]
 
-		dim.contentBoxWidth = rect.width - dim.borderHorizontal - dim.paddingHorizontal
-		dim.contentBoxHeight = rect.height - dim.borderVertical - dim.paddingVertical
-		dim.innerBoxWidth = rect.width - dim.borderHorizontal
-		dim.innerBoxHeight = rect.height - dim.borderVertical
+		dim.contentBoxWidth = Math.max(0, rect.width - dim.borderHorizontal - dim.paddingHorizontal)
+		dim.contentBoxHeight = Math.max(0, rect.height - dim.borderVertical - dim.paddingVertical)
+		dim.innerBoxWidth = Math.max(0, rect.width - dim.borderHorizontal)
+		dim.innerBoxHeight = Math.max(0, rect.height - dim.borderVertical)
 		dim.borderBoxWidth = rect.width
 		dim.borderBoxHeight = rect.height
-		dim.marginBoxWidth = rect.width + dim.marginHorizontal
-		dim.marginBoxHeight = rect.height + dim.marginVertical
+
+		dim.marginBoxWidth = Math.max(0, rect.width + dim.marginHorizontal)
+		dim.marginBoxHeight = Math.max(0, rect.height + dim.marginVertical)
 
 		dim.viewportTop = rect.top
 		dim.viewportTopMargin = rect.top - dim.marginTop

@@ -62,7 +62,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if @__dropHelper
 			# console.error "removing drop helper.."
-			@__dropHelper.remove()
+			CUI.DOM.remove(@__dropHelper)
 
 		if @_targetHelper
 			for el in CUI.DOM.findElements(@_element, @_selector)
@@ -108,7 +108,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 			position: "absolute"
 			top: dim.viewportTop - drop_helper_dim.borderTopWidth - drop_helper_dim.marginTop
 			left: dim.viewportLeft - drop_helper_dim.borderLeftWidth - drop_helper_dim.marginLeft
-
 
 
 	syncTargetHelper: (ev, info) ->
@@ -211,7 +210,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 			return
 
 		# console.error "removing drop helper.."
-		@__dropHelper?.remove()
+		CUI.DOM.remove(@__dropHelper)
 
 		dim = CUI.DOM.getDimensions(@__selectedTarget)
 
@@ -249,14 +248,19 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		Events.listen
 			node: @element
+			type: "cui-dragend"
+			instance: @
+			call: (ev, info) =>
+				@removeHelper()
+
+		Events.listen
+			node: @element
 			type: "cui-drop"
 			instance: @
 			call: (ev, info) =>
 
 				# CUI.debug "cui-drop", ev.getCurrentTarget()
 				if not @__dropTarget
-					@removeHelper()
-					console.warn("No drop target.")
 					return
 
 				# console.debug "cui-drop", info
@@ -264,8 +268,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 				info.dropTarget = @__dropTarget
 				if @_targetHelper
 					info.dropTargetPos = @__dropTargetPos
-
-				@removeHelper()
 
 				if @accept(ev, info) != false
 					ev.stopPropagation()

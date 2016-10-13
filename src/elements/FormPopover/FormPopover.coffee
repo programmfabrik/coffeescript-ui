@@ -167,9 +167,8 @@ class FormPopover extends Form
 		@getLayout().addClass(@__class)
 		@table
 
-
 	# overwritten in FormModal
-	getPopover: (opts) ->
+	initPopover: (opts) ->
 		new Popover(opts)
 
 	getPopoverOpts: ->
@@ -188,6 +187,9 @@ class FormPopover extends Form
 		# CUI.debug "getPopoverOpts", pop_opts
 		pop_opts
 
+	getPopover: ->
+		@__popover
+
 	__openPopover: ->
 		# console.time "FormPopover"
 
@@ -198,9 +200,10 @@ class FormPopover extends Form
 			# dynamic fields, we need to reload the form
 			if @table
 				@callOnFields("remove")
+				@table = null
+
 			@initFields()
 			@callOnFields("setData", @__data)
-			@table = null
 
 		if not @table
 			@renderTable()
@@ -221,7 +224,7 @@ class FormPopover extends Form
 
 		pop_opts.pane.content = @getLayout()
 
-		@__popover = @getPopover(pop_opts)
+		@__popover = @initPopover(pop_opts)
 
 		Events.listen
 			type: "data-changed"
@@ -247,7 +250,7 @@ class FormPopover extends Form
 		@__triggerDataChanged()
 		@
 
-	# this call the "onHide" function
+	# this calls the "onHide" function
 	closePopover: ->
 		@__popover?.hide()
 

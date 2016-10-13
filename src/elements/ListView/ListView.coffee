@@ -339,10 +339,10 @@ class ListView extends SimplePane
 			node: $(@quadrant[2])
 			call: (ev) =>
 				ev.preventDefault()
-				if ev.wheelDeltaY() < 0
+				if ev.wheelDeltaY() > 0
 					@quadrant[3].scrollTop += 100
 
-				if ev.wheelDeltaY() > 0
+				if ev.wheelDeltaY() < 0
 					@quadrant[3].scrollTop -= 100
 
 				on_scroll()

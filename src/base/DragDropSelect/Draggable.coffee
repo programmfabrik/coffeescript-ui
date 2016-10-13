@@ -75,7 +75,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 	destroy: ->
 		super()
-		globalDrag?.helperNode?.remove()
+		CUI.DOM.remove(globalDrag?.helperNode)
 		@__cleanup()
 		@
 
@@ -144,7 +144,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		ev.getMousedownEvent?().preventDefault()
 
 		if globalDrag == false
-			CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
+			# CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
 			return
 
 		for k, v of overwrite_options
@@ -267,41 +267,52 @@ class CUI.Draggable extends CUI.DragDropSelect
 						@_dragging?(ev, $target, diff)
 				return
 
-
 		Events.listen
 			node: document
-			type: ["mouseup", "keyup"]
+			type: ["keyup"]
 			capture: true
 			instance: @__ref
 			call: (ev) =>
-				if ev.getType() == "keyup" and ev.keyCode() == 83 and ev.altKey() # ALT-S
-					CUI.warn("Stopping Drag and Drop")
-					@__cleanup()
-					return
+				switch ev.keyCode()
+					when 83
+						if ev.altKey() # ALT-S
+							CUI.warn("Stopping Drag and Drop")
+							@__cleanup()
+							return
+					when 27
+						globalDrag.stopped = true
+						return ev.stop()
 
-				if not (ev.getType() == "mouseup" or ev.keyCode() == 27)
-					return
+				return
 
+		Events.listen
+			node: document
+			type: ["mouseup"]
+			capture: true
+			instance: @__ref
+			call: (ev) =>
 				# CUI.debug "mouseup/keyup: ", ev.getType()
 				# CUI.debug "draggable", ev.type
 				#
-				globalDrag.dragend = true
-				if globalDrag.dragStarted
-					@end_drag(ev)
-					@_dragend?(ev, globalDrag, @)
+				if not globalDrag.dragStarted
+					@__cleanup()
+					return
 
-					if ev.getType() == "mouseup" and
-						ev.getTarget() == globalDrag.startEvent.getTarget() and
-						not globalDrag.noClickHandlerKill
-							console.warn "install klick handler..."
-							Events.listen
-								type: "click"
-								capture: true
-								only_once: true
-								node: window
-								call: (ev) ->
-									console.error "Killing click after drag"
-									return ev.stop()
+				globalDrag.dragend = true
+				@end_drag(ev)
+				@_dragend?(ev, globalDrag, @)
+
+				if ev.getTarget() == globalDrag.startEvent.getTarget() and
+					not globalDrag.noClickHandlerKill
+						console.warn "install klick handler..."
+						Events.listen
+							type: "click"
+							capture: true
+							only_once: true
+							node: window
+							call: (ev) ->
+								console.error "Killing click after drag"
+								return ev.stop()
 
 				@__cleanup()
 				return ev.stop()
@@ -384,8 +395,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if @isDestroyed()
 			return
 
-		helper_animate_back = false
-
 		if globalDrag.dragoverTarget
 			# CUI.debug "sending pf_dragleave", globalDrag.dragoverTarget
 			# CUI.debug "pf_dragleave.event", globalDrag.dragoverTarget[0]
@@ -397,31 +406,26 @@ class CUI.Draggable extends CUI.DragDropSelect
 					globalDrag: globalDrag
 					originalEvent: ev
 
-			if ev.getType() == "mouseup"
-				drop_event = CUI.Event.require
+			CUI.Events.trigger
+				node: globalDrag.dragoverTarget
+				type: "cui-dragend"
+				info:
+					globalDrag: globalDrag
+					originalEvent: ev
+
+			if not globalDrag.stopped
+				CUI.Events.trigger
 					type: "cui-drop"
 					node: globalDrag.dragoverTarget
 					info:
 						globalDrag: globalDrag
 						originalEvent: ev
 
-				CUI.Events.trigger(drop_event)
-
-				# it can happen that the trigger deletes globalDrag by removing the
-				# draggable element, so we need to check if that has happened and
-				# do nothing in case
-				if not globalDrag
-					return
-
-				if drop_event.isPropagationStopped()
-					# currently unimplemented
-					helper_animate_back = false
-
 			globalDrag.dragoverTarget = null
 
 		# animate the helperNode back to its origin
 		globalDrag.$source.removeClass(@_dragClass)
-		globalDrag.helperNode?.remove()
+		CUI.DOM.remove(globalDrag.helperNode)
 		@
 
 	position_helper: (ev, $target, diff) ->

@@ -98,14 +98,21 @@ class CUI.CSSLoader extends CUI.Element
 			theme: name
 			href: url
 
+		loc = CUI.parseLocation(url)
+
+		if not loc.origin
+			css_href = document.location.origin + url
+		else
+			css_href = url
+
 		CUI.DOM.data(cssNode, "css-loader-deferred", dfr)
 
 		dfr.always =>
 			CUI.DOM.removeData(cssNode, "css-loader-deferred")
 			CUI.DOM.removeAttribute(cssNode, "loading")
 
-		dfr.fail =>
-			console.error("CSSLoader: Loading failed, removing node.", cssNode)
+		dfr.fail (css_href) =>
+			console.error("CSSLoader: Loading failed, removing node.", css_href)
 			CUI.DOM.remove(cssNode)
 
 		Events.listen
@@ -116,10 +123,19 @@ class CUI.CSSLoader extends CUI.Element
 					console.warn("CSSLoader.loadTheme: Caught event load second time, ignoring. IE does that for some reason.")
 					return
 
+				# ok, let's check if the style sheet loaded actually applies
+				# rules. IE tends to ignore 404 here.
+				for styleSheet in document.styleSheets
+					if styleSheet.href == css_href # this is the css loaded
+						if styleSheet.rules.length == 0 # we assume loading failed
+							console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet)
+							dfr.reject(css_href)
+							return
+
 				old_css_nodes = []
 				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
 					if css_node != cssNode
-						console.warn("CSSLoader.loadTheme: Removing old css node:", css_node, "New Node is:", cssNode, CUI.DOM.getAttribute(cssNode, "loading"))
+						console.warn("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
 						CUI.DOM.remove(css_node)
 						old_css_nodes.push(css_node)
 
@@ -131,7 +147,7 @@ class CUI.CSSLoader extends CUI.Element
 					info:
 						css_load: true
 
-				dfr.resolve()
+				dfr.resolve(css_href)
 				return
 
 		Events.listen
@@ -139,7 +155,7 @@ class CUI.CSSLoader extends CUI.Element
 			type: "error"
 			call: (ev, info) =>
 				console.error("CSS.load: loading error:", url)
-				dfr.reject()
+				dfr.reject(css_href)
 				return
 
 		document.head.appendChild(cssNode)

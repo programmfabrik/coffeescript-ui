@@ -518,8 +518,8 @@ class FormDemo extends Demo
 					cancel: true
 					pane:
 						header_left: "Form Modal"
-				ok_button_opts:
-					text: "Yo - Custom Text"
+					apply_button:
+						text: "Yo - Custom Text"
 
 				renderDisplayContent: (df) ->
 					data = df.getData()

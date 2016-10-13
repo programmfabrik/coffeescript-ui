@@ -250,8 +250,7 @@ class DateTime extends Input
 		# @append(@__status = $div("cui-date-time-status"), "center")
 
 	format: (s, type="display", output_type=null) ->
-		types = ["display_short", "display", "store", "input"]
-		assert(type in types, "DateTime.format", "type must be on of \"#{types.join(',')}\".", parm1: s, type: type)
+		assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: s, type: type)
 
 		if isEmpty(s)
 			return null
@@ -266,7 +265,7 @@ class DateTime extends Input
 		if not mom.isValid()
 			formats_tried = []
 			for format in @__input_formats_known
-				for k in ["store", "input", "display"]
+				for k in DateTime.formatTypes
 					formats_tried.push(format[k])
 
 			CUI.warn(
@@ -620,7 +619,7 @@ class DateTime extends Input
 			null
 
 	__parseFormat: (f, s) ->
-		for k in ["store", "input", "display"]
+		for k in DateTime.formatTypes
 			assert(f[k], "DateTime.__parseFormat", ".#{k} must be set", format: f)
 			mom = moment(s, f[k], true) # true the input format
 			if mom.isValid()
@@ -1239,7 +1238,8 @@ class DateTime extends Input
 						c.addClass("cui-date-time-selected")
 		return
 
-
+	# Keys when try parsing
+	@formatTypes: ["store", "input", "display", "display_short"]
 
 	@setLocale: (locale) ->
 		assert(DateTimeFormats[locale], "DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: DateTimeFormats)
