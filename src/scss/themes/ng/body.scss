@@ -4,6 +4,7 @@ $padding: 10px;
 // compensating padding compensates for line-height
 $compensating-padding: 7px;
 $gap: 12px;
+$small-gap: 7px;
 $background: hsl(205,0%,95%);
 $foreground: white;
 
@@ -154,6 +155,16 @@ textarea {
 	box-sizing: border-box;
 	resize: vertical;
 	box-shadow: 0 1px rgba(0,0,0,.05) inset;
+	
+	&.cui-input-shadow {
+		min-width: 0;
+		position: absolute;
+		display: block;
+		padding: 0;
+		border: none;
+		top: -1000px;
+		left: -1000px;
+	}
 }
 
 input {
@@ -214,6 +225,14 @@ li > div {
 			position: relative;
 			flex: 1 1 auto;
 			overflow: auto;
+		}
+
+		> .cui-horizontal-layout-right {
+			margin-left: $gap;
+			
+			&:empty {
+				margin-left: 0;
+			}
 		}
 	}
 
@@ -529,7 +548,7 @@ li > div {
 		height: 100%;
 		
 		.cui-button {
-			padding-right: $padding/2;
+			padding-right: $small-gap;
 			
 			&:last-child {
 				padding-right: $padding;
@@ -576,13 +595,6 @@ li > div {
 		font-size: 14px;
 		height: 100%;
     align-items: center;
-	}
-	
-	.fa-angle-right,
-	.fa-angle-left {
-		&:before {
-			font-size: 1.34em;
-		}
 	}
 	
 	// gain back padding
@@ -688,11 +700,22 @@ i.cui-spin-stepped {
 	        animation: fa-spin 1s steps(8) infinite;
 }
 
+// adjust close x size
 .fa-times-thin:before {
 	font-size: 1.58em;
 	content: '\00d7';
 	display: block;
   margin-top: -0.09em;
+}
+
+// adjust arrow-left, arrow-right size
+.fa-angle-right,
+.fa-angle-left,
+.fa-angle-down,
+.fa-angle-up {
+	&:before {
+		font-size: 1.34em;
+	}
 }
 
 // Button / Select
@@ -1192,6 +1215,10 @@ a[role="button"].cui-button-appearance-link {
 	// > *:not(:last-child) {
 	// 	margin-right: $gap;
 	// }
+	
+	.cui-label {
+		margin: 0 $small-gap;
+	}
 
 	.cui-label-content {
 		align-self: center; // Date-Time picker month label in footer
@@ -1323,15 +1350,6 @@ a[role="button"].cui-button-appearance-link {
 
 ::-ms-clear {
    display: none;
-}
-
-.cui-input-shadow {
-	position: absolute;
-	display: block;
-	padding: 0;
-	border: none;
-	top: -1000px;
-	left: -1000px;
 }
 
 // Layer
