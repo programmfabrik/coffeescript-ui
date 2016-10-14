@@ -168,7 +168,7 @@ class CUI.Button extends CUI.DOM
 				switch k
 					when "onShow", "onHide"
 						continue
-					when "class", "backdrop", "onPosition", "placement", "placements"
+					when "class", "backdrop", "onPosition", "placement", "placements", "pointer"
 						@__menu_opts[k] = v
 					else
 						itemList_opts[k] = v
@@ -203,7 +203,7 @@ class CUI.Button extends CUI.DOM
 				if @_menu_on_hover
 					@__menu_opts.backdrop = false
 				else
-					@__menu_opts.backdrop = policy: "click"
+					@__menu_opts.backdrop = policy: "click-thru"
 
 			if not @__menu_opts.backdrop.hasOwnProperty("blur") and
 				@_menu_parent?.getOpt("backdrop")?.blur

@@ -415,5 +415,8 @@ Layout = CUI.Layout
 CUI.ready ->
 	Events.listen
 		type: ["viewport-resize", "content-resize"]
-		call: (ev) ->
-			Layout.all()
+		call: (ev, info) ->
+			if info.FlexHandle
+				Layout.__all()
+			else
+				Layout.all()

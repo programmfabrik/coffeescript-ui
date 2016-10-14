@@ -61,12 +61,8 @@ class Buttonbar extends CUI.DOM
 			count = 0
 			for c, idx in d.children
 				c.classList.remove("cui-first-visible-child")
-				el = DOM.data(c, "element")
-
-				if el
-					count += el.isShown()
-				else
-					count += CUI.DOM.isVisible(c)
+				if CUI.DOM.isVisible(c)
+					count = count + 1
 
 				if count == 1
 					c.classList.add("cui-first-visible-child")
@@ -79,14 +75,15 @@ class Buttonbar extends CUI.DOM
 		visible = 0
 
 		# Hide the entire Buttonbar, if everything inside is hidden
-		for el in DOM.matchSelector(@__buttons, ".cui-buttonbar-group,.cui-button,.cui-select")
+		for el in CUI.DOM.children(@__buttons)
 			# el = $(_el)
-			DOM.removeClass(el, "cui-first-visible-child")
-			if DOM.isVisible(el)
-				visible++
-				if visible == 1
-					DOM.addClass(el, "cui-first-visible-child")
-				break
+			el.classList.remove("cui-first-visible-child")
+			if not DOM.isVisible(el)
+				continue
+
+			visible++
+			if visible == 1
+				el.classList.add("cui-first-visible-child")
 
 		# CUI.debug "Buttonbar.__checkVisibility", visible, @, @DOM[0]
 
