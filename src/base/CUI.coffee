@@ -50,7 +50,6 @@ class CUI
 
 		Template.load()
 		if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-			alert("cui base not found... loading easydbui")
 			CUI.Template.loadFile("easydbui.html")
 			.done =>
 				@ready()
