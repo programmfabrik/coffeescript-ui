@@ -43,6 +43,7 @@ class CUI.jQueryCompat
 						"remove"
 						"pf_hide"
 						"pf_show"
+						"scrollIntoView"
 						"addClass"
 						"removeClass"
 						"removeAttr"
@@ -66,15 +67,6 @@ class CUI.jQueryCompat
 								return nodes
 							else
 								return nodes[0]?.attr.apply(nodes[0], arguments)
-
-						return
-
-					if key in [
-						"scrollIntoView"
-					]
-						nodes[key] = =>
-							nodes[0]?.scrollIntoView()
-							return nodes
 
 						return
 

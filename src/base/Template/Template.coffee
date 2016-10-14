@@ -15,46 +15,21 @@
 # Template.obj: the actual DOM element
 #
 
-class Template extends CUI.Element
+class CUI.Template extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 
 		#try find it inside cached list
 		node = Template.nodeByName[@_name]
-
-		if not node
-			name = "cui-tmpl-"+@_name
-
-			selector = ".cui-tmpl.cui-tmpl.#{name}"
-
-			# find the template in the DOM tree
-			nodeList = CUI.DOM.matchSelector(document.body, selector)
-
-			#expecting parent domNode of template
-			if nodeList.length != 1
-				if nodeList.length == 0
-					err = "Not found"
-				else
-					err = "Too many (#{nodeList.length}) found"
-
-				err_txt = "Template \"#{name}\": #{err} in DOM, make sure you have a node with Class \"cui-tmpl #{name}\". Should match this selector: #{selector}"
-				alert(err_txt)
-				CUI.error(err_txt)
-				@DOM = $div().append($i().text("Template \"cui-tmpl #{name}\": #{err}."))
-				return
-
-			node = Template.nodeByName[@_name] = nodeList[0]
-
+		assert(node, "CUI.Template", @_name+" not found. Make sure to call Template.loadFile(...).")
 
 		@DOM = node.cloneNode(true)
-		@DOM.classList.remove("cui-tmpl")
 		if @_class
 			DOM.addClass(@DOM, @_class)
 		CUI.DOM.setElement(@DOM, @)
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
-
 		if not CUI.isEmptyObject(@map)
 			CUI.DOM.addClass(@DOM, "cui-template-empty")
 
@@ -265,3 +240,66 @@ class Template extends CUI.Element
 			# !fc
 
 	@nodeByName: {}
+
+	@start: ->
+		dfr = new CUI.Deferred()
+		@load()
+		if not @nodeByName["cui-base"]
+			CUI.Template.loadFile("easydbui.html")
+			.done =>
+				dfr.resolve()
+		else
+			dfr.resolve()
+		dfr.promise()
+
+
+	@loadFile: (filename) ->
+		if filename.match("^(https://|http://|/)")
+			p = filename
+		else
+			p = CUI.pathToScript+"/"+filename
+
+		div = CUI.DOM.element("DIV", style: "display:none;")
+
+		new CUI.XHR
+			url: p
+			responseType: "text"
+		.start()
+		.done (data) ->
+			div.innerHTML = data
+			count = Template.load(div)
+
+			if div.children.length > 0
+				document.body.appendChild(div)
+				console.error("Template.loadFile:", filename, "contains extra content.", div)
+
+			if count == 0
+				console.warn("Template.loadFile:", filename, "contains no Templates.")
+			else
+				console.info("Template.loadFile:", count, "Template loaded from", filename)
+			return
+
+		.fail (xhr) ->
+			CUI.error("Template.loadFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
+
+	@load: (start_element = document.documentElement) ->
+		count = 0
+		for el in CUI.DOM.matchSelector(start_element, ".cui-tmpl")
+			for cls in el.classList
+				if cls.startsWith("cui-tmpl-")
+					name = cls.substr(9)
+					if Template.nodeByName[name]
+						console.error("Template.load:", name, "already found in DOM tree. Make sure all elements exists only once.", el)
+						continue
+
+					# console.debug("Template: ", name)
+					Template.nodeByName[name] = el
+					CUI.DOM.remove(el)
+					el.classList.remove("cui-tmpl")
+					count = count + 1
+					break
+
+		return count
+
+
+Template = CUI.Template

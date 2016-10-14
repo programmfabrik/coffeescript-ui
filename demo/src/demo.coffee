@@ -226,7 +226,7 @@ class RunDemo extends CUI.Element
 
 		CUI.DOM.prepend(document.body, @main_menu_pane.DOM)
 
-		CUI.loadHTMLFile("demo/easydbui_demo.html")
+		Template.loadFile("demo/easydbui_demo.html")
 		.done =>
 			@displayDemo()
 

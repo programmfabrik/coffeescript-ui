@@ -51,3 +51,5 @@ class FileUploadButton extends Button
 
 		return
 
+CUI.ready =>
+	CUI.DOM.append(document.body, CUI.DOM.htmlToNodes("""<!-- CUI.FileUploadButton --><form style="display:none;"><input type="file" id="cui-file-upload-button"></input></form><!-- /CUI.FileUploadButton -->"""))

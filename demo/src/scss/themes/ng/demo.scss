@@ -346,3 +346,76 @@ body.cui-demo-playground {
 	margin: 20px 0;
 	background: #ffe8d3;
 }
+
+// ScrollIntoViewDemo
+
+.scroll-demo-container {
+
+	width: 800px;
+	height: 600px;
+	position: relative;
+	background: hsla(249, 64%, 62%, 0.35);
+	overflow: hidden;
+
+	div {
+		position: absolute;
+		overflow: auto;
+	}
+
+	.scroll-demo-1 {
+		top: 100px;
+		border: 2px solid orange;
+		left: 200px;
+		width: 400px;
+		height: 400px;
+		background: hsla(149, 64%, 62%, 0.35);
+	}
+
+	.scroll-demo-2 {
+		border: 2px solid orange;
+		top: 50px;
+		left: 50px;
+		width: 200px;
+		height: 400px;
+		background: hsla(49, 64%, 62%, 0.35);
+	}
+
+	.scroll-demo-3 {
+		border: 2px solid orange;
+		background: hsla(208, 100%, 97%, 0.92);
+		top: 100px;
+		left: 200px;
+		width: 180px;
+		height: 100px;
+	}
+
+	.scroll-item {
+		border: 1px solid black;
+		background-color: white;
+		margin: 5px;
+		padding: 3px 6px;
+	}
+
+	.item--a {
+		left: 0;
+		top: 329px;
+	}
+
+	.item--b {
+		left: 100px;
+		top: 400px;
+	}
+
+	.item--c {
+		left: 200px;
+		top: 800px;
+	}
+
+	.item--d {
+		top: 1000px;
+	}
+
+	.item--hidden {
+		top: 1000px;
+	}
+}

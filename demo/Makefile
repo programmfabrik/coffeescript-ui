@@ -6,6 +6,7 @@ coffee_files = src/demo.coffee \
 	src/ControlsDemo.coffee \
 	src/MemoryTester.coffee \
 	src/Playground.coffee \
+	src/ScrollIntoViewDemo/ScrollIntoViewDemo.coffee \
 	src/BoundingBoxDemo/BoundingBoxDemo.coffee \
 	../src/base/DragDropSelect/demo/DragDropSelectDemo.coffee \
 	../src/base/Events/demo/EventsDemo.coffee \
@@ -33,6 +34,7 @@ coffee_files = src/demo.coffee \
 	../src/elements/ListView/demo/ListViewTreeDemo.coffee \
 	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee
 
+
 jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 
 
@@ -58,6 +60,7 @@ html:
 	# make html
 	@cat ../src/base/*/demo/*html > $(target)/easydbui_demo.html
 	@cat ../src/elements/*/demo/*html >> $(target)/easydbui_demo.html
+	cat src/ScrollIntoViewDemo/ScrollIntoViewDemo.html >> $(target)/easydbui_demo.html
 
 css_ng: jpg
 	#

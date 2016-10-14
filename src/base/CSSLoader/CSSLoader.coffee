@@ -119,6 +119,7 @@ class CUI.CSSLoader extends CUI.Element
 			node: cssNode
 			type: "load"
 			call: (ev, info) =>
+
 				if dfr.state() != "pending"
 					console.warn("CSSLoader.loadTheme: Caught event load second time, ignoring. IE does that for some reason.")
 					return
@@ -127,7 +128,7 @@ class CUI.CSSLoader extends CUI.Element
 				# rules. IE tends to ignore 404 here.
 				for styleSheet in document.styleSheets
 					if styleSheet.href == css_href # this is the css loaded
-						if styleSheet.rules.length == 0 # we assume loading failed
+						if styleSheet.cssRules.length == 0 # we assume loading failed
 							console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet)
 							dfr.reject(css_href)
 							return

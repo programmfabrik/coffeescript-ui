@@ -48,8 +48,10 @@ class CUI
 
 		document.body.scrollTop=0
 
-		if not DOM.matchSelector(document.documentElement, ".cui-tmpl-dummy").length
-			@loadHTMLFile("easydbui.html")
+		Template.load()
+		if not Template.nodeByName["cui-base"] # loaded in easydbui.html
+			alert("cui base not found... loading easydbui")
+			CUI.Template.loadFile("easydbui.html")
 			.done =>
 				@ready()
 		else
@@ -67,22 +69,6 @@ class CUI
 
 		@pathToScript
 
-	@loadHTMLFile: (filename) ->
-		if filename.match("^(https://|http://|/)")
-			p = filename
-		else
-			p = @pathToScript+"/"+filename
-		div = $div("", style: "display:none;")
-
-		new CUI.XHR
-			url: p
-			responseType: "text"
-		.start()
-		.done (data) ->
-			div.innerHTML = data
-			document.body.appendChild(div)
-		.fail (xhr) ->
-			CUI.error("CUI.loadHTMLFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
 
 	@ready: (func) ->
 		if func instanceof Function
@@ -739,9 +725,9 @@ CUI.ready =>
 		smartLists: true
 		smartypants: false
 
-	CUI.__downloadDataElement = document.createElement("a")
-	CUI.__downloadDataElement.style.display = "none"
-	document.body.appendChild(CUI.__downloadDataElement)
+	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
+	CUI.__downloadDataElement = nodes[1]
+	CUI.DOM.append(document.body, nodes)
 
 window.addEventListener "load", =>
 	CUI.start()
