@@ -367,8 +367,8 @@ li > div {
 }
 
 .cui-flex-handle-row {
-	width: 20px;
-	margin: 0 -10px;
+	width: 10px;
+	margin: 0 -5px;
 	flex: 0 0 auto;
 	overflow: hidden;
 	position: relative;
@@ -408,9 +408,10 @@ li > div {
 	}
 	
 	user-select: none;
-	height: 20px;
-	margin: -10px 0;
-	position: relative;
+	height: 10px;
+	margin: -5px 0;
+	width: 100%;
+	position: absolute;
 	z-index: 1;
 	
 	&:not(.cui-flex-handle-closed) {
@@ -551,7 +552,7 @@ li > div {
 			padding-right: $small-gap;
 			
 			&:last-child {
-				padding-right: $padding;
+				padding-right: 0;
 			}
 			
 			.cui-button-visual {
@@ -572,6 +573,7 @@ li > div {
 		flex-shrink: 1;
 		min-width: 0;
 		align-self: center;
+		cursor: default;
 
 		.cui-label-content {
 			flex-shrink: 1;
@@ -595,15 +597,7 @@ li > div {
 		font-size: 14px;
 		height: 100%;
     align-items: center;
-	}
-	
-	// gain back padding
-	> .cui-horizontal-layout-left > .cui-buttonbar:first-child {
-		margin-left: -$padding;
-	}
-
-	> .cui-horizontal-layout-right > .cui-buttonbar:last-child {
-		margin-right: -$padding;
+    cursor: default;
 	}
 
 	.cui-horizontal-layout-left {
@@ -1404,7 +1398,7 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 	width: 33px;
 	height: 16px;
-	margin: 0 5px;
+	margin: 0 6px;
 	overflow: hidden;
 
 	&:after { // arrow (north)
@@ -1430,11 +1424,25 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-pointer--w {
 	width: 16px;
 	height: 37px;
-	margin: 5px 0;
+	margin: 6px 0;
 }
 
 .cui-layer-pointer--e:after {
 	left: -9px;
+}
+
+.cui-layer-root-menu .cui-layer-pointer {
+	height: 12px;
+	
+	&.cui-layer-pointer--e,
+	&.cui-layer-pointer--w {
+		width: 12px;
+		height: 37px;
+	}
+	
+	&:after {
+		background: white;
+	}
 }
 
 .cui-layer-backdrop {
@@ -1659,9 +1667,7 @@ a[role="button"].cui-button-appearance-link {
 	min-width: 0;
 	max-width: 300px;
   background: white;
-  box-shadow: 0 1px 10px rgba(0,0,0,.1);
   border-radius: 4px;
-  border: 1px solid hsl(0,0%,87%);
   padding: 4px 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
 
@@ -1717,7 +1723,7 @@ a[role="button"].cui-button-appearance-link {
 	  &:hover:not(.cui-disabled),
 	  &:active {
 	  	.cui-button-visual {
-	  		color: hsl(205,12%,27%);
+	  		color: hsl(205,7%,22%);
 				background: hsl(205,17%,98%);
 			}
 	  }
@@ -2898,7 +2904,7 @@ table.cui-form-table {
 
 .cui-lasso {
 	position: absolute;
-	background-color: transparentize($highlight-color, 0.33);
+	background-color: transparentize($highlight-color, 0.77);
 	display: block;
 	z-index: 1;
 }

@@ -60,7 +60,7 @@ class Icon extends CUI.Element
 		show: "fa-question"
 		help: "fa-question"
 		question: "fa-question"
-		settings: "fa-cogs"
+		settings: if CUI.__ng__ then "fa-cog" else "fa-cogs"
 		download: "fa-download"
 		export: "fa-download"
 		spinner: "fa-spinner cui-spin-stepped"
