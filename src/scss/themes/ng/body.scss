@@ -226,14 +226,6 @@ li > div {
 			flex: 1 1 auto;
 			overflow: auto;
 		}
-
-		> .cui-horizontal-layout-right {
-			margin-left: $gap;
-			
-			&:empty {
-				margin-left: 0;
-			}
-		}
 	}
 
 	&.cui-maximize-vertical {
@@ -523,6 +515,14 @@ li > div {
 		> .cui-toolbar {
 			// nested toolbars do not get a padding
 			padding: 0;
+		}
+	}
+
+	.cui-horizontal-layout-right {
+		margin-left: $gap;
+		
+		&:empty {
+			margin-left: 0;
 		}
 	}
 
@@ -2214,7 +2214,7 @@ $table-data-padding: 4px;
 	@include padding-y(0.5);
 }
 
-.cui-td {
+.cui-td {	
 	&[colspan]{		
 		> label,
 		> .cui-label {
@@ -2383,6 +2383,8 @@ table.cui-form-table {
 
 	.cui-form-left {
 		padding: 4px $padding;
+		display: block;
+		@include ellipsis;
 	}
 
 	.cui-form-center {
@@ -2896,9 +2898,9 @@ table.cui-form-table {
 
 .cui-lasso {
 	position: absolute;
-	background-color: rgba(135, 198, 253, 0.35);
+	background-color: transparentize($highlight-color, 0.33);
 	display: block;
-	// border: 2px dotted rgba(135, 198, 253, 0.8);
+	z-index: 1;
 }
 
 .cui-drag-drop-select-lasso-element-in-lasso {
