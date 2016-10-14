@@ -20,7 +20,7 @@ class ListViewColumn extends CUI.Element
 				check: "Integer"
 			element:
 				check: (v) ->
-					isContent(v)
+					isContent(v) or isString(v)
 			onSetElement:
 				check: Function
 
