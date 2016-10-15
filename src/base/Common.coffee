@@ -413,8 +413,6 @@ addToArray = (value, arr, compFunc) ->
 	else
 		return idx
 
-
-
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s
 

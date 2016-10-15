@@ -835,6 +835,9 @@ class CUI.DOM extends CUI.Element
 		assert(false, "Could not determine match function on docElem")
 	)()
 
+	@find: (sel) ->
+		@matchSelector(document.documentElement, sel)
+
 	@matchSelector: (docElem, sel, trySelf=false) ->
 		assert(docElem instanceof HTMLElement or docElem == document, "CUI.DOM.matchSelector", "docElem needs to be instanceof HTMLElement or document.", docElem: docElem)
 
@@ -989,7 +992,7 @@ class CUI.DOM extends CUI.Element
 		if isNull(docElem)
 			return null
 
-		if docElem == window or docElem == document.documentElement
+		if docElem == window or docElem == document
 			return {
 				width: window.innerWidth
 				height: window.innerHeight
@@ -1117,9 +1120,20 @@ class CUI.DOM extends CUI.Element
 		dim.horizontalScrollbarAtEnd = dim.scrollWidth - dim.scrollLeft - dim.clientWidth - dim.verticalScrollbarWidth < 1
 		dim.verticalScrollbarAtStart = dim.scrollTop == 0
 		dim.verticalScrollbarAtEnd = dim.scrollHeight - dim.scrollTop - dim.clientHeight - dim.horizontalScrollbarHeight < 1
+
+		dim.viewportTopContent = rect.top + dim.borderTop + dim.paddingTop
+		dim.viewportLeftContent = rect.left + dim.borderLeft + dim.paddingLeft
+		dim.viewportBottomContent = rect.bottom - dim.borderBottom - Math.max(dim.paddingBottom, dim.horizontalScrollbarHeight)
+		dim.viewportRightContent = rect.right - dim.borderRight- Math.max(dim.paddingRight, dim.verticalScrollbarWidth)
+
+		dim.viewportTopInner = rect.top + dim.borderTop
+		dim.viewportLeftInner = rect.left + dim.borderLeft
+		dim.viewportBottomInner = rect.bottom - dim.borderBottom - dim.horizontalScrollbarHeight
+		dim.viewportRightInner = rect.right - dim.borderRight- dim.verticalScrollbarWidth
+
 		dim
 
-	# returns the scrollable parent
+	# returns the scrollable parents
 	@parentsScrollable: (node) ->
 		parents = []
 		for parent, idx in DOM.parents(node)
@@ -1285,8 +1299,89 @@ class CUI.DOM extends CUI.Element
 	@element: (tagName, attrs={}) ->
 		DOM.setAttributeMap(document.createElement(tagName), attrs)
 
+	@debugRect: ->
+		@remove(@find("#cui-debug-rect")[0])
+		if arguments.length == 0
+			return
+
+		if arguments.length == 2 or not CUI.isArray(arguments[0])
+			dim = arguments[0]
+			pattern = arguments[1]
+			arr = []
+			for k in ["Top", "Left", "Bottom", "Right"]
+				if isEmpty(pattern) or pattern == "*"
+					k = k.toLowerCase()
+					value = dim[k]
+				else
+					value = dim[pattern.replace("*", k)]
+
+				arr.push(value)
+		else if CUI.isArray(arguments[0])
+			arr = arguments[0]
+		else
+			console.error("CUI.DOM.debugRect: Argument Error.")
+			return
+
+		[top, left, bottom, right] = arr
+
+		width = right - left
+		height = bottom - top
+
+		d = @element("DIV", id: "cui-debug-rect")
+		@setStyle d,
+			position: "absolute"
+			border: "2px solid red"
+			boxSizing: "border-box"
+			top: top
+			left: left
+			width: width
+			height: height
+
+		document.body.appendChild(d)
+		console.debug "DOM.debugRect:", [top, left, bottom, right]
+		d
+
 	@scrollIntoView: (docElem) ->
-		docElem.scrollIntoView()
+		parents = CUI.DOM.parentsUntil(docElem)
+		dim = null
+
+		measure = =>
+			dim = @getDimensions(docElem)
+
+		measure()
+
+		for p, idx in parents
+
+			dim_p = @getDimensions(p)
+			if dim_p.computedStyle.overflowY != "visible"
+
+				off_bottom = dim.viewportBottomMargin - dim_p.viewportBottomContent
+
+				if off_bottom > 0
+					p.scrollTop = p.scrollTop + off_bottom
+					measure()
+
+				off_top = dim.viewportTopMargin - dim_p.viewportTopContent
+
+				if off_top < 0
+					p.scrollTop = p.scrollTop + off_top
+					measure()
+
+			if dim_p.computedStyle.overflowX != "visible"
+
+				off_right = dim.viewportRightMargin - dim_p.viewportRightContent
+
+				if off_right > 0
+					p.scrollLeft = p.scrollLeft + off_right
+					measure()
+
+				off_left = dim.viewportLeftMargin - dim_p.viewportLeftContent
+
+				if off_left < 0
+					p.scrollLeft = p.scrollLeft + off_left
+					measure()
+
+		return docElem
 
 	@setClassOnMousemove: (_opts={}) ->
 		opts = CUI.Element.readOpts _opts, "DOM.setClassOnMousemove",

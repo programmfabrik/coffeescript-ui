@@ -24,7 +24,17 @@ class ScrollIntoViewDemo extends Demo
 
 				bb.addButton(btn)
 
+		for el in DOM.matchSelector(@__tmpl.DOM, "*")
+
+			Events.listen
+				type: "scroll"
+				node: el
+				call: =>
+					@saveScrollState()
+
+
 		@__tmpl.append(bb, "buttons")
+		@__tmpl.append(new EmptyLabel(text: "Use CTRL to use native .scrollIntoView().", "buttons"))
 
 		bb.addButton new Button
 			text: "Reset All"

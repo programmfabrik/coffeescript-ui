@@ -701,6 +701,8 @@ class CUI
 	@warn: ->
 		console.warn.apply(console, arguments)
 
+
+
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 CUI.browser =
 	opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
@@ -713,6 +715,20 @@ CUI.browser.edge = `!CUI.browser.isIE && !!window.StyleMedia`
 CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
 CUI.ready =>
+
+	for i in [1..9]
+		do (i) ->
+			CUI["$"+i] = ->
+				if arguments.length == 1
+					window["$"+i] = arguments[0]
+					console.debug "$"+i+" = ", arguments[0]
+					return
+
+				for arg, idx in arguments
+					window["$"+i+idx] = arg
+					console.debug "$"+i+idx+" = ", arg
+			return
+
 	# initialize a markdown renderer
 	marked?.setOptions
 		renderer: new marked.Renderer()

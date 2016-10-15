@@ -386,8 +386,18 @@ body.cui-demo-playground {
 		top: 100px;
 		left: 200px;
 		width: 180px;
-		height: 100px;
+		height: 200px;
 	}
+
+	.scroll-demo-4 {
+		border: 2px solid orange;
+		background: hsla(208, 50%, 97%, 0.92);
+		width: 1800px;
+		height: 1000px;
+		left: 200px;
+		margin: 40px;
+	}
+
 
 	.scroll-item {
 		border: 1px solid black;
@@ -413,6 +423,16 @@ body.cui-demo-playground {
 
 	.item--d {
 		top: 1000px;
+	}
+
+	.item--e {
+		top: 100px;
+		left: 100px;
+	}
+
+	.item--f {
+		top: 2000px;
+		left: 2000px;
 	}
 
 	.item--hidden {
