@@ -17,7 +17,6 @@ class CUI.Console extends CUI.DOM
 		@__console.innerHTML = ""
 
 	log: (txt, markdown = @_markdown) ->
-		console.debug "markdown:", @_markdown, markdown
 		lbl = new CUI.defaults.class.Label(text: txt, multiline: true, markdown: markdown)
 		@__console.appendChild(lbl.DOM[0])
 		@__console.scrollTop = @__console.scrollHeight

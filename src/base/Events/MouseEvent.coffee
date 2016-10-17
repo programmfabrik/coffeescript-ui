@@ -32,5 +32,3 @@ class CUI.MouseEvent extends CUI.Event
 
 		super(ev)
 
-	dump: ->
-		super()+" **wheelY**:"+@wheelDeltaY()

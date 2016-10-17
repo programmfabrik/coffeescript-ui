@@ -151,14 +151,14 @@ class CUI.Event extends CUI.Element
 	getModifiers: ->
 		mods = []
 
-		for k in [
-			"meta"
-			"ctrl"
-			"alt"
-			"shift"
-		]
+		for k, v of {
+			meta: "Meta"
+			ctrl: "Control"
+			alt: "Alt"
+			shift: "Shift"
+		}
 			if @[k+"Key"]()
-				mods.push(k)
+				mods.push(v)
 
 		mods
 
@@ -185,12 +185,6 @@ class CUI.Event extends CUI.Element
 
 	shiftKey: ->
 		@getNativeEvent()?.shiftKey
-
-	wheelDeltaY: ->
-		ne = @getNativeEvent()
-		if not ne
-			return
-		ne.deltaY
 
 	clientX: ->
 		@getNativeEvent()?.clientX
@@ -259,8 +253,9 @@ class CUI.Event extends CUI.Element
 
 	dump: ->
 		txt = @__cls+": **"+@getType()+"**"
-		for k in ["altKey", "ctrlKey", "shiftKey", "metaKey", "keyCode"]
-			txt += " **"+k+"**: "+@[k]()
+		mods = @getModifiers()
+		if mods.length > 0
+			txt += " Modifiers: **"+mods.join("+")+"**"
 		txt
 
 	stop: ->

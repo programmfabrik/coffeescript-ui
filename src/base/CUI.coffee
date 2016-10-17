@@ -34,9 +34,20 @@ class CUI
 				ev.preventDefault()
 
 		Events.listen
+			type: "keyup"
+			node: window
+			capture: true
+			call: (ev) ->
+				if ev.getKeyboard() == "c+u+i"
+					CUI.toaster(text: "CUI!")
+
+		Events.listen
 			type: "keydown"
 			node: window
 			call: (ev) ->
+				if ev.getKeyboard() == "c+"
+					CUI.toaster(text: "CUI!")
+
 				# backspace
 				if ev.keyCode() == 8
 					if ev.getTarget().tagName in ["INPUT", "TEXTAREA"]
@@ -658,7 +669,7 @@ class CUI
 			type: "keyup"
 			capture: true
 			call: (ev) =>
-				if not (ev.altKey() and ev.keyCode() == 67) # ALT-C
+				if ev.getKeyboard() != "Alt+C"
 					return
 
 				if ev.shiftKey()

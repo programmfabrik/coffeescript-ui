@@ -184,7 +184,8 @@ class EventsDemo extends Demo
 
 		tmpl.append(f, "buttons")
 
-		node = tmpl.map.pointer_events[0]
+		node = tmpl.map.pointer_events
+
 		data.listen = mousedown: true
 		fields = []
 		for k, idx in ["mousedown", "wheel", "mouseup", "click", "dblclick", "mouseisdown", "keydown", "keyup", "keypress"]
@@ -197,13 +198,15 @@ class EventsDemo extends Demo
 				node: node
 				type: k
 				instance: @
-				capture: true
 				call: (ev) =>
 					if ev.getTarget() != node
 						return
 
-					if data.listen[ev.getType()]
+					if ev.getType().startsWith("key")
 						ev.preventDefault()
+						ev.stopPropagation()
+
+					if data.listen[ev.getType()]
 						@flash(node)
 						@log(ev.dump())
 					return

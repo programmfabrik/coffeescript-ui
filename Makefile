@@ -22,13 +22,14 @@ coffee_files = src/base/Common.coffee \
 	src/base/DragDropSelect/Resizable.coffee \
 	src/base/DragDropSelect/Dragscroll.coffee \
 	src/base/Events/Event.coffee \
-    src/base/Events/MouseEvent.coffee \
-    src/base/Events/KeyboardEvent.coffee \
-    src/base/Events/CUIEvent.coffee \
-    src/base/Events/Listener.coffee \
-    src/base/Events/Events.coffee \
-	src/base/MouseIsDownEvent/MouseIsDownEvent.coffee \
-	src/base/MouseIsDownEvent/MouseIsDownListener.coffee \
+	src/base/Events/MouseEvent.coffee \
+	src/base/Events/KeyboardEvent.coffee \
+	src/base/Events/CUIEvent.coffee \
+	src/base/Events/Listener.coffee \
+	src/base/Events/MouseIsDownEvent/MouseIsDownEvent.coffee \
+	src/base/Events/MouseIsDownEvent/MouseIsDownListener.coffee \
+	src/base/Events/WheelEvent.coffee \
+	src/base/Events/Events.coffee \
 	src/base/DOM/DOM.coffee \
 	src/base/CSSLoader/CSSLoader.coffee \
 	src/base/Template/Template.coffee \
