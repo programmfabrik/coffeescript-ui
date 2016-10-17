@@ -1342,6 +1342,9 @@ class CUI.DOM extends CUI.Element
 		d
 
 	@scrollIntoView: (docElem) ->
+		if not docElem
+			return null
+
 		parents = CUI.DOM.parentsUntil(docElem)
 		dim = null
 
