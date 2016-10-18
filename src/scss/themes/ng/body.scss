@@ -22,7 +22,8 @@ $disabled-color: hsl(205,7%,73%);
 
 // Table Colors
 $zebra-color: hsl(205,10%,98%);
-$table-border-color: hsl(205,8%,90%);
+$table-border: hsl(205,8%,90%);
+$table-header-border: hsl(205,8%,94%);
 
 $pane-header-height: 30px;
 
@@ -411,7 +412,7 @@ li > div {
 	height: 10px;
 	margin: -5px 0;
 	width: 100%;
-	position: absolute;
+	position: relative;
 	z-index: 1;
 	
 	&:not(.cui-flex-handle-closed) {
@@ -481,6 +482,8 @@ li > div {
 	justify-content: space-between;
 	padding: 0 $padding;
 	background: hsl(205,2%,98%);
+	// needed in listview, to align all: content-box for all!
+	box-sizing: content-box;
 	
 	// prevent outline cutoff
 	&.cui-maximize-horizontal {
@@ -590,8 +593,7 @@ li > div {
 
 // Pane
 .cui-pane-header {
-	background: $foreground;
-	border-bottom: 1px solid hsl(180,9%,93%);
+	border-bottom: 1px solid hsl(205,2%,83%);
 	
 	.cui-label {
 		font-size: 14px;
@@ -713,10 +715,16 @@ i.cui-spin-stepped {
 }
 
 // Button / Select
+.cui-button,
+.cui-button-href {
+	max-width: 100%;
+}
+
 .cui-button-visual {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
+	max-width: 100%;
 }
 
 .cui-button-button,
@@ -821,6 +829,11 @@ i.cui-spin-stepped {
 
 .cui-button-center {
 	flex-shrink: 1;
+	max-width: 100%;
+	
+	span {
+		@include ellipsis;
+	}
 }
 
 .cui-button-size-mini {
@@ -1054,9 +1067,14 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label-content {
 		flex: 0 0 auto;
+		max-width: 100%;
 
 		&:empty {
 			display: none;
+		}
+
+		span {
+			@include ellipsis;
 		}
 	}
 
@@ -1181,6 +1199,10 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
+	.cui-label-content span {
+		white-space: normal;
+	}
 }
 
 // Label: Placeholder
@@ -1220,6 +1242,11 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button {
 		align-self: unset;
+	}
+
+	.cui-button-href {
+		height: 100%;
+		margin: 0 $small-gap;
 	}
 }
 
@@ -1552,6 +1579,7 @@ a[role="button"].cui-button-appearance-link {
 			margin: 0;
 			height: 100%;
 			align-items: stretch;
+			padding: 0;
 			
 			.cui-button-visual {
 				height: 100%;
@@ -1601,6 +1629,10 @@ a[role="button"].cui-button-appearance-link {
 				border-bottom-left-radius: 4px;
 			}
 		}
+	}
+	
+	.cui-horizontal-layout-right {
+		margin-left: 0;
 	}
 
 	// maximise form table rows
@@ -1673,6 +1705,10 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-item-list {
 		font-size: inherit;
+	}
+
+	.cui-button {
+		cursor: pointer;
 	}
 }
 
@@ -1846,6 +1882,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 	> .cui-vertical-layout-top {
 		> .cui-pane-header {
+			min-height: 42px;
+			background: hsl(205,2%,98%);
 			padding-right: $padding/2;
 
 			.cui-horizontal-layout-center {
@@ -1964,8 +2002,7 @@ $table-data-padding: 4px;
 
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
-			border-top: 1px solid $table-border-color;
-			box-sizing: content-box;
+			border-top: 1px solid $table-border;
 		}
 	}
 }
@@ -2011,7 +2048,7 @@ $table-data-padding: 4px;
 			top: 2px;
 			bottom: 2px;
 			width: 1px;
-			background: lighten($table-border-color, 10%);
+			background: $table-header-border;
 		}
 	}
 }
@@ -2054,7 +2091,7 @@ $table-data-padding: 4px;
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
 	flex-direction: row;
-	border-bottom: 1px solid $table-border-color;
+	border-bottom: 1px solid $table-border;
 	
 	.cui-lv-td {
 		justify-content: flex-end;
@@ -2168,7 +2205,7 @@ $table-data-padding: 4px;
 		width: 1px;
 		margin-left: -1px;
 		height: 100%;
-		background: lighten($table-border-color, 10%);
+		background: $table-header-border;
 	}
 }
 
