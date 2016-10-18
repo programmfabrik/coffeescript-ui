@@ -25,7 +25,7 @@ class Output extends DataFieldInput
 		@
 
 	init: ->
-		@__textSpan = new Label(multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
+		@__textSpan = new Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
 		@setText(@_text)
 		@__textSpan
 

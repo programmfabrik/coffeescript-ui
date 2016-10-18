@@ -22,7 +22,7 @@ class CUI.SimplePane extends CUI.Pane
 		if @_title
 			@append(new Label(text: @_title), "header_left")
 
-		@addClass("cui-simple-pane")
+		# @addClass("cui-simple-pane")
 
 	initOpts: ->
 		super()
@@ -63,12 +63,10 @@ class CUI.SimplePane extends CUI.Pane
 			content: @_content
 		@
 
-
 	destroy: ->
 		@__pane_header.destroy()
 		@__pane_footer.destroy()
 		super()
-
 
 	getPaneAndKey: (key) ->
 		# this reaches the panels directly
