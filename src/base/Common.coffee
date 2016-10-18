@@ -223,6 +223,14 @@ getFloat = (s) ->
 xor = (a,b) ->
 	!!((a && !b) || (!a && b))
 
+escapeAttribute = (data) ->
+	if isNull(data) or !isString(data)
+		return ""
+
+	data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
+	data
+
+
 toHtml = (data, space2nbsp) ->
 	if isNull(data) or !isString(data)
 		return ""

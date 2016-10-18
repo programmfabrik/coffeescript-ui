@@ -6,6 +6,7 @@ coffee_files = src/demo.coffee \
 	src/ControlsDemo.coffee \
 	src/MemoryTester.coffee \
 	src/Playground.coffee \
+	src/Docs.coffee \
 	src/ScrollIntoViewDemo/ScrollIntoViewDemo.coffee \
 	src/BoundingBoxDemo/BoundingBoxDemo.coffee \
 	../src/base/DragDropSelect/demo/DragDropSelectDemo.coffee \
@@ -41,17 +42,22 @@ jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 files = $(addsuffix .js, $(coffee_files) )
 
 
-code: $(files)
+code: $(files) docs
 	#
     # $@
 	mkdir -p $(target)
 	# make javascript, coffee transpiling is made automatically
 	@cat $(files) > $(target)/easydbui_demo.js
+	echo "Docs.path='/demo/docs';" >> $(target)/easydbui_demo.js
 	cp -rv scratch $(target)
 	cp ../src/elements/FileUpload/demo/FileUpload.php $(target)/FileUpload.php
 	cp ../src/base/XHR/demo/XHRTest.php $(target)/XHRTest.php
 	cp -r ../build/font-awesome $(target)
 	cat demo.html > $(target)/index.html
+
+docs:
+	mkdir -p $(target)
+	cp -r ../docs $(target)
 
 html:
 	#
@@ -110,3 +116,5 @@ wipe: clean
 
 %.coffee.js: %.coffee
 	coffee -b -p --compile $^ > $@ || ( rm -f $@ ; false )
+
+.PHONY: docs

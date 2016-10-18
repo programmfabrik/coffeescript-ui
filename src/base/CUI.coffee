@@ -38,7 +38,7 @@ class CUI
 			node: window
 			capture: true
 			call: (ev) ->
-				if ev.getKeyboard() == "c+u+i"
+				if ev.getKeyboard() == "C+U+I"
 					CUI.toaster(text: "CUI!")
 
 		Events.listen

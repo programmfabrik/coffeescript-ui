@@ -124,7 +124,9 @@ coffee_files = src/base/Common.coffee \
 	src/elements/Select/Select.coffee \
 	src/elements/StickyHeader/StickyHeader.coffee \
 	src/elements/StickyHeader/StickyHeaderControl.coffee \
-	src/elements/DigiDisplay/DigiDisplay.coffee
+	src/elements/DigiDisplay/DigiDisplay.coffee \
+	src/elements/DocumentBrowser/DocumentBrowserNode.coffee \
+	src/elements/DocumentBrowser/DocumentBrowser.coffee
 
 files = $(addsuffix .js, $(coffee_files))
 

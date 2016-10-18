@@ -1,4 +1,4 @@
-class ListViewTree extends ListView
+class CUI.ListViewTree extends CUI.ListView
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -311,3 +311,6 @@ CUI.Events.registerEvent
 		"row_selected"
 		"row_deselected"
 	]
+
+
+ListViewTree = CUI.ListViewTree

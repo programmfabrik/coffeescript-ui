@@ -1,4 +1,4 @@
-class ListViewRow extends CUI.Element
+class CUI.ListViewRow extends CUI.Element
 
 	initOpts: ->
 		super()
@@ -181,3 +181,6 @@ class ListViewRow extends CUI.Element
 
 	@defaults:
 		selected_class: "cui-selected"
+
+
+ListViewRow = CUI.ListViewRow

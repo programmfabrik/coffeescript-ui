@@ -1,4 +1,4 @@
-class ListViewTreeNode extends ListViewRow
+class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	initOpts: ->
 		super()
@@ -823,5 +823,7 @@ class ListViewTreeNode extends ListViewRow
 
 	moveNodeAfter: (to_node, new_father, after) ->
 
+
+ListViewTreeNode = CUI.ListViewTreeNode
 
 

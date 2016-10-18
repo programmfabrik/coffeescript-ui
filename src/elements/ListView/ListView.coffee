@@ -1,4 +1,4 @@
-class ListView extends SimplePane
+class CUI.ListView extends CUI.SimplePane
 
 	#Construct a new ListView.
 	#
@@ -1780,3 +1780,6 @@ class ListView extends SimplePane
 				).show()
 				return false
 		@
+
+
+ListView = CUI.ListView
