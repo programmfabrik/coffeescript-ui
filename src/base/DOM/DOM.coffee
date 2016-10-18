@@ -1425,6 +1425,13 @@ class CUI.DOM extends CUI.Element
 				schedule_remove_mousemoved_class()
 				return
 
+		Events.listen
+			node: opts.element
+			type: "mouseleave"
+			instance: opts.instance
+			call: (ev) =>
+				remove_mousemoved_class()
+
 	@requestFullscreen: (elem) ->
 		assert(elem instanceof HTMLElement, "startFullscreen", "element needs to be instance of HTMLElement", element: elem)
 		if elem.requestFullscreen
