@@ -148,6 +148,7 @@ html_files = \
 	src/elements/Button/Button_ng.html \
 	src/elements/FileUpload/FileUploadButton.html \
 	src/elements/Button/ButtonHref.html \
+	src/elements/Button/ButtonHref_ng.html \
 	src/elements/Options/Options.html \
 	src/elements/Button/Buttonbar.html \
 	src/elements/BorderLayout/BorderLayout.html \

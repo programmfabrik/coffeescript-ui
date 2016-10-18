@@ -27,5 +27,5 @@ class ButtonHref extends Button
 	getTemplateName: ->
 		# super sets @__has_left + @__has_right
 		super()
-		return "buttonHref"
+		return if CUI.__ng__ then "buttonHref-ng" else "buttonHref"
 
