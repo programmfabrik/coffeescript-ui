@@ -13,7 +13,7 @@ $button-text-color: hsl(205,10%,34%);
 $button-border: hsl(205,10%,75%);
 $button-border-radius: 4px;
 
-$drag-handle-color: hsl(0,0%,50%);
+$drag-handle-color: hsl(205,10%,75%);
 
 $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
@@ -150,8 +150,8 @@ input,
 textarea {
 	min-width: 200px;
 	font-size: 12px;
-	border: 1px solid hsl(0,0%,72%);
-	border-top-color: hsl(0,0%,65%);
+	border: 1px solid $button-border;
+	border-top-color: $button-border;
 	font-family: inherit;
 	padding: 2px 3px;
 	flex: 1 1 auto;
@@ -631,6 +631,7 @@ li > div {
 	.cui-toolbar {
 		min-height: 0;
 		background: none;
+		border-bottom-width: 0;
 	}
 }
 
@@ -892,6 +893,10 @@ a[role="button"].cui-button-appearance-link {
 		@include button-reset;
 		color: $highlight-color;
 	}
+
+	.cui-button-center {
+		padding: 0;
+	}
 }
 
 
@@ -1056,6 +1061,10 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-label-centered {
+		flex: 1;
+		align-items: center;
+		justify-content: center;
+		
 		.cui-label-content {
 			text-align: center;
 		}
@@ -1095,6 +1104,16 @@ a[role="button"].cui-button-appearance-link {
 
 		span {
 			@include ellipsis;
+		}
+
+		p {
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 
@@ -1229,9 +1248,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-empty-label {
 	color: $muted-color;
 	font-style: italic;
-	flex: 1;
-	align-items: center;
-	justify-content: center;
 	padding: $padding/2;
 	margin: 0;
 	
@@ -1418,7 +1434,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	// layer-body
-	.cui-simple-pane > .cui-vertical-layout-center {
+	> .cui-simple-pane > .cui-vertical-layout-center {
 		padding: $padding;
 		overflow: auto;
 
@@ -1955,13 +1971,13 @@ a[role="button"].cui-button-appearance-link {
 	.cui-button-visual {
 		border: none;
 		background: none;
-		color: $highlight-color;
-		height: 24px;
-		line-height: 22px;
+		color: hsl(205,15%,43%);
+		height: 26px;
+		line-height: 24px;
 		min-width: 80px;
 		padding: 0 $padding;
 		border-radius: 0;
-		border: 1px solid $highlight-color;	
+		border: 1px solid hsl(205,15%,43%);	
 	}
 
 	&:first-child .cui-button-visual {
@@ -1976,7 +1992,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-active .cui-button-visual {
 		color: $on-highlight-color;
-		background: $highlight-color;
+		background: hsl(205,15%,43%);
 	}
 }
 
@@ -2102,7 +2118,6 @@ $table-data-padding: 4px;
 // }
 
 .cui-list-view-grid {
-	background: white;
 	font-size: 12px;
 	flex: 1 1 auto;
 	flex-direction: column;
@@ -2554,9 +2569,8 @@ table.cui-form-table {
 	flex: 1 1 auto;
 	cursor: move;
 	height: 12px;
-	margin-top: 2px;
+	margin-top: 8px;
 	width: 100%;
-	align-self: center;
 
 	background: linear-gradient($drag-handle-color 1px, transparent 1px);
 	background-size: 100% 3px;
