@@ -620,6 +620,10 @@ li > div {
 		> *:first-child {
 			padding-left: 0;
 		}
+
+		> *:only-child {
+			padding-right: 0;
+		}
 	}
 
 	.cui-horizontal-layout-right {
@@ -885,8 +889,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-button-appearance-link[role],
-.cui-button-href {
+.cui-button-appearance-link[role] {
 	display: inline-flex;
 	
 	.cui-button-visual {
@@ -1276,13 +1279,22 @@ a[role="button"].cui-button-appearance-link {
 		align-self: center; // Date-Time picker month label in footer
 	}
 
-	.cui-button {
+	> .cui-button {
 		align-self: unset;
+		
+		& + .cui-button,
+		& + .cui-buttonbar-group {
+			margin-left: $small-gap;
+		}
 	}
 
 	.cui-button-href {
 		height: 100%;
 		margin: 0 $small-gap;
+	}
+
+	.cui-buttonbar-group + .cui-button {
+		margin-left: $small-gap;
 	}
 }
 
@@ -1427,32 +1439,39 @@ a[role="button"].cui-button-appearance-link {
 		0 0 0 1px hsla(0,0%,0%,0.1),
 		0 7px 14px hsla(0,0%,0%,0.1);
 	
-	// layer-header
-	.cui-pane-header {
-		background: hsl(0,0%,98%);
-		padding: $compensating-padding $padding;
-	}
-
-	// layer-body
-	> .cui-simple-pane > .cui-vertical-layout-center {
-		padding: $padding;
-		overflow: auto;
-
-		> .cui-multiline-label {
-			padding: $compensating-padding $padding;
-			margin: 0;
+	> .cui-simple-pane {
+		// layer-header
+		> .cui-vertical-layout-top > .cui-pane-header {
+			background: hsl(0,0%,98%);
+			min-height: 34px;
+			border-radius: 5px 5px 0 0;
 		}
 
-		.cui-form-table-has-left-column {
-			margin: 0;
-		}
-	}
+		// layer-body
+		> .cui-vertical-layout-center {
+			padding: $padding;
+			overflow: auto;
+			
+			> .cui-list-view {
+				margin: -$padding;
+			}
 
-	// layer-footer
-	.cui-pane-footer {
-		border-top: 1px solid hsl(180,9%,93%);
-		background: hsl(0,0%,98%);
-		padding: 0;
+			> .cui-multiline-label {
+				padding: $compensating-padding $padding;
+				margin: 0;
+			}
+
+			.cui-form-table-has-left-column {
+				margin: 0;
+			}
+		}
+
+		// layer-footer
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			border-top: 1px solid hsl(180,9%,93%);
+			background: hsl(0,0%,98%);
+			padding: 0;
+		}
 	}
 }
 
@@ -1556,24 +1575,26 @@ a[role="button"].cui-button-appearance-link {
 // Modal
 
 .cui-modal {
-	// layer footer
-	.cui-pane-footer {
-		border-radius: 0 0 5px 5px;
-		
-		// unset normal spacing
-		.cui-buttonbar > *:not(:last-child) {
-			margin-right: 0;
-		}
-		
-		.cui-button {
-			padding: $compensating-padding $padding/2;
+	> .cui-simple-pane {
+		// layer-footer
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			border-radius: 0 0 5px 5px;
 			
-			&:last-child {
-				padding-right: $padding;
+			// unset normal spacing
+			.cui-buttonbar > *:not(:last-child) {
+				margin-right: 0;
 			}
 			
-			&:first-child {
-				padding-left: $padding;
+			.cui-button {
+				padding: $compensating-padding $padding/2;
+				
+				&:last-child {
+					padding-right: $padding;
+				}
+				
+				&:first-child {
+					padding-left: $padding;
+				}
 			}
 		}
 	}
@@ -1599,7 +1620,9 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-toolbar {
+
+	// layer-footer
+	> .cui-simple-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
 		min-height: 0;
 		justify-content: space-between;
 		border: none;
@@ -1733,7 +1756,7 @@ a[role="button"].cui-button-appearance-link {
 // Menu
 .cui-menu {
 	min-width: 0;
-	max-width: 300px;
+	max-width: 200px; // when the width is wider its harder to see which arrow belongs to which row
   background: white;
   border-radius: 4px;
   padding: 4px 0;
@@ -2038,6 +2061,7 @@ $table-data-padding: 4px;
 
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
+			min-height: 34px;
 			border-top: 1px solid $table-border;
 		}
 	}
