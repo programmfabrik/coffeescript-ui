@@ -293,7 +293,7 @@ class FlexHandle extends CUI.Element
 		DOM.setAttribute(@_element, "title", @__unique_name)
 
 	__getState: () ->
-		value = window.localStorage[@__state_name]
+		value = CUI.getLocalStorage(@__state_name)
 		if not isNull(value)
 			state = JSON.parse(value)
 		else
@@ -329,8 +329,7 @@ class FlexHandle extends CUI.Element
 
 		value = JSON.stringify(state)
 
-		window.localStorage[@__state_name] = value
-
+		CUI.setLocalStorage(@__state_name, value)
 		# CUI.debug "stored state", @__state_name, value
 		@
 

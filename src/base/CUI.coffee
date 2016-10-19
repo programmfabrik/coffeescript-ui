@@ -458,6 +458,27 @@ class CUI
 		else
 			decodeURIComponent(results[1].replace(/\+/g, " "))
 
+	@setLocalStorage: (key, value) ->
+		data = @getLocalStorage()
+		data[key] = value
+		window.localStorage.setItem("CUI", JSON.stringify(data))
+		data
+
+	@getLocalStorage: (key = null) ->
+		data_json = window.localStorage.getItem("CUI")
+		if data_json
+			data = JSON.parse(data_json)
+		else
+			data = {}
+
+		if key != null
+			data[key]
+		else
+			data
+
+	@clearLocalStorage: ->
+		window.localStorage.removeItem("CUI")
+
 	@encodeUrlData: (params, replacer = null, connect = "&", connect_pair = "=") ->
 		url = []
 		if replacer

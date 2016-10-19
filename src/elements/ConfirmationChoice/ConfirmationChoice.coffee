@@ -77,7 +77,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 								return
 
 						@destroy()
-						@__deferred.resolve(@__getResolveValue(), btn)
+						@__deferred.resolve(@__getResolveValue(), btn, ev)
 					return
 
 			for key of @choiceOpts
