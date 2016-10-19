@@ -65,7 +65,6 @@ class CUI.KeyboardEvent extends CUI.Event
 					s = "Num+"
 				else
 					s = String.fromCharCode(key)
-		console.debug key, s
 		s
 
 	key: ->
@@ -95,7 +94,6 @@ class CUI.KeyboardEvent extends CUI.Event
 			node: window
 			capture: true
 			call: (ev) ->
-				console.debug "keyboard key:", ev.keyboardKey()
 				if not KeyboardEvent.isModifierKey(ev.keyCode())
 					pushOntoArray(ev.keyboardKey(), CUI.KeyboardEvent.__keys)
 
