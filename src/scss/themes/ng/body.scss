@@ -27,7 +27,18 @@ $zebra-color: hsl(205,10%,98%);
 $table-border: hsl(205,8%,90%);
 $table-header-border: hsl(205,8%,94%);
 
-$pane-header-height: 30px;
+$toolbar-background: hsl(205,2%,97%);
+$toolbar-height: 42px;
+$toolbar-small-height: 34px;
+
+$layer-header-pointer-background: $toolbar-background;
+$layer-header-background: $toolbar-background;
+$layer-header-border: hsl(204,22%,91%);
+
+$layer-background: hsl(0,0%,100%);
+
+$layer-footer-background: $layer-header-background;
+$layer-footer-border: $layer-header-border;
 
 @mixin ellipsis(){
 	white-space: nowrap;
@@ -482,10 +493,11 @@ li > div {
 
 // Toolbar
 .cui-toolbar {
-	min-height: 42px;
+	min-height: $toolbar-height;
 	justify-content: space-between;
+	flex-wrap: wrap;
 	padding: 0 $padding;
-	background: hsl(205,2%,98%);
+	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
 	
@@ -564,6 +576,7 @@ li > div {
 	.cui-buttonbar {
 		margin-bottom: 0;
 		height: 100%;
+		min-height: $toolbar-height;
 		
 		.cui-button {
 			.cui-button-visual {
@@ -599,8 +612,17 @@ li > div {
 	}
 }
 
+.cui-result-navigation-toolbar {
+	min-height: $toolbar-small-height;
+	
+	.cui-buttonbar {
+		min-height: $toolbar-small-height;
+	}
+}
+
 // Pane
 .cui-pane-header {
+	flex-wrap: nowrap;
 	border-bottom: 1px solid $border;
 	
 	.cui-label {
@@ -630,11 +652,33 @@ li > div {
 		min-height: 0;
 		background: none;
 		border-bottom-width: 0;
+		flex-wrap: nowrap;
 	}
 }
 
 .cui-pane-footer {
 	border-top: 1px solid hsl(180,9%,93%);
+	min-height: $toolbar-small-height;
+	
+	.cui-buttonbar {
+		min-height: $toolbar-small-height;
+	}
+
+	.cui-horizontal-layout-left .cui-buttonbar {
+		margin-left: -$padding;
+
+		.cui-button:first-child {
+			padding-left: $padding;
+		}
+	}
+
+	.cui-horizontal-layout-right .cui-buttonbar {
+		margin-right: -$padding;
+
+		.cui-button:last-child {
+			padding-right: $padding;
+		}
+	}
 }
 
 // Simple Pane
@@ -730,6 +774,10 @@ i.cui-spin-stepped {
 	}
 }
 
+.fa-angle-down {
+	margin-top: 1px;
+}
+
 // Button / Select
 .cui-button,
 .cui-button-href {
@@ -796,18 +844,18 @@ i.cui-spin-stepped {
 		
 		.cui-button-visual {
 			@include button-reset;
-			color: $highlight-color;
+			color: desaturate($highlight-color, 80%);
 		}
 		
 	  &:hover {
 	  	.cui-button-visual {
-	  		color: $highlight-color;
+	  		color: desaturate($highlight-color, 80%);
 	  	}
 	  }
 
 	  &.cui-active {
 	  	.cui-button-visual {
-	  		color: $highlight-color;
+	  		color: desaturate($highlight-color, 80%);
 	  	}
 	  }
 	}
@@ -964,7 +1012,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-button-left {
-		padding: 0 1px 0 0;
+		padding: 0 2px 0 0;
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -1277,7 +1325,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-button {
-		align-self: unset;
+		// align-self: unset; // don't unset - need stretch for big button clickarea
 		
 		& + .cui-button,
 		& + .cui-buttonbar-group {
@@ -1415,7 +1463,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 ::-ms-clear {
-   display: none;
+  display: none;
 }
 
 // Layer
@@ -1439,19 +1487,19 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-simple-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
-			background: hsl(0,0%,98%);
-			min-height: 34px;
+			background: $layer-header-background;
+			min-height: $toolbar-small-height;
 			border-radius: 5px 5px 0 0;
+			border-color: $layer-header-border;
+			
+			.cui-buttonbar {
+				min-height: $toolbar-small-height;
+			}
 		}
 
 		// layer-body
 		> .cui-vertical-layout-center {
-			padding: $padding;
 			overflow: auto;
-			
-			> .cui-list-view {
-				margin: -$padding;
-			}
 
 			> .cui-multiline-label {
 				padding: $compensating-padding $padding;
@@ -1465,9 +1513,9 @@ a[role="button"].cui-button-appearance-link {
 
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			border-top: 1px solid hsl(180,9%,93%);
-			background: hsl(0,0%,98%);
-			padding: 0;
+			border-top-color: $layer-footer-border;
+			background: $layer-footer-background;
+			border-radius: 0 0 5px 5px;
 		}
 	}
 }
@@ -1487,7 +1535,7 @@ a[role="button"].cui-button-appearance-link {
     top: 7px;
     width: 18px;
     height: 18px;
-		background: hsl(0,0%,98%);
+		background: $layer-background;
 		box-shadow:
 			0 0 0 1px hsla(0,0%,0%,0.1),
 			3px 3px 14px hsla(0,0%,0%,0.1);
@@ -1495,8 +1543,13 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-layer-pointer--n:after {
+	background: $layer-header-pointer-background;
+}
+
 .cui-layer-pointer--s:after {
 	top: -9px;
+	background: $layer-footer-background;
 }
 
 .cui-layer-pointer--e,
@@ -1583,7 +1636,7 @@ a[role="button"].cui-button-appearance-link {
 			}
 			
 			.cui-button {
-				padding: $compensating-padding $padding/2;
+				padding: $padding/2;
 				
 				&:last-child {
 					padding-right: $padding;
@@ -1600,92 +1653,84 @@ a[role="button"].cui-button-appearance-link {
 // Confirmation
 
 .cui-confirmation-dialog,
-.cui-layer-root-popover {
-	.cui-layer {
-		max-width: 400px;
-		background: hsl(0,0%,98%);
+.cui-layer-root-popover .cui-layer {
+	max-width: 400px;
+	background: $layer-background;
 
-		.cui-form-tr,
-		.cui-form-tr-header {
-			background: none;
-		}
-		
-		> .cui-pane {
-			> .cui-vertical-layout-top {
-				display: none;
-			}
-		}
-	}
-
-
-	// layer-footer
-	> .cui-simple-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
-		min-height: 0;
-		justify-content: space-between;
-		border: none;
+	.cui-form-tr,
+	.cui-form-tr-header {
 		background: none;
-		padding: 0;
-		
-		.cui-buttonbar {
-			height: 33px;
-		}
-
-		.cui-button-button {
-			flex: 1;
-			margin: 0;
-			height: 100%;
-			align-items: stretch;
-			padding: 0;
-			
-			.cui-button-visual {
-				height: 100%;
-				border: none;
-				border-top: 1px solid hsl(210,11%,93%);
-				border-left: 1px solid hsl(210,11%,93%);
-				padding: 0 $padding;
-				border-radius: 0;
-				color: $highlight-color;
-				background: none;
-			}
-
-			&.cui-active .cui-button-visual {
-				color: $highlight-color;
-			}
-
-			&.cui-button--primary .cui-button-visual {
-				background: $highlight-color;
-				color: $on-highlight-color;
-				border-top-color: $highlight-color;
-				border-left-width: 0;
-			}
-		}
-
-		.cui-buttonbar {
-			flex: 1;
-		}
-
-		.cui-horizontal-layout-left,
-		.cui-horizontal-layout-center,
-		.cui-horizontal-layout-right {
-			flex: 1;
-
-			&:empty {
-				display: none;
-			}
-		}
-
-		.cui-horizontal-layout-left:empty +
-		.cui-horizontal-layout-center:not(:empty),
-		.cui-horizontal-layout-left:empty +
-		.cui-horizontal-layout-center:empty +
-		.cui-horizontal-layout-right,
-		.cui-horizontal-layout-left {
-			.cui-button:first-child .cui-button-visual {
-				border-left-width: 0;
-				border-bottom-left-radius: 4px;
-			}
-		}
 	}
+
+	// // layer-footer
+	// > .cui-simple-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
+	// 	min-height: 0;
+	// 	justify-content: space-between;
+	// 	border: none;
+	// 	background: none;
+	// 	padding: 0;
+		
+	// 	.cui-buttonbar {
+	// 		height: 33px;
+	// 		min-height: 33px;
+	// 	}
+
+	// 	.cui-button-button {
+	// 		flex: 1;
+	// 		margin: 0;
+	// 		height: 100%;
+	// 		align-items: stretch;
+	// 		padding: 0;
+			
+	// 		.cui-button-visual {
+	// 			height: 100%;
+	// 			border: none;
+	// 			border-top: 1px solid hsl(210,11%,93%);
+	// 			border-left: 1px solid hsl(210,11%,93%);
+	// 			padding: 0 $padding;
+	// 			border-radius: 0;
+	// 			color: $highlight-color;
+	// 			background: none;
+	// 		}
+
+	// 		&.cui-active .cui-button-visual {
+	// 			color: $highlight-color;
+	// 		}
+
+	// 		&.cui-button--primary .cui-button-visual {
+	// 			background: $highlight-color;
+	// 			color: $on-highlight-color;
+	// 			border-top-color: $highlight-color;
+	// 			border-left-width: 0;
+	// 		}
+	// 	}
+
+	// 	.cui-buttonbar {
+	// 		flex: 1;
+	// 	}
+
+	// 	.cui-horizontal-layout-left,
+	// 	.cui-horizontal-layout-center,
+	// 	.cui-horizontal-layout-right {
+	// 		flex: 1;
+
+	// 		&:empty {
+	// 			display: none;
+	// 		}
+	// 	}
+
+	// 	.cui-horizontal-layout-left:empty +
+	// 	.cui-horizontal-layout-center:not(:empty),
+	// 	.cui-horizontal-layout-left:empty +
+	// 	.cui-horizontal-layout-center:empty +
+	// 	.cui-horizontal-layout-right,
+	// 	.cui-horizontal-layout-left {
+	// 		.cui-button:first-child .cui-button-visual {
+	// 			border-left-width: 0;
+	// 			border-bottom-left-radius: 4px;
+	// 		}
+	// 	}
+	// }
 	
 	.cui-horizontal-layout-right {
 		margin-left: 0;
@@ -1715,7 +1760,7 @@ a[role="button"].cui-button-appearance-link {
 	max-height: 100px;
 	min-width: 0;
 	overflow: auto;
-	background: hsl(0,0%,98%);
+	background: $layer-background;
 	border-radius: 2px;
 	box-shadow:
 		0 0 0 1px hsla(0,0%,0%,0.1),
@@ -1873,11 +1918,6 @@ a[role="button"].cui-button-appearance-link {
 	min-width: 247px;
 }
 
-// Popover: hide header
-.cui-popover > .cui-layout > .cui-vertical-layout-top {
-	display: none;
-}
-
 // Backdrop
 .cui-layer-root-modal,
 .cui-layer-root-confirmation-dialog {
@@ -1938,8 +1978,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 	> .cui-vertical-layout-top {
 		> .cui-pane-header {
-			min-height: 42px;
-			background: hsl(205,2%,98%);
+			min-height: $toolbar-height;
+			background: $toolbar-background;
 			padding-right: $padding/2;
 
 			.cui-horizontal-layout-center {
@@ -2182,8 +2222,22 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
-	.cui-lv-tr-outer:nth-child(even) {
-		background: $zebra-color;
+	.cui-lv-tr-outer {
+		position: relative;
+		
+		&:nth-child(even) {
+			background: $zebra-color;
+		}
+		
+		// &:not(:last-child):after {
+		// 	content: "";
+		// 	position: absolute;
+		// 	left: $padding/2;
+		// 	right: $padding/2;
+		// 	bottom: 0;
+		// 	height: 1px;
+		// 	background: hsl(0,0%,97%);
+		// }
 	}
 }
 
@@ -2291,10 +2345,7 @@ $table-data-padding: 4px;
 
 		.cui-tree-node-handle {
 			text-align: center;
-			
-			> i {
-				line-height: 17px;
-			}
+			justify-content: center;
 
 			.fa-caret-down {
 				margin-left: -3px;
@@ -2546,6 +2597,10 @@ table.cui-form-table {
     flex-direction: row;
 		margin-right: 2px;
     padding: 0 3px 0 1px;
+    
+    .cui-drag-handle-row {
+    	margin-top: 5px;
+    }
 	}
 }
 
@@ -3193,4 +3248,3 @@ table.cui-form-table {
 	from { opacity: 0.99; }
 	to { opacity: 1; }
 }
-

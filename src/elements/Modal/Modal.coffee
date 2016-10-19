@@ -22,7 +22,7 @@ class CUI.Modal extends CUI.LayerPane
 		@__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
 			icon:  "close"
-			appearance: "flat"
+			appearance: if CUI.__ng__ then "normal" else "flat"
 			onClick: (ev) =>
 				@doCancel(ev)
 
