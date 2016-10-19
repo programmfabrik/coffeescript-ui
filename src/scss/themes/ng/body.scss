@@ -566,12 +566,6 @@ li > div {
 		height: 100%;
 		
 		.cui-button {
-			padding-right: $small-gap;
-			
-			&:last-child {
-				padding-right: 0;
-			}
-			
 			.cui-button-visual {
 				padding-left: $padding/2;
 				padding-right: $padding/2;
@@ -639,6 +633,10 @@ li > div {
 	}
 }
 
+.cui-pane-footer {
+	border-top: 1px solid hsl(180,9%,93%);
+}
+
 // Simple Pane
 .cui-simple-pane {
 	> .cui-vertical-layout-center {
@@ -663,7 +661,6 @@ li > div {
 	.cui-pane-footer {
 		min-height: 0;
 		padding: 0;
-		border-top: 1px solid hsl(205,8%,77%);
 
 		.cui-button-button {
 			.cui-button-visual {
@@ -1976,7 +1973,7 @@ a[role="button"].cui-button-appearance-link {
 			> .cui-tmpl-tab-body {
 				// disable the javascript overwrite here
 				margin-left: 0 !important;
-  			border-bottom: 1px solid hsl(210,11%,93%);
+  			// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
 				flex: 1 1 auto;
 				overflow: auto;
 				&.cui-tab-hidden {
@@ -2061,7 +2058,6 @@ $table-data-padding: 4px;
 
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
-			min-height: 34px;
 			border-top: 1px solid $table-border;
 		}
 	}
