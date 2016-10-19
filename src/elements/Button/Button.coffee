@@ -679,10 +679,12 @@ class CUI.Button extends CUI.DOM
 		if parents.length == 0
 			# buttons are not grouped by anything, so we
 			# have no other buttons, so we use the top level element
-			all_parents = @DOM.parents()
-			docElem = all_parents[all_parents.length-1]
-		else
+			parents = @DOM.parents()
+
+		if parents.length > 0
 			docElem = parents[parents.length-1]
+		else
+			return []
 
 		(DOM.data(c, "element") for c in DOM.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
 
