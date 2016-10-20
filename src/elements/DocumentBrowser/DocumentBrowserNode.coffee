@@ -1,5 +1,5 @@
 #
-class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
+class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 	readOpts: ->
 		super()
 
@@ -13,29 +13,40 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 	initOpts: ->
 		super()
 		@addOpts
+			browser:
+				mandatory: true
+				check: CUI.DocumentBrowser
 			url:
 				check: (v) ->
 					!!CUI.parseLocation(v)
 			path:
 				default: []
 				check: Array
-			text:
+			title:
 				check: String
 
 	getChildren: ->
 		if @opts.leaf
 			return []
 
-		@__loadChildren()
+		if @children
+			new CUI.resolvedPromise(@children)
+		else
+			@__loadChildren()
 
 	__loadChildren: (dive = true) ->
-		# console.debug @__url, @getNodePath()
+
+		@loadContent()
+
+		dive = true
+
 		dfr = new CUI.Deferred()
 		new CUI.XHR
 			url: @__url + @getNodePath("menu.cms")
 			responseType: "text"
 		.start()
 		.done (data, xhr) =>
+			# console.debug @getNodePath()
 			children = []
 			items = []
 			for row in data.split("\n")
@@ -47,15 +58,15 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 
 				info = m[1].split(":")
 				if m[3]
-					text = m[3]
+					title = m[3]
 				else
-					text = info[0]
+					title = info[0]
 
 				path = @_path.slice(0)
 				path.push(info[0])
 
 				items.push
-					text: text
+					title: title
 					path: path
 
 			if items.length == 0
@@ -65,9 +76,10 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 
 			children_done = 0
 			for item, idx in items
-				child = new CUI.DocumentBrowserNode
+				child = new CUI.DocumentBrowser.Node
+					browser: @_browser
 					url: @__url
-					text: item.text
+					title: item.title
 					path: item.path
 
 				children.push(child)
@@ -76,6 +88,7 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 					.always =>
 						children_done = children_done + 1
 						if children_done == items.length
+							@children = children
 							dfr.resolve(children)
 			if not dive
 				dfr.resolve(children)
@@ -86,11 +99,67 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 		dfr.promise()
 
 	loadContent: ->
+		if @__content
+			new CUI.resolvedPromise(@__content, @__htmlNodes, @__texts)
+
+		dfr = new CUI.Deferred()
 		filename = @getLastPathElement()+".md"
 		new CUI.XHR
 			url: @__url + @getNodePath(filename)
 			responseType: "text"
 		.start()
+		.done (@__content) =>
+			@__htmlNodes = CUI.DOM.htmlToNodes(@_browser.marked(@, @__content))
+			@__texts = CUI.DOM.findTextInNodes(@__htmlNodes)
+			@_browser.addWords(@__texts)
+			# console.debug "loaded:", filename, markdown.length, @__texts.length
+			dfr.resolve(@__content, @__htmlNodes, @__texts)
+		.fail(dfr.reject)
+		dfr.promise()
+
+	findContent: (regExpe, search, matches = []) ->
+		idx_hits = [0..regExpe.length-1]
+
+		title_match = @_browser.getMatches(regExpe, @_title)
+		if title_match
+			for match in title_match.matches
+				removeFromArray(match.regExp_idx, idx_hits)
+				if idx_hits.length == 0
+					break
+
+		text_matches = []
+
+		if @__texts
+			for text, idx in @__texts
+				text_match = @_browser.getMatches(regExpe, text)
+				if text_match
+					text_matches.push(node: @, match: text_match)
+					if idx_hits.length > 0
+						for match in text_match.matches
+							removeFromArray(match.regExp_idx, idx_hits)
+							if idx_hits.length == 0
+								break
+
+		if idx_hits.length == 0
+			# console.debug "findContent", title_match, text_matches
+			matches.push(new CUI.DocumentBrowser.SearchMatch(
+				node: @
+				search: search
+				title_match: title_match
+				text_matches: text_matches
+			))
+
+			# console.debug "pusing:", matches.length, row_matches, title_match
+			# console.debug @getNodePath()+" matches:", matches1, matches2
+
+		if @children
+			for c in @children
+				c.findContent(regExpe, search, matches)
+
+		return matches
+
+	getBrowser: ->
+		@_browser
 
 	selectLocation: (nodePath, dfr = new CUI.Deferred()) ->
 		# console.debug "selectLocation", nodePath, "us:", @getNodePath()
@@ -132,6 +201,17 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 		else
 			nodePath + "/" + filename
 
+	getTitlePath: ->
+		texts = []
+		for node in @getPath(true)
+			if node.isRoot()
+				continue
+			texts.push(node.getTitle())
+		texts
+
+	getTitle: ->
+		@_title
+
 	absoluteUrl: (base, relative) ->
 		stack = base.split("/")
 		parts = relative.split("/")
@@ -145,7 +225,6 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 				stack.push(part)
 
 		stack.join("/")
-
 
 	rendererImage: (href, title, text) ->
 		if href.startsWith("http:") or href.startsWith("//")
@@ -164,7 +243,7 @@ class CUI.DocumentBrowserNode extends CUI.ListViewTreeNode
 		"<img src='"+_href+"' alt='"+escapeAttribute(text)+"' title='"+escapeAttribute(title)+"'></img>"
 
 	renderContent: ->
-		new Label(text: @_text, multiline: true)
+		new Label(text: @_title, multiline: true)
 
 
-class CUI.DocumentBrowserRootNode extends CUI.DocumentBrowserNode
+class CUI.DocumentBrowser.RootNode extends CUI.DocumentBrowser.Node

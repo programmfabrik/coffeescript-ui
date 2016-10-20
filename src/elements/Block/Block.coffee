@@ -1,4 +1,4 @@
-class Block extends CUI.DOM
+class CUI.Block extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -75,4 +75,5 @@ class Block extends CUI.DOM
 		@__block.append(content, "content")
 
 
+Block = CUI.Block
 

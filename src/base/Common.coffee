@@ -242,6 +242,7 @@ toHtml = (data, space2nbsp) ->
 	else
 		data
 
+
 copyObject = (obj, deep = false, level = 0) ->
 	if typeof(obj) in ["string", "number", "boolean", "function"]
 		return obj

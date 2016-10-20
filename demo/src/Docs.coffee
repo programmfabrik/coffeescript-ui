@@ -17,7 +17,6 @@ class Docs extends Demo
 		load_hash = =>
 			hash = document.location.hash.split("#")
 			if hash[2]
-				console.debug "new hash", hash
 				browser.loadLocation(hash[2])
 				true
 			else
@@ -26,8 +25,8 @@ class Docs extends Demo
 		browser = new CUI.DocumentBrowser
 			gotoLocation: (nodePath) ->
 				document.location = document.location.origin + document.location.pathname + "#Documentation#"+nodePath
-			# url: "/easydb/docs/root"
-			url: CUI.getPathToScript()+Docs.path # set by Makefile
+			url: "/easydb/docs/root"
+			# url: CUI.getPathToScript()+Docs.path # set by Makefile
 
 		dom = browser.render()
 		browser.load()

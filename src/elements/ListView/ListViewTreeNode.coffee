@@ -595,7 +595,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	check_deselect: (ev) ->
 		if ev
 			@allow_deselect(ev)
-			if ev.getInfo()._confirm_hash_change
+			if ev.getInfo?()._confirm_hash_change
 				m = new ModalConfirm(text: ev.getInfo()._confirm_hash_change)
 				return m.open()
 
@@ -607,7 +607,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	select: (ev) ->
 		dfr = new CUI.Deferred()
 		if ev and @getTree?().isSelectable()
-			ev.stopPropagation()
+			ev.stopPropagation?()
 
 		dfr.done =>
 			@getTree().triggerNodeSelect(ev, @)

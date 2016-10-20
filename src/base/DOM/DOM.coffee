@@ -1235,6 +1235,18 @@ class CUI.DOM extends CUI.Element
 		d.innerHTML = html
 		d.childNodes
 
+	@findTextInNodes: (nodes, texts = []) ->
+		for node in nodes
+			child_nodes = []
+			for child in node.childNodes
+				switch child.nodeType
+					when 3 # Text
+						texts.push(child.textContent)
+					when 1 # Element
+						child_nodes.push(child)
+			@findTextInNodes(child_nodes, texts)
+
+		return texts
 
 	# turns 14.813px into a float
 	@getCSSFloatValue: (v) ->

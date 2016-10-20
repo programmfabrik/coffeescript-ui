@@ -339,6 +339,21 @@ span {
 	background-color: #ffefd1;
 }
 
+// DocumentBrowser
+.cui-document-browser-list {
+	width: 250px;
+	strong {
+		color: white;
+		background-color: blue;
+	}
+	.cui-document-browser-search-match--title {
+		margin-top: 10px;
+		border-top: 3px solid #18026f;
+		border-bottom: 2px solid #caca64;
+	}
+
+}
+
 // Toolbar
 .cui-toolbar {
 	background-color: rgba(34, 139, 243, 0.43);
@@ -350,7 +365,7 @@ span {
 		}
 
 		&.cui-horizontal-layout-center {
-			align-items: center;
+			// align-items: center;
 		}
 		// flex-direction: row;
 		// align-items: center;
