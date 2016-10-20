@@ -6,18 +6,18 @@ class CUI.Modal extends CUI.LayerPane
 	#
 	constructor: (@opts={}) ->
 		super(@opts)
-		@__defer_auto_size = false
+		# @__defer_auto_size = false
 
 		@__addHeaderButton("fill_screen_button", Pane.getToggleFillScreenButton())
 
-		Events.listen
-			type: "end-fill-screen"
-			node: @getPane().DOM
-			call: (ev) =>
-				if @__defer_auto_size
-					@autoSize(false)
-					@__defer_auto_size = false
-				return
+		# Events.listen
+		# 	type: "end-fill-screen"
+		# 	node: @getPane().DOM
+		# 	call: (ev) =>
+		# 		if @__defer_auto_size
+		# 			@autoSize()
+		# 			@__defer_auto_size = false
+		# 		return
 
 		@__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
@@ -116,11 +116,11 @@ class CUI.Modal extends CUI.LayerPane
 		@getPane().endFillScreen(false) # no transition
 		super(ev)
 
-	autoSize: (immediate = false) ->
-		if @getPane().getFillScreenState()
-			@__defer_auto_size = true
-		else
-			super(immediate)
+	# autoSize: (immediate = false) ->
+	# 	if @getPane().getFillScreenState()
+	# 		@__defer_auto_size = true
+	# 	else
+	# 		super(immediate)
 
 
 Modal = CUI.Modal

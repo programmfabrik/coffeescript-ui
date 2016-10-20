@@ -17,7 +17,7 @@ class CUI.Icon extends CUI.Element
 
 		if svg_cls
 			href = CUI.pathToScript+"/icons.svg"
-			@DOM = CUI.DOM.htmlToNodes("""<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"#{href}##{svg_cls}\"></svg>""")
+			@DOM = CUI.DOM.htmlToNodes("""<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"#{href}##{svg_cls}\"></svg>""")[0]
 		else
 			@DOM = CUI.jQueryCompat(CUI.DOM.element("I", class: "fa "+cls))
 
