@@ -406,13 +406,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 					globalDrag: globalDrag
 					originalEvent: ev
 
-			CUI.Events.trigger
-				node: globalDrag.dragoverTarget
-				type: "cui-dragend"
-				info:
-					globalDrag: globalDrag
-					originalEvent: ev
-
 			if not globalDrag.stopped
 				CUI.Events.trigger
 					type: "cui-drop"
@@ -420,6 +413,13 @@ class CUI.Draggable extends CUI.DragDropSelect
 					info:
 						globalDrag: globalDrag
 						originalEvent: ev
+
+			CUI.Events.trigger
+				node: globalDrag.dragoverTarget
+				type: "cui-dragend"
+				info:
+					globalDrag: globalDrag
+					originalEvent: ev
 
 			globalDrag.dragoverTarget = null
 

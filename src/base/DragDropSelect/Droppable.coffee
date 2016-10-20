@@ -68,6 +68,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			for el in CUI.DOM.findElements(@_element, @_selector)
 				el.classList.remove("cui-droppable-target-helper")
 
+		# console.error "removing helper.."
+
 		@__dropTarget = undefined
 		@__dropTargetPos = undefined
 
@@ -258,6 +260,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			type: "cui-drop"
 			instance: @
 			call: (ev, info) =>
+
+				# console.debug "cui-drop event", ev, info, @__dropTarget
 
 				# CUI.debug "cui-drop", ev.getCurrentTarget()
 				if not @__dropTarget
