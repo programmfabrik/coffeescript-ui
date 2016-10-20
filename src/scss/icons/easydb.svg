@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>easydb</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="easydb" fill="#F6A623">
+            <path d="M4,24 C1.50584398,21.4885572 0,18.1532338 0,14 C0,10.839801 1.514542,7.50945274 4,5 L4,24" id="Fill-22"></path>
+            <path d="M17,20 L17,10 L22,8 L22,20 L17,20 Z M10,20 L10,10 L15,8 L15,20 L10,20 Z M9,1 L9,27 C10.5828445,27.6542115 12.3045179,28 14,28 C21.7800762,28 28,21.7314756 28,14 C28,6.26852438 21.7800762,0 14,0 C12.3035402,0 10.5808892,0.346773626 9,1 Z" id="Fill-24"></path>
+        </g>
+    </g>
+</svg>
