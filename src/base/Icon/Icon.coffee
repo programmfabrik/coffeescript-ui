@@ -95,6 +95,7 @@ class CUI.Icon extends CUI.Element
 		ellipsis_h: "fa-ellipsis-h"
 		ellipsis_v: "fa-ellipsis-v" #used for sidemenu buttons
 		close: "svg-close"
+		folder: "fa-folder-o"
 		folder_shared: "svg-folder-shared"
 		menu: "fa-bars"
 		info: "fa-info-circle"
