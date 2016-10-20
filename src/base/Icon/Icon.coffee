@@ -1,21 +1,26 @@
-class Icon extends CUI.Element
+class CUI.Icon extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
+		svg_cls = ""
+		cls = ""
 		if @_icon
-			@__class = @icon_map()[@_icon]
-			if isEmpty(@__class)
-				@__class = @_icon
-			if not isEmpty(@_class)
-				@__class += " "+@_class
-		else if not isEmpty(@_class)
-			@__class = @_class
+			cls = @icon_map()[@_icon]
+			if isEmpty(cls)
+				cls = @_icon
+
+			if cls.startsWith("svg-")
+				svg_cls = cls
+				cls = ""
+
+		if not isEmpty(@_class)
+			cls += (" "+@_class).trim()
+
+		if svg_cls
+			href = CUI.pathToScript+"/icons.svg"
+			@DOM = CUI.DOM.htmlToNodes("""<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"#{href}##{svg_cls}\"></svg>""")
+			console.error "SVG!", svg_cls, @DOM
 		else
-			@__class = ""
-
-		if @_fixed_width or isEmpty(@__class)
-			@__class = "#{@__class} cui-icon-fixed-width"
-
-		@DOM = $i("fa #{@__class}")
+			@DOM = CUI.jQueryCompat(CUI.DOM.element("I", class: "fa "+cls))
 
 		if @_tooltip
 			@_tooltip.element = @DOM
@@ -121,4 +126,6 @@ class Icon extends CUI.Element
 		image: "fa-picture-o"
 
 
-CUI.proxyMethods(Icon, Button, ["hide", "show", "isShown","isHidden"])
+CUI.proxyMethods(CUI.Icon, CUI.Button, ["hide", "show", "isShown","isHidden"])
+
+Icon = CUI.Icon

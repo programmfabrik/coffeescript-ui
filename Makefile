@@ -1,5 +1,6 @@
 target = build
 css_target = $(target)/css
+
 call_scss = sass --scss --no-cache --sourcemap=inline
 easydbui_js = $(target)/easydbui.js
 
@@ -190,6 +191,11 @@ font_awesome:
 demo: font_awesome
 	$(MAKE) --directory demo all
 
+code: $(easydbui_js) $(thirdparty_files) html font_awesome
+	cp src/scss/icons/icons.svg $(target)/icons.svg
+	$(MAKE) --directory demo code
+
+
 css_ng:
 	#
 	# $@
@@ -207,9 +213,6 @@ css_other:
 	$(MAKE) --directory demo css_other
 
 css: css_ng css_other
-
-code: $(easydbui_js) $(thirdparty_files) html font_awesome
-	$(MAKE) --directory demo code
 
 html: $(html_files)
 	#
@@ -246,4 +249,4 @@ wipe: clean
 %.coffee.js: %.coffee
 	coffee -b -p --compile $^ > $@ || ( rm -f $@ ; false )
 
-.PHONY: all demo clean clean-build wipe font_awesome
+.PHONY: all demo css css_ng css_other clean clean-build wipe font_awesome svg_icons

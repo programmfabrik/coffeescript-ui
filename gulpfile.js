@@ -6,7 +6,7 @@ var svgmin = require('gulp-svgmin');
 var cheerio = require('gulp-cheerio');
 var through2 = require('through2');
 
-var iconsource = 'src/scss/icons/*.svg';
+var iconsource = ['src/scss/icons/*.svg', '!src/scss/icons/icons.svg']
 
 gulp.task('svgstore', function () {
   return gulp
@@ -34,14 +34,14 @@ gulp.task('svgstore', function () {
         ];
       }).get();
       var cssFile = new gutil.File({
-        path: 'css/svg-dimensions.css',
+        path: '_svg-dimensions.scss',
         contents: new Buffer(data.join("\n"))
       });
       this.push(cssFile);
       this.push(file);
       cb();
     }))
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('src/scss/icons'));
 });
 
 gulp.task('default', function(){

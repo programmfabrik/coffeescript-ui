@@ -72,6 +72,7 @@ css_ng: jpg
 	#
 	# $@
 	mkdir -p $(target)/css
+	cp ../src/scss/icons/icons.svg $(target)/css/icons.svg
 	$(call_scss) src/scss/themes/ng/main.scss $(target)/css/cui_demo_ng.css
 	$(call_scss) src/scss/themes/ng_debug/main.scss $(target)/css/cui_demo_ng_debug.css
 
@@ -80,6 +81,7 @@ css_other:
 	# $@
 	mkdir -p $(target)/css
 	# make css TODO make demo css for each theme
+	cp ../src/scss/icons/icons.svg $(target)/css/icons.svg
 	$(call_scss) src/scss/themes/light/main.scss $(target)/css/cui_demo_light.css
 	$(call_scss) src/scss/themes/dark/main.scss $(target)/css/cui_demo_dark.css
 

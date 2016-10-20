@@ -1,3 +1,4 @@
+@import '../../icons/_svg-dimensions.scss';
 @import url($font_awesome_url);
 
 // reset
@@ -403,6 +404,10 @@ i.fa {
 	line-height: 20px;
 }
 
+.cui-icon-svg {
+	fill: currentColor;
+}
+
 i.fa-spinner {
 	width: 12px;
 }
@@ -440,9 +445,7 @@ a[role="button"],label[role="button"],.cui-button
 	flex-direction: row;
 	flex: 0 0 auto;
 	align-self: flex-start;
-	height: 20px;
 	line-height: 20px;
-
 
 	&:not(.cui-button-appearance-flat) {
 		&.cui-button--primary {
