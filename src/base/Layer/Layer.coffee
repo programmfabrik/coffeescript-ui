@@ -853,7 +853,7 @@ class CUI.Layer extends CUI.DOM
 		# console.debug "Pointer POS", vp.pointer_pos, "align:", vp.pointer_align_horizontal, "/", vp.pointer_align_vertical
 
 		if vp.layer_pos.width < 10 or vp.layer_pos.height < 10
-			console.warn("Layer: DIM is very small, layer might not be visible. Placement:", placement, "Dimensions:", vp, "Layer:", @__layer.DOM)
+			; # console.warn("Layer: DIM is very small, layer might not be visible. Placement:", placement, "Dimensions:", vp, "Layer:", @__layer.DOM)
 
 		if @_element and @_use_element_width_as_min_width
 			minWidth = dim_element.borderBoxWidth
