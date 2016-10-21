@@ -22,7 +22,8 @@ class CUI.SimplePane extends CUI.Pane
 		if @_title
 			@append(new Label(text: @_title), "header_left")
 
-		# @addClass("cui-simple-pane")
+		if not CUI.__ng__
+			@addClass("cui-simple-pane")
 
 	initOpts: ->
 		super()
