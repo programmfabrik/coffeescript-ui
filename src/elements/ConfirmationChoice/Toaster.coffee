@@ -2,11 +2,11 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 	initOpts: ->
 		super()
 		@removeOpt("choices")
-		@removeOpt("backdrop")
+		@mergeOpt "backdrop",
+			default: false
 
 	readOpts: ->
 		super()
-		@_backdrop = false
 		@_choices = []
 
 	open: ->
