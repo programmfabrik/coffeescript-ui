@@ -39,7 +39,7 @@ class CUI.DataField extends CUI.DOM
 		if @_hidden
 			@hide()
 
-		if @_tooltip
+		if @_tooltip and (@_tooltip.text or @_tooltip.content)
 			tt_opts = copyObject(@_tooltip)
 			tt_opts.element = @DOM
 			@__tooltip = new Tooltip(tt_opts)
