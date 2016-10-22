@@ -341,18 +341,45 @@ span {
 }
 
 // DocumentBrowser
-.cui-document-browser-list {
-	width: 250px;
-	strong {
-		color: white;
-		background-color: blue;
+.cui-document-browser {
+	.cui-label-content, a {
+		display: inline;
 	}
+	a {
+		text-decoration: underline;
+	}
+
+	.cui-document-browser-node-match-hierarchy {
+		font-weight: bold;
+		font-size: 14px;
+		padding: 0 3px;
+	}
+	.cui-document-browser-list {
+		width: 250px;
+		li, .cui-tmpl-label {
+			cursor: pointer;
+			&:hover {
+				background: #e0e0e0;
+			}
+		}
+	}
+
+	.cui-document-browser-marked-node {
+		background: hsla(47, 100%, 72%, 0.53);
+	}
+
 	.cui-document-browser-search-match--title {
 		margin-top: 10px;
 		border-top: 3px solid #18026f;
 		border-bottom: 2px solid #caca64;
 	}
-
+	.cui-document-browser-search-match-mark {
+		display: inline-block;
+		background-color: hsla(50%,50%,50%,0.5);
+		&.cui-search-match--1 {
+			background-color: hsla(260, 68%, 65%, 0.5);
+		}
+	}
 }
 
 // Toolbar

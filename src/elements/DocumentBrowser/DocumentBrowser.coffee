@@ -5,8 +5,12 @@ class CUI.DocumentBrowser extends CUI.Element
 		@addOpts
 			gotoLocation:
 				check: Function
-				default: (nodePath) =>
-					@loadLocation(nodePath)
+				default: (nodePath, search, nodeIdx) =>
+					@loadLocation(nodePath, search, nodeIdx)
+			renderHref:
+				check: Function
+				default: (href, nodePath) =>
+					href
 			url:
 				check: (v) ->
 					!!CUI.parseLocation(v)
@@ -16,72 +20,92 @@ class CUI.DocumentBrowser extends CUI.Element
 		@__markedRenderer = new marked.Renderer()
 		@__markedRenderer.image = (href, title, text) =>
 			@__node.rendererImage(href, title, text)
-		@__marked_opts = renderer: @__markedRenderer
+
+		@__markedRenderer.link = (href, title, text) =>
+			@__node.rendererLink(href, title, text)
+
+		@__marked_opts =
+			sanitize: false
+			renderer: @__markedRenderer
 		@__words = {}
+
+	renderHref: (href, nodePath) ->
+		@_renderHref(href, nodePath)
 
 	marked: (@__node, markdown) ->
 		marked(markdown, @__marked_opts)
 
-	loadLocation: (_nodePath) ->
+	loadLocation: (nodePath, search, _nodeIdx) ->
 		# console.error "loading:", _nodePath
 
-		if not _nodePath
+		if not nodePath
 			if not @__tree.root.children.length
 				return
 
 			return @loadLocation(@__tree.root.children[0].getNodePath())
 
-		# might contain ; as select word
-		if _nodePath.indexOf(";") > -1
-			parts = _nodePath.split(";")
-			nodePath = parts[0]
-			search = parts[1]
-		else
-			nodePath = _nodePath
-			search = null
-
 		@__tree.root.selectLocation(nodePath)
 		.done (node) =>
+			nodeIdx = parseInt(_nodeIdx)
 			if not node.isSelected()
-				node.select(search: search)
-			@loadContent(node, search)
+				node.select(search: search, nodeIdx: nodeIdx)
+			@loadContent(node, search, nodeIdx)
 		.fail =>
 			@loadEmpty()
 
 	loadEmpty: ->
 		@__layout.replace(new EmptyLabel(text: "No article available."), "center")
 
-	getMatches: (regExpe, str) ->
-		matches = null
-		if isEmpty(str)
-			return matches
-
-		for regExp, idx in regExpe
-			_matches = []
-			while ((match = regExp.exec(str)) != null)
-				_matches.push(match)
-
-			if _matches.length > 0
-				if not matches
-					matches =
-						str: str
-						regExpe: regExpe
-						matches: []
-
-				for _match in _matches
-					_match.regExp_idx = idx
-					matches.matches.push(_match)
-
-		matches
-
-	loadContent: (node, search) ->
+	loadContent: (node, search, nodeIdx) ->
 		node.loadContent()
-		.done (content, htmlNodes) =>
-			# console.debug "loadContent", content, htmlNodes, node, search
+		.done (content, htmlNodes, texts) =>
 			if not search
 				@__layout.replace(htmlNodes, "center")
+				return
+
+			scroll_node = null
+			searchQuery = new CUI.DocumentBrowser.SearchQuery(search: search)
+			nodes = CUI.DOM.htmlToNodes(@marked(node, content))
+
+			text_matches = []
+			text_node_idx = 0
+
+			CUI.DOM.findTextInNodes(nodes, (node, textContent) =>
+
+				text_node_idx = text_node_idx + 1
+				text_match = searchQuery.match(textContent)
+
+				if not text_match
+					return
+
+				console.debug "matches", searchQuery, textContent
+
+				text_match.__mark_all = (nodeIdx == text_node_idx - 1)
+				text_match.__node = node
+				text_matches.push(text_match)
+			)
+
+			console.debug "text matches", text_matches
+
+			for tm in text_matches
+
+				html = tm.getHighlighted()
+				if tm.__mark_all
+					html = "<span class='cui-document-browser-marked-node'>" + html + "</span>"
+
+				_node = CUI.DOM.replaceWith(tm.__node, CUI.DOM.htmlToNodes(html))
+				if tm.__mark_all
+					scroll_node = _node
+
+				# console.debug(child, child.textContent, child.textContent.length)
+
+			@__layout.replace(nodes, "center")
+			@__layout.prepend(node.getMainArticleUrl(), "center")
+
+			if scroll_node
+				CUI.DOM.scrollIntoView(scroll_node)
 			else
-				@__layout.replace(CUI.DOM.htmlToNodes(@marked(node, "# "+search+"\n\n"+content)), "center")
+				@__layout.center().scrollTop = 0
 
 		.fail =>
 			@loadEmpty()
@@ -93,37 +117,19 @@ class CUI.DocumentBrowser extends CUI.Element
 		@__searchResult.empty("center")
 
 		if search.trim().length > 2
-			# charRegExp = search.trim().split("").join(".*?")
-			# chary = new RegExp(charRegExp)
-			# matching_words = []
-			# for word in @__all_words
-			# 	if chary.exec(word.word)
-			# 		matching_words.push(word)
-
-			# matching_words.sort (a, b) =>
-			# 	b.count - a.count
-
-			# words = []
-			# for word in matching_words
-			# 	words.push(RegExp.escape(word.word))
-
-			# _search = "(?:"+words.join("|")+")"
-			# console.debug "matching words:", charRegExp,  _search
-
-			regExpe = []
-			for str in search.trim().split(/\s+/)
-				if str.trim() == ""
-					continue
-				regExpe.push(new RegExp(RegExp.escape(str), "ig"))
-
-			matches = @__tree.root.findContent(regExpe, search.trim())
-			console.debug "found:", matches
+			matches = @__tree.root.findContent(new CUI.DocumentBrowser.SearchQuery(search: search))
+			# console.debug "found:", matches
 			for match in matches
 				@__searchResult.append(match.render(), "center")
+
+			if matches.length == 0
+				@__searchResult.append(
+					new Label(markdown: true, text: "Nothing found for **"+search+"**.", multiline: true),
+				"center")
+			@showSearch(true)
 		else
 			matches = []
-
-		@showSearch(matches.length > 0)
+			@showSearch(false)
 
 	addWords: (texts) ->
 		return
@@ -158,11 +164,14 @@ class CUI.DocumentBrowser extends CUI.Element
 
 		data = search: ""
 
+		do_search = =>
+			@__doSearch(data.search)
+
 		search_input = new Input
 			data: data
 			name: "search"
 			onDataChanged: =>
-				@__doSearch(data.search)
+				CUI.scheduleCallback(ms: 200, call: do_search)
 
 		@__searchResult = new VerticalList()
 
@@ -171,7 +180,7 @@ class CUI.DocumentBrowser extends CUI.Element
 			selectable: true
 			onSelect: (ev, info) =>
 				if ev?.search
-					@_gotoLocation(info.node.getNodePath()+";"+ev.search)
+					@_gotoLocation(info.node.getNodePath(), ev.search, ev.nodeIdx)
 				else
 					@_gotoLocation(info.node.getNodePath())
 
@@ -197,6 +206,7 @@ class CUI.DocumentBrowser extends CUI.Element
 
 
 		@__layout = new HorizontalLayout
+			class: "cui-document-browser"
 			maximize: true
 			left:
 				class: "cui-document-browser-list"

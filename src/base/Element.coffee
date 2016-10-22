@@ -44,14 +44,6 @@ class CUI.Element
 	hasSetOpt: (key) ->
 		@hasOwnProperty("_"+key)
 
-	# this is a hackery function to return just
-	# the opts keys for a given class
-	@getOptKeys: ->
-		CUI.Element.__dont_read_opt = true
-		element = new(@)
-		delete(CUI.Element.__dont_read_opts)
-		Object.keys(element.getCheckMap())
-
 	initOpts: ->
 		@__initOptsCalled = true
 		@addOpts
@@ -101,6 +93,66 @@ class CUI.Element
 
 	readOpts: (opts = @opts, cls = @__cls, check_map = @__check_map) ->
 		CUI.Element.readOpts.call(@, opts, cls, check_map, true)
+
+	# add options from and style like attribute string
+	# element: the element to
+	addOptsFromAttr: (str) ->
+		for k, v of @readOptsFromAttr(str)
+			@opts[k] = v
+
+	# read "style" like opts for layout
+	readOptsFromAttr: (str) ->
+		opts = {}
+		if not str?.split
+			return opts
+		for key_value in str.split(";")
+			if isEmpty(key_value.trim())
+				continue
+			[key, value] = key_value.split(":")
+			key = key.trim()
+			value = value?.trim()
+			assert(not isEmpty(key) and not isEmpty(value), "#{@__cls}.readOptsFromAttr", "Parsing error in \"#{str}\".")
+			if value == "true"
+				value = true
+			else if value == "false"
+				value = false
+			else if not isNaN(parseInt(value))
+				value = parseInt(value)
+			opts[key] = value
+		opts
+
+	# proxy given methods to given element
+	proxy: (element, methods) ->
+		assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
+		assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
+		for method in methods
+			do (method) =>
+				@[method] = =>
+					element[method].apply(element, arguments)
+		@
+
+	destroy: ->
+		# clean mapped values
+		assert(@__mapped_keys, getObjectClass(@)+".destroy", "__mapped_keys not found, that means the top level constructor was not called.", element: @)
+
+		for k in @__mapped_keys
+			delete("@_#{k}")
+		@__mapped_keys = []
+		@_onDestroy?(@)
+		@__destroyed = true
+
+	isDestroyed: ->
+		@__destroyed
+
+	@uniqueId: 0
+
+	# this is a hackery function to return just
+	# the opts keys for a given class
+	@getOptKeys: ->
+		CUI.Element.__dont_read_opt = true
+		element = new(@)
+		delete(CUI.Element.__dont_read_opts)
+		Object.keys(element.getCheckMap())
 
 	@readOpts: (opts, cls, check_map, map_values) ->
 		if map_values != true and map_values != false
@@ -202,55 +254,3 @@ class CUI.Element
 		# CUI.warn "#{@__cls}.opts = ", dump(set_opts)
 		# @__timeEnd("readOpts")
 		set_opts
-
-	# add options from and style like attribute string
-	# element: the element to
-	addOptsFromAttr: (str) ->
-		for k, v of @readOptsFromAttr(str)
-			@opts[k] = v
-
-	# read "style" like opts for layout
-	readOptsFromAttr: (str) ->
-		opts = {}
-		if not str?.split
-			return opts
-		for key_value in str.split(";")
-			if isEmpty(key_value.trim())
-				continue
-			[key, value] = key_value.split(":")
-			key = key.trim()
-			value = value?.trim()
-			assert(not isEmpty(key) and not isEmpty(value), "#{@__cls}.readOptsFromAttr", "Parsing error in \"#{str}\".")
-			if value == "true"
-				value = true
-			else if value == "false"
-				value = false
-			else if not isNaN(parseInt(value))
-				value = parseInt(value)
-			opts[key] = value
-		opts
-
-	# proxy given methods to given element
-	proxy: (element, methods) ->
-		assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
-		assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
-		for method in methods
-			do (method) =>
-				@[method] = =>
-					element[method].apply(element, arguments)
-		@
-
-	destroy: ->
-		# clean mapped values
-		assert(@__mapped_keys, getObjectClass(@)+".destroy", "__mapped_keys not found, that means the top level constructor was not called.", element: @)
-
-		for k in @__mapped_keys
-			delete("@_#{k}")
-		@__mapped_keys = []
-		@_onDestroy?(@)
-		@__destroyed = true
-
-	isDestroyed: ->
-		@__destroyed
-
-	@uniqueId: 0

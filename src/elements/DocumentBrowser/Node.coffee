@@ -98,14 +98,16 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 			dfr.resolve([])
 		dfr.promise()
 
+	getMainArticleUrl: ->
+		@__url + @getNodePath(@getLastPathElement()+".md")
+
 	loadContent: ->
 		if @__content
 			new CUI.resolvedPromise(@__content, @__htmlNodes, @__texts)
 
 		dfr = new CUI.Deferred()
-		filename = @getLastPathElement()+".md"
 		new CUI.XHR
-			url: @__url + @getNodePath(filename)
+			url: @getMainArticleUrl()
 			responseType: "text"
 		.start()
 		.done (@__content) =>
@@ -117,34 +119,43 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 		.fail(dfr.reject)
 		dfr.promise()
 
-	findContent: (regExpe, search, matches = []) ->
+	findContent: (searchQuery, matches = []) ->
+		assert(searchQuery instanceof CUI.DocumentBrowser.SearchQuery, "DocumentBrowserNode.findContent", "searchQuery needs to be instance of CUI.DocumentBrowser.SearchQuery.", searchQuery: searchQuery)
+
+		regExpe = searchQuery.getRegExps()
+
 		idx_hits = [0..regExpe.length-1]
 
-		title_match = @_browser.getMatches(regExpe, @_title)
-		if title_match
-			for match in title_match.matches
-				removeFromArray(match.regExp_idx, idx_hits)
+		remove_matched_part = (match) =>
+			if idx_hits.length == 0
+				return
+
+			for _match in match.getMatches()
+				removeFromArray(_match.regExp_idx, idx_hits)
 				if idx_hits.length == 0
-					break
+					return
+
+		title_match = searchQuery.match(@_title)
+		if title_match
+			remove_matched_part(title_match)
 
 		text_matches = []
 
 		if @__texts
 			for text, idx in @__texts
-				text_match = @_browser.getMatches(regExpe, text)
-				if text_match
-					text_matches.push(node: @, match: text_match)
-					if idx_hits.length > 0
-						for match in text_match.matches
-							removeFromArray(match.regExp_idx, idx_hits)
-							if idx_hits.length == 0
-								break
+				text_match = searchQuery.match(text)
+				if not text_match
+					continue
+
+				text_match.nodeIdx = idx
+				text_matches.push(text_match)
+				remove_matched_part(text_match)
 
 		if idx_hits.length == 0
 			# console.debug "findContent", title_match, text_matches
-			matches.push(new CUI.DocumentBrowser.SearchMatch(
+			matches.push(new CUI.DocumentBrowser.NodeMatch(
 				node: @
-				search: search
+				searchQuery: searchQuery
 				title_match: title_match
 				text_matches: text_matches
 			))
@@ -154,7 +165,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 
 		if @children
 			for c in @children
-				c.findContent(regExpe, search, matches)
+				c.findContent(searchQuery, matches)
 
 		return matches
 
@@ -225,6 +236,11 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 				stack.push(part)
 
 		stack.join("/")
+
+	rendererLink: (href, title, text) ->
+		title = href
+		href = @_browser.renderHref(href, @getNodePath())
+		"<a href='"+href+"' title='"+escapeAttribute(title)+"'>"+text+"</a>"
 
 	rendererImage: (href, title, text) ->
 		if href.startsWith("http:") or href.startsWith("//")
