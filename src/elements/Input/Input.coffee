@@ -808,7 +808,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 		if @preventInvalidInput() and shadow_v.length > 0
 			ret = @checkInput(@correctValueForInput(shadow_v))
-			console.debug "checking shadow input", ret, shadow_v
+			# console.debug "checking shadow input", ret, shadow_v
 			if ret == false
 				return
 
@@ -911,7 +911,10 @@ class CUI.Input extends CUI.DataFieldInput
 
 	displayValue: ->
 		super()
-		@__input0.value = @getValueForDisplay()
+		value = @getValueForDisplay()
+		if value != @__input0.value
+			# prevent focus loss if value is the same
+			@__input0.value = value
 		@checkInput()
 		@
 
