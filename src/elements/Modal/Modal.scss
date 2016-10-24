@@ -81,6 +81,10 @@
 
 .cui-modal {
 	> .cui-pane {
+
+		min-width: 300px;
+		min-height: 140px;
+
 		@include pane_control_sizes(big);
 		@include pane_header_colors($modal_header_background_color, $modal_header_font_color);
 		@include outer_pane_padding("big");
