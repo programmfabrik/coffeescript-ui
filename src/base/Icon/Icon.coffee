@@ -74,7 +74,7 @@ class CUI.Icon extends CUI.Element
 		envelope_active: "fa-envelope"
 		save: "fa-floppy-o"
 		heart: "fa-heart"
-		remove: "fa-times-thin"
+		remove: "svg-close"
 		user: "fa-user"
 		clock: "fa-clock-o"
 		plus: "fa-plus"
