@@ -310,7 +310,6 @@ class CUI.Button extends CUI.DOM
 
 		if @_menu_on_hover
 			CUI.Button.menu_timeout = null
-			CUI.Button.menu_shown = null
 
 			menu_stop_hide = =>
 				if not CUI.Button.menu_timeout
@@ -326,7 +325,6 @@ class CUI.Button extends CUI.DOM
 					ms: 700
 					call: =>
 						@getMenu().hide(ev)
-
 
 		if @_menu_on_hover or @_tooltip
 			Events.listen
@@ -346,13 +344,16 @@ class CUI.Button extends CUI.DOM
 
 						if not @__disabled and menu.hasItems(ev)
 
-							if CUI.Button.menu_shown and CUI.Button.menu_shown != menu
+							menu_shown = CUI.DOM.data(CUI.DOM.find(".cui-button--hover-menu")[0], "element")
+
+							if menu_shown and menu_shown != menu
 								menu_stop_hide()
-								CUI.Button.menu_shown.hide(ev)
+								menu_shown.hide(ev)
+								console.debug "hiding", menu_shown.getUniqueId()
+
+							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
 
 							menu.show(ev)
-
-							CUI.Button.menu_shown = menu
 
 							Events.ignore
 								instance: @

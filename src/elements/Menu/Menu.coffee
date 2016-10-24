@@ -64,6 +64,7 @@ class CUI.Menu extends CUI.Layer
 				if ev.keyCode() == 27
 					@hide()
 					ev.stop()
+
 		@
 
 	hasItems: (event) ->
