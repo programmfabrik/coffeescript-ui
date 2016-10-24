@@ -1173,17 +1173,6 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&.cui-label-centered {
-		flex: 1;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		
-		.cui-label-content {
-			text-align: center;
-		}
-	}
-
 	.cui-label-icon {
 		.fa {
 			line-height: 18px;
@@ -1234,6 +1223,18 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label-icon:empty {
 		display: none;
+	}
+}
+
+// Label: Centered
+.cui-label-centered {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	.cui-label-content {
+		text-align: center;
 	}
 }
 
@@ -1310,7 +1311,8 @@ a[role="button"].cui-button-appearance-link {
 	@include margin;
 
 	&:not(.cui-label-markdown) {
-		white-space: pre-wrap;
+		// can't use pre-wrap everywhere: kills the layout in Safari
+		// white-space: pre-wrap;
 		// word-break: normal;
 		word-break: break-all;
 		// this does not work in IE, but will
