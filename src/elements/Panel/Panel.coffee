@@ -27,11 +27,11 @@ class Panel extends CUI.DOM
 			icon_active: @_icon_opened
 			icon_inactive: @_icon_closed
 			onActivate: (btn, flags, event) =>
-				@open()
+				@open(not flags.initial_activate)
 				@_onActivate?(btn, flags, event)
 
 			onDeactivate: (btn, flags, event) =>
-				@close()
+				@close(not flags.initial_activate)
 				@_onDeactivate?(btn, flags, event)
 
 		@append(@button, "header")
@@ -90,15 +90,28 @@ class Panel extends CUI.DOM
 	isOpen: ->
 		!@isClosed()
 
-	close: ->
+	close: (trigger = true) ->
 		@DOM.addClass("cui-panel-closed")
+
+		if trigger
+			Events.trigger
+				type: "content-resize"
+				node: @DOM
 		@
 
-	open: ->
-		if @_load_on_open and not @__content_loaded
-			@loadContent()
+	open: (trigger = true) ->
+		done = =>
+			@DOM.removeClass("cui-panel-closed")
+			if trigger
+				Events.trigger
+					type: "content-resize"
+					node: @DOM
+			return
 
-		@DOM.removeClass("cui-panel-closed")
+		if @_load_on_open and not @__content_loaded
+			@loadContent().done(done)
+		else
+			done()
 		@
 
 	loadContent: ->
@@ -107,14 +120,16 @@ class Panel extends CUI.DOM
 		else
 			ret = @_content
 
+		dfr = new CUI.Deferred()
 		if isPromise(ret)
 			ret.always (content) =>
 				@setContent(content)
+				dfr.resolve()
 		else
 			@setContent(ret)
-
+			dfr.resolve()
 		@__content_loaded = true
-		@
+		dfr.promise()
 
 	setContent: (content, key="content") ->
 		if content == false and @_content_placeholder

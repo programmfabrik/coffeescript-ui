@@ -29,7 +29,7 @@ class ListViewColResizeTool extends ListViewHoverTool
 			if not rect
 				return
 
-			CUI.debug "ListViewColResizeTool:", "left:", @info.cell.pos.left, "width:", rect.width, "threshold:", @threshold
+			# CUI.debug "ListViewColResizeTool:", "left:", @info.cell.pos.left, "width:", rect.width, "threshold:", @threshold
 
 			# if coldef == "maximize"
 			# 	# for 100% columns the actual width is greater than the reported

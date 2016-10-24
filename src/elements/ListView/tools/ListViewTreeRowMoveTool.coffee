@@ -27,7 +27,6 @@ class ListViewTreeRowMoveTool extends ListViewRowMoveTool
 			row_i = row.getRowIdx()
 			@blockedRows.push(row_i)
 			height += @lV.getRowHeight(row_i)
-			@movableMarkers.push(@markRow(row_i)[0])
 
 		@movableDiv.css(height: height)
 

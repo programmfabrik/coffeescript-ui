@@ -23,7 +23,6 @@ class ListViewRowMoveTool extends ListViewHoverTool
 
 	startDrag: ->
 		@movableTargetDiv = @appendMarker("row-move-target")
-		@movableMarkers = @markRow()
 		# get first row
 		@__rect_top = @lV.getRowGridRect(@lV.getRowIdx(@lV.fixedRowsCount))
 
