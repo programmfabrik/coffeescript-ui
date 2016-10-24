@@ -140,7 +140,7 @@ class CUI.Label extends CUI.DOM
 			@__overflow_button_div = $div("cui-label-manage-overflow-button-container", style: "display: none;")
 
 			if @_manage_overflow == true
-				btn_opts = CUI.defaults.class.Label.defaults.manage_overflow
+				btn_opts = copyObject(CUI.defaults.class.Label.defaults.manage_overflow, true)
 			else
 				btn_opts = @_manage_overflow
 
