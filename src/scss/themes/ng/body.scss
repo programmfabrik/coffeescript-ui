@@ -6,7 +6,7 @@ $padding: 10px;
 $compensating-padding: 7px;
 $gap: 12px;
 $small-gap: 7px;
-$background: hsl(205,0%,95%);
+$background: white;
 $foreground: white;
 $border: hsl(205,20%,91%);
 
@@ -20,7 +20,7 @@ $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
 $on-highlight-muted-color: hsl(205,50%,85%);
 
-$muted-color: hsl(205,8%,50%);
+$muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
 // Table Colors
@@ -250,7 +250,7 @@ li > div {
 	}
 
 	> .cui-horizontal-layout-center {
-		flex-direction: row;
+		// flex-direction: row; breaks collection manager detail
 	}
 }
 
@@ -555,6 +555,7 @@ li > div {
 
 	.cui-horizontal-layout-right {
 		margin-left: $gap;
+		flex-shrink: 0;
 		
 		&:empty {
 			margin-left: 0;
@@ -756,7 +757,7 @@ li > div {
 }
 
 i.fa-spinner {
-	width: 12px;
+	width: 1em;
 }
 
 i.cui-spin-stepped {
@@ -1034,8 +1035,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button-left {
 		padding: 0 2px 0 0;
-		position: relative;
-		top: -1px;
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -2264,6 +2263,7 @@ $table-data-padding: 4px;
 
 	&.cui-lv-td-max {
 		flex: 1 1 auto;
+		width: auto;
 	}
 }
 
@@ -2405,6 +2405,7 @@ $table-data-padding: 4px;
 .cui-lv-tr {
 	flex: 1 1 auto;
 	display: flex;
+	max-width: 100%;
 }
 
 .cui-list-view-row-move-handle-column {
@@ -2473,6 +2474,7 @@ $table-data-padding: 4px;
 	.cui-tree-node {
 		display: flex;
 		flex: 1 1 auto;
+		max-width: 100%;
 
 		.cui-tree-node-handle,
 		.cui-tree-node-spacer {
@@ -2494,6 +2496,11 @@ $table-data-padding: 4px;
 
 		.cui-tree-node-content {
 			flex: 1 1 auto;
+			min-width: 0;
+			
+			.cui-label {
+				max-width: 100%;
+			}
 		}
 	}
 }
@@ -2529,7 +2536,6 @@ table.cui-form-table {
 .cui-form-tr,
 .cui-form-tr-header {
 	display: flex;
-	background: $foreground;
 	position: relative;
 }
 
@@ -2539,9 +2545,7 @@ table.cui-form-table {
 		margin-top: -$padding;
 		margin-bottom: -$padding;
 
-		.cui-form-tr {
-			background: none;
-			
+		.cui-form-tr {			
 			&:before {
 				left: 0;
 				right: 0;
@@ -2566,7 +2570,6 @@ table.cui-form-table {
 
 [cui-form-depth="0"] > .cui-form-tr-header,
 .cui-form-tr-content-is-form-vertical > .cui-form-left {
-	background: $background;
 	width: auto;
 	padding: 3*$padding $padding $padding/2;
 	border-bottom: 1px solid hsl(205,10%,95%);

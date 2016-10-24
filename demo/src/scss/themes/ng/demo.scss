@@ -1,6 +1,4 @@
 .cui-demo-header {
-	padding: 10px;
-
 	.cui-demo-menu-button,
 	.theme-switch  {
 		&,
@@ -11,7 +9,6 @@
 				background: transparent;
 				border-style: none;
 				box-shadow: none;
-				padding: 2px 10px 2px 0;
 			}
 		}
 	}
@@ -26,6 +23,7 @@
 		color: #fff;
 		background-color: #000;
 		padding: 2px 7px;
+		height: auto;
 	}
 	.cui-demo-sub-title {
 		font-size: 20px;
@@ -84,7 +82,6 @@ body.cui-demo-docs {
 }
 
 .cui-demo-pane-center {
-	margin: 10px;
 }
 
 // console pane
