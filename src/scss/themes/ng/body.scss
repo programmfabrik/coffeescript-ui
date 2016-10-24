@@ -83,7 +83,6 @@ $layer-footer-border: $layer-header-border;
 		display: flex; // yes, this is fun :)
 		box-sizing: border-box;
 		flex: 1 1 auto;
-		flex-direction: row;
 
 		> td {
 			display: flex; // yes, this is fun :)
@@ -207,11 +206,7 @@ input {
 }
 
 div, a {
-	display: flex;
-	flex: 0 0 auto;
-	align-items: stretch;
 	box-sizing: border-box;
-	flex-direction: column;
 }
 
 li > div {
@@ -224,6 +219,7 @@ li > div {
 
 // HorizontalLayout
 .cui-horizontal-layout {
+	display: flex;
 	flex-shrink: 1;
 	
 	&.cui-maximize-horizontal {
@@ -245,17 +241,25 @@ li > div {
 
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
+		max-width: 100%;
 	}
 
 	&:not(.cui-maximize-horizontal) {
 		flex-direction: row;
 		// align-self: flex-start; anyoing in toolbar where you want align stretch
 	}
+
+	> .cui-horizontal-layout-center {
+		flex-direction: row;
+	}
 }
 
 .cui-horizontal-layout-left,
 .cui-horizontal-layout-center,
 .cui-horizontal-layout-right {
+	display: flex;
+	flex-direction: column;
+	
 	> .cui-label {
 		padding: 0 $padding;
 
@@ -272,6 +276,9 @@ li > div {
 
 // VerticalLayout
 .cui-vertical-layout {
+	display: flex;
+	flex-direction: column;
+	
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
 		// overflow: hidden; // cuts off password input outline
@@ -280,6 +287,7 @@ li > div {
 		> .cui-vertical-layout-bottom {
 			position: relative;
 			overflow: hidden;
+			flex-shrink: 0;
 		}
 		> .cui-vertical-layout-center {
 			position: relative;
@@ -297,37 +305,35 @@ li > div {
 	}
 }
 
-.cui-horizontal-list {
-	> .cui-horizontal-layout-center {
-		flex-direction: row;
-	}
+.cui-vertical-layout-top,
+.cui-vertical-layout-center,
+.cui-vertical-layout-bottom {
+	display: flex;
+	flex-direction: column;
 }
 
-
 // Layout Absolute Horizontal
-.cui-horizontal-layout{
-  &.cui-absolute {
-    position: relative;
+.cui-horizontal-layout.cui-absolute {
+  position: relative;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    & > div {
-			position: absolute !important; // overwrite "relative" from above
-      top: 0;
-      bottom: 0;
-    }
-    & > .cui-horizontal-layout-left {
-      left: 0;
-    }
-    & > .cui-horizontal-layout-center {
-      left: 0;  // overwritten by Layout.coffee
-      right: 0;  // overwritten by Layout.coffee
-    }
+  & > div {
+		position: absolute !important; // overwrite "relative" from above
+    top: 0;
+    bottom: 0;
+  }
+  & > .cui-horizontal-layout-left {
+    left: 0;
+  }
+  & > .cui-horizontal-layout-center {
+    left: 0;  // overwritten by Layout.coffee
+    right: 0;  // overwritten by Layout.coffee
+  }
 
-    & > .cui-horizontal-layout-right {
-      right: 0;
-    }
+  & > .cui-horizontal-layout-right {
+    right: 0;
   }
 }
 
@@ -374,6 +380,10 @@ li > div {
 }
 
 .cui-flex-handle {
+	position: relative;
+	z-index: 2;
+	flex-shrink: 0;
+
 	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
 		.cui-label {
 			display: none;
@@ -384,10 +394,6 @@ li > div {
 .cui-flex-handle-row {
 	width: 10px;
 	margin: 0 -5px;
-	flex: 0 0 auto;
-	overflow: hidden;
-	position: relative;
-	z-index: 2;
 	
 	&:not(.cui-flex-handle-closed) {
 		cursor: ew-resize;
@@ -418,17 +424,14 @@ li > div {
 }
 
 .cui-flex-handle-column {
-	&.cui-flex-handle-has-label.cui-flex-handle-closed {
-		margin: 0;
-	}
-	
-	user-select: none;
 	height: 10px;
 	margin: -5px 0;
 	width: 100%;
-	position: relative;
-	z-index: 1;
 	
+	&.cui-flex-handle-has-label.cui-flex-handle-closed {
+		margin: 0;
+	}
+
 	&:not(.cui-flex-handle-closed) {
 		cursor: ns-resize;
 	}
@@ -494,6 +497,7 @@ li > div {
 
 // Toolbar
 .cui-toolbar {
+	display: flex;
 	min-height: $toolbar-height;
 	justify-content: space-between;
 	flex-wrap: wrap;
@@ -563,7 +567,9 @@ li > div {
 
 	.cui-data-field-input {
 		height: 100%;
-		justify-content: center;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 		
 		.cui-input {
 			flex-grow: 0;
@@ -694,7 +700,7 @@ li > div {
 
 // Table
 .cui-table {
-	margin: $compensating-padding/2 $padding;
+	margin: 0 $padding;
 	
 	&:empty {
 		margin: 0;
@@ -791,7 +797,7 @@ i.cui-spin-stepped {
 }
 
 .cui-button-visual {
-	flex-direction: row;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	max-width: 100%;
@@ -826,12 +832,15 @@ i.cui-spin-stepped {
 	  color: hsl(205,100%,35%);
 	}
 
-	&.cui-disabled .cui-button-visual {
-	  opacity: 0.5;
+	&.cui-disabled {
 	  cursor: default;
-	  color: $button-text-color;
-	  border-color: hsl(205,10%,75%);
-	  background: none;
+	  
+		.cui-button-visual {
+		  opacity: 0.5;
+		  color: $button-text-color;
+		  border-color: hsl(205,10%,75%);
+		  background: none;
+	  }
 	}
 
 	&.cui-button-appearance-important[role],
@@ -891,6 +900,7 @@ i.cui-spin-stepped {
 .cui-button-left,
 .cui-button-center,
 .cui-button-right {
+	display: flex;
 	flex: 0 0 auto;
 	justify-content: center;
 	padding: 0 3px;
@@ -963,6 +973,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-button-checkbox {
+	display: flex;
 	flex-direction: row;
 	cursor: pointer;
 
@@ -1098,10 +1109,8 @@ a[role="button"].cui-button-appearance-link {
 // Label
 .cui-label {
 	display: inline-flex;
-	flex-direction: row;
 	flex: 0 0 auto;
-	align-items: stretch;
-	// align-self: flex-start;
+	align-items: center;
 
 	&.cui-tmpl-label-rotate-90 {
 		// rotate by 90 degrees
@@ -1119,6 +1128,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label-centered {
 		flex: 1;
+		display: flex;
 		align-items: center;
 		justify-content: center;
 		
@@ -1147,6 +1157,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&:not(cui-label-multiline) {
 		> .cui-label-content {
+			display: flex;
 			flex-direction: row;
 		}
 	}
@@ -1269,7 +1280,6 @@ a[role="button"].cui-button-appearance-link {
 			transition: height ease 0.5s, max-height ease 0.5s;
 			max-height: 62px;
 			position: relative;
-			// flex-direction: column;
 			overflow: hidden;
 
 			> .cui-label-manage-overflow-content-container {
@@ -1317,6 +1327,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Buttonbar
 .cui-buttonbar {
+	display: flex;
 	flex-direction: row;
 	align-items: center;
 	@include margin;
@@ -1364,6 +1375,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Buttonbar
 .cui-buttonbar-group {
+	display: flex;
 	flex-direction: row;
 
 	> * {
@@ -1411,6 +1423,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
+	display: flex;
 	flex-direction: column;
 
 	.cui-button {
@@ -1483,6 +1496,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer {
 	min-width: 200px;
 	position: absolute;
+	display: flex;
 	flex-direction: column;
 	overflow: auto;
 	background: white;
@@ -1517,6 +1531,28 @@ a[role="button"].cui-button-appearance-link {
 
 			.cui-form-table-has-left-column {
 				margin: 0;
+			}
+
+			// add spacing to single labels in the body
+			// 
+			// cases:
+			// - password reset
+			//
+			&,
+			> .cui-layout,
+			> .cui-layout > .cui-layout {
+				> .cui-label {
+					margin-left: $padding;
+					margin-right: $padding;
+					
+					&:first-child {
+						margin-top: $padding;
+					}
+
+					&:last-child {
+						margin-bottom: $padding;
+					}
+				}
 			}
 		}
 
@@ -1726,7 +1762,7 @@ a[role="button"].cui-button-appearance-link {
 				margin: 0;
 				height: 100%;
 				align-items: stretch;
-				padding: 0;
+				padding: 0 !important;
 				
 				.cui-button-visual {
 					height: 100%;
@@ -1938,6 +1974,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tmpl-item-list-body {
+	display: flex;
 	flex-direction: column;
 
 	> div {
@@ -2054,8 +2091,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 	> .cui-vertical-layout-center {
 		> .cui-tmpl-tabs-bodies {
+			display: flex;
 			flex: 1 1 auto;
-			flex-direction: row;
 			overflow: hidden;
 			> .cui-tmpl-tab-body {
 				// disable the javascript overwrite here
@@ -2156,7 +2193,7 @@ $table-data-padding: 4px;
 	min-height: $table-data-height;
 	flex: 0 0 auto;
 	overflow: hidden;
-	justify-content: center;
+	display: flex;
 
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
@@ -2227,6 +2264,7 @@ $table-data-padding: 4px;
 .cui-list-view-grid {
 	font-size: 12px;
 	flex: 1 1 auto;
+	display: flex;
 	flex-direction: column;
 	// needed for resize tool to position the resize
 	// handles properly
@@ -2235,7 +2273,7 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
-	flex-direction: row;
+	display: flex;
 	
 	.cui-lv-td {
 		justify-content: flex-end;
@@ -2244,7 +2282,7 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-inner-bottom {
 	flex: 1 1 auto;
-	flex-direction: row;
+	display: flex;
 }
 
 .cui-list-view-grid-quadrant-0 {
@@ -2292,13 +2330,14 @@ $table-data-padding: 4px;
 // this in Form too
 
 .cui-lv-tbody {
+	display: flex;
 	flex-direction: column;
 }
 
 .cui-lv-tr-outer {
 	// avoid the text select cursor on list items
 	cursor: default;
-	flex-direction: row;
+	display: flex;
 	flex: 0 0 auto;
 	min-width: 0;
 
@@ -2314,7 +2353,7 @@ $table-data-padding: 4px;
 
 .cui-lv-tr {
 	flex: 1 1 auto;
-	flex-direction: row;
+	display: flex;
 }
 
 .cui-list-view-row-move-handle-column {
@@ -2325,7 +2364,7 @@ $table-data-padding: 4px;
 	&.cui-lv-td {
 		width: 10px + $table-data-padding*2+4;
 		padding: 0 2px 0 $table-data-padding+2;
-		flex-direction: row;
+		display: flex;
 	}
 }
 
@@ -2338,7 +2377,7 @@ $table-data-padding: 4px;
 
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
-	flex-direction: row;
+	display: flex;
 	background: linear-gradient($zebra-color 50%, white 50%);
 	background-size: 100% $table-data-height*2;
 
@@ -2381,21 +2420,24 @@ $table-data-padding: 4px;
 		}
 	}
 	.cui-tree-node {
-		flex-direction: row;
+		display: flex;
 		flex: 1 1 auto;
 
 		.cui-tree-node-handle,
 		.cui-tree-node-spacer {
-			width: 14px;
+			width: 12px;
 			flex: 0 0 auto;
+			padding-right: 5px;
 		}
 
 		.cui-tree-node-handle {
+			display: flex;
 			text-align: center;
-			justify-content: center;
-
-			.fa-caret-down {
-				margin-left: -3px;
+			align-items: center;
+			justify-content: flex-end;
+			
+			.fa {
+				margin-top: -2px;
 			}
 		}
 
@@ -2407,7 +2449,7 @@ $table-data-padding: 4px;
 
 // Table
 .cui-tr {
-	flex-direction: row;
+	display: flex;
 	@include padding-y(0.5);
 }
 
@@ -2435,7 +2477,7 @@ table.cui-form-table {
 
 .cui-form-tr,
 .cui-form-tr-header {
-	flex-direction: row;
+	display: flex;
 	background: $foreground;
 	position: relative;
 }
@@ -2499,6 +2541,7 @@ table.cui-form-table {
 }
 
 .cui-form-tr.cui-form-tr-content-is-form-vertical {
+	display: flex;
 	flex-direction: column;
 	padding: 0;
 	
@@ -2636,12 +2679,11 @@ table.cui-form-table {
 }
 
 .cui-options-sortable-option {
-	flex-direction: row;
+	display: flex;
 	
 	.cui-options-sortable-drag-handle {
 		width: 16px;
 		display: flex;
-    flex-direction: row;
 		margin-right: 2px;
     padding: 0 3px 0 1px;
     
@@ -2679,7 +2721,7 @@ table.cui-form-table {
 		width: 12px;
 		padding: 0;
 		margin-right: $padding/2;
-		flex-direction: row;
+		display: flex;
 	}
 }
 
@@ -2716,7 +2758,7 @@ table.cui-form-table {
 
 // DateTime
 .cui-date-time {
-	flex-direction: row;
+	display: flex;
 }
 
 .cui-date-time-calendar .cui-buttonbar {
@@ -2883,7 +2925,7 @@ table.cui-form-table {
 	.cui-tmpl-item-list-body {
 		box-sizing: content-box;
 		width: 350px;
-		flex-direction: row;
+		display: flex;
 		flex-wrap: wrap;
 		> * {
 			box-sizing: border-box;
@@ -2926,7 +2968,7 @@ table.cui-form-table {
 			.cui-date-time-calendar {
 				transition: margin-left 0.5s ease-out;
 			}
-			flex-direction: row;
+			display: flex;
 			// overflow: hidden; cuts off year-picker outline
 			flex: 1 1 auto;
 			.cui-number-input {
@@ -2948,11 +2990,12 @@ table.cui-form-table {
 // MultiInput
 
 .cui-multi-input .cui-multi-input-container {
-    align-items: stretch;
+	display: flex;
+  align-items: stretch;
 	flex: 1 1 auto;
 
 	> .cui-multi-input-input {
-		flex-direction: row;
+		display: flex;
 		> .cui-data-field-multi-input-center {
 			flex: 1 1 auto;
 		}
@@ -3241,7 +3284,7 @@ table.cui-form-table {
 .cui-digi-display {
 	// border: 1px solid black;
 	align-self: flex-start;
-	flex-direction: row;
+	display: flex;
 
 	> div {
 		vertical-align: bottom;

@@ -53,7 +53,7 @@ class CUI.Icon extends CUI.Element
 		trash: "fa-trash-o"
 		failed: "fa-warning"
 		no_right: "fa-slack"
-		file: "fa-file-o"
+		file: if CUI.__ng__ then "fa-file" else "fa-file-o"
 		refresh: "fa-refresh"
 		zip: "fa fa-file-archive-o"
 		rotate_right: "fa-rotate-right"
