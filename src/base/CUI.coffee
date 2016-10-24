@@ -687,7 +687,7 @@ class CUI
 
 	@initNodeDebugCopy: ->
 		Events.listen
-			type: "keyup"
+			type: "keydown"
 			capture: true
 			call: (ev) =>
 				if ev.getKeyboard() != "Alt+C"
