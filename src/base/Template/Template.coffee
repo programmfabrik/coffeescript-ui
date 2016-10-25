@@ -88,10 +88,7 @@ class CUI.Template extends CUI.Element
 					sel = "."+@_map_prefix+"-"+clean_k
 				else
 					prefix = toDash(@_name)
-					if CUI.__ng__
-						sel = ".cui-"+prefix+"-"+clean_k
-					else
-						sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
+					sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
 			else
 				sel = v
 
