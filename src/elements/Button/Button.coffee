@@ -280,24 +280,25 @@ class CUI.Button extends CUI.DOM
 				return
 
 		Events.listen
-			type: ["mouseup", "click", "dblclick"]
+			type: @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
 			node: @DOM
 			call: (ev) =>
+				console.debug "button received ", ev.getType(), @getText(), @_click_type
 
-				if ev.getType() != @_click_type
-					# click type can be changed after
-					# button is created, so we
-					# need to check if the
-					# event is the desired one
-					ev.stopPropagation()
-					return
+				# if ev.getType() != @_click_type
+				# 	# click type can be changed after
+				# 	# button is created, so we
+				# 	# need to check if the
+				# 	# event is the desired one
+				# 	ev.stopPropagation()
+				# 	return
 
 				# console.debug @_click_type, ev, ev.getButton(), @__prevent_btn_click
 				if window.globalDrag
-					ev.stop()
+					# ev.stop()
 					return
 
-				if ev.getButton() != 0
+				if ev.getButton() != 0 and not ev.getType().startsWith("touch")
 					ev.stop()
 					return
 
@@ -509,9 +510,9 @@ class CUI.Button extends CUI.DOM
 			confirm_on_click:
 				check: String
 			click_type:
-				default: "click"
+				default: "click" # "touchend"
 				mandatory: true
-				check: ["click", "mouseup", "dblclick"]
+				check: ["click", "mouseup", "dblclick", "touchstart", "touchend"]
 			text:
 				check: String
 			tooltip:

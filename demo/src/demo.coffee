@@ -91,6 +91,7 @@ class RunDemo extends CUI.Element
 			type: "hashchange"
 			node: window
 			call: (ev) =>
+				console.debug "hashchange on window..", document.location.hash
 				@displayDemo()
 
 		groups = ["Core", "Base", "Extra", "Demo", "Test"].reverse()
@@ -128,7 +129,7 @@ class RunDemo extends CUI.Element
 								text: demo.getName()
 								_demo: demo
 								onClick: =>
-									document.location.hash = "##{demo.getName()}"
+									document.location.hash = "#"+demo.getName()
 					items
 
 			icon: new Icon
@@ -231,7 +232,7 @@ class RunDemo extends CUI.Element
 			@displayDemo()
 
 	displayDemo: ->
-		demo_name = document.location.hash.match('^#([a-zA-Z]+)')?[1]
+		demo_name = document.location.hash.match('^#([a-zA-Z &]+)')?[1]
 
 		demo = null
 		for _demo in @demos
@@ -356,20 +357,41 @@ CUI.ready ->
 			console.warn "transitionend..."
 			splash_node.remove()
 			splash_node = null
+		.fail =>
+			console.warn "rejected..."
+
 
 		CUI.DOM.setStyle(splash_node,
 			opacity: 0
 			pointerEvents: "none"
 		)
 
-	mouse_pos = null
-
 	Events.listen
-		type: "mousemove"
+		type: [
+			"mousedown"
+			"mouseup"
+			"touchstart"
+			"touchend"
+			"touchmove"
+			"touchcancel"
+			"touchforchange"
+			"gesturestart"
+			"gestureend"
+			"gesturechange"
+			"click"
+		]
 		capture: true
 		call: (ev) =>
-			# store mouse position
-			mouse_pos = x: ev.pageX(), y: ev.pageY()
+			ne = ev.getNativeEvent()
+			if ev.getType().startsWith("touch")
+				touches_print = []
+				for touch in ne.touches
+					touches_print.push(touch.pageX+"x"+touch.pageY)
+				console.debug ev.getType(), touches_print.join(",") # ne, ne.touches, ne.touchTargets
+			if ev.getType().startsWith("gesture")
+				console.debug ev.getType(), ne.scale, ne.rotation
+			else
+				console.debug "ev:", ev.getType(), ev.getTarget()
 
 	CUI.initNodeDebugCopy()
 

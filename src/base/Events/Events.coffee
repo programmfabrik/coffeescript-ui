@@ -346,6 +346,14 @@ class CUI.Events extends CUI.Element
 				mousedown: {}
 				mouseup: {}
 				click: {}
+				touchstart: {}
+				touchend: {}
+				touchmove: {}
+				touchcancel: {}
+				touchforchange: {}
+				gesturestart: {}
+				gestureend: {}
+				gesturechange: {}
 
 			KeyboardEvents:
 				input:

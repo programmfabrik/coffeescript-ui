@@ -1147,7 +1147,7 @@ class CUI.Layer extends CUI.DOM
 CUI.ready ->
 
 	Events.listen
-		type: ["mousedown"]
+		type: ["mousedown", "touchend"]
 		capture: true
 		# install not do high, do Drag & Drop can be on top
 		node: document.body

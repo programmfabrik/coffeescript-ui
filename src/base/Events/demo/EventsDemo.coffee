@@ -188,7 +188,23 @@ class EventsDemo extends Demo
 
 		data.listen = mousedown: true
 		fields = []
-		for k, idx in ["mousedown", "wheel", "mouseup", "click", "dblclick", "mouseisdown", "keydown", "keyup", "keypress"]
+		for k, idx in [
+			"mousedown"
+			"wheel"
+			"mouseup"
+			"click"
+			"dblclick"
+			"mouseisdown"
+			"keydown"
+			"keyup"
+			"keypress"
+			"touchstart"
+			"touchend"
+			"touchmove"
+			"touchcancel"
+			"touchforchange"
+
+		]
 			fields.push
 				type: Checkbox
 				name: k
@@ -214,6 +230,7 @@ class EventsDemo extends Demo
 		tmpl.map.pointer_events.before(Demo.dividerLabel("pointer events").DOM)
 
 		tmpl.append(new Form(
+			class: "cui-events-demo-form"
 			maximize: false
 			fields: fields
 			data: data.listen
