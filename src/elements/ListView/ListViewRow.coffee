@@ -31,7 +31,7 @@ class CUI.ListViewRow extends CUI.Element
 		if @_class
 			@__class = @_class
 		else
-			@__class = null
+			@__class = ""
 
 		@row_i = null
 
@@ -117,12 +117,19 @@ class CUI.ListViewRow extends CUI.Element
 
 	__selectableClass: "cui-list-view-row-selectable"
 
+	__movableClass: "cui-list-view-row-movable"
+
 	# used while node is rendered
 	getClass: ->
+		cls = @__class
+
 		if @isSelectable()
-			@__selectableClass+" "+@__class
-		else
-			@__class
+			cls = @__selectableClass + " " + cls
+
+		if @isMovable()
+			cls = @__movableClass + " " + cls
+
+		cls
 
 	# use this before node is rendered
 	setClass: (@__class) ->

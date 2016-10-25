@@ -1,13 +1,16 @@
 class ListViewColumnRowMoveHandle extends ListViewColumn
 
 	getClass: ->
-		if @getRow().isMovable()
+		if @getRow().isMovable() or CUI.__ng__
 			"cui-list-view-row-move-handle"
 		else
 			""
 
 	setElement: (cell) ->
 		super(cell)
+
+		if not @getRow().isMovable()
+			return
 
 		Events.listen
 			type: ["mousedown"]
