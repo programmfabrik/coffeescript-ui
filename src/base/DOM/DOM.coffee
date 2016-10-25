@@ -860,7 +860,7 @@ class CUI.DOM extends CUI.Element
 	# selector: collection eveverything until selector matches, null if no match
 	# untilDocElem: stop collecting at docElem
 	@elementsUntil: (docElem, selector, untilDocElem) ->
-		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof HTMLElement.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
+		assert(docElem instanceof Node or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof Node or window.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
 		testDocElem = docElem
 		path = [testDocElem]
 		while true
