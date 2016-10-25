@@ -7,13 +7,16 @@ class CUI.Lasso extends CUI.Draggable
 		super()
 		@addOpts
 			filter:
-				default: "*"
 				check: String
 
 			selected:
 				default: (ev, info) ->
 					alert("You lassoed #{info.elements.length} elements.")
 				check: Function
+
+			# only lasso rectangle cuts with this
+			lasso_filter:
+				check: String
 
 			lassoClass:
 				default: "cui-lasso"
@@ -89,8 +92,8 @@ class CUI.Lasso extends CUI.Draggable
 		@
 
 	get_lassoed_elements: ->
-		get_dim = ($el) ->
-			dim = DOM.getRect($el)
+		get_dim = (el) ->
+			dim = el.getBoundingClientRect()
 			dim
 
 		do_overlap = (dims1, dims2) ->
@@ -106,9 +109,27 @@ class CUI.Lasso extends CUI.Draggable
 
 		globalDrag.lasso_dim = get_dim(globalDrag.lasso)
 		lassoed = []
-		for el in globalDrag.$source.find(@_filter)
-			if do_overlap(globalDrag.lasso_dim, get_dim($(el)))
-				lassoed.push(el)
+		if @_lasso_filter
+			for el in CUI.DOM.matchSelector(globalDrag.$source, @_lasso_filter)
+				if not do_overlap(globalDrag.lasso_dim, get_dim(el))
+					continue
+				# find lasso filtered
+				if @_filter
+					lassoed_el = CUI.DOM.closest(el, @_filter, globalDrag.$source)
+				else
+					parents = CUI.DOM.parentsUntil(el, globalDrag.$source)
+					lassoed_el = parents[parents.length-2]
+
+				if lassoed_el
+					lassoed.push(lassoed_el)
+		else if @_filter
+			for el in CUI.DOM.matchSelector(globalDrag.$source, @_filter)
+				if do_overlap(globalDrag.lasso_dim, get_dim(el))
+					lassoed.push(el)
+		else
+			for el in globalDrag.$source.children
+				if do_overlap(globalDrag.lasso_dim, get_dim(el))
+					lassoed.push(el)
 		lassoed
 
 	end_drag: (ev) ->

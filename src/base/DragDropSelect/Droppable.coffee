@@ -182,9 +182,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@__dropTarget = @__selectedTarget
 			@__dropTargetPos = null
 
-			if @_selector or not @__dropHelper
-				CUI.DOM.addClass(@__selectedTarget, @_hoverClass)
-			else
+			CUI.DOM.addClass(@__selectedTarget, @_hoverClass)
+			if @__dropHelper
 				@syncDropHelper()
 
 			return

@@ -22,7 +22,7 @@ class DragDropSelectDemo extends Demo
 
 		new Lasso
 			selector: ".drag-drop-select-demo-draggable-container"
-			filter: ".drag-drop-select-demo-draggable-container-item"
+			# filter: ".drag-drop-select-demo-draggable-container-item"
 			selected: (ev, info) =>
 				for el in info.elements
 					$(el).addClass("mark-lassoed")
