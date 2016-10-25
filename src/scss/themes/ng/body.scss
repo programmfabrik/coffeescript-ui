@@ -159,7 +159,6 @@ body {
 
 input,
 textarea {
-	min-width: 200px;
 	font-size: 12px;
 	border: 1px solid $button-border;
 	border-top-color: $button-border;
@@ -300,9 +299,10 @@ li > div {
 		// overflow: hidden; // cuts off password input outline
 	}
 
-	&:not(.cui-maximize-horizontal) {
-		align-self: flex-start;
-	}
+	// weird rule - breaks popover pools
+	// &:not(.cui-maximize-horizontal) {
+	// 	align-self: flex-start;
+	// }
 }
 
 .cui-vertical-layout-top,
@@ -550,6 +550,19 @@ li > div {
 		> .cui-toolbar {
 			// nested toolbars do not get a padding
 			padding: 0;
+		}
+	}
+
+	.cui-horizontal-layout-left {
+		> .cui-label {
+			// reset padding: 0 $padding; in cui-horizontal-layout-left
+			&:first-child {
+				padding-left: 0;
+			}
+			
+			&:last-child {
+				padding-right: 0;
+			}
 		}
 	}
 
@@ -1508,6 +1521,7 @@ a[role="button"].cui-button-appearance-link {
 
 	input,
 	textarea {
+		width: 100%;
 		padding: 0 7px;
 		line-height: 22px;
 		outline: none;
@@ -1555,7 +1569,8 @@ a[role="button"].cui-button-appearance-link {
 		0 0 0 1px hsla(0,0%,0%,0.1),
 		0 7px 14px hsla(0,0%,0%,0.1);
 	
-	> .cui-simple-pane {
+	> .cui-simple-pane,
+	> .cui-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
 			background: $layer-header-background;
@@ -1571,6 +1586,14 @@ a[role="button"].cui-button-appearance-link {
 		// layer-body
 		> .cui-vertical-layout-center {
 			overflow: auto;
+			
+			// case that the header is not there and we have a 
+			// toolbar on first position (=> pools)
+			&:first-child {
+				.cui-toolbar:first-child {
+					border-radius: 4px 4px 0 0;
+				}
+			}
 
 			.cui-form-table-has-left-column {
 				margin: 0;
@@ -2320,6 +2343,16 @@ $table-data-padding: 4px;
 	// needed for resize tool to position the resize
 	// handles properly
 	position: relative;
+	
+	// .cui-list-view-row-move-handle {
+	// 	display: none;
+	// }
+	
+	// &.cui-list-view-has-row-move {
+	// 	.cui-list-view-row-move-handle {
+	// 		display: flex;
+	// 	}
+	// }
 }
 
 .cui-list-view-grid-inner-top {
@@ -2659,6 +2692,10 @@ table.cui-form-table {
 			}
 		}
 	}
+}
+
+.cui-data-field {
+	flex: 1;
 }
 
 .cui-data-field-output-label {
@@ -3045,16 +3082,20 @@ table.cui-form-table {
 
 .cui-multi-input .cui-multi-input-container {
 	display: flex;
+	flex-direction: column;
   align-items: stretch;
 	flex: 1 1 auto;
 
 	> .cui-multi-input-input {
 		display: flex;
+		
 		> .cui-data-field-multi-input-center {
 			flex: 1 1 auto;
 		}
+
 		> .cui-data-field-multi-input-right {
-			flex: 0 0  auto;
+			flex: 0 0 auto;
+			
 			.cui-button {
 				justify-content: center;
 				width: 25px;
@@ -3087,7 +3128,6 @@ table.cui-form-table {
 		font-size: 10px;
   	line-height: 20px;
   	cursor: pointer;
-  	padding: 0 3px;
   }
 }
 
