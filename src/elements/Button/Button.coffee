@@ -15,7 +15,6 @@ class CUI.Button extends CUI.DOM
 		confirm_icon: "question"
 		confirm_cancel: "Cancel"
 		confirm_title: "Confirmation"
-		pressed_css_class: "cui-pressed"
 		disabled_css_class: "cui-disabled"
 		active_css_class: "cui-active"
 		menu_open_css_class: "cui-menu-open"
@@ -200,10 +199,7 @@ class CUI.Button extends CUI.DOM
 				@_menu.onShow?()
 
 			if not @__menu_opts.hasOwnProperty("backdrop")
-				if @_menu_on_hover
-					@__menu_opts.backdrop = false
-				else
-					@__menu_opts.backdrop = policy: "click-thru"
+				@__menu_opts.backdrop = policy: "click-thru"
 
 			if not @__menu_opts.backdrop.hasOwnProperty("blur") and
 				@_menu_parent?.getOpt("backdrop")?.blur
@@ -266,18 +262,8 @@ class CUI.Button extends CUI.DOM
 			type: "mousedown"
 			node: @DOM
 			call: (ev) =>
-
 				# don't focus element
 				ev.preventDefault()
-
-				if window.globalDrag
-					return
-
-				if not @__disabled and not CUI.__ng__
-					CUI.DOM.addClass(@DOM, CUI.defaults.class.Button.defaults.pressed_css_class)
-
-				ev.stopPropagation()
-				return
 
 		Events.listen
 			type: @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
@@ -299,11 +285,8 @@ class CUI.Button extends CUI.DOM
 					return
 
 				if ev.getButton() != 0 and not ev.getType().startsWith("touch")
-					ev.stop()
+					# ev.stop()
 					return
-
-				if not CUI.__ng__
-					@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 
 				ev.stopPropagation()
 				@onClickAction(ev)
@@ -346,11 +329,9 @@ class CUI.Button extends CUI.DOM
 						if not @__disabled and menu.hasItems(ev)
 
 							menu_shown = CUI.DOM.data(CUI.DOM.find(".cui-button--hover-menu")[0], "element")
-
 							if menu_shown and menu_shown != menu
 								menu_stop_hide()
 								menu_shown.hide(ev)
-								console.debug "hiding", menu_shown.getUniqueId()
 
 							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
 
