@@ -112,10 +112,16 @@ class CUI.Lasso extends CUI.Draggable
 		lassoed
 
 	end_drag: (ev) ->
-		@resetLassoedElements()
 		if ev.getType() == "mouseup"
 			globalDrag.elements = @get_lassoed_elements()
-			@_selected(ev, globalDrag)
+			ret = @_selected(ev, globalDrag)
+			if isPromise(ret)
+				ret.always =>
+					@resetLassoedElements()
+			else
+				@resetLassoedElements()
+		else
+			@resetLassoedElements()
 		globalDrag.lasso.remove()
 
 
