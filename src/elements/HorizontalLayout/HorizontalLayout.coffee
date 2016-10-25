@@ -18,7 +18,7 @@ class CUI.HorizontalLayout extends CUI.Layout
 			"horizontal-layout-center"
 
 	getMapPrefix: ->
-		"horizontal-layout"
+		"cui-horizontal-layout"
 
 	hasFlexHandles: ->
 		if @_left?.flexHandle or @_right?.flexHandle

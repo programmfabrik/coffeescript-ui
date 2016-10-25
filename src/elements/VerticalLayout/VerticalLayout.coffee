@@ -18,7 +18,7 @@ class CUI.VerticalLayout extends CUI.Layout
 			"vertical-layout-center"
 
 	getMapPrefix: ->
-		"vertical-layout"
+		"cui-vertical-layout"
 
 	hasFlexHandles: ->
 		if @_top?.flexHandle or @_bottom?.flexHandle

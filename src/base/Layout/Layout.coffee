@@ -106,7 +106,7 @@ class CUI.Layout extends CUI.DOM
 		if @__maximize_vertical
 			@addClass("cui-maximize-vertical")
 
-		@addClass("cui-"+@getMapPrefix())
+		@addClass(@getMapPrefix())
 
 		if @_absolute
 			@addClass("cui-absolute")

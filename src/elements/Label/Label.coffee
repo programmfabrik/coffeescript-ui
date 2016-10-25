@@ -15,7 +15,7 @@ class CUI.Label extends CUI.DOM
 
 		@__label = new Template
 			name: if @_rotate_90 then "label-rotate-90" else "label"
-			map_prefix: "label"
+			map_prefix: "cui-label"
 			map:
 				icon: true
 				content: true

@@ -70,7 +70,7 @@ class CUI.Options extends CUI.DataField
 		if @_activatable
 			@__tmpl = new Template
 				name: "options-activatable"
-				map_prefix: "options"
+				map_prefix: "cui-options"
 				map:
 					top: true
 					bottom: true

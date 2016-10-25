@@ -85,11 +85,13 @@ class CUI.Template extends CUI.Element
 			if v == true
 				clean_k = k.replace(/_/g, "-")
 				if @_map_prefix
-					prefix = @_map_prefix
+					sel = "."+@_map_prefix+"-"+clean_k
 				else
 					prefix = toDash(@_name)
-
-				sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
+					if CUI.__ng__
+						sel = ".cui-"+prefix+"-"+clean_k
+					else
+						sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
 			else
 				sel = v
 
