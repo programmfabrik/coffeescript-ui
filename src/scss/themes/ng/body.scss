@@ -159,6 +159,7 @@ body {
 
 input,
 textarea {
+	width: 100%;
 	font-size: 12px;
 	border: 1px solid $button-border;
 	border-top-color: $button-border;
@@ -170,7 +171,6 @@ textarea {
 	box-shadow: 0 1px rgba(0,0,0,.05) inset;
 	
 	&.cui-input-shadow {
-		min-width: 0;
 		position: absolute;
 		display: block;
 		padding: 0;
@@ -185,7 +185,6 @@ input {
 }
 
 [max-chars] {
-	min-width: auto;
 	box-sizing: content-box;
 	text-align: center;
 }
@@ -762,7 +761,8 @@ li > div {
 
 // Icons
 .cui-icon-svg {
-	fill: currentColor;	
+	fill: currentColor;
+	vertical-align: bottom;
 }
 
 .fa {
@@ -806,7 +806,7 @@ i.cui-spin-stepped {
 // Button / Select
 .cui-button,
 .cui-button-href {
-	max-width: 100%;
+	// max-width: 100%; makes button icons unsharp (datepicker)
 	cursor: pointer;
 }
 
@@ -1521,10 +1521,13 @@ a[role="button"].cui-button-appearance-link {
 
 	input,
 	textarea {
-		width: 100%;
 		padding: 0 7px;
 		line-height: 22px;
 		outline: none;
+		
+		&:focus {
+			@include focus;
+		}
 	}
 
 	textarea {
@@ -2091,6 +2094,7 @@ a[role="button"].cui-button-appearance-link {
 	right: 0;
 	bottom: 0;
 	z-index: 1;
+	display: flex;
 	
 	.cui-wait-block-glass {
 		position: absolute;
@@ -2098,21 +2102,31 @@ a[role="button"].cui-button-appearance-link {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: $foreground;
-		opacity: 0.8;
+		background: $background;
 	}
 
 	.cui-wait-block-inner {
+		display: flex;
 		flex: 1 1 auto;
+		position: relative;
 		
 		.cui-wait-block-header {
+			display: flex;
 			flex: 1 1 auto;
 			justify-content: center;
 			align-self: center;
 			
-			.cui-label .cui-label-icon i {
-				font-size: 24px;
-				color: black;
+			.cui-label {
+				.cui-label-icon i {
+					font-size: 21px;
+			    width: 21px;
+			    height: 21px;
+			    line-height: 21px;
+			  }
+				
+				.cui-label-content {
+					padding-left: $padding;
+				}
 			}
 		}
 
@@ -2442,6 +2456,8 @@ $table-data-padding: 4px;
 }
 
 .cui-list-view-row-move-handle-column {
+	display: none;
+	
 	&:after {
 		display: none;
 	}
@@ -2449,8 +2465,11 @@ $table-data-padding: 4px;
 	&.cui-lv-td {
 		width: 10px + $table-data-padding*2+4;
 		padding: 0 2px 0 $table-data-padding+2;
-		display: flex;
 	}
+}
+
+.cui-list-view-row-movable .cui-list-view-row-move-handle-column {
+	display: flex;
 }
 
 .cui-list-view-grid-quadrant-1,
@@ -2911,6 +2930,10 @@ table.cui-form-table {
 	&:focus {
 		z-index: 1;
 	}
+
+	input {
+		position: relative;
+	}
 }
 
 .cui-date-time-input-right {
@@ -2918,6 +2941,7 @@ table.cui-form-table {
 
 	.cui-button {
 		margin-left: -1px;
+		height: 100%;
 		
 		.cui-button-visual {
 			border-radius: 0;
