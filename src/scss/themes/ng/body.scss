@@ -484,15 +484,15 @@ li > div {
 
 // BorderLayout
 
-.cui-border-layout-north,
-.cui-border-layout-south {
-	background-color: #ffd890;
-}
+// .cui-border-layout-north,
+// .cui-border-layout-south {
+// 	background-color: #ffd890;
+// }
 
-.cui-border-layout-west,
-.cui-border-layout-east {
-	background-color: #ffefd1;
-}
+// .cui-border-layout-west,
+// .cui-border-layout-east {
+// 	background-color: #ffefd1;
+// }
 
 // Toolbar
 .cui-toolbar {
@@ -1203,13 +1203,6 @@ a[role="button"].cui-button-appearance-link {
 		padding-left: $padding/2;
 	}
 
-	&:not(cui-label-multiline) {
-		> .cui-label-content {
-			display: flex;
-			flex-direction: row;
-		}
-	}
-
 	.cui-label-content {
 		flex: 0 0 auto;
 		max-width: 100%;
@@ -1230,6 +1223,12 @@ a[role="button"].cui-button-appearance-link {
 			&:last-child {
 				margin-bottom: 0;
 			}
+		}
+
+		// highlight
+		em {
+			background: hsl(55,100%,60%);
+			font-style: normal;
 		}
 	}
 
@@ -1323,13 +1322,15 @@ a[role="button"].cui-button-appearance-link {
 	@include margin;
 
 	&:not(.cui-label-markdown) {
-		// can't use pre-wrap everywhere: kills the layout in Safari
-		// white-space: pre-wrap;
 		// word-break: normal;
 		word-break: break-all;
 		// this does not work in IE, but will
 		// be ignored by IE, so we are good
 		word-break: break-word;
+		
+		.cui-label-content {
+			white-space: pre-wrap;
+		}
 	}
 
 	> .cui-label-content {
