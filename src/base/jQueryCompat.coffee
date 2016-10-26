@@ -13,7 +13,7 @@ class CUI.jQueryCompat
 
 			nodes = []
 			for item in input
-				assert(item instanceof HTMLElement, "jQueryCompat", "Wenn called with Array, only HTMLElements are supported.", item: item, input: input)
+				assert(item instanceof Node, "jQueryCompat", "Wenn called with Array, only Nodes are supported.", item: item, input: input)
 				nodes.push(CUI.jQueryCompat(item))
 
 			nodes.last = =>
@@ -198,7 +198,7 @@ class CUI.jQueryCompat
 
 
 	@__wrapNode: (node) ->
-		assert(node instanceof HTMLElement, "jQueryCompat", "Node needs to be instance of HTMLElement.", node: node)
+		assert(node instanceof Node, "jQueryCompat", "Node needs to be instance of Node.", node: node)
 
 		if not CUI.defaults.jQueryCompat
 			return

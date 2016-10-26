@@ -18,8 +18,8 @@ class CUI.Lasso extends CUI.Draggable
 			lasso_filter:
 				check: String
 
-			lassoClass:
-				default: "cui-lasso"
+			lassoed_element_class:
+				default: "cui-selected"
 				check: String
 
 		@removeOpt("helper")
@@ -27,8 +27,6 @@ class CUI.Lasso extends CUI.Draggable
 	readOpts: ->
 		super()
 		@_helper = null
-
-	lasso_cls: "cui-drag-drop-select-lasso-element-in-lasso"
 
 	init: ->
 		super()
@@ -41,10 +39,11 @@ class CUI.Lasso extends CUI.Draggable
 		if not CUI.DOM.isInDOM(@element[0])
 			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
 
-		globalDrag.lasso = $div(@_lassoClass+" cui-debug-node-copyable")
+		globalDrag.lasso = $div("cui-lasso cui-debug-node-copyable")
 		# CUI.debug "create lasso", @_lassoClass
 		#
 		globalDrag.lasso.appendTo(@element)
+		globalDrag.elements = []
 
 	do_drag: (ev, $target, diff) ->
 		# CUI.debug "Lasso do drag", globalDrag.start, globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
@@ -77,19 +76,18 @@ class CUI.Lasso extends CUI.Draggable
 			if over > 0
 				set_css.height -= over
 
-		@resetLassoedElements()
-		for el in @get_lassoed_elements()
-			el.classList.add(@lasso_cls)
+		lassoed_elements = @get_lassoed_elements()
+		for el in lassoed_elements
+			if el not in globalDrag.elements
+				globalDrag.elements.push(el)
+				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		# set_css.top += @position.top
-		# set_css.left += @position.left
+		for el in globalDrag.elements
+			if el not in lassoed_elements
+				removeFromArray(el, globalDrag.elements)
+				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		globalDrag.lasso.css(set_css)
-
-	resetLassoedElements: ->
-		for el in DOM.matchSelector(@element, "."+@lasso_cls)
-			el.classList.remove(@lasso_cls)
-		@
+		window.globalDrag.lasso.css(set_css)
 
 	get_lassoed_elements: ->
 		get_dim = (el) ->
@@ -134,15 +132,7 @@ class CUI.Lasso extends CUI.Draggable
 
 	end_drag: (ev) ->
 		if ev.getType() == "mouseup"
-			globalDrag.elements = @get_lassoed_elements()
-			ret = @_selected(ev, globalDrag)
-			if isPromise(ret)
-				ret.always =>
-					@resetLassoedElements()
-			else
-				@resetLassoedElements()
-		else
-			@resetLassoedElements()
+			@_selected(ev, globalDrag)
 		globalDrag.lasso.remove()
 
 
