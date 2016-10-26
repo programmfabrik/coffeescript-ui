@@ -12,16 +12,9 @@
 	transform: initial;
 }
 
-//make sure we cover root backround when a empty label is used instead of a pane in a layout-cell
-.cui-layout-cell > .cui-empty-label {
+//make sure we cover root backround when an empty label is used instead of a pane in a layout-cell
+.cui-layout-cell > .cui-empty-label.cui-label-centered {
 	background-color: $default_background_color;
-	width: 100%;
-	height: 100%;
-	@include flex_display(flex);
-	@include flex_direction(column);
-	@include flex_align_items(center);
-	@include justify_content(center);
-	text-align: center;
 }
 
 .cui-selected {

@@ -161,7 +161,18 @@
 
 	&-centered.cui-empty-label, //make sure we overwrite empty label setting
 	&-centered {
-		@extend %center_div;
+		//make sure we cover root backround when an empty label is used instead of a pane in a layout-cell
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+
+		@include flex_display(flex);
+		@include flex_direction(column);
+		@include flex_align_items(center);
+		@include justify_content(center);
+		text-align: center;
 	}
 
 	//need to be specific for overwriting label settings
