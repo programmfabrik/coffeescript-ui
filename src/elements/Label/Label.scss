@@ -55,6 +55,9 @@
 	//align to bottom in a flex context
 	@include flex_align_self(flex-end);
 
+	//flex leads to problems in ie11
+	display: block;
+
 	$width: $grid_size*3;
 	$height: $grid_size*25;
 	width: $width;
@@ -67,6 +70,7 @@
 		display: flex;
 		padding-left: 5px;
 
+
 		> .cui-label-icon {
 			flex: 0 0 auto;
 		}
@@ -76,7 +80,10 @@
 			overflow: hidden;
 			white-space: nowrap;
 		}
-		@include transform(rotate(-90deg) translateY($width));//TODO change origin instead of using translate !?
+
+		//we compensate display flex problem in ie11 with a x move.
+
+		transform: rotate(-90deg) translate( - $height + $width, $width);//TODO change origin instead of using translate !?
 		@include transform_origin(left bottom 0);
 	}
 }
@@ -170,7 +177,7 @@
 
 		@include flex_display(flex);
 		@include flex_direction(column);
-		@include flex_align_items(center);
+		@include flex_align_items(stretch);
 		@include justify_content(center);
 		text-align: center;
 	}
@@ -235,3 +242,4 @@
 .cui-selected .cui-label {
 	color: $active_font_color;
 }
+
