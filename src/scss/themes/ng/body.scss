@@ -710,16 +710,6 @@ li > div {
 	}
 }
 
-
-// Table
-.cui-table {
-	margin: 0 $padding;
-	
-	&:empty {
-		margin: 0;
-	}
-}
-
 // Data Table
 .cui-data-table {
 	.cui-pane-footer {
@@ -800,7 +790,7 @@ i.cui-spin-stepped {
 }
 
 .fa-angle-down {
-	margin-top: 1px;
+	margin-bottom: -1px;
 }
 
 // Button / Select
@@ -858,7 +848,7 @@ i.cui-spin-stepped {
 	  }
 	}
 
-	&.cui-button-appearance-important[role],
+	&.cui-button-appearance-important, // removed [role] - makes it too specific
 	&.cui-button--primary,
 	&.cui-active {
 		.cui-button-visual {
@@ -2397,9 +2387,29 @@ $table-data-padding: 4px;
 	overflow: hidden;
 }
 
+// eg. header
 .cui-list-view-grid-quadrant-1 {
 	flex: 1 1 auto;
 	overflow: hidden;
+	
+	.cui-button {
+		height: 100%;
+		flex: 1;
+		align-items: stretch;
+		
+		.cui-button-left {
+			padding-right: 6px;
+		}
+
+		.cui-button-center {
+			flex: 1;
+			justify-content: flex-start;
+		}
+		
+		.cui-button-visual {
+			@include button-reset;
+		}
+	}
 }
 
 .cui-list-view-grid-quadrant-2 {
@@ -2632,7 +2642,7 @@ table.cui-form-table {
 .cui-form-center {
 	flex-grow: 1;
 	
-	.cui-input {
+	.cui-data-field {
 		max-width: 230px;
 	}
 }
@@ -3138,8 +3148,8 @@ table.cui-form-table {
 			flex: 0 0 auto;
 			
 			.cui-button {
-				justify-content: center;
 				width: 25px;
+				margin-top: 2px;
 			}
 		}
 	}
@@ -3354,7 +3364,7 @@ table.cui-form-table {
 // ProgressMeter
 .cui-tmpl-progress-meter {
 	.cui-progress-meter-bar {
-		height: 30px;
+		height: 24px;
 		position: relative;
 		border-radius: $button-border-radius;
 		overflow: hidden;
@@ -3379,10 +3389,11 @@ table.cui-form-table {
 		.cui-progress-meter-text {
 			display: none;
 			color: white;
-			align-items: center;
-			line-height: 28px;
+			justify-content: center;
+			line-height: 24px;
 		}
 		.cui-progress-meter-icon {
+			display: flex;
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -3444,9 +3455,7 @@ table.cui-form-table {
 	.cui-digi-display-static {
 		height: 20px;
 	}
-
 }
-
 
 // Console
 .cui-console {
