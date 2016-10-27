@@ -13,6 +13,7 @@ class CUI
 		@CSS = new CUI.CSSLoader()
 
 		@getPathToScript()
+		@testSvgstoreFallback()
 
 		trigger_viewport_resize = =>
 			CUI.info("CUI: trigger viewport resize.")
@@ -79,6 +80,11 @@ class CUI
 
 		@pathToScript
 
+	@testSvgstoreFallback: ->
+		# IE Fallback for svgstore (IE till current Edge doesn't support use links to icons.svg#icon-name
+		test = new CUI.Icon()
+		if(test.detectIE())
+			test.injectSvgstore()
 
 	@ready: (func) ->
 		if func instanceof Function
