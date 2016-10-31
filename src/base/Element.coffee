@@ -17,14 +17,13 @@ class CUI.Element
 			CUI.warn("new "+@__cls+": CUI.Element::initOpts not called.", opts: @opts)
 
 		@_onConstruct?(@)
+
+		# DEBUG:
+		# console.error(getObjectClass(@)+"."+@__uniqueId+" created.")
 		return
 
 	getElementClass: ->
 		@__cls
-
-	# call this in the constructor of a deriving class for getting the construction callstack, uniqueId can be found in css class.
-	debugConstruction: () ->
-		CUI.error "CONSTRUCTION DEBUG STACK "+@__uniqueId;
 
 	getUniqueId: ->
 		@__uniqueId
@@ -207,7 +206,7 @@ class CUI.Element
 					post = ""
 
 				# CUI.error("%c #{cls}: opts.#{k} is deprecated.", "font-weight: bold; color: red; font-size: 1.2em;", post)
-				CUI.error("#{cls}: opts.#{k} is deprecated.", value)
+				console.error("#{cls}: opts.#{k} is deprecated.", value)
 
 			if v.check and (not isNull(value) or mandatory)
 				if CUI.isArray(v.check)
@@ -219,7 +218,7 @@ class CUI.Element
 					check = v.check.call(@, value)
 					if not(isNull(check) or isBoolean(check) or isString(check))
 						_check = check
-						CUI.error("CUI.Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
+						console.error("CUI.Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
 						if _check
 							check = true
 						else
@@ -248,7 +247,7 @@ class CUI.Element
 		for k, v of opts
 			# options starting with a "_" are considered private
 			if v != undefined and not set_opts.hasOwnProperty(k) and not k.startsWith("_")
-				CUI.error "#{cls}: opts.#{k}, not supported. check_map: ", check_map, "opts:", opts
+				console.error("#{cls}: opts.#{k}, not supported. check_map: ", check_map, "opts:", opts)
 				# delete(opts[k])
 
 		# CUI.warn "#{@__cls}.opts = ", dump(set_opts)
