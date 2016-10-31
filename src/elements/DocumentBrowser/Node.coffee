@@ -41,11 +41,17 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 		dive = true
 
 		dfr = new CUI.Deferred()
-		new CUI.XHR
+		xhr = new CUI.XHR
 			url: @__url + @getNodePath("menu.cms")
 			responseType: "text"
-		.start()
-		.done (data, xhr) =>
+
+		xhr.start()
+		.done (data) =>
+			if data.startsWith("<") # assume HTML, something isnt right
+				@opts.leaf = true
+				dfr.resolve([])
+				return
+
 			# console.debug @getNodePath()
 			children = []
 			items = []
@@ -111,6 +117,10 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 			responseType: "text"
 		.start()
 		.done (@__content) =>
+			if @__content.startsWith("<")
+				dfr.reject()
+				return
+
 			@__htmlNodes = CUI.DOM.htmlToNodes(@_browser.marked(@, @__content))
 			@__texts = CUI.DOM.findTextInNodes(@__htmlNodes)
 			@_browser.addWords(@__texts)
