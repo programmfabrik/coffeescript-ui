@@ -1153,7 +1153,7 @@ CUI.ready ->
 		node: document.body
 		call: (ev) ->
 
-			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root")
+			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on")
 			target = ev.getTarget()
 
 			while layer_element = layer_elements.pop()
