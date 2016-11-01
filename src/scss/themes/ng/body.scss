@@ -309,6 +309,7 @@ li > div {
 .cui-vertical-layout-bottom {
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 }
 
 // Layout Absolute Horizontal
@@ -511,7 +512,6 @@ li > div {
 		// overlap border of the previous toolbar
 		& + & {
 			margin-top: -1px;
-			padding-top: 1px;
 		}
 	}
 	
@@ -581,7 +581,6 @@ li > div {
 	.cui-data-field-input {
 		height: 100%;
 		display: flex;
-		flex-direction: row;
 		align-items: center;
 		
 		.cui-input {
@@ -685,7 +684,9 @@ li > div {
 	}
 
 	.cui-horizontal-layout-left .cui-buttonbar {
-		margin-left: -$padding;
+		&:first-child {
+			margin-left: -$padding;
+		}
 
 		.cui-button:first-child {
 			padding-left: $padding;
@@ -693,7 +694,9 @@ li > div {
 	}
 
 	.cui-horizontal-layout-right .cui-buttonbar {
-		margin-right: -$padding;
+		&:last-child {
+			margin-right: -$padding;
+		}
 
 		.cui-button:last-child {
 			padding-right: $padding;
@@ -1050,7 +1053,7 @@ a[role="button"].cui-button-appearance-link {
 			border-bottom-color: hsl(0,0%,72%);
 			background: white;
 			font-size: 11px;
-			line-height: 13px;
+			line-height: 11px;
 			border-radius: 2px;
 			box-shadow: 0 1px rgba(0,0,0,.05) inset;
 		}
