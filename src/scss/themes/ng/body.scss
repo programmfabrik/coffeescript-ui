@@ -1369,6 +1369,7 @@ a[role="button"].cui-button-appearance-link {
 	font-style: italic;
 	padding: $padding/2;
 	margin: 0;
+	cursor: default;
 	
 	.cui-label-content {
 		display: inline-block;
@@ -1786,7 +1787,6 @@ a[role="button"].cui-button-appearance-link {
 			overflow: visible;
 			
 			> .cui-pane-header {
-				margin-bottom: -3px;
 				background: none;
 				border-bottom-width: 0;
 				min-height: 0;
@@ -2179,17 +2179,20 @@ a[role="button"].cui-button-appearance-link {
 			display: flex;
 			flex: 1 1 auto;
 			overflow: hidden;
-			> .cui-tmpl-tab-body {
-				// disable the javascript overwrite here
-				margin-left: 0 !important;
-  			// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
-				flex: 1 1 auto;
-				overflow: auto;
-				&.cui-tab-hidden {
-					display: none;
-				}
-			}
 		}
+	}
+}
+
+.cui-tab {
+	margin-left: 0 !important;
+	// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	
+	&.cui-tab-hidden {
+		display: none;
 	}
 }
 
@@ -2459,11 +2462,10 @@ $table-data-padding: 4px;
 	min-width: 0;
 
 	&.cui-selected {
-		background: $highlight-color !important;
-		color: $on-highlight-color;
+		background: hsl(201,82%,92%) !important;
 		
 		.cui-empty-label {
-			color: $on-highlight-color;
+			color: hsl(205,33%,63%);
 		}
 	}
 }
@@ -2648,16 +2650,16 @@ table.cui-form-table {
 }
 
 [cui-form-depth="0"] > .cui-form-tr-header,
-.cui-form-tr-content-is-form-vertical > .cui-form-left {
+.cui-form-table-has-left-column .cui-form-tr-content-is-form-vertical > .cui-form-left {
 	width: auto;
-	padding: 3*$padding $padding $padding/2;
+	padding: 3*$padding 0 $padding/2;
+	margin: 0 $padding;
 	border-bottom: 1px solid hsl(205,10%,95%);
+	text-align: left;
 
 	.cui-label,
 	label {
-		text-transform: uppercase;
-		color: hsl(205,10%,60%);
-		letter-spacing: 0.01em;
+		font-weight: bold;
 	}
 
 	.cui-form-left {
@@ -2674,7 +2676,6 @@ table.cui-form-table {
 }
 
 .cui-form-tr.cui-form-tr-content-is-form-vertical {
-	display: flex;
 	flex-direction: column;
 	padding: 0;
 	
@@ -2695,6 +2696,23 @@ table.cui-form-table {
 
 		> .cui-form-left {
 			padding-left: $padding*5;
+		}
+	}
+
+	.cui-form-center {		
+		.cui-data-field {
+			max-width: none;
+		}
+
+		.cui-table {
+			.cui-form-left {
+				width: auto !important;
+				padding: 0 0 0 10px;
+			}
+
+			.cui-form-center {
+				padding-right: 0;
+			}
 		}
 	}
 }
@@ -2761,6 +2779,7 @@ table.cui-form-table {
 	.cui-form-left {
 		padding: 4px $padding;
 		display: block;
+		text-align: right;
 		@include ellipsis;
 	}
 
@@ -3454,6 +3473,21 @@ table.cui-form-table {
 
 	.cui-digi-display-static {
 		height: 20px;
+	}
+}
+
+// Autocomplete
+.cui-autocompletion-popup-container {
+	padding: 4px 0;
+}
+
+.cui-autocompletion-popup-item {
+	padding: 3px $padding;
+	cursor: pointer;
+	color: hsl(205,7%,22%);
+	
+	&:hover {
+		background: hsl(205,17%,98%);
 	}
 }
 
