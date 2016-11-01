@@ -941,7 +941,7 @@ class CUI.DOM extends CUI.Element
 		if not docElem
 			return null
 
-		assert(docElem instanceof HTMLElement, "CUI.DOM.isInDOM", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
+		assert(docElem instanceof Node, "CUI.DOM.isInDOM", "docElem needs to be instanceof Node.", docElem: docElem)
 		if @closestUntil(docElem, document.documentElement)
 			true
 		else
