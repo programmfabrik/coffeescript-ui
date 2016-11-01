@@ -6,7 +6,7 @@ $form_input_column-width: 300px;
 	.cui-data-table-column-field-name-#{$field_name} {
 		width: $width;
 		.cui-data-field {
-			width: 100%;
+			width: 100% !important;
 			min-width: 0 !important; //TODO remove
 		}
 	}
