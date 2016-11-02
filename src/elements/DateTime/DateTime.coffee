@@ -985,9 +985,13 @@ class DateTime extends Input
 				# CUI.debug "click on date table", ev.getTarget()
 				if $target.closest(".cui-date-time-day").length
 					data = DOM.data($target.closest("td,.cui-td")[0])
-					@__current_moment.date(data.date)
-					@__current_moment.month(data.month)
+
+					# order here is important, we need to set the month
+					# before we set the date!
 					@__current_moment.year(data.year)
+					@__current_moment.month(data.month)
+					@__current_moment.date(data.date)
+
 					@updateCalendar(@__current_moment)
 
 					if not CUI.__ng__
