@@ -622,11 +622,6 @@ li > div {
 			flex-shrink: 1;
 			min-width: 0;
 			display: block;
-			@include ellipsis;
-			
-			span {
-				display: inline;
-			}
 		}
 	}
 }
@@ -1195,13 +1190,10 @@ a[role="button"].cui-button-appearance-link {
 	.cui-label-content {
 		flex: 0 0 auto;
 		max-width: 100%;
+		@include ellipsis;
 
 		&:empty {
 			display: none;
-		}
-
-		span {
-			@include ellipsis;
 		}
 
 		p {
@@ -1372,7 +1364,6 @@ a[role="button"].cui-button-appearance-link {
 	
 	.cui-label-content {
 		display: inline-block;
-		flex-grow: 0;
 	}
 }
 
@@ -2459,8 +2450,10 @@ $table-data-padding: 4px;
 	display: flex;
 	flex: 0 0 auto;
 	min-width: 0;
+	outline: none;
 
-	&.cui-selected {
+	&.cui-selected,
+	&:focus {
 		background: hsl(201,82%,92%) !important;
 		
 		.cui-empty-label {
