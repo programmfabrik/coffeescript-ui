@@ -683,20 +683,16 @@ li > div {
 		min-height: $toolbar-small-height;
 	}
 
-	.cui-horizontal-layout-left .cui-buttonbar {
-		&:first-child {
-			margin-left: -$padding;
-		}
+	.cui-horizontal-layout-left .cui-buttonbar:first-child {
+		margin-left: -$padding;
 
 		.cui-button:first-child {
 			padding-left: $padding;
 		}
 	}
 
-	.cui-horizontal-layout-right .cui-buttonbar {
-		&:last-child {
-			margin-right: -$padding;
-		}
+	.cui-horizontal-layout-right .cui-buttonbar:last-child {
+		margin-right: -$padding;
 
 		.cui-button:last-child {
 			padding-right: $padding;
@@ -3492,6 +3488,19 @@ table.cui-form-table {
 	&:hover {
 		background: hsl(205,17%,98%);
 	}
+}
+
+// Space
+.cui-space {
+	width: $small-gap;
+}
+
+.cui-large-space {
+	width: $gap;
+}
+
+.cui-flexible-space {
+	flex: 1;
 }
 
 // Console
