@@ -614,12 +614,18 @@ class CUI.ListView extends CUI.SimplePane
 
 
 	rowAddClass: (row_i, cls) ->
-		for row in @getRow(row_i)
+		rows = @getRow(row_i)
+		if not rows
+			return
+		for row in rows
 			DOM.addClass(row, cls)
 		@
 
 	rowRemoveClass: (row_i, cls) ->
-		for row in @getRow(row_i)
+		rows = @getRow(row_i)
+		if not rows
+			return
+		for row in rows
 			DOM.removeClass(row, cls)
 		@
 
