@@ -1321,6 +1321,17 @@ class CUI.DOM extends CUI.Element
 		delete(docElem.__saved_display)
 		docElem
 
+	@space: (style = null) ->
+		switch style
+			when "large"
+				@element("DIV", class: "cui-large-space")
+			when "flexible"
+				@element("DIV", class: "cui-flexible-space")
+			when null
+				@element("DIV", class: "cui-space")
+			else
+				assert(false, "CUI.DOM.space", "Unknown style: "+style)
+
 	@element: (tagName, attrs={}) ->
 		DOM.setAttributeMap(document.createElement(tagName), attrs)
 
