@@ -8,7 +8,7 @@ $gap: 12px;
 $small-gap: 7px;
 $background: white;
 $foreground: white;
-$border: hsl(205,20%,91%);
+$border: hsl(205,20%,83%);
 
 $button-text-color: hsl(205,10%,34%);
 $button-border: hsl(205,10%,75%);
@@ -835,10 +835,8 @@ i.cui-spin-stepped {
 	  cursor: default;
 	  
 		.cui-button-visual {
-		  opacity: 0.5;
-		  color: $button-text-color;
-		  border-color: hsl(205,10%,75%);
-		  background: none;
+		  color: $disabled-color;
+		  border-color: $button-border;
 	  }
 	}
 
@@ -1350,7 +1348,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-label-content span {
-		white-space: normal;
+		// white-space: normal;
+		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
+		// example: collection description
 	}
 }
 
@@ -2260,7 +2260,7 @@ $table-data-padding: 4px;
 
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
-			border-top: 1px solid $table-border;
+			border-top: 1px solid $border;
 		}
 	}
 }
@@ -3341,10 +3341,10 @@ table.cui-form-table {
 // StickyHeader
 
 .cui-sticky-header {
-	padding: 4px 10px;
+	padding: 4px $padding;
 	font-size: 11px;
 	height: 22px;
-	margin-bottom: 10px;
+	margin-bottom: $padding;
 
 	&:not(:first-child) {
 		margin-top: $padding*2;
@@ -3358,6 +3358,7 @@ table.cui-form-table {
 	top: 0;
 	left: 0;
 	right: 0;
+	z-index: 1;
 
 	.cui-tmpl-sticky-header {
 		margin: 0;
