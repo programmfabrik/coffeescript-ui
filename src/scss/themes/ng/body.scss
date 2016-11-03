@@ -2780,7 +2780,7 @@ table.cui-form-table {
 .cui-form-table-has-left-column {
 	.cui-form-left,
 	.cui-form-right {
-		// width: 135px;
+		width: 135px;
 		// UNCLEAR breaks web-link configuration popover table layout
 	}
 
@@ -2861,6 +2861,7 @@ table.cui-form-table {
 .cui-options-center {
 	min-height: 24px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	
 	&:empty {
