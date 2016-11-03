@@ -201,6 +201,20 @@ class FlexHandle extends CUI.Element
 				#CUI.debug "dragend", @__css_value, diff, @__pane_data, new_value
 				@__setSize(new_value)
 
+			dragging: () =>
+				return if not CUI.__ng__
+				gd = window.globalDrag
+
+				new_value = gd.__pane_data.value + gd.dragDiff[gd.__pane_data.axis] * gd.__pane_data.flip
+				if gd.__pane_data.min
+					new_value = Math.max(gd.__pane_data.min, new_value)
+
+				if gd.__pane_data.max
+					new_value = Math.min(gd.__pane_data.max, new_value)
+
+				#CUI.debug "dragend", @__css_value, diff, @__pane_data, new_value
+				@__setSize(new_value)
+
 
 		DOM.waitForDOMInsert(node: @_element)
 		.done =>
