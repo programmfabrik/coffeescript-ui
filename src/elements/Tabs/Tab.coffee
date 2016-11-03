@@ -32,7 +32,7 @@ class CUI.Tab extends CUI.DOM
 			role: "tab-header"
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
-			size: "big"
+			size: if CUI.__ng__ then "normal" else "big"
 			group: if CUI.__ng__ then "tabs" else null
 			text: @_text
 			attr:

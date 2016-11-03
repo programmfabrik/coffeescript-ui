@@ -9,6 +9,7 @@ $small-gap: 7px;
 $background: white;
 $foreground: white;
 $border: hsl(205,20%,83%);
+$soft-border: hsl(205,20%,91%);
 
 $button-text-color: hsl(205,10%,34%);
 $button-border: hsl(205,10%,75%);
@@ -498,7 +499,7 @@ li > div {
 // Toolbar
 .cui-toolbar {
 	display: flex;
-	min-height: $toolbar-height;
+	min-height: $toolbar-small-height;
 	justify-content: space-between;
 	flex-wrap: wrap;
 	padding: 0 $padding;
@@ -583,6 +584,11 @@ li > div {
 		display: flex;
 		align-items: center;
 		
+		&.cui-vertical-layout {
+			align-items: stretch;
+			justify-content: center;
+		}
+		
 		.cui-input {
 			flex-grow: 0;
 		}
@@ -595,7 +601,7 @@ li > div {
 	.cui-buttonbar {
 		margin-bottom: 0;
 		height: 100%;
-		min-height: $toolbar-height;
+		// min-height: $toolbar-height; why? 3.11.2016
 		
 		.cui-button {
 			.cui-button-visual {
@@ -628,16 +634,13 @@ li > div {
 
 .cui-result-navigation-toolbar {
 	min-height: $toolbar-small-height;
-	
-	.cui-buttonbar {
-		min-height: $toolbar-small-height;
-	}
 }
 
 // Pane
 .cui-pane-header {
 	flex-wrap: nowrap;
 	border-bottom: 1px solid $border;
+	padding-right: 0;
 	
 	.cui-label {
 		font-size: 14px;
@@ -656,9 +659,15 @@ li > div {
 		}
 	}
 
-	.cui-horizontal-layout-right {
-		> *:last-child {
-			padding-right: 0;
+	> .cui-horizontal-layout-center {
+		margin-right: $padding;
+	}
+
+	> .cui-horizontal-layout-right {
+		margin-left: 0;
+		
+		.cui-buttonbar:last-child {
+			margin-right: $padding;
 		}
 	}
 
@@ -671,12 +680,8 @@ li > div {
 }
 
 .cui-pane-footer {
-	border-top: 1px solid hsl(180,9%,93%);
+	border-top: 1px solid $border;
 	min-height: $toolbar-small-height;
-	
-	.cui-buttonbar {
-		min-height: $toolbar-small-height;
-	}
 
 	.cui-horizontal-layout-left .cui-buttonbar:first-child {
 		margin-left: -$padding;
@@ -966,6 +971,8 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 }
 
@@ -973,6 +980,11 @@ a[role="button"].cui-button-appearance-link {
 	display: flex;
 	flex-direction: row;
 	cursor: pointer;
+	height: 24px;
+	line-height: 24px;
+	white-space: initial;
+	align-self: flex-start;
+	max-width: 100%;
 
 	&.cui-disabled {
 		cursor: default;
@@ -1028,6 +1040,10 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-button-visual {
+		justify-content: unset;
+	}
+
 	.cui-button-left {
 		padding: 0 2px 0 0;
 		// empty checkbox: span
@@ -1046,6 +1062,10 @@ a[role="button"].cui-button-appearance-link {
 			border-radius: 2px;
 			box-shadow: 0 1px rgba(0,0,0,.05) inset;
 		}
+	}
+
+	.cui-button-center {
+		min-width: 0;
 	}
 
 	&[role="radio"] {
@@ -1091,7 +1111,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel {
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid $soft-border;
 	
 	// &:last-child {
 	// 	border-bottom: none;
@@ -1107,8 +1127,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	border-top: 1px solid $border;
-	border-bottom: 1px solid $border;
+	border-top: 1px solid $soft-border;
+	border-bottom: 1px solid $soft-border;
 	position: relative;
 	height: $toolbar-small-height;
 
@@ -1464,19 +1484,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// Checkbox
-.cui-checkbox {
-	display: flex;
-	flex-direction: column;
-
-	.cui-button {
-		height: 24px;
-		line-height: 24px;
-		white-space: initial;
-		align-self: flex-start;
-	}
-}
-
 // Input
 .cui-input {
 	// state classes:
@@ -1558,8 +1565,11 @@ a[role="button"].cui-button-appearance-link {
 	outline: none;
 	border-radius: 5px;
 	box-shadow:
-		0 0 0 1px hsla(0,0%,0%,0.1),
-		0 7px 14px hsla(0,0%,0%,0.1);
+		0 4px 20px hsla(205,5%,30%,.4),
+		0 2px 4px hsla(0,0%,0%,.1);
+	// box-shadow:
+	// 	0 0 0 1px hsla(0,0%,0%,0.1),
+	// 	0 7px 14px hsla(0,0%,0%,0.1);
 	
 	> .cui-simple-pane,
 	> .cui-pane {
@@ -1569,10 +1579,6 @@ a[role="button"].cui-button-appearance-link {
 			min-height: $toolbar-small-height;
 			border-radius: 5px 5px 0 0;
 			border-color: $layer-header-border;
-			
-			.cui-buttonbar {
-				min-height: $toolbar-small-height;
-			}
 		}
 
 		// layer-body
@@ -1789,10 +1795,6 @@ a[role="button"].cui-button-appearance-link {
 					font-size: 15px;
 				}
 
-				.cui-buttonbar {
-					min-height: 0;
-				}
-
 				.cui-button {
 					padding: 11px 7px 4px 7px;
 					
@@ -1817,7 +1819,6 @@ a[role="button"].cui-button-appearance-link {
 			
 			.cui-buttonbar {
 				height: 33px;
-				min-height: 33px;
 				margin-right: 0;
 			}
 
@@ -2137,7 +2138,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 	> .cui-vertical-layout-top {
 		> .cui-pane-header {
-			min-height: $toolbar-height;
+			min-height: $toolbar-small-height;
 			background: $toolbar-background;
 			padding-right: $padding/2;
 
@@ -2272,6 +2273,7 @@ $table-data-padding: 4px;
 	flex: 0 0 auto;
 	overflow: hidden;
 	display: flex;
+	align-items: flex-start;
 
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
@@ -3150,6 +3152,8 @@ table.cui-form-table {
 
 	> .cui-multi-input-input {
 		display: flex;
+		margin-left: 0;
+		margin-right: 0;
 		
 		> .cui-data-field-multi-input-center {
 			flex: 1 1 auto;
@@ -3331,11 +3335,11 @@ table.cui-form-table {
 }
 
 .cui-block-header {
-	padding: $padding $padding 0;
+	padding: $padding $padding 4px;
 }
 
 .cui-block-content {
-	@include padding;
+	padding: 0 $padding $padding;
 }
 
 // StickyHeader
