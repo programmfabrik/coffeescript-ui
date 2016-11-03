@@ -486,15 +486,14 @@ li > div {
 
 // BorderLayout
 
-// .cui-border-layout-north,
-// .cui-border-layout-south {
-// 	background-color: #ffd890;
-// }
-
-// .cui-border-layout-west,
-// .cui-border-layout-east {
-// 	background-color: #ffefd1;
-// }
+.cui-border-layout-north,
+.cui-border-layout-south,
+.cui-border-layout-west,
+.cui-border-layout-east {
+	&:empty {
+		display: none;
+	}
+}
 
 // Toolbar
 .cui-toolbar {
@@ -2140,7 +2139,7 @@ a[role="button"].cui-button-appearance-link {
 		> .cui-pane-header {
 			min-height: $toolbar-small-height;
 			background: $toolbar-background;
-			padding-right: $padding/2;
+			padding: 0;
 
 			.cui-horizontal-layout-center {
 				overflow: hidden;
@@ -2150,9 +2149,10 @@ a[role="button"].cui-button-appearance-link {
 
 			/* overflowing tabs */
 			&.cui-tabs-pane-header--overflow {
-				.cui-horizontal-layout-center {
+				> .cui-horizontal-layout-center {
 					align-items: flex-start;
 					padding-left: $padding/2;
+					margin-right: 0;
 					
 					.cui-tab-header-button:last-child {
 						.cui-button-visual {
@@ -2197,7 +2197,7 @@ a[role="button"].cui-button-appearance-link {
 		color: hsl(205,15%,43%);
 		height: 26px;
 		line-height: 24px;
-		min-width: 80px;
+		min-width: 40px;
 		padding: 0 $padding;
 		border-radius: 0;
 		border: 1px solid hsl(205,15%,43%);	
@@ -2227,12 +2227,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-tab-header-button-overflow {
-		border-top-left-radius: 0 !important;
-		border-bottom-left-radius: 0 !important;
-		min-width: 0;
 		align-self: center;
-		padding: 0 $padding;
-		font-size: 14px;
+		padding-right: $padding/2;
 		position: relative;
 		z-index: 1; // to overlap active buttons
 		box-shadow:
@@ -2241,6 +2237,11 @@ a[role="button"].cui-button-appearance-link {
 			-3px 0 hsla(0,0%,0%,.05),
 			-4px 0 hsla(0,0%,0%,.02),
 			-5px 0 hsla(0,0%,0%,.01);
+		
+		.cui-button-visual {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+		}
 	}
 }
 
@@ -2641,6 +2642,10 @@ table.cui-form-table {
 	.cui-data-field {
 		max-width: 230px;
 	}
+	
+	.cui-checkbox {
+		max-width: none;
+	}
 }
 
 [cui-form-depth="0"] > .cui-form-tr-header,
@@ -2693,7 +2698,7 @@ table.cui-form-table {
 		}
 	}
 
-	.cui-form-center {		
+	.cui-form-center {
 		.cui-data-field {
 			max-width: none;
 		}
@@ -2846,6 +2851,7 @@ table.cui-form-table {
 // align options with label if there is only one option
 .cui-options-center {
 	min-height: 24px;
+	display: flex;
 	justify-content: center;
 	
 	&:empty {
