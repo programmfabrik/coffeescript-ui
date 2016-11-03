@@ -246,7 +246,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					eventPoint: coordinates
 
 				switch @_axis
-					when"x"
+					when "x"
 						diff.y = 0
 					when "y"
 						diff.x = 0
@@ -304,7 +304,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				if ev.getTarget() == globalDrag.startEvent.getTarget() and
 					not globalDrag.noClickHandlerKill
-						console.warn "install klick handler..."
+						console.warn "install click handler..."
 						Events.listen
 							type: "click"
 							capture: true
