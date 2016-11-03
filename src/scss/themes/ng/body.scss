@@ -751,6 +751,7 @@ li > div {
 .cui-icon-svg {
 	fill: currentColor;
 	vertical-align: bottom;
+	pointer-events: none;
 }
 
 .fa {
@@ -2574,12 +2575,19 @@ $table-data-padding: 4px;
 }
 
 // Table
+.cui-table {
+	display: table;
+	width: 100%;
+}
+
 .cui-tr {
-	display: flex;
+	display: table-row;
 	@include padding-y(0.5);
 }
 
-.cui-td {	
+.cui-td {
+	display: table-cell;
+	
 	&[colspan]{		
 		> label,
 		> .cui-label {
@@ -2772,7 +2780,8 @@ table.cui-form-table {
 .cui-form-table-has-left-column {
 	.cui-form-left,
 	.cui-form-right {
-		width: 135px;
+		// width: 135px;
+		// UNCLEAR breaks web-link configuration popover table layout
 	}
 
 	.cui-form-left {
