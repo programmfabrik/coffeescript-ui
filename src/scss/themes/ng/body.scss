@@ -15,12 +15,15 @@ $button-text-color: hsl(205,10%,34%);
 $button-border: hsl(205,10%,75%);
 $button-border-radius: 4px;
 
+$input-border: hsl(205,20%,79%);
+
 $drag-handle-color: hsl(205,10%,75%);
 
 $highlight-color: hsl(205,100%,45%);
 $on-highlight-color: white;
 $on-highlight-muted-color: hsl(205,50%,85%);
 
+$secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
@@ -162,8 +165,8 @@ input,
 textarea {
 	width: 100%;
 	font-size: 12px;
-	border: 1px solid $button-border;
-	border-top-color: $button-border;
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
 	font-family: inherit;
 	padding: 2px 3px;
 	flex: 1 1 auto;
@@ -697,6 +700,10 @@ li > div {
 			padding-right: $padding;
 		}
 	}
+
+	.cui-label {
+		color: $secondary-color;
+	}
 }
 
 // Simple Pane
@@ -710,6 +717,8 @@ li > div {
 
 // Data Table
 .cui-data-table {
+	border: 1px solid $border;
+	
 	.cui-pane-footer {
 		min-height: 0;
 		padding: 0;
@@ -1174,6 +1183,7 @@ a[role="button"].cui-button-appearance-link {
 	align-items: center;
 
 	&.cui-tmpl-label-rotate-90 {
+		align-items: flex-end;
 		// rotate by 90 degrees
 		white-space: nowrap;
 		// align-self: flex-start;
@@ -1559,11 +1569,14 @@ a[role="button"].cui-button-appearance-link {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	overflow: auto;
+	overflow: hidden;
 	background: white;
 	margin: 10px;
 	outline: none;
 	border-radius: 5px;
+	// to make sure that the border-radius will cut off all child backgrounds
+	// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
+	opacity: 0.99;
 	box-shadow:
 		0 4px 20px hsla(205,5%,30%,.4),
 		0 2px 4px hsla(0,0%,0%,.1);
@@ -1584,14 +1597,6 @@ a[role="button"].cui-button-appearance-link {
 		// layer-body
 		> .cui-vertical-layout-center {
 			overflow: auto;
-			
-			// case that the header is not there and we have a 
-			// toolbar on first position (=> pools)
-			&:first-child {
-				.cui-toolbar:first-child {
-					border-radius: 4px 4px 0 0;
-				}
-			}
 
 			.cui-form-table-has-left-column {
 				margin: 0;
@@ -2252,11 +2257,6 @@ $table-data-padding: 4px;
 
 // ListView
 .cui-list-view {
-	[cui-lv-quadrant="0"],
-	[cui-lv-quadrant="1"] {
-		color: hsl(0,0%,30%);
-	}
-
 	.cui-label {
 		line-height: $table-data-height - $table-data-padding*2;
 	}
@@ -2266,6 +2266,21 @@ $table-data-padding: 4px;
 			border-top: 1px solid $border;
 		}
 	}
+}
+
+.cui-tmpl-list-view-tool-row-move-target {
+	height: 4px;
+	background: $highlight-color;
+	margin-top: -2px;
+	position: absolute;
+	z-index: 4;
+}
+
+.cui-tmpl-list-view-tool-row-move-marker {
+	position: absolute;
+	z-index: 4;
+	background: $highlight-color;
+	opacity: 0.3;	
 }
 
 .cui-lv-td {
@@ -2278,13 +2293,11 @@ $table-data-padding: 4px;
 	align-items: flex-start;
 
 	&.cui-lv-td-rotate-90 {
-		width: 25px;
+		width: 32px;
+		
 		> .cui-tmpl-label-rotate-90 {
 			word-break: break-all;
-			height: 100px;
-			> .cui-label-transform {
-				width: 100px;
-			}
+			height: 250px;
 		}
 	}
 
@@ -2352,16 +2365,6 @@ $table-data-padding: 4px;
 	// needed for resize tool to position the resize
 	// handles properly
 	position: relative;
-	
-	// .cui-list-view-row-move-handle {
-	// 	display: none;
-	// }
-	
-	// &.cui-list-view-has-row-move {
-	// 	.cui-list-view-row-move-handle {
-	// 		display: flex;
-	// 	}
-	// }
 }
 
 .cui-list-view-grid-inner-top {
@@ -2406,6 +2409,14 @@ $table-data-padding: 4px;
 		.cui-button-visual {
 			@include button-reset;
 		}
+	}
+
+	.cui-label {
+		font-weight: bold;
+	}
+
+	.cui-lv-td {
+		align-items: flex-end;
 	}
 }
 
@@ -2474,14 +2485,16 @@ $table-data-padding: 4px;
 
 .cui-list-view-row-move-handle-column {
 	display: none;
+	padding-top: ($table-data-height - 12px) / 2;
 	
 	&:after {
 		display: none;
 	}
 
 	&.cui-lv-td {
-		width: 10px + $table-data-padding*2+4;
-		padding: 0 2px 0 $table-data-padding+2;
+		width: 10px + $table-data-padding*2+2;
+		padding-left: $table-data-padding+2;
+		padding-right: 0;
 	}
 }
 
@@ -2767,6 +2780,16 @@ table.cui-form-table {
 
 .cui-data-field {
 	flex: 1;
+	
+	.cui-list-view-grid-quadrant-3 {
+		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+	}
+
+	.cui-list-view-row-move-handle-column {
+		align-items: center;
+		padding-top: 0;	
+		padding-bottom: 0;	
+	}
 }
 
 .cui-data-field-output-label {
@@ -2835,6 +2858,13 @@ table.cui-form-table {
 	}
 }
 
+.cui-form-popover {
+	.cui-vertical-layout-center {
+		order: 1;
+		margin-top: 3px;
+	}
+}
+
 
 // Options
 
@@ -2849,7 +2879,7 @@ table.cui-form-table {
 		width: 16px;
 		display: flex;
 		margin-right: 2px;
-    padding: 0 3px 0 1px;
+    padding: 0 4px 0 0;
     
     .cui-drag-handle-row {
     	margin-top: 5px;
@@ -2879,6 +2909,7 @@ table.cui-form-table {
 	margin-top: $compensating-padding;
 	margin-left: 18px;
 	margin-bottom: 2px !important;
+	color: $secondary-color;
 }
 
 .cui-drag-drop-select-sortable,
@@ -2899,15 +2930,10 @@ table.cui-form-table {
 	flex: 1 1 auto;
 	cursor: move;
 	height: 12px;
-	margin-top: 8px;
 	width: 100%;
 
 	background: linear-gradient($drag-handle-color 1px, transparent 1px);
 	background-size: 100% 3px;
-}
-
-.cui-selected .cui-drag-handle-row {
-	background-image: linear-gradient($on-highlight-color 1px, transparent 1px);
 }
 
 // Drag and Drop
@@ -3189,7 +3215,7 @@ table.cui-form-table {
 }
 
 .cui-multi-input-input {
-	@include margin-top(0.25);
+	@include margin-top(0.5);
 	position: relative;
 
 	.cui-input,
@@ -3219,6 +3245,7 @@ table.cui-form-table {
 
 .cui-drag-drop-select-transparent {
 	pointer-events: none !important;
+	
 	* {
 		pointer-events: none !important;
 	}
