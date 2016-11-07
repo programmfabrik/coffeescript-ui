@@ -976,6 +976,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__setMargins()
 		# CUI.info("ListView#"+@listViewCounter, "Set margins on Q1 and Q2.")
 
+		@__addRowsOddEvenClasses()
 		# console.timeEnd "next-gen-layout"
 		@
 
