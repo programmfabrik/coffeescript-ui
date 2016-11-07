@@ -260,7 +260,7 @@ span {
 	&.cui-flex-handle-closed {
 		cursor: pointer;
 	}
-	&.cui-flex-handle-manual-size {
+	&.cui-is-manually-sized {
 		background-color: #64fdd8;
 	}
 }
@@ -270,7 +270,7 @@ span {
 		height: 20px;
 	}
 
-	&.cui-flex-handle-manual-size {
+	&.cui-is-manually-sized {
 		background-color: #64fdd8;
 	}
 

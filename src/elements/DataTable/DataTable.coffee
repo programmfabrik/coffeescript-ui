@@ -78,9 +78,11 @@ class DataTable extends DataFieldInput
 
 		@headerRow = new ListViewHeaderRow()
 
-		for f in @__fieldList
-			if f._form?.column
+		for f, idx in @__fieldList
+			if f.getOpt("form")?.column
 				cols.push(f._form.column)
+			else if idx == 0 and CUI.__ng__
+				cols.push("maximize")
 			else if f.isResizable()
 				cols.push("auto")
 			else

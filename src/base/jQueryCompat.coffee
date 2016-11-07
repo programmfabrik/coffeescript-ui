@@ -515,7 +515,7 @@ $element = (tagName, cls, attrs={}, no_tables=false) ->
 		if isEmpty(cls)
 			attrs.class = "cui-"+tagName
 		else
-			attrs.class = "cui-"+tagName+" "+attrs.class
+			attrs.class = "cui-"+tagName+" "+cls
 
 		tagName = "div"
 

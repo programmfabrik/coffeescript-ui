@@ -191,29 +191,24 @@ class FlexHandle extends CUI.Element
 				if ev.getType() != "mouseup"
 					return
 
-				new_value = gd.__pane_data.value + gd.dragDiff[gd.__pane_data.axis] * gd.__pane_data.flip
-				if gd.__pane_data.min
-					new_value = Math.max(gd.__pane_data.min, new_value)
+				dragging(gd)
 
-				if gd.__pane_data.max
-					new_value = Math.min(gd.__pane_data.max, new_value)
+			dragging: (ev, gd) =>
+				if not CUI.__ng__
+					return
 
-				#CUI.debug "dragend", @__css_value, diff, @__pane_data, new_value
-				@__setSize(new_value)
+				dragging(gd)
 
-			dragging: () =>
-				return if not CUI.__ng__
-				gd = window.globalDrag
 
-				new_value = gd.__pane_data.value + gd.dragDiff[gd.__pane_data.axis] * gd.__pane_data.flip
-				if gd.__pane_data.min
-					new_value = Math.max(gd.__pane_data.min, new_value)
+		dragging = (gd) =>
+			new_value = gd.__pane_data.value + gd.dragDiff[gd.__pane_data.axis] * gd.__pane_data.flip
+			if gd.__pane_data.min
+				new_value = Math.max(gd.__pane_data.min, new_value)
 
-				if gd.__pane_data.max
-					new_value = Math.min(gd.__pane_data.max, new_value)
+			if gd.__pane_data.max
+				new_value = Math.min(gd.__pane_data.max, new_value)
 
-				#CUI.debug "dragend", @__css_value, diff, @__pane_data, new_value
-				@__setSize(new_value)
+			@__setSize(new_value)
 
 
 		DOM.waitForDOMInsert(node: @_element)
@@ -236,11 +231,13 @@ class FlexHandle extends CUI.Element
 				CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
 				DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
 
-			@_element.classList.remove("cui-flex-handle-manual-size")
+			@__pane.classList.remove("cui-is-manually-sized")
+			@_element.classList.remove("cui-is-manually-sized")
 			@__size = null
 		else
-			console.debug "DOM set dimension", size, @__css_value, @__pane
-			@_element.classList.add("cui-flex-handle-manual-size")
+			# console.debug "DOM set dimension", size, @__css_value, @__pane
+			@__pane.classList.add("cui-is-manually-sized")
+			@_element.classList.add("cui-is-manually-sized")
 			DOM.setDimension(@__pane, "contentBox"+@__css_value, size)
 			@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
 

@@ -264,7 +264,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 						globalDrag.dragDiff = diff
 
 						@do_drag(ev, $target, diff)
-						@_dragging?(ev, $target, diff)
+						@_dragging?(ev, window.globalDrag, diff)
 				return
 
 		Events.listen

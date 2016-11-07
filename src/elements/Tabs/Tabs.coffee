@@ -66,7 +66,7 @@ class CUI.Tabs extends CUI.SimplePane
 			axis: "x"
 			dragstart: =>
 				startScrollLeft = @__header.scrollLeft
-			dragging: (ev, $target, diff) =>
+			dragging: (ev, gd, diff) =>
 				@__header.scrollLeft = startScrollLeft - diff.x
 			helper: null
 

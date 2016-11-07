@@ -146,7 +146,10 @@ class CUI.ListView extends CUI.SimplePane
 			if col == "maximize"
 				# assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
 				assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
-				assert(@__maximize_horizontal, "new ListView", "maximized columns need the ListView to be set to opts.maximize_horizontal == true", opts: @opts)
+
+				if not CUI.__ng__
+					assert(@__maximize_horizontal, "new ListView", "maximized columns need the ListView to be set to opts.maximize_horizontal == true", opts: @opts)
+
 				@__maxCols.push(col_i)
 
 		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
@@ -419,7 +422,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@appendDeferredRows()
 
-		if @_setOpacity and @_autoLayout != 2
+		if @_setOpacity # and @_autoLayout != 2
 			@grid[0].style.opacity = "0"
 		DOM.waitForDOMInsert(node: @DOM)
 		.done =>
@@ -427,11 +430,15 @@ class CUI.ListView extends CUI.SimplePane
 			if @rowsCount == 0
 				@showWaitBlock(true)
 
+			if CUI.__ng__
+				for el in CUI.DOM.find(".cui-tmpl-label-rotate-90")
+					CUI.DOM.data(el, "element").setLabelRotatedSizes()
+
 			# if @_autoLayout
 			# 	@__scheduleLayout()
 			# else
 			@__doLayout()
-			if @_setOpacity and @_autoLayout != 2
+			if @_setOpacity # and @_autoLayout != 2
 				@grid[0].style.opacity = "1"
 		@DOM
 

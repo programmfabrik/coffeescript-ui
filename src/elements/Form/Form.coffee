@@ -204,7 +204,12 @@ class CUI.Form extends CUI.DataField
 		@table
 
 	renderTable: ->
-		@table = $table("cui-form-table")
+
+		if CUI.__ng__
+			# avoid "cui-table"
+			@table = jQuery(CUI.DOM.element("TABLE", class: "cui-form-table"))
+		else
+			@table = $table("cui-form-table")
 
 		if @_horizontal
 			@table.addClass("cui-form-table-horizontal")
