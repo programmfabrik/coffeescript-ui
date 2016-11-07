@@ -212,6 +212,8 @@ class CUI.ListViewTree extends CUI.ListView
 
 		if @_no_hierarchy
 			@grid.addClass("cui-list-view-tree-no-hierarchy")
+		else
+			@grid.addClass("cui-list-view-tree-hierarchy")
 
 		@DOM
 

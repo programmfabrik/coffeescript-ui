@@ -7,6 +7,8 @@ class ListViewHeaderColumn extends ListViewColumn
 		@removeOpt("element")
 
 		@addOpts
+			spacer:
+				check: Boolean
 			rotate_90:
 				check: Boolean
 			label:
@@ -36,5 +38,11 @@ class ListViewHeaderColumn extends ListViewColumn
 		@__element
 
 	render: ->
-		@__label.DOM
+		if @_spacer
+			arr = [ $div("cui-tree-node-spacer") ]
+		else
+			arr = []
+
+		arr.push(@__label.DOM)
+		arr
 
