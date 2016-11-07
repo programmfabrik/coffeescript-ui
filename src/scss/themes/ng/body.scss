@@ -420,7 +420,7 @@ li > div {
 				// the difference to the normal rotate-90 is that
 				// we want to touch the label the "top" and not
 				// start from the "bottom"
-				transform: rotateZ(-90deg) translateY(7px) translate(calc(-100% - #{$padding}));
+				transform: rotate(-90deg) translateY(7px) translate(calc(-100% - #{$padding}));
 				transform-origin: left top;
 			}
 		}
@@ -1184,26 +1184,36 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-tmpl-label-rotate-90 {
 		align-items: flex-end;
-		// rotate by 90 degrees
 		white-space: nowrap;
-		// align-self: flex-start;
+		margin: $padding/2 0;
+		margin-left: -3px;
+		
 		> .cui-label-transform {
 			// the transform-origin is the corner
 			// of the content, so the padding
 			// moved the origin to the right.
 			// we need to compensate for that
-			transform: rotateZ(-90deg) translateY(calc(100% - 3px)) translateX(3px);
+			transform: rotate(-90deg) translateY(100%);
 			transform-origin: left bottom;
 		}
 	}
 
-	.cui-label-icon {
+	&-icon {
+		&:empty {
+			display: none;
+		}
+
 		.fa {
 			line-height: 18px;
 		}
 	}
 
-	&.cui-label-size-big {
+	&-size-mini {
+		font-size: 11px;
+		line-height: 13px;
+	}
+
+	&-size-big {
 		.cui-label-icon {
 			.fa {
 				font-size: 21px;
@@ -1211,11 +1221,11 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+	&-icon:not(:empty) + .cui-label-content:not(:empty) {
 		padding-left: $padding/2;
 	}
 
-	.cui-label-content {
+	&-content {
 		flex: 0 0 auto;
 		max-width: 100%;
 		@include ellipsis;
@@ -1239,10 +1249,6 @@ a[role="button"].cui-button-appearance-link {
 			background: hsl(55,100%,60%);
 			font-style: normal;
 		}
-	}
-
-	.cui-label-icon:empty {
-		display: none;
 	}
 }
 
@@ -2257,8 +2263,12 @@ $table-data-padding: 4px;
 
 // ListView
 .cui-list-view {
-	.cui-label {
+	.cui-label-size-normal {
 		line-height: $table-data-height - $table-data-padding*2;
+	}
+
+	.cui-data-field-output-label {
+		line-height: 24px;	
 	}
 
 	> .cui-vertical-layout-bottom {
@@ -2292,21 +2302,20 @@ $table-data-padding: 4px;
 	display: flex;
 	align-items: flex-start;
 
-	&.cui-lv-td-rotate-90 {
+	&-rotate-90 {
 		width: 32px;
 		
 		> .cui-tmpl-label-rotate-90 {
 			word-break: break-all;
-			height: 250px;
 		}
 	}
 
-	&.cui-lv-td-fill {
+	&-fill {
 		padding: 2px;
 		min-height: 0;
 	}
 
-	&.cui-lv-td-max {
+	&-max {
 		flex: 1 1 auto;
 		width: auto;
 	}
@@ -2495,6 +2504,7 @@ $table-data-padding: 4px;
 		width: 10px + $table-data-padding*2+2;
 		padding-left: $table-data-padding+2;
 		padding-right: 0;
+		padding-top: 11px; // for list views with buttons
 	}
 }
 
@@ -2545,44 +2555,45 @@ $table-data-padding: 4px;
 	opacity: 0.5;
 }
 
-// ListViewTree
+// Tree Node + Handle
+.cui-tree-node {
+	display: flex;
+	flex: 1 1 auto;
+	max-width: 100%;
 
+	.cui-tree-node-handle,
+	.cui-tree-node-spacer {
+		width: 12px;
+		flex: 0 0 auto;
+		padding-right: 5px;
+	}
+
+	.cui-tree-node-handle {
+		display: flex;
+		text-align: center;
+		align-items: center;
+		justify-content: flex-end;
+		
+		.fa {
+			margin-top: -2px;
+		}
+	}
+
+	.cui-tree-node-content {
+		flex: 1 1 auto;
+		min-width: 0;
+		
+		.cui-label {
+			max-width: 100%;
+		}
+	}
+}
+
+// ListViewTree
 .cui-list-view-grid {
 	&.cui-list-view-tree-no-hierarchy {
 		.cui-tree-node-handle {
 			display: none !important;
-		}
-	}
-	.cui-tree-node {
-		display: flex;
-		flex: 1 1 auto;
-		max-width: 100%;
-
-		.cui-tree-node-handle,
-		.cui-tree-node-spacer {
-			width: 12px;
-			flex: 0 0 auto;
-			padding-right: 5px;
-		}
-
-		.cui-tree-node-handle {
-			display: flex;
-			text-align: center;
-			align-items: center;
-			justify-content: flex-end;
-			
-			.fa {
-				margin-top: -2px;
-			}
-		}
-
-		.cui-tree-node-content {
-			flex: 1 1 auto;
-			min-width: 0;
-			
-			.cui-label {
-				max-width: 100%;
-			}
 		}
 	}
 }
@@ -2590,22 +2601,59 @@ $table-data-padding: 4px;
 // Table
 .cui-table {
 	display: table;
-	width: 100%;
+	border: 1px solid $table-border;
 }
 
 .cui-tr {
 	display: table-row;
-	@include padding-y(0.5);
+	
+	.cui-tr:nth-child(even) {
+		background: $zebra-color;
+	}
 }
 
 .cui-td {
 	display: table-cell;
+	padding: $padding/2 $padding;
 	
 	&[colspan]{		
 		> label,
 		> .cui-label {
 			margin-bottom: $padding/2;
 		}
+	}
+}
+
+.status-2d-map {
+	.cui-tr {
+		&:nth-child(odd):not(:first-child) {
+			background: $zebra-color;
+		}
+
+		&:first-child {
+			.cui-td {
+				border-bottom: 1px solid $table-border;
+				position: relative;
+		
+				&:not(:last-child):after {
+					content: "";
+					position: absolute;
+					right: 0;
+					margin: 3px 0;
+					top: 0;
+					bottom: 0;
+					width: 1px;
+					background: $table-border;
+				}
+			}
+		}
+	}
+}
+	
+// Nested Table
+.cui-table .cui-table {
+	.cui-tr {
+		background: $foreground;
 	}
 }
 
@@ -2719,7 +2767,9 @@ table.cui-form-table {
 		}
 	}
 
-	.cui-form-center {
+	> .cui-form-center {
+		padding: 0 $padding/2;
+		
 		.cui-data-field {
 			max-width: none;
 		}
@@ -2728,6 +2778,10 @@ table.cui-form-table {
 			.cui-form-left {
 				width: auto !important;
 				padding: 0 0 0 10px;
+	
+				&:empty {
+					display: none;
+				}
 			}
 
 			.cui-form-center {
@@ -2809,6 +2863,7 @@ table.cui-form-table {
 
 	.cui-form-left {
 		padding: 4px $padding;
+		line-height: 24px;
 		display: block;
 		text-align: right;
 		@include ellipsis;
@@ -2820,7 +2875,8 @@ table.cui-form-table {
 
 	.cui-form-tr,
 	.cui-form-tr-header {
-		padding: $padding 0 $padding - 1px;
+		// UNCLEAR forms already have padding in
+		// padding: $padding 0 $padding - 1px;
 
 		&:before {
 			content: "";
@@ -2861,7 +2917,14 @@ table.cui-form-table {
 .cui-form-popover {
 	.cui-vertical-layout-center {
 		order: 1;
-		margin-top: 3px;
+		
+		+ .cui-vertical-layout-bottom {
+			margin-bottom: 3px;
+			
+			&:empty {
+				display: none;
+			}
+		}
 	}
 }
 
@@ -3570,4 +3633,8 @@ table.cui-form-table {
 @keyframes nodeInserted {
 	from { opacity: 0.99; }
 	to { opacity: 1; }
+}
+
+.cui-template-empty {
+	display: none !important;
 }
