@@ -30,6 +30,14 @@ class Checkbox extends DataFieldInput
 				check: Boolean
 			tooltip:
 				check: "PlainObject"
+			icon_active:
+				default: "check"
+				mandatory: true
+				check: (v) ->
+					v instanceof Icon or isString(v)
+			icon_inactive:
+				check: (v) ->
+					v instanceof Icon or isString(v)
 
 	enable: ->
 		super()
@@ -110,6 +118,9 @@ class Checkbox extends DataFieldInput
 
 		@__checkbox.addClass(@getCheckboxClass())
 
+		if @_icon_active != "check" or @_icon_inactive
+			@addClass("cui-checkbox--icon")
+
 		if CUI.__ng__
 			@__checkbox.removeClass("cui-button-button")
 
@@ -142,18 +153,19 @@ class Checkbox extends DataFieldInput
 			@__checkbox.deactivate(initial_activate: true)
 		@
 
-
 	getButtonOpts: ->
 		if @_radio
 			role: "radio"
 			radio: @_radio
 			group: @_group
-			icon_active: "check"
+			icon_active: @_icon_active
+			icon_inactive: @_icon_inactive
 		else
 			role: "checkbox"
 			switch: true
 			group: @_group
-			icon_active: "check"
+			icon_active: @_icon_active
+			icon_inactive: @_icon_inactive
 
 	getDefaultValue: ->
 		if @_active

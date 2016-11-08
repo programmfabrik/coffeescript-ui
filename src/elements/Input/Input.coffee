@@ -541,6 +541,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 			if DOM.width(@__input) != w
 				changed = true
+
 			DOM.width(@__input, w)
 
 		if changed

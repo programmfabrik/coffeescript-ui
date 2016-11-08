@@ -97,6 +97,8 @@ class CUI.Icon extends CUI.Element
 		close: "svg-close"
 		folder: "fa-folder-o"
 		folder_shared: "svg-folder-shared"
+		folder_upload: "fa-folder"
+		folder_shared_upload: "fa-folder"
 		menu: "fa-bars"
 		info: "fa-info-circle"
 		bolt: "fa-bolt"
