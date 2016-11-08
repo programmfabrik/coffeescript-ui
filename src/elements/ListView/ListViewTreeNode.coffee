@@ -568,11 +568,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@update()
 		child.setFather(null)
 
-	deselect: (ev) ->
+	deselect: (ev, new_node) ->
 		if not @getTree().isSelectable()
 			return CUI.resolvedPromise()
 
-		@check_deselect(ev)
+		@check_deselect(ev, new_node)
 		.done =>
 			@getRoot().selectedNode = null
 			t = @getTree()
@@ -592,7 +592,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	# returns a Promise
 	# done: possible
 	# fail: not-possible
-	check_deselect: (ev) ->
+	check_deselect: (ev, new_node) ->
 		if ev
 			@allow_deselect(ev)
 			if ev.getInfo?()._confirm_hash_change
