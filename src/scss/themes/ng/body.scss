@@ -342,9 +342,6 @@ li > div {
 }
 
 
-
-
-
 // Layout Absolute Vertical
 .cui-vertical-layout {
 	&.cui-absolute {
@@ -684,7 +681,7 @@ li > div {
 .cui-pane-footer {
 	border-top: 1px solid $border;
 	min-height: $toolbar-small-height;
-
+	
 	.cui-horizontal-layout-left .cui-buttonbar:first-child {
 		margin-left: -$padding;
 
@@ -864,27 +861,6 @@ i.cui-spin-stepped {
 	  }
 	}
 
-	&.cui-button-appearance-flat {
-		align-self: auto;
-		
-		.cui-button-visual {
-			@include button-reset;
-			color: desaturate($highlight-color, 80%);
-		}
-		
-	  &:hover {
-	  	.cui-button-visual {
-	  		color: desaturate($highlight-color, 80%);
-	  	}
-	  }
-
-	  &.cui-active {
-	  	.cui-button-visual {
-	  		color: desaturate($highlight-color, 80%);
-	  	}
-	  }
-	}
-
 	&:focus {
 		outline: none;
 		
@@ -892,6 +868,27 @@ i.cui-spin-stepped {
 			@include focus;
 		}
 	}
+}
+
+.cui-button-appearance-flat {
+	align-self: auto;
+	
+	.cui-button-visual {
+		@include button-reset;
+		color: desaturate($highlight-color, 80%);
+	}
+	
+  &:hover {
+  	.cui-button-visual {
+  		color: desaturate($highlight-color, 80%);
+  	}
+  }
+
+  &.cui-active {
+  	.cui-button-visual {
+  		color: desaturate($highlight-color, 80%);
+  	}
+  }
 }
 
 .cui-button-select {
@@ -1122,9 +1119,13 @@ a[role="button"].cui-button-appearance-link {
 .cui-panel {
 	border-bottom: 1px solid $soft-border;
 	
-	// &:last-child {
-	// 	border-bottom: none;
-	// }
+	&:last-child {
+		border-bottom: none;
+		
+		&.cui-panel-closed .cui-panel-header {
+			border-bottom: none;
+		}
+	}
 
 	&.cui-panel-closed {
 		border-bottom: none;
@@ -1582,7 +1583,7 @@ a[role="button"].cui-button-appearance-link {
 	border-radius: 5px;
 	// to make sure that the border-radius will cut off all child backgrounds
 	// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
-	opacity: 0.99;
+	opacity: 0.9999;
 	box-shadow:
 		0 4px 20px hsla(205,5%,30%,.4),
 		0 2px 4px hsla(0,0%,0%,.1);
@@ -1799,6 +1800,10 @@ a[role="button"].cui-button-appearance-link {
 				min-height: 0;
 				position: relative;
 				padding-right: 0;
+
+				> .cui-horizontal-layout-right .cui-buttonbar:last-child {
+					margin-right: 0;
+				}
 				
 				.cui-label {
 					margin-top: $padding;
@@ -1890,6 +1895,12 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
+	.cui-table {
+		.cui-tr:nth-child(even) {
+			background: darken($zebra-color, 4%);
+		}
+	}
 	
 	.cui-horizontal-layout-right {
 		margin-left: 0;
@@ -1966,10 +1977,6 @@ a[role="button"].cui-button-appearance-link {
 	.cui-item-list {
 		font-size: inherit;
 	}
-
-	.cui-button {
-		cursor: pointer;
-	}
 }
 
 .cui-menu-divider {
@@ -2017,15 +2024,15 @@ a[role="button"].cui-button-appearance-link {
 	  }
 
 	  &:hover:not(.cui-disabled),
-	  &:active {
+	  &:active:not(.cui-disabled) {
 	  	.cui-button-visual {
 	  		color: hsl(205,7%,22%);
 				background: hsl(205,17%,98%);
 			}
 	  }
 
-	  &.cui-active,
-	  &.cui-active:hover {
+	  &.cui-active:not(.cui-disabled),
+	  &.cui-active:hover:not(.cui-disabled) {
 	  	.cui-button-visual {
 	  		color: $on-highlight-color;
 	  		background: $highlight-color;
@@ -2294,13 +2301,14 @@ $table-data-padding: 4px;
 }
 
 .cui-lv-td {
-	padding: $table-data-padding $padding;
-	width: 135px;
-	min-height: $table-data-height;
+	padding: $table-data-padding $padding/2;
+	width: 125px;
+	min-height: $table-data-height - 2*$table-data-padding;
 	flex: 0 0 auto;
 	overflow: hidden;
 	display: flex;
 	align-items: flex-start;
+	box-sizing: content-box;
 
 	&-rotate-90 {
 		width: 32px;
@@ -2490,6 +2498,11 @@ $table-data-padding: 4px;
 	flex: 1 1 auto;
 	display: flex;
 	max-width: 100%;
+	padding: 0 $padding/2;
+	
+	&:empty {
+		padding: 0;
+	}
 }
 
 .cui-list-view-row-move-handle-column {
@@ -2532,6 +2545,10 @@ $table-data-padding: 4px;
 	.cui-lv-td.cui-lv-td-fill {
 		padding: 0;
 	}
+}
+
+.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer {
+	background-image: linear-gradient(white 50%, $zebra-color 50%);
 }
 
 .cui-tmpl-list-view-tool-col-resize-marker {
@@ -2580,11 +2597,13 @@ $table-data-padding: 4px;
 	}
 
 	.cui-tree-node-content {
+		display: flex;
 		flex: 1 1 auto;
 		min-width: 0;
 		
 		.cui-label {
 			max-width: 100%;
+			flex: 1 1 auto;
 		}
 	}
 }
@@ -2669,6 +2688,12 @@ table.cui-form-table {
 // .cui-form-table {
 // 	margin: 0;
 // }
+
+.cui-form-table-has-not-left-column {
+	> .cui-tr > .cui-td.cui-form-left {
+		display: none;
+	}
+}
 
 .cui-form-tr,
 .cui-form-tr-header {
@@ -2875,6 +2900,7 @@ table.cui-form-table {
 
 	.cui-form-tr,
 	.cui-form-tr-header {
+		padding-top: 1px;
 		// UNCLEAR forms already have padding in
 		// padding: $padding 0 $padding - 1px;
 
@@ -3443,7 +3469,7 @@ table.cui-form-table {
 }
 
 .cui-block-header {
-	padding: $padding $padding 4px;
+	padding: $padding $padding 7px;
 }
 
 .cui-block-content {
@@ -3636,5 +3662,7 @@ table.cui-form-table {
 }
 
 .cui-template-empty {
-	display: none !important;
+	&.cui-label {
+		display: none !important;
+	}
 }
