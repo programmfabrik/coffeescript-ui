@@ -251,4 +251,4 @@ wipe: clean
 %.coffee.js: %.coffee
 	coffee -b -p --compile $^ > $@ || ( rm -f $@ ; false )
 
-.PHONY: all demo css css_ng css_other clean clean-build wipe font_awesome svg_icons
+.PHONY: all demo css css_ng css_other clean clean-build wipe font_awesome
