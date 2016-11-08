@@ -95,10 +95,10 @@ class CUI.Icon extends CUI.Element
 		ellipsis_h: "fa-ellipsis-h"
 		ellipsis_v: "fa-ellipsis-v" #used for sidemenu buttons
 		close: "svg-close"
-		folder: "fa-folder-o"
+		folder: "svg-folder"
 		folder_shared: "svg-folder-shared"
-		folder_upload: "fa-folder"
-		folder_shared_upload: "fa-folder"
+		folder_upload: "svg-folder-upload"
+		folder_shared_upload: "svg-folder-shared-upload"
 		menu: "fa-bars"
 		info: "fa-info-circle"
 		bolt: "fa-bolt"

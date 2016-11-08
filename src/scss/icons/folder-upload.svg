@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="19px" viewBox="0 0 15 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>folder-upload</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="folder-upload">
+            <path d="M2,2 C0.723857625,2 1.41680265e-16,2.72385763 0,4 L0,14 C-7.79241456e-16,15.2761424 0.723857625,16 2,16 L13,16 C14.2761424,16 15,15.2761424 15,14 L15,6 C15,4.72385763 14.2761424,4 13,4 L7,4 C7,4 7,2 5,2 L2,2 Z M2,3 L5,3 C5,3 6,3 6,4 C6,5 7,5 7,5 L13,5 C13,5 14,5 14,6 L14,14 C14,14 14,15 13,15 L2,15 C1,15 1,14 1,14 L1,4 C1,3 2,3 2,3 Z" id="folder" fill="#F6A623"></path>
+            <polygon id="arrow-mask" fill="#FFFFFF" transform="translate(7.500000, 11.500000) rotate(-180.000000) translate(-7.500000, -11.500000) " points="5 6.5 10 6.5 10 9.5 12.5 9.5 7.5 16.5 2.5 9.5 5 9.5"></polygon>
+            <polygon id="arrow" fill="#F6A623" transform="translate(7.500000, 13.250000) rotate(-180.000000) translate(-7.500000, -13.250000) " points="6 8.5 9 8.5 9 13.5 11.5 13.5 7.5 18 3.5 13.5 6 13.5"></polygon>
+        </g>
+    </g>
+</svg>

@@ -501,7 +501,7 @@ li > div {
 	min-height: $toolbar-small-height;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	padding: 0 $padding;
+	padding: 0 $padding/2;
 	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
@@ -556,7 +556,7 @@ li > div {
 		> .cui-label {
 			// reset padding: 0 $padding; in cui-horizontal-layout-left
 			&:first-child {
-				padding-left: 0;
+				padding-left: 3px;
 			}
 			
 			&:last-child {
@@ -649,24 +649,20 @@ li > div {
 	}
 
 	.cui-horizontal-layout-left {
-		> *:first-child {
-			padding-left: 0;
-		}
-
 		> *:only-child {
 			padding-right: 0;
 		}
 	}
 
 	> .cui-horizontal-layout-center {
-		margin-right: $padding;
+		margin-right: $padding/2;
 	}
 
 	> .cui-horizontal-layout-right {
 		margin-left: 0;
 		
 		.cui-buttonbar:last-child {
-			margin-right: $padding;
+			margin-right: $padding/2;
 		}
 	}
 
@@ -683,23 +679,24 @@ li > div {
 	min-height: $toolbar-small-height;
 	
 	.cui-horizontal-layout-left .cui-buttonbar:first-child {
-		margin-left: -$padding;
+		margin-left: -$padding/2;
 
 		.cui-button:first-child {
-			padding-left: $padding;
+			padding-left: $padding/2;
 		}
 	}
 
 	.cui-horizontal-layout-right .cui-buttonbar:last-child {
-		margin-right: -$padding;
+		margin-right: -$padding/2;
 
 		.cui-button:last-child {
-			padding-right: $padding;
+			padding-right: $padding/2;
 		}
 	}
 
 	.cui-label {
 		color: $secondary-color;
+		font-size: 12px;
 	}
 }
 
@@ -978,8 +975,27 @@ a[role="button"].cui-button-appearance-link {
 // Checkbox
 .cui-checkbox {
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	align-items: center;
+	
+	&--icon {
+		.cui-button-checkbox {
+			.cui-button-left i {
+				border: none;
+				background: none;
+				font-size: 14px;
+				opacity: 0.2;
+			}
+
+			&.cui-active {
+				.cui-button-left i {
+					background: none;
+					color: inherit;
+					text-shadow: none;
+					opacity: 1;
+				}
+			}
+		}
+	}
 }
 
 .cui-button-checkbox {
@@ -991,6 +1007,7 @@ a[role="button"].cui-button-appearance-link {
 	white-space: initial;
 	align-self: flex-start;
 	max-width: 100%;
+	flex: 1;
 
 	&.cui-disabled {
 		cursor: default;
@@ -1048,6 +1065,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button-visual {
 		justify-content: unset;
+		flex: 1;
 	}
 
 	.cui-button-left {
@@ -1072,6 +1090,8 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button-center {
 		min-width: 0;
+		flex: 1;
+		justify-content: flex-start;
 	}
 
 	&[role="radio"] {
@@ -1408,7 +1428,6 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
 	@include margin;
 
@@ -1456,7 +1475,6 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar-group {
 	display: flex;
-	flex-direction: row;
 
 	> * {
 		position: relative;
@@ -1767,11 +1785,11 @@ a[role="button"].cui-button-appearance-link {
 				padding: $padding/2;
 				
 				&:last-child {
-					padding-right: $padding;
+					padding-right: $padding/2;
 				}
 				
 				&:first-child {
-					padding-left: $padding;
+					padding-left: $padding/2;
 				}
 			}
 		}
@@ -2164,6 +2182,7 @@ a[role="button"].cui-button-appearance-link {
 				overflow: hidden;
 				flex-grow: 0;
 				justify-content: center;
+				margin-right: 0;
 			}
 
 			/* overflowing tabs */
