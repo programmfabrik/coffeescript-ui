@@ -283,13 +283,6 @@ class CUI.Layer extends CUI.DOM
 				default: false
 				check: Boolean
 
-			#
-			# if set to true the Layer listens to content-resize events
-			# and adjusts its size
-			auto_size:
-				default: true
-				check: Boolean
-
 			show_ms:
 				default: 700
 				check: (v) =>
@@ -1050,14 +1043,13 @@ class CUI.Layer extends CUI.DOM
 
 		@__updateLayerStackCounter()
 
-		if @_auto_size
-			Events.listen
-				type: "content-resize"
-				instance: @
-				node: @__layer
-				call: (ev) =>
-					# console.info("Layer caught event:", ev.getType)
-					@position()
+		Events.listen
+			type: "content-resize"
+			instance: @
+			node: @__layer
+			call: (ev) =>
+				console.error "Layer caught event:", ev.getType()
+				@position()
 
 		Events.listen
 			type: "viewport-resize"

@@ -896,7 +896,7 @@ class CUI.ListView extends CUI.SimplePane
 						Events.trigger
 							type: "content-resize"
 							exclude_self: true
-							node: @DOM[0]
+							node: @DOM
 
 			@__layoutDim = dim
 

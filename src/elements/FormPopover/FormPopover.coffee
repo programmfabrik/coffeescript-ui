@@ -176,8 +176,6 @@ class FormPopover extends Form
 		# pop_opts.element = @__button
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		if not pop_opts.hasOwnProperty("auto_size")
-			pop_opts.auto_size = true
 
 		assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
 
