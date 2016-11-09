@@ -484,7 +484,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# console.debug "FINAL helper pos:", globalDrag, diff,  "top", top, "left", left, dump(helper_pos)
 
 	getSourceCloneForHelper: ->
-		globalDrag.$source.cloneNode(true)
+		helper = globalDrag.$source.cloneNode(true)
+
+		# remove select state (hard to overwrite in CSS)
+		helper.classList.remove('cui-selected')
+		return helper
 
 	init_helper: (ev, $target, diff) ->
 		drag_source = globalDrag.$source
