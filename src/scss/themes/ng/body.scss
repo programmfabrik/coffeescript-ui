@@ -222,7 +222,7 @@ li > div {
 // HorizontalLayout
 .cui-horizontal-layout {
 	display: flex;
-	flex-shrink: 1;
+	flex-shrink: 0;
 	
 	&.cui-maximize-horizontal {
 		flex-direction: row;
@@ -230,7 +230,7 @@ li > div {
 
 		> .cui-horizontal-layout-left {
 			position: relative;
-			flex-shrink: 1;
+			// flex-shrink: 1; - too strong
 			// overflow: hidden; cuts off outline in date-time picker: year picker
 			// max-width: 45%; breaks CUI.confirm
 		}
@@ -280,6 +280,7 @@ li > div {
 .cui-vertical-layout {
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 	
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
@@ -449,6 +450,12 @@ li > div {
 
 .cui-flex-handle-hide-for-stretch {
 	display: none;
+}
+
+.cui-is-manually-sized {
+	& + .cui-flex-handle + * {
+		flex-shrink: 1 !important;
+	}
 }
 
 
@@ -2358,6 +2365,10 @@ $table-data-padding: 4px;
 		flex: 1 1 auto;
 		width: auto;
 	}
+
+	.cui-label-multiline {
+		align-self: flex-start;
+	}
 }
 
 .cui-list-view-grid-quadrant-0,
@@ -2508,8 +2519,6 @@ $table-data-padding: 4px;
 }
 
 .cui-lv-tr-outer {
-	// avoid the text select cursor on list items
-	cursor: default;
 	display: flex;
 	flex: 0 0 auto;
 	min-width: 0;
@@ -2976,7 +2985,7 @@ table.cui-form-table {
 		order: 1;
 		
 		+ .cui-vertical-layout-bottom {
-			margin-bottom: 3px;
+			margin-bottom: 5px;
 			
 			&:empty {
 				display: none;
@@ -3054,18 +3063,6 @@ table.cui-form-table {
 
 	background: linear-gradient($drag-handle-color 1px, transparent 1px);
 	background-size: 100% 3px;
-}
-
-// Drag and Drop
-
-.drag-drop-select-helper {
-	&.cui-tr {
-		padding: 0;
-	}
-}
-
-.cui-sortable-placeholder {
-	opacity: 0;
 }
 
 // DateTime
@@ -3371,13 +3368,32 @@ table.cui-form-table {
 	}
 }
 
+.drag-drop-select-helper {
+	z-index: 3; // above drop helper
+	
+	&.cui-tr {
+		padding: 0;
+	}
+}
+
+.cui-sortable-placeholder {
+	opacity: 0;
+}
 
 
 // Droppable
 
 .cui-droppable {
 	// marks an active droppable
-	opacity: 0.5;
+	// - in list views not neccesary because we have the droppable helper
+	// opacity: 0.5;
+}
+
+.cui-droppable-drop-helper {
+	box-shadow: 0 0 0 2px $highlight-color inset;
+	position: absolute;
+	z-index: 2;
+	pointer-events: none;
 }
 
 // Movable
