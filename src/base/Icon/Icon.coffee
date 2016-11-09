@@ -126,6 +126,7 @@ class CUI.Icon extends CUI.Element
 		camera: "fa-camera"
 		expert_search: "fa-list-ul" #"fa-binoculars" #"fa-mortar-board"
 		image: "fa-picture-o"
+		external_link: "svg-external-link"
 
 	detectIE: ->
 		ua = window.navigator.userAgent
