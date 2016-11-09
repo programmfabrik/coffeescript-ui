@@ -1481,16 +1481,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// Buttonbar & Button
-.cui-buttonbar + .cui-button {
-	margin-left: 4px;
-}
-
-.cui-button + .cui-buttonbar,
-.cui-select + .cui-buttonbar {
-	margin-left: 4px;
-}
-
 // Buttonbar
 .cui-buttonbar-group {
 	display: flex;
@@ -3671,11 +3661,11 @@ table.cui-form-table {
 
 // Space
 .cui-space {
-	width: $small-gap;
+	width: 10px;
 }
 
 .cui-large-space {
-	width: $gap;
+	width: 20px;
 }
 
 .cui-flexible-space {
