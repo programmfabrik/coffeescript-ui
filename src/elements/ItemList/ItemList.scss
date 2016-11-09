@@ -6,4 +6,7 @@
 	}
 }
 
-
+//empty menu items have a height to show their emptiness
+.cui-menu-item.cui-template-empty{
+	height: 22px;
+}
