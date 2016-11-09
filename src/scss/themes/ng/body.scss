@@ -802,6 +802,18 @@ i.cui-spin-stepped {
 	cursor: pointer;
 }
 
+.cui-button-href {
+	.cui-button-right {
+		flex-shrink: 0;
+		// nudge external link icon up a bit
+		margin-top: -1px;
+		
+		&:empty {
+			display: block;
+		}
+	}
+}
+
 .cui-button-visual {
 	display: flex;
 	align-items: center;
@@ -917,7 +929,7 @@ i.cui-spin-stepped {
 
 .cui-button-center {
 	flex-shrink: 1;
-	max-width: 100%;
+	min-width: 0;
 	
 	span {
 		@include ellipsis;
