@@ -54,6 +54,7 @@ class CUI.Icon extends CUI.Element
 		failed: "fa-warning"
 		no_right: "fa-slack"
 		file: if CUI.__ng__ then "fa-file" else "fa-file-o"
+		filter: "fa-filter"
 		refresh: "fa-refresh"
 		zip: "fa fa-file-archive-o"
 		rotate_right: "fa-rotate-right"
