@@ -140,24 +140,23 @@ $scrollbar_height: 1.5*$grid_size;
 
 
 
-//REMARKED this is made in code now
 // Vertical Scrollbar with outer padding x.
 // can be used if padding between content and vertical scrollbar is needed and this padding shouldnt sum up to a padding of the scroll container.
 // not Firefox compatible. Firefox would just have no padding on the outside of the scrollbar
 // not IE compatible, cant differentiate between vert and horizantal. same appearance as in Firefox.
-//@mixin scrollbar_with_padding() {
-//	::-webkit-scrollbar-track:vertical
-//	{
-//		border-right: $grid_size solid $default_background_color;
-//	}
-//
-//	::-webkit-scrollbar:vertical
-//	{
-//		width: $scrollbar_width + $grid_size;
-//	}
-//
-//	::-webkit-scrollbar-thumb:vertical
-//	{
-//		border-right: $grid_size solid $default_background_color;
-//	}
-//}
+@mixin scrollbar_with_padding() {
+	::-webkit-scrollbar-track:vertical
+	{
+		border-right: $grid_size solid $default_background_color;
+	}
+
+	::-webkit-scrollbar:vertical
+	{
+		width: $scrollbar_width + $grid_size;
+	}
+
+	::-webkit-scrollbar-thumb:vertical
+	{
+		border-right: $grid_size solid $default_background_color;
+	}
+}
