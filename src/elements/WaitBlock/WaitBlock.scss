@@ -62,6 +62,7 @@
 			}
 
 			i {
+				color: $wait_block_color;
 				padding: 20px;
 				@extend %__waiting_symbol_icon_rendering;
 				font-size: 50px;
