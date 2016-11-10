@@ -52,12 +52,15 @@ $marker_background_color: $orange; //e.g. used by datetime to show current day o
 $marker_color: #443c00;
 $invalid_input_background_color: #F5D3D3;
 $error_color: red;
+$font_color_diminished: $white*0.5; //e.g. for 'no assets' info texts etc.
 
 $dropzone_highlighted_color: $marker_background_color;
 
 $focus_color: #4D90FE;
 
 
+//-------------labels-------------------
+$label_icon_color: $font_color_diminished;
 
 //------------- buttons --------------------------
 

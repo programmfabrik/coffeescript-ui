@@ -11,7 +11,9 @@
 	font-size: map_get($button_font_sizes,$size);
 	line-height: map_get($button_line_heights,$size) + 2px; // compensate non existing border
 
+	//less contrast for non-buttons icons
 	> .cui-label-icon {
+		color: $label_icon_color;
 		font-size: map_get($button_icon_font_sizes,$size);
 	}
 };
