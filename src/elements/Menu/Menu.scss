@@ -4,6 +4,9 @@
 .cui-layer.cui-menu {
 	border-width: 1px;
 
+	padding: $half_grid_size;
+	padding-bottom: 0;
+
 	//show that there is something
 	min-width: 50px;
 
