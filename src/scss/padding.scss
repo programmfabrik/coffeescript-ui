@@ -182,8 +182,15 @@
         margin-left: map_get($outer_padding_x,$size);
         margin-right: map_get($outer_padding_x,$size);
 
-        margin-top: map_get($outer_padding_y,$size);
-        margin-bottom: map_get($outer_padding_y,$size);
+
+        //margin-top: map_get($outer_padding_y,$size);
+        //margin-bottom: map_get($outer_padding_y,$size);
+
+        //REMARKED content is not filling the negative margin. maybe 100% + margin?
+        //> .cui-list-view {
+        //    margin-top: - map_get($outer_padding_y,$size);
+        //    margin-bottom: - map_get($outer_padding_y,$size);
+        //}
 
         //REMARKED cant have scrolling with this
         //overflow: visible;
@@ -227,5 +234,18 @@
                 right: $line_padding_x;
             }
         }
+    }
+}
+
+
+.cui-popover > .cui-pane > .cui-vertical-layout-center {
+    margin-top: $grid_size;
+    margin-bottom: $grid_size;
+}
+
+@mixin center_content_padding_y(){
+    > .cui-vertical-layout-center {
+        padding-top: $half_grid_size;
+        padding-bottom: $half_grid_size;
     }
 }

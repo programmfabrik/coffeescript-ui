@@ -59,6 +59,8 @@ $list_view_tree_indent_width: $tree_node_handle_width;
 
 		cursor: pointer;
 
+		margin-top: 1px;
+
 		&.cui-tree-node-is-leaf {
 			cursor: inherit;
 		}

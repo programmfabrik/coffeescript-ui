@@ -34,7 +34,9 @@
 	> .cui-vertical-layout-top {
 
 		//modify standard pane header, should appear like a toolbar
-		.cui-pane-header {
+		.cui-pane-header:not(.cui-empty-template) {
+			margin-top: $toolbar_start_end_padding;
+
 			background-color: $list_view_row_color;
 			.cui-label {
 				color: $font_color;
@@ -49,9 +51,8 @@
 		overflow: hidden;
 	}
 
-
-
 }
+
 
 
 @mixin __row_background_color($color) {
