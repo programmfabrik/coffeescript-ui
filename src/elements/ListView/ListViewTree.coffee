@@ -281,8 +281,8 @@ class CUI.ListViewTree extends CUI.ListView
 	getRootChildren: ->
 		@root.children
 
-	getSelectedNode: ->
-		@root.selectedNode
+	getSelectedNode: (key="selectedNode") ->
+		@root[key]
 
 	prependNode: (node) ->
 		@addNode(node, false)

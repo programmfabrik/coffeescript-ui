@@ -609,11 +609,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	removeSelectedClass: ->
 		@getTree().rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
 
-	setSelectedNode: (node = null) ->
+	setSelectedNode: (node = null, key = @getSelectedNodeKey()) ->
 		@getRoot()[@getSelectedNodeKey()] = node
 
-	getSelectedNode: ->
-		@getRoot()?[@getSelectedNodeKey()] or null
+	getSelectedNode: (key = @getSelectedNodeKey()) ->
+		@getRoot()?[key] or null
 
 	getSelectedNodeKey: ->
 		"selectedNode"

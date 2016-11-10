@@ -503,6 +503,7 @@ class CUI.Button extends CUI.DOM
 				check: (v) ->
 					isBoolean(v) or CUI.isFunction(v)
 			active_css_class:
+				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String
 			left:
 				check: (v) ->
@@ -608,11 +609,6 @@ class CUI.Button extends CUI.DOM
 		if @_left
 			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
 
-		if not isNull(@_active_css_class)
-			@__active_css_class = @_active_css_class
-		else
-			@__active_css_class = CUI.defaults.class.Button.defaults.active_css_class
-
 	getCenter: ->
 		return @__box.map.center;
 
@@ -716,7 +712,7 @@ class CUI.Button extends CUI.DOM
 		# CUI.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
 
 		activate = =>
-			@addClass(@__active_css_class)
+			@addClass(@_active_css_class)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -757,7 +753,7 @@ class CUI.Button extends CUI.DOM
 		# CUI.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
 
 		deactivate = =>
-			@removeClass(@__active_css_class)
+			@removeClass(@_active_css_class)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
