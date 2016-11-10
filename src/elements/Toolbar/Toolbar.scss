@@ -10,6 +10,10 @@
 
     @include justify_content(space-between); //left center right
 
+    &.cui-template-empty {
+        display: none;
+    }
+
     //make sure that all child layout containers are in a row
     .cui-layout-cell {
         @include flex_direction(row);
@@ -43,7 +47,7 @@
         padding-bottom: $toolbar_padding_y;
         padding-top: $toolbar_padding_y;
 
-        &:empty { //collapse toolbar completely when empty
+        &:not(.cui-horizontal-layout-center):empty { //collapse toolbar completely when empty
             display: none;
         }
 
