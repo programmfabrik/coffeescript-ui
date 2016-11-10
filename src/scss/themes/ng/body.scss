@@ -543,11 +543,14 @@ li > div {
 	}
 
 	.cui-horizontal-layout-center {
-		align-items: center;
 		flex-direction: row;
 	}
 
 	> div {
+		&.cui-horizontal-layout-center {
+			justify-content: center;
+		}
+
 		> .cui-maximize-horizontal {
 			// in column direction this is solved by
 			// align-items: stretch, but here
@@ -621,6 +624,13 @@ li > div {
 			.cui-button-visual {
 				padding-left: $padding/2;
 				padding-right: $padding/2;
+			}
+
+			&.cui-button-appearance-flat {
+				.cui-button-visual {
+					padding-left: 0;
+					padding-right: 0;
+				}
 			}
 		}
 	}
@@ -913,6 +923,14 @@ i.cui-spin-stepped {
   		color: desaturate($highlight-color, 80%);
   	}
   }
+	
+  .cui-button-left {
+  	padding-left: 0;
+  }
+
+  .cui-button-right {
+  	padding-right: 0;
+  }
 }
 
 .cui-button-select {
@@ -957,6 +975,10 @@ i.cui-spin-stepped {
 
   &.cui-button-appearance-flat {
   	height: auto;
+  }
+
+  .cui-icon-svg {
+  	transform: scale(0.85);
   }
 }
 
