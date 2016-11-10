@@ -144,9 +144,8 @@
     overflow: hidden;
 }
 
-//show small nontransparent flex-handles inside panes
-.cui-pane .cui-flex-handle {
 
+@mixin small_flex_handle() {
     opacity: 1;
 
     &:after {
@@ -177,4 +176,9 @@
             margin: 2px 0;
         }
     }
+}
+//show small nontransparent flex-handles inside panes
+.cui-pane .cui-flex-handle {
+
+    @include small_flex_handle();
 }
