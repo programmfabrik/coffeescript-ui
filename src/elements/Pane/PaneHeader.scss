@@ -4,6 +4,7 @@
     background-color: $pane_header_background_color;
 
 
+
     .cui-button.cui-button-appearance-auto {
         @include button_flat_auto_colored( $font_color, $pane_header_background_color );
     }
@@ -19,5 +20,16 @@
 		//@extend %label_or_button_shrink_with_ellipsis;
 
 		font-weight: bold;
+		$pane_header_font_size: 13px;
+		font-size: $pane_header_font_size;
+		//> .cui-label-content {
+		//}
+
+	}
+
+	//emphasize super small arrows
+	.fa-angle-right,
+	.fa-angle-left {
+		text-shadow: 0 -1px currentColor;
 	}
 }
