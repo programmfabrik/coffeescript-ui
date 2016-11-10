@@ -55,7 +55,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			assert(@ not in new_father.getPath(true), "#{getObjectClass(@)}.setFather", "father cannot any of the node's children", node: @, father: new_father)
 
 		if not new_father and @selected
-			@getRoot()?.selectedNode = null
+			@setSelectedNode(null)
 			@selected = false
 
 		if @father and not new_father
@@ -574,9 +574,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		@check_deselect(ev, new_node)
 		.done =>
-			@getRoot().selectedNode = null
-			t = @getTree()
-			t.rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+			@setSelectedNode()
+			@removeSelectedClass()
 			@selected = false
 			@getTree().triggerNodeDeselect(ev, @)
 
@@ -604,6 +603,21 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	isSelected: ->
 		!!@selected
 
+	addSelectedClass: ->
+		@getTree().rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+
+	removeSelectedClass: ->
+		@getTree().rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+
+	setSelectedNode: (node = null) ->
+		@getRoot()[@getSelectedNodeKey()] = node
+
+	getSelectedNode: ->
+		@getRoot()?[@getSelectedNodeKey()] or null
+
+	getSelectedNodeKey: ->
+		"selectedNode"
+
 	select: (ev) ->
 		dfr = new CUI.Deferred()
 		if ev and @getTree?().isSelectable()
@@ -622,18 +636,18 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# CUI.debug "selecting node", sel_node
 
 		do_select = =>
-			@getRoot().selectedNode = @
+			@setSelectedNode(@)
 			# CUI.error "openUpwards", @getNodeId(), @is_open
 			@openUpwards()
 			.done =>
-				@getTree().rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+				@addSelectedClass()
 				@selected = true
 				dfr.resolve()
 			.fail(dfr.reject)
 
 		# the selected node is not us, so we ask the other
 		# node
-		sel_node = @getRoot().selectedNode
+		sel_node = @getSelectedNode()
 
 		if sel_node
 			sel_node.check_deselect(ev)
