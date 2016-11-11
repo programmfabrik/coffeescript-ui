@@ -338,10 +338,13 @@ class CUI.Options extends CUI.DataField
 
 					if _cb.hasData()
 						if @_radio and not @__radio_use_array
-							@storeValue(_cb.getValue(), flags)
+							if not flags.prior_activate
+								@storeValue(_cb.getValue(), flags)
 						else
 							removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
-							@storeValue(arr, flags)
+							if not flags.prior_activate
+								@storeValue(arr, flags)
+
 							if @_sortable
 								order_options_by_value_array()
 								@reload()

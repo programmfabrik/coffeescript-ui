@@ -78,11 +78,6 @@ class Checkbox extends DataFieldInput
 			if flags.initial_activate
 				return
 
-			if @_radio
-				# ignore prior_activate, so radio buttons get
-				# disabled
-				flags.force_store = true
-
 			@storeValue(@_value_unchecked, flags)
 			ret = @_onDeactivate?(@, flags, event)
 			if isPromise(ret)
