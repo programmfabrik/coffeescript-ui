@@ -872,13 +872,13 @@ i.cui-spin-stepped {
 	}
 
 	&:hover .cui-button-visual {
-	  border-color: hsl(205,100%,45%);
-	  color: hsl(205,100%,45%);
+	  border-color: $highlight-color;
+	  color: $highlight-color;
 	}
 
 	&:active .cui-button-visual {
-	  border-color: hsl(205,100%,35%);
-	  color: hsl(205,100%,35%);
+	  border-color: darken($highlight-color, 10%);
+	  color: darken($highlight-color, 10%);
 	}
 
 	&.cui-disabled {
