@@ -33,8 +33,8 @@ $table-border: hsl(205,8%,90%);
 $table-header-border: hsl(205,8%,94%);
 
 $toolbar-background: hsl(205,2%,97%);
-$toolbar-height: 42px;
-$toolbar-small-height: 34px;
+$toolbar-height: 34px;
+$toolbar-small-height: 29px;
 
 $layer-header-pointer-background: $toolbar-background;
 $layer-header-background: $toolbar-background;
@@ -479,13 +479,14 @@ li > div {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: #ffffff;
+		background-color: white;
 		
 		.cui-pane-fill-screen-inner {
 			width: 100%;
 			height: 100%;
 		}
 	}
+
 	// overwrite "style" set by code
   &.cui-pane-fill-screen-is-on {
     top: 0 !important;
@@ -509,7 +510,7 @@ li > div {
 // Toolbar
 .cui-toolbar {
 	display: flex;
-	min-height: $toolbar-small-height;
+	min-height: $toolbar-height;
 	justify-content: space-between;
 	flex-wrap: wrap;
 	padding: 0 $padding/2;
@@ -618,7 +619,6 @@ li > div {
 	.cui-buttonbar {
 		margin-bottom: 0;
 		height: 100%;
-		// min-height: $toolbar-height; why? 3.11.2016
 		
 		.cui-button {
 			.cui-button-visual {
@@ -657,7 +657,7 @@ li > div {
 }
 
 .cui-result-navigation-toolbar {
-	min-height: $toolbar-small-height;
+	min-height: $toolbar-height;
 }
 
 // Pane
@@ -701,7 +701,12 @@ li > div {
 
 .cui-pane-footer {
 	border-top: 1px solid $border;
-	min-height: $toolbar-small-height;
+	min-height: $toolbar-height;
+	
+	.cui-horizontal-layout-left,
+	.cui-horizontal-layout-right {
+		min-width: auto;
+	}
 	
 	.cui-horizontal-layout-left .cui-buttonbar:first-child {
 		margin-left: -$padding/2;
@@ -1141,6 +1146,7 @@ a[role="button"].cui-button-appearance-link {
 		min-width: 0;
 		flex: 1;
 		justify-content: flex-start;
+		padding-right: 0;
 	}
 
 	&[role="radio"] {
@@ -1209,7 +1215,7 @@ a[role="button"].cui-button-appearance-link {
 	border-top: 1px solid $soft-border;
 	border-bottom: 1px solid $soft-border;
 	position: relative;
-	height: $toolbar-small-height;
+	height: $toolbar-height;
 
 	&:first-child {
 		border-top: none;
@@ -1420,6 +1426,7 @@ a[role="button"].cui-button-appearance-link {
 
 	> .cui-label-content {
 		flex: 1 1 auto;
+		white-space: normal;
 	}
 
 	&.cui-label-manage-overflow {
@@ -1478,7 +1485,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-buttonbar {
 	display: flex;
 	align-items: center;
-	@include margin;
 
 	// > *:not(:last-child) {
 	// 	margin-right: $gap;
@@ -1630,6 +1636,11 @@ a[role="button"].cui-button-appearance-link {
 // Layer
 .cui-tmpl-layer-root {
 	z-index: 1;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .cui-layer {
@@ -1657,7 +1668,7 @@ a[role="button"].cui-button-appearance-link {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
 			background: $layer-header-background;
-			min-height: $toolbar-small-height;
+			min-height: $toolbar-height;
 			border-radius: 5px 5px 0 0;
 			border-color: $layer-header-border;
 		}
@@ -1665,10 +1676,6 @@ a[role="button"].cui-button-appearance-link {
 		// layer-body
 		> .cui-vertical-layout-center {
 			overflow: auto;
-
-			.cui-form-table-has-left-column {
-				margin: 0;
-			}
 
 			// add spacing to single labels in the body
 			// 
@@ -1705,7 +1712,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-toolbar {
-		min-height: $toolbar-small-height;
+		min-height: $toolbar-height;
+	}
+
+	.cui-form-table .cui-data-field {
+		width: auto;
 	}
 }
 
@@ -1899,10 +1910,17 @@ a[role="button"].cui-button-appearance-link {
 				margin-right: 0;
 			}
 
+			.cui-button {
+				height: $toolbar-height;
+				
+				.cui-button-visual {
+					padding: 0 $padding;
+				}
+			}
+
 			.cui-button-button {
 				flex: 1;
 				margin: 0;
-				height: 100%;
 				align-items: stretch;
 				padding: 0 !important;
 				
@@ -1911,7 +1929,6 @@ a[role="button"].cui-button-appearance-link {
 					border: none;
 					border-top: 1px solid hsl(210,11%,93%);
 					border-left: 1px solid hsl(210,11%,93%);
-					padding: 0 $padding;
 					border-radius: 0;
 					color: $highlight-color;
 					background: none;
@@ -2218,7 +2235,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 	> .cui-vertical-layout-top {
 		> .cui-pane-header {
-			min-height: $toolbar-small-height;
+			min-height: $toolbar-height;
 			background: $toolbar-background;
 			padding: 0;
 
@@ -2522,16 +2539,6 @@ $table-data-padding: 4px;
 		&:nth-child(even) {
 			background: $zebra-color;
 		}
-		
-		// &:not(:last-child):after {
-		// 	content: "";
-		// 	position: absolute;
-		// 	left: $padding/2;
-		// 	right: $padding/2;
-		// 	bottom: 0;
-		// 	height: 1px;
-		// 	background: hsl(0,0%,97%);
-		// }
 	}
 }
 
@@ -2747,13 +2754,25 @@ $table-data-padding: 4px;
 	align-self: stretch !important;
 }
 
-table.cui-form-table {
-	@include flex-table();
+.cui-form-table {
+	width: calc(100% - #{2*$padding});
+	display: table;
+	margin: $padding;
+	
+	.cui-tr {
+		display: table-row;
+	}
+	
+	.cui-th,
+	.cui-td {
+		display: table-cell;
+		width: auto;
+	}
+	
+	.cui-data-field {
+		margin: 0;	
+	}
 }
-
-// .cui-form-table {
-// 	margin: 0;
-// }
 
 .cui-form-table-has-not-left-column {
 	> .cui-tr > .cui-td.cui-form-left {
@@ -2798,14 +2817,6 @@ table.cui-form-table {
 
 .cui-form-center {
 	flex-grow: 1;
-	
-	.cui-data-field {
-		max-width: 230px;
-	}
-	
-	.cui-checkbox {
-		max-width: none;
-	}
 }
 
 [cui-form-depth="0"] > .cui-form-tr-header,
@@ -2948,14 +2959,13 @@ table.cui-form-table {
 .cui-form-table-has-left-column {
 	.cui-form-left,
 	.cui-form-right {
-		width: 135px;
+		// width: 135px;
 		// UNCLEAR breaks web-link configuration popover table layout
 	}
 
 	.cui-form-left {
 		padding: 4px $padding;
 		line-height: 24px;
-		display: block;
 		text-align: right;
 		@include ellipsis;
 	}
@@ -2964,24 +2974,18 @@ table.cui-form-table {
 		padding-right: $padding;
 	}
 
+	.cui-form-td {
+		border-top: 1px solid hsl(205,10%,96%);
+	}
+
 	.cui-form-tr,
 	.cui-form-tr-header {
-		padding-top: 1px;
+		// padding-top: 1px;
 		// UNCLEAR forms already have padding in
 		// padding: $padding 0 $padding - 1px;
 
-		&:before {
-			content: "";
-			position: absolute;
-			left: $padding;
-			right: $padding;
-			height: 1px;
-			top: 0;
-			background: hsl(205,10%,96%);
-		}
-
-		&:first-child:before {
-			display: none;
+		&:first-child .cui-form-td {
+			border-top-width: 0;
 		}
 	}
 }
@@ -3023,8 +3027,12 @@ table.cui-form-table {
 
 // Options
 
-.cui-options-active {
-	margin-bottom: $padding;
+.cui-options-inactive {
+	margin-top: $padding;
+	
+	&:empty {
+		margin-top: 0;
+	}
 }
 
 .cui-options-sortable-option {
@@ -3063,7 +3071,7 @@ table.cui-form-table {
 	font-size: 11px;
 	margin-top: $compensating-padding;
 	margin-left: 18px;
-	margin-bottom: 2px !important;
+	margin-bottom: 4px !important;
 	color: $secondary-color;
 }
 
@@ -3524,7 +3532,6 @@ table.cui-form-table {
 // Block
 
 .cui-block {
-	background: $foreground;
 	border-bottom: 1px solid hsl(180,9%,93%);
 
 	&.cui-block-level-1 {
