@@ -544,10 +544,7 @@ class CUI.DataField extends CUI.DOM
 		if not @hasData()
 			return false
 
-		store_last = (not flags.prior_activate and
-			flags.initial_activate != true and
-			flags.no_store != true) or
-			flags.force_store
+		store_last = flags.initial_activate != true and flags.no_store != true
 
 		if store_last and (undo = @getUndo())
 			# CUI.debug(".undo[#{@_name}][#{@undo.idx}]", @__data[@_name], ">", value)

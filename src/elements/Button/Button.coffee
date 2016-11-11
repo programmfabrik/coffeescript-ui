@@ -739,8 +739,9 @@ class CUI.Button extends CUI.DOM
 
 		if @__radio
 			for btn, idx in @getRadioButtons()
-				if btn == @
+				if btn == @ or not btn.isActive()
 					continue
+
 				btn.deactivate(prior_activate: true, initial_activate: flags.initial_activate)
 
 		@__active = true
