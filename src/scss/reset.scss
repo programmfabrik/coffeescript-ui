@@ -192,3 +192,7 @@ body,textarea,input {
     font-family: $font_family;
     font-size: $font_size;
 }
+
+body {
+    position: relative;
+}
