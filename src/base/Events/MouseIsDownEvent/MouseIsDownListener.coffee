@@ -52,8 +52,7 @@ class CUI.MouseIsDownListener extends CUI.Listener
 		@
 
 	__triggerEvent: ->
-		# CUI.debug "triggerEvent", @__counter, @__last_triggered?.isNextPrevented()
-		if @__mousedown_event.isImmediatePropagationStopped() or @__last_triggered?.isNextPrevented()
+		if @__mousedown_event.isImmediatePropagationStopped()
 			return
 
 		if not CUI.DOM.isInDOM(@__mousedown_event.getNode())

@@ -346,6 +346,7 @@ class CUI.Events extends CUI.Element
 				mousedown: {}
 				mouseup: {}
 				click: {}
+				dblclick: {}
 				touchstart: {}
 				touchend: {}
 				touchmove: {}
@@ -390,7 +391,6 @@ class CUI.Events extends CUI.Element
 					bubble: false
 				drop:
 					bubble: false
-				dblclick: {}
 				scroll:
 					bubble: false
 				selectstart:

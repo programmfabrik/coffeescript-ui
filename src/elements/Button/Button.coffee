@@ -269,7 +269,6 @@ class CUI.Button extends CUI.DOM
 			type: @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
 			node: @DOM
 			call: (ev) =>
-				console.debug "button received ", ev.getType(), @getText(), @_click_type
 
 				# if ev.getType() != @_click_type
 				# 	# click type can be changed after

@@ -35,13 +35,6 @@ class CUI.MouseIsDownEvent extends CUI.MouseEvent
 	getMousedownEvent: ->
 		@_mousedownEvent
 
-	# prevents next mouse is down event
-	preventNext: ->
-		@__preventNext = true
-
-	isNextPrevented: ->
-		@__preventNext
-
 	hasModifierKey: (includeShift=false) ->
 		@_mousedownEvent.hasModifierKey(includeShift)
 

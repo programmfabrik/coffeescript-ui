@@ -468,6 +468,7 @@ class FlexHandle extends CUI.Element
 		# CUI.debug "FlexHandle.show", @__uniqueId, @isOpen()
 		if @isOpen()
 			return @
+
 		@_element.classList.remove("cui-flex-handle-closed")
 		@__pane.css("display", "")
 		delete(@__closed)
