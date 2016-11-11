@@ -50,7 +50,7 @@ class CUI.Icon extends CUI.Element
 	icon_map: ->
 		crop: "fa-crop"
 		fullscreen: "fa-arrows-alt"
-		trash: "fa-trash-o"
+		trash: if CUI.__ng__ then "svg-trash" else "fa-trash-o"
 		failed: "fa-warning"
 		no_right: "fa-slack"
 		file: if CUI.__ng__ then "fa-file" else "fa-file-o"
