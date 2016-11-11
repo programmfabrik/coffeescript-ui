@@ -1143,7 +1143,7 @@ CUI.ready ->
 		capture: true
 		# install not do high, do Drag & Drop can be on top
 		node: document.body
-		call: (ev) ->
+		call: (ev, info) ->
 
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on")
 			target = ev.getTarget()
@@ -1157,6 +1157,8 @@ CUI.ready ->
 					return
 
 				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
+
+				info.mousedown_closed_layer = true
 
 				layer.hide(ev)
 
