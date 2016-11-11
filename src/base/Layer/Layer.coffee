@@ -81,7 +81,7 @@ class CUI.Layer extends CUI.DOM
 								ev.stopPropagation()
 
 					when "modal"
-						@__backdrop.addClass("layer-backdrop-modal")
+						@__backdrop.addClass("cui-layer-backdrop--visible")
 						if @_backdrop.add_bounce_class != false
 							if isString(@_backdrop.add_bounce_class)
 								bc = @_backdrop.add_bounce_class

@@ -31,7 +31,7 @@ body {
 			-webkit-filter: blur(10px);
 		}
 
-		.cui-tmpl-layer-backdrop.layer-backdrop-modal:empty {
+		.cui-tmpl-layer-backdrop.cui-layer-backdrop--visible:empty {
 			opacity: 0;
 		}
 		.cui-tmpl-layer-backdrop:not(:empty) {
@@ -41,7 +41,7 @@ body {
 
 	&.cui-layer-effect-darken {
 		.cui-tmpl-layer-backdrop:not(:empty),
-		.cui-tmpl-layer-backdrop.layer-backdrop-modal:empty,
+		.cui-tmpl-layer-backdrop.cui-layer-backdrop--visible:empty,
 		> div:not(.cui-tmpl-layer-root) {
 			background: #000;
 			opacity: 0.85;
@@ -65,7 +65,7 @@ body {
 	transform: scale(1.02)
 }
 
-.cui-tmpl-layer-backdrop.layer-backdrop-modal {
+.cui-tmpl-layer-backdrop.cui-layer-backdrop--visible {
 	opacity: 0.5;
 }
 
