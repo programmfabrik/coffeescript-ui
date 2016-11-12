@@ -512,7 +512,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		globalDrag.helperNode = hn
 
-		hn.addClass("drag-drop-select-helper cui-debug-node-copyable cui-drag-drop-select-transparent")
+		hn.addClass("drag-drop-select-helper cui-drag-drop-select-transparent")
 
 		start =
 			top: globalDrag.startCoordinates.pageY - offset.top

@@ -24,8 +24,11 @@ class CUI
 			type: "resize"
 			node: window
 			call: (ev, info) =>
-				CUI.info("CUI: caught window resize event.")
-				CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
+				console.info("CUI: caught window resize event.")
+				if CUI.__ng__
+					trigger_viewport_resize()
+				else
+					CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
 				return
 
 		Events.listen
@@ -689,39 +692,6 @@ class CUI
 		# url includes user+password
 		p.url = p.url + p.path
 		p
-
-
-	@initNodeDebugCopy: ->
-		Events.listen
-			type: "keydown"
-			capture: true
-			call: (ev) =>
-				if ev.getKeyboard() != "Alt+C"
-					return
-
-				if ev.shiftKey()
-					# remove all nodes
-					i = 0
-					for el in DOM.matchSelector(document.documentElement, ".cui-debug-node-copy")
-						el.remove()
-						i++
-
-					CUI.toaster(text: i+" Node(s) removed.")
-					return
-
-				i = 0
-				for node in CUI.DOM.matchSelector(document.documentElement, ".cui-debug-node-copyable")
-					node_copy = node.cloneNode(true)
-					node.parentNode.appendChild(node_copy)
-					CUI.DOM.insertAfter(node, node_copy)
-					node_copy.classList.add("cui-demo-node-copy")
-					console.debug "Node copied. Original:", node.parentNode, node, "Copy:", node_copy
-					i++
-
-				CUI.toaster(text: i+" Node(s) copied.")
-				return
-
-
 
 	# use for CSS markings of wrongly build markup
 	@setDebug: ->

@@ -536,7 +536,7 @@ class CUI.DOM extends CUI.Element
 		node.style.opacity = "0"
 
 		dim = DOM.getDimensions(node)
-		CUI.DOM.addClass(clone, "cui-dom-animated-clone cui-debug-node-copyable")
+		CUI.DOM.addClass(clone, "cui-dom-animated-clone")
 
 		# We need this micro DIV to push the scroll height / left
 		div = CUI.DOM.element("div", style: "position: absolute; opacity: 0; width: 1px; height: 1px;")
