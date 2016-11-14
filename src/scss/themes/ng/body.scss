@@ -128,9 +128,7 @@ td {
 
 ul {
 	margin: 0;
-	padding-left: 3px;
-  list-style-position: inside;
-	list-position: inline;
+	padding-left: 16px;
 }
 
 a {
@@ -1998,6 +1996,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 260px;
 	max-height: 100px;
 	min-width: 0;
+	min-height: 0;
 	overflow: auto;
 	background: $layer-background;
 	border-radius: 2px;
@@ -2037,6 +2036,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Menu
 .cui-menu {
+	min-height: 0;
 	min-width: 0;
 	max-width: 200px; // when the width is wider its harder to see which arrow belongs to which row
   background: white;
@@ -2573,6 +2573,10 @@ $table-data-padding: 4px;
 	}
 }
 
+.cui-list-view-row-selectable {
+	cursor: pointer;
+}
+
 .cui-list-view-row-move-handle-column {
 	display: none;
 	padding-top: ($table-data-height - 12px) / 2;
@@ -2666,12 +2670,12 @@ $table-data-padding: 4px;
 
 	.cui-tree-node-content {
 		display: flex;
-		flex: 1 1 auto;
+		flex: 1;
 		min-width: 0;
 		
 		.cui-label {
-			max-width: 100%;
-			flex: 1 1 auto;
+			min-width: 0;
+			flex-shrink: 1;
 		}
 	}
 }
@@ -2770,7 +2774,7 @@ $table-data-padding: 4px;
 	}
 	
 	.cui-data-field {
-		margin: 0;	
+		// margin: 0;	// UNCLEAR conflict with multi-input spacing
 	}
 }
 
@@ -3568,7 +3572,7 @@ $table-data-padding: 4px;
 
 	&:not(:first-child) {
 		margin-top: $padding*2;
-		border-top: 1px solid hsl(0,0%,80%);
+		border-top: 1px solid $soft-border;
 	}
 }
 
@@ -3588,8 +3592,7 @@ $table-data-padding: 4px;
 		font-weight: 600;
 		background: hsla(0,0%,100%,.94);
 		border-top: none;
-		box-shadow: 0 1px hsla(0,0%,50%,.5);
-		margin-bottom: 1px;
+		box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
 	}
 }
 
@@ -3600,6 +3603,9 @@ $table-data-padding: 4px;
 		position: relative;
 		border-radius: $button-border-radius;
 		overflow: hidden;
+		// to make sure that the border-radius will cut off all child backgrounds
+		// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
+		opacity: 0.9999;
 
 		.cui-progress-meter-fill-background,
 		.cui-progress-meter-fill,
@@ -3690,6 +3696,10 @@ $table-data-padding: 4px;
 }
 
 // Autocomplete
+.cui-autocompletion-popup {
+	min-height: 0;	
+}
+
 .cui-autocompletion-popup-container {
 	padding: 4px 0;
 }
