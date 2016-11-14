@@ -27,6 +27,8 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 						return false
 
 					for choice in v
+						if not v
+							continue
 						CUI.Element.readOpts(choice, "new ConfirmationChoice", @choiceOpts)
 					return true
 
@@ -45,6 +47,10 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			mandatory: true
 			default: false
 			check: Boolean
+		disabled:
+			mandatory: true
+			default: false
+			check: Boolean
 
 	readOpts: ->
 		super()
@@ -53,9 +59,13 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 	init: ->
 		@_buttons = []
 		for choice in @_choices
+			if not choice
+				continue
+
 			btn_opts =
 				left: true
 				value: choice
+				disabled: choice.disabled
 				onClick: (ev, btn) =>
 					@__choice = btn.getValue()
 					CUI.chainedCall(

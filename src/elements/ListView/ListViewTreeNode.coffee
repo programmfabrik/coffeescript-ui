@@ -42,7 +42,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		leaf
 
 	isSelectable: ->
-		@getTree?().isSelectable() and @__selectable
+		@getTree?().isSelectable() and @__selectable and not @isRoot()
 
 	getFather: ->
 		@father
@@ -116,6 +116,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @children
 			for c in @children
 				c.find(eq_func, nodes)
+
 		nodes
 
 	# filters the children by function
@@ -582,23 +583,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	allowRowMove: ->
 		true
 
-	# this is used by hash change and internally
-	# ev._confirm_hash_change needs to be set to a "confirmation text"
-	# to ask the user if the deselect is ok
-	allow_deselect: (ev, info) ->
-
-	# checks if deselecting is possible
-	# returns a Promise
-	# done: possible
-	# fail: not-possible
 	check_deselect: (ev, new_node) ->
-		if ev
-			@allow_deselect(ev)
-			if ev.getInfo?()._confirm_hash_change
-				m = new ModalConfirm(text: ev.getInfo()._confirm_hash_change)
-				return m.open()
-
-		return CUI.resolvedPromise()
+		CUI.resolvedPromise()
 
 	isSelected: ->
 		!!@selected
@@ -736,7 +722,6 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		.done =>
 			if layout_stopped
 				tree.startLayout()
-		@
 
 	reload: ->
 		# CUI.debug "ListViewTreeNode.reload:", @isRoot(), @is_open

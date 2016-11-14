@@ -467,14 +467,35 @@ class CUI
 		else
 			decodeURIComponent(results[1].replace(/\+/g, " "))
 
+	@setSessionStorage: (key, value) ->
+		@__setStorage("sessionStorage", key, value)
+
+	@getSessionStorage: (key = null) ->
+		@__getStorage("sessionStorage", key)
+
+	@clearSessionStorage: ->
+		@__clearStorage("sessionStorage", key)
+
 	@setLocalStorage: (key, value) ->
-		data = @getLocalStorage()
-		data[key] = value
-		window.localStorage.setItem("CUI", JSON.stringify(data))
-		data
+		@__setStorage("localStorage", key, value)
 
 	@getLocalStorage: (key = null) ->
-		data_json = window.localStorage.getItem("CUI")
+		@__getStorage("localStorage", key)
+
+	@clearLocalStorage: ->
+		@__clearStorage("localStorage")
+
+	@__setStorage: (skey, key, value) ->
+		data = @__getStorage(skey)
+		if value == undefined
+			delete(data[key])
+		else
+			data[key] = value
+		window[skey].setItem("CUI", JSON.stringify(data))
+		data
+
+	@__getStorage: (skey, key = null) ->
+		data_json = window[skey].getItem("CUI")
 		if data_json
 			data = JSON.parse(data_json)
 		else
@@ -485,8 +506,8 @@ class CUI
 		else
 			data
 
-	@clearLocalStorage: ->
-		window.localStorage.removeItem("CUI")
+	@__clearStorage: (skey) ->
+		window[skey].removeItem("CUI")
 
 	@encodeUrlData: (params, replacer = null, connect = "&", connect_pair = "=") ->
 		url = []
@@ -692,10 +713,6 @@ class CUI
 		# url includes user+password
 		p.url = p.url + p.path
 		p
-
-	# use for CSS markings of wrongly build markup
-	@setDebug: ->
-		document.body.classList.add("cui-debug")
 
 	@error: ->
 		console.error.apply(console, arguments)

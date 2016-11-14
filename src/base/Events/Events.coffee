@@ -370,6 +370,7 @@ class CUI.Events extends CUI.Element
 				error: {}
 				close: {}
 				contextmenu: {}
+				popstate: {}
 				dragstart: {}
 				dragover: {}
 				dragleave: {}

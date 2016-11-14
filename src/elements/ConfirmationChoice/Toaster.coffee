@@ -4,6 +4,9 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 		@removeOpt("choices")
 		@mergeOpt "backdrop",
 			default: false
+		@mergeOpt "show_ms",
+			check: (v) ->
+				v >= 0
 
 	readOpts: ->
 		super()
