@@ -237,7 +237,6 @@ li > div {
 		> .cui-horizontal-layout-center {
 			position: relative;
 			flex: 1 1 auto;
-			overflow: auto;
 		}
 	}
 
@@ -299,7 +298,6 @@ li > div {
 		> .cui-vertical-layout-center {
 			position: relative;
 			flex: 1 1 auto;
-			// overflow: auto; // cuts off password input outline
 		}
 	}
 
@@ -417,13 +415,12 @@ li > div {
 		
 		.cui-label.cui-tmpl-label-rotate-90 {
 			font-size: 14px;
+			margin: 11px 0;
+			margin-left: -2px;
 			
 			.cui-label-transform {
-				// the difference to the normal rotate-90 is that
-				// we want to touch the label the "top" and not
-				// start from the "bottom"
-				transform: rotate(-90deg) translateY(7px) translate(calc(-100% - #{$padding}));
-				transform-origin: left top;
+				transform: rotate(-90deg) translateY(150%);
+				transform-origin: left bottom;
 			}
 		}
 	}
@@ -530,13 +527,6 @@ li > div {
 		}
 	}
 	
-	// prevent outline cutoff
-	&.cui-maximize-horizontal {
-		> .cui-horizontal-layout-center {
-			overflow: visible;
-		}
-	}
-	
 	.cui-horizontal-layout-left,
 	.cui-horizontal-layout-right {
 		flex-direction: row;
@@ -558,11 +548,6 @@ li > div {
 			// we need to overwrite this
 			flex: 1 1 auto;
 			align-self: stretch;
-			
-			// prevent outline cutoff
-			> .cui-horizontal-layout-center {
-				overflow: visible;
-			}
 		}
 
 		> .cui-toolbar {
@@ -1262,7 +1247,6 @@ a[role="button"].cui-button-appearance-link {
 		align-items: flex-end;
 		white-space: nowrap;
 		margin: $padding/2 0;
-		margin-left: -3px;
 		
 		> .cui-label-transform {
 			// the transform-origin is the corner
@@ -1271,6 +1255,10 @@ a[role="button"].cui-button-appearance-link {
 			// we need to compensate for that
 			transform: rotate(-90deg) translateY(100%);
 			transform-origin: left bottom;
+		}
+
+		.cui-label-content {
+			white-space: nowrap !important;
 		}
 	}
 
@@ -1410,7 +1398,10 @@ a[role="button"].cui-button-appearance-link {
 // Label: Multiline
 .cui-label-multiline {
 	align-self: stretch;
-	@include margin;
+
+	& + & {
+		margin-top: $padding;
+	}
 
 	&:not(.cui-label-markdown) {
 		// word-break: normal;
@@ -1640,6 +1631,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-layer {
 	min-width: 200px;
+	min-height: 30px;
 	position: absolute;
 	display: flex;
 	flex-direction: column;
@@ -2148,11 +2140,15 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-item-list--has-button-left {
-		// this button always has a left side
+		// this button always has a left side		
 		.cui-button-left {
 			padding-right: $padding;
 			width: 13px;
 			box-sizing: content-box;
+		}
+		// add space to button without icon
+		.cui-button-center:first-child {
+			padding-left: 3px + $padding + 13px;
 		}
 	}
 }
@@ -2372,7 +2368,7 @@ $table-data-padding: 4px;
 }
 
 .cui-lv-td {
-	padding: $table-data-padding $padding/2;
+	padding: $table-data-padding $padding;
 	width: 125px;
 	min-height: $table-data-height - 2*$table-data-padding;
 	flex: 0 0 auto;
@@ -2382,10 +2378,15 @@ $table-data-padding: 4px;
 	box-sizing: content-box;
 
 	&-rotate-90 {
-		width: 32px;
+		width: 12px;
+		justify-content: center;
 		
 		> .cui-tmpl-label-rotate-90 {
 			word-break: break-all;
+		}
+
+		.cui-data-field {
+			flex-grow: 0;
 		}
 	}
 
@@ -2505,6 +2506,10 @@ $table-data-padding: 4px;
 
 	.cui-label {
 		font-weight: bold;
+		
+		&-multiline {
+			align-self: flex-end;
+		}
 	}
 
 	.cui-lv-td {
@@ -2561,7 +2566,7 @@ $table-data-padding: 4px;
 	flex: 1 1 auto;
 	display: flex;
 	max-width: 100%;
-	padding: 0 $padding/2;
+	// padding: 0 $padding/2;
 	
 	&:empty {
 		padding: 0;
@@ -2705,6 +2710,10 @@ $table-data-padding: 4px;
 			margin-bottom: $padding/2;
 		}
 	}
+}
+
+.cui-td {
+	vertical-align: top;
 }
 
 .status-2d-map {
