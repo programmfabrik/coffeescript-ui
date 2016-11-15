@@ -430,10 +430,6 @@ class CUI.ListView extends CUI.SimplePane
 			if @rowsCount == 0
 				@showWaitBlock(true)
 
-			if CUI.__ng__
-				for el in CUI.DOM.find(".cui-tmpl-label-rotate-90")
-					CUI.DOM.data(el, "element").setLabelRotatedSizes()
-
 			# if @_autoLayout
 			# 	@__scheduleLayout()
 			# else

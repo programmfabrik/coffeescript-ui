@@ -132,18 +132,6 @@ class CUI.Label extends CUI.DOM
 	getText: ->
 		@__currentText
 
-	# set sizes on rotated labels
-	setLabelRotatedSizes: ->
-		if not @_rotate_90
-			return
-
-		dim = CUI.DOM.getDimensions(@DOM)
-
-		CUI.DOM.setDimensions(@DOM,
-			contentBoxWidth: dim.contentBoxHeight
-			contentBoxHeight: dim.contentBoxWidth
-		)
-
 	setContent: (content) ->
 		if @_manage_overflow
 			@__overflow_content_div = $div("cui-label-manage-overflow-content-container").append(content)

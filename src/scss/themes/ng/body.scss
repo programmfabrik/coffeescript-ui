@@ -1246,12 +1246,14 @@ a[role="button"].cui-button-appearance-link {
 		white-space: nowrap;
 		margin: $padding/2 0;
 		
+		&:before {
+			content: "";
+			float: left;
+			margin-top: 100%;
+		}
+		
 		> .cui-label-transform {
-			// the transform-origin is the corner
-			// of the content, so the padding
-			// moved the origin to the right.
-			// we need to compensate for that
-			transform: rotate(-90deg) translateY(100%);
+			transform: rotate(-90deg)  translateX(-3px) translateY(100%);
 			transform-origin: left bottom;
 		}
 
@@ -2379,10 +2381,10 @@ $table-data-padding: 4px;
 
 	&-rotate-90 {
 		width: 12px;
-		justify-content: center;
 		
 		> .cui-tmpl-label-rotate-90 {
 			word-break: break-all;
+			margin-left: -3px;
 		}
 
 		.cui-data-field {
