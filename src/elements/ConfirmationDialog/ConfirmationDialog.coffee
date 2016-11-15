@@ -38,7 +38,10 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		@_pane = {}
 
 	init: ->
-		assert(xor(@_html, xor(@_content, @_text)), "#{@__cls}.readOpts", "only opts.content, opts.text, or opts.html can be set", opts: @opts)
+
+		if not xor(@_html, xor(@_content, @_text))
+			console.error("#{@__cls}.readOpts", "Exactly on opts.content, opts.text, or opts.html needs to be set", opts: @opts)
+			@_text = "No Message"
 
 		if not isEmpty(@_text)
 			c = new MultilineLabel(markdown: @_markdown, text: @_text)

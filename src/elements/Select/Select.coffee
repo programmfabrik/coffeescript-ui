@@ -139,6 +139,8 @@ class Select extends Checkbox
 			# 	vp.layer_pos.left += 20
 
 			onDeactivate: (btn, item, idx, flags) =>
+				if flags.prior_activate
+					return
 				@storeValue(null, flags)
 				if @isDestroyed()
 					return
