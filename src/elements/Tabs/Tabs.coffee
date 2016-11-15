@@ -62,7 +62,6 @@ class CUI.Tabs extends CUI.SimplePane
 
 		new Draggable
 			element: @__buttonbar.DOM
-			ms: 0
 			axis: "x"
 			dragstart: =>
 				startScrollLeft = @__header.scrollLeft

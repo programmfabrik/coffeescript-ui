@@ -50,11 +50,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 				check: (v) ->
 					v >= 0
 
-			ms:
-				default: 0
-				check: (v) ->
-					# must be multiple of MouseIsDownListener.interval_ms or 0
-					v % CUI.MouseIsDownListener.interval_ms == 0
+			# ms:
+			# 	default: 0
+			# 	check: (v) ->
+			# 		# must be multiple of MouseIsDownListener.interval_ms or 0
+			# 		v % CUI.MouseIsDownListener.interval_ms == 0
 
 			selector:
 				check: (v) =>
@@ -86,7 +86,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		DOM.addClass(@element, "no-user-select")
 
 		Events.listen
-			type: "mouseisdown"
+			type: "mousedown" # was: mouseisdown
 			node: @element
 			capture: true
 			instance: @
@@ -100,40 +100,35 @@ class CUI.Draggable extends CUI.DragDropSelect
 					# ignore if dragging is in progress
 					return
 
-				switch ev.getMilliseconds()
-					when @_ms
+				# console.debug getObjectClass(@), "[mouseisdown]", ev.getUniqueId(), @element
 
-						# console.debug getObjectClass(@), "[mouseisdown]", ev.getUniqueId(), @element
+				# hint possible click event listeners like Sidebar to
+				# not execute the click anymore...
+				#
+				position = elementGetPosition(getCoordinatesFromEvent(ev), $(ev.getTarget()))
+				dim = DOM.getDimensions(ev.getTarget())
 
-						# hint possible click event listeners like Sidebar to
-						# not execute the click anymore...
-						#
-						position = elementGetPosition(getCoordinatesFromEvent(ev), $(ev.getTarget()))
-						dim = DOM.getDimensions(ev.getTarget())
+				if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
+					CUI.warn("Mousedown on a vertical scrollbar, not starting drag.")
+					return
 
-						if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
-							CUI.warn("Mouseisdown on a vertical scrollbar, not starting drag.")
-							return
+				if dim.clientHeightScaled > 0 and position.top - dim.scrollTopScaled > dim.clientHeightScaled
+					CUI.warn("Mousedown on a horizontal scrollbar, not starting drag.")
+					return
 
-						if dim.clientHeightScaled > 0 and position.top - dim.scrollTopScaled > dim.clientHeightScaled
-							CUI.warn("Mouseisdown on a horizontal scrollbar, not starting drag.")
-							return
+				target = ev.getCurrentTarget()
+				target_dim = DOM.getDimensions(target)
+				if not DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
+					return
 
-						target = ev.getCurrentTarget()
-						target_dim = DOM.getDimensions(target)
-						if not DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
-							return
+				if CUI.DOM.closest(ev.getTarget(), "input,textarea,select")
+					return
 
-						if CUI.DOM.closest(ev.getTarget(), "input,textarea,select")
-							return
+				$target = $(target)
 
-						$target = $(target)
+				# CUI.debug "attempting to start drag", ev.getUniqueId(), $target[0]
 
-						# CUI.debug "attempting to start drag", ev.getUniqueId(), $target[0]
-
-						@init_drag(ev, $target)
-					else
-						return
+				@init_drag(ev, $target)
 				return
 
 	init_drag: (ev, $target) ->
@@ -141,7 +136,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 		overwrite_options = {}
 		globalDrag = @_create?(ev, overwrite_options, $target)
 
-		ev.getMousedownEvent?().preventDefault()
+		# ev.getMousedownEvent?().preventDefault()
+		ev.preventDefault()
 
 		if globalDrag == false
 			# CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
@@ -173,7 +169,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# CUI.debug "starting drag...", globalDrag
 
-		ev.stopImmediatePropagation()
+		# ev.stopImmediatePropagation()
 		# ev.preventDefault()
 
 		@before_drag(ev, $target)

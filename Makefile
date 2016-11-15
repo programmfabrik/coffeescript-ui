@@ -27,8 +27,6 @@ coffee_files = src/base/Common.coffee \
 	src/base/Events/KeyboardEvent.coffee \
 	src/base/Events/CUIEvent.coffee \
 	src/base/Events/Listener.coffee \
-	src/base/Events/MouseIsDownEvent/MouseIsDownEvent.coffee \
-	src/base/Events/MouseIsDownEvent/MouseIsDownListener.coffee \
 	src/base/Events/WheelEvent.coffee \
 	src/base/Events/Events.coffee \
 	src/base/DOM/DOM.coffee \

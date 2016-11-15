@@ -194,7 +194,6 @@ class EventsDemo extends Demo
 			"mouseup"
 			"click"
 			"dblclick"
-			"mouseisdown"
 			"keydown"
 			"keyup"
 			"keypress"

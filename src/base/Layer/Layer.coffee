@@ -1158,7 +1158,7 @@ CUI.ready ->
 
 				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
 
-				info.mousedown_closed_layer = true
+				ev.cui_layer_closed = true
 
 				layer.hide(ev)
 
