@@ -19,6 +19,11 @@
 		 > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-layout-cell {
 			 padding-bottom: map_get($outer_padding_x,big);
 		 }
+
+		 // we show even empty headers!
+		 > .cui-vertical-layout-top > .cui-pane-header {
+			 display: flex !important;
+		 }
 	}
 }
 
