@@ -2040,6 +2040,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-root-toaster .cui-layer {
 	font-size: 14px;
 	width: auto;
+	max-width: none;
 	min-width: 0;
 	user-select: none;
 	cursor: default;
@@ -3118,12 +3119,13 @@ $table-data-padding: 4px;
 
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
-	.cui-form-td.cui-form-left {
-		width: 12px;
-		padding: 0;
-		margin-right: $padding/2;
-		display: flex;
-	}
+	// CONFLICT - drag-drop select sortable is used on a whole sidebar in version editor - breaks a child form
+	// .cui-form-td.cui-form-left {
+	// 	width: 12px;
+	// 	padding: 0;
+	// 	margin-right: $padding/2;
+	// 	display: flex;
+	// }
 }
 
 .cui-drag-handle-row {
