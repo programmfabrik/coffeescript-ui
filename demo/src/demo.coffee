@@ -393,8 +393,6 @@ CUI.ready ->
 			else
 				console.debug "ev:", ev.getType(), ev.getTarget()
 
-	CUI.initNodeDebugCopy()
-
 	new RunDemo()
 
 Object.values = (obj) =>
