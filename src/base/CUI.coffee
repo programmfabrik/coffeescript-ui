@@ -474,7 +474,7 @@ class CUI
 		@__getStorage("sessionStorage", key)
 
 	@clearSessionStorage: ->
-		@__clearStorage("sessionStorage", key)
+		@__clearStorage("sessionStorage")
 
 	@setLocalStorage: (key, value) ->
 		@__setStorage("localStorage", key, value)
