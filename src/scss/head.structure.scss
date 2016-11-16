@@ -102,6 +102,7 @@ $checkmark_icon_margin_top: (
 //REMARKED we use cui-block-level-X now
 //$block_type: "title", "subtitle", "normal";
 $block_font_size: map_get($button_font_sizes,bigger),map_get($button_font_sizes,big), map_get($button_font_sizes,normal);
+$block_line_heights: map_get($button_line_heights,bigger),map_get($button_line_heights,big), map_get($button_line_heights,normal);
 $block_font_weight: bold, bold, bold;
 //TODO try line height instead of margins.
 $block_top_margin: 20px, 10px, 5px;

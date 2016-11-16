@@ -16,6 +16,7 @@
 					//TODO could use the label extends for appearance and size here !?, this way we would cover icons without much hazzle
 					font-weight: nth($block_font_weight, $i);
 					font-size: nth($block_font_size, $i);
+				    line-height: nth($block_line_heights,$i);
 				}
 			}
 		}
