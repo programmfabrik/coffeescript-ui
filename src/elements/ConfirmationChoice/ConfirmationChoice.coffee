@@ -27,6 +27,8 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 						return false
 
 					for choice in v
+						if not choice
+							continue
 						CUI.Element.readOpts(choice, "new ConfirmationChoice", @choiceOpts)
 					return true
 
