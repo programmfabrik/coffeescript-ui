@@ -883,6 +883,13 @@ i.cui-spin-stepped {
 	  	background: $highlight-color;
 	  	border-color: darken($highlight-color, 7%);
 	  }
+
+	  &:hover {
+		  .cui-button-visual {
+		  	background: lighten($highlight-color, 11%);
+		  	border-color: lighten($highlight-color, 4%);
+	  	}
+	  }
 	}
 
 	&:focus {
@@ -2316,9 +2323,15 @@ a[role="button"].cui-button-appearance-link {
 		border-bottom-right-radius: 3px;
 	}
 
-	&.cui-active .cui-button-visual {
-		color: $on-highlight-color;
-		background: hsl(205,15%,43%);
+	&.cui-active {
+		&,
+		&:hover {
+			.cui-button-visual {
+				color: $on-highlight-color;
+				background: hsl(205,15%,43%);
+				border-color: hsl(205,15%,43%);
+			}
+		}
 	}
 }
 
@@ -2354,12 +2367,18 @@ $table-data-padding: 4px;
 
 // ListView
 .cui-list-view {
+	flex-shrink: 1;
+	
 	.cui-label-size-normal {
 		line-height: $table-data-height - $table-data-padding*2;
 	}
 
 	.cui-data-field-output-label {
 		line-height: 24px;	
+	}
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
 	}
 
 	> .cui-vertical-layout-bottom {
