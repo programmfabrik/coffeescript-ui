@@ -32,6 +32,10 @@ $zebra-color: hsl(205,10%,98%);
 $table-border: hsl(205,8%,90%);
 $table-header-border: hsl(205,8%,94%);
 
+$error-color: hsl(10,90%,52%);
+$neutral-color: hsl(150,77%,50%);
+$positive-color: hsl(56,100%,60%);
+
 $toolbar-background: hsl(205,2%,97%);
 $toolbar-height: 34px;
 $toolbar-small-height: 29px;
@@ -1854,6 +1858,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Confirmation
 
+.cui-confirmation-dialog .cui-alert,
 .cui-confirmation-choice .cui-layer {
 	max-width: 300px; // don't make this bigger, make the text shorter
 	background: hsl(205,7%,98%);
@@ -1866,12 +1871,20 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-td {
 		border-top-color: hsl(205,10%,94%);
 	}
+
+	&.cui-confirmation-dialog--no-title {
+		> .cui-simple-pane {
+			// layer-header
+			> .cui-vertical-layout-top {
+				display: none;
+			}
+		}
+	}
 	
 	> .cui-simple-pane {
 		// layer-header
 		> .cui-vertical-layout-top {
 			overflow: visible;
-			display: none;
 			
 			> .cui-pane-header {
 				background: none;
@@ -1949,11 +1962,19 @@ a[role="button"].cui-button-appearance-link {
 					color: $highlight-color;
 				}
 
-				&.cui-button--primary .cui-button-visual {
-					background: $highlight-color;
-					color: $on-highlight-color;
-					border-top-color: $highlight-color;
-					border-left-width: 0;
+				&.cui-button--primary {
+					.cui-button-visual {
+						background: $highlight-color;
+						color: $on-highlight-color;
+						border-top-color: $highlight-color;
+						border-left-width: 0;
+					}
+
+					&.cui-disabled {
+						.cui-button-visual {
+							color: transparentize($on-highlight-color, 0.5);
+						}
+					}
 				}
 			}
 
@@ -2003,6 +2024,39 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// Confirmation Dialog
+.cui-confirmation-dialog .cui-layer {
+	max-width: 500px;
+}
+
+// Alert Problem (red)
+.cui-confirmation-dialog .cui-alert-problem {
+	border: 3px solid $error-color;
+	
+	> .cui-simple-pane {
+		// layer-footer
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			.cui-button-button {				
+				.cui-button-visual {
+					border-top-color: hsl(10,11%,93%);
+					border-left-color: hsl(10,11%,93%);
+					color: $error-color;
+				}
+
+				&.cui-active .cui-button-visual {
+					color: $error-color;
+				}
+
+				&.cui-button--primary {
+					.cui-button-visual {
+						background: $error-color;
+						border-top-color: $error-color;
+					}
+				}
+			}
+		}
+	}
+}
 
 // Tooltip
 .cui-layer-root-tooltip .cui-layer-pointer {
@@ -2061,7 +2115,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-menu {
 	min-height: 0;
 	min-width: 0;
-	max-width: 200px; // when the width is wider its harder to see which arrow belongs to which row
   background: white;
   border-radius: 4px;
   padding: 4px 0;
@@ -2070,6 +2123,12 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-item-list {
 		font-size: inherit;
+	}
+
+	.cui-tmpl-item-list-body {
+		> .cui-label {
+			max-width: 200px;
+		}
 	}
 }
 
