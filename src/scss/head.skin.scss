@@ -60,7 +60,8 @@ $focus_color: #4D90FE;
 
 
 //-------------labels-------------------
-$label_icon_color: $font_color_diminished;
+//used for dimming the icon so that it has a contrast to buttons
+$label_icon_opacity: 0.7;
 
 //------------- buttons --------------------------
 
