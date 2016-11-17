@@ -229,7 +229,7 @@ class CUI.ListView extends CUI.SimplePane
 				html.push("<style></style>")
 
 		add_quadrant = (qi) =>
-			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi}\">")
+			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi}\">")
 			if @_autoLayout == false
 				html.push("<table class=\"cui-list-view-grid-quadrant-table\"><tbody></tbody></table>")
 

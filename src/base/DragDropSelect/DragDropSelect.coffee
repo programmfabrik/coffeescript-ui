@@ -95,61 +95,65 @@ CUI.ready =>
 	Events.listen
 		type: "dragover-scroll"
 		node: document
-		selector: ".auto-drag-scroll,.cui-drag-drop-select"
+		selector: "div.cui-drag-scroll,div.cui-drag-drop-select"
 		call: (ev, info) =>
 			scrollSpeed = info.mousemoveEvent._counter*0.1+0.9
 			threshold = 30
 
-			$el = $(ev.getCurrentTarget())
+			el = ev.getCurrentTarget()
 
-			if $el.is("body,html")
+			dim = CUI.DOM.getDimensions(el)
+
+			if CUI.DOM.is(el, "body,html")
+				is_body = true
 				rect =
 					top: 0
 					left: 0
 					bottom: 0
 					right: 0
-					height: window.innerHeight
-					width: window.innerWidth
+					height: dim.height
+					width: dim.width
 			else
-				rect = CUI.DOM.getRect($el)
+				rect = dim.clientBoundingRect
 
 			scrollTop = 0
 			scrollLeft = 0
-			if $el[0].scrollWidth > rect.width
-				scrollbarVertical = $el.width()-$el[0].clientWidth
-				scrollX = $el[0].scrollLeft
+
+			if el.scrollWidth > rect.width
+				scrollX = el.scrollLeft
 				clientX = info.mousemoveEvent.clientX()
 				if 0 < (d = clientX-rect.left) < threshold
 					scrollLeft = -(threshold-d)*scrollSpeed
-				else if 0 < (d = rect.right-clientX-scrollbarVertical) < threshold
+				else if 0 < (d = rect.right-clientX-dim.verticalScrollbarWidth) < threshold
 					scrollLeft = (threshold-d)*scrollSpeed
 				ev.stopPropagation()
 
-			if $el[0].scrollHeight > rect.height
-				scrollbarHorizontal = $el.height()-$el[0].clientHeight
-				scrollY = $el[0].scrollTop
+			if el.scrollHeight > rect.height
+				scrollY = el.scrollTop
 				clientY = info.mousemoveEvent.clientY()
 				if 0 < (d = clientY-rect.top) < threshold
 					scrollTop = -(threshold-d)*scrollSpeed
-				else if 0 < (d = rect.bottom-clientY-scrollbarHorizontal) < threshold
+				else if 0 < (d = rect.bottom-clientY-dim.horizontalScrollbarHeight) < threshold
 					scrollTop = (threshold-d)*scrollSpeed
 
 			if scrollTop or scrollLeft
-				oldScrollTop = $el[0].scrollTop
-				oldScrollLeft = $el[0].scrollLeft
+				oldScrollTop = el.scrollTop
+				oldScrollLeft = el.scrollLeft
+
 				if scrollTop
-					$el[0].scrollTop += scrollTop
+					el.scrollTop += scrollTop
 				if scrollLeft
-					$el[0].scrollLeft += scrollLeft
-				if $el.is("body,html")
+					el.scrollLeft += scrollLeft
+
+				if is_body
 					oe = info.mousemoveEvent
 					if not oe.scrollPageY
 						oe.scrollPageY = 0
-					oe.scrollPageY += $el[0].scrollTop-oldScrollTop
+					oe.scrollPageY += el.scrollTop-oldScrollTop
 
 					if not oe.scrollPageX
 						oe.scrollPageX = 0
-					oe.scrollPageX += $el[0].scrollLeft-oldScrollLeft
+					oe.scrollPageX += el.scrollLeft-oldScrollLeft
 
 					# CUI.debug ev.mousemoveEvent.originalEvent.scrollPageY
 				ev.stopPropagation()

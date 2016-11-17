@@ -1110,20 +1110,9 @@ class CUI.DOM extends CUI.Element
 		]
 			dim[k+"Scaled"] = dim[k] * dim.scaleY
 
+		dim.verticalScrollbarWidth = dim.offsetWidth - dim.borderHorizontal - dim.clientWidth
+		dim.horizontalScrollbarHeight = dim.offsetHeight - dim.borderVertical - dim.clientHeight
 
-		if dim.scrollHeight > dim.clientHeight
-			dim.hasVerticalScrollbar = true
-			dim.verticalScrollbarWidth = dim.contentBoxWidth - dim.clientWidth
-		else
-			dim.verticalScrollbarWidth = 0
-
-		if dim.scrollWidth > dim.clientWidth
-			dim.hasHorizontalScrollbar = true
-			dim.horizontalScrollbarHeight = dim.contentBoxHeight - dim.clientHeight
-		else
-			dim.horizontalScrollbarHeight = 0
-
-		dim.hasScrollbar = dim.hasVerticalScrollbar or dim.hasHorizontalScrollbar
 		dim.canHaveScrollbar = cs.overflowX in ["auto", "scroll"] or cs.overflowY in ["auto", "scroll"]
 		dim.horizontalScrollbarAtStart = dim.scrollLeft == 0
 		dim.horizontalScrollbarAtEnd = dim.scrollWidth - dim.scrollLeft - dim.clientWidth - dim.verticalScrollbarWidth < 1
