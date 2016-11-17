@@ -122,7 +122,8 @@ $toolbar_start_end_padding: $half_grid_size;
     margin: 0 !important;
 }
 
-.cui-pane-footer,.cui-pane-toolbar {
+.cui-pane-footer,
+.cui-pane-toolbar {
     &:last-of-type {
         &:not(.cui-template-empty) {
 
@@ -130,3 +131,4 @@ $toolbar_start_end_padding: $half_grid_size;
         }
     }
 }
+
