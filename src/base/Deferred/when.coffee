@@ -48,8 +48,9 @@ CUI.when = =>
 				return
 
 			promise.progress =>
-				# pass this through
-				dfr.notify.apply(dfr, arguments)
+				if dfr.state() == "pending"
+					# pass this through
+					dfr.notify.apply(dfr, arguments)
 				return
 
 	dfr.promise()
