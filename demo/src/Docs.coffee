@@ -22,7 +22,12 @@ class Docs extends Demo
 			else
 				false
 
+		renderer = new marked.Renderer()
+
 		browser = new CUI.DocumentBrowser
+			marked_opts:
+				renderer: renderer
+
 			gotoLocation: (nodePath, search, nodeIdx) ->
 				loc = document.location.origin + document.location.pathname + "#Documentation"+nodePath
 				if search

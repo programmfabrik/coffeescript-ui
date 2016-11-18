@@ -6,9 +6,6 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 	@defaults:
 		ok: "Ok"
 		cancel: "Cancel"
-		alert_title: "..."
-		confirm_title: "Confirmation"
-		prompt_title: "???"
 
 	initOpts: ->
 		super()

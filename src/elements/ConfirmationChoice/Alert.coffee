@@ -10,9 +10,6 @@ class CUI.Alert extends CUI.ConfirmationChoice
 				check: String
 
 	readOpts: ->
-		if isEmpty(@opts.title)
-			@opts.title = CUI.defaults.class.ConfirmationChoice.defaults.alert_title
-
 		super()
 		@_choices = [
 			text: @_button_text_ok
@@ -21,9 +18,7 @@ class CUI.Alert extends CUI.ConfirmationChoice
 CUI.alert = (opts=text: "CUI.alert") ->
 	new CUI.Alert(opts).open()
 
-CUI.problem = (opts=text: "CUI.problem") ->
-	if not opts.class
-		opts.class = ""
-	opts.class += " cui-alert-problem"
-	CUI.alert(opts)
+class CUI.AlertProblem extends CUI.Alert
 
+CUI.problem = (opts=text: "CUI.problem") ->
+	new CUI.AlertProblem(opts).open()

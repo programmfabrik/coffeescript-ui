@@ -119,7 +119,7 @@ class CUI
 		dfr.reject.apply(dfr, arguments)
 		dfr.promise()
 
-	# calls the as argument passed functions in order
+	# calls the as arguments passed functions in order
 	# of appearance. if a function returns
 	# a deferred or promise, the next function waits
 	# for that function to complete the promise
@@ -739,7 +739,18 @@ CUI.browser =
 CUI.browser.edge = `!CUI.browser.isIE && !!window.StyleMedia`
 CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
+
 CUI.ready =>
+
+	CUI.defaults.marked_opts =
+		renderer: new marked.Renderer()
+		gfm: true
+		tables: true
+		breaks: false
+		pedantic: false
+		sanitize: true
+		smartLists: true
+		smartypants: false
 
 	for i in [1..9]
 		do (i) ->
@@ -755,15 +766,7 @@ CUI.ready =>
 			return
 
 	# initialize a markdown renderer
-	marked?.setOptions
-		renderer: new marked.Renderer()
-		gfm: true
-		tables: true
-		breaks: false
-		pedantic: false
-		sanitize: true
-		smartLists: true
-		smartypants: false
+	marked?.setOptions(CUI.defaults.marked_opts)
 
 	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]

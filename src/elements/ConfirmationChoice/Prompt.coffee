@@ -8,8 +8,6 @@ class CUI.Prompt extends CUI.Confirm
 				check: String
 
 	readOpts: ->
-		if isEmpty(@opts.title)
-			@opts.title = CUI.defaults.class.ConfirmationChoice.defaults.prompt_title
 		if not @opts.hasOwnProperty("cancel")
 			@opts.cancel = true
 

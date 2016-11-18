@@ -8,7 +8,6 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		super()
 		@addOpts
 			title:
-				default: ""
 				check: String
 			text:
 				check: String
@@ -42,6 +41,9 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		if not xor(@_html, xor(@_content, @_text))
 			console.warn("#{@__cls}.readOpts", "Exactly on opts.content, opts.text, or opts.html needs to be set", opts: @opts)
 			@_text = ""
+
+		if not @_title
+			@addClass("cui-confirmation-dialog--no-title")
 
 		if not isEmpty(@_text)
 			c = new MultilineLabel(markdown: @_markdown, text: @_text)

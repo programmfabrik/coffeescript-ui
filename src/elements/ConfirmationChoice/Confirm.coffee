@@ -20,8 +20,6 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 				check: ["ok", "cancel"]
 
 	readOpts: ->
-		if isEmpty(@opts.title)
-			@opts.title = CUI.defaults.class.ConfirmationChoice.defaults.confirm_title
 		if not @opts.hasOwnProperty("cancel")
 			@opts.cancel = true
 

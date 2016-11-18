@@ -121,11 +121,14 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 				dfr.reject()
 				return
 
-			@__htmlNodes = CUI.DOM.htmlToNodes(@_browser.marked(@, @__content))
-			@__texts = CUI.DOM.findTextInNodes(@__htmlNodes)
-			@_browser.addWords(@__texts)
-			# console.debug "loaded:", filename, markdown.length, @__texts.length
-			dfr.resolve(@__content, @__htmlNodes, @__texts)
+			@_browser.marked(@, @__content)
+			.done (content) =>
+				@__htmlNodes = CUI.DOM.htmlToNodes(content)
+				@__texts = CUI.DOM.findTextInNodes(@__htmlNodes)
+				@_browser.addWords(@__texts)
+				# console.debug "loaded:", filename, markdown.length, @__texts.length
+				dfr.resolve(@__content, @__htmlNodes, @__texts)
+			.fail(dfr.reject)
 		.fail(dfr.reject)
 		dfr.promise()
 
