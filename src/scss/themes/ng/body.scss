@@ -731,6 +731,11 @@ li > div {
 // Data Table
 .cui-data-table {
 	border: 1px solid $border;
+	flex-shrink: 1;
+	
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+	}
 	
 	.cui-pane-footer {
 		min-height: 0;
@@ -1233,6 +1238,12 @@ a[role="button"].cui-button-appearance-link {
 			line-height: 1;
 		}
 
+		&.cui-active:hover {
+			.cui-button-visual {
+				background: none;
+			}
+		}
+
 		.fa {
 			width: 12px;
 		}
@@ -1603,6 +1614,7 @@ a[role="button"].cui-button-appearance-link {
 		padding: 0 7px;
 		line-height: 22px;
 		outline: none;
+		vertical-align: bottom;
 		
 		&:focus {
 			@include focus;
@@ -1613,6 +1625,7 @@ a[role="button"].cui-button-appearance-link {
 		padding-top: $padding/2;
 		padding-bottom: $padding/2;
 		line-height: 18px;
+		height: 100px;
 	}
 
 	&.cui-has-focus {
@@ -1644,10 +1657,22 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 }
 
+.cui-layer-backdrop-policy-modal {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .cui-layer {
 	min-width: 200px;
 	min-height: 30px;
-	position: absolute;
+	max-width: calc(100% - #{2*$padding});
+	max-height: calc(100% - #{2*$padding});
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -1892,6 +1917,7 @@ a[role="button"].cui-button-appearance-link {
 				min-height: 0;
 				position: relative;
 				padding-right: 0;
+				margin-bottom: -$compensating-padding;
 
 				> .cui-horizontal-layout-right .cui-buttonbar:last-child {
 					margin-right: 0;
@@ -1901,6 +1927,7 @@ a[role="button"].cui-button-appearance-link {
 					margin-top: $padding;
 					font-weight: bold;
 					font-size: 15px;
+					padding-left: $padding/2;
 				}
 
 				.cui-button {
@@ -2069,6 +2096,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tooltip {
+	position: absolute;
 	max-width: 260px;
 	max-height: 100px;
 	min-width: 0;
@@ -2120,6 +2148,7 @@ a[role="button"].cui-button-appearance-link {
   padding: 4px 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
 	overflow: auto;
+	position: absolute;
 
 	.cui-item-list {
 		font-size: inherit;
@@ -2238,6 +2267,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Popover
 .cui-popover {
+	position: absolute;
 	background: white;
 	min-width: 247px;
 }
@@ -2745,35 +2775,35 @@ $table-data-padding: 4px;
 	display: flex;
 	flex: 1 1 auto;
 	max-width: 100%;
+}
 
-	.cui-tree-node-handle,
-	.cui-tree-node-spacer {
-		width: 12px;
-		flex: 0 0 auto;
-		padding-right: 5px;
+.cui-tree-node-handle,
+.cui-tree-node-spacer {
+	width: 12px;
+	flex: 0 0 auto;
+	padding-right: 5px;
+}
+
+.cui-tree-node-handle {
+	display: flex;
+	text-align: center;
+	justify-content: flex-end;
+	align-items: center;
+	
+	.fa {
+		margin-top: -2px;
 	}
+}
 
-	.cui-tree-node-handle {
-		display: flex;
-		text-align: center;
-		justify-content: flex-end;
-		margin-top: 3px;
-		
-		.fa {
-			margin-top: -2px;
-		}
-	}
-
-	.cui-tree-node-content {
-		display: flex;
-		flex: 1;
+.cui-tree-node-content {
+	display: flex;
+	flex: 1;
+	min-width: 0;
+	
+	.cui-label {
 		min-width: 0;
-		
-		.cui-label {
-			min-width: 0;
-			flex-shrink: 1;
-			padding: 0;
-		}
+		flex-shrink: 1;
+		padding: 0;
 	}
 }
 
@@ -2794,10 +2824,6 @@ $table-data-padding: 4px;
 
 .cui-tr {
 	display: table-row;
-	
-	.cui-tr:nth-child(even) {
-		background: $zebra-color;
-	}
 }
 
 .cui-th,
@@ -3223,6 +3249,7 @@ $table-data-padding: 4px;
 // DateTime
 .cui-date-time {
 	display: flex;
+	align-items: flex-end;
 	height: 24px;
 	line-height: 24px;
 }
@@ -3444,9 +3471,11 @@ $table-data-padding: 4px;
 			display: flex;
 			// overflow: hidden; cuts off year-picker outline
 			flex: 1 1 auto;
+			
 			.cui-number-input {
 				input {
-					width: 44px;
+					width: 4ch;
+					box-sizing: content-box;
 					min-width: 0;
 					text-align: center;
 				}
@@ -3505,13 +3534,12 @@ $table-data-padding: 4px;
 	z-index: 1; // put in front of focused input field
 }
 
-.cui-multi-input-tag-button {
+.cui-multi-input-tag-button {  
 	.cui-button-visual {
 		@include button-reset;
 		color: hsl(0,0%,30%);
 		font-size: 10px;
   	line-height: 20px;
-  	cursor: pointer;
   }
 }
 

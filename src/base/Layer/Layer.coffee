@@ -326,6 +326,8 @@ class CUI.Layer extends CUI.DOM
 		if not @isShown()
 			return
 
+		return if CUI.__ng__ and !@__element
+
 		dim_window = CUI.DOM.getDimensions(window)
 
 		get_pointer_direction = (placement) ->
