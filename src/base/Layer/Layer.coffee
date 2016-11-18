@@ -275,6 +275,8 @@ class CUI.Layer extends CUI.DOM
 			# horizontal: stretch width only
 			# vertical: stretch height only
 			fill_space:
+				default: "auto"
+				mandatory: true
 				check: ["auto", "both", "horizontal", "vertical"]
 
 			# if set, the Layer, when shown checks if the "element"
@@ -302,9 +304,9 @@ class CUI.Layer extends CUI.DOM
 
 	setVisible: (on_off=true) ->
 		if on_off
-			DOM.setStyleOne(@__layer_root.DOM[0], "visibility", "")
+			DOM.setStyleOne(@__layer_root.DOM, "visibility", "")
 		else
-			DOM.setStyleOne(@__layer_root.DOM[0], "visibility", "hidden")
+			DOM.setStyleOne(@__layer_root.DOM, "visibility", "hidden")
 
 	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
@@ -325,8 +327,6 @@ class CUI.Layer extends CUI.DOM
 		#
 		if not @isShown()
 			return
-
-		return if CUI.__ng__ and !@__element
 
 		dim_window = CUI.DOM.getDimensions(window)
 
@@ -389,8 +389,7 @@ class CUI.Layer extends CUI.DOM
 			width: ""
 			height: ""
 			margin: ""
-			"max-width": ""
-			"max-height": ""
+			minWidth: ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
@@ -855,16 +854,23 @@ class CUI.Layer extends CUI.DOM
 		else
 			minWidth = undefined
 
+		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-placement", placement)
+		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-fill-space", @_fill_space)
+
+		if CUI.__ng__ and placement == "c" and not @__backdrop_crop
+			# in "ng" we position this by pure CSS
+			return
+
 		# set layer
 		CUI.DOM.setStyle @__layer.DOM,
 			top: vp.layer_pos.top
 			left: vp.layer_pos.left
 			width: vp.layer_pos.width
 			height: vp.layer_pos.height
+			margin: 0
 			minWidth: minWidth
 			# maxWidth: vp.width + vp.overlap_width
 			# maxHeight: vp.height + vp.overlap_height
-			margin: 0
 
 		if @__pointer
 			# set pointer
