@@ -1654,10 +1654,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Layer
 .cui-tmpl-layer-root {
-	z-index: 1;
-}
-
-.cui-layer-backdrop-policy-modal {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -1666,6 +1662,15 @@ a[role="button"].cui-button-appearance-link {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 1;
+}
+
+.cui-layer-backdrop-policy-click-thru {
+	pointer-events: none;
+	
+	.cui-layer {
+		pointer-events: auto;
+	}
 }
 
 .cui-layer {
