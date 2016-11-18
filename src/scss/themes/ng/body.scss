@@ -1663,6 +1663,17 @@ a[role="button"].cui-button-appearance-link {
 	align-items: center;
 	justify-content: center;
 	z-index: 1;
+	
+	.cui-layer {
+		position: absolute;
+	}
+
+	// centered gets placed by the browser
+	&[cui-placement="c"] {
+		.cui-layer {
+			position: static;
+		}
+	}
 }
 
 .cui-layer-backdrop-policy-click-thru {
@@ -2101,7 +2112,6 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tooltip {
-	position: absolute;
 	max-width: 260px;
 	max-height: 100px;
 	min-width: 0;
@@ -2153,7 +2163,6 @@ a[role="button"].cui-button-appearance-link {
   padding: 4px 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
 	overflow: auto;
-	position: absolute;
 
 	.cui-item-list {
 		font-size: inherit;
@@ -2272,7 +2281,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Popover
 .cui-popover {
-	position: absolute;
 	background: white;
 	min-width: 247px;
 }
