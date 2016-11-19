@@ -105,6 +105,17 @@ class CUI.Template extends CUI.Element
 				report.push("+ #{k}: found")
 				el_map[k] = CUI.jQueryCompat(map_obj[0])
 
+				do (k) =>
+					el_map[k].empty = =>
+						@empty(k)
+						el_map[k]
+					el_map[k].append = (value) =>
+						@append(value, k)
+						el_map[k]
+					el_map[k].prepend = (value) =>
+						@prepend(value, k)
+						el_map[k]
+
 		if misses
 			alert("Not all required elements were found for Template:\n\n\"#{@_name}\"\n\n"+report.join("\n"))
 		el_map
@@ -161,7 +172,7 @@ class CUI.Template extends CUI.Element
 					break
 
 			if is_empty
-				DOM.addClass(@DOM, "cui-template-empty")
+				CUI.DOM.addClass(@DOM, "cui-template-empty")
 
 			return @map[key]
 
@@ -172,7 +183,7 @@ class CUI.Template extends CUI.Element
 			# with map we empty each individual map entry
 			for key of @map
 				DOM.empty(@map[key])
-			DOM.addClass(@DOM, "cui-template-empty")
+			CUI.DOM.addClass(@DOM, "cui-template-empty")
 
 		return @DOM
 
