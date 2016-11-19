@@ -113,6 +113,8 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		CUI.ConfirmationDialog::show.call(@)
 		return @__deferred.promise()
 
+CUI.choice = (opts=text: "CUI.ConfirmationChoice") ->
+	new CUI.ConfirmationChoice(opts).open()
 
 
 CUI.defaults.class.ConfirmationChoice = CUI.ConfirmationChoice
