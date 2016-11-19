@@ -1663,25 +1663,24 @@ a[role="button"].cui-button-appearance-link {
 	align-items: center;
 	justify-content: center;
 	z-index: 1;
+	pointer-events: none;
 	
 	.cui-layer {
 		position: absolute;
+		pointer-events: auto;
 	}
 
 	// centered gets placed by the browser
 	&[cui-placement="c"] {
 		.cui-layer {
 			position: static;
+			margin: 0;
 		}
 	}
 }
 
-.cui-layer-backdrop-policy-click-thru {
-	pointer-events: none;
-	
-	.cui-layer {
-		pointer-events: auto;
-	}
+.cui-layer-backdrop-policy-click {
+	pointer-events: auto;
 }
 
 .cui-layer {
@@ -2351,6 +2350,10 @@ a[role="button"].cui-button-appearance-link {
 			min-height: $toolbar-height;
 			background: $toolbar-background;
 			padding: 0;
+			
+			.cui-buttonbar {
+				min-width: 0;
+			}
 
 			.cui-horizontal-layout-center {
 				overflow: hidden;
