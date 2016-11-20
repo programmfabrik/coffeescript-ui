@@ -1056,7 +1056,7 @@ class CUI.Layer extends CUI.DOM
 			instance: @
 			node: @__layer
 			call: (ev) =>
-				console.error "Layer caught event:", ev.getType()
+				# console.error "Layer caught event:", ev.getType()
 				@position()
 
 		Events.listen

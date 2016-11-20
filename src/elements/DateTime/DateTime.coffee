@@ -647,8 +647,10 @@ class DateTime extends Input
 
 	setInputFromMoment: ->
 		@__clearOverwriteMonthAndYear()
-		@__input0.value = @__current_moment.format(@__input_format.input)
-		@storeValue(@__input.val())
+		# @__input0.value = @__current_moment.format(@__input_format.input)
+		# console.error "stored value:", @__input.val()
+		# @storeValue(@__input.val())
+		@setValue(@__current_moment.format(@__input_format.input), no_trigger: false)
 		@
 
 	__clearOverwriteMonthAndYear: ->
@@ -1099,6 +1101,9 @@ class DateTime extends Input
 			node: @__hour_minute
 			type: "click"
 			call: (ev) =>
+				if not @__gridTable
+					return
+
 				ev.stopPropagation()
 				$target = $(ev.getTarget())
 				# CUI.debug "clicked on ", $target

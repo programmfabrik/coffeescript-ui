@@ -636,12 +636,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		sel_node = @getSelectedNode()
 
 		if sel_node
-			sel_node.check_deselect(ev)
-			.done ->
+			sel_node.check_deselect(ev, @)
+			.done =>
 				# don't pass event, so no check is performed
 				#CUI.debug "selected node:", sel_node
-				sel_node.deselect()
-				.done ->
+				sel_node.deselect(null, @)
+				.done =>
 					do_select()
 				.fail(dfr.reject)
 			.fail(dfr.reject)
