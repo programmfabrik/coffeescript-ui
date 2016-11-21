@@ -1269,7 +1269,7 @@ class DateTime extends Input
 			opts.input_types = null
 
 		dt = new DateTime(opts)
-		mom = dt.parse(datestr_or_moment)
+		mom = dt.parseValue(datestr_or_moment)
 
 		if not mom.isValid()
 			return null
