@@ -143,7 +143,12 @@ class CUI.Layout extends CUI.DOM
 		if @hasFlexHandles()
 			has_flex_handles = true
 			# CUI.warn(getObjectClass(@)+".initFlexHandles", @opts, @__layout.__uniqueId, @DOM[0])
-			@__layout.initFlexHandles()
+			pane_opts = {}
+			for pn in @__panes
+				pane = @["_#{pn}"]
+				if pane?.flexHandle
+					pane_opts[pn] = pane.flexHandle
+			@__layout.initFlexHandles(pane_opts)
 		else
 			has_flex_handles = false
 
@@ -180,65 +185,20 @@ class CUI.Layout extends CUI.DOM
 	getMapPrefix: ->
 		undefined
 
-	getPaneCheckMap: ->
-		map =
+	#initialive pane option
+	__initPane: (options, pane_name) ->
+		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
+		opts = CUI.Element.readOpts(options, "new Layout.__initPane",
 			class:
 				check: String
 			content: {}
-
-		if @hasFlexHandles()
-			map.flexHandle =
-				check:
-					label:
-						check: (v) ->
-							v instanceof Label or CUI.isPlainObject(v)
-					hidden:
-						default: false
-						check: Boolean
-					closed:
-						default: false
-						check: Boolean
-					closable:
-						default: true
-						check: Boolean
-					class:
-						check: String
-		map
-
-	#initialive pane option
-	# @param [Object] options for pane creation
-	# @option options [Boolean] hidden , if true, pane is not shown
-	# @option options [Boolean] flexReset creates flex reset wrap TODO get rid of it
-	# @option options [Boolean] closed minimizes the pane
-	# @option options [String] class is a custom css class
-	# @option options [Array] content is an array or a single object of DOM-Nodes, JQuery-Objects or cui Elements , if Buttons are given they are automatically added into a button bar
-	# @param [String] pane_name name of the pane
-	__initPane: (options, pane_name) ->
-		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
-		opts = CUI.Element.readOpts(options, "new Layout.__initPane", @getPaneCheckMap())
+			flexHandle: {}
+		)
 
 		@append(opts.content, pane_name)
-		fh = opts.flexHandle
-
-		if fh
-			fh_inst = @__layout.getFlexHandle(pane_name)
-			if fh.label
-				fh_inst.addLabel(fh.label)
-
-			fh_inst.setClosable(fh.closable)
-
-			if fh.hidden
-				fh_inst.hide()
-
-			if fh.closed
-				fh_inst.close()
-
-			if fh.class
-				CUI.DOM.addClass(fh_inst.getHandle(), fh.class)
 
 		if opts.class
 			@__layout.addClass(opts.class, pane_name)
-
 
 
 	# returns true if this Layout has at least one

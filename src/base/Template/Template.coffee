@@ -51,13 +51,24 @@ class CUI.Template extends CUI.Element
 		@
 
 
-	initFlexHandles: ->
+	initFlexHandles: (pane_opts={}) ->
 		# init any flex handles find in the markup
 		@__flexHandles = {}
 		# txt = "Template.initFlexHandles[name=#{@_name}]"
 		# console.time(txt)
+
 		for fh_el in CUI.DOM.matchSelector(@DOM, "[cui-flex-handle]")
-			fh = new FlexHandle(element: fh_el)
+			opts = @readOptsFromAttr(CUI.DOM.getAttribute(fh_el, "cui-flex-handle"))
+			if pane_opts[opts.name]
+				# merge opts
+				for k,v of pane_opts[opts.name]
+					if not opts.hasOwnProperty(k)
+						opts[k] = v
+			else
+				opts.manage_state = false
+
+			opts.element = fh_el
+			fh = new FlexHandle(opts)
 			if not isEmpty(fh_name = fh.getName())
 				# CUI.warn("Template.initFlexHandles", fh_name)
 				@__flexHandles[fh_name] = fh

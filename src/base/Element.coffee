@@ -93,12 +93,6 @@ class CUI.Element
 	readOpts: (opts = @opts, cls = @__cls, check_map = @__check_map) ->
 		CUI.Element.readOpts.call(@, opts, cls, check_map, true)
 
-	# add options from and style like attribute string
-	# element: the element to
-	addOptsFromAttr: (str) ->
-		for k, v of @readOptsFromAttr(str)
-			@opts[k] = v
-
 	# read "style" like opts for layout
 	readOptsFromAttr: (str) ->
 		opts = {}

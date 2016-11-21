@@ -1,7 +1,6 @@
 # this class initializes a flex handle
 class FlexHandle extends CUI.Element
 	constructor: (@opts={}) ->
-		@addOptsFromAttr(CUI.DOM.getAttribute(@opts.element, "cui-flex-handle"))
 		super(@opts)
 
 		@__pane = null
@@ -42,7 +41,6 @@ class FlexHandle extends CUI.Element
 			@__direction = "column"
 
 		assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element[0])
-		@setClosable(@_closable)
 
 		if @_label
 			@addLabel(@_label)
@@ -78,6 +76,10 @@ class FlexHandle extends CUI.Element
 			manage_state:
 				default: true
 				check: Boolean
+			state_name:
+				check: String
+			class:
+				check: String
 
 	init: ->
 		if @isDestroyed()
@@ -90,6 +92,9 @@ class FlexHandle extends CUI.Element
 
 		if @__hidden
 			@hide()
+
+		if @_class
+			CUI.DOM.addClass(@_element, @_class)
 
 		if @__direction == "row"
 			axis = "x"
@@ -106,7 +111,7 @@ class FlexHandle extends CUI.Element
 				if @__size == null # isEmpty(@__pane[0].style[@__css_value])
 					if @isClosed()
 						@open()
-					else if @getClosable()
+					else if @_closable
 						@close()
 				else
 					@resetSize()
@@ -192,6 +197,8 @@ class FlexHandle extends CUI.Element
 					return
 
 				dragging(gd)
+				@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
+				@storeState()
 
 			dragging: (ev, gd) =>
 				if not CUI.__ng__
@@ -210,26 +217,23 @@ class FlexHandle extends CUI.Element
 
 			@__setSize(new_value)
 
+		if @_manage_state
+			if not @_state_name
+				console.error "new FlexHandle()", "opts.state_name missing, state will not be stored.", @opts
 
-		DOM.waitForDOMInsert(node: @_element)
-		.done =>
-			@__initState()
+			@__state_name = @_state_name
 			@__setState()
 
-			Events.listen
-				type: "content-resize"
-				node: @_element
-				call: (ev) =>
-					# CUI.info("FlexHandle stoped content-resize", @_element[0])
-					ev.stopPropagation()
 		@
 
 	__setSize: (size) ->
 		if isNull(size)
 			DOM.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
-			if DOM.getDimension(@__pane, "contentBox"+@__css_value) == 0
-				CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
-				DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
+
+			if @__isAlive()
+				if DOM.getDimension(@__pane, "contentBox"+@__css_value) == 0
+					CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
+					DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
 
 			@__pane.classList.remove("cui-is-manually-sized")
 			@_element.classList.remove("cui-is-manually-sized")
@@ -239,15 +243,9 @@ class FlexHandle extends CUI.Element
 			@__pane.classList.add("cui-is-manually-sized")
 			@_element.classList.add("cui-is-manually-sized")
 			DOM.setDimension(@__pane, "contentBox"+@__css_value, size)
-			@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
+			@__size = size
 
-		@storeState()
 		@__resize()
-
-	setClosable: (@__closable) ->
-
-	getClosable: ->
-		!!@__closable
 
 	resetSize: ->
 		@__setSize(null)
@@ -279,31 +277,7 @@ class FlexHandle extends CUI.Element
 		# 	node: @_element.parent()
 
 
-	__initState: ->
-		if not @_manage_state
-			return
-
-		# add non cui class names to
-		# the list to create a unique
-		# name to store state in cookie
-		cls_for_unique_name = [@_name]
-
-		add_cls = (el) ->
-			use_cls = []
-			for cls in el.classList
-				if cls.match(/^(ez-|cui-)/)
-					continue
-				use_cls.push(cls)
-			cls_for_unique_name.push("."+use_cls.join("."))
-
-		add_cls(@__pane)
-		for parent, idx in DOM.parents(@__pane)
-			add_cls(parent)
-
-		@__state_name = "CUI-FlexHandle-"+cls_for_unique_name.join("/")
-		DOM.setAttribute(@_element, "title", @__unique_name)
-
-	__getState: () ->
+	__getState: ->
 		value = CUI.getLocalStorage(@__state_name)
 		if not isNull(value)
 			state = JSON.parse(value)
@@ -312,7 +286,7 @@ class FlexHandle extends CUI.Element
 		state
 
 	__setState: ->
-		if not @_manage_state
+		if not @__state_name
 			return
 
 		state = @__getState()
@@ -331,7 +305,7 @@ class FlexHandle extends CUI.Element
 
 
 	storeState: ->
-		if not @_manage_state
+		if not @__state_name
 			return
 
 		state =
@@ -341,7 +315,7 @@ class FlexHandle extends CUI.Element
 		value = JSON.stringify(state)
 
 		CUI.setLocalStorage(@__state_name, value)
-		# CUI.debug "stored state", @__state_name, value
+		console.info("FlexHandle.storeState: ", @__state_name, value)
 		@
 
 	isStretched: ->
