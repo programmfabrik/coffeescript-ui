@@ -6,7 +6,7 @@ $padding: 10px;
 $compensating-padding: 7px;
 $gap: 12px;
 $small-gap: 7px;
-$background: white;
+$background: hsl(205,2%,97%);
 $foreground: white;
 $border: hsl(205,20%,83%);
 $soft-border: hsl(205,20%,91%);
@@ -169,7 +169,7 @@ textarea {
 	font-size: 12px;
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
-	background: $background;
+	background: $foreground;
 	font-family: inherit;
 	padding: 2px 3px;
 	flex: 1 1 auto;
@@ -1825,6 +1825,7 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	display: flex;
 	
 	&--visible {
 		background: radial-gradient(hsla(205,30%,20%,.4), hsla(205,30%,20%,.6));
@@ -2300,7 +2301,7 @@ a[role="button"].cui-button-appearance-link {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: $background;
+		background: $foreground;
 	}
 
 	.cui-wait-block-inner {
