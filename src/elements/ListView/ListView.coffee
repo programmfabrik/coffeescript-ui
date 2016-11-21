@@ -945,8 +945,12 @@ class CUI.ListView extends CUI.SimplePane
 				if width == 0
 					console.error "col width == 0", row_i, col_i, colspan, col_width
 				# console.debug row_i, col_i, colspan, width
-				cell.style.setProperty("width", width+"px", "important")
 
+				dim = CUI.DOM.getDimensions(cell)
+				if dim.computedStyle.boxSizing == "border-box"
+					cell.style.setProperty("width", width+"px", "important")
+				else
+					cell.style.setProperty("width", (width -dim.paddingHorizontal + dim.borderHorizontal)+"px", "important")
 
 		# CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
 
