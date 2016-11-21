@@ -13,6 +13,7 @@
 
 	//less contrast for non-buttons icons
 	> .cui-label-icon {
+		max-height: none; //disable svg oversize workaround
 		opacity: $label_icon_opacity;
 		font-size: map_get($button_icon_font_sizes,$size);
 	}
@@ -245,3 +246,7 @@
 	color: $active_font_color;
 }
 
+//svg oversize workaround
+.cui-label-size-normal > .cui-label-icon {
+	max-height: 18px; //limit the size of svg icons.
+}
