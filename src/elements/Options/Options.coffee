@@ -419,10 +419,11 @@ class CUI.Options extends CUI.DataField
 					else
 						el = cb.DOM
 
-					if cb.isActive() and @_activatable
-						@append(el, "active")
-					else if @_activatable
-						@append(el, "inactive")
+					if @_activatable
+						if cb.isActive()
+							@append(el, "active")
+						else
+							@append(el, "inactive")
 					else
 						@append(el, "center")
 
