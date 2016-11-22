@@ -950,7 +950,7 @@ class CUI.ListView extends CUI.SimplePane
 				if dim.computedStyle.boxSizing == "border-box"
 					cell.style.setProperty("width", width+"px", "important")
 				else
-					cell.style.setProperty("width", (width -dim.paddingHorizontal + dim.borderHorizontal)+"px", "important")
+					cell.style.setProperty("width", (width - dim.paddingHorizontal + dim.borderHorizontal)+"px", "important")
 
 		# CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
 
