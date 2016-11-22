@@ -551,9 +551,16 @@ class CUI
 			decode_func = (v) -> decodeURIComponent(v)
 
 		for part in url.split(connect)
-			pair = part.split(connect_pair)
-			key = decode_func(pair[0])
-			value = decode_func(pair[1])
+			if part.length == 0
+				continue
+
+			if part.indexOf(connect_pair) > -1
+				pair = part.split(connect_pair)
+				key = decode_func(pair[0])
+				value = decode_func(pair[1])
+			else
+				key = decode_func(part)
+				value = ""
 
 			if use_array
 				if not params[key]
