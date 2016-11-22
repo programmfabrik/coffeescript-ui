@@ -224,6 +224,7 @@ class CUI.Label extends CUI.DOM
 		CUI.DOM.setStyle(@__label.map.content[0],
 			maxHeight: content_height + @__overflow_heights.button
 		)
+		@__label.DOM.classList.toggle('cui-label--overflow-hidden', !showOverflow)
 		Events.wait
 			type: "transitionend"
 			node: @__label.map.content

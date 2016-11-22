@@ -20,6 +20,7 @@ $input-border: hsl(205,20%,79%);
 $drag-handle-color: hsl(205,10%,75%);
 
 $highlight-color: hsl(205,100%,45%);
+$row-highlight: hsl(201,82%,92%);
 $on-highlight-color: white;
 $on-highlight-muted-color: hsl(205,50%,85%);
 
@@ -520,14 +521,14 @@ li > div {
 	box-sizing: content-box;
 
 	& + & {
-		border-bottom: 1px solid $toolbar-background;
+		padding-bottom: 1px;
 	}
 	
 	&.cui-pane-toolbar {
 		border-bottom: 1px solid $border;
 		
 		& + .cui-toolbar {
-			border-bottom: none;
+			padding-bottom: 0;
 		}
 	}
 	
@@ -603,6 +604,7 @@ li > div {
 
 	.cui-button {
 		align-self: stretch;
+		height: 100%; // needed for comment checkbox in editor toolbar
 	}
 
 	.cui-buttonbar {
@@ -783,6 +785,7 @@ li > div {
 
 .fa {
 	font-size: 14px;
+	pointer-events: none;
 }
 
 i.fa-spinner {
@@ -984,7 +987,7 @@ i.cui-spin-stepped {
   }
 
   .cui-icon-svg {
-  	transform: scale(0.85);
+  	transform: scale(0.8);
   }
 }
 
@@ -1422,6 +1425,7 @@ a[role="button"].cui-button-appearance-link {
 // Label: Multiline
 .cui-label-multiline {
 	align-self: stretch;
+	max-width: 100%; // prevent overflow when its the child of a flex parent
 
 	& + & {
 		margin-top: $padding;
@@ -1444,42 +1448,47 @@ a[role="button"].cui-button-appearance-link {
 		white-space: normal;
 	}
 
-	&.cui-label-manage-overflow {
-		> .cui-label-content {
-			transition: height ease 0.5s, max-height ease 0.5s;
-			max-height: 62px;
-			position: relative;
-			overflow: hidden;
-
-			> .cui-label-manage-overflow-content-container {
-				transition: height ease 0.5s, max-height ease 0.5s;
-				overflow: hidden;
-
-				> span {
-					white-space: pre-wrap;
-					word-break: normal;
-				}
-			}
-
-			> .cui-label-manage-overflow-button-container {
-				height: 0;
-				align-self: flex-end;
-				.cui-button {
-					transform: translateY(-100%);
-					border-style: none;
-					background-color: #8a8a8a;
-					color: #ffffff;
-					border-radius: 3px;
-				}
-			}
-		}
-	}
-
 	.cui-label-content span {
 		// white-space: normal;
 		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
 		// example: collection description
 	}
+}
+
+// Label: Manage Overflow
+
+.cui-label-manage-overflow {
+	> .cui-label-content {
+		max-height: 75px;
+		overflow: hidden;
+	}
+	
+	&.cui-label--overflow-hidden {
+		> .cui-label-content > .cui-label-manage-overflow-button-container {
+			padding-top: 18px;
+			margin-top: -18px;
+		}
+	}
+}
+
+.cui-label-manage-overflow-content-container {
+	overflow: hidden;
+	flex-shrink: 1;
+
+	> span {
+		white-space: pre-wrap;
+		word-break: normal;
+	}
+}
+
+.cui-label-manage-overflow-button-container {
+	flex-shrink: 0;
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+	background-image: linear-gradient(hsla(0,0%,100%,0), hsla(0,0%,100%,1));
+	background-size: 100% 18px;
+	background-repeat: no-repeat;
 }
 
 // Label: Placeholder
@@ -1514,10 +1523,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-button,
+	> .cui-button-button,
 	> .cui-data-field-input {
 		// align-self: unset; // don't unset - need stretch for big button clickarea
 		
 		& + .cui-button,
+		& + .cui-button-button,
 		& + .cui-buttonbar-group,
 		& + .cui-data-field-input {
 			margin-left: $small-gap;
@@ -1526,7 +1537,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button-href {
 		height: 100%;
-		margin: 0 $small-gap;
 	}
 
 	.cui-buttonbar-group + .cui-button {
@@ -1537,6 +1547,7 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar-group {
 	display: flex;
+	align-self: stretch; // use full height for bigger click area for buttons (example: tabs)
 	
 	& + & {
 		margin-left: $small-gap;
@@ -1757,8 +1768,10 @@ a[role="button"].cui-button-appearance-link {
 		min-height: $toolbar-height;
 	}
 
-	.cui-form-table .cui-data-field {
-		width: auto;
+	.cui-form-table {
+		.cui-data-field {
+			width: auto;
+		}
 	}
 }
 
@@ -2443,7 +2456,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-toolbar {
 	&.cui-tabs-pane-header--scroll-at-end {
-		.cui-tab-header-button-overflow {
+		.cui-tab-header-button-overflow .cui-button-visual {
 			box-shadow: none;
 		}
 	}
@@ -2453,16 +2466,16 @@ a[role="button"].cui-button-appearance-link {
 		padding-right: $padding/2;
 		position: relative;
 		z-index: 1; // to overlap active buttons
-		box-shadow:
-			-1px 0 hsla(0,0%,0%,.10),
-			-2px 0 hsla(0,0%,0%,.08),
-			-3px 0 hsla(0,0%,0%,.05),
-			-4px 0 hsla(0,0%,0%,.02),
-			-5px 0 hsla(0,0%,0%,.01);
 		
 		.cui-button-visual {
 			border-top-left-radius: 0 !important;
 			border-bottom-left-radius: 0 !important;
+			box-shadow:
+				-1px 0 hsla(0,0%,0%,.10),
+				-2px 0 hsla(0,0%,0%,.08),
+				-3px 0 hsla(0,0%,0%,.05),
+				-4px 0 hsla(0,0%,0%,.02),
+				-5px 0 hsla(0,0%,0%,.01);
 		}
 	}
 }
@@ -2533,7 +2546,8 @@ $table-data-padding: 4px;
 	}
 
 	&-fill {
-		padding: 2px;
+		// UNCLEAR - why padding? has to be reset when its not used
+		//padding: 2px;
 		min-height: 0;
 	}
 
@@ -2677,6 +2691,16 @@ $table-data-padding: 4px;
 		
 		&:nth-child(even) {
 			background: $zebra-color;
+			
+			.cui-label-manage-overflow-button-container {
+				background-image: linear-gradient(#{transparentize($zebra-color, 1)}, #{transparentize($zebra-color, 0)});
+			}
+
+			&.cui-selected {
+				.cui-label-manage-overflow-button-container {
+					background-image: linear-gradient(#{transparentize($row-highlight, 1)}, #{transparentize($row-highlight, 0)});
+				}
+			}
 		}
 	}
 }
@@ -2697,7 +2721,7 @@ $table-data-padding: 4px;
 
 	&.cui-selected,
 	&:focus {
-		background: hsl(201,82%,92%) !important;
+		background: $row-highlight !important;
 		
 		.cui-empty-label {
 			color: hsl(205,33%,63%);
@@ -2755,10 +2779,6 @@ $table-data-padding: 4px;
 
 	> .cui-lv-tr {
 		border-style: none;
-	}
-
-	.cui-lv-td.cui-lv-td-fill {
-		padding: 0;
 	}
 }
 
@@ -2820,7 +2840,11 @@ $table-data-padding: 4px;
 	.cui-label {
 		min-width: 0;
 		flex-shrink: 1;
-		padding: 0;
+		// padding: 0; CONFLICT removes padding from tags that are inside node content
+		
+		.fa {
+			line-height: 1;
+		}
 	}
 }
 
@@ -3113,6 +3137,10 @@ $table-data-padding: 4px;
 
 .cui-data-field-output-label {
 	line-height: 24px;
+	
+	&.cui-data-field-output-label {
+		line-height: inherit;
+	}
 }
 
 .cui-data-field-hidden {
