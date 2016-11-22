@@ -1,5 +1,12 @@
 class FormButton extends Checkbox
 
+	constructor: (@opts={}) ->
+
+		super(@opts)
+		
+		if CUI.__ng__
+				@addClass("cui-button-button")
+
 	getButtonOpts: ->
 		opts = icon: @_icon
 		for k in ["appearance"]
