@@ -397,7 +397,12 @@ class CUI.Layer extends CUI.DOM
 		wanted_placement = @_placement or allowed_placements[0]
 
 		if @__element
-			dim_element = CUI.DOM.getDimensions(@__element)
+			element = @__element
+
+			if CUI.__ng__ and @__element.classList.contains('cui-button')
+				element = @__element.querySelector('.cui-button-visual')
+
+			dim_element = CUI.DOM.getDimensions(element)
 
 		else if @_show_at_position
 			dim_element =
