@@ -342,8 +342,7 @@ class CUI.Options extends CUI.DataField
 								@storeValue(_cb.getValue(), flags)
 						else
 							removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
-							if not flags.prior_activate
-								@storeValue(arr, flags)
+							@storeValue(arr, flags)
 
 							if @_sortable
 								order_options_by_value_array()
