@@ -28,9 +28,11 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 		@_choices = [
 			text: @_button_text_cancel
 			cancel: true
+			choice: "cancel"
 			primary: @_button_primary == "cancel"
 		,
 			text: @_button_text_ok
+			choice: "ok"
 			primary: @_button_primary == "ok"
 		]
 

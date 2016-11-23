@@ -16,6 +16,8 @@ class CUI.Prompt extends CUI.Confirm
 
 		delete(@_text) # delete so the ConfirmationDialog does not warn us
 
+		@__input = null
+
 		@__data = input: @_default+""
 		@_content = new Form
 			fields: [
@@ -26,6 +28,7 @@ class CUI.Prompt extends CUI.Confirm
 				type: Input
 				name: "input"
 				data: @__data
+				onConstruct: (@__input) =>
 				onKeyup: (inp, ev) =>
 					if ev.keyCode() == 13
 						@getButtons()[1].onClickAction(ev)
@@ -35,14 +38,8 @@ class CUI.Prompt extends CUI.Confirm
 			]
 		.start()
 
-		@_choices = [
-			text: @_button_text_cancel
-			cancel: true
-			primary: @_button_primary == "cancel"
-		,
-			text: @_button_text_ok
-			primary: @_button_primary == "ok"
-		]
+	getValue: ->
+		@__input.getValue()
 
 	open: ->
 		@__checkOkBtn()
@@ -51,6 +48,9 @@ class CUI.Prompt extends CUI.Confirm
 		.done (choice) =>
 			dfr.resolve(@__data.input)
 		.fail(dfr.reject)
+		CUI.setTimeout
+			call: =>
+				@__input.focus().selectAll()
 		dfr.promise()
 
 
@@ -61,8 +61,6 @@ class CUI.Prompt extends CUI.Confirm
 		else
 			buttons[1].disable()
 
-
-	getForm: ->
 
 
 CUI.prompt = (opts) ->

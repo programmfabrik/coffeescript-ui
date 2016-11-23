@@ -31,6 +31,11 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.setElement(@DOM, @)
 		@
 
+	# if used as parameter in "Layer", overwrite to
+	# a different element to position the layer with
+	getElementForLayer: ->
+		@DOM
+
 	unregisterDOMElement: (@DOM) ->
 		CUI.removeClass(@DOM, @getDOMElementClasses())
 		CUI.DOM.removeAttribute(@DOM, "id")

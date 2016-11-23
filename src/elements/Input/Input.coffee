@@ -639,6 +639,11 @@ class CUI.Input extends CUI.DataFieldInput
 		@__input0.selectionStart = selection.start
 		@__input0.selectionEnd = selection.end
 
+	selectAll: ->
+		@__input0.selectionStart = 0
+		@__input0.selectionEnd = @__input0.value.length
+		@
+
 	updateSelection: (txt="") ->
 		sel = @getSelection()
 		@setValue(sel.before + txt + sel.after)
@@ -956,6 +961,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 	focus: ->
 		@__input0?.focus()
+		@
 
 	getCursorBlocks: ->
 		blocks = @__getCursorBlocks?(@__input0.value)

@@ -311,7 +311,9 @@ class CUI.Layer extends CUI.DOM
 	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
 	__setElement: (element) ->
-		if element.DOM
+		if element instanceof CUI.DOM
+			@__element = element.getElementForLayer()
+		else if element.DOM
 			@__element = element.DOM
 		else
 			@__element = element
@@ -397,12 +399,7 @@ class CUI.Layer extends CUI.DOM
 		wanted_placement = @_placement or allowed_placements[0]
 
 		if @__element
-			element = @__element
-
-			if CUI.__ng__ and @__element.classList.contains('cui-button')
-				element = @__element.querySelector('.cui-button-visual')
-
-			dim_element = CUI.DOM.getDimensions(element)
+			dim_element = CUI.DOM.getDimensions(@__element)
 
 		else if @_show_at_position
 			dim_element =

@@ -46,6 +46,7 @@ class CUI.Button extends CUI.DOM
 			map:
 				left: if @__has_left then ".cui-button-left" else undefined
 				center: ".cui-button-center"
+				visual: if CUI.__ng__ then ".cui-button-visual" else undefined
 				right: if @__has_right then ".cui-button-right" else undefined
 
 		@registerTemplate(@__box)
@@ -639,6 +640,11 @@ class CUI.Button extends CUI.DOM
 
 	getValue: ->
 		@_value
+
+	getElementForLayer: ->
+		if not CUI.__ng__
+			return @DOM
+		return @__box.map.visual
 
 	getRadioButtons: ->
 		if not @__radio
