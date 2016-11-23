@@ -253,13 +253,25 @@ class FileUpload extends CUI.Element
 			call: (ev) =>
 				FileUpload.setDropClassByEvent(ev)
 				dt = ev.getNativeEvent().dataTransfer
+
 				if dt.files?.length > 0
-					files = (file for file in dt.files)
-					if multiple == false
-						# only take the first
-						files.splice(1)
-					# CUI.debug("queing ", files)
-					@queueFiles(files)
+					warn = []
+					files = []
+
+					for file in dt.files
+						if file.size == 0
+							warn.push(file)
+						else
+							files.push(file)
+							if multiple == false
+								break
+
+					if warn.length > 0
+						console.warn("Files empty or directories, not uploaded...", warn)
+
+					if files.length > 0
+						@queueFiles(files)
+
 				ev.stopPropagation()
 				ev.preventDefault()
 				return false
