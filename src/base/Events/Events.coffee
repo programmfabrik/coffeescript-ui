@@ -347,6 +347,7 @@ class CUI.Events extends CUI.Element
 				mouseup: {}
 				click: {}
 				dblclick: {}
+				contextmenu: {}
 				touchstart: {}
 				touchend: {}
 				touchmove: {}
@@ -369,7 +370,6 @@ class CUI.Events extends CUI.Element
 				load: {}
 				error: {}
 				close: {}
-				contextmenu: {}
 				popstate: {}
 				dragstart: {}
 				dragover: {}
