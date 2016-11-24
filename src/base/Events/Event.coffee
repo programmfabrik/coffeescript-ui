@@ -291,7 +291,6 @@ class CUI.Event extends CUI.Element
 			else
 				eventClass = CUI.Event
 
-
 		ev = new eventClass
 			type: event.type
 			bubble: event.bubbles
