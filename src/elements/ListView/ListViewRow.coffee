@@ -104,7 +104,7 @@ class CUI.ListViewRow extends CUI.Element
 	getDisplayRowIdx: ->
 		@listView?.getDisplayRowIdx(@row_i)
 
-	addedToListView: ->
+	addedToListView: (DOMNodes) ->
 		@__addedToListView = true
 
 	isAddedToListView: ->

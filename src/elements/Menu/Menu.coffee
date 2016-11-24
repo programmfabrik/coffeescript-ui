@@ -100,7 +100,7 @@ class CUI.Menu extends CUI.Layer
 		super()
 
 	hide: (ev) ->
-		ev?.preventDefault()
+		# ev?.preventDefault()
 		super(ev)
 		@
 

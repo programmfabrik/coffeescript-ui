@@ -1386,7 +1386,7 @@ class CUI.ListView extends CUI.SimplePane
 
 
 		assert(_cols.length+colspan_offset <= @colsCount, "ListView.addRow", "ListViewRow provided more columns (#{_cols.length+colspan_offset}) than colsCount (#{@colsCount}) is set to", colsCount: @colsCount, cols: _cols)
-		listViewRow.addedToListView()
+		listViewRow.addedToListView(@__rows[row_i])
 
 		return
 

@@ -233,7 +233,6 @@ class CUI.Layer extends CUI.DOM
 				default: true
 				check: Boolean
 
-
 			# a rectangle box to position the layer to
 			# a pointer is a helper to show the position of the layer
 			# allowed values are "arrow"
@@ -986,9 +985,6 @@ class CUI.Layer extends CUI.DOM
 
 		Events.ignore(instance: @)
 
-		@__clickThruListener?.destroy()
-		@__clickThruListener = null
-
 		@_onHide?(@, ev)
 		@
 
@@ -1073,12 +1069,6 @@ class CUI.Layer extends CUI.DOM
 				# console.info("Layer caught event:", ev.getType)
 				@position()
 				return
-
-
-		# if @__addClickThruListenerOnShow
-		# 	@__clickThruListener = @__addClickThruListener()
-		# else
-		# 	@__clickThruListener = null
 
 		@_onBeforeShow?(@, ev)
 		@__shown = true
@@ -1167,6 +1157,21 @@ CUI.ready ->
 					return
 
 				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
+
+				# prevent following click, if the target of the mousedown
+				# is the element which positioned the layer.
+
+				element = layer.getElement()
+				if element and CUI.DOM.closest(ev.getTarget(), element)
+					Events.listen
+						node: document.documentElement
+						type: ["dblclick", "click"]
+						capture: true
+						only_once: true
+						call: (ev) =>
+							console.error "eating click on layer opening element"
+							ev.stopPropagation()
+							return
 
 				ev.cui_layer_closed = true
 
