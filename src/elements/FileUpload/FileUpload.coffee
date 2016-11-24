@@ -259,12 +259,12 @@ class FileUpload extends CUI.Element
 					files = []
 
 					for file in dt.files
-						if file.size == 0
-							warn.push(file)
-						else
-							files.push(file)
-							if multiple == false
-								break
+						# if file.size == 0
+						# 	warn.push(file)
+						# else
+						files.push(file)
+						if multiple == false
+							break
 
 					if warn.length > 0
 						console.warn("Files empty or directories, not uploaded...", warn)
