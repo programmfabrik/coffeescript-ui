@@ -40,7 +40,6 @@ $positive-color: hsl(56,100%,60%);
 
 $toolbar-background: hsl(205,2%,97%);
 $toolbar-height: 34px;
-$toolbar-small-height: 29px;
 
 $layer-header-pointer-background: $toolbar-background;
 $layer-header-background: $toolbar-background;
@@ -601,7 +600,8 @@ li > div {
 	}
 
 	.cui-data-field-input {
-		height: 100%;
+		// use $toolbar-height instead of 100% because of Safari bug
+		height: $toolbar-height;
 		display: flex;
 		align-items: center;
 		
@@ -617,12 +617,12 @@ li > div {
 
 	.cui-button {
 		align-self: stretch;
-		height: 100%; // needed for comment checkbox in editor toolbar
+		height: $toolbar-height; // needed for comment checkbox in editor toolbar
 	}
 
 	.cui-buttonbar {
 		margin-bottom: 0;
-		height: 100%;
+		height: $toolbar-height;
 		
 		.cui-button {
 			.cui-button-visual {
@@ -795,6 +795,7 @@ li > div {
 	vertical-align: bottom;
 	pointer-events: none;
 	flex-shrink: 0;
+	transform: translateZ(0); // make em icons sharp in Firefox
 }
 
 .fa {
