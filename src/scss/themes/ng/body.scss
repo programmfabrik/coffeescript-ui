@@ -14,7 +14,7 @@ $soft-border: hsl(205,20%,91%);
 $button-background: white;
 $button-text-color: hsl(205,10%,34%);
 $button-border: hsl(205,10%,75%);
-$button-border-radius: 4px;
+$button-radius: 4px;
 
 $input-border: hsl(205,20%,79%);
 
@@ -105,6 +105,18 @@ $layer-footer-border: $layer-header-border;
 }
 
 @mixin focus() {
+	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin inner-focus() {
+	box-shadow: 0 0 0 3px lighten($highlight-color, 40%) inset;
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin border-focus() {
 	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
 	border-color: $highlight-color;
 	z-index: 1; // put forward to see outline
@@ -206,7 +218,7 @@ input {
 	width: 2.5ch;
 }
 
-@for $i from 3 through 10 {
+@for $i from 3 through 30 {
 	[max-chars="#{$i}"] {
 		width: #{$i}ch;
 	}
@@ -782,6 +794,7 @@ li > div {
 	fill: currentColor;
 	vertical-align: bottom;
 	pointer-events: none;
+	flex-shrink: 0;
 }
 
 .fa {
@@ -819,6 +832,17 @@ i.cui-spin-stepped {
 	}
 }
 
+// compensate right arrow spacing
+.fa-angle-right {
+	margin-left: 2px;
+}
+
+// compensate left arrow spacing
+.fa-angle-left {
+	margin-right: 2px;
+}
+
+// compensate down arrow spacing
 .fa-angle-down {
 	margin-bottom: -1px;
 }
@@ -866,7 +890,7 @@ i.cui-spin-stepped {
 	  color: $button-text-color;
 	  background: $button-background;
 	  border: 1px solid $button-border;
-	  border-radius: $button-border-radius;
+	  border-radius: $button-radius;
 	}
 
 	&:hover .cui-button-visual {
@@ -909,7 +933,7 @@ i.cui-spin-stepped {
 		outline: none;
 		
 		.cui-button-visual {
-			@include focus;
+			@include border-focus;
 		}
 	}
 }
@@ -919,6 +943,7 @@ i.cui-spin-stepped {
 	
 	.cui-button-visual {
 		@include button-reset;
+		border-radius: $button-radius;
 		color: desaturate($highlight-color, 80%);
 	}
 	
@@ -938,6 +963,12 @@ i.cui-spin-stepped {
   		.cui-button-visual {
   			background: none;	
   		}
+  	}
+  }
+
+  &:focus {
+  	.cui-button-visual {
+  		@include focus;
   	}
   }
 }
@@ -984,6 +1015,15 @@ i.cui-spin-stepped {
 
   &.cui-button-appearance-flat {
   	height: auto;
+  }
+
+  .cui-button-visual {
+  	height: 20px;
+  	padding: 0 $padding/2;
+  }
+
+  .fa {
+  	font-size: 11px;
   }
 
   .cui-icon-svg {
@@ -1081,7 +1121,7 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-button-left span,
 		.cui-button-left i {
-			@include focus;
+			@include border-focus;
 		}
 	}
 
@@ -1271,6 +1311,7 @@ a[role="button"].cui-button-appearance-link {
 		align-items: flex-end;
 		white-space: nowrap;
 		margin: $padding/2 0;
+		flex-shrink: 0;
 		
 		&:before {
 			content: "";
@@ -1579,7 +1620,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		&:only-child .cui-button-visual {
-			border-radius: $button-border-radius;
+			border-radius: $button-radius;
 		}
 
 		&:hover,
@@ -1627,7 +1668,7 @@ a[role="button"].cui-button-appearance-link {
 		vertical-align: bottom;
 		
 		&:focus {
-			@include focus;
+			@include border-focus;
 		}
 	}
 
@@ -1641,7 +1682,7 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-has-focus {
 		input,
 		textarea {
-			@include focus;
+			@include border-focus;
 		}
 	}
 
@@ -1769,8 +1810,14 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-form-table {
 		&.cui-form-table-has-not-left-column {
-			> .cui-tr > .cui-form-center > .cui-data-field > .cui-list-view {
-				margin: -15px -20px;
+			> .cui-tr > .cui-form-center > .cui-data-field {
+				&.cui-data-table {
+					border: none;
+				}
+
+				> .cui-list-view {
+					margin: -15px -20px;
+				}
 			}	
 		}
 
@@ -2379,12 +2426,14 @@ a[role="button"].cui-button-appearance-link {
 				flex-grow: 0;
 				justify-content: center;
 				margin-right: 0;
+				padding: 0 $padding;
 			}
 
 			/* overflowing tabs */
 			&.cui-tabs-pane-header--overflow {
 				> .cui-horizontal-layout-center {
 					align-items: flex-start;
+					padding-right: 0;
 					padding-left: $padding/2;
 					margin-right: 0;
 					
@@ -2539,6 +2588,10 @@ $table-data-padding: 4px;
 
 	&-rotate-90 {
 		width: 12px;
+		
+		.cui-tree-node-spacer {
+			display: none;
+		}
 		
 		> .cui-tmpl-label-rotate-90 {
 			word-break: break-all;
@@ -2725,8 +2778,9 @@ $table-data-padding: 4px;
 	outline: none;
 
 	&.cui-selected,
-	&:focus {
-		background: $row-highlight !important;
+	&:focus,
+	&:focus:nth-child(even) {
+		background: $row-highlight;
 		
 		.cui-empty-label {
 			color: hsl(205,33%,63%);
@@ -2760,6 +2814,7 @@ $table-data-padding: 4px;
 	&.cui-lv-td {
 		width: $padding/2 + $table-data-padding*2+2;
 		padding-left: $table-data-padding+2;
+		padding-right: 0;
 		align-items: center;
 	}
 }
@@ -2783,6 +2838,14 @@ $table-data-padding: 4px;
 
 	> .cui-lv-tr {
 		border-style: none;
+	}
+
+	.cui-lv-td {
+		// leave padding-left and padding-right 
+		// because its used to measure
+		// the column width for headers
+		padding-top: 0;
+		padding-bottom: 0;
 	}
 }
 
@@ -2882,6 +2945,10 @@ $table-data-padding: 4px;
 			margin-bottom: $padding/2;
 		}
 	}
+}
+
+.cui-th {
+	font-weight: bold;
 }
 
 .cui-td {
@@ -3321,8 +3388,8 @@ $table-data-padding: 4px;
 
 		&:last-child .cui-button .cui-button-visual {
 			border-right-width: 1px;
-			border-top-right-radius: $button-border-radius;
-			border-bottom-right-radius: $button-border-radius;
+			border-top-right-radius: $button-radius;
+			border-bottom-right-radius: $button-radius;
 			padding-right: 4px;
 		}
 
@@ -3379,6 +3446,7 @@ $table-data-padding: 4px;
 	.cui-button {
 		margin-left: -1px;
 		height: 100%;
+		vertical-align: bottom;
 		
 		.cui-button-visual {
 			border-radius: 0;
@@ -3397,7 +3465,7 @@ $table-data-padding: 4px;
 }
 
 .cui-date-time-day {
-	border-radius: $button-border-radius;
+	border-radius: $button-radius;
 }
 
 .cui-date-time-previous-month,
@@ -3800,7 +3868,7 @@ $table-data-padding: 4px;
 	.cui-progress-meter-bar {
 		height: 24px;
 		position: relative;
-		border-radius: $button-border-radius;
+		border-radius: $button-radius;
 		overflow: hidden;
 		// to make sure that the border-radius will cut off all child backgrounds
 		// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
@@ -3816,7 +3884,7 @@ $table-data-padding: 4px;
 			bottom: 0;
 		}
 		.cui-progress-meter-fill-background {
-			border-radius: $button-border-radius;
+			border-radius: $button-radius;
 			background: lighten(desaturate($highlight-color, 90%), 43%);
 		}
 		.cui-progress-meter-fill {
@@ -3909,9 +3977,7 @@ $table-data-padding: 4px;
 	
 	&.container-status {
 		padding: 4px $padding;
-		margin-top: -4px;
 		background: $toolbar-background;
-		display: flex;
 		border-top: 1px solid $soft-border;
 		
 		.cui-label {
@@ -3921,7 +3987,9 @@ $table-data-padding: 4px;
 			line-height: 14px;
 			
 			& + .cui-button {
-				margin-left: $padding;
+				display: block;
+				padding: 7px 0 4px;
+				height: auto;
 			}
 		}
 	}
@@ -3941,6 +4009,14 @@ $table-data-padding: 4px;
 	em {
 		font-weight: bold;
 		font-style: normal;
+	}
+
+	.cui-label {
+		max-width: 100%;
+	}
+
+	.cui-label-content {
+		flex-shrink: 1;	
 	}
 }
 
