@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 41.1 (35376) - http://www.bohemiancoding.com/sketch -->
     <title>easydb</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="easydb">
             <path d="M3,21 C1.12938298,18.6207384 0,15.4609584 0,11 C0,8.53244305 1.1359065,5.37737628 3,3 L3,21" id="Fill-22" fill="#50E3C2"></path>
-            <path d="M19,17 L15,17 L15,8.38046068 L19,7 L19,17 L19,17 Z M13,17 L9,17 L9,8.38046068 L13,7 L13,17 L13,17 Z M11.3000926,0 C9.78192858,0 8.33127508,0.297234537 7,0.836816551 L7.0016466,23.1648723 C8.33292168,23.7036099 9.78275188,24 11.3000926,24 C17.7621694,24 23,18.6269791 23,12 C23,5.3730209 17.7621694,0 11.3000926,0 L11.3000926,0 Z" id="Fill-24" fill="#B8E986"></path>
+            <path d="M19,17 L15,17 L15,8.38046068 L19,7 L19,17 L19,17 Z M13,17 L9,17 L9,8.38046068 L13,7 L13,17 L13,17 Z M11.3000926,0 C9.78192858,0 8.33127508,0.297234537 7,0.836816551 L7.0016466,23.1648723 C8.33292168,23.7036099 9.78275188,24 11.3000926,24 C17.7621694,24 23,18.6269791 23,12 C23,5.3730209 17.7621694,0 11.3000926,0 L11.3000926,0 Z" id="Fill-24" fill="#023979"></path>
         </g>
     </g>
 </svg>

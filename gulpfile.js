@@ -16,7 +16,7 @@ gulp.task('svgstore', function () {
     .pipe(cheerio({
       run: function ($) {
         // remove green-screen color
-        $('[fill="#B8E986"]').removeAttr('fill').parents('[fill="none"]').removeAttr('fill');
+        $('[fill="#023979"]').removeAttr('fill').parents('[fill="none"]').removeAttr('fill');
         $('[fill="#50E3C2"]').attr('fill', 'currentColor').parents('[fill="none"]').removeAttr('fill');
       },
       parserOptions: { xmlMode: true }
