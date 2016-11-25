@@ -1,1 +1,11 @@
 
+//disable link underline
+a,
+a:visited {
+	&,
+	&:-webkit-any-link {
+		&.cui-button-href {
+			text-decoration: none;
+		}
+	}
+}
