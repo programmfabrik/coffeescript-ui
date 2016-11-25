@@ -2610,8 +2610,7 @@ $table-data-padding: 4px;
 	}
 
 	&-max {
-		flex: 1 1 auto;
-		width: auto;
+		flex-grow: 1;
 	}
 
 	.cui-label-multiline {
@@ -2784,9 +2783,11 @@ $table-data-padding: 4px;
 	outline: none;
 
 	&.cui-selected,
+	&.cui-selected:nth-child(even),
 	&:focus,
 	&:focus:nth-child(even) {
-		&,
+		background: $row-highlight;
+		
 		.cui-lv-td {
 			background: $row-highlight;
 		}
@@ -3289,14 +3290,17 @@ $table-data-padding: 4px;
 }
 
 .cui-form-popover {
-	.cui-vertical-layout-center {
-		order: 1;
-		
+	.cui-vertical-layout-center {		
 		+ .cui-vertical-layout-bottom {
-			margin-bottom: 5px;
+			margin: 5px;
+			margin-bottom: 0;
 			
 			&:empty {
 				display: none;
+			}
+
+			.cui-empty-label {
+				padding: 0;
 			}
 		}
 	}
