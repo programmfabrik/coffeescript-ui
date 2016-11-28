@@ -600,8 +600,6 @@ li > div {
 	}
 
 	.cui-data-field-input {
-		// use $toolbar-height instead of 100% because of Safari bug
-		height: $toolbar-height;
 		display: flex;
 		align-items: center;
 		
@@ -617,12 +615,10 @@ li > div {
 
 	.cui-button {
 		align-self: stretch;
-		height: $toolbar-height; // needed for comment checkbox in editor toolbar
 	}
 
 	.cui-buttonbar {
 		margin-bottom: 0;
-		height: $toolbar-height;
 		
 		.cui-button {
 			.cui-button-visual {
@@ -2433,7 +2429,6 @@ a[role="button"].cui-button-appearance-link {
 			/* overflowing tabs */
 			&.cui-tabs-pane-header--overflow {
 				> .cui-horizontal-layout-center {
-					align-items: flex-start;
 					padding-right: 0;
 					padding-left: $padding/2;
 					margin-right: 0;
