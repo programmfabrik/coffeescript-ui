@@ -734,6 +734,14 @@ class CUI
 		console.warn.apply(console, arguments)
 
 
+	@escapeAttribute: (data) ->
+		if isNull(data) or !isString(data)
+			return ""
+
+		data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
+		data
+
+
 
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 CUI.browser =

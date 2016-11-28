@@ -100,6 +100,7 @@ class CUI.Template extends CUI.Element
 				else
 					prefix = toDash(@_name)
 					sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
+				sel = sel + ',[data-slot="'+CUI.escapeAttribute(k)+'"]'
 			else
 				sel = v
 
@@ -305,20 +306,26 @@ class CUI.Template extends CUI.Element
 
 	@load: (start_element = document.documentElement) ->
 		count = 0
-		for el in CUI.DOM.matchSelector(start_element, ".cui-tmpl")
-			for cls in el.classList
-				if cls.startsWith("cui-tmpl-")
-					name = cls.substr(9)
-					if Template.nodeByName[name]
-						console.error("Template.load:", name, "already found in DOM tree. Make sure all elements exists only once.", el)
-						continue
+		for el in CUI.DOM.matchSelector(start_element, ".cui-tmpl,[data-template]")
+			name = null
 
-					# console.debug("Template: ", name)
-					Template.nodeByName[name] = el
-					CUI.DOM.remove(el)
-					el.classList.remove("cui-tmpl")
-					count = count + 1
-					break
+			name = el.getAttribute("data-template")
+
+			if isEmpty(name)
+				for cls in el.classList
+					if cls.startsWith("cui-tmpl-")
+						name = cls.substr(9)
+						if Template.nodeByName[name]
+							console.error("Template.load:", name, "already found in DOM tree. Make sure all elements exists only once.", el)
+							continue
+						break
+
+			if name
+				# console.debug("Template: ", name)
+				Template.nodeByName[name] = el
+				CUI.DOM.remove(el)
+				el.classList.remove("cui-tmpl")
+				count = count + 1
 
 		return count
 

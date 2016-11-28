@@ -306,7 +306,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 	rendererLink: (href, title, text) ->
 		title = href
 		href = @_browser.renderHref(href, @getNodePath())
-		"<a href='"+href+"' title='"+escapeAttribute(title)+"'>"+text+"</a>"
+		"<a href='"+href+"' title='"+CUI.escapeAttribute(title)+"'>"+text+"</a>"
 
 	rendererImage: (href, title, text) ->
 		if href.startsWith("http:") or href.startsWith("//")
@@ -322,7 +322,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 			_href = href
 
 		# console.debug @, @__url, @_path, _href, href, title, text
-		"<img src='"+_href+"' alt='"+escapeAttribute(text)+"' title='"+escapeAttribute(title)+"'></img>"
+		"<img src='"+_href+"' alt='"+CUI.escapeAttribute(text)+"' title='"+CUI.escapeAttribute(title)+"'></img>"
 
 	renderContent: ->
 		new Label(text: @_title, multiline: true)

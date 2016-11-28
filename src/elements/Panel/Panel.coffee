@@ -116,7 +116,7 @@ class Panel extends CUI.DOM
 
 	loadContent: ->
 		if CUI.isFunction(@_content)
-			ret = @_content()
+			ret = @_content(@)
 		else
 			ret = @_content
 
