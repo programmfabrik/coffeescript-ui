@@ -943,7 +943,7 @@ i.cui-spin-stepped {
 		color: desaturate($highlight-color, 80%);
 	}
 	
-  &:hover {
+  &:hover:not(.cui-disabled) {
   	.cui-button-visual {
   		color: desaturate($highlight-color, 80%);
   	}
@@ -1660,7 +1660,7 @@ a[role="button"].cui-button-appearance-link {
 	textarea {
 		padding: 0 7px;
 		line-height: 22px;
-		min-height: 24px; // for IE because it doesn't use the line-height
+		min-height: 22px; // for IE because it doesn't use the line-height
 		outline: none;
 		vertical-align: bottom;
 		
@@ -1727,6 +1727,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-layer-backdrop-policy-modal,
 .cui-layer-backdrop-policy-click {
 	pointer-events: auto;
 }
@@ -2408,46 +2409,50 @@ a[role="button"].cui-button-appearance-link {
 		background: yellow;
 		transition: width 0.3s ease, left 0.3s ease;
 	}
-	> .cui-vertical-layout-top {
-		> .cui-pane-header {
-			min-height: $toolbar-height;
-			background: $toolbar-background;
-			padding: 0;
-			
-			.cui-buttonbar {
-				min-width: 0;
-			}
-
-			.cui-horizontal-layout-center {
-				overflow: hidden;
-				flex-grow: 0;
-				justify-content: center;
-				margin-right: 0;
-				padding: 0 $padding;
-			}
-
-			/* overflowing tabs */
-			&.cui-tabs-pane-header--overflow {
-				> .cui-horizontal-layout-center {
-					padding-right: 0;
-					margin-right: 0;
-					
-					.cui-tab-header-button:last-child {
-						.cui-button-visual {
-							border-top-right-radius: 0;
-							border-bottom-right-radius: 0;
-							border-right: none;
-						}
-					}
-				}
-			}
-		}
-	}
 	> .cui-vertical-layout-center {
 		> .cui-tmpl-tabs-bodies {
 			display: flex;
 			flex: 1 1 auto;
 			overflow: hidden;
+		}
+	}
+}
+
+.cui-tabs-pane-header {
+	min-height: $toolbar-height;
+	background: $toolbar-background;
+	padding: 0;
+	
+	&.cui-tabs-pane-header--mini {
+		background: none;
+		border-bottom-width: 0;
+	}
+	
+	.cui-buttonbar {
+		min-width: 0;
+	}
+
+	.cui-horizontal-layout-center {
+		overflow: hidden;
+		flex-grow: 0;
+		justify-content: center;
+		margin-right: 0;
+		padding: 0 $padding;
+	}
+
+	/* overflowing tabs */
+	&.cui-tabs-pane-header--overflow {
+		> .cui-horizontal-layout-center {
+			padding-right: 0;
+			margin-right: 0;
+			
+			.cui-tab-header-button:last-child {
+				.cui-button-visual {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+					border-right: none;
+				}
+			}
 		}
 	}
 }
@@ -2470,7 +2475,6 @@ a[role="button"].cui-button-appearance-link {
 	font-size: inherit;
 		
 	.cui-button-visual {
-		border: none;
 		background: none;
 		color: hsl(205,15%,43%);
 		height: 26px;
@@ -2479,6 +2483,16 @@ a[role="button"].cui-button-appearance-link {
 		padding: 0 $padding;
 		border-radius: 0;
 		border: 1px solid hsl(205,15%,43%);	
+	}
+
+	&.cui-button-size-mini {
+		height: auto;
+
+		.cui-button-visual {
+			height: 20px;
+			line-height: 18px;
+			font-size: 12px;
+		}
 	}
 
 	&:first-child .cui-button-visual {
@@ -2957,6 +2971,22 @@ $table-data-padding: 4px;
 			margin-bottom: $padding/2;
 		}
 	}
+
+	&:first-child {
+		text-align: right;
+	}
+
+	&:last-child {
+		width: 100%;
+		position: relative;
+		
+		> span {
+			position: absolute;
+	    right: 10px;
+	    left: 10px;
+	    @include ellipsis;
+	  }
+	}
 }
 
 .cui-th {
@@ -3378,7 +3408,7 @@ $table-data-padding: 4px;
 	height: 12px;
 	width: 100%;
 
-	background: linear-gradient($drag-handle-color 1px, transparent 1px);
+	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
 	background-size: 100% 3px;
 }
 
