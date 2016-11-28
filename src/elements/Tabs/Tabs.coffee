@@ -16,6 +16,8 @@ class CUI.Tabs extends CUI.SimplePane
 			#	check: Boolean
 			active_idx:
 				check: "Integer"
+			appearance:
+				check: ["normal", "mini"]
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
@@ -55,6 +57,11 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__tabs_bodies = new Template
 			name: "tabs-bodies"
+
+		@__pane_header.addClass("cui-tabs-header")
+
+		if @_appearance == "mini"
+			@__pane_header.addClass("cui-tabs-header--mini")
 
 		@__buttonbar = new Buttonbar()
 
@@ -110,6 +117,9 @@ class CUI.Tabs extends CUI.SimplePane
 		@__pane_header.append(@__overflowBtn, "right", false)
 
 		@getLayout().append(@__tabs_bodies, "center")
+
+		if @_appearance == "mini"
+			@addClass("cui-tabs--mini")
 
 		if not CUI.__ng__
 			if not @__maximize_horizontal or not @__maximize_vertical

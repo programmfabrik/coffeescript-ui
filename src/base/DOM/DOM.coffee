@@ -7,13 +7,13 @@ class CUI.DOM extends CUI.Element
 				default: ""
 				check: String
 
-	registerTemplate: (template) ->
+	registerTemplate: (template, add_default_classes=true) ->
 		assert(template instanceof Template, "#{getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{getObjectClass(template)}.", template: template)
 		if @__template
 			CUI.warn("#{getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
 			@__template.destroy()
 		@__template = template
-		@registerDOMElement(@__template.DOM)
+		@registerDOMElement(@__template.DOM, add_default_classes)
 
 	getDOMElementClasses: ->
 		if CUI.__ng__
@@ -21,9 +21,10 @@ class CUI.DOM extends CUI.Element
 		else
 			return "cui-dom-element cui-#{toDash(@__cls)} ez-#{toDash(@__cls)}"
 
-	registerDOMElement: (_dom) ->
+	registerDOMElement: (_dom, add_default_classes=true) ->
 		@DOM = _dom
-		CUI.DOM.addClass(@DOM, @getDOMElementClasses())
+		if add_default_classes
+			CUI.DOM.addClass(@DOM, @getDOMElementClasses())
 		CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
 		if @_class
 			# CUI.debug DOM, @DOM, @_class
