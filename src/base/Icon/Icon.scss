@@ -6,18 +6,10 @@
   fill: currentColor;
   vertical-align: middle;
   pointer-events: none;
+  transform: translateZ(0); // make em icons sharp in Firefox
 }
 
 //scale icons
 .cui-button-size-mini .cui-icon-svg {
   transform: scale(0.8);
 }
-
-.svg-close {
-  width: 14px;
-  height: 13px;
-}
-
-
-
-
