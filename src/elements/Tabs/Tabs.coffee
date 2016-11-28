@@ -58,10 +58,10 @@ class CUI.Tabs extends CUI.SimplePane
 		@__tabs_bodies = new Template
 			name: "tabs-bodies"
 
-		@__pane_header.addClass("cui-tabs-header")
+		@__pane_header.addClass("cui-tabs-pane-header")
 
 		if @_appearance == "mini"
-			@__pane_header.addClass("cui-tabs-header--mini")
+			@__pane_header.addClass("cui-tabs-pane-header--mini")
 
 		@__buttonbar = new Buttonbar()
 
