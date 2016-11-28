@@ -188,7 +188,6 @@ textarea {
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	resize: vertical;
-	box-shadow: 0 1px rgba(0,0,0,.05) inset;
 	
 	&.cui-input-shadow {
 		position: absolute;
@@ -1015,8 +1014,8 @@ i.cui-spin-stepped {
   }
 
   .cui-button-visual {
-  	height: 20px;
-  	padding: 0 $padding/2;
+  	height: 16px;
+  	padding: 0 $padding/4;
   }
 
   .fa {
@@ -1024,7 +1023,7 @@ i.cui-spin-stepped {
   }
 
   .cui-icon-svg {
-  	transform: scale(0.8);
+  	transform: scale(0.75);
   }
 }
 
@@ -1159,7 +1158,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-button-visual {
-		justify-content: unset;
+		justify-content: flex-start;
 		flex: 1;
 	}
 
@@ -1661,6 +1660,7 @@ a[role="button"].cui-button-appearance-link {
 	textarea {
 		padding: 0 7px;
 		line-height: 22px;
+		min-height: 24px; // for IE because it doesn't use the line-height
 		outline: none;
 		vertical-align: bottom;
 		
@@ -2430,7 +2430,6 @@ a[role="button"].cui-button-appearance-link {
 			&.cui-tabs-pane-header--overflow {
 				> .cui-horizontal-layout-center {
 					padding-right: 0;
-					padding-left: $padding/2;
 					margin-right: 0;
 					
 					.cui-tab-header-button:last-child {
@@ -2513,7 +2512,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-tab-header-button-overflow {
 		align-self: center;
-		padding-right: $padding/2;
+		padding-right: $padding;
 		position: relative;
 		z-index: 1; // to overlap active buttons
 		
