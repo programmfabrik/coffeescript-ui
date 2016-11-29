@@ -109,12 +109,11 @@ class CUI.Button extends CUI.DOM
 		else
 			text = @_text
 
-		assert(@_size)
 		if @_size == "auto"
-			@addClass("cui-button-size-normal") #additionally used as a fallback
-		@addClass("cui-button-size-"+@_size)
+			@setSize("normal") # additionally used as a fallback
 
-		assert(@_appearance)
+		@setSize(@_size)
+
 		if @_appearance == "auto"
 			@addClass("cui-button-appearance-normal") #additionally used as a fallback
 		@addClass("cui-button-appearance-"+@_appearance)
@@ -376,6 +375,18 @@ class CUI.Button extends CUI.DOM
 				if @_menu_on_hover
 					menu_start_hide(ev)
 				return
+
+	setSize: (size) ->
+
+		remove = []
+		for cls in @DOM.classList
+			if cls.startsWith("cui-button-size")
+				remove.push(cls)
+
+		for cls in remove
+			@DOM.classList.remove(cls)
+
+		@DOM.classList.add("cui-button-size-"+size)
 
 
 	onClickAction: (ev) ->

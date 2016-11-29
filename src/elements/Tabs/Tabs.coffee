@@ -144,7 +144,7 @@ class CUI.Tabs extends CUI.SimplePane
 			else
 				assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{getObjectClass(tab)}", opts: @opts)
 			if @_appearance == "mini"
-				_tab.getButton().addClass("cui-button-size-mini")
+				_tab.getButton().setSize("mini")
 
 		@__tabs[@_active_idx or 0].activate()
 
