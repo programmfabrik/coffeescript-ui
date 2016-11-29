@@ -189,13 +189,30 @@ font_awesome:
 	rsync -r thirdparty/font-awesome-4.5.0/fonts $(target)/font-awesome/
 	cp $(thirdparty_files) $(target)
 
+highlight_files = \
+	thirdparty/highlight/highlight.pack.js \
+	thirdparty/highlight/styles/atom-one-dark.css
+
+highlight:
+	#
+	# $@
+	mkdir -p $(target)
+
+	rm -rf $(target)/highlight
+	mkdir -p $(target)/highlight
+
+	rsync -r thirdparty/highlight/styles/atom-one-dark.css $(target)/highlight
+	rsync -r thirdparty/highlight/highlight.pack.js $(target)/highlight
+	cp $(highlight_files) $(target)/highlight
+
 demo: font_awesome
 	$(MAKE) --directory demo all
 
 code: $(easydbui_js) $(thirdparty_files) html font_awesome
-	cp src/scss/icons/icons.svg $(target)/icons.svg
+	cp src/scss/icons/icons.svg $(target)/icons.
+	cp src/scss/icons/inherit.svg $(target)/inherit.svg
+	cp src/scss/icons/arrow-right.svg $(target)/arrow-right.svg
 	$(MAKE) --directory demo code
-
 
 css_ng:
 	#

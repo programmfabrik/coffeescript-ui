@@ -27,6 +27,15 @@ class Docs extends Demo
 		browser = new CUI.DocumentBrowser
 			marked_opts:
 				renderer: renderer
+				gfm: true
+				tables: true
+				breaks: false
+				pedantic: false
+				sanitize: false
+				smartLists: true
+				smartypants: false
+				highlight: (code) ->
+					hljs.highlightAuto(code).value
 
 			gotoLocation: (nodePath, search, nodeIdx) ->
 				loc = document.location.origin + document.location.pathname + "#Documentation"+nodePath

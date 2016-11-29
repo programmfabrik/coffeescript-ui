@@ -1,3 +1,309 @@
+/* Content Area */
+.cui-document-browser-center {
+	padding: 1rem 3rem 3rem 3rem;
+
+	// ##########################
+	// # Typography
+	// ##########################
+	h1 {
+		margin: 1rem 0 0 0;
+
+		& + p { // For inheritance section
+			margin: 1rem 0 0.5rem 0;
+		}
+	}
+
+	h2 {
+		margin: 3rem 0 1.5rem 0;
+	}
+
+	p {
+		margin: 0 0 1rem 0;
+	}
+
+	hr {
+		width: 100%;
+	}
+
+	mark {
+		background-color: transparent;
+		text-decoration: none;
+		border-bottom: 1px dashed black;
+	}
+
+	span.inheritance {
+		background-color: #ebebeb;
+		padding: .2rem .3rem .3rem .2rem;
+
+		
+		&::before {
+			content: "Inheritance:\00a0";
+			background-color: #d1d1d1;
+			padding: .2rem .3rem .3rem .5rem;
+			margin-left: -.2rem; // same as padding-left of parent's span.
+			margin-right: .5rem
+		}
+		
+	}
+
+	// Links
+	a::before {
+		content: "";
+		background: url('../../arrow-right.svg');
+		background-repeat: no-repeat; 
+		background-size: contain;
+		display: inline-block; 
+		width: .7rem;
+   		height: .7rem; 
+		padding-right: .4em; 
+		margin-left: .5em;
+		margin-bottom: .1rem;
+		vertical-align: middle;
+
+	}
+
+	// ##########################
+	// # Code Box
+	// ##########################
+	pre {
+		// white-space: pre-wrap;
+		display: block;
+		position: relative;
+		overflow-x: visible;
+		padding: 2.5em 1em 1em 1em; // top pading for pseudo element's space
+		color: #abb2bf;
+		background: #282c34;
+
+	}
+
+	pre::before {
+		content: "Example";
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 1.7em;
+		width: 100%;
+		background: #535b6b;
+		box-sizing: border-box;
+		padding: 0.2em 0 0 1em;
+	}
+
+	// Unordered Lists
+	ul {
+		list-style-type: none;
+		margin-left: 1rem;
+		line-height: 1.5rem;
+
+		li {
+			//display: list-item;
+		}
+
+		li::before {
+			content: "\203A";
+			position: absolute;
+			margin-left: -1rem;
+		}
+
+	}
+
+	// ##########################
+	// # Step1, Step2, ... INSTRUCTION lists
+	// ##########################
+	//
+	// Little trick is needed: 
+	// 		->	place a <h5>-"instructions"-tag (##### in markdown) dirctly ABOVE the ordered list
+	//
+	#instructions {
+		visibility: hidden;
+		margin: 0;
+		padding: 0;
+		line-height: 0;
+		
+		// LISTS
+		& + ol {
+			list-style-type: none;
+			line-height: 1rem;
+			margin: 0 0 0 2rem;
+
+			li {
+
+				counter-increment: point;
+				margin-top: 1.5rem;
+				border-left: 2px solid #d1d1d1;
+				padding-left: 1rem;
+				min-height: 2rem;
+
+			}
+
+			li::before {
+				content: counters(point,"");
+				display: inline-block;
+				float: left;
+				width: 2.5rem;
+				margin-left: -4rem;
+				margin-right: 1rem;
+				text-align: center;
+				padding-top: .5rem;
+
+				color: #d1d1d1;
+				font-size: 1.5rem;
+				
+
+			}
+		}
+	}
+
+
+	// TABLE
+	// Style of all tables within the content area
+	table {
+		
+	}
+
+
+	// ##########################
+	// PARAMETER TABLE
+	// ##########################
+	//
+	// Extended style of all parameter tables within the content area
+	// Selects all tables that are next/direct siblings of any heading that's id starts with "parameter..."
+	//
+	[id^="parameter"] + table {
+		width: 100%;
+		border-collapse: collapse;
+		border: 1px solid #282c34;
+		line-height: 1.5em;
+		position: relative;
+
+		th, td {
+		padding: .65rem;
+		}
+
+		th, thead {
+			background: #282c34;
+			color: #FFF;
+			border: 1px solid #282c34;
+		}
+
+		tr {
+			// Column widths  
+			td:nth-child(1) { // Parameter
+				width: 16%;
+			}
+			td:nth-child(2) { // Format
+				width: 32%;
+			}
+			td:nth-child(3) { // Default
+				width: 10%;
+			}
+			td:nth-child(4) { // Mandatory
+				width: 10%;
+			}
+			td:nth-child(5) { // Description
+				width: 32%;
+			}
+
+			// Zebra-Style
+			&:nth-child(2n) {
+				background: #f2f2f2;
+			}
+
+			// Coloring rows on Hover
+			&:hover {
+				background: #d1d1d1;
+			}
+		}
+
+		td {
+			border-right: 1px solid #777;
+		}
+	}
+
+	//   +
+	// +++++  INHERITANCE style for tables
+	//   +
+	//
+	// Little trick is needed: 
+	// 		->	place a <h5>-"inheritance"-tag (##### in markdown) ABOVE each INCLUDE (of inherited paramters)
+	#inheritance {
+		visibility: hidden;
+		margin: 0;
+		padding: 0;
+		line-height: 0;
+
+
+		& + [id^="parameter"] {
+
+			position: relative;
+			margin-top: 6rem;
+			margin-left: auto;
+    		margin-right: auto;
+    		margin-bottom: 2rem;
+    		text-align: center;
+    		
+    		/*
+    		&::before {
+    			content: "Inherited from";
+    			display: block;
+    			text-align: center;
+    			color: hsl(0,0%,70%);
+    		}
+    		*/
+
+			&::after {
+				content: "";
+				background: url('../../inherit.svg');
+				background-size: contain;
+				width: 3rem;
+				height: 3rem;
+				position: absolute;
+				top: -4rem;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			& + table {
+
+			
+			}
+		}
+	}
+
+
+	// Definition-Lists in Parameter-Table
+	td:nth-child(2) {
+		/*dt:not(:only-of-type):not(:first-of-type)::before {
+			content: "or \00a0";		// 2225 = | , 00a0 = SPACE	
+		}*/
+
+		dt ~ dt::before { // all <dt>-Elements that are following on the first one
+			content: "or \00a0";		// 2225 = | , 00a0 = SPACE	
+		}
+	}
+
+
+}
+
+
+
+// Navigation
+.cui-document-browser-list{
+	flex-shrink: 0 !important;
+	width: 200px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 .cui-demo-header {
 	.cui-demo-menu-button,
 	.theme-switch  {

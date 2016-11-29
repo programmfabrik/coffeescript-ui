@@ -1,0 +1,5 @@
+pane=Pane
+simplepane=SimplePane
+paneheader=PaneHeader
+panefooter=PaneFooter
+panetoolbar=PaneToolbar

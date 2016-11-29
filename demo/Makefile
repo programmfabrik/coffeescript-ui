@@ -1,6 +1,8 @@
 target = ../build/demo
 call_scss = sass --scss --no-cache --sourcemap=inline
 
+example_coffee_files = src/examples/cui_examples.coffee
+
 coffee_files = src/demo.coffee \
 	src/CUIDemo.coffee \
 	src/ControlsDemo.coffee \
@@ -41,19 +43,22 @@ jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 
 files = $(addsuffix .js, $(coffee_files) )
 
+example_files = $(addsuffix .js, $(example_coffee_files) )
 
-code: $(files) docs
+code: $(files) $(example_files) docs
 	#
     # $@
-	mkdir -p $(target)
+	mkdir -p $(target)/examples
 	# make javascript, coffee transpiling is made automatically
 	@cat $(files) > $(target)/easydbui_demo.js
+	@cat $(example_files) > $(target)/examples/cui_examples.js
 	echo "Docs.path='/demo/docs';" >> $(target)/easydbui_demo.js
 	cp -rv scratch $(target)
 	cp ../src/elements/FileUpload/demo/FileUpload.php $(target)/FileUpload.php
 	cp ../src/base/XHR/demo/XHRTest.php $(target)/XHRTest.php
 	cp -r ../build/font-awesome $(target)
 	cat demo.html > $(target)/index.html
+	cat src/examples/index.html > $(target)/examples/index.html
 
 docs:
 	mkdir -p $(target)
