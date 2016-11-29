@@ -530,10 +530,10 @@ li > div {
 	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
-
-	& + & {
-		padding-bottom: 1px;
-	}
+	
+	// & + & {
+	// 	padding-bottom: 1px;
+	// }
 	
 	&.cui-pane-toolbar {
 		border-bottom: 1px solid $border;
