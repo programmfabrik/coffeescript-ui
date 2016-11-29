@@ -2,7 +2,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 	initOpts: ->
 		super()
-		@removeOpt("header_right")
+		# @removeOpt("header_right")
 		@removeOpt("header_center")
 		@removeOpt("content")
 
@@ -138,11 +138,13 @@ class CUI.Tabs extends CUI.SimplePane
 			if not tab
 				continue
 			if tab instanceof Tab
-				@addTab(tab)
+				_tab = @addTab(tab)
 			else if CUI.isPlainObject(tab)
-				@addTab(new Tab(tab))
+				_tab = @addTab(new Tab(tab))
 			else
 				assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{getObjectClass(tab)}", opts: @opts)
+			if @_appearance == "mini"
+				_tab.getButton().addClass("cui-button-size-mini")
 
 		@__tabs[@_active_idx or 0].activate()
 
