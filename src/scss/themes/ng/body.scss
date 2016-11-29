@@ -530,10 +530,10 @@ li > div {
 	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
-	
-	// & + & {
-	// 	padding-bottom: 1px;
-	// }
+
+	& + & {
+		padding-bottom: 1px;
+	}
 	
 	&.cui-pane-toolbar {
 		border-bottom: 1px solid $border;
@@ -614,6 +614,7 @@ li > div {
 
 	.cui-button {
 		align-self: stretch;
+		height: auto; // for checkbox
 	}
 
 	.cui-buttonbar {
@@ -1625,6 +1626,15 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-label {
+		border: 1px solid $button-border;
+		background: $foreground;
+		margin-left: -1px;
+		margin-right: 0;
+		padding: 0 7px;
+		color: $secondary-color;
+	}
+
 	> .cui-data-field {
 		& + *:before {
 			display: none;
@@ -2489,9 +2499,8 @@ a[role="button"].cui-button-appearance-link {
 		height: auto;
 
 		.cui-button-visual {
-			height: 20px;
-			line-height: 18px;
-			font-size: 12px;
+			height: 24px;
+			line-height: 22px;
 		}
 	}
 
@@ -4068,6 +4077,10 @@ $table-data-padding: 4px;
 // Space
 .cui-space {
 	width: 10px;
+}
+
+.cui-small-space {
+	width: 5px;
 }
 
 .cui-large-space {
