@@ -851,7 +851,7 @@ i.cui-spin-stepped {
 	cursor: pointer;
 }
 
-.cui-button-href {
+.cui-button-href.cui-button-appearance-link {
 	.cui-button-right {
 		flex-shrink: 0;
 		// nudge external link icon up a bit
@@ -2420,6 +2420,8 @@ a[role="button"].cui-button-appearance-link {
 		transition: width 0.3s ease, left 0.3s ease;
 	}
 	> .cui-vertical-layout-center {
+		flex-grow: 1;
+		
 		> .cui-tmpl-tabs-bodies {
 			display: flex;
 			flex: 1 1 auto;
