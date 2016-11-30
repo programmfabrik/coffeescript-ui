@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="12px" viewBox="0 0 10 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>multiple</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="multiple" fill="#023979">
+            <path d="M8,8 L10,8 L10,0 L4,0 L4,2 L5,2 L5,1 L9,1 L9,7 L8,7 L8,8 Z" id="Rectangle-21"></path>
+            <path d="M6,10 L8,10 L8,2 L2,2 L2,4 L3,4 L3,3 L7,3 L7,9 L6,9 L6,10 Z" id="Rectangle-21-Copy"></path>
+            <path d="M1,11 L5,11 L5,5 L1,5 L1,11 Z M0,4 L6,4 L6,12 L0,12 L0,4 Z" id="Rectangle-21-Copy-3"></path>
+        </g>
+    </g>
+</svg>
