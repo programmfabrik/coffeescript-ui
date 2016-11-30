@@ -538,7 +538,6 @@ li > div {
 	display: flex;
 	min-height: $toolbar-height;
 	justify-content: space-between;
-	flex-wrap: wrap;
 	padding: 0 $padding/2;
 	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
@@ -614,6 +613,7 @@ li > div {
 	.cui-data-field-input {
 		display: flex;
 		align-items: center;
+		min-width: 0;
 		
 		&.cui-vertical-layout {
 			align-items: stretch;
@@ -628,10 +628,13 @@ li > div {
 	.cui-button {
 		align-self: stretch;
 		height: auto; // for checkbox
+		min-width: 0;
+		flex-shrink: 1;
 	}
 
 	.cui-buttonbar {
 		margin-bottom: 0;
+		min-width: 0;
 		
 		.cui-button {
 			.cui-button-visual {
@@ -1028,7 +1031,7 @@ i.cui-spin-stepped {
   }
 
   .cui-button-visual {
-  	height: 16px;
+  	height: 18px;
   	padding: 0 $padding/4;
   }
 
@@ -1566,6 +1569,7 @@ a[role="button"].cui-button-appearance-link {
 	
 	.cui-label {
 		margin: 0 $small-gap;
+		align-self: center;
 	}
 
 	.cui-label-content {
@@ -1646,6 +1650,10 @@ a[role="button"].cui-button-appearance-link {
 		margin-right: 0;
 		padding: 0 7px;
 		color: $secondary-color;
+		
+		&-size-mini {
+			height: 18px;
+		}
 	}
 
 	> .cui-data-field {
