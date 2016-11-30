@@ -363,7 +363,7 @@ class CUI.DOM extends CUI.Element
 			len = content.length
 
 			while idx < len
-				CUI.DOM.append(node, content[idx], append)
+				@__append(node, content[idx], append)
 				if len > content.length
 					# leave idx == 0, list is live
 				else

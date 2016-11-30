@@ -221,6 +221,7 @@ class CUI.Template extends CUI.Element
 			fn = "prepend"
 		else
 			fn = "append"
+
 		assert(@map, "Template[#{@_name}].#{fn} [#{@getUniqueId()}]", "Already destroyed")
 		if key
 			assert(@map[key], "#{@__cls}.#{fn}", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
