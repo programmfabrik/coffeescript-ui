@@ -216,9 +216,17 @@ input {
 	width: 2.5ch;
 }
 
-@for $i from 3 through 30 {
+@for $i from 3 through 10 {
 	[max-chars="#{$i}"] {
 		width: #{$i}ch;
+	}
+}
+
+// damp max-chars > 10
+// e.g. max-chars 30 = 24ch
+@for $i from 10 through 40 {
+	[max-chars="#{$i}"] {
+		width: #{$i - $i*0.2}ch;
 	}
 }
 
@@ -403,6 +411,8 @@ li > div {
 	position: relative;
 	z-index: 2;
 	flex-shrink: 0;
+	-webkit-user-select: none;
+	        user-select: none;
 
 	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
 		.cui-label {
@@ -470,6 +480,9 @@ li > div {
 }
 
 .cui-is-manually-sized {
+	flex-grow: 0;
+	flex-shrink: 0;
+	
 	& + .cui-flex-handle + * {
 		flex-shrink: 1 !important;
 	}
@@ -1102,7 +1115,7 @@ a[role="button"].cui-button-appearance-link {
 	white-space: initial;
 	align-self: flex-start;
 	max-width: 100%;
-	flex: 1;
+	// flex: 1; don't grow (horizontally) because only the text should be clickable
 
 	&.cui-disabled {
 		cursor: default;
@@ -2600,7 +2613,6 @@ $table-data-padding: 4px;
 	padding: $table-data-padding $padding;
 	width: 125px;
 	min-height: $table-data-height - 2*$table-data-padding;
-	flex: 0 0 auto;
 	overflow: hidden;
 	display: flex;
 	align-items: flex-start;
@@ -3261,10 +3273,6 @@ $table-data-padding: 4px;
 
 .cui-data-field-output-label {
 	line-height: 24px;
-	
-	&.cui-data-field-output-label {
-		line-height: inherit;
-	}
 }
 
 .cui-data-field-hidden {
