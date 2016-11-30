@@ -1181,23 +1181,30 @@ CUI.ready ->
 
 	Events.listen
 		type: ["keyup"]
-		capture: true
-		# install not do high, do Drag & Drop can be on top
 		node: document.body
 		call: (ev) ->
-			if ev.keyCode() != 27
+			console.error ev.getType(), ev
+
+			if ev.keyCode() != 27 or window.globalDrag
 				return
 
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root > .cui-layer")
 			layer_element = layer_elements[layer_elements.length-1]
 
-			element = CUI.DOM.closest(ev.getTarget(), "[tabindex],input,textarea")
+			if not layer_element
+				return
 
-			if (element and element != layer_element) or not layer_element
+			element = CUI.DOM.closest(ev.getTarget(), "[tabindex],select,input,textarea")
+
+			# console.error ev.getType(), ev, element, ev.getTarget()
+
+			if (element in [layer_element, document.body])
 				# ignore this
 				return
 
 			layer = DOM.data(layer_element, "element")
+
+			# console.debug "layer", layer
 
 			ev.stopImmediatePropagation()
 			ev.preventDefault()

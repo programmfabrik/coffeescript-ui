@@ -9,6 +9,9 @@ class CUI.Alert extends CUI.ConfirmationChoice
 				default: CUI.defaults.class.ConfirmationChoice.defaults.ok
 				check: String
 
+	isKeyboardCancellable: (ev) ->
+		true
+
 	readOpts: ->
 		super()
 		@_choices = [

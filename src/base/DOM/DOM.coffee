@@ -380,7 +380,10 @@ class CUI.DOM extends CUI.Element
 			when "string"
 				append_node = document.createTextNode(content)
 			else
-				append_node = content
+				if content.DOM
+					append_node = content.DOM
+				else
+					append_node = content
 
 		if append
 			assert(append_node instanceof Node, "DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)

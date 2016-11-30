@@ -84,6 +84,8 @@ class CUI.Label extends CUI.DOM
 				check: ["auto","normal","important","title"]
 			tooltip:
 				check: "PlainObject"
+			group:
+				check: String
 			rotate_90:
 				default: false
 				check: Boolean
@@ -233,6 +235,9 @@ class CUI.Label extends CUI.DOM
 				type: "content-resize"
 				node: @__label.map.content
 		@
+
+	getGroup: ->
+		@_group
 
 	setIcon: (icon) ->
 		if icon instanceof Icon

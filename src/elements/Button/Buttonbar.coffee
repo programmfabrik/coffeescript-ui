@@ -112,6 +112,7 @@ class Buttonbar extends CUI.DOM
 			grp = btn.getGroup()
 		else if btn instanceof Label
 			btn_dom = btn.DOM
+			grp = btn.getGroup()
 		else if btn?.classList?.contains("cui-button")
 			# FIXME: this should be not needed
 			btn_dom = btn

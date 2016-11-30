@@ -124,6 +124,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/StickyHeader/StickyHeader.coffee \
 	src/elements/StickyHeader/StickyHeaderControl.coffee \
 	src/elements/DigiDisplay/DigiDisplay.coffee \
+	src/elements/Table/Table.coffee \
 	src/elements/DocumentBrowser/DocumentBrowser.coffee \
 	src/elements/DocumentBrowser/Node.coffee \
 	src/elements/DocumentBrowser/NodeMatch.coffee \
