@@ -52,7 +52,8 @@ class CUI.Label extends CUI.DOM
 
 		if @_appearance
 			@addClass("cui-label-appearance-"+@_appearance)
-
+		else if not CUI.__ng__
+			@addClass("cui-label-appearance-auto cui-label-appearance-normal")
 
 	initOpts: ->
 		super()

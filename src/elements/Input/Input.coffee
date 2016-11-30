@@ -661,7 +661,7 @@ class CUI.Input extends CUI.DataFieldInput
 		super(v, flags)
 
 	incNumberBounds: (ev) ->
-		if ev.keyCode() not in [38, 40, 9, 33, 34]
+		if ev.keyCode() not in [38, 40, 33, 34] # not in TAB
 			return
 
 		s = @__input0.selectionStart
@@ -687,7 +687,7 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.debug "s", s, "e", e, "v", v
 		block_move = 0
 		if ev.keyCode() in [9, 33, 34]
-			# TAB, PAGE UP/DOWN
+			# TAB, PAGE UP/DOWN  # TAB removed (above)
 			if ev.shiftKey() or
 				ev.keyCode() == 33
 					block_move = -1

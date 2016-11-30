@@ -113,6 +113,8 @@ class CUI.Button extends CUI.DOM
 
 		if @_appearance
 			@addClass("cui-button-appearance-"+@_appearance)
+		else if not CUI.__ng__
+			@addClass("cui-button-appearance-auto cui-button-appearance-normal")
 
 		if @_primary
 			@addClass("cui-button--primary")
