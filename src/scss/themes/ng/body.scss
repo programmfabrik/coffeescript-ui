@@ -3847,6 +3847,7 @@ $table-data-padding: 4px;
 	position: absolute;
 	background-color: transparentize($highlight-color, 0.77);
 	display: block;
+	pointer-events: none;
 	z-index: 1;
 }
 

@@ -25,6 +25,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 			dragend:
 				check: Function
 
+			dragstop:
+				check: Function
+
 			dragstart:
 				check: Function
 
@@ -232,7 +235,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				$target = $(pointTarget)
 				dragover_scroll(ev)
 
-				if globalDrag.dragend
+				if globalDrag.ended
 					return
 
 				coordinates = getCoordinatesFromEvent(ev)
@@ -264,21 +267,50 @@ class CUI.Draggable extends CUI.DragDropSelect
 						@_dragging?(ev, window.globalDrag, diff)
 				return
 
+		end_drag = (ev, stop = false) =>
+			start_target = globalDrag.startEvent.getTarget()
+			start_target_parents = CUI.DOM.parents(start_target)
+
+			globalDrag.ended = true
+
+			if stop
+				globalDrag.stopped = true
+				@stop_drag(ev)
+				@_dragstop?(ev, globalDrag, @)
+			else
+				@end_drag(ev)
+				@_dragend?(ev, globalDrag, @)
+
+			@__cleanup()
+
+			parents_now = CUI.DOM.parents(start_target)
+			for p, idx in start_target_parents
+				if parents_now[idx] != p
+					return
+
+			# if not globalDrag.noClickHandlerKill
+			# console.warn "install click handler..."
+			Events.listen
+				type: "click"
+				capture: true
+				only_once: true
+				node: window
+				call: (ev) ->
+					# console.error "Killing click after drag"
+					return ev.stop()
+			return
+
+
 		Events.listen
 			node: document
 			type: ["keyup"]
 			capture: true
 			instance: @__ref
 			call: (ev) =>
-				switch ev.keyCode()
-					when 83
-						if ev.altKey() # ALT-S
-							CUI.warn("Stopping Drag and Drop")
-							@__cleanup()
-							return
-					when 27
-						globalDrag.stopped = true
-						return ev.stop()
+				if ev.keyCode() == 27
+					# console.error "stopped.."
+					end_drag(ev, true)
+					return ev.stop()
 
 				return
 
@@ -295,23 +327,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					@__cleanup()
 					return
 
-				globalDrag.dragend = true
-				@end_drag(ev)
-				@_dragend?(ev, globalDrag, @)
-
-				if ev.getTarget() == globalDrag.startEvent.getTarget() and
-					not globalDrag.noClickHandlerKill
-						console.warn "install click handler..."
-						Events.listen
-							type: "click"
-							capture: true
-							only_once: true
-							node: window
-							call: (ev) ->
-								console.error "Killing click after drag"
-								return ev.stop()
-
-				@__cleanup()
+				end_drag(ev)
 				return ev.stop()
 				# CUI.debug "mouseup, resetting drag stuff"
 				#
@@ -374,6 +390,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		return
 
+	stop_drag: (ev) ->
+		@end_drag(ev)
+
 	# find_target: (ev, $target=$(ev.getTarget())) ->
 	# 	# hide helper and a drag-drop-select-transparent div
 	# 	# if necessaray
@@ -388,7 +407,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 	end_drag: (ev) ->
 		# CUI.debug globalDrag.dragoverTarget, ev.getType(), ev
-
 		if @isDestroyed()
 			return
 
@@ -404,6 +422,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					originalEvent: ev
 
 			if not globalDrag.stopped
+				# console.error "cui-drop", ev
 				CUI.Events.trigger
 					type: "cui-drop"
 					node: globalDrag.dragoverTarget

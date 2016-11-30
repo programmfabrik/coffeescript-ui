@@ -77,12 +77,13 @@ class CUI.Lasso extends CUI.Draggable
 				set_css.height -= over
 
 		lassoed_elements = @get_lassoed_elements()
+
 		for el in lassoed_elements
 			if el not in globalDrag.elements
 				globalDrag.elements.push(el)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		for el in globalDrag.elements
+		for el in globalDrag.elements.slice(0)
 			if el not in lassoed_elements
 				removeFromArray(el, globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
@@ -119,21 +120,29 @@ class CUI.Lasso extends CUI.Draggable
 					lassoed_el = parents[parents.length-2]
 
 				if lassoed_el
-					lassoed.push(lassoed_el)
+					pushOntoArray(lassoed_el, lassoed)
 		else if @_filter
 			for el in CUI.DOM.matchSelector(globalDrag.$source, @_filter)
 				if do_overlap(globalDrag.lasso_dim, get_dim(el))
-					lassoed.push(el)
+					pushOntoArray(el, lassoed)
 		else
 			for el in globalDrag.$source.children
 				if do_overlap(globalDrag.lasso_dim, get_dim(el))
 					lassoed.push(el)
 		lassoed
 
-	end_drag: (ev) ->
-		if ev.getType() == "mouseup"
-			@_selected(ev, globalDrag)
+	stop_drag: (ev) ->
+		for el in globalDrag.elements.slice(0)
+			removeFromArray(el, globalDrag.elements)
+			CUI.DOM.toggleClass(el, @_lassoed_element_class)
 		globalDrag.lasso.remove()
+		super(ev)
+
+	end_drag: (ev) ->
+		@_selected(ev, globalDrag)
+		globalDrag.lasso.remove()
+		super(ev)
+
 
 
 Lasso = CUI.Lasso

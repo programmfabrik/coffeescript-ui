@@ -46,10 +46,12 @@ class ListViewHoverTool extends ListViewTool
 			do_drag: (ev, $target, diff, movable) =>
 				@doDrag(ev, $target, diff, movable)
 
-			dragend: (ev, globalDrag, movable) =>
+			dragstop: =>
 				@removeMarker(true)
-				if ev.getType() == "mouseup"
-					@endDrag()
+
+			dragend: =>
+				@removeMarker(true)
+				@endDrag()
 		md
 
 	markRow: (row_i = @info.cell.row_i) ->

@@ -39,10 +39,10 @@ class CUI.Sortable extends CUI.Draggable
 			return
 
 		if source_idx < dest_idx
-			globalDrag.noClickHandlerKill = true
+			# globalDrag.noClickHandlerKill = true
 			CUI.DOM.insertAfter($dest, $source)
 		else if source_idx > dest_idx
-			globalDrag.noClickHandlerKill = true
+			# globalDrag.noClickHandlerKill = true
 			CUI.DOM.insertBefore($dest, $source)
 
 		CUI.DOM.syncAnimatedClone(@element)

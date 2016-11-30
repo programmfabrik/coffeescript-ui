@@ -133,6 +133,8 @@ class FlexHandle extends CUI.Element
 
 		# CUI.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
 
+		drag_start_size = null
+
 		new Draggable
 			element: @_element
 			axis: axis
@@ -165,6 +167,8 @@ class FlexHandle extends CUI.Element
 					max_diff = adj_data.value - adj_data.min # this is the maximum change for the adj value
 					data.max = Math.max(0, data.value+max_diff)
 
+				drag_start_size = @__pane.style[@__css_value.toLowerCase()]
+
 				gd.__pane_data =
 					flip: flip
 					axis: axis
@@ -193,12 +197,14 @@ class FlexHandle extends CUI.Element
 				return
 
 			dragend: (ev, gd) =>
-				if ev.getType() != "mouseup"
-					return
-
 				dragging(gd)
 				@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
 				@storeState()
+
+			dragstop: =>
+				@__pane.style[@__css_value.toLowerCase()] = drag_start_size
+				drag_start_size = null
+				@__resize()
 
 			dragging: (ev, gd) =>
 				if not CUI.__ng__
