@@ -100,7 +100,7 @@ class CUI.Tabs extends CUI.SimplePane
 			icon: "ellipsis_h"
 			class: "cui-tab-header-button-overflow"
 			icon_right: false
-			size: if @_appearance == "mini" then "mini" else "auto"
+			size: if @_appearance == "mini" then "mini" else undefined
 			menu:
 				items: =>
 					btns = []

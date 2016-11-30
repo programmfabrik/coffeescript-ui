@@ -1183,7 +1183,7 @@ CUI.ready ->
 		type: ["keyup"]
 		node: document.body
 		call: (ev) ->
-			console.error ev.getType(), ev
+			# console.error ev.getType(), ev
 
 			if ev.keyCode() != 27 or window.globalDrag
 				return

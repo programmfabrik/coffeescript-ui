@@ -47,14 +47,11 @@ class CUI.Label extends CUI.DOM
 		if @_manage_overflow
 			@addClass("cui-label-manage-overflow")
 
-		if @_size == "auto"
-			@addClass("cui-label-size-normal") #additionally used as a fallback
+		if @_size
+			@addClass("cui-label-size-"+@_size)
 
-		@addClass("cui-label-size-"+@_size)
-
-		if @_appearance == "auto"
-			@addClass("cui-label-appearance-normal") #additionally used as a fallback
-		@addClass("cui-label-appearance-"+@_appearance)
+		if @_appearance
+			@addClass("cui-label-appearance-"+@_appearance)
 
 
 	initOpts: ->
@@ -70,18 +67,14 @@ class CUI.Label extends CUI.DOM
 				check: (v) ->
 					v instanceof Icon or isString(v)
 			size:
-				default: "auto"
-				mandatory: true
-				check: ["auto","mini","normal","big","bigger"]
+				check: ["mini","normal","big","bigger"]
+			appearance:
+				check: ["normal","important","title"]
 			# set to true if text is markdown
 			markdown:
 				mandatory: true
 				default: false
 				check: Boolean
-			appearance:
-				default: "auto"
-				mandatory: true
-				check: ["auto","normal","important","title"]
 			tooltip:
 				check: "PlainObject"
 			group:

@@ -109,14 +109,10 @@ class CUI.Button extends CUI.DOM
 		else
 			text = @_text
 
-		if @_size == "auto"
-			@setSize("normal") # additionally used as a fallback
-
 		@setSize(@_size)
 
-		if @_appearance == "auto"
-			@addClass("cui-button-appearance-normal") #additionally used as a fallback
-		@addClass("cui-button-appearance-"+@_appearance)
+		if @_appearance
+			@addClass("cui-button-appearance-"+@_appearance)
 
 		if @_primary
 			@addClass("cui-button--primary")
@@ -386,8 +382,9 @@ class CUI.Button extends CUI.DOM
 		for cls in remove
 			@DOM.classList.remove(cls)
 
-		@DOM.classList.add("cui-button-size-"+size)
-
+		if size
+			@DOM.classList.add("cui-button-size-"+size)
+		@
 
 	onClickAction: (ev) ->
 		if @__disabled # or ev.button != 0
@@ -486,13 +483,9 @@ class CUI.Button extends CUI.DOM
 				default: "button"
 				check: String
 			size:
-				mandatory: true
-				default: "auto"
-				check: ["auto","mini","normal","big","bigger"]
+				check: ["mini","normal","big","bigger"]
 			appearance:
-				mandatory: true
-				default: "auto"
-				check: ["auto","link","flat","normal","important"]
+				check: ["link","flat","normal","important"]
 			primary:
 				mandatory: true
 				default: false

@@ -413,7 +413,10 @@ class CUI.DOM extends CUI.Element
 		if not element
 			return null
 
-		element.parentNode?.removeChild(element)
+		if element.DOM
+			element.parentNode?.removeChild(element.DOM)
+		else
+			element.parentNode?.removeChild(element)
 		element
 
 	@empty: (element) ->
