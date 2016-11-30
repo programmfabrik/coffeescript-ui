@@ -23,12 +23,11 @@ class CUI.Button extends CUI.DOM
 	#
 	# @param [Object] options for button creation
 	# @option options [String] size controls the size of the button.
-	#   "auto", the button is automatically formatted. e.g. when a button is in the lower right corner of a ConfirmationDialog it shown as big button.  this is the default.
 	#   "mini", small button.
 	#   "normal", medium size button.
 	#   "big", big sized button.
+	#   "bigger", bigger sized button.
 	# @option options [String] appearance controls the style or appearance of the button.
-	#   "auto", the button is automatically formatted. this is the default
 	#   "flat", button has no border and inherits its background color from its parent div.
 	#   "normal", standard button with border and its own background color.
 	#   "link", standard button without border and a underlined text.
@@ -109,6 +108,8 @@ class CUI.Button extends CUI.DOM
 		else
 			text = @_text
 
+		if not CUI.__ng__ and not @_size
+			@_size='normal' #need to set normal as default for mediathek! and light
 		@setSize(@_size)
 
 		if @_appearance

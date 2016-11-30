@@ -49,6 +49,8 @@ class CUI.Label extends CUI.DOM
 
 		if @_size
 			@addClass("cui-label-size-"+@_size)
+		else if not CUI.__ng__
+			@addClass("cui-label-size-normal") #need to set normal as default for mediathek! and light
 
 		if @_appearance
 			@addClass("cui-label-appearance-"+@_appearance)
