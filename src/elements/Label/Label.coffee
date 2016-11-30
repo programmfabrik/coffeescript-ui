@@ -125,6 +125,9 @@ class CUI.Label extends CUI.DOM
 			@removeClass("cui-label-markdown")
 		@
 
+	setTextMaxChars: (max_chars) ->
+		CUI.DOM.setAttribute(@__label.map.content[0], "max-chars", max_chars)
+
 	getText: ->
 		@__currentText
 
