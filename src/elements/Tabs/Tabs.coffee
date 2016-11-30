@@ -115,7 +115,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__overflowBtn.hide()
 
-		@__pane_header.append(@__overflowBtn, "right", false)
+		@__pane_header.prepend(@__overflowBtn, "right")
 
 		@getLayout().append(@__tabs_bodies, "center")
 
