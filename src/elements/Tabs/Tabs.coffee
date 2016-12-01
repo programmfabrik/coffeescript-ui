@@ -65,18 +65,6 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__buttonbar = new Buttonbar()
 
-		startScrollLeft = null
-
-		new Draggable
-			element: @__buttonbar.DOM
-			axis: "x"
-			dragstart: =>
-				startScrollLeft = @__header.scrollLeft
-			dragging: (ev, gd, diff) =>
-				@__header.scrollLeft = startScrollLeft - diff.x
-			helper: null
-
-
 		if CUI.__ng__
 			pane_key = "center"
 		else
@@ -87,6 +75,10 @@ class CUI.Tabs extends CUI.SimplePane
 		@__pane_header.append(@__tabs_marker, pane_key)
 
 		@__header = @__pane_header[pane_key]()[0]
+
+		new Dragscroll
+			element: @__buttonbar.DOM
+			scroll_element: @__header
 
 		Events.listen
 			type: "scroll"

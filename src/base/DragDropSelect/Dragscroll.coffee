@@ -2,12 +2,28 @@ globalDrag = null
 
 class Dragscroll extends Draggable
 
-	start_drag: (ev, $target, diff) ->
-		@scrollPos =
-			top: @element[0].scrollTop
-			left: @element[0].scrollLeft
-		# CUI.debug "started at", @scrollPos
+	initOpts: ->
+		super()
+		@removeOpt("helper")
+		@addOpts
+			scroll_element:
+				check: (v) ->
+					isElement(v)
+
+	readOpts: ->
+		super()
+		if @_scroll_element
+			@__scroll_element = @_scroll_element
+		else
+			@__scroll_element = @_element
+
+	start_drag: ->
+		@__scroll =
+			top: @__scroll_element.scrollTop
+			left: @__scroll_element.scrollLeft
 
 	do_drag: (ev, $target, diff) ->
-		@element[0].scrollTop = Math.max(0, @scrollPos.top - diff.y)
-		@element[0].scrollLeft = Math.max(0, @scrollPos.left - diff.x)
+		scrollTop = @__scroll.top - diff.bare_y
+		scrollLeft = @__scroll.left - diff.bare_x
+		@__scroll_element.scrollTop = scrollTop
+		@__scroll_element.scrollLeft = scrollLeft

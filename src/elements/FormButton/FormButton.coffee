@@ -21,6 +21,4 @@ class FormButton extends Checkbox
 				check: (v) ->
 					v instanceof Icon or isString(v)
 			appearance:
-				mandatory: true
-				default: "auto"
-				check: ["auto","link","flat","normal","important"]
+				check: ["link","flat","normal","important"]

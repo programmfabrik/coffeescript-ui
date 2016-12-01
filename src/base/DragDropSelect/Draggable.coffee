@@ -251,6 +251,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 					when "y"
 						diff.x = 0
 
+				diff.bare_x = diff.x
+				diff.bare_y = diff.y
+
 				diff.x += globalDrag.$source.scrollLeft - globalDrag.startScroll.left
 				diff.y += globalDrag.$source.scrollTop - globalDrag.startScroll.top
 
@@ -507,6 +510,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 		return helper
 
 	init_helper: (ev, $target, diff) ->
+		if not @_helper
+			return
+
 		drag_source = globalDrag.$source
 
 		if @_helper == "clone"
