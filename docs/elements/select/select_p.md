@@ -3,5 +3,5 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 
 
-##### Inheritance
-@@include(../checkboc/checkbox_p.md)
+
+@@include(../checkboc/checkbox_p.md) 

@@ -1,6 +1,7 @@
 # Label
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/label/label"><mark>Label</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/label/label"><mark>Label</mark></a>
 </span>
 ***
 
@@ -25,4 +26,6 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 	```
 
 
+```div-parameter
 @@include(label_p.md)
+```

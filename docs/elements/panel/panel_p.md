@@ -1,4 +1,5 @@
 ## Parameter Panel
+
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
 |	text	|	<dt>&lt;String&gt;	|	-	|	yes	|	Lorem	|
@@ -11,10 +12,16 @@
 |	icon_closed	|	d<dt>&lt;String&gt;	|	"fa-angle-right"	|	no	|	Lorem	|
 |	footer_right	|	{}	|	-	|	no	|	Lorem	|
 |	footer_left	|	{}	|	-	|	no	|	Lorem	|
+
+
+## Callbacks Panel
+
+|	Callback	|	Format	|	Default	|	Mandatory	|	Description	| 
+|		---				|			---				|	:---:					|	:---:		|		---					|
 |	onFirstActivate	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onActivate	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onDeactivate	|	<dt>function()	|	-	|	no	|	Lorem	|
 
-##### Inheritance
-@@include(../dom/dom_p.md)
+
+@@include(../../core/dom/dom_p.md) 
 

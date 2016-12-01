@@ -1,7 +1,8 @@
 # ButtonHref
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/button">Button</a>
-<a href="#Documentation/elements/buttonhref"><mark>ButtonHref</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/button">Button</a>
+<a class="inheritance" href="#Documentation/elements/buttonhref"><mark>ButtonHref</mark></a>
 </span>
 ***
 
@@ -27,7 +28,6 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
  Note that some parameters are mandatory.
  
 
+```div-parameter
 @@include(buttonhref_p.md)
-
-##### Inheritance
-@@include(../button/button_p.md)
+```

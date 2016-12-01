@@ -7,8 +7,13 @@
 |	text	|	<dt>&lt;String&gt;	|	-	|	no	|	Lorem	|
 |	colspan	|	<dt>&lt;Integer&gt;	|	-	|	no	|	<dt>1<dd><dt>2<dd><dt>...<dt>n<dd>	|
 |	element	|	<dt>isContent<dt>&lt;String&gt;	|	-	|	n	|	Lorem	|
-|	onSetElement	|	<dt>function()	|	-	|	no	|	Lorem	|
 
 
-##### Inheritance
-@@include(../../element/element_p.md)
+## Callbacks ListViewColumn
+
+|	Callback	|	Format	|	Default	|	Mandatory	|	Description	| 
+|		---				|			---				|	:---:					|	:---:		|		---					|
+|	onSetElement	|	<dt>function()	|	-	|	no	|	&nbsp;	|
+
+
+@@include(../../../core/element/element_p.md) 

@@ -1,9 +1,9 @@
 ## Parameter Popover
+
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
+|	<span class="merged-opt">placement</span>	|	|	null	|	|	|
+|	<span class="merged-opt">pointer</span>	|	|	arrow	|	|	&nbsp;	|
 
 
-##### Inheritance
-@@include(../modal/modal_p.md)
-
-##### Merged Opts: placement (default: null), pointer (default: arrow)
+@@include(../modal/modal_p.md) 

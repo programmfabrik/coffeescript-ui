@@ -1,12 +1,15 @@
 # ConfirmationChoice
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/layer">Layer</a>
-<a href="#Documentation/elements/layerpane">Layerpane</a>
-<a href="#Documentation/elements/modal">Modal</a>
-<a href="#Documentation/elements/confirmationdialog">ConfirmationDialog</a>
-<a href="#Documentation/elements/confirmationchoice/confirmationchoice"><mark>ConfirmationChoice</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/layer">Layer</a>
+<a class="inheritance" href="#Documentation/elements/layerpane">Layerpane</a>
+<a class="inheritance" href="#Documentation/elements/modal">Modal</a>
+<a class="inheritance" href="#Documentation/elements/confirmationdialog">ConfirmationDialog</a>
+<a class="inheritance" href="#Documentation/elements/confirmationchoice/confirmationchoice"><mark>ConfirmationChoice</mark></a>
 </span>
 ***
 
 
+```div-parameter
 @@include(confirmationchoice_p.md)
+```

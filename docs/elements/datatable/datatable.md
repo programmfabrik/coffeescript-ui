@@ -1,8 +1,9 @@
 # DataTable
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/datafield">DataField</a>
-<a href="#Documentation/elements/datafieldinput">DataFieldInput</a>
-<a href="#Documentation/elements/datatable"><mark>DataTable</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/datafield">DataField</a>
+<a class="inheritance" href="#Documentation/elements/datafieldinput">DataFieldInput</a>
+<a class="inheritance" href="#Documentation/elements/datatable"><mark>DataTable</mark></a>
 </span>
 ***
 
@@ -63,8 +64,9 @@ Of course, you can avoid these temporary variables and create the <DataTable>-ob
 	myDataTable.start()
 	```
 
-
+```div-parameter
 @@include(datatable_p.md)
+```
 
 
 

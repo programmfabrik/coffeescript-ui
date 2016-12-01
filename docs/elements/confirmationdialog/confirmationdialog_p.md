@@ -10,9 +10,7 @@
 |	buttons	|	<dt>&lt;Array&gt; = lenght &gt; 0<dt>function()	|	-	|	no	|	Lorem	|
 |	footer_left	|	{}	|	-	|	no	|	Lorem	|
 |	footer_right	|	{}	|	-	|	no	|	Lorem	|
+|	<span class="removed-opt">pane</span>	|	|	|	|	&nbsp;	|
 
 
-##### Inheritance
-@@include(../modal/modal_p.md)
-
-##### Remove Opt: pane
+@@include(../modal/modal_p.md) 

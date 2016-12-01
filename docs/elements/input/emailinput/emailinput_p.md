@@ -1,8 +1,7 @@
 ## Parameter EmailInput
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
+|	<span class="removed-opt">checkInput</span>	|	|	|	|	&nbsp;	|
 
-##### Inheritance
-@@include(../input/input_p.md)
 
-##### Remove Opts: checkInput
+@@include(../input/input_p.md) 

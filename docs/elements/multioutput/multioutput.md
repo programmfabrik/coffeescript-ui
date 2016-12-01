@@ -1,12 +1,15 @@
 # MultiOutput
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/datafield">Datafield</a>
-<a href="#Documentation/elements/datafieldinput">DatafieldInput</a>
-<a href="#Documentation/elements/output">Output</a>
-<a href="#Documentation/elements/multioutput"><mark>MultiOutput</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/datafield">Datafield</a>
+<a class="inheritance" href="#Documentation/elements/datafieldinput">DatafieldInput</a>
+<a class="inheritance" href="#Documentation/elements/output">Output</a>
+<a class="inheritance" href="#Documentation/elements/multioutput"><mark>MultiOutput</mark></a>
 </span>
 ***
 
 ## Description
 
+```div-parameter
 @@include(multioutput_p.md)
+```

@@ -1,6 +1,7 @@
 # DataField
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/datafield"><mark>Datafield</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/datafield"><mark>Datafield</mark></a>
 </span>
 ***
 
@@ -27,4 +28,6 @@ Lorem Ipsum
 	Take into account that the data-parameter's value requires an object with at least one key which stores an array as its value.
 
 
+```div-parameter
 @@include(datafield_p.md)
+```

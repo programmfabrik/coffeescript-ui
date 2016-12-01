@@ -1,7 +1,8 @@
 # Form
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/datafield">Datafield</a>
-<a href="#Documentation/elements/form"><mark>Form</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/datafield">Datafield</a>
+<a class="inheritance" href="#Documentation/elements/form/form"><mark>Form</mark></a>
 </span>
 ***
 
@@ -18,4 +19,6 @@ To build a new Form you simply create a new object of the type *Form*. As input 
 myForm = new Form();
 ```
 
+```div-parameter
 @@include(form_p.md)
+```

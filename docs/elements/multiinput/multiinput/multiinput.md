@@ -1,11 +1,14 @@
 # MultiInput
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/datafield">Datafield</a>
-<a href="#Documentation/elements/datafieldinput">DatafieldInput</a>
-<a href="#Documentation/elements/multiinput/multiinput"><mark>MultiInput</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/datafield">Datafield</a>
+<a class="inheritance" href="#Documentation/elements/datafieldinput">DatafieldInput</a>
+<a class="inheritance" href="#Documentation/elements/multiinput/multiinput"><mark>MultiInput</mark></a>
 </span>
 ***
 
 ## Description
 
+```div-parameter
 @@include(multiinput_p.md)
+```

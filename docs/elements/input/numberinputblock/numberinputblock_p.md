@@ -1,4 +1,4 @@
 ## Parameter NumberInputBlock
 
-##### Inheritance
-@@include(../inputblock/inputblock_p.md)
+
+@@include(../inputblock/inputblock_p.md) 

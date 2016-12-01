@@ -3,5 +3,5 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 
 
-##### Inheritance
-@@include(../../layout/verticallayout/verticallayout_p.md)
+
+@@include(../../layout/verticallayout/verticallayout_p.md) 

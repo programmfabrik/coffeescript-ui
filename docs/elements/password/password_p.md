@@ -3,5 +3,5 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 
 
-##### Inheritance
-@@include(../input/input/input_p.md)
+
+@@include(../input/input/input_p.md) 

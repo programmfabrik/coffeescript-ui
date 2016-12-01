@@ -1,7 +1,8 @@
 # HorizontalLayout
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/layout/layout">Layout</a>
-<a href="#Documentation/elements/layout/horizontallayout"><mark>HorizontalLayout</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/layout/layout">Layout</a>
+<a class="inheritance" href="#Documentation/elements/layout/horizontallayout"><mark>HorizontalLayout</mark></a>
 </span>
 ***
 
@@ -22,4 +23,6 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 
 
+```div-parameter
 @@include(horizontallayout_p.md)
+```

@@ -9,9 +9,11 @@
 |	separator	|	(v) -> isString(v) and v.length > 0	|	-	|	no	|	Lorem	|
 |	min	|	<dt>isNumber	|	 null	|	no	|	Lorem	|
 |	max	|	(<dt>isNumber	|	 null	|	no	|	Lorem	|
+|	<span class="removed-opt">checkInput</span>	|	|	|	|	|
+|	<span class="removed-opt">getValueForDisplay</span>	|	|	|	|	|
+|	<span class="removed-opt">getValueForInput</span>	|	|	|	|	|
+|	<span class="removed-opt">correctValueForInput</span>	|	|	|	|	|
+|	<span class="removed-opt">prevent_invalid_input</span>	|	|	|	|	&nbsp;	|
 
 
-##### Inheritance
-@@include(../input/input_p.md)
-
-##### Remove Opts: put, getValueForDisplay, getValueForInput, correctValueForInput, prevent_invalid_input
+@@include(../input/input_p.md) 

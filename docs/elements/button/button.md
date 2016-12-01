@@ -1,6 +1,7 @@
 # Button
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/button"><mark>Button</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/button"><mark>Button</mark></a>
 </span>
 ***
 
@@ -25,6 +26,8 @@ A button indicates possible user actions and responses depending on its function
 	@@include(button_exmpl1.coffee)
 	```
 
+```div-parameter
 @@include(button_p.md)
+```
 
 

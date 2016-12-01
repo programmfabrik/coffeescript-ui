@@ -3,9 +3,6 @@
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
 |	default	|	<dt>&lt;String&gt;	|	*empty String*	|	no	|	Lorem	|
+|	<span class="removed-opt">choices</span>	|	|	|	|	&nbsp;	|
 
-
-##### Inheritance
-@@include(../confirm/confirm_p.md)
-
-##### Remove Opts: choices
+@@include(../confirm/confirm_p.md) 

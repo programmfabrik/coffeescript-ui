@@ -1,4 +1,5 @@
 ## Parameter Tooltip
+
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
 |	text	|	<dt>&lt;String&gt;<dt>function()	|	-	|	no	|	Lorem	|
@@ -8,5 +9,5 @@
 |	on_hover	|	<dt>&lt;Boolean&gt;<dt>function()	|	-	|	no	|	Lorem	|
 
 
-##### Inheritance
-@@include(../layerpane/layerpane_p.md)
+
+@@include(../layerpane/layerpane_p.md) 

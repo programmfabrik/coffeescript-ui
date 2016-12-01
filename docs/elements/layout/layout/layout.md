@@ -1,6 +1,7 @@
 # Layout
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/layout/layout"><mark>Layout</mark></a></span>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/layout/layout"><mark>Layout</mark></a></span>
 ***
 
 ## Description
@@ -14,6 +15,8 @@ VerticalLayout as well as HorizontalLayout are both derived from this Layout-cla
 
 
 
+```div-parameter
 @@include(layout_p.md)
+```
 
 

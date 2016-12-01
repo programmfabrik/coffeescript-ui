@@ -13,5 +13,5 @@
 |	bottom	|	|	|	no	|	Lorem	|
 
 
-##### Inheritance
-@@include(../datafield/datafield_p.md)
+
+@@include(../../datafield/datafield_p.md) 

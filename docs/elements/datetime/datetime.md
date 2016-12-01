@@ -1,9 +1,10 @@
 # DateTime
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/datafield">DataField</a>
-<a href="#Documentation/elements/datafieldinput">DataFieldInput</a>
-<a href="#Documentation/elements/input/input">Input</a>
-<a href="#Documentation/elements/datetime"><mark>DateTime</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/datafield">DataField</a>
+<a class="inheritance" href="#Documentation/elements/datafieldinput">DataFieldInput</a>
+<a class="inheritance" href="#Documentation/elements/input/input">Input</a>
+<a class="inheritance" href="#Documentation/elements/datetime"><mark>DateTime</mark></a>
 </span>
 ***
 
@@ -21,4 +22,6 @@ To build a new DateTime you simply create a new object of the type *DateTime*. A
 myDateTime = new DateTime();
 ```
 
+```div-parameter
 @@include(datetime_p.md)
+```

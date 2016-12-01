@@ -1,6 +1,7 @@
 ## Parameter MultilineLabel
 
-##### Inheritance
-@@include(../label/label_p.md)
+|	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
+|		---				|			---				|	:---:					|	:---:		|		---					|
+|	<span class="merged-opt">multiline</span>	|	|	true	|	|	&nbsp;	|
 
-##### Merge Opts: multiline (default: true)
+@@include(../label/label_p.md) 

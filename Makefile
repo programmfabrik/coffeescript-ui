@@ -211,6 +211,8 @@ demo: font_awesome
 code: $(easydbui_js) $(thirdparty_files) html font_awesome
 	cp src/scss/icons/icons.svg $(target)/icons.
 	cp src/scss/icons/inherit.svg $(target)/inherit.svg
+	cp src/scss/icons/remove-icon.svg $(target)/remove-icon.svg
+	cp src/scss/icons/merge-icon.svg $(target)/merge-icon.svg
 	cp src/scss/icons/arrow-right.svg $(target)/arrow-right.svg
 	$(MAKE) --directory demo code
 

@@ -8,7 +8,6 @@
 |	click_type			|	<dt>&lt;String&gt; = <dd>"click" &#124; "mouseup" &#124; "dbclick" &#124; "touchstart" &#124; "touched"	|	`click`	|	yes	|	Required user's action to call *onclick*-function<dt>`click`<dd>Normal single click<dt>`mouseup`<dt>`dblclick`<dd>Doubleclick<dt>`touchstart`<dt>`touchend`	|
 |	tabindex			|	<dt>&lt;Integer&gt;<dt>&lt;Boolean&gt;	|	`0`		|	no 	|	<dt>`false`<dt>`1`<dt>`2`<dt>`...`	|
 |	role				|	<dt>&lt;String&gt;	|	button		|	no 	|		|
-|	onClick 			|	<dt>function()	|	-	|	no 	|	Functional description of the button's response to the user's click.	|
 |	confirm_on_click	|	<dt>&lt;String&gt;	|	-	|	no 	|		|
 |	text 				|	<dt>&lt;String&gt;	|	-	|	no 	|		|
 |	tooltip				|	<dt>PlainObject`	|	-	|	no 	|		|
@@ -31,15 +30,21 @@
 |	menu_on_hover		|	<dt>&lt;Boolean&gt;	|	-	|	no 	|	<dt>true<dd><dt>false<dd>	|
 |	menu_parent			|	? Menu 	|	-	|	no 			|		|
 |	menu				|	<dt>PlainObject	|	-	|	no 	|		|
-|	onActivate 			|	<dt>function()	|	-	|	no 	|		|
-|	onDeactivate 		|	<dt>function()	|	-	|	no 	|		|
 |	radio 				|	<dt>&lt;String&gt;<dt>&lt;Boolean&gt;	|	-	|	no 			|	<dt>true<dd><dt>false<dd>	|
 |	radio_allow_null	|	<dt>&lt;Boolean&gt;	|	-	|	no 	|	<dt>true<dd><dt>false<dd>	|
 |	switch				|	<dt>&lt;Boolean&gt;	|	-	|	no 	|	<dt>true<dd><dt>false<dd>	|
 |	active				|	<dt>&lt;Boolean&gt;	|	-	|	no 	|	<dt>true<dd><dt>false<dd>	|
 |	activate_initial	|	<dt>&lt;Boolean&gt;	|	true	|	no 	|	<dt>true<dd><dt>false<dd>	|
-|	group				|	<dt>&lt;String&gt;	|	-	|	no 	|	Lorem	|
-			
+|	group				|	<dt>&lt;String&gt;	|	-	|	no 	|	&nbsp;	|			
 
 
+## Callbacks Button
 
+|	Callback	|	Format	|	Default	|	Mandatory	|	Description	| 
+|		---				|			---				|	:---:					|	:---:		|		---					|
+|	onClick 			|	<dt>function()	|	-	|	no 	|	Functional description of the button's response to the user's click.	|
+|	onActivate 			|	<dt>function()	|	-	|	no 	|		|
+|	onDeactivate 		|	<dt>function()	|	-	|	no 	|	&nbsp;	|
+
+
+@@include(../../core/dom/dom_p.md)

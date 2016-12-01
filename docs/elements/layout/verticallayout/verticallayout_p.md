@@ -3,5 +3,5 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 
 
-##### Inheritance
-@@include(../layout/layout_p.md)
+
+@@include(../layout/layout_p.md) 

@@ -4,5 +4,7 @@
 |	start	|	<dt>&lt;Integer&gt;	|	-	|	yes	|	Lorem	|
 |	string	|	<dt>&lt;String&gt;	|	-	|	yes	|	Lorem	|
 
-##### Inheritance
-@@include(../../element/element_p.md)
+
+
+
+@@include(../../../core/element/element_p.md) 

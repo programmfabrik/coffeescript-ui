@@ -1,12 +1,15 @@
 # Popover
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/layer">Layer</a>
-<a href="#Documentation/elements/layerpane">Layerpane</a>
-<a href="#Documentation/elements/modal">Modal</a>
-<a href="#Documentation/elements/popover"><mark>Popover</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/layer">Layer</a>
+<a class="inheritance" href="#Documentation/elements/layerpane">Layerpane</a>
+<a class="inheritance" href="#Documentation/elements/modal">Modal</a>
+<a class="inheritance" href="#Documentation/elements/popover"><mark>Popover</mark></a>
 </span>
 ***
 
 ## Description
 
+```div-parameter
 @@include(popover_p.md)
+```

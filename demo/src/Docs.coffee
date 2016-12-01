@@ -88,5 +88,6 @@ class Docs extends Demo
 				browser.loadLocation()
 		dom
 
+	
 
 Demo.register(new Docs())

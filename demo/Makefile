@@ -35,7 +35,8 @@ coffee_files = src/demo.coffee \
 	../src/elements/Form/demo/FormLayoutDemo.coffee \
 	../src/elements/ListView/demo/ListViewDemo.coffee \
 	../src/elements/ListView/demo/ListViewTreeDemo.coffee \
-	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee
+	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee \
+	src/tobi.coffee
 
 
 jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
@@ -59,6 +60,8 @@ code: $(files) $(example_files) docs
 	cp -r ../build/font-awesome $(target)
 	cat demo.html > $(target)/index.html
 	cat src/examples/index.html > $(target)/examples/index.html
+	# Compile & Copy tobi.coffee.js
+	cp src/tobi.coffee.js $(target)
 
 docs:
 	mkdir -p $(target)

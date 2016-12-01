@@ -3,5 +3,5 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 |	element	|	<dt>isElement	|	-	|	yes	|	Lorem	|
 
-##### Inheritance
-@@include(../../element/element_p.md)
+
+@@include(../../../core/element/element_p.md) 

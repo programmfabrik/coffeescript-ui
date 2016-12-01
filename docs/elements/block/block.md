@@ -1,17 +1,13 @@
 # Block
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/block"><mark>Block</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/block"><mark>Block</mark></a>
 </span>
 ***
 
 ## Description
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-```div-hallo
-@@include(block_p.md)
-<dt>titel
-<dd>descr.
-```
 
 ## Creating a Block
 
@@ -54,5 +50,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
  	At the <a href="#parameter">bottom of this page</a> you can find the complete list of possible parameter as well as their formats, default values and so on. <br />
  	Note that some parameters are mandatory.
  
- 
+
+ ```div-parameter
  @@include(block_p.md)
+ ```

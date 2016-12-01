@@ -2,11 +2,8 @@
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
+|	<span class="removed-opt">choices</span>	|	|	|	|	|
+|	<span class="merged-opt">backdrop</span>	|	|	false	|	|	|
+|	<span class="merged-opt">show_ms</span>	|	<dt>&lt;Integer&gt; >= 0	|	|	|	&nbsp;	|
 
-
-##### Inheritance
-@@include(../confirmationchoice/confirmationchoice_p.md)
-
-##### Remove Opts: choices
-
-##### Merge Opts: backdrop (default: false), show_ms (check: v >= 0)
+@@include(../confirmationchoice/confirmationchoice_p.md) 

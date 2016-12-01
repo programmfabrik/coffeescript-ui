@@ -1,9 +1,10 @@
 # SimplePane
-<span class="inheritance">CUI.DOM
-<a href="#Documentation/elements/layout/layout">Layout</a>
-<a href="#Documentation/elements/layout/verticallayout">VerticalLayout</a>
-<a href="#Documentation/elements/pane/pane">Pane</a>
-<a href="#Documentation/elements/pane/simplepane"><mark>SimplePane</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/dom">DOM</a>
+<a class="inheritance" href="#Documentation/elements/layout/layout">Layout</a>
+<a class="inheritance" href="#Documentation/elements/layout/verticallayout">VerticalLayout</a>
+<a class="inheritance" href="#Documentation/elements/pane/pane">Pane</a>
+<a class="inheritance" href="#Documentation/elements/pane/simplepane"><mark>SimplePane</mark></a>
 </span>
 ***
 
@@ -136,4 +137,6 @@ Therefore use the introduced <mark>slots</mark> to place the wanted content.
 	```
 
 
+```div-parameter
 @@include(simplepane_p.md)
+```

@@ -1,6 +1,7 @@
 # ListviewRow
-<span class="inheritance">CUI.Element
-<a href="#Documentation/elements/listview/listviewrow"><mark>ListviewRow</mark></a>
+<span class="inheritance">
+<a href="#Documentation/core/element">CUI-Element</a>
+<a class="inheritance" href="#Documentation/elements/listview/listviewrow"><mark>ListviewRow</mark></a>
 </span>
 ***
 
@@ -20,4 +21,6 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 	a
 
 
+```div-parameter
 @@include(listviewrow_p.md)
+```
