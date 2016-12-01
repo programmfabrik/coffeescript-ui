@@ -866,8 +866,8 @@ class CUI.Layer extends CUI.DOM
 		CUI.DOM.setStyle @__layer.DOM,
 			top: vp.layer_pos.top
 			left: vp.layer_pos.left
-			width: vp.layer_pos.width
-			height: vp.layer_pos.height
+			width: Math.ceil(vp.layer_pos.width)
+			height: Math.ceil(vp.layer_pos.height)
 			margin: 0
 			minWidth: minWidth
 			# maxWidth: vp.width + vp.overlap_width
