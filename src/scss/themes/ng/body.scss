@@ -1045,11 +1045,21 @@ i.cui-spin-stepped {
 }
 
 .cui-button-size-big {
-	font-size: 15px;
-	height: 37px;
+	font-size: 11px;
+	height: 60px;
 
 	&.cui-button-appearance-flat {
 		height: auto;
+	}
+
+	.cui-button-visual {
+		height: auto;
+		flex-direction: column;
+		border-width: 0;
+	}
+
+	.fa {
+		font-size: 20px;
 	}
 }
 
