@@ -1047,15 +1047,22 @@ i.cui-spin-stepped {
 .cui-button-size-big {
 	font-size: 11px;
 	height: 60px;
+	padding: 0 $padding/2;
 
 	&.cui-button-appearance-flat {
 		height: auto;
 	}
 
 	.cui-button-visual {
+		line-height: 18px;
 		height: auto;
 		flex-direction: column;
 		border-width: 0;
+		padding: 0 $padding/2;
+	}
+
+	.cui-button-left {
+		padding: 3px;
 	}
 
 	.fa {
@@ -1572,6 +1579,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-buttonbar {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 
 	// > *:not(:last-child) {
 	// 	margin-right: $gap;
