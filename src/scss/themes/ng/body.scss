@@ -1854,6 +1854,15 @@ a[role="button"].cui-button-appearance-link {
 			width: auto;
 		}
 	}
+
+	.cui-td:last-child {
+		width: auto;
+		
+		> span {
+			position: static;
+			white-space: normal;
+	  }
+	}
 }
 
 .cui-layer-pointer {
@@ -3011,7 +3020,7 @@ $table-data-padding: 4px;
 		text-align: right;
 	}
 
-	&:nth-child(2):last-child {
+	&:last-child {
 		width: 100%;
 		position: relative;
 		
