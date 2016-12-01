@@ -27,11 +27,16 @@ class Buttonbar extends CUI.DOM
 		for btn, idx in @_buttons
 			@addButton(btn, false)
 
+		if @_size
+			@addClass("cui-buttonbar--size-"+@_size)
+
 		@__checkVisibility()
 
 	initOpts: ->
 		super()
 		@addOpts
+			size:
+				check: ["big"]
 			buttons:
 				mandatory: true
 				default: []
