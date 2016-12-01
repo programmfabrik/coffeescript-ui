@@ -308,7 +308,7 @@ class CUI.Button extends CUI.DOM
 					call: =>
 						@getMenu().hide(ev)
 
-		if @_menu_on_hover or @_tooltip
+		if @_menu_on_hover or @__tooltipOpts
 			Events.listen
 				type: "mouseenter"
 				node: @DOM
@@ -316,7 +316,7 @@ class CUI.Button extends CUI.DOM
 					if window.globalDrag
 						return
 
-					if @_tooltip
+					if @__tooltipOpts
 						@__initTooltip()
 						@getTooltip().showTimeout(null, ev)
 
@@ -612,6 +612,10 @@ class CUI.Button extends CUI.DOM
 			assert(isUndef(@opts.radio_allow_null), "new Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
 
 		super()
+
+		if @_tooltip
+			if @_tooltip.text or @_tooltip.content
+				@__tooltipOpts = @_tooltip
 
 		if @_left
 			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
@@ -911,7 +915,7 @@ class CUI.Button extends CUI.DOM
 		if @__tooltip
 			return @
 
-		tt_opts = copyObject(@_tooltip)
+		tt_opts = copyObject(@__tooltipOpts)
 
 		tt_opts.element ?= @DOM
 
