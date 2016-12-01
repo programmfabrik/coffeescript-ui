@@ -1891,15 +1891,6 @@ a[role="button"].cui-button-appearance-link {
 			width: auto;
 		}
 	}
-
-	.cui-td:last-child {
-		width: auto;
-		
-		> span {
-			position: static;
-			white-space: normal;
-	  }
-	}
 }
 
 .cui-layer-pointer {
@@ -3053,21 +3044,30 @@ $table-data-padding: 4px;
 		padding: 0;
 	}
 
-	&:first-child {
+	&.key {
 		text-align: right;
+		padding-right: 0;
 	}
 
-	&:last-child {
-		width: 100%;
-		position: relative;
-		
-		> span {
-			position: absolute;
-	    right: 10px;
-	    left: 10px;
-	    @include ellipsis;
-	  }
+	&.value {
+		word-break: break-all;
 	}
+
+	&:first-child {
+		
+	}
+
+	// &:last-child {
+	// 	width: 100%;
+	// 	position: relative;
+		
+	// 	> span {
+	// 		position: absolute;
+	//     right: 10px;
+	//     left: 10px;
+	//     @include ellipsis;
+	//   }
+	// }
 }
 
 .cui-th {
