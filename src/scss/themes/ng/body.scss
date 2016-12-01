@@ -2987,8 +2987,8 @@ $table-data-padding: 4px;
 	text-align: center;
 	justify-content: flex-end;
 	align-items: center;
-	
-	.fa {
+
+	&.cui-tree-node-is-open .fa {
 		margin-top: -2px;
 	}
 }
@@ -3026,6 +3026,14 @@ $table-data-padding: 4px;
 
 .cui-tr {
 	display: table-row;
+	
+	&:nth-child(odd) {
+		background: $zebra-color;
+	}
+
+	&.cui-table-header {
+		background: transparent;
+	}
 }
 
 .cui-th,
@@ -3043,39 +3051,43 @@ $table-data-padding: 4px;
 	> .cui-empty-label {
 		padding: 0;
 	}
+}
 
-	&.key {
-		text-align: right;
-		padding-right: 0;
-	}
+.cui-td--key {
+	text-align: right;
+	padding-right: 0;
+	vertical-align: top;
+}
 
-	&.value {
-		word-break: break-all;
-	}
-
-	&:first-child {
-		
-	}
-
-	// &:last-child {
-	// 	width: 100%;
-	// 	position: relative;
-		
-	// 	> span {
-	// 		position: absolute;
-	//     right: 10px;
-	//     left: 10px;
-	//     @include ellipsis;
-	//   }
-	// }
+.cui-td--value {
+	vertical-align: top;
+	word-break: break-all;
+	width: 100%;
+	// position: relative;
+	
+	// > span {
+	// 	position: absolute;
+ //    right: 10px;
+ //    left: 10px;
+ //    @include ellipsis;
+ //  }
 }
 
 .cui-th {
 	font-weight: bold;
-}
+	position: relative;
+	border-bottom: 1px solid $table-header-border;
+	font-size: 0.85em;
 
-.cui-td {
-	vertical-align: top;
+	&:after { // table-head line
+		content: "";
+		position: absolute;
+		right: 0;
+		top: 2px;
+		bottom: 2px;
+		width: 1px;
+		background: $table-header-border;
+	}
 }
 
 .status-2d-map {
