@@ -1756,6 +1756,25 @@ a[role="button"].cui-button-appearance-link {
 			margin: 0;
 		}
 	}
+
+	&[cui-fill-space="both"] {
+		.cui-layer {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&[cui-fill-space="horizontal"] {
+		.cui-layer {
+			width: 100%;
+		}
+	}
+
+	&[cui-fill-space="vertical"] {
+		.cui-layer {
+			height: 100%;
+		}
+	}
 }
 
 .cui-layer-backdrop-policy-modal,
