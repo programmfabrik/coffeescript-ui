@@ -209,7 +209,7 @@ demo: font_awesome
 	$(MAKE) --directory demo all
 
 code: $(easydbui_js) $(thirdparty_files) html font_awesome
-	cp src/scss/icons/icons.svg $(target)/icons.
+	cp src/scss/icons/icons.svg $(target)/icons.svg
 	cp src/scss/icons/inherit.svg $(target)/inherit.svg
 	cp src/scss/icons/remove-icon.svg $(target)/remove-icon.svg
 	cp src/scss/icons/merge-icon.svg $(target)/merge-icon.svg
