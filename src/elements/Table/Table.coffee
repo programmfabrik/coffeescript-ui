@@ -16,18 +16,20 @@ class CUI.Table extends CUI.DOM
 
 		@registerDOMElement(@__table, false)
 
-		# add header column
-		header = $tr("cui-table-header")
-		for col in @_columns
-			if col.text
-				txt = col.text
-			else
-				txt = col.name
-			th = $th("cui-table-th "+col.class)
-			th.textContent = txt
-			header.appendChild(th)
+		if @_header
+			# add header column
+			header = $tr("cui-table-header")
+			for col in @__columns
+				if col.text
+					txt = col.text
+				else
+					txt = col.name
+				th = $th("cui-table-th "+col.class)
+				th.textContent = txt
+				header.appendChild(th)
 
-		@__table.appendChild(header)
+			@__table.appendChild(header)
+
 		for row in @_rows
 			@addRow(row)
 		@
@@ -47,6 +49,10 @@ class CUI.Table extends CUI.DOM
 		@addOpts
 			class:
 				check: String
+			header:
+				mandatory: true
+				default: true
+				check: Boolean
 			columns:
 				check: (v) ->
 					is_array_of_maps v,
@@ -59,6 +65,10 @@ class CUI.Table extends CUI.DOM
 							check: String
 						text:
 							check: String
+			key_value:
+				mandatory: true
+				default: false
+				check: Boolean
 			rows:
 				mandatory: true
 				default: []
@@ -69,9 +79,25 @@ class CUI.Table extends CUI.DOM
 				default: "normal"
 				check: ["normal", "mini"]
 
+	readOpts: ->
+		super()
+		if @_key_value
+			assert(not @_columns and not @opts.hasOwnProperty("header"), "new Table", "opts.key_value cannot be set together with opts.header or opts.columns.", opts: @opts)
+			@_header = false
+			@__columns = [
+				name: "key"
+				class: "cui-td--key"
+			,
+				name: "value"
+				class: "cui-td--value"
+			]
+		else
+			@__columns = @_columns
+		@
+
 	addRow: (row) ->
 		tr = $tr("cui-table-row")
-		for col in @_columns
+		for col in @__columns
 			td = $td("cui-table-td "+col.class)
 			CUI.DOM.append(td, row[col.name])
 			tr.appendChild(td)

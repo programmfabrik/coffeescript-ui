@@ -757,15 +757,16 @@ CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
 CUI.ready =>
 
-	CUI.defaults.marked_opts =
-		renderer: new marked.Renderer()
-		gfm: true
-		tables: true
-		breaks: false
-		pedantic: false
-		sanitize: true
-		smartLists: true
-		smartypants: false
+	if window.marked
+		CUI.defaults.marked_opts =
+			renderer: new marked.Renderer()
+			gfm: true
+			tables: true
+			breaks: false
+			pedantic: false
+			sanitize: true
+			smartLists: true
+			smartypants: false
 
 	for i in [1..9]
 		do (i) ->

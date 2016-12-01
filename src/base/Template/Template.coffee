@@ -33,6 +33,10 @@ class CUI.Template extends CUI.Element
 		if not CUI.isEmptyObject(@map)
 			CUI.DOM.addClass(@DOM, "cui-template-empty")
 
+		#
+		if @_init_flex_handles
+			@initFlexHandles()
+
 		return
 
 	initOpts: ->
@@ -43,6 +47,10 @@ class CUI.Template extends CUI.Element
 				check: String
 			map_prefix:
 				check: String
+			init_flex_handles:
+				mandatory: true
+				default: false
+				check: Boolean
 			map:
 				type: "PlainObject"
 				default: {}
