@@ -4053,6 +4053,12 @@ $table-data-padding: 4px;
 	}
 }
 
+.cui-file-upload-progress-meter {
+	.cui-progress-meter {
+		width: 100%;
+	}
+}
+
 // DigiDisplay
 
 .cui-digi-display {
