@@ -480,8 +480,8 @@ li > div {
 }
 
 .cui-is-manually-sized {
-	flex-grow: 0;
-	flex-shrink: 0;
+	flex-grow: 0 !important;
+	flex-shrink: 0 !important;
 	
 	& + .cui-flex-handle + * {
 		flex-shrink: 1 !important;
@@ -1354,7 +1354,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&-size-mini {
 		font-size: 11px;
-		line-height: 13px;
+		line-height: 14px;
 	}
 
 	&-size-big {
