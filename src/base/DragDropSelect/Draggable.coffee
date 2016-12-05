@@ -278,10 +278,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 				return
 
 		end_drag = (ev, stop = false) =>
-			start_target = globalDrag.startEvent.getTarget()
-			start_target_parents = CUI.DOM.parents(start_target)
 
 			globalDrag.ended = true
+
 
 			if stop
 				globalDrag.stopped = true
@@ -291,23 +290,17 @@ class CUI.Draggable extends CUI.DragDropSelect
 				@end_drag(ev)
 				@_dragend?(ev, globalDrag, @)
 
+			if not globalDrag.noClickHandlerKill
+				Events.listen
+					type: "click"
+					capture: true
+					only_once: true
+					node: window
+					call: (ev) ->
+						console.error "Killing click after drag"
+						return ev.stop()
+
 			@__cleanup()
-
-			parents_now = CUI.DOM.parents(start_target)
-			for p, idx in start_target_parents
-				if parents_now[idx] != p
-					return
-
-			# if not globalDrag.noClickHandlerKill
-			# console.warn "install click handler..."
-			Events.listen
-				type: "click"
-				capture: true
-				only_once: true
-				node: window
-				call: (ev) ->
-					# console.error "Killing click after drag"
-					return ev.stop()
 			return
 
 
@@ -349,7 +342,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# It's ok to stop the events here, the "mouseup" and "keyup"
 		# we need to end the drag are initialized before in init drag,
 		# so they are executed before
-
 
 		# CUI.debug "start drag", diff
 		@_dragstart?(ev, window.globalDrag)

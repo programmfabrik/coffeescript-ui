@@ -18,6 +18,9 @@ class CUI.ConfirmationDialog extends CUI.Modal
 				check: String
 			text:
 				check: String
+			text_icon:
+				check: (v) ->
+					v instanceof Icon or isString(v)
 			markdown:
 				mandatory: true
 				default: false
@@ -53,7 +56,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			@addClass("cui-confirmation-dialog--no-title")
 
 		if not isEmpty(@_text)
-			c = new MultilineLabel(markdown: @_markdown, text: @_text)
+			c = new MultilineLabel(markdown: @_markdown, text: @_text, icon: @_text_icon)
 		else if not isEmpty(@_html)
 			c = new MultilineLabel(content: @_html)
 		else

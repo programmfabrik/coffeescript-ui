@@ -31,7 +31,15 @@ class CUI.Table extends CUI.DOM
 					txt = col.text
 				else
 					txt = col.name
-				th = $th("cui-table-th "+col.class)
+				if col.name
+					col.__class = " cui-td--"+col.name
+				else
+					col.__class = ""
+
+				if not isEmpty(col.class)
+					col.__class += " "+col.class
+
+				th = $th("cui-table-th "+col.__class)
 				th.textContent = txt
 				header.appendChild(th)
 
@@ -105,7 +113,7 @@ class CUI.Table extends CUI.DOM
 	addRow: (row) ->
 		tr = $tr("cui-table-row")
 		for col in @__columns
-			td = $td("cui-table-td "+col.class)
+			td = $td("cui-table-td"+col.__class)
 			CUI.DOM.append(td, row[col.name])
 			tr.appendChild(td)
 		@__table.appendChild(tr)
