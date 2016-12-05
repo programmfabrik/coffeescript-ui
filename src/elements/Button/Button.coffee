@@ -37,6 +37,10 @@ class CUI.Button extends CUI.DOM
 
 		super(@opts)
 
+		if @_tooltip
+			if @_tooltip.text or @_tooltip.content
+				@__tooltipOpts = @_tooltip
+
 		tname = @getTemplateName()
 		# getTemplateName, also sets has_left / has_right
 
@@ -612,10 +616,6 @@ class CUI.Button extends CUI.DOM
 			assert(isUndef(@opts.radio_allow_null), "new Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
 
 		super()
-
-		if @_tooltip
-			if @_tooltip.text or @_tooltip.content
-				@__tooltipOpts = @_tooltip
 
 		if @_left
 			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
