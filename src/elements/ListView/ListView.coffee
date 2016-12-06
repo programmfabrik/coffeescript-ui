@@ -920,14 +920,14 @@ class CUI.ListView extends CUI.SimplePane
 
 		if not @__maximize_horizontal or not @__maximize_vertical
 			dim = DOM.getDimensions(@DOM[0])
-			if @__layoutDim
-				if @__layoutDim.clientWidth != dim.clientWidth or
-					@__layoutDim.clientHeight != dim.clientHeight
-						# CUI.debug "ListView[#{@listViewCounter}]: dim changed, triggering content-resize."
-						Events.trigger
-							type: "content-resize"
-							exclude_self: true
-							node: @DOM
+			if not @__layoutDim or
+				@__layoutDim.clientWidth != dim.clientWidth or
+				@__layoutDim.clientHeight != dim.clientHeight
+					# CUI.debug "ListView[#{@listViewCounter}]: dim changed, triggering content-resize."
+					Events.trigger
+						type: "content-resize"
+						exclude_self: true
+						node: @DOM
 
 			@__layoutDim = dim
 
@@ -942,9 +942,9 @@ class CUI.ListView extends CUI.SimplePane
 
 		# console.debug "ListView##{@listViewCounter}.__doNextGenLayout..."
 
-		if @grid.clientWidth == 0 or @grid.clientHeight == 0
-			console.warn("ListView##{@listViewCounter}.__doNextGenLayout: clientWidth or clientHeight is 0, not layouting.")
-			return
+		# if @grid.clientWidth == 0 or @grid.clientHeight == 0
+		# 	console.warn("ListView##{@listViewCounter}.__doNextGenLayout: clientWidth or clientHeight is 0, not layouting.")
+		# 	return
 
 		# console.error "doing next gen layout", @listViewCounter
 
