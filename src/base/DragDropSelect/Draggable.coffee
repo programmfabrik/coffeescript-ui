@@ -278,9 +278,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 				return
 
 		end_drag = (ev, stop = false) =>
+			start_target = globalDrag.$source
+			start_target_parents = CUI.DOM.parents(start_target)
 
 			globalDrag.ended = true
-
 
 			if stop
 				globalDrag.stopped = true
@@ -290,17 +291,27 @@ class CUI.Draggable extends CUI.DragDropSelect
 				@end_drag(ev)
 				@_dragend?(ev, globalDrag, @)
 
-			if not globalDrag.noClickHandlerKill
-				Events.listen
-					type: "click"
-					capture: true
-					only_once: true
-					node: window
-					call: (ev) ->
-						console.error "Killing click after drag"
-						return ev.stop()
+			noClickKill = globalDrag.noClickKill
 
 			@__cleanup()
+
+			if noClickKill
+				return
+
+			parents_now = CUI.DOM.parents(start_target)
+			for p, idx in start_target_parents
+				if parents_now[idx] != p
+					return
+
+			Events.listen
+				type: "click"
+				capture: true
+				only_once: true
+				node: window
+				call: (ev) ->
+					console.error "Killing click after drag"
+					return ev.stop()
+
 			return
 
 

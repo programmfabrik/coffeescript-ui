@@ -1190,13 +1190,14 @@ CUI.ready ->
 		type: ["keyup"]
 		node: document.body
 		call: (ev) ->
-			# console.error ev.getType(), ev
 
 			if ev.keyCode() != 27 or window.globalDrag
 				return
 
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root > .cui-layer")
 			layer_element = layer_elements[layer_elements.length-1]
+
+			# console.error ev.getType(), ev, layer_elements
 
 			if not layer_element
 				return
@@ -1205,7 +1206,7 @@ CUI.ready ->
 
 			# console.error ev.getType(), ev, element, ev.getTarget()
 
-			if (element in [layer_element, document.body])
+			if (element in [layer_element])
 				# ignore this
 				return
 
