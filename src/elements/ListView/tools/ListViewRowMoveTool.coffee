@@ -101,6 +101,8 @@ class ListViewRowMoveTool extends ListViewHoverTool
 
 		row_rect = @lV.getRowGridRect(cell.row_i)
 
+		# console.warn "row rect", cell.row_i, row_rect
+
 		if @info.cell.display_row_i > 0
 			@target.before_row_i = @lV.getRowIdx(@info.cell.display_row_i-1)
 		if @info.cell.display_row_i < @lV.rowsCount-1

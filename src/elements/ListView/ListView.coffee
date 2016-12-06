@@ -725,6 +725,8 @@ class CUI.ListView extends CUI.SimplePane
 			left: _rect.left - _pos_grid.left
 			top: _rect.top - _pos_grid.top
 
+		# console.warn _rect.top, _pos_grid.top, _cell
+
 		# rect.rect = _rect
 		rect.width = cell.outerWidth(true)
 		rect.height = cell.outerHeight(true)
@@ -733,9 +735,35 @@ class CUI.ListView extends CUI.SimplePane
 		rect
 
 	getRowGridRect: (row_i) ->
-		rect = @getCellGridRect(0, row_i)
+		_rect =
+			width: 0
+
+		for row in @__rows[row_i]
+			dim = CUI.DOM.getDimensions(row)
+			_rect.width = _rect.width + dim.borderBoxWidth
+
+			if not _rect.hasOwnProperty("height")
+				_rect.height = dim.borderBoxHeight
+				_rect.top = dim.clientBoundingRect.top
+
+			if not _rect.hasOwnProperty("left")
+				_rect.left = dim.clientBoundingRect.left
+
+		_pos_grid = @grid.offset()
+
+		rect =
+			left_abs: _rect.left
+			top_abs: _rect.top
+			left: _rect.left - _pos_grid.left
+			top: _rect.top - _pos_grid.top
+			height: _rect.height
+
 		rect.width = @getGrid().width()
-		rect
+		return rect
+
+		# rect = @getCellGridRect(0, row_i)
+		# rect.width = @getGrid().width()
+		# rect
 
 	appendRow: (row, _defer=!@grid) ->
 		if _defer
