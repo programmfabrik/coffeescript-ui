@@ -10,4 +10,4 @@
 |	center	|	<dt>&lt;PlainObject&gt;	|	{}	|	no	|	&nbsp;	|
 
 
-@@include(../../core/dom/dom_p.md)
+@@include(../../../core/dom/dom_p.md)

@@ -208,7 +208,7 @@ highlight:
 demo: font_awesome
 	$(MAKE) --directory demo all
 
-code: $(easydbui_js) $(thirdparty_files) html font_awesome
+code: $(easydbui_js) $(thirdparty_files) html font_awesome highlight
 	cp src/scss/icons/icons.svg $(target)/icons.svg
 	cp src/scss/icons/inherit.svg $(target)/inherit.svg
 	cp src/scss/icons/remove-icon.svg $(target)/remove-icon.svg
