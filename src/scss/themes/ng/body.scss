@@ -188,6 +188,7 @@ textarea {
 	-webkit-appearance: none;
 	        appearance: none;
 	width: 100%;
+	min-width: 150px;
 	font-size: 12px;
 	border: 1px solid $input-border;
 	border-radius: 0;
@@ -905,6 +906,7 @@ i.cui-spin-stepped {
 	justify-content: center;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
+	max-width: 100%;
 	
 	.cui-button-visual {
 	  padding: 0 $padding;
@@ -1346,12 +1348,14 @@ a[role="button"].cui-button-appearance-link {
 	display: inline-flex;
 	flex: 0 0 auto;
 	align-items: center;
+	max-width: 100%;
 
 	&.cui-tmpl-label-rotate-90 {
 		align-items: flex-end;
 		white-space: nowrap;
 		margin: $padding/2 0;
 		flex-shrink: 0;
+		max-width: none;
 		
 		&:before {
 			content: "";
@@ -1872,6 +1876,20 @@ a[role="button"].cui-button-appearance-link {
 					}
 				}
 			}
+
+			// adding spacing to textareas in the body
+			> .cui-data-field {
+				margin-left: $padding;
+				margin-right: $padding;
+				
+				&:first-child {
+					margin-top: $compensating-padding;
+				}
+
+				&:last-child {
+					margin-bottom: $compensating-padding;
+				}
+			}
 		}
 
 		// layer-footer
@@ -1884,6 +1902,10 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-toolbar {
 		min-height: $toolbar-height;
+	}
+	
+	.cui-empty-label {
+		max-width: 540px;
 	}
 
 	.cui-form-table {
@@ -2040,7 +2062,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// Confirmation
+// Confirmation Dialog
+.cui-confirmation-dialog .cui-layer {
+	max-width: 500px;
+}
+
+// Confirmation Choice, Alert
 
 .cui-confirmation-dialog .cui-alert,
 .cui-confirmation-choice .cui-layer {
@@ -2208,11 +2235,6 @@ a[role="button"].cui-button-appearance-link {
 			flex-grow: 1;
 		}
 	}
-}
-
-// Confirmation Dialog
-.cui-confirmation-dialog .cui-layer {
-	max-width: 500px;
 }
 
 // Alert Problem (red)
@@ -2990,6 +3012,7 @@ $table-data-padding: 4px;
 	display: flex;
 	flex: 1 1 auto;
 	max-width: 100%;
+	align-self: center;
 }
 
 .cui-tree-node-handle,
@@ -3038,15 +3061,15 @@ $table-data-padding: 4px;
 // Table
 .cui-table {
 	display: table;
-	border: 1px solid $table-border;
+	// border: 1px solid $table-border;
 }
 
 .cui-tr {
 	display: table-row;
 	
-	&:nth-child(odd) {
-		background: $zebra-color;
-	}
+	// &:nth-child(odd) {
+	// 	background: $zebra-color;
+	// }
 
 	&.cui-table-header {
 		background: transparent;
@@ -3057,6 +3080,7 @@ $table-data-padding: 4px;
 .cui-td {
 	display: table-cell;
 	padding: $padding/2 $padding;
+	vertical-align: top;
 	
 	&[colspan]{		
 		> label,
@@ -3107,6 +3131,12 @@ $table-data-padding: 4px;
 	}
 }
 
+// Table Row Base-Widths
+
+.cui-td--url textarea {
+	width: 200px;	
+}
+
 .status-2d-map {
 	.cui-tr {
 		&:nth-child(odd):not(:first-child) {
@@ -3152,6 +3182,10 @@ $table-data-padding: 4px;
 	
 	.cui-tr {
 		display: table-row;
+		
+		&:nth-child(2n+1) {
+			background: none;
+		}
 	}
 	
 	.cui-th,
@@ -3221,95 +3255,6 @@ $table-data-padding: 4px;
 	}
 }
 
-// [cui-form-depth="0"] > .cui-form-tr-header,
-// .cui-form-table-has-left-column .cui-form-tr-content-is-form-vertical > .cui-form-left {
-// 	width: auto;
-// 	padding: 3*$padding 0 $padding/2;
-// 	margin: 0 $padding;
-// 	border-bottom: 1px solid hsl(205,10%,95%);
-// 	text-align: left;
-
-// 	.cui-label,
-// 	label {
-// 		font-weight: bold;
-// 	}
-
-// 	.cui-form-left {
-// 		padding: 0;
-// 	}
-
-// 	.cui-form-center {
-// 		display: none;
-// 	}
-
-// 	& + .cui-form-tr:before {
-// 		display: none;
-// 	}
-// }
-
-// .cui-form-tr.cui-form-tr-content-is-form-vertical {
-// 	flex-direction: column;
-// 	padding: 0;
-	
-// 	.cui-form-table[cui-form-depth="2"] > .cui-form-tr {
-// 		&:before {
-// 			left: $padding*2.5;
-// 		}
-
-// 		> .cui-form-left {
-// 			padding-left: $padding*2.5;
-// 		}
-// 	}
-	
-// 	.cui-form-table[cui-form-depth="3"] > .cui-form-tr {
-// 		&:before {
-// 			left: $padding*5;
-// 		}
-
-// 		> .cui-form-left {
-// 			padding-left: $padding*5;
-// 		}
-// 	}
-
-// 	> .cui-form-center {
-// 		padding: 0 $padding/2;
-		
-// 		.cui-data-field {
-// 			max-width: none;
-// 		}
-
-// 		.cui-table {
-// 			.cui-form-left {
-// 				width: auto !important;
-// 				padding: 0 0 0 10px;
-	
-// 				&:empty {
-// 					display: none;
-// 				}
-// 			}
-
-// 			.cui-form-center {
-// 				padding-right: 0;
-// 			}
-// 		}
-// 	}
-// }
-
-// // hacky 1px line instead of empty form-left that shouln't be here
-// [cui-form-depth="1"] .cui-form-tr-content-is-form-vertical:not(.cui-form-table-has-left-column){
-// 	> .cui-form-left {
-// 		height: 1px;
-// 		margin: 0 $padding;
-// 		padding: 0;
-// 		overflow: hidden;
-// 		background: hsl(205,10%,95%);
-		
-// 		&:before {
-// 			display: none;
-// 		}
-// 	}
-// }
-
 .cui-form-table-has-not-right-column {
 	> .cui-form-tr > .cui-form-td.cui-form-right {
 		display: none;
@@ -3338,6 +3283,7 @@ $table-data-padding: 4px;
 
 .cui-data-field {
 	flex: 1;
+	max-width: 100%;
 	
 	.cui-list-view-grid-quadrant-3 {
 		min-height: 3*$table-data-height; // for when using empty lists that can get filled
@@ -3856,23 +3802,23 @@ $table-data-padding: 4px;
 
 .cui-droppable-target-helper {
 	//overwrite any other animation, its just temporary
-	transition: transform 210ms ease !important;
+	transition: transform 300ms ease !important;
 }
 
 .cui-droppable-target-helper-y--after {
-	transform: translateY(-30%);
+	transform: translateY(-25%);
 }
 
 .cui-droppable-target-helper-y--before {
-	transform: translateY(30%);
+	transform: translateY(25%);
 }
 
 .cui-droppable-target-helper-x--after {
-	transform: translateX(-30%);
+	transform: translateX(-25%);
 }
 
 .cui-droppable-target-helper-x--before {
-	transform: translateX(30%);
+	transform: translateX(25%);
 }
 
 // Movable
@@ -3977,6 +3923,10 @@ $table-data-padding: 4px;
 
 .cui-block {
 	border-bottom: 1px solid hsl(180,9%,93%);
+	
+	&:last-child {
+		border-bottom-width: 0;
+	}
 
 	&.cui-block-level-1 {
 		> .cui-block-header {
