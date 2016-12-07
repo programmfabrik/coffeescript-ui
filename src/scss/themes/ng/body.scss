@@ -185,9 +185,12 @@ body {
 
 input,
 textarea {
+	-webkit-appearance: none;
+	        appearance: none;
 	width: 100%;
 	font-size: 12px;
 	border: 1px solid $input-border;
+	border-radius: 0;
 	border-top-color: darken($input-border, 3%);
 	background: $foreground;
 	font-family: inherit;
@@ -1489,6 +1492,7 @@ a[role="button"].cui-button-appearance-link {
     border-radius: 3px;
     border: none;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   hr {
@@ -1842,6 +1846,7 @@ a[role="button"].cui-button-appearance-link {
 		// layer-body
 		> .cui-vertical-layout-center {
 			overflow: auto;
+			-webkit-overflow-scrolling: touch;
 
 			// add spacing to single labels in the body
 			// 
@@ -2255,6 +2260,7 @@ a[role="button"].cui-button-appearance-link {
 	min-width: 0;
 	min-height: 0;
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 	background: $layer-background;
 	border-radius: 2px;
 	box-shadow:
@@ -2301,6 +2307,7 @@ a[role="button"].cui-button-appearance-link {
   padding: 4px 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 
 	.cui-item-list {
 		font-size: inherit;
@@ -2541,6 +2548,7 @@ a[role="button"].cui-button-appearance-link {
 	display: flex;
 	flex-direction: column;
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 	
 	&.cui-tab-hidden {
 		display: none;
@@ -2711,6 +2719,7 @@ $table-data-padding: 4px;
 	flex-direction: column;
 	position: relative;
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 .cui-list-view-grid-quadrant-0,
@@ -2824,6 +2833,7 @@ $table-data-padding: 4px;
 .cui-list-view-grid-quadrant-3 {
 	flex: 1 1 auto;
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 .cui-list-view-grid-quadrant-2,
@@ -3844,6 +3854,27 @@ $table-data-padding: 4px;
 	pointer-events: none;
 }
 
+.cui-droppable-target-helper {
+	//overwrite any other animation, its just temporary
+	transition: transform 210ms ease !important;
+}
+
+.cui-droppable-target-helper-y--after {
+	transform: translateY(-30%);
+}
+
+.cui-droppable-target-helper-y--before {
+	transform: translateY(30%);
+}
+
+.cui-droppable-target-helper-x--after {
+	transform: translateX(-30%);
+}
+
+.cui-droppable-target-helper-x--before {
+	transform: translateX(30%);
+}
+
 // Movable
 .cui-drag-drop-select-movable {
 	cursor: move;
@@ -4114,6 +4145,7 @@ $table-data-padding: 4px;
 .cui-tmpl-autocompletion-popup {
 	flex: 1;
 	overflow: auto;	
+	-webkit-overflow-scrolling: touch;
 }
 
 .cui-autocompletion-popup {
