@@ -31,13 +31,6 @@ class CUI.Table extends CUI.DOM
 					txt = col.text
 				else
 					txt = col.name
-				if col.name
-					col.__class = " cui-td--"+col.name
-				else
-					col.__class = ""
-
-				if not isEmpty(col.class)
-					col.__class += " "+col.class
 
 				th = $th("cui-table-th "+col.__class)
 				th.textContent = txt
@@ -101,13 +94,22 @@ class CUI.Table extends CUI.DOM
 			@_header = false
 			@__columns = [
 				name: "key"
-				class: "cui-td--key"
 			,
 				name: "value"
-				class: "cui-td--value"
 			]
 		else
 			@__columns = @_columns
+
+
+		for col in @__columns
+			if col.name
+				col.__class = " cui-td--"+col.name
+			else
+				col.__class = ""
+
+			if not isEmpty(col.class)
+				col.__class += " "+col.class
+
 		@
 
 	addRow: (row) ->
