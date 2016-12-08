@@ -71,9 +71,12 @@ class CUI.Events extends CUI.Element
 			node.setAttribute("cui-events-listener-element", "cui-events-listener-element")
 		@
 
-	@getActiveListeners: ->
-		listeners = @__listeners.slice(0)
-		for el in CUI.DOM.matchSelector(document, "[cui-events-listener-element]")
+	@getActiveListeners: (doc=document) ->
+		if doc == document
+			listeners = @__listeners.slice(0)
+		else
+			listeners = []
+		for el in CUI.DOM.matchSelector(doc, "[cui-events-listener-element]")
 			listeners.push.apply(listeners, DOM.data(el, "listeners"))
 		listeners
 
@@ -265,9 +268,9 @@ class CUI.Events extends CUI.Element
 		return CUI.when(waits)
 
 
-	@ignore: (filter) ->
+	@ignore: (filter, doc=document) ->
 		# CUI.debug "Events.ignore?", filter, listener.getTypes()
-		for listener in @getActiveListeners()
+		for listener in @getActiveListeners(doc)
 			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
 				# CUI.info("Events.ignore", filter, listener.getTypes())
 				listener.destroy()
