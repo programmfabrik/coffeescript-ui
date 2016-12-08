@@ -3951,6 +3951,8 @@ $table-data-padding: 4px;
 .cui-sticky-header {
 	padding: 4px $padding;
 	font-size: 11px;
+	font-weight: bold;
+	color: hsl(205,20%,20%);
 	height: 22px;
 	margin-bottom: $padding;
 
