@@ -265,12 +265,14 @@ class FormPopover extends Form
 
 	__triggerDataChanged: ->
 		if @__dataChanged
-			Events.trigger
-				type: "data-changed"
-				node: @__button
-				info: @__dataChanged
-
+			@triggerDataChanged()
 		@__dataChanged = null
+
+	triggerDataChanged: ->
+		Events.trigger
+			type: "data-changed"
+			node: @__button
+			info: @__dataChanged
 
 	disable: ->
 		super()
