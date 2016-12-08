@@ -188,7 +188,7 @@ textarea {
 	-webkit-appearance: none;
 	        appearance: none;
 	width: 100%;
-	min-width: 150px;
+	min-width: 100px;
 	font-size: 12px;
 	border: 1px solid $input-border;
 	border-radius: 0;
@@ -212,6 +212,7 @@ textarea {
 
 input {
 	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 [max-chars] {
@@ -1833,9 +1834,6 @@ a[role="button"].cui-button-appearance-link {
 	box-shadow:
 		0 4px 20px hsla(205,5%,30%,.4),
 		0 2px 4px hsla(0,0%,0%,.1);
-	// box-shadow:
-	// 	0 0 0 1px hsla(0,0%,0%,0.1),
-	// 	0 7px 14px hsla(0,0%,0%,0.1);
 	
 	> .cui-simple-pane,
 	> .cui-pane {
@@ -1877,17 +1875,10 @@ a[role="button"].cui-button-appearance-link {
 				}
 			}
 
-			// adding spacing to textareas in the body
+			// adding spacing to data-fields in the body
 			> .cui-data-field {
-				margin-left: $padding;
-				margin-right: $padding;
-				
-				&:first-child {
-					margin-top: $compensating-padding;
-				}
-
-				&:last-child {
-					margin-bottom: $compensating-padding;
+				&:only-child {
+					margin: $compensating-padding $padding;
 				}
 			}
 		}
@@ -2589,7 +2580,7 @@ a[role="button"].cui-button-appearance-link {
 		min-width: 40px;
 		padding: 0 $padding;
 		border-radius: 0;
-		border: 1px solid hsl(205,15%,43%);	
+		border: 1px solid;	
 	}
 
 	&.cui-button-size-mini {
@@ -2931,10 +2922,13 @@ $table-data-padding: 4px;
 
 .cui-list-view-row-move-handle-column {
 	display: none;
-	padding-top: ($table-data-height - 12px) / 2;
 	
 	&:after {
 		display: none;
+	}
+
+	.cui-drag-handle-row {
+		margin-top: 2px;
 	}
 
 	&.cui-lv-td {
@@ -3133,8 +3127,8 @@ $table-data-padding: 4px;
 
 // Table Row Base-Widths
 
-.cui-td--url textarea {
-	width: 200px;	
+.cui-td--url input {
+	width: 200px;
 }
 
 .status-2d-map {
@@ -4054,6 +4048,8 @@ $table-data-padding: 4px;
 }
 
 .cui-file-upload-progress-meter {
+	align-items: center;
+	
 	.cui-progress-meter {
 		width: 100%;
 	}
