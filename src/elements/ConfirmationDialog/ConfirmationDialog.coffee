@@ -56,9 +56,9 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			@addClass("cui-confirmation-dialog--no-title")
 
 		if not isEmpty(@_text)
-			c = new MultilineLabel(markdown: @_markdown, text: @_text, icon: @_text_icon)
+			@__label = c = new MultilineLabel(markdown: @_markdown, text: @_text, icon: @_text_icon)
 		else if not isEmpty(@_html)
-			c = new MultilineLabel(content: @_html)
+			@__label = c = new MultilineLabel(content: @_html)
 		else
 			c = @_content
 
@@ -76,9 +76,13 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			pane.append(content, key)
 		return
 
+	updateText: (txt) ->
+		@__label?.setText(txt)
+		@
+
 	setText: (text, markdown = @_markdown) ->
-		c = new MultilineLabel(markdown: markdown, text: text)
-		@getPane().replace(c, "content")
+		@__label = new MultilineLabel(markdown: markdown, text: text, icon: @_text_icon)
+		@getPane().replace(@__label, "content")
 
 	getButtons: ->
 		[pane, key] = @getPane().getPaneAndKey("footer_right")
