@@ -45,6 +45,10 @@ class CUI.XHR extends CUI.Element
 				mandatory: true
 				default: {}
 				check: "PlainObject"
+			withCredentials:
+				mandatory: true
+				default: false
+				check: Boolean
 		@
 
 
@@ -63,6 +67,8 @@ class CUI.XHR extends CUI.Element
 	readOpts: ->
 		super()
 		@__xhr = new XMLHttpRequest()
+		@__xhr.withCredentials = @_withCredentials
+
 		# CUI.debug "XHR.readOpts", @
 		@__readyStatesSeen = [@readyState()]
 		@__registerEvents("download")
