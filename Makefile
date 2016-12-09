@@ -68,6 +68,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ConfirmationChoice/ConfirmationChoice.coffee \
 	src/elements/ConfirmationChoice/Alert.coffee \
 	src/elements/ConfirmationChoice/Toaster.coffee \
+	src/elements/ConfirmationChoice/Spinner.coffee \
 	src/elements/ConfirmationChoice/Confirm.coffee \
 	src/elements/ConfirmationChoice/Prompt.coffee \
 	src/elements/Popover/Popover.coffee \
