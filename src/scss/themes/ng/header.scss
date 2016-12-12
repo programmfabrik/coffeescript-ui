@@ -6,3 +6,133 @@
 */
 
 // header for "ng*"
+
+$padding: 10px;
+// compensating padding compensates for line-height
+$compensating-padding: 7px;
+$gap: 12px;
+$small-gap: 7px;
+$background: hsl(205,2%,97%);
+$foreground: white;
+$border: hsl(205,20%,83%);
+$soft-border: hsl(205,20%,91%);
+
+$button-background: white;
+$button-text-color: hsl(205,10%,34%);
+$button-border: hsl(205,10%,75%);
+$button-radius: 4px;
+
+$input-border: hsl(205,20%,79%);
+
+$drag-handle-color: hsl(205,10%,75%);
+
+$highlight-color: hsl(205,100%,45%);
+$row-highlight: hsl(201,82%,92%);
+$on-highlight-color: white;
+$on-highlight-muted-color: hsl(205,50%,85%);
+
+$secondary-color: hsl(205,5%,45%);
+$muted-color: hsl(205,5%,60%);
+$disabled-color: hsl(205,7%,73%);
+
+// Table Colors
+$zebra-color: hsl(205,10%,98%);
+$table-border: hsl(205,8%,90%);
+$table-header-border: hsl(205,8%,94%);
+
+$error-color: hsl(10,90%,52%);
+$neutral-color: hsl(150,77%,50%);
+$positive-color: hsl(56,100%,60%);
+
+$toolbar-background: hsl(205,2%,97%);
+$toolbar-height: 34px;
+
+$layer-header-pointer-background: $toolbar-background;
+$layer-header-background: $toolbar-background;
+$layer-header-border: hsl(204,22%,91%);
+
+$layer-background: hsl(0,0%,100%);
+
+$layer-footer-background: $layer-header-background;
+$layer-footer-border: $layer-header-border;
+
+@mixin ellipsis(){
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin margin($factor: 1) {
+	margin-bottom: $padding * $factor;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@mixin margin-top($factor: 1) {
+	margin-top: $padding * $factor;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+@mixin padding($factor: 1) {
+	padding: $padding * $factor;
+}
+
+@mixin padding-y($factor: 1) {
+	padding-top: $padding * $factor;
+	padding-bottom: $padding * $factor;
+}
+
+// Flex for selected TABLE
+@mixin flex-table() {
+	display: flex; // yes, this is fun :)
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	flex-direction: column;
+
+	> tr {
+		display: flex; // yes, this is fun :)
+		box-sizing: border-box;
+		flex: 1 1 auto;
+
+		> td {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 0 0 auto;
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+}
+
+@mixin focus() {
+	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin inner-focus() {
+	box-shadow: 0 0 0 3px lighten($highlight-color, 40%) inset;
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin border-focus() {
+	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
+	border-color: $highlight-color;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin button-reset() {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  border-radius: 0;
+  height: auto;
+  line-height: inherit;
+}
