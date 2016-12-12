@@ -1632,7 +1632,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// Buttonbar
+// Buttonbar Group
 .cui-buttonbar-group {
 	display: flex;
 	align-self: stretch; // use full height for bigger click area for buttons (example: tabs)
@@ -1675,6 +1675,10 @@ a[role="button"].cui-button-appearance-link {
 		&.cui-active {
 			z-index: 1;
 		}
+	}
+
+	> .cui-active + .cui-button:hover {
+		z-index: initial;
 	}
 
 	.cui-label {
@@ -2257,6 +2261,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// Spinner
+.cui-spinner {
+	min-width: 0;
+}
+
 // Tooltip
 .cui-layer-root-tooltip .cui-layer-pointer {
 	width: $padding / 2;
@@ -2588,7 +2597,7 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-button-visual {
 			height: 24px;
-			line-height: 22px;
+			line-height: 23px;
 		}
 	}
 
@@ -3394,6 +3403,7 @@ $table-data-padding: 4px;
 	.cui-options-sortable-drag-handle {
 		width: 16px;
 		display: flex;
+		flex-shrink: 0;
 		margin-right: 2px;
     padding: 0 4px 0 0;
     
@@ -3442,6 +3452,10 @@ $table-data-padding: 4px;
 	// 	margin-right: $padding/2;
 	// 	display: flex;
 	// }
+	
+	.cui-data-field {
+		max-width: none;
+	}
 }
 
 .cui-drag-handle-row {
