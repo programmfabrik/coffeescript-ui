@@ -492,17 +492,29 @@ class CUI
 	@clearLocalStorage: ->
 		@__clearStorage("localStorage")
 
+	@__storage: localStorage: null, sessionStorage: null
+
 	@__setStorage: (skey, key, value) ->
 		data = @__getStorage(skey)
 		if value == undefined
 			delete(data[key])
 		else
 			data[key] = value
-		window[skey].setItem("CUI", JSON.stringify(data))
+		try
+			window[skey].setItem("CUI", JSON.stringify(data))
+		catch e
+			console.warn("CUI.__setStorage: Storage not available.", e)
+			@__storage[skey] = JSON.stringify(data)
 		data
 
+
 	@__getStorage: (skey, key = null) ->
-		data_json = window[skey].getItem("CUI")
+		try
+			data_json = window[skey].getItem("CUI")
+		catch e
+			console.warn("CUI.__getStorage: Storage not available.", e)
+			data_json = @__storage[skey]
+
 		if data_json
 			data = JSON.parse(data_json)
 		else
@@ -514,7 +526,11 @@ class CUI
 			data
 
 	@__clearStorage: (skey) ->
-		window[skey].removeItem("CUI")
+		try
+			window[skey].removeItem("CUI")
+		catch e
+			console.warn("CUI.__clearStorage: Storage not available.", e)
+			@__storage[skey] = null
 
 	@encodeUrlData: (params, replacer = null, connect = "&", connect_pair = "=") ->
 		url = []
