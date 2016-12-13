@@ -3201,7 +3201,6 @@ $table-data-padding: 4px;
 	}
 
 	.cui-form-left {
-		padding: 4px $padding;
 		line-height: 24px;
 		text-align: right;
 		@include ellipsis;
@@ -3310,6 +3309,14 @@ $table-data-padding: 4px;
 	.cui-button {
 		height: 20px;
 		line-height: 20px;
+	}
+
+	.cui-data-field {
+		margin-bottom: 2px;
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 }
 
