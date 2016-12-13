@@ -105,10 +105,10 @@ input {
 }
 
 // damp max-chars > 10
-// e.g. max-chars 30 = 24ch
+// e.g. max-chars 30 = 26ch
 @for $i from 10 through 40 {
 	[max-chars="#{$i}"] {
-		width: #{$i - $i*0.2}ch;
+		width: #{$i*(1 - ($i - 10)/30*0.2)}ch;
 	}
 }
 
