@@ -3116,6 +3116,7 @@ $table-data-padding: 4px;
 
 .cui-form-center {
 	flex-grow: 1;
+	vertical-align: middle;
 }
 
 .cui-form-tr-content-is-form-vertical {
@@ -3179,7 +3180,13 @@ $table-data-padding: 4px;
 }
 
 .cui-data-field-output-label {
-	line-height: 24px;
+	.cui-label-content {
+		white-space: normal;
+	}
+}
+
+.cui-output-empty {
+	color: $muted-color;
 }
 
 .cui-data-field-hidden {
@@ -4036,14 +4043,17 @@ $table-data-padding: 4px;
 // Space
 .cui-space {
 	width: 10px;
+	height: 10px;
 }
 
 .cui-small-space {
 	width: 5px;
+	height: 5px;
 }
 
 .cui-large-space {
 	width: 20px;
+	height: 20px;
 }
 
 .cui-flexible-space {
