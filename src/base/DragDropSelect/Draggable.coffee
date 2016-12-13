@@ -321,6 +321,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 			capture: true
 			instance: @__ref
 			call: (ev) =>
+				if not globalDrag.dragStarted
+					@__cleanup()
+					return
+
 				if ev.keyCode() == 27
 					# console.error "stopped.."
 					end_drag(ev, true)
