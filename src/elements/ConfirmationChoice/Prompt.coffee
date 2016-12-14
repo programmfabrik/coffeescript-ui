@@ -13,6 +13,13 @@ class CUI.Prompt extends CUI.Confirm
 			default:
 				default: ""
 				check: String
+			placeholder:
+				check: String
+			min_length:
+				mandatory: true
+				default: 1
+				check: (v) =>
+					v >= 0
 
 	readOpts: ->
 		if not @opts.hasOwnProperty("cancel")
@@ -34,6 +41,7 @@ class CUI.Prompt extends CUI.Confirm
 			,
 				type: Input
 				name: "input"
+				placeholder: @_placeholder
 				data: @__data
 				onConstruct: (@__input) =>
 				onKeyup: (inp, ev) =>
@@ -63,7 +71,7 @@ class CUI.Prompt extends CUI.Confirm
 
 	__checkOkBtn: =>
 		buttons = @getButtons()
-		if @__data.input.trim().length > 0
+		if @__data.input.trim().length >= @_min_length
 			buttons[1].enable()
 		else
 			buttons[1].disable()
