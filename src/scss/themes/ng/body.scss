@@ -80,11 +80,6 @@ textarea {
 	}
 }
 
-input {
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
 [max-chars] {
 	box-sizing: content-box;
 	text-align: center;
@@ -1606,6 +1601,26 @@ a[role="button"].cui-button-appearance-link {
 		&:focus {
 			@include border-focus;
 		}
+
+		&::-webkit-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::-moz-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&:-ms-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::-ms-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::placeholder {
+			color: $input-placeholder;
+		}
 	}
 
 	textarea {
@@ -2886,7 +2901,6 @@ $table-data-padding: 4px;
 	display: flex;
 	flex: 1 1 auto;
 	max-width: 100%;
-	align-self: center;
 }
 
 .cui-tree-node-handle,
