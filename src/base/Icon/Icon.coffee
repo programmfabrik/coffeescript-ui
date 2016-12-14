@@ -109,6 +109,7 @@ class CUI.Icon extends CUI.Element
 		folder_shared_upload: "svg-folder-shared-upload"
 		menu: "fa-bars"
 		info: "fa-info-circle"
+		info_circle: "svg-info-circle"
 		bolt: "fa-bolt"
 		check: "fa-check"
 		warning: "fa-warning"
