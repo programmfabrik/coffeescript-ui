@@ -306,7 +306,7 @@ class CUI.DataField extends CUI.DOM
 		if @isDisabled()
 			@disable()
 		if @isHidden()
-			@hide(true)
+			@hide()
 		@setOpacity()
 		@callOnOthers("render")
 		@_onRender?(@)
