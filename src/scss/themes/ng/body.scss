@@ -2752,8 +2752,9 @@ $table-data-padding: 4px;
 			background: $zebra-color;
 			
 			// also apply background to the cell for overflow
+			.cui-lv-tr,
 			.cui-lv-td {
-				background: $zebra-color;
+				background: inherit;
 			}
 			
 			.cui-label-manage-overflow-button-container {
@@ -3867,6 +3868,7 @@ $table-data-padding: 4px;
 	color: hsl(205,20%,20%);
 	height: 22px;
 	margin-bottom: $padding;
+	flex-basis: 100%;
 
 	&:not(:first-child) {
 		margin-top: $padding*2;
