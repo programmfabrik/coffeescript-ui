@@ -2560,6 +2560,12 @@ $table-data-padding: 4px;
 	}
 }
 
+.list-view-header-row {
+	.cui-label {
+		align-items: flex-end;
+	}
+}
+
 .cui-tmpl-list-view-tool-row-move-target {
 	height: 4px;
 	background: $highlight-color;
