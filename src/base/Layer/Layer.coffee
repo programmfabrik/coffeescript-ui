@@ -1179,8 +1179,7 @@ CUI.ready ->
 						only_once: true
 						call: (ev) =>
 							console.error "eating click on layer opening element"
-							ev.stopPropagation()
-							return
+							return ev.stop()
 
 				ev.cui_layer_closed = true
 
