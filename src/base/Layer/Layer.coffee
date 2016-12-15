@@ -334,7 +334,7 @@ class CUI.Layer extends CUI.DOM
 	position: (ev) ->
 		#
 		if not @isShown()
-			return
+			return @
 
 		dim_window = CUI.DOM.getDimensions(window)
 
@@ -867,7 +867,7 @@ class CUI.Layer extends CUI.DOM
 
 		if CUI.__ng__ and placement == "c" and not @__backdrop_crop
 			# in "ng" we position this by pure CSS
-			return
+			return @
 
 		# set layer
 		CUI.DOM.setStyle @__layer.DOM,
@@ -905,7 +905,7 @@ class CUI.Layer extends CUI.DOM
 		# We could re-read the layer width & height here to actually
 		# set it in Style. By doing that we could have support for transitions
 		# when Layer content size changes.
-		return
+		return @
 
 	__removeDebugDivs: ->
 		@__dbg_div1?.remove()

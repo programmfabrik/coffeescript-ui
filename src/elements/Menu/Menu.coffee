@@ -118,8 +118,13 @@ class CUI.Menu extends CUI.Layer
 
 	# return button if part of a button
 	getButton: ->
-		DOM.data(@getElement()?[0], "element")
-
+		element = @getOpt("element")
+		if element instanceof CUI.Button
+			return element
+		button = DOM.data(element.DOM or element, "element")
+		if button instanceof CUI.Button
+			return button
+		null
 
 
 Menu = CUI.Menu
