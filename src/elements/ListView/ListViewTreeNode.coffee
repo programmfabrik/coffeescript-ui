@@ -223,7 +223,6 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@do_open = false
 
 		if remove_self
-
 			if @element
 				if @getRowIdx() == null
 					if not @isRoot()
@@ -719,7 +718,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	update: (update_root=false) =>
 		# CUI.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
-		if @isRoot() and not update_root
+		if @isRoot() and not update_root or not @element
 			# dont update root
 			return
 
