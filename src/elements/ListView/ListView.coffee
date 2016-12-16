@@ -315,7 +315,7 @@ class CUI.ListView extends CUI.SimplePane
 			@_onScroll?()
 
 		Events.listen
-			node: $(@quadrant[3])
+			node: @quadrant[3]
 			type: "scroll"
 			call: on_scroll
 			# (ev) =>
@@ -346,7 +346,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		Events.listen
 			type: "wheel"
-			node: $(@quadrant[2])
+			node: @quadrant[2]
 			call: (ev) =>
 				ev.preventDefault()
 				if ev.wheelDeltaY() > 0
@@ -903,7 +903,7 @@ class CUI.ListView extends CUI.SimplePane
 		@
 
 	__doLayout: (opts={}) ->
-		for el in DOM.findElements(@getGrid()[0], ".list-view-row-new")
+		for el in DOM.findElements(@getGrid(), ".list-view-row-new")
 			el.classList.remove("list-view-row-new")
 
 		# console.error "ListView.__doLayout...##{@listViewCounter}", @, @__lvClass, @_autoLayout
@@ -919,17 +919,11 @@ class CUI.ListView extends CUI.SimplePane
 		@hideWaitBlock(true)
 
 		if not @__maximize_horizontal or not @__maximize_vertical
-			dim = DOM.getDimensions(@DOM[0])
-			if not @__layoutDim or
-				@__layoutDim.clientWidth != dim.clientWidth or
-				@__layoutDim.clientHeight != dim.clientHeight
-					# CUI.debug "ListView[#{@listViewCounter}]: dim changed, triggering content-resize."
-					Events.trigger
-						type: "content-resize"
-						exclude_self: true
-						node: @DOM
-
-			@__layoutDim = dim
+			# CUI.debug "ListView[#{@listViewCounter}]: dim changed, triggering content-resize."
+			Events.trigger
+				type: "content-resize"
+				exclude_self: true
+				node: @DOM
 
 		@__hasLayout = true
 		@
