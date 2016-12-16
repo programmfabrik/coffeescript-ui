@@ -276,9 +276,12 @@ class CUI.Button extends CUI.DOM
 				ev.preventDefault()
 
 		Events.listen
-			type: @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
+			type: Button.clickTypes # @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
 			node: @DOM
 			call: (ev) =>
+				if ev.getType() != @_click_type
+					ev.stopPropagation()
+					return
 
 				# if ev.getType() != @_click_type
 				# 	# click type can be changed after
@@ -511,7 +514,8 @@ class CUI.Button extends CUI.DOM
 			click_type:
 				default: "click" # "touchend"
 				mandatory: true
-				check: ["click", "mouseup", "dblclick", "touchstart", "touchend"]
+				check: Button.clickTypes
+
 			text:
 				check: String
 			tooltip:
@@ -964,6 +968,8 @@ class CUI.Button extends CUI.DOM
 		Events.trigger
 			type: "hide"
 			node: @DOM
+
+	@clickTypes: ["click", "mouseup", "dblclick", "touchstart", "touchend"]
 
 
 CUI.defaults.class.Button = CUI.Button
