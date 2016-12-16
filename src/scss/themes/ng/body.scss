@@ -621,6 +621,10 @@ li > div {
 		color: $secondary-color;
 		font-size: 12px;
 	}
+
+	.cui-button-size-big .cui-button-visual {
+		border-width: 1px;
+	}
 }
 
 // Simple Pane
@@ -1559,6 +1563,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-data-field {
+		margin-left: -1px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+		
 		& + *:before {
 			display: none;
 		}
@@ -2295,6 +2305,12 @@ a[role="button"].cui-button-appearance-link {
 		&:hover:not(.cui-disabled) .cui-button-visual {
 			color: $highlight-color;
 		}
+	}
+
+	.cui-options .cui-button {
+		height: 26px;
+		line-height: 26px;
+		flex: 1;
 	}
 }
 
@@ -3066,7 +3082,7 @@ $table-data-padding: 4px;
 
 // Form
 .cui-form {
-	padding: $padding;
+	margin: $padding;
 }
 
 .cui-form-table {
@@ -3179,6 +3195,7 @@ $table-data-padding: 4px;
 .cui-data-field {
 	flex: 1;
 	max-width: 100%;
+	margin: 0;
 	
 	.cui-list-view-grid-quadrant-3 {
 		min-height: 3*$table-data-height; // for when using empty lists that can get filled
@@ -3327,16 +3344,8 @@ $table-data-padding: 4px;
 	}
 
 	.cui-button {
-		height: 20px;
-		line-height: 20px;
-	}
-
-	.cui-data-field {
-		margin-bottom: 2px;
-		
-		&:last-child {
-			margin-bottom: 0;
-		}
+		height: 22px;
+		line-height: 22px;
 	}
 }
 
@@ -3469,11 +3478,6 @@ $table-data-padding: 4px;
 	}
 }
 
-.cui-date-time-month-header {
-	border-bottom: 1px solid hsl(205,11%,93%);
-	margin-bottom: $padding/4;
-}
-
 .cui-date-time-day {
 	border-radius: $button-radius;
 }
@@ -3526,7 +3530,7 @@ $table-data-padding: 4px;
 
 .cui-date-time-date {
 	width: 100%;
-	margin: 0 0 $padding !important;
+	margin: $padding 0;
 	flex-grow: 1;
 	border: none;
 
@@ -3535,15 +3539,22 @@ $table-data-padding: 4px;
 		display: flex;
 	}
 
+	.cui-th {
+		font-size: inherit;
+		
+		&:after {
+			display: none;
+		}
+	}
+
 	.cui-td,
 	.cui-th {
-		width: calc(100% / 8 - 1px); // 8 columns
+		width: calc(100% / 8); // 8 columns
 		text-align: right;
 		cursor: default;
 		justify-content: center;
 		padding-right: 7px;
 		line-height: 18px;
-		margin: 0 1px 1px 0;
 
 		&.cui-date-time-day {
 			cursor: pointer;
