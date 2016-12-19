@@ -571,8 +571,9 @@ li > div {
 	.cui-label {
 		font-size: 14px;
 		height: 100%;
-    align-items: center;
     cursor: default;
+    display: flex;
+    align-items: center;
 	}
 
 	.cui-horizontal-layout-left {
