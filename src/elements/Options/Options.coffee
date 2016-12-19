@@ -294,6 +294,8 @@ class CUI.Options extends CUI.DataField
 
 		@__checkboxes = []
 
+		@__maxChars = -1
+
 		for _opt, idx in @__options
 			do (_opt) =>
 
@@ -305,6 +307,10 @@ class CUI.Options extends CUI.DataField
 				if not opt.hasOwnProperty("value")
 					assert(not isEmpty(opt.text), "new #{@__cls}", "opts.options[#{idx}].text must be set.", opts: @opts)
 					opt.value = opt.text
+
+				chars = opt.text?.length or -1
+				if @__maxChars < chars
+					@__maxChars = chars
 
 				if @_sortable
 					if not opt.form
@@ -403,6 +409,7 @@ class CUI.Options extends CUI.DataField
 				top = undefined
 
 			if CUI.__ng__
+
 				@replace(bottom, "bottom")
 				@replace(top, "top")
 
@@ -414,6 +421,9 @@ class CUI.Options extends CUI.DataField
 
 				for cb in @__checkboxes
 					cb.start()
+					if @__maxChars > 0
+						cb.setTextMaxChars(@__maxChars)
+
 					if @_sortable and cb.isActive()
 						# we need extra markup around our checkbox
 						el = CUI.DOM.element("DIV", class: "cui-options-sortable-option")

@@ -132,6 +132,7 @@ class Checkbox extends DataFieldInput
 			"isActive"
 			"getGroup"
 			"setGroup"
+			"setTextMaxChars"
 			"setText"
 			"getText"
 		])

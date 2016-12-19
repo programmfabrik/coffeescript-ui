@@ -46,6 +46,12 @@ class CUI.Form extends CUI.DataField
 		else
 			@__horizontal = @_horizontal
 
+		if CUI.__ng__
+			if @__horizontal
+				console.error("new Form: opts.horizontal not supported in CUI.Form 'ng'.", opts: @opts)
+			if @_header
+				console.error("new Form: opts.header not supported in CUI.Form 'ng'.", opts: @opts)
+
 		vl_opts = class: "cui-form cui-padding-reset cui-form-appearance-"+@_appearance
 
 		for k in [
@@ -183,16 +189,18 @@ class CUI.Form extends CUI.DataField
 	# this hides a form row, if all
 	# datafields in it are hidden
 	__setRowVisibility: (tr) ->
-		df = DOM.data(tr[0], "data-field")
+		df = DOM.data(tr, "data-field")
 		if not df
-			CUI.warn("Form.__setRowVisibility", "data-field not found", df, @)
+			console.warn("Form.__setRowVisibility", "data-field not found", df, @)
 			return
 
 		for _f in df.getAllDataFields()
 			if not _f.isHidden()
-				tr.css("display", "")
+				CUI.DOM.showElement(tr)
 				return
-		tr.css("display", "none")
+
+		CUI.DOM.hideElement(tr)
+		return
 
 	render: ->
 		if CUI.__ng__
@@ -208,9 +216,13 @@ class CUI.Form extends CUI.DataField
 		@
 
 	getTable: ->
+		assert(not CUI.__ng__, "Form.getTable is obsolete in \"ng\" design.", form: @)
 		@table
 
 	renderTable: ->
+
+		if CUI.__ng__
+			return @__renderTableNg()
 
 		if CUI.__ng__
 			# avoid "cui-table"
@@ -439,6 +451,229 @@ class CUI.Form extends CUI.DataField
 		@getLayout().replace(@table, "center")
 		CUI.DOM.setAttribute(@table, "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
 		@table
+
+
+	__renderTableNg: ->
+
+
+		layout = @getLayout()
+		CUI.DOM.setAttribute(layout.center(), "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
+
+		layout.empty("center")
+		container = layout.center()
+
+		Events.listen
+			node: container
+			type: "form-check-row-visibility"
+			call: (ev) =>
+				tr = CUI.DOM.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
+				# console.error "check row visibility", ev, tr
+				ev.stopPropagation()
+				if tr
+					@__setRowVisibility(tr)
+				return
+
+		table = null
+		table_has_left = null
+
+		append = (stuff, to) =>
+			if not to
+				layout.append(stuff, "center")
+			else if stuff
+				to.appendChild(stuff)
+			return
+
+		# getTable = =>
+		# 	table = jQuery(CUI.DOM.element("TABLE", class: "cui-form-table"))
+
+		# 	if @_class_table
+		# 		table.addClass(@_class_table)
+
+		# 	# add all classes from the top level
+		# 	for cls in (@_class or "").split(/\s+/)
+		# 		if isEmpty(cls)
+		# 			continue
+		# 		table.classList.add(cls+"-table")
+
+		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
+
+		if @_class_table
+			CUI.DOM.addClass(container, @_class_table)
+
+		get_append = (v, info=@) =>
+			if CUI.isPlainObject(v) # assume a label constructor
+				# new Label(v).DOM
+				new MultilineLabel(v).DOM
+			else if isString(v)
+				# new Label(text: v).DOM
+				new MultilineLabel(text: v).DOM
+			else if v?.DOM
+				v.DOM
+			else if CUI.isFunction(v)
+				get_append(v(info))
+			else if isEmpty(v)
+				null
+			else
+				v
+
+		get_label = (field) =>
+			lbl = field._form?.label
+			if not lbl
+				return
+
+			if isString(lbl)
+				label = CUI.DOM.element("label", for: field.getUniqueIdForLabel())
+				label.textContent = lbl
+				return label
+
+			return lbl
+
+		fields = @getFields()
+		len = fields.length
+		field_idx = -1
+
+		field_has_left = (idx) =>
+			_field = fields[idx]
+
+			fopts = _field?._form or {}
+			if fopts.label
+				return true
+
+			if fopts.use_field_as_label
+				console.error("Form: use_field_as_label is obsolete in \"ng\" design", @)
+				return true
+
+			return false
+
+		render_next_field = =>
+			field_idx = field_idx + 1
+			if field_idx == len
+				# we are done
+				return
+
+			field = fields[field_idx]
+
+			if field._form?.right
+				hint_div = CUI.DOM.element("DIV", class: "cui-form-hint")
+				append(get_append(field._form?.right), hint_div)
+			else
+				hint_div = null
+
+			if field instanceof Form # subform -> render a block
+				level = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))+1
+				if not level
+					level = 1
+				if level > 3
+					level = 3
+
+				cb = field.getCheckbox()
+
+				if cb
+					do (cb, field) =>
+						Events.listen
+							type: "data-changed"
+							node: cb
+							call: =>
+								if cb.getValue()
+									field.show()
+								else
+									field.hide()
+					left_side = cb
+				else
+					left_side = get_label(field)
+
+				blk = new CUI.Block
+					class: "cui-form-block"
+					level: level
+					header: left_side
+					content: [
+						get_append(field)
+						hint_div
+					]
+
+				append(blk)
+
+				# used to set row visibility
+				DOM.data(blk.DOM, "data-field", field)
+
+				table = null
+				table_has_left = null
+				render_next_field()
+				return
+
+			if not table
+				# check if next subform has a left side
+				#
+				has_left = false
+				for idx in [field_idx...len] by 1
+					if field_has_left(idx)
+						has_left = true
+						break
+
+				if not has_left
+					table = CUI.DOM.element("DIV", class: "cui-form-container")
+					table_has_left = false
+				else
+					table = CUI.DOM.element("DIV", class: "cui-form-table")
+					table_has_left = true
+
+				append(table)
+
+			if table_has_left
+				tr = CUI.DOM.element("DIV", class: "cui-form-tr")
+
+				td = CUI.DOM.element("DIV", class: "cui-form-td")
+				append(get_label(field), td)
+				tr.appendChild(td)
+
+				td = CUI.DOM.element("DIV", class: "cui-form-td")
+				append(get_append(field), td)
+				append(hint_div, td)
+				tr.appendChild(td)
+
+				# used to set row visibility
+				DOM.data(tr, "data-field", field)
+
+				table.appendChild(tr)
+			else
+				row = CUI.DOM.element("DIV", class: "cui-form-row")
+				row.appendChild(get_append(field))
+				append(get_append(field), row)
+				append(hint_div, row)
+
+				# used to set row visibility
+				DOM.data(row, "data-field", field)
+
+				table.appendChild(row)
+
+			render_next_field()
+
+
+
+		render_next_field()
+
+
+		Events.listen
+			type: "data-changed"
+			node: container
+			call: (ev, info) =>
+				if not info.element
+					return
+
+				# CUI.debug "Form data-changed", @getData()
+
+				if info.action in ["goto", "reset"]
+					return
+
+				@__undo.log[++@__undo.idx] =
+					name: info.element.getName()
+					undo_idx: info.undo_idx
+					action: info.action
+
+				@__undo.log.splice(@__undo.idx+1)
+				return
+
+		container
 
 
 	__initUndo: ->

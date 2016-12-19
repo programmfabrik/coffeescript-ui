@@ -971,8 +971,6 @@ class CUI.ListView extends CUI.SimplePane
 					# safe to add "1" here
 					width = width + col_width[parseInt(col_i)+i]
 
-				if width == 0
-					console.error "col width == 0", row_i, col_i, colspan, col_width
 				# console.debug row_i, col_i, colspan, width
 
 				dim = CUI.DOM.getDimensions(cell)
