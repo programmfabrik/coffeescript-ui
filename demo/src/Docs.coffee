@@ -31,6 +31,59 @@ class Docs extends Demo
 
 		renderer = new marked.Renderer()
 
+
+		# Overwrite renderer's function "code" with ability to create DIV-blocks
+		`
+		renderer.code = function(code, lang, escaped) {
+
+			/* Div-Hack */
+			if (lang && lang.substring) {
+				if (lang.substring(0,4) == "div-") {
+
+					marked.setOptions({
+						renderer: new marked.Renderer(),
+						gfm: true,
+						tables: true,
+						breaks: false,
+						pedantic: false,
+						sanitize: false,
+						smartLists: true,
+						smartypants: false
+					});
+
+					return '<div class="'
+						+ lang.substring(4)
+						+ '">'
+						+ marked(code)
+						+ '\n</div>';
+
+				}
+			}
+
+			if (this.options.highlight) {
+				var out = this.options.highlight(code, lang);
+				if (out != null && out !== code) {
+					escaped = true;
+					code = out;
+				}
+			}
+
+			if (!lang) {
+				return '<pre class="preee"><code>'
+					+ (escaped ? code : escape(code, true))
+					+ '\n</code></pre>';
+			  }
+
+			return '<pre class="preee"><code class="'
+				+ this.options.langPrefix
+				+ escape(lang, true)
+				+ '">'
+				+ (escaped ? code : escape(code, true))
+				+ '\n</code></pre>\n';
+		}
+		`
+		
+
 		browser = new CUI.DocumentBrowser
 			marked_opts:
 				renderer: renderer

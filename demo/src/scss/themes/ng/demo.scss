@@ -88,7 +88,7 @@
 
 		&::before {
 			content: "";
-			background: url('../../arrow-right.svg');
+			background: url('icons/ arrow-right.svg');
 			background-repeat: no-repeat; 
 			background-size: 1rem 1rem;
 			display: inline;  
@@ -108,7 +108,7 @@
 		display: block;
 		position: relative;
 		overflow-x: visible;
-		padding: 2.5em 1em 1em 1em; // top pading for pseudo element's space
+		padding: 2.5em 1em 1em 1em; // top padding for pseudo element's space
 		color: #abb2bf;
 		background: #282c34;
 
@@ -251,7 +251,7 @@
 				color: hsl(0,60%,50%);
 
 				&::before {
-					content: url('../../remove-icon.svg');
+					content: url('icons/ remove-icon.svg');
 					width: 1rem;
 					height: 1rem;
 					display: inline-block;
@@ -264,7 +264,7 @@
 				color: hsl(210,100%,60%);
 
 				&::before {
-					content: url('../../merge-icon.svg');
+					content: url('icons/ merge-icon.svg');
 					width: 1rem;
 					height: 1rem;
 					display: inline-block;
@@ -289,7 +289,7 @@
 			
 			&::after {
 				content: "";
-				background: url('../../inherit.svg');
+				background: url('icons/inherit.svg');
 				background-size: contain;
 				width: 3rem;
 				height: 3rem;

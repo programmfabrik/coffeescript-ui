@@ -35,8 +35,7 @@ coffee_files = src/demo.coffee \
 	../src/elements/Form/demo/FormLayoutDemo.coffee \
 	../src/elements/ListView/demo/ListViewDemo.coffee \
 	../src/elements/ListView/demo/ListViewTreeDemo.coffee \
-	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee \
-	src/tobi.coffee
+	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee
 
 
 jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
@@ -46,7 +45,30 @@ files = $(addsuffix .js, $(coffee_files) )
 
 example_files = $(addsuffix .js, $(example_coffee_files) )
 
-code: $(files) $(example_files) docs
+highlight_files = \
+	../thirdparty/highlight/highlight.pack.js \
+	../thirdparty/highlight/styles/atom-one-dark.css
+
+highlight:
+	#
+	# $@
+	mkdir -p $(target)
+
+	rm -rf $(target)/highlight
+	mkdir -p $(target)/highlight
+
+	#rsync -r ../thirdparty/highlight/styles/atom-one-dark.css $(target)/highlight
+	#rsync -r ../thirdparty/highlight/highlight.pack.js $(target)/highlight
+	cp $(highlight_files) $(target)/highlight
+
+docs_icons:
+	mkdir -p $(target)/css/icons
+	cp src/icons/inherit.svg $(target)/css/icons/inherit.svg
+	cp src/icons/remove-icon.svg $(target)/css/icons/remove-icon.svg
+	cp src/icons/merge-icon.svg $(target)/css/icons/merge-icon.svg
+	cp src/icons/arrow-right.svg $(target)/css/icons/arrow-right.svg
+
+code: $(files) $(example_files) docs highlight docs_icons
 	#
     # $@
 	mkdir -p $(target)/examples
