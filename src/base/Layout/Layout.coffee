@@ -51,8 +51,6 @@ class CUI.Layout extends CUI.DOM
 	readOpts: ->
 		# DEBUG
 		# without absolute "help", FF and Safari perform badly, Chrome & IE (Edge) are fine
-		if CUI.__ng__
-			delete(@opts.absolute)
 		@initDefaultPanes()
 		super()
 
