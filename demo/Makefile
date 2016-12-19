@@ -1,8 +1,6 @@
 target = ../build/demo
 call_scss = sass --scss --no-cache --sourcemap=inline
 
-example_coffee_files = src/examples/cui_examples.coffee
-
 coffee_files = src/demo.coffee \
 	src/CUIDemo.coffee \
 	src/ControlsDemo.coffee \
@@ -43,8 +41,6 @@ jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 
 files = $(addsuffix .js, $(coffee_files) )
 
-example_files = $(addsuffix .js, $(example_coffee_files) )
-
 highlight_files = \
 	../thirdparty/highlight/highlight.pack.js \
 	../thirdparty/highlight/styles/atom-one-dark.css
@@ -68,22 +64,17 @@ docs_icons:
 	cp src/icons/merge-icon.svg $(target)/css/icons/merge-icon.svg
 	cp src/icons/arrow-right.svg $(target)/css/icons/arrow-right.svg
 
-code: $(files) $(example_files) docs highlight docs_icons
+code: $(files) docs highlight docs_icons
 	#
     # $@
-	mkdir -p $(target)/examples
 	# make javascript, coffee transpiling is made automatically
 	@cat $(files) > $(target)/easydbui_demo.js
-	@cat $(example_files) > $(target)/examples/cui_examples.js
 	echo "Docs.path='/demo/docs';" >> $(target)/easydbui_demo.js
 	cp -rv scratch $(target)
 	cp ../src/elements/FileUpload/demo/FileUpload.php $(target)/FileUpload.php
 	cp ../src/base/XHR/demo/XHRTest.php $(target)/XHRTest.php
 	cp -r ../build/font-awesome $(target)
 	cat demo.html > $(target)/index.html
-	cat src/examples/index.html > $(target)/examples/index.html
-	# Compile & Copy tobi.coffee.js
-	cp src/tobi.coffee.js $(target)
 
 docs:
 	mkdir -p $(target)
