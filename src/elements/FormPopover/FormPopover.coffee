@@ -170,7 +170,8 @@ class FormPopover extends Form
 		@
 
 	renderTable: ->
-		super()
+		@table = super()
+		# in "ng" design, table is the center element of layout
 		@getLayout().addClass(@__class)
 		@table
 
