@@ -1331,6 +1331,8 @@ class CUI.DOM extends CUI.Element
 
 	@space: (style = null) ->
 		switch style
+			when "small"
+				@element("DIV", class: "cui-small-space")
 			when "large"
 				@element("DIV", class: "cui-large-space")
 			when "flexible"
