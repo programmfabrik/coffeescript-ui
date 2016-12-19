@@ -47,7 +47,7 @@ class CUI.Form extends CUI.DataField
 			@__horizontal = @_horizontal
 
 		if CUI.__ng__
-			if @__horizontal
+			if @__horizontal and @__horizontal != true
 				console.error("new Form: opts.horizontal not supported in CUI.Form 'ng'.", opts: @opts)
 			if @_header
 				console.error("new Form: opts.header not supported in CUI.Form 'ng'.", opts: @opts)
@@ -452,6 +452,17 @@ class CUI.Form extends CUI.DataField
 		CUI.DOM.setAttribute(@table, "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
 		@table
 
+	renderAsBlock: ->
+		fields = @getFields()
+		for f in fields
+			if f.form?.label
+				return true
+
+			if f instanceof Form
+				if f.renderAsBlock()
+					return true
+
+		return false
 
 	__renderTableNg: ->
 
@@ -532,8 +543,7 @@ class CUI.Form extends CUI.DataField
 		len = fields.length
 		field_idx = -1
 
-		field_has_left = (idx) =>
-			_field = fields[idx]
+		field_has_left = (_field) =>
 
 			fopts = _field?._form or {}
 			if fopts.label
@@ -559,7 +569,7 @@ class CUI.Form extends CUI.DataField
 			else
 				hint_div = null
 
-			if field instanceof Form # subform -> render a block
+			if field instanceof Form and field.renderAsBlock()
 				level = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))+1
 				if not level
 					level = 1
@@ -606,7 +616,7 @@ class CUI.Form extends CUI.DataField
 				#
 				has_left = false
 				for idx in [field_idx...len] by 1
-					if field_has_left(idx)
+					if field_has_left(fields[idx])
 						has_left = true
 						break
 
@@ -616,6 +626,9 @@ class CUI.Form extends CUI.DataField
 				else
 					table = CUI.DOM.element("DIV", class: "cui-form-table")
 					table_has_left = true
+
+				if @__horizontal
+					CUI.DOM.addClass(table, "cui-form--horizontal")
 
 				append(table)
 
