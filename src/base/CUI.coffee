@@ -610,7 +610,11 @@ class CUI
 			if isEmpty(key)
 				continue
 			regex.push(key.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
-		return s.replace(new RegExp(regex.join('|'),"g"), (word) -> map[word])
+
+		if regex.length > 0
+			s.replace(new RegExp(regex.join('|'),"g"), (word) -> map[word])
+		else
+			s
 
 	@isFunction: (v) ->
 		v and typeof(v) == "function"
