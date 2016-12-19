@@ -85,6 +85,14 @@ textarea {
 	text-align: center;
 }
 
+// enlarge max-chars < 10
+// e.g. max-chars 5 = 5.5ch
+@for $i from 1 through 10 {
+	[max-chars="#{$i}"] {
+		width: #{$i + 0.5}ch;
+	}
+}
+
 [max-chars="1"] {
 	width: 1.5ch;
 }
@@ -95,12 +103,6 @@ textarea {
 
 [max-chars="3"] {
 	width: 3.5ch;
-}
-
-@for $i from 4 through 10 {
-	[max-chars="#{$i}"] {
-		width: #{$i}ch;
-	}
 }
 
 // damp max-chars > 10
@@ -3159,6 +3161,7 @@ $table-data-padding: 4px;
 .cui-form-td {
 	display: table-cell;
 	padding: $padding/2 $padding;
+	vertical-align: top;
 	
 	&:first-child {
 		width: 135px;
@@ -3343,7 +3346,7 @@ $table-data-padding: 4px;
     padding: 0 4px 0 0;
     
     .cui-drag-handle-row {
-    	margin-top: 5px;
+    	margin-top: 6px;
     }
 	}
 }
