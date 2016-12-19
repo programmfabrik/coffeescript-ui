@@ -93,7 +93,11 @@ textarea {
 	width: 2.5ch;
 }
 
-@for $i from 3 through 10 {
+[max-chars="3"] {
+	width: 3.5ch;
+}
+
+@for $i from 4 through 10 {
 	[max-chars="#{$i}"] {
 		width: #{$i}ch;
 	}
@@ -3155,6 +3159,15 @@ $table-data-padding: 4px;
 .cui-form-td {
 	display: table-cell;
 	padding: $padding/2 $padding;
+	
+	&:first-child {
+		width: 135px;
+		padding-left: 0;
+	}
+
+	&:last-child {
+		padding-right: 0;
+	}
 }
 
 .cui-form-center {
@@ -3344,8 +3357,9 @@ $table-data-padding: 4px;
 .cui-options-center {
 	min-height: 24px;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	max-width: 450px;
 	
 	&:empty {
 		min-height: 0;
@@ -3354,6 +3368,16 @@ $table-data-padding: 4px;
 	.cui-button {
 		height: 22px;
 		line-height: 22px;
+	}
+
+	.cui-data-field {
+		flex-grow: 0;
+	}
+}
+
+.cui-options--sortable {
+	.cui-options-center {
+		flex-direction: column;
 	}
 }
 
@@ -3883,6 +3907,11 @@ $table-data-padding: 4px;
 
 .cui-block-content {
 	padding: 0 $padding $padding;
+	
+	.cui-form-table {
+		width: 100%;
+		margin: $padding 0;
+	}
 }
 
 // StickyHeader
