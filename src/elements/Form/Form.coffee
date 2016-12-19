@@ -526,7 +526,7 @@ class CUI.Form extends CUI.DataField
 				label.textContent = lbl
 				return label
 
-			return lbl
+			return get_append(lbl)
 
 		fields = @getFields()
 		len = fields.length
