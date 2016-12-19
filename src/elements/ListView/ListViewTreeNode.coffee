@@ -718,9 +718,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	update: (update_root=false) =>
 		# CUI.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
-		if @isRoot() and not update_root or not @element
+
+		if not update_root and (not @element or @isRoot())
 			# dont update root
-			return
+			return CUI.resolvedPromise()
 
 		tree = @getTree()
 		layout_stopped = tree?.stopLayout()
