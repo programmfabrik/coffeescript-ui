@@ -1017,6 +1017,10 @@ a[role="button"].cui-button-appearance-link {
 	align-self: flex-start;
 	max-width: 100%;
 	// flex: 1; don't grow (horizontally) because only the text should be clickable
+	
+	[max-chars] {
+		text-align: inherit;
+	}
 
 	&.cui-disabled {
 		cursor: default;
@@ -1754,31 +1758,31 @@ a[role="button"].cui-button-appearance-link {
 			// - password reset
 			// - popover manager
 			//
-			&,
-			> .cui-layout,
-			> .cui-layout > .cui-layout,
-			> .cui-layout-cell,
-			> .cui-layout > .cui-layout-cell {
-				> .cui-label {
-					margin-left: $padding;
-					margin-right: $padding;
+			// &,
+			// > .cui-layout,
+			// > .cui-layout > .cui-layout,
+			// > .cui-layout-cell,
+			// > .cui-layout > .cui-layout-cell {
+			// 	> .cui-label {
+			// 		margin-left: $padding;
+			// 		margin-right: $padding;
 					
-					&:first-child {
-						margin-top: $compensating-padding;
-					}
+			// 		&:first-child {
+			// 			margin-top: $compensating-padding;
+			// 		}
 
-					&:last-child {
-						margin-bottom: $compensating-padding;
-					}
-				}
-			}
+			// 		&:last-child {
+			// 			margin-bottom: $compensating-padding;
+			// 		}
+			// 	}
+			// }
 
-			// adding spacing to data-fields in the body
-			> .cui-data-field {
-				&:only-child {
-					margin: $compensating-padding $padding;
-				}
-			}
+			// // adding spacing to data-fields in the body
+			// > .cui-data-field {
+			// 	&:only-child {
+			// 		margin: $compensating-padding $padding;
+			// 	}
+			// }
 		}
 
 		// layer-footer
@@ -3113,8 +3117,7 @@ $table-data-padding: 4px;
 
 .cui-form-tr,
 .cui-form-tr-header {
-	display: flex;
-	position: relative;
+	display: table-row;
 }
 
 .cui-form-tr {
@@ -3144,6 +3147,11 @@ $table-data-padding: 4px;
 	.cui-form-options-table .cui-form-center {
 		width: 70px;
 	}
+}
+
+.cui-form-td {
+	display: table-cell;
+	padding: $padding/2 $padding;
 }
 
 .cui-form-center {
@@ -3234,6 +3242,7 @@ $table-data-padding: 4px;
 	}
 
 	.cui-form-left {
+		width: 135px;
 		line-height: 24px;
 		text-align: right;
 		@include ellipsis;
@@ -3346,6 +3355,7 @@ $table-data-padding: 4px;
 }
 
 .cui-options-order-hint {
+	max-width: 250px;
 	font-size: 11px;
 	margin-top: $compensating-padding;
 	margin-left: 18px;
@@ -4077,18 +4087,15 @@ $table-data-padding: 4px;
 
 // Space
 .cui-space {
-	width: 10px;
-	height: 10px;
+	margin: 5px;
 }
 
 .cui-small-space {
-	width: 5px;
-	height: 5px;
+	margin: 2.5px;
 }
 
 .cui-large-space {
-	width: 20px;
-	height: 20px;
+	margin: 10px;
 }
 
 .cui-flexible-space {
