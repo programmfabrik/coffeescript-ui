@@ -453,6 +453,9 @@ class CUI.Form extends CUI.DataField
 		@table
 
 	renderAsBlock: ->
+		if @getCheckbox()
+			return true
+
 		fields = @getFields()
 		for f in fields
 			if f.form?.label
