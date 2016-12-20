@@ -1668,6 +1668,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-form-hint {
+	margin-top: 5px;
+	font-size: 12px;
+	color: $muted-color;
+}
+
 .cui-input-valid-hint {
 	font-size: 11px;
 	margin-top: $padding/4;
