@@ -2616,6 +2616,7 @@ $table-data-padding: 4px;
 	width: 125px;
 	min-height: $table-data-height - 2*$table-data-padding;
 	overflow: hidden;
+	flex-shrink: 0;
 	display: flex;
 	align-items: flex-start;
 	box-sizing: content-box;
@@ -3915,6 +3916,12 @@ $table-data-padding: 4px;
 	.cui-form-table {
 		width: 100%;
 		margin: $padding 0;
+	}
+	
+	.cui-block-header,
+	.cui-block-content {
+		padding-left: 0;
+		padding-right: 0;
 	}
 }
 

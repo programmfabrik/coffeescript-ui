@@ -332,7 +332,11 @@
 
 
 
-
+.cui-sticky-header-demo-pane {
+	> .cui-vertical-layout-center {
+		overflow: auto;
+	}
+}
 
 .cui-demo-header {
 	.cui-demo-menu-button,
