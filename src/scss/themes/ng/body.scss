@@ -109,7 +109,7 @@ textarea {
 // e.g. max-chars 30 = 26ch
 @for $i from 10 through 40 {
 	[max-chars="#{$i}"] {
-		width: #{$i*(1 - ($i - 10)/30*0.2)}ch;
+		width: #{$i*(1 - ($i - 10)/30*0.15)}ch;
 	}
 }
 
@@ -792,7 +792,7 @@ i.cui-spin-stepped {
 	  padding: 0 $padding;
 	  height: 24px;
 	  line-height: 22px;
-	  color: $button-text-color;
+	  color: $button-color;
 	  background: $button-background;
 	  border: 1px solid $button-border;
 	  border-radius: $button-radius;
@@ -1793,6 +1793,10 @@ a[role="button"].cui-button-appearance-link {
 					margin: $compensating-padding $padding;
 				}
 			}
+
+			> .cui-form {
+				margin: 0;
+			}
 		}
 
 		// layer-footer
@@ -1814,7 +1818,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-form-table {
 		&.cui-form-table-has-not-left-column {
-			> .cui-tr > .cui-form-center > .cui-data-field {
+			> .cui-tr > .cui-form-value > .cui-data-field {
 				&.cui-data-table {
 					border: none;
 				}
@@ -2135,7 +2139,7 @@ a[role="button"].cui-button-appearance-link {
 
 	// maximise form table rows
 	.cui-form-table-has-not-left-column {
-		.cui-form-center {
+		.cui-form-value {
 			flex-grow: 1;
 		}
 	}
@@ -2287,6 +2291,7 @@ a[role="button"].cui-button-appearance-link {
 	  align-items: stretch;
 	  
 	  .cui-button-visual {
+	  	color: $button-color;
 	  	justify-content: flex-start;
 		  padding: 0 $padding;
 			border: none;
@@ -2314,12 +2319,6 @@ a[role="button"].cui-button-appearance-link {
 	  .cui-button-center {
 	    padding: 0;
 	  }
-	}
-
-	.cui-button-href {
-		&:hover:not(.cui-disabled) .cui-button-visual {
-			color: $highlight-color;
-		}
 	}
 
 	.cui-options .cui-button {
@@ -2571,6 +2570,7 @@ $table-data-padding: 4px;
 // ListView
 .cui-list-view {
 	flex-shrink: 1;
+	min-height: 0;
 	
 	.cui-label-size-normal {
 		line-height: $table-data-height - $table-data-padding*2;
@@ -3097,7 +3097,19 @@ $table-data-padding: 4px;
 	margin: $padding;
 }
 
+.cui-form-container {
+	flex-grow: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
 .cui-form-row {
+	flex-grow: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	
 	> .cui-output {
 		margin-bottom: 7px;	
 	}
@@ -3138,7 +3150,7 @@ $table-data-padding: 4px;
 }
 
 .cui-form-table-has-not-left-column {
-	> .cui-tr > .cui-td.cui-form-left {
+	> .cui-tr > .cui-td.cui-form-key {
 		display: none;
 	}
 }
@@ -3161,38 +3173,39 @@ $table-data-padding: 4px;
 			}
 		}
 
-		.cui-form-left,
+		.cui-form-key,
 		.cui-form-right {
 			width: auto;
 		}
 
-		.cui-form-left {
+		.cui-form-key {
 			padding-left: 0;
 			padding-right: 0;
 		}
 	}
 	
-	.cui-form-options-table .cui-form-center {
+	.cui-form-options-table .cui-form-value {
 		width: 70px;
 	}
 }
 
 .cui-form-td {
 	display: table-cell;
-	padding: $padding/2 $padding;
+	padding: $padding/2 0;
 	vertical-align: top;
+}
 	
-	&:first-child {
-		width: 135px;
-		padding-left: 0;
-	}
-
-	&:last-child {
-		padding-right: 0;
+.cui-form-key {
+	width: 135px;
+	padding-right: 10px;
+	
+	label {
+		display: inline-block;
+		margin-top: 3px;
 	}
 }
 
-.cui-form-center {
+.cui-form-value {
 	flex-grow: 1;
 	vertical-align: middle;
 }
@@ -3203,7 +3216,7 @@ $table-data-padding: 4px;
 		width: 100%;
 	}
 
-	> .cui-form-center {
+	> .cui-form-value {
 		padding: 0 !important;
 	}
 }
@@ -3258,6 +3271,13 @@ $table-data-padding: 4px;
 	}
 }
 
+.cui-data-field-proxy {
+	// could be a list view, thus min-height: 0;
+	min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .cui-data-field-output-label {
 	.cui-label-content {
 		white-space: normal;
@@ -3273,20 +3293,20 @@ $table-data-padding: 4px;
 }
 
 .cui-form-table-has-left-column {
-	.cui-form-left,
+	.cui-form-key,
 	.cui-form-right {
 		// width: 135px;
 		// UNCLEAR breaks web-link configuration popover table layout
 	}
 
-	.cui-form-left {
+	.cui-form-key {
 		width: 135px;
 		line-height: 24px;
 		text-align: right;
 		@include ellipsis;
 	}
 
-	.cui-form-center {
+	.cui-form-value {
 		padding-right: $padding;
 	}
 
@@ -3309,7 +3329,7 @@ $table-data-padding: 4px;
 .cui-maximize-horizontal > .cui-vertical-layout-center {
 	> .cui-form-table {
 		> tr {
-			> .cui-form-td.cui-form-center {
+			> .cui-form-td.cui-form-value {
 				flex: 1 1 auto;
 				width: 200px;
 			}
@@ -3318,7 +3338,7 @@ $table-data-padding: 4px;
 
 	> .cui-form-table-vertical {
 		> .cui-tr {
-			> .cui-form-center {
+			> .cui-form-value {
 				flex-shrink: 1;
 				min-width: 0;
 			}
@@ -3329,8 +3349,7 @@ $table-data-padding: 4px;
 .cui-form-popover {
 	.cui-vertical-layout-center {		
 		+ .cui-vertical-layout-bottom {
-			margin: 5px;
-			margin-bottom: 0;
+			margin: 5px 0;
 			
 			&:empty {
 				display: none;
@@ -3415,7 +3434,7 @@ $table-data-padding: 4px;
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
 	// CONFLICT - drag-drop select sortable is used on a whole sidebar in version editor - breaks a child form
-	// .cui-form-td.cui-form-left {
+	// .cui-form-td.cui-form-key {
 	// 	width: 12px;
 	// 	padding: 0;
 	// 	margin-right: $padding/2;

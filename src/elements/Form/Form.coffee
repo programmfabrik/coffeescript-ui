@@ -363,7 +363,7 @@ class CUI.Form extends CUI.DataField
 							if isString(app.label) and CUI.__ng__
 								# use a HTML label and link it to the field
 								# if possible
-								content = CUI.DOM.element("label", for: _field.getUniqueIdForLabel())
+								content = CUI.DOM.element("label", class: "cui-label", for: _field.getUniqueIdForLabel())
 								content.textContent = app.label
 							else
 								content = getAppend(app.label, _field)
@@ -637,11 +637,11 @@ class CUI.Form extends CUI.DataField
 			if table_has_left
 				tr = CUI.DOM.element("DIV", class: "cui-form-tr")
 
-				td = CUI.DOM.element("DIV", class: "cui-form-td")
+				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
 				append(get_label(field), td)
 				tr.appendChild(td)
 
-				td = CUI.DOM.element("DIV", class: "cui-form-td")
+				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-value")
 				append(get_append(field), td)
 				append(hint_div, td)
 				tr.appendChild(td)
