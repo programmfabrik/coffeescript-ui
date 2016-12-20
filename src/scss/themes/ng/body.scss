@@ -3986,10 +3986,13 @@ $table-data-padding: 4px;
 
 
 .cui-sticky-header-control {
-	position: absolute;
+	position: fixed;
+	overflow: hidden;
+
 	top: 0;
 	left: 0;
 	right: 0;
+	height: 0;
 	z-index: 1;
 
 	.cui-tmpl-sticky-header {

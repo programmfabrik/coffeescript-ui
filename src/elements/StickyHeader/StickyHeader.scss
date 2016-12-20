@@ -40,10 +40,13 @@
 }
 
 .cui-sticky-header-control {
-	position: absolute;
+	position: fixed;
+	overflow: hidden;
 	left: 0;
 	right: 0;
 	top: 0;
+	height: 0;
+
 	.cui-tmpl-sticky-header {
 
 		margin-top: 0px !important;

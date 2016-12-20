@@ -11,14 +11,20 @@ class StickyHeaderControl extends CUI.Element
 
 		# destroy old instances, in case we are re-initialized
 		# on an .empty()ied element
-		DOM.data(@_element[0], "stickyHeaderControl")?.destroy()
+		DOM.data(@_element, "stickyHeaderControl")?.destroy()
 
-		DOM.data(@_element[0], "stickyHeaderControl", @)
-
-		if @_element.css("position") not in ["absolute", "fixed", "relative"]
-			@_element.css("position", "relative")
+		DOM.data(@_element, "stickyHeaderControl", @)
 
 		@__control = $div("cui-sticky-header-control")
+
+		Events.listen
+			instance: @
+			type: "viewport-resize"
+			node: @_element
+			call: =>
+				@__positionControl()
+
+		@__positionControl()
 
 		@_element.append(@__control)
 
@@ -37,7 +43,6 @@ class StickyHeaderControl extends CUI.Element
 				# console.timeEnd "scroll"
 				return
 
-
 	initOpts: ->
 		super()
 		@addOpts
@@ -46,11 +51,21 @@ class StickyHeaderControl extends CUI.Element
 				check: (v) ->
 					isElement(v)
 
+	__positionControl: ->
+		dim = CUI.DOM.getDimensions(@_element)
+		CUI.DOM.setStyle @__control,
+			left: dim.clientBoundingRect.left
+			top: dim.clientBoundingRect.top
+
+		CUI.DOM.setDimension(@__control, "marginBoxWidth", dim.clientWidth)
+		# console.error "__positionControl", @_element, @__control
+		return
+
 	isInDOM: ->
-		@__control and DOM.isInDOM(@__control[0])
+		@__control and DOM.isInDOM(@__control)
 
 	addStickyHeader: (stickyHeader) ->
-		assert(not @__positioned or DOM.isInDOM(@__control[0]), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
+		assert(not @__positioned or DOM.isInDOM(@__control), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
 
 		assert(stickyHeader instanceof StickyHeader, "#{@__cls}.addStickyHeader", "Needs to be instance of StickyHeader but is #{getObjectClass(stickyHeader)}", stickyHeader: stickyHeader)
 		@newStickyHeaders.push(stickyHeader)
@@ -63,7 +78,7 @@ class StickyHeaderControl extends CUI.Element
 			header =
 				stickyHeader: nsh
 				level: nsh.getLevel()
-				node: dom[0].cloneNode(true)
+				node: dom.cloneNode(true)
 
 			@headers.push(header)
 
@@ -75,13 +90,13 @@ class StickyHeaderControl extends CUI.Element
 
 		for header in measure_headers
 			header.dimInControl = DOM.getDimensions(header.node)
-			@__control[0].removeChild(header.node)
+			@__control.removeChild(header.node)
 			header.node.style.visiblity = ""
 		@
 
 	destroy: ->
 		# CUI.warn "destroying sticky header control"
-		DOM.removeData(@_element[0], "stickyHeaderControl")
+		DOM.removeData(@_element, "stickyHeaderControl")
 		Events.ignore
 			instance: @
 
@@ -98,7 +113,7 @@ class StickyHeaderControl extends CUI.Element
 		# make sure the control is at the end
 		@_element.append(@__control)
 
-		scrollTop = @_element[0].scrollTop
+		scrollTop = @_element.scrollTop
 		slots = []
 		extraTop = 0
 		for header, idx in @headers
@@ -109,7 +124,7 @@ class StickyHeaderControl extends CUI.Element
 					break
 				extraTop += slots[i].dimInControl.marginBoxHeight
 
-			if header.stickyHeader.DOM[0].offsetTop < scrollTop + extraTop + header.dimInControl.marginTop
+			if header.stickyHeader.DOM.offsetTop < scrollTop + extraTop + header.dimInControl.marginTop
 				slots[header.level] = header
 				for i in [header.level+1...slots.length] by 1
 					slots[i] = null
@@ -123,7 +138,7 @@ class StickyHeaderControl extends CUI.Element
 				break
 
 		if next_header
-			cut = next_header.stickyHeader.DOM[0].offsetTop - scrollTop - top_space
+			cut = next_header.stickyHeader.DOM.offsetTop - scrollTop - top_space
 			cut = cut - next_header.dimInControl.marginTop
 			# console.debug cut, next_header.stickyHeader.DOM[0], next_header.stickyHeader.DOM[0].offsetTop, scrollTop, top_space
 		else
@@ -146,7 +161,7 @@ class StickyHeaderControl extends CUI.Element
 			if cut < 0 and slot.level == next_header.level
 				top += cut
 
-			hideHeader = slot.stickyHeader.DOM[0]
+			hideHeader = slot.stickyHeader.DOM
 			hideHeader.style.visibility = "hidden"
 
 			@__hiddenHeaders.push(hideHeader)
@@ -155,7 +170,6 @@ class StickyHeaderControl extends CUI.Element
 			top += slot.dimInControl.marginBoxHeight
 
 		@__control.css
-			top: scrollTop
 			height: top
 
 		@
