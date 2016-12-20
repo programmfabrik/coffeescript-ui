@@ -1787,12 +1787,12 @@ a[role="button"].cui-button-appearance-link {
 			// 	}
 			// }
 
-			// // adding spacing to data-fields in the body
-			// > .cui-data-field {
-			// 	&:only-child {
-			// 		margin: $compensating-padding $padding;
-			// 	}
-			// }
+			// adding spacing to data-fields in the body
+			> .cui-data-field {
+				&:only-child {
+					margin: $compensating-padding $padding;
+				}
+			}
 		}
 
 		// layer-footer
@@ -1809,6 +1809,7 @@ a[role="button"].cui-button-appearance-link {
 	
 	.cui-empty-label {
 		max-width: 540px;
+		padding: 0;
 	}
 
 	.cui-form-table {
@@ -3096,6 +3097,22 @@ $table-data-padding: 4px;
 	margin: $padding;
 }
 
+.cui-form-row {
+	> .cui-output {
+		margin-bottom: 7px;	
+	}
+
+	> .cui-input {
+		margin-bottom: 7px;
+	}
+
+	&:last-child {
+		> .cui-data-field {
+			margin-bottom: 0;
+		}
+	}
+}
+
 .cui-form-table {
 	width: calc(100% - #{2*$padding});
 	display: table;
@@ -4130,15 +4147,27 @@ $table-data-padding: 4px;
 
 // Space
 .cui-space {
-	margin: 5px;
+	margin: $padding;
+	
+	&:empty {
+		margin: $padding/2;
+	}
 }
 
 .cui-small-space {
-	margin: 2.5px;
+	margin: $padding/2;
+	
+	&:empty {
+		margin: $padding/4;
+	}
 }
 
 .cui-large-space {
-	margin: 10px;
+	margin: $padding*2;
+	
+	&:empty {
+		margin: $padding;
+	}
 }
 
 .cui-flexible-space {
