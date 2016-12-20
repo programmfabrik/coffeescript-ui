@@ -413,6 +413,9 @@ class CUI.Options extends CUI.DataField
 				@replace(bottom, "bottom")
 				@replace(top, "top")
 
+				if @_horizontal
+					@addClass("cui-options--horizontal")
+
 				if @_activatable
 					@empty("active")
 					@empty("inactive")
