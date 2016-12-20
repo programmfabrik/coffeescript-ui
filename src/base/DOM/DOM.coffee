@@ -64,6 +64,10 @@ class CUI.DOM extends CUI.Element
 		@assertDOMElement("addClass")
 		CUI.DOM.addClass(@DOM, cls)
 
+	setAria: (attr, value) ->
+		@assertDOMElement("setAria")
+		CUI.DOM.setAria(@DOM, attr, value)
+
 	removeClass: (cls) ->
 		assert(arguments.length == 1, "DOM.removeClass", "Only one parameter allowed.")
 
@@ -455,6 +459,14 @@ class CUI.DOM extends CUI.Element
 		else
 			@removeClass(element, cls)
 		return on_off
+
+	@setAria: (element, attr, value) ->
+		if value == true
+			@setAttribute(element, "aria-"+attr, "true")
+		else if value == false
+			@setAttribute(element, "aria-"+attr, "false")
+		else
+			@setAttribute(element, "aria-"+attr, value)
 
 	@addClass: (element, cls) ->
 		if not cls or not element

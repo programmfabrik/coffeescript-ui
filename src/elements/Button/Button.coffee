@@ -66,16 +66,15 @@ class CUI.Button extends CUI.DOM
 		@__hidden = false
 		@__txt =  null
 
-		#TODO role was misused to set css_styles, now we use it in the right ARIA-way.
-		#for compatibility we map the rules to styles now
-		#remove this code when roles are removed from ez5
-		if @_role == "minor"
-			@_size = "mini"
-		else if @_role == "menu-item"
-			@addClass("cui-menu-item")
-
 		if CUI.__ng__
 			@addClass("cui-button-button")
+
+
+		if isString(@__tooltipOpts?.text)
+			@setAria("label", @__tooltipOpts?.text)
+			@__hasAriaLabel = true
+		else
+			@__hasAriaLabel = false
 
 		DOM.setAttributeMap(@DOM, @_attr)
 
@@ -496,9 +495,6 @@ class CUI.Button extends CUI.DOM
 				default: 0
 				check: (v) ->
 					isInteger(v) or v == false
-			role:
-				default: "button"
-				check: String
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
@@ -610,7 +606,10 @@ class CUI.Button extends CUI.DOM
 			#group can be used for buttonbars to specify a group css style
 			group:
 				check: String
-
+			role:
+				default: "button"
+				mandatory: true
+				check: String
 
 	# return icon for string
 	__getIcon: (icon) ->
@@ -740,6 +739,7 @@ class CUI.Button extends CUI.DOM
 
 		activate = =>
 			@addClass(@_active_css_class)
+			@setAria("pressed", true)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -782,6 +782,7 @@ class CUI.Button extends CUI.DOM
 
 		deactivate = =>
 			@removeClass(@_active_css_class)
+			@setAria("pressed", false)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -905,7 +906,11 @@ class CUI.Button extends CUI.DOM
 		if isEmpty(@__txt)
 			@empty("center")
 		else
-			@replace($text(@__txt), "center")
+			span = $text(@__txt)
+			if not @__hasAriaLabel
+				span.id = "button-text-"+@getUniqueId()
+				@setAria("labelledby", span.id)
+			@replace(span, "center")
 
 	setTextMaxChars: (max_chars) ->
 		CUI.DOM.setAttribute(@getCenter().firstChild, "max-chars", max_chars)

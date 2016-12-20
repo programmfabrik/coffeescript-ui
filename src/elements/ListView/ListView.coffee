@@ -40,6 +40,9 @@ class CUI.ListView extends CUI.SimplePane
 		@__deferredRows = []
 		@__isInDOM = false
 
+		@__doLayoutBound = =>
+			@__doLayout()
+
 		if CUI.__ng__
 			# always use next gen layout
 			@_autoLayout = 2
@@ -172,8 +175,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__isInDOM = null
 		@__cssElement?.remove()
 		@__cssElement = null
-		if @__scheduleLayoutTimeout
-			CUI.clearTimeout(@__scheduleLayoutTimeout)
+		CUI.scheduleCallbackCancel(call: @__doLayoutBound)
 		@listViewTemplate?.destroy()
 		@__layoutIsStopped = false
 
@@ -398,7 +400,7 @@ class CUI.ListView extends CUI.SimplePane
 						# row has not been measured
 						return
 					@__resetRowDim(row)
-					@__doLayout()
+					@__scheduleLayout()
 					return
 
 				if not @__cellDims.hasOwnProperty(row)
@@ -864,23 +866,7 @@ class CUI.ListView extends CUI.SimplePane
 			@__layoutAfterStart = true
 			return
 
-		if @__scheduleLayoutTimeout
-			return
-
-		# CUI.error "ListView[#{@listViewCounter}].__scheduleLayout", @
-		@__scheduleLayoutTimeout = CUI.setTimeout =>
-			@__scheduleLayoutTimeout = null
-
-			if not @__hasLayout and @rowsCount > 0
-				r = @grid.rect()
-				# CUI.debug "not rendering list view #{@listViewCounter} width== 0 and height== 0", @rowsCount
-				if r.width == 0 or r.height == 0
-					CUI.error "ListView.__scheduleLayout, size of 0 x 0, not layouting."
-					return
-
-			# CUI.error "ListView[#{@listViewCounter}].__scheduleLayout doing layout", @
-			# CUI.debug "rendering list view #{@listViewCounter}", @rowsCount
-			@__doLayout()
+		CUI.scheduleCallback(ms: 10, call: @__doLayoutBound)
 		@
 
 	layoutIsStopped: ->

@@ -196,6 +196,9 @@ class FormPopover extends Form
 	getPopover: ->
 		@__popover
 
+	renderAsBlock: ->
+		false
+
 	__openPopover: ->
 		# console.time "FormPopover"
 

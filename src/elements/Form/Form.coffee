@@ -458,7 +458,7 @@ class CUI.Form extends CUI.DataField
 
 		fields = @getFields()
 		for f in fields
-			if f.form?.label
+			if f._form?.label
 				return true
 
 			if f instanceof Form
@@ -468,7 +468,6 @@ class CUI.Form extends CUI.DataField
 		return false
 
 	__renderTableNg: ->
-
 
 		layout = @getLayout()
 		CUI.DOM.setAttribute(layout.center(), "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))

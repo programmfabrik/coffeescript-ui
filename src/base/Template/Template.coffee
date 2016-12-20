@@ -72,8 +72,8 @@ class CUI.Template extends CUI.Element
 		# txt = "Template.initFlexHandles[name=#{@_name}]"
 		# console.time(txt)
 
-		for fh_el in CUI.DOM.matchSelector(@DOM, "[cui-flex-handle]")
-			opts = @readOptsFromAttr(CUI.DOM.getAttribute(fh_el, "cui-flex-handle"))
+		for fh_el in CUI.DOM.matchSelector(@DOM, "[data-cui-flex-handle]")
+			opts = @readOptsFromAttr(CUI.DOM.getAttribute(fh_el, "data-cui-flex-handle"))
 			if pane_opts[opts.name]
 				# merge opts
 				for k,v of pane_opts[opts.name]
