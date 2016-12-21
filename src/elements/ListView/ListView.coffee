@@ -238,7 +238,7 @@ class CUI.ListView extends CUI.SimplePane
 				html.push("<style></style>")
 
 		add_quadrant = (qi) =>
-			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi}\">")
+			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\">")
 			if @_autoLayout == false
 				html.push("<table class=\"cui-list-view-grid-quadrant-table\"><tbody></tbody></table>")
 
@@ -949,7 +949,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
-				cell = DOM.matchSelector(@grid[0], "[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				cell = DOM.matchSelector(@grid[0], "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
 				width = 0
 				for i in [0...colspan] by 1
 					# we assume that colspanned columns
@@ -980,11 +980,11 @@ class CUI.ListView extends CUI.SimplePane
 				else
 					sel = "[cui-lv-tr-unmeasured=\""+@listViewCounter+"\"]"
 
-				for row in DOM.matchSelector(@grid[0], "[cui-lv-quadrant='#{qi}'] "+sel)
+				for row in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi}'] > "+sel)
 					rows[parseInt(DOM.getAttribute(row, "row"))] = row
 					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
-				for row, idx in DOM.matchSelector(@grid[0], "[cui-lv-quadrant='#{qi+1}'] "+sel)
+				for row, idx in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
 					row_i2 = parseInt(DOM.getAttribute(row, "row"))
 
 					# console.debug "Set ROW", idx, row_i2, row.offsetHeight

@@ -398,7 +398,7 @@ CUI.ready ->
 			if ev.getType().startsWith("gesture")
 				console.debug ev.getType(), ne.scale, ne.rotation
 			else
-				console.debug "ev:", ev.getType(), ev.getTarget()
+				; #console.debug "ev:", ev.getType(), ev.getTarget()
 
 	new RunDemo()
 
