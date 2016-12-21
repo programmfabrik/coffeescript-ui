@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Label
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -13,6 +14,6 @@
 |	centered	|	<dt>true<dd><dt>false<dd>	|	false	|	no	|	Lorem	|
 |	multiline	|	<dt>true<dd><dt>false<dd>	|	false	|	no	|	Lorem	|
 |	manage_overflow	|	<dt>true<dd><dt>false<dd><dt>PlainObject	|	-	|	no	|	&nbsp;	|
-
+```
 
 @@include(../../core/dom/dom_p.md)

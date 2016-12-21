@@ -6,6 +6,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(dom_p.md)
-```

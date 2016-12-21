@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter StickyHeader
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -5,7 +6,7 @@
 |	text	|	<dt>&lt;String&gt;	|	-	|	no	|	Lorem	|
 |	content	| {}	|	-	|	no	|	Lorem	|
 |	level	|	<dt>&lt;Integer&gt; = <dd>0 &#124; 1 &#124; 2	|	0	|	no	|	Lorem	|
-
+```
 
 @@include(../../../core/dom/dom_p.md) 
 

@@ -88,7 +88,7 @@
 
 		&::before {
 			content: "";
-			background: url('icons/ arrow-right.svg');
+			background: url('icons/arrow-right.svg');
 			background-repeat: no-repeat; 
 			background-size: 1rem 1rem;
 			display: inline;  
@@ -184,66 +184,82 @@
 	//
 	div.parameter {
 
+		h2 {
+			position: relative;
+			margin-top: 7rem;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 2rem;
+			text-align: left;
+		}
+
 		table {
 			width: 100%;
 			border-collapse: collapse;
-			border: 1px solid #282c34;
 			line-height: 1.5em;
 			position: relative;
 
 			th, td {
-				padding: .65rem;
+				padding: 1rem .1rem 1rem .65rem;
 			}
 
 			th, thead {
-				background: #282c34;
+				background: hsl(231, 12%, 19%);
 				color: #FFF;
-				border: 1px solid #282c34;
 			}
 
-			tr {
-				// Column widths  
-				td:nth-child(1) { // Parameter
-					width: 16%;
+			// table head's radius
+			th {
+				&:first-child {
+					border-radius: 5px 0px 0px 0px;
 				}
-				td:nth-child(2) { // Format
-					width: 32%;
-				}
-				td:nth-child(3) { // Default
-					width: 10%;
-				}
-				td:nth-child(4) { // Mandatory
-					width: 10%;
-				}
-				td:nth-child(5) { // Description
-					width: 32%;
-				}
-
-				// Zebra-Style
-				&:nth-child(2n) {
-					background: #f2f2f2;
-				}
-
-				// Coloring rows on Hover
-				&:hover {
-					background: #d1d1d1;
+				&:last-child {
+					border-radius: 0px 5px 0px 0px;
 				}
 			}
 
 			td {
-				border-right: 1px solid #777;
-			}
 
-			// Definition-Lists in Parameter-Table
-			td:nth-child(2) {
-				/*dt:not(:only-of-type):not(:first-of-type)::before {
-					content: "or \00a0";		// 2225 = | , 00a0 = SPACE	
-				}*/
+				vertical-align: middle;
 
-				dt ~ dt::before { // all <dt>-Elements that are following on the first one
-					content: "or \00a0";		// 2225 = | , 00a0 = SPACE	
+				// row's height
+				//height: 55px;
+
+				// Zebra Style
+				&:nth-child(2n-1) {
+					background: hsl(0, 0%, 92%);
+				}
+
+				// specific column styling  
+				&:nth-child(1) { // Parameter
+					width: 16%;
+				}
+				&:nth-child(2) { // Format
+					width: 32%;
+
+					// Definition list styling
+					dt ~ dt::before { // all <dt>-Elements that are following on the first one
+						content: "or \00a0"; // 2225 = | , 00a0 = SPACE	
+					}
+				}
+				&:nth-child(3) { // Default
+					width: 10%;
+				}
+				&:nth-child(4) { // Mandatory
+					width: 10%;
+				}
+				&:nth-child(5) { // Description
+					width: 32%;
 				}
 			}
+
+			tr {
+
+				// Separating bottom borders
+				border-bottom: 1px solid hsl(0, 0%, 80%);
+				
+			}
+
 
 			// Removed Opts
 			span.removed-opt {
@@ -251,7 +267,7 @@
 				color: hsl(0,60%,50%);
 
 				&::before {
-					content: url('icons/ remove-icon.svg');
+					content: url('icons/remove-icon.svg');
 					width: 1rem;
 					height: 1rem;
 					display: inline-block;
@@ -264,7 +280,7 @@
 				color: hsl(210,100%,60%);
 
 				&::before {
-					content: url('icons/ merge-icon.svg');
+					content: url('icons/merge-icon.svg');
 					width: 1rem;
 					height: 1rem;
 					display: inline-block;
@@ -274,20 +290,16 @@
 			}
 		}
 
-		//   +
-		// +++++	Inheritance Style
-		//   +
-		//			
-		h2[id^="parameter"]:not(:first-of-type) {
+	}
 
-			position: relative;
-			margin-top: 6rem;
-			margin-left: auto;
-			margin-right: auto;
-			margin-bottom: 2rem;
-			text-align: center;
+
+	//    ^
+	//   ^ ^    Arrow for inheritance style
+	//  ^   ^
+	//
+	div.parameter ~ div.parameter {
 			
-			&::after {
+		h2[id^="parameter"]::after {
 				content: "";
 				background: url('icons/inherit.svg');
 				background-size: contain;
@@ -297,20 +309,10 @@
 				top: -4rem;
 				left: 50%;
 				transform: translateX(-50%);
-			}
-			
 		}
-
-		h2[id^="callbacks"] {
-			position: relative;
-			margin-top: 2rem;
-			margin-left: auto;
-			margin-right: auto;
-			margin-bottom: 2rem;
-			text-align: center;
-		}
-
 	}
+
+	
 
 
 }

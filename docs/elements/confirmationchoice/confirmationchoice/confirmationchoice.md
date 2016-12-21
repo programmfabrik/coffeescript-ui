@@ -10,6 +10,5 @@
 ***
 
 
-```div-parameter
+
 @@include(confirmationchoice_p.md)
-```

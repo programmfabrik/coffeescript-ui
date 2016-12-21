@@ -7,6 +7,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(toolbar_p.md)
-```

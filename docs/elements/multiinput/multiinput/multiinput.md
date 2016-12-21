@@ -9,6 +9,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(multiinput_p.md)
-```

@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Checkbox
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description	| 
@@ -20,5 +21,7 @@
 |	onClick	|	<dt>function()	|	-	|	no	|	Describes the action in consequence of a click.	|
 |	onActivate	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onDeactivate	|	<dt>function()	|	-	|	no	|	Lorem	|
+
+```
 
 @@include(../datafieldinput/datafieldinput_p.md) 

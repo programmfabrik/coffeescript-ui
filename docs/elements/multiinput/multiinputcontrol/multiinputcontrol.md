@@ -7,6 +7,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(multiinputcontrol_p.md)
-```

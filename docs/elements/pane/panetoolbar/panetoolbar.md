@@ -8,6 +8,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(panetoolbar_p.md)
-```

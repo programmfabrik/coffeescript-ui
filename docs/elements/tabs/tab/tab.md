@@ -7,6 +7,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(tab_p.md)
-```

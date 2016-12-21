@@ -7,6 +7,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(panel_p.md)
-```

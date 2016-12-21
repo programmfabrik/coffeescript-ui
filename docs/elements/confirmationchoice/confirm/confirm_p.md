@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Confirm
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -6,6 +7,6 @@
 |	button_primary	|	<dt>&lt;String&gt; = <dd>"ok" &#124; "cancel"	|	"ok"	|	yes	|	Lorem	|
 |	<span class="removed-opt">choices</span>	|	|	|	|	|
 |	<span class="merged-opt">text</span>	|	|	|	yes	|	&nbsp;	|
-
+```
 
 @@include(../confirmationchoice/confirmationchoice_p.md) 

@@ -8,6 +8,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(waitblock_p.md)
-```

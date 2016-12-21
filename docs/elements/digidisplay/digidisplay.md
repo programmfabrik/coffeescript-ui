@@ -7,6 +7,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(digidisplay_p.md)
-```

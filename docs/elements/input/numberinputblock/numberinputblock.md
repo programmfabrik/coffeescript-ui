@@ -6,6 +6,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(numberinputblock_p.md)
-```

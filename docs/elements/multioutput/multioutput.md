@@ -10,6 +10,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(multioutput_p.md)
-```

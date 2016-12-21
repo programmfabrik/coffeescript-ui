@@ -5,6 +5,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(console_p.md)
-```

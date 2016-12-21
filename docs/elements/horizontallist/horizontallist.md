@@ -9,6 +9,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(horizontallist_p.md)
-```

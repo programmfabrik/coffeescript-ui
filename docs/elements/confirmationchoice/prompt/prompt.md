@@ -12,6 +12,5 @@
 ***
 
 
-```div-parameter
+
 @@include(prompt_p.md)
-```

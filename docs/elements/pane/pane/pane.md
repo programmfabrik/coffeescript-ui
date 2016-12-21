@@ -7,6 +7,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(pane_p.md)
-```

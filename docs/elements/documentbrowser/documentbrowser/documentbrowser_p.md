@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter DocumentBrowser
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -10,6 +11,6 @@
 |	gotoLocation	|	<dt>function()	|	(nodePath, search, nodeIdx) => @loadLocation(nodePath, search, nodeIdx)	|	no	|	Lorem	|
 |	getMarkdown	|	<dt>function()	|	(v) -> v	|	no	|	Lorem	|
 |	renderHref	|	<dt>function()	|	default: (href, nodePath) => href	|	no	|	Lorem	|
-
+```
 
 @@include(../../../core/element/element_p.md)

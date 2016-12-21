@@ -8,6 +8,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(panefooter_p.md)
-```

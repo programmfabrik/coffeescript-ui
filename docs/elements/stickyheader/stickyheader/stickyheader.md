@@ -7,6 +7,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(stickyheader_p.md)
-```

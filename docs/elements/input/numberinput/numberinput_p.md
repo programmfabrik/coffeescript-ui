@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter NumberInput
 |	Parameter			|			Format			|	Default				|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:				|	:---:		|		---					|
@@ -14,6 +15,6 @@
 |	<span class="removed-opt">getValueForInput</span>	|	|	|	|	|
 |	<span class="removed-opt">correctValueForInput</span>	|	|	|	|	|
 |	<span class="removed-opt">prevent_invalid_input</span>	|	|	|	|	&nbsp;	|
-
+```
 
 @@include(../input/input_p.md) 

@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter FileUploadButton
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -6,6 +7,6 @@
 |	directory	|	<dt>&lt;Boolean&gt;	|	-	|	no	|	Whether to allow file drop on the button.<br><dt>true<dd><dt>false<dd>	|
 |	drop	|	<dt>&lt;Boolean&gt;	|	-	|	no	|	<dt>true<dd><dt>false<dd>	|
 
-
+```
 
 @@include(../../button/button_p.md)

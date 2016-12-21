@@ -51,6 +51,4 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
  	Note that some parameters are mandatory.
  
 
- ```div-parameter
- @@include(block_p.md)
- ```
+@@include(block_p.md)

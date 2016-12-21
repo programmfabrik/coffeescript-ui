@@ -9,6 +9,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(verticallist_p.md)
-```

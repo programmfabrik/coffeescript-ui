@@ -5,6 +5,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(inputblock_p.md)
-```

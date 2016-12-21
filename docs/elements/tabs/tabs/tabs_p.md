@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Tabs
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -6,6 +7,6 @@
 |	<span class="removed-opt">header_right</span>	|	|	|	|	|
 |	<span class="removed-opt">header_center</span>	|	|	|	|	|
 |	<span class="removed-opt">content</span>	|	|	|	|	|
-
+```
 
 @@include(../../pane/simplepane/simplepane_p.md)

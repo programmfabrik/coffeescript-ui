@@ -21,6 +21,5 @@ Lorem Ipsum
 		<parameter-as-json-object>
 	```
 
-```div-parameter
+
 @@include(checkbox_p.md)
-```

@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter FileUpload
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -20,6 +21,6 @@
 |	onFail	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onAlways	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onBeforeDone	|	<dt>function()	|	-	|	no	|	Lorem	|
-
+```
 
 @@include(../../../core/element/element_p.md)

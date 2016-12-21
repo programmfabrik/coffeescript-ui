@@ -137,6 +137,5 @@ Therefore use the introduced <mark>slots</mark> to place the wanted content.
 	```
 
 
-```div-parameter
+
 @@include(simplepane_p.md)
-```

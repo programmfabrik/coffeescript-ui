@@ -64,9 +64,8 @@ Of course, you can avoid these temporary variables and create the <DataTable>-ob
 	myDataTable.start()
 	```
 
-```div-parameter
+
 @@include(datatable_p.md)
-```
 
 
 

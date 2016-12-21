@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter ConfirmationChoice 
 
 |	Parameter	|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -13,6 +14,6 @@
 |	Parameter	|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---		|			---				|	:---:					|	:---:		|		---					|
 |	onChoice	|	<dt>function()	|	-	|	no	|	Lorem	|
-
+```
 
 @@include(../../confirmationdialog/confirmationdialog_p.md) 

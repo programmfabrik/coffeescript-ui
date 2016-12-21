@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Tab
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -16,7 +17,7 @@
 |	onFirstActivate	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onActivate	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onDeactivate	|	<dt>function()	|	-	|	no	|	Lorem	|
-
+```
 
 @@include(../../../core/dom/dom_p.md) 
 

@@ -28,6 +28,5 @@ Lorem Ipsum
 	Take into account that the data-parameter's value requires an object with at least one key which stores an array as its value.
 
 
-```div-parameter
+
 @@include(datafield_p.md)
-```

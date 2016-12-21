@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter DataField
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -24,5 +25,6 @@
 |	onInit	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onRender	|	<dt>function()	|	-	|	no	|	&nbsp;	|
 
+```
 
 @@include(../../core/dom/dom_p.md)

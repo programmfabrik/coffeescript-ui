@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter InputBlock
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -5,6 +6,6 @@
 |	string	|	<dt>&lt;String&gt;	|	-	|	yes	|	Lorem	|
 
 
-
+```
 
 @@include(../../../core/element/element_p.md) 

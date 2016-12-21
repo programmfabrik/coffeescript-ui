@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter SimplePane
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -12,6 +13,6 @@
 |	<span class="removed-opt">bottom</span>	|	|	|	|	|
 |	<span class="removed-opt">center</span>	|	|	|	|	|
 |	<span class="merged-opt">padding</span>	|	|	normal	|	|	&nbsp;	|
-
+```
 
 @@include(../pane/pane_p.md)

@@ -24,6 +24,5 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 
 
-```div-parameter
+
 @@include(verticallayout_p.md)
-```

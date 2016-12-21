@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Modal
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -13,6 +14,6 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 |	onCancel	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onToggleFillScreen	|	<dt>function()	|	-	|	no	|	&nbsp;	|
-
+```
 
 @@include(../layerpane/layerpane_p.md) 

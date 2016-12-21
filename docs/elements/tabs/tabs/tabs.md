@@ -11,6 +11,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(tabs_p.md)
-```

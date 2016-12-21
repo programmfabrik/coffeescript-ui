@@ -15,8 +15,7 @@ VerticalLayout as well as HorizontalLayout are both derived from this Layout-cla
 
 
 
-```div-parameter
+
 @@include(layout_p.md)
-```
 
 

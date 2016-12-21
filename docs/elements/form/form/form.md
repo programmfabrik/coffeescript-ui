@@ -19,6 +19,5 @@ To build a new Form you simply create a new object of the type *Form*. As input 
 myForm = new Form();
 ```
 
-```div-parameter
+
 @@include(form_p.md)
-```

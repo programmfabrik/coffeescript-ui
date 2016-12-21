@@ -9,6 +9,5 @@
 ***
 
 
-```div-parameter
+
 @@include(confirmationdialog_p.md)
-```

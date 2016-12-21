@@ -8,6 +8,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(emptylabel_p.md)
-```

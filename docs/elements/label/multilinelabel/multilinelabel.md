@@ -6,6 +6,5 @@
 </span>
 ***
 
-```div-parameter
+
 @@include(multilinelabel_p.md)
-```

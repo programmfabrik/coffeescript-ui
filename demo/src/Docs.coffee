@@ -69,12 +69,12 @@ class Docs extends Demo
 			}
 
 			if (!lang) {
-				return '<pre class="preee"><code>'
+				return '<pre><code>'
 					+ (escaped ? code : escape(code, true))
 					+ '\n</code></pre>';
 			  }
 
-			return '<pre class="preee"><code class="'
+			return '<pre><code class="'
 				+ this.options.langPrefix
 				+ escape(lang, true)
 				+ '">'

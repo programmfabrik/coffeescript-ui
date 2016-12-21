@@ -9,6 +9,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(tooltip_p.md)
-```

@@ -26,8 +26,19 @@ A button indicates possible user actions and responses depending on its function
 	@@include(button_exmpl1.coffee)
 	```
 
-```div-parameter
+
+<svg width="35px" height="985px" viewBox="0 0 35 985" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Group" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(4.000000, 0.000000)">
+        <rect id="Rectangle-2" fill="#5FDCC7" x="12" y="19.7987928" width="11" height="964.201207"></rect>
+        <polygon id="Triangle" fill="#5FDBC6" points="17.5 0 35 20.7887324 0 20.7887324"></polygon>
+        <rect id="Rectangle-3" fill="#5FDBC6" x="0" y="973.110664" width="35" height="10.889336"></rect>
+    </g>
+</svg>
+
 @@include(button_p.md)
-```
+
 
 

@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter WaitBlock
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -8,5 +9,7 @@
 |	<span class"removed-opt">header</span>	|	|	|	|	|
 |	<span class"removed-opt">content</span>	|	|	|	|	|
 |	<span class"merged-opt">icon</span>	|	<dt>&lt;String&gt;<dt>&lt;Instance of Object&gt; = Icon	|	|	|	&nbsp;	|
+
+```
 
 @@include(../block/block_p.md)

@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter Button
 
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
@@ -46,5 +47,6 @@
 |	onActivate 			|	<dt>function()	|	-	|	no 	|		|
 |	onDeactivate 		|	<dt>function()	|	-	|	no 	|	&nbsp;	|
 
+```
 
 @@include(../../core/dom/dom_p.md)

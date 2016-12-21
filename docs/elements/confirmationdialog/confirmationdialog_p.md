@@ -1,3 +1,4 @@
+```div-parameter
 ## Parameter ConfirmationDialog
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
@@ -11,6 +12,6 @@
 |	footer_left	|	{}	|	-	|	no	|	Lorem	|
 |	footer_right	|	{}	|	-	|	no	|	Lorem	|
 |	<span class="removed-opt">pane</span>	|	|	|	|	&nbsp;	|
-
+```
 
 @@include(../modal/modal_p.md) 

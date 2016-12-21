@@ -8,6 +8,5 @@
 
 ## Description
 
-```div-parameter
+
 @@include(borderlayout_p.md)
-```

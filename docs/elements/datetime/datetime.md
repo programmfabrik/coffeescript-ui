@@ -22,6 +22,5 @@ To build a new DateTime you simply create a new object of the type *DateTime*. A
 myDateTime = new DateTime();
 ```
 
-```div-parameter
+
 @@include(datetime_p.md)
-```
