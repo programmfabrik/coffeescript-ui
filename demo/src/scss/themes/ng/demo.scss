@@ -34,11 +34,7 @@
 		width: 100%;
 	}
 
-	mark {
-		background-color: transparent;
-		text-decoration: none;
-		border-bottom: 1px dashed black;
-	}
+
 
 
 	// ##########################
@@ -60,7 +56,6 @@
 			position: absolute;
 			margin-left: -1rem;
 		}
-
 	}
 
 
@@ -70,21 +65,27 @@
 	span.inheritance {
 		background-color: #ebebeb;
 		line-height: 2rem;
-		padding: .2rem .3rem .3rem .2rem;
+		padding: .2rem 0rem .3rem .2rem;
 
 		&::before {
 			content: "Inheritance:\00a0";
-			background-color: #d1d1d1;
+			background-color: hsl(0, 0%, 82%);
 			padding: .2rem .3rem .3rem .5rem;
 			margin-left: -.2rem; // same as padding-left of parent's span.
-			margin-right: .5rem
+			margin-right: .5rem;
+		}
+
+		mark {
+			background-color: hsl(0, 0%, 87%);
+			text-decoration: none;
+			padding: .2rem .2rem .3rem .3rem;
 		}
 	}
 
 	// --> Links
 	a.inheritance {
 
-		padding-right: .2rem;
+		padding-right: 0rem;
 
 		&::before {
 			content: "";
@@ -92,7 +93,7 @@
 			background-repeat: no-repeat; 
 			background-size: 1rem 1rem;
 			display: inline;  
-			padding-right:1.54rem; 
+			padding-right: 1.54rem; 
 			margin-left: .3em;
 			vertical-align: middle;
 
@@ -169,8 +170,6 @@
 
 				color: #d1d1d1;
 				font-size: 1.5rem;
-				
-
 			}
 		}
 	}
@@ -191,7 +190,12 @@
 			margin-right: auto;
 			margin-bottom: 2rem;
 			text-align: left;
+
+			&[id^="callba"] {
+				margin-top: 4rem;
+			}
 		}
+
 
 		table {
 			width: 100%;

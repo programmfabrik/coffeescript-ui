@@ -37,7 +37,7 @@ Displaying Content vertically. Has always a header at the top, a content area in
 </div>
 
 <br><br>
-In order to place the content and align it within the areas, you can use the *structure* of <mark>slots</mark> (colored red below) which every SimplePane uses in the background.
+In order to place the content and align it within the areas, you can use the *structure* of slots (colored red below) which every SimplePane uses in the background.
 
 <div style="width: 50%;">	
 	<div style="border: 1px solid #d1d1d1" class="cui-tmpl-vertical-layout-top-center-bottom cui-layout cui-padding-reset cui-dom-element cui-simple-pane cui-maximize cui-maximize-horizontal cui-maximize-vertical cui-vertical-layout cui-pane" cui-absolute-container="column" id="cui-dom-element-292">
@@ -116,7 +116,7 @@ In order to place the content and align it within the areas, you can use the *st
 ## Modifying a SimplePane
 
 After a SimplePane has been created, you can modify its header-, content- and footer-area.
-Therefore use the introduced <mark>slots</mark> to place the wanted content.
+Therefore use the introduced slots to place the wanted content.
 
 
 1. 

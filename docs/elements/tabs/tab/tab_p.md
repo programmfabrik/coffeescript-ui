@@ -5,7 +5,7 @@
 |		---				|			---				|	:---:					|	:---:		|		---					|
 |	name	|	<dt>&lt;String&gt;	|	-	|	no	|	Lorem	|
 |	text	|	<dt>&lt;String&gt;	|	-	|	yes	|	Lorem	|
-|	content	|	<dt>&lt;String&gt;<dt>inContent	|	check: (v) ->	|	-	|	yes	|	Lorem	|
+|	content	|	<dt>&lt;String&gt;<dt>inContent	|	check: (v) ->	|	yes	|	Lorem	|
 |	content_placeholder	|	<dt>isContent	|	-	|	no	|	Lorem	|
 |	load_on_show	|	<dt>&lt;Boolean&gt;	|	-	|	no	|	<dt>true<dd><dt>false<dd>	|
 

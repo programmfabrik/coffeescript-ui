@@ -2,7 +2,7 @@
 ## Parameter Select
 |	Parameter			|			Format			|	Default					|	Mandatory	|	Description				| 
 |		---				|			---				|	:---:					|	:---:		|		---					|
-
+|||||&nbsp;|
 ```
 
-@@include(../checkboc/checkbox_p.md) 
+@@include(../checkbox/checkbox_p.md) 

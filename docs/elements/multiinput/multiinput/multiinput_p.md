@@ -18,6 +18,6 @@
 |	onClick	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onKeyup	|	<dt>function()	|	-	|	no	|	Lorem	|
 |	onBlur	|	<dt>function()	|	-	|	no	|	Lorem	|
+```
 
-
-@@inculde(../../datafieldinput/datafieldinput_p.md) 
+@@include(../../datafieldinput/datafieldinput_p.md) 

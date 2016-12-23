@@ -16,4 +16,4 @@
 |	manage_overflow	|	<dt>true<dd><dt>false<dd><dt>PlainObject	|	-	|	no	|	&nbsp;	|
 ```
 
-@@include(../../core/dom/dom_p.md)
+@@include(../../../core/dom/dom_p.md)
