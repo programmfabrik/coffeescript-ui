@@ -3437,7 +3437,8 @@ $table-data-padding: 4px;
 	}
 }
 
-.cui-options--sortable {
+.cui-options--sortable,
+.cui-options--vertical {
 	.cui-options-center {
 		flex-direction: column;
 	}
