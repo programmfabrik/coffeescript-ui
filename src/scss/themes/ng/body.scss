@@ -1767,6 +1767,10 @@ a[role="button"].cui-button-appearance-link {
 		> .cui-vertical-layout-center {
 			overflow: auto;
 			-webkit-overflow-scrolling: touch;
+			
+			> .cui-layout {
+				flex-shrink: 0;
+			}
 
 			// add spacing to single labels in the body
 			// 
@@ -2698,7 +2702,9 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
-		border-bottom: 1px solid $table-border;
+		// UNCLEAR: too often this list-view-grind-inner-top is unused and then a wild border appears
+		// Example: table search results with Serienbilder
+		// border-bottom: 1px solid $table-border;
 	}
 }
 
@@ -3108,6 +3114,15 @@ $table-data-padding: 4px;
 	min-height: 0;
 	display: flex;
 	flex-direction: column;
+	
+	&.cui-form--horizontal {
+		flex-direction: row;
+		
+		.cui-form-row {
+			flex-grow: 0;
+			min-width: 0;
+		}
+	}
 }
 
 .cui-form-row {
