@@ -2704,7 +2704,7 @@ $table-data-padding: 4px;
 	.cui-list-view-grid-inner-top {
 		// UNCLEAR: too often this list-view-grind-inner-top is unused and then a wild border appears
 		// Example: table search results with Serienbilder
-		// border-bottom: 1px solid $table-border;
+		border-bottom: 1px solid $table-border;
 	}
 }
 
