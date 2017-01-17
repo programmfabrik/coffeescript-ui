@@ -2797,15 +2797,15 @@ $table-data-padding: 4px;
 .cui-list-view-grid-quadrant-3 {
 	.cui-lv-tr-outer {
 		position: relative;
+			
+		// also apply background to the cell for overflow
+		.cui-lv-tr,
+		.cui-lv-td {
+			background: inherit;
+		}
 		
 		&:nth-child(even) {
 			background: $zebra-color;
-			
-			// also apply background to the cell for overflow
-			.cui-lv-tr,
-			.cui-lv-td {
-				background: inherit;
-			}
 			
 			.cui-label-manage-overflow-button-container {
 				background-image: linear-gradient(#{transparentize($zebra-color, 1)}, #{transparentize($zebra-color, 0)});
