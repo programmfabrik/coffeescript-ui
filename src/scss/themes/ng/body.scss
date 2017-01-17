@@ -2604,6 +2604,11 @@ $table-data-padding: 4px;
 			border-top: 1px solid $border;
 		}
 	}
+	
+	// nested list-view
+	.cui-list-view {
+		background: $foreground;
+	}
 }
 
 .list-view-header-row {
