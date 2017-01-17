@@ -2981,6 +2981,7 @@ $table-data-padding: 4px;
 	display: flex;
 	flex: 1;
 	min-width: 0;
+	flex-wrap: wrap;
 	
 	.cui-label {
 		min-width: 0;
