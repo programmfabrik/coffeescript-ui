@@ -1610,7 +1610,7 @@ a[role="button"].cui-button-appearance-link {
 	//
 
 	&.cui-input-has-check-input {
-		&.cui-input-invalid:not(.cui-input-has-user-input) {
+		&.cui-input-invalid {
 			input {
 				border-color: hsl(0,90%,60%);
 				background: hsla(0,90%,74%, 0.15);
@@ -3493,6 +3493,10 @@ $table-data-padding: 4px;
 	align-items: flex-end;
 	height: 24px;
 	line-height: 24px;
+	
+	.cui-input-invalid-hint {
+		display: none;
+	}
 }
 
 .cui-date-time-calendar .cui-buttonbar {
