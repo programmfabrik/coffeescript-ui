@@ -1856,12 +1856,6 @@ a[role="button"].cui-button-appearance-link {
 			width: auto;
 		}
 	}
-
-	.cui-panel:last-child {		
-		&.cui-panel-closed .cui-panel-header {
-			border-bottom: none;
-		}
-	}
 }
 
 .cui-layer-pointer {
@@ -2393,6 +2387,12 @@ a[role="button"].cui-button-appearance-link {
 .cui-popover {
 	background: white;
 	min-width: 247px;
+
+	.cui-panel:last-child {		
+		&.cui-panel-closed .cui-panel-header {
+			border-bottom: none;
+		}
+	}
 }
 
 // WaitBlock
