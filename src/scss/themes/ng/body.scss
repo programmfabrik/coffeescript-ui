@@ -1167,12 +1167,15 @@ a[role="button"].cui-button-appearance-link {
 .cui-panel {
 	border-bottom: 1px solid $soft-border;
 	
+	& + &,
+	&:first-child {
+		.cui-panel-header {
+			border-top: none;
+		}
+	}
+
 	&:last-child {
 		border-bottom: none;
-		
-		&.cui-panel-closed .cui-panel-header {
-			border-bottom: none;
-		}
 	}
 
 	&.cui-panel-closed {
@@ -1189,10 +1192,8 @@ a[role="button"].cui-button-appearance-link {
 	border-bottom: 1px solid $soft-border;
 	position: relative;
 	height: $toolbar-height;
-
-	&:first-child {
-		border-top: none;
-	}
+	background: $toolbar-background;
+	flex-shrink: 0;
 
 	.cui-button {
 		width: 100%;
@@ -1216,8 +1217,8 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-		.fa {
-			width: 12px;
+		.cui-button-left {
+			width: 22px;
 		}
 
 		.fa-angle-right {
@@ -1853,6 +1854,12 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-data-field {
 			width: auto;
+		}
+	}
+
+	.cui-panel:last-child {		
+		&.cui-panel-closed .cui-panel-header {
+			border-bottom: none;
 		}
 	}
 }
@@ -3471,6 +3478,11 @@ $table-data-padding: 4px;
 	color: $secondary-color;
 }
 
+.cui-drag-drop-select-draggable {
+	cursor: -webkit-grab;
+	cursor:         grab;
+}
+
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
 	// CONFLICT - drag-drop select sortable is used on a whole sidebar in version editor - breaks a child form
@@ -3480,6 +3492,8 @@ $table-data-padding: 4px;
 	// 	margin-right: $padding/2;
 	// 	display: flex;
 	// }
+	cursor: -webkit-grabbing;
+	cursor: 				grabbing;
 	
 	.cui-data-field {
 		max-width: none;
