@@ -3433,6 +3433,7 @@ $table-data-padding: 4px;
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	max-width: 450px;
+	flex-direction: column;
 	
 	&:empty {
 		min-height: 0;
@@ -3448,10 +3449,9 @@ $table-data-padding: 4px;
 	}
 }
 
-.cui-options--sortable,
-.cui-options--vertical {
+.cui-options--horizontal {
 	.cui-options-center {
-		flex-direction: column;
+		flex-direction: row;
 	}
 }
 
