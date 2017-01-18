@@ -644,6 +644,12 @@ li > div {
 			margin: $padding;
 		}
 	}
+
+	&--padded {
+		> .cui-vertical-layout-center {
+			padding: $padding;
+		}
+	}
 }
 
 // Data Table
@@ -3467,6 +3473,16 @@ $table-data-padding: 4px;
 	.cui-options-center {
 		flex-direction: row;
 	}
+}
+
+.cui-options--sortable {
+	.cui-options-center {
+		flex-direction: column;
+	}
+}
+
+.cui-options-title {
+	font-weight: bold;	
 }
 
 .cui-options-order-hint {
