@@ -4029,13 +4029,16 @@ $table-data-padding: 4px;
 	height: 22px;
 	margin-bottom: $padding;
 	flex-basis: 100%;
-
-	&:not(:first-child) {
-		margin-top: $padding*2;
-		border-top: 1px solid $soft-border;
-	}
+	margin-top: $padding*2;
+	border-top: 1px solid $soft-border;
 }
 
+.cui-sticky-header-control + .cui-sticky-header,
+.cui-sticky-header:first-child,
+.cui-block + .cui-sticky-header {
+	margin-top: 0;
+	border-top-width: 0;
+}
 
 .cui-sticky-header-control {
 	position: fixed;
