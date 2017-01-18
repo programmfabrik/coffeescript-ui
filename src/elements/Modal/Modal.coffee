@@ -57,7 +57,7 @@ class CUI.Modal extends CUI.LayerPane
 			return
 
 		if CUI.isPlainObject(_btn)
-			btn = new Button(_btn)
+			btn = new CUI.defaults.class.Button(_btn)
 		else
 			btn = _btn
 
