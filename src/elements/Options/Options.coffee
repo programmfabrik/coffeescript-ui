@@ -40,12 +40,8 @@ class CUI.Options extends CUI.DataField
 			horizontal:
 				default: if CUI.__ng__ then true else undefined
 				check: (v) ->
-					if v == true or (isInteger(v) and v > 0)
+					if isBoolean(v) or (isInteger(v) and v > 0)
 						return true
-
-					if CUI.__ng__ and v == false
-						return true
-
 
 			title:
 				check: String
@@ -457,7 +453,7 @@ class CUI.Options extends CUI.DataField
 			else
 				@__optionsForm = new Form
 					class: "cui-options-form cui-form-options" # form-options needed by old design
-					horizontal: @_horizontal
+					horizontal: if @_horizontal != false then @_horizontal else undefined
 					top: top
 					bottom: bottom
 					fields: @__checkboxes
