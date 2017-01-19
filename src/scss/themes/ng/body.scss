@@ -3134,19 +3134,10 @@ $table-data-padding: 4px;
 	min-height: 0;
 	display: flex;
 	flex-direction: column;
+	margin-bottom: $padding;
 	
-	> .cui-output {
-		margin-bottom: 7px;	
-	}
-
-	> .cui-input {
-		margin-bottom: 7px;
-	}
-
 	&:last-child {
-		> .cui-data-field {
-			margin-bottom: 0;
-		}
+		margin-bottom: 0;
 	}
 }
 
@@ -3374,7 +3365,7 @@ $table-data-padding: 4px;
 .cui-form-popover {
 	.cui-vertical-layout-center {		
 		+ .cui-vertical-layout-bottom {
-			margin: 5px 0;
+			margin: 5px 0 0;
 			
 			&:empty {
 				display: none;
