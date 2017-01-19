@@ -1790,39 +1790,7 @@ a[role="button"].cui-button-appearance-link {
 			.cui-form {
 				flex-shrink: 0;
 			}
-
-			// add spacing to single labels in the body
-			// 
-			// cases:
-			// - password reset
-			// - popover manager
-			//
-			// &,
-			// > .cui-layout,
-			// > .cui-layout > .cui-layout,
-			// > .cui-layout-cell,
-			// > .cui-layout > .cui-layout-cell {
-			// 	> .cui-label {
-			// 		margin-left: $padding;
-			// 		margin-right: $padding;
-					
-			// 		&:first-child {
-			// 			margin-top: $compensating-padding;
-			// 		}
-
-			// 		&:last-child {
-			// 			margin-bottom: $compensating-padding;
-			// 		}
-			// 	}
-			// }
-
-			// adding spacing to data-fields in the body
-			> .cui-data-field {
-				&:only-child {
-					margin: $compensating-padding $padding;
-				}
-			}
-
+			
 			> .cui-form {
 				margin: 0;
 			}
@@ -1861,6 +1829,10 @@ a[role="button"].cui-button-appearance-link {
 		.cui-data-field {
 			width: auto;
 		}
+	}
+
+	.cui-form-key {
+		width: auto;
 	}
 }
 
