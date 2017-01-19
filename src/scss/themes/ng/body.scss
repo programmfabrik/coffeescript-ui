@@ -1504,7 +1504,11 @@ a[role="button"].cui-button-appearance-link {
 		align-self: center; // Date-Time picker month label in footer
 	}
 
+	> .cui-button,
+	> .cui-button-button,
 	> .cui-data-field-input {
+		+ .cui-button,
+		+ .cui-button-button,
 		+ .cui-data-field-input,
 		+ .cui-buttonbar-group {
 			margin-left: $small-gap;
@@ -2658,6 +2662,10 @@ $table-data-padding: 4px;
 		// UNCLEAR - doesn't look good on single line multiline labels
 		// align-self: flex-start;
 	}
+}
+
+.cui-lv-th {
+	cursor: default;
 }
 
 // List View Grid
