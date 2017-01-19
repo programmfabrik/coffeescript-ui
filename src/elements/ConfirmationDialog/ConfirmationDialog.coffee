@@ -41,6 +41,9 @@ class CUI.ConfirmationDialog extends CUI.Modal
 
 		@removeOpt("pane")
 
+	setPane: ->
+		super(padded: true)
+
 	readOpts: ->
 		super()
 		# this needs to be set here, so that Modal / LayerPane are happy

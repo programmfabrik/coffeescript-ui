@@ -575,6 +575,7 @@ class CUI.Form extends CUI.DataField
 				level = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))+1
 				if not level
 					level = 1
+
 				if level > 3
 					level = 3
 
@@ -587,8 +588,10 @@ class CUI.Form extends CUI.DataField
 							node: cb
 							call: =>
 								if cb.getValue()
+									blk.removeClass("cui-form--block-content-hidden")
 									field.show()
 								else
+									blk.addClass("cui-form--block-content-hidden")
 									field.hide()
 					left_side = cb
 				else
@@ -602,6 +605,12 @@ class CUI.Form extends CUI.DataField
 						get_append(field)
 						hint_div
 					]
+
+				if cb
+					if cb.getValue()
+						blk.removeClass("cui-form--block-content-hidden")
+					else
+						blk.addClass("cui-form--block-content-hidden")
 
 				append(blk)
 
