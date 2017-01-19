@@ -1504,15 +1504,9 @@ a[role="button"].cui-button-appearance-link {
 		align-self: center; // Date-Time picker month label in footer
 	}
 
-	> .cui-button,
-	> .cui-button-button,
 	> .cui-data-field-input {
-		// align-self: unset; // don't unset - need stretch for big button clickarea
-		
-		& + .cui-button,
-		& + .cui-button-button,
-		& + .cui-buttonbar-group,
-		& + .cui-data-field-input {
+		+ .cui-data-field-input,
+		+ .cui-buttonbar-group {
 			margin-left: $small-gap;
 		}
 	}
