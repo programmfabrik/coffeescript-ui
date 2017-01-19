@@ -3499,6 +3499,10 @@ $table-data-padding: 4px;
 	cursor:         grab;
 }
 
+.cui-drag-drop-select-lasso {
+	cursor: default;
+}
+
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
 	// CONFLICT - drag-drop select sortable is used on a whole sidebar in version editor - breaks a child form
