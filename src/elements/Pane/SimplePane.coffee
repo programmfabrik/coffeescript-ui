@@ -28,7 +28,7 @@ class CUI.SimplePane extends CUI.Pane
 
 		if @_title
 			@append(new Label(text: @_title), "header_left")
-		
+
 		if @_padded
 			@addClass("cui-simple-pane--padded")
 
