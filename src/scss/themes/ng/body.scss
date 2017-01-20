@@ -2364,6 +2364,31 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// Hint Popover
+
+$popover-hint-background: hsl(205,15%,43%);
+
+.cui-layer-root-hint-popover .cui-layer-pointer {
+	height: 12px;
+	
+	&.cui-layer-pointer--e,
+	&.cui-layer-pointer--w {
+		width: 12px;
+		height: 37px;
+	}
+	
+	&:after {
+		background: $popover-hint-background;
+	}
+}
+
+.cui-hint-popover {
+	min-width: 0;
+	background: $popover-hint-background;
+	color: white;
+	padding: 7px 10px;
+}
+
 // WaitBlock
 .cui-tmpl-wait-block {
 	position: absolute;
