@@ -22,9 +22,6 @@ class CUI.Layer extends CUI.DOM
 		@registerTemplate(@__layer)
 		# @__layer.DOM.attr("role", @_role)
 
-		if @_content
-			@append(@_content)
-
 		# layer root is a container for the backdrop, pointer and layer
 		#
 		# this is only to hold all nodes in one node, the backdrop is a sibling
@@ -272,10 +269,6 @@ class CUI.Layer extends CUI.DOM
 			show_at_position:
 				check: (v) ->
 					CUI.isPlainObject(v) and v.top >= 0 and v.left >= 0
-
-			content:
-				check: (v) ->
-					isContent(v)
 
 			# fills the available space to the maximum
 			# if used with "placement", the placement is not
