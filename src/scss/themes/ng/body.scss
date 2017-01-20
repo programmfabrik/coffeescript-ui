@@ -3685,7 +3685,9 @@ $table-data-padding: 4px;
 		box-sizing: content-box;
 		width: 350px;
 		display: flex;
+		flex-direction: row;
 		flex-wrap: wrap;
+		
 		> * {
 			box-sizing: border-box;
 		}
@@ -3695,6 +3697,10 @@ $table-data-padding: 4px;
 			height: 30px;
 			align-items: center;
 			text-align: center;
+			
+			&-center {
+				flex-shrink: 0;
+			}
 		}
 	}
 }
