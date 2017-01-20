@@ -7,10 +7,13 @@
 
 CUI.tz_data = {}
 
-class DateTime extends Input
+class CUI.DateTime extends Input
 	constructor: (@opts={}) ->
 		super(@opts)
 		@init()
+
+	@defaults:
+		button_tooltip: "Open calendar"
 
 	initOpts: ->
 		super()
@@ -247,6 +250,7 @@ class DateTime extends Input
 
 		btn = new CUI.defaults.class.Button
 			icon: "calendar"
+			tooltip: text: CUI.DateTime.defaults.button_tooltip
 			onClick: =>
 				@openPopover(btn)
 
@@ -1286,3 +1290,5 @@ class DateTime extends Input
 			return null
 		dt = new DateTime(input_types: null)
 		dt.parse(datestr)
+
+DateTime = CUI.DateTime
