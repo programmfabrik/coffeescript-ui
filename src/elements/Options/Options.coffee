@@ -166,9 +166,12 @@ class CUI.Options extends CUI.DataField
 		for opt, idx in @__options
 			if opt.value == value
 				found = idx
+				break
 		assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
 		@__checkboxes[found]
 
+	getOptions: ->
+		@__options
 
 	setValue: (v, flags={}) ->
 		flags.__set_on_data = true
