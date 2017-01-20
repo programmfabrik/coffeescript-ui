@@ -420,6 +420,8 @@ class CUI.Options extends CUI.DataField
 
 				if @_horizontal
 					@addClass("cui-options--horizontal")
+				else
+					@addClass("cui-options--vertical")
 
 				if @_activatable
 					@empty("active")
