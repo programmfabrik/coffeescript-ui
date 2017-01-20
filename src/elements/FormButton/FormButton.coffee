@@ -9,14 +9,20 @@ class FormButton extends Checkbox
 
 	constructor: (@opts={}) ->
 		super(@opts)
-		if CUI.__ng__
-			@addClass("cui-button-button")
 
 	getButtonOpts: ->
 		opts = icon: @_icon
 		for k in ["appearance"]
 			opts[k] = @["_"+k]
 		opts
+
+	render: ->
+		super()
+		if CUI.__ng__
+			# OMG, this is really f*cked up, we add this in Button, remove it in Checkbox
+			# and now add it again...
+			@__checkbox.addClass("cui-button-button")
+		return
 
 	getCheckboxClass: ->
 		"cui-button-form-button"

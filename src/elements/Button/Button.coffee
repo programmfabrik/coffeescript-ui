@@ -69,7 +69,6 @@ class CUI.Button extends CUI.DOM
 		if CUI.__ng__
 			@addClass("cui-button-button")
 
-
 		if isString(@__tooltipOpts?.text)
 			@setAria("label", @__tooltipOpts?.text)
 			@__hasAriaLabel = true
