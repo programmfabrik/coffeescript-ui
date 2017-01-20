@@ -3683,7 +3683,7 @@ $table-data-padding: 4px;
 .cui-menu.cui-date-time-60-select {
 	.cui-tmpl-item-list-body {
 		box-sizing: content-box;
-		width: 350px;
+		width: 370px;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -3693,14 +3693,10 @@ $table-data-padding: 4px;
 		}
 
 		.cui-button {
-			width: 35px;
+			width: 37px;
 			height: 30px;
 			align-items: center;
 			text-align: center;
-			
-			&-center {
-				flex-shrink: 0;
-			}
 		}
 	}
 }
