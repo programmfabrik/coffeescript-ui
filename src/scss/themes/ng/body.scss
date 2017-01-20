@@ -639,12 +639,6 @@ li > div {
 
 // Simple Pane
 .cui-simple-pane {
-	> .cui-vertical-layout-center {
-		> .cui-label:only-child {
-			margin: $padding;
-		}
-	}
-
 	&--padded {
 		> .cui-vertical-layout-center {
 			padding: $padding;
@@ -2038,7 +2032,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		> .cui-vertical-layout-center {
-			margin: 5px 0;
+			margin: $padding/2;
 		}
 		
 		// layer-footer
