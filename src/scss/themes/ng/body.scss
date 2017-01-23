@@ -2387,6 +2387,14 @@ $popover-hint-background: hsl(205,15%,43%);
 	background: $popover-hint-background;
 	color: white;
 	padding: 7px 10px;
+	
+	.cui-button-appearance-link[role] .cui-button-visual {
+		color: lighten(desaturate($highlight-color, 10%), 20%);
+	}
+
+	.cui-empty-label {
+		color: lighten($muted-color, 14%);
+	}
 }
 
 // WaitBlock
