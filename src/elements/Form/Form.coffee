@@ -514,7 +514,9 @@ class CUI.Form extends CUI.DataField
 			CUI.DOM.addClass(container, @_class_table)
 
 		get_append = (v, info=@) =>
-			if CUI.isPlainObject(v) # assume a label constructor
+			if v instanceof Form and v.getFields().length == 0
+				null
+			else if CUI.isPlainObject(v) # assume a label constructor
 				# new Label(v).DOM
 				new MultilineLabel(v).DOM
 			else if isString(v)
@@ -588,10 +590,10 @@ class CUI.Form extends CUI.DataField
 							node: cb
 							call: =>
 								if cb.getValue()
-									blk.removeClass("cui-form--block-content-hidden")
+									blk.addClass("cui-form-block--checkbox-checked")
 									field.show()
 								else
-									blk.addClass("cui-form--block-content-hidden")
+									blk.removeClass("cui-form-block--checkbox-checked")
 									field.hide()
 					left_side = cb
 				else
@@ -607,10 +609,12 @@ class CUI.Form extends CUI.DataField
 					]
 
 				if cb
+					blk.addClass("cui-form-block--has-checkbox")
+
 					if cb.getValue()
-						blk.removeClass("cui-form--block-content-hidden")
+						blk.addClass("cui-form-block--checkbox-checked")
 					else
-						blk.addClass("cui-form--block-content-hidden")
+						blk.removeClass("cui-form-block--checkbox-checked")
 
 				append(blk)
 

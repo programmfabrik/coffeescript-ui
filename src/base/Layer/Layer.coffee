@@ -874,26 +874,26 @@ class CUI.Layer extends CUI.DOM
 
 			switch vp.align_horizontal
 				when "left"
-					left = vp.layer_pos.left
+					pos_left = vp.layer_pos.left
 				when "right"
-					right = dim_window.width - (vp.layer_pos.left + vp.layer_pos.width)
+					pos_right = dim_window.width - (vp.layer_pos.left + vp.layer_pos.width)
 				when "center"
-					left = vp.layer_pos.left
+					pos_left = vp.layer_pos.left
 
 			switch vp.align_vertical
 				when "top"
-					top = vp.top
+					pos_top = vp.top
 				when "bottom"
-					bottom = dim_window.height - (vp.layer_pos.top + vp.layer_pos.height)
+					pos_bottom = dim_window.height - (vp.layer_pos.top + vp.layer_pos.height)
 				when "center"
-					top = vp.layer_pos.top
+					pos_top = vp.layer_pos.top
 
 			# set layer
 			CUI.DOM.setStyle @__layer.DOM,
-				top: top
-				bottom: bottom
-				left: left
-				right: right
+				top: pos_top
+				bottom: pos_bottom
+				left: pos_left
+				right: pos_right
 
 				# width: Math.ceil(vp.layer_pos.width)
 				# height: Math.ceil(vp.layer_pos.height)
