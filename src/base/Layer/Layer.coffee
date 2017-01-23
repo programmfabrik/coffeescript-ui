@@ -392,8 +392,8 @@ class CUI.Layer extends CUI.DOM
 
 		# reset previously set layer dimensions
 		CUI.DOM.setStyle @__layer.DOM,
-			top: 0
-			left: 0
+			top: ""
+			left: ""
 			width: ""
 			height: ""
 			margin: ""
@@ -452,6 +452,7 @@ class CUI.Layer extends CUI.DOM
 					vp.bottom = vp.window_bottom
 					vp.align_vertical = "center"
 					vp.align_horizontal = "center"
+
 				when "n"
 					vp.top = dim_layer.marginTop
 					vp.left = dim_layer.marginLeft
@@ -589,7 +590,6 @@ class CUI.Layer extends CUI.DOM
 				when "center"
 					layer_pos.top = dim_element.viewportCenterTop - layer_pos.height / 2
 
-
 			if vp.dim_pointer
 				# now align the pointer within the available viewport
 				switch vp.pointer_align_horizontal
@@ -611,7 +611,6 @@ class CUI.Layer extends CUI.DOM
 				pointer_pos.width = vp.dim_pointer.borderBoxWidth
 				pointer_pos.height = vp.dim_pointer.borderBoxHeight
 				pointer_pos.direction = vp.dim_pointer.direction
-
 
 			# move layer into viewport in case we overlap
 			if layer_pos.top < vp.top
@@ -869,16 +868,50 @@ class CUI.Layer extends CUI.DOM
 			# in "ng" we position this by pure CSS
 			return @
 
-		# set layer
-		CUI.DOM.setStyle @__layer.DOM,
-			top: vp.layer_pos.top
-			left: vp.layer_pos.left
-			width: Math.ceil(vp.layer_pos.width)
-			height: Math.ceil(vp.layer_pos.height)
-			margin: 0
-			minWidth: minWidth
-			# maxWidth: vp.width + vp.overlap_width
-			# maxHeight: vp.height + vp.overlap_height
+		# console.debug "viewport", vp, left, right, top, bottom
+
+		if CUI.__ng__
+
+			switch vp.align_horizontal
+				when "left"
+					left = vp.layer_pos.left
+				when "right"
+					right = dim_window.width - (vp.layer_pos.left + vp.layer_pos.width)
+				when "center"
+					left = vp.layer_pos.left
+
+			switch vp.align_vertical
+				when "top"
+					top = vp.top
+				when "bottom"
+					bottom = dim_window.height - (vp.layer_pos.top + vp.layer_pos.height)
+				when "center"
+					top = vp.layer_pos.top
+
+			# set layer
+			CUI.DOM.setStyle @__layer.DOM,
+				top: top
+				bottom: bottom
+				left: left
+				right: right
+
+				# width: Math.ceil(vp.layer_pos.width)
+				# height: Math.ceil(vp.layer_pos.height)
+				margin: 0
+				minWidth: minWidth
+				maxWidth: Math.floor(vp.width + vp.overlap_width)
+				maxHeight: Math.floor(vp.height + vp.overlap_height)
+		else
+			# set layer
+			CUI.DOM.setStyle @__layer.DOM,
+				top: vp.layer_pos.top
+				left: vp.layer_pos.left
+				width: Math.ceil(vp.layer_pos.width)
+				height: Math.ceil(vp.layer_pos.height)
+				margin: 0
+				minWidth: minWidth
+				# maxWidth: Math.floor(vp.width + vp.overlap_width)
+				# maxHeight: Math.floor(vp.height + vp.overlap_height)
 
 		if @__pointer
 			# set pointer
