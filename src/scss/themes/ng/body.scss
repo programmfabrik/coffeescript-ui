@@ -3130,6 +3130,10 @@ $table-data-padding: 4px;
 // Form
 .cui-form {
 	margin: $padding;
+	
+	&--block-content-hidden .cui-block-content {
+		display: none;
+	}
 }
 
 .cui-form-container {
