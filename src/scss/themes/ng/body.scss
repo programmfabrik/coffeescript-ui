@@ -1833,7 +1833,7 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 	width: 33px;
 	height: 16px;
-	margin: 0 6px;
+	margin: 6px;
 	overflow: hidden;
 
 	&:after { // arrow (north)
@@ -1858,6 +1858,11 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-pointer--s:after {
 	top: -9px;
 	background: $layer-footer-background;
+}
+
+.cui-layer-pointer--n,
+.cui-layer-pointer--s {
+	margin: 0 6px;
 }
 
 .cui-layer-pointer--e,
