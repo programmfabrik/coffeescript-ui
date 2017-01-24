@@ -1358,12 +1358,8 @@ a[role="button"].cui-button-appearance-link {
   & > p,
   & > pre,
   & > blockquote {
-    &:first-child {
-      margin-top: 6px;
-    }
-
     &:last-child {
-      margin-bottom: 6px;
+      margin-bottom: 0;
     }
   }
 
@@ -3145,10 +3141,6 @@ $table-data-padding: 4px;
 // Form
 .cui-form {
 	margin: $padding;
-	
-	&--block-content-hidden .cui-block-content {
-		display: none;
-	}
 }
 
 .cui-form-container {
@@ -3163,6 +3155,32 @@ $table-data-padding: 4px;
 		.cui-form-row {
 			flex-grow: 0;
 			min-width: 0;
+		}
+	}
+}
+
+.cui-form-block {
+	&--has-checkbox {
+		.cui-block-header {
+			padding-bottom: $padding;	
+		}
+
+		.cui-block-content {
+			display: none;
+		}
+
+		&.cui-form-block--checkbox-checked {
+			.cui-block-header {
+				padding-bottom: 7px;	
+			}
+
+			.cui-block-content {
+				display: block;
+				
+				&:empty {
+					padding-bottom: 3px;
+				}
+			}
 		}
 	}
 }
@@ -4036,6 +4054,10 @@ $table-data-padding: 4px;
 
 .cui-block-content {
 	padding: 0 $padding $padding;
+	
+	&:empty {
+		display: none;
+	}
 	
 	.cui-form-table {
 		width: 100%;
