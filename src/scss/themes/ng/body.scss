@@ -2149,27 +2149,32 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Alert Problem (red)
-.cui-confirmation-dialog .cui-alert-problem {
-	border: 3px solid $error-color;
-	
+.cui-confirmation-dialog .cui-alert-problem {	
 	> .cui-simple-pane {
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			.cui-button-button {				
-				.cui-button-visual {
-					border-top-color: hsl(10,11%,93%);
-					border-left-color: hsl(10,11%,93%);
-					color: $error-color;
-				}
-
-				&.cui-active .cui-button-visual {
-					color: $error-color;
-				}
-
-				&.cui-button--primary {
+			.cui-button-button {
+				&:only-child {
 					.cui-button-visual {
+						border-top-color: hsl(10,11%,93%);
+						border-left-color: hsl(10,11%,93%);
+						color: $on-error-color;
 						background: $error-color;
 						border-top-color: $error-color;
+					}
+				}
+				&:not(:only-child).cui-button--primary {
+					.cui-button-visual {
+						background: $error-color;
+						color: $on-error-color;
+						border-top-color: $error-color;
+						border-left-width: 0;
+					}
+
+					&.cui-disabled {
+						.cui-button-visual {
+							color: transparentize($on-error-color, 0.5);
+						}
 					}
 				}
 			}
