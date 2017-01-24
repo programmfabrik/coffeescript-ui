@@ -1821,17 +1821,6 @@ a[role="button"].cui-button-appearance-link {
 			width: auto;
 		}
 	}
-
-	// let form keys grow/shrink freely
-	.cui-form-key {
-		width: auto;
-	}
-
-	// exception to this rule
-	// - in tabs (targeting seperate tables that should have the same appearance)
-	.cui-tab .cui-form-key {
-		width: $td-width;
-	}
 }
 
 .cui-layer-pointer {
