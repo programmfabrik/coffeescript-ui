@@ -291,6 +291,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 				@end_drag(ev)
 				@_dragend?(ev, globalDrag, @)
 
+			if @isDestroyed()
+				# this can happen if any of the
+				# callbacks cleanup / reload
+				return
+
 			noClickKill = globalDrag.noClickKill
 
 			@__cleanup()

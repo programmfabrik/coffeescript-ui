@@ -476,11 +476,10 @@ class CUI.Options extends CUI.DataField
 					element: sortable_element
 					selector: sortable_selector
 					sorted: (ev, from_idx, to_idx) =>
-						console.debug "from:", from_idx, "to:", to_idx
-						# CUI.debug "options order before sort", @__options_order.join(", ")
-						moveInArray(from_idx, to_idx, @__options_order)
-						# CUI.debug "sort", from_idx, " > ", to_idx
-						# CUI.debug "options order after sort", @__options_order.join(", ")
+						# console.debug "from:", from_idx, "to:", to_idx
+						# console.debug "options order before sort", @__options_order.join(", ")
+						moveInArray(from_idx, to_idx, @__options_order, from_idx < to_idx)
+						# console.debug "options order after sort", @__options_order.join(", ")
 						# re order options
 						sort_options()
 

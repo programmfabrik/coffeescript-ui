@@ -93,21 +93,27 @@ class CUI.Sortable extends CUI.Draggable
 		dest_idx = @get_child_number(target_child)
 		@move_element(source_idx, dest_idx)
 
+	stop_drag: (ev) ->
+		@__end_drag(ev, true)
+		super(ev)
+
 	end_drag: (ev) ->
+		@__end_drag(ev, false)
+		super(ev)
+
+	__end_drag: (ev, stopped) ->
 		# move dragged object into position
 		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
-
 		CUI.DOM.removeAnimatedClone(@element)
-
 		curr_idx = @get_child_number(globalDrag.sort_source)
-		if ev.getType() == "mouseup"
-			globalDrag.helperNode.remove()
-			globalDrag.helperNode = null
-			if @_sorted
-				if globalDrag.start_idx != curr_idx
-					@_sorted(ev, globalDrag.start_idx, curr_idx)
-		else
+
+		if globalDrag.start_idx == curr_idx
+			return
+
+		if stopped
 			@move_element(curr_idx, globalDrag.start_idx)
-		super(ev)
+		else
+			@_sorted(ev, globalDrag.start_idx, curr_idx)
+
 
 Sortable = CUI.Sortable
