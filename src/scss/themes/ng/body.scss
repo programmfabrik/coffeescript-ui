@@ -3374,7 +3374,7 @@ $table-data-padding: 4px;
 }
 
 .cui-data-field-hidden {
-	display: none;
+	display: none !important;
 }
 
 .cui-form-table-has-left-column {
@@ -3857,6 +3857,12 @@ $table-data-padding: 4px;
 .cui-multi-input-input {
 	@include margin-top(0.5);
 	position: relative;
+	
+	&.cui-data-field-hidden {
+		+ .cui-multi-input-input {
+			margin-top: 0;
+		}
+	} 
 
 	.cui-input,
 	.cui-textarea {
