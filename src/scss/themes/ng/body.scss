@@ -1979,212 +1979,19 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 500px;
 }
 
-// Confirmation Choice, Alert
-
-.cui-confirmation-dialog .cui-layer,
+// Confirmation Choice
 .cui-confirmation-choice .cui-layer {
 	max-width: 300px; // don't make this bigger, make the text shorter
-	background: hsl(205,7%,98%);
-
-	.cui-form-tr,
-	.cui-form-tr-header {
-		background: none;
-	}
-
-	.cui-form-td {
-		border-top-color: hsl(205,10%,94%);
-	}
-
-	&.cui-confirmation-dialog--no-title {
-		> .cui-simple-pane {
-			// layer-header
-			> .cui-vertical-layout-top {
-				display: none;
-			}
-		}
-	}
 	
 	> .cui-simple-pane {
-		// layer-header
-		> .cui-vertical-layout-top {
-			overflow: visible;
-			
-			> .cui-pane-header {
-				background: none;
-				border-bottom-width: 0;
-				min-height: 0;
-				position: relative;
-				padding-right: 0;
-				margin-bottom: -$compensating-padding;
-
-				> .cui-horizontal-layout-right .cui-buttonbar:last-child {
-					margin-right: 0;
-				}
-				
-				.cui-label {
-					margin-top: 14px;
-					font-weight: bold;
-					font-size: 15px;
-					padding-left: $padding;
-				}
-
-				.cui-button {
-					padding: 11px 7px 4px 7px;
-					
-					.cui-button-visual {
-						border-width: 0;
-						background: none;
-						padding: 0;
-						height: auto;
-						color: hsl(205,6%,75%);
-					}
-				}
-			}
-		}
-
 		> .cui-vertical-layout-center {
 			margin: $padding/2;
 		}
-		
-		// layer-footer
-		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			min-height: 0;
-			justify-content: space-between;
-			border: none;
-			background: none;
-			padding: 0;
-			
-			.cui-buttonbar {
-				height: 33px;
-				margin-right: 0;
-			}
-
-			.cui-button {
-				height: $toolbar-height;
-				
-				.cui-button-visual {
-					padding: 0 $padding;
-				}
-			}
-
-			.cui-button-button {
-				flex: 1;
-				margin: 0;
-				align-items: stretch;
-				padding: 0 !important;
-				
-				.cui-button-visual {
-					height: 100%;
-					border: none;
-					border-top: 1px solid hsl(210,11%,93%);
-					border-left: 1px solid hsl(210,11%,93%);
-					border-radius: 0;
-					color: $highlight-color;
-					background: none;
-				}
-
-				&.cui-active .cui-button-visual {
-					color: $highlight-color;
-				}
-
-				&.cui-button--primary {
-					.cui-button-visual {
-						background: $highlight-color;
-						color: $on-highlight-color;
-						border-top-color: $highlight-color;
-						border-left-width: 0;
-					}
-
-					&.cui-disabled {
-						.cui-button-visual {
-							color: transparentize($on-highlight-color, 0.5);
-						}
-					}
-				}
-			}
-
-			.cui-buttonbar {
-				flex: 1;
-			}
-
-			.cui-horizontal-layout-left,
-			.cui-horizontal-layout-center,
-			.cui-horizontal-layout-right {
-				flex: 1;
-
-				&:empty {
-					display: none;
-				}
-			}
-
-			.cui-horizontal-layout-left:empty +
-			.cui-horizontal-layout-center:not(:empty),
-			.cui-horizontal-layout-left:empty +
-			.cui-horizontal-layout-center:empty +
-			.cui-horizontal-layout-right,
-			.cui-horizontal-layout-left {
-				.cui-button:first-child .cui-button-visual {
-					border-left-width: 0;
-					border-bottom-left-radius: 4px;
-				}
-			}
-		}
 	}
-
-	.cui-table {
-		.cui-tr:nth-child(even) {
-			background: darken($zebra-color, 4%);
-		}
-	}
-	
-	.cui-horizontal-layout-right {
-		margin-left: 0;
-	}
-
-	// maximise form table rows
-	.cui-form-table-has-not-left-column {
-		.cui-form-value {
-			flex-grow: 1;
-		}
-	}
-}
-
-.cui-confirmation-dialog .cui-layer:not(.cui-alert) {
-	max-width: 480px;
 }
 
 // Alert Problem (red)
-.cui-confirmation-dialog .cui-alert-problem {	
-	> .cui-simple-pane {
-		// layer-footer
-		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			.cui-button-button {
-				&:only-child {
-					.cui-button-visual {
-						border-top-color: hsl(10,11%,93%);
-						border-left-color: hsl(10,11%,93%);
-						color: $on-error-color;
-						background: $error-color;
-						border-top-color: $error-color;
-					}
-				}
-				&:not(:only-child).cui-button--primary {
-					.cui-button-visual {
-						background: $error-color;
-						color: $on-error-color;
-						border-top-color: $error-color;
-						border-left-width: 0;
-					}
-
-					&.cui-disabled {
-						.cui-button-visual {
-							color: transparentize($on-error-color, 0.5);
-						}
-					}
-				}
-			}
-		}
-	}
+.cui-confirmation-dialog .cui-alert-problem {
 }
 
 // Spinner
@@ -2325,6 +2132,7 @@ a[role="button"].cui-button-appearance-link {
 	  	.cui-button-visual {
 	  		color: $on-highlight-color;
 	  		background: $highlight-color;
+	  		border-color: $highlight-color;
 	  	}
 	  }
 
