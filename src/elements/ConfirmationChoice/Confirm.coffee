@@ -27,9 +27,6 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 				check: ["ok", "cancel"]
 
 	readOpts: ->
-		if not @opts.hasOwnProperty("cancel")
-			@opts.cancel = true
-
 		super()
 
 		@_choices = [

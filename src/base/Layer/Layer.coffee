@@ -872,28 +872,28 @@ class CUI.Layer extends CUI.DOM
 
 		if CUI.__ng__
 
-			switch vp.align_horizontal
-				when "left"
-					pos_left = vp.layer_pos.left
-				when "right"
-					pos_right = dim_window.width - (vp.layer_pos.left + vp.layer_pos.width)
-				when "center"
-					pos_left = vp.layer_pos.left
+			# switch vp.align_horizontal
+			# 	when "left"
+			# 		pos_left = vp.layer_pos.left
+			# 	when "right"
+			# 		pos_right = dim_window.width - (vp.layer_pos.left + vp.layer_pos.width)
+			# 	when "center"
+			# 		pos_left = vp.layer_pos.left
 
-			switch vp.align_vertical
-				when "top"
-					pos_top = vp.top
-				when "bottom"
-					pos_bottom = dim_window.height - (vp.layer_pos.top + vp.layer_pos.height)
-				when "center"
-					pos_top = vp.layer_pos.top
+			# switch vp.align_vertical
+			# 	when "top"
+			# 		pos_top = vp.top
+			# 	when "bottom"
+			# 		pos_bottom = dim_window.height - (vp.layer_pos.top + vp.layer_pos.height)
+			# 	when "center"
+			# 		pos_top = vp.layer_pos.top
 
 			# set layer
 			CUI.DOM.setStyle @__layer.DOM,
-				top: pos_top
-				bottom: pos_bottom
-				left: pos_left
-				right: pos_right
+				top: vp.layer_pos.top # pos_top
+				# bottom: pos_bottom
+				left: vp.layer_pos.left
+				# right: pos_right
 
 				# width: Math.ceil(vp.layer_pos.width)
 				# height: Math.ceil(vp.layer_pos.height)
