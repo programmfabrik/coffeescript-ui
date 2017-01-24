@@ -1981,7 +1981,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Confirmation Choice, Alert
 
-.cui-confirmation-dialog .cui-alert,
+.cui-confirmation-dialog .cui-layer,
 .cui-confirmation-choice .cui-layer {
 	max-width: 300px; // don't make this bigger, make the text shorter
 	background: hsl(205,7%,98%);
@@ -2022,10 +2022,10 @@ a[role="button"].cui-button-appearance-link {
 				}
 				
 				.cui-label {
-					margin-top: $padding;
+					margin-top: 14px;
 					font-weight: bold;
 					font-size: 15px;
-					padding-left: $padding/2;
+					padding-left: $padding;
 				}
 
 				.cui-button {
@@ -2147,6 +2147,10 @@ a[role="button"].cui-button-appearance-link {
 			flex-grow: 1;
 		}
 	}
+}
+
+.cui-confirmation-dialog .cui-layer:not(.cui-alert) {
+	max-width: 480px;
 }
 
 // Alert Problem (red)
