@@ -1821,8 +1821,15 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	// let form keys grow/shrink freely
 	.cui-form-key {
 		width: auto;
+	}
+
+	// exception to this rule
+	// - in tabs (targeting seperate tables that should have the same appearance)
+	.cui-tab .cui-form-key {
+		width: $td-width;
 	}
 }
 
@@ -3268,7 +3275,7 @@ $table-data-padding: 4px;
 }
 	
 .cui-form-key {
-	width: 135px;
+	width: $td-width;
 	padding-right: 10px;
 	
 	label {
@@ -3367,12 +3374,12 @@ $table-data-padding: 4px;
 .cui-form-table-has-left-column {
 	.cui-form-key,
 	.cui-form-right {
-		// width: 135px;
+		// width: $td-width;
 		// UNCLEAR breaks web-link configuration popover table layout
 	}
 
 	.cui-form-key {
-		width: 135px;
+		width: $td-width;
 		line-height: 24px;
 		text-align: right;
 		@include ellipsis;
