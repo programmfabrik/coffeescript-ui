@@ -468,7 +468,6 @@ class CUI.Form extends CUI.DataField
 		return false
 
 	hasContentForAppend: ->
-		console.error "Form:", @, "hasContentForAppend", @__fields
 		if @__fields?.length > 0
 			true
 		else

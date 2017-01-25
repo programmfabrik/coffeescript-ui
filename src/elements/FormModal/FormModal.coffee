@@ -38,7 +38,11 @@ class FormModal extends FormPopover
 				@__popover.hide()
 
 		btn = new CUI.defaults.class.Button(btn_opts)
-		btn.disable()
+
+		if @hasChanges()
+			btn.enable()
+		else
+			btn.disable()
 
 		opts.pane.footer_right = btn
 
