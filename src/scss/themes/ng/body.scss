@@ -1967,7 +1967,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-confirmation-choice .cui-layer {
 	max-width: 300px; // don't make this bigger, make the text shorter
 	
-	> .cui-simple-pane {
+	> .cui-layer-pane {
 		> .cui-vertical-layout-center {
 			margin: $padding/2;
 		}
@@ -1975,8 +1975,43 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Alert Problem (red)
-.cui-confirmation-dialog .cui-alert-problem {
+.cui-confirmation-dialog {
+	.cui-alert-problem,
+	.cui-alert {
+		> .cui-layer-pane {
+		> .cui-vertical-layout-center {
+				flex-direction: row;
+			}
+		}
+	}
+
+	.cui-alert {
+		.cui-layer-icon {
+			color: $error-color;
+		}
+	}
+
+	.cui-alert-problem {
+		.cui-layer-icon {
+			color: $neutral-color;
+		}
+	}
 }
+
+.cui-layer-icon {
+	margin: 5px 15px -2px 0;
+	
+	.fa {
+		font-size: 60px;
+	}
+}
+
+.cui-layer-content {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+// Alert
 
 // Spinner
 .cui-spinner {
