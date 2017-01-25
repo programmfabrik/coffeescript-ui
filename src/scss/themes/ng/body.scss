@@ -2623,16 +2623,10 @@ $table-data-padding: 4px;
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
 	.cui-lv-tr-outer {
-		position: relative;
-			
-		// also apply background to the cell for overflow
-		.cui-lv-tr,
-		.cui-lv-td {
-			background: inherit;
-		}
-		
 		&:nth-child(even) {
-			background: $zebra-color;
+			> .cui-lv-tr > .cui-lv-td {
+				background: $zebra-color;
+			}
 			
 			.cui-label-manage-overflow-button-container {
 				background-image: linear-gradient(#{transparentize($zebra-color, 1)}, #{transparentize($zebra-color, 0)});
@@ -2725,8 +2719,7 @@ $table-data-padding: 4px;
 	> .cui-lv-tr {
 		border-style: none;
 	}
-
-	&,
+	
 	.cui-lv-td {
 		background: linear-gradient($zebra-color 50%, white 50%);
 		background-size: 100% $table-data-height*2;
@@ -2742,7 +2735,6 @@ $table-data-padding: 4px;
 }
 
 .cui-list-view-grid-rows-even .cui-lv-tr-fill-outer {
-	&,
 	.cui-lv-td {
 		background-image: linear-gradient(white 50%, $zebra-color 50%);
 	}
