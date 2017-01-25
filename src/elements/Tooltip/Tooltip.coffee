@@ -148,6 +148,9 @@ class CUI.Tooltip extends CUI.LayerPane
 				super(ev)
 		@
 
+	getElementOpenClass: ->
+		null
+
 	fillContent: ->
 		dfr = new CUI.Deferred()
 

@@ -7,6 +7,9 @@
 
 class CUI.ListView extends CUI.SimplePane
 
+	@defaults:
+		row_move_handle_tooltip: "Drag to move row"
+
 	#Construct a new ListView.
 	#
 	# @param [Object] options for listview creation

@@ -328,6 +328,9 @@ class CUI.Layer extends CUI.DOM
 		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
 
+	__getOriginalElement: ->
+		@_element?.DOM or @_element or null
+
 	autoSize: ->
 		@position()
 
@@ -1004,7 +1007,8 @@ class CUI.Layer extends CUI.DOM
 		if @__element
 			if @__check_for_element
 				CUI.clearInterval(@__check_for_element)
-			@__element.removeClass("cui-layer-active")
+
+			CUI.DOM.removeClass(@__getOriginalElement(), @getElementOpenClass())
 
 		@__layer_root.DOM.detach()
 
@@ -1042,6 +1046,9 @@ class CUI.Layer extends CUI.DOM
 
 		@
 
+	getElementOpenClass: ->
+		"cui-layer-open"
+
 	# use element to temporarily overwrite element used
 	# for positioning
 	show: (ev) ->
@@ -1070,7 +1077,7 @@ class CUI.Layer extends CUI.DOM
 		document.body.appendChild(@__layer_root.DOM)
 
 		if @__element
-			@__element.addClass("cui-layer-active")
+			CUI.DOM.addClass(@__getOriginalElement(), @getElementOpenClass())
 
 			for scroll_parent in CUI.DOM.parentsScrollable(@__element)
 				Events.listen

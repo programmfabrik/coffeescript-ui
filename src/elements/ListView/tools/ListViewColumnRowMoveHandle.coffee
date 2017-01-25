@@ -19,6 +19,11 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 		if not @getRow().isMovable()
 			return
 
+		if CUI.ListView.defaults.row_move_handle_tooltip
+			new Tooltip
+				text: CUI.ListView.defaults.row_move_handle_tooltip
+				element: cell
+
 		Events.listen
 			type: ["mousedown"]
 			node: cell

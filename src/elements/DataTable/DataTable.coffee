@@ -5,10 +5,14 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class DataTable extends DataFieldInput
+class CUI.DataTable extends CUI.DataFieldInput
 	constructor: (@opts) ->
 		super(@opts)
 		@addClass("cui-padding-reset")
+
+	@defaults:
+		plus_button_tooltip: null
+		minus_button_tooltip: null
 
 	initOpts: ->
 		super()
@@ -130,6 +134,7 @@ class DataTable extends DataFieldInput
 			if @_new_rows != "remove_only"
 				buttons.push
 					icon: "plus"
+					tooltip: text: CUI.DataTable.defaults.plus_button_tooltip
 					group: "plus-minus"
 					onClick: =>
 						@rows.push(d={})
@@ -147,6 +152,7 @@ class DataTable extends DataFieldInput
 			buttons.push @minusButton = new CUI.defaults.class.Button
 				icon: "minus"
 				group: "plus-minus"
+				tooltip: text: CUI.DataTable.defaults.minus_button_tooltip
 				disabled: true
 				onClick: =>
 					for row in @listView.getSelectedRows()
@@ -229,3 +235,6 @@ class DataTable extends DataFieldInput
 			@listView.appendDeferredRows()
 
 		@
+
+
+DataTable = CUI.DataTable

@@ -24,7 +24,6 @@ class CUI.Button extends CUI.DOM
 		confirm_title: "Confirmation"
 		disabled_css_class: "cui-disabled"
 		active_css_class: "cui-active"
-		menu_open_css_class: "cui-menu-open"
 
 	#Construct a new Button.
 	#
@@ -199,11 +198,9 @@ class CUI.Button extends CUI.DOM
 					@__menu_opts.use_element_width_as_min_width = true
 
 			@__menu_opts.onHide = =>
-				@removeClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onHide?()
 
 			@__menu_opts.onShow = =>
-				@addClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onShow?()
 
 			if not @__menu_opts.hasOwnProperty("backdrop")

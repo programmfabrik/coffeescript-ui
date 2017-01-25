@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewColumn extends CUI.Element
+class CUI.ListViewColumn extends CUI.Element
 
 	readOpts: ->
 		super()
@@ -90,3 +90,4 @@ class ListViewColumn extends CUI.Element
 		else
 			return 1
 
+ListViewColumn = CUI.ListViewColumn
