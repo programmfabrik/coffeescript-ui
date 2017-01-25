@@ -204,6 +204,7 @@ li > div {
 			overflow: hidden;
 			flex-shrink: 0;
 		}
+
 		> .cui-vertical-layout-center {
 			position: relative;
 			flex: 1 1 auto;
@@ -227,6 +228,10 @@ li > div {
 	display: flex;
 	flex-direction: column;
 	flex-shrink: 0;
+	
+	> .cui-sticky-header {
+		flex-basis: auto;
+	}
 }
 
 // Layout Absolute Horizontal
