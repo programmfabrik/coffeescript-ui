@@ -2480,6 +2480,14 @@ $table-data-padding: 4px;
 
 	&-max {
 		flex-grow: 1;
+		
+		~ .cui-lv-td:last-child {
+			flex-grow: 0;
+		}
+	}
+
+	&:last-child {
+		flex-grow: 1;
 	}
 
 	.cui-label-multiline {
@@ -2941,32 +2949,6 @@ $table-data-padding: 4px;
 		.cui-form-row {
 			flex-grow: 0;
 			min-width: 0;
-		}
-	}
-}
-
-.cui-form-block {
-	&--has-checkbox {
-		.cui-block-header {
-			padding-bottom: $padding;	
-		}
-
-		.cui-block-content {
-			display: none;
-		}
-
-		&.cui-form-block--checkbox-checked {
-			.cui-block-header {
-				padding-bottom: 7px;	
-			}
-
-			.cui-block-content {
-				display: block;
-				
-				&:empty {
-					padding-bottom: 3px;
-				}
-			}
 		}
 	}
 }
@@ -3834,6 +3816,37 @@ $table-data-padding: 4px;
 	}
 	> .cui-block-header {
 		font-weight: bold;
+	}
+
+	&.cui-form-block {
+		> .cui-block-header {
+			font-size: inherit;
+			font-weight: inherit;
+		}
+
+		&--has-checkbox {
+			.cui-block-header {
+				padding-bottom: $padding;	
+			}
+
+			.cui-block-content {
+				display: none;
+			}
+
+			&.cui-form-block--checkbox-checked {
+				.cui-block-header {
+					padding-bottom: 7px;	
+				}
+
+				.cui-block-content {
+					display: block;
+					
+					&:empty {
+						padding-bottom: 3px;
+					}
+				}
+			}
+		}
 	}
 }
 
