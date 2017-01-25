@@ -33,6 +33,8 @@ $highlight-color: hsl(205,100%,45%);
 $row-highlight: hsl(201,82%,92%);
 $on-highlight-color: white;
 $on-highlight-muted-color: hsl(205,50%,85%);
+$highlight-color-pressed: hsl(205,100%,36%);
+$on-highlight-color-pressed: hsl(205,10%,91%);
 
 $secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
@@ -52,11 +54,10 @@ $positive-color: hsl(150,77%,50%);
 $toolbar-background: hsl(205,2%,97%);
 $toolbar-height: 34px;
 
+$layer-background: $foreground;
 $layer-header-pointer-background: $toolbar-background;
 $layer-header-background: $toolbar-background;
 $layer-header-border: hsl(204,22%,91%);
-
-$layer-background: hsl(0,0%,100%);
 
 $layer-footer-background: $layer-header-background;
 $layer-footer-border: $layer-header-border;
