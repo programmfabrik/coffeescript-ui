@@ -436,14 +436,14 @@ li > div {
 
 	& + & {
 		padding-bottom: 1px;
+		
+		&:last-child {
+			padding-bottom: 0;
+		}
 	}
 	
 	&.cui-pane-toolbar {
 		border-bottom: 1px solid $border;
-		
-		& + .cui-toolbar {
-			padding-bottom: 0;
-		}
 	}
 	
 	.cui-horizontal-layout-left,
