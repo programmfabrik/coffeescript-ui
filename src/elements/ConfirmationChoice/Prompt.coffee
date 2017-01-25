@@ -22,9 +22,6 @@ class CUI.Prompt extends CUI.Confirm
 					v >= 0
 
 	readOpts: ->
-		if not @opts.hasOwnProperty("cancel")
-			@opts.cancel = true
-
 		super()
 		text = @_text
 
