@@ -90,6 +90,9 @@ class FormPopover extends Form
 
 		@registerTemplate(vl.getLayout())
 
+	hasContentForAppend: ->
+		# FormPopver always shows a button
+		true
 
 	render: ->
 		button_opts = copyObject(@_button, true)

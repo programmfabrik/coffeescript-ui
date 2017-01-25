@@ -467,6 +467,13 @@ class CUI.Form extends CUI.DataField
 
 		return false
 
+	hasContentForAppend: ->
+		console.error "Form:", @, "hasContentForAppend", @__fields
+		if @__fields?.length > 0
+			true
+		else
+			false
+
 	__renderTableNg: ->
 
 		layout = @getLayout()
@@ -514,7 +521,7 @@ class CUI.Form extends CUI.DataField
 			CUI.DOM.addClass(container, @_class_table)
 
 		get_append = (v, info=@) =>
-			if v instanceof Form and v.getFields().length == 0
+			if v instanceof Form and not v.hasContentForAppend()
 				null
 			else if CUI.isPlainObject(v) # assume a label constructor
 				# new Label(v).DOM
