@@ -815,7 +815,7 @@ i.cui-spin-stepped {
 	  border-radius: $button-radius;
 	}
 
-	&.cui-layer-active,
+	&.cui-layer-open,
 	&.cui-menu-open,
 	&:active {
 		.cui-button-visual {
