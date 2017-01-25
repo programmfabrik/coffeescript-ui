@@ -3015,6 +3015,7 @@ $table-data-padding: 4px;
 
 		.cui-form-key,
 		.cui-form-right {
+			max-width: none;
 			width: auto;
 		}
 
@@ -3036,7 +3037,7 @@ $table-data-padding: 4px;
 }
 	
 .cui-form-key {
-	width: $td-width;
+	max-width: $td-width;
 	padding-right: 10px;
 	
 	label {
@@ -3140,7 +3141,7 @@ $table-data-padding: 4px;
 	}
 
 	.cui-form-key {
-		width: $td-width;
+		max-width: $td-width;
 		line-height: 24px;
 		text-align: right;
 		@include ellipsis;
