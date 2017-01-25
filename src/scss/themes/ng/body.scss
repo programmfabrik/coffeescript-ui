@@ -1978,6 +1978,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-confirmation-dialog {
 	.cui-alert-problem,
 	.cui-alert {
+		max-width: 360px;
+
 		> .cui-layer-pane {
 		> .cui-vertical-layout-center {
 				flex-direction: row;
