@@ -810,14 +810,12 @@ i.cui-spin-stepped {
 	  border-radius: $button-radius;
 	}
 
-	&:hover .cui-button-visual {
-	  border-color: $highlight-color;
-	  color: $highlight-color;
-	}
-
-	&:active .cui-button-visual {
-	  border-color: darken($highlight-color, 10%);
-	  color: darken($highlight-color, 10%);
+	&.cui-layer-active,
+	&.cui-menu-open,
+	&:active {
+		.cui-button-visual {
+	  	background: $button-pressed;
+	  }
 	}
 
 	&.cui-disabled {
@@ -836,13 +834,6 @@ i.cui-spin-stepped {
 	  	color: white;
 	  	background: $highlight-color;
 	  	border-color: darken($highlight-color, 7%);
-	  }
-
-	  &:hover {
-		  .cui-button-visual {
-		  	background: lighten($highlight-color, 11%);
-		  	border-color: lighten($highlight-color, 4%);
-	  	}
 	  }
 	}
 
@@ -863,23 +854,11 @@ i.cui-spin-stepped {
 		border-radius: $button-radius;
 		color: desaturate($highlight-color, 80%);
 	}
-	
-  &:hover:not(.cui-disabled) {
-  	.cui-button-visual {
-  		color: desaturate($highlight-color, 80%);
-  	}
-  }
 
   &.cui-active {
   	.cui-button-visual {
   		color: desaturate($highlight-color, 80%);
   		background: none;
-  	}
-
-  	&:hover {
-  		.cui-button-visual {
-  			background: none;	
-  		}
   	}
   }
 
@@ -1219,12 +1198,6 @@ a[role="button"].cui-button-appearance-link {
 			line-height: 1;
 		}
 
-		&.cui-active:hover {
-			.cui-button-visual {
-				background: none;
-			}
-		}
-
 		.cui-button-left {
 			width: 22px;
 		}
@@ -1560,15 +1533,10 @@ a[role="button"].cui-button-appearance-link {
 		&:only-child .cui-button-visual {
 			border-radius: $button-radius;
 		}
-
-		&:hover,
+		
 		&.cui-active {
 			z-index: 1;
 		}
-	}
-
-	> .cui-active + .cui-button:hover {
-		z-index: initial;
 	}
 
 	.cui-label {
@@ -1769,7 +1737,7 @@ a[role="button"].cui-button-appearance-link {
 		0 2px 4px hsla(0,0%,0%,.1);
 	
 	> .cui-simple-pane,
-	> .cui-pane {
+	> .cui-pane {		
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
 			background: $layer-header-background;
@@ -1789,6 +1757,10 @@ a[role="button"].cui-button-appearance-link {
 			
 			> .cui-form {
 				margin: 0;
+			}
+
+			> .cui-vertical-layout {
+				flex-shrink: 0;
 			}
 		}
 
@@ -2175,6 +2147,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Popover
+
 .cui-popover {
 	background: white;
 	min-width: 247px;
@@ -2379,13 +2352,10 @@ $popover-hint-background: hsl(205,15%,43%);
 	}
 
 	&.cui-active {
-		&,
-		&:hover {
-			.cui-button-visual {
-				color: $on-highlight-color;
-				background: hsl(205,15%,43%);
-				border-color: hsl(205,15%,43%);
-			}
+		.cui-button-visual {
+			color: $on-highlight-color;
+			background: hsl(205,15%,43%);
+			border-color: hsl(205,15%,43%);
 		}
 	}
 }
@@ -3258,10 +3228,6 @@ $table-data-padding: 4px;
 
 .cui-options-inactive {
 	margin-top: $padding;
-	
-	&:empty {
-		margin-top: 0;
-	}
 }
 
 .cui-options-sortable-option {
