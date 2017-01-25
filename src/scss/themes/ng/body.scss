@@ -1976,8 +1976,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Alert Problem (red)
 .cui-confirmation-dialog {
-	.cui-alert-problem,
-	.cui-alert {
+	.cui-alert-problem {
 		max-width: 360px;
 
 		> .cui-layer-pane {
@@ -1985,15 +1984,7 @@ a[role="button"].cui-button-appearance-link {
 				flex-direction: row;
 			}
 		}
-	}
 
-	.cui-alert {
-		.cui-layer-icon {
-			color: $error-color;
-		}
-	}
-
-	.cui-alert-problem {
 		.cui-layer-icon {
 			color: $neutral-color;
 		}
