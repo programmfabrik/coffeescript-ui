@@ -1201,14 +1201,16 @@ a[role="button"].cui-button-appearance-link {
 		align-items: stretch;
 		
 		.cui-button-visual {
-			border: none;
-			background: none;
-			border-radius: 0;
+			@include button-reset;
 			justify-content: flex-start;
-			color: inherit;
 			padding: 0 $padding;
-			height: auto;
-			line-height: 1;
+		}
+
+		&:active:not(.cui-disabled) {
+			.cui-button-visual {
+				background: none;
+				color: inherit;
+			}
 		}
 
 		.cui-button-left {
