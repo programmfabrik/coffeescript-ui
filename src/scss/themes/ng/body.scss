@@ -1980,31 +1980,26 @@ a[role="button"].cui-button-appearance-link {
 		max-width: 360px;
 
 		> .cui-layer-pane {
-		> .cui-vertical-layout-center {
-				flex-direction: row;
+			> .cui-vertical-layout-center {
+				position: relative;
+				min-height: 83px;
+				padding-left: 92px;
+				margin-right: 9px;
+				justify-content: center;
+				
+				&:before {
+					font-family: 'FontAwesome';
+					content: "\f071";
+					font-size: 60px;
+					color: $neutral-color;
+					left: 13px;
+					top: 14px;
+					position: absolute;
+				}
 			}
 		}
-
-		.cui-layer-icon {
-			color: $neutral-color;
-		}
 	}
 }
-
-.cui-layer-icon {
-	margin: 5px 15px -2px 0;
-	
-	.fa {
-		font-size: 60px;
-	}
-}
-
-.cui-layer-content {
-	margin-top: auto;
-	margin-bottom: auto;
-}
-
-// Alert
 
 // Spinner
 .cui-spinner {
