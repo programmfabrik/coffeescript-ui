@@ -269,10 +269,10 @@ class CUI.Events extends CUI.Element
 
 
 	@ignore: (filter, doc=document) ->
-		# CUI.debug "Events.ignore?", filter, listener.getTypes()
+		# console.debug "Events.ignore", filter, filter.instance?.getUniqueId?()
 		for listener in @getActiveListeners(doc)
 			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
-				# CUI.info("Events.ignore", filter, listener.getTypes())
+				# console.debug "ignoring listener", filter.instance?.getUniqueId?()
 				listener.destroy()
 		@
 

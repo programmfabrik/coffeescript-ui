@@ -94,12 +94,12 @@ class CUI.Sortable extends CUI.Draggable
 		@move_element(source_idx, dest_idx)
 
 	stop_drag: (ev) ->
+		Draggable::end_drag.call(@, ev)
 		@__end_drag(ev, true)
-		super(ev)
 
 	end_drag: (ev) ->
-		@__end_drag(ev, false)
 		super(ev)
+		@__end_drag(ev, false)
 
 	__end_drag: (ev, stopped) ->
 		# move dragged object into position
@@ -115,5 +115,6 @@ class CUI.Sortable extends CUI.Draggable
 		else
 			@_sorted(ev, globalDrag.start_idx, curr_idx)
 
+		return
 
 Sortable = CUI.Sortable

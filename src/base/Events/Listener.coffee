@@ -204,6 +204,12 @@ class CUI.Listener extends CUI.Element
 			@destroy()
 			# this calls "destroy" on us
 
+		inst = @getInstance()
+		if inst and inst instanceof CUI.Element and inst.isDestroyed()
+			console.error "inst destroyed already.."
+			@destroy()
+			return
+
 		# try
 		ret = @_call.call(@, event, event.getInfo())
 		# catch ex
