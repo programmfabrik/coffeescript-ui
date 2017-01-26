@@ -28,9 +28,6 @@ class CUI.SimplePane extends CUI.Pane
 
 		if @_title
 			@append(new Label(text: @_title), "header_left")
-		
-		if @_padded
-			@addClass("cui-simple-pane--padded")
 
 		if not CUI.__ng__
 			@addClass("cui-simple-pane")
@@ -45,9 +42,6 @@ class CUI.SimplePane extends CUI.Pane
 			footer_left: {}
 			footer_right: {}
 			content: {}
-			padded:
-				check: Boolean
-				default: false
 
 		@removeOpt("top")
 		@removeOpt("bottom")
