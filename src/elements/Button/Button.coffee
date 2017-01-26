@@ -909,7 +909,7 @@ class CUI.Button extends CUI.DOM
 			@replace(span, "center")
 
 	setTextMaxChars: (max_chars) ->
-		CUI.DOM.setAttribute(@getCenter().firstChild, "max-chars", max_chars)
+		CUI.DOM.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
 
 	getText: ->
 		@__txt

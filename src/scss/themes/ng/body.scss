@@ -85,7 +85,7 @@ textarea {
 	}
 }
 
-[max-chars] {
+[data-max-chars] {
 	box-sizing: content-box;
 	text-align: center;
 }
@@ -93,33 +93,38 @@ textarea {
 // enlarge max-chars < 10
 // e.g. max-chars 5 = 5.5ch
 @for $i from 1 through 10 {
-	[max-chars="#{$i}"] {
+	[data-max-chars="#{$i}"] {
 		width: #{$i + 0.5}ch;
 	}
 }
 
-[max-chars="1"] {
+[data-max-chars="1"] {
 	width: 1.5ch;
 }
 
-[max-chars="2"] {
+[data-max-chars="2"] {
 	width: 2.5ch;
 }
 
-[max-chars="3"] {
+[data-max-chars="3"] {
 	width: 3.5ch;
 }
 
 // damp max-chars > 10
 // e.g. max-chars 30 = 26ch
 @for $i from 10 through 40 {
-	[max-chars="#{$i}"] {
+	[data-max-chars="#{$i}"] {
 		width: #{$i*(1 - ($i - 10)/30*0.15)}ch;
 	}
 }
 
-input[max-chars] {
+input[data-max-chars] {
 	min-width: 0;
+}
+
+[data-cursor="grabbing"] {
+	cursor: -webkit-grabbing;
+	cursor: 				grabbing;
 }
 
 * {
@@ -894,7 +899,7 @@ i.cui-spin-stepped {
 	.cui-button-center {
 		padding-right: 6px;
 		
-		[max-chars] {
+		[data-max-chars] {
 			text-align: inherit;
 		}
 	}
@@ -1037,7 +1042,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 100%;
 	// flex: 1; don't grow (horizontally) because only the text should be clickable
 	
-	[max-chars] {
+	[data-max-chars] {
 		text-align: inherit;
 	}
 
@@ -1150,7 +1155,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&[max-chars="2"] {
+	&[data-max-chars="2"] {
 		width: auto;
 
 		.cui-button-center span {
@@ -1158,7 +1163,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&[max-chars="4"] {
+	&[data-max-chars="4"] {
 		width: auto;
 
 		.cui-button-center span {
@@ -2828,7 +2833,7 @@ $table-data-padding: 4px;
 }
 
 .cui-tree-node-handle {
-	height: 14px;
+	min-height: 14px;
 	display: flex;
 	text-align: center;
 	justify-content: flex-end;
@@ -2836,7 +2841,7 @@ $table-data-padding: 4px;
 	cursor: pointer;
 
 	&.cui-tree-node-is-open .fa {
-		margin-top: 2px;
+		margin-top: 1px;
 	}
 }
 
@@ -3307,7 +3312,7 @@ $table-data-padding: 4px;
 }
 
 .cui-options--vertical {
-	[max-chars] {
+	[data-max-chars] {
 		width: auto;
 	}
 }
@@ -3342,13 +3347,6 @@ $table-data-padding: 4px;
 
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
-	// CONFLICT - drag-drop select sortable is used on a whole sidebar in version editor - breaks a child form
-	// .cui-form-td.cui-form-key {
-	// 	width: 12px;
-	// 	padding: 0;
-	// 	margin-right: $padding/2;
-	// 	display: flex;
-	// }
 	cursor: -webkit-grabbing;
 	cursor: 				grabbing;
 	
@@ -3363,7 +3361,8 @@ $table-data-padding: 4px;
 	}
 
 	flex: 1 1 auto;
-	cursor: move;
+	cursor: -webkit-grab;
+	cursor:         grab;
 	height: 12px;
 	width: 100%;
 
@@ -3631,32 +3630,31 @@ $table-data-padding: 4px;
 	flex-direction: column;
   align-items: stretch;
 	flex: 1 1 auto;
-
-	> .cui-multi-input-input {
-		display: flex;
-		margin-left: 0;
-		margin-right: 0;
+}
 		
-		> .cui-data-field-multi-input-center {
-			flex: 1 1 auto;
-		}
+.cui-data-field-multi-input-center {
+	flex: 1 1 auto;
+}
 
-		> .cui-data-field-multi-input-right {
-			flex: 0 0 auto;
-			
-			.cui-button {
-				width: 25px;
-				margin-top: 2px;
-			}
-		}
+.cui-data-field-multi-input-right {
+	flex: 0 0 auto;
+	
+	.cui-button {
+		width: 25px;
+		margin-top: 2px;
 	}
 }
 
 .cui-multi-input-input {
+	display: flex;
+	margin-left: 0;
+	margin-right: 0;
 	@include margin-top(0.5);
 	position: relative;
 	
 	&.cui-data-field-hidden {
+		display: none;
+		
 		+ .cui-multi-input-input {
 			margin-top: 0;
 		}
@@ -3745,7 +3743,8 @@ $table-data-padding: 4px;
 
 // Movable
 .cui-drag-drop-select-movable {
-	cursor: move;
+	cursor: -webkit-grab;
+	cursor:         grab;
 }
 
 // Resizable
