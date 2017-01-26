@@ -1818,11 +1818,6 @@ a[role="button"].cui-button-appearance-link {
 	.cui-toolbar {
 		min-height: $toolbar-height;
 	}
-	
-	.cui-empty-label {
-		max-width: 540px;
-		padding: 0;
-	}
 
 	.cui-form-key {
 		max-width: $td-width;
@@ -2923,6 +2918,28 @@ $table-data-padding: 4px;
 	// border: 1px solid $table-border;
 }
 
+.cui-table-row {
+	&:nth-child(even) .cui-table-td {
+		background: $zebra-color;
+	}
+	
+	.cui-table-td {
+		vertical-align: middle;
+	}
+}
+
+.cui-table-header {
+	~ .cui-table-row {
+		&:nth-child(odd) .cui-table-td {
+			background: $zebra-color;
+		}
+
+		&:nth-child(even) .cui-table-td {
+			background: none;
+		}
+	}
+}
+
 .cui-tr {
 	display: table-row;
 	
@@ -2987,6 +3004,10 @@ $table-data-padding: 4px;
 		bottom: 2px;
 		width: 1px;
 		background: $table-header-border;
+	}
+
+	&:last-child:after {
+		display: none;
 	}
 }
 
