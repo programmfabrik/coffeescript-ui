@@ -3064,9 +3064,15 @@ $table-data-padding: 4px;
 	&.cui-form--horizontal {
 		flex-direction: row;
 		
-		.cui-form-row {
+		> .cui-form-row {
 			flex-grow: 0;
 			min-width: 0;
+			margin-bottom: 0;
+			margin-right: $padding;
+			
+			&:last-child {
+				margin-right: 0;
+			}
 		}
 	}
 }
