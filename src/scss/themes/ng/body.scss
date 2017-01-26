@@ -2700,6 +2700,7 @@ $table-data-padding: 4px;
 	flex: 0 0 auto;
 	min-width: 0;
 	outline: none;
+	cursor: default;
 
 	&.cui-selected,
 	&.cui-selected:nth-child(even),
