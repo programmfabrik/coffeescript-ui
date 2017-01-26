@@ -127,6 +127,16 @@ input[data-max-chars] {
 	cursor: 				grabbing;
 }
 
+$drag-cursors: "move", "col-resize", "row-resize", "n-resize", "e-resize", "s-resize", "w-resize", "ne-resize", "nw-resize", "se-resize", "sw-resize", "ew-resize", "ns-resize", "nesw-resize", "nwse-resize";
+
+@for $i from 1 to length($drag-cursors) {
+	$cursor: nth($drag-cursors, $i);
+	
+	[data-cursor="#{$cursor}"] {
+		cursor: $cursor;
+	}
+}
+
 * {
 	box-sizing: border-box;
 }
