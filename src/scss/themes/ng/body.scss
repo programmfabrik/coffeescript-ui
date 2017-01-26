@@ -3175,7 +3175,7 @@ $table-data-padding: 4px;
 }
 
 .cui-data-field-hidden {
-	display: none !important;
+	display: none;
 }
 
 .cui-form-table-has-left-column {
@@ -3871,26 +3871,8 @@ $table-data-padding: 4px;
 		}
 
 		&--has-checkbox {
-			.cui-block-header {
-				padding-bottom: $padding;	
-			}
-
 			.cui-block-content {
-				display: none;
-			}
-
-			&.cui-form-block--checkbox-checked {
-				.cui-block-header {
-					padding-bottom: 7px;	
-				}
-
-				.cui-block-content {
-					display: block;
-					
-					&:empty {
-						padding-bottom: 3px;
-					}
-				}
+				margin-left: 17px;
 			}
 		}
 	}
