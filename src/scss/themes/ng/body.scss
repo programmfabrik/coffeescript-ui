@@ -887,6 +887,13 @@ i.cui-spin-stepped {
 		color: desaturate($highlight-color, 80%);
 	}
 
+	&:active:not(.cui-disabled),
+	&.cui-layer-open {
+		.cui-button-visual {
+			background: none;
+		}
+	}
+
   &.cui-active {
   	.cui-button-visual {
   		color: desaturate($highlight-color, 80%);
@@ -1894,8 +1901,19 @@ a[role="button"].cui-button-appearance-link {
 	
 	&.cui-layer-pointer--e,
 	&.cui-layer-pointer--w {
-		width: 12px;
+		width: 9px;
 		height: 37px;
+		
+		&:after {
+			top: 9px;
+		}
+	}
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&:after {
+			left: 7px;
+		}
 	}
 	
 	&:after {
@@ -2225,19 +2243,30 @@ a[role="button"].cui-button-appearance-link {
 
 // Hint Popover
 
-$popover-hint-background: hsl(205,15%,43%);
-
 .cui-layer-root-hint-popover .cui-layer-pointer {
 	height: 12px;
 	
 	&.cui-layer-pointer--e,
 	&.cui-layer-pointer--w {
-		width: 12px;
+		width: 9px;
 		height: 37px;
+		
+		&:after {
+			top: 9px;
+		}
+	}
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&:after {
+			left: 7px;
+		}
 	}
 	
 	&:after {
 		background: $popover-hint-background;
+		box-shadow:
+			3px 3px 14px hsla(0,0%,0%,0.1);
 	}
 }
 
@@ -2246,6 +2275,9 @@ $popover-hint-background: hsl(205,15%,43%);
 	background: $popover-hint-background;
 	color: white;
 	padding: 7px 10px;
+	box-shadow: // remove dark outline from normal layer for a sharper edge
+		0 4px 20px hsla(205,20%,30%,.4),
+		0 2px 4px hsla(0,0%,0%,.1);
 	
 	.cui-button-appearance-link[role] .cui-button-visual {
 		color: lighten(desaturate($highlight-color, 10%), 20%);
