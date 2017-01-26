@@ -1768,7 +1768,8 @@ a[role="button"].cui-button-appearance-link {
 	// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
 	opacity: 0.9999;
 	box-shadow:
-		0 4px 20px hsla(205,5%,30%,.4),
+		0 0 0 1px hsla(205,20%,30%,.15),
+		0 4px 20px hsla(205,20%,30%,.4),
 		0 2px 4px hsla(0,0%,0%,.1);
 	
 	> .cui-simple-pane,
@@ -1857,7 +1858,7 @@ a[role="button"].cui-button-appearance-link {
     height: 18px;
 		background: $layer-background;
 		box-shadow:
-			0 0 0 1px hsla(0,0%,0%,0.1),
+			0 0 0 1px hsla(205,20%,30%,.15),
 			3px 3px 14px hsla(0,0%,0%,0.1);
 		transform: rotate(45deg);
 	}
