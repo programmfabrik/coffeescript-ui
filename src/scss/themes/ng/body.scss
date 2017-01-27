@@ -2590,10 +2590,6 @@ $table-data-padding: 4px;
 		// UNCLEAR - doesn't look good on single line multiline labels
 		// align-self: flex-start;
 	}
-
-	&:first-child > .cui-tree-node {
-		margin: 4px 0;
-	}
 }
 
 .cui-lv-th {
