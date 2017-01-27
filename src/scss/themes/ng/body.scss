@@ -1067,6 +1067,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-disabled {
 		color: $disabled-color;
+		opacity: 1;
 		
 		.cui-button-left {
 			opacity: 0.27;	
@@ -1818,6 +1819,10 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-toolbar {
 		min-height: $toolbar-height;
+	}
+
+	.cui-data-table .cui-pane-footer {
+		min-height: 0;
 	}
 
 	.cui-form-key {
@@ -2580,6 +2585,10 @@ $table-data-padding: 4px;
 	.cui-label-multiline {
 		// UNCLEAR - doesn't look good on single line multiline labels
 		// align-self: flex-start;
+	}
+
+	&:first-child > .cui-tree-node {
+		margin: 4px 0;
 	}
 }
 
