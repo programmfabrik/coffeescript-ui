@@ -1207,7 +1207,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-panel-closed {
-		border-bottom: none;
+		&:last-child {
+			border-bottom: none;
+		}
 		
 		> .cui-panel-body {
 			display: none;
@@ -1222,6 +1224,7 @@ a[role="button"].cui-button-appearance-link {
 	height: $toolbar-height;
 	background: $toolbar-background;
 	flex-shrink: 0;
+	box-sizing: content-box;
 
 	.cui-button {
 		width: 100%;
