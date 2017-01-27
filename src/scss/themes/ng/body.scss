@@ -3063,6 +3063,13 @@ $table-data-padding: 4px;
 // Form
 .cui-form {
 	margin: $padding;
+	
+	&--justify-buttons {
+		.cui-button {
+			width: 100%;
+			align-items: stretch;
+		}
+	}
 }
 
 .cui-form-container {
