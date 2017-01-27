@@ -699,8 +699,9 @@ li > div {
 			  border-right: 1px solid hsl(205,8%,77%) !important;
 			}
 		  
-		  &:cui-disabled {
+		  &.cui-disabled {
 		  	opacity: 1;
+		  	pointer-events: auto;
 		  	
 		  	.cui-button-visual * {
 		  		opacity: 0.5;
@@ -843,6 +844,7 @@ i.cui-spin-stepped {
 
 	&.cui-disabled {
 	  cursor: default;
+	  opacity: 1;
 	  
 		.cui-button-visual {
 		  color: $disabled-color;
@@ -1064,7 +1066,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-disabled {
-		cursor: default;
 		color: $disabled-color;
 		
 		.cui-button-left {
@@ -3166,7 +3167,7 @@ $table-data-padding: 4px;
 	
 	label {
 		display: inline-block;
-		margin-top: 4px;
+		margin: 4px 0;
 	}
 }
 
@@ -3244,6 +3245,8 @@ $table-data-padding: 4px;
 }
 
 .cui-data-field-output-label {
+	max-width: 400px;
+	
 	.cui-label-content {
 		white-space: normal;
 	}
@@ -4241,6 +4244,11 @@ $table-data-padding: 4px;
 	}
 }
 
+.cui-disabled {
+	user-select: none;
+	opacity: 0.33;
+	pointer-events: none;
+}
 
 // CUI technical stuff
 .cui-tmpl {
