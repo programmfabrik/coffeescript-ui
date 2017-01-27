@@ -1807,9 +1807,10 @@ a[role="button"].cui-button-appearance-link {
 				margin: 0;
 			}
 
-			> .cui-vertical-layout {
-				flex-shrink: 0;
-			}
+			// CONFLICT: hides footer of nested list views behind scroll
+			// > .cui-vertical-layout {
+			// 	flex-shrink: 0;
+			// }
 		}
 
 		// layer-footer
