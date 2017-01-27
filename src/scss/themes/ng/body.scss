@@ -2014,22 +2014,22 @@ a[role="button"].cui-button-appearance-link {
 // Alert Problem (red)
 .cui-confirmation-dialog {
 	.cui-alert-problem {
-		max-width: 360px;
+		max-width: 375px;
 
 		> .cui-layer-pane {
 			> .cui-vertical-layout-center {
 				position: relative;
-				min-height: 83px;
-				padding-left: 92px;
+				min-height: 66px;
+				padding-left: 74px;
 				margin-right: 9px;
 				justify-content: center;
 				
 				&:before {
 					font-family: 'FontAwesome';
 					content: "\f071";
-					font-size: 60px;
+					font-size: 42px;
 					color: $neutral-color;
-					left: 13px;
+					left: 14px;
 					top: 14px;
 					position: absolute;
 				}
