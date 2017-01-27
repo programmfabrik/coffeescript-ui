@@ -2991,9 +2991,9 @@ $table-data-padding: 4px;
 }
 
 .cui-th {
-	font-weight: bold;
 	position: relative;
 	border-bottom: 1px solid $table-header-border;
+	padding: $padding/2 - 1px $padding;
 	font-size: 0.85em;
 
 	&:after { // table-head line
@@ -3014,7 +3014,7 @@ $table-data-padding: 4px;
 // Table Row Base-Widths
 
 .cui-td--url input {
-	width: 200px;
+	width: 300px;
 }
 
 .status-2d-map {
