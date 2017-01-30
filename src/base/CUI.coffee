@@ -778,7 +778,7 @@ CUI.browser =
 	ie: `/*@cc_on!@*/false || !!document.documentMode`
 	chrome: `!!window.chrome && !!window.chrome.webstore`
 
-CUI.browser.edge = `!CUI.browser.isIE && !!window.StyleMedia`
+CUI.browser.edge = `!CUI.browser.ie && !!window.StyleMedia`
 CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
 

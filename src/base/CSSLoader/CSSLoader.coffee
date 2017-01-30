@@ -131,15 +131,27 @@ class CUI.CSSLoader extends CUI.Element
 					console.warn("CSSLoader.loadTheme: Caught event load second time, ignoring. IE does that for some reason.")
 					return
 
-				if CUI.browser.isIE
+				if CUI.browser.ie
+					found_stylesheet = false
+
 					# ok, let's check if the style sheet loaded actually applies
 					# rules. IE tends to ignore 404 here.
 					for styleSheet in document.styleSheets
 						if styleSheet.href == css_href # this is the css loaded
-							if not styleSheet.cssRules?.length # we assume loading failed
-								console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet)
-								dfr.reject(css_href)
-								return
+							try
+								if not styleSheet.cssRules?.length # we assume loading failed
+									console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet)
+									dfr.reject(css_href)
+									return
+								found_stylesheet = true
+							catch ex
+								; # ignore, we output an error below
+							break
+
+					if not found_stylesheet
+						console.error("CSSLoader: Stylesheet not correctly loaded: ", css_href)
+						dfr.reject(css_href)
+						return
 
 				old_css_nodes = []
 				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
