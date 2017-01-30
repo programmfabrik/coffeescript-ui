@@ -98,23 +98,25 @@ textarea {
 	}
 }
 
-[data-max-chars="1"] {
-	width: 1.5ch;
-}
-
-[data-max-chars="2"] {
-	width: 2.5ch;
-}
-
-[data-max-chars="3"] {
-	width: 3.5ch;
-}
-
 // damp max-chars > 10
 // e.g. max-chars 30 = 26ch
 @for $i from 10 through 40 {
 	[data-max-chars="#{$i}"] {
 		width: #{$i*(1 - ($i - 10)/30*0.15)}ch;
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	@for $i from 1 through 10 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i + 1.5}ch;
+		}
+	}
+
+	@for $i from 10 through 40 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i*(1.54 - ($i - 10)/30*0.15)}ch;
+		}
 	}
 }
 
@@ -1062,7 +1064,6 @@ a[role="button"].cui-button-appearance-link {
 	white-space: initial;
 	align-self: flex-start;
 	max-width: 100%;
-	// flex: 1; don't grow (horizontally) because only the text should be clickable
 	
 	[data-max-chars] {
 		text-align: inherit;
@@ -1124,7 +1125,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button-visual {
 		justify-content: flex-start;
-		flex: 1;
+		flex: 1 0 auto;
 	}
 
 	.cui-button-left {
@@ -1149,7 +1150,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button-center {
 		min-width: 0;
-		flex: 1;
+		flex: 1 0 auto;
 		justify-content: flex-start;
 	}
 
@@ -1174,22 +1175,6 @@ a[role="button"].cui-button-appearance-link {
 		&:after {
 			content: '-';
 			padding: 0 $padding/4;
-		}
-	}
-
-	&[data-max-chars="2"] {
-		width: auto;
-
-		.cui-button-center span {
-			width: 2.5ch;
-		}
-	}
-
-	&[data-max-chars="4"] {
-		width: auto;
-
-		.cui-button-center span {
-			width: 4ch;
 		}
 	}
 }
@@ -1494,7 +1479,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Label: Centered
 .cui-label-centered {
-	flex: 1;
+	flex: 1 1 auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -2136,6 +2121,12 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-button--has-caret {
+	// IE 11 ignoring margin: auto when justify-content is set bugfix 
+	// http://stackoverflow.com/a/37535548
+	.cui-button-visual {
+		justify-content: flex-start;
+	}
+
 	.cui-button-right {
 		margin-left: auto;
 	}
@@ -2207,7 +2198,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-options .cui-button {
 		height: 26px;
 		line-height: 26px;
-		flex: 1;
+		flex: 1 1 auto;
 	}
 }
 
@@ -2693,7 +2684,7 @@ $table-data-padding: 4px;
 	
 	.cui-button {
 		height: 100%;
-		flex: 1;
+		flex: 1 1 auto;
 		align-items: stretch;
 		
 		.cui-button-left {
@@ -2701,7 +2692,7 @@ $table-data-padding: 4px;
 		}
 
 		.cui-button-center {
-			flex: 1;
+			flex: 1 1 auto;
 			justify-content: flex-start;
 		}
 		
@@ -2908,7 +2899,7 @@ $table-data-padding: 4px;
 
 .cui-tree-node-content {
 	display: flex;
-	flex: 1;
+	flex: 1 1 auto;
 	min-width: 0;
 	flex-wrap: wrap;
 	
@@ -3240,7 +3231,7 @@ $table-data-padding: 4px;
 }
 
 .cui-data-field {
-	flex: 1;
+	flex: 1 1 auto;
 	max-width: 100%;
 	margin: 0;
 	
@@ -3415,7 +3406,7 @@ $table-data-padding: 4px;
 
 .cui-options--vertical {
 	[data-max-chars] {
-		width: auto;
+		width: auto !important;
 	}
 }
 
@@ -4170,7 +4161,7 @@ $table-data-padding: 4px;
 
 // Autocomplete
 .cui-tmpl-autocompletion-popup {
-	flex: 1;
+	flex: 1 1 auto;
 	overflow: auto;	
 	-webkit-overflow-scrolling: touch;
 }
@@ -4253,7 +4244,7 @@ $table-data-padding: 4px;
 }
 
 .cui-flexible-space {
-	flex: 1;
+	flex: 1 1 auto;
 }
 
 // Console
