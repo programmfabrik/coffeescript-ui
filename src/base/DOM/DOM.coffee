@@ -1260,6 +1260,9 @@ class CUI.DOM extends CUI.Element
 		cssFloat
 
 	@htmlToNodes: (html) ->
+		if isNull(html)
+			return
+
 		d = @element("DIV")
 		d.innerHTML = html
 		d.childNodes

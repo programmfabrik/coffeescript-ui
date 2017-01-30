@@ -101,6 +101,7 @@ class FormPopover extends Form
 
 		CUI.mergeMap button_opts,
 			left: true
+			text: ""
 
 		@__button = new CUI.defaults.class.Button(button_opts)
 

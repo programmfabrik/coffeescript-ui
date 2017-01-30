@@ -110,12 +110,6 @@ class CUI.Button extends CUI.DOM
 		else if @_right != true
 			@append(@_right, "right")
 
-		if not icon_right and not icon_left and isUndef(@_text) and
-			not @_icon_active and not @_icon_inactive
-				text = @__cls
-		else
-			text = @_text
-
 		if not CUI.__ng__ and not @_size
 			@_size='normal' #need to set normal as default for mediathek! and light
 		@setSize(@_size)
@@ -130,8 +124,8 @@ class CUI.Button extends CUI.DOM
 
 		if @_center
 			@append(@_center, "center")
-		else
-			@setText(text)
+		else if @_text
+			@setText(@_text)
 
 		if @_disabled and (@_disabled == true or @_disabled.call(@, @))
 			@disable()
@@ -309,11 +303,12 @@ class CUI.Button extends CUI.DOM
 				CUI.clearTimeout(CUI.Button.menu_timeout)
 				CUI.Button.menu_timeout = null
 
-			menu_start_hide = (ev) =>
+			menu_start_hide = (ev, ms=700) =>
+				menu_stop_hide()
 				# we set a timeout, if during the time
 				# the focus enters the menu, we cancel the timeout
 				CUI.Button.menu_timeout = CUI.setTimeout
-					ms: 700
+					ms: ms
 					call: =>
 						@getMenu().hide(ev)
 
@@ -337,12 +332,9 @@ class CUI.Button extends CUI.DOM
 
 							menu_shown = CUI.DOM.data(CUI.DOM.find(".cui-button--hover-menu")[0], "element")
 							if menu_shown and menu_shown != menu
-								menu_stop_hide()
 								menu_shown.hide(ev)
 
 							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
-
-							menu.show(ev)
 
 							Events.ignore
 								instance: @
@@ -364,6 +356,8 @@ class CUI.Button extends CUI.DOM
 								call: =>
 									menu_start_hide(ev)
 
+							menu.show(ev)
+
 					return
 
 		Events.listen
@@ -381,7 +375,8 @@ class CUI.Button extends CUI.DOM
 				@getTooltip()?.hideTimeout(ev)
 
 				if @_menu_on_hover
-					menu_start_hide(ev)
+					menu_start_hide(ev, 100)
+
 				return
 
 	setSize: (size) ->

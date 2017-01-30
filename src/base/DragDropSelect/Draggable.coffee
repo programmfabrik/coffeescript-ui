@@ -319,7 +319,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			return
 
-
 		Events.listen
 			node: document
 			type: ["keyup"]
