@@ -781,6 +781,9 @@ CUI.browser =
 CUI.browser.edge = `!CUI.browser.ie && !!window.StyleMedia`
 CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
+for k of CUI.browser
+	if CUI.browser[k]
+		document.body.classList.add("cui-browser-"+k)
 
 CUI.ready =>
 
