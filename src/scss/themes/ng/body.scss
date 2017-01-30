@@ -2175,11 +2175,18 @@ a[role="button"].cui-button-appearance-link {
 			line-height: 26px;
 	  }
 
-	  &:hover:not(.cui-disabled),
-	  &:active:not(.cui-disabled) {
+		&.cui-layer-open,
+		&:active:not(.cui-disabled) {
+			.cui-button-visual {
+				color: $item-list-color;
+				background: $item-list-pressed;
+			}
+		}
+
+	  &:hover:not(.cui-disabled) {
 	  	.cui-button-visual {
-	  		color: hsl(205,7%,22%);
-				background: hsl(205,17%,98%);
+	  		color: $item-list-color;
+				background: $item-list-hover;
 			}
 	  }
 

@@ -62,6 +62,10 @@ $layer-header-border: hsl(204,22%,91%);
 $layer-footer-background: $layer-header-background;
 $layer-footer-border: $layer-header-border;
 
+$item-list-color: hsl(205,7%,22%);
+$item-list-hover: $button-pressed;
+$item-list-pressed: $button-pressed;
+
 $popover-hint-background: hsl(205,20%,30%);
 
 @mixin ellipsis(){
