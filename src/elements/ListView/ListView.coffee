@@ -774,7 +774,7 @@ class CUI.ListView extends CUI.SimplePane
 		if _defer
 			@__deferRow(row)
 		else
-			@__appendRows([row])
+			@appendRows([row])
 
 	prependRow: (row) ->
 		assert(not @isDestroyed(), "ListView.prependRow", "ListView #{@listViewCounter} is already destroyed.")
@@ -847,7 +847,7 @@ class CUI.ListView extends CUI.SimplePane
 
 	appendDeferredRows: ->
 		if @__deferredRows.length
-			@__appendRows(@__deferredRows)
+			@appendRows(@__deferredRows)
 			@__deferredRows = []
 		@
 
@@ -1137,8 +1137,7 @@ class CUI.ListView extends CUI.SimplePane
 		viewport = @grid.rect()
 		@grid.rect(true, 500, "ListView[##{@listViewCounter}].#{func} #{ms}ms "+viewport.width+"x"+viewport.height)
 
-
-	__appendRows: (rows) ->
+	appendRows: (rows) ->
 		assert(not @isDestroyed(), "ListView.appendRow", "ListView #{@listViewCounter} is already destroyed.")
 		for row, idx in rows
 			row_i = ++@__maxRowIdx
