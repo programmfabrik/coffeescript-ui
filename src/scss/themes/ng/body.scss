@@ -2203,8 +2203,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-options .cui-button {
-		height: 26px;
-		line-height: 26px;
+		padding: 4px 0;
 		flex: 1 1 auto;
 	}
 }
@@ -3398,8 +3397,7 @@ $table-data-padding: 4px;
 	}
 
 	.cui-button {
-		height: 22px;
-		line-height: 22px;
+		padding: 1px 0;
 	}
 
 	.cui-data-field {
