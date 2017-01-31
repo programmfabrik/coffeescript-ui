@@ -2772,7 +2772,9 @@ $table-data-padding: 4px;
 	&.cui-selected:nth-child(even),
 	&:focus,
 	&:focus:nth-child(even) {
-		background: $row-highlight;
+		> .cui-lv-tr > .cui-lv-td {
+			background: $row-highlight;
+		}
 		
 		.cui-empty-label {
 			color: hsl(205,33%,63%);
