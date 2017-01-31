@@ -858,17 +858,17 @@ i.cui-spin-stepped {
 	&.cui-button--primary,
 	&.cui-active {
 		.cui-button-visual {
-	  	color: $on-highlight-color;
-	  	background: $highlight-color;
-	  	border-color: darken($highlight-color, 7%);
+	  	color: $button-active-text;
+	  	background: $button-active;
+	  	border-color: $button-active-border;
 	  }
 
 		&.cui-layer-open,
 	  &:active:not(.cui-disabled) {
 	  	.cui-button-visual {
-	  		color: $on-highlight-color-pressed;
-		  	background: $highlight-color-pressed;
-		  	border-color: darken($highlight-color-pressed, 7%);
+	  		color: $button-active-pressed-text;
+		  	background: $button-active-pressed;
+		  	border-color: $button-active-pressed;
 		  }
 		}
 	}

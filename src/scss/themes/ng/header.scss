@@ -18,8 +18,19 @@ $foreground: white;
 $border: hsl(205,20%,83%);
 $soft-border: hsl(205,20%,91%);
 
+$highlight-color: hsl(205,100%,45%);
+$row-highlight: hsl(201,82%,92%);
+$on-highlight-color: white;
+$on-highlight-muted-color: hsl(205,50%,85%);
+
 $button-background: white;
 $button-pressed: hsl(205,10%,91%);
+$button-active: desaturate($highlight-color, 80%);
+$button-active-text: $on-highlight-color;
+$button-active-border: darken($button-active, 5%);
+$button-active-pressed: darken($button-active, 9%);
+$button-active-pressed-text: darken($button-active-text, 9%);
+$button-active-pressed-border: darken($button-active-pressed, 5%);
 $button-color: hsl(205,10%,34%);
 $button-border: hsl(205,10%,75%);
 $button-radius: 4px;
@@ -29,19 +40,13 @@ $input-placeholder: hsl(205,10%,75%);
 
 $drag-handle-color: hsl(205,10%,75%);
 
-$highlight-color: hsl(205,100%,45%);
-$row-highlight: hsl(201,82%,92%);
-$on-highlight-color: white;
-$on-highlight-muted-color: hsl(205,50%,85%);
-$highlight-color-pressed: hsl(205,100%,36%);
-$on-highlight-color-pressed: hsl(205,10%,91%);
-
 $secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
 // Table Colors
 $zebra-color: hsla(205,41%,20%,.04);
+$zebra-on-foreground-color: hsl(210,12%,97%);
 $table-border: hsl(205,8%,90%);
 $table-header-border: hsl(205,8%,94%);
 $td-width: 135px;
