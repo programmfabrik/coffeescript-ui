@@ -22,6 +22,8 @@ class Popover extends Modal
 		if not @opts.backdrop?.policy
 			@_backdrop.policy = "click-thru"
 
+	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw"]
+
 	# disableAllButtons: ->
 	# 	super()
 	# 	@disableBackdropClick()
