@@ -1404,7 +1404,8 @@ a[role="button"].cui-button-appearance-link {
 
 // Label: Multiline
 .cui-label-multiline {
-	align-self: stretch;
+	// Conflict: makes it center vertically align in center
+	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
 
 	& + & {
@@ -2741,7 +2742,7 @@ $table-data-padding: 4px;
 			}
 			
 			.cui-label-manage-overflow-button-container {
-				background-image: linear-gradient(#{transparentize($zebra-color, 1)}, #{transparentize($zebra-color, 0)});
+				background-image: linear-gradient(#{transparentize($zebra-on-foreground-color, 1)}, #{transparentize($zebra-on-foreground-color, 0)});
 			}
 
 			&.cui-selected {
@@ -2778,6 +2779,12 @@ $table-data-padding: 4px;
 		
 		.cui-empty-label {
 			color: hsl(205,33%,63%);
+		}
+		
+		&.cui-selected {
+			.cui-label-manage-overflow-button-container {
+				background-image: linear-gradient(#{transparentize($row-highlight, 1)}, #{transparentize($row-highlight, 0)});
+			}
 		}
 	}
 }
