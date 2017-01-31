@@ -1035,9 +1035,8 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
-	display: flex;
-	align-items: center;
-	
+	max-width: 300px !important; // overwrite data-field
+
 	&--icon {
 		.cui-button-checkbox {
 			.cui-button-left i {
@@ -1417,8 +1416,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&:not(.cui-label-markdown) {
-		// word-break: normal;
-		word-break: break-all;
 		// this does not work in IE, but will
 		// be ignored by IE, so we are good
 		word-break: break-word;
