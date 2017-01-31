@@ -1204,7 +1204,8 @@ a[role="button"].cui-button-appearance-link {
 		border-bottom: none;
 	}
 
-	&.cui-panel-closed {
+	&-closed {
+		> .cui-panel-header,
 		&:last-child {
 			border-bottom: none;
 		}
