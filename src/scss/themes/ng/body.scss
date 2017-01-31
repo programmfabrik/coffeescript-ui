@@ -66,7 +66,6 @@ textarea {
 	min-width: 100px;
 	font-size: 12px;
 	border: 1px solid $input-border;
-	border-radius: 0;
 	border-top-color: darken($input-border, 3%);
 	background: $foreground;
 	font-family: inherit;
@@ -74,6 +73,7 @@ textarea {
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	resize: vertical;
+	box-shadow: 0 1px transparentize(darken($input-border, 60%), 0.92) inset;
 	
 	&.cui-input-shadow {
 		position: absolute;
@@ -549,6 +549,15 @@ li > div {
 		flex-shrink: 1;
 	}
 
+	.cui-button-checkbox {
+		display: flex;
+		align-items: center;
+	}
+
+	.cui-checkbox {
+		max-width: none !important;
+	}
+
 	.cui-buttonbar {
 		margin-bottom: 0;
 		min-width: 0;
@@ -855,21 +864,37 @@ i.cui-spin-stepped {
 	}
 
 	&.cui-button-appearance-important, // removed [role] - makes it too specific
-	&.cui-button--primary,
-	&.cui-active {
+	&.cui-button--primary {
 		.cui-button-visual {
-	  	color: $button-active-text;
-	  	background: $button-active;
-	  	border-color: $button-active-border;
-	  }
+			color: $on-highlight-color;
+			background: $highlight-color;
+			border-color: darken($highlight-color, 7%);
+		}
 
 		&.cui-layer-open,
-	  &:active:not(.cui-disabled) {
-	  	.cui-button-visual {
-	  		color: $button-active-pressed-text;
-		  	background: $button-active-pressed;
-		  	border-color: $button-active-pressed;
-		  }
+		&:active:not(.cui-disabled) {
+			.cui-button-visual {
+				color: darken($on-highlight-color, 9%);
+				background: darken($highlight-color, 9%);
+				border-color: darken($highlight-color, 16%);
+			}
+		}
+	}
+
+	&.cui-active {
+		.cui-button-visual {
+			color: $button-active-text;
+			background: $button-active;
+			border-color: $button-active-border;
+		}
+
+		&.cui-layer-open,
+		&:active:not(.cui-disabled) {
+			.cui-button-visual {
+				color: $button-active-pressed-text;
+				background: $button-active-pressed;
+				border-color: $button-active-pressed;
+			}
 		}
 	}
 
@@ -898,7 +923,7 @@ i.cui-spin-stepped {
 		}
 	}
 
-  &.cui-active {
+	&.cui-active {
   	.cui-button-visual {
   		color: desaturate($highlight-color, 80%);
   		background: none;
@@ -913,6 +938,9 @@ i.cui-spin-stepped {
 }
 
 .cui-button-select {
+	width: 100%;
+	align-items: stretch;
+	
 	.cui-button-visual {
 		padding: 0 4px 0 8px;
 	}
@@ -1036,6 +1064,7 @@ a[role="button"].cui-button-appearance-link {
 // Checkbox
 .cui-checkbox {
 	max-width: 300px !important; // overwrite data-field
+	display: inline-block;
 
 	&--icon {
 		.cui-button-checkbox {
@@ -1264,6 +1293,7 @@ a[role="button"].cui-button-appearance-link {
 	flex: 0 0 auto;
 	align-items: center;
 	max-width: 100%;
+	line-height: 18px;
 
 	&.cui-tmpl-label-rotate-90 {
 		align-items: flex-end;
