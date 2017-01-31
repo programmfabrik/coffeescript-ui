@@ -1360,6 +1360,11 @@ a[role="button"].cui-button-appearance-link {
 	  line-height: 25px;
 	}
 
+	a {
+		color: $highlight-color;
+		text-decoration: underline;
+	}
+
 	p,
   pre,
   blockquote {
