@@ -4046,6 +4046,10 @@ $table-data-padding: 4px;
 
 .cui-block-header {
 	padding: $padding $padding 7px;
+	
+	&:empty {
+		display: none;
+	}
 }
 
 .cui-block-content {
