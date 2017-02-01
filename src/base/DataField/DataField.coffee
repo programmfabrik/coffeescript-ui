@@ -131,7 +131,6 @@ class CUI.DataField extends CUI.DOM
 	toString: ->
 		"[#{@__cls}[#{@__uniqueId}, #{@_name or '<no name>'}]}"
 
-
 	reload: ->
 		@remove()
 		@render()

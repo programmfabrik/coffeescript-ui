@@ -190,7 +190,7 @@ class CUI.Template extends CUI.Element
 		if key
 			assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			# CUI.debug "Template.destroyingChildren", key, @map[key]
-			DOM.empty(@map[key])
+			CUI.DOM.empty(@map[key])
 
 			is_empty = true
 			for key of @map
@@ -276,6 +276,12 @@ class CUI.Template extends CUI.Element
 			# if fc
 			# 	CUI.debug "isEmpty: false", key, fc
 			# !fc
+
+	removeEmptySlots: ->
+		for key, node of @map
+			if not node.firstChild
+				DOM.remove(node)
+		@
 
 	@nodeByName: {}
 

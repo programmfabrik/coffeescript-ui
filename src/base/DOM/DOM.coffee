@@ -430,13 +430,13 @@ class CUI.DOM extends CUI.Element
 			element.parentNode?.removeChild(element)
 		element
 
-	@empty: (element) ->
-		if not element
+	@empty: (node) ->
+		if not node
 			return null
-
-		assert(isElement(element), "DOM.empty", "top needs to be Element", element: element)
-		element.innerHTML = ""
-		element
+		assert(isElement(node), "DOM.empty", "top needs to be Element", node: node)
+		while last = node.lastChild
+			node.removeChild(last)
+		node
 
 	# checks if any of the classes are set
 	@hasClass: (element, cls) ->
