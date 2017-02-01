@@ -25,9 +25,9 @@ $on-highlight-muted-color: hsl(205,50%,85%);
 
 $button-background: white;
 $button-pressed: hsl(205,10%,91%);
-$button-active: desaturate($highlight-color, 80%);
+$button-active: hsl(205,15%,43%);
 $button-active-text: $on-highlight-color;
-$button-active-border: darken($button-active, 5%);
+$button-active-border: hsl(205,15%,43%);
 $button-active-pressed: darken($button-active, 9%);
 $button-active-pressed-text: darken($button-active-text, 9%);
 $button-active-pressed-border: darken($button-active-pressed, 5%);

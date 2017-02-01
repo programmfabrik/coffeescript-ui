@@ -73,7 +73,6 @@ textarea {
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	resize: vertical;
-	box-shadow: 0 1px transparentize(darken($input-border, 60%), 0.92) inset;
 	
 	&.cui-input-shadow {
 		position: absolute;
@@ -847,7 +846,7 @@ i.cui-spin-stepped {
 	}
 
 	&.cui-layer-open,
-	&:active:not(.cui-disabled) {
+	&:active {
 		.cui-button-visual {
 	  	background: $button-pressed;
 	  }
@@ -856,6 +855,7 @@ i.cui-spin-stepped {
 	&.cui-disabled {
 	  cursor: default;
 	  opacity: 1;
+	  pointer-events: none;
 	  
 		.cui-button-visual {
 		  color: $disabled-color;
@@ -872,7 +872,7 @@ i.cui-spin-stepped {
 		}
 
 		&.cui-layer-open,
-		&:active:not(.cui-disabled) {
+		&:active {
 			.cui-button-visual {
 				color: darken($on-highlight-color, 9%);
 				background: darken($highlight-color, 9%);
@@ -889,7 +889,7 @@ i.cui-spin-stepped {
 		}
 
 		&.cui-layer-open,
-		&:active:not(.cui-disabled) {
+		&:active {
 			.cui-button-visual {
 				color: $button-active-pressed-text;
 				background: $button-active-pressed;
@@ -916,7 +916,7 @@ i.cui-spin-stepped {
 		color: desaturate($highlight-color, 80%);
 	}
 
-	&:active:not(.cui-disabled),
+	&:active,
 	&.cui-layer-open {
 		.cui-button-visual {
 			background: none;
@@ -1043,7 +1043,7 @@ a[role="button"].cui-button-appearance-link {
 	display: inline-flex;
 	
 	&,
-	&:active:not(.cui-disabled) {
+	&:active {
 		.cui-button-visual {
 			@include button-reset;
 			color: $highlight-color;
@@ -1104,6 +1104,7 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-disabled {
 		color: $disabled-color;
 		opacity: 1;
+		pointer-events: none;
 		
 		.cui-button-left {
 			opacity: 0.27;	
@@ -1265,7 +1266,7 @@ a[role="button"].cui-button-appearance-link {
 			padding: 0 $padding;
 		}
 
-		&:active:not(.cui-disabled) {
+		&:active {
 			.cui-button-visual {
 				background: none;
 				color: inherit;
@@ -1856,6 +1857,10 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-toolbar {
 		min-height: $toolbar-height;
+		
+		.cui-data-field-input {
+			min-width: 0;
+		}
 	}
 
 	.cui-data-table .cui-pane-footer {
@@ -1883,6 +1888,10 @@ a[role="button"].cui-button-appearance-link {
 		.cui-data-field {
 			width: auto;
 		}
+	}
+
+	.cui-data-field-input {
+		min-width: 150px;
 	}
 }
 
@@ -2212,26 +2221,25 @@ a[role="button"].cui-button-appearance-link {
 	  }
 
 		&.cui-layer-open,
-		&:active:not(.cui-disabled) {
+		&:active {
 			.cui-button-visual {
 				color: $item-list-color;
 				background: $item-list-pressed;
 			}
 		}
 
-	  &:hover:not(.cui-disabled) {
+	  &:hover {
 	  	.cui-button-visual {
 	  		color: $item-list-color;
 				background: $item-list-hover;
 			}
 	  }
 
-	  &.cui-active:not(.cui-disabled),
-	  &.cui-active:hover:not(.cui-disabled) {
+	  &.cui-active,
+	  &.cui-active:hover {
 	  	.cui-button-visual {
-	  		color: $on-highlight-color;
-	  		background: $highlight-color;
-	  		border-color: $highlight-color;
+	  		color: $button-active-text;
+	  		background: $button-active;
 	  	}
 	  }
 
@@ -2500,8 +2508,16 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-active {
 		.cui-button-visual {
 			color: $on-highlight-color;
-			background: hsl(205,15%,43%);
-			border-color: hsl(205,15%,43%);
+			background: $button-active;
+			border-color: $button-active-border;
+		}
+
+		&:active {
+			.cui-button-visual {
+				color: $button-active-pressed-text;
+				background: $button-active-pressed;
+				border-color: $button-active-pressed-border;
+			}
 		}
 	}
 }
@@ -3524,6 +3540,11 @@ $table-data-padding: 4px;
 	.cui-input-invalid-hint {
 		display: none;
 	}
+
+	.cui-input {
+		border-top-left-radius: $button-radius;
+		border-bottom-left-radius: $button-radius;
+	}
 }
 
 .cui-date-time-calendar .cui-buttonbar {
@@ -3601,7 +3622,8 @@ $table-data-padding: 4px;
 		vertical-align: bottom;
 		
 		.cui-button-visual {
-			border-radius: 0;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
 			padding: 0 $padding/2;
 		}
 
@@ -4015,7 +4037,7 @@ $table-data-padding: 4px;
 		}
 
 		&--has-checkbox {
-			.cui-block-content {
+			> .cui-block-content {
 				margin-left: 17px;
 			}
 		}
@@ -4226,8 +4248,16 @@ $table-data-padding: 4px;
 .cui-autocompletion-popup-container {
 	padding: 4px 0;
 	
+	&:empty {
+		display: none;
+		
+		+ .cui-autocompletion-popup-container.container-status {
+			border-top: none;
+		}
+	}
+	
 	&.container-status {
-		padding: 4px $padding;
+		padding: 4px $padding 7px;
 		background: $toolbar-background;
 		border-top: 1px solid $soft-border;
 		
@@ -4239,7 +4269,7 @@ $table-data-padding: 4px;
 			
 			& + .cui-button {
 				display: block;
-				padding: 7px 0 4px;
+				padding: 7px 0 0;
 				height: auto;
 			}
 		}
