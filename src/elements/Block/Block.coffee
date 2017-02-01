@@ -20,11 +20,12 @@ class CUI.Block extends CUI.DOM
 		if @_header
 			@setHeader(@_header)
 		else
-			@__label = new Label
-				text: @_text
-				icon: @_icon
-				multiline: true
-			@setHeader(@__label)
+			if @_text or @_icon
+				@__label = new Label
+					text: @_text
+					icon: @_icon
+					multiline: true
+				@setHeader(@__label)
 
 		if @_content
 			@setContent(@_content)
@@ -65,11 +66,11 @@ class CUI.Block extends CUI.DOM
 		"block"
 
 	setText: (txt) ->
-		assert(@__label, "Block.setText", "Block must not be called with opts.header.", opts: @opts)
+		assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
 		@__label.setText(txt)
 
 	setIcon: (icon) ->
-		assert(@__label, "Block.setText", "Block must not be called with opts.header.", opts: @opts)
+		assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
 		@__label.setIcon(icon)
 
 	setHeader: (header) ->
@@ -83,4 +84,3 @@ class CUI.Block extends CUI.DOM
 
 
 Block = CUI.Block
-

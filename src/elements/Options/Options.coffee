@@ -494,8 +494,8 @@ class CUI.Options extends CUI.DataField
 						order_options_by_value_array()
 						@reload()
 
-		else
-			@replace(new EmptyLabel(text: @_placeholder))
+		else if not isEmpty(@_placeholder)
+			@replace(new EmptyLabel(text: @_placeholder), "center")
 
 		@
 

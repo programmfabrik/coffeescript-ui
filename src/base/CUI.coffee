@@ -769,7 +769,6 @@ class CUI
 		data
 
 
-
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 CUI.browser =
 	opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
@@ -781,11 +780,10 @@ CUI.browser =
 CUI.browser.edge = `!CUI.browser.ie && !!window.StyleMedia`
 CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
-for k of CUI.browser
-	if CUI.browser[k]
-		document.body.classList.add("cui-browser-"+k)
-
 CUI.ready =>
+	for k of CUI.browser
+		if CUI.browser[k]
+			document.body.classList.add("cui-browser-"+k)
 
 	if window.marked
 		CUI.defaults.marked_opts =

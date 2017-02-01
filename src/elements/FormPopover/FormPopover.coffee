@@ -112,7 +112,7 @@ class FormPopover extends Form
 		if @_renderDisplayButton
 			@addClass("cui-form-popover-has-button-text")
 		@append(@__button, "center")
-		@append(@getChangedMarker(), "center")
+		# @append(@getChangedMarker(), "center")
 		DataField::render.call(@)
 		@
 

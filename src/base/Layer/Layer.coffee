@@ -253,7 +253,7 @@ class CUI.Layer extends CUI.DOM
 					if not CUI.isArray(v)
 						return false
 					for a in v
-						if CUI.Layer.knownPlacements.indexOf(a) == -1
+						if @knownPlacements.indexOf(a) == -1
 							return false
 					return true
 
@@ -314,7 +314,7 @@ class CUI.Layer extends CUI.DOM
 		else
 			DOM.setStyleOne(@__layer_root.DOM, "visibility", "hidden")
 
-	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
+	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
 	__setElement: (element) ->
 		if element instanceof CUI.DOM
@@ -404,7 +404,7 @@ class CUI.Layer extends CUI.DOM
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
-		allowed_placements = (@_placements or CUI.Layer.knownPlacements).slice(0)
+		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
 		if @__element
@@ -431,7 +431,7 @@ class CUI.Layer extends CUI.DOM
 		vp_pl = {}
 
 		# calc all possible layer viewports
-		for placement in CUI.Layer.knownPlacements
+		for placement in @knownPlacements
 			if placement not in ["n", "s", "e", "w", "c"]
 				continue
 
@@ -491,7 +491,7 @@ class CUI.Layer extends CUI.DOM
 			vp.overlap_align = null
 
 		# add two-direction placements
-		for placement in CUI.Layer.knownPlacements
+		for placement in @knownPlacements
 			if placement in ["n", "s", "e", "w", "c"]
 				continue
 
@@ -526,7 +526,7 @@ class CUI.Layer extends CUI.DOM
 					vp.overlap_align = "left"
 
 		# throw out placements which are too small
-		for placement in CUI.Layer.knownPlacements
+		for placement in @knownPlacements
 			if placement not in allowed_placements
 				delete(vp_pl[placement])
 				continue
@@ -833,12 +833,12 @@ class CUI.Layer extends CUI.DOM
 
 					while (true)
 						dbg_pl = dbg_pl + 1
-						if dbg_pl == CUI.Layer.knownPlacements.length
+						if dbg_pl == @knownPlacements.length
 							@__removeDebugDivs()
 							listener.destroy()
 							return
 
-						_placement = CUI.Layer.knownPlacements[dbg_pl]
+						_placement = @knownPlacements[dbg_pl]
 
 						if vp_pl[_placement]
 							show_dbg_div(_placement)

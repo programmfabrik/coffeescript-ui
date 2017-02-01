@@ -137,8 +137,9 @@ class Checkbox extends DataFieldInput
 			"getText"
 		])
 
+		# @append(@getChangedMarker())
 		@replace(@__checkbox)
-		@append(@getChangedMarker())
+
 
 	checkValue: (v, flags) ->
 		if not isBoolean(v)

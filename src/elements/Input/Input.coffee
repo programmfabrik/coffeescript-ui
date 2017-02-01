@@ -843,7 +843,7 @@ class CUI.Input extends CUI.DataFieldInput
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
 
-		@append(@getChangedMarker(), @getTemplateKeyForRender())
+		# @append(@getChangedMarker(), @getTemplateKeyForRender())
 
 		for k in ["empty", "invalid", "valid"]
 			@append(@__inputHints[k], @getTemplateKeyForRender())

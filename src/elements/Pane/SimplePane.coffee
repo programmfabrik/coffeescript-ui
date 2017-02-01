@@ -24,7 +24,11 @@ class CUI.SimplePane extends CUI.Pane
 			"footer_left"
 			"footer_right"
 		]
-			@append(@["_#{k}"], k)
+			value = @["_#{k}"]
+			if not value
+				continue
+
+			@append(value, k)
 
 		if @_title
 			@append(new Label(text: @_title), "header_left")

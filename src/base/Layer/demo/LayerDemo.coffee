@@ -7,7 +7,7 @@
 
 class LayerDemo extends Demo
 	display: ->
-		placements = CUI.Layer.knownPlacements
+		placements = CUI.Layer::knownPlacements
 		@__data = {}
 
 		if window.localStorage.CUILayerDemo
@@ -26,7 +26,7 @@ class LayerDemo extends Demo
 
 		placements_opts = []
 		placement_opts = []
-		for pm in CUI.Layer.knownPlacements
+		for pm in CUI.Layer::knownPlacements
 			placement_opts.push
 				text: pm
 				value: pm

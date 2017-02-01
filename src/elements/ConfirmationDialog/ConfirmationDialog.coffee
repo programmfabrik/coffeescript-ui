@@ -76,7 +76,8 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			footer_right: @_buttons
 			footer_left: @_footer_left
 		}
-			pane.append(content, key)
+			if content
+				pane.append(content, key)
 		return
 
 	updateText: (txt) ->
