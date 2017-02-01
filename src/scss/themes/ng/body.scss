@@ -1857,10 +1857,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-toolbar {
 		min-height: $toolbar-height;
-		
-		.cui-data-field-input {
-			min-width: 0;
-		}
 	}
 
 	.cui-data-table .cui-pane-footer {
@@ -1892,6 +1888,17 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-data-field-input {
 		min-width: 150px;
+	}
+
+	.cui-date-time {
+		min-width: 215px;
+	}
+
+	.cui-toolbar,
+	.cui-buttonbar {
+		.cui-data-field-input {
+			min-width: 0;
+		}
 	}
 }
 
@@ -3549,6 +3556,10 @@ $table-data-padding: 4px;
 
 .cui-date-time-calendar .cui-buttonbar {
 	justify-content: space-between;
+	
+	.cui-button-select {
+		width: auto;
+	}
 }
 
 .cui-buttonbar-group-date,
@@ -3742,6 +3753,13 @@ $table-data-padding: 4px;
 
 
 .cui-date-time-popover {
+	+ .cui-layer-pointer--n,
+	+ .cui-layer-pointer--s {
+		&:after {
+			background: $foreground;
+		}
+	}
+
 	.cui-simple-pane > .cui-vertical-layout-center {
 		padding: $padding;
 	}
