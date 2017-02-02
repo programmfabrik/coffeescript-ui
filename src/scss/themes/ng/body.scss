@@ -808,8 +808,8 @@ i.cui-spin-stepped {
 .cui-button-href.cui-button-appearance-link {
 	.cui-button-right {
 		flex-shrink: 0;
-		// nudge external link icon up a bit
-		margin-top: -1px;
+		align-self: flex-start;
+		margin-top: 2px;
 		
 		&:empty {
 			display: block;
@@ -1771,6 +1771,10 @@ a[role="button"].cui-button-appearance-link {
 			position: static;
 			margin: 0;
 		}
+
+		.cui-layer-pointer {
+			display: none;
+		}
 	}
 
 	&[cui-fill-space="both"] {
@@ -1888,6 +1892,10 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-data-field-input {
 		min-width: 150px;
+		
+		&.cui-checkbox {
+			min-width: 0;
+		}
 	}
 
 	.cui-date-time {
@@ -2256,8 +2264,16 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-options .cui-button {
-		padding: 4px 0;
+		padding: 0;
 		flex: 1 1 auto;
+
+		.cui-button-visual {
+			padding-top: 4px;
+			padding-bottom: 4px;
+  		line-height: 18px;
+  		height: auto;
+  		min-height: 26px;
+  	}
 	}
 }
 
