@@ -3187,6 +3187,10 @@ $table-data-padding: 4px;
 	display: table;
 	margin: $padding;
 	
+	& + .cui-form-table {
+		margin-top: -$padding;
+	}
+	
 	.cui-tr {
 		display: table-row;
 		
