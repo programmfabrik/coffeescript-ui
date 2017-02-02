@@ -1898,6 +1898,12 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-list-view {
+		.cui-data-field-input {
+			min-width: 0;
+		}
+	}
+
 	.cui-date-time {
 		min-width: 215px;
 	}
@@ -2573,7 +2579,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-$table-data-height: 26px;
+$table-data-height: 32px;
 $table-data-padding: 4px;
 
 // ListView
@@ -2916,14 +2922,11 @@ $table-data-padding: 4px;
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	display: flex;
+	background: linear-gradient($zebra-color 50%, white 50%);
+	background-size: 100% $table-data-height*2;
 
 	> .cui-lv-tr {
 		border-style: none;
-	}
-	
-	.cui-lv-td {
-		background: linear-gradient($zebra-color 50%, white 50%);
-		background-size: 100% $table-data-height*2;
 	}
 
 	.cui-lv-td {
@@ -2936,9 +2939,7 @@ $table-data-padding: 4px;
 }
 
 .cui-list-view-grid-rows-even .cui-lv-tr-fill-outer {
-	.cui-lv-td {
-		background-image: linear-gradient(white 50%, $zebra-color 50%);
-	}
+	background-image: linear-gradient(white 50%, $zebra-color 50%);
 }
 
 .cui-tmpl-list-view-tool-col-resize-marker {
