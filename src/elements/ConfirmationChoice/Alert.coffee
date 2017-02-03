@@ -8,8 +8,10 @@
 class CUI.Alert extends CUI.ConfirmationChoice
 	initOpts: ->
 		super()
-		@removeOpt("choices")
-		@mergeOpt("text", mandatory: true)
+		# @removeOpt("choices")
+		# @mergeOpt("text", mandatory: true)
+		@mergeOpt("choices", mandatory: false, default: undefined)
+
 		@addOpts
 			button_text_ok:
 				mandatory: true
@@ -21,9 +23,10 @@ class CUI.Alert extends CUI.ConfirmationChoice
 
 	readOpts: ->
 		super()
-		@_choices = [
-			text: @_button_text_ok
-		]
+		if not @_choices
+			@_choices = [
+				text: @_button_text_ok
+			]
 
 CUI.alert = (opts=text: "CUI.alert") ->
 	new CUI.Alert(opts).open()

@@ -30,10 +30,10 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 					if not CUI.isArray(v)
 						return false
 
-					for choice in v
+					for choice, idx in v
 						if not choice
 							continue
-						CUI.Element.readOpts(choice, "new ConfirmationChoice", @choiceOpts)
+						CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#"+idx+"]", @choiceOpts)
 					return true
 
 	choiceOpts:
