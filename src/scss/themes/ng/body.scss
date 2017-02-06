@@ -2658,6 +2658,11 @@ $table-data-padding: 4px;
 	display: flex;
 	align-items: flex-start;
 	box-sizing: content-box;
+	
+	.cui-lv-td {
+		max-width: 100%;
+		box-sizing: border-box;
+	}
 
 	&-rotate-90 {
 		width: 12px;
