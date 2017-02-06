@@ -178,7 +178,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 							type: "cui-button-click"
 							node: btn
 							call: (ev, info) =>
-								btn.getTooltip()?.destroy()
 								@_onClick?(info.event, btn, item, idx)
 
 								if not menu?.isAutoCloseAfterClick() or btn.hasMenu()
