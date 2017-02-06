@@ -2635,7 +2635,7 @@ $table-data-padding: 4px;
 .cui-lv-td {
 	padding: $table-data-padding $padding;
 	width: 125px;
-	min-height: $table-data-height - 2*$table-data-padding;
+	min-height: 18px;
 	overflow: hidden;
 	flex-shrink: 0;
 	display: flex;
