@@ -80,6 +80,28 @@ class FileUploadDemo extends Demo
 			onDequeue: update_status
 			onUpdate: update_drop_zone
 
+		csv_data =
+			delimiter: ";"
+			quotechar: '"'
+
+		fr_csv = new CUI.FileReader
+			onAdd: update_status
+			onProgress: update_status
+			onDone: (frf) =>
+				update_status(frf)
+				console.debug "uploaded_data", frf, frf.getResult().length
+				csv = new CUI.CSV
+					delimiter: csv_data.delimiter
+					quotechar: csv_data.quotechar
+
+				csv.parse(frf.getResult())
+				.done (rows) =>
+					CUI.FileReader.save(frf.getFile().name+".json", JSON.stringify(rows))
+
+			onFail: update_status
+			onDequeue: update_status
+			onUpdate: update_drop_zone
+
 
 		fu.initDropZone(dropZone: drop_zone)
 
@@ -126,6 +148,35 @@ class FileUploadDemo extends Demo
 			multiple: false
 			icon: "upload"
 		).DOM)
+
+		demo_table.addExample("Pick One File (local upload, CSV)", [
+			new FileUploadButton(
+				fileUpload: fr_csv
+				text: "Upload One"
+				multiple: false
+				icon: "upload"
+			).DOM
+		,
+			new Select
+				name: "delimiter"
+				data: csv_data
+				options: [
+					value: ","
+				,
+					value: ";"
+				]
+			.start().DOM
+		,
+			new Select
+				name: "quotechar"
+				data: csv_data
+				options: [
+					value: '"'
+				,
+					value: "'"
+				]
+			.start().DOM
+		])
 
 		browserUploadInput = $element("input", "", id: "browser-native-upload", type: "file")[0]
 

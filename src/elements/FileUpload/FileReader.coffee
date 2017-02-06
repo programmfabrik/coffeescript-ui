@@ -20,3 +20,15 @@ class CUI.FileReader extends FileUpload
 		CUI.debug "filereader upload file", file
 		file.upload(file)
 
+	@save: (filename, data, type = "text/csv") ->
+		blob = new Blob([data], type: type)
+		if (window.navigator.msSaveOrOpenBlob)
+	        window.navigator.msSaveBlob(blob, filename)
+	    else
+	        elem = window.document.createElement('a')
+	        elem.href = window.URL.createObjectURL(blob)
+	        elem.download = filename
+	        document.body.appendChild(elem);
+	        elem.click();
+	        document.body.removeChild(elem);
+			window.URL.revokeObjectURL(blob)

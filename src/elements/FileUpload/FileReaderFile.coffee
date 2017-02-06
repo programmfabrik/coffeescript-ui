@@ -39,11 +39,8 @@ class FileReaderFile extends FileUploadFile
 
 		return
 
-	getDataAsUtf8String: ->
-		CUI.utf8ArrayBufferToString(@getData())
-
-	getDataAsBytes: ->
-		String.fromCharCode.apply(null, new Uint8Array(@getData()))
+	getResult: ->
+		@__reader.result
 
 	__event_loadStart: ->
 		@__progress.status = "STARTED"
