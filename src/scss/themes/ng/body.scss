@@ -167,7 +167,7 @@ li > div {
 		}
 		> .cui-horizontal-layout-center {
 			position: relative;
-			flex: 1 1 auto;
+			flex: 1 1 0%;
 			min-width: 0;
 		}
 	}
@@ -232,7 +232,7 @@ li > div {
 
 		> .cui-vertical-layout-center {
 			position: relative;
-			flex: 1 1 auto;
+			flex: 1 1 0%;
 			min-height: 0;
 		}
 	}
