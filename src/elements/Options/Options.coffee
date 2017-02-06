@@ -317,6 +317,9 @@ class CUI.Options extends CUI.DataField
 				if @__maxChars < chars
 					@__maxChars = chars
 
+				if CUI.__ng__ and opt.form?.right
+					console.error("Options.render: form.right is obsolete. 'right' part will not appear.", @, opt)
+
 				if @_sortable
 					if not opt.form
 						opt.form = {}
