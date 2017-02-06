@@ -63,6 +63,7 @@ class CUI.Icon extends CUI.Element
 		file: if CUI.__ng__ then "fa-file" else "fa-file-o"
 		filter: "fa-filter"
 		refresh: "fa-refresh"
+		reset: "svg-reset"
 		zip: "fa fa-file-archive-o"
 		rotate_right: "fa-rotate-right"
 		rotate_left: "fa-rotate-left"
