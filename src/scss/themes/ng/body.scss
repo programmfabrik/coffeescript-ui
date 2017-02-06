@@ -1916,6 +1916,23 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-layer {		
+		> .cui-simple-pane,
+		> .cui-pane {
+			> .cui-vertical-layout-center {
+				flex-basis: auto;
+				
+				> .cui-maximize-vertical.cui-vertical-layout {
+					> .cui-vertical-layout-center {
+						flex-basis: auto;
+					}
+				}
+			}
+		}
+	}
+}
+
 .cui-layer-pointer {
 	position: absolute;
 	z-index: 1;
