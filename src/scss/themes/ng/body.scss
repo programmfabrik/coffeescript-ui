@@ -1956,6 +1956,17 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-layer-pointer--n,
+.cui-layer-pointer--s {
+	margin: 0 6px;
+	height: 14px;
+	
+	&:after {
+		top: 5px;
+		left: 7px;
+	}
+}
+
 .cui-layer-pointer--n:after {
 	background: $layer-header-pointer-background;
 }
@@ -1963,11 +1974,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-pointer--s:after {
 	top: -9px;
 	background: $layer-footer-background;
-}
-
-.cui-layer-pointer--n,
-.cui-layer-pointer--s {
-	margin: 0 6px;
 }
 
 .cui-layer-pointer--e,
