@@ -456,7 +456,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if @__contentSize
 			return
 
-		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1")
+		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
 
 		@__contentSize.appendTo(document.body)
 		@__contentSize0 = @__contentSize[0]
@@ -784,6 +784,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__shadow = $element("input", "cui-input-shadow", type: "text")
 
 		@__shadow.prop("tabindex", "-1")
+		@__shadow.prop("autocomplete", "off")
 		@__shadow.appendTo(document.body)
 		@__shadow0 = @__shadow[0]
 
