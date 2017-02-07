@@ -173,7 +173,7 @@ li > div {
 	}
 
 	&.cui-maximize-vertical {
-		flex: 1 1 0%;
+		flex: 1 1 auto;
 		max-width: 100%;
 		min-height: 0;
 	}
@@ -232,7 +232,7 @@ li > div {
 
 		> .cui-vertical-layout-center {
 			position: relative;
-			flex: 1 1 0%;
+			flex: 1 1 auto;
 			min-height: 0;
 		}
 	}
@@ -1063,7 +1063,8 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
-	max-width: 300px !important; // overwrite data-field
+	max-width: 400px !important; // overwrite data-field
+	min-width: 0;
 	display: inline-block;
 
 	&--icon {
@@ -1250,7 +1251,6 @@ a[role="button"].cui-button-appearance-link {
 	border-top: 1px solid $soft-border;
 	border-bottom: 1px solid $soft-border;
 	position: relative;
-	height: $toolbar-height;
 	background: $toolbar-background;
 	flex-shrink: 0;
 	box-sizing: content-box;
@@ -1262,8 +1262,10 @@ a[role="button"].cui-button-appearance-link {
 		
 		.cui-button-visual {
 			@include button-reset;
+			line-height: 22px;
 			justify-content: flex-start;
-			padding: 0 $padding;
+			padding: 6px $padding;
+			align-items: flex-start;
 		}
 
 		&:active {
@@ -1275,6 +1277,13 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-button-left {
 			width: 22px;
+			padding-top: 2px;
+		}
+		
+		.cui-button-center {
+			span {
+				white-space: normal;
+			}
 		}
 
 		.fa-angle-right {
