@@ -73,6 +73,24 @@ $item-list-pressed: $button-pressed;
 
 $popover-hint-background: hsl(205,20%,30%);
 
+@mixin desktop {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
 @mixin ellipsis(){
 	white-space: nowrap;
 	overflow: hidden;
