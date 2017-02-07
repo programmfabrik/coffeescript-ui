@@ -655,24 +655,6 @@ li > div {
 	.cui-horizontal-layout-right {
 		min-width: auto;
 	}
-	
-	.cui-horizontal-layout-left .cui-buttonbar:first-child {
-		margin-left: -$padding/2;
-		
-		.cui-button-href:first-child,
-		.cui-button:first-child {
-			padding-left: $padding/2;
-		}
-	}
-
-	.cui-horizontal-layout-right .cui-buttonbar:last-child {
-		margin-right: -$padding/2;
-
-		.cui-button-href:last-child,
-		.cui-button:last-child {
-			padding-right: $padding/2;
-		}
-	}
 
 	.cui-label {
 		color: $secondary-color;
