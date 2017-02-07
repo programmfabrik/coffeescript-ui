@@ -5,35 +5,101 @@ class CUI.CSVData extends CUI.Element
 			rows:
 				check: (v) ->
 					CUI.isArray(v) and v.length > 0
+
 			header_rows:
 				mandatory: true
-				default: 0
+				default: null
 				check: (v) ->
-					v >= 0
+					v >= 0 or v == null
+
+			column_name_prefix:
+				mandatory: true
+				default: "column "
+				check: String
 
 	readOpts: ->
 		super()
 		@column_names = []
+
+		@__max_column_count = 0
+		@__header_rows = undefined
+
 		if @_rows
 			@rows = @_rows
-			if @_header_rows
-				for header_row_i in [0...@_header_rows]
-					@column_names[header_row_i] = []
-					for col in @rows[header_row_i]
-						@column_names[header_row_i].push(col)
-
-				for row_i in [@_header_rows...@rows.length]
-					row = @rows[row_i]
-					row.columns = []
-					for header_row_i in [0...@_header_rows]
-						row.columns[header_row_i] = {}
-						for col, col_i in row
-							col_name = @column_names[header_row_i][col_i]
-							if col_name
-								row.columns[header_row_i][col_name] = col
+			for row in @rows
+				col_count = row.length
+				if col_count > @__max_column_count
+					@__max_column_count = col_count
 		else
 			@rows = []
+
+		if @_header_rows >= 0
+			@readHeaderRows(@_header_rows)
+
 		return
+
+	readHeaderRows: (@__header_rows) ->
+
+		@column_names = [[]]
+		for col_i in [0...@__max_column_count] by 1
+			@column_names[0].push(@_column_name_prefix+(col_i+1))
+
+		for header_row_i in [0...@__header_rows] by 1
+			@column_names[header_row_i+1] = []
+			for col in @rows[header_row_i]
+				@column_names[header_row_i+1].push(col)
+
+		for row_i in [0...@rows.length] by 1
+			row = @rows[row_i]
+			row.columns = [{}]
+
+			# map to first line by "idx"
+			for col, col_i in row
+				row.columns[0][@column_names[0][col_i]] = col
+
+			for i in [col_i...@__max_column_count] by 1
+				row.columns[0][@column_names[0][col_i]] = null # add empty columns
+
+			if row_i < @__header_rows
+				continue
+
+			for header_row_i in [0...@__header_rows] by 1
+				row.columns[header_row_i+1] = {}
+				for col, col_i in row
+					col_name = @column_names[header_row_i+1][col_i]
+					if col_name
+						row.columns[header_row_i+1][col_name] = col
+		return
+
+	getMaxColumnCount: ->
+		@__max_column_count
+
+	getRows: ->
+		@rows
+
+	getColumnNames: (header_row) ->
+		assert(@__header_rows >= 0, "CSVData.getColumnNames", "readHeaderRows needs to be called before calling this.", CSVData: @)
+		@column_names[header_row]
+
+	getRowsByHeader: (header_row = 0) ->
+		assert(@__header_rows >= 0, "CSVData.getRowsByHeader", "readHeaderRows needs to be called before calling this.", CSVData: @)
+
+		rows = []
+		for row, idx in @rows
+			if idx < @__header_rows
+				continue
+			rows.push(row.columns[header_row])
+		rows
+
+	getRow: (row_i) ->
+		@rows[row_i + (@__header_rows or 0)]
+
+	getRecord: (row_i, header_row) ->
+		@getRow(row_i).columns[header_row]
+
+	getRowsCount: ->
+		@rows.length - (@__header_rows or 0)
+
 
 	debug: ->
 		console.debug "rows:", @rows, "column_names:", @column_names

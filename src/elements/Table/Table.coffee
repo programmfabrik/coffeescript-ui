@@ -98,7 +98,7 @@ class CUI.Table extends CUI.DOM
 				name: "value"
 			]
 		else
-			@__columns = @_columns
+			@__columns = copyObject(@_columns, true)
 
 
 		for col in @__columns
