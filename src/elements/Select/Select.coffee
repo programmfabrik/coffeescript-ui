@@ -242,7 +242,7 @@ class Select extends Checkbox
 
 			@__checkbox.setText(txt)
 
-			if txt.length > max_chars
+			if txt?.length > max_chars
 				max_chars = txt.length
 
 			@__checkbox.setTextMaxChars(max_chars)

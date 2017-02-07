@@ -80,7 +80,8 @@ class CUI.Table extends CUI.DOM
 			rows:
 				mandatory: true
 				default: []
-				check: is_array_of_maps
+				check: (v) ->
+					CUI.isArray(v)
 
 			size:
 				mandatory: true
