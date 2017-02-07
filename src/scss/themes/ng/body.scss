@@ -2091,17 +2091,21 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Confirmation Dialog
-.cui-confirmation-dialog .cui-layer {
-	max-width: 500px;
+.cui-confirmation-dialog {
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			margin: $padding/2;
+			max-width: 500px;
+		}
+	}
 }
 
 // Confirmation Choice
-.cui-confirmation-choice .cui-layer {
-	max-width: 300px; // don't make this bigger, make the text shorter
-	
-	> .cui-layer-pane {
+.cui-confirmation-choice {
+	.cui-layer > .cui-layer-pane {
 		> .cui-vertical-layout-center {
 			margin: $padding/2;
+			max-width: 300px; // don't make this bigger, make the text shorter
 		}
 	}
 }
@@ -2109,12 +2113,11 @@ a[role="button"].cui-button-appearance-link {
 // Alert Problem (red)
 .cui-confirmation-dialog {
 	.cui-alert-problem {
-		max-width: 375px;
-
 		> .cui-layer-pane {
 			> .cui-vertical-layout-center {
 				position: relative;
 				min-height: 66px;
+				max-width: 375px;
 				padding-left: 74px;
 				margin-right: 9px;
 				justify-content: center;
