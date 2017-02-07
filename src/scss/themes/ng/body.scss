@@ -2802,7 +2802,8 @@ $table-data-padding: 4px;
 .cui-list-view-grid-inner-bottom {
 	flex: 1 1 auto;
 	display: flex;
-	overflow: hidden; // prevent scrollbars when dragging an element
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 .cui-list-view-grid-quadrant-0 {
@@ -2850,13 +2851,10 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-quadrant-2 {
 	flex: 0 0 auto;
-	overflow: hidden;
 }
 
 .cui-list-view-grid-quadrant-3 {
 	flex: 1 1 auto;
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
 }
 
 .cui-list-view-grid-quadrant-2,
