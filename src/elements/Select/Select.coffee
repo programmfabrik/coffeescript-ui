@@ -228,16 +228,22 @@ class Select extends Checkbox
 				else
 					@__checkbox.setIcon(null)
 
-				@__checkbox.setText(found_opt.text_selected or found_opt.text)
+				txt = found_opt.text_selected or found_opt.text
 
 				@__checkbox.menuSetActiveIdx(found_opt._idx)
 			else
 				if @getValue() == null and not isEmpty(@_empty_text)
-					@__checkbox.setText(@_empty_text)
+					txt = @_empty_text
 				else
 					# CUI.debug "Select, option not found:", @getValue(), @getData(), @getName(), "options:", @__options
-					@__checkbox.setText(@_not_found_text+":"+@getValue())
+					txt = @_not_found_text+":"+@getValue()
+
 				@__checkbox.menuSetActiveIdx(null)
+
+			@__checkbox.setText(txt)
+
+			if txt.length > max_chars
+				max_chars = txt.length
 
 			@__checkbox.setTextMaxChars(max_chars)
 		@

@@ -575,6 +575,9 @@ class CUI.Form extends CUI.DataField
 
 			if field._form?.right
 				hint_div = CUI.DOM.element("DIV", class: "cui-form-hint")
+
+				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", field, "Field#", field_idx)
+
 				append(get_append(field._form?.right), hint_div)
 			else
 				hint_div = null

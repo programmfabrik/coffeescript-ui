@@ -131,7 +131,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/DocumentBrowser/NodeMatch.coffee \
 	src/elements/DocumentBrowser/SearchMatch.coffee \
 	src/elements/DocumentBrowser/SearchQuery.coffee \
-	src/base/CSV.coffee
+	src/base/CSVData.coffee
 
 files = $(addsuffix .js, $(coffee_files))
 

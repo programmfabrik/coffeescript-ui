@@ -81,8 +81,9 @@ class FileUploadDemo extends Demo
 			onUpdate: update_drop_zone
 
 		csv_data =
-			delimiter: ";"
-			quotechar: '"'
+			delimiter: null
+			quotechar: null
+			header_rows: 1
 
 		fr_csv = new CUI.FileReader
 			onAdd: update_status
@@ -90,13 +91,15 @@ class FileUploadDemo extends Demo
 			onDone: (frf) =>
 				update_status(frf)
 				console.debug "uploaded_data", frf, frf.getResult().length
-				csv = new CUI.CSV
+
+				CUI.CSVData.parse(
 					delimiter: csv_data.delimiter
 					quotechar: csv_data.quotechar
-
-				csv.parse(frf.getResult())
-				.done (rows) =>
-					CUI.FileReader.save(frf.getFile().name+".json", JSON.stringify(rows))
+					header_rows: csv_data.header_rows
+					text: frf.getResult()
+				)
+				.done (csv_data) =>
+					CUI.FileReader.save(frf.getFile().name+".json", JSON.stringify(csv_data.rows))
 
 			onFail: update_status
 			onDequeue: update_status
@@ -161,6 +164,9 @@ class FileUploadDemo extends Demo
 				name: "delimiter"
 				data: csv_data
 				options: [
+					text: "- detect -"
+					value: null
+				,
 					value: ","
 				,
 					value: ";"
@@ -171,9 +177,24 @@ class FileUploadDemo extends Demo
 				name: "quotechar"
 				data: csv_data
 				options: [
+					text: "- detect -"
+					value: null
+				,
 					value: '"'
 				,
 					value: "'"
+				]
+			.start().DOM
+		,
+			new Select
+				name: "header_rows"
+				data: csv_data
+				options: [
+					value: 0
+				,
+					value: 1
+				,
+					value: 2
 				]
 			.start().DOM
 		])
