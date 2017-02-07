@@ -685,6 +685,10 @@ li > div {
 			padding: $padding;
 		}
 	}
+
+	> .cui-vertical-layout-center {
+		overflow: auto;
+	}
 }
 
 // Data Table
