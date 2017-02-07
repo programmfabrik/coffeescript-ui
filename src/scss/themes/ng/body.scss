@@ -1930,11 +1930,10 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-browser-ie:not(.cui-browser-edge) {
-	.cui-layer {		
-		> .cui-simple-pane,
-		> .cui-pane {
+	.cui-layer {
+		> .cui-layer-pane {
 			> .cui-vertical-layout-center {
-				flex-basis: auto;
+				flex-basis: 250px;
 				
 				> .cui-maximize-vertical.cui-vertical-layout {
 					> .cui-vertical-layout-center {
