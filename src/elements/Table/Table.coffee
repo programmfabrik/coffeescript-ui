@@ -117,7 +117,11 @@ class CUI.Table extends CUI.DOM
 		tr = $tr("cui-table-row")
 		for col in @__columns
 			td = $td("cui-table-td"+col.__class)
-			CUI.DOM.append(td, row[col.name])
+			value = row[col.name]
+			if not isString(value)
+				CUI.DOM.append(td, value+"")
+			else
+				CUI.DOM.append(td, value)
 			tr.appendChild(td)
 		@__table.appendChild(tr)
 		@

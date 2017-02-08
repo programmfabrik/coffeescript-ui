@@ -31,7 +31,7 @@ class CUI.CSVData extends CUI.Element
 		for row in @rows
 			if row.length < @__max_column_count
 				for idx in [row.length...@__max_column_count]
-					row[idx] = ""
+					row[idx] = null
 		return
 
 	getMaxColumnCount: ->
@@ -49,14 +49,16 @@ class CUI.CSVData extends CUI.Element
 	debug: ->
 		console.debug "rows:", @rows
 
-	toText: (_opts) ->
+	toText: (_opts={}) ->
 		opts = CUI.Element.readOpts _opts, "CSVData.toText",
 			delimiter:
 				mandatory: true
+				default: ";"
 				check: (v) =>
 					CUI.isString(v) and v.length > 0
 			quotechar:
 				mandatory: true
+				default: '"'
 				check: (v) =>
 					CUI.isString(v) and v.length > 0
 			always_quote:
@@ -87,7 +89,10 @@ class CUI.CSVData extends CUI.Element
 				if idx > 0
 					_row.push(opts.delimiter)
 
-				str = ""+col
+				if isEmpty(col)
+					str = ""
+				else
+					str = ""+col
 
 				if opts.always_quote
 					quote = true
