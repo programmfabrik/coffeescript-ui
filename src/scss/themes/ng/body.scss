@@ -1229,11 +1229,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-select {
 	.cui-button-center:empty {
 		display: flex;
-
-		&:after {
-			content: '-';
-			padding: 0 $padding/4;
-		}
 	}
 }
 
