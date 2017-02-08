@@ -227,19 +227,21 @@ li > div {
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
 		min-height: 0;
+		overflow: auto;
 		// overflow: hidden; // cuts off password input outline
 
 		> .cui-vertical-layout-top,
 		> .cui-vertical-layout-bottom {
 			position: relative;
-			overflow: hidden;
 			flex-shrink: 0;
+			overflow: hidden;
 		}
 
 		> .cui-vertical-layout-center {
 			position: relative;
 			flex: 1 1 auto;
 			min-height: 0;
+			overflow: auto;
 		}
 	}
 
@@ -911,9 +913,12 @@ i.cui-spin-stepped {
 
 .cui-button-appearance-flat {
 	align-self: auto;
+	margin: 3px 0;
+	vertical-align: top;
 	
 	.cui-button-visual {
 		@include button-reset;
+		height: 18px;
 		border-radius: $button-radius;
 		color: desaturate($highlight-color, 80%);
 	}
@@ -3421,6 +3426,7 @@ $table-data-padding: 4px;
 	
 	.cui-label-content {
 		white-space: normal;
+		word-break: break-word;
 	}
 }
 
@@ -4404,6 +4410,7 @@ $table-data-padding: 4px;
 // Space
 .cui-space {
 	margin: $padding;
+	display: inline-block;
 	
 	&:empty {
 		margin: $padding/2;
@@ -4412,6 +4419,7 @@ $table-data-padding: 4px;
 
 .cui-small-space {
 	margin: $padding/2;
+	display: inline-block;
 	
 	&:empty {
 		margin: $padding/4;
@@ -4420,6 +4428,7 @@ $table-data-padding: 4px;
 
 .cui-large-space {
 	margin: $padding*2;
+	display: inline-block;
 	
 	&:empty {
 		margin: $padding;
