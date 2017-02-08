@@ -1500,7 +1500,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-empty-label {
 	color: $muted-color;
 	font-style: italic;
-	padding: $padding/2;
 	margin: 0;
 	cursor: default;
 	
@@ -1890,6 +1889,10 @@ a[role="button"].cui-button-appearance-link {
 		&.cui-checkbox {
 			min-width: 0;
 		}
+
+		&.cui-data-table {
+			min-width: 200px;
+		}
 	}
 
 	.cui-list-view {
@@ -2087,7 +2090,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-confirmation-dialog {
 	.cui-layer > .cui-layer-pane {
 		> .cui-vertical-layout-center {
-			margin: $padding/2;
 			max-width: 500px;
 		}
 	}
@@ -2097,7 +2099,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-confirmation-choice {
 	.cui-layer > .cui-layer-pane {
 		> .cui-vertical-layout-center {
-			margin: $padding/2;
 			max-width: 300px; // don't make this bigger, make the text shorter
 		}
 	}
@@ -3270,7 +3271,7 @@ $table-data-padding: 4px;
 		// margin: 0;	// UNCLEAR conflict with multi-input spacing
 	}
 
-	[data-max-chars] {
+	.cui-select [data-max-chars] {
 		width: auto;
 	}
 }
