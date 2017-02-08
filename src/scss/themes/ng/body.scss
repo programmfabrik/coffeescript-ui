@@ -1058,6 +1058,12 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	&:focus {
+		.cui-button-visual {
+			text-decoration: underline;
+		}
+	}
+
 	.cui-button-center {
 		padding: 0;
 		
