@@ -158,14 +158,10 @@ li > div {
 	&.cui-maximize-horizontal {
 		flex-direction: row;
 		overflow: auto;
-		// overflow: hidden; cuts off outline in date-time picker: year picker
 
 		> .cui-horizontal-layout-left {
 			position: relative;
 			overflow: auto;
-			// flex-shrink: 1; - too strong
-			// overflow: hidden; cuts off outline in date-time picker: year picker
-			// max-width: 45%; breaks CUI.confirm
 		}
 		> .cui-horizontal-layout-center {
 			position: relative;
@@ -186,11 +182,6 @@ li > div {
 
 	&:not(.cui-maximize-horizontal) {
 		flex-direction: row;
-		// align-self: flex-start; anyoing in toolbar where you want align stretch
-	}
-
-	> .cui-horizontal-layout-center {
-		// flex-direction: row; breaks collection manager detail
 	}
 }
 
@@ -206,14 +197,6 @@ li > div {
 		& + .cui-label {
 			padding-left: 0;
 		}
-
-		// &:first-child { makes no sense because this is not a vertical layout
-		// 	padding-top: $compensating-padding;
-		// }
-
-		// &:last-child {
-		// 	padding-bottom: $compensating-padding;
-		// }
 	}
 }
 
@@ -228,7 +211,6 @@ li > div {
 		flex: 1 1 auto;
 		min-height: 0;
 		overflow: auto;
-		// overflow: hidden; // cuts off password input outline
 
 		> .cui-vertical-layout-top,
 		> .cui-vertical-layout-bottom {
@@ -244,15 +226,6 @@ li > div {
 			overflow: auto;
 		}
 	}
-
-	&.cui-maximize-horizontal {
-		// overflow: hidden; // cuts off password input outline
-	}
-
-	// weird rule - breaks popover pools
-	// &:not(.cui-maximize-horizontal) {
-	// 	align-self: flex-start;
-	// }
 }
 
 .cui-vertical-layout-top,
