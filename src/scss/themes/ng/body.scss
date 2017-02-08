@@ -3900,7 +3900,6 @@ $table-data-padding: 4px;
 	
 	.cui-button {
 		width: 25px;
-		margin-top: 2px;
 	}
 }
 
@@ -3910,6 +3909,15 @@ $table-data-padding: 4px;
 	margin-right: 0;
 	@include margin-top(0.5);
 	position: relative;
+	
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	background: $foreground;
+	
+	&:focus,
+	&.cui-has-focus {
+		@include border-focus;
+	}
 	
 	&.cui-data-field-hidden {
 		display: none;
@@ -3921,15 +3929,13 @@ $table-data-padding: 4px;
 
 	.cui-input,
 	.cui-textarea {
-		padding-right: 20px;
+		border: none;
+		background: none;
+		
+		&:focus {
+			box-shadow: none;
+		}
 	}
-}
-
-.cui-data-field-multi-input-right {
-	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: 1; // put in front of focused input field
 }
 
 .cui-multi-input-tag-button {  
@@ -3937,7 +3943,7 @@ $table-data-padding: 4px;
 		@include button-reset;
 		color: hsl(0,0%,30%);
 		font-size: 10px;
-  	line-height: 20px;
+  	line-height: 22px;
   }
 }
 
