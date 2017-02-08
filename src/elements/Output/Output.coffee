@@ -23,6 +23,10 @@ class Output extends DataFieldInput
 				check: Function
 			multiline:
 				check: Boolean
+			allow_delete:
+				mandatory: true
+				default: false
+				check: Boolean
 
 	readOpts: ->
 		super()
@@ -62,6 +66,10 @@ class Output extends DataFieldInput
 		super()
 		if @getName()
 			ret = @getValue()
+			if not isEmpty(ret)
+				@__deleteBtn?.show()
+			else
+				@__deleteBtn?.hide()
 			if isContent(ret)
 				@replace(ret)
 			else
@@ -78,3 +86,11 @@ class Output extends DataFieldInput
 	render: ->
 		super()
 		@replace(@__textSpan)
+		if @_allow_delete and @hasData()
+			@__deleteBtn = new Button
+				icon: "remove"
+				appearance: "flat"
+				onClick: =>
+					@setValue(null, no_trigger: false)
+			@append(@__deleteBtn)
+		@

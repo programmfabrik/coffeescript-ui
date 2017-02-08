@@ -90,19 +90,19 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 		@headerRow = new ListViewHeaderRow()
 
-		if CUI.__ng__
-			for f, idx in @__fieldList
-				if f instanceof DataTable
+		for f, idx in @__fieldList
+			if f.getOpt("form")?.column == "maximize" or
+				f instanceof DataTable
 					maxis.push(idx)
 
-			if maxis.length == 0
-				maxis.push(0)
+		if maxis.length == 0
+			maxis.push(0)
 
 		for f, idx in @__fieldList
-			if f.getOpt("form")?.column
-				cols.push(f._form.column)
-			else if idxInArray(idx, maxis) > -1
+			if idxInArray(idx, maxis) > -1
 				cols.push("maximize")
+			else if f.getOpt("form")?.column
+				cols.push(f._form.column)
 			else if f.isResizable()
 				cols.push("auto")
 			else

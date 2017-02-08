@@ -6,69 +6,32 @@ class CUI.CSVData extends CUI.Element
 				check: (v) ->
 					CUI.isArray(v) and v.length > 0
 
-			header_rows:
-				mandatory: true
-				default: null
-				check: (v) ->
-					v >= 0 or v == null
-
-			column_name_prefix:
-				mandatory: true
-				default: "column "
-				check: String
-
 	readOpts: ->
 		super()
-		@column_names = []
 
 		@__max_column_count = 0
-		@__header_rows = undefined
 
 		if @_rows
 			@rows = @_rows
-			for row in @rows
-				col_count = row.length
-				if col_count > @__max_column_count
-					@__max_column_count = col_count
 		else
 			@rows = []
 
-		if @_header_rows >= 0
-			@readHeaderRows(@_header_rows)
+		@__evenOutRows()
 
 		return
 
-	readHeaderRows: (@__header_rows) ->
+	# makes sure, all rows have the same length
+	__evenOutRows: ->
+		@__max_column_count = 0
+		for row in @rows
+			col_count = row.length
+			if col_count > @__max_column_count
+				@__max_column_count = col_count
 
-		@column_names = [[]]
-		for col_i in [0...@__max_column_count] by 1
-			@column_names[0].push(@_column_name_prefix+(col_i+1))
-
-		for header_row_i in [0...@__header_rows] by 1
-			@column_names[header_row_i+1] = []
-			for col in @rows[header_row_i]
-				@column_names[header_row_i+1].push(col)
-
-		for row_i in [0...@rows.length] by 1
-			row = @rows[row_i]
-			row.columns = [{}]
-
-			# map to first line by "idx"
-			for col, col_i in row
-				row.columns[0][@column_names[0][col_i]] = col
-
-			for i in [col_i...@__max_column_count] by 1
-				row.columns[0][@column_names[0][col_i]] = null # add empty columns
-
-			if row_i < @__header_rows
-				continue
-
-			for header_row_i in [0...@__header_rows] by 1
-				row.columns[header_row_i+1] = {}
-				for col, col_i in row
-					col_name = @column_names[header_row_i+1][col_i]
-					if col_name
-						row.columns[header_row_i+1][col_name] = col
+		for row in @rows
+			if row.length < @__max_column_count
+				for idx in [row.length...@__max_column_count]
+					row[idx] = ""
 		return
 
 	getMaxColumnCount: ->
@@ -77,32 +40,14 @@ class CUI.CSVData extends CUI.Element
 	getRows: ->
 		@rows
 
-	getColumnNames: (header_row) ->
-		assert(@__header_rows >= 0, "CSVData.getColumnNames", "readHeaderRows needs to be called before calling this.", CSVData: @)
-		@column_names[header_row]
-
-	getRowsByHeader: (header_row = 0) ->
-		assert(@__header_rows >= 0, "CSVData.getRowsByHeader", "readHeaderRows needs to be called before calling this.", CSVData: @)
-
-		rows = []
-		for row, idx in @rows
-			if idx < @__header_rows
-				continue
-			rows.push(row.columns[header_row])
-		rows
-
 	getRow: (row_i) ->
-		@rows[row_i + (@__header_rows or 0)]
-
-	getRecord: (row_i, header_row) ->
-		@getRow(row_i).columns[header_row]
+		@rows[row_i]
 
 	getRowsCount: ->
-		@rows.length - (@__header_rows or 0)
-
+		@rows.length
 
 	debug: ->
-		console.debug "rows:", @rows, "column_names:", @column_names
+		console.debug "rows:", @rows
 
 	toText: (_opts) ->
 		opts = CUI.Element.readOpts _opts, "CSVData.toText",
@@ -114,11 +59,22 @@ class CUI.CSVData extends CUI.Element
 				mandatory: true
 				check: (v) =>
 					CUI.isString(v) and v.length > 0
+			always_quote:
+				mandatory: true
+				default: true
+				check: Boolean
+			equal_columns:
+				mandatory: true
+				default: true
+				check: Boolean
 			newline:
 				mandatory: true
 				default: String.fromCharCode(10)
 				check: (v) =>
 					CUI.isString(v) and v.length > 0
+
+		if opts.equal_columns
+			@__evenOutRows()
 
 		nl = String.fromCharCode(10)
 		cr = String.fromCharCode(13)
@@ -133,7 +89,9 @@ class CUI.CSVData extends CUI.Element
 
 				str = ""+col
 
-				if str.indexOf(opts.delimiter) > -1
+				if opts.always_quote
+					quote = true
+				else if str.indexOf(opts.delimiter) > -1
 					quote = true
 				else if str.indexOf(opts.quotechar) > -1
 					quote = true
@@ -155,29 +113,26 @@ class CUI.CSVData extends CUI.Element
 
 
 	# parse csv info array
-	@parse: (_opts={}) ->
+	parse: (_opts={}) ->
 		opts = CUI.Element.readOpts _opts, "CSVData.parse",
 			text:
 				mandatory: true
 				check: String
-			header_rows:
-				mandatory: true
-				default: 0
-				check: (v) ->
-					v >= 0
 			delimiter:
 				check: String
 			quotechar:
 				check: String
 
+		@rows = []
 		text = opts.text
-		rows = []
 		columns = []
 		column_idx = 0
 		column_chars = []
 		len = text.length
 		idx = 0
 		in_quotes = false
+
+		lines = 0
 
 		auto_quotechars = ['"',"'"]
 		auto_delimiters = [",",";","\t"]
@@ -205,7 +160,8 @@ class CUI.CSVData extends CUI.Element
 
 			end_row = =>
 				if columns.length > 0
-					rows.push(columns)
+					lines = lines + 1
+					@rows.push(columns)
 					columns = []
 
 				column_idx = 0
@@ -260,8 +216,8 @@ class CUI.CSVData extends CUI.Element
 						end_column()
 						end_row()
 
-						if rows.length%1000==0
-							dfr.notify(idx, rows)
+						if lines%1000==0
+							dfr.notify(row_count: lines, file_read_idx: idx, file_length: len)
 							CUI.setTimeout
 								ms: 10
 								call: do_work
@@ -283,17 +239,14 @@ class CUI.CSVData extends CUI.Element
 			if columns.length > 0
 				end_row()
 
-			csv_data = new CUI.CSVData
-				rows: rows
-				header_rows: opts.header_rows
-
-			dfr.resolve(csv_data)
+			@__evenOutRows()
+			dfr.resolve(row_count: lines, file_length: len)
 
 		CUI.setTimeout
 			ms: 0
 			call: do_work
 
-		dfr.done (csv_data) =>
-			csv_data.debug()
+		dfr.done =>
+			@debug()
 
 		dfr.promise()
