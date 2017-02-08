@@ -477,10 +477,11 @@ li > div {
 		border-bottom: 1px solid $border;
 	}
 	
-	.cui-horizontal-layout-left,
-	.cui-horizontal-layout-right {
+	> .cui-horizontal-layout-left,
+	> .cui-horizontal-layout-right {
 		flex-direction: row;
 		min-width: 0;
+		overflow: visible !important;
 	}
 
 	.cui-horizontal-layout-center {
@@ -2501,6 +2502,7 @@ a[role="button"].cui-button-appearance-link {
 		> .cui-horizontal-layout-center {
 			padding-right: 0;
 			margin-right: 0;
+			overflow: hidden;
 			
 			.cui-tab-header-button:last-child {
 				.cui-button-visual {
@@ -2872,6 +2874,7 @@ $table-data-padding: 4px;
 .cui-lv-tbody {
 	display: flex;
 	flex-direction: column;
+	max-width: 100%;
 }
 
 .cui-lv-tr-outer {
@@ -2926,14 +2929,13 @@ $table-data-padding: 4px;
 	}
 
 	.cui-drag-handle-row {
-		margin-top: 2px;
+		margin-top: 7px;
 	}
 
 	&.cui-lv-td {
 		width: $padding/2 + $table-data-padding*2+2;
 		padding-left: $table-data-padding+2;
 		padding-right: 0;
-		align-items: center;
 	}
 }
 
@@ -3371,7 +3373,6 @@ $table-data-padding: 4px;
 	}
 
 	.cui-list-view-row-move-handle-column {
-		align-items: center;
 		padding-top: 0;	
 		padding-bottom: 0;	
 	}
