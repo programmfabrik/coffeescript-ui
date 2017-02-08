@@ -464,6 +464,7 @@ li > div {
 	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
+	overflow: visible !important;
 
 	& + & {
 		padding-bottom: 1px;
@@ -491,6 +492,7 @@ li > div {
 	> div {
 		&.cui-horizontal-layout-center {
 			justify-content: center;
+			overflow: visible !important;
 		}
 
 		> .cui-maximize-horizontal {
@@ -499,6 +501,13 @@ li > div {
 			// we need to overwrite this
 			flex: 1 1 auto;
 			align-self: stretch;
+			overflow: visible;
+
+			> .cui-horizontal-layout-left,
+			> .cui-horizontal-layout-center,
+			> .cui-horizontal-layout-right {
+				overflow: visible;
+			}
 		}
 
 		> .cui-toolbar {
@@ -1059,6 +1068,10 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 400px !important; // overwrite data-field
 	min-width: 0;
 	display: inline-block;
+	
+	&.cui-data-field-disabled {
+		opacity: 1;
+	}
 
 	&--icon {
 		.cui-button-checkbox {
@@ -1552,6 +1565,14 @@ a[role="button"].cui-button-appearance-link {
 	.cui-label {
 		margin: 0 $small-gap;
 		align-self: center;
+		
+		&:first-child {
+			margin-left: 0;
+		}
+		
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 
 	.cui-label-content {
