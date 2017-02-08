@@ -121,3 +121,8 @@ class CUI.Table extends CUI.DOM
 			tr.appendChild(td)
 		@__table.appendChild(tr)
 		@
+
+	@keyValueRowsFromMap: (map) ->
+		for k, v of map
+			key: k
+			value: v

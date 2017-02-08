@@ -16,12 +16,12 @@ class CUI.CSVData extends CUI.Element
 		else
 			@rows = []
 
-		@__evenOutRows()
+		@giveAllRowsSameNumberOfColumns()
 
 		return
 
 	# makes sure, all rows have the same length
-	__evenOutRows: ->
+	giveAllRowsSameNumberOfColumns: ->
 		@__max_column_count = 0
 		for row in @rows
 			col_count = row.length
@@ -74,7 +74,7 @@ class CUI.CSVData extends CUI.Element
 					CUI.isString(v) and v.length > 0
 
 		if opts.equal_columns
-			@__evenOutRows()
+			@giveAllRowsSameNumberOfColumns()
 
 		nl = String.fromCharCode(10)
 		cr = String.fromCharCode(13)
@@ -239,7 +239,7 @@ class CUI.CSVData extends CUI.Element
 			if columns.length > 0
 				end_row()
 
-			@__evenOutRows()
+			@giveAllRowsSameNumberOfColumns()
 			dfr.resolve(row_count: lines, file_length: len)
 
 		CUI.setTimeout
