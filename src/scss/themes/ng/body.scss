@@ -3269,6 +3269,10 @@ $table-data-padding: 4px;
 	.cui-data-field {
 		// margin: 0;	// UNCLEAR conflict with multi-input spacing
 	}
+
+	[data-max-chars] {
+		width: auto;
+	}
 }
 
 .cui-form-table-has-not-left-column {
