@@ -30,6 +30,7 @@ class CUI.Form extends CUI.DataField
 				check: ["normal","separators"]
 			# passed to underlying vertical layout
 			maximize:
+				default: false
 				check: Boolean
 			maximize_horizontal:
 				check: Boolean
