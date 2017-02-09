@@ -2495,7 +2495,7 @@ a[role="button"].cui-button-appearance-link {
 		> .cui-horizontal-layout-center {
 			padding-right: 0;
 			margin-right: 0;
-			overflow: hidden;
+			overflow: hidden !important; // overwrite toolbar > center overflow visible
 			
 			.cui-tab-header-button:last-child {
 				.cui-button-visual {
