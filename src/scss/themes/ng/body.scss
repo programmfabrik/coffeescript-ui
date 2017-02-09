@@ -3619,7 +3619,8 @@ $table-data-padding: 4px;
 	color: $secondary-color;
 }
 
-.cui-drag-drop-select-draggable {
+.cui-drag-drop-select-draggable,
+.cui-drag-drop-select-sortable {
 	cursor: -webkit-grab;
 	cursor:         grab;
 }
@@ -3629,10 +3630,7 @@ $table-data-padding: 4px;
 }
 
 .cui-drag-drop-select-sortable,
-.drag-drop-select-helper {
-	cursor: -webkit-grabbing;
-	cursor: 				grabbing;
-	
+.drag-drop-select-helper {	
 	.cui-data-field {
 		max-width: none;
 	}
