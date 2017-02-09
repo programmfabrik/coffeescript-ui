@@ -23,6 +23,8 @@ class Output extends DataFieldInput
 				check: Function
 			multiline:
 				check: Boolean
+				default: true
+				mandatory: true
 			allow_delete:
 				mandatory: true
 				default: false

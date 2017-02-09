@@ -118,8 +118,9 @@ class CUI.Table extends CUI.DOM
 		for col in @__columns
 			td = $td("cui-table-td"+col.__class)
 			value = row[col.name]
-			if not isString(value)
-				CUI.DOM.append(td, value+"")
+			if isString(value)
+				CUI.DOM.addClass(td, "cui-td--text-content")
+				td.textContent = value
 			else
 				CUI.DOM.append(td, value)
 			tr.appendChild(td)

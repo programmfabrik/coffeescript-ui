@@ -720,6 +720,13 @@ class CUI.DOM extends CUI.Element
 		if CUI.DOM.isInDOM(node)
 			return CUI.resolvedPromise(true)
 
+
+		# we cannot really use observer here. the problem is
+		# that we would need to observe the parent to detect dom insert
+		# of "node" as a new child.
+		#
+
+
 		#add animation style
 		for prefix in ["-webkit-", "-moz-", "-ms-", "-o-", ""]
 			# nodeInserted needs to be defined in CSS!
@@ -734,6 +741,7 @@ class CUI.DOM extends CUI.Element
 			type: "animationstart"
 			maxWait: -1
 		.done =>
+
 			if DOM.isInDOM(node)
 				dfr.resolve()
 				return
@@ -1573,4 +1581,3 @@ class CUI.DOM extends CUI.Element
 
 
 DOM = CUI.DOM
-
