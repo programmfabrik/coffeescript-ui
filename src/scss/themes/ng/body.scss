@@ -975,6 +975,12 @@ i.cui-spin-stepped {
 
   .cui-icon-svg {
   	transform: scale(0.75);
+  	
+  	&.svg-close {
+  		transform: none;
+  		width: 9px;
+  		height: 9px;
+  	}
   }
 }
 
