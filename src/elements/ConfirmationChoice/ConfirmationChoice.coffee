@@ -80,9 +80,9 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 							if @__choice.cancel
 								@doCancel(ev, true) # force this in case opts.cancel is not set
 								# go out of the way
-								false
-							else
-								@_onChoice?.call(@, ev, @__choice, @, btn)
+								return false
+
+							@_onChoice?.call(@, ev, @__choice, @, btn)
 					).done (ret1, ret2) =>
 						# CUI.debug "chained call done", ret1, ret2, ev, @__choice
 						if ev.isImmediatePropagationStopped() or

@@ -87,8 +87,8 @@ class CUI.Modal extends CUI.LayerPane
 		else
 			super(ev)
 
-	doCancel: (ev) ->
-		if not @_cancel
+	doCancel: (ev, force_callback = false) ->
+		if not @_cancel and not force_callback
 			super(ev)
 		else
 			ret = @_onCancel?(ev, @)
