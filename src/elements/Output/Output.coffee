@@ -89,6 +89,7 @@ class Output extends DataFieldInput
 		super()
 		@replace(@__textSpan)
 		if @_allow_delete and @hasData()
+			@addClass("cui-output--deletable")
 			@__deleteBtn = new Button
 				icon: "remove"
 				appearance: "flat"

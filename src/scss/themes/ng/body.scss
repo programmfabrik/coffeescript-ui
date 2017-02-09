@@ -917,10 +917,7 @@ i.cui-spin-stepped {
   }
 }
 
-.cui-button-select {
-	width: 100%;
-	align-items: stretch;
-	
+.cui-button-select {	
 	.cui-button-visual {
 		padding: 0 4px 0 8px;
 	}
@@ -3207,11 +3204,24 @@ $table-data-padding: 4px;
 // Form
 .cui-form {
 	margin: $padding;
-	
-	&--justify-buttons {
-		.cui-button {
+
+	&.cui-maximize-horizontal > .cui-layout-cell > .cui-form-table {
+		.cui-form-key {
+			label {
+				word-break: normal;
+  			white-space: nowrap;
+			}
+		}
+
+		.cui-form-value {
 			width: 100%;
-			align-items: stretch;
+			position: relative;
+			
+			> .cui-data-field {
+				position: absolute;
+				left: 0;
+				right: 0;
+			}
 		}
 	}
 }
@@ -3336,6 +3346,7 @@ $table-data-padding: 4px;
 	label {
 		display: inline-block;
 		margin: 4px 0;
+		word-break: break-word;
 	}
 }
 
@@ -3346,6 +3357,10 @@ $table-data-padding: 4px;
 	
 	.cui-checkbox {
 		padding-top: 1px; // nudge down a bit to align with label	
+	}
+
+	> .cui-data-field {
+		min-width: 0;
 	}
 }
 
@@ -3416,19 +3431,37 @@ $table-data-padding: 4px;
   flex-direction: column;
 }
 
+.cui-data-field-proxy	> .cui-button-button,
+.cui-data-field-input	> .cui-button-select {
+	width: 100%;
+	align-items: stretch;
+}
+
 .cui-data-field-output-label {
-	max-width: 400px;
 	padding: 3px 0;
-	line-height: 18px;
 	
-	.cui-label-content {
-		white-space: normal;
-		word-break: break-word;
+	&.cui-label-multiline {
+		max-width: 400px;
 	}
 }
 
-.cui-output-empty {
-	color: $muted-color;
+.cui-output {
+	&-empty {
+		color: $muted-color;
+	}
+
+	&--deletable {
+		display: flex;
+		
+		.cui-label {
+			flex-shrink: 1;
+			min-width: 0;
+		}
+
+		.cui-button {
+			margin-left: $padding/2;
+		}
+	}
 }
 
 .cui-data-field-hidden {
