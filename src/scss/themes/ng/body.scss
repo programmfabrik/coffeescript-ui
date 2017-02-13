@@ -3832,12 +3832,18 @@ $table-data-padding: 4px;
 		text-align: right;
 		cursor: default;
 		justify-content: center;
-		padding-right: 7px;
+		padding: 5px 7px;
 		line-height: 18px;
 
 		&.cui-date-time-day {
 			cursor: pointer;
 		}
+	}
+
+	.cui-td {
+		width: calc(100% / 8 - 4px); // 8 columns
+		padding: 3px 5px;
+		margin: 2px;
 	}
 }
 
@@ -3909,6 +3915,7 @@ $table-data-padding: 4px;
 					box-sizing: content-box;
 					min-width: 0;
 					text-align: center;
+					border-radius: 0;
 				}
 			}
 		}
