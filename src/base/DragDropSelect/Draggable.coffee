@@ -303,10 +303,15 @@ class CUI.Draggable extends CUI.DragDropSelect
 			if noClickKill
 				return
 
-			parents_now = CUI.DOM.parents(start_target)
-			for p, idx in start_target_parents
-				if parents_now[idx] != p
-					return
+			has_same_parents = =>
+				parents_now = CUI.DOM.parents(start_target)
+				for p, idx in start_target_parents
+					if parents_now[idx] != p
+						return false
+				return true
+
+			if not has_same_parents or not CUI.DOM.isInDOM(ev.getTarget())
+				return
 
 			Events.listen
 				type: "click"
@@ -314,7 +319,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				only_once: true
 				node: window
 				call: (ev) ->
-					console.error "Killing click after drag"
+					console.error "Killing click after drag", ev.getTarget()
 					return ev.stop()
 
 			return
