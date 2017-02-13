@@ -71,6 +71,7 @@ textarea {
 	background: $foreground;
 	font-family: inherit;
 	padding: 2px 3px;
+	margin: 0;
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	resize: vertical;
@@ -793,12 +794,12 @@ i.cui-spin-stepped {
 	align-items: center;
 	justify-content: center;
 	max-width: 100%;
+	flex-grow: 1;
 }
 
 .cui-button-button,
 .cui-button-select {
 	flex: 0 0 auto;
-	flex-direction: column;
 	align-self: flex-start;
 	align-items: center;
 	justify-content: center;
@@ -1239,7 +1240,6 @@ a[role="button"].cui-button-appearance-link {
 			line-height: 22px;
 			justify-content: flex-start;
 			padding: 6px $padding;
-			align-items: flex-start;
 		}
 
 		&:active {
@@ -2251,6 +2251,7 @@ a[role="button"].cui-button-appearance-link {
 	  
 	  .cui-button-visual {
 	  	justify-content: flex-start;
+	  	flex-grow: 1;
 		  padding: 0 $padding;
 			border: none;
 			border-radius: 0;
@@ -2509,13 +2510,15 @@ a[role="button"].cui-button-appearance-link {
 	margin-left: 0 !important;
 	// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
 	flex: 1 1 auto;
-	display: flex;
-	flex-direction: column;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	
 	&.cui-tab-hidden {
 		display: none;
+	}
+
+	> .cui-empty-label:only-child {
+		margin: $padding 0;
 	}
 }
 
@@ -3428,7 +3431,6 @@ $table-data-padding: 4px;
 .cui-data-field-proxy	> .cui-button-button,
 .cui-data-field-input	> .cui-button-select {
 	width: 100%;
-	align-items: stretch;
 }
 
 .cui-data-field-output-label {
