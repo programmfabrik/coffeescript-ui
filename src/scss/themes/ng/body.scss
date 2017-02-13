@@ -2608,6 +2608,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-tab-header-button-overflow {
 		align-self: center;
 		padding-right: $padding;
+		padding-left: 0;
 		position: relative;
 		z-index: 1; // to overlap active buttons
 		
