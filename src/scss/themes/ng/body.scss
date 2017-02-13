@@ -67,6 +67,7 @@ textarea {
 	font-size: 12px;
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
 	background: $foreground;
 	font-family: inherit;
 	padding: 2px 3px;
@@ -3661,8 +3662,8 @@ $table-data-padding: 4px;
 	}
 
 	.cui-input {
-		border-top-left-radius: $button-radius;
-		border-bottom-left-radius: $button-radius;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 	}
 }
 
@@ -3949,6 +3950,7 @@ $table-data-padding: 4px;
 	
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
 	background: $foreground;
 	
 	&:focus,
@@ -3968,6 +3970,7 @@ $table-data-padding: 4px;
 	.cui-textarea {
 		border: none;
 		background: none;
+		border-radius: 0;
 		
 		&:focus {
 			box-shadow: none;
