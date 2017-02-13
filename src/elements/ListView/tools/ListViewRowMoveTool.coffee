@@ -63,6 +63,9 @@ class ListViewRowMoveTool extends ListViewHoverTool
 
 		source_node = @lV.getListViewRow(@info.cell.row_i)
 		target_node = @lV.getListViewRow(@target.row_i)
+
+		globalDrag.noClickKill = true
+
 		if source_node.moveRow
 			source_node.moveRow(@lV, target_node, @target.after)
 		else
