@@ -2487,6 +2487,8 @@ a[role="button"].cui-button-appearance-link {
 			overflow: hidden !important; // overwrite toolbar > center overflow visible
 			
 			.cui-tab-header-button:last-child {
+				padding-right: 0;
+				
 				.cui-button-visual {
 					border-top-right-radius: 0;
 					border-bottom-right-radius: 0;
