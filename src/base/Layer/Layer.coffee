@@ -867,29 +867,11 @@ class CUI.Layer extends CUI.DOM
 		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-placement", placement)
 		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-fill-space", @_fill_space)
 
-		if CUI.__ng__ and placement == "c" and not @__backdrop_crop
-			# in "ng" we position this by pure CSS
-			return @
+		if CUI.__ng__ and not CUI.browser.ie
 
-		# console.debug "viewport", vp, left, right, top, bottom
-
-		if CUI.__ng__
-
-			# switch vp.align_horizontal
-			# 	when "left"
-			# 		pos_left = vp.layer_pos.left
-			# 	when "right"
-			# 		pos_right = dim_window.width - (vp.layer_pos.left + vp.layer_pos.width)
-			# 	when "center"
-			# 		pos_left = vp.layer_pos.left
-
-			# switch vp.align_vertical
-			# 	when "top"
-			# 		pos_top = vp.top
-			# 	when "bottom"
-			# 		pos_bottom = dim_window.height - (vp.layer_pos.top + vp.layer_pos.height)
-			# 	when "center"
-			# 		pos_top = vp.layer_pos.top
+			if placement == "c" and not @__backdrop_crop
+				# in "ng" we position this by pure CSS
+				return @
 
 			# set layer
 			CUI.DOM.setStyle @__layer.DOM,
