@@ -1047,7 +1047,6 @@ a[role="button"].cui-button-appearance-link {
 
 // Checkbox
 .cui-checkbox {
-	max-width: 400px !important; // overwrite data-field
 	min-width: 0;
 	display: inline-block;
 	
@@ -1913,22 +1912,6 @@ a[role="button"].cui-button-appearance-link {
 	.cui-buttonbar {
 		.cui-data-field-input {
 			min-width: 0;
-		}
-	}
-}
-
-.cui-browser-ie:not(.cui-browser-edge) {
-	.cui-layer {
-		> .cui-layer-pane {
-			> .cui-vertical-layout-center {
-				flex-basis: 250px;
-				
-				> .cui-maximize-vertical.cui-vertical-layout {
-					> .cui-vertical-layout-center {
-						flex-basis: auto;
-					}
-				}
-			}
 		}
 	}
 }
@@ -4158,6 +4141,7 @@ $table-data-padding: 4px;
 
 .cui-block {
 	border-bottom: 1px solid hsl(180,9%,93%);
+	flex-shrink: 0;
 	
 	&:last-child {
 		border-bottom-width: 0;
