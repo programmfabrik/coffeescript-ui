@@ -3197,6 +3197,7 @@ $table-data-padding: 4px;
 // Form
 .cui-form {
 	margin: $padding;
+	overflow: initial;
 
 	&.cui-maximize-horizontal > .cui-layout-cell > .cui-form-table {
 		.cui-form-key {
