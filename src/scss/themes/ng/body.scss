@@ -3340,7 +3340,8 @@ $table-data-padding: 4px;
 	label {
 		display: inline-block;
 		margin: 4px 0;
-		word-break: break-all;
+		// word-break: break-all; CONFLICT: creates crossword puzzles in IE11
+		word-wrap: break-word;
 		word-break: break-word;
 	}
 }
