@@ -349,7 +349,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 			call: (ev) =>
 				# CUI.debug "mouseup/keyup: ", ev.getType()
 				# CUI.debug "draggable", ev.type
-				#
+				if not globalDrag
+					return
+
 				if not globalDrag.dragStarted
 					@__cleanup()
 					return
