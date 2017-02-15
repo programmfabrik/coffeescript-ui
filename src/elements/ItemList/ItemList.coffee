@@ -98,12 +98,8 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	__initActiveIdx: ->
 
-		active_idx = @_active_item_idx
-
 		if isUndef(active_idx)
 			items = @__getItems()
-
-			active_idx = null
 
 			for item, idx in items
 				if not item
@@ -113,6 +109,12 @@ class CUI.ItemList extends CUI.VerticalLayout
 				if item.active
 					active_idx = idx
 					break
+
+				# we only get here, if any
+				# of out items has an
+				# "active" property
+				if isUndef(active_idx)
+			        active_idx = null
 
 		if not isUndef(active_idx)
 			@__active_idx = active_idx
