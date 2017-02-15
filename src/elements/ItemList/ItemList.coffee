@@ -98,15 +98,12 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	__initActiveIdx: ->
 
-		if not isUndef(@__active_idx)
-			active_idx = @__active_idx
-		else
-			active_idx = @_active_item_idx
+		active_idx = @_active_item_idx
 
 		if isUndef(active_idx)
 			items = @__getItems()
-			if isPromise(items)
-				active_idx = null
+
+			active_idx = null
 
 			for item, idx in items
 				if not item
@@ -116,8 +113,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 				if item.active
 					active_idx = idx
 					break
-				if isUndef(active_idx)
-					active_idx = null
 
 		if not isUndef(active_idx)
 			@__active_idx = active_idx
@@ -235,7 +230,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						if item.hasOwnProperty(k) and not opts.hasOwnProperty(k)
 							opts[k] = item[k]
 
-					if @__radio
+					if @__radio and not CUI.isFunction(@_items)
 						if @__active_idx == idx
 							opts.active = true
 
