@@ -101,20 +101,23 @@ class CUI.ItemList extends CUI.VerticalLayout
 		if isUndef(active_idx)
 			items = @__getItems()
 
-			for item, idx in items
-				if not item
-					continue
-				if isUndef(item.active)
-					continue
-				if item.active
-					active_idx = idx
-					break
+			if isPromise(items)
+				active_idx = null
+			else
+				for item, idx in items
+					if not item
+						continue
+					if isUndef(item.active)
+						continue
+					if item.active
+						active_idx = idx
+						break
 
-				# we only get here, if any
-				# of out items has an
-				# "active" property
-				if isUndef(active_idx)
-			        active_idx = null
+					# we only get here, if any
+					# of out items has an
+					# "active" property
+					if isUndef(active_idx)
+				        active_idx = null
 
 		if not isUndef(active_idx)
 			@__active_idx = active_idx
