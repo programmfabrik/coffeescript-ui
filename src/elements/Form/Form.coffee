@@ -573,15 +573,30 @@ class CUI.Form extends CUI.DataField
 				return
 
 			field = fields[field_idx]
+			hint_div = null
 
-			if field._form?.right
-				hint_div = CUI.DOM.element("DIV", class: "cui-form-hint")
+			if field._form and (not isNull(field._form.hint) or field._form.right)
 
-				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", field, "Field#", field_idx)
+				add_hint_div = =>
+					if hint_div
+						return
+					hint_div = CUI.DOM.element("DIV", class: "cui-form-hint", "data-for-field": field.getUniqueId())
 
-				append(get_append(field._form?.right), hint_div)
-			else
-				hint_div = null
+				if not isNull(field._form.hint)
+					add_hint_div()
+					if isString(field._form.hint)
+						hint_div.appendChild(new Label(class: "cui-form-hint-label", text: field._form.hint, multiline: true, markdown: true).DOM)
+					else
+						DUI.DOM.append(hint_div, field._form.hint)
+
+				if field._form.right
+					add_hint_div()
+
+					console.error("Form.renderTable: form.right is deprecated. Use 'hint' instead. Form:", @, "Field:", field, "Field#", field_idx)
+					# append deprecated stuff to the hint div
+					# you should use ".hint" instead
+					append(get_append(form._form.right), hint_div)
+
 
 			if field instanceof Form and field.renderAsBlock()
 				level = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))+1
@@ -658,7 +673,7 @@ class CUI.Form extends CUI.DataField
 				append(table)
 
 			if table_has_left
-				tr = CUI.DOM.element("DIV", class: "cui-form-tr")
+				tr = CUI.DOM.element("DIV", class: "cui-form-tr", "data-for-field": field.getUniqueId())
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
 				append(get_label(field), td)
@@ -674,7 +689,7 @@ class CUI.Form extends CUI.DataField
 
 				table.appendChild(tr)
 			else
-				row = CUI.DOM.element("DIV", class: "cui-form-row")
+				row = CUI.DOM.element("DIV", class: "cui-form-row", "data-for-field": field.getUniqueId())
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
 				append(hint_div, row)
@@ -758,6 +773,20 @@ class CUI.Form extends CUI.DataField
 	getFieldByIdx: (idx) ->
 		assert(isInteger(idx) and idx >= 0, "#{@__cls}.getFieldByIdx", "idx must be Integer.", idx: idx)
 		@getFields("getFieldByIdx")[idx]
+
+	updateHint: (field_name, hint) ->
+		field = @getFieldsByName(field_name)[0]
+		if not field
+			console.error("Form.updateHint:", field_name, "not found.")
+			return
+
+		els = CUI.DOM.matchSelector(@getLayout().DOM, ".cui-form-hint[data-for-field='"+field.getUniqueId()+"'] > .cui-form-hint-label")
+		if els.length != 1
+			console.error("Form.updateHint:", field_name, "not found in DOM.")
+			return
+
+		CUI.DOM.data(els[0]).element.setText(hint)
+		@
 
 	getFieldsByName: (name, found_fields = []) ->
 		assert(isString(name), "#{@__cls}.getFieldsByName", "name must be String.", name: name)
