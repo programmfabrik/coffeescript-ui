@@ -42,7 +42,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		@removeOpt("pane")
 
 	setPane: ->
-		super(padded: true)
+		super(padded: true, force_header: true, force_footer: true)
 
 	readOpts: ->
 		super()

@@ -80,6 +80,9 @@ class DemoConsole extends CUI.SimplePane
 
 		@append(@__console, "content")
 
+	forceHeader: ->
+		true
+
 	__getPaneFlexHandle: ->
 		DOM.data(@DOM.closest("[flex-handled-pane]")[0], "flexHandle")
 

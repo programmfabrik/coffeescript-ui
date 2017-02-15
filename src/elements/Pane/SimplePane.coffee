@@ -46,11 +46,18 @@ class CUI.SimplePane extends CUI.Pane
 			footer_left: {}
 			footer_right: {}
 			content: {}
+			force_header:
+				mandatory: true
+				check: Boolean
+				default: false
+			force_footer:
+				mandatory: true
+				check: Boolean
+				default: false
 
 		@removeOpt("top")
 		@removeOpt("bottom")
 		@removeOpt("center")
-
 		@
 
 	readOpts: ->
@@ -61,22 +68,33 @@ class CUI.SimplePane extends CUI.Pane
 		if @_title
 			assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
 
-		@__pane_header = new PaneHeader()
-		@__pane_footer = new PaneFooter()
+		if @forceHeader() or not (isUndef(@_header_left) and isUndef(@_header_center) and isUndef(@_header_right))
+			@__pane_header = new PaneHeader()
 
-		@_top =
-			content: @__pane_header
+			@_top =
+				content: @__pane_header
 
-		@_bottom =
-			content: @__pane_footer
+		if @forceFooter() or not (isUndef(@_footer_left) and isUndef(@_footer_right))
+			@__pane_footer = new PaneFooter()
+
+			@_bottom =
+				content: @__pane_footer
 
 		@_center =
 			content: @_content
 		@
 
+	forceHeader: ->
+		@_force_header
+
+	forceFooter: ->
+		@_force_footer
+
 	destroy: ->
-		@__pane_header.destroy()
-		@__pane_footer.destroy()
+		@__pane_header?.destroy()
+		@__pane_header = null
+		@__pane_footer?.destroy()
+		@__pane_footer = null
 		super()
 
 	getPaneAndKey: (key) ->

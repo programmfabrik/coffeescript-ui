@@ -941,7 +941,7 @@ class CUI.Layer extends CUI.DOM
 		@
 
 	showTimeout: (ms=@_show_ms, ev) ->
-		# console.error "Layer.showTimeout ", @getUniqueId()
+		# console.error "Layer.showTimeout ", @getUniqueId(), @__element, CUI.DOM.isInDOM(@__element), @isDestroyed()
 
 		@clearTimeout()
 		dfr = new CUI.Deferred()

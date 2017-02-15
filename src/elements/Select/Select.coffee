@@ -235,7 +235,7 @@ class Select extends Checkbox
 				if @getValue() == null and not isEmpty(@_empty_text)
 					txt = @_empty_text
 				else
-					# CUI.debug "Select, option not found:", @getValue(), @getData(), @getName(), "options:", @__options
+					# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
 					txt = @_not_found_text+":"+@getValue()
 
 				@__checkbox.menuSetActiveIdx(null)

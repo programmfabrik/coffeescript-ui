@@ -12,6 +12,8 @@ class CUI.Tabs extends CUI.SimplePane
 		# @removeOpt("header_right")
 		@removeOpt("header_center")
 		@removeOpt("content")
+		@removeOpt("force_footer")
+		@removeOpt("force_header")
 
 		@addOpts
 			tabs:
@@ -28,6 +30,12 @@ class CUI.Tabs extends CUI.SimplePane
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
+
+	forceHeader: ->
+		true
+
+	forceFooter: ->
+		true
 
 	__checkOverflowButton: ->
 		if not @__maximize_horizontal
