@@ -101,6 +101,74 @@ class CUI.ListViewTree extends CUI.ListView
 		if do_open
 			@root.open()
 
+		prep_target = (ev, info, handle) =>
+			if ev.getType() == "click"
+				CUI.DOM.setStyleOne(handle, "opacity", 0.5)
+				return true
+			if info.mousemoveEvent._done
+				# CUI.debug "event is done, not doing anything"
+				return false
+			if info.mousemoveEvent._counter % 2 == 0
+				CUI.DOM.setStyleOne(handle, "opacity", "")
+			else
+				CUI.DOM.setStyleOne(handle, "opacity", "0.5")
+			# CUI.debug "ev.mousemoveEvent._counter #{ev.mousemoveEvent._counter} #{ev.mousemoveEvent._done}"
+			info.mousemoveEvent._counter > 4
+
+		run_trigger = (ev, info, action, node) =>
+			if ev.ctrlKey() and ev.getType() == "click"
+				action_on_node(ev, info, action+"Recursively", node)
+			else
+				action_on_node(ev, info, action, node)
+			return
+
+		action_on_node = (ev, info, action, node) =>
+			console.time("#{@__uniqueId}: action on node #{action}")
+			info.mousemoveEvent?._done = true
+
+			hide_spinner = null
+			spinner_timeout = CUI.setTimeout
+				ms: 500
+				call: =>
+					node.showSpinner()
+					spinner_timeout = null
+					hide_spinner = true
+
+			@stopLayout()
+
+			ret = node[action]()
+			ret.done =>
+				switch action
+					when "open"
+						@_onOpen?(ev, node: node)
+					when "close"
+						@_onClose?(ev, node: node)
+
+			ret.always =>
+				if spinner_timeout
+					CUI.clearTimeout(spinner_timeout)
+
+				if hide_spinner
+					node.hideSpinner()
+
+				@startLayout()
+
+			return ret
+			# console.timeEnd("#{@__uniqueId}: action on node #{action}")
+
+
+		action_on_handle = (ev, info, row, node) =>
+			handle = CUI.DOM.matchSelector(row, ".cui-tree-node-handle")[0]
+			if handle.hasClass("cui-tree-node-is-closed") # and not $target.hasClass("no-children")
+				if prep_target(ev, info, handle)
+					run_trigger(ev, info, "open", node)
+					return
+			else if handle.hasClass("cui-tree-node-is-open")
+				if prep_target(ev, info, handle)
+					run_trigger(ev, info, "close", node)
+					return
+			return
+
 		# this uses the capture phase, don't interfer with the
 		# click, if we have nothing to do
 		Events.listen
@@ -112,83 +180,22 @@ class CUI.ListViewTree extends CUI.ListView
 				# console.warn "ListViewTree", ev.getType(), @DOM
 				# dragover fires multiple times, so we need to prevent
 				# this node from open multiple times
-				$target = $(ev.getTarget())
+				target = ev.getTarget()
 
-
-				_row = $target.closest(".cui-list-view-grid-row")
-				# _row = $target.closest(".#{@__lvClass}-row")
-				_handle = $target.closest(".cui-tree-node-handle")
-				node = DOM.data(_row, "listViewRow")
+				row = CUI.DOM.closest(target, ".cui-list-view-grid-row")
+				node = DOM.data(row, "listViewRow")
 
 				# console.error "tree event", ev, _row, _handle, node
 
 				if not node or node.isLoading?()
 					return
 
-				prep_target = =>
-					if ev.getType() == "click"
-						_handle.css(opacity: 0.5)
-						return true
-					if info.mousemoveEvent._done
-						# CUI.debug "event is done, not doing anything"
-						return false
-					if info.mousemoveEvent._counter % 2 == 0
-						_handle.css(opacity: "")
-					else
-						_handle.css(opacity: 0.5)
-					# CUI.debug "ev.mousemoveEvent._counter #{ev.mousemoveEvent._counter} #{ev.mousemoveEvent._done}"
-					info.mousemoveEvent._counter > 4
-
-				run_trigger = (action) =>
-					if ev.ctrlKey() and ev.getType() == "click"
-						action_on_node(action+"Recursively", node)
-					else
-						action_on_node(action, node)
-					return
-
-				action_on_node = (action, _node) =>
-					console.time("#{@__uniqueId}: action on node #{action}")
-					info.mousemoveEvent?._done = true
+				if CUI.DOM.closest(target, ".cui-tree-node-handle")
 					ev.stopPropagation()
+					action_on_handle(ev, info, row, node)
 
-					hide_spinner = null
-					spinner_timeout = CUI.setTimeout
-						ms: 500
-						call: =>
-							node.showSpinner()
-							spinner_timeout = null
-							hide_spinner = true
+				return
 
-					@stopLayout()
-
-					ret = _node[action]()
-					ret.done =>
-						switch action
-							when "open"
-								@_onOpen?(ev, node: node)
-							when "close"
-								@_onClose?(ev, node: node)
-
-					ret.always =>
-						if spinner_timeout
-							CUI.clearTimeout(spinner_timeout)
-
-						if hide_spinner
-							node.hideSpinner()
-
-						@startLayout()
-
-					return ret
-					# console.timeEnd("#{@__uniqueId}: action on node #{action}")
-
-				if _handle.hasClass("cui-tree-node-is-closed") # and not $target.hasClass("no-children")
-					if prep_target()
-						run_trigger("open")
-						return
-				else if _handle.hasClass("cui-tree-node-is-open")
-					if prep_target()
-						run_trigger("close")
-						return
 
 		# this is the bubble phase, note that the click
 		# is stopped here by "select" and "deselect" below
@@ -199,10 +206,9 @@ class CUI.ListViewTree extends CUI.ListView
 				if ev.hasModifierKey(true)
 					return
 
-				$target = $(ev.getTarget())
-				_row = $target.closest(".cui-list-view-grid-row")
-				# _row = $target.closest(".#{@__lvClass}-row")
-				node = DOM.data(_row, "listViewRow")
+				target = ev.getTarget()
+				row = CUI.DOM.closest(target, ".cui-list-view-grid-row")
+				node = DOM.data(row, "listViewRow")
 
 				if not node or node.isLoading?()
 					return
@@ -210,11 +216,21 @@ class CUI.ListViewTree extends CUI.ListView
 				# FIXME: This code needs to go away and use the select/deselect mechanism
 				# of ListView
 				#
-
 				if node.isSelected?()
-					node.deselect?(ev)
+					action = "deselect"
 				else
-					node.select?(ev)
+					action = "select"
+
+				ret = node[action]?(ev)
+
+				# console.error "node action", action, ret
+
+				if isPromise(ret)
+					ret.fail =>
+						# if the node did not select, we try the handle
+						ev.stopPropagation()
+						action_on_handle(ev, info, row, node)
+
 				return
 
 		if @_no_hierarchy
