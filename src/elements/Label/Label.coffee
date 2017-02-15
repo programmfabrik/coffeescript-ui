@@ -20,16 +20,23 @@ class CUI.Label extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
+		if @_rotate_90
+			tname = "label-rotate-90"
+		else if @_icon or not CUI.__ng__
+			tname = "label"
+		else
+			tname = "label-no-icon"
+
 		@__label = new Template
-			name: if @_rotate_90 then "label-rotate-90" else "label"
+			name: tname
 			map_prefix: "cui-label"
 			map:
-				icon: true
+				icon: if tname == "label-no-icon" then undefined else true
 				content: true
 
 		@registerTemplate(@__label)
 
-		if @_icon
+		if @_icon and @_icon != true
 			@setIcon(@_icon)
 
 		if not isEmpty(@_text)
@@ -75,7 +82,7 @@ class CUI.Label extends CUI.DOM
 					isContent(v) or isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or isString(v) or v == true
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:

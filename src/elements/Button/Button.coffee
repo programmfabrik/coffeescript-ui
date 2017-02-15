@@ -47,6 +47,10 @@ class CUI.Button extends CUI.DOM
 			if @_tooltip.text or @_tooltip.content
 				@__tooltipOpts = @_tooltip
 
+		@__has_left = true
+		@__has_right = true
+		@__has_center = true
+
 		tname = @getTemplateName()
 		# getTemplateName, also sets has_left / has_right
 
@@ -54,7 +58,7 @@ class CUI.Button extends CUI.DOM
 			name: tname
 			map:
 				left: if @__has_left then ".cui-button-left" else undefined
-				center: ".cui-button-center"
+				center: if @__has_center then ".cui-button-center" else undefined
 				visual: if CUI.__ng__ then ".cui-button-visual" else undefined
 				right: if @__has_right then ".cui-button-right" else undefined
 
@@ -317,6 +321,7 @@ class CUI.Button extends CUI.DOM
 				type: "mouseenter"
 				node: @DOM
 				call: (ev) =>
+
 					if window.globalDrag
 						return
 
@@ -635,10 +640,21 @@ class CUI.Button extends CUI.DOM
 		else
 			@__has_right = false
 
+		if @__has_left and
+			isUndef(@_text) and
+			isUndef(@_center) and
+			isUndef(@_text_active) and
+			isUndef(@_text_inactive) and
+			CUI.__ng__
+				@__has_center = false
+
 		if @__has_left and @__has_right
 			return "button"
 		else if @__has_left
-			return "button-left-center"
+			if @__has_center
+				return "button-left-center"
+			else
+				return "button-left"
 		else if @__has_right
 			return "button-center-right"
 		else
@@ -946,7 +962,9 @@ class CUI.Button extends CUI.DOM
 	destroy: ->
 		# CUI.debug "destroying button", @__uniqueId, @getText()
 		@__menu?.destroy()
+		@__menu = null
 		@__tooltip?.destroy()
+		@__tooltip = null
 		super()
 
 	show: ->
