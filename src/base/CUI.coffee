@@ -59,13 +59,15 @@ class CUI
 				if ev.getKeyboard() == "c+"
 					CUI.toaster(text: "CUI!")
 
-				# backspace
+				# backspace acts as "BACK" in some browser, like FF
 				if ev.keyCode() == 8
-					if ev.getTarget().tagName in ["INPUT", "TEXTAREA"]
-						return
-					else
-						# CUI.info("swalloded BACKSPACE keydown event to prevent default")
-						ev.preventDefault()
+					for node in CUI.DOM.elementsUntil(ev.getTarget(), null, document.documentElement)
+						if node.tagName in ["INPUT", "TEXTAREA"]
+							return
+						if node.getAttribute("contenteditable") == "true"
+							return
+					# CUI.info("swalloded BACKSPACE keydown event to prevent default")
+					ev.preventDefault()
 				return
 
 		document.body.scrollTop=0
