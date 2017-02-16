@@ -786,6 +786,10 @@ class CUI.Form extends CUI.DataField
 			return
 
 		CUI.DOM.data(els[0]).element.setText(hint)
+
+		Events.trigger
+			type: "content-resize"
+			node: els[0]
 		@
 
 	getFieldsByName: (name, found_fields = []) ->
