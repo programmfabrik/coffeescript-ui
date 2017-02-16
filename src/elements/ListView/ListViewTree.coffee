@@ -161,10 +161,12 @@ class CUI.ListViewTree extends CUI.ListView
 			handle = CUI.DOM.matchSelector(row, ".cui-tree-node-handle")[0]
 			if handle.hasClass("cui-tree-node-is-closed") # and not $target.hasClass("no-children")
 				if prep_target(ev, info, handle)
+					ev.stopPropagation()
 					run_trigger(ev, info, "open", node)
 					return
 			else if handle.hasClass("cui-tree-node-is-open")
 				if prep_target(ev, info, handle)
+					ev.stopPropagation()
 					run_trigger(ev, info, "close", node)
 					return
 			return
@@ -191,7 +193,6 @@ class CUI.ListViewTree extends CUI.ListView
 					return
 
 				if CUI.DOM.closest(target, ".cui-tree-node-handle")
-					ev.stopPropagation()
 					action_on_handle(ev, info, row, node)
 
 				return
@@ -228,7 +229,6 @@ class CUI.ListViewTree extends CUI.ListView
 				if isPromise(ret)
 					ret.fail =>
 						# if the node did not select, we try the handle
-						ev.stopPropagation()
 						action_on_handle(ev, info, row, node)
 
 				return
