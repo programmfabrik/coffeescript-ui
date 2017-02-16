@@ -2451,6 +2451,10 @@ a[role="button"].cui-button-appearance-link {
 			overflow: hidden;
 		}
 	}
+
+	&.cui-absolute > .cui-vertical-layout {
+		top: $toolbar-height + 1px; // 1px border
+	}
 }
 
 .cui-tabs-pane-header {
