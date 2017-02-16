@@ -2452,7 +2452,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&.cui-absolute > .cui-vertical-layout {
+	&.cui-absolute > .cui-vertical-layout-center {
 		top: $toolbar-height + 1px; // 1px border
 	}
 }
