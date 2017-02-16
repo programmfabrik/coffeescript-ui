@@ -2049,23 +2049,6 @@ a[role="button"].cui-button-appearance-link {
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
 			border-radius: 0 0 5px 5px;
-			
-			// unset normal spacing
-			.cui-buttonbar > *:not(:last-child) {
-				margin-right: 0;
-			}
-			
-			.cui-button {
-				padding: $padding/2;
-				
-				&:last-child {
-					padding-right: $padding/2;
-				}
-				
-				&:first-child {
-					padding-left: $padding/2;
-				}
-			}
 		}
 	}
 }
