@@ -38,7 +38,6 @@ class CUI.Options extends CUI.DataField
 			# true: all fields horizontal
 			# int: n fields horizontal
 			horizontal:
-				default: if CUI.__ng__ then true else undefined
 				check: (v) ->
 					if isBoolean(v) or (isInteger(v) and v > 0)
 						return true
@@ -65,6 +64,10 @@ class CUI.Options extends CUI.DataField
 		assert(not @_sortable or not @_left, "new Options", "opts.sortable and opts.left cannot be used together.", opts: @opts)
 		assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
 		assert(not @_sortable or not @opts.horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
+
+		if CUI.__ng__
+			if @opts.horizontal == undefined
+				@_horizontal = not @_sortable
 
 		if @_sortable and @_activatable == undefined
 			@_activatable = true

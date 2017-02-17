@@ -3573,6 +3573,11 @@ $table-data-padding: 4px;
 }
 
 .cui-options--vertical {
+	.cui-options-inactive {
+		display: flex;
+		flex-direction: column;
+	}
+
 	[data-max-chars] {
 		width: auto !important;
 	}
