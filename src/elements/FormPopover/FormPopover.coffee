@@ -185,6 +185,13 @@ class FormPopover extends Form
 
 	getPopoverOpts: ->
 		pop_opts = copyObject(@_popover, true)
+
+		if not pop_opts.backdrop
+			pop_opts.backdrop = {}
+
+		if not pop_opts.backdrop.policy
+			pop_opts.backdrop.policy = "click"
+
 		# pop_opts.element = @__button
 		if not pop_opts.pane
 			pop_opts.pane = {}
