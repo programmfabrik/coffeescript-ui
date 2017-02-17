@@ -29,6 +29,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 			helper_set_pos:
 				check: Function
 
+			get_cursor:
+				check: Function
+
 			dragend:
 				check: Function
 
@@ -230,11 +233,16 @@ class CUI.Draggable extends CUI.DragDropSelect
 				else
 					window.getSelection().removeAllRanges()
 
-				# ok, in firefox the target of the mousemove
-				# event is WRONG while dragging. we need to overwrite
-				# this with elementFromPoint, true story :(
-				pointTarget = ev.getPointTarget()
 				@__killTimeout()
+
+
+				if CUI.browser.firefox
+					# ok, in firefox the target of the mousemove
+					# event is WRONG while dragging. we need to overwrite
+					# this with elementFromPoint, true story :(
+					pointTarget = ev.getPointTarget()
+				else
+					pointTarget = ev.getTarget()
 
 				if not pointTarget
 					return
@@ -268,10 +276,14 @@ class CUI.Draggable extends CUI.DragDropSelect
 					Math.abs(diff.y) >= globalDrag.threshold or
 					globalDrag.dragStarted
 
+						globalDrag.dragDiff = diff
+
 						if not globalDrag.dragStarted
 							@__startDrag(ev, $target, diff)
-
-						globalDrag.dragDiff = diff
+							if @_get_cursor
+								document.body.setAttribute("data-cursor", @_get_cursor(globalDrag))
+							else
+								document.body.setAttribute("data-cursor", @getCursor())
 
 						@do_drag(ev, $target, diff)
 						@_dragging?(ev, window.globalDrag, diff)
@@ -282,6 +294,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 			start_target_parents = CUI.DOM.parents(start_target)
 
 			globalDrag.ended = true
+
+			document.body.removeAttribute("data-cursor")
 
 			if stop
 				globalDrag.stopped = true
@@ -362,6 +376,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 				#
 		return
 
+	getCursor: ->
+		"grabbing"
 
 	__startDrag: (ev, $target, diff) ->
 
@@ -522,8 +538,13 @@ class CUI.Draggable extends CUI.DragDropSelect
 		@_helper_set_pos?(globalDrag, helper_pos)
 
 		CUI.DOM.setStyle globalDrag.helperNode,
-			top: helper_pos.top
-			left: helper_pos.left
+			transform: "translateX("+helper_pos.dragDiff.x+"px) translateY("+helper_pos.dragDiff.y+"px)"
+
+		return
+
+		# CUI.DOM.setStyle globalDrag.helperNode,
+		# 	top: helper_pos.top
+		# 	left: helper_pos.left
 
 		# console.debug "FINAL helper pos:", globalDrag, diff,  "top", top, "left", left, dump(helper_pos)
 
@@ -531,7 +552,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		helper = globalDrag.$source.cloneNode(true)
 
 		# remove select state (hard to overwrite in CSS)
-		helper.classList.remove('cui-selected')
+		helper.classList.remove("cui-selected")
 		return helper
 
 	init_helper: (ev, $target, diff) ->

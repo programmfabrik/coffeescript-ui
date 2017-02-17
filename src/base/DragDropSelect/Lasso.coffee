@@ -52,6 +52,9 @@ class CUI.Lasso extends CUI.Draggable
 		globalDrag.lasso.appendTo(@element)
 		globalDrag.elements = []
 
+	getCursor: ->
+		"default"
+
 	do_drag: (ev, $target, diff) ->
 		# CUI.debug "Lasso do drag", globalDrag.start, globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
 		set_css =  {}

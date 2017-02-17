@@ -186,6 +186,12 @@ class FlexHandle extends CUI.Element
 				gd.isFlexHandleDrag = true
 				gd
 
+			get_cursor: (gd) ->
+				if gd.__pane_data.axis == "x"
+					return "ew-resize"
+				else
+					return "ns-resize"
+
 			helper_set_pos: (gd, helper_pos) ->
 				data = gd.__pane_data
 				if data.axis == "x"

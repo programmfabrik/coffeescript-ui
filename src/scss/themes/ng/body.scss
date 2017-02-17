@@ -127,14 +127,14 @@ input[data-max-chars] {
 
 body[data-cursor="grabbing"] * {
 	cursor: -webkit-grabbing !important;
-	cursor: 				grabbing !important;
+	cursor: grabbing !important;
 }
 
 $drag-cursors: "default", "move", "col-resize", "row-resize", "n-resize", "e-resize", "s-resize", "w-resize", "ne-resize", "nw-resize", "se-resize", "sw-resize", "ew-resize", "ns-resize", "nesw-resize", "nwse-resize";
 
 @for $i from 1 to length($drag-cursors) {
 	$cursor: nth($drag-cursors, $i);
-	
+
 	body[data-cursor="#{$cursor}"] * {
 		cursor: $cursor !important;
 	}
