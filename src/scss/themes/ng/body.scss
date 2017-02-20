@@ -1429,6 +1429,7 @@ a[role="button"].cui-button-appearance-link {
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
 	display: flex;
+	flex-grow: 1;
 
 	& + & {
 		margin-top: $padding;
