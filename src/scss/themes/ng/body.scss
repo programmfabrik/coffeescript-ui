@@ -2624,9 +2624,10 @@ $table-data-padding: 4px;
 	}
 	
 	// nested list-view
-	.cui-list-view {
-		background: $foreground;
-	}
+	// CONFLICT: background is not wanted in table views
+	// .cui-list-view {
+	// 	background: $foreground;
+	// }
 }
 
 .list-view-header-row {
@@ -2747,9 +2748,13 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
-		// UNCLEAR: too often this list-view-grind-inner-top is unused and then a wild border appears
-		// Example: table search results with Serienbilder
-		border-bottom: 1px solid $table-border;
+		.cui-list-view-grid-quadrant {
+			border-bottom: 1px solid $table-border;
+			
+			&:empty {
+				border-bottom-width: 0;
+			}	
+		}
 	}
 }
 
