@@ -130,7 +130,7 @@ body[data-cursor="grabbing"] * {
 	cursor: grabbing !important;
 }
 
-$drag-cursors: "default", "move", "col-resize", "row-resize", "n-resize", "e-resize", "s-resize", "w-resize", "ne-resize", "nw-resize", "se-resize", "sw-resize", "ew-resize", "ns-resize", "nesw-resize", "nwse-resize";
+$drag-cursors: default, move, col-resize, row-resize, n-resize, e-resize, s-resize, w-resize, ne-resize, nw-resize, se-resize, sw-resize, ew-resize, ns-resize, nesw-resize, nwse-resize;
 
 @for $i from 1 to length($drag-cursors) {
 	$cursor: nth($drag-cursors, $i);
@@ -1428,8 +1428,7 @@ a[role="button"].cui-button-appearance-link {
 	// Conflict: makes it center vertically align in center
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
-	display: flex;
-	flex-grow: 1;
+	display: block; // IE11 fix - could be flex too but that breaks loader icon
 
 	& + & {
 		margin-top: $padding;
