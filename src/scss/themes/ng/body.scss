@@ -1428,7 +1428,8 @@ a[role="button"].cui-button-appearance-link {
 	// Conflict: makes it center vertically align in center
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
-	display: block; // IE11 fix - could be flex too but that breaks loader icon
+	display: flex;
+	flex-grow: 1;
 
 	& + & {
 		margin-top: $padding;
@@ -1721,6 +1722,10 @@ a[role="button"].cui-button-appearance-link {
 		input,
 		textarea {
 			min-height: 24px;
+			
+			&[data-max-chars] {
+				min-height: 22px;
+			}
 		}
 	}
 }
@@ -2135,8 +2140,12 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label {
 		font-size: 11px;
-    line-height: 14px;
-    padding: 3px 6px;
+		line-height: 14px;
+		padding: 3px 6px;
+		
+		&-multiline > .cui-label-content {
+			flex-basis: auto;
+		}
 	}
 
 	> .cui-simple-pane > .cui-vertical-layout-center {
@@ -2380,45 +2389,47 @@ a[role="button"].cui-button-appearance-link {
 	bottom: 0;
 	z-index: 1;
 	display: flex;
+}
 	
-	.cui-wait-block-glass {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: $foreground;
-	}
+.cui-wait-block-glass {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: $foreground;
+}
 
-	.cui-wait-block-inner {
-		display: flex;
-		flex: 1 1 auto;
-		position: relative;
+.cui-wait-block-inner {
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+}
+	
+.cui-wait-block-header {
+	display: flex;
+	flex: 1 1 auto;
+	justify-content: center;
+	align-self: center;
+	
+	.cui-label {
+		flex-grow: 0;
 		
-		.cui-wait-block-header {
-			display: flex;
-			flex: 1 1 auto;
-			justify-content: center;
-			align-self: center;
-			
-			.cui-label {
-				.cui-label-icon i {
-					font-size: 21px;
-			    width: 21px;
-			    height: 21px;
-			    line-height: 21px;
-			  }
-				
-				.cui-label-content {
-					padding-left: $padding;
-				}
-			}
-		}
-
-		.cui-wait-block-content {
-			display: none;
+		.cui-label-icon i {
+			font-size: 21px;
+	    width: 21px;
+	    height: 21px;
+	    line-height: 21px;
+	  }
+		
+		.cui-label-content {
+			padding-left: $padding;
 		}
 	}
+}
+
+.cui-wait-block-content {
+	display: none;
 }
 
 // Tabs
