@@ -2001,7 +2001,8 @@ a[role="button"].cui-button-appearance-link {
 	display: flex;
 	
 	&--visible {
-		background: radial-gradient(hsla(205,30%,20%,.4), hsla(205,30%,20%,.6));
+		background: $foreground;
+		opacity: .5;
 	}
 
 	> div {
