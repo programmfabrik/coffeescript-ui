@@ -1428,6 +1428,7 @@ a[role="button"].cui-button-appearance-link {
 	// Conflict: makes it center vertically align in center
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
+	display: flex;
 
 	& + & {
 		margin-top: $padding;
@@ -1444,7 +1445,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-label-content {
-		flex: 1 1 auto;
+		flex: 1 1 0%;
 		white-space: normal;
 	}
 
