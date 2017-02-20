@@ -1428,8 +1428,6 @@ a[role="button"].cui-button-appearance-link {
 	// Conflict: makes it center vertically align in center
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
-	display: flex;
-	flex-grow: 1;
 
 	& + & {
 		margin-top: $padding;
@@ -1446,7 +1444,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-label-content {
-		flex: 1 1 0%;
+		flex: 1 1 auto;
 		white-space: normal;
 	}
 
@@ -1741,6 +1739,16 @@ a[role="button"].cui-button-appearance-link {
 	margin-top: 5px;
 	font-size: 12px;
 	color: $muted-color;
+	
+	// IE layout fix: (layer form hint)
+	.cui-label-multiline {
+		flex-grow: 1;
+		display: flex;
+		
+		.cui-label-content {
+			flex-basis: 0%;
+		}
+	}
 }
 
 .cui-input-valid-hint {
@@ -2142,10 +2150,6 @@ a[role="button"].cui-button-appearance-link {
 		font-size: 11px;
 		line-height: 14px;
 		padding: 3px 6px;
-		
-		&-multiline > .cui-label-content {
-			flex-basis: auto;
-		}
 	}
 
 	> .cui-simple-pane > .cui-vertical-layout-center {
@@ -2412,9 +2416,7 @@ a[role="button"].cui-button-appearance-link {
 	justify-content: center;
 	align-self: center;
 	
-	.cui-label {
-		flex-grow: 0;
-		
+	.cui-label {		
 		.cui-label-icon i {
 			font-size: 21px;
 	    width: 21px;
