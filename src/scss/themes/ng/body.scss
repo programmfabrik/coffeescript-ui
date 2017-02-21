@@ -205,24 +205,28 @@ li > div {
 
 // VerticalLayout
 .cui-vertical-layout {
-	display: flex;
-	flex-direction: column;
 	flex-shrink: 0;
 	overflow: hidden;
 	
 	&.cui-maximize-vertical {
+		display: flex;
+		flex-direction: column;
 		flex: 1 1 auto;
 		min-height: 0;
 		max-height: 100%; // used in cui-pane-fill-screen
 
 		> .cui-vertical-layout-top,
 		> .cui-vertical-layout-bottom {
+			display: flex;
+			flex-direction: column;
 			position: relative;
 			flex-shrink: 0;
 			overflow: hidden;
 		}
 
 		> .cui-vertical-layout-center {
+			display: flex;
+			flex-direction: column;
 			position: relative;
 			flex: 1 1 auto;
 			min-height: 0;
@@ -260,8 +264,6 @@ li > div {
 .cui-vertical-layout-top,
 .cui-vertical-layout-center,
 .cui-vertical-layout-bottom {
-	display: flex;
-	flex-direction: column;
 	flex-shrink: 0;
 	
 	> .cui-sticky-header {
