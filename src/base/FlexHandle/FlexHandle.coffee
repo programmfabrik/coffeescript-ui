@@ -220,7 +220,7 @@ class FlexHandle extends CUI.Element
 				@__resize()
 
 			dragging: (ev, gd) =>
-				if not CUI.__ng__
+				if !CUI.__ng__  || CUI.browser.ie
 					return
 
 				dragging(gd)

@@ -32,7 +32,7 @@ class CUI
 			node: window
 			call: (ev, info) =>
 				console.info("CUI: caught window resize event.")
-				if CUI.__ng__
+				if CUI.__ng__ && !CUI.browser.ie
 					trigger_viewport_resize()
 				else
 					CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
