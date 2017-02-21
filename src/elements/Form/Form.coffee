@@ -854,6 +854,7 @@ class CUI.Form extends CUI.DataField
 
 	destroy: ->
 		if @table
+			@unregisterTableListeners()
 			DOM.remove(@table)
 			@table = null
 		super()
