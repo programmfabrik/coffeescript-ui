@@ -1198,7 +1198,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel {
-	border-bottom: 1px solid $soft-border;
+	border-bottom: 1px solid $border;
 	
 	& + &,
 	&:first-child {
@@ -1224,10 +1224,10 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	border-top: 1px solid $soft-border;
-	border-bottom: 1px solid $soft-border;
+	border-top: 1px solid $border;
+	border-bottom: 1px solid $border;
+	background: $zebra-color;
 	position: relative;
-	background: $toolbar-background;
 	flex-shrink: 0;
 	box-sizing: content-box;
 
@@ -1241,18 +1241,19 @@ a[role="button"].cui-button-appearance-link {
 			line-height: 22px;
 			justify-content: flex-start;
 			padding: 6px $padding;
+			color: $button-color;
 		}
 
 		&:active {
 			.cui-button-visual {
-				background: none;
-				color: inherit;
+				background: darken($zebra-color, 5%);
+				color: $button-color;
 			}
 		}
 
 		.cui-button-left {
 			width: 22px;
-			padding-top: 2px;
+			padding-top: 1px;
 		}
 		
 		.cui-button-center {
@@ -1835,8 +1836,9 @@ a[role="button"].cui-button-appearance-link {
 	opacity: 0.9999;
 	box-shadow:
 		0 0 0 1px hsla(205,20%,30%,.15),
-		0 4px 20px hsla(205,20%,30%,.4),
-		0 2px 4px hsla(0,0%,0%,.1);
+		0 8px 10px 1px hsla(0,0%,0%,.14),
+		0 3px 14px 2px hsla(0,0%,0%,.12),
+		0 5px 5px -3px hsla(0,0%,0%,.4);
 	
 	> .cui-simple-pane,
 	> .cui-pane {		
@@ -1846,6 +1848,7 @@ a[role="button"].cui-button-appearance-link {
 			min-height: $toolbar-height;
 			border-radius: 5px 5px 0 0;
 			border-color: $layer-header-border;
+			color: $layer-header-color;
 		}
 
 		// layer-body
@@ -1938,7 +1941,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-pointer {
 	position: absolute;
 	z-index: 1;
-	width: 33px;
+	width: 46px;
 	height: 16px;
 	margin: 6px;
 	overflow: hidden;
@@ -1946,15 +1949,15 @@ a[role="button"].cui-button-appearance-link {
 	&:after { // arrow (north)
 		content: "";
 		position: absolute;
-		left: 5px;
-    top: 7px;
     width: 18px;
     height: 18px;
 		background: $layer-background;
+		transform: rotate(45deg);
 		box-shadow:
 			0 0 0 1px hsla(205,20%,30%,.15),
-			3px 3px 14px hsla(0,0%,0%,0.1);
-		transform: rotate(45deg);
+			4px 4px 10px 1px hsla(0,0%,0%,.14),
+			1px 1px 14px 2px hsla(0,0%,0%,.12),
+			2px 2px 5px -3px hsla(0,0%,0%,.4);
 	}
 }
 
@@ -1965,7 +1968,7 @@ a[role="button"].cui-button-appearance-link {
 	
 	&:after {
 		top: 5px;
-		left: 7px;
+		left: 14px;
 	}
 }
 
@@ -1980,13 +1983,18 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-layer-pointer--e,
 .cui-layer-pointer--w {
-	width: 10px;
-	height: 37px;
+	width: 12px;
+	height: 46px;
 	margin: 6px 0;
+	
+	&:after {
+		left: 5px;
+    top: 14px;
+	}
 }
 
 .cui-layer-pointer--e:after {
-	left: -13px;
+	left: -11px;
 }
 
 .cui-layer-root-menu .cui-layer-pointer {
