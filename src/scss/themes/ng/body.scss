@@ -2943,13 +2943,10 @@ $table-data-padding: 4px;
 	display: none;
 	cursor: -webkit-grab;
 	cursor:         grab;
+	align-items: center;
 	
 	&:after {
 		display: none;
-	}
-
-	.cui-drag-handle-row {
-		margin-top: 7px;
 	}
 
 	&.cui-lv-td {
@@ -2986,6 +2983,10 @@ $table-data-padding: 4px;
 		padding-bottom: 0;
 		background: linear-gradient($zebra-color 50%, white 50%);
 		background-size: 100% $table-data-height*2;
+		
+		&.cui-list-view-row-move-handle-column {
+			display: block;
+		}
 	}
 }
 
@@ -3563,6 +3564,7 @@ $table-data-padding: 4px;
     
     .cui-drag-handle-row {
     	margin-top: 6px;
+    	align-self: flex-start;
     }
 	}
 }
@@ -3648,16 +3650,17 @@ $table-data-padding: 4px;
 }
 
 .cui-drag-handle-row {
-	&:hover {
-		opacity: 0.8;
-	}
-
+	margin-top: 2px;
 	flex: 1 1 auto;
 	height: 12px;
 	width: 100%;
 
 	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
 	background-size: 100% 3px;
+	
+	&:hover {
+		opacity: 0.8;
+	}
 }
 
 // DateTime
