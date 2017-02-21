@@ -193,13 +193,14 @@ li > div {
 	display: flex;
 	flex-direction: column;
 	
-	> .cui-label {
-		padding: 0 $padding;
+	// CONFLICT: TOO GENERIC
+	// > .cui-label {
+	// 	padding: 0 $padding;
 		
-		& + .cui-label {
-			padding-left: 0;
-		}
-	}
+	// 	& + .cui-label {
+	// 		padding-left: 0;
+	// 	}
+	// }
 }
 
 
