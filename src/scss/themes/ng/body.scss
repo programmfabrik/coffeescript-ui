@@ -306,6 +306,7 @@ li > div {
 	z-index: 2;
 	flex-shrink: 0;
 	-webkit-user-select: none;
+	    -ms-user-select: none;
 	        user-select: none;
 
 	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
@@ -2168,7 +2169,9 @@ a[role="button"].cui-button-appearance-link {
 	width: auto;
 	max-width: none;
 	min-width: 0;
-	user-select: none;
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
 	cursor: default;
 
 	> .cui-layout > .cui-vertical-layout-center {
@@ -4521,7 +4524,9 @@ $table-data-padding: 4px;
 }
 
 .cui-disabled {
-	user-select: none;
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
 	opacity: 0.33;
 	pointer-events: none;
 }
