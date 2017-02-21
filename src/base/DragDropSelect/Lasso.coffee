@@ -57,34 +57,37 @@ class CUI.Lasso extends CUI.Draggable
 
 	do_drag: (ev, $target, diff) ->
 		# CUI.debug "Lasso do drag", globalDrag.start, globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
-		set_css =  {}
+		left = 0
+		top = 0
+		width = 0
+		height = 0
 		if diff.x <= 0
-			set_css.left = globalDrag.start.left + diff.x
-			set_css.width = -diff.x
-			over = -set_css.left
+			left = globalDrag.start.left + diff.x
+			width = -diff.x
+			over = -left
 			if over > 0
-				set_css.width -= over
-				set_css.left = 0
+				width -= over
+				left = 0
 		else
-			set_css.left = globalDrag.start.left
-			set_css.width = diff.x
-			over = set_css.left + set_css.width - @element[0].scrollWidth
+			left = globalDrag.start.left
+			width = diff.x
+			over = left + width - @element[0].scrollWidth
 			if over > 0
-				set_css.width -= over
+				width -= over
 
 		if diff.y <= 0
-			set_css.top = globalDrag.start.top + diff.y
-			set_css.height = -diff.y
-			over = -set_css.top
+			top = globalDrag.start.top + diff.y
+			height = -diff.y
+			over = -top
 			if over > 0
-				set_css.height -= over
-				set_css.top = 0
+				height -= over
+				top = 0
 		else
-			set_css.top = globalDrag.start.top
-			set_css.height = diff.y
-			over = set_css.top + set_css.height - @element[0].scrollHeight
+			top = globalDrag.start.top
+			height = diff.y
+			over = top + height - @element[0].scrollHeight
 			if over > 0
-				set_css.height -= over
+				height -= over
 
 		lassoed_elements = @get_lassoed_elements()
 
@@ -98,7 +101,7 @@ class CUI.Lasso extends CUI.Draggable
 				removeFromArray(el, globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		window.globalDrag.lasso.css(set_css)
+		window.globalDrag.lasso.css("transform", "translate3d(#{left}px,#{top}px,0) scale(#{width},#{height})")
 
 	get_lassoed_elements: ->
 		get_dim = (el) ->

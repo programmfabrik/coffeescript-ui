@@ -4156,10 +4156,16 @@ $table-data-padding: 4px;
 
 .cui-lasso {
 	position: absolute;
+	width: 1px;
+	height: 1px;
+	left: 0;
+	top: 0;
 	background-color: transparentize($highlight-color, 0.77);
 	display: block;
 	pointer-events: none;
 	z-index: 1;
+	will-change: transform;
+	transform-origin: left top;
 }
 
 .cui-drag-drop-select-lasso-element-in-lasso {
