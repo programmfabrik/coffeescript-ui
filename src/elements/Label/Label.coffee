@@ -134,7 +134,7 @@ class CUI.Label extends CUI.DOM
 		if isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.DOM.htmlToNodes(marked(@__currentText)))
+			@setContent(CUI.DOM.htmlToNodes(window.marked(@__currentText, CUI.defaults.marked_opts)))
 			@addClass("cui-label-markdown")
 		else
 			@setContent($text(@__currentText))

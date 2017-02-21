@@ -22,7 +22,7 @@ class MarkdownInput extends Input
 			renderFunction:
 				mandatory: true
 				default: (md) =>
-					marked(md)
+					window.marked(md, CUI.defaults.marked_opts)
 				check: Function
 
 
