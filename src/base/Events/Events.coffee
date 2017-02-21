@@ -268,19 +268,28 @@ class CUI.Events extends CUI.Element
 		return CUI.when(waits)
 
 
-	@ignore: (filter, doc=document) ->
+	@ignore: (filter, doc=document) -> # , debug=false) ->
 		# console.debug "Events.ignore", filter, filter.instance?.getUniqueId?()
 		for listener in @getActiveListeners(doc)
 			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
-				# console.debug "ignoring listener", filter.instance?.getUniqueId?()
+				# if debug
+				# 	console.debug("Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
 				listener.destroy()
 		@
 
 	@dump: (filter={}) ->
 		for listener in @getActiveListeners()
-			if listener.matchesFilter(filter)
-				CUI.debug "Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener
+			if CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
+				console.debug("Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener)
 		@
+
+	# @dumpTopLevel: ->
+	# 	for listener in @__listeners
+	# 		console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
+
+	# 	for listener in DOM.data(document.documentElement, "listeners")
+	# 		console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
+	# 	@
 
 	@hasEventType: (type) ->
 		!!@__eventRegistry[type]

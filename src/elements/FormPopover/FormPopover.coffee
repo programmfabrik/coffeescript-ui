@@ -210,17 +210,30 @@ class FormPopover extends Form
 	renderAsBlock: ->
 		false
 
+	resetTableAndFields: ->
+		# console.error "resetTableAndFields", @table
+		@callOnFields("remove")
+		@unregisterTableListeners()
+		# console.error "resetTableAndFields", DOM.data(@getLayout().center())
+		if CUI.__ng__
+			CUI.DOM.empty(@table)
+		else
+			CUI.DOM.remove(@table)
+		@table = null
+		@__fields = null
+		@
+
 	__openPopover: ->
 		# console.time "FormPopover"
 
-		# CUI.debug "open popover", @__data, @table, @__fields
+		# console.debug "open popover", @__data, @table, @__fields
+
 		pop_opts = @getPopoverOpts()
 
 		if @__fields_is_func
 			# dynamic fields, we need to reload the form
 			if @table
-				@callOnFields("remove")
-				@table = null
+				@resetTableAndFields()
 
 			@initFields()
 			@callOnFields("setData", @__data)
@@ -263,9 +276,9 @@ class FormPopover extends Form
 		# console.timeEnd "FormPopover"
 
 	__closePopover: ->
+		@removeClass("focus")
 		@getLayout().DOM.detach()
 		@__popover.destroy()
-		@removeClass("focus")
 		@__popover = null
 		@__triggerDataChanged()
 		@

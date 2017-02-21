@@ -136,7 +136,7 @@ class CUI.DataField extends CUI.DOM
 		@render()
 		@displayValue()
 
-	remove: (purge = false) ->
+	remove: ->
 		@callOnOthers("remove")
 		if not @isDestroyed()
 			@empty()

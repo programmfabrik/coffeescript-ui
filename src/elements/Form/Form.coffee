@@ -485,6 +485,7 @@ class CUI.Form extends CUI.DataField
 		Events.listen
 			node: container
 			type: "form-check-row-visibility"
+			instance: @
 			call: (ev) =>
 				tr = CUI.DOM.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
 				# console.error "check row visibility", ev, tr
@@ -705,10 +706,10 @@ class CUI.Form extends CUI.DataField
 
 		render_next_field()
 
-
 		Events.listen
 			type: "data-changed"
 			node: container
+			instance: @
 			call: (ev, info) =>
 				if not info.element
 					return
@@ -728,6 +729,12 @@ class CUI.Form extends CUI.DataField
 
 		container
 
+	unregisterTableListeners: ->
+		Events.ignore({node: @getLayout().center(), instance: @})
+
+	remove: ->
+		@unregisterTableListeners()
+		super()
 
 	__initUndo: ->
 		if @__undo

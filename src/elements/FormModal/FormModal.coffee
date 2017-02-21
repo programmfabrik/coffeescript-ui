@@ -69,8 +69,8 @@ class FormModal extends FormPopover
 			delete(@__orig_set_data[@_name])
 
 		@setData(@__orig_set_data)
-		@callOnFields("remove")
-		@table = null
+
+		@resetTableAndFields()
 
 		Events.trigger
 			type: "data-changed"

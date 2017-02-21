@@ -44,12 +44,13 @@ class CUI.DOM extends CUI.Element
 	getElementForLayer: ->
 		@DOM
 
-	unregisterDOMElement: (@DOM) ->
-		CUI.removeClass(@DOM, @getDOMElementClasses())
+	unregisterDOMElement: ->
+		CUI.DOM.removeClass(@DOM, @getDOMElementClasses())
 		CUI.DOM.removeAttribute(@DOM, "id")
 		if @_class
 			CUI.DOM.removeClass(@DOM, @_class)
 		DOM.removeData(@DOM, "element")
+		delete(@DOM)
 		@
 
 	assertDOMElement: (func) ->
