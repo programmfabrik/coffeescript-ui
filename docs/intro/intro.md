@@ -1,3 +1,3 @@
 # Coffeescript User Interface System (CUI)
 
-[https://github.com/programmfabrik/coffeescript-ui](https://github.com/programmfabrik/coffeescript-ui)
+Source code is public at: [https://github.com/programmfabrik/coffeescript-ui](https://github.com/programmfabrik/coffeescript-ui)
