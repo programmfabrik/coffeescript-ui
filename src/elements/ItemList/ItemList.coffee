@@ -20,6 +20,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 				mandatory: true
 				check: (v) ->
 					CUI.isFunction(v) or CUI.isArray(v)
+			# if set no "null", don't manage this for us
+			# otherwise ItemList sets the active item
+			# according to the active idx
 			active_item_idx:
 				check: "Integer"
 
@@ -235,7 +238,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						if item.hasOwnProperty(k) and not opts.hasOwnProperty(k)
 							opts[k] = item[k]
 
-					if @__radio and not CUI.isFunction(@_items)
+					if @__radio
 						if @__active_idx == idx
 							opts.active = true
 
