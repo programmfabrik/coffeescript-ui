@@ -2675,6 +2675,16 @@ $table-data-padding: 4px;
 	.cui-label {
 		align-items: flex-end;
 	}
+
+	&:nth-child(n+2) {
+		.cui-lv-td {
+			overflow: visible;
+			
+			&:after {
+				top: -2px;
+			}
+		}
+	}
 }
 
 .cui-tmpl-list-view-tool-row-move-target {
