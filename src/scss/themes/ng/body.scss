@@ -4027,6 +4027,7 @@ $table-data-padding: 4px;
 		border: none;
 		background: none;
 		border-radius: 0;
+		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
 		
 		&:focus {
 			box-shadow: none;
