@@ -3415,7 +3415,7 @@ a[role="button"].cui-button-appearance-link {
 	// vertical-align: middle;
 	
 	.cui-checkbox {
-		padding-top: 1px; // nudge down a bit to align with label	
+		padding-top: 2px; // nudge down a bit to align with label	
 	}
 
 	> .cui-data-field {
@@ -3627,12 +3627,12 @@ a[role="button"].cui-button-appearance-link {
 		display: flex;
 		flex-shrink: 0;
 		margin-right: 2px;
-    padding: 0 4px 0 0;
-    
-    .cui-drag-handle-row {
-    	margin-top: 6px;
-    	align-self: flex-start;
-    }
+		padding: 0 4px 0 0;
+		
+		.cui-drag-handle-row {
+			margin-top: 6px;
+			align-self: flex-start;
+		}
 	}
 }
 
