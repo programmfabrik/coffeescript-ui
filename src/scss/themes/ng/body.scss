@@ -1212,7 +1212,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel {
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid $soft-border;
 	
 	& + &,
 	&:first-child {
@@ -1238,9 +1238,9 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	border-top: 1px solid $border;
-	border-bottom: 1px solid $border;
-	background: $zebra-color;
+	border-top: 1px solid $soft-border;
+	border-bottom: 1px solid $soft-border;
+	background: $toolbar-background;
 	position: relative;
 	flex-shrink: 0;
 	box-sizing: content-box;
@@ -2045,8 +2045,7 @@ a[role="button"].cui-button-appearance-link {
 	display: flex;
 	
 	&--visible {
-		background: $foreground;
-		opacity: .5;
+		background: radial-gradient(hsla(205,30%,20%,.4), hsla(205,30%,20%,.6));
 	}
 
 	> div {

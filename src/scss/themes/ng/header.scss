@@ -60,16 +60,17 @@ $on-error-color: white;
 $neutral-color: hsl(48,100%,58%);
 $positive-color: hsl(150,77%,50%);
 
-$toolbar-background: hsl(205,10%,95%);
+$toolbar-background: hsl(205,10%,94%);
 $toolbar-height: 34px;
 
 $layer-background: $foreground;
-$layer-header-background: linear-gradient(hsl(205,14%,91%), hsl(205,13%,87%));
-$layer-header-pointer-background: hsl(205,14%,91%);
-$layer-header-border: hsl(205,8%,73%);
+
+$layer-header-pointer-background: $toolbar-background;
+$layer-header-background: $toolbar-background;
+$layer-header-border: hsl(204,22%,91%);
 $layer-header-color: hsl(205,4%,27%);
 
-$layer-footer-background: hsl(205,13%,87%);
+$layer-footer-background: $layer-header-background;
 $layer-footer-border: $layer-header-border;
 
 $item-list-color: hsl(205,7%,22%);
