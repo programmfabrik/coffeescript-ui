@@ -418,7 +418,7 @@ class FlexHandle extends CUI.Element
 			if @__direction == "row"
 				opts.rotate_90 = true
 
-			@__label = new Label(opts)
+			@__label = new CUI.defaults.class.Label(opts)
 		DOM.append(@_element, @__label.DOM)
 		DOM.addClass(@_element, "cui-flex-handle-has-label")
 
