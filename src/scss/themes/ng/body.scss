@@ -2646,10 +2646,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-
-$table-data-height: 32px;
-$table-data-padding: 4px;
-
 // ListView
 .cui-list-view {
 	flex-shrink: 1;
@@ -2714,7 +2710,7 @@ $table-data-padding: 4px;
 .cui-lv-td {
 	padding: $table-data-padding $padding;
 	width: 125px;
-	min-height: 18px;
+	min-height: $td-height;
 	overflow: hidden;
 	flex-shrink: 0;
 	display: flex;
@@ -3025,12 +3021,20 @@ $table-data-padding: 4px;
 		padding-top: 0;
 		padding-bottom: 0;
 		background: linear-gradient($zebra-color 50%, white 50%);
-		background-size: 100% $table-data-height*2;
+		background-size: 100% ($td-height + 2*$table-data-padding)*2;
 	}
 }
 
 .cui-list-view-grid-rows-even .cui-lv-tr-fill-outer .cui-lv-td {
 	background-image: linear-gradient(white 50%, $zebra-color 50%);
+}
+
+.cui-data-table {
+	.cui-lv-tr-fill-outer {
+		.cui-lv-td {
+			background-size: 100% $table-data-height*2;
+		}
+	}
 }
 
 .cui-tmpl-list-view-tool-col-resize-marker {

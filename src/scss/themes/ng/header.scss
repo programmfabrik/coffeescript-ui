@@ -53,7 +53,11 @@ $zebra-on-foreground-color: hsl(210,12%,97%);
 $table-border: hsl(205,8%,90%);
 $table-header-border: hsl(205,8%,94%);
 $table-row-border: $soft-border;
+
+$table-data-height: 32px;
+$table-data-padding: 4px;
 $td-width: 135px;
+$td-height: 18px;
 
 $error-color: hsl(10,90%,52%);
 $on-error-color: white;
