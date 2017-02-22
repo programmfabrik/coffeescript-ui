@@ -506,6 +506,12 @@ li > div {
 		&:empty {
 			margin-left: 0;
 		}
+
+		> .cui-label {
+			&:last-child {
+				padding-right: $padding/2 + 3px;
+			}
+		}
 	}
 
 	&.cui-template-empty {
