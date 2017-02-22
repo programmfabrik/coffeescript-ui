@@ -1212,7 +1212,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel {
-	border-bottom: 1px solid $soft-border;
+	border-bottom: 1px solid $layer-header-border;
 	
 	& + &,
 	&:first-child {
@@ -1238,8 +1238,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	border-top: 1px solid $soft-border;
-	border-bottom: 1px solid $soft-border;
+	border-top: 1px solid $layer-header-border;
+	border-bottom: 1px solid $layer-header-border;
 	background: $toolbar-background;
 	position: relative;
 	flex-shrink: 0;
@@ -3252,13 +3252,8 @@ $table-data-padding: 4px;
 
 	&.cui-maximize-horizontal > .cui-layout-cell > .cui-form-table {
 		.cui-form-key {
-			&:before {
-				content: "";
-				height: 24px;
-				vertical-align: top;
-				display: inline-block;
-			}
-
+			max-width: none;
+			
 			label {
 				word-break: normal;
   			white-space: nowrap;
@@ -3268,6 +3263,12 @@ $table-data-padding: 4px;
 		.cui-form-value {
 			width: 100%;
 			position: relative;
+			
+			&:before {
+				content: "";
+				height: 24px;
+				float: left;
+			}
 			
 			> .cui-data-field {
 				position: absolute;
@@ -3582,7 +3583,7 @@ $table-data-padding: 4px;
 }
 
 .cui-form-popover {
-	.cui-vertical-layout {
+	&.cui-vertical-layout {
 		display: flex;
 		flex-direction: column;
 	}
