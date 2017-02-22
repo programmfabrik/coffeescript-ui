@@ -3249,6 +3249,13 @@ $table-data-padding: 4px;
 
 	&.cui-maximize-horizontal > .cui-layout-cell > .cui-form-table {
 		.cui-form-key {
+			&:before {
+				content: "";
+				height: 24px;
+				vertical-align: top;
+				display: inline-block;
+			}
+
 			label {
 				word-break: normal;
   			white-space: nowrap;
