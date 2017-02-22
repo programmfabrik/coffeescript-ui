@@ -86,7 +86,6 @@ class FormPopover extends Form
 	initTemplate: ->
 		vl = new VerticalLayout
 			maximize: false
-			maximize_vertical: true
 			bottom: {}
 
 		@registerTemplate(vl.getLayout())

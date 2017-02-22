@@ -3572,7 +3572,17 @@ $table-data-padding: 4px;
 }
 
 .cui-form-popover {
-	.cui-vertical-layout-center {		
+	.cui-vertical-layout {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.cui-vertical-layout-center {
+		.cui-button {
+			flex-grow: 1;
+			padding: 0;
+		}
+
 		+ .cui-vertical-layout-bottom {
 			margin: 5px 0 0;
 			
