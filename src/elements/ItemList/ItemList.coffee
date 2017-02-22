@@ -101,6 +101,8 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	__initActiveIdx: ->
 
+		active_idx = @_active_item_idx
+
 		if isUndef(active_idx)
 			items = @__getItems()
 
