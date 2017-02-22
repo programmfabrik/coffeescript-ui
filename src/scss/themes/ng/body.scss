@@ -3054,9 +3054,9 @@ $table-data-padding: 4px;
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
-	width: 12px;
+	width: 14px;
 	flex: 0 0 auto;
-	padding-right: 5px;
+	padding-right: 6px;
 }
 
 .cui-tree-node-handle {
@@ -3497,6 +3497,12 @@ $table-data-padding: 4px;
 
 		.cui-button {
 			margin-left: $padding/2;
+		}
+	}
+
+	&--no-padding {
+		.cui-label {
+			padding: 0;
 		}
 	}
 }
