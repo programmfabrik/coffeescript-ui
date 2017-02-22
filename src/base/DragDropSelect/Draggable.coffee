@@ -73,18 +73,26 @@ class CUI.Draggable extends CUI.DragDropSelect
 				check: (v) =>
 					isString(v) or CUI.isFunction(v)
 
+	readOpts: ->
+		super()
+		@__autoRepeatTimeout = null
+
 	__killTimeout: ->
-		if globalDrag?.autoRepeatTimeout
-			CUI.clearTimeout(globalDrag.autoRepeatTimeout)
-			globalDrag.autoRepeatTimeout = null
+		if @__autoRepeatTimeout
+			CUI.clearTimeout(@__autoRepeatTimeout)
+			@__autoRepeatTimeout = null
 		@
 
 	__cleanup: ->
+
 		@__killTimeout()
 		if @__ref
 			Events.ignore(instance: @__ref)
 			@__ref = null
-		globalDrag = null
+
+		if globalDrag?.instance == @
+			globalDrag = null
+		return
 
 	destroy: ->
 		super()
@@ -171,6 +179,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			$source: $target
 			startEvent: ev
 			startCoordinates: point
+			instance: @
 			startScroll:
 				top: $target[0].scrollTop
 				left: $target[0].scrollLeft
@@ -209,7 +218,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				info:
 					mousemoveEvent: mousemoveEvent
 
-			globalDrag.autoRepeatTimeout = CUI.setTimeout
+			@__autoRepeatTimeout = CUI.setTimeout
 				ms: 100
 				track: false
 				call: =>
@@ -227,14 +236,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				# we drag
 				ev.preventDefault()
 
-				# remove selection in firefox
-				if document.selection
-					document.selection.empty()
-				else
-					window.getSelection().removeAllRanges()
-
 				@__killTimeout()
-
 
 				if CUI.browser.firefox
 					# ok, in firefox the target of the mousemove
@@ -280,6 +282,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 						if not globalDrag.dragStarted
 							@__startDrag(ev, $target, diff)
+
 							if @_get_cursor
 								document.body.setAttribute("data-cursor", @_get_cursor(globalDrag))
 							else
@@ -290,6 +293,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				return
 
 		end_drag = (ev, stop = false) =>
+
 			start_target = globalDrag.$source
 			start_target_parents = CUI.DOM.parents(start_target)
 
