@@ -1,1 +1,1 @@
-# CUI Event is the best
+# Coffeescript User Interface System (CUI) Event
