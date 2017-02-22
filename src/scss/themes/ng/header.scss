@@ -18,10 +18,15 @@ $foreground: white;
 $border: hsl(205,20%,83%);
 $soft-border: hsl(205,20%,91%);
 
+$secondary-color: hsl(205,5%,45%);
+$muted-color: hsl(205,5%,60%);
+$disabled-color: hsl(205,7%,73%);
+
 $highlight-color: hsl(205,100%,45%);
 $row-highlight: hsl(201,82%,92%);
 $on-highlight-color: white;
 $on-highlight-muted-color: hsl(205,50%,85%);
+$on-row-highlight-muted-color: hsl(205,40%,69%);
 
 $button-background: white;
 $button-pressed: hsl(205,10%,91%);
@@ -40,10 +45,6 @@ $input-radius: $button-radius;
 $input-placeholder: hsl(205,10%,75%);
 
 $drag-handle-color: hsl(205,10%,75%);
-
-$secondary-color: hsl(205,5%,45%);
-$muted-color: hsl(205,5%,60%);
-$disabled-color: hsl(205,7%,73%);
 
 // Table Colors
 $zebra-color: hsla(205,41%,20%,.04);
