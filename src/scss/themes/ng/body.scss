@@ -549,7 +549,8 @@ li > div {
 		margin-bottom: 0;
 		min-width: 0;
 		
-		.cui-button {
+		.cui-button,
+		.cui-data-field {
 			&:not(:first-child) {
 				padding-left: 0;
 			}
@@ -568,6 +569,12 @@ li > div {
 					padding-left: 0;
 					padding-right: 0;
 				}
+			}
+		}
+
+		.cui-data-field {
+			.cui-button {
+				padding: 0;
 			}
 		}
 	}
