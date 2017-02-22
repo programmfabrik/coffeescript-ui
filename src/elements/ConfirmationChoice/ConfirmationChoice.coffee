@@ -44,6 +44,8 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			check: Function
 		icon:
 			check: Icon
+		choice:
+			check: String
 		cancel:
 			default: false
 			check: Boolean
@@ -95,7 +97,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 					return
 
 			for key of @choiceOpts
-				if key not in ["onClick", "cancel"]
+				if key not in ["onClick", "cancel", "choice"]
 					btn_opts[key] = choice[key]
 
 			@_buttons.push(btn_opts)

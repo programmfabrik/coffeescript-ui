@@ -721,11 +721,24 @@ class CUI.DOM extends CUI.Element
 		if CUI.DOM.isInDOM(node)
 			return CUI.resolvedPromise(true)
 
+		dfr = new CUI.Deferred()
 
-		# we cannot really use observer here. the problem is
-		# that we would need to observe the parent to detect dom insert
-		# of "node" as a new child.
-		#
+		# If we use MutationObserver, and a not gets not inserted
+		# we never free memory on these nodes we wait to be inserted.
+
+		# mo = new MutationObserver =>
+		# 	console.debug "waiting for dom insert", node
+		# 	if DOM.isInDOM(node)
+		# 		if dfr.state() == "pending"
+		# 			# console.warn "inserted by mutation", node
+		# 			dfr.resolve()
+
+		# dfr.always =>
+		# 	mo.disconnect()
+
+		# mo.observe(document.documentElement, childList: true, subtree: true)
+
+		# return dfr.promise()
 
 
 		#add animation style
@@ -736,7 +749,6 @@ class CUI.DOM extends CUI.Element
 
 		timeout = null
 
-		dfr = new CUI.Deferred()
 		Events.wait
 			node: node
 			type: "animationstart"
@@ -982,10 +994,7 @@ class CUI.DOM extends CUI.Element
 			return null
 
 		assert(docElem instanceof Node, "CUI.DOM.isInDOM", "docElem needs to be instanceof Node.", docElem: docElem)
-		if @closestUntil(docElem, document.documentElement)
-			true
-		else
-			false
+		document.documentElement.contains(docElem)
 
 	# new nodes can be node or Array of nodes
 	@replaceWith: (node, new_node) ->
