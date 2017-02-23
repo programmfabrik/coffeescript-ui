@@ -107,6 +107,19 @@ textarea {
 	}
 }
 
+
+i.fa {
+	&.fa-color-green {
+		color: $cui_icon_color_green;
+	}
+	&.fa-color-red {
+		color: $cui_icon_color_red;
+	}
+	&.fa-color-blue {
+		color: $cui_icon_color_blue;
+	}
+}
+
 .cui-browser-ie:not(.cui-browser-edge) {
 	@for $i from 1 through 10 {
 		[data-max-chars="#{$i}"] {
