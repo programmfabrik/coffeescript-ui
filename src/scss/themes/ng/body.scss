@@ -3542,7 +3542,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-data-field-hidden {
-	display: none;
+	display: none !important;
 }
 
 .cui-form-table-has-left-column {
@@ -4059,7 +4059,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 	
 	&.cui-data-field-hidden {
-		display: none;
+		display: none !important;
 		
 		+ .cui-multi-input-input {
 			margin-top: 0;
