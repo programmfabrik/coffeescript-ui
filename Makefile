@@ -78,6 +78,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ListView/ListViewRow.coffee \
 	src/elements/ListView/ListViewHeaderRow.coffee \
 	src/elements/ListView/ListViewTreeNode.coffee \
+	src/elements/ListView/ListViewTreeHeaderNode.coffee \
 	src/elements/ListView/ListViewColumn.coffee \
 	src/elements/ListView/ListViewColumnEmpty.coffee \
 	src/elements/ListView/ListViewHeaderColumn.coffee \
@@ -112,6 +113,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/Checkbox/Checkbox.coffee \
 	src/elements/Options/Options.coffee \
 	src/elements/ObjectDumper/ObjectDumper.coffee \
+	src/elements/ObjectDumper/ObjectDumperNode.coffee \
 	src/elements/Output/Output.coffee \
 	src/elements/Output/OutputContent.coffee \
 	src/elements/MultiOutput/MultiOutput.coffee \

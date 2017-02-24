@@ -33,13 +33,24 @@ coffee_files = src/demo.coffee \
 	../src/elements/Form/demo/FormLayoutDemo.coffee \
 	../src/elements/ListView/demo/ListViewDemo.coffee \
 	../src/elements/ListView/demo/ListViewTreeDemo.coffee \
-	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee
+	../src/elements/DigiDisplay/demo/DigiDisplayDemo.coffee \
+	../src/elements/ObjectDumper/demo/ObjectDumperDemo.coffee
 
 
 jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 
+resource_files = ../src/elements/ObjectDumper/demo/example.json
 
 files = $(addsuffix .js, $(coffee_files) )
+
+all: code html css files.txt
+	#
+	# ---- $@ ----
+	mkdir -p $(target)
+	cp files.txt $(target)/
+	# make file list on Linux
+	# find -O1 -not -name '*~' -not -name '.*' -printf '%P %d %y %s %A@\n' files.txt
+
 
 highlight_files = \
 	../thirdparty/highlight/highlight.pack.js \
@@ -64,7 +75,7 @@ docs_icons:
 	cp src/icons/merge-icon.svg $(target)/css/icons/merge-icon.svg
 	cp src/icons/arrow-right.svg $(target)/css/icons/arrow-right.svg
 
-code: $(files) docs highlight docs_icons
+code: $(files) docs highlight docs_icons resources
 	#
     # $@
 	# make javascript, coffee transpiling is made automatically
@@ -121,13 +132,9 @@ jpg: $(jpg_files)
 	mkdir -p $(target)/css/pics
 	cp $(jpg_files) $(target)/css/pics
 
-all: code html css files.txt
-	#
-	# ---- $@ ----
-	mkdir -p $(target)
-	cp files.txt $(target)/
-	# make file list on Linux
-	# find -O1 -not -name '*~' -not -name '.*' -printf '%P %d %y %s %A@\n' files.txt
+resources: $(resource_files)
+	mkdir -p $(target)/resources
+	cp $(resource_files) $(target)/resources
 
 clean:
 	find . -name '*.coffee.js' | xargs rm -f

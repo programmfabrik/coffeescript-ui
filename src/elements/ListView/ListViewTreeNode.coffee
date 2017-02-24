@@ -15,11 +15,15 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			open:
 				check: Boolean
 			html: {}
+			colspan:
+				check: (v) ->
+					v > 0
 			getChildren:
 				check: Function
 
 	readOpts: ->
 		super()
+		@colspan = @_colspan
 		if @_children
 			@children = @opts.children
 			@initChildren()
@@ -795,7 +799,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@prependColumn new ListViewColumn
 			element: @element
 			class: "cui-tree-node-column cui-tree-node-level-#{@level()}"
-			colspan: @opts.colspan
+			colspan: @colspan
 
 		# nodes can re-arrange the order of the columns
 		# so we call them last

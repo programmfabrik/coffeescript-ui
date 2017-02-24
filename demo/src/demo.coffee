@@ -204,6 +204,7 @@ class RunDemo extends CUI.Element
 				content:
 					@__console
 				flexHandle:
+					state_name: "cui-demo-right"
 					label:
 						text: "Console"
 					hidden: false

@@ -8,7 +8,7 @@
 class CUI.ListViewTree extends CUI.ListView
 	constructor: (@opts={}) ->
 		super(@opts)
-
+		assert(@root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#
 
@@ -34,8 +34,7 @@ class CUI.ListViewTree extends CUI.ListView
 				check: Function
 
 
-
-	readOpts: ->
+	initListView: ->
 		super()
 
 		if not @_root
@@ -49,7 +48,6 @@ class CUI.ListViewTree extends CUI.ListView
 
 			@root = new ListViewTreeNode(lv_opts)
 		else
-			assert(@_root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 			@root = @_root
 
 		# replace RowMoveTool with ours
@@ -58,6 +56,7 @@ class CUI.ListViewTree extends CUI.ListView
 				@tools[idx] = new ListViewTreeRowMoveTool
 					rowMoveWithinNodesOnly: @_rowMoveWithinNodesOnly
 					# tree: @
+
 		@
 
 	isSelectable: ->

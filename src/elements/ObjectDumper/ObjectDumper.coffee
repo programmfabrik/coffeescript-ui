@@ -5,7 +5,17 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ObjectDumper extends CUI.Element
+class CUI.ObjectDumper extends CUI.ListViewTree
+
+	constructor: (@opts = {}) ->
+		super(@opts)
+
+		if @_headers
+			headerRow = new CUI.ListViewTreeHeaderNode(headers: @_headers)
+			@root.children.splice(0,0, headerRow)
+
+		@render(false)
+		@root.open()
 
 	initOpts: ->
 		super()
@@ -13,45 +23,32 @@ class ObjectDumper extends CUI.Element
 			object:
 				mandatory: true
 				check: (v) ->
-					not CUI.isFunction(v)
-					try
-						JSON.stringify(v)
-					catch e
-						CUI.error(e)
-						return false
-					return true
+					if CUI.isArray(v) or CUI.isPlainObject(v)
+						true
+					else
+						false
+			headers:
+				default: [
+					label: text: "key"
+				,
+					label: text: "value"
+				]
+				check: (v) ->
+					v.length == 2
 
-	render: ->
-		 $div("cui-object-dumper-container").append(@__dumpToDiv(@_object))
+		@removeOpt("root")
+		@removeOpt("cols")
+		@removeOpt("colResize")
+		@removeOpt("fixedRows")
 
-	__dumpToDiv: (obj, depth = 0) ->
+	readOpts: ->
+		super()
+		@_cols = ["auto", "auto"]
+		@_colClasses = ["cui-object-dumper-key", "cui-object-dumper-value"]
+		if @_headers
+			@_colResize = true
+			@_fixedRows = 1
 
-		label = (txt) =>
-			new Label(text: txt).DOM
-
-		if CUI.isPlainObject(obj)
-			node = $table()
-			for k, v of obj
-				tr = $tr().appendTo(node)
-				tr.append($td().append(new Label(text: k).DOM))
-				tr.append($td().append(@__dumpToDiv(v, depth+1)))
-		else if CUI.isArray(obj)
-			node = $ul()
-			for k in obj
-				node.append($li().append(@__dumpToDiv(k, depth+1)))
-		else if obj == true
-			node = label("<true>")
-		else if obj == false
-			node = label("<false>")
-		else if isNumber(obj)
-			node = label(obj+"")
-		else if isString(obj)
-			node = label(obj)
-		else if obj == null
-			node = label("<null>")
-		else if obj == undefined
-			node = label("<undefined>")
-		else
-			CUI.error("Unable to dumpToDiv", obj)
-
-		return node
+	initListView: ->
+		super()
+		@root = new CUI.ObjectDumperNode(data: @_object)

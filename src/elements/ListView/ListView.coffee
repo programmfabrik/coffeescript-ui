@@ -16,6 +16,48 @@ class CUI.ListView extends CUI.SimplePane
 	# @option options [String] TODO
 	constructor: (@opts={}) ->
 		super(@opts)
+		@initListView()
+
+	initListView: ->
+
+		@tools = []
+		@fixedColsCount = @_fixedCols
+		@fixedRowsCount = @_fixedRows
+
+		@__cols = @_cols.slice(0)
+
+		if @_colClasses
+			@__colClasses = @_colClasses.slice(0)
+
+		if @_rowMove
+			assert(not @_rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
+			@tools.push(new ListViewRowMoveTool())
+
+		if @_rowMove or @_rowMovePlaceholder
+			@__cols.splice(0,0, "fixed")
+			if not @__colClasses
+				@__colClasses = []
+			@__colClasses.splice(0,0, "cui-list-view-row-move-handle-column")
+
+		assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
+
+		if @_colResize or (@fixedRowsCount > 0 and @_colResize != false)
+			assert(@fixedRowsCount > 0, "new ListView", "Cannot enable col resize with no fixed rows.", opts: @opts)
+			@tools.push(new ListViewColResizeTool())
+
+		@__maxCols = []
+		for col, col_i in @__cols
+			assert(col in ["auto", "maximize", "fixed", "manual"], "new #{@__cls}", "Unkown type of col: \"#{col}\". opts.cols can only contain \"auto\" and \"maximize\" elements.")
+			if col == "maximize"
+				# assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
+				assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
+
+				if not CUI.__ng__
+					assert(@__maximize_horizontal, "new ListView", "maximized columns need the ListView to be set to opts.maximize_horizontal == true", opts: @opts)
+
+				@__maxCols.push(col_i)
+
+		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
 
 		@rowsCount = 0
 		@colsCount = @__cols.length
@@ -128,45 +170,6 @@ class CUI.ListView extends CUI.SimplePane
 			@opts.footer_left = @opts.footer
 
 		super()
-		@tools = []
-		@fixedColsCount = @_fixedCols
-		@fixedRowsCount = @_fixedRows
-
-		@__cols = @_cols.slice(0)
-
-		if @_colClasses
-			@__colClasses = @_colClasses.slice(0)
-
-		if @_rowMove
-			assert(not @_rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
-			@tools.push(new ListViewRowMoveTool())
-
-		if @_rowMove or @_rowMovePlaceholder
-			@__cols.splice(0,0, "fixed")
-			if not @__colClasses
-				@__colClasses = []
-			@__colClasses.splice(0,0, "cui-list-view-row-move-handle-column")
-
-		assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
-
-		if @_colResize or (@fixedRowsCount > 0 and @_colResize != false)
-			assert(@fixedRowsCount > 0, "new ListView", "Cannot enable col resize with no fixed rows.", opts: @opts)
-			@tools.push(new ListViewColResizeTool())
-
-		@__maxCols = []
-		for col, col_i in @__cols
-			assert(col in ["auto", "maximize", "fixed", "manual"], "new #{@__cls}", "Unkown type of col: \"#{col}\". opts.cols can only contain \"auto\" and \"maximize\" elements.")
-			if col == "maximize"
-				# assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
-				assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
-
-				if not CUI.__ng__
-					assert(@__maximize_horizontal, "new ListView", "maximized columns need the ListView to be set to opts.maximize_horizontal == true", opts: @opts)
-
-				@__maxCols.push(col_i)
-
-		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
-
 		@
 
 	destroy: ->
