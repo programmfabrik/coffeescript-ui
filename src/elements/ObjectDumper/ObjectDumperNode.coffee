@@ -5,8 +5,11 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 			key:
 				default: "root"
 				mandatory: true
-			data:
+			data: {}
+			do_open:
 				mandatory: true
+				default: false
+				check: Boolean
 		@removeOpt("colspan")
 		@removeOpt("children")
 		@removeOpt("getChildren")
@@ -18,6 +21,9 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		if @_key == "root"
 			@children = @getNodesFromData(@_data)
 
+		if not @isLeaf() and @_do_open
+			@do_open = true
+
 	getChildren: ->
 		@getNodesFromData(@_data)
 
@@ -25,8 +31,22 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		not @__info.has_children
 
 	renderContent: ->
-		@addColumn(new ListViewColumn(class: "cui-object-dumper-node-"+@__info.cls.toLowerCase(), text: @__info.text))
-		new Label(class: "cui-object-dumper-node-key cls", text: @_key)
+		@addColumn(new ListViewColumn(
+			class: "cui-object-dumper-node-value"
+			element: new Label(
+				text: @__info.text
+				multiline: true
+			)
+		))
+		new Label(
+			class: "cui-object-dumper-node-key"
+			text: @_key
+			multiline: true
+		)
+
+	getClass: ->
+		cls = super()
+		cls + " cui-object-dumper-node-" + @__info.cls.toLowerCase()
 
 	getInfoFromData: (data) ->
 		info = {}
@@ -67,6 +87,6 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		nodes = []
 		info = @getInfoFromData(data)
 		for k, v of data
-			nodes.push(new CUI.ObjectDumperNode(key: k, data: v))
+			nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open))
 		nodes
 

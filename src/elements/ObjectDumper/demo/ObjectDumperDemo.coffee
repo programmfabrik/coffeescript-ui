@@ -21,6 +21,7 @@ class ObjectDumperDemo extends Demo
 		.done (data) ->
 			od = new CUI.ObjectDumper
 				header_left: new Label(text: fn)
+				# do_open: true
 				object: data
 			CUI.DOM.append(div, od)
 		.fail ->

@@ -35,6 +35,10 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 				]
 				check: (v) ->
 					v.length == 2
+			do_open:
+				mandatory: true
+				default: false
+				check: Boolean
 
 		@removeOpt("root")
 		@removeOpt("cols")
@@ -51,4 +55,4 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 
 	initListView: ->
 		super()
-		@root = new CUI.ObjectDumperNode(data: @_object)
+		@root = new CUI.ObjectDumperNode(data: @_object, do_open: @_do_open)

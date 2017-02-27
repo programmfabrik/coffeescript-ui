@@ -36,6 +36,8 @@ class CUI.Form extends CUI.DataField
 				check: Boolean
 			maximize_vertical:
 				check: Boolean
+			render_as_block:
+				check: Boolean
 			top: {}
 			bottom: {}
 
@@ -135,6 +137,10 @@ class CUI.Form extends CUI.DataField
 		@__fields = @__createFields()
 		@__fields
 
+	reload: ->
+		@initFields()
+		super()
+
 	displayValue: ->
 		if @__checkbox
 			@__checkbox.displayValue()
@@ -211,6 +217,11 @@ class CUI.Form extends CUI.DataField
 			# it does not break anything
 			super()
 			@renderTable()
+			if not @hasContentForAppend()
+				CUI.DOM.hideElement(@DOM)
+			else
+				CUI.DOM.showElement(@DOM)
+
 		else
 			@renderTable()
 			super()
@@ -457,6 +468,12 @@ class CUI.Form extends CUI.DataField
 		if @getCheckbox()
 			return true
 
+		if @_render_as_block == false
+			return false
+
+		if @_render_as_block == true
+			return true
+
 		fields = @getFields()
 		for f in fields
 			if f._form?.label
@@ -522,8 +539,8 @@ class CUI.Form extends CUI.DataField
 			CUI.DOM.addClass(container, @_class_table)
 
 		get_append = (v, info=@) =>
-			if v instanceof Form and not v.hasContentForAppend()
-				null
+			if v instanceof Form
+				v.DOM
 			else if CUI.isPlainObject(v) # assume a label constructor
 				# new Label(v).DOM
 				new MultilineLabel(v).DOM
