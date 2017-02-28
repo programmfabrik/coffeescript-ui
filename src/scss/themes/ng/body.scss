@@ -941,7 +941,7 @@ i.cui-spin-stepped {
 
   &:focus {
   	.cui-button-visual {
-  		@include focus;
+  		@include inner-focus;
   	}
   }
 }
@@ -1207,6 +1207,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-button-center {
 		min-width: 0;
 		flex: 1 1 auto;
+		padding-right: 5px;
 		justify-content: flex-start;
 
 		span {
