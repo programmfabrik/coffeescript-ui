@@ -841,8 +841,8 @@ i.cui-spin-stepped {
 
 	.cui-button-visual {
 	  padding: 0 $padding;
-	  height: 24px;
-	  line-height: 22px;
+	  height: $button-height;
+	  line-height: $button-height - 2px;
 	  color: $button-color;
 	  background: $button-background;
 	  border: 1px solid $button-border;

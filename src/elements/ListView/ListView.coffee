@@ -486,7 +486,9 @@ class CUI.ListView extends CUI.SimplePane
 		width = @quadrant[3].offsetWidth - @quadrant[3].clientWidth
 		height = @quadrant[3].offsetHeight -  @quadrant[3].clientHeight
 
-		@quadrant[1].style.marginRight = @__getValue(width)
+		# sorry to brake this to you Martin but using paddingRight here 
+		# instead of marginRight is way cooler because it keeps the border
+		@quadrant[1].style.paddingRight = @__getValue(width)
 		@quadrant[2].style.marginBottom = @__getValue(height)
 		@
 
