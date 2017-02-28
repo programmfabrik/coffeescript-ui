@@ -1396,18 +1396,18 @@ a[role="button"].cui-button-appearance-link {
 	display: block;
 
 	h1, h2, h3, h4, h5, h6 {
-	  font-weight: normal;
-	  margin: 0 0 $padding;
+		font-weight: normal;
+		margin: 0 0 $padding;
 	}
 
 	h1 {
-	  font-size: 24px;
-	  line-height: 30px;
+		font-size: 24px;
+		line-height: 30px;
 	}
 
 	h2 {
-	  font-size: 20px;
-	  line-height: 25px;
+		font-size: 20px;
+		line-height: 25px;
 	}
 
 	a {
@@ -1415,17 +1415,51 @@ a[role="button"].cui-button-appearance-link {
 		text-decoration: underline;
 	}
 
+	em {
+		background: none;
+		font-style: italic;
+	}
+
 	p,
-  pre,
-  blockquote {
-    margin: 0 0 16px;
+	pre,
+	blockquote,
+	table {
+		margin: 0 0 16px;
   }
 
   & > p,
   & > pre,
+  & > table,
   & > blockquote {
-    &:last-child {
-      margin-bottom: 0;
+		&:last-child {
+			margin-bottom: 0;
+    }
+  }
+
+  table {
+    border: none;
+    table-layout: auto;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: keep-all;
+
+    td, th {
+			padding: 7px 12px;
+			border: 1px solid hsl(0,0%,87%);
+    }
+
+    th {
+			font-weight: bold;
+			text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+			background: hsl(0,0%,97%);
+    }
+
+    col {
+			width: auto;
     }
   }
 
@@ -2216,7 +2250,7 @@ a[role="button"].cui-button-appearance-link {
 	min-width: 0;
 	-webkit-user-select: none;
 	    -ms-user-select: none;
-	        user-select: none;
+					user-select: none;
 	cursor: default;
 
 	> .cui-layout > .cui-vertical-layout-center {
