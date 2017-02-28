@@ -4609,6 +4609,14 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// Object Dumper
+
+.cui-object-dumper {
+	.cui-label-multiline:not(.cui-label-markdown) {
+		word-break: break-all;
+	}
+}
+
 .cui-disabled {
 	-webkit-user-select: none;
 	    -ms-user-select: none;
