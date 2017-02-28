@@ -39,6 +39,10 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 				mandatory: true
 				default: false
 				check: Boolean
+			parse_json:
+				mandatory: true
+				default: false
+				check: Boolean
 
 		@removeOpt("root")
 		@removeOpt("cols")
@@ -55,4 +59,4 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 
 	initListView: ->
 		super()
-		@root = new CUI.ObjectDumperNode(data: @_object, do_open: @_do_open)
+		@root = new CUI.ObjectDumperNode(data: @_object, do_open: @_do_open, parse_json: @_parse_json)

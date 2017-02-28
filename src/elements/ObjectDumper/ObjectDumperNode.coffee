@@ -1,4 +1,5 @@
 class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -10,22 +11,43 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 				mandatory: true
 				default: false
 				check: Boolean
+			parse_json:
+				mandatory: true
+				default: false
+				check: Boolean
+
 		@removeOpt("colspan")
 		@removeOpt("children")
 		@removeOpt("getChildren")
 
 	readOpts: ->
 		super()
-		@__info = @getInfoFromData(@_data)
+		@setData(@_data)
+		@__info = @getInfoFromData(@getData())
 
 		if @_key == "root"
-			@children = @getNodesFromData(@_data)
+			@children = @getNodesFromData(@getData())
 
 		if not @isLeaf() and @_do_open
 			@do_open = true
 
+	setData: (data) ->
+
+		if @_parse_json and isString(data)
+			try
+				@__data = JSON.parse(data)
+			catch e
+				@__data = data
+		else
+			@__data = data
+
+		@
+
+	getData: ->
+		@__data
+
 	getChildren: ->
-		@getNodesFromData(@_data)
+		@getNodesFromData(@getData())
 
 	isLeaf: ->
 		not @__info.has_children
@@ -49,6 +71,7 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		cls + " cui-object-dumper-node-" + @__info.cls.toLowerCase()
 
 	getInfoFromData: (data) ->
+
 		info = {}
 		if data == undefined
 			info.cls = "undefined"
@@ -87,6 +110,6 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		nodes = []
 		info = @getInfoFromData(data)
 		for k, v of data
-			nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open))
+			nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open, parse_json: @_parse_json))
 		nodes
 
