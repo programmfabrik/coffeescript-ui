@@ -549,7 +549,8 @@ li > div {
 		}
 	}
 
-	.cui-button {
+	.cui-button,
+	.cui-button-href {
 		align-self: stretch;
 		height: auto; // for checkbox
 		min-width: 0;
@@ -572,7 +573,8 @@ li > div {
 		min-width: 0;
 
 		.cui-button,
-		.cui-data-field {
+		.cui-data-field,
+		.cui-button-href {
 			&:not(:first-child) {
 				padding-left: 0;
 			}
@@ -1593,8 +1595,11 @@ a[role="button"].cui-button-appearance-link {
 		height: 100%;
 	}
 
-	.cui-buttonbar-group + .cui-button {
-		margin-left: $padding/2;
+	.cui-buttonbar-group {
+		+ .cui-button,
+		+ .cui-button-href {
+			margin-left: $padding/2;
+		}
 	}
 }
 
