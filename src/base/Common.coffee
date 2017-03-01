@@ -319,7 +319,7 @@ alert_dump = (v) -> alert(dump(v, "    "))
 # convert camel case to dash
 toDash = (s) ->
 	s = s + "U"
-	s1 = (s.substring(0,1) + s.substring(1).replace(/([A-Z](?![A-Z]))/g, ($1)->"-#{$1.toLowerCase()}"))
+	s1 = (s.substring(0,1) + s.substring(1).replace(/([A-Z](?![A-Z0-9]))/g, ($1)->"-#{$1.toLowerCase()}"))
 	s1 = s1.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 	s1 = s1.substring(0,s1.length-2)
 	s1.replace(/\./g, "-")
