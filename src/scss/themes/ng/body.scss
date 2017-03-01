@@ -710,6 +710,8 @@ li > div {
 		padding: 0;
 
 		.cui-button-button {
+			padding: 0;
+			
 			.cui-button-visual {
 				@include button-reset;
 				color: hsl(205,11%,29%);
@@ -2616,6 +2618,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-toolbar .cui-tab-header-button-overflow,
 .cui-toolbar .cui-tab-header-button {
 	font-size: inherit;
+	padding-top: 0;
+	padding-bottom: 0;
 
 	.cui-button-visual {
 		background: none;
@@ -2718,9 +2722,10 @@ a[role="button"].cui-button-appearance-link {
 		line-height: $table-data-height - $table-data-padding*2;
 	}
 
-	.cui-data-field-output-label {
-		padding: 6px 0;
-	}
+	// Conflict: looks bad in list-views that include buttons
+	// .cui-data-field-output-label {
+	// 	padding: 6px 0;
+	// }
 
 	> .cui-vertical-layout-center {
 		flex-shrink: 1;
@@ -3035,9 +3040,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: pointer;
 }
 
-.cui-list-view-row-move-handle-column {
-	align-items: center;
-
+.cui-list-view-row-move-handle-column {	
 	&:after {
 		display: none;
 	}
@@ -3136,7 +3139,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tree-node-handle {
-	min-height: 14px;
+	height: 18px;
 	display: flex;
 	text-align: center;
 	justify-content: flex-end;
@@ -3700,8 +3703,7 @@ a[role="button"].cui-button-appearance-link {
 		padding: 0 4px 0 0;
 
 		.cui-drag-handle-row {
-			margin-top: 6px;
-			align-self: flex-start;
+			margin-top: 7px;
 		}
 	}
 }
