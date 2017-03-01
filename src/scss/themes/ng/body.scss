@@ -563,8 +563,7 @@ li > div {
 		height: auto; // for checkbox
 		min-width: 0;
 		flex-shrink: 1;
-		padding-left: 5px;
-		padding-right: 5px;
+		padding: 5px;
 	}
 
 	.cui-button-checkbox {
@@ -1039,7 +1038,7 @@ i.cui-spin-stepped {
 	}
 
 	.fa {
-		font-size: 20px;
+		font-size: 28px;
 	}
 }
 
