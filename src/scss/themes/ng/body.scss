@@ -94,9 +94,9 @@ textarea {
 
 // enlarge max-chars < 10
 // e.g. max-chars 5 = 5.5ch
-@for $i from 1 through 10 {
+@for $i from 1 to 10 {
 	[data-max-chars="#{$i}"] {
-		width: #{$i + 0.5}ch;
+		width: #{$i + 1}ch;
 	}
 }
 
