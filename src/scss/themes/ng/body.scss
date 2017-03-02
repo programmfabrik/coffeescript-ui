@@ -861,7 +861,8 @@ i.cui-spin-stepped {
 	}
 
 	&.cui-layer-open,
-	&:active {
+	&:active,
+	&.cui-active {
 		.cui-button-visual {
 	  	background: $button-pressed;
 	  }
