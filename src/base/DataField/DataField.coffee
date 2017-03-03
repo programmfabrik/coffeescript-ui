@@ -219,15 +219,6 @@ class CUI.DataField extends CUI.DOM
 	isShown: ->
 		!@isHidden()
 
-	setOpacity: (opacity) ->
-		if opacity == 1
-			if @__opacity != 1
-				@DOM.css("opacity", "")
-		else
-			@DOM.css("opacity", opacity)
-		@__opacity = opacity
-		@
-
 	updateData: (data) ->
 		if CUI.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
@@ -306,7 +297,6 @@ class CUI.DataField extends CUI.DOM
 			@disable()
 		if @isHidden()
 			@hide()
-		@setOpacity()
 		@callOnOthers("render")
 		@_onRender?(@)
 		@

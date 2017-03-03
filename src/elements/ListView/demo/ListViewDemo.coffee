@@ -271,7 +271,6 @@ class ListViewDemo extends Demo
 		options = {
 			maximize_column: [1]
 			listViewOptions:
-				setOpacity: false
 				autoLayout: 2
 				fixedRows: 1
 				fixedCols: 1

@@ -1197,10 +1197,24 @@ class CUI.DOM extends CUI.Element
 	@getDimension: (docElem, key) ->
 		@getDimensions(docElem)[key]
 
+	@prepareSetDimensions: (docElem) ->
+		if docElem.__prep_dim
+			return
+
+		docElem.__prep_dim =
+			borderBox: @isBorderBox(docElem)
+			dim: @getDimensions(docElem)
+		@
+
 	@setDimensions: (docElem, _dim) ->
-		borderBox = @isBorderBox(docElem)
+		@prepareSetDimensions(docElem)
+
 		css = {}
-		dim = @getDimensions(docElem)
+		borderBox = docElem.__prep_dim.borderBox
+		dim = docElem.__prep_dim.dim
+
+		delete(docElem.__prep_dim)
+
 		set_dim = copyObject(_dim)
 
 		cssFloat = {}

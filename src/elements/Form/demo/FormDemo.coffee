@@ -158,20 +158,6 @@ class FormDemo extends Demo
 							else
 								df.focus()
 					,
-						text: "setOpacity"
-						menu_on_hover: true
-						menu:
-							placement: "es"
-							items: [
-								text: "1"
-								onClick: (ev, btn) ->
-									df.setOpacity(1)
-							,
-								text: "0.5"
-								onClick: (ev, btn) ->
-									df.setOpacity(0.5)
-							]
-					,
 						text: "setValue"
 						menu_on_hover: true
 						menu:

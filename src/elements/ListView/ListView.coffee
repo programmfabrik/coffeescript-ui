@@ -157,9 +157,6 @@ class CUI.ListView extends CUI.SimplePane
 						true
 					else
 						false
-			setOpacity:
-				default: true
-				check: Boolean
 
 
 	readOpts: ->
@@ -437,8 +434,6 @@ class CUI.ListView extends CUI.SimplePane
 
 		@appendDeferredRows()
 
-		if @_setOpacity # and @_autoLayout != 2
-			@grid[0].style.opacity = "0"
 		DOM.waitForDOMInsert(node: @DOM)
 		.done =>
 			@__isInDOM = true
@@ -449,8 +444,6 @@ class CUI.ListView extends CUI.SimplePane
 			# 	@__scheduleLayout()
 			# else
 			@__doLayout()
-			if @_setOpacity # and @_autoLayout != 2
-				@grid[0].style.opacity = "1"
 		@DOM
 
 	__getScrolling: ->
@@ -486,7 +479,7 @@ class CUI.ListView extends CUI.SimplePane
 		width = @quadrant[3].offsetWidth - @quadrant[3].clientWidth
 		height = @quadrant[3].offsetHeight -  @quadrant[3].clientHeight
 
-		# sorry to brake this to you Martin but using paddingRight here 
+		# sorry to brake this to you Martin but using paddingRight here
 		# instead of marginRight is way cooler because it keeps the border
 		@quadrant[1].style.paddingRight = @__getValue(width)
 		@quadrant[2].style.marginBottom = @__getValue(height)
@@ -972,11 +965,11 @@ class CUI.ListView extends CUI.SimplePane
 					cell.style.setProperty("width", width+"px", "important")
 				else
 					cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal)+"px", "important")
-
 		# CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
 
 		@styleElement.innerHTML = css.join("\n")
 		# CUI.info("ListView#"+@listViewCounter, "Set manual col widths.")
+
 
 		if @fixedColsCount >  0
 			# find unmeasured rows in Q2 & Q3 and set height
@@ -994,12 +987,18 @@ class CUI.ListView extends CUI.SimplePane
 
 				for row, idx in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
 					row_i2 = parseInt(DOM.getAttribute(row, "row"))
+					DOM.prepareSetDimensions(rows[row_i2])
+					row.__offsetHeight = row.offsetHeight
 
-					# console.debug "Set ROW", idx, row_i2, row.offsetHeight
-					DOM.setDimensions(rows[row_i2], borderBoxHeight: row.offsetHeight)
+				for row, idx in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
+					row_i2 = parseInt(DOM.getAttribute(row, "row"))
+					DOM.setDimensions(rows[row_i2], borderBoxHeight: row.__offsetHeight)
+					delete(row.__offsetHeight)
 					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
 			# CUI.info("ListView#"+@listViewCounter, "Synced row heights in Q0 and Q1.")
+
+
 
 		@__setMargins()
 		# CUI.info("ListView#"+@listViewCounter, "Set margins on Q1 and Q2.")
