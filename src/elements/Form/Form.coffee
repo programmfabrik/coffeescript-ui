@@ -139,6 +139,7 @@ class CUI.Form extends CUI.DataField
 
 	reload: ->
 		@initFields()
+		@callOnOthers("setData", @__data)
 		super()
 
 	displayValue: ->
@@ -494,7 +495,10 @@ class CUI.Form extends CUI.DataField
 	__renderTableNg: ->
 
 		layout = @getLayout()
-		CUI.DOM.setAttribute(layout.center(), "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
+
+		form_depth = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
+
+		CUI.DOM.setAttribute(layout.center(), "cui-form-depth", form_depth)
 
 		layout.empty("center")
 		container = layout.center()
@@ -687,6 +691,8 @@ class CUI.Form extends CUI.DataField
 
 				if @__horizontal
 					CUI.DOM.addClass(table, "cui-form--horizontal")
+
+				CUI.DOM.setAttribute(table, "cui-form-depth", form_depth)
 
 				append(table)
 

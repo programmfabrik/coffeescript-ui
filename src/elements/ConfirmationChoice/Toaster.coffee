@@ -22,6 +22,11 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 	open: ->
 		# super sets a deferred
 		super()
+		if @_show_ms == 0
+			if not @_backdrop
+				@_backdrop =
+					policy: "modal"
+
 		if @_show_ms > 0
 			CUI.setTimeout
 				ms: @_show_ms

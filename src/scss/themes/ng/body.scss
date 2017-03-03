@@ -711,7 +711,7 @@ li > div {
 
 		.cui-button-button {
 			padding: 0;
-			
+
 			.cui-button-visual {
 				@include button-reset;
 				color: hsl(205,11%,29%);
@@ -2902,7 +2902,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-list-view-grid-quadrant-1 {
 	flex: 1 1 auto;
-	
+
 	.cui-lv-td:last-child:after {
 		display: none;
 	}
@@ -3036,7 +3036,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: pointer;
 }
 
-.cui-list-view-row-move-handle-column {	
+.cui-list-view-row-move-handle-column {
 	&:after {
 		display: none;
 	}
@@ -3321,8 +3321,9 @@ a[role="button"].cui-button-appearance-link {
 			max-width: none;
 
 			label {
-				word-break: normal;
-  			white-space: nowrap;
+				word-break: break-all;
+				white-space: normal;
+				min-width: $td-min-width;
 			}
 		}
 
@@ -3379,9 +3380,14 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-table {
-	width: calc(100% - #{2*$padding});
 	display: table;
-	margin: $padding;
+	width: 100%;
+	margin: 0;
+
+	&[cui-form-depth="0"] {
+		width: calc(100% - #{2*$padding});
+		margin: $padding;
+	}
 
 	& + .cui-form-table {
 		margin-top: -$padding;
@@ -3470,6 +3476,13 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-form-table:not([cui-form-depth="0"]) {
+	.cui-form-value {
+		// push the width in inner tables to the maximum
+		width: 100%;
+	}
+}
+
 .cui-form-value {
 	flex-grow: 1;
 	// CONFLICT: kills the spacing when the label is multi-line
@@ -3545,7 +3558,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-object-dumper {
 		border: 1px solid $table-border;
-		
+
 		.cui-list-view-grid-quadrant-3 {
 			min-height: auto;
 		}

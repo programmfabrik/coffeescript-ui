@@ -221,7 +221,7 @@ class Select extends Checkbox
 				if opt.text?.length > max_chars
 					max_chars = opt.text?.length
 
-			# CUI.debug "Select.displayValue", @__options, @getData(), @getValue(), found_opt
+			# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
 			if found_opt
 				if found_opt.icon
 					@__checkbox.setIcon(found_opt.icon)

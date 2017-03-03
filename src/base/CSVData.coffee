@@ -108,14 +108,13 @@ class CUI.CSVData extends CUI.Element
 					quote = false
 
 				if quote
-					_row.push(opts.quotechar+str.replace(new RegExp(escapeRegExp(opts.quotechar), "g"), opts.quotechar+opts.quotechar)+opts.quotechar)
+					_row.push(CUI.CSVData.quote(str, opts.quotechar))
 				else
 					_row.push(str)
 
 			_rows.push(_row.join(""))
 
 		_rows.join(opts.newline)
-
 
 	# parse csv info array
 	parse: (_opts={}) ->
@@ -127,6 +126,10 @@ class CUI.CSVData extends CUI.Element
 				check: String
 			quotechar:
 				check: String
+			defer:
+				mandatory: true
+				default: true
+				check: Boolean
 
 		@rows = []
 		text = opts.text
@@ -152,9 +155,9 @@ class CUI.CSVData extends CUI.Element
 		else
 			quotechar = null
 
-		console.info("CUI.CSV.parse:", len, "chars. delimiter:", delimiter or "detect", "quotechar:", quotechar or "detect")
-
-		dfr = new CUI.Deferred()
+		# console.info("CUI.CSV.parse:", len, "chars. delimiter:", delimiter or "detect", "quotechar:", quotechar or "detect")
+		if opts.defer
+			dfr = new CUI.Deferred()
 
 		do_work = =>
 
@@ -177,11 +180,11 @@ class CUI.CSVData extends CUI.Element
 
 				if quotechar == null and char in auto_quotechars
 					quotechar = char
-					console.info("CSVData.parse: detected quotechar:", quotechar)
+					# console.info("CSVData.parse: detected quotechar:", quotechar)
 
 				if delimiter == null and char in auto_delimiters
 					delimiter = char
-					console.info("CSVData.parse: detected delimiter:", delimiter)
+					# console.info("CSVData.parse: detected delimiter:", delimiter)
 
 				if char == quotechar
 					if in_quotes
@@ -221,7 +224,7 @@ class CUI.CSVData extends CUI.Element
 						end_column()
 						end_row()
 
-						if lines%1000==0
+						if lines%1000==0 and opts.defer
 							dfr.notify(row_count: lines, file_read_idx: idx, file_length: len)
 							CUI.setTimeout
 								ms: 10
@@ -245,13 +248,24 @@ class CUI.CSVData extends CUI.Element
 				end_row()
 
 			@giveAllRowsSameNumberOfColumns()
-			dfr.resolve(row_count: lines, file_length: len)
 
-		CUI.setTimeout
-			ms: 0
-			call: do_work
+			info = row_count: lines, file_length: len, rows: @rows
+			if opts.defer
+				dfr.resolve(info)
+			else
+				return info
 
-		dfr.done =>
-			@debug()
+		if opts.defer
+			CUI.setTimeout
+				ms: 0
+				call: do_work
 
-		dfr.promise()
+			dfr.done =>
+				@debug()
+
+			return dfr.promise()
+		else
+			return do_work()
+
+	@quote: (str, quotechar = '"') ->
+		quotechar+str.replace(new RegExp(escapeRegExp(quotechar), "g"), quotechar+quotechar)+quotechar
