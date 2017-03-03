@@ -399,7 +399,7 @@ class CUI.ListView extends CUI.SimplePane
 				col = parseInt(cell.getAttribute("col"))
 
 				if @_autoLayout == 2
-					if DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
+					if @fixedColsCount > 0 and DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
 						# row has not been measured
 						return
 					@__resetRowDim(row)
@@ -1231,7 +1231,10 @@ class CUI.ListView extends CUI.SimplePane
 					when true
 						html[qi].push("<div class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
 					when 2
-						html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" cui-lv-tr-unmeasured=\"#{@listViewCounter}\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
+						if @fixedColsCount > 0
+							html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" cui-lv-tr-unmeasured=\"#{@listViewCounter}\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
+						else
+							html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
 					else
 						html[qi].push("<tr class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
 
@@ -1432,7 +1435,7 @@ class CUI.ListView extends CUI.SimplePane
 		delete(@__cellDims[row_i])
 		delete(@__rowHeights[row_i])
 
-		if @__rows[row_i]
+		if @fixedColsCount > 0 and @__rows[row_i]
 			for row in @__rows[row_i]
 				DOM.setAttribute(row, "cui-lv-tr-unmeasured", @listViewCounter)
 
