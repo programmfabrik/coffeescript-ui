@@ -53,13 +53,14 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		not @__info.has_children
 
 	renderContent: ->
-		@addColumn(new ListViewColumn(
-			class: "cui-object-dumper-node-value"
-			element: new Label(
-				text: @__info.text
-				multiline: true
-			)
-		))
+		if @isLeaf() or not @isOpen()
+			@addColumn(new ListViewColumn(
+				class: "cui-object-dumper-node-value"
+				element: new Label(
+					text: @__info.text
+					multiline: true
+				)
+			))
 		new Label(
 			class: "cui-object-dumper-node-key"
 			text: @_key
@@ -109,7 +110,12 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 	getNodesFromData: (data) ->
 		nodes = []
 		info = @getInfoFromData(data)
-		for k, v of data
-			nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open, parse_json: @_parse_json))
+		if info.cls == "Array"
+			for idx in [0...data.length]
+				nodes.push(new CUI.ObjectDumperNode(key: idx, data: data[idx], do_open: @_do_open, parse_json: @_parse_json))
+		else
+			for k, v of data
+				nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open, parse_json: @_parse_json))
+
 		nodes
 

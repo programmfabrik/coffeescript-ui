@@ -3183,10 +3183,10 @@ a[role="button"].cui-button-appearance-link {
 	&:nth-child(even) .cui-table-td {
 		background: $zebra-color;
 	}
+}
 
-	.cui-table-td {
-		vertical-align: middle;
-	}
+.cui-table-td {
+	vertical-align: middle;
 }
 
 .cui-table-header {
@@ -3235,6 +3235,11 @@ a[role="button"].cui-button-appearance-link {
 	text-align: right;
 	padding-right: 0;
 	vertical-align: top;
+}
+
+.cui-td--text-content {
+	vertical-align: top;
+	white-space: pre-wrap;
 }
 
 .cui-td--value {

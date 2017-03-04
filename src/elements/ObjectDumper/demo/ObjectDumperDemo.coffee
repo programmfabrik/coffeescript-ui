@@ -12,16 +12,17 @@ class ObjectDumperDemo extends Demo
 	display: ->
 		div = $div("cui-object-dumper-demo")
 
-		fn = "/demo/resources/example.json"
+		fn = "/demo/resources/example2.json"
 
 		xhr = new CUI.XHR
 			url: CUI.getPathToScript()+fn
 
 		xhr.start()
 		.done (data) ->
+			console.debug dump(data)
 			od = new CUI.ObjectDumper
 				header_left: new Label(text: fn)
-				# do_open: true
+				do_open: true
 				object: data
 			CUI.DOM.append(div, od)
 		.fail ->

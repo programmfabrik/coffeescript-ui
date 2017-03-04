@@ -303,76 +303,65 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	# resolves with the opened node
 	open: ->
-		dfr = new CUI.Deferred()
-		tree = @getTree()
-		# CUI.error "Node.open START", @getUniqueId(), @getNodeId(), @isLoading(), @is_open, dfr.getUniqueId()
 
-		assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @, tree: tree)
+		# we could return loading_deferred here
+		assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
 
 		if @is_open
-			# CUI.debug "node is already open"
-			return dfr.resolve(@).promise()
+			return CUI.resolvedPromise()
 
-		# keep this as long as the other deferred is not done
-		@__loadingDeferred = new CUI.Deferred()
+		dfr = @__loadingDeferred = new CUI.Deferred()
 
-		# console.time "open:"+tree.getUniqueId()+@getNodeId()
-		dfr.always =>
-			# CUI.error @getUniqueId(), "running always...", @__loadingDeferred, @isLoading()
+		do_resolve = =>
+			if @__loadingDeferred.state() == "pending"
+				@__loadingDeferred.resolve(@)
 			@__loadingDeferred = null
-			# console.timeEnd "open:"+tree.getUniqueId()+@getNodeId()
-			# CUI.error "Node.open DONE", @getUniqueId(), @isLoading()
-			return
+
+		do_reject = =>
+			if @__loadingDeferred.state() == "pending"
+				@__loadingDeferred.reject(@)
+			@__loadingDeferred = null
 
 		load_children = =>
 			assert(CUI.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
+
+			# console.debug @._key, @getUniqueId(), "children loaded", @children.length
 
 			if @children.length == 0
 				@is_open = true
 				@do_open = false
 				if not @isRoot()
 					@replaceSelf()
-				dfr.resolve(@)
+				do_resolve()
 				return
 
 			@initChildren()
 
-			# # CUI.debug "starting with children", @getUniqueId(), (c.getUniqueId() for c in @children)
-			# for n in @children
-			#       @__addNode(n, true, false, true)
+			CUI.chunkWork.call @,
+				items: @children
+				chunk_size: 5
+				timeout: 1
+				call: (items) =>
+					CUI.chunkWork.call @,
+						items: items
+						chunk_size: 1
+						timeout: -1
+						call: (_items) =>
+							if @__loadingDeferred.state() == "rejected"
+								return false
+							@__appendNode(_items[0], true) # , false, true))
 
-			# if not @isRoot()
-			# 	@is_open = true
-			# 	@replaceSelf()
-			# dfr.resolve()
-			# return
-
-			# CUI.debug "root: ", @isRoot(), @is_open, @children.length
-
-			promises = []
-			@__loadingDeferred = CUI.chunkWork(@children, 5, 1) # set ms to 1 so we track this
-			.progress (node, idx) =>
-				# CUI.debug "chunk adding node:", "this:", @getUniqueId(), "node:", node.getUniqueId()
-				promises.push(@__appendNode(node, true)) # , false, true)) # don't add again to child array, assume open
-				# CUI.debug "node appended", idx, tree.layoutIsStopped(), tree
 			.done =>
-				CUI.when(promises)
-				.done =>
-					# CUI.error @getUniqueId(), "resolving deferred...", @, @__loadingDeferred
-					@is_open = true
-					@do_open = false
-					if not @isRoot()
-						@replaceSelf()
-
-					dfr.resolve(@)
-				.fail =>
-					dfr.reject(@)
+				@is_open = true
+				@do_open = false
+				if not @isRoot()
+					@replaceSelf()
+				do_resolve()
 			.fail =>
-				# we need to remove our children
 				for c in @children
 					c.removeFromDOM()
-				# CUI.error(@getUniqueId(), "rejecting deferred...", @__loadingDeferred)
-				dfr.reject(@)
+				do_reject()
+
 			return
 
 		if @children
@@ -388,17 +377,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 					assert(isPromise(ret), "#{getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
 					ret
 					.done (@children) =>
-						if @__loadingDeferred.state() == "rejected"
-							CUI.warn("getChildren promise returned, but node opening was cancelled.")
-							dfr.reject(@)
-						else
+						if @__loadingDeferred.state() == "pending"
 							load_children()
-					.fail =>
-						dfr.reject(@)
+						return
+					.fail(do_reject)
 			else
 				if not @isRoot()
 					@replaceSelf()
-				dfr.resolve(@)
+				do_resolve()
 
 		dfr.promise()
 
@@ -483,6 +469,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		if tree?.isDestroyed()
 			return CUI.rejectedPromise(node)
+
+		# console.debug @._key, node._key, node.__info?.text, @isRendered()
 
 		if not @isRendered()
 			return CUI.resolvedPromise(node)

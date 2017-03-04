@@ -17,15 +17,17 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 
 	readOpts: ->
 		super()
+		if @_show_ms == 0
+			if not @_backdrop
+				@_backdrop =
+					policy: "modal"
+			console.error "backrop:", @_backdrop
+
 		@_choices = []
 
 	open: ->
 		# super sets a deferred
 		super()
-		if @_show_ms == 0
-			if not @_backdrop
-				@_backdrop =
-					policy: "modal"
 
 		if @_show_ms > 0
 			CUI.setTimeout

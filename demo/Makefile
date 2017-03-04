@@ -39,7 +39,8 @@ coffee_files = src/demo.coffee \
 
 jpg_files = ../src/elements/Menu/demo/Schmetterling.jpg
 
-resource_files = ../src/elements/ObjectDumper/demo/example.json
+resource_files = ../src/elements/ObjectDumper/demo/example.json \
+	../src/elements/ObjectDumper/demo/example2.json
 
 files = $(addsuffix .js, $(coffee_files) )
 

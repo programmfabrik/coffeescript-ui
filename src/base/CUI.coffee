@@ -197,10 +197,82 @@ class CUI
 		dfr.promise()
 
 
+	@chunkWork: (_opts = {}) ->
+		opts = CUI.Element.readOpts _opts, "CUI.chunkWork",
+			items:
+				mandatory: true
+				check: (v) ->
+					CUI.isArray(v)
+			chunk_size:
+				mandatory: true
+				default: 10
+				check: (v) ->
+					v >= 1
+			timeout:
+				mandatory: true
+				default: 0
+				check: (v) ->
+					v >= -1
+			call:
+				mandatory: true
+				check: (v) ->
+					v instanceof Function
+
+		chunk_size = opts.chunk_size
+		timeout = opts.timeout
+
+		assert(@ != CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.")
+
+		idx = 0
+		len = opts.items.length
+
+		next_chunk = =>
+			progress = (idx+1) + " - " + Math.min(len, idx+chunk_size) + " / " +len
+			# console.error "progress:", progress
+
+			dfr?.notify
+				progress: progress
+				idx: idx
+				len: len
+				chunk_size: chunk_size
+
+			go_on = =>
+				if idx + chunk_size >= len
+					dfr?.resolve()
+				else
+					idx = idx + chunk_size
+					if timeout == -1
+						next_chunk()
+					else
+						CUI.setTimeout
+							ms: timeout
+							call: next_chunk
+				return
+
+			ret = opts.call.call(@, opts.items.slice(idx, idx+opts.chunk_size))
+			if ret == false
+				# interrupt this
+				dfr?.reject()
+				return
+
+			if isPromise(ret)
+				ret.fail(dfr?.reject).done(go_on)
+			else
+				go_on()
+
+			return
+
+		dfr = new CUI.Deferred()
+		CUI.setTimeout
+			ms: Math.min(0, timeout)
+			call: next_chunk
+
+		return dfr.promise()
+
 	# returns a Deferred, the Deferred
 	# notifies the worker for each
 	# object
-	@chunkWork: (objects, chunkSize = 10, timeout = 0) ->
+	@chunkWorkOLD: (objects, chunkSize = 10, timeout = 0) ->
 		dfr = new CUI.Deferred()
 
 		idx = 0
