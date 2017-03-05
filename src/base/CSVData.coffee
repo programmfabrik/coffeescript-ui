@@ -144,13 +144,14 @@ class CUI.CSVData extends CUI.Element
 
 		auto_quotechars = ['"',"'"]
 		auto_delimiters = [",",";","\t"]
+		# space_chars = [" "]
 
-		if not isEmpty(opts.delimiter)
+		if opts.delimiter != undefined
 			delimiter = opts.delimiter
 		else
 			delimiter = null
 
-		if not isEmpty(opts.quotechar)
+		if opts.quotechar != undefined
 			quotechar = opts.quotechar
 		else
 			quotechar = null

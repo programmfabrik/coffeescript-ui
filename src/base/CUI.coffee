@@ -249,7 +249,7 @@ class CUI
 							call: next_chunk
 				return
 
-			ret = opts.call.call(@, opts.items.slice(idx, idx+opts.chunk_size))
+			ret = opts.call.call(@, opts.items.slice(idx, idx+opts.chunk_size), idx, len)
 			if ret == false
 				# interrupt this
 				dfr?.reject()
