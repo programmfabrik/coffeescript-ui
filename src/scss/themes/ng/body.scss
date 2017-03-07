@@ -65,7 +65,7 @@ textarea {
 	        appearance: none;
 	width: 100%;
 	min-width: 100px;
-	font-size: 12px;
+	font-size: inherit;
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
@@ -2839,7 +2839,6 @@ a[role="button"].cui-button-appearance-link {
 // List View Grid
 
 .cui-list-view-grid {
-	font-size: 12px;
 	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
