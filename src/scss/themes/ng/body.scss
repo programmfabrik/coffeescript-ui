@@ -343,6 +343,21 @@ li > div {
 	}
 }
 
+// Show the flex handle helper in IE because real time dragging is turned off because of performance reasons
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-flex-handle.drag-drop-select-helper {
+		&:after {
+			content: "";
+			top: 0;
+			left: $padding - 1px;
+			border-right: 3px dotted $highlight-color;
+			height: 100%;
+			opacity: 0.5;
+			position: absolute;
+		}
+	}
+}
+
 .cui-flex-handle-row {
 	width: 10px;
 	margin: 0 -5px;
