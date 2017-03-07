@@ -3481,10 +3481,11 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-table:not([cui-form-depth="0"]) {
-	.cui-form-value {
-		// push the width in inner tables to the maximum
-		width: 100%;
-	}
+	// CONFLICT: break ins layer
+	// .cui-form-value {
+	// 	// push the width in inner tables to the maximum
+	// 	width: 100%;
+	// }
 }
 
 .cui-form-value {
