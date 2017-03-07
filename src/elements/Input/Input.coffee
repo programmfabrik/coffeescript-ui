@@ -278,7 +278,7 @@ class CUI.Input extends CUI.DataFieldInput
 				if @hasShadowFocus()
 					return
 
-				@__enterInput()
+				@enterInput()
 				@addClass("cui-has-focus")
 				@__initShadowInput()
 				@_onFocus?(@, ev)
@@ -331,7 +331,7 @@ class CUI.Input extends CUI.DataFieldInput
 					return
 
 				@removeClass("cui-has-focus")
-				@__leaveInput()
+				@leaveInput()
 				@__removeShadowInput()
 				@_onBlur?(@, ev)
 				return
@@ -891,13 +891,17 @@ class CUI.Input extends CUI.DataFieldInput
 
 		return "empty"
 
-	__leaveInput: ->
-		@__input0.value = @getValueForDisplay()
-		@checkInput()
+	leaveInput: ->
+		if @getInputState() != "invalid"
+			@__input0.value = @getValueForDisplay()
+			@checkInput()
+		@
 
-	__enterInput: ->
-		@__input0.value = @getValueForInput()
-		@checkInput()
+	enterInput: ->
+		if @getInputState() != "invalid"
+			@__input0.value = @getValueForInput()
+			@checkInput()
+		@
 
 	hasUserInput: ->
 		@__input0.value.length > 0
