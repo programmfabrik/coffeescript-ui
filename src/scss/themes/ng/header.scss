@@ -7,9 +7,28 @@
 
 // header for "ng*"
 
-$cui-icon-color-green: hsl(104,80%,82%); // dark: hsl(104,69%,54%) h: 0, s: -11, b: -28
-$cui-icon-color-blue: hsl(211,100%,85%); // dark: hsl(211,100%,43%) h: 0, s: 0, b: -42
-$cui-icon-color-red: hsl(3,100%,86%); // dark: hsl(3,100%,59%) h: 0, s: 0, b: -27
+$cui-highlight-color: "blue" !default;
+
+$colors: (
+	"blue": (
+		dark: hsl(211,100%,43%),
+		light: hsl(211,100%,85%)
+	),
+	"green": (
+		dark: hsl(104,69%,54%),
+		light: hsl(104,80%,82%)
+	),
+	"red": (
+		dark: hsl(3,100%,59%),
+		light: hsl(3,100%,86%)
+	)
+);
+
+$highlight: map-get($colors, $cui-highlight-color);
+
+$cui-swatch-color-green: hsl(104,80%,82%);
+$cui-swatch-color-blue: hsl(211,100%,85%);
+$cui-swatch-color-red: hsl(3,100%,86%);
 
 $padding: 10px;
 // compensating padding compensates for line-height
@@ -27,8 +46,8 @@ $secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
-$highlight-color: hsl(211,100%,43%);
-$row-highlight: hsl(211,100%,85%);
+$highlight-color: map-get($highlight, 'dark');
+$row-highlight: map-get($highlight, 'light');
 $on-highlight-color: white;
 $on-highlight-muted-color: desaturate($row-highlight, 50%);
 $on-row-highlight-muted-color: darken(desaturate($row-highlight, 40%), 20%);

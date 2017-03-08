@@ -115,14 +115,14 @@ textarea {
 	height: 12px;
 	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14);
 
-	&.cui-icon-color-green {
-		background: $cui-icon-color-green;
+	&.cui-swatch-color-green {
+		background: $cui-swatch-color-green;
 	}
-	&.cui-icon-color-red {
-		background: $cui-icon-color-red;
+	&.cui-swatch-color-red {
+		background: $cui-swatch-color-red;
 	}
-	&.cui-icon-color-blue {
-		background: $cui-icon-color-blue;
+	&.cui-swatch-color-blue {
+		background: $cui-swatch-color-blue;
 	}
 }
 
