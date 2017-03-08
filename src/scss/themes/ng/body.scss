@@ -114,15 +114,11 @@ textarea {
 	width: 24px;
 	height: 12px;
 	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14) inset;
-
-	&.cui-swatch-color-green {
-		background: $cui-swatch-color-green;
-	}
-	&.cui-swatch-color-red {
-		background: $cui-swatch-color-red;
-	}
-	&.cui-swatch-color-blue {
-		background: $cui-swatch-color-blue;
+	
+	@each $color, $values in $colors {
+		&.cui-swatch-color-#{$color} {
+			background: map-get($values, 'light');
+		}
 	}
 }
 

@@ -10,25 +10,45 @@
 $cui-highlight-color: "blue" !default;
 
 $colors: (
-	"blue": (
-		dark: hsl(211,100%,43%),
-		light: hsl(211,100%,85%)
+	"red": (
+		dark: hsl(3,100%,59%),
+		light: hsl(3,100%,86%)
+	),
+	"orange": (
+		dark: hsl(35,100%,50%),
+		light: hsl(35,100%,85%)
+	),
+	"yellow": (
+		dark: hsl(48,100%,50%),
+		light: hsl(48,100%,85%)
 	),
 	"green": (
 		dark: hsl(104,69%,54%),
 		light: hsl(104,80%,82%)
 	),
-	"red": (
-		dark: hsl(3,100%,59%),
-		light: hsl(3,100%,86%)
+	"blue": (
+		dark: hsl(211,100%,43%),
+		light: hsl(211,100%,85%)
+	),
+	"purple": (
+		dark: hsl(289,65%,67%),
+		light: hsl(289,100%,92%)
+	),
+	"pink": (
+		dark: hsl(342,100%,58%),
+		light: hsl(342,100%,87%)
+	),
+	"brown": (
+		dark: hsl(34,27%,50%),
+		light: hsl(34,49%,86%)
+	),
+	"graphite": (
+		dark: hsl(240,2%,44%),
+		light: hsl(240,5%,85%)
 	)
 );
 
 $highlight: map-get($colors, $cui-highlight-color);
-
-$cui-swatch-color-green: hsl(104,80%,82%);
-$cui-swatch-color-blue: hsl(211,100%,85%);
-$cui-swatch-color-red: hsl(3,100%,86%);
 
 $padding: 10px;
 // compensating padding compensates for line-height
