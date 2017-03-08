@@ -27,14 +27,12 @@ $secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
-$highlight-color: hsl(205,100%,45%);
-$row-highlight: hsl(201,82%,92%);
+$highlight-color: hsl(211,100%,43%);
+$row-highlight: hsl(211,100%,85%);
 $on-highlight-color: white;
-$on-highlight-muted-color: hsl(205,50%,85%);
-$on-row-highlight-muted-color: hsl(205,40%,69%);
-$on-row-highlight-secondary-color: hsl(205,26%,45%);
-// used for: tagfilter border in list-view tagmanager/Berechtigungen
-$on-row-highlight-soft-border: hsl(205,40%,86%);
+$on-highlight-muted-color: desaturate($row-highlight, 50%);
+$on-row-highlight-muted-color: darken(desaturate($row-highlight, 40%), 20%);
+$on-row-highlight-secondary-color: darken(desaturate($row-highlight, 75%), 40%);
 
 $button-background: white;
 $button-pressed: hsl(205,10%,91%);
