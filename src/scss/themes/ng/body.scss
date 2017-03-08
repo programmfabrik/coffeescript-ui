@@ -2279,7 +2279,7 @@ a[role="button"].cui-button-appearance-link {
 					user-select: none;
 	cursor: default;
 
-	> .cui-layout > .cui-vertical-layout-center {
+	> .cui-layer-pane > .cui-vertical-layout-center {
 		padding: 7px $padding;
 	}
 }
@@ -2925,13 +2925,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
-		.cui-list-view-grid-quadrant {
-			border-bottom: 1px solid $table-border;
-
-			&:empty {
-				border-bottom-width: 0;
-			}
-		}
+		border-bottom: 1px solid $table-border;
 	}
 }
 
@@ -3336,7 +3330,7 @@ a[role="button"].cui-button-appearance-link {
 	margin: $padding;
 	overflow: visible;
 
-	&.cui-maximize-horizontal > .cui-layout-cell > .cui-form-table {
+	&.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
 		.cui-form-key {
 			max-width: none;
 
