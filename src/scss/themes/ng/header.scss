@@ -7,9 +7,9 @@
 
 // header for "ng*"
 
-$cui_icon_color_green: #00DD00;
-$cui_icon_color_blue: #0000DD;
-$cui_icon_color_red: #DD0000;
+$cui-icon-color-green: hsl(104,80%,82%); // dark: hsl(104,69%,54%) h: 0, s: -11, b: -28
+$cui-icon-color-blue: hsl(211,100%,85%); // dark: hsl(211,100%,43%) h: 0, s: 0, b: -42
+$cui-icon-color-red: hsl(3,100%,86%); // dark: hsl(3,100%,59%) h: 0, s: 0, b: -27
 
 $padding: 10px;
 // compensating padding compensates for line-height

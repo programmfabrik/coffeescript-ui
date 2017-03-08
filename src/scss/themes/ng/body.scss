@@ -110,15 +110,19 @@ textarea {
 }
 
 
-i.fa {
-	&.fa-color-green {
-		color: $cui_icon_color_green;
+.css-swatch {
+	width: 24px;
+	height: 12px;
+	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14);
+
+	&.cui-icon-color-green {
+		background: $cui-icon-color-green;
 	}
-	&.fa-color-red {
-		color: $cui_icon_color_red;
+	&.cui-icon-color-red {
+		background: $cui-icon-color-red;
 	}
-	&.fa-color-blue {
-		color: $cui_icon_color_blue;
+	&.cui-icon-color-blue {
+		background: $cui-icon-color-blue;
 	}
 }
 
