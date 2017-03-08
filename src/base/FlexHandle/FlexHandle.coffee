@@ -71,7 +71,7 @@ class FlexHandle extends CUI.Element
 				check: Boolean
 			closable:
 				mandatory: true
-				default: true
+				default: false
 				check: Boolean
 			label:
 				check: (v) ->
@@ -310,7 +310,7 @@ class FlexHandle extends CUI.Element
 
 		state = @__getState()
 
-		if not isUndef(state.closed)
+		if not isUndef(state.closed) and @_closable
 			if state.closed
 				@close()
 			else
