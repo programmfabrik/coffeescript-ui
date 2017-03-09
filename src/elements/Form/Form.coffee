@@ -607,7 +607,7 @@ class CUI.Form extends CUI.DataField
 				if not isNull(field._form.hint)
 					add_hint_div()
 					if isString(field._form.hint)
-						hint_div.appendChild(new Label(class: "cui-form-hint-label", text: field._form.hint, multiline: true, markdown: true).DOM)
+						hint_div.appendChild(new Label(class: "cui-form-hint-label", icon: field._form.hint_icon, text: field._form.hint, multiline: true, markdown: true).DOM)
 					else
 						DUI.DOM.append(hint_div, field._form.hint)
 
