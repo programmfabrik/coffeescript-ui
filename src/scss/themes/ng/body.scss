@@ -2925,7 +2925,13 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
-		border-bottom: 1px solid $table-border;
+		.cui-list-view-grid-quadrant {
+			border-bottom: 1px solid $table-border;
+
+			&:empty {
+				border-bottom-width: 0;
+			}
+		}
 	}
 }
 
@@ -3034,6 +3040,9 @@ a[role="button"].cui-button-appearance-link {
 	flex: 1 1 auto;
 	display: flex;
 	max-width: 100%;
+	-webkit-min-width: min-content;
+     -moz-min-width: min-content;
+	        min-width: min-content;
 	// padding: 0 $padding/2;
 
 	&:empty {
@@ -4707,7 +4716,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // CUI technical stuff
-.cui-tmpl {
+.cui-tmpl,
+[data-template] {
 	// hide all templates
 	display: none !important;
 }
