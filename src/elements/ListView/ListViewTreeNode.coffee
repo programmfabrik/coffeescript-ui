@@ -302,6 +302,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			return
 		CUI.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
 		@__loadingDeferred.reject()
+		@__loadingDeferred = null
+		return
+
+	__open_counter: 0
 
 	# resolves with the opened node
 	open: ->
@@ -309,8 +313,17 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# we could return loading_deferred here
 		assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
 
+		@__open_counter++
+
+		open_counter = @__open_counter
+
+		# console.error @getUniqueId(), "opening...", "is open:", @is_open, open_counter
+
 		if @is_open
 			return CUI.resolvedPromise()
+
+		@is_open = true
+		@do_open = false
 
 		dfr = @__loadingDeferred = new CUI.Deferred()
 
@@ -330,8 +343,6 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			# console.debug @._key, @getUniqueId(), "children loaded", @children.length
 
 			if @children.length == 0
-				@is_open = true
-				@do_open = false
 				if not @isRoot()
 					@replaceSelf()
 				do_resolve()
@@ -349,17 +360,25 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 						chunk_size: 1
 						timeout: -1
 						call: (_items) =>
-							if @__loadingDeferred.state() == "rejected"
+							# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work"
+							if open_counter < @__open_counter
+								# we are already in a new run, exit
 								return false
 							@__appendNode(_items[0], true) # , false, true))
 
 			.done =>
-				@is_open = true
-				@do_open = false
+				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work DONE"
+				if open_counter < @__open_counter
+					return
+
 				if not @isRoot()
 					@replaceSelf()
 				do_resolve()
 			.fail =>
+				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work FAIL"
+				if open_counter < @__open_counter
+					return
+
 				for c in @children
 					c.removeFromDOM()
 				do_reject()
@@ -379,8 +398,9 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 					assert(isPromise(ret), "#{getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
 					ret
 					.done (@children) =>
-						if @__loadingDeferred.state() == "pending"
-							load_children()
+						if open_counter < @__open_counter
+							return
+						load_children()
 						return
 					.fail(do_reject)
 			else
