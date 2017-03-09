@@ -359,7 +359,7 @@ class CUI.Layout extends CUI.DOM
 	@__all: ->
 		layouts = []
 		changed = 0
-		for layout, idx in DOM.matchSelector(document.documentElement, ".cui-layout.cui-absolute")
+		for layout, idx in DOM.matchSelector(document.documentElement, ".cui-absolute")
 			if Layout.setAbsolute(layout)
 				changed++
 

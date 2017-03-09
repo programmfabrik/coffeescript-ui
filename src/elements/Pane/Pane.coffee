@@ -87,8 +87,8 @@ class CUI.Pane extends CUI.VerticalLayout
 
 		# add DOM element classes of all parent dom elements
 		# to the inner container
-		for el in @DOM.parents(".cui-dom-element")
-			inner.addClass(DOM.data(el, "element").getDOMElementClasses())
+		# for el in @DOM.parents(".cui-dom-element")
+		# 	inner.addClass(DOM.data(el, "element").getDOMElementClasses())
 
 		@__fillscreenTmpl.DOM.appendTo(document.body)
 		rect_fill = @__fillscreenTmpl.DOM.rect()

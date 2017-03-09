@@ -52,9 +52,6 @@ class CUI.ListView extends CUI.SimplePane
 				# assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
 				assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
 
-				if not CUI.__ng__
-					assert(@__maximize_horizontal, "new ListView", "maximized columns need the ListView to be set to opts.maximize_horizontal == true", opts: @opts)
-
 				@__maxCols.push(col_i)
 
 		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
@@ -80,7 +77,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@__cells = []
 		@__rows = []
-		@__lvClass = "cui-list-view-grid-#{@listViewCounter}"
+		@__lvClass = "cui-lv-#{@listViewCounter}"
 
 		@__deferredRows = []
 		@__isInDOM = false
@@ -88,17 +85,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__doLayoutBound = =>
 			@__doLayout()
 
-		if CUI.__ng__
-			# always use next gen layout
-			@_autoLayout = 2
-
-		switch @_autoLayout
-			when true
-				@addClass("cui-list-view cui-padding-reset cui-list-view-div-layout")
-			when 2
-				@addClass("cui-list-view")
-			else
-				@addClass("cui-list-view cui-padding-reset cui-list-view-table-layout")
+		@addClass("cui-list-view")
 
 
 	initOpts: ->
@@ -150,13 +137,6 @@ class CUI.ListView extends CUI.SimplePane
 				deprecated: true
 			footer:
 				deprecated: true
-			autoLayout:
-				default: true
-				check: (v) ->
-					if v == true or v == false or v == 2
-						true
-					else
-						false
 
 
 	readOpts: ->
@@ -174,10 +154,8 @@ class CUI.ListView extends CUI.SimplePane
 		delete(@colsOrder)
 		delete(@rowsOrder)
 		delete(@__fillRowQ3)
-		@hideWaitBlock()
+		# @hideWaitBlock()
 		@__isInDOM = null
-		@__cssElement?.remove()
-		@__cssElement = null
 		CUI.scheduleCallbackCancel(call: @__doLayoutBound)
 		@listViewTemplate?.destroy()
 		@__layoutIsStopped = false
@@ -236,48 +214,46 @@ class CUI.ListView extends CUI.SimplePane
 		html.push("<div class=\"")
 		html.push(cls.join(" "))
 		html.push("\">")
-		switch @_autoLayout
-			when false, 2
-				html.push("<style></style>")
+		html.push("<style></style>")
 
 		add_quadrant = (qi) =>
 			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\">")
-			if @_autoLayout == false
-				html.push("<table class=\"cui-list-view-grid-quadrant-table\"><tbody></tbody></table>")
 
 			if qi in [2, 3]
-				switch @_autoLayout
-					when 2
-						html.push("<div class=\"cui-lv-tr-fill-outer\"><div class=\"cui-lv-tr\">")
-					else
-						html.push("<div class=\"cui-list-view-grid-fills cui-list-view-grid-fills-#{qi} cui-list-view-grid-row\">")
+				html.push("<div class=\"cui-lv-tr-fill-outer\"><div class=\"cui-lv-tr\">")
 				ft = @__getColsFromAndTo(qi)
 				for col_i in [ft.from..ft.to] by 1
 					cls = @__getColClass(col_i)
-					switch @_autoLayout
-						when 2
-							html.push("<div class=\"#{cls} cui-lv-td cui-lv-td-fill cui-list-view-grid-fill-col-#{col_i}\"></div>")
-						else
-							html.push("<div class=\"cui-list-view-grid-cell-fill #{cls} cui-lv-td cui-lv-td-fill cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i} cui-list-view-grid-fill-col-#{col_i}\"></div>")
-
-				switch @_autoLayout
-					when 2
-						html.push("</div></div>")
-					else
-						html.push("</div>")
-
+					html.push("<div class=\"#{cls} cui-lv-td cui-lv-td-fill cui-list-view-grid-fill-col-#{col_i}\"></div>")
+				html.push("</div></div>")
 			html.push("</div>")
 			return
 
-		html.push("<div class=\"cui-list-view-grid-inner-top\">")
-		add_quadrant(0)
-		add_quadrant(1)
-		html.push("</div>")
+		if @fixedColsCount > 0 and @fixedRowsCount > 0
+			html.push("<div class=\"cui-list-view-grid-inner-top\">")
+			add_quadrant(0)
+			add_quadrant(1)
+			html.push("</div>")
 
-		html.push("<div class=\"cui-list-view-grid-inner-bottom\">")
-		add_quadrant(2)
-		add_quadrant(3)
-		html.push("</div>")
+			html.push("<div class=\"cui-list-view-grid-inner-bottom\">")
+			add_quadrant(2)
+			add_quadrant(3)
+			html.push("</div>")
+		else if @fixedColsCount > 0
+			html.push("<div class=\"cui-list-view-grid-inner-bottom\">")
+			add_quadrant(2)
+			add_quadrant(3)
+			html.push("</div>")
+		else if @fixedRowsCount > 0
+			html.push("<div class=\"cui-list-view-grid-inner-top\">")
+			add_quadrant(1)
+			html.push("</div>")
+			html.push("<div class=\"cui-list-view-grid-inner-bottom\">")
+			add_quadrant(3)
+			html.push("</div>")
+		else
+			add_quadrant(3)
+
 		html.push("</div>")
 
 		outer = @center()[0]
@@ -291,18 +267,7 @@ class CUI.ListView extends CUI.SimplePane
 			CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-3")[0]
 		]
 
-		if @_autoLayout
-			@quadrantRows = @quadrant
-			if @_autoLayout == 2
-				@styleElement = CUI.DOM.matchSelector(outer, "style")[0]
-		else
-			@quadrantRows = [
-				CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-0 > table > tbody")[0]
-				CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-1 > table > tbody")[0]
-				CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-2 > table > tbody")[0]
-				CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-3 > table > tbody")[0]
-			]
-			@styleElement = CUI.DOM.matchSelector(outer, "style")[0]
+		@styleElement = CUI.DOM.matchSelector(outer, "style")[0]
 
 		@__fillRowQ3 = CUI.DOM.matchSelector(@grid[0], ".cui-list-view-grid-fills-3")[0]
 
@@ -332,10 +297,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__currentScroll = top: 0, left: 0
 
 		if @_selectableRows
-			if @_autoLayout
-				selector = ".#{@__lvClass} > div > .cui-list-view-grid-quadrant > .cui-list-view-grid-row"
-			else
-				selector = ".#{@__lvClass} > div > .cui-list-view-grid-quadrant > table > tbody > .cui-list-view-grid-row"
+			selector = ".#{@__lvClass} > div > .cui-list-view-grid-quadrant > .cui-lv-tr-outer"
 
 			Events.listen
 				type: "click"
@@ -371,10 +333,7 @@ class CUI.ListView extends CUI.SimplePane
 				if not @__hasLayout
 					return
 
-				if @_autoLayout == 2
-					@__doNextGenLayout(resetRows: !!(info.css_load or info.tab))
-				else
-					@__scheduleLayout()
+				@__doLayout(resetRows: !!(info.css_load or info.tab))
 				return
 
 		Events.listen
@@ -382,8 +341,6 @@ class CUI.ListView extends CUI.SimplePane
 			node: @DOM
 			call: (ev, info) =>
 				# CUI.debug("ListView[##{@listViewCounter}] caught content resize, stop.")
-				if not @_autoLayout
-					return
 
 				if not @__isInDOM
 					return
@@ -398,28 +355,12 @@ class CUI.ListView extends CUI.SimplePane
 				row = parseInt(cell.getAttribute("row"))
 				col = parseInt(cell.getAttribute("col"))
 
-				if @_autoLayout == 2
-					if @fixedColsCount > 0 and DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
-						# row has not been measured
-						return
-					@__resetRowDim(row)
-					@__scheduleLayout()
-					return
-
-				if not @__cellDims.hasOwnProperty(row)
+				if @fixedColsCount > 0 and DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
 					# row has not been measured
 					return
-
 				@__resetRowDim(row)
-				@__resetColWidth(col)
-
-				if @layoutIsStopped()
-					@__scheduleLayout()
-				else
-					# CUI.debug("ListView[#{@listViewCounter}]: caught content resize, if this happens to often, we need to scheduleLayout again, but for now we are layouting immediately.")
-					@__doLayout()
-
-				# @__scheduleLayout()
+				@__scheduleLayout()
+				return
 
 		@__registerTools()
 
@@ -429,20 +370,14 @@ class CUI.ListView extends CUI.SimplePane
 		if @isInactive()
 			@setInactive(true)
 
-		if @__showWaitBlock
-			@showWaitBlock()
+		# if @__showWaitBlock
+		# 	@showWaitBlock()
 
 		@appendDeferredRows()
 
 		DOM.waitForDOMInsert(node: @DOM)
 		.done =>
 			@__isInDOM = true
-			if @rowsCount == 0
-				@showWaitBlock(true)
-
-			# if @_autoLayout
-			# 	@__scheduleLayout()
-			# else
 			@__doLayout()
 		@DOM
 
@@ -479,10 +414,8 @@ class CUI.ListView extends CUI.SimplePane
 		width = @quadrant[3].offsetWidth - @quadrant[3].clientWidth
 		height = @quadrant[3].offsetHeight -  @quadrant[3].clientHeight
 
-		# sorry to brake this to you Martin but using paddingRight here
-		# instead of marginRight is way cooler because it keeps the border
-		@quadrant[1].style.paddingRight = @__getValue(width)
-		@quadrant[2].style.marginBottom = @__getValue(height)
+		@quadrant[1]?.style.marginRight = @__getValue(width)
+		@quadrant[2]?.style.marginBottom = @__getValue(height)
 		@
 
 	getSelectedRows: ->
@@ -713,10 +646,7 @@ class CUI.ListView extends CUI.SimplePane
 	getCellGridRectByNode: (_cell) ->
 		assert(isElement(_cell), "ListView.getCellGridRectByNode", "Cell node needs to be instance of HTMLElement.", cell: _cell)
 
-		if not @_autoLayout
-			cell = _cell.parent() # this is the TD, we can measure
-		else
-			cell = _cell
+		cell = _cell
 
 		# get absolute position relative to the grid corner
 		_pos_grid = @grid.offset()
@@ -890,44 +820,6 @@ class CUI.ListView extends CUI.SimplePane
 		@
 
 	__doLayout: (opts={}) ->
-		for el in DOM.findElements(@getGrid(), ".list-view-row-new")
-			el.classList.remove("list-view-row-new")
-
-		# console.error "ListView.__doLayout...##{@listViewCounter}", @, @__lvClass, @_autoLayout
-
-		switch @_autoLayout
-			when true
-				@__doAutoLayout()
-			when 2
-				@__doNextGenLayout(opts)
-			else
-				@__doManualLayout()
-
-		@hideWaitBlock(true)
-
-		if not @__maximize_horizontal or not @__maximize_vertical
-			# CUI.debug "ListView[#{@listViewCounter}]: dim changed, triggering content-resize."
-			Events.trigger
-				type: "content-resize"
-				exclude_self: true
-				node: @DOM
-
-		@__hasLayout = true
-		@
-
-
-	__doNextGenLayout: (opts={}) ->
-		# console.time "next-gen-layout"
-		# FIXME: improve selectors, so they only catch the current table not nested ones
-		#
-
-		# console.debug "ListView##{@listViewCounter}.__doNextGenLayout..."
-
-		# if @grid.clientWidth == 0 or @grid.clientHeight == 0
-		# 	console.warn("ListView##{@listViewCounter}.__doNextGenLayout: clientWidth or clientHeight is 0, not layouting.")
-		# 	return
-
-		# console.error "doing next gen layout", @listViewCounter
 
 		css = []
 		add_css = (col_i, width) =>
@@ -965,10 +857,8 @@ class CUI.ListView extends CUI.SimplePane
 					cell.style.setProperty("width", width+"px", "important")
 				else
 					cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal)+"px", "important")
-		# CUI.info("ListView#"+@listViewCounter, "Set colspan cell styles.")
 
 		@styleElement.innerHTML = css.join("\n")
-		# CUI.info("ListView#"+@listViewCounter, "Set manual col widths.")
 
 
 		if @fixedColsCount >  0
@@ -996,79 +886,21 @@ class CUI.ListView extends CUI.SimplePane
 					delete(row.__offsetHeight)
 					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
-			# CUI.info("ListView#"+@listViewCounter, "Synced row heights in Q0 and Q1.")
-
 
 
 		@__setMargins()
-		# CUI.info("ListView#"+@listViewCounter, "Set margins on Q1 and Q2.")
 
 		@__addRowsOddEvenClasses()
-		# console.timeEnd "next-gen-layout"
+
+		if not @__maximize_horizontal or not @__maximize_vertical
+			Events.trigger
+				type: "content-resize"
+				exclude_self: true
+				node: @DOM
+
+		@__hasLayout = true
 		@
 
-	__doManualLayout: ->
-		css = []
-		set_width_for_max_cols = []
-		max_width = null
-
-		# remove all styles from the table
-		@styleElement.innerHTML = ""
-
-		# dont set width on fill div
-		@__fillRowQ3.style.width = ""
-
-		add_css = (col_i, w) =>
-			# adds the CSS for the TD column of the main table(s)
-			css.push("td > div.#{@__lvClass}-cell.cui-list-view-grid-cell-col-#{col_i} { width: #{w}px; }")
-
-		# set manual width in table cells
-		# disable flex grow on manual set fill cells
-		@__colWidths = []
-		for fc, col_i in @__fillCells
-			w = @__manualColWidths[col_i]
-			if w >= 0
-				add_css(col_i, w)
-				fc.style.width = w+"px"
-				@__colWidths[col_i] = w
-				if col_i in @__maxCols
-					# disable flex grow for a manually
-					# set max column
-					fc.style.flexGrow = "0"
-			else
-				fc.style.width = ""
-				if col_i in @__maxCols
-					fc.style.flexGrow = ""
-
-		# measure the non-auto cells and non-manual-cells
-		if @rowsCount > 0
-			for fc, col_i in @__fillCells
-				if @__manualColWidths[col_i] > 0 or col_i in @__maxCols
-					# skip manual cols and maximized cols
-					continue
-
-				td = DOM.findElement(@grid[0], "td[col='#{col_i}']:not([colspan])")
-				if not td
-					CUI.warn("Col_i: no td found", @rowsCount, @grid, col_i, "td[col='#{col_i}']:not([colspan])")
-					continue
-				@__colWidths[col_i] = w = td.getBoundingClientRect().width
-				# set fill div to measured width
-				fc.style.width = w+"px"
-
-		# now set the width of the maxed cols inside the table
-		# measured in the fill divs
-		for fc, col_i in @__fillCells
-			if @__isMaximizedCol(col_i)
-				@__colWidths[col_i] = w = fc.getBoundingClientRect().width
-				add_css(col_i, w)
-
-		# CUI.error "doManualLayout #{@listViewCounter}:", @DOM[0], @__colWidths
-		# CUI.debug dump(css.join("\n"))
-
-		@styleElement.innerHTML = css.join("\n")
-		@__addRowsOddEvenClasses()
-		@__setMargins()
-		@
 
 	__addRowsOddEvenClasses: ->
 		if (@rowsCount - @fixedRowsCount)%2 == 0
@@ -1077,32 +909,6 @@ class CUI.ListView extends CUI.SimplePane
 		else
 			@grid.removeClass("cui-list-view-grid-rows-even")
 			@grid.addClass("cui-list-view-grid-rows-odd")
-		@
-
-	__doAutoLayout: ->
-
-		# CUI.debug @__cellDims
-		# return
-		# txt = "ListView[#{@listViewCounter}].__doLayout #{@rowsCount}x#{@colsCount} #{@listViewCounter}"
-		# console.time(txt)
-		# CUI.debug "ListView[#{@listViewCounter}].__doLayout #{@rowsCount}x#{@colsCount}"
-		# remeasure and apply styles for widths and heights of all cells
-		@__measureCellDims()
-		@__calculateDims()
-
-		if @isDestroyed()
-			return
-
-		@__addStyle()
-		# maintain an odd/even class to design the fill rows background
-		@__addRowsOddEvenClasses()
-
-		# set margins on q2 and q1 to reflect for a scrollbar in q3
-		@__setMargins()
-		# set scroll height
-		if @__currentScroll.top > 0 or @__currentScroll.left > 0
-			@__setScrolling(@__currentScroll)
-			@__syncScrolling()
 		@
 
 
@@ -1114,28 +920,28 @@ class CUI.ListView extends CUI.SimplePane
 		else
 			px
 
-	hideWaitBlock: (internal=false) ->
-		if not @grid
-			@__showWaitBlock = false
-		else if @__waitBlock
-			if not internal or @__waitBlock.__internal
-				@__waitBlock.destroy()
-				delete(@__waitBlock)
-		@
+	# hideWaitBlock: (internal=false) ->
+	# 	if not @grid
+	# 		@__showWaitBlock = false
+	# 	else if @__waitBlock
+	# 		if not internal or @__waitBlock.__internal
+	# 			@__waitBlock.destroy()
+	# 			delete(@__waitBlock)
+	# 	@
 
-	showWaitBlock: (internal=false) ->
-		if @__waitBlock
-			return @
+	# showWaitBlock: (internal=false) ->
+	# 	if @__waitBlock
+	# 		return @
 
-		if not @grid
-			@__showWaitBlock = true
-			return
+	# 	if not @grid
+	# 		@__showWaitBlock = true
+	# 		return
 
-		delete(@__showWaitBlock)
-		@__waitBlock = new WaitBlock(element: @grid)
-		@__waitBlock.__internal = internal
-		@__waitBlock.show()
-		@
+	# 	delete(@__showWaitBlock)
+	# 	@__waitBlock = new WaitBlock(element: @grid)
+	# 	@__waitBlock.__internal = internal
+	# 	@__waitBlock.show()
+	# 	@
 
 	__debugRect: (func, ms) ->
 		viewport = @grid.rect()
@@ -1210,13 +1016,6 @@ class CUI.ListView extends CUI.SimplePane
 			assert(anchor_row.length >= 1, "ListView.__addRows", "anchor row #{row_i} for mode #{mode} not found.", rows: @__rows, row_i: row_i, mode: _mode, mode_used: mode)
 			# CUI.debug("__addRows", anchor_row, row_i)
 
-		if @__isInDOM
-			# this class hides the row, which is only necessary
-			# if we are in DOM already
-			new_cls = "list-view-row-new"
-		else
-			new_cls = ""
-
 		# prepare html for all rows
 		for row_i in [_row_i..row_i+listViewRows.length-1] by 1
 			@__cells[row_i] = []
@@ -1227,46 +1026,29 @@ class CUI.ListView extends CUI.SimplePane
 				if ft.to < ft.from
 					continue
 
-				switch @_autoLayout
-					when true
-						html[qi].push("<div class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
-					when 2
-						if @fixedColsCount > 0
-							html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" cui-lv-tr-unmeasured=\"#{@listViewCounter}\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
-						else
-							html[qi].push("<div class=\"cui-lv-tr-outer cui-list-view-grid-row\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
-					else
-						html[qi].push("<tr class=\"#{new_cls} cui-list-view-grid-row #{@__lvClass}-row cui-list-view-grid-row-#{row_i}\" row=\"#{row_i}\">")
+				if @fixedColsCount > 0
+					html[qi].push("<div class=\"cui-lv-tr-outer\" cui-lv-tr-unmeasured=\"#{@listViewCounter}\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
+				else
+					html[qi].push("<div class=\"cui-lv-tr-outer\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
 
 				for display_col_i in [ft.from..ft.to] by 1
 					col_i = @getColIdx(display_col_i)
 					[width, maxi] = @__getColWidth(row_i, col_i)
 					cls = @__getColClass(col_i)
-					switch @_autoLayout
-						when true
-							html[qi].push("<div class=\"cui-list-view-grid-cell cui-list-view-grid-cell-div #{@__lvClass}-cell cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i} #{cls}\" col=\"#{col_i}\" row=\"#{row_i}\"></div>")
-						when 2
-							html[qi].push("<div class=\"cui-lv-td #{cls} #{@__lvClass}-cell cui-list-view-grid-cell\" col=\"#{col_i}\" row=\"#{row_i}\"></div>")
-						else
-							html[qi].push("<td class=\"cui-list-view-grid-cell-td #{cls}\" col=#{col_i} row=#{row_i}><div class=\"cui-list-view-grid-cell #{cls} #{@__lvClass}-cell cui-list-view-grid-cell-col cui-list-view-grid-cell-col-#{col_i}\" col=#{col_i} row=#{row_i}></div></td>")
+					html[qi].push("<div class=\"cui-lv-td #{cls} #{@__lvClass}-cell\" col=\"#{col_i}\" row=\"#{row_i}\"></div>")
 
-				switch @_autoLayout
-					when true
-						html[qi].push("</div>")
-					when 2
-						html[qi].push("</div></div>")
-					else
-						html[qi].push("</tr>")
+				html[qi].push("</div></div>")
 
 		find_cells_and_rows = (top) =>
 			# find rows and cells in newly prepared html
-			_cells = CUI.DOM.matchSelector(top, ".cui-list-view-grid-cell")
+			_cells = CUI.DOM.matchSelector(top, ".cui-lv-td")
 			for cell in _cells
 				_col = parseInt(cell.getAttribute("col"))
 				_row = parseInt(cell.getAttribute("row"))
 				@__cells[_row][_col] = $(cell)
 
-			_rows = CUI.DOM.matchSelector(top, ".cui-list-view-grid-row[row]")
+			_rows = CUI.DOM.matchSelector(top, ".cui-lv-tr-outer")
+
 			for row in _rows
 				row_i = parseInt(row.getAttribute("row"))
 				@__rows[row_i].push(row)
@@ -1278,28 +1060,22 @@ class CUI.ListView extends CUI.SimplePane
 			if html[qi].length == 0
 				continue
 
-			if @_autoLayout
-				outer = document.createElement("div")
-			else
-				outer = document.createElement("tbody")
+			outer = document.createElement("div")
 
 			outer.innerHTML = html[qi].join("")
 			find_cells_and_rows(outer)
 
 			if mode == "append"
-				if @_autoLayout and qi in [2, 3]
+				if qi in [2, 3]
 					# the last row is the fill row, make sure to
 					# insert our node before
 					while node = outer.firstChild
-						@quadrantRows[qi].insertBefore(node, @quadrantRows[qi].lastChild)
-				else
-					while node = outer.firstChild
-						@quadrantRows[qi].appendChild(node)
+						@quadrant[qi].insertBefore(node, @quadrant[qi].lastChild)
 				continue
 
 			if mode == "prepend"
 				while node = outer.lastChild
-					@quadrantRows[qi].insertBefore(node, @quadrantRows[qi].firstChild)
+					@quadrant[qi].insertBefore(node, @quadrant[qi].firstChild)
 				continue
 
 			row = $(anchor_row[anchor_row_idx])
@@ -1318,7 +1094,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		# check for overflow in fixed qudrant
 		if @fixedRowsCount > 0
-			fixedRows = @quadrantRows[1].childNodes
+			fixedRows = @quadrant[1].childNodes
 			if @fixedRowsCount < fixedRows.length
 				if @fixedColsCount > 0
 					_qi_s = [0,1]
@@ -1327,10 +1103,10 @@ class CUI.ListView extends CUI.SimplePane
 
 				for i in [0...fixedRows.length-@fixedRowsCount] by 1
 					for _qi in _qi_s
-						if @quadrantRows[_qi+2].firstChild
-							@quadrantRows[_qi+2].insertBefore(@quadrantRows[_qi].lastChild, @quadrantRows[_qi+2].firstChild)
+						if @quadrant[_qi+2].firstChild
+							@quadrant[_qi+2].insertBefore(@quadrant[_qi].lastChild, @quadrant[_qi+2].firstChild)
 						else
-							@quadrantRows[_qi+2].appendChild(@quadrantRows[_qi].lastChild)
+							@quadrant[_qi+2].appendChild(@quadrant[_qi].lastChild)
 
 		for listViewRow, idx in listViewRows
 			if isPromise(listViewRow)
@@ -1384,9 +1160,6 @@ class CUI.ListView extends CUI.SimplePane
 			if colspan > 1
 				cell.attr("colspan", colspan)
 
-				if not @_autoLayout
-					cell.parent().attr("colspan", colspan)
-
 				# we remember the colspan here for the addCss
 				# class, its important to do this before we change
 				# colspan_offset
@@ -1399,10 +1172,7 @@ class CUI.ListView extends CUI.SimplePane
 				# if they are not in order, this is not our problem
 				# at this point
 				for i in [1...colspan]
-					if not @_autoLayout
-						@__cells[row_i][col_i+colspan_offset+1].parent().remove()
-					else
-						@__cells[row_i][col_i+colspan_offset+1].remove()
+					@__cells[row_i][col_i+colspan_offset+1].remove()
 					delete(@__cells[row_i][col_i+colspan_offset+1])
 					colspan_offset++
 
@@ -1420,15 +1190,8 @@ class CUI.ListView extends CUI.SimplePane
 		else if not isEmpty(col_cls)
 			cls.push(col_cls)
 
-		switch @_autoLayout
-			when 2
-				if col_i in @__maxCols
-					cls.push("cui-lv-td-max")
-			else
-				if col_i in @__maxCols
-					cls.push("cui-list-view-grid-cell-max")
-				else
-					cls.push("cui-list-view-grid-cell-standard")
+		if col_i in @__maxCols
+			cls.push("cui-lv-td-max")
 		cls.join(" ")
 
 	__resetRowDim: (row_i) ->
@@ -1471,219 +1234,14 @@ class CUI.ListView extends CUI.SimplePane
 		@__colWidths = []
 		@__rowHeights = []
 
-	__measureCellDims: ->
-		# console.error "measure cell dims, rows count", @rowsCount
-		# console.time "measure"
-		for display_row_i in [0..@rowsCount-1] by 1
-			row_i = @getRowIdx(display_row_i)
-			if not @__cellDims[row_i]
-				@__cellDims[row_i] = []
-			for display_col_i in [0..@colsCount-1] by 1
-				col_i = @getColIdx(display_col_i)
-				if @__cellDims[row_i][col_i]
-					continue
-				cell = @__cells[row_i][col_i]
-				if not cell # or @__colspanRows[row_i]?[col_i] > 1
-					# the cell might be missing, if it is a colspanned cell
-					@__cellDims[row_i][col_i] = [0,0]
-				else
-					rect = cell[0].getBoundingClientRect()
-					if @__colspanRows[row_i]?[col_i] > 1
-						# ignore the width for colspan rows
-						@__cellDims[row_i][col_i] = [0, rect.height]
-					else
-						@__cellDims[row_i][col_i] = [rect.width, rect.height]
-				# console.debug "ListView #{row_i}/#{col_i}:", @__cellDims[row_i][col_i]
-		# console.timeEnd "measure"
-
-		@
-
-	__calculateDims: ->
-		txt = "ListView[#{@listViewCounter}].__calculateDims[#{@listViewCounter}]: "+@rowsCount+" rows. "
-		# console.time(txt)
-
-		for display_row_i in [0..@rowsCount-1] by 1
-			row_i = @getRowIdx(display_row_i)
-			if @__rowHeights.hasOwnProperty(row_i)
-				continue
-			calcHeight = -1
-			for display_col_i in [0..@colsCount-1] by 1
-				col_i = @getColIdx(display_col_i)
-				height = @__cellDims[row_i][col_i][1]
-				if height > calcHeight
-					calcHeight = height
-
-			@__rowHeights[row_i] = calcHeight
-
-
-		for display_col_i in [0..@colsCount-1] by 1
-			col_i = @getColIdx(display_col_i)
-			if @__colWidths[col_i] != null and @__colWidths.hasOwnProperty(col_i)
-				; # continue
-
-			# if not @_measure_fixed_rows_only or (@fixedRowsCount == 0 or @__colWidths[col_i] == null)
-			rowsCount = @rowsCount
-			# else
-			# 	rowsCount = @fixedRowsCount
-
-			manualWidth = @__manualColWidths[col_i]
-			if manualWidth >= 0
-				calcWidth = manualWidth
-			else
-				calcWidth = -1
-				for display_row_i in [0..rowsCount-1] by 1
-					row_i = @getRowIdx(display_row_i)
-					width = @__cellDims[row_i][col_i][0]
-					if width > calcWidth
-						calcWidth = width
-			@__colWidths[col_i] = calcWidth
-			# CUI.debug rowsCount, display_col_i, calcWidth
-
-		# CUI.debug("colWidths:", @__colWidths, "rowHeights:", @__rowHeights)
-		@
-
-	__getMostCommonIntegerInArray: (values) ->
-		# counter to find the most common row height
-		stats = {}
-		for v in values
-			if not stats[v]
-				stats[v] = 1
-			else
-				stats[v]++
-
-		mostCommon = null
-		max_count = 0
-		for v, count of stats
-			if count > max_count
-				mostCommon = v
-				max_count = count
-
-		parseInt(mostCommon)
 
 	# __removeCss: ->
 	# 	$("style."+@__lvClass).remove()
 
-	# calculate sum of array values,
-	# skip undefined or null
-	__calcSum: (arr) ->
-		sum = 0
-		for item in arr
-			if isNull(item)
-				continue
-			sum += item
-		sum
-
 	__isMaximizedCol: (col_i) ->
 		col_i in @__maxCols and not @__manualColWidths.hasOwnProperty(col_i)
 
-	# used for debug menu only
-	__removeStyle: ->
-		for display_col_i in [0..@colsCount-1] by 1
-			col_i = @getColIdx(display_col_i)
-			@__fillCells[col_i].style.cssText = ""
-			for display_row_i in [0..@rowsCount-1] by 1
-				row_i = @getRowIdx(display_row_i)
-				@__resetCellStyle(row_i, col_i)
-		@
 
-	__addStyle: ->
-		set_width = (sty, width, maxi) =>
-			if width == -1
-				sty.minWidth = ""
-				sty.flexGrow = ""
-				sty.width = ""
-			else if maxi
-				sty.minWidth = @__getValue(width)
-				sty.flexGrow = 1
-			else
-				sty.minWidth = ""
-				sty.flexGrow = ""
-				sty.width = @__getValue(width)
-
-		for display_row_i in [0..@rowsCount-1] by 1
-			row_i = @getRowIdx(display_row_i)
-			for display_col_i in [0..@colsCount-1] by 1
-				col_i = @getColIdx(display_col_i)
-
-				if @getColdef(col_i) == "manual"
-					if not (@__colspanRows[row_i]?[col_i] > 1)
-						continue
-
-				if @_autoLayout and display_row_i == 0
-					[width, maxi] = @__getColWidth(null, col_i)
-					set_width(@__fillCells[col_i].style, width, maxi)
-
-				cell = @__cells[row_i][col_i]
-				if not cell
-					continue
-
-				[width, maxi] = @__getColWidth(row_i, col_i)
-				set_width(cell[0].style, width, maxi)
-				cell[0].style.height = @__getValue(@__rowHeights[row_i])
-		@
-
-	# __addCss: ->
-
-	# 	assert($("style."+@_lvClass).length == 0, "ListView.addCss", "removeCss first")
-
-	# 	# CUI.debug "cell dims", cell_dims
-
-	# 	css = []
-	# 	sel = ".#{@__lvClass} > div > div >"
-
-	# 	mostCommonHeight = @__getMostCommonIntegerInArray(@__rowHeights)
-	# 	mostCommonWidth = @__getMostCommonIntegerInArray(@__colWidths)
-
-	# 	if mostCommonHeight > 0
-	# 		css.push("#{sel} .cui-list-view-grid-row > .cui-list-view-grid-cell { height: #{@__getValue(mostCommonHeight)};}")
-
-	# 	if mostCommonWidth > 0
-	# 		css.push("#{sel} .cui-list-view-grid-row > .cui-list-view-grid-cell-col { width: #{@__getValue(mostCommonWidth)};}")
-
-	# 	for display_row_i in [0..@rowsCount-1] by 1
-	# 		row_i = @getRowIdx(display_row_i)
-	# 		height = @__rowHeights[row_i]
-	# 		if height == mostCommonHeight
-	# 			continue
-	# 		css.push("#{sel} .cui-list-view-grid-row-#{row_i} > .cui-list-view-grid-cell { height: #{@__getValue(height)};}")
-
-	# 	push_css = (col_i, width, maximize, row_i = null) =>
-	# 		if row_i != null
-	# 			row_sel = "-#{row_i}"
-	# 		else
-	# 			row_sel = ""
-	# 		if maximize
-	# 			css.push("#{sel} .cui-list-view-grid-row#{row_sel} > .cui-list-view-grid-cell-col-#{col_i} {
-	# 				min-width: #{@__getValue(width)};
-	# 				flex-grow: 1 !important;
-	# 				-webkit-flex-grow: 1 !important;
-	# 			}")
-	# 		else
-	# 			css.push("#{sel} .cui-list-view-grid-row#{row_sel} > .cui-list-view-grid-cell-col-#{col_i} { width: #{@__getValue(width)}; }")
-
-	# 	for display_col_i in [0..@colsCount-1] by 1
-	# 		col_i = @getColIdx(display_col_i)
-	# 		width = @__colWidths[col_i]
-	# 		if width == mostCommonWidth
-	# 			continue
-	# 		push_css(col_i, width, @__isMaximizedCol(col_i))
-
-
-	# 	# CUI.debug "colWidths:", @__colWidths, "rowHeight:", @__rowHeights, "manualColWidths:", @__manualColWidths
-
-	# 	# CSS for the colspanned cells
-	# 	for _row_i, cols of @__colspanRows
-	# 		row_i = parseInt(_row_i)
-	# 		for _col_i of cols
-	# 			col_i = parseInt(_col_i)
-	# 			[width, maxi] = @__getColWidth(row_i, col_i)
-	# 			push_css(col_i, width, maxi, row_i)
-
-	# 	# CUI.debug css.join("\n")
-
-	# 	$("head").append($element("style", @__lvClass).html(css.join("\n")))
-
-	# 	return
 
 	@counter: 0
 
@@ -1730,36 +1288,6 @@ class CUI.ListView extends CUI.SimplePane
 
 				items = [
 					label: "ListView[##{@listViewCounter}] Debug Menu"
-				# ,
-				# 	text: "removeCss"
-				# 	onClick: (ev) =>
-				# 		@__debugCall "__removeCss", =>
-				# 			@__manualColWidths = []
-				# 			@__removeCss(ev)
-				,
-					text: "measure"
-					onClick: =>
-						@__debugCall "__measureCellDims", =>
-							@__resetCellDims()
-							@__measureCellDims()
-							@__calculateDims()
-							CUI.debug(@__cellDims)
-							CUI.debug("colWidths:", @__colWidths, "rowHeights:", @__rowHeights)
-				,
-				# 	text: "addCss"
-				# 	onClick: (ev) =>
-				# 		@__debugCall "__addCss", =>
-				# 			@__addCss(ev)
-				# ,
-					text: "addStyle"
-					onClick: (ev) =>
-						@__debugCall "__addStyle", =>
-							@__addStyle(ev)
-				,
-					text: "removeStyle"
-					onClick: (ev) =>
-						@__debugCall "__removeStyle", =>
-							@__removeStyle(ev)
 				,
 					text: "layout"
 					onClick: =>
@@ -1769,14 +1297,6 @@ class CUI.ListView extends CUI.SimplePane
 					text: "flash"
 					onClick: =>
 						@grid.rect(true, 1000, "ListView[##{@listViewCounter}]")
-				,
-					text: "showWaitBlock"
-					onClick: (ev) =>
-						@showWaitBlock()
-				,
-					text: "hideWaitBlock"
-					onClick: (ev) =>
-						@hideWaitBlock()
 				,
 					text: "debug"
 					onClick: =>

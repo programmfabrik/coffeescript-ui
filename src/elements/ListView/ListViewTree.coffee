@@ -183,7 +183,7 @@ class CUI.ListViewTree extends CUI.ListView
 				# this node from open multiple times
 				target = ev.getTarget()
 
-				row = CUI.DOM.closest(target, ".cui-list-view-grid-row")
+				row = CUI.DOM.closest(target, ".cui-lv-tr-outer")
 				node = DOM.data(row, "listViewRow")
 
 				# console.error "tree event", ev, _row, _handle, node
@@ -207,7 +207,7 @@ class CUI.ListViewTree extends CUI.ListView
 					return
 
 				target = ev.getTarget()
-				row = CUI.DOM.closest(target, ".cui-list-view-grid-row")
+				row = CUI.DOM.closest(target, ".cui-lv-tr-outer")
 				node = DOM.data(row, "listViewRow")
 
 				if not node or node.isLoading?()

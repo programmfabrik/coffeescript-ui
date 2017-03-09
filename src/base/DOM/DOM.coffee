@@ -24,7 +24,8 @@ class CUI.DOM extends CUI.Element
 
 	getDOMElementClasses: ->
 		if CUI.__ng__
-			return "cui-dom-element cui-#{toDash(@__cls)}"
+			# return "cui-dom-element cui-#{toDash(@__cls)}"
+			return "cui-#{toDash(@__cls)}"
 		else
 			return "cui-dom-element cui-#{toDash(@__cls)} ez-#{toDash(@__cls)}"
 
@@ -32,7 +33,7 @@ class CUI.DOM extends CUI.Element
 		@DOM = _dom
 		if add_default_classes
 			CUI.DOM.addClass(@DOM, @getDOMElementClasses())
-		CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
+		# CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
 		if @_class
 			# CUI.debug DOM, @DOM, @_class
 			CUI.DOM.addClass(@DOM, @_class) # @DOM.addClass(@_class)
@@ -412,11 +413,11 @@ class CUI.DOM extends CUI.Element
 	@append: (node, content) ->
 		@__append(node, content)
 
-	@getById: (uniqueId) ->
-		dom_el = document.getElementById("cui-dom-element-"+uniqueId)
-		if not dom_el
-			return null
-		DOM.data(dom_el, "element")
+	# @getById: (uniqueId) ->
+	# 	dom_el = document.getElementById("cui-dom-element-"+uniqueId)
+	# 	if not dom_el
+	# 		return null
+	# 	DOM.data(dom_el, "element")
 
 	@getAttribute: (node, key) ->
 		node.getAttribute(key)

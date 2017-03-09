@@ -348,6 +348,7 @@ class CUI.Template extends CUI.Element
 				Template.nodeByName[name] = el
 				CUI.DOM.remove(el)
 				el.classList.remove("cui-tmpl")
+				el.removeAttribute("data-template")
 				count = count + 1
 
 		return count
