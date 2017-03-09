@@ -311,18 +311,19 @@ class CUI.ListView extends CUI.SimplePane
 					return
 
 
-		Events.listen
-			type: "wheel"
-			node: @quadrant[2]
-			call: (ev) =>
-				ev.preventDefault()
-				if ev.wheelDeltaY() > 0
-					@quadrant[3].scrollTop += 100
+		if @quadrant[2]
+			Events.listen
+				type: "wheel"
+				node: @quadrant[2]
+				call: (ev) =>
+					ev.preventDefault()
+					if ev.wheelDeltaY() > 0
+						@quadrant[3].scrollTop += 100
 
-				if ev.wheelDeltaY() < 0
-					@quadrant[3].scrollTop -= 100
+					if ev.wheelDeltaY() < 0
+						@quadrant[3].scrollTop -= 100
 
-				on_scroll()
+					on_scroll()
 
 		Events.listen
 			type: "viewport-resize"
@@ -345,7 +346,7 @@ class CUI.ListView extends CUI.SimplePane
 				if not @__isInDOM
 					return
 
-				cell = DOM.closest(ev.getNode(), ".cui-list-view-grid-cell")
+				cell = DOM.closest(ev.getNode(), ".cui-lv-td")
 
 				if not cell
 					return
@@ -454,7 +455,7 @@ class CUI.ListView extends CUI.SimplePane
 
 
 	getCellByTarget: ($target) ->
-		if $target.is(".cui-list-view-grid-cell")
+		if $target.is(".cui-lv-td")
 			cell =
 				col_i: parseInt($target.attr("col"))
 				row_i: parseInt($target.attr("row"))
@@ -489,7 +490,6 @@ class CUI.ListView extends CUI.SimplePane
 
 				# CUI.debug "mousemove on cell", info.cell
 				if not info.cell
-					# quadrant 4 + 5
 					return
 
 				info.cell.pos = elementGetPosition(getCoordinatesFromEvent(ev), info.$target)
@@ -1021,8 +1021,9 @@ class CUI.ListView extends CUI.SimplePane
 			@__cells[row_i] = []
 			@__rows[row_i] = []
 
-			for qi, idx in @__getQuadrants(row_i)
+			for qi in @__getQuadrants(row_i)
 				ft = @__getColsFromAndTo(qi)
+
 				if ft.to < ft.from
 					continue
 
@@ -1071,6 +1072,10 @@ class CUI.ListView extends CUI.SimplePane
 					# insert our node before
 					while node = outer.firstChild
 						@quadrant[qi].insertBefore(node, @quadrant[qi].lastChild)
+				else
+					while node = outer.firstChild
+						@quadrant[qi].appendChild(node)
+
 				continue
 
 			if mode == "prepend"

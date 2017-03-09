@@ -7,7 +7,7 @@
 
 class ListViewRowMoveTool extends ListViewHoverTool
 
-	mousemove: (ev) =>
+	mousemove: (ev) ->
 		if not @info.cell
 			return
 
@@ -20,6 +20,7 @@ class ListViewRowMoveTool extends ListViewHoverTool
 		if @info.$target.is(".cui-list-view-row-move-handle[allow-row-move]")
 			if not @lV.getListViewRow(@info.cell.row_i).isMovable(ev)
 				return
+
 			ev.stopImmediatePropagation()
 			rect = @lV.getCellGridRectByNode(@info.$target)
 			rect.width = @lV.getGrid().width()
