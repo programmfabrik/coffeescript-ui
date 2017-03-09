@@ -1652,6 +1652,10 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	> .cui-buttonbar-group + .cui-buttonbar-group {
+		margin-left: $padding;
+	}
+
 	.cui-button-href {
 		height: 100%;
 	}
@@ -4011,7 +4015,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-td,
 	.cui-th {
 		width: calc(100% / 8); // 8 columns
-		text-align: right;
+		text-align: center;
 		cursor: default;
 		justify-content: center;
 		padding: 5px 7px;
