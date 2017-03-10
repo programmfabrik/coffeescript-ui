@@ -504,7 +504,7 @@ class CUI.DateTime extends Input
 
 		@popoverSetClasses()
 		@drawDate()
-		@drawHourMinute()
+		# @drawHourMinute()
 		@setClock()
 		@setDigiClock()
 		@setPrintClock()
@@ -1004,12 +1004,7 @@ class CUI.DateTime extends Input
 					@__current_moment.date(data.date)
 
 					@updateCalendar(@__current_moment)
-
-					if not CUI.__ng__
-						if @__input_formats[0].type.match(/time/)
-							@setCursor("hour")
-						else
-							@closePopover()
+					@closePopover()
 				return
 
 		# Wk, Mo, Tu, We, Th...
@@ -1097,164 +1092,164 @@ class CUI.DateTime extends Input
 		return
 
 
-	drawHourMinute: ->
+	# drawHourMinute: ->
 
-		if @__gridTable
-			@markTime()
-			return
+	# 	if @__gridTable
+	# 		@markTime()
+	# 		return
 
-		@__gridTable = $table("cui-date-time-day-grid")
-		@__hour_minute.empty().append(@__gridTable)
+	# 	@__gridTable = $table("cui-date-time-day-grid")
+	# 	@__hour_minute.empty().append(@__gridTable)
 
-		Events.listen
-			node: @__hour_minute
-			type: "click"
-			call: (ev) =>
-				if not @__gridTable
-					return
+	# 	Events.listen
+	# 		node: @__hour_minute
+	# 		type: "click"
+	# 		call: (ev) =>
+	# 			if not @__gridTable
+	# 				return
 
-				ev.stopPropagation()
-				$target = $(ev.getTarget())
-				# CUI.debug "clicked on ", $target
-				if $target.closest(".cui-date-time-grid-hour").length
-					hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
-					if @__input_formats[0].clock_am_pm
-						current_hour = @__current_moment.hour()
-						if current_hour < 12 # AM
-							@__current_moment.hour(hour%12)
-						else
-							@__current_moment.hour(hour%12+12)
-					else
-						@__current_moment.hour(hour)
-					@__current_moment.second(0)
-					if @__current_moment.minute() % 5 != 0
-						@__current_moment.minute(0)
+	# 			ev.stopPropagation()
+	# 			$target = $(ev.getTarget())
+	# 			# CUI.debug "clicked on ", $target
+	# 			if $target.closest(".cui-date-time-grid-hour").length
+	# 				hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
+	# 				if @__input_formats[0].clock_am_pm
+	# 					current_hour = @__current_moment.hour()
+	# 					if current_hour < 12 # AM
+	# 						@__current_moment.hour(hour%12)
+	# 					else
+	# 						@__current_moment.hour(hour%12+12)
+	# 				else
+	# 					@__current_moment.hour(hour)
+	# 				@__current_moment.second(0)
+	# 				if @__current_moment.minute() % 5 != 0
+	# 					@__current_moment.minute(0)
 
-					if @__input_formats[0].clock_am_pm
-						cursor = "am_pm"
-					else
-						cursor = "minute"
+	# 				if @__input_formats[0].clock_am_pm
+	# 					cursor = "am_pm"
+	# 				else
+	# 					cursor = "minute"
 
-				if $target.closest(".cui-date-time-grid-am-pm").length
-					current_hour = @__current_moment.hour()
-					am_pm = $target.closest("td,.cui-td").data("am_pm")
-					if am_pm == "AM"
-						if current_hour >= 12
-							@__current_moment.hour(current_hour-12)
-					else
-						if current_hour < 12
-							@__current_moment.hour(current_hour+12)
-					@__current_moment.second(0)
-					cursor = "minute"
+	# 			if $target.closest(".cui-date-time-grid-am-pm").length
+	# 				current_hour = @__current_moment.hour()
+	# 				am_pm = $target.closest("td,.cui-td").data("am_pm")
+	# 				if am_pm == "AM"
+	# 					if current_hour >= 12
+	# 						@__current_moment.hour(current_hour-12)
+	# 				else
+	# 					if current_hour < 12
+	# 						@__current_moment.hour(current_hour+12)
+	# 				@__current_moment.second(0)
+	# 				cursor = "minute"
 
-				if $target.closest(".cui-date-time-grid-minute").length
-					@__current_moment.minute(DOM.data($target.closest("td,.cui-td")[0], "minute"))
-					@__current_moment.second(0)
-					cursor = "blur"
+	# 			if $target.closest(".cui-date-time-grid-minute").length
+	# 				@__current_moment.minute(DOM.data($target.closest("td,.cui-td")[0], "minute"))
+	# 				@__current_moment.second(0)
+	# 				cursor = "blur"
 
-				delete(@__current_moment.__now)
-				@markTime()
-				@setInputFromMoment()
+	# 			delete(@__current_moment.__now)
+	# 			@markTime()
+	# 			@setInputFromMoment()
 
-				if cursor == "blur"
-					@closePopover()
-				else
-					@setCursor(cursor)
+	# 			if cursor == "blur"
+	# 				@closePopover()
+	# 			else
+	# 				@setCursor(cursor)
 
-				return
+	# 			return
 
-		#$tr().appendTo(table).append(
-		#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Hour"))
-		#)
-		if not @__input_formats[0].clock_am_pm
-			for hour in [0..23]
-				if hour % 6 == 0
-					tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
-				tr.append(
-					td = $td("cui-date-time-grid-hour")
-					.attr("hour", hour)
-					.append($text(hour))
-				)
-				DOM.data(td[0], "hour", hour)
-			tr.addClass("cui-date-time-grid-row-last")
-		else
-			for hour in [1..12]
-				if (hour-1) % 6 == 0
-					tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
-				tr.append(
-					td = $td("cui-date-time-grid-hour")
-					.attr("hour", hour)
-					.append($text(hour))
-				)
-				DOM.data(td[0], "hour", hour)
-			tr.addClass("cui-date-time-grid-row-last")
-			# ----------------------
-			tr = $tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
-			for am_pm in ["AM","PM"]
-				tr.append(
-					td = $td("cui-date-time-grid-am-pm")
-					.attr("am_pm", am_pm)
-					.append($text(am_pm))
-				)
-				DOM.data(td[0], "am_pm", am_pm)
-			tr.append($td("",colspan:4))
+	# 	#$tr().appendTo(table).append(
+	# 	#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Hour"))
+	# 	#)
+	# 	if not @__input_formats[0].clock_am_pm
+	# 		for hour in [0..23]
+	# 			if hour % 6 == 0
+	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 			tr.append(
+	# 				td = $td("cui-date-time-grid-hour")
+	# 				.attr("hour", hour)
+	# 				.append($text(hour))
+	# 			)
+	# 			DOM.data(td[0], "hour", hour)
+	# 		tr.addClass("cui-date-time-grid-row-last")
+	# 	else
+	# 		for hour in [1..12]
+	# 			if (hour-1) % 6 == 0
+	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 			tr.append(
+	# 				td = $td("cui-date-time-grid-hour")
+	# 				.attr("hour", hour)
+	# 				.append($text(hour))
+	# 			)
+	# 			DOM.data(td[0], "hour", hour)
+	# 		tr.addClass("cui-date-time-grid-row-last")
+	# 		# ----------------------
+	# 		tr = $tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
+	# 		for am_pm in ["AM","PM"]
+	# 			tr.append(
+	# 				td = $td("cui-date-time-grid-am-pm")
+	# 				.attr("am_pm", am_pm)
+	# 				.append($text(am_pm))
+	# 			)
+	# 			DOM.data(td[0], "am_pm", am_pm)
+	# 		tr.append($td("",colspan:4))
 
-			tr.addClass("cui-date-time-grid-row-last")
+	# 		tr.addClass("cui-date-time-grid-row-last")
 
-		#$tr().appendTo(table).append(
-		#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Minute"))
-		#)
+	# 	#$tr().appendTo(table).append(
+	# 	#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Minute"))
+	# 	#)
 
-		for minute in [0..59] by 5
-			if minute % 6 == 0
-				tr = $tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
-			if minute < 10
-				_minute = ":0"+minute
-			else
-				_minute = ":"+minute
-			tr.append(
-				td = $td("cui-date-time-grid-minute")
-				.attr("minute", minute)
-				.append($text(_minute))
-			)
+	# 	for minute in [0..59] by 5
+	# 		if minute % 6 == 0
+	# 			tr = $tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
+	# 		if minute < 10
+	# 			_minute = ":0"+minute
+	# 		else
+	# 			_minute = ":"+minute
+	# 		tr.append(
+	# 			td = $td("cui-date-time-grid-minute")
+	# 			.attr("minute", minute)
+	# 			.append($text(_minute))
+	# 		)
 
-			DOM.data(td[0], "minute", minute)
+	# 		DOM.data(td[0], "minute", minute)
 
-		tr.addClass("cui-date-time-grid-minute-row-last")
-		@markTime()
-		return
-
-
-	markTime: ->
-		@__dateTimeTmpl.DOM.find(".cui-date-time-day-grid .cui-date-time-selected").removeClass("cui-date-time-selected")
-
-		for k in ["hour", "minute"]
-			if @__current_moment.__now
-				continue
-
-			units = @__current_moment[k]()
-			if k == "hour" and @__input_formats[0].clock_am_pm
-				units = (units+11)%12+1 # convert hours in visible hour format
-
-			if k == "minute"
-				units = units - (units % 5)
-
-			@__gridTable.find("[#{k}=\"#{units}\"]").addClass("cui-date-time-selected")
+	# 	tr.addClass("cui-date-time-grid-minute-row-last")
+	# 	@markTime()
+	# 	return
 
 
-		if @__input_formats[0].clock_am_pm
-			for _c in @__gridTable.find("[am_pm]")
-				c = $(_c)
-				if @__current_moment.__now
-					continue
+	# markTime: ->
+	# 	@__dateTimeTmpl.DOM.find(".cui-date-time-day-grid .cui-date-time-selected").removeClass("cui-date-time-selected")
 
-				if @__current_moment.hour() < 12
-					if c.attr("am_pm") == "AM"
-						c.addClass("cui-date-time-selected")
-				else
-					if c.attr("am_pm") == "PM"
-						c.addClass("cui-date-time-selected")
-		return
+	# 	for k in ["hour", "minute"]
+	# 		if @__current_moment.__now
+	# 			continue
+
+	# 		units = @__current_moment[k]()
+	# 		if k == "hour" and @__input_formats[0].clock_am_pm
+	# 			units = (units+11)%12+1 # convert hours in visible hour format
+
+	# 		if k == "minute"
+	# 			units = units - (units % 5)
+
+	# 		@__gridTable.find("[#{k}=\"#{units}\"]").addClass("cui-date-time-selected")
+
+
+	# 	if @__input_formats[0].clock_am_pm
+	# 		for _c in @__gridTable.find("[am_pm]")
+	# 			c = $(_c)
+	# 			if @__current_moment.__now
+	# 				continue
+
+	# 			if @__current_moment.hour() < 12
+	# 				if c.attr("am_pm") == "AM"
+	# 					c.addClass("cui-date-time-selected")
+	# 			else
+	# 				if c.attr("am_pm") == "PM"
+	# 					c.addClass("cui-date-time-selected")
+	# 	return
 
 	# Keys when try parsing
 	@formatTypes: ["store", "input", "display", "display_short"]
