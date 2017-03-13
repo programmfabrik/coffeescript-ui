@@ -104,7 +104,8 @@ class CUI.Input extends CUI.DataFieldInput
 				check: (v) ->
 					CUI.isFunction(v) and not @_overwrite
 			placeholder:
-				check: String
+				check: (v) ->
+					CUI.isFunction(v) or isString(v)
 			readonly:
 				check: Boolean
 			readonly_select_all:
@@ -158,6 +159,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__autocomplete = "on"
 		else if @_autocomplete == false
 			@__autocomplete = "off"
+
 		@
 
 	__checkInputRegexp: (value) ->
@@ -175,6 +177,15 @@ class CUI.Input extends CUI.DataFieldInput
 	setPlaceholder: (placeholder) ->
 		DOM.setAttribute(@__input[0], "placeholder", placeholder)
 
+	getPlaceholder: ->
+		if not @_placeholder
+			return undefined
+
+		if CUI.isFunction(@_placeholder)
+			@_placeholder(@, @getData())
+		else
+			@_placeholder
+
 	# MISSING FEATURES:
 	# - tab block advance
 	# - up/down cursor number decrement/increment
@@ -183,7 +194,7 @@ class CUI.Input extends CUI.DataFieldInput
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
 			@__input = $element "textarea", "cui-textarea",
-				placeholder: @_placeholder
+				placeholder: @getPlaceholder()
 				tabindex: "0"
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
@@ -197,7 +208,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__input = $element "input", "cui-input",
 				type: input_type
 				size: size
-				placeholder: @_placeholder
+				placeholder: @getPlaceholder()
 				tabindex: "0"
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck

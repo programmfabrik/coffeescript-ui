@@ -47,6 +47,12 @@ class CUI.DataTable extends CUI.DataFieldInput
 			footer_right:
 				check: (v) ->
 					isContent(v)
+			# own buttons
+			buttons:
+				mandatory: true
+				default: []
+				check: (v) ->
+					CUI.isArray(v)
 
 	getFieldList: ->
 		@__fieldList
@@ -81,6 +87,20 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 	getDefaultValue: ->
 		[]
+
+	addRow: (data={}) ->
+		@rows.push(data)
+		# CUI.debug "creating new data node"
+		new_node = new DataTableNode
+			dataTable: @
+			data: data
+			rows: @rows
+
+		@_onNodeAdd?(node)
+		@listView.appendRow(new_node)
+		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
+		@storeValue(copyObject(@rows, true))
+		new_node
 
 	render: ->
 		super()
@@ -129,7 +149,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 					text: label
 					multiline: true
 
-		buttons = []
+		buttons = @_buttons.slice(0)
 		if @_new_rows != "none"
 			if @_new_rows != "remove_only"
 				buttons.push
@@ -137,17 +157,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 					tooltip: text: CUI.DataTable.defaults.plus_button_tooltip
 					group: "plus-minus"
 					onClick: =>
-						@rows.push(d={})
-						# CUI.debug "creating new data node"
-						new_node = new DataTableNode
-							dataTable: @
-							data: d
-							rows: @rows
-
-						@_onNodeAdd?(node)
-						@listView.appendRow(new_node)
-						# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
-						@storeValue(copyObject(@rows, true))
+						@addRow()
 
 			buttons.push @minusButton = new CUI.defaults.class.Button
 				icon: "minus"
@@ -188,7 +198,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			colResize: if @_no_header then false else true
 			colClasses: colClasses
 			rowMove: @_rowMove
-			rowMovePlaceholder: not @_rowMove
+			# rowMovePlaceholder: not @_rowMove
 			maximize: @_maximize
 			maximize_horizontal: @_maximize_horizontal
 			maximize_vertical: @_maximize_vertical

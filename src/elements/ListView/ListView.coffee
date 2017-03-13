@@ -297,7 +297,8 @@ class CUI.ListView extends CUI.SimplePane
 		@__currentScroll = top: 0, left: 0
 
 		if @_selectableRows
-			selector = ".#{@__lvClass} > div > .cui-list-view-grid-quadrant > .cui-lv-tr-outer"
+
+			selector = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer"
 
 			Events.listen
 				type: "click"
@@ -920,28 +921,18 @@ class CUI.ListView extends CUI.SimplePane
 		else
 			px
 
-	# hideWaitBlock: (internal=false) ->
-	# 	if not @grid
-	# 		@__showWaitBlock = false
-	# 	else if @__waitBlock
-	# 		if not internal or @__waitBlock.__internal
-	# 			@__waitBlock.destroy()
-	# 			delete(@__waitBlock)
-	# 	@
+	hideWaitBlock: ->
+		if @__waitBlock
+			@__waitBlock.destroy()
+			delete(@__waitBlock)
+		@
 
-	# showWaitBlock: (internal=false) ->
-	# 	if @__waitBlock
-	# 		return @
-
-	# 	if not @grid
-	# 		@__showWaitBlock = true
-	# 		return
-
-	# 	delete(@__showWaitBlock)
-	# 	@__waitBlock = new WaitBlock(element: @grid)
-	# 	@__waitBlock.__internal = internal
-	# 	@__waitBlock.show()
-	# 	@
+	showWaitBlock: ->
+		if @__waitBlock
+			return @
+		@__waitBlock = new WaitBlock(element: @DOM)
+		@__waitBlock.show()
+		@
 
 	__debugRect: (func, ms) ->
 		viewport = @grid.rect()
