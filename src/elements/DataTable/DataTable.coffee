@@ -94,6 +94,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 		new_node = new DataTableNode
 			dataTable: @
 			data: data
+			rowIdx: @rows.length-1
 			rows: @rows
 
 		@_onNodeAdd?(node)
@@ -238,6 +239,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				node = new DataTableNode
 					dataTable: @
 					data: row
+					rowIdx: idx
 					rows: @rows
 					check_changed_data: @getInitValue()?[idx]
 				@_onNodeAdd?(node)

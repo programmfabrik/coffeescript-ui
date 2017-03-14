@@ -230,7 +230,7 @@ class CUI
 			progress = (idx+1) + " - " + Math.min(len, idx+chunk_size) + " / " +len
 			# console.error "progress:", progress
 
-			dfr?.notify
+			dfr.notify
 				progress: progress
 				idx: idx
 				len: len
@@ -238,7 +238,7 @@ class CUI
 
 			go_on = =>
 				if idx + chunk_size >= len
-					dfr?.resolve()
+					dfr.resolve()
 				else
 					idx = idx + chunk_size
 					if timeout == -1
@@ -252,11 +252,11 @@ class CUI
 			ret = opts.call.call(@, opts.items.slice(idx, idx+opts.chunk_size), idx, len)
 			if ret == false
 				# interrupt this
-				dfr?.reject()
+				dfr.reject()
 				return
 
 			if isPromise(ret)
-				ret.fail(dfr?.reject).done(go_on)
+				ret.fail(dfr.reject).done(go_on)
 			else
 				go_on()
 
@@ -265,7 +265,11 @@ class CUI
 		dfr = new CUI.Deferred()
 		CUI.setTimeout
 			ms: Math.min(0, timeout)
-			call: next_chunk
+			call: =>
+				if len > 0
+					next_chunk()
+				else
+					dfr.resolve()
 
 		return dfr.promise()
 

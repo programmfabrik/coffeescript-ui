@@ -453,8 +453,8 @@ class CUI.DateTime extends Input
 				content: @__dateTimeTmpl
 		@updateDateTimePicker()
 		@setCursor("day")
-		if not @__current_moment.__now
-			@setInputFromMoment()
+		# if not @__current_moment.__now
+		# 	@setInputFromMoment()
 		@__popover.show()
 		@
 

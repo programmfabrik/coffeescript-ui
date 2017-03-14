@@ -37,7 +37,7 @@ class CUI.Template extends CUI.Element
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
-		if not CUI.isEmptyObject(@map)
+		if not CUI.isEmptyObject(@map) and @_set_template_empty
 			CUI.DOM.addClass(@DOM, "cui-template-empty")
 
 		#
@@ -57,6 +57,10 @@ class CUI.Template extends CUI.Element
 			init_flex_handles:
 				mandatory: true
 				default: false
+				check: Boolean
+			set_template_empty:
+				mandatory: true
+				default: true
 				check: Boolean
 			map:
 				type: "PlainObject"
@@ -199,7 +203,7 @@ class CUI.Template extends CUI.Element
 					is_empty = false
 					break
 
-			if is_empty
+			if is_empty and @_set_template_empty
 				CUI.DOM.addClass(@DOM, "cui-template-empty")
 
 			return @map[key]
@@ -211,7 +215,9 @@ class CUI.Template extends CUI.Element
 			# with map we empty each individual map entry
 			for key of @map
 				DOM.empty(@map[key])
-			CUI.DOM.addClass(@DOM, "cui-template-empty")
+
+			if @_set_template_empty
+				CUI.DOM.addClass(@DOM, "cui-template-empty")
 
 		return @DOM
 
@@ -264,7 +270,8 @@ class CUI.Template extends CUI.Element
 
 		if appends.length > 0
 			CUI.DOM[fn](node, appends)
-			CUI.DOM.removeClass(@DOM, "cui-template-empty")
+			if @_set_template_empty
+				CUI.DOM.removeClass(@DOM, "cui-template-empty")
 
 		node
 

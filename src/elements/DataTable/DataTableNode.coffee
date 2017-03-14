@@ -21,6 +21,10 @@ class DataTableNode extends ListViewRow
 			rows:
 				mandatory: true
 				check: "Array"
+			rowIdx:
+				mandatory: true
+				check: (v) ->
+					v >= 0
 
 	readOpts: ->
 		super()
@@ -56,6 +60,9 @@ class DataTableNode extends ListViewRow
 
 	getFieldByIdx: (idx) ->
 		@__fields[idx]
+
+	getRowIdx: ->
+		@_rowIdx
 
 	getFieldsByName: (name) ->
 		fields = []

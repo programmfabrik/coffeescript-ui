@@ -400,6 +400,7 @@ class CUI.DataField extends CUI.DOM
 
 		if flags.no_trigger not in [false, true]
 			flags.no_trigger = true
+
 		@storeValue(v, flags)
 		if @isRendered()
 			@displayValue()
