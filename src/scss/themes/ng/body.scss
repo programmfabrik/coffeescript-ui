@@ -3008,7 +3008,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 	max-width: 100%;
 	min-width: 0;
-	flex-shrink: 1;
+	// flex-shrink: 1; CONFLICT: overwrites shrink: 0 of quadrant-0 and 2
 }
 
 .cui-lv-tr-outer {
