@@ -540,12 +540,7 @@ li > div {
 	}
 
 	.cui-horizontal-layout-right {
-		margin-left: $gap;
 		flex-shrink: 0;
-
-		&:empty {
-			margin-left: 0;
-		}
 
 		> .cui-label {
 			&:last-child {
@@ -1646,14 +1641,17 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-data-field-input {
 		+ .cui-button,
 		+ .cui-button-button,
-		+ .cui-data-field-input,
-		+ .cui-buttonbar-group {
+		+ .cui-data-field-input {
 			margin-left: $padding;
 		}
 	}
 
-	> .cui-buttonbar-group + .cui-buttonbar-group {
-		margin-left: $padding;
+	> .cui-button,
+	> .cui-button-button,
+	> .cui-data-field-input {
+		+ .cui-buttonbar-group {
+			margin-left: $padding/2;
+		}
 	}
 
 	.cui-button-href {
@@ -3908,6 +3906,10 @@ a[role="button"].cui-button-appearance-link {
 			padding-right: 3px;
 		}
 	}
+}
+
+.cui-buttonbar-group-time {
+	margin-left: $padding;
 }
 
 .cui-date-time-input-center {
