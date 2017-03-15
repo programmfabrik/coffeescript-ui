@@ -114,7 +114,7 @@ textarea {
 	width: 24px;
 	height: 12px;
 	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14) inset;
-	
+
 	@each $color, $values in $colors {
 		&.cui-swatch-color-#{$color} {
 			background: map-get($values, 'light');
@@ -3157,10 +3157,17 @@ a[role="button"].cui-button-appearance-link {
 	text-align: center;
 	justify-content: flex-end;
 	align-items: center;
-	cursor: pointer;
 
-	&.cui-tree-node-is-open .fa {
-		margin-top: 1px;
+	&.cui-tree-node-is-closed {
+		cursor: pointer;
+	}
+
+	&.cui-tree-node-is-open {
+		cursor: pointer;
+
+		.fa {
+			margin-top: 1px;
+		}
 	}
 }
 
