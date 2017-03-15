@@ -1410,6 +1410,10 @@ a[role="button"].cui-button-appearance-link {
 			font-style: normal;
 		}
 	}
+
+	&-appearance-secondary {
+		color: $secondary-color;
+	}
 }
 
 // Label: Markdown
@@ -1522,7 +1526,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 100%; // prevent overflow when its the child of a flex parent
 
 	& + & {
-		margin-top: $padding;
+		margin-top: 7px;
 	}
 
 	&:not(.cui-label-markdown) {

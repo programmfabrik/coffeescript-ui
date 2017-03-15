@@ -86,7 +86,7 @@ class CUI.Label extends CUI.DOM
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
-				check: ["normal","important","title"]
+				check: ["normal","important","title","secondary"]
 			# set to true if text is markdown
 			markdown:
 				mandatory: true
