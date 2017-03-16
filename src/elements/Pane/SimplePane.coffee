@@ -90,6 +90,12 @@ class CUI.SimplePane extends CUI.Pane
 	forceFooter: ->
 		@_force_footer
 
+	hasHeader: ->
+		!!@__pane_header
+
+	hasFooter: ->
+		!!@__pane_footer
+
 	destroy: ->
 		@__pane_header?.destroy()
 		@__pane_header = null

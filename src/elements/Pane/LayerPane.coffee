@@ -24,14 +24,16 @@ class CUI.LayerPane extends CUI.Layer
 	getPane: ->
 		@__pane
 
-
 	setPane: (pane) ->
 		if CUI.isPlainObject(pane)
-			for k in ["force_header", "force_footer"]
-				if not pane.hasOwnProperty(k)
-					pane[k] = true
+			# for k in ["force_header", "force_footer"]
+			# 	if not pane.hasOwnProperty(k)
+			# 		pane[k] = true
 
 			@__pane = new SimplePane(pane)
+
+			if @__pane.hasHeader()
+				@__layer_root.DOM.classList.add("ez5-simple-pane--has-header")
 		else
 			@__pane = pane
 		@__pane.addClass("cui-layer-pane");
