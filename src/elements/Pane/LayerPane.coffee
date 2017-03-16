@@ -34,6 +34,9 @@ class CUI.LayerPane extends CUI.Layer
 
 			if @__pane.hasHeader()
 				@__layer_root.DOM.classList.add("ez5-simple-pane--has-header")
+
+			if @__pane.hasFooter()
+				@__layer_root.DOM.classList.add("ez5-simple-pane--has-footer")
 		else
 			@__pane = pane
 		@__pane.addClass("cui-layer-pane");
