@@ -72,7 +72,7 @@ class CUI.ListViewRow extends CUI.Element
 			if not @listView.hasSelectableRows()
 				return false
 
-			if @getRowIdx() < @listView.fixedRowsCount
+			if @getDisplayRowIdx() < @listView.fixedRowsCount
 				return false
 
 		@__selectable
@@ -188,7 +188,6 @@ class CUI.ListViewRow extends CUI.Element
 
 	isSelected: ->
 		!!@selected
-
 
 	remove: ->
 		@listView.removeRow(@row_i)

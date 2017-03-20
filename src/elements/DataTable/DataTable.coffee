@@ -94,7 +94,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 		new_node = new DataTableNode
 			dataTable: @
 			data: data
-			rowIdx: @rows.length-1
+			dataRowIdx: @rows.length-1
 			rows: @rows
 
 		@_onNodeAdd?(node)
@@ -160,7 +160,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 					onClick: =>
 						@addRow()
 
-			buttons.push @minusButton = new CUI.defaults.class.Button
+
+			@minusButton = new CUI.defaults.class.Button
 				icon: "minus"
 				group: "plus-minus"
 				tooltip: text: CUI.DataTable.defaults.minus_button_tooltip
@@ -169,7 +170,10 @@ class CUI.DataTable extends CUI.DataFieldInput
 					for row in @listView.getSelectedRows()
 						row.remove()
 					@storeValue(copyObject(@rows, true))
+					updateMinusButton()
 					return
+
+			buttons.push(@minusButton)
 
 		if buttons.length
 			footer = new Buttonbar(buttons: buttons)
@@ -239,7 +243,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				node = new DataTableNode
 					dataTable: @
 					data: row
-					rowIdx: idx
+					dataRowIdx: idx
 					rows: @rows
 					check_changed_data: @getInitValue()?[idx]
 				@_onNodeAdd?(node)
