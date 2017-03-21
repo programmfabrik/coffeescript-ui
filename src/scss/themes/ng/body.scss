@@ -3826,8 +3826,9 @@ a[role="button"].cui-button-appearance-link {
 	right: 0;
 	top: 0;
 	bottom: 0;
-	width: 5px;
-	background: red;
+	margin: 0 -5px;
+	width: 10px;
+	z-index: 1;
 }
 
 .cui-drag-drop-select-lasso {
