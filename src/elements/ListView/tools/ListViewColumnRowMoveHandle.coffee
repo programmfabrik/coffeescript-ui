@@ -7,9 +7,6 @@
 
 class ListViewColumnRowMoveHandle extends ListViewColumn
 
-	getClass: ->
-		"cui-lv-row-move-handle"
-
 	setElement: (cell) ->
 		super(cell)
 

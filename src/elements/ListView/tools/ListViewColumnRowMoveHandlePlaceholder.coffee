@@ -6,11 +6,3 @@
 ###
 
 class ListViewColumnRowMoveHandlePlaceholder extends ListViewColumnEmpty
-
-	initOpts: ->
-		super()
-		@removeOpt("class")
-
-	readOpts: ->
-		super()
-		@_class = "cui-lv-no-row-move-placeholder"
