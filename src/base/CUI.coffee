@@ -20,8 +20,6 @@ class CUI
 		@CSS = new CUI.CSSLoader()
 
 		@getPathToScript()
-		@testSvgstoreFallback()
-
 		trigger_viewport_resize = =>
 			CUI.info("CUI: trigger viewport resize.")
 			Events.trigger
@@ -72,13 +70,15 @@ class CUI
 
 		document.body.scrollTop=0
 
-		Template.load()
-		if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-			CUI.Template.loadFile("easydbui.html")
-			.done =>
+		CUI.Template.loadFile("icons.svg")
+		.done =>
+			Template.load()
+			if not Template.nodeByName["cui-base"] # loaded in easydbui.html
+				CUI.Template.loadFile("easydbui.html")
+				.done =>
+					@ready()
+			else
 				@ready()
-		else
-			@ready()
 		@
 
 	@getPathToScript: ->
@@ -92,11 +92,6 @@ class CUI
 
 		@pathToScript
 
-	@testSvgstoreFallback: ->
-		# IE Fallback for svgstore (IE till current Edge doesn't support use links to icons.svg#icon-name
-		test = new CUI.Icon()
-		if(test.detectIE())
-			test.injectSvgstore()
 
 	@ready: (func) ->
 		if func instanceof Function

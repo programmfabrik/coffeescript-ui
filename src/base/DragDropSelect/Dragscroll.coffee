@@ -7,7 +7,7 @@
 
 globalDrag = null
 
-class Dragscroll extends Draggable
+class CUI.Dragscroll extends CUI.Draggable
 
 	initOpts: ->
 		super()

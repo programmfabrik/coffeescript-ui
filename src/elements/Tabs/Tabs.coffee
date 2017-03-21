@@ -46,7 +46,7 @@ class CUI.Tabs extends CUI.SimplePane
 		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
 			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
-			@__dragscroll = new Dragscroll
+			@__dragscroll = new CUI.Dragscroll
 				element: @__buttonbar.DOM
 				scroll_element: @__header
 		else

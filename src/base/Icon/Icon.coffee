@@ -23,15 +23,13 @@ class CUI.Icon extends CUI.Element
 			cls += " "+@_class
 
 		if svg_cls
-			href = if @detectIE() then "" else CUI.pathToScript+"/icons.svg"
-			@DOM = CUI.DOM.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"#{href}##{svg_cls}\"></svg>")[0]
+			@DOM = CUI.DOM.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls}\"></svg>")[0]
 		else
 			@DOM = CUI.jQueryCompat(CUI.DOM.element("I", class: "fa "+cls))
 
 		if @_tooltip
 			@_tooltip.element = @DOM
 			new Tooltip(@_tooltip)
-
 
 	initOpts: ->
 		super()
@@ -138,38 +136,6 @@ class CUI.Icon extends CUI.Element
 		image: "fa-picture-o"
 		external_link: "svg-external-link"
 
-	detectIE: ->
-		ua = window.navigator.userAgent
-
-		msie = ua.indexOf('MSIE ')
-		if(msie > 0)
-			# IE 10 or older => return version number
-			return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10)
-
-		trident = ua.indexOf('Trident/')
-		if(trident > 0)
-			# IE 11 => return version number
-			rv = ua.indexOf('rv:')
-			return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10)
-
-		edge = ua.indexOf('Edge/')
-		if(edge > 0)
-			 # Edge (IE 12+) => return version number
-			 return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10)
-
-		# other browser
-		false
-
-	injectSvgstore: ->
-		xhr = new XMLHttpRequest()
-		xhr.onload = ->
-			svgstore = document.createElement('div')
-			svgstore.innerHTML = this.responseText
-			svgstore.style.display = 'none'
-			svgstore.id = 'svgstore'
-			document.querySelector('body').insertBefore(svgstore, document.querySelector('body > :first-child'))
-		xhr.open('get', CUI.pathToScript+"/icons.svg", true)
-		xhr.send()
 
 CUI.proxyMethods(CUI.Icon, CUI.Button, ["hide", "show", "isShown","isHidden"])
 

@@ -323,7 +323,7 @@ class CUI.Template extends CUI.Element
 
 			if div.children.length > 0
 				document.body.appendChild(div)
-				console.error("Template.loadFile:", filename, "contains extra content.", div)
+				console.warn("Template.loadFile:", filename, "contains extra content.", div)
 
 			if count == 0
 				console.warn("Template.loadFile:", filename, "contains no Templates.")
