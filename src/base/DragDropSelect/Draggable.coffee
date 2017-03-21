@@ -107,13 +107,14 @@ class CUI.Draggable extends CUI.DragDropSelect
 		DOM.addClass(@element, "no-user-select")
 
 		Events.listen
-			type: "mousedown" # was: mouseisdown
+			type: ["mousedown", "touchstart"] # was: mouseisdown
 			node: @element
-			capture: true
+			# capture: true
 			instance: @
 			selector: @_selector
 			call: (ev) =>
-				if ev.getButton() > 0
+
+				if ev.getButton() > 0 and ev.getType() == "mousedown"
 					# ignore if not the main button
 					return
 
@@ -130,11 +131,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 				dim = DOM.getDimensions(ev.getTarget())
 
 				if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
-					CUI.warn("Mousedown on a vertical scrollbar, not starting drag.")
+					console.warn("Mousedown on a vertical scrollbar, not starting drag.")
 					return
 
 				if dim.clientHeightScaled > 0 and position.top - dim.scrollTopScaled > dim.clientHeightScaled
-					CUI.warn("Mousedown on a horizontal scrollbar, not starting drag.")
+					console.warn("Mousedown on a horizontal scrollbar, not starting drag.")
 					return
 
 				target = ev.getCurrentTarget()
@@ -147,7 +148,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				$target = $(target)
 
-				# CUI.debug "attempting to start drag", ev.getUniqueId(), $target[0]
+				# console.debug "attempting to start drag", ev.getUniqueId(), $target[0]
 
 				@init_drag(ev, $target)
 				return
@@ -163,7 +164,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			# CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
 			return
 
-		# ev.preventDefault()
+		ev.preventDefault()
 
 		for k, v of overwrite_options
 			@["_#{k}"] = v
@@ -226,7 +227,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		Events.listen
 			node: document
-			type: "mousemove"
+			type: ["mousemove", "touchmove"]
 			instance: @__ref
 			call: (ev) =>
 				if not globalDrag
@@ -262,7 +263,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					y: coordinates.pageY - globalDrag.startCoordinates.pageY
 					eventPoint: coordinates
 
-				switch @_axis
+				switch @get_axis()
 					when "x"
 						diff.y = 0
 					when "y"
@@ -337,7 +338,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				only_once: true
 				node: window
 				call: (ev) ->
-					console.error "Killing click after drag", ev.getTarget()
+					# console.error "Killing click after drag", ev.getTarget()
 					return ev.stop()
 
 			return
@@ -361,11 +362,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		Events.listen
 			node: document
-			type: ["mouseup"]
+			type: ["mouseup", "touchend"]
 			capture: true
 			instance: @__ref
 			call: (ev) =>
-				# CUI.debug "mouseup/keyup: ", ev.getType()
+				# console.debug "event received: ", ev.getType()
 				# CUI.debug "draggable", ev.type
 				if not globalDrag
 					return
@@ -438,20 +439,15 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		return
 
-	stop_drag: (ev) ->
-		@end_drag(ev)
+	cleanup_drag: (ev) ->
+		if @isDestroyed()
+			return
 
-	# find_target: (ev, $target=$(ev.getTarget())) ->
-	# 	# hide helper and a drag-drop-select-transparent div
-	# 	# if necessaray
-	# 	$hide = $target.closest(".cui-drag-drop-select-transparent")
-	# 	if $hide.length
-	# 		# hide helper and determine the "real" target
-	# 		oldDisplay = $hide[0].style.display
-	# 		$hide.css(display: "none")
-	# 		$target = @find_target(ev, $(document.elementFromPoint(ev.clientX(), ev.clientY())))
-	# 		$hide.css(display: oldDisplay)
-	# 	$target
+		globalDrag.$source.removeClass(@_dragClass)
+		CUI.DOM.remove(globalDrag.helperNode)
+
+	stop_drag: (ev) ->
+		@cleanup_drag(ev)
 
 	end_drag: (ev) ->
 		# CUI.debug globalDrag.dragoverTarget, ev.getType(), ev
@@ -487,33 +483,36 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			globalDrag.dragoverTarget = null
 
-		# animate the helperNode back to its origin
-		globalDrag.$source.removeClass(@_dragClass)
-		CUI.DOM.remove(globalDrag.helperNode)
+		@cleanup_drag(ev)
 		@
 
+	get_helper_pos: (ev, gd, diff) ->
+		top: globalDrag.helperNodeStart.top + diff.y
+		left: globalDrag.helperNodeStart.left + diff.x
+		width: globalDrag.helperNodeStart.width
+		height: globalDrag.helperNodeStart.height
+
+	get_helper_contain_element: ->
+		@_helper_contain_element
+
 	position_helper: (ev, $target, diff) ->
+		# console.debug "position helper", globalDrag.helperNodeStart, ev, $target, diff
+
 		if not globalDrag.helperNode
 			return
 
-		top = globalDrag.helperNodeStart.top + diff.y
-		left = globalDrag.helperNodeStart.left + diff.x
-
-		helper_pos =
-			top: top
-			left: left
-			start:
-				top: globalDrag.helperNodeStart.top
-				left: globalDrag.helperNodeStart.left
+		helper_pos = @get_helper_pos(ev, globalDrag, diff)
 
 		pos =
 			x: helper_pos.left
 			y: helper_pos.top
-			w: globalDrag.helperNodeStart.width
-			h: globalDrag.helperNodeStart.height
+			w: helper_pos.width
+			h: helper_pos.height
 
-		if @_helper_contain_element
-			dim_contain = CUI.DOM.getDimensions(@_helper_contain_element)
+		helper_contain_element = @get_helper_contain_element(ev, $target, diff)
+
+		if helper_contain_element
+			dim_contain = CUI.DOM.getDimensions(helper_contain_element)
 
 			# pos is changed in place
 			Draggable.limitRect pos,
@@ -539,10 +538,21 @@ class CUI.Draggable extends CUI.DragDropSelect
 			x: helper_pos.left - globalDrag.helperNodeStart.left
 			y: helper_pos.top - globalDrag.helperNodeStart.top
 
-		@_helper_set_pos?(globalDrag, helper_pos)
+		# @_helper_set_pos?(globalDrag, helper_pos)
+
+		if helper_pos.width != globalDrag.helperNodeStart.width
+			new_width = helper_pos.width
+
+		if helper_pos.height != globalDrag.helperNodeStart.height
+			new_height = helper_pos.height
 
 		CUI.DOM.setStyle globalDrag.helperNode,
 			transform: "translateX("+helper_pos.dragDiff.x+"px) translateY("+helper_pos.dragDiff.y+"px)"
+
+
+		CUI.DOM.setDimensions globalDrag.helperNode,
+			borderBoxWidth: new_width
+			borderBoxHeight: new_height
 
 		return
 
@@ -559,25 +569,33 @@ class CUI.Draggable extends CUI.DragDropSelect
 		helper.classList.remove("cui-selected")
 		return helper
 
+	get_axis: ->
+		@_axis
+
+	get_helper: (ev, gd, diff) ->
+		@_helper
+
+	get_init_helper_pos: (node, gd, offset = top: 0, left: 0) ->
+		top: gd.startCoordinates.pageY - offset.top
+		left: gd.startCoordinates.pageX - offset.left
+
 	init_helper: (ev, $target, diff) ->
-		if not @_helper
+		helper = @get_helper(ev, window.globalDrag, diff)
+
+		if not helper
 			return
 
-		drag_source = globalDrag.$source
-
-		if @_helper == "clone"
+		if helper == "clone"
 			hn = CUI.jQueryCompat(@getSourceCloneForHelper())
 			# offset the layer to the click
 			offset =
 				top: globalDrag.start.top
 				left: globalDrag.start.left
-
-		if CUI.isFunction(@_helper)
-			hn = globalDrag.helperNode = @_helper(globalDrag)
-			offset =
-				top: 0
-				left: 0
+		else if CUI.isFunction(helper)
+			hn = globalDrag.helperNode = helper(globalDrag)
 			set_dim = null
+		else
+			hn = globalDrag.helperNode = helper
 
 		if not hn
 			return
@@ -586,26 +604,20 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		hn.addClass("drag-drop-select-helper cui-drag-drop-select-transparent")
 
-		start =
-			top: globalDrag.startCoordinates.pageY - offset.top
-			left: globalDrag.startCoordinates.pageX - offset.left
-
-		CUI.DOM.setStyle hn,
-			position: "absolute"
-			top: start.top
-			left: start.left
-			zIndex: 1000
-
-		# console.debug "INITIAL POS", globalDrag.startCoordinates.pageY - offset.top, globalDrag.startCoordinates.pageX - offset.left
 		document.body.appendChild(hn)
 
-		if @_helper == "clone"
+		start = @get_init_helper_pos(hn, globalDrag, offset)
+
+		CUI.DOM.setStyle(hn, start)
+
+		if helper == "clone"
 			# set width & height
-			set_dim = DOM.getDimensions(drag_source)
+			set_dim = DOM.getDimensions(globalDrag.$source)
 
 			DOM.setDimensions hn,
 				marginBoxWidth: set_dim.marginBoxWidth
 				marginBoxHeight: set_dim.marginBoxHeight
+
 
 		dim = DOM.getDimensions(hn)
 

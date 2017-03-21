@@ -352,6 +352,11 @@ class CUI.Events extends CUI.Element
 				eventClass: CUI.MouseEvent
 				bubble: true
 
+			TouchEvents:
+				eventClass: CUI.TouchEvent
+				bubble: true
+
+
 		for block, events of {
 			MouseEvents:
 				mousemove: {}
@@ -367,6 +372,8 @@ class CUI.Events extends CUI.Element
 				click: {}
 				dblclick: {}
 				contextmenu: {}
+
+			TouchEvents:
 				touchstart: {}
 				touchend: {}
 				touchmove: {}

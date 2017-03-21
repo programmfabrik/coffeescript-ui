@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewTreeRowMoveTool extends ListViewRowMoveTool
+class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 
 	initOpts: ->
 		super()
@@ -13,29 +13,31 @@ class ListViewTreeRowMoveTool extends ListViewRowMoveTool
 			rowMoveWithinNodesOnly:
 				check: Boolean
 
-	mousemove: (ev) ->
-		return if not @info.cell
+	# mousemove: (ev) ->
+	# 	return if not @info.cell
 
-		lvr = @lV.getListViewRow(@info.cell.row_i)
-		if lvr not instanceof ListViewTreeNode
-			return
-		super(ev)
+	# 	lvr = @lV.getListViewRow(@info.cell.row_i)
+	# 	if lvr not instanceof ListViewTreeNode
+	# 		return
+	# 	super(ev)
 
+	get_init_helper_pos: (node, gd) ->
+		pos = super(node, gd)
 
-	startDrag: ->
-		super()
+		@blockedRows = [@__row_i]
 
-		@blockedRows = [@info.cell.row_i]
+		height = @__listView.getRowHeight(@__row_i)
 
-		lvr = @lV.getListViewRow(@info.cell.row_i)
-		height = @lV.getRowHeight(lvr.getRowIdx())
+		console.debug @__row_i, @__listView
 
-		for row, idx in lvr.getRowsToMove()
+		for row, idx in @_row.getRowsToMove()
 			row_i = row.getRowIdx()
 			@blockedRows.push(row_i)
-			height += @lV.getRowHeight(row_i)
+			height += @__listView.getRowHeight(row_i)
 
-		@movableDiv.css(height: height)
+		pos.height = height
+		console.debug dump(pos)
+		pos
 
 	showHorizontalTargetMarker: (cell) ->
 
@@ -43,7 +45,7 @@ class ListViewTreeRowMoveTool extends ListViewRowMoveTool
 		@blockedAfterRows = [@target.before_row_i]
 		@blockedBeforeRows = [@target.after_row_i]
 
-		node = @lV.getListViewRow(@info.cell.row_i)
+		node = @_row
 
 		# CUI.debug "moving node", @info.cell.row_i, node.getChildIdx(), node.getRowIdx()
 
@@ -54,8 +56,8 @@ class ListViewTreeRowMoveTool extends ListViewRowMoveTool
 			@target = null
 			@movableTargetDiv.hide()
 		else
+			@movableTargetDiv.show()
 			@movableTargetDiv.css
-				display: "block"
 				left: @target.left
 				top: @target.top
 				width: @target.width
@@ -71,7 +73,7 @@ class ListViewTreeRowMoveTool extends ListViewRowMoveTool
 				(@target.row_i in @blockedBeforeRows and not @target.after)
 			return false
 
-		[ from_node, to_node, new_father ] = @lV.getNodesForMove(@info.cell.row_i, @target.row_i, @target.after)
+		[ from_node, to_node, new_father ] = @__listView.getNodesForMove(@__row_i, @target.row_i, @target.after)
 
 		if @_rowMoveWithinNodesOnly and new_father
 			return false

@@ -7,7 +7,7 @@
 
 /* Content Area */
 .cui-document-browser-center {
-	
+
 	padding: 1rem 3rem 3rem 3rem;
 
 
@@ -40,7 +40,7 @@
 	// ##########################
 	// # General Elements
 	// ##########################
-	
+
 	// Unordered Lists
 	ul {
 		list-style-type: none;
@@ -90,10 +90,10 @@
 		&::before {
 			content: "";
 			background: url('icons/arrow-right.svg');
-			background-repeat: no-repeat; 
+			background-repeat: no-repeat;
 			background-size: 1rem 1rem;
-			display: inline;  
-			padding-right: 1.54rem; 
+			display: inline;
+			padding-right: 1.54rem;
 			margin-left: .3em;
 			vertical-align: middle;
 
@@ -128,12 +128,12 @@
 		padding: 0.2em 0 0 1em;
 	}
 
-	
+
 	// ##########################
 	// # Step1, Step2, ... INSTRUCTION lists
 	// ##########################
 	//
-	// Little trick is needed: 
+	// Little trick is needed:
 	// 		->	place a <h5>-"instructions"-tag (##### in markdown) dirctly ABOVE the ordered list
 	//
 	#instructions {
@@ -141,7 +141,7 @@
 		margin: 0;
 		padding: 0;
 		line-height: 0;
-		
+
 		// LISTS
 		& + ol {
 			list-style-type: none;
@@ -234,7 +234,7 @@
 					background: hsl(0, 0%, 92%);
 				}
 
-				// specific column styling  
+				// specific column styling
 				&:nth-child(1) { // Parameter
 					width: 16%;
 				}
@@ -243,7 +243,7 @@
 
 					// Definition list styling
 					dt ~ dt::before { // all <dt>-Elements that are following on the first one
-						content: "or \00a0"; // 2225 = | , 00a0 = SPACE	
+						content: "or \00a0"; // 2225 = | , 00a0 = SPACE
 					}
 				}
 				&:nth-child(3) { // Default
@@ -261,7 +261,7 @@
 
 				// Separating bottom borders
 				border-bottom: 1px solid hsl(0, 0%, 80%);
-				
+
 			}
 
 
@@ -302,7 +302,7 @@
 	//  ^   ^
 	//
 	div.parameter ~ div.parameter {
-			
+
 		h2[id^="parameter"]::after {
 				content: "";
 				background: url('icons/inherit.svg');
@@ -316,7 +316,7 @@
 		}
 	}
 
-	
+
 
 
 }

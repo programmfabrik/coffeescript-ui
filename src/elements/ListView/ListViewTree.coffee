@@ -33,6 +33,9 @@ class CUI.ListViewTree extends CUI.ListView
 			onClose:
 				check: Function
 
+	getRowMoveTool: (opts = {}) ->
+		opts.rowMoveWithinNodesOnly = @_rowMoveWithinNodesOnly
+		new CUI.ListViewTreeRowMove(opts)
 
 	initListView: ->
 		super()
@@ -49,13 +52,6 @@ class CUI.ListViewTree extends CUI.ListView
 			@root = new ListViewTreeNode(lv_opts)
 		else
 			@root = @_root
-
-		# replace RowMoveTool with ours
-		for t, idx in @tools
-			if t instanceof ListViewRowMoveTool
-				@tools[idx] = new ListViewTreeRowMoveTool
-					rowMoveWithinNodesOnly: @_rowMoveWithinNodesOnly
-					# tree: @
 
 		@
 
@@ -101,7 +97,7 @@ class CUI.ListViewTree extends CUI.ListView
 			@root.open()
 
 		prep_target = (ev, info, handle) =>
-			if ev.getType() == "click"
+			if ev.getType() in ["click", "touchend"]
 				CUI.DOM.setStyleOne(handle, "opacity", 0.5)
 				return true
 			if info.mousemoveEvent._done
@@ -115,7 +111,7 @@ class CUI.ListViewTree extends CUI.ListView
 			info.mousemoveEvent._counter > 4
 
 		run_trigger = (ev, info, action, node) =>
-			if ev.ctrlKey() and ev.getType() == "click"
+			if ev.ctrlKey() and ev.getType() in ["click", "touchend"]
 				action_on_node(ev, info, action+"Recursively", node)
 			else
 				action_on_node(ev, info, action, node)
@@ -175,7 +171,7 @@ class CUI.ListViewTree extends CUI.ListView
 		Events.listen
 			node: @DOM
 			capture: true
-			type: ["click", "dragover-scroll"]
+			type: ["click", "touchend", "dragover-scroll"]
 			call: (ev, info) =>
 				# CUI.debug "ListViewTree[event]",ev.getType(),info
 				# console.warn "ListViewTree", ev.getType(), @DOM
@@ -197,11 +193,19 @@ class CUI.ListViewTree extends CUI.ListView
 				return
 
 
+		Events.listen
+			node: @DOM
+			type: ["touchstart"]
+			call: (ev) =>
+				console.debug "touchstart ListViewTree", @DOM
+				ev.preventDefault()
+
+
 		# this is the bubble phase, note that the click
 		# is stopped here by "select" and "deselect" below
 		Events.listen
 			node: @DOM
-			type: ["click"]
+			type: ["click", "touchend"]
 			call: (ev, info)  =>
 				if ev.hasModifierKey(true)
 					return

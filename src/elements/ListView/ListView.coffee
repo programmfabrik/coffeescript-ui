@@ -20,7 +20,6 @@ class CUI.ListView extends CUI.SimplePane
 
 	initListView: ->
 
-		@tools = []
 		@fixedColsCount = @_fixedCols
 		@fixedRowsCount = @_fixedRows
 
@@ -31,7 +30,6 @@ class CUI.ListView extends CUI.SimplePane
 
 		if @_rowMove
 			assert(not @_rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
-			@tools.push(new ListViewRowMoveTool())
 
 		if @_rowMove or @_rowMovePlaceholder
 			@__cols.splice(0,0, "fixed")
@@ -41,9 +39,13 @@ class CUI.ListView extends CUI.SimplePane
 
 		assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
 
-		if @_colResize or (@fixedRowsCount > 0 and @_colResize != false)
+		if @_colResize
+			@__colResize = true
+		else if @fixedRowsCount > 0 and @_colResize == undefined
+			@__colResize = true
+
+		if @__colResize
 			assert(@fixedRowsCount > 0, "new ListView", "Cannot enable col resize with no fixed rows.", opts: @opts)
-			@tools.push(new ListViewColResizeTool())
 
 		@__maxCols = []
 		for col, col_i in @__cols
@@ -131,8 +133,6 @@ class CUI.ListView extends CUI.SimplePane
 				check: Function
 			onScroll:
 				check: Function
-			tools:
-				check: "Array"
 			header:
 				deprecated: true
 			footer:
@@ -168,6 +168,9 @@ class CUI.ListView extends CUI.SimplePane
 
 	getGrid: ->
 		@grid
+
+	hasResizableColumns: ->
+		@__colResize
 
 	hasMovableRows: ->
 		@_rowMove
@@ -301,10 +304,18 @@ class CUI.ListView extends CUI.SimplePane
 			selector = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer"
 
 			Events.listen
-				type: "click"
+				type: ["touchstart"]
+				node: @DOM
+				call: (ev) =>
+					# console.debug "touchstart prevent default", @DOM
+					ev.preventDefault()
+
+			Events.listen
+				type: ["click", "touchend"]
 				node: @DOM
 				selector: selector
 				call: (ev) =>
+					# console.debug ev.getType(), "click / touchend"
 					ev.stopPropagation()
 					# CUI.debug "click on row", ev
 					row = DOM.data(ev.getCurrentTarget(), "listViewRow")
@@ -363,8 +374,6 @@ class CUI.ListView extends CUI.SimplePane
 				@__resetRowDim(row)
 				@__scheduleLayout()
 				return
-
-		@__registerTools()
 
 		if CUI.defaults.debug
 			@__addDebugControl()
@@ -470,39 +479,8 @@ class CUI.ListView extends CUI.SimplePane
 		else
 			null
 
-	toolCellSelector: ->
-		"."+@__lvClass+"-cell"
-
-
-	__registerTools: ->
-		if @tools.length == 0
-			return
-
-		Events.listen
-			node: @grid
-			type: "mousemove"
-			selector: @toolCellSelector()
-			call: (ev) =>
-				if window.globalDrag
-					return
-
-				info = $target: $(ev.getCurrentTarget())
-				info.cell = @getCellByTarget(info.$target)
-
-				# CUI.debug "mousemove on cell", info.cell
-				if not info.cell
-					return
-
-				info.cell.pos = elementGetPosition(getCoordinatesFromEvent(ev), info.$target)
-
-				for t in @tools
-					t.mousemoveEvent(ev, info)
-					if ev.isImmediatePropagationStopped()
-						break
-
-		for t in @tools
-			t.registerListView(@)
-		@
+	getRowMoveTool: (opts = {}) ->
+		new CUI.ListViewRowMove(opts)
 
 	getListViewRow: (row_i) ->
 		DOM.data(@getRow(row_i)[0], "listViewRow")
@@ -596,77 +574,37 @@ class CUI.ListView extends CUI.SimplePane
 		@__doLayout(resetRows: true)
 		@
 
+	getManualColWidth: (col_i) ->
+		@__manualColWidths[col_i]
+
 	getRowHeight: (row_i) ->
-		@__rowHeights[row_i]
+		@__rows[row_i][0].offsetHeight
 
 	getColWidth: (col_i) ->
 		@__colWidths[col_i]
 
-	getCellGridRect: (col_i, row_i) ->
+	getCellGridRect: (row_i, col_i) ->
 
-		get_cell = (_row_i, _col_i) =>
-			if @__colspanRows[_row_i]?[_col_i] > 1
-				null
-			else
-				@__cells[_row_i][_col_i]
-
-		cell = get_cell(row_i, col_i)
-		if cell
-			return @getCellGridRectByNode(cell)
-
-		# for colspanned columns we need to
-		# check other cells for the correct measurements
-		rect = {}
-		for display_col_i in [0...@colsCount]
-			_col_i = @getColIdx(display_col_i)
-			cell = get_cell(row_i, _col_i)
-			if not cell
-				continue
-
-			_rect = @getCellGridRectByNode(cell)
-			rect.top = _rect.top
-			rect.height = _rect.height
-			break
-
-		for display_row_i in [0...@rowsCount]
-			_row_i = @getRowIdx(display_row_i)
-			cell = get_cell(_row_i, col_i)
-			if not cell
-				continue
-
-			_rect = @getCellGridRectByNode(cell)
-			rect.left = _rect.left
-			rect.width = _rect.width
-			break
-
-		if CUI.isEmptyObject(rect)
+		cell = @__cells[row_i]?[col_i]
+		if not cell
 			return null
 
-		rect
-
-	getCellGridRectByNode: (_cell) ->
-		assert(isElement(_cell), "ListView.getCellGridRectByNode", "Cell node needs to be instance of HTMLElement.", cell: _cell)
-
-		cell = _cell
-
-		# get absolute position relative to the grid corner
-		_pos_grid = @grid.offset()
-		_rect = cell.rect()
+		pos_grid = @grid.offset()
+		dim = CUI.DOM.getDimensions(cell)
 
 		rect =
-			left_abs: _rect.left
-			top_abs: _rect.top
-			left: _rect.left - _pos_grid.left
-			top: _rect.top - _pos_grid.top
+			left_abs: dim.clientBoundingRect.left
+			top_abs: dim.clientBoundingRect.top
+			left: dim.clientBoundingRect.left - pos_grid.left
+			top: dim.clientBoundingRect.top - pos_grid.top
+			width: dim.borderBoxWidth
+			height: dim.borderBoxHeight
+			contentWidthAdjust: dim.contentWidthAdjust
+			contentHeightAdjust: dim.contentHeightAdjust
 
-		# console.warn _rect.top, _pos_grid.top, _cell
-
-		# rect.rect = _rect
-		rect.width = cell.outerWidth(true)
-		rect.height = cell.outerHeight(true)
-
-		# CUI.debug cell, rect
+		# console.debug "dim:", cell, rect
 		rect
+
 
 	getRowGridRect: (row_i) ->
 		_rect =
@@ -827,17 +765,17 @@ class CUI.ListView extends CUI.SimplePane
 			css.push("."+@__lvClass+"-cell[col=\""+col_i+"\"] { width: #{width}px !important; flex: 0 0 auto !important;}")
 
 		# set width on colspan cells
-		col_width = []
+		@__colWidths = []
 		for fc, display_col_i in @__fillCells
 			col_i = @getColIdx(display_col_i)
 			manual_col_width = @__manualColWidths[col_i]
 			if manual_col_width > 0
 				add_css(col_i, manual_col_width)
-				col_width[col_i] = manual_col_width
+				@__colWidths[col_i] = manual_col_width
 				fc.style.setProperty("width", manual_col_width+"px")
 				fc.style.setProperty("flex", "0 0 auto")
 			else
-				col_width[col_i] = fc.offsetWidth
+				@__colWidths[col_i] = fc.offsetWidth
 				fc.style.removeProperty("width")
 				fc.style.removeProperty("flex")
 
@@ -849,7 +787,7 @@ class CUI.ListView extends CUI.SimplePane
 					# we assume that colspanned columns
 					# are never torn apart, so it is
 					# safe to add "1" here
-					width = width + col_width[parseInt(col_i)+i]
+					width = width + @__colWidths[parseInt(col_i)+i]
 
 				# console.debug row_i, col_i, colspan, width
 
@@ -1149,6 +1087,7 @@ class CUI.ListView extends CUI.SimplePane
 			if not isNull(node)
 				cell.append(node)
 
+			col.setColumnIdx(col_i)
 			col.setElement(cell)
 
 			colspan = col.getColspan()
@@ -1219,10 +1158,6 @@ class CUI.ListView extends CUI.SimplePane
 			@__resetCellStyle(row_i, col_i)
 
 		@__fillCells[col_i].style.cssText = ""
-
-		# null hints the calculateDims method
-		# to check all rows for this column
-		@__colWidths[col_i] = null
 		@
 
 	__resetCellDims: (col_i) ->

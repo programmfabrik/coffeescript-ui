@@ -42,6 +42,24 @@ class ListViewHeaderColumn extends ListViewColumn
 			@addClass("cui-lv-td-rotate-90")
 
 		@addClass("cui-lv-th")
+
+		listView = @getRow().getListView()
+
+		if not listView.hasResizableColumns()
+			return @__element
+
+		coldef = listView.getColdef(@getColumnIdx())
+		if coldef == "fixed"
+			return @__element
+
+		move_handle = CUI.DOM.element("DIV", class: "cui-lv-col-resize-handle")
+
+		new CUI.ListViewColResize
+			element: move_handle
+			row: @getRow()
+			column: @
+
+		CUI.DOM.append(@__element, move_handle)
 		@__element
 
 	render: ->

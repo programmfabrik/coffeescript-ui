@@ -398,9 +398,11 @@ CUI.ready ->
 				touches_print = []
 				for touch in ne.touches
 					touches_print.push(touch.pageX+"x"+touch.pageY)
-				console.debug ev.getType(), touches_print.join(",") # ne, ne.touches, ne.touchTargets
+				console.debug ev.getType(), ev.getNativeEvent(), touches_print.join(",") # ne, ne.touches, ne.touchTargets
 			if ev.getType().startsWith("gesture")
-				console.debug ev.getType(), ne.scale, ne.rotation
+				console.debug ev.getType(), ev.getNativeEvent(), ne.scale, ne.rotation
+				ev.stopPropagation()
+				ev.preventDefault()
 			else
 				; #console.debug "ev:", ev.getType(), ev.getTarget()
 

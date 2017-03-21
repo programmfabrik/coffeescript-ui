@@ -36,6 +36,12 @@ class CUI.ListViewColumn extends CUI.Element
 	getRow: ->
 		@listViewRow
 
+	setColumnIdx: (@col_i) ->
+		@
+
+	getColumnIdx: ->
+		@col_i
+
 	render: ->
 		if not isUndef(@_element)
 			if @_element.DOM

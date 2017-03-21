@@ -25,6 +25,7 @@ coffee_files = src/base/Common.coffee \
 	src/base/Events/Event.coffee \
 	src/base/Events/MouseEvent.coffee \
 	src/base/Events/KeyboardEvent.coffee \
+	src/base/Events/TouchEvent.coffee \
 	src/base/Events/CUIEvent.coffee \
 	src/base/Events/Listener.coffee \
 	src/base/Events/WheelEvent.coffee \
@@ -84,11 +85,10 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ListView/ListViewHeaderColumn.coffee \
 	src/elements/ListView/tools/ListViewColumnRowMoveHandle.coffee \
 	src/elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee \
-	src/elements/ListView/tools/ListViewTool.coffee \
-	src/elements/ListView/tools/ListViewHoverTool.coffee \
-	src/elements/ListView/tools/ListViewRowMoveTool.coffee \
-	src/elements/ListView/tools/ListViewColResizeTool.coffee \
-	src/elements/ListView/tools/ListViewTreeRowMoveTool.coffee \
+	src/elements/ListView/tools/ListViewDraggable.coffee \
+	src/elements/ListView/tools/ListViewRowMove.coffee \
+	src/elements/ListView/tools/ListViewColResize.coffee \
+	src/elements/ListView/tools/ListViewTreeRowMove.coffee \
 	src/elements/ItemList/ItemList.coffee \
 	src/elements/Menu/Menu.coffee \
 	src/elements/Panel/Panel.coffee \

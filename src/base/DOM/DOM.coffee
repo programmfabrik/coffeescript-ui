@@ -1019,6 +1019,8 @@ class CUI.DOM extends CUI.Element
 	@setStyle: (docElem, style, append="px") ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		for k, v of style
+			if v == undefined
+				continue
 			switch v
 				when "", null
 					docElem.style[k] = ""
@@ -1083,6 +1085,13 @@ class CUI.DOM extends CUI.Element
 		dim.innerBoxHeight = Math.max(0, rect.height - dim.borderVertical)
 		dim.borderBoxWidth = rect.width
 		dim.borderBoxHeight = rect.height
+
+		if cs.boxSizing == "content-box"
+			dim.contentWidthAdjust = dim.borderBoxWidth - dim.contentBoxWidth
+			dim.contentHeightAdjust = dim.borderBoxHeight - dim.contentBoxHeight
+		else
+			dim.contentWidthAdjust = 0
+			dim.contentHeightAdjust = 0
 
 		dim.marginBoxWidth = Math.max(0, rect.width + dim.marginHorizontal)
 		dim.marginBoxHeight = Math.max(0, rect.height + dim.marginVertical)

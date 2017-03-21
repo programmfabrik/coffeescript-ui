@@ -148,14 +148,15 @@ class CUI.Lasso extends CUI.Draggable
 		for el in globalDrag.elements.slice(0)
 			removeFromArray(el, globalDrag.elements)
 			CUI.DOM.toggleClass(el, @_lassoed_element_class)
-		globalDrag.lasso.remove()
 		super(ev)
+
+	cleanup_drag: (ev) ->
+		super(ev)
+		globalDrag.lasso.remove()
 
 	end_drag: (ev) ->
 		@_selected(ev, globalDrag)
-		globalDrag.lasso.remove()
 		super(ev)
-
 
 
 Lasso = CUI.Lasso

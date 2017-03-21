@@ -262,29 +262,18 @@ class CUI.Button extends CUI.DOM
 				return
 
 		Events.listen
-			type: "mousedown"
+			type: ["mousedown", "touchstart"]
 			node: @DOM
 			call: (ev) =>
 				# don't focus element
 				ev.preventDefault()
+				ev.stopPropagation()
 
 		Events.listen
-			type: Button.clickTypes # @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
+			type: Button.clickTypes[@_click_type]
 			node: @DOM
 			call: (ev) =>
-				if ev.getType() != @_click_type
-					ev.stopPropagation()
-					return
 
-				# if ev.getType() != @_click_type
-				# 	# click type can be changed after
-				# 	# button is created, so we
-				# 	# need to check if the
-				# 	# event is the desired one
-				# 	ev.stopPropagation()
-				# 	return
-
-				# console.debug @_click_type, ev, ev.getButton(), @__prevent_btn_click
 				if window.globalDrag
 					# ev.stop()
 					return
@@ -506,7 +495,8 @@ class CUI.Button extends CUI.DOM
 			click_type:
 				default: "click" # "touchend"
 				mandatory: true
-				check: Button.clickTypes
+				check: (v) ->
+					!!Button.clickTypes[v]
 
 			text:
 				check: String
@@ -625,6 +615,7 @@ class CUI.Button extends CUI.DOM
 
 		if @_left
 			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
+
 
 	getCenter: ->
 		return @__box.map.center;
@@ -983,7 +974,10 @@ class CUI.Button extends CUI.DOM
 			type: "hide"
 			node: @DOM
 
-	@clickTypes: ["click", "mouseup", "dblclick", "touchstart", "touchend"]
+	@clickTypes:
+		click: ["click", "touchend"]
+		mouseup: ["mouseup", "touchend"]
+		dblclick: ["dblclick"]
 
 
 CUI.defaults.class.Button = CUI.Button

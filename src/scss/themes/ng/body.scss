@@ -3820,6 +3820,17 @@ a[role="button"].cui-button-appearance-link {
 	cursor:         grab;
 }
 
+
+.cui-lv-col-resize-handle {
+	position: absolute;
+	cursor: ew-resize;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 5px;
+	background: red;
+}
+
 .cui-drag-drop-select-lasso {
 	cursor: default;
 }
@@ -4214,6 +4225,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .drag-drop-select-helper {
+	position: absolute;
 	z-index: 3; // above drop helper
 
 	&.cui-tr {

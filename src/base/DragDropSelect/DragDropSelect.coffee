@@ -23,7 +23,7 @@ class CUI.DragDropSelect extends CUI.Element
 
 	readOpts: ->
 		super()
-		@cls = window[@__cls].cls
+		@cls = CUI[@__cls].cls
 		assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
 
 		@element = @_element

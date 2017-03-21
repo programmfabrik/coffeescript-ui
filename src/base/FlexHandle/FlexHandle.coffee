@@ -192,22 +192,22 @@ class FlexHandle extends CUI.Element
 				else
 					return "ns-resize"
 
-			helper_set_pos: (gd, helper_pos) ->
-				data = gd.__pane_data
-				if data.axis == "x"
-					key = "left"
-				else
-					key = "top"
+			# helper_set_pos: (gd, helper_pos) ->
+			# 	data = gd.__pane_data
+			# 	if data.axis == "x"
+			# 		key = "left"
+			# 	else
+			# 		key = "top"
 
-				new_value = data.value + gd.dragDiff[data.axis] * data.flip
-				if new_value < data.min
-					new_value = data.min
-				else if new_value > data.max
-					new_value = data.max
+			# 	new_value = data.value + gd.dragDiff[data.axis] * data.flip
+			# 	if new_value < data.min
+			# 		new_value = data.min
+			# 	else if new_value > data.max
+			# 		new_value = data.max
 
-				helper_pos[key] = (new_value - data.value) * data.flip + helper_pos.start[key]
+			# 	helper_pos[key] = (new_value - data.value) * data.flip + helper_pos.start[key]
 
-				return
+			# 	return
 
 			dragend: (ev, gd) =>
 				dragging(gd)
