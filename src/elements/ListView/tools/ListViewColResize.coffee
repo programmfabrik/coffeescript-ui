@@ -35,7 +35,7 @@ class CUI.ListViewColResize extends CUI.ListViewRowMove
 		"ew-resize"
 
 	get_helper: (ev, gd, diff) ->
-		@get_marker("col-marker")
+		@get_marker("cui-lv-col-resize")
 
 	get_init_helper_pos: ->
 		rect = @__listView.getCellGridRect(@__row_i, @__col_i)

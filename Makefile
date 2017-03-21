@@ -162,7 +162,6 @@ html_files = \
 	src/elements/HorizontalLayout/HorizontalLayout.html \
 	src/elements/VerticalLayout/VerticalLayout.html \
 	src/elements/DateTime/DateTime.html \
-	src/elements/ListView/tools/ListViewTool.html \
 	src/elements/Tabs/Tabs.html \
 	src/elements/Label/Label.html \
 	src/elements/MultiInput/MultiInputInput.html \

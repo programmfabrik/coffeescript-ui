@@ -13,4 +13,4 @@ class ListViewColumnRowMoveHandlePlaceholder extends ListViewColumnEmpty
 
 	readOpts: ->
 		super()
-		@_class = "cui-list-view-no-row-move-placeholder"
+		@_class = "cui-lv-no-row-move-placeholder"

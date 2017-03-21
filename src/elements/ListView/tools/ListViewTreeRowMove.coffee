@@ -13,14 +13,6 @@ class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 			rowMoveWithinNodesOnly:
 				check: Boolean
 
-	# mousemove: (ev) ->
-	# 	return if not @info.cell
-
-	# 	lvr = @lV.getListViewRow(@info.cell.row_i)
-	# 	if lvr not instanceof ListViewTreeNode
-	# 		return
-	# 	super(ev)
-
 	get_init_helper_pos: (node, gd) ->
 		pos = super(node, gd)
 
@@ -28,15 +20,12 @@ class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 
 		height = @__listView.getRowHeight(@__row_i)
 
-		console.debug @__row_i, @__listView
-
 		for row, idx in @_row.getRowsToMove()
 			row_i = row.getRowIdx()
 			@blockedRows.push(row_i)
 			height += @__listView.getRowHeight(row_i)
 
 		pos.height = height
-		console.debug dump(pos)
 		pos
 
 	showHorizontalTargetMarker: (cell) ->
@@ -54,10 +43,10 @@ class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 
 		if not @allowRowMove()
 			@target = null
-			@movableTargetDiv.hide()
+			CUI.DOM.hideElement(@movableTargetDiv)
 		else
-			@movableTargetDiv.show()
-			@movableTargetDiv.css
+			CUI.DOM.showElement(@movableTargetDiv)
+			CUI.DOM.setStyle @movableTargetDiv,
 				left: @target.left
 				top: @target.top
 				width: @target.width

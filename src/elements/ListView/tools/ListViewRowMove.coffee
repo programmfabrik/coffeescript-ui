@@ -22,7 +22,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 		@__listView = @_row.getListView()
 
 	get_helper: (ev, gd, diff) ->
-		@get_marker("row-marker")
+		@get_marker("cui-lv-row-move")
 
 	get_helper_contain_element: ->
 		@__listView.getBottom()
@@ -39,8 +39,8 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 		height: rect.height
 
 	init_helper: ->
-		@movableTargetDiv = @get_marker("row-move-target")
-		@movableTargetDiv.appendTo(@__listView.getGrid())
+		@movableTargetDiv = @get_marker("cui-lv-row-move-target")
+		CUI.DOM.append(@__listView.getGrid(), @movableTargetDiv)
 		super()
 
 	do_drag: (ev, $target, diff) ->
@@ -99,10 +99,10 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 				(@target.after_row_i == @__row_i and @target.before == false)
 
 			@target = null
-			@movableTargetDiv.hide()
+			CUI.DOM.hideElement(@movableTargetDiv)
 		else
-			@movableTargetDiv.show()
-			@movableTargetDiv.css
+			CUI.DOM.showElement(@movableTargetDiv)
+			CUI.DOM.setStyle @movableTargetDiv,
 				# display: "block"
 				left: @target.left
 				top: @target.top

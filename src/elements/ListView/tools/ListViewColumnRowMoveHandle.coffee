@@ -8,10 +8,7 @@
 class ListViewColumnRowMoveHandle extends ListViewColumn
 
 	getClass: ->
-		if @getRow().isMovable() or CUI.__ng__
-			"cui-list-view-row-move-handle"
-		else
-			""
+		"cui-lv-row-move-handle"
 
 	setElement: (cell) ->
 		super(cell)
@@ -34,5 +31,5 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 		return
 
 	render: ->
-		new Template(name: "list-view-tool-row-move-handle").DOM
+		CUI.DOM.element("DIV", class: "cui-lv-row-move-handle")
 

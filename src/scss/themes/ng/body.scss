@@ -2783,7 +2783,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-list-view-tool-row-move-target {
+.cui-lv-row-move-target {
 	height: 4px;
 	background: $highlight-color;
 	margin-top: -2px;
@@ -2791,7 +2791,7 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 4;
 }
 
-.cui-tmpl-list-view-tool-row-move-marker {
+.cui-lv-row-move {
 	position: absolute;
 	z-index: 4;
 	background: $highlight-color;
@@ -3057,7 +3057,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: pointer;
 }
 
-.cui-list-view-row-move-handle-column {
+.cui-lv-row-move-handle-column {
 	&:after {
 		display: none;
 	}
@@ -3068,16 +3068,16 @@ a[role="button"].cui-button-appearance-link {
 		padding-right: 0;
 	}
 
-	.cui-drag-handle-row {
+	.cui-lv-row-move-handle {
 		display: none;
 	}
 }
 
-.cui-list-view-row-movable .cui-list-view-row-move-handle-column {
+.cui-list-view-row-movable .cui-lv-row-move-handle-column {
 	cursor: -webkit-grab;
 	cursor:         grab;
 
-	.cui-drag-handle-row {
+	.cui-lv-row-move-handle {
 		display: block;
 	}
 }
@@ -3120,8 +3120,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-list-view-tool-col-resize-marker {
-	position: absolute;
+.cui-lv-col-resize {
 	cursor: ew-resize !important;
 	// bigger grab area
 	margin: 0 -4px;
@@ -3135,9 +3134,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-list-view-tool-marker {
+.cui-lv-draggable {
 	position: absolute;
-	background: $zebra-color;
+	// background: $zebra-color;
 	opacity: 0.5;
 }
 
@@ -3577,7 +3576,7 @@ a[role="button"].cui-button-appearance-link {
 		min-height: 3*$table-data-height; // for when using empty lists that can get filled
 	}
 
-	.cui-list-view-row-move-handle-column {
+	.cui-lv-row-move-handle-column {
 		padding-top: 0;
 		padding-bottom: 0;
 	}
@@ -3745,7 +3744,7 @@ a[role="button"].cui-button-appearance-link {
 		margin-right: 2px;
 		padding: 0 4px 0 0;
 
-		.cui-drag-handle-row {
+		.cui-lv-row-move-handle {
 			margin-top: 7px;
 		}
 	}
@@ -3842,7 +3841,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-drag-handle-row {
+.cui-lv-row-move-handle {
 	margin-top: 2px;
 	flex: 1 1 auto;
 	height: 12px;
@@ -4216,17 +4215,15 @@ a[role="button"].cui-button-appearance-link {
 
 // Drag & Drop
 
-.cui-drag-drop-select-transparent {
+.cui-drag-drop-select-helper {
+	position: absolute;
+	z-index: 3; // above drop helper
+
 	pointer-events: none !important;
 
 	* {
 		pointer-events: none !important;
 	}
-}
-
-.drag-drop-select-helper {
-	position: absolute;
-	z-index: 3; // above drop helper
 
 	&.cui-tr {
 		padding: 0;

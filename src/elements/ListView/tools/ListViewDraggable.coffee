@@ -19,8 +19,6 @@ class CUI.ListViewDraggable extends CUI.Draggable
 		super()
 		@__row_i = @_row.getRowIdx()
 
-	get_marker: (tname) ->
-		tmpl = new Template(name: "list-view-tool-"+tname)
-		tmpl.addClass("cui-list-view-tool cui-demo-node-copyable cui-drag-drop-select-transparent")
-		tmpl.DOM
+	get_marker: (cls="") ->
+		CUI.DOM.element("DIV", class: "cui-lv-draggable "+cls)
 

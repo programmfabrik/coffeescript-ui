@@ -35,7 +35,7 @@ class CUI.ListView extends CUI.SimplePane
 			@__cols.splice(0,0, "fixed")
 			if not @__colClasses
 				@__colClasses = []
-			@__colClasses.splice(0,0, "cui-list-view-row-move-handle-column")
+			@__colClasses.splice(0,0, "cui-lv-row-move-handle-column")
 
 		assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
 

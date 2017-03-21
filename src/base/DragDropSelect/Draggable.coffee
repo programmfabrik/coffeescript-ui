@@ -586,7 +586,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			return
 
 		if helper == "clone"
-			hn = CUI.jQueryCompat(@getSourceCloneForHelper())
+			hn = @getSourceCloneForHelper()
 			# offset the layer to the click
 			offset =
 				top: globalDrag.start.top
@@ -602,7 +602,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		globalDrag.helperNode = hn
 
-		hn.addClass("drag-drop-select-helper cui-drag-drop-select-transparent")
+		CUI.DOM.addClass(hn, "cui-drag-drop-select-helper")
 
 		document.body.appendChild(hn)
 
