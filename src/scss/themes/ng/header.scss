@@ -218,6 +218,13 @@ $popover-hint-background: hsl(205,20%,30%);
 	z-index: 1; // put forward to see outline
 }
 
+@mixin outer-focus() {
+	box-shadow: 
+		0 0 0 1px $highlight-color,
+		0 0 0 4px $row-highlight;
+	z-index: 1; // put forward to see outline
+}
+
 @mixin button-reset() {
   padding: 0;
   border: none;
