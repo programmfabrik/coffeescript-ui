@@ -52,6 +52,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# CUI.debug getObjectClass(@), "isLeaf?",leaf, @hasChildren?(), @opts.leaf, @
 		leaf
 
+	getClass: ->
+		cls = super()
+		cls = cls + " cui-lv-tree-node"
+		cls
+
 	isSelectable: ->
 		@getTree?().isSelectable() and @__selectable and not @isRoot()
 

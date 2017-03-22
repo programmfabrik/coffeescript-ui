@@ -30,6 +30,7 @@ coffee_files = src/base/Common.coffee \
 	src/base/Events/Listener.coffee \
 	src/base/Events/WheelEvent.coffee \
 	src/base/Events/Events.coffee \
+	src/base/DragDropSelect/DragoverScrollEvent.coffee \
 	src/base/DOM/DOM.coffee \
 	src/base/CSSLoader/CSSLoader.coffee \
 	src/base/Template/Template.coffee \

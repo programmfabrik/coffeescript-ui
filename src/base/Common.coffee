@@ -175,6 +175,9 @@ isBoolean = (obj) ->
 isElement = (obj) ->
 	obj instanceof HTMLElement
 
+isPosInt = (obj) ->
+	isInteger(obj) and obj >= 0
+
 isContent = (obj) ->
 	isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or isElement(obj?.DOM)
 

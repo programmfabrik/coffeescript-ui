@@ -82,6 +82,8 @@ CUI.ready =>
 	Events.registerEvent
 		type: "dragover-scroll"
 		bubble: true
+		eventClass: CUI.DragoverScrollEvent
+
 
 
 	# # FIXME: this does not work in Text input fields (chrome)
@@ -104,7 +106,10 @@ CUI.ready =>
 		node: document
 		selector: "div.cui-drag-scroll,div.cui-drag-drop-select"
 		call: (ev, info) =>
-			scrollSpeed = info.mousemoveEvent._counter*0.1+0.9
+
+			originalEvent = ev.getOriginalEvent()
+
+			scrollSpeed = ev.getCount()*0.01+0.9
 			threshold = 30
 
 			el = ev.getCurrentTarget()
@@ -128,7 +133,7 @@ CUI.ready =>
 
 			if el.scrollWidth > rect.width
 				scrollX = el.scrollLeft
-				clientX = info.mousemoveEvent.clientX()
+				clientX = originalEvent.clientX()
 				if 0 < (d = clientX-rect.left) < threshold
 					scrollLeft = -(threshold-d)*scrollSpeed
 				else if 0 < (d = rect.right-clientX-dim.verticalScrollbarWidth) < threshold
@@ -137,30 +142,32 @@ CUI.ready =>
 
 			if el.scrollHeight > rect.height
 				scrollY = el.scrollTop
-				clientY = info.mousemoveEvent.clientY()
+				clientY = originalEvent.clientY()
 				if 0 < (d = clientY-rect.top) < threshold
 					scrollTop = -(threshold-d)*scrollSpeed
 				else if 0 < (d = rect.bottom-clientY-dim.horizontalScrollbarHeight) < threshold
 					scrollTop = (threshold-d)*scrollSpeed
 
-			if scrollTop or scrollLeft
-				oldScrollTop = el.scrollTop
-				oldScrollLeft = el.scrollLeft
+			if not (scrollTop or scrollLeft)
+				return
 
-				if scrollTop
-					el.scrollTop += scrollTop
-				if scrollLeft
-					el.scrollLeft += scrollLeft
+			oldScrollTop = el.scrollTop
+			oldScrollLeft = el.scrollLeft
 
-				if is_body
-					oe = info.mousemoveEvent
-					if not oe.scrollPageY
-						oe.scrollPageY = 0
-					oe.scrollPageY += el.scrollTop-oldScrollTop
+			if scrollTop
+				el.scrollTop += scrollTop
+			if scrollLeft
+				el.scrollLeft += scrollLeft
 
-					if not oe.scrollPageX
-						oe.scrollPageX = 0
-					oe.scrollPageX += el.scrollLeft-oldScrollLeft
+			if is_body
+				# FIXME: this is used in getCoordinatesFromEvent
+				if not originalEvent.scrollPageY
+					originalEvent.scrollPageY = 0
+				originalEvent.scrollPageY += el.scrollTop-oldScrollTop
 
-					# CUI.debug ev.mousemoveEvent.originalEvent.scrollPageY
-				ev.stopPropagation()
+				if not originalEvent.scrollPageX
+					originalEvent.scrollPageX = 0
+				originalEvent.scrollPageX += originalEvent.scrollLeft-oldScrollLeft
+
+				# CUI.debug ev.mousemoveEvent.originalEvent.scrollPageY
+			ev.stopPropagation()

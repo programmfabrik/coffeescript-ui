@@ -146,6 +146,8 @@ class CUI.ListView extends CUI.SimplePane
 		if @opts.footer
 			@opts.footer_left = @opts.footer
 
+		@__selectableRows = @_selectableRows
+
 		super()
 		@
 
@@ -299,7 +301,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@__currentScroll = top: 0, left: 0
 
-		if @_selectableRows
+		if @hasSelectableRows()
 
 			selector = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer"
 
@@ -315,11 +317,11 @@ class CUI.ListView extends CUI.SimplePane
 				node: @DOM
 				selector: selector
 				call: (ev) =>
-					# console.debug ev.getType(), "click / touchend"
-					ev.stopPropagation()
-					# CUI.debug "click on row", ev
 					row = DOM.data(ev.getCurrentTarget(), "listViewRow")
-					@selectRow(ev, row)
+					if not row.isSelectable()
+						return
+					ev.stopPropagation()
+					ret = @selectRow(ev, row)
 					return
 
 
@@ -440,7 +442,7 @@ class CUI.ListView extends CUI.SimplePane
 		sel_rows
 
 	hasSelectableRows: ->
-		@_selectableRows != false
+		@__selectableRows != false
 
 	selectRowById: (row_id) ->
 		@selectRow(null, @getListViewRow(row_id), true)
@@ -450,11 +452,13 @@ class CUI.ListView extends CUI.SimplePane
 
 	selectRow: (ev, row, no_deselect=false) ->
 		assert(isNull(row) or row instanceof ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of ListViewRow.", selectedRow: row)
-		if @_selectableRows == true # only one row
+
+		if @__selectableRows == true # only one row
 			for _row in @getSelectedRows()
 				if row == _row
 					continue
 				_row.deselect(ev)
+
 		if row.isSelected()
 			if not no_deselect
 				row.deselect(ev)

@@ -7,7 +7,7 @@
 
 globalDrag = null
 
-class Resizable extends Movable
+class CUI.Resizable extends CUI.Movable
 	@cls = "resizable"
 
 	initOpts: ->

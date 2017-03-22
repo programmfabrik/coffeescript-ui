@@ -200,30 +200,30 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		@__ref = new CUI.Dummy() # instance to easily remove events
 
-		$target = null
+		dragover_count = 0
 
-		dragover_scroll = (mousemoveEvent) =>
+		moveEvent = null
 
-			# the mousemove event is repeated automatically
-			# the _counter provides a way for users to figure out if the event
-			# is a repeated one or not
-			if not mousemoveEvent.hasOwnProperty("_counter")
-				mousemoveEvent._counter = 0
-			else
-				mousemoveEvent._counter++
+		dragover_scroll = =>
 
-			# send our own scroll event
+			# during a dragover scroll, the original target
+			# might be not available any more, we need to recalculate it
+			pointTarget = moveEvent.getPointTarget()
+
 			Events.trigger
 				type: "dragover-scroll"
-				node: $target
-				info:
-					mousemoveEvent: mousemoveEvent
+				node: pointTarget
+				count: dragover_count
+				originalEvent: moveEvent
+
+			dragover_count = dragover_count + 1
+
+			@__killTimeout()
 
 			@__autoRepeatTimeout = CUI.setTimeout
 				ms: 100
 				track: false
-				call: =>
-					dragover_scroll(mousemoveEvent)
+				call: dragover_scroll
 
 		Events.listen
 			node: document
@@ -237,8 +237,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 				# we drag
 				ev.preventDefault()
 
-				@__killTimeout()
-
 				if CUI.browser.firefox
 					# ok, in firefox the target of the mousemove
 					# event is WRONG while dragging. we need to overwrite
@@ -247,11 +245,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				else
 					pointTarget = ev.getTarget()
 
-				if not pointTarget
-					return
-
 				$target = $(pointTarget)
-				dragover_scroll(ev)
 
 				if globalDrag.ended
 					return
@@ -288,6 +282,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 								document.body.setAttribute("data-cursor", @_get_cursor(globalDrag))
 							else
 								document.body.setAttribute("data-cursor", @getCursor())
+
+						moveEvent = ev
+						dragover_scroll()
 
 						@do_drag(ev, $target, diff)
 						@_dragging?(ev, window.globalDrag, diff)
@@ -447,42 +444,47 @@ class CUI.Draggable extends CUI.DragDropSelect
 		CUI.DOM.remove(globalDrag.helperNode)
 
 	stop_drag: (ev) ->
+		@__finish_drag(ev)
 		@cleanup_drag(ev)
+
+	__finish_drag: (ev) ->
+		if not globalDrag.dragoverTarget
+			return
+
+		# CUI.debug "sending pf_dragleave", globalDrag.dragoverTarget
+		# CUI.debug "pf_dragleave.event", globalDrag.dragoverTarget[0]
+
+		CUI.Events.trigger
+			node: globalDrag.dragoverTarget
+			type: "cui-dragleave"
+			info:
+				globalDrag: globalDrag
+				originalEvent: ev
+
+		if not globalDrag.stopped
+			# console.error "cui-drop", ev
+			CUI.Events.trigger
+				type: "cui-drop"
+				node: globalDrag.dragoverTarget
+				info:
+					globalDrag: globalDrag
+					originalEvent: ev
+
+		CUI.Events.trigger
+			node: globalDrag.dragoverTarget
+			type: "cui-dragend"
+			info:
+				globalDrag: globalDrag
+				originalEvent: ev
+
+		globalDrag.dragoverTarget = null
+		@
 
 	end_drag: (ev) ->
 		# CUI.debug globalDrag.dragoverTarget, ev.getType(), ev
 		if @isDestroyed()
 			return
-
-		if globalDrag.dragoverTarget
-			# CUI.debug "sending pf_dragleave", globalDrag.dragoverTarget
-			# CUI.debug "pf_dragleave.event", globalDrag.dragoverTarget[0]
-
-			CUI.Events.trigger
-				node: globalDrag.dragoverTarget
-				type: "cui-dragleave"
-				info:
-					globalDrag: globalDrag
-					originalEvent: ev
-
-			if not globalDrag.stopped
-				# console.error "cui-drop", ev
-				CUI.Events.trigger
-					type: "cui-drop"
-					node: globalDrag.dragoverTarget
-					info:
-						globalDrag: globalDrag
-						originalEvent: ev
-
-			CUI.Events.trigger
-				node: globalDrag.dragoverTarget
-				type: "cui-dragend"
-				info:
-					globalDrag: globalDrag
-					originalEvent: ev
-
-			globalDrag.dragoverTarget = null
-
+		@__finish_drag(ev)
 		@cleanup_drag(ev)
 		@
 
