@@ -137,8 +137,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		@__body.empty()
 
-		@getItems(event)
-		.done (items) =>
+		promise = @getItems(event)
+
+		promise.done (items) =>
 
 			opt_keys = CUI.defaults.class.Button.getOptKeys()
 			list_has_button_left = false
@@ -264,6 +265,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 					@__body.removeClass("cui-item-list--has-button-left")
 
 			return
+		promise
 
 	destroy: ->
 		super()

@@ -401,6 +401,7 @@ class CUI.Button extends CUI.DOM
 			# not (ev.ctrlKey or ev.shiftKey or ev.altKey or ev.metaKey) and
 			not @_menu_on_hover and
 			@getMenu().hasItems(ev)
+
 				@getMenu().show(ev)
 
 				# in some contexts (like FileUploadButton), this
@@ -805,10 +806,17 @@ class CUI.Button extends CUI.DOM
 		@
 
 	setIcon: (icon=null) ->
-		@__icon = @__getIcon(icon)
-		assert(@__icon == null or @__icon instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+		if icon == ""
+			@__icon = ""
+		else
+			@__icon = @__getIcon(icon)
+
+		assert(@__icon == null or @__icon == "" or @__icon instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+
 		if @__icon == null
 			@empty("left")
+		else if @__icon == ""
+			@replace(CUI.DOM.element("SPAN"), "left")
 		else
 			@replace(@__icon, "left")
 		@
@@ -842,16 +850,14 @@ class CUI.Button extends CUI.DOM
 
 		if @isActive()
 			if not @_icon_active
-				@replace(DOM.element("SPAN"), "left")
-				@__icon = null
+				@setIcon("")
 			else
-				@setIcon(@_icon_active, "left")
+				@setIcon(@_icon_active)
 		else
 			if not @_icon_inactive
-				@replace(DOM.element("SPAN"), "left")
-				@__icon = null
+				@setIcon("")
 			else
-				@setIcon(@_icon_inactive, "left")
+				@setIcon(@_icon_inactive)
 		@
 
 	__setTextState: ->

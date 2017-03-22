@@ -359,13 +359,6 @@ class CUI.DataField extends CUI.DOM
 			arr = v
 		return arr
 
-	getPromiseFromOpt: (opt, event) ->
-		ret = @getArrayFromOpt(opt, event, true)
-		if isPromise(ret)
-			ret
-		else
-			CUI.resolvedPromise(ret)
-
 	getName: ->
 		@_name
 

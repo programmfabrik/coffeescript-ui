@@ -50,14 +50,15 @@ class CUI.Menu extends CUI.Layer
 	show: (@__event) ->
 		assert(not @isDestroyed(), "#{getObjectClass(@)}.show", "Element is already destroyed.")
 
-		if not @isShown() and @__itemList
+		if @__itemList
 			@__itemList.render(@, @__event)
 			.done =>
-				Events.trigger
-					type: "content-resize"
-					node: @__itemList
-
-		super(@__event)
+				super(@__event)
+				# Events.trigger
+				# 	type: "content-resize"
+				# 	node: @__itemList
+		else
+			super(@__event)
 
 		Events.listen
 			type: "keydown"
@@ -71,7 +72,6 @@ class CUI.Menu extends CUI.Layer
 				if ev.keyCode() == 27
 					@hide()
 					ev.stop()
-
 		@
 
 	hasItems: (event) ->

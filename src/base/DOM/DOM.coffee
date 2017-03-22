@@ -82,6 +82,14 @@ class CUI.DOM extends CUI.Element
 		@assertDOMElement("removeClass")
 		CUI.DOM.removeClass(@DOM, cls)
 
+	hide: ->
+		@assertDOMElement("hide")
+		CUI.DOM.hideElement(@DOM)
+
+	show: ->
+		@assertDOMElement("show")
+		CUI.DOM.showElement(@DOM)
+
 	hasClass: (cls) ->
 		assert(arguments.length == 1, "DOM.hasClass", "Only one parameter allowed.")
 		@assertDOMElement("hasClass")

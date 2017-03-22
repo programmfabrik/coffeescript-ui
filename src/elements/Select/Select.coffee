@@ -75,13 +75,23 @@ class Select extends Checkbox
 		else
 			super()
 
-	__loadOptions: (event) ->
-		@__optionsPromise = @getPromiseFromOpt("options", event)
+	__getPromiseFromOpt: (opt, event) ->
+		ret = @getArrayFromOpt(opt, event, true)
+		if isPromise(ret)
+			ret
+		else
+			CUI.resolvedPromise(ret)
 
-		if not @isDisabled()
-			@disable(true)
-			@__optionsPromise.always =>
-				@enable(true)
+	__loadOptions: (event) ->
+		if @__optionsPromise?.state() == "pending"
+			return @__optionsPromise
+
+		@__optionsPromise = @__getPromiseFromOpt("options", event)
+
+		# if not @isDisabled()
+		# 	@disable(true)
+		# 	@__optionsPromise.always =>
+		# 		@enable(true)
 
 		@__optionsPromise.done (@__options) =>
 			first_value_opt = undefined

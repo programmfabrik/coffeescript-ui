@@ -176,8 +176,9 @@ class CUI.Label extends CUI.DOM
 
 				btn_opts[k] += " "+v
 
-			overflow_button = new CUI.defaults.class.Button(btn_opts)
-			@__overflow_button_div.append(overflow_button.DOM[0])
+			@__overflow_button = new CUI.defaults.class.Button(btn_opts)
+
+			@__overflow_button_div.append(@__overflow_button.DOM)
 			@append(@__overflow_button_div, "content")
 
 			CUI.DOM.waitForDOMInsert(node: @DOM[0])
@@ -185,7 +186,7 @@ class CUI.Label extends CUI.DOM
 				@initOverflowSize()
 
 			Events.listen
-				node: @DOM[0]
+				node: @DOM
 				type: "viewport-resize"
 				call: =>
 					@initOverflowSize()
@@ -196,23 +197,23 @@ class CUI.Label extends CUI.DOM
 
 	initOverflowSize: ->
 		# reset style
-		CUI.DOM.setStyle(@__overflow_content_div[0],
+		CUI.DOM.setStyle(@__overflow_content_div,
 			height: ""
 		)
-		CUI.DOM.setStyle(@__label.map.content[0],
+		CUI.DOM.setStyle(@__label.map.content,
 			height: ""
 			maxHeight: ""
 		)
-		DOM.hideElement(@__overflow_button_div[0])
-		dim_div = DOM.getDimensions(@__label.map.content[0])
+		DOM.hideElement(@__overflow_button_div)
+		dim_div = DOM.getDimensions(@__label.map.content)
 
 		if not (dim_div.scrollHeight > dim_div.clientHeight)
 			return
 
-		DOM.showElement(@__overflow_button_div[0])
+		DOM.showElement(@__overflow_button_div)
 
-		dim_content = DOM.getDimensions(@__overflow_content_div[0])
-		dim_btn = DOM.getDimensions(@__overflow_button_div[0])
+		dim_content = DOM.getDimensions(@__overflow_content_div)
+		dim_btn = DOM.getDimensions(@__overflow_button_div)
 
 		@__overflow_heights =
 			content_hide: dim_div.clientHeight - dim_btn.marginBoxHeight
@@ -222,7 +223,10 @@ class CUI.Label extends CUI.DOM
 		@setOverflowSize()
 		@
 
-	setOverflowSize: (showOverflow = false) ->
+	setOverflowSize: (showOverflow) ->
+
+		if showOverflow == undefined
+			showOverflow = @__overflow_button.isActive()
 
 		if showOverflow
 			content_height = @__overflow_heights.content_show
@@ -239,7 +243,6 @@ class CUI.Label extends CUI.DOM
 		CUI.DOM.setStyle(@__label.map.content[0],
 			maxHeight: content_height + @__overflow_heights.button
 		)
-		@__label.DOM.classList.toggle('cui-label--overflow-hidden', !showOverflow)
 		Events.wait
 			type: "transitionend"
 			node: @__label.map.content
@@ -247,6 +250,7 @@ class CUI.Label extends CUI.DOM
 			Events.trigger
 				type: "content-resize"
 				node: @__label.map.content
+		@__label.DOM.classList.toggle('cui-label--overflow-hidden', !showOverflow)
 		@
 
 	getGroup: ->

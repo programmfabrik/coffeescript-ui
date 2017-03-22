@@ -308,15 +308,13 @@ class CUI.Layout extends CUI.DOM
 		abs_values = values.join(",")
 		check_value = DOM.getDimensions(layout)[rect_check_key]+""
 
-		# console.error "abs_value:", CUI.DOM.getAttribute(layout, "cui-absolute-values"), abs_values, CUI.DOM.getAttribute(layout, "cui-absolute-check-value"), check_value
+		# console.debug layout, abs_values, CUI.DOM.getAttribute(layout, "data-cui-absolute-values")
+		# console.debug layout, check_value, CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value")
 
 		if CUI.DOM.getAttribute(layout, "data-cui-absolute-values") == abs_values and
 			CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value") == check_value
 				# nothing to do
 				return false
-
-		# CUI.debug layout.attr("cui-absolute-values"), abs_values
-		# CUI.debug layout.attr("cui-absolute-check-value"), check_value
 
 		if CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value") != check_value
 			CUI.DOM.setAttribute(layout, "data-cui-absolute-check-value", check_value)
