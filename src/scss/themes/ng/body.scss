@@ -3069,7 +3069,7 @@ a[role="button"].cui-button-appearance-link {
 		padding-right: 0;
 	}
 
-	.cui-lv-row-move-handle {
+	.cui-drag-handle-row {
 		display: none;
 	}
 }
@@ -3078,7 +3078,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: -webkit-grab;
 	cursor:         grab;
 
-	.cui-lv-row-move-handle {
+	.cui-drag-handle-row {
 		display: block;
 	}
 }
@@ -3843,7 +3843,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-lv-row-move-handle {
+.cui-drag-handle-row {
 	margin-top: 2px;
 	flex: 1 1 auto;
 	height: 12px;
