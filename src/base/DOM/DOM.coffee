@@ -14,6 +14,10 @@ class CUI.DOM extends CUI.Element
 				default: ""
 				check: String
 
+			attr:
+				default: {}
+				check: "PlainObject"
+
 	registerTemplate: (template, add_default_classes=true) ->
 		assert(template instanceof Template, "#{getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{getObjectClass(template)}.", template: template)
 		if @__template
@@ -33,6 +37,8 @@ class CUI.DOM extends CUI.Element
 		@DOM = _dom
 		if add_default_classes
 			CUI.DOM.addClass(@DOM, @getDOMElementClasses())
+			DOM.setAttributeMap(@DOM, @_attr)
+
 		# CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
 		if @_class
 			# CUI.debug DOM, @DOM, @_class

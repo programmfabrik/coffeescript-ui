@@ -78,8 +78,6 @@ class CUI.Button extends CUI.DOM
 		else
 			@__hasAriaLabel = false
 
-		DOM.setAttributeMap(@DOM, @_attr)
-
 		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 
 		if not @_attr?.role
@@ -262,7 +260,7 @@ class CUI.Button extends CUI.DOM
 				return
 
 		Events.listen
-			type: ["mousedown", "touchstart"]
+			type: ["mousedown"] # , "touchstart"]
 			node: @DOM
 			call: (ev) =>
 				# don't focus element
@@ -547,10 +545,6 @@ class CUI.Button extends CUI.DOM
 			text_inactive:
 				check: String
 			value: {}
-			# attributes for the @DOM element
-			attr:
-				default: {}
-				check: "PlainObject"
 			name:
 				check: String
 			hidden:
@@ -975,8 +969,8 @@ class CUI.Button extends CUI.DOM
 			node: @DOM
 
 	@clickTypes:
-		click: ["click", "touchend"]
-		mouseup: ["mouseup", "touchend"]
+		click: ["click"]
+		mouseup: ["mouseup"]
 		dblclick: ["dblclick"]
 
 

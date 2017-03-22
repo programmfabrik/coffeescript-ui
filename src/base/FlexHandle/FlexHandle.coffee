@@ -127,7 +127,7 @@ class FlexHandle extends CUI.Element
 				return
 
 		Events.listen
-			type: "click"
+			type: ["click"]
 			node: @_element
 			call: (ev) =>
 				if not @__label

@@ -305,15 +305,15 @@ class CUI.ListView extends CUI.SimplePane
 
 			selector = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer"
 
-			Events.listen
-				type: ["touchstart"]
-				node: @DOM
-				call: (ev) =>
-					# console.debug "touchstart prevent default", @DOM
-					ev.preventDefault()
+			# Events.listen
+			# 	type: ["touchstart"]
+			# 	node: @DOM
+			# 	call: (ev) =>
+			# 		# console.debug "touchstart prevent default", @DOM
+			# 		ev.preventDefault()
 
 			Events.listen
-				type: ["click", "touchend"]
+				type: ["click"]
 				node: @DOM
 				selector: selector
 				call: (ev) =>

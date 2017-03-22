@@ -64,8 +64,8 @@ class CUI.Sortable extends CUI.Draggable
 
 		# CUI.debug "INIT HELPER", globalDrag
 
-	getSourceCloneForHelper: ->
-		@__findClosestSon(globalDrag.$source).cloneNode(true)
+	getCloneSourceForHelper: ->
+		@__findClosestSon(globalDrag.$source)
 
 	__findClosestSon: ($target) ->
 		# find the closest child of the target

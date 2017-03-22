@@ -100,46 +100,38 @@ class CUI.ListViewTree extends CUI.ListView
 			CUI.error("ListViewTree.render called with do_open == #{do_open}, only \"false\" is supported. The automatic root.open() is deprecated and will be removed in a future version.")
 			do_open = true
 
-		# we need to register our events BEFORE "super" is called,
-		# so that we receive them first
+		handle_event = (ev) =>
+
+			node = DOM.data(DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
+
+			if node not instanceof ListViewTreeNode or node.isLoading() or node.isLeaf()
+				return
+
+			# This needs to be immediate, "super" listens on the same node
+			ev.stopImmediatePropagation()
+
+			if ev instanceof CUI.DragoverScrollEvent
+				if ev.getCount() % 50 == 0
+					@toggleNode(ev, node)
+			else
+				@toggleNode(ev, node)
+			return
+
+
+		Events.listen
+			node: @DOM
+			selector: ".cui-tree-node-handle"
+			capture: true
+			type: ["click"]
+			call: (ev) =>
+				handle_event(ev)
 
 		Events.listen
 			node: @DOM
 			selector: ".cui-lv-tree-node"
-			type: ["click", "touchend", "dragover-scroll"]
+			type: ["click", "dragover-scroll"]
 			call: (ev) =>
-
-				node = DOM.data(ev.getCurrentTarget(), "listViewRow")
-				handle = CUI.DOM.closest(ev.getTarget(), ".cui-tree-node-handle")
-
-				console.debug "handle", !!handle, "node", node.isLeaf(), node.isSelectable()
-
-				if node not instanceof ListViewTreeNode or node.isLeaf()
-					return
-
-				if handle or not node.isSelectable()
-					# only click on handle or on unselectable rows
-					# will open / close the node
-
-					# This needs to be immediate, "super" listens on the same node
-					ev.stopImmediatePropagation()
-
-					if ev instanceof CUI.DragoverScrollEvent
-						if ev.getCount() % 10 == 0
-							@toggleNode(ev, node)
-					else
-						@toggleNode(ev, node)
-
-				return
-
-
-		Events.listen
-			node: @DOM
-			type: ["touchstart"]
-			call: (ev) =>
-				console.debug "touchstart ListViewTree", @DOM
-				ev.preventDefault()
-
+				handle_event(ev)
 
 		super()
 
@@ -164,7 +156,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 
 	__runTrigger: (ev, action, node) ->
-		if ev.ctrlKey() and ev.getType() in ["click", "touchend"]
+		if ev.ctrlKey()
 			@__actionOnNode(ev, action+"Recursively", node)
 		else
 			@__actionOnNode(ev, action, node)

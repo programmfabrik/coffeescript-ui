@@ -323,10 +323,10 @@ class CUI.Options extends CUI.DataField
 				if CUI.__ng__ and opt.form?.right
 					console.error("Options.render: form.right is obsolete. 'right' part will not appear.", @, opt)
 
-				if @_sortable
-					if not opt.form
-						opt.form = {}
-					opt.form.label = $div("cui-options-sortable-drag-handle cui-drag-handle-row")
+				# if @_sortable
+				# 	if not opt.form
+				# 		opt.form = {}
+				# 	opt.form.label = $div("cui-options-sortable-drag-handle cui-drag-handle-row")
 
 				opt.radio = @__radio
 				if @_radio and @_min_checked == 0
@@ -477,7 +477,7 @@ class CUI.Options extends CUI.DataField
 				sortable_selector = undefined
 
 			if @_sortable
-				new Sortable
+				new CUI.Sortable
 					axis: "y"
 					element: sortable_element
 					selector: sortable_selector

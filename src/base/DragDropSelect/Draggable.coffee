@@ -164,7 +164,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			# CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
 			return
 
-		ev.preventDefault()
+		# ev.preventDefault()
 
 		for k, v of overwrite_options
 			@["_#{k}"] = v
@@ -564,12 +564,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# console.debug "FINAL helper pos:", globalDrag, diff,  "top", top, "left", left, dump(helper_pos)
 
-	getSourceCloneForHelper: ->
-		helper = globalDrag.$source.cloneNode(true)
-
-		# remove select state (hard to overwrite in CSS)
-		helper.classList.remove("cui-selected")
-		return helper
+	getCloneSourceForHelper: ->
+		globalDrag.$source
 
 	get_axis: ->
 		@_axis
@@ -588,7 +584,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 			return
 
 		if helper == "clone"
-			hn = @getSourceCloneForHelper()
+			clone_source = @getCloneSourceForHelper()
+
+			hn = clone_source.cloneNode(true)
+			hn.classList.remove("cui-selected")
+
 			# offset the layer to the click
 			offset =
 				top: globalDrag.start.top
@@ -614,7 +614,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		if helper == "clone"
 			# set width & height
-			set_dim = DOM.getDimensions(globalDrag.$source)
+			set_dim = DOM.getDimensions(clone_source)
+
+			# console.error "measureing clone", set_dim.marginBoxWidth, globalDrag.$source, dim
 
 			DOM.setDimensions hn,
 				marginBoxWidth: set_dim.marginBoxWidth

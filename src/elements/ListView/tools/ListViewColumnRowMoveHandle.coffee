@@ -28,5 +28,5 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 		return
 
 	render: ->
-		CUI.DOM.element("DIV", class: "cui-lv-row-move-handle")
+		CUI.DOM.element("DIV", class: "cui-drag-handle-row")
 
