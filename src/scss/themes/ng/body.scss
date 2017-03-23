@@ -3386,6 +3386,47 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-form--grid {
+	.cui-form-table {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 10px 0 !important; // overwrite cui-form-table[cui-form-depth="0"]
+		width: 100% !important;
+	}
+
+	.cui-form-tr {
+		display: block;
+		padding: 0 10px;
+		
+		$sizes: "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5";
+		
+		@each $size in $sizes {
+			&[data-cui-grid="#{$size}"] {
+				width: calc(#{$size} * 100%);
+			}
+		}
+		
+		@include phone {
+			width: 100%;
+		}
+	}
+
+	.cui-form-td {
+		display: block;
+	}
+	
+	.cui-form-key {
+		max-width: none;
+		width: auto;
+		padding-bottom: 2px;	
+	}
+
+	.cui-form-value {
+		width: auto;
+		padding-top: 0;
+	}
+}
+
 .cui-form-container {
 	flex-grow: 1;
 	min-height: 0;
