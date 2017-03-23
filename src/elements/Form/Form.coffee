@@ -38,6 +38,10 @@ class CUI.Form extends CUI.DataField
 				check: Boolean
 			render_as_block:
 				check: Boolean
+			render_as_grid:
+				default: false
+				mandatory: true
+				check: Boolean
 			top: {}
 			bottom: {}
 
@@ -97,6 +101,10 @@ class CUI.Form extends CUI.DataField
 			@checkbox = null
 
 		@__verticalLayout = new VerticalLayout(vl_opts)
+
+		if @_render_as_grid
+			@__verticalLayout.addClass("cui-form--grid")
+
 		@__verticalLayout
 
 
@@ -596,6 +604,7 @@ class CUI.Form extends CUI.DataField
 
 			field = fields[field_idx]
 			hint_div = null
+			grid = field._form?.grid
 
 			if field._form and (not isNull(field._form.hint) or field._form.right)
 
@@ -618,6 +627,7 @@ class CUI.Form extends CUI.DataField
 					# append deprecated stuff to the hint div
 					# you should use ".hint" instead
 					append(get_append(field._form.right), hint_div)
+
 
 
 			if field instanceof Form and field.renderAsBlock()
@@ -711,6 +721,9 @@ class CUI.Form extends CUI.DataField
 				# used to set row visibility
 				DOM.data(tr, "data-field", field)
 
+				if grid
+					tr.setAttribute("data-cui-grid", grid)
+
 				table.appendChild(tr)
 			else
 				row = CUI.DOM.element("DIV", class: "cui-form-row", "data-for-field": field.getUniqueId())
@@ -720,6 +733,9 @@ class CUI.Form extends CUI.DataField
 
 				# used to set row visibility
 				DOM.data(row, "data-field", field)
+
+				if grid
+					row.setAttribute("data-cui-grid", grid)
 
 				table.appendChild(row)
 
