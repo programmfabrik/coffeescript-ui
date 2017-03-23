@@ -75,18 +75,24 @@ class Select extends Checkbox
 		else
 			super()
 
-	__getPromiseFromOpt: (opt, event) ->
-		ret = @getArrayFromOpt(opt, event, true)
-		if isPromise(ret)
-			ret
-		else
-			CUI.resolvedPromise(ret)
-
 	__loadOptions: (event) ->
 		if @__optionsPromise?.state() == "pending"
 			return @__optionsPromise
 
-		@__optionsPromise = @__getPromiseFromOpt("options", event)
+		ret = @getArrayFromOpt("options", event, true)
+
+		if isPromise(ret)
+			@__optionsPromise = ret
+			btn = @getButton()
+
+			if btn
+				icon_right = btn.getIconRight()
+				btn.setIconRight("spinner")
+
+				@__optionsPromise.always =>
+					btn.setIconRight(icon_right)
+		else
+			@__optionsPromise = CUI.resolvedPromise(ret)
 
 		# if not @isDisabled()
 		# 	@disable(true)

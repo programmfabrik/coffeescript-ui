@@ -98,17 +98,15 @@ class CUI.Button extends CUI.DOM
 
 		if not @_right
 			if @_icon_right
-				icon_right = @__getIcon(@_icon_right)
+				@setIconRight(@_icon_right)
 			else if @_menu and @_icon_right != false
-				if @_menu_parent
-					icon_right = new Icon(class: "fa-angle-right")
-				else
-					icon_right = new Icon(class: "fa-angle-down")
-
 				@addClass("cui-button--has-caret")
 
-			if icon_right
-				@append(icon_right, "right")
+				if @_menu_parent
+					@setIconRight("fa-angle-right")
+				else
+					@setIconRight("fa-angle-down")
+
 		else if @_right != true
 			@append(@_right, "right")
 
@@ -805,20 +803,25 @@ class CUI.Button extends CUI.DOM
 		deactivate()
 		@
 
-	setIcon: (icon=null) ->
+	setIconRight: (icon=null) ->
+		@setIcon(icon, "right")
+
+	setIcon: (icon=null, _key="left") ->
+		key = "__icon_"+_key
+
 		if icon == ""
-			@__icon = ""
+			@[key] = ""
 		else
-			@__icon = @__getIcon(icon)
+			@[key] = @__getIcon(icon)
 
-		assert(@__icon == null or @__icon == "" or @__icon instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+		assert(@[key] == null or @[key] == "" or @[key] instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
 
-		if @__icon == null
-			@empty("left")
-		else if @__icon == ""
-			@replace(CUI.DOM.element("SPAN"), "left")
+		if @[key] == null
+			@empty(_key)
+		else if @[key] == ""
+			@replace(CUI.DOM.element("SPAN"), _key)
 		else
-			@replace(@__icon, "left")
+			@replace(@[key], _key)
 		@
 
 	startSpinner: ->
@@ -838,7 +841,10 @@ class CUI.Button extends CUI.DOM
 		@
 
 	getIcon: ->
-		@__icon
+		@__icon_left
+
+	getIconRight: ->
+		@__icon_right
 
 	__setState: ->
 		@__setIconState()

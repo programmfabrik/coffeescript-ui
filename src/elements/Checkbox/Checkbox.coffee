@@ -54,6 +54,9 @@ class Checkbox extends DataFieldInput
 		super()
 		@__checkbox?.disable()
 
+	getButton: ->
+		@__checkbox
+
 	getOptValue: ->
 		@_value
 
