@@ -122,7 +122,6 @@ class CUI.ListView extends CUI.SimplePane
 			colResize:
 				check: Boolean
 			selectableRows:
-				default: false
 				check: (v) ->
 					v == false or v == true or v == "multiple"
 			onSelect:
@@ -146,9 +145,8 @@ class CUI.ListView extends CUI.SimplePane
 		if @opts.footer
 			@opts.footer_left = @opts.footer
 
-		@__selectableRows = @_selectableRows
-
 		super()
+		@__selectableRows = @_selectableRows
 		@
 
 	destroy: ->
@@ -320,7 +318,7 @@ class CUI.ListView extends CUI.SimplePane
 					row = DOM.data(ev.getCurrentTarget(), "listViewRow")
 					if not row.isSelectable()
 						return
-					ev.stopPropagation()
+					ev.stopImmediatePropagation()
 					ret = @selectRow(ev, row)
 					return
 
@@ -442,7 +440,7 @@ class CUI.ListView extends CUI.SimplePane
 		sel_rows
 
 	hasSelectableRows: ->
-		@__selectableRows != false
+		!!@__selectableRows
 
 	selectRowById: (row_id) ->
 		@selectRow(null, @getListViewRow(row_id), true)

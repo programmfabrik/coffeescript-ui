@@ -36,8 +36,10 @@ class CUI.ListViewTree extends CUI.ListView
 
 	readOpts: ->
 		super()
-		if @_selectableRows == undefined
+		if @_selectable != undefined
+			assert(@_selectableRows == undefined, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
 			@__selectableRows = @_selectable
+		@
 
 	getRowMoveTool: (opts = {}) ->
 		opts.rowMoveWithinNodesOnly = @_rowMoveWithinNodesOnly
@@ -117,6 +119,7 @@ class CUI.ListViewTree extends CUI.ListView
 				@toggleNode(ev, node)
 			return
 
+		super()
 
 		Events.listen
 			node: @DOM
@@ -132,8 +135,6 @@ class CUI.ListViewTree extends CUI.ListView
 			type: ["click", "dragover-scroll"]
 			call: (ev) =>
 				handle_event(ev)
-
-		super()
 
 		if do_open
 			@root.open()

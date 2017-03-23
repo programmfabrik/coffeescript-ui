@@ -175,14 +175,15 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			buttons.push(@minusButton)
 
+			updateMinusButton = =>
+				if @listView.getSelectedRows().length == 0
+					@minusButton.disable()
+				else
+					@minusButton.enable()
+
 		if buttons.length
 			footer = new Buttonbar(buttons: buttons)
 
-		updateMinusButton = =>
-			if @listView.getSelectedRows().length == 0
-				@minusButton.disable()
-			else
-				@minusButton.enable()
 
 		@listView = new ListView
 			selectableRows: @_new_rows != "none"
