@@ -47,7 +47,7 @@ label {
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+	font-family: $font-family;
 	font-size: 13px;
 	line-height: normal;
 	background: $background;
@@ -1999,6 +1999,10 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-key {
 		max-width: $td-width;
 		width: auto;
+		
+		@include phone {
+			max-width: none;
+		}
 	}
 
 	.cui-form-table {
@@ -3407,7 +3411,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 		
 		@include phone {
-			width: 100%;
+			width: 100% !important;
 		}
 	}
 
@@ -3465,6 +3469,10 @@ a[role="button"].cui-button-appearance-link {
 	display: table;
 	width: 100%;
 	margin: 0;
+	
+	@include phone {
+		display: block;
+	}
 
 	&[cui-form-depth="0"] {
 		width: calc(100% - #{2*$padding});
@@ -3507,6 +3515,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-tr,
 .cui-form-tr-header {
 	display: table-row;
+	
+	@include phone {
+		display: block;
+	}
 }
 
 .cui-form-tr {
@@ -3543,6 +3555,18 @@ a[role="button"].cui-button-appearance-link {
 	display: table-cell;
 	padding: $padding/2 0;
 	vertical-align: top;
+	
+	@include phone {
+		display: block;
+		
+		&.cui-form-key {
+			padding-bottom: 2px;
+		}
+
+		&.cui-form-value {
+			padding-top: 0;
+		}
+	}
 }
 
 .cui-form-key {
