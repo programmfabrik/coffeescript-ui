@@ -210,9 +210,11 @@ class CUI.Label extends CUI.DOM
 
 		dim_div = DOM.getDimensions(@__label.map.content)
 
-		max_height = parseInt(dim_div.computedStyle.maxHeight)
+		max_height = CUI.DOM.parseCSSFloatValue(dim_div.computedStyle.maxHeight)
 		if not (max_height > 0)
 			max_height = dim_div.clientHeight
+
+		console.info("Label.checkOverflowSize: Scroll Height:", dim_div.scrollHeight, " Using Height: ", max_height, "Element:", @__label.map.content)
 
 		if dim_div.scrollHeight > max_height
 			# really to big, show button
@@ -224,28 +226,6 @@ class CUI.Label extends CUI.DOM
 
 		@__label.removeClass("cui-label--measure-overflow")
 		@
-
-	setOverflowSize: (showOverflow, trigger = true) ->
-
-		if trigger
-			Events.wait
-				type: "transitionend"
-				node: @__label.map.content
-			.always =>
-				Events.trigger
-					type: "content-resize"
-					node: @__label.map.content
-
-		if !showOverflow
-			CUI.DOM.setDimensions(@__overflow_content_div, marginBoxHeight: @__overflow_content_hidden_height)
-			CUI.DOM.setStyle(@__label.map.content, maxHeight: "")
-		else
-			CUI.DOM.setStyle(@__overflow_content_div, height: "")
-			CUI.DOM.setStyle(@__label.map.content, maxHeight: "none")
-
-		@
-
-
 
 	getGroup: ->
 		@_group

@@ -1340,7 +1340,7 @@ class CUI.DOM extends CUI.Element
 
 		return texts
 
-	# turns 14.813px into a float
+	# turns 14.813px into a Number
 	@getCSSFloatValue: (v) ->
 		if v.indexOf("px") == -1
 			return 0
