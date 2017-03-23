@@ -223,7 +223,6 @@ class CUI.Label extends CUI.DOM
 			if @__overflow_button.isActive()
 				@__label.addClass("cui-label--show-overflow")
 		else
-			@__overflow_button.hide()
 			@__label.addClass("cui-label--show-overflow")
 
 		@__label.removeClass("cui-label--measure-overflow")
