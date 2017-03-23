@@ -1563,37 +1563,38 @@ a[role="button"].cui-button-appearance-link {
 // Label: Manage Overflow
 
 .cui-label-manage-overflow {
+	position: relative;
+	display: block;
+	
+	&.cui-label--measure-overflow {
+		> .cui-label-content {
+			max-height: 100px;
+		}
+	}
+
 	> .cui-label-content {
 		max-height: 75px;
 		overflow: hidden;
 	}
 
-	&.cui-label--overflow-hidden {
-		> .cui-label-content > .cui-label-manage-overflow-button-container {
-			padding-top: 18px;
-			margin-top: -18px;
+	.cui-label-manage-overflow-button {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(to right, hsla(0,0%,100%,0), hsl(0,0%,100%) 10px);
+		padding: 0 0 0 10px !important;
+	}
+
+	&.cui-label--show-overflow {
+		> .cui-label-content {
+			max-height: none;
+		}
+
+		.cui-label-manage-overflow-button {
+			position: static;
+			float: right;
 		}
 	}
-}
-
-.cui-label-manage-overflow-content-container {
-	overflow: hidden;
-	flex-shrink: 1;
-
-	> span {
-		white-space: pre-wrap;
-		word-break: normal;
-	}
-}
-
-.cui-label-manage-overflow-button-container {
-	flex-shrink: 0;
-	display: flex;
-	justify-content: flex-end;
-	position: relative;
-	background-image: linear-gradient(hsla(0,0%,100%,0), hsla(0,0%,100%,1));
-	background-size: 100% 18px;
-	background-repeat: no-repeat;
 }
 
 // Label: Placeholder
