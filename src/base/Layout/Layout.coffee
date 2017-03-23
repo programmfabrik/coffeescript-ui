@@ -279,6 +279,23 @@ class CUI.Layout extends CUI.DOM
 		else
 			return super(value, key)
 
+	setAbsolute: ->
+		@addClass("cui-absolute")
+		Layout.__all()
+
+	unsetAbsolute: ->
+		@DOM.removeAttribute("data-cui-absolute-check-value")
+		@DOM.removeAttribute("data-cui-absolute-values")
+
+		for child in CUI.DOM.children(@DOM)
+			CUI.DOM.setStyle child,
+				top: ""
+				left: ""
+				right: ""
+				bottom: ""
+
+		@removeClass("cui-absolute")
+		@
 
 	getName: ->
 		assert(false, "#{@__cls}.getName", "Needs to be overwritten.")
