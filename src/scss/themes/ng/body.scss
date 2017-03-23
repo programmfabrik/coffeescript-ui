@@ -883,7 +883,7 @@ i.cui-spin-stepped {
 	&.cui-disabled {
 	  cursor: default;
 	  opacity: 1;
-	  pointer-events: none;
+	  pointer-events: auto;
 
 		.cui-button-visual {
 		  color: $disabled-color;
