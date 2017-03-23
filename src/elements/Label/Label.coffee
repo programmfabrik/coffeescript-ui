@@ -206,11 +206,12 @@ class CUI.Label extends CUI.DOM
 		# show full content and see if it fits
 		@__label.removeClass("cui-label--show-overflow")
 		@__label.addClass("cui-label--measure-overflow")
+
 		@__overflow_button.hide()
 
 		dim_div = DOM.getDimensions(@__label.map.content)
 
-		max_height = CUI.DOM.parseCSSFloatValue(dim_div.computedStyle.maxHeight)
+		max_height = CUI.DOM.getCSSFloatValue(dim_div.computedStyle.maxHeight)
 		if not (max_height > 0)
 			max_height = dim_div.clientHeight
 
@@ -223,6 +224,7 @@ class CUI.Label extends CUI.DOM
 				@__label.addClass("cui-label--show-overflow")
 		else
 			@__overflow_button.hide()
+			@__label.addClass("cui-label--show-overflow")
 
 		@__label.removeClass("cui-label--measure-overflow")
 		@
