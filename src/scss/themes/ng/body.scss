@@ -982,7 +982,7 @@ i.cui-spin-stepped {
 
 		&:empty {
 			display: flex;
-			
+
 			&:after {
 				content: " ";
 			}
@@ -1565,7 +1565,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-label-manage-overflow {
 	position: relative;
 	display: block;
-	
+
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
 			max-height: 100px;
@@ -1587,7 +1587,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label--show-overflow {
 		> .cui-label-content {
-			max-height: none;
+			max-height: none !important;
 		}
 
 		.cui-label-manage-overflow-button {
@@ -2000,7 +2000,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-key {
 		max-width: $td-width;
 		width: auto;
-		
+
 		@include phone {
 			max-width: none;
 		}
@@ -3402,15 +3402,15 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-tr {
 		display: block;
 		padding: 0 10px;
-		
+
 		$sizes: "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5";
-		
+
 		@each $size in $sizes {
 			&[data-cui-grid="#{$size}"] {
 				width: calc(#{$size} * 100%);
 			}
 		}
-		
+
 		@include phone {
 			width: 100% !important;
 		}
@@ -3419,11 +3419,11 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-td {
 		display: block;
 	}
-	
+
 	.cui-form-key {
 		max-width: none;
 		width: auto;
-		padding-bottom: 2px;	
+		padding-bottom: 2px;
 	}
 
 	.cui-form-value {
@@ -3470,7 +3470,7 @@ a[role="button"].cui-button-appearance-link {
 	display: table;
 	width: 100%;
 	margin: 0;
-	
+
 	@include phone {
 		display: block;
 	}
@@ -3516,7 +3516,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-tr,
 .cui-form-tr-header {
 	display: table-row;
-	
+
 	@include phone {
 		display: block;
 	}
@@ -3556,10 +3556,10 @@ a[role="button"].cui-button-appearance-link {
 	display: table-cell;
 	padding: $padding/2 0;
 	vertical-align: top;
-	
+
 	@include phone {
 		display: block;
-		
+
 		&.cui-form-key {
 			padding-bottom: 2px;
 		}
