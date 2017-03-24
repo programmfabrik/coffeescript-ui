@@ -125,14 +125,14 @@ class CUI.ListViewTree extends CUI.ListView
 			node: @DOM
 			selector: ".cui-tree-node-handle"
 			capture: true
-			type: ["click"]
+			type: ["click", "dragover-scroll"]
 			call: (ev) =>
 				handle_event(ev)
 
 		Events.listen
 			node: @DOM
 			selector: ".cui-lv-tree-node"
-			type: ["click", "dragover-scroll"]
+			type: ["click"]
 			call: (ev) =>
 				handle_event(ev)
 

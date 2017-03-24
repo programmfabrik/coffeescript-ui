@@ -5,9 +5,18 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.ListViewColResize extends CUI.ListViewRowMove
-	constructor: (@opts = {}) ->
-		super(@opts)
+class CUI.ListViewColResize extends CUI.ListViewDraggable
+
+	initOpts: ->
+		super()
+		@removeOpt("helper")
+		@addOpts
+			row:
+				mandatory: true
+				check: ListViewRow
+			column:
+				mandatory: true
+				check: ListViewColumn
 
 		Events.listen
 			type: "dblclick"
@@ -17,15 +26,11 @@ class CUI.ListViewColResize extends CUI.ListViewRowMove
 				console.debug "list view", @__listView, @__col_i, @__row_i
 				@__listView.resetColWidth(@__col_i)
 
-	initOpts: ->
-		super()
-		@addOpts
-			column:
-				mandatory: true
-				check: ListViewColumn
-
 	readOpts: ->
 		super()
+		@__row_i = @_row.getRowIdx()
+		@__display_row_i = @_row.getDisplayRowIdx()
+		@__listView = @_row.getListView()
 		@__col_i = @_column.getColumnIdx()
 
 	get_axis: ->
