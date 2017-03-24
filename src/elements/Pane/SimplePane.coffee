@@ -68,11 +68,13 @@ class CUI.SimplePane extends CUI.Pane
 		if @_title
 			assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
 
-		if @forceHeader() or not (isUndef(@_header_left) and isUndef(@_header_center) and isUndef(@_header_right))
-			@__pane_header = new PaneHeader()
+		if @forceHeader() or
+			not (isUndef(@_header_left) and isUndef(@_header_center) and isUndef(@_header_right)) or
+			@_title
+				@__pane_header = new PaneHeader()
 
-			@_top =
-				content: @__pane_header
+				@_top =
+					content: @__pane_header
 
 		if @forceFooter() or not (isUndef(@_footer_left) and isUndef(@_footer_right))
 			@__pane_footer = new PaneFooter()
