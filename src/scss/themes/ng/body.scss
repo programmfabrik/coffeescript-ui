@@ -2000,6 +2000,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-key {
 		max-width: $td-width;
 		width: auto;
+		min-width: 100px;
 
 		@include phone {
 			max-width: none;
