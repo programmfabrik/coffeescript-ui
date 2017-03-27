@@ -407,6 +407,9 @@ class CUI.Layer extends CUI.DOM
 		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
+		body_scroll_top = document.body.scrollTop
+		body_scroll_left = document.body.scrollLeft
+
 		if @__element
 			dim_element = CUI.DOM.getDimensions(@__element)
 
@@ -418,6 +421,7 @@ class CUI.Layer extends CUI.DOM
 			dim_element.viewportBottom = dim_element.viewportTop
 			dim_element.viewportRight = dim_element.viewportLeft
 		else
+
 			dim_element =
 				viewportTop: 0
 				viewportLeft: 0
@@ -875,9 +879,9 @@ class CUI.Layer extends CUI.DOM
 
 			# set layer
 			CUI.DOM.setStyle @__layer.DOM,
-				top: vp.layer_pos.top # pos_top
+				top: vp.layer_pos.top + body_scroll_top # pos_top
 				# bottom: pos_bottom
-				left: vp.layer_pos.left
+				left: vp.layer_pos.left + body_scroll_left
 				# right: pos_right
 
 				# width: Math.ceil(vp.layer_pos.width)
@@ -889,8 +893,8 @@ class CUI.Layer extends CUI.DOM
 		else
 			# set layer
 			CUI.DOM.setStyle @__layer.DOM,
-				top: vp.layer_pos.top
-				left: vp.layer_pos.left
+				top: vp.layer_pos.top + body_scroll_top
+				left: vp.layer_pos.left + body_scroll_left
 				width: Math.ceil(vp.layer_pos.width)
 				height: Math.ceil(vp.layer_pos.height)
 				margin: 0
@@ -901,24 +905,24 @@ class CUI.Layer extends CUI.DOM
 		if @__pointer
 			# set pointer
 			CUI.DOM.setStyle @__pointer,
-				top: vp.pointer_pos.top
-				left: vp.pointer_pos.left
+				top: vp.pointer_pos.top + body_scroll_top
+				left: vp.pointer_pos.left + body_scroll_left
 				margin: 0
 
 			CUI.DOM.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
 
 		if @__backdrop_crop
 			DOM.setStyle @__backdrop_crop,
-				top: vp.layer_pos.top
-				left: vp.layer_pos.left
+				top: vp.layer_pos.top + body_scroll_top
+				left: vp.layer_pos.left + body_scroll_left
 				width: vp.layer_pos.width
 				height: vp.layer_pos.height
 
 			DOM.setStyle @__backdrop_crop.firstChild,
 				width: dim_window.width
 				height: dim_window.height
-				top: -vp.layer_pos.top
-				left: -vp.layer_pos.left
+				top: -vp.layer_pos.top + body_scroll_top
+				left: -vp.layer_pos.left + body_scroll_left
 
 		# We could re-read the layer width & height here to actually
 		# set it in Style. By doing that we could have support for transitions
