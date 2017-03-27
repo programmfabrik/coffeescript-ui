@@ -710,8 +710,7 @@ class CUI
 		typeof(s) == "string"
 
 	@downloadData: (data, fileName) ->
-		json = JSON.stringify(data)
-		blob = new Blob([json], type: "octet/stream")
+		blob = new Blob([data], type: "octet/stream")
 		url = window.URL.createObjectURL(blob)
 		@__downloadDataElement.href = url
 		@__downloadDataElement.download = fileName

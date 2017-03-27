@@ -21,8 +21,8 @@ class CUI.Modal extends CUI.LayerPane
 			icon:  "close"
 			tooltip: @_cancel_tooltip
 			appearance: if CUI.__ng__ then "normal" else "flat"
-			onClick: (ev) =>
-				@doCancel(ev)
+			onClick: (ev, btn) =>
+				@doCancel(ev, false, btn)
 
 	initOpts: ->
 		super()
@@ -87,12 +87,18 @@ class CUI.Modal extends CUI.LayerPane
 		else
 			super(ev)
 
-	doCancel: (ev, force_callback = false) ->
+	doCancel: (ev, force_callback = false, button = null) ->
 		if not @_cancel and not force_callback
 			super(ev)
 		else
 			ret = @_onCancel?(ev, @)
 			if isPromise(ret)
+				if button
+					button.disable()
+					button.startSpinner()
+					ret.always =>
+						button.stopSpinner()
+						button.enable()
 				ret.done (value) => @[@_cancel_action](ev, value)
 			else if ret != false
 				@[@_cancel_action](ev, ret)

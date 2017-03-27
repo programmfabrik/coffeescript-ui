@@ -37,7 +37,7 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 					@__deferred.resolve()
 		return @__deferred.promise()
 
-CUI.toaster = (opts=text: "CUI.toaster") ->
+CUI.toaster = (opts = text: "CUI.toaster") ->
 	toaster = new CUI.Toaster(opts)
 	toaster.open()
 	toaster
