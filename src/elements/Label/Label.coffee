@@ -215,7 +215,7 @@ class CUI.Label extends CUI.DOM
 		if not (max_height > 0)
 			max_height = dim_div.clientHeight
 
-		console.info("Label.checkOverflowSize: Scroll Height:", dim_div.scrollHeight, " Using Height: ", max_height, "Element:", @__label.map.content)
+		# console.info("Label.checkOverflowSize: Scroll Height:", dim_div.scrollHeight, " Using Height: ", max_height, "Element:", @__label.map.content)
 
 		if dim_div.scrollHeight > max_height
 			# really to big, show button

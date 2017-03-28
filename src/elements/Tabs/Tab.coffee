@@ -151,6 +151,9 @@ class CUI.Tab extends CUI.DOM
 		@__button.deactivate()
 		@
 
+	isActive: ->
+		@__button.isActive()
+
 	getButton: ->
 		@__button
 
