@@ -339,7 +339,9 @@ class CUI.Layer extends CUI.DOM
 		if not @isShown()
 			return @
 
-		dim_window = CUI.DOM.getDimensions(window)
+		dim_window =
+			width: document.body.clientWidth
+			height: window.innerHeight
 
 		get_pointer_direction = (placement) ->
 			# return direction
