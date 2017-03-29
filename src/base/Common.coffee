@@ -424,6 +424,14 @@ addToArray = (value, arr, compFunc) ->
 	else
 		return idx
 
+# ucs-2 string to base64 encoded ascii
+utoa = (str) ->
+    window.btoa(unescape(encodeURIComponent(str)))
+
+# base64 encoded ascii to ucs-2 string
+atou = (str) ->
+    decodeURIComponent(escape(window.atob(str)))
+
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s
 
