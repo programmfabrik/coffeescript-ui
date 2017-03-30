@@ -2573,12 +2573,9 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tabs-pane-header {
-	background: none;
-	min-height: $toolbar-height + 1px; // add border height
-	border: none;
-	box-shadow: 0 -1px $border inset;
-	align-items: flex-end;
-	padding: 0 5px;
+	min-height: $toolbar-height;
+	background: $toolbar-background;
+	padding: 0 $padding;
 
 	&.cui-tabs-pane-header--mini {
 		background: none;
@@ -2593,7 +2590,6 @@ a[role="button"].cui-button-appearance-link {
 		overflow: hidden;
 		flex-grow: 0;
 		margin-right: 0;
-		justify-content: flex-start;
 	}
 
 	/* overflowing tabs */
@@ -2646,8 +2642,7 @@ a[role="button"].cui-button-appearance-link {
 		line-height: 24px;
 		min-width: 40px;
 		padding: 0 $padding;
-		border-radius: $button-radius $button-radius 0 0 !important;
-		border: 1px solid $border;
+		border: 1px solid;
 	}
 
 	&.cui-button-size-mini {
@@ -2657,6 +2652,16 @@ a[role="button"].cui-button-appearance-link {
 			height: 24px;
 			line-height: 23px;
 		}
+	}
+
+	&:first-child .cui-button-visual {
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
+
+	&:last-child .cui-button-visual {
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
 	}
 
 	&.cui-active {
