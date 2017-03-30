@@ -4426,7 +4426,7 @@ a[role="button"].cui-button-appearance-link {
 // Block
 
 .cui-block {
-	border-bottom: 1px solid hsl(180,9%,93%);
+	border-bottom: 1px solid $soft-border;
 	flex-shrink: 0;
 
 	&:last-child {
@@ -4496,7 +4496,7 @@ a[role="button"].cui-button-appearance-link {
 	font-size: 11px;
 	font-weight: bold;
 	color: hsl(205,20%,20%);
-	height: 22px;
+	// height: 22px; CONFLICT: unflexible
 	margin-bottom: $padding;
 	flex-basis: 100%;
 	margin-top: $padding*2;
