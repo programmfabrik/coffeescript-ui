@@ -2755,6 +2755,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view {
 	flex-shrink: 1;
 	min-height: 0;
+	display: flex;
+	flex-direction: column;
 
 	.cui-label-size-normal {
 		line-height: $table-data-height - $table-data-padding*2;
@@ -2767,6 +2769,8 @@ a[role="button"].cui-button-appearance-link {
 
 	> .cui-vertical-layout-center {
 		flex-shrink: 1;
+		display: flex;
+		flex-direction: column;
 	}
 
 	> .cui-vertical-layout-bottom {
