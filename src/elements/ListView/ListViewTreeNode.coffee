@@ -279,18 +279,21 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @isLeaf()
 			return dfr.resolve().promise()
 
-		@[action]()
-		.done =>
+		if action == "open"
+			ret = @getLoading()
+			if not ret
+				ret = @open()
+		else
+			ret = @close()
+
+		ret.done =>
 			promises = []
 			for child in @children
 				promises.push(child["#{action}Recursively"]())
 			CUI.when(promises)
-			.done =>
-				dfr.resolve()
-			.fail =>
-				dfr.reject()
-		.fail =>
-			dfr.reject()
+			.done(dfr.resolve)
+			.fail(dfr.reject)
+		.fail(dfr.reject)
 		dfr.promise()
 
 	isOpen: ->
@@ -305,7 +308,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	abortLoading: ->
 		if not @__loadingDeferred
 			return
-		CUI.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
+
+		console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
 		@__loadingDeferred.reject()
 		@__loadingDeferred = null
 		return
