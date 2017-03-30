@@ -943,18 +943,13 @@ i.cui-spin-stepped {
 	}
 
 	&:active,
-	&.cui-layer-open {
+	&.cui-layer-open,
+	&.cui-active {
 		.cui-button-visual {
 			background: none;
+			color: desaturate($highlight-color, 40%);
 		}
 	}
-
-	&.cui-active {
-  	.cui-button-visual {
-  		color: desaturate($highlight-color, 80%);
-  		background: none;
-  	}
-  }
 
   &:focus {
   	.cui-button-visual {
@@ -4001,7 +3996,7 @@ a[role="button"].cui-button-appearance-link {
 
 	input {
 		position: relative;
-		min-width: 80px;
+		min-width: 0; // was 80px - breaks scaling it down in a sidebar
 	}
 }
 
