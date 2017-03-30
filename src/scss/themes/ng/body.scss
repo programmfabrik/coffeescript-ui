@@ -2089,12 +2089,15 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-layer-pointer--n:after {
+.ez5-simple-pane--has-footer .cui-layer-pointer--n:after {
 	background: $layer-header-pointer-background;
 }
 
 .cui-layer-pointer--s:after {
 	top: -9px;
+}
+
+.ez5-simple-pane--has-header .cui-layer-pointer--s:after {
 	background: $layer-footer-background;
 }
 
@@ -4167,13 +4170,6 @@ a[role="button"].cui-button-appearance-link {
 
 
 .cui-date-time-popover {
-	+ .cui-layer-pointer--n,
-	+ .cui-layer-pointer--s {
-		&:after {
-			background: $foreground;
-		}
-	}
-
 	.cui-simple-pane > .cui-vertical-layout-center {
 		padding: $padding;
 	}
