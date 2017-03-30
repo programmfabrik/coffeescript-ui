@@ -932,12 +932,12 @@ i.cui-spin-stepped {
 
 .cui-button-appearance-flat {
 	align-self: auto;
-	margin: 3px 0;
 	vertical-align: top;
 
 	.cui-button-visual {
 		@include button-reset;
-		height: 18px;
+		height: 24px;
+		padding: 3px 0;
 		border-radius: $button-radius;
 		color: desaturate($highlight-color, 80%);
 	}
