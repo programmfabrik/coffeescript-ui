@@ -501,29 +501,24 @@ li > div {
 		overflow: visible !important;
 	}
 
-	.cui-horizontal-layout-center {
+	> .cui-horizontal-layout-center {
+		justify-content: center;
 		flex-direction: row;
+		overflow: visible !important;
 	}
 
-	> div {
-		&.cui-horizontal-layout-center {
-			justify-content: center;
-			overflow: visible !important;
-		}
+	> div > .cui-maximize-horizontal {
+		// in column direction this is solved by
+		// align-items: stretch, but here
+		// we need to overwrite this
+		flex: 1 1 auto;
+		align-self: stretch;
+		overflow: visible;
 
-		> .cui-maximize-horizontal {
-			// in column direction this is solved by
-			// align-items: stretch, but here
-			// we need to overwrite this
-			flex: 1 1 auto;
-			align-self: stretch;
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-center,
+		> .cui-horizontal-layout-right {
 			overflow: visible;
-
-			> .cui-horizontal-layout-left,
-			> .cui-horizontal-layout-center,
-			> .cui-horizontal-layout-right {
-				overflow: visible;
-			}
 		}
 	}
 
@@ -1261,13 +1256,12 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel {
+	border-top: 1px solid $layer-header-border;
 	border-bottom: 1px solid $layer-header-border;
 
 	& + &,
 	&:first-child {
-		.cui-panel-header {
-			border-top: none;
-		}
+		border-top: none;
 	}
 
 	&:last-child {
@@ -1275,11 +1269,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-closed {
-		> .cui-panel-header,
-		&:last-child {
-			border-bottom: none;
-		}
-
 		> .cui-panel-body {
 			display: none;
 		}
@@ -1287,8 +1276,6 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	border-top: 1px solid $layer-header-border;
-	border-bottom: 1px solid $layer-header-border;
 	background: $toolbar-background;
 	position: relative;
 	flex-shrink: 0;
@@ -2465,12 +2452,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-popover {
 	background: $layer-background;
 	min-width: 247px;
-
-	.cui-panel:last-child {
-		&.cui-panel-closed .cui-panel-header {
-			border-bottom: none;
-		}
-	}
 }
 
 // Hint Popover
@@ -2597,9 +2578,12 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tabs-pane-header {
-	min-height: $toolbar-height;
-	background: $toolbar-background;
-	padding: 0;
+	background: none;
+	min-height: $toolbar-height + 1px; // add border height
+	border: none;
+	box-shadow: 0 -1px $border inset;
+	align-items: flex-end;
+	padding: 0 5px;
 
 	&.cui-tabs-pane-header--mini {
 		background: none;
@@ -2610,12 +2594,11 @@ a[role="button"].cui-button-appearance-link {
 		min-width: 0;
 	}
 
-	.cui-horizontal-layout-center {
+	> .cui-horizontal-layout-center {
 		overflow: hidden;
 		flex-grow: 0;
-		justify-content: center;
 		margin-right: 0;
-		padding: 0 $padding;
+		justify-content: flex-start;
 	}
 
 	/* overflowing tabs */
@@ -2659,8 +2642,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-toolbar .cui-tab-header-button-overflow,
 .cui-toolbar .cui-tab-header-button {
 	font-size: inherit;
-	padding-top: 0;
-	padding-bottom: 0;
+	padding: 0;
 
 	.cui-button-visual {
 		background: none;
@@ -2669,8 +2651,8 @@ a[role="button"].cui-button-appearance-link {
 		line-height: 24px;
 		min-width: 40px;
 		padding: 0 $padding;
-		border-radius: 0;
-		border: 1px solid;
+		border-radius: $button-radius $button-radius 0 0 !important;
+		border: 1px solid $border;
 	}
 
 	&.cui-button-size-mini {
@@ -2680,16 +2662,6 @@ a[role="button"].cui-button-appearance-link {
 			height: 24px;
 			line-height: 23px;
 		}
-	}
-
-	&:first-child .cui-button-visual {
-		border-top-left-radius: 3px;
-		border-bottom-left-radius: 3px;
-	}
-
-	&:last-child .cui-button-visual {
-		border-top-right-radius: 3px;
-		border-bottom-right-radius: 3px;
 	}
 
 	&.cui-active {
@@ -2736,8 +2708,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-tab-header-button-overflow {
 		align-self: center;
-		padding-right: $padding;
-		padding-left: 0;
 		position: relative;
 		z-index: 1; // to overlap active buttons
 
