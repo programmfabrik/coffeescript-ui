@@ -3409,6 +3409,14 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-value {
 		width: auto;
 		padding-top: 0;
+		
+		.cui-output {
+			font-weight: bold;
+			
+			&-empty {
+				font-weight: normal;
+			}
+		}
 	}
 }
 
@@ -3676,11 +3684,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-output {
-	font-weight: bold;
-	
+.cui-output {	
 	&-empty {
-		font-weight: normal;
 		color: $muted-color;
 	}
 
