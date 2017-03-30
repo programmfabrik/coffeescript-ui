@@ -74,7 +74,7 @@ class CUI
 		.done =>
 			Template.load()
 			if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-				CUI.Template.loadFile("easydbui.html")
+				CUI.Template.loadTemplateFile("easydbui.html")
 				.done =>
 					@ready()
 			else

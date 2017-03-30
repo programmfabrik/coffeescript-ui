@@ -305,7 +305,10 @@ class CUI.Template extends CUI.Element
 		dfr.promise()
 
 
-	@loadFile: (filename) ->
+	@loadTemplateFile: (filename) ->
+		@loadFile(filename, true)
+
+	@loadFile: (filename, load_templates = false) ->
 		if filename.match("^(https://|http://|/)")
 			p = filename
 		else
@@ -319,16 +322,19 @@ class CUI.Template extends CUI.Element
 		.start()
 		.done (data) ->
 			div.innerHTML = data
-			count = Template.load(div)
-
-			if div.children.length > 0
+			if not load_templates
 				document.body.appendChild(div)
-				console.warn("Template.loadFile:", filename, "contains extra content.", div)
-
-			if count == 0
-				console.warn("Template.loadFile:", filename, "contains no Templates.")
 			else
-				console.info("Template.loadFile:", count, "Template loaded from", filename)
+				count = Template.load(div)
+
+				if div.children.length > 0
+					document.body.appendChild(div)
+					console.warn("Template.loadFile:", filename, "contains extra content.", div)
+
+				if count == 0
+					console.warn("Template.loadFile:", filename, "contains no Templates.")
+				else
+					; # console.info("Template.loadFile:", count, "Template loaded from", filename)
 			return
 
 		.fail (xhr) ->

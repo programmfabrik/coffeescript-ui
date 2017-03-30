@@ -79,18 +79,18 @@ class CUI.CSSLoader extends CUI.Element
 					console.warn("CSSLoader.loadTheme:", name, ". Theme already loading, returning Promise.")
 					return loader_deferred.promise()
 
-				console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting other load.")
+				# console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting other load.")
 				# reject loading, this removed the old node
 				load_deferred.reject()
 			else
 				if same_theme and same_url
 					# all good
-					console.warn("CSSLoader.loadTheme:", name, ". Theme already loaded.")
+					# console.warn("CSSLoader.loadTheme:", name, ". Theme already loaded.")
 					return CUI.resolvedPromise()
 
 				# in all other cases we simply "overload"
 
-		console.info("CSSLoader: Loading:", url)
+		# console.info("CSSLoader: Loading:", url)
 
 		if name.startsWith("ng")
 			CUI.__ng__ = true
@@ -156,13 +156,13 @@ class CUI.CSSLoader extends CUI.Element
 				old_css_nodes = []
 				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
 					if css_node != cssNode
-						console.warn("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
+						# console.info("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
 						CUI.DOM.remove(css_node)
 						old_css_nodes.push(css_node)
 
 				CUI.DOM.setAttribute(document.body, "cui-theme", name)
 
-				console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
+				# console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				Events.trigger
 					type: "viewport-resize"
 					info:
