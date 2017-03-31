@@ -67,7 +67,7 @@ class CUI.ListViewTree extends CUI.ListView
 	# 	@_selectable
 
 	isSelectable: ->
-		@_selectable
+		!!@__selectableRows
 
 	# hasSelectableRows: ->
 	# 	@_selectable
