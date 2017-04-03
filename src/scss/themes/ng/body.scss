@@ -2462,7 +2462,8 @@ a[role="button"].cui-button-appearance-link {
 // Hint Popover
 
 .cui-layer-root-hint-popover .cui-layer-pointer {
-	height: 12px;
+	height: 10px;
+	width: 32px;
 
 	&.cui-layer-pointer--e,
 	&.cui-layer-pointer--w {
@@ -2482,6 +2483,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&:after {
+		top: 3px;
 		background: $popover-hint-background;
 		box-shadow:
 			3px 3px 14px hsla(0,0%,0%,0.1);
