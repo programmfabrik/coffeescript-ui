@@ -235,3 +235,16 @@ $popover-hint-background: hsl(205,20%,30%);
   height: auto;
   line-height: inherit;
 }
+
+%icon {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin icon($code){
+	@extend %icon;
+	content: $code;
+}

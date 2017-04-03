@@ -3023,7 +3023,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		.cui-empty-label {
-			color: hsl(205,33%,63%);
+			color: $on-row-highlight-secondary-color;
 		}
 
 		&.cui-selected {
