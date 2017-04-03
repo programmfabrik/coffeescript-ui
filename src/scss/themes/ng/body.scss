@@ -3156,6 +3156,46 @@ a[role="button"].cui-button-appearance-link {
 	opacity: 0.5;
 }
 
+// List View Edit Tree
+
+// Position tree-node- and drag-handle lower
+// because input fields make the rows higher
+// and make the filler higher 
+.cui-list-view-edit-tree {
+	// its sick.. but the only known way to make sure that it doesn't affect nested elements
+	> .cui-vertical-layout-center {
+		> .cui-list-view-grid {
+			> .cui-list-view-grid-inner-bottom {
+				> .cui-list-view-grid-quadrant {
+					> .cui-lv-tr-outer {
+						> .cui-lv-tr {
+							> .cui-lv-td {
+								> .cui-tree-node {
+									> .cui-tree-node-handle {
+										height: 24px;
+									}
+								}
+
+								> .cui-drag-handle-row {
+									margin-top: 7px;
+								}
+
+								&.cui-lv-row-move-handle-column {
+									padding-top: $table-data-padding;
+									padding-bottom: $table-data-padding;
+								}
+							}
+						}
+					}
+					> .cui-lv-tr-fill-outer .cui-lv-td {
+						background-size: 100% 64px;
+					}
+				}
+			}
+		}
+	}
+}
+
 // Tree Node + Handle
 .cui-tree-node {
 	display: flex;
