@@ -2391,6 +2391,13 @@ a[role="button"].cui-button-appearance-link {
 	  	}
 	  }
 
+	  &.cui-disabled {
+	  	.cui-button-visual {
+				color: $disabled-color;
+				background: none;
+	  	}
+	  }
+
 	  .cui-button-center {
 	    padding: 0;
 	  }
