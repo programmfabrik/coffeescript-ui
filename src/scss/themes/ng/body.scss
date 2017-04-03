@@ -2576,7 +2576,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-tabs-pane-header {
 	min-height: $toolbar-height;
 	background: $toolbar-background;
-	padding: 0 $padding;
 
 	&.cui-tabs-pane-header--mini {
 		background: none;
@@ -2587,8 +2586,8 @@ a[role="button"].cui-button-appearance-link {
 		min-width: 0;
 	}
 
-	> .cui-horizontal-layout-center {
 		overflow: hidden;
+	> .cui-horizontal-layout-center {
 		flex-grow: 0;
 		margin-right: 0;
 	}
@@ -2698,6 +2697,20 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+}
+
+.cui-toolbar .cui-tab-header-button {
+	&:first-child {
+		padding-left: $padding;
+	}
+
+	&:last-child {
+		padding-right: $padding;
+	}
+}
+
+.cui-toolbar .cui-tab-header-button-overflow {
+	padding-right: $padding;
 }
 
 .cui-toolbar {
