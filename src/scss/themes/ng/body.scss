@@ -1327,21 +1327,22 @@ a[role="button"].cui-button-appearance-link {
 	line-height: 18px;
 
 	&.cui-tmpl-label-rotate-90 {
-		align-items: flex-end;
 		white-space: nowrap;
 		margin: $padding/2 0;
 		flex-shrink: 0;
 		max-width: none;
+		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
 
 		&:before {
 			content: "";
 			float: left;
-			margin-top: 100%;
+			margin-top: calc(100% - #{$padding});
 		}
 
 		> .cui-label-transform {
 			transform: rotate(-90deg)  translateX(-3px) translateY(100%);
 			transform-origin: left bottom;
+			clear: left;
 		}
 
 		.cui-label-content {
@@ -2962,6 +2963,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-grid-inner-bottom {
 	flex: 1 1 auto;
 	display: flex;
+	min-height: 0; // FF scroll fix
 }
 
 .cui-list-view-grid-quadrant-2 {
