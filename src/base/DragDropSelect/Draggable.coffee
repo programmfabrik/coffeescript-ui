@@ -109,7 +109,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		Events.listen
 			type: ["mousedown", "touchstart"] # was: mouseisdown
 			node: @element
-			# capture: true
+			capture: true
 			instance: @
 			selector: @_selector
 			call: (ev) =>
