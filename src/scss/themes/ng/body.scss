@@ -1524,9 +1524,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&:not(.cui-label-markdown) {
-		// this does not work in IE, but will
-		// be ignored by IE, so we are good
-		word-break: break-word;
+		-webkit-hyphens: auto;
+		    -ms-hyphens: auto;
+		        hyphens: auto;
 
 		.cui-label-content {
 			white-space: pre-wrap;
@@ -4844,14 +4844,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label:not(:last-child) {
 		border-bottom: 1px solid hsl(0,0%,94%);
-	}
-}
-
-// Object Dumper
-
-.cui-object-dumper {
-	.cui-label-multiline:not(.cui-label-markdown) {
-		word-break: break-all;
 	}
 }
 
