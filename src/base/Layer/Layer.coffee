@@ -397,6 +397,7 @@ class CUI.Layer extends CUI.DOM
 
 		# reset previously set layer dimensions
 		CUI.DOM.setStyle @__layer.DOM,
+			position: ""
 			top: ""
 			left: ""
 			width: ""
@@ -873,36 +874,44 @@ class CUI.Layer extends CUI.DOM
 		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-placement", placement)
 		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-fill-space", @_fill_space)
 
+
+		set_css =
+			top: vp.layer_pos.top + body_scroll_top
+			left: vp.layer_pos.left + body_scroll_left
+			margin: 0
+			minWidth: minWidth
+
+		if placement == "c"
+			is_fixed = true
+		else
+			is_fixed = @__layer_root.DOM.previousElementSibling?.hasAttribute("cui-layer-fixed") or false
+
+		if is_fixed
+			@__layer_root.DOM.setAttribute("cui-layer-fixed", "")
+			set_css.position = "fixed"
+			set_css.top = vp.layer_pos.top
+			set_css.left = vp.layer_pos.left
+		else
+			@__layer_root.DOM.removeAttribute("cui-layer-fixed")
+
 		if CUI.__ng__ and not CUI.browser.ie
 
-			if placement == "c" and not @__backdrop_crop
-				# in "ng" we position this by pure CSS
-				return @
+			# if placement == "c" and not @__backdrop_crop
+			# 	# in "ng" we position this by pure CSS
+			# 	return @
 
-			# set layer
-			CUI.DOM.setStyle @__layer.DOM,
-				top: vp.layer_pos.top + body_scroll_top # pos_top
-				# bottom: pos_bottom
-				left: vp.layer_pos.left + body_scroll_left
-				# right: pos_right
+			set_css.maxWidth = Math.floor(vp.width + vp.overlap_width)
+			set_css.maxHeight = Math.floor(vp.height + vp.overlap_height)
 
-				# width: Math.ceil(vp.layer_pos.width)
-				# height: Math.ceil(vp.layer_pos.height)
-				margin: 0
-				minWidth: minWidth
-				maxWidth: Math.floor(vp.width + vp.overlap_width)
-				maxHeight: Math.floor(vp.height + vp.overlap_height)
 		else
-			# set layer
-			CUI.DOM.setStyle @__layer.DOM,
-				top: vp.layer_pos.top + body_scroll_top
-				left: vp.layer_pos.left + body_scroll_left
-				width: Math.ceil(vp.layer_pos.width)
-				height: Math.ceil(vp.layer_pos.height)
-				margin: 0
-				minWidth: minWidth
-				# maxWidth: Math.floor(vp.width + vp.overlap_width)
-				# maxHeight: Math.floor(vp.height + vp.overlap_height)
+
+			set_css.width = Math.ceil(vp.layer_pos.width)
+			set_css.height = Math.ceil(vp.layer_pos.height)
+
+		CUI.DOM.setStyle(@__layer.DOM, set_css)
+
+		# console.debug "pos:", dim_element, vp.layer_pos.top, "body scroll:", body_scroll_top
+
 
 		if @__pointer
 			# set pointer
