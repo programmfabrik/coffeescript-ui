@@ -185,7 +185,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 			footer = new Buttonbar(buttons: buttons)
 
 
-		@listView = new ListView
+		@listView = new CUI.ListView
+			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
 			onSelect: updateMinusButton
 			onDeselect: updateMinusButton

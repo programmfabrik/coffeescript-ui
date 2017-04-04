@@ -3158,12 +3158,12 @@ a[role="button"].cui-button-appearance-link {
 	opacity: 0.5;
 }
 
-// List View Edit Tree
+// List View with DataFields
 
 // Position tree-node- and drag-handle lower
 // because input fields make the rows higher
-// and make the filler higher 
-.cui-list-view-edit-tree {
+// and make the filler higher
+.cui-lv--has-datafields {
 	// its sick.. but the only known way to make sure that it doesn't affect nested elements
 	> .cui-vertical-layout-center {
 		> .cui-list-view-grid {
@@ -3475,10 +3475,10 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-value {
 		width: auto;
 		padding-top: 0;
-		
+
 		.cui-output {
 			font-weight: bold;
-			
+
 			&-empty {
 				font-weight: normal;
 			}
@@ -3750,7 +3750,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-output {	
+.cui-output {
 	&-empty {
 		color: $muted-color;
 	}
