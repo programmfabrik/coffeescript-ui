@@ -9,6 +9,9 @@
 #
 class CUI.Modal extends CUI.LayerPane
 
+	@defaults:
+		cancel_tooltip: text: "Close Dialog"
+
 	#Construct a new Modal.
 	#
 	constructor: (@opts={}) ->
@@ -19,7 +22,7 @@ class CUI.Modal extends CUI.LayerPane
 		@__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
 			icon:  "close"
-			tooltip: @_cancel_tooltip
+			tooltip: @_cancel_tooltip or CUI.Modal.defaults.cancel_tooltip
 			appearance: if CUI.__ng__ then "normal" else "flat"
 			onClick: (ev, btn) =>
 				@doCancel(ev, false, btn)

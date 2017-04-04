@@ -7,11 +7,14 @@
 
 class CUI.Pane extends CUI.VerticalLayout
 
+	@defaults:
+		button_tooltip: text: "Turn fullscreen on / off"
+
 	__init: ->
 		super()
 		@addClass("cui-pane")
 		@__fill_screen_is_on = false
-		
+
 		if @_padded
 			@addClass("cui-simple-pane--padded")
 
@@ -177,6 +180,9 @@ class CUI.Pane extends CUI.VerticalLayout
 				DOM.data(btn.DOM.closest(".cui-pane")[0], "element").toggleFillScreen()
 		}
 			opts[k] = v
+
+		if not opts.tooltip
+			opts.tooltip = CUI.Pane.defaults.button_tooltip
 
 		new CUI.defaults.class.Button(opts)
 
