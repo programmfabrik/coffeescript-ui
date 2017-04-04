@@ -33,10 +33,10 @@ class CUI.LayerPane extends CUI.Layer
 			@__pane = new SimplePane(pane)
 
 			if @__pane.hasHeader()
-				@__layer_root.DOM.classList.add("ez5-simple-pane--has-header")
+				@__layer_root.DOM.classList.add("ez5-pane--has-header")
 
 			if @__pane.hasFooter()
-				@__layer_root.DOM.classList.add("ez5-simple-pane--has-footer")
+				@__layer_root.DOM.classList.add("ez5-pane--has-footer")
 		else
 			@__pane = pane
 		@__pane.addClass("cui-layer-pane");

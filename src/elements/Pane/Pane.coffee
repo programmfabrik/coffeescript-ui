@@ -32,7 +32,6 @@ class CUI.Pane extends CUI.VerticalLayout
 	getFillScreenState: ->
 		@__fill_screen_is_on
 
-
 	endFillScreen: (transition=true) ->
 
 		if not @getFillScreenState()
