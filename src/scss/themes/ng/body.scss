@@ -4570,10 +4570,10 @@ a[role="button"].cui-button-appearance-link {
 // StickyHeader
 
 .cui-sticky-header {
-	padding: 4px $padding;
-	font-size: 11px;
+	padding: 5px $padding;
+	font-size: 13px;
 	font-weight: bold;
-	color: hsl(205,20%,20%);
+	color: $color;
 	// height: 22px; CONFLICT: unflexible
 	margin-bottom: $padding;
 	flex-basis: 100%;
@@ -4607,6 +4607,12 @@ a[role="button"].cui-button-appearance-link {
 		background: hsla(0,0%,100%,.94);
 		border-top: none;
 		box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
+	}
+}
+
+.cui-sticky-header-level-0 {
+	+ .cui-sticky-header-level-1 {
+		margin-top: 0;
 	}
 }
 
