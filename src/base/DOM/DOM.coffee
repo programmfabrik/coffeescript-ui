@@ -845,6 +845,9 @@ class CUI.DOM extends CUI.Element
 		win.print()
 
 	@isNode: (node) ->
+		if not node
+			return false
+
 		if node == document.documentElement or
 			node == window or
 			node == document or

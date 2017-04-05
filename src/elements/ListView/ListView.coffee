@@ -773,13 +773,15 @@ class CUI.ListView extends CUI.SimplePane
 			manual_col_width = @__manualColWidths[col_i]
 			if manual_col_width > 0
 				add_css(col_i, manual_col_width)
-				@__colWidths[col_i] = manual_col_width
 				fc.style.setProperty("width", manual_col_width+"px")
 				fc.style.setProperty("flex", "0 0 auto")
 			else
-				@__colWidths[col_i] = fc.offsetWidth
 				fc.style.removeProperty("width")
 				fc.style.removeProperty("flex")
+
+		for fc, display_col_i in @__fillCells
+			col_i = @getColIdx(display_col_i)
+			@__colWidths[col_i] = fc.offsetWidth
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
