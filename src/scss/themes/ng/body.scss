@@ -1861,6 +1861,13 @@ a[role="button"].cui-button-appearance-link {
   display: none;
 }
 
+.cui-tmpl-layer-root[cui-layer-fixed] {
+	.cui-layer,
+	.cui-layer-pointer {
+		position: fixed;
+	}
+}
+
 // Layer
 .cui-tmpl-layer-root {
 	position: absolute;
