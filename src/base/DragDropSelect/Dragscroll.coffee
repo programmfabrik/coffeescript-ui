@@ -24,6 +24,12 @@ class CUI.Dragscroll extends CUI.Draggable
 		else
 			@__scroll_element = @_element
 
+	supportTouch: ->
+		if @_support_touch != undefined
+			super()
+		else
+			true
+
 	start_drag: ->
 		@__scroll =
 			top: @__scroll_element.scrollTop

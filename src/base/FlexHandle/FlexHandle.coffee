@@ -145,6 +145,7 @@ class FlexHandle extends CUI.Element
 		new Draggable
 			element: @_element
 			axis: axis
+			support_touch: true
 			create: =>
 				if @isClosed()
 					return false

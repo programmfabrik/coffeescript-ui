@@ -32,6 +32,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 			get_cursor:
 				check: Function
 
+			support_touch:
+				check: Boolean
+
 			dragend:
 				check: Function
 
@@ -77,6 +80,21 @@ class CUI.Draggable extends CUI.DragDropSelect
 		super()
 		@__autoRepeatTimeout = null
 
+		if @supportTouch()
+			@__event_types =
+				start: ["mousedown", "touchstart"]
+				end: ["mouseup", "touchend"]
+				move: ["mousemove", "touchmove"]
+		else
+			@__event_types =
+				start: ["mousedown"]
+				end: ["mouseup"]
+				move: ["mousemove"]
+		@
+
+	supportTouch: ->
+		!!@_support_touch
+
 	__killTimeout: ->
 		if @__autoRepeatTimeout
 			CUI.clearTimeout(@__autoRepeatTimeout)
@@ -107,7 +125,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		DOM.addClass(@element, "no-user-select")
 
 		Events.listen
-			type: ["mousedown", "touchstart"] # was: mouseisdown
+			type: @__event_types.start
 			node: @element
 			capture: true
 			instance: @
@@ -189,7 +207,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# CUI.debug "drag drop init", init
 		for k, v of init
-			globalDrag[k] = v
+			window.globalDrag[k] = v
 
 		# CUI.debug "starting drag...", globalDrag
 
@@ -227,7 +245,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		Events.listen
 			node: document
-			type: ["mousemove", "touchmove"]
+			type: @__event_types.move
 			instance: @__ref
 			call: (ev) =>
 				if not globalDrag
@@ -276,6 +294,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 						globalDrag.dragDiff = diff
 
 						if not globalDrag.dragStarted
+							globalDrag.startEvent.preventDefault()
+
 							@__startDrag(ev, $target, diff)
 
 							if @_get_cursor
@@ -359,7 +379,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		Events.listen
 			node: document
-			type: ["mouseup", "touchend"]
+			type: @__event_types.end
 			capture: true
 			instance: @__ref
 			call: (ev) =>
