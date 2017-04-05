@@ -4624,77 +4624,61 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ProgressMeter
-.cui-tmpl-progress-meter {
+.cui-progress-meter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	flex-grow: 1;
+	padding: 8px;
+	
 	.cui-progress-meter-bar {
+		width: 100%;
+		max-width: 100px;
+		min-width: 30px;
 		height: 24px;
-		position: relative;
+		line-height: 24px;
 		border-radius: $button-radius;
 		overflow: hidden;
+		position: relative;
 		// to make sure that the border-radius will cut off all child backgrounds
 		// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
 		opacity: 0.9999;
+		background: lighten(desaturate($highlight-color, 93%), 26%);
+		color: white;
 
-		.cui-progress-meter-fill-background,
-		.cui-progress-meter-fill,
-		.cui-progress-meter-text {
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-		}
-		.cui-progress-meter-fill-background {
-			border-radius: $button-radius;
-			background: lighten(desaturate($highlight-color, 90%), 43%);
-		}
 		.cui-progress-meter-fill {
 			display: none;
 			background: $highlight-color;
-		}
-		.cui-progress-meter-text {
-			display: none;
-			color: white;
-			justify-content: center;
-			line-height: 24px;
-		}
-		.cui-progress-meter-icon {
-			display: flex;
 			position: absolute;
 			left: 0;
 			top: 0;
-			bottom: 0;
-			right: 0;
-			color: white;
-			align-items: center;
+			width: 100%;
+			height: 100%;
+		}
+		.cui-progress-meter-text {
+			display: none;
 			justify-content: center;
+			position: relative;
+		}
+		.cui-progress-meter-icon {
+			text-align: center;
+			position: relative;
 		}
 
 	}
 	&[state="waiting"] {
-		.cui-progress-meter-fill-background {
-			// reddish
-			// background-color: #ff6054;
-		}
 	}
 
 	&[state="percent"] {
 		.cui-progress-meter-icon {
 			display: none;
 		}
-		.cui-progress-meter-text {
-			display: flex;
-		}
+		.cui-progress-meter-text,
 		.cui-progress-meter-fill {
 			display: flex;
 		}
-	}
-}
-
-.cui-tmpl-progress-meter {
-	align-items: center;
-
-	.cui-progress-meter {
-		width: 100%;
 	}
 }
 
