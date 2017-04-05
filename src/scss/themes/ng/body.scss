@@ -1864,7 +1864,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-tmpl-layer-root[cui-layer-fixed] {
 	.cui-layer,
 	.cui-layer-pointer {
-		position: fixed;
+		position: fixed !important;
 	}
 }
 
