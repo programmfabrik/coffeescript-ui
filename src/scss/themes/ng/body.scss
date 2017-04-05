@@ -4635,10 +4635,10 @@ a[role="button"].cui-button-appearance-link {
 	
 	.cui-progress-meter-bar {
 		width: 100%;
-		max-width: 100px;
+		max-width: 200px;
 		min-width: 30px;
-		height: 24px;
-		line-height: 24px;
+		height: $button-height;
+		line-height: $button-height;
 		border-radius: $button-radius;
 		overflow: hidden;
 		position: relative;
