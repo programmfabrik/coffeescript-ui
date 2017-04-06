@@ -38,9 +38,9 @@ a {
 
 html {
 	overflow: hidden;
-  width: 100%;
-  height: 100%;
-  color: $color;
+	width: 100%;
+	height: 100%;
+	color: $color;
 }
 
 label {
@@ -1862,10 +1862,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-tmpl-layer-root[cui-layer-fixed] {
-	.cui-layer,
-	.cui-layer-pointer {
-		position: fixed !important;
-	}
+	position: fixed !important;
 }
 
 // Layer

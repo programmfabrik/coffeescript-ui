@@ -97,20 +97,25 @@ class CUI.CSSLoader extends CUI.Element
 
 		dfr = new CUI.Deferred()
 
+		if url.startsWith("http://") or
+			url.startsWith("https://") or
+			url.startsWith("file://")
+				css_href = url
+		else if not url.startsWith("/")
+			css_href = CUI.getPathToScript() + url
+		else
+			css_href = document.location.origin + url
+
+		# console.error "parsing location", url, CUI.getPathToScript(), css_href
+
 		cssNode = CUI.DOM.element "LINK",
 			rel: "stylesheet"
 			charset: "utf-8"
 			name: @__cssName
 			loading: "1"
 			theme: name
-			href: url
+			href: css_href
 
-		loc = CUI.parseLocation(url)
-
-		if not loc.origin
-			css_href = document.location.origin + url
-		else
-			css_href = url
 
 		CUI.DOM.data(cssNode, "css-loader-deferred", dfr)
 
