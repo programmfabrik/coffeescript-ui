@@ -312,7 +312,7 @@ class CUI.Template extends CUI.Element
 		if filename.match("^(https://|http://|/)")
 			p = filename
 		else
-			p = CUI.pathToScript+"/"+filename
+			p = CUI.getPathToScript()+filename
 
 		div = CUI.DOM.element("DIV", style: "display:none;")
 
@@ -338,7 +338,7 @@ class CUI.Template extends CUI.Element
 			return
 
 		.fail (xhr) ->
-			CUI.error("Template.loadFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
+			console.error("Template.loadFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
 
 	@load: (start_element = document.documentElement) ->
 		count = 0

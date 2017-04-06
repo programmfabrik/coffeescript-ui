@@ -70,11 +70,11 @@ class CUI
 
 		document.body.scrollTop=0
 
-		CUI.Template.loadFile("icons.svg")
+		CUI.Template.loadFile("css/icons.svg")
 		.done =>
 			Template.load()
 			if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-				CUI.Template.loadTemplateFile("easydbui.html")
+				CUI.Template.loadTemplateFile("cui.html")
 				.done =>
 					@ready()
 			else
@@ -84,11 +84,11 @@ class CUI
 	@getPathToScript: ->
 		if not @pathToScript
 			for s, idx in DOM.matchSelector(document.documentElement, "script")
-				if m = s.src.match("(.*)/easydbui.js")
+				if m = s.src.match("(.*/)cui\.js$")
 					@pathToScript = m[1]
 					@script = s
 					break
-			assert(@pathToScript, "easydbui", "Could not determine script path.")
+			assert(@pathToScript, "CUI", "Could not determine script path.")
 
 		@pathToScript
 

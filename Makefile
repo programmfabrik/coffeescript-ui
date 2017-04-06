@@ -1,8 +1,8 @@
-target = build
+target = public
 css_target = $(target)/css
 
 call_scss = sass --scss --no-cache --sourcemap=inline
-easydbui_js = $(target)/easydbui.js
+cui_js = $(target)/cui.js
 
 coffee_files = src/base/Common.coffee \
 	src/base/CUI.coffee \
@@ -142,8 +142,6 @@ test_files = src/tests/Test.coffee.js \
 	src/tests/Test_MoveInArray.coffee.js \
 	src/tests/Test_Promise.coffee.js
 
-# thirdparty/*/jquery-2.1.0.js \
-
 thirdparty_files = thirdparty/moment/*js \
 	thirdparty/moment/*json \
 	thirdparty/marked/lib/marked.js
@@ -175,10 +173,11 @@ html_files = \
 	src/elements/StickyHeader/StickyHeader.html \
 	src/elements/Tabs/Tab.html
 
-all: code demo css
+all: code css font_awesome $(thirdparty_files)
 	#
 	# $@
-	mkdir -p $(target)
+	mkdir -p $(target)/js
+	cp $(thirdparty_files) $(target)/js
 
 font_awesome:
 	#
@@ -191,39 +190,23 @@ font_awesome:
 
 	rsync -r thirdparty/font-awesome-4.5.0/css $(target)/font-awesome/
 	rsync -r thirdparty/font-awesome-4.5.0/fonts $(target)/font-awesome/
-	cp $(thirdparty_files) $(target)
 
 
-demo: font_awesome
-	$(MAKE) --directory demo all
+code: $(cui_js) html
 
-code: $(easydbui_js) $(thirdparty_files) html font_awesome
-	cp src/scss/icons/icons.svg $(target)/icons.svg
-	$(MAKE) --directory demo code
-
-css_ng:
+css:
 	#
 	# $@
 	mkdir -p $(css_target)
 	$(call_scss) src/scss/themes/ng/main.scss $(css_target)/cui_ng.css
 	$(call_scss) src/scss/themes/ng_debug/main.scss $(css_target)/cui_ng_debug.css
-	$(MAKE) --directory demo css_ng
-
-css_other:
-	#
-	# $@
-	mkdir -p $(css_target)
-	$(call_scss) src/scss/themes/light/main.scss $(css_target)/cui_light.css
-	$(call_scss) src/scss/themes/dark/main.scss $(css_target)/cui_dark.css
-	$(MAKE) --directory demo css_other
-
-css: css_ng css_other
+	cp src/scss/icons/icons.svg $(target)/css/icons.svg
 
 html: $(html_files)
 	#
 	# $@
 	mkdir -p $(target)
-	@cat $(html_files) > $(target)/easydbui.html
+	@cat $(html_files) > $(target)/cui.html
 
 docs: $(files)
 	#
@@ -233,25 +216,23 @@ docs: $(files)
 	rm -rf $(target)/docs
 	codo $(files:.coffee.js=.coffee)
 
-$(easydbui_js): $(files) $(test_files)
+$(cui_js): $(files) $(test_files)
 	#
 	# $@
-	mkdir -p $(target)
+	mkdir -p $(target)/js
 # cat $(files) | perl -00 -pne 's/(?s)(assert\(.*?\);)/\/* $$1 *\//m' > $@
 	@cat $(files) $(test_files) > $@
 
 clean:
-	$(MAKE) --directory demo clean
 	rm -rf $(target)
 	find src -name '*.coffee.js' | xargs rm -f
 	rm -f $(files_txt)
 
 wipe: clean
-	$(MAKE) --directory demo wipe
 	find . -name '*~' -or -name '#*#' | xargs rm -f
 	find . -name '.sass-cache' | xargs rm -rf
 
 %.coffee.js: %.coffee
 	coffee -b -p --compile $^ > $@ || ( rm -f $@ ; false )
 
-.PHONY: all demo css css_ng css_other clean clean-build wipe font_awesome
+.PHONY: all css clean wipe font_awesome
