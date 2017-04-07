@@ -894,9 +894,9 @@ class CUI.Layer extends CUI.DOM
 		else
 			@__layer_root.DOM.removeAttribute("cui-layer-fixed")
 
-		if placement == "c"
+		if placement == "c" and not CUI.browser.ie
 			# placement can be done by pure CSS
-			return @
+			; # return @
 
 		if CUI.browser.ie
 			set_css.width = Math.ceil(vp.layer_pos.width)

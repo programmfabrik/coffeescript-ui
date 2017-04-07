@@ -1887,7 +1887,7 @@ a[role="button"].cui-button-appearance-link {
 	&[cui-placement="c"] {
 		.cui-layer {
 			position: static;
-			margin: 0;
+			margin: $padding;
 		}
 
 		.cui-layer-pointer {
