@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Input extends CUI.DataFieldInput
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -97,7 +104,8 @@ class CUI.Input extends CUI.DataFieldInput
 				check: (v) ->
 					CUI.isFunction(v) and not @_overwrite
 			placeholder:
-				check: String
+				check: (v) ->
+					CUI.isFunction(v) or isString(v)
 			readonly:
 				check: Boolean
 			readonly_select_all:
@@ -151,6 +159,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__autocomplete = "on"
 		else if @_autocomplete == false
 			@__autocomplete = "off"
+
 		@
 
 	__checkInputRegexp: (value) ->
@@ -168,6 +177,15 @@ class CUI.Input extends CUI.DataFieldInput
 	setPlaceholder: (placeholder) ->
 		DOM.setAttribute(@__input[0], "placeholder", placeholder)
 
+	getPlaceholder: ->
+		if not @_placeholder
+			return undefined
+
+		if CUI.isFunction(@_placeholder)
+			@_placeholder(@, @getData())
+		else
+			@_placeholder
+
 	# MISSING FEATURES:
 	# - tab block advance
 	# - up/down cursor number decrement/increment
@@ -176,7 +194,7 @@ class CUI.Input extends CUI.DataFieldInput
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
 			@__input = $element "textarea", "cui-textarea",
-				placeholder: @_placeholder
+				placeholder: @getPlaceholder()
 				tabindex: "0"
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
@@ -190,7 +208,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__input = $element "input", "cui-input",
 				type: input_type
 				size: size
-				placeholder: @_placeholder
+				placeholder: @getPlaceholder()
 				tabindex: "0"
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
@@ -271,7 +289,7 @@ class CUI.Input extends CUI.DataFieldInput
 				if @hasShadowFocus()
 					return
 
-				@__enterInput()
+				@enterInput()
 				@addClass("cui-has-focus")
 				@__initShadowInput()
 				@_onFocus?(@, ev)
@@ -324,7 +342,7 @@ class CUI.Input extends CUI.DataFieldInput
 					return
 
 				@removeClass("cui-has-focus")
-				@__leaveInput()
+				@leaveInput()
 				@__removeShadowInput()
 				@_onBlur?(@, ev)
 				return
@@ -449,7 +467,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if @__contentSize
 			return
 
-		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1")
+		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
 
 		@__contentSize.appendTo(document.body)
 		@__contentSize0 = @__contentSize[0]
@@ -541,6 +559,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 			if DOM.width(@__input) != w
 				changed = true
+
 			DOM.width(@__input, w)
 
 		if changed
@@ -638,6 +657,11 @@ class CUI.Input extends CUI.DataFieldInput
 		@__input0.selectionStart = selection.start
 		@__input0.selectionEnd = selection.end
 
+	selectAll: ->
+		@__input0.selectionStart = 0
+		@__input0.selectionEnd = @__input0.value.length
+		@
+
 	updateSelection: (txt="") ->
 		sel = @getSelection()
 		@setValue(sel.before + txt + sel.after)
@@ -655,7 +679,7 @@ class CUI.Input extends CUI.DataFieldInput
 		super(v, flags)
 
 	incNumberBounds: (ev) ->
-		if ev.keyCode() not in [38, 40, 9, 33, 34]
+		if ev.keyCode() not in [38, 40, 33, 34] # not in TAB
 			return
 
 		s = @__input0.selectionStart
@@ -681,7 +705,7 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.debug "s", s, "e", e, "v", v
 		block_move = 0
 		if ev.keyCode() in [9, 33, 34]
-			# TAB, PAGE UP/DOWN
+			# TAB, PAGE UP/DOWN  # TAB removed (above)
 			if ev.shiftKey() or
 				ev.keyCode() == 33
 					block_move = -1
@@ -771,6 +795,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__shadow = $element("input", "cui-input-shadow", type: "text")
 
 		@__shadow.prop("tabindex", "-1")
+		@__shadow.prop("autocomplete", "off")
 		@__shadow.appendTo(document.body)
 		@__shadow0 = @__shadow[0]
 
@@ -830,7 +855,7 @@ class CUI.Input extends CUI.DataFieldInput
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
 
-		@append(@getChangedMarker(), @getTemplateKeyForRender())
+		# @append(@getChangedMarker(), @getTemplateKeyForRender())
 
 		for k in ["empty", "invalid", "valid"]
 			@append(@__inputHints[k], @getTemplateKeyForRender())
@@ -877,13 +902,17 @@ class CUI.Input extends CUI.DataFieldInput
 
 		return "empty"
 
-	__leaveInput: ->
-		@__input0.value = @getValueForDisplay()
-		@checkInput()
+	leaveInput: ->
+		if @getInputState() != "invalid"
+			@__input0.value = @getValueForDisplay()
+			@checkInput()
+		@
 
-	__enterInput: ->
-		@__input0.value = @getValueForInput()
-		@checkInput()
+	enterInput: ->
+		if @getInputState() != "invalid"
+			@__input0.value = @getValueForInput()
+			@checkInput()
+		@
 
 	hasUserInput: ->
 		@__input0.value.length > 0
@@ -955,6 +984,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 	focus: ->
 		@__input0?.focus()
+		@
 
 	getCursorBlocks: ->
 		blocks = @__getCursorBlocks?(@__input0.value)

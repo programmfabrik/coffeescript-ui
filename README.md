@@ -9,3 +9,7 @@ Coffeescript User Interface System (CUI)
     make
 
 In **build** the needed files can be found after the "make".
+
+# online documentation
+
+[http://picshare.5.easydb.de/cui/demo/#Documentation](http://picshare.5.easydb.de/cui/demo/#Documentation)

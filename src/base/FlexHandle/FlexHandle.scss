@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 .cui-flex-handle {
     position: relative;
@@ -144,9 +151,8 @@
     overflow: hidden;
 }
 
-//show small nontransparent flex-handles inside panes
-.cui-pane .cui-flex-handle {
 
+@mixin small_flex_handle() {
     opacity: 1;
 
     &:after {
@@ -177,4 +183,9 @@
             margin: 2px 0;
         }
     }
+}
+//show small nontransparent flex-handles inside panes
+.cui-pane .cui-flex-handle {
+
+    @include small_flex_handle();
 }

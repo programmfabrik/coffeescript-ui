@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.DocumentBrowser extends CUI.Element
 
 	initOpts: ->
@@ -7,6 +14,19 @@ class CUI.DocumentBrowser extends CUI.Element
 				check: Function
 				default: (nodePath, search, nodeIdx) =>
 					@loadLocation(nodePath, search, nodeIdx)
+			marked_opts:
+				default: {}
+				mandatory: true
+				check: (v) ->
+					if not CUI.isPlainObject(v)
+						return false
+					for _k, _v of v
+						if _k in ["image", "link"]
+							return false
+					true
+			getMarkdown:
+				default: (v) -> v
+				check: Function
 			renderHref:
 				check: Function
 				default: (href, nodePath) =>
@@ -17,23 +37,43 @@ class CUI.DocumentBrowser extends CUI.Element
 
 	readOpts: ->
 		super(@opts)
-		@__markedRenderer = new marked.Renderer()
-		@__markedRenderer.image = (href, title, text) =>
+
+		@__marked_opts = copyObject(@_marked_opts)
+
+		if not @__marked_opts.renderer
+			@__marked_opts.renderer = new marked.Renderer()
+		renderer = @__marked_opts.renderer
+
+		for k, v of {
+			sanitize: false
+		}
+			if not @__marked_opts.hasOwnProperty(k)
+				@__marked_opts[k] = v
+
+		renderer.image = (href, title, text) =>
 			@__node.rendererImage(href, title, text)
 
-		@__markedRenderer.link = (href, title, text) =>
+		renderer.link = (href, title, text) =>
 			@__node.rendererLink(href, title, text)
 
-		@__marked_opts =
-			sanitize: false
-			renderer: @__markedRenderer
 		@__words = {}
 
 	renderHref: (href, nodePath) ->
 		@_renderHref(href, nodePath)
 
 	marked: (@__node, markdown) ->
-		marked(markdown, @__marked_opts)
+		dfr = new CUI.Deferred()
+		mark = (markdown) =>
+			dfr.resolve(marked(markdown, @__marked_opts))
+		ret = @_getMarkdown(markdown)
+		if isPromise(ret)
+			ret
+			.done (markdown) =>
+				mark(markdown)
+			.fail(dfr.reject)
+		else
+			mark(ret)
+		dfr.promise()
 
 	loadLocation: (nodePath, search, _nodeIdx) ->
 		# console.error "loading:", _nodePath

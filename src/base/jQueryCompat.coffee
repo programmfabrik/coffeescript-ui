@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # CUI jQueryCompat Layer
 #
 
@@ -515,7 +522,7 @@ $element = (tagName, cls, attrs={}, no_tables=false) ->
 		if isEmpty(cls)
 			attrs.class = "cui-"+tagName
 		else
-			attrs.class = "cui-"+tagName+" "+attrs.class
+			attrs.class = "cui-"+tagName+" "+cls
 
 		tagName = "div"
 

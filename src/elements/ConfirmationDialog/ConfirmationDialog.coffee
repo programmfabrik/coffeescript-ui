@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.ConfirmationDialog extends CUI.Modal
 	constructor: (@opts) ->
 		super(@opts)
@@ -8,10 +15,12 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		super()
 		@addOpts
 			title:
-				default: ""
 				check: String
 			text:
 				check: String
+			text_icon:
+				check: (v) ->
+					v instanceof Icon or isString(v)
 			markdown:
 				mandatory: true
 				default: false
@@ -32,6 +41,9 @@ class CUI.ConfirmationDialog extends CUI.Modal
 
 		@removeOpt("pane")
 
+	setPane: ->
+		super(padded: true, force_header: true, force_footer: true)
+
 	readOpts: ->
 		super()
 		# this needs to be set here, so that Modal / LayerPane are happy
@@ -43,10 +55,13 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			console.warn("#{@__cls}.readOpts", "Exactly on opts.content, opts.text, or opts.html needs to be set", opts: @opts)
 			@_text = ""
 
+		if not @_title
+			@addClass("cui-confirmation-dialog--no-title")
+
 		if not isEmpty(@_text)
-			c = new MultilineLabel(markdown: @_markdown, text: @_text)
+			@__label = c = new MultilineLabel(markdown: @_markdown, text: @_text, icon: @_text_icon)
 		else if not isEmpty(@_html)
-			c = new MultilineLabel(content: @_html)
+			@__label = c = new MultilineLabel(content: @_html)
 		else
 			c = @_content
 
@@ -61,12 +76,17 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			footer_right: @_buttons
 			footer_left: @_footer_left
 		}
-			pane.append(content, key)
+			if content
+				pane.append(content, key)
 		return
 
+	updateText: (txt) ->
+		@__label?.setText(txt)
+		@
+
 	setText: (text, markdown = @_markdown) ->
-		c = new MultilineLabel(markdown: markdown, text: text)
-		@getPane().replace(c, "content")
+		@__label = new MultilineLabel(markdown: markdown, text: text, icon: @_text_icon)
+		@getPane().replace(@__label, "content")
 
 	getButtons: ->
 		[pane, key] = @getPane().getPaneAndKey("footer_right")

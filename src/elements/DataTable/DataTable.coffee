@@ -1,7 +1,18 @@
-class DataTable extends DataFieldInput
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
+class CUI.DataTable extends CUI.DataFieldInput
 	constructor: (@opts) ->
 		super(@opts)
 		@addClass("cui-padding-reset")
+
+	@defaults:
+		plus_button_tooltip: null
+		minus_button_tooltip: null
 
 	initOpts: ->
 		super()
@@ -36,6 +47,12 @@ class DataTable extends DataFieldInput
 			footer_right:
 				check: (v) ->
 					isContent(v)
+			# own buttons
+			buttons:
+				mandatory: true
+				default: []
+				check: (v) ->
+					CUI.isArray(v)
 
 	getFieldList: ->
 		@__fieldList
@@ -71,15 +88,41 @@ class DataTable extends DataFieldInput
 	getDefaultValue: ->
 		[]
 
+	addRow: (data={}) ->
+		@rows.push(data)
+		# CUI.debug "creating new data node"
+		new_node = new DataTableNode
+			dataTable: @
+			data: data
+			dataRowIdx: @rows.length-1
+			rows: @rows
+
+		@_onNodeAdd?(node)
+		@listView.appendRow(new_node)
+		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
+		@storeValue(copyObject(@rows, true))
+		new_node
+
 	render: ->
 		super()
 		cols = []
 		colClasses = []
+		maxis = []
 
 		@headerRow = new ListViewHeaderRow()
 
-		for f in @__fieldList
-			if f._form?.column
+		for f, idx in @__fieldList
+			if f.getOpt("form")?.column == "maximize" or
+				f instanceof DataTable
+					maxis.push(idx)
+
+		if maxis.length == 0
+			maxis.push(0)
+
+		for f, idx in @__fieldList
+			if idxInArray(idx, maxis) > -1
+				cols.push("maximize")
+			else if f.getOpt("form")?.column
 				cols.push(f._form.column)
 			else if f.isResizable()
 				cols.push("auto")
@@ -107,45 +150,43 @@ class DataTable extends DataFieldInput
 					text: label
 					multiline: true
 
-		buttons = []
+		buttons = @_buttons.slice(0)
 		if @_new_rows != "none"
 			if @_new_rows != "remove_only"
 				buttons.push
 					icon: "plus"
+					tooltip: text: CUI.DataTable.defaults.plus_button_tooltip
 					group: "plus-minus"
 					onClick: =>
-						@rows.push(d={})
-						# CUI.debug "creating new data node"
-						new_node = new DataTableNode
-							dataTable: @
-							data: d
-							rows: @rows
+						@addRow()
 
-						@_onNodeAdd?(node)
-						@listView.appendRow(new_node)
-						# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
-						@storeValue(copyObject(@rows, true))
 
-			buttons.push @minusButton = new CUI.defaults.class.Button
+			@minusButton = new CUI.defaults.class.Button
 				icon: "minus"
 				group: "plus-minus"
+				tooltip: text: CUI.DataTable.defaults.minus_button_tooltip
 				disabled: true
 				onClick: =>
 					for row in @listView.getSelectedRows()
 						row.remove()
 					@storeValue(copyObject(@rows, true))
+					updateMinusButton()
 					return
+
+			buttons.push(@minusButton)
+
+			updateMinusButton = =>
+				if @listView.getSelectedRows().length == 0
+					@minusButton.disable()
+				else
+					@minusButton.enable()
 
 		if buttons.length
 			footer = new Buttonbar(buttons: buttons)
 
-		updateMinusButton = =>
-			if @listView.getSelectedRows().length == 0
-				@minusButton.disable()
-			else
-				@minusButton.enable()
 
-		@listView = new ListView
+		@listView = new CUI.ListView
+			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
 			onSelect: updateMinusButton
 			onDeselect: updateMinusButton
@@ -160,11 +201,11 @@ class DataTable extends DataFieldInput
 			fixedRows: if @_no_header then 0 else 1
 			footer_left: footer
 			footer_right: @_footer_right
-			fixedCols: 1
+			fixedCols: if @_rowMove then 1 else 0
 			colResize: if @_no_header then false else true
 			colClasses: colClasses
 			rowMove: @_rowMove
-			rowMovePlaceholder: not @_rowMove
+			# rowMovePlaceholder: not @_rowMove
 			maximize: @_maximize
 			maximize_horizontal: @_maximize_horizontal
 			maximize_vertical: @_maximize_vertical
@@ -204,6 +245,7 @@ class DataTable extends DataFieldInput
 				node = new DataTableNode
 					dataTable: @
 					data: row
+					dataRowIdx: idx
 					rows: @rows
 					check_changed_data: @getInitValue()?[idx]
 				@_onNodeAdd?(node)
@@ -211,3 +253,6 @@ class DataTable extends DataFieldInput
 			@listView.appendDeferredRows()
 
 		@
+
+
+DataTable = CUI.DataTable

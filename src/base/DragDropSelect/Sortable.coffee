@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 globalDrag = null
 
 class CUI.Sortable extends CUI.Draggable
@@ -39,10 +46,10 @@ class CUI.Sortable extends CUI.Draggable
 			return
 
 		if source_idx < dest_idx
-			globalDrag.noClickHandlerKill = true
+			globalDrag.noClickKill = true
 			CUI.DOM.insertAfter($dest, $source)
 		else if source_idx > dest_idx
-			globalDrag.noClickHandlerKill = true
+			globalDrag.noClickKill = true
 			CUI.DOM.insertBefore($dest, $source)
 
 		CUI.DOM.syncAnimatedClone(@element)
@@ -57,8 +64,8 @@ class CUI.Sortable extends CUI.Draggable
 
 		# CUI.debug "INIT HELPER", globalDrag
 
-	getSourceCloneForHelper: ->
-		@__findClosestSon(globalDrag.$source).cloneNode(true)
+	getCloneSourceForHelper: ->
+		@__findClosestSon(globalDrag.$source)
 
 	__findClosestSon: ($target) ->
 		# find the closest child of the target
@@ -86,21 +93,31 @@ class CUI.Sortable extends CUI.Draggable
 		dest_idx = @get_child_number(target_child)
 		@move_element(source_idx, dest_idx)
 
-	end_drag: (ev) ->
-		# move dragged object into position
-		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
+	stop_drag: (ev) ->
+		super(ev)
+		@__end_drag(ev, true)
 
+	end_drag: (ev) ->
+		super(ev)
+		@__end_drag(ev, false)
+
+	cleanup_drag: (ev) ->
+		super(ev)
+		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
 		CUI.DOM.removeAnimatedClone(@element)
 
+	__end_drag: (ev, stopped) ->
+		# move dragged object into position
 		curr_idx = @get_child_number(globalDrag.sort_source)
-		if ev.getType() == "mouseup"
-			globalDrag.helperNode.remove()
-			globalDrag.helperNode = null
-			if @_sorted
-				if globalDrag.start_idx != curr_idx
-					@_sorted(ev, globalDrag.start_idx, curr_idx)
-		else
+
+		if globalDrag.start_idx == curr_idx
+			return
+
+		if stopped
 			@move_element(curr_idx, globalDrag.start_idx)
-		super(ev)
+		else
+			@_sorted(ev, globalDrag.start_idx, curr_idx)
+
+		return
 
 Sortable = CUI.Sortable

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 CUI.when = =>
 	promises = []
 	add_promise = (promise, idx) =>
@@ -48,8 +55,9 @@ CUI.when = =>
 				return
 
 			promise.progress =>
-				# pass this through
-				dfr.notify.apply(dfr, arguments)
+				if dfr.state() == "pending"
+					# pass this through
+					dfr.notify.apply(dfr, arguments)
 				return
 
 	dfr.promise()

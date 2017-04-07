@@ -1,6 +1,13 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class LayerDemo extends Demo
 	display: ->
-		placements = CUI.Layer.knownPlacements
+		placements = CUI.Layer::knownPlacements
 		@__data = {}
 
 		if window.localStorage.CUILayerDemo
@@ -19,7 +26,7 @@ class LayerDemo extends Demo
 
 		placements_opts = []
 		placement_opts = []
-		for pm in CUI.Layer.knownPlacements
+		for pm in CUI.Layer::knownPlacements
 			placement_opts.push
 				text: pm
 				value: pm

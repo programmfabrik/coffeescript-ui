@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Listener extends CUI.Element
 
 	initOpts: ->
@@ -196,6 +203,12 @@ class CUI.Listener extends CUI.Element
 			# CUI.debug "destroying one time event listener...", event, @
 			@destroy()
 			# this calls "destroy" on us
+
+		inst = @getInstance()
+		if inst and inst instanceof CUI.Element and inst.isDestroyed()
+			console.error "inst destroyed already.."
+			@destroy()
+			return
 
 		# try
 		ret = @_call.call(@, event, event.getInfo())

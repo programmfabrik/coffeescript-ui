@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -54,7 +61,7 @@ $button_line_heights: (
 
 $button_icon_font_sizes: (
         mini: 12px,
-        normal: 16px,
+        normal: 14px, //was 16px all the time
         big: 17px,
         bigger: 24px //19px make root menu button looking uneven scaled 21px looks good but is not centered correctly
 );
@@ -102,6 +109,7 @@ $checkmark_icon_margin_top: (
 //REMARKED we use cui-block-level-X now
 //$block_type: "title", "subtitle", "normal";
 $block_font_size: map_get($button_font_sizes,bigger),map_get($button_font_sizes,big), map_get($button_font_sizes,normal);
+$block_line_heights: map_get($button_line_heights,bigger),map_get($button_line_heights,big), map_get($button_line_heights,normal);
 $block_font_weight: bold, bold, bold;
 //TODO try line height instead of margins.
 $block_top_margin: 20px, 10px, 5px;

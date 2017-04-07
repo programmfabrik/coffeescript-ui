@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 //can be used to format other text then only labels
@@ -16,6 +23,7 @@
 					//TODO could use the label extends for appearance and size here !?, this way we would cover icons without much hazzle
 					font-weight: nth($block_font_weight, $i);
 					font-size: nth($block_font_size, $i);
+				    line-height: nth($block_line_heights,$i);
 				}
 			}
 		}

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class Panel extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -23,7 +30,7 @@ class Panel extends CUI.DOM
 			text: @_text
 			class: "cui-panel-header-button"
 			radio: @_radio
-			radio_allow_null: true
+			radio_allow_null: @_radio_allow_null
 			icon_active: @_icon_opened
 			icon_inactive: @_icon_closed
 			onActivate: (btn, flags, event) =>
@@ -61,6 +68,10 @@ class Panel extends CUI.DOM
 				default: "panel-switcher"
 				check: (v) ->
 					isString(v) or v == true
+			radio_allow_null:
+				default: true
+				mandatory: true
+				check: Boolean
 			closed:
 				default: true
 				check: Boolean
@@ -116,7 +127,7 @@ class Panel extends CUI.DOM
 
 	loadContent: ->
 		if CUI.isFunction(@_content)
-			ret = @_content()
+			ret = @_content(@)
 		else
 			ret = @_content
 

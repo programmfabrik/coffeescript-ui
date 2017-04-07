@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class Playground extends Demo
 	getGroup: ->
 		""
@@ -585,6 +592,32 @@ class Playground extends Demo
 			new Form(data: data, maximize: false, fields: fields).start()
 		]
 
+	getTableTab: ->
+		table = new CUI.Table
+			columns: [
+				name: "a"
+				text: "a"
+				class: "a-class"
+			,
+				name: "b"
+				text: "b"
+				class: "b-class"
+			]
+			rows: [
+				a: "a0"
+				b: "b0"
+			,
+				a: "a1"
+				b: "b1"
+			]
+
+		for i in [2..5]
+			table.addRow
+				a: "a"+i
+				b: "b"+i
+
+		table
+
 	getControlsTab: ->
 		fu = new FileUpload
 			url: "FileUpload.php"
@@ -667,6 +700,9 @@ class Playground extends Demo
 			,
 				text: "Layout"
 				content: @getLayoutTab()
+			,
+				text: "Table"
+				content: @getTableTab()
 			]
 
 

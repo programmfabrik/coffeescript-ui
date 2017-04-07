@@ -1,7 +1,13 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # this class initializes a flex handle
 class FlexHandle extends CUI.Element
 	constructor: (@opts={}) ->
-		@addOptsFromAttr(CUI.DOM.getAttribute(@opts.element, "cui-flex-handle"))
 		super(@opts)
 
 		@__pane = null
@@ -42,7 +48,6 @@ class FlexHandle extends CUI.Element
 			@__direction = "column"
 
 		assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element[0])
-		@setClosable(@_closable)
 
 		if @_label
 			@addLabel(@_label)
@@ -66,7 +71,7 @@ class FlexHandle extends CUI.Element
 				check: Boolean
 			closable:
 				mandatory: true
-				default: true
+				default: false
 				check: Boolean
 			label:
 				check: (v) ->
@@ -78,6 +83,10 @@ class FlexHandle extends CUI.Element
 			manage_state:
 				default: true
 				check: Boolean
+			state_name:
+				check: String
+			class:
+				check: String
 
 	init: ->
 		if @isDestroyed()
@@ -90,6 +99,9 @@ class FlexHandle extends CUI.Element
 
 		if @__hidden
 			@hide()
+
+		if @_class
+			CUI.DOM.addClass(@_element, @_class)
 
 		if @__direction == "row"
 			axis = "x"
@@ -106,7 +118,7 @@ class FlexHandle extends CUI.Element
 				if @__size == null # isEmpty(@__pane[0].style[@__css_value])
 					if @isClosed()
 						@open()
-					else if @getClosable()
+					else if @_closable
 						@close()
 				else
 					@resetSize()
@@ -115,7 +127,7 @@ class FlexHandle extends CUI.Element
 				return
 
 		Events.listen
-			type: "click"
+			type: ["click"]
 			node: @_element
 			call: (ev) =>
 				if not @__label
@@ -128,9 +140,12 @@ class FlexHandle extends CUI.Element
 
 		# CUI.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
 
+		drag_start_size = null
+
 		new Draggable
 			element: @_element
 			axis: axis
+			support_touch: true
 			create: =>
 				if @isClosed()
 					return false
@@ -160,6 +175,8 @@ class FlexHandle extends CUI.Element
 					max_diff = adj_data.value - adj_data.min # this is the maximum change for the adj value
 					data.max = Math.max(0, data.value+max_diff)
 
+				drag_start_size = @__pane.style[@__css_value.toLowerCase()]
+
 				gd.__pane_data =
 					flip: flip
 					axis: axis
@@ -170,73 +187,85 @@ class FlexHandle extends CUI.Element
 				gd.isFlexHandleDrag = true
 				gd
 
-			helper_set_pos: (gd, helper_pos) ->
-				data = gd.__pane_data
-				if data.axis == "x"
-					key = "left"
+			get_cursor: (gd) ->
+				if gd.__pane_data.axis == "x"
+					return "ew-resize"
 				else
-					key = "top"
+					return "ns-resize"
 
-				new_value = data.value + gd.dragDiff[data.axis] * data.flip
-				if new_value < data.min
-					new_value = data.min
-				else if new_value > data.max
-					new_value = data.max
+			# helper_set_pos: (gd, helper_pos) ->
+			# 	data = gd.__pane_data
+			# 	if data.axis == "x"
+			# 		key = "left"
+			# 	else
+			# 		key = "top"
 
-				helper_pos[key] = (new_value - data.value) * data.flip + helper_pos.start[key]
+			# 	new_value = data.value + gd.dragDiff[data.axis] * data.flip
+			# 	if new_value < data.min
+			# 		new_value = data.min
+			# 	else if new_value > data.max
+			# 		new_value = data.max
 
-				return
+			# 	helper_pos[key] = (new_value - data.value) * data.flip + helper_pos.start[key]
+
+			# 	return
 
 			dragend: (ev, gd) =>
-				if ev.getType() != "mouseup"
+				dragging(gd)
+				@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
+				@storeState()
+
+			dragstop: =>
+				@__pane.style[@__css_value.toLowerCase()] = drag_start_size
+				drag_start_size = null
+				@__resize()
+
+			dragging: (ev, gd) =>
+				if !CUI.__ng__  || CUI.browser.ie
 					return
 
-				new_value = gd.__pane_data.value + gd.dragDiff[gd.__pane_data.axis] * gd.__pane_data.flip
-				if gd.__pane_data.min
-					new_value = Math.max(gd.__pane_data.min, new_value)
-
-				if gd.__pane_data.max
-					new_value = Math.min(gd.__pane_data.max, new_value)
-
-				#CUI.debug "dragend", @__css_value, diff, @__pane_data, new_value
-				@__setSize(new_value)
+				dragging(gd)
 
 
-		DOM.waitForDOMInsert(node: @_element)
-		.done =>
-			@__initState()
+		dragging = (gd) =>
+			new_value = gd.__pane_data.value + gd.dragDiff[gd.__pane_data.axis] * gd.__pane_data.flip
+			if gd.__pane_data.min
+				new_value = Math.max(gd.__pane_data.min, new_value)
+
+			if gd.__pane_data.max
+				new_value = Math.min(gd.__pane_data.max, new_value)
+
+			@__setSize(new_value)
+
+		if @_manage_state
+			if not @_state_name
+				console.error "new FlexHandle()", "opts.state_name missing, state will not be stored.", @opts
+
+			@__state_name = @_state_name
 			@__setState()
 
-			Events.listen
-				type: "content-resize"
-				node: @_element
-				call: (ev) =>
-					# CUI.info("FlexHandle stoped content-resize", @_element[0])
-					ev.stopPropagation()
 		@
 
 	__setSize: (size) ->
 		if isNull(size)
 			DOM.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
-			if DOM.getDimension(@__pane, "contentBox"+@__css_value) == 0
-				CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
-				DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
 
-			@_element.classList.remove("cui-flex-handle-manual-size")
+			if @__isAlive()
+				if DOM.getDimension(@__pane, "contentBox"+@__css_value) == 0
+					CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
+					DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
+
+			@__pane.classList.remove("cui-is-manually-sized")
+			@_element.classList.remove("cui-is-manually-sized")
 			@__size = null
 		else
-			console.debug "DOM set dimension", size, @__css_value, @__pane
-			@_element.classList.add("cui-flex-handle-manual-size")
+			# console.debug "DOM set dimension", size, @__css_value, @__pane
+			@__pane.classList.add("cui-is-manually-sized")
+			@_element.classList.add("cui-is-manually-sized")
 			DOM.setDimension(@__pane, "contentBox"+@__css_value, size)
-			@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
+			@__size = size
 
-		@storeState()
 		@__resize()
-
-	setClosable: (@__closable) ->
-
-	getClosable: ->
-		!!@__closable
 
 	resetSize: ->
 		@__setSize(null)
@@ -268,31 +297,7 @@ class FlexHandle extends CUI.Element
 		# 	node: @_element.parent()
 
 
-	__initState: ->
-		if not @_manage_state
-			return
-
-		# add non cui class names to
-		# the list to create a unique
-		# name to store state in cookie
-		cls_for_unique_name = [@_name]
-
-		add_cls = (el) ->
-			use_cls = []
-			for cls in el.classList
-				if cls.match(/^(ez-|cui-)/)
-					continue
-				use_cls.push(cls)
-			cls_for_unique_name.push("."+use_cls.join("."))
-
-		add_cls(@__pane)
-		for parent, idx in DOM.parents(@__pane)
-			add_cls(parent)
-
-		@__state_name = "CUI-FlexHandle-"+cls_for_unique_name.join("/")
-		DOM.setAttribute(@_element, "title", @__unique_name)
-
-	__getState: () ->
+	__getState: ->
 		value = CUI.getLocalStorage(@__state_name)
 		if not isNull(value)
 			state = JSON.parse(value)
@@ -301,12 +306,12 @@ class FlexHandle extends CUI.Element
 		state
 
 	__setState: ->
-		if not @_manage_state
+		if not @__state_name
 			return
 
 		state = @__getState()
 
-		if not isUndef(state.closed)
+		if not isUndef(state.closed) and @_closable
 			if state.closed
 				@close()
 			else
@@ -320,7 +325,7 @@ class FlexHandle extends CUI.Element
 
 
 	storeState: ->
-		if not @_manage_state
+		if not @__state_name
 			return
 
 		state =
@@ -330,7 +335,7 @@ class FlexHandle extends CUI.Element
 		value = JSON.stringify(state)
 
 		CUI.setLocalStorage(@__state_name, value)
-		# CUI.debug "stored state", @__state_name, value
+		console.info("FlexHandle.storeState: ", @__state_name, value)
 		@
 
 	isStretched: ->
@@ -414,7 +419,7 @@ class FlexHandle extends CUI.Element
 			if @__direction == "row"
 				opts.rotate_90 = true
 
-			@__label = new Label(opts)
+			@__label = new CUI.defaults.class.Label(opts)
 		DOM.append(@_element, @__label.DOM)
 		DOM.addClass(@_element, "cui-flex-handle-has-label")
 
@@ -457,6 +462,7 @@ class FlexHandle extends CUI.Element
 		# CUI.debug "FlexHandle.show", @__uniqueId, @isOpen()
 		if @isOpen()
 			return @
+
 		@_element.classList.remove("cui-flex-handle-closed")
 		@__pane.css("display", "")
 		delete(@__closed)

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 globalDrag = null
 
 class CUI.Droppable extends CUI.DragDropSelect
@@ -50,7 +57,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if @_dropHelper
 			assert(not @_selector or @_targetHelper, "new Droppable", "opts.dropHelper does only work without opts.selector or with opts.targetHelper and opts.selector. needs opts.selector to be set.", opts: @opts)
-			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper cui-debug-node-copyable")
+			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper")
 
 		return
 

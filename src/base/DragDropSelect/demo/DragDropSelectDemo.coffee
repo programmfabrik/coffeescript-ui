@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class DragDropSelectDemo extends Demo
 	getName: ->
 		"Drag & Drop"
@@ -81,11 +88,11 @@ class DragDropSelectDemo extends Demo
 
 			rect
 
-		new Movable
+		new CUI.Movable
 			element: drop_container_inner
 			limitRect: getLimitRect
 
-		new Resizable
+		new CUI.Resizable
 			element: drop_container_inner
 			limitRect: getLimitRect
 
@@ -99,28 +106,28 @@ class DragDropSelectDemo extends Demo
 		for i in [0..100]
 			sort_container2.append($div("drag-drop-select-demo-sortable-container-item item-"+i, item: ""+i).append(new Label(text: ""+i).DOM))
 
-		new Sortable
+		new CUI.Sortable
 			element: sort_container
 			axis: "y"
 			sorted: (ev, from_idx, to_idx) =>
 				@log("You sorted **"+from_idx+"** to **"+to_idx+"**.")
 
-		new Sortable
+		new CUI.Sortable
 			element: sort_container2
 			sorted: (ev, from_idx, to_idx) =>
 				@log("You sorted **"+from_idx+"** to **"+to_idx+"**.")
 
-		new Sortable
+		new CUI.Sortable
 			element: sort_container
 			axis: "y"
 
-		new Droppable
+		new CUI.Droppable
 			element: sort_container2
 			targetHelper: true
 			dropHelper: true
 			selector: ".drag-drop-select-demo-sortable-container-item"
 
-		new Droppable
+		new CUI.Droppable
 			element: sort_container
 			targetHelper: true
 			selector: ".drag-drop-select-demo-sortable-container-item"

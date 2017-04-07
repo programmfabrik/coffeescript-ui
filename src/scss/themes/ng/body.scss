@@ -1,114 +1,12 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 @import '../../icons/_svg-dimensions.scss';
 @import url($font_awesome_url);
-
-$padding: 10px;
-// compensating padding compensates for line-height
-$compensating-padding: 7px;
-$gap: 12px;
-$small-gap: 7px;
-$background: white;
-$foreground: white;
-$border: hsl(205,20%,91%);
-
-$button-text-color: hsl(205,10%,34%);
-$button-border: hsl(205,10%,75%);
-$button-border-radius: 4px;
-
-$drag-handle-color: hsl(205,10%,75%);
-
-$highlight-color: hsl(205,100%,45%);
-$on-highlight-color: white;
-$on-highlight-muted-color: hsl(205,50%,85%);
-
-$muted-color: hsl(205,5%,60%);
-$disabled-color: hsl(205,7%,73%);
-
-// Table Colors
-$zebra-color: hsl(205,10%,98%);
-$table-border: hsl(205,8%,90%);
-$table-header-border: hsl(205,8%,94%);
-
-$toolbar-background: hsl(205,2%,97%);
-$toolbar-height: 42px;
-$toolbar-small-height: 34px;
-
-$layer-header-pointer-background: $toolbar-background;
-$layer-header-background: $toolbar-background;
-$layer-header-border: hsl(204,22%,91%);
-
-$layer-background: hsl(0,0%,100%);
-
-$layer-footer-background: $layer-header-background;
-$layer-footer-border: $layer-header-border;
-
-@mixin ellipsis(){
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-@mixin margin($factor: 1) {
-	margin-bottom: $padding * $factor;
-
-	&:last-child {
-		margin-bottom: 0;
-	}
-}
-
-@mixin margin-top($factor: 1) {
-	margin-top: $padding * $factor;
-
-	&:first-child {
-		margin-top: 0;
-	}
-}
-
-@mixin padding($factor: 1) {
-	padding: $padding * $factor;
-}
-
-@mixin padding-y($factor: 1) {
-	padding-top: $padding * $factor;
-	padding-bottom: $padding * $factor;
-}
-
-// Flex for selected TABLE
-@mixin flex-table() {
-	display: flex; // yes, this is fun :)
-	box-sizing: border-box;
-	flex: 0 0 auto;
-	flex-direction: column;
-
-	> tr {
-		display: flex; // yes, this is fun :)
-		box-sizing: border-box;
-		flex: 1 1 auto;
-
-		> td {
-			display: flex; // yes, this is fun :)
-			box-sizing: border-box;
-			flex: 0 0 auto;
-			flex-direction: column;
-			align-items: stretch;
-		}
-	}
-}
-
-@mixin focus() {
-	box-shadow: 0 0 0 3px lighten($highlight-color, 40%);
-	border-color: $highlight-color;
-	z-index: 1; // put forward to see outline
-}
-
-@mixin button-reset() {
-  padding: 0;
-  border: none;
-  background: none;
-  color: inherit;
-  border-radius: 0;
-  height: auto;
-  line-height: inherit;
-}
 
 // reset
 
@@ -124,21 +22,25 @@ td {
 
 ul {
 	margin: 0;
-	padding-left: 3px;
-  list-style-position: inside;
-	list-position: inline;
+	padding-left: 16px;
 }
 
 a {
 	text-decoration: none;
-	color: black;
+	color: $color;
 }
+
+.italic {
+	font-style: italic;
+}
+
 // basics
 
 html {
 	overflow: hidden;
   width: 100%;
   height: 100%;
+  color: $color;
 }
 
 label {
@@ -146,30 +48,38 @@ label {
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+	font-family: $font-family;
 	font-size: 13px;
 	line-height: normal;
 	background: $background;
+	color: $color;
 	display: flex;
 	width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 input,
 textarea {
+	-webkit-appearance: none;
+	        appearance: none;
 	width: 100%;
-	font-size: 12px;
-	border: 1px solid $button-border;
-	border-top-color: $button-border;
+	min-width: 100px;
+	font-size: inherit;
+	color: $button-color;
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
+	background: $foreground;
 	font-family: inherit;
 	padding: 2px 3px;
+	margin: 0;
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	resize: vertical;
-	box-shadow: 0 1px rgba(0,0,0,.05) inset;
-	
+
 	&.cui-input-shadow {
 		position: absolute;
 		display: block;
@@ -180,27 +90,78 @@ textarea {
 	}
 }
 
-input {
-	overflow: hidden;
-}
-
-[max-chars] {
+[data-max-chars] {
 	box-sizing: content-box;
 	text-align: center;
 }
 
-[max-chars="1"] {
-	width: 1.5ch;
-}
-
-[max-chars="2"] {
-	width: 2.5ch;
-}
-
-@for $i from 3 through 10 {
-	[max-chars="#{$i}"] {
-		width: #{$i}ch;
+// enlarge max-chars < 10
+// e.g. max-chars 5 = 5.5ch
+@for $i from 1 to 10 {
+	[data-max-chars="#{$i}"] {
+		width: #{$i + 1}ch;
 	}
+}
+
+// damp max-chars > 10
+// e.g. max-chars 30 = 26ch
+@for $i from 10 through 40 {
+	[data-max-chars="#{$i}"] {
+		width: #{$i*(1 - ($i - 10)/30*0.15)}ch;
+	}
+}
+
+
+.css-swatch {
+	width: 24px;
+	height: 12px;
+	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14) inset;
+
+	@each $color, $values in $colors {
+		&.cui-swatch-color-#{$color} {
+			background: map-get($values, 'light');
+		}
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	@for $i from 1 through 10 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i + 1.5}ch;
+		}
+	}
+
+	@for $i from 10 through 40 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i*(1.54 - ($i - 10)/30*0.15)}ch;
+		}
+	}
+}
+
+input[data-max-chars] {
+	min-width: 0;
+}
+
+$drag-cursors: default, move, col-resize, row-resize, n-resize, e-resize, s-resize, w-resize, ne-resize, nw-resize, se-resize, sw-resize, ew-resize, ns-resize, nesw-resize, nwse-resize;
+
+body[data-cursor] {
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+}
+
+@for $i from 1 to length($drag-cursors) {
+	$cursor: nth($drag-cursors, $i);
+
+	body[data-cursor="#{$cursor}"] * {
+		cursor: $cursor !important;
+	}
+}
+
+// special case with prefix
+body[data-cursor="grabbing"] * {
+	cursor: -webkit-grabbing !important;
+	cursor: grabbing !important;
 }
 
 * {
@@ -218,38 +179,39 @@ li > div {
 // HorizontalLayout
 .cui-horizontal-layout {
 	display: flex;
-	flex-shrink: 1;
-	
+	flex-shrink: 0;
+	flex-direction: row;
+
 	&.cui-maximize-horizontal {
-		flex-direction: row;
-		// overflow: hidden; cuts off outline in date-time picker: year picker
+		overflow: auto;
 
 		> .cui-horizontal-layout-left {
 			position: relative;
-			flex-shrink: 1;
-			// overflow: hidden; cuts off outline in date-time picker: year picker
-			// max-width: 45%; breaks CUI.confirm
+			overflow: auto;
 		}
 		> .cui-horizontal-layout-center {
 			position: relative;
-			flex: 1 1 auto;
+			flex: 1 1 0%;
+			min-width: 0;
 			overflow: auto;
+		}
+		> .cui-horizontal-layout-right {
+			overflow: auto;
+		}
+	}
+
+	&.cui-horizontal-list {
+		> .cui-horizontal-layout-center {
+			flex-direction: row;
 		}
 	}
 
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
 		max-width: 100%;
+		min-height: 0;
 	}
 
-	&:not(.cui-maximize-horizontal) {
-		flex-direction: row;
-		// align-self: flex-start; anyoing in toolbar where you want align stretch
-	}
-
-	> .cui-horizontal-layout-center {
-		// flex-direction: row; breaks collection manager detail
-	}
 }
 
 .cui-horizontal-layout-left,
@@ -257,59 +219,84 @@ li > div {
 .cui-horizontal-layout-right {
 	display: flex;
 	flex-direction: column;
-	
-	> .cui-label {
-		padding: 0 $padding;
 
-		// &:first-child { makes no sense because this is not a vertical layout
-		// 	padding-top: $compensating-padding;
-		// }
+	// CONFLICT: TOO GENERIC
+	// > .cui-label {
+	// 	padding: 0 $padding;
 
-		// &:last-child {
-		// 	padding-bottom: $compensating-padding;
-		// }
-	}
+	// 	& + .cui-label {
+	// 		padding-left: 0;
+	// 	}
+	// }
 }
 
 
 // VerticalLayout
 .cui-vertical-layout {
-	display: flex;
-	flex-direction: column;
-	
+	flex-shrink: 0;
+	overflow: hidden;
+
 	&.cui-maximize-vertical {
+		display: flex;
+		flex-direction: column;
 		flex: 1 1 auto;
-		// overflow: hidden; // cuts off password input outline
+		min-height: 0;
+		max-height: 100%; // used in cui-pane-fill-screen
 
 		> .cui-vertical-layout-top,
 		> .cui-vertical-layout-bottom {
+			display: flex;
+			flex-direction: column;
 			position: relative;
-			overflow: hidden;
 			flex-shrink: 0;
+			overflow: hidden;
 		}
+
 		> .cui-vertical-layout-center {
+			display: flex;
+			flex-direction: column;
 			position: relative;
 			flex: 1 1 auto;
-			// overflow: auto; // cuts off password input outline
+			min-height: 0;
+			overflow: auto;
 		}
 	}
 
-	&.cui-maximize-horizontal {
-		// overflow: hidden; // cuts off password input outline
-	}
+	&.cui-absolute {
+		position: relative;
+		width: 100%;
+		height: 100%;
 
-	// weird rule - breaks popover pools
-	// &:not(.cui-maximize-horizontal) {
-	// 	align-self: flex-start;
-	// }
+		& > div {
+			position: absolute !important; // overwrite "relative" from above
+			left: 0;
+			right: 0;
+			width: 100%;
+		}
+
+		& > .cui-vertical-layout-top {
+			top: 0;
+		}
+
+		& > .cui-vertical-layout-center {
+			top: 0; // overwritten by Layout.coffee
+			bottom: 0; // overwritten by Layout.coffee
+		}
+
+		& > .cui-vertical-layout-bottom {
+			bottom: 0;
+		}
+	}
 }
 
 .cui-vertical-layout-top,
 .cui-vertical-layout-center,
 .cui-vertical-layout-bottom {
-	display: flex;
-	flex-direction: column;
 	flex-shrink: 0;
+
+	> .cui-sticky-header {
+		flex-basis: auto;
+	}
 }
 
 // Layout Absolute Horizontal
@@ -338,41 +325,6 @@ li > div {
 }
 
 
-
-
-
-// Layout Absolute Vertical
-.cui-vertical-layout {
-	&.cui-absolute {
-		position: relative;
-
-		width: 100%;
-		height: 100%;
-
-		& > div {
-			position: absolute !important; // overwrite "relative" from above
-			left: 0;
-			right: 0;
-			width: 100%;
-		}
-
-		& > .cui-vertical-layout-top {
-			top: 0;
-		}
-
-		& > .cui-vertical-layout-center {
-			top: 0; // overwritten by Layout.coffee
-			bottom: 0; // overwritten by Layout.coffee
-		}
-
-		& > .cui-vertical-layout-bottom {
-			bottom: 0;
-		}
-
-	}
-}
-
-
 // Flexhandle
 
 .cui-flex-handle-hidden {
@@ -383,6 +335,9 @@ li > div {
 	position: relative;
 	z-index: 2;
 	flex-shrink: 0;
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
 
 	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
 		.cui-label {
@@ -391,10 +346,25 @@ li > div {
 	}
 }
 
+// Show the flex handle helper in IE because real time dragging is turned off because of performance reasons
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-flex-handle.drag-drop-select-helper {
+		&:after {
+			content: "";
+			top: 0;
+			left: $padding - 1px;
+			border-right: 3px dotted $highlight-color;
+			height: 100%;
+			opacity: 0.5;
+			position: absolute;
+		}
+	}
+}
+
 .cui-flex-handle-row {
 	width: 10px;
 	margin: 0 -5px;
-	
+
 	&:not(.cui-flex-handle-closed) {
 		cursor: ew-resize;
 	}
@@ -408,16 +378,15 @@ li > div {
 		width: 32px;
 		margin: 0;
 		background: white;
-		
+
 		.cui-label.cui-tmpl-label-rotate-90 {
 			font-size: 14px;
-			
+			margin: 11px 0;
+			margin-left: -2px;
+
 			.cui-label-transform {
-				// the difference to the normal rotate-90 is that
-				// we want to touch the label the "top" and not
-				// start from the "bottom"
-				transform: rotateZ(-90deg) translateY(7px) translate(calc(-100% - #{$padding}));
-				transform-origin: left top;
+				transform: rotate(-90deg) translateY(150%);
+				transform-origin: left bottom;
 			}
 		}
 	}
@@ -427,7 +396,7 @@ li > div {
 	height: 10px;
 	margin: -5px 0;
 	width: 100%;
-	
+
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
 		margin: 0;
 	}
@@ -450,6 +419,15 @@ li > div {
 	display: none;
 }
 
+.cui-is-manually-sized {
+	flex-grow: 0 !important;
+	flex-shrink: 0 !important;
+
+	& + .cui-flex-handle + * {
+		flex-shrink: 1 !important;
+	}
+}
+
 
 .cui-tmpl-pane-fill-screen {
   transition: top ease-out 0.5s,right ease-out 0.5s,left ease-out 0.5s,bottom ease-out 0.5s;
@@ -467,13 +445,14 @@ li > div {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: #ffffff;
-		
+		background-color: white;
+
 		.cui-pane-fill-screen-inner {
 			width: 100%;
 			height: 100%;
 		}
 	}
+
 	// overwrite "style" set by code
   &.cui-pane-fill-screen-is-on {
     top: 0 !important;
@@ -485,70 +464,62 @@ li > div {
 
 // BorderLayout
 
-// .cui-border-layout-north,
-// .cui-border-layout-south {
-// 	background-color: #ffd890;
-// }
-
-// .cui-border-layout-west,
-// .cui-border-layout-east {
-// 	background-color: #ffefd1;
-// }
+.cui-border-layout-north,
+.cui-border-layout-south,
+.cui-border-layout-west,
+.cui-border-layout-east {
+	&:empty {
+		display: none;
+	}
+}
 
 // Toolbar
 .cui-toolbar {
 	display: flex;
 	min-height: $toolbar-height;
 	justify-content: space-between;
-	flex-wrap: wrap;
-	padding: 0 $padding;
 	background: $toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
-	
+	overflow: visible !important;
+
+	& + & {
+		padding-bottom: 1px;
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+
 	&.cui-pane-toolbar {
 		border-bottom: 1px solid $border;
-		
-		// overlap border of the previous toolbar
-		& + & {
-			margin-top: -1px;
-		}
 	}
-	
-	// prevent outline cutoff
-	&.cui-maximize-horizontal {
-		> .cui-horizontal-layout-center {
+
+	> .cui-horizontal-layout-left,
+	> .cui-horizontal-layout-right {
+		flex-direction: row;
+		min-width: 0;
+		overflow: visible !important;
+	}
+
+	> .cui-horizontal-layout-center {
+		justify-content: center;
+		flex-direction: row;
+		overflow: visible !important;
+	}
+
+	> div > .cui-maximize-horizontal {
+		// in column direction this is solved by
+		// align-items: stretch, but here
+		// we need to overwrite this
+		flex: 1 1 auto;
+		align-self: stretch;
+		overflow: visible;
+
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-center,
+		> .cui-horizontal-layout-right {
 			overflow: visible;
-		}
-	}
-
-	> div {
-		&.cui-horizontal-layout-left,
-		&.cui-horizontal-layout-right {
-			flex-direction: row;
-			min-width: 0;
-		}
-
-		&.cui-horizontal-layout-center {
-			align-items: center;
-		}
-
-		> .cui-maximize-horizontal {
-			// in column direction this is solved by
-			// align-items: stretch, but here
-			// we need to overwrite this
-			flex: 1 1 auto;
-			align-self: stretch;
-			
-			// prevent outline cutoff
-			> .cui-horizontal-layout-center {
-				overflow: visible;
-			}
-		}
-
-		> .cui-toolbar {
-			// nested toolbars do not get a padding
-			padding: 0;
 		}
 	}
 
@@ -556,9 +527,9 @@ li > div {
 		> .cui-label {
 			// reset padding: 0 $padding; in cui-horizontal-layout-left
 			&:first-child {
-				padding-left: 0;
+				padding-left: $padding/2 + 3px;
 			}
-			
+
 			&:last-child {
 				padding-right: 0;
 			}
@@ -566,11 +537,12 @@ li > div {
 	}
 
 	.cui-horizontal-layout-right {
-		margin-left: $gap;
 		flex-shrink: 0;
-		
-		&:empty {
-			margin-left: 0;
+
+		> .cui-label {
+			&:last-child {
+				padding-right: $padding/2 + 3px;
+			}
 		}
 	}
 
@@ -579,36 +551,70 @@ li > div {
 	}
 
 	.cui-data-field-input {
-		height: 100%;
 		display: flex;
 		align-items: center;
-		
+		min-width: 0;
+
+		&.cui-vertical-layout {
+			align-items: stretch;
+			justify-content: center;
+		}
+
 		.cui-input {
 			flex-grow: 0;
 		}
 	}
 
-	.cui-button {
+	.cui-button,
+	.cui-button-href {
 		align-self: stretch;
+		height: auto; // for checkbox
+		min-width: 0;
+		flex-shrink: 1;
+		padding: 5px;
+	}
+
+	.cui-button-checkbox {
+		display: flex;
+		align-items: center;
+	}
+
+	.cui-checkbox {
+		max-width: none !important;
 	}
 
 	.cui-buttonbar {
 		margin-bottom: 0;
-		height: 100%;
-		min-height: $toolbar-height;
-		
-		.cui-button {
+		min-width: 0;
+
+		.cui-button,
+		.cui-data-field,
+		.cui-button-href {
+			&:not(:first-child) {
+				padding-left: 0;
+			}
+
+			&:not(:last-child) {
+				padding-right: 0;
+			}
+
 			.cui-button-visual {
 				padding-left: $padding/2;
 				padding-right: $padding/2;
 			}
-		}
-	}
 
-	.cui-buttonbar-group {
-		.cui-button,
-		.cui-button:last-child {
-			padding-right: 0;
+			&.cui-button-appearance-flat {
+				.cui-button-visual {
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+		}
+
+		.cui-data-field {
+			.cui-button {
+				padding: 0;
+			}
 		}
 	}
 
@@ -627,39 +633,35 @@ li > div {
 }
 
 .cui-result-navigation-toolbar {
-	min-height: $toolbar-small-height;
-	
-	.cui-buttonbar {
-		min-height: $toolbar-small-height;
-	}
+	min-height: $toolbar-height;
 }
 
 // Pane
 .cui-pane-header {
 	flex-wrap: nowrap;
 	border-bottom: 1px solid $border;
-	
+	padding-right: 0;
+
 	.cui-label {
 		font-size: 14px;
 		height: 100%;
-    align-items: center;
     cursor: default;
+    display: flex;
+    align-items: center;
 	}
 
 	.cui-horizontal-layout-left {
-		> *:first-child {
-			padding-left: 0;
-		}
-
 		> *:only-child {
 			padding-right: 0;
 		}
 	}
 
-	.cui-horizontal-layout-right {
-		> *:last-child {
-			padding-right: 0;
-		}
+	> .cui-horizontal-layout-center {
+		margin-right: $padding/2;
+	}
+
+	> .cui-horizontal-layout-right {
+		margin-left: 0;
 	}
 
 	.cui-toolbar {
@@ -671,46 +673,53 @@ li > div {
 }
 
 .cui-pane-footer {
-	border-top: 1px solid hsl(180,9%,93%);
-	min-height: $toolbar-small-height;
-	
-	.cui-buttonbar {
-		min-height: $toolbar-small-height;
+	border-top: 1px solid $border;
+	min-height: $toolbar-height;
+
+	.cui-horizontal-layout-left,
+	.cui-horizontal-layout-right {
+		min-width: auto;
 	}
 
-	.cui-horizontal-layout-left .cui-buttonbar:first-child {
-		margin-left: -$padding;
-
-		.cui-button:first-child {
-			padding-left: $padding;
-		}
+	.cui-label {
+		color: $secondary-color;
+		font-size: 12px;
 	}
 
-	.cui-horizontal-layout-right .cui-buttonbar:last-child {
-		margin-right: -$padding;
-
-		.cui-button:last-child {
-			padding-right: $padding;
-		}
+	.cui-button-size-big .cui-button-visual {
+		border-width: 1px;
 	}
 }
 
 // Simple Pane
 .cui-simple-pane {
-	> .cui-vertical-layout-center {
-		> .cui-label:only-child {
-			margin: $padding;
+	&--padded {
+		> .cui-vertical-layout-center {
+			padding: $padding;
 		}
+	}
+
+	> .cui-vertical-layout-center {
+		overflow: auto;
 	}
 }
 
 // Data Table
 .cui-data-table {
+	border: 1px solid $border;
+	flex-shrink: 1;
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+	}
+
 	.cui-pane-footer {
 		min-height: 0;
 		padding: 0;
 
 		.cui-button-button {
+			padding: 0;
+
 			.cui-button-visual {
 				@include button-reset;
 				color: hsl(205,11%,29%);
@@ -718,10 +727,15 @@ li > div {
 			  padding: 0 $padding/2;
 			  border-right: 1px solid hsl(205,8%,77%) !important;
 			}
-		  
-		  &:cui-disabled {
+
+			&:first-child {
+				padding-left: 0;
+			}
+
+		  &.cui-disabled {
 		  	opacity: 1;
-		  	
+		  	pointer-events: auto;
+
 		  	.cui-button-visual * {
 		  		opacity: 0.5;
 		  	}
@@ -747,10 +761,14 @@ li > div {
 .cui-icon-svg {
 	fill: currentColor;
 	vertical-align: bottom;
+	pointer-events: none;
+	flex-shrink: 0;
+	transform: translateZ(0); // make em icons sharp in Firefox
 }
 
 .fa {
 	font-size: 14px;
+	pointer-events: none;
 }
 
 i.fa-spinner {
@@ -783,8 +801,24 @@ i.cui-spin-stepped {
 	}
 }
 
+// compensate right arrow spacing
+.fa-angle-right {
+	margin-left: 2px;
+}
+
+// compensate left arrow spacing
+.fa-angle-left {
+	margin-right: 2px;
+}
+
+// compensate down arrow spacing
 .fa-angle-down {
 	margin-bottom: -1px;
+}
+
+// adjust play icon weight
+.fa-play {
+	margin-right: -3px;
 }
 
 // Button / Select
@@ -794,92 +828,135 @@ i.cui-spin-stepped {
 	cursor: pointer;
 }
 
+.cui-button-href.cui-button-appearance-link {
+	.cui-button-right {
+		flex-shrink: 0;
+		align-self: flex-start;
+		margin-top: 2px;
+
+		&:empty {
+			display: block;
+		}
+	}
+}
+
 .cui-button-visual {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	max-width: 100%;
+	flex-grow: 1;
 }
 
 .cui-button-button,
 .cui-button-select {
 	flex: 0 0 auto;
-	flex-direction: column;
 	align-self: flex-start;
 	align-items: center;
 	justify-content: center;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
-	
+	max-width: 100%;
+
 	.cui-button-visual {
 	  padding: 0 $padding;
-	  height: 24px;
-	  line-height: 22px;
-	  color: $button-text-color;
-	  background: hsl(0,0%,100%);
+	  height: $button-height;
+	  line-height: $button-height - 2px;
+	  color: $button-color;
+	  background: $button-background;
 	  border: 1px solid $button-border;
-	  border-radius: $button-border-radius;
+	  border-radius: $button-radius;
 	}
 
-	&:hover .cui-button-visual {
-	  border-color: hsl(205,100%,45%);
-	  color: hsl(205,100%,45%);
-	}
-
-	&:active .cui-button-visual {
-	  border-color: hsl(205,100%,35%);
-	  color: hsl(205,100%,35%);
+	&.cui-layer-open,
+	&:active,
+	&.cui-active {
+		.cui-button-visual {
+	  	background: $button-pressed;
+	  }
 	}
 
 	&.cui-disabled {
 	  cursor: default;
-	  
+	  opacity: 1;
+	  pointer-events: auto;
+
 		.cui-button-visual {
-		  opacity: 0.5;
-		  color: $button-text-color;
-		  border-color: hsl(205,10%,75%);
-		  background: none;
+		  color: $disabled-color;
+		  border-color: $button-border;
 	  }
 	}
 
 	&.cui-button-appearance-important, // removed [role] - makes it too specific
-	&.cui-button--primary,
-	&.cui-active {
+	&.cui-button--primary {
 		.cui-button-visual {
-	  	color: white;
-	  	background: $highlight-color;
-	  	border-color: darken($highlight-color, 7%);
-	  }
+			color: $on-highlight-color;
+			background: $highlight-color;
+			border-color: darken($highlight-color, 7%);
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				color: darken($on-highlight-color, 9%);
+				background: darken($highlight-color, 9%);
+				border-color: darken($highlight-color, 16%);
+			}
+		}
 	}
 
-	&.cui-button-appearance-flat {
-		align-self: auto;
-		
+	&.cui-active {
 		.cui-button-visual {
-			@include button-reset;
-			color: desaturate($highlight-color, 80%);
+			color: $button-active-text;
+			background: $button-active;
+			border-color: $button-active-border;
 		}
-		
-	  &:hover {
-	  	.cui-button-visual {
-	  		color: desaturate($highlight-color, 80%);
-	  	}
-	  }
 
-	  &.cui-active {
-	  	.cui-button-visual {
-	  		color: desaturate($highlight-color, 80%);
-	  	}
-	  }
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				color: $button-active-pressed-text;
+				background: $button-active-pressed;
+				border-color: $button-active-pressed;
+			}
+		}
 	}
 
 	&:focus {
 		outline: none;
-		
+
 		.cui-button-visual {
-			@include focus;
+			@include border-focus;
 		}
 	}
+}
+
+.cui-button-appearance-flat {
+	align-self: auto;
+	vertical-align: top;
+
+	.cui-button-visual {
+		@include button-reset;
+		height: 24px;
+		padding: 3px 0;
+		border-radius: $button-radius;
+		color: desaturate($highlight-color, 80%);
+	}
+
+	&:active,
+	&.cui-layer-open,
+	&.cui-active {
+		.cui-button-visual {
+			background: none;
+			color: desaturate($highlight-color, 40%);
+		}
+	}
+
+  &:focus {
+  	.cui-button-visual {
+  		@include inner-focus;
+  	}
+  }
 }
 
 .cui-button-select {
@@ -889,9 +966,17 @@ i.cui-spin-stepped {
 
 	.cui-button-center {
 		padding-right: 6px;
-		
-		[max-chars] {
+
+		[data-max-chars] {
 			text-align: inherit;
+		}
+
+		&:empty {
+			display: flex;
+
+			&:after {
+				content: " ";
+			}
 		}
 	}
 }
@@ -911,8 +996,8 @@ i.cui-spin-stepped {
 
 .cui-button-center {
 	flex-shrink: 1;
-	max-width: 100%;
-	
+	min-width: 0;
+
 	span {
 		@include ellipsis;
 	}
@@ -925,14 +1010,49 @@ i.cui-spin-stepped {
   &.cui-button-appearance-flat {
   	height: auto;
   }
+
+  .cui-button-visual {
+  	height: 20px;
+  	padding: 0 $padding/4;
+  }
+
+  .fa {
+  	font-size: 11px;
+  }
+
+  .cui-icon-svg {
+  	transform: scale(0.75);
+
+  	&.svg-close {
+  		transform: none;
+  		width: 9px;
+  		height: 9px;
+  	}
+  }
 }
 
 .cui-button-size-big {
-	font-size: 15px;
-	height: 37px;
+	font-size: 11px;
+	height: 60px;
 
 	&.cui-button-appearance-flat {
 		height: auto;
+	}
+
+	.cui-button-visual {
+		line-height: 18px;
+		height: auto;
+		flex-direction: column;
+		border-width: 0;
+		padding: 0 $padding/2;
+	}
+
+	.cui-button-left {
+		padding: 3px;
+	}
+
+	.fa {
+		font-size: 28px;
 	}
 }
 
@@ -954,34 +1074,83 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-button-appearance-link[role] {
 	display: inline-flex;
-	
-	.cui-button-visual {
-		@include button-reset;
-		color: $highlight-color;
+
+	&,
+	&:active {
+		.cui-button-visual {
+			@include button-reset;
+			color: $highlight-color;
+			line-height: 18px;
+		}
+	}
+
+	&:focus {
+		.cui-button-visual {
+			text-decoration: underline;
+		}
 	}
 
 	.cui-button-center {
 		padding: 0;
+
+		span {
+			white-space: normal;
+		}
 	}
 }
 
 
 // Checkbox
 .cui-checkbox {
-	justify-content: center;
+	min-width: 0;
+	display: inline-block;
+
+	&.cui-data-field-disabled {
+		opacity: 1;
+	}
+
+	&--icon {
+		.cui-button-checkbox {
+			.cui-button-left i {
+				border: none;
+				background: none;
+				font-size: 14px;
+				opacity: 0.2;
+			}
+
+			&.cui-active {
+				.cui-button-left i {
+					background: none;
+					color: inherit;
+					text-shadow: none;
+					opacity: 1;
+				}
+			}
+		}
+	}
 }
 
 .cui-button-checkbox {
 	display: flex;
 	flex-direction: row;
 	cursor: pointer;
+	line-height: 18px;
+	white-space: initial;
+	align-self: flex-start;
+	max-width: 100%;
+	padding: 3px 0;
+
+	[data-max-chars] {
+		text-align: inherit;
+	}
 
 	&.cui-disabled {
-		cursor: default;
 		color: $disabled-color;
-		
+		opacity: 1;
+		pointer-events: none;
+
 		.cui-button-left {
-			opacity: 0.27;	
+			opacity: 0.27;
 		}
 	}
 
@@ -990,7 +1159,7 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-button-left span,
 		.cui-button-left i {
-			@include focus;
+			@include border-focus;
 		}
 	}
 
@@ -1030,8 +1199,14 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-button-visual {
+		justify-content: flex-start;
+		flex: 1 0 auto;
+		align-items: flex-start;
+	}
+
 	.cui-button-left {
-		padding: 0 2px 0 0;
+		padding: 3px 2px 0 0;
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -1050,8 +1225,21 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-button-center {
+		min-width: 0;
+		flex: 1 1 auto;
+		padding-right: 5px;
+		justify-content: flex-start;
+
+		span {
+			white-space: normal;
+		}
+	}
+
 	&[role="radio"] {
 		.cui-button-left {
+			padding-top: 2px;
+
 			span,
 			i {
 				width: 14px;
@@ -1062,46 +1250,21 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// Select
-
-.cui-select {
-	.cui-button-center:empty {
-		display: flex;
-
-		&:after {
-			content: '-';
-			padding: 0 $padding/4;
-		}
-	}
-
-	&[max-chars="2"] {
-		width: auto;
-
-		.cui-button-center span {
-			width: 2.5ch;
-		}
-	}
-
-	&[max-chars="4"] {
-		width: auto;
-
-		.cui-button-center span {
-			width: 4ch;
-		}
-	}
-}
-
 // Panel
 .cui-panel {
-	border-bottom: 1px solid $border;
-	
-	// &:last-child {
-	// 	border-bottom: none;
-	// }
+	border-top: 1px solid $layer-header-border;
+	border-bottom: 1px solid $layer-header-border;
 
-	&.cui-panel-closed {
+	& + &,
+	&:first-child {
+		border-top: none;
+	}
+
+	&:last-child {
 		border-bottom: none;
-		
+	}
+
+	&-closed {
 		> .cui-panel-body {
 			display: none;
 		}
@@ -1109,33 +1272,40 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	border-top: 1px solid $border;
-	border-bottom: 1px solid $border;
+	background: $toolbar-background;
 	position: relative;
-	height: $toolbar-small-height;
-
-	&:first-child {
-		border-top: none;
-	}
+	flex-shrink: 0;
+	box-sizing: content-box;
 
 	.cui-button {
 		width: 100%;
 		height: 100%;
 		align-items: stretch;
-		
+
 		.cui-button-visual {
-			border: none;
-			background: none;
-			border-radius: 0;
+			@include button-reset;
+			line-height: 22px;
 			justify-content: flex-start;
-			color: inherit;
-			padding: 0 $padding;
-			height: auto;
-			line-height: 1;
+			padding: 6px $padding;
+			color: $button-color;
 		}
 
-		.fa {
-			width: 12px;
+		&:active {
+			.cui-button-visual {
+				background: darken($zebra-color, 5%);
+				color: $button-color;
+			}
+		}
+
+		.cui-button-left {
+			width: 22px;
+			padding-top: 1px;
+		}
+
+		.cui-button-center {
+			span {
+				white-space: normal;
+			}
 		}
 
 		.fa-angle-right {
@@ -1154,28 +1324,49 @@ a[role="button"].cui-button-appearance-link {
 	display: inline-flex;
 	flex: 0 0 auto;
 	align-items: center;
+	max-width: 100%;
+	line-height: 18px;
 
 	&.cui-tmpl-label-rotate-90 {
-		// rotate by 90 degrees
 		white-space: nowrap;
-		// align-self: flex-start;
+		margin: $padding/2 0;
+		flex-shrink: 0;
+		max-width: none;
+		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
+
+		&:before {
+			content: "";
+			float: left;
+			margin-top: calc(100% - #{$padding});
+		}
+
 		> .cui-label-transform {
-			// the transform-origin is the corner
-			// of the content, so the padding
-			// moved the origin to the right.
-			// we need to compensate for that
-			transform: rotateZ(-90deg) translateY(calc(100% - 3px)) translateX(3px);
+			transform: rotate(-90deg)  translateX(-3px) translateY(100%);
 			transform-origin: left bottom;
+			clear: left;
+		}
+
+		.cui-label-content {
+			white-space: nowrap !important;
 		}
 	}
 
-	.cui-label-icon {
+	&-icon {
+		&:empty {
+			display: none;
+		}
+
 		.fa {
 			line-height: 18px;
 		}
 	}
 
-	&.cui-label-size-big {
+	&-size-mini {
+		font-size: 11px;
+		line-height: 14px;
+	}
+
+	&-size-big {
 		.cui-label-icon {
 			.fa {
 				font-size: 21px;
@@ -1183,11 +1374,11 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-		padding-left: $padding/2;
+	&-icon:not(:empty) + .cui-label-content:not(:empty) {
+		padding-left: 7px;
 	}
 
-	.cui-label-content {
+	&-content {
 		flex: 0 0 auto;
 		max-width: 100%;
 		@include ellipsis;
@@ -1213,20 +1404,8 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-label-icon:empty {
-		display: none;
-	}
-}
-
-// Label: Centered
-.cui-label-centered {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	
-	.cui-label-content {
-		text-align: center;
+	&-appearance-secondary {
+		color: $secondary-color;
 	}
 }
 
@@ -1235,35 +1414,70 @@ a[role="button"].cui-button-appearance-link {
 	display: block;
 
 	h1, h2, h3, h4, h5, h6 {
-	  font-weight: normal;
-	  margin: 0 0 $padding;
+		font-weight: normal;
+		margin: 0 0 $padding;
 	}
 
 	h1 {
-	  font-size: 24px;
-	  line-height: 30px;
+		font-size: 24px;
+		line-height: 30px;
 	}
 
 	h2 {
-	  font-size: 20px;
-	  line-height: 25px;
+		font-size: 20px;
+		line-height: 25px;
+	}
+
+	a {
+		color: $highlight-color;
+		text-decoration: underline;
+	}
+
+	em {
+		background: none;
+		font-style: italic;
 	}
 
 	p,
-  pre,
-  blockquote {
-    margin: 0 0 16px;
+	pre,
+	blockquote,
+	table {
+		margin: 0 0 16px;
   }
 
   & > p,
   & > pre,
+  & > table,
   & > blockquote {
-    &:first-child {
-      margin-top: 6px;
+		&:last-child {
+			margin-bottom: 0;
+    }
+  }
+
+  table {
+    border: none;
+    table-layout: auto;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: keep-all;
+
+    td, th {
+			padding: 7px 12px;
+			border: 1px solid hsl(0,0%,87%);
     }
 
-    &:last-child {
-      margin-bottom: 6px;
+    th {
+			font-weight: bold;
+			text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+			background: hsl(0,0%,97%);
+    }
+
+    col {
+			width: auto;
     }
   }
 
@@ -1287,6 +1501,7 @@ a[role="button"].cui-button-appearance-link {
     border-radius: 3px;
     border: none;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   hr {
@@ -1299,16 +1514,20 @@ a[role="button"].cui-button-appearance-link {
 
 // Label: Multiline
 .cui-label-multiline {
-	align-self: stretch;
-	@include margin;
+	// Conflict: makes it center vertically align in center
+	// align-self: stretch;
+	max-width: 100%; // prevent overflow when its the child of a flex parent
+	display: flex;
+
+	& + & {
+		margin-top: 7px;
+	}
 
 	&:not(.cui-label-markdown) {
-		// word-break: normal;
-		word-break: break-all;
-		// this does not work in IE, but will
-		// be ignored by IE, so we are good
-		word-break: break-word;
-		
+		-webkit-hyphens: auto;
+		    -ms-hyphens: auto;
+		        hyphens: auto;
+
 		.cui-label-content {
 			white-space: pre-wrap;
 		}
@@ -1316,41 +1535,50 @@ a[role="button"].cui-button-appearance-link {
 
 	> .cui-label-content {
 		flex: 1 1 auto;
-	}
-
-	&.cui-label-manage-overflow {
-		> .cui-label-content {
-			transition: height ease 0.5s, max-height ease 0.5s;
-			max-height: 62px;
-			position: relative;
-			overflow: hidden;
-
-			> .cui-label-manage-overflow-content-container {
-				transition: height ease 0.5s, max-height ease 0.5s;
-				overflow: hidden;
-
-				> span {
-					white-space: pre-wrap;
-					word-break: normal;
-				}
-			}
-
-			> .cui-label-manage-overflow-button-container {
-				height: 0;
-				align-self: flex-end;
-				.cui-button {
-					transform: translateY(-100%);
-					border-style: none;
-					background-color: #8a8a8a;
-					color: #ffffff;
-					border-radius: 3px;
-				}
-			}
-		}
+		white-space: normal;
 	}
 
 	.cui-label-content span {
-		white-space: normal;
+		// white-space: normal;
+		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
+		// example: collection description
+	}
+}
+
+// Label: Manage Overflow
+
+.cui-label-manage-overflow {
+	position: relative;
+	display: block;
+
+	&.cui-label--measure-overflow {
+		> .cui-label-content {
+			max-height: 100px;
+		}
+	}
+
+	> .cui-label-content {
+		max-height: 75px;
+		overflow: hidden;
+	}
+
+	.cui-label-manage-overflow-button {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(to right, hsla(0,0%,100%,0), hsl(0,0%,100%) 10px);
+		padding: 0 0 0 10px !important;
+	}
+
+	&.cui-label--show-overflow {
+		> .cui-label-content {
+			max-height: none !important;
+		}
+
+		.cui-label-manage-overflow-button {
+			position: static;
+			float: right;
+		}
 	}
 }
 
@@ -1358,12 +1586,24 @@ a[role="button"].cui-button-appearance-link {
 .cui-empty-label {
 	color: $muted-color;
 	font-style: italic;
-	padding: $padding/2;
 	margin: 0;
 	cursor: default;
-	
+
 	.cui-label-content {
 		display: inline-block;
+	}
+}
+
+// Label: Centered
+.cui-label-centered {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	> .cui-label-content {
+		text-align: center;
+		flex-grow: 0;
 	}
 }
 
@@ -1371,55 +1611,64 @@ a[role="button"].cui-button-appearance-link {
 // Buttonbar
 .cui-buttonbar {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
-	@include margin;
+	justify-content: space-between;
 
 	// > *:not(:last-child) {
 	// 	margin-right: $gap;
 	// }
-	
+
 	.cui-label {
 		margin: 0 $small-gap;
+		align-self: center;
+
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 
 	.cui-label-content {
 		align-self: center; // Date-Time picker month label in footer
 	}
 
-	> .cui-button {
-		// align-self: unset; // don't unset - need stretch for big button clickarea
-		
-		& + .cui-button,
-		& + .cui-buttonbar-group {
-			margin-left: $small-gap;
+	> .cui-button,
+	> .cui-button-button,
+	> .cui-data-field-input {
+		+ .cui-button,
+		+ .cui-button-button,
+		+ .cui-data-field-input {
+			margin-left: $padding;
+		}
+	}
+
+	> .cui-button,
+	> .cui-button-button,
+	> .cui-data-field-input {
+		+ .cui-buttonbar-group {
+			margin-left: $padding/2;
 		}
 	}
 
 	.cui-button-href {
 		height: 100%;
-		margin: 0 $small-gap;
 	}
 
-	.cui-buttonbar-group + .cui-button {
-		margin-left: $small-gap;
+	.cui-buttonbar-group {
+		+ .cui-button,
+		+ .cui-button-href {
+			margin-left: $padding/2;
+		}
 	}
 }
 
-// Buttonbar & Button
-.cui-buttonbar + .cui-button {
-	margin-left: 4px;
-}
-
-.cui-button + .cui-buttonbar,
-.cui-select + .cui-buttonbar {
-	margin-left: 4px;
-}
-
-// Buttonbar
+// Buttonbar Group
 .cui-buttonbar-group {
 	display: flex;
-	flex-direction: row;
+	align-self: stretch; // use full height for bigger click area for buttons (example: tabs)
 
 	> * {
 		position: relative;
@@ -1427,8 +1676,9 @@ a[role="button"].cui-button-appearance-link {
 
 		&:first-child {
 			margin-left: 0;
-			
-			.cui-button-visual {
+
+			.cui-button-visual,
+			.cui-input {
 				border-top-right-radius: 0;
 				border-bottom-right-radius: 0;
 			}
@@ -1438,42 +1688,53 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-		&:last-child .cui-button-visual {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
+		&:last-child {
+			.cui-button-visual,
+			.cui-input {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
 		}
 
-		&:not(:first-child):not(:last-child) .cui-button-visual {
-			border-radius: 0;
+		&:not(:first-child):not(:last-child) {
+			.cui-button-visual,
+			.cui-input {
+				border-radius: 0;
+			}
 		}
 
 		&:only-child .cui-button-visual {
-			border-radius: $button-border-radius;
+			border-radius: $button-radius;
 		}
 
-		&:hover,
 		&.cui-active {
 			z-index: 1;
 		}
 	}
 
+	.cui-label {
+		border: 1px solid $button-border;
+		background: $foreground;
+		margin-left: -1px;
+		margin-right: 0;
+		padding: 0 7px;
+		color: $secondary-color;
+
+		&-size-mini {
+			height: 20px;
+		}
+	}
+
 	> .cui-data-field {
+		margin-left: -1px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+
 		& + *:before {
 			display: none;
 		}
-	}
-}
-
-// Checkbox
-.cui-checkbox {
-	display: flex;
-	flex-direction: column;
-
-	.cui-button {
-		height: 24px;
-		line-height: 24px;
-		white-space: initial;
-		align-self: flex-start;
 	}
 }
 
@@ -1493,7 +1754,7 @@ a[role="button"].cui-button-appearance-link {
 	//
 
 	&.cui-input-has-check-input {
-		&.cui-input-invalid:not(.cui-input-has-user-input) {
+		&.cui-input-invalid {
 			input {
 				border-color: hsl(0,90%,60%);
 				background: hsla(0,90%,74%, 0.15);
@@ -1506,22 +1767,44 @@ a[role="button"].cui-button-appearance-link {
 		padding: 0 7px;
 		line-height: 22px;
 		outline: none;
-		
+		vertical-align: bottom;
+
 		&:focus {
-			@include focus;
+			@include border-focus;
+		}
+
+		&::-webkit-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::-moz-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&:-ms-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::-ms-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::placeholder {
+			color: $input-placeholder;
 		}
 	}
 
 	textarea {
-		padding-top: $padding/2;
-		padding-bottom: $padding/2;
-		line-height: 18px;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		line-height: 16px;
+		height: 100px;
 	}
 
 	&.cui-has-focus {
 		input,
 		textarea {
-			@include focus;
+			@include border-focus;
 		}
 	}
 
@@ -1530,6 +1813,42 @@ a[role="button"].cui-button-appearance-link {
 		margin-top: 5px;
 		font-size: 12px;
 		color: $muted-color;
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-input {
+		input,
+		textarea {
+			min-height: 24px;
+
+			&[data-max-chars] {
+				min-height: 22px;
+			}
+		}
+	}
+}
+
+.cui-input-content-size {
+	textarea {
+		height: 24px;
+		resize: none;
+	}
+}
+
+.cui-form-hint {
+	margin-top: 5px;
+	font-size: 12px;
+	color: $muted-color;
+
+	// IE layout fix: (layer form hint)
+	.cui-label-multiline {
+		flex-grow: 1;
+		display: flex;
+
+		.cui-label-content {
+			flex-basis: 0%;
+		}
 	}
 }
 
@@ -1542,78 +1861,115 @@ a[role="button"].cui-button-appearance-link {
   display: none;
 }
 
+.cui-tmpl-layer-root[cui-layer-fixed] {
+	.cui-layer,
+	.cui-layer-pointer {
+		position: fixed !important;
+	}
+}
+
 // Layer
 .cui-tmpl-layer-root {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	z-index: 1;
+	pointer-events: none;
+
+	.cui-layer {
+		position: absolute;
+		pointer-events: auto;
+	}
+
+	// centered gets placed by the browser
+	&[cui-placement="c"] {
+		.cui-layer {
+			position: static;
+			margin: 0;
+		}
+
+		.cui-layer-pointer {
+			display: none;
+		}
+	}
+
+	&[cui-fill-space="both"] {
+		.cui-layer {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&[cui-fill-space="horizontal"] {
+		.cui-layer {
+			width: 100%;
+		}
+	}
+
+	&[cui-fill-space="vertical"] {
+		.cui-layer {
+			height: 100%;
+		}
+	}
+}
+
+.cui-layer-backdrop-policy-modal,
+.cui-layer-backdrop-policy-click {
+	pointer-events: auto;
 }
 
 .cui-layer {
 	min-width: 200px;
-	position: absolute;
+	min-height: 30px;
+	max-width: calc(100% - #{2*$padding});
+	max-height: calc(100% - #{2*$padding});
 	display: flex;
 	flex-direction: column;
-	overflow: auto;
-	background: white;
+	overflow: hidden;
+	background: $layer-background;
 	margin: 10px;
 	outline: none;
 	border-radius: 5px;
+	// to make sure that the border-radius will cut off all child backgrounds
+	// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
+	opacity: 0.9999;
 	box-shadow:
-		0 0 0 1px hsla(0,0%,0%,0.1),
-		0 7px 14px hsla(0,0%,0%,0.1);
-	
+		0 0 0 1px hsla(205,20%,30%,.15),
+		0 8px 10px 1px hsla(0,0%,0%,.14),
+		0 3px 14px 2px hsla(0,0%,0%,.12),
+		0 5px 5px -3px hsla(0,0%,0%,.4);
+
 	> .cui-simple-pane,
 	> .cui-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
 			background: $layer-header-background;
-			min-height: $toolbar-small-height;
+			min-height: $toolbar-height;
 			border-radius: 5px 5px 0 0;
 			border-color: $layer-header-border;
-			
-			.cui-buttonbar {
-				min-height: $toolbar-small-height;
-			}
+			color: $layer-header-color;
 		}
 
 		// layer-body
 		> .cui-vertical-layout-center {
 			overflow: auto;
-			
-			// case that the header is not there and we have a 
-			// toolbar on first position (=> pools)
-			&:first-child {
-				.cui-toolbar:first-child {
-					border-radius: 4px 4px 0 0;
-				}
+			-webkit-overflow-scrolling: touch;
+
+			.cui-form {
+				flex-shrink: 0;
 			}
 
-			.cui-form-table-has-left-column {
+			> .cui-form {
 				margin: 0;
 			}
 
-			// add spacing to single labels in the body
-			// 
-			// cases:
-			// - password reset
-			// - popover manager
-			//
-			&,
-			> .cui-layout,
-			> .cui-layout > .cui-layout,
-			> .cui-layout-cell,
-			> .cui-layout > .cui-layout-cell {
-				> .cui-label {
-					margin-left: $padding;
-					margin-right: $padding;
-					
-					&:first-child {
-						margin-top: $compensating-padding;
-					}
-
-					&:last-child {
-						margin-bottom: $compensating-padding;
-					}
-				}
+			> .cui-vertical-list { // CONFLICT: hides footer of nested list views behind scroll
+				flex-shrink: 0;
 			}
 		}
 
@@ -1626,62 +1982,153 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-toolbar {
-		min-height: $toolbar-small-height;
+		min-height: $toolbar-height;
+	}
+
+	.cui-data-table .cui-pane-footer {
+		min-height: 0;
+	}
+
+	.cui-form-key {
+		max-width: $td-width;
+		width: auto;
+		min-width: 100px;
+
+		@include phone {
+			max-width: none;
+		}
+	}
+
+	.cui-form-table {
+		&.cui-form-table-has-not-left-column {
+			> .cui-tr > .cui-form-value > .cui-data-field {
+				&.cui-data-table {
+					border: none;
+				}
+
+				> .cui-list-view {
+					margin: -15px -20px;
+				}
+			}
+		}
+
+		.cui-data-field {
+			width: auto;
+		}
+	}
+
+	.cui-data-field-input {
+		min-width: 150px;
+
+		&.cui-checkbox {
+			min-width: 0;
+		}
+
+		&.cui-data-table {
+			min-width: 200px;
+		}
+	}
+
+	.cui-list-view {
+		.cui-data-field-input {
+			min-width: 0;
+		}
+	}
+
+	.cui-date-time {
+		min-width: 215px;
+	}
+
+	.cui-toolbar,
+	.cui-buttonbar {
+		.cui-data-field-input {
+			min-width: 0;
+		}
 	}
 }
 
 .cui-layer-pointer {
 	position: absolute;
 	z-index: 1;
-	width: 33px;
+	width: 46px;
 	height: 16px;
-	margin: 0 6px;
+	margin: 6px;
 	overflow: hidden;
 
 	&:after { // arrow (north)
 		content: "";
 		position: absolute;
-		left: 8px;
-    top: 7px;
     width: 18px;
     height: 18px;
 		background: $layer-background;
-		box-shadow:
-			0 0 0 1px hsla(0,0%,0%,0.1),
-			3px 3px 14px hsla(0,0%,0%,0.1);
 		transform: rotate(45deg);
+		box-shadow:
+			0 0 0 1px hsla(205,20%,30%,.15),
+			4px 4px 10px 1px hsla(0,0%,0%,.14),
+			1px 1px 14px 2px hsla(0,0%,0%,.12),
+			2px 2px 5px -3px hsla(0,0%,0%,.4);
 	}
 }
 
-.cui-layer-pointer--n:after {
+.cui-layer-pointer--n,
+.cui-layer-pointer--s {
+	margin: 0 6px;
+	height: 14px;
+
+	&:after {
+		top: 5px;
+		left: 14px;
+	}
+}
+
+.ez5-pane--has-footer .cui-layer-pointer--n:after {
 	background: $layer-header-pointer-background;
 }
 
 .cui-layer-pointer--s:after {
 	top: -9px;
+}
+
+.ez5-pane--has-header .cui-layer-pointer--s:after {
 	background: $layer-footer-background;
 }
 
 .cui-layer-pointer--e,
 .cui-layer-pointer--w {
-	width: 16px;
-	height: 37px;
+	width: 12px;
+	height: 46px;
 	margin: 6px 0;
+
+	&:after {
+		left: 5px;
+    top: 14px;
+	}
 }
 
 .cui-layer-pointer--e:after {
-	left: -9px;
+	left: -11px;
 }
 
 .cui-layer-root-menu .cui-layer-pointer {
 	height: 12px;
-	
+
 	&.cui-layer-pointer--e,
 	&.cui-layer-pointer--w {
-		width: 12px;
+		width: 9px;
 		height: 37px;
+
+		&:after {
+			top: 9px;
+		}
 	}
-	
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&:after {
+			left: 7px;
+		}
+	}
+
 	&:after {
 		background: white;
 	}
@@ -1693,6 +2140,11 @@ a[role="button"].cui-button-appearance-link {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	display: flex;
+
+	&--visible {
+		background: radial-gradient(hsla(205,30%,20%,.4), hsla(205,30%,20%,.6));
+	}
 
 	> div {
 		flex: 1 1 auto;
@@ -1739,158 +2191,58 @@ a[role="button"].cui-button-appearance-link {
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
 			border-radius: 0 0 5px 5px;
-			
-			// unset normal spacing
-			.cui-buttonbar > *:not(:last-child) {
-				margin-right: 0;
-			}
-			
-			.cui-button {
-				padding: $padding/2;
-				
-				&:last-child {
-					padding-right: $padding;
-				}
-				
-				&:first-child {
-					padding-left: $padding;
-				}
-			}
 		}
 	}
 }
 
-// Confirmation
-
+// Confirmation Dialog
 .cui-confirmation-dialog {
-	max-width: 400px;
-	background: hsl(205,7%,98%);
-
-	.cui-form-tr,
-	.cui-form-tr-header {
-		background: none;
-	}
-	
-	> .cui-simple-pane {
-		// layer-header
-		> .cui-vertical-layout-top {
-			overflow: visible;
-			
-			> .cui-pane-header {
-				background: none;
-				border-bottom-width: 0;
-				min-height: 0;
-				position: relative;
-				padding-right: 0;
-				
-				.cui-label {
-					margin-top: $padding;
-					font-weight: bold;
-					font-size: 15px;
-				}
-
-				.cui-buttonbar {
-					min-height: 0;
-				}
-
-				.cui-button {
-					padding: 11px 7px 4px 7px;
-					
-					.cui-button-visual {
-						border-width: 0;
-						background: none;
-						padding: 0;
-						height: auto;
-						color: hsl(205,6%,75%);
-					}
-				}
-			}
-		}
-		
-		// layer-footer
-		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			min-height: 0;
-			justify-content: space-between;
-			border: none;
-			background: none;
-			padding: 0;
-			
-			.cui-buttonbar {
-				height: 33px;
-				min-height: 33px;
-				margin-right: 0;
-			}
-
-			.cui-button-button {
-				flex: 1;
-				margin: 0;
-				height: 100%;
-				align-items: stretch;
-				padding: 0 !important;
-				
-				.cui-button-visual {
-					height: 100%;
-					border: none;
-					border-top: 1px solid hsl(210,11%,93%);
-					border-left: 1px solid hsl(210,11%,93%);
-					padding: 0 $padding;
-					border-radius: 0;
-					color: $highlight-color;
-					background: none;
-				}
-
-				&.cui-active .cui-button-visual {
-					color: $highlight-color;
-				}
-
-				&.cui-button--primary .cui-button-visual {
-					background: $highlight-color;
-					color: $on-highlight-color;
-					border-top-color: $highlight-color;
-					border-left-width: 0;
-				}
-			}
-
-			.cui-buttonbar {
-				flex: 1;
-			}
-
-			.cui-horizontal-layout-left,
-			.cui-horizontal-layout-center,
-			.cui-horizontal-layout-right {
-				flex: 1;
-
-				&:empty {
-					display: none;
-				}
-			}
-
-			.cui-horizontal-layout-left:empty +
-			.cui-horizontal-layout-center:not(:empty),
-			.cui-horizontal-layout-left:empty +
-			.cui-horizontal-layout-center:empty +
-			.cui-horizontal-layout-right,
-			.cui-horizontal-layout-left {
-				.cui-button:first-child .cui-button-visual {
-					border-left-width: 0;
-					border-bottom-left-radius: 4px;
-				}
-			}
-		}
-	}
-	
-	.cui-horizontal-layout-right {
-		margin-left: 0;
-	}
-
-	// maximise form table rows
-	.cui-form-table-has-not-left-column {
-		.cui-form-center {
-			flex-grow: 1;
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			max-width: 500px;
 		}
 	}
 }
 
+// Confirmation Choice
+.cui-confirmation-choice {
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			max-width: 300px; // don't make this bigger, make the text shorter
+		}
+	}
+}
+
+// Alert Problem (red)
+.cui-confirmation-dialog {
+	.cui-alert-problem {
+		> .cui-layer-pane {
+			> .cui-vertical-layout-center {
+				position: relative;
+				min-height: 66px;
+				max-width: 375px;
+				padding-left: 74px;
+				margin-right: 9px;
+				justify-content: center;
+
+				&:before {
+					font-family: 'FontAwesome';
+					content: "\f071";
+					font-size: 42px;
+					color: $neutral-color;
+					left: 14px;
+					top: 14px;
+					position: absolute;
+				}
+			}
+		}
+	}
+}
+
+// Spinner
+.cui-spinner {
+	min-width: 0;
+}
 
 // Tooltip
 .cui-layer-root-tooltip .cui-layer-pointer {
@@ -1906,7 +2258,9 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 260px;
 	max-height: 100px;
 	min-width: 0;
+	min-height: 0;
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 	background: $layer-background;
 	border-radius: 2px;
 	box-shadow:
@@ -1916,13 +2270,13 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-label {
 		font-size: 11px;
-    line-height: 14px;
-    padding: 3px 6px;
+		line-height: 14px;
+		padding: 3px 6px;
 	}
 
 	> .cui-simple-pane > .cui-vertical-layout-center {
 		padding: 0;
-		
+
 		> .cui-label:only-child {
 			margin: 0;
 		}
@@ -1934,29 +2288,41 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer-root-toaster .cui-layer {
 	font-size: 14px;
 	width: auto;
+	max-width: none;
 	min-width: 0;
-	user-select: none;
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+					user-select: none;
+	cursor: default;
 
-	> .cui-layout > .cui-vertical-layout-center {
-		padding: 0 $padding;
+	> .cui-layer-pane > .cui-vertical-layout-center {
+		padding: 7px $padding;
 	}
 }
 
 // Menu
 .cui-menu {
+	min-height: 0;
 	min-width: 0;
-	max-width: 200px; // when the width is wider its harder to see which arrow belongs to which row
   background: white;
   border-radius: 4px;
   padding: 4px 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 
 	.cui-item-list {
 		font-size: inherit;
 	}
 
-	.cui-button {
-		cursor: pointer;
+	.cui-tmpl-item-list-body {
+		> .cui-label {
+			max-width: 200px;
+		}
+	}
+
+	.cui-vertical-layout {
+		overflow: visible;
 	}
 }
 
@@ -1965,6 +2331,12 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-button--has-caret {
+	// IE 11 ignoring margin: auto when justify-content is set bugfix
+	// http://stackoverflow.com/a/37535548
+	.cui-button-visual {
+		justify-content: flex-start;
+	}
+
 	.cui-button-right {
 		margin-left: auto;
 	}
@@ -1977,15 +2349,15 @@ a[role="button"].cui-button-appearance-link {
 	  padding: $padding+3px $padding 3px;
 	  font-size: 0.9em;
 	  color: hsl(205,3%,50%);
-	  
+
 	  &.cui-empty-label {
 	  	padding: 6px $padding;
 	  }
-	  
+
 	  &:first-child {
 	  	padding-top: 6px;
 	  }
-	  
+
 	  &:last-child {
 	  	padding-bottom: 6px;
 	  }
@@ -1994,9 +2366,10 @@ a[role="button"].cui-button-appearance-link {
 	.cui-button,
 	.cui-button-href {
 	  align-items: stretch;
-	  
+
 	  .cui-button-visual {
 	  	justify-content: flex-start;
+	  	flex-grow: 1;
 		  padding: 0 $padding;
 			border: none;
 			border-radius: 0;
@@ -2004,19 +2377,33 @@ a[role="button"].cui-button-appearance-link {
 			line-height: 26px;
 	  }
 
-	  &:hover:not(.cui-disabled),
-	  &:active {
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				color: $item-list-color;
+				background: $item-list-pressed;
+			}
+		}
+
+	  &:hover {
 	  	.cui-button-visual {
-	  		color: hsl(205,7%,22%);
-				background: hsl(205,17%,98%);
+	  		color: $item-list-color;
+				background: $item-list-hover;
 			}
 	  }
 
 	  &.cui-active,
 	  &.cui-active:hover {
 	  	.cui-button-visual {
-	  		color: $on-highlight-color;
-	  		background: $highlight-color;
+	  		color: $button-active-text;
+	  		background: $button-active;
+	  	}
+	  }
+
+	  &.cui-disabled {
+	  	.cui-button-visual {
+				color: $disabled-color;
+				background: none;
 	  	}
 	  }
 
@@ -2025,10 +2412,17 @@ a[role="button"].cui-button-appearance-link {
 	  }
 	}
 
-	.cui-button-href {
-		&:hover:not(.cui-disabled) .cui-button-visual {
-			color: $highlight-color;
-		}
+	.cui-options .cui-button {
+		padding: 0;
+		flex: 1 1 auto;
+
+		.cui-button-visual {
+			padding-top: 4px;
+			padding-bottom: 4px;
+  		line-height: 18px;
+  		height: auto;
+  		min-height: 26px;
+  	}
 	}
 }
 
@@ -2054,23 +2448,70 @@ a[role="button"].cui-button-appearance-link {
 		// this button always has a left side
 		.cui-button-left {
 			padding-right: $padding;
-			width: 13px;
+			min-width: 13px;
 			box-sizing: content-box;
+			padding-left: 1px;
+		}
+		// add space to button without icon
+		.cui-button-center:first-child {
+			padding-left: 3px + $padding + 13px;
 		}
 	}
 }
 
 // Popover
+
 .cui-popover {
-	background: white;
+	background: $layer-background;
 	min-width: 247px;
 }
 
-// Backdrop
-.cui-layer-root-modal,
-.cui-layer-root-confirmation-dialog {
-	.cui-layer-backdrop {
-		background: radial-gradient(hsla(205,30%,20%,.4), hsla(205,30%,20%,.6));
+// Hint Popover
+
+.cui-layer-root-hint-popover .cui-layer-pointer {
+	height: 10px;
+	width: 32px;
+
+	&.cui-layer-pointer--e,
+	&.cui-layer-pointer--w {
+		width: 9px;
+		height: 37px;
+
+		&:after {
+			top: 9px;
+		}
+	}
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&:after {
+			left: 7px;
+		}
+	}
+
+	&:after {
+		top: 3px;
+		background: $popover-hint-background;
+		box-shadow:
+			3px 3px 14px hsla(0,0%,0%,0.1);
+	}
+}
+
+.cui-hint-popover {
+	min-width: 0;
+	background: $popover-hint-background;
+	color: white;
+	padding: 7px 10px;
+	box-shadow: // remove dark outline from normal layer for a sharper edge
+		0 4px 20px hsla(205,20%,30%,.4),
+		0 2px 4px hsla(0,0%,0%,.1);
+
+	.cui-button-appearance-link[role] .cui-button-visual {
+		color: lighten(desaturate($highlight-color, 10%), 20%);
+	}
+
+	.cui-empty-label {
+		color: lighten($muted-color, 14%);
 	}
 }
 
@@ -2083,45 +2524,45 @@ a[role="button"].cui-button-appearance-link {
 	bottom: 0;
 	z-index: 1;
 	display: flex;
-	
-	.cui-wait-block-glass {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: $background;
-	}
+}
 
-	.cui-wait-block-inner {
-		display: flex;
-		flex: 1 1 auto;
-		position: relative;
-		
-		.cui-wait-block-header {
-			display: flex;
-			flex: 1 1 auto;
-			justify-content: center;
-			align-self: center;
-			
-			.cui-label {
-				.cui-label-icon i {
-					font-size: 21px;
-			    width: 21px;
-			    height: 21px;
-			    line-height: 21px;
-			  }
-				
-				.cui-label-content {
-					padding-left: $padding;
-				}
-			}
-		}
+.cui-wait-block-glass {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: $foreground;
+}
 
-		.cui-wait-block-content {
-			display: none;
+.cui-wait-block-inner {
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+}
+
+.cui-wait-block-header {
+	display: flex;
+	flex: 1 1 auto;
+	justify-content: center;
+	align-self: center;
+
+	.cui-label {
+		.cui-label-icon i {
+			font-size: 21px;
+	    width: 21px;
+	    height: 21px;
+	    line-height: 21px;
+	  }
+
+		.cui-label-content {
+			padding-left: $padding;
 		}
 	}
+}
+
+.cui-wait-block-content {
+	display: none;
 }
 
 // Tabs
@@ -2135,71 +2576,100 @@ a[role="button"].cui-button-appearance-link {
 		background: yellow;
 		transition: width 0.3s ease, left 0.3s ease;
 	}
-	> .cui-vertical-layout-top {
-		> .cui-pane-header {
-			min-height: $toolbar-height;
-			background: $toolbar-background;
-			padding-right: $padding/2;
-
-			.cui-horizontal-layout-center {
-				overflow: hidden;
-				flex-grow: 0;
-				justify-content: center;
-			}
-
-			/* overflowing tabs */
-			&.cui-tabs-pane-header--overflow {
-				.cui-horizontal-layout-center {
-					align-items: flex-start;
-					padding-left: $padding/2;
-					
-					.cui-tab-header-button:last-child {
-						.cui-button-visual {
-							border-top-right-radius: 0;
-							border-bottom-right-radius: 0;
-							border-right: none;
-						}
-					}
-				}
-			}
-		}
-	}
 	> .cui-vertical-layout-center {
+		flex-grow: 1;
+
 		> .cui-tmpl-tabs-bodies {
 			display: flex;
 			flex: 1 1 auto;
 			overflow: hidden;
 		}
 	}
+
+	&.cui-absolute > .cui-vertical-layout-center {
+		top: $toolbar-height + 1px; // 1px border
+	}
+}
+
+.cui-tabs-pane-header {
+	min-height: $toolbar-height;
+	background: $toolbar-background;
+
+	&.cui-tabs-pane-header--mini {
+		background: none;
+		border-bottom-width: 0;
+	}
+
+	.cui-buttonbar {
+		min-width: 0;
+	}
+
+		overflow: hidden;
+	> .cui-horizontal-layout-center {
+		flex-grow: 0;
+		margin-right: 0;
+	}
+
+	/* overflowing tabs */
+	&.cui-tabs-pane-header--overflow {
+		> .cui-horizontal-layout-center {
+			padding-right: 0;
+			margin-right: 0;
+			overflow: hidden !important; // overwrite toolbar > center overflow visible
+
+			.cui-tab-header-button:last-child {
+				padding-right: 0;
+
+				.cui-button-visual {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+					border-right: none;
+				}
+			}
+		}
+	}
 }
 
 .cui-tab {
 	margin-left: 0 !important;
-	// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
-	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
+	// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
+	flex: 1 1 auto;
 	overflow: auto;
-	
+	-webkit-overflow-scrolling: touch;
+
 	&.cui-tab-hidden {
 		display: none;
+	}
+
+	> .cui-empty-label:only-child {
+		margin: $padding 0;
 	}
 }
 
 .cui-toolbar .cui-tab-header-button-overflow,
 .cui-toolbar .cui-tab-header-button {
 	font-size: inherit;
-		
+	padding: 0;
+
 	.cui-button-visual {
-		border: none;
 		background: none;
-		color: hsl(205,15%,43%);
+		color: $button-active;
 		height: 26px;
 		line-height: 24px;
-		min-width: 80px;
+		min-width: 40px;
 		padding: 0 $padding;
-		border-radius: 0;
-		border: 1px solid hsl(205,15%,43%);	
+		border: 1px solid;
+	}
+
+	&.cui-button-size-mini {
+		height: auto;
+
+		.cui-button-visual {
+			height: 24px;
+			line-height: 23px;
+		}
 	}
 
 	&:first-child .cui-button-visual {
@@ -2212,92 +2682,251 @@ a[role="button"].cui-button-appearance-link {
 		border-bottom-right-radius: 3px;
 	}
 
-	&.cui-active .cui-button-visual {
-		color: $on-highlight-color;
-		background: hsl(205,15%,43%);
+	&.cui-active {
+		.cui-button-visual {
+			color: $on-highlight-color;
+			background: $button-active;
+			border-color: $button-active-border;
+		}
+
+		&:active {
+			.cui-button-visual {
+				color: $button-active-pressed-text;
+				background: $button-active-pressed;
+				border-color: $button-active-pressed-border;
+			}
+		}
 	}
+
+	&.cui-disabled {
+		.cui-button-visual {
+			color: lighten($button-active, 32%);
+		}
+
+		&:not(:first-child) {
+			.cui-button-visual {
+				border-left-color: $button-active;
+			}
+		}
+
+		+ .cui-disabled {
+			.cui-button-visual {
+				border-left-color: currentColor;
+			}
+		}
+	}
+}
+
+.cui-toolbar .cui-tab-header-button {
+	&:first-child {
+		padding-left: $padding;
+	}
+
+	&:last-child {
+		padding-right: $padding;
+	}
+}
+
+.cui-toolbar .cui-tab-header-button-overflow {
+	padding-right: $padding;
 }
 
 .cui-toolbar {
 	&.cui-tabs-pane-header--scroll-at-end {
-		.cui-tab-header-button-overflow {
+		.cui-tab-header-button-overflow .cui-button-visual {
 			box-shadow: none;
 		}
 	}
 
 	.cui-tab-header-button-overflow {
-		border-top-left-radius: 0 !important;
-		border-bottom-left-radius: 0 !important;
-		min-width: 0;
 		align-self: center;
-		padding: 0 $padding;
-		font-size: 14px;
 		position: relative;
 		z-index: 1; // to overlap active buttons
-		box-shadow:
-			-1px 0 hsla(0,0%,0%,.10),
-			-2px 0 hsla(0,0%,0%,.08),
-			-3px 0 hsla(0,0%,0%,.05),
-			-4px 0 hsla(0,0%,0%,.02),
-			-5px 0 hsla(0,0%,0%,.01);
+
+		.cui-button-visual {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			box-shadow:
+				-1px 0 hsla(0,0%,0%,.10),
+				-2px 0 hsla(0,0%,0%,.08),
+				-3px 0 hsla(0,0%,0%,.05),
+				-4px 0 hsla(0,0%,0%,.02),
+				-5px 0 hsla(0,0%,0%,.01);
+		}
 	}
 }
 
-
-$table-data-height: 26px;
-$table-data-padding: 4px;
-
 // ListView
 .cui-list-view {
-	[cui-lv-quadrant="0"],
-	[cui-lv-quadrant="1"] {
-		color: hsl(0,0%,30%);
+	flex-shrink: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+
+	.cui-label-size-normal {
+		line-height: $table-data-height - $table-data-padding*2;
 	}
 
-	.cui-label {
-		line-height: $table-data-height - $table-data-padding*2;
+	// Conflict: looks bad in list-views that include buttons
+	// .cui-data-field-output-label {
+	// 	padding: 6px 0;
+	// }
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+		display: flex;
+		flex-direction: column;
 	}
 
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
-			border-top: 1px solid $table-border;
+			border-top: 1px solid $border;
 		}
 	}
+
+	// nested list-view
+	// CONFLICT: background is not wanted in table views
+	// .cui-list-view {
+	// 	background: $foreground;
+	// }
+}
+
+.list-view-header-row {
+	.cui-label {
+		align-items: flex-end;
+	}
+
+	&:nth-child(n+2) {
+		.cui-lv-td {
+			overflow: visible;
+
+			&:after {
+				top: -2px;
+			}
+		}
+	}
+}
+
+.cui-lv-row-move-target {
+	height: 4px;
+	background: $highlight-color;
+	margin-top: -2px;
+	position: absolute;
+	z-index: 4;
+}
+
+.cui-lv-row-move {
+	position: absolute;
+	z-index: 4;
+	background: $highlight-color;
+	opacity: 0.3;
 }
 
 .cui-lv-td {
 	padding: $table-data-padding $padding;
-	width: 135px;
-	min-height: $table-data-height;
-	flex: 0 0 auto;
+	width: 125px;
+	min-height: $td-height;
 	overflow: hidden;
+	flex-shrink: 0;
 	display: flex;
+	align-items: flex-start;
+	box-sizing: content-box;
 
-	&.cui-lv-td-rotate-90 {
-		width: 25px;
+	.cui-lv-td {
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+
+	&-rotate-90 {
+		width: 12px;
+
+		.cui-tree-node-spacer {
+			display: none;
+		}
+
 		> .cui-tmpl-label-rotate-90 {
 			word-break: break-all;
-			height: 100px;
-			> .cui-label-transform {
-				width: 100px;
-			}
+			margin-left: -3px;
+		}
+
+		.cui-data-field {
+			flex-grow: 0;
 		}
 	}
 
-	&.cui-lv-td-fill {
-		padding: 2px;
+	&-fill {
+		// UNCLEAR - why padding? has to be reset when its not used
+		//padding: 2px;
 		min-height: 0;
 	}
 
-	&.cui-lv-td-max {
-		flex: 1 1 auto;
-		width: auto;
+	&-max {
+		flex-grow: 1;
+
+		~ .cui-lv-td:last-child {
+			flex-grow: 0;
+		}
+	}
+
+	&:last-child {
+		flex-grow: 1;
+	}
+
+	.cui-label-multiline {
+		// UNCLEAR - doesn't look good on single line multiline labels
+		// align-self: flex-start;
 	}
 }
 
+.cui-lv-th {
+	cursor: default;
+}
+
+// List View Grid
+
+.cui-list-view-grid {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+}
+
+// eg. header
 .cui-list-view-grid-quadrant-0,
 .cui-list-view-grid-quadrant-1 {
+	overflow: hidden;
+
+	.cui-button {
+		height: 100%;
+		flex: 1 1 auto;
+		align-items: stretch;
+
+		.cui-button-left {
+			padding-right: 6px;
+		}
+
+		.cui-button-center {
+			flex: 1 1 auto;
+			justify-content: flex-start;
+		}
+
+		.cui-button-visual {
+			@include button-reset;
+		}
+	}
+
+	.cui-label {
+		font-weight: bold;
+
+		&-multiline {
+			align-self: flex-end;
+			max-width: none;
+		}
+	}
+
 	.cui-lv-td {
+		align-items: flex-end;
 		position: relative;
 
 		&:after { // table-head line
@@ -2312,7 +2941,13 @@ $table-data-padding: 4px;
 	}
 }
 
+.cui-list-view-grid-quadrant-0 {
+	flex: 0 0 auto;
+}
+
 .cui-list-view-grid-quadrant-1 {
+	flex: 1 1 auto;
+
 	.cui-lv-td:last-child:after {
 		display: none;
 	}
@@ -2320,7 +2955,13 @@ $table-data-padding: 4px;
 
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
-		border-bottom: 1px solid $table-border;
+		.cui-list-view-grid-quadrant {
+			border-bottom: 1px solid $table-border;
+
+			&:empty {
+				border-bottom-width: 0;
+			}
+		}
 	}
 }
 
@@ -2340,30 +2981,10 @@ $table-data-padding: 4px;
 //	}
 // }
 
-.cui-list-view-grid {
-	font-size: 12px;
-	flex: 1 1 auto;
-	display: flex;
-	flex-direction: column;
-	// needed for resize tool to position the resize
-	// handles properly
-	position: relative;
-	
-	// .cui-list-view-row-move-handle {
-	// 	display: none;
-	// }
-	
-	// &.cui-list-view-has-row-move {
-	// 	.cui-list-view-row-move-handle {
-	// 		display: flex;
-	// 	}
-	// }
-}
-
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
 	display: flex;
-	
+
 	// breaks the headers - they should be left aligned
 	// .cui-lv-td {
 	// 	justify-content: flex-end;
@@ -2373,36 +2994,7 @@ $table-data-padding: 4px;
 .cui-list-view-grid-inner-bottom {
 	flex: 1 1 auto;
 	display: flex;
-}
-
-.cui-list-view-grid-quadrant-0 {
-	flex: 0 0 auto;
-	overflow: hidden;
-}
-
-// eg. header
-.cui-list-view-grid-quadrant-1 {
-	flex: 1 1 auto;
-	overflow: hidden;
-	
-	.cui-button {
-		height: 100%;
-		flex: 1;
-		align-items: stretch;
-		
-		.cui-button-left {
-			padding-right: 6px;
-		}
-
-		.cui-button-center {
-			flex: 1;
-			justify-content: flex-start;
-		}
-		
-		.cui-button-visual {
-			@include button-reset;
-		}
-	}
+	min-height: 0; // FF scroll fix
 }
 
 .cui-list-view-grid-quadrant-2 {
@@ -2413,26 +3005,27 @@ $table-data-padding: 4px;
 .cui-list-view-grid-quadrant-3 {
 	flex: 1 1 auto;
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
 	.cui-lv-tr-outer {
-		position: relative;
-		
 		&:nth-child(even) {
-			background: $zebra-color;
+			> .cui-lv-tr > .cui-lv-td {
+				background: $zebra-color;
+			}
+
+			.cui-label-manage-overflow-button-container {
+				background-image: linear-gradient(#{transparentize($zebra-on-foreground-color, 1)}, #{transparentize($zebra-on-foreground-color, 0)});
+			}
+
+			&.cui-selected {
+				.cui-label-manage-overflow-button-container {
+					background-image: linear-gradient(#{transparentize($row-highlight, 1)}, #{transparentize($row-highlight, 0)});
+				}
+			}
 		}
-		
-		// &:not(:last-child):after {
-		// 	content: "";
-		// 	position: absolute;
-		// 	left: $padding/2;
-		// 	right: $padding/2;
-		// 	bottom: 0;
-		// 	height: 1px;
-		// 	background: hsl(0,0%,97%);
-		// }
 	}
 }
 
@@ -2442,22 +3035,34 @@ $table-data-padding: 4px;
 .cui-lv-tbody {
 	display: flex;
 	flex-direction: column;
+	max-width: 100%;
+	min-width: 0;
+	// flex-shrink: 1; CONFLICT: overwrites shrink: 0 of quadrant-0 and 2
 }
 
 .cui-lv-tr-outer {
-	// avoid the text select cursor on list items
-	cursor: default;
 	display: flex;
 	flex: 0 0 auto;
 	min-width: 0;
 	outline: none;
+	cursor: default;
 
 	&.cui-selected,
-	&:focus {
-		background: hsl(201,82%,92%) !important;
-		
+	&.cui-selected:nth-child(even),
+	&:focus,
+	&:focus:nth-child(even) {
+		> .cui-lv-tr > .cui-lv-td {
+			background: $row-highlight;
+		}
+
 		.cui-empty-label {
-			color: hsl(205,33%,63%);
+			color: $on-row-highlight-secondary-color;
+		}
+
+		&.cui-selected {
+			.cui-label-manage-overflow-button-container {
+				background-image: linear-gradient(#{transparentize($row-highlight, 1)}, #{transparentize($row-highlight, 0)});
+			}
 		}
 	}
 }
@@ -2466,23 +3071,40 @@ $table-data-padding: 4px;
 	flex: 1 1 auto;
 	display: flex;
 	max-width: 100%;
+	// padding: 0 $padding/2;
+
+	&:empty {
+		padding: 0;
+	}
 }
 
-.cui-list-view-row-move-handle-column {
-	display: none;
-	
+.cui-list-view-row-selectable {
+	cursor: pointer;
+}
+
+.cui-lv-row-move-handle-column {
 	&:after {
 		display: none;
 	}
 
 	&.cui-lv-td {
-		width: 10px + $table-data-padding*2+4;
-		padding: 0 2px 0 $table-data-padding+2;
+		width: $padding/2 + $table-data-padding*2+2;
+		padding-left: $table-data-padding+2;
+		padding-right: 0;
+	}
+
+	.cui-drag-handle-row {
+		display: none;
 	}
 }
 
-.cui-list-view-row-movable .cui-list-view-row-move-handle-column {
-	display: flex;
+.cui-list-view-row-movable .cui-lv-row-move-handle-column {
+	cursor: -webkit-grab;
+	cursor:         grab;
+
+	.cui-drag-handle-row {
+		display: block;
+	}
 }
 
 .cui-list-view-grid-quadrant-1,
@@ -2495,21 +3117,36 @@ $table-data-padding: 4px;
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	display: flex;
-	background: linear-gradient($zebra-color 50%, white 50%);
-	background-size: 100% $table-data-height*2;
 
 	> .cui-lv-tr {
 		border-style: none;
 	}
 
-	.cui-lv-td.cui-lv-td-fill {
-		padding: 0;
+	.cui-lv-td {
+		// leave padding-left and padding-right
+		// because its used to measure
+		// the column width for headers
+		padding-top: 0;
+		padding-bottom: 0;
+		background: linear-gradient($zebra-color 50%, white 50%);
+		background-size: 100% ($td-height + 2*$table-data-padding)*2;
 	}
 }
 
-.cui-tmpl-list-view-tool-col-resize-marker {
-	position: absolute;
-	cursor: col-resize;
+.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer .cui-lv-td {
+	background-image: linear-gradient(white 50%, $zebra-color 50%);
+}
+
+.cui-data-table {
+	.cui-lv-tr-fill-outer {
+		.cui-lv-td {
+			background-size: 100% $table-data-height*2;
+		}
+	}
+}
+
+.cui-lv-col-resize {
+	cursor: ew-resize !important;
 	// bigger grab area
 	margin: 0 -4px;
 	padding: 0 4px;
@@ -2522,86 +3159,428 @@ $table-data-padding: 4px;
 	}
 }
 
-.cui-list-view-tool-marker {
+.cui-lv-draggable {
 	position: absolute;
-	background: $zebra-color;
+	// background: $zebra-color;
 	opacity: 0.5;
 }
 
-// ListViewTree
+// List View with DataFields
 
+// Position tree-node- and drag-handle lower
+// because input fields make the rows higher
+// and make the filler higher
+.cui-lv--has-datafields {
+	// its sick.. but the only known way to make sure that it doesn't affect nested elements
+	> .cui-vertical-layout-center {
+		> .cui-list-view-grid {
+			> .cui-list-view-grid-inner-bottom {
+				> .cui-list-view-grid-quadrant {
+					> .cui-lv-tr-outer {
+						> .cui-lv-tr {
+							> .cui-lv-td {
+								> .cui-tree-node {
+									> .cui-tree-node-handle {
+										height: 24px;
+									}
+								}
+
+								> .cui-drag-handle-row {
+									margin-top: 7px;
+								}
+
+								&.cui-lv-row-move-handle-column {
+									padding-top: $table-data-padding;
+									padding-bottom: $table-data-padding;
+								}
+							}
+						}
+					}
+					> .cui-lv-tr-fill-outer .cui-lv-td {
+						background-size: 100% 64px;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Tree Node + Handle
+.cui-tree-node {
+	display: flex;
+	flex: 1 1 auto;
+	max-width: 100%;
+}
+
+.cui-tree-node-handle,
+.cui-tree-node-spacer {
+	width: 14px;
+	flex: 0 0 auto;
+	padding-right: 6px;
+}
+
+.cui-tree-node-handle {
+	height: 18px;
+	display: flex;
+	text-align: center;
+	justify-content: flex-end;
+	align-items: center;
+
+	&.cui-tree-node-is-closed {
+		cursor: pointer;
+	}
+
+	&.cui-tree-node-is-open {
+		cursor: pointer;
+
+		.fa {
+			margin-top: 1px;
+		}
+	}
+}
+
+.cui-tree-node-content {
+	display: flex;
+	flex: 1 1 auto;
+	min-width: 0;
+	flex-wrap: wrap;
+
+	.cui-label {
+		min-width: 0;
+		flex-shrink: 1;
+		// padding: 0; CONFLICT removes padding from tags that are inside node content
+
+		.fa {
+			line-height: 1;
+		}
+	}
+}
+
+// ListViewTree
 .cui-list-view-grid {
 	&.cui-list-view-tree-no-hierarchy {
 		.cui-tree-node-handle {
 			display: none !important;
 		}
 	}
-	.cui-tree-node {
-		display: flex;
-		flex: 1 1 auto;
-		max-width: 100%;
+}
 
-		.cui-tree-node-handle,
-		.cui-tree-node-spacer {
-			width: 12px;
-			flex: 0 0 auto;
-			padding-right: 5px;
+// Table
+.cui-table {
+	display: table;
+	// border: 1px solid $table-border;
+}
+
+.cui-table-row {
+	&:nth-child(even) .cui-table-td {
+		background: $zebra-color;
+	}
+}
+
+.cui-table-td {
+	vertical-align: middle;
+}
+
+.cui-table-header {
+	~ .cui-table-row {
+		&:nth-child(odd) .cui-table-td {
+			background: $zebra-color;
 		}
 
-		.cui-tree-node-handle {
-			display: flex;
-			text-align: center;
-			align-items: center;
-			justify-content: flex-end;
-			
-			.fa {
-				margin-top: -2px;
-			}
-		}
-
-		.cui-tree-node-content {
-			flex: 1 1 auto;
-			min-width: 0;
-			
-			.cui-label {
-				max-width: 100%;
-			}
+		&:nth-child(even) .cui-table-td {
+			background: none;
 		}
 	}
 }
 
-// Table
 .cui-tr {
-	display: flex;
-	@include padding-y(0.5);
+	display: table-row;
+
+	// &:nth-child(odd) {
+	// 	background: $zebra-color;
+	// }
+
+	&.cui-table-header {
+		background: transparent;
+	}
 }
 
-.cui-td {	
-	&[colspan]{		
+.cui-th,
+.cui-td {
+	display: table-cell;
+	padding: $padding/2 $padding;
+	vertical-align: top;
+
+	&[colspan]{
 		> label,
 		> .cui-label {
 			margin-bottom: $padding/2;
 		}
 	}
+
+	> .cui-empty-label {
+		padding: 0;
+	}
+}
+
+.cui-td--key {
+	text-align: right;
+	padding-right: 0;
+	vertical-align: top;
+}
+
+.cui-td--text-content {
+	vertical-align: top;
+	white-space: pre-wrap;
+}
+
+.cui-td--value {
+	vertical-align: top;
+	word-break: break-all;
+	width: 100%;
+	// position: relative;
+
+	// > span {
+	// 	position: absolute;
+ //    right: 10px;
+ //    left: 10px;
+ //    @include ellipsis;
+ //  }
+}
+
+.cui-th {
+	position: relative;
+	border-bottom: 1px solid $table-header-border;
+	padding: $padding/2 - 1px $padding;
+	font-size: 0.85em;
+
+	&:after { // table-head line
+		content: "";
+		position: absolute;
+		right: 0;
+		top: 2px;
+		bottom: 2px;
+		width: 1px;
+		background: $table-header-border;
+	}
+
+	&:last-child:after {
+		display: none;
+	}
+}
+
+// Table Row Base-Widths
+
+.cui-td--url input {
+	width: 300px;
+}
+
+.status-2d-map {
+	.cui-tr {
+		&:nth-child(odd):not(:first-child) {
+			background: $zebra-color;
+		}
+
+		&:first-child {
+			.cui-td {
+				border-bottom: 1px solid $table-border;
+				position: relative;
+
+				&:not(:last-child):after {
+					content: "";
+					position: absolute;
+					right: 0;
+					margin: 3px 0;
+					top: 0;
+					bottom: 0;
+					width: 1px;
+					background: $table-border;
+				}
+			}
+		}
+	}
+}
+
+// Nested Table
+.cui-table .cui-table {
+	.cui-tr {
+		background: $foreground;
+	}
 }
 
 // Form
 .cui-form {
-	align-self: stretch !important;
+	margin: $padding;
+	overflow: visible;
+
+	&.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
+		.cui-form-key {
+			max-width: none;
+
+			label {
+				word-break: break-all;
+				white-space: normal;
+				min-width: $td-min-width;
+			}
+		}
+
+		/* .cui-form-value { */
+		/* 	width: 100%; */
+		/* 	position: relative; */
+
+		/* 	> .cui-data-field { */
+		/* 		&:before { */
+		/* 			content: ""; */
+		/* 			height: 24px; */
+		/* 			float: left; */
+		/* 		} */
+		/* 		position: absolute; */
+		/* 		left: 0; */
+		/* 		right: 0; */
+		/* 	} */
+		/* } */
+	}
 }
 
-table.cui-form-table {
-	@include flex-table();
+.cui-form--grid {
+	.cui-form-table {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 10px 0 !important; // overwrite cui-form-table[cui-form-depth="0"]
+		width: 100% !important;
+	}
+
+	.cui-form-tr {
+		display: block;
+		padding: 0 10px;
+		width: 100%;
+
+		$sizes: "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5";
+
+		@each $size in $sizes {
+			&[data-cui-grid="#{$size}"] {
+				width: calc(#{$size} * 100%);
+			}
+		}
+
+		@include phone {
+			width: 100% !important;
+		}
+	}
+
+	.cui-form-td {
+		display: block;
+	}
+
+	.cui-form-key {
+		max-width: none;
+		width: auto;
+		min-width: 0;
+		padding-bottom: 2px;
+	}
+
+	.cui-form-value {
+		width: auto;
+		padding-top: 0;
+
+		.cui-output {
+			font-weight: bold;
+
+			&-empty {
+				font-weight: normal;
+			}
+		}
+	}
 }
 
-// .cui-form-table {
-// 	margin: 0;
-// }
+.cui-form-container {
+	flex-grow: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+
+	&.cui-form--horizontal {
+		flex-direction: row;
+
+		> .cui-form-row {
+			flex-grow: 0;
+			min-width: 0;
+			margin-bottom: 0;
+			margin-right: $padding;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.cui-form-row {
+	flex-grow: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: $padding;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.cui-form-table {
+	display: table;
+	width: 100%;
+	margin: 0;
+
+	@include phone {
+		display: block;
+	}
+
+	&[cui-form-depth="0"] {
+		width: calc(100% - #{2*$padding});
+		margin: $padding;
+	}
+
+	& + .cui-form-table {
+		margin-top: -$padding;
+	}
+
+	.cui-tr {
+		display: table-row;
+
+		&:nth-child(2n+1) {
+			background: none;
+		}
+	}
+
+	.cui-th,
+	.cui-td {
+		display: table-cell;
+		width: auto;
+	}
+
+	.cui-data-field {
+		// margin: 0;	// UNCLEAR conflict with multi-input spacing
+	}
+
+	.cui-select [data-max-chars] {
+		width: auto;
+	}
+}
+
+.cui-form-table-has-not-left-column {
+	> .cui-tr > .cui-td.cui-form-key {
+		display: none;
+	}
+}
 
 .cui-form-tr,
 .cui-form-tr-header {
-	display: flex;
-	position: relative;
+	display: table-row;
+
+	@include phone {
+		display: block;
+	}
 }
 
 .cui-form-tr {
@@ -2610,117 +3589,93 @@ table.cui-form-table {
 		margin-top: -$padding;
 		margin-bottom: -$padding;
 
-		.cui-form-tr {			
+		.cui-form-tr {
 			&:before {
 				left: 0;
 				right: 0;
 			}
 		}
 
-		.cui-form-left,
+		.cui-form-key,
 		.cui-form-right {
+			max-width: none;
 			width: auto;
+			min-width: 0;
 		}
 
-		.cui-form-left {
+		.cui-form-key {
 			padding-left: 0;
 			padding-right: 0;
 		}
 	}
-	
-	.cui-form-options-table .cui-form-center {
+
+	.cui-form-options-table .cui-form-value {
 		width: 70px;
 	}
 }
 
-.cui-form-center {
-	flex-grow: 1;
-	
-	.cui-data-field {
-		max-width: 230px;
+.cui-form-td {
+	display: table-cell;
+	padding: $padding/2 0;
+	vertical-align: top;
+
+	@include phone {
+		display: block;
+
+		&.cui-form-key {
+			padding-bottom: 2px;
+		}
+
+		&.cui-form-value {
+			padding-top: 0;
+		}
 	}
 }
 
-[cui-form-depth="0"] > .cui-form-tr-header,
-.cui-form-table-has-left-column .cui-form-tr-content-is-form-vertical > .cui-form-left {
-	width: auto;
-	padding: 3*$padding 0 $padding/2;
-	margin: 0 $padding;
-	border-bottom: 1px solid hsl(205,10%,95%);
-	text-align: left;
+.cui-form-key {
+	width: $td-width;
+	min-width: $td-width;
+	padding-right: 10px;
 
-	.cui-label,
 	label {
-		font-weight: bold;
-	}
-
-	.cui-form-left {
-		padding: 0;
-	}
-
-	.cui-form-center {
-		display: none;
-	}
-
-	& + .cui-form-tr:before {
-		display: none;
+		display: inline-block;
+		margin: 4px 0;
+		// word-break: break-all; CONFLICT: creates crossword puzzles in IE11
+		word-wrap: break-word;
+		word-break: break-word;
 	}
 }
 
-.cui-form-tr.cui-form-tr-content-is-form-vertical {
-	flex-direction: column;
-	padding: 0;
-	
-	.cui-form-table[cui-form-depth="2"] > .cui-form-tr {
-		&:before {
-			left: $padding*2.5;
-		}
+.cui-form-table:not([cui-form-depth="0"]) {
+	// CONFLICT: break ins layer
+	// .cui-form-value {
+	// 	// push the width in inner tables to the maximum
+	// 	width: 100%;
+	// }
+}
 
-		> .cui-form-left {
-			padding-left: $padding*2.5;
-		}
-	}
-	
-	.cui-form-table[cui-form-depth="3"] > .cui-form-tr {
-		&:before {
-			left: $padding*5;
-		}
+.cui-form-value {
+	flex-grow: 1;
+	// CONFLICT: kills the spacing when the label is multi-line
+	// vertical-align: middle;
 
-		> .cui-form-left {
-			padding-left: $padding*5;
-		}
+	.cui-checkbox {
+		padding-top: 2px; // nudge down a bit to align with label
 	}
 
-	.cui-form-center {		
-		.cui-data-field {
-			max-width: none;
-		}
-
-		.cui-table {
-			.cui-form-left {
-				width: auto !important;
-				padding: 0 0 0 10px;
-			}
-
-			.cui-form-center {
-				padding-right: 0;
-			}
-		}
+	> .cui-data-field {
+		min-width: 0;
 	}
 }
 
-// hacky 1px line instead of empty form-left that shouln't be here
-[cui-form-depth="1"] .cui-form-tr-content-is-form-vertical:not(.cui-form-table-has-left-column){
-	> .cui-form-left {
-		height: 1px;
-		margin: 0 $padding;
-		padding: 0;
-		overflow: hidden;
-		background: hsl(205,10%,95%);
-		
-		&:before {
-			display: none;
-		}
+.cui-form-tr-content-is-form-vertical {
+	.cui-form-table {
+		margin: 0;
+		width: 100%;
+	}
+
+	> .cui-form-value {
+		padding: 0 !important;
 	}
 }
 
@@ -2751,50 +3706,115 @@ table.cui-form-table {
 }
 
 .cui-data-field {
-	flex: 1;
+	flex: 1 1 auto;
+	max-width: 100%;
+	margin: 0;
+
+	.cui-list-view-grid-quadrant-3 {
+		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+	}
+
+	.cui-lv-row-move-handle-column {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	&-disabled {
+		opacity: 0.3;
+
+		.cui-data-field-disabled {
+			opacity: 1;
+		}
+	}
+
+	.cui-object-dumper {
+		border: 1px solid $table-border;
+
+		.cui-list-view-grid-quadrant-3 {
+			min-height: auto;
+		}
+	}
 }
 
+.cui-data-field-proxy {
+	// could be a list view, thus min-height: 0;
+	min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cui-data-field-proxy	> .cui-button-button,
+.cui-data-field-input	> .cui-button-select {
+	width: 100%;
+}
+
+.cui-data-field-proxy > .cui-label,
 .cui-data-field-output-label {
-	line-height: 24px;
+	padding: 3px 0;
+
+	&.cui-label-multiline {
+		max-width: 400px;
+	}
+}
+
+.cui-output {
+	&-empty {
+		color: $muted-color;
+	}
+
+	&--deletable {
+		display: flex;
+
+		.cui-label {
+			flex-shrink: 1;
+			min-width: 0;
+		}
+
+		.cui-button {
+			margin-left: $padding/2;
+		}
+	}
+
+	&--no-padding {
+		.cui-label {
+			padding: 0;
+		}
+	}
 }
 
 .cui-data-field-hidden {
-	display: none;
+	display: none !important;
 }
 
 .cui-form-table-has-left-column {
-	.cui-form-left,
+	.cui-form-key,
 	.cui-form-right {
-		width: 135px;
+		// width: $td-width;
+		// UNCLEAR breaks web-link configuration popover table layout
 	}
 
-	.cui-form-left {
-		padding: 4px $padding;
-		display: block;
+	.cui-form-key {
+		line-height: 24px;
 		text-align: right;
 		@include ellipsis;
 	}
 
-	.cui-form-center {
+	.cui-form-value {
 		padding-right: $padding;
+	}
+
+	.cui-form-td {
+		border-top: 1px solid hsl(205,10%,96%);
 	}
 
 	.cui-form-tr,
 	.cui-form-tr-header {
-		padding: $padding 0 $padding - 1px;
+		// padding-top: 1px;
+		// UNCLEAR forms already have padding in
+		// padding: $padding 0 $padding - 1px;
 
-		&:before {
-			content: "";
-			position: absolute;
-			left: $padding;
-			right: $padding;
-			height: 1px;
-			top: 0;
-			background: hsl(205,10%,96%);
-		}
-
-		&:first-child:before {
-			display: none;
+		&:first-child .cui-form-td {
+			border-top-width: 0;
 		}
 	}
 }
@@ -2802,7 +3822,7 @@ table.cui-form-table {
 .cui-maximize-horizontal > .cui-vertical-layout-center {
 	> .cui-form-table {
 		> tr {
-			> .cui-form-td.cui-form-center {
+			> .cui-form-td.cui-form-value {
 				flex: 1 1 auto;
 				width: 200px;
 			}
@@ -2811,9 +3831,35 @@ table.cui-form-table {
 
 	> .cui-form-table-vertical {
 		> .cui-tr {
-			> .cui-form-center {
+			> .cui-form-value {
 				flex-shrink: 1;
 				min-width: 0;
+			}
+		}
+	}
+}
+
+.cui-form-popover {
+	&.cui-vertical-layout {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.cui-vertical-layout-center {
+		.cui-button {
+			flex-grow: 1;
+			padding: 0;
+		}
+
+		+ .cui-vertical-layout-bottom {
+			margin: 5px 0 0;
+
+			&:empty {
+				display: none;
+			}
+
+			.cui-empty-label {
+				padding: 0;
 			}
 		}
 	}
@@ -2822,95 +3868,155 @@ table.cui-form-table {
 
 // Options
 
-.cui-options-active {
-	margin-bottom: $padding;
+.cui-options-inactive {
+	margin-top: $padding;
 }
 
 .cui-options-sortable-option {
 	display: flex;
-	
+
 	.cui-options-sortable-drag-handle {
 		width: 16px;
 		display: flex;
+		flex-shrink: 0;
 		margin-right: 2px;
-    padding: 0 3px 0 1px;
-    
-    .cui-drag-handle-row {
-    	margin-top: 5px;
-    }
+		padding: 0 4px 0 0;
+
+		.cui-drag-handle-row {
+			margin-top: 7px;
+		}
 	}
+}
+
+.cui-options-top .cui-label span:not(:empty) {
+	padding-bottom: 3px;
+	display: inline-block;
 }
 
 // align options with label if there is only one option
 .cui-options-center {
 	min-height: 24px;
-	justify-content: center;
-	
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	max-width: 450px;
+	flex-direction: column;
+
 	&:empty {
 		min-height: 0;
 	}
 
 	.cui-button {
-		height: 20px;
-		line-height: 20px;
+		padding: 1px 0;
+	}
+
+	.cui-data-field {
+		flex-grow: 0;
 	}
 }
 
+.cui-options--horizontal {
+	.cui-options-center {
+		flex-direction: row;
+	}
+}
+
+.cui-options--vertical {
+	.cui-options-inactive {
+		display: flex;
+		flex-direction: column;
+	}
+
+	[data-max-chars] {
+		width: auto !important;
+	}
+}
+
+.cui-options--sortable {
+	.cui-options-center {
+		flex-direction: column;
+	}
+}
+
+.cui-options-title {
+	font-weight: bold;
+}
+
 .cui-options-order-hint {
+	max-width: 250px;
 	font-size: 11px;
 	margin-top: $compensating-padding;
 	margin-left: 18px;
-	margin-bottom: 2px !important;
+	margin-bottom: 4px !important;
+	color: $secondary-color;
+}
+
+.cui-drag-drop-select-draggable,
+.cui-drag-drop-select-sortable {
+	cursor: -webkit-grab;
+	cursor:         grab;
+}
+
+
+.cui-lv-col-resize-handle {
+	position: absolute;
+	cursor: ew-resize;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: 0 -5px;
+	width: 10px;
+	z-index: 1;
+}
+
+.cui-drag-drop-select-lasso {
+	cursor: default;
 }
 
 .cui-drag-drop-select-sortable,
 .drag-drop-select-helper {
-	.cui-form-td.cui-form-left {
-		width: 12px;
-		padding: 0;
-		margin-right: $padding/2;
-		display: flex;
+	.cui-data-field {
+		max-width: none;
 	}
 }
 
 .cui-drag-handle-row {
+	margin-top: 2px;
+	flex: 1 1 auto;
+	height: 12px;
+	width: 100%;
+
+	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
+	background-size: 100% 3px;
+
 	&:hover {
 		opacity: 0.8;
 	}
-
-	flex: 1 1 auto;
-	cursor: move;
-	height: 12px;
-	margin-top: 8px;
-	width: 100%;
-
-	background: linear-gradient($drag-handle-color 1px, transparent 1px);
-	background-size: 100% 3px;
-}
-
-.cui-selected .cui-drag-handle-row {
-	background-image: linear-gradient($on-highlight-color 1px, transparent 1px);
-}
-
-// Drag and Drop
-
-.drag-drop-select-helper {
-	&.cui-tr {
-		padding: 0;
-	}
-}
-
-.cui-sortable-placeholder {
-	opacity: 0;
 }
 
 // DateTime
 .cui-date-time {
 	display: flex;
+	align-items: flex-end;
+	height: 24px;
+	line-height: 24px;
+
+	.cui-input-invalid-hint {
+		display: none;
+	}
+
+	.cui-input {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
 }
 
 .cui-date-time-calendar .cui-buttonbar {
 	justify-content: space-between;
+
+	.cui-button-select {
+		width: auto;
+	}
 }
 
 .cui-buttonbar-group-date,
@@ -2922,8 +4028,8 @@ table.cui-form-table {
 
 		&:last-child .cui-button .cui-button-visual {
 			border-right-width: 1px;
-			border-top-right-radius: $button-border-radius;
-			border-bottom-right-radius: $button-border-radius;
+			border-top-right-radius: $button-radius;
+			border-bottom-right-radius: $button-radius;
 			padding-right: 4px;
 		}
 
@@ -2962,6 +4068,10 @@ table.cui-form-table {
 	}
 }
 
+.cui-buttonbar-group-time {
+	margin-left: $padding;
+}
+
 .cui-date-time-input-center {
 	flex: 1 1 auto;
 
@@ -2971,6 +4081,7 @@ table.cui-form-table {
 
 	input {
 		position: relative;
+		min-width: 0; // was 80px - breaks scaling it down in a sidebar
 	}
 }
 
@@ -2980,9 +4091,11 @@ table.cui-form-table {
 	.cui-button {
 		margin-left: -1px;
 		height: 100%;
-		
+		vertical-align: bottom;
+
 		.cui-button-visual {
-			border-radius: 0;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
 			padding: 0 $padding/2;
 		}
 
@@ -2992,13 +4105,8 @@ table.cui-form-table {
 	}
 }
 
-.cui-date-time-month-header {
-	border-bottom: 1px solid hsl(205,11%,93%);
-	margin-bottom: $padding/4;
-}
-
 .cui-date-time-day {
-	border-radius: $button-border-radius;
+	border-radius: $button-radius;
 }
 
 .cui-date-time-previous-month,
@@ -3048,27 +4156,42 @@ table.cui-form-table {
 // DateTimeDate
 
 .cui-date-time-date {
-	@include flex-table;
-	margin: 0 0 $padding !important;
+	width: 100%;
+	margin: $padding 0;
 	flex-grow: 1;
+	border: none;
 
 	.cui-tr {
 		padding: 0;
+		display: flex;
+	}
+
+	.cui-th {
+		font-size: inherit;
+
+		&:after {
+			display: none;
+		}
 	}
 
 	.cui-td,
 	.cui-th {
-		width: calc(100% / 8 - 1px); // 8 columns
-		text-align: right;
+		width: calc(100% / 8); // 8 columns
+		text-align: center;
 		cursor: default;
 		justify-content: center;
-		padding-right: 7px;
-		line-height: 25px;
-		margin: 0 1px 1px 0;
+		padding: 5px 7px;
+		line-height: 18px;
 
-		&.cui-date-time-same-month {
+		&.cui-date-time-day {
 			cursor: pointer;
 		}
+	}
+
+	.cui-td {
+		width: calc(100% / 8 - 4px); // 8 columns
+		padding: 3px 5px;
+		margin: 2px;
 	}
 }
 
@@ -3077,15 +4200,17 @@ table.cui-form-table {
 .cui-menu.cui-date-time-60-select {
 	.cui-tmpl-item-list-body {
 		box-sizing: content-box;
-		width: 350px;
+		width: 370px;
 		display: flex;
+		flex-direction: row;
 		flex-wrap: wrap;
+
 		> * {
 			box-sizing: border-box;
 		}
 
 		.cui-button {
-			width: 35px;
+			width: 37px;
 			height: 30px;
 			align-items: center;
 			text-align: center;
@@ -3124,9 +4249,11 @@ table.cui-form-table {
 			display: flex;
 			// overflow: hidden; cuts off year-picker outline
 			flex: 1 1 auto;
+
 			.cui-number-input {
 				input {
-					width: 44px;
+					width: 4ch;
+					box-sizing: content-box;
 					min-width: 0;
 					text-align: center;
 				}
@@ -3147,40 +4274,66 @@ table.cui-form-table {
 	flex-direction: column;
   align-items: stretch;
 	flex: 1 1 auto;
+}
 
-	> .cui-multi-input-input {
-		display: flex;
-		
-		> .cui-data-field-multi-input-center {
-			flex: 1 1 auto;
-		}
+.cui-data-field-multi-input-center {
+	flex: 1 1 auto;
+}
 
-		> .cui-data-field-multi-input-right {
-			flex: 0 0 auto;
-			
-			.cui-button {
-				width: 25px;
-				margin-top: 2px;
-			}
-		}
+.cui-data-field-multi-input-right {
+	flex: 0 0 auto;
+	vertical-align: top;
+
+	.cui-button {
+		width: 25px;
 	}
 }
 
 .cui-multi-input-input {
-	@include margin-top(0.25);
+	display: flex;
+	margin-left: 0;
+	margin-right: 0;
+	@include margin-top(0.5);
 	position: relative;
+
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
+	background: $foreground;
+
+	&:focus,
+	&.cui-has-focus {
+		@include border-focus;
+	}
+
+	&.cui-data-field-hidden {
+		display: none !important;
+
+		+ .cui-multi-input-input {
+			margin-top: 0;
+		}
+	}
 
 	.cui-input,
 	.cui-textarea {
-		padding-right: 20px;
+		border: none;
+		background: none;
+		border-radius: 0;
+		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
+
+		&:focus {
+			box-shadow: none;
+		}
 	}
 }
 
-.cui-data-field-multi-input-right {
-	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: 1; // put in front of focused input field
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-multi-input-input {
+		input,
+		textarea {
+			min-height: 22px;
+		}
+	}
 }
 
 .cui-multi-input-tag-button {
@@ -3188,32 +4341,72 @@ table.cui-form-table {
 		@include button-reset;
 		color: hsl(0,0%,30%);
 		font-size: 10px;
-  	line-height: 20px;
-  	cursor: pointer;
+  	line-height: 22px;
   }
 }
 
 // Drag & Drop
 
-.cui-drag-drop-select-transparent {
+.cui-drag-drop-select-helper {
+	position: absolute;
+	z-index: 3; // above drop helper
+
 	pointer-events: none !important;
+
 	* {
 		pointer-events: none !important;
 	}
+
+	&.cui-tr {
+		padding: 0;
+	}
 }
 
+.cui-sortable-placeholder {
+	opacity: 0;
+}
 
 
 // Droppable
 
 .cui-droppable {
 	// marks an active droppable
-	opacity: 0.5;
+	// - in list views not neccesary because we have the droppable helper
+	// opacity: 0.5;
+}
+
+.cui-droppable-drop-helper {
+	box-shadow: 0 0 0 2px $highlight-color inset;
+	position: absolute;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.cui-droppable-target-helper {
+	//overwrite any other animation, its just temporary
+	transition: transform 300ms ease !important;
+}
+
+.cui-droppable-target-helper-y--after {
+	transform: translateY(-25%);
+}
+
+.cui-droppable-target-helper-y--before {
+	transform: translateY(25%);
+}
+
+.cui-droppable-target-helper-x--after {
+	transform: translateX(-25%);
+}
+
+.cui-droppable-target-helper-x--before {
+	transform: translateX(25%);
 }
 
 // Movable
 .cui-drag-drop-select-movable {
-	cursor: move;
+	cursor: -webkit-grab;
+	cursor:         grab;
 }
 
 // Resizable
@@ -3297,9 +4490,16 @@ table.cui-form-table {
 
 .cui-lasso {
 	position: absolute;
+	width: 1px;
+	height: 1px;
+	left: 0;
+	top: 0;
 	background-color: transparentize($highlight-color, 0.77);
 	display: block;
+	pointer-events: none;
 	z-index: 1;
+	will-change: transform;
+	transform-origin: left top;
 }
 
 .cui-drag-drop-select-lasso-element-in-lasso {
@@ -3311,8 +4511,12 @@ table.cui-form-table {
 // Block
 
 .cui-block {
-	background: $foreground;
-	border-bottom: 1px solid hsl(180,9%,93%);
+	border-bottom: 1px solid $soft-border;
+	flex-shrink: 0;
+
+	&:last-child {
+		border-bottom-width: 0;
+	}
 
 	&.cui-block-level-1 {
 		> .cui-block-header {
@@ -3328,111 +4532,170 @@ table.cui-form-table {
 	> .cui-block-header {
 		font-weight: bold;
 	}
+
+	&.cui-form-block {
+		> .cui-block-header {
+			font-size: inherit;
+			font-weight: inherit;
+		}
+
+		&--has-checkbox {
+			> .cui-block-content {
+				margin-left: 17px;
+			}
+		}
+	}
 }
 
 .cui-block-header {
-	padding: $padding $padding 0;
+	padding: $padding $padding 7px;
+
+	&:empty {
+		display: none;
+	}
 }
 
 .cui-block-content {
-	@include padding;
+	padding: 0 $padding $padding;
+
+	&:empty {
+		display: none;
+	}
+
+	.cui-form-table {
+		width: 100%;
+		margin: $padding 0;
+	}
+
+	.cui-block-header,
+	.cui-block-content {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 // StickyHeader
 
 .cui-sticky-header {
-	padding: 4px 10px;
-	font-size: 11px;
-	height: 22px;
-	margin-bottom: 10px;
-
-	&:not(:first-child) {
-		margin-top: $padding*2;
-		border-top: 1px solid hsl(0,0%,80%);
-	}
+	padding: 5px $padding;
+	font-size: 13px;
+	font-weight: bold;
+	color: $color;
+	// height: 22px; CONFLICT: unflexible
+	margin-bottom: $padding;
+	flex-basis: 100%;
+	margin-top: $padding*2;
+	border-top: 1px solid $soft-border;
 }
 
+.cui-sticky-header-control + .cui-sticky-header,
+.cui-sticky-header:first-child,
+.cui-block + .cui-sticky-header {
+	margin-top: 0;
+	border-top-width: 0;
+}
 
 .cui-sticky-header-control {
-	position: absolute;
+	position: fixed;
+	overflow: hidden;
+
 	top: 0;
 	left: 0;
 	right: 0;
+	height: 0;
+	z-index: 1;
 
 	.cui-tmpl-sticky-header {
 		margin: 0;
 		position: absolute;
 		left: 0;
 		right: 0;
-		font-weight: 600;
+		font-weight: bold;
 		background: hsla(0,0%,100%,.94);
 		border-top: none;
-		box-shadow: 0 1px hsla(0,0%,50%,.5);
-		margin-bottom: 1px;
+		box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
+	}
+}
+
+.cui-sticky-header-level-0 {
+	+ .cui-sticky-header-level-1 {
+		margin-top: 0;
 	}
 }
 
 // ProgressMeter
-.cui-tmpl-progress-meter {
+.cui-progress-meter {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	flex-grow: 1;
+	padding: 8px;
+	
 	.cui-progress-meter-bar {
-		height: 24px;
-		position: relative;
-		border-radius: $button-border-radius;
+		width: 100%;
+		max-width: 200px;
+		min-width: 30px;
+		height: $button-height;
+		line-height: $button-height;
+		border-radius: $button-radius;
 		overflow: hidden;
+		position: relative;
+		// to make sure that the border-radius will cut off all child backgrounds
+		// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
+		opacity: 0.9999;
+		background: lighten(desaturate($highlight-color, 93%), 26%);
+		color: white;
 
-		.cui-progress-meter-fill-background,
-		.cui-progress-meter-fill,
-		.cui-progress-meter-text {
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-		}
-		.cui-progress-meter-fill-background {
-			border-radius: $button-border-radius;
-			background: lighten(desaturate($highlight-color, 90%), 43%);
-		}
 		.cui-progress-meter-fill {
 			display: none;
 			background: $highlight-color;
-		}
-		.cui-progress-meter-text {
-			display: none;
-			color: white;
-			justify-content: center;
-			line-height: 24px;
-		}
-		.cui-progress-meter-icon {
-			display: flex;
 			position: absolute;
 			left: 0;
 			top: 0;
-			bottom: 0;
-			right: 0;
-			color: white;
-			align-items: center;
+			width: 100%;
+			height: 100%;
+		}
+		.cui-progress-meter-text {
+			display: none;
 			justify-content: center;
+			position: relative;
+		}
+		.cui-progress-meter-icon {
+			text-align: center;
+			position: relative;
 		}
 
 	}
 	&[state="waiting"] {
-		.cui-progress-meter-fill-background {
-			// reddish
-			// background-color: #ff6054;
-		}
 	}
 
 	&[state="percent"] {
 		.cui-progress-meter-icon {
 			display: none;
 		}
-		.cui-progress-meter-text {
-			display: flex;
-		}
+		.cui-progress-meter-text,
 		.cui-progress-meter-fill {
 			display: flex;
 		}
+	}
+}
+
+.cui-file-upload-drop-zone {
+	position: relative;
+
+	&.cui-file-upload-drag-over:after {
+		content: '';
+		pointer-events: none;
+		display: block;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		box-shadow: 0 0 0 2px $highlight-color inset;
+		z-index: 1;
 	}
 }
 
@@ -3469,31 +4732,102 @@ table.cui-form-table {
 }
 
 // Autocomplete
+.cui-tmpl-autocompletion-popup {
+	flex: 1 1 auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.cui-autocompletion-popup {
+	min-height: 0;
+}
+
 .cui-autocompletion-popup-container {
 	padding: 4px 0;
+
+	&:empty {
+		display: none;
+
+		+ .cui-autocompletion-popup-container.container-status {
+			border-top: none;
+		}
+	}
+
+	&.container-status {
+		padding: 4px $padding 7px;
+		background: $toolbar-background;
+		border-top: 1px solid $soft-border;
+
+		.cui-label {
+			color: $muted-color;
+			cursor: default;
+			font-size: 11px;
+			line-height: 14px;
+
+			& + .cui-button {
+				display: block;
+				padding: 7px 0 0;
+				height: auto;
+			}
+		}
+	}
 }
 
 .cui-autocompletion-popup-item {
 	padding: 3px $padding;
 	cursor: pointer;
 	color: hsl(205,7%,22%);
-	
-	&:hover {
+	outline: none;
+
+	&:hover,
+	&:focus {
 		background: hsl(205,17%,98%);
+	}
+
+	em {
+		font-weight: bold;
+		font-style: normal;
+	}
+
+	.cui-label {
+		max-width: 100%;
+	}
+
+	.cui-label-content {
+		flex-shrink: 1;
 	}
 }
 
 // Space
 .cui-space {
-	width: $small-gap;
+	margin: $padding;
+	display: inline-block;
+
+	&:empty {
+		margin: $padding/2;
+	}
+}
+
+.cui-small-space {
+	margin: $padding/2;
+	display: inline-block;
+
+	&:empty {
+		margin: $padding/4;
+	}
 }
 
 .cui-large-space {
-	width: $gap;
+	margin: $padding*2;
+	display: inline-block;
+
+	&:empty {
+		margin: $padding;
+	}
 }
 
 .cui-flexible-space {
-	flex: 1;
+	flex: 1 1 auto;
 }
 
 // Console
@@ -3510,9 +4844,17 @@ table.cui-form-table {
 	}
 }
 
+.cui-disabled {
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+	opacity: 0.33;
+	pointer-events: none;
+}
 
 // CUI technical stuff
-.cui-tmpl {
+.cui-tmpl,
+[data-template] {
 	// hide all templates
 	display: none !important;
 }
@@ -3520,4 +4862,14 @@ table.cui-form-table {
 @keyframes nodeInserted {
 	from { opacity: 0.99; }
 	to { opacity: 1; }
+}
+
+.cui-template-empty {
+	&.cui-label {
+		display: none !important;
+	}
+}
+
+[hidden] {
+	display: none !important;
 }

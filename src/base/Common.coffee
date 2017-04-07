@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 
 assert = (condition, caller, message, debug_output) ->
 	if not CUI.defaults.asserts
@@ -168,6 +175,9 @@ isBoolean = (obj) ->
 isElement = (obj) ->
 	obj instanceof HTMLElement
 
+isPosInt = (obj) ->
+	isInteger(obj) and obj >= 0
+
 isContent = (obj) ->
 	isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or isElement(obj?.DOM)
 
@@ -222,14 +232,6 @@ getFloat = (s) ->
 
 xor = (a,b) ->
 	!!((a && !b) || (!a && b))
-
-escapeAttribute = (data) ->
-	if isNull(data) or !isString(data)
-		return ""
-
-	data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
-	data
-
 
 toHtml = (data, space2nbsp) ->
 	if isNull(data) or !isString(data)
@@ -320,7 +322,7 @@ alert_dump = (v) -> alert(dump(v, "    "))
 # convert camel case to dash
 toDash = (s) ->
 	s = s + "U"
-	s1 = (s.substring(0,1) + s.substring(1).replace(/([A-Z](?![A-Z]))/g, ($1)->"-#{$1.toLowerCase()}"))
+	s1 = (s.substring(0,1) + s.substring(1).replace(/([A-Z](?![A-Z0-9]))/g, ($1)->"-#{$1.toLowerCase()}"))
 	s1 = s1.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 	s1 = s1.substring(0,s1.length-2)
 	s1.replace(/\./g, "-")
@@ -421,6 +423,14 @@ addToArray = (value, arr, compFunc) ->
 		return arr.length - 1
 	else
 		return idx
+
+# ucs-2 string to base64 encoded ascii
+utoa = (str) ->
+    window.btoa(unescape(encodeURIComponent(str)))
+
+# base64 encoded ascii to ucs-2 string
+atou = (str) ->
+    decodeURIComponent(escape(window.atob(str)))
 
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s

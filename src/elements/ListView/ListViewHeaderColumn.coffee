@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class ListViewHeaderColumn extends ListViewColumn
 
 	initOpts: ->
@@ -7,6 +14,8 @@ class ListViewHeaderColumn extends ListViewColumn
 		@removeOpt("element")
 
 		@addOpts
+			spacer:
+				check: Boolean
 			rotate_90:
 				check: Boolean
 			label:
@@ -33,8 +42,32 @@ class ListViewHeaderColumn extends ListViewColumn
 			@addClass("cui-lv-td-rotate-90")
 
 		@addClass("cui-lv-th")
+
+		listView = @getRow().getListView()
+
+		if not listView.hasResizableColumns()
+			return @__element
+
+		coldef = listView.getColdef(@getColumnIdx())
+		if coldef == "fixed"
+			return @__element
+
+		move_handle = CUI.DOM.element("DIV", class: "cui-lv-col-resize-handle")
+
+		new CUI.ListViewColResize
+			element: move_handle
+			row: @getRow()
+			column: @
+
+		CUI.DOM.append(@__element, move_handle)
 		@__element
 
 	render: ->
-		@__label.DOM
+		if @_spacer
+			arr = [ $div("cui-tree-node-spacer") ]
+		else
+			arr = []
+
+		arr.push(@__label.DOM)
+		arr
 

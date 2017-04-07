@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.ListViewRow extends CUI.Element
 
 	initOpts: ->
@@ -65,7 +72,7 @@ class CUI.ListViewRow extends CUI.Element
 			if not @listView.hasSelectableRows()
 				return false
 
-			if @getRowIdx() < @listView.fixedRowsCount
+			if @getDisplayRowIdx() < @listView.fixedRowsCount
 				return false
 
 		@__selectable
@@ -104,7 +111,7 @@ class CUI.ListViewRow extends CUI.Element
 	getDisplayRowIdx: ->
 		@listView?.getDisplayRowIdx(@row_i)
 
-	addedToListView: ->
+	addedToListView: (DOMNodes) ->
 		@__addedToListView = true
 
 	isAddedToListView: ->
@@ -181,7 +188,6 @@ class CUI.ListViewRow extends CUI.Element
 
 	isSelected: ->
 		!!@selected
-
 
 	remove: ->
 		@listView.removeRow(@row_i)

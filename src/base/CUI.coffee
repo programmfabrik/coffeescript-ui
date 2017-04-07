@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # Base class for the Coffeescript UI system. It is used for
 # Theme-Management as well as for basic event management tasks.
 #
@@ -13,8 +20,6 @@ class CUI
 		@CSS = new CUI.CSSLoader()
 
 		@getPathToScript()
-		@testSvgstoreFallback()
-
 		trigger_viewport_resize = =>
 			CUI.info("CUI: trigger viewport resize.")
 			Events.trigger
@@ -24,8 +29,11 @@ class CUI
 			type: "resize"
 			node: window
 			call: (ev, info) =>
-				CUI.info("CUI: caught window resize event.")
-				CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
+				console.info("CUI: caught window resize event.")
+				if CUI.__ng__ && !CUI.browser.ie
+					trigger_viewport_resize()
+				else
+					CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
 				return
 
 		Events.listen
@@ -49,24 +57,28 @@ class CUI
 				if ev.getKeyboard() == "c+"
 					CUI.toaster(text: "CUI!")
 
-				# backspace
+				# backspace acts as "BACK" in some browser, like FF
 				if ev.keyCode() == 8
-					if ev.getTarget().tagName in ["INPUT", "TEXTAREA"]
-						return
-					else
-						# CUI.info("swalloded BACKSPACE keydown event to prevent default")
-						ev.preventDefault()
+					for node in CUI.DOM.elementsUntil(ev.getTarget(), null, document.documentElement)
+						if node.tagName in ["INPUT", "TEXTAREA"]
+							return
+						if node.getAttribute("contenteditable") == "true"
+							return
+					# CUI.info("swalloded BACKSPACE keydown event to prevent default")
+					ev.preventDefault()
 				return
 
 		document.body.scrollTop=0
 
-		Template.load()
-		if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-			CUI.Template.loadFile("easydbui.html")
-			.done =>
+		CUI.Template.loadFile("icons.svg")
+		.done =>
+			Template.load()
+			if not Template.nodeByName["cui-base"] # loaded in easydbui.html
+				CUI.Template.loadTemplateFile("easydbui.html")
+				.done =>
+					@ready()
+			else
 				@ready()
-		else
-			@ready()
 		@
 
 	@getPathToScript: ->
@@ -80,11 +92,6 @@ class CUI
 
 		@pathToScript
 
-	@testSvgstoreFallback: ->
-		# IE Fallback for svgstore (IE till current Edge doesn't support use links to icons.svg#icon-name
-		test = new CUI.Icon()
-		if(test.detectIE())
-			test.injectSvgstore()
 
 	@ready: (func) ->
 		if func instanceof Function
@@ -116,7 +123,7 @@ class CUI
 		dfr.reject.apply(dfr, arguments)
 		dfr.promise()
 
-	# calls the as argument passed functions in order
+	# calls the as arguments passed functions in order
 	# of appearance. if a function returns
 	# a deferred or promise, the next function waits
 	# for that function to complete the promise
@@ -185,10 +192,86 @@ class CUI
 		dfr.promise()
 
 
+	@chunkWork: (_opts = {}) ->
+		opts = CUI.Element.readOpts _opts, "CUI.chunkWork",
+			items:
+				mandatory: true
+				check: (v) ->
+					CUI.isArray(v)
+			chunk_size:
+				mandatory: true
+				default: 10
+				check: (v) ->
+					v >= 1
+			timeout:
+				mandatory: true
+				default: 0
+				check: (v) ->
+					v >= -1
+			call:
+				mandatory: true
+				check: (v) ->
+					v instanceof Function
+
+		chunk_size = opts.chunk_size
+		timeout = opts.timeout
+
+		assert(@ != CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.")
+
+		idx = 0
+		len = opts.items.length
+
+		next_chunk = =>
+			progress = (idx+1) + " - " + Math.min(len, idx+chunk_size) + " / " +len
+			# console.error "progress:", progress
+
+			dfr.notify
+				progress: progress
+				idx: idx
+				len: len
+				chunk_size: chunk_size
+
+			go_on = =>
+				if idx + chunk_size >= len
+					dfr.resolve()
+				else
+					idx = idx + chunk_size
+					if timeout == -1
+						next_chunk()
+					else
+						CUI.setTimeout
+							ms: timeout
+							call: next_chunk
+				return
+
+			ret = opts.call.call(@, opts.items.slice(idx, idx+opts.chunk_size), idx, len)
+			if ret == false
+				# interrupt this
+				dfr.reject()
+				return
+
+			if isPromise(ret)
+				ret.fail(dfr.reject).done(go_on)
+			else
+				go_on()
+
+			return
+
+		dfr = new CUI.Deferred()
+		CUI.setTimeout
+			ms: Math.min(0, timeout)
+			call: =>
+				if len > 0
+					next_chunk()
+				else
+					dfr.resolve()
+
+		return dfr.promise()
+
 	# returns a Deferred, the Deferred
 	# notifies the worker for each
 	# object
-	@chunkWork: (objects, chunkSize = 10, timeout = 0) ->
+	@chunkWorkOLD: (objects, chunkSize = 10, timeout = 0) ->
 		dfr = new CUI.Deferred()
 
 		idx = 0
@@ -464,14 +547,47 @@ class CUI
 		else
 			decodeURIComponent(results[1].replace(/\+/g, " "))
 
+	@setSessionStorage: (key, value) ->
+		@__setStorage("sessionStorage", key, value)
+
+	@getSessionStorage: (key = null) ->
+		@__getStorage("sessionStorage", key)
+
+	@clearSessionStorage: ->
+		@__clearStorage("sessionStorage")
+
 	@setLocalStorage: (key, value) ->
-		data = @getLocalStorage()
-		data[key] = value
-		window.localStorage.setItem("CUI", JSON.stringify(data))
-		data
+		@__setStorage("localStorage", key, value)
 
 	@getLocalStorage: (key = null) ->
-		data_json = window.localStorage.getItem("CUI")
+		@__getStorage("localStorage", key)
+
+	@clearLocalStorage: ->
+		@__clearStorage("localStorage")
+
+	@__storage: localStorage: null, sessionStorage: null
+
+	@__setStorage: (skey, key, value) ->
+		data = @__getStorage(skey)
+		if value == undefined
+			delete(data[key])
+		else
+			data[key] = value
+		try
+			window[skey].setItem("CUI", JSON.stringify(data))
+		catch e
+			console.warn("CUI.__setStorage: Storage not available.", e)
+			@__storage[skey] = JSON.stringify(data)
+		data
+
+
+	@__getStorage: (skey, key = null) ->
+		try
+			data_json = window[skey].getItem("CUI")
+		catch e
+			console.warn("CUI.__getStorage: Storage not available.", e)
+			data_json = @__storage[skey]
+
 		if data_json
 			data = JSON.parse(data_json)
 		else
@@ -482,8 +598,12 @@ class CUI
 		else
 			data
 
-	@clearLocalStorage: ->
-		window.localStorage.removeItem("CUI")
+	@__clearStorage: (skey) ->
+		try
+			window[skey].removeItem("CUI")
+		catch e
+			console.warn("CUI.__clearStorage: Storage not available.", e)
+			@__storage[skey] = null
 
 	@encodeUrlData: (params, replacer = null, connect = "&", connect_pair = "=") ->
 		url = []
@@ -527,9 +647,16 @@ class CUI
 			decode_func = (v) -> decodeURIComponent(v)
 
 		for part in url.split(connect)
-			pair = part.split(connect_pair)
-			key = decode_func(pair[0])
-			value = decode_func(pair[1])
+			if part.length == 0
+				continue
+
+			if part.indexOf(connect_pair) > -1
+				pair = part.split(connect_pair)
+				key = decode_func(pair[0])
+				value = decode_func(pair[1])
+			else
+				key = decode_func(part)
+				value = ""
 
 			if use_array
 				if not params[key]
@@ -556,7 +683,11 @@ class CUI
 			if isEmpty(key)
 				continue
 			regex.push(key.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
-		return s.replace(new RegExp(regex.join('|'),"g"), (word) -> map[word])
+
+		if regex.length > 0
+			s.replace(new RegExp(regex.join('|'),"g"), (word) -> map[word])
+		else
+			s
 
 	@isFunction: (v) ->
 		v and typeof(v) == "function"
@@ -579,8 +710,7 @@ class CUI
 		typeof(s) == "string"
 
 	@downloadData: (data, fileName) ->
-		json = JSON.stringify(data)
-		blob = new Blob([json], type: "octet/stream")
+		blob = new Blob([data], type: "octet/stream")
 		url = window.URL.createObjectURL(blob)
 		@__downloadDataElement.href = url
 		@__downloadDataElement.download = fileName
@@ -690,43 +820,6 @@ class CUI
 		p.url = p.url + p.path
 		p
 
-
-	@initNodeDebugCopy: ->
-		Events.listen
-			type: "keydown"
-			capture: true
-			call: (ev) =>
-				if ev.getKeyboard() != "Alt+C"
-					return
-
-				if ev.shiftKey()
-					# remove all nodes
-					i = 0
-					for el in DOM.matchSelector(document.documentElement, ".cui-debug-node-copy")
-						el.remove()
-						i++
-
-					CUI.toaster(text: i+" Node(s) removed.")
-					return
-
-				i = 0
-				for node in CUI.DOM.matchSelector(document.documentElement, ".cui-debug-node-copyable")
-					node_copy = node.cloneNode(true)
-					node.parentNode.appendChild(node_copy)
-					CUI.DOM.insertAfter(node, node_copy)
-					node_copy.classList.add("cui-demo-node-copy")
-					console.debug "Node copied. Original:", node.parentNode, node, "Copy:", node_copy
-					i++
-
-				CUI.toaster(text: i+" Node(s) copied.")
-				return
-
-
-
-	# use for CSS markings of wrongly build markup
-	@setDebug: ->
-		document.body.classList.add("cui-debug")
-
 	@error: ->
 		console.error.apply(console, arguments)
 
@@ -740,6 +833,13 @@ class CUI
 		console.warn.apply(console, arguments)
 
 
+	@escapeAttribute: (data) ->
+		if isNull(data) or !isString(data)
+			return ""
+
+		data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
+		data
+
 
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 CUI.browser =
@@ -749,10 +849,24 @@ CUI.browser =
 	ie: `/*@cc_on!@*/false || !!document.documentMode`
 	chrome: `!!window.chrome && !!window.chrome.webstore`
 
-CUI.browser.edge = `!CUI.browser.isIE && !!window.StyleMedia`
+CUI.browser.edge = `!CUI.browser.ie && !!window.StyleMedia`
 CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
 
 CUI.ready =>
+	for k of CUI.browser
+		if CUI.browser[k]
+			document.body.classList.add("cui-browser-"+k)
+
+	if window.marked
+		CUI.defaults.marked_opts =
+			renderer: new marked.Renderer()
+			gfm: true
+			tables: true
+			breaks: false
+			pedantic: false
+			sanitize: true
+			smartLists: true
+			smartypants: false
 
 	for i in [1..9]
 		do (i) ->
@@ -768,15 +882,7 @@ CUI.ready =>
 			return
 
 	# initialize a markdown renderer
-	marked?.setOptions
-		renderer: new marked.Renderer()
-		gfm: true
-		tables: true
-		breaks: false
-		pedantic: false
-		sanitize: true
-		smartLists: true
-		smartypants: false
+	marked?.setOptions(CUI.defaults.marked_opts)
 
 	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]

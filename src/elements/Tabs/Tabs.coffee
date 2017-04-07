@@ -1,10 +1,19 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Tabs extends CUI.SimplePane
 
 	initOpts: ->
 		super()
-		@removeOpt("header_right")
+		# @removeOpt("header_right")
 		@removeOpt("header_center")
 		@removeOpt("content")
+		@removeOpt("force_footer")
+		@removeOpt("force_header")
 
 		@addOpts
 			tabs:
@@ -16,9 +25,17 @@ class CUI.Tabs extends CUI.SimplePane
 			#	check: Boolean
 			active_idx:
 				check: "Integer"
+			appearance:
+				check: ["normal", "mini"]
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
+
+	forceHeader: ->
+		true
+
+	forceFooter: ->
+		true
 
 	__checkOverflowButton: ->
 		if not @__maximize_horizontal
@@ -29,7 +46,12 @@ class CUI.Tabs extends CUI.SimplePane
 		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
 			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
+			@__dragscroll = new CUI.Dragscroll
+				element: @__buttonbar.DOM
+				scroll_element: @__header
 		else
+			@__dragscroll?.destroy()
+			@__dragscroll = null
 			@__overflowBtn.hide()
 			CUI.DOM.removeClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 		@
@@ -56,20 +78,12 @@ class CUI.Tabs extends CUI.SimplePane
 		@__tabs_bodies = new Template
 			name: "tabs-bodies"
 
+		@__pane_header.addClass("cui-tabs-pane-header")
+
+		if @_appearance == "mini"
+			@__pane_header.addClass("cui-tabs-pane-header--mini")
+
 		@__buttonbar = new Buttonbar()
-
-		startScrollLeft = null
-
-		new Draggable
-			element: @__buttonbar.DOM
-			ms: 0
-			axis: "x"
-			dragstart: =>
-				startScrollLeft = @__header.scrollLeft
-			dragging: (ev, $target, diff) =>
-				@__header.scrollLeft = startScrollLeft - diff.x
-			helper: null
-
 
 		if CUI.__ng__
 			pane_key = "center"
@@ -94,6 +108,7 @@ class CUI.Tabs extends CUI.SimplePane
 			icon: "ellipsis_h"
 			class: "cui-tab-header-button-overflow"
 			icon_right: false
+			size: if @_appearance == "mini" then "mini" else undefined
 			menu:
 				items: =>
 					btns = []
@@ -108,9 +123,12 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__overflowBtn.hide()
 
-		@__pane_header.append(@__overflowBtn, "right", false)
+		@__pane_header.prepend(@__overflowBtn, "right")
 
 		@getLayout().append(@__tabs_bodies, "center")
+
+		if @_appearance == "mini"
+			@addClass("cui-tabs--mini")
 
 		if not CUI.__ng__
 			if not @__maximize_horizontal or not @__maximize_vertical
@@ -129,11 +147,13 @@ class CUI.Tabs extends CUI.SimplePane
 			if not tab
 				continue
 			if tab instanceof Tab
-				@addTab(tab)
+				_tab = @addTab(tab)
 			else if CUI.isPlainObject(tab)
-				@addTab(new Tab(tab))
+				_tab = @addTab(new Tab(tab))
 			else
 				assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{getObjectClass(tab)}", opts: @opts)
+			if @_appearance == "mini"
+				_tab.getButton().setSize("mini")
 
 		@__tabs[@_active_idx or 0].activate()
 

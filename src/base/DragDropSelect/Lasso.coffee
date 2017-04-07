@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 globalDrag = null
 
 class CUI.Lasso extends CUI.Draggable
@@ -39,55 +46,62 @@ class CUI.Lasso extends CUI.Draggable
 		if not CUI.DOM.isInDOM(@element[0])
 			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
 
-		globalDrag.lasso = $div("cui-lasso cui-debug-node-copyable")
+		globalDrag.lasso = $div("cui-lasso")
 		# CUI.debug "create lasso", @_lassoClass
 		#
 		globalDrag.lasso.appendTo(@element)
 		globalDrag.elements = []
 
+	getCursor: ->
+		"default"
+
 	do_drag: (ev, $target, diff) ->
 		# CUI.debug "Lasso do drag", globalDrag.start, globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
-		set_css =  {}
+		left = 0
+		top = 0
+		width = 0
+		height = 0
 		if diff.x <= 0
-			set_css.left = globalDrag.start.left + diff.x
-			set_css.width = -diff.x
-			over = -set_css.left
+			left = globalDrag.start.left + diff.x
+			width = -diff.x
+			over = -left
 			if over > 0
-				set_css.width -= over
-				set_css.left = 0
+				width -= over
+				left = 0
 		else
-			set_css.left = globalDrag.start.left
-			set_css.width = diff.x
-			over = set_css.left + set_css.width - @element[0].scrollWidth
+			left = globalDrag.start.left
+			width = diff.x
+			over = left + width - @element[0].scrollWidth
 			if over > 0
-				set_css.width -= over
+				width -= over
 
 		if diff.y <= 0
-			set_css.top = globalDrag.start.top + diff.y
-			set_css.height = -diff.y
-			over = -set_css.top
+			top = globalDrag.start.top + diff.y
+			height = -diff.y
+			over = -top
 			if over > 0
-				set_css.height -= over
-				set_css.top = 0
+				height -= over
+				top = 0
 		else
-			set_css.top = globalDrag.start.top
-			set_css.height = diff.y
-			over = set_css.top + set_css.height - @element[0].scrollHeight
+			top = globalDrag.start.top
+			height = diff.y
+			over = top + height - @element[0].scrollHeight
 			if over > 0
-				set_css.height -= over
+				height -= over
 
 		lassoed_elements = @get_lassoed_elements()
+
 		for el in lassoed_elements
 			if el not in globalDrag.elements
 				globalDrag.elements.push(el)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		for el in globalDrag.elements
+		for el in globalDrag.elements.slice(0)
 			if el not in lassoed_elements
 				removeFromArray(el, globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		window.globalDrag.lasso.css(set_css)
+		window.globalDrag.lasso.css("transform", "translate3d(#{left}px,#{top}px,0) scale(#{width},#{height})")
 
 	get_lassoed_elements: ->
 		get_dim = (el) ->
@@ -119,21 +133,30 @@ class CUI.Lasso extends CUI.Draggable
 					lassoed_el = parents[parents.length-2]
 
 				if lassoed_el
-					lassoed.push(lassoed_el)
+					pushOntoArray(lassoed_el, lassoed)
 		else if @_filter
 			for el in CUI.DOM.matchSelector(globalDrag.$source, @_filter)
 				if do_overlap(globalDrag.lasso_dim, get_dim(el))
-					lassoed.push(el)
+					pushOntoArray(el, lassoed)
 		else
 			for el in globalDrag.$source.children
 				if do_overlap(globalDrag.lasso_dim, get_dim(el))
 					lassoed.push(el)
 		lassoed
 
-	end_drag: (ev) ->
-		if ev.getType() == "mouseup"
-			@_selected(ev, globalDrag)
+	stop_drag: (ev) ->
+		for el in globalDrag.elements.slice(0)
+			removeFromArray(el, globalDrag.elements)
+			CUI.DOM.toggleClass(el, @_lassoed_element_class)
+		super(ev)
+
+	cleanup_drag: (ev) ->
+		super(ev)
 		globalDrag.lasso.remove()
+
+	end_drag: (ev) ->
+		@_selected(ev, globalDrag)
+		super(ev)
 
 
 Lasso = CUI.Lasso

@@ -25,12 +25,12 @@ coffee_files = src/base/Common.coffee \
 	src/base/Events/Event.coffee \
 	src/base/Events/MouseEvent.coffee \
 	src/base/Events/KeyboardEvent.coffee \
+	src/base/Events/TouchEvent.coffee \
 	src/base/Events/CUIEvent.coffee \
 	src/base/Events/Listener.coffee \
-	src/base/Events/MouseIsDownEvent/MouseIsDownEvent.coffee \
-	src/base/Events/MouseIsDownEvent/MouseIsDownListener.coffee \
 	src/base/Events/WheelEvent.coffee \
 	src/base/Events/Events.coffee \
+	src/base/DragDropSelect/DragoverScrollEvent.coffee \
 	src/base/DOM/DOM.coffee \
 	src/base/CSSLoader/CSSLoader.coffee \
 	src/base/Template/Template.coffee \
@@ -70,6 +70,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ConfirmationChoice/ConfirmationChoice.coffee \
 	src/elements/ConfirmationChoice/Alert.coffee \
 	src/elements/ConfirmationChoice/Toaster.coffee \
+	src/elements/ConfirmationChoice/Spinner.coffee \
 	src/elements/ConfirmationChoice/Confirm.coffee \
 	src/elements/ConfirmationChoice/Prompt.coffee \
 	src/elements/Popover/Popover.coffee \
@@ -79,16 +80,16 @@ coffee_files = src/base/Common.coffee \
 	src/elements/ListView/ListViewRow.coffee \
 	src/elements/ListView/ListViewHeaderRow.coffee \
 	src/elements/ListView/ListViewTreeNode.coffee \
+	src/elements/ListView/ListViewTreeHeaderNode.coffee \
 	src/elements/ListView/ListViewColumn.coffee \
 	src/elements/ListView/ListViewColumnEmpty.coffee \
 	src/elements/ListView/ListViewHeaderColumn.coffee \
 	src/elements/ListView/tools/ListViewColumnRowMoveHandle.coffee \
 	src/elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee \
-	src/elements/ListView/tools/ListViewTool.coffee \
-	src/elements/ListView/tools/ListViewHoverTool.coffee \
-	src/elements/ListView/tools/ListViewRowMoveTool.coffee \
-	src/elements/ListView/tools/ListViewColResizeTool.coffee \
-	src/elements/ListView/tools/ListViewTreeRowMoveTool.coffee \
+	src/elements/ListView/tools/ListViewDraggable.coffee \
+	src/elements/ListView/tools/ListViewRowMove.coffee \
+	src/elements/ListView/tools/ListViewColResize.coffee \
+	src/elements/ListView/tools/ListViewTreeRowMove.coffee \
 	src/elements/ItemList/ItemList.coffee \
 	src/elements/Menu/Menu.coffee \
 	src/elements/Panel/Panel.coffee \
@@ -113,6 +114,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/Checkbox/Checkbox.coffee \
 	src/elements/Options/Options.coffee \
 	src/elements/ObjectDumper/ObjectDumper.coffee \
+	src/elements/ObjectDumper/ObjectDumperNode.coffee \
 	src/elements/Output/Output.coffee \
 	src/elements/Output/OutputContent.coffee \
 	src/elements/MultiOutput/MultiOutput.coffee \
@@ -126,11 +128,13 @@ coffee_files = src/base/Common.coffee \
 	src/elements/StickyHeader/StickyHeader.coffee \
 	src/elements/StickyHeader/StickyHeaderControl.coffee \
 	src/elements/DigiDisplay/DigiDisplay.coffee \
+	src/elements/Table/Table.coffee \
 	src/elements/DocumentBrowser/DocumentBrowser.coffee \
 	src/elements/DocumentBrowser/Node.coffee \
 	src/elements/DocumentBrowser/NodeMatch.coffee \
 	src/elements/DocumentBrowser/SearchMatch.coffee \
-	src/elements/DocumentBrowser/SearchQuery.coffee
+	src/elements/DocumentBrowser/SearchQuery.coffee \
+	src/base/CSVData.coffee
 
 files = $(addsuffix .js, $(coffee_files))
 
@@ -159,7 +163,6 @@ html_files = \
 	src/elements/HorizontalLayout/HorizontalLayout.html \
 	src/elements/VerticalLayout/VerticalLayout.html \
 	src/elements/DateTime/DateTime.html \
-	src/elements/ListView/tools/ListViewTool.html \
 	src/elements/Tabs/Tabs.html \
 	src/elements/Label/Label.html \
 	src/elements/MultiInput/MultiInputInput.html \
@@ -190,13 +193,13 @@ font_awesome:
 	rsync -r thirdparty/font-awesome-4.5.0/fonts $(target)/font-awesome/
 	cp $(thirdparty_files) $(target)
 
+
 demo: font_awesome
 	$(MAKE) --directory demo all
 
 code: $(easydbui_js) $(thirdparty_files) html font_awesome
 	cp src/scss/icons/icons.svg $(target)/icons.svg
 	$(MAKE) --directory demo code
-
 
 css_ng:
 	#
@@ -251,4 +254,4 @@ wipe: clean
 %.coffee.js: %.coffee
 	coffee -b -p --compile $^ > $@ || ( rm -f $@ ; false )
 
-.PHONY: all demo css css_ng css_other clean clean-build wipe font_awesome svg_icons
+.PHONY: all demo css css_ng css_other clean clean-build wipe font_awesome

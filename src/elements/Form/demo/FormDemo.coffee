@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class FormDemo extends Demo
 	display: ->
 
@@ -150,20 +157,6 @@ class FormDemo extends Demo
 								alert(df+" has no method .focus")
 							else
 								df.focus()
-					,
-						text: "setOpacity"
-						menu_on_hover: true
-						menu:
-							placement: "es"
-							items: [
-								text: "1"
-								onClick: (ev, btn) ->
-									df.setOpacity(1)
-							,
-								text: "0.5"
-								onClick: (ev, btn) ->
-									df.setOpacity(0.5)
-							]
 					,
 						text: "setValue"
 						menu_on_hover: true

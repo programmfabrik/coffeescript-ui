@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class Select extends Checkbox
 
 	initOpts: ->
@@ -69,12 +76,28 @@ class Select extends Checkbox
 			super()
 
 	__loadOptions: (event) ->
-		@__optionsPromise = @getPromiseFromOpt("options", event)
+		if @__optionsPromise?.state() == "pending"
+			return @__optionsPromise
 
-		if not @isDisabled()
-			@disable(true)
-			@__optionsPromise.always =>
-				@enable(true)
+		ret = @getArrayFromOpt("options", event, true)
+
+		if isPromise(ret)
+			@__optionsPromise = ret
+			btn = @getButton()
+
+			if btn
+				icon_right = btn.getIconRight()
+				btn.setIconRight("spinner")
+
+				@__optionsPromise.always =>
+					btn.setIconRight(icon_right)
+		else
+			@__optionsPromise = CUI.resolvedPromise(ret)
+
+		# if not @isDisabled()
+		# 	@disable(true)
+		# 	@__optionsPromise.always =>
+		# 		@enable(true)
 
 		@__optionsPromise.done (@__options) =>
 			first_value_opt = undefined
@@ -214,23 +237,29 @@ class Select extends Checkbox
 				if opt.text?.length > max_chars
 					max_chars = opt.text?.length
 
-			# CUI.debug "Select.displayValue", @__options, @getData(), @getValue(), found_opt
+			# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
 			if found_opt
 				if found_opt.icon
 					@__checkbox.setIcon(found_opt.icon)
 				else
 					@__checkbox.setIcon(null)
 
-				@__checkbox.setText(found_opt.text_selected or found_opt.text)
+				txt = found_opt.text_selected or found_opt.text
 
 				@__checkbox.menuSetActiveIdx(found_opt._idx)
 			else
 				if @getValue() == null and not isEmpty(@_empty_text)
-					@__checkbox.setText(@_empty_text)
+					txt = @_empty_text
 				else
-					# CUI.debug "Select, option not found:", @getValue(), @getData(), @getName(), "options:", @__options
-					@__checkbox.setText(@_not_found_text+":"+@getValue())
+					# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
+					txt = @_not_found_text+":"+@getValue()
+
 				@__checkbox.menuSetActiveIdx(null)
+
+			@__checkbox.setText(txt)
+
+			if txt?.length > max_chars
+				max_chars = txt.length
 
 			@__checkbox.setTextMaxChars(max_chars)
 		@

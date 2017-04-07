@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class FormModal extends FormPopover
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -31,7 +38,11 @@ class FormModal extends FormPopover
 				@__popover.hide()
 
 		btn = new CUI.defaults.class.Button(btn_opts)
-		btn.disable()
+
+		if @hasChanges()
+			btn.enable()
+		else
+			btn.disable()
 
 		opts.pane.footer_right = btn
 
@@ -58,8 +69,8 @@ class FormModal extends FormPopover
 			delete(@__orig_set_data[@_name])
 
 		@setData(@__orig_set_data)
-		@callOnFields("remove")
-		@table = null
+
+		@resetTableAndFields()
 
 		Events.trigger
 			type: "data-changed"

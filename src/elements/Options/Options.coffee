@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -32,7 +39,8 @@ class CUI.Options extends CUI.DataField
 			# int: n fields horizontal
 			horizontal:
 				check: (v) ->
-					v == true or (isInteger(v) and v > 0)
+					if isBoolean(v) or (isInteger(v) and v > 0)
+						return true
 
 			title:
 				check: String
@@ -55,7 +63,11 @@ class CUI.Options extends CUI.DataField
 		super()
 		assert(not @_sortable or not @_left, "new Options", "opts.sortable and opts.left cannot be used together.", opts: @opts)
 		assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
-		assert(not @_sortable or not @_horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
+		assert(not @_sortable or not @opts.horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
+
+		if CUI.__ng__
+			if @opts.horizontal == undefined
+				@_horizontal = not @_sortable
 
 		if @_sortable and @_activatable == undefined
 			@_activatable = true
@@ -157,9 +169,12 @@ class CUI.Options extends CUI.DataField
 		for opt, idx in @__options
 			if opt.value == value
 				found = idx
+				break
 		assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
 		@__checkboxes[found]
 
+	getOptions: ->
+		@__options
 
 	setValue: (v, flags={}) ->
 		flags.__set_on_data = true
@@ -287,6 +302,8 @@ class CUI.Options extends CUI.DataField
 
 		@__checkboxes = []
 
+		@__maxChars = -1
+
 		for _opt, idx in @__options
 			do (_opt) =>
 
@@ -299,10 +316,17 @@ class CUI.Options extends CUI.DataField
 					assert(not isEmpty(opt.text), "new #{@__cls}", "opts.options[#{idx}].text must be set.", opts: @opts)
 					opt.value = opt.text
 
-				if @_sortable
-					if not opt.form
-						opt.form = {}
-					opt.form.label = $div("cui-options-sortable-drag-handle cui-drag-handle-row")
+				chars = opt.text?.length or -1
+				if @__maxChars < chars
+					@__maxChars = chars
+
+				if CUI.__ng__ and opt.form?.right
+					console.error("Options.render: form.right is obsolete. 'right' part will not appear.", @, opt)
+
+				# if @_sortable
+				# 	if not opt.form
+				# 		opt.form = {}
+				# 	opt.form.label = $div("cui-options-sortable-drag-handle cui-drag-handle-row")
 
 				opt.radio = @__radio
 				if @_radio and @_min_checked == 0
@@ -342,8 +366,7 @@ class CUI.Options extends CUI.DataField
 								@storeValue(_cb.getValue(), flags)
 						else
 							removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
-							if not flags.prior_activate
-								@storeValue(arr, flags)
+							@storeValue(arr, flags)
 
 							if @_sortable
 								order_options_by_value_array()
@@ -397,8 +420,14 @@ class CUI.Options extends CUI.DataField
 				top = undefined
 
 			if CUI.__ng__
+
 				@replace(bottom, "bottom")
 				@replace(top, "top")
+
+				if @_horizontal
+					@addClass("cui-options--horizontal")
+				else
+					@addClass("cui-options--vertical")
 
 				if @_activatable
 					@empty("active")
@@ -408,6 +437,9 @@ class CUI.Options extends CUI.DataField
 
 				for cb in @__checkboxes
 					cb.start()
+					if @__maxChars > 0
+						cb.setTextMaxChars(@__maxChars)
+
 					if @_sortable and cb.isActive()
 						# we need extra markup around our checkbox
 						el = CUI.DOM.element("DIV", class: "cui-options-sortable-option")
@@ -419,10 +451,11 @@ class CUI.Options extends CUI.DataField
 					else
 						el = cb.DOM
 
-					if cb.isActive() and @_activatable
-						@append(el, "active")
-					else if @_activatable
-						@append(el, "inactive")
+					if @_activatable
+						if cb.isActive()
+							@append(el, "active")
+						else
+							@append(el, "inactive")
 					else
 						@append(el, "center")
 
@@ -431,7 +464,7 @@ class CUI.Options extends CUI.DataField
 			else
 				@__optionsForm = new Form
 					class: "cui-options-form cui-form-options" # form-options needed by old design
-					horizontal: @_horizontal
+					horizontal: if @_horizontal != false then @_horizontal else undefined
 					top: top
 					bottom: bottom
 					fields: @__checkboxes
@@ -444,16 +477,15 @@ class CUI.Options extends CUI.DataField
 				sortable_selector = undefined
 
 			if @_sortable
-				new Sortable
+				new CUI.Sortable
 					axis: "y"
 					element: sortable_element
 					selector: sortable_selector
 					sorted: (ev, from_idx, to_idx) =>
-						console.debug "from:", from_idx, "to:", to_idx
-						# CUI.debug "options order before sort", @__options_order.join(", ")
-						moveInArray(from_idx, to_idx, @__options_order)
-						# CUI.debug "sort", from_idx, " > ", to_idx
-						# CUI.debug "options order after sort", @__options_order.join(", ")
+						# console.debug "from:", from_idx, "to:", to_idx
+						# console.debug "options order before sort", @__options_order.join(", ")
+						moveInArray(from_idx, to_idx, @__options_order, from_idx < to_idx)
+						# console.debug "options order after sort", @__options_order.join(", ")
 						# re order options
 						sort_options()
 
@@ -468,8 +500,8 @@ class CUI.Options extends CUI.DataField
 						order_options_by_value_array()
 						@reload()
 
-		else
-			@replace(new EmptyLabel(text: @_placeholder))
+		else if not isEmpty(@_placeholder)
+			@replace(new EmptyLabel(text: @_placeholder), "center")
 
 		@
 

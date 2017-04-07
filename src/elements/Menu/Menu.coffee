@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Menu extends CUI.Layer
 	constructor: (@opts={}) ->
 		# @opts.role = "menu"
@@ -43,14 +50,15 @@ class CUI.Menu extends CUI.Layer
 	show: (@__event) ->
 		assert(not @isDestroyed(), "#{getObjectClass(@)}.show", "Element is already destroyed.")
 
-		if not @isShown() and @__itemList
+		if @__itemList
 			@__itemList.render(@, @__event)
 			.done =>
-				Events.trigger
-					type: "content-resize"
-					node: @__itemList
-
-		super(@__event)
+				super(@__event)
+				# Events.trigger
+				# 	type: "content-resize"
+				# 	node: @__itemList
+		else
+			super(@__event)
 
 		Events.listen
 			type: "keydown"
@@ -64,7 +72,6 @@ class CUI.Menu extends CUI.Layer
 				if ev.keyCode() == 27
 					@hide()
 					ev.stop()
-
 		@
 
 	hasItems: (event) ->
@@ -100,7 +107,7 @@ class CUI.Menu extends CUI.Layer
 		super()
 
 	hide: (ev) ->
-		ev?.preventDefault()
+		# ev?.preventDefault()
 		super(ev)
 		@
 
@@ -111,8 +118,13 @@ class CUI.Menu extends CUI.Layer
 
 	# return button if part of a button
 	getButton: ->
-		DOM.data(@getElement()?[0], "element")
-
+		element = @getOpt("element")
+		if not element or element instanceof CUI.Button
+			return element
+		button = DOM.data(element.DOM or element, "element")
+		if button instanceof CUI.Button
+			return button
+		null
 
 
 Menu = CUI.Menu

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.DataField extends CUI.DOM
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"
@@ -124,13 +131,12 @@ class CUI.DataField extends CUI.DOM
 	toString: ->
 		"[#{@__cls}[#{@__uniqueId}, #{@_name or '<no name>'}]}"
 
-
 	reload: ->
 		@remove()
 		@render()
 		@displayValue()
 
-	remove: (purge = false) ->
+	remove: ->
 		@callOnOthers("remove")
 		if not @isDestroyed()
 			@empty()
@@ -213,15 +219,6 @@ class CUI.DataField extends CUI.DOM
 	isShown: ->
 		!@isHidden()
 
-	setOpacity: (opacity) ->
-		if opacity == 1
-			if @__opacity != 1
-				@DOM.css("opacity", "")
-		else
-			@DOM.css("opacity", opacity)
-		@__opacity = opacity
-		@
-
 	updateData: (data) ->
 		if CUI.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
@@ -300,7 +297,6 @@ class CUI.DataField extends CUI.DOM
 			@disable()
 		if @isHidden()
 			@hide()
-		@setOpacity()
 		@callOnOthers("render")
 		@_onRender?(@)
 		@
@@ -363,13 +359,6 @@ class CUI.DataField extends CUI.DOM
 			arr = v
 		return arr
 
-	getPromiseFromOpt: (opt, event) ->
-		ret = @getArrayFromOpt(opt, event, true)
-		if isPromise(ret)
-			ret
-		else
-			CUI.resolvedPromise(ret)
-
 	getName: ->
 		@_name
 
@@ -404,6 +393,7 @@ class CUI.DataField extends CUI.DOM
 
 		if flags.no_trigger not in [false, true]
 			flags.no_trigger = true
+
 		@storeValue(v, flags)
 		if @isRendered()
 			@displayValue()

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class ButtonDemo extends Demo
 
 	getName: () ->
@@ -287,33 +294,6 @@ class ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("appearance: \"auto\", defaults to \"normal\". ",
-			icon_left: new Icon(class: "fa-bank")
-			appearance: "auto"
-			text: "Auto Button stays normal"
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
-		)
-
-
-		@__addButton("appearance: \"auto\", auto switch to \"important\"",
-			icon_left: new Icon(class: "fa-bank")
-			class: "cui-button-demo-auto-switch-to-important" #TODO make a better example , with a container class, just use the buttonDemo pane style !?
-			appearance: "auto"
-			text: "Auto Button gets important"
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
-		)
-
-		@__addButton("appearance default is \"auto\", auto switch to \"important\"",
-			icon_left: new Icon(class: "fa-bank")
-			class: "cui-button-demo-auto-switch-to-important" #TODO make a better example , with a container class, just use the buttonDemo pane style !?
-			text: "Auto Button gets important"
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
-		)
-
-
 		@__addDivider("Button option: size ")
 
 		@__addButton("size: \"normal\"",
@@ -347,32 +327,6 @@ class ButtonDemo extends Demo
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
-
-		@__addButton("size: \"auto\", defaults to \"normal\".",
-			icon_left: new Icon(class: "fa-bank")
-			size: "auto"
-			text: "Auto Button stays Normal"
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
-		)
-
-		@__addButton("size: \"auto\", auto switch to \"big\".",
-			icon_left: new Icon(class: "fa-bank")
-			class: "cui-button-demo-auto-switch-to-big" #TODO make a better example , with a container class, just use the buttonDemo pane style !?
-			size: "auto"
-			text: "Auto Button gets Big"
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
-		)
-
-		@__addButton("size default is \"auto\", auto switch to \"big\".",
-			icon_left: new Icon(class: "fa-bank")
-			class: "cui-button-demo-auto-switch-to-big" #TODO make a better example , with a container class, just use the buttonDemo pane style !?
-			text: "Auto Button gets Big"
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
-		)
-
 
 		@__addDivider("Buttons with mixed options")
 		@__addButton("size: \"big\", appearance: \"link\" ",

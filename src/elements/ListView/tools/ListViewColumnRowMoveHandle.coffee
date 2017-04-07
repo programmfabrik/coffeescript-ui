@@ -1,33 +1,32 @@
-class ListViewColumnRowMoveHandle extends ListViewColumn
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
 
-	getClass: ->
-		if @getRow().isMovable() or CUI.__ng__
-			"cui-list-view-row-move-handle"
-		else
-			""
+class ListViewColumnRowMoveHandle extends ListViewColumn
 
 	setElement: (cell) ->
 		super(cell)
 
-		if not @getRow().isMovable()
+		row = @getRow()
+
+		if not row.isMovable()
 			return
 
-		Events.listen
-			type: ["mousedown"]
-			node: cell
-			call: (ev, info) ->
-				# CUI.debug ev.getType(), info
-				cell.attr("allow-row-move", "1")
+		if CUI.ListView.defaults.row_move_handle_tooltip
+			new Tooltip
+				text: CUI.ListView.defaults.row_move_handle_tooltip
+				element: cell
 
-				Events.listen
-					type: "mouseup"
-					node: window
-					only_once: true
-					capture: true
-					call: ->
-						cell.removeAttr("allow-row-move")
+
+		row.getListView().getRowMoveTool
+			row: row
+			element: cell
+
 		return
 
 	render: ->
-		new Template(name: "list-view-tool-row-move-handle").DOM
+		CUI.DOM.element("DIV", class: "cui-drag-handle-row")
 

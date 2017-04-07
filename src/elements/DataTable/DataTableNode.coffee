@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class DataTableNode extends ListViewRow
 
 	initOpts: ->
@@ -14,6 +21,10 @@ class DataTableNode extends ListViewRow
 			rows:
 				mandatory: true
 				check: "Array"
+			dataRowIdx:
+				mandatory: true
+				check: (v) ->
+					v >= 0
 
 	readOpts: ->
 		super()
@@ -49,6 +60,9 @@ class DataTableNode extends ListViewRow
 
 	getFieldByIdx: (idx) ->
 		@__fields[idx]
+
+	getDataRowIdx: ->
+		@_dataRowIdx
 
 	getFieldsByName: (name) ->
 		fields = []

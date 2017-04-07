@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # {Layout} is used for all layout related stuff, like {HorizontalLayout},
 # {VerticalLayout}, {BorderLayout}, {Toolbar}, {Pane}, etc.
 #
@@ -44,7 +51,6 @@ class CUI.Layout extends CUI.DOM
 	readOpts: ->
 		# DEBUG
 		# without absolute "help", FF and Safari perform badly, Chrome & IE (Edge) are fine
-		# delete(@opts.absolute)
 		@initDefaultPanes()
 		super()
 
@@ -110,7 +116,7 @@ class CUI.Layout extends CUI.DOM
 
 		if @_absolute
 			@addClass("cui-absolute")
-			assert(CUI.DOM.getAttribute(@DOM, "cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
+			assert(CUI.DOM.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
 
 			DOM.waitForDOMInsert(node: @DOM)
 			.done =>
@@ -142,11 +148,14 @@ class CUI.Layout extends CUI.DOM
 		if @hasFlexHandles()
 			has_flex_handles = true
 			# CUI.warn(getObjectClass(@)+".initFlexHandles", @opts, @__layout.__uniqueId, @DOM[0])
-			@__layout.initFlexHandles()
+			pane_opts = {}
+			for pn in @__panes
+				pane = @["_#{pn}"]
+				if pane?.flexHandle
+					pane_opts[pn] = pane.flexHandle
+			@__layout.initFlexHandles(pane_opts)
 		else
 			has_flex_handles = false
-
-		CUI.DOM.setAttribute(@__layout.DOM, "has-flex-handles", (if has_flex_handles then true else false))
 
 		# every pane gets a method "<pane>: ->" to retrieve
 		# the DOM element from the template
@@ -179,65 +188,20 @@ class CUI.Layout extends CUI.DOM
 	getMapPrefix: ->
 		undefined
 
-	getPaneCheckMap: ->
-		map =
+	#initialive pane option
+	__initPane: (options, pane_name) ->
+		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
+		opts = CUI.Element.readOpts(options, "new Layout.__initPane",
 			class:
 				check: String
 			content: {}
-
-		if @hasFlexHandles()
-			map.flexHandle =
-				check:
-					label:
-						check: (v) ->
-							v instanceof Label or CUI.isPlainObject(v)
-					hidden:
-						default: false
-						check: Boolean
-					closed:
-						default: false
-						check: Boolean
-					closable:
-						default: true
-						check: Boolean
-					class:
-						check: String
-		map
-
-	#initialive pane option
-	# @param [Object] options for pane creation
-	# @option options [Boolean] hidden , if true, pane is not shown
-	# @option options [Boolean] flexReset creates flex reset wrap TODO get rid of it
-	# @option options [Boolean] closed minimizes the pane
-	# @option options [String] class is a custom css class
-	# @option options [Array] content is an array or a single object of DOM-Nodes, JQuery-Objects or cui Elements , if Buttons are given they are automatically added into a button bar
-	# @param [String] pane_name name of the pane
-	__initPane: (options, pane_name) ->
-		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
-		opts = CUI.Element.readOpts(options, "new Layout.__initPane", @getPaneCheckMap())
+			flexHandle: {}
+		)
 
 		@append(opts.content, pane_name)
-		fh = opts.flexHandle
-
-		if fh
-			fh_inst = @__layout.getFlexHandle(pane_name)
-			if fh.label
-				fh_inst.addLabel(fh.label)
-
-			fh_inst.setClosable(fh.closable)
-
-			if fh.hidden
-				fh_inst.hide()
-
-			if fh.closed
-				fh_inst.close()
-
-			if fh.class
-				CUI.DOM.addClass(fh_inst.getHandle(), fh.class)
 
 		if opts.class
 			@__layout.addClass(opts.class, pane_name)
-
 
 
 	# returns true if this Layout has at least one
@@ -315,6 +279,23 @@ class CUI.Layout extends CUI.DOM
 		else
 			return super(value, key)
 
+	setAbsolute: ->
+		@addClass("cui-absolute")
+		Layout.__all()
+
+	unsetAbsolute: ->
+		@DOM.removeAttribute("data-cui-absolute-check-value")
+		@DOM.removeAttribute("data-cui-absolute-values")
+
+		for child in CUI.DOM.children(@DOM)
+			CUI.DOM.setStyle child,
+				top: ""
+				left: ""
+				right: ""
+				bottom: ""
+
+		@removeClass("cui-absolute")
+		@
 
 	getName: ->
 		assert(false, "#{@__cls}.getName", "Needs to be overwritten.")
@@ -323,7 +304,7 @@ class CUI.Layout extends CUI.DOM
 		# CUI.error "Layout.setAbsolute", layout[0]
 		assert(isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
 
-		direction = CUI.DOM.getAttribute(layout, "cui-absolute-container")
+		direction = CUI.DOM.getAttribute(layout, "data-cui-absolute-container")
 		switch direction
 			when "row"
 				rect_key = "marginBoxWidth"
@@ -344,25 +325,23 @@ class CUI.Layout extends CUI.DOM
 		abs_values = values.join(",")
 		check_value = DOM.getDimensions(layout)[rect_check_key]+""
 
-		# console.error "abs_value:", CUI.DOM.getAttribute(layout, "cui-absolute-values"), abs_values, CUI.DOM.getAttribute(layout, "cui-absolute-check-value"), check_value
+		# console.debug layout, abs_values, CUI.DOM.getAttribute(layout, "data-cui-absolute-values")
+		# console.debug layout, check_value, CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value")
 
-		if CUI.DOM.getAttribute(layout, "cui-absolute-values") == abs_values and
-			CUI.DOM.getAttribute(layout, "cui-absolute-check-value") == check_value
+		if CUI.DOM.getAttribute(layout, "data-cui-absolute-values") == abs_values and
+			CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value") == check_value
 				# nothing to do
 				return false
 
-		# CUI.debug layout.attr("cui-absolute-values"), abs_values
-		# CUI.debug layout.attr("cui-absolute-check-value"), check_value
+		if CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value") != check_value
+			CUI.DOM.setAttribute(layout, "data-cui-absolute-check-value", check_value)
 
-		if CUI.DOM.getAttribute(layout, "cui-absolute-check-value") != check_value
-			CUI.DOM.setAttribute(layout, "cui-absolute-check-value", check_value)
-
-		if CUI.DOM.getAttribute(layout, "cui-absolute-values") != abs_values
-			CUI.DOM.setAttribute(layout, "cui-absolute-values", abs_values)
+		if CUI.DOM.getAttribute(layout, "data-cui-absolute-values") != abs_values
+			CUI.DOM.setAttribute(layout, "data-cui-absolute-values", abs_values)
 			# CUI.debug(txt, values)
 
 			for child, idx in children
-				set = CUI.DOM.getAttribute(child, "cui-absolute-set")
+				set = CUI.DOM.getAttribute(child, "data-cui-absolute-set")
 				if not set
 					continue
 
@@ -381,7 +360,7 @@ class CUI.Layout extends CUI.DOM
 							else
 								value = 0
 						else
-							assert(false, "Layout.setAbsolute: Unknown key #{key} in cui-absolute-set.")
+							assert(false, "Layout.setAbsolute: Unknown key #{key} in data-cui-absolute-set.")
 					# CUI.debug idx, key, value
 					css[key] = value
 				DOM.setStyle(child, css)
@@ -395,7 +374,7 @@ class CUI.Layout extends CUI.DOM
 	@__all: ->
 		layouts = []
 		changed = 0
-		for layout, idx in DOM.matchSelector(document.documentElement, ".cui-layout.cui-absolute")
+		for layout, idx in DOM.matchSelector(document.documentElement, ".cui-absolute")
 			if Layout.setAbsolute(layout)
 				changed++
 

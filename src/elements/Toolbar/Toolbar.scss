@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 .cui-toolbar {
     > .cui-layout-cell:empty + .cui-layout-cell:empty + .cui-layout-cell:empty {
@@ -9,6 +16,10 @@
     @include ASSERT_TYPE(cui-maximize);
 
     @include justify_content(space-between); //left center right
+
+    &.cui-template-empty {
+        display: none;
+    }
 
     //make sure that all child layout containers are in a row
     .cui-layout-cell {
@@ -43,7 +54,7 @@
         padding-bottom: $toolbar_padding_y;
         padding-top: $toolbar_padding_y;
 
-        &:empty { //collapse toolbar completely when empty
+        &:not(.cui-horizontal-layout-center):empty { //collapse toolbar completely when empty
             display: none;
         }
 
@@ -77,6 +88,9 @@
 
     .cui-toolbar {
         @include WARNING_MARKER("nested toolbars are not supported!");
+        > .cui-layout-cell {
+            padding: 0;
+        }
     }
 
     //make sure controls shrink in toolbars, icons are excluded from this behaviour
@@ -96,3 +110,32 @@
     // ------------
 
 }
+
+$toolbar_start_end_padding: $half_grid_size;
+
+.cui-pane-header + .cui-pane-toolbar {
+    &:not(.cui-template-empty){
+
+        margin-top: $toolbar_start_end_padding;
+    }
+}
+
+.cui-pane-toolbar:last-of-type:not(.cui-template-empty)
+{
+    margin-bottom: $half_grid_size;
+}
+
+.cui-pane-header .cui-pane-toolbar {
+    margin: 0 !important;
+}
+
+.cui-pane-footer,
+.cui-pane-toolbar {
+    &:last-of-type {
+        &:not(.cui-template-empty) {
+
+            margin-bottom: $toolbar_start_end_padding;
+        }
+    }
+}
+

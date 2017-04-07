@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 DateTimeFormats = {}
 
 DateTimeFormats["de-DE"] =
@@ -19,6 +26,7 @@ DateTimeFormats["de-DE"] =
 		display_short: "DD.MM.YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"D.M.YYYY HH:mm:ss"
 			"DD.M.YYYY HH:mm:ss"
@@ -115,6 +123,8 @@ DateTimeFormats["it-IT"] =
 		display_short: "DD.MM.YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss.SSSZ"
+			"YYYY-MM-DDTHH:mm:ssZ"
 			"D.M.YYYY HH:mm:ss"
 			"DD.M.YYYY HH:mm:ss"
 			"D.MM.YYYY HH:mm:ss"
@@ -208,6 +218,8 @@ DateTimeFormats["es-ES"] =
 		display_short: "DD.MM.YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss.SSSZ"
+			"YYYY-MM-DDTHH:mm:ssZ"
 			"D.M.YYYY HH:mm:ss"
 			"DD.M.YYYY HH:mm:ss"
 			"D.MM.YYYY HH:mm:ss"
@@ -303,6 +315,8 @@ DateTimeFormats["en-US"] =
 		display_short: "MM/DD/YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss.SSSZ"
+			"YYYY-MM-DDTHH:mm:ssZ"
 			"D.M.YYYY HH:mm:ss"
 			"DD.M.YYYY HH:mm:ss"
 			"D.MM.YYYY HH:mm:ss"

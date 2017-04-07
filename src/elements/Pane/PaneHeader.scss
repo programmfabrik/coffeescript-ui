@@ -1,7 +1,15 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 .cui-pane-header {
     background-color: $pane_header_background_color;
+
 
 
     .cui-button.cui-button-appearance-auto {
@@ -19,5 +27,16 @@
 		//@extend %label_or_button_shrink_with_ellipsis;
 
 		font-weight: bold;
+		$pane_header_font_size: 13px;
+		font-size: $pane_header_font_size;
+		//> .cui-label-content {
+		//}
+
+	}
+
+	//emphasize super small arrows
+	.fa-angle-right,
+	.fa-angle-left {
+		text-shadow: 0 -1px currentColor;
 	}
 }

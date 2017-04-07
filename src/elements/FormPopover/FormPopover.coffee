@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class FormPopover extends Form
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -83,6 +90,9 @@ class FormPopover extends Form
 
 		@registerTemplate(vl.getLayout())
 
+	hasContentForAppend: ->
+		# FormPopver always shows a button
+		true
 
 	render: ->
 		button_opts = copyObject(@_button, true)
@@ -91,6 +101,7 @@ class FormPopover extends Form
 
 		CUI.mergeMap button_opts,
 			left: true
+			text: ""
 
 		@__button = new CUI.defaults.class.Button(button_opts)
 
@@ -101,7 +112,7 @@ class FormPopover extends Form
 		if @_renderDisplayButton
 			@addClass("cui-form-popover-has-button-text")
 		@append(@__button, "center")
-		@append(@getChangedMarker(), "center")
+		# @append(@getChangedMarker(), "center")
 		DataField::render.call(@)
 		@
 
@@ -163,7 +174,8 @@ class FormPopover extends Form
 		@
 
 	renderTable: ->
-		super()
+		@table = super()
+		# in "ng" design, table is the center element of layout
 		@getLayout().addClass(@__class)
 		@table
 
@@ -173,11 +185,16 @@ class FormPopover extends Form
 
 	getPopoverOpts: ->
 		pop_opts = copyObject(@_popover, true)
+
+		if not pop_opts.backdrop
+			pop_opts.backdrop = {}
+
+		if not pop_opts.backdrop.policy
+			pop_opts.backdrop.policy = "click"
+
 		# pop_opts.element = @__button
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		if not pop_opts.hasOwnProperty("auto_size")
-			pop_opts.auto_size = true
 
 		assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
 
@@ -190,17 +207,33 @@ class FormPopover extends Form
 	getPopover: ->
 		@__popover
 
+	renderAsBlock: ->
+		false
+
+	resetTableAndFields: ->
+		# console.error "resetTableAndFields", @table
+		@callOnFields("remove")
+		@unregisterTableListeners()
+		# console.error "resetTableAndFields", DOM.data(@getLayout().center())
+		if CUI.__ng__
+			CUI.DOM.empty(@table)
+		else
+			CUI.DOM.remove(@table)
+		@table = null
+		@__fields = null
+		@
+
 	__openPopover: ->
 		# console.time "FormPopover"
 
-		# CUI.debug "open popover", @__data, @table, @__fields
+		# console.debug "open popover", @__data, @table, @__fields
+
 		pop_opts = @getPopoverOpts()
 
 		if @__fields_is_func
 			# dynamic fields, we need to reload the form
 			if @table
-				@callOnFields("remove")
-				@table = null
+				@resetTableAndFields()
 
 			@initFields()
 			@callOnFields("setData", @__data)
@@ -243,9 +276,9 @@ class FormPopover extends Form
 		# console.timeEnd "FormPopover"
 
 	__closePopover: ->
+		@removeClass("focus")
 		@getLayout().DOM.detach()
 		@__popover.destroy()
-		@removeClass("focus")
 		@__popover = null
 		@__triggerDataChanged()
 		@
@@ -260,12 +293,14 @@ class FormPopover extends Form
 
 	__triggerDataChanged: ->
 		if @__dataChanged
-			Events.trigger
-				type: "data-changed"
-				node: @__button
-				info: @__dataChanged
-
+			@triggerDataChanged()
 		@__dataChanged = null
+
+	triggerDataChanged: ->
+		Events.trigger
+			type: "data-changed"
+			node: @__button
+			info: @__dataChanged
 
 	disable: ->
 		super()

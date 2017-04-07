@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class FileUploadDemo extends Demo
 	display: ->
 
@@ -73,6 +80,31 @@ class FileUploadDemo extends Demo
 			onDequeue: update_status
 			onUpdate: update_drop_zone
 
+		csv_data =
+			delimiter: null
+			quotechar: null
+			header_rows: 1
+
+		fr_csv = new CUI.FileReader
+			onAdd: update_status
+			onProgress: update_status
+			onDone: (frf) =>
+				update_status(frf)
+				console.debug "uploaded_data", frf, frf.getResult().length
+
+				CUI.CSVData.parse(
+					delimiter: csv_data.delimiter
+					quotechar: csv_data.quotechar
+					header_rows: csv_data.header_rows
+					text: frf.getResult()
+				)
+				.done (csv_data) =>
+					CUI.FileReader.save(frf.getFile().name+".json", JSON.stringify(csv_data.rows))
+
+			onFail: update_status
+			onDequeue: update_status
+			onUpdate: update_drop_zone
+
 
 		fu.initDropZone(dropZone: drop_zone)
 
@@ -119,6 +151,53 @@ class FileUploadDemo extends Demo
 			multiple: false
 			icon: "upload"
 		).DOM)
+
+		demo_table.addExample("Pick One File (local upload, CSV)", [
+			new FileUploadButton(
+				fileUpload: fr_csv
+				text: "Upload One"
+				multiple: false
+				icon: "upload"
+			).DOM
+		,
+			new Select
+				name: "delimiter"
+				data: csv_data
+				options: [
+					text: "- detect -"
+					value: null
+				,
+					value: ","
+				,
+					value: ";"
+				]
+			.start().DOM
+		,
+			new Select
+				name: "quotechar"
+				data: csv_data
+				options: [
+					text: "- detect -"
+					value: null
+				,
+					value: '"'
+				,
+					value: "'"
+				]
+			.start().DOM
+		,
+			new Select
+				name: "header_rows"
+				data: csv_data
+				options: [
+					value: 0
+				,
+					value: 1
+				,
+					value: 2
+				]
+			.start().DOM
+		])
 
 		browserUploadInput = $element("input", "", id: "browser-native-upload", type: "file")[0]
 

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Event extends CUI.Element
 
 	constructor: (@opts={}) ->
@@ -290,7 +297,6 @@ class CUI.Event extends CUI.Element
 				eventClass = ev_info.eventClass
 			else
 				eventClass = CUI.Event
-
 
 		ev = new eventClass
 			type: event.type

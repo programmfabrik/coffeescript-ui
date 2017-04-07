@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class Demo extends CUI.DOM
 
 	display: ->
@@ -72,6 +79,9 @@ class DemoConsole extends CUI.SimplePane
 		@append(new Label(text: "Console"), "header_center")
 
 		@append(@__console, "content")
+
+	forceHeader: ->
+		true
 
 	__getPaneFlexHandle: ->
 		DOM.data(@DOM.closest("[flex-handled-pane]")[0], "flexHandle")
@@ -194,6 +204,7 @@ class RunDemo extends CUI.Element
 				content:
 					@__console
 				flexHandle:
+					state_name: "cui-demo-right"
 					label:
 						text: "Console"
 					hidden: false
@@ -227,7 +238,7 @@ class RunDemo extends CUI.Element
 
 		CUI.DOM.prepend(document.body, @main_menu_pane.DOM)
 
-		Template.loadFile("demo/easydbui_demo.html")
+		Template.loadTemplateFile("demo/easydbui_demo.html")
 		.done =>
 			@displayDemo()
 
@@ -387,13 +398,13 @@ CUI.ready ->
 				touches_print = []
 				for touch in ne.touches
 					touches_print.push(touch.pageX+"x"+touch.pageY)
-				console.debug ev.getType(), touches_print.join(",") # ne, ne.touches, ne.touchTargets
+				console.debug ev.getType(), ev.getNativeEvent(), touches_print.join(",") # ne, ne.touches, ne.touchTargets
 			if ev.getType().startsWith("gesture")
-				console.debug ev.getType(), ne.scale, ne.rotation
+				console.debug ev.getType(), ev.getNativeEvent(), ne.scale, ne.rotation
+				ev.stopPropagation()
+				ev.preventDefault()
 			else
-				console.debug "ev:", ev.getType(), ev.getTarget()
-
-	CUI.initNodeDebugCopy()
+				; #console.debug "ev:", ev.getType(), ev.getTarget()
 
 	new RunDemo()
 

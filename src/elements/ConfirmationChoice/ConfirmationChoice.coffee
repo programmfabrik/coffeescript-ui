@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 	constructor: (@opts) ->
 		super(@opts)
@@ -6,9 +13,6 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 	@defaults:
 		ok: "Ok"
 		cancel: "Cancel"
-		alert_title: "..."
-		confirm_title: "Confirmation"
-		prompt_title: "???"
 
 	initOpts: ->
 		super()
@@ -26,10 +30,10 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 					if not CUI.isArray(v)
 						return false
 
-					for choice in v
+					for choice, idx in v
 						if not choice
 							continue
-						CUI.Element.readOpts(choice, "new ConfirmationChoice", @choiceOpts)
+						CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#"+idx+"]", @choiceOpts)
 					return true
 
 	choiceOpts:
@@ -40,10 +44,16 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			check: Function
 		icon:
 			check: Icon
+		choice:
+			check: String
 		cancel:
 			default: false
 			check: Boolean
 		primary:
+			mandatory: true
+			default: false
+			check: Boolean
+		disabled:
 			mandatory: true
 			default: false
 			check: Boolean
@@ -55,9 +65,13 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 	init: ->
 		@_buttons = []
 		for choice in @_choices
+			if not choice
+				continue
+
 			btn_opts =
 				left: true
 				value: choice
+				disabled: choice.disabled
 				onClick: (ev, btn) =>
 					@__choice = btn.getValue()
 					CUI.chainedCall(
@@ -68,9 +82,9 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 							if @__choice.cancel
 								@doCancel(ev, true) # force this in case opts.cancel is not set
 								# go out of the way
-								false
-							else
-								@_onChoice?.call(@, ev, @__choice)
+								return false
+
+							@_onChoice?.call(@, ev, @__choice, @, btn)
 					).done (ret1, ret2) =>
 						# CUI.debug "chained call done", ret1, ret2, ev, @__choice
 						if ev.isImmediatePropagationStopped() or
@@ -83,7 +97,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 					return
 
 			for key of @choiceOpts
-				if key not in ["onClick", "cancel"]
+				if key not in ["onClick", "cancel", "choice"]
 					btn_opts[key] = choice[key]
 
 			@_buttons.push(btn_opts)
@@ -108,6 +122,8 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		CUI.ConfirmationDialog::show.call(@)
 		return @__deferred.promise()
 
+CUI.choice = (opts=text: "CUI.ConfirmationChoice") ->
+	new CUI.ConfirmationChoice(opts).open()
 
 
 CUI.defaults.class.ConfirmationChoice = CUI.ConfirmationChoice

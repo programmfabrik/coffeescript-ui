@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 .cui-pane {
@@ -91,42 +98,50 @@
 		padding: 0 $grid_size;
 	}
 
-	> .cui-vertical-layout-top > .cui-horizontal-layout {
-		padding: map_get($outer_padding_x, "big") map_get($outer_padding_x, "bigger");
+	> .cui-vertical-layout-top {
 
-		.cui-horizontal-layout-left {
-			.cui-label {
-				@include label_size("bigger");
-				font-weight: normal !important;
-			}
-
-			.cui-button {
-				@include button_size("bigger");
-			}
+		//can happen that ez5 is using .cui-template-empty while measuring the absolute root layout
+		.cui-toolbar.cui-template-empty {
+			display: flex !important;
 		}
 
-		//TODO maybe we want special sizes !?
-		//$root_menu_title_icon_font_size: 24px;
-		//$root_menu_title_font_size: 20px;
-		//$root_menu_title_line_height: 23px;
+		> .cui-horizontal-layout {
+			padding: map_get($outer_padding_x, "big") map_get($outer_padding_x, "bigger");
 
-		//.ez5-title > .cui-label {
-		//	color: $root_menu_font_color;
-		//	font-size: $root_menu_title_font_size;
-		//	line-height: $root_menu_title_line_height;
-		//}
+			.cui-horizontal-layout-left {
+				.cui-label {
+					@include label_size("bigger");
+					font-weight: normal !important;
+				}
 
-		//.ez5-main-menu-button.cui-button {
-		//	.cui-button-left {
-		//		line-height: $root_menu_title_icon_font_size;
-		//
-		//		.fa {
-		//			color: $root_menu_font_color;
-		//			font-size: $root_menu_title_icon_font_size;
-		//		}
-		//	}
-		//}
+				.cui-button {
+					@include button_size("bigger");
+				}
+			}
 
+			//TODO maybe we want special sizes !?
+			//$root_menu_title_icon_font_size: 24px;
+			//$root_menu_title_font_size: 20px;
+			//$root_menu_title_line_height: 23px;
+
+			//.ez5-title > .cui-label {
+			//	color: $root_menu_font_color;
+			//	font-size: $root_menu_title_font_size;
+			//	line-height: $root_menu_title_line_height;
+			//}
+
+			//.ez5-main-menu-button.cui-button {
+			//	.cui-button-left {
+			//		line-height: $root_menu_title_icon_font_size;
+			//
+			//		.fa {
+			//			color: $root_menu_font_color;
+			//			font-size: $root_menu_title_icon_font_size;
+			//		}
+			//	}
+			//}
+
+		}
 	}
 
 	> .cui-vertical-layout-bottom > .cui-horizontal-layout {

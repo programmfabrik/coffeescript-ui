@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 @mixin short_message_dialog() {
 	min-width: 400px;
@@ -18,6 +25,11 @@
 
 		 > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-layout-cell {
 			 padding-bottom: map_get($outer_padding_x,big);
+		 }
+
+		 // we show even empty headers!
+		 > .cui-vertical-layout-top > .cui-pane-header {
+			 display: flex !important;
 		 }
 	}
 }

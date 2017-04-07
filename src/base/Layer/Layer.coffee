@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # a layer is a top level positioned div
 # which can be used to display Menu
 # Popver, Modal, Autocompletion and
@@ -22,7 +29,7 @@ class CUI.Layer extends CUI.DOM
 		# not affect the layer's opacity as it would to if the layer would be
 		# a child of backdrop
 		@__layer_root = new Template
-			class: "cui-layer-root-"+(toDash(@__cls)+" "+@_class).trim().split(/\s+/).join(" cui-layer-root-")
+			class: "cui-layer-root-"+(toDash(@__cls)+" "+(@_class or "")).trim().split(/\s+/).join(" cui-layer-root-")
 			name: "layer-root"
 
 		# @__backdropClickDisabled = false
@@ -81,7 +88,7 @@ class CUI.Layer extends CUI.DOM
 								ev.stopPropagation()
 
 					when "modal"
-						@__backdrop.addClass("layer-backdrop-modal")
+						@__backdrop.addClass("cui-layer-backdrop--visible")
 						if @_backdrop.add_bounce_class != false
 							if isString(@_backdrop.add_bounce_class)
 								bc = @_backdrop.add_bounce_class
@@ -233,7 +240,6 @@ class CUI.Layer extends CUI.DOM
 				default: true
 				check: Boolean
 
-
 			# a rectangle box to position the layer to
 			# a pointer is a helper to show the position of the layer
 			# allowed values are "arrow"
@@ -247,7 +253,7 @@ class CUI.Layer extends CUI.DOM
 					if not CUI.isArray(v)
 						return false
 					for a in v
-						if CUI.Layer.knownPlacements.indexOf(a) == -1
+						if @knownPlacements.indexOf(a) == -1
 							return false
 					return true
 
@@ -275,19 +281,14 @@ class CUI.Layer extends CUI.DOM
 			# horizontal: stretch width only
 			# vertical: stretch height only
 			fill_space:
+				default: "auto"
+				mandatory: true
 				check: ["auto", "both", "horizontal", "vertical"]
 
 			# if set, the Layer, when shown checks if the "element"
 			# is still in the DOM tree
 			check_for_element:
 				default: false
-				check: Boolean
-
-			#
-			# if set to true the Layer listens to content-resize events
-			# and adjusts its size
-			auto_size:
-				default: true
 				check: Boolean
 
 			show_ms:
@@ -309,14 +310,16 @@ class CUI.Layer extends CUI.DOM
 
 	setVisible: (on_off=true) ->
 		if on_off
-			DOM.setStyleOne(@__layer_root.DOM[0], "visibility", "")
+			DOM.setStyleOne(@__layer_root.DOM, "visibility", "")
 		else
-			DOM.setStyleOne(@__layer_root.DOM[0], "visibility", "hidden")
+			DOM.setStyleOne(@__layer_root.DOM, "visibility", "hidden")
 
-	@knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
+	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
 	__setElement: (element) ->
-		if element.DOM
+		if element instanceof CUI.DOM
+			@__element = element.getElementForLayer()
+		else if element.DOM
 			@__element = element.DOM
 		else
 			@__element = element
@@ -325,15 +328,20 @@ class CUI.Layer extends CUI.DOM
 		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
 
+	__getOriginalElement: ->
+		@_element?.DOM or @_element or null
+
 	autoSize: ->
 		@position()
 
 	position: (ev) ->
 		#
 		if not @isShown()
-			return
+			return @
 
-		dim_window = CUI.DOM.getDimensions(window)
+		dim_window =
+			width: document.body.clientWidth
+			height: window.innerHeight
 
 		get_pointer_direction = (placement) ->
 			# return direction
@@ -389,18 +397,21 @@ class CUI.Layer extends CUI.DOM
 
 		# reset previously set layer dimensions
 		CUI.DOM.setStyle @__layer.DOM,
-			top: 0
-			left: 0
+			position: ""
+			top: ""
+			left: ""
 			width: ""
 			height: ""
 			margin: ""
-			"max-width": ""
-			"max-height": ""
+			minWidth: ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
-		allowed_placements = (@_placements or CUI.Layer.knownPlacements).slice(0)
+		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
+
+		body_scroll_top = document.body.scrollTop
+		body_scroll_left = document.body.scrollLeft
 
 		if @__element
 			dim_element = CUI.DOM.getDimensions(@__element)
@@ -413,6 +424,7 @@ class CUI.Layer extends CUI.DOM
 			dim_element.viewportBottom = dim_element.viewportTop
 			dim_element.viewportRight = dim_element.viewportLeft
 		else
+
 			dim_element =
 				viewportTop: 0
 				viewportLeft: 0
@@ -426,7 +438,7 @@ class CUI.Layer extends CUI.DOM
 		vp_pl = {}
 
 		# calc all possible layer viewports
-		for placement in CUI.Layer.knownPlacements
+		for placement in @knownPlacements
 			if placement not in ["n", "s", "e", "w", "c"]
 				continue
 
@@ -450,6 +462,7 @@ class CUI.Layer extends CUI.DOM
 					vp.bottom = vp.window_bottom
 					vp.align_vertical = "center"
 					vp.align_horizontal = "center"
+
 				when "n"
 					vp.top = dim_layer.marginTop
 					vp.left = dim_layer.marginLeft
@@ -485,7 +498,7 @@ class CUI.Layer extends CUI.DOM
 			vp.overlap_align = null
 
 		# add two-direction placements
-		for placement in CUI.Layer.knownPlacements
+		for placement in @knownPlacements
 			if placement in ["n", "s", "e", "w", "c"]
 				continue
 
@@ -520,7 +533,7 @@ class CUI.Layer extends CUI.DOM
 					vp.overlap_align = "left"
 
 		# throw out placements which are too small
-		for placement in CUI.Layer.knownPlacements
+		for placement in @knownPlacements
 			if placement not in allowed_placements
 				delete(vp_pl[placement])
 				continue
@@ -587,7 +600,6 @@ class CUI.Layer extends CUI.DOM
 				when "center"
 					layer_pos.top = dim_element.viewportCenterTop - layer_pos.height / 2
 
-
 			if vp.dim_pointer
 				# now align the pointer within the available viewport
 				switch vp.pointer_align_horizontal
@@ -609,7 +621,6 @@ class CUI.Layer extends CUI.DOM
 				pointer_pos.width = vp.dim_pointer.borderBoxWidth
 				pointer_pos.height = vp.dim_pointer.borderBoxHeight
 				pointer_pos.direction = vp.dim_pointer.direction
-
 
 			# move layer into viewport in case we overlap
 			if layer_pos.top < vp.top
@@ -829,12 +840,12 @@ class CUI.Layer extends CUI.DOM
 
 					while (true)
 						dbg_pl = dbg_pl + 1
-						if dbg_pl == CUI.Layer.knownPlacements.length
+						if dbg_pl == @knownPlacements.length
 							@__removeDebugDivs()
 							listener.destroy()
 							return
 
-						_placement = CUI.Layer.knownPlacements[dbg_pl]
+						_placement = @knownPlacements[dbg_pl]
 
 						if vp_pl[_placement]
 							show_dbg_div(_placement)
@@ -860,23 +871,53 @@ class CUI.Layer extends CUI.DOM
 		else
 			minWidth = undefined
 
-		# set layer
-		CUI.DOM.setStyle @__layer.DOM,
-			top: vp.layer_pos.top
-			left: vp.layer_pos.left
-			width: vp.layer_pos.width
-			height: vp.layer_pos.height
+		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-placement", placement)
+		CUI.DOM.setAttribute(@__layer_root.DOM, "cui-fill-space", @_fill_space)
+
+		set_css =
+			top: vp.layer_pos.top + body_scroll_top
+			left: vp.layer_pos.left + body_scroll_left
 			minWidth: minWidth
-			# maxWidth: vp.width + vp.overlap_width
-			# maxHeight: vp.height + vp.overlap_height
+			maxWidth: Math.floor(vp.width + vp.overlap_width)
+			maxHeight: Math.floor(vp.height + vp.overlap_height)
 			margin: 0
+
+		if placement == "c"
+			is_fixed = true
+		else
+			is_fixed = @__layer_root.DOM.previousElementSibling?.hasAttribute("cui-layer-fixed") or false
+
+		if is_fixed
+			@__layer_root.DOM.setAttribute("cui-layer-fixed", "")
+			set_css.top = vp.layer_pos.top
+			set_css.left = vp.layer_pos.left
+		else
+			@__layer_root.DOM.removeAttribute("cui-layer-fixed")
+
+		if placement == "c"
+			# placement can be done by pure CSS
+			return @
+
+		if CUI.browser.ie
+			set_css.width = Math.ceil(vp.layer_pos.width)
+			set_css.height = Math.ceil(vp.layer_pos.height)
+
+		CUI.DOM.setStyle(@__layer.DOM, set_css)
+
+		# console.debug "pos:", dim_element, vp.layer_pos.top, "body scroll:", body_scroll_top
 
 		if @__pointer
 			# set pointer
-			CUI.DOM.setStyle @__pointer,
-				top: vp.pointer_pos.top
-				left: vp.pointer_pos.left
-				margin: 0
+			if is_fixed
+				CUI.DOM.setStyle @__pointer,
+					top: vp.pointer_pos.top
+					left: vp.pointer_pos.left
+					margin: 0
+			else
+				CUI.DOM.setStyle @__pointer,
+					top: vp.pointer_pos.top + body_scroll_top
+					left: vp.pointer_pos.left + body_scroll_left
+					margin: 0
 
 			CUI.DOM.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
 
@@ -896,7 +937,7 @@ class CUI.Layer extends CUI.DOM
 		# We could re-read the layer width & height here to actually
 		# set it in Style. By doing that we could have support for transitions
 		# when Layer content size changes.
-		return
+		return @
 
 	__removeDebugDivs: ->
 		@__dbg_div1?.remove()
@@ -914,7 +955,7 @@ class CUI.Layer extends CUI.DOM
 		@
 
 	showTimeout: (ms=@_show_ms, ev) ->
-		# console.error "Layer.showTimeout ", @getUniqueId()
+		# console.error "Layer.showTimeout ", @getUniqueId(), @__element, CUI.DOM.isInDOM(@__element), @isDestroyed()
 
 		@clearTimeout()
 		dfr = new CUI.Deferred()
@@ -962,7 +1003,8 @@ class CUI.Layer extends CUI.DOM
 		if @__element
 			if @__check_for_element
 				CUI.clearInterval(@__check_for_element)
-			@__element.removeClass("cui-layer-active")
+
+			CUI.DOM.removeClass(@__getOriginalElement(), @getElementOpenClass())
 
 		@__layer_root.DOM.detach()
 
@@ -983,9 +1025,6 @@ class CUI.Layer extends CUI.DOM
 
 		Events.ignore(instance: @)
 
-		@__clickThruListener?.destroy()
-		@__clickThruListener = null
-
 		@_onHide?(@, ev)
 		@
 
@@ -1002,6 +1041,9 @@ class CUI.Layer extends CUI.DOM
 				"cui-layer-stack-count": total
 
 		@
+
+	getElementOpenClass: ->
+		"cui-layer-open"
 
 	# use element to temporarily overwrite element used
 	# for positioning
@@ -1031,7 +1073,7 @@ class CUI.Layer extends CUI.DOM
 		document.body.appendChild(@__layer_root.DOM)
 
 		if @__element
-			@__element.addClass("cui-layer-active")
+			CUI.DOM.addClass(@__getOriginalElement(), @getElementOpenClass())
 
 			for scroll_parent in CUI.DOM.parentsScrollable(@__element)
 				Events.listen
@@ -1050,14 +1092,13 @@ class CUI.Layer extends CUI.DOM
 
 		@__updateLayerStackCounter()
 
-		if @_auto_size
-			Events.listen
-				type: "content-resize"
-				instance: @
-				node: @__layer
-				call: (ev) =>
-					# console.info("Layer caught event:", ev.getType)
-					@position()
+		Events.listen
+			type: "content-resize"
+			instance: @
+			node: @__layer
+			call: (ev) =>
+				# console.error "Layer caught event:", ev.getType()
+				@position()
 
 		Events.listen
 			type: "viewport-resize"
@@ -1071,12 +1112,6 @@ class CUI.Layer extends CUI.DOM
 				# console.info("Layer caught event:", ev.getType)
 				@position()
 				return
-
-
-		# if @__addClickThruListenerOnShow
-		# 	@__clickThruListener = @__addClickThruListener()
-		# else
-		# 	@__clickThruListener = null
 
 		@_onBeforeShow?(@, ev)
 		@__shown = true
@@ -1151,9 +1186,11 @@ CUI.ready ->
 		capture: true
 		# install not do high, do Drag & Drop can be on top
 		node: document.body
-		call: (ev) ->
+		call: (ev, info) ->
 
-			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on")
+			layer_elements = DOM.findElements(document.body,
+				"body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru"
+			)
 			target = ev.getTarget()
 
 			while layer_element = layer_elements.pop()
@@ -1166,29 +1203,53 @@ CUI.ready ->
 
 				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
 
+				# prevent following click, if the target of the mousedown
+				# is the element which positioned the layer.
+
+				element = layer.getElement()
+				if element and CUI.DOM.closest(ev.getTarget(), element)
+					Events.listen
+						node: document.documentElement
+						type: ["dblclick", "click"]
+						capture: true
+						only_once: true
+						call: (ev) =>
+							console.error "eating click on layer opening element"
+							return ev.stop()
+
+				ev.cui_layer_closed = true
+
 				layer.hide(ev)
 
 			return
 
 	Events.listen
 		type: ["keyup"]
-		capture: true
-		# install not do high, do Drag & Drop can be on top
 		node: document.body
 		call: (ev) ->
-			if ev.keyCode() != 27
+
+			if ev.keyCode() != 27 or window.globalDrag
 				return
 
 			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root > .cui-layer")
 			layer_element = layer_elements[layer_elements.length-1]
 
-			element = CUI.DOM.closest(ev.getTarget(), "[tabindex],input,textarea")
+			# console.error ev.getType(), ev, layer_elements
 
-			if (element and element != layer_element) or not layer_element
+			if not layer_element
+				return
+
+			element = CUI.DOM.closest(ev.getTarget(), "[tabindex],select,input,textarea")
+
+			# console.error ev.getType(), ev, element, ev.getTarget()
+
+			if (element in [layer_element])
 				# ignore this
 				return
 
 			layer = DOM.data(layer_element, "element")
+
+			# console.debug "layer", layer
 
 			ev.stopImmediatePropagation()
 			ev.preventDefault()

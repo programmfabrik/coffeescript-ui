@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class MarkdownInput extends Input
 	initOpts: ->
 		super()
@@ -15,7 +22,7 @@ class MarkdownInput extends Input
 			renderFunction:
 				mandatory: true
 				default: (md) =>
-					marked(md)
+					window.marked(md, CUI.defaults.marked_opts)
 				check: Function
 
 

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 
 class CUI.CSSLoader extends CUI.Element
 	initOpts: ->
@@ -72,18 +79,18 @@ class CUI.CSSLoader extends CUI.Element
 					console.warn("CSSLoader.loadTheme:", name, ". Theme already loading, returning Promise.")
 					return loader_deferred.promise()
 
-				console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting other load.")
+				# console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting other load.")
 				# reject loading, this removed the old node
 				load_deferred.reject()
 			else
 				if same_theme and same_url
 					# all good
-					console.warn("CSSLoader.loadTheme:", name, ". Theme already loaded.")
+					# console.warn("CSSLoader.loadTheme:", name, ". Theme already loaded.")
 					return CUI.resolvedPromise()
 
 				# in all other cases we simply "overload"
 
-		console.info("CSSLoader: Loading:", url)
+		# console.info("CSSLoader: Loading:", url)
 
 		if name.startsWith("ng")
 			CUI.__ng__ = true
@@ -124,26 +131,38 @@ class CUI.CSSLoader extends CUI.Element
 					console.warn("CSSLoader.loadTheme: Caught event load second time, ignoring. IE does that for some reason.")
 					return
 
-				if CUI.browser.isIE
+				if CUI.browser.ie
+					found_stylesheet = false
+
 					# ok, let's check if the style sheet loaded actually applies
 					# rules. IE tends to ignore 404 here.
 					for styleSheet in document.styleSheets
 						if styleSheet.href == css_href # this is the css loaded
-							if not styleSheet.cssRules?.length # we assume loading failed
-								console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet)
-								dfr.reject(css_href)
-								return
+							try
+								if not styleSheet.cssRules?.length # we assume loading failed
+									console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet)
+									dfr.reject(css_href)
+									return
+								found_stylesheet = true
+							catch ex
+								; # ignore, we output an error below
+							break
+
+					if not found_stylesheet
+						console.error("CSSLoader: Stylesheet not correctly loaded: ", css_href)
+						dfr.reject(css_href)
+						return
 
 				old_css_nodes = []
 				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
 					if css_node != cssNode
-						console.warn("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
+						# console.info("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
 						CUI.DOM.remove(css_node)
 						old_css_nodes.push(css_node)
 
 				CUI.DOM.setAttribute(document.body, "cui-theme", name)
 
-				console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
+				# console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				Events.trigger
 					type: "viewport-resize"
 					info:

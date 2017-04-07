@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 .cui-tmpl-sticky-header {
@@ -33,10 +40,13 @@
 }
 
 .cui-sticky-header-control {
-	position: absolute;
+	position: fixed;
+	overflow: hidden;
 	left: 0;
 	right: 0;
 	top: 0;
+	height: 0;
+
 	.cui-tmpl-sticky-header {
 
 		margin-top: 0px !important;

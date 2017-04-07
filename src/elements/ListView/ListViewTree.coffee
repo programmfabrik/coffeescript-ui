@@ -1,7 +1,14 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.ListViewTree extends CUI.ListView
 	constructor: (@opts={}) ->
 		super(@opts)
-
+		assert(@root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#
 
@@ -13,6 +20,7 @@ class CUI.ListViewTree extends CUI.ListView
 			children:
 				check: Array
 			selectable:
+				deprecated: true
 				check: Boolean
 			# dont display a tree hierarchy
 			no_hierarchy:
@@ -26,9 +34,18 @@ class CUI.ListViewTree extends CUI.ListView
 			onClose:
 				check: Function
 
-
-
 	readOpts: ->
+		super()
+		if @_selectable != undefined
+			assert(@_selectableRows == undefined, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
+			@__selectableRows = @_selectable
+		@
+
+	getRowMoveTool: (opts = {}) ->
+		opts.rowMoveWithinNodesOnly = @_rowMoveWithinNodesOnly
+		new CUI.ListViewTreeRowMove(opts)
+
+	initListView: ->
 		super()
 
 		if not @_root
@@ -42,22 +59,18 @@ class CUI.ListViewTree extends CUI.ListView
 
 			@root = new ListViewTreeNode(lv_opts)
 		else
-			assert(@_root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 			@root = @_root
 
-		# replace RowMoveTool with ours
-		for t, idx in @tools
-			if t instanceof ListViewRowMoveTool
-				@tools[idx] = new ListViewTreeRowMoveTool
-					rowMoveWithinNodesOnly: @_rowMoveWithinNodesOnly
-					# tree: @
 		@
 
-	isSelectable: ->
-		@_selectable
+	# isSelectable: ->
+	# 	@_selectable
 
-	hasSelectableRows: ->
-		@_selectable
+	isSelectable: ->
+		!!@__selectableRows
+
+	# hasSelectableRows: ->
+	# 	@_selectable
 
 	isNoHierarchy: ->
 		@_no_hierarchy
@@ -89,131 +102,101 @@ class CUI.ListViewTree extends CUI.ListView
 			CUI.error("ListViewTree.render called with do_open == #{do_open}, only \"false\" is supported. The automatic root.open() is deprecated and will be removed in a future version.")
 			do_open = true
 
+		handle_event = (ev) =>
+
+			node = DOM.data(DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
+
+			if node not instanceof ListViewTreeNode or node.isLoading() or node.isLeaf()
+				return
+
+			# This needs to be immediate, "super" listens on the same node
+			ev.stopImmediatePropagation()
+
+			if ev instanceof CUI.DragoverScrollEvent
+				if ev.getCount() % 50 == 0
+					@toggleNode(ev, node)
+			else
+				@toggleNode(ev, node)
+			return
+
 		super()
+
+		Events.listen
+			node: @DOM
+			selector: ".cui-tree-node-handle"
+			capture: true
+			type: ["click", "dragover-scroll"]
+			call: (ev) =>
+				handle_event(ev)
+
+		Events.listen
+			node: @DOM
+			selector: ".cui-lv-tree-node"
+			type: ["click"]
+			call: (ev) =>
+				handle_event(ev)
 
 		if do_open
 			@root.open()
 
-		# this uses the capture phase, don't interfer with the
-		# click, if we have nothing to do
-		Events.listen
-			node: @DOM
-			capture: true
-			type: ["click", "dragover-scroll"]
-			call: (ev, info) =>
-				# CUI.debug "ListViewTree[event]",ev.getType(),info
-				# console.warn "ListViewTree", ev.getType(), @DOM
-				# dragover fires multiple times, so we need to prevent
-				# this node from open multiple times
-				$target = $(ev.getTarget())
-
-
-				_row = $target.closest(".cui-list-view-grid-row")
-				# _row = $target.closest(".#{@__lvClass}-row")
-				_handle = $target.closest(".cui-tree-node-handle")
-				node = DOM.data(_row, "listViewRow")
-
-				# console.error "tree event", ev, _row, _handle, node
-
-				if not node or node.isLoading?()
-					return
-
-				prep_target = =>
-					if ev.getType() == "click"
-						_handle.css(opacity: 0.5)
-						return true
-					if info.mousemoveEvent._done
-						# CUI.debug "event is done, not doing anything"
-						return false
-					if info.mousemoveEvent._counter % 2 == 0
-						_handle.css(opacity: "")
-					else
-						_handle.css(opacity: 0.5)
-					# CUI.debug "ev.mousemoveEvent._counter #{ev.mousemoveEvent._counter} #{ev.mousemoveEvent._done}"
-					info.mousemoveEvent._counter > 4
-
-				run_trigger = (action) =>
-					if ev.ctrlKey() and ev.getType() == "click"
-						action_on_node(action+"Recursively", node)
-					else
-						action_on_node(action, node)
-					return
-
-				action_on_node = (action, _node) =>
-					console.time("#{@__uniqueId}: action on node #{action}")
-					info.mousemoveEvent?._done = true
-					ev.stopPropagation()
-
-					hide_spinner = null
-					spinner_timeout = CUI.setTimeout
-						ms: 500
-						call: =>
-							node.showSpinner()
-							spinner_timeout = null
-							hide_spinner = true
-
-					@stopLayout()
-
-					ret = _node[action]()
-					ret.done =>
-						switch action
-							when "open"
-								@_onOpen?(ev, node: node)
-							when "close"
-								@_onClose?(ev, node: node)
-
-					ret.always =>
-						if spinner_timeout
-							CUI.clearTimeout(spinner_timeout)
-
-						if hide_spinner
-							node.hideSpinner()
-
-						@startLayout()
-
-					return ret
-					# console.timeEnd("#{@__uniqueId}: action on node #{action}")
-
-				if _handle.hasClass("cui-tree-node-is-closed") # and not $target.hasClass("no-children")
-					if prep_target()
-						run_trigger("open")
-						return
-				else if _handle.hasClass("cui-tree-node-is-open")
-					if prep_target()
-						run_trigger("close")
-						return
-
-		# this is the bubble phase, note that the click
-		# is stopped here by "select" and "deselect" below
-		Events.listen
-			node: @DOM
-			type: ["click"]
-			call: (ev, info)  =>
-				if ev.hasModifierKey(true)
-					return
-
-				$target = $(ev.getTarget())
-				_row = $target.closest(".cui-list-view-grid-row")
-				# _row = $target.closest(".#{@__lvClass}-row")
-				node = DOM.data(_row, "listViewRow")
-
-				if not node or node.isLoading?()
-					return
-
-				# FIXME: This code needs to go away and use the select/deselect mechanism
-				# of ListView
-				#
-
-				if node.isSelected?()
-					node.deselect?(ev)
-				else
-					node.select?(ev)
-				return
-
 		if @_no_hierarchy
 			@grid.addClass("cui-list-view-tree-no-hierarchy")
+		else
+			@grid.addClass("cui-list-view-tree-hierarchy")
 
 		@DOM
+
+	toggleNode: (ev, node) ->
+
+		if node.isOpen()
+			@__runTrigger(ev, "close", node)
+		else
+			@__runTrigger(ev, "open", node)
+
+		return
+
+
+	__runTrigger: (ev, action, node) ->
+		if ev.ctrlKey()
+			@__actionOnNode(ev, action+"Recursively", node)
+		else
+			@__actionOnNode(ev, action, node)
+		return
+
+
+	__actionOnNode: (ev, action, node) =>
+		hide_spinner = null
+		spinner_timeout = CUI.setTimeout
+			ms: 500
+			call: =>
+				node.showSpinner()
+				spinner_timeout = null
+				hide_spinner = true
+
+		@stopLayout()
+
+		ret = node[action]()
+		ret.done =>
+			switch action
+				when "open"
+					@_onOpen?(ev, node: node)
+				when "close"
+					@_onClose?(ev, node: node)
+
+		ret.always =>
+			if spinner_timeout
+				CUI.clearTimeout(spinner_timeout)
+
+			if hide_spinner
+				node.hideSpinner()
+
+			@startLayout()
+
+		return ret
+		# console.timeEnd("#{@__uniqueId}: action on node #{action}")
+
+	selectRow: (ev, row) ->
+		row.select(ev)
 
 	getNodesForMove: (from_i, to_i, after) ->
 		from_node = @getListViewRow(from_i)
@@ -279,8 +262,8 @@ class CUI.ListViewTree extends CUI.ListView
 	getRootChildren: ->
 		@root.children
 
-	getSelectedNode: ->
-		@root.selectedNode
+	getSelectedNode: (key="selectedNode") ->
+		@root[key]
 
 	prependNode: (node) ->
 		@addNode(node, false)

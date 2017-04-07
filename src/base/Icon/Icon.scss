@@ -1,21 +1,22 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 .cui-icon-fixed-width {
 	width: 16px;
 }
 
 .cui-icon-svg {
   fill: currentColor;
-  vertical-align: sub;
+  vertical-align: middle;
   pointer-events: none;
+  transform: translateZ(0); // make em icons sharp in Firefox
 }
 
-.svg-close {
-  width: 14px;
-  height: 14px;
-	text-shadow: -1px 0px;
+//scale icons
+.cui-button-size-mini .cui-icon-svg {
+  transform: scale(0.8);
 }
-
-.svg-folder-shared {
-	width: 14px;
-	height: 21px;
-}
-

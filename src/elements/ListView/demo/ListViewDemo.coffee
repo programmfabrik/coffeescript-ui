@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 
 class ListviewDemoTable extends DemoTable
 
@@ -264,8 +271,6 @@ class ListViewDemo extends Demo
 		options = {
 			maximize_column: [1]
 			listViewOptions:
-				setOpacity: false
-				autoLayout: 2
 				fixedRows: 1
 				fixedCols: 1
 				colResize: true
@@ -327,7 +332,6 @@ class ListViewDemo extends Demo
 			listViewOptions:
 				fixedCols: 0
 				colClasses: [null, "list-view-demo-width-100", "list-view-demo-width-100", "list-view-demo-width-100"]
-				autoLayout: false
 			oversized_cells: [4,10]
 		}
 		list_view = @createListView(options)
@@ -337,7 +341,6 @@ class ListViewDemo extends Demo
 			maximize_column: []
 			listViewOptions:
 				maximize: false
-				autoLayout: false
 				fixedCols: 0
 				colClasses: ["list-view-demo-width-100", "list-view-demo-width-100", "list-view-demo-width-100", "list-view-demo-width-100"]
 			oversized_cells: [4,10]
@@ -349,7 +352,6 @@ class ListViewDemo extends Demo
 			maximize_column: []
 			listViewOptions:
 				maximize: false
-				autoLayout: false
 				fixedCols: 0
 				colClasses: ["list-view-demo-width-100", "list-view-demo-width-100", "list-view-demo-width-100", "list-view-demo-width-100"]
 			label_rotate90: true
@@ -396,27 +398,25 @@ class ListViewDemo extends Demo
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview("Moveable rows with AutoLayout: "+dump(options),list_view)
+			demo_table.addListview("Moveable rows:"+dump(options),list_view)
 
 			options = {
 				listViewOptions:
 					fixedCols: 1
 					rowMove: true
-					autoLayout: false
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview("Moveable rows in FixedColumn without Autolayout: !!Will never work cause fixed column and other columns are not syncing height when autolayout is false!!"+dump(options),list_view)
+			demo_table.addListview("Moveable rows:"+dump(options),list_view)
 
 			options = {
 				listViewOptions:
 					fixedCols: 0
 					rowMove: true
-					autoLayout: false
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview("Moveable rows without Autolayout, No FixedCols: "+dump(options),list_view)
+			demo_table.addListview("Moveable rows, No FixedCols: "+dump(options),list_view)
 
 			options = {
 				listViewOptions:

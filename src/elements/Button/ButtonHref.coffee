@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class ButtonHref extends Button
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -20,6 +27,9 @@ class ButtonHref extends Button
 				check: Boolean
 			target:
 				check: String
+
+		if CUI.__ng__
+			@mergeOpt("icon_right", default: "external_link")
 
 	setHref: (href) ->
 		@DOM.attr("href", href)

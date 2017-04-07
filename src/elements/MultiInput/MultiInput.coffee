@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class MultiInput extends DataFieldInput
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -29,6 +36,10 @@ class MultiInput extends DataFieldInput
 			content_size:
 				default: false
 				check: Boolean
+
+	readOpts: ->
+		super()
+		@__inputs = null
 
 	disable: ->
 		super()
@@ -99,6 +110,7 @@ class MultiInput extends DataFieldInput
 			node: inp.DOM # last one
 
 	getUniqueIdForLabel: ->
+		@__initInputs()
 		for inp in @__inputs
 			if @_control.isEnabled(inp.getName())
 				return inp.getUniqueIdForLabel()
@@ -117,8 +129,10 @@ class MultiInput extends DataFieldInput
 			input.displayValue()
 		@
 
-	render: ->
-		super()
+	__initInputs: ->
+		if @__inputs
+			return
+
 		@__multiInputDiv = $div("cui-multi-input-container")
 
 		Events.listen
@@ -176,6 +190,12 @@ class MultiInput extends DataFieldInput
 						@storeValue(values)
 
 			@__inputs.push(input)
+		return
+
+
+	render: ->
+		super()
+		@__initInputs()
 
 		if @hasData()
 			@setDataOnInputs()

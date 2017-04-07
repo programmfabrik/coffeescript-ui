@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.ItemList extends CUI.VerticalLayout
 
 	init: ->
@@ -13,6 +20,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 				mandatory: true
 				check: (v) ->
 					CUI.isFunction(v) or CUI.isArray(v)
+			# if set no "null", don't manage this for us
+			# otherwise ItemList sets the active item
+			# according to the active idx
 			active_item_idx:
 				check: "Integer"
 
@@ -91,26 +101,28 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	__initActiveIdx: ->
 
-		if not isUndef(@__active_idx)
-			active_idx = @__active_idx
-		else
-			active_idx = @_active_item_idx
+		active_idx = @_active_item_idx
 
 		if isUndef(active_idx)
 			items = @__getItems()
+
 			if isPromise(items)
 				active_idx = null
+			else
+				for item, idx in items
+					if not item
+						continue
+					if isUndef(item.active)
+						continue
+					if item.active
+						active_idx = idx
+						break
 
-			for item, idx in items
-				if not item
-					continue
-				if isUndef(item.active)
-					continue
-				if item.active
-					active_idx = idx
-					break
-				if isUndef(active_idx)
-					active_idx = null
+					# we only get here, if any
+					# of out items has an
+					# "active" property
+					if isUndef(active_idx)
+				        active_idx = null
 
 		if not isUndef(active_idx)
 			@__active_idx = active_idx
@@ -125,8 +137,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		@__body.empty()
 
-		@getItems(event)
-		.done (items) =>
+		promise = @getItems(event)
+
+		promise.done (items) =>
 
 			opt_keys = CUI.defaults.class.Button.getOptKeys()
 			list_has_button_left = false
@@ -171,7 +184,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 							type: "cui-button-click"
 							node: btn
 							call: (ev, info) =>
-								btn.getTooltip()?.destroy()
 								@_onClick?(info.event, btn, item, idx)
 
 								if not menu?.isAutoCloseAfterClick() or btn.hasMenu()
@@ -253,6 +265,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 					@__body.removeClass("cui-item-list--has-button-left")
 
 			return
+		promise
 
 	destroy: ->
 		super()

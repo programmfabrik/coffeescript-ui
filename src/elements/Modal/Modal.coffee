@@ -1,30 +1,31 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # Modal
 #
 class CUI.Modal extends CUI.LayerPane
+
+	@defaults:
+		cancel_tooltip: text: "Close Dialog"
 
 	#Construct a new Modal.
 	#
 	constructor: (@opts={}) ->
 		super(@opts)
-		# @__defer_auto_size = false
 
-		@__addHeaderButton("fill_screen_button", Pane.getToggleFillScreenButton())
-
-		# Events.listen
-		# 	type: "end-fill-screen"
-		# 	node: @getPane().DOM
-		# 	call: (ev) =>
-		# 		if @__defer_auto_size
-		# 			@autoSize()
-		# 			@__defer_auto_size = false
-		# 		return
+		@__addHeaderButton("fill_screen_button", Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip))
 
 		@__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
 			icon:  "close"
+			tooltip: @_cancel_tooltip or CUI.Modal.defaults.cancel_tooltip
 			appearance: if CUI.__ng__ then "normal" else "flat"
-			onClick: (ev) =>
-				@doCancel(ev)
+			onClick: (ev, btn) =>
+				@doCancel(ev, false, btn)
 
 	initOpts: ->
 		super()
@@ -39,11 +40,15 @@ class CUI.Modal extends CUI.LayerPane
 			cancel_action:
 				default: "destroy"
 				check: ["destroy", "hide"]
+			cancel_tooltip:
+				check: "PlainObject"
 			onCancel:
 				check: Function
 			# show a fill screen button
 			fill_screen_button:
 				check: Boolean
+			fill_screen_button_tooltip:
+				check: "PlainObject"
 			onToggleFillScreen:
 				check: Function
 
@@ -55,7 +60,7 @@ class CUI.Modal extends CUI.LayerPane
 			return
 
 		if CUI.isPlainObject(_btn)
-			btn = new Button(_btn)
+			btn = new CUI.defaults.class.Button(_btn)
 		else
 			btn = _btn
 
@@ -85,12 +90,18 @@ class CUI.Modal extends CUI.LayerPane
 		else
 			super(ev)
 
-	doCancel: (ev) ->
-		if not @_cancel
+	doCancel: (ev, force_callback = false, button = null) ->
+		if not @_cancel and not force_callback
 			super(ev)
 		else
 			ret = @_onCancel?(ev, @)
 			if isPromise(ret)
+				if button
+					button.disable()
+					button.startSpinner()
+					ret.always =>
+						button.stopSpinner()
+						button.enable()
 				ret.done (value) => @[@_cancel_action](ev, value)
 			else if ret != false
 				@[@_cancel_action](ev, ret)
@@ -115,12 +126,6 @@ class CUI.Modal extends CUI.LayerPane
 	hide: (ev) ->
 		@getPane().endFillScreen(false) # no transition
 		super(ev)
-
-	# autoSize: (immediate = false) ->
-	# 	if @getPane().getFillScreenState()
-	# 		@__defer_auto_size = true
-	# 	else
-	# 		super(immediate)
 
 
 Modal = CUI.Modal

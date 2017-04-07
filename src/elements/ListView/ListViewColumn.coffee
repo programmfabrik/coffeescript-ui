@@ -1,4 +1,11 @@
-class ListViewColumn extends CUI.Element
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
+class CUI.ListViewColumn extends CUI.Element
 
 	readOpts: ->
 		super()
@@ -28,6 +35,12 @@ class ListViewColumn extends CUI.Element
 
 	getRow: ->
 		@listViewRow
+
+	setColumnIdx: (@col_i) ->
+		@
+
+	getColumnIdx: ->
+		@col_i
 
 	render: ->
 		if not isUndef(@_element)
@@ -83,3 +96,4 @@ class ListViewColumn extends CUI.Element
 		else
 			return 1
 
+ListViewColumn = CUI.ListViewColumn

@@ -1,3 +1,10 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 
@@ -114,10 +121,14 @@
 .cui-lasso {
 	position: absolute;
 	z-index: 100;
-	border: 1px dotted black;
+	width: 1px;
+	height: 1px;
+	left: 0;
+	top: 0;
 	opacity: 0.5;
 	background-color: #fff;
 	box-sizing: border-box;
+	transform-origin: left top;
 }
 
 .cui-lasso-area {

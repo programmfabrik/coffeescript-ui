@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class Checkbox extends DataFieldInput
 
 	initOpts: ->
@@ -30,6 +37,14 @@ class Checkbox extends DataFieldInput
 				check: Boolean
 			tooltip:
 				check: "PlainObject"
+			icon_active:
+				default: "check"
+				mandatory: true
+				check: (v) ->
+					v instanceof Icon or isString(v)
+			icon_inactive:
+				check: (v) ->
+					v instanceof Icon or isString(v)
 
 	enable: ->
 		super()
@@ -38,6 +53,9 @@ class Checkbox extends DataFieldInput
 	disable: ->
 		super()
 		@__checkbox?.disable()
+
+	getButton: ->
+		@__checkbox
 
 	getOptValue: ->
 		@_value
@@ -99,11 +117,14 @@ class Checkbox extends DataFieldInput
 
 		btn_opts.disabled = @isDisabled()
 		btn_opts.center = @_content
-		btn_opts.class = @_class
+		# btn_opts.class = @_class
 
 		@__checkbox = new CUI.defaults.class.Button(btn_opts)
 
 		@__checkbox.addClass(@getCheckboxClass())
+
+		if @_icon_active != "check" or @_icon_inactive
+			@addClass("cui-checkbox--icon")
 
 		if CUI.__ng__
 			@__checkbox.removeClass("cui-button-button")
@@ -114,12 +135,14 @@ class Checkbox extends DataFieldInput
 			"isActive"
 			"getGroup"
 			"setGroup"
+			"setTextMaxChars"
 			"setText"
 			"getText"
 		])
 
+		# @append(@getChangedMarker())
 		@replace(@__checkbox)
-		@append(@getChangedMarker())
+
 
 	checkValue: (v, flags) ->
 		if not isBoolean(v)
@@ -137,18 +160,19 @@ class Checkbox extends DataFieldInput
 			@__checkbox.deactivate(initial_activate: true)
 		@
 
-
 	getButtonOpts: ->
 		if @_radio
 			role: "radio"
 			radio: @_radio
 			group: @_group
-			icon_active: "check"
+			icon_active: @_icon_active
+			icon_inactive: @_icon_inactive
 		else
 			role: "checkbox"
 			switch: true
 			group: @_group
-			icon_active: "check"
+			icon_active: @_icon_active
+			icon_inactive: @_icon_inactive
 
 	getDefaultValue: ->
 		if @_active

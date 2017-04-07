@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	initOpts: ->
@@ -8,11 +15,15 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			open:
 				check: Boolean
 			html: {}
+			colspan:
+				check: (v) ->
+					v > 0
 			getChildren:
 				check: Function
 
 	readOpts: ->
 		super()
+		@colspan = @_colspan
 		if @_children
 			@children = @opts.children
 			@initChildren()
@@ -41,8 +52,13 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# CUI.debug getObjectClass(@), "isLeaf?",leaf, @hasChildren?(), @opts.leaf, @
 		leaf
 
+	getClass: ->
+		cls = super()
+		cls = cls + " cui-lv-tree-node"
+		cls
+
 	isSelectable: ->
-		@getTree?().isSelectable() and @__selectable
+		@getTree?().isSelectable() and @__selectable and not @isRoot()
 
 	getFather: ->
 		@father
@@ -55,7 +71,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			assert(@ not in new_father.getPath(true), "#{getObjectClass(@)}.setFather", "father cannot any of the node's children", node: @, father: new_father)
 
 		if not new_father and @selected
-			@getRoot()?.selectedNode = null
+			@setSelectedNode(null)
 			@selected = false
 
 		if @father and not new_father
@@ -116,6 +132,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @children
 			for c in @children
 				c.find(eq_func, nodes)
+
 		nodes
 
 	# filters the children by function
@@ -215,13 +232,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@do_open = false
 
 		if remove_self
-
 			if @element
-				if @getRowIdx() == null
-					if not @isRoot()
-						@getTree().removeDeferredRow(@)
-				else
-					@getTree().removeRow(@getRowIdx())
+				tree = @getTree()
+				if tree and not tree.isDestroyed()
+					if @getRowIdx() == null
+						if not @isRoot()
+							tree.removeDeferredRow(@)
+					else
+						tree.removeRow(@getRowIdx())
 
 				@element = null
 
@@ -261,18 +279,21 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @isLeaf()
 			return dfr.resolve().promise()
 
-		@[action]()
-		.done =>
+		if action == "open"
+			ret = @getLoading()
+			if not ret
+				ret = @open()
+		else
+			ret = @close()
+
+		ret.done =>
 			promises = []
 			for child in @children
 				promises.push(child["#{action}Recursively"]())
 			CUI.when(promises)
-			.done =>
-				dfr.resolve()
-			.fail =>
-				dfr.reject()
-		.fail =>
-			dfr.reject()
+			.done(dfr.resolve)
+			.fail(dfr.reject)
+		.fail(dfr.reject)
 		dfr.promise()
 
 	isOpen: ->
@@ -287,81 +308,90 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	abortLoading: ->
 		if not @__loadingDeferred
 			return
-		CUI.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
+
+		console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
 		@__loadingDeferred.reject()
+		@__loadingDeferred = null
+		return
+
+	__open_counter: 0
 
 	# resolves with the opened node
 	open: ->
-		dfr = new CUI.Deferred()
-		tree = @getTree()
-		# CUI.error "Node.open START", @getUniqueId(), @getNodeId(), @isLoading(), @is_open, dfr.getUniqueId()
 
-		assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @, tree: tree)
+		# we could return loading_deferred here
+		assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
+
+		@__open_counter++
+
+		open_counter = @__open_counter
+
+		# console.error @getUniqueId(), "opening...", "is open:", @is_open, open_counter
 
 		if @is_open
-			# CUI.debug "node is already open"
-			return dfr.resolve(@).promise()
+			return CUI.resolvedPromise()
 
-		# keep this as long as the other deferred is not done
-		@__loadingDeferred = new CUI.Deferred()
+		@is_open = true
+		@do_open = false
 
-		# console.time "open:"+tree.getUniqueId()+@getNodeId()
-		dfr.always =>
-			# CUI.error @getUniqueId(), "running always...", @__loadingDeferred, @isLoading()
+		dfr = @__loadingDeferred = new CUI.Deferred()
+
+		do_resolve = =>
+			if @__loadingDeferred.state() == "pending"
+				@__loadingDeferred.resolve(@)
 			@__loadingDeferred = null
-			# console.timeEnd "open:"+tree.getUniqueId()+@getNodeId()
-			# CUI.error "Node.open DONE", @getUniqueId(), @isLoading()
-			return
+
+		do_reject = =>
+			if @__loadingDeferred.state() == "pending"
+				@__loadingDeferred.reject(@)
+			@__loadingDeferred = null
 
 		load_children = =>
 			assert(CUI.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
 
+			# console.debug @._key, @getUniqueId(), "children loaded", @children.length
+
 			if @children.length == 0
-				@is_open = true
-				@do_open = false
 				if not @isRoot()
 					@replaceSelf()
-				dfr.resolve(@)
+				do_resolve()
 				return
 
 			@initChildren()
 
-			# # CUI.debug "starting with children", @getUniqueId(), (c.getUniqueId() for c in @children)
-			# for n in @children
-			#       @__addNode(n, true, false, true)
+			CUI.chunkWork.call @,
+				items: @children
+				chunk_size: 5
+				timeout: 1
+				call: (items) =>
+					CUI.chunkWork.call @,
+						items: items
+						chunk_size: 1
+						timeout: -1
+						call: (_items) =>
+							# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work"
+							if open_counter < @__open_counter
+								# we are already in a new run, exit
+								return false
+							@__appendNode(_items[0], true) # , false, true))
 
-			# if not @isRoot()
-			# 	@is_open = true
-			# 	@replaceSelf()
-			# dfr.resolve()
-			# return
-
-			# CUI.debug "root: ", @isRoot(), @is_open, @children.length
-
-			promises = []
-			@__loadingDeferred = CUI.chunkWork(@children, 5, 1) # set ms to 1 so we track this
-			.progress (node, idx) =>
-				# CUI.debug "chunk adding node:", "this:", @getUniqueId(), "node:", node.getUniqueId()
-				promises.push(@__appendNode(node, true)) # , false, true)) # don't add again to child array, assume open
-				# CUI.debug "node appended", idx, tree.layoutIsStopped(), tree
 			.done =>
-				CUI.when(promises)
-				.done =>
-					# CUI.error @getUniqueId(), "resolving deferred...", @, @__loadingDeferred
-					@is_open = true
-					@do_open = false
-					if not @isRoot()
-						@replaceSelf()
+				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work DONE"
+				if open_counter < @__open_counter
+					return
 
-					dfr.resolve(@)
-				.fail =>
-					dfr.reject(@)
+				if not @isRoot()
+					@replaceSelf()
+				do_resolve()
 			.fail =>
-				# we need to remove our children
+				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work FAIL"
+				if open_counter < @__open_counter
+					return
+
 				for c in @children
 					c.removeFromDOM()
-				# CUI.error(@getUniqueId(), "rejecting deferred...", @__loadingDeferred)
-				dfr.reject(@)
+				do_reject()
+
 			return
 
 		if @children
@@ -377,17 +407,15 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 					assert(isPromise(ret), "#{getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
 					ret
 					.done (@children) =>
-						if @__loadingDeferred.state() == "rejected"
-							CUI.warn("getChildren promise returned, but node opening was cancelled.")
-							dfr.reject(@)
-						else
-							load_children()
-					.fail =>
-						dfr.reject(@)
+						if open_counter < @__open_counter
+							return
+						load_children()
+						return
+					.fail(do_reject)
 			else
 				if not @isRoot()
 					@replaceSelf()
-				dfr.resolve(@)
+				do_resolve()
 
 		dfr.promise()
 
@@ -472,6 +500,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		if tree?.isDestroyed()
 			return CUI.rejectedPromise(node)
+
+		# console.debug @._key, node._key, node.__info?.text, @isRendered()
 
 		if not @isRendered()
 			return CUI.resolvedPromise(node)
@@ -568,41 +598,40 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@update()
 		child.setFather(null)
 
-	deselect: (ev) ->
+	deselect: (ev, new_node) ->
 		if not @getTree().isSelectable()
 			return CUI.resolvedPromise()
 
-		@check_deselect(ev)
+		@check_deselect(ev, new_node)
 		.done =>
-			@getRoot().selectedNode = null
-			t = @getTree()
-			t.rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+			@setSelectedNode()
+			@removeSelectedClass()
 			@selected = false
 			@getTree().triggerNodeDeselect(ev, @)
 
 	allowRowMove: ->
 		true
 
-	# this is used by hash change and internally
-	# ev._confirm_hash_change needs to be set to a "confirmation text"
-	# to ask the user if the deselect is ok
-	allow_deselect: (ev, info) ->
-
-	# checks if deselecting is possible
-	# returns a Promise
-	# done: possible
-	# fail: not-possible
-	check_deselect: (ev) ->
-		if ev
-			@allow_deselect(ev)
-			if ev.getInfo?()._confirm_hash_change
-				m = new ModalConfirm(text: ev.getInfo()._confirm_hash_change)
-				return m.open()
-
-		return CUI.resolvedPromise()
+	check_deselect: (ev, new_node) ->
+		CUI.resolvedPromise()
 
 	isSelected: ->
 		!!@selected
+
+	addSelectedClass: ->
+		@getTree().rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+
+	removeSelectedClass: ->
+		@getTree().rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+
+	setSelectedNode: (node = null, key = @getSelectedNodeKey()) ->
+		@getRoot()[@getSelectedNodeKey()] = node
+
+	getSelectedNode: (key = @getSelectedNodeKey()) ->
+		@getRoot()?[key] or null
+
+	getSelectedNodeKey: ->
+		"selectedNode"
 
 	select: (ev) ->
 		dfr = new CUI.Deferred()
@@ -622,26 +651,26 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# CUI.debug "selecting node", sel_node
 
 		do_select = =>
-			@getRoot().selectedNode = @
+			@setSelectedNode(@)
 			# CUI.error "openUpwards", @getNodeId(), @is_open
 			@openUpwards()
 			.done =>
-				@getTree().rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+				@addSelectedClass()
 				@selected = true
 				dfr.resolve()
 			.fail(dfr.reject)
 
 		# the selected node is not us, so we ask the other
 		# node
-		sel_node = @getRoot().selectedNode
+		sel_node = @getSelectedNode()
 
 		if sel_node
-			sel_node.check_deselect(ev)
-			.done ->
+			sel_node.check_deselect(ev, @)
+			.done =>
 				# don't pass event, so no check is performed
 				#CUI.debug "selected node:", sel_node
-				sel_node.deselect()
-				.done ->
+				sel_node.deselect(null, @)
+				.done =>
 					do_select()
 				.fail(dfr.reject)
 			.fail(dfr.reject)
@@ -712,9 +741,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	update: (update_root=false) =>
 		# CUI.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
-		if @isRoot() and not update_root
+
+		if not update_root and (not @element or @isRoot())
 			# dont update root
-			return
+			return CUI.resolvedPromise()
 
 		tree = @getTree()
 		layout_stopped = tree?.stopLayout()
@@ -722,7 +752,6 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		.done =>
 			if layout_stopped
 				tree.startLayout()
-		@
 
 	reload: ->
 		# CUI.debug "ListViewTreeNode.reload:", @isRoot(), @is_open
@@ -789,7 +818,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@prependColumn new ListViewColumn
 			element: @element
 			class: "cui-tree-node-column cui-tree-node-level-#{@level()}"
-			colspan: @opts.colspan
+			colspan: @colspan
 
 		# nodes can re-arrange the order of the columns
 		# so we call them last

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # Pane with Header and Footer
 class CUI.SimplePane extends CUI.Pane
 
@@ -17,7 +24,11 @@ class CUI.SimplePane extends CUI.Pane
 			"footer_left"
 			"footer_right"
 		]
-			@append(@["_#{k}"], k)
+			value = @["_#{k}"]
+			if not value
+				continue
+
+			@append(value, k)
 
 		if @_title
 			@append(new Label(text: @_title), "header_left")
@@ -35,12 +46,18 @@ class CUI.SimplePane extends CUI.Pane
 			footer_left: {}
 			footer_right: {}
 			content: {}
+			force_header:
+				mandatory: true
+				check: Boolean
+				default: false
+			force_footer:
+				mandatory: true
+				check: Boolean
+				default: false
 
 		@removeOpt("top")
 		@removeOpt("bottom")
 		@removeOpt("center")
-
-		@mergeOpt("padding", default: "normal")
 		@
 
 	readOpts: ->
@@ -51,22 +68,41 @@ class CUI.SimplePane extends CUI.Pane
 		if @_title
 			assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
 
-		@__pane_header = new PaneHeader()
-		@__pane_footer = new PaneFooter()
+		if @forceHeader() or
+			not (isUndef(@_header_left) and isUndef(@_header_center) and isUndef(@_header_right)) or
+			@_title
+				@__pane_header = new PaneHeader()
 
-		@_top =
-			content: @__pane_header
+				@_top =
+					content: @__pane_header
 
-		@_bottom =
-			content: @__pane_footer
+		if @forceFooter() or not (isUndef(@_footer_left) and isUndef(@_footer_right))
+			@__pane_footer = new PaneFooter()
+
+			@_bottom =
+				content: @__pane_footer
 
 		@_center =
 			content: @_content
 		@
 
+	forceHeader: ->
+		@_force_header
+
+	forceFooter: ->
+		@_force_footer
+
+	hasHeader: ->
+		!!@__pane_header
+
+	hasFooter: ->
+		!!@__pane_footer
+
 	destroy: ->
-		@__pane_header.destroy()
-		@__pane_footer.destroy()
+		@__pane_header?.destroy()
+		@__pane_header = null
+		@__pane_footer?.destroy()
+		@__pane_footer = null
 		super()
 
 	getPaneAndKey: (key) ->

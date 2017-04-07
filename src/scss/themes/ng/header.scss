@@ -1,1 +1,250 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 // header for "ng*"
+
+$cui-highlight-color: "blue" !default;
+
+$colors: (
+	"red": (
+		dark: hsl(3,100%,59%),
+		light: hsl(3,100%,86%)
+	),
+	"orange": (
+		dark: hsl(35,100%,50%),
+		light: hsl(35,100%,85%)
+	),
+	"yellow": (
+		dark: hsl(48,100%,50%),
+		light: hsl(48,100%,85%)
+	),
+	"green": (
+		dark: hsl(104,69%,54%),
+		light: hsl(104,80%,82%)
+	),
+	"blue": (
+		dark: hsl(211,100%,43%),
+		light: hsl(211,100%,85%)
+	),
+	"purple": (
+		dark: hsl(289,65%,67%),
+		light: hsl(289,100%,92%)
+	),
+	"pink": (
+		dark: hsl(342,100%,58%),
+		light: hsl(342,100%,87%)
+	),
+	"brown": (
+		dark: hsl(34,27%,50%),
+		light: hsl(34,49%,86%)
+	),
+	"graphite": (
+		dark: hsl(240,2%,44%),
+		light: hsl(240,5%,85%)
+	)
+);
+
+$highlight: map-get($colors, $cui-highlight-color);
+
+$padding: 10px;
+// compensating padding compensates for line-height
+$compensating-padding: 7px;
+$gap: 10px;
+$small-gap: 7px;
+$text: black;
+$background: hsl(205,2%,97%);
+$foreground: white;
+$border: hsl(205,20%,83%);
+$soft-border: hsl(205,20%,91%);
+$color: black;
+$font-family: -apple-system, BlinkMacSystemFont, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+
+$secondary-color: hsl(205,5%,45%);
+$muted-color: hsl(205,5%,60%);
+$disabled-color: hsl(205,7%,73%);
+
+$highlight-color: map-get($highlight, 'dark');
+$row-highlight: map-get($highlight, 'light');
+$on-highlight-color: white;
+$on-highlight-muted-color: desaturate($row-highlight, 50%);
+$on-row-highlight-muted-color: darken(desaturate($row-highlight, 70%), 36%);
+$on-row-highlight-secondary-color: darken(desaturate($row-highlight, 75%), 40%);
+
+$button-background: white;
+$button-pressed: hsl(205,10%,91%);
+$button-active: hsl(205,15%,43%);
+$button-active-text: $on-highlight-color;
+$button-active-border: hsl(205,15%,43%);
+$button-active-pressed: darken($button-active, 9%);
+$button-active-pressed-text: darken($button-active-text, 9%);
+$button-active-pressed-border: darken($button-active-pressed, 5%);
+$button-color: hsl(205,8%,34%);
+$button-border: hsl(205,10%,75%);
+$button-radius: 4px;
+$button-height: 24px;
+
+$input-border: hsl(205,20%,79%);
+$input-radius: $button-radius;
+$input-placeholder: hsl(205,10%,75%);
+
+$drag-handle-color: hsla(205,10%,50%,.5);
+
+// Table Colors
+$zebra-color: hsla(205,41%,20%,.04);
+$zebra-on-foreground-color: hsl(210,12%,97%);
+$table-border: hsl(205,8%,90%);
+$table-header-border: hsl(205,8%,94%);
+$table-row-border: $soft-border;
+
+$table-data-height: 32px;
+$table-data-padding: 4px;
+$td-width: 135px;
+$td-min-width: 100px;
+$td-height: 18px;
+
+$error-color: hsl(10,90%,52%);
+$on-error-color: white;
+$neutral-color: hsl(48,100%,58%);
+$positive-color: hsl(150,77%,50%);
+
+$toolbar-background: hsl(205,10%,94%);
+$toolbar-height: 34px;
+
+$layer-background: $foreground;
+
+$layer-header-pointer-background: $toolbar-background;
+$layer-header-background: $toolbar-background;
+$layer-header-border: hsl(205,22%,87%);
+$layer-header-color: hsl(205,4%,27%);
+
+$layer-footer-background: $layer-header-background;
+$layer-footer-border: $layer-header-border;
+
+$item-list-color: hsl(205,7%,22%);
+$item-list-hover: $button-pressed;
+$item-list-pressed: $button-pressed;
+
+$popover-hint-background: hsl(205,20%,30%);
+
+@mixin desktop {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin ellipsis(){
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin margin($factor: 1) {
+	margin-bottom: $padding * $factor;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@mixin margin-top($factor: 1) {
+	margin-top: $padding * $factor;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+@mixin padding($factor: 1) {
+	padding: $padding * $factor;
+}
+
+@mixin padding-y($factor: 1) {
+	padding-top: $padding * $factor;
+	padding-bottom: $padding * $factor;
+}
+
+// Flex for selected TABLE
+@mixin flex-table() {
+	display: flex; // yes, this is fun :)
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	flex-direction: column;
+
+	> tr {
+		display: flex; // yes, this is fun :)
+		box-sizing: border-box;
+		flex: 1 1 auto;
+
+		> td {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 0 0 auto;
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+}
+
+@mixin focus() {
+	box-shadow: 0 0 0 3px $row-highlight;
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin inner-focus() {
+	box-shadow: 0 0 0 3px $row-highlight inset;
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin border-focus() {
+	box-shadow: 0 0 0 3px $row-highlight;
+	border-color: $highlight-color;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin outer-focus() {
+	box-shadow: 
+		0 0 0 1px $highlight-color,
+		0 0 0 4px $row-highlight;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin button-reset() {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  border-radius: 0;
+  height: auto;
+  line-height: inherit;
+}
+
+%icon {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin icon($code){
+	@extend %icon;
+	content: $code;
+}

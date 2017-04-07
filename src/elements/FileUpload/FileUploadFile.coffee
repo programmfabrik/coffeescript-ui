@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class FileUploadFile extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -135,60 +142,69 @@ class FileUploadFile extends CUI.Element
 
 		onDone = =>
 
-		@__upload = new CUI.XHR
-			url: url
-			form: form
-		@__upload
-		.start()
-		.progress (type, loaded, total, percent) =>
-			if type == "download"
-				return
+		if @_file.size > 0
 
-			# CUI.debug loaded, total, percent
-			if @__progress.status == "ABORT"
-				return
+			@__upload = new CUI.XHR
+				url: url
+				form: form
+			@__upload
+			.start()
+			.progress (type, loaded, total, percent) =>
+				if type == "download"
+					return
 
-			if loaded == total
-				@__progress.status = "COMPLETED"
-			else
-				@__progress.status = "PROGRESS"
+				# CUI.debug loaded, total, percent
+				if @__progress.status == "ABORT"
+					return
 
-			@__progress.loaded = loaded
-			@__progress.total = total
-			@__progress.percent = percent
-			@__dfr.notify(@)
-		.done (data) =>
-			@__progress.data = data
+				if loaded == total
+					@__progress.status = "COMPLETED"
+				else
+					@__progress.status = "PROGRESS"
 
-			onDone = =>
-				# CUI.debug @_file.name, "result:", @result
-				@__progress.status = "DONE"
-				@__upload = null
-				@__dfr.resolve(@)
+				@__progress.loaded = loaded
+				@__progress.total = total
+				@__progress.percent = percent
+				@__dfr.notify(@)
+			.done (data) =>
+				@__progress.data = data
 
-			if @_onBeforeDone
-				CUI.decide(@_onBeforeDone(@))
-				.done(onDone)
-				.fail =>
+				onDone = =>
+					# CUI.debug @_file.name, "result:", @result
+					@__progress.status = "DONE"
+					@__upload = null
+					@__dfr.resolve(@)
+
+				if @_onBeforeDone
+					CUI.decide(@_onBeforeDone(@))
+					.done(onDone)
+					.fail =>
+						@__progress.status = "ABORT"
+						@__upload = null
+						@__dfr.reject(@)
+				else
+					onDone()
+
+			.fail (data, status, statusText) =>
+				# "abort" may be set by jQuery
+				console.warn("FileUploadFile.fail", status, statusText)
+				if statusText == "abort"
 					@__progress.status = "ABORT"
+
+				if @__progress.status != "ABORT"
+					@__progress.status = "FAILED"
+
+				@__progress.fail = @__upload.response()
+				@__progress.fail_xhr = @__upload.getXHR()
+				@__upload = null
+				@__dfr.reject(@)
+		else
+			CUI.setTimeout
+				call: =>
+					console.warn("FileUploadFile.fail, Not uploading empty file.")
+					@__progress.status = "FAILED"
 					@__upload = null
 					@__dfr.reject(@)
-			else
-				onDone()
-
-		.fail (data, status, statusText) =>
-			# "abort" may be set by jQuery
-			CUI.warn("FileUploadFile.fail", status, statusText)
-			if statusText == "abort"
-				@__progress.status = "ABORT"
-
-			if @__progress.status != "ABORT"
-				@__progress.status = "FAILED"
-
-			@__progress.fail = @__upload.response()
-			@__progress.fail_xhr = @__upload.getXHR()
-			@__upload = null
-			@__dfr.reject(@)
 
 		@__progress.status = "STARTED"
 		@__progress.percent = 0

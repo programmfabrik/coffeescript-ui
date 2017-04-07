@@ -1,0 +1,5 @@
+input=Input
+emailinput=EmailInput
+numberinput=NumberInput
+inputblock=InputBlock
+numberinputblock=NumberInputBlock

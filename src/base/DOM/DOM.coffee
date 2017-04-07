@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.DOM extends CUI.Element
 
 	initOpts: ->
@@ -7,36 +14,50 @@ class CUI.DOM extends CUI.Element
 				default: ""
 				check: String
 
-	registerTemplate: (template) ->
+			attr:
+				default: {}
+				check: "PlainObject"
+
+	registerTemplate: (template, add_default_classes=true) ->
 		assert(template instanceof Template, "#{getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{getObjectClass(template)}.", template: template)
 		if @__template
 			CUI.warn("#{getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
 			@__template.destroy()
 		@__template = template
-		@registerDOMElement(@__template.DOM)
+		@registerDOMElement(@__template.DOM, add_default_classes)
 
 	getDOMElementClasses: ->
 		if CUI.__ng__
-			return "cui-dom-element cui-#{toDash(@__cls)}"
+			# return "cui-dom-element cui-#{toDash(@__cls)}"
+			return "cui-#{toDash(@__cls)}"
 		else
 			return "cui-dom-element cui-#{toDash(@__cls)} ez-#{toDash(@__cls)}"
 
-	registerDOMElement: (_dom) ->
+	registerDOMElement: (_dom, add_default_classes=true) ->
 		@DOM = _dom
-		CUI.DOM.addClass(@DOM, @getDOMElementClasses())
-		CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
+		if add_default_classes
+			CUI.DOM.addClass(@DOM, @getDOMElementClasses())
+			DOM.setAttributeMap(@DOM, @_attr)
+
+		# CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
 		if @_class
 			# CUI.debug DOM, @DOM, @_class
 			CUI.DOM.addClass(@DOM, @_class) # @DOM.addClass(@_class)
 		CUI.DOM.setElement(@DOM, @)
 		@
 
-	unregisterDOMElement: (@DOM) ->
-		CUI.removeClass(@DOM, @getDOMElementClasses())
+	# if used as parameter in "Layer", overwrite to
+	# a different element to position the layer with
+	getElementForLayer: ->
+		@DOM
+
+	unregisterDOMElement: ->
+		CUI.DOM.removeClass(@DOM, @getDOMElementClasses())
 		CUI.DOM.removeAttribute(@DOM, "id")
 		if @_class
 			CUI.DOM.removeClass(@DOM, @_class)
 		DOM.removeData(@DOM, "element")
+		delete(@DOM)
 		@
 
 	assertDOMElement: (func) ->
@@ -51,11 +72,23 @@ class CUI.DOM extends CUI.Element
 		@assertDOMElement("addClass")
 		CUI.DOM.addClass(@DOM, cls)
 
+	setAria: (attr, value) ->
+		@assertDOMElement("setAria")
+		CUI.DOM.setAria(@DOM, attr, value)
+
 	removeClass: (cls) ->
 		assert(arguments.length == 1, "DOM.removeClass", "Only one parameter allowed.")
 
 		@assertDOMElement("removeClass")
 		CUI.DOM.removeClass(@DOM, cls)
+
+	hide: ->
+		@assertDOMElement("hide")
+		CUI.DOM.hideElement(@DOM)
+
+	show: ->
+		@assertDOMElement("show")
+		CUI.DOM.showElement(@DOM)
 
 	hasClass: (cls) ->
 		assert(arguments.length == 1, "DOM.hasClass", "Only one parameter allowed.")
@@ -357,7 +390,7 @@ class CUI.DOM extends CUI.Element
 			len = content.length
 
 			while idx < len
-				CUI.DOM.append(node, content[idx], append)
+				@__append(node, content[idx], append)
 				if len > content.length
 					# leave idx == 0, list is live
 				else
@@ -374,7 +407,10 @@ class CUI.DOM extends CUI.Element
 			when "string"
 				append_node = document.createTextNode(content)
 			else
-				append_node = content
+				if content.DOM
+					append_node = content.DOM
+				else
+					append_node = content
 
 		if append
 			assert(append_node instanceof Node, "DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
@@ -391,11 +427,11 @@ class CUI.DOM extends CUI.Element
 	@append: (node, content) ->
 		@__append(node, content)
 
-	@getById: (uniqueId) ->
-		dom_el = document.getElementById("cui-dom-element-"+uniqueId)
-		if not dom_el
-			return null
-		DOM.data(dom_el, "element")
+	# @getById: (uniqueId) ->
+	# 	dom_el = document.getElementById("cui-dom-element-"+uniqueId)
+	# 	if not dom_el
+	# 		return null
+	# 	DOM.data(dom_el, "element")
 
 	@getAttribute: (node, key) ->
 		node.getAttribute(key)
@@ -404,16 +440,19 @@ class CUI.DOM extends CUI.Element
 		if not element
 			return null
 
-		element.parentNode?.removeChild(element)
+		if element.DOM
+			element.parentNode?.removeChild(element.DOM)
+		else
+			element.parentNode?.removeChild(element)
 		element
 
-	@empty: (element) ->
-		if not element
+	@empty: (node) ->
+		if not node
 			return null
-
-		assert(isElement(element), "DOM.empty", "top needs to be Element", element: element)
-		element.innerHTML = ""
-		element
+		assert(isElement(node), "DOM.empty", "top needs to be Element", node: node)
+		while last = node.lastChild
+			node.removeChild(last)
+		node
 
 	# checks if any of the classes are set
 	@hasClass: (element, cls) ->
@@ -427,7 +466,7 @@ class CUI.DOM extends CUI.Element
 				return true
 		return false
 
-	@toggleClass: (element, cls, on_off) ->
+	@toggleClass: (element, cls) ->
 		@setClass(element, cls, not @hasClass(element, cls))
 
 	@setClass: (element, cls, on_off) ->
@@ -436,6 +475,14 @@ class CUI.DOM extends CUI.Element
 		else
 			@removeClass(element, cls)
 		return on_off
+
+	@setAria: (element, attr, value) ->
+		if value == true
+			@setAttribute(element, "aria-"+attr, "true")
+		else if value == false
+			@setAttribute(element, "aria-"+attr, "false")
+		else
+			@setAttribute(element, "aria-"+attr, value)
 
 	@addClass: (element, cls) ->
 		if not cls or not element
@@ -536,7 +583,7 @@ class CUI.DOM extends CUI.Element
 		node.style.opacity = "0"
 
 		dim = DOM.getDimensions(node)
-		CUI.DOM.addClass(clone, "cui-dom-animated-clone cui-debug-node-copyable")
+		CUI.DOM.addClass(clone, "cui-dom-animated-clone")
 
 		# We need this micro DIV to push the scroll height / left
 		div = CUI.DOM.element("div", style: "position: absolute; opacity: 0; width: 1px; height: 1px;")
@@ -689,6 +736,26 @@ class CUI.DOM extends CUI.Element
 		if CUI.DOM.isInDOM(node)
 			return CUI.resolvedPromise(true)
 
+		dfr = new CUI.Deferred()
+
+		# If we use MutationObserver, and a not gets not inserted
+		# we never free memory on these nodes we wait to be inserted.
+
+		# mo = new MutationObserver =>
+		# 	console.debug "waiting for dom insert", node
+		# 	if DOM.isInDOM(node)
+		# 		if dfr.state() == "pending"
+		# 			# console.warn "inserted by mutation", node
+		# 			dfr.resolve()
+
+		# dfr.always =>
+		# 	mo.disconnect()
+
+		# mo.observe(document.documentElement, childList: true, subtree: true)
+
+		# return dfr.promise()
+
+
 		#add animation style
 		for prefix in ["-webkit-", "-moz-", "-ms-", "-o-", ""]
 			# nodeInserted needs to be defined in CSS!
@@ -697,12 +764,12 @@ class CUI.DOM extends CUI.Element
 
 		timeout = null
 
-		dfr = new CUI.Deferred()
 		Events.wait
 			node: node
 			type: "animationstart"
 			maxWait: -1
 		.done =>
+
 			if DOM.isInDOM(node)
 				dfr.resolve()
 				return
@@ -778,6 +845,9 @@ class CUI.DOM extends CUI.Element
 		win.print()
 
 	@isNode: (node) ->
+		if not node
+			return false
+
 		if node == document.documentElement or
 			node == window or
 			node == document or
@@ -942,10 +1012,7 @@ class CUI.DOM extends CUI.Element
 			return null
 
 		assert(docElem instanceof Node, "CUI.DOM.isInDOM", "docElem needs to be instanceof Node.", docElem: docElem)
-		if @closestUntil(docElem, document.documentElement)
-			true
-		else
-			false
+		document.documentElement.contains(docElem)
 
 	# new nodes can be node or Array of nodes
 	@replaceWith: (node, new_node) ->
@@ -969,6 +1036,8 @@ class CUI.DOM extends CUI.Element
 	@setStyle: (docElem, style, append="px") ->
 		assert(docElem instanceof HTMLElement, "CUI.DOM.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		for k, v of style
+			if v == undefined
+				continue
 			switch v
 				when "", null
 					docElem.style[k] = ""
@@ -1033,6 +1102,13 @@ class CUI.DOM extends CUI.Element
 		dim.innerBoxHeight = Math.max(0, rect.height - dim.borderVertical)
 		dim.borderBoxWidth = rect.width
 		dim.borderBoxHeight = rect.height
+
+		if cs.boxSizing == "content-box"
+			dim.contentWidthAdjust = dim.borderBoxWidth - dim.contentBoxWidth
+			dim.contentHeightAdjust = dim.borderBoxHeight - dim.contentBoxHeight
+		else
+			dim.contentWidthAdjust = 0
+			dim.contentHeightAdjust = 0
 
 		dim.marginBoxWidth = Math.max(0, rect.width + dim.marginHorizontal)
 		dim.marginBoxHeight = Math.max(0, rect.height + dim.marginVertical)
@@ -1110,20 +1186,9 @@ class CUI.DOM extends CUI.Element
 		]
 			dim[k+"Scaled"] = dim[k] * dim.scaleY
 
+		dim.verticalScrollbarWidth = dim.offsetWidth - dim.borderHorizontal - dim.clientWidth
+		dim.horizontalScrollbarHeight = dim.offsetHeight - dim.borderVertical - dim.clientHeight
 
-		if dim.scrollHeight > dim.clientHeight
-			dim.hasVerticalScrollbar = true
-			dim.verticalScrollbarWidth = dim.contentBoxWidth - dim.clientWidth
-		else
-			dim.verticalScrollbarWidth = 0
-
-		if dim.scrollWidth > dim.clientWidth
-			dim.hasHorizontalScrollbar = true
-			dim.horizontalScrollbarHeight = dim.contentBoxHeight - dim.clientHeight
-		else
-			dim.horizontalScrollbarHeight = 0
-
-		dim.hasScrollbar = dim.hasVerticalScrollbar or dim.hasHorizontalScrollbar
 		dim.canHaveScrollbar = cs.overflowX in ["auto", "scroll"] or cs.overflowY in ["auto", "scroll"]
 		dim.horizontalScrollbarAtStart = dim.scrollLeft == 0
 		dim.horizontalScrollbarAtEnd = dim.scrollWidth - dim.scrollLeft - dim.clientWidth - dim.verticalScrollbarWidth < 1
@@ -1159,10 +1224,24 @@ class CUI.DOM extends CUI.Element
 	@getDimension: (docElem, key) ->
 		@getDimensions(docElem)[key]
 
+	@prepareSetDimensions: (docElem) ->
+		if docElem.__prep_dim
+			return
+
+		docElem.__prep_dim =
+			borderBox: @isBorderBox(docElem)
+			dim: @getDimensions(docElem)
+		@
+
 	@setDimensions: (docElem, _dim) ->
-		borderBox = @isBorderBox(docElem)
+		@prepareSetDimensions(docElem)
+
 		css = {}
-		dim = @getDimensions(docElem)
+		borderBox = docElem.__prep_dim.borderBox
+		dim = docElem.__prep_dim.dim
+
+		delete(docElem.__prep_dim)
+
 		set_dim = copyObject(_dim)
 
 		cssFloat = {}
@@ -1240,6 +1319,9 @@ class CUI.DOM extends CUI.Element
 		cssFloat
 
 	@htmlToNodes: (html) ->
+		if isNull(html)
+			return
+
 		d = @element("DIV")
 		d.innerHTML = html
 		d.childNodes
@@ -1261,7 +1343,7 @@ class CUI.DOM extends CUI.Element
 
 		return texts
 
-	# turns 14.813px into a float
+	# turns 14.813px into a Number
 	@getCSSFloatValue: (v) ->
 		if v.indexOf("px") == -1
 			return 0
@@ -1323,6 +1405,8 @@ class CUI.DOM extends CUI.Element
 
 	@space: (style = null) ->
 		switch style
+			when "small"
+				@element("DIV", class: "cui-small-space")
 			when "large"
 				@element("DIV", class: "cui-large-space")
 			when "flexible"
@@ -1334,6 +1418,22 @@ class CUI.DOM extends CUI.Element
 
 	@element: (tagName, attrs={}) ->
 		DOM.setAttributeMap(document.createElement(tagName), attrs)
+
+	# @firstCommonAncestor: (el1, el2) ->
+	# 	parents1 = @parents(el1)
+	# 	parents2 = @parents(el2)
+
+	# 	parents1.reverse()
+	# 	parents2.reverse()
+
+	# 	common = null
+	# 	for p, idx in parents1
+	# 		if p == parents2[idx]
+	# 			common = p
+	# 		else
+	# 			return common
+
+	# 	common
 
 	@debugRect: ->
 		@remove(@find("#cui-debug-rect")[0])
@@ -1532,4 +1632,3 @@ class CUI.DOM extends CUI.Element
 
 
 DOM = CUI.DOM
-

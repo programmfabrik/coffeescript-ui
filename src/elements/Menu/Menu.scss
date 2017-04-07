@@ -1,8 +1,18 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
 
 
 
 .cui-layer.cui-menu {
 	border-width: 1px;
+
+	padding: $half_grid_size;
+	padding-bottom: 0;
 
 	//show that there is something
 	min-width: 50px;

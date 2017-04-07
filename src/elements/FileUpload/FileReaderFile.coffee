@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class FileReaderFile extends FileUploadFile
 	initOpts: ->
 		super()
@@ -32,11 +39,8 @@ class FileReaderFile extends FileUploadFile
 
 		return
 
-	getDataAsUtf8String: ->
-		CUI.utf8ArrayBufferToString(@getData())
-
-	getDataAsBytes: ->
-		String.fromCharCode.apply(null, new Uint8Array(@getData()))
+	getResult: ->
+		@__reader.result
 
 	__event_loadStart: ->
 		@__progress.status = "STARTED"

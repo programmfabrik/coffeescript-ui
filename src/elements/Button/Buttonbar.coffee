@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 
 # Buttonbar groups {Button}s
 class Buttonbar extends CUI.DOM
@@ -27,11 +34,16 @@ class Buttonbar extends CUI.DOM
 		for btn, idx in @_buttons
 			@addButton(btn, false)
 
+		if @_size
+			@addClass("cui-buttonbar--size-"+@_size)
+
 		@__checkVisibility()
 
 	initOpts: ->
 		super()
 		@addOpts
+			size:
+				check: ["big"]
 			buttons:
 				mandatory: true
 				default: []
@@ -112,6 +124,7 @@ class Buttonbar extends CUI.DOM
 			grp = btn.getGroup()
 		else if btn instanceof Label
 			btn_dom = btn.DOM
+			grp = btn.getGroup()
 		else if btn?.classList?.contains("cui-button")
 			# FIXME: this should be not needed
 			btn_dom = btn

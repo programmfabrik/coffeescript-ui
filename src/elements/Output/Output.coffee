@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class Output extends DataFieldInput
 	initOpts: ->
 		super()
@@ -15,6 +22,12 @@ class Output extends DataFieldInput
 			getValue:
 				check: Function
 			multiline:
+				check: Boolean
+				default: true
+				mandatory: true
+			allow_delete:
+				mandatory: true
+				default: false
 				check: Boolean
 
 	readOpts: ->
@@ -55,6 +68,10 @@ class Output extends DataFieldInput
 		super()
 		if @getName()
 			ret = @getValue()
+			if not isEmpty(ret)
+				@__deleteBtn?.show()
+			else
+				@__deleteBtn?.hide()
 			if isContent(ret)
 				@replace(ret)
 			else
@@ -71,3 +88,12 @@ class Output extends DataFieldInput
 	render: ->
 		super()
 		@replace(@__textSpan)
+		if @_allow_delete and @hasData()
+			@addClass("cui-output--deletable")
+			@__deleteBtn = new Button
+				icon: "remove"
+				appearance: "flat"
+				onClick: =>
+					@setValue(null, no_trigger: false)
+			@append(@__deleteBtn)
+		@

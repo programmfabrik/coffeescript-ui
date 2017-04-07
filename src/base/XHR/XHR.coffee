@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.XHR extends CUI.Element
 	getGroup: ->
 		"Core"
@@ -21,7 +28,7 @@ class CUI.XHR extends CUI.Element
 			responseType:
 				mandatory: true
 				default: "json"
-				check: ["", "text", "json"]
+				check: ["", "text", "json", "blob", "arraybuffer"]
 			timeout:
 				check: (v) ->
 					v >= 0
@@ -29,6 +36,7 @@ class CUI.XHR extends CUI.Element
 				check: "PlainObject"
 			url_data:
 				check: "PlainObject"
+			body: {}
 			json_data: {} # can be anything
 			json_pretty:
 				default: false
@@ -38,6 +46,10 @@ class CUI.XHR extends CUI.Element
 				mandatory: true
 				default: {}
 				check: "PlainObject"
+			withCredentials:
+				mandatory: true
+				default: false
+				check: Boolean
 		@
 
 
@@ -56,6 +68,8 @@ class CUI.XHR extends CUI.Element
 	readOpts: ->
 		super()
 		@__xhr = new XMLHttpRequest()
+		@__xhr.withCredentials = @_withCredentials
+
 		# CUI.debug "XHR.readOpts", @
 		@__readyStatesSeen = [@readyState()]
 		@__registerEvents("download")
@@ -74,7 +88,15 @@ class CUI.XHR extends CUI.Element
 		else
 			@__url = @_url
 
-		assert(not(@_form and @_json_data), "new CUI.XHR", "opts.form and opts.json_data cannot be set at the same time.")
+		set = 0
+		if @_form
+			set = set + 1
+		if @_json_data
+			set = set + 1
+		if @_body
+			set = set + 1
+
+		assert(set <= 1, "new CUI.XHR", "opts.form, opts.json_data, opts.body are mutually exclusive.")
 		@
 
 	# type: xhr / upload
@@ -212,6 +234,8 @@ class CUI.XHR extends CUI.Element
 					send_data = JSON.stringify(@_json_data, null, @_json_pretty)
 			else
 				send_data = JSON.stringify(@_json_data)
+		else if @_body
+			send_data = @_body
 		else
 			send_data = undefined
 

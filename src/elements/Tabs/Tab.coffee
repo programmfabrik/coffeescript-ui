@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Tab extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -32,7 +39,8 @@ class CUI.Tab extends CUI.DOM
 			role: "tab-header"
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
-			size: "big"
+			disabled: @_disabled
+			size: if CUI.__ng__ then "normal" else "big"
 			group: if CUI.__ng__ then "tabs" else null
 			text: @_text
 			attr:
@@ -69,6 +77,10 @@ class CUI.Tab extends CUI.DOM
 			text:
 				mandatory: true
 				check: String
+			disabled:
+				mandatory: true
+				default: false
+				check: Boolean
 			content:
 				mandatory: true
 				check: (v) ->
@@ -123,6 +135,14 @@ class CUI.Tab extends CUI.DOM
 		@__button.destroy()
 		super()
 
+	disable: ->
+		@__button.disable()
+		@
+
+	enable: ->
+		@__button.enable()
+		@
+
 	activate: ->
 		@__button.activate()
 		@
@@ -130,6 +150,9 @@ class CUI.Tab extends CUI.DOM
 	deactivate: ->
 		@__button.deactivate()
 		@
+
+	isActive: ->
+		@__button.isActive()
 
 	getButton: ->
 		@__button

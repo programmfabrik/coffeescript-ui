@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 class CUI.Confirm extends CUI.ConfirmationChoice
 	initOpts: ->
 		super()
@@ -20,19 +27,16 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 				check: ["ok", "cancel"]
 
 	readOpts: ->
-		if isEmpty(@opts.title)
-			@opts.title = CUI.defaults.class.ConfirmationChoice.defaults.confirm_title
-		if not @opts.hasOwnProperty("cancel")
-			@opts.cancel = true
-
 		super()
 
 		@_choices = [
 			text: @_button_text_cancel
 			cancel: true
+			choice: "cancel"
 			primary: @_button_primary == "cancel"
 		,
 			text: @_button_text_ok
+			choice: "ok"
 			primary: @_button_primary == "ok"
 		]
 

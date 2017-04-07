@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # Base class for all Buttons. Yeahhhh
 #
 #TODO document this in class...
@@ -17,18 +24,16 @@ class CUI.Button extends CUI.DOM
 		confirm_title: "Confirmation"
 		disabled_css_class: "cui-disabled"
 		active_css_class: "cui-active"
-		menu_open_css_class: "cui-menu-open"
 
 	#Construct a new Button.
 	#
 	# @param [Object] options for button creation
 	# @option options [String] size controls the size of the button.
-	#   "auto", the button is automatically formatted. e.g. when a button is in the lower right corner of a ConfirmationDialog it shown as big button.  this is the default.
 	#   "mini", small button.
 	#   "normal", medium size button.
 	#   "big", big sized button.
+	#   "bigger", bigger sized button.
 	# @option options [String] appearance controls the style or appearance of the button.
-	#   "auto", the button is automatically formatted. this is the default
 	#   "flat", button has no border and inherits its background color from its parent div.
 	#   "normal", standard button with border and its own background color.
 	#   "link", standard button without border and a underlined text.
@@ -38,6 +43,14 @@ class CUI.Button extends CUI.DOM
 
 		super(@opts)
 
+		if @_tooltip
+			if @_tooltip.text or @_tooltip.content
+				@__tooltipOpts = @_tooltip
+
+		@__has_left = true
+		@__has_right = true
+		@__has_center = true
+
 		tname = @getTemplateName()
 		# getTemplateName, also sets has_left / has_right
 
@@ -45,7 +58,8 @@ class CUI.Button extends CUI.DOM
 			name: tname
 			map:
 				left: if @__has_left then ".cui-button-left" else undefined
-				center: ".cui-button-center"
+				center: if @__has_center then ".cui-button-center" else undefined
+				visual: if CUI.__ng__ then ".cui-button-visual" else undefined
 				right: if @__has_right then ".cui-button-right" else undefined
 
 		@registerTemplate(@__box)
@@ -55,18 +69,14 @@ class CUI.Button extends CUI.DOM
 		@__hidden = false
 		@__txt =  null
 
-		#TODO role was misused to set css_styles, now we use it in the right ARIA-way.
-		#for compatibility we map the rules to styles now
-		#remove this code when roles are removed from ez5
-		if @_role == "minor"
-			@_size = "mini"
-		else if @_role == "menu-item"
-			@addClass("cui-menu-item")
-
 		if CUI.__ng__
 			@addClass("cui-button-button")
 
-		DOM.setAttributeMap(@DOM, @_attr)
+		if isString(@__tooltipOpts?.text)
+			@setAria("label", @__tooltipOpts?.text)
+			@__hasAriaLabel = true
+		else
+			@__hasAriaLabel = false
 
 		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 
@@ -88,43 +98,34 @@ class CUI.Button extends CUI.DOM
 
 		if not @_right
 			if @_icon_right
-				icon_right = @__getIcon(@_icon_right)
+				@setIconRight(@_icon_right)
 			else if @_menu and @_icon_right != false
-				if @_menu_parent
-					icon_right = new Icon(class: "fa-angle-right")
-				else
-					icon_right = new Icon(class: "fa-angle-down")
-
 				@addClass("cui-button--has-caret")
 
-			if icon_right
-				@append(icon_right, "right")
+				if @_menu_parent
+					@setIconRight("fa-angle-right")
+				else
+					@setIconRight("fa-angle-down")
+
 		else if @_right != true
 			@append(@_right, "right")
 
-		if not icon_right and not icon_left and isUndef(@_text) and
-			not @_icon_active and not @_icon_inactive
-				text = @__cls
-		else
-			text = @_text
+		if not CUI.__ng__ and not @_size
+			@_size='normal' #need to set normal as default for mediathek! and light
+		@setSize(@_size)
 
-		assert(@_size)
-		if @_size == "auto"
-			@addClass("cui-button-size-normal") #additionally used as a fallback
-		@addClass("cui-button-size-"+@_size)
-
-		assert(@_appearance)
-		if @_appearance == "auto"
-			@addClass("cui-button-appearance-normal") #additionally used as a fallback
-		@addClass("cui-button-appearance-"+@_appearance)
+		if @_appearance
+			@addClass("cui-button-appearance-"+@_appearance)
+		else if not CUI.__ng__
+			@addClass("cui-button-appearance-auto cui-button-appearance-normal")
 
 		if @_primary
 			@addClass("cui-button--primary")
 
 		if @_center
 			@append(@_center, "center")
-		else
-			@setText(text)
+		else if @_text
+			@setText(@_text)
 
 		if @_disabled and (@_disabled == true or @_disabled.call(@, @))
 			@disable()
@@ -191,11 +192,9 @@ class CUI.Button extends CUI.DOM
 					@__menu_opts.use_element_width_as_min_width = true
 
 			@__menu_opts.onHide = =>
-				@removeClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onHide?()
 
 			@__menu_opts.onShow = =>
-				@addClass(CUI.defaults.class.Button.defaults.menu_open_css_class)
 				@_menu.onShow?()
 
 			if not @__menu_opts.hasOwnProperty("backdrop")
@@ -259,27 +258,18 @@ class CUI.Button extends CUI.DOM
 				return
 
 		Events.listen
-			type: "mousedown"
+			type: ["mousedown"] # , "touchstart"]
 			node: @DOM
 			call: (ev) =>
 				# don't focus element
 				ev.preventDefault()
+				ev.stopPropagation()
 
 		Events.listen
-			type: @_click_type # ["touchstart", "touchend"] # ["mouseup", "click", "dblclick"]
+			type: Button.clickTypes[@_click_type]
 			node: @DOM
 			call: (ev) =>
-				console.debug "button received ", ev.getType(), @getText(), @_click_type
 
-				# if ev.getType() != @_click_type
-				# 	# click type can be changed after
-				# 	# button is created, so we
-				# 	# need to check if the
-				# 	# event is the desired one
-				# 	ev.stopPropagation()
-				# 	return
-
-				# console.debug @_click_type, ev, ev.getButton(), @__prevent_btn_click
 				if window.globalDrag
 					# ev.stop()
 					return
@@ -302,23 +292,25 @@ class CUI.Button extends CUI.DOM
 				CUI.clearTimeout(CUI.Button.menu_timeout)
 				CUI.Button.menu_timeout = null
 
-			menu_start_hide = (ev) =>
+			menu_start_hide = (ev, ms=700) =>
+				menu_stop_hide()
 				# we set a timeout, if during the time
 				# the focus enters the menu, we cancel the timeout
 				CUI.Button.menu_timeout = CUI.setTimeout
-					ms: 700
+					ms: ms
 					call: =>
 						@getMenu().hide(ev)
 
-		if @_menu_on_hover or @_tooltip
+		if @_menu_on_hover or @__tooltipOpts
 			Events.listen
 				type: "mouseenter"
 				node: @DOM
 				call: (ev) =>
+
 					if window.globalDrag
 						return
 
-					if @_tooltip
+					if @__tooltipOpts
 						@__initTooltip()
 						@getTooltip().showTimeout(null, ev)
 
@@ -330,12 +322,9 @@ class CUI.Button extends CUI.DOM
 
 							menu_shown = CUI.DOM.data(CUI.DOM.find(".cui-button--hover-menu")[0], "element")
 							if menu_shown and menu_shown != menu
-								menu_stop_hide()
 								menu_shown.hide(ev)
 
 							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
-
-							menu.show(ev)
 
 							Events.ignore
 								instance: @
@@ -357,6 +346,8 @@ class CUI.Button extends CUI.DOM
 								call: =>
 									menu_start_hide(ev)
 
+							menu.show(ev)
+
 					return
 
 		Events.listen
@@ -374,9 +365,23 @@ class CUI.Button extends CUI.DOM
 				@getTooltip()?.hideTimeout(ev)
 
 				if @_menu_on_hover
-					menu_start_hide(ev)
+					menu_start_hide(ev, 100)
+
 				return
 
+	setSize: (size) ->
+
+		remove = []
+		for cls in @DOM.classList
+			if cls.startsWith("cui-button-size")
+				remove.push(cls)
+
+		for cls in remove
+			@DOM.classList.remove(cls)
+
+		if size
+			@DOM.classList.add("cui-button-size-"+size)
+		@
 
 	onClickAction: (ev) ->
 		if @__disabled # or ev.button != 0
@@ -394,6 +399,7 @@ class CUI.Button extends CUI.DOM
 			# not (ev.ctrlKey or ev.shiftKey or ev.altKey or ev.metaKey) and
 			not @_menu_on_hover and
 			@getMenu().hasItems(ev)
+
 				@getMenu().show(ev)
 
 				# in some contexts (like FileUploadButton), this
@@ -471,17 +477,10 @@ class CUI.Button extends CUI.DOM
 				default: 0
 				check: (v) ->
 					isInteger(v) or v == false
-			role:
-				default: "button"
-				check: String
 			size:
-				mandatory: true
-				default: "auto"
-				check: ["auto","mini","normal","big","bigger"]
+				check: ["mini","normal","big","bigger"]
 			appearance:
-				mandatory: true
-				default: "auto"
-				check: ["auto","link","flat","normal","important"]
+				check: ["link","flat","normal","important"]
 			primary:
 				mandatory: true
 				default: false
@@ -493,7 +492,9 @@ class CUI.Button extends CUI.DOM
 			click_type:
 				default: "click" # "touchend"
 				mandatory: true
-				check: ["click", "mouseup", "dblclick", "touchstart", "touchend"]
+				check: (v) ->
+					!!Button.clickTypes[v]
+
 			text:
 				check: String
 			tooltip:
@@ -503,6 +504,7 @@ class CUI.Button extends CUI.DOM
 				check: (v) ->
 					isBoolean(v) or CUI.isFunction(v)
 			active_css_class:
+				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String
 			left:
 				check: (v) ->
@@ -542,10 +544,6 @@ class CUI.Button extends CUI.DOM
 			text_inactive:
 				check: String
 			value: {}
-			# attributes for the @DOM element
-			attr:
-				default: {}
-				check: "PlainObject"
 			name:
 				check: String
 			hidden:
@@ -587,7 +585,10 @@ class CUI.Button extends CUI.DOM
 			#group can be used for buttonbars to specify a group css style
 			group:
 				check: String
-
+			role:
+				default: "button"
+				mandatory: true
+				check: String
 
 	# return icon for string
 	__getIcon: (icon) ->
@@ -608,10 +609,6 @@ class CUI.Button extends CUI.DOM
 		if @_left
 			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
 
-		if not isNull(@_active_css_class)
-			@__active_css_class = @_active_css_class
-		else
-			@__active_css_class = CUI.defaults.class.Button.defaults.active_css_class
 
 	getCenter: ->
 		return @__box.map.center;
@@ -627,10 +624,21 @@ class CUI.Button extends CUI.DOM
 		else
 			@__has_right = false
 
+		if @__has_left and
+			isUndef(@_text) and
+			isUndef(@_center) and
+			isUndef(@_text_active) and
+			isUndef(@_text_inactive) and
+			CUI.__ng__
+				@__has_center = false
+
 		if @__has_left and @__has_right
 			return "button"
 		else if @__has_left
-			return "button-left-center"
+			if @__has_center
+				return "button-left-center"
+			else
+				return "button-left"
 		else if @__has_right
 			return "button-center-right"
 		else
@@ -644,6 +652,11 @@ class CUI.Button extends CUI.DOM
 
 	getValue: ->
 		@_value
+
+	getElementForLayer: ->
+		if not CUI.__ng__
+			return @DOM
+		return @__box.map.visual
 
 	getRadioButtons: ->
 		if not @__radio
@@ -716,7 +729,8 @@ class CUI.Button extends CUI.DOM
 		# CUI.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
 
 		activate = =>
-			@addClass(@__active_css_class)
+			@addClass(@_active_css_class)
+			@setAria("pressed", true)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -758,7 +772,8 @@ class CUI.Button extends CUI.DOM
 		# CUI.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
 
 		deactivate = =>
-			@removeClass(@__active_css_class)
+			@removeClass(@_active_css_class)
+			@setAria("pressed", false)
 			@__setState()
 			group = @getGroup()
 			if not group or not event?.ctrlKey() or flags.ignore_ctrl
@@ -788,13 +803,25 @@ class CUI.Button extends CUI.DOM
 		deactivate()
 		@
 
-	setIcon: (icon=null) ->
-		@__icon = @__getIcon(icon)
-		assert(@__icon == null or @__icon instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
-		if @__icon == null
-			@empty("left")
+	setIconRight: (icon=null) ->
+		@setIcon(icon, "right")
+
+	setIcon: (icon=null, _key="left") ->
+		key = "__icon_"+_key
+
+		if icon == ""
+			@[key] = ""
 		else
-			@replace(@__icon, "left")
+			@[key] = @__getIcon(icon)
+
+		assert(@[key] == null or @[key] == "" or @[key] instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+
+		if @[key] == null
+			@empty(_key)
+		else if @[key] == ""
+			@replace(CUI.DOM.element("SPAN"), _key)
+		else
+			@replace(@[key], _key)
 		@
 
 	startSpinner: ->
@@ -814,7 +841,10 @@ class CUI.Button extends CUI.DOM
 		@
 
 	getIcon: ->
-		@__icon
+		@__icon_left
+
+	getIconRight: ->
+		@__icon_right
 
 	__setState: ->
 		@__setIconState()
@@ -826,16 +856,14 @@ class CUI.Button extends CUI.DOM
 
 		if @isActive()
 			if not @_icon_active
-				@replace(DOM.element("SPAN"), "left")
-				@__icon = null
+				@setIcon("")
 			else
-				@setIcon(@_icon_active, "left")
+				@setIcon(@_icon_active)
 		else
 			if not @_icon_inactive
-				@replace(DOM.element("SPAN"), "left")
-				@__icon = null
+				@setIcon("")
 			else
-				@setIcon(@_icon_inactive, "left")
+				@setIcon(@_icon_inactive)
 		@
 
 	__setTextState: ->
@@ -882,10 +910,14 @@ class CUI.Button extends CUI.DOM
 		if isEmpty(@__txt)
 			@empty("center")
 		else
-			@replace($text(@__txt), "center")
+			span = $text(@__txt)
+			if not @__hasAriaLabel
+				span.id = "button-text-"+@getUniqueId()
+				@setAria("labelledby", span.id)
+			@replace(span, "center")
 
 	setTextMaxChars: (max_chars) ->
-		CUI.DOM.setAttribute(@getCenter().firstChild, "max-chars", max_chars)
+		CUI.DOM.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
 
 	getText: ->
 		@__txt
@@ -903,7 +935,7 @@ class CUI.Button extends CUI.DOM
 		if @__tooltip
 			return @
 
-		tt_opts = copyObject(@_tooltip)
+		tt_opts = copyObject(@__tooltipOpts)
 
 		tt_opts.element ?= @DOM
 
@@ -927,7 +959,9 @@ class CUI.Button extends CUI.DOM
 	destroy: ->
 		# CUI.debug "destroying button", @__uniqueId, @getText()
 		@__menu?.destroy()
+		@__menu = null
 		@__tooltip?.destroy()
+		@__tooltip = null
 		super()
 
 	show: ->
@@ -945,6 +979,11 @@ class CUI.Button extends CUI.DOM
 		Events.trigger
 			type: "hide"
 			node: @DOM
+
+	@clickTypes:
+		click: ["click"]
+		mouseup: ["mouseup"]
+		dblclick: ["dblclick"]
 
 
 CUI.defaults.class.Button = CUI.Button

@@ -1,3 +1,10 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
 # Events Inter-"Process"-Communication for CUI
 #
 #
@@ -64,9 +71,12 @@ class CUI.Events extends CUI.Element
 			node.setAttribute("cui-events-listener-element", "cui-events-listener-element")
 		@
 
-	@getActiveListeners: ->
-		listeners = @__listeners.slice(0)
-		for el in CUI.DOM.matchSelector(document, "[cui-events-listener-element]")
+	@getActiveListeners: (doc=document) ->
+		if doc == document
+			listeners = @__listeners.slice(0)
+		else
+			listeners = []
+		for el in CUI.DOM.matchSelector(doc, "[cui-events-listener-element]")
 			listeners.push.apply(listeners, DOM.data(el, "listeners"))
 		listeners
 
@@ -258,19 +268,28 @@ class CUI.Events extends CUI.Element
 		return CUI.when(waits)
 
 
-	@ignore: (filter) ->
-		# CUI.debug "Events.ignore?", filter, listener.getTypes()
-		for listener in @getActiveListeners()
+	@ignore: (filter, doc=document) -> # , debug=false) ->
+		# console.debug "Events.ignore", filter, filter.instance?.getUniqueId?()
+		for listener in @getActiveListeners(doc)
 			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
-				# CUI.info("Events.ignore", filter, listener.getTypes())
+				# if debug
+				# 	console.debug("Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
 				listener.destroy()
 		@
 
 	@dump: (filter={}) ->
 		for listener in @getActiveListeners()
-			if listener.matchesFilter(filter)
-				CUI.debug "Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener
+			if CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
+				console.debug("Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener)
 		@
+
+	# @dumpTopLevel: ->
+	# 	for listener in @__listeners
+	# 		console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
+
+	# 	for listener in DOM.data(document.documentElement, "listeners")
+	# 		console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
+	# 	@
 
 	@hasEventType: (type) ->
 		!!@__eventRegistry[type]
@@ -333,6 +352,11 @@ class CUI.Events extends CUI.Element
 				eventClass: CUI.MouseEvent
 				bubble: true
 
+			TouchEvents:
+				eventClass: CUI.TouchEvent
+				bubble: true
+
+
 		for block, events of {
 			MouseEvents:
 				mousemove: {}
@@ -346,6 +370,10 @@ class CUI.Events extends CUI.Element
 				mousedown: {}
 				mouseup: {}
 				click: {}
+				dblclick: {}
+				contextmenu: {}
+
+			TouchEvents:
 				touchstart: {}
 				touchend: {}
 				touchmove: {}
@@ -368,7 +396,7 @@ class CUI.Events extends CUI.Element
 				load: {}
 				error: {}
 				close: {}
-				contextmenu: {}
+				popstate: {}
 				dragstart: {}
 				dragover: {}
 				dragleave: {}
@@ -390,7 +418,6 @@ class CUI.Events extends CUI.Element
 					bubble: false
 				drop:
 					bubble: false
-				dblclick: {}
 				scroll:
 					bubble: false
 				selectstart:
