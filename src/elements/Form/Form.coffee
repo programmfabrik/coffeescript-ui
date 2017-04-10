@@ -618,7 +618,7 @@ class CUI.Form extends CUI.DataField
 					if isString(field._form.hint)
 						hint_div.appendChild(new Label(class: "cui-form-hint-label", icon: field._form.hint_icon, text: field._form.hint, multiline: true, markdown: true).DOM)
 					else
-						DUI.DOM.append(hint_div, field._form.hint)
+						CUI.DOM.append(hint_div, field._form.hint)
 
 				if field._form.right
 					add_hint_div()
@@ -627,8 +627,6 @@ class CUI.Form extends CUI.DataField
 					# append deprecated stuff to the hint div
 					# you should use ".hint" instead
 					append(get_append(field._form.right), hint_div)
-
-
 
 			if field instanceof Form and field.renderAsBlock()
 				level = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))+1
@@ -706,8 +704,17 @@ class CUI.Form extends CUI.DataField
 
 				append(table)
 
+			name = field.getName()
+			if name
+				if table_has_left
+					cls = " cui-form-tr--"+name
+				else
+					cls = " cui-form-row--"+name
+			else
+				cls = ""
+
 			if table_has_left
-				tr = CUI.DOM.element("DIV", class: "cui-form-tr", "data-for-field": field.getUniqueId())
+				tr = CUI.DOM.element("DIV", class: "cui-form-tr"+cls, "data-for-field": field.getUniqueId())
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
 				append(get_label(field), td)
@@ -726,7 +733,7 @@ class CUI.Form extends CUI.DataField
 
 				table.appendChild(tr)
 			else
-				row = CUI.DOM.element("DIV", class: "cui-form-row", "data-for-field": field.getUniqueId())
+				row = CUI.DOM.element("DIV", class: "cui-form-row"+cls, "data-for-field": field.getUniqueId())
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
 				append(hint_div, row)
@@ -837,6 +844,24 @@ class CUI.Form extends CUI.DataField
 			type: "content-resize"
 			node: els[0]
 		@
+
+	__setClassOnField: (field_name, cls, add_remove) ->
+		for field in @getFieldsByName(field_name)
+			row = CUI.DOM.closest(field.DOM, "[data-for-field]")
+			if not row
+				continue
+
+			if add_remove
+				CUI.DOM.addClass(row, cls)
+			else
+				CUI.DOM.removeClass(row, cls)
+		@
+
+	addClassToField: (field_name, cls) ->
+		@__setClassOnField(field_name, cls, true)
+
+	removeClassFromField: (field_name, cls) ->
+		@__setClassOnField(field_name, cls, false)
 
 	getFieldsByName: (name, found_fields = []) ->
 		assert(isString(name), "#{@__cls}.getFieldsByName", "name must be String.", name: name)
