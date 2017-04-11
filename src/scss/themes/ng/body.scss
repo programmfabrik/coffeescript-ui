@@ -4603,7 +4603,7 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 
 	.cui-tmpl-sticky-header {
-		margin: 0;
+		margin: 0 0 1px; // one pixel bottom margin to make sure that the box-shadow doesn't get cut off when something gets measured
 		position: absolute;
 		left: 0;
 		right: 0;
