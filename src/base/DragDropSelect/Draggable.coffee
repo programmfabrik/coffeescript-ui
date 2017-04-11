@@ -226,7 +226,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			# during a dragover scroll, the original target
 			# might be not available any more, we need to recalculate it
-			pointTarget = moveEvent.getPointTarget()
+			pointTarget = moveEvent.getPointTarget() or moveEvent.getTarget()
 
 			Events.trigger
 				type: "dragover-scroll"
