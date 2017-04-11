@@ -3009,7 +3009,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-grid-quadrant-3 {
 	.cui-lv-tr-outer {
 		&:nth-child(even) {
-			> .cui-lv-tr > .cui-lv-td {
+			> .cui-lv-tr {
 				background: $zebra-color;
 			}
 
@@ -3048,7 +3048,7 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-selected:nth-child(even),
 	&:focus,
 	&:focus:nth-child(even) {
-		> .cui-lv-tr > .cui-lv-td {
+		> .cui-lv-tr {
 			background: $row-highlight;
 		}
 
@@ -3067,8 +3067,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-tr {
 	flex: 1 1 auto;
 	display: flex;
-	max-width: 100%;
-	// padding: 0 $padding/2;
 
 	&:empty {
 		padding: 0;
@@ -3117,6 +3115,8 @@ a[role="button"].cui-button-appearance-link {
 
 	> .cui-lv-tr {
 		border-style: none;
+		background: linear-gradient($zebra-color 50%, white 50%);
+		background-size: 100% ($td-height + 2*$table-data-padding)*2;
 	}
 
 	.cui-lv-td {
@@ -3125,18 +3125,16 @@ a[role="button"].cui-button-appearance-link {
 		// the column width for headers
 		padding-top: 0;
 		padding-bottom: 0;
-		background: linear-gradient($zebra-color 50%, white 50%);
-		background-size: 100% ($td-height + 2*$table-data-padding)*2;
 	}
 }
 
-.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer .cui-lv-td {
+.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer > .cui-lv-tr {
 	background-image: linear-gradient(white 50%, $zebra-color 50%);
 }
 
 .cui-data-table {
 	.cui-lv-tr-fill-outer {
-		.cui-lv-td {
+		> .cui-lv-tr {
 			background-size: 100% $table-data-height*2;
 		}
 	}
@@ -3193,7 +3191,7 @@ a[role="button"].cui-button-appearance-link {
 							}
 						}
 					}
-					> .cui-lv-tr-fill-outer .cui-lv-td {
+					> .cui-lv-tr-fill-outer > .cui-lv-tr {
 						background-size: 100% 64px;
 					}
 				}
