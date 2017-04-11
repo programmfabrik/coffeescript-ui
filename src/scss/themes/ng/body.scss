@@ -4621,15 +4621,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ProgressMeter
-.cui-progress-meter {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-	width: 100%;
-	flex-grow: 1;
-	padding: 8px;
-	
+.cui-progress-meter {	
 	.cui-progress-meter-bar {
 		width: 100%;
 		max-width: 200px;
