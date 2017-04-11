@@ -4611,6 +4611,10 @@ a[role="button"].cui-button-appearance-link {
 		background: hsla(0,0%,100%,.94);
 		border-top: none;
 		box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
+		
+		&:not(:first-child) {
+			margin-bottom: 0;
+		}
 	}
 }
 
