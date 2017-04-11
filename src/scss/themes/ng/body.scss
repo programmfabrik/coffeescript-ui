@@ -4576,11 +4576,13 @@ a[role="button"].cui-button-appearance-link {
 	font-size: 13px;
 	font-weight: bold;
 	color: $color;
-	// height: 22px; CONFLICT: unflexible
-	margin-bottom: $padding;
 	flex-basis: 100%;
 	margin-top: $padding*2;
 	border-top: 1px solid $soft-border;
+	
+	.cui-label {
+		line-height: normal;
+	}
 }
 
 .cui-sticky-header-control + .cui-sticky-header,
@@ -4610,6 +4612,13 @@ a[role="button"].cui-button-appearance-link {
 		border-top: none;
 		box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
 	}
+}
+
+.cui-sticky-header-level-1,
+.cui-sticky-header-level-2,
+.cui-sticky-header-level-3,
+.cui-sticky-header-level-4 {
+	font-size: 11px;
 }
 
 .cui-sticky-header-level-0 {
