@@ -16,7 +16,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		@__fill_screen_is_on = false
 
 		if @_padded
-			@addClass("cui-simple-pane--padded")
+			@addClass("cui-pane--padded")
 
 	initOpts: ->
 		super()
@@ -28,6 +28,12 @@ class CUI.Pane extends CUI.VerticalLayout
 	readOpts: ->
 		@initDefaultPanes()
 		super()
+
+	hasHeader: ->
+		!!@_top
+
+	hasFooter: ->
+		!!@_bottom
 
 	getFillScreenState: ->
 		@__fill_screen_is_on

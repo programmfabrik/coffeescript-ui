@@ -31,14 +31,16 @@ class CUI.LayerPane extends CUI.Layer
 			# 		pane[k] = true
 
 			@__pane = new SimplePane(pane)
-
-			if @__pane.hasHeader()
-				@__layer_root.DOM.classList.add("ez5-pane--has-header")
-
-			if @__pane.hasFooter()
-				@__layer_root.DOM.classList.add("ez5-pane--has-footer")
 		else
 			@__pane = pane
+
+
+		if @__pane.hasHeader()
+			@__layer_root.DOM.classList.add("ez5-pane--has-header")
+
+		if @__pane.hasFooter()
+			@__layer_root.DOM.classList.add("ez5-pane--has-footer")
+
 		@__pane.addClass("cui-layer-pane");
 		# add pane to layer, using the layers append
 		# method, so subclasses (like Modal does!) cannot interfer

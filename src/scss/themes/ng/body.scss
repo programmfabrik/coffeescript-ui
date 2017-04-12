@@ -691,14 +691,15 @@ li > div {
 	}
 }
 
+// Pane
+.cui-pane--padded {
+	> .cui-vertical-layout-center {
+		padding: $padding;
+	}
+}
+
 // Simple Pane
 .cui-simple-pane {
-	&--padded {
-		> .cui-vertical-layout-center {
-			padding: $padding;
-		}
-	}
-
 	> .cui-vertical-layout-center {
 		overflow: auto;
 	}
