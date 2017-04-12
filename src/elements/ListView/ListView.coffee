@@ -328,14 +328,27 @@ class CUI.ListView extends CUI.SimplePane
 				type: "wheel"
 				node: @quadrant[2]
 				call: (ev) =>
-					ev.preventDefault()
+					scroll_delta = 100
+
 					if ev.wheelDeltaY() > 0
-						@quadrant[3].scrollTop += 100
+						if @quadrant[3].scrollTop == (@quadrant[3].scrollHeight - @quadrant[3].offsetHeight)
+							# at bottom
+							return
 
-					if ev.wheelDeltaY() < 0
-						@quadrant[3].scrollTop -= 100
+						@quadrant[3].scrollTop += scroll_delta
 
+					else if ev.wheelDeltaY() < 0
+						if @quadrant[3].scrollTop == 0
+							# at top
+							return
+
+						@quadrant[3].scrollTop -= scroll_delta
+					else
+						return
+
+					ev.preventDefault()
 					on_scroll()
+					return
 
 		Events.listen
 			type: "viewport-resize"
