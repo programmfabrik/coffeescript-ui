@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Popover extends Modal
+class CUI.Popover extends CUI.Modal
 
 	initOpts: ->
 		super()
@@ -33,3 +33,5 @@ class Popover extends Modal
 	# 	@enableBackdropClick()
 
 
+
+Popover = CUI.Popover
