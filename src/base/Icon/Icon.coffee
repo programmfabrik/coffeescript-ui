@@ -23,7 +23,7 @@ class CUI.Icon extends CUI.Element
 			cls += " "+@_class
 
 		if svg_cls
-			@DOM = CUI.DOM.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls}\"></svg>")[0]
+			@DOM = CUI.DOM.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
 		else
 			@DOM = CUI.jQueryCompat(CUI.DOM.element("I", class: "fa "+cls))
 
@@ -74,7 +74,7 @@ class CUI.Icon extends CUI.Element
 		settings: if CUI.__ng__ then "fa-cog" else "fa-cogs"
 		download: "fa-download"
 		export: "fa-download"
-		spinner: "fa-spinner cui-spin-stepped"
+		spinner: "svg-spinner cui-spin-stepped"
 		list: "fa-question"
 		upload: "fa-upload"
 		envelope: "fa-envelope-o"

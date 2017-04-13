@@ -799,11 +799,15 @@ li > div {
 	pointer-events: none;
 }
 
-i.fa-spinner {
+.fa-spinner {
 	width: 1em;
 }
 
-i.cui-spin-stepped {
+.svg-spinner {
+	height: 18px;
+}
+
+.cui-spin-stepped {
 	-webkit-animation: fa-spin 1s steps(8) infinite;
 	   -moz-animation: fa-spin 1s steps(8) infinite;
 	    -ms-animation: fa-spin 1s steps(8) infinite;
@@ -4701,6 +4705,10 @@ a[role="button"].cui-button-appearance-link {
 		.cui-progress-meter-icon {
 			text-align: center;
 			position: relative;
+			
+			.svg-spinner {
+				height: $button-height;
+			}
 		}
 
 	}

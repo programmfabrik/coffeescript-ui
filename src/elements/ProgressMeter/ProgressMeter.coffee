@@ -106,4 +106,4 @@ class ProgressMeter extends CUI.DOM
 CUI.defaults.ProgressMeter =
 	states:
 		waiting: "fa-hourglass"
-		spinning: "fa-spinner cui-spin-stepped"
+		spinning: "svg-spinner cui-spin-stepped"
