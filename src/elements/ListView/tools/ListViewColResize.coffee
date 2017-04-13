@@ -18,6 +18,13 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 				mandatory: true
 				check: ListViewColumn
 
+	readOpts: ->
+		super()
+		@__row_i = @_row.getRowIdx()
+		@__display_row_i = @_row.getDisplayRowIdx()
+		@__listView = @_row.getListView()
+		@__col_i = @_column.getColumnIdx()
+
 		Events.listen
 			type: "dblclick"
 			node: @_element
@@ -26,12 +33,7 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 				console.debug "list view", @__listView, @__col_i, @__row_i
 				@__listView.resetColWidth(@__col_i)
 
-	readOpts: ->
-		super()
-		@__row_i = @_row.getRowIdx()
-		@__display_row_i = @_row.getDisplayRowIdx()
-		@__listView = @_row.getListView()
-		@__col_i = @_column.getColumnIdx()
+		return
 
 	get_axis: ->
 		"x"
