@@ -283,13 +283,13 @@ class CUI.Events extends CUI.Element
 				console.debug("Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener)
 		@
 
-	# @dumpTopLevel: ->
-	# 	for listener in @__listeners
-	# 		console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
+	@dumpTopLevel: ->
+		for listener in @__listeners
+			console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
 
-	# 	for listener in DOM.data(document.documentElement, "listeners")
-	# 		console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
-	# 	@
+		for listener in DOM.data(document.documentElement, "listeners")
+			console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
+		@
 
 	@hasEventType: (type) ->
 		!!@__eventRegistry[type]
