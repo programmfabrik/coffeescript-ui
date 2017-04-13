@@ -886,6 +886,12 @@ i.cui-spin-stepped {
 		  color: $disabled-color;
 		  border-color: $button-border;
 	  }
+
+	  &:active {
+	  	.cui-button-visual {
+	  		background: $button-background;
+	  	}
+	  }
 	}
 
 	&.cui-button-appearance-important, // removed [role] - makes it too specific
