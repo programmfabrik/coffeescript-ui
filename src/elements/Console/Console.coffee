@@ -13,7 +13,6 @@ class CUI.Console extends CUI.DOM
 
 	initOpts: ->
 		super()
-		console.debug "init opts console"
 		@addOpts
 			markdown:
 				mandatory: true
