@@ -201,31 +201,6 @@ $popover-hint-background: hsl(205,20%,30%);
 	}
 }
 
-@mixin focus() {
-	box-shadow: 0 0 0 3px $row-highlight;
-	border-radius: $button-radius;
-	z-index: 1; // put forward to see outline
-}
-
-@mixin inner-focus() {
-	box-shadow: 0 0 0 3px $row-highlight inset;
-	border-radius: $button-radius;
-	z-index: 1; // put forward to see outline
-}
-
-@mixin border-focus() {
-	box-shadow: 0 0 0 3px $row-highlight;
-	border-color: $highlight-color;
-	z-index: 1; // put forward to see outline
-}
-
-@mixin outer-focus() {
-	box-shadow: 
-		0 0 0 1px $highlight-color,
-		0 0 0 4px $row-highlight;
-	z-index: 1; // put forward to see outline
-}
-
 @mixin button-reset() {
   padding: 0;
   border: none;
