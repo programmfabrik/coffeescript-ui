@@ -404,6 +404,7 @@ class CUI.Layer extends CUI.DOM
 			height: ""
 			margin: ""
 			minWidth: ""
+			maxWidth: ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
@@ -902,6 +903,14 @@ class CUI.Layer extends CUI.DOM
 			set_css.width = Math.ceil(vp.layer_pos.width)
 			set_css.height = Math.ceil(vp.layer_pos.height)
 
+			# IE 11 (Edge renderer) cannot perfectly update a DIVs CSS
+			# without leaving scrollbars in some cases, we need to fully
+			# DOM detach the DIV and put it back in.
+
+			sibl = @__layer_root.DOM.previousElementSibling
+			@__layer_root.DOM.remove()
+
+
 		CUI.DOM.setStyle(@__layer.DOM, set_css)
 
 		# console.debug "pos:", dim_element, vp.layer_pos.top, "body scroll:", body_scroll_top
@@ -933,6 +942,9 @@ class CUI.Layer extends CUI.DOM
 				height: dim_window.height
 				top: -vp.layer_pos.top
 				left: -vp.layer_pos.left
+
+		if CUI.browser.ie
+			CUI.DOM.insertAfter(sibl, @__layer_root.DOM)
 
 		# We could re-read the layer width & height here to actually
 		# set it in Style. By doing that we could have support for transitions
