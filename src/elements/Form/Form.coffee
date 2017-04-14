@@ -705,16 +705,21 @@ class CUI.Form extends CUI.DataField
 				append(table)
 
 			name = field.getName()
+			classes = []
 			if name
-				if table_has_left
-					cls = " cui-form-tr--"+name
-				else
-					cls = " cui-form-row--"+name
-			else
-				cls = ""
+				classes.push("cui-form-field-name--"+name)
+
+			if field instanceof Checkbox
+				classes.push("cui-form-field-type--checkbox")
+
+			if field instanceof Input
+				classes.push("cui-form-field-type--input")
+
+			if field instanceof Select
+				classes.push("cui-form-field-type--select")
 
 			if table_has_left
-				tr = CUI.DOM.element("DIV", class: "cui-form-tr"+cls, "data-for-field": field.getUniqueId())
+				tr = CUI.DOM.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
 				append(get_label(field), td)
@@ -733,7 +738,7 @@ class CUI.Form extends CUI.DataField
 
 				table.appendChild(tr)
 			else
-				row = CUI.DOM.element("DIV", class: "cui-form-row"+cls, "data-for-field": field.getUniqueId())
+				row = CUI.DOM.element("DIV", class: "cui-form-row "+classes.join(" "), "data-for-field": field.getUniqueId())
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
 				append(hint_div, row)
