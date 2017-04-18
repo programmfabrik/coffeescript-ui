@@ -2897,10 +2897,9 @@ a[role="button"].cui-button-appearance-link {
 
 	&-max {
 		flex-grow: 1;
-
-		~ .cui-lv-td:last-child {
-			flex-grow: 0;
-		}
+		/* ~ .cui-lv-td:last-child { */
+		/* 	flex-grow: 0; */
+		/* } */
 	}
 
 	&:last-child {
