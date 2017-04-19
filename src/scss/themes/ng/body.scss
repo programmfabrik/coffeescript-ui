@@ -1562,11 +1562,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&:not(.cui-label-markdown) {
-		-webkit-hyphens: auto;
-		    -ms-hyphens: auto;
-		        hyphens: auto;
-
 		.cui-label-content {
+			word-break: break-all; // IE fallback
+			word-break: break-word;
 			white-space: pre-wrap;
 		}
 	}
@@ -2583,12 +2581,10 @@ a[role="button"].cui-button-appearance-link {
 	align-self: center;
 
 	.cui-label {
-		.cui-label-icon i {
-			font-size: 21px;
-	    width: 21px;
-	    height: 21px;
-	    line-height: 21px;
-	  }
+		.svg-spinner {
+			height: auto;
+			width: 28px;
+		}
 
 		.cui-label-content {
 			padding-left: $padding;
