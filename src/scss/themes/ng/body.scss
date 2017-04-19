@@ -3452,7 +3452,19 @@ a[role="button"].cui-button-appearance-link {
 	overflow: visible;
 
 	&.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
+		display: block;
+		
+		.cui-form-tr {
+			display: flex;
+		}
+
+		.cui-form-td {
+			display: block;
+		}
+		
 		.cui-form-key {
+			flex-shrink: 0;
+			width: $td-width;
 			max-width: none;
 
 			label {
@@ -3463,21 +3475,10 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-		/* .cui-form-value { */
-		/* 	width: 100%; */
-		/* 	position: relative; */
-
-		/* 	> .cui-data-field { */
-		/* 		&:before { */
-		/* 			content: ""; */
-		/* 			height: 24px; */
-		/* 			float: left; */
-		/* 		} */
-		/* 		position: absolute; */
-		/* 		left: 0; */
-		/* 		right: 0; */
-		/* 	} */
-		/* } */
+		.cui-form-value {
+			flex-shrink: 1;
+			min-width: 0;
+		}
 	}
 }
 
