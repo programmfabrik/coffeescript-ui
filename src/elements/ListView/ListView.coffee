@@ -785,10 +785,18 @@ class CUI.ListView extends CUI.SimplePane
 			col_i = @getColIdx(display_col_i)
 			manual_col_width = @__manualColWidths[col_i]
 			if manual_col_width > 0
+				if display_col_i == @__fillCells.length - 2
+					# the one before the last
+					CUI.DOM.addClass(@grid, "cui-lv--second-last-col-manually-sized")
+
 				add_css(col_i, manual_col_width)
 				fc.style.setProperty("width", manual_col_width+"px")
 				fc.style.setProperty("flex", "0 0 auto")
 			else
+				if display_col_i == @__fillCells.length - 2
+					# the one before the last
+					CUI.DOM.removeClass(@grid, "cui-lv--second-last-col-manually-sized")
+
 				fc.style.removeProperty("width")
 				fc.style.removeProperty("flex")
 
