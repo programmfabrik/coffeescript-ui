@@ -138,19 +138,6 @@ textarea {
 	}
 }
 
-
-.css-swatch {
-	width: 24px;
-	height: 12px;
-	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14) inset;
-
-	@each $color, $values in $colors {
-		&.cui-swatch-color-#{$color} {
-			background: map-get($values, 'light');
-		}
-	}
-}
-
 .cui-browser-ie:not(.cui-browser-edge) {
 	@for $i from 1 through 10 {
 		[data-max-chars="#{$i}"] {
@@ -167,6 +154,19 @@ textarea {
 
 input[data-max-chars] {
 	min-width: 0;
+}
+
+
+.css-swatch {
+	width: 24px;
+	height: 12px;
+	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14) inset;
+
+	@each $color, $values in $colors {
+		&.cui-swatch-color-#{$color} {
+			background: map-get($values, 'light');
+		}
+	}
 }
 
 $drag-cursors: default, move, col-resize, row-resize, n-resize, e-resize, s-resize, w-resize, ne-resize, nw-resize, se-resize, sw-resize, ew-resize, ns-resize, nesw-resize, nwse-resize;
@@ -4213,6 +4213,7 @@ a[role="button"].cui-button-appearance-link {
 		justify-content: center;
 		padding: 5px 7px;
 		line-height: 18px;
+		display: block;
 
 		&.cui-date-time-day {
 			cursor: pointer;
@@ -4289,6 +4290,14 @@ a[role="button"].cui-button-appearance-link {
 					text-align: center;
 				}
 			}
+		}
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-date-time-browser .cui-number-input {
+		input {
+			width: 6ch;
 		}
 	}
 }
