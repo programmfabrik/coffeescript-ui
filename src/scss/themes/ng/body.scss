@@ -3495,13 +3495,23 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-		@include phone {
+		@include xs {
 			width: 100% !important;
 		}
 	}
 
 	.cui-form-td {
 		display: block;
+		
+		@include xs {
+			&.cui-form-key {
+				padding-bottom: 2px;
+			}
+
+			&.cui-form-value {
+				padding-top: 0;
+			}
+		}
 	}
 
 	.cui-form-key {
@@ -3651,18 +3661,6 @@ a[role="button"].cui-button-appearance-link {
 	display: table-cell;
 	padding: $padding/2 0;
 	vertical-align: top;
-
-	@include phone {
-		display: block;
-
-		&.cui-form-key {
-			padding-bottom: 2px;
-		}
-
-		&.cui-form-value {
-			padding-top: 0;
-		}
-	}
 }
 
 .cui-form-key {

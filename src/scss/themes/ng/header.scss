@@ -142,6 +142,12 @@ $popover-hint-background: hsl(205,20%,30%);
   }
 }
 
+@mixin xs {
+	@media screen and (max-width: 440px) {
+		@content;
+	}
+}
+
 @mixin phone {
   @media screen and (max-width: 767px) {
     @content;
