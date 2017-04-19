@@ -2893,9 +2893,10 @@ a[role="button"].cui-button-appearance-link {
 
 	&-max {
 		flex-grow: 1;
-		/* ~ .cui-lv-td:last-child { */
-		/* 	flex-grow: 0; */
-		/* } */
+		
+		~ .cui-lv-td:last-child {
+			flex-grow: 0;
+		}
 	}
 
 	&:last-child {
@@ -2920,6 +2921,14 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 	position: relative;
 	overflow: hidden;
+	
+	&.cui-lv--second-last-col-manually-sized {
+		> div > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr {
+			> .cui-lv-td:last-child {
+				flex-grow: 1;
+			}
+		}
+	}
 }
 
 // eg. header
@@ -3365,6 +3374,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-td--value {
 	vertical-align: top;
 	word-break: break-all;
+	word-break: break-word;
 	width: 100%;
 	// position: relative;
 
@@ -3447,6 +3457,7 @@ a[role="button"].cui-button-appearance-link {
 
 			label {
 				word-break: break-all;
+				word-break: break-word;
 				white-space: normal;
 				min-width: $td-min-width;
 			}
