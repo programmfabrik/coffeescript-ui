@@ -874,14 +874,13 @@ class CUI.Form extends CUI.DataField
 		# CUI.debug @dataFields, @, typeof(@getFields)
 
 		for _field in @getFields("getFieldsByName")
-			if _field instanceof Form
-				_field.getFieldsByName(name, found_fields)
-				continue
-
 			# CUI.debug _field, getObjectClass(_field), name, _field.getName
 			if _field.getName() == name
 				found_fields.push(_field)
-				continue
+
+			if _field instanceof Form
+				_field.getFieldsByName(name, found_fields)
+
 
 		# if found_fields.length == 0
 		#	CUI.warn("#{@__cls}.getFieldsByName: No field found matching \"#{name}\".")

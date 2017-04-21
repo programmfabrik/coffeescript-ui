@@ -257,8 +257,10 @@ class CUI.DateTime extends Input
 		@replace(btn, "right")
 		# @append(@__status = $div("cui-date-time-status"), "center")
 
-	format: (s, type="display", output_type=null) ->
-		assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: s, type: type)
+	format: (_s, type="display", output_type=null) ->
+		assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
+
+		s = _s.trim()
 
 		if isEmpty(s)
 			return null
@@ -276,12 +278,7 @@ class CUI.DateTime extends Input
 				for k in DateTime.formatTypes
 					formats_tried.push(format[k])
 
-			CUI.warn(
-				"DateTime.format: Moment is invalid:"
-				s
-				"Tried formats:"
-				formats_tried
-			)
+			console.warn("DateTime.format: Moment '#{s}' is invalid. Tried formats:", formats_tried)
 			return null
 
 		output_format = null
