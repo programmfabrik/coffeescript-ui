@@ -584,7 +584,7 @@ class CUI.ListView extends CUI.SimplePane
 
 	setColWidth: (col_i, width) ->
 		# CUI.debug "setColWidth", col_i, width
-		@__manualColWidths[col_i] = width
+		@__manualColWidths[col_i] = Math.max(20, width)
 		delete(@__colWidths[col_i])
 		@__doLayout(resetRows: true)
 		@
@@ -778,6 +778,9 @@ class CUI.ListView extends CUI.SimplePane
 		css = []
 		add_css = (col_i, width) =>
 			css.push("."+@__lvClass+"-cell[col=\""+col_i+"\"] { width: #{width}px !important; flex: 0 0 auto !important;}")
+		# console.debug @__fillCells.length, @__maxCols, @getColIdx(@__fillCells.length-2), @__manualColWidths[col_i]
+		has_max_cols = false
+		has_manually_sized_column =  false
 
 		# set width on colspan cells
 		@__colWidths = []
@@ -785,17 +788,14 @@ class CUI.ListView extends CUI.SimplePane
 			col_i = @getColIdx(display_col_i)
 			manual_col_width = @__manualColWidths[col_i]
 			if manual_col_width > 0
-				if display_col_i == @__fillCells.length - 2
-					# the one before the last
-					CUI.DOM.addClass(@grid, "cui-lv--second-last-col-manually-sized")
+				has_manually_sized_column =  true
 
 				add_css(col_i, manual_col_width)
 				fc.style.setProperty("width", manual_col_width+"px")
 				fc.style.setProperty("flex", "0 0 auto")
 			else
-				if display_col_i == @__fillCells.length - 2
-					# the one before the last
-					CUI.DOM.removeClass(@grid, "cui-lv--second-last-col-manually-sized")
+				if col_i in @__maxCols
+					has_max_cols = true
 
 				fc.style.removeProperty("width")
 				fc.style.removeProperty("flex")
@@ -803,6 +803,14 @@ class CUI.ListView extends CUI.SimplePane
 		for fc, display_col_i in @__fillCells
 			col_i = @getColIdx(display_col_i)
 			@__colWidths[col_i] = fc.offsetWidth
+
+		if @__maximize_horizontal
+			if not has_max_cols and has_manually_sized_column
+				CUI.DOM.addClass(@grid, "cui-lv--max-last-col")
+			else
+				CUI.DOM.removeClass(@grid, "cui-lv--max-last-col")
+
+		@styleElement.innerHTML = css.join("\n")
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
@@ -821,9 +829,6 @@ class CUI.ListView extends CUI.SimplePane
 					cell.style.setProperty("width", width+"px", "important")
 				else
 					cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal)+"px", "important")
-
-		@styleElement.innerHTML = css.join("\n")
-
 
 		if @fixedColsCount >  0
 			# find unmeasured rows in Q2 & Q3 and set height
@@ -1196,8 +1201,6 @@ class CUI.ListView extends CUI.SimplePane
 
 	__isMaximizedCol: (col_i) ->
 		col_i in @__maxCols and not @__manualColWidths.hasOwnProperty(col_i)
-
-
 
 	@counter: 0
 

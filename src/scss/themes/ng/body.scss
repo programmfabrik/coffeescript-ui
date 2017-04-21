@@ -29,7 +29,7 @@
 }
 
 @mixin outer-focus() {
-	box-shadow: 
+	box-shadow:
 		0 0 0 1px $highlight-color,
 		0 0 0 4px $row-highlight;
 	z-index: 1; // put forward to see outline
@@ -2827,15 +2827,17 @@ a[role="button"].cui-button-appearance-link {
 		align-items: flex-end;
 	}
 
-	&:nth-child(n+2) {
-		.cui-lv-td {
-			overflow: visible;
+	// please review this. it causes problem when dragging the second
+	// last col width and the column has a vertical label
+	/* &:nth-child(n+2) { */
+	/* 	.cui-lv-td { */
+	/* 		overflow: visible; */
 
-			&:after {
-				top: -2px;
-			}
-		}
-	}
+	/* 		&:after { */
+	/* 			top: -2px; */
+	/* 		} */
+	/* 	} */
+	/* } */
 }
 
 .cui-lv-row-move-target {
@@ -2893,7 +2895,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&-max {
 		flex-grow: 1;
-		
+
 		~ .cui-lv-td:last-child {
 			flex-grow: 0;
 		}
@@ -2921,8 +2923,8 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: column;
 	position: relative;
 	overflow: hidden;
-	
-	&.cui-lv--second-last-col-manually-sized {
+
+	&.cui-lv--max-last-col {
 		> div > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr {
 			> .cui-lv-td:last-child {
 				flex-grow: 1;
@@ -3453,7 +3455,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
 		display: block;
-		
+
 		.cui-form-tr {
 			display: flex;
 		}
@@ -3461,7 +3463,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-form-td {
 			display: block;
 		}
-		
+
 		.cui-form-key {
 			flex-shrink: 0;
 			width: $td-width;
@@ -3510,7 +3512,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-form-td {
 		display: block;
-		
+
 		@include xs {
 			&.cui-form-key {
 				padding-bottom: 2px;
@@ -4632,7 +4634,7 @@ a[role="button"].cui-button-appearance-link {
 	flex-basis: 100%;
 	margin-top: $padding*2;
 	border-top: 1px solid $soft-border;
-	
+
 	.cui-label {
 		line-height: normal;
 	}
@@ -4665,7 +4667,7 @@ a[role="button"].cui-button-appearance-link {
 		border-top: none;
 		// box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
 		border-bottom: 1px transparentize(darken($soft-border, 50%), 0.85) solid;
-		
+
 		&:not(:first-child) {
 			margin-bottom: 0;
 		}
@@ -4686,7 +4688,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ProgressMeter
-.cui-progress-meter {	
+.cui-progress-meter {
 	.cui-progress-meter-bar {
 		width: 100%;
 		max-width: 200px;
@@ -4719,7 +4721,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-progress-meter-icon {
 			text-align: center;
 			position: relative;
-			
+
 			.svg-spinner {
 				height: $button-height;
 			}
