@@ -2827,17 +2827,14 @@ a[role="button"].cui-button-appearance-link {
 		align-items: flex-end;
 	}
 
-	// please review this. it causes problem when dragging the second
-	// last col width and the column has a vertical label
-	/* &:nth-child(n+2) { */
-	/* 	.cui-lv-td { */
-	/* 		overflow: visible; */
-
-	/* 		&:after { */
-	/* 			top: -2px; */
-	/* 		} */
-	/* 	} */
-	/* } */
+	// connect the line when there are several rows
+	&:nth-child(n+2) {
+		.cui-lv-td {
+			&:after {
+				top: -2px;
+			}
+		}
+	}
 }
 
 .cui-lv-row-move-target {
@@ -2969,6 +2966,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-lv-td {
 		align-items: flex-end;
 		position: relative;
+		overflow: visible;
 
 		&:after { // table-head line
 			content: "";
@@ -3143,13 +3141,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-drag-handle-row {
 		display: block;
-	}
-}
-
-.cui-list-view-grid-quadrant-1,
-.cui-list-view-grid-quadrant-3 {
-	.cui-lv-td:last-child {
-		// border-right: solid 1px black;
 	}
 }
 
