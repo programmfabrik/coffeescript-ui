@@ -625,11 +625,6 @@ li > div {
 				padding-right: 0;
 			}
 
-			.cui-button-visual {
-				padding-left: $padding/2;
-				padding-right: $padding/2;
-			}
-
 			&.cui-button-appearance-flat {
 				.cui-button-visual {
 					padding-left: 0;
@@ -891,7 +886,7 @@ li > div {
 	max-width: 100%;
 
 	.cui-button-visual {
-	  padding: 0 $padding;
+	  padding: 0 $padding/2;
 	  height: $button-height;
 	  line-height: $button-height - 2px;
 	  color: $button-color;
