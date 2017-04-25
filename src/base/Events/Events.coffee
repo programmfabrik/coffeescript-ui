@@ -192,8 +192,6 @@ class CUI.Events extends CUI.Element
 		info = event.getInfo()
 		waits = []
 		info.__waits = waits
-		waits_dfr = new CUI.Deferred()
-		info.promise = waits_dfr.promise()
 
 		# use the standard event system for this kind of events
 		bubble = event.isBubble()
@@ -267,8 +265,7 @@ class CUI.Events extends CUI.Element
 					# CUI.debug "adding stop node", listener_node[0]
 					stopNodes.push(listener_node[0])
 
-		CUI.when(waits).done(waits_dfr.resolve).fail(waits_dfr.reject)
-		return info.promise
+		return CUI.when(waits)
 
 
 	@ignore: (filter, doc=document) -> # , debug=false) ->
