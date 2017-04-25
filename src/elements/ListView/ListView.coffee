@@ -584,7 +584,7 @@ class CUI.ListView extends CUI.SimplePane
 
 	setColWidth: (col_i, width) ->
 		# CUI.debug "setColWidth", col_i, width
-		@__manualColWidths[col_i] = Math.max(20, width)
+		@__manualColWidths[col_i] = Math.max(5, width)
 		delete(@__colWidths[col_i])
 		@__doLayout(resetRows: true)
 		@
