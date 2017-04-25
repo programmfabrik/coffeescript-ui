@@ -554,7 +554,7 @@ li > div {
 		> .cui-label {
 			// reset padding: 0 $padding; in cui-horizontal-layout-left
 			&:first-child {
-				padding-left: $padding/2 + 3px;
+				padding-left: $small-gap;
 			}
 
 			&:last-child {
@@ -568,7 +568,7 @@ li > div {
 
 		> .cui-label {
 			&:last-child {
-				padding-right: $padding/2 + 3px;
+				padding-right: $small-gap;
 			}
 		}
 	}
@@ -1653,13 +1653,14 @@ a[role="button"].cui-button-appearance-link {
 		margin: 0 $small-gap;
 		align-self: center;
 
-		&:first-child {
-			margin-left: 0;
-		}
+		// CONFLICT: spacing needed around first/last labels
+		// &:first-child {
+		// 	margin-left: 0;
+		// }
 
-		&:last-child {
-			margin-right: 0;
-		}
+		// &:last-child {
+		// 	margin-right: 0;
+		// }
 	}
 
 	.cui-label-content {
@@ -2946,6 +2947,7 @@ a[role="button"].cui-button-appearance-link {
 		&-multiline {
 			align-self: flex-end;
 			max-width: none;
+			flex-shrink: 1;
 		}
 	}
 
