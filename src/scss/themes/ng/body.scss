@@ -2821,15 +2821,6 @@ a[role="button"].cui-button-appearance-link {
 	.cui-label {
 		align-items: flex-end;
 	}
-
-	// connect the line when there are several rows
-	&:nth-child(n+2) {
-		.cui-lv-td {
-			&:after {
-				top: -2px;
-			}
-		}
-	}
 }
 
 .cui-lv-row-move-target {
@@ -2962,13 +2953,17 @@ a[role="button"].cui-button-appearance-link {
 		align-items: flex-end;
 		position: relative;
 		overflow: visible;
+		
+		&.cui-lv-td-rotate-90 {
+			overflow: hidden;
+		}
 
 		&:after { // table-head line
 			content: "";
 			position: absolute;
 			right: 0;
-			top: 2px;
-			bottom: 2px;
+			top: 0;
+			bottom: 0;
 			width: 1px;
 			background: $table-header-border;
 		}
