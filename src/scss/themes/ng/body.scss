@@ -4049,8 +4049,8 @@ a[role="button"].cui-button-appearance-link {
 		min-width: 206px;
 	}
 
-	&[data-cui-date-time-format="dddd-DD-MM-YYYY"] .cui-input {
-		min-width: 166px;
+	&[data-cui-date-time-format="DD-MM-YYYY-HH-mm"] .cui-input {
+		min-width: 130px;
 	}
 }
 
