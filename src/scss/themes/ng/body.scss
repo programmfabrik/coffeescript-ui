@@ -4632,19 +4632,11 @@ a[role="button"].cui-button-appearance-link {
 	font-weight: bold;
 	color: $color;
 	flex-basis: 100%;
-	margin-top: $padding*2;
-	border-top: 1px solid $soft-border;
+	border-bottom: 1px solid transparentize(darken($soft-border, 50%), 0.85);
 
 	.cui-label {
 		line-height: normal;
 	}
-}
-
-.cui-sticky-header-control + .cui-sticky-header,
-.cui-sticky-header:first-child,
-.cui-block + .cui-sticky-header {
-	margin-top: 0;
-	border-top-width: 0;
 }
 
 .cui-sticky-header-control {
@@ -4658,19 +4650,11 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 
 	.cui-tmpl-sticky-header {
-		margin: 0 0 1px; // one pixel bottom margin to make sure that the box-shadow doesn't get cut off when something gets measured
 		position: absolute;
 		left: 0;
 		right: 0;
 		font-weight: bold;
 		background: hsla(0,0%,100%,.94);
-		border-top: none;
-		// box-shadow: 0 1px transparentize(darken($soft-border, 50%), 0.85);
-		border-bottom: 1px transparentize(darken($soft-border, 50%), 0.85) solid;
-
-		&:not(:first-child) {
-			margin-bottom: 0;
-		}
 	}
 }
 
@@ -4679,12 +4663,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-sticky-header-level-3,
 .cui-sticky-header-level-4 {
 	font-size: 11px;
-}
-
-.cui-sticky-header-level-0 {
-	+ .cui-sticky-header-level-1 {
-		margin-top: 0;
-	}
 }
 
 // ProgressMeter
