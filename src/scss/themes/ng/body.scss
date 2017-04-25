@@ -2064,10 +2064,6 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-date-time {
-		min-width: 215px;
-	}
-
 	.cui-toolbar,
 	.cui-buttonbar {
 		.cui-data-field-input {
@@ -4046,6 +4042,14 @@ a[role="button"].cui-button-appearance-link {
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
+
+	&[data-cui-date-time-format="dddd-DD-MM-YYYY-HH-mm"] .cui-input {
+		min-width: 206px;
+	}
+
+	&[data-cui-date-time-format="dddd-DD-MM-YYYY"] .cui-input {
+		min-width: 166px;
+	}
 }
 
 .cui-date-time-calendar .cui-buttonbar {
@@ -4118,7 +4122,6 @@ a[role="button"].cui-button-appearance-link {
 
 	input {
 		position: relative;
-		min-width: 0; // was 80px - breaks scaling it down in a sidebar
 	}
 }
 
