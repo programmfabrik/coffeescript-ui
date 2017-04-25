@@ -92,6 +92,12 @@ class CUI.Draggable extends CUI.DragDropSelect
 				move: ["mousemove"]
 		@
 
+	getClass: ->
+		if not @_selector
+			"cui-draggable "+super()
+		else
+			super()
+
 	supportTouch: ->
 		!!@_support_touch
 
