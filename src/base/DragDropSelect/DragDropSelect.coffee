@@ -29,7 +29,7 @@ class CUI.DragDropSelect extends CUI.Element
 		@element = @_element
 		DragDropSelect.getInstance(@element, @cls)?.destroy()
 		DOM.data(@element, "drag-drop-select-"+@cls, @)
-		DOM.addClass(@element, @__getClass())
+		DOM.addClass(@element, @getClass())
 
 	getClass: ->
 		"cui-drag-drop-select cui-drag-drop-select-"+@cls
