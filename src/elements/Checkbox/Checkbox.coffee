@@ -21,7 +21,7 @@ class Checkbox extends DataFieldInput
 				check: String
 			content:
 				check: (v) ->
-					!!(isElement(v) or v instanceof CUI.Element)
+					isContent(v) or isString(v)
 			active:
 				default: false
 				check: Boolean

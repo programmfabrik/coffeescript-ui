@@ -523,7 +523,7 @@ class CUI.Button extends CUI.DOM
 					(v == true or isContent(v)) and not @_icon_right
 			center:
 				check: (v) ->
-					(isElement(v) or isString(v) or v instanceof CUI.Element)
+					isContent(v) or isString(v)
 			icon:
 				check: (v) ->
 					v instanceof Icon or isString(v)
