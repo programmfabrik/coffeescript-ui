@@ -3666,6 +3666,12 @@ a[role="button"].cui-button-appearance-link {
 		word-wrap: break-word;
 		word-break: break-word;
 	}
+
+	.cui-form-field-type--checkbox > & {
+		label {
+			margin: 0;
+		}
+	}
 }
 
 .cui-form-table:not([cui-form-depth="0"]) {
@@ -3682,11 +3688,18 @@ a[role="button"].cui-button-appearance-link {
 	// vertical-align: middle;
 
 	.cui-checkbox {
-		padding-top: 2px; // nudge down a bit to align with label
+		// padding-top: 2px; // nudge down a bit to align with label
+		// CONFLICT: can't do this because it makes the checkbox 26px high
 	}
 
 	> .cui-data-field {
 		min-width: 0;
+	}
+
+	.cui-form-field-type--checkbox > & {
+		.cui-button-checkbox {
+			padding: 0;
+		}
 	}
 }
 
