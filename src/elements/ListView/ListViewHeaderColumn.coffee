@@ -19,7 +19,6 @@ class ListViewHeaderColumn extends ListViewColumn
 			rotate_90:
 				check: Boolean
 			label:
-				mandatory: true
 				check: (v) ->
 					if CUI.isPlainObject(v) or v instanceof Label
 						true
@@ -32,7 +31,7 @@ class ListViewHeaderColumn extends ListViewColumn
 		super()
 		if @_label instanceof Label
 			@__label = @_label
-		else
+		else if @_label
 			@_label.rotate_90 = @_rotate_90
 			@__label = new CUI.defaults.class.Label(@_label)
 
@@ -68,6 +67,8 @@ class ListViewHeaderColumn extends ListViewColumn
 		else
 			arr = []
 
-		arr.push(@__label.DOM)
+		if @__label
+			arr.push(@__label.DOM)
+
 		arr
 
