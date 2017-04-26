@@ -195,8 +195,8 @@ class CUI.ListViewTree extends CUI.ListView
 		return ret
 		# console.timeEnd("#{@__uniqueId}: action on node #{action}")
 
-	selectRow: (ev, row) ->
-		row.select(ev)
+	# selectRow: (ev, row) ->
+	# 	row.select(ev)
 
 	getNodesForMove: (from_i, to_i, after) ->
 		from_node = @getListViewRow(from_i)
