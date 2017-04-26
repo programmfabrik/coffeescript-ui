@@ -22,7 +22,7 @@ DateTimeFormats["de-DE"] =
 		clock_seconds: false
 		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
-		display: "dddd, DD.MM.YYYY HH:mm"
+		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
@@ -46,7 +46,7 @@ DateTimeFormats["de-DE"] =
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
-		display: "dddd, DD.MM.YYYY HH:mm:ss"
+		display: "dd, DD.MM.YYYY HH:mm:ss"
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
@@ -65,7 +65,7 @@ DateTimeFormats["de-DE"] =
 		text: "Datum"
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
-		display: "dddd, DD.MM.YYYY"
+		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
 		store: "YYYY-MM-DD"
 		type: "date"
@@ -119,7 +119,7 @@ DateTimeFormats["it-IT"] =
 		clock_seconds: false
 		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
-		display: "dddd, DD.MM.YYYY HH:mm"
+		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
@@ -143,7 +143,7 @@ DateTimeFormats["it-IT"] =
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
-		display: "dddd, DD.MM.YYYY HH:mm:ss"
+		display: "dd, DD.MM.YYYY HH:mm:ss"
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
@@ -160,7 +160,7 @@ DateTimeFormats["it-IT"] =
 		text: "Datum"
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
-		display: "dddd, DD.MM.YYYY"
+		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
 		store: "YYYY-MM-DD"
 		type: "date"
@@ -214,7 +214,7 @@ DateTimeFormats["es-ES"] =
 		clock_seconds: false
 		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
-		display: "dddd, DD.MM.YYYY HH:mm"
+		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
@@ -238,7 +238,7 @@ DateTimeFormats["es-ES"] =
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
-		display: "dddd, DD.MM.YYYY HH:mm:ss"
+		display: "dd, DD.MM.YYYY HH:mm:ss"
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
@@ -255,7 +255,7 @@ DateTimeFormats["es-ES"] =
 		text: "Datum"
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
-		display: "dddd, DD.MM.YYYY"
+		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
 		store: "YYYY-MM-DD"
 		type: "date"
@@ -311,7 +311,7 @@ DateTimeFormats["en-US"] =
 		clock_seconds: false
 		# digi_clock: "HH:mm"
 		input: "MM/DD/YYYY HH:mm"
-		display: "dddd, MM/DD/YYYY HH:mm"
+		display: "dd, MM/DD/YYYY HH:mm"
 		display_short: "MM/DD/YYYY HH:mm"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
@@ -335,7 +335,7 @@ DateTimeFormats["en-US"] =
 		type: "date_time_seconds"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
 		input: "MM/DD/YYYY HH:mm:ss"
-		display: "dddd, MM/DD/YYYY HH:mm:ss"
+		display: "dd, MM/DD/YYYY HH:mm:ss"
 		display_short: "MM/DD/YYYY HH:mm:ss"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
@@ -353,7 +353,7 @@ DateTimeFormats["en-US"] =
 		text: "Date"
 		input: "MM/DD/YYYY"
 		invalid: "Invalid date"
-		display: "dddd, MM/DD/YYYY"
+		display: "dd, MM/DD/YYYY"
 		display_short: "MM/DD/YYYY"
 		store: "YYYY-MM-DD"
 		type: "date"
