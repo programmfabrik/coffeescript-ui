@@ -844,9 +844,8 @@ li > div {
 	margin-bottom: -1px;
 }
 
-// adjust play icon weight
 .fa-play {
-	margin-right: -3px;
+	margin-left: 1px; // aligns it with the stop button
 }
 
 // Button / Select
