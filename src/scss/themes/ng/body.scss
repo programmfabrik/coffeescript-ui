@@ -477,6 +477,10 @@ li > div {
 		.cui-pane-fill-screen-inner {
 			width: 100%;
 			height: 100%;
+			
+			> .cui-maximize-vertical.cui-vertical-layout {
+				height: 100%;
+			}
 		}
 	}
 
