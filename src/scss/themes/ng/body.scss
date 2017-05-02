@@ -2682,6 +2682,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-toolbar .cui-tab-header-button {
 	font-size: inherit;
 	padding: 0;
+	flex-shrink: 0;
 
 	.cui-button-visual {
 		background: none;
@@ -2825,6 +2826,10 @@ a[role="button"].cui-button-appearance-link {
 	.cui-label {
 		align-items: flex-end;
 	}
+
+	.cui-lv-td {
+		display: flex;
+	}
 }
 
 .cui-lv-row-move-target {
@@ -2848,8 +2853,7 @@ a[role="button"].cui-button-appearance-link {
 	min-height: $td-height;
 	overflow: hidden;
 	flex-shrink: 0;
-	display: flex;
-	align-items: flex-start;
+	display: block;
 	box-sizing: content-box;
 
 	.cui-lv-td {
