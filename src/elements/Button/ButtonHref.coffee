@@ -28,8 +28,13 @@ class ButtonHref extends Button
 			target:
 				check: String
 
-		if CUI.__ng__
-			@mergeOpt("icon_right", default: "external_link")
+	readOpts: ->
+		super()
+
+		if @_icon_right == undefined and @_appearance == "link"
+			@_icon_right = "external_link"
+
+		@
 
 	setHref: (href) ->
 		@DOM.attr("href", href)

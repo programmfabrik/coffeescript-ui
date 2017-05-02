@@ -219,8 +219,13 @@ class CUI.Form extends CUI.DataField
 			if not _f.isHidden()
 				CUI.DOM.showElement(tr)
 				return
+			hide = true
 
-		CUI.DOM.hideElement(tr)
+		if hide
+			CUI.DOM.hideElement(tr)
+		else
+			CUI.DOM.showElement(tr)
+
 		return
 
 	render: ->
@@ -443,7 +448,9 @@ class CUI.Form extends CUI.DataField
 
 				# used to set row visibility
 				DOM.data(blk.DOM, "data-field", field)
-				@__setRowVisibility(blk.DOM)
+
+				# if not cb
+				# 	@__setRowVisibility(blk.DOM)
 
 				table = null
 				table_has_left = null
@@ -502,7 +509,7 @@ class CUI.Form extends CUI.DataField
 				# used to set row visibility
 				DOM.data(tr, "data-field", field)
 
-				@__setRowVisibility(tr)
+				# @__setRowVisibility(tr)
 
 				if grid
 					tr.setAttribute("data-cui-grid", grid)
