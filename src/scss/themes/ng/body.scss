@@ -3045,13 +3045,13 @@ a[role="button"].cui-button-appearance-link {
 				background: $zebra-color;
 			}
 
-			.cui-label-manage-overflow-button-container {
-				background-image: linear-gradient(#{transparentize($zebra-on-foreground-color, 1)}, #{transparentize($zebra-on-foreground-color, 0)});
+			.cui-label-manage-overflow-button {
+				background: linear-gradient(to right, transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color 10px);
 			}
 
 			&.cui-selected {
-				.cui-label-manage-overflow-button-container {
-					background-image: linear-gradient(#{transparentize($row-highlight, 1)}, #{transparentize($row-highlight, 0)});
+				.cui-label-manage-overflow-button {
+					background: linear-gradient(to right, transparentize($row-highlight, 1), $row-highlight 10px);
 				}
 			}
 		}
@@ -3089,8 +3089,8 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		&.cui-selected {
-			.cui-label-manage-overflow-button-container {
-				background-image: linear-gradient(#{transparentize($row-highlight, 1)}, #{transparentize($row-highlight, 0)});
+			.cui-label-manage-overflow-button {
+				background: linear-gradient(to right, transparentize($row-highlight, 1), $row-highlight 10px);
 			}
 		}
 	}
