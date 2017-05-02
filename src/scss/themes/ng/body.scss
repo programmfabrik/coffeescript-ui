@@ -1173,6 +1173,7 @@ a[role="button"].cui-button-appearance-link {
 	align-self: flex-start;
 	max-width: 100%;
 	padding: 3px 0;
+	vertical-align: bottom; // fix height change on windows when checked
 
 	[data-max-chars] {
 		text-align: inherit;
