@@ -191,7 +191,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@getOpenChildNodes()
 
 	isRendered: ->
-		if (@isRoot() and @getTree()?.getGrid()) or @element
+		if (@isRoot() and @getTree()?.getGrid()) or @__is_rendered
 			true
 		else
 			false
@@ -232,7 +232,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@do_open = false
 
 		if remove_self
-			if @element
+			if @__is_rendered
 				tree = @getTree()
 				if tree and not tree.isDestroyed()
 					if @getRowIdx() == null
@@ -241,13 +241,13 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 					else
 						tree.removeRow(@getRowIdx())
 
-				@element = null
+				@__is_rendered = false
 
 		@is_open = false
 		@
 
-	getElement: ->
-		@element
+	# getElement: ->
+	# 	@element
 
 	# replaces node_element with a new render of ourself
 	replaceSelf: ->
@@ -742,7 +742,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	update: (update_root=false) =>
 		# CUI.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
 
-		if not update_root and (not @element or @isRoot())
+		if not update_root and (not @__is_rendered or @isRoot())
 			# dont update root
 			return CUI.resolvedPromise()
 
@@ -769,13 +769,13 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@update()
 
 	showSpinner: ->
-		if @element
+		if @__is_rendered
 			@__handleDiv.empty()
 			@__handleDiv.append(new Icon(icon: "spinner").DOM)
 		@
 
 	hideSpinner: ->
-		if @element
+		if @__is_rendered
 			@__handleDiv.empty()
 			if @__handleIcon
 				@__handleDiv.append(new Icon(icon: @__handleIcon).DOM)
@@ -786,11 +786,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		assert(not @isRoot(), "ListViewTreeNode.render", "Unable to render root node.")
 		@removeColumns()
 
-		@element = $div("cui-tree-node level-#{@level()}")
+		element = $div("cui-tree-node level-#{@level()}")
+		@__is_rendered = true
 
 		# Space for the left side
 		for i in [1...@level()] by 1
-			@element.append($div("cui-tree-node-spacer"))
+			element.append($div("cui-tree-node-spacer"))
 
 		# Handle before content
 		cls = ["cui-tree-node-handle"]
@@ -812,11 +813,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @__handleIcon
 			@__handleDiv.append(new Icon(icon: @__handleIcon).DOM)
 
-		@element.append(@__handleDiv)
+		element.append(@__handleDiv)
 
 		# push the tree element as the first column
 		@prependColumn new ListViewColumn
-			element: @element
+			element: element
 			class: "cui-tree-node-column cui-tree-node-level-#{@level()}"
 			colspan: @colspan
 
@@ -831,7 +832,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				contentDiv.append(con?.DOM or content)
 		else
 			contentDiv.append(content?.DOM or content)
-		@element.append(contentDiv)
+		element.append(contentDiv)
 		@
 
 

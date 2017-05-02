@@ -139,17 +139,26 @@ elementGetPosition = (coordinates, el) ->
 
 	return position
 
-
+getObjectClassRegexp = /^function\s*(\w+)/
 
 # Returns the class name of the argument or undefined if
 # it's not a valid JavaScript object.
 getObjectClass = (obj) ->
-	if obj and obj.constructor and obj.constructor.toString
-        arr = obj.constructor.toString().match(/function\s*(\w+)/)
+	if not obj or not obj.constructor
+		return undefined
 
-        if arr and arr.length == 2
-            return arr[1]
-    return undefined
+	if CUI.browser.ie
+		str = obj.constructor.toString().trim()
+		if str.substr(0, 8) == "function"
+			arr = str.match(getObjectClassRegexp)
+			if arr and arr.length == 2
+				return arr[1]
+			else
+				return undefined
+		else
+			return undefined
+	else
+		return obj.constructor.name
 
 isUndef = (obj) ->
 	(typeof obj == "undefined")

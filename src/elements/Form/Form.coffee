@@ -155,6 +155,9 @@ class CUI.Form extends CUI.DataField
 			@__checkbox.displayValue()
 		super()
 
+	getParentData: ->
+		@__parent_data or @__data
+
 	setData: (data) ->
 		if @_name and @__checkbox
 			assert(not CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
@@ -180,9 +183,11 @@ class CUI.Form extends CUI.DataField
 				if isUndef(data[@_name])
 					data[@_name] = {}
 
+				@__parent_data = data
 				super(data[@_name])
 		else
 			super(data)
+
 		# sometimes fields depend on data, we need to see if
 		# that is the case
 		# these functions do this:
@@ -219,259 +224,22 @@ class CUI.Form extends CUI.DataField
 		return
 
 	render: ->
-		if CUI.__ng__
-			# we need fields rendered before we render
-			# us, so that <label for=...> can work, just
-			# to be safe, for "ng" only until we know
-			# it does not break anything
-			super()
-			@renderTable()
-			if not @hasContentForAppend()
-				CUI.DOM.hideElement(@DOM)
-			else
-				CUI.DOM.showElement(@DOM)
-
+		# we need fields rendered before we render
+		# us, so that <label for=...> can work, just
+		# to be safe, for "ng" only until we know
+		# it does not break anything
+		super()
+		@renderTable()
+		if not @hasContentForAppend()
+			CUI.DOM.hideElement(@DOM)
 		else
-			@renderTable()
-			super()
+			CUI.DOM.showElement(@DOM)
 		@
 
 	getTable: ->
 		assert(not CUI.__ng__, "Form.getTable is obsolete in \"ng\" design.", form: @)
 		@table
 
-	renderTable: ->
-
-		if CUI.__ng__
-			return @__renderTableNg()
-
-		if CUI.__ng__
-			# avoid "cui-table"
-			@table = jQuery(CUI.DOM.element("TABLE", class: "cui-form-table"))
-		else
-			@table = $table("cui-form-table")
-
-		if @_horizontal
-			@table.addClass("cui-form-table-horizontal")
-		else
-			@table.addClass("cui-form-table-vertical")
-
-		Events.listen
-			node: @table
-			type: "form-check-row-visibility"
-			call: (ev) =>
-				tr = $(ev.getNode()).closest(".cui-form-tr")
-				ev.stopPropagation()
-				if not tr.hasClass("cui-form-tr-vertical")
-					return
-				if tr.length
-					@__setRowVisibility(tr)
-
-		if @_class_table
-			@table.addClass(@_class_table)
-
-		# add all classes from the top level
-		for cls in (@_class or "").split(/\s+/)
-			if isEmpty(cls)
-				continue
-			@table[0].classList.add(cls+"-table")
-
-		if @_horizontal and CUI.__ng__
-			td_classes = [
-				"cui-padding cui-form-left cui-form-th"
-				"cui-padding cui-form-center cui-form-td"
-			]
-		else
-			td_classes = [
-				"cui-padding cui-form-left cui-form-td"
-				"cui-padding cui-form-center cui-form-td"
-			]
-
-		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
-
-		getAppend = (v, info=@) =>
-			if CUI.isPlainObject(v) # assume a label constructor
-				# new Label(v).DOM
-				new MultilineLabel(v).DOM
-			else if isString(v)
-				# new Label(text: v).DOM
-				new MultilineLabel(text: v).DOM
-			else if v?.DOM
-				v.DOM
-			else if CUI.isFunction(v)
-				getAppend(v(info))
-			else if isEmpty(v)
-				null
-			else
-				v
-
-		if @_header
-			tr_head = $tr("cui-form-tr-header").appendTo(@table)
-
-			console.error "adding header..", @_header
-
-			assert(not @_horizontal, "Form.renderTable", "opts.header cannot be used with opts.horizontal", opts: @opts)
-
-			for td_class, idx in td_classes
-				head = @_header[idx]
-				th = $th(td_class).appendTo(tr_head)
-				th.append(getAppend(head?.label))
-
-		has_left = false
-
-		_fields = @getFields()
-		if @__horizontal > 1
-			# re-sort fields
-			fields = []
-			fields_per_column = Math.ceil(_fields.length / @__horizontal)
-			for col_i in [0...@__horizontal]
-				for row_i in [0...fields_per_column]
-					target_idx = col_i+row_i*@_horizontal
-					source_idx = col_i*fields_per_column+row_i
-					if source_idx >= _fields.length
-						continue
-					fields[target_idx] = _fields[source_idx]
-
-		else
-			fields = _fields
-
-		for _field, idx in fields
-
-			# _field can be undefined in @__horizontal > 1 tables
-
-			if @__horizontal and (idx == 0 or (@__horizontal > 1 and idx % @__horizontal == 0))
-				tr_labels = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-labels")
-
-				if not CUI.__ng__
-					tr_labels.appendTo(@table)
-
-				tr_fields = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-fields").appendTo(@table)
-				# tr_rights = $tr("cui-form-tr cui-form-tr-horizontal cui-form-tr-rights").appendTo(@table)
-
-			fopts = _field?._form or {}
-
-			tds = []
-			right = null
-
-			if fopts.hasOwnProperty("right")
-				right = fopts.right
-				console.error("Form.renderTable: form.right is deprecated. Remove this from your code. Form:", @, "Field:", _field, "Field#", idx)
-
-			append_content = []
-			append_left = []
-			use_field_as_label = false
-
-			for app, idx in [fopts, _field, right]
-
-				if idx == 0
-					content = null
-
-					if _field instanceof Form and _field.getCheckbox()
-						cb = _field.getCheckbox()
-						content = _field.getCheckbox().DOM
-
-						do (cb, _field) =>
-							Events.listen
-								type: "data-changed"
-								node: cb
-								call: =>
-									if cb.getValue()
-										_field.show()
-									else
-										_field.hide()
-					else
-						if app.label
-							if isString(app.label) and CUI.__ng__
-								# use a HTML label and link it to the field
-								# if possible
-								content = CUI.DOM.element("label", class: "cui-label", for: _field.getUniqueIdForLabel())
-								content.textContent = app.label
-							else
-								content = getAppend(app.label, _field)
-
-						if app.use_field_as_label
-							assert(not @_horizontal, "Form.renderTable", "field.form.use_field_as_label is not supported with opts.horizontal.", opts: @opts, field: _field)
-
-							use_field_as_label = true
-				else
-					content = getAppend(app, _field)
-
-				if content != null
-					if use_field_as_label or idx == 0
-						append_left.push(content)
-					else
-						append_content.push(content)
-
-			if append_left.length > 0
-				if @_horizontal
-					if CUI.__ng__
-						console.error("Form.renderTable", "field.form.label in horizontal tables is obsolete.")
-					else
-						console.error("Form.renderTable", "field.form.label in horizontal tables is deprectated.")
-
-				has_left = true
-
-			if use_field_as_label
-				tds.push($td(td_classes[0], colspan: 2).append(append_left))
-			else
-				td2 = $td(td_classes[1])
-
-				if @_horizontal and CUI.__ng__
-					td1 = $th(td_classes[0])
-					td1.addClass("cui-form-th")
-					if fopts.th_rotate_90
-						td1.addClass("cui-form-rotate-90")
-						td2.addClass("cui-form-rotate-90")
-				else
-					td1 = $td(td_classes[0])
-
-				tds.push(td1.append(append_left))
-				tds.push(td2.append(append_content))
-
-			if @__horizontal
-				tr_labels.append(tds[0])
-				tr_fields.append(tds[1])
-				# tr_rights.append(tds[2])
-			else
-				tr = $tr("cui-form-tr cui-form-tr-vertical").appendTo(@table)
-				# mark this row special, if our content includes another vertical form
-				if getObjectClass(_field) == "Form" and _field instanceof CUI.Form
-					if not _field.getOpt("horizontal") or not has_left
-						tr.addClass("cui-form-tr-content-is-form-vertical")
-
-				# used to set row visibility
-				DOM.data(tr[0], "data-field", _field)
-
-				tr.append(tds)
-
-		if has_left
-			@table.addClass("cui-form-table-has-left-column")
-		else
-			@table.addClass("cui-form-table-has-not-left-column")
-
-		Events.listen
-			type: "data-changed"
-			node: @table
-			call: (ev, info) =>
-				if not info.element
-					return
-
-				# CUI.debug "Form data-changed", @getData()
-
-				if info.action in ["goto", "reset"]
-					return
-
-				@__undo.log[++@__undo.idx] =
-					name: info.element.getName()
-					undo_idx: info.undo_idx
-					action: info.action
-
-				@__undo.log.splice(@__undo.idx+1)
-				return
-
-		@getLayout().replace(@table, "center")
-		CUI.DOM.setAttribute(@table, "cui-form-depth", CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
-		@table
 
 	renderAsBlock: ->
 		if @getCheckbox()
@@ -500,7 +268,7 @@ class CUI.Form extends CUI.DataField
 		else
 			false
 
-	__renderTableNg: ->
+	renderTable: ->
 
 		layout = @getLayout()
 
@@ -675,6 +443,7 @@ class CUI.Form extends CUI.DataField
 
 				# used to set row visibility
 				DOM.data(blk.DOM, "data-field", field)
+				@__setRowVisibility(blk.DOM)
 
 				table = null
 				table_has_left = null
@@ -732,6 +501,8 @@ class CUI.Form extends CUI.DataField
 
 				# used to set row visibility
 				DOM.data(tr, "data-field", field)
+
+				@__setRowVisibility(tr)
 
 				if grid
 					tr.setAttribute("data-cui-grid", grid)

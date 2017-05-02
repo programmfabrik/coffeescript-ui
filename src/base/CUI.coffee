@@ -892,5 +892,8 @@ CUI.ready =>
 	CUI.__downloadDataElement = nodes[1]
 	CUI.DOM.append(document.body, nodes)
 
-window.addEventListener "load", =>
-	CUI.start()
+
+if not window.addEventListener
+	alert("Your browser is not supported. Please update to a current version of Google Chrome, Mozilla Firefox or Internet Explorer.")
+else
+	window.addEventListener("load", CUI.start)

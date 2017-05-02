@@ -366,8 +366,6 @@ class CUI.ListView extends CUI.SimplePane
 			type: "content-resize"
 			node: @DOM
 			call: (ev, info) =>
-				# CUI.debug("ListView[##{@listViewCounter}] caught content resize, stop.")
-
 				if not @__isInDOM
 					return
 
@@ -464,20 +462,31 @@ class CUI.ListView extends CUI.SimplePane
 	selectRow: (ev, row, no_deselect=false) ->
 		assert(isNull(row) or row instanceof ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of ListViewRow.", selectedRow: row)
 
+		dfr = new CUI.Deferred()
+
+		do_select = =>
+			if row.isSelected()
+				if not no_deselect
+					row.deselect(ev).done(dfr.resolve).fail(dfr.reject)
+				else
+					dfr.resolve()
+			else
+				row.select(ev).done(dfr.resolve).fail(dfr.reject)
+			return
+
 		if @__selectableRows == true # only one row
+			promises = []
 			for _row in @getSelectedRows()
 				if row == _row
 					continue
-				_row.deselect(ev)
-
-		if row.isSelected()
-			if not no_deselect
-				row.deselect(ev)
-			else
-				row
+				ret = _row.deselect(ev)
+				if isPromise(ret)
+					promises.push(ret)
+			CUI.when(promises).done(do_select).fail(dfr.reject)
 		else
-			row.select(ev)
+			do_select()
 
+		dfr.promise()
 
 	getCellByTarget: ($target) ->
 		if $target.is(".cui-lv-td")

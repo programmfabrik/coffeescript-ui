@@ -135,6 +135,8 @@ class CUI.DataField extends CUI.DOM
 		@remove()
 		@render()
 		@displayValue()
+		@_onRender?(@)
+		@
 
 	remove: ->
 		@callOnOthers("remove")
@@ -298,7 +300,6 @@ class CUI.DataField extends CUI.DOM
 		if @isHidden()
 			@hide()
 		@callOnOthers("render")
-		@_onRender?(@)
 		@
 
 	displayValue: ->
@@ -313,6 +314,7 @@ class CUI.DataField extends CUI.DOM
 		@__initDisabled()
 		@render()
 		@displayValue()
+		@_onRender?(@)
 		@
 
 	getAllDataFields: (all=false)->

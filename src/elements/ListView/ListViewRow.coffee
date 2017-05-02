@@ -168,13 +168,14 @@ class CUI.ListViewRow extends CUI.Element
 			listView: @listView
 			row: @
 
-		@
+		CUI.resolvedPromise()
 
 	deselect: (ev) ->
 		if not @listView.hasSelectableRows()
-			return
+			return CUI.rejectedPromise()
+
 		if not @selected
-			return
+			return CUI.rejectedPromise()
 
 		@listView?.rowRemoveClass(@row_i, ListViewRow.defaults.selected_class)
 		@selected = false
@@ -184,7 +185,7 @@ class CUI.ListViewRow extends CUI.Element
 			listView: @listView
 			row: @
 
-		@
+		CUI.resolvedPromise()
 
 	isSelected: ->
 		!!@selected
