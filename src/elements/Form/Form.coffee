@@ -171,11 +171,11 @@ class CUI.Form extends CUI.DataField
 				if data[@_name]
 					@__checkbox_form_data = data[@_name]
 					@__checkbox_data.checkbox = true
-					@show()
+					# @show()
 				else
 					@__checkbox_form_data = {}
 					@__checkbox_data.checkbox = false
-					@hide()
+					# @hide()
 
 				super(@__checkbox_form_data)
 
@@ -219,13 +219,8 @@ class CUI.Form extends CUI.DataField
 			if not _f.isHidden()
 				CUI.DOM.showElement(tr)
 				return
-			hide = true
 
-		if hide
-			CUI.DOM.hideElement(tr)
-		else
-			CUI.DOM.showElement(tr)
-
+		CUI.DOM.hideElement(tr)
 		return
 
 	render: ->
@@ -235,7 +230,7 @@ class CUI.Form extends CUI.DataField
 		# it does not break anything
 		super()
 		@renderTable()
-		if not @hasContentForAppend()
+		if not @hasContentForAppend() or @__checkbox?.getValue() == false
 			CUI.DOM.hideElement(@DOM)
 		else
 			CUI.DOM.showElement(@DOM)
@@ -419,10 +414,10 @@ class CUI.Form extends CUI.DataField
 							call: =>
 								if cb.getValue()
 									blk.addClass("cui-form-block--checkbox-checked")
-									field.show()
+									CUI.DOM.showElement(field.DOM)
 								else
 									blk.removeClass("cui-form-block--checkbox-checked")
-									field.hide()
+									CUI.DOM.hideElement(field.DOM)
 					left_side = cb
 				else
 					left_side = get_label(field)
@@ -449,8 +444,7 @@ class CUI.Form extends CUI.DataField
 				# used to set row visibility
 				DOM.data(blk.DOM, "data-field", field)
 
-				# if not cb
-				# 	@__setRowVisibility(blk.DOM)
+				@__setRowVisibility(blk.DOM)
 
 				table = null
 				table_has_left = null
@@ -509,7 +503,7 @@ class CUI.Form extends CUI.DataField
 				# used to set row visibility
 				DOM.data(tr, "data-field", field)
 
-				# @__setRowVisibility(tr)
+				@__setRowVisibility(tr)
 
 				if grid
 					tr.setAttribute("data-cui-grid", grid)

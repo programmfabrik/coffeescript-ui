@@ -287,7 +287,6 @@ class CUI.DataField extends CUI.DOM
 
 	render: ->
 		assert(not @__isRendered, "#{@__cls}.render", "Cannot be called when already rendered.", opts: @opts, dataField: @)
-
 		# for p of @__tmpl.map
 		# 	content = @["__#{p}"]
 		# 	if isNull(content)
