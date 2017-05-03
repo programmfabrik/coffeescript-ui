@@ -254,7 +254,12 @@ class CUI.DateTime extends CUI.Input
 			else
 				display_key = "display"
 
-		@DOM.setAttribute("data-cui-date-time-format", @__input_formats[0][display_key].replace(/[:, \.]/g, "-").replace(/-+/g,"-"))
+		attr = @__input_formats[0][display_key+'_attribute']
+
+		if not attr
+			attr = @__input_formats[0][display_key].replace(/[:, \.]/g, "-").replace(/-+/g,"-")
+
+		@DOM.setAttribute("data-cui-date-time-format", attr)
 
 		btn = new CUI.defaults.class.Button
 			icon: "calendar"

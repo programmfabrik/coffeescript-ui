@@ -24,6 +24,8 @@ DateTimeFormats["de-DE"] =
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
+		display_attribute: "date-time"
+		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
@@ -48,6 +50,8 @@ DateTimeFormats["de-DE"] =
 		store: "YYYY-MM-DDTHH:mm:ssZ"
 		display: "dd, DD.MM.YYYY HH:mm:ss"
 		display_short: "DD.MM.YYYY HH:mm:ss"
+		display_attribute: "date-time-seconds"
+		display_short_attribute: "date-time-seconds-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
@@ -67,6 +71,8 @@ DateTimeFormats["de-DE"] =
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
+		display_attribute: "date"
+		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
 		# digi_clock: false
