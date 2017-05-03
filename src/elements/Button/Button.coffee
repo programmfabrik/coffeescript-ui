@@ -420,54 +420,23 @@ class CUI.Button extends CUI.DOM
 				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
 			return
 
-		do_click = =>
-			if ev.isImmediatePropagationStopped()
-				remove_click_class()
-				return
-
-			Events.trigger
-				type: "cui-button-click"
-				node: @
-				info:
-					event: ev
-
-			if ev.isImmediatePropagationStopped() or not @_onClick
-				remove_click_class()
-				return
-
-			CUI.decide(@_onClick.call(@, ev, @))
-			.always =>
-				remove_click_class()
+		if ev.isImmediatePropagationStopped()
+			remove_click_class()
 			return
 
-		if @_onClick and @_confirm_on_click and not ev.ctrlKey()
-			btns = []
+		Events.trigger
+			type: "cui-button-click"
+			node: @
+			info:
+				event: ev
 
-			if not isEmpty(CUI.defaults.class.Button.defaults.confirm_cancel)
-				btns.push
-					text: CUI.defaults.class.Button.defaults.confirm_cancel
-					onClick: =>
-						dialog.destroy()
-						remove_click_class()
+		if ev.isImmediatePropagationStopped() or not @_onClick
+			remove_click_class()
+			return
 
-			btns.push
-				text: CUI.defaults.class.Button.defaults.confirm_ok
-				onClick: =>
-					dialog.destroy()
-					do_click()
-
-			dialog = new CUI.ConfirmationDialog
-				text: @_confirm_on_click
-				icon: CUI.defaults.class.Button.defaults.confirm_icon
-				title: CUI.defaults.class.Button.defaults.confirm_title
-				header_right:
-					icon: "close"
-					onClick: ->
-						dialog.destroy()
-				buttons: btns
-			dialog.show()
-		else
-			do_click()
+		CUI.decide(@_onClick.call(@, ev, @))
+		.always =>
+			remove_click_class()
 		@
 
 	initOpts: ->
@@ -487,8 +456,6 @@ class CUI.Button extends CUI.DOM
 				check: Boolean
 			onClick:
 				check: Function
-			confirm_on_click:
-				check: String
 			click_type:
 				default: "click" # "touchend"
 				mandatory: true
