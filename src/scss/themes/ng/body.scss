@@ -3222,7 +3222,8 @@ a[role="button"].cui-button-appearance-link {
 						> .cui-lv-tr {
 							> .cui-lv-td {
 								> .cui-tree-node {
-									> .cui-tree-node-handle {
+									> .cui-tree-node-handle,
+									> .cui-tree-node-content {
 										height: 24px;
 									}
 								}
