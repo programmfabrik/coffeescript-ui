@@ -89,6 +89,8 @@ DateTimeFormats["de-DE"] =
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
 		display_short: "MM.YYYY"
+		display_attribute: "year-month"
+		display_short_attribute: "year-month-short"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
@@ -101,6 +103,8 @@ DateTimeFormats["de-DE"] =
 		invalid: "Datum ungültig"
 		display: "YYYY"
 		display_short: "YYYY"
+		display_attribute: "year"
+		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
 		# digi_clock: false
@@ -127,6 +131,8 @@ DateTimeFormats["it-IT"] =
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
+		display_attribute: "date-time"
+		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
@@ -151,6 +157,8 @@ DateTimeFormats["it-IT"] =
 		store: "YYYY-MM-DDTHH:mm:ssZ"
 		display: "dd, DD.MM.YYYY HH:mm:ss"
 		display_short: "DD.MM.YYYY HH:mm:ss"
+		display_attribute: "date-time-seconds"
+		display_short_attribute: "date-time-seconds-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
@@ -168,6 +176,8 @@ DateTimeFormats["it-IT"] =
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
+		display_attribute: "date"
+		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
 		# digi_clock: false
@@ -184,6 +194,8 @@ DateTimeFormats["it-IT"] =
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
 		display_short: "MM.YYYY"
+		display_attribute: "year-month"
+		display_short_attribute: "year-month-short"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
@@ -196,6 +208,8 @@ DateTimeFormats["it-IT"] =
 		invalid: "Datum ungültig"
 		display: "YYYY"
 		display_short: "YYYY"
+		display_attribute: "year"
+		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
 		# digi_clock: false
@@ -222,6 +236,8 @@ DateTimeFormats["es-ES"] =
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
+		display_attribute: "date-time"
+		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
@@ -246,6 +262,8 @@ DateTimeFormats["es-ES"] =
 		store: "YYYY-MM-DDTHH:mm:ssZ"
 		display: "dd, DD.MM.YYYY HH:mm:ss"
 		display_short: "DD.MM.YYYY HH:mm:ss"
+		display_attribute: "date-time-seconds"
+		display_short_attribute: "date-time-seconds-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
@@ -263,6 +281,8 @@ DateTimeFormats["es-ES"] =
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
+		display_attribute: "date"
+		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
 		# digi_clock: false
@@ -279,6 +299,8 @@ DateTimeFormats["es-ES"] =
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
 		display_short: "MM.YYYY"
+		display_attribute: "year-month"
+		display_short_attribute: "year-month-short"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
@@ -291,6 +313,8 @@ DateTimeFormats["es-ES"] =
 		invalid: "Datum ungültig"
 		display: "YYYY"
 		display_short: "YYYY"
+		display_attribute: "year"
+		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
 		# digi_clock: false
@@ -319,6 +343,8 @@ DateTimeFormats["en-US"] =
 		input: "MM/DD/YYYY HH:mm"
 		display: "dd, MM/DD/YYYY HH:mm"
 		display_short: "MM/DD/YYYY HH:mm"
+		display_attribute: "date-time"
+		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
@@ -343,6 +369,8 @@ DateTimeFormats["en-US"] =
 		input: "MM/DD/YYYY HH:mm:ss"
 		display: "dd, MM/DD/YYYY HH:mm:ss"
 		display_short: "MM/DD/YYYY HH:mm:ss"
+		display_attribute: "date-time-seconds"
+		display_short_attribute: "date-time-seconds-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_am_pm: true
@@ -361,6 +389,8 @@ DateTimeFormats["en-US"] =
 		invalid: "Invalid date"
 		display: "dd, MM/DD/YYYY"
 		display_short: "MM/DD/YYYY"
+		display_attribute: "date"
+		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
 		# digi_clock: false
@@ -377,6 +407,8 @@ DateTimeFormats["en-US"] =
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
 		display_short: "MM/YYYY"
+		display_attribute: "year-month"
+		display_short_attribute: "year-month-short"
 		type: "year_month"
 		# digi_clock: false
 		clock: false
@@ -389,6 +421,8 @@ DateTimeFormats["en-US"] =
 		invalid: "Invalid date"
 		display: "YYYY"
 		display_short: "YYYY"
+		display_attribute: "year"
+		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
 		# digi_clock: false
