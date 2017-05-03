@@ -734,11 +734,19 @@ li > div {
 
 // Data Table
 .cui-data-table {
-	border: 1px solid $border;
 	flex-shrink: 1;
+	display: inline-block;
+	
+	&.cui-maximize-horizontal {
+		display: block;
+	}
 
 	> .cui-vertical-layout-center {
 		flex-shrink: 1;
+	}
+
+	> .cui-list-view {
+		border: 1px solid $border;
 	}
 
 	.cui-pane-footer {
@@ -1649,7 +1657,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-buttonbar {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	// justify-content: space-between; CONFLICT: looks bad sometimes
 
 	// > *:not(:last-child) {
 	// 	margin-right: $gap;
@@ -2037,7 +2045,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-table {
 		&.cui-form-table-has-not-left-column {
 			> .cui-tr > .cui-form-value > .cui-data-field {
-				&.cui-data-table {
+				&.cui-data-table > .cui-list-view {
 					border: none;
 				}
 
@@ -2791,8 +2799,12 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view {
 	flex-shrink: 1;
 	min-height: 0;
-	display: flex;
+	display: inline-flex;
 	flex-direction: column;
+	
+	&.cui-maximize-horizontal {
+		display: flex;
+	}
 
 	.cui-label-size-normal {
 		line-height: $table-data-height - $table-data-padding*2;
@@ -2890,11 +2902,6 @@ a[role="button"].cui-button-appearance-link {
 		// disable grow on last cell
 		~ .cui-lv-td:last-child {
 			flex-grow: 0;
-		}
-
-		// except when the max cell is manually sized
-		&.cui-lv-td--manually-sized ~ .cui-lv-td:last-child {
-			flex-grow: 1;
 		}
 	}
 
@@ -4060,12 +4067,24 @@ a[role="button"].cui-button-appearance-link {
 		border-bottom-right-radius: 0;
 	}
 
-	&[data-cui-date-time-format="dd-DD-MM-YYYY-HH-mm"] .cui-input {
-		min-width: 206px;
+	/*
+	
+	date: "dd, DD.MM.YYYY"
+	date-short: "DD.MM.YYYY"
+	date-time: "dd, DD.MM.YYYY HH:mm"
+	date-time-short = "DD.MM.YYYY HH:mm"
+	date-time-seconds: "dd, DD.MM.YYYY HH:mm:ss"
+	date-time-seconds-short: "DD.MM.YYYY HH:mm:ss"
+
+	*/
+
+	&[data-cui-date-time-format="date-time"] .cui-input,
+	&[data-cui-date-time-format="date-time-seconds-short"] .cui-input {
+		min-width: 150px;
 	}
 
-	&[data-cui-date-time-format="DD-MM-YYYY-HH-mm"] .cui-input {
-		min-width: 130px;
+	&[data-cui-date-time-format="date-time-seconds"] .cui-input {
+		min-width: 175px;
 	}
 }
 
@@ -4599,16 +4618,14 @@ a[role="button"].cui-button-appearance-link {
 		font-weight: bold;
 	}
 
-	&.cui-form-block {
+	&.cui-form-block--has-checkbox {
 		> .cui-block-header {
 			font-size: inherit;
 			font-weight: inherit;
 		}
 
-		&--has-checkbox {
-			> .cui-block-content {
-				margin-left: 17px;
-			}
+		> .cui-block-content {
+			margin-left: 17px;
 		}
 	}
 }
