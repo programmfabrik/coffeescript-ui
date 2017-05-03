@@ -3212,40 +3212,39 @@ a[role="button"].cui-button-appearance-link {
 // Position tree-node- and drag-handle lower
 // because input fields make the rows higher
 // and make the filler higher
-.cui-lv--has-datafields {
+.cui-lv--has-datafields {	
 	// its sick.. but the only known way to make sure that it doesn't affect nested elements
 	> .cui-vertical-layout-center {
 		> .cui-list-view-grid {
-			> .cui-list-view-grid-inner-bottom {
-				> .cui-list-view-grid-quadrant {
-					> .cui-lv-tr-outer {
-						> .cui-lv-tr {
-							> .cui-lv-td {
-								> .cui-tree-node {
-									> .cui-tree-node-handle {
-										height: 24px;
-									}
+			> .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant,
+			> .cui-list-view-grid-quadrant {
+				> .cui-lv-tr-outer {
+					> .cui-lv-tr {
+						> .cui-lv-td {
+							> .cui-tree-node {
+								> .cui-tree-node-handle {
+									height: 24px;
 								}
+							}
 
-								> .cui-label {
-									padding-top: 3px;
-									padding-bottom: 3px;
-								}
+							> .cui-label {
+								padding-top: 3px;
+								padding-bottom: 3px;
+							}
 
-								> .cui-drag-handle-row {
-									margin-top: 7px;
-								}
+							> .cui-drag-handle-row {
+								margin-top: 7px;
+							}
 
-								&.cui-lv-row-move-handle-column {
-									padding-top: $table-data-padding;
-									padding-bottom: $table-data-padding;
-								}
+							&.cui-lv-row-move-handle-column {
+								padding-top: $table-data-padding;
+								padding-bottom: $table-data-padding;
 							}
 						}
 					}
-					> .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
-						background-size: 100% 64px;
-					}
+				}
+				> .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
+					background-size: 100% 64px;
 				}
 			}
 		}
