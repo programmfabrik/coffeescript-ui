@@ -2887,8 +2887,14 @@ a[role="button"].cui-button-appearance-link {
 	&-max {
 		flex-grow: 1;
 
+		// disable grow on last cell
 		~ .cui-lv-td:last-child {
 			flex-grow: 0;
+		}
+
+		// except when the max cell is manually sized
+		&.cui-lv-td--manually-sized ~ .cui-lv-td:last-child {
+			flex-grow: 1;
 		}
 	}
 
@@ -3050,7 +3056,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-grid-quadrant-3 {
 	.cui-lv-tr-outer {
 		&:nth-child(even) {
-			> .cui-lv-tr {
+			> .cui-lv-tr > .cui-lv-td {
 				background: $zebra-color;
 			}
 
@@ -3089,7 +3095,7 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-selected:nth-child(even),
 	&:focus,
 	&:focus:nth-child(even) {
-		> .cui-lv-tr {
+		> .cui-lv-tr > .cui-lv-td {
 			background: $row-highlight;
 		}
 
@@ -3147,7 +3153,7 @@ a[role="button"].cui-button-appearance-link {
 	flex: 1 1 auto;
 	display: flex;
 
-	> .cui-lv-tr {
+	> .cui-lv-tr > .cui-lv-td {
 		border-style: none;
 		background: linear-gradient($zebra-color 50%, white 50%);
 		background-size: 100% ($td-height + 2*$table-data-padding)*2;
@@ -3162,13 +3168,13 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer > .cui-lv-tr {
+.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
 	background-image: linear-gradient(white 50%, $zebra-color 50%);
 }
 
 .cui-data-table {
 	.cui-lv-tr-fill-outer {
-		> .cui-lv-tr {
+		> .cui-lv-tr > .cui-lv-td {
 			background-size: 100% $table-data-height*2;
 		}
 	}
@@ -3225,7 +3231,7 @@ a[role="button"].cui-button-appearance-link {
 							}
 						}
 					}
-					> .cui-lv-tr-fill-outer > .cui-lv-tr {
+					> .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
 						background-size: 100% 64px;
 					}
 				}
