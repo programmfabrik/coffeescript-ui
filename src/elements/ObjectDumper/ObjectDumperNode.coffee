@@ -86,6 +86,9 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		else if data == false
 			info.cls = "boolean"
 			info.text = "false"
+		else if typeof(data) == "number" and isNaN(data)
+			info.cls = "NaN"
+			info.text = "NaN"
 		else if isNumber(data)
 			info.cls = "number"
 			info.text = ""+data
