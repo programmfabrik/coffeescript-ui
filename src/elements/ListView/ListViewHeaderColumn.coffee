@@ -11,7 +11,7 @@ class ListViewHeaderColumn extends ListViewColumn
 		super()
 
 		@removeOpt("text")
-		@removeOpt("element")
+		# @removeOpt("element")
 
 		@addOpts
 			spacer:
@@ -67,8 +67,10 @@ class ListViewHeaderColumn extends ListViewColumn
 		else
 			arr = []
 
-		if @__label
-			arr.push(@__label.DOM)
+		if @_element
+			arr.push(@_element)
+		else if @__label
+			arr.push(@__label)
 
 		arr
 
