@@ -359,9 +359,6 @@ class CUI.Button extends CUI.DOM
 				if window.globalDrag
 					return
 
-				if not CUI.__ng__
-					@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
-
 				@getTooltip()?.hideTimeout(ev)
 
 				if @_menu_on_hover
@@ -412,18 +409,6 @@ class CUI.Button extends CUI.DOM
 		if ev.isImmediatePropagationStopped()
 			return
 
-		if not CUI.__ng__
-			@addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
-
-		remove_click_class = =>
-			if not CUI.__ng__
-				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
-			return
-
-		if ev.isImmediatePropagationStopped()
-			remove_click_class()
-			return
-
 		Events.trigger
 			type: "cui-button-click"
 			node: @
@@ -431,13 +416,9 @@ class CUI.Button extends CUI.DOM
 				event: ev
 
 		if ev.isImmediatePropagationStopped() or not @_onClick
-			remove_click_class()
 			return
 
-		CUI.decide(@_onClick.call(@, ev, @))
-		.always =>
-			remove_click_class()
-		@
+		@_onClick.call(@, ev, @)
 
 	initOpts: ->
 		super()
