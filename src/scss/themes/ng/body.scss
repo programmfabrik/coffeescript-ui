@@ -3290,6 +3290,7 @@ a[role="button"].cui-button-appearance-link {
 	flex: 1 1 auto;
 	min-width: 0;
 	flex-wrap: wrap;
+	min-width: 50px; // prevent them from turning into scrabble when several are unfolded
 
 	.cui-label {
 		min-width: 0;
