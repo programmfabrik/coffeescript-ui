@@ -25,6 +25,8 @@ class CUI.ConfirmationDialog extends CUI.Modal
 				mandatory: true
 				default: false
 				check: Boolean
+			markdown_opts:
+				check: "PlainObject"
 			html:
 				check: String
 			content:
@@ -59,7 +61,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			@addClass("cui-confirmation-dialog--no-title")
 
 		if not isEmpty(@_text)
-			@__label = c = new MultilineLabel(markdown: @_markdown, text: @_text, icon: @_text_icon)
+			@__label = c = new MultilineLabel(markdown: @_markdown, markdown_opts: @_markdown_opts, text: @_text, icon: @_text_icon)
 		else if not isEmpty(@_html)
 			@__label = c = new MultilineLabel(content: @_html)
 		else
@@ -84,8 +86,8 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		@__label?.setText(txt)
 		@
 
-	setText: (text, markdown = @_markdown) ->
-		@__label = new MultilineLabel(markdown: markdown, text: text, icon: @_text_icon)
+	setText: (text, markdown = @_markdown, markdown_opts = @_markdown_opts) ->
+		@__label = new MultilineLabel(markdown: markdown, markdown_opts: markdown_opts, text: text, icon: @_text_icon)
 		@getPane().replace(@__label, "content")
 
 	getButtons: ->

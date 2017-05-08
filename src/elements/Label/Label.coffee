@@ -166,7 +166,8 @@ class CUI.Label extends CUI.DOM
 
 		if @_markdown_opts
 			@__markdown_opts = copyObject(CUI.defaults.marked_opts, false)
-			CUI.mergeMap(@__markdown_opts, @_markdown_opts)
+			for k, v of @_markdown_opts
+				@__markdown_opts[k] = v
 		else
 			@__markdown_opts = CUI.defaults.marked_opts
 
