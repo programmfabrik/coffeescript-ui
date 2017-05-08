@@ -3722,9 +3722,13 @@ a[role="button"].cui-button-appearance-link {
 	// CONFLICT: kills the spacing when the label is multi-line
 	// vertical-align: middle;
 
-	.cui-checkbox {
-		// padding-top: 2px; // nudge down a bit to align with label
+	> .cui-options {
+		margin: 2px 0; // align with label
 		// CONFLICT: can't do this because it makes the checkbox 26px high
+		
+		.cui-options-center {
+			min-height: 0;
+		}
 	}
 
 	> .cui-data-field {
