@@ -4069,6 +4069,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-input {
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
+		min-width: 90px; // date-short
 	}
 
 	/*
@@ -4081,6 +4082,14 @@ a[role="button"].cui-button-appearance-link {
 	date-time-seconds-short: "DD.MM.YYYY HH:mm:ss"
 
 	*/
+
+	&[data-cui-date-time-format="date"] .cui-input {
+		min-width: 112px;
+	}
+
+	&[data-cui-date-time-format="date-time-short"] .cui-input {
+		min-width: 129px;
+	}
 
 	&[data-cui-date-time-format="date-time"] .cui-input,
 	&[data-cui-date-time-format="date-time-seconds-short"] .cui-input {
