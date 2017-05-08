@@ -54,13 +54,33 @@ class CUI.Layout extends CUI.DOM
 		@initDefaultPanes()
 		super()
 
+		@maximizeReadOpts()
+
+		if @_absolute
+			assert(@__maximize, "new "+@__cls, "opts.absolute needs opts.maximize to be set.", opts: @opts)
+		@
+
+
+	maximizeAddClasses: ->
+		if @__maximize
+			@addClass("cui-maximize")
+
+		if @__maximize_horizontal
+			@addClass("cui-maximize-horizontal")
+
+		if @__maximize_vertical
+			@addClass("cui-maximize-vertical")
+
+		@
+
+	maximizeReadOpts: ->
 		if isNull(@_maximize) and
 			isNull(@_maximize_horizontal) and
 			isNull(@_maximize_vertical)
 				@_maximize = true
 
 		if @_maximize
-			assert(not @_maximize_horizontal and not @_maximize_vertical, "new Layout", "opts.maximize cannot be set together with opts.maximize_horizontal or opts.maximize_vertical", opts: @opts)
+			assert(not @_maximize_horizontal and not @_maximize_vertical, "new "+getObjectClass(@), "opts.maximize cannot be set together with opts.maximize_horizontal or opts.maximize_vertical", opts: @opts)
 			@__maximize_horizontal = true
 			@__maximize_vertical = true
 		else
@@ -73,10 +93,7 @@ class CUI.Layout extends CUI.DOM
 		if @__maximize_vertical and @__maximize_horizontal
 			@__maximize = true
 
-		if @_absolute
-			assert(@__maximize, "new "+@__cls, "opts.absolute needs opts.maximize to be set.", opts: @opts)
 		@
-
 
 	init: ->
 		@__init()
@@ -103,14 +120,7 @@ class CUI.Layout extends CUI.DOM
 
 		@registerTemplate(@__layout)
 
-		if @__maximize
-			@addClass("cui-maximize")
-
-		if @__maximize_horizontal
-			@addClass("cui-maximize-horizontal")
-
-		if @__maximize_vertical
-			@addClass("cui-maximize-vertical")
+		@maximizeAddClasses()
 
 		@addClass(@getMapPrefix())
 

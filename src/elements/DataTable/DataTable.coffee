@@ -8,7 +8,7 @@
 class CUI.DataTable extends CUI.DataFieldInput
 	constructor: (@opts) ->
 		super(@opts)
-		@addClass("cui-padding-reset")
+		Layout::maximizeAddClasses.call(@)
 
 	@defaults:
 		plus_button_tooltip: null
@@ -53,6 +53,10 @@ class CUI.DataTable extends CUI.DataFieldInput
 				default: []
 				check: (v) ->
 					CUI.isArray(v)
+
+	readOpts: ->
+		super()
+		Layout::maximizeReadOpts.call(@)
 
 	getFieldList: ->
 		@__fieldList

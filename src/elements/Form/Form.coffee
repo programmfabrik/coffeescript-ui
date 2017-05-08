@@ -479,14 +479,12 @@ class CUI.Form extends CUI.DataField
 			if name
 				classes.push("cui-form-field-name--"+name)
 
-			if field instanceof Checkbox
-				classes.push("cui-form-field-type--checkbox")
-
-			if field instanceof Input
-				classes.push("cui-form-field-type--input")
-
 			if field instanceof Select
 				classes.push("cui-form-field-type--select")
+			else if field instanceof Checkbox
+				classes.push("cui-form-field-type--checkbox")
+			else if field instanceof Input
+				classes.push("cui-form-field-type--input")
 
 			if table_has_left
 				tr = CUI.DOM.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
