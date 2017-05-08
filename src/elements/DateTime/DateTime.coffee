@@ -273,17 +273,18 @@ class CUI.DateTime extends CUI.Input
 	format: (_s, type="display", output_type=null) ->
 		assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
 
-		s = _s.trim()
-
-		if isEmpty(s)
-			return null
-
-		if moment.isMoment(s)
-			mom = s
+		if moment.isMoment(_s)
+			mom = _s
 		else
+			s = _s.trim()
+
+			if isEmpty(s)
+				return null
+
 			mom = @parse(s, @__input_formats_known)
-			if mom.isValid() and isNull(output_type)
-				output_type = @getCurrentFormat().type
+
+		if mom.isValid() and isNull(output_type)
+			output_type = @getCurrentFormat().type
 
 		if not mom.isValid()
 			formats_tried = []
