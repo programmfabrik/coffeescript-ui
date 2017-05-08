@@ -154,7 +154,7 @@ $popover-hint-background: hsl(205,20%,30%);
   }
 }
 
-%clickable {
+@mixin clickable {
   cursor: pointer;
 	-webkit-user-select: none;
 	    -ms-user-select: none;

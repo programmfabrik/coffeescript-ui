@@ -3128,7 +3128,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-list-view-row-selectable {
-	@extend %clickable;
+	@include clickable;
 }
 
 .cui-lv-row-move-handle-column {
