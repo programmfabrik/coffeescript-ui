@@ -128,6 +128,8 @@ class CUI.Label extends CUI.DOM
 				mandatory: true
 				default: false
 				check: Boolean
+			markdown_opts:
+				check: "PlainObject"
 			tooltip:
 				check: "PlainObject"
 			group:
@@ -162,6 +164,12 @@ class CUI.Label extends CUI.DOM
 		@__currentText = null
 		assert(xor(isNull(@_text), isNull(@_content)), "new Label", "opts.text and opts.content cannot both be set.", opts: @opts)
 
+		if @_markdown_opts
+			@__markdown_opts = copyObject(CUI.defaults.marked_opts, false)
+			CUI.mergeMap(@__markdown_opts, @_markdown_opts)
+		else
+			@__markdown_opts = CUI.defaults.marked_opts
+
 		if @_manage_overflow
 			assert(@_multiline, "new Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
 		@
@@ -170,7 +178,7 @@ class CUI.Label extends CUI.DOM
 		if isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.DOM.htmlToNodes(window.marked(@__currentText, CUI.defaults.marked_opts)))
+			@setContent(CUI.DOM.htmlToNodes(window.marked(@__currentText, @__markdown_opts)))
 			@addClass("cui-label-markdown")
 		else
 			@setContent($text(@__currentText))
