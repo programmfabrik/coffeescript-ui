@@ -154,6 +154,14 @@ $popover-hint-background: hsl(205,20%,30%);
   }
 }
 
+%clickable {
+  cursor: pointer;
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+  touch-action: manipulation;
+}
+
 @mixin ellipsis(){
 	white-space: nowrap;
 	overflow: hidden;
