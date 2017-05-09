@@ -3588,14 +3588,6 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-value {
 		width: auto;
 		padding-top: 0;
-
-		.cui-output {
-			font-weight: bold;
-
-			&-empty {
-				font-weight: normal;
-			}
-		}
 	}
 }
 
@@ -3737,6 +3729,7 @@ a[role="button"].cui-button-appearance-link {
 		// word-break: break-all; CONFLICT: creates crossword puzzles in IE11
 		word-wrap: break-word;
 		word-break: break-word;
+		color: $secondary-color;
 	}
 
 	.cui-form-field-type--checkbox > & {
@@ -4717,6 +4710,12 @@ a[role="button"].cui-button-appearance-link {
 	.cui-block-content {
 		padding-left: 0;
 		padding-right: 0;
+	}
+}
+
+.cui-form-block {
+	.cui-block-content {
+		padding-bottom: 0;
 	}
 }
 
