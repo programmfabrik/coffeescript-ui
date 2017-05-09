@@ -1108,12 +1108,15 @@ class CUI.ListView extends CUI.SimplePane
 		listViewRow.addClass((listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
 
 		if @_rowMove
-			if row_i >= @fixedRowsCount + @_rowMoveFixedRows
-				listViewRow.prependColumn(new ListViewColumnRowMoveHandle())
+			if @getDisplayRowIdx(row_i) >= @fixedRowsCount + @_rowMoveFixedRows
+				if listViewRow.getColumns()[0] not instanceof ListViewColumnRowMoveHandle
+					listViewRow.prependColumn(new ListViewColumnRowMoveHandle())
 			else
-				listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
+				if listViewRow.getColumns()[0] not instanceof ListViewColumnRowMoveHandlePlaceholder
+					listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
 		else if @_rowMovePlaceholder
-			listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
+			if listViewRow.getColumns()[0] not instanceof ListViewColumnRowMoveHandlePlaceholder
+				listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
 
 		_cols = listViewRow.getColumns()
 
@@ -1123,7 +1126,7 @@ class CUI.ListView extends CUI.SimplePane
 
 			cell = @__cells[row_i][col_i+colspan_offset]
 
-			assert(cell, "ListView.__appendCells","Cell not found: row: "+row_i+" column: "+(col_i+colspan_offset+1)+". colsCount: "+@colsCount)
+			assert(cell, "ListView.__appendCells", "Cell not found: row: "+row_i+" column: "+(col_i+colspan_offset+1)+". colsCount: "+@colsCount, row: listViewRow)
 
 			if not isNull(node)
 				cell.append(node)

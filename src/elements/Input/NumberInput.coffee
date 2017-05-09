@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class NumberInput extends Input
+class CUI.NumberInput extends CUI.Input
 	initOpts: ->
 		super()
 		@addOpts
@@ -54,6 +54,12 @@ class NumberInput extends Input
 		super()
 		@_checkInput = @__checkInput
 		@_prevent_invalid_input = true
+		@setMin(@_min)
+		@setMax(@_max)
+
+	setMin: (@__min) ->
+
+	setMax: (@__max) ->
 
 	formatValueForDisplay: (value=@getValue(), forInput = false) ->
 		assert(typeof(value) == "number" or value == null, "NumberInput.formatValueForDisplay", "value needs to be Number or null", value: value, type: typeof(value))
@@ -203,15 +209,15 @@ class NumberInput extends Input
 			# CUI.debug "number not matched", number
 			return false
 
-		if not isNull(@_min)
-			if @_min >= 0 and number == "-"
+		if not isNull(@__min)
+			if @__min >= 0 and number == "-"
 				return false
 
-			if number < @_min
+			if number < @__min
 				return false
 
-		if not isNull(@_max)
-			if number > @_max
+		if not isNull(@__max)
+			if number > @__max
 				return false
 
 		if not points.match(/^([0-9]*)$/)
@@ -240,3 +246,5 @@ class NumberInput extends Input
 			null
 		else
 			ni.formatValueForDisplay(v)
+
+NumberInput = CUI.NumberInput

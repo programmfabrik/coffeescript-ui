@@ -53,10 +53,21 @@ class CUI.DataTable extends CUI.DataFieldInput
 				default: []
 				check: (v) ->
 					CUI.isArray(v)
+			chunk_size:
+				default: 0
+				mandatory: true
+				check: (v) ->
+					v >= 0
+
 
 	readOpts: ->
 		super()
+		@__navi_prev = null
+		@__navi_next = null
+		@__offset = 0
 		Layout::maximizeReadOpts.call(@)
+		assert(not (@_chunk_size and @_rowMove), "new DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
+		@
 
 	getFieldList: ->
 		@__fieldList
@@ -102,9 +113,13 @@ class CUI.DataTable extends CUI.DataFieldInput
 			rows: @rows
 
 		@_onNodeAdd?(node)
-		@listView.appendRow(new_node)
-		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
 		@storeValue(copyObject(@rows, true))
+		if @_chunk_size > 0
+			@__offset = Math.floor((@rows.length-1) / @_chunk_size) * @_chunk_size
+			@displayValue()
+		else
+			@listView.appendRow(new_node)
+		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
 		new_node
 
 	render: ->
@@ -175,6 +190,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 						row.remove()
 					@storeValue(copyObject(@rows, true))
 					updateMinusButton()
+					if @_chunk_size > 0
+						@displayValue()
 					return
 
 			buttons.push(@minusButton)
@@ -184,6 +201,52 @@ class CUI.DataTable extends CUI.DataFieldInput
 					@minusButton.disable()
 				else
 					@minusButton.enable()
+
+		if @_chunk_size > 0
+
+			buttons.push
+				onConstruct: (btn) =>
+					@__navi_prev = btn
+				icon: "left"
+				disabled: true
+				group: "navi"
+				onClick: =>
+					@__offset = @__offset - @_chunk_size
+					@displayValue()
+
+			page_data = {}
+
+			load_page = =>
+				@__offset = (page_data.page - 1) * @_chunk_size
+				@displayValue()
+
+			@__navi_input = new CUI.NumberInput
+				group: "navi"
+				placeholder: "henk"
+				data: page_data
+				name: 'page'
+				onBlur: (input) =>
+					input.setValue(null)
+				onDataChanged: =>
+					CUI.debug "input changed to", page_data.page
+					CUI.scheduleCallback
+						ms: 1000
+						call: load_page
+					return
+
+			.start()
+
+			buttons.push(@__navi_input)
+
+			buttons.push
+				onConstruct: (btn) =>
+					@__navi_next = btn
+				icon: "right"
+				disabled: true
+				group: "navi"
+				onClick: =>
+					@__offset = @__offset + @_chunk_size
+					@displayValue()
 
 		if buttons.length
 			footer = new Buttonbar(buttons: buttons)
@@ -196,6 +259,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 			onDeselect: updateMinusButton
 			onRowMove: (display_from_i, display_to_i, after) =>
 				fr = @listView.fixedRowsCount
+				display_from_i = @__offset + display_from_i
+				display_to_i = @__offset + display_to_i
 				moveInArray(display_from_i-fr, display_to_i-fr, @rows, after)
 				Events.trigger
 					type: "data-changed"
@@ -242,10 +307,44 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 		@rows = copyObject(@getValue(), true)
 
+		if @_chunk_size > 0
+			len = @rows.length
+
+			if @__offset >= len
+				@__offset = Math.max(@__offset - @_chunk_size)
+
+			page = Math.floor(@__offset / @_chunk_size)
+			last_page = Math.ceil(len / @_chunk_size)-1
+
+			sep = ' / '
+			placeholder = (page+1)+sep+(last_page+1)
+
+			@__navi_input.setMin(1)
+			@__navi_input.setMax(last_page+1)
+			@__navi_input.setValue(null)
+
+			@__navi_input.setPlaceholder(placeholder)
+			CUI.DOM.setAttribute(@__navi_input.getElement(), "data-max-chars", (""+(last_page+1)).length*2+sep.length)
+
+			if page > 0
+				@__navi_prev.enable()
+			else
+				@__navi_prev.disable()
+
+			if page < last_page
+				@__navi_next.enable()
+			else
+				@__navi_next.disable()
+
 		assert(CUI.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
 
 		if @rows
-			for row, idx in @rows
+			if @_chunk_size > 0
+				rows_sliced = @rows.slice(@__offset, @__offset + @_chunk_size)
+			else
+				rows_sliced = @rows
+
+			for row, idx in rows_sliced
 				node = new DataTableNode
 					dataTable: @
 					data: row
