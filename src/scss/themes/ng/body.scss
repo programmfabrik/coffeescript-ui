@@ -567,7 +567,7 @@ li > div {
 		> .cui-label {
 			// reset padding: 0 $padding; in cui-horizontal-layout-left
 			&:first-child {
-				padding-left: $small-gap;
+				padding-left: $padding;
 			}
 
 			&:last-child {
@@ -581,7 +581,7 @@ li > div {
 
 		> .cui-label {
 			&:last-child {
-				padding-right: $small-gap;
+				padding-right: $padding;
 			}
 		}
 	}
@@ -684,6 +684,14 @@ li > div {
     cursor: default;
     display: flex;
     align-items: center;
+    
+    &-size-big {
+    	font-size: 16px;
+    }
+    
+    &-size-bigger {
+    	font-size: 18px;
+    }
 	}
 
 	.cui-horizontal-layout-left {
@@ -720,6 +728,14 @@ li > div {
 	.cui-label {
 		color: $secondary-color;
 		font-size: 12px;
+		
+		&-size-big {
+			font-size: 16px;
+		}
+		
+		&-size-bigger {
+			font-size: 18px;
+		}
 	}
 
 	.cui-button-size-big .cui-button-visual {
@@ -1432,12 +1448,21 @@ a[role="button"].cui-button-appearance-link {
 		line-height: 14px;
 	}
 
-	&-size-big {
+	&-size-big,
+	&-size-bigger {
 		.cui-label-icon {
 			.fa {
-				font-size: 21px;
+				font-size: inherit;
 			}
 		}
+	}
+
+	&-size-big {
+		font-size: 16px;
+	}
+
+	&-size-bigger {
+		font-size: 18px;
 	}
 
 	&-icon:not(:empty) + .cui-label-content:not(:empty) {
