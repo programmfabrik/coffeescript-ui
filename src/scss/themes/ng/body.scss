@@ -686,11 +686,11 @@ li > div {
     align-items: center;
     
     &-size-big {
-    	font-size: 16px;
+    	font-size: $label-big;
     }
     
     &-size-bigger {
-    	font-size: 18px;
+    	font-size: $label-bigger;
     }
 	}
 
@@ -728,14 +728,14 @@ li > div {
 	.cui-label {
 		color: $secondary-color;
 		font-size: 12px;
-		
-		&-size-big {
-			font-size: 16px;
-		}
-		
-		&-size-bigger {
-			font-size: 18px;
-		}
+    
+    &-size-big {
+    	font-size: $label-big;
+    }
+    
+    &-size-bigger {
+    	font-size: $label-bigger;
+    }
 	}
 
 	.cui-button-size-big .cui-button-visual {
@@ -1458,11 +1458,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-size-big {
-		font-size: 16px;
+		font-size: $label-big;
 	}
-
+	
 	&-size-bigger {
-		font-size: 18px;
+		font-size: $label-bigger;
 	}
 
 	&-icon:not(:empty) + .cui-label-content:not(:empty) {

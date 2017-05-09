@@ -67,6 +67,9 @@ $secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
+$label-big: 16px;
+$label-bigger: 18px;
+
 $highlight-color: map-get($highlight, 'dark');
 $row-highlight: map-get($highlight, 'light');
 $on-highlight-color: white;
