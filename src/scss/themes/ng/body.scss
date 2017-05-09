@@ -750,6 +750,16 @@ li > div {
 		display: block;
 	}
 
+	&.cui-maximize-vertical {
+		display: flex;
+	}
+
+	&.cui-maximize {
+		> .cui-list-view {
+			border: none;
+		}
+	}
+
 	> .cui-vertical-layout-center {
 		flex-shrink: 1;
 	}
