@@ -276,7 +276,7 @@ class CUI.DateTime extends CUI.Input
 		if moment.isMoment(_s)
 			mom = _s
 		else
-			s = _s.trim()
+			s = _s?.trim()
 
 			if isEmpty(s)
 				return null
