@@ -349,7 +349,10 @@ class CUI.DataField extends CUI.DOM
 		@__data
 
 	hasData: ->
-		not isEmpty(@_name) and @__data
+		if not isEmpty(@_name) and @__data
+			true
+		else
+			false
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]
@@ -527,7 +530,6 @@ class CUI.DataField extends CUI.DOM
 		if isUndef(undo = @__data._undo[@_name])
 			undo = @__data._undo[@_name] = {}
 		undo
-
 
 	# stores a user changed value and
 	# manages old and new values

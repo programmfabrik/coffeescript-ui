@@ -357,7 +357,8 @@ class CUI.Input extends CUI.DataFieldInput
 					@checkInput()
 					@moveCursor(ev)
 					@showCursor(ev)
-					@storeValue(@__input0.value)
+					if @getValueForStore(@__input0.value) != @getValue()
+						@storeValue(@__input0.value)
 				return
 
 		Events.listen
@@ -406,6 +407,12 @@ class CUI.Input extends CUI.DataFieldInput
 			@showCursor(ev)
 		,
 			0
+
+	getValueForStore: (value) ->
+		value
+
+	storeValue: (value, flags={}) ->
+		super(@getValueForStore(value), flags)
 
 	handleSelectionChange: ->
 		@_onSelectionchange?.apply(@, arguments)
@@ -672,6 +679,7 @@ class CUI.Input extends CUI.DataFieldInput
 		@setSelection(start: start, end: end)
 
 	setValue: (v, flags = {}) ->
+
 		if not @hasData()
 			@__input0?.value = v
 			@setContentSize()

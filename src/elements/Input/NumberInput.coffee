@@ -121,9 +121,6 @@ class CUI.NumberInput extends CUI.Input
 
 		return number
 
-	storeValue: (value, flags={}) ->
-		super(@getValueForStore(value), flags)
-
 	getDefaultValue: ->
 		null
 
