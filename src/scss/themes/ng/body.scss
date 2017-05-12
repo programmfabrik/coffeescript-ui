@@ -681,17 +681,21 @@ li > div {
 	.cui-label {
 		font-size: 14px;
 		height: 100%;
-    cursor: default;
-    display: flex;
-    align-items: center;
-    
-    &-size-big {
-    	font-size: $label-big;
-    }
-    
-    &-size-bigger {
-    	font-size: $label-bigger;
-    }
+		cursor: default;
+		display: flex;
+		align-items: center;
+		
+		&-size-mini {
+			font-size: $label-mini;
+		}
+		
+		&-size-big {
+			font-size: $label-big;
+		}
+		
+		&-size-bigger {
+			font-size: $label-bigger;
+		}
 	}
 
 	.cui-horizontal-layout-left {
@@ -728,14 +732,18 @@ li > div {
 	.cui-label {
 		color: $secondary-color;
 		font-size: 12px;
-    
-    &-size-big {
-    	font-size: $label-big;
-    }
-    
-    &-size-bigger {
-    	font-size: $label-bigger;
-    }
+		
+		&-size-mini {
+			font-size: $label-mini;
+		}
+		
+		&-size-big {
+			font-size: $label-big;
+		}
+		
+		&-size-bigger {
+			font-size: $label-bigger;
+		}
 	}
 
 	.cui-button-size-big .cui-button-visual {
@@ -1451,7 +1459,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-size-mini {
-		font-size: 11px;
+		font-size: $label-mini;
 		line-height: 14px;
 	}
 
