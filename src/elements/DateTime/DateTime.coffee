@@ -44,6 +44,10 @@ class CUI.DateTime extends CUI.Input
 				mandatory: true
 				default: 2499
 				check: "Integer"
+			store_invalid:
+				mandatory: true
+				default: false
+				check: Boolean
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
@@ -426,6 +430,8 @@ class CUI.DateTime extends CUI.Input
 		mom = @parse(value)
 		if mom.isValid()
 			value = mom.format(@__input_format.store)
+		else if @_store_invalid and value.trim().length > 0
+			value = 'invalid'
 		else
 			value = null
 		super(value, flags)
