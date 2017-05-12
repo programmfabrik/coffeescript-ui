@@ -1209,6 +1209,18 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
+	&--multiline {
+		.cui-button-checkbox {
+			white-space: initial;
+			
+			.cui-button-center {
+				span {
+					white-space: normal;
+				}
+			}
+		}
+	}
 }
 
 .cui-button-checkbox {
@@ -1216,7 +1228,6 @@ a[role="button"].cui-button-appearance-link {
 	flex-direction: row;
 	cursor: pointer;
 	line-height: 18px;
-	white-space: initial;
 	align-self: flex-start;
 	max-width: 100%;
 	padding: 3px 0;
@@ -1312,10 +1323,6 @@ a[role="button"].cui-button-appearance-link {
 		flex: 1 1 auto;
 		padding-right: 5px;
 		justify-content: flex-start;
-
-		span {
-			white-space: normal;
-		}
 	}
 
 	&[role="radio"] {

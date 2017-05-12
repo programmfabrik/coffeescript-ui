@@ -19,6 +19,9 @@ class Checkbox extends DataFieldInput
 				default: false
 			text:
 				check: String
+			multiline:
+				default: false
+				check: Boolean
 			content:
 				check: (v) ->
 					isContent(v) or isString(v)
@@ -45,6 +48,12 @@ class Checkbox extends DataFieldInput
 			icon_inactive:
 				check: (v) ->
 					v instanceof Icon or isString(v)
+
+	constructor: (@opts={}) ->
+		super(@opts)
+
+		if @_multiline
+			@addClass("cui-checkbox--multiline")
 
 	enable: ->
 		super()
