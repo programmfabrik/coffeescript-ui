@@ -779,6 +779,8 @@ li > div {
 	}
 
 	&.cui-maximize {
+		flex-basis: 0%; // IE 11 correct scrollbar in list-view
+
 		> .cui-list-view {
 			border: none;
 		}
@@ -3102,7 +3104,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-list-view-grid-inner-bottom {
-	flex: 1 1 auto;
+	flex: 1 1 0%; // IE 11 needs 0% basis
 	display: flex;
 	min-height: 0; // FF scroll fix
 }
