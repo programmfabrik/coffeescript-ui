@@ -486,7 +486,7 @@ li > div {
 		.cui-pane-fill-screen-inner {
 			width: 100%;
 			height: 100%;
-			
+
 			> .cui-maximize-vertical.cui-vertical-layout {
 				height: 100%;
 			}
@@ -684,15 +684,15 @@ li > div {
 		cursor: default;
 		display: flex;
 		align-items: center;
-		
+
 		&-size-mini {
 			font-size: $label-mini;
 		}
-		
+
 		&-size-big {
 			font-size: $label-big;
 		}
-		
+
 		&-size-bigger {
 			font-size: $label-bigger;
 		}
@@ -732,15 +732,15 @@ li > div {
 	.cui-label {
 		color: $secondary-color;
 		font-size: 12px;
-		
+
 		&-size-mini {
 			font-size: $label-mini;
 		}
-		
+
 		&-size-big {
 			font-size: $label-big;
 		}
-		
+
 		&-size-bigger {
 			font-size: $label-bigger;
 		}
@@ -769,7 +769,7 @@ li > div {
 .cui-data-table {
 	flex-shrink: 1;
 	display: inline-block;
-	
+
 	&.cui-maximize-horizontal {
 		display: block;
 	}
@@ -1223,7 +1223,7 @@ a[role="button"].cui-button-appearance-link {
 	&--multiline {
 		.cui-button-checkbox {
 			white-space: initial;
-			
+
 			.cui-button-center {
 				span {
 					white-space: normal;
@@ -1477,7 +1477,7 @@ a[role="button"].cui-button-appearance-link {
 	&-size-big {
 		font-size: $label-big;
 	}
-	
+
 	&-size-bigger {
 		font-size: $label-bigger;
 	}
@@ -2862,7 +2862,7 @@ a[role="button"].cui-button-appearance-link {
 	min-height: 0;
 	display: inline-flex;
 	flex-direction: column;
-	
+
 	&.cui-maximize-horizontal {
 		display: flex;
 	}
@@ -3036,7 +3036,7 @@ a[role="button"].cui-button-appearance-link {
 		align-items: flex-end;
 		position: relative;
 		overflow: visible;
-		
+
 		&.cui-lv-td-rotate-90 {
 			overflow: hidden;
 		}
@@ -3273,7 +3273,7 @@ a[role="button"].cui-button-appearance-link {
 // Position tree-node- and drag-handle lower
 // because input fields make the rows higher
 // and make the filler higher
-.cui-lv--has-datafields {	
+.cui-lv--has-datafields {
 	// its sick.. but the only known way to make sure that it doesn't affect nested elements
 	> .cui-vertical-layout-center {
 		> .cui-list-view-grid {
@@ -3772,7 +3772,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-options {
 		margin: 2px 0; // align with label
 		// CONFLICT: can't do this because it makes the checkbox 26px high
-		
+
 		.cui-options-center {
 			min-height: 0;
 		}
@@ -4133,7 +4133,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	/*
-	
+
 	date: "dd, DD.MM.YYYY"
 	date-short: "DD.MM.YYYY"
 	date-time: "dd, DD.MM.YYYY HH:mm"
@@ -5022,4 +5022,45 @@ a[role="button"].cui-button-appearance-link {
 
 [hidden] {
 	display: none !important;
+}
+
+.cui-slider {
+	width: 200px;
+	height: 20px;
+	display: flex;
+	flex-direction: row;
+
+	.cui-slider-track-visual {
+		position: relative;
+		width: 198px;
+		height: 4px;
+		margin-top: 7px;
+		margin-bottom: 7px;
+		background: #c0c0c0;
+	}
+
+	&.cui-slider--sliding .cui-slider-track-visual {
+		background: orange;
+	}
+
+	.cui-slider-track {
+		position: absolute;
+		left: 0px;
+		right: 10px;
+	}
+
+	.cui-slider-handle {
+		position: absolute;
+		top: -3px;
+		width: 10px;
+		height: 10px;
+		background: #3c3838;
+		border-radius: 3px;
+	}
+
+	.cui-slider-text {
+		width: 40px;
+		text-align: center;
+	}
+
 }

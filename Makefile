@@ -134,6 +134,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/DocumentBrowser/NodeMatch.coffee \
 	src/elements/DocumentBrowser/SearchMatch.coffee \
 	src/elements/DocumentBrowser/SearchQuery.coffee \
+	src/elements/Slider/Slider.coffee \
 	src/base/CSVData.coffee
 
 files = $(addsuffix .js, $(coffee_files))
@@ -156,6 +157,7 @@ html_files = \
 	src/elements/Button/ButtonHref.html \
 	src/elements/Button/ButtonHref_ng.html \
 	src/elements/Options/Options.html \
+	src/elements/Slider/Slider.html \
 	src/elements/Button/Buttonbar.html \
 	src/elements/BorderLayout/BorderLayout.html \
 	src/elements/HorizontalLayout/HorizontalLayout.html \

@@ -121,9 +121,6 @@ class CUI.Tooltip extends CUI.LayerPane
 		# console.error "Tooltip.showTimeout ", @getUniqueId(), !!Tooltip.current
 
 		if CUI.Tooltip.current
-			if CUI.Tooltip.current != @
-				CUI.Tooltip.current.hide(ev)
-
 			@show(ev)
 			return CUI.resolvedPromise()
 		else
@@ -139,6 +136,8 @@ class CUI.Tooltip extends CUI.LayerPane
 		super(ev)
 
 	show: (ev) ->
+		if CUI.Tooltip.current and CUI.Tooltip.current != @
+			CUI.Tooltip.current.hide(ev)
 		CUI.Tooltip.current = @
 		if @__static
 			super(ev)
