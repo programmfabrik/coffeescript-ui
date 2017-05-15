@@ -2424,6 +2424,16 @@ a[role="button"].cui-button-appearance-link {
 	.cui-vertical-layout {
 		overflow: visible;
 	}
+
+	.cui-tmpl-item-list-body > .cui-options:last-child {
+		border-top: 1px solid $border;
+		padding-top: 4px;
+		padding-bottom: 4px;
+		
+		.cui-button-checkbox {
+			display: flex;
+		}
+	}
 }
 
 .cui-menu-divider {
