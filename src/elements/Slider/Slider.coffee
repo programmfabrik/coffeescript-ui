@@ -20,6 +20,8 @@ class CUI.Slider extends CUI.DataField
 				check: Function
 			onDrop:
 				check: Function
+			onUpdate:
+				check: Function
 
 	readOpts: ->
 		super()
@@ -52,15 +54,15 @@ class CUI.Slider extends CUI.DataField
 			element: @__handle
 			dragstart: (ev, gd) =>
 				@initDimensions()
-				@addClass('cui-slider--sliding')
+				@addClass('cui-slider--dragging')
 				@__last_diff_x = 0
 				@__start_value = @__value
 			dragstop: =>
 				@setValue(@__start_value)
-				@removeClass('cui-slider--sliding')
+				@removeClass('cui-slider--dragging')
 				@_onDrop?(@)
 			dragend: =>
-				@removeClass('cui-slider--sliding')
+				@removeClass('cui-slider--dragging')
 				@_onDrop?(@)
 			dragging: (ev, gd) =>
 
@@ -77,7 +79,7 @@ class CUI.Slider extends CUI.DataField
 				else
 					use_precision = precision
 
-				console.debug diff_x, precision, precision_factor, use_precision
+				# console.debug diff_x, precision, precision_factor, use_precision
 				@setValue(@__value + (diff_x / use_precision))
 				@_onDragging?(@, @getValue())
 
@@ -89,8 +91,6 @@ class CUI.Slider extends CUI.DataField
 				track_clientX = @__track_dim.clientBoundingRect.left
 				click_clientX = ev.getNativeEvent().clientX
 				@setValue((click_clientX - track_clientX) / @__track_available.width * @__distance)
-				@_onDragging?(@, @getValue())
-				@_onDrop?(@)
 				return
 
 	getValue: ->
@@ -106,6 +106,7 @@ class CUI.Slider extends CUI.DataField
 		v = Math.round(Math.min(Math.max(@_min, _v), @_max))
 		@__value = v
 		super(@__value, flags)
+		@
 
 	getDefaultValue: ->
 		if @_value == undefined
@@ -114,9 +115,9 @@ class CUI.Slider extends CUI.DataField
 			@_value
 
 	displayValue: ->
-		console.debug "display value:", @getValue()
 		percent = @getValue() / @_max * 100
 		CUI.DOM.setStyle(@__handle, left: percent + '%')
+		@_onUpdate?(@, @getValue())
 
 	checkValue: (v, flags) ->
 		if v < @_min or v > @_max
