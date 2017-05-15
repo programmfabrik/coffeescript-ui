@@ -20,7 +20,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			helper:
 				default: "clone"
 				check: (v) ->
-					v == "clone" or isElement(v) or CUI.isFunction(v)
+					v == "clone" or isElement(v) or CUI.isFunction(v) or null
 
 			helper_contain_element:
 				check: (v) ->

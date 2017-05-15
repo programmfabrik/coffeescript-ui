@@ -54,6 +54,7 @@ class CUI.Slider extends CUI.DataField
 
 		new CUI.Draggable
 			element: @__handle
+			helper: null
 			dragstart: (ev, gd) =>
 				@initDimensions()
 				@addClass('cui-slider--dragging')
