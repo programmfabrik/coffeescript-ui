@@ -16,6 +16,8 @@ class CUI.Slider extends CUI.DataField
 				default: 100
 				check: (v) ->
 					isInteger(v)
+			onDragstart:
+				check: Function
 			onDragging:
 				check: Function
 			onDrop:
@@ -57,6 +59,7 @@ class CUI.Slider extends CUI.DataField
 				@addClass('cui-slider--dragging')
 				@__last_diff_x = 0
 				@__start_value = @__value
+				@_onDragstart?(@, @__start_value)
 			dragstop: =>
 				@setValue(@__start_value)
 				@removeClass('cui-slider--dragging')
