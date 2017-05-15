@@ -5067,7 +5067,7 @@ a[role="button"].cui-button-appearance-link {
 		height: 16px;
 		background: $button-background;
 		border: 1px solid $button-border;
-		border-radius: $button-radius;
+		border-radius: 999px;
 	}
 
 	&-text {
