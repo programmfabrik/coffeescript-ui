@@ -1863,8 +1863,8 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-input-has-check-input {
 		&.cui-input-invalid {
 			input {
-				border-color: hsl(0,90%,60%);
-				background: hsla(0,90%,74%, 0.15);
+				border-color: $error-color;
+				background: transparentize($error-color, 0.85);
 			}
 		}
 	}
