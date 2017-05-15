@@ -5035,42 +5035,43 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-slider {
-	width: 200px;
-	height: 20px;
+	height: 18px;
 	display: flex;
-	flex-direction: row;
+	padding: 6px 0;
+	position: relative;
 
-	.cui-slider-track-visual {
-		position: relative;
-		width: 198px;
-		height: 4px;
-		margin-top: 7px;
-		margin-bottom: 7px;
-		background: #c0c0c0;
+	&--dragging {
+		.cui-slider-track-visual {
+			background: hsl(208,10%,89%);
+		}
 	}
 
-	&.cui-slider--dragging .cui-slider-track-visual {
-		background: orange;
+  &-track-visual {
+		width: 100%;
+		background: hsl(208,10%,93%);
+		border: 1px solid $button-border;
+		border-radius: 999px;
 	}
 
-	.cui-slider-track {
+	&-track {
 		position: absolute;
-		left: 0px;
-		right: 10px;
+		left: 0;
+		right: 16px;
+		top: 50%;
 	}
 
-	.cui-slider-handle {
+	&-handle {
 		position: absolute;
-		top: -3px;
-		width: 10px;
-		height: 10px;
-		background: #3c3838;
-		border-radius: 3px;
+		margin-top: -8px;
+		width: 16px;
+		height: 16px;
+		background: $button-background;
+		border: 1px solid $button-border;
+		border-radius: $button-radius;
 	}
 
-	.cui-slider-text {
+	&-text {
 		width: 40px;
 		text-align: center;
 	}
-
 }
