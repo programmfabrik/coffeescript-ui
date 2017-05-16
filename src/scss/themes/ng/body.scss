@@ -3762,7 +3762,8 @@ a[role="button"].cui-button-appearance-link {
 	min-width: $td-width;
 	padding-right: 10px;
 
-	label {
+	label,
+	.cui-label {
 		display: inline-block;
 		margin: 4px 0;
 		// word-break: break-all; CONFLICT: creates crossword puzzles in IE11
