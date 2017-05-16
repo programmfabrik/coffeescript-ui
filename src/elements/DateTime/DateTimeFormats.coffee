@@ -81,6 +81,7 @@ DateTimeFormats["de-DE"] =
 			"D.M.YYYY"
 			"D.MM.YYYY"
 			"DD.M.YYYY"
+			"YYYYMMDD"
 		]
 	,
 		text: "Jahr-Monat"
@@ -186,6 +187,7 @@ DateTimeFormats["it-IT"] =
 			"D.M.YYYY"
 			"D.MM.YYYY"
 			"DD.M.YYYY"
+			"YYYYMMDD"
 		]
 	,
 		text: "Jahr-Monat"
@@ -291,6 +293,7 @@ DateTimeFormats["es-ES"] =
 			"D.M.YYYY"
 			"D.MM.YYYY"
 			"DD.M.YYYY"
+			"YYYYMMDD"
 		]
 	,
 		text: "Jahr-Monat"
@@ -399,6 +402,7 @@ DateTimeFormats["en-US"] =
 			"D.M.YYYY"
 			"D.MM.YYYY"
 			"DD.M.YYYY"
+			"YYYYMMDD"
 		]
 	,
 		text: "Jahr-Monat"
