@@ -945,6 +945,7 @@ li > div {
 	.cui-button-visual {
 	  padding: 0 $padding/2;
 	  height: $button-height;
+	  min-width: 27px;
 	  line-height: $button-height - 2px;
 	  color: $button-color;
 	  background: $button-background;
