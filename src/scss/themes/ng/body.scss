@@ -1338,6 +1338,7 @@ a[role="button"].cui-button-appearance-link {
 	&[role="radio"] {
 		.cui-button-left {
 			padding-top: 2px;
+			padding-right: 4px;
 
 			span,
 			i {
@@ -2427,11 +2428,21 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-tmpl-item-list-body > .cui-options:last-child {
 		border-top: 1px solid $border;
-		padding-top: 4px;
+		padding: 6px 0;
 		margin-top: 4px;
+		margin-bottom: -4px;
+		background: $toolbar-background;
+		font-size: 12px;
 		
 		.cui-button-checkbox {
 			display: flex;
+			
+			.cui-button-visual {
+				min-height: 0;
+				padding: 1px $padding;
+				background: none;
+				color: inherit;
+			}
 		}
 	}
 }
