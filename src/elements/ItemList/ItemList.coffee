@@ -210,9 +210,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 					if item instanceof Button
 						listenButtonClick(item)
 
-						if CUI.__ng__
-							item.removeClass("cui-button-button")
-
 						if item.hasLeft()
 							list_has_button_left = true
 
