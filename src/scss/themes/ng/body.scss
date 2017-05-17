@@ -2933,6 +2933,7 @@ a[role="button"].cui-button-appearance-link {
 	margin-top: -2px;
 	position: absolute;
 	z-index: 4;
+	pointer-events: none !important;
 }
 
 .cui-lv-row-move {

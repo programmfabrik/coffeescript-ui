@@ -275,7 +275,11 @@ class CUI.ListView extends CUI.SimplePane
 		@__fillRowQ3 = CUI.DOM.matchSelector(@grid[0], ".cui-list-view-grid-fills-3")[0]
 
 		@__topQuadrants = $(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-top")[0])
-		@__bottomQuadrants = $(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-bottom")[0])
+
+		if (@fixedColsCount == 0 and @fixedRowsCount == 0 ) # we only have Q3
+			@__bottomQuadrants = @quadrant[3]
+		else
+			@__bottomQuadrants = $(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-bottom")[0])
 
 		@__fillCells = []
 		for col in [0..@colsCount-1] by 1

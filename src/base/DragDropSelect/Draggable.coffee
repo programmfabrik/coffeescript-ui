@@ -542,6 +542,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if helper_contain_element
 			dim_contain = CUI.DOM.getDimensions(helper_contain_element)
 
+			if dim_contain.clientWidth == 0 or dim_contain.clientHeight == 0
+				console.warn('Draggable[position_helper]: Containing element has no dimensions.', helper_contain_element);
+
 			# pos is changed in place
 			Draggable.limitRect pos,
 				min_x: dim_contain.viewportLeft + dim_contain.borderLeftWidth
