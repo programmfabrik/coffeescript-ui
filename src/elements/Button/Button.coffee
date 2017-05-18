@@ -258,10 +258,9 @@ class CUI.Button extends CUI.DOM
 				return
 
 		Events.listen
-			type: ["mousedown"] # , "touchstart"]
+			type: Button.clickTypesPrevent[@_click_type]
 			node: @DOM
 			call: (ev) =>
-				# don't focus element
 				ev.preventDefault()
 				ev.stopPropagation()
 
@@ -929,9 +928,14 @@ class CUI.Button extends CUI.DOM
 			node: @DOM
 
 	@clickTypes:
-		click: ["click"]
-		mouseup: ["mouseup"]
-		dblclick: ["dblclick"]
+		click: ['click']
+		mouseup: ['mouseup']
+		dblclick: ['dblclick']
+
+	@clickTypesPrevent:
+		click: ['dblclick', 'mousedown']
+		mouseup: ['mouseup', 'mousedown']
+		dblclick: ['click', 'mousedown']
 
 
 CUI.defaults.class.Button = CUI.Button
