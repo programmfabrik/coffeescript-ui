@@ -44,12 +44,26 @@ assert = (condition, caller, message, debug_output) ->
 		msg += ": #{message}"
 
 	# msg += "\nCallstack:\n"+stack+"\n"
-	if false and CUI.problem
-		CUI.problem(title: "ASSERT", text: msg)
-	else
-		alert(msg)
+	#
+	switch CUI.defaults.asserts_alert
+		when 'js'
+			alert(msg)
+		when 'cui'
+			CUI.problem(text: msg)
+		else
+			; # ignore 'off' or other values
 
-	throw new Error(msg)
+	if CUI.__in_error
+		console.error("Another assert occurred, cannot throw Error to avoid loop: ", msg)
+		return
+
+	CUI.__in_error = true
+
+	CUI.setTimeout =>
+		CUI.__in_error = false
+
+	throw(new Error(msg))
+
 
 assertImplements = (inst, methods) ->
 	if not CUI.defaults.asserts

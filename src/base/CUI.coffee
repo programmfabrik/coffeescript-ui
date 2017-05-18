@@ -111,6 +111,7 @@ class CUI
 
 		debug: true
 		asserts: true
+		asserts_alert: 'js' # or 'cui' or 'off'
 		class: {}
 
 	@resolvedPromise: ->
