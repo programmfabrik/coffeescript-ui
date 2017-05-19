@@ -976,6 +976,15 @@ li > div {
 	  		background: $button-background;
 	  	}
 	  }
+
+	  &.cui-active,
+	  &.cui-active:active {
+	  	.cui-button-visual {
+	  		color: $button-active-disabled-text;
+	  		background: $button-active;
+	  		border-color: $button-active-border;
+	  	}
+	  }
 	}
 
 	&.cui-button-appearance-important, // removed [role] - makes it too specific

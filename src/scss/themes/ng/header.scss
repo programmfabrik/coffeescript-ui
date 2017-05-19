@@ -86,6 +86,7 @@ $button-active-border: hsl(205,15%,43%);
 $button-active-pressed: darken($button-active, 9%);
 $button-active-pressed-text: darken($button-active-text, 9%);
 $button-active-pressed-border: darken($button-active-pressed, 5%);
+$button-active-disabled-text: lighten($button-active, 17%);
 $button-color: hsl(205,8%,34%);
 $button-border: hsl(205,10%,75%);
 $button-radius: 4px;
