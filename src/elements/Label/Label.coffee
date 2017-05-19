@@ -61,6 +61,9 @@ class CUI.Label extends CUI.DOM
 		if @_manage_overflow
 			@addClass("cui-label-manage-overflow")
 
+		if @_padded
+			@addClass("cui-label--padded")
+
 		if @_size
 			@addClass("cui-label-size-"+@_size)
 		else if not CUI.__ng__
@@ -141,6 +144,9 @@ class CUI.Label extends CUI.DOM
 				default: false
 				check: Boolean
 			multiline:
+				default: false
+				check: Boolean
+			padded:
 				default: false
 				check: Boolean
 			manage_overflow:

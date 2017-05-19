@@ -1517,6 +1517,14 @@ a[role="button"].cui-button-appearance-link {
 	&-appearance-secondary {
 		color: $secondary-color;
 	}
+
+	&--padded {
+		padding: $padding;
+		
+		+ .cui-block > .cui-block-header {
+			padding-top: $padding/2;
+		}
+	}
 }
 
 // Label: Markdown
