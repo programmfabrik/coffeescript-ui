@@ -3317,6 +3317,10 @@ a[role="button"].cui-button-appearance-link {
 								> .cui-tree-node-handle {
 									height: 24px;
 								}
+
+								> .cui-tree-node-content {
+									min-height: 24px;
+								}
 							}
 
 							> .cui-label {
@@ -3399,7 +3403,8 @@ a[role="button"].cui-button-appearance-link {
 // ListViewTree
 .cui-list-view-grid {
 	&.cui-list-view-tree-no-hierarchy {
-		.cui-tree-node-handle {
+		.cui-tree-node-handle,
+		.cui-tree-node-spacer {
 			display: none !important;
 		}
 	}
