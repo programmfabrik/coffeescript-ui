@@ -471,7 +471,7 @@ class CUI.ListView extends CUI.SimplePane
 		do_select = =>
 			if row.isSelected()
 				if not no_deselect
-					row.deselect(ev).done(dfr.resolve).fail(dfr.reject)
+					row.deselect(ev, row).done(dfr.resolve).fail(dfr.reject)
 				else
 					dfr.resolve()
 			else
@@ -482,10 +482,10 @@ class CUI.ListView extends CUI.SimplePane
 			promises = []
 			for _row in @getSelectedRows()
 				if row == _row
+					# we handle this in do_select
 					continue
-				# don't pass an event to deselect, as this
-				# is not the node where the user clicked on
-				ret = _row.deselect()
+
+				ret = _row.deselect(ev, row)
 				if isPromise(ret)
 					promises.push(ret)
 			CUI.when(promises).done(do_select).fail(dfr.reject)
