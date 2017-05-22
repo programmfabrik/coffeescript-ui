@@ -4807,7 +4807,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-block {
-	.cui-block-content {
+	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}
 }
