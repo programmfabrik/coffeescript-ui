@@ -405,6 +405,9 @@ compareIndex = (a_idx, b_idx) ->
 	else
 		0
 
+index = (node) ->
+	Array.prototype.indexOf.call(node.parentNode.children, node)
+
 # pushes value onto array, if not exists
 # returns index of the pushed value
 pushOntoArray = (value, arr, compFunc) ->
