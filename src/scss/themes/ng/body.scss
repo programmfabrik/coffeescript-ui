@@ -1139,12 +1139,18 @@ li > div {
 		height: auto;
 	}
 
+	.cui-buttonbar-group & {
+		&:not(:first-child) {
+			margin-left: 1px;
+		}
+	}
+
 	.cui-button-visual {
 		line-height: 18px;
 		height: auto;
 		flex-direction: column;
 		border-width: 0;
-		padding: 0 $padding/2;
+		padding: $padding/2 $padding/2 0;
 	}
 
 	.cui-button-left {
@@ -1152,7 +1158,7 @@ li > div {
 	}
 
 	.fa {
-		font-size: 28px;
+		font-size: 21px;
 	}
 }
 
@@ -3423,6 +3429,23 @@ a[role="button"].cui-button-appearance-link {
 .cui-table {
 	display: table;
 	// border: 1px solid $table-border;
+	
+	&--flex {
+		.cui-tr {
+			display: flex;
+		}
+
+		.cui-td--key {
+			width: $td-width;
+			flex-shrink: 0;
+			word-wrap: break-word;
+			word-break: break-all;
+		}
+		
+		.cui-td--value {
+			flex-grow: 1;
+		}
+	}
 }
 
 .cui-table-row {
@@ -3478,7 +3501,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-td--key {
-	text-align: right;
+	color: $secondary-color;
 	padding-right: 0;
 	vertical-align: top;
 }

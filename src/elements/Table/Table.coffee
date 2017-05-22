@@ -19,6 +19,9 @@ class CUI.Table extends CUI.DOM
 		if @_class
 			cls.push(@_class)
 
+		if @_flex
+			cls.push("cui-table--flex")
+
 		@__table = $table(cls.join(" "))
 
 		@registerDOMElement(@__table, false)
@@ -82,6 +85,9 @@ class CUI.Table extends CUI.DOM
 				default: []
 				check: (v) ->
 					CUI.isArray(v)
+			flex:
+				default: false
+				check: Boolean
 
 			size:
 				mandatory: true
