@@ -3430,6 +3430,13 @@ a[role="button"].cui-button-appearance-link {
 	display: table;
 	// border: 1px solid $table-border;
 	
+	&--has-datafields {
+		.cui-td--text-content {
+			padding-top: 9px;
+			padding-bottom: 9px;
+		}
+	}
+	
 	&--flex {
 		.cui-tr {
 			display: flex;
@@ -3550,7 +3557,7 @@ a[role="button"].cui-button-appearance-link {
 // Table Row Base-Widths
 
 .cui-td--url input {
-	width: 300px;
+	min-width: 300px;
 }
 
 .status-2d-map {
