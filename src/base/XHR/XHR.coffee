@@ -93,6 +93,9 @@ class CUI.XHR extends CUI.Element
 			set = set + 1
 		if @_json_data
 			set = set + 1
+			if @__headers['content-type'] == undefined
+				@__headers['content-type'] = 'application/json; charset=utf-8'
+
 		if @_body
 			set = set + 1
 
@@ -271,5 +274,3 @@ class CUI.XHR extends CUI.Element
 
 	readyState: ->
 		CUI.XHR.readyStates[@__xhr.readyState]
-
-
