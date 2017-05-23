@@ -199,7 +199,10 @@ class CUI.Label extends CUI.DOM
 		@__currentText
 
 	setContent: (content) ->
-		@replace(content, "content")
+		if isString(content)
+			@replace(CUI.DOM.htmlToNodes(content), 'content')
+		else
+			@replace(content, "content")
 
 		if not @_manage_overflow
 			return
