@@ -30,6 +30,7 @@ class CUI.Deferred
 			cb = @__callbacks[idx]
 			if cb.type in types
 				# console.info @getUniqueId(), idx, cb.type, @__callbacks.length
+				#
 				cb.func.apply(@, args)
 
 				if cb.type in ["done", "always", "fail"]
@@ -46,6 +47,7 @@ class CUI.Deferred
 	__register: (type, func) ->
 		# CUI.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
 		#
+		assert(CUI.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
 		if @__state == "rejected" and type == "done"
 			# nothing to do
 			return
