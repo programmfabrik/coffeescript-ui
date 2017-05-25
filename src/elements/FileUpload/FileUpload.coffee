@@ -223,18 +223,26 @@ class FileUpload extends CUI.Element
 		return
 
 
-	initDropZone: (opts={}) ->
-		dropZone = opts.dropZone?.DOM
-		if not dropZone
-			dropZone = opts.dropZone
+	initDropZone: (_opts={}) ->
+
+		opts = CUI.Element.readOpts _opts, "FileUpload.initDropZone",
+			dropZone:
+				mandatory: true
+				check: (v) ->
+					isElement(v)
+			multiple:
+				mandatory: true
+				default: true
+				check: Boolean
+			selector:
+				check: String
+			allow_drop: (ev) =>
+				check: Function
+
+		dropZone = opts.dropZone.DOM or opts.dropZone
 
 		selector = opts.selector
-		if opts.multiple == false
-			multiple = false
-		else
-			multiple = true
-
-		assert(isElement(dropZone) or isElement(dropZone?.DOM), "FileUpload.initDropZone", "Drop Zone needs to be instanceof HTMLElement or contain such an element in its property \"DOM\".", dropZone: dropZone)
+		multiple = opts.multiple
 
 		Events.ignore
 			instance: @
@@ -247,6 +255,9 @@ class FileUpload extends CUI.Element
 			instance: @
 			selector: selector
 			call: (ev) =>
+				if opts.allow_drop and not opts.allow_drop(ev)
+					return ev.stop()
+
 				FileUpload.setDropClassByEvent(ev)
 				ev.stopPropagation()
 				ev.preventDefault()
@@ -258,6 +269,9 @@ class FileUpload extends CUI.Element
 			instance: @
 			selector: selector
 			call: (ev) =>
+				if opts.allow_drop and not opts.allow_drop(ev)
+					return ev.stop()
+
 				FileUpload.setDropClassByEvent(ev)
 				dt = ev.getNativeEvent().dataTransfer
 
