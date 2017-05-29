@@ -2206,16 +2206,35 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-pane--has-footer .cui-layer-pointer--s:after {
-	background: $layer-header-pointer-background;
+.cui-pane--has-footer {
+	.cui-layer-pointer--s:after {
+		background: $layer-header-pointer-background;
+	}
+
+	// make sure that white layer pointers on the side
+	// only end above the footer
+	.cui-layer-pointer--e,
+	.cui-layer-pointer--w {
+		margin-bottom: $toolbar-height;
+	}
 }
 
 .cui-layer-pointer--s:after {
 	top: -9px;
 }
 
-.cui-pane--has-header .cui-layer-pointer--n:after {
-	background: $layer-footer-background;
+.cui-pane--has-header {
+	// color northern layer pointer in header color
+	.cui-layer-pointer--n:after {
+		background: $layer-footer-background;
+	}
+
+	// make sure that white layer pointers on the side
+	// only start below the header
+	.cui-layer-pointer--e,
+	.cui-layer-pointer--w {
+		margin-top: $toolbar-height;
+	}
 }
 
 .cui-layer-pointer--e,
