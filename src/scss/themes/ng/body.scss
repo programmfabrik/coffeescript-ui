@@ -1804,6 +1804,7 @@ a[role="button"].cui-button-appearance-link {
 
 	> * {
 		position: relative;
+		align-self: stretch; // make sure that buttons are full height
 		margin-left: -1px;
 
 		&:first-child {
