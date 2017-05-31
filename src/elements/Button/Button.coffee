@@ -278,6 +278,7 @@ class CUI.Button extends CUI.DOM
 					return
 
 				ev.stopPropagation()
+				ev.preventDefault()
 				@onClickAction(ev)
 				return
 
