@@ -229,7 +229,7 @@ class FileUpload extends CUI.Element
 			dropZone:
 				mandatory: true
 				check: (v) ->
-					isElement(v)
+					isElement(v) or isElement(v.DOM)
 			multiple:
 				mandatory: true
 				default: true
