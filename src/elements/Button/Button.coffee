@@ -278,7 +278,6 @@ class CUI.Button extends CUI.DOM
 					return
 
 				ev.stopPropagation()
-				ev.preventDefault()
 				@onClickAction(ev)
 				return
 
@@ -382,6 +381,7 @@ class CUI.Button extends CUI.DOM
 
 	onClickAction: (ev) ->
 		if @__disabled # or ev.button != 0
+			ev.preventDefault()
 			return
 
 		@getTooltip()?.hide(ev)
