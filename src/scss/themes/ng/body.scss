@@ -3170,7 +3170,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-list-view-grid-inner-bottom {
-	flex: 1 1 0%; // IE 11 needs 0% basis
+	flex: 1 1 auto; // IE 11 needs 0% basis - CONFLICT: apparently IE11 needs a auto basis
 	display: flex;
 	min-height: 0; // FF scroll fix
 }
