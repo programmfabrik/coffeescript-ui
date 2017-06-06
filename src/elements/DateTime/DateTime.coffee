@@ -31,7 +31,6 @@ class CUI.DateTime extends CUI.Input
 				check: (v) ->
 					CUI.isArray(DateTimeFormats[v]?.formats)
 			input_types:
-				default: ["date_time"]
 				check: Array
 			display_type:
 				default: "long"
