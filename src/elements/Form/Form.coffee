@@ -59,7 +59,7 @@ class CUI.Form extends CUI.DataField
 			if @_header
 				console.error("new Form: opts.header not supported in CUI.Form 'ng'.", opts: @opts)
 
-		vl_opts = class: "cui-form cui-padding-reset cui-form-appearance-"+@_appearance
+		vl_opts = class: "cui-form cui-form-appearance-"+@_appearance
 
 		for k in [
 			"maximize"

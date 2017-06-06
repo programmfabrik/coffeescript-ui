@@ -8,7 +8,6 @@
 class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->
 		super(@opts)
-		@DOM.addClass("cui-padding-reset")
 		if @_sortable
 			@DOM.addClass("cui-options--sortable")
 
