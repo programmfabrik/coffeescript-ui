@@ -72,8 +72,22 @@ class CUI.DateTime extends CUI.Input
 						@__input_formats.push(f)
 						found = true
 				assert(found, "new DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
-		@initFormat(0)
+		@__default_format = @__input_formats[0]
+		for format in @__input_formats
+			if format.clock == false
+				@__input_format_no_time = format
+				@__default_format = format
+				break
+		@__input_format = @initFormat(@__default_format)
 		return
+
+	setInputFormat: (use_clock) ->
+		if use_clock == true
+			@__input_format = @initFormat(@__input_formats[0])
+		else
+			@__input_format = @initFormat(@__input_format_no_time)
+		console.debug "set input to", use_clock, @__input_format
+		@
 
 	initDateTimePicker: ->
 		if @__dateTimeTmpl
@@ -186,26 +200,22 @@ class CUI.DateTime extends CUI.Input
 		@__dateTimeTmpl.replace(new Label(text: title), "header_center")
 		@
 
-	initFormat: (idx_or_format) ->
-		if isInteger(idx_or_format)
-			@__input_format = @__input_formats[idx_or_format]
-		else
-			@__input_format = idx_or_format
+	initFormat: (input_format) ->
 
 		moment.locale(@__locale_format.moment_locale or @_locale)
 
 		switch @_display_type
 			when "short"
-				@__input_format.__display = @__input_format.display_short
+				input_format.__display = input_format.display_short
 			else
-				@__input_format.__display = @__input_format.display
+				input_format.__display = input_format.display
 
-		@_invalidHint = text: @__input_format.invalid
+		@_invalidHint = text: input_format.invalid
 
 		for k, v of @__regexpMatcher
 			v.match_str = k
 
-		input = @__input_format.input
+		input = input_format.input
 		rstr = "("+Object.keys(@__regexpMatcher).join("|")+")"
 		re = new RegExp(rstr, "g")
 		s = input.split("")
@@ -225,8 +235,8 @@ class CUI.DateTime extends CUI.Input
 
 		# CUI.debug "regexp found", @__input_format.regexp, @__input_format.matcher
 
-		@__input_format.regexp = new RegExp("^"+regexp.join("")+"$")
-		@__input_format.matcher = matcher
+		input_format.regexp = new RegExp("^"+regexp.join("")+"$")
+		input_format.matcher = matcher
 
 		# CUI.debug "initFormat", @__input_format.input, @__input_format.regexp
 
@@ -239,10 +249,9 @@ class CUI.DateTime extends CUI.Input
 		# 				@__input_format["__#{k}"] = null
 		# 			@__dateTimeTmpl.replace(@__input_format["__#{k}"], k)
 
-		# 	@popoverSetClasses()
 		# 	@pop?.position()
 		# @__current_input_format = @__input_format
-		@
+		input_format
 
 	getTemplateKeyForRender: ->
 		"center"
@@ -395,7 +404,7 @@ class CUI.DateTime extends CUI.Input
 			if not mom.isValid()
 				return false
 		else
-			@initFormat(0)
+			@__input_format = @initFormat(@__default_format)
 		return true
 
 	__getInputBlocks: (v) ->
@@ -486,27 +495,6 @@ class CUI.DateTime extends CUI.Input
 		@
 
 
-	# set classes for clock visibility
-	popoverSetClasses: ->
-
-		if @__input_format.clock_seconds
-			@__dateTimeTmpl.removeClass("hide-clock-seconds")
-		else
-			@__dateTimeTmpl.addClass("hide-clock-seconds")
-
-		if @__input_format.clock
-			@__dateTimeTmpl.removeClass("hide-clock")
-		else
-			@__dateTimeTmpl.addClass("hide-clock")
-
-		# if @__input_format.timezone_display
-		# 	@__dateTimeTmpl.removeClass("hide-timezone-display")
-		# else
-		# 	@__dateTimeTmpl.addClass("hide-timezone-display")
-
-		@
-
-
 	updateDateTimePicker: ->
 
 		@setMomentFromInput()
@@ -519,7 +507,6 @@ class CUI.DateTime extends CUI.Input
 
 		CUI.debug "updating popover...", @__input_format
 
-		@popoverSetClasses()
 		@drawDate()
 		# @drawHourMinute()
 		@setClock()
@@ -620,9 +607,9 @@ class CUI.DateTime extends CUI.Input
 			mom = @__parseFormat(format, s)
 			if mom
 				if format in use_formats
-					@initFormat(format)
+					@__input_format = @initFormat(format)
 				else
-					@initFormat(0)
+					@__input_format = @initFormat(@__default_format)
 				mom.locale(moment.locale())
 				# CUI.debug "parsing ok", mom, f, moment.locale()
 				return mom
@@ -658,7 +645,6 @@ class CUI.DateTime extends CUI.Input
 
 		return
 
-
 	setMomentFromInput: ->
 		inp = @__input0.value.trim()
 		if inp.length > 0
@@ -667,7 +653,7 @@ class CUI.DateTime extends CUI.Input
 		if inp == "" or not @__current_moment.isValid()
 			@__current_moment = moment()
 			@__current_moment.__now = true
-			@initFormat(0)
+			@__input_format = @initFormat(@__default_format)
 
 		return
 
@@ -711,22 +697,30 @@ class CUI.DateTime extends CUI.Input
 		@markDay()
 		@
 
+
 	getDateTimeDrawer: (mom) ->
 
-		am_pm = @__input_formats[0].clock_am_pm
+		console.debug "getDateTimeDrawer", mom, @__input_format
+
+		am_pm = true # @__input_formats[0].clock_am_pm
 
 		data =
 			month: mom.month()
 			year: mom.year()
 			date: mom.date()
-			hour: mom.hour()
-			minute: mom.minute()
-			second: mom.second()
+			hour: null
+			minute: null
+			second: null
 			am_pm: null
 
-		if am_pm
-			data.am_pm = Math.floor(data.hour / 12)*12
-			data.hour = data.hour%12
+		if @__input_format.clock
+			data.hour = mom.hour()
+			data.minute = mom.minute()
+			data.second = mom.second()
+
+			if am_pm
+				data.am_pm = Math.floor(data.hour / 12)*12
+				data.hour = data.hour%12
 
 		pad0 = (n) ->
 			if n < 10
@@ -784,17 +778,30 @@ class CUI.DateTime extends CUI.Input
 
 		if @__input_formats[0].clock
 
+			if @__input_format_no_time
+				emtpy_clock_opts = [
+					text: ''
+					value: null
+				]
+			else
+				emtpy_clock_opts = []
+
 			hour_sel = new Select(
 				name: "hour"
 				data: data
 				group: "time"
-				onDataChanged: =>
-					if am_pm
-						@updateCalendar(mom.hour(data.hour+data.am_pm))
+				onDataChanged: (_data) =>
+					if _data.hour == null
+						@setInputFormat(false)
+						@updateCalendar(mom)
 					else
-						@updateCalendar(mom.hour(data.hour))
+						@setInputFormat(true)
+						if am_pm
+							@updateCalendar(mom.hour(data.hour+data.am_pm))
+						else
+							@updateCalendar(mom.hour(data.hour))
 				options: =>
-					opts = []
+					opts = emtpy_clock_opts.slice(0)
 					if am_pm
 						for hour in [1..12]
 							opts.push
@@ -815,11 +822,16 @@ class CUI.DateTime extends CUI.Input
 				name: "minute"
 				group: "time"
 				data: data
-				onDataChanged: =>
-					@updateCalendar(mom.minute(data.minute))
+				onDataChanged: (_data) =>
+					if _data.minute == null
+						@setInputFormat(false)
+						@updateCalendar(mom)
+					else
+						@setInputFormat(true)
+						@updateCalendar(mom.minute(data.minute))
 				options: =>
 
-					opts = []
+					opts = emtpy_clock_opts.slice(0)
 					for minute in [0..59]
 						opts.push
 							text: pad0(minute)
@@ -834,10 +846,16 @@ class CUI.DateTime extends CUI.Input
 					name: "am_pm"
 					group: "time"
 					data: data
-					onDataChanged: =>
-						@updateCalendar(mom.hour(data.hour+data.am_pm))
+					onDataChanged: (_data) =>
+						if _data.am_pm == null
+							@setInputFormat(false)
+							@updateCalendar(mom)
+						else
+							@setInputFormat(true)
+							@updateCalendar(mom.hour(data.hour+data.am_pm))
+
 					options: =>
-						opts = []
+						opts = emtpy_clock_opts.slice(0)
 						for am_pm in ["AM", "PM"]
 							opts.push
 								text: am_pm
