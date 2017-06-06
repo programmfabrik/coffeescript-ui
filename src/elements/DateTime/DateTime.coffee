@@ -86,7 +86,6 @@ class CUI.DateTime extends CUI.Input
 			@__input_format = @initFormat(@__input_formats[0])
 		else
 			@__input_format = @initFormat(@__input_format_no_time)
-		console.debug "set input to", use_clock, @__input_format
 		@
 
 	initDateTimePicker: ->
@@ -700,9 +699,7 @@ class CUI.DateTime extends CUI.Input
 
 	getDateTimeDrawer: (mom) ->
 
-		console.debug "getDateTimeDrawer", mom, @__input_format
-
-		am_pm = true # @__input_formats[0].clock_am_pm
+		am_pm = @__input_formats[0].clock_am_pm
 
 		data =
 			month: mom.month()
