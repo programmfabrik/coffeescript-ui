@@ -856,13 +856,13 @@ class CUI.Button extends CUI.DOM
 
 	setText: (@__txt) ->
 		if isEmpty(@__txt)
-			@empty("center")
-		else
-			span = $text(@__txt)
-			if not @__hasAriaLabel
-				span.id = "button-text-"+@getUniqueId()
-				@setAria("labelledby", span.id)
-			@replace(span, "center")
+			@__txt = ''
+
+		span = $text(@__txt)
+		if not @__hasAriaLabel
+			span.id = "button-text-"+@getUniqueId()
+			@setAria("labelledby", span.id)
+		@replace(span, "center")
 
 	setTextMaxChars: (max_chars) ->
 		CUI.DOM.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
