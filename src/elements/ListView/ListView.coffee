@@ -53,11 +53,16 @@ class CUI.ListView extends CUI.SimplePane
 			if col == "maximize"
 				# assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
 				assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
-
 				@__maxCols.push(col_i)
 
-		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
+		if @__maximize_horizontal and @__maxCols.length == 0
+			# auto-max the last column
+			len = @__cols.length - 1
+			if len >= @fixedColsCount
+				@__maxCols.push(len)
+				@__cols[len] = 'maximize'
 
+		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
 		@rowsCount = 0
 		@colsCount = @__cols.length
 
