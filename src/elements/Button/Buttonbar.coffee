@@ -71,13 +71,20 @@ class Buttonbar extends CUI.DOM
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
 			count = 0
+			last_visible_child
 			for c, idx in d.children
 				c.classList.remove("cui-first-visible-child")
-				if CUI.DOM.isVisible(c)
-					count = count + 1
+				c.classList.remove("cui-last-visible-child")
 
-				if count == 1
-					c.classList.add("cui-first-visible-child")
+				if CUI.DOM.isVisible(c)
+					if count == 0
+						c.classList.add("cui-first-visible-child")
+
+					count = count + 1
+					last_visible_child = c
+
+			if last_visible_child
+				c.classList.add("cui-last-visible-child")
 
 			if count > 0
 				DOM.showElement(d)
