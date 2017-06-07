@@ -72,7 +72,7 @@ class Buttonbar extends CUI.DOM
 			c.classList.remove("cui-first-visible-child")
 			c.classList.remove("cui-last-visible-child")
 
-			if not CUI.DOM.isVisible(c) or CUI.DOM.data(c, 'element')?.isHidden?()
+			if CUI.DOM.data(c, 'element')?.isHidden?() or not CUI.DOM.isVisible(c)
 				continue
 
 			count++
