@@ -1071,12 +1071,8 @@ li > div {
 			text-align: inherit;
 		}
 
-		&:empty {
-			display: flex;
-
-			&:after {
-				content: " ";
-			}
+		span:empty:after {
+			content: " ";
 		}
 	}
 }
