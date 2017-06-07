@@ -63,6 +63,28 @@ class Buttonbar extends CUI.DOM
 	enable: ->
 		@__proxy("enable")
 
+	# sets classes on all children of "el"
+	# returns the number of visible children
+	__setVisibilityClasses: (el) =>
+		count = 0
+		last_visible_child = null
+		for c, idx in el.children
+			c.classList.remove("cui-first-visible-child")
+			c.classList.remove("cui-last-visible-child")
+
+			if not CUI.DOM.isVisible(c) or CUI.DOM.data(c, 'element')?.isHidden?()
+				continue
+
+			count++
+			last_visible_child = c
+			if count == 1
+				c.classList.add("cui-first-visible-child")
+
+		if last_visible_child
+			last_visible_child.classList.add("cui-last-visible-child")
+
+		count
+
 
 	# hide the group if no children
 	__checkVisibility: ->
@@ -70,43 +92,13 @@ class Buttonbar extends CUI.DOM
 
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
-			count = 0
-			last_visible_child
-			for c, idx in d.children
-				c.classList.remove("cui-first-visible-child")
-				c.classList.remove("cui-last-visible-child")
 
-				if CUI.DOM.isVisible(c)
-					if count == 0
-						c.classList.add("cui-first-visible-child")
-
-					count = count + 1
-					last_visible_child = c
-
-			if last_visible_child
-				c.classList.add("cui-last-visible-child")
-
-			if count > 0
+			if @__setVisibilityClasses(d) > 0
 				DOM.showElement(d)
 			else
 				DOM.hideElement(d)
 
-		visible = 0
-
-		# Hide the entire Buttonbar, if everything inside is hidden
-		for el in CUI.DOM.children(@__buttons)
-			# el = $(_el)
-			el.classList.remove("cui-first-visible-child")
-			if not DOM.isVisible(el)
-				continue
-
-			visible++
-			if visible == 1
-				el.classList.add("cui-first-visible-child")
-
-		# CUI.debug "Buttonbar.__checkVisibility", visible, @, @DOM[0]
-
-		if visible > 0
+		if @__setVisibilityClasses(@__buttons) > 0
 			if @__tooltip?.isShown()
 				@__tooltip.position()
 		else
