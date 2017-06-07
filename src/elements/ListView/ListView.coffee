@@ -56,10 +56,6 @@ class CUI.ListView extends CUI.SimplePane
 
 				@__maxCols.push(col_i)
 
-		if !@__maxCols.length
-			# default: add maximize to last column
-			@__maxCols.push(@__cols.length - 1)
-
 		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
 
 		@rowsCount = 0

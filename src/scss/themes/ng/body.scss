@@ -3015,6 +3015,15 @@ a[role="button"].cui-button-appearance-link {
 
 	&-max {
 		flex-grow: 1;
+
+		// disable grow on last cell
+		~ .cui-lv-td:last-child {
+			flex-grow: 0;
+		}
+	}
+
+	&:last-child {
+		flex-grow: 1;
 	}
 
 	.cui-label-multiline {
