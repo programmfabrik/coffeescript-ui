@@ -3704,6 +3704,14 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
+	.cui-form {
+		margin: $padding;
+		
+		.cui-form {
+			margin: 0;
+		}
+	}
 }
 
 .cui-form-row {
@@ -4814,6 +4822,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-block {
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
+	}
+
+	> .cui-block-content > .cui-form {
+		margin: 0;
 	}
 }
 
