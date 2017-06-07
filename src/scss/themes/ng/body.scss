@@ -3844,7 +3844,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-form-field-type--checkbox > & {
-		label {
+		label,
+		.cui-label {
 			margin: 0;
 		}
 	}
