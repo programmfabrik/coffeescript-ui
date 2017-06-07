@@ -3046,9 +3046,14 @@ a[role="button"].cui-button-appearance-link {
 	overflow: hidden;
 
 	&.cui-lv--max-last-col {
-		> div > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr {
-			> .cui-lv-td:last-child {
-				flex-grow: 1;
+		> div > .cui-list-view-grid-quadrant {
+			> .cui-lv-tr-outer,
+			> .cui-lv-tr-fill-outer {
+				> .cui-lv-tr {
+					> .cui-lv-td:last-child {
+						flex-grow: 1;
+					}
+				}
 			}
 		}
 	}
