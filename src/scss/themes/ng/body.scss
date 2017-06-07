@@ -2052,13 +2052,11 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer {
 	min-width: 200px;
 	min-height: 30px;
-	max-width: calc(100% - #{2*$padding});
-	max-height: calc(100% - #{2*$padding});
+	margin: $padding;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
 	background: $layer-background;
-	margin: 10px;
 	outline: none;
 	border-radius: 5px;
 	// to make sure that the border-radius will cut off all child backgrounds
