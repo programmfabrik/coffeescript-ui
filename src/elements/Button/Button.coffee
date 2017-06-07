@@ -602,8 +602,6 @@ class CUI.Button extends CUI.DOM
 		@_value
 
 	getElementForLayer: ->
-		if not CUI.__ng__
-			return @DOM
 		return @__box.map.visual
 
 	getRadioButtons: ->

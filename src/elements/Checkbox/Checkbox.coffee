@@ -147,6 +147,7 @@ class Checkbox extends DataFieldInput
 			"setTextMaxChars"
 			"setText"
 			"getText"
+			"getElementForLayer"
 		])
 
 		# @append(@getChangedMarker())
