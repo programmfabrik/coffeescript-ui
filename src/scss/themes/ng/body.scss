@@ -1802,14 +1802,20 @@ a[role="button"].cui-button-appearance-link {
 		position: relative;
 		align-self: stretch; // make sure that buttons are full height
 		margin-left: -1px;
+		
+		.cui-button-visual,
+		.cui-input {
+			border-radius: 0;
+		}
 
-		&:first-child {
+		&:first-child,
+		&.cui-first-visible-child {
 			margin-left: 0;
 
 			.cui-button-visual,
 			.cui-input {
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
+				border-top-left-radius: $button-radius;
+				border-bottom-left-radius: $button-radius;
 			}
 
 			&:before {
@@ -1817,23 +1823,13 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-		&:last-child {
+		&:last-child,
+		&.cui-last-visible-child {
 			.cui-button-visual,
 			.cui-input {
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
+				border-top-right-radius: $button-radius;
+				border-bottom-right-radius: $button-radius;
 			}
-		}
-
-		&:not(:first-child):not(:last-child) {
-			.cui-button-visual,
-			.cui-input {
-				border-radius: 0;
-			}
-		}
-
-		&:only-child .cui-button-visual {
-			border-radius: $button-radius;
 		}
 
 		&.cui-active {
