@@ -7,6 +7,9 @@
 
 class CUI.Tabs extends CUI.SimplePane
 
+	@defaults:
+		overflow_button_tooltip: null
+
 	initOpts: ->
 		super()
 		# @removeOpt("header_right")
@@ -85,10 +88,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__buttonbar = new Buttonbar()
 
-		if CUI.__ng__
-			pane_key = "center"
-		else
-			pane_key = "left"
+		pane_key = "center"
 
 		@__pane_header.append(@__buttonbar, pane_key)
 
@@ -109,6 +109,7 @@ class CUI.Tabs extends CUI.SimplePane
 			class: "cui-tab-header-button-overflow"
 			icon_right: false
 			size: if @_appearance == "mini" then "mini" else undefined
+			tooltip: text: CUI.Tabs.defaults.overflow_button_tooltip
 			menu:
 				items: =>
 					btns = []
