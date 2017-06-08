@@ -97,6 +97,7 @@ DateTimeFormats["de-DE"] =
 		clock: false
 		parse: [
 			"MM YYYY"
+			"MM/YYYY"
 		]
 	,
 		text: "Jahr"
@@ -203,6 +204,7 @@ DateTimeFormats["it-IT"] =
 		clock: false
 		parse: [
 			"MM YYYY"
+			"MM/YYYY"
 		]
 	,
 		text: "Jahr"
@@ -309,6 +311,7 @@ DateTimeFormats["es-ES"] =
 		clock: false
 		parse: [
 			"MM YYYY"
+			"MM/YYYY"
 		]
 	,
 		text: "Jahr"
@@ -418,6 +421,7 @@ DateTimeFormats["en-US"] =
 		clock: false
 		parse: [
 			"MM YYYY"
+			"MM/YYYY"
 		]
 	,
 		text: "Jahr"
