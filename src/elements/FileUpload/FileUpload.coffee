@@ -245,6 +245,7 @@ class FileUpload extends CUI.Element
 		multiple = opts.multiple
 
 		Events.ignore
+			node: dropZone
 			instance: @
 
 		dropZone.classList.add("cui-file-upload-drop-zone")
@@ -298,10 +299,10 @@ class FileUpload extends CUI.Element
 				return false
 
 		for dz in @__dropZones
-			if dz == dropZone[0]
+			if dz == dropZone
 				return @
 
-		@__dropZones.push(dropZone[0])
+		@__dropZones.push(dropZone)
 		@
 
 	@setDropClassByEvent: (ev) ->
