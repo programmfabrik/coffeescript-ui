@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class WaitBlock extends Block
+class CUI.WaitBlock extends CUI.Block
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_inactive
@@ -90,3 +90,5 @@ class WaitBlock extends Block
 	destroy: ->
 		@hide()
 		super()
+
+WaitBlock = CUI.WaitBlock
