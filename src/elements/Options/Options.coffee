@@ -14,8 +14,6 @@ class CUI.Options extends CUI.DataField
 	initOpts: ->
 		super()
 		@addOpts
-			hash_store:
-				check: Boolean
 			radio:
 				check: (v) ->
 					isString(v) or isBoolean(v)

@@ -310,7 +310,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			return
 
 		console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
-		@__loadingDeferred.reject()
+		if @__loadingDeferred.state == 'pending'
+			@__loadingDeferred.reject()
 		@__loadingDeferred = null
 		return
 
