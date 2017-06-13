@@ -182,6 +182,11 @@ class FileUpload extends CUI.Element
 	removeFile: (file) ->
 		removeFromArray(file, @__files)
 
+	isDone: ->
+		for f in @__files
+			if not f.isDone()
+				return false
+		return true
 
 	isUploading: ->
 		for f in @__files
