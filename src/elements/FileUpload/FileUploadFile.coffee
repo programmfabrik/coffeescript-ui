@@ -74,7 +74,7 @@ class FileUploadFile extends CUI.Element
 		@_batch
 
 	getName: ->
-		@_file.name
+		@_file.webkitRelativePath or @_file.name
 
 	getStatus: ->
 		@__progress.status
