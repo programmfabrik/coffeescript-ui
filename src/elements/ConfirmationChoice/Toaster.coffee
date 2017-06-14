@@ -26,6 +26,9 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 		@_choices = []
 
 	open: ->
+		if @__deferred
+			return @__deferred.promise()
+
 		# super sets a deferred
 		super()
 

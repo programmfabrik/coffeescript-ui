@@ -33,10 +33,11 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 					for choice, idx in v
 						if not choice
 							continue
-						CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#"+idx+"]", @choiceOpts)
+						CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#"+idx+"]",
+							CUI.ConfirmationChoice.choiceOpts)
 					return true
 
-	choiceOpts:
+	@choiceOpts:
 		text:
 			mandatory: true
 			check: String
@@ -92,11 +93,11 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 							ret2 == false
 								return
 
-						@destroy()
 						@__deferred.resolve(@__getResolveValue(), btn, ev)
+						@destroy()
 					return
 
-			for key of @choiceOpts
+			for key of CUI.ConfirmationChoice.choiceOpts
 				if key not in ["onClick", "cancel", "choice"]
 					btn_opts[key] = choice[key]
 
@@ -115,11 +116,23 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		@hide(ev)
 		@__deferred.reject(@__choice, ret)
 
+	destroy: ->
+		@__deferred = null
+		super()
+
 	# opens the dialog and returns a promise
 	# promise fails if the user cancels
 	open: ->
+		if @__deferred
+			return @__deferred.promise()
+
 		@__deferred = new CUI.Deferred()
+
 		CUI.ConfirmationDialog::show.call(@)
+
+		@__deferred.always =>
+			@__deferred = null
+
 		return @__deferred.promise()
 
 CUI.choice = (opts=text: "CUI.ConfirmationChoice") ->
