@@ -147,6 +147,9 @@ class CUI.DataField extends CUI.DOM
 	getNameOpt: ->
 		check: String
 
+	registerLabel: (lbl) ->
+		# code from Form, use to register a label
+
 	getLabel: ->
 		@_label
 

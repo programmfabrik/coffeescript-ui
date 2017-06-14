@@ -63,6 +63,15 @@ class Checkbox extends DataFieldInput
 		super()
 		@__checkbox?.disable()
 
+	registerLabel: (lbl) ->
+		lbl.setAttribute('data-label-clickable', '1')
+		Events.listen
+			type: 'click'
+			node: lbl
+			call: (ev) =>
+				@getButton().onClickAction(ev)
+		@
+
 	getButton: ->
 		@__checkbox
 

@@ -490,7 +490,9 @@ class CUI.Form extends CUI.DataField
 				tr = CUI.DOM.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
-				append(get_label(field), td)
+				lbl = get_label(field)
+				field.registerLabel(lbl)
+				append(lbl, td)
 				tr.appendChild(td)
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-value")

@@ -139,6 +139,9 @@ class Select extends Checkbox
 	getCheckboxClass: ->
 		"cui-button-select"
 
+	registerLabel: ->
+		# ignore
+
 	getButtonOpts: ->
 		group: @_group
 		role: "select"
