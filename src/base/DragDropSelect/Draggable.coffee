@@ -578,8 +578,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			new_height = helper_pos.height
 
 		CUI.DOM.setStyle globalDrag.helperNode,
-			transform: "translateX("+helper_pos.dragDiff.x+"px) translateY("+helper_pos.dragDiff.y+"px)"
-
+			transform: globalDrag.helperNodeStart.transform+" translateX("+helper_pos.dragDiff.x+"px) translateY("+helper_pos.dragDiff.y+"px)"
 
 		CUI.DOM.setDimensions globalDrag.helperNode,
 			borderBoxWidth: new_width
@@ -662,6 +661,9 @@ class CUI.Draggable extends CUI.DragDropSelect
 		start.marginLeft = dim.marginLeft
 		start.marginVertical = dim.marginVertical
 		start.marginHorizontal = dim.marginHorizontal
+		start.transform = dim.computedStyle.transform
+		if start.transform == 'none'
+			start.transform = ''
 		start.body_dim = CUI.DOM.getDimensions(document.body)
 
 		globalDrag.helperNodeStart = start
