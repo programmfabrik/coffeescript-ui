@@ -620,8 +620,10 @@ class CUI
 			if CUI.isArray(v)
 				for _v in v
 					url.push(encode_func(k) + connect_pair + encode_func(_v))
-			else
+			else if not isEmpty(v)
 				url.push(encode_func(k) + connect_pair + encode_func(v))
+			else
+				url.push(encode_func(k))
 
 		url.join(connect)
 
