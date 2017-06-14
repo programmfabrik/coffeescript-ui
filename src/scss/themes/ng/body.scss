@@ -1532,7 +1532,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&--padded {
 		padding: $padding;
-		
+
 		+ .cui-block > .cui-block-header {
 			padding-top: $padding/2;
 		}
@@ -1803,7 +1803,7 @@ a[role="button"].cui-button-appearance-link {
 		position: relative;
 		align-self: stretch; // make sure that buttons are full height
 		margin-left: -1px;
-		
+
 		.cui-button-visual,
 		.cui-input {
 			border-radius: 0;
@@ -2065,7 +2065,7 @@ a[role="button"].cui-button-appearance-link {
 		0 3px 14px 2px hsla(0,0%,0%,.12),
 		0 5px 5px -3px hsla(0,0%,0%,.4);
 
-	> .cui-simple-pane,
+	// redundaten:? > .cui-simple-pane,
 	> .cui-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
@@ -2081,16 +2081,8 @@ a[role="button"].cui-button-appearance-link {
 			overflow: auto;
 			-webkit-overflow-scrolling: touch;
 
-			.cui-form {
-				flex-shrink: 0;
-			}
-
 			> .cui-form {
 				margin: 0;
-			}
-
-			> .cui-vertical-list { // CONFLICT: hides footer of nested list views behind scroll
-				flex-shrink: 0;
 			}
 		}
 
@@ -2468,10 +2460,10 @@ a[role="button"].cui-button-appearance-link {
 		margin-bottom: -4px;
 		background: $toolbar-background;
 		font-size: 12px;
-		
+
 		.cui-button-checkbox {
 			display: flex;
-			
+
 			.cui-button-visual {
 				min-height: 0;
 				padding: 1px $padding;
@@ -2499,7 +2491,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ItemList
-.cui-item-list {	
+.cui-item-list {
 	.cui-label {
 	  cursor: default;
 	  padding: $padding+3px $padding 3px;
@@ -3386,7 +3378,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-tree-node-spacer {
 	flex: 0 0 auto;
 	padding-right: 6px;
-	
+
 	.fa-caret-right {
 		width: 8px;
 	}
@@ -3448,17 +3440,17 @@ a[role="button"].cui-button-appearance-link {
 .cui-table {
 	display: table;
 	// border: 1px solid $table-border;
-	
+
 	&--has-datafields {
 		.cui-td--text-content {
 			padding-top: 9px;
 			padding-bottom: 9px;
 		}
 	}
-	
+
 	&--flex {
 		display: block;
-		
+
 		.cui-tr {
 			display: flex;
 		}
@@ -3470,7 +3462,7 @@ a[role="button"].cui-button-appearance-link {
 			word-break: break-all;
 			display: block;
 		}
-		
+
 		.cui-td--value {
 			flex-grow: 1;
 			width: auto;
@@ -3730,7 +3722,7 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-form {
 		margin: $padding;
-		
+
 		.cui-form {
 			margin: 0;
 		}
@@ -4575,7 +4567,7 @@ a[role="button"].cui-button-appearance-link {
 	&:focus,
 	&.cui-has-focus {
 		@include border-focus;
-		
+
 		textarea {
 			box-shadow: none;
 		}
@@ -5011,7 +5003,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-autocompletion-popup {
 	min-height: 0;
-	
+
 	.cui-lv-td {
 		width: 100%;
 		box-sizing: border-box;
