@@ -531,9 +531,9 @@ class CUI
 		a= $("body")
 		a.addClass("cui-webdriver-test")
 
-	@mergeMap: (targetMap, mergeMap, overwriteEmpty = false) ->
+	@mergeMap: (targetMap, mergeMap) ->
 		for k, v of mergeMap
-			if not targetMap.hasOwnProperty(k) or (overwriteEmpty and isEmpty(targetMap[k]))
+			if not targetMap.hasOwnProperty(k)
 				targetMap[k] = v
 			else if CUI.isPlainObject(targetMap[k]) and CUI.isPlainObject(v)
 				CUI.mergeMap(targetMap[k], v)
