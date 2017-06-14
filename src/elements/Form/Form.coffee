@@ -336,14 +336,15 @@ class CUI.Form extends CUI.DataField
 			else
 				v
 
-		get_label = (field) =>
+		get_label = (field, register = false) =>
 			lbl = field._form?.label
 			if not lbl
 				return
 
 			if isString(lbl)
-				label = CUI.DOM.element("label", for: field.getUniqueIdForLabel())
+				label = CUI.DOM.element("label")
 				label.textContent = lbl
+				field.registerLabel(label)
 				return label
 
 			return get_append(lbl)
@@ -490,9 +491,7 @@ class CUI.Form extends CUI.DataField
 				tr = CUI.DOM.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
-				lbl = get_label(field)
-				field.registerLabel(lbl)
-				append(lbl, td)
+				append(get_label(field, true), td)
 				tr.appendChild(td)
 
 				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-value")

@@ -148,7 +148,7 @@ class CUI.DataField extends CUI.DOM
 		check: String
 
 	registerLabel: (lbl) ->
-		# code from Form, use to register a label
+		lbl.setAttribute('for', @getUniqueIdForLabel())
 
 	getLabel: ->
 		@_label
