@@ -543,6 +543,8 @@ class CUI.DOM extends CUI.Element
 
 			parent = parent.parentNode
 
+			if not parent
+				break
 
 		# console.debug parent, node, offset.top, offset.left
 		return offset

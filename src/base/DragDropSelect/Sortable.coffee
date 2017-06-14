@@ -59,6 +59,7 @@ class CUI.Sortable extends CUI.Draggable
 		globalDrag.sort_source = @__findClosestSon(globalDrag.$source)
 		globalDrag.sort_source.classList.add("cui-sortable-placeholder")
 		globalDrag.start_idx = @get_child_number(globalDrag.sort_source)
+		CUI.DOM.addClass(@element, 'cui-sorting')
 
 		CUI.DOM.initAnimatedClone(@element)
 
@@ -103,6 +104,7 @@ class CUI.Sortable extends CUI.Draggable
 
 	cleanup_drag: (ev) ->
 		super(ev)
+		CUI.DOM.removeClass(@element, 'cui-sorting')
 		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
 		CUI.DOM.removeAnimatedClone(@element)
 
