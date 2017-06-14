@@ -602,7 +602,7 @@ class CUI.Form extends CUI.DataField
 		assert(isInteger(idx) and idx >= 0, "#{@__cls}.getFieldByIdx", "idx must be Integer.", idx: idx)
 		@getFields("getFieldByIdx")[idx]
 
-	updateHint: (field_name, hint) ->
+	updateHint: (field_name, hint, trigger_resize = true) ->
 		field = @getFieldsByName(field_name)[0]
 		if not field
 			console.error("Form.updateHint:", field_name, "not found.")
@@ -615,9 +615,10 @@ class CUI.Form extends CUI.DataField
 
 		CUI.DOM.data(els[0]).element.setText(hint)
 
-		Events.trigger
-			type: "content-resize"
-			node: els[0]
+		if trigger_resize
+			Events.trigger
+				type: "content-resize"
+				node: els[0]
 		@
 
 	__setClassOnField: (field_name, cls, add_remove) ->
