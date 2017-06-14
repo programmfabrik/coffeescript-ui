@@ -3849,6 +3849,10 @@ a[role="button"].cui-button-appearance-link {
 		color: $secondary-color;
 	}
 
+	label[data-label-clickable] {
+		cursor: pointer;
+	}
+
 	.cui-form-field-type--checkbox > & {
 		label,
 		.cui-label {
