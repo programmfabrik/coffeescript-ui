@@ -21,3 +21,6 @@ class CUI.EmailInput extends CUI.Input
 			return false
 
 	@regexp: new RegExp("^[a-z0-9!\#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!\#$%&'*+/=?^_`{|}~-]+)*@(([a-z0-9][a-z0-9-]*[a-z0-9]\.)+[a-z0-9][a-z0-9-]*[a-z0-9]|localhost)$", "i")
+
+
+EmailInput = CUI.EmailInput
