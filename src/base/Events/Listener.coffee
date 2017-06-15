@@ -230,6 +230,7 @@ class CUI.Listener extends CUI.Element
 		@_instance
 
 	matchesFilter: (filter) ->
+
 		if filter instanceof CUI.Listener
 			return filter == @
 
@@ -240,11 +241,18 @@ class CUI.Listener extends CUI.Element
 		if filter.node
 			filter_node = DOM.getNode(filter.node)
 			filtered = true
-			match = DOM.closestUntil(@__node, filter_node)
+			match = !!DOM.closestUntil(@__node, filter_node)
 
 		if match and filter.type
 			filtered = true
-			match = filter.type in @__types
+			if CUI.isArray(filter.type)
+				match = false
+				for _type in filter.type
+					match = _type in @__types
+					if match
+						break
+			else
+				match = filter.type in @__types
 
 		if match and filter.call
 			filtered = true

@@ -76,6 +76,9 @@ class CUI.Events extends CUI.Element
 			listeners = @__listeners.slice(0)
 		else
 			listeners = []
+			if CUI.DOM.matches(doc, '[cui-events-listener-element]')
+				listeners.push.apply(listeners, DOM.data(doc, "listeners"))
+
 		for el in CUI.DOM.matchSelector(doc, "[cui-events-listener-element]")
 			listeners.push.apply(listeners, DOM.data(el, "listeners"))
 		listeners
