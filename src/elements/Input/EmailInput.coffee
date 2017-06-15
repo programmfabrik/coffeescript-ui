@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class EmailInput extends Input
+class CUI.EmailInput extends CUI.Input
 	initOpts: ->
 		super()
 		@removeOpt("checkInput")
