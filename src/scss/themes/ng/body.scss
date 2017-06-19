@@ -941,6 +941,7 @@ li > div {
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
 	max-width: 100%;
+	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
 	  padding: 0 $padding/2;
