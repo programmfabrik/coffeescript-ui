@@ -3234,6 +3234,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-tr {
 	flex: 1 1 auto;
 	display: flex;
+	max-width: 100%;
 
 	&:empty {
 		padding: 0;
@@ -3451,6 +3452,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 	
 	&--flex {
+		display: block;
+		
 		.cui-tr {
 			display: flex;
 		}
@@ -3460,10 +3463,13 @@ a[role="button"].cui-button-appearance-link {
 			flex-shrink: 0;
 			word-wrap: break-word;
 			word-break: break-all;
+			display: block;
 		}
 		
 		.cui-td--value {
 			flex-grow: 1;
+			width: auto;
+			display: block;
 		}
 	}
 }
