@@ -2498,7 +2498,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ItemList
-.cui-item-list {
+.cui-item-list {	
 	.cui-label {
 	  cursor: default;
 	  padding: $padding+3px $padding 3px;
@@ -2555,12 +2555,16 @@ a[role="button"].cui-button-appearance-link {
 	  	}
 	  }
 
-	  &.cui-disabled {
-	  	.cui-button-visual {
-				color: $disabled-color;
-				background: none;
-	  	}
-	  }
+		&.cui-disabled {
+			&,
+			&:hover,
+			&.cui-active {
+				.cui-button-visual {
+					color: $disabled-color;
+					background: none;
+				}
+			}
+		}
 
 	  .cui-button-center {
 	    padding: 0;
