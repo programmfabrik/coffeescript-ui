@@ -879,8 +879,8 @@ class CUI.Layer extends CUI.DOM
 			top: vp.layer_pos.top + body_scroll_top
 			left: vp.layer_pos.left + body_scroll_left
 			minWidth: minWidth
-			maxWidth: Math.floor(vp.width + vp.overlap_width)
-			maxHeight: Math.floor(vp.height + vp.overlap_height)
+			maxWidth: Math.floor(vp.width + vp.overlap_width - vp.layer_pos.left)
+			maxHeight: Math.floor(vp.height + vp.overlap_height - vp.layer_pos.top)
 			margin: 0
 
 		if placement == "c"
