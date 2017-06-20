@@ -1066,7 +1066,7 @@ li > div {
 	}
 
 	.cui-button-center {
-		padding-right: 6px;
+		padding: 0;
 
 		[data-max-chars] {
 			text-align: inherit;
@@ -1075,6 +1075,10 @@ li > div {
 		span:empty:after {
 			content: " ";
 		}
+	}
+
+	.cui-button-left:empty + .cui-button-center {
+		padding: 0 6px 0 3px;
 	}
 }
 
@@ -2606,6 +2610,10 @@ a[role="button"].cui-button-appearance-link {
 			min-width: 15px;
 			box-sizing: content-box;
 			padding-left: 1px;
+			
+			&:only-child {
+				padding-right: 0;
+			}
 		}
 		// add space to button without icon
 		.cui-button-center:first-child {
