@@ -1962,10 +1962,13 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-form-hint {
-	margin-top: 5px;
+.cui-hint {
 	font-size: 12px;
 	color: $muted-color;
+}
+
+.cui-form-hint {
+	margin-top: 5px;
 
 	// IE layout fix: (layer form hint)
 	.cui-label-multiline {
