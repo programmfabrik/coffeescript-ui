@@ -3731,12 +3731,8 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	.cui-form {
+	.cui-form[cui-form-depth="1"] {
 		margin: $padding;
-
-		.cui-form {
-			margin: 0;
-		}
 	}
 }
 
