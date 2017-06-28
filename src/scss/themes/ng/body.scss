@@ -914,6 +914,7 @@ li > div {
 .cui-button-href {
 	// max-width: 100%; makes button icons unsharp (datepicker)
 	cursor: pointer;
+	max-width: 275px;
 }
 
 .cui-button-href.cui-button-appearance-link {
@@ -944,7 +945,7 @@ li > div {
 	justify-content: center;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
-	max-width: 100%;
+	// max-width: 100%; would overwrite the 275px max-width
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
@@ -1064,9 +1065,7 @@ li > div {
   }
 }
 
-.cui-button-select {
-	max-width: 275px;
-	
+.cui-button-select {	
 	.cui-button-visual {
 		padding: 0 4px 0 8px;
 	}
@@ -1213,6 +1212,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+// File Upload Button
+
+.cui-file-upload-button {
+	width: 100%;
+}
 
 // Checkbox
 .cui-checkbox {
