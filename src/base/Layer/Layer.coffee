@@ -123,15 +123,6 @@ class CUI.Layer extends CUI.DOM
 
 		@__layer_root.DOM.appendChild(@__layer.DOM)
 
-		Events.listen
-			type: "click"
-			node: @__layer
-			call: (ev) =>
-				if not ev.altKey()
-					return
-				@hide()
-				@show()
-
 		if @_handle_focus
 			DOM.setAttribute(@__layer.DOM, "tabindex", "0")
 
@@ -405,6 +396,8 @@ class CUI.Layer extends CUI.DOM
 			margin: ""
 			minWidth: ""
 			maxWidth: ""
+			maxWidth: ""
+			maxHeight: ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
