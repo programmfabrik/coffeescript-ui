@@ -1973,12 +1973,15 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-hint {
+.cui-hint,
+.cui-form-hint,
+.cui-form-hint-label {
 	font-size: 12px;
 	color: $muted-color;
 }
 
-.cui-form-hint {
+.cui-form-hint,
+.cui-form-hint-label {
 	margin-top: 5px;
 
 	// IE layout fix: (layer form hint)
