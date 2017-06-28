@@ -4124,7 +4124,7 @@ label[data-label-clickable],
 		padding: 0 4px 0 0;
 
 		.cui-drag-handle-row {
-			margin-top: 7px;
+			margin-top: 5px;
 		}
 	}
 }
@@ -4226,9 +4226,9 @@ label[data-label-clickable],
 }
 
 .cui-drag-handle-row {
-	margin-top: 2px;
+	margin-top: 4px; // 4px to center it next to our normal line-height of 18px
 	flex: 1 1 auto;
-	height: 12px;
+	height: 10px;
 	width: 100%;
 
 	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
