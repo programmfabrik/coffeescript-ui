@@ -33,6 +33,9 @@ class CUI.Block extends CUI.DOM
 		@addClass("appearance-"+@_appearance)
 		@addClass("cui-block-level-"+@_level)
 
+		if @_padded
+			@addClass("cui-block--padded")
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -50,12 +53,14 @@ class CUI.Block extends CUI.DOM
 				mandatory: true
 				default: 1
 				check: [1, 2, 3]
-
 			appearance:
 				deprectated: true
 				default: "normal"
 				mandatory: true
 				check: ["title","subtitle","normal"]
+			padded:
+				check: Boolean
+				default: true
 
 	readOpts: ->
 		super()
