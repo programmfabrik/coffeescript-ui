@@ -23,6 +23,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 		if @_checkInput
 			@addClass("cui-input-has-check-input")
+			@__checkInput = @_checkInput
 
 		if @_prevent_invalid_input
 			@addClass("cui-input-has-prevent-invalid-input")
@@ -113,6 +114,10 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			textarea:
 				check: Boolean
+			# limit the amount of rows in textarea input
+			rows:
+				check: (v) ->
+					v >= 1
 			content_size:
 				default: false
 				check: Boolean
@@ -124,9 +129,6 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 
 	readOpts: ->
-		if not isEmpty(@opts.regexp)
-			assert(not (@opts.checkInput), "new Input", "opts.regexp conflicts with opts.checkInput.")
-			assert(not @opts.hasOwnProperty("prevent_invalid_input"), "new Input", "opts.prevent_invalid_input conflicts with opts.regexp.")
 
 		if @opts.readonly
 			assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
@@ -143,17 +145,31 @@ class CUI.Input extends CUI.DataFieldInput
 
 		if @_regexp
 			@__regexp = new RegExp(@_regexp, @_regexp_flags)
-			@_prevent_invalid_input = false
-			@_checkInput = @__checkInputRegexp
+			# @_prevent_invalid_input = false
+			@__checkInput = (value) =>
+				if not @__checkInputRegexp(value)
+					false
+				else if @_checkInput
+					@_checkInput(value)
+				else
+					true
 
-		if @_required and not @_checkInput
-			@_checkInput = (opts) =>
-				opts.value.trim().lengt > 0
+		if @_required
+			@__checkInput = (value) =>
+				if value.trim().length == 0
+					false
+				else if @_checkInput
+					@_checkInput(value)
+				else
+					true
 
 		if @_spellcheck == false
 			@__spellcheck = "false"
 		else
 			@__spellcheck = "default"
+
+		if @_rows
+			assert(@_content_size, "new Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
 
 		if @_autocomplete == true
 			@__autocomplete = "on"
@@ -783,7 +799,7 @@ class CUI.Input extends CUI.DataFieldInput
 		@
 
 	preventInvalidInput: ->
-		if @_checkInput and @_prevent_invalid_input
+		if @__checkInput and @_prevent_invalid_input
 			true
 		else
 			false
@@ -838,6 +854,9 @@ class CUI.Input extends CUI.DataFieldInput
 
 	__shadowInput: (ev) ->
 		shadow_v = @__shadow0.value
+
+		if @_rows and shadow_v.split("\n").length > @_rows
+			return
 
 		if @preventInvalidInput() and shadow_v.length > 0
 			ret = @checkInput(@correctValueForInput(shadow_v))
@@ -932,8 +951,8 @@ class CUI.Input extends CUI.DataFieldInput
 		state
 
 	__checkInputInternal: (value = @__input0.value) ->
-		if @_checkInput
-			@_checkInput(value)
+		if @__checkInput
+			@__checkInput(value)
 		else
 			true
 
