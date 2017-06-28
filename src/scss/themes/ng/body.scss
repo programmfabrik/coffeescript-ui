@@ -126,6 +126,10 @@ textarea {
 	}
 }
 
+input {
+	max-width: 275px;
+}
+
 [data-max-chars] {
 	box-sizing: content-box;
 	text-align: center;
