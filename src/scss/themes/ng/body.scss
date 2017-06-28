@@ -3980,7 +3980,7 @@ label[data-label-clickable],
   flex-direction: column;
 }
 
-.cui-data-field-proxy	> .cui-button-button,
+// .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
 .cui-data-field-input	> .cui-button-select {
 	width: 100%;
 }
