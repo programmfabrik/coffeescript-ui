@@ -46,6 +46,8 @@ assert = (condition, caller, message, debug_output) ->
 	# msg += "\nCallstack:\n"+stack+"\n"
 	#
 	switch CUI.defaults.asserts_alert
+		when 'debugger'
+			debugger
 		when 'js'
 			alert(msg)
 		when 'cui'
