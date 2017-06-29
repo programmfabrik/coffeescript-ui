@@ -4583,6 +4583,7 @@ label[data-label-clickable],
 	margin-right: 0;
 	@include margin-top(0.5);
 	position: relative;
+	max-width: 275px;
 
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
