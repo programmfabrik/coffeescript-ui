@@ -4118,6 +4118,10 @@ label[data-label-clickable],
 
 .cui-options-inactive {
 	margin-top: $padding;
+	
+	&:empty {
+		margin-top: 0;
+	}
 }
 
 .cui-options-sortable-option {
@@ -4133,6 +4137,18 @@ label[data-label-clickable],
 		.cui-drag-handle-row {
 			margin-top: 5px;
 		}
+	}
+
+	.cui-button {
+		padding: 1px 0;
+	}
+
+	.cui-data-field {
+		flex-grow: 0;
+	}
+
+	.cui-empty-label {
+		margin: 3px 0;
 	}
 }
 
@@ -4152,18 +4168,6 @@ label[data-label-clickable],
 
 	&:empty {
 		min-height: 0;
-	}
-
-	.cui-button {
-		padding: 1px 0;
-	}
-
-	.cui-data-field {
-		flex-grow: 0;
-	}
-
-	.cui-empty-label {
-		margin: 3px 0;
 	}
 }
 
@@ -4196,11 +4200,10 @@ label[data-label-clickable],
 
 .cui-options-order-hint {
 	max-width: 250px;
-	font-size: 11px;
 	margin-top: $compensating-padding;
 	margin-left: 18px;
 	margin-bottom: 4px !important;
-	color: $secondary-color;
+	@extend .cui-hint;
 }
 
 .cui-drag-drop-select-draggable,
