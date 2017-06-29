@@ -4827,6 +4827,12 @@ label[data-label-clickable],
 		font-weight: bold;
 	}
 
+	&--padded {
+		> .cui-block-content {
+			padding: 0 $padding $padding;
+		}
+	}
+
 	&.cui-form-block--has-checkbox {
 		> .cui-block-header {
 			font-size: inherit;
@@ -4848,8 +4854,6 @@ label[data-label-clickable],
 }
 
 .cui-block-content {
-	padding: 0 $padding $padding;
-
 	&:empty {
 		display: none;
 	}
