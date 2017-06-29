@@ -3402,6 +3402,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
+	min-width: 14px;
 	flex: 0 0 auto;
 	padding-right: 6px;
 
@@ -3428,10 +3429,6 @@ a[role="button"].cui-button-appearance-link {
 			margin-top: 1px;
 		}
 	}
-}
-
-.cui-tree-node-spacer {
-	width: 14px;
 }
 
 .cui-tree-node-content {
