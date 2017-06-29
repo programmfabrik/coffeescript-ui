@@ -133,6 +133,7 @@ input {
 [data-max-chars] {
 	box-sizing: content-box;
 	text-align: center;
+	width: 200px;
 }
 
 // enlarge max-chars < 10
@@ -4146,6 +4147,9 @@ label[data-label-clickable],
 		}
 	}
 
+	// the following 3 statements are duplicate here
+	// because when dragged it doesn't have the options-center parent
+
 	.cui-button {
 		padding: 1px 0;
 	}
@@ -4170,15 +4174,23 @@ label[data-label-clickable],
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
-	max-width: 450px;
+	// max-width: 450px; conflict - it only allows for two columns, not more
 	flex-direction: column;
 
 	&:empty {
 		min-height: 0;
 	}
 
-	.cui-checkbox {
+	.cui-button {
+		padding: 1px 0;
+	}
+
+	.cui-data-field {
 		flex-grow: 0;
+	}
+
+	.cui-empty-label {
+		margin: 3px 0;
 	}
 }
 
