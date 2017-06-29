@@ -725,7 +725,7 @@ class CUI
 	@urlRegex: new RegExp(
 		"^" +
 		# protocol identifier
-		"(?:(?:(https?))://|)" +
+		"(?:(?:(ftp|ftps|https)?)://|)" +
 		# user:pass authentication
 		"(?:(\\S+?)(?::(\\S*))?@)?" +
 		"((?:(?:" +
