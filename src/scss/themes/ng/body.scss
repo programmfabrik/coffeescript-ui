@@ -1671,6 +1671,7 @@ a[role="button"].cui-button-appearance-link {
 	&:not(.cui-label-markdown) {
 		.cui-label-content {
 			word-wrap: break-word; // IE fallback
+			word-break: break-all;
 			word-break: break-word;
 			white-space: pre-wrap;
 		}
@@ -3864,6 +3865,7 @@ a[role="button"].cui-button-appearance-link {
 		margin: 4px 0;
 		// word-break: break-all; CONFLICT: creates crossword puzzles in IE11
 		word-wrap: break-word;
+		word-break: break-all;
 		word-break: break-word;
 		color: $secondary-color;
 	}
