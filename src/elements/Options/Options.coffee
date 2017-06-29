@@ -55,6 +55,12 @@ class CUI.Options extends CUI.DataField
 				default: "No options available."
 				check: String
 
+			columns:
+				check: (v) ->
+					if (isInteger(v) and v <= 12) # max 12 columns
+						return true
+				default: 1
+
 
 	readOpts: ->
 		super()
@@ -373,6 +379,7 @@ class CUI.Options extends CUI.DataField
 
 				opt.undo_support = false
 				opt.mark_changed = @_mark_changed
+				opt.multiline = true
 				if @getName()
 					if @__radio and not @__radio_use_array
 						opt.name = @__radio
@@ -425,6 +432,9 @@ class CUI.Options extends CUI.DataField
 					@addClass("cui-options--horizontal")
 				else
 					@addClass("cui-options--vertical")
+
+				if @_columns > 1
+					@addClass("cui-options--columns-#{@_columns}")
 
 				if @_activatable
 					@empty("active")
