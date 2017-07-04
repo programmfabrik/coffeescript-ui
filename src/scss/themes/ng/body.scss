@@ -126,10 +126,6 @@ textarea {
 	}
 }
 
-input {
-	max-width: 275px;
-}
-
 [data-max-chars] {
 	box-sizing: content-box;
 	text-align: center;
@@ -1901,6 +1897,7 @@ a[role="button"].cui-button-appearance-link {
 
 	input,
 	textarea {
+		max-width: 275px;
 		padding: 0 7px;
 		line-height: 22px;
 		outline: none;
@@ -3603,6 +3600,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-td--url input {
 	min-width: 300px;
+	max-width: 100%;
 }
 
 .status-2d-map {
