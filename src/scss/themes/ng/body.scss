@@ -3411,12 +3411,16 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
-	min-width: 14px;
+	width: 14px;
 	flex: 0 0 auto;
-	padding-right: 6px;
 
 	.fa-caret-right {
 		width: 8px;
+	}
+
+	.svg-spinner {
+		width: 10px;
+		height: 10px;
 	}
 }
 
@@ -3424,7 +3428,7 @@ a[role="button"].cui-button-appearance-link {
 	height: 18px;
 	display: flex;
 	text-align: center;
-	justify-content: flex-end;
+	// justify-content: flex-end; // conflict: left-align icons
 	align-items: center;
 
 	&.cui-tree-node-is-closed {
