@@ -998,16 +998,16 @@ li > div {
 	&.cui-button--primary {
 		.cui-button-visual {
 			color: $on-highlight-color;
-			background: $highlight-color;
-			border-color: darken($highlight-color, 7%);
+			background: lighten($highlight-color, 3%);
+			border-color: darken($highlight-color, 3%);
 		}
 
 		&.cui-layer-open,
 		&:active {
 			.cui-button-visual {
-				color: darken($on-highlight-color, 9%);
-				background: darken($highlight-color, 9%);
-				border-color: darken($highlight-color, 16%);
+				color: darken($on-highlight-color, 6%);
+				background: darken($highlight-color, 6%);
+				border-color: darken($highlight-color, 12%);
 			}
 		}
 	}
