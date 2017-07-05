@@ -168,8 +168,8 @@ class CUI.Input extends CUI.DataFieldInput
 		else
 			@__spellcheck = "default"
 
-		if @_rows
-			assert(@_content_size, "new Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
+		# if @_rows
+		# 	assert(@_content_size, "new Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
 
 		if @_autocomplete == true
 			@__autocomplete = "on"
@@ -805,7 +805,7 @@ class CUI.Input extends CUI.DataFieldInput
 			false
 
 	__initShadowInput: ->
-		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput or @_readonly)
+		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput or @_readonly or @_rows)
 			return
 
 		if @__shadow

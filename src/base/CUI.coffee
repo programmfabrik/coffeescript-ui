@@ -21,7 +21,7 @@ class CUI
 
 		@getPathToScript()
 		trigger_viewport_resize = =>
-			CUI.info("CUI: trigger viewport resize.")
+			console.info("CUI: trigger viewport resize.")
 			Events.trigger
 				type: "viewport-resize"
 
