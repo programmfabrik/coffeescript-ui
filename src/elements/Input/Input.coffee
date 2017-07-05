@@ -48,6 +48,9 @@ class CUI.Input extends CUI.DataFieldInput
 
 			@addClass("cui-input-has-"+k+"-hint")
 
+		@__doSetContentSize = =>
+			@__setContentSize()
+
 		return
 
 
@@ -477,7 +480,9 @@ class CUI.Input extends CUI.DataFieldInput
 			return @
 
 		if @__contentSize
-			@__setContentSize()
+			CUI.scheduleCallback
+				call: @__doSetContentSize
+				ms: 100
 		else
 			@__initContentSize()
 			@__setContentSize()
