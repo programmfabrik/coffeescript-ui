@@ -123,6 +123,11 @@ class CUI.Modal extends CUI.LayerPane
 		@position()
 		@
 
+	setContent: (content) ->
+		@getPane().replace(content, 'center')
+		@position()
+		@
+
 	hide: (ev) ->
 		@getPane().endFillScreen(false) # no transition
 		super(ev)

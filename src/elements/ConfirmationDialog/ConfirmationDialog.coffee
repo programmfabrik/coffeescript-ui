@@ -88,7 +88,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 
 	setText: (text, markdown = @_markdown, markdown_opts = @_markdown_opts) ->
 		@__label = new MultilineLabel(markdown: markdown, markdown_opts: markdown_opts, text: text, icon: @_text_icon)
-		@getPane().replace(@__label, "content")
+		@setContent(@__label)
 
 	getButtons: ->
 		[pane, key] = @getPane().getPaneAndKey("footer_right")
