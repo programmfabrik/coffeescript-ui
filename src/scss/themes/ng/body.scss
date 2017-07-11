@@ -3884,7 +3884,7 @@ a[role="button"].cui-button-appearance-link {
 
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
-	cursor: pointer;
+	@include clickable;
 }
 
 .cui-form-table:not([cui-form-depth="0"]) {
@@ -3916,6 +3916,11 @@ label[data-label-clickable],
 	.cui-form-field-type--checkbox > & {
 		.cui-button-checkbox {
 			padding: 0;
+			vertical-align: text-top;
+			
+			.cui-button-left {
+				padding-top: 2px;
+			}
 		}
 	}
 }
