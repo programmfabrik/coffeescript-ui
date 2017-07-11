@@ -407,6 +407,7 @@ li > div {
 	}
 	&.cui-flex-handle-closed {
 		cursor: pointer;
+		overflow: hidden;
 	}
 	&.cui-flex-handle-manual-size {
 		// background-color: #64fdd8;
