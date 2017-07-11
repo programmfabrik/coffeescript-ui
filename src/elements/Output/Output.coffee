@@ -92,6 +92,7 @@ class Output extends DataFieldInput
 			@addClass("cui-output--deletable")
 			@__deleteBtn = new Button
 				icon: "remove"
+				appearance: "flat"
 				onClick: =>
 					@setValue(null, no_trigger: false)
 			@append(@__deleteBtn)

@@ -4016,14 +4016,29 @@ label[data-label-clickable],
 
 	&--deletable {
 		display: flex;
+		border: 1px solid $button-border;
+		border-radius: $button-radius;
+		color: $button-color;
+		cursor: default;
 
 		.cui-label {
-			flex-shrink: 1;
+			flex: 1 1 0;
 			min-width: 0;
+			margin-left: $padding;
+			padding: 2px 0;
 		}
 
 		.cui-button {
 			margin-left: $padding/2;
+			
+			&-visual {
+				color: inherit;
+			}
+
+			.svg-close {
+				width: 9px;
+				height: 9px;
+			}
 		}
 	}
 
