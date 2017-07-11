@@ -281,7 +281,9 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 				if @accept(ev, info) != false
 					ev.stopPropagation()
-					@_drop(ev, info)
+					CUI.setTimeout
+						call: =>
+							@_drop(ev, info)
 
 				return
 
