@@ -872,9 +872,13 @@ class CUI.Layer extends CUI.DOM
 			top: vp.layer_pos.top + body_scroll_top
 			left: vp.layer_pos.left + body_scroll_left
 			minWidth: minWidth
-			maxWidth: vp.width + vp.overlap_width - (vp.layer_pos.left - vp.left)
-			maxHeight: vp.height + vp.overlap_height - (vp.layer_pos.top - vp.top)
 			margin: 0
+
+		if not dim_layer.computedStyle.maxWidth
+			set_css.maxWidth = vp.width + vp.overlap_width - (vp.layer_pos.left - vp.left)
+
+		if not dim_layer.computedStyle.maxHeight
+			set_css.maxHeight =  vp.height + vp.overlap_height - (vp.layer_pos.top - vp.top)
 
 		if placement == "c"
 			is_fixed = true
