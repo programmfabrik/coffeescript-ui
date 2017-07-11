@@ -1256,6 +1256,7 @@ a[role="button"].cui-button-appearance-link {
 	display: inline-flex; // so that the click area is not wider than the text
 	flex-direction: row;
 	cursor: pointer;
+	min-height: 18px;
 	line-height: 18px;
 	align-self: flex-start;
 	max-width: 100%;
@@ -3877,7 +3878,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-field-type--checkbox > & {
 		label,
 		.cui-label {
-			margin: 0;
+			margin: 1px 0;
 		}
 	}
 }
@@ -3917,10 +3918,6 @@ label[data-label-clickable],
 		.cui-button-checkbox {
 			padding: 0;
 			vertical-align: text-top;
-			
-			.cui-button-left {
-				padding-top: 2px;
-			}
 		}
 	}
 }
