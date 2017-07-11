@@ -396,7 +396,6 @@ class CUI.Layer extends CUI.DOM
 			margin: ""
 			minWidth: ""
 			maxWidth: ""
-			maxWidth: ""
 			maxHeight: ""
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
@@ -874,10 +873,10 @@ class CUI.Layer extends CUI.DOM
 			minWidth: minWidth
 			margin: 0
 
-		if not dim_layer.computedStyle.maxWidth
+		if not dim_layer.computedStyle.maxWidth or dim_layer.computedStyle.maxWidth == 'none'
 			set_css.maxWidth = vp.width + vp.overlap_width - (vp.layer_pos.left - vp.left)
 
-		if not dim_layer.computedStyle.maxHeight
+		if not dim_layer.computedStyle.maxHeight or dim_layer.computedStyle.maxHeight == 'none'
 			set_css.maxHeight =  vp.height + vp.overlap_height - (vp.layer_pos.top - vp.top)
 
 		if placement == "c"
