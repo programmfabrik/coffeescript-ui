@@ -1664,7 +1664,6 @@ a[role="button"].cui-button-appearance-link {
 			word-wrap: break-word; // IE fallback
 			word-break: break-all;
 			word-break: break-word;
-			white-space: pre-wrap;
 		}
 	}
 
@@ -2348,7 +2347,7 @@ a[role="button"].cui-button-appearance-link {
 				word-wrap: break-word; // IE fallback
 				word-break: break-all;
 				word-break: break-word;
-				white-space: pre-wrap;
+				white-space: normal;
 			}
 		}
 	}
