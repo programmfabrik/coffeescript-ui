@@ -364,7 +364,6 @@ class CUI.ListView extends CUI.SimplePane
 			node: @grid
 			call: (ev, info) =>
 				# console.error "ListView[##{@listViewCounter}][#{ev.getDebug()}]:",@DOM[0],"hasLayout: ", @__hasLayout, @, info
-
 				if not @__hasLayout
 					return
 
@@ -391,6 +390,7 @@ class CUI.ListView extends CUI.SimplePane
 				if @fixedColsCount > 0 and DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
 					# row has not been measured
 					return
+
 				@__resetRowDim(row)
 				@__scheduleLayout()
 				return

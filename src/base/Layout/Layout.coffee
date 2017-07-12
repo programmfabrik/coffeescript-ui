@@ -48,6 +48,7 @@ class CUI.Layout extends CUI.DOM
 					CUI.isPlainObject(v) or v == false
 			)
 
+
 	readOpts: ->
 		# DEBUG
 		# without absolute "help", FF and Safari perform badly, Chrome & IE (Edge) are fine
@@ -119,6 +120,14 @@ class CUI.Layout extends CUI.DOM
 			map: @getTemplateMap()
 
 		@registerTemplate(@__layout)
+
+		if @__maximize_horizontal and @__maximize_vertical
+			Events.listen
+				type: "content-resize"
+				instance: @
+				node: @DOM
+				call: (ev) =>
+					ev.stopPropagation()
 
 		@maximizeAddClasses()
 
