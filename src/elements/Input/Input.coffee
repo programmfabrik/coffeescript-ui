@@ -82,6 +82,9 @@ class CUI.Input extends CUI.DataFieldInput
 			validHint:
 				check: (v) ->
 					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+			maxLength:
+				check: (v) ->
+					v >= 0
 			onFocus:
 				check: Function
 			onClick:
@@ -215,20 +218,16 @@ class CUI.Input extends CUI.DataFieldInput
 			@__input = $element "textarea", "cui-textarea",
 				placeholder: @getPlaceholder()
 				tabindex: "0"
+				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 		else
-			if CUI.__ng__
-				# this is the way to make input not behave irratically
-				size = 1
-			else
-				size = undefined
-
 			@__input = $element "input", "cui-input",
 				type: input_type
-				size: size
+				size: 1
 				placeholder: @getPlaceholder()
 				tabindex: "0"
+				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				autocomplete: @__autocomplete

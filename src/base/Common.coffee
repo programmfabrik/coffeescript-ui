@@ -33,7 +33,7 @@ assert = (condition, caller, message, debug_output) ->
 			parms.push(key)
 			args.push(value)
 
-		CUI.debug.apply(console, args)
+		console.debug.apply(console, args)
 
 	if parms.length
 		msg = "#{caller}(#{parms.join(",")})"
