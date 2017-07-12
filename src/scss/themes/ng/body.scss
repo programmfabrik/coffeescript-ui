@@ -3879,6 +3879,7 @@ a[role="button"].cui-button-appearance-link {
 		label,
 		.cui-label {
 			margin: 1px 0;
+			line-height: 16px;
 		}
 	}
 }
@@ -3917,7 +3918,6 @@ label[data-label-clickable],
 	.cui-form-field-type--checkbox > & {
 		.cui-button-checkbox {
 			padding: 0;
-			vertical-align: text-top;
 		}
 	}
 }
