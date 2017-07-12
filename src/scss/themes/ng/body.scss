@@ -2390,6 +2390,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-alert {
+	.cui-pane-footer .cui-button {
+		min-width: 60px;
+	}
+}
+
 // Spinner
 .cui-spinner {
 	min-width: 0;
