@@ -1178,7 +1178,7 @@ li > div {
 a[role="button"].cui-button-appearance-link {
 	height: initial;
 	> .cui-button-center {
-		word-break: break-all;
+		word-wrap: break-word;
 	}
 }
 
@@ -1663,9 +1663,8 @@ a[role="button"].cui-button-appearance-link {
 
 	&:not(.cui-label-markdown) {
 		.cui-label-content {
-			word-wrap: break-word; // IE fallback
-			word-break: break-all;
-			word-break: break-word;
+			word-wrap: break-word;
+			white-space: pre-wrap;
 		}
 	}
 
@@ -2344,11 +2343,13 @@ a[role="button"].cui-button-appearance-link {
 	.cui-layer > .cui-layer-pane {
 		> .cui-vertical-layout-center {
 			max-width: 500px;
-
-			.cui-label-content {
-				word-wrap: break-word; // IE fallback
-				word-break: break-all;
-				word-break: break-word;
+			
+			// turn all labels into multiline labels
+			.cui-label:not(.cui-label-markdown) {
+				.cui-label-content {
+					word-wrap: break-word;
+					white-space: pre-wrap;
+				}
 			}
 		}
 	}
@@ -3022,7 +3023,7 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		> .cui-tmpl-label-rotate-90 {
-			word-break: break-all;
+			word-wrap: break-word;
 			margin-left: -3px;
 		}
 
@@ -3487,7 +3488,6 @@ a[role="button"].cui-button-appearance-link {
 			width: $td-width;
 			flex-shrink: 0;
 			word-wrap: break-word;
-			word-break: break-all;
 			display: block;
 		}
 
@@ -3564,6 +3564,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-td--value {
 	vertical-align: top;
+	word-wrap: break-word;
 	word-break: break-all;
 	word-break: break-word;
 	width: 100%;
@@ -3660,8 +3661,7 @@ a[role="button"].cui-button-appearance-link {
 			max-width: none;
 
 			label {
-				word-break: break-all;
-				word-break: break-word;
+				word-wrap: break-word;
 				white-space: normal;
 				min-width: $td-min-width;
 			}
@@ -3859,6 +3859,7 @@ a[role="button"].cui-button-appearance-link {
 	vertical-align: top;
 }
 
+
 .cui-form-key {
 	width: $td-width;
 	min-width: $td-width;
@@ -3868,10 +3869,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-label {
 		display: inline-block;
 		margin: 4px 0;
-		// word-break: break-all; CONFLICT: creates crossword puzzles in IE11
 		word-wrap: break-word;
-		word-break: break-all;
-		word-break: break-word;
 		color: $secondary-color;
 	}
 
