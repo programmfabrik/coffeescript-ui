@@ -137,11 +137,11 @@ class CUI.XHR extends CUI.Element
 
 	__download_abort: ->
 		@__setStatus(-1)
-		CUI.warn("Aborted:", @__readyStatesSeen, @)
+		console.warn("Aborted:", @__readyStatesSeen, @)
 
 	__download_timeout: ->
 		@__setStatus(-2)
-		CUI.warn("Timeout:", @__readyStatesSeen, @)
+		console.warn("Timeout:", @__readyStatesSeen, @)
 
 	__download_loadend: ->
 		# CUI.info("Loadend:", @__readyStatesSeen, @__status, @status())

@@ -106,7 +106,7 @@ class FileUploadFile extends CUI.Element
 				@__progress.status = "ABORT"
 				@__dfr.reject(@)
 			when "STARTED","PROGRESS","COMPLETED"
-				CUI.debug "FileUploadFile.abort:", @__upload
+				console.debug("FileUploadFile.abort:", @__upload)
 				@__upload.abort()
 			when "ABORT","DEQUEUED"
 				;
@@ -147,6 +147,7 @@ class FileUploadFile extends CUI.Element
 			@__upload = new CUI.XHR
 				url: url
 				form: form
+
 			@__upload
 			.start()
 			.progress (type, loaded, total, percent) =>
@@ -210,4 +211,3 @@ class FileUploadFile extends CUI.Element
 		@__progress.percent = 0
 		@__dfr.notify(@)
 		@__promise
-

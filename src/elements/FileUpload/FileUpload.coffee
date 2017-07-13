@@ -155,7 +155,7 @@ class FileUpload extends CUI.Element
 				@checkBatchDone(f)
 
 			dont_queue_file = =>
-				CUI.debug("FileUpload.onAdd: Skipping file, function returned 'false'.")
+				console.debug("FileUpload.onAdd: Skipping file, function returned 'false'.")
 				next_file()
 
 			queue_file = =>
@@ -165,15 +165,20 @@ class FileUpload extends CUI.Element
 				f.queue()
 				next_file()
 
+			@__isQueueing = true
+
 			CUI.decide(@_onAdd?(f))
 			.done =>
 				queue_file()
 			.fail =>
 				dont_queue_file()
+			.always =>
+				@__isQueueing = false
 
 		next_file()
 		@
 
+	# this also aborts
 	clear: ->
 		while file = @__files[0]
 			file.remove()
@@ -183,6 +188,9 @@ class FileUpload extends CUI.Element
 		removeFromArray(file, @__files)
 
 	isDone: ->
+		if @__isQueueing
+			return false
+
 		for f in @__files
 			if not f.isDone()
 				return false
