@@ -121,13 +121,14 @@ class CUI.Layout extends CUI.DOM
 
 		@registerTemplate(@__layout)
 
-		if @__maximize_horizontal and @__maximize_vertical
-			Events.listen
-				type: "content-resize"
-				instance: @
-				node: @DOM
-				call: (ev) =>
-					ev.stopPropagation()
+		# if @__maximize_horizontal and @__maximize_vertical
+		# 	Events.listen
+		# 		type: "content-resize"
+		# 		instance: @
+		# 		node: @DOM
+		# 		call: (ev) =>
+		# 			console.debug "stop", ev
+		# 			ev.stopPropagation()
 
 		@maximizeAddClasses()
 
