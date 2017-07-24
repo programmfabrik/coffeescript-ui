@@ -622,7 +622,7 @@ class CUI
 					url.push(encode_func(k) + connect_pair + encode_func(_v))
 			else if not isEmpty(v)
 				url.push(encode_func(k) + connect_pair + encode_func(v))
-			else
+			else if v != undefined
 				url.push(encode_func(k))
 
 		url.join(connect)
