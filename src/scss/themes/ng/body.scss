@@ -1063,7 +1063,7 @@ li > div {
   }
 }
 
-.cui-button-select {	
+.cui-button-select {
 	.cui-button-visual {
 		padding: 0 4px 0 8px;
 	}
@@ -2343,7 +2343,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-layer > .cui-layer-pane {
 		> .cui-vertical-layout-center {
 			max-width: 500px;
-			
+
 			// turn all labels into multiline labels
 			.cui-label:not(.cui-label-markdown) {
 				.cui-label-content {
@@ -2633,7 +2633,7 @@ a[role="button"].cui-button-appearance-link {
 			min-width: 15px;
 			box-sizing: content-box;
 			padding-left: 1px;
-			
+
 			&:only-child {
 				padding-right: 0;
 			}
@@ -2944,14 +2944,8 @@ a[role="button"].cui-button-appearance-link {
 
 // ListView
 .cui-list-view {
-	flex-shrink: 1;
 	min-height: 0;
-	display: inline-flex;
 	flex-direction: column;
-
-	&.cui-maximize-horizontal {
-		display: flex;
-	}
 
 	.cui-label-size-normal {
 		line-height: $table-data-height - $table-data-padding*2;
@@ -3315,8 +3309,11 @@ a[role="button"].cui-button-appearance-link {
 		// leave padding-left and padding-right
 		// because its used to measure
 		// the column width for headers
-		padding-top: 0;
-		padding-bottom: 0;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
+		height: 0 !important;
 	}
 }
 
@@ -3686,7 +3683,7 @@ a[role="button"].cui-button-appearance-link {
 		flex-wrap: wrap;
 		margin: 10px 0 !important; // overwrite cui-form-table[cui-form-depth="0"]
 		width: 100% !important;
-		
+
 		.cui-form-tr {
 			display: block;
 			padding: 0 10px;
@@ -4036,7 +4033,7 @@ label[data-label-clickable],
 
 		.cui-button {
 			margin-left: $padding/2;
-			
+
 			&-visual {
 				color: inherit;
 			}
@@ -4143,7 +4140,7 @@ label[data-label-clickable],
 
 .cui-options-inactive {
 	margin-top: $padding;
-	
+
 	&:empty {
 		margin-top: 0;
 	}
