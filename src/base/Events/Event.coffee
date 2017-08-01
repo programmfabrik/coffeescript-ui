@@ -133,7 +133,8 @@ class CUI.Event extends CUI.Element
 			@__isInDOM = DOM.isInDOM(@__node)
 
 	setNativeEvent: (NativeEvent) ->
-		# assert(NativeEvent instanceof window.Event, "CUI.Event.setNativeEvent", "Event needs to be instanceof Event", Event: NativeEvent)
+		# avoid checking instanceof, so external initializers like TestCafé work
+		assert(typeof(v) == 'object', "CUI.Event.setNativeEvent", "Event needs to be instanceof Event", Event: NativeEvent)
 		@__NativeEvent = NativeEvent
 		@
 

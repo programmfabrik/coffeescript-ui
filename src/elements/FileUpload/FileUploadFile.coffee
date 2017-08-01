@@ -26,7 +26,8 @@ class FileUploadFile extends CUI.Element
 			file:
 				mandatory: true
 				check: (v) ->
-					v instanceof File
+					# avoid instanceof, so external initializers like TestCafé work
+					typeof(v) == 'object'
 			fileUpload:
 				mandatory: true
 				check: FileUpload
