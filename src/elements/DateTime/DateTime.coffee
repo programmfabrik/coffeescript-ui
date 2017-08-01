@@ -644,7 +644,7 @@ class CUI.DateTime extends CUI.Input
 		return
 
 	setMomentFromInput: ->
-		inp = @__input0.value.trim()
+		inp = @__input.value.trim()
 		if inp.length > 0
 			@__current_moment = @parse(inp)
 
@@ -657,7 +657,7 @@ class CUI.DateTime extends CUI.Input
 
 	setInputFromMoment: ->
 		@__clearOverwriteMonthAndYear()
-		# @__input0.value = @__current_moment.format(@__input_format.input)
+		# @__input.value = @__current_moment.format(@__input_format.input)
 		# console.error "stored value:", @__input.val()
 		# @storeValue(@__input.val())
 		@setValue(@__current_moment.format(@__input_format.input), no_trigger: false)
