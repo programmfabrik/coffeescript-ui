@@ -117,8 +117,15 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 			for idx in [0...data.length]
 				nodes.push(new CUI.ObjectDumperNode(key: idx, data: data[idx], do_open: @_do_open, parse_json: @_parse_json))
 		else
-			for k, v of data
+			keys = []
+			for k of data
+				keys.push(k)
+
+			keys.sort (a, b) ->
+				a.localeCompare(b)
+
+			for k in keys
+				v = data[k]
 				nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open, parse_json: @_parse_json))
 
 		nodes
-
