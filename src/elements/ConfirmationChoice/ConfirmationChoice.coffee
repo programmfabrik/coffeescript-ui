@@ -47,6 +47,8 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			check: Icon
 		choice:
 			check: String
+		tooltip:
+			check: "PlainObject"
 		cancel:
 			default: false
 			check: Boolean
@@ -73,6 +75,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 				left: true
 				value: choice
 				disabled: choice.disabled
+				tooltip: choice.tooltip
 				onClick: (ev, btn) =>
 					@__choice = btn.getValue()
 					CUI.chainedCall(
