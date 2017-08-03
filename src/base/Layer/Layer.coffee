@@ -99,7 +99,7 @@ class CUI.Layer extends CUI.DOM
 								type: "click"
 								node: @__backdrop
 								call: (ev) =>
-									CUI.debug "clicked on modal backdrop", bc, @_backdrop
+									# console.debug "clicked on modal backdrop", bc, @_backdrop
 									if not @__layer
 										return
 
@@ -1196,12 +1196,17 @@ CUI.ready ->
 		node: document.body
 		call: (ev, info) ->
 
-			layer_elements = DOM.findElements(document.body,
-				"body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru"
-			)
+			layer_elements = CUI.DOM.find("body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru")
 			target = ev.getTarget()
+			idx = -1
+			len = layer_elements.length
 
-			while layer_element = layer_elements.pop()
+			while true
+				idx = idx + 1
+				if idx == len
+					break
+
+				layer_element = layer_elements[idx]
 
 				if not CUI.DOM.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")
 					return
