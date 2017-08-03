@@ -1198,15 +1198,8 @@ CUI.ready ->
 
 			layer_elements = CUI.DOM.find("body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru")
 			target = ev.getTarget()
-			idx = -1
-			len = layer_elements.length
 
-			while true
-				idx = idx + 1
-				if idx == len
-					break
-
-				layer_element = layer_elements[idx]
+			for layer_element in layer_elements by -1
 
 				if not CUI.DOM.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")
 					return
@@ -1244,7 +1237,7 @@ CUI.ready ->
 			if ev.keyCode() != 27 or window.globalDrag
 				return
 
-			layer_elements = DOM.findElements(document.body, "body > .cui-tmpl-layer-root > .cui-layer")
+			layer_elements = DOM.find("body > .cui-tmpl-layer-root > .cui-layer")
 			layer_element = layer_elements[layer_elements.length-1]
 
 			# console.error ev.getType(), ev, layer_elements
