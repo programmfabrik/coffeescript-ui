@@ -134,7 +134,7 @@ class CUI.Event extends CUI.Element
 
 	setNativeEvent: (NativeEvent) ->
 		# avoid checking instanceof, so external initializers like TestCafé work
-		assert(typeof(v) == 'object', "CUI.Event.setNativeEvent", "Event needs to be instanceof Event", Event: NativeEvent)
+		assert(typeof(NativeEvent) == 'object', "CUI.Event.setNativeEvent", "Event needs to be instanceof Event", Event: NativeEvent)
 		@__NativeEvent = NativeEvent
 		@
 
