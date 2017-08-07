@@ -1981,6 +1981,14 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-hint,
 .cui-form-hint-label {
 	margin-top: 5px;
+	
+	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+		padding-left: 5px;
+	}
+
+	.fa {
+		font-size: 12px;	
+	}
 
 	// IE layout fix: (layer form hint)
 	.cui-label-multiline {
