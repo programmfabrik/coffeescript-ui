@@ -225,7 +225,11 @@ class CUI.ListView extends CUI.SimplePane
 		html.push("<style></style>")
 
 		add_quadrant = (qi) =>
-			html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\">")
+			if qi is 3
+				# add tabindex="-1"
+				html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\" tabindex=\"-1\">")
+			else
+				html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\">")
 
 			if qi in [2, 3]
 				html.push("<div class=\"cui-lv-tr-fill-outer\"><div class=\"cui-lv-tr\">")
