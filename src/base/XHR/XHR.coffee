@@ -151,7 +151,7 @@ class CUI.XHR extends CUI.Element
 			if not @status() and not @__status
 				# check ready states if we can determine a pseudo status
 				@__setStatus(-3)
-				CUI.debug "status", @__status
+				console.debug("XHR.__download_loadend", @getXHR())
 
 			@__dfr.reject(@response(), @status(), @statusText())
 		@
@@ -249,7 +249,6 @@ class CUI.XHR extends CUI.Element
 
 	getXHR: ->
 		@__xhr
-
 
 	getAllResponseHeaders: ->
 		headers = []
