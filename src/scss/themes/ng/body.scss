@@ -2986,6 +2986,7 @@ a[role="button"].cui-button-appearance-link {
 .list-view-header-row {
 	.cui-label {
 		align-items: flex-end;
+		font-weight: bold;
 	}
 
 	.cui-lv-td {
@@ -3203,6 +3204,10 @@ a[role="button"].cui-button-appearance-link {
 	flex: 1 1 auto;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
+	
+	&:focus {
+		outline: none;
+	}
 }
 
 .cui-list-view-grid-quadrant-2,
