@@ -110,6 +110,7 @@ $table-data-padding: 4px;
 $td-width: 135px;
 $td-min-width: 100px;
 $td-height: 18px;
+$row-move-handle-width: $padding/2 + $table-data-padding*2+2;
 
 $error-color: hsl(10,90%,52%);
 $on-error-color: white;

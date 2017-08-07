@@ -3289,7 +3289,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-lv-td {
-		width: $padding/2 + $table-data-padding*2+2;
+		width: $row-move-handle-width;
 		padding-left: $table-data-padding+2;
 		padding-right: 0;
 	}
