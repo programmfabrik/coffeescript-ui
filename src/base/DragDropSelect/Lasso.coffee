@@ -101,7 +101,13 @@ class CUI.Lasso extends CUI.Draggable
 				removeFromArray(el, globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		window.globalDrag.lasso.css("transform", "translate3d(#{left}px,#{top}px,0) scale(#{width},#{height})")
+		window.globalDrag.lasso.css
+			left: left
+			top: top
+			width: width
+			height: height
+		# this has problems when browser is set to zoom != 100%
+		# ("transform", "translate3d(#{left}px,#{top}px,0) scale(#{width},#{height})")
 
 	get_lassoed_elements: ->
 		get_dim = (el) ->
