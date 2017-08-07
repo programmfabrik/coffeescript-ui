@@ -400,6 +400,8 @@ class CUI.Layer extends CUI.DOM
 
 		dim_layer = CUI.DOM.getDimensions(@__layer.DOM)
 
+		# console.debug "layer dimensions:", dim_layer.borderBoxWidth, dim_layer.borderBoxHeight, @__layer.DOM
+
 		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
@@ -568,6 +570,8 @@ class CUI.Layer extends CUI.DOM
 					layer_pos.width = dim_layer.borderBoxWidth
 					layer_pos.height = dim_layer.borderBoxHeight
 
+			# console.debug placement, vp, layer_pos.width, layer_pos.height, vp.width, vp.height
+
 			if layer_pos.width > vp.width
 				layer_pos.width = vp.width
 				vp.cuts++
@@ -653,6 +657,8 @@ class CUI.Layer extends CUI.DOM
 
 
 				overlap_width = dim_layer.borderBoxWidth - layer_pos.width
+
+				# console.debug "overlap:", dim_layer.borderBoxWidth, layer_pos.width, overlap_width
 
 				if overlap_width > 0
 					switch vp.overlap_align
@@ -874,10 +880,10 @@ class CUI.Layer extends CUI.DOM
 			margin: 0
 
 		if not dim_layer.computedStyle.maxWidth or dim_layer.computedStyle.maxWidth == 'none'
-			set_css.maxWidth = vp.width + vp.overlap_width - (vp.layer_pos.left - vp.left)
+			set_css.maxWidth = vp.width + vp.overlap_width # - (vp.layer_pos.left - vp.left)
 
 		if not dim_layer.computedStyle.maxHeight or dim_layer.computedStyle.maxHeight == 'none'
-			set_css.maxHeight =  vp.height + vp.overlap_height - (vp.layer_pos.top - vp.top)
+			set_css.maxHeight =  vp.height + vp.overlap_height # - (vp.layer_pos.top - vp.top)
 
 		if placement == "c"
 			is_fixed = true
