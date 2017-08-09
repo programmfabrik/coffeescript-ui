@@ -35,13 +35,14 @@ class CUI.Tab extends CUI.DOM
 	initButton: (tabs) ->
 		assert(tabs instanceof CUI.Tabs, "Tab.initButton", "Parameter #1 need to be instance of Tabs.", tabs: tabs)
 
-		@__button = new Button
+		@__button = new CUI.Button
 			role: "tab-header"
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
 			disabled: @_disabled
-			size: if CUI.__ng__ then "normal" else "big"
-			group: if CUI.__ng__ then "tabs" else null
+			id: @_button_id
+			size: "normal"
+			group: "tabs"
 			text: @_text
 			attr:
 				tab: @_name
@@ -73,6 +74,8 @@ class CUI.Tab extends CUI.DOM
 		super()
 		@addOpts
 			name:
+				check: String
+			button_id:
 				check: String
 			text:
 				mandatory: true

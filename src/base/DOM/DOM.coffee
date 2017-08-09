@@ -14,6 +14,10 @@ class CUI.DOM extends CUI.Element
 				default: ""
 				check: String
 
+			# add a DOM id
+			id:
+				check: String
+
 			attr:
 				default: {}
 				check: "PlainObject"
@@ -27,23 +31,24 @@ class CUI.DOM extends CUI.Element
 		@registerDOMElement(@__template.DOM, add_default_classes)
 
 	getDOMElementClasses: ->
-		if CUI.__ng__
-			# return "cui-dom-element cui-#{toDash(@__cls)}"
-			return "cui-#{toDash(@__cls)}"
-		else
-			return "cui-dom-element cui-#{toDash(@__cls)} ez-#{toDash(@__cls)}"
+		return 'cui-'+toDash(@__cls)
 
-	registerDOMElement: (_dom, add_default_classes=true) ->
-		@DOM = _dom
+	registerDOMElement: (@DOM, add_default_classes=true) ->
+
 		if add_default_classes
 			CUI.DOM.addClass(@DOM, @getDOMElementClasses())
-			DOM.setAttributeMap(@DOM, @_attr)
 
-		# CUI.DOM.setAttribute(@DOM, "id", "cui-dom-element-"+@getUniqueId())
+		if @_attr
+			CUI.DOM.setAttributeMap(@DOM, @_attr)
+
+		if @_id
+			CUI.DOM.setAttribute(@DOM, 'id', @_id)
+
 		if @_class
-			# CUI.debug DOM, @DOM, @_class
-			CUI.DOM.addClass(@DOM, @_class) # @DOM.addClass(@_class)
+			CUI.DOM.addClass(@DOM, @_class)
+
 		CUI.DOM.setElement(@DOM, @)
+
 		@
 
 	# if used as parameter in "Layer", overwrite to
