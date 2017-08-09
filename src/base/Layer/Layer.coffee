@@ -880,10 +880,10 @@ class CUI.Layer extends CUI.DOM
 			margin: 0
 
 		if not dim_layer.computedStyle.maxWidth or dim_layer.computedStyle.maxWidth == 'none'
-			set_css.maxWidth = vp.window_right - vp.layer_pos.left # width + vp.overlap_width # - (vp.layer_pos.left - vp.left)
+			set_css.maxWidth = vp.width + vp.overlap_width
 
 		if not dim_layer.computedStyle.maxHeight or dim_layer.computedStyle.maxHeight == 'none'
-			set_css.maxHeight =  vp.window_bottom - vp.layer_pos.top # vp.height + vp.overlap_height # - (vp.layer_pos.top - vp.top)
+			set_css.maxHeight =  vp.height + vp.overlap_height
 
 		if placement == "c"
 			is_fixed = true

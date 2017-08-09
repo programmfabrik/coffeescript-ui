@@ -17,7 +17,6 @@ class CUI.FileReader extends FileUpload
 		FileReaderFile
 
 	uploadFile: (file) ->
-		CUI.debug "filereader upload file", file
 		file.upload(file)
 
 	@save: (filename, data, type = "text/csv") ->
