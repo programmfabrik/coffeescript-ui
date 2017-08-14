@@ -6,10 +6,10 @@ The functions here install in "window" \(for now\).
 
 | Parameter | Type | Comment |
 | :--- | :--- | :--- |
-| \#1 | Boolean | Condition to evaluate |
-| \#2 | String | The caller |
-| \#3 | String | Additional information |
-| \#4 | Map | Debug Output |
+| condition | Boolean | Condition to evaluate |
+| caller | String | The caller |
+| description | String | Additional information |
+| debug | Map | Debug Output |
 
 **CUI.defaults.asserts** determines whether an assert check is performed or not. Default is _true_.
 
@@ -87,6 +87,10 @@ Returns true if obj is a CUI.Deferred.
 ## escapeRegExp\(str\)
 
 Returns **str **escaped for use inside a RegExp.
+
+## getObjectClass\(obj\)
+
+Returns the name of the Function used to create **obj**.
 
 ## getInt\(str\)
 
