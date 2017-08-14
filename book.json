@@ -13,11 +13,7 @@
 	"pluginsConfig": {
 		"download-pdf-link": {
 			"base": "https://www.gitbook.com/download/pdf/book/programmfabrik/coffeescript-ui",
-			"label": {
-				"en": "Download PDF",
-				"de": "PDF erzeugen"
-			},
-			"multilingual": true
+			"label": "Download PDF"
 		}
 	}
 }
