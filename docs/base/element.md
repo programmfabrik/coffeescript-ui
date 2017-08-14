@@ -8,9 +8,9 @@ The constructor calls
 * **readOpts**
 * **onConstruct **\(if given\)
 
-**initOpts **and **readOpts **are the function which should be extended when CUI.Element is subclassed.
+**initOpts** and **readOpts** are the function which should be extended when CUI.Element is subclassed.
 
-**readOpts **checks all Options against the required types and values. Each option which passed the test, is then copied into the objects namespace, prefixed by a single underscore \(\_\).
+**readOpts** checks all Options against the required types and values. Each option which passed the test, is then copied into the objects namespace, prefixed by a single underscore \(\_\).
 
 ## Options
 
@@ -20,11 +20,11 @@ Can be passed and used to switch code based debugging on or off. **CUI **does no
 
 ### onConstruct\(obj\)
 
-**Callback **executed on construction time. **obj **is the instance of the created CUI.Element.
+**Callback** executed on construction time. **obj** is the instance of the created CUI.Element.
 
 ### onDestroy\(obj\)
 
-Callback executed when the destroy method is called on the CUI.Element. **obj **is the instance of the created CUI.Element.
+Callback executed when the destroy method is called on the CUI.Element. **obj** is the instance of the created CUI.Element.
 
 ## Methods
 
@@ -42,15 +42,15 @@ Returns the passed Options.
 
 ### getOpt\(key\)
 
-Returns **key **of the passed Options Map.
+Returns **key** of the passed Options Map.
 
 ### hasOpt\(key\)
 
-Returns _true_, if the passed Options Map contains **key **as property.
+Returns _true_, if the passed Options Map contains **key** as property.
 
 ### getSetOpt\(key\)
 
-Return the **key **of the set option. This can differ from the passed option, as **readOpts **could have set a default value for an option.
+Return the **key** of the set option. This can differ from the passed option, as **readOpts **could have set a default value for an option.
 
 ### hasSetOpt\(key\)
 
@@ -124,11 +124,11 @@ This method registers all methods given in **methods** \(Array of Strings\) to t
 
 ### destroy\(\)
 
-This destroys the **CUI.Element**. It sets the destroyed flag internally, the method **isDestroyed\(\)** returns \_true \_after the call. All mapped values are deleted and the **onDestroy** callback is called.
+This destroys the **CUI.Element**. It sets the destroyed flag internally, the method **isDestroyed\(\)** returns _true_ after the call. All mapped values are deleted and the **onDestroy** callback is called.
 
 ### isDestroyed\(\)
 
-Returns \_false \_before **destroy\(\)** was called, \_true \_afterwards.
+Returns _false_ before **destroy\(\)** was called, _true_ afterwards.
 
 ### @getOptKeys\(\)
 
