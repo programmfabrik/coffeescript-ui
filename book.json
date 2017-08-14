@@ -1,0 +1,24 @@
+{
+	"root": "docs",
+	"title": "Documentation of Coffeescript UI",
+	"structure": {
+           "summary": "SUMMARY.md"
+    	},
+	"plugins": [
+		"download-pdf-link",
+		"-lunr",
+		"-search",
+		"custom-favicon",
+		"search-plus"
+	],
+	"pluginsConfig": {
+		"download-pdf-link": {
+			"base": "https://www.gitbook.com/download/pdf/book/programmfabrik/coffeescript-ui",
+			"label": {
+				"en": "Download PDF",
+				"de": "PDF erzeugen"
+			},
+			"multilingual": true
+		}
+	}
+}
