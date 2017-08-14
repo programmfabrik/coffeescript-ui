@@ -1,4 +1,3 @@
-/* remove links to gitboook */
 ul.summary > li:nth-child(-n+2) {
     display: none;
 }
