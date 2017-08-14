@@ -1,3 +1,4 @@
-# My Awesome Book
+# Coffeescript-UI
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+The Coffeescript-UI (CUI) system is a simple framework to develop webapplications quickly. It's main design goal was to give the programmer an easy way to focus on problem solution without creating HTML and CSS files.
+
