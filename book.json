@@ -1,5 +1,5 @@
 {
-	"root": "docs",
+	"root": "./docs",
 	"title": "Documentation of Coffeescript UI",
 	"structure": {
            "summary": "SUMMARY.md"
