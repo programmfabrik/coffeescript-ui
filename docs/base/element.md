@@ -1,4 +1,4 @@
-# CUI.Element
+# new CUI.Element(Options)
 
 **CUI.Element** is the main class for all our CUI-Elements. It manages parameters which are used to construct an instance of any CUI-Element.
 
