@@ -5,4 +5,6 @@
 * [CUI.Element](base/element.md)
 * [CUI.Deferred](base/deferred.md)
 * [CUI.XHR](base/xhr.md)
+* [CUI.Template](base/template.md)
+
 
