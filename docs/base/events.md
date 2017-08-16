@@ -1,6 +1,6 @@
 # CUI.Events
 
-## trigger\(event\)
+## trigger(event)
 
 This global function is used to trigger an [CUI.Event](event.md). The Event is created using **CUI.Event.require**, see the Options below.
 
@@ -8,7 +8,7 @@ Returns a [CUI.Promise](deferred.md), which resolves when all of the CUI.Listene
 
 If Listeners don't return Promises, the Listener is assumed to have resolved.
 
-## listen\(listener\)
+## listen(listener)
 
 This global function is used to register a [CUI.Listener](listener.md). The Listener is created using **CUI.Listener.require**.
 
@@ -16,11 +16,11 @@ The newly created Listener is returned.
 
 > Each Listener is linked to the DOM node it listens on. An attribute \[cui-events-listener-element\] is set on the node. Be careful to attached Listeners to document.documentElement \(the default\), this is a great source for memory leaks, as the garbage collector cannot remove those, if they are no longer needed by your application. Listeners attached to document or window, are kept in a separate list in Events.__listeners.
 
-## ignore\(filter, node\)
+## ignore(filter, node)
 
 Start at **node** and look for registered Listeners which match the given **filter**.
 
-## wait\(options\)
+## wait(options)
 
 Wait for an event to happen on a node. This returns a [CUI.Promise](deferred.md#Promise). If the event does not happen before a timeout, the Promise is resolved, too.
 
@@ -44,9 +44,9 @@ CUI.wait
     # transition is done
 ```
 
-## unregisterListener\(listener\)
+## unregisterListener(listener)
 
-Destroys the given listener.
+Destroys the given listener. Its better to use Events.ignore, though.
 
 ## dump(filter)
 
@@ -71,9 +71,4 @@ Return an Array of type aliases for the given event type **type**
 ## registerEvent(event)
 
 Registers default options for an event. Besides the options for [CUI.Event](event.md), **eventClass* can be set to create the event using another function than CUI.Event to create the event.
-
-
-
-
-
 
