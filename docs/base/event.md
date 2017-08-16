@@ -1,6 +1,6 @@
-# new CUI.Event\(Options\)
+# new CUI.Event(Options)
 
-Known events: beforeunload, unload, load, error, close, popstate, dragstart, dragover, dragleave, dragenter, drop, message, fullscreenchange, hashchange, change, focus, blur, paste, scroll, selectstart, animationstart, transitioned, resize
+Known events: beforeunload, unload, load, error, close, popstate, dragstart, dragover, dragleave, dragenter, drop, message, fullscreenchange, hashchange, change, focus, blur, paste, scroll, selectstart, animationstart, transitioned, resize.
 
 ## Options
 
