@@ -2,11 +2,13 @@
 
 * [Introduction](README.md)
 * [Common](base/common.md)
-* [CUI.Element](base/element.md)
-* [CUI.Deferred](base/deferred.md)
-* [CUI.XHR](base/xhr.md)
-* [CUI.Template](base/template.md)
-* [CUI.Events](base/events.md)
+* [Element](base/element.md)
+* [Deferred](base/deferred.md)
+* [XHR](base/xhr.md)
+* [Template](base/template.md)
+* [Events](base/events.md)
+  * [Event](base/event.md)
+  * [Listener](base/listener.md)
 
 
 
