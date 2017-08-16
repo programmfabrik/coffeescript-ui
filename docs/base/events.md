@@ -18,7 +18,7 @@ The newly created Listener is returned.
 
 ## ignore(filter, node)
 
-Start at **node** and look for registered Listeners which match the given **filter**.
+Start at **node** and look for registered Listeners which match the given **filter**. See [CUI.Listener](listener.md#matchesFilter) for details.
 
 ## wait(options)
 
