@@ -1251,6 +1251,9 @@ class CUI.ListView extends CUI.SimplePane
 		if not CUI.defaults.debug
 			return func()
 
+		getMs = ->
+			(new Date()).getTime()
+
 		start = getMs()
 		func()
 		end = getMs()

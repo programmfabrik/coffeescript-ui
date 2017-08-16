@@ -293,18 +293,6 @@ class CUI.Template extends CUI.Element
 
 	@nodeByName: {}
 
-	@start: ->
-		dfr = new CUI.Deferred()
-		@load()
-		if not @nodeByName["cui-base"]
-			CUI.Template.loadFile("easydbui.html")
-			.done =>
-				dfr.resolve()
-		else
-			dfr.resolve()
-		dfr.promise()
-
-
 	@loadTemplateFile: (filename) ->
 		@loadFile(filename, true)
 

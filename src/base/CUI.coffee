@@ -455,7 +455,7 @@ class CUI
 		idx = idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		if idx > -1 and not CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeoutID)
-			console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
+			# console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
 			CUI.clearTimeout(@__scheduledCallbacks[idx].timeoutID)
 			@__scheduledCallbacks.splice(idx, 1)
 			return true

@@ -65,66 +65,66 @@ class CUI.DOM extends CUI.Element
 		delete(@DOM)
 		@
 
-	assertDOMElement: (func) ->
+	__assertDOMElement: (func) ->
 		assert(@DOM, "#{@__cls}.#{func}", "registerDOMElement needs to be called before \"#{func}\" is supported.")
 
-	assertTemplateElement: (func) ->
+	__assertTemplateElement: (func) ->
 		assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
 
 	addClass: (cls) ->
 		assert(arguments.length == 1, "DOM.addClass", "Only one parameter allowed.")
 
-		@assertDOMElement("addClass")
+		@__assertDOMElement("addClass")
 		CUI.DOM.addClass(@DOM, cls)
 
 	setAria: (attr, value) ->
-		@assertDOMElement("setAria")
+		@__assertDOMElement("setAria")
 		CUI.DOM.setAria(@DOM, attr, value)
 
 	removeClass: (cls) ->
 		assert(arguments.length == 1, "DOM.removeClass", "Only one parameter allowed.")
 
-		@assertDOMElement("removeClass")
+		@__assertDOMElement("removeClass")
 		CUI.DOM.removeClass(@DOM, cls)
 
 	hide: ->
-		@assertDOMElement("hide")
+		@__assertDOMElement("hide")
 		CUI.DOM.hideElement(@DOM)
 
 	show: ->
-		@assertDOMElement("show")
+		@__assertDOMElement("show")
 		CUI.DOM.showElement(@DOM)
 
 	hasClass: (cls) ->
 		assert(arguments.length == 1, "DOM.hasClass", "Only one parameter allowed.")
-		@assertDOMElement("hasClass")
+		@__assertDOMElement("hasClass")
 		CUI.DOM.hasClass(@DOM, cls)
 
 	isDestroyed: (key) ->
 		@__template?.isDestroyed.call(@__template, key)
 
 	empty: (key) ->
-		@assertTemplateElement("empty")
+		@__assertTemplateElement("empty")
 		@__template.empty.call(@__template, key)
 
 	replace: (value, key) ->
-		@assertTemplateElement("replace")
+		@__assertTemplateElement("replace")
 		@__template.replace.call(@__template, value, key, @)
 
 	append: (value, key) ->
-		@assertTemplateElement("append")
+		@__assertTemplateElement("append")
 		@__template.append.call(@__template, value, key, @)
 
 	prepend: (value, key) ->
-		@assertTemplateElement("prepend")
+		@__assertTemplateElement("prepend")
 		@__template.prepend.call(@__template, value, key, @)
 
 	text: (value, key) ->
-		@assertTemplateElement("text")
+		@__assertTemplateElement("text")
 		@__template.text.call(@__template, value, key, @)
 
 	getFlexHandle: (key, do_assert) ->
-		@assertTemplateElement("getFlexHandle")
+		@__assertTemplateElement("getFlexHandle")
 		@__template.getFlexHandle.call(@__template, key, do_assert)
 
 	destroy: ->

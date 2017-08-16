@@ -64,7 +64,7 @@ class CUI.Listener extends CUI.Element
 
 		@__handleDOMEvent = (ev) =>
 			# CUI.debug "handleDOMEvent", ev.type, @getUniqueId(), @
-			@handleDOMEvent(ev)
+			@__handleDOMEventInternal(ev)
 
 		if @_selector
 			if isString(@_selector)
@@ -73,7 +73,7 @@ class CUI.Listener extends CUI.Element
 			else
 				@__selector = @_selector
 
-		@registerDOMEvent()
+		@__registerDOMEvent()
 		@
 
 	isCapture: ->
@@ -85,14 +85,14 @@ class CUI.Listener extends CUI.Element
 	getTypes: ->
 		@__types
 
-	registerDOMEvent: ->
+	__registerDOMEvent: ->
 		for _type in @getTypes()
 			# @__node.addClass("cui-debug-listen-#{type}")
 			for type in Events.getEventTypeAliases(_type)
 				@__node.addEventListener(type, @__handleDOMEvent, @isCapture())
 		@
 
-	handleDOMEvent: (ev) ->
+	__handleDOMEventInternal: (ev) ->
 
 		if @__selector
 			# filter this by the selector
@@ -196,8 +196,8 @@ class CUI.Listener extends CUI.Element
 	# nothing
 	handleEvent: (event, phase) ->
 		assert(event instanceof CUI.Event, "CUI.Listener.handleEvent", "event needs to be instance of CUI.Event", event: event)
-		event.setPhase(phase)
-		event.setListener(@)
+		event.__setPhase(phase)
+		event.__setListener(@)
 
 		if @isOnlyOnce()
 			# CUI.debug "destroying one time event listener...", event, @
@@ -217,7 +217,6 @@ class CUI.Listener extends CUI.Element
 		# 	throw(ex)
 
 		# CUI.debug "CUI.Listener.handleEvent", event, info
-		event.progress(@, ret)
 		if isPromise(ret)
 			info = event.getInfo()
 			if not info.__waits

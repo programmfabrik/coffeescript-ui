@@ -47,4 +47,5 @@ class CUI.HorizontalLayout extends CUI.Layout
 	getSupportedPanes: ->
 		["left", "right"]
 
+
 HorizontalLayout = CUI.HorizontalLayout

@@ -93,8 +93,7 @@ class CUI.Element
 			@mergeOpt(k, v)
 		@
 
-
-	getCheckMap: ->
+	__getCheckMap: ->
 		@__check_map
 
 	readOpts: (opts = @opts, cls = @__cls, check_map = @__check_map) ->
@@ -152,7 +151,7 @@ class CUI.Element
 		CUI.Element.__dont_read_opt = true
 		element = new(@)
 		delete(CUI.Element.__dont_read_opts)
-		Object.keys(element.getCheckMap())
+		Object.keys(element.__getCheckMap())
 
 	@readOpts: (opts, cls, check_map, map_values) ->
 		if map_values != true and map_values != false

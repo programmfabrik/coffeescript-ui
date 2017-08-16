@@ -339,8 +339,9 @@ dump = (obj, space="\t") ->
 	try
 		return JSON.stringify(clean_obj(obj), null, space)
 	catch e
-		CUI.error(e)
+		console.error(e)
 		return "Unable to dump object"
+
 alert_dump = (v) -> alert(dump(v, "    "))
 
 
@@ -407,9 +408,6 @@ compareIndex = (a_idx, b_idx) ->
 	else
 		0
 
-index = (node) ->
-	Array.prototype.indexOf.call(node.parentNode.children, node)
-
 # pushes value onto array, if not exists
 # returns index of the pushed value
 pushOntoArray = (value, arr, compFunc) ->
@@ -443,15 +441,6 @@ findInArray = (value, arr, compFunc) ->
 	else
 		arr[idx]
 
-addToArray = (value, arr, compFunc) ->
-	assert(CUI.isArray(arr), "addToArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
-	idx = idxInArray(value, arr, compFunc)
-	if idx == -1
-		arr.push(value)
-		return arr.length - 1
-	else
-		return idx
-
 # ucs-2 string to base64 encoded ascii
 utoa = (str) ->
     window.btoa(unescape(encodeURIComponent(str)))
@@ -465,48 +454,6 @@ String.prototype.startsWith = (s) ->
 
 String.prototype.endsWith = (s) ->
 	@substr(@length-s.length) == s
-
-Date.prototype.getWeek = (us=false) ->
-	if us
-		# US week
-		start_day = 0
-		start_on_jan_1st = true
-		days_week_in_next_year = 6
-	else
-		# get the ISO week
-		start_day = 1
-		start_on_jan_1st = false
-		days_week_in_next_year = 3
-
-	day_offset = 24*60*60*1000
-	week_offset = day_offset * 7
-	d = new Date(this)
-	d.setUTCHours(0,0,0,0)
-	current_ms = d.getTime()
-	next_year_jan_1st = new Date(d)
-	next_year_jan_1st.setUTCFullYear(d.getUTCFullYear()+1,0,1)
-
-	# CUI.debug "asked day", d
-	d.setUTCMonth(0,1)
-	first_day = d.getUTCDay()
-	# CUI.debug "first day", first_day, d
-	first_day_of_week_ms = d.getTime() - ((first_day-start_day+7)%7)*day_offset
-	if first_day in [5, 6, 0] and not start_on_jan_1st
-		first_day_of_week_ms += week_offset
-	d.setTime(first_day_of_week_ms)
-
-	if (next_year_jan_1st.getTime()-current_ms) / day_offset <= days_week_in_next_year
-		week_no = 1
-	else
-		week_no = Math.floor((current_ms - first_day_of_week_ms) / week_offset) + 1
-	# CUI.debug "first day of week", d.getUTCFullYear(), d
-	# CUI.debug "next jan 1st", next_year_jan_1st, (next_year_jan_1st.getTime()-current_ms) / day_offset
-	# CUI.debug "diff_ms", current_ms - first_day_of_week_ms, week_no
-	week_no
-
-
-getMs = ->
-	(new Date()).getTime()
 
 RegExp.escape= (s) ->
     s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
