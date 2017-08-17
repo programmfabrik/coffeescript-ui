@@ -13,6 +13,11 @@ class CUI.Sortable extends CUI.Draggable
 	initOpts: ->
 		super()
 		@addOpts
+			allowSort:
+				mandatory: true
+				default: (ev, from_idx, to_idx) ->
+					return true
+				check: Function
 			sorted:
 				mandatory: true
 				default: (ev, from_idx, to_idx) ->
@@ -20,15 +25,23 @@ class CUI.Sortable extends CUI.Draggable
 				check: Function
 
 		@removeOpt("helper_contain_element")
-		@mergeOpt "selector", default:
-			(target, node) ->
-				els = CUI.DOM.elementsUntil(target, null, node)
-				if not els
-					return null
-				if els.length > 1
-					els[els.length-2]
-				else
-					return null
+
+
+	getSortTarget: (target, node) ->
+		els = CUI.DOM.elementsUntil(target, null, node)
+		if not els
+			return null
+		if els.length > 1
+			els[els.length-2]
+		else
+			return null
+
+	getClass: ->
+		if @_selector
+			"cui-drag-drop-select"
+		else
+			super()
+
 	readOpts: ->
 		super()
 		@_helper_contain_element = @_element
@@ -56,6 +69,7 @@ class CUI.Sortable extends CUI.Draggable
 		@
 
 	start_drag: (ev, $target, diff) ->
+
 		globalDrag.sort_source = @__findClosestSon(globalDrag.$source)
 		globalDrag.sort_source.classList.add("cui-sortable-placeholder")
 		globalDrag.start_idx = @get_child_number(globalDrag.sort_source)
@@ -92,7 +106,14 @@ class CUI.Sortable extends CUI.Draggable
 
 		source_idx = @get_child_number(globalDrag.sort_source)
 		dest_idx = @get_child_number(target_child)
-		@move_element(source_idx, dest_idx)
+
+		if @_allowSort(ev, source_idx, dest_idx)
+			@move_element(source_idx, dest_idx)
+		@
+
+	init_drag: (ev, $target) ->
+		# we need to move the target to the element undernith the cursor
+		super(ev, @getSortTarget(ev.getTarget(), @_element))
 
 	stop_drag: (ev) ->
 		super(ev)

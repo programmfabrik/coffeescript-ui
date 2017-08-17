@@ -133,11 +133,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 		Events.listen
 			type: @__event_types.start
 			node: @element
-			capture: true
+			# capture: true
 			instance: @
 			selector: @_selector
 			call: (ev) =>
-
 				if ev.getButton() > 0 and ev.getType() == "mousedown"
 					# ignore if not the main button
 					return
@@ -146,7 +145,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					# ignore if dragging is in progress
 					return
 
-				# console.debug getObjectClass(@), "[mouseisdown]", ev.getUniqueId(), @element
+				# console.debug getObjectClass(@), "[mousedown]", ev.getUniqueId(), @element
 
 				# hint possible click event listeners like Sidebar to
 				# not execute the click anymore...
@@ -172,8 +171,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				$target = $(target)
 
-				# console.debug "attempting to start drag", ev.getUniqueId(), $target[0]
-
+				# console.debug "attempting to start drag", ev, $target
 				@init_drag(ev, $target)
 				return
 
@@ -217,7 +215,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# CUI.debug "starting drag...", globalDrag
 
-		# ev.stopImmediatePropagation()
+		ev.stopPropagation()
 		# ev.preventDefault()
 
 		@before_drag(ev, $target)
