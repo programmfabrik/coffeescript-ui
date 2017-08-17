@@ -186,7 +186,12 @@ isString = (obj) ->
 	(typeof obj == "string")
 
 isEmpty = (obj) ->
-	(isNull(obj) || obj == "")
+	if CUI.isArray(obj)
+		obj.length == 0
+	else if CUI.isPlainObject(obj)
+		CUI.isEmptyObject(obj)
+	else
+		(isNull(obj) || obj == "" || obj == false)
 
 isTrue = (obj) ->
 	(!isNull(obj) && (obj == 1 || obj == true || obj == "1" || obj == "true"))

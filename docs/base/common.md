@@ -42,7 +42,7 @@ Returns true if obj is String.
 
 ## isEmpty\(obj\)
 
-Returns true if obj is empty. An object is empty, if it is null or "".
+Returns true if obj is empty. An object is empty, if it is null, "", false, [], or {}.
 
 ## isTrue\(obj\)
 
