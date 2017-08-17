@@ -125,6 +125,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/FormModal/FormModal.coffee \
 	src/elements/DataTable/DataTable.coffee \
 	src/elements/DataTable/DataTableNode.coffee \
+	src/elements/DataForm/DataForm.coffee \
 	src/elements/Select/Select.coffee \
 	src/elements/StickyHeader/StickyHeader.coffee \
 	src/elements/StickyHeader/StickyHeaderControl.coffee \

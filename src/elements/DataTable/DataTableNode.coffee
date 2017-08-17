@@ -38,7 +38,7 @@ class DataTableNode extends ListViewRow
 		for f in @__dataTable.getFieldList()
 			fopts = f.getOpts()
 			fopts.undo_support = false
-			_f = new window[f.__cls](fopts)
+			_f = new CUI[f.getElementClass()](fopts)
 			_f.setForm(@)
 			_f.setData(@__data)
 			if f.hasData()
@@ -81,4 +81,3 @@ class DataTableNode extends ListViewRow
 		for df in @__fields
 			df.start()
 		@
-

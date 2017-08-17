@@ -83,11 +83,25 @@ class CUI.DataTable extends CUI.DataFieldInput
 		super()
 		@listView?.debug()
 
+	getFieldOpts: ->
+		field_opts = []
+		for _field in @getArrayFromOpt("fields")
+			field = copyObject(_field, true)
+			if not field.form
+				field.form = {}
+
+			if not field.form.label
+				field.form.label = field.name
+
+			field_opts.push(field)
+
+		field_opts
+
 	init: ->
 		@__fieldList = []
-		for field in @getArrayFromOpt("fields")
-			_field = DataField.new(field)
-			@__fieldList.push(_field)
+		for field in @getFieldOpts()
+			@__fieldList.push(DataField.new(field))
+		@
 
 	disable: ->
 		super()
@@ -121,53 +135,13 @@ class CUI.DataTable extends CUI.DataFieldInput
 		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
 		new_node
 
-	render: ->
-		super()
-		cols = []
-		colClasses = []
-		maxis = []
+	updateButtons: ->
+		if @listView.getSelectedRows().length == 0
+			@minusButton.disable()
+		else
+			@minusButton.enable()
 
-		@headerRow = new ListViewHeaderRow()
-
-		for f, idx in @__fieldList
-			if f.getOpt("form")?.column == "maximize" or
-				f instanceof DataTable
-					maxis.push(idx)
-
-		if maxis.length == 0
-			maxis.push(0)
-
-		for f, idx in @__fieldList
-			if idxInArray(idx, maxis) > -1
-				cols.push("maximize")
-			else if f.getOpt("form")?.column
-				cols.push(f._form.column)
-			else if f.isResizable()
-				cols.push("auto")
-			else
-				cols.push("fixed")
-
-			name = f.getName()
-			label = f._form?.label
-			if isNull(label)
-				label = name
-
-			cls = []
-			if name
-				cls.push("cui-data-table-column-field-name-"+name)
-
-			cls.push("cui-data-table-column-field-type-"+toDash(f.getElementClass()))
-			if f._form?.rotate_90
-				cls.push("cui-lv-td-rotate-90")
-
-			colClasses.push(cls)
-
-			@headerRow.addColumn new ListViewHeaderColumn
-				rotate_90: f._form?.rotate_90
-				label:
-					text: label
-					multiline: true
-
+	getFooter: ->
 		buttons = @_buttons.slice(0)
 		if @_new_rows != "none"
 			if @_new_rows != "remove_only"
@@ -188,18 +162,13 @@ class CUI.DataTable extends CUI.DataFieldInput
 					for row in @listView.getSelectedRows()
 						row.remove()
 					@storeValue(copyObject(@rows, true))
-					updateMinusButton()
+					@updateButtons()
 					if @_chunk_size > 0
 						@displayValue()
 					return
 
 			buttons.push(@minusButton)
 
-			updateMinusButton = =>
-				if @listView.getSelectedRows().length == 0
-					@minusButton.disable()
-				else
-					@minusButton.enable()
 
 		if @_chunk_size > 0
 
@@ -248,14 +217,63 @@ class CUI.DataTable extends CUI.DataFieldInput
 					@displayValue()
 
 		if buttons.length
-			footer = new Buttonbar(buttons: buttons)
+			new Buttonbar(buttons: buttons)
+		else
+			return null
+
+	render: ->
+		super()
+		cols = []
+		colClasses = []
+		maxis = []
+
+		@headerRow = new ListViewHeaderRow()
+
+		for f, idx in @__fieldList
+			if f.getOpt("form")?.column == "maximize" or
+				f instanceof DataTable
+					maxis.push(idx)
+
+		if maxis.length == 0
+			maxis.push(0)
+
+		for f, idx in @__fieldList
+			if idxInArray(idx, maxis) > -1
+				cols.push("maximize")
+			else if f.getOpt("form")?.column
+				cols.push(f._form.column)
+			else if f.isResizable()
+				cols.push("auto")
+			else
+				cols.push("fixed")
+
+			name = f.getName()
+			label = f._form.label
+
+			cls = []
+			if name
+				cls.push("cui-data-table-column-field-name-"+name)
+
+			cls.push("cui-data-table-column-field-type-"+toDash(f.getElementClass()))
+			if f._form?.rotate_90
+				cls.push("cui-lv-td-rotate-90")
+
+			colClasses.push(cls)
+
+			@headerRow.addColumn new ListViewHeaderColumn
+				rotate_90: f._form?.rotate_90
+				label:
+					text: label
+					multiline: true
 
 
 		@listView = new CUI.ListView
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
-			onSelect: updateMinusButton
-			onDeselect: updateMinusButton
+			onSelect: =>
+				@updateButtons()
+			onDeselect: =>
+				@updateButtons()
 			onRowMove: (display_from_i, display_to_i, after) =>
 				fr = @listView.fixedRowsCount
 				display_from_i = @__offset + display_from_i
@@ -267,7 +285,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			cols: cols
 			fixedRows: if @_no_header then 0 else 1
-			footer_left: footer
+			footer_left: @getFooter()
 			footer_right: @_footer_right
 			fixedCols: if @_rowMove then 1 else 0
 			colResize: if @_no_header then false else true
@@ -295,9 +313,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 				@storeValue(copyObject(@rows, true))
 				return
-
 		@
-
 
 	displayValue: ->
 		@listView.removeAllRows()
