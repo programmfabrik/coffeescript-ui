@@ -119,6 +119,7 @@ coffee_files = src/base/Common.coffee \
 	src/elements/Output/OutputContent.coffee \
 	src/elements/MultiOutput/MultiOutput.coffee \
 	src/elements/FormButton/FormButton.coffee \
+	src/elements/Form/SimpleForm.coffee \
 	src/elements/Form/Form.coffee \
 	src/elements/FormPopover/FormPopover.coffee \
 	src/elements/FormModal/FormModal.coffee \
