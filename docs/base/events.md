@@ -14,7 +14,7 @@ This global function is used to register a [CUI.Listener](listener.md). The List
 
 The newly created Listener is returned.
 
-> Each Listener is linked to the DOM node it listens on. An attribute \[cui-events-listener-element\] is set on the node. Be careful to attached Listeners to document.documentElement \(the default\), this is a great source for memory leaks, as the garbage collector cannot remove those, if they are no longer needed by your application. Listeners attached to document or window, are kept in a separate list in Events.__listeners.
+> Each Listener is linked to the DOM node it listens on. An attribute \[data-cui-listener\] is set on the node. Be careful to attached Listeners to document.documentElement \(the default\), this is a great source for memory leaks, as the garbage collector cannot remove those, if they are no longer needed by your application. Listeners attached to document or window, are kept in a separate list in Events.__listeners.
 
 ## ignore(filter, node)
 

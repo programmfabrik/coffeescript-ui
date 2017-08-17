@@ -300,13 +300,17 @@ class CUI.Button extends CUI.DOM
 					call: =>
 						@getMenu().hide(ev)
 
-		if @_menu_on_hover or @__tooltipOpts
+		if @_menu_on_hover or @__tooltipOpts or @_onMouseenter
 			Events.listen
 				type: "mouseenter"
 				node: @DOM
 				call: (ev) =>
 
 					if window.globalDrag
+						return
+
+					@_onMouseenter?(ev)
+					if ev.isImmediatePropagationStopped()
 						return
 
 					if @__tooltipOpts
@@ -357,6 +361,8 @@ class CUI.Button extends CUI.DOM
 
 				if window.globalDrag
 					return
+
+				@_onMouseleave?(ev)
 
 				@getTooltip()?.hideTimeout(ev)
 
@@ -506,6 +512,10 @@ class CUI.Button extends CUI.DOM
 			onActivate:
 				check: Function
 			onDeactivate:
+				check: Function
+			onMouseenter:
+				check: Function
+			onMouseleave:
 				check: Function
 
 			# if set, this button belongs

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Checkbox extends DataFieldInput
+class CUI.Checkbox extends CUI.DataFieldInput
 
 	initOpts: ->
 
@@ -214,3 +214,5 @@ class Checkbox extends DataFieldInput
 		# is has changed if the checked value
 		return @__checkChangedValue == JSON.stringify(@getOptValue())
 
+
+Checkbox = CUI.Checkbox

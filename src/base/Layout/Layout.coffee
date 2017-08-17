@@ -164,6 +164,11 @@ class CUI.Layout extends CUI.DOM
 			# 	instance: @
 			# 	call: _call
 
+		else
+			CUI.DOM.removeAttribute(@DOM, "data-cui-absolute-container")
+			for child in @DOM.children
+				CUI.DOM.removeAttribute(child, "data-cui-absolute-set")
+
 
 		@__buttonbars = {}
 

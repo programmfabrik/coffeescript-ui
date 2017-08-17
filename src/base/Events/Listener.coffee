@@ -98,7 +98,6 @@ class CUI.Listener extends CUI.Element
 			# filter this by the selector
 			# check if from the target up, we match a selector
 			currentTarget = @__selector(ev.target, @__node)
-			# CUI.debug "handleDOMEvent.selector", ev.type, ev.__eventsEvent, ev.target, currentTarget, @_call
 			if not currentTarget
 				return false
 		else
@@ -206,7 +205,6 @@ class CUI.Listener extends CUI.Element
 
 		inst = @getInstance()
 		if inst and inst instanceof CUI.Element and inst.isDestroyed()
-			console.error "inst destroyed already.."
 			@destroy()
 			return
 

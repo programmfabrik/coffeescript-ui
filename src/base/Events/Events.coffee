@@ -68,7 +68,7 @@ class CUI.Events extends CUI.Element
 		listeners.push(listener)
 
 		if node instanceof HTMLElement
-			node.setAttribute("cui-events-listener-element", "cui-events-listener-element")
+			node.setAttribute("data-cui-listeners", "")
 		@
 
 	@__getActiveListeners: (doc=document) ->
@@ -76,10 +76,10 @@ class CUI.Events extends CUI.Element
 			listeners = @__listeners.slice(0)
 		else
 			listeners = []
-			if CUI.DOM.matches(doc, '[cui-events-listener-element]')
+			if CUI.DOM.matches(doc, '[data-cui-listeners]')
 				listeners.push.apply(listeners, DOM.data(doc, "listeners"))
 
-		for el in CUI.DOM.matchSelector(doc, "[cui-events-listener-element]")
+		for el in CUI.DOM.matchSelector(doc, "[data-cui-listeners]")
 			listeners.push.apply(listeners, DOM.data(el, "listeners"))
 		listeners
 

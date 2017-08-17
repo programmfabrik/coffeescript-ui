@@ -59,7 +59,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 				check: (v) ->
 					v >= 0
 
-
 	readOpts: ->
 		super()
 		@__navi_prev = null

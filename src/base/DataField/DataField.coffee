@@ -30,7 +30,8 @@ class CUI.DataField extends CUI.DOM
 				if not info?.element
 					CUI.warn("#{getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
 					return
-				@_onDataChanged?(info.element.getData(), info.element, ev, info)
+				# @_onDataChanged?(info.element.getData(), info.element, ev, info)
+				@_onDataChanged?(@getData(), info.element, ev, info)
 				return
 
 		if @getName()
@@ -77,17 +78,17 @@ class CUI.DataField extends CUI.DOM
 			hidden:
 				check: Boolean
 			form: {}
-			undo_support:
-				default: true
-				check: Boolean
 			# set undo_support, check_changed, mark_changed all at once
 			undo_and_changed_support:
 				check: Boolean
+			undo_support:
+				default: false
+				check: Boolean
 			mark_changed:
-				default: true
+				default: false
 				check: Boolean
 			check_changed:
-				default: true
+				default: false
 				check: Boolean
 			onDataChanged:
 				check: Function
@@ -167,12 +168,15 @@ class CUI.DataField extends CUI.DOM
 		@setFormDepth()
 		@
 
+	getFormDepth: ->
+		parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
+
 	setFormDepth: ->
 		# update depth
 		path = @getFormPath()
 		CUI.DOM.setAttribute(@DOM, "cui-form-depth", path.length)
 		@callOnOthers("setFormDepth")
-		@
+		path.length
 
 	getFormPath: (include_self=false, path=[], call=0) ->
 		assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
@@ -230,6 +234,10 @@ class CUI.DataField extends CUI.DOM
 		else
 			@__data = data
 		@displayValue()
+
+	clearData: ->
+		delete(@__data)
+		@
 
 	setData: (data, init_data=true) ->
 		if @__data and @_data and not CUI.isFunction(@_data)
@@ -328,6 +336,8 @@ class CUI.DataField extends CUI.DOM
 		@callOnOthers("getDataFields", all, data_fields)
 		data_fields
 
+	renderAsBlock: ->
+		false
 
 	isDataField: ->
 		@hasData()
@@ -356,6 +366,9 @@ class CUI.DataField extends CUI.DOM
 			true
 		else
 			false
+
+	hasUserData: ->
+		@hasData() and not isEmpty(@__data[@_name])
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]
@@ -413,6 +426,7 @@ class CUI.DataField extends CUI.DOM
 		undo.values[0]
 
 	getLastValue: ->
+		assert(@_undo_support, "DataField.getLastValue", "Needs opts.undo_support to be set.", opts: @opts)
 		undo = @getUndo()
 		if not undo
 			return undefined
