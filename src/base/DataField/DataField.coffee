@@ -9,6 +9,9 @@ class CUI.DataField extends CUI.DOM
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"
 
+	@defaults:
+		undo_and_changed_support: false
+
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -82,13 +85,13 @@ class CUI.DataField extends CUI.DOM
 			undo_and_changed_support:
 				check: Boolean
 			undo_support:
-				default: false
+				default: CUI.DataField.defaults.undo_and_changed_support
 				check: Boolean
 			mark_changed:
-				default: false
+				default: CUI.DataField.defaults.undo_and_changed_support
 				check: Boolean
 			check_changed:
-				default: false
+				default: CUI.DataField.defaults.undo_and_changed_support
 				check: Boolean
 			onDataChanged:
 				check: Function
