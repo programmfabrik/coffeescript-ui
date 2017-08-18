@@ -10,6 +10,7 @@
 #
 # @example Startup
 #
+
 class CUI
 
 	@__readyFuncs = []
@@ -899,6 +900,9 @@ CUI.ready =>
 if not window.addEventListener
 	alert("Your browser is not supported. Please update to a current version of Google Chrome, Mozilla Firefox or Internet Explorer.")
 else
-	window.addEventListener("load", =>
+	window.addEventListener("ready", =>
 		CUI.start()
 	)
+
+
+window.CUI = CUI

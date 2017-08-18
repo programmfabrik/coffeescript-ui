@@ -2,7 +2,9 @@
   "name": "coffeescript-ui",
   "version": "1.0.0",
   "description": "Coffeescript User Interface System",
-  "main": "build/easydbui.js",
+  "scripts": {
+    "build": "webpack"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/programmfabrik/coffeescript-ui.git"
@@ -23,15 +25,28 @@
   },
   "homepage": "https://github.com/programmfabrik/coffeescript-ui#readme",
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.16",
     "codo": "^2.1.2",
     "coffee": "^3.3.0",
+    "coffee-loader": "^0.7.3",
+    "coffee-script": "^1.12.7",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
     "gulp": "^3.8.11",
     "gulp-cheerio": "^0.6.2",
     "gulp-rename": "^1.2.0",
     "gulp-svgmin": "^1.1.2",
     "gulp-svgstore": "^5.0.1",
     "gulp-util": "^3.0.7",
+    "node-sass": "^4.5.3",
     "sass": "^0.5.0",
-    "through2": "^2.0.1"
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "through2": "^2.0.1",
+    "url-loader": "^0.5.9",
+    "webpack": "^2.2.0",
+    "webpack-concat-plugin": "^1.4.0"
   }
 }

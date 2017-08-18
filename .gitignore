@@ -7,3 +7,4 @@ public/*
 commit.txt
 /node_modules
 .\#*
+.idea
