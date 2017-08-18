@@ -51,6 +51,11 @@ const config = {
     plugins: [
         new CleanWebpackPlugin(BUILD_DIR),
         new ExtractTextPlugin("css/cui_ng.css"),
+        new CopyWebpackPlugin(
+            [
+                {from: 'scss/icons/icons.svg', to: 'css/icons.svg'}
+            ]
+        ),
         new ConcatPlugin({
             fileName: 'cui.html',
             filesToConcat: htmlFiles

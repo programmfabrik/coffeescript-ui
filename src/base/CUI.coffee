@@ -73,13 +73,15 @@ class CUI
 
 		document.body.scrollTop=0
 
-		Template.load()
-		if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-			CUI.Template.loadTemplateFile("cui.html")
+		CUI.Template.loadFile("css/icons.svg")
 			.done =>
-				@ready()
-		else
-			@ready()
+				Template.load()
+				if not Template.nodeByName["cui-base"] # loaded in easydbui.html
+					CUI.Template.loadTemplateFile("cui.html")
+					.done =>
+						@ready()
+				else
+					@ready()
 		@
 
 	@getPathToScript: ->

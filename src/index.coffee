@@ -1,5 +1,4 @@
 require('font-awesome/css/font-awesome.min.css')
-require('./scss/icons/icons.svg')
 
 require('./base/CUI.coffee')
 require('./base/Common.coffee')
