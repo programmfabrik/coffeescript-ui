@@ -1,7 +1,3 @@
-# Workaround to use these libraries as global instead of require in each file where are used.
-window.moment = require('moment')
-window.marked = require('marked')
-
 require('font-awesome/css/font-awesome.min.css')
 require('./scss/icons/icons.svg')
 

@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+moment = require('moment')
+
 CUI.tz_data = {}
 
 class CUI.DateTime extends CUI.Input

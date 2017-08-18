@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+marked = require('marked')
+
 class CUI.DocumentBrowser extends CUI.Element
 
 	initOpts: ->

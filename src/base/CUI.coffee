@@ -11,6 +11,8 @@
 # @example Startup
 #
 
+marked = require('marked')
+
 class CUI
 
 	@__readyFuncs = []
