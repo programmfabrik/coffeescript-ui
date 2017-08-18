@@ -916,7 +916,7 @@ CUI.ready =>
 if not window.addEventListener
 	alert("Your browser is not supported. Please update to a current version of Google Chrome, Mozilla Firefox or Internet Explorer.")
 else
-	window.addEventListener("ready", =>
+	window.addEventListener("load", =>
 		CUI.start()
 	)
 

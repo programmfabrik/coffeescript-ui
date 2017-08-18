@@ -5,9 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-DateTimeFormats = {}
+CUI.DateTimeFormats = {}
 
-DateTimeFormats["de-DE"] =
+CUI.DateTimeFormats["de-DE"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "de-DE"
 	tab_date: "Datum"
@@ -116,7 +116,7 @@ DateTimeFormats["de-DE"] =
 		]
 	]
 
-DateTimeFormats["it-IT"] =
+CUI.DateTimeFormats["it-IT"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "de-DE"
 	tab_date: "Datum"
@@ -223,7 +223,7 @@ DateTimeFormats["it-IT"] =
 		]
 	]
 
-DateTimeFormats["es-ES"] =
+CUI.DateTimeFormats["es-ES"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "de-DE"
 	tab_date: "Datum"
@@ -331,7 +331,7 @@ DateTimeFormats["es-ES"] =
 	]
 
 
-DateTimeFormats["en-US"] =
+CUI.DateTimeFormats["en-US"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "en-US"
 	tab_date: "Date"
