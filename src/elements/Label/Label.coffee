@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-
+marked = require('marked')
 
 # @param [Object] options for {Label} creation
 # @option options [boolean] centered , label will be centered with css style 'position: absolute'.
@@ -185,7 +185,7 @@ class CUI.Label extends CUI.DOM
 		if isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.DOM.htmlToNodes(window.marked(@__currentText, @__markdown_opts)))
+			@setContent(CUI.DOM.htmlToNodes(marked(@__currentText, @__markdown_opts)))
 			@addClass("cui-label-markdown")
 		else
 			@setContent($text(@__currentText))

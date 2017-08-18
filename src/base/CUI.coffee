@@ -895,19 +895,18 @@ CUI.ready =>
 		if CUI.browser[k]
 			document.body.classList.add("cui-browser-"+k)
 
-	if window.marked
-		CUI.defaults.marked_opts =
-			renderer: new marked.Renderer()
-			gfm: true
-			tables: true
-			breaks: false
-			pedantic: false
-			sanitize: true
-			smartLists: true
-			smartypants: false
+	CUI.defaults.marked_opts =
+		renderer: new marked.Renderer()
+		gfm: true
+		tables: true
+		breaks: false
+		pedantic: false
+		sanitize: true
+		smartLists: true
+		smartypants: false
 
 	# initialize a markdown renderer
-	marked?.setOptions(CUI.defaults.marked_opts)
+	marked.setOptions(CUI.defaults.marked_opts)
 
 	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]
@@ -920,5 +919,5 @@ else
 		CUI.start()
 	)
 
-
+# windowCompat, for now this needs to be here...
 window.CUI = CUI

@@ -6,6 +6,7 @@
 ###
 
 # CUI.tz_data = {}
+moment = require('moment')
 
 class CUI.DateTime extends CUI.Input
 	constructor: (@opts={}) ->

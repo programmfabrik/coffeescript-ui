@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+marked = require('marked')
+
 class CUI.MarkdownInput extends CUI.Input
 	initOpts: ->
 		super()
@@ -22,7 +24,7 @@ class CUI.MarkdownInput extends CUI.Input
 			renderFunction:
 				mandatory: true
 				default: (md) =>
-					window.marked(md, CUI.defaults.marked_opts)
+					marked(md, CUI.defaults.marked_opts)
 				check: Function
 
 

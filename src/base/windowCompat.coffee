@@ -3,3 +3,6 @@
 # as soon as possible, but for now we are stuck with it.
 
 CUI.windowCompat.start()
+
+window.marked = require('marked')
+window.moment = require('moment')
