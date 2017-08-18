@@ -1,4 +1,4 @@
-require('font-awesome/css/font-awesome.min.css')
+require("font-awesome-webpack");
 
 require('./base/CUI.coffee')
 require('./base/Common.coffee')

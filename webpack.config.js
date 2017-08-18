@@ -16,6 +16,7 @@ const config = {
     output: {
         path: BUILD_DIR,
         filename: 'cui.js',
+        publicPath: 'cui/'
     },
     module: {
         loaders: [
@@ -24,8 +25,8 @@ const config = {
                 loader: 'coffee-loader'
             },
             {
-                test: /\.css$/,
-                loader: ['style-loader', 'css-loader']
+                test: /\.less$/,
+                loader: ['style-loader', 'css-loader!less-loader']
             },
             {
                 test: /\.scss$/,
