@@ -4,6 +4,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
+const webpack = require('webpack');
 
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const APP_DIR = path.resolve(__dirname, 'src');
@@ -60,6 +61,10 @@ const config = {
         new ConcatPlugin({
             fileName: 'cui.html',
             filesToConcat: htmlFiles
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {warnings: false, keep_fnames: true},
+            mangle: {keep_classnames: true, keep_fnames: true}
         })
     ]
 };
