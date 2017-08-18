@@ -84,6 +84,9 @@ class CUI.Block extends CUI.DOM
 	setContent: (content) ->
 		@__block.replace(content, "content")
 
+	getContent: ->
+		@__block.map.content
+
 	appendContent: (content) ->
 		@__block.append(content, "content")
 
