@@ -1,7 +1,5 @@
-require('./base/Common.coffee');
 require('./base/CUI.coffee');
-require('./base/CSSLoader/CSSLoader.coffee');
-require('./base/DOM/DOM.coffee');
+require('./base/Common.coffee');
 require('./base/jQueryCompat.coffee');
 require('./base/Deferred/Deferred.coffee');
 require('./base/Deferred/Promise.coffee');
@@ -27,6 +25,8 @@ require('./base/Events/Listener.coffee');
 require('./base/Events/WheelEvent.coffee');
 require('./base/Events/Events.coffee');
 require('./base/DragDropSelect/DragoverScrollEvent.coffee');
+require('./base/DOM/DOM.coffee');
+require('./base/CSSLoader/CSSLoader.coffee');
 require('./base/Template/Template.coffee');
 require('./base/FlexHandle/FlexHandle.coffee');
 require('./base/Layout/Layout.coffee');
