@@ -51,8 +51,5 @@
     "url-loader": "^0.5.9",
     "webpack": "^2.2.0",
     "webpack-concat-plugin": "^1.4.0"
-  },
-  "dependencies": {
-    "html-loader": "^0.5.1"
   }
 }
