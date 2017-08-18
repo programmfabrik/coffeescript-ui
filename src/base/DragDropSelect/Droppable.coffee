@@ -297,6 +297,3 @@ class CUI.Droppable extends CUI.DragDropSelect
 				ev.stopPropagation()
 				return
 
-
-
-Droppable = CUI.Droppable

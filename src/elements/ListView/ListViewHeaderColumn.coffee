@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewHeaderColumn extends ListViewColumn
+class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 
 	initOpts: ->
 		super()

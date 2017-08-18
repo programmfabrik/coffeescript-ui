@@ -31,3 +31,5 @@ class CUI.Promise
 
 	getUniqueId: ->
 		@__deferred.getUniqueId()
+
+CUI.windowCompat.protect.push("Promise")

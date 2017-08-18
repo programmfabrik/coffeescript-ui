@@ -436,5 +436,4 @@ class CUI.Events extends CUI.Element
 				@registerEvent(ev)
 
 CUI.Events.__init()
-Events = CUI.Events
 CUI.defaults.class.Events = CUI.Events

@@ -5,5 +5,5 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewColumnEmpty extends ListViewColumn
+class CUI.ListViewColumnEmpty extends CUI.ListViewColumn
 	render: ->

@@ -5,8 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-
-class ProgressMeter extends CUI.DOM
+class CUI.ProgressMeter extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
@@ -101,7 +100,6 @@ class ProgressMeter extends CUI.DOM
 		@__meter.map.fill.css(fill_css)
 		@_onUpdate?.call(@, @)
 		@
-
 
 CUI.defaults.ProgressMeter =
 	states:

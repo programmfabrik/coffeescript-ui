@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class DateTimeInputBlock extends InputBlock
+class CUI.DateTimeInputBlock extends CUI.InputBlock
 	initOpts: ->
 		super()
 		@addOpts

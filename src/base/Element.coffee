@@ -253,3 +253,5 @@ class CUI.Element
 		# CUI.warn "#{@__cls}.opts = ", dump(set_opts)
 		# @__timeEnd("readOpts")
 		set_opts
+
+CUI.windowCompat.protect.push("Element")

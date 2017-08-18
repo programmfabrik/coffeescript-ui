@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FileUploadButton extends Button
+class CUI.FileUploadButton extends CUI.Button
 	constructor: (@opts={}) ->
 		super(@opts)
 		@addClass("cui-button")

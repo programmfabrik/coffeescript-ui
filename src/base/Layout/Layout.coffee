@@ -415,9 +415,6 @@ class CUI.Layout extends CUI.DOM
 	@all: ->
 		CUI.scheduleCallback(call: Layout.__all)
 
-Layout = CUI.Layout
-
-
 CUI.ready ->
 	Events.listen
 		type: ["viewport-resize", "content-resize"]

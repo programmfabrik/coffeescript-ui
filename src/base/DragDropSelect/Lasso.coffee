@@ -163,6 +163,3 @@ class CUI.Lasso extends CUI.Draggable
 	end_drag: (ev) ->
 		@_selected(ev, globalDrag)
 		super(ev)
-
-
-Lasso = CUI.Lasso

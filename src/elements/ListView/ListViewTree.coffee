@@ -294,6 +294,3 @@ CUI.Events.registerEvent
 		"row_selected"
 		"row_deselected"
 	]
-
-
-ListViewTree = CUI.ListViewTree

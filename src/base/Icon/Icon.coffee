@@ -139,4 +139,3 @@ class CUI.Icon extends CUI.Element
 
 CUI.proxyMethods(CUI.Icon, CUI.Button, ["hide", "show", "isShown","isHidden"])
 
-Icon = CUI.Icon

@@ -38,5 +38,3 @@ class CUI.Form extends CUI.SimpleForm
 		layout.empty("center")
 		layout.center()
 
-
-Form = CUI.Form

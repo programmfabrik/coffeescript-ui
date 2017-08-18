@@ -21,5 +21,3 @@ class CUI.VerticalList extends CUI.VerticalLayout
 	getSupportedPanes: ->
 		[]
 
-
-VerticalList = CUI.VerticalList

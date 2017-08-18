@@ -738,5 +738,3 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# CUI.debug "limitRect AFTER", pos, diff
 		return pos
 
-
-Draggable = CUI.Draggable

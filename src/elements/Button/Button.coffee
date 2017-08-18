@@ -946,11 +946,9 @@ class CUI.Button extends CUI.DOM
 		mouseup: ['mouseup', 'mousedown']
 		dblclick: ['click', 'mousedown']
 
-
 CUI.defaults.class.Button = CUI.Button
 
 CUI.Events.registerEvent
 	type: ["show", "hide", "cui-button-click"]
 	bubble: true
 
-Button = CUI.Button

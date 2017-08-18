@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class StickyHeaderControl extends CUI.Element
+class CUI.StickyHeaderControl extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 

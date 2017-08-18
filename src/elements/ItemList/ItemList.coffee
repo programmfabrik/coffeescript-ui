@@ -268,5 +268,3 @@ class CUI.ItemList extends CUI.VerticalLayout
 		super()
 		@__body?.destroy()
 
-
-ItemList = CUI.ItemList

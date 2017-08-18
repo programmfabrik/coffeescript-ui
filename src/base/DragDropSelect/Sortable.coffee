@@ -143,4 +143,3 @@ class CUI.Sortable extends CUI.Draggable
 
 		return
 
-Sortable = CUI.Sortable

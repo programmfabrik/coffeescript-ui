@@ -518,4 +518,3 @@ class CUI.Options extends CUI.DataField
 		else
 			[]
 
-Options = CUI.Options

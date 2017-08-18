@@ -73,9 +73,8 @@ class CUI.Prompt extends CUI.Confirm
 		else
 			buttons[1].disable()
 
-
-
 CUI.prompt = (opts) ->
 	new CUI.Prompt(opts).open()
 
+CUI.windowCompat.protect.push("prompt")
 

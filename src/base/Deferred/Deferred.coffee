@@ -112,3 +112,5 @@ class CUI.Deferred
 
 
 	@uniqueId: 0
+
+CUI.windowCompat.protect.push("Deferred")

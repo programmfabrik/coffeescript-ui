@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class DataTableNode extends ListViewRow
+class CUI.DataTableNode extends CUI.ListViewRow
 
 	initOpts: ->
 		super()

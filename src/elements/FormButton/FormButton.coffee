@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FormButton extends Checkbox
+class CUI.FormButton extends CUI.Checkbox
 
 	constructor: (@opts={}) ->
 		super(@opts)

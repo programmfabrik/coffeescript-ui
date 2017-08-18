@@ -638,9 +638,6 @@ class CUI.DataField extends CUI.DOM
 		assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
 		return _field
 
-DataField = CUI.DataField
-
-
 CUI.Events.registerEvent
 	type: "data-changed"
 	bubble: true

@@ -354,5 +354,3 @@ class CUI.Template extends CUI.Element
 
 		return count
 
-
-Template = CUI.Template

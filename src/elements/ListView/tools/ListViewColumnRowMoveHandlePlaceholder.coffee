@@ -5,4 +5,4 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewColumnRowMoveHandlePlaceholder extends ListViewColumnEmpty
+class CUI.ListViewColumnRowMoveHandlePlaceholder extends CUI.ListViewColumnEmpty

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.tz_data = {}
+# CUI.tz_data = {}
 
 class CUI.DateTime extends CUI.Input
 	constructor: (@opts={}) ->
@@ -1316,9 +1316,6 @@ class CUI.DateTime extends CUI.Input
 			return null
 		dt = new DateTime(input_types: null)
 		dt.parse(datestr)
-
-DateTime = CUI.DateTime
-
 
 # Date.prototype.getWeek = (us=false) ->
 # 	if us

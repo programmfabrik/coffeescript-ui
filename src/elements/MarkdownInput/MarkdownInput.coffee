@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MarkdownInput extends Input
+class CUI.MarkdownInput extends CUI.Input
 	initOpts: ->
 		super()
 

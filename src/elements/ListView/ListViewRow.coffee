@@ -195,6 +195,3 @@ class CUI.ListViewRow extends CUI.Element
 
 	@defaults:
 		selected_class: "cui-selected"
-
-
-ListViewRow = CUI.ListViewRow

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Test_MoveInArray extends CUI.Test
+class CUI.Test.Test_MoveInArray extends CUI.Test
 	run: ->
 		super()
 		#
@@ -85,4 +85,4 @@ class Test_MoveInArray extends CUI.Test
 			moveInArray(0, 4, a, true)
 			@eq(a, [1,2,3,4,0])
 
-CUI.Test.register(new Test_MoveInArray())
+CUI.Test.register(new CUI.Test.Test_MoveInArray())

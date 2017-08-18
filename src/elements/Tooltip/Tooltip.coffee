@@ -210,6 +210,3 @@ class CUI.Tooltip extends CUI.LayerPane
 		Events.ignore(instance: @__dummyInst)
 		super()
 		@__element.removeClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")
-
-
-Tooltip = CUI.Tooltip

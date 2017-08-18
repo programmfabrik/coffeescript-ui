@@ -31,7 +31,3 @@ class CUI.Popover extends CUI.Modal
 	# enableAllButtons: ->
 	# 	super()
 	# 	@enableBackdropClick()
-
-
-
-Popover = CUI.Popover

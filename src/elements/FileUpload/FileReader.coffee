@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.FileReader extends FileUpload
+class CUI.FileReader extends CUI.FileUpload
 	initOpts: ->
 		super()
 		@removeOpt("url")
@@ -31,3 +31,5 @@ class CUI.FileReader extends FileUpload
 	        elem.click();
 	        document.body.removeChild(elem);
 			window.URL.revokeObjectURL(blob)
+
+CUI.windowCompat.protect.push("FileReader")

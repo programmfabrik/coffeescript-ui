@@ -99,4 +99,3 @@ class CUI.Movable extends CUI.Draggable
 		# !!! The order in Draggable.limitRect is different, but better
 		Draggable.limitRect(pos, limitRect, defaults)
 
-Movable = CUI.Movable

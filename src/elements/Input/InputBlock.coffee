@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class InputBlock extends CUI.Element
+class CUI.InputBlock extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__start = @_start

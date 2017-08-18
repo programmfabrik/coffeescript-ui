@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class NumberInputBlock extends InputBlock
+class CUI.NumberInputBlock extends CUI.InputBlock
 
 	incrementBlock: (block, blocks) ->
 		@__changeBlock(block, blocks, 1)

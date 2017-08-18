@@ -135,4 +135,3 @@ class CUI.SimplePane extends CUI.Pane
 		pane.replace(content, _key)
 		@
 
-SimplePane = CUI.SimplePane

@@ -97,5 +97,3 @@ class CUI.Output extends CUI.DataFieldInput
 					@setValue(null, no_trigger: false)
 			@append(@__deleteBtn)
 		@
-
-Output = CUI.Output

@@ -1326,5 +1326,3 @@ class CUI.ListView extends CUI.SimplePane
 				return false
 		@
 
-
-ListView = CUI.ListView

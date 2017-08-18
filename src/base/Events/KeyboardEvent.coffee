@@ -121,5 +121,7 @@ class CUI.KeyboardEvent extends CUI.Event
 				# console.debug "blur windo"
 				CUI.KeyboardEvent.__keys = []
 
+CUI.windowCompat.protect.push("KeyboardEvent")
+
 CUI.ready =>
 	CUI.KeyboardEvent.__initKeyboardListener()

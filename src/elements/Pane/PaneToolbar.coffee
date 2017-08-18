@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class PaneToolbar extends Toolbar
+class CUI.PaneToolbar extends CUI.Toolbar
 	init: ->
 		super()
 		@addClass("cui-pane-toolbar")

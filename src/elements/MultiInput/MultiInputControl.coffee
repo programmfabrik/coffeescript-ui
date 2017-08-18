@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MultiInputControl extends CUI.Element
+class CUI.MultiInputControl extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__body = $(document.body)

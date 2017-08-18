@@ -371,6 +371,3 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@listView.appendDeferredRows()
 
 		@
-
-
-DataTable = CUI.DataTable

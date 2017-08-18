@@ -1231,5 +1231,3 @@ class CUI.Input extends CUI.DataFieldInput
 		super()
 
 	@uniqueId: 0
-
-Input = CUI.Input

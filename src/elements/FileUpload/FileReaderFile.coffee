@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FileReaderFile extends FileUploadFile
+class CUI.FileReaderFile extends CUI.FileUploadFile
 	initOpts: ->
 		super()
 		@addOpts

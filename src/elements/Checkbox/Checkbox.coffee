@@ -214,5 +214,3 @@ class CUI.Checkbox extends CUI.DataFieldInput
 		# is has changed if the checked value
 		return @__checkChangedValue == JSON.stringify(@getOptValue())
 
-
-Checkbox = CUI.Checkbox

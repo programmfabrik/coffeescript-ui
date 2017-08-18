@@ -6,7 +6,7 @@
 ###
 
 #Organizes/Layouts tools ({Button}s or other Elements) in a horizontal Toolbar
-class Toolbar extends HorizontalLayout
+class CUI.Toolbar extends CUI.HorizontalLayout
 	init: ->
 		super()
 		@addClass("cui-toolbar")

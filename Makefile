@@ -4,8 +4,9 @@ css_target = $(target)/css
 call_scss = sass --scss --no-cache --sourcemap=inline
 cui_js = $(target)/cui.js
 
-coffee_files = src/base/Common.coffee \
+coffee_files = \
 	src/base/CUI.coffee \
+	src/base/Common.coffee \
 	src/base/jQueryCompat.coffee \
 	src/base/Deferred/Deferred.coffee \
 	src/base/Deferred/Promise.coffee \
@@ -137,7 +138,8 @@ coffee_files = src/base/Common.coffee \
 	src/elements/DocumentBrowser/SearchMatch.coffee \
 	src/elements/DocumentBrowser/SearchQuery.coffee \
 	src/elements/Slider/Slider.coffee \
-	src/base/CSVData.coffee
+	src/base/CSVData.coffee\
+	src/base/windowCompat.coffee
 
 files = $(addsuffix .js, $(coffee_files))
 

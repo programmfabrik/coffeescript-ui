@@ -44,7 +44,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		onClick:
 			check: Function
 		icon:
-			check: Icon
+			check: CUI.Icon
 		choice:
 			check: String
 		tooltip:
