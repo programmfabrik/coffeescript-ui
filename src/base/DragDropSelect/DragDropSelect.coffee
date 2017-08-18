@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.DragDropSelect extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -94,7 +92,7 @@ CUI.ready =>
 	# 	call: (ev) =>
 	# 		console.debug "selectstart"
 	# 		$target = $(ev.getTarget())
-	# 		if not globalDrag and $target.closest("span,input,textarea,pre,i").length and
+	# 		if not CUI.globalDrag and $target.closest("span,input,textarea,pre,i").length and
 	# 			not $target.closest(".btn,.drag-drop-select-cursor,.no-user-select").length
 	# 				return
 	# 		ev.preventDefault()

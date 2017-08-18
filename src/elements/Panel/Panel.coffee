@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Panel extends CUI.DOM
+class CUI.Panel extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 		@panel = new Template

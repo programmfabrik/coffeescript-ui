@@ -5,8 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Util
-	@assert:  (condition, caller, message, debug_output) ->
+class CUI.Utils
+
+	@assert: (condition, caller, message, debug_output) ->
 		if not CUI.defaults.asserts
 			return
 
@@ -66,6 +67,7 @@ class CUI.Util
 
 		throw(new Error(msg))
 
+
 	@assertImplements: (inst, methods) ->
 		if not CUI.defaults.asserts
 			return
@@ -77,6 +79,13 @@ class CUI.Util
 		assert(needs.length == 0, "#{getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
 		return
 
+		# scrollPageX and scrollPageY are faked attributes
+		# which are set by DragDropSelect
+		if ev.scrollPageY
+			coord.pageY += ev.scrollPageY
+		if ev.scrollPageX
+			coord.pageX += ev.scrollPageX
+		coord
 
 	@assertInstanceOf: (variableName, classClass, opts, value=undefined) ->
 		if not CUI.defaults.asserts
@@ -117,7 +126,6 @@ class CUI.Util
 
 		assert(false, "new #{fn}", "opts.#{variableName} needs to be instance of #{cn} but it is #{getObjectClass(value)}.", opts: opts, value: value, classClass: classClass)
 		return
-
 
 	@$elementIsInDOM: ($el) ->
 		$el.parents().last().is("html")
@@ -226,7 +234,7 @@ class CUI.Util
 		n instanceof CUI.Deferred
 
 	@escapeRegExp: (str) ->
-		str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+	  str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 	@getIntOrString: (s) ->
 		getInt(s, true)
@@ -266,7 +274,6 @@ class CUI.Util
 			data.replace(/\s/g, "&nbsp;")
 		else
 			data
-
 
 	@copyObject: (obj, deep = false, level = 0) ->
 		if typeof(obj) in ["string", "number", "boolean", "function"]
@@ -447,11 +454,6 @@ class CUI.Util
 	@atou: (str) ->
 	    decodeURIComponent(escape(window.atob(str)))
 
-
-# FIXME: For now, we map the utils into global space
-for fname, func of CUI.Util
-	window[fname] = func
-
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s
 
@@ -460,3 +462,8 @@ String.prototype.endsWith = (s) ->
 
 RegExp.escape= (s) ->
     s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+
+
+for prop, func of CUI.Utils
+	window[prop] = func
+	console.info("CUI.Utils."+prop+" -> window."+prop)

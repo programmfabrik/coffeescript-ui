@@ -96,4 +96,3 @@ class CUI.ListViewColumn extends CUI.Element
 		else
 			return 1
 
-ListViewColumn = CUI.ListViewColumn

@@ -28,4 +28,3 @@ class CUI.DataFieldInput extends CUI.DataField
 	isResizable: ->
 		true
 
-DataFieldInput = CUI.DataFieldInput

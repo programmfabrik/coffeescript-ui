@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewColumnRowMoveHandle extends ListViewColumn
+class CUI.ListViewColumnRowMoveHandle extends CUI.ListViewColumn
 
 	setElement: (cell) ->
 		super(cell)

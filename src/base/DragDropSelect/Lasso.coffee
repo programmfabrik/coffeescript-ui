@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Lasso extends CUI.Draggable
 	@cls = "lasso"
 
@@ -46,44 +44,44 @@ class CUI.Lasso extends CUI.Draggable
 		if not CUI.DOM.isInDOM(@element[0])
 			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
 
-		globalDrag.lasso = $div("cui-lasso")
+		CUI.globalDrag.lasso = $div("cui-lasso")
 		# CUI.debug "create lasso", @_lassoClass
 		#
-		globalDrag.lasso.appendTo(@element)
-		globalDrag.elements = []
+		CUI.globalDrag.lasso.appendTo(@element)
+		CUI.globalDrag.elements = []
 
 	getCursor: ->
 		"default"
 
 	do_drag: (ev, $target, diff) ->
-		# CUI.debug "Lasso do drag", globalDrag.start, globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
+		# CUI.debug "Lasso do drag", CUI.globalDrag.start, CUI.globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
 		left = 0
 		top = 0
 		width = 0
 		height = 0
 		if diff.x <= 0
-			left = globalDrag.start.left + diff.x
+			left = CUI.globalDrag.start.left + diff.x
 			width = -diff.x
 			over = -left
 			if over > 0
 				width -= over
 				left = 0
 		else
-			left = globalDrag.start.left
+			left = CUI.globalDrag.start.left
 			width = diff.x
 			over = left + width - @element[0].scrollWidth
 			if over > 0
 				width -= over
 
 		if diff.y <= 0
-			top = globalDrag.start.top + diff.y
+			top = CUI.globalDrag.start.top + diff.y
 			height = -diff.y
 			over = -top
 			if over > 0
 				height -= over
 				top = 0
 		else
-			top = globalDrag.start.top
+			top = CUI.globalDrag.start.top
 			height = diff.y
 			over = top + height - @element[0].scrollHeight
 			if over > 0
@@ -92,16 +90,16 @@ class CUI.Lasso extends CUI.Draggable
 		lassoed_elements = @get_lassoed_elements()
 
 		for el in lassoed_elements
-			if el not in globalDrag.elements
-				globalDrag.elements.push(el)
+			if el not in CUI.globalDrag.elements
+				CUI.globalDrag.elements.push(el)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		for el in globalDrag.elements.slice(0)
+		for el in CUI.globalDrag.elements.slice(0)
 			if el not in lassoed_elements
-				removeFromArray(el, globalDrag.elements)
+				removeFromArray(el, CUI.globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		window.globalDrag.lasso.css
+		CUI.globalDrag.lasso.css
 			left: left
 			top: top
 			width: width
@@ -125,44 +123,41 @@ class CUI.Lasso extends CUI.Draggable
 			h2 = dims2.height
 			!(y2 + h2 <= y1 || y1 + h1 <= y2 || x2 + w2 <= x1 || x1 + w1 <= x2)
 
-		globalDrag.lasso_dim = get_dim(globalDrag.lasso)
+		CUI.globalDrag.lasso_dim = get_dim(CUI.globalDrag.lasso)
 		lassoed = []
 		if @_lasso_filter
-			for el in CUI.DOM.matchSelector(globalDrag.$source, @_lasso_filter)
-				if not do_overlap(globalDrag.lasso_dim, get_dim(el))
+			for el in CUI.DOM.matchSelector(CUI.globalDrag.$source, @_lasso_filter)
+				if not do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
 					continue
 				# find lasso filtered
 				if @_filter
-					lassoed_el = CUI.DOM.closest(el, @_filter, globalDrag.$source)
+					lassoed_el = CUI.DOM.closest(el, @_filter, CUI.globalDrag.$source)
 				else
-					parents = CUI.DOM.parentsUntil(el, globalDrag.$source)
+					parents = CUI.DOM.parentsUntil(el, CUI.globalDrag.$source)
 					lassoed_el = parents[parents.length-2]
 
 				if lassoed_el
 					pushOntoArray(lassoed_el, lassoed)
 		else if @_filter
-			for el in CUI.DOM.matchSelector(globalDrag.$source, @_filter)
-				if do_overlap(globalDrag.lasso_dim, get_dim(el))
+			for el in CUI.DOM.matchSelector(CUI.globalDrag.$source, @_filter)
+				if do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
 					pushOntoArray(el, lassoed)
 		else
-			for el in globalDrag.$source.children
-				if do_overlap(globalDrag.lasso_dim, get_dim(el))
+			for el in CUI.globalDrag.$source.children
+				if do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
 					lassoed.push(el)
 		lassoed
 
 	stop_drag: (ev) ->
-		for el in globalDrag.elements.slice(0)
-			removeFromArray(el, globalDrag.elements)
+		for el in CUI.globalDrag.elements.slice(0)
+			removeFromArray(el, CUI.globalDrag.elements)
 			CUI.DOM.toggleClass(el, @_lassoed_element_class)
 		super(ev)
 
 	cleanup_drag: (ev) ->
 		super(ev)
-		globalDrag.lasso.remove()
+		CUI.globalDrag.lasso.remove()
 
 	end_drag: (ev) ->
-		@_selected(ev, globalDrag)
+		@_selected(ev, CUI.globalDrag)
 		super(ev)
-
-
-Lasso = CUI.Lasso

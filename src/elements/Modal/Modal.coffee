@@ -132,5 +132,3 @@ class CUI.Modal extends CUI.LayerPane
 		@getPane().endFillScreen(false) # no transition
 		super(ev)
 
-
-Modal = CUI.Modal

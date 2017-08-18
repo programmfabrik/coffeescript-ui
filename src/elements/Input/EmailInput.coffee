@@ -21,5 +21,3 @@ class CUI.EmailInput extends CUI.Input
 			return false
 
 	@regexp: /^[\S]+@(?:[\S]+\.[A-Z]{2,}|localhost)$/i
-
-EmailInput = CUI.EmailInput

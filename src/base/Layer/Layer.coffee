@@ -1240,7 +1240,7 @@ CUI.ready ->
 		node: document.body
 		call: (ev) ->
 
-			if ev.keyCode() != 27 or window.globalDrag
+			if ev.keyCode() != 27 or CUI.globalDrag
 				return
 
 			layer_elements = DOM.find("body > .cui-tmpl-layer-root > .cui-layer")

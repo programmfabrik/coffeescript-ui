@@ -47,4 +47,3 @@ class CUI.VerticalLayout extends CUI.Layout
 	getSupportedPanes: ->
 		["top", "bottom"]
 
-VerticalLayout = CUI.VerticalLayout

@@ -126,5 +126,3 @@ class CUI.Menu extends CUI.Layer
 			return button
 		null
 
-
-Menu = CUI.Menu

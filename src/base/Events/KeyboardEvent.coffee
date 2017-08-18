@@ -7,18 +7,15 @@
 
 class CUI.KeyboardEvent extends CUI.Event
 
-	getKeys: ->
-		CUI.KeyboardEvent.__keys
-
 	getKeyboard: ->
 		keys = @getModifiers()
-		keys.push.apply(keys, @getKeys())
+		keys.push.apply(keys, CUI.KeyboardEvent.__keys)
 		keys.join("+")
 
 	# Returns the visible keyboard key
 	# "key" only returns the native event key which is different
 	# between OSs
-	keyboardKey: ->
+	__keyboardKey: ->
 		key = @keyCode()
 		if key in [96..105]
 			s = "Num"+String.fromCharCode(key-48)
@@ -85,24 +82,23 @@ class CUI.KeyboardEvent extends CUI.Event
 			txt = txt + " Keyboard: **"+keyboard+"**"
 		txt
 
-	@isModifierKey: (keyCode) ->
-		switch keyCode
-			when 16, 17, 18, 91, 93
-				true
-			else
-				false
+	@__initKeyboardListener: ->
+		is_modifier = (keyCode) ->
+			switch keyCode
+				when 16, 17, 18, 91, 93
+					true
+				else
+					false
 
-	@initKeyboardListener: ->
 		CUI.KeyboardEvent.__keys = []
-		CUI.KeyboardEvent.__modifier_keys = []
 
 		Events.listen
 			type: ["keydown"]
 			node: window
 			capture: true
 			call: (ev) ->
-				if not KeyboardEvent.isModifierKey(ev.keyCode())
-					pushOntoArray(ev.keyboardKey(), CUI.KeyboardEvent.__keys)
+				if not is_modifier(ev.keyCode())
+					pushOntoArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
 
 				return
 
@@ -112,8 +108,8 @@ class CUI.KeyboardEvent extends CUI.Event
 			capture: true
 			call: (ev) ->
 
-				if not KeyboardEvent.isModifierKey(ev.keyCode())
-					removeFromArray(ev.keyboardKey(), CUI.KeyboardEvent.__keys)
+				if not is_modifier(ev.keyCode())
+					removeFromArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
 
 				return
 
@@ -125,5 +121,7 @@ class CUI.KeyboardEvent extends CUI.Event
 				# console.debug "blur windo"
 				CUI.KeyboardEvent.__keys = []
 
+CUI.windowCompat.protect.push("KeyboardEvent")
+
 CUI.ready =>
-	CUI.KeyboardEvent.initKeyboardListener()
+	CUI.KeyboardEvent.__initKeyboardListener()

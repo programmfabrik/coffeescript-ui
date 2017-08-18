@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Output extends DataFieldInput
+class CUI.Output extends CUI.DataFieldInput
 	initOpts: ->
 		super()
 		@addOpts

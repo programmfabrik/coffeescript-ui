@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MultiInput extends DataFieldInput
+class CUI.MultiInput extends CUI.DataFieldInput
 	constructor: (@opts={}) ->
 		super(@opts)
 		@addClass("cui-multi-input")
@@ -32,7 +32,7 @@ class MultiInput extends DataFieldInput
 			control:
 				mandatory: true
 				check: (v) ->
-					v instanceof MultiInputControl
+					v instanceof CUI.MultiInputControl
 			content_size:
 				default: false
 				check: Boolean

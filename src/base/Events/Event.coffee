@@ -60,9 +60,6 @@ class CUI.Event extends CUI.Element
 				default: false
 				check: Boolean
 
-			onProgress:
-				check: Function
-
 
 	readOpts: ->
 		super()
@@ -76,28 +73,22 @@ class CUI.Event extends CUI.Element
 			@preventDefault()
 
 		@__listenerClass = null
-		@__progress_counter = 0
 
 		@__isInDOM = null
 
 		# assert(not @isDOMEvent() or @_bubble, "DOMEvent needs opts.bubble set.", opts: @opts)
 
-	setListener: (listener) ->
+	__setListener: (listener) ->
 		if not @__listenerClass
 			@__listenerClass = listener.getElementClass()
 		else
 			assert(@__listenerClass == listener.getElementClass(), "Event.setListener", "listener class cannot change during an events life cycle.", listener: listener, listenerClass: @__listenerClass)
 		@
 
-	progress: (listener, ret) ->
-		@__progress_counter++
-		@_onProgress?(listener, ret, @__progress_counter)
-		@__progress_counter
+	__setPhase: (@__phase) ->
 
 	isExcludeSelf: ->
 		@_exclude_self
-
-	setPhase: (@__phase) ->
 
 	getPhase: ->
 		@__phase
@@ -106,7 +97,7 @@ class CUI.Event extends CUI.Element
 		@_type
 
 	getDebug: ->
-		@_type+"["+@getUniqueId()+"#"+@__progress_counter+"]"
+		@_type+"["+@getUniqueId()+"]"
 
 	getInfo: ->
 		@_info
@@ -307,3 +298,5 @@ class CUI.Event extends CUI.Element
 		# CUI.debug "Event.createFromDOMEvent", event.type, eventClass.name, ev.getUniqueId()
 		ev.setNativeEvent(event)
 		ev
+
+CUI.windowCompat.protect.push("Event")

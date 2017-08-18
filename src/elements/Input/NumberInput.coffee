@@ -243,5 +243,3 @@ class CUI.NumberInput extends CUI.Input
 			null
 		else
 			ni.formatValueForDisplay(v)
-
-NumberInput = CUI.NumberInput

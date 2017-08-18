@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Draggable extends CUI.DragDropSelect
 	@cls = "draggable"
 
@@ -114,13 +112,13 @@ class CUI.Draggable extends CUI.DragDropSelect
 			Events.ignore(instance: @__ref)
 			@__ref = null
 
-		if globalDrag?.instance == @
-			globalDrag = null
+		if CUI.globalDrag?.instance == @
+			CUI.globalDrag = null
 		return
 
 	destroy: ->
 		super()
-		CUI.DOM.remove(globalDrag?.helperNode)
+		CUI.DOM.remove(CUI.globalDrag?.helperNode)
 		@__cleanup()
 		@
 
@@ -133,20 +131,19 @@ class CUI.Draggable extends CUI.DragDropSelect
 		Events.listen
 			type: @__event_types.start
 			node: @element
-			capture: true
+			# capture: true
 			instance: @
 			selector: @_selector
 			call: (ev) =>
-
 				if ev.getButton() > 0 and ev.getType() == "mousedown"
 					# ignore if not the main button
 					return
 
-				if window.globalDrag
+				if CUI.globalDrag
 					# ignore if dragging is in progress
 					return
 
-				# console.debug getObjectClass(@), "[mouseisdown]", ev.getUniqueId(), @element
+				# console.debug getObjectClass(@), "[mousedown]", ev.getUniqueId(), @element
 
 				# hint possible click event listeners like Sidebar to
 				# not execute the click anymore...
@@ -172,31 +169,27 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				$target = $(target)
 
-				# console.debug "attempting to start drag", ev.getUniqueId(), $target[0]
-
+				# console.debug "attempting to start drag", ev, $target
 				@init_drag(ev, $target)
 				return
 
 	init_drag: (ev, $target) ->
 
 		overwrite_options = {}
-		globalDrag = @_create?(ev, overwrite_options, $target)
+		CUI.globalDrag = @_create?(ev, $target)
 
 		# ev.getMousedownEvent?().preventDefault()
 
-		if globalDrag == false
+		if CUI.globalDrag == false
 			# CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
 			return
 
 		# ev.preventDefault()
 
-		for k, v of overwrite_options
-			@["_#{k}"] = v
+		if isNull(CUI.globalDrag) or CUI.globalDrag == true
+			CUI.globalDrag = {}
 
-		if isNull(globalDrag) or globalDrag == true
-			globalDrag = {}
-
-		assert(CUI.isPlainObject(globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: globalDrag)
+		assert(CUI.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: CUI.globalDrag)
 		point = getCoordinatesFromEvent(ev)
 		position = elementGetPosition(point, $target)
 
@@ -211,13 +204,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 			start: position # offset to the $target
 			threshold: @_threshold
 
-		# CUI.debug "drag drop init", init
 		for k, v of init
-			window.globalDrag[k] = v
+			CUI.globalDrag[k] = v
 
-		# CUI.debug "starting drag...", globalDrag
-
-		# ev.stopImmediatePropagation()
+		ev.stopPropagation()
 		# ev.preventDefault()
 
 		@before_drag(ev, $target)
@@ -254,7 +244,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			type: @__event_types.move
 			instance: @__ref
 			call: (ev) =>
-				if not globalDrag
+				if not CUI.globalDrag
 					return
 
 				# this prevents chrome from focussing element while
@@ -271,14 +261,14 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				$target = $(pointTarget)
 
-				if globalDrag.ended
+				if CUI.globalDrag.ended
 					return
 
 				coordinates = getCoordinatesFromEvent(ev)
 
 				diff =
-					x: coordinates.pageX - globalDrag.startCoordinates.pageX
-					y: coordinates.pageY - globalDrag.startCoordinates.pageY
+					x: coordinates.pageX - CUI.globalDrag.startCoordinates.pageX
+					y: coordinates.pageY - CUI.globalDrag.startCoordinates.pageY
 					eventPoint: coordinates
 
 				switch @get_axis()
@@ -290,22 +280,22 @@ class CUI.Draggable extends CUI.DragDropSelect
 				diff.bare_x = diff.x
 				diff.bare_y = diff.y
 
-				diff.x += globalDrag.$source.scrollLeft - globalDrag.startScroll.left
-				diff.y += globalDrag.$source.scrollTop - globalDrag.startScroll.top
+				diff.x += CUI.globalDrag.$source.scrollLeft - CUI.globalDrag.startScroll.left
+				diff.y += CUI.globalDrag.$source.scrollTop - CUI.globalDrag.startScroll.top
 
-				if Math.abs(diff.x) >= globalDrag.threshold or
-					Math.abs(diff.y) >= globalDrag.threshold or
-					globalDrag.dragStarted
+				if Math.abs(diff.x) >= CUI.globalDrag.threshold or
+					Math.abs(diff.y) >= CUI.globalDrag.threshold or
+					CUI.globalDrag.dragStarted
 
-						globalDrag.dragDiff = diff
+						CUI.globalDrag.dragDiff = diff
 
-						if not globalDrag.dragStarted
-							globalDrag.startEvent.preventDefault()
+						if not CUI.globalDrag.dragStarted
+							CUI.globalDrag.startEvent.preventDefault()
 
 							@__startDrag(ev, $target, diff)
 
 							if @_get_cursor
-								document.body.setAttribute("data-cursor", @_get_cursor(globalDrag))
+								document.body.setAttribute("data-cursor", @_get_cursor(CUI.globalDrag))
 							else
 								document.body.setAttribute("data-cursor", @getCursor())
 
@@ -313,32 +303,32 @@ class CUI.Draggable extends CUI.DragDropSelect
 						dragover_scroll()
 
 						@do_drag(ev, $target, diff)
-						@_dragging?(ev, window.globalDrag, diff)
+						@_dragging?(ev, CUI.globalDrag, diff)
 				return
 
 		end_drag = (ev, stop = false) =>
 
-			start_target = globalDrag.$source
+			start_target = CUI.globalDrag.$source
 			start_target_parents = CUI.DOM.parents(start_target)
 
-			globalDrag.ended = true
+			CUI.globalDrag.ended = true
 
 			document.body.removeAttribute("data-cursor")
 
 			if stop
-				globalDrag.stopped = true
+				CUI.globalDrag.stopped = true
 				@stop_drag(ev)
-				@_dragstop?(ev, globalDrag, @)
+				@_dragstop?(ev, CUI.globalDrag, @)
 			else
 				@end_drag(ev)
-				@_dragend?(ev, globalDrag, @)
+				@_dragend?(ev, CUI.globalDrag, @)
 
 			if @isDestroyed()
 				# this can happen if any of the
 				# callbacks cleanup / reload
 				return
 
-			noClickKill = globalDrag.noClickKill
+			noClickKill = CUI.globalDrag.noClickKill
 
 			@__cleanup()
 
@@ -372,7 +362,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			capture: true
 			instance: @__ref
 			call: (ev) =>
-				if not globalDrag.dragStarted
+				if not CUI.globalDrag.dragStarted
 					@__cleanup()
 					return
 
@@ -391,10 +381,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 			call: (ev) =>
 				# console.debug "event received: ", ev.getType()
 				# CUI.debug "draggable", ev.type
-				if not globalDrag
+				if not CUI.globalDrag
 					return
 
-				if not globalDrag.dragStarted
+				if not CUI.globalDrag.dragStarted
 					@__cleanup()
 					return
 
@@ -414,11 +404,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# so they are executed before
 
 		# CUI.debug "start drag", diff
-		@_dragstart?(ev, window.globalDrag)
+		@_dragstart?(ev, CUI.globalDrag)
 		@init_helper(ev, $target, diff)
-		globalDrag.$source.addClass(@_dragClass)
+		CUI.globalDrag.$source.addClass(@_dragClass)
 		@start_drag(ev, $target, diff)
-		globalDrag.dragStarted = true
+		CUI.globalDrag.dragStarted = true
 
 	# call after first mousedown
 	before_drag: ->
@@ -432,32 +422,32 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# position helper
 		@position_helper(ev, $target, diff)
 
-		if globalDrag.dragoverTarget and globalDrag.dragoverTarget[0] != $target[0]
+		if CUI.globalDrag.dragoverTarget and CUI.globalDrag.dragoverTarget[0] != $target[0]
 			Events.trigger
 				type: "cui-dragleave"
-				node: globalDrag.dragoverTarget
+				node: CUI.globalDrag.dragoverTarget
 				info:
-					globalDrag: globalDrag
+					globalDrag: CUI.globalDrag
 					originalEvent: ev
 
-			globalDrag.dragoverTarget = null
+			CUI.globalDrag.dragoverTarget = null
 
-		if not globalDrag.dragoverTarget
-			globalDrag.dragoverTarget = $target
+		if not CUI.globalDrag.dragoverTarget
+			CUI.globalDrag.dragoverTarget = $target
 			# console.debug "target:", $target
 			Events.trigger
 				type: "cui-dragenter"
-				node: globalDrag.dragoverTarget
+				node: CUI.globalDrag.dragoverTarget
 				info:
-					globalDrag: globalDrag
+					globalDrag: CUI.globalDrag
 					originalEvent: ev
 
 		# trigger our own dragover event on the correct target
 		Events.trigger
-			node: globalDrag.dragoverTarget
+			node: CUI.globalDrag.dragoverTarget
 			type: "cui-dragover"
 			info:
-				globalDrag: globalDrag
+				globalDrag: CUI.globalDrag
 				originalEvent: ev
 
 		return
@@ -466,48 +456,48 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if @isDestroyed()
 			return
 
-		globalDrag.$source.removeClass(@_dragClass)
-		CUI.DOM.remove(globalDrag.helperNode)
+		CUI.globalDrag.$source.removeClass(@_dragClass)
+		CUI.DOM.remove(CUI.globalDrag.helperNode)
 
 	stop_drag: (ev) ->
 		@__finish_drag(ev)
 		@cleanup_drag(ev)
 
 	__finish_drag: (ev) ->
-		if not globalDrag.dragoverTarget
+		if not CUI.globalDrag.dragoverTarget
 			return
 
-		# CUI.debug "sending pf_dragleave", globalDrag.dragoverTarget
-		# CUI.debug "pf_dragleave.event", globalDrag.dragoverTarget[0]
+		# CUI.debug "sending pf_dragleave", CUI.globalDrag.dragoverTarget
+		# CUI.debug "pf_dragleave.event", CUI.globalDrag.dragoverTarget[0]
 
 		CUI.Events.trigger
-			node: globalDrag.dragoverTarget
+			node: CUI.globalDrag.dragoverTarget
 			type: "cui-dragleave"
 			info:
-				globalDrag: globalDrag
+				globalDrag: CUI.globalDrag
 				originalEvent: ev
 
-		if not globalDrag.stopped
+		if not CUI.globalDrag.stopped
 			# console.error "cui-drop", ev
 			CUI.Events.trigger
 				type: "cui-drop"
-				node: globalDrag.dragoverTarget
+				node: CUI.globalDrag.dragoverTarget
 				info:
-					globalDrag: globalDrag
+					globalDrag: CUI.globalDrag
 					originalEvent: ev
 
 		CUI.Events.trigger
-			node: globalDrag.dragoverTarget
+			node: CUI.globalDrag.dragoverTarget
 			type: "cui-dragend"
 			info:
-				globalDrag: globalDrag
+				globalDrag: CUI.globalDrag
 				originalEvent: ev
 
-		globalDrag.dragoverTarget = null
+		CUI.globalDrag.dragoverTarget = null
 		@
 
 	end_drag: (ev) ->
-		# CUI.debug globalDrag.dragoverTarget, ev.getType(), ev
+		# CUI.debug CUI.globalDrag.dragoverTarget, ev.getType(), ev
 		if @isDestroyed()
 			return
 		@__finish_drag(ev)
@@ -515,21 +505,21 @@ class CUI.Draggable extends CUI.DragDropSelect
 		@
 
 	get_helper_pos: (ev, gd, diff) ->
-		top: globalDrag.helperNodeStart.top + diff.y
-		left: globalDrag.helperNodeStart.left + diff.x
-		width: globalDrag.helperNodeStart.width
-		height: globalDrag.helperNodeStart.height
+		top: CUI.globalDrag.helperNodeStart.top + diff.y
+		left: CUI.globalDrag.helperNodeStart.left + diff.x
+		width: CUI.globalDrag.helperNodeStart.width
+		height: CUI.globalDrag.helperNodeStart.height
 
 	get_helper_contain_element: ->
 		@_helper_contain_element
 
 	position_helper: (ev, $target, diff) ->
-		# console.debug "position helper", globalDrag.helperNodeStart, ev, $target, diff
+		# console.debug "position helper", CUI.globalDrag.helperNodeStart, ev, $target, diff
 
-		if not globalDrag.helperNode
+		if not CUI.globalDrag.helperNode
 			return
 
-		helper_pos = @get_helper_pos(ev, globalDrag, diff)
+		helper_pos = @get_helper_pos(ev, CUI.globalDrag, diff)
 
 		pos =
 			x: helper_pos.left
@@ -548,17 +538,17 @@ class CUI.Draggable extends CUI.DragDropSelect
 			# pos is changed in place
 			Draggable.limitRect pos,
 				min_x: dim_contain.viewportLeft + dim_contain.borderLeftWidth
-				max_x: dim_contain.viewportRight - dim_contain.borderRightWidth - globalDrag.helperNodeStart.marginHorizontal
+				max_x: dim_contain.viewportRight - dim_contain.borderRightWidth - CUI.globalDrag.helperNodeStart.marginHorizontal
 				min_y: dim_contain.viewportTop + dim_contain.borderTopWidth
-				max_y: dim_contain.viewportBottom - dim_contain.borderBottomWidth - globalDrag.helperNodeStart.marginVertical
+				max_y: dim_contain.viewportBottom - dim_contain.borderBottomWidth - CUI.globalDrag.helperNodeStart.marginVertical
 		else
-			dim_contain = globalDrag.helperNodeStart.body_dim
+			dim_contain = CUI.globalDrag.helperNodeStart.body_dim
 
 			Draggable.limitRect pos,
 				min_x: dim_contain.borderLeftWidth
-				max_x: dim_contain.scrollWidth - dim_contain.borderRightWidth - globalDrag.helperNodeStart.marginHorizontal
+				max_x: dim_contain.scrollWidth - dim_contain.borderRightWidth - CUI.globalDrag.helperNodeStart.marginHorizontal
 				min_y: dim_contain.borderTopWidth
-				max_y: dim_contain.scrollHeight - dim_contain.borderBottomWidth - globalDrag.helperNodeStart.marginVertical
+				max_y: dim_contain.scrollHeight - dim_contain.borderBottomWidth - CUI.globalDrag.helperNodeStart.marginVertical
 
 		# console.debug "limitRect", dump(pos), dim_contain
 
@@ -566,34 +556,27 @@ class CUI.Draggable extends CUI.DragDropSelect
 		helper_pos.left = pos.x
 
 		helper_pos.dragDiff =
-			x: helper_pos.left - globalDrag.helperNodeStart.left
-			y: helper_pos.top - globalDrag.helperNodeStart.top
+			x: helper_pos.left - CUI.globalDrag.helperNodeStart.left
+			y: helper_pos.top - CUI.globalDrag.helperNodeStart.top
 
-		# @_helper_set_pos?(globalDrag, helper_pos)
-
-		if helper_pos.width != globalDrag.helperNodeStart.width
+		if helper_pos.width != CUI.globalDrag.helperNodeStart.width
 			new_width = helper_pos.width
 
-		if helper_pos.height != globalDrag.helperNodeStart.height
+		if helper_pos.height != CUI.globalDrag.helperNodeStart.height
 			new_height = helper_pos.height
 
-		CUI.DOM.setStyle globalDrag.helperNode,
-			transform: globalDrag.helperNodeStart.transform+" translateX("+helper_pos.dragDiff.x+"px) translateY("+helper_pos.dragDiff.y+"px)"
+		CUI.DOM.setStyle CUI.globalDrag.helperNode,
+			transform: CUI.globalDrag.helperNodeStart.transform+" translateX("+helper_pos.dragDiff.x+"px) translateY("+helper_pos.dragDiff.y+"px)"
 
-		CUI.DOM.setDimensions globalDrag.helperNode,
+		CUI.DOM.setDimensions CUI.globalDrag.helperNode,
 			borderBoxWidth: new_width
 			borderBoxHeight: new_height
 
 		return
 
-		# CUI.DOM.setStyle globalDrag.helperNode,
-		# 	top: helper_pos.top
-		# 	left: helper_pos.left
-
-		# console.debug "FINAL helper pos:", globalDrag, diff,  "top", top, "left", left, dump(helper_pos)
 
 	getCloneSourceForHelper: ->
-		globalDrag.$source
+		CUI.globalDrag.$source
 
 	get_axis: ->
 		@_axis
@@ -606,7 +589,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		left: gd.startCoordinates.pageX - offset.left
 
 	init_helper: (ev, $target, diff) ->
-		helper = @get_helper(ev, window.globalDrag, diff)
+		helper = @get_helper(ev, CUI.globalDrag, diff)
 
 		if not helper
 			return
@@ -619,24 +602,24 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			# offset the layer to the click
 			offset =
-				top: globalDrag.start.top
-				left: globalDrag.start.left
+				top: CUI.globalDrag.start.top
+				left: CUI.globalDrag.start.left
 		else if CUI.isFunction(helper)
-			hn = globalDrag.helperNode = helper(globalDrag)
+			hn = CUI.globalDrag.helperNode = helper(globalDrag)
 			set_dim = null
 		else
-			hn = globalDrag.helperNode = helper
+			hn = CUI.globalDrag.helperNode = helper
 
 		if not hn
 			return
 
-		globalDrag.helperNode = hn
+		CUI.globalDrag.helperNode = hn
 
 		CUI.DOM.addClass(hn, "cui-drag-drop-select-helper")
 
 		document.body.appendChild(hn)
 
-		start = @get_init_helper_pos(hn, globalDrag, offset)
+		start = @get_init_helper_pos(hn, CUI.globalDrag, offset)
 
 		CUI.DOM.setStyle(hn, start)
 
@@ -644,7 +627,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			# set width & height
 			set_dim = DOM.getDimensions(clone_source)
 
-			# console.error "measureing clone", set_dim.marginBoxWidth, globalDrag.$source, dim
+			# console.error "measureing clone", set_dim.marginBoxWidth, CUI.globalDrag.$source, dim
 
 			DOM.setDimensions hn,
 				marginBoxWidth: set_dim.marginBoxWidth
@@ -652,8 +635,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 
 		dim = DOM.getDimensions(hn)
-
-		# console.debug "globalDrag", globalDrag, offset, hn, set_dim.marginBoxWidth, set_dim.marginBoxHeight
 
 		start.width = dim.borderBoxWidth
 		start.height = dim.borderBoxHeight
@@ -666,7 +647,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			start.transform = ''
 		start.body_dim = CUI.DOM.getDimensions(document.body)
 
-		globalDrag.helperNodeStart = start
+		CUI.globalDrag.helperNodeStart = start
 
 
 	# keep pos inside certain constraints
@@ -740,5 +721,3 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# CUI.debug "limitRect AFTER", pos, diff
 		return pos
 
-
-Draggable = CUI.Draggable

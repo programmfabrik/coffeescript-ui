@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Select extends Checkbox
+class CUI.Select extends CUI.Checkbox
 
 	initOpts: ->
 		super()

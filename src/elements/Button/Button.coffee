@@ -269,7 +269,7 @@ class CUI.Button extends CUI.DOM
 			node: @DOM
 			call: (ev) =>
 
-				if window.globalDrag
+				if CUI.globalDrag
 					# ev.stop()
 					return
 
@@ -300,13 +300,17 @@ class CUI.Button extends CUI.DOM
 					call: =>
 						@getMenu().hide(ev)
 
-		if @_menu_on_hover or @__tooltipOpts
+		if @_menu_on_hover or @__tooltipOpts or @_onMouseenter
 			Events.listen
 				type: "mouseenter"
 				node: @DOM
 				call: (ev) =>
 
-					if window.globalDrag
+					if CUI.globalDrag
+						return
+
+					@_onMouseenter?(ev)
+					if ev.isImmediatePropagationStopped()
 						return
 
 					if @__tooltipOpts
@@ -355,8 +359,10 @@ class CUI.Button extends CUI.DOM
 			call: (ev) =>
 				# @__prevent_btn_click = false
 
-				if window.globalDrag
+				if CUI.globalDrag
 					return
+
+				@_onMouseleave?(ev)
 
 				@getTooltip()?.hideTimeout(ev)
 
@@ -506,6 +512,10 @@ class CUI.Button extends CUI.DOM
 			onActivate:
 				check: Function
 			onDeactivate:
+				check: Function
+			onMouseenter:
+				check: Function
+			onMouseleave:
 				check: Function
 
 			# if set, this button belongs
@@ -936,11 +946,9 @@ class CUI.Button extends CUI.DOM
 		mouseup: ['mouseup', 'mousedown']
 		dblclick: ['click', 'mousedown']
 
-
 CUI.defaults.class.Button = CUI.Button
 
 CUI.Events.registerEvent
 	type: ["show", "hide", "cui-button-click"]
 	bubble: true
 
-Button = CUI.Button

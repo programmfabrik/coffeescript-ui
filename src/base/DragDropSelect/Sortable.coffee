@@ -5,14 +5,17 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Sortable extends CUI.Draggable
 	@cls = "sortable"
 
 	initOpts: ->
 		super()
 		@addOpts
+			allowSort:
+				mandatory: true
+				default: (ev, from_idx, to_idx) ->
+					return true
+				check: Function
 			sorted:
 				mandatory: true
 				default: (ev, from_idx, to_idx) ->
@@ -20,15 +23,23 @@ class CUI.Sortable extends CUI.Draggable
 				check: Function
 
 		@removeOpt("helper_contain_element")
-		@mergeOpt "selector", default:
-			(target, node) ->
-				els = CUI.DOM.elementsUntil(target, null, node)
-				if not els
-					return null
-				if els.length > 1
-					els[els.length-2]
-				else
-					return null
+
+
+	getSortTarget: (target, node) ->
+		els = CUI.DOM.elementsUntil(target, null, node)
+		if not els
+			return null
+		if els.length > 1
+			els[els.length-2]
+		else
+			return null
+
+	getClass: ->
+		if @_selector
+			"cui-drag-drop-select"
+		else
+			super()
+
 	readOpts: ->
 		super()
 		@_helper_contain_element = @_element
@@ -46,27 +57,26 @@ class CUI.Sortable extends CUI.Draggable
 			return
 
 		if source_idx < dest_idx
-			globalDrag.noClickKill = true
+			CUI.globalDrag.noClickKill = true
 			CUI.DOM.insertAfter($dest, $source)
 		else if source_idx > dest_idx
-			globalDrag.noClickKill = true
+			CUI.globalDrag.noClickKill = true
 			CUI.DOM.insertBefore($dest, $source)
 
 		CUI.DOM.syncAnimatedClone(@element)
 		@
 
 	start_drag: (ev, $target, diff) ->
-		globalDrag.sort_source = @__findClosestSon(globalDrag.$source)
-		globalDrag.sort_source.classList.add("cui-sortable-placeholder")
-		globalDrag.start_idx = @get_child_number(globalDrag.sort_source)
+
+		CUI.globalDrag.sort_source = @__findClosestSon(CUI.globalDrag.$source)
+		CUI.globalDrag.sort_source.classList.add("cui-sortable-placeholder")
+		CUI.globalDrag.start_idx = @get_child_number(CUI.globalDrag.sort_source)
 		CUI.DOM.addClass(@element, 'cui-sorting')
 
 		CUI.DOM.initAnimatedClone(@element)
 
-		# CUI.debug "INIT HELPER", globalDrag
-
 	getCloneSourceForHelper: ->
-		@__findClosestSon(globalDrag.$source)
+		@__findClosestSon(CUI.globalDrag.$source)
 
 	__findClosestSon: ($target) ->
 		# find the closest child of the target
@@ -90,9 +100,16 @@ class CUI.Sortable extends CUI.Draggable
 		if not target_child
 			return
 
-		source_idx = @get_child_number(globalDrag.sort_source)
+		source_idx = @get_child_number(CUI.globalDrag.sort_source)
 		dest_idx = @get_child_number(target_child)
-		@move_element(source_idx, dest_idx)
+
+		if @_allowSort(ev, source_idx, dest_idx)
+			@move_element(source_idx, dest_idx)
+		@
+
+	init_drag: (ev, $target) ->
+		# we need to move the target to the element undernith the cursor
+		super(ev, @getSortTarget(ev.getTarget(), @_element))
 
 	stop_drag: (ev) ->
 		super(ev)
@@ -105,21 +122,20 @@ class CUI.Sortable extends CUI.Draggable
 	cleanup_drag: (ev) ->
 		super(ev)
 		CUI.DOM.removeClass(@element, 'cui-sorting')
-		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
+		CUI.globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
 		CUI.DOM.removeAnimatedClone(@element)
 
 	__end_drag: (ev, stopped) ->
 		# move dragged object into position
-		curr_idx = @get_child_number(globalDrag.sort_source)
+		curr_idx = @get_child_number(CUI.globalDrag.sort_source)
 
-		if globalDrag.start_idx == curr_idx
+		if CUI.globalDrag.start_idx == curr_idx
 			return
 
 		if stopped
-			@move_element(curr_idx, globalDrag.start_idx)
+			@move_element(curr_idx, CUI.globalDrag.start_idx)
 		else
-			@_sorted(ev, globalDrag.start_idx, curr_idx)
+			@_sorted(ev, CUI.globalDrag.start_idx, curr_idx)
 
 		return
 
-Sortable = CUI.Sortable

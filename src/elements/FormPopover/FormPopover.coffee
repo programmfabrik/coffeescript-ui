@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FormPopover extends Form
+class CUI.FormPopover extends CUI.Form
 	constructor: (@opts={}) ->
 		super(@opts)
 		# CUI.debug "FormPopover", @opts

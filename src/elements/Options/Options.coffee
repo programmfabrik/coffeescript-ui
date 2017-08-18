@@ -343,7 +343,7 @@ class CUI.Options extends CUI.DataField
 						if @_radio and not @__radio_use_array
 							@storeValue(_cb.getValue(), flags)
 						else
-							addToArray(_cb.getOptValue(), arr = @getValue().slice(0))
+							pushOntoArray(_cb.getOptValue(), arr = @getValue().slice(0))
 							order_value_array(arr)
 							@storeValue(arr, flags)
 							if @_sortable
@@ -518,4 +518,3 @@ class CUI.Options extends CUI.DataField
 		else
 			[]
 
-Options = CUI.Options

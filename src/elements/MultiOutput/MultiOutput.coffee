@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MultiOutput extends Output
+class CUI.MultiOutput extends CUI.Output
 	initOpts: ->
 		super()
 		@addOpts
@@ -21,3 +21,4 @@ class MultiOutput extends Output
 		@setText(@getValue()[key.name])
 		@
 
+MultiOutput = CUI.MulitOutput

@@ -5,6 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewHeaderRow extends ListViewRow
+class CUI.ListViewHeaderRow extends CUI.ListViewRow
 	isSelectable: ->
 		false

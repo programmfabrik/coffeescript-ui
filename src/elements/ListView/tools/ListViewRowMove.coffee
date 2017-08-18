@@ -76,7 +76,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 		source_node = @_row
 		target_node = @__listView.getListViewRow(@target.row_i)
 
-		globalDrag.noClickKill = true
+		CUI.globalDrag.noClickKill = true
 
 		if source_node.moveRow
 			source_node.moveRow(@__listView, target_node, @target.after)

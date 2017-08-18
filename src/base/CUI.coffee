@@ -456,7 +456,7 @@ class CUI
 		idx = idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		if idx > -1 and not CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeoutID)
-			console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
+			# console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
 			CUI.clearTimeout(@__scheduledCallbacks[idx].timeoutID)
 			@__scheduledCallbacks.splice(idx, 1)
 			return true
@@ -849,18 +849,48 @@ class CUI
 		data
 
 
-# http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-CUI.browser =
-	opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
-	firefox: `typeof InstallTrigger !== 'undefined'`
-	safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
-	ie: `/*@cc_on!@*/false || !!document.documentMode`
-	chrome: `!!window.chrome && !!window.chrome.webstore`
+	@windowCompat:
+		protect: [] # Array to hold properties which will not get copied
+		start: ->
+			for prop, func of CUI
+				if prop in CUI.windowCompat.protect
+					continue
 
-CUI.browser.edge = `!CUI.browser.ie && !!window.StyleMedia`
-CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
+				if window[prop] != undefined
+					console.error("CUI.windowCompat: Already mapped! CUI."+prop+" -> window."+prop)
+				else
+					window[prop] = func
+					console.info("CUI."+prop+" -> window."+prop)
+
+			for prop, func of CUI.DOM
+				if prop.startsWith('$')
+					window[prop] = func
+					console.info("CUI.DOM."+prop+" -> window."+prop)
+
+			console.info("CUI.windowCompat: CUI.jQuery -> window.$")
+			window.$ = CUI.jQuery
+
+
+# http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+	@browser: (->
+		map =
+			opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
+			firefox: `typeof InstallTrigger !== 'undefined'`
+			safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
+			ie: `/*@cc_on!@*/false || !!document.documentMode`
+			chrome: !!window.chrome and !!window.chrome.webstore
+		map.edge = not map.ie && !!window.StyleMedia
+		map.blink = (map.chrome or opera) && !!window.CSS
+		map
+	)()
+
+# protect already stuff added from CUI
+for prop, value of CUI
+	# protect from copying by windowCompat.coffee
+	CUI.windowCompat.protect.push(prop)
 
 CUI.ready =>
+
 	for k of CUI.browser
 		if CUI.browser[k]
 			document.body.classList.add("cui-browser-"+k)
@@ -876,26 +906,12 @@ CUI.ready =>
 			smartLists: true
 			smartypants: false
 
-	for i in [1..9]
-		do (i) ->
-			CUI["$"+i] = ->
-				if arguments.length == 1
-					window["$"+i] = arguments[0]
-					console.debug "$"+i+" = ", arguments[0]
-					return
-
-				for arg, idx in arguments
-					window["$"+i+idx] = arg
-					console.debug "$"+i+idx+" = ", arg
-			return
-
 	# initialize a markdown renderer
 	marked?.setOptions(CUI.defaults.marked_opts)
 
 	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]
 	CUI.DOM.append(document.body, nodes)
-
 
 if not window.addEventListener
 	alert("Your browser is not supported. Please update to a current version of Google Chrome, Mozilla Firefox or Internet Explorer.")

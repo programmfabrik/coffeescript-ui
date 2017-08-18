@@ -68,18 +68,18 @@ class CUI.Events extends CUI.Element
 		listeners.push(listener)
 
 		if node instanceof HTMLElement
-			node.setAttribute("cui-events-listener-element", "cui-events-listener-element")
+			node.setAttribute("data-cui-listeners", "")
 		@
 
-	@getActiveListeners: (doc=document) ->
+	@__getActiveListeners: (doc=document) ->
 		if doc == document
 			listeners = @__listeners.slice(0)
 		else
 			listeners = []
-			if CUI.DOM.matches(doc, '[cui-events-listener-element]')
+			if CUI.DOM.matches(doc, '[data-cui-listeners]')
 				listeners.push.apply(listeners, DOM.data(doc, "listeners"))
 
-		for el in CUI.DOM.matchSelector(doc, "[cui-events-listener-element]")
+		for el in CUI.DOM.matchSelector(doc, "[data-cui-listeners]")
 			listeners.push.apply(listeners, DOM.data(el, "listeners"))
 		listeners
 
@@ -149,13 +149,13 @@ class CUI.Events extends CUI.Element
 			master_dfr.resolve()
 
 		if opts.maxWait >= 0
-			CUI.setTimeout ->
-				for dfr in dfrs
-					if dfr.state() == "pending"
-						dfr.reject()
-				return
-			,
-				opts.maxWait
+			CUI.setTimeout
+				ms: opts.maxWait
+				call: ->
+					for dfr in dfrs
+						if dfr.state() == "pending"
+							dfr.reject()
+					return
 
 		master_dfr.promise()
 
@@ -169,21 +169,6 @@ class CUI.Events extends CUI.Element
 
 		listener
 
-	@active: (type) ->
-		llm = {}
-		for ln in @getActiveListeners()
-			types = ln.getTypes()
-			for _type in types
-				if not llm[_type]
-					llm[_type] = []
-				llm[_type].push(ln)
-
-		if type
-			for ln in llm[type]
-				CUI.debug type, ln.getNode()[0]
-			return
-		else
-			Object.keys(llm).sort()
 
 	@trigger: (_event) ->
 		event = CUI.Event.require(_event, "CUI.Events.trigger")
@@ -218,7 +203,7 @@ class CUI.Events extends CUI.Element
 			# if event.getType() == "toolbox"
 			# 	CUI.debug "sink event...", event.getType(), event.getNode()
 			triggerListeners = []
-			for listener, idx in @getActiveListeners()
+			for listener, idx in @__getActiveListeners()
 				if event.getType() not in listener.getTypes()
 					continue
 
@@ -273,7 +258,7 @@ class CUI.Events extends CUI.Element
 
 	@ignore: (filter, doc=document) -> # , debug=false) ->
 		# console.debug "Events.ignore", filter, filter.instance?.getUniqueId?()
-		for listener in @getActiveListeners(doc)
+		for listener in @__getActiveListeners(doc)
 			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
 				# if debug
 				# 	console.debug("Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
@@ -281,7 +266,7 @@ class CUI.Events extends CUI.Element
 		@
 
 	@dump: (filter={}) ->
-		for listener in @getActiveListeners()
+		for listener in @__getActiveListeners()
 			if CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
 				console.debug("Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener)
 		@
@@ -335,7 +320,7 @@ class CUI.Events extends CUI.Element
 						register_other_type(type)
 		@
 
-	@init: ->
+	@__init: ->
 		defaults =
 			BrowserEvents:
 				bubble: true
@@ -401,7 +386,6 @@ class CUI.Events extends CUI.Element
 				close: {}
 				popstate: {}
 				dragstart: {}
-				dragover: {}
 				dragleave: {}
 				dragenter: {}
 				message: {}
@@ -451,6 +435,5 @@ class CUI.Events extends CUI.Element
 				ev.type = type
 				@registerEvent(ev)
 
-CUI.Events.init()
-Events = CUI.Events
+CUI.Events.__init()
 CUI.defaults.class.Events = CUI.Events

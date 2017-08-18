@@ -333,5 +333,3 @@ class CUI.Tabs extends CUI.SimplePane
 		tab = @getTab(tab_or_idx_or_name)
 		tab.activate()
 		@
-
-Tabs = CUI.Tabs

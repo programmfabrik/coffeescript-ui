@@ -5,9 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-moment = require('moment')
-
-CUI.tz_data = {}
+# CUI.tz_data = {}
 
 class CUI.DateTime extends CUI.Input
 	constructor: (@opts={}) ->
@@ -1319,4 +1317,40 @@ class CUI.DateTime extends CUI.Input
 		dt = new DateTime(input_types: null)
 		dt.parse(datestr)
 
-DateTime = CUI.DateTime
+# Date.prototype.getWeek = (us=false) ->
+# 	if us
+# 		# US week
+# 		start_day = 0
+# 		start_on_jan_1st = true
+# 		days_week_in_next_year = 6
+# 	else
+# 		# get the ISO week
+# 		start_day = 1
+# 		start_on_jan_1st = false
+# 		days_week_in_next_year = 3
+
+# 	day_offset = 24*60*60*1000
+# 	week_offset = day_offset * 7
+# 	d = new Date(this)
+# 	d.setUTCHours(0,0,0,0)
+# 	current_ms = d.getTime()
+# 	next_year_jan_1st = new Date(d)
+# 	next_year_jan_1st.setUTCFullYear(d.getUTCFullYear()+1,0,1)
+
+# 	# CUI.debug "asked day", d
+# 	d.setUTCMonth(0,1)
+# 	first_day = d.getUTCDay()
+# 	# CUI.debug "first day", first_day, d
+# 	first_day_of_week_ms = d.getTime() - ((first_day-start_day+7)%7)*day_offset
+# 	if first_day in [5, 6, 0] and not start_on_jan_1st
+# 		first_day_of_week_ms += week_offset
+# 	d.setTime(first_day_of_week_ms)
+
+# 	if (next_year_jan_1st.getTime()-current_ms) / day_offset <= days_week_in_next_year
+# 		week_no = 1
+# 	else
+# 		week_no = Math.floor((current_ms - first_day_of_week_ms) / week_offset) + 1
+# 	# CUI.debug "first day of week", d.getUTCFullYear(), d
+# 	# CUI.debug "next jan 1st", next_year_jan_1st, (next_year_jan_1st.getTime()-current_ms) / day_offset
+# 	# CUI.debug "diff_ms", current_ms - first_day_of_week_ms, week_no
+# 	week_no

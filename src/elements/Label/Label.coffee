@@ -266,5 +266,3 @@ class CUI.Label extends CUI.DOM
 
 
 CUI.defaults.class.Label = CUI.Label
-
-Label = CUI.Label

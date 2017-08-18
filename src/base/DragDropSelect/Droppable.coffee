@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Droppable extends CUI.DragDropSelect
 	@cls = "droppable"
 
@@ -297,6 +295,3 @@ class CUI.Droppable extends CUI.DragDropSelect
 				ev.stopPropagation()
 				return
 
-
-
-Droppable = CUI.Droppable

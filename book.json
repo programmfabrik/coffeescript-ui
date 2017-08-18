@@ -1,0 +1,19 @@
+{
+	"root": "./docs",
+	"title": "Documentation of Coffeescript UI",
+	"structure": {
+        "summary": "SUMMARY.md"
+    },
+	"plugins": [
+		"download-pdf-link",
+		"-lunr",
+		"-search",
+		"search-plus"
+	],
+	"pluginsConfig": {
+		"download-pdf-link": {
+			"base": "https://www.gitbook.com/download/pdf/book/programmfabrik/coffeescript-ui",
+			"label": "Download PDF"
+		}
+	}
+}

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewColumnRightFill extends ListViewColumnEmpty
+class CUI.ListViewColumnRightFill extends CUI.ListViewColumnEmpty
 	render: ->
 
 	setElement: ->

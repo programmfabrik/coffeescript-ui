@@ -855,6 +855,4 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	moveNodeAfter: (to_node, new_father, after) ->
 
 
-ListViewTreeNode = CUI.ListViewTreeNode
-
 

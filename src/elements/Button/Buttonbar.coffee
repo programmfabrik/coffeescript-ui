@@ -7,7 +7,7 @@
 
 
 # Buttonbar groups {Button}s
-class Buttonbar extends CUI.DOM
+class CUI.Buttonbar extends CUI.DOM
 
 	# @param [Object] options for {Buttonbar} creation
 	# @option options [Array] buttons is an array of {Button} Objects. Use thie 'group' option in {Button} to let {Buttonbar} sort the buttons into groups.

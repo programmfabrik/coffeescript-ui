@@ -839,6 +839,43 @@ li > div {
 	}
 }
 
+.cui-data-form--multiple-fields {
+	> .cui-data-form-row {
+		> .cui-horizontal-layout-left {
+			margin-right: 10px;
+			border-right: 2px solid #525252;
+		}
+	}
+}
+
+.cui-data-form--movable-rows,
+.cui-data-form .cui-data-form {
+	> .cui-data-form-row {
+		> .cui-horizontal-layout-left {
+			width: 20px;
+		}
+	}
+}
+
+// DataForm
+.cui-data-form-row {
+
+	&.cui-data-form-row--trash {
+		opacity: 0.5;
+	}
+
+	.cui-data-form-row:not(:first-child) {
+		margin-top: 5px;
+	}
+}
+
+.fa.cui-data-form-row-move-handle {
+	cursor: -webkit-grab;
+	cursor:         grab;
+	pointer-events: auto;
+}
+
+
 // Icons
 .cui-icon-svg {
 	fill: currentColor;

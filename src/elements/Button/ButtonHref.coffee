@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ButtonHref extends Button
+class CUI.ButtonHref extends CUI.Button
 	constructor: (@opts={}) ->
 		super(@opts)
 		attr =

@@ -15,3 +15,4 @@ class CUI.WheelEvent extends CUI.MouseEvent
 			return 0
 		ne.deltaY or 0
 
+CUI.windowCompat.protect.push("WheelEvent")

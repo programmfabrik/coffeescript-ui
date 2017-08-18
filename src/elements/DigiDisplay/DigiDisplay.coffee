@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class DigiDisplay extends CUI.DOM
+class CUI.DigiDisplay extends CUI.DOM
 
 	constructor: (@opts={}) ->
 		super(@opts)

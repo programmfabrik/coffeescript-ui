@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class BorderLayout extends Layout
+class CUI.BorderLayout extends CUI.Layout
 
 	getName: ->
 		"border-layout"

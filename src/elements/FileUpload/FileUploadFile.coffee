@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FileUploadFile extends CUI.Element
+class CUI.FileUploadFile extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 

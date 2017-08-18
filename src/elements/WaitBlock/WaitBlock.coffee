@@ -91,4 +91,3 @@ class CUI.WaitBlock extends CUI.Block
 		@hide()
 		super()
 
-WaitBlock = CUI.WaitBlock

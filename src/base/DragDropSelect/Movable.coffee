@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Movable extends CUI.Draggable
 	@cls = "movable"
 
@@ -99,4 +97,3 @@ class CUI.Movable extends CUI.Draggable
 		# !!! The order in Draggable.limitRect is different, but better
 		Draggable.limitRect(pos, limitRect, defaults)
 
-Movable = CUI.Movable

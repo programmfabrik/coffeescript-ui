@@ -6,7 +6,7 @@
 ###
 
 # this class initializes a flex handle
-class FlexHandle extends CUI.Element
+class CUI.FlexHandle extends CUI.Element
 	constructor: (@opts={}) ->
 		super(@opts)
 

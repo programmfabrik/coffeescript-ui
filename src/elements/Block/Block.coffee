@@ -45,7 +45,7 @@ class CUI.Block extends CUI.DOM
 				check: (v) ->
 					!!(isContent(v) or isString(v) or v?.DOM)
 			icon:
-				check: Icon
+				check: CUI.Icon
 			content:
 				check: (v) ->
 					!!(isContent(v) or isString(v) or v?.DOM)
@@ -87,5 +87,3 @@ class CUI.Block extends CUI.DOM
 	appendContent: (content) ->
 		@__block.append(content, "content")
 
-
-Block = CUI.Block

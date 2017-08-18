@@ -175,4 +175,3 @@ CUI.ready =>
 		type: "tab_activate"
 
 
-Tab = CUI.Tab
