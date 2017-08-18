@@ -8,3 +8,4 @@ commit.txt
 /node_modules
 .\#*
 .idea
+npm-debug.log

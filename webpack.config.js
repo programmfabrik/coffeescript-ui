@@ -24,6 +24,10 @@ const config = {
                 loader: 'coffee-loader'
             },
             {
+                test: /\.css$/,
+                loader: ['style-loader', 'css-loader']
+            },
+            {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -47,13 +51,6 @@ const config = {
     plugins: [
         new CleanWebpackPlugin(BUILD_DIR),
         new ExtractTextPlugin("css/cui_ng.css"),
-        new CopyWebpackPlugin(
-            [
-                {from: '../thirdparty/marked/lib/marked.js', to: 'js'},
-                {from: '../thirdparty/moment', to: 'js'},
-                {from: 'scss/icons/icons.svg', to: 'css/icons.svg'}
-            ]
-        ),
         new ConcatPlugin({
             fileName: 'cui.html',
             filesToConcat: htmlFiles
