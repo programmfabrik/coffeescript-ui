@@ -13,7 +13,7 @@ class CUI.DataForm extends CUI.DataTable
 			new CUI.Sortable
 				element: @DOM
 				selector: ".cui-data-form-row-move-handle"
-				create: (ev, options, target) ->
+				create: (ev, target) ->
 					data = CUI.DOM.data(target, "data")
 					if not data
 						return false

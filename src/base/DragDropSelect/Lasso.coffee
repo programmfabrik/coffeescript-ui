@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Lasso extends CUI.Draggable
 	@cls = "lasso"
 
@@ -125,11 +123,11 @@ class CUI.Lasso extends CUI.Draggable
 			h2 = dims2.height
 			!(y2 + h2 <= y1 || y1 + h1 <= y2 || x2 + w2 <= x1 || x1 + w1 <= x2)
 
-		CUI.globalDrag.lasso_dim = get_dim(globalDrag.lasso)
+		CUI.globalDrag.lasso_dim = get_dim(CUI.globalDrag.lasso)
 		lassoed = []
 		if @_lasso_filter
-			for el in CUI.DOM.matchSelector(globalDrag.$source, @_lasso_filter)
-				if not do_overlap(globalDrag.lasso_dim, get_dim(el))
+			for el in CUI.DOM.matchSelector(CUI.globalDrag.$source, @_lasso_filter)
+				if not do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
 					continue
 				# find lasso filtered
 				if @_filter
@@ -141,12 +139,12 @@ class CUI.Lasso extends CUI.Draggable
 				if lassoed_el
 					pushOntoArray(lassoed_el, lassoed)
 		else if @_filter
-			for el in CUI.DOM.matchSelector(globalDrag.$source, @_filter)
-				if do_overlap(globalDrag.lasso_dim, get_dim(el))
+			for el in CUI.DOM.matchSelector(CUI.globalDrag.$source, @_filter)
+				if do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
 					pushOntoArray(el, lassoed)
 		else
 			for el in CUI.globalDrag.$source.children
-				if do_overlap(globalDrag.lasso_dim, get_dim(el))
+				if do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
 					lassoed.push(el)
 		lassoed
 
@@ -161,5 +159,5 @@ class CUI.Lasso extends CUI.Draggable
 		CUI.globalDrag.lasso.remove()
 
 	end_drag: (ev) ->
-		@_selected(ev, globalDrag)
+		@_selected(ev, CUI.globalDrag)
 		super(ev)
