@@ -1551,7 +1551,7 @@ class CUI.DOM extends CUI.Element
 			instance: {}
 
 		remove_mousemoved_class = =>
-			if opts.delayRemove?() or window.globalDrag
+			if opts.delayRemove?() or CUI.globalDrag
 				schedule_remove_mousemoved_class()
 				return
 			opts.element.classList.remove(opts.class)

@@ -57,8 +57,8 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 	get_helper_pos: (ev, $target, diff) ->
 		helper_pos = super(ev, $target, diff)
 		# left stays
-		helper_pos.left = globalDrag.helperNodeStart.left
-		@__new_width = globalDrag.helperNodeStart.width + diff.x
+		helper_pos.left = CUI.globalDrag.helperNodeStart.left
+		@__new_width = CUI.globalDrag.helperNodeStart.width + diff.x
 		helper_pos.width = @__new_width
 
 		helper_pos

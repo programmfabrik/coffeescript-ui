@@ -59,10 +59,10 @@ class CUI.Sortable extends CUI.Draggable
 			return
 
 		if source_idx < dest_idx
-			globalDrag.noClickKill = true
+			CUI.globalDrag.noClickKill = true
 			CUI.DOM.insertAfter($dest, $source)
 		else if source_idx > dest_idx
-			globalDrag.noClickKill = true
+			CUI.globalDrag.noClickKill = true
 			CUI.DOM.insertBefore($dest, $source)
 
 		CUI.DOM.syncAnimatedClone(@element)
@@ -70,9 +70,9 @@ class CUI.Sortable extends CUI.Draggable
 
 	start_drag: (ev, $target, diff) ->
 
-		globalDrag.sort_source = @__findClosestSon(globalDrag.$source)
-		globalDrag.sort_source.classList.add("cui-sortable-placeholder")
-		globalDrag.start_idx = @get_child_number(globalDrag.sort_source)
+		CUI.globalDrag.sort_source = @__findClosestSon(globalDrag.$source)
+		CUI.globalDrag.sort_source.classList.add("cui-sortable-placeholder")
+		CUI.globalDrag.start_idx = @get_child_number(globalDrag.sort_source)
 		CUI.DOM.addClass(@element, 'cui-sorting')
 
 		CUI.DOM.initAnimatedClone(@element)
@@ -126,20 +126,20 @@ class CUI.Sortable extends CUI.Draggable
 	cleanup_drag: (ev) ->
 		super(ev)
 		CUI.DOM.removeClass(@element, 'cui-sorting')
-		globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
+		CUI.globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
 		CUI.DOM.removeAnimatedClone(@element)
 
 	__end_drag: (ev, stopped) ->
 		# move dragged object into position
 		curr_idx = @get_child_number(globalDrag.sort_source)
 
-		if globalDrag.start_idx == curr_idx
+		if CUI.globalDrag.start_idx == curr_idx
 			return
 
 		if stopped
-			@move_element(curr_idx, globalDrag.start_idx)
+			@move_element(curr_idx, CUI.globalDrag.start_idx)
 		else
-			@_sorted(ev, globalDrag.start_idx, curr_idx)
+			@_sorted(ev, CUI.globalDrag.start_idx, curr_idx)
 
 		return
 

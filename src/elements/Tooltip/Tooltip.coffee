@@ -26,7 +26,7 @@ class CUI.Tooltip extends CUI.LayerPane
 				instance: @__dummyInst
 				node: @__element
 				call: (ev) =>
-					if window.globalDrag
+					if CUI.globalDrag
 						return
 
 					if @_on_hover == true or @_on_hover(@)
@@ -38,7 +38,7 @@ class CUI.Tooltip extends CUI.LayerPane
 				instance: @__dummyInst
 				node: @__element
 				call: (ev) =>
-					if window.globalDrag
+					if CUI.globalDrag
 						@hide(ev)
 					else
 						@hideTimeout(null, ev)

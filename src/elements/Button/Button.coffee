@@ -269,7 +269,7 @@ class CUI.Button extends CUI.DOM
 			node: @DOM
 			call: (ev) =>
 
-				if window.globalDrag
+				if CUI.globalDrag
 					# ev.stop()
 					return
 
@@ -306,7 +306,7 @@ class CUI.Button extends CUI.DOM
 				node: @DOM
 				call: (ev) =>
 
-					if window.globalDrag
+					if CUI.globalDrag
 						return
 
 					@_onMouseenter?(ev)
@@ -359,7 +359,7 @@ class CUI.Button extends CUI.DOM
 			call: (ev) =>
 				# @__prevent_btn_click = false
 
-				if window.globalDrag
+				if CUI.globalDrag
 					return
 
 				@_onMouseleave?(ev)

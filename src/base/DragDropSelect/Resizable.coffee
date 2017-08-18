@@ -25,7 +25,7 @@ class CUI.Resizable extends CUI.Movable
 
 	before_drag: (ev, $target) ->
 		super(ev, $target)
-		globalDrag.resize = $target.attr("cui-drag-drop-select-resizable")
+		CUI.globalDrag.resize = $target.attr("cui-drag-drop-select-resizable")
 
 	init_drag: (ev, $target) ->
 		#if $target.is(".cui-resizable-handle")
@@ -49,7 +49,7 @@ class CUI.Resizable extends CUI.Movable
 	# on the resize direction
 	getResizePos: (start, diff, limitRect=@getLimitRect()) =>
 
-		switch globalDrag.resize
+		switch CUI.globalDrag.resize
 			when "se"
 				pos = w: start.w+diff.x, h: start.h+diff.y, fix: ["n","w"]
 			when "sw"
