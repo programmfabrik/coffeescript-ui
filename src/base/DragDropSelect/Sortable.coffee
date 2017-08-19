@@ -24,11 +24,8 @@ class CUI.Sortable extends CUI.Draggable
 
 		@removeOpt("helper_contain_element")
 
-
 	getSortTarget: (target, node) ->
 		els = CUI.DOM.elementsUntil(target, null, node)
-		if not els
-			return null
 		if els.length > 1
 			els[els.length-2]
 		else
