@@ -87,6 +87,9 @@ class CUI.Block extends CUI.DOM
 	getContent: ->
 		@__block.map.content
 
+	getHeader: ->
+		@__block.map.header
+
 	appendContent: (content) ->
 		@__block.append(content, "content")
 

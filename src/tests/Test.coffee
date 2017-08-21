@@ -13,9 +13,9 @@ class CUI.Test
 
 	eq: (a, b) ->
 		if JSON.stringify(a) == JSON.stringify(b)
-			CUI.info("Test passed: eq: ", a, b)
+			console.info("Test passed: eq: ", a, b)
 			return true
-		CUI.error("Test failed: eq: ", a, b, @test_func.toString())
+		console.error("Test failed: eq: ", a, b, @test_func.toString())
 
 	test: (@test_func) ->
 		# CUI.info getObjectClass(@)+"##{@idx}", f.toString()
@@ -31,6 +31,6 @@ class CUI.Test
 
 	@run: ->
 		for test in @tests
-			CUI.info("Running Test", getObjectClass(test))
+			console.info("Running Test", getObjectClass(test))
 			test.run()
 		return

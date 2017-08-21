@@ -40,6 +40,11 @@ class CUI.Test.Test_MoveInArray extends CUI.Test
 			@eq(a, [1,2,3,4,0,5])
 
 		@test =>
+			a = [2,1]
+			moveInArray(0, 1, a)
+			@eq(a, [2,1])
+
+		@test =>
 			a = [0,1,2,3,4,5]
 			moveInArray(0, 6, a)
 			@eq(a, [1,2,3,4,5,0])
