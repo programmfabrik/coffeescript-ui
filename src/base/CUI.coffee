@@ -921,5 +921,4 @@ else
 		CUI.start()
 	)
 
-# windowCompat, for now this needs to be here...
-window.CUI = CUI
+module.exports = CUI

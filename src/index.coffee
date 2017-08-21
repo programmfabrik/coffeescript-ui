@@ -1,6 +1,5 @@
 require("font-awesome-webpack");
 
-require('./base/CUI.coffee')
 require('./base/Common.coffee')
 require('./base/jQueryCompat.coffee')
 require('./base/Deferred/Deferred.coffee')
@@ -136,3 +135,5 @@ require('./base/CSVData.coffee')
 require('./base/windowCompat.coffee')
 
 require('./scss/themes/ng/main.scss')
+
+module.exports = require('./base/CUI.coffee')
