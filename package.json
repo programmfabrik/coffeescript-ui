@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Coffeescript User Interface System",
   "scripts": {
-    "build": "webpack --progress",
+    "build": "webpack --progress --env.minify",
     "build:dev": "webpack --watch --progress"
   },
   "repository": {

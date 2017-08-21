@@ -61,12 +61,22 @@ const config = {
         new ConcatPlugin({
             fileName: 'cui.html',
             filesToConcat: htmlFiles
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {warnings: false, keep_fnames: true},
-            mangle: {keep_classnames: true, keep_fnames: true}
         })
+
     ]
 };
 
-module.exports = config;
+module.exports = function (env) {
+    if (!env) {
+        return config;
+    }
+
+    if (env.minify) {
+        config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+            compress: {warnings: false, keep_fnames: true},
+            mangle: {keep_classnames: true, keep_fnames: true}
+        }));
+    }
+
+    return config
+};
