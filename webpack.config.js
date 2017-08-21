@@ -17,7 +17,7 @@ const config = {
     output: {
         path: BUILD_DIR,
         filename: 'cui.js',
-        publicPath: 'cui/'
+        publicPath: '/cui/'
     },
     module: {
         loaders: [
