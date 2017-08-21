@@ -17,7 +17,9 @@ const config = {
     output: {
         path: BUILD_DIR,
         filename: 'cui.js',
-        publicPath: '/cui/'
+        publicPath: '/cui/',
+        libraryTarget: "var",
+        library: "CUI"
     },
     module: {
         loaders: [
@@ -61,8 +63,10 @@ const config = {
         new ConcatPlugin({
             fileName: 'cui.html',
             filesToConcat: htmlFiles
+        }),
+        new webpack.ProvidePlugin({
+            'CUI': APP_DIR + '/base/CUI.coffee'
         })
-
     ]
 };
 
