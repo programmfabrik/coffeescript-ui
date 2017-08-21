@@ -6,8 +6,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
 const webpack = require('webpack');
 
-const BUILD_DIR = path.resolve(__dirname, 'public');
-const APP_DIR = path.resolve(__dirname, 'src');
+const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
+const APP_DIR = path.resolve(__dirname + path.sep, 'src');
 
 const htmlFiles = require('./html-files');
 

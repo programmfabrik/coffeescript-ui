@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Coffeescript User Interface System",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --progress",
+    "build:dev": "webpack --watch --progress"
   },
   "repository": {
     "type": "git",
