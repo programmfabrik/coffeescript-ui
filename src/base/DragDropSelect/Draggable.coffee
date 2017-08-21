@@ -605,7 +605,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				top: CUI.globalDrag.start.top
 				left: CUI.globalDrag.start.left
 		else if CUI.isFunction(helper)
-			hn = CUI.globalDrag.helperNode = helper(globalDrag)
+			hn = CUI.globalDrag.helperNode = helper(CUI.globalDrag)
 			set_dim = null
 		else
 			hn = CUI.globalDrag.helperNode = helper

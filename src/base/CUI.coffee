@@ -22,7 +22,6 @@ class CUI
 
 		@CSS = new CUI.CSSLoader()
 
-		@getPathToScript()
 		trigger_viewport_resize = =>
 			console.info("CUI: trigger viewport resize.")
 			Events.trigger
@@ -86,12 +85,12 @@ class CUI
 
 	@getPathToScript: ->
 		if not @pathToScript
-			for s, idx in DOM.matchSelector(document.documentElement, "script")
-				if m = s.src.match("(.*/)cui\.js$")
-					@pathToScript = m[1]
-					@script = s
-					break
-			assert(@pathToScript, "CUI", "Could not determine script path.")
+			scripts = document.getElementsByTagName('script')
+			cui_script = scripts[scripts.length - 1]
+			if m = cui_script.src.match("(.*/).*?\.js$")
+				@pathToScript = m[1]
+			else
+				assert(@pathToScript, "CUI", "Could not determine script path.")
 
 		@pathToScript
 
@@ -913,6 +912,10 @@ CUI.ready =>
 	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]
 	CUI.DOM.append(document.body, nodes)
+
+
+CUI.getPathToScript()
+
 
 if not window.addEventListener
 	alert("Your browser is not supported. Please update to a current version of Google Chrome, Mozilla Firefox or Internet Explorer.")

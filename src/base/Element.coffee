@@ -206,7 +206,7 @@ class CUI.Element
 					post = ""
 
 				# CUI.error("%c #{cls}: opts.#{k} is deprecated.", "font-weight: bold; color: red; font-size: 1.2em;", post)
-				console.error("#{cls}: opts.#{k} is deprecated.", value)
+				console.warn("#{cls}: opts.#{k} is deprecated.", value)
 
 			if v.check and (not isNull(value) or mandatory)
 				if CUI.isArray(v.check)
@@ -247,7 +247,7 @@ class CUI.Element
 		for k, v of opts
 			# options starting with a "_" are considered private
 			if v != undefined and not set_opts.hasOwnProperty(k) and not k.startsWith("_")
-				console.error("#{cls}: opts.#{k}, not supported. check_map: ", check_map, "opts:", opts)
+				console.warn("#{cls}: opts.#{k}, not supported. check_map: ", check_map, "opts:", opts)
 				# delete(opts[k])
 
 		# CUI.warn "#{@__cls}.opts = ", dump(set_opts)

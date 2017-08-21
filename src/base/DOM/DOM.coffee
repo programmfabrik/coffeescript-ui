@@ -948,8 +948,7 @@ class CUI.DOM extends CUI.Element
 				if selector
 					# this means we have not found any
 					# elements which match the selector, so we
-					# return null
-					return null
+					return []
 				else
 					return path
 
@@ -957,14 +956,14 @@ class CUI.DOM extends CUI.Element
 
 			if testDocElem == null
 				if selector
-					return null
+					return []
 				else
 					return path
 
 			path.push(testDocElem)
 
-		# this is unreachable
-		return null
+		# this should unreachable
+		return []
 
 	@parent: (docElem) ->
 		if docElem == window
@@ -982,7 +981,7 @@ class CUI.DOM extends CUI.Element
 			return null
 
 		path = @elementsUntil(docElem, selector, untilDocElem)
-		if path == null or path.length == 0
+		if path.length == 0
 			return null
 
 		path[path.length-1]
@@ -993,15 +992,12 @@ class CUI.DOM extends CUI.Element
 		if not parentElem
 			return []
 
-		path = @elementsUntil(parentElem, selector, untilDocElem)
-		if not path?.length
-			return []
-		path
+		@elementsUntil(parentElem, selector, untilDocElem)
 
 	# selector is a filter
-	@parents: (docElem, selector) ->
+	@parents: (docElem, selector, untilDocElem=document.documentElement) ->
 		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.parents", "element needs to be instanceof HTMLElement, document, or window.", element: docElem)
-		path = @parentsUntil(docElem)
+		path = @parentsUntil(docElem, null, untilDocElem)
 
 		if not selector
 			return path
