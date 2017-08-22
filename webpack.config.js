@@ -32,7 +32,7 @@ const config = {
             {
                 test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
                 exclude: /icons\.svg/,
-                use: 'base64-inline-loader?name=[name].[ext]'
+                use: 'base64-inline-loader?limit=150000&name=[name].[ext]'
             },
             {
                 test: /\.(html)$/,
