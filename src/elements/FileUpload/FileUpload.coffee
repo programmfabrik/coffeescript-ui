@@ -28,6 +28,8 @@ class CUI.FileUpload extends CUI.Element
 					v >= 1
 			onAdd:
 				check: Function
+			onBatchStart:
+				check: Function
 			onBatchQueued:
 				check: Function
 			onBatchDone:
@@ -113,12 +115,17 @@ class CUI.FileUpload extends CUI.Element
 		batch = ++@__batch_id
 		# CUI.debug "FileUpload.queueFiles", files
 
+		locked = false
+
 		idx = -1
 		next_file = =>
+			locked = true
+
 			idx++
 			if idx == files.length
 				@_onBatchQueued?()
 				@uploadNextFiles()
+				locked = false
 				return
 
 			file = files[idx]
@@ -156,18 +163,20 @@ class CUI.FileUpload extends CUI.Element
 
 			dont_queue_file = =>
 				console.debug("FileUpload.onAdd: Skipping file, function returned 'false'.")
-				next_file()
+				locked = false
+				return
 
 			queue_file = =>
 				@__files.push(f)
 
 				@_onUpdate?(f)
 				f.queue()
-				next_file()
+				locked = false
+				return
 
 			@__isQueueing = true
 
-			CUI.decide(@_onAdd?(f))
+			CUI.decide(@_onAdd?(f, idx, files.length))
 			.done =>
 				queue_file()
 			.fail =>
@@ -175,13 +184,47 @@ class CUI.FileUpload extends CUI.Element
 			.always =>
 				@__isQueueing = false
 
-		next_file()
+		@_onBatchStart?()
+
+		@__queuing = new CUI.Deferred()
+
+		interval = window.setInterval(=>
+			if locked
+				# wait
+				return
+
+			if @__abort
+				window.clearInterval(interval)
+				@__queuing.reject()
+				delete(@__queuing)
+				delete(@__abort)
+				return
+
+			if idx < files.length
+				# console.debug "queue", idx, files.length
+				next_file()
+			else
+				window.clearInterval(interval)
+				@__queuing.resolve()
+				delete(@__queuing)
+		,
+			1)
+
 		@
 
 	# this also aborts
 	clear: ->
-		while file = @__files[0]
-			file.remove()
+		do_clear = =>
+			while file = @__files[0]
+				file.remove()
+
+		if @__queuing
+			@__abort = true
+			@__queuing.always =>
+				do_clear()
+		else
+			do_clear()
+
 		@
 
 	removeFile: (file) ->

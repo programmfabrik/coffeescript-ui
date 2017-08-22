@@ -25,7 +25,7 @@ class CUI.DataForm extends CUI.DataTable
 					!!@rows[to_idx]
 				sorted: (ev, from_idx, to_idx) =>
 					console.debug from_idx, ">", to_idx
-					moveInArray(from_idx, to_idx, @rows)
+					moveInArray(from_idx, to_idx, @rows, from_idx < to_idx)
 					@__storeValue()
 					@__updateView()
 

@@ -108,7 +108,7 @@ class CUI.FileUploadFile extends CUI.Element
 				@__dfr.reject(@)
 			when "STARTED","PROGRESS","COMPLETED"
 				console.debug("FileUploadFile.abort:", @__upload)
-				@__upload.abort()
+				@__upload?.abort()
 			when "ABORT","DEQUEUED"
 				;
 				# do nothing
@@ -203,7 +203,7 @@ class CUI.FileUploadFile extends CUI.Element
 		else
 			CUI.setTimeout
 				call: =>
-					console.warn("FileUploadFile.fail, Not uploading empty file.")
+					# console.warn("FileUploadFile.fail, Not uploading empty file.")
 					@__progress.status = "FAILED"
 					@__upload = null
 					@__dfr.reject(@)
