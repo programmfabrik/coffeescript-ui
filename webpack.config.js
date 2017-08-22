@@ -1,6 +1,5 @@
 const path = require('path');
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
@@ -30,10 +29,7 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{loader: 'css-loader'}, {loader: 'sass-loader'}]
-                })
+                loaders: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.(jpg|png|svg)$/,
@@ -55,7 +51,6 @@ const config = {
     },
     plugins: [
         new CleanWebpackPlugin(BUILD_DIR),
-        new ExtractTextPlugin("css/cui_ng.css"),
         new CopyWebpackPlugin(
             [
                 {from: 'scss/icons/icons.svg', to: 'css/icons.svg'}
