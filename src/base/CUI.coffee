@@ -72,10 +72,11 @@ class CUI
 
 		document.body.scrollTop=0
 
-		CUI.Template.loadFile("css/icons.svg")
-			.done =>
-				Template.load()
-				@ready()
+		icons = require('../scss/icons/icons.svg')
+		CUI.Template.loadText(icons)
+		CUI.Template.load()
+		@ready()
+
 		@
 
 	@getPathToScript: ->

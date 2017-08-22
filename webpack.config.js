@@ -1,7 +1,6 @@
 const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
@@ -32,8 +31,8 @@ const config = {
                 loaders: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(jpg|png|svg)$/,
-                loader: 'url-loader'
+                test: /icons\.svg/,
+                loader: 'raw-loader'
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -41,6 +40,7 @@ const config = {
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                exclude: /icons\.svg/,
                 loader: "file-loader"
             },
             {
@@ -51,11 +51,6 @@ const config = {
     },
     plugins: [
         new CleanWebpackPlugin(BUILD_DIR),
-        new CopyWebpackPlugin(
-            [
-                {from: 'scss/icons/icons.svg', to: 'css/icons.svg'}
-            ]
-        ),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         })

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./Tab.html'));
+CUI.Template.loadTemplateText(require('./Tab.html'));
 
 class CUI.Tab extends CUI.DOM
 	constructor: (@opts={}) ->

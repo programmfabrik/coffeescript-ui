@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./Tabs.html'));
+CUI.Template.loadTemplateText(require('./Tabs.html'));
 
 class CUI.Tabs extends CUI.SimplePane
 

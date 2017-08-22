@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./DataField.html'));
+CUI.Template.loadTemplateText(require('./DataField.html'));
 
 class CUI.DataField extends CUI.DOM
 

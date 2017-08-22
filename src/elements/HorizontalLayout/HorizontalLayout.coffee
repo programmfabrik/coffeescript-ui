@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./HorizontalLayout.html'));
+CUI.Template.loadTemplateText(require('./HorizontalLayout.html'));
 
 class CUI.HorizontalLayout extends CUI.Layout
 

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./Block.html'));
+CUI.Template.loadTemplateText(require('./Block.html'));
 
 class CUI.Block extends CUI.DOM
 	constructor: (@opts={}) ->

@@ -4,7 +4,7 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
-CUI.Template.loadHtml(require('./BorderLayout.html'));
+CUI.Template.loadTemplateText(require('./BorderLayout.html'));
 
 class CUI.BorderLayout extends CUI.Layout
 

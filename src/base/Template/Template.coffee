@@ -296,8 +296,11 @@ class CUI.Template extends CUI.Element
 	@loadTemplateFile: (filename) ->
 		@loadFile(filename, true)
 
-	@loadHtml: (html) ->
-		@loadFileOrTemplate(html, true)
+	@loadTemplateText: (html) ->
+		@__appendContent(html, true)
+
+	@loadText: (text) ->
+		@__appendContent(text, false)		
 
 	@loadFile: (filename, load_templates = false) ->
 		if filename.match("^(https://|http://|/)")
@@ -310,7 +313,7 @@ class CUI.Template extends CUI.Element
 			responseType: "text"
 		.start()
 		.done (data) =>
-			@loadFileOrTemplate(data, load_templates)
+			@__appendContent(data, load_templates)
 			return
 		.fail (xhr) ->
 			console.error("Template.loadFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
@@ -341,7 +344,7 @@ class CUI.Template extends CUI.Element
 
 		return count
 
-	@loadFileOrTemplate: (data, load_templates) ->
+	@__appendContent: (data, load_templates) ->
 		div = CUI.DOM.element("DIV", style: "display:none;")
 		div.innerHTML = data
 		if not load_templates

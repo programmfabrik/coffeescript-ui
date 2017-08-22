@@ -4,7 +4,7 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
-CUI.Template.loadHtml(require('./ItemList.html'));
+CUI.Template.loadTemplateText(require('./ItemList.html'));
 
 class CUI.ItemList extends CUI.VerticalLayout
 

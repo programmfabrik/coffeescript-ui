@@ -10,7 +10,7 @@
 # Popver, Modal, Autocompletion and
 # other dialogs
 
-CUI.Template.loadHtml(require('./Layer.html'));
+CUI.Template.loadTemplateText(require('./Layer.html'));
 
 class CUI.Layer extends CUI.DOM
 

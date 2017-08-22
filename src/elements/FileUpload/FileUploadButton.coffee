@@ -4,7 +4,7 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
-CUI.Template.loadHtml(require('./FileUploadButton.html'));
+CUI.Template.loadTemplateText(require('./FileUploadButton.html'));
 
 class CUI.FileUploadButton extends CUI.Button
 	constructor: (@opts={}) ->

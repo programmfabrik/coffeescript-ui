@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./Options.html'));
+CUI.Template.loadTemplateText(require('./Options.html'));
 
 class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->

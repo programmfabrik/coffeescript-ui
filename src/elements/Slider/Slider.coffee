@@ -1,4 +1,4 @@
-CUI.Template.loadHtml(require('./Slider.html'));
+CUI.Template.loadTemplateText(require('./Slider.html'));
 
 class CUI.Slider extends CUI.DataField
 

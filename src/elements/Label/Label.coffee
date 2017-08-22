@@ -6,7 +6,7 @@
 ###
 
 marked = require('marked')
-CUI.Template.loadHtml(require('./Label.html'));
+CUI.Template.loadTemplateText(require('./Label.html'));
 
 # @param [Object] options for {Label} creation
 # @option options [boolean] centered , label will be centered with css style 'position: absolute'.

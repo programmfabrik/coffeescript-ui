@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.Template.loadHtml(require('./Buttonbar.html'));
+CUI.Template.loadTemplateText(require('./Buttonbar.html'));
 
 # Buttonbar groups {Button}s
 class CUI.Buttonbar extends CUI.DOM
