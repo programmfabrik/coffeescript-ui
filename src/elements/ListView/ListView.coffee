@@ -553,7 +553,7 @@ class CUI.ListView extends CUI.SimplePane
 		else
 			func = "before"
 
-		# CUI.debug("moveRow", from_i, to_i, after, trigger_row_moved)
+		# console.debug "moveRow", from_i, to_i, after, @rowsOrder.join(",")
 		for row, idx in @getRow(from_i)
 			$(@getRow(to_i)[idx])[func](row)
 
@@ -562,9 +562,8 @@ class CUI.ListView extends CUI.SimplePane
 
 		@moveInOrderArray(from_i, to_i, @rowsOrder, after)
 
-		@_onRowMove?(display_from_i, display_to_i, after)
-
 		if trigger_row_moved
+			@_onRowMove?(display_from_i, display_to_i, after)
 			Events.trigger
 				type: "row_moved"
 				node: @grid

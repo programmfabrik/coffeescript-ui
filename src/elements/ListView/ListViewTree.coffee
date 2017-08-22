@@ -225,6 +225,9 @@ class CUI.ListViewTree extends CUI.ListView
 
 		assert(isPromise(promise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: promise)
 		promise.done =>
+			display_from_i = @getDisplayRowIdx(from_i)
+			display_to_i = @getDisplayRowIdx(to_i)
+
 			super(from_i, to_i, after, false)
 			# move row in data structure
 			if from_node.father == to_node.father and not (to_node.is_open and after)
@@ -248,6 +251,7 @@ class CUI.ListViewTree extends CUI.ListView
 			new_father?.reload()
 
 			from_node.moveNodeAfter(to_node, new_father, after)
+			@_onRowMove?(display_from_i, display_to_i, after)
 
 			Events.trigger
 				node: @grid
