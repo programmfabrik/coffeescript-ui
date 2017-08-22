@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadHtml(require('./Pane.html'));
+
 class CUI.Pane extends CUI.VerticalLayout
 
 	@defaults:

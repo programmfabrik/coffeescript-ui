@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadHtml(require('./DataField.html'));
+
 class CUI.DataField extends CUI.DOM
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"

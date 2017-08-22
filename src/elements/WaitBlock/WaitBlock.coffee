@@ -4,6 +4,7 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadHtml(require('./WaitBlock.html'));
 
 class CUI.WaitBlock extends CUI.Block
 	constructor: (@opts={}) ->

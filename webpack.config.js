@@ -3,13 +3,10 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ConcatPlugin = require('webpack-concat-plugin');
 const webpack = require('webpack');
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
-
-const htmlFiles = require('./html-files');
 
 const config = {
     context: APP_DIR,
@@ -18,7 +15,7 @@ const config = {
         path: BUILD_DIR,
         filename: 'cui.js',
         publicPath: '/cui/',
-        libraryTarget: "var",
+        libraryTarget: "umd",
         library: "CUI"
     },
     module: {
@@ -49,6 +46,10 @@ const config = {
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "file-loader"
+            },
+            {
+                test: /\.(html)$/,
+                loader: 'html-loader'
             }
         ]
     },
@@ -60,10 +61,6 @@ const config = {
                 {from: 'scss/icons/icons.svg', to: 'css/icons.svg'}
             ]
         ),
-        new ConcatPlugin({
-            fileName: 'cui.html',
-            filesToConcat: htmlFiles
-        }),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         })

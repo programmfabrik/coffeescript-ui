@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/programmfabrik/coffeescript-ui.git"
   },
+  "main": "public/cui.js",
   "keywords": [
     "coffeescript",
     "ui",
@@ -43,6 +44,7 @@
     "gulp-svgmin": "^1.1.2",
     "gulp-svgstore": "^5.0.1",
     "gulp-util": "^3.0.7",
+    "html-loader": "^0.5.1",
     "less": "^2.7.2",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
@@ -52,7 +54,6 @@
     "style-loader": "^0.18.2",
     "through2": "^2.0.1",
     "url-loader": "^0.5.9",
-    "webpack": "^2.2.0",
-    "webpack-concat-plugin": "^1.4.0"
+    "webpack": "^2.2.0"
   }
 }

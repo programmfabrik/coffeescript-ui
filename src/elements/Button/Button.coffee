@@ -15,6 +15,9 @@
 #Button.DOM: the actual button object
 #Button.disable: disable button
 #Button.enable: enable button
+CUI.Template.loadHtml(require('./Button.html'));
+CUI.Template.loadHtml(require('./Button_ng.html'));
+
 class CUI.Button extends CUI.DOM
 
 	@defaults:

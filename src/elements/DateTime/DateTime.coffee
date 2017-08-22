@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadHtml(require('./DateTime.html'));
+
 # CUI.tz_data = {}
 moment = require('moment')
 

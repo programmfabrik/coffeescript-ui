@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadHtml(require('./MultiInputInput.html'));
+
 class CUI.MultiInputInput extends CUI.Input
 	getTemplate: ->
 		new Template

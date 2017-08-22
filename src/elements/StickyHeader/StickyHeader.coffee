@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadHtml(require('./StickyHeader.html'));
+
 class CUI.StickyHeader extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)

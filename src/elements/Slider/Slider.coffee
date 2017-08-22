@@ -1,3 +1,5 @@
+CUI.Template.loadHtml(require('./Slider.html'));
+
 class CUI.Slider extends CUI.DataField
 
 	initOpts: ->

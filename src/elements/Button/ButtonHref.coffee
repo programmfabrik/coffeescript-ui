@@ -4,6 +4,8 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadHtml(require('./ButtonHref.html'));
+CUI.Template.loadHtml(require('./ButtonHref_ng.html'));
 
 class CUI.ButtonHref extends CUI.Button
 	constructor: (@opts={}) ->

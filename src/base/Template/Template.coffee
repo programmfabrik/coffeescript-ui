@@ -296,35 +296,22 @@ class CUI.Template extends CUI.Element
 	@loadTemplateFile: (filename) ->
 		@loadFile(filename, true)
 
+	@loadHtml: (html) ->
+		@loadFileOrTemplate(html, true)
+
 	@loadFile: (filename, load_templates = false) ->
 		if filename.match("^(https://|http://|/)")
 			p = filename
 		else
 			p = CUI.getPathToScript()+filename
-
-		div = CUI.DOM.element("DIV", style: "display:none;")
-
+	
 		new CUI.XHR
 			url: p
 			responseType: "text"
 		.start()
-		.done (data) ->
-			div.innerHTML = data
-			if not load_templates
-				document.body.appendChild(div)
-			else
-				count = Template.load(div)
-
-				if div.children.length > 0
-					document.body.appendChild(div)
-					console.warn("Template.loadFile:", filename, "contains extra content.", div)
-
-				if count == 0
-					console.warn("Template.loadFile:", filename, "contains no Templates.")
-				else
-					; # console.info("Template.loadFile:", count, "Template loaded from", filename)
+		.done (data) =>
+			@loadFileOrTemplate(data, load_templates)
 			return
-
 		.fail (xhr) ->
 			console.error("Template.loadFile: Unable to load filename: \"#{filename}\", see Console for more details. You can however, output easydbui.html manually before loading easydbui.js.", xhr)
 
@@ -354,3 +341,19 @@ class CUI.Template extends CUI.Element
 
 		return count
 
+	@loadFileOrTemplate: (data, load_templates) ->
+		div = CUI.DOM.element("DIV", style: "display:none;")
+		div.innerHTML = data
+		if not load_templates
+			document.body.appendChild(div)
+		else
+			count = Template.load(div)
+			
+			if div.children.length > 0
+				document.body.appendChild(div)
+				console.warn("Template.loadFile:", filename, "contains extra content.", div)
+
+			if count == 0
+				console.warn("Template.loadFile:", filename, "contains no Templates.")
+			else
+				; # console.info("Template.loadFile:", count, "Template loaded from", filename)
