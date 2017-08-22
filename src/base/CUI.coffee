@@ -878,7 +878,7 @@ class CUI
 			ie: `/*@cc_on!@*/false || !!document.documentMode`
 			chrome: !!window.chrome and !!window.chrome.webstore
 		map.edge = not map.ie && !!window.StyleMedia
-		map.blink = (map.chrome or opera) && !!window.CSS
+		map.blink = (map.chrome or map.opera) && !!window.CSS
 		map
 	)()
 
