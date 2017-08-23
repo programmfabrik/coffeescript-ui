@@ -1042,7 +1042,7 @@ class CUI.DateTime extends CUI.Input
 				return
 
 		# Wk, Mo, Tu, We, Th...
-		tr = $tr("cui-date-time-month-header").appendTo(month_table)
+		tr = CUI.DOM.append(month_table, $tr("cui-date-time-month-header"))
 
 		if CUI.__ng__
 			td_func = $th
@@ -1069,7 +1069,7 @@ class CUI.DateTime extends CUI.Input
 				if weeks ==6
 					# if ((curr_m > m and date.getUTCFullYear() == year) or date.getUTCFullYear() > year)
 					break
-				tr = $tr().appendTo(month_table)
+				tr = CUI.DOM.append(month_table, $tr())
 				week_no = mom.week() #@start_day==0)
 				CUI.DOM.append(tr, CUI.DOM.append($td("cui-date-time-week"), $text(week_no)))
 				weeks++
@@ -1093,9 +1093,9 @@ class CUI.DateTime extends CUI.Input
 			day_div.addClass("cui-date-time-day-"+mom.format("dd").toLowerCase())
 
 			if CUI.__ng__
-				td = day_div.appendTo(tr)
+				td = CUI.DOM.append(tr, day_div)
 			else
-				td = CUI.DOM.append($td(), day_div).appendTo(tr)
+				td = CUI.DOM.append(tr, CUI.DOM.append($td(), day_div))
 
 			DOM.data(td[0],
 				date: day_no

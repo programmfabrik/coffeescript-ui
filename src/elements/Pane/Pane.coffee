@@ -100,7 +100,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		# for el in @DOM.parents(".cui-dom-element")
 		# 	inner.addClass(DOM.data(el, "element").getDOMElementClasses())
 
-		@__fillscreenTmpl.DOM.appendTo(document.body)
+		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)
 		rect_fill = @__fillscreenTmpl.DOM.rect()
 		rect_fill_inner = inner.rect()
 
@@ -122,7 +122,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		@__fillscreenTmpl.DOM.detach()
 
 		@__fillscreenTmpl.DOM.css(start_rect)
-		@__fillscreenTmpl.DOM.appendTo(document.body)
+		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)
 
 		# copy keys over for the placeholder, so that it has the
 		# same dimension as the replaced div

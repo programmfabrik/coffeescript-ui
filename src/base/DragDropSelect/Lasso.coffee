@@ -47,7 +47,7 @@ class CUI.Lasso extends CUI.Draggable
 		CUI.globalDrag.lasso = $div("cui-lasso")
 		# CUI.debug "create lasso", @_lassoClass
 		#
-		CUI.globalDrag.lasso.appendTo(@element)
+		CUI.DOM.append(@element, CUI.globalDrag.lasso.appendTo)
 		CUI.globalDrag.elements = []
 
 	getCursor: ->

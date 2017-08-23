@@ -1739,7 +1739,7 @@ class CUI.DOM extends CUI.Element
 	@$tr_one_row: ->
 		tr = CUI.DOM.$tr()
 		append = (__a) ->
-			td = CUI.DOM.$td().appendTo(tr)
+			td = CUI.DOM.append(tr, CUI.DOM.$td())
 
 			add_content = (___a) =>
 				if CUI.isArray(___a)

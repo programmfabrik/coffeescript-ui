@@ -67,7 +67,7 @@ class CUI.WaitBlock extends CUI.Block
 
 		@__element.addClass("cui-wait-block-active")
 		if @_fullscreen
-			@DOM.appendTo(@__element)
+			CUI.DOM.append(@__element, @DOM)
 		else
 			CUI.DOM.append(@__element, @DOM)
 		@__shown = true
