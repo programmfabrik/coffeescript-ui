@@ -772,14 +772,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	showSpinner: ->
 		if @__is_rendered
 			@__handleDiv.empty()
-			@__handleDiv.append(new Icon(icon: "spinner").DOM)
+			CUI.DOM.append(@__handleDiv, new Icon(icon: "spinner").DOM)
 		@
 
 	hideSpinner: ->
 		if @__is_rendered
 			@__handleDiv.empty()
 			if @__handleIcon
-				@__handleDiv.append(new Icon(icon: @__handleIcon).DOM)
+				CUI.DOM.append(@__handleDiv, new Icon(icon: @__handleIcon).DOM)
 			else
 		@
 
@@ -792,7 +792,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		# Space for the left side
 		for i in [1...@level()] by 1
-			element.append($div("cui-tree-node-spacer"))
+			CUI.DOM.append(element, $div("cui-tree-node-spacer"))
 
 		# Handle before content
 		cls = ["cui-tree-node-handle"]
@@ -812,9 +812,9 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		@__handleDiv = $div(cls.join(" "))
 		if @__handleIcon
-			@__handleDiv.append(new Icon(icon: @__handleIcon).DOM)
+			CUI.DOM.append(@__handleDiv, new Icon(icon: @__handleIcon).DOM)
 
-		element.append(@__handleDiv)
+		CUI.DOM.append(element, @__handleDiv)
 
 		# push the tree element as the first column
 		@prependColumn new ListViewColumn
@@ -830,10 +830,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		content = @renderContent()
 		if CUI.isArray(content)
 			for con in content
-				contentDiv.append(con?.DOM or content)
+				CUI.DOM.append(contentDiv, con?.DOM or content)
 		else
-			contentDiv.append(content?.DOM or content)
-		element.append(contentDiv)
+			CUI.DOM.append(contentDiv, content?.DOM or content)
+		CUI.DOM.append(element, contentDiv)
 		@
 
 

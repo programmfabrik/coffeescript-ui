@@ -26,7 +26,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		@__positionControl()
 
-		@_element.append(@__control)
+		CUI.DOM.append(@_element, @__control)
 
 		@headers = []
 		@newStickyHeaders = []
@@ -111,7 +111,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 		@__positioned = true
 		@initNewStickyHeaders()
 		# make sure the control is at the end
-		@_element.append(@__control)
+		CUI.DOM.append(@_element, @__control)
 
 		scrollTop = @_element.scrollTop
 		slots = []

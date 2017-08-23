@@ -40,7 +40,7 @@ class CUI.DataField extends CUI.DOM
 				return
 
 		if @getName()
-			@DOM.attr("cui-data-field-name", @getName())
+			@DOM.setAttribute("cui-data-field-name", @getName())
 
 		@init()
 		if @_data and not CUI.isFunction(@_data)

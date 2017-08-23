@@ -249,7 +249,7 @@ class CUI.Tabs extends CUI.SimplePane
 		tab.hide()
 		tab.initButton(@)
 		@__buttonbar.addButton(tab.getButton())
-		@__tabs_bodies.append(tab)
+		CUI.DOM.append(@__tabs_bodies, tab)
 		tab
 
 

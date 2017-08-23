@@ -1734,7 +1734,7 @@ class CUI.DOM extends CUI.Element
 		s
 
 	@$table_one_row: ->
-		CUI.DOM.$table().append(CUI.DOM.$tr_one_row.apply(@, arguments))
+		CUI.DOM.append(CUI.DOM.$table(), CUI.DOM.$tr_one_row.apply(@, arguments))
 
 	@$tr_one_row: ->
 		tr = CUI.DOM.$tr()
@@ -1746,9 +1746,9 @@ class CUI.DOM extends CUI.Element
 					for a in ___a
 						add_content(a)
 				else if ___a?.DOM
-					td.append(___a.DOM)
+					CUI.DOM.append(td, ___a.DOM)
 				else if not isNull(___a)
-					td.append(___a)
+					CUI.DOM.append(td, ___a)
 				return
 
 

@@ -506,8 +506,8 @@ class CUI.ListView extends CUI.SimplePane
 	getCellByTarget: ($target) ->
 		if $target.is(".cui-lv-td")
 			cell =
-				col_i: parseInt($target.attr("col"))
-				row_i: parseInt($target.attr("row"))
+				col_i: parseInt($target.getAttribute("col"))
+				row_i: parseInt($target.getAttribute("row"))
 
 			# CUI.debug "getCellByTarget", $target[0], cell.col_i, cell.row_i
 
@@ -1141,7 +1141,7 @@ class CUI.ListView extends CUI.SimplePane
 			assert(cell, "ListView.__appendCells", "Cell not found: row: "+row_i+" column: "+(col_i+colspan_offset+1)+". colsCount: "+@colsCount, row: listViewRow)
 
 			if not isNull(node)
-				cell.append(node)
+				CUI.DOM.append(cell, node)
 
 			col.setColumnIdx(col_i)
 			col.setElement(cell)
@@ -1149,7 +1149,7 @@ class CUI.ListView extends CUI.SimplePane
 			colspan = col.getColspan()
 			assert(col_i+colspan_offset+colspan-1 < @colsCount, "ListView.__appendCells", "Colspan #{colspan} exceeds cols count #{@colsCount}, unable to append cell.", row_i: row_i, col_i: col_i, colspan_offset: colspan_offset, colspan: colspan, column: col, row: listViewRow, ListView: @)
 			if colspan > 1
-				cell.attr("colspan", colspan)
+				cell.setAttribute("colspan", colspan)
 
 				# we remember the colspan here for the addCss
 				# class, its important to do this before we change

@@ -19,11 +19,11 @@ class CUI.Resizable extends CUI.Movable
 	init: ->
 		super()
 		for d in ["ne","nw","se","sw","s","n","e","w"]
-			@element.append(CUI.DOM.element("DIV", "cui-drag-drop-select-resizable": d, class: "cui-resizable-handle cui-resizable-handle-"+d))
+			CUI.DOM.append(@element, CUI.DOM.element("DIV", "cui-drag-drop-select-resizable": d, class: "cui-resizable-handle cui-resizable-handle-"+d))
 
 	before_drag: (ev, $target) ->
 		super(ev, $target)
-		CUI.globalDrag.resize = $target.attr("cui-drag-drop-select-resizable")
+		CUI.globalDrag.resize = $target.getAttribute("cui-drag-drop-select-resizable")
 
 	init_drag: (ev, $target) ->
 		#if $target.is(".cui-resizable-handle")

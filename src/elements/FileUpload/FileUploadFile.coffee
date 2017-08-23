@@ -60,7 +60,7 @@ class CUI.FileUploadFile extends CUI.Element
 				@__imgDiv.addClass("portrait")
 			window.URL.revokeObjectURL(img.src)
 
-		@__imgDiv = $div("cui-file-upload-file-img").addClass("landscape").append($div().append(img))
+		@__imgDiv = CUI.DOM.append($div("cui-file-upload-file-img").addClass("landscape"), CUI.DOM.append($div(), img))
 
 	getFile: ->
 		@_file

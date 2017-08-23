@@ -1049,12 +1049,12 @@ class CUI.DateTime extends CUI.Input
 		else
 			td_func = $td
 
-		tr.append(td_func("cui-date-time-week-title").append($div("cui-date-time-dow").text(@__locale_format.tab_week)))
+		CUI.DOM.append(tr, CUI.DOM.append(td_func("cui-date-time-week-title"), $div("cui-date-time-dow").text(@__locale_format.tab_week)))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
 			day_div = $div("cui-date-time-dow").text(weekday)
 			day_div.addClass("cui-date-time-day-"+weekday.toLowerCase())
-			tr.append(td_func().append(day_div))
+			CUI.DOM.append(tr, CUI.DOM.append(td_func(), day_div))
 
 		# Weeks
 		mom.subtract((mom.day()-@start_day+7)%7, "days")
@@ -1071,7 +1071,7 @@ class CUI.DateTime extends CUI.Input
 					break
 				tr = $tr().appendTo(month_table)
 				week_no = mom.week() #@start_day==0)
-				tr.append($td("cui-date-time-week").append($text(week_no)))
+				CUI.DOM.append(tr, CUI.DOM.append($td("cui-date-time-week"), $text(week_no)))
 				weeks++
 
 			if CUI.__ng__
@@ -1095,7 +1095,7 @@ class CUI.DateTime extends CUI.Input
 			if CUI.__ng__
 				td = day_div.appendTo(tr)
 			else
-				td = $td().append(day_div).appendTo(tr)
+				td = CUI.DOM.append($td(), day_div).appendTo(tr)
 
 			DOM.data(td[0],
 				date: day_no
@@ -1201,7 +1201,7 @@ class CUI.DateTime extends CUI.Input
 	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
 	# 				td = $td("cui-date-time-grid-hour")
-	# 				.attr("hour", hour)
+	# 				.setAttribute("hour", hour)
 	# 				.append($text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
@@ -1212,7 +1212,7 @@ class CUI.DateTime extends CUI.Input
 	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
 	# 				td = $td("cui-date-time-grid-hour")
-	# 				.attr("hour", hour)
+	# 				.setAttribute("hour", hour)
 	# 				.append($text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
@@ -1222,7 +1222,7 @@ class CUI.DateTime extends CUI.Input
 	# 		for am_pm in ["AM","PM"]
 	# 			tr.append(
 	# 				td = $td("cui-date-time-grid-am-pm")
-	# 				.attr("am_pm", am_pm)
+	# 				.setAttribute("am_pm", am_pm)
 	# 				.append($text(am_pm))
 	# 			)
 	# 			DOM.data(td[0], "am_pm", am_pm)
@@ -1243,7 +1243,7 @@ class CUI.DateTime extends CUI.Input
 	# 			_minute = ":"+minute
 	# 		tr.append(
 	# 			td = $td("cui-date-time-grid-minute")
-	# 			.attr("minute", minute)
+	# 			.setAttribute("minute", minute)
 	# 			.append($text(_minute))
 	# 		)
 
@@ -1278,10 +1278,10 @@ class CUI.DateTime extends CUI.Input
 	# 				continue
 
 	# 			if @__current_moment.hour() < 12
-	# 				if c.attr("am_pm") == "AM"
+	# 				if c.getAttribute("am_pm") == "AM"
 	# 					c.addClass("cui-date-time-selected")
 	# 			else
-	# 				if c.attr("am_pm") == "PM"
+	# 				if c.getAttribute("am_pm") == "PM"
 	# 					c.addClass("cui-date-time-selected")
 	# 	return
 

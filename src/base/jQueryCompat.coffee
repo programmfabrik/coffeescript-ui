@@ -8,7 +8,7 @@
 # CUI jQueryCompat Layer
 #
 
-CUI.defaults.jQueryCompat = 1 # 0: off, 1: on, 2: as warnings, 3: as error, 4: ... with args
+CUI.defaults.jQueryCompat = 2 # 0: off, 1: on, 2: as warnings, 3: as error, 4: ... with args
 
 class CUI.jQueryCompat
 

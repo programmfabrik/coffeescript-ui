@@ -21,7 +21,7 @@ class CUI.Layer extends CUI.DOM
 
 		# layer is registered as our main layer TODO register layer_root as our main layer!
 		@registerTemplate(@__layer)
-		# @__layer.DOM.attr("role", @_role)
+		# @__layer.DOM.setAttribute("role", @_role)
 
 		# layer root is a container for the backdrop, pointer and layer
 		#
@@ -69,7 +69,7 @@ class CUI.Layer extends CUI.DOM
 			else
 				@__layer_root.DOM.appendChild(@__backdrop.DOM)
 
-				# @__backdrop.DOM.attr("role", @_role)
+				# @__backdrop.DOM.setAttribute("role", @_role)
 
 				switch @__bd_policy
 					when "click-thru"
@@ -183,7 +183,7 @@ class CUI.Layer extends CUI.DOM
 
 	setBackdropContent: (content) ->
 		assert(@__backdrop, "CUI.Layer.setBackdropContent", "No backdrop found in layer", layer: @)
-		@__backdrop.DOM.append(content)
+		CUI.DOM.append(@__backdrop.DOM, content)
 
 	getTemplate: ->
 		new Template(name: "layer")

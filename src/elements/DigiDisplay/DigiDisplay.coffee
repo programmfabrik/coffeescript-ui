@@ -40,8 +40,8 @@ class CUI.DigiDisplay extends CUI.DOM
 			if not info.height
 				info.height = fc.outerHeight()
 			fc.css("marginTop", "-"+(_idx*info.height)+"px")
-			fc.attr("c", c)
-			fc.attr("idx", _idx)
+			fc.setAttribute("c", c)
+			fc.setAttribute("idx", _idx)
 		@
 
 	createMarkup: ->
@@ -53,9 +53,9 @@ class CUI.DigiDisplay extends CUI.DOM
 					container = $div("cui-digi-display-static cui-digi-display-#{digit_idx}")
 
 				)
-				container.append($text(digit.static)).addClass(digit.class)
+				CUI.DOM.append(container, $text(digit.static)).addClass(digit.class)
 				if digit.attr
-					container.attr(digit.attr)
+					container.getAttribute(digit.attr)
 				continue
 			digit.__regexp = new RegExp(digit.mask)
 			@__displayDiv.append(
@@ -63,21 +63,21 @@ class CUI.DigiDisplay extends CUI.DOM
 			)
 			container.addClass(digit.class)
 			if digit.attr
-				container.attr(digit.attr)
+				container.getAttribute(digit.attr)
 
 			@__digitsMap[digit_idx] = map: (map = {})
 
 			# for the "unknown character
-			container.append(fc = $div("cui-digi-display-digit").html("&nbsp;"))
+			CUI.DOM.append(container, fc = $div("cui-digi-display-digit").html("&nbsp;"))
 			@__digitsMap[digit_idx].first_div = fc
 			idx = 1
 			matched = false
 			for i in [32..128]
 				if digit.__regexp.exec(c = String.fromCharCode(i))
 					if i == 32
-						container.append($div("cui-digi-display-digit").html("&nbsp;"))
+						CUI.DOM.append(container, $div("cui-digi-display-digit").html("&nbsp;"))
 					else
-						container.append($div("cui-digi-display-digit").text(c))
+						CUI.DOM.append(container, $div("cui-digi-display-digit").text(c))
 					map[c] = idx
 					idx++
 					matched = true
