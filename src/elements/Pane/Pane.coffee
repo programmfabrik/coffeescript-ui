@@ -121,7 +121,7 @@ class CUI.Pane extends CUI.VerticalLayout
 
 		@__fillscreenTmpl.DOM.detach()
 
-		@__fillscreenTmpl.DOM.css(start_rect)
+		CUI.DOM.setStyle(@__fillscreenTmpl.DOM, start_rect)
 		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)
 
 		# copy keys over for the placeholder, so that it has the
@@ -134,7 +134,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			height: @DOM.outerHeight(true)
 
 		for key_copy in ["position", "top", "left", "right", "bottom"]
-			@__placeholder.css(key_copy, @DOM.css(key_copy))
+			CUI.DOM.setStyleOne(@__placeholder, key_copy, CUI.DOM.getComputedStyle(@DOM.css)[key_copy])
 
 		@DOM.after(@__placeholder)
 

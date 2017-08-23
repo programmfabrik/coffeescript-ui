@@ -268,9 +268,15 @@ class CUI.Tabs extends CUI.SimplePane
 
 		# remove previously set dimensions
 		for tab in @__tabs
-			tab.getBody().css("min-width": "", height: "")
+			CUI.DOM.setStyle(tab.getBody(), 
+				"min-width": "", 
+				"height": ""
+			)
 
-		@__tabs_bodies.DOM.css("min-width": "", height: "")
+		CUI.DOM.setStyle(@__tabs_bodies.DOM,
+			"min-width": "", 
+			"height": ""
+		)
 
 		# measure
 		max_width = -1
@@ -286,10 +292,16 @@ class CUI.Tabs extends CUI.SimplePane
 			if dim.height > max_height
 				max_height = dim.height
 
-		@__tabs_bodies.DOM.css("min-width": max_width, height: max_height)
+		CUI.DOM.setStyle(@__tabs_bodies.DOM,
+			"min-width": max_width, 
+			"height": max_height
+		)
 
 		for tab in @__tabs
-			tab.getBody().css("min-width": max_width, height: max_height)
+			CUI.DOM.setStyle(tab.getBody(),
+				"min-width": max_width, 
+				height: max_height
+			)
 
 		if @max_width != @__max_width or @max_height != @__max_height
 			@__max_width = max_width

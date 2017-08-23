@@ -531,9 +531,9 @@ class CUI.DateTime extends CUI.Input
 		minutes = minute + seconds / 60
 		hours = (hour%12) + minutes / 60
 
-		@__hour.css("transform", "rotate(" + hours * 30 + "deg)")
-		@__minute.css("transform", "rotate(" + minutes * 6 + "deg)")
-		@__second.css("transform", "rotate(" + seconds * 6 + "deg)")
+		CUI.DOM.setStyleOne(@__hour, "transform", "rotate(" + hours * 30 + "deg)")
+		CUI.DOM.setStyleOne(@__minute, "transform", "rotate(" + minutes * 6 + "deg)")
+		CUI.DOM.setStyleOne(@__second, "transform", "rotate(" + seconds * 6 + "deg)")
 
 
 	setDigiClock: (mom = @__current_moment) ->

@@ -41,7 +41,7 @@ class CUI.Lasso extends CUI.Draggable
 		@position = null
 
 	start_drag: (ev, $target, diff) ->
-		if not CUI.DOM.isInDOM(@element[0])
+		if not CUI.DOM.isInDOM(@element)
 			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
 
 		CUI.globalDrag.lasso = $div("cui-lasso")

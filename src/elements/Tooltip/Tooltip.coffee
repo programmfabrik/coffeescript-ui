@@ -202,8 +202,7 @@ class CUI.Tooltip extends CUI.LayerPane
 
 	resetLayer: ->
 		super()
-		# @DOM.css("width", "200px")
-		@DOM.css("max-width", @__viewport.width/2)
+		CUI.DOM.setStyleOne(@DOM, "max-width", @__viewport.width/2)
 
 	destroy: ->
 		# console.error "destroying ", @getUniqueId()

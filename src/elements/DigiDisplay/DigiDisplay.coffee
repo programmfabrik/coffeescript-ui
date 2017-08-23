@@ -39,7 +39,7 @@ class CUI.DigiDisplay extends CUI.DOM
 
 			if not info.height
 				info.height = fc.outerHeight()
-			fc.css("marginTop", "-"+(_idx*info.height)+"px")
+			CUI.DOM.setStyleOne(fc, "marginTop", "-"+(_idx*info.height)+"px")
 			fc.setAttribute("c", c)
 			fc.setAttribute("idx", _idx)
 		@

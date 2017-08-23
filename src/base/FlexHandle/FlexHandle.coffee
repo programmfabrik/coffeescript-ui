@@ -454,7 +454,7 @@ class CUI.FlexHandle extends CUI.Element
 			type: "flex-close"
 
 		@_element.classList.add("cui-flex-handle-closed")
-		@__pane.css("display", "none")
+		CUI.DOM.setStyleOne(@__pane, "display", "none")
 		@__resize()
 		@
 
@@ -464,7 +464,7 @@ class CUI.FlexHandle extends CUI.Element
 			return @
 
 		@_element.classList.remove("cui-flex-handle-closed")
-		@__pane.css("display", "")
+		CUI.DOM.setStyleOne(@__pane, "display", "")
 		delete(@__closed)
 		@__resize()
 		@
