@@ -873,7 +873,6 @@ li > div {
 .fa.cui-data-form-row-move-handle {
 	cursor: -webkit-grab;
 	cursor:         grab;
-	pointer-events: auto;
 }
 
 
@@ -881,14 +880,16 @@ li > div {
 .cui-icon-svg {
 	fill: currentColor;
 	vertical-align: bottom;
-	pointer-events: none;
+	// FIXME: why no pointer events? this breaks tooltips on icons
+	// pointer-events: none;
 	flex-shrink: 0;
 	transform: translateZ(0); // make em icons sharp in Firefox
 }
 
 .fa {
 	font-size: 14px;
-	pointer-events: none;
+	// FIXME: why no pointer events? this breaks tooltips on icons
+	// pointer-events: none;
 }
 
 .fa-spinner {

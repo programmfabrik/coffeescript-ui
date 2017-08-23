@@ -47,9 +47,12 @@ class CUI.DOM extends CUI.Element
 		if @_class
 			CUI.DOM.addClass(@DOM, @_class)
 
-		CUI.DOM.setElement(@DOM, @)
-
+		@setElement()
 		@
+
+	setElement: ->
+		@__assertDOMElement('setElement')
+		CUI.DOM.setElement(@DOM, @)
 
 	# if used as parameter in "Layer", overwrite to
 	# a different element to position the layer with
@@ -1763,5 +1766,3 @@ class CUI.DOM extends CUI.Element
 				append(a)
 
 		tr
-
-

@@ -15,6 +15,8 @@ class CUI
 	@__readyFuncs = []
 	@__themes = []
 
+	@__ng__: true
+
 	@start: ->
 
 		@CSS = new CUI.CSSLoader()

@@ -92,9 +92,6 @@ class CUI.CSSLoader extends CUI.Element
 
 		# console.info("CSSLoader: Loading:", url)
 
-		if name.startsWith("ng")
-			CUI.__ng__ = true
-
 		dfr = new CUI.Deferred()
 
 		if url.startsWith("http://") or

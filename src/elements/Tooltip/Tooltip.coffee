@@ -10,17 +10,9 @@ class CUI.Tooltip extends CUI.LayerPane
 		super(@opts)
 		assert(xor(@_text, @_content), "new #{@__cls}", "One of opts.text or opts.content must be set.", opts: @opts)
 
-		if not CUI.isFunction(@_text) and not CUI.isFunction(@_content)
-			@__static = true
-			@fillContent()
-		else
-			@__static = false
-
-		# object to register events on the element
-		@__dummyInst = new CUI.Dummy()
+		@__dummyInst = =>
 
 		if @_on_hover
-			assert( @__element, "Element not set in Tooltip." )
 			Events.listen
 				type: "mouseenter"
 				instance: @__dummyInst
@@ -44,11 +36,11 @@ class CUI.Tooltip extends CUI.LayerPane
 						@hideTimeout(null, ev)
 					return
 
-			@__element.addClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-hover")
+			@__element.addClass("cui-dom-element-has-tooltip-on-hover")
 			return
 
 		if @_on_click
-			@__element.addClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-click")
+			@__element.addClass("cui-dom-element-has-tooltip-on-click")
 
 			Events.listen
 				type: "click"
@@ -63,6 +55,10 @@ class CUI.Tooltip extends CUI.LayerPane
 
 	initOpts: ->
 		super()
+		@mergeOpts
+			element:
+				mandatory: true
+
 		@addOpts
 			text:
 				check: (v) ->
@@ -113,6 +109,9 @@ class CUI.Tooltip extends CUI.LayerPane
 
 	@current: null # global to store currently shown tooltip
 
+	setElement: ->
+		# we don't set the element
+
 	focusOnHide: (ev) ->
 
 	focusOnShow: (ev) ->
@@ -151,6 +150,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		null
 
 	fillContent: ->
+
 		dfr = new CUI.Deferred()
 
 		dfr.fail =>
@@ -193,6 +193,11 @@ class CUI.Tooltip extends CUI.LayerPane
 		else
 			fill_content(@_content)
 
+		if not CUI.isFunction(@_text) and not CUI.isFunction(@_content)
+			# avoid this next time
+			@__static = true
+		else
+			@__static = false
 
 		dfr.promise()
 
@@ -209,4 +214,4 @@ class CUI.Tooltip extends CUI.LayerPane
 		# console.error "destroying ", @getUniqueId()
 		Events.ignore(instance: @__dummyInst)
 		super()
-		@__element.removeClass("cui-dom-element-has-tooltip cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")
+		@__element.removeClass("cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")
