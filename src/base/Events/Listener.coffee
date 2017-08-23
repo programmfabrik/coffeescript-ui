@@ -87,7 +87,6 @@ class CUI.Listener extends CUI.Element
 
 	__registerDOMEvent: ->
 		for _type in @getTypes()
-			# @__node.addClass("cui-debug-listen-#{type}")
 			for type in Events.getEventTypeAliases(_type)
 				@__node.addEventListener(type, @__handleDOMEvent, @isCapture())
 		@

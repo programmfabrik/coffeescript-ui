@@ -50,13 +50,13 @@ class CUI.DigiDisplay extends CUI.DOM
 		for digit, digit_idx in @_digits
 			if digit.static
 				CUI.DOM.append(@__displayDiv, container = $div("cui-digi-display-static cui-digi-display-#{digit_idx}"))
-				CUI.DOM.append(container, $text(digit.static)).addClass(digit.class)
+				CUI.DOM.addClass(CUI.DOM.append(container, $text(digit.static)), digit.class)
 				if digit.attr
 					container.getAttribute(digit.attr)
 				continue
 			digit.__regexp = new RegExp(digit.mask)
 			CUI.DOM.append(@__displayDiv, container = $div("cui-digi-display-container cui-digi-display-#{digit_idx}"))
-			container.addClass(digit.class)
+			CUI.DOM.addClass(container, digit.class)
 			if digit.attr
 				container.getAttribute(digit.attr)
 

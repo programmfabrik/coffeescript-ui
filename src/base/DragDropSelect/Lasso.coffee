@@ -36,7 +36,7 @@ class CUI.Lasso extends CUI.Draggable
 	init: ->
 		super()
 		# @makeElementRelative @element
-		@element.addClass("cui-lasso-area")
+		CUI.DOM.addClass(@element, "cui-lasso-area")
 		# assert @element.css("position") in ["relative","absolute","fixed"], "Lasso.init", "Element needs to be positioned (relative, absolute, fixed)", element: @element
 		@position = null
 

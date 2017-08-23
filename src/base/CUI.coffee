@@ -527,7 +527,7 @@ class CUI
 
 	@startWebdriverTest: ->
 		a= $("body")
-		a.addClass("cui-webdriver-test")
+		CUI.DOM.addClass(a, "cui-webdriver-test")
 
 	@mergeMap: (targetMap, mergeMap) ->
 		for k, v of mergeMap

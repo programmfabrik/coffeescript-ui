@@ -176,7 +176,7 @@ class CUI.FormPopover extends CUI.Form
 	renderTable: ->
 		@table = super()
 		# in "ng" design, table is the center element of layout
-		@getLayout().addClass(@__class)
+		CUI.DOM.addClass(@getLayout(), @__class)
 		@table
 
 	# overwritten in FormModal

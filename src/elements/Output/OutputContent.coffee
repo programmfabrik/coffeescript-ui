@@ -27,7 +27,7 @@ class CUI.OutputContent extends CUI.DataFieldInput
 	setContent: (content=null) ->
 		CUI.debug "setContent", @DOM, content
 		if not content
-			@DOM.addClass("cui-output-empty")
+			CUI.DOM.addClass(@DOM, "cui-output-empty")
 			@empty()
 		else
 			@DOM.removeClass("cui-output-empty")

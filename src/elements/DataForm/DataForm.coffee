@@ -206,7 +206,7 @@ class CUI.DataForm extends CUI.DataTable
 				icon: "fa-minus"
 				appearance: "flat"
 				onMouseenter: =>
-					hl.addClass("cui-data-form-row--trash")
+					CUI.DOM.addClass(hl, "cui-data-form-row--trash")
 				onMouseleave: =>
 					hl.removeClass("cui-data-form-row--trash")
 				onClick: =>

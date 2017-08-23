@@ -74,7 +74,7 @@ class CUI.ListViewColumn extends CUI.Element
 		if not @__element
 			@__cl += " "+cls
 		else if @__element instanceof HTMLElement
-			CUI.DOM.addClass(@__element, cls)
+			@__element.addClass(cls)
 		@
 
 	removeClass: (cls) ->

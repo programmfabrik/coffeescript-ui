@@ -10,10 +10,10 @@ class CUI.WaitBlock extends CUI.Block
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_inactive
-			@DOM.addClass("cui-wait-block-inactive")
+			CUI.DOM.addClass(@DOM, "cui-wait-block-inactive")
 
 		if @_fullscreen
-			@DOM.addClass("cui-wait-block-fullscreen")
+			CUI.DOM.addClass(@DOM, "cui-wait-block-fullscreen")
 
 	initOpts: ->
 		super()

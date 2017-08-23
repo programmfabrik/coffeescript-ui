@@ -406,7 +406,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# CUI.debug "start drag", diff
 		@_dragstart?(ev, CUI.globalDrag)
 		@init_helper(ev, $target, diff)
-		CUI.globalDrag.$source.addClass(@_dragClass)
+		CUI.DOM.addClass(CUI.globalDrag.$source, @_dragClass)
 		@start_drag(ev, $target, diff)
 		CUI.globalDrag.dragStarted = true
 

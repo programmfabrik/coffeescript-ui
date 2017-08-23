@@ -50,7 +50,7 @@ class CUI.Tabs extends CUI.SimplePane
 		# console.debug "header_dim", header_dim.scrollWidth, header_dim.clientWidth
 		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
-			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
+			CUI.DOM.addClass(@__pane_header, "cui-tabs-pane-header--overflow")
 			@__dragscroll = new CUI.Dragscroll
 				element: @__buttonbar.DOM
 				scroll_element: @__header
@@ -249,7 +249,7 @@ class CUI.Tabs extends CUI.SimplePane
 		tab.hide()
 		tab.initButton(@)
 		@__buttonbar.addButton(tab.getButton())
-		CUI.DOM.append(@__tabs_bodies, tab)
+		@__tabs_bodies.append(tab)
 		tab
 
 

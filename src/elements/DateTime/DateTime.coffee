@@ -1053,7 +1053,7 @@ class CUI.DateTime extends CUI.Input
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
 			day_div = $div("cui-date-time-dow").text(weekday)
-			day_div.addClass("cui-date-time-day-"+weekday.toLowerCase())
+			CUI.DOM.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
 			CUI.DOM.append(tr, CUI.DOM.append(td_func(), day_div))
 
 		# Weeks
@@ -1082,15 +1082,15 @@ class CUI.DateTime extends CUI.Input
 			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-")).text(day_no)
 
 			if curr_m < month
-				day_div.addClass("cui-date-time-previous-month")
+				CUI.DOM.addClass(day_div, "cui-date-time-previous-month")
 			else if curr_m > month
-				day_div.addClass("cui-date-time-next-month")
+				CUI.DOM.addClass(day_div, "cui-date-time-next-month")
 			else
-				day_div.addClass("cui-date-time-same-month")
+				CUI.DOM.addClass(day_div, "cui-date-time-same-month")
 				if year == now.year() and month == now.month() and day_no == now.date()
-					day_div.addClass("cui-date-time-now")
+					CUI.DOM.addClass(day_div, "cui-date-time-now")
 
-			day_div.addClass("cui-date-time-day-"+mom.format("dd").toLowerCase())
+			CUI.DOM.addClass(day_div, "cui-date-time-day-"+mom.format("dd").toLowerCase())
 
 			if CUI.__ng__
 				td = CUI.DOM.append(tr, day_div)
@@ -1122,7 +1122,7 @@ class CUI.DateTime extends CUI.Input
 		].join("-")
 
 		# CUI.debug "markDay", datestr
-		@__calendar.find("[datestr=\"#{datestr}\"]").addClass("cui-date-time-selected")
+		CUI.DOM.addClass(@__calendar.find("[datestr=\"#{datestr}\"]"), "cui-date-time-selected")
 		return
 
 

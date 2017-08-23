@@ -11,7 +11,7 @@ class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_sortable
-			@DOM.addClass("cui-options--sortable")
+			CUI.DOM.addClass(@DOM, "cui-options--sortable")
 
 	initOpts: ->
 		super()

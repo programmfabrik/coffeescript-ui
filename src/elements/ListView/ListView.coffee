@@ -187,7 +187,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__inactive = !!inactive
 		if @grid
 			if @__inactive
-				@grid.addClass(addClass)
+				CUI.DOM.addClass(@grid, addClass)
 				@__inactiveWaitBlock = new WaitBlock(element: @grid, inactive: true).show()
 			else
 				@__inactiveWaitBlock?.destroy()
@@ -896,11 +896,11 @@ class CUI.ListView extends CUI.SimplePane
 
 	__addRowsOddEvenClasses: ->
 		if (@rowsCount - @fixedRowsCount)%2 == 0
-			@grid.addClass("cui-list-view-grid-rows-even")
+			CUI.DOM.addClass(@grid, "cui-list-view-grid-rows-even")
 			@grid.removeClass("cui-list-view-grid-rows-odd")
 		else
 			@grid.removeClass("cui-list-view-grid-rows-even")
-			@grid.addClass("cui-list-view-grid-rows-odd")
+			CUI.DOM.addClass(@grid, "cui-list-view-grid-rows-odd")
 		@
 
 

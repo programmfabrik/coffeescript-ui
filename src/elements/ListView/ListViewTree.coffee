@@ -140,9 +140,9 @@ class CUI.ListViewTree extends CUI.ListView
 			@root.open()
 
 		if @_no_hierarchy
-			@grid.addClass("cui-list-view-tree-no-hierarchy")
+			CUI.DOM.addClass(@grid, "cui-list-view-tree-no-hierarchy")
 		else
-			@grid.addClass("cui-list-view-tree-hierarchy")
+			CUI.DOM.addClass(@grid, "cui-list-view-tree-hierarchy")
 
 		@DOM
 

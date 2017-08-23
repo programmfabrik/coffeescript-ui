@@ -104,7 +104,7 @@ class CUI.Panel extends CUI.DOM
 		!@isClosed()
 
 	close: (trigger = true) ->
-		@DOM.addClass("cui-panel-closed")
+		CUI.DOM.addClass(@DOM, "cui-panel-closed")
 
 		if trigger
 			Events.trigger
