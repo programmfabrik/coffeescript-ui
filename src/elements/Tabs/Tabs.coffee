@@ -255,7 +255,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 	__measureAndSetBodyWidth: ->
 
-		for parent in @DOM.parents()
+		for parent in CUI.DOM.parents(@DOM)
 			if parent.scrollTop or parent.scrollLeft
 				scrollSaveParent =
 						node: parent
