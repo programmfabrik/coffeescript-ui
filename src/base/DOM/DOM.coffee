@@ -152,7 +152,7 @@ class CUI.DOM extends CUI.Element
 		assert(node instanceof HTMLElement, "DOM.data","node needs to be instance of HTMLElement", node: node)
 
 		if key == undefined
-			return node.__dom_data
+			return node.__dom_data or {}
 
 		if CUI.isPlainObject(key)
 			for k, v of key
