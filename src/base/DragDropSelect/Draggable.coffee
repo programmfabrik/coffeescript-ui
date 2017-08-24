@@ -126,7 +126,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# CUI.debug "Draggable", @options.selector
 		assert(not @_helper_contain_element or CUI.DOM.closest(@_element, @_helper_contain_element), "new Draggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
 
-		DOM.addClass(@element, "no-user-select")
+		CUI.DOM.addClass(@element, "no-user-select")
 
 		Events.listen
 			type: @__event_types.start
@@ -199,8 +199,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 			startCoordinates: point
 			instance: @
 			startScroll:
-				top: $target[0].scrollTop
-				left: $target[0].scrollLeft
+				top: $target.scrollTop
+				left: $target.scrollLeft
 			start: position # offset to the $target
 			threshold: @_threshold
 
@@ -422,7 +422,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# position helper
 		@position_helper(ev, $target, diff)
 
-		if CUI.globalDrag.dragoverTarget and CUI.globalDrag.dragoverTarget[0] != $target[0]
+		if CUI.globalDrag.dragoverTarget and CUI.globalDrag.dragoverTarget != $target
 			Events.trigger
 				type: "cui-dragleave"
 				node: CUI.globalDrag.dragoverTarget
@@ -456,7 +456,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if @isDestroyed()
 			return
 
-		CUI.globalDrag.$source.removeClass(@_dragClass)
+		CUI.DOM.removeClass(CUI.globalDrag.$source, @_dragClass)
 		CUI.DOM.remove(CUI.globalDrag.helperNode)
 
 	stop_drag: (ev) ->

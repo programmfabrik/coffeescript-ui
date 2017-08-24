@@ -192,11 +192,11 @@ class CUI.DateTime extends CUI.Input
 		switch cursor
 			when "hour", "minute", "second", "am_pm"
 				title = @__locale_format.tab_time
-				DOM.setAttribute(@__dateTimeTmpl.DOM[0], "browser", "time")
+				DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
 				@setDigiClock()
 			else
 				title = @__locale_format.tab_date
-				DOM.setAttribute(@__dateTimeTmpl.DOM[0], "browser", "date")
+				DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
 
 		@__dateTimeTmpl.replace(new Label(text: title), "header_center")
 		@
@@ -260,7 +260,7 @@ class CUI.DateTime extends CUI.Input
 	render: ->
 		super()
 		if isEmpty(@_placeholder)
-			@__input.setAttribute("placeholder", @__input_formats[0].text)
+			@__input.setAttribute("placeholder", @__input_formats[0].textContent)
 
 		switch @_display_type
 			when "short"
@@ -591,7 +591,12 @@ class CUI.DateTime extends CUI.Input
 
 			opts.push
 				text: tz.print_name
-				right: if mom then $span("cui-timezone-offset").setAttribute("title", tz.geo).text(mom.tz(tz.name).format("zZ")) else null
+				right: if mom
+								 span = $span("cui-timezone-offset").setAttribute("title", tz.geo)
+								 span.textContent = mom.tz(tz.name).format("zZ")
+								 span
+							 else
+							   null
 				value: tz.name
 		opts
 
@@ -682,13 +687,9 @@ class CUI.DateTime extends CUI.Input
 	updateCalendar: (mom, update_current_moment = true) ->
 		CUI.DOM.empty(@__calendar)
 
-		if CUI.__ng__
-			@__calendar.append(@getDateTimeDrawer(mom))
-			@__calendar.append(@drawMonthTable(mom))
-			@__calendar.append(@drawYearMonthsSelect(mom))
-		else
-			@__calendar.append(@drawYearMonthsSelect(mom))
-			@__calendar.append(@drawMonthTable(mom))
+		@__calendar.append(@getDateTimeDrawer(mom))
+		@__calendar.append(@drawMonthTable(mom))
+		@__calendar.append(@drawYearMonthsSelect(mom))
 
 		if update_current_moment
 			@__current_moment = mom.clone()
@@ -931,7 +932,7 @@ class CUI.DateTime extends CUI.Input
 								@drawDate(mom)
 						,
 							new Label
-								text: month_opts[data.month].text
+								text: month_opts[data.month].textContent
 							# new Select(
 							# 	attr:
 							# 		cursor: "month"
@@ -1029,8 +1030,8 @@ class CUI.DateTime extends CUI.Input
 				ev.stopPropagation()
 				$target = $(ev.getTarget())
 				# CUI.debug "click on date table", ev.getTarget()
-				if $target.closest(".cui-date-time-day").length
-					data = DOM.data($target.closest("td,.cui-td")[0])
+				if CUI.DOM.closest($target, ".cui-date-time-day")
+					data = DOM.data(CUI.DOM.closest($target, "td,.cui-td"))
 
 					# order here is important, we need to set the month
 					# before we set the date!
@@ -1043,17 +1044,17 @@ class CUI.DateTime extends CUI.Input
 				return
 
 		# Wk, Mo, Tu, We, Th...
-		tr = CUI.DOM.append(month_table, $tr("cui-date-time-month-header"))
+		tr = $tr("cui-date-time-month-header")
+		CUI.DOM.append(month_table, tr)
 
-		if CUI.__ng__
-			td_func = $th
-		else
-			td_func = $td
+		td_func = $th
 
-		CUI.DOM.append(tr, CUI.DOM.append(td_func("cui-date-time-week-title"), $div("cui-date-time-dow").text(@__locale_format.tab_week)))
+		$div("cui-date-time-dow").textContent = @__locale_format.tab_week
+		CUI.DOM.append(tr, CUI.DOM.append(td_func("cui-date-time-week-title"), $div("cui-date-time-dow")))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
-			day_div = $div("cui-date-time-dow").text(weekday)
+			$div("cui-date-time-dow").textContent = weekday
+			day_div = $div("cui-date-time-dow")
 			CUI.DOM.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
 			CUI.DOM.append(tr, CUI.DOM.append(td_func(), day_div))
 
@@ -1070,17 +1071,16 @@ class CUI.DateTime extends CUI.Input
 				if weeks ==6
 					# if ((curr_m > m and date.getUTCFullYear() == year) or date.getUTCFullYear() > year)
 					break
-				tr = CUI.DOM.append(month_table, $tr())
+				tr = $tr()
+				CUI.DOM.append(month_table, tr)
 				week_no = mom.week() #@start_day==0)
 				CUI.DOM.append(tr, CUI.DOM.append($td("cui-date-time-week"), $text(week_no)))
 				weeks++
 
-			if CUI.__ng__
-				div_type = $td
-			else
-				div_type = $div
+			div_type = $td
 
-			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-")).text(day_no)
+			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-"))
+			day_div.textContent = day_no
 
 			if curr_m < month
 				CUI.DOM.addClass(day_div, "cui-date-time-previous-month")
@@ -1093,12 +1093,10 @@ class CUI.DateTime extends CUI.Input
 
 			CUI.DOM.addClass(day_div, "cui-date-time-day-"+mom.format("dd").toLowerCase())
 
-			if CUI.__ng__
-				td = CUI.DOM.append(tr, day_div)
-			else
-				td = CUI.DOM.append(tr, CUI.DOM.append($td(), day_div))
+			td = day_div
+			CUI.DOM.append(tr, td)
 
-			DOM.data(td[0],
+			DOM.data(td,
 				date: day_no
 				month: curr_m
 				year: curr_y
@@ -1111,7 +1109,9 @@ class CUI.DateTime extends CUI.Input
 
 	markDay: ->
 
-		CUI.DOM.removeClass(@__dateTimeTmpl.DOM.find(".cui-date-time-calendar .cui-date-time-selected"), "cui-date-time-selected")
+		for el in CUI.DOM.matchSelector(@__dateTimeTmpl.DOM, ".cui-date-time-calendar .cui-date-time-selected")
+			CUI.DOM.removeClass(el, "cui-date-time-selected")
+
 		# CUI.debug "markDay", @__current_moment, @__current_moment.__now
 		if @__current_moment.__now
 			return
@@ -1123,7 +1123,8 @@ class CUI.DateTime extends CUI.Input
 		].join("-")
 
 		# CUI.debug "markDay", datestr
-		CUI.DOM.addClass(@__calendar.find("[datestr=\"#{datestr}\"]"), "cui-date-time-selected")
+		for el in CUI.DOM.matchSelector(@__calendar, "[datestr=\"#{datestr}\"]")
+			CUI.DOM.addClass(el, "cui-date-time-selected")
 		return
 
 

@@ -86,7 +86,7 @@ class CUI.Pane extends CUI.VerticalLayout
 				inner: true
 
 		# measure DOM start position
-		rect = @DOM.rect()
+		rect = CUI.DOM.getRect(@DOM)
 
 		vp = CUI.DOM.getDimensions(window)
 		@__placeholderTmpl = new Template
@@ -101,17 +101,17 @@ class CUI.Pane extends CUI.VerticalLayout
 		# 	inner.addClass(DOM.data(el, "element").getDOMElementClasses())
 
 		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)
-		rect_fill = @__fillscreenTmpl.DOM.rect()
-		rect_fill_inner = inner.rect()
+		dim_fill = CUI.DOM.getDimensions(@__fillscreenTmpl.DOM)
+		dim_fill_inner = CUI.DOM.getDimensions(inner)
 
 		# adjust start rect, so it matches the design of the
 		# fill div
 
 		adjust =
-			left: (rect_fill_inner.left - rect_fill.left) + inner.cssEdgeSpace("left")
-			top: (rect_fill_inner.top - rect_fill.top) + inner.cssEdgeSpace("top")
-			right: (rect_fill.right - rect_fill_inner.right) + inner.cssEdgeSpace("right")
-			bottom: (rect_fill.bottom - rect_fill_inner.bottom) + inner.cssEdgeSpace("bottom")
+			left: (dim_fill_inner.clientBoundingRect.left - dim_fill.clientBoundingRect.left) + dim_fill_inner.borderLeft + dim_fill_inner.paddingLeft
+			top: (dim_fill_inner.clientBoundingRect.top - dim_fill.clientBoundingRect.top) + dim_fill_inner.borderTop + dim_fill_inner.paddingTop
+			right: (dim_fill.clientBoundingRect.right - dim_fill_inner.clientBoundingRect.right) + dim_fill_inner.borderRight + dim_fill_inner.paddingRight
+			bottom: (dim_fill.clientBoundingRect.bottom - dim_fill_inner.clientBoundingRect.bottom) + dim_fill_inner.borderBottom + dim_fill_inner.paddingBottom
 
 		start_rect =
 			top: rect.top - adjust.top
@@ -129,12 +129,13 @@ class CUI.Pane extends CUI.VerticalLayout
 		# this assumes, that the placeholder dont uses padding, border
 		# or margin!
 
-		@__placeholder.css
+		CUI.DOM.setStyle(@__placeholder,
 			width: @DOM.outerWidth(true)
 			height: @DOM.outerHeight(true)
+		)
 
 		for key_copy in ["position", "top", "left", "right", "bottom"]
-			CUI.DOM.setStyleOne(@__placeholder, key_copy, CUI.DOM.getComputedStyle(@DOM.css)[key_copy])
+			CUI.DOM.setStyleOne(@__placeholder, key_copy, CUI.DOM.getComputedStyle(@DOM)[key_copy])
 
 		@DOM.after(@__placeholder)
 
@@ -184,7 +185,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			icon_active: new Icon(class: "fa-compress")
 			switch: true
 			onClick: (ev, btn) =>
-				DOM.data(btn.DOM.closest(".cui-pane")[0], "element").toggleFillScreen()
+				DOM.data(btn.DOM.closest(".cui-pane"), "element").toggleFillScreen()
 		}
 			opts[k] = v
 

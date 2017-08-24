@@ -25,14 +25,14 @@ class CUI.WaitBlock extends CUI.Block
 		@removeOpt("content")
 
 		@addOpts
-			# inactive is used to block content
-			# from being accessed
+# inactive is used to block content
+# from being accessed
 			inactive:
 				check: Boolean
 			element:
 				check: (v) ->
 					isElement(v) or isElement(v.DOM)
-			# use to put this wait block fullscreen
+# use to put this wait block fullscreen
 			fullscreen:
 				check: Boolean
 
@@ -58,14 +58,13 @@ class CUI.WaitBlock extends CUI.Block
 		"wait-block"
 
 	show: ->
-		position = @__element[0].style.position
-		if not DOM.isPositioned(@__element[0])
-			@__savedPosition = @__element[0].style.position
-			@__element[0].style.position = "relative"
+		if not DOM.isPositioned(@__element)
+			@__savedPosition = CUI.DOM.getComputedStyle(@__element)["position"]
+			CUI.DOM.setStyleOne(@__element, "position", "relative")
 		else
 			@__savedPosition = null
 
-		@__element.addClass("cui-wait-block-active")
+		CUI.DOM.addClass(@__element.DOM, "cui-wait-block-active")
 		if @_fullscreen
 			CUI.DOM.append(@__element, @DOM)
 		else
@@ -81,9 +80,9 @@ class CUI.WaitBlock extends CUI.Block
 			return @
 		CUI.DOM.remove(@DOM)
 		if @__savedPosition != null
-			@__element[0].style.position = @__savedPosition
+			CUI.DOM.setStyleOne(@__element, "position", @__savedPosition)
 
-		@__element.removeClass("cui-wait-block-active")
+		CUI.DOM.removeClass(@__element, "cui-wait-block-active")
 		@__shown = false
 		@__savedPosition = null
 		@
@@ -91,4 +90,3 @@ class CUI.WaitBlock extends CUI.Block
 	destroy: ->
 		@hide()
 		super()
-

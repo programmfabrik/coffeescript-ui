@@ -48,7 +48,7 @@ class CUI.Movable extends CUI.Draggable
 		if not isEmpty(pos.h)
 			setCss.marginBoxHeight = pos.h
 
-		CUI.DOM.setDimensions(@element[0], setCss)
+		CUI.DOM.setDimensions(@element, setCss)
 		@_onPositioned?(pos)
 
 
@@ -61,7 +61,7 @@ class CUI.Movable extends CUI.Draggable
 
 
 	before_drag: ->
-		dim = CUI.DOM.getDimensions(@element[0])
+		dim = CUI.DOM.getDimensions(@element)
 		@start =
 			x: dim.left or 0
 			y: dim.top or 0

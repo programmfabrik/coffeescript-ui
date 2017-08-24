@@ -668,7 +668,7 @@ class CUI.ListView extends CUI.SimplePane
 			top: _rect.top - _pos_grid.top
 			height: _rect.height
 
-		rect.width = @getGrid().width()
+		rect.width = CUI.DOM.width(@getGrid())
 		return rect
 
 		# rect = @getCellGridRect(0, row_i)

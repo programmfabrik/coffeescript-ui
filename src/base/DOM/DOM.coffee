@@ -1425,22 +1425,6 @@ class CUI.DOM extends CUI.Element
 	@element: (tagName, attrs={}) ->
 		DOM.setAttributeMap(document.createElement(tagName), attrs)
 
-	# @firstCommonAncestor: (el1, el2) ->
-	# 	parents1 = @parents(el1)
-	# 	parents2 = @parents(el2)
-
-	# 	parents1.reverse()
-	# 	parents2.reverse()
-
-	# 	common = null
-	# 	for p, idx in parents1
-	# 		if p == parents2[idx]
-	# 			common = p
-	# 		else
-	# 			return common
-
-	# 	common
-
 	@debugRect: ->
 		@remove(@find("#cui-debug-rect")[0])
 		if arguments.length == 0
@@ -1742,7 +1726,8 @@ class CUI.DOM extends CUI.Element
 	@$tr_one_row: ->
 		tr = CUI.DOM.$tr()
 		append = (__a) ->
-			td = CUI.DOM.append(tr, CUI.DOM.$td())
+			td = CUI.DOM.$td()
+			CUI.DOM.append(tr, td)
 
 			add_content = (___a) =>
 				if CUI.isArray(___a)

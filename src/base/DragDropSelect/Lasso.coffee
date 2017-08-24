@@ -47,7 +47,7 @@ class CUI.Lasso extends CUI.Draggable
 		CUI.globalDrag.lasso = $div("cui-lasso")
 		# CUI.debug "create lasso", @_lassoClass
 		#
-		CUI.DOM.append(@element, CUI.globalDrag.lasso.appendTo)
+		CUI.DOM.append(@element, CUI.globalDrag.lasso)
 		CUI.globalDrag.elements = []
 
 	getCursor: ->
@@ -69,7 +69,7 @@ class CUI.Lasso extends CUI.Draggable
 		else
 			left = CUI.globalDrag.start.left
 			width = diff.x
-			over = left + width - @element[0].scrollWidth
+			over = left + width - @element.scrollWidth
 			if over > 0
 				width -= over
 
@@ -83,7 +83,7 @@ class CUI.Lasso extends CUI.Draggable
 		else
 			top = CUI.globalDrag.start.top
 			height = diff.y
-			over = top + height - @element[0].scrollHeight
+			over = top + height - @element.scrollHeight
 			if over > 0
 				height -= over
 
@@ -99,11 +99,12 @@ class CUI.Lasso extends CUI.Draggable
 				removeFromArray(el, CUI.globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
-		CUI.globalDrag.lasso.css
+		CUI.DOM.setStyle(CUI.globalDrag.lasso,
 			left: left
 			top: top
 			width: width
 			height: height
+		)
 		# this has problems when browser is set to zoom != 100%
 		# ("transform", "translate3d(#{left}px,#{top}px,0) scale(#{width},#{height})")
 

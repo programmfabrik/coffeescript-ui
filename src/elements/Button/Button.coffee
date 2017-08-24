@@ -860,7 +860,7 @@ class CUI.Button extends CUI.DOM
 		@
 
 	enable: ->
-		@DOM.removeClass(CUI.defaults.class.Button.defaults.disabled_css_class)
+		CUI.DOM.removeClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
 		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 		@__disabled = false
 		@

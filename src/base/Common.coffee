@@ -128,7 +128,9 @@ class CUI.Utils
 		return
 
 	@$elementIsInDOM: ($el) ->
-		CUI.DOM.parents($el).last().is("html")
+		parents = CUI.DOM.parents($el)
+		lastParent = parents[parents.length - 1]
+		return CUI.DOM.is(lastParent, "html")
 
 	# for our self repeating mousemove event we
 	# track a scrollPageX and scrollPageY offset

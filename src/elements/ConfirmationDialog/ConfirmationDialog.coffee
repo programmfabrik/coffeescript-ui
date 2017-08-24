@@ -92,7 +92,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 
 	getButtons: ->
 		[pane, key] = @getPane().getPaneAndKey("footer_right")
-		els = DOM.findElements(pane[key]()[0], ".cui-button")
+		els = DOM.findElements(pane[key](), ".cui-button")
 		buttons = []
 		for el in els
 			buttons.push(DOM.data(el, "element"))

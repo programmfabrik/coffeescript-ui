@@ -523,7 +523,7 @@ class CUI.Input extends CUI.DataFieldInput
 			css.whiteSpace = "nowrap"
 
 		CUI.DOM.setStyle(@__contentSize, css)
-		DOM.height(@__contentSize, 1)
+		CUI.DOM.height(@__contentSize, 1)
 
 		if @_textarea
 			DOM.width(@__contentSize, DOM.width(@__contentSize))

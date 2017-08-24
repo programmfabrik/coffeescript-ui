@@ -371,7 +371,7 @@ class CUI.Layer extends CUI.DOM
 			pointer_direction = get_pointer_direction(placement)
 
 			if @__pointer
-				@__pointer.addClass(get_pointer_class(pointer_direction))
+				CUI.DOM.addClass(@__pointer.DOM, get_pointer_class(pointer_direction))
 
 				dim_pointer[placement] = CUI.DOM.getDimensions(@__pointer)
 
@@ -931,7 +931,7 @@ class CUI.Layer extends CUI.DOM
 					left: vp.pointer_pos.left + body_scroll_left
 					margin: 0
 
-			@__pointer.addClass(get_pointer_class(vp.pointer_pos.direction))
+			CUI.DOM.addClass(@__pointer.DOM, get_pointer_class(vp.pointer_pos.direction))
 
 		if @__backdrop_crop
 			DOM.setStyle @__backdrop_crop,
