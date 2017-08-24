@@ -175,7 +175,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 	init_drag: (ev, $target) ->
 
-		overwrite_options = {}
+		if not $target
+			# if subclasses screw with $target, this can happen
+			return
+
 		CUI.globalDrag = @_create?(ev, $target)
 
 		# ev.getMousedownEvent?().preventDefault()
@@ -199,8 +202,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 			startCoordinates: point
 			instance: @
 			startScroll:
-				top: $target[0].scrollTop
-				left: $target[0].scrollLeft
+				top: $target.scrollTop
+				left: $target.scrollLeft
 			start: position # offset to the $target
 			threshold: @_threshold
 
@@ -422,7 +425,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# position helper
 		@position_helper(ev, $target, diff)
 
-		if CUI.globalDrag.dragoverTarget and CUI.globalDrag.dragoverTarget[0] != $target[0]
+		if CUI.globalDrag.dragoverTarget and CUI.globalDrag.dragoverTarget != $target
 			Events.trigger
 				type: "cui-dragleave"
 				node: CUI.globalDrag.dragoverTarget
@@ -468,7 +471,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			return
 
 		# CUI.debug "sending pf_dragleave", CUI.globalDrag.dragoverTarget
-		# CUI.debug "pf_dragleave.event", CUI.globalDrag.dragoverTarget[0]
+		# CUI.debug "pf_dragleave.event", CUI.globalDrag.dragoverTarget
 
 		CUI.Events.trigger
 			node: CUI.globalDrag.dragoverTarget
@@ -720,4 +723,3 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# CUI.debug "limitRect AFTER", pos, diff
 		return pos
-
