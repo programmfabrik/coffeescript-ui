@@ -149,7 +149,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		@__hiddenHeaders.splice(0)
 
-		@__control.empty()
+		CUI.DOM.empty(@__control)
 
 		top = 0
 		for slot, idx in slots

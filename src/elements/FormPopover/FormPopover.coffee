@@ -277,7 +277,7 @@ class CUI.FormPopover extends CUI.Form
 
 	__closePopover: ->
 		@removeClass("focus")
-		@getLayout().DOM.detach()
+		CUI.DOM.remove(@getLayout().DOM)
 		@__popover.destroy()
 		@__popover = null
 		@__triggerDataChanged()

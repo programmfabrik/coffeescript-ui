@@ -771,13 +771,13 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	showSpinner: ->
 		if @__is_rendered
-			@__handleDiv.empty()
+			CUI.DOM.empty(@__handleDiv)
 			CUI.DOM.append(@__handleDiv, new Icon(icon: "spinner").DOM)
 		@
 
 	hideSpinner: ->
 		if @__is_rendered
-			@__handleDiv.empty()
+			CUI.DOM.empty(@__handleDiv)
 			if @__handleIcon
 				CUI.DOM.append(@__handleDiv, new Icon(icon: @__handleIcon).DOM)
 			else

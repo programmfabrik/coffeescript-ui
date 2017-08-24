@@ -119,7 +119,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			bottom: vp.height - rect.bottom - adjust.bottom
 			right: vp.width - rect.right - adjust.right
 
-		@__fillscreenTmpl.DOM.detach()
+		CUI.DOM.remove(@__fillscreenTmpl.DOM)
 
 		CUI.DOM.setStyle(@__fillscreenTmpl.DOM, start_rect)
 		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)

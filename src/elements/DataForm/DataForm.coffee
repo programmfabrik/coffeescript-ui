@@ -208,7 +208,7 @@ class CUI.DataForm extends CUI.DataTable
 				onMouseenter: =>
 					CUI.DOM.addClass(hl, "cui-data-form-row--trash")
 				onMouseleave: =>
-					hl.removeClass("cui-data-form-row--trash")
+					CUI.DOM.removeClass(hl, "cui-data-form-row--trash")
 				onClick: =>
 					@_onRowRemove?.call(@, data)
 					@__removeRow(data)

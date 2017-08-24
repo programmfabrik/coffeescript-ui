@@ -1021,9 +1021,9 @@ class CUI.Layer extends CUI.DOM
 
 			CUI.DOM.removeClass(@__getOriginalElement(), @getElementOpenClass())
 
-		@__layer_root.DOM.detach()
+		CUI.DOM.remove(@__layer_root.DOM)
 
-		CUI.DOM.setAttributeMap @__layer_root.DOM[0],
+		CUI.DOM.setAttributeMap @__layer_root.DOM,
 			"cui-layer-stack-number": null
 			"cui-layer-stack-count": null
 

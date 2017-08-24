@@ -62,7 +62,7 @@ class CUI.Tabs extends CUI.SimplePane
 		@
 
 	__setActiveMarker: ->
-		btn = @getActiveTab()?.getButton().DOM[0]
+		btn = @getActiveTab()?.getButton().DOM
 
 		if not btn
 			CUI.DOM.hideElement(@__tabs_marker)
@@ -83,10 +83,10 @@ class CUI.Tabs extends CUI.SimplePane
 		@__tabs_bodies = new Template
 			name: "tabs-bodies"
 
-		@__pane_header.addClass("cui-tabs-pane-header")
+		CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header")
 
 		if @_appearance == "mini"
-			@__pane_header.addClass("cui-tabs-pane-header--mini")
+			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
 
 		@__buttonbar = new Buttonbar()
 
@@ -96,7 +96,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__pane_header.append(@__tabs_marker, pane_key)
 
-		@__header = @__pane_header[pane_key]()[0]
+		@__header = @__pane_header[pane_key]()
 
 		Events.listen
 			type: "scroll"
@@ -172,7 +172,7 @@ class CUI.Tabs extends CUI.SimplePane
 					@__checkOverflowButton()
 					@__setActiveMarker()
 
-			assert( DOM.isInDOM(@getLayout().DOM[0]),"Tabs getting DOM insert event without being in DOM." )
+			assert( DOM.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
 			@__setActiveMarker()
 
@@ -214,18 +214,18 @@ class CUI.Tabs extends CUI.SimplePane
 				call: =>
 
 					if @__overflowBtn.isShown()
-						DOM.scrollIntoView(tab.getButton().DOM[0])
+						DOM.scrollIntoView(tab.getButton().DOM)
 
 					if CUI.__ng__
 						if not @_maximize_vertical
 							# set left margin on first tab
 							# console.debug "style", @__tabs[0].DOM[0], -100*idxInArray(tab, @__tabs)+"%"
-							DOM.setStyle(@__tabs[0].DOM[0], marginLeft: -100*idxInArray(tab, @__tabs)+"%")
+							DOM.setStyle(@__tabs[0].DOM, marginLeft: -100*idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
 					@__setActiveMarker()
 
-					DOM.setAttribute(@DOM[0], "active-tab-idx", idxInArray(tab, @__tabs))
+					DOM.setAttribute(@DOM, "active-tab-idx", idxInArray(tab, @__tabs))
 					# CUI.error @__uniqueId, "activate"
 
 			Events.listen
@@ -234,7 +234,7 @@ class CUI.Tabs extends CUI.SimplePane
 				call: =>
 					# CUI.error @__uniqueId, "deactivate"
 					@__active_tab = null
-					DOM.setAttribute(@DOM[0], "active-tab-idx", "")
+					DOM.setAttribute(@DOM, "active-tab-idx", "")
 
 			Events.listen
 				node: tab

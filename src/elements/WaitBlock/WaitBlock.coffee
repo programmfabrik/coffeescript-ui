@@ -79,7 +79,7 @@ class CUI.WaitBlock extends CUI.Block
 	hide: ->
 		if not @isShown()
 			return @
-		@DOM.detach()
+		CUI.DOM.remove(@DOM)
 		if @__savedPosition != null
 			@__element[0].style.position = @__savedPosition
 

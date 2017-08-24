@@ -260,7 +260,7 @@ class CUI.DateTime extends CUI.Input
 	render: ->
 		super()
 		if isEmpty(@_placeholder)
-			@__input.prop("placeholder", @__input_formats[0].text)
+			@__input.setAttribute("placeholder", @__input_formats[0].text)
 
 		switch @_display_type
 			when "short"
@@ -550,7 +550,8 @@ class CUI.DateTime extends CUI.Input
 		mom_tz = mom.clone()
 		mom_tz.tz(CUI.tz_data.tz)
 		# CUI.debug @__input_format.timezone_display, mom_tz.format(@__input_format.timezone_display)
-		@__timezone_display.empty().append(mom_tz.format(@__input_format.timezone_display))
+		CUI.DOM.empty(@__timezone_display)
+		CUI.DOM.append(@__timezone_display, mom_tz.format(@__input_format.timezone_display))
 
 	setTimezone: ->
 
@@ -590,7 +591,7 @@ class CUI.DateTime extends CUI.Input
 
 			opts.push
 				text: tz.print_name
-				right: if mom then $span("cui-timezone-offset").prop("title", tz.geo).text(mom.tz(tz.name).format("zZ")) else null
+				right: if mom then $span("cui-timezone-offset").setAttribute("title", tz.geo).text(mom.tz(tz.name).format("zZ")) else null
 				value: tz.name
 		opts
 
@@ -679,7 +680,7 @@ class CUI.DateTime extends CUI.Input
 		@updateCalendar(mom, false)
 
 	updateCalendar: (mom, update_current_moment = true) ->
-		@__calendar.empty()
+		CUI.DOM.empty(@__calendar)
 
 		if CUI.__ng__
 			@__calendar.append(@getDateTimeDrawer(mom))
@@ -1110,7 +1111,7 @@ class CUI.DateTime extends CUI.Input
 
 	markDay: ->
 
-		@__dateTimeTmpl.DOM.find(".cui-date-time-calendar .cui-date-time-selected").removeClass("cui-date-time-selected")
+		CUI.DOM.removeClass(@__dateTimeTmpl.DOM.find(".cui-date-time-calendar .cui-date-time-selected"), "cui-date-time-selected")
 		# CUI.debug "markDay", @__current_moment, @__current_moment.__now
 		if @__current_moment.__now
 			return

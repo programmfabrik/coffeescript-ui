@@ -192,7 +192,7 @@ class CUI.ListView extends CUI.SimplePane
 			else
 				@__inactiveWaitBlock?.destroy()
 				@__inactiveWaitBlock = null
-				@grid.removeClass(addClass)
+				CUI.DOM.removeClass(@grid, addClass)
 		@
 
 	render: ->
@@ -268,7 +268,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		html.push("</div>")
 
-		outer = @center()[0]
+		outer = @center()
 		outer.innerHTML = html.join("")
 		@grid = $(outer.firstChild)
 
@@ -281,7 +281,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@styleElement = CUI.DOM.matchSelector(outer, "style")[0]
 
-		@__fillRowQ3 = CUI.DOM.matchSelector(@grid[0], ".cui-list-view-grid-fills-3")[0]
+		@__fillRowQ3 = CUI.DOM.matchSelector(@grid, ".cui-list-view-grid-fills-3")[0]
 
 		@__topQuadrants = $(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-top")[0])
 
@@ -897,9 +897,9 @@ class CUI.ListView extends CUI.SimplePane
 	__addRowsOddEvenClasses: ->
 		if (@rowsCount - @fixedRowsCount)%2 == 0
 			CUI.DOM.addClass(@grid, "cui-list-view-grid-rows-even")
-			@grid.removeClass("cui-list-view-grid-rows-odd")
+			CUI.DOM.removeClass(@grid, "cui-list-view-grid-rows-odd")
 		else
-			@grid.removeClass("cui-list-view-grid-rows-even")
+			CUI.DOM.removeClass(@grid, "cui-list-view-grid-rows-even")
 			CUI.DOM.addClass(@grid, "cui-list-view-grid-rows-odd")
 		@
 
@@ -1117,7 +1117,7 @@ class CUI.ListView extends CUI.SimplePane
 		for row in @__rows[row_i]
 			DOM.data(row, "listViewRow", listViewRow)
 
-		listViewRow.addClass((listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
+		CUI.DOM.addClass(listViewRow.DOM, (listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
 
 		if @_rowMove
 			if @getDisplayRowIdx(row_i) >= @fixedRowsCount + @_rowMoveFixedRows
@@ -1201,7 +1201,7 @@ class CUI.ListView extends CUI.SimplePane
 	__resetCellStyle: (row_i, col_i) ->
 		cell = @__cells[row_i]?[col_i]
 		if cell
-			cell[0].style.cssText = ""
+			CUI.DOM.setStyleOne(cell, "cssText", "")
 		cell
 
 	__resetColWidth: (col_i) ->

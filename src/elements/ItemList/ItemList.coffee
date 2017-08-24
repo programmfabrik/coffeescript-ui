@@ -195,7 +195,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 								el = menu.getElement()
 								if el
-									dim = DOM.getDimensions(menu.getElement()[0])
+									dim = CUI.DOM.getDimensions(menu.getElement())
 									if dim.clientWidth == 0 and dim.clientHeight == 0
 										hide()
 										return

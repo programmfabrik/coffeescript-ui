@@ -114,7 +114,7 @@ class CUI.Panel extends CUI.DOM
 
 	open: (trigger = true) ->
 		done = =>
-			@DOM.removeClass("cui-panel-closed")
+			CUI.DOM.removeClass(@DOM, "cui-panel-closed")
 			if trigger
 				Events.trigger
 					type: "content-resize"

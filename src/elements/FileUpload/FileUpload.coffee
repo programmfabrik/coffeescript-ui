@@ -425,7 +425,7 @@ class CUI.FileUpload extends CUI.Element
 			instance: @
 
 		for dz in @__dropZones
-			$(dz).removeClass("cui-file-upload-drop-zone")
+			CUI.DOM.removeClass(dz, "cui-file-upload-drop-zone")
 		@__dropZones = []
 		@
 

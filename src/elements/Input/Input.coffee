@@ -197,7 +197,7 @@ class CUI.Input extends CUI.DataFieldInput
 			DOM.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
-		DOM.setAttribute(@__input[0], "placeholder", placeholder)
+		CUI.DOM.setAttribute(@__input[0], "placeholder", placeholder)
 
 	getPlaceholder: ->
 		if not @_placeholder
@@ -822,8 +822,8 @@ class CUI.Input extends CUI.DataFieldInput
 		else
 			@__shadow = $element("input", "cui-input-shadow", type: "text")
 
-		@__shadow.prop("tabindex", "-1")
-		@__shadow.prop("autocomplete", "off")
+		@__shadow.setAttribute("tabindex", "-1")
+		@__shadow.setAttribute("autocomplete", "off")
 		CUI.DOM.append(document.body, @__shadow)
 
 		if @_content_size
@@ -915,12 +915,12 @@ class CUI.Input extends CUI.DataFieldInput
 				@addClass("cui-input-invalid")
 
 		for k in ["empty", "invalid", "valid"]
-			DOM.hideElement(@__inputHints[k]?.DOM[0])
+			DOM.hideElement(@__inputHints[k]?.DOM)
 
 		if not @hasUserInput() and state == "invalid"
-			DOM.showElement(@__inputHints.empty?.DOM[0])
+			DOM.showElement(@__inputHints.empty?.DOM)
 		else
-			DOM.showElement(@__inputHints[state]?.DOM[0])
+			DOM.showElement(@__inputHints[state]?.DOM)
 		@
 
 	getInputState: ->
@@ -1006,11 +1006,11 @@ class CUI.Input extends CUI.DataFieldInput
 
 	enable: ->
 		super()
-		@__input?.prop("disabled", false)
+		@__input?.setAttribute("disabled", false)
 
 	disable: ->
 		super()
-		@__input?.prop("disabled", true)
+		@__input?.setAttribute("disabled", true)
 
 	focus: ->
 		@__input?.focus()

@@ -116,13 +116,13 @@ class CUI.Tab extends CUI.DOM
 
 	hide: ->
 		# console.error "hiding tab...", @getUniqueId(), @DOM
-		@DOM.addClass("cui-tab-hidden")
+		CUI.DOM.addClass(@DOM, "cui-tab-hidden")
 		@
 
 	show: ->
 		# console.error "showing tab...", @getUniqueId(), @DOM
 		# move to first position
-		@DOM.removeClass("cui-tab-hidden")
+		CUI.DOM.removeClass(@DOM, "cui-tab-hidden")
 
 		if CUI.__ng__
 			Events.trigger
