@@ -4744,8 +4744,8 @@ label[data-label-clickable],
 // Drag & Drop
 
 .cui-drag-drop-select-helper {
-	position: absolute;
-	z-index: 3; // above drop helper
+	position: absolute !important;
+	z-index: 3 !important; // above drop helper
 
 	pointer-events: none !important;
 
