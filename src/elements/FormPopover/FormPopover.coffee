@@ -70,6 +70,7 @@ class CUI.FormPopover extends CUI.Form
 		if func in [
 			"show"
 			"hide"
+			"remove"
 			"enable"
 			"disable"
 			"getFieldsByName"

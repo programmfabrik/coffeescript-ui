@@ -530,6 +530,8 @@ class CUI.SimpleForm extends CUI.DataField
 		container
 
 	unregisterTableListeners: ->
+		if @getLayout().isDestroyed()
+			return
 		Events.ignore({node: @getLayout().center(), instance: @})
 
 	remove: ->

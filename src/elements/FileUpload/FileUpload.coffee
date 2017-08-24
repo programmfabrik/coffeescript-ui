@@ -117,15 +117,18 @@ class CUI.FileUpload extends CUI.Element
 
 		locked = false
 
+		done_queuing = =>
+			@_onBatchQueued?()
+			@uploadNextFiles()
+			locked = false
+
 		idx = -1
 		next_file = =>
 			locked = true
 
 			idx++
 			if idx == files.length
-				@_onBatchQueued?()
-				@uploadNextFiles()
-				locked = false
+				done_queuing()
 				return
 
 			file = files[idx]
@@ -193,11 +196,17 @@ class CUI.FileUpload extends CUI.Element
 				# wait
 				return
 
-			if @__abort
+			if @__stop or @__abort
 				window.clearInterval(interval)
-				@__queuing.reject()
+				dfr = @__queuing
 				delete(@__queuing)
-				delete(@__abort)
+				if @__stop
+					delete(@__stop)
+					done_queuing()
+					dfr.resolve()
+				else
+					delete(@__abort)
+					dfr.reject()
 				return
 
 			if idx < files.length
@@ -212,20 +221,26 @@ class CUI.FileUpload extends CUI.Element
 
 		@
 
-	# this also aborts
+	isQueuing: ->
+		!!@__queuing
+
+	stopQueuing: (abort = false) ->
+		dfr = new CUI.Deferred()
+		if @__queuing
+			if not abort
+				@__stop = true
+			else
+				@__abort = true
+			@__queuing.always(dfr.resolve)
+		else
+			dfr.resolve()
+		dfr.promise()
+
 	clear: ->
-		do_clear = =>
+		@stopQueuing(true)
+		.done =>
 			while file = @__files[0]
 				file.remove()
-
-		if @__queuing
-			@__abort = true
-			@__queuing.always =>
-				do_clear()
-		else
-			do_clear()
-
-		@
 
 	removeFile: (file) ->
 		removeFromArray(file, @__files)

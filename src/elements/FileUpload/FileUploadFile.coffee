@@ -107,7 +107,7 @@ class CUI.FileUploadFile extends CUI.Element
 				@__progress.status = "ABORT"
 				@__dfr.reject(@)
 			when "STARTED","PROGRESS","COMPLETED"
-				console.debug("FileUploadFile.abort:", @__upload)
+				# console.debug("FileUploadFile.abort:", @__upload)
 				@__upload?.abort()
 			when "ABORT","DEQUEUED"
 				;
@@ -189,7 +189,7 @@ class CUI.FileUploadFile extends CUI.Element
 
 			.fail (data, status, statusText) =>
 				# "abort" may be set by jQuery
-				console.warn("FileUploadFile.fail", status, statusText)
+				# console.warn("FileUploadFile.fail", status, statusText)
 				if statusText == "abort"
 					@__progress.status = "ABORT"
 
