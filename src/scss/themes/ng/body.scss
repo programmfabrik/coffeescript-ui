@@ -4208,6 +4208,8 @@ label[data-label-clickable],
 		flex-shrink: 0;
 		margin-right: 2px;
 		padding: 0 4px 0 0;
+		cursor: -webkit-grab;
+		cursor:         grab;
 
 		.cui-drag-handle-row {
 			margin-top: 5px;
