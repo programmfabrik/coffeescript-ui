@@ -21,7 +21,7 @@ class CUI.Layer extends CUI.DOM
 
 		# layer is registered as our main layer TODO register layer_root as our main layer!
 		@registerTemplate(@__layer)
-		# @__layer.DOM.setAttribute("role", @_role)
+		# @__layer.DOM.attr("role", @_role)
 
 		# layer root is a container for the backdrop, pointer and layer
 		#
@@ -56,7 +56,7 @@ class CUI.Layer extends CUI.DOM
 					@__backdrop_crop = @__backdrop.DOM
 					@setBackdropContent(body_clone)
 				else
-					@__backdrop_crop = $div("cui-layer-backdrop-body-clone")[0]
+					@__backdrop_crop = $div("cui-layer-backdrop-body-clone")
 					@__backdrop_crop.appendChild(body_clone)
 					@setBackdropContent(@__backdrop_crop)
 
@@ -69,7 +69,7 @@ class CUI.Layer extends CUI.DOM
 			else
 				@__layer_root.DOM.appendChild(@__backdrop.DOM)
 
-				# @__backdrop.DOM.setAttribute("role", @_role)
+				# @__backdrop.DOM.attr("role", @_role)
 
 				switch @__bd_policy
 					when "click-thru"
@@ -371,7 +371,7 @@ class CUI.Layer extends CUI.DOM
 			pointer_direction = get_pointer_direction(placement)
 
 			if @__pointer
-				CUI.DOM.addClass(@__pointer.DOM, get_pointer_class(pointer_direction))
+				CUI.DOM.addClass(@__pointer, get_pointer_class(pointer_direction))
 
 				dim_pointer[placement] = CUI.DOM.getDimensions(@__pointer)
 
@@ -931,7 +931,7 @@ class CUI.Layer extends CUI.DOM
 					left: vp.pointer_pos.left + body_scroll_left
 					margin: 0
 
-			CUI.DOM.addClass(@__pointer.DOM, get_pointer_class(vp.pointer_pos.direction))
+			CUI.DOM.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
 
 		if @__backdrop_crop
 			DOM.setStyle @__backdrop_crop,
@@ -1156,7 +1156,7 @@ class CUI.Layer extends CUI.DOM
 			@__focused_on_show = false
 
 		if @__focused_on_show
-			@DOM[0].focus()
+			@DOM.focus()
 		@
 
 	focusOnHide: (ev) ->
@@ -1164,7 +1164,7 @@ class CUI.Layer extends CUI.DOM
 			return @
 
 		if ev == CUI.KeyboardEvent or @__focused_on_show
-			DOM.findElement(@__element[0], "[tabindex]")?.focus()
+			DOM.findElement(@__element, "[tabindex]")?.focus()
 		@
 
 	getElement: ->
@@ -1227,6 +1227,7 @@ CUI.ready ->
 						capture: true
 						only_once: true
 						call: (ev) =>
+							console.error "eating click on layer opening element"
 							return ev.stop()
 
 				ev.cui_layer_closed = true

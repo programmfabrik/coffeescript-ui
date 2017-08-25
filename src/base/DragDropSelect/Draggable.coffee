@@ -148,7 +148,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				# hint possible click event listeners like Sidebar to
 				# not execute the click anymore...
 				#
-				position = elementGetPosition(getCoordinatesFromEvent(ev), $(ev.getTarget()))
+				position = elementGetPosition(getCoordinatesFromEvent(ev), ev.getTarget())
 				dim = DOM.getDimensions(ev.getTarget())
 
 				if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
@@ -167,7 +167,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				if CUI.DOM.closest(ev.getTarget(), "input,textarea,select")
 					return
 
-				$target = $(target)
+				$target = target
 
 				# console.debug "attempting to start drag", ev, $target
 				@init_drag(ev, $target)
@@ -262,7 +262,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				else
 					pointTarget = ev.getTarget()
 
-				$target = $(pointTarget)
+				$target = pointTarget
 
 				if CUI.globalDrag.ended
 					return

@@ -627,7 +627,10 @@ class CUI.ListView extends CUI.SimplePane
 		if not cell
 			return null
 
-		pos_grid = @grid.offset()
+		grid_rect = CUI.DOM.getRect(@grid)
+		pos_grid =
+			top: grid_rect.top
+			left: grid_rect.left
 		dim = CUI.DOM.getDimensions(cell)
 
 		rect =
@@ -659,7 +662,10 @@ class CUI.ListView extends CUI.SimplePane
 			if not _rect.hasOwnProperty("left")
 				_rect.left = dim.clientBoundingRect.left
 
-		_pos_grid = @grid.offset()
+		grid_rect = CUI.DOM.getRect(@grid)
+		_pos_grid =
+			top: grid_rect.top
+			left: grid_rect.left
 
 		rect =
 			left_abs: _rect.left
@@ -837,7 +843,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
-				cell = DOM.matchSelector(@grid[0], "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				cell = DOM.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
 				width = 0
 				for i in [0...colspan] by 1
 					# we assume that colspanned columns
