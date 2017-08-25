@@ -38,7 +38,7 @@ class CUI.DigiDisplay extends CUI.DOM
 			fc = info.first_div
 
 			if not info.height
-				info.height = fc.outerHeight()
+				info.height = CUI.DOM.getDimensions(fc).borderBoxHeight
 			CUI.DOM.setStyleOne(fc, "marginTop", "-"+(_idx*info.height)+"px")
 			fc.setAttribute("c", c)
 			fc.setAttribute("idx", _idx)

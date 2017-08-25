@@ -270,7 +270,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		outer = @center()
 		outer.innerHTML = html.join("")
-		@grid = $(outer.firstChild)
+		@grid = outer.firstChild
 
 		@quadrant = [
 			CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-0")[0]
@@ -283,12 +283,12 @@ class CUI.ListView extends CUI.SimplePane
 
 		@__fillRowQ3 = CUI.DOM.matchSelector(@grid, ".cui-list-view-grid-fills-3")[0]
 
-		@__topQuadrants = $(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-top")[0])
+		@__topQuadrants = CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-top")[0]
 
 		if (@fixedColsCount == 0 and @fixedRowsCount == 0 ) # we only have Q3
 			@__bottomQuadrants = @quadrant[3]
 		else
-			@__bottomQuadrants = $(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-bottom")[0])
+			@__bottomQuadrants = CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-bottom")[0]
 
 		@__fillCells = []
 		for col in [0..@colsCount-1] by 1
@@ -555,7 +555,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		# console.debug "moveRow", from_i, to_i, after, @rowsOrder.join(",")
 		for row, idx in @getRow(from_i)
-			$(@getRow(to_i)[idx])[func](row)
+			@getRow(to_i)[idx][func](row)
 
 		display_from_i = @getDisplayRowIdx(from_i)
 		display_to_i = @getDisplayRowIdx(to_i)
@@ -1034,7 +1034,7 @@ class CUI.ListView extends CUI.SimplePane
 			for cell in _cells
 				_col = parseInt(cell.getAttribute("col"))
 				_row = parseInt(cell.getAttribute("row"))
-				@__cells[_row][_col] = $(cell)
+				@__cells[_row][_col] = cell
 
 			_rows = CUI.DOM.matchSelector(top, ".cui-lv-tr-outer")
 
@@ -1071,7 +1071,7 @@ class CUI.ListView extends CUI.SimplePane
 					@quadrant[qi].insertBefore(node, @quadrant[qi].firstChild)
 				continue
 
-			row = $(anchor_row[anchor_row_idx])
+			row = anchor_row[anchor_row_idx]
 
 			# CUI.debug "qi", qi, anchor_row, anchor_row.length, html[qi]
 			anchor_row_idx++
@@ -1227,10 +1227,6 @@ class CUI.ListView extends CUI.SimplePane
 		@__colWidths = []
 		@__rowHeights = []
 
-
-	# __removeCss: ->
-	# 	$("style."+@__lvClass).remove()
-
 	__isMaximizedCol: (col_i) ->
 		col_i in @__maxCols and not @__manualColWidths.hasOwnProperty(col_i)
 
@@ -1315,9 +1311,6 @@ class CUI.ListView extends CUI.SimplePane
 					text: "close"
 					onClick: =>
 						@__control.destroy()
-				#,
-				#	content:
-				#		$pre().html(dump(@opts))
 				]
 
 				(new Menu

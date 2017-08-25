@@ -1028,7 +1028,7 @@ class CUI.DateTime extends CUI.Input
 			type: "click"
 			call: (ev) =>
 				ev.stopPropagation()
-				$target = $(ev.getTarget())
+				$target = ev.getTarget()
 				# CUI.debug "click on date table", ev.getTarget()
 				if CUI.DOM.closest($target, ".cui-date-time-day")
 					data = DOM.data(CUI.DOM.closest($target, "td,.cui-td"))
@@ -1145,7 +1145,7 @@ class CUI.DateTime extends CUI.Input
 	# 				return
 
 	# 			ev.stopPropagation()
-	# 			$target = $(ev.getTarget())
+	# 			$target = ev.getTarget()
 	# 			# CUI.debug "clicked on ", $target
 	# 			if $target.closest(".cui-date-time-grid-hour").length
 	# 				hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
@@ -1275,7 +1275,7 @@ class CUI.DateTime extends CUI.Input
 
 	# 	if @__input_formats[0].clock_am_pm
 	# 		for _c in @__gridTable.find("[am_pm]")
-	# 			c = $(_c)
+	# 			c = _c
 	# 			if @__current_moment.__now
 	# 				continue
 

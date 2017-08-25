@@ -528,7 +528,7 @@ class CUI
 	# we can hide things on the screen that should not irritate our screenshot comparison
 
 	@startWebdriverTest: ->
-		a= $("body")
+		a= "body"
 		CUI.DOM.addClass(a, "cui-webdriver-test")
 
 	@mergeMap: (targetMap, mergeMap) ->

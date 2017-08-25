@@ -99,7 +99,7 @@ class CUI.ListViewRow extends CUI.Element
 		@
 
 	getDOMNodes: ->
-		CUI.jQueryCompat(@listView?.getRow(@row_i))
+		@listView?.getRow(@row_i)
 
 	getRowIdx: ->
 		@row_i
