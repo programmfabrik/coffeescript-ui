@@ -84,7 +84,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 			measure_headers.push(header)
 			header.node.style.visiblity = "hidden"
-			@__control.prepend(header.node)
+			CUI.DOM.prepend(@__control, header.node)
 
 		@newStickyHeaders.splice(0)
 
@@ -156,7 +156,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 			if slot == null
 				break
 
-			@__control.prepend(slot.node)
+			CUI.DOM.prepend(@__control, slot.node)
 
 			if cut < 0 and slot.level == next_header.level
 				top += cut
@@ -169,7 +169,8 @@ class CUI.StickyHeaderControl extends CUI.Element
 			slot.node.style.top = top+"px"
 			top += slot.dimInControl.marginBoxHeight
 
-		@__control.css
+		CUI.DOM.setStyle(@__control,
 			height: top
+		)
 
 		@

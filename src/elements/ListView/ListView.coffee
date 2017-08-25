@@ -504,7 +504,7 @@ class CUI.ListView extends CUI.SimplePane
 		dfr.promise()
 
 	getCellByTarget: ($target) ->
-		if $target.is(".cui-lv-td")
+		if CUI.DOM.is($target, ".cui-lv-td")
 			cell =
 				col_i: parseInt($target.getAttribute("col"))
 				row_i: parseInt($target.getAttribute("row"))
@@ -1123,7 +1123,7 @@ class CUI.ListView extends CUI.SimplePane
 		for row in @__rows[row_i]
 			DOM.data(row, "listViewRow", listViewRow)
 
-		CUI.DOM.addClass(listViewRow.DOM, (listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
+		listViewRow.addClass((listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
 
 		if @_rowMove
 			if @getDisplayRowIdx(row_i) >= @fixedRowsCount + @_rowMoveFixedRows

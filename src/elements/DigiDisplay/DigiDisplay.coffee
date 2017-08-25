@@ -63,16 +63,22 @@ class CUI.DigiDisplay extends CUI.DOM
 			@__digitsMap[digit_idx] = map: (map = {})
 
 			# for the "unknown character
-			CUI.DOM.append(container, fc = $div("cui-digi-display-digit").html("&nbsp;"))
+			fc = $div("cui-digi-display-digit")
+			fc.innerHTML = "&nbsp;"
+			CUI.DOM.append(container, fc)
 			@__digitsMap[digit_idx].first_div = fc
 			idx = 1
 			matched = false
 			for i in [32..128]
 				if digit.__regexp.exec(c = String.fromCharCode(i))
 					if i == 32
-						CUI.DOM.append(container, $div("cui-digi-display-digit").html("&nbsp;"))
+						div = $div("cui-digi-display-digit")
+						div.innerHTML = "&nbsp;"
+						CUI.DOM.append(container, div)
 					else
-						CUI.DOM.append(container, $div("cui-digi-display-digit").text(c))
+						div = $div("cui-digi-display-digit")
+						div.textContent = c
+						CUI.DOM.append(container, div)
 					map[c] = idx
 					idx++
 					matched = true

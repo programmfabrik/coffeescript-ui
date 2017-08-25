@@ -36,11 +36,11 @@ class CUI.Tooltip extends CUI.LayerPane
 						@hideTimeout(null, ev)
 					return
 
-			CUI.DOM.addClass(@__element.DOM, "cui-dom-element-has-tooltip-on-hover")
+			CUI.DOM.addClass(@__element, "cui-dom-element-has-tooltip-on-hover")
 			return
 
 		if @_on_click
-			CUI.DOM.addClass(@__element.DOM, "cui-dom-element-has-tooltip-on-click")
+			CUI.DOM.addClass(@__element, "cui-dom-element-has-tooltip-on-click")
 
 			Events.listen
 				type: "click"
