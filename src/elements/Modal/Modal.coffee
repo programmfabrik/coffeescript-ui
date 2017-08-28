@@ -72,9 +72,9 @@ class CUI.Modal extends CUI.LayerPane
 		@
 
 	__runOnAllButtons: (func) ->
-		for el in @__layer.DOM.find(".cui-button")
-			btn = DOM.data(el, "element")
-			if btn instanceof Button
+		for el in CUI.DOM.matchSelector(@__layer.DOM, ".cui-button")
+			btn = CUI.DOM.data(el, "element")
+			if btn instanceof CUI.Button
 				btn[func]()
 		return
 
