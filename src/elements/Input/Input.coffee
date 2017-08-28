@@ -197,7 +197,7 @@ class CUI.Input extends CUI.DataFieldInput
 			DOM.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
-		CUI.DOM.setAttribute(@__input[0], "placeholder", placeholder)
+		CUI.DOM.setAttribute(@__input, "placeholder", placeholder)
 
 	getPlaceholder: ->
 		if not @_placeholder
