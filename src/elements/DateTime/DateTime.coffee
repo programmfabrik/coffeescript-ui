@@ -188,7 +188,6 @@ class CUI.DateTime extends CUI.Input
 		@__input_format?.__display
 
 	setCursor: (cursor) ->
-		# CUI.debug "setCursor", cursor, @__lastCursor
 		switch cursor
 			when "hour", "minute", "second", "am_pm"
 				title = @__locale_format.tab_time
@@ -260,7 +259,7 @@ class CUI.DateTime extends CUI.Input
 	render: ->
 		super()
 		if isEmpty(@_placeholder)
-			@__input.setAttribute("placeholder", @__input_formats[0].textContent)
+			@__input.setAttribute("placeholder", @__input_formats[0].text)
 
 		switch @_display_type
 			when "short"
@@ -409,7 +408,7 @@ class CUI.DateTime extends CUI.Input
 		return true
 
 	__getInputBlocks: (v) ->
-		CUI.debug "getInputBlocks", v, @__input_format.regexp
+		console.debug "getInputBlocks", v, @__input_format.regexp
 		match = v.match(@__input_format.regexp)
 		if not match
 			return false
@@ -506,7 +505,7 @@ class CUI.DateTime extends CUI.Input
 		# 	,
 		# 		1000*30 # update the popover every 30 seconds
 
-		CUI.debug "updating popover...", @__input_format
+		console.debug "updating popover...", @__input_format
 
 		@drawDate()
 		# @drawHourMinute()
@@ -538,7 +537,7 @@ class CUI.DateTime extends CUI.Input
 
 	setDigiClock: (mom = @__current_moment) ->
 		f = @__input_format.digi_clock
-		CUI.debug "setDigiClock", f, mom, mom.format(f)
+		console.debug "setDigiClock", f, mom, mom.format(f)
 		if f
 			@__digiDisplay.display(mom.format(f))
 		@

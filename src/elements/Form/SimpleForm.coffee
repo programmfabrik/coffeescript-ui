@@ -390,10 +390,10 @@ class CUI.SimpleForm extends CUI.DataField
 							node: cb
 							call: =>
 								if cb.getValue()
-									CUI.DOM.addClass(blk, "cui-form-block--checkbox-checked")
+									CUI.DOM.addClass(blk.DOM, "cui-form-block--checkbox-checked")
 									CUI.DOM.showElement(field.DOM)
 								else
-									CUI.DOM.removeClass(blk, "cui-form-block--checkbox-checked")
+									CUI.DOM.removeClass(blk.DOM, "cui-form-block--checkbox-checked")
 									CUI.DOM.hideElement(field.DOM)
 					left_side = cb
 				else
@@ -411,12 +411,12 @@ class CUI.SimpleForm extends CUI.DataField
 					]
 
 				if cb
-					CUI.DOM.addClass(blk, "cui-form-block--has-checkbox")
+					CUI.DOM.addClass(blk.DOM, "cui-form-block--has-checkbox")
 
 					if cb.getValue()
-						CUI.DOM.addClass(blk, "cui-form-block--checkbox-checked")
+						CUI.DOM.addClass(blk.DOM, "cui-form-block--checkbox-checked")
 					else
-						CUI.DOM.removeClass(blk, "cui-form-block--checkbox-checked")
+						CUI.DOM.removeClass(blk.DOM, "cui-form-block--checkbox-checked")
 
 				append(blk)
 
