@@ -134,7 +134,7 @@ class CUI.Template extends CUI.Element
 				misses++
 			else
 				report.push("+ #{k}: found")
-				el_map[k] = map_obj[0]
+				el_map[k] = CUI.jQueryCompat(map_obj[0])
 				# CUI.DOM.addClass(el_map[k], "cui-template-empty")
 
 				do (k) =>

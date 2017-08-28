@@ -91,7 +91,7 @@ CUI.ready =>
 	# 	capture: true
 	# 	call: (ev) =>
 	# 		console.debug "selectstart"
-	# 		$target = ev.getTarget()
+	# 		$target = $(ev.getTarget())
 	# 		if not CUI.globalDrag and $target.closest("span,input,textarea,pre,i").length and
 	# 			not $target.closest(".btn,.drag-drop-select-cursor,.no-user-select").length
 	# 				return

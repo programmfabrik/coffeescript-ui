@@ -142,6 +142,7 @@ class CUI.DOM extends CUI.Element
 
 
 	@setElement: (element, inst) ->
+		CUI.jQueryCompat(element)
 		DOM.data(element, "element", inst)
 
 	@data: (node, key, data) ->
@@ -1635,7 +1636,7 @@ class CUI.DOM extends CUI.Element
 			tagName = "div"
 
 		node = CUI.DOM.element(tagName, attrs)
-		node
+		CUI.jQueryCompat.__wrapNode(node)
 
 	@$div: (cls, attrs) ->
 		CUI.DOM.$element("div", cls, attrs)

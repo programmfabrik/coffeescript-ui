@@ -41,7 +41,7 @@ class CUI.WaitBlock extends CUI.Block
 		assert(xor(@_element, @_fullscreen), "new WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
 
 		if @_fullscreen
-			@__element = document.body
+			@__element = $(document.body)
 		else if @_element.DOM
 			@__element = @_element.DOM
 		else
