@@ -26,15 +26,15 @@ class CUI.DragDropSelect extends CUI.Element
 
 		@element = @_element
 		DragDropSelect.getInstance(@element, @cls)?.destroy()
-		DOM.data(@element, "drag-drop-select-"+@cls, @)
-		DOM.addClass(@element, @getClass())
+		CUI.DOM.data(@element, "drag-drop-select-"+@cls, @)
+		CUI.DOM.addClass(@element, @getClass())
 
 	getClass: ->
 		"cui-drag-drop-select cui-drag-drop-select-"+@cls
 
 	destroy: ->
-		DOM.removeClass(@element, @getClass())
-		DOM.removeData(@element, "drag-drop-select-"+@cls)
+		CUI.DOM.removeClass(@element, @getClass())
+		CUI.DOM.removeData(@element, "drag-drop-select-"+@cls)
 		Events.ignore
 			instance: @
 		super()

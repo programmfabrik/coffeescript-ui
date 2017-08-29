@@ -32,7 +32,7 @@ class CUI.Template extends CUI.Element
 
 		@DOM = node.cloneNode(true)
 		if @_class
-			DOM.addClass(@DOM, @_class)
+			CUI.DOM.addClass(@DOM, @_class)
 		CUI.DOM.setElement(@DOM, @)
 
 		# map elements which require mapping
@@ -154,31 +154,30 @@ class CUI.Template extends CUI.Element
 
 	destroy: ->
 		# CUI.error "destroying...", getObjectClass(DOM.data(@DOM, "element")), getObjectClass(@DOM[0])
-		DOM.remove(@DOM)
+		CUI.DOM.remove(@DOM)
 		delete(@map)
 		super()
 
 	addClass: (cls, key) ->
 		if key
 			assert(@map[key], "#{@__cls}.addClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-			DOM.addClass(@map[key], cls)
+			CUI.DOM.addClass(@map[key], cls)
 		else
-			DOM.addClass(@DOM, cls)
-		# @DOM.addClass.apply(@DOM, arguments)
+			CUI.DOM.addClass(@DOM, cls)
 
 	removeClass: (cls, key) ->
 		if key
 			assert(@map[key], "#{@__cls}.removeClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-			DOM.removeClass(@map[key], cls)
+			CUI.DOM.removeClass(@map[key], cls)
 		else
-			DOM.removeClass(@DOM, cls)
+			CUI.DOM.removeClass(@DOM, cls)
 
 	hasClass: (cls, key) ->
 		if key
 			assert(@map[key], "#{@__cls}.hasClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-			DOM.hasClass(@map[key], cls)
+			CUI.DOM.hasClass(@map[key], cls)
 		else
-			DOM.hasClass(@DOM, cls)
+			CUI.DOM.hasClass(@DOM, cls)
 
 	has: (key) ->
 		!!@map[key]
@@ -210,11 +209,11 @@ class CUI.Template extends CUI.Element
 
 		if CUI.isEmptyObject(@map)
 			# without map we empty the whole @DOM
-			DOM.empty(@DOM)
+			CUI.DOM.empty(@DOM)
 		else
 			# with map we empty each individual map entry
 			for key of @map
-				DOM.empty(@map[key])
+				CUI.DOM.empty(@map[key])
 
 			if @_set_template_empty
 				CUI.DOM.addClass(@DOM, "cui-template-empty")
@@ -231,9 +230,9 @@ class CUI.Template extends CUI.Element
 	text: (value, key, element) ->
 		assert(isString(value), "#{@__cls}.text", "Value must be String", value: value, key: key, element: element)
 		if key
-			@map[key].text(value)
+			@map[key].textContent = value
 		else
-			@DOM.text(value)
+			@DOM.textContent = value
 
 	prepend: (value, key, element) ->
 		@append(value, key, element, true)

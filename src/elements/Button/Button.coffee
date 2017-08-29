@@ -925,16 +925,16 @@ class CUI.Button extends CUI.DOM
 
 	show: ->
 		@__hidden = false
-		DOM.removeClass(@DOM, "cui-button-hidden")
-		DOM.showElement(@DOM)
+		CUI.DOM.removeClass(@DOM, "cui-button-hidden")
+		CUI.DOM.showElement(@DOM)
 		Events.trigger
 			type: "show"
 			node: @DOM
 
 	hide: ->
 		@__hidden = true
-		DOM.addClass(@DOM, "cui-button-hidden")
-		DOM.hideElement(@DOM)
+		CUI.DOM.addClass(@DOM, "cui-button-hidden")
+		CUI.DOM.hideElement(@DOM)
 		Events.trigger
 			type: "hide"
 			node: @DOM

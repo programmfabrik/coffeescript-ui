@@ -213,4 +213,4 @@ class CUI.Tooltip extends CUI.LayerPane
 		# console.error "destroying ", @getUniqueId()
 		Events.ignore(instance: @__dummyInst)
 		super()
-		@__element.removeClass("cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")
+		CUI.DOM.removeClass(@__element, "cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")

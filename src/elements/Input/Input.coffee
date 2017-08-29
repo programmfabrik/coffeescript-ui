@@ -192,9 +192,9 @@ class CUI.Input extends CUI.DataFieldInput
 
 	setSpellcheck: (spellcheck) ->
 		if spellcheck
-			DOM.setAttribute(@__input, "spellcheck", "default")
+			CUI.DOM.setAttribute(@__input, "spellcheck", "default")
 		else
-			DOM.setAttribute(@__input, "spellcheck", "false")
+			CUI.DOM.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
 		CUI.DOM.setAttribute(@__input, "placeholder", placeholder)
@@ -397,7 +397,7 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.debug "listening for dom insert on ", @__input
 		#
 		if @_content_size
-			DOM.waitForDOMInsert(node: @__input)
+			CUI.DOM.waitForDOMInsert(node: @__input)
 			.done =>
 				if @isDestroyed()
 					return
@@ -536,7 +536,7 @@ class CUI.Input extends CUI.DataFieldInput
 				correct_height = parseFloat(CUI.DOM.getComputedStyle(@__input)["height"]) - DOM.height(@__input)
 				@__max_height -= correct_height
 		else
-			DOM.width(@__contentSize, 1)
+			CUI.DOM.width(@__contentSize, 1)
 		@
 
 	__setContentSize: ->
@@ -558,8 +558,8 @@ class CUI.Input extends CUI.DataFieldInput
 			if @__input.value.length == 0
 				@__contentSize.value = "A" # help IE out, so we get a height
 
-			if DOM.width(@__input) != DOM.width(@__contentSize)
-				DOM.width(@__contentSize, DOM.width(@__input))
+			if CUI.DOM.width(@__input) != CUI.DOM.width(@__contentSize)
+				CUI.DOM.width(@__contentSize, CUI.DOM.width(@__input))
 
 			h = @__contentSize.scrollHeight
 
@@ -568,10 +568,10 @@ class CUI.Input extends CUI.DataFieldInput
 			else
 				@__input.style.overflow = ""
 
-			previous_height = DOM.height(@__input)
-			DOM.height(@__input, h)
+			previous_height = CUI.DOM.height(@__input)
+			CUI.DOM.height(@__input, h)
 
-			if DOM.height(@__input) != previous_height
+			if CUI.DOM.height(@__input) != previous_height
 				changed = true
 
 			# CUI.error "__setContentSize", @_textarea, @__input.value, @__contentSize.value, h
@@ -585,10 +585,10 @@ class CUI.Input extends CUI.DataFieldInput
 				# Chrome measures a Textarea width different than an Input width
 				w = w + 1
 
-			if DOM.width(@__input) != w
+			if CUI.DOM.width(@__input) != w
 				changed = true
 
-			DOM.width(@__input, w)
+			CUI.DOM.width(@__input, w)
 
 		if changed
 			Events.trigger
@@ -915,12 +915,12 @@ class CUI.Input extends CUI.DataFieldInput
 				@addClass("cui-input-invalid")
 
 		for k in ["empty", "invalid", "valid"]
-			DOM.hideElement(@__inputHints[k]?.DOM)
+			CUI.DOM.hideElement(@__inputHints[k]?.DOM)
 
 		if not @hasUserInput() and state == "invalid"
-			DOM.showElement(@__inputHints.empty?.DOM)
+			CUI.DOM.showElement(@__inputHints.empty?.DOM)
 		else
-			DOM.showElement(@__inputHints[state]?.DOM)
+			CUI.DOM.showElement(@__inputHints[state]?.DOM)
 		@
 
 	getInputState: ->

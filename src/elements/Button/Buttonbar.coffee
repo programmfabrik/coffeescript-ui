@@ -146,7 +146,7 @@ class CUI.Buttonbar extends CUI.DOM
 		if grp
 			if not @__groupDivs[grp]
 				div = $div("cui-buttonbar-group cui-buttonbar-group-#{grp}")
-				DOM.append(@__buttons, div)
+				CUI.DOM.append(@__buttons, div)
 				@__groupDivs[grp] = div
 
 			CUI.DOM[func](@__groupDivs[grp], btn_dom)

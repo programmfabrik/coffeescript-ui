@@ -581,7 +581,7 @@ class CUI.ListView extends CUI.SimplePane
 		if not rows
 			return
 		for row in rows
-			DOM.addClass(row, cls)
+			CUI.DOM.addClass(row, cls)
 		@
 
 	rowRemoveClass: (row_i, cls) ->

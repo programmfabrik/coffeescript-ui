@@ -92,7 +92,7 @@ class CUI.FlexHandle extends CUI.Element
 		if @isDestroyed()
 			return
 
-		DOM.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
+		CUI.DOM.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
 
 		if @__closed
 			@close()
@@ -420,8 +420,8 @@ class CUI.FlexHandle extends CUI.Element
 				opts.rotate_90 = true
 
 			@__label = new CUI.defaults.class.Label(opts)
-		DOM.append(@_element, @__label.DOM)
-		DOM.addClass(@_element, "cui-flex-handle-has-label")
+		CUI.DOM.append(@_element, @__label.DOM)
+		CUI.DOM.addClass(@_element, "cui-flex-handle-has-label")
 
 	getName: ->
 		@_name
