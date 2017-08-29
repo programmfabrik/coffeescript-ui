@@ -1006,7 +1006,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 	enable: ->
 		super()
-		@__input?.setAttribute("disabled", false)
+		@__input?.removeAttribute("disabled")
 
 	disable: ->
 		super()
