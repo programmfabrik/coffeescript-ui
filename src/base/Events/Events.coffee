@@ -251,7 +251,7 @@ class CUI.Events extends CUI.Element
 				# the listener has a node
 				if event.isPropagationStopped() and listener_node
 					# CUI.debug "adding stop node", listener_node[0]
-					stopNodes.push(listener_node[0])
+					stopNodes.push(listener_node)
 
 		return CUI.when(waits)
 
