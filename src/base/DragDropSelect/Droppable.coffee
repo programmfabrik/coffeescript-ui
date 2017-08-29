@@ -243,7 +243,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@resetMargin()
 			@__saveZoneDims = [ CUI.DOM.getDimensions(@__selectedTarget) ]
 			@__selectedTarget.__target_helper_class = helper_cls
-			@__selectedTarget.addClass(@__selectedTarget.__target_helper_class)
+			CUI.DOM.addClass(@__selectedTarget, @__selectedTarget.__target_helper_class)
 			@__saveZoneDims.push(CUI.DOM.getDimensions(@__selectedTarget))
 			@__resetMargin = @__selectedTarget
 

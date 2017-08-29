@@ -280,6 +280,7 @@ class CUI.jQueryCompat
 			return node
 
 		node.closest = (selector) =>
+			CUI.jQueryCompat.__warn("closest", node)
 			CUI.jQueryCompat(CUI.DOM.closest(node, selector))
 
 		node.outerHeight = (includeMargin = false) =>
@@ -345,9 +346,11 @@ class CUI.jQueryCompat
 			return value
 
 		node.hide = ->
+			CUI.jQueryCompat.__warn("hide", node)
 			CUI.DOM.hideElement(node)
 
 		node.show = ->
+			CUI.jQueryCompat.__warn("show", node)
 			CUI.DOM.showElement(node)
 
 		node.html = (value) ->
@@ -403,6 +406,7 @@ class CUI.jQueryCompat
 			CUI.jQueryCompat(CUI.DOM.parents(node, selector))
 
 		node.removeAttr = (attr) ->
+			CUI.jQueryCompat.__warn("removeAttr", node, value)
 			CUI.DOM.removeAttribute(node, attr)
 
 		if node.nodeName in ["DIV"]
@@ -435,9 +439,11 @@ class CUI.jQueryCompat
 			CUI.jQueryCompat(CUI.DOM.matchSelector(node, selector))
 
 		node.before = (node_before) ->
+			CUI.jQueryCompat.__warn("before", node)
 			CUI.DOM.insertBefore(node, node_before)
 
 		node.after = (node_after) ->
+			CUI.jQueryCompat.__warn("after", node)
 			CUI.DOM.insertAfter(node, node_after)
 
 		node.attr = (prop, value) ->

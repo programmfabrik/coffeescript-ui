@@ -1027,7 +1027,7 @@ class CUI.DateTime extends CUI.Input
 			type: "click"
 			call: (ev) =>
 				ev.stopPropagation()
-				$target = $(ev.getTarget())
+				$target = ev.getTarget()
 				# CUI.debug "click on date table", ev.getTarget()
 				if CUI.DOM.closest($target, ".cui-date-time-day")
 					data = DOM.data(CUI.DOM.closest($target, "td,.cui-td"))
