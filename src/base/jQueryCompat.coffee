@@ -504,5 +504,6 @@ class CUI.jQueryCompat
 
 class CUI.jQuery extends CUI.jQueryCompat
 	constructor: (input) ->
+		CUI.jQueryCompat.__warn("jQuery|$", input)
 		return super(input)
 
