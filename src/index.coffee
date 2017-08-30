@@ -1,7 +1,6 @@
 require("font-awesome-webpack");
 
 require('./base/Common.coffee')
-require('./base/jQueryCompat.coffee')
 require('./base/Deferred/Deferred.coffee')
 require('./base/Deferred/Promise.coffee')
 require('./base/Deferred/when.coffee')

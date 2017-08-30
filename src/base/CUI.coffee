@@ -869,10 +869,6 @@ class CUI
 					window[prop] = func
 					console.info("CUI.DOM."+prop+" -> window."+prop)
 
-			console.info("CUI.windowCompat: CUI.jQuery -> window.$")
-			window.$ = CUI.jQuery
-
-
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 	@browser: (->
 		map =

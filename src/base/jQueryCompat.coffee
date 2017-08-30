@@ -13,6 +13,7 @@ CUI.defaults.jQueryCompat = 2 # 0: off, 1: on, 2: as warnings, 3: as error, 4: .
 class CUI.jQueryCompat
 
 	constructor: (input) ->
+		CUI.jQueryCompat.__warn("Usage of constructor jQueryCompat", input)
 		if not input
 			return CUI.jQueryCompat.__noopNode()
 
