@@ -137,7 +137,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		for key_copy in ["position", "top", "left", "right", "bottom"]
 			CUI.DOM.setStyleOne(@__placeholder, key_copy, CUI.DOM.getComputedStyle(@DOM)[key_copy])
 
-		@DOM.after(@__placeholder)
+		CUI.DOM.insertAfter(@DOM, @__placeholder)
 
 		@__fillscreenTmpl.replace(@DOM, "inner")
 
@@ -185,7 +185,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			icon_active: new Icon(class: "fa-compress")
 			switch: true
 			onClick: (ev, btn) =>
-				DOM.data(btn.DOM.closest(".cui-pane"), "element").toggleFillScreen()
+				DOM.data(CUI.DOM.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()
 		}
 			opts[k] = v
 

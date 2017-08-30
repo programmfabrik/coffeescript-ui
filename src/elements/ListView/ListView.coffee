@@ -1078,7 +1078,7 @@ class CUI.ListView extends CUI.SimplePane
 
 			if mode == "after"
 				while node = outer.lastChild
-					row.after(node)
+					CUI.DOM.insertAfter(row, node)
 				continue
 
 			if mode == "replace"

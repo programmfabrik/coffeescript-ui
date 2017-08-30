@@ -456,6 +456,7 @@ class CUI.jQueryCompat
 				CUI.DOM.setAttribute(node, prop, value)
 
 		node.relativePosition = ->
+			CUI.jQueryCompat.__warn("relativePosition")
 			CUI.DOM.getRelativePosition(node)
 
 		node.prop = node.attr
@@ -492,9 +493,11 @@ class CUI.jQueryCompat
 		CUI.isArray(obj)
 
 	@inArray: (value, arr) ->
+		CUI.jQueryCompat.__warn("imArray")
 		arr.indexOf(value)
 
 	@each: (obj, callback) ->
+		CUI.jQueryCompat.__warn("each")
 		if CUI.isArray(obj)
 			for item, idx in obj
 				callback(idx, item)
