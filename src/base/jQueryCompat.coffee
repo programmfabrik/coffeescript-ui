@@ -493,7 +493,7 @@ class CUI.jQueryCompat
 		CUI.isArray(obj)
 
 	@inArray: (value, arr) ->
-		CUI.jQueryCompat.__warn("imArray")
+		CUI.jQueryCompat.__warn("inArray")
 		arr.indexOf(value)
 
 	@each: (obj, callback) ->

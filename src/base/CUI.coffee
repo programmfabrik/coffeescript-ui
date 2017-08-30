@@ -709,6 +709,9 @@ class CUI
 	@isArray: (v) ->
 		Array.isArray(v)
 
+	@inArray: (value, array) ->
+		array.indexOf(value)
+
 	@isString: (s) ->
 		typeof(s) == "string"
 
