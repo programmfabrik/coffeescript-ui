@@ -64,7 +64,7 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.removeAttribute(@DOM, "id")
 		if @_class
 			CUI.DOM.removeClass(@DOM, @_class)
-		DOM.removeData(@DOM, "element")
+		CUI.DOM.removeData(@DOM, "element")
 		delete(@DOM)
 		@
 
@@ -75,7 +75,7 @@ class CUI.DOM extends CUI.Element
 		assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
 
 	addClass: (cls) ->
-		assert(arguments.length == 1, "DOM.addClass", "Only one parameter allowed.")
+		assert(arguments.length == 1, "CUI.DOM.addClass", "Only one parameter allowed.")
 
 		@__assertDOMElement("addClass")
 		CUI.DOM.addClass(@DOM, cls)
@@ -85,7 +85,7 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.setAria(@DOM, attr, value)
 
 	removeClass: (cls) ->
-		assert(arguments.length == 1, "DOM.removeClass", "Only one parameter allowed.")
+		assert(arguments.length == 1, "CUI.DOM.removeClass", "Only one parameter allowed.")
 
 		@__assertDOMElement("removeClass")
 		CUI.DOM.removeClass(@DOM, cls)
@@ -99,7 +99,7 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.showElement(@DOM)
 
 	hasClass: (cls) ->
-		assert(arguments.length == 1, "DOM.hasClass", "Only one parameter allowed.")
+		assert(arguments.length == 1, "CUI.DOM.hasClass", "Only one parameter allowed.")
 		@__assertDOMElement("hasClass")
 		CUI.DOM.hasClass(@DOM, cls)
 
@@ -136,7 +136,7 @@ class CUI.DOM extends CUI.Element
 		if @__template
 			@__template?.destroy()
 		else if @DOM
-			DOM.remove(@DOM)
+			CUI.DOM.remove(@DOM)
 		@
 		# Events.ignore(node: @DOM)
 
@@ -154,7 +154,7 @@ class CUI.DOM extends CUI.Element
 
 		if CUI.isPlainObject(key)
 			for k, v of key
-				DOM.data(node, k, v)
+				CUI.DOM.data(node, k, v)
 			return node
 
 		if data == undefined
@@ -218,7 +218,7 @@ class CUI.DOM extends CUI.Element
 	@findNextVisibleElement: (node, selector, forward=true) ->
 		@findNextElement(node, selector, ((node) =>
 			# CUI.debug "node visible?", DOM.isVisible(node), node
-			DOM.isVisible(node)), forward)
+			CUI.DOM.isVisible(node)), forward)
 
 	@findPreviousVisibleElement: (node, selector) ->
 		@findNextVisibleElement(node, selector, false)
@@ -244,7 +244,7 @@ class CUI.DOM extends CUI.Element
 
 		if check_node and accept_node
 			# CUI.debug "checking node", node
-			if selector == null or DOM.matches(node, selector)
+			if selector == null or CUI.DOM.matches(node, selector)
 				# CUI.debug "node ok..."
 				elements.push(node)
 				if elements.length == maxEls
@@ -368,7 +368,7 @@ class CUI.DOM extends CUI.Element
 	@width: (docElem, value) ->
 		if docElem == document or docElem == window
 			if value != undefined
-				assert(false, "DOM.width", "Unable to set width on a non HTMLElement", docElem: docElem)
+				assert(false, "CUI.DOM.width", "Unable to set width on a non HTMLElement", docElem: docElem)
 			return window.innerWidth
 
 		if value == undefined
@@ -379,7 +379,7 @@ class CUI.DOM extends CUI.Element
 	@height: (docElem, value) ->
 		if docElem == document or docElem == window
 			if value != undefined
-				assert(false, "DOM.height", "Unable to set width on a non HTMLElement", docElem: docElem)
+				assert(false, "CUI.DOM.height", "Unable to set width on a non HTMLElement", docElem: docElem)
 			return window.innerHeight
 
 		if value == undefined
@@ -419,10 +419,10 @@ class CUI.DOM extends CUI.Element
 					append_node = content
 
 		if append
-			assert(append_node instanceof Node, "DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			assert(append_node instanceof Node, "CUI.DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
 			node.appendChild(append_node)
 		else
-			assert(append_node instanceof Node, "DOM.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			assert(append_node instanceof Node, "CUI.DOM.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
 			node.insertBefore(content, node.firstChild)
 
 		return node
@@ -455,7 +455,7 @@ class CUI.DOM extends CUI.Element
 	@empty: (node) ->
 		if not node
 			return null
-		assert(isElement(node), "DOM.empty", "top needs to be Element", node: node)
+		assert(isElement(node), "CUI.DOM.empty", "top needs to be Element", node: node)
 		while last = node.lastChild
 			node.removeChild(last)
 		node
@@ -590,7 +590,7 @@ class CUI.DOM extends CUI.Element
 
 		node.style.opacity = "0"
 
-		dim = DOM.getDimensions(node)
+		dim = CUI.DOM.getDimensions(node)
 		CUI.DOM.addClass(clone, "cui-dom-animated-clone")
 
 		# We need this micro DIV to push the scroll height / left
@@ -664,8 +664,8 @@ class CUI.DOM extends CUI.Element
 
 	# sets the absolute position of an element
 	@setAbsolutePosition: (element, offset) ->
-		assert(isElement(element), "DOM.setAbsolutePosition", "element needs to be a jQuery element", element: element, offset: offset)
-		assert(isNumber(offset?.left) and isNumber(offset?.top), "DOM.setAbsolutePosition", "offset.left and offset.top must be >= 0", element: element, offset: offset)
+		assert(isElement(element), "CUI.DOM.setAbsolutePosition", "element needs to be an instance of HTMLElement", element: element, offset: offset)
+		assert(isNumber(offset?.left) and isNumber(offset?.top), "CUI.DOM.setAbsolutePosition", "offset.left and offset.top must be >= 0", element: element, offset: offset)
 		# the offset needs to be corrected by the parent offset
 		# of our DOM element
 		offsetParent = element.offsetParent
@@ -679,7 +679,7 @@ class CUI.DOM extends CUI.Element
 				top: document.body.scrollTop
 				left: document.body.scrollLeft
 		else
-			dim = DOM.getDimensions(offsetParent)
+			dim = CUI.DOM.getDimensions(offsetParent)
 			layer_parent_offset =
 				top: dim.top
 				left: dim.left
@@ -694,9 +694,10 @@ class CUI.DOM extends CUI.Element
 				top: dim.scrollTop
 				left: dim.scrollLeft
 
-		element.css
+		CUI.DOM.setStyle(element,
 			top: offset.top - layer_parent_offset.top + correct_offset.top
 			left: offset.left - layer_parent_offset.left + correct_offset.left
+		)
 		@
 
 	@__failedDOMInserts = 0
@@ -704,17 +705,17 @@ class CUI.DOM extends CUI.Element
 
 	@waitForDOMRemove: (_opts) ->
 
-		opts = CUI.Element.readOpts _opts, "DOM.waitForDOMRemove",
+		opts = CUI.Element.readOpts _opts, "CUI.DOM.waitForDOMRemove",
 			node:
 				mandatory: true
 				check: (v) ->
-					DOM.isNode(v)
+					CUI.DOM.isNode(v)
 			ms:
 				default: 200
 				check: (v) ->
 					v > 0
 
-		node = DOM.getNode(opts.node)
+		node = CUI.DOM.getNode(opts.node)
 
 		dfr = new CUI.Deferred()
 		check_in_dom = =>
@@ -733,13 +734,13 @@ class CUI.DOM extends CUI.Element
 
 	@waitForDOMInsert: (_opts) ->
 
-		opts = CUI.Element.readOpts _opts, "DOM.waitForDOMInsert",
+		opts = CUI.Element.readOpts _opts, "CUI.DOM.waitForDOMInsert",
 			node:
 				mandatory: true
 				check: (v) ->
-					DOM.isNode(v)
+					CUI.DOM.isNode(v)
 
-		node = DOM.getNode(opts.node)
+		node = CUI.DOM.getNode(opts.node)
 
 		if CUI.DOM.isInDOM(node)
 			return CUI.resolvedPromise(true)
@@ -767,8 +768,8 @@ class CUI.DOM extends CUI.Element
 		#add animation style
 		for prefix in ["-webkit-", "-moz-", "-ms-", "-o-", ""]
 			# nodeInserted needs to be defined in CSS!
-			DOM.setStyleOne(node, "#{prefix}animation-duration", "0.001s")
-			DOM.setStyleOne(node, "#{prefix}animation-name", "nodeInserted")
+			CUI.DOM.setStyleOne(node, "#{prefix}animation-duration", "0.001s")
+			CUI.DOM.setStyleOne(node, "#{prefix}animation-name", "nodeInserted")
 
 		timeout = null
 
@@ -778,7 +779,7 @@ class CUI.DOM extends CUI.Element
 			maxWait: -1
 		.done =>
 
-			if DOM.isInDOM(node)
+			if CUI.DOM.isInDOM(node)
 				dfr.resolve()
 				return
 
@@ -789,7 +790,7 @@ class CUI.DOM extends CUI.Element
 			tries = 0
 
 			check_for_node = ->
-				if DOM.isInDOM(node)
+				if CUI.DOM.isInDOM(node)
 					console.warn("[##{c}] Poll done, element is in DOM now.")
 					dfr.resolve()
 				else if tries < 10
@@ -813,7 +814,7 @@ class CUI.DOM extends CUI.Element
 
 	# small experiment, testing...
 	@printElement: (_opts) ->
-		opts = CUI.Element.readOpts _opts, "DOM.printElement",
+		opts = CUI.Element.readOpts _opts, "CUI.DOM.printElement",
 			docElem:
 				check: (v) ->
 					v instanceof HTMLElement
@@ -840,7 +841,7 @@ class CUI.DOM extends CUI.Element
 		if not isEmpty(opts.title)
 			win.document.title = opts.title
 
-		for style_node in DOM.matchSelector(document.head, "link[rel='stylesheet']")
+		for style_node in CUI.DOM.matchSelector(document.head, "link[rel='stylesheet']")
 			new_node = style_node.cloneNode(true)
 			href = ez5.getAbsoluteURL(new_node.getAttribute("href"))
 			new_node.setAttribute("href", href)
@@ -1061,7 +1062,7 @@ class CUI.DOM extends CUI.Element
 		@setStyle(docElem, map)
 
 	@setStylePx: (docElem, style) ->
-		console.error("DOM.setStylePx is deprectaed, use DOM.setStyle.")
+		console.error("CUI.DOM.setStylePx is deprectaed, use CUI.DOM.setStyle.")
 		@setStyle(docElem, style)
 
 	@getRelativePosition: (docElem) ->
@@ -1214,8 +1215,8 @@ class CUI.DOM extends CUI.Element
 	# returns the scrollable parents
 	@parentsScrollable: (node) ->
 		parents = []
-		for parent, idx in DOM.parents(node)
-			dim = DOM.getDimensions(parent)
+		for parent, idx in CUI.DOM.parents(node)
+			dim = CUI.DOM.getDimensions(parent)
 			if dim.canHaveScrollbar
 				parents.push(parent)
 		parents
@@ -1259,7 +1260,7 @@ class CUI.DOM extends CUI.Element
 
 				cssFloat[key] = value
 				return
-			assert(cssFloat[key] == value, "DOM.setDimensions", "Unable to set contradicting values for #{key}.", docElem: docElem, dim: set_dim)
+			assert(cssFloat[key] == value, "CUI.DOM.setDimensions", "Unable to set contradicting values for #{key}.", docElem: docElem, dim: set_dim)
 			return
 
 		# passthru keys
@@ -1317,7 +1318,7 @@ class CUI.DOM extends CUI.Element
 
 		left_over_keys = Object.keys(set_dim)
 
-		assert(left_over_keys.length == 0, "DOM.setDimensions", "Unknown keys in dimension: \""+left_over_keys.join("\", \"")+"\".", docElem: docElem, dim: _dim)
+		assert(left_over_keys.length == 0, "CUI.DOM.setDimensions", "Unknown keys in dimension: \""+left_over_keys.join("\", \"")+"\".", docElem: docElem, dim: _dim)
 
 		@setStyle(docElem, cssFloat)
 		cssFloat
@@ -1356,7 +1357,7 @@ class CUI.DOM extends CUI.Element
 		fl
 
 	@isPositioned: (docElem) ->
-		assert(docElem instanceof HTMLElement, "DOM.isPositioned", "docElem needs to be instance of HTMLElement.", docElem: docElem)
+		assert(docElem instanceof HTMLElement, "CUI.DOM.isPositioned", "docElem needs to be instance of HTMLElement.", docElem: docElem)
 		if docElem == document.body or docElem == document.documentElement
 			return true
 
@@ -1421,7 +1422,7 @@ class CUI.DOM extends CUI.Element
 				assert(false, "CUI.DOM.space", "Unknown style: "+style)
 
 	@element: (tagName, attrs={}) ->
-		DOM.setAttributeMap(document.createElement(tagName), attrs)
+		CUI.DOM.setAttributeMap(document.createElement(tagName), attrs)
 
 	@debugRect: ->
 		@remove(@find("#cui-debug-rect")[0])
@@ -1462,7 +1463,7 @@ class CUI.DOM extends CUI.Element
 			height: height
 
 		document.body.appendChild(d)
-		console.debug "DOM.debugRect:", [top, left, bottom, right]
+		console.debug "CUI.DOM.debugRect:", [top, left, bottom, right]
 		d
 
 	@scrollIntoView: (docElem) ->
@@ -1514,7 +1515,7 @@ class CUI.DOM extends CUI.Element
 		return docElem
 
 	@setClassOnMousemove: (_opts={}) ->
-		opts = CUI.Element.readOpts _opts, "DOM.setClassOnMousemove",
+		opts = CUI.Element.readOpts _opts, "CUI.DOM.setClassOnMousemove",
 			delayRemove:
 				check: Function
 			class:
@@ -1579,7 +1580,7 @@ class CUI.DOM extends CUI.Element
 			node: window
 			call: (ev) =>
 				# console.debug "fullscreenchange caught...", ev, DOM.isFullscreen()
-				if DOM.isFullscreen()
+				if CUI.DOM.isFullscreen()
 					dfr.notify()
 				else
 					Events.ignore(fsc_ev)
