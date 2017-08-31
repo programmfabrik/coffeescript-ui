@@ -675,7 +675,7 @@ class CUI.SimpleForm extends CUI.DataField
 	destroy: ->
 		if @table
 			@unregisterTableListeners()
-			DOM.remove(@table)
+			CUI.DOM.remove(@table)
 			@table = null
 		super()
 

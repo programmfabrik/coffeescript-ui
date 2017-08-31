@@ -522,7 +522,7 @@ class CUI.ListView extends CUI.SimplePane
 		new CUI.ListViewRowMove(opts)
 
 	getListViewRow: (row_i) ->
-		DOM.data(@getRow(row_i)[0], "listViewRow")
+		CUI.DOM.data(@getRow(row_i)[0], "listViewRow")
 
 	getDisplayColIdx: (col_i) ->
 		@colsOrder.indexOf(parseInt(col_i))

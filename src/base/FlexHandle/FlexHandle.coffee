@@ -486,9 +486,9 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	destroy: ->
-		DOM.removeData(@__pane, "flexHandle")
-		DOM.removeAttribute(@__pane, "flex-handled-pane")
-		DOM.remove(@_element)
+		CUI.DOM.removeData(@__pane, "flexHandle")
+		CUI.DOM.removeAttribute(@__pane, "flex-handled-pane")
+		CUI.DOM.remove(@_element)
 		super()
 
 

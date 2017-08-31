@@ -160,7 +160,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				disabled: true
 				onClick: =>
 					for row in @listView.getSelectedRows()
-						row.remove()
+						CUI.DOM.remove(row)
 					@storeValue(copyObject(@rows, true))
 					@updateButtons()
 					if @_chunk_size > 0

@@ -288,7 +288,7 @@ class CUI.Template extends CUI.Element
 	removeEmptySlots: ->
 		for key, node of @map
 			if not node.firstChild
-				DOM.remove(node)
+				CUI.DOM.remove(node)
 		@
 
 	@nodeByName: {}
