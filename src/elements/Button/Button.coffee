@@ -262,7 +262,8 @@ class CUI.Button extends CUI.DOM
 			node: @DOM
 			call: (ev) =>
 				ev.preventDefault()
-				ev.stopPropagation()
+				# ev.stopPropagation()
+				return
 
 		Events.listen
 			type: Button.clickTypes[@_click_type]

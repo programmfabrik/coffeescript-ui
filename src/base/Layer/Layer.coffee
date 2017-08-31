@@ -1242,25 +1242,19 @@ CUI.ready ->
 			if ev.keyCode() != 27 or CUI.globalDrag
 				return
 
-			layer_elements = DOM.find("body > .cui-tmpl-layer-root > .cui-layer")
+			layer_elements = DOM.find("body > .cui-tmpl-layer-root > .cui-layer:not(.cui-tooltip)")
 			layer_element = layer_elements[layer_elements.length-1]
 
 			# console.error ev.getType(), ev, layer_elements
-
 			if not layer_element
 				return
 
+			# ignore Esc in input fields
 			element = CUI.DOM.closest(ev.getTarget(), "[tabindex],select,input,textarea")
-
-			# console.error ev.getType(), ev, element, ev.getTarget()
-
 			if (element in [layer_element])
-				# ignore this
 				return
 
 			layer = DOM.data(layer_element, "element")
-
-			# console.debug "layer", layer
 
 			ev.stopImmediatePropagation()
 			ev.preventDefault()

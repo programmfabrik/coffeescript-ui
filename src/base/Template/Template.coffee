@@ -33,7 +33,9 @@ class CUI.Template extends CUI.Element
 		@DOM = node.cloneNode(true)
 		if @_class
 			DOM.addClass(@DOM, @_class)
-		CUI.DOM.setElement(@DOM, @)
+
+		CUI.jQueryCompat(@DOM)
+		# CUI.DOM.setElement(@DOM, @)
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
@@ -353,4 +355,3 @@ class CUI.Template extends CUI.Element
 				count = count + 1
 
 		return count
-
