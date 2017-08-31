@@ -864,7 +864,7 @@ li > div {
 		opacity: 0.5;
 	}
 
-	.cui-data-form-row:not(:first-child) {
+	&:not(:first-child) {
 		margin-top: 5px;
 	}
 }

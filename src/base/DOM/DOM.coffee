@@ -140,7 +140,6 @@ class CUI.DOM extends CUI.Element
 		@
 		# Events.ignore(node: @DOM)
 
-
 	@setElement: (element, inst) ->
 		CUI.DOM.data(element, "element", inst)
 

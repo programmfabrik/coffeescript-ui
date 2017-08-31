@@ -33,7 +33,8 @@ class CUI.Template extends CUI.Element
 		@DOM = node.cloneNode(true)
 		if @_class
 			CUI.DOM.addClass(@DOM, @_class)
-		CUI.DOM.setElement(@DOM, @)
+
+		#CUI.DOM.setElement(@DOM, @)
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
@@ -299,14 +300,14 @@ class CUI.Template extends CUI.Element
 		@__appendContent(html, true)
 
 	@loadText: (text) ->
-		@__appendContent(text, false)		
+		@__appendContent(text, false)
 
 	@loadFile: (filename, load_templates = false) ->
 		if filename.match("^(https://|http://|/)")
 			p = filename
 		else
 			p = CUI.getPathToScript()+filename
-	
+
 		new CUI.XHR
 			url: p
 			responseType: "text"
@@ -350,7 +351,7 @@ class CUI.Template extends CUI.Element
 			document.body.appendChild(div)
 		else
 			count = Template.load(div)
-			
+
 			if div.children.length > 0
 				document.body.appendChild(div)
 				console.warn("Template.loadFile:", filename, "contains extra content.", div)
