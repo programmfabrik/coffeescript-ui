@@ -1030,7 +1030,7 @@ class CUI.DateTime extends CUI.Input
 				$target = ev.getTarget()
 				# CUI.debug "click on date table", ev.getTarget()
 				if CUI.DOM.closest($target, ".cui-date-time-day")
-					data = DOM.data(CUI.DOM.closest($target, "td,.cui-td"))
+					data = CUI.DOM.data(CUI.DOM.closest($target, "td,.cui-td"))
 
 					# order here is important, we need to set the month
 					# before we set the date!

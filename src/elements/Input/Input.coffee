@@ -526,14 +526,14 @@ class CUI.Input extends CUI.DataFieldInput
 		CUI.DOM.height(@__contentSize, 1)
 
 		if @_textarea
-			DOM.width(@__contentSize, DOM.width(@__contentSize))
+			CUI.DOM.width(@__contentSize, CUI.DOM.width(@__contentSize))
 			@__max_height = parseFloat(CUI.DOM.getComputedStyle(@__input)["max-height"])
 			@__input.style.overflow = "hidden"
 
 			if isNaN(@__max_height)
 				@__max_height = null
 			else
-				correct_height = parseFloat(CUI.DOM.getComputedStyle(@__input)["height"]) - DOM.height(@__input)
+				correct_height = parseFloat(CUI.DOM.getComputedStyle(@__input)["height"]) - CUI.DOM.height(@__input)
 				@__max_height -= correct_height
 		else
 			CUI.DOM.width(@__contentSize, 1)

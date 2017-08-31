@@ -127,7 +127,7 @@ class CUI.Layout extends CUI.DOM
 				instance: @
 				node: @DOM
 				call: (ev) =>
-					if DOM.closest(ev.getTarget(), '.cui-absolute')
+					if CUI.DOM.closest(ev.getTarget(), '.cui-absolute')
 						# no stopping inside absolute layouts
 						return
 					ev.stopPropagation()

@@ -232,7 +232,7 @@ class CUI.Event extends CUI.Element
 			# when sinking, we touch the node while sinking, so
 			# its ok to start with the parent to not trigger
 			# it twice
-			node = DOM.parent(@getNode())
+			node = CUI.DOM.parent(@getNode())
 		else
 			# even is event.isBubble() === false
 			# we trigger here using the bubble mechanism,

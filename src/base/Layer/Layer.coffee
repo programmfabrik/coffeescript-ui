@@ -316,7 +316,7 @@ class CUI.Layer extends CUI.DOM
 		else
 			@__element = element
 
-		assert(not DOM.closest(@__element, ".cui-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
+		assert(not CUI.DOM.closest(@__element, ".cui-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
 		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
 
@@ -1244,7 +1244,7 @@ CUI.ready ->
 			if ev.keyCode() != 27 or CUI.globalDrag
 				return
 
-			layer_elements = DOM.find("body > .cui-tmpl-layer-root > .cui-layer:not(.cui-tooltip)")
+			layer_elements = CUI.DOM.find("body > .cui-tmpl-layer-root > .cui-layer:not(.cui-tooltip)")
 			layer_element = layer_elements[layer_elements.length-1]
 
 			# console.error ev.getType(), ev, layer_elements

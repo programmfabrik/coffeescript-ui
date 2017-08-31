@@ -130,8 +130,8 @@ class CUI.Pane extends CUI.VerticalLayout
 		# or margin!
 
 		CUI.DOM.setStyle(@__placeholder,
-			width: @DOM.outerWidth(true)
-			height: @DOM.outerHeight(true)
+			width: CUI.DOM.getDimensions(@DOM).marginBoxWidth
+			height: CUI.DOM.getDimensions(@DOM).marginBoxHeight
 		)
 
 		for key_copy in ["position", "top", "left", "right", "bottom"]
@@ -185,7 +185,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			icon_active: new Icon(class: "fa-compress")
 			switch: true
 			onClick: (ev, btn) =>
-				DOM.data(CUI.DOM.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()
+				CUI.DOM.data(CUI.DOM.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()
 		}
 			opts[k] = v
 

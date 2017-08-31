@@ -228,7 +228,7 @@ class CUI.Events extends CUI.Element
 				# CUI.debug "listener:", listener, listener.getDepthFromLastMatchedEvent()
 
 				if listener_node and stopNodes.length > 0
-					listener_node_parents = DOM.parents(listener_node)
+					listener_node_parents = CUI.DOM.parents(listener_node)
 					skip = false
 					for stopNode in stopNodes
 						for listener_node_parent in listener_node_parents

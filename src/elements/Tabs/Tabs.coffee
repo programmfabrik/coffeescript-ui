@@ -284,8 +284,8 @@ class CUI.Tabs extends CUI.SimplePane
 
 		for tab in @__tabs
 			dim =
-				width: tab.getBody().outerWidth(true)
-				height: tab.getBody().outerHeight(true)
+				width: CUI.DOM.getDimensions(tab.getBody()).marginBoxWidth
+				height: CUI.DOM.getDimensions(tab.getBody()).marginBoxHeight
 
 			if dim.width > max_width
 				max_width = dim.width

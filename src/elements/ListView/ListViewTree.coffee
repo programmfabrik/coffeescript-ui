@@ -104,7 +104,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		handle_event = (ev) =>
 
-			node = DOM.data(DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
+			node = CUI.DOM.data(CUI.DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
 
 			if node not instanceof ListViewTreeNode or node.isLoading() or node.isLeaf()
 				return

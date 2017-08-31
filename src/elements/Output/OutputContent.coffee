@@ -30,7 +30,7 @@ class CUI.OutputContent extends CUI.DataFieldInput
 			CUI.DOM.addClass(@DOM, "cui-output-empty")
 			@empty()
 		else
-			@DOM.removeClass("cui-output-empty")
+			CUI.DOM.removeClass(@DOM, "cui-output-empty")
 			@replace(content)
 
 	displayValue: ->

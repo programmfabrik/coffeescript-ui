@@ -178,7 +178,7 @@ class CUI.Listener extends CUI.Element
 		#  	CUI.debug "listener", @getNode(), DOM.parents(@__node), ev_node
 
 		if event.isSink()
-			for parent in DOM.parents(@__node)
+			for parent in CUI.DOM.parents(@__node)
 				@__depth++
 				if parent == ev_node
 					return @__depth

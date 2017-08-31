@@ -381,7 +381,7 @@ class CUI.ListView extends CUI.SimplePane
 				if not @__isInDOM
 					return
 
-				cell = DOM.closest(ev.getNode(), ".cui-lv-td")
+				cell = CUI.DOM.closest(ev.getNode(), ".cui-lv-td")
 
 				if not cell
 					return
@@ -589,7 +589,7 @@ class CUI.ListView extends CUI.SimplePane
 		if not rows
 			return
 		for row in rows
-			DOM.removeClass(row, cls)
+			CUI.DOM.removeClass(row, cls)
 		@
 
 	getColdef: (col_i) ->

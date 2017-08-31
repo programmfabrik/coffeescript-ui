@@ -98,7 +98,7 @@ class CUI.Panel extends CUI.DOM
 		@
 
 	isClosed: ->
-		@DOM.hasClass("cui-panel-closed")
+		CUI.DOM.hasClass(@DOM, "cui-panel-closed")
 
 	isOpen: ->
 		!@isClosed()
