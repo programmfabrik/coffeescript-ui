@@ -1,3 +1,5 @@
+PATH := ./node_modules/.bin:$(PATH)
+
 target = public
 css_target = $(target)/css
 
