@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Utils
+class CUI.util
 
 	@assert: (condition, caller, message, debug_output) ->
 		if not CUI.defaults.asserts
@@ -76,7 +76,7 @@ class CUI.Utils
 		for method in methods
 			if not CUI.isFunction(inst[method])
 				needs.push(method)
-		assert(needs.length == 0, "#{getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
+		CUI.util.assert(needs.length == 0, "#{CUI.util.getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
 		return
 
 		# scrollPageX and scrollPageY are faked attributes
@@ -96,20 +96,20 @@ class CUI.Utils
 
 		if value == undefined
 			value = opts[variableName]
-			assert(CUI.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{getObjectClass(opts)}.", opts: opts)
+			CUI.util.assert(CUI.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{CUI.util.getObjectClass(opts)}.", opts: opts)
 
 		if classClass == "Array"
 			cn = "Array"
 			cond = value instanceof Array
 		else if classClass == "Integer"
 			cn = "Integer"
-			cond = isInteger(value)
+			cond = CUI.util.isInteger(value)
 		else if classClass == "PlainObject"
 			cn = "PlainObject"
 			cond = CUI.isPlainObject(value)
 		else if (new String) instanceof classClass
 			cn = "String"
-			cond = isString(value)
+			cond = CUI.util.isString(value)
 		else if (new Boolean) instanceof classClass
 			cn = "Boolean"
 			cond = value == true or value == false
@@ -122,9 +122,9 @@ class CUI.Utils
 
 		fn = arguments.callee.caller.name
 		if not fn
-			fn = getObjectClass(@)
+			fn = CUI.util.getObjectClass(@)
 
-		assert(false, "new #{fn}", "opts.#{variableName} needs to be instance of #{cn} but it is #{getObjectClass(value)}.", opts: opts, value: value, classClass: classClass)
+		CUI.util.assert(false, "new #{fn}", "opts.#{variableName} needs to be instance of #{cn} but it is #{CUI.util.getObjectClass(value)}.", opts: opts, value: value, classClass: classClass)
 		return
 
 	@$elementIsInDOM: ($el) ->
@@ -175,7 +175,7 @@ class CUI.Utils
 		if CUI.browser.ie
 			str = obj.constructor.toString().trim()
 			if str.substr(0, 8) == "function"
-				arr = str.match(getObjectClassRegexp)
+				arr = str.match(CUI.util.getObjectClassRegexp)
 				if arr and arr.length == 2
 					return arr[1]
 				else
@@ -189,7 +189,7 @@ class CUI.Utils
 		(typeof obj == "undefined")
 
 	@isNull: (obj) ->
-		(isUndef(obj) or obj == null)
+		(CUI.util.isUndef(obj) or obj == null)
 
 	@isString: (obj) ->
 		(typeof obj == "string")
@@ -200,13 +200,13 @@ class CUI.Utils
 		else if CUI.isPlainObject(obj)
 			CUI.isEmptyObject(obj)
 		else
-			(isNull(obj) || obj == "" || obj == false)
+			(CUI.util.isNull(obj) || obj == "" || obj == false)
 
 	@isTrue: (obj) ->
-		(!isNull(obj) && (obj == 1 || obj == true || obj == "1" || obj == "true"))
+		(!CUI.util.isNull(obj) && (obj == 1 || obj == true || obj == "1" || obj == "true"))
 
 	@isFalse: (obj) ->
-		(isNull(obj) || obj == 0 || obj == false || obj == "0" || obj == "false")
+		(CUI.util.isNull(obj) || obj == 0 || obj == false || obj == "0" || obj == "false")
 
 	@isBoolean: (obj) ->
 		obj == true or obj == false
@@ -215,13 +215,13 @@ class CUI.Utils
 		obj instanceof HTMLElement
 
 	@isPosInt: (obj) ->
-		isInteger(obj) and obj >= 0
+		CUI.util.isInteger(obj) and obj >= 0
 
 	@isContent: (obj) ->
-		isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or isElement(obj?.DOM)
+		CUI.util.isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or CUI.util.isElement(obj?.DOM)
 
 	@isNumber: (n) ->
-		isInteger(n) or isFloat(n)
+		CUI.util.isInteger(n) or CUI.util.isFloat(n)
 
 	@isFloat: (n) ->
 		`n===+n && n!==(n|0)`
@@ -239,10 +239,10 @@ class CUI.Utils
 	  str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 	@getIntOrString: (s) ->
-		getInt(s, true)
+		CUI.util.getInt(s, true)
 
 	@getInt: (s, ret_as_is=false) ->
-		if isNull(s)
+		if CUI.util.isNull(s)
 			return null
 
 		i = parseInt(s)
@@ -254,7 +254,7 @@ class CUI.Utils
 		return i
 
 	@getFloat: (s) ->
-		if isNull(s)
+		if CUI.util.isNull(s)
 			return null
 
 		f = parseFloat(s)
@@ -267,7 +267,7 @@ class CUI.Utils
 		!!((a && !b) || (!a && b))
 
 	@toHtml: (data, space2nbsp) ->
-		if isNull(data) or !isString(data)
+		if CUI.util.isNull(data) or !CUI.util.isString(data)
 			return ""
 
 		data = data.replace(/&/g, "&amp;").replace(/\'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;")
@@ -281,7 +281,7 @@ class CUI.Utils
 		if typeof(obj) in ["string", "number", "boolean", "function"]
 			return obj
 
-		if isNull(obj)
+		if CUI.util.isNull(obj)
 			return obj
 
 		if obj instanceof CUI.Element
@@ -301,7 +301,7 @@ class CUI.Utils
 			for k, v of obj
 				if deep
 					try
-						new_obj[k] = copyObject(v, true, level+1)
+						new_obj[k] = CUI.util.copyObject(v, true, level+1)
 					catch e
 						console.error "Error during Object copy:", e.toString(), "Key:", k, "Object:", obj
 						throw(e)
@@ -316,11 +316,11 @@ class CUI.Utils
 
 			new_arr = []
 			for o in obj
-				new_arr.push(copyObject(o, true, level+1))
+				new_arr.push(CUI.util.copyObject(o, true, level+1))
 
 			return new_arr
 
-		assert(false, "copyObject", "Only {},[],string, boolean, and number can be copied. Object is: #{getObjectClass(obj)}", obj: obj, deep: deep)
+		CUI.util.assert(false, "copyObject", "Only {},[],string, boolean, and number can be copied. Object is: #{CUI.util.getObjectClass(obj)}", obj: obj, deep: deep)
 
 	@dump: (obj, space="\t") ->
 		clean_obj = (obj) ->
@@ -336,12 +336,12 @@ class CUI.Utils
 				return result
 			else if typeof(obj) in ["string", "number", "boolean"]
 				return obj
-			else if isUndef(obj)
+			else if CUI.util.isUndef(obj)
 				return "<undefined>"
-			else if isNull(obj)
+			else if CUI.util.isNull(obj)
 				return "<null>"
 			else
-				return getObjectClass(obj)
+				return CUI.util.getObjectClass(obj)
 
 		try
 			return JSON.stringify(clean_obj(obj), null, space)
@@ -349,7 +349,7 @@ class CUI.Utils
 			console.error(e)
 			return "Unable to dump object"
 
-	@alert_dump: (v) -> alert(dump(v, "    "))
+	@alert_dump: (v) -> alert(CUI.util.dump(v, "    "))
 
 
 	# convert camel case to dash
@@ -363,11 +363,11 @@ class CUI.Utils
 
 	# convert to class compatible string
 	@toClass: (s) ->
-		toDash(s).replace(/_/g,"-").replace(/\s+/g, "-")
+		CUI.util.toDash(s).replace(/_/g,"-").replace(/\s+/g, "-")
 
 	# convert to class compatible string
 	@toDot: (s) ->
-		toDash(s).replace(/-/g,".")
+		CUI.util.toDash(s).replace(/-/g,".")
 
 	# convert dash to camel
 	@toCamel: (s, includeFirst=false) ->
@@ -379,10 +379,10 @@ class CUI.Utils
 	# remove all occurrances of value from array
 	# returns the number of items removed
 	@removeFromArray: (value, arr, compFunc) ->
-		assert(CUI.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
+		CUI.util.assert(CUI.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
 		removed = 0
 		while true
-			idx = idxInArray(value, arr, compFunc)
+			idx = CUI.util.idxInArray(value, arr, compFunc)
 			if idx > -1
 				arr.splice(idx, 1)
 				removed++
@@ -418,7 +418,7 @@ class CUI.Utils
 	# pushes value onto array, if not exists
 	# returns index of the pushed value
 	@pushOntoArray: (value, arr, compFunc) ->
-		idx = idxInArray(value, arr, compFunc)
+		idx = CUI.util.idxInArray(value, arr, compFunc)
 		if idx == -1
 			arr.push(value)
 			return arr.length-1
@@ -442,7 +442,7 @@ class CUI.Utils
 		idx
 
 	@findInArray: (value, arr, compFunc) ->
-		idx = idxInArray(value, arr, compFunc)
+		idx = CUI.util.idxInArray(value, arr, compFunc)
 		if idx == -1
 			undefined
 		else
@@ -466,6 +466,6 @@ RegExp.escape= (s) ->
     s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
 
 
-for prop, func of CUI.Utils
+for prop, func of CUI.util
 	window[prop] = func
-	console.info("CUI.Utils."+prop+" -> window."+prop)
+	console.info("CUI.util."+prop+" -> window."+prop)

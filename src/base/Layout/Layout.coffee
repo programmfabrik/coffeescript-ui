@@ -58,7 +58,7 @@ class CUI.Layout extends CUI.DOM
 		@maximizeReadOpts()
 
 		if @_absolute
-			assert(@__maximize, "new "+@__cls, "opts.absolute needs opts.maximize to be set.", opts: @opts)
+			CUI.util.assert(@__maximize, "new "+@__cls, "opts.absolute needs opts.maximize to be set.", opts: @opts)
 		@
 
 
@@ -75,13 +75,13 @@ class CUI.Layout extends CUI.DOM
 		@
 
 	maximizeReadOpts: ->
-		if isNull(@_maximize) and
-			isNull(@_maximize_horizontal) and
-			isNull(@_maximize_vertical)
+		if CUI.util.isNull(@_maximize) and
+			CUI.util.isNull(@_maximize_horizontal) and
+			CUI.util.isNull(@_maximize_vertical)
 				@_maximize = true
 
 		if @_maximize
-			assert(not @_maximize_horizontal and not @_maximize_vertical, "new "+getObjectClass(@), "opts.maximize cannot be set together with opts.maximize_horizontal or opts.maximize_vertical", opts: @opts)
+			CUI.util.assert(not @_maximize_horizontal and not @_maximize_vertical, "new "+CUI.util.getObjectClass(@), "opts.maximize cannot be set together with opts.maximize_horizontal or opts.maximize_vertical", opts: @opts)
 			@__maximize_horizontal = true
 			@__maximize_vertical = true
 		else
@@ -106,7 +106,7 @@ class CUI.Layout extends CUI.DOM
 		map
 
 	__init: ->
-		assert(not(@_maximize == false and @_absolute == true), "Layout.__init", "opts.maximize == false and opts.absolute == true is not allowed.", opts: @opts)
+		CUI.util.assert(not(@_maximize == false and @_absolute == true), "Layout.__init", "opts.maximize == false and opts.absolute == true is not allowed.", opts: @opts)
 
 		@__panes = @getPanes()
 		@__panes.push("center")
@@ -138,7 +138,7 @@ class CUI.Layout extends CUI.DOM
 
 		if @_absolute
 			@addClass("cui-absolute")
-			assert(CUI.DOM.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
+			CUI.util.assert(CUI.DOM.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
 
 			DOM.waitForDOMInsert(node: @DOM)
 			.done =>
@@ -174,7 +174,7 @@ class CUI.Layout extends CUI.DOM
 
 		if @hasFlexHandles()
 			has_flex_handles = true
-			# CUI.warn(getObjectClass(@)+".initFlexHandles", @opts, @__layout.__uniqueId, @DOM[0])
+			# CUI.warn(CUI.util.getObjectClass(@)+".initFlexHandles", @opts, @__layout.__uniqueId, @DOM[0])
 			pane_opts = {}
 			for pn in @__panes
 				pane = @["_#{pn}"]
@@ -190,8 +190,8 @@ class CUI.Layout extends CUI.DOM
 		for pn in @__panes
 			do (pn) =>
 				@[pn] = =>
-					assert(@["_#{pn}"], "#{@__cls}.#{pn}", "Pane \"#{pn}\" not initialized.", opts: @opts)
-					assert(not @__layout.isDestroyed(), "Layout already destroyed, cannot get pane \"#{pn}\".")
+					CUI.util.assert(@["_#{pn}"], "#{@__cls}.#{pn}", "Pane \"#{pn}\" not initialized.", opts: @opts)
+					CUI.util.assert(not @__layout.isDestroyed(), "Layout already destroyed, cannot get pane \"#{pn}\".")
 					@__layout.map[pn]
 
 			pane = @["_#{pn}"]
@@ -201,7 +201,7 @@ class CUI.Layout extends CUI.DOM
 				if has_flex_handles and pn != "center" and not pane.flexHandle
 					@__layout.getFlexHandle(pn).destroy()
 			else
-				# CUI.debug(getObjectClass(@), "removing uninitialized pane", pn, @)
+				# CUI.debug(CUI.util.getObjectClass(@), "removing uninitialized pane", pn, @)
 				@__layout.map[pn].remove()
 				if has_flex_handles
 					@__layout.getFlexHandle(pn).destroy()
@@ -217,7 +217,7 @@ class CUI.Layout extends CUI.DOM
 
 	#initialive pane option
 	__initPane: (options, pane_name) ->
-		assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
+		CUI.util.assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
 		opts = CUI.Element.readOpts(options, "new Layout.__initPane",
 			class:
 				check: String
@@ -244,10 +244,10 @@ class CUI.Layout extends CUI.DOM
 		@
 
 	getPanes: ->
-		assert(false, "#{@__cls}.getPanes", "Needs implementation")
+		CUI.util.assert(false, "#{@__cls}.getPanes", "Needs implementation")
 
 	getSupportedPanes: ->
-		assert(false, "#{@__cls}.getSupportedPanes", "Needs implementation")
+		CUI.util.assert(false, "#{@__cls}.getSupportedPanes", "Needs implementation")
 
 	getLayout: ->
 		@__layout
@@ -325,11 +325,11 @@ class CUI.Layout extends CUI.DOM
 		@
 
 	getName: ->
-		assert(false, "#{@__cls}.getName", "Needs to be overwritten.")
+		CUI.util.assert(false, "#{@__cls}.getName", "Needs to be overwritten.")
 
 	@setAbsolute: (layout) ->
 		# CUI.error "Layout.setAbsolute", layout[0]
-		assert(isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
+		CUI.util.assert(CUI.util.isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
 
 		direction = CUI.DOM.getAttribute(layout, "data-cui-absolute-container")
 		switch direction
@@ -340,7 +340,7 @@ class CUI.Layout extends CUI.DOM
 				rect_key = "marginBoxHeight"
 				rect_check_key = "marginBoxWidth"
 			else
-				assert(false, "Layout.setAbsolute", "cui-absolute-container is not set for .cui-absolute container or not set to row or column.", container: layout, direction: direction)
+				CUI.util.assert(false, "Layout.setAbsolute", "cui-absolute-container is not set for .cui-absolute container or not set to row or column.", container: layout, direction: direction)
 
 		# measure all children
 		values = []
@@ -387,7 +387,7 @@ class CUI.Layout extends CUI.DOM
 							else
 								value = 0
 						else
-							assert(false, "Layout.setAbsolute: Unknown key #{key} in data-cui-absolute-set.")
+							CUI.util.assert(false, "Layout.setAbsolute: Unknown key #{key} in data-cui-absolute-set.")
 					# CUI.debug idx, key, value
 					css[key] = value
 				DOM.setStyle(child, css)

@@ -28,7 +28,7 @@ class CUI.Template extends CUI.Element
 
 		#try find it inside cached list
 		node = Template.nodeByName[@_name]
-		assert(node, "CUI.Template", @_name+" not found. Make sure to call Template.loadFile(...).")
+		CUI.util.assert(node, "CUI.Template", @_name+" not found. Make sure to call Template.loadFile(...).")
 
 		@DOM = node.cloneNode(true)
 		if @_class
@@ -89,7 +89,7 @@ class CUI.Template extends CUI.Element
 
 			opts.element = fh_el
 			fh = new FlexHandle(opts)
-			if not isEmpty(fh_name = fh.getName())
+			if not CUI.util.isEmpty(fh_name = fh.getName())
 				# CUI.warn("Template.initFlexHandles", fh_name)
 				@__flexHandles[fh_name] = fh
 				fh.init()
@@ -97,9 +97,9 @@ class CUI.Template extends CUI.Element
 		@
 
 	getFlexHandle: (name) ->
-		assert(@__flexHandles, "Template.getFlexHandle", "flexHandles are not initialized yet, call Template.initFlexHandles(opts) first.", name: name)
+		CUI.util.assert(@__flexHandles, "Template.getFlexHandle", "flexHandles are not initialized yet, call Template.initFlexHandles(opts) first.", name: name)
 		fh = @__flexHandles[name]
-		assert(fh instanceof FlexHandle, "#{@__cls}.getFlexHandle", "FlexHandle \"#{name}\" not found, make sure you have specified a name in the cui-flex-handle attribute.", opts: @opts, flexHandles: @__flexHandles)
+		CUI.util.assert(fh instanceof FlexHandle, "#{@__cls}.getFlexHandle", "FlexHandle \"#{name}\" not found, make sure you have specified a name in the cui-flex-handle attribute.", opts: @opts, flexHandles: @__flexHandles)
 		fh
 
 	getFlexHandles: ->
@@ -110,7 +110,7 @@ class CUI.Template extends CUI.Element
 		report = []
 		misses = 0
 		for k, v of map
-			if isNull(v)
+			if CUI.util.isNull(v)
 				continue
 
 			if v == true
@@ -118,7 +118,7 @@ class CUI.Template extends CUI.Element
 				if @_map_prefix
 					sel = "."+@_map_prefix+"-"+clean_k
 				else
-					prefix = toDash(@_name)
+					prefix = CUI.util.toDash(@_name)
 					sel = ".ez-"+prefix+"-"+clean_k+",.cui-"+prefix+"-"+clean_k
 				sel = sel + ',[data-slot="'+CUI.escapeAttribute(k)+'"]'
 			else
@@ -154,28 +154,28 @@ class CUI.Template extends CUI.Element
 		el_map
 
 	destroy: ->
-		# CUI.error "destroying...", getObjectClass(DOM.data(@DOM, "element")), getObjectClass(@DOM[0])
+		# CUI.error "destroying...", CUI.util.getObjectClass(DOM.data(@DOM, "element")), CUI.util.getObjectClass(@DOM[0])
 		CUI.DOM.remove(@DOM)
 		delete(@map)
 		super()
 
 	addClass: (cls, key) ->
 		if key
-			assert(@map[key], "#{@__cls}.addClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			CUI.util.assert(@map[key], "#{@__cls}.addClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
 			CUI.DOM.addClass(@map[key], cls)
 		else
 			CUI.DOM.addClass(@DOM, cls)
 
 	removeClass: (cls, key) ->
 		if key
-			assert(@map[key], "#{@__cls}.removeClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			CUI.util.assert(@map[key], "#{@__cls}.removeClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
 			CUI.DOM.removeClass(@map[key], cls)
 		else
 			CUI.DOM.removeClass(@DOM, cls)
 
 	hasClass: (cls, key) ->
 		if key
-			assert(@map[key], "#{@__cls}.hasClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			CUI.util.assert(@map[key], "#{@__cls}.hasClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
 			CUI.DOM.hasClass(@map[key], cls)
 		else
 			CUI.DOM.hasClass(@DOM, cls)
@@ -185,21 +185,21 @@ class CUI.Template extends CUI.Element
 
 
 	empty: (key) ->
-		assert(@map, "Template[#{@_name}].empty [#{@getUniqueId()}]", "Already destroyed", template: @, name: @_name)
-		if @isEmpty(key)
+		CUI.util.assert(@map, "Template[#{@_name}].empty [#{@getUniqueId()}]", "Already destroyed", template: @, name: @_name)
+		if @CUI.util.isEmpty(key)
 			if key
 				return @map[key]
 			else
 				return @DOM
 
 		if key
-			assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
+			CUI.util.assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			# CUI.debug "Template.destroyingChildren", key, @map[key]
 			CUI.DOM.empty(@map[key])
 
 			is_empty = true
 			for key of @map
-				if not @isEmpty(key)
+				if not @CUI.util.isEmpty(key)
 					is_empty = false
 					break
 
@@ -222,14 +222,14 @@ class CUI.Template extends CUI.Element
 		return @DOM
 
 	replace: (value, key, element) ->
-		assert(@map, "Template[#{@_name}].replace [#{@getUniqueId()}]", "Already destroyed")
+		CUI.util.assert(@map, "Template[#{@_name}].replace [#{@getUniqueId()}]", "Already destroyed")
 		if key
-			assert(@map[key], "#{@__cls}.replace", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+			CUI.util.assert(@map[key], "#{@__cls}.replace", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
 		@empty(key)
 		@append(value, key, element)
 
 	text: (value, key, element) ->
-		assert(isString(value), "#{@__cls}.text", "Value must be String", value: value, key: key, element: element)
+		CUI.util.assert(CUI.util.isString(value), "#{@__cls}.text", "Value must be String", value: value, key: key, element: element)
 		if key
 			@map[key].textContent = value
 		else
@@ -244,9 +244,9 @@ class CUI.Template extends CUI.Element
 		else
 			fn = "append"
 
-		assert(@map, "Template[#{@_name}].#{fn} [#{@getUniqueId()}]", "Already destroyed")
+		CUI.util.assert(@map, "Template[#{@_name}].#{fn} [#{@getUniqueId()}]", "Already destroyed")
 		if key
-			assert(@map[key], "#{@__cls}.#{fn}", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
+			CUI.util.assert(@map[key], "#{@__cls}.#{fn}", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 
 		if CUI.isFunction(value)
 			value = value(element)
@@ -259,7 +259,7 @@ class CUI.Template extends CUI.Element
 			if _value?.DOM
 				appends.push(_value.DOM)
 			else
-				assert(not isPromise(_value), "Template.append", "value cannot be Promise", value: value)
+				CUI.util.assert(not CUI.util.isPromise(_value), "Template.append", "value cannot be Promise", value: value)
 				if _value
 					appends.push(_value)
 
@@ -279,7 +279,7 @@ class CUI.Template extends CUI.Element
 		if not key
 			!@DOM.firstChild
 		else
-			assert(@map[key], "#{@__cls}.isEmpty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
+			CUI.util.assert(@map[key], "#{@__cls}.isEmpty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			!@map[key].firstChild
 			# if fc
 			# 	CUI.debug "isEmpty: false", key, fc
@@ -325,7 +325,7 @@ class CUI.Template extends CUI.Element
 
 			name = el.getAttribute("data-template")
 
-			if isEmpty(name)
+			if CUI.util.isEmpty(name)
 				for cls in el.classList
 					if cls.startsWith("cui-tmpl-")
 						name = cls.substr(9)

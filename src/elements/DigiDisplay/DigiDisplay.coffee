@@ -83,7 +83,7 @@ class CUI.DigiDisplay extends CUI.DOM
 					idx++
 					matched = true
 
-			assert(matched, "DigiDisplay.createMarkup", "Digit #{digit_idx} not matched against the regexp. ASCII range 32-128 is allowed.", digit: digit)
+			CUI.util.assert(matched, "DigiDisplay.createMarkup", "Digit #{digit_idx} not matched against the regexp. ASCII range 32-128 is allowed.", digit: digit)
 
 			# CUI.debug "created markup with map", map
 		@__displayDiv

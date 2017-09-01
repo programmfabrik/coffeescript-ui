@@ -79,7 +79,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			return true
 
 		items = @__getItems(event)
-		if isPromise(items)
+		if CUI.util.isPromise(items)
 			CUI.warn("ItemList.hasItems: opts.items Function returned a Promise. Set opts.has_items to true, in order to avoid the call of that Function.")
 			true
 		else
@@ -94,7 +94,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 	getItems: (event) ->
 		items = @__getItems(event)
 
-		if isPromise(items)
+		if CUI.util.isPromise(items)
 			items
 		else
 			new CUI.Deferred().resolve(items)
@@ -104,16 +104,16 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		active_idx = @_active_item_idx
 
-		if isUndef(active_idx)
+		if CUI.util.isUndef(active_idx)
 			items = @__getItems()
 
-			if isPromise(items)
+			if CUI.util.isPromise(items)
 				active_idx = null
 			else
 				for item, idx in items
 					if not item
 						continue
-					if isUndef(item.active)
+					if CUI.util.isUndef(item.active)
 						continue
 					if item.active
 						active_idx = idx
@@ -122,10 +122,10 @@ class CUI.ItemList extends CUI.VerticalLayout
 					# we only get here, if any
 					# of out items has an
 					# "active" property
-					if isUndef(active_idx)
+					if CUI.util.isUndef(active_idx)
 				        active_idx = null
 
-		if not isUndef(active_idx)
+		if not CUI.util.isUndef(active_idx)
 			@__active_idx = active_idx
 			@__radio = "item-list--"+@getUniqueId()
 

@@ -7,17 +7,17 @@ class CUI.Slider extends CUI.DataField
 		@addOpts
 			value:
 				check: (v) ->
-					isInteger(v)
+					CUI.util.isInteger(v)
 			min:
 				mandatory: true
 				default: 0
 				check: (v) ->
-					isInteger(v)
+					CUI.util.isInteger(v)
 			max:
 				mandatory: true
 				default: 100
 				check: (v) ->
-					isInteger(v)
+					CUI.util.isInteger(v)
 			onDragstart:
 				check: Function
 			onDragging:
@@ -30,7 +30,7 @@ class CUI.Slider extends CUI.DataField
 	readOpts: ->
 		super()
 		@__distance = @_max - @_min
-		assert(@__distance > 1, 'new Slider', 'opts.min and opts.max need to be at least 2 apart.')
+		CUI.util.assert(@__distance > 1, 'new Slider', 'opts.min and opts.max need to be at least 2 apart.')
 		@__value = @getDefaultValue()
 
 	getTemplate: ->

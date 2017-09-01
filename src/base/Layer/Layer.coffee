@@ -30,7 +30,7 @@ class CUI.Layer extends CUI.DOM
 		# not affect the layer's opacity as it would to if the layer would be
 		# a child of backdrop
 		@__layer_root = new Template
-			class: "cui-layer-root-"+(toDash(@__cls)+" "+(@_class or "")).trim().split(/\s+/).join(" cui-layer-root-")
+			class: "cui-layer-root-"+(CUI.util.toDash(@__cls)+" "+(@_class or "")).trim().split(/\s+/).join(" cui-layer-root-")
 			name: "layer-root"
 
 		# @__backdropClickDisabled = false
@@ -91,7 +91,7 @@ class CUI.Layer extends CUI.DOM
 					when "modal"
 						@__backdrop.addClass("cui-layer-backdrop--visible")
 						if @_backdrop.add_bounce_class != false
-							if isString(@_backdrop.add_bounce_class)
+							if CUI.util.isString(@_backdrop.add_bounce_class)
 								bc = @_backdrop.add_bounce_class
 							else
 								bc = "cui-layer-bounce"
@@ -117,7 +117,7 @@ class CUI.Layer extends CUI.DOM
 									return
 
 					else
-						assert("new #{@__cls}", "Unknown backdrop policy: \"#{@__bd_policy}\".")
+						CUI.util.assert("new #{@__cls}", "Unknown backdrop policy: \"#{@__bd_policy}\".")
 
 		if @_visible == false
 			@setVisible(@_visible)
@@ -131,7 +131,7 @@ class CUI.Layer extends CUI.DOM
 			@__setElement(@_element)
 
 		if @_use_element_width_as_min_width
-			assert(@__element, "new CUI.Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", opts: @opts)
+			CUI.util.assert(@__element, "new CUI.Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", opts: @opts)
 
 		if @_pointer
 			if @_class
@@ -182,7 +182,7 @@ class CUI.Layer extends CUI.DOM
 	# 	@
 
 	setBackdropContent: (content) ->
-		assert(@__backdrop, "CUI.Layer.setBackdropContent", "No backdrop found in layer", layer: @)
+		CUI.util.assert(@__backdrop, "CUI.Layer.setBackdropContent", "No backdrop found in layer", layer: @)
 		CUI.DOM.append(@__backdrop.DOM, content)
 
 	getTemplate: ->
@@ -252,7 +252,7 @@ class CUI.Layer extends CUI.DOM
 			# element to position the layer to
 			element:
 				check: (v) ->
-					isElement(v) or isElement(v?.DOM)
+					CUI.util.isElement(v) or CUI.util.isElement(v?.DOM)
 
 			use_element_width_as_min_width:
 				default: false
@@ -316,8 +316,8 @@ class CUI.Layer extends CUI.DOM
 		else
 			@__element = element
 
-		assert(not CUI.DOM.closest(@__element, ".cui-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
-		assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
+		CUI.util.assert(not CUI.DOM.closest(@__element, ".cui-tmpl"), "Layer.__setElement", "element cannot be inside a Template.", element: element)
+		CUI.util.assert(@__element instanceof HTMLElement, "Layer.__setElement", "element needs to be HTMLElement.", element: element)
 		@__element
 
 	__getOriginalElement: ->
@@ -499,7 +499,7 @@ class CUI.Layer extends CUI.DOM
 				continue
 
 			placement_parts = placement.split("")
-			vp_pl[placement] = vp = copyObject(vp_pl[placement_parts[0]])
+			vp_pl[placement] = vp = CUI.util.copyObject(vp_pl[placement_parts[0]])
 
 			vp.dim_pointer = dim_pointer[placement_parts[0]]
 
@@ -730,7 +730,7 @@ class CUI.Layer extends CUI.DOM
 			vp.layer_pos.aspect_ratio = vp.layer_pos.width / vp.layer_pos.height
 			vp.dim_layer.aspect_ratio = vp.dim_layer.borderBoxWidth / vp.dim_layer.borderBoxHeight
 
-			wanted_rank = (allowed_placements.length - idxInArray(placement, allowed_placements))
+			wanted_rank = (allowed_placements.length - CUI.util.idxInArray(placement, allowed_placements))
 			if wanted_placement == placement
 				wanted_rank = allowed_placements.length + 1
 
@@ -744,7 +744,7 @@ class CUI.Layer extends CUI.DOM
 		for placement, vp of vp_pl
 			available_placements.push(placement)
 
-		assert(available_placements.length > 0, "Layer.position", "No available placements found.", vp_pl: vp_pl)
+		CUI.util.assert(available_placements.length > 0, "Layer.position", "No available placements found.", vp_pl: vp_pl)
 
 		# console.debug "sorting placements BEFORE", ((pl+"["+vp_pl[pl].ranking+"]") for pl in available_placements).join(", ")
 		# sort available placements
@@ -752,7 +752,7 @@ class CUI.Layer extends CUI.DOM
 			value = (pl) ->
 				vp_pl[pl].ranking
 
-			compareIndex(value(pl1), value(pl2))
+			CUI.util.compareIndex(value(pl1), value(pl2))
 
 		available_placements.reverse()
 		# console.debug "sorting placements AFTER", available_placements.join(", ")
@@ -1067,7 +1067,7 @@ class CUI.Layer extends CUI.DOM
 
 		# "element" as first parameter is gone, i don't think we need this
 
-		assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer ##{@getUniqueId()} is already destroyed", layer: @)
+		CUI.util.assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer ##{@getUniqueId()} is already destroyed", layer: @)
 
 		if Tooltip.current and @ not instanceof Tooltip
 			Tooltip.current.hide()

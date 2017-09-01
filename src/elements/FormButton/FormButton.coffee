@@ -32,6 +32,6 @@ class CUI.FormButton extends CUI.Checkbox
 		@addOpts
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			appearance:
 				check: ["link","flat","normal","important"]

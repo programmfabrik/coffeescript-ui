@@ -46,7 +46,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				default: false
 			footer_right:
 				check: (v) ->
-					isContent(v)
+					CUI.util.isContent(v)
 			# own buttons
 			buttons:
 				mandatory: true
@@ -65,7 +65,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 		@__navi_next = null
 		@__offset = 0
 		Layout::maximizeReadOpts.call(@)
-		assert(not (@_chunk_size and @_rowMove), "new DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
+		CUI.util.assert(not (@_chunk_size and @_rowMove), "new DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
 		@
 
 	getFieldList: ->
@@ -86,7 +86,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 	getFieldOpts: ->
 		field_opts = []
 		for _field in @getArrayFromOpt("fields")
-			field = copyObject(_field, true)
+			field = CUI.util.copyObject(_field, true)
 			if not field.form
 				field.form = {}
 
@@ -126,7 +126,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			rows: @rows
 
 		@_onNodeAdd?(node)
-		@storeValue(copyObject(@rows, true))
+		@storeValue(CUI.util.copyObject(@rows, true))
 		if @_chunk_size > 0
 			@__offset = Math.floor((@rows.length-1) / @_chunk_size) * @_chunk_size
 			@displayValue()
@@ -161,7 +161,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				onClick: =>
 					for row in @listView.getSelectedRows()
 						CUI.DOM.remove(row)
-					@storeValue(copyObject(@rows, true))
+					@storeValue(CUI.util.copyObject(@rows, true))
 					@updateButtons()
 					if @_chunk_size > 0
 						@displayValue()
@@ -238,7 +238,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			maxis.push(0)
 
 		for f, idx in @__fieldList
-			if idxInArray(idx, maxis) > -1
+			if CUI.util.idxInArray(idx, maxis) > -1
 				cols.push("maximize")
 			else if f.getOpt("form")?.column
 				cols.push(f._form.column)
@@ -254,7 +254,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			if name
 				cls.push("cui-data-table-column-field-name-"+name)
 
-			cls.push("cui-data-table-column-field-type-"+toDash(f.getElementClass()))
+			cls.push("cui-data-table-column-field-type-"+CUI.util.toDash(f.getElementClass()))
 			if f._form?.rotate_90
 				cls.push("cui-lv-td-rotate-90")
 
@@ -278,7 +278,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				fr = @listView.fixedRowsCount
 				display_from_i = @__offset + display_from_i
 				display_to_i = @__offset + display_to_i
-				moveInArray(display_from_i-fr, display_to_i-fr, @rows, after)
+				CUI.util.moveInArray(display_from_i-fr, display_to_i-fr, @rows, after)
 				Events.trigger
 					type: "data-changed"
 					node: @listView
@@ -311,7 +311,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				# store value triggers a new data-changed
 				# CUI.debug "data-changed on DataTable storing values:", dump(@rows)
 
-				@storeValue(copyObject(@rows, true))
+				@storeValue(CUI.util.copyObject(@rows, true))
 				return
 		@
 
@@ -320,7 +320,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 		if not @_no_header
 			@listView.appendRow(@headerRow)
 
-		@rows = copyObject(@getValue(), true)
+		@rows = CUI.util.copyObject(@getValue(), true)
 
 		if @_chunk_size > 0
 			len = @rows.length
@@ -351,7 +351,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			else
 				@__navi_next.disable()
 
-		assert(CUI.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
+		CUI.util.assert(CUI.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
 
 		if @rows
 			if @_chunk_size > 0

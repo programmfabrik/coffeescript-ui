@@ -18,11 +18,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 			helper:
 				default: "clone"
 				check: (v) ->
-					v == "clone" or isElement(v) or CUI.isFunction(v) or null
+					v == "clone" or CUI.util.isElement(v) or CUI.isFunction(v) or null
 
 			helper_contain_element:
 				check: (v) ->
-					isElement(v)
+					CUI.util.isElement(v)
 
 			helper_set_pos:
 				check: Function
@@ -72,7 +72,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			selector:
 				check: (v) =>
-					isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.isFunction(v)
 
 	readOpts: ->
 		super()
@@ -124,7 +124,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 	init: ->
 		# CUI.debug "Draggable", @options.selector
-		assert(not @_helper_contain_element or CUI.DOM.closest(@_element, @_helper_contain_element), "new Draggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
+		CUI.util.assert(not @_helper_contain_element or CUI.DOM.closest(@_element, @_helper_contain_element), "new Draggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
 
 		CUI.DOM.addClass(@element, "no-user-select")
 
@@ -143,12 +143,12 @@ class CUI.Draggable extends CUI.DragDropSelect
 					# ignore if dragging is in progress
 					return
 
-				# console.debug getObjectClass(@), "[mousedown]", ev.getUniqueId(), @element
+				# console.debug CUI.util.getObjectClass(@), "[mousedown]", ev.getUniqueId(), @element
 
 				# hint possible click event listeners like Sidebar to
 				# not execute the click anymore...
 				#
-				position = elementGetPosition(getCoordinatesFromEvent(ev), ev.getTarget())
+				position = CUI.util.elementGetPosition(CUI.util.getCoordinatesFromEvent(ev), ev.getTarget())
 				dim = DOM.getDimensions(ev.getTarget())
 
 				if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
@@ -189,12 +189,12 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		# ev.preventDefault()
 
-		if isNull(CUI.globalDrag) or CUI.globalDrag == true
+		if CUI.util.isNull(CUI.globalDrag) or CUI.globalDrag == true
 			CUI.globalDrag = {}
 
-		assert(CUI.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: CUI.globalDrag)
-		point = getCoordinatesFromEvent(ev)
-		position = elementGetPosition(point, $target)
+		CUI.util.assert(CUI.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: CUI.globalDrag)
+		point = CUI.util.getCoordinatesFromEvent(ev)
+		position = CUI.util.elementGetPosition(point, $target)
 
 		init =
 			$source: $target
@@ -267,7 +267,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				if CUI.globalDrag.ended
 					return
 
-				coordinates = getCoordinatesFromEvent(ev)
+				coordinates = CUI.util.getCoordinatesFromEvent(ev)
 
 				diff =
 					x: coordinates.pageX - CUI.globalDrag.startCoordinates.pageX
@@ -661,7 +661,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 	@limitRect: (pos, limitRect, defaults={}) ->
 		pos.fix = pos.fix or []
 		for k, v of defaults
-			if isUndef(pos[k])
+			if CUI.util.isUndef(pos[k])
 				pos[k] = v
 
 		# CUI.debug "limitRect", pos, defaults, limitRect
@@ -677,10 +677,10 @@ class CUI.Draggable extends CUI.DragDropSelect
 			"max_y"
 			]
 			value = limitRect[key]
-			if isUndef(value)
+			if CUI.util.isUndef(value)
 				continue
 
-			assert(not isNaN(value), "#{getObjectClass(@)}.limitRect", "key #{key} in pos isNaN", pos: pos, defaults: defaults, limitRect: limitRect)
+			CUI.util.assert(not isNaN(value), "#{CUI.util.getObjectClass(@)}.limitRect", "key #{key} in pos isNaN", pos: pos, defaults: defaults, limitRect: limitRect)
 
 			skey = key.substring(4)
 			mkey = key.substring(0,3)

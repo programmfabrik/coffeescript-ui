@@ -48,7 +48,7 @@ class CUI.Menu extends CUI.Layer
 		return
 
 	show: (@__event) ->
-		assert(not @isDestroyed(), "#{getObjectClass(@)}.show", "Element is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "#{CUI.util.getObjectClass(@)}.show", "Element is already destroyed.")
 
 		if @__itemList
 			@__itemList.render(@, @__event)

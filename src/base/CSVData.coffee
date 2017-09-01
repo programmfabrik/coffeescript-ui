@@ -55,12 +55,12 @@ class CUI.CSVData extends CUI.Element
 				mandatory: true
 				default: ";"
 				check: (v) =>
-					CUI.isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 			quotechar:
 				mandatory: true
 				default: '"'
 				check: (v) =>
-					CUI.isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 			always_quote:
 				mandatory: true
 				default: true
@@ -73,7 +73,7 @@ class CUI.CSVData extends CUI.Element
 				mandatory: true
 				default: String.fromCharCode(10)
 				check: (v) =>
-					CUI.isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 
 		if opts.equal_columns
 			@giveAllRowsSameNumberOfColumns()
@@ -89,7 +89,7 @@ class CUI.CSVData extends CUI.Element
 				if idx > 0
 					_row.push(opts.delimiter)
 
-				if isEmpty(col)
+				if CUI.util.isEmpty(col)
 					str = ""
 				else
 					str = ""+col
@@ -269,4 +269,4 @@ class CUI.CSVData extends CUI.Element
 			return do_work()
 
 	@quote: (str, quotechar = '"') ->
-		quotechar+str.replace(new RegExp(escapeRegExp(quotechar), "g"), quotechar+quotechar)+quotechar
+		quotechar+str.replace(new RegExp(CUI.util.escapeRegExp(quotechar), "g"), quotechar+quotechar)+quotechar

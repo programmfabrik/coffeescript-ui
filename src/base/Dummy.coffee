@@ -10,7 +10,7 @@
 class CUI.Dummy
 	constructor: ->
 		@__uniqueId = CUI.Dummy.uniqueId++
-		@__cls = getObjectClass(@)
+		@__cls = CUI.util.getObjectClass(@)
 
 	getUniqueId: ->
 		@__uniqueId

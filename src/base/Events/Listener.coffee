@@ -14,7 +14,7 @@ class CUI.Listener extends CUI.Element
 			type:
 				mandatory: true
 				check: (v) ->
-					isString(v) or CUI.isArray(v)
+					CUI.util.isString(v) or CUI.isArray(v)
 
 			# an optional element to bind this listener to
 			# if given, the event will only be triggered
@@ -37,7 +37,7 @@ class CUI.Listener extends CUI.Element
 			# passthru for jquery selector
 			selector:
 				check: (v) ->
-					isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.isFunction(v)
 
 			# abritrary object to match when "ignore" is called
 			instance: {}
@@ -49,7 +49,7 @@ class CUI.Listener extends CUI.Element
 
 	readOpts: ->
 		super()
-		if isString(@_type)
+		if CUI.util.isString(@_type)
 			@__types = @_type.split(/\s+/)
 		else
 			@__types = @_type
@@ -59,15 +59,15 @@ class CUI.Listener extends CUI.Element
 		for type in @__types
 			ev = Events.getEventType(type)
 
-		if isString(@_selector)
-			assert(@__node instanceof HTMLElement or @__node == document, "new CUI.Listener", "opts.selector requires the node to be instance of HTMLElement.", opts: @opts)
+		if CUI.util.isString(@_selector)
+			CUI.util.assert(@__node instanceof HTMLElement or @__node == document, "new CUI.Listener", "opts.selector requires the node to be instance of HTMLElement.", opts: @opts)
 
 		@__handleDOMEvent = (ev) =>
 			# CUI.debug "handleDOMEvent", ev.type, @getUniqueId(), @
 			@__handleDOMEventInternal(ev)
 
 		if @_selector
-			if isString(@_selector)
+			if CUI.util.isString(@_selector)
 				@__selector = (target, node) =>
 					DOM.closestUntil(target, @_selector, node)
 			else
@@ -147,7 +147,7 @@ class CUI.Listener extends CUI.Element
 	# to the events node. with no node, return -1
 	# returns null if no match
 	matchesEvent: (event) ->
-		assert(event instanceof CUI.Event, "CUI.Listener.matchesEvent", "event needs to be instance of CUI.Event.")
+		CUI.util.assert(event instanceof CUI.Event, "CUI.Listener.matchesEvent", "event needs to be instance of CUI.Event.")
 		delete(@__depth)
 
 		if event.getType() not in @getTypes()
@@ -193,7 +193,7 @@ class CUI.Listener extends CUI.Element
 	# return a promise, otherwise we return the last ret
 	# nothing
 	handleEvent: (event, phase) ->
-		assert(event instanceof CUI.Event, "CUI.Listener.handleEvent", "event needs to be instance of CUI.Event", event: event)
+		CUI.util.assert(event instanceof CUI.Event, "CUI.Listener.handleEvent", "event needs to be instance of CUI.Event", event: event)
 		event.__setPhase(phase)
 		event.__setListener(@)
 
@@ -214,10 +214,10 @@ class CUI.Listener extends CUI.Element
 		# 	throw(ex)
 
 		# CUI.debug "CUI.Listener.handleEvent", event, info
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			info = event.getInfo()
 			if not info.__waits
-				assert(false, "CUI.Listener.handleEvent", "Event \"#{event.getType()}\" to handle was not triggered by CUI.Events.trigger, but instead by a regular DOMEvent.\n\nMake sure that, if your handler returns a Promise, the event is triggered by Events.trigger.", event: event, listener: @, return: ret)
+				CUI.util.assert(false, "CUI.Listener.handleEvent", "Event \"#{event.getType()}\" to handle was not triggered by CUI.Events.trigger, but instead by a regular DOMEvent.\n\nMake sure that, if your handler returns a Promise, the event is triggered by Events.trigger.", event: event, listener: @, return: ret)
 			info.__waits.push(ret)
 
 		ret
@@ -230,7 +230,7 @@ class CUI.Listener extends CUI.Element
 		if filter instanceof CUI.Listener
 			return filter == @
 
-		assert(CUI.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.")
+		CUI.util.assert(CUI.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.")
 		match = true
 		filtered = false
 
@@ -258,7 +258,7 @@ class CUI.Listener extends CUI.Element
 			filtered = true
 			match = filter.instance == @getInstance()
 
-		assert(filtered, "Listener.matchesFilter", "Filter did not filter anything, make sure you have 'node', 'type', 'call', or 'instance' set.", filter: filter)
+		CUI.util.assert(filtered, "Listener.matchesFilter", "Filter did not filter anything, make sure you have 'node', 'type', 'call', or 'instance' set.", filter: filter)
 
 		return match
 
@@ -273,17 +273,17 @@ class CUI.Listener extends CUI.Element
 
 			for type in types
 				ev = Events.getEventType(type)
-				assert(ev, "#{func}", "listener.type needs to be registered", listener: listener)
+				CUI.util.assert(ev, "#{func}", "listener.type needs to be registered", listener: listener)
 
 				if ev.listenerClass
-					assert(not listenerFunc or listenerFunc == ev.listenerClass, "#{func}", "listenerFunction differs for different listener types.", listener: listener)
+					CUI.util.assert(not listenerFunc or listenerFunc == ev.listenerClass, "#{func}", "listenerFunction differs for different listener types.", listener: listener)
 					listenerFunc = ev.listenerClass
 				else
-					assert(not listenerFunc or listenerFunc == CUI.Listener, "#{func}", "listenerFunction differs for different listener types.", listener: listener)
+					CUI.util.assert(not listenerFunc or listenerFunc == CUI.Listener, "#{func}", "listenerFunction differs for different listener types.", listener: listener)
 					listenerFunc = CUI.Listener
 
 			listen = new listenerFunc(listener)
 		else
 			listen = listener
-		assert(listen instanceof CUI.Listener, "#{func}", "listener needs to be PlainObject or instance of CUI.Listener.")
+		CUI.util.assert(listen instanceof CUI.Listener, "#{func}", "listener needs to be PlainObject or instance of CUI.Listener.")
 		listen

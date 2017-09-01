@@ -59,7 +59,7 @@ class CUI.ProgressMeter extends CUI.DOM
 			@addOpt "icon_"+state,
 				default: CUI.defaults.ProgressMeter.states[state]
 				check: (v) =>
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 
 	getState: ->
 		@__state
@@ -69,7 +69,7 @@ class CUI.ProgressMeter extends CUI.DOM
 
 	setState: (state) ->
 
-		assert(@__checkState(state), "ProgressMeter.setState", "state needs to be "+@_states.join(",")+" or between 0 and 100.", state: state)
+		CUI.util.assert(@__checkState(state), "ProgressMeter.setState", "state needs to be "+@_states.join(",")+" or between 0 and 100.", state: state)
 		if typeof(state) == "number"
 			state = Math.round(state*100)/100
 
@@ -81,7 +81,7 @@ class CUI.ProgressMeter extends CUI.DOM
 			icon = @["_icon_"+@__state]
 			if icon instanceof Icon
 				@__meter.replace(icon, "icon")
-			else if not isEmpty(icon)
+			else if not CUI.util.isEmpty(icon)
 				@__meter.replace(new Icon(icon: icon), "icon")
 			else
 				@__meter.empty("icon")

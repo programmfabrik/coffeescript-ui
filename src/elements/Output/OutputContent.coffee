@@ -14,7 +14,7 @@ class CUI.OutputContent extends CUI.DataFieldInput
 				check: String
 			content:
 				check: (v) ->
-					isElement(v) or isElement(v.DOM)
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
 			getValue:
 				check: Function
 

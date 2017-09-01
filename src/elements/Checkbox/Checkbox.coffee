@@ -24,7 +24,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 				check: Boolean
 			content:
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			active:
 				default: false
 				check: Boolean
@@ -44,10 +44,10 @@ class CUI.Checkbox extends CUI.DataFieldInput
 				default: "check"
 				mandatory: true
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			icon_inactive:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -97,7 +97,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 				return
 			@storeValue(@_value, flags)
 			ret = @_onActivate?(@, flags, event)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.fail =>
 					@storeValue(@_value_unchecked, flags)
 			ret
@@ -108,7 +108,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 
 			@storeValue(@_value_unchecked, flags)
 			ret = @_onDeactivate?(@, flags, event)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.fail =>
 					@storeValue(@_value, flags)
 			ret
@@ -126,11 +126,11 @@ class CUI.Checkbox extends CUI.DataFieldInput
 			"radio_allow_null"
 			"active"
 		]
-			if not isUndef(btn_opts[k])
+			if not CUI.util.isUndef(btn_opts[k])
 				continue
 			btn_opts[k] = @["_#{k}"]
 
-		if isEmpty(btn_opts.text)
+		if CUI.util.isEmpty(btn_opts.text)
 			btn_opts.text = ""
 
 		btn_opts.disabled = @isDisabled()
@@ -164,7 +164,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 
 
 	checkValue: (v, flags) ->
-		if not isBoolean(v)
+		if not CUI.util.isBoolean(v)
 			throw new Error("#{@__cls}.setValue(value): Value needs to be Boolean.")
 
 	displayValue: ->

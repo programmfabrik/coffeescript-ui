@@ -9,7 +9,7 @@ class CUI.Element
 
 	constructor: (@opts={}) ->
 		@__uniqueId = CUI.Element.uniqueId++
-		@__cls = getObjectClass(@)
+		@__cls = CUI.util.getObjectClass(@)
 		@__destroyed = false
 		@__check_map = {}
 		@__mapped_keys = []
@@ -26,7 +26,7 @@ class CUI.Element
 		@_onConstruct?(@)
 
 		# DEBUG:
-		# console.error(getObjectClass(@)+"."+@__uniqueId+" created.")
+		# console.error(CUI.util.getObjectClass(@)+"."+@__uniqueId+" created.")
 		return
 
 	getElementClass: ->
@@ -74,21 +74,21 @@ class CUI.Element
 		delete(@__check_map[key])
 
 	addOpt: (key, check_map, fn="addOpt") ->
-		assert(isString(key), "#{@__cls}.#{fn}", "key needs to be String", key: key, check_map: check_map)
-		if isNull(check_map)
+		CUI.util.assert(CUI.util.isString(key), "#{@__cls}.#{fn}", "key needs to be String", key: key, check_map: check_map)
+		if CUI.util.isNull(check_map)
 			return
-		assert(CUI.isPlainObject(check_map), "#{@__cls}.#{fn}", "check_map needs to be Map", key: key, check_map: check_map)
+		CUI.util.assert(CUI.isPlainObject(check_map), "#{@__cls}.#{fn}", "check_map needs to be Map", key: key, check_map: check_map)
 		@__check_map[key] = check_map
 		@
 
 	addOpts: (map) ->
-		assert(CUI.isPlainObject(map), "#{@__cls}.addOpts", "Parameter needs to be Map", map: map)
+		CUI.util.assert(CUI.isPlainObject(map), "#{@__cls}.addOpts", "Parameter needs to be Map", map: map)
 		for k, v of map
 			@addOpt(k, v)
 		@
 
 	mergeOpts: (map) ->
-		assert(CUI.isPlainObject(map), "#{@__cls}.mergeOpts", "Parameter needs to be Map", map: map)
+		CUI.util.assert(CUI.isPlainObject(map), "#{@__cls}.mergeOpts", "Parameter needs to be Map", map: map)
 		for k, v of map
 			@mergeOpt(k, v)
 		@
@@ -105,12 +105,12 @@ class CUI.Element
 		if not str?.split
 			return opts
 		for key_value in str.split(";")
-			if isEmpty(key_value.trim())
+			if CUI.util.isEmpty(key_value.trim())
 				continue
 			[key, value] = key_value.split(":")
 			key = key.trim()
 			value = value?.trim()
-			assert(not isEmpty(key) and not isEmpty(value), "#{@__cls}.readOptsFromAttr", "Parsing error in \"#{str}\".")
+			CUI.util.assert(not CUI.util.isEmpty(key) and not CUI.util.isEmpty(value), "#{@__cls}.readOptsFromAttr", "Parsing error in \"#{str}\".")
 			if value == "true"
 				value = true
 			else if value == "false"
@@ -122,8 +122,8 @@ class CUI.Element
 
 	# proxy given methods to given element
 	proxy: (element, methods) ->
-		assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
-		assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
+		CUI.util.assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
+		CUI.util.assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
 		for method in methods
 			do (method) =>
 				@[method] = =>
@@ -132,7 +132,7 @@ class CUI.Element
 
 	destroy: ->
 		# clean mapped values
-		assert(@__mapped_keys, getObjectClass(@)+".destroy", "__mapped_keys not found, that means the top level constructor was not called.", element: @)
+		CUI.util.assert(@__mapped_keys, CUI.util.getObjectClass(@)+".destroy", "__mapped_keys not found, that means the top level constructor was not called.", element: @)
 
 		for k in @__mapped_keys
 			delete("@_#{k}")
@@ -156,7 +156,7 @@ class CUI.Element
 	@readOpts: (opts, cls, check_map, map_values) ->
 		if map_values != true and map_values != false
 			if @ != Element
-				assert(@ != window, "CUI.Element.readOpts", "this cannot be window.")
+				CUI.util.assert(@ != window, "CUI.Element.readOpts", "this cannot be window.")
 				map_values = true
 
 		if not CUI.defaults.asserts
@@ -175,8 +175,8 @@ class CUI.Element
 			return set_opts
 
 		# @__time("readOpts")
-		assert(CUI.isPlainObject(opts), cls, "opts needs to be PlainObject.", opts: opts, check_map: check_map)
-		assert(CUI.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
+		CUI.util.assert(CUI.isPlainObject(opts), cls, "opts needs to be PlainObject.", opts: opts, check_map: check_map)
+		CUI.util.assert(CUI.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
 		set_opts = {}
 		for k, v of check_map
 			# CUI.debug "check map", cls, k, v.check, v.check?.name
@@ -196,7 +196,7 @@ class CUI.Element
 
 			if not exists
 				if mandatory
-					assert(false, cls, "opts.#{k} needs to be set.", opts: opts, check_map: check_map)
+					CUI.util.assert(false, cls, "opts.#{k} needs to be set.", opts: opts, check_map: check_map)
 				else
 					continue
 			else if v.deprecated
@@ -208,15 +208,15 @@ class CUI.Element
 				# CUI.error("%c #{cls}: opts.#{k} is deprecated.", "font-weight: bold; color: red; font-size: 1.2em;", post)
 				console.warn("#{cls}: opts.#{k} is deprecated.", value)
 
-			if v.check and (not isNull(value) or mandatory)
+			if v.check and (not CUI.util.isNull(value) or mandatory)
 				if CUI.isArray(v.check)
-					assert(v.check.indexOf(value) > -1, cls, "opts.#{k} needs to be one of [\"#{v.check.join('\",\"')}\"].", opts: opts)
+					CUI.util.assert(v.check.indexOf(value) > -1, cls, "opts.#{k} needs to be one of [\"#{v.check.join('\",\"')}\"].", opts: opts)
 				else if v.check == Boolean or v.check == String or v.check == Function or v.check == Array
-					assertInstanceOf.call(@, k, v.check, undefined, value)
+					CUI.util.assertInstanceOf.call(@, k, v.check, undefined, value)
 				else if CUI.isFunction(v.check) and not v.check.__super__ # super is from coffeescript and shows us that we have a "class" here
-					assert(isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", opts: opts, key: k, value: v)
+					CUI.util.assert(CUI.util.isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", opts: opts, key: k, value: v)
 					check = v.check.call(@, value)
-					if not(isNull(check) or isBoolean(check) or isString(check))
+					if not(CUI.util.isNull(check) or CUI.util.isBoolean(check) or CUI.util.isString(check))
 						_check = check
 						console.error("CUI.Element.readOpts: check needs to return Boolean, null, undefined or String.", "opts:", opts, "opt:", v, "return:", _check)
 						if _check
@@ -224,17 +224,17 @@ class CUI.Element
 						else
 							check = false
 					if check != true
-						if isString(check)
+						if CUI.util.isString(check)
 							err = check
 						else
 							err = "needs to match\n\n"+v.check.toString()
-						assert(false, cls, "opts.#{k}: #{err}.", opts: opts)
+						CUI.util.assert(false, cls, "opts.#{k}: #{err}.", opts: opts)
 				else if CUI.isPlainObject(v.check)
 					value = CUI.Element.readOpts(value, cls+" [opts."+k+"]", v.check)
-				else if isNull(value) and mandatory
-					assert(false, cls, "opts.#{k} is mandatory, but is #{value}.", opts: opts)
+				else if CUI.util.isNull(value) and mandatory
+					CUI.util.assert(false, cls, "opts.#{k} is mandatory, but is #{value}.", opts: opts)
 				else
-					assertInstanceOf.call(@, k, v.check, undefined, value)
+					CUI.util.assertInstanceOf.call(@, k, v.check, undefined, value)
 
 			# convenient mapping this to our space
 			if map_values

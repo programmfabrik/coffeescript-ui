@@ -50,7 +50,7 @@ class CUI.Output extends CUI.DataFieldInput
 	# 	@removeClass("cui-data-field-disabled")
 
 	setText: (txt, markdown = null) ->
-		if isEmpty(txt)
+		if CUI.util.isEmpty(txt)
 			@__textSpan.addClass("cui-output-empty")
 			txt = @_placeholder
 		else
@@ -68,11 +68,11 @@ class CUI.Output extends CUI.DataFieldInput
 		super()
 		if @getName()
 			ret = @getValue()
-			if not isEmpty(ret)
+			if not CUI.util.isEmpty(ret)
 				@__deleteBtn?.show()
 			else
 				@__deleteBtn?.hide()
-			if isContent(ret)
+			if CUI.util.isContent(ret)
 				@replace(ret)
 			else
 				@setText(ret, false) # don't use markdown for data driven output

@@ -15,7 +15,7 @@ class CUI.EmailInput extends CUI.Input
 		@_checkInput = @__checkInput
 
 	__checkInput: (value) ->
-		if isEmpty(value) or EmailInput.regexp.exec(value)
+		if CUI.util.isEmpty(value) or EmailInput.regexp.exec(value)
 			return true
 		else
 			return false

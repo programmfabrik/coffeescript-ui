@@ -113,7 +113,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		@__choice
 
 	show: ->
-		assert(false, "ConfirmationChoice.show", "Use .open to open the ConfirmationChoice")
+		CUI.util.assert(false, "ConfirmationChoice.show", "Use .open to open the ConfirmationChoice")
 
 	cancel: (ev, ret) ->
 		@hide(ev)

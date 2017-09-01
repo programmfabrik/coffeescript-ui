@@ -17,10 +17,10 @@ class CUI.DataField extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		assertImplements(@, ["render"])
+		CUI.util.assertImplements(@, ["render"])
 
 		if @_name
-			assertImplements(@, ["getDefaultValue"])
+			CUI.util.assertImplements(@, ["getDefaultValue"])
 
 		@__checkChangedValue = undefined
 
@@ -33,7 +33,7 @@ class CUI.DataField extends CUI.DOM
 			node: @DOM
 			call: (ev, info) =>
 				if not info?.element
-					CUI.warn("#{getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
+					CUI.warn("#{CUI.util.getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
 					return
 				# @_onDataChanged?(info.element.getData(), info.element, ev, info)
 				@_onDataChanged?(@getData(), info.element, ev, info)
@@ -53,7 +53,7 @@ class CUI.DataField extends CUI.DOM
 			@hide()
 
 		if @_tooltip and (@_tooltip.text or @_tooltip.content)
-			tt_opts = copyObject(@_tooltip)
+			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element = @DOM
 			@__tooltip = new Tooltip(tt_opts)
 
@@ -75,7 +75,7 @@ class CUI.DataField extends CUI.DOM
 			disabled:
 				default: false
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.isFunction(v)
 			disabled_depends_on_data:
 				check: Function
 			tooltip:
@@ -160,7 +160,7 @@ class CUI.DataField extends CUI.DOM
 		@_label
 
 	setForm: (form) ->
-		assertImplements(form, [
+		CUI.util.assertImplements(form, [
 			"getFieldsByName"
 			"getFieldByIdx"
 			"getData"
@@ -184,7 +184,7 @@ class CUI.DataField extends CUI.DOM
 		path.length
 
 	getFormPath: (include_self=false, path=[], call=0) ->
-		assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
+		CUI.util.assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
 
 		if @getForm()?.getFormPath
 			@getForm().getFormPath(true, path, call+1)
@@ -252,14 +252,14 @@ class CUI.DataField extends CUI.DOM
 			# than the Form data
 			return
 
-		assert(not @__data, "#{@}.setData", "data is already set.", opts: @opts, data: @__data)
+		CUI.util.assert(not @__data, "#{@}.setData", "data is already set.", opts: @opts, data: @__data)
 
 		if CUI.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 
-		assert(CUI.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
+		CUI.util.assert(CUI.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
 
 		# CUI.debug "initData", @__data, @__data.hasOwnProperty
 
@@ -302,10 +302,10 @@ class CUI.DataField extends CUI.DOM
 		@__isRendered
 
 	render: ->
-		assert(not @__isRendered, "#{@__cls}.render", "Cannot be called when already rendered.", opts: @opts, dataField: @)
+		CUI.util.assert(not @__isRendered, "#{@__cls}.render", "Cannot be called when already rendered.", opts: @opts, dataField: @)
 		# for p of @__tmpl.map
 		# 	content = @["__#{p}"]
-		# 	if isNull(content)
+		# 	if CUI.util.isNull(content)
 		# 		continue
 		# 	@append(content, p)
 
@@ -318,14 +318,14 @@ class CUI.DataField extends CUI.DOM
 		@
 
 	displayValue: ->
-		assert(not @isDestroyed(), "#{@__cls}.displayValue", "DataField already destroyed, cannot display value.", data_field: @)
+		CUI.util.assert(not @isDestroyed(), "#{@__cls}.displayValue", "DataField already destroyed, cannot display value.", data_field: @)
 
-		assert(@__isRendered, "#{@__cls}.displayValue", "not rendered yet, cannot display.", opts: @opts, data: @__data)
+		CUI.util.assert(@__isRendered, "#{@__cls}.displayValue", "not rendered yet, cannot display.", opts: @opts, data: @__data)
 		@checkChanged()
 		@callOnOthers("displayValue")
 
 	start: ->
-		assert(not @__isRendered, "#{@__cls}.start", "Cannot be called when already rendered.", opts: @opts, dataField: @)
+		CUI.util.assert(not @__isRendered, "#{@__cls}.start", "Cannot be called when already rendered.", opts: @opts, dataField: @)
 		@__initDisabled()
 		@render()
 		@displayValue()
@@ -357,7 +357,7 @@ class CUI.DataField extends CUI.DOM
 
 		for df in other_fields
 			if not df or not CUI.isFunction(df[func])
-				assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
+				CUI.util.assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
 				return @
 
 			df[func].apply(df, args)
@@ -367,19 +367,19 @@ class CUI.DataField extends CUI.DOM
 		@__data
 
 	hasData: ->
-		if not isEmpty(@_name) and @__data
+		if not CUI.util.isEmpty(@_name) and @__data
 			true
 		else
 			false
 
 	hasUserData: ->
-		@hasData() and not isEmpty(@__data[@_name])
+		@hasData() and not CUI.util.isEmpty(@__data[@_name])
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]
 		if CUI.isFunction(v)
 			arr = v.call(@, @, event)
-			assert(CUI.isArray(arr) or (isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
+			CUI.util.assert(CUI.isArray(arr) or (CUI.util.isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
 		else
 			arr = v
 		return arr
@@ -431,7 +431,7 @@ class CUI.DataField extends CUI.DOM
 		undo.values[0]
 
 	getLastValue: ->
-		assert(@_undo_support, "DataField.getLastValue", "Needs opts.undo_support to be set.", opts: @opts)
+		CUI.util.assert(@_undo_support, "DataField.getLastValue", "Needs opts.undo_support to be set.", opts: @opts)
 		undo = @getUndo()
 		if not undo
 			return undefined
@@ -482,7 +482,7 @@ class CUI.DataField extends CUI.DOM
 
 	goto: (idx) ->
 		if undo = @getUndo()
-			if isUndef(undo.values[idx])
+			if CUI.util.isUndef(undo.values[idx])
 				return false
 			undo.idx = idx
 			@__data[@_name] = undo.values[undo.idx]
@@ -511,7 +511,7 @@ class CUI.DataField extends CUI.DOM
 			undo.values = [ @getValue() ]
 			undo.idx = 0
 
-		if isUndef(@getCheckChangedValue())
+		if CUI.util.isUndef(@getCheckChangedValue())
 			@setCheckChangedValue(
 				if undo
 					@getInitValue()
@@ -525,13 +525,13 @@ class CUI.DataField extends CUI.DOM
 		@
 
 	initValue: ->
-		if isUndef(@__data[@_name])
+		if CUI.util.isUndef(@__data[@_name])
 			# CUI.debug "initValue", @getName(), @__data[@_name], @getDefaultValue()
 			@__data[@_name] = @getDefaultValue()
 		@
 
 	setCheckChangedValue: (value) ->
-		assert(@hasData(), "#{@__cls}.setCheckChangedValue", "Cannot set without data.", opts: @opts, value: value, dataField: @)
+		CUI.util.assert(@hasData(), "#{@__cls}.setCheckChangedValue", "Cannot set without data.", opts: @opts, value: value, dataField: @)
 		if @_check_changed == false
 			return undefined
 		@__checkChangedValue = JSON.stringify(value)
@@ -539,17 +539,17 @@ class CUI.DataField extends CUI.DOM
 	getCheckChangedValue: ->
 		if @_check_changed == false
 			return undefined
-		assert(@hasData(), "#{@__cls}.getCheckChangedValue", "No data set.", opts: @opts)
+		CUI.util.assert(@hasData(), "#{@__cls}.getCheckChangedValue", "No data set.", opts: @opts)
 		@__checkChangedValue
 
 	getUndo: ->
 		if not @hasData() or @_undo_support == false
 			return false
 
-		if isUndef(@__data._undo)
+		if CUI.util.isUndef(@__data._undo)
 			@__data._undo = {}
 		# CUI.debug @__data, @__data._undo, @_name
-		if isUndef(undo = @__data._undo[@_name])
+		if CUI.util.isUndef(undo = @__data._undo[@_name])
 			undo = @__data._undo[@_name] = {}
 		undo
 
@@ -616,7 +616,7 @@ class CUI.DataField extends CUI.DOM
 		if field instanceof DataField
 			return field
 
-		assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
+		CUI.util.assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
 
 		field_opts = {}
 		for k, v of field
@@ -635,9 +635,9 @@ class CUI.DataField extends CUI.DOM
 				continue
 			field_opts[k] = v
 
-		assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
+		CUI.util.assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
 		_field = new type(field_opts)
-		assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
+		CUI.util.assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{CUI.util.getObjectClass(_field)}.", field: field)
 		return _field
 
 CUI.Events.registerEvent

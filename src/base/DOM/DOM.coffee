@@ -23,15 +23,15 @@ class CUI.DOM extends CUI.Element
 				check: "PlainObject"
 
 	registerTemplate: (template, add_default_classes=true) ->
-		assert(template instanceof Template, "#{getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{getObjectClass(template)}.", template: template)
+		CUI.util.assert(template instanceof Template, "#{CUI.util.getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{CUI.util.getObjectClass(template)}.", template: template)
 		if @__template
-			CUI.warn("#{getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
+			CUI.warn("#{CUI.util.getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
 			@__template.destroy()
 		@__template = template
 		@registerDOMElement(@__template.DOM, add_default_classes)
 
 	getDOMElementClasses: ->
-		return 'cui-'+toDash(@__cls)
+		return 'cui-'+CUI.util.toDash(@__cls)
 
 	registerDOMElement: (@DOM, add_default_classes=true) ->
 
@@ -69,13 +69,13 @@ class CUI.DOM extends CUI.Element
 		@
 
 	__assertDOMElement: (func) ->
-		assert(@DOM, "#{@__cls}.#{func}", "registerDOMElement needs to be called before \"#{func}\" is supported.")
+		CUI.util.assert(@DOM, "#{@__cls}.#{func}", "registerDOMElement needs to be called before \"#{func}\" is supported.")
 
 	__assertTemplateElement: (func) ->
-		assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
+		CUI.util.assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
 
 	addClass: (cls) ->
-		assert(arguments.length == 1, "CUI.DOM.addClass", "Only one parameter allowed.")
+		CUI.util.assert(arguments.length == 1, "CUI.DOM.addClass", "Only one parameter allowed.")
 
 		@__assertDOMElement("addClass")
 		CUI.DOM.addClass(@DOM, cls)
@@ -85,7 +85,7 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.setAria(@DOM, attr, value)
 
 	removeClass: (cls) ->
-		assert(arguments.length == 1, "CUI.DOM.removeClass", "Only one parameter allowed.")
+		CUI.util.assert(arguments.length == 1, "CUI.DOM.removeClass", "Only one parameter allowed.")
 
 		@__assertDOMElement("removeClass")
 		CUI.DOM.removeClass(@DOM, cls)
@@ -99,7 +99,7 @@ class CUI.DOM extends CUI.Element
 		CUI.DOM.showElement(@DOM)
 
 	hasClass: (cls) ->
-		assert(arguments.length == 1, "CUI.DOM.hasClass", "Only one parameter allowed.")
+		CUI.util.assert(arguments.length == 1, "CUI.DOM.hasClass", "Only one parameter allowed.")
 		@__assertDOMElement("hasClass")
 		CUI.DOM.hasClass(@DOM, cls)
 
@@ -147,7 +147,7 @@ class CUI.DOM extends CUI.Element
 		if not node
 			return undefined
 
-		assert(node instanceof HTMLElement, "DOM.data","node needs to be instance of HTMLElement", node: node)
+		CUI.util.assert(node instanceof HTMLElement, "DOM.data","node needs to be instance of HTMLElement", node: node)
 
 		if key == undefined
 			return node.__dom_data or {}
@@ -233,7 +233,7 @@ class CUI.DOM extends CUI.Element
 	# which matches the selector
 	@findElements: (node=document.documentElement, selector=null, nodeFilter=false, maxEls=null, forward=true, siblingOnly=false, elements) ->
 		if not elements
-			assert(node instanceof HTMLElement, "DOM.findElement", "node needs to be instanceof HTMLElement.", node: node, selector: selector)
+			CUI.util.assert(node instanceof HTMLElement, "DOM.findElement", "node needs to be instanceof HTMLElement.", node: node, selector: selector)
 			elements = []
 			check_node = not siblingOnly
 		else
@@ -341,7 +341,7 @@ class CUI.DOM extends CUI.Element
 		if not node
 			return null
 
-		if isNull(value) or value == false
+		if CUI.util.isNull(value) or value == false
 			return @removeAttribute(node, key)
 
 		if value == true
@@ -368,7 +368,7 @@ class CUI.DOM extends CUI.Element
 	@width: (docElem, value) ->
 		if docElem == document or docElem == window
 			if value != undefined
-				assert(false, "CUI.DOM.width", "Unable to set width on a non HTMLElement", docElem: docElem)
+				CUI.util.assert(false, "CUI.DOM.width", "Unable to set width on a non HTMLElement", docElem: docElem)
 			return window.innerWidth
 
 		if value == undefined
@@ -379,7 +379,7 @@ class CUI.DOM extends CUI.Element
 	@height: (docElem, value) ->
 		if docElem == document or docElem == window
 			if value != undefined
-				assert(false, "CUI.DOM.height", "Unable to set width on a non HTMLElement", docElem: docElem)
+				CUI.util.assert(false, "CUI.DOM.height", "Unable to set width on a non HTMLElement", docElem: docElem)
 			return window.innerHeight
 
 		if value == undefined
@@ -388,7 +388,7 @@ class CUI.DOM extends CUI.Element
 			@setDimension(docElem, "contentBoxHeight", value)
 
 	@__append: (node, content, append=true) ->
-		if isNull(content)
+		if CUI.util.isNull(content)
 			return node
 
 		if CUI.isArray(content) or content instanceof HTMLCollection or content instanceof NodeList
@@ -419,10 +419,10 @@ class CUI.DOM extends CUI.Element
 					append_node = content
 
 		if append
-			assert(append_node instanceof Node, "CUI.DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			CUI.util.assert(append_node instanceof Node, "CUI.DOM.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
 			node.appendChild(append_node)
 		else
-			assert(append_node instanceof Node, "CUI.DOM.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			CUI.util.assert(append_node instanceof Node, "CUI.DOM.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
 			node.insertBefore(content, node.firstChild)
 
 		return node
@@ -455,7 +455,7 @@ class CUI.DOM extends CUI.Element
 	@empty: (node) ->
 		if not node
 			return null
-		assert(isElement(node), "CUI.DOM.empty", "top needs to be Element", node: node)
+		CUI.util.assert(CUI.util.isElement(node), "CUI.DOM.empty", "top needs to be Element", node: node)
 		while last = node.lastChild
 			node.removeChild(last)
 		node
@@ -514,7 +514,7 @@ class CUI.DOM extends CUI.Element
 	# returns the relative position of either
 	# the next scrollable parent or positioned parent
 	@getRelativeOffset: (node, untilElem = null, ignore_margin = false) ->
-		assert(isElement(node), "CUI.DOM.getRelativePosition", "Node needs to HTMLElement.", node: node)
+		CUI.util.assert(CUI.util.isElement(node), "CUI.DOM.getRelativePosition", "Node needs to HTMLElement.", node: node)
 		dim_node = CUI.DOM.getDimensions(node)
 		parent = node.parentNode
 
@@ -664,8 +664,8 @@ class CUI.DOM extends CUI.Element
 
 	# sets the absolute position of an element
 	@setAbsolutePosition: (element, offset) ->
-		assert(isElement(element), "CUI.DOM.setAbsolutePosition", "element needs to be an instance of HTMLElement", element: element, offset: offset)
-		assert(isNumber(offset?.left) and isNumber(offset?.top), "CUI.DOM.setAbsolutePosition", "offset.left and offset.top must be >= 0", element: element, offset: offset)
+		CUI.util.assert(CUI.util.isElement(element), "CUI.DOM.setAbsolutePosition", "element needs to be an instance of HTMLElement", element: element, offset: offset)
+		CUI.util.assert(CUI.util.isNumber(offset?.left) and CUI.util.isNumber(offset?.top), "CUI.DOM.setAbsolutePosition", "offset.left and offset.top must be >= 0", element: element, offset: offset)
 		# the offset needs to be corrected by the parent offset
 		# of our DOM element
 		offsetParent = element.offsetParent
@@ -838,7 +838,7 @@ class CUI.DOM extends CUI.Element
 
 		win = window.open("", opts.windowName, opts.windowFeatures)
 
-		if not isEmpty(opts.title)
+		if not CUI.util.isEmpty(opts.title)
 			win.document.title = opts.title
 
 		for style_node in CUI.DOM.matchSelector(document.head, "link[rel='stylesheet']")
@@ -868,7 +868,7 @@ class CUI.DOM extends CUI.Element
 
 	# Inserts the node like array "slice"
 	@insertChildAtPosition: (node, node_insert, pos) ->
-		assert(isInteger(pos) and pos >= 0 and pos <= node.children.length, "CUI.DOM.insertAtPosition", "Unable to insert node at position ##{pos}.", node: node, node_insert: node_insert, pos: pos)
+		CUI.util.assert(CUI.util.isInteger(pos) and pos >= 0 and pos <= node.children.length, "CUI.DOM.insertAtPosition", "Unable to insert node at position ##{pos}.", node: node, node_insert: node_insert, pos: pos)
 		if pos == node.children.length
 			node.appendChild(node_insert)
 		else if node.children[pos] != node_insert
@@ -911,14 +911,14 @@ class CUI.DOM extends CUI.Element
 		for k in ["matches", "webkitMatchesSelector", "mozMatchesSelector", "oMatchesSelector", "msMatchesSelector"]
 			if d[k]
 				return k
-		assert(false, "Could not determine match function on docElem")
+		CUI.util.assert(false, "Could not determine match function on docElem")
 	)()
 
 	@find: (sel) ->
 		@matchSelector(document.documentElement, sel)
 
 	@matchSelector: (docElem, sel, trySelf=false) ->
-		assert(docElem instanceof HTMLElement or docElem == document, "CUI.DOM.matchSelector", "docElem needs to be instanceof HTMLElement or document.", docElem: docElem)
+		CUI.util.assert(docElem instanceof HTMLElement or docElem == document, "CUI.DOM.matchSelector", "docElem needs to be instanceof HTMLElement or document.", docElem: docElem)
 
 		# CUI.error "matchSelector", docElem, sel, trySelf
 		list = docElem.querySelectorAll(sel)
@@ -939,7 +939,7 @@ class CUI.DOM extends CUI.Element
 	# selector: collection eveverything until selector matches, null if no match
 	# untilDocElem: stop collecting at docElem
 	@elementsUntil: (docElem, selector, untilDocElem) ->
-		assert(docElem instanceof Node or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof Node or window.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
+		CUI.util.assert(docElem instanceof Node or docElem == window, "CUI.DOM.elementsUntil", "docElem needs to be instanceof Node or window.", docElem: docElem, selector: selector, untilDocElem: untilDocElem)
 		testDocElem = docElem
 		path = [testDocElem]
 		while true
@@ -998,7 +998,7 @@ class CUI.DOM extends CUI.Element
 
 	# selector is a filter
 	@parents: (docElem, selector, untilDocElem=document.documentElement) ->
-		assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.parents", "element needs to be instanceof HTMLElement, document, or window.", element: docElem)
+		CUI.util.assert(docElem instanceof HTMLElement or docElem == document or docElem == window, "CUI.DOM.parents", "element needs to be instanceof HTMLElement, document, or window.", element: docElem)
 		path = @parentsUntil(docElem, null, untilDocElem)
 
 		if not selector
@@ -1016,12 +1016,12 @@ class CUI.DOM extends CUI.Element
 		if not docElem
 			return null
 
-		assert(docElem instanceof Node, "CUI.DOM.isInDOM", "docElem needs to be instanceof Node.", docElem: docElem)
+		CUI.util.assert(docElem instanceof Node, "CUI.DOM.isInDOM", "docElem needs to be instanceof Node.", docElem: docElem)
 		document.documentElement.contains(docElem)
 
 	# new nodes can be node or Array of nodes
 	@replaceWith: (node, new_node) ->
-		assert(node instanceof Node and (new_node instanceof Node or new_node instanceof NodeList), "CUI.DOM.replaceWidth", "nodes need to be instanceof Node.", node: node, newNode: new_node)
+		CUI.util.assert(node instanceof Node and (new_node instanceof Node or new_node instanceof NodeList), "CUI.DOM.replaceWidth", "nodes need to be instanceof Node.", node: node, newNode: new_node)
 
 		if new_node instanceof NodeList
 			first_node = new_node[0]
@@ -1039,7 +1039,7 @@ class CUI.DOM extends CUI.Element
 		window.getComputedStyle(docElem)
 
 	@setStyle: (docElem, style, append="px") ->
-		assert(docElem instanceof HTMLElement, "CUI.DOM.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
+		CUI.util.assert(docElem instanceof HTMLElement, "CUI.DOM.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		for k, v of style
 			if v == undefined
 				continue
@@ -1066,13 +1066,13 @@ class CUI.DOM extends CUI.Element
 		@setStyle(docElem, style)
 
 	@getRelativePosition: (docElem) ->
-		assert(docElem instanceof HTMLElement, "CUI.DOM.getRelativePosition", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
+		CUI.util.assert(docElem instanceof HTMLElement, "CUI.DOM.getRelativePosition", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		dim = CUI.DOM.getDimensions(docElem)
 		top: dim.offsetTopScrolled
 		left: dim.offsetLeftScrolled
 
 	@getDimensions: (docElem) ->
-		if isNull(docElem)
+		if CUI.util.isNull(docElem)
 			return null
 
 		if docElem == window or docElem == document
@@ -1247,11 +1247,11 @@ class CUI.DOM extends CUI.Element
 
 		delete(docElem.__prep_dim)
 
-		set_dim = copyObject(_dim)
+		set_dim = CUI.util.copyObject(_dim)
 
 		cssFloat = {}
 		set = (key, value) =>
-			if isNull(value) or isNaN(value)
+			if CUI.util.isNull(value) or isNaN(value)
 				return
 
 			if not cssFloat.hasOwnProperty(key)
@@ -1260,7 +1260,7 @@ class CUI.DOM extends CUI.Element
 
 				cssFloat[key] = value
 				return
-			assert(cssFloat[key] == value, "CUI.DOM.setDimensions", "Unable to set contradicting values for #{key}.", docElem: docElem, dim: set_dim)
+			CUI.util.assert(cssFloat[key] == value, "CUI.DOM.setDimensions", "Unable to set contradicting values for #{key}.", docElem: docElem, dim: set_dim)
 			return
 
 		# passthru keys
@@ -1318,13 +1318,13 @@ class CUI.DOM extends CUI.Element
 
 		left_over_keys = Object.keys(set_dim)
 
-		assert(left_over_keys.length == 0, "CUI.DOM.setDimensions", "Unknown keys in dimension: \""+left_over_keys.join("\", \"")+"\".", docElem: docElem, dim: _dim)
+		CUI.util.assert(left_over_keys.length == 0, "CUI.DOM.setDimensions", "Unknown keys in dimension: \""+left_over_keys.join("\", \"")+"\".", docElem: docElem, dim: _dim)
 
 		@setStyle(docElem, cssFloat)
 		cssFloat
 
 	@htmlToNodes: (html) ->
-		if isNull(html)
+		if CUI.util.isNull(html)
 			return
 
 		d = @element("DIV")
@@ -1357,7 +1357,7 @@ class CUI.DOM extends CUI.Element
 		fl
 
 	@isPositioned: (docElem) ->
-		assert(docElem instanceof HTMLElement, "CUI.DOM.isPositioned", "docElem needs to be instance of HTMLElement.", docElem: docElem)
+		CUI.util.assert(docElem instanceof HTMLElement, "CUI.DOM.isPositioned", "docElem needs to be instance of HTMLElement.", docElem: docElem)
 		if docElem == document.body or docElem == document.documentElement
 			return true
 
@@ -1396,7 +1396,7 @@ class CUI.DOM extends CUI.Element
 
 	# remove all children from a DOM node (detach)
 	@removeChildren: (docElem, filter) ->
-		assert(docElem instanceof HTMLElement, "CUI.DOM.removeChildren", "element needs to be instance of HTMLElement", element: docElem)
+		CUI.util.assert(docElem instanceof HTMLElement, "CUI.DOM.removeChildren", "element needs to be instance of HTMLElement", element: docElem)
 		for child in @children(docElem, filter)
 			docElem.removeChild(child)
 		return docElem
@@ -1419,7 +1419,7 @@ class CUI.DOM extends CUI.Element
 			when null
 				@element("DIV", class: "cui-space")
 			else
-				assert(false, "CUI.DOM.space", "Unknown style: "+style)
+				CUI.util.assert(false, "CUI.DOM.space", "Unknown style: "+style)
 
 	@element: (tagName, attrs={}) ->
 		CUI.DOM.setAttributeMap(document.createElement(tagName), attrs)
@@ -1434,7 +1434,7 @@ class CUI.DOM extends CUI.Element
 			pattern = arguments[1]
 			arr = []
 			for k in ["Top", "Left", "Bottom", "Right"]
-				if isEmpty(pattern) or pattern == "*"
+				if CUI.util.isEmpty(pattern) or pattern == "*"
 					k = k.toLowerCase()
 					value = dim[k]
 				else
@@ -1561,7 +1561,7 @@ class CUI.DOM extends CUI.Element
 				remove_mousemoved_class()
 
 	@requestFullscreen: (elem) ->
-		assert(elem instanceof HTMLElement, "startFullscreen", "element needs to be instance of HTMLElement", element: elem)
+		CUI.util.assert(elem instanceof HTMLElement, "startFullscreen", "element needs to be instance of HTMLElement", element: elem)
 		if elem.requestFullscreen
 			elem.requestFullscreen()
 		else if elem.webkitRequestFullscreen
@@ -1623,11 +1623,11 @@ class CUI.DOM extends CUI.Element
 		if not CUI.__ng__
 			no_tables = false
 
-		if not isEmpty(cls)
+		if not CUI.util.isEmpty(cls)
 			attrs.class = cls
 
 		if no_tables
-			if isEmpty(cls)
+			if CUI.util.isEmpty(cls)
 				attrs.class = "cui-"+tagName
 			else
 				attrs.class = "cui-"+tagName+" "+cls
@@ -1734,7 +1734,7 @@ class CUI.DOM extends CUI.Element
 						add_content(a)
 				else if ___a?.DOM
 					CUI.DOM.append(td, ___a.DOM)
-				else if not isNull(___a)
+				else if not CUI.util.isNull(___a)
 					CUI.DOM.append(td, ___a)
 				return
 

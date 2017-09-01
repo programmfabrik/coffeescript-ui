@@ -46,20 +46,20 @@ class CUI.ListViewRow extends CUI.Element
 		@listView = null
 
 	addColumn: (column) ->
-		assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.push(column)
 		column.setRow(@)
 		@
 
 	setColumn: (idx, column) ->
-		assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns[idx] = column
 		column.setRow(@)
 		@
 
 
 	prependColumn: (column) ->
-		assert(column instanceof ListViewColumn,"ListViewRow.prependColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof ListViewColumn,"ListViewRow.prependColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.splice(0,0,column)
 		column.setRow(@)
 		@

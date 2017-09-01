@@ -41,7 +41,7 @@ class CUI.XHR extends CUI.Element
 			json_pretty:
 				default: false
 				check: (v) ->
-					v == false or v == true or isString(v)
+					v == false or v == true or CUI.util.isString(v)
 			headers:
 				mandatory: true
 				default: {}
@@ -99,7 +99,7 @@ class CUI.XHR extends CUI.Element
 		if @_body
 			set = set + 1
 
-		assert(set <= 1, "new CUI.XHR", "opts.form, opts.json_data, opts.body are mutually exclusive.")
+		CUI.util.assert(set <= 1, "new CUI.XHR", "opts.form, opts.json_data, opts.body are mutually exclusive.")
 		@
 
 	# type: xhr / upload
@@ -157,7 +157,7 @@ class CUI.XHR extends CUI.Element
 		@
 
 	__download_readyStateChange: ->
-		pushOntoArray(@readyState(), @__readyStatesSeen)
+		CUI.util.pushOntoArray(@readyState(), @__readyStatesSeen)
 
 	__progress: (ev, type) ->
 		if @readyState() == "DONE"

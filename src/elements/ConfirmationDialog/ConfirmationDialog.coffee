@@ -20,7 +20,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 				check: String
 			text_icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			markdown:
 				mandatory: true
 				default: false
@@ -31,10 +31,10 @@ class CUI.ConfirmationDialog extends CUI.Modal
 				check: String
 			content:
 				check: (v) ->
-					isContent(v) or v?.DOM
+					CUI.util.isContent(v) or v?.DOM
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			buttons:
 				check: (v) ->
 					(CUI.isArray(v) and v.length > 0) or CUI.isFunction(v)
@@ -53,21 +53,21 @@ class CUI.ConfirmationDialog extends CUI.Modal
 
 	init: ->
 
-		if not xor(@_html, xor(@_content, @_text))
+		if not CUI.util.xor(@_html, CUI.util.xor(@_content, @_text))
 			console.warn("#{@__cls}.readOpts", "Exactly on opts.content, opts.text, or opts.html needs to be set", opts: @opts)
 			@_text = ""
 
 		if not @_title
 			@addClass("cui-confirmation-dialog--no-title")
 
-		if not isEmpty(@_text)
+		if not CUI.util.isEmpty(@_text)
 			@__label = c = new MultilineLabel(markdown: @_markdown, markdown_opts: @_markdown_opts, text: @_text, icon: @_text_icon)
-		else if not isEmpty(@_html)
+		else if not CUI.util.isEmpty(@_html)
 			@__label = c = new MultilineLabel(content: @_html)
 		else
 			c = @_content
 
-		if not isEmpty(@_title) or not isNull(@_icon)
+		if not CUI.util.isEmpty(@_title) or not CUI.util.isNull(@_icon)
 			l = new Label(text: @_title, icon: @_icon)
 
 		pane = @getPane()

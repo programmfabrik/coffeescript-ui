@@ -45,12 +45,12 @@ class CUI.Block extends CUI.DOM
 				check: String
 			header:
 				check: (v) ->
-					!!(isContent(v) or isString(v) or v?.DOM)
+					!!(CUI.util.isContent(v) or CUI.util.isString(v) or v?.DOM)
 			icon:
 				check: CUI.Icon
 			content:
 				check: (v) ->
-					!!(isContent(v) or isString(v) or v?.DOM)
+					!!(CUI.util.isContent(v) or CUI.util.isString(v) or v?.DOM)
 			level:
 				mandatory: true
 				default: 1
@@ -66,18 +66,18 @@ class CUI.Block extends CUI.DOM
 
 	readOpts: ->
 		super()
-		assert(not ((@_text or @_icon) and @_header), "new Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
+		CUI.util.assert(not ((@_text or @_icon) and @_header), "new Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
 		@
 
 	getTemplateName: ->
 		"block"
 
 	setText: (txt) ->
-		assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
+		CUI.util.assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
 		@__label.setText(txt)
 
 	setIcon: (icon) ->
-		assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
+		CUI.util.assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
 		@__label.setIcon(icon)
 
 	setHeader: (header) ->

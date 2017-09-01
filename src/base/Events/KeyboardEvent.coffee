@@ -98,7 +98,7 @@ class CUI.KeyboardEvent extends CUI.Event
 			capture: true
 			call: (ev) ->
 				if not is_modifier(ev.keyCode())
-					pushOntoArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
+					CUI.util.pushOntoArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
 
 				return
 
@@ -109,7 +109,7 @@ class CUI.KeyboardEvent extends CUI.Event
 			call: (ev) ->
 
 				if not is_modifier(ev.keyCode())
-					removeFromArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
+					CUI.util.removeFromArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
 
 				return
 

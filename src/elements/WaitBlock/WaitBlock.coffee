@@ -19,7 +19,7 @@ class CUI.WaitBlock extends CUI.Block
 		super()
 		@mergeOpt "icon",
 			check: (v) ->
-				v instanceof Icon or isString(v)
+				v instanceof Icon or CUI.util.isString(v)
 
 		@removeOpt("header")
 		@removeOpt("content")
@@ -31,14 +31,14 @@ class CUI.WaitBlock extends CUI.Block
 				check: Boolean
 			element:
 				check: (v) ->
-					isElement(v) or isElement(v.DOM)
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
 # use to put this wait block fullscreen
 			fullscreen:
 				check: Boolean
 
 	readOpts: ->
 		super()
-		assert(xor(@_element, @_fullscreen), "new WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(@_element, @_fullscreen), "new WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
 
 		if @_fullscreen
 			@__element = document.body

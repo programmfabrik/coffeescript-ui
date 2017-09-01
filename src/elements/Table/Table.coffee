@@ -97,7 +97,7 @@ class CUI.Table extends CUI.DOM
 	readOpts: ->
 		super()
 		if @_key_value
-			assert(not @_columns and not @opts.hasOwnProperty("header"), "new Table", "opts.key_value cannot be set together with opts.header or opts.columns.", opts: @opts)
+			CUI.util.assert(not @_columns and not @opts.hasOwnProperty("header"), "new Table", "opts.key_value cannot be set together with opts.header or opts.columns.", opts: @opts)
 			@_header = false
 			@__columns = [
 				name: "key"
@@ -105,7 +105,7 @@ class CUI.Table extends CUI.DOM
 				name: "value"
 			]
 		else
-			@__columns = copyObject(@_columns, true)
+			@__columns = CUI.util.copyObject(@_columns, true)
 
 
 		for col in @__columns
@@ -114,7 +114,7 @@ class CUI.Table extends CUI.DOM
 			else
 				col.__class = ""
 
-			if not isEmpty(col.class)
+			if not CUI.util.isEmpty(col.class)
 				col.__class += " "+col.class
 
 		@
@@ -124,7 +124,7 @@ class CUI.Table extends CUI.DOM
 		for col in @__columns
 			td = $td("cui-table-td"+col.__class)
 			value = row[col.name]
-			if isString(value)
+			if CUI.util.isString(value)
 				CUI.DOM.addClass(td, "cui-td--text-content")
 				td.textContent = value
 			else

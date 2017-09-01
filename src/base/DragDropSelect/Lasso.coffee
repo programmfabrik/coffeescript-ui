@@ -96,7 +96,7 @@ class CUI.Lasso extends CUI.Draggable
 
 		for el in CUI.globalDrag.elements.slice(0)
 			if el not in lassoed_elements
-				removeFromArray(el, CUI.globalDrag.elements)
+				CUI.util.removeFromArray(el, CUI.globalDrag.elements)
 				CUI.DOM.toggleClass(el, @_lassoed_element_class)
 
 		CUI.DOM.setStyle(CUI.globalDrag.lasso,
@@ -138,11 +138,11 @@ class CUI.Lasso extends CUI.Draggable
 					lassoed_el = parents[parents.length-2]
 
 				if lassoed_el
-					pushOntoArray(lassoed_el, lassoed)
+					CUI.util.pushOntoArray(lassoed_el, lassoed)
 		else if @_filter
 			for el in CUI.DOM.matchSelector(CUI.globalDrag.$source, @_filter)
 				if do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
-					pushOntoArray(el, lassoed)
+					CUI.util.pushOntoArray(el, lassoed)
 		else
 			for el in CUI.globalDrag.$source.children
 				if do_overlap(CUI.globalDrag.lasso_dim, get_dim(el))
@@ -151,7 +151,7 @@ class CUI.Lasso extends CUI.Draggable
 
 	stop_drag: (ev) ->
 		for el in CUI.globalDrag.elements.slice(0)
-			removeFromArray(el, CUI.globalDrag.elements)
+			CUI.util.removeFromArray(el, CUI.globalDrag.elements)
 			CUI.DOM.toggleClass(el, @_lassoed_element_class)
 		super(ev)
 

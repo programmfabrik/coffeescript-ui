@@ -40,7 +40,7 @@ class CUI.DocumentBrowser extends CUI.Element
 	readOpts: ->
 		super(@opts)
 
-		@__marked_opts = copyObject(@_marked_opts)
+		@__marked_opts = CUI.util.copyObject(@_marked_opts)
 
 		if not @__marked_opts.renderer
 			@__marked_opts.renderer = new marked.Renderer()
@@ -68,7 +68,7 @@ class CUI.DocumentBrowser extends CUI.Element
 		mark = (markdown) =>
 			dfr.resolve(marked(markdown, @__marked_opts))
 		ret = @_getMarkdown(markdown)
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret
 			.done (markdown) =>
 				mark(markdown)
@@ -270,7 +270,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				@__all_words.push
 					word: word
 					count: count
-					sorted: word.toLocaleLowerCase().split("").sort((a,b) -> compareIndex(a, b)).join("")
+					sorted: word.toLocaleLowerCase().split("").sort((a,b) -> CUI.util.compareIndex(a, b)).join("")
 			@__all_words.sort (a, b) =>
 				b.count - a.count
 			console.debug "words", @__words, @__all_words

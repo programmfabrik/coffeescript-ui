@@ -127,7 +127,7 @@ class CUI.MarkdownInput extends CUI.Input
 				else
 					is_ul = null
 
-				if is_ul != null and not xor(is_ul, ul) # unsorted list
+				if is_ul != null and not CUI.util.xor(is_ul, ul) # unsorted list
 					prefix = ""
 
 				console.debug "rowcriteria.", space.length, item
@@ -157,7 +157,7 @@ class CUI.MarkdownInput extends CUI.Input
 	handleSelectionChange: (ev) ->
 		super(ev)
 		sel = @getSelection()
-		console.debug "md selection change", ev, dump(sel)
+		console.debug "md selection change", ev, CUI.util.dump(sel)
 		@checkList()
 
 
@@ -220,7 +220,7 @@ class CUI.MarkdownInput extends CUI.Input
 	@__escape_regexp: new RegExp('[\\'+('*-_\\![]()'.split("").join("\\"))+']','g')
 
 	@escape: (obj) ->
-		assert(typeof(obj) in ["string", "object"], "MarkdownInput.escape", "Object needs to be typof 'string' or 'object'.", obj: obj)
+		CUI.util.assert(typeof(obj) in ["string", "object"], "MarkdownInput.escape", "Object needs to be typof 'string' or 'object'.", obj: obj)
 		if typeof(obj) == "string"
 			return obj.replace(@__escape_regexp, "\\$&")
 

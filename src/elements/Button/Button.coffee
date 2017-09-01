@@ -75,7 +75,7 @@ class CUI.Button extends CUI.DOM
 		if CUI.__ng__
 			@addClass("cui-button-button")
 
-		if isString(@__tooltipOpts?.text)
+		if CUI.util.isString(@__tooltipOpts?.text)
 			@setAria("label", @__tooltipOpts?.text)
 			@__hasAriaLabel = true
 		else
@@ -88,13 +88,13 @@ class CUI.Button extends CUI.DOM
 
 		if not @_left or @_left == true
 			if @_icon
-				assert(isUndef(@_icon_left), "new #{@__cls}", "opts.icon conflicts with opts.icon_left", opts: @opts)
+				CUI.util.assert(CUI.util.isUndef(@_icon_left), "new #{@__cls}", "opts.icon conflicts with opts.icon_left", opts: @opts)
 				icon_left = @_icon
 			else
 				icon_left = @_icon_left
 
 			if icon_left
-				assert(not @_icon_active and not @_icon_inactive, "new Button", "opts.icon_active or opts.icon_inactive cannot be set together with opts.icon or opts.icon_left", opts: @opts)
+				CUI.util.assert(not @_icon_active and not @_icon_inactive, "new Button", "opts.icon_active or opts.icon_inactive cannot be set together with opts.icon or opts.icon_left", opts: @opts)
 				@setIcon(icon_left)
 		else
 			@append(@_left, "left")
@@ -146,17 +146,17 @@ class CUI.Button extends CUI.DOM
 		@__radio_allow_null = @_radio_allow_null
 
 		if @_radio
-			assert(isUndef(@_switch), "new Button", "opts.switch conflicts with opts.radio.", opts: @opts)
+			CUI.util.assert(CUI.util.isUndef(@_switch), "new Button", "opts.switch conflicts with opts.radio.", opts: @opts)
 			if @_radio == true
 				@__radio = "radio--"+@getUniqueId()
 			else
 				@__radio = @_radio
-		else if not isNull(@_switch)
+		else if not CUI.util.isNull(@_switch)
 			@__radio = "switch--"+@getUniqueId()
 			@__radio_allow_null = true
 
 		if @__radio
-			assert(not @_attr?.radio, "new Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
+			CUI.util.assert(not @_attr?.radio, "new Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
 			DOM.setAttribute(@DOM, "radio", @__radio)
 
 		@setGroup(@_group)
@@ -176,7 +176,7 @@ class CUI.Button extends CUI.DOM
 					else
 						itemList_opts[k] = v
 
-			if not isEmpty(@_class)
+			if not CUI.util.isEmpty(@_class)
 				if @__menu_opts.class
 					@__menu_opts.class += " "+@_class
 				else
@@ -436,7 +436,7 @@ class CUI.Button extends CUI.DOM
 			tabindex:
 				default: 0
 				check: (v) ->
-					isInteger(v) or v == false
+					CUI.util.isInteger(v) or v == false
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
@@ -460,7 +460,7 @@ class CUI.Button extends CUI.DOM
 			disabled:
 				default: false
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.isFunction(v)
 			active_css_class:
 				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String
@@ -469,34 +469,34 @@ class CUI.Button extends CUI.DOM
 					if v == true
 						return true
 
-					(isElement(v) or
+					(CUI.util.isElement(v) or
 						v instanceof CUI.Element or
-						isString(v)) and
+						CUI.util.isString(v)) and
 						not @_icon and
 						not @_icon_left and
 						not @_icon_active and
 						not @_icon_inactive
 			right:
 				check: (v) ->
-					(v == true or isContent(v)) and not @_icon_right
+					(v == true or CUI.util.isContent(v)) and not @_icon_right
 			center:
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			icon_left:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			icon_right:
 				check: (v) ->
-					v instanceof Icon or isString(v) or v == false
+					v instanceof Icon or CUI.util.isString(v) or v == false
 			icon_active:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			icon_inactive:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof Icon or CUI.util.isString(v)
 			text_active:
 				check: String
 			text_inactive:
@@ -506,7 +506,7 @@ class CUI.Button extends CUI.DOM
 				check: String
 			hidden:
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.isFunction(v)
 			menu:
 				check: "PlainObject"
 			menu_on_hover:
@@ -529,7 +529,7 @@ class CUI.Button extends CUI.DOM
 			# on the others
 			radio:
 				check: (v) ->
-					isString(v) or v == true
+					CUI.util.isString(v) or v == true
 			# whether to allow de-select
 			# on radio buttons
 			radio_allow_null:
@@ -564,12 +564,12 @@ class CUI.Button extends CUI.DOM
 	readOpts: ->
 
 		if @opts.switch
-			assert(isUndef(@opts.radio_allow_null), "new Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
+			CUI.util.assert(CUI.util.isUndef(@opts.radio_allow_null), "new Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
 
 		super()
 
 		if @_left
-			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
+			CUI.util.assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
 
 
 	getCenter: ->
@@ -587,10 +587,10 @@ class CUI.Button extends CUI.DOM
 			@__has_right = false
 
 		if @__has_left and
-			isUndef(@_text) and
-			isUndef(@_center) and
-			isUndef(@_text_active) and
-			isUndef(@_text_inactive) and
+			CUI.util.isUndef(@_text) and
+			CUI.util.isUndef(@_center) and
+			CUI.util.isUndef(@_text_active) and
+			CUI.util.isUndef(@_text_inactive) and
 			CUI.__ng__
 				@__has_center = false
 
@@ -720,7 +720,7 @@ class CUI.Button extends CUI.DOM
 
 		@__active = true
 		ret = @_onActivate?(@, flags, event)
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret.done(activate).fail =>
 				@__active = false
 			return ret
@@ -755,7 +755,7 @@ class CUI.Button extends CUI.DOM
 
 		@__active = false
 		ret = @_onDeactivate?(@, flags, event)
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret.done(deactivate).fail =>
 				@__active = true
 			return ret
@@ -774,7 +774,7 @@ class CUI.Button extends CUI.DOM
 		else
 			@[key] = @__getIcon(icon)
 
-		assert(@[key] == null or @[key] == "" or @[key] instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+		CUI.util.assert(@[key] == null or @[key] == "" or @[key] instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
 
 		if @[key] == null
 			@empty(_key)
@@ -785,7 +785,7 @@ class CUI.Button extends CUI.DOM
 		@
 
 	startSpinner: ->
-		assert(@__has_left, "CUI.Button.startSpinner", "No space for Icon found, make sure the Button was created with opts.left set.", opts: @opts)
+		CUI.util.assert(@__has_left, "CUI.Button.startSpinner", "No space for Icon found, make sure the Button was created with opts.left set.", opts: @opts)
 		if @__hasSpinner
 			return
 
@@ -831,10 +831,10 @@ class CUI.Button extends CUI.DOM
 			return @
 
 		if @isActive()
-			if not isNull(@_text_active)
+			if not CUI.util.isNull(@_text_active)
 				@setText(@_text_active)
 		else
-			if not isNull(@_text_inactive)
+			if not CUI.util.isNull(@_text_inactive)
 				@setText(@_text_inactive)
 		@
 
@@ -867,7 +867,7 @@ class CUI.Button extends CUI.DOM
 		@
 
 	setText: (@__txt) ->
-		if isEmpty(@__txt)
+		if CUI.util.isEmpty(@__txt)
 			@__txt = ''
 
 		span = $text(@__txt)
@@ -895,13 +895,13 @@ class CUI.Button extends CUI.DOM
 		if @__tooltip
 			return @
 
-		tt_opts = copyObject(@__tooltipOpts)
+		tt_opts = CUI.util.copyObject(@__tooltipOpts)
 
 		tt_opts.element ?= @DOM
 
 		# make sure the tooltip does not register any listeners
 		for k in ["on_hover", "on_click"]
-			assert(not tt_opts.hasOwnProperty(k), "CUI.Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
+			CUI.util.assert(not tt_opts.hasOwnProperty(k), "CUI.Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
 			tt_opts[k] = false
 
 		@__tooltip = new Tooltip(tt_opts)

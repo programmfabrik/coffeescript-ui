@@ -41,7 +41,7 @@ class CUI.FormPopover extends CUI.Form
 		@__fields_is_func = CUI.isFunction(@_fields)
 
 		if @__fields_is_func
-			assert(@_data_not_for_others != true, "new FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
+			CUI.util.assert(@_data_not_for_others != true, "new FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
 
 	init: ->
 		if not @__fields_is_func
@@ -80,7 +80,7 @@ class CUI.FormPopover extends CUI.Form
 		]
 			return @__fields or []
 
-		assert(@__fields, "FormPopover.getFields("+func+")", "Fields not rendered yet. This is a programming error in CUI.")
+		CUI.util.assert(@__fields, "FormPopover.getFields("+func+")", "Fields not rendered yet. This is a programming error in CUI.")
 		return super()
 
 	# this is for the button container
@@ -96,7 +96,7 @@ class CUI.FormPopover extends CUI.Form
 		true
 
 	render: ->
-		button_opts = copyObject(@_button, true)
+		button_opts = CUI.util.copyObject(@_button, true)
 		button_opts.onClick = =>
 			@__openPopover()
 
@@ -185,7 +185,7 @@ class CUI.FormPopover extends CUI.Form
 		new Popover(opts)
 
 	getPopoverOpts: ->
-		pop_opts = copyObject(@_popover, true)
+		pop_opts = CUI.util.copyObject(@_popover, true)
 
 		if not pop_opts.backdrop
 			pop_opts.backdrop = {}
@@ -197,9 +197,9 @@ class CUI.FormPopover extends CUI.Form
 		if not pop_opts.pane
 			pop_opts.pane = {}
 
-		assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
 
-		if isEmpty(pop_opts.class)
+		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
 		pop_opts.class += " cui-form-popover-popover"
 		# CUI.debug "getPopoverOpts", pop_opts

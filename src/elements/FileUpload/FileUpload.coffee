@@ -66,7 +66,7 @@ class CUI.FileUpload extends CUI.Element
 
 	# returns all uploaded files including completed
 	getFiles: (filter) ->
-		if isString(filter)
+		if CUI.util.isString(filter)
 			filter = [ filter ]
 
 		files = []
@@ -243,7 +243,7 @@ class CUI.FileUpload extends CUI.Element
 				file.remove()
 
 	removeFile: (file) ->
-		removeFromArray(file, @__files)
+		CUI.util.removeFromArray(file, @__files)
 
 	isDone: ->
 		if @__isQueueing
@@ -300,7 +300,7 @@ class CUI.FileUpload extends CUI.Element
 			dropZone:
 				mandatory: true
 				check: (v) ->
-					isElement(v) or isElement(v.DOM)
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
 			multiple:
 				mandatory: true
 				default: true

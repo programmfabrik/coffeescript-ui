@@ -13,7 +13,7 @@ class CUI.Dragscroll extends CUI.Draggable
 		@addOpts
 			scroll_element:
 				check: (v) ->
-					isElement(v)
+					CUI.util.isElement(v)
 
 	readOpts: ->
 		super()

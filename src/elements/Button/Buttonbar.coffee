@@ -28,7 +28,7 @@ class CUI.Buttonbar extends CUI.DOM
 		@__groupDivs = {}
 
 		if @_tooltip
-			tt_opts = copyObject(@_tooltip)
+			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element = @__buttons
 			@__tooltip = new Tooltip(tt_opts)
 
@@ -113,7 +113,7 @@ class CUI.Buttonbar extends CUI.DOM
 		@addButton(btn, check_visibility, true)
 
 	addButton: (btn, check_visibility = true, prepend = false) ->
-		if isNull(btn)
+		if CUI.util.isNull(btn)
 			return
 
 		if CUI.isPlainObject(btn)
@@ -130,7 +130,7 @@ class CUI.Buttonbar extends CUI.DOM
 			btn_dom = btn
 			grp = btn.group or null
 		else
-			assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{getObjectClass(btn)}.", button: btn, opts: @opts)
+			CUI.util.assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{CUI.util.getObjectClass(btn)}.", button: btn, opts: @opts)
 
 		Events.listen
 			type: ["show", "hide"]

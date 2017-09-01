@@ -88,7 +88,7 @@ class CUI
 			if m = cui_script.src.match("(.*/).*?\.js$")
 				@pathToScript = m[1]
 			else
-				assert(@pathToScript, "CUI", "Could not determine script path.")
+				CUI.util.assert(@pathToScript, "CUI", "Could not determine script path.")
 
 		@pathToScript
 
@@ -175,7 +175,7 @@ class CUI
 
 			idx++
 
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret
 				.done =>
 					return_values.push(get_return_value(arguments))
@@ -217,7 +217,7 @@ class CUI
 		chunk_size = opts.chunk_size
 		timeout = opts.timeout
 
-		assert(@ != CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.")
+		CUI.util.assert(@ != CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.")
 
 		idx = 0
 		len = opts.items.length
@@ -251,7 +251,7 @@ class CUI
 				dfr.reject()
 				return
 
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.fail(dfr.reject).done(go_on)
 			else
 				go_on()
@@ -323,7 +323,7 @@ class CUI
 		return
 
 	@__removeTimeout: (timeout) ->
-		if removeFromArray(timeout, @__timeouts)
+		if CUI.util.removeFromArray(timeout, @__timeouts)
 			if timeout.track
 				@__callTimeoutChangeCallbacks()
 		return
@@ -333,12 +333,12 @@ class CUI
 			if timeout.id == timeoutID
 				return timeout
 
-		assert(ignoreNotFound, "CUI.__getTimeoutById", "Timeout ##{timeoutID} not found.")
+		CUI.util.assert(ignoreNotFound, "CUI.__getTimeoutById", "Timeout ##{timeoutID} not found.")
 		null
 
 	@resetTimeout: (timeoutID) ->
 		timeout = @__getTimeoutById(timeoutID)
-		assert(not timeout.__isRunning, "CUI.resetTimeout", "Timeout #{timeoutID} cannot be resetted while running.", timeout: timeout)
+		CUI.util.assert(not timeout.__isRunning, "CUI.resetTimeout", "Timeout #{timeoutID} cannot be resetted while running.", timeout: timeout)
 		timeout.onReset?(timeout)
 		window.clearTimeout(timeout.real_id)
 		old_real_id = timeout.real_id
@@ -360,13 +360,13 @@ class CUI
 		else
 			func = _func
 
-		if isNull(track)
+		if CUI.util.isNull(track)
 			if ms == 0
 				track = false
 			else
 				track = true
 
-		assert(CUI.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
+		CUI.util.assert(CUI.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
 		timeout =
 			call: =>
 				timeout.__isRunning = true
@@ -401,12 +401,12 @@ class CUI
 			ms:
 				default: 0
 				check: (v) ->
-					isInteger(v) and v >= 0
+					CUI.util.isInteger(v) and v >= 0
 			track:
 				default: false
 				check: Boolean
 
-		idx = idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
+		idx = CUI.util.idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		if idx > -1 and CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeoutID)
 			# don't schedule the same call while it is already running, schedule
@@ -440,7 +440,7 @@ class CUI
 
 		dfr.done =>
 			# remove this callback after we are done
-			removeFromArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
+			CUI.util.removeFromArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		cb.promise
 
@@ -452,7 +452,7 @@ class CUI
 				mandatory: true
 				check: Function
 
-		idx = idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
+		idx = CUI.util.idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		if idx > -1 and not CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeoutID)
 			# console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
@@ -620,7 +620,7 @@ class CUI
 			if CUI.isArray(v)
 				for _v in v
 					url.push(encode_func(k) + connect_pair + encode_func(_v))
-			else if not isEmpty(v)
+			else if not CUI.util.isEmpty(v)
 				url.push(encode_func(k) + connect_pair + encode_func(v))
 			else if v != undefined
 				url.push(encode_func(k))
@@ -683,7 +683,7 @@ class CUI
 	@stringMapReplace: (s, map) ->
 		regex = []
 		for key of map
-			if isEmpty(key)
+			if CUI.util.isEmpty(key)
 				continue
 			regex.push(key.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
 
@@ -844,30 +844,11 @@ class CUI
 
 
 	@escapeAttribute: (data) ->
-		if isNull(data) or !isString(data)
+		if CUI.util.isNull(data) or !CUI.util.isString(data)
 			return ""
 
 		data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
 		data
-
-
-	@windowCompat:
-		protect: [] # Array to hold properties which will not get copied
-		start: ->
-			for prop, func of CUI
-				if prop in CUI.windowCompat.protect
-					continue
-
-				if window[prop] != undefined
-					console.error("CUI.windowCompat: Already mapped! CUI."+prop+" -> window."+prop)
-				else
-					window[prop] = func
-					console.info("CUI."+prop+" -> window."+prop)
-
-			for prop, func of CUI.DOM
-				if prop.startsWith('$')
-					window[prop] = func
-					console.info("CUI.DOM."+prop+" -> window."+prop)
 
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 	@browser: (->
@@ -881,11 +862,6 @@ class CUI
 		map.blink = (map.chrome or map.opera) && !!window.CSS
 		map
 	)()
-
-# protect already stuff added from CUI
-for prop, value of CUI
-	# protect from copying by windowCompat.coffee
-	CUI.windowCompat.protect.push(prop)
 
 CUI.ready =>
 

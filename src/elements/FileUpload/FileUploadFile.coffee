@@ -138,7 +138,7 @@ class CUI.FileUploadFile extends CUI.Element
 
 	upload: (url, name) ->
 		# CUI.debug "starting upload for", @_file.name
-		assert(not @__upload, "FileUploadFile.upload", "A file can only be uploaded once.", file: @)
+		CUI.util.assert(not @__upload, "FileUploadFile.upload", "A file can only be uploaded once.", file: @)
 
 		form = {}
 		form[name] = @_file

@@ -22,7 +22,7 @@ class CUI.DragDropSelect extends CUI.Element
 	readOpts: ->
 		super()
 		@cls = CUI[@__cls].cls
-		assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
+		CUI.util.assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
 
 		@element = @_element
 		DragDropSelect.getInstance(@element, @cls)?.destroy()
@@ -42,16 +42,12 @@ class CUI.DragDropSelect extends CUI.Element
 	init: ->
 		throw "overwrite Drag.init"
 
-	# makeElementRelative: (ele) ->
-	# 	if $elementIsInDOM(ele) and ele.css("position") not in ["absolute","fixed","relative"]
-	# 		ele.css(position: "relative")
-
 	@destroy: (node, cls=@cls) ->
 		inst = @getInstance(node, cls)
 		inst?.destroy()
 
 	@getInstance: (node, cls=@cls) ->
-		assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
+		CUI.util.assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
 		DOM.data(node, "drag-drop-select-"+cls)
 
 

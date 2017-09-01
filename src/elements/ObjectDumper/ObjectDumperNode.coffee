@@ -33,7 +33,7 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 
 	setData: (data) ->
 
-		if @_parse_json and isString(data)
+		if @_parse_json and CUI.util.isString(data)
 			try
 				@__data = JSON.parse(data)
 			catch e
@@ -89,14 +89,14 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		else if typeof(data) == "number" and isNaN(data)
 			info.cls = "NaN"
 			info.text = "NaN"
-		else if isNumber(data)
+		else if CUI.util.isNumber(data)
 			info.cls = "number"
 			info.text = ""+data
-		else if isString(data)
+		else if CUI.util.isString(data)
 			info.cls = "String"
 			info.text = '"'+data+'"'
 		else
-			info.cls = getObjectClass(data)
+			info.cls = CUI.util.getObjectClass(data)
 
 			if CUI.isArray(data) or CUI.isPlainObject(data)
 				info.has_children = not CUI.isEmptyObject(data)

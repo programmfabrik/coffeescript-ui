@@ -34,7 +34,7 @@ class CUI.FlexHandle extends CUI.Element
 		@__stretched = null
 		@__size = null
 
-		assert(@__pane, "new #{@__cls}", "pane \"#{@_pane}\" not found in parent element of cui-flex-handle element.", opts: @opts, children: children)
+		CUI.util.assert(@__pane, "new #{@__cls}", "pane \"#{@_pane}\" not found in parent element of cui-flex-handle element.", opts: @opts, children: children)
 
 		CUI.DOM.data(@__pane, "flexHandle", @)
 
@@ -47,7 +47,7 @@ class CUI.FlexHandle extends CUI.Element
 		else if @_direction in ["vertical", "column"]
 			@__direction = "column"
 
-		assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element)
+		CUI.util.assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element)
 
 		if @_label
 			@addLabel(@_label)
@@ -60,7 +60,7 @@ class CUI.FlexHandle extends CUI.Element
 			element:
 				mandatory: true
 				check: (v) ->
-					isElement(v)
+					CUI.util.isElement(v)
 			pane:
 				mandatory: true
 				check: String
@@ -115,7 +115,7 @@ class CUI.FlexHandle extends CUI.Element
 			type: "dblclick"
 			node: @_element
 			call: (ev) =>
-				if @__size == null # isEmpty(@__pane[0].style[@__css_value])
+				if @__size == null # CUI.util.isEmpty(@__pane[0].style[@__css_value])
 					if @isClosed()
 						@open()
 					else if @_closable
@@ -247,7 +247,7 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	__setSize: (size) ->
-		if isNull(size)
+		if CUI.util.isNull(size)
 			DOM.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
 
 			if @__isAlive()
@@ -299,7 +299,7 @@ class CUI.FlexHandle extends CUI.Element
 
 	__getState: ->
 		value = CUI.getLocalStorage(@__state_name)
-		if not isNull(value)
+		if not CUI.util.isNull(value)
 			state = JSON.parse(value)
 		else
 			state = {}
@@ -311,13 +311,13 @@ class CUI.FlexHandle extends CUI.Element
 
 		state = @__getState()
 
-		if not isUndef(state.closed) and @_closable
+		if not CUI.util.isUndef(state.closed) and @_closable
 			if state.closed
 				@close()
 			else
 				@open()
 
-		if not isUndef(state.size)
+		if not CUI.util.isUndef(state.size)
 			@__setSize(state.size)
 
 		# CUI.debug "setState", state
@@ -523,7 +523,7 @@ class CUI.FlexHandle extends CUI.Element
 					fh = opts.flexHandle
 				else
 					fh_els = CUI.DOM.closest(btn.DOM, "[flex-handled-pane]")
-					assert(fh_els, "FlexHandle.getStretchButton", "FlexHandle not or more than one found, name: #{opts.name}.", opts: opts, flexHandles: fh_els)
+					CUI.util.assert(fh_els, "FlexHandle.getStretchButton", "FlexHandle not or more than one found, name: #{opts.name}.", opts: opts, flexHandles: fh_els)
 					fh = DOM.data(fh_els, "flexHandle")
 
 				if fh.isStretched()

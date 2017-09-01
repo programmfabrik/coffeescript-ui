@@ -56,7 +56,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			inp.enable()
 
 	initValue: ->
-		if isNull(v = @__data[@_name])
+		if CUI.util.isNull(v = @__data[@_name])
 			v = @__data[@_name] = {}
 
 		for key in @_control.getKeys()
@@ -72,7 +72,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		if not @__inputs
 			return
 
-		input_data = copyObject(@getValue(), true)
+		input_data = CUI.util.copyObject(@getValue(), true)
 		for input in @__inputs
 			input.setData(input_data)
 			if @_undo_support
@@ -88,7 +88,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		names = (key.name for key in @_control.getKeys())
 		# sort input by key
 		@__inputs.sort (a, b) =>
-			compareIndex(
+			CUI.util.compareIndex(
 				names.indexOf(a.getOpt("name"))
 				names.indexOf(b.getOpt("name"))
 			)
@@ -148,9 +148,9 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		@__inputs = []
 
 		for key, idx in @_control.getKeys()
-			assert(CUI.isPlainObject(key), "new #{@__cls}", "opts.keys[#{idx}] needs to be PlainObject.", opts: @opts)
-			assert(isString(key.name), "new #{@__cls}", "opts.keys[#{idx}].name needs to be String.", opts: @opts)
-			assert(isString(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag needs to be String.", opts: @opts)
+			CUI.util.assert(CUI.isPlainObject(key), "new #{@__cls}", "opts.keys[#{idx}] needs to be PlainObject.", opts: @opts)
+			CUI.util.assert(CUI.util.isString(key.name), "new #{@__cls}", "opts.keys[#{idx}].name needs to be String.", opts: @opts)
+			CUI.util.assert(CUI.util.isString(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag needs to be String.", opts: @opts)
 
 			input_opts =
 				class: "cui-multi-input-input"
@@ -184,7 +184,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 					type: "data-changed"
 					node: input
 					call: (ev) =>
-						values = copyObject(@getValue())
+						values = CUI.util.copyObject(@getValue())
 						values[key.name] = input.getValue()
 						ev.stopImmediatePropagation()
 						@storeValue(values)

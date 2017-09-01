@@ -8,7 +8,7 @@
 class CUI.Tooltip extends CUI.LayerPane
 	constructor: (@opts = {}) ->
 		super(@opts)
-		assert(xor(@_text, @_content), "new #{@__cls}", "One of opts.text or opts.content must be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(@_text, @_content), "new #{@__cls}", "One of opts.text or opts.content must be set.", opts: @opts)
 
 		@__dummyInst = =>
 
@@ -62,14 +62,14 @@ class CUI.Tooltip extends CUI.LayerPane
 		@addOpts
 			text:
 				check: (v) ->
-					isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.isFunction(v)
 			markdown:
 				mandatory: true
 				default: false
 				check: Boolean
 			content:
 				check: (v) ->
-					isString(v) or CUI.isFunction(v) or isElement(v) or CUI.isArray(v) or isElement(v?.DOM)
+					CUI.util.isString(v) or CUI.isFunction(v) or CUI.util.isElement(v) or CUI.isArray(v) or CUI.util.isElement(v?.DOM)
 			# hide/show on click on element
 			on_click:
 				mandatory: true
@@ -78,7 +78,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			# hide/show on click on hover
 			on_hover:
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.isFunction(v)
 
 		return
 
@@ -87,7 +87,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		if not @opts.hasOwnProperty("on_hover")
 			@opts.on_hover = not @opts.on_click
 
-		# if isUndef(@opts.anchor)
+		# if CUI.util.isUndef(@opts.anchor)
 		#	@opts.anchor = @opts.element
 		if @opts.on_click
 			if not @opts.backdrop
@@ -95,7 +95,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			if not @opts.backdrop.policy
 				@opts.backdrop.policy = "click"
 
-		if isUndef(@opts.backdrop)
+		if CUI.util.isUndef(@opts.backdrop)
 			@opts.backdrop = false
 		# @opts.role = "tooltip"
 		@opts.pointer = "arrow"
@@ -104,7 +104,7 @@ class CUI.Tooltip extends CUI.LayerPane
 
 		super()
 
-		assert(not (@_on_click and @_on_hover), "new Tooltip", "opts.on_click and opts.on_hover cannot be used together.", opts: @opts)
+		CUI.util.assert(not (@_on_click and @_on_hover), "new Tooltip", "opts.on_click and opts.on_hover cannot be used together.", opts: @opts)
 		@
 
 	@current: null # global to store currently shown tooltip
@@ -158,7 +158,7 @@ class CUI.Tooltip extends CUI.LayerPane
 				@__pane.empty("center")
 
 		fill_text = (text) =>
-			if isEmpty(text)
+			if CUI.util.isEmpty(text)
 				return dfr.reject()
 
 			fill_content(new Label(markdown: @_markdown, text: text, multiline: true))
@@ -172,7 +172,7 @@ class CUI.Tooltip extends CUI.LayerPane
 
 		if CUI.isFunction(@_text)
 			ret = @_text.call(@, @)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.done (text) ->
 					fill_text(text)
 				ret.fail ->
@@ -181,14 +181,14 @@ class CUI.Tooltip extends CUI.LayerPane
 				fill_text(ret)
 		else if CUI.isFunction(@_content)
 			ret = @_content.call(@, @)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.done (text) ->
 					fill_content(text)
 				ret.fail (xhr) ->
 					dfr.reject(xhr)
 			else
 				fill_content(ret)
-		else if not isEmpty(@_text)
+		else if not CUI.util.isEmpty(@_text)
 			fill_text(@_text)
 		else
 			fill_content(@_content)

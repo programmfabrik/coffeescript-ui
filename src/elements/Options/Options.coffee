@@ -18,7 +18,7 @@ class CUI.Options extends CUI.DataField
 		@addOpts
 			radio:
 				check: (v) ->
-					isString(v) or isBoolean(v)
+					CUI.util.isString(v) or CUI.util.isBoolean(v)
 
 			radio_unchecked_value:
 				default: false
@@ -28,7 +28,7 @@ class CUI.Options extends CUI.DataField
 					if @_radio
 						v == 0 or v == 1
 					else
-						isInteger(v) and v >= 0
+						CUI.util.isInteger(v) and v >= 0
 			options:
 				mandatory: true
 				check: (v) ->
@@ -38,7 +38,7 @@ class CUI.Options extends CUI.DataField
 			# int: n fields horizontal
 			horizontal:
 				check: (v) ->
-					if isBoolean(v) or (isInteger(v) and v > 0)
+					if CUI.util.isBoolean(v) or (CUI.util.isInteger(v) and v > 0)
 						return true
 
 			title:
@@ -59,16 +59,16 @@ class CUI.Options extends CUI.DataField
 
 			columns:
 				check: (v) ->
-					if (isInteger(v) and v <= 12) # max 12 columns
+					if (CUI.util.isInteger(v) and v <= 12) # max 12 columns
 						return true
 				default: 1
 
 
 	readOpts: ->
 		super()
-		assert(not @_sortable or not @_left, "new Options", "opts.sortable and opts.left cannot be used together.", opts: @opts)
-		assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
-		assert(not @_sortable or not @opts.horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
+		CUI.util.assert(not @_sortable or not @_left, "new Options", "opts.sortable and opts.left cannot be used together.", opts: @opts)
+		CUI.util.assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
+		CUI.util.assert(not @_sortable or not @opts.horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
 
 		if CUI.__ng__
 			if @opts.horizontal == undefined
@@ -77,7 +77,7 @@ class CUI.Options extends CUI.DataField
 		if @_sortable and @_activatable == undefined
 			@_activatable = true
 
-		assert(not (@_sortable and not @_activatable), "new Options", "opts.sortable needs opts.activatable to be set.", opts: @opts)
+		CUI.util.assert(not (@_sortable and not @_activatable), "new Options", "opts.sortable needs opts.activatable to be set.", opts: @opts)
 
 
 	getTemplate: ->
@@ -175,7 +175,7 @@ class CUI.Options extends CUI.DataField
 			if opt.value == value
 				found = idx
 				break
-		assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
+		CUI.util.assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
 		@__checkboxes[found]
 
 	getOptions: ->
@@ -230,9 +230,9 @@ class CUI.Options extends CUI.DataField
 
 		sort_options = =>
 			@__options.sort (a, b) =>
-				a_idx = idxInArray(idxInArray(a, unsorted_options), @__options_order)
-				b_idx = idxInArray(idxInArray(b, unsorted_options), @__options_order)
-				compareIndex(a_idx, b_idx)
+				a_idx = CUI.util.idxInArray(CUI.util.idxInArray(a, unsorted_options), @__options_order)
+				b_idx = CUI.util.idxInArray(CUI.util.idxInArray(b, unsorted_options), @__options_order)
+				CUI.util.compareIndex(a_idx, b_idx)
 
 		find_value_in_options = (value, options) ->
 			for opt, idx in options
@@ -255,7 +255,7 @@ class CUI.Options extends CUI.DataField
 				b_idx = find_value_in_options(b, @__options)
 				if b_idx == -1
 					b_idx = arr.length+b.__idx
-				compareIndex(a_idx, b_idx)
+				CUI.util.compareIndex(a_idx, b_idx)
 
 			for a, idx in arr
 				delete(a.___idx)
@@ -279,7 +279,7 @@ class CUI.Options extends CUI.DataField
 			missing_opts = []
 			# second put the inactive values
 			for opt, idx in unsorted_options
-				if idxInArray(idx, @__options_order) == -1
+				if CUI.util.idxInArray(idx, @__options_order) == -1
 					missing_opts.push(opt: opt, idx: idx)
 
 			missing_opts.sort (a, b) ->
@@ -316,9 +316,9 @@ class CUI.Options extends CUI.DataField
 				for k, v of _opt
 					opt[k] = v
 
-				assert(not isEmpty(opt.text) or not isEmpty(opt.content), "new #{@__cls}", "opts.options[#{idx}].text|content must be set.", opts: @opts)
+				CUI.util.assert(not CUI.util.isEmpty(opt.text) or not CUI.util.isEmpty(opt.content), "new #{@__cls}", "opts.options[#{idx}].text|content must be set.", opts: @opts)
 				if not opt.hasOwnProperty("value")
-					assert(not isEmpty(opt.text), "new #{@__cls}", "opts.options[#{idx}].text must be set.", opts: @opts)
+					CUI.util.assert(not CUI.util.isEmpty(opt.text), "new #{@__cls}", "opts.options[#{idx}].text must be set.", opts: @opts)
 					opt.value = opt.text
 
 				chars = opt.text?.length or -1
@@ -345,7 +345,7 @@ class CUI.Options extends CUI.DataField
 						if @_radio and not @__radio_use_array
 							@storeValue(_cb.getValue(), flags)
 						else
-							pushOntoArray(_cb.getOptValue(), arr = @getValue().slice(0))
+							CUI.util.pushOntoArray(_cb.getOptValue(), arr = @getValue().slice(0))
 							order_value_array(arr)
 							@storeValue(arr, flags)
 							if @_sortable
@@ -370,7 +370,7 @@ class CUI.Options extends CUI.DataField
 							if not flags.prior_activate
 								@storeValue(_cb.getValue(), flags)
 						else
-							removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
+							CUI.util.removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
 							@storeValue(arr, flags)
 
 							if @_sortable
@@ -410,7 +410,7 @@ class CUI.Options extends CUI.DataField
 			# CUI.debug "setting data on options", @__radio, @getName(), @getData(), dump(@__options_data)
 
 		if @__checkboxes.length
-			if @_sortable and not isEmpty(@_sortable_hint)
+			if @_sortable and not CUI.util.isEmpty(@_sortable_hint)
 				bottom = new Label
 					multiline: true
 					class: "cui-options-order-hint"
@@ -418,7 +418,7 @@ class CUI.Options extends CUI.DataField
 			else
 				bottom = undefined
 
-			if not isEmpty(@_title)
+			if not CUI.util.isEmpty(@_title)
 				top = new Label
 					class: "cui-options-title"
 					text: @_title
@@ -493,7 +493,7 @@ class CUI.Options extends CUI.DataField
 					sorted: (ev, from_idx, to_idx) =>
 						# console.debug "from:", from_idx, "to:", to_idx
 						# console.debug "options order before sort", @__options_order.join(", ")
-						moveInArray(from_idx, to_idx, @__options_order, from_idx < to_idx)
+						CUI.util.moveInArray(from_idx, to_idx, @__options_order, from_idx < to_idx)
 						# console.debug "options order after sort", @__options_order.join(", ")
 						# re order options
 						sort_options()
@@ -509,7 +509,7 @@ class CUI.Options extends CUI.DataField
 						order_options_by_value_array()
 						@reload()
 
-		else if not isEmpty(@_placeholder)
+		else if not CUI.util.isEmpty(@_placeholder)
 			@replace(new EmptyLabel(text: @_placeholder), "center")
 
 		@

@@ -81,7 +81,7 @@ class CUI.Select extends CUI.Checkbox
 
 		ret = @getArrayFromOpt("options", event, true)
 
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			@__optionsPromise = ret
 			btn = @getButton()
 
@@ -105,13 +105,13 @@ class CUI.Select extends CUI.Checkbox
 			# adjust options, so we always have a text and value
 			for opt, idx in @__options
 				opt._idx = idx
-				if isUndef(opt.text) and not isUndef(opt.value) and not opt.icon
+				if CUI.util.isUndef(opt.text) and not CUI.util.isUndef(opt.value) and not opt.icon
 					opt.text = ""+opt.value
 
-				if isUndef(opt.value) and not isUndef(opt.text)
+				if CUI.util.isUndef(opt.value) and not CUI.util.isUndef(opt.text)
 					opt.value = opt.text
 
-				if not isUndef(opt.value) and first_value_opt == undefined
+				if not CUI.util.isUndef(opt.value) and first_value_opt == undefined
 					first_value_opt = opt
 
 			# auto - select first opt, if value unset
@@ -148,7 +148,7 @@ class CUI.Select extends CUI.Checkbox
 		left: true # make sure we have a "left" container for the icon
 		menu:
 			active_item_idx: @default_opt?._idx or null
-			allow_null: not isEmpty(@_empty_text)
+			allow_null: not CUI.util.isEmpty(@_empty_text)
 			class: "ez-menu-select"
 			# placements: ["c"]
 			# onPosition: (menu, vp) =>
@@ -251,7 +251,7 @@ class CUI.Select extends CUI.Checkbox
 
 				@__checkbox.menuSetActiveIdx(found_opt._idx)
 			else
-				if @getValue() == null and not isEmpty(@_empty_text)
+				if @getValue() == null and not CUI.util.isEmpty(@_empty_text)
 					txt = @_empty_text
 				else
 					# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)

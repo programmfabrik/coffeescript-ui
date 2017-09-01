@@ -29,7 +29,7 @@ class CUI.ListView extends CUI.SimplePane
 			@__colClasses = @_colClasses.slice(0)
 
 		if @_rowMove
-			assert(not @_rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
+			CUI.util.assert(not @_rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
 
 		if @_rowMove or @_rowMovePlaceholder
 			@__cols.splice(0,0, "fixed")
@@ -37,7 +37,7 @@ class CUI.ListView extends CUI.SimplePane
 				@__colClasses = []
 			@__colClasses.splice(0,0, "cui-lv-row-move-handle-column")
 
-		assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
+		CUI.util.assert(@fixedColsCount < @__cols.length, "new ListView", "opts.fixedCols must be less than column count.", opts: @opts)
 
 		if @_colResize
 			@__colResize = true
@@ -45,14 +45,14 @@ class CUI.ListView extends CUI.SimplePane
 			@__colResize = true
 
 		if @__colResize
-			assert(@fixedRowsCount > 0, "new ListView", "Cannot enable col resize with no fixed rows.", opts: @opts)
+			CUI.util.assert(@fixedRowsCount > 0, "new ListView", "Cannot enable col resize with no fixed rows.", opts: @opts)
 
 		@__maxCols = []
 		for col, col_i in @__cols
-			assert(col in ["auto", "maximize", "fixed", "manual"], "new #{@__cls}", "Unkown type of col: \"#{col}\". opts.cols can only contain \"auto\" and \"maximize\" elements.")
+			CUI.util.assert(col in ["auto", "maximize", "fixed", "manual"], "new #{@__cls}", "Unkown type of col: \"#{col}\". opts.cols can only contain \"auto\" and \"maximize\" elements.")
 			if col == "maximize"
-				# assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
-				assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
+				# CUI.util.assert(@_maximize, "new ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
+				CUI.util.assert(col_i >= @fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
 				@__maxCols.push(col_i)
 
 		if @__maximize_horizontal and @__maxCols.length == 0
@@ -155,7 +155,7 @@ class CUI.ListView extends CUI.SimplePane
 		@
 
 	destroy: ->
-		# CUI.error "#{getObjectClass(@)}.destroy list-view-#{@listViewCounter} called. This is NOT an error."
+		# CUI.error "#{CUI.util.getObjectClass(@)}.destroy list-view-#{@listViewCounter} called. This is NOT an error."
 		delete(@colsOrder)
 		delete(@rowsOrder)
 		delete(@__fillRowQ3)
@@ -196,7 +196,7 @@ class CUI.ListView extends CUI.SimplePane
 		@
 
 	render: ->
-		assert(not @grid, "ListView.render", "ListView already rendered", opts: @opts)
+		CUI.util.assert(not @grid, "ListView.render", "ListView already rendered", opts: @opts)
 		html = []
 
 		cls = ["cui-list-view-grid", @__lvClass]
@@ -473,7 +473,7 @@ class CUI.ListView extends CUI.SimplePane
 		@selectRowById(@getRowIdx(row_display_idx))
 
 	selectRow: (ev, row, no_deselect=false) ->
-		assert(isNull(row) or row instanceof ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of ListViewRow.", selectedRow: row)
+		CUI.util.assert(CUI.util.isNull(row) or row instanceof ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of ListViewRow.", selectedRow: row)
 
 		dfr = new CUI.Deferred()
 
@@ -495,7 +495,7 @@ class CUI.ListView extends CUI.SimplePane
 					continue
 
 				ret = _row.deselect(ev, row)
-				if isPromise(ret)
+				if CUI.util.isPromise(ret)
 					promises.push(ret)
 			CUI.when(promises).done(do_select).fail(dfr.reject)
 		else
@@ -531,7 +531,7 @@ class CUI.ListView extends CUI.SimplePane
 		@rowsOrder.indexOf(parseInt(row_i))
 
 	getColIdx: (display_col_i) ->
-		assert(CUI.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
+		CUI.util.assert(CUI.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
 		@colsOrder[display_col_i]
 
 	getRowIdx: (display_row_i) ->
@@ -541,12 +541,12 @@ class CUI.ListView extends CUI.SimplePane
 		display_from_i = array.indexOf(from_i)
 		display_to_i = array.indexOf(to_i)
 
-		moveInArray(display_from_i, display_to_i, array, after)
+		CUI.util.moveInArray(display_from_i, display_to_i, array, after)
 		null
 
 	moveRow: (from_i, to_i, after=false, trigger_row_moved=true) ->
 
-		assert(from_i >= @fixedRowsCount and to_i >= @fixedRowsCount, "ListView.moveRow", "from_i and to_i must not be in flexible area of the list view", from_i: from_i, to_i: to_i, fixed_i: @fixedRowsCount)
+		CUI.util.assert(from_i >= @fixedRowsCount and to_i >= @fixedRowsCount, "ListView.moveRow", "from_i and to_i must not be in flexible area of the list view", from_i: from_i, to_i: to_i, fixed_i: @fixedRowsCount)
 
 		if after
 			func = "after"
@@ -688,7 +688,7 @@ class CUI.ListView extends CUI.SimplePane
 			@appendRows([row])
 
 	prependRow: (row) ->
-		assert(not @isDestroyed(), "ListView.prependRow", "ListView #{@listViewCounter} is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "ListView.prependRow", "ListView #{@listViewCounter} is already destroyed.")
 		row_i = ++@__maxRowIdx
 		@rowsCount++
 		@rowsOrder.splice(0, 0, row_i)
@@ -698,7 +698,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__addRow(row_i, row, "replace")
 
 	insertRowAt: (display_row_i, row) ->
-		assert(not @isDestroyed(), "ListView.insertRowAfter", "ListView #{@listViewCounter} is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "ListView.insertRowAfter", "ListView #{@listViewCounter} is already destroyed.")
 		# CUI.debug "insertRowAt", display_row_i, @rowsCount
 		if display_row_i == @rowsCount or @rowsCount == 0
 			@appendRow(row)
@@ -708,16 +708,16 @@ class CUI.ListView extends CUI.SimplePane
 			@insertRowBefore(@getRowIdx(display_row_i), row)
 
 	insertRowAfter: (sibling_row_i, row) ->
-		assert(not @isDestroyed(), "ListView.insertRowAfter", "ListView ##{@listViewCounter} is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "ListView.insertRowAfter", "ListView ##{@listViewCounter} is already destroyed.")
 		sibling_display_row_i = @getDisplayRowIdx(sibling_row_i)
-		assert(sibling_display_row_i > -1, "ListView.insertRowAfter", "ListView ##{@listViewCounter}: Row #{sibling_row_i} not found.", row_i: sibling_row_i, row: row, rowsCount: @rowsCount)
+		CUI.util.assert(sibling_display_row_i > -1, "ListView.insertRowAfter", "ListView ##{@listViewCounter}: Row #{sibling_row_i} not found.", row_i: sibling_row_i, row: row, rowsCount: @rowsCount)
 		row_i = ++@__maxRowIdx
 		@rowsCount++
 		@rowsOrder.splice(sibling_display_row_i+1, 0, row_i)
 		@__addRow(row_i, row, "after", sibling_row_i)
 
 	insertRowBefore: (sibling_row_i, row) ->
-		assert(not @isDestroyed(), "ListView.insertRowBefore", "ListView ##{@listViewCounter} is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "ListView.insertRowBefore", "ListView ##{@listViewCounter} is already destroyed.")
 
 		sibling_display_row_i = @getDisplayRowIdx(sibling_row_i)
 		if sibling_display_row_i == 0
@@ -735,14 +735,14 @@ class CUI.ListView extends CUI.SimplePane
 		@
 
 	removeDeferredRow: (listViewRow) ->
-		count = removeFromArray(listViewRow, @__deferredRows)
-		assert(count == 1, "ListView.removeListViewRow", "row not found", listViewRow: listViewRow)
+		count = CUI.util.removeFromArray(listViewRow, @__deferredRows)
+		CUI.util.assert(count == 1, "ListView.removeListViewRow", "row not found", listViewRow: listViewRow)
 		@
 
 	removeRow: (row_i) ->
-		assert(row_i != null and row_i >= 0, "ListView.removeRow", "row_i must be >= 0", row_i: row_i)
+		CUI.util.assert(row_i != null and row_i >= 0, "ListView.removeRow", "row_i must be >= 0", row_i: row_i)
 		display_row_i = @getDisplayRowIdx(row_i)
-		assert(display_row_i > -1, "ListView.removeRow", "display_row_id not found for row_i", row_i: row_i)
+		CUI.util.assert(display_row_i > -1, "ListView.removeRow", "display_row_id not found for row_i", row_i: row_i)
 
 		@rowsOrder.splice(display_row_i, 1)
 		@rowsCount--
@@ -913,7 +913,7 @@ class CUI.ListView extends CUI.SimplePane
 	__getValue: (px) ->
 		if not isNaN(parseFloat(px))
 			px+"px"
-		else if isNull(px)
+		else if CUI.util.isNull(px)
 			""
 		else
 			px
@@ -936,7 +936,7 @@ class CUI.ListView extends CUI.SimplePane
 		@grid.rect(true, 500, "ListView[##{@listViewCounter}].#{func} #{ms}ms "+viewport.width+"x"+viewport.height)
 
 	appendRows: (rows) ->
-		assert(not @isDestroyed(), "ListView.appendRow", "ListView #{@listViewCounter} is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "ListView.appendRow", "ListView #{@listViewCounter} is already destroyed.")
 		for row, idx in rows
 			row_i = ++@__maxRowIdx
 			if idx == 0
@@ -972,9 +972,9 @@ class CUI.ListView extends CUI.SimplePane
 			[2,3]
 
 	__addRows: (_row_i, listViewRows=[], mode="append", sibling_row_i=null) ->
-		assert(@grid, "ListView.__addRows", "ListView.render has not been called yet.", row_i: _row_i, listView: @)
+		CUI.util.assert(@grid, "ListView.__addRows", "ListView.render has not been called yet.", row_i: _row_i, listView: @)
 
-		assert(mode in ["append", "prepend", "after", "replace"], "ListView.__addRows", "mode \"#{mode}\" not supported", row_i: _row_i)
+		CUI.util.assert(mode in ["append", "prepend", "after", "replace"], "ListView.__addRows", "mode \"#{mode}\" not supported", row_i: _row_i)
 
 		txt = "ListView[#{@listViewCounter}].__addRows: Adding "+listViewRows.length+" rows, starting at #{_row_i}."
 
@@ -994,14 +994,14 @@ class CUI.ListView extends CUI.SimplePane
 		if mode in ["replace", "after"]
 			switch mode
 				when "replace"
-					assert(listViewRows.length == 1, "ListView.__addRows", "Can only use mode \"#{mode}\" on one row", listViewRows: listViewRows)
+					CUI.util.assert(listViewRows.length == 1, "ListView.__addRows", "Can only use mode \"#{mode}\" on one row", listViewRows: listViewRows)
 					row_i = _row_i
 					@__resetRowDim(row_i)
 				when "after"
 					row_i = sibling_row_i
 
 			anchor_row = @__rows[row_i]
-			assert(anchor_row.length >= 1, "ListView.__addRows", "anchor row #{row_i} for mode #{mode} not found.", rows: @__rows, row_i: row_i, mode: _mode, mode_used: mode)
+			CUI.util.assert(anchor_row.length >= 1, "ListView.__addRows", "anchor row #{row_i} for mode #{mode} not found.", rows: @__rows, row_i: row_i, mode: _mode, mode_used: mode)
 			# CUI.debug("__addRows", anchor_row, row_i)
 
 		# prepare html for all rows
@@ -1102,7 +1102,7 @@ class CUI.ListView extends CUI.SimplePane
 							@quadrant[_qi+2].appendChild(@quadrant[_qi].lastChild)
 
 		for listViewRow, idx in listViewRows
-			if isPromise(listViewRow)
+			if CUI.util.isPromise(listViewRow)
 				do (idx) =>
 					listViewRow.done (_listViewRow) =>
 						@__appendCells(_listViewRow, _row_i+idx)
@@ -1116,14 +1116,14 @@ class CUI.ListView extends CUI.SimplePane
 
 
 	__appendCells: (listViewRow, row_i) ->
-		assert(listViewRow instanceof ListViewRow, "ListView.addRow", "listViewRow needs to be instance of ListViewRow or Deferred which returns a ListViewRow", listViewRow: listViewRow)
+		CUI.util.assert(listViewRow instanceof ListViewRow, "ListView.addRow", "listViewRow needs to be instance of ListViewRow or Deferred which returns a ListViewRow", listViewRow: listViewRow)
 
 		listViewRow.setRowIdx(row_i).setListView(@)
 
 		for row in @__rows[row_i]
 			DOM.data(row, "listViewRow", listViewRow)
 
-		listViewRow.addClass((listViewRow.getClass() or "")+" "+toDash(getObjectClass(listViewRow)))
+		listViewRow.addClass((listViewRow.getClass() or "")+" "+CUI.util.toDash(CUI.util.getObjectClass(listViewRow)))
 
 		if @_rowMove
 			if @getDisplayRowIdx(row_i) >= @fixedRowsCount + @_rowMoveFixedRows
@@ -1144,16 +1144,16 @@ class CUI.ListView extends CUI.SimplePane
 
 			cell = @__cells[row_i][col_i+colspan_offset]
 
-			assert(cell, "ListView.__appendCells", "Cell not found: row: "+row_i+" column: "+(col_i+colspan_offset+1)+". colsCount: "+@colsCount, row: listViewRow)
+			CUI.util.assert(cell, "ListView.__appendCells", "Cell not found: row: "+row_i+" column: "+(col_i+colspan_offset+1)+". colsCount: "+@colsCount, row: listViewRow)
 
-			if not isNull(node)
+			if not CUI.util.isNull(node)
 				CUI.DOM.append(cell, node)
 
 			col.setColumnIdx(col_i)
 			col.setElement(cell)
 
 			colspan = col.getColspan()
-			assert(col_i+colspan_offset+colspan-1 < @colsCount, "ListView.__appendCells", "Colspan #{colspan} exceeds cols count #{@colsCount}, unable to append cell.", row_i: row_i, col_i: col_i, colspan_offset: colspan_offset, colspan: colspan, column: col, row: listViewRow, ListView: @)
+			CUI.util.assert(col_i+colspan_offset+colspan-1 < @colsCount, "ListView.__appendCells", "Colspan #{colspan} exceeds cols count #{@colsCount}, unable to append cell.", row_i: row_i, col_i: col_i, colspan_offset: colspan_offset, colspan: colspan, column: col, row: listViewRow, ListView: @)
 			if colspan > 1
 				cell.setAttribute("colspan", colspan)
 
@@ -1174,7 +1174,7 @@ class CUI.ListView extends CUI.SimplePane
 					colspan_offset++
 
 
-		assert(_cols.length+colspan_offset <= @colsCount, "ListView.addRow", "ListViewRow provided more columns (#{_cols.length+colspan_offset}) than colsCount (#{@colsCount}) is set to", colsCount: @colsCount, cols: _cols)
+		CUI.util.assert(_cols.length+colspan_offset <= @colsCount, "ListView.addRow", "ListViewRow provided more columns (#{_cols.length+colspan_offset}) than colsCount (#{@colsCount}) is set to", colsCount: @colsCount, cols: _cols)
 		listViewRow.addedToListView(@__rows[row_i])
 
 		return
@@ -1184,7 +1184,7 @@ class CUI.ListView extends CUI.SimplePane
 		cls = []
 		if CUI.isArray(col_cls)
 			cls.push.apply(cls, col_cls)
-		else if not isEmpty(col_cls)
+		else if not CUI.util.isEmpty(col_cls)
 			cls.push(col_cls)
 
 		if col_i in @__maxCols
@@ -1293,8 +1293,8 @@ class CUI.ListView extends CUI.SimplePane
 						@__debugCall "debug", =>
 							CUI.debug("ListView[##{@listViewCounter}]", @)
 							CUI.debug("opts:", @opts)
-							CUI.debug("manualColWidths:", dump(@__manualColWidths))
-							CUI.debug("colWidths:", dump(@__colWidths), "rowHeights:", @__rowHeights)
+							CUI.debug("manualColWidths:", CUI.util.dump(@__manualColWidths))
+							CUI.debug("colWidths:", CUI.util.dump(@__colWidths), "rowHeights:", @__rowHeights)
 				,
 					text: "appendRow"
 					onClick: =>

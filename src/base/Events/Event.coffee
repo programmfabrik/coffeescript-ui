@@ -12,7 +12,7 @@ class CUI.Event extends CUI.Element
 
 		if @_require_node_in_dom
 			console.debug "require node in dom", @isInDOM(), @__node
-			assert(@isInDOM(), "new Event", "node is not in DOM, unable to create event.", opts: @opts)
+			CUI.util.assert(@isInDOM(), "new Event", "node is not in DOM, unable to create event.", opts: @opts)
 
 		@__propagationStopped = false
 		@__propagationImmediateStopped = false
@@ -25,7 +25,7 @@ class CUI.Event extends CUI.Element
 			type:
 				mandatory: true
 				check: (v) ->
-					isString(v) and not isEmpty(v) and v.split(/\s+/).length == 1
+					CUI.util.isString(v) and not CUI.util.isEmpty(v) and v.split(/\s+/).length == 1
 			# node to start from
 			node:
 				default: document.documentElement
@@ -67,7 +67,7 @@ class CUI.Event extends CUI.Element
 		@__node = DOM.getNode(@_node)
 
 		# if @_exclude_self
-		# 	assert(@_bubble != false, "new EventsEvent", "opts.exclude_self can only be set if bubble is set to true.", opts: @opts)
+		# 	CUI.util.assert(@_bubble != false, "new EventsEvent", "opts.exclude_self can only be set if bubble is set to true.", opts: @opts)
 
 		if @_preventDefault
 			@preventDefault()
@@ -76,13 +76,13 @@ class CUI.Event extends CUI.Element
 
 		@__isInDOM = null
 
-		# assert(not @isDOMEvent() or @_bubble, "DOMEvent needs opts.bubble set.", opts: @opts)
+		# CUI.util.assert(not @isDOMEvent() or @_bubble, "DOMEvent needs opts.bubble set.", opts: @opts)
 
 	__setListener: (listener) ->
 		if not @__listenerClass
 			@__listenerClass = listener.getElementClass()
 		else
-			assert(@__listenerClass == listener.getElementClass(), "Event.setListener", "listener class cannot change during an events life cycle.", listener: listener, listenerClass: @__listenerClass)
+			CUI.util.assert(@__listenerClass == listener.getElementClass(), "Event.setListener", "listener class cannot change during an events life cycle.", listener: listener, listenerClass: @__listenerClass)
 		@
 
 	__setPhase: (@__phase) ->
@@ -125,7 +125,7 @@ class CUI.Event extends CUI.Element
 
 	setNativeEvent: (NativeEvent) ->
 		# avoid checking instanceof, so external initializers like TestCafé work
-		assert(typeof(NativeEvent) == 'object', "CUI.Event.setNativeEvent", "Event needs to be instanceof Event", Event: NativeEvent)
+		CUI.util.assert(typeof(NativeEvent) == 'object', "CUI.Event.setNativeEvent", "Event needs to be instanceof Event", Event: NativeEvent)
 		@__NativeEvent = NativeEvent
 		@
 
@@ -223,7 +223,7 @@ class CUI.Event extends CUI.Element
 
 	dispatch: ->
 		# CUI.info "CUI.Events.trigger jQuery DOMEvent", event.getType()
-		assert(not @getNativeEvent(), "CUI.Event.dispatch", "Can only dispatch once.", event: @)
+		CUI.util.assert(not @getNativeEvent(), "CUI.Event.dispatch", "Can only dispatch once.", event: @)
 		ev = document.createEvent("Event")
 		ev.initEvent(@getType(), @isBubble(), true)
 		ev.__cui_event = @
@@ -277,7 +277,7 @@ class CUI.Event extends CUI.Element
 			ev = new eventClass(event)
 		else
 			ev = event
-		assert(ev instanceof CUI.Event, "#{func}", "event needs to be PlainObject or instance of CUI.Event.")
+		CUI.util.assert(ev instanceof CUI.Event, "#{func}", "event needs to be PlainObject or instance of CUI.Event.")
 		ev
 
 	# cr

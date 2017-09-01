@@ -28,7 +28,7 @@ class CUI.FormModal extends CUI.FormPopover
 
 	initPopover: (opts) ->
 
-		btn_opts = copyObject(@_modal.apply_button, true)
+		btn_opts = CUI.util.copyObject(@_modal.apply_button, true)
 
 		onClick = btn_opts.onClick
 
@@ -61,7 +61,7 @@ class CUI.FormModal extends CUI.FormPopover
 		mod
 
 	revertData: ->
-		assert(@__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", opts: @opts)
+		CUI.util.assert(@__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", opts: @opts)
 		delete(@__data)
 		if @__orig_data
 			@__orig_set_data[@_name] = @__orig_data
@@ -80,7 +80,7 @@ class CUI.FormModal extends CUI.FormPopover
 	setData: (data) ->
 		if @_name and not CUI.isFunction(data)
 			if data[@_name]
-				@__orig_data = copyObject(data[@_name], true)
+				@__orig_data = CUI.util.copyObject(data[@_name], true)
 			else
 				@__orig_data = undefined
 			@__orig_set_data = data
@@ -88,7 +88,7 @@ class CUI.FormModal extends CUI.FormPopover
 
 	__closePopover: ->
 		if @__orig_set_data
-			@__orig_data = copyObject(@__orig_set_data[@_name], true)
+			@__orig_data = CUI.util.copyObject(@__orig_set_data[@_name], true)
 		super()
 
 	hasChanges: ->
@@ -98,7 +98,7 @@ class CUI.FormModal extends CUI.FormPopover
 			null
 
 	getPopoverOpts: ->
-		pop_opts = copyObject(@_modal, true)
+		pop_opts = CUI.util.copyObject(@_modal, true)
 
 		if pop_opts.cancel and @__orig_set_data
 			onCancel = pop_opts.onCancel
@@ -115,14 +115,14 @@ class CUI.FormModal extends CUI.FormPopover
 				dfr.promise()
 
 		delete(pop_opts.apply_button)
-		if isEmpty(pop_opts.class)
+		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
 
 		# don't center this to an element
 		pop_opts.element = null
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		assert(CUI.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)
 		pop_opts.class += " cui-form-modal-modal"
 		pop_opts
 

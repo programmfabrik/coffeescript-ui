@@ -60,16 +60,16 @@ class CUI.Panel extends CUI.DOM
 			content:
 				# mandatory: true
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			content_placeholder:
 				check: (v) ->
-					isContent(v)
+					CUI.util.isContent(v)
 			load_on_open:
 				check: Boolean
 			radio:
 				default: "panel-switcher"
 				check: (v) ->
-					isString(v) or v == true
+					CUI.util.isString(v) or v == true
 			radio_allow_null:
 				default: true
 				mandatory: true
@@ -134,7 +134,7 @@ class CUI.Panel extends CUI.DOM
 			ret = @_content
 
 		dfr = new CUI.Deferred()
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret.always (content) =>
 				@setContent(content)
 				dfr.resolve()

@@ -5,7 +5,7 @@ class CUI.DragoverScrollEvent extends CUI.Event
 			count:
 				mandatory: true
 				check: (v) =>
-					isPosInt(v)
+					CUI.util.isPosInt(v)
 			originalEvent:
 				mandatory: true
 				check: CUI.Event

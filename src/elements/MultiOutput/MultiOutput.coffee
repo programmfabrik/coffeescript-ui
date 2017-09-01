@@ -17,7 +17,7 @@ class CUI.MultiOutput extends CUI.Output
 	displayValue: ->
 		super()
 		key = @_control.getPreferredKey()
-		assert(key, "Output.displayValue", "MultiInputControl: no preferred key set.", control: @_control)
+		CUI.util.assert(key, "Output.displayValue", "MultiInputControl: no preferred key set.", control: @_control)
 		@setText(@getValue()[key.name])
 		@
 

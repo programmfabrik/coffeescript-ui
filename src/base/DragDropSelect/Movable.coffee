@@ -37,15 +37,15 @@ class CUI.Movable extends CUI.Draggable
 			@_limitRect
 
 	setElementCss: (pos) ->
-		assert(CUI.isPlainObject(pos), getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
+		CUI.util.assert(CUI.isPlainObject(pos), CUI.util.getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
 		setCss = {}
-		if not isEmpty(pos.x)
+		if not CUI.util.isEmpty(pos.x)
 			setCss.left = pos.x
-		if not isEmpty(pos.y)
+		if not CUI.util.isEmpty(pos.y)
 			setCss.top = pos.y
-		if not isEmpty(pos.w)
+		if not CUI.util.isEmpty(pos.w)
 			setCss.marginBoxWidth = pos.w
-		if not isEmpty(pos.h)
+		if not CUI.util.isEmpty(pos.h)
 			setCss.marginBoxHeight = pos.h
 
 		CUI.DOM.setDimensions(@element, setCss)

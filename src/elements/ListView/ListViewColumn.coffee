@@ -27,7 +27,7 @@ class CUI.ListViewColumn extends CUI.Element
 				check: "Integer"
 			element:
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			onSetElement:
 				check: Function
 
@@ -43,12 +43,12 @@ class CUI.ListViewColumn extends CUI.Element
 		@col_i
 
 	render: ->
-		if not isUndef(@_element)
+		if not CUI.util.isUndef(@_element)
 			if @_element.DOM
 				@_element.DOM
 			else
 				@_element
-		else if not isEmpty(@_text)
+		else if not CUI.util.isEmpty(@_text)
 			new Label(text: @_text).DOM
 		else
 			null

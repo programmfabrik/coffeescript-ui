@@ -12,14 +12,14 @@ class CUI.Icon extends CUI.Element
 		cls = ""
 		if @_icon
 			cls = @icon_map()[@_icon]
-			if isEmpty(cls)
+			if CUI.util.isEmpty(cls)
 				cls = @_icon
 
 			if cls.startsWith("svg-")
 				svg_cls = cls
 				cls = ""
 
-		if not isEmpty(@_class)
+		if not CUI.util.isEmpty(@_class)
 			cls += " "+@_class
 
 		if svg_cls

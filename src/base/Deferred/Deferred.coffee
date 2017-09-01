@@ -47,7 +47,7 @@ class CUI.Deferred
 	__register: (type, func) ->
 		# CUI.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
 		#
-		assert(CUI.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
+		CUI.util.assert(CUI.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
 		if @__state == "rejected" and type == "done"
 			# nothing to do
 			return
@@ -83,12 +83,12 @@ class CUI.Deferred
 		@
 
 	__notify: ->
-		assert(@__state == "pending", "CUI.Deferred.notify", "Cannot notify state #{@__state}.")
+		CUI.util.assert(@__state == "pending", "CUI.Deferred.notify", "Cannot notify state #{@__state}.")
 		@__callback(["progress"], arguments)
 		@
 
 	__resolve: ->
-		assert(@__state == "pending", "CUI.Deferred.resolve", "Cannot resolve state #{@__state}.")
+		CUI.util.assert(@__state == "pending", "CUI.Deferred.resolve", "Cannot resolve state #{@__state}.")
 		@__finished_args = arguments
 		# console.error "Deferred.resolve", @getUniqueId(), @__finished_args
 		@__state = "resolved"
@@ -97,7 +97,7 @@ class CUI.Deferred
 		@
 
 	__reject: ->
-		assert(@__state == "pending", "CUI.Deferred.reject", "Cannot reject state #{@__state}.")
+		CUI.util.assert(@__state == "pending", "CUI.Deferred.reject", "Cannot reject state #{@__state}.")
 		@__finished_args = arguments
 		# console.error "Deferred.reject", @getUniqueId(), @__finished_args
 		@__state = "rejected"

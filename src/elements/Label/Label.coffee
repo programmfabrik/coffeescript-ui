@@ -40,13 +40,13 @@ class CUI.Label extends CUI.DOM
 		if @_icon and @_icon != true
 			@setIcon(@_icon)
 
-		if not isEmpty(@_text)
+		if not CUI.util.isEmpty(@_text)
 			@setText(@_text)
 		else
 			@setContent(@_content)
 
 		if @_tooltip
-			tt_opts = copyObject(@_tooltip)
+			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element ?= @DOM
 			@__tooltip = new Tooltip(tt_opts)
 
@@ -78,7 +78,7 @@ class CUI.Label extends CUI.DOM
 		if @_manage_overflow
 
 			if @_manage_overflow == true
-				btn_opts = copyObject(CUI.defaults.class.Label.defaults.manage_overflow, true)
+				btn_opts = CUI.util.copyObject(CUI.defaults.class.Label.defaults.manage_overflow, true)
 			else
 				btn_opts = @_manage_overflow
 
@@ -116,13 +116,13 @@ class CUI.Label extends CUI.DOM
 		@addOpts
 			text:
 				check: (v) ->
-					isString(v) or isNumber(v)
+					CUI.util.isString(v) or CUI.util.isNumber(v)
 			content:
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v) or v == true
+					v instanceof Icon or CUI.util.isString(v) or v == true
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
@@ -157,11 +157,11 @@ class CUI.Label extends CUI.DOM
 
 	readOpts: ->
 		super()
-		if isNull(@_text) and isNull(@_content)
+		if CUI.util.isNull(@_text) and CUI.util.isNull(@_content)
 			@_text = ""
 
 		if @_markdown
-			assert(not @_content, "new "+@__cls, "opts.markdown cannot be combined with opts.content, use opts.text instead.", opts: @opts)
+			CUI.util.assert(not @_content, "new "+@__cls, "opts.markdown cannot be combined with opts.content, use opts.text instead.", opts: @opts)
 			if not marked
 				CUI.error("new Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
 				@__markdown = false
@@ -169,21 +169,21 @@ class CUI.Label extends CUI.DOM
 				@__markdown = true
 
 		@__currentText = null
-		assert(xor(isNull(@_text), isNull(@_content)), "new Label", "opts.text and opts.content cannot both be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(CUI.util.isNull(@_text), CUI.util.isNull(@_content)), "new Label", "opts.text and opts.content cannot both be set.", opts: @opts)
 
 		if @_markdown_opts
-			@__markdown_opts = copyObject(CUI.defaults.marked_opts, false)
+			@__markdown_opts = CUI.util.copyObject(CUI.defaults.marked_opts, false)
 			for k, v of @_markdown_opts
 				@__markdown_opts[k] = v
 		else
 			@__markdown_opts = CUI.defaults.marked_opts
 
 		if @_manage_overflow
-			assert(@_multiline, "new Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
+			CUI.util.assert(@_multiline, "new Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
 		@
 
 	setText: (@__currentText, markdown = @__markdown) ->
-		if isEmpty(@__currentText)
+		if CUI.util.isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
 			@setContent(CUI.DOM.htmlToNodes(marked(@__currentText, @__markdown_opts)))
@@ -200,7 +200,7 @@ class CUI.Label extends CUI.DOM
 		@__currentText
 
 	setContent: (content) ->
-		if isString(content)
+		if CUI.util.isString(content)
 			@replace(CUI.DOM.htmlToNodes(content), 'content')
 		else
 			@replace(content, "content")
@@ -253,7 +253,7 @@ class CUI.Label extends CUI.DOM
 	setIcon: (icon) ->
 		if icon instanceof Icon
 			__icon = icon
-		else if not isEmpty(icon)
+		else if not CUI.util.isEmpty(icon)
 			__icon = new Icon(icon: icon)
 		else
 			__icon = null

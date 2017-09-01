@@ -15,7 +15,7 @@ class CUI.NumberInput extends CUI.Input
 
 			symbol:
 				check: (v) ->
-					isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 
 			symbol_before:
 				default: false
@@ -32,17 +32,17 @@ class CUI.NumberInput extends CUI.Input
 
 			separator:
 				check: (v) ->
-					isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 
 			min:
 				default: null
 				check: (v) ->
-					isNumber(v)
+					CUI.util.isNumber(v)
 
 			max:
 				default: null
 				check: (v) ->
-					isNumber(v)
+					CUI.util.isNumber(v)
 
 		@removeOpt("checkInput")
 		@removeOpt("getValueForDisplay")
@@ -62,8 +62,8 @@ class CUI.NumberInput extends CUI.Input
 	setMax: (@__max) ->
 
 	formatValueForDisplay: (value=@getValue(), forInput = false) ->
-		assert(typeof(value) == "number" or value == null, "NumberInput.formatValueForDisplay", "value needs to be Number or null", value: value, type: typeof(value))
-		if isEmpty(value)
+		CUI.util.assert(typeof(value) == "number" or value == null, "NumberInput.formatValueForDisplay", "value needs to be Number or null", value: value, type: typeof(value))
+		if CUI.util.isEmpty(value)
 			return ""
 
 		if @_store_as_integer
@@ -110,7 +110,7 @@ class CUI.NumberInput extends CUI.Input
 		@formatValueForDisplay(@getValue())
 
 	getValueForStore: (value) ->
-		if not isString(value)
+		if not CUI.util.isString(value)
 			value = value + ""
 		number = parseFloat(value.replace(/,/,"."))
 		if isNaN(number)
@@ -131,15 +131,15 @@ class CUI.NumberInput extends CUI.Input
 	checkValue: (v) ->
 		if v == null
 			true
-		else if @_decimals > 0 and isFloat(v)
+		else if @_decimals > 0 and CUI.util.isFloat(v)
 			true
-		else if isInteger(v)
+		else if CUI.util.isInteger(v)
 			true
 		else
 			throw new Error("#{@__cls}.setValue(value): Value needs to be Number or null.")
 
 	__addSymbol: (str) ->
-		if isEmpty(@_symbol)
+		if CUI.util.isEmpty(@_symbol)
 			return str
 
 		if @_symbol_before
@@ -148,7 +148,7 @@ class CUI.NumberInput extends CUI.Input
 			str+" "+@_symbol
 
 	__addSeparator: (str) ->
-		if isEmpty(@_separator)
+		if CUI.util.isEmpty(@_separator)
 			return str
 
 		nn = []
@@ -206,14 +206,14 @@ class CUI.NumberInput extends CUI.Input
 			# CUI.debug "number not matched", number
 			return false
 
-		if not isNull(@__min)
+		if not CUI.util.isNull(@__min)
 			if @__min >= 0 and number == "-"
 				return false
 
 			if number < @__min
 				return false
 
-		if not isNull(@__max)
+		if not CUI.util.isNull(@__max)
 			if number > @__max
 				return false
 
@@ -228,11 +228,11 @@ class CUI.NumberInput extends CUI.Input
 
 
 	@format: (v, opts={}) ->
-		if isEmpty(v)
+		if CUI.util.isEmpty(v)
 			v = null
 
 		# automatically set decimals
-		if isFloat(v) and not opts.hasOwnProperty("decimals")
+		if CUI.util.isFloat(v) and not opts.hasOwnProperty("decimals")
 			_v = v+""
 			opts.decimals = _v.length - _v.indexOf(".") - 1
 

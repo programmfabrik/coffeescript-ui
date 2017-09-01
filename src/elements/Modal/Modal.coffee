@@ -64,9 +64,9 @@ class CUI.Modal extends CUI.LayerPane
 		else
 			btn = _btn
 
-		assert(btn instanceof Button, "Modal.__addHeaderButton", "Button needs to be instance of Button", btn: btn)
+		CUI.util.assert(btn instanceof Button, "Modal.__addHeaderButton", "Button needs to be instance of Button", btn: btn)
 
-		assert(@__pane instanceof SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
+		CUI.util.assert(@__pane instanceof SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
 
 		@append(btn, "header_right")
 		@
@@ -95,7 +95,7 @@ class CUI.Modal extends CUI.LayerPane
 			super(ev)
 		else
 			ret = @_onCancel?(ev, @)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				if button
 					button.disable()
 					button.startSpinner()

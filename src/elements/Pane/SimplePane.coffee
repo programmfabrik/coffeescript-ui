@@ -66,17 +66,17 @@ class CUI.SimplePane extends CUI.Pane
 		VerticalLayout::readOpts.call(@)
 
 		if @_title
-			assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
+			CUI.util.assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
 
 		if @forceHeader() or
-			not (isUndef(@_header_left) and isUndef(@_header_center) and isUndef(@_header_right)) or
+			not (CUI.util.isUndef(@_header_left) and CUI.util.isUndef(@_header_center) and CUI.util.isUndef(@_header_right)) or
 			@_title
 				@__pane_header = new PaneHeader()
 
 				@_top =
 					content: @__pane_header
 
-		if @forceFooter() or not (isUndef(@_footer_left) and isUndef(@_footer_right))
+		if @forceFooter() or not (CUI.util.isUndef(@_footer_left) and CUI.util.isUndef(@_footer_right))
 			@__pane_footer = new PaneFooter()
 
 			@_bottom =
@@ -113,10 +113,10 @@ class CUI.SimplePane extends CUI.Pane
 			[ @getLayout(), "center" ]
 		else
 			m = key.match(/^(.*?)_(.*)$/)
-			assert(m?.length==3, "SimplePane.getPaneAndKey", "key #{key} not matched.", matched: m)
+			CUI.util.assert(m?.length==3, "SimplePane.getPaneAndKey", "key #{key} not matched.", matched: m)
 			pn = "__pane_#{m?[1]}"
 			pane = @[pn]
-			assert(pane, "SimplePane.getPaneAndKey", "pane #{pn} not found.")
+			CUI.util.assert(pane, "SimplePane.getPaneAndKey", "pane #{pn} not found.")
 
 			[ pane, m[2] ]
 

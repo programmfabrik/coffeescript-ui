@@ -8,7 +8,7 @@
 CUI.when = =>
 	promises = []
 	add_promise = (promise, idx) =>
-		assert(isPromise(promise) or isDeferred(promise), "CUI.when", "arg[#{idx}] needs to be instanceof CUI.Promise or CUI.Deferred.", arg: promise)
+		CUI.util.assert(CUI.util.isPromise(promise) or CUI.util.isDeferred(promise), "CUI.when", "arg[#{idx}] needs to be instanceof CUI.Promise or CUI.Deferred.", arg: promise)
 		promises.push(promise)
 		return
 

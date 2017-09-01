@@ -59,7 +59,7 @@ class CUI.CSSLoader extends CUI.Element
 
 	loadTheme: (name, overload_url = null) ->
 		url = @__themes[name]?.url
-		assert(url, "CSSLoader.loadTheme", "Theme not found.", name: name, themes: @__themes)
+		CUI.util.assert(url, "CSSLoader.loadTheme", "Theme not found.", name: name, themes: @__themes)
 
 		if overload_url
 			url = overload_url

@@ -28,7 +28,7 @@ class CUI.DocumentBrowser.NodeMatch extends CUI.Element
 	render: ->
 		titlePath =[]
 		for part in @_node.getTitlePath()
-			titlePath.push(toHtml(part))
+			titlePath.push(CUI.util.toHtml(part))
 
 		if @_title_match
 			# replace last item

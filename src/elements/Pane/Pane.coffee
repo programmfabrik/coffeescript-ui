@@ -47,7 +47,7 @@ class CUI.Pane extends CUI.VerticalLayout
 
 		@__fill_screen_is_on = false
 
-		if not $elementIsInDOM(@__placeholder)
+		if not CUI.util.$elementIsInDOM(@__placeholder)
 			@__fillscreenTmpl.destroy()
 			@__placeholder = null
 		else
@@ -162,7 +162,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			if not @getFillScreenState()
 				return
 
-			if not $elementIsInDOM(@__placeholder)
+			if not CUI.util.$elementIsInDOM(@__placeholder)
 				@endFillScreen()
 
 			CUI.setTimeout(checkToggle, 50)

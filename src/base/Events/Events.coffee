@@ -57,7 +57,7 @@ class CUI.Events extends CUI.Element
 			DOM.data(node, "listeners")
 
 	@__registerListener: (listener) ->
-		assert(listener instanceof CUI.Listener, "CUI.Events.__registerListener", "listener needs to be instance of Listener", listener: listener)
+		CUI.util.assert(listener instanceof CUI.Listener, "CUI.Events.__registerListener", "listener needs to be instance of Listener", listener: listener)
 
 		node = listener.getNode()
 		listeners = @__getListenersForNode(node)
@@ -86,9 +86,9 @@ class CUI.Events extends CUI.Element
 	@unregisterListener: (listener) ->
 		node = listener.getNode()
 		arr = @__getListenersForNode(node)
-		assert(arr, "CUI.Events.unregisterListeners", "Listeners not found for node.", node: node, listener: listener)
+		CUI.util.assert(arr, "CUI.Events.unregisterListeners", "Listeners not found for node.", node: node, listener: listener)
 		# CUI.error "unregistring listeenr", listener.getUniqueId()
-		removeFromArray(listener, arr)
+		CUI.util.removeFromArray(listener, arr)
 		if arr.length == 0 and node instanceof HTMLElement
 			node.removeAttribute("cui-events-listener-element")
 			DOM.removeData(node, "listeners")
@@ -197,7 +197,7 @@ class CUI.Events extends CUI.Element
 			event.setTarget(node)
 
 		if exclude and not bubble and not sink
-			assert(false, "CUI.Events.trigger", "Unable to trigger event with bubble == false, sink == false and exclude_self == true.", event: event)
+			CUI.util.assert(false, "CUI.Events.trigger", "Unable to trigger event with bubble == false, sink == false and exclude_self == true.", event: event)
 
 		if sink or (not sink and not bubble and not exclude and event.isInDOM())
 			# if event.getType() == "toolbox"
@@ -218,7 +218,7 @@ class CUI.Events extends CUI.Element
 			# 	CUI.warn("Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
 
 			triggerListeners.sort (a, b) ->
-				compareIndex(a.getDepthFromLastMatchedEvent(), b.getDepthFromLastMatchedEvent())
+				CUI.util.compareIndex(a.getDepthFromLastMatchedEvent(), b.getDepthFromLastMatchedEvent())
 
 			stopNodes = []
 			ev_node = event.getNode()
@@ -285,7 +285,7 @@ class CUI.Events extends CUI.Element
 	# returns event info by type
 	@getEventType: (type) ->
 		ev = @__eventRegistry[type]
-		assert(ev, "Unknown event type \"#{type}\". Use Events.registerEvent to register this type.")
+		CUI.util.assert(ev, "Unknown event type \"#{type}\". Use Events.registerEvent to register this type.")
 		return ev
 
 	@getEventTypeAliases: (type) ->
@@ -293,10 +293,10 @@ class CUI.Events extends CUI.Element
 
 	@registerEvent: (event, allow_array=true) ->
 		if not CUI.isArray(event.type) or not allow_array
-			assert(isString(event?.type) and event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", event: event)
+			CUI.util.assert(CUI.util.isString(event?.type) and event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", event: event)
 
 		register_other_type = (_type) =>
-			_event = copyObject(event, true)
+			_event = CUI.util.copyObject(event, true)
 			_event.type = _type
 			@registerEvent(_event, false)
 

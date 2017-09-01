@@ -18,19 +18,19 @@ class CUI.Test
 		console.error("Test failed: eq: ", a, b, @test_func.toString())
 
 	test: (@test_func) ->
-		# CUI.info getObjectClass(@)+"##{@idx}", f.toString()
+		# CUI.info CUI.util.getObjectClass(@)+"##{@idx}", f.toString()
 		@test_func()
 		@idx++
 
 	@tests: []
 
 	@register: (test) ->
-		assert(test instanceof Test, "Test.register", "Test needs to be instance of Test", test: test)
+		CUI.util.assert(test instanceof Test, "Test.register", "Test needs to be instance of Test", test: test)
 		test.idx = @tests.length
 		@tests.push(test)
 
 	@run: ->
 		for test in @tests
-			console.info("Running Test", getObjectClass(test))
+			console.info("Running Test", CUI.util.getObjectClass(test))
 			test.run()
 		return

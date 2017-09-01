@@ -30,7 +30,7 @@ class CUI.DocumentBrowser.SearchQuery extends CUI.Element
 
 	match: (str, strip) ->
 		search_match = null
-		if isEmpty(str)
+		if CUI.util.isEmpty(str)
 			return search_match
 
 		for regExp, idx in @__regExpe

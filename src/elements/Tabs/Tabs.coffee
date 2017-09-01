@@ -154,7 +154,7 @@ class CUI.Tabs extends CUI.SimplePane
 			else if CUI.isPlainObject(tab)
 				_tab = @addTab(new Tab(tab))
 			else
-				assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{getObjectClass(tab)}", opts: @opts)
+				CUI.util.assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{CUI.util.getObjectClass(tab)}", opts: @opts)
 			if @_appearance == "mini"
 				_tab.getButton().setSize("mini")
 
@@ -172,7 +172,7 @@ class CUI.Tabs extends CUI.SimplePane
 					@__checkOverflowButton()
 					@__setActiveMarker()
 
-			assert( DOM.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
+			CUI.util.assert( DOM.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
 			@__setActiveMarker()
 
@@ -205,7 +205,7 @@ class CUI.Tabs extends CUI.SimplePane
 		@
 
 	addTab: (tab) ->
-		assert(tab instanceof Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{getObjectClass(tab)}", tab: tab)
+		CUI.util.assert(tab instanceof Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{CUI.util.getObjectClass(tab)}", tab: tab)
 		if not @hasTab(tab)
 			@__tabs.push(tab)
 			Events.listen
@@ -219,13 +219,13 @@ class CUI.Tabs extends CUI.SimplePane
 					if CUI.__ng__
 						if not @_maximize_vertical
 							# set left margin on first tab
-							# console.debug "style", @__tabs[0].DOM[0], -100*idxInArray(tab, @__tabs)+"%"
-							DOM.setStyle(@__tabs[0].DOM, marginLeft: -100*idxInArray(tab, @__tabs)+"%")
+							# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
+							DOM.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
 					@__setActiveMarker()
 
-					DOM.setAttribute(@DOM, "active-tab-idx", idxInArray(tab, @__tabs))
+					DOM.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
 					# CUI.error @__uniqueId, "activate"
 
 			Events.listen
@@ -241,7 +241,7 @@ class CUI.Tabs extends CUI.SimplePane
 				type: "tab_destroy"
 				call: =>
 					idx = @__tabs.indexOf(tab)
-					removeFromArray(tab, @__tabs)
+					CUI.util.removeFromArray(tab, @__tabs)
 					idx--
 					@__tabs[idx]?.activate()
 
@@ -326,7 +326,7 @@ class CUI.Tabs extends CUI.SimplePane
 	getTab: (tab_or_idx_or_name) ->
 		found_tab = null
 		# CUI.debug tab_or_idx_or_name, @, @__tabs.length
-		if isString(tab_or_idx_or_name)
+		if CUI.util.isString(tab_or_idx_or_name)
 			for tab in @__tabs
 				# CUI.debug tab._name, tab_or_idx_or_name
 				if tab._name == tab_or_idx_or_name

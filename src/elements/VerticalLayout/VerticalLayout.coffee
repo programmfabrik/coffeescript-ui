@@ -15,7 +15,7 @@ class CUI.VerticalLayout extends CUI.Layout
 			return "vertical-layout"
 
 		panes = @getPanes()
-		# CUI.debug getObjectClass(@)+".getPanes: ",panes
+		# CUI.debug CUI.util.getObjectClass(@)+".getPanes: ",panes
 		if panes.length == 2
 			"vertical-layout-top-center-bottom"
 		else if "top" in panes

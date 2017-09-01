@@ -73,7 +73,7 @@ class CUI.DateTime extends CUI.Input
 					if f.type == type
 						@__input_formats.push(f)
 						found = true
-				assert(found, "new DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
+				CUI.util.assert(found, "new DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
 		@__default_format = @__input_formats[0]
 		for format in @__input_formats
 			if format.clock == false
@@ -225,13 +225,13 @@ class CUI.DateTime extends CUI.Input
 		while (match = re.exec(input)) != null
 			match_str = match[0]
 			match_start = match.index
-			regexp.push("("+escapeRegExp(s.slice(last_match_end, match_start).join(""))+")")
+			regexp.push("("+CUI.util.escapeRegExp(s.slice(last_match_end, match_start).join(""))+")")
 			regexp.push("("+@__regexpMatcher[match_str].regexp+")")
 			matcher.push(@__regexpMatcher[match_str])
 
 			last_match_end = match_start + match_str.length
 
-		regexp.push("("+escapeRegExp(s.slice(last_match_end).join(""))+")")
+		regexp.push("("+CUI.util.escapeRegExp(s.slice(last_match_end).join(""))+")")
 
 		# CUI.debug "regexp found", @__input_format.regexp, @__input_format.matcher
 
@@ -258,7 +258,7 @@ class CUI.DateTime extends CUI.Input
 
 	render: ->
 		super()
-		if isEmpty(@_placeholder)
+		if CUI.util.isEmpty(@_placeholder)
 			@__input.setAttribute("placeholder", @__input_formats[0].text)
 
 		switch @_display_type
@@ -284,19 +284,19 @@ class CUI.DateTime extends CUI.Input
 		# @append(@__status = $div("cui-date-time-status"), "center")
 
 	format: (_s, type="display", output_type=null) ->
-		assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
+		CUI.util.assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
 
 		if moment.isMoment(_s)
 			mom = _s
 		else
 			s = _s?.trim()
 
-			if isEmpty(s)
+			if CUI.util.isEmpty(s)
 				return null
 
 			mom = @parse(s, @__input_formats_known)
 
-		if mom.isValid() and isNull(output_type)
+		if mom.isValid() and CUI.util.isNull(output_type)
 			output_type = @getCurrentFormat().type
 
 		if not mom.isValid()
@@ -314,7 +314,7 @@ class CUI.DateTime extends CUI.Input
 				output_format = f
 				break
 
-		assert(output_format, "DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
+		CUI.util.assert(output_format, "DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
 		# CUI.debug "display format", s, output_type, dump(output_format), output_format[type], type
 
@@ -378,7 +378,7 @@ class CUI.DateTime extends CUI.Input
 	getValueForDisplay: ->
 		value = @getValue()?.trim?()
 
-		if isEmpty(value)
+		if CUI.util.isEmpty(value)
 			return ""
 
 		mom = @parse(value)
@@ -389,7 +389,7 @@ class CUI.DateTime extends CUI.Input
 			value
 
 	getValueForInput: (v = @getValue()) ->
-		if isEmpty(v?.trim())
+		if CUI.util.isEmpty(v?.trim())
 			return ""
 
 		mom = @parse(v)
@@ -399,7 +399,7 @@ class CUI.DateTime extends CUI.Input
 			return v
 
 	__checkInput: (value) ->
-		if not isEmpty(value?.trim())
+		if not CUI.util.isEmpty(value?.trim())
 			mom = @parse(value)
 			if not mom.isValid()
 				return false
@@ -627,7 +627,7 @@ class CUI.DateTime extends CUI.Input
 	parseValue: (value, output_format = null) ->
 		input_formats = @__input_formats.slice(0)
 		for format in @__input_formats_known
-			pushOntoArray(format, input_formats)
+			CUI.util.pushOntoArray(format, input_formats)
 		mom = @parse(value, input_formats, @__input_formats)
 		if not output_format
 			return mom
@@ -639,7 +639,7 @@ class CUI.DateTime extends CUI.Input
 
 	__parseFormat: (f, s) ->
 		for k in DateTime.formatTypes
-			assert(f[k], "DateTime.__parseFormat", ".#{k} must be set", format: f)
+			CUI.util.assert(f[k], "DateTime.__parseFormat", ".#{k} must be set", format: f)
 			mom = moment(s, f[k], true) # true the input format
 			if mom.isValid()
 				return mom
@@ -983,7 +983,7 @@ class CUI.DateTime extends CUI.Input
 							name: "year"
 							group: if CUI.__ng__ then "year" else null
 							onDataChanged: (data) =>
-								if isEmpty(data.year)
+								if CUI.util.isEmpty(data.year)
 									year = now_year
 								else
 									year = data.year
@@ -1290,7 +1290,7 @@ class CUI.DateTime extends CUI.Input
 	@formatTypes: ["store", "input", "display", "display_short"]
 
 	@setLocale: (locale) ->
-		assert(DateTimeFormats[locale], "DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: DateTimeFormats)
+		CUI.util.assert(DateTimeFormats[locale], "DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: DateTimeFormats)
 		DateTime.__locale = locale
 
 	# format the date_str
@@ -1316,7 +1316,7 @@ class CUI.DateTime extends CUI.Input
 		return mom.format(dt.getCurrentFormatDisplay())
 
 	@toMoment: (datestr) ->
-		if isEmpty(datestr)
+		if CUI.util.isEmpty(datestr)
 			return null
 		dt = new DateTime(input_types: null)
 		dt.parse(datestr)

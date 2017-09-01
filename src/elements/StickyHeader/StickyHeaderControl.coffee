@@ -49,7 +49,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 			element:
 				mandatory: true
 				check: (v) ->
-					isElement(v)
+					CUI.util.isElement(v)
 
 	__positionControl: ->
 		dim = CUI.DOM.getDimensions(@_element)
@@ -65,9 +65,9 @@ class CUI.StickyHeaderControl extends CUI.Element
 		@__control and DOM.isInDOM(@__control)
 
 	addStickyHeader: (stickyHeader) ->
-		assert(not @__positioned or DOM.isInDOM(@__control), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
+		CUI.util.assert(not @__positioned or DOM.isInDOM(@__control), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
 
-		assert(stickyHeader instanceof StickyHeader, "#{@__cls}.addStickyHeader", "Needs to be instance of StickyHeader but is #{getObjectClass(stickyHeader)}", stickyHeader: stickyHeader)
+		CUI.util.assert(stickyHeader instanceof StickyHeader, "#{@__cls}.addStickyHeader", "Needs to be instance of StickyHeader but is #{CUI.util.getObjectClass(stickyHeader)}", stickyHeader: stickyHeader)
 		@newStickyHeaders.push(stickyHeader)
 
 	initNewStickyHeaders: ->

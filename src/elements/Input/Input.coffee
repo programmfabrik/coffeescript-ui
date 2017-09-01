@@ -75,13 +75,13 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Function
 			emptyHint:
 				check: (v) ->
-					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof Label or CUI.isPlainObject(v)
 			invalidHint:
 				check: (v) ->
-					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof Label or CUI.isPlainObject(v)
 			validHint:
 				check: (v) ->
-					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof Label or CUI.isPlainObject(v)
 			maxLength:
 				check: (v) ->
 					v >= 0
@@ -112,7 +112,7 @@ class CUI.Input extends CUI.DataFieldInput
 					CUI.isFunction(v) and not @_overwrite
 			placeholder:
 				check: (v) ->
-					CUI.isFunction(v) or isString(v)
+					CUI.isFunction(v) or CUI.util.isString(v)
 			readonly:
 				check: Boolean
 			readonly_select_all:
@@ -137,11 +137,11 @@ class CUI.Input extends CUI.DataFieldInput
 	readOpts: ->
 
 		if @opts.readonly
-			assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
+			CUI.util.assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
 
 		if @opts.textarea
-			assert(not @opts.autocomplete, "new Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
-			assert(not @opts.incNumbers, "new Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
+			CUI.util.assert(not @opts.autocomplete, "new Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
+			CUI.util.assert(not @opts.incNumbers, "new Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
 
 		super()
 
@@ -175,7 +175,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__spellcheck = "default"
 
 		# if @_rows
-		# 	assert(@_content_size, "new Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
+		# 	CUI.util.assert(@_content_size, "new Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
 
 		if @_autocomplete == true
 			@__autocomplete = "on"
@@ -600,7 +600,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if not CUI.isArray(blocks)
 			return false
 		for b, idx in blocks
-			assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)
+			CUI.util.assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)
 			b.idx = idx
 		blocks
 
@@ -877,7 +877,7 @@ class CUI.Input extends CUI.DataFieldInput
 		return
 
 	checkValue: (v) ->
-		if not isString(v) or null
+		if not CUI.util.isString(v) or null
 			throw new Error("#{@__cls}.checkValue(value): Value needs to be String or null.")
 		@
 
@@ -1067,7 +1067,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if ev.getType() == "keydown" and ev.keyCode() in [46, 8]
 			@cursor.shift = null
 
-		if isUndef(@cursor.shift)
+		if CUI.util.isUndef(@cursor.shift)
 			@cursor.shift = null
 
 		@cursor.start = @findBlock(blocks, s, "left")

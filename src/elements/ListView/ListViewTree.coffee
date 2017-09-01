@@ -8,7 +8,7 @@
 class CUI.ListViewTree extends CUI.ListView
 	constructor: (@opts={}) ->
 		super(@opts)
-		assert(@root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
+		CUI.util.assert(@root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#
 
@@ -37,7 +37,7 @@ class CUI.ListViewTree extends CUI.ListView
 	readOpts: ->
 		super()
 		if @_selectable != undefined
-			assert(@_selectableRows == undefined, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
+			CUI.util.assert(@_selectableRows == undefined, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
 			@__selectableRows = @_selectable
 		@
 
@@ -202,8 +202,8 @@ class CUI.ListViewTree extends CUI.ListView
 		from_node = @getListViewRow(from_i)
 		to_node = @getListViewRow(to_i)
 
-		assert(from_node, "ListViewTree.moveRow", "from_i node not found", from_i: from_i)
-		assert(to_node, "ListViewTree.moveRow", "to_i node not found", to_i: to_i)
+		CUI.util.assert(from_node, "ListViewTree.moveRow", "from_i node not found", from_i: from_i)
+		CUI.util.assert(to_node, "ListViewTree.moveRow", "to_i node not found", to_i: to_i)
 
 		if from_node.father == to_node.father and not (to_node.is_open and after)
 			new_father = null
@@ -223,7 +223,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		promise = from_node.moveNodeBefore(to_node, new_father, after)
 
-		assert(isPromise(promise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: promise)
+		CUI.util.assert(CUI.util.isPromise(promise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: promise)
 		promise.done =>
 			display_from_i = @getDisplayRowIdx(from_i)
 			display_to_i = @getDisplayRowIdx(to_i)
@@ -231,7 +231,7 @@ class CUI.ListViewTree extends CUI.ListView
 			super(from_i, to_i, after, false)
 			# move row in data structure
 			if from_node.father == to_node.father and not (to_node.is_open and after)
-				moveInArray(from_node.getChildIdx(), to_node.getChildIdx(), from_node.father.children, after)
+				CUI.util.moveInArray(from_node.getChildIdx(), to_node.getChildIdx(), from_node.father.children, after)
 			else
 				from_node.father.removeChild(from_node)
 				# the node is open and we want to put it after, so
@@ -273,7 +273,7 @@ class CUI.ListViewTree extends CUI.ListView
 		@addNode(node, false)
 
 	addNode: (node, append=true) ->
-		assert(node instanceof ListViewTreeNode, "#{getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
+		CUI.util.assert(node instanceof ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
 		promise = @root.addNode(node, append)
 		Events.trigger
 			node: @

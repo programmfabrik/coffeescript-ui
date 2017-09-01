@@ -19,7 +19,7 @@ class CUI.StickyHeader extends CUI.DOM
 		@registerTemplate(@header)
 
 		@addClass("cui-sticky-header-level-#{@_level}")
-		if not isEmpty(@_text)
+		if not CUI.util.isEmpty(@_text)
 			@replace($text(@_text), "center")
 		else
 			@replace(@_content, "center")

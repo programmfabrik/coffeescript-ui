@@ -23,7 +23,7 @@ class CUI.SimpleForm extends CUI.DataField
 			horizontal:
 				default: false
 				check: (v) ->
-					isBoolean(v) or (isInteger(v) and v > 0)
+					CUI.util.isBoolean(v) or (CUI.util.isInteger(v) and v > 0)
 			appearance:
 				default: "normal"
 				mandatory: true
@@ -62,12 +62,12 @@ class CUI.SimpleForm extends CUI.DataField
 
 		if @_form?.checkbox
 			# the form has a checkbox (for form context)
-			assert(CUI.isPlainObject(@_form.checkbox, "new Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
-			assert(@_name, "new Form", "opts.form.checkbox requires opts.name to be set.", opts: @opts)
-			assert(not @_form.checkbox.data, "new Form", "opts.form.checkbox cannot have 'data' set.", opts: @opts)
-			assert(not @_form.checkbox.name, "new Form", "opts.form.checkbox cannot have 'name' set.", opts: @opts)
+			CUI.util.assert(CUI.isPlainObject(@_form.checkbox, "new Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
+			CUI.util.assert(@_name, "new Form", "opts.form.checkbox requires opts.name to be set.", opts: @opts)
+			CUI.util.assert(not @_form.checkbox.data, "new Form", "opts.form.checkbox cannot have 'data' set.", opts: @opts)
+			CUI.util.assert(not @_form.checkbox.name, "new Form", "opts.form.checkbox cannot have 'name' set.", opts: @opts)
 
-			cb_opts = copyObject(@_form.checkbox, true)
+			cb_opts = CUI.util.copyObject(@_form.checkbox, true)
 
 			cb_opts.data = @__checkbox_data = checkbox: false
 			cb_opts.name = "checkbox"
@@ -139,7 +139,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 	setData: (data) ->
 		if @_name and @__checkbox
-			assert(not CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
+			CUI.util.assert(not CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
 
 		if @_name and not CUI.isFunction(data)
 			# CUI.debug "init data ", @_name, data, 1
@@ -159,7 +159,7 @@ class CUI.SimpleForm extends CUI.DataField
 				super(@__checkbox_form_data)
 
 			else
-				if isUndef(data[@_name])
+				if CUI.util.isUndef(data[@_name])
 					data[@_name] = {}
 
 				@__parent_data = data
@@ -216,7 +216,7 @@ class CUI.SimpleForm extends CUI.DataField
 		@
 
 	getTable: ->
-		assert(not CUI.__ng__, "Form.getTable is obsolete in \"ng\" design.", form: @)
+		CUI.util.assert(not CUI.__ng__, "Form.getTable is obsolete in \"ng\" design.", form: @)
 		@table
 
 	renderAsBlock: ->
@@ -282,7 +282,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 		# 	# add all classes from the top level
 		# 	for cls in (@_class or "").split(/\s+/)
-		# 		if isEmpty(cls)
+		# 		if CUI.util.isEmpty(cls)
 		# 			continue
 		# 		table.classList.add(cls+"-table")
 
@@ -297,14 +297,14 @@ class CUI.SimpleForm extends CUI.DataField
 			else if CUI.isPlainObject(v) # assume a label constructor
 				# new Label(v).DOM
 				new MultilineLabel(v).DOM
-			else if isString(v)
+			else if CUI.util.isString(v)
 				# new Label(text: v).DOM
 				new MultilineLabel(text: v).DOM
 			else if v?.DOM
 				v.DOM
 			else if CUI.isFunction(v)
 				get_append(v(info))
-			else if isEmpty(v)
+			else if CUI.util.isEmpty(v)
 				null
 			else
 				v
@@ -314,7 +314,7 @@ class CUI.SimpleForm extends CUI.DataField
 			if not lbl
 				return
 
-			if isString(lbl)
+			if CUI.util.isString(lbl)
 				label = CUI.DOM.element("label")
 				label.textContent = lbl
 				field.registerLabel(label)
@@ -348,16 +348,16 @@ class CUI.SimpleForm extends CUI.DataField
 			hint_div = null
 			grid = field._form?.grid
 
-			if field._form and (not isNull(field._form.hint) or field._form.right)
+			if field._form and (not CUI.util.isNull(field._form.hint) or field._form.right)
 
 				add_hint_div = =>
 					if hint_div
 						return
 					hint_div = CUI.DOM.element("DIV", class: "cui-form-hint", "data-for-field": field.getUniqueId())
 
-				if not isNull(field._form.hint)
+				if not CUI.util.isNull(field._form.hint)
 					add_hint_div()
-					if isString(field._form.hint)
+					if CUI.util.isString(field._form.hint)
 						hint_div.appendChild(new Label(class: "cui-form-hint-label", icon: field._form.hint_icon, text: field._form.hint, multiline: true, markdown: true).DOM)
 					else
 						CUI.DOM.append(hint_div, field._form.hint)
@@ -580,7 +580,7 @@ class CUI.SimpleForm extends CUI.DataField
 		return true
 
 	getFieldByIdx: (idx) ->
-		assert(isInteger(idx) and idx >= 0, "#{@__cls}.getFieldByIdx", "idx must be Integer.", idx: idx)
+		CUI.util.assert(CUI.util.isInteger(idx) and idx >= 0, "#{@__cls}.getFieldByIdx", "idx must be Integer.", idx: idx)
 		@getFields("getFieldByIdx")[idx]
 
 	updateHint: (field_name, hint, trigger_resize = true) ->
@@ -621,12 +621,12 @@ class CUI.SimpleForm extends CUI.DataField
 		@__setClassOnField(field_name, cls, false)
 
 	getFieldsByName: (name, found_fields = []) ->
-		assert(isString(name), "#{@__cls}.getFieldsByName", "name must be String.", name: name)
+		CUI.util.assert(CUI.util.isString(name), "#{@__cls}.getFieldsByName", "name must be String.", name: name)
 
 		# CUI.debug @dataFields, @, typeof(@getFields)
 
 		for _field in @getFields("getFieldsByName")
-			# CUI.debug _field, getObjectClass(_field), name, _field.getName
+			# CUI.debug _field, CUI.util.getObjectClass(_field), name, _field.getName
 			if _field.getName() == name
 				found_fields.push(_field)
 
@@ -662,7 +662,7 @@ class CUI.SimpleForm extends CUI.DataField
 			return data
 		else
 			# CUI.debug "getValue HENK", @_name, @__data
-			data = copyObject(@__data, true)
+			data = CUI.util.copyObject(@__data, true)
 			delete(data._undo)
 			return data
 

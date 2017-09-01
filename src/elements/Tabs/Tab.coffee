@@ -11,8 +11,8 @@ class CUI.Tab extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		if not isEmpty(@_name)
-			cls = "ez-tab-#{toClass(@_name)}"
+		if not CUI.util.isEmpty(@_name)
+			cls = "ez-tab-#{CUI.util.toClass(@_name)}"
 		else
 			cls = null
 
@@ -35,7 +35,7 @@ class CUI.Tab extends CUI.DOM
 		@__activations = 0
 
 	initButton: (tabs) ->
-		assert(tabs instanceof CUI.Tabs, "Tab.initButton", "Parameter #1 need to be instance of Tabs.", tabs: tabs)
+		CUI.util.assert(tabs instanceof CUI.Tabs, "Tab.initButton", "Parameter #1 need to be instance of Tabs.", tabs: tabs)
 
 		@__button = new CUI.Button
 			role: "tab-header"
@@ -89,7 +89,7 @@ class CUI.Tab extends CUI.DOM
 			content:
 				mandatory: true
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			onFirstActivate:
 				check: Function
 			onActivate:
@@ -98,7 +98,7 @@ class CUI.Tab extends CUI.DOM
 				check: Function
 			content_placeholder:
 				check: (v) ->
-					isContent(v)
+					CUI.util.isContent(v)
 			load_on_show:
 				check: Boolean
 

@@ -25,7 +25,7 @@ class CUI.DataForm extends CUI.DataTable
 					!!@rows[to_idx]
 				sorted: (ev, from_idx, to_idx) =>
 					console.debug from_idx, ">", to_idx
-					moveInArray(from_idx, to_idx, @rows, from_idx < to_idx)
+					CUI.util.moveInArray(from_idx, to_idx, @rows, from_idx < to_idx)
 					@__storeValue()
 					@__updateView()
 
@@ -38,7 +38,7 @@ class CUI.DataForm extends CUI.DataTable
 				default: 0
 				mandatory: true
 				check: (v) ->
-					isPosInt(v)
+					CUI.util.isPosInt(v)
 
 		@removeOpt("onNodeAdd")
 		@removeOpt("footer_right")
@@ -114,7 +114,7 @@ class CUI.DataForm extends CUI.DataTable
 		@
 
 	__storeValue: ->
-		@storeValue(copyObject(@rows, true))
+		@storeValue(CUI.util.copyObject(@rows, true))
 
 	__updateEmptyInRows: ->
 		for row in @rows
@@ -179,10 +179,10 @@ class CUI.DataForm extends CUI.DataTable
 		return
 
 	__findRowInfo: (row) ->
-		idx = idxInArray(null, @__rowRegistry, (v) ->
+		idx = CUI.util.idxInArray(null, @__rowRegistry, (v) ->
 			v.data == row
 		)
-		assert(idx > -1, "DataForm.__removeRow", "row not found", row: row, registry: @__rowRegistry)
+		CUI.util.assert(idx > -1, "DataForm.__removeRow", "row not found", row: row, registry: @__rowRegistry)
 		info = @__rowRegistry[idx]
 		info.idx = idx
 		info
@@ -191,7 +191,7 @@ class CUI.DataForm extends CUI.DataTable
 		info = @__findRowInfo(row)
 		CUI.DOM.remove(info.dom)
 		@__rowRegistry.splice(info.idx, 1)
-		removeFromArray(row, @rows)
+		CUI.util.removeFromArray(row, @rows)
 		@__storeValue()
 		@
 
