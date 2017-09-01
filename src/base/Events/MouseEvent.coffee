@@ -38,6 +38,3 @@ class CUI.MouseEvent extends CUI.Event
 				ev[k] = @[prop]
 
 		super(ev)
-
-
-CUI.windowCompat.protect.push("MouseEvent")

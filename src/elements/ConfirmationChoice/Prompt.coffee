@@ -75,6 +75,3 @@ class CUI.Prompt extends CUI.Confirm
 
 CUI.prompt = (opts) ->
 	new CUI.Prompt(opts).open()
-
-CUI.windowCompat.protect.push("prompt")
-

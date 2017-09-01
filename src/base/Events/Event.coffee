@@ -298,5 +298,3 @@ class CUI.Event extends CUI.Element
 		# CUI.debug "Event.createFromDOMEvent", event.type, eventClass.name, ev.getUniqueId()
 		ev.setNativeEvent(event)
 		ev
-
-CUI.windowCompat.protect.push("Event")

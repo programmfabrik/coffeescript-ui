@@ -38,5 +38,3 @@ class CUI.TouchEvent extends CUI.MouseEvent
 				ev[k] = @[prop]
 
 		super(ev)
-
-CUI.windowCompat.protect.push("TouchEvent")

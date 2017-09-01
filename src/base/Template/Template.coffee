@@ -186,7 +186,7 @@ class CUI.Template extends CUI.Element
 
 	empty: (key) ->
 		CUI.util.assert(@map, "Template[#{@_name}].empty [#{@getUniqueId()}]", "Already destroyed", template: @, name: @_name)
-		if @CUI.util.isEmpty(key)
+		if @isEmpty(key)
 			if key
 				return @map[key]
 			else
@@ -199,7 +199,7 @@ class CUI.Template extends CUI.Element
 
 			is_empty = true
 			for key of @map
-				if not @CUI.util.isEmpty(key)
+				if not @isEmpty(key)
 					is_empty = false
 					break
 

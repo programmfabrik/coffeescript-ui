@@ -26,10 +26,10 @@ class CUI
 
 		trigger_viewport_resize = =>
 			console.info("CUI: trigger viewport resize.")
-			Events.trigger
+			CUI.Events.trigger
 				type: "viewport-resize"
 
-		Events.listen
+		CUI.Events.listen
 			type: "resize"
 			node: window
 			call: (ev, info) =>
@@ -40,13 +40,13 @@ class CUI
 					CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "drop"
 			node: document.documentElement
 			call: (ev) ->
 				ev.preventDefault()
 
-		Events.listen
+		CUI.Events.listen
 			type: "keyup"
 			node: window
 			capture: true
@@ -54,7 +54,7 @@ class CUI
 				if ev.getKeyboard() == "C+U+I"
 					CUI.toaster(text: "CUI!")
 
-		Events.listen
+		CUI.Events.listen
 			type: "keydown"
 			node: window
 			call: (ev) ->
@@ -850,6 +850,25 @@ class CUI
 		data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
 		data
 
+
+	@windowCompat:
+		protect: [] # Array to hold properties which will not get copied
+		start: ->
+			for prop, func of CUI
+				if prop in CUI.windowCompat.protect
+					continue
+
+				if window[prop] != undefined
+					console.error("CUI.windowCompat: Already mapped! CUI."+prop+" -> window."+prop)
+				else
+					window[prop] = func
+					console.info("CUI."+prop+" -> window."+prop)
+
+			for prop, func of CUI.DOM
+				if prop.startsWith('$')
+					window[prop] = func
+					console.info("CUI.DOM."+prop+" -> window."+prop)
+
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 	@browser: (->
 		map =
@@ -862,6 +881,11 @@ class CUI
 		map.blink = (map.chrome or map.opera) && !!window.CSS
 		map
 	)()
+
+# protect already stuff added from CUI
+for prop, value of CUI
+	# protect from copying by windowCompat.coffee
+	CUI.windowCompat.protect.push(prop)
 
 CUI.ready =>
 

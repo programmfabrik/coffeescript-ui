@@ -31,5 +31,3 @@ class CUI.FileReader extends CUI.FileUpload
 	        elem.click();
 	        document.body.removeChild(elem);
 			window.URL.revokeObjectURL(blob)
-
-CUI.windowCompat.protect.push("FileReader")

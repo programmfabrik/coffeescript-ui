@@ -35,5 +35,3 @@ class CUI.AlertProblem extends CUI.Alert
 
 CUI.problem = (opts=text: "CUI.problem") ->
 	new CUI.AlertProblem(opts).open()
-
-CUI.windowCompat.protect.push("alert", "Alert", "problem")
