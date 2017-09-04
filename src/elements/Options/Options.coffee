@@ -407,7 +407,7 @@ class CUI.Options extends CUI.DataField
 
 		if @hasData()
 			@__setDataOnOptions()
-			# CUI.debug "setting data on options", @__radio, @getName(), @getData(), dump(@__options_data)
+			# CUI.debug "setting data on options", @__radio, @getName(), @getData(), CUI.util.dump(@__options_data)
 
 		if @__checkboxes.length
 			if @_sortable and not CUI.util.isEmpty(@_sortable_hint)

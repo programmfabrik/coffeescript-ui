@@ -316,7 +316,7 @@ class CUI.DateTime extends CUI.Input
 
 		CUI.util.assert(output_format, "DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
-		# CUI.debug "display format", s, output_type, dump(output_format), output_format[type], type
+		# CUI.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
 
 		mom.format(output_format[type])
 

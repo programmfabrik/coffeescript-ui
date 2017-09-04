@@ -250,6 +250,6 @@ class CUI.Element
 				console.warn("#{cls}: opts.#{k}, not supported. check_map: ", check_map, "opts:", opts)
 				# delete(opts[k])
 
-		# CUI.warn "#{@__cls}.opts = ", dump(set_opts)
+		# CUI.warn "#{@__cls}.opts = ", CUI.util.dump(set_opts)
 		# @__timeEnd("readOpts")
 		set_opts

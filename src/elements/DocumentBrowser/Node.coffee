@@ -67,7 +67,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 				if not m
 					continue
 
-				# console.debug "match:", dump(m)
+				# console.debug "match:", CUI.util.dump(m)
 
 				info = m[1].split(":")
 				if m[3]

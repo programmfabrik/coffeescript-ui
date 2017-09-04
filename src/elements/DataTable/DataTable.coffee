@@ -132,7 +132,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@displayValue()
 		else
 			@listView.appendRow(new_node)
-		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
+		# CUI.debug "data-changed on DataTable PLUS storing values:", CUI.util.dump(@rows)
 		new_node
 
 	updateButtons: ->
@@ -309,7 +309,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				# present us as a whole
 				ev.stopPropagation()
 				# store value triggers a new data-changed
-				# CUI.debug "data-changed on DataTable storing values:", dump(@rows)
+				# CUI.debug "data-changed on DataTable storing values:", CUI.util.dump(@rows)
 
 				@storeValue(CUI.util.copyObject(@rows, true))
 				return

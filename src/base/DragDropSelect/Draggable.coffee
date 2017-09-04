@@ -553,7 +553,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				min_y: dim_contain.borderTopWidth
 				max_y: dim_contain.scrollHeight - dim_contain.borderBottomWidth - CUI.globalDrag.helperNodeStart.marginVertical
 
-		# console.debug "limitRect", dump(pos), dim_contain
+		# console.debug "limitRect", CUI.util.dump(pos), dim_contain
 
 		helper_pos.top = pos.y
 		helper_pos.left = pos.x
