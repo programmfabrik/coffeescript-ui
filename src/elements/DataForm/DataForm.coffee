@@ -3,7 +3,7 @@ class CUI.DataForm extends CUI.DataTable
 	render: ->
 		CUI.DataFieldInput::render.call(@)
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: @DOM
 			call: =>

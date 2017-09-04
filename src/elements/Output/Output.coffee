@@ -38,7 +38,7 @@ class CUI.Output extends CUI.DataFieldInput
 		@
 
 	init: ->
-		@__textSpan = new Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
+		@__textSpan = new CUI.Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
 		@setText(@_text)
 		@__textSpan
 
@@ -90,7 +90,7 @@ class CUI.Output extends CUI.DataFieldInput
 		@replace(@__textSpan)
 		if @_allow_delete and @hasData()
 			@addClass("cui-output--deletable")
-			@__deleteBtn = new Button
+			@__deleteBtn = new CUI.Button
 				icon: "remove"
 				appearance: "flat"
 				onClick: =>

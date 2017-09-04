@@ -555,7 +555,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@father?.removeChild(@, keep_children_array)
 
 			if tree = @getTree()
-				Events.trigger
+				CUI.Events.trigger
 					node: tree
 					type: "row_removed"
 
@@ -738,7 +738,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		else if @html
 			@html
 		else
-			new EmptyLabel(text: "<empty>").DOM
+			new CUI.EmptyLabel(text: "<empty>").DOM
 
 	update: (update_root=false) =>
 		# CUI.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
@@ -772,14 +772,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	showSpinner: ->
 		if @__is_rendered
 			CUI.DOM.empty(@__handleDiv)
-			CUI.DOM.append(@__handleDiv, new Icon(icon: "spinner").DOM)
+			CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: "spinner").DOM)
 		@
 
 	hideSpinner: ->
 		if @__is_rendered
 			CUI.DOM.empty(@__handleDiv)
 			if @__handleIcon
-				CUI.DOM.append(@__handleDiv, new Icon(icon: @__handleIcon).DOM)
+				CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 			else
 		@
 
@@ -812,7 +812,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		@__handleDiv = $div(cls.join(" "))
 		if @__handleIcon
-			CUI.DOM.append(@__handleDiv, new Icon(icon: @__handleIcon).DOM)
+			CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 
 		CUI.DOM.append(element, @__handleDiv)
 

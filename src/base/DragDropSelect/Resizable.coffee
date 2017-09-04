@@ -27,7 +27,7 @@ class CUI.Resizable extends CUI.Movable
 
 	init_drag: (ev, $target) ->
 		#if $target.is(".cui-resizable-handle")
-		Draggable::init_drag.call(@, ev, $target)
+		CUI.Draggable::init_drag.call(@, ev, $target)
 		# else
 		# 	# ignore this
 		# 	return

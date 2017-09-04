@@ -20,7 +20,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 				check: String
 			text_icon:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			markdown:
 				mandatory: true
 				default: false
@@ -34,7 +34,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 					CUI.util.isContent(v) or v?.DOM
 			icon:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			buttons:
 				check: (v) ->
 					(CUI.isArray(v) and v.length > 0) or CUI.isFunction(v)
@@ -61,14 +61,14 @@ class CUI.ConfirmationDialog extends CUI.Modal
 			@addClass("cui-confirmation-dialog--no-title")
 
 		if not CUI.util.isEmpty(@_text)
-			@__label = c = new MultilineLabel(markdown: @_markdown, markdown_opts: @_markdown_opts, text: @_text, icon: @_text_icon)
+			@__label = c = new CUI.MultilineLabel(markdown: @_markdown, markdown_opts: @_markdown_opts, text: @_text, icon: @_text_icon)
 		else if not CUI.util.isEmpty(@_html)
-			@__label = c = new MultilineLabel(content: @_html)
+			@__label = c = new CUI.MultilineLabel(content: @_html)
 		else
 			c = @_content
 
 		if not CUI.util.isEmpty(@_title) or not CUI.util.isNull(@_icon)
-			l = new Label(text: @_title, icon: @_icon)
+			l = new CUI.Label(text: @_title, icon: @_icon)
 
 		pane = @getPane()
 		for key, content of {
@@ -87,13 +87,13 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		@
 
 	setText: (text, markdown = @_markdown, markdown_opts = @_markdown_opts) ->
-		@__label = new MultilineLabel(markdown: markdown, markdown_opts: markdown_opts, text: text, icon: @_text_icon)
+		@__label = new CUI.MultilineLabel(markdown: markdown, markdown_opts: markdown_opts, text: text, icon: @_text_icon)
 		@setContent(@__label)
 
 	getButtons: ->
 		[pane, key] = @getPane().getPaneAndKey("footer_right")
-		els = DOM.findElements(pane[key](), ".cui-button")
+		els = CUI.DOM.findElements(pane[key](), ".cui-button")
 		buttons = []
 		for el in els
-			buttons.push(DOM.data(el, "element"))
+			buttons.push(CUI.DOM.data(el, "element"))
 		buttons

@@ -29,7 +29,7 @@ class CUI.Layer extends CUI.DOM
 		# of the layer, that way we can give the backdrop an opacity which does
 		# not affect the layer's opacity as it would to if the layer would be
 		# a child of backdrop
-		@__layer_root = new Template
+		@__layer_root = new CUI.Template
 			class: "cui-layer-root-"+(CUI.util.toDash(@__cls)+" "+(@_class or "")).trim().split(/\s+/).join(" cui-layer-root-")
 			name: "layer-root"
 
@@ -39,7 +39,7 @@ class CUI.Layer extends CUI.DOM
 
 			@__bd_policy = @_backdrop.policy or "click-thru"
 
-			@__backdrop = new Template
+			@__backdrop = new CUI.Template
 				class: "cui-layer-backdrop"
 				name: "layer-backdrop"
 
@@ -75,7 +75,7 @@ class CUI.Layer extends CUI.DOM
 					when "click-thru"
 						; # @__addClickThruListener()
 					when "click"
-						Events.listen
+						CUI.Events.listen
 							type: ["click", "contextmenu"]
 							node: @__backdrop
 							call: (ev) =>
@@ -96,7 +96,7 @@ class CUI.Layer extends CUI.DOM
 							else
 								bc = "cui-layer-bounce"
 
-							Events.listen
+							CUI.Events.listen
 								type: "click"
 								node: @__backdrop
 								call: (ev) =>
@@ -104,7 +104,7 @@ class CUI.Layer extends CUI.DOM
 									if not @__layer
 										return
 
-									Events.wait
+									CUI.Events.wait
 										type: "transitionend"
 										node: @__layer
 									.always =>
@@ -125,7 +125,7 @@ class CUI.Layer extends CUI.DOM
 		@__layer_root.DOM.appendChild(@__layer.DOM)
 
 		if @_handle_focus
-			DOM.setAttribute(@__layer.DOM, "tabindex", "0")
+			CUI.DOM.setAttribute(@__layer.DOM, "tabindex", "0")
 
 		if @_element
 			@__setElement(@_element)
@@ -137,7 +137,7 @@ class CUI.Layer extends CUI.DOM
 			if @_class
 				cls = "cui-layer-pointer-"+@_class.split(/\s+/).join(" cui-layer-pointer-")
 
-			@__pointer = new Template
+			@__pointer = new CUI.Template
 				class: cls
 				name: "layer-pointer"
 			.DOM
@@ -186,7 +186,7 @@ class CUI.Layer extends CUI.DOM
 		CUI.DOM.append(@__backdrop.DOM, content)
 
 	getTemplate: ->
-		new Template(name: "layer")
+		new CUI.Template(name: "layer")
 
 	getLayerRoot: ->
 		@__layer_root
@@ -302,9 +302,9 @@ class CUI.Layer extends CUI.DOM
 
 	setVisible: (on_off=true) ->
 		if on_off
-			DOM.setStyleOne(@__layer_root.DOM, "visibility", "")
+			CUI.DOM.setStyleOne(@__layer_root.DOM, "visibility", "")
 		else
-			DOM.setStyleOne(@__layer_root.DOM, "visibility", "hidden")
+			CUI.DOM.setStyleOne(@__layer_root.DOM, "visibility", "hidden")
 
 	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
@@ -789,7 +789,7 @@ class CUI.Layer extends CUI.DOM
 					width: _vp.width
 					height: _vp.height
 
-				DOM.setStyle(@__dbg_div1, style1)
+				CUI.DOM.setStyle(@__dbg_div1, style1)
 
 				style2 =
 					position: "absolute"
@@ -809,7 +809,7 @@ class CUI.Layer extends CUI.DOM
 				span.textContent = placement
 
 				@__dbg_div2.appendChild(span)
-				DOM.setStyle(@__dbg_div2, style2)
+				CUI.DOM.setStyle(@__dbg_div2, style2)
 
 				style3 =
 					position: "absolute"
@@ -821,7 +821,7 @@ class CUI.Layer extends CUI.DOM
 					width: _vp.pointer_pos.width
 					height: _vp.pointer_pos.height
 
-				DOM.setStyle(@__dbg_div3, style3)
+				CUI.DOM.setStyle(@__dbg_div3, style3)
 
 				@__layer_root.DOM.appendChild(@__dbg_div1)
 				@__layer_root.DOM.appendChild(@__dbg_div2)
@@ -831,7 +831,7 @@ class CUI.Layer extends CUI.DOM
 
 			dbg_pl = 0
 
-			listener = Events.listen
+			listener = CUI.Events.listen
 				node: document
 				type: "keyup"
 				call: (ev, info) =>
@@ -934,13 +934,13 @@ class CUI.Layer extends CUI.DOM
 			CUI.DOM.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
 
 		if @__backdrop_crop
-			DOM.setStyle @__backdrop_crop,
+			CUI.DOM.setStyle @__backdrop_crop,
 				top: vp.layer_pos.top
 				left: vp.layer_pos.left
 				width: vp.layer_pos.width
 				height: vp.layer_pos.height
 
-			DOM.setStyle @__backdrop_crop.firstChild,
+			CUI.DOM.setStyle @__backdrop_crop.firstChild,
 				width: dim_window.width
 				height: dim_window.height
 				top: -vp.layer_pos.top
@@ -1038,7 +1038,7 @@ class CUI.Layer extends CUI.DOM
 		# 	@__element = @__orig_element
 		# 	delete(@__orig_element)
 
-		Events.ignore(instance: @)
+		CUI.Events.ignore(instance: @)
 
 		@_onHide?(@, ev)
 		@
@@ -1091,7 +1091,7 @@ class CUI.Layer extends CUI.DOM
 			CUI.DOM.addClass(@__getOriginalElement(), @getElementOpenClass())
 
 			for scroll_parent in CUI.DOM.parentsScrollable(@__element)
-				Events.listen
+				CUI.Events.listen
 					type: "scroll"
 					instance: @
 					node: scroll_parent
@@ -1107,7 +1107,7 @@ class CUI.Layer extends CUI.DOM
 
 		@__updateLayerStackCounter()
 
-		Events.listen
+		CUI.Events.listen
 			type: "content-resize"
 			instance: @
 			node: @__layer
@@ -1115,7 +1115,7 @@ class CUI.Layer extends CUI.DOM
 				# console.error "Layer caught event:", ev.getType()
 				@position()
 
-		Events.listen
+		CUI.Events.listen
 			type: "viewport-resize"
 			instance: @
 			node: @__layer
@@ -1150,7 +1150,7 @@ class CUI.Layer extends CUI.DOM
 	focusOnShow: (ev) ->
 		if ev == CUI.KeyboardEvent
 			@__focused_on_show = true
-		else if @__element and DOM.matchSelector(document.documentElement, ":focus").length > 0
+		else if @__element and CUI.DOM.matchSelector(document.documentElement, ":focus").length > 0
 			; # @__focused_on_show = true
 		else
 			@__focused_on_show = false
@@ -1164,7 +1164,7 @@ class CUI.Layer extends CUI.DOM
 			return @
 
 		if ev == CUI.KeyboardEvent or @__focused_on_show
-			DOM.findElement(@__element, "[tabindex]")?.focus()
+			CUI.DOM.findElement(@__element, "[tabindex]")?.focus()
 		@
 
 	getElement: ->
@@ -1196,7 +1196,7 @@ class CUI.Layer extends CUI.DOM
 
 CUI.ready ->
 
-	Events.listen
+	CUI.Events.listen
 		type: ["mousedown", "touchend"]
 		capture: true
 		# install not do high, do Drag & Drop can be on top
@@ -1214,14 +1214,14 @@ CUI.ready ->
 				if CUI.DOM.closest(target, layer_element)
 					return
 
-				layer = DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
+				layer = CUI.DOM.data(CUI.DOM.children(layer_element, ".cui-layer")[0], "element")
 
 				# prevent following click, if the target of the mousedown
 				# is the element which positioned the layer.
 
 				element = layer.getElement()
 				if element and CUI.DOM.closest(ev.getTarget(), element)
-					Events.listen
+					CUI.Events.listen
 						node: document.documentElement
 						type: ["dblclick", "click"]
 						capture: true
@@ -1236,7 +1236,7 @@ CUI.ready ->
 
 			return
 
-	Events.listen
+	CUI.Events.listen
 		type: ["keyup"]
 		node: document.body
 		call: (ev) ->
@@ -1256,7 +1256,7 @@ CUI.ready ->
 			if (element in [layer_element])
 				return
 
-			layer = DOM.data(layer_element, "element")
+			layer = CUI.DOM.data(layer_element, "element")
 
 			ev.stopImmediatePropagation()
 			ev.preventDefault()

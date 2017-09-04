@@ -124,7 +124,7 @@ class CUI.CSSLoader extends CUI.Element
 			console.error("CSSLoader: Loading failed, removing node.", css_href)
 			CUI.DOM.remove(cssNode)
 
-		Events.listen
+		CUI.Events.listen
 			node: cssNode
 			type: "load"
 			call: (ev, info) =>
@@ -156,7 +156,7 @@ class CUI.CSSLoader extends CUI.Element
 						return
 
 				old_css_nodes = []
-				for css_node in DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
+				for css_node in CUI.DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
 					if css_node != cssNode
 						# console.info("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
 						CUI.DOM.remove(css_node)
@@ -165,7 +165,7 @@ class CUI.CSSLoader extends CUI.Element
 				CUI.DOM.setAttribute(document.body, "cui-theme", name)
 
 				# console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
-				Events.trigger
+				CUI.Events.trigger
 					type: "viewport-resize"
 					info:
 						css_load: true
@@ -173,7 +173,7 @@ class CUI.CSSLoader extends CUI.Element
 				dfr.resolve(css_href)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			node: cssNode
 			type: "error"
 			call: (ev, info) =>

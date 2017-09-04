@@ -223,7 +223,7 @@ class CUI.Select extends CUI.Checkbox
 		@
 
 	displayValue: ->
-		DataFieldInput::displayValue.call(@)
+		CUI.DataFieldInput::displayValue.call(@)
 
 		if not @__optionsPromise and CUI.isFunction(@_options)
 			@__loadOptions()

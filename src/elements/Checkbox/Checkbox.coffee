@@ -44,10 +44,10 @@ class CUI.Checkbox extends CUI.DataFieldInput
 				default: "check"
 				mandatory: true
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_inactive:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 
 	constructor: (@opts={}) ->
 		super(@opts)
@@ -65,7 +65,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 
 	registerLabel: (lbl) ->
 		lbl.setAttribute('data-label-clickable', '1')
-		Events.listen
+		CUI.Events.listen
 			type: 'click'
 			node: lbl
 			call: (ev) =>

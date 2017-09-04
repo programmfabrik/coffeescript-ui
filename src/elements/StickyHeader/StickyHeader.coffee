@@ -11,7 +11,7 @@ class CUI.StickyHeader extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		@header = new Template
+		@header = new CUI.Template
 			name: "sticky-header"
 			map:
 				center: true

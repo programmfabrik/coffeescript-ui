@@ -11,7 +11,7 @@ class CUI.Block extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		@__block = new Template
+		@__block = new CUI.Template
 			name: @getTemplateName()
 			map:
 				header: true
@@ -23,7 +23,7 @@ class CUI.Block extends CUI.DOM
 			@setHeader(@_header)
 		else
 			if @_text or @_icon
-				@__label = new Label
+				@__label = new CUI.Label
 					text: @_text
 					icon: @_icon
 					multiline: true

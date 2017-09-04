@@ -54,7 +54,7 @@ class CUI.Events extends CUI.Element
 		if node == document or node == window
 			@__listeners
 		else
-			DOM.data(node, "listeners")
+			CUI.DOM.data(node, "listeners")
 
 	@__registerListener: (listener) ->
 		CUI.util.assert(listener instanceof CUI.Listener, "CUI.Events.__registerListener", "listener needs to be instance of Listener", listener: listener)
@@ -63,7 +63,7 @@ class CUI.Events extends CUI.Element
 		listeners = @__getListenersForNode(node)
 		if not listeners
 			listeners = []
-			DOM.data(node, "listeners", listeners)
+			CUI.DOM.data(node, "listeners", listeners)
 
 		listeners.push(listener)
 
@@ -77,10 +77,10 @@ class CUI.Events extends CUI.Element
 		else
 			listeners = []
 			if CUI.DOM.matches(doc, '[data-cui-listeners]')
-				listeners.push.apply(listeners, DOM.data(doc, "listeners"))
+				listeners.push.apply(listeners, CUI.DOM.data(doc, "listeners"))
 
 		for el in CUI.DOM.matchSelector(doc, "[data-cui-listeners]")
-			listeners.push.apply(listeners, DOM.data(el, "listeners"))
+			listeners.push.apply(listeners, CUI.DOM.data(el, "listeners"))
 		listeners
 
 	@unregisterListener: (listener) ->
@@ -91,7 +91,7 @@ class CUI.Events extends CUI.Element
 		CUI.util.removeFromArray(listener, arr)
 		if arr.length == 0 and node instanceof HTMLElement
 			node.removeAttribute("cui-events-listener-element")
-			DOM.removeData(node, "listeners")
+			CUI.DOM.removeData(node, "listeners")
 			# CUI.debug "removing listeners from node", node[0]
 		@
 
@@ -105,7 +105,7 @@ class CUI.Events extends CUI.Element
 			node:
 				mandatory: true
 				check: (v) ->
-					DOM.isNode(v)
+					CUI.DOM.isNode(v)
 			# optionally wait for a timeout
 			# if set to <= 0, wait forever
 			maxWait:
@@ -124,10 +124,10 @@ class CUI.Events extends CUI.Element
 		dfrs = []
 		listeners = []
 
-		_node = DOM.getNode(opts.node)
+		_node = CUI.DOM.getNode(opts.node)
 
 		dfr = new CUI.Deferred()
-		listeners.push Events.listen
+		listeners.push CUI.Events.listen
 			type: opts.type
 			node: _node
 			call: ->
@@ -275,7 +275,7 @@ class CUI.Events extends CUI.Element
 		for listener in @__listeners
 			console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
 
-		for listener in DOM.data(document.documentElement, "listeners")
+		for listener in CUI.DOM.data(document.documentElement, "listeners")
 			console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
 		@
 

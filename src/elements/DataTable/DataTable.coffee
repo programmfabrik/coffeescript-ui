@@ -100,7 +100,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 	init: ->
 		@__fieldList = []
 		for field in @getFieldOpts()
-			@__fieldList.push(DataField.new(field))
+			@__fieldList.push(CUI.DataField.new(field))
 		@
 
 	disable: ->
@@ -217,7 +217,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 					@displayValue()
 
 		if buttons.length
-			new Buttonbar(buttons: buttons)
+			new CUI.Buttonbar(buttons: buttons)
 		else
 			return null
 
@@ -279,7 +279,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				display_from_i = @__offset + display_from_i
 				display_to_i = @__offset + display_to_i
 				CUI.util.moveInArray(display_from_i-fr, display_to_i-fr, @rows, after)
-				Events.trigger
+				CUI.Events.trigger
 					type: "data-changed"
 					node: @listView
 
@@ -301,7 +301,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 		@replace(@listView.render())
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: @listView
 			call: (ev, info) =>

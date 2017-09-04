@@ -60,7 +60,7 @@ class CUI.Menu extends CUI.Layer
 		else
 			super(@__event)
 
-		Events.listen
+		CUI.Events.listen
 			type: "keydown"
 			instance: @  # will be ignored by onHide in Layer
 			node: @DOM
@@ -121,7 +121,7 @@ class CUI.Menu extends CUI.Layer
 		element = @getOpt("element")
 		if not element or element instanceof CUI.Button
 			return element
-		button = DOM.data(element.DOM or element, "element")
+		button = CUI.DOM.data(element.DOM or element, "element")
 		if button instanceof CUI.Button
 			return button
 		null

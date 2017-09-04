@@ -11,13 +11,13 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		# destroy old instances, in case we are re-initialized
 		# on an .empty()ied element
-		DOM.data(@_element, "stickyHeaderControl")?.destroy()
+		CUI.DOM.data(@_element, "stickyHeaderControl")?.destroy()
 
-		DOM.data(@_element, "stickyHeaderControl", @)
+		CUI.DOM.data(@_element, "stickyHeaderControl", @)
 
 		@__control = $div("cui-sticky-header-control")
 
-		Events.listen
+		CUI.Events.listen
 			instance: @
 			type: "viewport-resize"
 			node: @_element
@@ -33,7 +33,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 		@__hiddenHeaders = []
 		@__positioned = false
 
-		Events.listen
+		CUI.Events.listen
 			node: @_element
 			type: "scroll"
 			instance: @
@@ -62,10 +62,10 @@ class CUI.StickyHeaderControl extends CUI.Element
 		return
 
 	isInDOM: ->
-		@__control and DOM.isInDOM(@__control)
+		@__control and CUI.DOM.isInDOM(@__control)
 
 	addStickyHeader: (stickyHeader) ->
-		CUI.util.assert(not @__positioned or DOM.isInDOM(@__control), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
+		CUI.util.assert(not @__positioned or CUI.DOM.isInDOM(@__control), "#{@__cls}.addStickyHeader", "StickyHeaderControl is not in DOM tree anymore. Cannot add a new StickyHeader.")
 
 		CUI.util.assert(stickyHeader instanceof StickyHeader, "#{@__cls}.addStickyHeader", "Needs to be instance of StickyHeader but is #{CUI.util.getObjectClass(stickyHeader)}", stickyHeader: stickyHeader)
 		@newStickyHeaders.push(stickyHeader)
@@ -89,15 +89,15 @@ class CUI.StickyHeaderControl extends CUI.Element
 		@newStickyHeaders.splice(0)
 
 		for header in measure_headers
-			header.dimInControl = DOM.getDimensions(header.node)
+			header.dimInControl = CUI.DOM.getDimensions(header.node)
 			@__control.removeChild(header.node)
 			header.node.style.visiblity = ""
 		@
 
 	destroy: ->
 		# CUI.warn "destroying sticky header control"
-		DOM.removeData(@_element, "stickyHeaderControl")
-		Events.ignore
+		CUI.DOM.removeData(@_element, "stickyHeaderControl")
+		CUI.Events.ignore
 			instance: @
 
 		@__control.remove()

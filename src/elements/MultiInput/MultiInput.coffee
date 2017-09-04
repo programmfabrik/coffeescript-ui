@@ -105,7 +105,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		if not ok
 			CUI.warn("MulitInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "content-resize"
 			node: inp.DOM # last one
 
@@ -135,7 +135,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 		@__multiInputDiv = $div("cui-multi-input-container")
 
-		Events.listen
+		CUI.Events.listen
 			type: "multi-input-control-update"
 			node: @__multiInputDiv
 			call: (ev) =>
@@ -180,7 +180,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 				input.append(btn, "right")
 
-				Events.listen
+				CUI.Events.listen
 					type: "data-changed"
 					node: input
 					call: (ev) =>

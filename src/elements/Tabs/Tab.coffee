@@ -16,7 +16,7 @@ class CUI.Tab extends CUI.DOM
 		else
 			cls = null
 
-		@__body = new Template
+		@__body = new CUI.Template
 			name: "tab-body"
 			class: cls
 
@@ -59,14 +59,14 @@ class CUI.Tab extends CUI.DOM
 					@_onFirstActivate?(@)
 
 				@_onActivate?(@)
-				Events.trigger
+				CUI.Events.trigger
 					type: "tab_activate"
 					node: @DOM
 
 			onDeactivate: (btn) =>
 				@hide()
 				@_onDeactivate?(@)
-				Events.trigger
+				CUI.Events.trigger
 					type: "tab_deactivate"
 					node: @DOM
 
@@ -125,7 +125,7 @@ class CUI.Tab extends CUI.DOM
 		CUI.DOM.removeClass(@DOM, "cui-tab-hidden")
 
 		if CUI.__ng__
-			Events.trigger
+			CUI.Events.trigger
 				type: "viewport-resize"
 				node: @DOM
 				info:
@@ -133,7 +133,7 @@ class CUI.Tab extends CUI.DOM
 		@
 
 	destroy: ->
-		Events.trigger
+		CUI.Events.trigger
 			type: "tab_destroy"
 			node: @DOM
 
@@ -167,13 +167,13 @@ class CUI.Tab extends CUI.DOM
 
 
 CUI.ready =>
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "tab_destroy"
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "tab_deactivate"
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "tab_activate"
 
 

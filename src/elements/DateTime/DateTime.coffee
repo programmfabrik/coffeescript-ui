@@ -94,7 +94,7 @@ class CUI.DateTime extends CUI.Input
 		if @__dateTimeTmpl
 			return @__dateTimeTmpl
 
-		@__dateTimeTmpl = new Template
+		@__dateTimeTmpl = new CUI.Template
 			name: "date-time"
 			map:
 				calendar: true
@@ -162,7 +162,7 @@ class CUI.DateTime extends CUI.Input
 
 
 	getTemplate: ->
-		new Template
+		new CUI.Template
 			name: "date-time-input"
 			map:
 				center: true
@@ -191,13 +191,13 @@ class CUI.DateTime extends CUI.Input
 		switch cursor
 			when "hour", "minute", "second", "am_pm"
 				title = @__locale_format.tab_time
-				DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
+				CUI.DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
 				@setDigiClock()
 			else
 				title = @__locale_format.tab_date
-				DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
+				CUI.DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
 
-		@__dateTimeTmpl.replace(new Label(text: title), "header_center")
+		@__dateTimeTmpl.replace(new CUI.Label(text: title), "header_center")
 		@
 
 	initFormat: (input_format) ->
@@ -815,7 +815,7 @@ class CUI.DateTime extends CUI.Input
 					opts
 			).start()
 
-			# minute_colon = new Label(text: ":")
+			# minute_colon = new CUI.Label(text: ":")
 
 			minute_sel = new Select(
 				class: "cui-date-time-60-select"
@@ -863,7 +863,7 @@ class CUI.DateTime extends CUI.Input
 						opts
 				).start()
 
-			# second_colon = new Label(text: ":")
+			# second_colon = new CUI.Label(text: ":")
 
 			# second_sel = new Select(
 			# 	class: "cui-date-time-60-select"
@@ -881,7 +881,7 @@ class CUI.DateTime extends CUI.Input
 			# 		opts
 			# ).start()
 
-		new Buttonbar(
+		new CUI.Buttonbar(
 			buttons: [
 				date_sel
 				month_sel
@@ -911,12 +911,12 @@ class CUI.DateTime extends CUI.Input
 		now_year = moment().year()
 
 		##### HEADER includes YEAR and MONTH
-		header_year_month = new HorizontalLayout
+		header_year_month = new CUI.HorizontalLayout
 			maximize_vertical: false
 			maximize_horizontal: true
 			class: "cui-date-time-footer"
 			left:
-				content: new Buttonbar
+				content: new CUI.Buttonbar
 					class: "cui-date-time-header-month"
 					buttons:
 						[
@@ -930,7 +930,7 @@ class CUI.DateTime extends CUI.Input
 								mom.subtract(1, "months")
 								@drawDate(mom)
 						,
-							new Label
+							new CUI.Label
 								text: month_opts[data.month].textContent
 							# new Select(
 							# 	attr:
@@ -960,7 +960,7 @@ class CUI.DateTime extends CUI.Input
 								@drawDate(mom)
 						]
 			right:
-				content: new Buttonbar
+				content: new CUI.Buttonbar
 					class: "cui-date-time-header-year"
 					buttons: [
 						appearance: if CUI.__ng__ then undefined else "flat"
@@ -1022,7 +1022,7 @@ class CUI.DateTime extends CUI.Input
 
 		month_table = $table("cui-date-time-date")
 
-		Events.listen
+		CUI.Events.listen
 			node: month_table
 			type: "click"
 			call: (ev) =>
@@ -1095,7 +1095,7 @@ class CUI.DateTime extends CUI.Input
 			td = day_div
 			CUI.DOM.append(tr, td)
 
-			DOM.data(td,
+			CUI.DOM.data(td,
 				date: day_no
 				month: curr_m
 				year: curr_y

@@ -56,12 +56,12 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		if @isLeaf() or not @isOpen()
 			@addColumn(new ListViewColumn(
 				class: "cui-object-dumper-node-value"
-				element: new Label(
+				element: new CUI.Label(
 					text: @__info.text
 					multiline: true
 				)
 			))
-		new Label(
+		new CUI.Label(
 			class: "cui-object-dumper-node-key"
 			text: @_key
 			multiline: true

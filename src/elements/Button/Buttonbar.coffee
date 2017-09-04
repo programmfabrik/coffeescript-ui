@@ -16,7 +16,7 @@ class CUI.Buttonbar extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		@__box = new Template
+		@__box = new CUI.Template
 			name: "buttonbar"
 
 		@registerTemplate(@__box)
@@ -53,8 +53,8 @@ class CUI.Buttonbar extends CUI.DOM
 				check: "PlainObject"
 
 	__proxy: (func, args...) ->
-		for el in DOM.matchSelector(@__buttons, ".cui-button,.cui-select")
-			ele = DOM.data(el, "element")
+		for el in CUI.DOM.matchSelector(@__buttons, ".cui-button,.cui-select")
+			ele = CUI.DOM.data(el, "element")
 			ele[func].apply(ele, args)
 		@
 
@@ -89,25 +89,25 @@ class CUI.Buttonbar extends CUI.DOM
 
 	# hide the group if no children
 	__checkVisibility: ->
-		DOM.showElement(@__buttons)
+		CUI.DOM.showElement(@__buttons)
 
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
 
 			if @__setVisibilityClasses(d) > 0
-				DOM.showElement(d)
+				CUI.DOM.showElement(d)
 			else
-				DOM.hideElement(d)
+				CUI.DOM.hideElement(d)
 
 		if @__setVisibilityClasses(@__buttons) > 0
 			if @__tooltip?.isShown()
 				@__tooltip.position()
 		else
-			DOM.showElement(@__buttons)
+			CUI.DOM.showElement(@__buttons)
 		@
 
 	removeButtons: ->
-		DOM.empty(@__buttons)
+		CUI.DOM.empty(@__buttons)
 
 	prependButton: (btn, check_visibility = true) ->
 		@addButton(btn, check_visibility, true)
@@ -119,10 +119,10 @@ class CUI.Buttonbar extends CUI.DOM
 		if CUI.isPlainObject(btn)
 			btn = new CUI.defaults.class.Button(btn)
 
-		if btn instanceof Button or btn instanceof DataFieldInput
+		if btn instanceof CUI.Button or btn instanceof CUI.DataFieldInput
 			btn_dom = btn.DOM
 			grp = btn.getGroup()
-		else if btn instanceof Label
+		else if btn instanceof CUI.Label
 			btn_dom = btn.DOM
 			grp = btn.getGroup()
 		else if btn?.classList?.contains("cui-button")
@@ -132,7 +132,7 @@ class CUI.Buttonbar extends CUI.DOM
 		else
 			CUI.util.assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{CUI.util.getObjectClass(btn)}.", button: btn, opts: @opts)
 
-		Events.listen
+		CUI.Events.listen
 			type: ["show", "hide"]
 			node: btn
 			call: (ev) =>

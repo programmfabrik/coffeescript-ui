@@ -13,7 +13,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		@__dummyInst = =>
 
 		if @_on_hover
-			Events.listen
+			CUI.Events.listen
 				type: "mouseenter"
 				instance: @__dummyInst
 				node: @__element
@@ -25,7 +25,7 @@ class CUI.Tooltip extends CUI.LayerPane
 						@showTimeout(null, ev)
 					return
 
-			Events.listen
+			CUI.Events.listen
 				type: "mouseleave"
 				instance: @__dummyInst
 				node: @__element
@@ -42,7 +42,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		if @_on_click
 			CUI.DOM.addClass(@__element, "cui-dom-element-has-tooltip-on-click")
 
-			Events.listen
+			CUI.Events.listen
 				type: "click"
 				instance: @__dummyInst
 				node: @__element
@@ -161,7 +161,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			if CUI.util.isEmpty(text)
 				return dfr.reject()
 
-			fill_content(new Label(markdown: @_markdown, text: text, multiline: true))
+			fill_content(new CUI.Label(markdown: @_markdown, text: text, multiline: true))
 
 		fill_content = (content) =>
 			if not content or @__pane.isDestroyed()
@@ -211,6 +211,6 @@ class CUI.Tooltip extends CUI.LayerPane
 
 	destroy: ->
 		# console.error "destroying ", @getUniqueId()
-		Events.ignore(instance: @__dummyInst)
+		CUI.Events.ignore(instance: @__dummyInst)
 		super()
 		CUI.DOM.removeClass(@__element, "cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")

@@ -25,7 +25,7 @@ class CUI.DragDropSelect extends CUI.Element
 		CUI.util.assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
 
 		@element = @_element
-		DragDropSelect.getInstance(@element, @cls)?.destroy()
+		CUI.DragDropSelect.getInstance(@element, @cls)?.destroy()
 		CUI.DOM.data(@element, "drag-drop-select-"+@cls, @)
 		CUI.DOM.addClass(@element, @getClass())
 
@@ -35,7 +35,7 @@ class CUI.DragDropSelect extends CUI.Element
 	destroy: ->
 		CUI.DOM.removeClass(@element, @getClass())
 		CUI.DOM.removeData(@element, "drag-drop-select-"+@cls)
-		Events.ignore
+		CUI.Events.ignore
 			instance: @
 		super()
 
@@ -48,32 +48,32 @@ class CUI.DragDropSelect extends CUI.Element
 
 	@getInstance: (node, cls=@cls) ->
 		CUI.util.assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
-		DOM.data(node, "drag-drop-select-"+cls)
+		CUI.DOM.data(node, "drag-drop-select-"+cls)
 
 
 
 CUI.ready =>
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-drop"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragenter"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragend"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragleave"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragover"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "dragover-scroll"
 		bubble: true
 		eventClass: CUI.DragoverScrollEvent
@@ -95,7 +95,7 @@ CUI.ready =>
 	# 		ev.stopPropagation()
 	# 		return false
 
-	Events.listen
+	CUI.Events.listen
 		type: "dragover-scroll"
 		node: document
 		selector: "div.cui-drag-scroll,div.cui-drag-drop-select"

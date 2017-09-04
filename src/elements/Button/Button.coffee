@@ -28,7 +28,7 @@ class CUI.Button extends CUI.DOM
 		disabled_css_class: "cui-disabled"
 		active_css_class: "cui-active"
 
-	#Construct a new Button.
+	#Construct a new CUI.Button.
 	#
 	# @param [Object] options for button creation
 	# @option options [String] size controls the size of the button.
@@ -57,7 +57,7 @@ class CUI.Button extends CUI.DOM
 		tname = @getTemplateName()
 		# getTemplateName, also sets has_left / has_right
 
-		@__box = new Template
+		@__box = new CUI.Template
 			name: tname
 			map:
 				left: if @__has_left then ".cui-button-left" else undefined
@@ -81,10 +81,10 @@ class CUI.Button extends CUI.DOM
 		else
 			@__hasAriaLabel = false
 
-		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
+		CUI.DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 
 		if not @_attr?.role
-			DOM.setAttribute(@DOM, "role", @_role)
+			CUI.DOM.setAttribute(@DOM, "role", @_role)
 
 		if not @_left or @_left == true
 			if @_icon
@@ -94,7 +94,7 @@ class CUI.Button extends CUI.DOM
 				icon_left = @_icon_left
 
 			if icon_left
-				CUI.util.assert(not @_icon_active and not @_icon_inactive, "new Button", "opts.icon_active or opts.icon_inactive cannot be set together with opts.icon or opts.icon_left", opts: @opts)
+				CUI.util.assert(not @_icon_active and not @_icon_inactive, "new CUI.Button", "opts.icon_active or opts.icon_inactive cannot be set together with opts.icon or opts.icon_left", opts: @opts)
 				@setIcon(icon_left)
 		else
 			@append(@_left, "left")
@@ -146,7 +146,7 @@ class CUI.Button extends CUI.DOM
 		@__radio_allow_null = @_radio_allow_null
 
 		if @_radio
-			CUI.util.assert(CUI.util.isUndef(@_switch), "new Button", "opts.switch conflicts with opts.radio.", opts: @opts)
+			CUI.util.assert(CUI.util.isUndef(@_switch), "new CUI.Button", "opts.switch conflicts with opts.radio.", opts: @opts)
 			if @_radio == true
 				@__radio = "radio--"+@getUniqueId()
 			else
@@ -156,8 +156,8 @@ class CUI.Button extends CUI.DOM
 			@__radio_allow_null = true
 
 		if @__radio
-			CUI.util.assert(not @_attr?.radio, "new Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
-			DOM.setAttribute(@DOM, "radio", @__radio)
+			CUI.util.assert(not @_attr?.radio, "new CUI.Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
+			CUI.DOM.setAttribute(@DOM, "radio", @__radio)
 
 		@setGroup(@_group)
 
@@ -216,7 +216,7 @@ class CUI.Button extends CUI.DOM
 				@__menu_opts.parent_menu = @_menu_parent
 
 
-		Events.listen
+		CUI.Events.listen
 			type: "keydown"
 			node: @DOM
 			capture: true
@@ -239,10 +239,10 @@ class CUI.Button extends CUI.DOM
 				el = null
 
 				right = =>
-					el = DOM.findNextVisibleElement(@DOM, "[tabindex]")
+					el = CUI.DOM.findNextVisibleElement(@DOM, "[tabindex]")
 
 				left = =>
-					el = DOM.findPreviousVisibleElement(@DOM, "[tabindex]")
+					el = CUI.DOM.findPreviousVisibleElement(@DOM, "[tabindex]")
 
 				switch ev.keyCode()
 					when 39 # right cursor
@@ -260,16 +260,16 @@ class CUI.Button extends CUI.DOM
 
 				return
 
-		Events.listen
-			type: Button.clickTypesPrevent[@_click_type]
+		CUI.Events.listen
+			type: CUI.Button.clickTypesPrevent[@_click_type]
 			node: @DOM
 			call: (ev) =>
 				ev.preventDefault()
 				# ev.stopPropagation()
 				return
 
-		Events.listen
-			type: Button.clickTypes[@_click_type]
+		CUI.Events.listen
+			type: CUI.Button.clickTypes[@_click_type]
 			node: @DOM
 			call: (ev) =>
 
@@ -305,7 +305,7 @@ class CUI.Button extends CUI.DOM
 						@getMenu().hide(ev)
 
 		if @_menu_on_hover or @__tooltipOpts or @_onMouseenter
-			Events.listen
+			CUI.Events.listen
 				type: "mouseenter"
 				node: @DOM
 				call: (ev) =>
@@ -333,11 +333,11 @@ class CUI.Button extends CUI.DOM
 
 							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
 
-							Events.ignore
+							CUI.Events.ignore
 								instance: @
 								node: menu
 
-							Events.listen
+							CUI.Events.listen
 								type: "mouseenter"
 								node: menu
 								instance: @
@@ -345,7 +345,7 @@ class CUI.Button extends CUI.DOM
 								call: =>
 									menu_stop_hide()
 
-							Events.listen
+							CUI.Events.listen
 								type: "mouseleave"
 								node: menu
 								instance: @
@@ -357,7 +357,7 @@ class CUI.Button extends CUI.DOM
 
 					return
 
-		Events.listen
+		CUI.Events.listen
 			type: "mouseleave"
 			node: @DOM
 			call: (ev) =>
@@ -419,7 +419,7 @@ class CUI.Button extends CUI.DOM
 		if ev.isImmediatePropagationStopped()
 			return
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "cui-button-click"
 			node: @
 			info:
@@ -451,7 +451,7 @@ class CUI.Button extends CUI.DOM
 				default: "click" # "touchend"
 				mandatory: true
 				check: (v) ->
-					!!Button.clickTypes[v]
+					!!CUI.Button.clickTypes[v]
 
 			text:
 				check: String
@@ -484,19 +484,19 @@ class CUI.Button extends CUI.DOM
 					CUI.util.isContent(v) or CUI.util.isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_left:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_right:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v) or v == false
+					v instanceof CUI.Icon or CUI.util.isString(v) or v == false
 			icon_active:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_inactive:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			text_active:
 				check: String
 			text_inactive:
@@ -556,20 +556,20 @@ class CUI.Button extends CUI.DOM
 	__getIcon: (icon) ->
 		if not icon
 			null
-		else if icon instanceof Icon
+		else if icon instanceof CUI.Icon
 			icon
 		else
-			new Icon(icon: icon)
+			new CUI.Icon(icon: icon)
 
 	readOpts: ->
 
 		if @opts.switch
-			CUI.util.assert(CUI.util.isUndef(@opts.radio_allow_null), "new Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
+			CUI.util.assert(CUI.util.isUndef(@opts.radio_allow_null), "new CUI.Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
 
 		super()
 
 		if @_left
-			CUI.util.assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
+			CUI.util.assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new CUI.Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
 
 
 	getCenter: ->
@@ -642,7 +642,7 @@ class CUI.Button extends CUI.DOM
 		else
 			return []
 
-		(DOM.data(c, "element") for c in DOM.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
+		(CUI.DOM.data(c, "element") for c in CUI.DOM.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
 
 
 	hasMenu: ->
@@ -774,7 +774,7 @@ class CUI.Button extends CUI.DOM
 		else
 			@[key] = @__getIcon(icon)
 
-		CUI.util.assert(@[key] == null or @[key] == "" or @[key] instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+		CUI.util.assert(@[key] == null or @[key] == "" or @[key] instanceof CUI.Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
 
 		if @[key] == null
 			@empty(_key)
@@ -856,13 +856,13 @@ class CUI.Button extends CUI.DOM
 
 	disable: ->
 		CUI.DOM.addClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.removeAttribute(@DOM, "tabindex")
+		CUI.DOM.removeAttribute(@DOM, "tabindex")
 		@__disabled = true
 		@
 
 	enable: ->
 		CUI.DOM.removeClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
+		CUI.DOM.setAttribute(@DOM, "tabindex", @_tabindex)
 		@__disabled = false
 		@
 
@@ -887,9 +887,9 @@ class CUI.Button extends CUI.DOM
 
 	setGroup: (@__group) ->
 		if @__group
-			DOM.setAttribute(@DOM, "button-group", @__group)
+			CUI.DOM.setAttribute(@DOM, "button-group", @__group)
 		else
-			DOM.removeAttribute(@DOM, "button-group")
+			CUI.DOM.removeAttribute(@DOM, "button-group")
 
 	__initTooltip: ->
 		if @__tooltip
@@ -928,7 +928,7 @@ class CUI.Button extends CUI.DOM
 		@__hidden = false
 		CUI.DOM.removeClass(@DOM, "cui-button-hidden")
 		CUI.DOM.showElement(@DOM)
-		Events.trigger
+		CUI.Events.trigger
 			type: "show"
 			node: @DOM
 
@@ -936,7 +936,7 @@ class CUI.Button extends CUI.DOM
 		@__hidden = true
 		CUI.DOM.addClass(@DOM, "cui-button-hidden")
 		CUI.DOM.hideElement(@DOM)
-		Events.trigger
+		CUI.Events.trigger
 			type: "hide"
 			node: @DOM
 

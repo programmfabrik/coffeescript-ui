@@ -82,7 +82,7 @@ class CUI.ListViewTree extends CUI.ListView
 			listView: @
 
 		@_onDeselect?(ev, info)
-		Events.trigger
+		CUI.Events.trigger
 			node: @
 			type: "row_deselected"
 
@@ -93,7 +93,7 @@ class CUI.ListViewTree extends CUI.ListView
 			listView: @
 
 		@_onSelect?(ev, info)
-		Events.trigger
+		CUI.Events.trigger
 			node: @
 			type: "row_selected"
 
@@ -121,7 +121,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		super()
 
-		Events.listen
+		CUI.Events.listen
 			node: @DOM
 			selector: ".cui-tree-node-handle"
 			capture: true
@@ -129,7 +129,7 @@ class CUI.ListViewTree extends CUI.ListView
 			call: (ev) =>
 				handle_event(ev)
 
-		Events.listen
+		CUI.Events.listen
 			node: @DOM
 			selector: ".cui-lv-tree-node"
 			type: ["click"]
@@ -253,7 +253,7 @@ class CUI.ListViewTree extends CUI.ListView
 			from_node.moveNodeAfter(to_node, new_father, after)
 			@_onRowMove?(display_from_i, display_to_i, after)
 
-			Events.trigger
+			CUI.Events.trigger
 				node: @grid
 				type: "row_moved"
 				info:
@@ -275,7 +275,7 @@ class CUI.ListViewTree extends CUI.ListView
 	addNode: (node, append=true) ->
 		CUI.util.assert(node instanceof ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
 		promise = @root.addNode(node, append)
-		Events.trigger
+		CUI.Events.trigger
 			node: @
 			type: "row_added"
 			info:
@@ -286,7 +286,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		row_index = @getRowIdx(index)
 		row = @getRow(row_index)
-		DOM.data(row[0], "listViewRow").open()
+		CUI.DOM.data(row[0], "listViewRow").open()
 
 
 CUI.Events.registerEvent

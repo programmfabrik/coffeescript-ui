@@ -332,7 +332,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 		"<img src='"+_href+"' alt='"+CUI.escapeAttribute(text)+"' title='"+CUI.escapeAttribute(title)+"'></img>"
 
 	renderContent: ->
-		new Label(text: @_title, multiline: true)
+		new CUI.Label(text: @_title, multiline: true)
 
 
 class CUI.DocumentBrowser.RootNode extends CUI.DocumentBrowser.Node

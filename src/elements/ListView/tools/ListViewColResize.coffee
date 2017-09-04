@@ -25,7 +25,7 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 		@__listView = @_row.getListView()
 		@__col_i = @_column.getColumnIdx()
 
-		Events.listen
+		CUI.Events.listen
 			type: "dblclick"
 			node: @_element
 			instance: @
@@ -91,5 +91,5 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 		@__setColWidth(@__new_width)
 
 	destroy: ->
-		Events.ignore(instance: @)
+		CUI.Events.ignore(instance: @)
 		super()

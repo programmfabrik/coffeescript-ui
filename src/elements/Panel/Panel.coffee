@@ -10,7 +10,7 @@ CUI.Template.loadTemplateText(require('./Panel.html'));
 class CUI.Panel extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
-		@panel = new Template
+		@panel = new CUI.Template
 			name: "panel"
 			map:
 				header: true
@@ -28,7 +28,7 @@ class CUI.Panel extends CUI.DOM
 		else if @_content
 			@append(@_content, "content")
 
-		@button = new Button
+		@button = new CUI.Button
 			text: @_text
 			class: "cui-panel-header-button"
 			radio: @_radio
@@ -107,7 +107,7 @@ class CUI.Panel extends CUI.DOM
 		CUI.DOM.addClass(@DOM, "cui-panel-closed")
 
 		if trigger
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				node: @DOM
 		@
@@ -116,7 +116,7 @@ class CUI.Panel extends CUI.DOM
 		done = =>
 			CUI.DOM.removeClass(@DOM, "cui-panel-closed")
 			if trigger
-				Events.trigger
+				CUI.Events.trigger
 					type: "content-resize"
 					node: @DOM
 			return

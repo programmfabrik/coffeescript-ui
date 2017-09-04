@@ -49,7 +49,7 @@ class CUI.FormModal extends CUI.FormPopover
 		mod = new Modal(opts)
 
 		if @__orig_set_data
-			Events.listen
+			CUI.Events.listen
 				type: "data-changed"
 				node: mod
 				call: =>
@@ -72,7 +72,7 @@ class CUI.FormModal extends CUI.FormPopover
 
 		@resetTableAndFields()
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "data-changed"
 			node: @getPopover()
 		@

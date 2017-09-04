@@ -252,14 +252,14 @@ class CUI.Droppable extends CUI.DragDropSelect
 	init: ->
 		# console.error "register droppable on", @element
 
-		Events.listen
+		CUI.Events.listen
 			node: @element
 			type: "cui-dragend"
 			instance: @
 			call: (ev, info) =>
 				@removeHelper()
 
-		Events.listen
+		CUI.Events.listen
 			node: @element
 			type: "cui-drop"
 			instance: @
@@ -285,7 +285,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 				return
 
-		Events.listen
+		CUI.Events.listen
 			node: @element
 			type: ["cui-dragover", "cui-dragenter", "cui-dragleave"]
 			instance: @

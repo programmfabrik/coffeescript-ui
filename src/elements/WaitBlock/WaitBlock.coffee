@@ -19,7 +19,7 @@ class CUI.WaitBlock extends CUI.Block
 		super()
 		@mergeOpt "icon",
 			check: (v) ->
-				v instanceof Icon or CUI.util.isString(v)
+				v instanceof CUI.Icon or CUI.util.isString(v)
 
 		@removeOpt("header")
 		@removeOpt("content")
@@ -38,7 +38,7 @@ class CUI.WaitBlock extends CUI.Block
 
 	readOpts: ->
 		super()
-		CUI.util.assert(CUI.util.xor(@_element, @_fullscreen), "new WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(@_element, @_fullscreen), "new CUI.WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
 
 		if @_fullscreen
 			@__element = document.body
@@ -58,7 +58,7 @@ class CUI.WaitBlock extends CUI.Block
 		"wait-block"
 
 	show: ->
-		if not DOM.isPositioned(@__element)
+		if not CUI.DOM.isPositioned(@__element)
 			@__savedPosition = CUI.DOM.getComputedStyle(@__element)["position"]
 			CUI.DOM.setStyleOne(@__element, "position", "relative")
 		else

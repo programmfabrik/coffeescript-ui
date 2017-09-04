@@ -152,7 +152,7 @@ class CUI.util
 	# return the difference of the absolute position
 	# of coordinates and element
 	@elementGetPosition: (coordinates, el) ->
-		rect = DOM.getRect(el)
+		rect = CUI.DOM.getRect(el)
 		# CUI.debug(coordinates.pageX, coordinates.pageY, offset);
 		position =
 			left: coordinates.pageX  - rect.left # (offset.left + $el.cssInt("border-left-width"))

@@ -315,13 +315,13 @@ class CUI.FileUpload extends CUI.Element
 		selector = opts.selector
 		multiple = opts.multiple
 
-		Events.ignore
+		CUI.Events.ignore
 			node: dropZone
 			instance: @
 
 		dropZone.classList.add("cui-file-upload-drop-zone")
 
-		Events.listen
+		CUI.Events.listen
 			node: dropZone
 			type: ["dragover"]
 			instance: @
@@ -335,7 +335,7 @@ class CUI.FileUpload extends CUI.Element
 				ev.preventDefault()
 				return false
 
-		Events.listen
+		CUI.Events.listen
 			node: dropZone
 			type: "drop"
 			instance: @
@@ -409,21 +409,21 @@ class CUI.FileUpload extends CUI.Element
 		inp = opts.fileUpload
 		for k in ["webkitdirectory", "mozdirectory", "directory"]
 			if opts.directory
-				DOM.setAttribute(inp, k, true)
+				CUI.DOM.setAttribute(inp, k, true)
 			else
-				DOM.removeAttribute(inp, k)
+				CUI.DOM.removeAttribute(inp, k)
 
 		if opts.multiple
-			DOM.setAttribute(inp, "multiple", true)
+			CUI.DOM.setAttribute(inp, "multiple", true)
 		else
-			DOM.removeAttribute(inp, "multiple")
+			CUI.DOM.removeAttribute(inp, "multiple")
 
 		dfr = new CUI.Deferred()
 
-		Events.ignore
+		CUI.Events.ignore
 			node: inp
 
-		Events.listen
+		CUI.Events.listen
 			type: "change"
 			node: inp
 			call: =>
@@ -436,7 +436,7 @@ class CUI.FileUpload extends CUI.Element
 		dfr.promise()
 
 	resetDropZones: ->
-		Events.ignore
+		CUI.Events.ignore
 			instance: @
 
 		for dz in @__dropZones

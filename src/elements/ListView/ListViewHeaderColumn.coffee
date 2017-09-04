@@ -20,7 +20,7 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 				check: Boolean
 			label:
 				check: (v) ->
-					if CUI.isPlainObject(v) or v instanceof Label
+					if CUI.isPlainObject(v) or v instanceof CUI.Label
 						true
 					else
 						false
@@ -29,7 +29,7 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 
 	readOpts: ->
 		super()
-		if @_label instanceof Label
+		if @_label instanceof CUI.Label
 			@__label = @_label
 		else if @_label
 			@_label.rotate_90 = @_rotate_90

@@ -9,7 +9,7 @@ CUI.Template.loadTemplateText(require('./MultiInputInput.html'));
 
 class CUI.MultiInputInput extends CUI.Input
 	getTemplate: ->
-		new Template
+		new CUI.Template
 			name: "data-field-multi-input"
 			map:
 				center: true

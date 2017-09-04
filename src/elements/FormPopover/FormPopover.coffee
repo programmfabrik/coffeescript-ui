@@ -114,14 +114,14 @@ class CUI.FormPopover extends CUI.Form
 			@addClass("cui-form-popover-has-button-text")
 		@append(@__button, "center")
 		# @append(@getChangedMarker(), "center")
-		DataField::render.call(@)
+		CUI.DataField::render.call(@)
 		@
 
 	getButton: ->
 		@__button
 
 	displayValue: ->
-		DataField::displayValue.call(@)
+		CUI.DataField::displayValue.call(@)
 		@__renderDisplay()
 
 	callOnFields: (func, args...) ->
@@ -148,7 +148,7 @@ class CUI.FormPopover extends CUI.Form
 				@__button.deactivate()
 			else if render == true
 				@__button.activate()
-			else if render instanceof Icon
+			else if render instanceof CUI.Icon
 				@__button.setIcon(render)
 				@__button.setText()
 			else
@@ -157,7 +157,7 @@ class CUI.FormPopover extends CUI.Form
 
 			if @__old_render != null
 				# CUI.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
-				Events.trigger
+				CUI.Events.trigger
 					type: "content-resize"
 					node: @DOM
 			@__old_render = render
@@ -166,7 +166,7 @@ class CUI.FormPopover extends CUI.Form
 			if @__old_display == null or @__old_display != display
 				@replace(display, "bottom")
 				if @__old_display != null
-					Events.trigger
+					CUI.Events.trigger
 						type: "content-resize"
 						node: @DOM
 				@__old_display = display
@@ -260,7 +260,7 @@ class CUI.FormPopover extends CUI.Form
 
 		@__popover = @initPopover(pop_opts)
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: @__popover
 			call: (ev, info={}) =>
@@ -298,7 +298,7 @@ class CUI.FormPopover extends CUI.Form
 		@__dataChanged = null
 
 	triggerDataChanged: ->
-		Events.trigger
+		CUI.Events.trigger
 			type: "data-changed"
 			node: @__button
 			info: @__dataChanged

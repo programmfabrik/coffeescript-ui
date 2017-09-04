@@ -10,7 +10,7 @@ class CUI.ProgressMeter extends CUI.DOM
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		@__meter = new Template
+		@__meter = new CUI.Template
 			name: "progress-meter"
 			map:
 				icon: true
@@ -59,7 +59,7 @@ class CUI.ProgressMeter extends CUI.DOM
 			@addOpt "icon_"+state,
 				default: CUI.defaults.ProgressMeter.states[state]
 				check: (v) =>
-					v instanceof Icon or CUI.util.isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 
 	getState: ->
 		@__state
@@ -79,10 +79,10 @@ class CUI.ProgressMeter extends CUI.DOM
 		@__state = state
 		if @__state in @_states
 			icon = @["_icon_"+@__state]
-			if icon instanceof Icon
+			if icon instanceof CUI.Icon
 				@__meter.replace(icon, "icon")
 			else if not CUI.util.isEmpty(icon)
-				@__meter.replace(new Icon(icon: icon), "icon")
+				@__meter.replace(new CUI.Icon(icon: icon), "icon")
 			else
 				@__meter.empty("icon")
 			# CUI.debug icon, @__state

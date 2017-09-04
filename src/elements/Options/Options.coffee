@@ -85,7 +85,7 @@ class CUI.Options extends CUI.DataField
 			return super()
 
 		if @_activatable
-			@__tmpl = new Template
+			@__tmpl = new CUI.Template
 				name: "options-activatable"
 				map_prefix: "cui-options"
 				map:
@@ -94,7 +94,7 @@ class CUI.Options extends CUI.DataField
 					active: true
 					inactive: true
 		else
-			@__tmpl = new Template
+			@__tmpl = new CUI.Template
 				name: "options"
 				map:
 					top: true
@@ -200,7 +200,7 @@ class CUI.Options extends CUI.DataField
 	checkValue: (_value) ->
 		if @__radio_use_array or not @_radio
 			if not CUI.isArray(_value)
-				throw new CheckValueError("Value must be Array.")
+				throw new CUI.CheckValueError("Value must be Array.")
 			check = _value
 		else
 			check = [_value]
@@ -210,7 +210,7 @@ class CUI.Options extends CUI.DataField
 				if opt.value == value
 					CUI.debug "value is ok.", @hasData(), @getData()[@_name]
 					return
-		throw new CheckValueError("Value is not in the options.")
+		throw new CUI.CheckValueError("Value is not in the options.")
 
 	disable: ->
 		if not CUI.__ng__
@@ -395,7 +395,7 @@ class CUI.Options extends CUI.DataField
 
 
 				cb = new Checkbox(opt)
-				Events.listen
+				CUI.Events.listen
 					type: "data-changed"
 					node: cb
 					call: (ev, info) ->
@@ -411,7 +411,7 @@ class CUI.Options extends CUI.DataField
 
 		if @__checkboxes.length
 			if @_sortable and not CUI.util.isEmpty(@_sortable_hint)
-				bottom = new Label
+				bottom = new CUI.Label
 					multiline: true
 					class: "cui-options-order-hint"
 					text: @_sortable_hint
@@ -419,7 +419,7 @@ class CUI.Options extends CUI.DataField
 				bottom = undefined
 
 			if not CUI.util.isEmpty(@_title)
-				top = new Label
+				top = new CUI.Label
 					class: "cui-options-title"
 					text: @_title
 			else
@@ -510,7 +510,7 @@ class CUI.Options extends CUI.DataField
 						@reload()
 
 		else if not CUI.util.isEmpty(@_placeholder)
-			@replace(new EmptyLabel(text: @_placeholder), "center")
+			@replace(new CUI.EmptyLabel(text: @_placeholder), "center")
 
 		@
 

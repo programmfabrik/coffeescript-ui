@@ -92,7 +92,7 @@ class CUI.KeyboardEvent extends CUI.Event
 
 		CUI.KeyboardEvent.__keys = []
 
-		Events.listen
+		CUI.Events.listen
 			type: ["keydown"]
 			node: window
 			capture: true
@@ -102,7 +102,7 @@ class CUI.KeyboardEvent extends CUI.Event
 
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: ["keyup"]
 			node: window
 			capture: true
@@ -113,7 +113,7 @@ class CUI.KeyboardEvent extends CUI.Event
 
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: ["blur"]
 			node: window
 			capture: true

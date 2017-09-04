@@ -95,5 +95,5 @@ class CUI.Movable extends CUI.Draggable
 
 	limitRect: (pos, defaults={}, limitRect = @getLimitRect()) ->
 		# !!! The order in Draggable.limitRect is different, but better
-		Draggable.limitRect(pos, limitRect, defaults)
+		CUI.Draggable.limitRect(pos, limitRect, defaults)
 

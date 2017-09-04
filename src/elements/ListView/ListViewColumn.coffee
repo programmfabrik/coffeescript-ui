@@ -49,7 +49,7 @@ class CUI.ListViewColumn extends CUI.Element
 			else
 				@_element
 		else if not CUI.util.isEmpty(@_text)
-			new Label(text: @_text).DOM
+			new CUI.Label(text: @_text).DOM
 		else
 			null
 

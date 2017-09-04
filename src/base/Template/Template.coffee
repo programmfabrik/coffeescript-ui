@@ -7,7 +7,7 @@
 
 # Template needs to be called like this:
 #
-# new Template
+# new CUI.Template
 #    name: "name-of-template"  // a .cui-tmpl.cui-tmpl-name-of-template has to exist in the DOM tree
 #    map:
 #       key: selector    // selector can be "true", than key is used like ".key", "_" is replaced by "-"
@@ -27,7 +27,7 @@ class CUI.Template extends CUI.Element
 		super(@opts)
 
 		#try find it inside cached list
-		node = Template.nodeByName[@_name]
+		node = CUI.Template.nodeByName[@_name]
 		CUI.util.assert(node, "CUI.Template", @_name+" not found. Make sure to call Template.loadFile(...).")
 
 		@DOM = node.cloneNode(true)
@@ -88,7 +88,7 @@ class CUI.Template extends CUI.Element
 				opts.manage_state = false
 
 			opts.element = fh_el
-			fh = new FlexHandle(opts)
+			fh = new CUI.FlexHandle(opts)
 			if not CUI.util.isEmpty(fh_name = fh.getName())
 				# CUI.warn("Template.initFlexHandles", fh_name)
 				@__flexHandles[fh_name] = fh
@@ -99,7 +99,7 @@ class CUI.Template extends CUI.Element
 	getFlexHandle: (name) ->
 		CUI.util.assert(@__flexHandles, "Template.getFlexHandle", "flexHandles are not initialized yet, call Template.initFlexHandles(opts) first.", name: name)
 		fh = @__flexHandles[name]
-		CUI.util.assert(fh instanceof FlexHandle, "#{@__cls}.getFlexHandle", "FlexHandle \"#{name}\" not found, make sure you have specified a name in the cui-flex-handle attribute.", opts: @opts, flexHandles: @__flexHandles)
+		CUI.util.assert(fh instanceof CUI.FlexHandle, "#{@__cls}.getFlexHandle", "FlexHandle \"#{name}\" not found, make sure you have specified a name in the cui-flex-handle attribute.", opts: @opts, flexHandles: @__flexHandles)
 		fh
 
 	getFlexHandles: ->
@@ -329,14 +329,14 @@ class CUI.Template extends CUI.Element
 				for cls in el.classList
 					if cls.startsWith("cui-tmpl-")
 						name = cls.substr(9)
-						if Template.nodeByName[name]
+						if CUI.Template.nodeByName[name]
 							console.error("Template.load:", name, "already found in DOM tree. Make sure all elements exists only once.", el)
 							continue
 						break
 
 			if name
 				# console.debug("Template: ", name)
-				Template.nodeByName[name] = el
+				CUI.Template.nodeByName[name] = el
 				CUI.DOM.remove(el)
 				el.classList.remove("cui-tmpl")
 				el.removeAttribute("data-template")
@@ -350,7 +350,7 @@ class CUI.Template extends CUI.Element
 		if not load_templates
 			document.body.appendChild(div)
 		else
-			count = Template.load(div)
+			count = CUI.Template.load(div)
 
 			if div.children.length > 0
 				document.body.appendChild(div)

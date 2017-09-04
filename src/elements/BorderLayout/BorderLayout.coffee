@@ -28,11 +28,11 @@ class CUI.BorderLayout extends CUI.Layout
 		if @_absolute
 			CUI.DOM.addClass(@getLayout().map.row, "cui-absolute")
 			# we need listen to viewport resize
-			Events.listen
+			CUI.Events.listen
 				type: "viewport-resize"
 				node: @getLayout().map.row
 				call: (ev) =>
 					ev.stopPropagation()
-					Layout.setAbsolute(@getLayout().map.row)
+					CUI.Layout.setAbsolute(@getLayout().map.row)
 
 		@

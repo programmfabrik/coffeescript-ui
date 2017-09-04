@@ -96,7 +96,7 @@ class CUI.DocumentBrowser extends CUI.Element
 			@loadEmpty()
 
 	loadEmpty: ->
-		@__layout.replace(new EmptyLabel(text: "No article available."), "center")
+		@__layout.replace(new CUI.EmptyLabel(text: "No article available."), "center")
 
 	loadContent: (node, search, nodeIdx) ->
 		node.loadContent()
@@ -166,7 +166,7 @@ class CUI.DocumentBrowser extends CUI.Element
 
 			if matches.length == 0
 				@__searchResult.append(
-					new Label(markdown: true, text: "Nothing found for **"+search+"**.", multiline: true),
+					new CUI.Label(markdown: true, text: "Nothing found for **"+search+"**.", multiline: true),
 				"center")
 			@showSearch(true)
 		else
@@ -233,12 +233,12 @@ class CUI.DocumentBrowser extends CUI.Element
 		@__leftLayout = new SimplePane
 			header_center: search_input.start()
 			header_right: [
-				@__searchBtn = new Button
+				@__searchBtn = new CUI.Button
 					icon: "search"
 					onClick: =>
 						@showSearch(true)
 			,
-				@__resetBtn = new Button
+				@__resetBtn = new CUI.Button
 					icon: "remove"
 					hidden: true
 					onClick: =>
@@ -247,7 +247,7 @@ class CUI.DocumentBrowser extends CUI.Element
 			content: @__tree.render(false)
 
 
-		@__layout = new HorizontalLayout
+		@__layout = new CUI.HorizontalLayout
 			class: "cui-document-browser"
 			maximize: true
 			left:

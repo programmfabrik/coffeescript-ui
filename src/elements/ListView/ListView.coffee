@@ -188,7 +188,7 @@ class CUI.ListView extends CUI.SimplePane
 		if @grid
 			if @__inactive
 				CUI.DOM.addClass(@grid, addClass)
-				@__inactiveWaitBlock = new WaitBlock(element: @grid, inactive: true).show()
+				@__inactiveWaitBlock = new CUI.WaitBlock(element: @grid, inactive: true).show()
 			else
 				@__inactiveWaitBlock?.destroy()
 				@__inactiveWaitBlock = null
@@ -300,7 +300,7 @@ class CUI.ListView extends CUI.SimplePane
 			@__syncScrolling()
 			@_onScroll?()
 
-		Events.listen
+		CUI.Events.listen
 			node: @quadrant[3]
 			type: "scroll"
 			call: on_scroll
@@ -323,12 +323,12 @@ class CUI.ListView extends CUI.SimplePane
 			# 		# console.debug "touchstart prevent default", @DOM
 			# 		ev.preventDefault()
 
-			Events.listen
+			CUI.Events.listen
 				type: ["click"]
 				node: @DOM
 				selector: selector
 				call: (ev) =>
-					row = DOM.data(ev.getCurrentTarget(), "listViewRow")
+					row = CUI.DOM.data(ev.getCurrentTarget(), "listViewRow")
 					if not row.isSelectable()
 						return
 					ev.stopImmediatePropagation()
@@ -337,7 +337,7 @@ class CUI.ListView extends CUI.SimplePane
 
 
 		if @quadrant[2]
-			Events.listen
+			CUI.Events.listen
 				type: "wheel"
 				node: @quadrant[2]
 				call: (ev) =>
@@ -363,7 +363,7 @@ class CUI.ListView extends CUI.SimplePane
 					on_scroll()
 					return
 
-		Events.listen
+		CUI.Events.listen
 			type: "viewport-resize"
 			node: @grid
 			call: (ev, info) =>
@@ -374,7 +374,7 @@ class CUI.ListView extends CUI.SimplePane
 				@__doLayout(resetRows: !!(info.css_load or info.tab))
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "content-resize"
 			node: @DOM
 			call: (ev, info) =>
@@ -391,7 +391,7 @@ class CUI.ListView extends CUI.SimplePane
 				row = parseInt(cell.getAttribute("row"))
 				col = parseInt(cell.getAttribute("col"))
 
-				if @fixedColsCount > 0 and DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
+				if @fixedColsCount > 0 and CUI.DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
 					# row has not been measured
 					return
 
@@ -410,7 +410,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@appendDeferredRows()
 
-		DOM.waitForDOMInsert(node: @DOM)
+		CUI.DOM.waitForDOMInsert(node: @DOM)
 		.done =>
 			@__isInDOM = true
 			@__doLayout()
@@ -564,7 +564,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		if trigger_row_moved
 			@_onRowMove?(display_from_i, display_to_i, after)
-			Events.trigger
+			CUI.Events.trigger
 				type: "row_moved"
 				node: @grid
 				info:
@@ -843,7 +843,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
-				cell = DOM.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				cell = CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
 				width = 0
 				for i in [0...colspan] by 1
 					# we assume that colspanned columns
@@ -869,20 +869,20 @@ class CUI.ListView extends CUI.SimplePane
 				else
 					sel = "[cui-lv-tr-unmeasured=\""+@listViewCounter+"\"]"
 
-				for row in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi}'] > "+sel)
-					rows[parseInt(DOM.getAttribute(row, "row"))] = row
-					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
+				for row in CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi}'] > "+sel)
+					rows[parseInt(CUI.DOM.getAttribute(row, "row"))] = row
+					CUI.DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
-				for row, idx in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
-					row_i2 = parseInt(DOM.getAttribute(row, "row"))
-					DOM.prepareSetDimensions(rows[row_i2])
+				for row, idx in CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
+					row_i2 = parseInt(CUI.DOM.getAttribute(row, "row"))
+					CUI.DOM.prepareSetDimensions(rows[row_i2])
 					row.__offsetHeight = row.offsetHeight
 
-				for row, idx in DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
-					row_i2 = parseInt(DOM.getAttribute(row, "row"))
-					DOM.setDimensions(rows[row_i2], borderBoxHeight: row.__offsetHeight)
+				for row, idx in CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
+					row_i2 = parseInt(CUI.DOM.getAttribute(row, "row"))
+					CUI.DOM.setDimensions(rows[row_i2], borderBoxHeight: row.__offsetHeight)
 					delete(row.__offsetHeight)
-					DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
+					CUI.DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
 
 
 
@@ -891,7 +891,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__addRowsOddEvenClasses()
 
 		if not @__maximize_horizontal or not @__maximize_vertical
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				exclude_self: true
 				node: @DOM
@@ -927,7 +927,7 @@ class CUI.ListView extends CUI.SimplePane
 	showWaitBlock: ->
 		if @__waitBlock
 			return @
-		@__waitBlock = new WaitBlock(element: @DOM)
+		@__waitBlock = new CUI.WaitBlock(element: @DOM)
 		@__waitBlock.show()
 		@
 
@@ -1121,7 +1121,7 @@ class CUI.ListView extends CUI.SimplePane
 		listViewRow.setRowIdx(row_i).setListView(@)
 
 		for row in @__rows[row_i]
-			DOM.data(row, "listViewRow", listViewRow)
+			CUI.DOM.data(row, "listViewRow", listViewRow)
 
 		listViewRow.addClass((listViewRow.getClass() or "")+" "+CUI.util.toDash(CUI.util.getObjectClass(listViewRow)))
 
@@ -1197,7 +1197,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		if @fixedColsCount > 0 and @__rows[row_i]
 			for row in @__rows[row_i]
-				DOM.setAttribute(row, "cui-lv-tr-unmeasured", @listViewCounter)
+				CUI.DOM.setAttribute(row, "cui-lv-tr-unmeasured", @listViewCounter)
 
 		for display_col_i in [0..@colsCount-1]
 			col_i = @getColIdx(display_col_i)
@@ -1261,7 +1261,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__debugRect(name, end - start)
 
 	__addDebugControl: ->
-		Events.listen
+		CUI.Events.listen
 			type: "contextmenu"
 			node: @DOM
 			call: (ev) =>

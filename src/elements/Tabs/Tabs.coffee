@@ -46,7 +46,7 @@ class CUI.Tabs extends CUI.SimplePane
 		if not @__maximize_horizontal
 			return
 
-		header_dim = DOM.getDimensions(@__header)
+		header_dim = CUI.DOM.getDimensions(@__header)
 		# console.debug "header_dim", header_dim.scrollWidth, header_dim.clientWidth
 		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
@@ -69,8 +69,8 @@ class CUI.Tabs extends CUI.SimplePane
 			return
 
 		CUI.DOM.showElement(@__tabs_marker)
-		btn_dim = DOM.getDimensions(btn)
-		DOM.setStyle @__tabs_marker,
+		btn_dim = CUI.DOM.getDimensions(btn)
+		CUI.DOM.setStyle @__tabs_marker,
 			left: btn_dim.offsetLeft
 			width: btn_dim.borderBoxWidth
 		@
@@ -80,7 +80,7 @@ class CUI.Tabs extends CUI.SimplePane
 		# slider to mark active tab
 		@__tabs_marker = CUI.DOM.element("DIV", class: "cui-tabs-active-marker")
 
-		@__tabs_bodies = new Template
+		@__tabs_bodies = new CUI.Template
 			name: "tabs-bodies"
 
 		CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header")
@@ -88,7 +88,7 @@ class CUI.Tabs extends CUI.SimplePane
 		if @_appearance == "mini"
 			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
 
-		@__buttonbar = new Buttonbar()
+		@__buttonbar = new CUI.Buttonbar()
 
 		pane_key = "center"
 
@@ -98,7 +98,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__header = @__pane_header[pane_key]()
 
-		Events.listen
+		CUI.Events.listen
 			type: "scroll"
 			node: @__header
 			call: (ev) =>
@@ -106,7 +106,7 @@ class CUI.Tabs extends CUI.SimplePane
 				CUI.DOM.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-end", dim.horizontalScrollbarAtEnd)
 				CUI.DOM.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-start", dim.horizontalScrollbarAtStart)
 
-		@__overflowBtn = new Button
+		@__overflowBtn = new CUI.Button
 			icon: "ellipsis_h"
 			class: "cui-tab-header-button-overflow"
 			icon_right: false
@@ -135,7 +135,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		if not CUI.__ng__
 			if not @__maximize_horizontal or not @__maximize_vertical
-				Events.listen
+				CUI.Events.listen
 					node: @getLayout()
 					type: "content-resize"
 					call: (event, info) =>
@@ -160,19 +160,19 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__tabs[@_active_idx or 0].activate()
 
-		DOM.waitForDOMInsert(node: @getLayout())
+		CUI.DOM.waitForDOMInsert(node: @getLayout())
 		.done =>
 			if @isDestroyed()
 				return
 
-			Events.listen
+			CUI.Events.listen
 				node: @getLayout()
 				type: "viewport-resize"
 				call: =>
 					@__checkOverflowButton()
 					@__setActiveMarker()
 
-			CUI.util.assert( DOM.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
+			CUI.util.assert( CUI.DOM.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
 			@__setActiveMarker()
 
@@ -199,7 +199,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		if @__measureAndSetBodyWidth()
 			# size has changed
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				node: @DOM.parentNode
 		@
@@ -208,35 +208,35 @@ class CUI.Tabs extends CUI.SimplePane
 		CUI.util.assert(tab instanceof Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{CUI.util.getObjectClass(tab)}", tab: tab)
 		if not @hasTab(tab)
 			@__tabs.push(tab)
-			Events.listen
+			CUI.Events.listen
 				node: tab
 				type: "tab_activate"
 				call: =>
 
 					if @__overflowBtn.isShown()
-						DOM.scrollIntoView(tab.getButton().DOM)
+						CUI.DOM.scrollIntoView(tab.getButton().DOM)
 
 					if CUI.__ng__
 						if not @_maximize_vertical
 							# set left margin on first tab
 							# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
-							DOM.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
+							CUI.DOM.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
 					@__setActiveMarker()
 
-					DOM.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
+					CUI.DOM.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
 					# CUI.error @__uniqueId, "activate"
 
-			Events.listen
+			CUI.Events.listen
 				node: tab
 				type: "tab_deactivate"
 				call: =>
 					# CUI.error @__uniqueId, "deactivate"
 					@__active_tab = null
-					DOM.setAttribute(@DOM, "active-tab-idx", "")
+					CUI.DOM.setAttribute(@DOM, "active-tab-idx", "")
 
-			Events.listen
+			CUI.Events.listen
 				node: tab
 				type: "tab_destroy"
 				call: =>

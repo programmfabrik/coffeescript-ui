@@ -31,7 +31,7 @@ class CUI.SimplePane extends CUI.Pane
 			@append(value, k)
 
 		if @_title
-			@append(new Label(text: @_title), "header_left")
+			@append(new CUI.Label(text: @_title), "header_left")
 
 		if not CUI.__ng__
 			@addClass("cui-simple-pane")

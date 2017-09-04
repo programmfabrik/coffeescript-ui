@@ -28,7 +28,7 @@ class CUI.Label extends CUI.DOM
 		else
 			tname = "label-no-icon"
 
-		@__label = new Template
+		@__label = new CUI.Template
 			name: tname
 			map_prefix: "cui-label"
 			map:
@@ -104,7 +104,7 @@ class CUI.Label extends CUI.DOM
 			# push in global markup
 			@append(@__overflow_button)
 
-			Events.listen
+			CUI.Events.listen
 				node: @DOM
 				type: "viewport-resize"
 				call: =>
@@ -122,7 +122,7 @@ class CUI.Label extends CUI.DOM
 					CUI.util.isContent(v) or CUI.util.isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or CUI.util.isString(v) or v == true
+					v instanceof CUI.Icon or CUI.util.isString(v) or v == true
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
@@ -163,13 +163,13 @@ class CUI.Label extends CUI.DOM
 		if @_markdown
 			CUI.util.assert(not @_content, "new "+@__cls, "opts.markdown cannot be combined with opts.content, use opts.text instead.", opts: @opts)
 			if not marked
-				CUI.error("new Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
+				CUI.error("new CUI.Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
 				@__markdown = false
 			else
 				@__markdown = true
 
 		@__currentText = null
-		CUI.util.assert(CUI.util.xor(CUI.util.isNull(@_text), CUI.util.isNull(@_content)), "new Label", "opts.text and opts.content cannot both be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(CUI.util.isNull(@_text), CUI.util.isNull(@_content)), "new CUI.Label", "opts.text and opts.content cannot both be set.", opts: @opts)
 
 		if @_markdown_opts
 			@__markdown_opts = CUI.util.copyObject(CUI.defaults.marked_opts, false)
@@ -179,7 +179,7 @@ class CUI.Label extends CUI.DOM
 			@__markdown_opts = CUI.defaults.marked_opts
 
 		if @_manage_overflow
-			CUI.util.assert(@_multiline, "new Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
+			CUI.util.assert(@_multiline, "new CUI.Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
 		@
 
 	setText: (@__currentText, markdown = @__markdown) ->
@@ -228,7 +228,7 @@ class CUI.Label extends CUI.DOM
 
 		@__overflow_button.hide()
 
-		dim_div = DOM.getDimensions(@__label.map.content)
+		dim_div = CUI.DOM.getDimensions(@__label.map.content)
 
 		max_height = CUI.DOM.getCSSFloatValue(dim_div.computedStyle.maxHeight)
 		if not (max_height > 0)
@@ -251,10 +251,10 @@ class CUI.Label extends CUI.DOM
 		@_group
 
 	setIcon: (icon) ->
-		if icon instanceof Icon
+		if icon instanceof CUI.Icon
 			__icon = icon
 		else if not CUI.util.isEmpty(icon)
-			__icon = new Icon(icon: icon)
+			__icon = new CUI.Icon(icon: icon)
 		else
 			__icon = null
 

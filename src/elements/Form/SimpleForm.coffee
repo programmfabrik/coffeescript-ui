@@ -73,7 +73,7 @@ class CUI.SimpleForm extends CUI.DataField
 			cb_opts.name = "checkbox"
 
 			@__checkbox = new Checkbox(cb_opts).start()
-			Events.listen
+			CUI.Events.listen
 				type: "data-changed"
 				node: @__checkbox
 				call: =>
@@ -103,9 +103,9 @@ class CUI.SimpleForm extends CUI.DataField
 			if not field
 				continue
 			if CUI.isFunction(field)
-				_field = DataField.new(field(@))
+				_field = CUI.DataField.new(field(@))
 			else
-				_field = DataField.new(field)
+				_field = CUI.DataField.new(field)
 
 			_field.setForm(@)
 			fs.push(_field)
@@ -189,7 +189,7 @@ class CUI.SimpleForm extends CUI.DataField
 	# this hides a form row, if all
 	# datafields in it are hidden
 	__setRowVisibility: (tr) ->
-		df = DOM.data(tr, "data-field")
+		df = CUI.DOM.data(tr, "data-field")
 		if not df
 			console.warn("Form.__setRowVisibility", "data-field not found", df, @)
 			return
@@ -252,7 +252,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 		container = @getTableContainer()
 
-		Events.listen
+		CUI.Events.listen
 			node: container
 			type: "form-check-row-visibility"
 			instance: @
@@ -295,11 +295,11 @@ class CUI.SimpleForm extends CUI.DataField
 			if v instanceof Form
 				v.DOM
 			else if CUI.isPlainObject(v) # assume a label constructor
-				# new Label(v).DOM
-				new MultilineLabel(v).DOM
+				# new CUI.Label(v).DOM
+				new CUI.MultilineLabel(v).DOM
 			else if CUI.util.isString(v)
-				# new Label(text: v).DOM
-				new MultilineLabel(text: v).DOM
+				# new CUI.Label(text: v).DOM
+				new CUI.MultilineLabel(text: v).DOM
 			else if v?.DOM
 				v.DOM
 			else if CUI.isFunction(v)
@@ -358,7 +358,7 @@ class CUI.SimpleForm extends CUI.DataField
 				if not CUI.util.isNull(field._form.hint)
 					add_hint_div()
 					if CUI.util.isString(field._form.hint)
-						hint_div.appendChild(new Label(class: "cui-form-hint-label", icon: field._form.hint_icon, text: field._form.hint, multiline: true, markdown: true).DOM)
+						hint_div.appendChild(new CUI.Label(class: "cui-form-hint-label", icon: field._form.hint_icon, text: field._form.hint, multiline: true, markdown: true).DOM)
 					else
 						CUI.DOM.append(hint_div, field._form.hint)
 
@@ -385,7 +385,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 				if cb
 					do (cb, field) =>
-						Events.listen
+						CUI.Events.listen
 							type: "data-changed"
 							node: cb
 							call: =>
@@ -421,7 +421,7 @@ class CUI.SimpleForm extends CUI.DataField
 				append(blk)
 
 				# used to set row visibility
-				DOM.data(blk.DOM, "data-field", field)
+				CUI.DOM.data(blk.DOM, "data-field", field)
 
 				@__setRowVisibility(blk.DOM)
 
@@ -478,7 +478,7 @@ class CUI.SimpleForm extends CUI.DataField
 				tr.appendChild(td)
 
 				# used to set row visibility
-				DOM.data(tr, "data-field", field)
+				CUI.DOM.data(tr, "data-field", field)
 
 				@__setRowVisibility(tr)
 
@@ -493,7 +493,7 @@ class CUI.SimpleForm extends CUI.DataField
 				append(hint_div, row)
 
 				# used to set row visibility
-				DOM.data(row, "data-field", field)
+				CUI.DOM.data(row, "data-field", field)
 
 				if grid
 					row.setAttribute("data-cui-grid", grid)
@@ -506,7 +506,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 		render_next_field()
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: container
 			instance: @
@@ -532,7 +532,7 @@ class CUI.SimpleForm extends CUI.DataField
 	unregisterTableListeners: ->
 		if @getLayout().isDestroyed()
 			return
-		Events.ignore({node: @getLayout().center(), instance: @})
+		CUI.Events.ignore({node: @getLayout().center(), instance: @})
 
 	remove: ->
 		@unregisterTableListeners()
@@ -597,7 +597,7 @@ class CUI.SimpleForm extends CUI.DataField
 		CUI.DOM.data(els[0]).element.setText(hint)
 
 		if trigger_resize
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				node: els[0]
 		@

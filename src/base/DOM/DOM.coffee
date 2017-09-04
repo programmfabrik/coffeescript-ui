@@ -617,7 +617,7 @@ class CUI.DOM extends CUI.Element
 			clone.scrollTop = node.scrollTop
 			clone.scrollLeft = node.scrollLeft
 
-		Events.listen
+		CUI.Events.listen
 			type: "scroll"
 			instance: clone
 			node: node
@@ -655,7 +655,7 @@ class CUI.DOM extends CUI.Element
 		if not node.__clone
 			return
 
-		Events.ignore(instance: node.__clone)
+		CUI.Events.ignore(instance: node.__clone)
 		node.style.opacity = ""
 		node.__clone.remove()
 		delete(node.__clone)
@@ -773,7 +773,7 @@ class CUI.DOM extends CUI.Element
 
 		timeout = null
 
-		Events.wait
+		CUI.Events.wait
 			node: node
 			type: "animationstart"
 			maxWait: -1
@@ -1543,7 +1543,7 @@ class CUI.DOM extends CUI.Element
 				ms: opts.ms
 				call: remove_mousemoved_class
 
-		Events.listen
+		CUI.Events.listen
 			node: opts.element
 			type: "mousemove"
 			instance: opts.instance
@@ -1553,7 +1553,7 @@ class CUI.DOM extends CUI.Element
 				schedule_remove_mousemoved_class()
 				return
 
-		Events.listen
+		CUI.Events.listen
 			node: opts.element
 			type: "mouseleave"
 			instance: opts.instance
@@ -1575,7 +1575,7 @@ class CUI.DOM extends CUI.Element
 
 		# send notifiy on open and done on exit
 
-		fsc_ev = Events.listen
+		fsc_ev = CUI.Events.listen
 			type: "fullscreenchange"
 			node: window
 			call: (ev) =>
@@ -1583,7 +1583,7 @@ class CUI.DOM extends CUI.Element
 				if CUI.DOM.isFullscreen()
 					dfr.notify()
 				else
-					Events.ignore(fsc_ev)
+					CUI.Events.ignore(fsc_ev)
 					dfr.resolve()
 				return
 

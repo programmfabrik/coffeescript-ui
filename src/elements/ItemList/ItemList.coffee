@@ -11,7 +11,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 	init: ->
 		super()
 		@addClass("cui-item-list")
-		@__body = new Template(name: "item-list-body")
+		@__body = new CUI.Template(name: "item-list-body")
 		@append(@__body, "center")
 
 	initOpts: ->
@@ -64,9 +64,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	getItemByValue: (value) ->
 		for el in @__body.DOM.children
-			btn = DOM.data(el, "element")
+			btn = CUI.DOM.data(el, "element")
 
-			if btn not instanceof Button
+			if btn not instanceof CUI.Button
 				continue
 
 			if btn.getValue() == value
@@ -162,7 +162,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						return
 
 					if item.label
-						if item.label instanceof Label
+						if item.label instanceof CUI.Label
 							label = item.label
 						else if CUI.isPlainObject(item.label)
 							label = new CUI.defaults.class.Label(item.label)
@@ -181,7 +181,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 					listenButtonClick = (btn) =>
 
-						Events.listen
+						CUI.Events.listen
 							type: "cui-button-click"
 							node: btn
 							call: (ev, info) =>
@@ -208,15 +208,15 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 						return
 
-					if item instanceof Button
+					if item instanceof CUI.Button
 						listenButtonClick(item)
 
 						if item.hasLeft()
 							list_has_button_left = true
 
-					if item instanceof Button or
-						item instanceof DataField or
-						item instanceof Label
+					if item instanceof CUI.Button or
+						item instanceof CUI.DataField or
+						item instanceof CUI.Label
 
 							CUI.DOM.append(@__body.DOM, item.DOM)
 							return

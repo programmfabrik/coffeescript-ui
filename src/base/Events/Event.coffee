@@ -31,7 +31,7 @@ class CUI.Event extends CUI.Element
 				default: document.documentElement
 				mandatory: true
 				check: (v) ->
-					DOM.isNode(v)
+					CUI.DOM.isNode(v)
 
 			require_node_in_dom:
 				default: false
@@ -64,7 +64,7 @@ class CUI.Event extends CUI.Element
 	readOpts: ->
 		super()
 
-		@__node = DOM.getNode(@_node)
+		@__node = CUI.DOM.getNode(@_node)
 
 		# if @_exclude_self
 		# 	CUI.util.assert(@_bubble != false, "new EventsEvent", "opts.exclude_self can only be set if bubble is set to true.", opts: @opts)
@@ -106,7 +106,7 @@ class CUI.Event extends CUI.Element
 		@__node
 
 	getElement: ->
-		DOM.data(@getNode(), "element")
+		CUI.DOM.data(@getNode(), "element")
 
 	isBubble: ->
 		@_bubble
@@ -121,7 +121,7 @@ class CUI.Event extends CUI.Element
 		else if @__node == document or @__node == window
 			@__isInDOM  = true
 		else
-			@__isInDOM = DOM.isInDOM(@__node)
+			@__isInDOM = CUI.DOM.isInDOM(@__node)
 
 	setNativeEvent: (NativeEvent) ->
 		# avoid checking instanceof, so external initializers like TestCafé work
@@ -265,7 +265,7 @@ class CUI.Event extends CUI.Element
 
 	@require: (event, func) ->
 		if CUI.isPlainObject(event)
-			ev_info = Events.getEventType(event.type)
+			ev_info = CUI.Events.getEventType(event.type)
 			if ev_info.eventClass
 				eventClass = ev_info.eventClass
 			else

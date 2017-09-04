@@ -109,7 +109,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		@__killTimeout()
 		if @__ref
-			Events.ignore(instance: @__ref)
+			CUI.Events.ignore(instance: @__ref)
 			@__ref = null
 
 		if CUI.globalDrag?.instance == @
@@ -124,11 +124,11 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 	init: ->
 		# CUI.debug "Draggable", @options.selector
-		CUI.util.assert(not @_helper_contain_element or CUI.DOM.closest(@_element, @_helper_contain_element), "new Draggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
+		CUI.util.assert(not @_helper_contain_element or CUI.DOM.closest(@_element, @_helper_contain_element), "new CUI.sDraggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
 
 		CUI.DOM.addClass(@element, "no-user-select")
 
-		Events.listen
+		CUI.Events.listen
 			type: @__event_types.start
 			node: @element
 			# capture: true
@@ -149,7 +149,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				# not execute the click anymore...
 				#
 				position = CUI.util.elementGetPosition(CUI.util.getCoordinatesFromEvent(ev), ev.getTarget())
-				dim = DOM.getDimensions(ev.getTarget())
+				dim = CUI.DOM.getDimensions(ev.getTarget())
 
 				if dim.clientWidthScaled > 0 and position.left - dim.scrollLeftScaled > dim.clientWidthScaled
 					console.warn("Mousedown on a vertical scrollbar, not starting drag.")
@@ -160,8 +160,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 					return
 
 				target = ev.getCurrentTarget()
-				target_dim = DOM.getDimensions(target)
-				if not DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
+				target_dim = CUI.DOM.getDimensions(target)
+				if not CUI.DOM.isInDOM(target) or target_dim.clientWidth == 0 or target_dim.clientHeight == 0
 					return
 
 				if CUI.DOM.closest(ev.getTarget(), "input,textarea,select")
@@ -227,7 +227,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			# might be not available any more, we need to recalculate it
 			pointTarget = moveEvent.getPointTarget() or moveEvent.getTarget()
 
-			Events.trigger
+			CUI.Events.trigger
 				type: "dragover-scroll"
 				node: pointTarget
 				count: dragover_count
@@ -242,7 +242,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				track: false
 				call: dragover_scroll
 
-		Events.listen
+		CUI.Events.listen
 			node: document
 			type: @__event_types.move
 			instance: @__ref
@@ -348,7 +348,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			if not has_same_parents or not CUI.DOM.isInDOM(ev.getTarget())
 				return
 
-			Events.listen
+			CUI.Events.listen
 				type: "click"
 				capture: true
 				only_once: true
@@ -359,7 +359,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			return
 
-		Events.listen
+		CUI.Events.listen
 			node: document
 			type: ["keyup"]
 			capture: true
@@ -376,7 +376,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				return
 
-		Events.listen
+		CUI.Events.listen
 			node: document
 			type: @__event_types.end
 			capture: true
@@ -426,7 +426,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		@position_helper(ev, $target, diff)
 
 		if CUI.globalDrag.dragoverTarget and CUI.globalDrag.dragoverTarget != $target
-			Events.trigger
+			CUI.Events.trigger
 				type: "cui-dragleave"
 				node: CUI.globalDrag.dragoverTarget
 				info:
@@ -438,7 +438,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if not CUI.globalDrag.dragoverTarget
 			CUI.globalDrag.dragoverTarget = $target
 			# console.debug "target:", $target
-			Events.trigger
+			CUI.Events.trigger
 				type: "cui-dragenter"
 				node: CUI.globalDrag.dragoverTarget
 				info:
@@ -446,7 +446,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 					originalEvent: ev
 
 		# trigger our own dragover event on the correct target
-		Events.trigger
+		CUI.Events.trigger
 			node: CUI.globalDrag.dragoverTarget
 			type: "cui-dragover"
 			info:
@@ -539,7 +539,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				console.warn('Draggable[position_helper]: Containing element has no dimensions.', helper_contain_element);
 
 			# pos is changed in place
-			Draggable.limitRect pos,
+			CUI.Draggable.limitRect pos,
 				min_x: dim_contain.viewportLeft + dim_contain.borderLeftWidth
 				max_x: dim_contain.viewportRight - dim_contain.borderRightWidth - CUI.globalDrag.helperNodeStart.marginHorizontal
 				min_y: dim_contain.viewportTop + dim_contain.borderTopWidth
@@ -547,7 +547,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		else
 			dim_contain = CUI.globalDrag.helperNodeStart.body_dim
 
-			Draggable.limitRect pos,
+			CUI.Draggable.limitRect pos,
 				min_x: dim_contain.borderLeftWidth
 				max_x: dim_contain.scrollWidth - dim_contain.borderRightWidth - CUI.globalDrag.helperNodeStart.marginHorizontal
 				min_y: dim_contain.borderTopWidth
@@ -628,16 +628,16 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 		if helper == "clone"
 			# set width & height
-			set_dim = DOM.getDimensions(clone_source)
+			set_dim = CUI.DOM.getDimensions(clone_source)
 
 			# console.error "measureing clone", set_dim.marginBoxWidth, CUI.globalDrag.$source, dim
 
-			DOM.setDimensions hn,
+			CUI.DOM.setDimensions hn,
 				marginBoxWidth: set_dim.marginBoxWidth
 				marginBoxHeight: set_dim.marginBoxHeight
 
 
-		dim = DOM.getDimensions(hn)
+		dim = CUI.DOM.getDimensions(hn)
 
 		start.width = dim.borderBoxWidth
 		start.height = dim.borderBoxHeight

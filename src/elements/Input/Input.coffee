@@ -38,7 +38,7 @@ class CUI.Input extends CUI.DataFieldInput
 				continue
 
 			@__inputHints[k]
-			if hint instanceof Label
+			if hint instanceof CUI.Label
 				@__inputHints[k] = hint
 			else
 				@__inputHints[k] = new CUI.defaults.class.Label(hint)
@@ -75,13 +75,13 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Function
 			emptyHint:
 				check: (v) ->
-					CUI.util.isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.isPlainObject(v)
 			invalidHint:
 				check: (v) ->
-					CUI.util.isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.isPlainObject(v)
 			validHint:
 				check: (v) ->
-					CUI.util.isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.isPlainObject(v)
 			maxLength:
 				check: (v) ->
 					v >= 0
@@ -232,13 +232,13 @@ class CUI.Input extends CUI.DataFieldInput
 				spellcheck: @__spellcheck
 				autocomplete: @__autocomplete
 
-		Events.listen
+		CUI.Events.listen
 			node: @__input
 			type: "dragstart"
 			call: (ev) ->
 				ev.preventDefault()
 
-		Events.listen
+		CUI.Events.listen
 			node: @__input
 			type: "keydown"
 			call: (ev) =>
@@ -273,7 +273,7 @@ class CUI.Input extends CUI.DataFieldInput
 				@__focusShadowInput()
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "keyup"
 			node: @__input
 			call: (ev) =>
@@ -299,7 +299,7 @@ class CUI.Input extends CUI.DataFieldInput
 					@_onKeyup(@, ev)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "focus"
 			node: @__input
 			call: (ev) =>
@@ -317,7 +317,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 		oldSizes = null
 
-		Events.listen
+		CUI.Events.listen
 			type: "mousedown"
 			node: @__input
 			call: (ev) =>
@@ -326,33 +326,33 @@ class CUI.Input extends CUI.DataFieldInput
 				trigger = =>
 					if oldSizes[0] != @__input.offsetWidth or
 						oldSizes[1] != @__input.offsetHeight
-							Events.trigger
+							CUI.Events.trigger
 								type: "content-resize"
 								node: @__input
 
-				mev = Events.listen
+				mev = CUI.Events.listen
 					type: "mousemove"
 					call: =>
 						trigger()
 						return
 
-				Events.listen
+				CUI.Events.listen
 					type: "mouseup"
 					only_once: true
 					capture: true
 					call: (ev) =>
-						Events.ignore(mev)
+						CUI.Events.ignore(mev)
 						return
 
 
-		Events.listen
+		CUI.Events.listen
 			type: "mouseup"
 			node: @__input
 			call: (ev) =>
 				@__setCursor(ev)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "blur"
 			node: @__input
 			call: (ev) =>
@@ -366,7 +366,7 @@ class CUI.Input extends CUI.DataFieldInput
 				@_onBlur?(@, ev)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "input"
 			node: @__input
 			call: (ev, info) =>
@@ -380,13 +380,13 @@ class CUI.Input extends CUI.DataFieldInput
 						@storeValue(@__input.value)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "paste"
 			node: @__input
 			call: (ev) =>
 				@__focusShadowInput()
 
-		Events.listen
+		CUI.Events.listen
 			type: "click"
 			node: @__input
 			call: (ev) =>
@@ -591,7 +591,7 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.DOM.width(@__input, w)
 
 		if changed
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				node: @__input
 		@
@@ -830,7 +830,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__initContentSize()
 
 
-		Events.listen
+		CUI.Events.listen
 			type: "input"
 			node: @__shadow
 			call: (ev) =>
@@ -843,7 +843,7 @@ class CUI.Input extends CUI.DataFieldInput
 				.dispatch()
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "keyup"
 			node: @__shadow
 			call: (ev) =>

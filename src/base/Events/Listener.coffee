@@ -22,7 +22,7 @@ class CUI.Listener extends CUI.Element
 				default: document.documentElement
 				mandatory: true
 				check: (v) ->
-					DOM.isNode(v)
+					CUI.DOM.isNode(v)
 
 			# call this function when event is triggered
 			call:
@@ -57,7 +57,7 @@ class CUI.Listener extends CUI.Element
 		@__node = CUI.DOM.getNode(@_node)
 
 		for type in @__types
-			ev = Events.getEventType(type)
+			ev = CUI.Events.getEventType(type)
 
 		if CUI.util.isString(@_selector)
 			CUI.util.assert(@__node instanceof HTMLElement or @__node == document, "new CUI.Listener", "opts.selector requires the node to be instance of HTMLElement.", opts: @opts)
@@ -69,7 +69,7 @@ class CUI.Listener extends CUI.Element
 		if @_selector
 			if CUI.util.isString(@_selector)
 				@__selector = (target, node) =>
-					DOM.closestUntil(target, @_selector, node)
+					CUI.DOM.closestUntil(target, @_selector, node)
 			else
 				@__selector = @_selector
 
@@ -87,7 +87,7 @@ class CUI.Listener extends CUI.Element
 
 	__registerDOMEvent: ->
 		for _type in @getTypes()
-			for type in Events.getEventTypeAliases(_type)
+			for type in CUI.Events.getEventTypeAliases(_type)
 				@__node.addEventListener(type, @__handleDOMEvent, @isCapture())
 		@
 
@@ -134,12 +134,12 @@ class CUI.Listener extends CUI.Element
 		if @isDestroyed()
 			return
 
-		Events.unregisterListener(@)
+		CUI.Events.unregisterListener(@)
 
 		for _type in @getTypes()
 			# @__node.removeClass("cui-debug-listen-#{type}")
 			#
-			for type in Events.getEventTypeAliases(_type)
+			for type in CUI.Events.getEventTypeAliases(_type)
 				@__node.removeEventListener(type, @__handleDOMEvent, @isCapture())
 		super()
 
@@ -235,9 +235,9 @@ class CUI.Listener extends CUI.Element
 		filtered = false
 
 		if filter.node
-			filter_node = DOM.getNode(filter.node)
+			filter_node = CUI.DOM.getNode(filter.node)
 			filtered = true
-			match = !!DOM.closestUntil(@__node, filter_node)
+			match = !!CUI.DOM.closestUntil(@__node, filter_node)
 
 		if match and filter.type
 			filtered = true
@@ -272,7 +272,7 @@ class CUI.Listener extends CUI.Element
 				types = listener.type
 
 			for type in types
-				ev = Events.getEventType(type)
+				ev = CUI.Events.getEventType(type)
 				CUI.util.assert(ev, "#{func}", "listener.type needs to be registered", listener: listener)
 
 				if ev.listenerClass

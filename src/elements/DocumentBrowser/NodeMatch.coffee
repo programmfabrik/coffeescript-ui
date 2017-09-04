@@ -35,14 +35,14 @@ class CUI.DocumentBrowser.NodeMatch extends CUI.Element
 			titlePath[titlePath.length-1] = @_title_match.getHighlighted()
 		# console.debug titlePath
 
-		lbl = new Label
+		lbl = new CUI.Label
 			class: "cui-document-browser-search-match--title"
 			multiline: true
-			content: CUI.DOM.htmlToNodes(titlePath.join("<span class='cui-document-browser-node-match-hierarchy'>"+new Icon(icon: "right").DOM.outerHTML+"</span>"))
+			content: CUI.DOM.htmlToNodes(titlePath.join("<span class='cui-document-browser-node-match-hierarchy'>"+new CUI.Icon(icon: "right").DOM.outerHTML+"</span>"))
 
 		CUI.DOM.setAttribute(lbl.DOM, "tabindex", 0)
 
-		Events.listen
+		CUI.Events.listen
 			type: "focus"
 			node: lbl
 			call: (ev) =>
@@ -58,7 +58,7 @@ class CUI.DocumentBrowser.NodeMatch extends CUI.Element
 				html = text_match.getHighlighted(true)
 				li = CUI.DOM.element("LI", title: text_match.getString(), tabindex: 0)
 				do (text_match) =>
-					Events.listen
+					CUI.Events.listen
 						type: "focus"
 						node: li
 						call: (ev) =>

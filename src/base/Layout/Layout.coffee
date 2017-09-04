@@ -114,7 +114,7 @@ class CUI.Layout extends CUI.DOM
 
 		@__name = @getName()
 
-		@__layout = new Template
+		@__layout = new CUI.Template
 			name: @__name
 			map_prefix: @getMapPrefix()
 			map: @getTemplateMap()
@@ -122,7 +122,7 @@ class CUI.Layout extends CUI.DOM
 		@registerTemplate(@__layout)
 
 		if @__maximize_horizontal and @__maximize_vertical
-			Events.listen
+			CUI.Events.listen
 				type: "content-resize"
 				instance: @
 				node: @DOM
@@ -140,10 +140,10 @@ class CUI.Layout extends CUI.DOM
 			@addClass("cui-absolute")
 			CUI.util.assert(CUI.DOM.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
 
-			DOM.waitForDOMInsert(node: @DOM)
+			CUI.DOM.waitForDOMInsert(node: @DOM)
 			.done =>
 				# CUI.debug "Layout[absolute] inserted", @__uniqueId
-				Layout.all()
+				CUI.Layout.all()
 
 			# _call = (event) =>
 			# 	CUI.error "Layout.setAbsolute[#{event.getDebug()}]:", @DOM[0]
@@ -209,7 +209,7 @@ class CUI.Layout extends CUI.DOM
 		@__isInit = true
 
 	destroy: ->
-		Events.ignore(instance: @)
+		CUI.Events.ignore(instance: @)
 		super()
 
 	getMapPrefix: ->
@@ -254,7 +254,7 @@ class CUI.Layout extends CUI.DOM
 
 	getButtonbar: (key) ->
 		if not @__buttonbars[key]
-			@__buttonbars[key] = new Buttonbar()
+			@__buttonbars[key] = new CUI.Buttonbar()
 			# CUI.info("#{@__cls}: automatically generated Buttonbar for #{key}.")
 			DOM::append.call(@, @__buttonbars[key], key)
 		@__buttonbars[key]
@@ -276,12 +276,12 @@ class CUI.Layout extends CUI.DOM
 		if CUI.isArray(value)
 			for _v in value
 				v = get_value(_v)
-				if v instanceof Button
+				if v instanceof CUI.Button
 					@getButtonbar(key).addButton(v)
 				else
 					DOM::append.call(@, _v, key)
 
-		else if value instanceof Button
+		else if value instanceof CUI.Button
 			@getButtonbar(key).addButton(value)
 		else
 			return DOM::append.call(@, value, key)
@@ -308,7 +308,7 @@ class CUI.Layout extends CUI.DOM
 
 	setAbsolute: ->
 		@addClass("cui-absolute")
-		Layout.__all()
+		CUI.Layout.__all()
 
 	unsetAbsolute: ->
 		@DOM.removeAttribute("data-cui-absolute-check-value")
@@ -344,13 +344,13 @@ class CUI.Layout extends CUI.DOM
 
 		# measure all children
 		values = []
-		children = DOM.children(layout)
+		children = CUI.DOM.children(layout)
 
 		for child, idx in children
-			values[idx] = DOM.getDimensions(child)[rect_key]
+			values[idx] = CUI.DOM.getDimensions(child)[rect_key]
 
 		abs_values = values.join(",")
-		check_value = DOM.getDimensions(layout)[rect_check_key]+""
+		check_value = CUI.DOM.getDimensions(layout)[rect_check_key]+""
 
 		# console.debug layout, abs_values, CUI.DOM.getAttribute(layout, "data-cui-absolute-values")
 		# console.debug layout, check_value, CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value")
@@ -390,7 +390,7 @@ class CUI.Layout extends CUI.DOM
 							CUI.util.assert(false, "Layout.setAbsolute: Unknown key #{key} in data-cui-absolute-set.")
 					# CUI.debug idx, key, value
 					css[key] = value
-				DOM.setStyle(child, css)
+				CUI.DOM.setStyle(child, css)
 
 		# Events.trigger
 		# 	type: "viewport-resize"
@@ -401,25 +401,25 @@ class CUI.Layout extends CUI.DOM
 	@__all: ->
 		layouts = []
 		changed = 0
-		for layout, idx in DOM.matchSelector(document.documentElement, ".cui-absolute")
-			if Layout.setAbsolute(layout)
+		for layout, idx in CUI.DOM.matchSelector(document.documentElement, ".cui-absolute")
+			if CUI.Layout.setAbsolute(layout)
 				changed++
 
 		if changed > 0
 			# CUI.info("Layout.setAbsolute[all]: changed: ", changed)
 			# console.debug "triggering viewport resize"
-			Events.trigger(type: "viewport-resize")
+			CUI.Events.trigger(type: "viewport-resize")
 		@
 
 
 	@all: ->
-		CUI.scheduleCallback(call: Layout.__all)
+		CUI.scheduleCallback(call: CUI.Layout.__all)
 
 CUI.ready ->
-	Events.listen
+	CUI.Events.listen
 		type: ["viewport-resize", "content-resize"]
 		call: (ev, info) ->
 			if info.FlexHandle
-				Layout.__all()
+				CUI.Layout.__all()
 			else
-				Layout.all()
+				CUI.Layout.all()

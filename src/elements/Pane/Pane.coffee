@@ -57,15 +57,15 @@ class CUI.Pane extends CUI.VerticalLayout
 				@__placeholder.remove()
 				@__fillscreenTmpl.destroy()
 				delete(@__fillscreenTmpl)
-				Events.trigger
+				CUI.Events.trigger
 					type: "end-fill-screen"
 					node: @DOM
-				Events.trigger
+				CUI.Events.trigger
 					type: "viewport-resize"
 					node: @DOM
 
 			if transition
-				Events.wait
+				CUI.Events.wait
 					type: "transitionend"
 					node: @__fillscreenTmpl
 				.always =>
@@ -80,7 +80,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		if @getFillScreenState()
 			return
 
-		@__fillscreenTmpl = new Template
+		@__fillscreenTmpl = new CUI.Template
 			name: "pane-fill-screen"
 			map:
 				inner: true
@@ -89,7 +89,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		rect = CUI.DOM.getRect(@DOM)
 
 		vp = CUI.DOM.getDimensions(window)
-		@__placeholderTmpl = new Template
+		@__placeholderTmpl = new CUI.Template
 			name: "pane-fill-screen-placeholder"
 
 		@__placeholder = @__placeholderTmpl.DOM
@@ -142,14 +142,14 @@ class CUI.Pane extends CUI.VerticalLayout
 		@__fillscreenTmpl.replace(@DOM, "inner")
 
 
-		Events.wait
+		CUI.Events.wait
 			type: "transitionend"
 			node: @__fillscreenTmpl
 		.always =>
-			Events.trigger
+			CUI.Events.trigger
 				type: "start-fill-screen"
 				node: @DOM
-			Events.trigger
+			CUI.Events.trigger
 				type: "viewport-resize"
 				node: @DOM
 
@@ -181,8 +181,8 @@ class CUI.Pane extends CUI.VerticalLayout
 	# creates a button that can be used in paneheader (or somewhere else) to toggle fillscreen
 	@getToggleFillScreenButton: (opts={}) ->
 		for k, v of {
-			icon_inactive: new Icon(class: "fa-expand")
-			icon_active: new Icon(class: "fa-compress")
+			icon_inactive: new CUI.Icon(class: "fa-expand")
+			icon_active: new CUI.Icon(class: "fa-compress")
 			switch: true
 			onClick: (ev, btn) =>
 				CUI.DOM.data(CUI.DOM.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()

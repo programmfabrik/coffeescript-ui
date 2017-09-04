@@ -28,7 +28,7 @@ class CUI.DataField extends CUI.DOM
 
 		@addClass("cui-data-field")
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: @DOM
 			call: (ev, info) =>
@@ -118,7 +118,7 @@ class CUI.DataField extends CUI.DOM
 		@registerTemplate(@getTemplate())
 
 	getTemplate: ->
-		new Template
+		new CUI.Template
 			name: "data-field"
 
 	isResizable: ->
@@ -278,7 +278,7 @@ class CUI.DataField extends CUI.DOM
 		@addClass("cui-data-field-hidden")
 		@callOnOthers("hide")
 		if trigger_event
-			Events.trigger
+			CUI.Events.trigger
 				type: "form-check-row-visibility"
 				node: @DOM
 				info:
@@ -291,7 +291,7 @@ class CUI.DataField extends CUI.DOM
 		if trigger_event
 			# FIXME: too many events were triggered and I dont
 			# know where this is really
-			Events.trigger
+			CUI.Events.trigger
 				type: "form-check-row-visibility"
 				node: @DOM
 				info:
@@ -412,7 +412,7 @@ class CUI.DataField extends CUI.DOM
 		try
 			@checkValue(v, flags)
 		catch e
-			if e not instanceof CheckValueError
+			if e not instanceof CUI.CheckValueError
 				throw(e)
 			throw(new Error("#{@__cls}.setValue: "+v+", Error: "+e))
 
@@ -580,7 +580,7 @@ class CUI.DataField extends CUI.DOM
 	triggerDataChanged: (info={}) ->
 		info.element = @
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "data-changed"
 			node: @DOM
 			info: info
@@ -613,7 +613,7 @@ class CUI.DataField extends CUI.DOM
 		super()
 
 	@new: (field, delete_keys=[], default_data={}) ->
-		if field instanceof DataField
+		if field instanceof CUI.DataField
 			return field
 
 		CUI.util.assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
@@ -625,7 +625,7 @@ class CUI.DataField extends CUI.DOM
 				continue
 			if delete_keys.indexOf(k) > -1
 				continue
-			# if v instanceof Icon
+			# if v instanceof CUI.Icon
 			#	field_opts[k] = v.copy()
 			#	continue
 			field_opts[k] = v

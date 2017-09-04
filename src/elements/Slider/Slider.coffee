@@ -89,7 +89,7 @@ class CUI.Slider extends CUI.DataField
 				@setValue(@__value + (diff_x / use_precision))
 				@_onDragging?(@, @getValue())
 
-		Events.listen
+		CUI.Events.listen
 			type: 'click'
 			node: @__slider.map.track_visual
 			call: (ev) =>
@@ -127,5 +127,5 @@ class CUI.Slider extends CUI.DataField
 
 	checkValue: (v, flags) ->
 		if v < @_min or v > @_max
-			throw new CheckValueError('value needs to be between '+@_min+' and '+@_max)
+			throw new CUI.CheckValueError('value needs to be between '+@_min+' and '+@_max)
 		@

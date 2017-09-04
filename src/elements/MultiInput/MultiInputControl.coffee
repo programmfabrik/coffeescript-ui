@@ -84,11 +84,11 @@ class CUI.MultiInputControl extends CUI.Element
 					onActivate: ->
 						CUI.debug "control activate", key.tag
 						key.enabled = true
-						Events.trigger(type: "multi-input-control-update")
+						CUI.Events.trigger(type: "multi-input-control-update")
 					onDeactivate: (cb) ->
 						CUI.debug "control deactivate", key.tag
 						key.enabled = false
-						Events.trigger(type: "multi-input-control-update")
+						CUI.Events.trigger(type: "multi-input-control-update")
 					text: key.tag
 		options
 
@@ -103,12 +103,12 @@ class CUI.MultiInputControl extends CUI.Element
 			onHide: =>
 				@popover = null
 			pane:
-				footer_right: new Button
+				footer_right: new CUI.Button
 					text: "Done"
 					onClick: =>
 						@popover.destroy()
 
-				header_left: new Label(text: "MultiInputControl")
+				header_left: new CUI.Label(text: "MultiInputControl")
 				content: options
 		.show()
 
