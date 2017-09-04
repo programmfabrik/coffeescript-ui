@@ -31,7 +31,7 @@ class CUI.StickyHeader extends CUI.DOM
 		@addOpts
 			control:
 				mandatory: true
-				check: StickyHeaderControl
+				check: CUI.StickyHeaderControl
 			text:
 				check: String
 			content: {}

@@ -20,7 +20,7 @@ class CUI.Form extends CUI.SimpleForm
 		if @hasSetOpt("bottom")
 			vl_opts.bottom = content: @_bottom
 
-		@__verticalLayout = new VerticalLayout(vl_opts)
+		@__verticalLayout = new CUI.VerticalLayout(vl_opts)
 
 		if @_render_as_grid
 			@__verticalLayout.addClass("cui-form--grid")

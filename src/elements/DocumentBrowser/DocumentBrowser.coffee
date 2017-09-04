@@ -209,15 +209,15 @@ class CUI.DocumentBrowser extends CUI.Element
 		do_search = =>
 			@__doSearch(data.search)
 
-		search_input = new Input
+		search_input = new CUI.Input
 			data: data
 			name: "search"
 			onDataChanged: =>
 				CUI.scheduleCallback(ms: 200, call: do_search)
 
-		@__searchResult = new VerticalList()
+		@__searchResult = new CUI.VerticalList()
 
-		@__tree = new ListViewTree
+		@__tree = new CUI.ListViewTree
 			cols: ["maximize"]
 			selectable: true
 			onSelect: (ev, info) =>
@@ -230,7 +230,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				# console.error "deselect me!", info
 			root: new CUI.DocumentBrowser.RootNode(browser: @, url: @_url)
 
-		@__leftLayout = new SimplePane
+		@__leftLayout = new CUI.SimplePane
 			header_center: search_input.start()
 			header_right: [
 				@__searchBtn = new CUI.Button

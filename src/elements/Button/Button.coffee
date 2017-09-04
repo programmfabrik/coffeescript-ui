@@ -512,7 +512,7 @@ class CUI.Button extends CUI.DOM
 			menu_on_hover:
 				check: Boolean
 			menu_parent:
-				check: Menu
+				check: CUI.Menu
 			onActivate:
 				check: Function
 			onDeactivate:
@@ -658,7 +658,7 @@ class CUI.Button extends CUI.DOM
 		if @__menu
 			@__menu
 		else
-			@__menu = new Menu(@__menu_opts)
+			@__menu = new CUI.Menu(@__menu_opts)
 
 	menuSetActiveIdx: (idx) ->
 		if @__menu
@@ -904,7 +904,7 @@ class CUI.Button extends CUI.DOM
 			CUI.util.assert(not tt_opts.hasOwnProperty(k), "CUI.Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
 			tt_opts[k] = false
 
-		@__tooltip = new Tooltip(tt_opts)
+		@__tooltip = new CUI.Tooltip(tt_opts)
 		@
 
 	getTooltip: ->

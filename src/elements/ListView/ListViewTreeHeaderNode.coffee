@@ -9,5 +9,5 @@ class CUI.ListViewTreeHeaderNode extends CUI.ListViewTreeNode
 	render: ->
 		@__is_rendered = true
 		for header, idx in @_headers
-			@addColumn(new ListViewHeaderColumn(header))
+			@addColumn(new CUI.ListViewHeaderColumn(header))
 		@

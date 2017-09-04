@@ -18,10 +18,7 @@ class CUI.FormButton extends CUI.Checkbox
 
 	render: ->
 		super()
-		if CUI.__ng__
-			# OMG, this is really f*cked up, we add this in Button, remove it in Checkbox
-			# and now add it again...
-			@__checkbox.addClass("cui-button-button")
+		@__checkbox.addClass("cui-button-button")
 		return
 
 	getCheckboxClass: ->

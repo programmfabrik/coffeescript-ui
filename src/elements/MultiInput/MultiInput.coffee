@@ -165,7 +165,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				content_size: @_content_size
 				placeholder: @_placeholder?[key.name]
 
-			input = new MultiInputInput(input_opts)
+			input = new CUI.MultiInputInput(input_opts)
 			input.render()
 
 			do (input, key) =>

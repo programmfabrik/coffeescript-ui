@@ -8,7 +8,7 @@
 class CUI.ListViewTree extends CUI.ListView
 	constructor: (@opts={}) ->
 		super(@opts)
-		CUI.util.assert(@root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
+		CUI.util.assert(@root instanceof CUI.ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#
 
@@ -28,7 +28,7 @@ class CUI.ListViewTree extends CUI.ListView
 				check: Boolean
 			root:
 				check: (v) ->
-					v instanceof ListViewRow
+					v instanceof CUI.ListViewRow
 			onOpen:
 				check: Function
 			onClose:
@@ -57,7 +57,7 @@ class CUI.ListViewTree extends CUI.ListView
 			else
 				lv_opts.children = []
 
-			@root = new ListViewTreeNode(lv_opts)
+			@root = new CUI.ListViewTreeNode(lv_opts)
 		else
 			@root = @_root
 
@@ -106,7 +106,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 			node = CUI.DOM.data(CUI.DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
 
-			if node not instanceof ListViewTreeNode or node.isLoading() or node.isLeaf()
+			if node not instanceof CUI.ListViewTreeNode or node.isLoading() or node.isLeaf()
 				return
 
 			# This needs to be immediate, "super" listens on the same node
@@ -273,7 +273,7 @@ class CUI.ListViewTree extends CUI.ListView
 		@addNode(node, false)
 
 	addNode: (node, append=true) ->
-		CUI.util.assert(node instanceof ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
+		CUI.util.assert(node instanceof CUI.ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
 		promise = @root.addNode(node, append)
 		CUI.Events.trigger
 			node: @

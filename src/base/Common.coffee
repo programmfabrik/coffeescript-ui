@@ -464,8 +464,3 @@ String.prototype.endsWith = (s) ->
 
 RegExp.escape= (s) ->
     s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
-
-
-for prop, func of CUI.util
-	window[prop] = func
-	console.info("CUI.util."+prop+" -> window."+prop)

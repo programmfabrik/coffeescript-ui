@@ -24,7 +24,7 @@ class CUI.Menu extends CUI.Layer
 				check: Boolean
 
 			parent_menu:
-				check: Menu
+				check: CUI.Menu
 
 			onBeforeItemListInit:
 				check: Function
@@ -54,7 +54,7 @@ class CUI.Menu extends CUI.Layer
 			@__itemList.render(@, @__event)
 			.done =>
 				super(@__event)
-				# Events.trigger
+				# CUI.Events.trigger
 				# 	type: "content-resize"
 				# 	node: @__itemList
 		else

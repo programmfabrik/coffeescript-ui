@@ -93,12 +93,12 @@ class CUI.MultiInputControl extends CUI.Element
 		options
 
 	showUserControl:  ->
-		options = new Options
+		options = new CUI.Options
 			min_checked: 1
 			options: @getUserControlOptions()
 		.start()
 
-		@popover = new Modal
+		@popover = new CUI.Modal
 			class: "cui-multi-input-control"
 			onHide: =>
 				@popover = null

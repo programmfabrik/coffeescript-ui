@@ -64,7 +64,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@father
 
 	setFather: (new_father) ->
-		CUI.util.assert(new_father == null or new_father instanceof ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.setFather", "father can only be null or instanceof ListViewTreeNode", father: new_father)
+		CUI.util.assert(new_father == null or new_father instanceof CUI.ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.setFather", "father can only be null or instanceof CUI.ListViewTreeNode", father: new_father)
 		CUI.util.assert(new_father != @, "#{CUI.util.getObjectClass(@)}.setFather", "father cannot be self", node: @, father: new_father)
 		# CUI.debug @, new_father
 		if new_father
@@ -93,7 +93,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	setTree: (@tree) ->
 		CUI.util.assert(@isRoot(), "#{CUI.util.getObjectClass(@)}.setTree", "node must be root node to set tree", tree: @tree, opts: @opts)
-		CUI.util.assert(@tree instanceof ListViewTree, "#{CUI.util.getObjectClass(@)}.setTree", "tree must be instance of ListViewTree", tree: @tree, opts: @opts)
+		CUI.util.assert(@tree instanceof CUI.ListViewTree, "#{CUI.util.getObjectClass(@)}.setTree", "tree must be instance of ListViewTree", tree: @tree, opts: @opts)
 
 	getRoot: (call=0) ->
 		CUI.util.assert(call < 100, "ListViewTreeNode.getRoot", "Recursion detected.")
@@ -256,7 +256,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				# layout_stopped = tree.stopLayout()
 				tree.replaceRow(@getRowIdx(), @render())
 				if @selected
-					tree.rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+					tree.rowAddClass(@getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 				# if layout_stopped
 				# 	tree.startLayout()
 			return CUI.resolvedPromise()
@@ -489,7 +489,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	# resolves with the appended node
 	__appendNode: (node, append=true) -> # , assume_open=false) ->
-		CUI.util.assert(node instanceof ListViewTreeNode, "ListViewTreeNode.__appendNode", "node must be instance of ListViewTreeNode", node: @, new_node: node)
+		CUI.util.assert(node instanceof CUI.ListViewTreeNode, "ListViewTreeNode.__appendNode", "node must be instance of ListViewTreeNode", node: @, new_node: node)
 		CUI.util.assert(node.getFather() == @, "ListViewTreeNode.__appendNode", "node added must be child of current node", node: @, new_node: node)
 
 		# CUI.debug ".__appendNode: father: ", @getUniqueId()+"["+@getNodeId()+"]", "child:", node.getUniqueId()+"["+node.getNodeId()+"]"
@@ -538,7 +538,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			tree.insertRowAfter(last_node.getRowIdx(), node.render())
 
 		if node.selected
-			tree.rowAddClass(node.getRowIdx(), ListViewRow.defaults.selected_class)
+			tree.rowAddClass(node.getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 
 		if node.do_open
 			node.open()
@@ -620,10 +620,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		!!@selected
 
 	addSelectedClass: ->
-		@getTree().rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+		@getTree().rowAddClass(@getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 
 	removeSelectedClass: ->
-		@getTree().rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+		@getTree().rowRemoveClass(@getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 
 	setSelectedNode: (node = null, key = @getSelectedNodeKey()) ->
 		@getRoot()[@getSelectedNodeKey()] = node
@@ -817,7 +817,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.DOM.append(element, @__handleDiv)
 
 		# push the tree element as the first column
-		@prependColumn new ListViewColumn
+		@prependColumn new CUI.ListViewColumn
 			element: element
 			class: "cui-tree-node-column cui-tree-node-level-#{@level()}"
 			colspan: @colspan

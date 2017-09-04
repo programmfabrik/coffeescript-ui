@@ -11,7 +11,7 @@ class CUI.MultiOutput extends CUI.Output
 		@addOpts
 			control:
 				mandatory: true
-				check: MultiInputControl
+				check: CUI.MultiInputControl
 
 
 	displayValue: ->
@@ -20,5 +20,3 @@ class CUI.MultiOutput extends CUI.Output
 		CUI.util.assert(key, "Output.displayValue", "MultiInputControl: no preferred key set.", control: @_control)
 		@setText(@getValue()[key.name])
 		@
-
-MultiOutput = CUI.MulitOutput

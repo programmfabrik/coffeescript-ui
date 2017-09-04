@@ -149,10 +149,10 @@ class CUI.Tabs extends CUI.SimplePane
 		for tab, idx in @_tabs
 			if not tab
 				continue
-			if tab instanceof Tab
+			if tab instanceof CUI.Tab
 				_tab = @addTab(tab)
 			else if CUI.isPlainObject(tab)
-				_tab = @addTab(new Tab(tab))
+				_tab = @addTab(new CUI.Tab(tab))
 			else
 				CUI.util.assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{CUI.util.getObjectClass(tab)}", opts: @opts)
 			if @_appearance == "mini"
@@ -205,7 +205,7 @@ class CUI.Tabs extends CUI.SimplePane
 		@
 
 	addTab: (tab) ->
-		CUI.util.assert(tab instanceof Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{CUI.util.getObjectClass(tab)}", tab: tab)
+		CUI.util.assert(tab instanceof CUI.Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{CUI.util.getObjectClass(tab)}", tab: tab)
 		if not @hasTab(tab)
 			@__tabs.push(tab)
 			CUI.Events.listen
@@ -268,7 +268,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		# remove previously set dimensions
 		for tab in @__tabs
-			CUI.DOM.setStyle(tab.getBody(), 
+			CUI.DOM.setStyle(tab.getBody(),
 				"min-width": "", 
 				"height": ""
 			)
@@ -332,7 +332,7 @@ class CUI.Tabs extends CUI.SimplePane
 				if tab._name == tab_or_idx_or_name
 					found_tab = tab
 					break
-		else if tab_or_idx_or_name instanceof Tab
+		else if tab_or_idx_or_name instanceof CUI.Tab
 			if @__tabs.indexOf(tab_or_idx_or_name) > -1
 				found_tab = tab_or_idx_or_name
 		else

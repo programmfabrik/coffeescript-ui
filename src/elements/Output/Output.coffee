@@ -62,7 +62,7 @@ class CUI.Output extends CUI.DataFieldInput
 			@__textSpan.setText(txt, markdown)
 
 	checkValue: ->
-		# Output does not care about values
+		# CUI.Output does not care about values
 
 	displayValue: ->
 		super()

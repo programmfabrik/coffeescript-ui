@@ -66,7 +66,7 @@ class CUI.ListView extends CUI.SimplePane
 		@rowsCount = 0
 		@colsCount = @__cols.length
 
-		@listViewCounter = ListView.counter++
+		@listViewCounter = CUI.ListView.counter++
 
 		# @cssUniqueId = "list-view-#{@listViewCounter}-style"
 
@@ -316,7 +316,7 @@ class CUI.ListView extends CUI.SimplePane
 
 			selector = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer"
 
-			# Events.listen
+			# CUI.Events.listen
 			# 	type: ["touchstart"]
 			# 	node: @DOM
 			# 	call: (ev) =>
@@ -473,7 +473,7 @@ class CUI.ListView extends CUI.SimplePane
 		@selectRowById(@getRowIdx(row_display_idx))
 
 	selectRow: (ev, row, no_deselect=false) ->
-		CUI.util.assert(CUI.util.isNull(row) or row instanceof ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of ListViewRow.", selectedRow: row)
+		CUI.util.assert(CUI.util.isNull(row) or row instanceof CUI.ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", selectedRow: row)
 
 		dfr = new CUI.Deferred()
 
@@ -1116,7 +1116,7 @@ class CUI.ListView extends CUI.SimplePane
 
 
 	__appendCells: (listViewRow, row_i) ->
-		CUI.util.assert(listViewRow instanceof ListViewRow, "ListView.addRow", "listViewRow needs to be instance of ListViewRow or Deferred which returns a ListViewRow", listViewRow: listViewRow)
+		CUI.util.assert(listViewRow instanceof CUI.ListViewRow, "ListView.addRow", "listViewRow needs to be instance of ListViewRow or Deferred which returns a ListViewRow", listViewRow: listViewRow)
 
 		listViewRow.setRowIdx(row_i).setListView(@)
 
@@ -1127,14 +1127,14 @@ class CUI.ListView extends CUI.SimplePane
 
 		if @_rowMove
 			if @getDisplayRowIdx(row_i) >= @fixedRowsCount + @_rowMoveFixedRows
-				if listViewRow.getColumns()[0] not instanceof ListViewColumnRowMoveHandle
-					listViewRow.prependColumn(new ListViewColumnRowMoveHandle())
+				if listViewRow.getColumns()[0] not instanceof CUI.ListViewColumnRowMoveHandle
+					listViewRow.prependColumn(new CUI.ListViewColumnRowMoveHandle())
 			else
-				if listViewRow.getColumns()[0] not instanceof ListViewColumnRowMoveHandlePlaceholder
-					listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
+				if listViewRow.getColumns()[0] not instanceof CUI.ListViewColumnRowMoveHandlePlaceholder
+					listViewRow.prependColumn(new CUI.ListViewColumnRowMoveHandlePlaceholder())
 		else if @_rowMovePlaceholder
-			if listViewRow.getColumns()[0] not instanceof ListViewColumnRowMoveHandlePlaceholder
-				listViewRow.prependColumn(new ListViewColumnRowMoveHandlePlaceholder())
+			if listViewRow.getColumns()[0] not instanceof CUI.ListViewColumnRowMoveHandlePlaceholder
+				listViewRow.prependColumn(new CUI.ListViewColumnRowMoveHandlePlaceholder())
 
 		_cols = listViewRow.getColumns()
 
@@ -1298,10 +1298,10 @@ class CUI.ListView extends CUI.SimplePane
 				,
 					text: "appendRow"
 					onClick: =>
-						lv = new ListViewRow()
+						lv = new CUI.ListViewRow()
 						for col, display_col_i in @_cols
 							col_i = @getColIdx(display_col_i)
-							lv.addColumn(new ListViewColumn(text: @getColdef(col_i)+" "+@rowsCount))
+							lv.addColumn(new CUI.ListViewColumn(text: @getColdef(col_i)+" "+@rowsCount))
 						@appendRow(lv)
 				,
 					text: "removeRow"
@@ -1313,7 +1313,7 @@ class CUI.ListView extends CUI.SimplePane
 						@__control.destroy()
 				]
 
-				(new Menu
+				(new CUI.Menu
 					auto_close_after_click: false
 					itemList:
 						items: items

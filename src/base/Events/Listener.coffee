@@ -102,7 +102,7 @@ class CUI.Listener extends CUI.Element
 		else
 			currentTarget = @__node
 
-		# this event was synthecially created by Events.trigger
+		# this event was synthecially created by CUI.Events.trigger
 		# or previously handled by an CUI.Listener
 		# or dispatched by Event.dispatch
 		if ev.__cui_event
@@ -217,7 +217,7 @@ class CUI.Listener extends CUI.Element
 		if CUI.util.isPromise(ret)
 			info = event.getInfo()
 			if not info.__waits
-				CUI.util.assert(false, "CUI.Listener.handleEvent", "Event \"#{event.getType()}\" to handle was not triggered by CUI.Events.trigger, but instead by a regular DOMEvent.\n\nMake sure that, if your handler returns a Promise, the event is triggered by Events.trigger.", event: event, listener: @, return: ret)
+				CUI.util.assert(false, "CUI.Listener.handleEvent", "Event \"#{event.getType()}\" to handle was not triggered by CUI.Events.trigger, but instead by a regular DOMEvent.\n\nMake sure that, if your handler returns a Promise, the event is triggered by CUI.Events.trigger.", event: event, listener: @, return: ret)
 			info.__waits.push(ret)
 
 		ret

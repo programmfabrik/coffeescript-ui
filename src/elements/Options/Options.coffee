@@ -66,9 +66,9 @@ class CUI.Options extends CUI.DataField
 
 	readOpts: ->
 		super()
-		CUI.util.assert(not @_sortable or not @_left, "new Options", "opts.sortable and opts.left cannot be used together.", opts: @opts)
-		CUI.util.assert(not @_sortable or not @_radio, "new Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
-		CUI.util.assert(not @_sortable or not @opts.horizontal, "new Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
+		CUI.util.assert(not @_sortable or not @_left, "new CUI.Options", "opts.sortable and opts.left cannot be used together.", opts: @opts)
+		CUI.util.assert(not @_sortable or not @_radio, "new CUI.Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
+		CUI.util.assert(not @_sortable or not @opts.horizontal, "new CUI.Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
 
 		if CUI.__ng__
 			if @opts.horizontal == undefined
@@ -77,7 +77,7 @@ class CUI.Options extends CUI.DataField
 		if @_sortable and @_activatable == undefined
 			@_activatable = true
 
-		CUI.util.assert(not (@_sortable and not @_activatable), "new Options", "opts.sortable needs opts.activatable to be set.", opts: @opts)
+		CUI.util.assert(not (@_sortable and not @_activatable), "new CUI.Options", "opts.sortable needs opts.activatable to be set.", opts: @opts)
 
 
 	getTemplate: ->
@@ -175,7 +175,7 @@ class CUI.Options extends CUI.DataField
 			if opt.value == value
 				found = idx
 				break
-		CUI.util.assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in Options.", options: @__options)
+		CUI.util.assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in CUI.Options.", options: @__options)
 		@__checkboxes[found]
 
 	getOptions: ->
@@ -243,7 +243,7 @@ class CUI.Options extends CUI.DataField
 		order_value_array = (arr) =>
 			# store the current index, by doing that
 			# we make sure that array value which are not among
-			# our Options.options, keep their order (but are
+			# our CUI.Options.options, keep their order (but are
 			# send to the end of the array)
 			for a, idx in arr
 				a.___idx = idx
@@ -394,7 +394,7 @@ class CUI.Options extends CUI.DataField
 					opt.data_not_for_others = true
 
 
-				cb = new Checkbox(opt)
+				cb = new CUI.Checkbox(opt)
 				CUI.Events.listen
 					type: "data-changed"
 					node: cb
@@ -471,7 +471,7 @@ class CUI.Options extends CUI.DataField
 				sortable_element = @__tmpl.map.active
 				sortable_selector = ".cui-options-sortable-drag-handle"
 			else
-				@__optionsForm = new Form
+				@__optionsForm = new CUI.Form
 					class: "cui-options-form cui-form-options" # form-options needed by old design
 					horizontal: if @_horizontal != false then @_horizontal else undefined
 					top: top

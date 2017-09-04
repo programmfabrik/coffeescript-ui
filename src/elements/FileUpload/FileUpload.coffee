@@ -109,7 +109,7 @@ class CUI.FileUpload extends CUI.Element
 			all_done: all_done
 
 	getUploadFileClass: ->
-		FileUploadFile
+		CUI.FileUploadFile
 
 	queueFiles: (files) ->
 		batch = ++@__batch_id
@@ -330,7 +330,7 @@ class CUI.FileUpload extends CUI.Element
 				if opts.allow_drop and not opts.allow_drop(ev)
 					return ev.stop()
 
-				FileUpload.setDropClassByEvent(ev)
+				CUI.FileUpload.setDropClassByEvent(ev)
 				ev.stopPropagation()
 				ev.preventDefault()
 				return false
@@ -344,7 +344,7 @@ class CUI.FileUpload extends CUI.Element
 				if opts.allow_drop and not opts.allow_drop(ev)
 					return ev.stop()
 
-				FileUpload.setDropClassByEvent(ev)
+				CUI.FileUpload.setDropClassByEvent(ev)
 				dt = ev.getNativeEvent().dataTransfer
 
 				if dt.files?.length > 0

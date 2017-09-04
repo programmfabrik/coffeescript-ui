@@ -150,7 +150,7 @@ class CUI.Layer extends CUI.DOM
 
 
 	# __addClickThruListener: ->
-	# 	Events.listen
+	# 	CUI.Events.listen
 	# 		type: "mousedown"
 	# 		capture: true
 	# 		node: window
@@ -1069,8 +1069,8 @@ class CUI.Layer extends CUI.DOM
 
 		CUI.util.assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer ##{@getUniqueId()} is already destroyed", layer: @)
 
-		if Tooltip.current and @ not instanceof Tooltip
-			Tooltip.current.hide()
+		if CUI.Tooltip.current and @ not instanceof CUI.Tooltip
+			CUI.Tooltip.current.hide()
 
 		@clearTimeout()
 		if @isShown()

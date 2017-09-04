@@ -852,18 +852,7 @@ class CUI
 
 
 	@windowCompat:
-		protect: [] # Array to hold properties which will not get copied
 		start: ->
-			for prop, func of CUI
-				if prop in CUI.windowCompat.protect
-					continue
-
-				if window[prop] != undefined
-					console.error("CUI.windowCompat: Already mapped! CUI."+prop+" -> window."+prop)
-				else
-					window[prop] = func
-					console.info("CUI."+prop+" -> window."+prop)
-
 			for prop, func of CUI.DOM
 				if prop.startsWith('$')
 					window[prop] = func
@@ -881,11 +870,6 @@ class CUI
 		map.blink = (map.chrome or map.opera) && !!window.CSS
 		map
 	)()
-
-# protect already stuff added from CUI
-for prop, value of CUI
-	# protect from copying by windowCompat.coffee
-	CUI.windowCompat.protect.push(prop)
 
 CUI.ready =>
 

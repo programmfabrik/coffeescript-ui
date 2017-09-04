@@ -13,10 +13,10 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 		@addOpts
 			row:
 				mandatory: true
-				check: ListViewRow
+				check: CUI.ListViewRow
 			column:
 				mandatory: true
-				check: ListViewColumn
+				check: CUI.ListViewColumn
 
 	readOpts: ->
 		super()

@@ -30,7 +30,7 @@ class CUI.Buttonbar extends CUI.DOM
 		if @_tooltip
 			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element = @__buttons
-			@__tooltip = new Tooltip(tt_opts)
+			@__tooltip = new CUI.Tooltip(tt_opts)
 
 		for btn, idx in @_buttons
 			@addButton(btn, false)

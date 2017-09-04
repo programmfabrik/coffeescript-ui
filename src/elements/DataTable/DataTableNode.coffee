@@ -12,7 +12,7 @@ class CUI.DataTableNode extends CUI.ListViewRow
 		@addOpts
 			dataTable:
 				mandatory: true
-				check: DataTable
+				check: CUI.DataTable
 			data:
 				mandatory: true
 				check: "PlainObject"
@@ -47,7 +47,7 @@ class CUI.DataTableNode extends CUI.ListViewRow
 				else
 					_f.setCheckChangedValue(f.getDefaultValue())
 			@__fields.push(_f)
-			@addColumn(new ListViewColumn(element: _f.DOM))
+			@addColumn(new CUI.ListViewColumn(element: _f.DOM))
 		@
 
 	remove: ->

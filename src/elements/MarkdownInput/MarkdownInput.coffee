@@ -47,7 +47,7 @@ class CUI.MarkdownInput extends CUI.Input
 			if @hasSetOpt(k)
 				vl_opts[k] = @getSetOpt(k)
 
-		@__verticalLayout = new Pane(vl_opts)
+		@__verticalLayout = new CUI.Pane(vl_opts)
 
 
 	initTemplate: ->
@@ -163,7 +163,7 @@ class CUI.MarkdownInput extends CUI.Input
 
 	render: ->
 		super()
-		bb = new Toolbar
+		bb = new CUI.Toolbar
 			left:
 				content: [
 					group: "lists"

@@ -81,7 +81,7 @@ CUI.ready =>
 
 
 	# # FIXME: this does not work in Text input fields (chrome)
-	# Events.listen
+	# CUI.Events.listen
 	# 	type: "selectstart"
 	# 	node: document.documentElement
 	# 	capture: true

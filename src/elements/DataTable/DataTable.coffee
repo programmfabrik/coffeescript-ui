@@ -8,7 +8,7 @@
 class CUI.DataTable extends CUI.DataFieldInput
 	constructor: (@opts) ->
 		super(@opts)
-		Layout::maximizeAddClasses.call(@)
+		CUI.Layout::maximizeAddClasses.call(@)
 
 	@defaults:
 		plus_button_tooltip: null
@@ -64,8 +64,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 		@__navi_prev = null
 		@__navi_next = null
 		@__offset = 0
-		Layout::maximizeReadOpts.call(@)
-		CUI.util.assert(not (@_chunk_size and @_rowMove), "new DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
+		CUI.Layout::maximizeReadOpts.call(@)
+		CUI.util.assert(not (@_chunk_size and @_rowMove), "new CUI.DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
 		@
 
 	getFieldList: ->
@@ -119,7 +119,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 	addRow: (data={}) ->
 		@rows.push(data)
 		# CUI.debug "creating new data node"
-		new_node = new DataTableNode
+		new_node = new CUI.DataTableNode
 			dataTable: @
 			data: data
 			dataRowIdx: @rows.length-1
@@ -132,7 +132,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@displayValue()
 		else
 			@listView.appendRow(new_node)
-		# CUI.debug "data-changed on DataTable PLUS storing values:", CUI.util.dump(@rows)
+		# CUI.debug "data-changed on CUI.DataTable PLUS storing values:", CUI.util.dump(@rows)
 		new_node
 
 	updateButtons: ->
@@ -227,11 +227,11 @@ class CUI.DataTable extends CUI.DataFieldInput
 		colClasses = []
 		maxis = []
 
-		@headerRow = new ListViewHeaderRow()
+		@headerRow = new CUI.ListViewHeaderRow()
 
 		for f, idx in @__fieldList
 			if f.getOpt("form")?.column == "maximize" or
-				f instanceof DataTable
+				f instanceof CUI.DataTable
 					maxis.push(idx)
 
 		if maxis.length == 0
@@ -260,7 +260,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			colClasses.push(cls)
 
-			@headerRow.addColumn new ListViewHeaderColumn
+			@headerRow.addColumn new CUI.ListViewHeaderColumn
 				rotate_90: f._form?.rotate_90
 				label:
 					text: label
@@ -309,7 +309,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				# present us as a whole
 				ev.stopPropagation()
 				# store value triggers a new data-changed
-				# CUI.debug "data-changed on DataTable storing values:", CUI.util.dump(@rows)
+				# CUI.debug "data-changed on CUI.DataTable storing values:", CUI.util.dump(@rows)
 
 				@storeValue(CUI.util.copyObject(@rows, true))
 				return
@@ -360,7 +360,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				rows_sliced = @rows
 
 			for row, idx in rows_sliced
-				node = new DataTableNode
+				node = new CUI.DataTableNode
 					dataTable: @
 					data: row
 					dataRowIdx: idx

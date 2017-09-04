@@ -13,7 +13,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 		@addOpts
 			row:
 				mandatory: true
-				check: ListViewRow
+				check: CUI.ListViewRow
 
 	readOpts: ->
 		super()

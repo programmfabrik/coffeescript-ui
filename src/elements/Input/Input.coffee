@@ -137,17 +137,17 @@ class CUI.Input extends CUI.DataFieldInput
 	readOpts: ->
 
 		if @opts.readonly
-			CUI.util.assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
+			CUI.util.assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new CUI.Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
 
 		if @opts.textarea
-			CUI.util.assert(not @opts.autocomplete, "new Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
-			CUI.util.assert(not @opts.incNumbers, "new Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
+			CUI.util.assert(not @opts.autocomplete, "new CUI.Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
+			CUI.util.assert(not @opts.incNumbers, "new CUI.Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
 
 		super()
 
 		if @_readonly and @_readonly_select_all
 			@_getCursorBlocks = (v) =>
-				[ new InputBlock(start: 0, string: v) ]
+				[ new CUI.InputBlock(start: 0, string: v) ]
 
 		if @_regexp
 			@__regexp = new RegExp(@_regexp, @_regexp_flags)
@@ -175,7 +175,7 @@ class CUI.Input extends CUI.DataFieldInput
 			@__spellcheck = "default"
 
 		# if @_rows
-		# 	CUI.util.assert(@_content_size, "new Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
+		# 	CUI.util.assert(@_content_size, "new CUI.Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
 
 		if @_autocomplete == true
 			@__autocomplete = "on"
@@ -600,7 +600,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if not CUI.isArray(blocks)
 			return false
 		for b, idx in blocks
-			CUI.util.assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)
+			CUI.util.assert(b instanceof CUI.InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of CUI.InputBlock.", blocks: blocks, block: b)
 			b.idx = idx
 		blocks
 
@@ -637,7 +637,7 @@ class CUI.Input extends CUI.DataFieldInput
 				match_str = "-"+match_str
 				match_start -= 1
 
-			blocks.push new NumberInputBlock
+			blocks.push new CUI.NumberInputBlock
 				start: match_start
 				string: match_str
 		# CUI.debug "blocks", blocks
@@ -646,10 +646,10 @@ class CUI.Input extends CUI.DataFieldInput
 	__overwriteBlocks: (v) ->
 		blocks = []
 		for i in [0...v.length]
-			blocks.push new InputBlock
+			blocks.push new CUI.InputBlock
 				start: i
 				string: v.substr(i, 1)
-		blocks.push new InputBlock
+		blocks.push new CUI.InputBlock
 			start: v.length
 			string: ""
 		blocks

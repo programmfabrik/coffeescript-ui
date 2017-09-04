@@ -46,7 +46,7 @@ class CUI.FormModal extends CUI.FormPopover
 
 		opts.pane.footer_right = btn
 
-		mod = new Modal(opts)
+		mod = new CUI.Modal(opts)
 
 		if @__orig_set_data
 			CUI.Events.listen
@@ -122,7 +122,7 @@ class CUI.FormModal extends CUI.FormPopover
 		pop_opts.element = null
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", opts: pop_opts)
 		pop_opts.class += " cui-form-modal-modal"
 		pop_opts
 

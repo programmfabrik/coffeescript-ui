@@ -224,7 +224,7 @@ class CUI.XHR extends CUI.Element
 
 		# CUI.debug "URL:", @__xhr.responseType, @__url, @_form, @_json_data
 		if @_form
-			data = new FormData()
+			data = new CUI.FormData()
 			for k, v of @_form
 				data.append(k, v)
 			send_data = data

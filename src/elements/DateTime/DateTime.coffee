@@ -21,10 +21,10 @@ class CUI.DateTime extends CUI.Input
 	initOpts: ->
 		super()
 
-		if DateTime.__locale
-			locale = DateTime.__locale
+		if CUI.DateTime.__locale
+			locale = CUI.DateTime.__locale
 		else
-			for locale of DateTimeFormats
+			for locale of CUI.DateTimeFormats
 				break
 
 		@addOpts
@@ -32,7 +32,7 @@ class CUI.DateTime extends CUI.Input
 				mandatory: true
 				default: locale
 				check: (v) ->
-					CUI.isArray(DateTimeFormats[v]?.formats)
+					CUI.isArray(CUI.DateTimeFormats[v]?.formats)
 			input_types:
 				check: Array
 			display_type:
@@ -60,8 +60,8 @@ class CUI.DateTime extends CUI.Input
 	init: ->
 		@__regexpMatcher = @regexpMatcher()
 
-		@__input_formats_known = DateTimeFormats[@_locale].formats
-		@__locale_format = DateTimeFormats[@_locale]
+		@__input_formats_known = CUI.DateTimeFormats[@_locale].formats
+		@__locale_format = CUI.DateTimeFormats[@_locale]
 
 		@__input_formats = []
 		if not @_input_types?.length
@@ -73,7 +73,7 @@ class CUI.DateTime extends CUI.Input
 					if f.type == type
 						@__input_formats.push(f)
 						found = true
-				CUI.util.assert(found, "new DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
+				CUI.util.assert(found, "new CUI.DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
 		@__default_format = @__input_formats[0]
 		for format in @__input_formats
 			if format.clock == false
@@ -140,7 +140,7 @@ class CUI.DateTime extends CUI.Input
 		, "header_right")
 
 		# @__timezone_display = tmpl.map.timezone_display
-		# @__timeZone = new Select
+		# @__timeZone = new CUI.Select
 		# 	data: CUI.tz_data
 		# 	name: "tz"
 		# 	mark_changed: false
@@ -284,7 +284,7 @@ class CUI.DateTime extends CUI.Input
 		# @append(@__status = $div("cui-date-time-status"), "center")
 
 	format: (_s, type="display", output_type=null) ->
-		CUI.util.assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
+		CUI.util.assert(type in CUI.DateTime.formatTypes, "CUI.DateTime.format", "type must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
 
 		if moment.isMoment(_s)
 			mom = _s
@@ -302,10 +302,10 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			formats_tried = []
 			for format in @__input_formats_known
-				for k in DateTime.formatTypes
+				for k in CUI.DateTime.formatTypes
 					formats_tried.push(format[k])
 
-			console.warn("DateTime.format: Moment '#{s}' is invalid. Tried formats:", formats_tried)
+			console.warn("CUI.DateTime.format: Moment '#{s}' is invalid. Tried formats:", formats_tried)
 			return null
 
 		output_format = null
@@ -314,7 +314,7 @@ class CUI.DateTime extends CUI.Input
 				output_format = f
 				break
 
-		CUI.util.assert(output_format, "DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
+		CUI.util.assert(output_format, "CUI.DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
 		# CUI.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
 
@@ -371,7 +371,7 @@ class CUI.DateTime extends CUI.Input
 		value = @getValue()
 		corrected_value = @parseValue(value, "store")
 		if corrected_value and corrected_value != value
-			CUI.warn("DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
+			CUI.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
 			@__data[@_name] = corrected_value
 		@
 
@@ -419,7 +419,7 @@ class CUI.DateTime extends CUI.Input
 				continue
 
 			if idx % 2 == 0
-				blocks.push new DateTimeInputBlock
+				blocks.push new CUI.DateTimeInputBlock
 					start: pos
 					string: m
 					datetime: v
@@ -462,12 +462,12 @@ class CUI.DateTime extends CUI.Input
 				digits.push(static: ":")
 
 		# CUI.debug digits
-		@__digiDisplay = new DigiDisplay(digits: digits)
+		@__digiDisplay = new CUI.DigiDisplay(digits: digits)
 
 
 	openPopover: (btn) ->
 		@initDateTimePicker()
-		@__popover = new Popover
+		@__popover = new CUI.Popover
 			element: btn
 			handle_focus: false
 			onHide: =>
@@ -585,7 +585,7 @@ class CUI.DateTime extends CUI.Input
 
 		opts = []
 		for tz, idx in @__tz_data
-			if not mom and tz.name != DateTimeFormats["de-DE"].timezone
+			if not mom and tz.name != CUI.DateTimeFormats["de-DE"].timezone
 				continue
 
 			opts.push
@@ -638,8 +638,8 @@ class CUI.DateTime extends CUI.Input
 			null
 
 	__parseFormat: (f, s) ->
-		for k in DateTime.formatTypes
-			CUI.util.assert(f[k], "DateTime.__parseFormat", ".#{k} must be set", format: f)
+		for k in CUI.DateTime.formatTypes
+			CUI.util.assert(f[k], "CUI.DateTime.__parseFormat", ".#{k} must be set", format: f)
 			mom = moment(s, f[k], true) # true the input format
 			if mom.isValid()
 				return mom
@@ -694,7 +694,7 @@ class CUI.DateTime extends CUI.Input
 			@__current_moment = mom.clone()
 			@setInputFromMoment()
 
-		console.info("DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
+		console.info("CUI.DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
 
 		@markDay()
 		@
@@ -728,7 +728,7 @@ class CUI.DateTime extends CUI.Input
 			else
 				""+n
 
-		date_sel = new Select(
+		date_sel = new CUI.Select(
 			name: "date"
 			data: data
 			group: "date"
@@ -744,7 +744,7 @@ class CUI.DateTime extends CUI.Input
 				opts
 		).start()
 
-		month_sel = new Select(
+		month_sel = new CUI.Select(
 			name: "month"
 			data: data
 			group: "date"
@@ -760,7 +760,7 @@ class CUI.DateTime extends CUI.Input
 				opts
 		).start()
 
-		year_sel = new Select(
+		year_sel = new CUI.Select(
 			name: "year"
 			data: data
 			group: "date"
@@ -786,7 +786,7 @@ class CUI.DateTime extends CUI.Input
 			else
 				emtpy_clock_opts = []
 
-			hour_sel = new Select(
+			hour_sel = new CUI.Select(
 				name: "hour"
 				data: data
 				group: "time"
@@ -817,7 +817,7 @@ class CUI.DateTime extends CUI.Input
 
 			# minute_colon = new CUI.Label(text: ":")
 
-			minute_sel = new Select(
+			minute_sel = new CUI.Select(
 				class: "cui-date-time-60-select"
 				name: "minute"
 				group: "time"
@@ -841,7 +841,7 @@ class CUI.DateTime extends CUI.Input
 			).start()
 
 			if am_pm
-				am_pm_sel = new Select(
+				am_pm_sel = new CUI.Select(
 					class: "cui-date-time-am-pm-select"
 					name: "am_pm"
 					group: "time"
@@ -865,7 +865,7 @@ class CUI.DateTime extends CUI.Input
 
 			# second_colon = new CUI.Label(text: ":")
 
-			# second_sel = new Select(
+			# second_sel = new CUI.Select(
 			# 	class: "cui-date-time-60-select"
 			# 	name: "second"
 			# 	data: data
@@ -932,7 +932,7 @@ class CUI.DateTime extends CUI.Input
 						,
 							new CUI.Label
 								text: month_opts[data.month].textContent
-							# new Select(
+							# new CUI.Select(
 							# 	attr:
 							# 		cursor: "month"
 							# 	class: "cui-date-time-month-select"
@@ -973,7 +973,7 @@ class CUI.DateTime extends CUI.Input
 							mom.subtract(1, "years")
 							@drawDate(mom)
 					,
-						new NumberInput(
+						new CUI.NumberInput(
 							attr:
 								cursor: "year"
 							max: @_max_year
@@ -1136,7 +1136,7 @@ class CUI.DateTime extends CUI.Input
 	# 	@__gridTable = $table("cui-date-time-day-grid")
 	# 	@__hour_minute.empty().append(@__gridTable)
 
-	# 	Events.listen
+	# 	CUI.Events.listen
 	# 		node: @__hour_minute
 	# 		type: "click"
 	# 		call: (ev) =>
@@ -1290,14 +1290,14 @@ class CUI.DateTime extends CUI.Input
 	@formatTypes: ["store", "input", "display", "display_short"]
 
 	@setLocale: (locale) ->
-		CUI.util.assert(DateTimeFormats[locale], "DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: DateTimeFormats)
-		DateTime.__locale = locale
+		CUI.util.assert(CUI.DateTimeFormats[locale], "CUI.DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: CUI.DateTimeFormats)
+		CUI.DateTime.__locale = locale
 
 	# format the date_str
 	# input_type "display_short", "display", "store", "input"
 	# output_type "date_time", "date", "date_time_secons", "year_month",v "year"
 	@format: (datestr_or_moment, type, output_type) ->
-		dt = new DateTime()
+		dt = new CUI.DateTime()
 
 		str = dt.format(datestr_or_moment, type, output_type)
 		# CUI.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
@@ -1307,7 +1307,7 @@ class CUI.DateTime extends CUI.Input
 		if not opts.hasOwnProperty("input_types")
 			opts.input_types = null
 
-		dt = new DateTime(opts)
+		dt = new CUI.DateTime(opts)
 		mom = dt.parseValue(datestr_or_moment)
 
 		if not mom.isValid()
@@ -1318,7 +1318,7 @@ class CUI.DateTime extends CUI.Input
 	@toMoment: (datestr) ->
 		if CUI.util.isEmpty(datestr)
 			return null
-		dt = new DateTime(input_types: null)
+		dt = new CUI.DateTime(input_types: null)
 		dt.parse(datestr)
 
 # Date.prototype.getWeek = (us=false) ->

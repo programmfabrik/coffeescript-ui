@@ -17,9 +17,9 @@ class CUI.LayerPane extends CUI.Layer
 			pane:
 				mandatory: true
 				default:
-					new SimplePane()
+					new CUI.SimplePane()
 				check: (v) ->
-					v instanceof Pane or CUI.isPlainObject(v)
+					v instanceof CUI.Pane or CUI.isPlainObject(v)
 
 	getPane: ->
 		@__pane
@@ -30,7 +30,7 @@ class CUI.LayerPane extends CUI.Layer
 			# 	if not pane.hasOwnProperty(k)
 			# 		pane[k] = true
 
-			@__pane = new SimplePane(pane)
+			@__pane = new CUI.SimplePane(pane)
 		else
 			@__pane = pane
 

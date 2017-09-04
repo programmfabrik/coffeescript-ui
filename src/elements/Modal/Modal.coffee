@@ -12,12 +12,12 @@ class CUI.Modal extends CUI.LayerPane
 	@defaults:
 		cancel_tooltip: text: "Close Dialog"
 
-	#Construct a new Modal.
+	#Construct a new CUI.Modal.
 	#
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		@__addHeaderButton("fill_screen_button", Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip))
+		@__addHeaderButton("fill_screen_button", CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip))
 
 		@__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
@@ -66,7 +66,7 @@ class CUI.Modal extends CUI.LayerPane
 
 		CUI.util.assert(btn instanceof CUI.Button, "Modal.__addHeaderButton", "Button needs to be instance of Button", btn: btn)
 
-		CUI.util.assert(@__pane instanceof SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
+		CUI.util.assert(@__pane instanceof CUI.SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
 
 		@append(btn, "header_right")
 		@

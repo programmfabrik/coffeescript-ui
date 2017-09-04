@@ -41,7 +41,7 @@ class CUI.FormPopover extends CUI.Form
 		@__fields_is_func = CUI.isFunction(@_fields)
 
 		if @__fields_is_func
-			CUI.util.assert(@_data_not_for_others != true, "new FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
+			CUI.util.assert(@_data_not_for_others != true, "new CUI.FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
 
 	init: ->
 		if not @__fields_is_func
@@ -85,7 +85,7 @@ class CUI.FormPopover extends CUI.Form
 
 	# this is for the button container
 	initTemplate: ->
-		vl = new VerticalLayout
+		vl = new CUI.VerticalLayout
 			maximize: false
 			bottom: {}
 
@@ -182,7 +182,7 @@ class CUI.FormPopover extends CUI.Form
 
 	# overwritten in FormModal
 	initPopover: (opts) ->
-		new Popover(opts)
+		new CUI.Popover(opts)
 
 	getPopoverOpts: ->
 		pop_opts = CUI.util.copyObject(@_popover, true)
@@ -197,7 +197,7 @@ class CUI.FormPopover extends CUI.Form
 		if not pop_opts.pane
 			pop_opts.pane = {}
 
-		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
 
 		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""

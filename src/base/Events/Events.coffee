@@ -12,21 +12,21 @@
 # @example How to listen to and trigger events
 #
 # Event.listen
-#     type: [ "click", "dblclick" ]
+#   	type: [ "click", "dblclick" ]
 #     node: jQuery Element or CUI DOM Element
 #     call: (ev, info) ->
 #     selector: jQuery like path selector to filter events
 #
 #
 # Event.trigger
-#     type: "content-resize"
+#   	type: "content-resize"
 #     node: jQuery Element or CUI DOM Element
 #     bubble: set to yes if event should bubble up or down the DOM tree
 #     info: info Map, contains eventsEvent for DOMElements and
 #           the internal "waits" queue
 #
 # Event.ignore
-#     type: "<type>"
+#   	type: "<type>"
 #     node: jQuery or DOM Element
 #
 #
@@ -36,9 +36,9 @@
 #
 # All events need to be registered or a warning is output at the console.
 #
-# Events.registerEvent(options)
+# CUI.Events.registerEvent(options)
 #    options are the default options for the event
-#    type: <type>
+#  	type: <type>
 #    bubble: true|false
 #
 #
@@ -97,7 +97,7 @@ class CUI.Events extends CUI.Element
 
 	# wait for an event on a node
 	@wait: (_opts) ->
-		opts = CUI.Element.readOpts _opts, "Events.wait",
+		opts = CUI.Element.readOpts _opts, "CUI.Events.wait",
 			# event type
 			type:
 				mandatory: true
@@ -215,7 +215,7 @@ class CUI.Events extends CUI.Element
 				triggerListeners.push(listener)
 
 			# if triggerListeners.length == 0
-			# 	CUI.warn("Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
+			# 	CUI.warn("CUI.Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
 
 			triggerListeners.sort (a, b) ->
 				CUI.util.compareIndex(a.getDepthFromLastMatchedEvent(), b.getDepthFromLastMatchedEvent())
@@ -257,11 +257,11 @@ class CUI.Events extends CUI.Element
 
 
 	@ignore: (filter, doc=document) -> # , debug=false) ->
-		# console.debug "Events.ignore", filter, filter.instance?.getUniqueId?()
+		# console.debug "CUI.Events.ignore", filter, filter.instance?.getUniqueId?()
 		for listener in @__getActiveListeners(doc)
 			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
 				# if debug
-				# 	console.debug("Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
+				# 	console.debug("CUI.Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
 				listener.destroy()
 		@
 
@@ -285,7 +285,7 @@ class CUI.Events extends CUI.Element
 	# returns event info by type
 	@getEventType: (type) ->
 		ev = @__eventRegistry[type]
-		CUI.util.assert(ev, "Unknown event type \"#{type}\". Use Events.registerEvent to register this type.")
+		CUI.util.assert(ev, "Unknown event type \"#{type}\". Use CUI.Events.registerEvent to register this type.")
 		return ev
 
 	@getEventTypeAliases: (type) ->

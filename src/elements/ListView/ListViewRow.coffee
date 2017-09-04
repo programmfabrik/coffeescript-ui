@@ -46,20 +46,20 @@ class CUI.ListViewRow extends CUI.Element
 		@listView = null
 
 	addColumn: (column) ->
-		CUI.util.assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof CUI.ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.push(column)
 		column.setRow(@)
 		@
 
 	setColumn: (idx, column) ->
-		CUI.util.assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof CUI.ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns[idx] = column
 		column.setRow(@)
 		@
 
 
 	prependColumn: (column) ->
-		CUI.util.assert(column instanceof ListViewColumn,"ListViewRow.prependColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof CUI.ListViewColumn,"ListViewRow.prependColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.splice(0,0,column)
 		column.setRow(@)
 		@
@@ -161,7 +161,7 @@ class CUI.ListViewRow extends CUI.Element
 		if not @listView
 			return
 
-		@listView.rowAddClass(@row_i, ListViewRow.defaults.selected_class)
+		@listView.rowAddClass(@row_i, CUI.ListViewRow.defaults.selected_class)
 
 		@listView._onSelect? ev,
 			originalEvent: ev
@@ -177,7 +177,7 @@ class CUI.ListViewRow extends CUI.Element
 		if not @selected
 			return CUI.rejectedPromise()
 
-		@listView?.rowRemoveClass(@row_i, ListViewRow.defaults.selected_class)
+		@listView?.rowRemoveClass(@row_i, CUI.ListViewRow.defaults.selected_class)
 		@selected = false
 
 		@listView?._onDeselect? ev,

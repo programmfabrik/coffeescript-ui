@@ -29,7 +29,7 @@ class CUI.Icon extends CUI.Element
 
 		if @_tooltip
 			@_tooltip.element = @DOM
-			new Tooltip(@_tooltip)
+			new CUI.Tooltip(@_tooltip)
 
 	initOpts: ->
 		super()

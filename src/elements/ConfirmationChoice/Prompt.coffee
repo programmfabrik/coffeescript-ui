@@ -30,13 +30,13 @@ class CUI.Prompt extends CUI.Confirm
 		@__input = null
 
 		@__data = input: @_default+""
-		@_content = new Form
+		@_content = new CUI.Form
 			fields: [
-				type: Output
+				type: CUI.Output
 				multiline: true
 				text: text
 			,
-				type: Input
+				type: CUI.Input
 				name: "input"
 				placeholder: @_placeholder
 				data: @__data

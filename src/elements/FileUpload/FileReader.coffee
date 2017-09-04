@@ -14,7 +14,7 @@ class CUI.FileReader extends CUI.FileUpload
 		CUI.Element::readOpts.call(@)
 
 	getUploadFileClass: ->
-		FileReaderFile
+		CUI.FileReaderFile
 
 	uploadFile: (file) ->
 		file.upload(file)

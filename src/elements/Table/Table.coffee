@@ -52,7 +52,7 @@ class CUI.Table extends CUI.DOM
 				return false
 			for _v, idx in v
 				if check
-					v[idx] = CUI.Element.readOpts(_v, "new Table", check)
+					v[idx] = CUI.Element.readOpts(_v, "new CUI.Table", check)
 				else if not CUI.isPlainObject(_v)
 					return false
 			true
@@ -97,7 +97,7 @@ class CUI.Table extends CUI.DOM
 	readOpts: ->
 		super()
 		if @_key_value
-			CUI.util.assert(not @_columns and not @opts.hasOwnProperty("header"), "new Table", "opts.key_value cannot be set together with opts.header or opts.columns.", opts: @opts)
+			CUI.util.assert(not @_columns and not @opts.hasOwnProperty("header"), "new CUI.Table", "opts.key_value cannot be set together with opts.header or opts.columns.", opts: @opts)
 			@_header = false
 			@__columns = [
 				name: "key"

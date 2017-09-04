@@ -104,7 +104,7 @@ class CUI.Tooltip extends CUI.LayerPane
 
 		super()
 
-		CUI.util.assert(not (@_on_click and @_on_hover), "new Tooltip", "opts.on_click and opts.on_hover cannot be used together.", opts: @opts)
+		CUI.util.assert(not (@_on_click and @_on_hover), "new CUI.Tooltip", "opts.on_click and opts.on_hover cannot be used together.", opts: @opts)
 		@
 
 	@current: null # global to store currently shown tooltip

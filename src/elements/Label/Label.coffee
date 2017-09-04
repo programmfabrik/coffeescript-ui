@@ -48,7 +48,7 @@ class CUI.Label extends CUI.DOM
 		if @_tooltip
 			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element ?= @DOM
-			@__tooltip = new Tooltip(tt_opts)
+			@__tooltip = new CUI.Tooltip(tt_opts)
 
 		if @_multiline
 			@addClass("cui-label-multiline")

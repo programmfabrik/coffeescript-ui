@@ -63,21 +63,21 @@ class CUI.SimplePane extends CUI.Pane
 	readOpts: ->
 		# Skip readOpts from Pane as it sets defaults in top and bottom
 		# which is not allowed in our initOpts
-		VerticalLayout::readOpts.call(@)
+		CUI.VerticalLayout::readOpts.call(@)
 
 		if @_title
-			CUI.util.assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
+			CUI.util.assert(not @_header_left, "new CUI.SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
 
 		if @forceHeader() or
 			not (CUI.util.isUndef(@_header_left) and CUI.util.isUndef(@_header_center) and CUI.util.isUndef(@_header_right)) or
 			@_title
-				@__pane_header = new PaneHeader()
+				@__pane_header = new CUI.PaneHeader()
 
 				@_top =
 					content: @__pane_header
 
 		if @forceFooter() or not (CUI.util.isUndef(@_footer_left) and CUI.util.isUndef(@_footer_right))
-			@__pane_footer = new PaneFooter()
+			@__pane_footer = new CUI.PaneFooter()
 
 			@_bottom =
 				content: @__pane_footer

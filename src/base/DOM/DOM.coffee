@@ -23,7 +23,7 @@ class CUI.DOM extends CUI.Element
 				check: "PlainObject"
 
 	registerTemplate: (template, add_default_classes=true) ->
-		CUI.util.assert(template instanceof Template, "#{CUI.util.getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{CUI.util.getObjectClass(template)}.", template: template)
+		CUI.util.assert(template instanceof CUI.Template, "#{CUI.util.getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{CUI.util.getObjectClass(template)}.", template: template)
 		if @__template
 			CUI.warn("#{CUI.util.getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
 			@__template.destroy()
@@ -138,7 +138,7 @@ class CUI.DOM extends CUI.Element
 		else if @DOM
 			CUI.DOM.remove(@DOM)
 		@
-		# Events.ignore(node: @DOM)
+		# CUI.Events.ignore(node: @DOM)
 
 	@setElement: (element, inst) ->
 		CUI.DOM.data(element, "element", inst)

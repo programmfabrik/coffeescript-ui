@@ -16,7 +16,7 @@ class CUI.ListViewColumnRowMoveHandle extends CUI.ListViewColumn
 			return
 
 		if CUI.ListView.defaults.row_move_handle_tooltip
-			new Tooltip
+			new CUI.Tooltip
 				text: CUI.ListView.defaults.row_move_handle_tooltip
 				element: cell
 

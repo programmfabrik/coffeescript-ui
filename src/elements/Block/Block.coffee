@@ -66,7 +66,7 @@ class CUI.Block extends CUI.DOM
 
 	readOpts: ->
 		super()
-		CUI.util.assert(not ((@_text or @_icon) and @_header), "new Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
+		CUI.util.assert(not ((@_text or @_icon) and @_header), "new CUI.Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
 		@
 
 	getTemplateName: ->

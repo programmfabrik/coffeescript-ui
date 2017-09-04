@@ -55,7 +55,7 @@ class CUI.DataField extends CUI.DOM
 		if @_tooltip and (@_tooltip.text or @_tooltip.content)
 			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element = @DOM
-			@__tooltip = new Tooltip(tt_opts)
+			@__tooltip = new CUI.Tooltip(tt_opts)
 
 		@__opacity = 1
 		@_onInit?(@)
@@ -204,7 +204,7 @@ class CUI.DataField extends CUI.DOM
 	getRootForm: ->
 		if @__form
 			@__form.getRootForm()
-		else if @ instanceof Form
+		else if @ instanceof CUI.Form
 			@
 		else
 			null

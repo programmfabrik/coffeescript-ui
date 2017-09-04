@@ -55,24 +55,24 @@ class CUI.SimpleForm extends CUI.DataField
 
 		if CUI.__ng__
 			if @__horizontal and @__horizontal != true
-				console.error("new Form: opts.horizontal not supported in CUI.Form 'ng'.", opts: @opts)
+				console.error("new CUI.Form: opts.horizontal not supported in CUI.Form 'ng'.", opts: @opts)
 			if @_header
-				console.error("new Form: opts.header not supported in CUI.Form 'ng'.", opts: @opts)
+				console.error("new CUI.Form: opts.header not supported in CUI.Form 'ng'.", opts: @opts)
 
 
 		if @_form?.checkbox
 			# the form has a checkbox (for form context)
-			CUI.util.assert(CUI.isPlainObject(@_form.checkbox, "new Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
-			CUI.util.assert(@_name, "new Form", "opts.form.checkbox requires opts.name to be set.", opts: @opts)
-			CUI.util.assert(not @_form.checkbox.data, "new Form", "opts.form.checkbox cannot have 'data' set.", opts: @opts)
-			CUI.util.assert(not @_form.checkbox.name, "new Form", "opts.form.checkbox cannot have 'name' set.", opts: @opts)
+			CUI.util.assert(CUI.isPlainObject(@_form.checkbox, "new CUI.Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
+			CUI.util.assert(@_name, "new CUI.Form", "opts.form.checkbox requires opts.name to be set.", opts: @opts)
+			CUI.util.assert(not @_form.checkbox.data, "new CUI.Form", "opts.form.checkbox cannot have 'data' set.", opts: @opts)
+			CUI.util.assert(not @_form.checkbox.name, "new CUI.Form", "opts.form.checkbox cannot have 'name' set.", opts: @opts)
 
 			cb_opts = CUI.util.copyObject(@_form.checkbox, true)
 
 			cb_opts.data = @__checkbox_data = checkbox: false
 			cb_opts.name = "checkbox"
 
-			@__checkbox = new Checkbox(cb_opts).start()
+			@__checkbox = new CUI.Checkbox(cb_opts).start()
 			CUI.Events.listen
 				type: "data-changed"
 				node: @__checkbox
@@ -234,7 +234,7 @@ class CUI.SimpleForm extends CUI.DataField
 			if f._form?.label
 				return true
 
-			if f instanceof Form
+			if f instanceof CUI.Form
 				if f.renderAsBlock()
 					return true
 
@@ -292,7 +292,7 @@ class CUI.SimpleForm extends CUI.DataField
 			CUI.DOM.addClass(container, @_class_table)
 
 		get_append = (v, info=@) =>
-			if v instanceof Form
+			if v instanceof CUI.Form
 				v.DOM
 			else if CUI.isPlainObject(v) # assume a label constructor
 				# new CUI.Label(v).DOM
@@ -378,7 +378,7 @@ class CUI.SimpleForm extends CUI.DataField
 				if level > 3
 					level = 3
 
-				if field instanceof Form
+				if field instanceof CUI.Form
 					cb = field.getCheckbox()
 				else
 					cb = null
@@ -458,11 +458,11 @@ class CUI.SimpleForm extends CUI.DataField
 			if name
 				classes.push("cui-form-field-name--"+name)
 
-			if field instanceof Select
+			if field instanceof CUI.Select
 				classes.push("cui-form-field-type--select")
-			else if field instanceof Checkbox
+			else if field instanceof CUI.Checkbox
 				classes.push("cui-form-field-type--checkbox")
-			else if field instanceof Input
+			else if field instanceof CUI.Input
 				classes.push("cui-form-field-type--input")
 
 			if table_has_left
@@ -630,7 +630,7 @@ class CUI.SimpleForm extends CUI.DataField
 			if _field.getName() == name
 				found_fields.push(_field)
 
-			if _field instanceof Form
+			if _field instanceof CUI.Form
 				_field.getFieldsByName(name, found_fields)
 
 

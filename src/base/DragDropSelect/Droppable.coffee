@@ -51,10 +51,10 @@ class CUI.Droppable extends CUI.DragDropSelect
 	readOpts: ->
 		super()
 		if @_targetHelper
-			CUI.util.assert(@_selector, "new Droppable", "opts.targetHelper needs opts.selector to be set.", opts: @opts)
+			CUI.util.assert(@_selector, "new CUI.Droppable", "opts.targetHelper needs opts.selector to be set.", opts: @opts)
 
 		if @_dropHelper
-			CUI.util.assert(not @_selector or @_targetHelper, "new Droppable", "opts.dropHelper does only work without opts.selector or with opts.targetHelper and opts.selector. needs opts.selector to be set.", opts: @opts)
+			CUI.util.assert(not @_selector or @_targetHelper, "new CUI.Droppable", "opts.dropHelper does only work without opts.selector or with opts.targetHelper and opts.selector. needs opts.selector to be set.", opts: @opts)
 			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper")
 
 		return

@@ -152,13 +152,13 @@ class CUI.Layout extends CUI.DOM
 			# 	event.stopPropagation()
 			# 	Layout.setAbsolute(@DOM)
 
-			# Events.listen
+			# CUI.Events.listen
 			# 	type: "viewport-resize"
 			# 	node: @DOM
 			# 	instance: @
 			# 	call: _call
 
-			# Events.listen
+			# CUI.Events.listen
 			# 	type: "content-resize"
 			# 	node: @DOM
 			# 	instance: @
@@ -256,7 +256,7 @@ class CUI.Layout extends CUI.DOM
 		if not @__buttonbars[key]
 			@__buttonbars[key] = new CUI.Buttonbar()
 			# CUI.info("#{@__cls}: automatically generated Buttonbar for #{key}.")
-			DOM::append.call(@, @__buttonbars[key], key)
+			CUI.DOM::append.call(@, @__buttonbars[key], key)
 		@__buttonbars[key]
 
 
@@ -279,12 +279,12 @@ class CUI.Layout extends CUI.DOM
 				if v instanceof CUI.Button
 					@getButtonbar(key).addButton(v)
 				else
-					DOM::append.call(@, _v, key)
+					CUI.DOM::append.call(@, _v, key)
 
 		else if value instanceof CUI.Button
 			@getButtonbar(key).addButton(value)
 		else
-			return DOM::append.call(@, value, key)
+			return CUI.DOM::append.call(@, value, key)
 
 
 	# @param [jQuery, Function, Array, ...] value the value to append to the layer
@@ -392,7 +392,7 @@ class CUI.Layout extends CUI.DOM
 					css[key] = value
 				CUI.DOM.setStyle(child, css)
 
-		# Events.trigger
+		# CUI.Events.trigger
 		# 	type: "viewport-resize"
 		# 	exclude_self: true
 		# 	node: layout

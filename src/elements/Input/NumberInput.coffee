@@ -236,7 +236,7 @@ class CUI.NumberInput extends CUI.Input
 			_v = v+""
 			opts.decimals = _v.length - _v.indexOf(".") - 1
 
-		ni = new NumberInput(opts)
+		ni = new CUI.NumberInput(opts)
 		ni.start()
 
 		if not ni.checkInput(v+"")

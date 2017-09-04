@@ -292,7 +292,7 @@ class CUI.FlexHandle extends CUI.Element
 			info:
 				FlexHandle: true
 
-# Events.trigger
+# CUI.Events.trigger
 # 	type: "viewport-resize"
 # 	node: @_element.parent()
 

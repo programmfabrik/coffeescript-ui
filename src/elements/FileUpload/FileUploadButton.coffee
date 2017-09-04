@@ -19,7 +19,7 @@ class CUI.FileUploadButton extends CUI.Button
 		@addOpts
 			fileUpload:
 				mandatory: true
-				check: FileUpload
+				check: CUI.FileUpload
 			multiple:
 				default: true
 				check: Boolean
