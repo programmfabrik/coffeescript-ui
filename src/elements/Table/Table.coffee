@@ -22,20 +22,20 @@ class CUI.Table extends CUI.DOM
 		if @_flex
 			cls.push("cui-table--flex")
 
-		@__table = $table(cls.join(" "))
+		@__table = CUI.DOM.table(cls.join(" "))
 
 		@registerDOMElement(@__table, false)
 
 		if @_header
 			# add header column
-			header = $tr("cui-table-header")
+			header = CUI.DOM.tr("cui-table-header")
 			for col in @__columns
 				if col.text
 					txt = col.text
 				else
 					txt = col.name
 
-				th = $th("cui-table-th "+col.__class)
+				th = CUI.DOM.th("cui-table-th "+col.__class)
 				th.textContent = txt
 				header.appendChild(th)
 
@@ -120,9 +120,9 @@ class CUI.Table extends CUI.DOM
 		@
 
 	addRow: (row) ->
-		tr = $tr("cui-table-row")
+		tr = CUI.DOM.tr("cui-table-row")
 		for col in @__columns
-			td = $td("cui-table-td"+col.__class)
+			td = CUI.DOM.td("cui-table-td"+col.__class)
 			value = row[col.name]
 			if CUI.util.isString(value)
 				CUI.DOM.addClass(td, "cui-td--text-content")

@@ -133,7 +133,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		if @__inputs
 			return
 
-		@__multiInputDiv = $div("cui-multi-input-container")
+		@__multiInputDiv = CUI.DOM.div("cui-multi-input-container")
 
 		CUI.Events.listen
 			type: "multi-input-control-update"

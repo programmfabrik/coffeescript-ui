@@ -156,7 +156,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						return
 
 					if item.divider
-						divider = $div("cui-menu-divider cui-item-list-divider", role: "menu-item")
+						divider = CUI.DOM.div("cui-menu-divider cui-item-list-divider", role: "menu-item")
 						# DOM.data(divider[0], "itemListIdx", idx)
 						@__body.append(divider)
 						return

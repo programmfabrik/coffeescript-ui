@@ -189,7 +189,9 @@ class CUI.Label extends CUI.DOM
 			@setContent(CUI.DOM.htmlToNodes(marked(@__currentText, @__markdown_opts)))
 			@addClass("cui-label-markdown")
 		else
-			@setContent($text(@__currentText))
+			@setContent(
+
+				(@__currentText))
 			@removeClass("cui-label-markdown")
 		@
 

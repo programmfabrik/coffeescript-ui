@@ -1637,95 +1637,95 @@ class CUI.DOM extends CUI.Element
 		node = CUI.DOM.element(tagName, attrs)
 		node
 
-	@$div: (cls, attrs) ->
+	@div: (cls, attrs) ->
 		CUI.DOM.$element("div", cls, attrs)
 
-	@$video: (cls, attrs) ->
+	@video: (cls, attrs) ->
 		CUI.DOM.$element("video", cls, attrs)
 
-	@$audio: (cls, attrs) ->
+	@audio: (cls, attrs) ->
 		CUI.DOM.$element("audio", cls, attrs)
 
-	@$source: (cls, attrs) ->
+	@source: (cls, attrs) ->
 		CUI.DOM.$element("source", cls, attrs)
 
-	@$span: (cls, attrs) ->
+	@span: (cls, attrs) ->
 		CUI.DOM.$element("span", cls, attrs)
 
-	@$table: (cls, attrs) ->
+	@table: (cls, attrs) ->
 		CUI.DOM.$element("table", cls, attrs, true)
 
-	@$img: (cls, attrs) ->
+	@img: (cls, attrs) ->
 		CUI.DOM.$element("img", cls, attrs)
 
-	@$tr: (cls, attrs) ->
+	@tr: (cls, attrs) ->
 		CUI.DOM.$element("tr", cls, attrs, true)
 
-	@$th: (cls, attrs) ->
+	@th: (cls, attrs) ->
 		CUI.DOM.$element("th", cls, attrs, true)
 
-	@$td: (cls, attrs) ->
+	@td: (cls, attrs) ->
 		CUI.DOM.$element("td", cls, attrs, true)
 
-	@$i: (cls, attrs) ->
+	@i: (cls, attrs) ->
 		CUI.DOM.$element("i", cls, attrs)
 
-	@$p: (cls, attrs) ->
+	@p: (cls, attrs) ->
 		CUI.DOM.$element("p", cls, attrs)
 
-	@$pre: (cls, attrs) ->
+	@pre: (cls, attrs) ->
 		CUI.DOM.$element("pre", cls, attrs)
 
-	@$ul: (cls, attrs) ->
+	@ul: (cls, attrs) ->
 		CUI.DOM.$element("ul", cls, attrs)
 
-	@$a: (cls, attrs) ->
+	@a: (cls, attrs) ->
 		CUI.DOM.$element("a", cls, attrs)
 
-	@$b: (cls, attrs) ->
+	@b: (cls, attrs) ->
 		CUI.DOM.$element("b", cls, attrs)
 
-	@$li: (cls, attrs) ->
+	@li: (cls, attrs) ->
 		CUI.DOM.$element("li", cls, attrs)
 
-	@$label: (cls, attrs) ->
+	@label: (cls, attrs) ->
 		CUI.DOM.$element("label", cls, attrs)
 
-	@$h1: (cls, attrs) ->
+	@h1: (cls, attrs) ->
 		CUI.DOM.$element("h1", cls, attrs)
 
-	@$h2: (cls, attrs) ->
+	@h2: (cls, attrs) ->
 		CUI.DOM.$element("h2", cls, attrs)
 
-	@$h3: (cls, attrs) ->
+	@h3: (cls, attrs) ->
 		CUI.DOM.$element("h3", cls, attrs)
 
-	@$h4: (cls, attrs) ->
+	@h4: (cls, attrs) ->
 		CUI.DOM.$element("h4", cls, attrs)
 
-	@$h5: (cls, attrs) ->
+	@h5: (cls, attrs) ->
 		CUI.DOM.$element("h5", cls, attrs)
 
-	@$h6: (cls, attrs) ->
+	@h6: (cls, attrs) ->
 		CUI.DOM.$element("h6", cls, attrs)
 
-	@$text: (text, cls, attrs) ->
-		s = CUI.DOM.$span(cls, attrs)
+	@text: (text, cls, attrs) ->
+		s = CUI.DOM.span(cls, attrs)
 		s.textContent = text
 		s
 
-	@$textEmpty: (text) ->
-		s = CUI.DOM.$span("italic")
+	@textEmpty: (text) ->
+		s = CUI.DOM.span("italic")
 		s.textContent = text
 		s
 
-	@$table_one_row: ->
-		CUI.DOM.append(CUI.DOM.$table(), CUI.DOM.$tr_one_row.apply(@, arguments))
+	@table_one_row: ->
+		CUI.DOM.append(CUI.DOM.table(), CUI.DOM.tr_one_row.apply(@, arguments))
 
-	@$tr_one_row: ->
-		tr = CUI.DOM.$tr()
+	@tr_one_row: ->
+		tr = CUI.DOM.tr()
 		append = (__a) ->
-			td = CUI.DOM.$td()
+			td = CUI.DOM.td()
 			CUI.DOM.append(tr, td)
 
 			add_content = (___a) =>

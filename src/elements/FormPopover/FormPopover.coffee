@@ -138,7 +138,7 @@ class CUI.FormPopover extends CUI.Form
 			render = @_renderDisplayButton(@, @__data)
 		else if not @__data
 			text = "Data not set."
-			display = $textEmpty(text)
+			display = CUI.DOM.textEmpty(text)
 		else
 			display = text = ""
 			# CUI.debug("display", display,@__formPopover.getGroupData())

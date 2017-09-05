@@ -215,14 +215,14 @@ class CUI.Input extends CUI.DataFieldInput
 
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
-			@__input = $element "textarea", "cui-textarea",
+			@__input = CUI.DOM.$element "textarea", "cui-textarea",
 				placeholder: @getPlaceholder()
 				tabindex: "0"
 				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 		else
-			@__input = $element "input", "cui-input",
+			@__input = CUI.DOM.$element "input", "cui-input",
 				type: input_type
 				size: 1
 				placeholder: @getPlaceholder()
@@ -493,7 +493,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if @__contentSize
 			return
 
-		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
+		@__contentSize = CUI.DOM.$element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
 
 		CUI.DOM.append(document.body, @__contentSize)
 
@@ -818,9 +818,9 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.debug "initShadowInput", @getUniqueId()
 		#
 		if @_textarea
-			@__shadow = $element("textarea", "cui-input-shadow")
+			@__shadow = CUI.DOM.$element("textarea", "cui-input-shadow")
 		else
-			@__shadow = $element("input", "cui-input-shadow", type: "text")
+			@__shadow = CUI.DOM.$element("input", "cui-input-shadow", type: "text")
 
 		@__shadow.setAttribute("tabindex", "-1")
 		@__shadow.setAttribute("autocomplete", "off")

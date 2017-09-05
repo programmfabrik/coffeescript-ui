@@ -44,7 +44,7 @@ class CUI.Lasso extends CUI.Draggable
 		if not CUI.DOM.isInDOM(@element)
 			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
 
-		CUI.globalDrag.lasso = $div("cui-lasso")
+		CUI.globalDrag.lasso = CUI.DOM.div("cui-lasso")
 		# CUI.debug "create lasso", @_lassoClass
 		#
 		CUI.DOM.append(@element, CUI.globalDrag.lasso)

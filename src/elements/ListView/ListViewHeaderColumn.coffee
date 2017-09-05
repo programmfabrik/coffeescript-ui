@@ -63,7 +63,7 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 
 	render: ->
 		if @_spacer
-			arr = [ $div("cui-tree-node-spacer") ]
+			arr = [ CUI.DOM.div("cui-tree-node-spacer") ]
 		else
 			arr = []
 

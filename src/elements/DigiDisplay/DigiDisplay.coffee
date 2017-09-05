@@ -45,17 +45,17 @@ class CUI.DigiDisplay extends CUI.DOM
 		@
 
 	createMarkup: ->
-		@__displayDiv = $div("cui-digi-display")
+		@__displayDiv = CUI.DOM.div("cui-digi-display")
 
 		for digit, digit_idx in @_digits
 			if digit.static
-				CUI.DOM.append(@__displayDiv, container = $div("cui-digi-display-static cui-digi-display-#{digit_idx}"))
-				CUI.DOM.addClass(CUI.DOM.append(container, $text(digit.static)), digit.class)
+				CUI.DOM.append(@__displayDiv, container = CUI.DOM.div("cui-digi-display-static cui-digi-display-#{digit_idx}"))
+				CUI.DOM.addClass(CUI.DOM.append(container, CUI.DOM.text(digit.static)), digit.class)
 				if digit.attr
 					container.getAttribute(digit.attr)
 				continue
 			digit.__regexp = new RegExp(digit.mask)
-			CUI.DOM.append(@__displayDiv, container = $div("cui-digi-display-container cui-digi-display-#{digit_idx}"))
+			CUI.DOM.append(@__displayDiv, container = CUI.DOM.div("cui-digi-display-container cui-digi-display-#{digit_idx}"))
 			CUI.DOM.addClass(container, digit.class)
 			if digit.attr
 				container.getAttribute(digit.attr)
@@ -63,7 +63,7 @@ class CUI.DigiDisplay extends CUI.DOM
 			@__digitsMap[digit_idx] = map: (map = {})
 
 			# for the "unknown character
-			fc = $div("cui-digi-display-digit")
+			fc = CUI.DOM.div("cui-digi-display-digit")
 			fc.innerHTML = "&nbsp;"
 			CUI.DOM.append(container, fc)
 			@__digitsMap[digit_idx].first_div = fc
@@ -72,11 +72,11 @@ class CUI.DigiDisplay extends CUI.DOM
 			for i in [32..128]
 				if digit.__regexp.exec(c = String.fromCharCode(i))
 					if i == 32
-						div = $div("cui-digi-display-digit")
+						div = CUI.DOM.div("cui-digi-display-digit")
 						div.innerHTML = "&nbsp;"
 						CUI.DOM.append(container, div)
 					else
-						div = $div("cui-digi-display-digit")
+						div = CUI.DOM.div("cui-digi-display-digit")
 						div.textContent = c
 						CUI.DOM.append(container, div)
 					map[c] = idx

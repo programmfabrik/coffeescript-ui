@@ -870,7 +870,7 @@ class CUI.Button extends CUI.DOM
 		if CUI.util.isEmpty(@__txt)
 			@__txt = ''
 
-		span = $text(@__txt)
+		span = CUI.DOM.text(@__txt)
 		if not @__hasAriaLabel
 			span.id = "button-text-"+@getUniqueId()
 			@setAria("labelledby", span.id)

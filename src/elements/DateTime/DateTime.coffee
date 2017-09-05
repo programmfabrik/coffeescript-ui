@@ -281,7 +281,7 @@ class CUI.DateTime extends CUI.Input
 				@openPopover(btn)
 
 		@replace(btn, "right")
-		# @append(@__status = $div("cui-date-time-status"), "center")
+		# @append(@__status = CUI.DOM.div("cui-date-time-status"), "center")
 
 	format: (_s, type="display", output_type=null) ->
 		CUI.util.assert(type in CUI.DateTime.formatTypes, "CUI.DateTime.format", "type must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
@@ -591,7 +591,7 @@ class CUI.DateTime extends CUI.Input
 			opts.push
 				text: tz.print_name
 				right: if mom
-								 span = $span("cui-timezone-offset").setAttribute("title", tz.geo)
+								 span = CUI.DOM.span("cui-timezone-offset").setAttribute("title", tz.geo)
 								 span.textContent = mom.tz(tz.name).format("zZ")
 								 span
 							 else
@@ -1020,7 +1020,7 @@ class CUI.DateTime extends CUI.Input
 		]) # .utc()
 
 
-		month_table = $table("cui-date-time-date")
+		month_table = CUI.DOM.table("cui-date-time-date")
 
 		CUI.Events.listen
 			node: month_table
@@ -1043,17 +1043,17 @@ class CUI.DateTime extends CUI.Input
 				return
 
 		# Wk, Mo, Tu, We, Th...
-		tr = $tr("cui-date-time-month-header")
+		tr = CUI.DOM.tr("cui-date-time-month-header")
 		CUI.DOM.append(month_table, tr)
 
-		td_func = $th
+		td_func = CUI.DOM.th
 
-		$div("cui-date-time-dow").textContent = @__locale_format.tab_week
-		CUI.DOM.append(tr, CUI.DOM.append(td_func("cui-date-time-week-title"), $div("cui-date-time-dow")))
+		CUI.DOM.div("cui-date-time-dow").textContent = @__locale_format.tab_week
+		CUI.DOM.append(tr, CUI.DOM.append(td_func("cui-date-time-week-title"), CUI.DOM.div("cui-date-time-dow")))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
-			$div("cui-date-time-dow").textContent = weekday
-			day_div = $div("cui-date-time-dow")
+			CUI.DOM.div("cui-date-time-dow").textContent = weekday
+			day_div = CUI.DOM.div("cui-date-time-dow")
 			CUI.DOM.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
 			CUI.DOM.append(tr, CUI.DOM.append(td_func(), day_div))
 
@@ -1070,13 +1070,13 @@ class CUI.DateTime extends CUI.Input
 				if weeks ==6
 					# if ((curr_m > m and date.getUTCFullYear() == year) or date.getUTCFullYear() > year)
 					break
-				tr = $tr()
+				tr = CUI.DOM.tr()
 				CUI.DOM.append(month_table, tr)
 				week_no = mom.week() #@start_day==0)
-				CUI.DOM.append(tr, CUI.DOM.append($td("cui-date-time-week"), $text(week_no)))
+				CUI.DOM.append(tr, CUI.DOM.append(CUI.DOM.td("cui-date-time-week"), CUI.DOM.text(week_no)))
 				weeks++
 
-			div_type = $td
+			div_type = CUI.DOM.td
 
 			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-"))
 			day_div.textContent = day_no
@@ -1133,7 +1133,7 @@ class CUI.DateTime extends CUI.Input
 	# 		@markTime()
 	# 		return
 
-	# 	@__gridTable = $table("cui-date-time-day-grid")
+	# 	@__gridTable = CUI.DOM.table("cui-date-time-day-grid")
 	# 	@__hour_minute.empty().append(@__gridTable)
 
 	# 	CUI.Events.listen
@@ -1193,59 +1193,59 @@ class CUI.DateTime extends CUI.Input
 
 	# 			return
 
-	# 	#$tr().appendTo(table).append(
-	# 	#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Hour"))
+	# 	#CUI.DOM.tr().appendTo(table).append(
+	# 	#	CUI.DOM.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.DOM.text("Hour"))
 	# 	#)
 	# 	if not @__input_formats[0].clock_am_pm
 	# 		for hour in [0..23]
 	# 			if hour % 6 == 0
-	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 				tr = CUI.DOM.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
-	# 				td = $td("cui-date-time-grid-hour")
+	# 				td = CUI.DOM.td("cui-date-time-grid-hour")
 	# 				.setAttribute("hour", hour)
-	# 				.append($text(hour))
+	# 				.append(CUI.DOM.text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
 	# 		tr.addClass("cui-date-time-grid-row-last")
 	# 	else
 	# 		for hour in [1..12]
 	# 			if (hour-1) % 6 == 0
-	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 				tr = CUI.DOM.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
-	# 				td = $td("cui-date-time-grid-hour")
+	# 				td = CUI.DOM.td("cui-date-time-grid-hour")
 	# 				.setAttribute("hour", hour)
-	# 				.append($text(hour))
+	# 				.append(CUI.DOM.text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
 	# 		tr.addClass("cui-date-time-grid-row-last")
 	# 		# ----------------------
-	# 		tr = $tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
+	# 		tr = CUI.DOM.tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
 	# 		for am_pm in ["AM","PM"]
 	# 			tr.append(
-	# 				td = $td("cui-date-time-grid-am-pm")
+	# 				td = CUI.DOM.td("cui-date-time-grid-am-pm")
 	# 				.setAttribute("am_pm", am_pm)
-	# 				.append($text(am_pm))
+	# 				.append(CUI.DOM.text(am_pm))
 	# 			)
 	# 			DOM.data(td[0], "am_pm", am_pm)
-	# 		tr.append($td("",colspan:4))
+	# 		tr.append(CUI.DOM.td("",colspan:4))
 
 	# 		tr.addClass("cui-date-time-grid-row-last")
 
-	# 	#$tr().appendTo(table).append(
-	# 	#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Minute"))
+	# 	#CUI.DOM.tr().appendTo(table).append(
+	# 	#	CUI.DOM.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.DOM.text("Minute"))
 	# 	#)
 
 	# 	for minute in [0..59] by 5
 	# 		if minute % 6 == 0
-	# 			tr = $tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
+	# 			tr = CUI.DOM.tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
 	# 		if minute < 10
 	# 			_minute = ":0"+minute
 	# 		else
 	# 			_minute = ":"+minute
 	# 		tr.append(
-	# 			td = $td("cui-date-time-grid-minute")
+	# 			td = CUI.DOM.td("cui-date-time-grid-minute")
 	# 			.setAttribute("minute", minute)
-	# 			.append($text(_minute))
+	# 			.append(CUI.DOM.text(_minute))
 	# 		)
 
 	# 		DOM.data(td[0], "minute", minute)

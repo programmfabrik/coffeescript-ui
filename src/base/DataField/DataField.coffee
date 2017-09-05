@@ -605,7 +605,7 @@ class CUI.DataField extends CUI.DOM
 		if @_mark_changed == false or @_check_changed == false
 			return
 		@checkChanged()
-		$div(CUI.DataField.changed_marker_css_class)
+		CUI.DOM.div(CUI.DataField.changed_marker_css_class)
 
 	destroy: ->
 		@remove(true)

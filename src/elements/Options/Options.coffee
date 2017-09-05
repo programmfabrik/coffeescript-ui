@@ -331,7 +331,7 @@ class CUI.Options extends CUI.DataField
 				# if @_sortable
 				# 	if not opt.form
 				# 		opt.form = {}
-				# 	opt.form.label = $div("cui-options-sortable-drag-handle cui-drag-handle-row")
+				# 	opt.form.label = CUI.DOM.div("cui-options-sortable-drag-handle cui-drag-handle-row")
 
 				opt.radio = @__radio
 				if @_radio and @_min_checked == 0

@@ -52,7 +52,7 @@ class CUI.FileUploadFile extends CUI.Element
 		if @__imgDiv
 			return @__imgDiv
 
-		img = $img()[0]
+		img = CUI.DOM.img()[0]
 		img.src = window.URL.createObjectURL(@_file)
 		img.onload = (ev) =>
 			if img.width < img.height
@@ -60,9 +60,9 @@ class CUI.FileUploadFile extends CUI.Element
 				@__imgDiv.addClass("portrait")
 			window.URL.revokeObjectURL(img.src)
 
-		div = $div("cui-file-upload-file-img")
+		div = CUI.DOM.div("cui-file-upload-file-img")
 		CUI.DOM.addClass(div, "landscape")
-		@__imgDiv = CUI.DOM.append(div, CUI.DOM.append($div(), img))
+		@__imgDiv = CUI.DOM.append(div, CUI.DOM.append(CUI.DOM.div(), img))
 
 	getFile: ->
 		@_file

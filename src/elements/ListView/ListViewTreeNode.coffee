@@ -787,12 +787,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.util.assert(not @isRoot(), "ListViewTreeNode.render", "Unable to render root node.")
 		@removeColumns()
 
-		element = $div("cui-tree-node level-#{@level()}")
+		element = CUI.DOM.div("cui-tree-node level-#{@level()}")
 		@__is_rendered = true
 
 		# Space for the left side
 		for i in [1...@level()] by 1
-			CUI.DOM.append(element, $div("cui-tree-node-spacer"))
+			CUI.DOM.append(element, CUI.DOM.div("cui-tree-node-spacer"))
 
 		# Handle before content
 		cls = ["cui-tree-node-handle"]
@@ -810,7 +810,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @children?.length == 0
 			cls.push("cui-tree-node-no-children")
 
-		@__handleDiv = $div(cls.join(" "))
+		@__handleDiv = CUI.DOM.div(cls.join(" "))
 		if @__handleIcon
 			CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 
@@ -826,7 +826,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# so we call them last
 
 		# append Content
-		contentDiv = $div("cui-tree-node-content")
+		contentDiv = CUI.DOM.div("cui-tree-node-content")
 		content = @renderContent()
 		if CUI.isArray(content)
 			for con in content

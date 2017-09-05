@@ -56,7 +56,7 @@ class CUI.Layer extends CUI.DOM
 					@__backdrop_crop = @__backdrop.DOM
 					@setBackdropContent(body_clone)
 				else
-					@__backdrop_crop = $div("cui-layer-backdrop-body-clone")
+					@__backdrop_crop = CUI.DOM.div("cui-layer-backdrop-body-clone")
 					@__backdrop_crop.appendChild(body_clone)
 					@setBackdropContent(@__backdrop_crop)
 

@@ -15,7 +15,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		CUI.DOM.data(@_element, "stickyHeaderControl", @)
 
-		@__control = $div("cui-sticky-header-control")
+		@__control = CUI.DOM.div("cui-sticky-header-control")
 
 		CUI.Events.listen
 			instance: @

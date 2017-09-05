@@ -257,7 +257,7 @@ class CUI.DocumentBrowser extends CUI.Element
 					hidden: false
 			center:
 				class: "cui-document-browser-center"
-				content: $text(@_url)
+				content: CUI.DOM.text(@_url)
 
 		@__layout
 

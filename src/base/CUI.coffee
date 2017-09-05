@@ -853,10 +853,10 @@ class CUI
 
 	@windowCompat:
 		start: ->
-			for prop, func of CUI.DOM
-				if prop.startsWith('$')
-					window[prop] = func
-					console.info("CUI.DOM."+prop+" -> window."+prop)
+#			for prop, func of CUI.DOM
+#				if prop.startsWith('$')
+#					window[prop] = func
+#					console.info("CUI.DOM."+prop+" -> window."+prop)
 
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 	@browser: (->
