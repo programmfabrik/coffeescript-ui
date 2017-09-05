@@ -61,7 +61,7 @@ class CUI.Element
 
 	# create a new instance from the same opts
 	copy: ->
-		new window[@__cls](@opts)
+		new CUI[@__cls](@opts)
 
 	# returns the merged opt
 	mergeOpt: (key, check_map={}) ->
