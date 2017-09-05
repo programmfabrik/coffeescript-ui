@@ -103,13 +103,13 @@ class CUI.Tab extends CUI.DOM
 				check: Boolean
 
 	loadContent: ->
-		Panel::loadContent.call(@)
+		CUI.Panel::loadContent.call(@)
 
 	setContent: (content) ->
-		Panel::setContent.call(@, content, false)
+		CUI.Panel::setContent.call(@, content, false)
 
 	appendContent: (content) ->
-		Panel::appendContent.call(@, content, false)
+		CUI.Panel::appendContent.call(@, content, false)
 
 	getText: ->
 		@_text

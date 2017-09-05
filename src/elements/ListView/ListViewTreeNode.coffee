@@ -144,7 +144,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			our_idx = @getChildIdx()
 			filtered_nodes.push(@)
 			father = @getFather()
-			ListViewTreeNode::remove.call(@, true, false)  # keep children array, no de-select
+			CUI.ListViewTreeNode::remove.call(@, true, false)  # keep children array, no de-select
 			for c, idx in save_children
 				father.children.splice(our_idx+idx, 0, c)
 				c.setFather(father)
