@@ -109,7 +109,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		lines.push(padding.join("")+@dumpString())
 		if @children
 			for c in @children
-				c.CUI.util.dump(lines, depth+1)
+				c.dump(lines, depth+1)
 
 		if depth==0
 			return "\n"+lines.join("\n")+"\n"
