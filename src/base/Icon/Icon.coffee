@@ -11,7 +11,7 @@ class CUI.Icon extends CUI.Element
 		svg_cls = ""
 		cls = ""
 		if @_icon
-			cls = @icon_map()[@_icon]
+			cls = CUI.Icon.icon_map[@_icon]
 			if CUI.util.isEmpty(cls)
 				cls = @_icon
 
@@ -52,13 +52,13 @@ class CUI.Icon extends CUI.Element
 	show: ->
 		CUI.DOM.showElement(@DOM)
 
-	icon_map: ->
+	@icon_map:
 		crop: "fa-crop"
 		fullscreen: "fa-arrows-alt"
-		trash: if CUI.__ng__ then "svg-trash" else "fa-trash-o"
+		trash: "svg-trash"
 		failed: "fa-warning"
 		no_right: "fa-slack"
-		file: if CUI.__ng__ then "fa-file" else "fa-file-o"
+		file: "fa-file"
 		filter: "fa-filter"
 		refresh: "fa-refresh"
 		reset: "svg-reset"
@@ -71,7 +71,7 @@ class CUI.Icon extends CUI.Element
 		show: "fa-question"
 		help: "fa-question"
 		question: "fa-question"
-		settings: if CUI.__ng__ then "fa-cog" else "fa-cogs"
+		settings: "fa-cog"
 		download: "fa-download"
 		export: "fa-download"
 		spinner: "svg-spinner cui-spin-stepped"
@@ -114,9 +114,9 @@ class CUI.Icon extends CUI.Element
 		warning: "fa-warning"
 		legal: "fa-legal"
 		cloud: "fa-cloud"
-		left: if CUI.__ng__ then "fa-angle-left" else "fa-chevron-left"
-		right: if CUI.__ng__ then "fa-angle-right" else "fa-chevron-right"
-		dive: if CUI.__ng__ then "fa-angle-right" else "fa-chevron-right"
+		left: "fa-angle-left"
+		right: "fa-angle-right"
+		dive: "fa-angle-right"
 		zoom_in: "fa-search-plus"
 		zoom_out: "fa-search-minus"
 		resize_small: "fa-compress"
