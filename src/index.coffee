@@ -1,10 +1,5 @@
 require("font-awesome-webpack");
 
-# FIXME.
-window.marked = require('marked')
-window.moment = require('moment')
-#
-
 CUI = require('./base/CUI.coffee')
 
 require('./base/Common.coffee')
