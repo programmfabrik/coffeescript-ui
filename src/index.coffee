@@ -1,5 +1,10 @@
 require("font-awesome-webpack");
 
+# FIXME.
+window.marked = require('marked')
+window.moment = require('moment')
+#
+
 CUI = require('./base/CUI.coffee')
 
 require('./base/Common.coffee')
@@ -133,7 +138,6 @@ require('./elements/DocumentBrowser/SearchMatch.coffee')
 require('./elements/DocumentBrowser/SearchQuery.coffee')
 require('./elements/Slider/Slider.coffee')
 require('./base/CSVData.coffee')
-require('./base/windowCompat.coffee')
 
 require('./scss/themes/ng/main.scss')
 
