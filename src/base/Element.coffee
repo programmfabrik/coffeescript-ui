@@ -61,7 +61,8 @@ class CUI.Element
 
 	# create a new instance from the same opts
 	copy: ->
-		new CUI[@__cls](@opts)
+		clazz = CUI[@__cls]
+		if clazz then new clazz(@opts) else new window[@__cls](@opts)
 
 	# returns the merged opt
 	mergeOpt: (key, check_map={}) ->
