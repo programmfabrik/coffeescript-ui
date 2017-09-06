@@ -90,4 +90,4 @@ class CUI.Test.Test_MoveInArray extends CUI.Test
 			CUI.util.moveInArray(0, 4, a, true)
 			@eq(a, [1,2,3,4,0])
 
-CUI.Test.register(new CUI.Test.Test_CUI.util.moveInArray())
+CUI.Test.register(new CUI.Test.Test_.moveInArray())
