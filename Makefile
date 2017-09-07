@@ -1,14 +1,8 @@
-all: install build
-
-code: build
+all:
+	npm install
+	npm run build
 
 code_dev:
 	npm run build:dev
-
-install:
-	npm install
-
-build:
-	npm run build
 
 .PHONY: all
