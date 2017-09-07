@@ -2,7 +2,10 @@ all:
 	npm install
 	npm run build
 
-code_dev:
-	npm run build:dev
+watch:
+	npm run build:watch
+
+code:
+	npm run build:no-minify
 
 .PHONY: all
