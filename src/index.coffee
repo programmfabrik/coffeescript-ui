@@ -2,7 +2,8 @@ require("font-awesome-webpack");
 
 CUI = require('./base/CUI.coffee')
 
-require('./base/Utils.coffee')
+require('./base/util.coffee')
+require('./base/dom.coffee')
 require('./base/Deferred/Deferred.coffee')
 require('./base/Deferred/Promise.coffee')
 require('./base/Deferred/when.coffee')
@@ -28,7 +29,6 @@ require('./base/Events/WheelEvent.coffee')
 require('./base/Events/Events.coffee')
 require('./base/DragDropSelect/DragoverScrollEvent.coffee')
 require('./base/DOMElement/DOMElement.coffee')
-require('./base/DOM/DOM.coffee')
 require('./base/CSSLoader/CSSLoader.coffee')
 require('./base/Template/Template.coffee')
 require('./base/FlexHandle/FlexHandle.coffee')
