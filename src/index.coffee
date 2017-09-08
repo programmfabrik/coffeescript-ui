@@ -135,6 +135,4 @@ require('./elements/DocumentBrowser/SearchQuery.coffee')
 require('./elements/Slider/Slider.coffee')
 require('./base/CSVData.coffee')
 
-require('./scss/themes/ng/main.scss')
-
 module.exports = CUI
