@@ -2,7 +2,7 @@ require("font-awesome-webpack");
 
 CUI = require('./base/CUI.coffee')
 
-require('./base/Common.coffee')
+require('./base/Utils.coffee')
 require('./base/Deferred/Deferred.coffee')
 require('./base/Deferred/Promise.coffee')
 require('./base/Deferred/when.coffee')
