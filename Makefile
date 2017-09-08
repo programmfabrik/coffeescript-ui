@@ -8,4 +8,7 @@ watch:
 code:
 	npm run build:no-minify
 
-.PHONY: all
+wipe:
+	find . -name '*~' -or -name '#*#' | xargs rm -f
+
+.PHONY: all wipe code watch
