@@ -1,15 +1,25 @@
-# coffeescript-ui
-Coffeescript User Interface System (CUI)
+# Coffeescript User Interface System (CUI)
 
-# install
+## Install
 
     git clone https://github.com/programmfabrik/coffeescript-ui.git coffeescript-ui
     git submodule init
     git submodule update
-    make
+    
+    npm install
+    npm run build
 
-In **build** the needed files can be found after the "make".
+You will find a file called "cui.js" inside **public** folder.
 
-# online documentation
+### Install options
 
-[http://picshare.5.easydb.de/cui/demo/#Documentation](http://picshare.5.easydb.de/cui/demo/#Documentation)
+- No CSS: --env.noCss
+- Minify: --env.minify
+
+_Example:_
+
+**npm run build -- --env.minify --env.noCss**
+
+# Documentation
+
+Work in progress
