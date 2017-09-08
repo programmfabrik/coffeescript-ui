@@ -7,7 +7,7 @@
 
 CUI.Template.loadTemplateText(require('./DataField.html'));
 
-class CUI.DataField extends CUI.DOM
+class CUI.DataField extends CUI.DOMElement
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"
 

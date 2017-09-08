@@ -7,7 +7,7 @@
 
 CUI.Template.loadTemplateText(require('./Panel.html'));
 
-class CUI.Panel extends CUI.DOM
+class CUI.Panel extends CUI.DOMElement
 	constructor: (@opts={}) ->
 		super(@opts)
 		@panel = new CUI.Template

@@ -18,7 +18,7 @@
 CUI.Template.loadTemplateText(require('./Button.html'));
 CUI.Template.loadTemplateText(require('./Button_ng.html'));
 
-class CUI.Button extends CUI.DOM
+class CUI.Button extends CUI.DOMElement
 
 	@defaults:
 		confirm_ok: "Ok"

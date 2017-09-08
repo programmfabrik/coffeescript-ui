@@ -7,7 +7,7 @@
 
 CUI.Template.loadTemplateText(require('./Tab.html'));
 
-class CUI.Tab extends CUI.DOM
+class CUI.Tab extends CUI.DOMElement
 	constructor: (@opts={}) ->
 		super(@opts)
 

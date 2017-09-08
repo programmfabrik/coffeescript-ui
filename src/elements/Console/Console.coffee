@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Console extends CUI.DOM
+class CUI.Console extends CUI.DOMElement
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__console = CUI.DOM.element("DIV", class: "cui-console")

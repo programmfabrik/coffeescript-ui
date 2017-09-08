@@ -10,7 +10,7 @@ CUI.Template.loadTemplateText(require('./Label.html'));
 
 # @param [Object] options for {Label} creation
 # @option options [boolean] centered , label will be centered with css style 'position: absolute'.
-class CUI.Label extends CUI.DOM
+class CUI.Label extends CUI.DOMElement
 
 	@defaults:
 		manage_overflow:

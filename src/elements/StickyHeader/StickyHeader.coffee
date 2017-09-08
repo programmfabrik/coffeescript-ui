@@ -7,7 +7,7 @@
 
 CUI.Template.loadTemplateText(require('./StickyHeader.html'));
 
-class CUI.StickyHeader extends CUI.DOM
+class CUI.StickyHeader extends CUI.DOMElement
 	constructor: (@opts={}) ->
 		super(@opts)
 

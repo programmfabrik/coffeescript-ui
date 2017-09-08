@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Table extends CUI.DOM
+class CUI.Table extends CUI.DOMElement
 	constructor: (@opts={}) ->
 		super(@opts)
 

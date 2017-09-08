@@ -9,7 +9,7 @@
 # {VerticalLayout}, {BorderLayout}, {Toolbar}, {Pane}, etc.
 #
 # It features an automatic {Buttonbar} generation for all panes (see {Layout#append})
-class CUI.Layout extends CUI.DOM
+class CUI.Layout extends CUI.DOMElement
 
 	#Construct a new Layout.
 	#
@@ -256,7 +256,7 @@ class CUI.Layout extends CUI.DOM
 		if not @__buttonbars[key]
 			@__buttonbars[key] = new CUI.Buttonbar()
 			# CUI.info("#{@__cls}: automatically generated Buttonbar for #{key}.")
-			CUI.DOM::append.call(@, @__buttonbars[key], key)
+			CUI.DOMElement::append.call(@, @__buttonbars[key], key)
 		@__buttonbars[key]
 
 
@@ -279,12 +279,12 @@ class CUI.Layout extends CUI.DOM
 				if v instanceof CUI.Button
 					@getButtonbar(key).addButton(v)
 				else
-					CUI.DOM::append.call(@, _v, key)
+					CUI.DOMElement::append.call(@, _v, key)
 
 		else if value instanceof CUI.Button
 			@getButtonbar(key).addButton(value)
 		else
-			return CUI.DOM::append.call(@, value, key)
+			return CUI.DOMElement::append.call(@, value, key)
 
 
 	# @param [jQuery, Function, Array, ...] value the value to append to the layer

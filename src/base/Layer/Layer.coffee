@@ -12,7 +12,7 @@
 
 CUI.Template.loadTemplateText(require('./Layer.html'));
 
-class CUI.Layer extends CUI.DOM
+class CUI.Layer extends CUI.DOMElement
 
 	constructor: (@opts={}) ->
 		super(@opts)
