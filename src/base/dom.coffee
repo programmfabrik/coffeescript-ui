@@ -294,6 +294,10 @@ class CUI.dom
 
 		return node
 
+	@replace: (node, content) ->
+		@empty(node)
+		@append(node, content)
+
 	@prepend: (node, content) ->
 		@__append(node, content, false)
 
