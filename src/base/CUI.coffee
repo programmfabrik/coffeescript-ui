@@ -22,8 +22,6 @@ class CUI
 
 	@start: ->
 
-		@CSS = new CUI.CSSLoader()
-
 		trigger_viewport_resize = =>
 			console.info("CUI: trigger viewport resize.")
 			CUI.Events.trigger
@@ -34,7 +32,7 @@ class CUI
 			node: window
 			call: (ev, info) =>
 				console.info("CUI: caught window resize event.")
-				if CUI.__ng__ && !CUI.browser.ie
+				if !CUI.browser.ie
 					trigger_viewport_resize()
 				else
 					CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
