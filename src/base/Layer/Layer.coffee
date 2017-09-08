@@ -309,7 +309,7 @@ class CUI.Layer extends CUI.DOMElement
 	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
 	__setElement: (element) ->
-		if element instanceof CUI.DOM
+		if element instanceof CUI.DOMElement
 			@__element = element.getElementForLayer()
 		else if element.DOM
 			@__element = element.DOM
