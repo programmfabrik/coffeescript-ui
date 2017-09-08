@@ -138,7 +138,7 @@ class CUI.FormPopover extends CUI.Form
 			render = @_renderDisplayButton(@, @__data)
 		else if not @__data
 			text = "Data not set."
-			display = CUI.DOM.textEmpty(text)
+			display = CUI.dom.textEmpty(text)
 		else
 			display = text = ""
 			# CUI.debug("display", display,@__formPopover.getGroupData())
@@ -177,7 +177,7 @@ class CUI.FormPopover extends CUI.Form
 	renderTable: ->
 		@table = super()
 		# in "ng" design, table is the center element of layout
-		CUI.DOM.addClass(@getLayout().DOM, @__class)
+		CUI.dom.addClass(@getLayout().DOM, @__class)
 		@table
 
 	# overwritten in FormModal
@@ -217,9 +217,9 @@ class CUI.FormPopover extends CUI.Form
 		@unregisterTableListeners()
 		# console.error "resetTableAndFields", DOM.data(@getLayout().center())
 		if CUI.__ng__
-			CUI.DOM.empty(@table)
+			CUI.dom.empty(@table)
 		else
-			CUI.DOM.remove(@table)
+			CUI.dom.remove(@table)
 		@table = null
 		@__fields = null
 		@
@@ -278,7 +278,7 @@ class CUI.FormPopover extends CUI.Form
 
 	__closePopover: ->
 		@removeClass("focus")
-		CUI.DOM.remove(@getLayout().DOM)
+		CUI.dom.remove(@getLayout().DOM)
 		@__popover.destroy()
 		@__popover = null
 		@__triggerDataChanged()

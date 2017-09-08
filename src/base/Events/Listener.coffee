@@ -22,7 +22,7 @@ class CUI.Listener extends CUI.Element
 				default: document.documentElement
 				mandatory: true
 				check: (v) ->
-					CUI.DOM.isNode(v)
+					CUI.dom.isNode(v)
 
 			# call this function when event is triggered
 			call:
@@ -54,7 +54,7 @@ class CUI.Listener extends CUI.Element
 		else
 			@__types = @_type
 
-		@__node = CUI.DOM.getNode(@_node)
+		@__node = CUI.dom.getNode(@_node)
 
 		for type in @__types
 			ev = CUI.Events.getEventType(type)
@@ -69,7 +69,7 @@ class CUI.Listener extends CUI.Element
 		if @_selector
 			if CUI.util.isString(@_selector)
 				@__selector = (target, node) =>
-					CUI.DOM.closestUntil(target, @_selector, node)
+					CUI.dom.closestUntil(target, @_selector, node)
 			else
 				@__selector = @_selector
 
@@ -178,7 +178,7 @@ class CUI.Listener extends CUI.Element
 		#  	CUI.debug "listener", @getNode(), DOM.parents(@__node), ev_node
 
 		if event.isSink()
-			for parent in CUI.DOM.parents(@__node)
+			for parent in CUI.dom.parents(@__node)
 				@__depth++
 				if parent == ev_node
 					return @__depth
@@ -235,9 +235,9 @@ class CUI.Listener extends CUI.Element
 		filtered = false
 
 		if filter.node
-			filter_node = CUI.DOM.getNode(filter.node)
+			filter_node = CUI.dom.getNode(filter.node)
 			filtered = true
-			match = !!CUI.DOM.closestUntil(@__node, filter_node)
+			match = !!CUI.dom.closestUntil(@__node, filter_node)
 
 		if match and filter.type
 			filtered = true

@@ -36,11 +36,11 @@ class CUI.Tooltip extends CUI.LayerPane
 						@hideTimeout(null, ev)
 					return
 
-			CUI.DOM.addClass(@__element, "cui-dom-element-has-tooltip-on-hover")
+			CUI.dom.addClass(@__element, "cui-dom-element-has-tooltip-on-hover")
 			return
 
 		if @_on_click
-			CUI.DOM.addClass(@__element, "cui-dom-element-has-tooltip-on-click")
+			CUI.dom.addClass(@__element, "cui-dom-element-has-tooltip-on-click")
 
 			CUI.Events.listen
 				type: "click"
@@ -203,14 +203,14 @@ class CUI.Tooltip extends CUI.LayerPane
 
 	preventOverflow: ->
 		super()
-		CUI.DOM.width(@DOM, @__layer_dim._css_width)
+		CUI.dom.width(@DOM, @__layer_dim._css_width)
 
 	resetLayer: ->
 		super()
-		CUI.DOM.setStyleOne(@DOM, "max-width", @__viewport.width/2)
+		CUI.dom.setStyleOne(@DOM, "max-width", @__viewport.width/2)
 
 	destroy: ->
 		# console.error "destroying ", @getUniqueId()
 		CUI.Events.ignore(instance: @__dummyInst)
 		super()
-		CUI.DOM.removeClass(@__element, "cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")
+		CUI.dom.removeClass(@__element, "cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")

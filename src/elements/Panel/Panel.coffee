@@ -98,13 +98,13 @@ class CUI.Panel extends CUI.DOMElement
 		@
 
 	isClosed: ->
-		CUI.DOM.hasClass(@DOM, "cui-panel-closed")
+		CUI.dom.hasClass(@DOM, "cui-panel-closed")
 
 	isOpen: ->
 		!@isClosed()
 
 	close: (trigger = true) ->
-		CUI.DOM.addClass(@DOM, "cui-panel-closed")
+		CUI.dom.addClass(@DOM, "cui-panel-closed")
 
 		if trigger
 			CUI.Events.trigger
@@ -114,7 +114,7 @@ class CUI.Panel extends CUI.DOMElement
 
 	open: (trigger = true) ->
 		done = =>
-			CUI.DOM.removeClass(@DOM, "cui-panel-closed")
+			CUI.dom.removeClass(@DOM, "cui-panel-closed")
 			if trigger
 				CUI.Events.trigger
 					type: "content-resize"

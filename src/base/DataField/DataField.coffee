@@ -174,12 +174,12 @@ class CUI.DataField extends CUI.DOMElement
 		@
 
 	getFormDepth: ->
-		parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
+		parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))
 
 	setFormDepth: ->
 		# update depth
 		path = @getFormPath()
-		CUI.DOM.setAttribute(@DOM, "cui-form-depth", path.length)
+		CUI.dom.setAttribute(@DOM, "cui-form-depth", path.length)
 		@callOnOthers("setFormDepth")
 		path.length
 
@@ -605,7 +605,7 @@ class CUI.DataField extends CUI.DOMElement
 		if @_mark_changed == false or @_check_changed == false
 			return
 		@checkChanged()
-		CUI.DOM.div(CUI.DataField.changed_marker_css_class)
+		CUI.dom.div(CUI.DataField.changed_marker_css_class)
 
 	destroy: ->
 		@remove(true)

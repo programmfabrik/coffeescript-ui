@@ -31,7 +31,7 @@ class CUI.Event extends CUI.Element
 				default: document.documentElement
 				mandatory: true
 				check: (v) ->
-					CUI.DOM.isNode(v)
+					CUI.dom.isNode(v)
 
 			require_node_in_dom:
 				default: false
@@ -64,7 +64,7 @@ class CUI.Event extends CUI.Element
 	readOpts: ->
 		super()
 
-		@__node = CUI.DOM.getNode(@_node)
+		@__node = CUI.dom.getNode(@_node)
 
 		# if @_exclude_self
 		# 	CUI.util.assert(@_bubble != false, "new EventsEvent", "opts.exclude_self can only be set if bubble is set to true.", opts: @opts)
@@ -106,7 +106,7 @@ class CUI.Event extends CUI.Element
 		@__node
 
 	getElement: ->
-		CUI.DOM.data(@getNode(), "element")
+		CUI.dom.data(@getNode(), "element")
 
 	isBubble: ->
 		@_bubble
@@ -121,7 +121,7 @@ class CUI.Event extends CUI.Element
 		else if @__node == document or @__node == window
 			@__isInDOM  = true
 		else
-			@__isInDOM = CUI.DOM.isInDOM(@__node)
+			@__isInDOM = CUI.dom.isInDOM(@__node)
 
 	setNativeEvent: (NativeEvent) ->
 		# avoid checking instanceof, so external initializers like TestCafé work
@@ -232,7 +232,7 @@ class CUI.Event extends CUI.Element
 			# when sinking, we touch the node while sinking, so
 			# its ok to start with the parent to not trigger
 			# it twice
-			node = CUI.DOM.parent(@getNode())
+			node = CUI.dom.parent(@getNode())
 		else
 			# even is event.isBubble() === false
 			# we trigger here using the bubble mechanism,

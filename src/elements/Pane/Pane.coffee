@@ -86,9 +86,9 @@ class CUI.Pane extends CUI.VerticalLayout
 				inner: true
 
 		# measure DOM start position
-		rect = CUI.DOM.getRect(@DOM)
+		rect = CUI.dom.getRect(@DOM)
 
-		vp = CUI.DOM.getDimensions(window)
+		vp = CUI.dom.getDimensions(window)
 		@__placeholderTmpl = new CUI.Template
 			name: "pane-fill-screen-placeholder"
 
@@ -100,9 +100,9 @@ class CUI.Pane extends CUI.VerticalLayout
 		# for el in @DOM.parents(".cui-dom-element")
 		# 	inner.addClass(DOM.data(el, "element").getDOMElementClasses())
 
-		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)
-		dim_fill = CUI.DOM.getDimensions(@__fillscreenTmpl.DOM)
-		dim_fill_inner = CUI.DOM.getDimensions(inner)
+		CUI.dom.append(document.body, @__fillscreenTmpl.DOM)
+		dim_fill = CUI.dom.getDimensions(@__fillscreenTmpl.DOM)
+		dim_fill_inner = CUI.dom.getDimensions(inner)
 
 		# adjust start rect, so it matches the design of the
 		# fill div
@@ -119,25 +119,25 @@ class CUI.Pane extends CUI.VerticalLayout
 			bottom: vp.height - rect.bottom - adjust.bottom
 			right: vp.width - rect.right - adjust.right
 
-		CUI.DOM.remove(@__fillscreenTmpl.DOM)
+		CUI.dom.remove(@__fillscreenTmpl.DOM)
 
-		CUI.DOM.setStyle(@__fillscreenTmpl.DOM, start_rect)
-		CUI.DOM.append(document.body, @__fillscreenTmpl.DOM)
+		CUI.dom.setStyle(@__fillscreenTmpl.DOM, start_rect)
+		CUI.dom.append(document.body, @__fillscreenTmpl.DOM)
 
 		# copy keys over for the placeholder, so that it has the
 		# same dimension as the replaced div
 		# this assumes, that the placeholder dont uses padding, border
 		# or margin!
 
-		CUI.DOM.setStyle(@__placeholder,
-			width: CUI.DOM.getDimensions(@DOM).marginBoxWidth
-			height: CUI.DOM.getDimensions(@DOM).marginBoxHeight
+		CUI.dom.setStyle(@__placeholder,
+			width: CUI.dom.getDimensions(@DOM).marginBoxWidth
+			height: CUI.dom.getDimensions(@DOM).marginBoxHeight
 		)
 
 		for key_copy in ["position", "top", "left", "right", "bottom"]
-			CUI.DOM.setStyleOne(@__placeholder, key_copy, CUI.DOM.getComputedStyle(@DOM)[key_copy])
+			CUI.dom.setStyleOne(@__placeholder, key_copy, CUI.dom.getComputedStyle(@DOM)[key_copy])
 
-		CUI.DOM.insertAfter(@DOM, @__placeholder)
+		CUI.dom.insertAfter(@DOM, @__placeholder)
 
 		@__fillscreenTmpl.replace(@DOM, "inner")
 
@@ -185,7 +185,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			icon_active: new CUI.Icon(class: "fa-compress")
 			switch: true
 			onClick: (ev, btn) =>
-				CUI.DOM.data(CUI.DOM.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()
+				CUI.dom.data(CUI.dom.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()
 		}
 			opts[k] = v
 

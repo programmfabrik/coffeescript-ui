@@ -9,7 +9,7 @@ class CUI.Table extends CUI.DOMElement
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		# CUI.__ng__: when we only have "ng", use CUI.DOM.element instead
+		# CUI.__ng__: when we only have "ng", use CUI.dom.element instead
 
 		cls = []
 
@@ -22,20 +22,20 @@ class CUI.Table extends CUI.DOMElement
 		if @_flex
 			cls.push("cui-table--flex")
 
-		@__table = CUI.DOM.table(cls.join(" "))
+		@__table = CUI.dom.table(cls.join(" "))
 
 		@registerDOMElement(@__table, false)
 
 		if @_header
 			# add header column
-			header = CUI.DOM.tr("cui-table-header")
+			header = CUI.dom.tr("cui-table-header")
 			for col in @__columns
 				if col.text
 					txt = col.text
 				else
 					txt = col.name
 
-				th = CUI.DOM.th("cui-table-th "+col.__class)
+				th = CUI.dom.th("cui-table-th "+col.__class)
 				th.textContent = txt
 				header.appendChild(th)
 
@@ -120,15 +120,15 @@ class CUI.Table extends CUI.DOMElement
 		@
 
 	addRow: (row) ->
-		tr = CUI.DOM.tr("cui-table-row")
+		tr = CUI.dom.tr("cui-table-row")
 		for col in @__columns
-			td = CUI.DOM.td("cui-table-td"+col.__class)
+			td = CUI.dom.td("cui-table-td"+col.__class)
 			value = row[col.name]
 			if CUI.util.isString(value)
-				CUI.DOM.addClass(td, "cui-td--text-content")
+				CUI.dom.addClass(td, "cui-td--text-content")
 				td.textContent = value
 			else
-				CUI.DOM.append(td, value)
+				CUI.dom.append(td, value)
 			tr.appendChild(td)
 		@__table.appendChild(tr)
 		@

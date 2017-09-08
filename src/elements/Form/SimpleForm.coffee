@@ -189,17 +189,17 @@ class CUI.SimpleForm extends CUI.DataField
 	# this hides a form row, if all
 	# datafields in it are hidden
 	__setRowVisibility: (tr) ->
-		df = CUI.DOM.data(tr, "data-field")
+		df = CUI.dom.data(tr, "data-field")
 		if not df
 			console.warn("Form.__setRowVisibility", "data-field not found", df, @)
 			return
 
 		for _f in df.getAllDataFields()
 			if not _f.isHidden()
-				CUI.DOM.showElement(tr)
+				CUI.dom.showElement(tr)
 				return
 
-		CUI.DOM.hideElement(tr)
+		CUI.dom.hideElement(tr)
 		return
 
 	render: ->
@@ -210,9 +210,9 @@ class CUI.SimpleForm extends CUI.DataField
 		super()
 		@renderTable()
 		if not @hasContentForAppend() or @__checkbox?.getValue() == false
-			CUI.DOM.hideElement(@DOM)
+			CUI.dom.hideElement(@DOM)
 		else
-			CUI.DOM.showElement(@DOM)
+			CUI.dom.showElement(@DOM)
 		@
 
 	getTable: ->
@@ -257,7 +257,7 @@ class CUI.SimpleForm extends CUI.DataField
 			type: "form-check-row-visibility"
 			instance: @
 			call: (ev) =>
-				tr = CUI.DOM.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
+				tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
 				# console.error "check row visibility", ev, tr
 				ev.stopPropagation()
 				if tr
@@ -269,13 +269,13 @@ class CUI.SimpleForm extends CUI.DataField
 
 		append = (stuff, to) =>
 			if not to
-				CUI.DOM.append(container, stuff)
+				CUI.dom.append(container, stuff)
 			else if stuff
 				to.appendChild(stuff)
 			return
 
 		# getTable = =>
-		# 	table = jQuery(CUI.DOM.element("TABLE", class: "cui-form-table"))
+		# 	table = jQuery(CUI.dom.element("TABLE", class: "cui-form-table"))
 
 		# 	if @_class_table
 		# 		table.addClass(@_class_table)
@@ -289,7 +289,7 @@ class CUI.SimpleForm extends CUI.DataField
 		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
 		if @_class_table
-			CUI.DOM.addClass(container, @_class_table)
+			CUI.dom.addClass(container, @_class_table)
 
 		get_append = (v, info=@) =>
 			if v instanceof CUI.Form
@@ -315,7 +315,7 @@ class CUI.SimpleForm extends CUI.DataField
 				return
 
 			if CUI.util.isString(lbl)
-				label = CUI.DOM.element("label")
+				label = CUI.dom.element("label")
 				label.textContent = lbl
 				field.registerLabel(label)
 				return label
@@ -353,14 +353,14 @@ class CUI.SimpleForm extends CUI.DataField
 				add_hint_div = =>
 					if hint_div
 						return
-					hint_div = CUI.DOM.element("DIV", class: "cui-form-hint", "data-for-field": field.getUniqueId())
+					hint_div = CUI.dom.element("DIV", class: "cui-form-hint", "data-for-field": field.getUniqueId())
 
 				if not CUI.util.isNull(field._form.hint)
 					add_hint_div()
 					if CUI.util.isString(field._form.hint)
 						hint_div.appendChild(new CUI.Label(class: "cui-form-hint-label", icon: field._form.hint_icon, text: field._form.hint, multiline: true, markdown: true).DOM)
 					else
-						CUI.DOM.append(hint_div, field._form.hint)
+						CUI.dom.append(hint_div, field._form.hint)
 
 				if field._form.right
 					add_hint_div()
@@ -371,7 +371,7 @@ class CUI.SimpleForm extends CUI.DataField
 					append(get_append(field._form.right), hint_div)
 
 			if field.renderAsBlock()
-				level = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))+1
+				level = parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))+1
 				if not level
 					level = 1
 
@@ -390,11 +390,11 @@ class CUI.SimpleForm extends CUI.DataField
 							node: cb
 							call: =>
 								if cb.getValue()
-									CUI.DOM.addClass(blk.DOM, "cui-form-block--checkbox-checked")
-									CUI.DOM.showElement(field.DOM)
+									CUI.dom.addClass(blk.DOM, "cui-form-block--checkbox-checked")
+									CUI.dom.showElement(field.DOM)
 								else
-									CUI.DOM.removeClass(blk.DOM, "cui-form-block--checkbox-checked")
-									CUI.DOM.hideElement(field.DOM)
+									CUI.dom.removeClass(blk.DOM, "cui-form-block--checkbox-checked")
+									CUI.dom.hideElement(field.DOM)
 					left_side = cb
 				else
 					left_side = get_label(field)
@@ -411,17 +411,17 @@ class CUI.SimpleForm extends CUI.DataField
 					]
 
 				if cb
-					CUI.DOM.addClass(blk.DOM, "cui-form-block--has-checkbox")
+					CUI.dom.addClass(blk.DOM, "cui-form-block--has-checkbox")
 
 					if cb.getValue()
-						CUI.DOM.addClass(blk.DOM, "cui-form-block--checkbox-checked")
+						CUI.dom.addClass(blk.DOM, "cui-form-block--checkbox-checked")
 					else
-						CUI.DOM.removeClass(blk.DOM, "cui-form-block--checkbox-checked")
+						CUI.dom.removeClass(blk.DOM, "cui-form-block--checkbox-checked")
 
 				append(blk)
 
 				# used to set row visibility
-				CUI.DOM.data(blk.DOM, "data-field", field)
+				CUI.dom.data(blk.DOM, "data-field", field)
 
 				@__setRowVisibility(blk.DOM)
 
@@ -440,16 +440,16 @@ class CUI.SimpleForm extends CUI.DataField
 						break
 
 				if not has_left
-					table = CUI.DOM.element("DIV", class: "cui-form-container")
+					table = CUI.dom.element("DIV", class: "cui-form-container")
 					table_has_left = false
 				else
-					table = CUI.DOM.element("DIV", class: "cui-form-table")
+					table = CUI.dom.element("DIV", class: "cui-form-table")
 					table_has_left = true
 
 				if @__horizontal
-					CUI.DOM.addClass(table, "cui-form--horizontal")
+					CUI.dom.addClass(table, "cui-form--horizontal")
 
-				CUI.DOM.setAttribute(table, "cui-form-depth", form_depth)
+				CUI.dom.setAttribute(table, "cui-form-depth", form_depth)
 
 				append(table)
 
@@ -466,19 +466,19 @@ class CUI.SimpleForm extends CUI.DataField
 				classes.push("cui-form-field-type--input")
 
 			if table_has_left
-				tr = CUI.DOM.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
+				tr = CUI.dom.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
 
-				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-key")
+				td = CUI.dom.element("DIV", class: "cui-form-td cui-form-key")
 				append(get_label(field, true), td)
 				tr.appendChild(td)
 
-				td = CUI.DOM.element("DIV", class: "cui-form-td cui-form-value")
+				td = CUI.dom.element("DIV", class: "cui-form-td cui-form-value")
 				append(get_append(field), td)
 				append(hint_div, td)
 				tr.appendChild(td)
 
 				# used to set row visibility
-				CUI.DOM.data(tr, "data-field", field)
+				CUI.dom.data(tr, "data-field", field)
 
 				@__setRowVisibility(tr)
 
@@ -487,13 +487,13 @@ class CUI.SimpleForm extends CUI.DataField
 
 				table.appendChild(tr)
 			else
-				row = CUI.DOM.element("DIV", class: "cui-form-row "+classes.join(" "), "data-for-field": field.getUniqueId())
+				row = CUI.dom.element("DIV", class: "cui-form-row "+classes.join(" "), "data-for-field": field.getUniqueId())
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
 				append(hint_div, row)
 
 				# used to set row visibility
-				CUI.DOM.data(row, "data-field", field)
+				CUI.dom.data(row, "data-field", field)
 
 				if grid
 					row.setAttribute("data-cui-grid", grid)
@@ -589,12 +589,12 @@ class CUI.SimpleForm extends CUI.DataField
 			console.error("Form.updateHint:", field_name, "not found.")
 			return
 
-		els = CUI.DOM.matchSelector(@getLayout().DOM, ".cui-form-hint[data-for-field='"+field.getUniqueId()+"'] > .cui-form-hint-label")
+		els = CUI.dom.matchSelector(@getLayout().DOM, ".cui-form-hint[data-for-field='"+field.getUniqueId()+"'] > .cui-form-hint-label")
 		if els.length != 1
 			console.error("Form.updateHint:", field_name, "not found in DOM.")
 			return
 
-		CUI.DOM.data(els[0]).element.setText(hint)
+		CUI.dom.data(els[0]).element.setText(hint)
 
 		if trigger_resize
 			CUI.Events.trigger
@@ -604,14 +604,14 @@ class CUI.SimpleForm extends CUI.DataField
 
 	__setClassOnField: (field_name, cls, add_remove) ->
 		for field in @getFieldsByName(field_name)
-			row = CUI.DOM.closest(field.DOM, "[data-for-field]")
+			row = CUI.dom.closest(field.DOM, "[data-for-field]")
 			if not row
 				continue
 
 			if add_remove
-				CUI.DOM.addClass(row, cls)
+				CUI.dom.addClass(row, cls)
 			else
-				CUI.DOM.removeClass(row, cls)
+				CUI.dom.removeClass(row, cls)
 		@
 
 	addClassToField: (field_name, cls) ->
@@ -675,7 +675,7 @@ class CUI.SimpleForm extends CUI.DataField
 	destroy: ->
 		if @table
 			@unregisterTableListeners()
-			CUI.DOM.remove(@table)
+			CUI.dom.remove(@table)
 			@table = null
 		super()
 

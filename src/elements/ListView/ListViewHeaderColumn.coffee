@@ -51,19 +51,19 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 		if coldef == "fixed"
 			return @__element
 
-		move_handle = CUI.DOM.element("DIV", class: "cui-lv-col-resize-handle")
+		move_handle = CUI.dom.element("DIV", class: "cui-lv-col-resize-handle")
 
 		new CUI.ListViewColResize
 			element: move_handle
 			row: @getRow()
 			column: @
 
-		CUI.DOM.append(@__element, move_handle)
+		CUI.dom.append(@__element, move_handle)
 		@__element
 
 	render: ->
 		if @_spacer
-			arr = [ CUI.DOM.div("cui-tree-node-spacer") ]
+			arr = [ CUI.dom.div("cui-tree-node-spacer") ]
 		else
 			arr = []
 

@@ -38,9 +38,9 @@ class CUI.DocumentBrowser.NodeMatch extends CUI.Element
 		lbl = new CUI.Label
 			class: "cui-document-browser-search-match--title"
 			multiline: true
-			content: CUI.DOM.htmlToNodes(titlePath.join("<span class='cui-document-browser-node-match-hierarchy'>"+new CUI.Icon(icon: "right").DOM.outerHTML+"</span>"))
+			content: CUI.dom.htmlToNodes(titlePath.join("<span class='cui-document-browser-node-match-hierarchy'>"+new CUI.Icon(icon: "right").DOM.outerHTML+"</span>"))
 
-		CUI.DOM.setAttribute(lbl.DOM, "tabindex", 0)
+		CUI.dom.setAttribute(lbl.DOM, "tabindex", 0)
 
 		CUI.Events.listen
 			type: "focus"
@@ -52,11 +52,11 @@ class CUI.DocumentBrowser.NodeMatch extends CUI.Element
 		arr = [ lbl ]
 
 		if @_text_matches
-			ul = CUI.DOM.element("UL")
+			ul = CUI.dom.element("UL")
 			arr.push(ul)
 			for text_match in @_text_matches
 				html = text_match.getHighlighted(true)
-				li = CUI.DOM.element("LI", title: text_match.getString(), tabindex: 0)
+				li = CUI.dom.element("LI", title: text_match.getString(), tabindex: 0)
 				do (text_match) =>
 					CUI.Events.listen
 						type: "focus"
@@ -64,6 +64,6 @@ class CUI.DocumentBrowser.NodeMatch extends CUI.Element
 						call: (ev) =>
 							@_node.select(search: @_searchQuery.getSearch(), nodeIdx: text_match.nodeIdx)
 							return
-				CUI.DOM.append(li, CUI.DOM.htmlToNodes(html))
+				CUI.dom.append(li, CUI.dom.htmlToNodes(html))
 				ul.appendChild(li)
 		arr

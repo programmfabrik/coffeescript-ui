@@ -186,22 +186,22 @@ class CUI.Label extends CUI.DOMElement
 		if CUI.util.isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.DOM.htmlToNodes(marked(@__currentText, @__markdown_opts)))
+			@setContent(CUI.dom.htmlToNodes(marked(@__currentText, @__markdown_opts)))
 			@addClass("cui-label-markdown")
 		else
-			@setContent(CUI.DOM.text(@__currentText))
+			@setContent(CUI.dom.text(@__currentText))
 			@removeClass("cui-label-markdown")
 		@
 
 	setTextMaxChars: (max_chars) ->
-		CUI.DOM.setAttribute(@__label.map.content[0], "data-max-chars", max_chars)
+		CUI.dom.setAttribute(@__label.map.content[0], "data-max-chars", max_chars)
 
 	getText: ->
 		@__currentText
 
 	setContent: (content) ->
 		if CUI.util.isString(content)
-			@replace(CUI.DOM.htmlToNodes(content), 'content')
+			@replace(CUI.dom.htmlToNodes(content), 'content')
 		else
 			@replace(content, "content")
 
@@ -211,7 +211,7 @@ class CUI.Label extends CUI.DOMElement
 		# append overflow button to the whole thing
 		@append(@__overflow_button)
 
-		CUI.DOM.waitForDOMInsert(node: @DOM)
+		CUI.dom.waitForDOMInsert(node: @DOM)
 		.done =>
 			@checkOverflowSize()
 
@@ -228,9 +228,9 @@ class CUI.Label extends CUI.DOMElement
 
 		@__overflow_button.hide()
 
-		dim_div = CUI.DOM.getDimensions(@__label.map.content)
+		dim_div = CUI.dom.getDimensions(@__label.map.content)
 
-		max_height = CUI.DOM.getCSSFloatValue(dim_div.computedStyle.maxHeight)
+		max_height = CUI.dom.getCSSFloatValue(dim_div.computedStyle.maxHeight)
 		if not (max_height > 0)
 			max_height = dim_div.clientHeight
 

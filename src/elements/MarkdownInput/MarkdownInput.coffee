@@ -207,7 +207,7 @@ class CUI.MarkdownInput extends CUI.Input
 
 	getPreview: ->
 		if not @__preview
-			@__preview = CUI.DOM.element("div", class: "cui-markdown-input-preview")
+			@__preview = CUI.dom.element("div", class: "cui-markdown-input-preview")
 			@updatePreview()
 		@__preview
 

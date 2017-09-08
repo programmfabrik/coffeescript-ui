@@ -98,7 +98,7 @@ class CUI.ProgressMeter extends CUI.DOMElement
 			fill_css = {} #display: ""
 			fill_css[@_css_property_percent] = @__state+"%"
 
-		CUI.DOM.setStyle(@__meter.map.fill, fill_css)
+		CUI.dom.setStyle(@__meter.map.fill, fill_css)
 		@_onUpdate?.call(@, @)
 		@
 

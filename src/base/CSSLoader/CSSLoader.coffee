@@ -21,12 +21,12 @@ class CUI.CSSLoader extends CUI.Element
 		@__themes = {}
 
 	__getCSSNodes: ->
-		CUI.DOM.matchSelector(document.documentElement, "link[name=\""+@__cssName+"\"]")
+		CUI.dom.matchSelector(document.documentElement, "link[name=\""+@__cssName+"\"]")
 
 	getActiveTheme: ->
 		for cssNode in @__getCSSNodes()
-			if not CUI.DOM.getAttribute(cssNode, "loading")
-				name = CUI.DOM.getAttribute(cssNode, "theme")
+			if not CUI.dom.getAttribute(cssNode, "loading")
+				name = CUI.dom.getAttribute(cssNode, "theme")
 				active_theme = @__themes[name]
 				break
 
@@ -67,14 +67,14 @@ class CUI.CSSLoader extends CUI.Element
 		# console.error "nodes:", @__getCSSNodes()
 
 		for oldCssNode in @__getCSSNodes()
-			same_theme = CUI.DOM.getAttribute(oldCssNode, "theme") == name
-			same_url = CUI.DOM.getAttribute(oldCssNode, "href") == url
-			is_loading = CUI.DOM.getAttribute(oldCssNode, "loading")
+			same_theme = CUI.dom.getAttribute(oldCssNode, "theme") == name
+			same_url = CUI.dom.getAttribute(oldCssNode, "href") == url
+			is_loading = CUI.dom.getAttribute(oldCssNode, "loading")
 
 			# console.debug same_theme, same_url, is_loading
 
 			if is_loading
-				loader_deferred = CUI.DOM.data(oldCssNode, "css-loader-deferred")
+				loader_deferred = CUI.dom.data(oldCssNode, "css-loader-deferred")
 				if same_theme and same_url
 					console.warn("CSSLoader.loadTheme:", name, ". Theme already loading, returning Promise.")
 					return loader_deferred.promise()
@@ -105,7 +105,7 @@ class CUI.CSSLoader extends CUI.Element
 
 		# console.error "parsing location", url, CUI.getPathToScript(), css_href
 
-		cssNode = CUI.DOM.element "LINK",
+		cssNode = CUI.dom.element "LINK",
 			rel: "stylesheet"
 			charset: "utf-8"
 			name: @__cssName
@@ -114,15 +114,15 @@ class CUI.CSSLoader extends CUI.Element
 			href: css_href
 
 
-		CUI.DOM.data(cssNode, "css-loader-deferred", dfr)
+		CUI.dom.data(cssNode, "css-loader-deferred", dfr)
 
 		dfr.always =>
-			CUI.DOM.removeData(cssNode, "css-loader-deferred")
-			CUI.DOM.removeAttribute(cssNode, "loading")
+			CUI.dom.removeData(cssNode, "css-loader-deferred")
+			CUI.dom.removeAttribute(cssNode, "loading")
 
 		dfr.fail (css_href) =>
 			console.error("CSSLoader: Loading failed, removing node.", css_href)
-			CUI.DOM.remove(cssNode)
+			CUI.dom.remove(cssNode)
 
 		CUI.Events.listen
 			node: cssNode
@@ -156,13 +156,13 @@ class CUI.CSSLoader extends CUI.Element
 						return
 
 				old_css_nodes = []
-				for css_node in CUI.DOM.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
+				for css_node in CUI.dom.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
 					if css_node != cssNode
-						# console.info("CSSLoader.loadTheme: Removing old css node:", CUI.DOM.getAttribute(css_node, "href"), "New Node is:", CUI.DOM.getAttribute(cssNode, "href"), "Is loading:", CUI.DOM.getAttribute(css_node, "loading"))
-						CUI.DOM.remove(css_node)
+						# console.info("CSSLoader.loadTheme: Removing old css node:", CUI.dom.getAttribute(css_node, "href"), "New Node is:", CUI.dom.getAttribute(cssNode, "href"), "Is loading:", CUI.dom.getAttribute(css_node, "loading"))
+						CUI.dom.remove(css_node)
 						old_css_nodes.push(css_node)
 
-				CUI.DOM.setAttribute(document.body, "cui-theme", name)
+				CUI.dom.setAttribute(document.body, "cui-theme", name)
 
 				# console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				CUI.Events.trigger

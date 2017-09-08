@@ -81,10 +81,10 @@ class CUI.Button extends CUI.DOMElement
 		else
 			@__hasAriaLabel = false
 
-		CUI.DOM.setAttribute(@DOM, "tabindex", @_tabindex)
+		CUI.dom.setAttribute(@DOM, "tabindex", @_tabindex)
 
 		if not @_attr?.role
-			CUI.DOM.setAttribute(@DOM, "role", @_role)
+			CUI.dom.setAttribute(@DOM, "role", @_role)
 
 		if not @_left or @_left == true
 			if @_icon
@@ -157,7 +157,7 @@ class CUI.Button extends CUI.DOMElement
 
 		if @__radio
 			CUI.util.assert(not @_attr?.radio, "new CUI.Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
-			CUI.DOM.setAttribute(@DOM, "radio", @__radio)
+			CUI.dom.setAttribute(@DOM, "radio", @__radio)
 
 		@setGroup(@_group)
 
@@ -239,10 +239,10 @@ class CUI.Button extends CUI.DOMElement
 				el = null
 
 				right = =>
-					el = CUI.DOM.findNextVisibleElement(@DOM, "[tabindex]")
+					el = CUI.dom.findNextVisibleElement(@DOM, "[tabindex]")
 
 				left = =>
-					el = CUI.DOM.findPreviousVisibleElement(@DOM, "[tabindex]")
+					el = CUI.dom.findPreviousVisibleElement(@DOM, "[tabindex]")
 
 				switch ev.keyCode()
 					when 39 # right cursor
@@ -327,11 +327,11 @@ class CUI.Button extends CUI.DOMElement
 
 						if not @__disabled and menu.hasItems(ev)
 
-							menu_shown = CUI.DOM.data(CUI.DOM.find(".cui-button--hover-menu")[0], "element")
+							menu_shown = CUI.dom.data(CUI.dom.find(".cui-button--hover-menu")[0], "element")
 							if menu_shown and menu_shown != menu
 								menu_shown.hide(ev)
 
-							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
+							CUI.dom.addClass(menu.DOM, "cui-button--hover-menu")
 
 							CUI.Events.ignore
 								instance: @
@@ -630,19 +630,19 @@ class CUI.Button extends CUI.DOMElement
 
 	# returns other buttons
 	__getButtons: (key, value) ->
-		parents = CUI.DOM.parents(@DOM, ".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer")
+		parents = CUI.dom.parents(@DOM, ".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer")
 
 		if parents.length == 0
 			# buttons are not grouped by anything, so we
 			# have no other buttons, so we use the top level element
-			parents = CUI.DOM.parents(@DOM)
+			parents = CUI.dom.parents(@DOM)
 
 		if parents.length > 0
 			docElem = parents[parents.length-1]
 		else
 			return []
 
-		(CUI.DOM.data(c, "element") for c in CUI.DOM.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
+		(CUI.dom.data(c, "element") for c in CUI.dom.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
 
 
 	hasMenu: ->
@@ -779,7 +779,7 @@ class CUI.Button extends CUI.DOMElement
 		if @[key] == null
 			@empty(_key)
 		else if @[key] == ""
-			@replace(CUI.DOM.element("SPAN"), _key)
+			@replace(CUI.dom.element("SPAN"), _key)
 		else
 			@replace(@[key], _key)
 		@
@@ -855,14 +855,14 @@ class CUI.Button extends CUI.DOMElement
 			@disable()
 
 	disable: ->
-		CUI.DOM.addClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
-		CUI.DOM.removeAttribute(@DOM, "tabindex")
+		CUI.dom.addClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
+		CUI.dom.removeAttribute(@DOM, "tabindex")
 		@__disabled = true
 		@
 
 	enable: ->
-		CUI.DOM.removeClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
-		CUI.DOM.setAttribute(@DOM, "tabindex", @_tabindex)
+		CUI.dom.removeClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
+		CUI.dom.setAttribute(@DOM, "tabindex", @_tabindex)
 		@__disabled = false
 		@
 
@@ -870,14 +870,14 @@ class CUI.Button extends CUI.DOMElement
 		if CUI.util.isEmpty(@__txt)
 			@__txt = ''
 
-		span = CUI.DOM.text(@__txt)
+		span = CUI.dom.text(@__txt)
 		if not @__hasAriaLabel
 			span.id = "button-text-"+@getUniqueId()
 			@setAria("labelledby", span.id)
 		@replace(span, "center")
 
 	setTextMaxChars: (max_chars) ->
-		CUI.DOM.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
+		CUI.dom.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
 
 	getText: ->
 		@__txt
@@ -887,9 +887,9 @@ class CUI.Button extends CUI.DOMElement
 
 	setGroup: (@__group) ->
 		if @__group
-			CUI.DOM.setAttribute(@DOM, "button-group", @__group)
+			CUI.dom.setAttribute(@DOM, "button-group", @__group)
 		else
-			CUI.DOM.removeAttribute(@DOM, "button-group")
+			CUI.dom.removeAttribute(@DOM, "button-group")
 
 	__initTooltip: ->
 		if @__tooltip
@@ -926,16 +926,16 @@ class CUI.Button extends CUI.DOMElement
 
 	show: ->
 		@__hidden = false
-		CUI.DOM.removeClass(@DOM, "cui-button-hidden")
-		CUI.DOM.showElement(@DOM)
+		CUI.dom.removeClass(@DOM, "cui-button-hidden")
+		CUI.dom.showElement(@DOM)
 		CUI.Events.trigger
 			type: "show"
 			node: @DOM
 
 	hide: ->
 		@__hidden = true
-		CUI.DOM.addClass(@DOM, "cui-button-hidden")
-		CUI.DOM.hideElement(@DOM)
+		CUI.dom.addClass(@DOM, "cui-button-hidden")
+		CUI.dom.hideElement(@DOM)
 		CUI.Events.trigger
 			type: "hide"
 			node: @DOM

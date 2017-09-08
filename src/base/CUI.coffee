@@ -63,7 +63,7 @@ class CUI
 
 				# backspace acts as "BACK" in some browser, like FF
 				if ev.keyCode() == 8
-					for node in CUI.DOM.elementsUntil(ev.getTarget(), null, document.documentElement)
+					for node in CUI.dom.elementsUntil(ev.getTarget(), null, document.documentElement)
 						if node.tagName in ["INPUT", "TEXTAREA"]
 							return
 						if node.getAttribute("contenteditable") == "true"
@@ -529,7 +529,7 @@ class CUI
 
 	@startWebdriverTest: ->
 		a= "body"
-		CUI.DOM.addClass(a, "cui-webdriver-test")
+		CUI.dom.addClass(a, "cui-webdriver-test")
 
 	@mergeMap: (targetMap, mergeMap) ->
 		for k, v of mergeMap
@@ -882,9 +882,9 @@ CUI.ready =>
 	# initialize a markdown renderer
 	marked.setOptions(CUI.defaults.marked_opts)
 
-	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
+	nodes = CUI.dom.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]
-	CUI.DOM.append(document.body, nodes)
+	CUI.dom.append(document.body, nodes)
 
 
 CUI.getPathToScript()

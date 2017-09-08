@@ -127,7 +127,7 @@ class CUI.Layout extends CUI.DOMElement
 				instance: @
 				node: @DOM
 				call: (ev) =>
-					if CUI.DOM.closest(ev.getTarget(), '.cui-absolute')
+					if CUI.dom.closest(ev.getTarget(), '.cui-absolute')
 						# no stopping inside absolute layouts
 						return
 					ev.stopPropagation()
@@ -138,9 +138,9 @@ class CUI.Layout extends CUI.DOMElement
 
 		if @_absolute
 			@addClass("cui-absolute")
-			CUI.util.assert(CUI.DOM.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
+			CUI.util.assert(CUI.dom.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
 
-			CUI.DOM.waitForDOMInsert(node: @DOM)
+			CUI.dom.waitForDOMInsert(node: @DOM)
 			.done =>
 				# CUI.debug "Layout[absolute] inserted", @__uniqueId
 				CUI.Layout.all()
@@ -165,9 +165,9 @@ class CUI.Layout extends CUI.DOMElement
 			# 	call: _call
 
 		else
-			CUI.DOM.removeAttribute(@DOM, "data-cui-absolute-container")
+			CUI.dom.removeAttribute(@DOM, "data-cui-absolute-container")
 			for child in @DOM.children
-				CUI.DOM.removeAttribute(child, "data-cui-absolute-set")
+				CUI.dom.removeAttribute(child, "data-cui-absolute-set")
 
 
 		@__buttonbars = {}
@@ -314,8 +314,8 @@ class CUI.Layout extends CUI.DOMElement
 		@DOM.removeAttribute("data-cui-absolute-check-value")
 		@DOM.removeAttribute("data-cui-absolute-values")
 
-		for child in CUI.DOM.children(@DOM)
-			CUI.DOM.setStyle child,
+		for child in CUI.dom.children(@DOM)
+			CUI.dom.setStyle child,
 				top: ""
 				left: ""
 				right: ""
@@ -331,7 +331,7 @@ class CUI.Layout extends CUI.DOMElement
 		# CUI.error "Layout.setAbsolute", layout[0]
 		CUI.util.assert(CUI.util.isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
 
-		direction = CUI.DOM.getAttribute(layout, "data-cui-absolute-container")
+		direction = CUI.dom.getAttribute(layout, "data-cui-absolute-container")
 		switch direction
 			when "row"
 				rect_key = "marginBoxWidth"
@@ -344,31 +344,31 @@ class CUI.Layout extends CUI.DOMElement
 
 		# measure all children
 		values = []
-		children = CUI.DOM.children(layout)
+		children = CUI.dom.children(layout)
 
 		for child, idx in children
-			values[idx] = CUI.DOM.getDimensions(child)[rect_key]
+			values[idx] = CUI.dom.getDimensions(child)[rect_key]
 
 		abs_values = values.join(",")
-		check_value = CUI.DOM.getDimensions(layout)[rect_check_key]+""
+		check_value = CUI.dom.getDimensions(layout)[rect_check_key]+""
 
-		# console.debug layout, abs_values, CUI.DOM.getAttribute(layout, "data-cui-absolute-values")
-		# console.debug layout, check_value, CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value")
+		# console.debug layout, abs_values, CUI.dom.getAttribute(layout, "data-cui-absolute-values")
+		# console.debug layout, check_value, CUI.dom.getAttribute(layout, "data-cui-absolute-check-value")
 
-		if CUI.DOM.getAttribute(layout, "data-cui-absolute-values") == abs_values and
-			CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value") == check_value
+		if CUI.dom.getAttribute(layout, "data-cui-absolute-values") == abs_values and
+			CUI.dom.getAttribute(layout, "data-cui-absolute-check-value") == check_value
 				# nothing to do
 				return false
 
-		if CUI.DOM.getAttribute(layout, "data-cui-absolute-check-value") != check_value
-			CUI.DOM.setAttribute(layout, "data-cui-absolute-check-value", check_value)
+		if CUI.dom.getAttribute(layout, "data-cui-absolute-check-value") != check_value
+			CUI.dom.setAttribute(layout, "data-cui-absolute-check-value", check_value)
 
-		if CUI.DOM.getAttribute(layout, "data-cui-absolute-values") != abs_values
-			CUI.DOM.setAttribute(layout, "data-cui-absolute-values", abs_values)
+		if CUI.dom.getAttribute(layout, "data-cui-absolute-values") != abs_values
+			CUI.dom.setAttribute(layout, "data-cui-absolute-values", abs_values)
 			# CUI.debug(txt, values)
 
 			for child, idx in children
-				set = CUI.DOM.getAttribute(child, "data-cui-absolute-set")
+				set = CUI.dom.getAttribute(child, "data-cui-absolute-set")
 				if not set
 					continue
 
@@ -390,7 +390,7 @@ class CUI.Layout extends CUI.DOMElement
 							CUI.util.assert(false, "Layout.setAbsolute: Unknown key #{key} in data-cui-absolute-set.")
 					# CUI.debug idx, key, value
 					css[key] = value
-				CUI.DOM.setStyle(child, css)
+				CUI.dom.setStyle(child, css)
 
 		# CUI.Events.trigger
 		# 	type: "viewport-resize"
@@ -401,7 +401,7 @@ class CUI.Layout extends CUI.DOMElement
 	@__all: ->
 		layouts = []
 		changed = 0
-		for layout, idx in CUI.DOM.matchSelector(document.documentElement, ".cui-absolute")
+		for layout, idx in CUI.dom.matchSelector(document.documentElement, ".cui-absolute")
 			if CUI.Layout.setAbsolute(layout)
 				changed++
 

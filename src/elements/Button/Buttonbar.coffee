@@ -53,8 +53,8 @@ class CUI.Buttonbar extends CUI.DOMElement
 				check: "PlainObject"
 
 	__proxy: (func, args...) ->
-		for el in CUI.DOM.matchSelector(@__buttons, ".cui-button,.cui-select")
-			ele = CUI.DOM.data(el, "element")
+		for el in CUI.dom.matchSelector(@__buttons, ".cui-button,.cui-select")
+			ele = CUI.dom.data(el, "element")
 			ele[func].apply(ele, args)
 		@
 
@@ -73,7 +73,7 @@ class CUI.Buttonbar extends CUI.DOMElement
 			c.classList.remove("cui-first-visible-child")
 			c.classList.remove("cui-last-visible-child")
 
-			if CUI.DOM.data(c, 'element')?.isHidden?() or not CUI.DOM.isVisible(c)
+			if CUI.dom.data(c, 'element')?.isHidden?() or not CUI.dom.isVisible(c)
 				continue
 
 			count++
@@ -89,25 +89,25 @@ class CUI.Buttonbar extends CUI.DOMElement
 
 	# hide the group if no children
 	__checkVisibility: ->
-		CUI.DOM.showElement(@__buttons)
+		CUI.dom.showElement(@__buttons)
 
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
 
 			if @__setVisibilityClasses(d) > 0
-				CUI.DOM.showElement(d)
+				CUI.dom.showElement(d)
 			else
-				CUI.DOM.hideElement(d)
+				CUI.dom.hideElement(d)
 
 		if @__setVisibilityClasses(@__buttons) > 0
 			if @__tooltip?.isShown()
 				@__tooltip.position()
 		else
-			CUI.DOM.showElement(@__buttons)
+			CUI.dom.showElement(@__buttons)
 		@
 
 	removeButtons: ->
-		CUI.DOM.empty(@__buttons)
+		CUI.dom.empty(@__buttons)
 
 	prependButton: (btn, check_visibility = true) ->
 		@addButton(btn, check_visibility, true)
@@ -145,13 +145,13 @@ class CUI.Buttonbar extends CUI.DOMElement
 
 		if grp
 			if not @__groupDivs[grp]
-				div = CUI.DOM.div("cui-buttonbar-group cui-buttonbar-group-#{grp}")
-				CUI.DOM.append(@__buttons, div)
+				div = CUI.dom.div("cui-buttonbar-group cui-buttonbar-group-#{grp}")
+				CUI.dom.append(@__buttons, div)
 				@__groupDivs[grp] = div
 
-			CUI.DOM[func](@__groupDivs[grp], btn_dom)
+			CUI.dom[func](@__groupDivs[grp], btn_dom)
 		else
-			CUI.DOM[func](@__buttons,btn_dom)
+			CUI.dom[func](@__buttons,btn_dom)
 
 		if check_visibility
 			@__checkVisibility()

@@ -64,7 +64,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	getItemByValue: (value) ->
 		for el in @__body.DOM.children
-			btn = CUI.DOM.data(el, "element")
+			btn = CUI.dom.data(el, "element")
 
 			if btn not instanceof CUI.Button
 				continue
@@ -156,7 +156,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						return
 
 					if item.divider
-						divider = CUI.DOM.div("cui-menu-divider cui-item-list-divider", role: "menu-item")
+						divider = CUI.dom.div("cui-menu-divider cui-item-list-divider", role: "menu-item")
 						# DOM.data(divider[0], "itemListIdx", idx)
 						@__body.append(divider)
 						return
@@ -171,12 +171,12 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 						# DOM.data(label.DOM[0], "itemListIdx", idx)
 						label.addClass("cui-menu-item")
-						CUI.DOM.append(@__body.DOM, label.DOM)
+						CUI.dom.append(@__body.DOM, label.DOM)
 						return
 
 					if item.content
 						# CUI.debug "adding item content", item.content
-						CUI.DOM.append(@__body.DOM, item.content.DOM or item.content)
+						CUI.dom.append(@__body.DOM, item.content.DOM or item.content)
 						return
 
 					listenButtonClick = (btn) =>
@@ -195,7 +195,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 								el = menu.getElement()
 								if el
-									dim = CUI.DOM.getDimensions(menu.getElement())
+									dim = CUI.dom.getDimensions(menu.getElement())
 									if dim.clientWidth == 0 and dim.clientHeight == 0
 										hide()
 										return
@@ -218,7 +218,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						item instanceof CUI.DataField or
 						item instanceof CUI.Label
 
-							CUI.DOM.append(@__body.DOM, item.DOM)
+							CUI.dom.append(@__body.DOM, item.DOM)
 							return
 
 					opts =
@@ -254,7 +254,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						list_has_button_left = true
 
 					# DOM.data(btn.DOM[0], "itemListIdx", idx)
-					CUI.DOM.append(@__body.DOM, btn.DOM)
+					CUI.dom.append(@__body.DOM, btn.DOM)
 					return
 
 				if list_has_button_left

@@ -20,7 +20,7 @@ class CUI.StickyHeader extends CUI.DOMElement
 
 		@addClass("cui-sticky-header-level-#{@_level}")
 		if not CUI.util.isEmpty(@_text)
-			@replace(CUI.DOM.text(@_text), "center")
+			@replace(CUI.dom.text(@_text), "center")
 		else
 			@replace(@_content, "center")
 

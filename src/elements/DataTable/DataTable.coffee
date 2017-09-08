@@ -339,7 +339,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@__navi_input.setValue(null)
 
 			@__navi_input.setPlaceholder(placeholder)
-			CUI.DOM.setAttribute(@__navi_input.getElement(), "data-max-chars", (""+(last_page+1)).length*2+sep.length)
+			CUI.dom.setAttribute(@__navi_input.getElement(), "data-max-chars", (""+(last_page+1)).length*2+sep.length)
 
 			if page > 0
 				@__navi_prev.enable()

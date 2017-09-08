@@ -60,7 +60,7 @@ class CUI.ListViewColumn extends CUI.Element
 	setElement: (@__element) ->
 		@addClass(@getClass())
 		if @__attrs
-			CUI.DOM.setAttributeMap(@__element, @__attrs)
+			CUI.dom.setAttributeMap(@__element, @__attrs)
 		@_onSetElement?(@)
 		@__element
 
@@ -74,12 +74,12 @@ class CUI.ListViewColumn extends CUI.Element
 		if not @__element
 			@__cl += " "+cls
 		else if @__element instanceof HTMLElement
-			CUI.DOM.addClass(@__element, cls)
+			CUI.dom.addClass(@__element, cls)
 		@
 
 	removeClass: (cls) ->
 		if @__element instanceof HTMLElement
-			CUI.DOM.removeClass(@__element, cls)
+			CUI.dom.removeClass(@__element, cls)
 		@
 
 	setColspan: (colspan) =>

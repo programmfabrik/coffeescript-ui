@@ -46,11 +46,11 @@ class CUI.Tabs extends CUI.SimplePane
 		if not @__maximize_horizontal
 			return
 
-		header_dim = CUI.DOM.getDimensions(@__header)
+		header_dim = CUI.dom.getDimensions(@__header)
 		# console.debug "header_dim", header_dim.scrollWidth, header_dim.clientWidth
 		if header_dim.scrollWidth > header_dim.clientWidth
 			@__overflowBtn.show()
-			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
+			CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 			@__dragscroll = new CUI.Dragscroll
 				element: @__buttonbar.DOM
 				scroll_element: @__header
@@ -58,19 +58,19 @@ class CUI.Tabs extends CUI.SimplePane
 			@__dragscroll?.destroy()
 			@__dragscroll = null
 			@__overflowBtn.hide()
-			CUI.DOM.removeClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
+			CUI.dom.removeClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 		@
 
 	__setActiveMarker: ->
 		btn = @getActiveTab()?.getButton().DOM
 
 		if not btn
-			CUI.DOM.hideElement(@__tabs_marker)
+			CUI.dom.hideElement(@__tabs_marker)
 			return
 
-		CUI.DOM.showElement(@__tabs_marker)
-		btn_dim = CUI.DOM.getDimensions(btn)
-		CUI.DOM.setStyle @__tabs_marker,
+		CUI.dom.showElement(@__tabs_marker)
+		btn_dim = CUI.dom.getDimensions(btn)
+		CUI.dom.setStyle @__tabs_marker,
 			left: btn_dim.offsetLeft
 			width: btn_dim.borderBoxWidth
 		@
@@ -78,15 +78,15 @@ class CUI.Tabs extends CUI.SimplePane
 	init: ->
 		super()
 		# slider to mark active tab
-		@__tabs_marker = CUI.DOM.element("DIV", class: "cui-tabs-active-marker")
+		@__tabs_marker = CUI.dom.element("DIV", class: "cui-tabs-active-marker")
 
 		@__tabs_bodies = new CUI.Template
 			name: "tabs-bodies"
 
-		CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header")
+		CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header")
 
 		if @_appearance == "mini"
-			CUI.DOM.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
+			CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
 
 		@__buttonbar = new CUI.Buttonbar()
 
@@ -102,9 +102,9 @@ class CUI.Tabs extends CUI.SimplePane
 			type: "scroll"
 			node: @__header
 			call: (ev) =>
-				dim = CUI.DOM.getDimensions(@__header)
-				CUI.DOM.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-end", dim.horizontalScrollbarAtEnd)
-				CUI.DOM.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-start", dim.horizontalScrollbarAtStart)
+				dim = CUI.dom.getDimensions(@__header)
+				CUI.dom.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-end", dim.horizontalScrollbarAtEnd)
+				CUI.dom.setClass(@__pane_header.DOM, "cui-tabs-pane-header--scroll-at-start", dim.horizontalScrollbarAtStart)
 
 		@__overflowBtn = new CUI.Button
 			icon: "ellipsis_h"
@@ -160,7 +160,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@__tabs[@_active_idx or 0].activate()
 
-		CUI.DOM.waitForDOMInsert(node: @getLayout())
+		CUI.dom.waitForDOMInsert(node: @getLayout())
 		.done =>
 			if @isDestroyed()
 				return
@@ -172,7 +172,7 @@ class CUI.Tabs extends CUI.SimplePane
 					@__checkOverflowButton()
 					@__setActiveMarker()
 
-			CUI.util.assert( CUI.DOM.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
+			CUI.util.assert( CUI.dom.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
 			@__setActiveMarker()
 
@@ -214,18 +214,18 @@ class CUI.Tabs extends CUI.SimplePane
 				call: =>
 
 					if @__overflowBtn.isShown()
-						CUI.DOM.scrollIntoView(tab.getButton().DOM)
+						CUI.dom.scrollIntoView(tab.getButton().DOM)
 
 					if CUI.__ng__
 						if not @_maximize_vertical
 							# set left margin on first tab
 							# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
-							CUI.DOM.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
+							CUI.dom.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
 					@__setActiveMarker()
 
-					CUI.DOM.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
+					CUI.dom.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
 					# CUI.error @__uniqueId, "activate"
 
 			CUI.Events.listen
@@ -234,7 +234,7 @@ class CUI.Tabs extends CUI.SimplePane
 				call: =>
 					# CUI.error @__uniqueId, "deactivate"
 					@__active_tab = null
-					CUI.DOM.setAttribute(@DOM, "active-tab-idx", "")
+					CUI.dom.setAttribute(@DOM, "active-tab-idx", "")
 
 			CUI.Events.listen
 				node: tab
@@ -255,7 +255,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 	__measureAndSetBodyWidth: ->
 
-		for parent in CUI.DOM.parents(@DOM)
+		for parent in CUI.dom.parents(@DOM)
 			if parent.scrollTop or parent.scrollLeft
 				scrollSaveParent =
 						node: parent
@@ -268,12 +268,12 @@ class CUI.Tabs extends CUI.SimplePane
 
 		# remove previously set dimensions
 		for tab in @__tabs
-			CUI.DOM.setStyle(tab.getBody(),
+			CUI.dom.setStyle(tab.getBody(),
 				"min-width": "", 
 				"height": ""
 			)
 
-		CUI.DOM.setStyle(@__tabs_bodies.DOM,
+		CUI.dom.setStyle(@__tabs_bodies.DOM,
 			"min-width": "", 
 			"height": ""
 		)
@@ -284,21 +284,21 @@ class CUI.Tabs extends CUI.SimplePane
 
 		for tab in @__tabs
 			dim =
-				width: CUI.DOM.getDimensions(tab.getBody()).marginBoxWidth
-				height: CUI.DOM.getDimensions(tab.getBody()).marginBoxHeight
+				width: CUI.dom.getDimensions(tab.getBody()).marginBoxWidth
+				height: CUI.dom.getDimensions(tab.getBody()).marginBoxHeight
 
 			if dim.width > max_width
 				max_width = dim.width
 			if dim.height > max_height
 				max_height = dim.height
 
-		CUI.DOM.setStyle(@__tabs_bodies.DOM,
+		CUI.dom.setStyle(@__tabs_bodies.DOM,
 			"min-width": max_width, 
 			"height": max_height
 		)
 
 		for tab in @__tabs
-			CUI.DOM.setStyle(tab.getBody(),
+			CUI.dom.setStyle(tab.getBody(),
 				"min-width": max_width, 
 				height: max_height
 			)

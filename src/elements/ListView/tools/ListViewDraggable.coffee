@@ -20,5 +20,5 @@ class CUI.ListViewDraggable extends CUI.Draggable
 		@__row_i = @_row.getRowIdx()
 
 	get_marker: (cls="") ->
-		CUI.DOM.element("DIV", class: "cui-lv-draggable "+cls)
+		CUI.dom.element("DIV", class: "cui-lv-draggable "+cls)
 

@@ -183,8 +183,8 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 			.done (content) =>
 				@_browser.marked(@, content)
 				.done (content) =>
-					@__htmlNodes = CUI.DOM.htmlToNodes(content)
-					@__texts = CUI.DOM.findTextInNodes(@__htmlNodes)
+					@__htmlNodes = CUI.dom.htmlToNodes(content)
+					@__texts = CUI.dom.findTextInNodes(@__htmlNodes)
 					@_browser.addWords(@__texts)
 					# console.debug "loaded:", filename, markdown.length, @__texts.length
 					dfr.resolve(@__content, @__htmlNodes, @__texts)

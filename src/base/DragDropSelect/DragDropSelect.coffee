@@ -16,7 +16,7 @@ class CUI.DragDropSelect extends CUI.Element
 			element:
 				mandatory: true
 				check: (v) ->
-					CUI.DOM.isNode(v)
+					CUI.dom.isNode(v)
 		@
 
 	readOpts: ->
@@ -26,15 +26,15 @@ class CUI.DragDropSelect extends CUI.Element
 
 		@element = @_element
 		CUI.DragDropSelect.getInstance(@element, @cls)?.destroy()
-		CUI.DOM.data(@element, "drag-drop-select-"+@cls, @)
-		CUI.DOM.addClass(@element, @getClass())
+		CUI.dom.data(@element, "drag-drop-select-"+@cls, @)
+		CUI.dom.addClass(@element, @getClass())
 
 	getClass: ->
 		"cui-drag-drop-select cui-drag-drop-select-"+@cls
 
 	destroy: ->
-		CUI.DOM.removeClass(@element, @getClass())
-		CUI.DOM.removeData(@element, "drag-drop-select-"+@cls)
+		CUI.dom.removeClass(@element, @getClass())
+		CUI.dom.removeData(@element, "drag-drop-select-"+@cls)
 		CUI.Events.ignore
 			instance: @
 		super()
@@ -48,7 +48,7 @@ class CUI.DragDropSelect extends CUI.Element
 
 	@getInstance: (node, cls=@cls) ->
 		CUI.util.assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
-		CUI.DOM.data(node, "drag-drop-select-"+cls)
+		CUI.dom.data(node, "drag-drop-select-"+cls)
 
 
 
@@ -108,9 +108,9 @@ CUI.ready =>
 
 			el = ev.getCurrentTarget()
 
-			dim = CUI.DOM.getDimensions(el)
+			dim = CUI.dom.getDimensions(el)
 
-			if CUI.DOM.is(el, "body,html")
+			if CUI.dom.is(el, "body,html")
 				is_body = true
 				rect =
 					top: 0

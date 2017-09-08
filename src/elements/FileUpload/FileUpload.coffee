@@ -409,14 +409,14 @@ class CUI.FileUpload extends CUI.Element
 		inp = opts.fileUpload
 		for k in ["webkitdirectory", "mozdirectory", "directory"]
 			if opts.directory
-				CUI.DOM.setAttribute(inp, k, true)
+				CUI.dom.setAttribute(inp, k, true)
 			else
-				CUI.DOM.removeAttribute(inp, k)
+				CUI.dom.removeAttribute(inp, k)
 
 		if opts.multiple
-			CUI.DOM.setAttribute(inp, "multiple", true)
+			CUI.dom.setAttribute(inp, "multiple", true)
 		else
-			CUI.DOM.removeAttribute(inp, "multiple")
+			CUI.dom.removeAttribute(inp, "multiple")
 
 		dfr = new CUI.Deferred()
 
@@ -440,7 +440,7 @@ class CUI.FileUpload extends CUI.Element
 			instance: @
 
 		for dz in @__dropZones
-			CUI.DOM.removeClass(dz, "cui-file-upload-drop-zone")
+			CUI.dom.removeClass(dz, "cui-file-upload-drop-zone")
 		@__dropZones = []
 		@
 

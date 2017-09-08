@@ -19,7 +19,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 					pos = info.dropTargetPos or "on"
 					CUI.alert(
 						markdown: true,
-						text: "You dropped me **"+pos+"**: " + CUI.DOM.getAttribute(info.dropTarget, "class")
+						text: "You dropped me **"+pos+"**: " + CUI.dom.getAttribute(info.dropTarget, "class")
 					)
 				check: Function
 
@@ -55,22 +55,22 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if @_dropHelper
 			CUI.util.assert(not @_selector or @_targetHelper, "new CUI.Droppable", "opts.dropHelper does only work without opts.selector or with opts.targetHelper and opts.selector. needs opts.selector to be set.", opts: @opts)
-			@__dropHelper = CUI.DOM.element("DIV", class: "cui-droppable-drop-helper")
+			@__dropHelper = CUI.dom.element("DIV", class: "cui-droppable-drop-helper")
 
 		return
 
 	removeHelper: ->
 		@resetMargin()
 		if @__selectedTarget
-			CUI.DOM.removeClass(@__selectedTarget, @_hoverClass)
+			CUI.dom.removeClass(@__selectedTarget, @_hoverClass)
 			@__selectedTarget = null
 
 		if @__dropHelper
 			# console.error "removing drop helper.."
-			CUI.DOM.remove(@__dropHelper)
+			CUI.dom.remove(@__dropHelper)
 
 		if @_targetHelper
-			for el in CUI.DOM.findElements(@_element, @_selector)
+			for el in CUI.dom.findElements(@_element, @_selector)
 				el.classList.remove("cui-droppable-target-helper")
 
 		# console.error "removing helper.."
@@ -101,17 +101,17 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 	syncDropHelper: ->
 		# drop helper goes on top
-		dim = CUI.DOM.getDimensions(@_element)
+		dim = CUI.dom.getDimensions(@_element)
 
 		document.body.appendChild(@__dropHelper)
 
-		CUI.DOM.setDimensions @__dropHelper,
+		CUI.dom.setDimensions @__dropHelper,
 			contentBoxWidth: dim.borderBoxWidth
 			contentBoxHeight: dim.borderBoxHeight
 
-		drop_helper_dim = CUI.DOM.getDimensions(@__dropHelper)
+		drop_helper_dim = CUI.dom.getDimensions(@__dropHelper)
 
-		CUI.DOM.setStyle @__dropHelper,
+		CUI.dom.setStyle @__dropHelper,
 			position: "absolute"
 			top: dim.viewportTop - drop_helper_dim.borderTopWidth - drop_helper_dim.marginTop
 			left: dim.viewportLeft - drop_helper_dim.borderLeftWidth - drop_helper_dim.marginLeft
@@ -124,7 +124,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 		if ev.getType() == "cui-dragleave"
 			new_target = info.originalEvent.getTarget()
 
-			if CUI.DOM.closest(new_target, ".cui-drag-drop-select-droppable") != @_element
+			if CUI.dom.closest(new_target, ".cui-drag-drop-select-droppable") != @_element
 				# outside us
 				@removeHelper()
 				return true
@@ -149,8 +149,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			# check axis
 			last_dim = null
 			@__axis = null
-			for el in CUI.DOM.findElements(@_element, @_selector)
-				dim = CUI.DOM.getDimensions(el)
+			for el in CUI.dom.findElements(@_element, @_selector)
+				dim = CUI.dom.getDimensions(el)
 				if last_dim and not @__axis
 					if last_dim.viewportLeft == dim.viewportLeft
 						@__axis = "y"
@@ -169,9 +169,9 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@__dropTargetPos = null
 			@__dropTarget = null
 
-		CUI.DOM.removeClass(@__selectedTarget, @_hoverClass)
+		CUI.dom.removeClass(@__selectedTarget, @_hoverClass)
 		if @_selector
-			@__selectedTarget = CUI.DOM.closest(target, @_selector)
+			@__selectedTarget = CUI.dom.closest(target, @_selector)
 		else
 			@__selectedTarget = @_element
 
@@ -187,7 +187,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@__dropTarget = @__selectedTarget
 			@__dropTargetPos = null
 
-			CUI.DOM.addClass(@__selectedTarget, @_hoverClass)
+			CUI.dom.addClass(@__selectedTarget, @_hoverClass)
 			if @__dropHelper
 				@syncDropHelper()
 
@@ -216,9 +216,9 @@ class CUI.Droppable extends CUI.DragDropSelect
 			return
 
 		# console.error "removing drop helper.."
-		CUI.DOM.remove(@__dropHelper)
+		CUI.dom.remove(@__dropHelper)
 
-		dim = CUI.DOM.getDimensions(@__selectedTarget)
+		dim = CUI.dom.getDimensions(@__selectedTarget)
 
 		if (@__axis == "x" and coord.pageX > dim.viewportCenterLeft) or
 			(@__axis == "y" and coord.pageY > dim.viewportCenterTop)
@@ -241,10 +241,10 @@ class CUI.Droppable extends CUI.DragDropSelect
 			; # target helper is still ok
 		else
 			@resetMargin()
-			@__saveZoneDims = [ CUI.DOM.getDimensions(@__selectedTarget) ]
+			@__saveZoneDims = [ CUI.dom.getDimensions(@__selectedTarget) ]
 			@__selectedTarget.__target_helper_class = helper_cls
-			CUI.DOM.addClass(@__selectedTarget, @__selectedTarget.__target_helper_class)
-			@__saveZoneDims.push(CUI.DOM.getDimensions(@__selectedTarget))
+			CUI.dom.addClass(@__selectedTarget, @__selectedTarget.__target_helper_class)
+			@__saveZoneDims.push(CUI.dom.getDimensions(@__selectedTarget))
 			@__resetMargin = @__selectedTarget
 
 		return

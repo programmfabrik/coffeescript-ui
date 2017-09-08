@@ -128,9 +128,9 @@ class CUI.util
 		return
 
 	@$elementIsInDOM: ($el) ->
-		parents = CUI.DOM.parents($el)
+		parents = CUI.dom.parents($el)
 		lastParent = parents[parents.length - 1]
-		return CUI.DOM.is(lastParent, "html")
+		return CUI.dom.is(lastParent, "html")
 
 	# for our self repeating mousemove event we
 	# track a scrollPageX and scrollPageY offset
@@ -152,7 +152,7 @@ class CUI.util
 	# return the difference of the absolute position
 	# of coordinates and element
 	@elementGetPosition: (coordinates, el) ->
-		rect = CUI.DOM.getRect(el)
+		rect = CUI.dom.getRect(el)
 		# CUI.debug(coordinates.pageX, coordinates.pageY, offset);
 		position =
 			left: coordinates.pageX  - rect.left # (offset.left + $el.cssInt("border-left-width"))

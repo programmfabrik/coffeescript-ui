@@ -27,23 +27,23 @@ class CUI.DOMElement extends CUI.Element
 	registerDOMElement: (@DOM, add_default_classes=true) ->
 
 		if add_default_classes
-			CUI.DOM.addClass(@DOM, @getDOMElementClasses())
+			CUI.dom.addClass(@DOM, @getDOMElementClasses())
 
 		if @_attr
-			CUI.DOM.setAttributeMap(@DOM, @_attr)
+			CUI.dom.setAttributeMap(@DOM, @_attr)
 
 		if @_id
-			CUI.DOM.setAttribute(@DOM, 'id', @_id)
+			CUI.dom.setAttribute(@DOM, 'id', @_id)
 
 		if @_class
-			CUI.DOM.addClass(@DOM, @_class)
+			CUI.dom.addClass(@DOM, @_class)
 
 		@setElement()
 		@
 
 	setElement: ->
 		@__assertDOMElement('setElement')
-		CUI.DOM.setElement(@DOM, @)
+		CUI.dom.setElement(@DOM, @)
 
 # if used as parameter in "Layer", overwrite to
 # a different element to position the layer with
@@ -51,11 +51,11 @@ class CUI.DOMElement extends CUI.Element
 		@DOM
 
 	unregisterDOMElement: ->
-		CUI.DOM.removeClass(@DOM, @getDOMElementClasses())
-		CUI.DOM.removeAttribute(@DOM, "id")
+		CUI.dom.removeClass(@DOM, @getDOMElementClasses())
+		CUI.dom.removeAttribute(@DOM, "id")
 		if @_class
-			CUI.DOM.removeClass(@DOM, @_class)
-		CUI.DOM.removeData(@DOM, "element")
+			CUI.dom.removeClass(@DOM, @_class)
+		CUI.dom.removeData(@DOM, "element")
 		delete(@DOM)
 		@
 
@@ -66,33 +66,33 @@ class CUI.DOMElement extends CUI.Element
 		CUI.util.assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
 
 	addClass: (cls) ->
-		CUI.util.assert(arguments.length == 1, "CUI.DOM.addClass", "Only one parameter allowed.")
+		CUI.util.assert(arguments.length == 1, "CUI.dom.addClass", "Only one parameter allowed.")
 
 		@__assertDOMElement("addClass")
-		CUI.DOM.addClass(@DOM, cls)
+		CUI.dom.addClass(@DOM, cls)
 
 	setAria: (attr, value) ->
 		@__assertDOMElement("setAria")
-		CUI.DOM.setAria(@DOM, attr, value)
+		CUI.dom.setAria(@DOM, attr, value)
 
 	removeClass: (cls) ->
-		CUI.util.assert(arguments.length == 1, "CUI.DOM.removeClass", "Only one parameter allowed.")
+		CUI.util.assert(arguments.length == 1, "CUI.dom.removeClass", "Only one parameter allowed.")
 
 		@__assertDOMElement("removeClass")
-		CUI.DOM.removeClass(@DOM, cls)
+		CUI.dom.removeClass(@DOM, cls)
 
 	hide: ->
 		@__assertDOMElement("hide")
-		CUI.DOM.hideElement(@DOM)
+		CUI.dom.hideElement(@DOM)
 
 	show: ->
 		@__assertDOMElement("show")
-		CUI.DOM.showElement(@DOM)
+		CUI.dom.showElement(@DOM)
 
 	hasClass: (cls) ->
-		CUI.util.assert(arguments.length == 1, "CUI.DOM.hasClass", "Only one parameter allowed.")
+		CUI.util.assert(arguments.length == 1, "CUI.dom.hasClass", "Only one parameter allowed.")
 		@__assertDOMElement("hasClass")
-		CUI.DOM.hasClass(@DOM, cls)
+		CUI.dom.hasClass(@DOM, cls)
 
 	isDestroyed: (key) ->
 		@__template?.isDestroyed.call(@__template, key)
@@ -127,6 +127,6 @@ class CUI.DOMElement extends CUI.Element
 		if @__template
 			@__template?.destroy()
 		else if @DOM
-			CUI.DOM.remove(@DOM)
+			CUI.dom.remove(@DOM)
 		@
 # CUI.Events.ignore(node: @DOM)

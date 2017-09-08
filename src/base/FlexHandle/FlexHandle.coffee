@@ -13,11 +13,11 @@ class CUI.FlexHandle extends CUI.Element
 		@__pane = null
 		children = @_element.parentNode.children
 		for c, idx in children
-			if CUI.DOM.is(c, @_pane)
+			if CUI.dom.is(c, @_pane)
 				@__pane = c
 				@__pane_idx = idx
 
-			if CUI.DOM.is(c, @_element)
+			if CUI.dom.is(c, @_element)
 				@__element_idx = idx
 
 		@__adjacent_pane = null
@@ -36,9 +36,9 @@ class CUI.FlexHandle extends CUI.Element
 
 		CUI.util.assert(@__pane, "new #{@__cls}", "pane \"#{@_pane}\" not found in parent element of cui-flex-handle element.", opts: @opts, children: children)
 
-		CUI.DOM.data(@__pane, "flexHandle", @)
+		CUI.dom.data(@__pane, "flexHandle", @)
 
-		CUI.DOM.setAttribute(@__pane, "flex-handled-pane", @_name)
+		CUI.dom.setAttribute(@__pane, "flex-handled-pane", @_name)
 
 	readOpts: ->
 		super()
@@ -92,7 +92,7 @@ class CUI.FlexHandle extends CUI.Element
 		if @isDestroyed()
 			return
 
-		CUI.DOM.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
+		CUI.dom.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
 
 		if @__closed
 			@close()
@@ -101,7 +101,7 @@ class CUI.FlexHandle extends CUI.Element
 			@hide()
 
 		if @_class
-			CUI.DOM.addClass(@_element, @_class)
+			CUI.dom.addClass(@_element, @_class)
 
 		if @__direction == "row"
 			axis = "x"
@@ -159,7 +159,7 @@ class CUI.FlexHandle extends CUI.Element
 					flip = -1
 
 				get_data = (pane) =>
-					dim = CUI.DOM.getDimensions(pane)
+					dim = CUI.dom.getDimensions(pane)
 					min = dim["min"+@__css_value]
 					if min < 10
 						min = 10
@@ -212,7 +212,7 @@ class CUI.FlexHandle extends CUI.Element
 
 			dragend: (ev, gd) =>
 				dragging(gd)
-				@__size = CUI.DOM.getDimension(@__pane, "contentBox"+@__css_value)
+				@__size = CUI.dom.getDimension(@__pane, "contentBox"+@__css_value)
 				@storeState()
 
 			dragstop: =>
@@ -248,12 +248,12 @@ class CUI.FlexHandle extends CUI.Element
 
 	__setSize: (size) ->
 		if CUI.util.isNull(size)
-			CUI.DOM.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
+			CUI.dom.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
 
 			if @__isAlive()
-				if CUI.DOM.getDimension(@__pane, "contentBox"+@__css_value) == 0
+				if CUI.dom.getDimension(@__pane, "contentBox"+@__css_value) == 0
 					CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane)
-					CUI.DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
+					CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, 100)
 
 			@__pane.classList.remove("cui-is-manually-sized")
 			@_element.classList.remove("cui-is-manually-sized")
@@ -262,7 +262,7 @@ class CUI.FlexHandle extends CUI.Element
 # console.debug "DOM set dimension", size, @__css_value, @__pane
 			@__pane.classList.add("cui-is-manually-sized")
 			@_element.classList.add("cui-is-manually-sized")
-			CUI.DOM.setDimension(@__pane, "contentBox"+@__css_value, size)
+			CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, size)
 			@__size = size
 
 		@__resize()
@@ -275,7 +275,7 @@ class CUI.FlexHandle extends CUI.Element
 		@__size
 
 	__isAlive: ->
-		if @isDestroyed() or not CUI.DOM.isInDOM(@_element)
+		if @isDestroyed() or not CUI.dom.isInDOM(@_element)
 			false
 		else
 			true
@@ -353,9 +353,9 @@ class CUI.FlexHandle extends CUI.Element
 
 		switch direction
 			when "west", "north"
-				els = CUI.DOM.findPreviousSiblings(pane)
+				els = CUI.dom.findPreviousSiblings(pane)
 			when "east", "south"
-				els = CUI.DOM.findNextSiblings(pane)
+				els = CUI.dom.findNextSiblings(pane)
 
 		switch direction
 			when "west", "east"
@@ -373,7 +373,7 @@ class CUI.FlexHandle extends CUI.Element
 				el.classList.add("cui-flex-handle-hide-for-stretch")
 				el.classList.add("cui-flex-handle-hide-for-stretch-#{direction}")
 
-			CUI.DOM[set](@__pane, "")
+			CUI.dom[set](@__pane, "")
 
 			pane.classList.add("cui-flex-handle-stretched")
 			pane.classList.add("cui-flex-handle-stretched-#{direction}")
@@ -420,8 +420,8 @@ class CUI.FlexHandle extends CUI.Element
 				opts.rotate_90 = true
 
 			@__label = new CUI.defaults.class.Label(opts)
-		CUI.DOM.append(@_element, @__label.DOM)
-		CUI.DOM.addClass(@_element, "cui-flex-handle-has-label")
+		CUI.dom.append(@_element, @__label.DOM)
+		CUI.dom.addClass(@_element, "cui-flex-handle-has-label")
 
 	getName: ->
 		@_name
@@ -454,7 +454,7 @@ class CUI.FlexHandle extends CUI.Element
 			type: "flex-close"
 
 		@_element.classList.add("cui-flex-handle-closed")
-		CUI.DOM.setStyleOne(@__pane, "display", "none")
+		CUI.dom.setStyleOne(@__pane, "display", "none")
 		@__resize()
 		@
 
@@ -464,7 +464,7 @@ class CUI.FlexHandle extends CUI.Element
 			return @
 
 		@_element.classList.remove("cui-flex-handle-closed")
-		CUI.DOM.setStyleOne(@__pane, "display", "")
+		CUI.dom.setStyleOne(@__pane, "display", "")
 		delete(@__closed)
 		@__resize()
 		@
@@ -486,9 +486,9 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	destroy: ->
-		CUI.DOM.removeData(@__pane, "flexHandle")
-		CUI.DOM.removeAttribute(@__pane, "flex-handled-pane")
-		CUI.DOM.remove(@_element)
+		CUI.dom.removeData(@__pane, "flexHandle")
+		CUI.dom.removeAttribute(@__pane, "flex-handled-pane")
+		CUI.dom.remove(@_element)
 		super()
 
 
@@ -522,9 +522,9 @@ class CUI.FlexHandle extends CUI.Element
 				if opts.flexHandle
 					fh = opts.flexHandle
 				else
-					fh_els = CUI.DOM.closest(btn.DOM, "[flex-handled-pane]")
+					fh_els = CUI.dom.closest(btn.DOM, "[flex-handled-pane]")
 					CUI.util.assert(fh_els, "FlexHandle.getStretchButton", "FlexHandle not or more than one found, name: #{opts.name}.", opts: opts, flexHandles: fh_els)
-					fh = CUI.DOM.data(fh_els, "flexHandle")
+					fh = CUI.dom.data(fh_els, "flexHandle")
 
 				if fh.isStretched()
 					fh.unstretch()

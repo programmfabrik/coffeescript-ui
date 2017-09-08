@@ -10,7 +10,7 @@ class CUI.Password extends CUI.Input
 		super("password")
 
 	showPassword: ->
-		CUI.DOM.setAttribute(@__input, "type", "text")
+		CUI.dom.setAttribute(@__input, "type", "text")
 
 	hidePassword: ->
-		CUI.DOM.setAttribute(@__input, "type", "password")
+		CUI.dom.setAttribute(@__input, "type", "password")

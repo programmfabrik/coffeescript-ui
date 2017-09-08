@@ -771,15 +771,15 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	showSpinner: ->
 		if @__is_rendered
-			CUI.DOM.empty(@__handleDiv)
-			CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: "spinner").DOM)
+			CUI.dom.empty(@__handleDiv)
+			CUI.dom.append(@__handleDiv, new CUI.Icon(icon: "spinner").DOM)
 		@
 
 	hideSpinner: ->
 		if @__is_rendered
-			CUI.DOM.empty(@__handleDiv)
+			CUI.dom.empty(@__handleDiv)
 			if @__handleIcon
-				CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
+				CUI.dom.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 			else
 		@
 
@@ -787,12 +787,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.util.assert(not @isRoot(), "ListViewTreeNode.render", "Unable to render root node.")
 		@removeColumns()
 
-		element = CUI.DOM.div("cui-tree-node level-#{@level()}")
+		element = CUI.dom.div("cui-tree-node level-#{@level()}")
 		@__is_rendered = true
 
 		# Space for the left side
 		for i in [1...@level()] by 1
-			CUI.DOM.append(element, CUI.DOM.div("cui-tree-node-spacer"))
+			CUI.dom.append(element, CUI.dom.div("cui-tree-node-spacer"))
 
 		# Handle before content
 		cls = ["cui-tree-node-handle"]
@@ -810,11 +810,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if @children?.length == 0
 			cls.push("cui-tree-node-no-children")
 
-		@__handleDiv = CUI.DOM.div(cls.join(" "))
+		@__handleDiv = CUI.dom.div(cls.join(" "))
 		if @__handleIcon
-			CUI.DOM.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
+			CUI.dom.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 
-		CUI.DOM.append(element, @__handleDiv)
+		CUI.dom.append(element, @__handleDiv)
 
 		# push the tree element as the first column
 		@prependColumn new CUI.ListViewColumn
@@ -826,14 +826,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# so we call them last
 
 		# append Content
-		contentDiv = CUI.DOM.div("cui-tree-node-content")
+		contentDiv = CUI.dom.div("cui-tree-node-content")
 		content = @renderContent()
 		if CUI.isArray(content)
 			for con in content
-				CUI.DOM.append(contentDiv, con?.DOM or content)
+				CUI.dom.append(contentDiv, con?.DOM or content)
 		else
-			CUI.DOM.append(contentDiv, content?.DOM or content)
-		CUI.DOM.append(element, contentDiv)
+			CUI.dom.append(contentDiv, content?.DOM or content)
+		CUI.dom.append(element, contentDiv)
 		@
 
 

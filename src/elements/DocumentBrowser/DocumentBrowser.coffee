@@ -107,12 +107,12 @@ class CUI.DocumentBrowser extends CUI.Element
 
 			scroll_node = null
 			searchQuery = new CUI.DocumentBrowser.SearchQuery(search: search)
-			nodes = CUI.DOM.htmlToNodes(@marked(node, content))
+			nodes = CUI.dom.htmlToNodes(@marked(node, content))
 
 			text_matches = []
 			text_node_idx = 0
 
-			CUI.DOM.findTextInNodes(nodes, (node, textContent) =>
+			CUI.dom.findTextInNodes(nodes, (node, textContent) =>
 
 				text_node_idx = text_node_idx + 1
 				text_match = searchQuery.match(textContent)
@@ -135,7 +135,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				if tm.__mark_all
 					html = "<span class='cui-document-browser-marked-node'>" + html + "</span>"
 
-				_node = CUI.DOM.replaceWith(tm.__node, CUI.DOM.htmlToNodes(html))
+				_node = CUI.dom.replaceWith(tm.__node, CUI.dom.htmlToNodes(html))
 				if tm.__mark_all
 					scroll_node = _node
 
@@ -145,7 +145,7 @@ class CUI.DocumentBrowser extends CUI.Element
 			@__layout.prepend(node.getMainArticleUrl(), "center")
 
 			if scroll_node
-				CUI.DOM.scrollIntoView(scroll_node)
+				CUI.dom.scrollIntoView(scroll_node)
 			else
 				@__layout.center().scrollTop = 0
 
@@ -194,12 +194,12 @@ class CUI.DocumentBrowser extends CUI.Element
 		if on_off
 			@__resetBtn.show()
 			@__searchBtn.hide()
-			CUI.DOM.remove(@__tree.DOM)
+			CUI.dom.remove(@__tree.DOM)
 			@__leftLayout.replace(@__searchResult, "content")
 		else
 			@__resetBtn.hide()
 			@__searchBtn.show()
-			CUI.DOM.remove(@__searchResult.DOM)
+			CUI.dom.remove(@__searchResult.DOM)
 			@__leftLayout.replace(@__tree.DOM, "content")
 
 	render: ->
@@ -257,7 +257,7 @@ class CUI.DocumentBrowser extends CUI.Element
 					hidden: false
 			center:
 				class: "cui-document-browser-center"
-				content: CUI.DOM.text(@_url)
+				content: CUI.dom.text(@_url)
 
 		@__layout
 

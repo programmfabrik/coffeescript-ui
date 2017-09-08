@@ -11,7 +11,7 @@ class CUI.Options extends CUI.DataField
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_sortable
-			CUI.DOM.addClass(@DOM, "cui-options--sortable")
+			CUI.dom.addClass(@DOM, "cui-options--sortable")
 
 	initOpts: ->
 		super()
@@ -331,7 +331,7 @@ class CUI.Options extends CUI.DataField
 				# if @_sortable
 				# 	if not opt.form
 				# 		opt.form = {}
-				# 	opt.form.label = CUI.DOM.div("cui-options-sortable-drag-handle cui-drag-handle-row")
+				# 	opt.form.label = CUI.dom.div("cui-options-sortable-drag-handle cui-drag-handle-row")
 
 				opt.radio = @__radio
 				if @_radio and @_min_checked == 0
@@ -451,9 +451,9 @@ class CUI.Options extends CUI.DataField
 
 					if @_sortable and cb.isActive()
 						# we need extra markup around our checkbox
-						el = CUI.DOM.element("DIV", class: "cui-options-sortable-option")
-						drag_handle = CUI.DOM.element("DIV", class: "cui-options-sortable-drag-handle")
-						drag_handle_inner = CUI.DOM.element("DIV", class: "cui-drag-handle-row")
+						el = CUI.dom.element("DIV", class: "cui-options-sortable-option")
+						drag_handle = CUI.dom.element("DIV", class: "cui-options-sortable-drag-handle")
+						drag_handle_inner = CUI.dom.element("DIV", class: "cui-drag-handle-row")
 						drag_handle.appendChild(drag_handle_inner)
 						el.appendChild(drag_handle)
 						el.appendChild(cb.DOM)

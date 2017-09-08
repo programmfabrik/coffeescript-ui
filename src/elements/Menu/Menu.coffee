@@ -121,7 +121,7 @@ class CUI.Menu extends CUI.Layer
 		element = @getOpt("element")
 		if not element or element instanceof CUI.Button
 			return element
-		button = CUI.DOM.data(element.DOM or element, "element")
+		button = CUI.dom.data(element.DOM or element, "element")
 		if button instanceof CUI.Button
 			return button
 		null

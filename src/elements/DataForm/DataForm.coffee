@@ -14,7 +14,7 @@ class CUI.DataForm extends CUI.DataTable
 				element: @DOM
 				selector: ".cui-data-form-row-move-handle"
 				create: (ev, target) ->
-					data = CUI.DOM.data(target, "data")
+					data = CUI.dom.data(target, "data")
 					if not data
 						return false
 					if data._new
@@ -94,7 +94,7 @@ class CUI.DataForm extends CUI.DataTable
 				@__removeEmptyRows()
 				@__storeValue()
 
-		CUI.DOM.setAttribute(new_form.DOM, "cui-form-depth", @getFormDepth() + 1)
+		CUI.dom.setAttribute(new_form.DOM, "cui-form-depth", @getFormDepth() + 1)
 		new_form
 
 	__updateView: ->
@@ -189,7 +189,7 @@ class CUI.DataForm extends CUI.DataTable
 
 	__removeRow: (row) ->
 		info = @__findRowInfo(row)
-		CUI.DOM.remove(info.dom)
+		CUI.dom.remove(info.dom)
 		@__rowRegistry.splice(info.idx, 1)
 		CUI.util.removeFromArray(row, @rows)
 		@__storeValue()
@@ -206,9 +206,9 @@ class CUI.DataForm extends CUI.DataTable
 				icon: "fa-minus"
 				appearance: "flat"
 				onMouseenter: =>
-					CUI.DOM.addClass(hl, "cui-data-form-row--trash")
+					CUI.dom.addClass(hl, "cui-data-form-row--trash")
 				onMouseleave: =>
-					CUI.DOM.removeClass(hl, "cui-data-form-row--trash")
+					CUI.dom.removeClass(hl, "cui-data-form-row--trash")
 				onClick: =>
 					@_onRowRemove?.call(@, data)
 					@__removeRow(data)
@@ -225,7 +225,7 @@ class CUI.DataForm extends CUI.DataTable
 			center:
 				content: @getForm(data).start()
 
-		CUI.DOM.data(hl.DOM, "data", data)
+		CUI.dom.data(hl.DOM, "data", data)
 
 		if data._new
 			move?.hide()

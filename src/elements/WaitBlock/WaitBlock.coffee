@@ -10,10 +10,10 @@ class CUI.WaitBlock extends CUI.Block
 	constructor: (@opts={}) ->
 		super(@opts)
 		if @_inactive
-			CUI.DOM.addClass(@DOM, "cui-wait-block-inactive")
+			CUI.dom.addClass(@DOM, "cui-wait-block-inactive")
 
 		if @_fullscreen
-			CUI.DOM.addClass(@DOM, "cui-wait-block-fullscreen")
+			CUI.dom.addClass(@DOM, "cui-wait-block-fullscreen")
 
 	initOpts: ->
 		super()
@@ -58,17 +58,17 @@ class CUI.WaitBlock extends CUI.Block
 		"wait-block"
 
 	show: ->
-		if not CUI.DOM.isPositioned(@__element)
-			@__savedPosition = CUI.DOM.getComputedStyle(@__element)["position"]
-			CUI.DOM.setStyleOne(@__element, "position", "relative")
+		if not CUI.dom.isPositioned(@__element)
+			@__savedPosition = CUI.dom.getComputedStyle(@__element)["position"]
+			CUI.dom.setStyleOne(@__element, "position", "relative")
 		else
 			@__savedPosition = null
 
-		CUI.DOM.addClass(@__element.DOM, "cui-wait-block-active")
+		CUI.dom.addClass(@__element.DOM, "cui-wait-block-active")
 		if @_fullscreen
-			CUI.DOM.append(@__element, @DOM)
+			CUI.dom.append(@__element, @DOM)
 		else
-			CUI.DOM.append(@__element, @DOM)
+			CUI.dom.append(@__element, @DOM)
 		@__shown = true
 		@
 
@@ -78,11 +78,11 @@ class CUI.WaitBlock extends CUI.Block
 	hide: ->
 		if not @isShown()
 			return @
-		CUI.DOM.remove(@DOM)
+		CUI.dom.remove(@DOM)
 		if @__savedPosition != null
-			CUI.DOM.setStyleOne(@__element, "position", @__savedPosition)
+			CUI.dom.setStyleOne(@__element, "position", @__savedPosition)
 
-		CUI.DOM.removeClass(@__element, "cui-wait-block-active")
+		CUI.dom.removeClass(@__element, "cui-wait-block-active")
 		@__shown = false
 		@__savedPosition = null
 		@

@@ -95,7 +95,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 		ok = false
 		for inp in @__inputs
-			CUI.DOM.append(@__multiInputDiv, inp.DOM)
+			CUI.dom.append(@__multiInputDiv, inp.DOM)
 			if @_control.isEnabled(inp.getName())
 				inp.show()
 				ok = true
@@ -133,7 +133,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		if @__inputs
 			return
 
-		@__multiInputDiv = CUI.DOM.div("cui-multi-input-container")
+		@__multiInputDiv = CUI.dom.div("cui-multi-input-container")
 
 		CUI.Events.listen
 			type: "multi-input-control-update"

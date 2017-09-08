@@ -33,8 +33,8 @@ class CUI.Form extends CUI.SimpleForm
 
 	getTableContainer: ->
 		layout = @getLayout()
-		form_depth = parseInt(CUI.DOM.getAttribute(@DOM, "cui-form-depth"))
-		CUI.DOM.setAttribute(layout.center(), "cui-form-depth", form_depth)
+		form_depth = parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))
+		CUI.dom.setAttribute(layout.center(), "cui-form-depth", form_depth)
 		layout.empty("center")
 		layout.center()
 

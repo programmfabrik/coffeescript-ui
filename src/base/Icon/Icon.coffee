@@ -23,9 +23,9 @@ class CUI.Icon extends CUI.Element
 			cls += " "+@_class
 
 		if svg_cls
-			@DOM = CUI.DOM.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
+			@DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
 		else
-			@DOM = CUI.DOM.element("I", class: "fa "+cls)
+			@DOM = CUI.dom.element("I", class: "fa "+cls)
 
 		if @_tooltip
 			@_tooltip.element = @DOM
@@ -47,10 +47,10 @@ class CUI.Icon extends CUI.Element
 		new CUI.Icon(@opts)
 
 	hide: ->
-		CUI.DOM.hideElement(@DOM)
+		CUI.dom.hideElement(@DOM)
 
 	show: ->
-		CUI.DOM.showElement(@DOM)
+		CUI.dom.showElement(@DOM)
 
 	@icon_map:
 		crop: "fa-crop"

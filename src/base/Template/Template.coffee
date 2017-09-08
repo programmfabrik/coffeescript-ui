@@ -32,14 +32,14 @@ class CUI.Template extends CUI.Element
 
 		@DOM = node.cloneNode(true)
 		if @_class
-			CUI.DOM.addClass(@DOM, @_class)
+			CUI.dom.addClass(@DOM, @_class)
 
-		#CUI.DOM.setElement(@DOM, @)
+		#CUI.dom.setElement(@DOM, @)
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
 		if not CUI.isEmptyObject(@map) and @_set_template_empty
-			CUI.DOM.addClass(@DOM, "cui-template-empty")
+			CUI.dom.addClass(@DOM, "cui-template-empty")
 
 		#
 		if @_init_flex_handles
@@ -77,8 +77,8 @@ class CUI.Template extends CUI.Element
 		# txt = "Template.initFlexHandles[name=#{@_name}]"
 		# console.time(txt)
 
-		for fh_el in CUI.DOM.matchSelector(@DOM, "[data-cui-flex-handle]")
-			opts = @readOptsFromAttr(CUI.DOM.getAttribute(fh_el, "data-cui-flex-handle"))
+		for fh_el in CUI.dom.matchSelector(@DOM, "[data-cui-flex-handle]")
+			opts = @readOptsFromAttr(CUI.dom.getAttribute(fh_el, "data-cui-flex-handle"))
 			if pane_opts[opts.name]
 				# merge opts
 				for k,v of pane_opts[opts.name]
@@ -124,7 +124,7 @@ class CUI.Template extends CUI.Element
 			else
 				sel = v
 
-			map_obj = CUI.DOM.matchSelector(@DOM, sel, true)
+			map_obj = CUI.dom.matchSelector(@DOM, sel, true)
 
 			if map_obj.length == 0
 				report.push("* #{k}: not found (#{sel})")
@@ -136,7 +136,7 @@ class CUI.Template extends CUI.Element
 			else
 				report.push("+ #{k}: found")
 				el_map[k] = map_obj[0]
-				# CUI.DOM.addClass(el_map[k], "cui-template-empty")
+				# CUI.dom.addClass(el_map[k], "cui-template-empty")
 
 				do (k) =>
 					el_map[k].empty = =>
@@ -155,30 +155,30 @@ class CUI.Template extends CUI.Element
 
 	destroy: ->
 		# CUI.error "destroying...", CUI.util.getObjectClass(DOM.data(@DOM, "element")), CUI.util.getObjectClass(@DOM[0])
-		CUI.DOM.remove(@DOM)
+		CUI.dom.remove(@DOM)
 		delete(@map)
 		super()
 
 	addClass: (cls, key) ->
 		if key
 			CUI.util.assert(@map[key], "#{@__cls}.addClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-			CUI.DOM.addClass(@map[key], cls)
+			CUI.dom.addClass(@map[key], cls)
 		else
-			CUI.DOM.addClass(@DOM, cls)
+			CUI.dom.addClass(@DOM, cls)
 
 	removeClass: (cls, key) ->
 		if key
 			CUI.util.assert(@map[key], "#{@__cls}.removeClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-			CUI.DOM.removeClass(@map[key], cls)
+			CUI.dom.removeClass(@map[key], cls)
 		else
-			CUI.DOM.removeClass(@DOM, cls)
+			CUI.dom.removeClass(@DOM, cls)
 
 	hasClass: (cls, key) ->
 		if key
 			CUI.util.assert(@map[key], "#{@__cls}.hasClass", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-			CUI.DOM.hasClass(@map[key], cls)
+			CUI.dom.hasClass(@map[key], cls)
 		else
-			CUI.DOM.hasClass(@DOM, cls)
+			CUI.dom.hasClass(@DOM, cls)
 
 	has: (key) ->
 		!!@map[key]
@@ -195,7 +195,7 @@ class CUI.Template extends CUI.Element
 		if key
 			CUI.util.assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			# CUI.debug "Template.destroyingChildren", key, @map[key]
-			CUI.DOM.empty(@map[key])
+			CUI.dom.empty(@map[key])
 
 			is_empty = true
 			for key of @map
@@ -204,20 +204,20 @@ class CUI.Template extends CUI.Element
 					break
 
 			if is_empty and @_set_template_empty
-				CUI.DOM.addClass(@DOM, "cui-template-empty")
+				CUI.dom.addClass(@DOM, "cui-template-empty")
 
 			return @map[key]
 
 		if CUI.isEmptyObject(@map)
 			# without map we empty the whole @DOM
-			CUI.DOM.empty(@DOM)
+			CUI.dom.empty(@DOM)
 		else
 			# with map we empty each individual map entry
 			for key of @map
-				CUI.DOM.empty(@map[key])
+				CUI.dom.empty(@map[key])
 
 			if @_set_template_empty
-				CUI.DOM.addClass(@DOM, "cui-template-empty")
+				CUI.dom.addClass(@DOM, "cui-template-empty")
 
 		return @DOM
 
@@ -269,9 +269,9 @@ class CUI.Template extends CUI.Element
 			node = @DOM
 
 		if appends.length > 0
-			CUI.DOM[fn](node, appends)
+			CUI.dom[fn](node, appends)
 			if @_set_template_empty
-				CUI.DOM.removeClass(@DOM, "cui-template-empty")
+				CUI.dom.removeClass(@DOM, "cui-template-empty")
 
 		node
 
@@ -288,7 +288,7 @@ class CUI.Template extends CUI.Element
 	removeEmptySlots: ->
 		for key, node of @map
 			if not node.firstChild
-				CUI.DOM.remove(node)
+				CUI.dom.remove(node)
 		@
 
 	@nodeByName: {}
@@ -320,7 +320,7 @@ class CUI.Template extends CUI.Element
 
 	@load: (start_element = document.documentElement) ->
 		count = 0
-		for el in CUI.DOM.matchSelector(start_element, ".cui-tmpl,[data-template]")
+		for el in CUI.dom.matchSelector(start_element, ".cui-tmpl,[data-template]")
 			name = null
 
 			name = el.getAttribute("data-template")
@@ -337,7 +337,7 @@ class CUI.Template extends CUI.Element
 			if name
 				# console.debug("Template: ", name)
 				CUI.Template.nodeByName[name] = el
-				CUI.DOM.remove(el)
+				CUI.dom.remove(el)
 				el.classList.remove("cui-tmpl")
 				el.removeAttribute("data-template")
 				count = count + 1
@@ -345,7 +345,7 @@ class CUI.Template extends CUI.Element
 		return count
 
 	@__appendContent: (data, load_templates) ->
-		div = CUI.DOM.element("DIV", style: "display:none;")
+		div = CUI.dom.element("DIV", style: "display:none;")
 		div.innerHTML = data
 		if not load_templates
 			document.body.appendChild(div)

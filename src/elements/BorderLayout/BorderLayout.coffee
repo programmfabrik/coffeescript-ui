@@ -26,7 +26,7 @@ class CUI.BorderLayout extends CUI.Layout
 		super()
 
 		if @_absolute
-			CUI.DOM.addClass(@getLayout().map.row, "cui-absolute")
+			CUI.dom.addClass(@getLayout().map.row, "cui-absolute")
 			# we need listen to viewport resize
 			CUI.Events.listen
 				type: "viewport-resize"

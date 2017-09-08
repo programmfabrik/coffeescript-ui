@@ -54,7 +54,7 @@ class CUI.Events extends CUI.Element
 		if node == document or node == window
 			@__listeners
 		else
-			CUI.DOM.data(node, "listeners")
+			CUI.dom.data(node, "listeners")
 
 	@__registerListener: (listener) ->
 		CUI.util.assert(listener instanceof CUI.Listener, "CUI.Events.__registerListener", "listener needs to be instance of Listener", listener: listener)
@@ -63,7 +63,7 @@ class CUI.Events extends CUI.Element
 		listeners = @__getListenersForNode(node)
 		if not listeners
 			listeners = []
-			CUI.DOM.data(node, "listeners", listeners)
+			CUI.dom.data(node, "listeners", listeners)
 
 		listeners.push(listener)
 
@@ -76,11 +76,11 @@ class CUI.Events extends CUI.Element
 			listeners = @__listeners.slice(0)
 		else
 			listeners = []
-			if CUI.DOM.matches(doc, '[data-cui-listeners]')
-				listeners.push.apply(listeners, CUI.DOM.data(doc, "listeners"))
+			if CUI.dom.matches(doc, '[data-cui-listeners]')
+				listeners.push.apply(listeners, CUI.dom.data(doc, "listeners"))
 
-		for el in CUI.DOM.matchSelector(doc, "[data-cui-listeners]")
-			listeners.push.apply(listeners, CUI.DOM.data(el, "listeners"))
+		for el in CUI.dom.matchSelector(doc, "[data-cui-listeners]")
+			listeners.push.apply(listeners, CUI.dom.data(el, "listeners"))
 		listeners
 
 	@unregisterListener: (listener) ->
@@ -91,7 +91,7 @@ class CUI.Events extends CUI.Element
 		CUI.util.removeFromArray(listener, arr)
 		if arr.length == 0 and node instanceof HTMLElement
 			node.removeAttribute("cui-events-listener-element")
-			CUI.DOM.removeData(node, "listeners")
+			CUI.dom.removeData(node, "listeners")
 			# CUI.debug "removing listeners from node", node[0]
 		@
 
@@ -105,7 +105,7 @@ class CUI.Events extends CUI.Element
 			node:
 				mandatory: true
 				check: (v) ->
-					CUI.DOM.isNode(v)
+					CUI.dom.isNode(v)
 			# optionally wait for a timeout
 			# if set to <= 0, wait forever
 			maxWait:
@@ -124,7 +124,7 @@ class CUI.Events extends CUI.Element
 		dfrs = []
 		listeners = []
 
-		_node = CUI.DOM.getNode(opts.node)
+		_node = CUI.dom.getNode(opts.node)
 
 		dfr = new CUI.Deferred()
 		listeners.push CUI.Events.listen
@@ -228,7 +228,7 @@ class CUI.Events extends CUI.Element
 				# CUI.debug "listener:", listener, listener.getDepthFromLastMatchedEvent()
 
 				if listener_node and stopNodes.length > 0
-					listener_node_parents = CUI.DOM.parents(listener_node)
+					listener_node_parents = CUI.dom.parents(listener_node)
 					skip = false
 					for stopNode in stopNodes
 						for listener_node_parent in listener_node_parents
@@ -275,7 +275,7 @@ class CUI.Events extends CUI.Element
 		for listener in @__listeners
 			console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
 
-		for listener in CUI.DOM.data(document.documentElement, "listeners")
+		for listener in CUI.dom.data(document.documentElement, "listeners")
 			console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
 		@
 

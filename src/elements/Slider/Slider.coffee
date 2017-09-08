@@ -42,8 +42,8 @@ class CUI.Slider extends CUI.DataField
 				handle: true
 
 	initDimensions: ->
-		@__track_dim = CUI.DOM.getDimensions(@__track)
-		@__handle_dim = CUI.DOM.getDimensions(@__handle)
+		@__track_dim = CUI.dom.getDimensions(@__track)
+		@__handle_dim = CUI.dom.getDimensions(@__handle)
 		@__track_available =
 			width: @__track_dim.contentBoxWidth - (@__handle_dim.borderBoxWidth / 2)
 			height: @__track_dim.contentBoxHeight - (@__handle_dim.borderBoxHeight / 2)
@@ -122,7 +122,7 @@ class CUI.Slider extends CUI.DataField
 
 	displayValue: ->
 		percent = @getValue() / @_max * 100
-		CUI.DOM.setStyle(@__handle, left: percent + '%')
+		CUI.dom.setStyle(@__handle, left: percent + '%')
 		@_onUpdate?(@, @getValue())
 
 	checkValue: (v, flags) ->

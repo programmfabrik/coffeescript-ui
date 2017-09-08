@@ -38,47 +38,47 @@ class CUI.DigiDisplay extends CUI.DOMElement
 			fc = info.first_div
 
 			if not info.height
-				info.height = CUI.DOM.getDimensions(fc).borderBoxHeight
-			CUI.DOM.setStyleOne(fc, "marginTop", "-"+(_idx*info.height)+"px")
+				info.height = CUI.dom.getDimensions(fc).borderBoxHeight
+			CUI.dom.setStyleOne(fc, "marginTop", "-"+(_idx*info.height)+"px")
 			fc.setAttribute("c", c)
 			fc.setAttribute("idx", _idx)
 		@
 
 	createMarkup: ->
-		@__displayDiv = CUI.DOM.div("cui-digi-display")
+		@__displayDiv = CUI.dom.div("cui-digi-display")
 
 		for digit, digit_idx in @_digits
 			if digit.static
-				CUI.DOM.append(@__displayDiv, container = CUI.DOM.div("cui-digi-display-static cui-digi-display-#{digit_idx}"))
-				CUI.DOM.addClass(CUI.DOM.append(container, CUI.DOM.text(digit.static)), digit.class)
+				CUI.dom.append(@__displayDiv, container = CUI.dom.div("cui-digi-display-static cui-digi-display-#{digit_idx}"))
+				CUI.dom.addClass(CUI.dom.append(container, CUI.dom.text(digit.static)), digit.class)
 				if digit.attr
 					container.getAttribute(digit.attr)
 				continue
 			digit.__regexp = new RegExp(digit.mask)
-			CUI.DOM.append(@__displayDiv, container = CUI.DOM.div("cui-digi-display-container cui-digi-display-#{digit_idx}"))
-			CUI.DOM.addClass(container, digit.class)
+			CUI.dom.append(@__displayDiv, container = CUI.dom.div("cui-digi-display-container cui-digi-display-#{digit_idx}"))
+			CUI.dom.addClass(container, digit.class)
 			if digit.attr
 				container.getAttribute(digit.attr)
 
 			@__digitsMap[digit_idx] = map: (map = {})
 
 			# for the "unknown character
-			fc = CUI.DOM.div("cui-digi-display-digit")
+			fc = CUI.dom.div("cui-digi-display-digit")
 			fc.innerHTML = "&nbsp;"
-			CUI.DOM.append(container, fc)
+			CUI.dom.append(container, fc)
 			@__digitsMap[digit_idx].first_div = fc
 			idx = 1
 			matched = false
 			for i in [32..128]
 				if digit.__regexp.exec(c = String.fromCharCode(i))
 					if i == 32
-						div = CUI.DOM.div("cui-digi-display-digit")
+						div = CUI.dom.div("cui-digi-display-digit")
 						div.innerHTML = "&nbsp;"
-						CUI.DOM.append(container, div)
+						CUI.dom.append(container, div)
 					else
-						div = CUI.DOM.div("cui-digi-display-digit")
+						div = CUI.dom.div("cui-digi-display-digit")
 						div.textContent = c
-						CUI.DOM.append(container, div)
+						CUI.dom.append(container, div)
 					map[c] = idx
 					idx++
 					matched = true

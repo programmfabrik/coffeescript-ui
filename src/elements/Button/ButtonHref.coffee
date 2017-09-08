@@ -18,7 +18,7 @@ class CUI.ButtonHref extends CUI.Button
 		if @_download
 			attr.download = "download"
 
-		CUI.DOM.setAttributeMap(@DOM, attr)
+		CUI.dom.setAttributeMap(@DOM, attr)
 
 	initOpts: ->
 		super()
@@ -39,7 +39,7 @@ class CUI.ButtonHref extends CUI.Button
 		@
 
 	setHref: (href) ->
-		CUI.DOM.setAttribute(@DOM, "href", href)
+		CUI.dom.setAttribute(@DOM, "href", href)
 
 	getTemplateName: ->
 		# super sets @__has_left + @__has_right

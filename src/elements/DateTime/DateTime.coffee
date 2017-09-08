@@ -191,11 +191,11 @@ class CUI.DateTime extends CUI.Input
 		switch cursor
 			when "hour", "minute", "second", "am_pm"
 				title = @__locale_format.tab_time
-				CUI.DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
+				CUI.dom.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
 				@setDigiClock()
 			else
 				title = @__locale_format.tab_date
-				CUI.DOM.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
+				CUI.dom.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
 
 		@__dateTimeTmpl.replace(new CUI.Label(text: title), "header_center")
 		@
@@ -281,7 +281,7 @@ class CUI.DateTime extends CUI.Input
 				@openPopover(btn)
 
 		@replace(btn, "right")
-		# @append(@__status = CUI.DOM.div("cui-date-time-status"), "center")
+		# @append(@__status = CUI.dom.div("cui-date-time-status"), "center")
 
 	format: (_s, type="display", output_type=null) ->
 		CUI.util.assert(type in CUI.DateTime.formatTypes, "CUI.DateTime.format", "type must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
@@ -530,9 +530,9 @@ class CUI.DateTime extends CUI.Input
 		minutes = minute + seconds / 60
 		hours = (hour%12) + minutes / 60
 
-		CUI.DOM.setStyleOne(@__hour, "transform", "rotate(" + hours * 30 + "deg)")
-		CUI.DOM.setStyleOne(@__minute, "transform", "rotate(" + minutes * 6 + "deg)")
-		CUI.DOM.setStyleOne(@__second, "transform", "rotate(" + seconds * 6 + "deg)")
+		CUI.dom.setStyleOne(@__hour, "transform", "rotate(" + hours * 30 + "deg)")
+		CUI.dom.setStyleOne(@__minute, "transform", "rotate(" + minutes * 6 + "deg)")
+		CUI.dom.setStyleOne(@__second, "transform", "rotate(" + seconds * 6 + "deg)")
 
 
 	setDigiClock: (mom = @__current_moment) ->
@@ -549,8 +549,8 @@ class CUI.DateTime extends CUI.Input
 		mom_tz = mom.clone()
 		mom_tz.tz(CUI.tz_data.tz)
 		# CUI.debug @__input_format.timezone_display, mom_tz.format(@__input_format.timezone_display)
-		CUI.DOM.empty(@__timezone_display)
-		CUI.DOM.append(@__timezone_display, mom_tz.format(@__input_format.timezone_display))
+		CUI.dom.empty(@__timezone_display)
+		CUI.dom.append(@__timezone_display, mom_tz.format(@__input_format.timezone_display))
 
 	setTimezone: ->
 
@@ -591,7 +591,7 @@ class CUI.DateTime extends CUI.Input
 			opts.push
 				text: tz.print_name
 				right: if mom
-								 span = CUI.DOM.span("cui-timezone-offset").setAttribute("title", tz.geo)
+								 span = CUI.dom.span("cui-timezone-offset").setAttribute("title", tz.geo)
 								 span.textContent = mom.tz(tz.name).format("zZ")
 								 span
 							 else
@@ -684,7 +684,7 @@ class CUI.DateTime extends CUI.Input
 		@updateCalendar(mom, false)
 
 	updateCalendar: (mom, update_current_moment = true) ->
-		CUI.DOM.empty(@__calendar)
+		CUI.dom.empty(@__calendar)
 
 		@__calendar.append(@getDateTimeDrawer(mom))
 		@__calendar.append(@drawMonthTable(mom))
@@ -1020,7 +1020,7 @@ class CUI.DateTime extends CUI.Input
 		]) # .utc()
 
 
-		month_table = CUI.DOM.table("cui-date-time-date")
+		month_table = CUI.dom.table("cui-date-time-date")
 
 		CUI.Events.listen
 			node: month_table
@@ -1029,8 +1029,8 @@ class CUI.DateTime extends CUI.Input
 				ev.stopPropagation()
 				$target = ev.getTarget()
 				# CUI.debug "click on date table", ev.getTarget()
-				if CUI.DOM.closest($target, ".cui-date-time-day")
-					data = CUI.DOM.data(CUI.DOM.closest($target, "td,.cui-td"))
+				if CUI.dom.closest($target, ".cui-date-time-day")
+					data = CUI.dom.data(CUI.dom.closest($target, "td,.cui-td"))
 
 					# order here is important, we need to set the month
 					# before we set the date!
@@ -1043,19 +1043,19 @@ class CUI.DateTime extends CUI.Input
 				return
 
 		# Wk, Mo, Tu, We, Th...
-		tr = CUI.DOM.tr("cui-date-time-month-header")
-		CUI.DOM.append(month_table, tr)
+		tr = CUI.dom.tr("cui-date-time-month-header")
+		CUI.dom.append(month_table, tr)
 
-		td_func = CUI.DOM.th
+		td_func = CUI.dom.th
 
-		CUI.DOM.div("cui-date-time-dow").textContent = @__locale_format.tab_week
-		CUI.DOM.append(tr, CUI.DOM.append(td_func("cui-date-time-week-title"), CUI.DOM.div("cui-date-time-dow")))
+		CUI.dom.div("cui-date-time-dow").textContent = @__locale_format.tab_week
+		CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), CUI.dom.div("cui-date-time-dow")))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
-			CUI.DOM.div("cui-date-time-dow").textContent = weekday
-			day_div = CUI.DOM.div("cui-date-time-dow")
-			CUI.DOM.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
-			CUI.DOM.append(tr, CUI.DOM.append(td_func(), day_div))
+			CUI.dom.div("cui-date-time-dow").textContent = weekday
+			day_div = CUI.dom.div("cui-date-time-dow")
+			CUI.dom.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
+			CUI.dom.append(tr, CUI.dom.append(td_func(), day_div))
 
 		# Weeks
 		mom.subtract((mom.day()-@start_day+7)%7, "days")
@@ -1070,32 +1070,32 @@ class CUI.DateTime extends CUI.Input
 				if weeks ==6
 					# if ((curr_m > m and date.getUTCFullYear() == year) or date.getUTCFullYear() > year)
 					break
-				tr = CUI.DOM.tr()
-				CUI.DOM.append(month_table, tr)
+				tr = CUI.dom.tr()
+				CUI.dom.append(month_table, tr)
 				week_no = mom.week() #@start_day==0)
-				CUI.DOM.append(tr, CUI.DOM.append(CUI.DOM.td("cui-date-time-week"), CUI.DOM.text(week_no)))
+				CUI.dom.append(tr, CUI.dom.append(CUI.dom.td("cui-date-time-week"), CUI.dom.text(week_no)))
 				weeks++
 
-			div_type = CUI.DOM.td
+			div_type = CUI.dom.td
 
 			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-"))
 			day_div.textContent = day_no
 
 			if curr_m < month
-				CUI.DOM.addClass(day_div, "cui-date-time-previous-month")
+				CUI.dom.addClass(day_div, "cui-date-time-previous-month")
 			else if curr_m > month
-				CUI.DOM.addClass(day_div, "cui-date-time-next-month")
+				CUI.dom.addClass(day_div, "cui-date-time-next-month")
 			else
-				CUI.DOM.addClass(day_div, "cui-date-time-same-month")
+				CUI.dom.addClass(day_div, "cui-date-time-same-month")
 				if year == now.year() and month == now.month() and day_no == now.date()
-					CUI.DOM.addClass(day_div, "cui-date-time-now")
+					CUI.dom.addClass(day_div, "cui-date-time-now")
 
-			CUI.DOM.addClass(day_div, "cui-date-time-day-"+mom.format("dd").toLowerCase())
+			CUI.dom.addClass(day_div, "cui-date-time-day-"+mom.format("dd").toLowerCase())
 
 			td = day_div
-			CUI.DOM.append(tr, td)
+			CUI.dom.append(tr, td)
 
-			CUI.DOM.data(td,
+			CUI.dom.data(td,
 				date: day_no
 				month: curr_m
 				year: curr_y
@@ -1108,8 +1108,8 @@ class CUI.DateTime extends CUI.Input
 
 	markDay: ->
 
-		for el in CUI.DOM.matchSelector(@__dateTimeTmpl.DOM, ".cui-date-time-calendar .cui-date-time-selected")
-			CUI.DOM.removeClass(el, "cui-date-time-selected")
+		for el in CUI.dom.matchSelector(@__dateTimeTmpl.DOM, ".cui-date-time-calendar .cui-date-time-selected")
+			CUI.dom.removeClass(el, "cui-date-time-selected")
 
 		# CUI.debug "markDay", @__current_moment, @__current_moment.__now
 		if @__current_moment.__now
@@ -1122,8 +1122,8 @@ class CUI.DateTime extends CUI.Input
 		].join("-")
 
 		# CUI.debug "markDay", datestr
-		for el in CUI.DOM.matchSelector(@__calendar, "[datestr=\"#{datestr}\"]")
-			CUI.DOM.addClass(el, "cui-date-time-selected")
+		for el in CUI.dom.matchSelector(@__calendar, "[datestr=\"#{datestr}\"]")
+			CUI.dom.addClass(el, "cui-date-time-selected")
 		return
 
 
@@ -1133,7 +1133,7 @@ class CUI.DateTime extends CUI.Input
 	# 		@markTime()
 	# 		return
 
-	# 	@__gridTable = CUI.DOM.table("cui-date-time-day-grid")
+	# 	@__gridTable = CUI.dom.table("cui-date-time-day-grid")
 	# 	@__hour_minute.empty().append(@__gridTable)
 
 	# 	CUI.Events.listen
@@ -1193,59 +1193,59 @@ class CUI.DateTime extends CUI.Input
 
 	# 			return
 
-	# 	#CUI.DOM.tr().appendTo(table).append(
-	# 	#	CUI.DOM.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.DOM.text("Hour"))
+	# 	#CUI.dom.tr().appendTo(table).append(
+	# 	#	CUI.dom.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.dom.text("Hour"))
 	# 	#)
 	# 	if not @__input_formats[0].clock_am_pm
 	# 		for hour in [0..23]
 	# 			if hour % 6 == 0
-	# 				tr = CUI.DOM.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 				tr = CUI.dom.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
-	# 				td = CUI.DOM.td("cui-date-time-grid-hour")
+	# 				td = CUI.dom.td("cui-date-time-grid-hour")
 	# 				.setAttribute("hour", hour)
-	# 				.append(CUI.DOM.text(hour))
+	# 				.append(CUI.dom.text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
 	# 		tr.addClass("cui-date-time-grid-row-last")
 	# 	else
 	# 		for hour in [1..12]
 	# 			if (hour-1) % 6 == 0
-	# 				tr = CUI.DOM.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 				tr = CUI.dom.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
-	# 				td = CUI.DOM.td("cui-date-time-grid-hour")
+	# 				td = CUI.dom.td("cui-date-time-grid-hour")
 	# 				.setAttribute("hour", hour)
-	# 				.append(CUI.DOM.text(hour))
+	# 				.append(CUI.dom.text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
 	# 		tr.addClass("cui-date-time-grid-row-last")
 	# 		# ----------------------
-	# 		tr = CUI.DOM.tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
+	# 		tr = CUI.dom.tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
 	# 		for am_pm in ["AM","PM"]
 	# 			tr.append(
-	# 				td = CUI.DOM.td("cui-date-time-grid-am-pm")
+	# 				td = CUI.dom.td("cui-date-time-grid-am-pm")
 	# 				.setAttribute("am_pm", am_pm)
-	# 				.append(CUI.DOM.text(am_pm))
+	# 				.append(CUI.dom.text(am_pm))
 	# 			)
 	# 			DOM.data(td[0], "am_pm", am_pm)
-	# 		tr.append(CUI.DOM.td("",colspan:4))
+	# 		tr.append(CUI.dom.td("",colspan:4))
 
 	# 		tr.addClass("cui-date-time-grid-row-last")
 
-	# 	#CUI.DOM.tr().appendTo(table).append(
-	# 	#	CUI.DOM.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.DOM.text("Minute"))
+	# 	#CUI.dom.tr().appendTo(table).append(
+	# 	#	CUI.dom.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.dom.text("Minute"))
 	# 	#)
 
 	# 	for minute in [0..59] by 5
 	# 		if minute % 6 == 0
-	# 			tr = CUI.DOM.tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
+	# 			tr = CUI.dom.tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
 	# 		if minute < 10
 	# 			_minute = ":0"+minute
 	# 		else
 	# 			_minute = ":"+minute
 	# 		tr.append(
-	# 			td = CUI.DOM.td("cui-date-time-grid-minute")
+	# 			td = CUI.dom.td("cui-date-time-grid-minute")
 	# 			.setAttribute("minute", minute)
-	# 			.append(CUI.DOM.text(_minute))
+	# 			.append(CUI.dom.text(_minute))
 	# 		)
 
 	# 		DOM.data(td[0], "minute", minute)

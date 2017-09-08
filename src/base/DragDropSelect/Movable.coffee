@@ -48,20 +48,20 @@ class CUI.Movable extends CUI.Draggable
 		if not CUI.util.isEmpty(pos.h)
 			setCss.marginBoxHeight = pos.h
 
-		CUI.DOM.setDimensions(@element, setCss)
+		CUI.dom.setDimensions(@element, setCss)
 		@_onPositioned?(pos)
 
 
 	init_drag: (ev, $target) ->
 		# CUI.debug "init_drag target", ev.getTarget(), $target[0]
-		if CUI.DOM.closest(ev.getTarget(), ".cui-resizable-handle")
+		if CUI.dom.closest(ev.getTarget(), ".cui-resizable-handle")
 			return
 		# CUI.debug "init_drag on #{@cls}", ev, $target[0]
 		super(ev, $target)
 
 
 	before_drag: ->
-		dim = CUI.DOM.getDimensions(@element)
+		dim = CUI.dom.getDimensions(@element)
 		@start =
 			x: dim.left or 0
 			y: dim.top or 0

@@ -104,7 +104,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		handle_event = (ev) =>
 
-			node = CUI.DOM.data(CUI.DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
+			node = CUI.dom.data(CUI.dom.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
 
 			if node not instanceof CUI.ListViewTreeNode or node.isLoading() or node.isLeaf()
 				return
@@ -140,9 +140,9 @@ class CUI.ListViewTree extends CUI.ListView
 			@root.open()
 
 		if @_no_hierarchy
-			CUI.DOM.addClass(@grid, "cui-list-view-tree-no-hierarchy")
+			CUI.dom.addClass(@grid, "cui-list-view-tree-no-hierarchy")
 		else
-			CUI.DOM.addClass(@grid, "cui-list-view-tree-hierarchy")
+			CUI.dom.addClass(@grid, "cui-list-view-tree-hierarchy")
 
 		@DOM
 
@@ -286,7 +286,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		row_index = @getRowIdx(index)
 		row = @getRow(row_index)
-		CUI.DOM.data(row[0], "listViewRow").open()
+		CUI.dom.data(row[0], "listViewRow").open()
 
 
 CUI.Events.registerEvent

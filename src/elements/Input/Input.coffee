@@ -192,12 +192,12 @@ class CUI.Input extends CUI.DataFieldInput
 
 	setSpellcheck: (spellcheck) ->
 		if spellcheck
-			CUI.DOM.setAttribute(@__input, "spellcheck", "default")
+			CUI.dom.setAttribute(@__input, "spellcheck", "default")
 		else
-			CUI.DOM.setAttribute(@__input, "spellcheck", "false")
+			CUI.dom.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
-		CUI.DOM.setAttribute(@__input, "placeholder", placeholder)
+		CUI.dom.setAttribute(@__input, "placeholder", placeholder)
 
 	getPlaceholder: ->
 		if not @_placeholder
@@ -215,14 +215,14 @@ class CUI.Input extends CUI.DataFieldInput
 
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
-			@__input = CUI.DOM.$element "textarea", "cui-textarea",
+			@__input = CUI.dom.$element "textarea", "cui-textarea",
 				placeholder: @getPlaceholder()
 				tabindex: "0"
 				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 		else
-			@__input = CUI.DOM.$element "input", "cui-input",
+			@__input = CUI.dom.$element "input", "cui-input",
 				type: input_type
 				size: 1
 				placeholder: @getPlaceholder()
@@ -397,7 +397,7 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.debug "listening for dom insert on ", @__input
 		#
 		if @_content_size
-			CUI.DOM.waitForDOMInsert(node: @__input)
+			CUI.dom.waitForDOMInsert(node: @__input)
 			.done =>
 				if @isDestroyed()
 					return
@@ -493,9 +493,9 @@ class CUI.Input extends CUI.DataFieldInput
 		if @__contentSize
 			return
 
-		@__contentSize = CUI.DOM.$element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
+		@__contentSize = CUI.dom.$element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
 
-		CUI.DOM.append(document.body, @__contentSize)
+		CUI.dom.append(document.body, @__contentSize)
 
 		style = window.getComputedStyle(@__input)
 
@@ -522,21 +522,21 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @_textarea
 			css.whiteSpace = "nowrap"
 
-		CUI.DOM.setStyle(@__contentSize, css)
-		CUI.DOM.height(@__contentSize, 1)
+		CUI.dom.setStyle(@__contentSize, css)
+		CUI.dom.height(@__contentSize, 1)
 
 		if @_textarea
-			CUI.DOM.width(@__contentSize, CUI.DOM.width(@__contentSize))
-			@__max_height = parseFloat(CUI.DOM.getComputedStyle(@__input)["max-height"])
+			CUI.dom.width(@__contentSize, CUI.dom.width(@__contentSize))
+			@__max_height = parseFloat(CUI.dom.getComputedStyle(@__input)["max-height"])
 			@__input.style.overflow = "hidden"
 
 			if isNaN(@__max_height)
 				@__max_height = null
 			else
-				correct_height = parseFloat(CUI.DOM.getComputedStyle(@__input)["height"]) - CUI.DOM.height(@__input)
+				correct_height = parseFloat(CUI.dom.getComputedStyle(@__input)["height"]) - CUI.dom.height(@__input)
 				@__max_height -= correct_height
 		else
-			CUI.DOM.width(@__contentSize, 1)
+			CUI.dom.width(@__contentSize, 1)
 		@
 
 	__setContentSize: ->
@@ -558,8 +558,8 @@ class CUI.Input extends CUI.DataFieldInput
 			if @__input.value.length == 0
 				@__contentSize.value = "A" # help IE out, so we get a height
 
-			if CUI.DOM.width(@__input) != CUI.DOM.width(@__contentSize)
-				CUI.DOM.width(@__contentSize, CUI.DOM.width(@__input))
+			if CUI.dom.width(@__input) != CUI.dom.width(@__contentSize)
+				CUI.dom.width(@__contentSize, CUI.dom.width(@__input))
 
 			h = @__contentSize.scrollHeight
 
@@ -568,10 +568,10 @@ class CUI.Input extends CUI.DataFieldInput
 			else
 				@__input.style.overflow = ""
 
-			previous_height = CUI.DOM.height(@__input)
-			CUI.DOM.height(@__input, h)
+			previous_height = CUI.dom.height(@__input)
+			CUI.dom.height(@__input, h)
 
-			if CUI.DOM.height(@__input) != previous_height
+			if CUI.dom.height(@__input) != previous_height
 				changed = true
 
 			# CUI.error "__setContentSize", @_textarea, @__input.value, @__contentSize.value, h
@@ -585,10 +585,10 @@ class CUI.Input extends CUI.DataFieldInput
 				# Chrome measures a Textarea width different than an Input width
 				w = w + 1
 
-			if CUI.DOM.width(@__input) != w
+			if CUI.dom.width(@__input) != w
 				changed = true
 
-			CUI.DOM.width(@__input, w)
+			CUI.dom.width(@__input, w)
 
 		if changed
 			CUI.Events.trigger
@@ -818,13 +818,13 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.debug "initShadowInput", @getUniqueId()
 		#
 		if @_textarea
-			@__shadow = CUI.DOM.$element("textarea", "cui-input-shadow")
+			@__shadow = CUI.dom.$element("textarea", "cui-input-shadow")
 		else
-			@__shadow = CUI.DOM.$element("input", "cui-input-shadow", type: "text")
+			@__shadow = CUI.dom.$element("input", "cui-input-shadow", type: "text")
 
 		@__shadow.setAttribute("tabindex", "-1")
 		@__shadow.setAttribute("autocomplete", "off")
-		CUI.DOM.append(document.body, @__shadow)
+		CUI.dom.append(document.body, @__shadow)
 
 		if @_content_size
 			@__initContentSize()
@@ -915,12 +915,12 @@ class CUI.Input extends CUI.DataFieldInput
 				@addClass("cui-input-invalid")
 
 		for k in ["empty", "invalid", "valid"]
-			CUI.DOM.hideElement(@__inputHints[k]?.DOM)
+			CUI.dom.hideElement(@__inputHints[k]?.DOM)
 
 		if not @hasUserInput() and state == "invalid"
-			CUI.DOM.showElement(@__inputHints.empty?.DOM)
+			CUI.dom.showElement(@__inputHints.empty?.DOM)
 		else
-			CUI.DOM.showElement(@__inputHints[state]?.DOM)
+			CUI.dom.showElement(@__inputHints[state]?.DOM)
 		@
 
 	getInputState: ->

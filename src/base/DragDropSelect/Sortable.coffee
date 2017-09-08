@@ -25,7 +25,7 @@ class CUI.Sortable extends CUI.Draggable
 		@removeOpt("helper_contain_element")
 
 	getSortTarget: (target, node) ->
-		els = CUI.DOM.elementsUntil(target, null, node)
+		els = CUI.dom.elementsUntil(target, null, node)
 		if els.length > 1
 			els[els.length-2]
 		else
@@ -55,12 +55,12 @@ class CUI.Sortable extends CUI.Draggable
 
 		if source_idx < dest_idx
 			CUI.globalDrag.noClickKill = true
-			CUI.DOM.insertAfter($dest, $source)
+			CUI.dom.insertAfter($dest, $source)
 		else if source_idx > dest_idx
 			CUI.globalDrag.noClickKill = true
-			CUI.DOM.insertBefore($dest, $source)
+			CUI.dom.insertBefore($dest, $source)
 
-		CUI.DOM.syncAnimatedClone(@element)
+		CUI.dom.syncAnimatedClone(@element)
 		@
 
 	start_drag: (ev, $target, diff) ->
@@ -68,16 +68,16 @@ class CUI.Sortable extends CUI.Draggable
 		CUI.globalDrag.sort_source = @__findClosestSon(CUI.globalDrag.$source)
 		CUI.globalDrag.sort_source.classList.add("cui-sortable-placeholder")
 		CUI.globalDrag.start_idx = @get_child_number(CUI.globalDrag.sort_source)
-		CUI.DOM.addClass(@element, 'cui-sorting')
+		CUI.dom.addClass(@element, 'cui-sorting')
 
-		CUI.DOM.initAnimatedClone(@element)
+		CUI.dom.initAnimatedClone(@element)
 
 	getCloneSourceForHelper: ->
 		@__findClosestSon(CUI.globalDrag.$source)
 
 	__findClosestSon: ($target) ->
 		# find the closest child of the target
-		parents = CUI.DOM.parentsUntil($target, null, @element)
+		parents = CUI.dom.parentsUntil($target, null, @element)
 
 		if parents[parents.length-1] == window
 			return null
@@ -118,9 +118,9 @@ class CUI.Sortable extends CUI.Draggable
 
 	cleanup_drag: (ev) ->
 		super(ev)
-		CUI.DOM.removeClass(@element, 'cui-sorting')
+		CUI.dom.removeClass(@element, 'cui-sorting')
 		CUI.globalDrag.sort_source.classList.remove("cui-sortable-placeholder")
-		CUI.DOM.removeAnimatedClone(@element)
+		CUI.dom.removeAnimatedClone(@element)
 
 	__end_drag: (ev, stopped) ->
 		# move dragged object into position

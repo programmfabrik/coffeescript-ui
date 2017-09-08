@@ -187,12 +187,12 @@ class CUI.ListView extends CUI.SimplePane
 		@__inactive = !!inactive
 		if @grid
 			if @__inactive
-				CUI.DOM.addClass(@grid, addClass)
+				CUI.dom.addClass(@grid, addClass)
 				@__inactiveWaitBlock = new CUI.WaitBlock(element: @grid, inactive: true).show()
 			else
 				@__inactiveWaitBlock?.destroy()
 				@__inactiveWaitBlock = null
-				CUI.DOM.removeClass(@grid, addClass)
+				CUI.dom.removeClass(@grid, addClass)
 		@
 
 	render: ->
@@ -273,26 +273,26 @@ class CUI.ListView extends CUI.SimplePane
 		@grid = outer.firstChild
 
 		@quadrant = [
-			CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-0")[0]
-			CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-1")[0]
-			CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-2")[0]
-			CUI.DOM.matchSelector(outer, ".cui-list-view-grid-quadrant-3")[0]
+			CUI.dom.matchSelector(outer, ".cui-list-view-grid-quadrant-0")[0]
+			CUI.dom.matchSelector(outer, ".cui-list-view-grid-quadrant-1")[0]
+			CUI.dom.matchSelector(outer, ".cui-list-view-grid-quadrant-2")[0]
+			CUI.dom.matchSelector(outer, ".cui-list-view-grid-quadrant-3")[0]
 		]
 
-		@styleElement = CUI.DOM.matchSelector(outer, "style")[0]
+		@styleElement = CUI.dom.matchSelector(outer, "style")[0]
 
-		@__fillRowQ3 = CUI.DOM.matchSelector(@grid, ".cui-list-view-grid-fills-3")[0]
+		@__fillRowQ3 = CUI.dom.matchSelector(@grid, ".cui-list-view-grid-fills-3")[0]
 
-		@__topQuadrants = CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-top")[0]
+		@__topQuadrants = CUI.dom.matchSelector(outer, ".cui-list-view-grid-inner-top")[0]
 
 		if (@fixedColsCount == 0 and @fixedRowsCount == 0 ) # we only have Q3
 			@__bottomQuadrants = @quadrant[3]
 		else
-			@__bottomQuadrants = CUI.DOM.matchSelector(outer, ".cui-list-view-grid-inner-bottom")[0]
+			@__bottomQuadrants = CUI.dom.matchSelector(outer, ".cui-list-view-grid-inner-bottom")[0]
 
 		@__fillCells = []
 		for col in [0..@colsCount-1] by 1
-			@__fillCells.push(CUI.DOM.matchSelector(outer, ".cui-list-view-grid-fill-col-#{col}")[0])
+			@__fillCells.push(CUI.dom.matchSelector(outer, ".cui-list-view-grid-fill-col-#{col}")[0])
 
 		# CUI.debug "ListView[#{@listViewCounter}]:", "fixedCols:", @fixedColsCount, "fixedRow", @fixedRowsCount, "cols:", @colsCount, "rows:", @__deferredRows.length
 
@@ -328,7 +328,7 @@ class CUI.ListView extends CUI.SimplePane
 				node: @DOM
 				selector: selector
 				call: (ev) =>
-					row = CUI.DOM.data(ev.getCurrentTarget(), "listViewRow")
+					row = CUI.dom.data(ev.getCurrentTarget(), "listViewRow")
 					if not row.isSelectable()
 						return
 					ev.stopImmediatePropagation()
@@ -381,7 +381,7 @@ class CUI.ListView extends CUI.SimplePane
 				if not @__isInDOM
 					return
 
-				cell = CUI.DOM.closest(ev.getNode(), ".cui-lv-td")
+				cell = CUI.dom.closest(ev.getNode(), ".cui-lv-td")
 
 				if not cell
 					return
@@ -391,7 +391,7 @@ class CUI.ListView extends CUI.SimplePane
 				row = parseInt(cell.getAttribute("row"))
 				col = parseInt(cell.getAttribute("col"))
 
-				if @fixedColsCount > 0 and CUI.DOM.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
+				if @fixedColsCount > 0 and CUI.dom.getAttribute(cell.parentNode, "cui-lv-tr-unmeasured")
 					# row has not been measured
 					return
 
@@ -410,7 +410,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@appendDeferredRows()
 
-		CUI.DOM.waitForDOMInsert(node: @DOM)
+		CUI.dom.waitForDOMInsert(node: @DOM)
 		.done =>
 			@__isInDOM = true
 			@__doLayout()
@@ -504,7 +504,7 @@ class CUI.ListView extends CUI.SimplePane
 		dfr.promise()
 
 	getCellByTarget: ($target) ->
-		if CUI.DOM.is($target, ".cui-lv-td")
+		if CUI.dom.is($target, ".cui-lv-td")
 			cell =
 				col_i: parseInt($target.getAttribute("col"))
 				row_i: parseInt($target.getAttribute("row"))
@@ -522,7 +522,7 @@ class CUI.ListView extends CUI.SimplePane
 		new CUI.ListViewRowMove(opts)
 
 	getListViewRow: (row_i) ->
-		CUI.DOM.data(@getRow(row_i)[0], "listViewRow")
+		CUI.dom.data(@getRow(row_i)[0], "listViewRow")
 
 	getDisplayColIdx: (col_i) ->
 		@colsOrder.indexOf(parseInt(col_i))
@@ -581,7 +581,7 @@ class CUI.ListView extends CUI.SimplePane
 		if not rows
 			return
 		for row in rows
-			CUI.DOM.addClass(row, cls)
+			CUI.dom.addClass(row, cls)
 		@
 
 	rowRemoveClass: (row_i, cls) ->
@@ -589,7 +589,7 @@ class CUI.ListView extends CUI.SimplePane
 		if not rows
 			return
 		for row in rows
-			CUI.DOM.removeClass(row, cls)
+			CUI.dom.removeClass(row, cls)
 		@
 
 	getColdef: (col_i) ->
@@ -627,11 +627,11 @@ class CUI.ListView extends CUI.SimplePane
 		if not cell
 			return null
 
-		grid_rect = CUI.DOM.getRect(@grid)
+		grid_rect = CUI.dom.getRect(@grid)
 		pos_grid =
 			top: grid_rect.top
 			left: grid_rect.left
-		dim = CUI.DOM.getDimensions(cell)
+		dim = CUI.dom.getDimensions(cell)
 
 		rect =
 			left_abs: dim.clientBoundingRect.left
@@ -652,7 +652,7 @@ class CUI.ListView extends CUI.SimplePane
 			width: 0
 
 		for row in @__rows[row_i]
-			dim = CUI.DOM.getDimensions(row)
+			dim = CUI.dom.getDimensions(row)
 			_rect.width = _rect.width + dim.borderBoxWidth
 
 			if not _rect.hasOwnProperty("height")
@@ -662,7 +662,7 @@ class CUI.ListView extends CUI.SimplePane
 			if not _rect.hasOwnProperty("left")
 				_rect.left = dim.clientBoundingRect.left
 
-		grid_rect = CUI.DOM.getRect(@grid)
+		grid_rect = CUI.dom.getRect(@grid)
 		_pos_grid =
 			top: grid_rect.top
 			left: grid_rect.left
@@ -674,7 +674,7 @@ class CUI.ListView extends CUI.SimplePane
 			top: _rect.top - _pos_grid.top
 			height: _rect.height
 
-		rect.width = CUI.DOM.width(@getGrid())
+		rect.width = CUI.dom.width(@getGrid())
 		return rect
 
 		# rect = @getCellGridRect(0, row_i)
@@ -748,7 +748,7 @@ class CUI.ListView extends CUI.SimplePane
 		@rowsCount--
 		delete(@__colspanRows[row_i])
 		for row in @getRow(row_i)
-			CUI.DOM.remove(row)
+			CUI.dom.remove(row)
 
 		delete(@__rows[row_i])
 		@__resetRowDim(row_i)
@@ -835,15 +835,15 @@ class CUI.ListView extends CUI.SimplePane
 
 		if @__maximize_horizontal
 			if not has_max_cols and has_manually_sized_column
-				CUI.DOM.addClass(@grid, "cui-lv--max-last-col")
+				CUI.dom.addClass(@grid, "cui-lv--max-last-col")
 			else
-				CUI.DOM.removeClass(@grid, "cui-lv--max-last-col")
+				CUI.dom.removeClass(@grid, "cui-lv--max-last-col")
 
 		@styleElement.innerHTML = css.join("\n")
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
-				cell = CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				cell = CUI.dom.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
 				width = 0
 				for i in [0...colspan] by 1
 					# we assume that colspanned columns
@@ -853,7 +853,7 @@ class CUI.ListView extends CUI.SimplePane
 
 				# console.debug row_i, col_i, colspan, width
 
-				dim = CUI.DOM.getDimensions(cell)
+				dim = CUI.dom.getDimensions(cell)
 				if dim.computedStyle.boxSizing == "border-box"
 					cell.style.setProperty("width", width+"px", "important")
 				else
@@ -869,20 +869,20 @@ class CUI.ListView extends CUI.SimplePane
 				else
 					sel = "[cui-lv-tr-unmeasured=\""+@listViewCounter+"\"]"
 
-				for row in CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi}'] > "+sel)
-					rows[parseInt(CUI.DOM.getAttribute(row, "row"))] = row
-					CUI.DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
+				for row in CUI.dom.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi}'] > "+sel)
+					rows[parseInt(CUI.dom.getAttribute(row, "row"))] = row
+					CUI.dom.removeAttribute(row, "cui-lv-tr-unmeasured")
 
-				for row, idx in CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
-					row_i2 = parseInt(CUI.DOM.getAttribute(row, "row"))
-					CUI.DOM.prepareSetDimensions(rows[row_i2])
+				for row, idx in CUI.dom.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
+					row_i2 = parseInt(CUI.dom.getAttribute(row, "row"))
+					CUI.dom.prepareSetDimensions(rows[row_i2])
 					row.__offsetHeight = row.offsetHeight
 
-				for row, idx in CUI.DOM.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
-					row_i2 = parseInt(CUI.DOM.getAttribute(row, "row"))
-					CUI.DOM.setDimensions(rows[row_i2], borderBoxHeight: row.__offsetHeight)
+				for row, idx in CUI.dom.matchSelector(@grid, "."+@__lvClass+"-quadrant[cui-lv-quadrant='#{qi+1}'] > "+sel)
+					row_i2 = parseInt(CUI.dom.getAttribute(row, "row"))
+					CUI.dom.setDimensions(rows[row_i2], borderBoxHeight: row.__offsetHeight)
 					delete(row.__offsetHeight)
-					CUI.DOM.removeAttribute(row, "cui-lv-tr-unmeasured")
+					CUI.dom.removeAttribute(row, "cui-lv-tr-unmeasured")
 
 
 
@@ -902,11 +902,11 @@ class CUI.ListView extends CUI.SimplePane
 
 	__addRowsOddEvenClasses: ->
 		if (@rowsCount - @fixedRowsCount)%2 == 0
-			CUI.DOM.addClass(@grid, "cui-list-view-grid-rows-even")
-			CUI.DOM.removeClass(@grid, "cui-list-view-grid-rows-odd")
+			CUI.dom.addClass(@grid, "cui-list-view-grid-rows-even")
+			CUI.dom.removeClass(@grid, "cui-list-view-grid-rows-odd")
 		else
-			CUI.DOM.removeClass(@grid, "cui-list-view-grid-rows-even")
-			CUI.DOM.addClass(@grid, "cui-list-view-grid-rows-odd")
+			CUI.dom.removeClass(@grid, "cui-list-view-grid-rows-even")
+			CUI.dom.addClass(@grid, "cui-list-view-grid-rows-odd")
 		@
 
 
@@ -1030,13 +1030,13 @@ class CUI.ListView extends CUI.SimplePane
 
 		find_cells_and_rows = (top) =>
 			# find rows and cells in newly prepared html
-			_cells = CUI.DOM.matchSelector(top, ".cui-lv-td")
+			_cells = CUI.dom.matchSelector(top, ".cui-lv-td")
 			for cell in _cells
 				_col = parseInt(cell.getAttribute("col"))
 				_row = parseInt(cell.getAttribute("row"))
 				@__cells[_row][_col] = cell
 
-			_rows = CUI.DOM.matchSelector(top, ".cui-lv-tr-outer")
+			_rows = CUI.dom.matchSelector(top, ".cui-lv-tr-outer")
 
 			for row in _rows
 				row_i = parseInt(row.getAttribute("row"))
@@ -1078,12 +1078,12 @@ class CUI.ListView extends CUI.SimplePane
 
 			if mode == "after"
 				while node = outer.lastChild
-					CUI.DOM.insertAfter(row, node)
+					CUI.dom.insertAfter(row, node)
 				continue
 
 			if mode == "replace"
 				node = outer.firstChild
-				CUI.DOM.replaceWith(row, node)
+				CUI.dom.replaceWith(row, node)
 
 		# check for overflow in fixed qudrant
 		if @fixedRowsCount > 0
@@ -1121,7 +1121,7 @@ class CUI.ListView extends CUI.SimplePane
 		listViewRow.setRowIdx(row_i).setListView(@)
 
 		for row in @__rows[row_i]
-			CUI.DOM.data(row, "listViewRow", listViewRow)
+			CUI.dom.data(row, "listViewRow", listViewRow)
 
 		listViewRow.addClass((listViewRow.getClass() or "")+" "+CUI.util.toDash(CUI.util.getObjectClass(listViewRow)))
 
@@ -1147,7 +1147,7 @@ class CUI.ListView extends CUI.SimplePane
 			CUI.util.assert(cell, "ListView.__appendCells", "Cell not found: row: "+row_i+" column: "+(col_i+colspan_offset+1)+". colsCount: "+@colsCount, row: listViewRow)
 
 			if not CUI.util.isNull(node)
-				CUI.DOM.append(cell, node)
+				CUI.dom.append(cell, node)
 
 			col.setColumnIdx(col_i)
 			col.setElement(cell)
@@ -1197,7 +1197,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		if @fixedColsCount > 0 and @__rows[row_i]
 			for row in @__rows[row_i]
-				CUI.DOM.setAttribute(row, "cui-lv-tr-unmeasured", @listViewCounter)
+				CUI.dom.setAttribute(row, "cui-lv-tr-unmeasured", @listViewCounter)
 
 		for display_col_i in [0..@colsCount-1]
 			col_i = @getColIdx(display_col_i)
@@ -1207,7 +1207,7 @@ class CUI.ListView extends CUI.SimplePane
 	__resetCellStyle: (row_i, col_i) ->
 		cell = @__cells[row_i]?[col_i]
 		if cell
-			CUI.DOM.setStyleOne(cell, "cssText", "")
+			CUI.dom.setStyleOne(cell, "cssText", "")
 		cell
 
 	__resetColWidth: (col_i) ->

@@ -43,10 +43,10 @@ class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 
 		if not @allowRowMove()
 			@target = null
-			CUI.DOM.hideElement(@movableTargetDiv)
+			CUI.dom.hideElement(@movableTargetDiv)
 		else
-			CUI.DOM.showElement(@movableTargetDiv)
-			CUI.DOM.setStyle @movableTargetDiv,
+			CUI.dom.showElement(@movableTargetDiv)
+			CUI.dom.setStyle @movableTargetDiv,
 				left: @target.left
 				top: @target.top
 				width: @target.width
