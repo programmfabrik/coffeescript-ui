@@ -9,3 +9,4 @@ commit.txt
 .\#*
 .idea
 npm-debug.log
+!public/cui.js
