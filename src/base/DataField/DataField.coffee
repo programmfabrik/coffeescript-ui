@@ -240,10 +240,6 @@ class CUI.DataField extends CUI.DOMElement
 			@__data = data
 		@displayValue()
 
-	clearData: ->
-		delete(@__data)
-		@
-
 	setData: (data, init_data=true) ->
 		if @__data and @_data and not CUI.isFunction(@_data)
 			# CUI.debug "private data already set", @_data
@@ -372,8 +368,8 @@ class CUI.DataField extends CUI.DOMElement
 		else
 			false
 
-	hasUserData: ->
-		@hasData() and not CUI.util.isEmpty(@__data[@_name])
+	hasUserData: (data) ->
+		@_name and not CUI.util.isEmpty(data[@_name])
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]

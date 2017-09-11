@@ -122,28 +122,29 @@ class CUI.DataForm extends CUI.DataTable
 				delete(row._empty)
 			else
 				row._empty = true
+		return
 
-	hasUserData: ->
-		# console.debug "have user data", @getValue()
-		if not super()
+	hasUserData: (data) ->
+
+		if not super(data)
 			return false
 
-		rows = @getValue()
+		rows = data[@getName()]
 
 		if rows.length == 0
 			return false
 
 		for row in rows
-			if not row._empty
+			if @rowHasUserData(row)
 				return true
 
 		return false
 
 	rowHasUserData: (row) ->
 		for f in @getFieldList()
-			f.clearData().setData(row)
 			if f.hasUserData(row)
 				return true
+
 		return false
 
 	renderAsBlock: ->
@@ -173,9 +174,9 @@ class CUI.DataForm extends CUI.DataTable
 			info = @__findRowInfo(row)
 			info.trash?.show()
 			if @rows.length >= 2
-				info.move?.show()
+				CUI.dom.showElement(info.move)
 			else
-				info.move?.hide()
+				CUI.dom.hideElement(info.move)
 		return
 
 	__findRowInfo: (row) ->
@@ -197,13 +198,11 @@ class CUI.DataForm extends CUI.DataTable
 
 	__appendRow: (data) ->
 		if @_rowMove
-			move = new CUI.Icon
-				class: "cui-data-form-row-move-handle"
-				icon: "fa-reorder"
+			move = CUI.dom.element("DIV", class: "cui-drag-handle-row")
 
 		if @_new_rows != "none"
 			trash = new CUI.defaults.class.Button
-				icon: "fa-minus"
+				icon: "svg-close"
 				appearance: "flat"
 				onMouseenter: =>
 					CUI.dom.addClass(hl, "cui-data-form-row--trash")
@@ -228,7 +227,7 @@ class CUI.DataForm extends CUI.DataTable
 		CUI.dom.data(hl.DOM, "data", data)
 
 		if data._new
-			move?.hide()
+			CUI.dom.hideElement(move)
 			trash?.hide()
 
 		@__rowRegistry.push

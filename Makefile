@@ -3,7 +3,7 @@ all:
 	npm run build -- --env.minify --env.noCss
 
 watch:
-	npm run build:watch
+	npm run build:watch -- --env.noCss
 
 code:
 	npm run build -- --env.noCss

@@ -859,6 +859,17 @@ li > div {
 
 // DataForm
 .cui-data-form-row {
+	.cui-drag-handle-row {
+		margin: 7px 4px;
+		width: auto;
+		height: auto;
+	}
+
+	> .cui-horizontal-layout-right {
+		.cui-button-visual {
+			color: $drag-handle-color;
+		}
+	}
 
 	&.cui-data-form-row--trash {
 		opacity: 0.5;

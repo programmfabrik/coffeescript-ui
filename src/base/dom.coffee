@@ -368,7 +368,7 @@ class CUI.dom
 		for _cls in cls.trim().split(/\s+/)
 			if _cls == ""
 				continue
-			element.classList.add(_cls)
+			(element.DOM or element).classList.add(_cls)
 		element
 
 	@removeClass: (element, cls) ->
@@ -378,7 +378,7 @@ class CUI.dom
 		for _cls in cls.trim().split(/\s+/)
 			if _cls == ""
 				continue
-			element.classList.remove(_cls)
+			(element.DOM or element).classList.remove(_cls)
 		element
 
 
