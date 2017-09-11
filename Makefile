@@ -11,6 +11,13 @@ code:
 demo:
 	npm run build
 
+# Build all versions.
+build_all:
+	npm run build
+	npm run build -- --env.noCss
+	npm run build -- --env.minify
+	npm run build -- --env.minify --env.noCss
+
 wipe:
 	find . -name '*~' -or -name '#*#' | xargs rm -f
 

@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/programmfabrik/coffeescript-ui.git"
   },
-  "main": "public/cui.js",
+  "main": "public/cui.min.js",
   "keywords": [
     "coffeescript",
     "ui",

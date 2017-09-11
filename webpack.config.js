@@ -11,7 +11,6 @@ const config = {
     entry: './index.coffee',
     output: {
         path: BUILD_DIR,
-        filename: 'cui.js',
         libraryTarget: "umd",
         library: "CUI"
     },
@@ -41,7 +40,6 @@ const config = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(BUILD_DIR),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         })
@@ -49,20 +47,24 @@ const config = {
 };
 
 module.exports = function (env) {
-    if (!env) {
-        return config;
+    config.output.filename = "cui";
+    if (env) {
+        if (env.noCss) {
+            config.output.filename += ".no-css";
+            config.entry = './index-no-css.coffee';
+        }
+
+        if (env.minify) {
+            config.output.filename += ".min";
+            config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+                compress: {warnings: false, keep_fnames: true},
+                mangle: {keep_classnames: true, keep_fnames: true}
+            }));
+        }
     }
 
-    if (env.noCss) {
-        config.entry = './index-no-css.coffee'
-    }
-
-    if (env.minify) {
-        config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-            compress: {warnings: false, keep_fnames: true},
-            mangle: {keep_classnames: true, keep_fnames: true}
-        }));
-    }
+    config.output.filename += ".js";
+    config.plugins.push(new CleanWebpackPlugin(config.output.filename))
 
     return config
 };

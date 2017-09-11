@@ -10,3 +10,6 @@ commit.txt
 .idea
 npm-debug.log
 !public/cui.js
+!public/cui.min.js
+!public/cui.no-css.min.js
+!public/cui.no-css.js
