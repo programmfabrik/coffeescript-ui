@@ -8,7 +8,7 @@ const APP_DIR = path.resolve(__dirname + path.sep, 'src');
 
 const config = {
     context: APP_DIR,
-    entry: ['./index.coffee', './scss/themes/ng/main.scss'],
+    entry: './index.coffee',
     output: {
         path: BUILD_DIR,
         filename: 'cui.js',
@@ -54,7 +54,7 @@ module.exports = function (env) {
     }
 
     if (env.noCss) {
-        config.entry.pop();
+        config.entry = './index-no-css.coffee'
     }
 
     if (env.minify) {
