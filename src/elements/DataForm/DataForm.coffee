@@ -174,9 +174,9 @@ class CUI.DataForm extends CUI.DataTable
 			info = @__findRowInfo(row)
 			info.trash?.show()
 			if @rows.length >= 2
-				info.move?.show()
+				CUI.dom.showElement(info.move)
 			else
-				info.move?.hide()
+				CUI.dom.hideElement(info.move)
 		return
 
 	__findRowInfo: (row) ->
@@ -198,18 +198,16 @@ class CUI.DataForm extends CUI.DataTable
 
 	__appendRow: (data) ->
 		if @_rowMove
-			move = new CUI.Icon
-				class: "cui-data-form-row-move-handle"
-				icon: "fa-reorder"
+			move = CUI.dom.element("DIV", class: "cui-drag-handle-row")
 
 		if @_new_rows != "none"
 			trash = new CUI.defaults.class.Button
-				icon: "fa-minus"
+				icon: "svg-close"
 				appearance: "flat"
 				onMouseenter: =>
-					CUI.dom.addClass(hl, "cui-data-form-row--trash")
+					CUI.dom.addClass(hl.DOM, "cui-data-form-row--trash")
 				onMouseleave: =>
-					CUI.dom.removeClass(hl, "cui-data-form-row--trash")
+					CUI.dom.removeClass(hl.DOM, "cui-data-form-row--trash")
 				onClick: =>
 					@_onRowRemove?.call(@, data)
 					@__removeRow(data)
@@ -229,7 +227,7 @@ class CUI.DataForm extends CUI.DataTable
 		CUI.dom.data(hl.DOM, "data", data)
 
 		if data._new
-			move?.hide()
+			CUI.dom.hideElement(move)
 			trash?.hide()
 
 		@__rowRegistry.push
