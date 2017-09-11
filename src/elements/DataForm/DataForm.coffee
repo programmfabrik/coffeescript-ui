@@ -122,28 +122,29 @@ class CUI.DataForm extends CUI.DataTable
 				delete(row._empty)
 			else
 				row._empty = true
+		return
 
-	hasUserData: ->
-		# console.debug "have user data", @getValue()
-		if not super()
+	hasUserData: (data) ->
+
+		if not super(data)
 			return false
 
-		rows = @getValue()
+		rows = data[@getName()]
 
 		if rows.length == 0
 			return false
 
 		for row in rows
-			if not row._empty
+			if @rowHasUserData(row)
 				return true
 
 		return false
 
 	rowHasUserData: (row) ->
 		for f in @getFieldList()
-			f.clearData().setData(row)
 			if f.hasUserData(row)
 				return true
+
 		return false
 
 	renderAsBlock: ->
