@@ -852,6 +852,15 @@ li > div {
 				cursor:         grab;
 				
 				&.is-hidden {
+					display: none;
+				}
+			}
+		}
+
+		&:nth-child(n+3) {
+			> .cui-horizontal-layout-left {		
+				.cui-drag-handle-row.is-hidden {
+					display: block;
 					pointer-events: none;
 					opacity: 0.1;
 				}
@@ -955,7 +964,9 @@ li > div {
 	}
 }
 
-.cui-data-form-row {	
+.cui-data-form-row {
+	overflow: visible !important;
+	
 	&:last-child {
 		margin-bottom: $padding;
 	}
