@@ -864,8 +864,8 @@ li > div {
 .cui-data-form--multiple-fields {
 	.cui-data-form-row {
 		margin-bottom: $padding;
-		border: 1px solid hsl(205,20%,83%);
-		border-radius: $input-radius;
+		border-left: 1px solid hsl(205,20%,83%);
+		margin-left: $padding;
 		position: relative;
 		background: hsl(240,7%,100%);
 		
@@ -916,14 +916,14 @@ li > div {
 		
 		& & {
 			display: flex;
-			margin: 0 10px;
+			// margin: 0 10px;
 			border-color: hsl(206,20%,89%);
 			background: hsl(240,7%,98%);
 			margin-bottom: 7px;
 			
-			.cui-drag-handle-row {
-				margin: 7px 5px !important;
-			}
+			// .cui-drag-handle-row {
+			// 	margin: 7px 5px !important;
+			// }
 			
 			&:first-child {
 				// border-top-width: 0;
@@ -943,8 +943,10 @@ li > div {
 			position: absolute;
 			top: 0;
 			right: 0;
+			width: auto;
 			
 			.cui-button {
+				height: auto;
 				padding: 8px 5px;
 				padding-left: 0;
 			}
@@ -967,10 +969,12 @@ li > div {
 	}
 
 	> .cui-horizontal-layout-right {
+		width: 28px;
+		
 		.cui-button {
 			height: 30px;
 			
-			&.is-hidden {
+			&.cui-button-hidden {
 				pointer-events: none;
 				
 				.cui-button-visual {
@@ -984,6 +988,19 @@ li > div {
 			padding: 0 5px;
 			color: $drag-handle-color;
 		}
+	}
+}
+
+// Navigation Toolbar
+
+.cui-navigation-toolbar {
+	background: none;
+	display: none;
+	
+	.cui-input {
+		padding: 0 3px;
+		font-size: 11px;
+		line-height: 18px;
 	}
 }
 
@@ -1259,30 +1276,31 @@ li > div {
 
 .cui-button-size-mini {
 	font-size: 12px;
-  height: 26px;
+	height: 26px;
 
-  &.cui-button-appearance-flat {
-  	height: auto;
-  }
+	&.cui-button-appearance-flat {
+		height: auto;
+	}
 
-  .cui-button-visual {
-  	height: 20px;
-  	padding: 0 $padding/4;
-  }
+	.cui-button-visual {
+		min-width: 22px;
+		height: 20px;
+		padding: 0 $padding/4;
+	}
 
-  .fa {
-  	font-size: 11px;
-  }
+	.fa {
+		font-size: 11px;
+	}
 
-  .cui-icon-svg {
-  	transform: scale(0.75);
+	.cui-icon-svg {
+		transform: scale(0.75);
 
-  	&.svg-close {
-  		transform: none;
-  		width: 9px;
-  		height: 9px;
-  	}
-  }
+		&.svg-close {
+			transform: none;
+			width: 9px;
+			height: 9px;
+		}
+	}
 }
 
 .cui-button-size-big {
@@ -2048,12 +2066,15 @@ a[role="button"].cui-button-appearance-link {
 
 	input,
 	textarea {
-		width: 275px;
 		max-width: 100%;
 		padding: 0 7px;
 		line-height: 22px;
 		outline: none;
 		vertical-align: bottom;
+		
+		&:not([data-max-chars]) {
+			width: 275px;
+		}
 
 		&:focus {
 			@include border-focus;

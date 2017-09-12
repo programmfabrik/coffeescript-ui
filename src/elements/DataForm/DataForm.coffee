@@ -172,7 +172,7 @@ class CUI.DataForm extends CUI.DataTable
 	__updateButtons: ->
 		for row in @rows
 			info = @__findRowInfo(row)
-			CUI.dom.removeClass(info.trash.DOM, 'is-hidden')
+			info.trash?.show()
 			if @rows.length >= 2
 				CUI.dom.removeClass(info.move, 'is-hidden')
 			else
@@ -228,7 +228,7 @@ class CUI.DataForm extends CUI.DataTable
 
 		if data._new
 			CUI.dom.addClass(move, 'is-hidden')
-			CUI.dom.addClass(trash, 'is-hidden')
+			trash.hide()
 
 		@__rowRegistry.push
 			data: data
