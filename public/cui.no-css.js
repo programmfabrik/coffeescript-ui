@@ -32782,7 +32782,7 @@ CUI.DataForm = (function(superClass) {
     if (this._rowMove) {
       new CUI.Sortable({
         element: this.DOM,
-        selector: ".cui-data-form-row-move-handle",
+        selector: ".cui-drag-handle-row",
         create: function(ev, target) {
           var data;
           data = CUI.dom.data(target, "data");
@@ -32986,18 +32986,16 @@ CUI.DataForm = (function(superClass) {
   };
 
   DataForm.prototype.__updateButtons = function() {
-    var i, info, len, ref, ref1, row;
+    var i, info, len, ref, row;
     ref = this.rows;
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
       info = this.__findRowInfo(row);
-      if ((ref1 = info.trash) != null) {
-        ref1.show();
-      }
+      CUI.dom.removeClass(info.trash.DOM, 'is-hidden');
       if (this.rows.length >= 2) {
-        CUI.dom.showElement(info.move);
+        CUI.dom.removeClass(info.move, 'is-hidden');
       } else {
-        CUI.dom.hideElement(info.move);
+        CUI.dom.addClass(info.move, 'is-hidden');
       }
     }
   };
@@ -33075,10 +33073,8 @@ CUI.DataForm = (function(superClass) {
     });
     CUI.dom.data(hl.DOM, "data", data);
     if (data._new) {
-      CUI.dom.hideElement(move);
-      if (trash != null) {
-        trash.hide();
-      }
+      CUI.dom.addClass(move, 'is-hidden');
+      CUI.dom.addClass(trash, 'is-hidden');
     }
     this.__rowRegistry.push({
       data: data,
