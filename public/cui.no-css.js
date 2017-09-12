@@ -32986,12 +32986,14 @@ CUI.DataForm = (function(superClass) {
   };
 
   DataForm.prototype.__updateButtons = function() {
-    var i, info, len, ref, row;
+    var i, info, len, ref, ref1, row;
     ref = this.rows;
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
       info = this.__findRowInfo(row);
-      CUI.dom.removeClass(info.trash.DOM, 'is-hidden');
+      if ((ref1 = info.trash) != null) {
+        ref1.show();
+      }
       if (this.rows.length >= 2) {
         CUI.dom.removeClass(info.move, 'is-hidden');
       } else {
@@ -33074,7 +33076,7 @@ CUI.DataForm = (function(superClass) {
     CUI.dom.data(hl.DOM, "data", data);
     if (data._new) {
       CUI.dom.addClass(move, 'is-hidden');
-      CUI.dom.addClass(trash, 'is-hidden');
+      trash.hide();
     }
     this.__rowRegistry.push({
       data: data,
