@@ -1,3 +1,0 @@
-[submodule "thirdparty/marked"]
-	path = thirdparty/marked
-	url = https://github.com/chjj/marked.git
