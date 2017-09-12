@@ -12,7 +12,7 @@ class CUI.DataForm extends CUI.DataTable
 		if @_rowMove
 			new CUI.Sortable
 				element: @DOM
-				selector: ".cui-data-form-row-move-handle"
+				selector: ".cui-drag-handle-row"
 				create: (ev, target) ->
 					data = CUI.dom.data(target, "data")
 					if not data
@@ -172,11 +172,11 @@ class CUI.DataForm extends CUI.DataTable
 	__updateButtons: ->
 		for row in @rows
 			info = @__findRowInfo(row)
-			info.trash?.show()
+			CUI.dom.removeClass(info.trash.DOM, 'is-hidden')
 			if @rows.length >= 2
-				CUI.dom.showElement(info.move)
+				CUI.dom.removeClass(info.move, 'is-hidden')
 			else
-				CUI.dom.hideElement(info.move)
+				CUI.dom.addClass(info.move, 'is-hidden')
 		return
 
 	__findRowInfo: (row) ->
@@ -227,8 +227,8 @@ class CUI.DataForm extends CUI.DataTable
 		CUI.dom.data(hl.DOM, "data", data)
 
 		if data._new
-			CUI.dom.hideElement(move)
-			trash?.hide()
+			CUI.dom.addClass(move, 'is-hidden')
+			CUI.dom.addClass(trash, 'is-hidden')
 
 		@__rowRegistry.push
 			data: data
