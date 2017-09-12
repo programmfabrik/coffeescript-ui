@@ -4,7 +4,8 @@
   "description": "Coffeescript User Interface System",
   "scripts": {
     "build": "webpack --progress",
-    "build:watch": "webpack --watch --progress"
+    "build:watch": "webpack --watch --progress",
+    "build:all": "npm run build && npm run build -- --env.noCss && npm run build -- --env.minify && npm run build -- --env.minify --env.noCss"
   },
   "repository": {
     "type": "git",
