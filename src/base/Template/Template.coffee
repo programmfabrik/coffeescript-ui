@@ -138,6 +138,8 @@ class CUI.Template extends CUI.Element
 				el_map[k] = map_obj[0]
 				# CUI.dom.addClass(el_map[k], "cui-template-empty")
 
+				map_obj[0].removeAttribute("data-slot")
+
 				do (k) =>
 					el_map[k].empty = =>
 						@empty(k)

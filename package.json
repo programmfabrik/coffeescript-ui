@@ -5,6 +5,8 @@
   "scripts": {
     "build": "webpack --progress",
     "build:watch": "webpack --watch --progress",
+    "watch:nocss": "webpack --watch --progress --env.noCss",
+    "build:nocss": "webpack --progress --env.noCss",
     "build:all": "npm run build && npm run build -- --env.noCss && npm run build -- --env.minify && npm run build -- --env.minify --env.noCss"
   },
   "repository": {
