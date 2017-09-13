@@ -107,6 +107,7 @@ textarea {
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
+	box-shadow: $input-shadow;
 	background: $foreground;
 	font-family: inherit;
 	padding: 2px 3px;
