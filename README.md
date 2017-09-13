@@ -31,6 +31,18 @@ It will load the default version. It includes the CSS and It's minified.
     <script src="node_modules/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="node_modules/public/cui.no-css.min.js" type="text/javascript" charset="utf-8"></script>
   
+### Usage with webpack
+
+It's recommended to use **webpack.ProvidePlugin** to avoid "require" in each file. Also it's easier if you want to change the version
+
+    plugins: [
+        ...
+        new webpack.ProvidePlugin({
+            'CUI': "coffeescript-ui/public/cui.js"
+        })
+        ...
+    ] 
+  
 ## Build
 
 The first step is to download all dependencies with *npm install*
