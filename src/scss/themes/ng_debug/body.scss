@@ -243,7 +243,7 @@ span {
 .cui-flex-handle-row {
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
 		width: 20px;
-		.cui-label.cui-tmpl-label-rotate-90 {
+		.cui-label.cui-label-rotate-90 {
 			.cui-label-transform {
 				// the difference to the normal rotate-90 is that
 				// we want to touch the label the "top" and not
@@ -304,7 +304,7 @@ span {
 }
 
 
-.cui-tmpl-pane-fill-screen {
+.cui-pane-fill-screen {
         transition: top ease-out 0.5s,right ease-out 0.5s,left ease-out 0.5s,bottom ease-out 0.5s;
         position: absolute;
         top: 0;
@@ -362,7 +362,7 @@ span {
 	}
 	.cui-document-browser-list {
 		width: 250px;
-		li, .cui-tmpl-label {
+		li, .cui-label {
 			cursor: pointer;
 			&:hover {
 				background: #e0e0e0;
@@ -646,7 +646,7 @@ a[role="button"].cui-button-appearance-link {
 	// align-self: flex-start;
 
 	padding: 0 3px;
-	&.cui-tmpl-label-rotate-90 {
+	&.cui-label-rotate-90 {
 		// rotate by 90 degrees
 		white-space: nowrap;
 		// align-self: flex-start;
@@ -897,7 +897,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-layer-backdrop
+.cui-layer-backdrop
 {
 	position: absolute;
 	top: 0;
@@ -922,9 +922,9 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-layer-root.cui-layer-root-backdrop-blur
+.cui-layer-root.cui-layer-root-backdrop-blur
 {
-	> .cui-tmpl-layer-backdrop
+	> .cui-layer-backdrop
 	{
 		-webkit-filter: blur(5px);
 		-moz-filter: blur(5px);
@@ -937,7 +937,7 @@ a[role="button"].cui-button-appearance-link {
 		// blur effect, make layer transparent
 		background-color: rgba(255, 255, 255, 0.39);
 
-		.cui-tmpl-item-list-body {
+		.cui-item-list-body {
 			.cui-button {
 				background-color: transparent;
 			}
@@ -959,13 +959,13 @@ a[role="button"].cui-button-appearance-link {
 .cui-menu {
 	border: 2px solid green;
 	background-color: #bcf7bc;
-	.cui-tmpl-item-list-body {
+	.cui-item-list-body {
 		border: 2px solid yellow;
 	}
 }
 
 // ItemList
-.cui-tmpl-item-list-body
+.cui-item-list-body
 {
 	flex-direction: column;
 
@@ -1000,8 +1000,8 @@ a[role="button"].cui-button-appearance-link {
 				padding-left: 3px;
 			}
 		}
-		> .cui-tmpl-button-center,
-		> .cui-tmpl-button-center-right {
+		> .cui-button-center,
+		> .cui-button-center-right {
 			.cui-button-center {
 				padding-left: 23px;
 			}
@@ -1019,7 +1019,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ConfirmationDialog
-.cui-tmpl-layer-root.cui-confirmation-dialog {
+.cui-layer-root.cui-confirmation-dialog {
 	> .cui-layer {
 		text-align: center;
 		max-width: 400px;
@@ -1038,7 +1038,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // WaitBlock
-.cui-tmpl-wait-block {
+.cui-wait-block {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1091,11 +1091,11 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 	> .cui-vertical-layout-center {
-		> .cui-tmpl-tabs-bodies {
+		> .cui-tabs-bodies {
 			flex: 1 1 auto;
 			flex-direction: row;
 			overflow: hidden;
-			> .cui-tmpl-tab-body {
+			> .cui-tab-body {
 				// disable the javascript overwrite here
 				margin-left: 0 !important;
 				// transition: margin-left 0.5s ease;
@@ -1238,7 +1238,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-td {
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
-		> .cui-tmpl-label-rotate-90 {
+		> .cui-label-rotate-90 {
 			word-break: break-all;
 			height: 100px;
 			> .cui-label-transform {
@@ -1295,7 +1295,7 @@ a[role="button"].cui-button-appearance-link {
 	width: 100px;
 }
 
-.cui-tmpl-list-view-tool-col-resize-marker {
+.cui-list-view-tool-col-resize-marker {
 
 	position: absolute;
 	cursor: col-resize;
@@ -1313,14 +1313,14 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-tool {
 	position: absolute;
 
-	&.cui-tmpl-list-view-tool-row-move-marker {
+	&.cui-list-view-tool-row-move-marker {
 		border: 1px solid green;
 		background-color: green;
 		opacity: 0.3;
 	}
 
 	// marker to show the insert drop target
-	&.cui-tmpl-list-view-tool-row-move-target {
+	&.cui-list-view-tool-row-move-target {
 		height: 3px;
 		background: green;
 	}
@@ -1432,7 +1432,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // Options
-.cui-tmpl-options-activatable {
+.cui-options-activatable {
 	.cui-options-active,
 	.cui-options-inactive {
 		border: 1px solid blue;
@@ -1464,7 +1464,7 @@ a[role="button"].cui-button-appearance-link {
 // DateTime Popover
 
 .cui-menu.cui-date-time-60-select {
-	.cui-tmpl-item-list-body {
+	.cui-item-list-body {
 		box-sizing: content-box;
 		width: 300px;
 		flex-direction: row;
@@ -1484,7 +1484,7 @@ a[role="button"].cui-button-appearance-link {
 	width: 250px;
 	height: 250px;
 
-	.cui-tmpl-date-time {
+	.cui-date-time {
 		padding: 5px;
 		flex: 1 1 auto;
 
@@ -1742,7 +1742,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Block
 
-.cui-tmpl-block {
+.cui-block {
 	background-color: rgba(183, 236, 236, 0.57);
 	&.cui-block-level-1 {
 		border: 1px solid blue;
@@ -1782,7 +1782,7 @@ a[role="button"].cui-button-appearance-link {
 	top: 0;
 	left: 0;
 	right: 0;
-	> .cui-tmpl-sticky-header {
+	> .cui-sticky-header {
 		// margin-top: 2px;
 		// margin-bottom: 0;
 		margin: 0;
@@ -1793,7 +1793,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // ProgressMeter
-.cui-tmpl-progress-meter {
+.cui-progress-meter {
 	.cui-progress-meter-bar {
 		height: 20px;
 		position: relative;

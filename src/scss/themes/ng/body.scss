@@ -417,7 +417,7 @@ li > div {
 		margin: 0;
 		background: white;
 
-		.cui-label.cui-tmpl-label-rotate-90 {
+		.cui-label.cui-label-rotate-90 {
 			font-size: 14px;
 			margin: 11px 0;
 			margin-left: -2px;
@@ -467,7 +467,7 @@ li > div {
 }
 
 
-.cui-tmpl-pane-fill-screen {
+.cui-pane-fill-screen {
   transition: top ease-out 0.5s,right ease-out 0.5s,left ease-out 0.5s,bottom ease-out 0.5s;
   position: absolute;
   top: 0;
@@ -1598,7 +1598,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 100%;
 	line-height: 18px;
 
-	&.cui-tmpl-label-rotate-90 {
+	&.cui-label-rotate-90 {
 		white-space: nowrap;
 		margin: $padding/2 0;
 		flex-shrink: 0;
@@ -2164,12 +2164,12 @@ a[role="button"].cui-button-appearance-link {
   display: none;
 }
 
-.cui-tmpl-layer-root[cui-layer-fixed] {
+.cui-layer-root[cui-layer-fixed] {
 	position: fixed !important;
 }
 
 // Layer
-.cui-tmpl-layer-root {
+.cui-layer-root {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -2467,8 +2467,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-tmpl-layer-root.cui-layer-root-backdrop-blur {
-	> .cui-tmpl-layer-backdrop
+.cui-layer-root.cui-layer-root-backdrop-blur {
+	> .cui-layer-backdrop
 	{
 		-webkit-filter: blur(5px);
 		-moz-filter: blur(5px);
@@ -2481,7 +2481,7 @@ a[role="button"].cui-button-appearance-link {
 		// blur effect, make layer transparent
 		background-color: rgba(255, 255, 255, 0.39);
 
-		.cui-tmpl-item-list-body {
+		.cui-item-list-body {
 			.cui-button {
 				background-color: transparent;
 			}
@@ -2634,7 +2634,7 @@ a[role="button"].cui-button-appearance-link {
 		font-size: inherit;
 	}
 
-	.cui-tmpl-item-list-body {
+	.cui-item-list-body {
 		> .cui-label {
 			max-width: 200px;
 		}
@@ -2644,7 +2644,7 @@ a[role="button"].cui-button-appearance-link {
 		overflow: visible;
 	}
 
-	.cui-tmpl-item-list-body > .cui-options:last-child {
+	.cui-item-list-body > .cui-options:last-child {
 		border-top: 1px solid $border;
 		padding: 6px 0;
 		margin-top: 4px;
@@ -2775,7 +2775,7 @@ a[role="button"].cui-button-appearance-link {
 	background: hsl(210,11%,93%);
 }
 
-.cui-tmpl-item-list-body {
+.cui-item-list-body {
 	display: flex;
 	flex-direction: column;
 
@@ -2864,7 +2864,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 // WaitBlock
-.cui-tmpl-wait-block {
+.cui-wait-block {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2926,7 +2926,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-vertical-layout-center {
 		flex-grow: 1;
 
-		> .cui-tmpl-tabs-bodies {
+		> .cui-tabs-bodies {
 			display: flex;
 			flex: 1 1 auto;
 			overflow: hidden;
@@ -3185,7 +3185,7 @@ a[role="button"].cui-button-appearance-link {
 			display: none;
 		}
 
-		> .cui-tmpl-label-rotate-90 {
+		> .cui-label-rotate-90 {
 			word-wrap: break-word;
 			margin-left: -3px;
 		}
@@ -4702,7 +4702,7 @@ label[data-label-clickable],
 // DateTime Popover
 
 .cui-menu.cui-date-time-60-select {
-	.cui-tmpl-item-list-body {
+	.cui-item-list-body {
 		box-sizing: content-box;
 		width: 370px;
 		display: flex;
@@ -4728,7 +4728,7 @@ label[data-label-clickable],
 		padding: $padding;
 	}
 
-	.cui-tmpl-date-time {
+	.cui-date-time {
 		flex: 1 1 auto;
 
 		.cui-date-time-header {
@@ -5129,7 +5129,7 @@ label[data-label-clickable],
 	height: 0;
 	z-index: 1;
 
-	.cui-tmpl-sticky-header {
+	.cui-sticky-header {
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -5250,7 +5250,7 @@ label[data-label-clickable],
 }
 
 // Autocomplete
-.cui-tmpl-autocompletion-popup {
+.cui-autocompletion-popup {
 	flex: 1 1 auto;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
