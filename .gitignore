@@ -5,7 +5,7 @@ public/*
 *\#
 .DS_Store
 commit.txt
-/node_modules
+node_modules
 .\#*
 .idea
 npm-debug.log
@@ -13,3 +13,4 @@ npm-debug.log
 !public/cui.min.js
 !public/cui.no-css.min.js
 !public/cui.no-css.js
+tutorial/public
