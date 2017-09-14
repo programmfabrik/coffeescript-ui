@@ -52902,7 +52902,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 281 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"cui-tmpl-progress-meter\" class=\"cui-tmpl cui-tmpl-progress-meter\">\n\t<div class=\"cui-progress-meter-bar\">\n\t\t<div class=\"cui-progress-meter-fill-background\"></div>\n\t\t<div class=\"cui-progress-meter-fill\">\n\t\t\t<div class=\"cui-progress-meter-fill-inner\"></div>\n\t\t</div>\n\t\t<div class=\"cui-progress-meter-text\"></div>\n\t\t<div class=\"cui-progress-meter-icon\"></div>\n\t</div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"progress-meter\" class=\"cui-tmpl cui-tmpl-progress-meter\">\n\t<div class=\"cui-progress-meter-bar\">\n\t\t<div class=\"cui-progress-meter-fill-background\"></div>\n\t\t<div class=\"cui-progress-meter-fill\">\n\t\t\t<div class=\"cui-progress-meter-fill-inner\"></div>\n\t\t</div>\n\t\t<div class=\"cui-progress-meter-text\"></div>\n\t\t<div class=\"cui-progress-meter-icon\"></div>\n\t</div>\n</div>";
 
 /***/ }),
 /* 282 */
