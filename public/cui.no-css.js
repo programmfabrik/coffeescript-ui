@@ -25892,7 +25892,7 @@ CUI.Layer = (function(superClass) {
 
   Layer.prototype.__updateLayerStackCounter = function() {
     var el, i, idx, layer_elements, len, total;
-    layer_elements = CUI.dom.matchSelector(document.documentElement, "body > .cui-tmpl-layer-root");
+    layer_elements = CUI.dom.matchSelector(document.documentElement, "body > .cui-layer-root");
     total = layer_elements.length;
     for (idx = i = 0, len = layer_elements.length; i < len; idx = ++i) {
       el = layer_elements[idx];
@@ -26070,7 +26070,7 @@ CUI.ready(function() {
     node: document.body,
     call: function(ev, info) {
       var element, i, layer, layer_element, layer_elements, target;
-      layer_elements = CUI.dom.find("body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru");
+      layer_elements = CUI.dom.find("body > .cui-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru");
       target = ev.getTarget();
       for (i = layer_elements.length - 1; i >= 0; i += -1) {
         layer_element = layer_elements[i];
@@ -26109,7 +26109,7 @@ CUI.ready(function() {
       if (ev.keyCode() !== 27 || CUI.globalDrag) {
         return;
       }
-      layer_elements = CUI.dom.find("body > .cui-tmpl-layer-root > .cui-layer:not(.cui-tooltip)");
+      layer_elements = CUI.dom.find("body > .cui-layer-root > .cui-layer:not(.cui-tooltip)");
       layer_element = layer_elements[layer_elements.length - 1];
       if (!layer_element) {
         return;
@@ -30881,7 +30881,7 @@ CUI.Button = (function(superClass) {
 
   Button.prototype.__getButtons = function(key, value) {
     var c, docElem, i, len, parents, ref, results;
-    parents = CUI.dom.parents(this.DOM, ".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer");
+    parents = CUI.dom.parents(this.DOM, ".cui-buttonbar,.cui-form-table,.cui-item-list-body,.cui-layer");
     if (parents.length === 0) {
       parents = CUI.dom.parents(this.DOM);
     }
@@ -52818,43 +52818,43 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 267 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-left-center\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n</div>\n<div data-template=\"button-center-right\" class=\"cui-button-center-right\">\n    <div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-center\" class=\"cui-button-center\">\n    <div class=\"cui-button-center\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-left-center\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n</div>\n<div data-template=\"button-center-right\" class=\"cui-button-center-right\">\n    <div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-center\" class=\"cui-button-center\">\n    <div class=\"cui-button-center\"></div>\n</div>\n";
 
 /***/ }),
 /* 268 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<a data-template=\"buttonHref\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div>\n    <div class=\"cui-button-center\"></div>\n    <div class=\"cui-button-right\"></div>\n</a>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<a data-template=\"buttonHref\">\n    <div class=\"cui-button-left\"></div>\n    <div class=\"cui-button-center\"></div>\n    <div class=\"cui-button-right\"></div>\n</a>\n";
 
 /***/ }),
 /* 269 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<a data-template=\"buttonHref-ng\" class=\"cui-tmpl\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div>\n\t\t<div class=\"cui-button-center\"></div>\n\t\t<div class=\"cui-button-right\"></div>\n\t</div>\n</a>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<a data-template=\"buttonHref-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div>\n\t\t<div class=\"cui-button-center\"></div>\n\t\t<div class=\"cui-button-right\"></div>\n\t</div>\n</a>\n";
 
 /***/ }),
 /* 270 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button-ng\" class=\"cui-tmpl\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</div>\n<div data-template=\"button-left-center-ng\" class=\"cui-tmpl\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n\t</div>\n</div>\n<div data-template=\"button-left-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div>\n\t</div>\n</div>\n<div data-template=\"button-center-right-ng\" class=\"cui-tmpl\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</div>\n<div data-template=\"button-center-ng\" class=\"cui-tmpl\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-center\"></div>\n\t</div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</div>\n<div data-template=\"button-left-center-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n\t</div>\n</div>\n<div data-template=\"button-left-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div>\n\t</div>\n</div>\n<div data-template=\"button-center-right-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</div>\n<div data-template=\"button-center-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-center\"></div>\n\t</div>\n</div>\n";
 
 /***/ }),
 /* 271 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"buttonbar\" class=\"cui-tmpl\">\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"buttonbar\">\n</div>\n";
 
 /***/ }),
 /* 272 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"date-time\" class=\"cui-date-time\">\n\t<div class=\"cui-date-time-header\">\n\t\t<div class=\"cui-date-time-header-left\"></div>\n\t\t<div class=\"cui-date-time-header-center\"></div>\n\t\t<div class=\"cui-date-time-header-right\"></div>\n\t</div>\n\t<div class=\"cui-date-time-browser\">\n\t\t<div class=\"cui-date-time-calendar\"></div>\n\t\t<div class=\"cui-date-time-clock\">\n\t\t\t<div class=\"cui-date-time-analog-clock\">\n\t\t\t\t<div class=\"cui-date-time-face\">\n\t\t\t\t\t<div class=\"cui-date-time-hour\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-minute\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-second\"></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"cui-date-time-hour-minute\"></div>\n\t\t\t<div class=\"cui-date-time-digi-clock cui-date-time-digi-clock\"></div>\n\t\t</div>\n\t</div>\n\t<!--\n\t<table class=\"cui-date-time-timezone-display-table\">\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone-display\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t</table>-->\n</div>\n<div data-template=\"date-time-input\" class=\"cui-tmpl\">\n\t<div class=\"cui-date-time-input-center\"></div>\n\t<div class=\"cui-date-time-input-right\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"date-time\" class=\"cui-date-time\">\n\t<div class=\"cui-date-time-header\">\n\t\t<div class=\"cui-date-time-header-left\"></div>\n\t\t<div class=\"cui-date-time-header-center\"></div>\n\t\t<div class=\"cui-date-time-header-right\"></div>\n\t</div>\n\t<div class=\"cui-date-time-browser\">\n\t\t<div class=\"cui-date-time-calendar\"></div>\n\t\t<div class=\"cui-date-time-clock\">\n\t\t\t<div class=\"cui-date-time-analog-clock\">\n\t\t\t\t<div class=\"cui-date-time-face\">\n\t\t\t\t\t<div class=\"cui-date-time-hour\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-minute\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-second\"></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"cui-date-time-hour-minute\"></div>\n\t\t\t<div class=\"cui-date-time-digi-clock cui-date-time-digi-clock\"></div>\n\t\t</div>\n\t</div>\n\t<!--\n\t<table class=\"cui-date-time-timezone-display-table\">\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone-display\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t</table>-->\n</div>\n<div data-template=\"date-time-input\">\n\t<div class=\"cui-date-time-input-center\"></div>\n\t<div class=\"cui-date-time-input-right\"></div>\n</div>\n";
 
 /***/ }),
 /* 273 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<label for=\"cui-file-upload-button\" data-template=\"file-upload-button\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</label>\n<label for=\"cui-file-upload-button\" data-template=\"file-upload-button-ng\" class=\"cui-tmpl\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</label>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<label for=\"cui-file-upload-button\" data-template=\"file-upload-button\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</label>\n<label for=\"cui-file-upload-button\" data-template=\"file-upload-button-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</label>\n";
 
 /***/ }),
 /* 274 */
@@ -52878,7 +52878,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 277 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"data-field-multi-input\" class=\"cui-tmpl\">\n\t<div class=\"cui-data-field-multi-input-center\"></div>\n\t<div class=\"cui-data-field-multi-input-right\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"data-field-multi-input\">\n\t<div class=\"cui-data-field-multi-input-center\"></div>\n\t<div class=\"cui-data-field-multi-input-right\"></div>\n</div>\n";
 
 /***/ }),
 /* 278 */
@@ -52890,7 +52890,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 279 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"pane-fill-screen\" class=\"cui-pane-fill-screen\">\n\t<div class=\"cui-pane-fill-screen\">\n\t\t<div class=\"cui-pane-fill-screen-inner\"><div style=\"background-color: black; height:100%;\"></div></div>\n\t</div>\n</div>\n<div data-template=\"pane-fill-screen-placeholder\" class=\"cui-tmpl\">Placeholder</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"pane-fill-screen\" class=\"cui-pane-fill-screen\">\n\t<div class=\"cui-pane-fill-screen\">\n\t\t<div class=\"cui-pane-fill-screen-inner\"><div style=\"background-color: black; height:100%;\"></div></div>\n\t</div>\n</div>\n<div data-template=\"pane-fill-screen-placeholder\">Placeholder</div>\n";
 
 /***/ }),
 /* 280 */
