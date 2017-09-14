@@ -58,7 +58,7 @@ There is different types of layouts that we can use as main dom element. We use 
 **App.coffee**
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
-
+  
 class App
   constructor: ->
     body = new CUI.VerticalLayout
@@ -73,7 +73,7 @@ class App
         content: new CUI.Label
           text: "This is the bottom"
     CUI.dom.append(document.body, body)
-
+  
 CUI.ready ->
   new App()
 ```
@@ -87,7 +87,7 @@ After that we have to choose which classes our elements should use.
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
 require('./scss/base.scss')
-
+  
 class App
   constructor: ->
     body = new CUI.VerticalLayout
@@ -106,7 +106,7 @@ class App
         content: new CUI.Label
           text: "This is the bottom"
     CUI.dom.append(document.body, body)
-
+  
 CUI.ready ->
   new App()
 ```
@@ -220,7 +220,7 @@ So, we will use a custom template to render our data and remove those CUI.dom.ap
 The first step is to create a *html* file, which has all the html structure of our desired *template*.
 
 The main element has to have a *data-template* attribute with the name of our template, and optionally is possible to add *slots* inside that element.
-*Slots* are used to put values inside them, and each one needs a*data-slot* attribute to access them.
+*Slots* are used to put values inside them, and each one needs a *data-slot* attribute to access them.
 
 
 **modules/weather/weather.html**
