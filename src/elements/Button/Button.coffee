@@ -630,7 +630,7 @@ class CUI.Button extends CUI.DOMElement
 
 	# returns other buttons
 	__getButtons: (key, value) ->
-		parents = CUI.dom.parents(@DOM, ".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer")
+		parents = CUI.dom.parents(@DOM, ".cui-buttonbar,.cui-form-table,.cui-item-list-body,.cui-layer")
 
 		if parents.length == 0
 			# buttons are not grouped by anything, so we

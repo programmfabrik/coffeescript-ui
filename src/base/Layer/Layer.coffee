@@ -1047,7 +1047,7 @@ class CUI.Layer extends CUI.DOMElement
 		# count all active layers and set a counter to the body
 		# and to each, so a layer knows its stack number
 
-		layer_elements = CUI.dom.matchSelector(document.documentElement, "body > .cui-tmpl-layer-root")
+		layer_elements = CUI.dom.matchSelector(document.documentElement, "body > .cui-layer-root")
 		total = layer_elements.length
 
 		for el, idx in layer_elements
@@ -1203,7 +1203,7 @@ CUI.ready ->
 		node: document.body
 		call: (ev, info) ->
 
-			layer_elements = CUI.dom.find("body > .cui-tmpl-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru")
+			layer_elements = CUI.dom.find("body > .cui-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru")
 			target = ev.getTarget()
 
 			for layer_element in layer_elements by -1
@@ -1244,7 +1244,7 @@ CUI.ready ->
 			if ev.keyCode() != 27 or CUI.globalDrag
 				return
 
-			layer_elements = CUI.dom.find("body > .cui-tmpl-layer-root > .cui-layer:not(.cui-tooltip)")
+			layer_elements = CUI.dom.find("body > .cui-layer-root > .cui-layer:not(.cui-tooltip)")
 			layer_element = layer_elements[layer_elements.length-1]
 
 			# console.error ev.getType(), ev, layer_elements
