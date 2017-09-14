@@ -107,6 +107,7 @@ textarea {
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
+	box-shadow: $input-shadow;
 	background: $foreground;
 	font-family: inherit;
 	padding: 2px 3px;
@@ -839,12 +840,11 @@ li > div {
 	}
 }
 
-.cui-data-form--movable-rows,
-.cui-data-form .cui-data-form {
+.cui-data-form--movable-rows {
 	> .cui-data-form-row {
 		> .cui-horizontal-layout-left {		
 			.cui-drag-handle-row {
-				margin: 9px 7px 9px 0;
+				margin: 9px 7px 0 0;
 				width: 12px;
 				height: 10px;
 				flex-grow: 0;
@@ -852,17 +852,15 @@ li > div {
 				cursor:         grab;
 				
 				&.is-hidden {
-					display: none;
+					pointer-events: none;
 				}
 			}
 		}
 
-		&:nth-child(n+3) {
+		&:last-child { // edit row
 			> .cui-horizontal-layout-left {		
 				.cui-drag-handle-row.is-hidden {
-					display: block;
-					pointer-events: none;
-					opacity: 0.1;
+					opacity: 0.33;
 				}
 			}
 		}
@@ -871,31 +869,25 @@ li > div {
 
 // DataForm
 .cui-data-form--multiple-fields {
-	.cui-data-form-row {
+	> .cui-data-form-row {
 		margin-bottom: $padding;
 		border-left: 1px solid hsl(205,20%,83%);
-		margin-left: $padding;
 		position: relative;
-		background: hsl(240,7%,100%);
+		// background: hsl(240,7%,100%);
+		align-items: flex-start;
 		
-		.cui-drag-handle-row {
-			margin: 15px 0 15px 10px !important;
+		> .cui-horizontal-layout-left .cui-drag-handle-row {
+			margin: 17px 0 17px 10px !important;
 		}
 
-		> .cui-horizontal-layout-center {
-			margin: 3px 0;
-		}
-
-		.cui-data-field .cui-form-table {
-			margin: 0 $padding + 28px 0 $padding !important;
-			width: calc(100% - #{$padding*2 + 28px});
-		}
+		// .cui-data-field .cui-form-table {
+		// 	margin: 0 $padding + 28px 0 $padding !important;
+		// 	width: calc(100% - #{$padding*2 + 28px});
+		// }
 
 		.cui-block-header {
 			padding-left: $padding !important;
 			padding-right: $padding !important;
-			font-weight: normal;
-			color: hsl(202, 5%, 45%);
 		}
 
 		.cui-block-content {
@@ -922,30 +914,9 @@ li > div {
 				min-width: $td-width - $key-inset - 22px;
 			}
 		}
-		
-		& & {
-			display: flex;
-			// margin: 0 10px;
-			border-color: hsl(206,20%,89%);
-			background: hsl(240,7%,98%);
-			margin-bottom: 7px;
-			
-			// .cui-drag-handle-row {
-			// 	margin: 7px 5px !important;
-			// }
-			
-			&:first-child {
-				// border-top-width: 0;
-			}
 
-			&:last-child {
-				// border-bottom-left-radius: $input-radius;
-				// border-bottom-right-radius: $input-radius;
-			}
-
-			> .cui-horizontal-layout-center {
-				margin: 3px 0;
-			}
+		> .cui-horizontal-layout-center {
+			margin: 0;
 		}
 
 		> .cui-horizontal-layout-right {
@@ -956,9 +927,7 @@ li > div {
 			
 			.cui-button {
 				height: auto;
-				padding-top: 8px;
-				padding-bottom: 8px;
-				padding-left: 0;
+				padding: 5px 2px 0 0;
 			}
 		}
 	}
@@ -978,13 +947,14 @@ li > div {
 	> .cui-horizontal-layout-center {
 		margin: 3px 0;
 		min-width: 0;
+		display: block;
 	}
 
 	> .cui-horizontal-layout-right {
 		width: 28px;
 		
 		.cui-button {
-			height: 30px;
+			margin-top: 4px;
 			
 			&.cui-button-hidden {
 				pointer-events: none;
