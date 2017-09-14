@@ -37865,632 +37865,6 @@ CUI.FileUploadFile = (function(superClass) {
 /* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(CUI) {
-/*
- * coffeescript-ui - Coffeescript User Interface System (CUI)
- * Copyright (c) 2013 - 2016 Programmfabrik GmbH
- * MIT Licence
- * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
- */
-var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
-
-CUI.FormButton = (function(superClass) {
-  extend(FormButton, superClass);
-
-  function FormButton(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FormButton.__super__.constructor.call(this, this.opts);
-  }
-
-  FormButton.prototype.getButtonOpts = function() {
-    var i, k, len, opts, ref;
-    opts = {
-      icon: this._icon
-    };
-    ref = ["appearance"];
-    for (i = 0, len = ref.length; i < len; i++) {
-      k = ref[i];
-      opts[k] = this["_" + k];
-    }
-    return opts;
-  };
-
-  FormButton.prototype.render = function() {
-    FormButton.__super__.render.call(this);
-    this.__checkbox.addClass("cui-button-button");
-  };
-
-  FormButton.prototype.getCheckboxClass = function() {
-    return "cui-button-form-button";
-  };
-
-  FormButton.prototype.initOpts = function() {
-    FormButton.__super__.initOpts.call(this);
-    return this.addOpts({
-      icon: {
-        check: function(v) {
-          return v instanceof CUI.Icon || CUI.util.isString(v);
-        }
-      },
-      appearance: {
-        check: ["link", "flat", "normal", "important"]
-      }
-    });
-  };
-
-  return FormButton;
-
-})(CUI.Checkbox);
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(CUI) {
-/*
- * coffeescript-ui - Coffeescript User Interface System (CUI)
- * Copyright (c) 2013 - 2016 Programmfabrik GmbH
- * MIT Licence
- * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
- */
-var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
-
-CUI.FormModal = (function(superClass) {
-  extend(FormModal, superClass);
-
-  function FormModal(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FormModal.__super__.constructor.call(this, this.opts);
-    this.__old_text = null;
-    this.__old_display = null;
-  }
-
-  FormModal.prototype.initOpts = function() {
-    FormModal.__super__.initOpts.call(this);
-    this.removeOpt("popover");
-    return this.addOpts({
-      modal: {
-        "default": {},
-        check: "PlainObject",
-        apply_button: {
-          mandatory: true,
-          "default": {
-            text: "Ok"
-          },
-          check: (function(_this) {
-            return function(v) {
-              return CUI.isPlainObject(v);
-            };
-          })(this)
-        }
-      }
-    });
-  };
-
-  FormModal.prototype.initPopover = function(opts) {
-    var btn, btn_opts, mod, onClick;
-    btn_opts = CUI.util.copyObject(this._modal.apply_button, true);
-    onClick = btn_opts.onClick;
-    btn_opts.onClick = (function(_this) {
-      return function(ev, btn) {
-        return CUI.decide(typeof onClick === "function" ? onClick(ev, btn, _this) : void 0).done(function() {
-          return _this.__popover.hide();
-        });
-      };
-    })(this);
-    btn = new CUI.defaults["class"].Button(btn_opts);
-    if (this.hasChanges()) {
-      btn.enable();
-    } else {
-      btn.disable();
-    }
-    opts.pane.footer_right = btn;
-    mod = new CUI.Modal(opts);
-    if (this.__orig_set_data) {
-      CUI.Events.listen({
-        type: "data-changed",
-        node: mod,
-        call: (function(_this) {
-          return function() {
-            if (_this.hasChanges()) {
-              return btn.enable();
-            } else {
-              return btn.disable();
-            }
-          };
-        })(this)
-      });
-    }
-    return mod;
-  };
-
-  FormModal.prototype.revertData = function() {
-    CUI.util.assert(this.__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", {
-      opts: this.opts
-    });
-    delete this.__data;
-    if (this.__orig_data) {
-      this.__orig_set_data[this._name] = this.__orig_data;
-    } else {
-      delete this.__orig_set_data[this._name];
-    }
-    this.setData(this.__orig_set_data);
-    this.resetTableAndFields();
-    CUI.Events.trigger({
-      type: "data-changed",
-      node: this.getPopover()
-    });
-    return this;
-  };
-
-  FormModal.prototype.setData = function(data) {
-    if (this._name && !CUI.isFunction(data)) {
-      if (data[this._name]) {
-        this.__orig_data = CUI.util.copyObject(data[this._name], true);
-      } else {
-        this.__orig_data = void 0;
-      }
-      this.__orig_set_data = data;
-    }
-    return FormModal.__super__.setData.call(this, data);
-  };
-
-  FormModal.prototype.__closePopover = function() {
-    if (this.__orig_set_data) {
-      this.__orig_data = CUI.util.copyObject(this.__orig_set_data[this._name], true);
-    }
-    return FormModal.__super__.__closePopover.call(this);
-  };
-
-  FormModal.prototype.hasChanges = function() {
-    if (this.__orig_set_data) {
-      return JSON.stringify(this.__orig_data) !== JSON.stringify(this.__orig_set_data[this._name]);
-    } else {
-      return null;
-    }
-  };
-
-  FormModal.prototype.getPopoverOpts = function() {
-    var onCancel, pop_opts;
-    pop_opts = CUI.util.copyObject(this._modal, true);
-    if (pop_opts.cancel && this.__orig_set_data) {
-      onCancel = pop_opts.onCancel;
-      pop_opts.onCancel = (function(_this) {
-        return function(ev, modal) {
-          var dfr;
-          dfr = new CUI.Deferred();
-          CUI.decide(typeof onCancel === "function" ? onCancel(ev, modal, _this.hasChanges()) : void 0).done(dfr.resolve).fail(dfr.reject);
-          dfr.done(function() {
-            return _this.revertData();
-          });
-          return dfr.promise();
-        };
-      })(this);
-    }
-    delete pop_opts.apply_button;
-    if (CUI.util.isEmpty(pop_opts["class"])) {
-      pop_opts["class"] = "";
-    }
-    pop_opts.element = null;
-    if (!pop_opts.pane) {
-      pop_opts.pane = {};
-    }
-    CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", {
-      opts: pop_opts
-    });
-    pop_opts["class"] += " cui-form-modal-modal";
-    return pop_opts;
-  };
-
-  FormModal.prototype.disable = function() {
-    var ref;
-    FormModal.__super__.disable.call(this);
-    return (ref = this.__button) != null ? ref.disable() : void 0;
-  };
-
-  FormModal.prototype.enable = function() {
-    var ref;
-    FormModal.__super__.enable.call(this);
-    return (ref = this.__button) != null ? ref.enable() : void 0;
-  };
-
-  FormModal.prototype.destroy = function() {
-    var ref;
-    FormModal.__super__.destroy.call(this);
-    return (ref = this.__popover) != null ? ref.destroy() : void 0;
-  };
-
-  return FormModal;
-
-})(CUI.FormPopover);
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 188 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(CUI) {
-/*
- * coffeescript-ui - Coffeescript User Interface System (CUI)
- * Copyright (c) 2013 - 2016 Programmfabrik GmbH
- * MIT Licence
- * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
- */
-var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty,
-  slice = [].slice;
-
-CUI.FormPopover = (function(superClass) {
-  extend(FormPopover, superClass);
-
-  function FormPopover(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FormPopover.__super__.constructor.call(this, this.opts);
-    this.__old_display = null;
-    this.__old_render = null;
-    this;
-  }
-
-  FormPopover.prototype.initOpts = function() {
-    FormPopover.__super__.initOpts.call(this);
-    return this.addOpts({
-      popover: {
-        "default": {},
-        check: "PlainObject"
-      },
-      button: {
-        "default": {},
-        check: function(v) {
-          return CUI.isPlainObject(v) && !v.onClick;
-        }
-      },
-      trigger_data_changed_while_open: {
-        "default": false,
-        check: Boolean
-      },
-      renderDisplayButton: {
-        check: Function
-      },
-      renderDisplayContent: {
-        check: Function
-      }
-    });
-  };
-
-  FormPopover.prototype.readOpts = function() {
-    FormPopover.__super__.readOpts.call(this);
-    if (this._class) {
-      this.__class = this._class;
-      delete this._class;
-    }
-    this.__fields_is_func = CUI.isFunction(this._fields);
-    if (this.__fields_is_func) {
-      return CUI.util.assert(this._data_not_for_others !== true, "new CUI.FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", {
-        opts: this.opts
-      });
-    }
-  };
-
-  FormPopover.prototype.init = function() {
-    if (!this.__fields_is_func) {
-      return FormPopover.__super__.init.call(this);
-    }
-    this.__initUndo();
-    return this.setFormDepth();
-  };
-
-  FormPopover.prototype.setDataOnOthers = function() {
-    if (this.__fields_is_func) {
-      return false;
-    } else {
-      return FormPopover.__super__.setDataOnOthers.call(this);
-    }
-  };
-
-  FormPopover.prototype.isChanged = function() {
-    if (this.__fields) {
-      return FormPopover.__super__.isChanged.call(this);
-    } else {
-      return false;
-    }
-  };
-
-  FormPopover.prototype.getFields = function(func) {
-    if (func == null) {
-      func = "";
-    }
-    if (func === "render" || func === "displayValue") {
-      return [];
-    }
-    if (func === "show" || func === "hide" || func === "remove" || func === "enable" || func === "disable" || func === "getFieldsByName" || func === "getFieldByIdx" || func === "setFormDepth" || func === "getDataFields") {
-      return this.__fields || [];
-    }
-    CUI.util.assert(this.__fields, "FormPopover.getFields(" + func + ")", "Fields not rendered yet. This is a programming error in CUI.");
-    return FormPopover.__super__.getFields.call(this);
-  };
-
-  FormPopover.prototype.initTemplate = function() {
-    var vl;
-    vl = new CUI.VerticalLayout({
-      maximize: false,
-      bottom: {}
-    });
-    return this.registerTemplate(vl.getLayout());
-  };
-
-  FormPopover.prototype.hasContentForAppend = function() {
-    return true;
-  };
-
-  FormPopover.prototype.render = function() {
-    var button_opts;
-    button_opts = CUI.util.copyObject(this._button, true);
-    button_opts.onClick = (function(_this) {
-      return function() {
-        return _this.__openPopover();
-      };
-    })(this);
-    CUI.mergeMap(button_opts, {
-      left: true,
-      text: ""
-    });
-    this.__button = new CUI.defaults["class"].Button(button_opts);
-    this.addClass("cui-data-field-input");
-    if (this._renderDisplayButton) {
-      this.addClass("cui-form-popover-has-button-text");
-    }
-    this.append(this.__button, "center");
-    CUI.DataField.prototype.render.call(this);
-    return this;
-  };
-
-  FormPopover.prototype.getButton = function() {
-    return this.__button;
-  };
-
-  FormPopover.prototype.displayValue = function() {
-    CUI.DataField.prototype.displayValue.call(this);
-    return this.__renderDisplay();
-  };
-
-  FormPopover.prototype.callOnFields = function() {
-    var args, df, func, i, len, ref;
-    func = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-    ref = this.getFields();
-    for (i = 0, len = ref.length; i < len; i++) {
-      df = ref[i];
-      df[func].apply(df, args);
-    }
-    return this;
-  };
-
-  FormPopover.prototype.__renderDisplay = function() {
-    var display, render, text;
-    if (this._renderDisplayContent) {
-      display = this._renderDisplayContent(this, this.__data);
-    } else if (this._renderDisplayButton) {
-      render = this._renderDisplayButton(this, this.__data);
-    } else if (!this.__data) {
-      text = "Data not set.";
-      display = CUI.dom.textEmpty(text);
-    } else {
-      display = text = "";
-    }
-    if (this._renderDisplayButton) {
-      if (render === false) {
-        this.__button.deactivate();
-      } else if (render === true) {
-        this.__button.activate();
-      } else if (render instanceof CUI.Icon) {
-        this.__button.setIcon(render);
-        this.__button.setText();
-      } else {
-        this.__button.setIcon();
-        this.__button.setText(render);
-      }
-      if (this.__old_render !== null) {
-        CUI.Events.trigger({
-          type: "content-resize",
-          node: this.DOM
-        });
-      }
-      this.__old_render = render;
-    } else {
-      if (this.__old_display === null || this.__old_display !== display) {
-        this.replace(display, "bottom");
-        if (this.__old_display !== null) {
-          CUI.Events.trigger({
-            type: "content-resize",
-            node: this.DOM
-          });
-        }
-        this.__old_display = display;
-      }
-    }
-    this.checkChanged();
-    return this;
-  };
-
-  FormPopover.prototype.renderTable = function() {
-    this.table = FormPopover.__super__.renderTable.call(this);
-    CUI.dom.addClass(this.getLayout().DOM, this.__class);
-    return this.table;
-  };
-
-  FormPopover.prototype.initPopover = function(opts) {
-    return new CUI.Popover(opts);
-  };
-
-  FormPopover.prototype.getPopoverOpts = function() {
-    var pop_opts;
-    pop_opts = CUI.util.copyObject(this._popover, true);
-    if (!pop_opts.backdrop) {
-      pop_opts.backdrop = {};
-    }
-    if (!pop_opts.backdrop.policy) {
-      pop_opts.backdrop.policy = "click";
-    }
-    if (!pop_opts.pane) {
-      pop_opts.pane = {};
-    }
-    CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", {
-      opts: pop_opts
-    });
-    if (CUI.util.isEmpty(pop_opts["class"])) {
-      pop_opts["class"] = "";
-    }
-    pop_opts["class"] += " cui-form-popover-popover";
-    return pop_opts;
-  };
-
-  FormPopover.prototype.getPopover = function() {
-    return this.__popover;
-  };
-
-  FormPopover.prototype.renderAsBlock = function() {
-    return false;
-  };
-
-  FormPopover.prototype.resetTableAndFields = function() {
-    this.callOnFields("remove");
-    this.unregisterTableListeners();
-    if (CUI.__ng__) {
-      CUI.dom.empty(this.table);
-    } else {
-      CUI.dom.remove(this.table);
-    }
-    this.table = null;
-    this.__fields = null;
-    return this;
-  };
-
-  FormPopover.prototype.__openPopover = function() {
-    var onHide, onShow, pop_opts;
-    pop_opts = this.getPopoverOpts();
-    if (this.__fields_is_func) {
-      if (this.table) {
-        this.resetTableAndFields();
-      }
-      this.initFields();
-      this.callOnFields("setData", this.__data);
-    }
-    if (!this.table) {
-      this.renderTable();
-      this.callOnFields("start");
-    }
-    if (!pop_opts.hasOwnProperty("element")) {
-      pop_opts.element = this.__button;
-    }
-    onHide = pop_opts.onHide;
-    pop_opts.onHide = (function(_this) {
-      return function(pop, ev) {
-        _this.__closePopover();
-        return typeof onHide === "function" ? onHide(pop, ev) : void 0;
-      };
-    })(this);
-    onShow = pop_opts.onShow;
-    if (onShow) {
-      pop_opts.onShow = (function(_this) {
-        return function(pop) {
-          return typeof onShow === "function" ? onShow(pop, _this) : void 0;
-        };
-      })(this);
-    }
-    pop_opts.pane.content = this.getLayout();
-    this.__popover = this.initPopover(pop_opts);
-    CUI.Events.listen({
-      type: "data-changed",
-      node: this.__popover,
-      call: (function(_this) {
-        return function(ev, info) {
-          if (info == null) {
-            info = {};
-          }
-          _this.__renderDisplay();
-          _this.__dataChanged = info;
-          if (_this._trigger_data_changed_while_open) {
-            _this.__triggerDataChanged();
-          }
-        };
-      })(this)
-    });
-    this.__popover.show();
-    return this.addClass("focus");
-  };
-
-  FormPopover.prototype.__closePopover = function() {
-    this.removeClass("focus");
-    CUI.dom.remove(this.getLayout().DOM);
-    this.__popover.destroy();
-    this.__popover = null;
-    this.__triggerDataChanged();
-    return this;
-  };
-
-  FormPopover.prototype.closePopover = function() {
-    var ref;
-    return (ref = this.__popover) != null ? ref.hide() : void 0;
-  };
-
-  FormPopover.prototype.hide = function(trigger_event) {
-    if (trigger_event == null) {
-      trigger_event = false;
-    }
-    this.closePopover();
-    return FormPopover.__super__.hide.call(this, trigger_event);
-  };
-
-  FormPopover.prototype.__triggerDataChanged = function() {
-    if (this.__dataChanged) {
-      this.triggerDataChanged();
-    }
-    return this.__dataChanged = null;
-  };
-
-  FormPopover.prototype.triggerDataChanged = function() {
-    return CUI.Events.trigger({
-      type: "data-changed",
-      node: this.__button,
-      info: this.__dataChanged
-    });
-  };
-
-  FormPopover.prototype.disable = function() {
-    var ref;
-    FormPopover.__super__.disable.call(this);
-    return (ref = this.__button) != null ? ref.disable() : void 0;
-  };
-
-  FormPopover.prototype.enable = function() {
-    var ref;
-    FormPopover.__super__.enable.call(this);
-    return (ref = this.__button) != null ? ref.enable() : void 0;
-  };
-
-  FormPopover.prototype.destroy = function() {
-    var ref;
-    FormPopover.__super__.destroy.call(this);
-    if ((ref = this.__popover) != null) {
-      ref.destroy();
-    }
-    return this.__dataChanged = null;
-  };
-
-  return FormPopover;
-
-})(CUI.Form);
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 189 */
-/***/ (function(module, exports, __webpack_require__) {
-
 /* WEBPACK VAR INJECTION */(function(CUI) {var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -38554,7 +37928,7 @@ CUI.Form = (function(superClass) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 190 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(CUI) {
@@ -39361,6 +38735,632 @@ CUI.Events.registerEvent({
   type: "form-check-row-visibility",
   bubble: true
 });
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(CUI) {
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.FormButton = (function(superClass) {
+  extend(FormButton, superClass);
+
+  function FormButton(opts1) {
+    this.opts = opts1 != null ? opts1 : {};
+    FormButton.__super__.constructor.call(this, this.opts);
+  }
+
+  FormButton.prototype.getButtonOpts = function() {
+    var i, k, len, opts, ref;
+    opts = {
+      icon: this._icon
+    };
+    ref = ["appearance"];
+    for (i = 0, len = ref.length; i < len; i++) {
+      k = ref[i];
+      opts[k] = this["_" + k];
+    }
+    return opts;
+  };
+
+  FormButton.prototype.render = function() {
+    FormButton.__super__.render.call(this);
+    this.__checkbox.addClass("cui-button-button");
+  };
+
+  FormButton.prototype.getCheckboxClass = function() {
+    return "cui-button-form-button";
+  };
+
+  FormButton.prototype.initOpts = function() {
+    FormButton.__super__.initOpts.call(this);
+    return this.addOpts({
+      icon: {
+        check: function(v) {
+          return v instanceof CUI.Icon || CUI.util.isString(v);
+        }
+      },
+      appearance: {
+        check: ["link", "flat", "normal", "important"]
+      }
+    });
+  };
+
+  return FormButton;
+
+})(CUI.Checkbox);
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 189 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(CUI) {
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.FormModal = (function(superClass) {
+  extend(FormModal, superClass);
+
+  function FormModal(opts1) {
+    this.opts = opts1 != null ? opts1 : {};
+    FormModal.__super__.constructor.call(this, this.opts);
+    this.__old_text = null;
+    this.__old_display = null;
+  }
+
+  FormModal.prototype.initOpts = function() {
+    FormModal.__super__.initOpts.call(this);
+    this.removeOpt("popover");
+    return this.addOpts({
+      modal: {
+        "default": {},
+        check: "PlainObject",
+        apply_button: {
+          mandatory: true,
+          "default": {
+            text: "Ok"
+          },
+          check: (function(_this) {
+            return function(v) {
+              return CUI.isPlainObject(v);
+            };
+          })(this)
+        }
+      }
+    });
+  };
+
+  FormModal.prototype.initPopover = function(opts) {
+    var btn, btn_opts, mod, onClick;
+    btn_opts = CUI.util.copyObject(this._modal.apply_button, true);
+    onClick = btn_opts.onClick;
+    btn_opts.onClick = (function(_this) {
+      return function(ev, btn) {
+        return CUI.decide(typeof onClick === "function" ? onClick(ev, btn, _this) : void 0).done(function() {
+          return _this.__popover.hide();
+        });
+      };
+    })(this);
+    btn = new CUI.defaults["class"].Button(btn_opts);
+    if (this.hasChanges()) {
+      btn.enable();
+    } else {
+      btn.disable();
+    }
+    opts.pane.footer_right = btn;
+    mod = new CUI.Modal(opts);
+    if (this.__orig_set_data) {
+      CUI.Events.listen({
+        type: "data-changed",
+        node: mod,
+        call: (function(_this) {
+          return function() {
+            if (_this.hasChanges()) {
+              return btn.enable();
+            } else {
+              return btn.disable();
+            }
+          };
+        })(this)
+      });
+    }
+    return mod;
+  };
+
+  FormModal.prototype.revertData = function() {
+    CUI.util.assert(this.__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", {
+      opts: this.opts
+    });
+    delete this.__data;
+    if (this.__orig_data) {
+      this.__orig_set_data[this._name] = this.__orig_data;
+    } else {
+      delete this.__orig_set_data[this._name];
+    }
+    this.setData(this.__orig_set_data);
+    this.resetTableAndFields();
+    CUI.Events.trigger({
+      type: "data-changed",
+      node: this.getPopover()
+    });
+    return this;
+  };
+
+  FormModal.prototype.setData = function(data) {
+    if (this._name && !CUI.isFunction(data)) {
+      if (data[this._name]) {
+        this.__orig_data = CUI.util.copyObject(data[this._name], true);
+      } else {
+        this.__orig_data = void 0;
+      }
+      this.__orig_set_data = data;
+    }
+    return FormModal.__super__.setData.call(this, data);
+  };
+
+  FormModal.prototype.__closePopover = function() {
+    if (this.__orig_set_data) {
+      this.__orig_data = CUI.util.copyObject(this.__orig_set_data[this._name], true);
+    }
+    return FormModal.__super__.__closePopover.call(this);
+  };
+
+  FormModal.prototype.hasChanges = function() {
+    if (this.__orig_set_data) {
+      return JSON.stringify(this.__orig_data) !== JSON.stringify(this.__orig_set_data[this._name]);
+    } else {
+      return null;
+    }
+  };
+
+  FormModal.prototype.getPopoverOpts = function() {
+    var onCancel, pop_opts;
+    pop_opts = CUI.util.copyObject(this._modal, true);
+    if (pop_opts.cancel && this.__orig_set_data) {
+      onCancel = pop_opts.onCancel;
+      pop_opts.onCancel = (function(_this) {
+        return function(ev, modal) {
+          var dfr;
+          dfr = new CUI.Deferred();
+          CUI.decide(typeof onCancel === "function" ? onCancel(ev, modal, _this.hasChanges()) : void 0).done(dfr.resolve).fail(dfr.reject);
+          dfr.done(function() {
+            return _this.revertData();
+          });
+          return dfr.promise();
+        };
+      })(this);
+    }
+    delete pop_opts.apply_button;
+    if (CUI.util.isEmpty(pop_opts["class"])) {
+      pop_opts["class"] = "";
+    }
+    pop_opts.element = null;
+    if (!pop_opts.pane) {
+      pop_opts.pane = {};
+    }
+    CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", {
+      opts: pop_opts
+    });
+    pop_opts["class"] += " cui-form-modal-modal";
+    return pop_opts;
+  };
+
+  FormModal.prototype.disable = function() {
+    var ref;
+    FormModal.__super__.disable.call(this);
+    return (ref = this.__button) != null ? ref.disable() : void 0;
+  };
+
+  FormModal.prototype.enable = function() {
+    var ref;
+    FormModal.__super__.enable.call(this);
+    return (ref = this.__button) != null ? ref.enable() : void 0;
+  };
+
+  FormModal.prototype.destroy = function() {
+    var ref;
+    FormModal.__super__.destroy.call(this);
+    return (ref = this.__popover) != null ? ref.destroy() : void 0;
+  };
+
+  return FormModal;
+
+})(CUI.FormPopover);
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(CUI) {
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty,
+  slice = [].slice;
+
+CUI.FormPopover = (function(superClass) {
+  extend(FormPopover, superClass);
+
+  function FormPopover(opts1) {
+    this.opts = opts1 != null ? opts1 : {};
+    FormPopover.__super__.constructor.call(this, this.opts);
+    this.__old_display = null;
+    this.__old_render = null;
+    this;
+  }
+
+  FormPopover.prototype.initOpts = function() {
+    FormPopover.__super__.initOpts.call(this);
+    return this.addOpts({
+      popover: {
+        "default": {},
+        check: "PlainObject"
+      },
+      button: {
+        "default": {},
+        check: function(v) {
+          return CUI.isPlainObject(v) && !v.onClick;
+        }
+      },
+      trigger_data_changed_while_open: {
+        "default": false,
+        check: Boolean
+      },
+      renderDisplayButton: {
+        check: Function
+      },
+      renderDisplayContent: {
+        check: Function
+      }
+    });
+  };
+
+  FormPopover.prototype.readOpts = function() {
+    FormPopover.__super__.readOpts.call(this);
+    if (this._class) {
+      this.__class = this._class;
+      delete this._class;
+    }
+    this.__fields_is_func = CUI.isFunction(this._fields);
+    if (this.__fields_is_func) {
+      return CUI.util.assert(this._data_not_for_others !== true, "new CUI.FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", {
+        opts: this.opts
+      });
+    }
+  };
+
+  FormPopover.prototype.init = function() {
+    if (!this.__fields_is_func) {
+      return FormPopover.__super__.init.call(this);
+    }
+    this.__initUndo();
+    return this.setFormDepth();
+  };
+
+  FormPopover.prototype.setDataOnOthers = function() {
+    if (this.__fields_is_func) {
+      return false;
+    } else {
+      return FormPopover.__super__.setDataOnOthers.call(this);
+    }
+  };
+
+  FormPopover.prototype.isChanged = function() {
+    if (this.__fields) {
+      return FormPopover.__super__.isChanged.call(this);
+    } else {
+      return false;
+    }
+  };
+
+  FormPopover.prototype.getFields = function(func) {
+    if (func == null) {
+      func = "";
+    }
+    if (func === "render" || func === "displayValue") {
+      return [];
+    }
+    if (func === "show" || func === "hide" || func === "remove" || func === "enable" || func === "disable" || func === "getFieldsByName" || func === "getFieldByIdx" || func === "setFormDepth" || func === "getDataFields") {
+      return this.__fields || [];
+    }
+    CUI.util.assert(this.__fields, "FormPopover.getFields(" + func + ")", "Fields not rendered yet. This is a programming error in CUI.");
+    return FormPopover.__super__.getFields.call(this);
+  };
+
+  FormPopover.prototype.initTemplate = function() {
+    var vl;
+    vl = new CUI.VerticalLayout({
+      maximize: false,
+      bottom: {}
+    });
+    return this.registerTemplate(vl.getLayout());
+  };
+
+  FormPopover.prototype.hasContentForAppend = function() {
+    return true;
+  };
+
+  FormPopover.prototype.render = function() {
+    var button_opts;
+    button_opts = CUI.util.copyObject(this._button, true);
+    button_opts.onClick = (function(_this) {
+      return function() {
+        return _this.__openPopover();
+      };
+    })(this);
+    CUI.mergeMap(button_opts, {
+      left: true,
+      text: ""
+    });
+    this.__button = new CUI.defaults["class"].Button(button_opts);
+    this.addClass("cui-data-field-input");
+    if (this._renderDisplayButton) {
+      this.addClass("cui-form-popover-has-button-text");
+    }
+    this.append(this.__button, "center");
+    CUI.DataField.prototype.render.call(this);
+    return this;
+  };
+
+  FormPopover.prototype.getButton = function() {
+    return this.__button;
+  };
+
+  FormPopover.prototype.displayValue = function() {
+    CUI.DataField.prototype.displayValue.call(this);
+    return this.__renderDisplay();
+  };
+
+  FormPopover.prototype.callOnFields = function() {
+    var args, df, func, i, len, ref;
+    func = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    ref = this.getFields();
+    for (i = 0, len = ref.length; i < len; i++) {
+      df = ref[i];
+      df[func].apply(df, args);
+    }
+    return this;
+  };
+
+  FormPopover.prototype.__renderDisplay = function() {
+    var display, render, text;
+    if (this._renderDisplayContent) {
+      display = this._renderDisplayContent(this, this.__data);
+    } else if (this._renderDisplayButton) {
+      render = this._renderDisplayButton(this, this.__data);
+    } else if (!this.__data) {
+      text = "Data not set.";
+      display = CUI.dom.textEmpty(text);
+    } else {
+      display = text = "";
+    }
+    if (this._renderDisplayButton) {
+      if (render === false) {
+        this.__button.deactivate();
+      } else if (render === true) {
+        this.__button.activate();
+      } else if (render instanceof CUI.Icon) {
+        this.__button.setIcon(render);
+        this.__button.setText();
+      } else {
+        this.__button.setIcon();
+        this.__button.setText(render);
+      }
+      if (this.__old_render !== null) {
+        CUI.Events.trigger({
+          type: "content-resize",
+          node: this.DOM
+        });
+      }
+      this.__old_render = render;
+    } else {
+      if (this.__old_display === null || this.__old_display !== display) {
+        this.replace(display, "bottom");
+        if (this.__old_display !== null) {
+          CUI.Events.trigger({
+            type: "content-resize",
+            node: this.DOM
+          });
+        }
+        this.__old_display = display;
+      }
+    }
+    this.checkChanged();
+    return this;
+  };
+
+  FormPopover.prototype.renderTable = function() {
+    this.table = FormPopover.__super__.renderTable.call(this);
+    CUI.dom.addClass(this.getLayout().DOM, this.__class);
+    return this.table;
+  };
+
+  FormPopover.prototype.initPopover = function(opts) {
+    return new CUI.Popover(opts);
+  };
+
+  FormPopover.prototype.getPopoverOpts = function() {
+    var pop_opts;
+    pop_opts = CUI.util.copyObject(this._popover, true);
+    if (!pop_opts.backdrop) {
+      pop_opts.backdrop = {};
+    }
+    if (!pop_opts.backdrop.policy) {
+      pop_opts.backdrop.policy = "click";
+    }
+    if (!pop_opts.pane) {
+      pop_opts.pane = {};
+    }
+    CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", {
+      opts: pop_opts
+    });
+    if (CUI.util.isEmpty(pop_opts["class"])) {
+      pop_opts["class"] = "";
+    }
+    pop_opts["class"] += " cui-form-popover-popover";
+    return pop_opts;
+  };
+
+  FormPopover.prototype.getPopover = function() {
+    return this.__popover;
+  };
+
+  FormPopover.prototype.renderAsBlock = function() {
+    return false;
+  };
+
+  FormPopover.prototype.resetTableAndFields = function() {
+    this.callOnFields("remove");
+    this.unregisterTableListeners();
+    if (CUI.__ng__) {
+      CUI.dom.empty(this.table);
+    } else {
+      CUI.dom.remove(this.table);
+    }
+    this.table = null;
+    this.__fields = null;
+    return this;
+  };
+
+  FormPopover.prototype.__openPopover = function() {
+    var onHide, onShow, pop_opts;
+    pop_opts = this.getPopoverOpts();
+    if (this.__fields_is_func) {
+      if (this.table) {
+        this.resetTableAndFields();
+      }
+      this.initFields();
+      this.callOnFields("setData", this.__data);
+    }
+    if (!this.table) {
+      this.renderTable();
+      this.callOnFields("start");
+    }
+    if (!pop_opts.hasOwnProperty("element")) {
+      pop_opts.element = this.__button;
+    }
+    onHide = pop_opts.onHide;
+    pop_opts.onHide = (function(_this) {
+      return function(pop, ev) {
+        _this.__closePopover();
+        return typeof onHide === "function" ? onHide(pop, ev) : void 0;
+      };
+    })(this);
+    onShow = pop_opts.onShow;
+    if (onShow) {
+      pop_opts.onShow = (function(_this) {
+        return function(pop) {
+          return typeof onShow === "function" ? onShow(pop, _this) : void 0;
+        };
+      })(this);
+    }
+    pop_opts.pane.content = this.getLayout();
+    this.__popover = this.initPopover(pop_opts);
+    CUI.Events.listen({
+      type: "data-changed",
+      node: this.__popover,
+      call: (function(_this) {
+        return function(ev, info) {
+          if (info == null) {
+            info = {};
+          }
+          _this.__renderDisplay();
+          _this.__dataChanged = info;
+          if (_this._trigger_data_changed_while_open) {
+            _this.__triggerDataChanged();
+          }
+        };
+      })(this)
+    });
+    this.__popover.show();
+    return this.addClass("focus");
+  };
+
+  FormPopover.prototype.__closePopover = function() {
+    this.removeClass("focus");
+    CUI.dom.remove(this.getLayout().DOM);
+    this.__popover.destroy();
+    this.__popover = null;
+    this.__triggerDataChanged();
+    return this;
+  };
+
+  FormPopover.prototype.closePopover = function() {
+    var ref;
+    return (ref = this.__popover) != null ? ref.hide() : void 0;
+  };
+
+  FormPopover.prototype.hide = function(trigger_event) {
+    if (trigger_event == null) {
+      trigger_event = false;
+    }
+    this.closePopover();
+    return FormPopover.__super__.hide.call(this, trigger_event);
+  };
+
+  FormPopover.prototype.__triggerDataChanged = function() {
+    if (this.__dataChanged) {
+      this.triggerDataChanged();
+    }
+    return this.__dataChanged = null;
+  };
+
+  FormPopover.prototype.triggerDataChanged = function() {
+    return CUI.Events.trigger({
+      type: "data-changed",
+      node: this.__button,
+      info: this.__dataChanged
+    });
+  };
+
+  FormPopover.prototype.disable = function() {
+    var ref;
+    FormPopover.__super__.disable.call(this);
+    return (ref = this.__button) != null ? ref.disable() : void 0;
+  };
+
+  FormPopover.prototype.enable = function() {
+    var ref;
+    FormPopover.__super__.enable.call(this);
+    return (ref = this.__button) != null ? ref.enable() : void 0;
+  };
+
+  FormPopover.prototype.destroy = function() {
+    var ref;
+    FormPopover.__super__.destroy.call(this);
+    if ((ref = this.__popover) != null) {
+      ref.destroy();
+    }
+    return this.__dataChanged = null;
+  };
+
+  return FormPopover;
+
+})(CUI.Form);
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -52399,15 +52399,15 @@ __webpack_require__(228);
 
 __webpack_require__(223);
 
+__webpack_require__(188);
+
+__webpack_require__(187);
+
 __webpack_require__(186);
 
 __webpack_require__(190);
 
 __webpack_require__(189);
-
-__webpack_require__(188);
-
-__webpack_require__(187);
 
 __webpack_require__(170);
 
@@ -52800,25 +52800,25 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 264 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"layer-root\" class=\"cui-tmpl cui-tmpl-layer-root\"></div>\n<div data-template=\"layer\" class=\"cui-tmpl cui-tmpl-layer cui-layer\"></div>\n<div data-template=\"layer-backdrop\" class=\"cui-tmpl cui-tmpl-layer-backdrop\"></div>\n<div data-template=\"layer-pointer\" class=\"cui-tmpl cui-layer-pointer\"></div>\n\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"layer-root\" class=\"cui-layer-root\"></div>\n<div data-template=\"layer\" class=\"cui-layer\"></div>\n<div data-template=\"layer-backdrop\" class=\"cui-layer-backdrop\"></div>\n<div data-template=\"layer-pointer\" class=\"cui-layer-pointer\"></div>\n\n";
 
 /***/ }),
 /* 265 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"block\" class=\"cui-tmpl cui-tmpl-block\">\n\t<div class=\"cui-block-header\"></div>\n\t<div class=\"cui-block-content\"></div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"block\" class=\"cui-block\">\n\t<div class=\"cui-block-header\"></div>\n\t<div class=\"cui-block-content\"></div>\n</div>";
 
 /***/ }),
 /* 266 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"border-layout\" class=\"cui-tmpl cui-vertical-layout cui-layout\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-border-layout-north cui-vertical-layout-top\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-border-layout-north; name: north; direction: column;\"  data-cui-absolute-set=\"top\"></div>\n\t<div class=\"cui-border-layout-main cui-vertical-layout-center\" data-cui-absolute-set=\"top,bottom\">\n\t\t<div class=\"cui-border-layout-row cui-horizontal-layout cui-maximize cui-maximize-vertical cui-maximize-horizontal cui-layout\" data-cui-absolute-container=\"row\" >\n\t\t\t<div class=\"cui-border-layout-west cui-horizontal-layout-left\"></div>\n\t\t\t<div data-cui-flex-handle=\"pane: .cui-border-layout-west; name: west; direction: row;\" data-cui-absolute-set=\"left\"></div>\n\t\t\t<div class=\"cui-border-layout-center cui-horizontal-layout-center\" data-cui-absolute-set=\"left,right\"></div>\n\t\t\t<div data-cui-flex-handle=\"pane: .cui-border-layout-east; name: east; direction: row;\" data-cui-absolute-set=\"right\"></div>\n\t\t\t<div class=\"cui-border-layout-east cui-horizontal-layout-right\"></div>\n\t\t</div>\n\t</div>\n\t<div data-cui-flex-handle=\"pane: .cui-border-layout-south; name: south; direction: column;\" data-cui-absolute-set=\"bottom\"></div>\n\t<div class=\"cui-border-layout-south cui-vertical-layout-bottom\" ></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"border-layout\" class=\"cui-vertical-layout cui-layout\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-border-layout-north cui-vertical-layout-top\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-border-layout-north; name: north; direction: column;\"  data-cui-absolute-set=\"top\"></div>\n\t<div class=\"cui-border-layout-main cui-vertical-layout-center\" data-cui-absolute-set=\"top,bottom\">\n\t\t<div class=\"cui-border-layout-row cui-horizontal-layout cui-maximize cui-maximize-vertical cui-maximize-horizontal cui-layout\" data-cui-absolute-container=\"row\" >\n\t\t\t<div class=\"cui-border-layout-west cui-horizontal-layout-left\"></div>\n\t\t\t<div data-cui-flex-handle=\"pane: .cui-border-layout-west; name: west; direction: row;\" data-cui-absolute-set=\"left\"></div>\n\t\t\t<div class=\"cui-border-layout-center cui-horizontal-layout-center\" data-cui-absolute-set=\"left,right\"></div>\n\t\t\t<div data-cui-flex-handle=\"pane: .cui-border-layout-east; name: east; direction: row;\" data-cui-absolute-set=\"right\"></div>\n\t\t\t<div class=\"cui-border-layout-east cui-horizontal-layout-right\"></div>\n\t\t</div>\n\t</div>\n\t<div data-cui-flex-handle=\"pane: .cui-border-layout-south; name: south; direction: column;\" data-cui-absolute-set=\"bottom\"></div>\n\t<div class=\"cui-border-layout-south cui-vertical-layout-bottom\" ></div>\n</div>\n";
 
 /***/ }),
 /* 267 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-left-center\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n</div>\n<div data-template=\"button-center-right\" class=\"cui-tmpl cui-tmpl-button-center-right\">\n    <div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-center\" class=\"cui-tmpl cui-tmpl-button-center\">\n    <div class=\"cui-button-center\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-left-center\" class=\"cui-tmpl\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n</div>\n<div data-template=\"button-center-right\" class=\"cui-button-center-right\">\n    <div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-center\" class=\"cui-button-center\">\n    <div class=\"cui-button-center\"></div>\n</div>\n";
 
 /***/ }),
 /* 268 */
@@ -52848,7 +52848,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 272 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"date-time\" class=\"cui-tmpl cui-tmpl-date-time\">\n\t<div class=\"cui-date-time-header\">\n\t\t<div class=\"cui-date-time-header-left\"></div>\n\t\t<div class=\"cui-date-time-header-center\"></div>\n\t\t<div class=\"cui-date-time-header-right\"></div>\n\t</div>\n\t<div class=\"cui-date-time-browser\">\n\t\t<div class=\"cui-date-time-calendar\"></div>\n\t\t<div class=\"cui-date-time-clock\">\n\t\t\t<div class=\"cui-date-time-analog-clock\">\n\t\t\t\t<div class=\"cui-date-time-face\">\n\t\t\t\t\t<div class=\"cui-date-time-hour\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-minute\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-second\"></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"cui-date-time-hour-minute\"></div>\n\t\t\t<div class=\"cui-date-time-digi-clock cui-date-time-digi-clock\"></div>\n\t\t</div>\n\t</div>\n\t<!--\n\t<table class=\"cui-date-time-timezone-display-table\">\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone-display\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t</table>-->\n</div>\n<div data-template=\"date-time-input\" class=\"cui-tmpl\">\n\t<div class=\"cui-date-time-input-center\"></div>\n\t<div class=\"cui-date-time-input-right\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"date-time\" class=\"cui-date-time\">\n\t<div class=\"cui-date-time-header\">\n\t\t<div class=\"cui-date-time-header-left\"></div>\n\t\t<div class=\"cui-date-time-header-center\"></div>\n\t\t<div class=\"cui-date-time-header-right\"></div>\n\t</div>\n\t<div class=\"cui-date-time-browser\">\n\t\t<div class=\"cui-date-time-calendar\"></div>\n\t\t<div class=\"cui-date-time-clock\">\n\t\t\t<div class=\"cui-date-time-analog-clock\">\n\t\t\t\t<div class=\"cui-date-time-face\">\n\t\t\t\t\t<div class=\"cui-date-time-hour\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-minute\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-second\"></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"cui-date-time-hour-minute\"></div>\n\t\t\t<div class=\"cui-date-time-digi-clock cui-date-time-digi-clock\"></div>\n\t\t</div>\n\t</div>\n\t<!--\n\t<table class=\"cui-date-time-timezone-display-table\">\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone-display\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t</table>-->\n</div>\n<div data-template=\"date-time-input\" class=\"cui-tmpl\">\n\t<div class=\"cui-date-time-input-center\"></div>\n\t<div class=\"cui-date-time-input-right\"></div>\n</div>\n";
 
 /***/ }),
 /* 273 */
@@ -52866,13 +52866,13 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 275 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"item-list-body\" class=\"cui-tmpl cui-tmpl-item-list-body\"></div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"item-list-body\" class=\"cui-item-list-body\"></div>\n";
 
 /***/ }),
 /* 276 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"label\" class=\"cui-tmpl cui-tmpl-label\">\n\t<div class=\"cui-label-icon\"></div>\n\t<div class=\"cui-label-content\"></div>\n</div>\n<div data-template=\"label-no-icon\">\n\t<div class=\"cui-label-content\"></div>\n</div>\n<div data-template=\"label-rotate-90\" class=\"cui-tmpl cui-tmpl-label-rotate-90\">\n\t<div class=\"cui-label-transform\">\n\t\t<div class=\"cui-label-icon\"></div>\n\t\t<div class=\"cui-label-content\"></div>\n\t</div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"label\" class=\"cui-label\">\n\t<div class=\"cui-label-icon\"></div>\n\t<div class=\"cui-label-content\"></div>\n</div>\n<div data-template=\"label-no-icon\">\n\t<div class=\"cui-label-content\"></div>\n</div>\n<div data-template=\"label-rotate-90\" class=\"cui-label-rotate-90\">\n\t<div class=\"cui-label-transform\">\n\t\t<div class=\"cui-label-icon\"></div>\n\t\t<div class=\"cui-label-content\"></div>\n\t</div>\n</div>";
 
 /***/ }),
 /* 277 */
@@ -52884,25 +52884,25 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 278 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"options-activatable\" class=\"cui-tmpl cui-tmpl-options-activatable\">\n\t<div class=\"cui-options-top\"></div>\n\t<div class=\"cui-options-center\">\n\t\t<div class=\"cui-options-active\"></div>\n\t\t<div class=\"cui-options-inactive\"></div>\n\t</div>\n\t<div class=\"cui-options-bottom\"></div>\n</div>\n<div data-template=\"options\" class=\"cui-tmpl cui-tmpl-options\">\n\t<div class=\"cui-options-top\"></div>\n\t<div class=\"cui-options-center\"></div>\n\t<div class=\"cui-options-bottom\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"options-activatable\" class=\"cui-options-activatable\">\n\t<div class=\"cui-options-top\"></div>\n\t<div class=\"cui-options-center\">\n\t\t<div class=\"cui-options-active\"></div>\n\t\t<div class=\"cui-options-inactive\"></div>\n\t</div>\n\t<div class=\"cui-options-bottom\"></div>\n</div>\n<div data-template=\"options\" class=\"cui-options\">\n\t<div class=\"cui-options-top\"></div>\n\t<div class=\"cui-options-center\"></div>\n\t<div class=\"cui-options-bottom\"></div>\n</div>\n";
 
 /***/ }),
 /* 279 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"pane-fill-screen\" class=\"cui-tmpl cui-tmpl-pane-fill-screen\">\n\t<div class=\"cui-pane-fill-screen\">\n\t\t<div class=\"cui-pane-fill-screen-inner\"><div style=\"background-color: black; height:100%;\"></div></div>\n\t</div>\n</div>\n<div data-template=\"pane-fill-screen-placeholder\" class=\"cui-tmpl\">Placeholder</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"pane-fill-screen\" class=\"cui-pane-fill-screen\">\n\t<div class=\"cui-pane-fill-screen\">\n\t\t<div class=\"cui-pane-fill-screen-inner\"><div style=\"background-color: black; height:100%;\"></div></div>\n\t</div>\n</div>\n<div data-template=\"pane-fill-screen-placeholder\" class=\"cui-tmpl\">Placeholder</div>\n";
 
 /***/ }),
 /* 280 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"panel\" class=\"cui-tmpl cui-panel\">\n\t<div class=\"cui-panel-header\">\n\t</div>\n\t<div class=\"cui-panel-body\">\n\t\t<div class=\"cui-panel-content\"></div>\n\t</div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"panel\" class=\"cui-panel\">\n\t<div class=\"cui-panel-header\">\n\t</div>\n\t<div class=\"cui-panel-body\">\n\t\t<div class=\"cui-panel-content\"></div>\n\t</div>\n</div>";
 
 /***/ }),
 /* 281 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"progress-meter\" class=\"cui-tmpl cui-tmpl-progress-meter\">\n\t<div class=\"cui-progress-meter-bar\">\n\t\t<div class=\"cui-progress-meter-fill-background\"></div>\n\t\t<div class=\"cui-progress-meter-fill\">\n\t\t\t<div class=\"cui-progress-meter-fill-inner\"></div>\n\t\t</div>\n\t\t<div class=\"cui-progress-meter-text\"></div>\n\t\t<div class=\"cui-progress-meter-icon\"></div>\n\t</div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"progress-meter\" class=\"cui-progress-meter\">\n\t<div class=\"cui-progress-meter-bar\">\n\t\t<div class=\"cui-progress-meter-fill-background\"></div>\n\t\t<div class=\"cui-progress-meter-fill\">\n\t\t\t<div class=\"cui-progress-meter-fill-inner\"></div>\n\t\t</div>\n\t\t<div class=\"cui-progress-meter-text\"></div>\n\t\t<div class=\"cui-progress-meter-icon\"></div>\n\t</div>\n</div>";
 
 /***/ }),
 /* 282 */
@@ -52914,19 +52914,19 @@ module.exports = "<div data-template='slider'>\n\t<div data-slot='track_visual' 
 /* 283 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"sticky-header\" class=\"cui-tmpl cui-tmpl-sticky-header\">\n\t<div class=\"cui-sticky-header-center\"></div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"sticky-header\" class=\"cui-sticky-header\">\n\t<div class=\"cui-sticky-header-center\"></div>\n</div>";
 
 /***/ }),
 /* 284 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"tab-body\" class=\"cui-tmpl cui-tmpl-tab-body\"></div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"tab-body\" class=\"cui-tab-body\"></div>\n";
 
 /***/ }),
 /* 285 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"tabs-bodies\" class=\"cui-tmpl cui-tmpl-tabs-bodies\"></div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"tabs-bodies\" class=\"cui-tabs-bodies\"></div>";
 
 /***/ }),
 /* 286 */
@@ -52938,7 +52938,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 287 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"wait-block\" class=\"cui-tmpl cui-tmpl-wait-block\">\n\t<div class=\"cui-wait-block-glass\"></div>\n\t<div class=\"cui-wait-block-inner\">\n\t\t<div class=\"cui-wait-block-header\"></div>\n\t\t<div class=\"cui-wait-block-content\"></div>\n\t</div>\n</div>";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"wait-block\" class=\"cui-wait-block\">\n\t<div class=\"cui-wait-block-glass\"></div>\n\t<div class=\"cui-wait-block-inner\">\n\t\t<div class=\"cui-wait-block-header\"></div>\n\t\t<div class=\"cui-wait-block-content\"></div>\n\t</div>\n</div>";
 
 /***/ }),
 /* 288 */
