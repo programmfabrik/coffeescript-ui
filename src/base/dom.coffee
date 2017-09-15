@@ -145,17 +145,6 @@ class CUI.dom
 		# CUI.debug "nothing found, returning with", elements.length
 		return elements
 
-	# finds the first element child which is not
-	# filtered by the optional node filter
-	@firstElementChild: (node, nodeFilter) ->
-		child = node.firstElementChild
-		while true
-			if not nodeFilter or nodeFilter(child)
-				return child
-
-			child = child.nextElementSibling
-			if not child
-				return null
 
 	@children: (node, filter) ->
 		children = []
@@ -166,35 +155,48 @@ class CUI.dom
 
 		children
 
+	# finds the first element child which is not
+	# filtered by the optional node filter
+	@firstElementChild: (node, nodeFilter) ->
+		child = node.firstElementChild
+		while true
+			if not child
+				return null
+
+			if not nodeFilter or nodeFilter(child)
+				return child
+
+			child = child.nextElementSibling
 
 	@lastElementChild: (node, nodeFilter) ->
 		child = node.lastElementChild
 		while true
+			if not child
+				return null
+
 			if not nodeFilter or nodeFilter(child)
 				return child
 
 			child = child.previousElementSibling
-			if not child
-				return null
 
 	@nextElementSibling: (node, nodeFilter) ->
 		while true
 			sibling = node.nextElementSibling
-			if not nodeFilter or nodeFilter(child)
-				return sibling
-
 			if not sibling
 				return null
+
+			if not nodeFilter or nodeFilter(sibling)
+				return sibling
 
 
 	@previousElementSibling: (node, nodeFilter) ->
 		while true
 			sibling = node.previousElementSibling
-			if not nodeFilter or nodeFilter(child)
-				return sibling
-
 			if not sibling
 				return null
+
+			if not nodeFilter or nodeFilter(sibling)
+				return sibling
 
 
 	@removeAttribute: (node, key) ->
@@ -745,12 +747,20 @@ class CUI.dom
 		else if node.children[pos] != node_insert
 			@insertBefore(node.children[pos], node_insert)
 
-	@insertBefore: (node, node_before) ->
+	@insertBefore: (_node, node_before) ->
+		node = (_node?.DOM or _node)
+		if not node
+			return null
+
 		if node_before
 			node.parentNode.insertBefore(node_before, node)
 		node
 
-	@insertAfter: (node, node_after) ->
+	@insertAfter: (_node, node_after) ->
+		node = (_node?.DOM or _node)
+		if not node
+			return null
+
 		if node_after
 			node.parentNode.insertBefore(node_after, node.nextSibling)
 		node
