@@ -32986,7 +32986,7 @@ CUI.DataForm = (function(superClass) {
     }
     if (this._new_rows !== "none") {
       trash = new CUI.defaults["class"].Button({
-        icon: "svg-close",
+        icon: "fa-trash-o",
         appearance: "flat",
         onMouseenter: (function(_this) {
           return function() {
