@@ -202,7 +202,7 @@ class CUI.DataForm extends CUI.DataTable
 
 		if @_new_rows != "none"
 			trash = new CUI.defaults.class.Button
-				icon: "svg-close"
+				icon: "fa-trash-o"
 				appearance: "flat"
 				onMouseenter: =>
 					CUI.dom.addClass(hl, "cui-data-form-row--trash")
