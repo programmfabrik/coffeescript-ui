@@ -6,39 +6,31 @@
 
 ### Different versions
 
-- **cui.js**: No minified, includes CSS
-- **cui.no-css.js**: No minified, no CSS
-- **cui.min.js**: Minified, includes CSS (default version)     
-- **cui.no-css.min.js**: Minified, no CSS  
+- **cui.min.js**: Minified (default version)     
+- **cui.js**: No minified
 
 ### Usage with *require*
 
-    cui = require('coffeescript-ui')
-
-It will load the default version. It includes the CSS and It's minified.
-
-#### Different versions with *require*
-
+    require('coffeescript-ui') (uses default version)
     require('coffeescript-ui/public/cui.js')
-    require('coffeescript-ui/public/cui.no-css.js')
-    require('coffeescript-ui/public/cui.min.js')
-    require('coffeescript-ui/public/cui.no-css.min.js')
         
 ### Usage with *\<script\>* tag
  
-    <script src="node_modules/public/cui.js" type="text/javascript" charset="utf-8"></script>
-    <script src="node_modules/public/cui.no-css.js" type="text/javascript" charset="utf-8"></script>
-    <script src="node_modules/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="node_modules/public/cui.no-css.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="node_modules/coffeescript-ui/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="node_modules/coffeescript-ui/public/cui.js" type="text/javascript" charset="utf-8"></script>
   
+### Use cui.css
+
+
+
 ### Usage with webpack
 
-It's recommended to use **webpack.ProvidePlugin** to avoid "require" in each file. Also it's easier if you want to change the version
+It's recommended to use **webpack.ProvidePlugin** to avoid "require" in each file.
 
     plugins: [
         ...
         new webpack.ProvidePlugin({
-            'CUI': "coffeescript-ui/public/cui.js"
+            'CUI': "coffeescript-ui"
         })
         ...
     ] 
@@ -59,12 +51,11 @@ You will find the bundled file inside **public** folder.
 
 It's optional to add the following parameters to generate different versions:
 
-- No CSS: --env.noCss
 - Minify: --env.minify
 
 _Example:_
 
-**npm run build -- --env.minify --env.noCss**
+**npm run build -- --env.minify**
 
 _It will generate a different filename depending in the options that were used (see **Different versions**)_
 

@@ -2,9 +2,14 @@ const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
+
+const extractSass = new ExtractTextPlugin({
+    filename: "cui.css"
+});
 
 const config = {
     context: APP_DIR,
@@ -22,7 +27,13 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
+                use: extractSass.extract({
+                    use: [{
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader"
+                    }]
+                })
             },
             {
                 test: /icons\.svg/,
@@ -40,6 +51,7 @@ const config = {
         ]
     },
     plugins: [
+        extractSass,
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         })
@@ -48,12 +60,8 @@ const config = {
 
 module.exports = function (env) {
     config.output.filename = "cui";
-    if (env) {
-        if (env.noCss) {
-            config.output.filename += ".no-css";
-            config.entry = './index-no-css.coffee';
-        }
 
+    if (env) {
         if (env.minify) {
             config.output.filename += ".min";
             config.plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -64,7 +72,7 @@ module.exports = function (env) {
     }
 
     config.output.filename += ".js";
-    config.plugins.push(new CleanWebpackPlugin(config.output.filename))
+    config.plugins.push(new CleanWebpackPlugin(config.output.filename));
 
     return config
 };
