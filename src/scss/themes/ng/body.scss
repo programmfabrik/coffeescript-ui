@@ -926,7 +926,8 @@ li > div {
 	> .cui-horizontal-layout-center {
 		margin: 3px 0;
 		min-width: 0;
-		display: block;
+		flex-direction: row;
+		flex-wrap: wrap;
 	}
 
 	> .cui-horizontal-layout-right {
@@ -956,7 +957,11 @@ li > div {
 
 .cui-navigation-toolbar {
 	background: none;
-	display: none;
+	min-height: 20px;
+	
+	.cui-button {
+		padding: 0;
+	}
 	
 	.cui-input {
 		padding: 0 3px;
@@ -4776,7 +4781,7 @@ label[data-label-clickable],
 	vertical-align: top;
 
 	.cui-button {
-		width: 25px;
+		width: 26px;
 	}
 }
 
@@ -4813,6 +4818,7 @@ label[data-label-clickable],
 
 	.cui-input,
 	.cui-textarea {
+		width: 100% !important;
 		border: none;
 		background: none;
 		border-radius: 0;
@@ -4839,6 +4845,7 @@ label[data-label-clickable],
 		color: hsl(0,0%,30%);
 		font-size: 10px;
   	line-height: 22px;
+  	box-shadow: $input-shadow;
   }
 }
 
