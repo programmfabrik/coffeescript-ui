@@ -21,7 +21,14 @@
   
 ### Use cui.css
 
+With script tag
 
+    CUI.ready ->
+        new CUI.CSSLoader().load({url: 'node_modules/coffeescript-ui/public/cui.css'})
+
+With require
+        
+    require('coffeescript-ui/public/cui.css')
 
 ### Usage with webpack
 
