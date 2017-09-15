@@ -844,7 +844,7 @@ li > div {
 	> .cui-data-form-row {
 		> .cui-horizontal-layout-left {		
 			.cui-drag-handle-row {
-				margin: 9px 7px 0 0;
+				margin: 10px 7px 0 0;
 				width: 12px;
 				height: 10px;
 				flex-grow: 0;
@@ -853,13 +853,6 @@ li > div {
 				
 				&.is-hidden {
 					pointer-events: none;
-				}
-			}
-		}
-
-		&:last-child { // edit row
-			> .cui-horizontal-layout-left {		
-				.cui-drag-handle-row.is-hidden {
 					opacity: 0.33;
 				}
 			}
@@ -875,10 +868,6 @@ li > div {
 		position: relative;
 		// background: hsl(240,7%,100%);
 		align-items: flex-start;
-		
-		> .cui-horizontal-layout-left .cui-drag-handle-row {
-			margin: 17px 0 17px 10px !important;
-		}
 
 		// .cui-data-field .cui-form-table {
 		// 	margin: 0 $padding + 28px 0 $padding !important;
@@ -918,30 +907,26 @@ li > div {
 		> .cui-horizontal-layout-center {
 			margin: 0;
 		}
-
-		> .cui-horizontal-layout-right {
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: auto;
-			
-			.cui-button {
-				height: auto;
-				padding: 5px 2px 0 0;
-			}
-		}
 	}
 }
 
 .cui-data-form-row {
 	overflow: visible !important;
 	
+	&:hover {
+		> .cui-horizontal-layout-right {
+			opacity: 1;
+		}
+	}
+	
 	&:last-child {
 		margin-bottom: $padding;
 	}
 	
 	&.cui-data-form-row--trash {
-		opacity: 0.5;
+		> .cui-horizontal-layout-center {
+			opacity: 0.5;	
+		}
 	}
 
 	> .cui-horizontal-layout-center {
@@ -952,9 +937,10 @@ li > div {
 
 	> .cui-horizontal-layout-right {
 		width: 28px;
+		// opacity: 0;
 		
 		.cui-button {
-			margin-top: 4px;
+			margin-top: 3px;
 			
 			&.cui-button-hidden {
 				pointer-events: none;
