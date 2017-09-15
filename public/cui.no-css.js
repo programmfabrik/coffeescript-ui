@@ -18072,53 +18072,38 @@ CUI.CSSLoader = (function(superClass) {
     return CSSLoader.__super__.constructor.apply(this, arguments);
   }
 
-  CSSLoader.prototype.initOpts = function() {
-    CSSLoader.__super__.initOpts.call(this);
-    return this.addOpts({
-      group: {
-        mandatory: true,
-        "default": "main",
-        check: String
-      }
-    });
-  };
-
   CSSLoader.prototype.readOpts = function() {
     CSSLoader.__super__.readOpts.call(this);
-    this.__cssName = "cui-css-" + this._group;
-    return this.__themes = {};
+    return this.__cssName = "cui-css-" + this.getUniqueId();
   };
 
   CSSLoader.prototype.__getCSSNodes = function() {
     return CUI.dom.matchSelector(document.documentElement, "link[name=\"" + this.__cssName + "\"]");
   };
 
-  CSSLoader.prototype.getActiveTheme = function() {
-    var active_theme, cssNode, i, len, name, ref;
+  CSSLoader.prototype.getActiveCSS = function() {
+    var cssNode, i, len, ref;
     ref = this.__getCSSNodes();
     for (i = 0, len = ref.length; i < len; i++) {
       cssNode = ref[i];
-      if (!CUI.dom.getAttribute(cssNode, "loading")) {
-        name = CUI.dom.getAttribute(cssNode, "theme");
-        active_theme = this.__themes[name];
-        break;
+      if (CUI.dom.getAttribute(cssNode, "data-cui-loading")) {
+        continue;
       }
-    }
-    if (active_theme) {
-      return active_theme;
+      return {
+        url: CUI.dom.getAttribute(cssNode, "data-cui-url"),
+        theme: CUI.dom.getAttribute(cssNode, "data-cui-theme")
+      };
     }
     return null;
   };
 
-  CSSLoader.prototype.getThemes = function() {
-    return this.__themes;
-  };
-
-  CSSLoader.prototype.registerTheme = function(_opts) {
-    var opts;
-    opts = CUI.Element.readOpts(_opts, "CSS.registerTheme", {
-      name: {
-        mandatory: true,
+  CSSLoader.prototype.load = function(_opts) {
+    var cssNode, css_href, dfr, i, is_loading, len, oldCssNode, opts, ref, url;
+    if (_opts == null) {
+      _opts = {};
+    }
+    opts = CUI.Element.readOpts(_opts, "CSSLoader", {
+      theme: {
         check: String
       },
       url: {
@@ -18126,50 +18111,18 @@ CUI.CSSLoader = (function(superClass) {
         check: String
       }
     });
-    return this.__themes[opts.name] = opts;
-  };
-
-  CSSLoader.prototype.forceReloadTheme = function() {
-    var theme;
-    theme = this.getActiveTheme();
-    if (!active_theme) {
-      return CUI.rejectedPromise();
-    }
-    return this.loadTheme(theme, true);
-  };
-
-  CSSLoader.prototype.loadTheme = function(name, overload_url) {
-    var cssNode, css_href, dfr, i, is_loading, len, loader_deferred, oldCssNode, ref, ref1, same_theme, same_url, url;
-    if (overload_url == null) {
-      overload_url = null;
-    }
-    url = (ref = this.__themes[name]) != null ? ref.url : void 0;
-    CUI.util.assert(url, "CSSLoader.loadTheme", "Theme not found.", {
-      name: name,
-      themes: this.__themes
-    });
-    if (overload_url) {
-      url = overload_url;
-    }
-    ref1 = this.__getCSSNodes();
-    for (i = 0, len = ref1.length; i < len; i++) {
-      oldCssNode = ref1[i];
-      same_theme = CUI.dom.getAttribute(oldCssNode, "theme") === name;
-      same_url = CUI.dom.getAttribute(oldCssNode, "href") === url;
-      is_loading = CUI.dom.getAttribute(oldCssNode, "loading");
+    ref = this.__getCSSNodes();
+    for (i = 0, len = ref.length; i < len; i++) {
+      oldCssNode = ref[i];
+      is_loading = CUI.dom.getAttribute(oldCssNode, "data-cui-loading");
       if (is_loading) {
-        loader_deferred = CUI.dom.data(oldCssNode, "css-loader-deferred");
-        if (same_theme && same_url) {
-          console.warn("CSSLoader.loadTheme:", name, ". Theme already loading, returning Promise.");
-          return loader_deferred.promise();
-        }
-        load_deferred.reject();
-      } else {
-        if (same_theme && same_url) {
-          return CUI.resolvedPromise();
-        }
+        console.warn("CSSLoader.load. CSS already loading.", {
+          opts: opts
+        });
+        return CUI.rejectedPromise();
       }
     }
+    url = opts.url;
     dfr = new CUI.Deferred();
     if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("file://")) {
       css_href = url;
@@ -18182,15 +18135,14 @@ CUI.CSSLoader = (function(superClass) {
       rel: "stylesheet",
       charset: "utf-8",
       name: this.__cssName,
-      loading: "1",
-      theme: name,
+      "data-cui-loading": "1",
+      "data-cui-theme": opts.theme,
+      "data-cui-url": opts.url,
       href: css_href
     });
-    CUI.dom.data(cssNode, "css-loader-deferred", dfr);
     dfr.always((function(_this) {
       return function() {
-        CUI.dom.removeData(cssNode, "css-loader-deferred");
-        return CUI.dom.removeAttribute(cssNode, "loading");
+        return CUI.dom.removeAttribute(cssNode, "data-cui-loading");
       };
     })(this));
     dfr.fail((function(_this) {
@@ -18204,19 +18156,19 @@ CUI.CSSLoader = (function(superClass) {
       type: "load",
       call: (function(_this) {
         return function(ev, info) {
-          var css_node, ex, found_stylesheet, j, k, len1, len2, old_css_nodes, ref2, ref3, ref4, styleSheet;
+          var css_node, ex, found_stylesheet, j, k, len1, len2, old_css_nodes, ref1, ref2, ref3, styleSheet;
           if (dfr.state() !== "pending") {
             console.warn("CSSLoader.loadTheme: Caught event load second time, ignoring. IE does that for some reason.");
             return;
           }
           if (CUI.browser.ie) {
             found_stylesheet = false;
-            ref2 = document.styleSheets;
-            for (j = 0, len1 = ref2.length; j < len1; j++) {
-              styleSheet = ref2[j];
+            ref1 = document.styleSheets;
+            for (j = 0, len1 = ref1.length; j < len1; j++) {
+              styleSheet = ref1[j];
               if (styleSheet.href === css_href) {
                 try {
-                  if (!((ref3 = styleSheet.cssRules) != null ? ref3.length : void 0)) {
+                  if (!((ref2 = styleSheet.cssRules) != null ? ref2.length : void 0)) {
                     console.error("CSSLoader: Loaded a stylesheet with no rules: ", css_href, styleSheet);
                     dfr.reject(css_href);
                     return;
@@ -18235,15 +18187,15 @@ CUI.CSSLoader = (function(superClass) {
             }
           }
           old_css_nodes = [];
-          ref4 = CUI.dom.matchSelector(document.head, "link[name='" + _this.__cssName + "']");
-          for (k = 0, len2 = ref4.length; k < len2; k++) {
-            css_node = ref4[k];
+          ref3 = CUI.dom.matchSelector(document.head, "link[name='" + _this.__cssName + "']");
+          for (k = 0, len2 = ref3.length; k < len2; k++) {
+            css_node = ref3[k];
             if (css_node !== cssNode) {
               CUI.dom.remove(css_node);
               old_css_nodes.push(css_node);
             }
           }
-          CUI.dom.setAttribute(document.body, "cui-theme", name);
+          CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme);
           CUI.Events.trigger({
             type: "viewport-resize",
             info: {
