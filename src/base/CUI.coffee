@@ -80,15 +80,15 @@ class CUI
 		@
 
 	@getPathToScript: ->
-		if not @pathToScript
+		if not @__pathToScript
 			scripts = document.getElementsByTagName('script')
 			cui_script = scripts[scripts.length - 1]
 			if m = cui_script.src.match("(.*/).*?\.js$")
-				@pathToScript = m[1]
+				@__pathToScript = m[1]
 			else
-				CUI.util.assert(@pathToScript, "CUI", "Could not determine script path.")
+				CUI.util.assert(@__pathToScript, "CUI", "Could not determine script path.")
 
-		@pathToScript
+		@__pathToScript
 
 
 	@ready: (func) ->
@@ -883,9 +883,6 @@ CUI.ready =>
 	nodes = CUI.dom.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]
 	CUI.dom.append(document.body, nodes)
-
-
-CUI.getPathToScript()
 
 
 if not window.addEventListener
