@@ -913,12 +913,6 @@ li > div {
 .cui-data-form-row {
 	overflow: visible !important;
 	
-	&:hover {
-		> .cui-horizontal-layout-right {
-			opacity: 1;
-		}
-	}
-	
 	&:last-child {
 		margin-bottom: $padding;
 	}
@@ -937,7 +931,6 @@ li > div {
 
 	> .cui-horizontal-layout-right {
 		width: 28px;
-		// opacity: 0;
 		
 		.cui-button {
 			margin-top: 3px;
