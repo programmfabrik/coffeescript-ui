@@ -27600,20 +27600,6 @@ CUI.dom = (function() {
     return elements;
   };
 
-  dom.firstElementChild = function(node, nodeFilter) {
-    var child;
-    child = node.firstElementChild;
-    while (true) {
-      if (!nodeFilter || nodeFilter(child)) {
-        return child;
-      }
-      child = child.nextElementSibling;
-      if (!child) {
-        return null;
-      }
-    }
-  };
-
   dom.children = function(node, filter) {
     var child, children, i, idx, len1, ref;
     children = [];
@@ -27627,17 +27613,31 @@ CUI.dom = (function() {
     return children;
   };
 
+  dom.firstElementChild = function(node, nodeFilter) {
+    var child;
+    child = node.firstElementChild;
+    while (true) {
+      if (!child) {
+        return null;
+      }
+      if (!nodeFilter || nodeFilter(child)) {
+        return child;
+      }
+      child = child.nextElementSibling;
+    }
+  };
+
   dom.lastElementChild = function(node, nodeFilter) {
     var child;
     child = node.lastElementChild;
     while (true) {
+      if (!child) {
+        return null;
+      }
       if (!nodeFilter || nodeFilter(child)) {
         return child;
       }
       child = child.previousElementSibling;
-      if (!child) {
-        return null;
-      }
     }
   };
 
@@ -27645,11 +27645,11 @@ CUI.dom = (function() {
     var sibling;
     while (true) {
       sibling = node.nextElementSibling;
-      if (!nodeFilter || nodeFilter(child)) {
-        return sibling;
-      }
       if (!sibling) {
         return null;
+      }
+      if (!nodeFilter || nodeFilter(sibling)) {
+        return sibling;
       }
     }
   };
@@ -27658,11 +27658,11 @@ CUI.dom = (function() {
     var sibling;
     while (true) {
       sibling = node.previousElementSibling;
-      if (!nodeFilter || nodeFilter(child)) {
-        return sibling;
-      }
       if (!sibling) {
         return null;
+      }
+      if (!nodeFilter || nodeFilter(sibling)) {
+        return sibling;
       }
     }
   };
@@ -28280,14 +28280,24 @@ CUI.dom = (function() {
     }
   };
 
-  dom.insertBefore = function(node, node_before) {
+  dom.insertBefore = function(_node, node_before) {
+    var node;
+    node = (_node != null ? _node.DOM : void 0) || _node;
+    if (!node) {
+      return null;
+    }
     if (node_before) {
       node.parentNode.insertBefore(node_before, node);
     }
     return node;
   };
 
-  dom.insertAfter = function(node, node_after) {
+  dom.insertAfter = function(_node, node_after) {
+    var node;
+    node = (_node != null ? _node.DOM : void 0) || _node;
+    if (!node) {
+      return null;
+    }
     if (node_after) {
       node.parentNode.insertBefore(node_after, node.nextSibling);
     }

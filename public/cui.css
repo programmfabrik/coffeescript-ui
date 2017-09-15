@@ -952,7 +952,8 @@ li > div {
   .cui-data-form-row > .cui-horizontal-layout-center {
     margin: 3px 0;
     min-width: 0;
-    display: block; }
+    flex-direction: row;
+    flex-wrap: wrap; }
   .cui-data-form-row > .cui-horizontal-layout-right {
     width: 28px; }
     .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
@@ -968,7 +969,9 @@ li > div {
 
 .cui-navigation-toolbar {
   background: none;
-  display: none; }
+  min-height: 20px; }
+  .cui-navigation-toolbar .cui-button {
+    padding: 0; }
   .cui-navigation-toolbar .cui-input {
     padding: 0 3px;
     font-size: 11px;
@@ -3386,7 +3389,7 @@ label[data-label-clickable],
   flex: 0 0 auto;
   vertical-align: top; }
   .cui-data-field-multi-input-right .cui-button {
-    width: 25px; }
+    width: 26px; }
 
 .cui-multi-input-input {
   display: flex;
@@ -3414,6 +3417,7 @@ label[data-label-clickable],
       margin-top: 0; }
   .cui-multi-input-input .cui-input,
   .cui-multi-input-input .cui-textarea {
+    width: 100% !important;
     border: none;
     background: none;
     border-radius: 0;
@@ -3436,7 +3440,8 @@ label[data-label-clickable],
   line-height: inherit;
   color: #4d4d4d;
   font-size: 10px;
-  line-height: 22px; }
+  line-height: 22px;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.03) inset, 0 2px rgba(0, 0, 0, 0.01) inset; }
 
 .cui-drag-drop-select-helper {
   position: absolute !important;
