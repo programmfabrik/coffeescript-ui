@@ -5,92 +5,47 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+# my_load = new CUI.CSSLoader()
+# my_load.load(theme: "1", url: "...theme1.css") -> Promise
+# my_load.load(theme: "roman", url: "...theme2.css") -> Promise
+# my_load.getActiveCSS() -> {theme: "roman", url: ...}
 
 class CUI.CSSLoader extends CUI.Element
-	initOpts: ->
-		super()
-		@addOpts
-			group:
-				mandatory: true
-				default: "main"
-				check: String
 
 	readOpts: ->
 		super()
-		@__cssName = "cui-css-"+@_group
-		@__themes = {}
+		@__cssName = "cui-css-"+@getUniqueId()
 
 	__getCSSNodes: ->
 		CUI.dom.matchSelector(document.documentElement, "link[name=\""+@__cssName+"\"]")
 
-	getActiveTheme: ->
+	getActiveCSS: ->
 		for cssNode in @__getCSSNodes()
-			if not CUI.dom.getAttribute(cssNode, "loading")
-				name = CUI.dom.getAttribute(cssNode, "theme")
-				active_theme = @__themes[name]
-				break
+			if CUI.dom.getAttribute(cssNode, "data-cui-loading")
+				continue
 
-		if active_theme
-			return active_theme
+			return
+				url: CUI.dom.getAttribute(cssNode, "data-cui-url")
+				theme: CUI.dom.getAttribute(cssNode, "data-cui-theme")
 
 		return null
 
-	getThemes: ->
-		@__themes
-
-	registerTheme: (_opts) ->
-		opts = CUI.Element.readOpts _opts, "CSS.registerTheme",
-			name:
-				mandatory: true
+	load: (_opts = {}) ->
+		opts = CUI.Element.readOpts _opts, "CSSLoader",
+			theme:
 				check: String
 			url:
 				mandatory: true
 				check: String
 
-		@__themes[opts.name] = opts
-
-	forceReloadTheme: ->
-		theme = @getActiveTheme()
-		if not active_theme
-			return CUI.rejectedPromise()
-
-		@loadTheme(theme, true)
-
-
-	loadTheme: (name, overload_url = null) ->
-		url = @__themes[name]?.url
-		CUI.util.assert(url, "CSSLoader.loadTheme", "Theme not found.", name: name, themes: @__themes)
-
-		if overload_url
-			url = overload_url
-
 		# console.error "nodes:", @__getCSSNodes()
-
 		for oldCssNode in @__getCSSNodes()
-			same_theme = CUI.dom.getAttribute(oldCssNode, "theme") == name
-			same_url = CUI.dom.getAttribute(oldCssNode, "href") == url
-			is_loading = CUI.dom.getAttribute(oldCssNode, "loading")
-
-			# console.debug same_theme, same_url, is_loading
-
+			is_loading = CUI.dom.getAttribute(oldCssNode, "data-cui-loading")
 			if is_loading
-				loader_deferred = CUI.dom.data(oldCssNode, "css-loader-deferred")
-				if same_theme and same_url
-					console.warn("CSSLoader.loadTheme:", name, ". Theme already loading, returning Promise.")
-					return loader_deferred.promise()
+				console.warn("CSSLoader.load. CSS already loading.", opts: opts)
+				return CUI.rejectedPromise()
 
-				# console.warn("CSSLoader.loadTheme:", name, ". Theme still loading, but a different one, aborting other load.")
-				# reject loading, this removed the old node
-				load_deferred.reject()
-			else
-				if same_theme and same_url
-					# all good
-					# console.warn("CSSLoader.loadTheme:", name, ". Theme already loaded.")
-					return CUI.resolvedPromise()
-
-				# in all other cases we simply "overload"
-
-		# console.info("CSSLoader: Loading:", url)
+		url = opts.url
 
 		dfr = new CUI.Deferred()
 
@@ -103,22 +58,21 @@ class CUI.CSSLoader extends CUI.Element
 		else
 			css_href = document.location.origin + url
 
+		# console.info("CSSLoader: Loading:", css_href)
+
 		# console.error "parsing location", url, CUI.getPathToScript(), css_href
 
 		cssNode = CUI.dom.element "LINK",
 			rel: "stylesheet"
 			charset: "utf-8"
 			name: @__cssName
-			loading: "1"
-			theme: name
+			"data-cui-loading": "1"
+			"data-cui-theme": opts.theme
+			"data-cui-url": opts.url
 			href: css_href
 
-
-		CUI.dom.data(cssNode, "css-loader-deferred", dfr)
-
 		dfr.always =>
-			CUI.dom.removeData(cssNode, "css-loader-deferred")
-			CUI.dom.removeAttribute(cssNode, "loading")
+			CUI.dom.removeAttribute(cssNode, "data-cui-loading")
 
 		dfr.fail (css_href) =>
 			console.error("CSSLoader: Loading failed, removing node.", css_href)
@@ -162,7 +116,7 @@ class CUI.CSSLoader extends CUI.Element
 						CUI.dom.remove(css_node)
 						old_css_nodes.push(css_node)
 
-				CUI.dom.setAttribute(document.body, "cui-theme", name)
+				CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme)
 
 				# console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				CUI.Events.trigger
