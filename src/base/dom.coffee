@@ -41,7 +41,7 @@ class CUI.dom
 			delete(node.__dom_data[key])
 			if CUI.isEmptyObject(node.__dom_data)
 				delete(node.__dom_data)
-		CUI.dom
+		node
 
 	# find an element starting from node, but never going
 	# up
