@@ -571,7 +571,7 @@ class CUI.dom
 			top: offset.top - layer_parent_offset.top + correct_offset.top
 			left: offset.left - layer_parent_offset.left + correct_offset.left
 		)
-		@
+		element
 
 	@__failedDOMInserts = 0
 

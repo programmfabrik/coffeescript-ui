@@ -28101,7 +28101,7 @@ CUI.dom = (function() {
       top: offset.top - layer_parent_offset.top + correct_offset.top,
       left: offset.left - layer_parent_offset.left + correct_offset.left
     });
-    return this;
+    return element;
   };
 
   dom.__failedDOMInserts = 0;
