@@ -70,6 +70,8 @@ $disabled-color: hsl(205,7%,73%);
 $label-mini: 11px;
 $label-big: 16px;
 $label-bigger: 18px;
+$form-label-color: hsl(210,16%,27%);
+$form-label-weight: 600;
 
 $highlight-color: map-get($highlight, 'dark');
 $row-highlight: map-get($highlight, 'light');
