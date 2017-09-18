@@ -957,7 +957,7 @@ li > div {
 
 .cui-navigation-toolbar {
 	background: none;
-	min-height: 20px;
+	min-height: 20px !important;
 	
 	.cui-button {
 		padding: 0;
@@ -4026,7 +4026,8 @@ a[role="button"].cui-button-appearance-link {
 		display: inline-block;
 		margin: 4px 0;
 		word-wrap: break-word;
-		color: $secondary-color;
+		color: $form-label-color;
+		font-weight: $form-label-weight;
 	}
 
 	.cui-form-field-type--checkbox > & {
@@ -4149,6 +4150,10 @@ label[data-label-clickable],
 	min-height: 0;
   display: flex;
   flex-direction: column;
+  
+  > .cui-button-href {
+  	margin: 3px 0;
+  }
 }
 
 // .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
@@ -5034,7 +5039,7 @@ label[data-label-clickable],
 		}
 	}
 	> .cui-block-header {
-		font-weight: bold;
+		font-weight: 700;
 	}
 
 	&--padded {
@@ -5081,6 +5086,10 @@ label[data-label-clickable],
 }
 
 .cui-form-block {
+	.cui-block-header {
+		color: $form-block-color;
+	}
+
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}
