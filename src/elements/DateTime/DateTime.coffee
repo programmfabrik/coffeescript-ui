@@ -931,7 +931,7 @@ class CUI.DateTime extends CUI.Input
 								@drawDate(mom)
 						,
 							new CUI.Label
-								text: month_opts[data.month].textContent
+								text: month_opts[data.month].text
 							# new CUI.Select(
 							# 	attr:
 							# 		cursor: "month"
