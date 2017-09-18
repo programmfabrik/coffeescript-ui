@@ -969,7 +969,7 @@ li > div {
 
 .cui-navigation-toolbar {
   background: none;
-  min-height: 20px; }
+  min-height: 20px !important; }
   .cui-navigation-toolbar .cui-button {
     padding: 0; }
   .cui-navigation-toolbar .cui-input {
@@ -2892,7 +2892,8 @@ a[role="button"].cui-button-appearance-link {
     display: inline-block;
     margin: 4px 0;
     word-wrap: break-word;
-    color: #6d7478; }
+    color: #444f5a;
+    font-weight: 600; }
   .cui-form-field-type--checkbox > .cui-form-key label,
   .cui-form-field-type--checkbox > .cui-form-key .cui-label {
     margin: 1px 0;
@@ -2955,6 +2956,8 @@ label[data-label-clickable],
   min-height: 0;
   display: flex;
   flex-direction: column; }
+  .cui-data-field-proxy > .cui-button-href {
+    margin: 3px 0; }
 
 .cui-data-field-input > .cui-button-select {
   width: 100%; }
@@ -3565,7 +3568,7 @@ label[data-label-clickable],
     .cui-block.cui-block-level-2 > .cui-block-header {
       font-size: 13px; }
   .cui-block > .cui-block-header {
-    font-weight: bold; }
+    font-weight: 700; }
   .cui-block--padded > .cui-block-content {
     padding: 0 10px 10px; }
   .cui-block.cui-form-block--has-checkbox > .cui-block-header {
@@ -3590,6 +3593,9 @@ label[data-label-clickable],
 .cui-block-content .cui-block-content {
   padding-left: 0;
   padding-right: 0; }
+
+.cui-form-block .cui-block-header {
+  color: #3a4550; }
 
 .cui-form-block:not(:last-child) .cui-block-content {
   padding-bottom: 0; }
