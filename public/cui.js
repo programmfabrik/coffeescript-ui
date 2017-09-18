@@ -28097,11 +28097,10 @@ CUI.dom = (function() {
         left: dim.scrollLeft
       };
     }
-    CUI.dom.setStyle(element, {
+    return CUI.dom.setStyle(element, {
       top: offset.top - layer_parent_offset.top + correct_offset.top,
       left: offset.left - layer_parent_offset.left + correct_offset.left
     });
-    return element;
   };
 
   dom.__failedDOMInserts = 0;
