@@ -27451,7 +27451,7 @@ CUI.dom = (function() {
         delete node.__dom_data;
       }
     }
-    return CUI.dom;
+    return node;
   };
 
   dom.findElement = function(node, selector, nodeFilter, forward, siblingOnly) {
@@ -34779,7 +34779,7 @@ CUI.DateTime = (function(superClass) {
                 };
               })(this)
             }, new CUI.Label({
-              text: month_opts[data.month].textContent
+              text: month_opts[data.month].text
             }), {
               appearance: CUI.__ng__ ? void 0 : "flat",
               size: CUI.__ng__ ? void 0 : "mini",
