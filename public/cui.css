@@ -910,17 +910,6 @@ li > div {
   .cui-data-table textarea {
     min-width: 0; }
 
-.cui-data-form--movable-rows > .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row {
-  margin: 10px 7px 0 0;
-  width: 12px;
-  height: 10px;
-  flex-grow: 0;
-  cursor: -webkit-grab;
-  cursor: grab; }
-  .cui-data-form--movable-rows > .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row.is-hidden {
-    pointer-events: none;
-    opacity: 0.33; }
-
 .cui-data-form--multiple-fields > .cui-data-form-row {
   margin-bottom: 10px;
   border-left: 1px solid #cbd5dc;
@@ -945,10 +934,22 @@ li > div {
 
 .cui-data-form-row {
   overflow: visible !important; }
-  .cui-data-form-row:last-child {
-    margin-bottom: 10px; }
+  .cui-drag-drop-select .cui-data-form-row {
+    width: 100%; }
+  .cui-data-form-row--read-only .cui-drag-handle-row {
+    opacity: 0 !important; }
   .cui-data-form-row.cui-data-form-row--trash > .cui-horizontal-layout-center {
     opacity: 0.5; }
+  .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row {
+    margin: 10px 7px 0 0;
+    width: 12px;
+    height: 10px;
+    flex-grow: 0;
+    cursor: -webkit-grab;
+    cursor: grab; }
+    .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row.is-hidden {
+      pointer-events: none;
+      opacity: 0.33; }
   .cui-data-form-row > .cui-horizontal-layout-center {
     margin: 3px 0;
     min-width: 0;

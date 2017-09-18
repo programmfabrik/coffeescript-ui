@@ -840,26 +840,6 @@ li > div {
 	}
 }
 
-.cui-data-form--movable-rows {
-	> .cui-data-form-row {
-		> .cui-horizontal-layout-left {		
-			.cui-drag-handle-row {
-				margin: 10px 7px 0 0;
-				width: 12px;
-				height: 10px;
-				flex-grow: 0;
-				cursor: -webkit-grab;
-				cursor:         grab;
-				
-				&.is-hidden {
-					pointer-events: none;
-					opacity: 0.33;
-				}
-			}
-		}
-	}
-}
-
 // DataForm
 .cui-data-form--multiple-fields {
 	> .cui-data-form-row {
@@ -913,13 +893,39 @@ li > div {
 .cui-data-form-row {
 	overflow: visible !important;
 	
+	.cui-drag-drop-select & {
+		width: 100%;
+	}
+	
+	&--read-only {
+		.cui-drag-handle-row {
+			opacity: 0 !important;
+		}
+	}
+	
 	&:last-child {
-		margin-bottom: $padding;
+		// margin-bottom: $padding; anyoing in fields renderer
 	}
 	
 	&.cui-data-form-row--trash {
 		> .cui-horizontal-layout-center {
 			opacity: 0.5;	
+		}
+	}
+
+	> .cui-horizontal-layout-left {
+		.cui-drag-handle-row {
+			margin: 10px 7px 0 0;
+			width: 12px;
+			height: 10px;
+			flex-grow: 0;
+			cursor: -webkit-grab;
+			cursor:         grab;
+			
+			&.is-hidden {
+				pointer-events: none;
+				opacity: 0.33;
+			}
 		}
 	}
 
