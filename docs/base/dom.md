@@ -605,7 +605,7 @@ It returns the relative position of the **element**
 #### Examples
 
 ```html
-<div id="div" style="margin-left: 50px; margin-top: 100px;">
+<div style="margin-left: 50px; margin-top: 100px;">
     <p style="margin-top:50px;">Hello world</p>
 </div>
 ```
@@ -613,15 +613,50 @@ It returns the relative position of the **element**
     CUI.dom.getRelativePosition(p)
     > {top: 150, left: 50}
 
+### CUI.dom.setAbsolutePosition(element, offset)
+
+- element `HTMLElement`
+- offset `Object`
+    - left `Number`
+    - top `Number`
+
+It sets the absolute position of the **element** with **offset.left** and **offset.top** values
+
+#### Example
+
+```html
+<div style="position: absolute;">
+    <span style="position: relative;">Hello world</span>
+</div>
+```
+
+    CUI.dom.setAbsolutePosition(div, {top: 10, left: 10})
+    > <div style="position: absolute; top: 10px; left: 10px;">
+          <span style="position: relative;">Hello world</span>
+      </div>
+     
+    CUI.dom.setAbsolutePosition(span, {top: 50, left: 30})
+    > <span style="position: relative; top: 40px; left: 20px;">Hello world</span>
+     
+### CUI.dom.getNode(node)
+
+- node `Object`
+
+It returns the attribute *DOM* of **node** if it exists and **node** is not *window*, otherwise returns **node**.
+
+### CUI.dom.isNode(node)
+
+- node `Object`
+
+It returns *true* if **node** is true, otherwise returns *false*
+
+
 ### CUI.dom.hasAnimatedClone(node)
 ### CUI.dom.initAnimatedClone(node, selector)
 ### CUI.dom.syncAnimatedClone(node)
 ### CUI.dom.removeAnimatedClone(node)
-### CUI.dom.setAbsolutePosition(element, offset)
 ### CUI.dom.waitForDOMRemove(options)
 ### CUI.dom.waitForDOMInsert(options)
-### CUI.dom.getNode(node)
-### CUI.dom.isNode(node)
 ### CUI.dom.insertChildAtPosition(node, node_insert, position)
 ### CUI.dom.insertBefore(node, node_before)
 ### CUI.dom.insertAfter(node, node_after)
