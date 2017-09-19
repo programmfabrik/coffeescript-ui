@@ -893,10 +893,6 @@ li > div {
 .cui-data-form-row {
 	overflow: visible !important;
 	
-	.cui-drag-drop-select & {
-		width: 100%;
-	}
-	
 	&--read-only {
 		.cui-drag-handle-row {
 			opacity: 0 !important;

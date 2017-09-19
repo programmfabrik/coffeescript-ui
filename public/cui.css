@@ -934,8 +934,6 @@ li > div {
 
 .cui-data-form-row {
   overflow: visible !important; }
-  .cui-drag-drop-select .cui-data-form-row {
-    width: 100%; }
   .cui-data-form-row--read-only .cui-drag-handle-row {
     opacity: 0 !important; }
   .cui-data-form-row:last-child > .cui-horizontal-layout-center {
