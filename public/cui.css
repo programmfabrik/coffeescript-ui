@@ -975,7 +975,8 @@ li > div {
   background: none;
   min-height: 20px !important; }
   .cui-navigation-toolbar .cui-horizontal-layout-left > .cui-label:first-child {
-    color: #949a9e;
+    color: #adb3b8;
+    font-weight: normal;
     padding-left: 5px; }
   .cui-navigation-toolbar .cui-buttonbar {
     margin-bottom: 2px; }
@@ -1816,7 +1817,7 @@ a[role="button"].cui-button-appearance-link {
   .cui-layer .cui-data-field-input {
     min-width: 150px; }
     .cui-layer .cui-data-field-input.cui-checkbox {
-      min-width: 0; }
+      min-width: 13px; }
     .cui-layer .cui-data-field-input.cui-data-table {
       min-width: 200px; }
   .cui-layer .cui-list-view .cui-data-field-input {
@@ -2969,7 +2970,8 @@ label[data-label-clickable],
     margin: 3px 0; }
 
 .cui-data-field-input > .cui-button-select {
-  width: 100%; }
+  width: 100%;
+  max-width: 100%; }
 
 .cui-data-field-proxy > .cui-label,
 .cui-data-field-output-label {

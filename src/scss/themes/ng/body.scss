@@ -970,7 +970,8 @@ li > div {
 	min-height: 20px !important;
 
 	.cui-horizontal-layout-left > .cui-label:first-child {
-		color: $muted-color;
+		color: hsl(205,7%,70%);
+		font-weight: normal;
 		padding-left: $padding/2;
 	}
 
@@ -2314,7 +2315,7 @@ a[role="button"].cui-button-appearance-link {
 		min-width: 150px;
 
 		&.cui-checkbox {
-			min-width: 0;
+			min-width: 13px;
 		}
 
 		&.cui-data-table {
@@ -4178,6 +4179,7 @@ label[data-label-clickable],
 // .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
 .cui-data-field-input	> .cui-button-select {
 	width: 100%;
+	max-width: 100%;
 }
 
 .cui-data-field-proxy > .cui-label,
