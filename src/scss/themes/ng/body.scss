@@ -944,6 +944,7 @@ li > div {
 		
 		.cui-button {
 			margin-top: 3px;
+			position: relative; // put forward
 			
 			&.cui-button-hidden {
 				pointer-events: none;

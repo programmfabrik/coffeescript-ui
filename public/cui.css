@@ -960,7 +960,8 @@ li > div {
   .cui-data-form-row > .cui-horizontal-layout-right {
     width: 28px; }
     .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
-      margin-top: 3px; }
+      margin-top: 3px;
+      position: relative; }
       .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden {
         pointer-events: none; }
         .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden .cui-button-visual {
