@@ -910,26 +910,22 @@ li > div {
   .cui-data-table textarea {
     min-width: 0; }
 
-.cui-data-form--multiple-fields > .cui-data-form-row {
-  margin-bottom: 10px;
-  border-left: 1px solid #cbd5dc;
+.cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
-  align-items: flex-start; }
-  .cui-data-form--multiple-fields > .cui-data-form-row .cui-block-header {
-    padding-left: 10px !important;
-    padding-right: 10px !important; }
-  .cui-data-form--multiple-fields > .cui-data-form-row .cui-block-content {
-    padding-bottom: 0 !important; }
-  .cui-data-form--multiple-fields > .cui-data-form-row .cui-form-key {
-    width: 124px;
-    min-width: 124px; }
-  .cui-data-form--multiple-fields > .cui-data-form-row .cui-data-form--multiple-fields .cui-form-key {
-    width: 104px;
-    min-width: 104px; }
-  .cui-data-form--multiple-fields > .cui-data-form-row .cui-data-form-row .cui-form-key {
-    width: 102px;
-    min-width: 102px; }
-  .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center {
+  padding: 4px 4px 4px 10px;
+  border-left: 1px solid #dbdbe1; }
+  .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center:after, .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center:before {
+    content: "";
+    position: absolute;
+    background: #dbdbe1;
+    width: 10px;
+    height: 1px;
+    left: 0;
+    top: 0; }
+  .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center:after {
+    top: auto;
+    bottom: 0; }
+  .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center > .cui-data-field > .cui-form-table {
     margin: 0; }
 
 .cui-data-form-row {

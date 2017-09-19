@@ -843,49 +843,30 @@ li > div {
 // DataForm
 .cui-data-form--multiple-fields {
 	> .cui-data-form-row {
-		margin-bottom: $padding;
-		border-left: 1px solid hsl(205,20%,83%);
-		position: relative;
-		// background: hsl(240,7%,100%);
-		align-items: flex-start;
-
-		// .cui-data-field .cui-form-table {
-		// 	margin: 0 $padding + 28px 0 $padding !important;
-		// 	width: calc(100% - #{$padding*2 + 28px});
-		// }
-
-		.cui-block-header {
-			padding-left: $padding !important;
-			padding-right: $padding !important;
-		}
-
-		.cui-block-content {
-			padding-bottom: 0 !important;
-		}
-
-		$key-inset: ($padding + 1px); // $padding + border
-
-		.cui-form-key {
-			width: $td-width - $key-inset;
-			min-width: $td-width - $key-inset;
-		}
-
-		.cui-data-form--multiple-fields {
-			.cui-form-key {
-				width: $td-width - $key-inset - 20px;
-				min-width: $td-width - $key-inset - 20px;
-			}
-		}
-
-		.cui-data-form-row {
-			.cui-form-key {
-				width: $td-width - $key-inset - 22px;
-				min-width: $td-width - $key-inset - 22px;
-			}
-		}
-
 		> .cui-horizontal-layout-center {
-			margin: 0;
+			position: relative;
+			padding: 4px 4px 4px 10px;
+			border-left: 1px solid hsl(240,8%,87%);
+
+			&:after,
+			&:before {
+				content: "";
+				position: absolute;
+				background: hsl(240,8%,87%);
+				width: 10px;
+				height: 1px;
+				left: 0;
+				top: 0;
+			}
+
+			&:after {
+				top: auto;
+				bottom: 0;
+			}
+
+			> .cui-data-field > .cui-form-table {
+				margin: 0;
+			}
 		}
 	}
 }
