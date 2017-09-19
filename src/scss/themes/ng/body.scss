@@ -905,6 +905,9 @@ li > div {
 	
 	&:last-child {
 		// margin-bottom: $padding; anyoing in fields renderer
+		> .cui-horizontal-layout-center {
+			margin-bottom: 0;
+		}
 	}
 	
 	&.cui-data-form-row--trash {
@@ -964,6 +967,15 @@ li > div {
 .cui-navigation-toolbar {
 	background: none;
 	min-height: 20px !important;
+
+	.cui-horizontal-layout-left > .cui-label:first-child {
+		color: $muted-color;
+		padding-left: $padding/2;
+	}
+
+	.cui-buttonbar {
+		margin-bottom: 2px;
+	}
 	
 	.cui-button {
 		padding: 0;
