@@ -713,7 +713,7 @@ class CUI.DateTime extends CUI.Input
 			second: null
 			am_pm: null
 
-		if @__input_formats[0].clock
+		if @__input_format.clock
 			data.hour = mom.hour()
 			data.minute = mom.minute()
 			data.second = mom.second()
