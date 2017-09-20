@@ -244,7 +244,7 @@ class CUI.DocumentBrowser extends CUI.Element
 					onClick: =>
 						@showSearch(false)
 			]
-			content: @__tree.render(false)
+			content: @__tree.render()
 
 
 		@__layout = new CUI.HorizontalLayout

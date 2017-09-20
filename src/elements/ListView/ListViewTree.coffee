@@ -97,10 +97,7 @@ class CUI.ListViewTree extends CUI.ListView
 			node: @
 			type: "row_selected"
 
-	render: (do_open) ->
-		if do_open != false
-			CUI.error("ListViewTree.render called with do_open == #{do_open}, only \"false\" is supported. The automatic root.open() is deprecated and will be removed in a future version.")
-			do_open = true
+	render: ->
 
 		handle_event = (ev) =>
 
@@ -135,9 +132,6 @@ class CUI.ListViewTree extends CUI.ListView
 			type: ["click"]
 			call: (ev) =>
 				handle_event(ev)
-
-		if do_open
-			@root.open()
 
 		if @_no_hierarchy
 			CUI.dom.addClass(@grid, "cui-list-view-tree-no-hierarchy")

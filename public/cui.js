@@ -35858,7 +35858,7 @@ CUI.DocumentBrowser = (function(superClass) {
           })(this)
         })
       ],
-      content: this.__tree.render(false)
+      content: this.__tree.render()
     });
     this.__layout = new CUI.HorizontalLayout({
       "class": "cui-document-browser",
@@ -44399,12 +44399,8 @@ CUI.ListViewTree = (function(superClass) {
     });
   };
 
-  ListViewTree.prototype.render = function(do_open) {
+  ListViewTree.prototype.render = function() {
     var handle_event;
-    if (do_open !== false) {
-      CUI.error("ListViewTree.render called with do_open == " + do_open + ", only \"false\" is supported. The automatic root.open() is deprecated and will be removed in a future version.");
-      do_open = true;
-    }
     handle_event = (function(_this) {
       return function(ev) {
         var node;
@@ -44444,9 +44440,6 @@ CUI.ListViewTree = (function(superClass) {
         };
       })(this)
     });
-    if (do_open) {
-      this.root.open();
-    }
     if (this._no_hierarchy) {
       CUI.dom.addClass(this.grid, "cui-list-view-tree-no-hierarchy");
     } else {
@@ -47590,7 +47583,7 @@ CUI.ObjectDumper = (function(superClass) {
       });
       this.root.children.splice(0, 0, headerRow);
     }
-    this.render(false);
+    this.render();
     this.root.open();
   }
 

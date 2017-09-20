@@ -14,7 +14,7 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 			headerRow = new CUI.ListViewTreeHeaderNode(headers: @_headers)
 			@root.children.splice(0,0, headerRow)
 
-		@render(false)
+		@render()
 		@root.open()
 
 	initOpts: ->
