@@ -273,7 +273,6 @@ class CUI.dom
 
 				len = content.length
 
-
 			return node
 
 		switch typeof(content)
@@ -282,8 +281,10 @@ class CUI.dom
 			when "string"
 				append_node = document.createTextNode(content)
 			else
-				if content.DOM
+				if content.hasOwnProperty('DOM')
 					append_node = content.DOM
+					if CUI.util.isNull(append_node)
+						return
 				else
 					append_node = content
 
