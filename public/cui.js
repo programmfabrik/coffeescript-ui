@@ -27772,8 +27772,11 @@ CUI.dom = (function() {
         append_node = document.createTextNode(content);
         break;
       default:
-        if (content.DOM) {
+        if (content.hasOwnProperty('DOM')) {
           append_node = content.DOM;
+          if (CUI.util.isNull(append_node)) {
+            return;
+          }
         } else {
           append_node = content;
         }
