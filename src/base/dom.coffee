@@ -206,9 +206,11 @@ class CUI.dom
 		node.removeAttribute(key)
 		node
 
-	@setAttribute: (node, key, value) ->
-		if not node
+	@setAttribute: (_node, key, value) ->
+		if not _node
 			return null
+
+		node = _node.DOM or _node
 
 		if CUI.util.isNull(value) or value == false
 			return @removeAttribute(node, key)
