@@ -27675,10 +27675,12 @@ CUI.dom = (function() {
     return node;
   };
 
-  dom.setAttribute = function(node, key, value) {
-    if (!node) {
+  dom.setAttribute = function(_node, key, value) {
+    var node;
+    if (!_node) {
       return null;
     }
+    node = _node.DOM || _node;
     if (CUI.util.isNull(value) || value === false) {
       return this.removeAttribute(node, key);
     }
