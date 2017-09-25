@@ -679,8 +679,14 @@ li > div {
 	flex-wrap: nowrap;
 	border-bottom: 1px solid $border;
 	padding-right: 0;
+	background: $header-background;
+	border-color: $header-border;
+	min-height: $toolbar-height;
+	border-color: $header-border;
 
 	.cui-label {
+		color: $header-color;
+		font-weight: 600;
 		font-size: 14px;
 		height: 100%;
 		cursor: default;

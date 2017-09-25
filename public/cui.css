@@ -814,8 +814,14 @@ li > div {
 .cui-pane-header {
   flex-wrap: nowrap;
   border-bottom: 1px solid #cbd5dc;
-  padding-right: 0; }
+  padding-right: 0;
+  background: #dde4e9;
+  border-color: #bdc6cc;
+  min-height: 34px;
+  border-color: #bdc6cc; }
   .cui-pane-header .cui-label {
+    color: #52636f;
+    font-weight: 600;
     font-size: 14px;
     height: 100%;
     cursor: default;
@@ -1349,8 +1355,8 @@ a[role="button"].cui-button-appearance-link {
       border-radius: 100%; }
 
 .cui-panel {
-  border-top: 1px solid #d7dfe5;
-  border-bottom: 1px solid #d7dfe5; }
+  border-top: 1px solid #bdc6cc;
+  border-bottom: 1px solid #bdc6cc; }
   .cui-panel + .cui-panel, .cui-panel:first-child {
     border-top: none; }
   .cui-panel:last-child {
@@ -1781,19 +1787,19 @@ a[role="button"].cui-button-appearance-link {
   opacity: 0.9999;
   box-shadow: 0 0 0 1px rgba(61, 79, 92, 0.15), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4); }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
-    background: #eef0f1;
+    background: #dde4e9;
     min-height: 34px;
     border-radius: 5px 5px 0 0;
-    border-color: #d7dfe5;
-    color: #424548; }
+    border-color: #bdc6cc;
+    color: #52636f; }
   .cui-layer > .cui-pane > .cui-vertical-layout-center {
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
     .cui-layer > .cui-pane > .cui-vertical-layout-center > .cui-form {
       margin: 0; }
   .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
-    border-top-color: #d7dfe5;
-    background: #eef0f1;
+    border-top-color: #bdc6cc;
+    background: #dde4e9;
     border-radius: 0 0 5px 5px; }
   .cui-layer .cui-toolbar {
     min-height: 34px; }
@@ -1850,7 +1856,7 @@ a[role="button"].cui-button-appearance-link {
     left: 14px; }
 
 .cui-pane--has-footer .cui-layer-pointer--s:after {
-  background: #eef0f1; }
+  background: #dde4e9; }
 
 .cui-pane--has-footer .cui-layer-pointer--e,
 .cui-pane--has-footer .cui-layer-pointer--w {
@@ -1860,7 +1866,7 @@ a[role="button"].cui-button-appearance-link {
   top: -9px; }
 
 .cui-pane--has-header .cui-layer-pointer--n:after {
-  background: #eef0f1; }
+  background: #dde4e9; }
 
 .cui-pane--has-header .cui-layer-pointer--e,
 .cui-pane--has-header .cui-layer-pointer--w {
