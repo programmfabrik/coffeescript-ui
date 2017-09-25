@@ -1447,6 +1447,8 @@ a[role="button"].cui-button-appearance-link {
       font-style: normal; }
   .cui-label-appearance-secondary {
     color: #6d7478; }
+    .cui-selected .cui-label-appearance-secondary {
+      color: #56728f; }
   .cui-label--padded {
     padding: 10px; }
     .cui-label--padded + .cui-block > .cui-block-header {

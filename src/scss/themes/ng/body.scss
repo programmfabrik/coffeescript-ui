@@ -1669,6 +1669,10 @@ a[role="button"].cui-button-appearance-link {
 
 	&-appearance-secondary {
 		color: $secondary-color;
+
+		.cui-selected & {
+			color: $on-row-highlight-secondary-color;
+		}
 	}
 
 	&--padded {
