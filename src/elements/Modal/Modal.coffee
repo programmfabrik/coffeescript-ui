@@ -27,6 +27,8 @@ class CUI.Modal extends CUI.LayerPane
 			onClick: (ev, btn) =>
 				@doCancel(ev, false, btn)
 
+		@getPane().addClass("cui-pane--window")
+
 	initOpts: ->
 		super()
 		@mergeOpt "backdrop",
