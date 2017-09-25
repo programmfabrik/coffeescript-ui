@@ -1251,6 +1251,9 @@ a[role="button"].cui-button-appearance-link {
     .cui-button-appearance-link[role] .cui-button-center span {
       white-space: normal; }
 
+.cui-select {
+  max-width: 275px; }
+
 .cui-checkbox {
   min-width: 0;
   display: inline-block; }

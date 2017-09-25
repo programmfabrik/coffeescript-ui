@@ -1048,7 +1048,7 @@ li > div {
 .cui-button-href {
 	// max-width: 100%; makes button icons unsharp (datepicker)
 	cursor: pointer;
-	max-width: 275px;
+	max-width: $input-width;
 }
 
 .cui-button-href.cui-button-appearance-link {
@@ -1079,7 +1079,7 @@ li > div {
 	justify-content: center;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
-	// max-width: 100%; would overwrite the 275px max-width
+	// max-width: 100%; would overwrite the $input-width max-width
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
@@ -1345,6 +1345,10 @@ a[role="button"].cui-button-appearance-link {
 			white-space: normal;
 		}
 	}
+}
+
+.cui-select {
+	max-width: $input-width;
 }
 
 // Checkbox
@@ -2048,7 +2052,7 @@ a[role="button"].cui-button-appearance-link {
 		vertical-align: bottom;
 		
 		&:not([data-max-chars]) {
-			width: 275px;
+			width: $input-width;
 		}
 
 		&:focus {
@@ -4806,7 +4810,7 @@ label[data-label-clickable],
 	margin-right: 0;
 	@include margin-top(0.5);
 	position: relative;
-	width: 275px;
+	width: $input-width;
 	max-width: 100%;
 
 	border: 1px solid $input-border;
