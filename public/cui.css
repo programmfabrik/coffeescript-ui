@@ -811,17 +811,20 @@ li > div {
 .cui-result-navigation-toolbar {
   min-height: 34px; }
 
-.cui-pane-header {
-  flex-wrap: nowrap;
-  border-bottom: 1px solid #cbd5dc;
-  padding-right: 0;
+.cui-pane--window > .cui-vertical-layout-top > .cui-pane-header {
   background: #dde4e9;
   border-color: #bdc6cc;
   min-height: 34px;
   border-color: #bdc6cc; }
-  .cui-pane-header .cui-label {
+  .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header .cui-label {
     color: #52636f;
-    font-weight: 600;
+    font-weight: 600; }
+
+.cui-pane-header {
+  flex-wrap: nowrap;
+  border-bottom: 1px solid #cbd5dc;
+  padding-right: 0; }
+  .cui-pane-header .cui-label {
     font-size: 14px;
     height: 100%;
     cursor: default;
@@ -1790,11 +1793,7 @@ a[role="button"].cui-button-appearance-link {
   opacity: 0.9999;
   box-shadow: 0 0 0 1px rgba(61, 79, 92, 0.15), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4); }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
-    background: #dde4e9;
-    min-height: 34px;
-    border-radius: 5px 5px 0 0;
-    border-color: #bdc6cc;
-    color: #52636f; }
+    border-radius: 5px 5px 0 0; }
   .cui-layer > .cui-pane > .cui-vertical-layout-center {
     overflow: auto;
     -webkit-overflow-scrolling: touch; }

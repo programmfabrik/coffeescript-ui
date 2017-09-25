@@ -134,11 +134,9 @@ $toolbar-height: 34px;
 $layer-background: $foreground;
 
 $layer-header-pointer-background: $header-background;
-$layer-header-background: $header-background;
 $layer-header-border: $header-border;
-$layer-header-color: $header-color;
 
-$layer-footer-background: $layer-header-background;
+$layer-footer-background: $header-background;
 $layer-footer-border: $layer-header-border;
 
 $item-list-color: hsl(205,7%,22%);

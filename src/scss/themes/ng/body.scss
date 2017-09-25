@@ -675,18 +675,26 @@ li > div {
 }
 
 // Pane
+.cui-pane--window {
+	> .cui-vertical-layout-top > .cui-pane-header {
+		background: $header-background;
+		border-color: $header-border;
+		min-height: $toolbar-height;
+		border-color: $header-border;
+		
+		.cui-label {
+			color: $header-color;
+			font-weight: $header-weight;
+		}
+	}
+}
+
 .cui-pane-header {
 	flex-wrap: nowrap;
 	border-bottom: 1px solid $border;
 	padding-right: 0;
-	background: $header-background;
-	border-color: $header-border;
-	min-height: $toolbar-height;
-	border-color: $header-border;
 
 	.cui-label {
-		color: $header-color;
-		font-weight: $header-weight;
 		font-size: 14px;
 		height: 100%;
 		cursor: default;
@@ -2243,11 +2251,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
-			background: $layer-header-background;
-			min-height: $toolbar-height;
 			border-radius: 5px 5px 0 0;
-			border-color: $layer-header-border;
-			color: $layer-header-color;
 		}
 
 		// layer-body
