@@ -46799,6 +46799,7 @@ CUI.Modal = (function(superClass) {
         };
       })(this)
     });
+    this.getPane().addClass("cui-pane--window");
   }
 
   Modal.prototype.initOpts = function() {
