@@ -1377,6 +1377,8 @@ a[role="button"].cui-button-appearance-link {
 			.cui-button-center {
 				span {
 					white-space: normal;
+					word-wrap: break-word;
+					text-overflow: clip;
 				}
 			}
 		}

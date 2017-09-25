@@ -1263,7 +1263,9 @@ a[role="button"].cui-button-appearance-link {
   .cui-checkbox--multiline .cui-button-checkbox {
     white-space: initial; }
     .cui-checkbox--multiline .cui-button-checkbox .cui-button-center span {
-      white-space: normal; }
+      white-space: normal;
+      word-wrap: break-word;
+      text-overflow: clip; }
 
 .cui-button-checkbox {
   display: inline-flex;
