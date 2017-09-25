@@ -239,7 +239,7 @@ class CUI.FlexHandle extends CUI.Element
 
 		if @_manage_state
 			if not @_state_name
-				console.error "new FlexHandle()", "opts.state_name missing, state will not be stored.", @opts
+				console.error "new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", @opts
 
 			@__state_name = @_state_name
 			@__setState()

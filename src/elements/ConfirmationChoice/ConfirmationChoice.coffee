@@ -33,7 +33,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 					for choice, idx in v
 						if not choice
 							continue
-						CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#"+idx+"]",
+						CUI.Element.readOpts(choice, "new CUI.ConfirmationChoice[choice#"+idx+"]",
 							CUI.ConfirmationChoice.choiceOpts)
 					return true
 

@@ -770,7 +770,6 @@ class CUI.Input extends CUI.DataFieldInput
 
 		if bl = blocks[block_jump_to]
 			new_str = [parts_inbetween[0]]
-			# CUI.debug "new blocks"+blocks
 			for block, idx in blocks
 				new_str.push(block.string)
 				new_str.push(parts_inbetween[idx+1])

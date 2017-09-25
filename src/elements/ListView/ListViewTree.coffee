@@ -8,7 +8,7 @@
 class CUI.ListViewTree extends CUI.ListView
 	constructor: (@opts={}) ->
 		super(@opts)
-		CUI.util.assert(@root instanceof CUI.ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
+		CUI.util.assert(@root instanceof CUI.ListViewTreeNode, "new CUI.ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#
 
@@ -37,7 +37,7 @@ class CUI.ListViewTree extends CUI.ListView
 	readOpts: ->
 		super()
 		if @_selectable != undefined
-			CUI.util.assert(@_selectableRows == undefined, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
+			CUI.util.assert(@_selectableRows == undefined, "new CUI.ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
 			@__selectableRows = @_selectable
 		@
 

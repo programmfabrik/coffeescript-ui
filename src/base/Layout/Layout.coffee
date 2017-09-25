@@ -138,7 +138,7 @@ class CUI.Layout extends CUI.DOMElement
 
 		if @_absolute
 			@addClass("cui-absolute")
-			CUI.util.assert(CUI.dom.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
+			CUI.util.assert(CUI.dom.getAttribute(@DOM, "data-cui-absolute-container") in ["row","column"], "new CUI.Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".")
 
 			CUI.dom.waitForDOMInsert(node: @DOM)
 			.done =>
@@ -218,7 +218,7 @@ class CUI.Layout extends CUI.DOMElement
 	#initialive pane option
 	__initPane: (options, pane_name) ->
 		CUI.util.assert(pane_name, "Layout.initPane", "pane_name must be set", options: options, pane_name: pane_name)
-		opts = CUI.Element.readOpts(options, "new Layout.__initPane",
+		opts = CUI.Element.readOpts(options, "new CUI.Layout.__initPane",
 			class:
 				check: String
 			content: {}
