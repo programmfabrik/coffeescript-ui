@@ -67,6 +67,10 @@ $secondary-color: hsl(205,5%,45%);
 $muted-color: hsl(205,5%,60%);
 $disabled-color: hsl(205,7%,73%);
 
+$header-background: hsl(205,20%,89%);
+$header-border: hsl(205,13%,77%);
+$header-color: hsl(205,15%,38%);
+
 $label-mini: 11px;
 $label-big: 16px;
 $label-bigger: 18px;
@@ -99,6 +103,7 @@ $input-border: hsl(205,20%,79%);
 $input-radius: $button-radius;
 $input-placeholder: hsl(205,10%,75%);
 $input-shadow: 0 1px hsla(0,0%,0%,.03) inset, 0 2px hsla(0,0%,0%,.01) inset;
+$input-width: 275px;
 
 $drag-handle-color: hsla(205,10%,50%,.5);
 
@@ -126,10 +131,10 @@ $toolbar-height: 34px;
 
 $layer-background: $foreground;
 
-$layer-header-pointer-background: $toolbar-background;
-$layer-header-background: $toolbar-background;
-$layer-header-border: hsl(205,22%,87%);
-$layer-header-color: hsl(205,4%,27%);
+$layer-header-pointer-background: $header-background;
+$layer-header-background: $header-background;
+$layer-header-border: $header-border;
+$layer-header-color: $header-color;
 
 $layer-footer-background: $layer-header-background;
 $layer-footer-border: $layer-header-border;
