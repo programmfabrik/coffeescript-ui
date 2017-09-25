@@ -70,13 +70,14 @@ $disabled-color: hsl(205,7%,73%);
 $header-background: hsl(205,20%,89%);
 $header-border: hsl(205,13%,77%);
 $header-color: hsl(205,15%,38%);
+$header-weight: 600;
 
 $label-mini: 11px;
 $label-big: 16px;
 $label-bigger: 18px;
 $form-label-color: hsl(210,14%,31%);
 $form-label-weight: 500;
-$form-label-font-size: 12px;
+$form-label-font-size: 13px;
 $form-block-color: hsl(210,16%,27%);
 
 $highlight-color: map-get($highlight, 'dark');
