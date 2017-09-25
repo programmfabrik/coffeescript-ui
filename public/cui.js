@@ -24326,7 +24326,7 @@ CUI.FlexHandle = (function(superClass) {
     })(this);
     if (this._manage_state) {
       if (!this._state_name) {
-        console.error("new FlexHandle()", "opts.state_name missing, state will not be stored.", this.opts);
+        console.error("new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", this.opts);
       }
       this.__state_name = this._state_name;
       this.__setState();
@@ -26241,7 +26241,7 @@ CUI.Layout = (function(superClass) {
     this.addClass(this.getMapPrefix());
     if (this._absolute) {
       this.addClass("cui-absolute");
-      CUI.util.assert((ref = CUI.dom.getAttribute(this.DOM, "data-cui-absolute-container")) === "row" || ref === "column", "new Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".");
+      CUI.util.assert((ref = CUI.dom.getAttribute(this.DOM, "data-cui-absolute-container")) === "row" || ref === "column", "new CUI.Layout", "opts.absolute: template must include a cui-absolute-container attribute set to \"row\" or \"column\".");
       CUI.dom.waitForDOMInsert({
         node: this.DOM
       }).done((function(_this) {
@@ -26321,7 +26321,7 @@ CUI.Layout = (function(superClass) {
       options: options,
       pane_name: pane_name
     });
-    opts = CUI.Element.readOpts(options, "new Layout.__initPane", {
+    opts = CUI.Element.readOpts(options, "new CUI.Layout.__initPane", {
       "class": {
         check: String
       },
@@ -32062,7 +32062,7 @@ CUI.ConfirmationChoice = (function(superClass) {
             if (!choice) {
               continue;
             }
-            CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#" + idx + "]", CUI.ConfirmationChoice.choiceOpts);
+            CUI.Element.readOpts(choice, "new CUI.ConfirmationChoice[choice#" + idx + "]", CUI.ConfirmationChoice.choiceOpts);
           }
           return true;
         }
@@ -42126,7 +42126,7 @@ CUI.ListView = (function(superClass) {
       this.__colClasses = this._colClasses.slice(0);
     }
     if (this._rowMove) {
-      CUI.util.assert(!this._rowMovePlaceholder, "new ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", {
+      CUI.util.assert(!this._rowMovePlaceholder, "new CUI.ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", {
         opts: this.opts
       });
     }
@@ -42137,7 +42137,7 @@ CUI.ListView = (function(superClass) {
       }
       this.__colClasses.splice(0, 0, "cui-lv-row-move-handle-column");
     }
-    CUI.util.assert(this.fixedColsCount < this.__cols.length, "new ListView", "opts.fixedCols must be less than column count.", {
+    CUI.util.assert(this.fixedColsCount < this.__cols.length, "new CUI.ListView", "opts.fixedCols must be less than column count.", {
       opts: this.opts
     });
     if (this._colResize) {
@@ -42146,7 +42146,7 @@ CUI.ListView = (function(superClass) {
       this.__colResize = true;
     }
     if (this.__colResize) {
-      CUI.util.assert(this.fixedRowsCount > 0, "new ListView", "Cannot enable col resize with no fixed rows.", {
+      CUI.util.assert(this.fixedRowsCount > 0, "new CUI.ListView", "Cannot enable col resize with no fixed rows.", {
         opts: this.opts
       });
     }
@@ -42156,7 +42156,7 @@ CUI.ListView = (function(superClass) {
       col = ref[col_i];
       CUI.util.assert(col === "auto" || col === "maximize" || col === "fixed" || col === "manual", "new " + this.__cls, "Unkown type of col: \"" + col + "\". opts.cols can only contain \"auto\" and \"maximize\" elements.");
       if (col === "maximize") {
-        CUI.util.assert(col_i >= this.fixedColsCount, "new ListView", "maximized columns can only be in the non-fixed side of the ListView.", {
+        CUI.util.assert(col_i >= this.fixedColsCount, "new CUI.ListView", "maximized columns can only be in the non-fixed side of the ListView.", {
           opts: this.opts
         });
         this.__maxCols.push(col_i);
@@ -44289,7 +44289,7 @@ CUI.ListViewTree = (function(superClass) {
     this.opts = opts1 != null ? opts1 : {};
     this.__actionOnNode = bind(this.__actionOnNode, this);
     ListViewTree.__super__.constructor.call(this, this.opts);
-    CUI.util.assert(this.root instanceof CUI.ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", {
+    CUI.util.assert(this.root instanceof CUI.ListViewTreeNode, "new CUI.ListViewTree", "opts.root must be instance of ListViewTreeNode", {
       opts: this.opts
     });
     this.root.setTree(this);
@@ -44329,7 +44329,7 @@ CUI.ListViewTree = (function(superClass) {
   ListViewTree.prototype.readOpts = function() {
     ListViewTree.__super__.readOpts.call(this);
     if (this._selectable !== void 0) {
-      CUI.util.assert(this._selectableRows === void 0, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", {
+      CUI.util.assert(this._selectableRows === void 0, "new CUI.ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", {
         opts: this.opts
       });
       this.__selectableRows = this._selectable;
@@ -50216,7 +50216,7 @@ CUI.Slider = (function(superClass) {
   Slider.prototype.readOpts = function() {
     Slider.__super__.readOpts.call(this);
     this.__distance = this._max - this._min;
-    CUI.util.assert(this.__distance > 1, 'new Slider', 'opts.min and opts.max need to be at least 2 apart.');
+    CUI.util.assert(this.__distance > 1, 'new CUI.Slider', 'opts.min and opts.max need to be at least 2 apart.');
     return this.__value = this.getDefaultValue();
   };
 
