@@ -3846,6 +3846,10 @@ label[data-label-clickable],
     width: 40px;
     text-align: center; }
 
+.cui-map {
+  width: 100%;
+  height: 300px; }
+
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
