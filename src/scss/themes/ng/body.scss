@@ -84,8 +84,8 @@ label {
 
 body {
 	font-family: $font-family;
-	font-size: 13px;
-	line-height: normal;
+	font-size: $font-size;
+	line-height: $line-height;
 	background: $background;
 	color: $color;
 	display: flex;
