@@ -177,7 +177,6 @@ class CUI.Pane extends CUI.VerticalLayout
 		else
 			@startFillScreen()
 
-
 	# creates a button that can be used in paneheader (or somewhere else) to toggle fillscreen
 	@getToggleFillScreenButton: (opts={}) ->
 		for k, v of {
