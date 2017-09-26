@@ -34523,9 +34523,9 @@ CUI.DateTime = (function(superClass) {
       update_current_moment = true;
     }
     CUI.dom.empty(this.__calendar);
-    this.__calendar.append(this.getDateTimeDrawer(mom));
-    this.__calendar.append(this.drawMonthTable(mom));
-    this.__calendar.append(this.drawYearMonthsSelect(mom));
+    CUI.dom.append(this.__calendar, this.getDateTimeDrawer(mom));
+    CUI.dom.append(this.__calendar, this.drawMonthTable(mom));
+    CUI.dom.append(this.__calendar, this.drawYearMonthsSelect(mom));
     if (update_current_moment) {
       this.__current_moment = mom.clone();
       this.setInputFromMoment();
