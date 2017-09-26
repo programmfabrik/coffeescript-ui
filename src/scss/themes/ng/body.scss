@@ -4474,7 +4474,7 @@ label[data-label-clickable],
 	align-items: flex-end;
 	height: 24px;
 	line-height: 24px;
-	max-width: 100%;
+	max-width: $input-width;
 
 	.cui-input-invalid-hint {
 		display: none;

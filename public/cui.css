@@ -3190,7 +3190,7 @@ label[data-label-clickable],
   align-items: flex-end;
   height: 24px;
   line-height: 24px;
-  max-width: 100%;
+  max-width: 275px;
   /*
 
 	date: "dd, DD.MM.YYYY"
