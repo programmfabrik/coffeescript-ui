@@ -41977,7 +41977,7 @@ CUI.Label = (function(superClass) {
   };
 
   Label.prototype.setTextMaxChars = function(max_chars) {
-    return CUI.dom.setAttribute(this.__label.map.content[0], "data-max-chars", max_chars);
+    return CUI.dom.setAttribute(this.__label.map.content, "data-max-chars", max_chars);
   };
 
   Label.prototype.getText = function() {
@@ -48921,8 +48921,8 @@ CUI.Pane = (function(superClass) {
     } else {
       end_fill_screen = (function(_this) {
         return function() {
-          _this.__placeholder.before(_this.DOM);
-          _this.__placeholder.remove();
+          CUI.dom.insertBefore(_this.__placeholder, _this.DOM);
+          CUI.dom.remove(_this.__placeholder);
           _this.__fillscreenTmpl.destroy();
           delete _this.__fillscreenTmpl;
           CUI.Events.trigger({
