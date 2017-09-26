@@ -134,6 +134,7 @@ require('./elements/DocumentBrowser/NodeMatch.coffee')
 require('./elements/DocumentBrowser/SearchMatch.coffee')
 require('./elements/DocumentBrowser/SearchQuery.coffee')
 require('./elements/Slider/Slider.coffee')
+require('./elements/Map/Map.coffee')
 require('./base/CSVData.coffee')
 require('./scss/themes/ng/main.scss')
 
