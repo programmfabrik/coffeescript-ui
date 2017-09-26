@@ -127,7 +127,7 @@ ul {
 
 a {
   text-decoration: none;
-  color: black; }
+  color: #1a1a1a; }
 
 kbd {
   padding: 1px 5px;
@@ -144,7 +144,7 @@ html {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  color: black; }
+  color: #1a1a1a; }
 
 label {
   box-sizing: border-box; }
@@ -152,9 +152,9 @@ label {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 13px;
-  line-height: normal;
+  line-height: 16px;
   background: #f7f7f8;
-  color: black;
+  color: #1a1a1a;
   display: flex;
   width: 100%;
   height: 100%;
@@ -3625,7 +3625,7 @@ label[data-label-clickable],
   padding: 5px 10px;
   font-size: 13px;
   font-weight: bold;
-  color: black;
+  color: #1a1a1a;
   flex-basis: 100%;
   border-bottom: 1px solid rgba(84, 108, 125, 0.15); }
   .cui-sticky-header .cui-label {
