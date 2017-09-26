@@ -46810,6 +46810,18 @@ CUI.Modal = (function(superClass) {
       })(this)
     });
     this.getPane().addClass("cui-pane--window");
+    if (this._onToggleFillScreen) {
+      Events.listen({
+        type: ["start-fill-screen", "end-fill-screen"],
+        node: this.getPane(),
+        call: (function(_this) {
+          return function(ev) {
+            return _this._onToggleFillScreen.call(_this, ev, _this);
+          };
+        })(this)
+      });
+    }
+    return;
   }
 
   Modal.prototype.initOpts = function() {
