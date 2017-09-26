@@ -2415,7 +2415,8 @@ a[role="button"].cui-button-appearance-link {
     .cui-list-view-grid-quadrant-1 .cui-label-multiline {
       align-self: flex-end;
       max-width: none;
-      flex-shrink: 1; }
+      flex-shrink: 1;
+      max-width: 100%; }
   .cui-list-view-grid-quadrant-0 .cui-lv-td,
   .cui-list-view-grid-quadrant-1 .cui-lv-td {
     align-items: flex-end;
