@@ -5,6 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+marked = require('marked')
+moment = require('moment')
+
 class CUI.util
 
 	@assert: (condition, caller, message, debug_output) ->
@@ -455,6 +458,9 @@ class CUI.util
 	# base64 encoded ascii to ucs-2 string
 	@atou: (str) ->
 	    decodeURIComponent(escape(window.atob(str)))
+
+CUI.util.moment = moment
+CUI.util.marked = marked
 
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s

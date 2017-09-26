@@ -29349,6 +29349,12 @@ CUI.dom = (function() {
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
  */
+var marked, moment;
+
+marked = __webpack_require__(2);
+
+moment = __webpack_require__(1);
+
 CUI.util = (function() {
   function util() {}
 
@@ -29914,6 +29920,10 @@ CUI.util = (function() {
   return util;
 
 })();
+
+CUI.util.moment = moment;
+
+CUI.util.marked = marked;
 
 String.prototype.startsWith = function(s) {
   return this.substr(0, s.length) === s;
