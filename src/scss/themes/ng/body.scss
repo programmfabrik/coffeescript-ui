@@ -4175,6 +4175,7 @@ label[data-label-clickable],
 // .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
 .cui-data-field-input	> .cui-button-select {
 	width: 100%;
+	padding: 0; // remove double padding
 }
 
 .cui-data-field-proxy > .cui-label,

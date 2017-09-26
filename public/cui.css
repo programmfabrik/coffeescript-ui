@@ -816,12 +816,12 @@ li > div {
   min-height: 34px; }
 
 .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header {
-  background: #dde4e9;
-  border-color: #bdc6cc;
+  background: #dadfe2;
+  border-color: #bbc0c3;
   min-height: 34px;
-  border-color: #bdc6cc; }
+  border-color: #bbc0c3; }
   .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header .cui-label {
-    color: #52636f;
+    color: #464e53;
     font-weight: 700; }
 
 .cui-pane-header {
@@ -1362,8 +1362,8 @@ a[role="button"].cui-button-appearance-link {
       border-radius: 100%; }
 
 .cui-panel {
-  border-top: 1px solid #bdc6cc;
-  border-bottom: 1px solid #bdc6cc; }
+  border-top: 1px solid #bbc0c3;
+  border-bottom: 1px solid #bbc0c3; }
   .cui-panel + .cui-panel, .cui-panel:first-child {
     border-top: none; }
   .cui-panel:last-child {
@@ -1801,8 +1801,8 @@ a[role="button"].cui-button-appearance-link {
     .cui-layer > .cui-pane > .cui-vertical-layout-center > .cui-form {
       margin: 0; }
   .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
-    border-top-color: #bdc6cc;
-    background: #dde4e9;
+    border-top-color: #bbc0c3;
+    background: #dadfe2;
     border-radius: 0 0 5px 5px; }
   .cui-layer .cui-toolbar {
     min-height: 34px; }
@@ -1859,7 +1859,7 @@ a[role="button"].cui-button-appearance-link {
     left: 14px; }
 
 .cui-pane--has-footer .cui-layer-pointer--s:after {
-  background: #dde4e9; }
+  background: #dadfe2; }
 
 .cui-pane--has-footer .cui-layer-pointer--e,
 .cui-pane--has-footer .cui-layer-pointer--w {
@@ -1869,7 +1869,7 @@ a[role="button"].cui-button-appearance-link {
   top: -9px; }
 
 .cui-pane--has-header .cui-layer-pointer--n:after {
-  background: #dde4e9; }
+  background: #dadfe2; }
 
 .cui-pane--has-header .cui-layer-pointer--e,
 .cui-pane--has-header .cui-layer-pointer--w {
@@ -2980,7 +2980,8 @@ label[data-label-clickable],
     margin: 3px 0; }
 
 .cui-data-field-input > .cui-button-select {
-  width: 100%; }
+  width: 100%;
+  padding: 0; }
 
 .cui-data-field-proxy > .cui-label,
 .cui-data-field-output-label {
