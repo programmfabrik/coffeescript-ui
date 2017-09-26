@@ -1955,6 +1955,7 @@ a[role="button"].cui-button-appearance-link {
     font-family: 'FontAwesome';
     content: "\F071";
     font-size: 42px;
+    line-height: 1;
     color: #ffd429;
     left: 14px;
     top: 14px;
