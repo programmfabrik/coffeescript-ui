@@ -53,8 +53,9 @@ class CUI.Pane extends CUI.VerticalLayout
 		else
 			end_fill_screen = =>
 				#CUI.debug "Stopping", event
-				@__placeholder.before(@DOM)
-				@__placeholder.remove()
+				CUI.dom.insertBefore(@__placeholder, @DOM)
+				CUI.dom.remove(@__placeholder)
+
 				@__fillscreenTmpl.destroy()
 				delete(@__fillscreenTmpl)
 				CUI.Events.trigger

@@ -194,7 +194,7 @@ class CUI.Label extends CUI.DOMElement
 		@
 
 	setTextMaxChars: (max_chars) ->
-		CUI.dom.setAttribute(@__label.map.content[0], "data-max-chars", max_chars)
+		CUI.dom.setAttribute(@__label.map.content, "data-max-chars", max_chars)
 
 	getText: ->
 		@__currentText
