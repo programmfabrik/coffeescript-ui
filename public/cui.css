@@ -822,7 +822,7 @@ li > div {
   border-color: #bbc0c3; }
   .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header .cui-label {
     color: #464e53;
-    font-weight: 700; }
+    font-weight: 500; }
 
 .cui-pane-header {
   flex-wrap: nowrap;
