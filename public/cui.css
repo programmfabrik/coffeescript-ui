@@ -2364,7 +2364,8 @@ a[role="button"].cui-button-appearance-link {
       display: none; }
     .cui-lv-td-rotate-90 > .cui-label-rotate-90 {
       word-wrap: break-word;
-      margin-left: -3px; }
+      margin-left: -3px;
+      max-width: none !important; }
     .cui-lv-td-rotate-90 .cui-data-field {
       flex-grow: 0; }
   .cui-lv-td-fill {

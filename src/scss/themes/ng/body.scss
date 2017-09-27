@@ -3186,6 +3186,7 @@ a[role="button"].cui-button-appearance-link {
 		> .cui-label-rotate-90 {
 			word-wrap: break-word;
 			margin-left: -3px;
+			max-width: none !important;
 		}
 
 		.cui-data-field {
