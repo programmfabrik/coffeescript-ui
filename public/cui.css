@@ -960,7 +960,8 @@ li > div {
       pointer-events: none;
       opacity: 0.33; }
   .cui-data-form-row > .cui-horizontal-layout-center {
-    margin: 3px 0;
+    margin-top: 3px;
+    margin-bottom: 3px;
     min-width: 0;
     flex-direction: row;
     flex-wrap: wrap; }
@@ -3465,7 +3466,7 @@ label[data-label-clickable],
   line-height: inherit;
   color: #4d4d4d;
   font-size: 10px;
-  line-height: 22px;
+  line-height: 22px !important;
   box-shadow: 0 1px rgba(0, 0, 0, 0.03) inset, 0 2px rgba(0, 0, 0, 0.01) inset; }
 
 .cui-drag-drop-select-helper {
@@ -3610,6 +3611,10 @@ label[data-label-clickable],
 .cui-block-content .cui-form-table {
   width: 100%;
   margin: 10px 0; }
+
+.cui-block-content .cui-block {
+  margin-top: 10px;
+  margin-bottom: 10px; }
 
 .cui-block-content .cui-block-header,
 .cui-block-content .cui-block-content {

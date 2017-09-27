@@ -924,7 +924,8 @@ li > div {
 	}
 
 	> .cui-horizontal-layout-center {
-		margin: 3px 0;
+		margin-top: 3px;
+		margin-bottom: 3px;
 		min-width: 0;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -4867,7 +4868,7 @@ label[data-label-clickable],
 		@include button-reset;
 		color: hsl(0,0%,30%);
 		font-size: 10px;
-  	line-height: 22px;
+  	line-height: 22px !important;
   	box-shadow: $input-shadow;
   }
 }
@@ -5094,6 +5095,11 @@ label[data-label-clickable],
 	.cui-form-table {
 		width: 100%;
 		margin: $padding 0;
+	}
+
+	.cui-block {
+		margin-top: $padding;
+		margin-bottom: $padding;
 	}
 
 	.cui-block-header,
