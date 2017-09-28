@@ -18592,6 +18592,9 @@ CUI.DOMElement = (function(superClass) {
       id: {
         check: String
       },
+      qa: {
+        check: String
+      },
       attr: {
         "default": {},
         check: "PlainObject"
@@ -18636,6 +18639,9 @@ CUI.DOMElement = (function(superClass) {
     }
     if (this._class) {
       CUI.dom.addClass(this.DOM, this._class);
+    }
+    if (this._qa) {
+      CUI.dom.setAttribute(this.DOM, 'data-qa', this._qa);
     }
     this.setElement();
     return this;
