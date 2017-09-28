@@ -75,7 +75,10 @@ class CUI
 		icons = require('../scss/icons/icons.svg')
 		CUI.Template.loadText(icons)
 		CUI.Template.load()
-		@ready()
+
+		@chainedCall.apply(@, @__readyFuncs)
+		.always =>
+			@__ready = true
 
 		@
 
@@ -92,15 +95,12 @@ class CUI
 
 
 	@ready: (func) ->
-		if func instanceof Function
-			if @__ready
-				func.call(@)
-			else
-				@__readyFuncs.push(func)
-		else
-			@__ready = true
-			for func in @__readyFuncs
-				func.call(@)
+		CUI.util.assert(func instanceof Function, "CUI.ready"," ...."
+
+		if @__ready
+			return func.call(@)
+
+		@__readyFuncs.push(func)
 
 	@defaults:
 		FileUpload:

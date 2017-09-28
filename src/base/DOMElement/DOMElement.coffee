@@ -9,6 +9,8 @@ class CUI.DOMElement extends CUI.Element
 			# add a DOM id
 			id:
 				check: String
+			data_qa:
+				check: String
 			attr:
 				default: {}
 				check: "PlainObject"
@@ -34,6 +36,9 @@ class CUI.DOMElement extends CUI.Element
 
 		if @_id
 			CUI.dom.setAttribute(@DOM, 'id', @_id)
+
+		if @_data_qa
+			CUI.dom.setAttribute(@DOM, 'data-qa', @_data_qa)
 
 		if @_class
 			CUI.dom.addClass(@DOM, @_class)

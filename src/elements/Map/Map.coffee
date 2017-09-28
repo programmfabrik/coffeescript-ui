@@ -4,17 +4,23 @@ class CUI.Map extends CUI.DOMElement
 
 	@defaults =
 		google_api:
-			key: "google-api-key-here",
+			key: null # "google-api-key-here",
 			language: "en"
 
 	initOpts: ->
 		super()
 		@addOpts
 			center:
-				check: "PlainObject"
+				check:
+					lat:
+						check: (v) =>
+							v >= 0
+					lng:
+
 				default:
 					lat: 0
 					lng: 0
+
 			zoom:
 				check: "Integer"
 				default: 10
@@ -38,6 +44,8 @@ class CUI.Map extends CUI.DOMElement
 			CUI.Map.googleMapsPromise = googleMapsApi(CUI.Map.defaults.google_api)
 
 		@__init()
+		@__mapDefered = new CUI.Deferred()
+		@__mapDeferredPromise = @__mapDeferred.promise()
 
 
 	__init: () ->
@@ -53,7 +61,12 @@ class CUI.Map extends CUI.DOMElement
 					@map.setZoom(@_zoom)
 					@setSelectedMarkerPosition(event.latLng)
 				)
+
+			@__mapDefered.resolve(@map)
 		)
+
+	getMap: ->
+		@__mapDeferredPromise
 
 	addMarkers: (markers) ->
 		CUI.Map.googleMapsPromise.then(() =>
@@ -92,7 +105,12 @@ class CUI.Map extends CUI.DOMElement
 			marker.setMap(@map)
 
 	__addMarker: (marker) ->
+		marker.map = @__map
 		options = @__getMarkerOptions(marker)
+
+
+
+
 		marker = new google.maps.Marker(options)
 
 		@_markers.push(marker)
@@ -104,7 +122,34 @@ class CUI.Map extends CUI.DOMElement
 
 		marker
 
+	getMap: ->
+
+
+	@getInfoWindow: (content) ->
+			div = CUI.dom.div()
+			CUI.dom.append(div, marker.content)
+
+
 	__getMarkerOptions: (marker) ->
+
+		options = {}
+
+		for k, v of marker
+			if not k.startWith("cui_")
+				options[k] = v
+				continue
+
+			switch k
+				when "cui_content"
+					options.infoWindow = @getInfoWindow(v)
+				else
+					assert(false, "CUI.Map", "Unknown option"
+
+		options
+
+
+
+
 		options = {
 			position: marker.location
 			draggable: marker.draggable
@@ -115,9 +160,17 @@ class CUI.Map extends CUI.DOMElement
 		if marker.icon
 			options.icon = marker.icon
 
-		if marker.htmlContent
-			options.infoWindow = new google.maps.InfoWindow(
-				content: marker.htmlContent
+		if marker.cui_content
+
 			)
 
 		options
+
+CUI.ready =>
+	if not CUI.Map.google_api.key
+		return
+
+	dfr = new CUI.Deferred()
+	googleMapsApi(CUI.Map.defaults.google_api)
+
+
