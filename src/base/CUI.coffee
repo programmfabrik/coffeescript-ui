@@ -76,10 +76,8 @@ class CUI
 		CUI.Template.loadText(icons)
 		CUI.Template.load()
 
-		@chainedCall.apply(@, @__readyFuncs)
-		.always =>
+		@chainedCall.apply(@, @__readyFuncs).always =>
 			@__ready = true
-
 		@
 
 	@getPathToScript: ->
@@ -95,8 +93,6 @@ class CUI
 
 
 	@ready: (func) ->
-		CUI.util.assert(func instanceof Function, "CUI.ready"," ...."
-
 		if @__ready
 			return func.call(@)
 
