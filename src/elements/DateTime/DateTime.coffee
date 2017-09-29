@@ -898,6 +898,11 @@ class CUI.DateTime extends CUI.Input
 
 	drawYearMonthsSelect: (mom) ->
 
+		year = null
+
+		updateCalendar = =>
+			@updateCalendar(mom.year(year))
+
 		data =
 			month: mom.month()
 			year: mom.year()
@@ -987,7 +992,7 @@ class CUI.DateTime extends CUI.Input
 									year = now_year
 								else
 									year = data.year
-								@updateCalendar(mom.year(year))
+								CUI.scheduleCallback(ms: 500, call: updateCalendar)
 						).start()
 					,
 						appearance: if CUI.__ng__ then undefined else "flat"
