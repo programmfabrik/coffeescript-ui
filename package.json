@@ -47,6 +47,7 @@
     "through2": "^0.6.5",
     "html-loader": "^0.5.1",
     "less": "^2.7.2",
+    "load-google-maps-api": "^1.0.0",
     "marked": "^0.3.6",
     "moment": "^2.18.1",
     "node-sass": "^4.5.3",
