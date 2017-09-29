@@ -34753,7 +34753,13 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.drawYearMonthsSelect = function(mom) {
-    var data, header_year_month, i, idx, len, m, month_opts, now_year, ref;
+    var data, header_year_month, i, idx, len, m, month_opts, now_year, ref, updateCalendar, year;
+    year = null;
+    updateCalendar = (function(_this) {
+      return function() {
+        return _this.updateCalendar(mom.year(year));
+      };
+    })(this);
     data = {
       month: mom.month(),
       year: mom.year()
@@ -34838,13 +34844,15 @@ CUI.DateTime = (function(superClass) {
               group: CUI.__ng__ ? "year" : null,
               onDataChanged: (function(_this) {
                 return function(data) {
-                  var year;
                   if (CUI.util.isEmpty(data.year)) {
                     year = now_year;
                   } else {
                     year = data.year;
                   }
-                  return _this.updateCalendar(mom.year(year));
+                  return CUI.scheduleCallback({
+                    ms: 500,
+                    call: updateCalendar
+                  });
                 };
               })(this)
             }).start(), {
