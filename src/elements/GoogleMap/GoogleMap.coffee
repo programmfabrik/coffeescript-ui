@@ -40,6 +40,7 @@ class CUI.GoogleMap extends CUI.DOMElement
 		@registerDOMElement(CUI.dom.div())
 		@addClass("cui-google-map")
 
+	init: ->
 		@__map = new google.maps.Map(@DOM, {
 			zoom: @_zoom
 			center: @_center
