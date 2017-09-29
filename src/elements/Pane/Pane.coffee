@@ -53,8 +53,9 @@ class CUI.Pane extends CUI.VerticalLayout
 		else
 			end_fill_screen = =>
 				#CUI.debug "Stopping", event
-				@__placeholder.before(@DOM)
-				@__placeholder.remove()
+				CUI.dom.insertBefore(@__placeholder, @DOM)
+				CUI.dom.remove(@__placeholder)
+
 				@__fillscreenTmpl.destroy()
 				delete(@__fillscreenTmpl)
 				CUI.Events.trigger
@@ -176,7 +177,6 @@ class CUI.Pane extends CUI.VerticalLayout
 			@endFillScreen()
 		else
 			@startFillScreen()
-
 
 	# creates a button that can be used in paneheader (or somewhere else) to toggle fillscreen
 	@getToggleFillScreenButton: (opts={}) ->

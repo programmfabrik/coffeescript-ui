@@ -686,9 +686,9 @@ class CUI.DateTime extends CUI.Input
 	updateCalendar: (mom, update_current_moment = true) ->
 		CUI.dom.empty(@__calendar)
 
-		@__calendar.append(@getDateTimeDrawer(mom))
-		@__calendar.append(@drawMonthTable(mom))
-		@__calendar.append(@drawYearMonthsSelect(mom))
+		CUI.dom.append(@__calendar, @getDateTimeDrawer(mom))
+		CUI.dom.append(@__calendar, @drawMonthTable(mom))
+		CUI.dom.append(@__calendar, @drawYearMonthsSelect(mom))
 
 		if update_current_moment
 			@__current_moment = mom.clone()

@@ -29,6 +29,15 @@ class CUI.Modal extends CUI.LayerPane
 
 		@getPane().addClass("cui-pane--window")
 
+		if @_onToggleFillScreen
+			Events.listen
+				type: ["start-fill-screen", "end-fill-screen"]
+				node: @getPane()
+				call: (ev) =>
+					@_onToggleFillScreen.call(@, ev, @)
+
+		return
+
 	initOpts: ->
 		super()
 		@mergeOpt "backdrop",
@@ -133,4 +142,3 @@ class CUI.Modal extends CUI.LayerPane
 	hide: (ev) ->
 		@getPane().endFillScreen(false) # no transition
 		super(ev)
-
