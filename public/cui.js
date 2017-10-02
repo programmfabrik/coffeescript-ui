@@ -51119,6 +51119,7 @@ CUI.Tab = (function(superClass) {
       radio: "tabs--" + tabs.getUniqueId(),
       "class": "cui-tab-header-button",
       disabled: this._disabled,
+      qa: this._qa,
       id: this._button_id,
       size: "normal",
       group: "tabs",

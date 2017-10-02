@@ -42,6 +42,7 @@ class CUI.Tab extends CUI.DOMElement
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
 			disabled: @_disabled
+			qa: @_qa
 			id: @_button_id
 			size: "normal"
 			group: "tabs"
