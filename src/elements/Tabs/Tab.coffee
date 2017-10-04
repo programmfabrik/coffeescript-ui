@@ -42,7 +42,7 @@ class CUI.Tab extends CUI.DOMElement
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
 			disabled: @_disabled
-			qa: @_button_qa
+			qa: @_qa + "-button"
 			id: @_button_id
 			size: "normal"
 			group: "tabs"
@@ -79,8 +79,6 @@ class CUI.Tab extends CUI.DOMElement
 			name:
 				check: String
 			button_id:
-				check: String
-			button_qa:
 				check: String
 			text:
 				mandatory: true
