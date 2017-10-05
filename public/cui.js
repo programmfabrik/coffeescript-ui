@@ -39414,6 +39414,7 @@ CUI.GoogleMap = (function(superClass) {
     GoogleMap.__super__.constructor.call(this, this.opts);
     this.registerDOMElement(CUI.dom.div());
     this.addClass("cui-google-map");
+    this.__listeners = [];
   }
 
   GoogleMap.prototype.init = function() {
@@ -39422,13 +39423,13 @@ CUI.GoogleMap = (function(superClass) {
       center: this._center
     });
     if (this._clickable) {
-      return this.__map.addListener('click', (function(_this) {
+      return this.__listeners.push(this.__map.addListener('click', (function(_this) {
         return function(event) {
           _this.__map.setCenter(event.latLng);
           _this.__map.setZoom(_this._zoom);
           return _this.setSelectedMarkerPosition(event.latLng);
         };
-      })(this));
+      })(this)));
     }
   };
 
@@ -39456,12 +39457,12 @@ CUI.GoogleMap = (function(superClass) {
         draggable: this._clickable,
         label: this._selectedMarkerLabel
       });
-      this.__selectedMarker.addListener('dragend', (function(_this) {
+      this.__listeners.push(this.__selectedMarker.addListener('dragend', (function(_this) {
         return function(event) {
           _this.__map.setCenter(event.latLng);
           return typeof _this._onMarkerSelected === "function" ? _this._onMarkerSelected(_this.getSelectedMarkerPosition()) : void 0;
         };
-      })(this));
+      })(this)));
     }
     return typeof this._onMarkerSelected === "function" ? this._onMarkerSelected(this.getSelectedMarkerPosition()) : void 0;
   };
@@ -39488,6 +39489,26 @@ CUI.GoogleMap = (function(superClass) {
     return results;
   };
 
+  GoogleMap.prototype.destroy = function() {
+    var i, j, len, len1, listener, marker, ref, ref1;
+    ref = this.__listeners;
+    for (i = 0, len = ref.length; i < len; i++) {
+      listener = ref[i];
+      listener.remove();
+    }
+    ref1 = this._markers;
+    for (j = 0, len1 = ref1.length; j < len1; j++) {
+      marker = ref1[j];
+      marker.setMap(null);
+    }
+    delete this._markers;
+    delete this.__listeners;
+    delete this.__map;
+    delete this.__selectedMarker;
+    CUI.dom.remove(this.DOM);
+    return this.__destroyed = true;
+  };
+
   GoogleMap.prototype.__addMarker = function(marker) {
     var options;
     options = this.__getMarkerOptions(marker);
@@ -39495,11 +39516,11 @@ CUI.GoogleMap = (function(superClass) {
     marker.setMap(this.__map);
     this._markers.push(marker);
     if (marker.infoWindow) {
-      marker.addListener('click', (function(_this) {
+      this.__listeners.push(marker.addListener('click', (function(_this) {
         return function() {
           return marker.infoWindow.open(_this.__map, marker);
         };
-      })(this));
+      })(this)));
     }
     return marker;
   };

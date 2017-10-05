@@ -39,6 +39,7 @@ class CUI.GoogleMap extends CUI.DOMElement
 		super(@opts)
 		@registerDOMElement(CUI.dom.div())
 		@addClass("cui-google-map")
+		@__listeners = []
 
 	init: ->
 		@__map = new google.maps.Map(@DOM, {
@@ -47,11 +48,11 @@ class CUI.GoogleMap extends CUI.DOMElement
 		})
 
 		if @_clickable
-			@__map.addListener('click', (event) =>
+			@__listeners.push(@__map.addListener('click', (event) =>
 				@__map.setCenter(event.latLng)
 				@__map.setZoom(@_zoom)
 				@setSelectedMarkerPosition(event.latLng)
-			)
+			))
 
 	addMarkers: (markers) ->
 		for marker in markers
@@ -70,10 +71,10 @@ class CUI.GoogleMap extends CUI.DOMElement
 				label: @_selectedMarkerLabel
 			)
 
-			@__selectedMarker.addListener('dragend', (event) =>
+			@__listeners.push(@__selectedMarker.addListener('dragend', (event) =>
 				@__map.setCenter(event.latLng)
 				@_onMarkerSelected?(@getSelectedMarkerPosition())
-			)
+			))
 
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
@@ -85,6 +86,21 @@ class CUI.GoogleMap extends CUI.DOMElement
 		for marker in @_markers
 			marker.setMap(@__map)
 
+	destroy: ->
+		for listener in @__listeners
+			listener.remove()
+
+		for marker in @_markers
+			marker.setMap(null)
+
+		delete @_markers
+		delete @__listeners
+		delete @__map
+		delete @__selectedMarker
+		CUI.dom.remove(@DOM)
+
+		@__destroyed = true
+
 	__addMarker: (marker) ->
 		options = @__getMarkerOptions(marker)
 
@@ -94,9 +110,9 @@ class CUI.GoogleMap extends CUI.DOMElement
 		@_markers.push(marker)
 
 		if marker.infoWindow
-			marker.addListener('click', =>
+			@__listeners.push(marker.addListener('click', =>
 				marker.infoWindow.open(@__map, marker)
-			)
+			))
 
 		marker
 
