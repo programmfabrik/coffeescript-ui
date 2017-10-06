@@ -47903,8 +47903,9 @@ CUI.ObjectDumper = (function(superClass) {
     this._colClasses = ["cui-object-dumper-key", "cui-object-dumper-value"];
     if (this._headers) {
       this._colResize = true;
-      return this._fixedRows = 1;
+      this._fixedRows = 1;
     }
+    return this._no_hierarchy = this.__hasOnlyPlainValues(this._object);
   };
 
   ObjectDumper.prototype.initListView = function() {
@@ -47914,6 +47915,17 @@ CUI.ObjectDumper = (function(superClass) {
       do_open: this._do_open,
       parse_json: this._parse_json
     });
+  };
+
+  ObjectDumper.prototype.__hasOnlyPlainValues = function(object) {
+    var key, value;
+    for (key in object) {
+      value = object[key];
+      if (CUI.isPlainObject(value) || CUI.isArray(value)) {
+        return false;
+      }
+    }
+    return true;
   };
 
   return ObjectDumper;

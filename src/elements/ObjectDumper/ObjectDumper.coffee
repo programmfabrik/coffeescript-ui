@@ -57,6 +57,14 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 			@_colResize = true
 			@_fixedRows = 1
 
+		@_no_hierarchy = @__hasOnlyPlainValues(@_object)
+
 	initListView: ->
 		super()
 		@root = new CUI.ObjectDumperNode(data: @_object, do_open: @_do_open, parse_json: @_parse_json)
+
+	__hasOnlyPlainValues: (object) ->
+		for key, value of object
+			if CUI.isPlainObject(value) or CUI.isArray(value)
+				return false
+		return true
