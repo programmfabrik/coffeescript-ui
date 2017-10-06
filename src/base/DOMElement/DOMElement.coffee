@@ -1,5 +1,8 @@
 class CUI.DOMElement extends CUI.Element
 
+	@defaults:
+		qa: false
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -40,7 +43,7 @@ class CUI.DOMElement extends CUI.Element
 		if @_class
 			CUI.dom.addClass(@DOM, @_class)
 
-		if @_qa
+		if @_qa and CUI.DOMElement.defaults.qa
 			CUI.dom.setAttribute(@DOM, 'data-qa', @_qa)
 
 		@setElement()

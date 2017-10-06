@@ -18573,6 +18573,10 @@ CUI.DOMElement = (function(superClass) {
     return DOMElement.__super__.constructor.apply(this, arguments);
   }
 
+  DOMElement.defaults = {
+    qa: false
+  };
+
   DOMElement.prototype.initOpts = function() {
     DOMElement.__super__.initOpts.call(this);
     return this.addOpts({
@@ -18631,7 +18635,7 @@ CUI.DOMElement = (function(superClass) {
     if (this._class) {
       CUI.dom.addClass(this.DOM, this._class);
     }
-    if (this._qa) {
+    if (this._qa && CUI.DOMElement.defaults.qa) {
       CUI.dom.setAttribute(this.DOM, 'data-qa', this._qa);
     }
     this.setElement();
