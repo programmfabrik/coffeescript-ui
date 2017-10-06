@@ -77,6 +77,10 @@ class CUI.DataTableNode extends CUI.ListViewRow
 	getData: ->
 		@__data
 
+	reload: ->
+		for df in @__fields
+			df.reload()
+
 	addedToListView: ->
 		for df in @__fields
 			df.start()
