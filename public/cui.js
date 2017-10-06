@@ -33684,6 +33684,17 @@ CUI.DataTableNode = (function(superClass) {
     return this.__data;
   };
 
+  DataTableNode.prototype.reload = function() {
+    var df, i, len, ref, results;
+    ref = this.__fields;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      df = ref[i];
+      results.push(df.reload());
+    }
+    return results;
+  };
+
   DataTableNode.prototype.addedToListView = function() {
     var df, i, len, ref;
     ref = this.__fields;
