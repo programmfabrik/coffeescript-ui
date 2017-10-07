@@ -5,14 +5,31 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+# this is like when, only that it not stops on failure
+CUI.whenAll = =>
+	args = [false]
+	args.push.apply(args, arguments)
+	CUI.__when.apply(@, args)
+
 CUI.when = =>
+	args = [true]
+	args.push.apply(args, arguments)
+	CUI.__when.apply(@, args)
+
+CUI.__when = =>
 	promises = []
 	add_promise = (promise, idx) =>
 		CUI.util.assert(CUI.util.isPromise(promise) or CUI.util.isDeferred(promise), "CUI.when", "arg[#{idx}] needs to be instanceof CUI.Promise or CUI.Deferred.", arg: promise)
 		promises.push(promise)
 		return
 
+	stop_on_failure = null
+
 	for arg, idx in arguments
+		if idx == 0
+			stop_on_failure = arg
+			continue
+
 		if arg instanceof Array
 			for _arg,_idx in arg
 				add_promise(_arg, idx+"["+_idx+"]")
@@ -23,36 +40,49 @@ CUI.when = =>
 		return CUI.resolvedPromise()
 
 	dfr = new CUI.Deferred()
-	done_values = []
-	done_count = 0
+	finished_values = []
+	finished_count = 0
+
+	if stop_on_failure
+		finished_func = 'done'
+	else
+		finished_func = 'always'
 
 	for promise, idx in promises
-		do (idx) =>
-			promise.done =>
+		do (promise, idx) =>
+			promise[finished_func] =>
 				# console.error "CUI.when, resolve...", dfr.getUniqueId(), done_count, promises.length
 				# CUI.debug "promise done", done_count, promises.length
-				done_count++
-				switch arguments.length
-					when 0
-						done_values[idx] = undefined
-					when 1
-						done_values[idx] = arguments[0]
+				finished_count++
+
+				if stop_on_failure and arguments.length <= 1
+					switch arguments.length
+						when 0
+							finished_values[idx] = undefined
+						when 1
+							finished_values[idx] = arguments[0]
+				else
+					args = []
+					for arg in arguments
+						args.push(arg)
+
+					if stop_on_failure
+						finished_values[idx] = args
 					else
-						done_values[idx] = []
-						for arg in arguments
-							done_values[idx].push(arg)
+						finished_values[idx] = state: promise.state(), args: args
 
-				if done_count == promises.length
-					# all done
-					dfr.resolve.apply(dfr, done_values)
+				if finished_count == promises.length
+					# all finished
+					dfr.resolve.apply(dfr, finished_values)
 				return
 
-			promise.fail =>
-				# console.error "CUI.when, reject...", dfr.getUniqueId()
-				if dfr.state() != "rejected"
-					# pass this through
-					dfr.reject.apply(dfr, arguments)
-				return
+			if stop_on_failure
+				promise.fail =>
+					# console.error "CUI.when, reject...", dfr.getUniqueId()
+					if dfr.state() != "rejected"
+						# pass this through
+						dfr.reject.apply(dfr, arguments)
+					return
 
 			promise.progress =>
 				if dfr.state() == "pending"
