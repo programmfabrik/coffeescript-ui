@@ -19919,9 +19919,27 @@ CUI.decide = (function(_this) {
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
  */
+CUI.whenAll = (function(_this) {
+  return function() {
+    var args;
+    args = [false];
+    args.push.apply(args, arguments);
+    return CUI.__when.apply(_this, args);
+  };
+})(this);
+
 CUI.when = (function(_this) {
   return function() {
-    var _arg, _idx, add_promise, arg, dfr, done_count, done_values, fn, i, idx, j, k, len, len1, len2, promise, promises;
+    var args;
+    args = [true];
+    args.push.apply(args, arguments);
+    return CUI.__when.apply(_this, args);
+  };
+})(this);
+
+CUI.__when = (function(_this) {
+  return function() {
+    var _arg, _idx, add_promise, arg, dfr, finished_count, finished_func, finished_values, fn, i, idx, j, k, len, len1, len2, promise, promises, stop_on_failure;
     promises = [];
     add_promise = function(promise, idx) {
       CUI.util.assert(CUI.util.isPromise(promise) || CUI.util.isDeferred(promise), "CUI.when", "arg[" + idx + "] needs to be instanceof CUI.Promise or CUI.Deferred.", {
@@ -19929,8 +19947,13 @@ CUI.when = (function(_this) {
       });
       promises.push(promise);
     };
+    stop_on_failure = null;
     for (idx = i = 0, len = arguments.length; i < len; idx = ++i) {
       arg = arguments[idx];
+      if (idx === 0) {
+        stop_on_failure = arg;
+        continue;
+      }
       if (arg instanceof Array) {
         for (_idx = j = 0, len1 = arg.length; j < len1; _idx = ++j) {
           _arg = arg[_idx];
@@ -19944,35 +19967,51 @@ CUI.when = (function(_this) {
       return CUI.resolvedPromise();
     }
     dfr = new CUI.Deferred();
-    done_values = [];
-    done_count = 0;
-    fn = function(idx) {
-      promise.done(function() {
-        var l, len3;
-        done_count++;
-        switch (arguments.length) {
-          case 0:
-            done_values[idx] = void 0;
-            break;
-          case 1:
-            done_values[idx] = arguments[0];
-            break;
-          default:
-            done_values[idx] = [];
-            for (l = 0, len3 = arguments.length; l < len3; l++) {
-              arg = arguments[l];
-              done_values[idx].push(arg);
-            }
+    finished_values = [];
+    finished_count = 0;
+    if (stop_on_failure) {
+      finished_func = 'done';
+    } else {
+      finished_func = 'always';
+    }
+    fn = function(promise, idx) {
+      promise[finished_func](function() {
+        var args, l, len3;
+        finished_count++;
+        if (stop_on_failure && arguments.length <= 1) {
+          switch (arguments.length) {
+            case 0:
+              finished_values[idx] = void 0;
+              break;
+            case 1:
+              finished_values[idx] = arguments[0];
+          }
+        } else {
+          args = [];
+          for (l = 0, len3 = arguments.length; l < len3; l++) {
+            arg = arguments[l];
+            args.push(arg);
+          }
+          if (stop_on_failure) {
+            finished_values[idx] = args;
+          } else {
+            finished_values[idx] = {
+              state: promise.state(),
+              args: args
+            };
+          }
         }
-        if (done_count === promises.length) {
-          dfr.resolve.apply(dfr, done_values);
+        if (finished_count === promises.length) {
+          dfr.resolve.apply(dfr, finished_values);
         }
       });
-      promise.fail(function() {
-        if (dfr.state() !== "rejected") {
-          dfr.reject.apply(dfr, arguments);
-        }
-      });
+      if (stop_on_failure) {
+        promise.fail(function() {
+          if (dfr.state() !== "rejected") {
+            dfr.reject.apply(dfr, arguments);
+          }
+        });
+      }
       return promise.progress(function() {
         if (dfr.state() === "pending") {
           dfr.notify.apply(dfr, arguments);
@@ -19981,7 +20020,7 @@ CUI.when = (function(_this) {
     };
     for (idx = k = 0, len2 = promises.length; k < len2; idx = ++k) {
       promise = promises[idx];
-      fn(idx);
+      fn(promise, idx);
     }
     return dfr.promise();
   };
