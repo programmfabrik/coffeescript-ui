@@ -68,4 +68,4 @@ _It will generate a different filename depending in the options that were used (
 
 ## Documentation
 
-*Work in progress*
+https://programmfabrik.gitbooks.io/coffeescript-ui/
