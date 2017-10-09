@@ -5462,3 +5462,9 @@ label[data-label-clickable],
   width: 100%;
   height: 300px;
 }
+
+.cui-leaflet-map {
+	width: 100%;
+	height: 300px;
+	overflow: hidden!important;
+}
