@@ -31,14 +31,11 @@ class CUI.Map extends CUI.DOMElement
 	constructor: (@opts = {}) ->
 		super(@opts)
 		@registerDOMElement(CUI.dom.div())
-		@addClass(@getMapClass())
+		@addClass(@__getMapClassName())
 
-		@__map = @buildMap()
+		@__map = @__buildMap()
 		if @_clickable
-			@bindOnClickMapEvent()
-
-	getMapClass: ->
-		"cui-map"
+			@__bindOnClickMapEvent()
 
 	addMarkers: (markers) ->
 		for marker in markers
@@ -46,22 +43,10 @@ class CUI.Map extends CUI.DOMElement
 
 	addMarker: (marker) ->
 		options = @__getMarkerOptions(marker)
-		marker = @buildMarker(options)
+		marker = @__buildMarker(options)
 		@_markers.push(marker)
-		@addMarkerToMap(marker)
+		@__addMarkerToMap(marker)
 		marker
-
-	buildMap: ->
-		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".buildMap needs to be implemented.")
-
-	buildMarker: ->
-		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".buildMarker needs to be implemented.")
-
-	addMarkerToMap: ->
-		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".addMarkerToMap needs to be implemented.")
-
-	bindOnClickMapEvent: ->
-		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".addOnClickEvent needs to be implemented.")
 
 	getSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getSelectedMarkerPosition needs to be implemented.")
@@ -74,6 +59,21 @@ class CUI.Map extends CUI.DOMElement
 
 	showMarkers: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".showMarkers needs to be implemented.")
+
+	__addMarkerToMap: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__addMarkerToMap needs to be implemented.")
+
+	__getMapClassName: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__getMapClassName needs to be implemented.")
+
+	__buildMap: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__buildMap needs to be implemented.")
+
+	__buildMarker: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__buildMarker needs to be implemented.")
+
+	__bindOnClickMapEvent: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__bindOnClickMapEvent needs to be implemented.")
 
 	__addCustomOption: (options, key, value) ->
 		return false

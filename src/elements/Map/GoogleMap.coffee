@@ -11,10 +11,10 @@ class CUI.GoogleMap extends CUI.Map
 		@__listeners = []
 		super(@opts)
 
-	getMapClass: ->
+	__getMapClassName: ->
 		"cui-google-map"
 
-	buildMap: ->
+	__buildMap: ->
 		map = new google.maps.Map(@DOM,
 			zoom: @_zoom
 		)
@@ -26,17 +26,17 @@ class CUI.GoogleMap extends CUI.Map
 
 		map
 
-	bindOnClickMapEvent: ->
+	__bindOnClickMapEvent: ->
 		@__listeners.push(@__map.addListener('click', (event) =>
 			@__map.setCenter(event.latLng)
 			@__map.setZoom(@_zoom)
 			@setSelectedMarkerPosition(event.latLng)
 		))
 
-	buildMarker: (options) ->
+	__buildMarker: (options) ->
 		new google.maps.Marker(options)
 
-	addMarkerToMap: (marker) ->
+	__addMarkerToMap: (marker) ->
 		marker.setMap(@__map)
 
 		if marker.infoWindow

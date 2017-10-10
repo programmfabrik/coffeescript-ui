@@ -7,10 +7,10 @@ class CUI.LeafletMap extends CUI.Map
 		mapboxToken: "pk.eyJ1Ijoicm9tYW4tcHJvZ3JhbW1mYWJyaWsiLCJhIjoiY2o4azVmb2duMDhwNTJ4bzNsMG9iMDN5diJ9.SfqU1rxrf5to9-ggCM6V9g",
 		urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
 
-	getMapClass: ->
+	__getMapClassName: ->
 		"cui-leaflet-map"
 
-	buildMap: ->
+	__buildMap: ->
 		map = L.map(@DOM)
 
 		tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
@@ -26,13 +26,13 @@ class CUI.LeafletMap extends CUI.Map
 
 		map
 
-	buildMarker: (options) ->
+	__buildMarker: (options) ->
 		L.marker(options.position, options)
 
-	addMarkerToMap: (marker) ->
+	__addMarkerToMap: (marker) ->
 		marker.addTo(@__map);
 
-	bindOnClickMapEvent: ->
+	__bindOnClickMapEvent: ->
 		@__map.on('click', (event) =>
 			@__map.setView(event.latlng, @_zoom)
 			@setSelectedMarkerPosition(event.latlng)

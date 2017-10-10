@@ -46374,11 +46374,11 @@ CUI.GoogleMap = (function(superClass) {
     GoogleMap.__super__.constructor.call(this, this.opts);
   }
 
-  GoogleMap.prototype.getMapClass = function() {
+  GoogleMap.prototype.__getMapClassName = function() {
     return "cui-google-map";
   };
 
-  GoogleMap.prototype.buildMap = function() {
+  GoogleMap.prototype.__buildMap = function() {
     var map;
     map = new google.maps.Map(this.DOM, {
       zoom: this._zoom
@@ -46394,7 +46394,7 @@ CUI.GoogleMap = (function(superClass) {
     return map;
   };
 
-  GoogleMap.prototype.bindOnClickMapEvent = function() {
+  GoogleMap.prototype.__bindOnClickMapEvent = function() {
     return this.__listeners.push(this.__map.addListener('click', (function(_this) {
       return function(event) {
         _this.__map.setCenter(event.latLng);
@@ -46404,11 +46404,11 @@ CUI.GoogleMap = (function(superClass) {
     })(this)));
   };
 
-  GoogleMap.prototype.buildMarker = function(options) {
+  GoogleMap.prototype.__buildMarker = function(options) {
     return new google.maps.Marker(options);
   };
 
-  GoogleMap.prototype.addMarkerToMap = function(marker) {
+  GoogleMap.prototype.__addMarkerToMap = function(marker) {
     marker.setMap(this.__map);
     if (marker.infoWindow) {
       return this.__listeners.push(marker.addListener('click', (function(_this) {
@@ -46551,11 +46551,11 @@ CUI.LeafletMap = (function(superClass) {
     urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
   };
 
-  LeafletMap.prototype.getMapClass = function() {
+  LeafletMap.prototype.__getMapClassName = function() {
     return "cui-leaflet-map";
   };
 
-  LeafletMap.prototype.buildMap = function() {
+  LeafletMap.prototype.__buildMap = function() {
     var map, tileLayer;
     map = L.map(this.DOM);
     tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -46575,15 +46575,15 @@ CUI.LeafletMap = (function(superClass) {
     return map;
   };
 
-  LeafletMap.prototype.buildMarker = function(options) {
+  LeafletMap.prototype.__buildMarker = function(options) {
     return L.marker(options.position, options);
   };
 
-  LeafletMap.prototype.addMarkerToMap = function(marker) {
+  LeafletMap.prototype.__addMarkerToMap = function(marker) {
     return marker.addTo(this.__map);
   };
 
-  LeafletMap.prototype.bindOnClickMapEvent = function() {
+  LeafletMap.prototype.__bindOnClickMapEvent = function() {
     return this.__map.on('click', (function(_this) {
       return function(event) {
         _this.__map.setView(event.latlng, _this._zoom);
@@ -46703,16 +46703,12 @@ CUI.Map = (function(superClass) {
     this.opts = opts != null ? opts : {};
     Map.__super__.constructor.call(this, this.opts);
     this.registerDOMElement(CUI.dom.div());
-    this.addClass(this.getMapClass());
-    this.__map = this.buildMap();
+    this.addClass(this.__getMapClassName());
+    this.__map = this.__buildMap();
     if (this._clickable) {
-      this.bindOnClickMapEvent();
+      this.__bindOnClickMapEvent();
     }
   }
-
-  Map.prototype.getMapClass = function() {
-    return "cui-map";
-  };
 
   Map.prototype.addMarkers = function(markers) {
     var i, len, marker, results;
@@ -46727,26 +46723,10 @@ CUI.Map = (function(superClass) {
   Map.prototype.addMarker = function(marker) {
     var options;
     options = this.__getMarkerOptions(marker);
-    marker = this.buildMarker(options);
+    marker = this.__buildMarker(options);
     this._markers.push(marker);
-    this.addMarkerToMap(marker);
+    this.__addMarkerToMap(marker);
     return marker;
-  };
-
-  Map.prototype.buildMap = function() {
-    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".buildMap needs to be implemented.");
-  };
-
-  Map.prototype.buildMarker = function() {
-    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".buildMarker needs to be implemented.");
-  };
-
-  Map.prototype.addMarkerToMap = function() {
-    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".addMarkerToMap needs to be implemented.");
-  };
-
-  Map.prototype.bindOnClickMapEvent = function() {
-    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".addOnClickEvent needs to be implemented.");
   };
 
   Map.prototype.getSelectedMarkerPosition = function() {
@@ -46763,6 +46743,26 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.showMarkers = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".showMarkers needs to be implemented.");
+  };
+
+  Map.prototype.__addMarkerToMap = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__addMarkerToMap needs to be implemented.");
+  };
+
+  Map.prototype.__getMapClassName = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__getMapClassName needs to be implemented.");
+  };
+
+  Map.prototype.__buildMap = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__buildMap needs to be implemented.");
+  };
+
+  Map.prototype.__buildMarker = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__buildMarker needs to be implemented.");
+  };
+
+  Map.prototype.__bindOnClickMapEvent = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__bindOnClickMapEvent needs to be implemented.");
   };
 
   Map.prototype.__addCustomOption = function(options, key, value) {
