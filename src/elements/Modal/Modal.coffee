@@ -66,6 +66,12 @@ class CUI.Modal extends CUI.LayerPane
 		@mergeOpt "placement",
 			default: "c"
 
+	readOpts: ->
+		if @opts.cancel and CUI.isPlainObject(@opts.pane)
+			@opts.pane.force_header = true
+
+		super()
+
 	__addHeaderButton: (pname, _btn) ->
 		if not @["_#{pname}"]
 			return
