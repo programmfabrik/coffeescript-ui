@@ -2700,6 +2700,8 @@ a[role="button"].cui-button-appearance-link {
       flex-grow: 1;
       width: auto;
       display: block; }
+  .cui-table .cui-input input:not([data-max-chars]) {
+    width: 100%; }
 
 .cui-table-row:nth-child(even) .cui-table-td {
   background: rgba(30, 54, 72, 0.04); }

@@ -3732,6 +3732,10 @@ a[role="button"].cui-button-appearance-link {
 			display: block;
 		}
 	}
+
+	.cui-input input:not([data-max-chars]) {
+		width: 100%;
+	}
 }
 
 .cui-table-row {
