@@ -47376,6 +47376,13 @@ CUI.Modal = (function(superClass) {
     });
   };
 
+  Modal.prototype.readOpts = function() {
+    if (this.opts.cancel && CUI.isPlainObject(this.opts.pane)) {
+      this.opts.pane.force_header = true;
+    }
+    return Modal.__super__.readOpts.call(this);
+  };
+
   Modal.prototype.__addHeaderButton = function(pname, _btn) {
     var btn;
     if (!this["_" + pname]) {
@@ -51657,10 +51664,15 @@ CUI.Tabs = (function(superClass) {
         }
       },
       active_idx: {
-        check: "Integer"
+        check: 'Integer'
       },
       appearance: {
-        check: ["normal", "mini"]
+        check: ['normal', 'mini']
+      },
+      orientation: {
+        check: ['vertical', 'horizontal'],
+        mandatory: true,
+        "default": 'horizontal'
       }
     });
   };
@@ -51723,9 +51735,10 @@ CUI.Tabs = (function(superClass) {
       name: "tabs-bodies"
     });
     CUI.dom.addClass(this.__pane_header.DOM, "cui-tabs-pane-header");
-    if (this._appearance === "mini") {
+    if (this._appearance === 'mini') {
       CUI.dom.addClass(this.__pane_header.DOM, "cui-tabs-pane-header--mini");
     }
+    this.addClass('cui-tabs--' + this._orientation);
     this.__buttonbar = new CUI.Buttonbar();
     pane_key = "center";
     this.__pane_header.append(this.__buttonbar, pane_key);
