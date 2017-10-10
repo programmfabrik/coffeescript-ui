@@ -788,7 +788,7 @@ class CUI.Input extends CUI.DataFieldInput
 		return
 
 	__removeContentSize: ->
-		@__contentSize?.remove()
+		CUI.dom.remove(@__contentSize)
 		@__contentSize = null
 		@
 
@@ -796,7 +796,7 @@ class CUI.Input extends CUI.DataFieldInput
 		# CUI.error "removeShadowInput", @getUniqueId()
 		@__removeContentSize()
 
-		@__shadow?.remove()
+		CUI.dom.remove(@__shadow)
 		@__shadow = null
 		@__shadow_focused = false
 		@

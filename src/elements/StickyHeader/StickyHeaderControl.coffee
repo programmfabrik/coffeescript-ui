@@ -100,7 +100,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 		CUI.Events.ignore
 			instance: @
 
-		@__control.remove()
+		CUI.dom.remove(@__control)
 		@__headers = null
 		@newStickyHeaders = null
 

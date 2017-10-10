@@ -955,9 +955,9 @@ class CUI.Layer extends CUI.DOMElement
 		return @
 
 	__removeDebugDivs: ->
-		@__dbg_div1?.remove()
-		@__dbg_div2?.remove()
-		@__dbg_div3?.remove()
+		CUI.dom.remove(@__dbg_div1)
+		CUI.dom.remove(@__dbg_div2)
+		CUI.dom.remove(@__dbg_div3)
 		@__dbg_div1 = null
 		@__dbg_div2 = null
 		@__dbg_div3 = null

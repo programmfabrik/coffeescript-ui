@@ -157,7 +157,7 @@ class CUI.Lasso extends CUI.Draggable
 
 	cleanup_drag: (ev) ->
 		super(ev)
-		CUI.globalDrag.lasso.remove()
+		CUI.dom.remove(CUI.globalDrag.lasso)
 
 	end_drag: (ev) ->
 		@_selected(ev, CUI.globalDrag)
