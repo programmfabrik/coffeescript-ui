@@ -46,7 +46,8 @@ class CUI.GoogleMap extends CUI.Map
 
 	getSelectedMarkerPosition: ->
 		position = @__selectedMarker?.getPosition()
-		lat: position.lat(), lng: position.lng()
+		if position
+			lat: position.lat(), lng: position.lng()
 
 	setSelectedMarkerPosition: (position) ->
 		if @__selectedMarker

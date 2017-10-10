@@ -46422,10 +46422,12 @@ CUI.GoogleMap = (function(superClass) {
   GoogleMap.prototype.getSelectedMarkerPosition = function() {
     var position, ref;
     position = (ref = this.__selectedMarker) != null ? ref.getPosition() : void 0;
-    return {
-      lat: position.lat(),
-      lng: position.lng()
-    };
+    if (position) {
+      return {
+        lat: position.lat(),
+        lng: position.lng()
+      };
+    }
   };
 
   GoogleMap.prototype.setSelectedMarkerPosition = function(position) {
