@@ -42770,14 +42770,14 @@ CUI.ListView = (function(superClass) {
       fixed_i: this.fixedRowsCount
     });
     if (after) {
-      func = "after";
+      func = CUI.dom.insertAfter;
     } else {
-      func = "before";
+      func = CUI.dom.insertBefore;
     }
     ref = this.getRow(from_i);
     for (idx = j = 0, len1 = ref.length; j < len1; idx = ++j) {
       row = ref[idx];
-      this.getRow(to_i)[idx][func](row);
+      func(this.getRow(to_i)[idx], row);
     }
     display_from_i = this.getDisplayRowIdx(from_i);
     display_to_i = this.getDisplayRowIdx(to_i);
@@ -43526,7 +43526,7 @@ CUI.ListView = (function(superClass) {
         }
         this.__colspanRows[row_i][col_i + colspan_offset] = colspan;
         for (i = l = 1, ref1 = colspan; 1 <= ref1 ? l < ref1 : l > ref1; i = 1 <= ref1 ? ++l : --l) {
-          this.__cells[row_i][col_i + colspan_offset + 1].remove();
+          CUI.dom.remove(this.__cells[row_i][col_i + colspan_offset + 1]);
           delete this.__cells[row_i][col_i + colspan_offset + 1];
           colspan_offset++;
         }
