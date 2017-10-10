@@ -29,9 +29,13 @@ class CUI.Tabs extends CUI.SimplePane
 			#	default: false
 			#	check: Boolean
 			active_idx:
-				check: "Integer"
+				check: 'Integer'
 			appearance:
-				check: ["normal", "mini"]
+				check: ['normal', 'mini']
+			orientation:
+				check: ['vertical', 'horizontal']
+				mandatory: true
+				default: 'horizontal'
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
@@ -85,8 +89,10 @@ class CUI.Tabs extends CUI.SimplePane
 
 		CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header")
 
-		if @_appearance == "mini"
+		if @_appearance == 'mini'
 			CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
+
+		@addClass('cui-tabs--'+@_orientation)
 
 		@__buttonbar = new CUI.Buttonbar()
 
