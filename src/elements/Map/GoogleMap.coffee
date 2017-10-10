@@ -8,6 +8,7 @@ class CUI.GoogleMap extends CUI.Map
 			language: "en"
 
 	constructor: (@opts = {}) ->
+		CUI.util.assert(CUI.GoogleMap.defaults.google_api.key, "It's necessary to add a google maps api key in order to use CUI.GoogleMap")
 		@__listeners = []
 		super(@opts)
 
