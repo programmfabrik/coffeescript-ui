@@ -202,7 +202,7 @@ class CUI.Layout extends CUI.DOMElement
 					@__layout.getFlexHandle(pn).destroy()
 			else
 				# CUI.debug(CUI.util.getObjectClass(@), "removing uninitialized pane", pn, @)
-				@__layout.map[pn].remove()
+				CUI.dom.remove(@__layout.map[pn])
 				if has_flex_handles
 					@__layout.getFlexHandle(pn).destroy()
 

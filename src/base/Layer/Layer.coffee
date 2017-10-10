@@ -911,7 +911,7 @@ class CUI.Layer extends CUI.DOMElement
 			# DOM detach the DIV and put it back in.
 
 			sibl = @__layer_root.DOM.previousElementSibling
-			@__layer_root.DOM.remove()
+			CUI.dom.remove(@__layer_root)
 
 
 		CUI.dom.setStyle(@__layer.DOM, set_css)
@@ -1187,7 +1187,7 @@ class CUI.Layer extends CUI.DOMElement
 		@__layer = null
 		@__layer_root = null
 
-		@__pointer?.remove()
+		CUI.dom.remove(@__pointer)
 		@__pointer = null
 
 		@__backdrop?.destroy()

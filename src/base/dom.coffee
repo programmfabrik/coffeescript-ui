@@ -533,7 +533,7 @@ class CUI.dom
 
 		CUI.Events.ignore(instance: node.__clone)
 		node.style.opacity = ""
-		node.__clone.remove()
+		CUI.dom.remove(node.__clone)
 		delete(node.__clone)
 		node
 

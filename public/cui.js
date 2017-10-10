@@ -25721,7 +25721,7 @@ CUI.Layer = (function(superClass) {
       set_css.width = Math.ceil(vp.layer_pos.width);
       set_css.height = Math.ceil(vp.layer_pos.height);
       sibl = this.__layer_root.DOM.previousElementSibling;
-      this.__layer_root.DOM.remove();
+      CUI.dom.remove(this.__layer_root);
     }
     CUI.dom.setStyle(this.__layer.DOM, set_css);
     if (this.__pointer) {
@@ -26025,7 +26025,7 @@ CUI.Layer = (function(superClass) {
   };
 
   Layer.prototype.destroy = function() {
-    var ref, ref1, ref2, ref3;
+    var ref, ref1, ref2;
     this.clearTimeout();
     if (this.__shown) {
       this.hide();
@@ -26039,12 +26039,10 @@ CUI.Layer = (function(superClass) {
     }
     this.__layer = null;
     this.__layer_root = null;
-    if ((ref2 = this.__pointer) != null) {
-      ref2.remove();
-    }
+    CUI.dom.remove(this.__pointer);
     this.__pointer = null;
-    if ((ref3 = this.__backdrop) != null) {
-      ref3.destroy();
+    if ((ref2 = this.__backdrop) != null) {
+      ref2.destroy();
     }
     return this.__backdrop = null;
   };
@@ -26335,7 +26333,7 @@ CUI.Layout = (function(superClass) {
           this.__layout.getFlexHandle(pn).destroy();
         }
       } else {
-        this.__layout.map[pn].remove();
+        CUI.dom.remove(this.__layout.map[pn]);
         if (has_flex_handles) {
           this.__layout.getFlexHandle(pn).destroy();
         }
@@ -28104,7 +28102,7 @@ CUI.dom = (function() {
       instance: node.__clone
     });
     node.style.opacity = "";
-    node.__clone.remove();
+    CUI.dom.remove(node.__clone);
     delete node.__clone;
     return node;
   };
