@@ -68,10 +68,12 @@ class CUI.GoogleMap extends CUI.Map
 	hideMarkers: ->
 		for marker in @_markers
 			marker.setMap(null)
+		return
 
 	showMarkers: ->
 		for marker in @_markers
 			marker.setMap(@__map)
+		return
 
 	destroy: ->
 		for listener in @__listeners

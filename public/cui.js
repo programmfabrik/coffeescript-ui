@@ -46448,25 +46448,21 @@ CUI.GoogleMap = (function(superClass) {
   };
 
   GoogleMap.prototype.hideMarkers = function() {
-    var i, len, marker, ref, results;
+    var i, len, marker, ref;
     ref = this._markers;
-    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
-      results.push(marker.setMap(null));
+      marker.setMap(null);
     }
-    return results;
   };
 
   GoogleMap.prototype.showMarkers = function() {
-    var i, len, marker, ref, results;
+    var i, len, marker, ref;
     ref = this._markers;
-    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
-      results.push(marker.setMap(this.__map));
+      marker.setMap(this.__map);
     }
-    return results;
   };
 
   GoogleMap.prototype.destroy = function() {
@@ -46614,6 +46610,24 @@ CUI.LeafletMap = (function(superClass) {
       })(this));
     }
     return typeof this._onMarkerSelected === "function" ? this._onMarkerSelected(this.getSelectedMarkerPosition()) : void 0;
+  };
+
+  LeafletMap.prototype.hideMarkers = function() {
+    var i, len, marker, ref;
+    ref = this._markers;
+    for (i = 0, len = ref.length; i < len; i++) {
+      marker = ref[i];
+      marker.setOpacity(0);
+    }
+  };
+
+  LeafletMap.prototype.showMarkers = function() {
+    var i, len, marker, ref;
+    ref = this._markers;
+    for (i = 0, len = ref.length; i < len; i++) {
+      marker = ref[i];
+      marker.setOpacity(1);
+    }
   };
 
   LeafletMap.prototype.destroy = function() {
