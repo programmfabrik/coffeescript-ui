@@ -21597,7 +21597,7 @@ CUI.Lasso = (function(superClass) {
 
   Lasso.prototype.cleanup_drag = function(ev) {
     Lasso.__super__.cleanup_drag.call(this, ev);
-    return CUI.globalDrag.lasso.remove();
+    return CUI.dom.remove(CUI.globalDrag.lasso);
   };
 
   Lasso.prototype.end_drag = function(ev) {
@@ -25761,16 +25761,9 @@ CUI.Layer = (function(superClass) {
   };
 
   Layer.prototype.__removeDebugDivs = function() {
-    var ref, ref1, ref2;
-    if ((ref = this.__dbg_div1) != null) {
-      ref.remove();
-    }
-    if ((ref1 = this.__dbg_div2) != null) {
-      ref1.remove();
-    }
-    if ((ref2 = this.__dbg_div3) != null) {
-      ref2.remove();
-    }
+    CUI.dom.remove(this.__dbg_div1);
+    CUI.dom.remove(this.__dbg_div2);
+    CUI.dom.remove(this.__dbg_div3);
     this.__dbg_div1 = null;
     this.__dbg_div2 = null;
     return this.__dbg_div3 = null;
@@ -40471,20 +40464,14 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__removeContentSize = function() {
-    var ref;
-    if ((ref = this.__contentSize) != null) {
-      ref.remove();
-    }
+    CUI.dom.remove(this.__contentSize);
     this.__contentSize = null;
     return this;
   };
 
   Input.prototype.__removeShadowInput = function() {
-    var ref;
     this.__removeContentSize();
-    if ((ref = this.__shadow) != null) {
-      ref.remove();
-    }
+    CUI.dom.remove(this.__shadow);
     this.__shadow = null;
     this.__shadow_focused = false;
     return this;
@@ -51096,7 +51083,7 @@ CUI.StickyHeaderControl = (function(superClass) {
     CUI.Events.ignore({
       instance: this
     });
-    this.__control.remove();
+    CUI.dom.remove(this.__control);
     this.__headers = null;
     return this.newStickyHeaders = null;
   };
