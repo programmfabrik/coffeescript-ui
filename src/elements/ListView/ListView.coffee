@@ -549,13 +549,13 @@ class CUI.ListView extends CUI.SimplePane
 		CUI.util.assert(from_i >= @fixedRowsCount and to_i >= @fixedRowsCount, "ListView.moveRow", "from_i and to_i must not be in flexible area of the list view", from_i: from_i, to_i: to_i, fixed_i: @fixedRowsCount)
 
 		if after
-			func = "after"
+			func = CUI.dom.insertAfter
 		else
-			func = "before"
+			func = CUI.dom.insertBefore
 
 		# console.debug "moveRow", from_i, to_i, after, @rowsOrder.join(",")
 		for row, idx in @getRow(from_i)
-			@getRow(to_i)[idx][func](row)
+			func(@getRow(to_i)[idx], (row))
 
 		display_from_i = @getDisplayRowIdx(from_i)
 		display_to_i = @getDisplayRowIdx(to_i)
@@ -1169,7 +1169,7 @@ class CUI.ListView extends CUI.SimplePane
 				# if they are not in order, this is not our problem
 				# at this point
 				for i in [1...colspan]
-					@__cells[row_i][col_i+colspan_offset+1].remove()
+					CUI.dom.remove(@__cells[row_i][col_i+colspan_offset+1])
 					delete(@__cells[row_i][col_i+colspan_offset+1])
 					colspan_offset++
 
