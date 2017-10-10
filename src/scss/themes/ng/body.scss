@@ -4427,11 +4427,8 @@ label[data-label-clickable],
 // align options with label if there is only one option
 .cui-options-center {
 	min-height: 24px;
-	display: flex;
-	flex-wrap: wrap;
 	justify-content: flex-start;
 	// max-width: 450px; conflict - it only allows for two columns, not more
-	flex-direction: column;
 
 	&:empty {
 		min-height: 0;

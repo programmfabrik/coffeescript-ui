@@ -3132,10 +3132,7 @@ label[data-label-clickable],
 
 .cui-options-center {
   min-height: 24px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  flex-direction: column; }
+  justify-content: flex-start; }
   .cui-options-center:empty {
     min-height: 0; }
   .cui-options-center .cui-button {
