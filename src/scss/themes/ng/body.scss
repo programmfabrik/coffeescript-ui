@@ -3103,6 +3103,69 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-tabs--vertical {
+	display: grid !important;
+	grid-template-columns: 200px 1fr;
+	grid-template-rows: 1fr auto;
+	
+	// IE support
+	display: -ms-grid !important;
+	-ms-grid-columns: 200px 1fr;
+	-ms-grid-rows: 1fr auto;
+	
+	> .cui-vertical-layout-top {
+		grid-row: span 2;
+		-ms-grid-row-span: 2;
+	}
+	
+	> .cui-vertical-layout-center {
+		-ms-grid-column: 2;
+	}
+	
+	> .cui-vertical-layout-bottom {
+		-ms-grid-row: 2;
+		-ms-grid-column: 2;
+	}
+
+	.cui-tabs-pane-header {
+		border-bottom: none;
+		padding: 0 !important;
+		border-right: 1px solid $border;
+		display: block;
+		overflow: auto;
+		height: 100%;
+		
+		> .cui-horizontal-layout-center {
+			overflow: visible !important;
+			display: block;
+		}
+
+		> .cui-horizontal-layout-right {
+			display: none;
+		}
+
+		.cui-buttonbar,
+		.cui-buttonbar-group {
+			display: block;
+		}
+	}
+
+	.cui-tab-header-button {
+		padding: 0 !important;
+		display: block;
+		
+		.cui-button-visual {
+			border-radius: 0 !important;
+			height: auto;
+			line-height: normal;
+			border: none;
+			border-bottom: 1px solid $border;
+			padding: $compensating-padding $padding;
+			justify-content: flex-start;
+		}
+	}
+}
+
 // ListView
 .cui-list-view {
 	min-height: 0;
