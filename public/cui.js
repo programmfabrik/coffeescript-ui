@@ -46370,6 +46370,7 @@ CUI.GoogleMap = (function(superClass) {
 
   function GoogleMap(opts) {
     this.opts = opts != null ? opts : {};
+    CUI.util.assert(CUI.GoogleMap.defaults.google_api.key, "It's necessary to add a google maps api key in order to use CUI.GoogleMap");
     this.__listeners = [];
     GoogleMap.__super__.constructor.call(this, this.opts);
   }
