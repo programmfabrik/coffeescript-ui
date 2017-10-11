@@ -1841,21 +1841,27 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
-			max-height: 100px;
+			max-height: 131px;
 		}
 	}
 
 	> .cui-label-content {
-		max-height: 75px;
+		max-height: 99px;
 		overflow: hidden;
 	}
 
 	.cui-label-manage-overflow-button {
 		position: absolute;
 		right: 0;
-		bottom: 0;
+		bottom: 3px;
 		background: linear-gradient(to right, hsla(0,0%,100%,0), hsl(0,0%,100%) 10px);
 		padding: 0 0 0 10px !important;
+		
+		.cui-button-visual {
+			color: $highlight-color;
+			height: auto;
+			padding: 0;
+		}
 	}
 
 	&.cui-label--show-overflow {

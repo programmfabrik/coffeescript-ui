@@ -1552,16 +1552,20 @@ a[role="button"].cui-button-appearance-link {
   position: relative;
   display: block; }
   .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
-    max-height: 100px; }
+    max-height: 131px; }
   .cui-label-manage-overflow > .cui-label-content {
-    max-height: 75px;
+    max-height: 99px;
     overflow: hidden; }
   .cui-label-manage-overflow .cui-label-manage-overflow-button {
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 3px;
     background: linear-gradient(to right, rgba(255, 255, 255, 0), white 10px);
     padding: 0 0 0 10px !important; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
+      color: #006adb;
+      height: auto;
+      padding: 0; }
   .cui-label-manage-overflow.cui-label--show-overflow > .cui-label-content {
     max-height: none !important; }
   .cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button {
