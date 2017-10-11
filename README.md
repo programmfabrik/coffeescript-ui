@@ -21,7 +21,7 @@
   
 ### Use cui.css
 
-With script tag
+With CUI.CSSLoader
 
     CUI.ready ->
         new CUI.CSSLoader().load({url: 'node_modules/coffeescript-ui/public/cui.css'})
