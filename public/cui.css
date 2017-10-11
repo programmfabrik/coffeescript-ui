@@ -1546,6 +1546,7 @@ a[role="button"].cui-button-appearance-link {
     flex: 1 1 auto;
     white-space: normal;
     overflow: visible;
+    text-overflow: clip;
     word-wrap: break-word; }
 
 .cui-label-manage-overflow {
