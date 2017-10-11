@@ -50,7 +50,7 @@ After that, it's necessary to run one of the following build commands
 
 - **npm run build**: Builds the default version
 - **npm run build:watch**: Builds the default version and watch for changes
-- **npm run build:all**: Builds one of each version (it takes 2-3 minutes)
+- **npm run build:all**: Builds one of each version
 
 You will find the bundled file inside **public** folder.
 
