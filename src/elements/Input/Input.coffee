@@ -242,7 +242,11 @@ class CUI.Input extends CUI.DataFieldInput
 			node: @__input
 			type: "keydown"
 			call: (ev) =>
-				# CUI.debug "keydown on input", ev.shiftKey, ev.which, @_incNumbers
+				# console.debug "keydown on input", ev.hasModifierKey(), ev.keyCode(), @_incNumbers
+
+				if ev.ctrlKey() or ev.metaKey()
+					return
+
 				@lastKeyDownEvent = ev
 
 				if @_incNumbers and not @_textarea and not @_readonly
