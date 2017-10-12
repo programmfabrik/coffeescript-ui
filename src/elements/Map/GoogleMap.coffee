@@ -92,10 +92,10 @@ class CUI.GoogleMap extends CUI.Map
 
 		@__destroyed = true
 
-	__addCustomOption: (options, key, value) ->
+	__addCustomOption: (markerOptions, key, value) ->
 		switch key
 			when "cui_content"
-				options.infoWindow = CUI.GoogleMap.getInfoWindow(value)
+				markerOptions.infoWindow = CUI.GoogleMap.getInfoWindow(value)
 			else
 				assert(false, "CUI.GoogleMap", "Unknown option. Known options: ['cui_content']")
 

@@ -6,7 +6,7 @@ This is an 'abstract' class which can be used to render a map with one of its tw
 
 Both can be used almost in the same way, they are only differentiated by some particularities of their libraries.
 
-## Usage
+## Methods
 ### new CUI.Map
 ```
 map = new CUI.LeafletMap(options)
@@ -24,28 +24,117 @@ map = new CUI.GoogleMap(options)
 - selectedMarkerLabel `String`
 - onMarkerSelected `Function`
 
-### .addMarker(marker)
+### .addMarker(options)
 
-- marker `PlainObject`
+- options `PlainObject`
     - position `PlainObject`
         - lat: `Number`
         - lng: `Number`
 
 **position** is the only one mandatory, the rest are optional. The rest of the options depends in each library.
 
+### .addMarkers(optionsArray)
+
+- optionsArray `[PlainObject]`
+    - position `PlainObject`
+        - lat: `Number`
+        - lng: `Number`
+
+Invoke *.addMaker* for each *options* inside **optionsArray** array.
+
+### .getSelectedMarkerPosition() : position
+
+- position `PlainObject`
+    - lat: `Number`
+    - lng: `Number`
+
+Get an object with the latitude and longitude of the selected marker. If there is not a marker selected returns undefined.
+
+### .setSelectedMarkerPosition(position)
+
+- position `PlainObject`
+    - lat: `Number`
+    - lng: `Number`
+    
+Set the latitude and longitude for the selected marker.
+
+### .hideMarkers()
+
+Hide all the markers registered.
+
+### .showMarkers()
+
+Show all the markers registered.
+
+## New map implementation
+
+In order to create a new map implementation, it's necessary to override the following methods.
+
+- .getSelectedMarkerPosition() : position
+- .setSelectedMarkerPosition(position)
+- .hideMarkers()
+- .showMarkers()
+
+Also, it's needed to override the following private methods:
+
+### .__buildMap() : newMapClass
+
+This method must create and return the new map instance.
+
+**newMapClass** is the class of the new map implementation.
+
+For example: For Google Maps the class is **google.maps.Map**
+
+You can access to this map instance with **@__map** 
+
+### .__buildMarker(options) : newMarkerClass
+
+This method must create and return the new marker instance.
+
+**newMarkerClass** is the class of the new marker implementation.
+
+**options** is a `PlainObject` with all the options passed when a marker is added with *.addMarker(options)*
+
+For example: For Google Maps the class is **google.maps.Marker**
+
+### .__getMapClassName() : className
+
+**className** is the map container class.
+
+### .__addMarkerToMap(newMarkerClass)
+
+This method must add the **newMarkerClass** inside the **@__map**
+
+### .__bindOnClickMapEvent()
+
+This method should bind a click event in **@__map** to handle it, but it's optional.
+
+### .__addCustomOption(markerOptions, key, value)
+
+If there is options with the prefix 'cui_' when a marker is added, those options will not be mapped and this method is called instead, so you can add a different behaviour instead of plain mapping.
+
 ## Initialization properties
-
-Both implementations has some properties that need to be modified in order to use the map.
-
 #### GoogleMap
 
 ```
-CUI.GoogleMap.defaults.google_api.key = <GOOGLE_API_KEY>
+CUI.GoogleMap.defaults.google_api.key = "<GOOGLE_API_KEY>"
 CUI.GoogleMap.defaults.google_api.language = 'en' # (optional, default: 'en')
 ``` 
 
 #### LeafletMap
 
+Leaflet is an open-source JavaScript library, so you don't need an api key as GoogleMap.
+However, It's possible to use different Tile layers.
+
+As default, It's using OpenStreetMap, but you can change it easily.
+
+For example, if you want to use Mapbox:
+
 ```
-CUI.LeafletMap.defaults.mapboxToken = <MAPBOX-TOKEN-HERE>
+CUI.LeafletMap.defaults.tileLayerUrl: 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
+CUI.LeafletMap.defaults.tileLayerOptions:
+    accessToken: "<MAPBOX_TOKEN>",
+    attribution: "<ATTRIBUTION_HTML_HERE>",
+    maxZoom: 20,
+    id: 'mapbox.streets',
 ```

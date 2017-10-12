@@ -4,8 +4,10 @@ require("leaflet/dist/leaflet.js")
 class CUI.LeafletMap extends CUI.Map
 
 	@defaults =
-		mapboxToken: "pk.eyJ1Ijoicm9tYW4tcHJvZ3JhbW1mYWJyaWsiLCJhIjoiY2o4azVmb2duMDhwNTJ4bzNsMG9iMDN5diJ9.SfqU1rxrf5to9-ggCM6V9g",
 		urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+		tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+		tileLayerOptions:
+			attribution: attributionHtml
 
 	__getMapClassName: ->
 		"cui-leaflet-map"
@@ -13,12 +15,7 @@ class CUI.LeafletMap extends CUI.Map
 	__buildMap: ->
 		map = L.map(@DOM)
 
-		tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-			attribution: attributionHtml,
-			maxZoom: 20,
-			id: 'mapbox.streets',
-			accessToken: CUI.LeafletMap.defaults.mapboxToken
-		)
+		tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions)
 
 		CUI.dom.waitForDOMInsert(node: @).done =>
 			map.setView(@_center, @_zoom)
@@ -73,7 +70,7 @@ class CUI.LeafletMap extends CUI.Map
 		CUI.dom.remove(@DOM)
 
 CUI.ready =>
-	if not CUI.LeafletMap.defaults.mapboxToken or not CUI.LeafletMap.defaults.urlCss
+	if not CUI.LeafletMap.defaults.urlCss
 		return
 
 	leafletDeferred = new CUI.Deferred()

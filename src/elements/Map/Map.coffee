@@ -37,13 +37,13 @@ class CUI.Map extends CUI.DOMElement
 		if @_clickable
 			@__bindOnClickMapEvent()
 
-	addMarkers: (markers) ->
-		for marker in markers
-			@addMarker(marker)
+	addMarkers: (optionsArray) ->
+		for options in optionsArray
+			@addMarker(options)
 
-	addMarker: (marker) ->
-		options = @__getMarkerOptions(marker)
-		marker = @__buildMarker(options)
+	addMarker: (options) ->
+		markerOptions = @__getMarkerOptions(options)
+		marker = @__buildMarker(markerOptions)
 		@_markers.push(marker)
 		@__addMarkerToMap(marker)
 		marker
@@ -78,14 +78,14 @@ class CUI.Map extends CUI.DOMElement
 	__addCustomOption: (options, key, value) ->
 		return false
 
-	__getMarkerOptions: (marker) ->
-		options = {}
+	__getMarkerOptions: (options) ->
+		markerOptions = {}
 
-		for key, value of marker
+		for key, value of options
 			if not key.startsWith("cui_")
-				options[key] = value
+				markerOptions[key] = value
 				continue
 
-			@__addCustomOption(options, key, value)
+			@__addCustomOption(markerOptions, key, value)
 
-		options
+		markerOptions

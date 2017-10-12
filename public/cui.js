@@ -46476,10 +46476,10 @@ CUI.GoogleMap = (function(superClass) {
     return this.__destroyed = true;
   };
 
-  GoogleMap.prototype.__addCustomOption = function(options, key, value) {
+  GoogleMap.prototype.__addCustomOption = function(markerOptions, key, value) {
     switch (key) {
       case "cui_content":
-        return options.infoWindow = CUI.GoogleMap.getInfoWindow(value);
+        return markerOptions.infoWindow = CUI.GoogleMap.getInfoWindow(value);
       default:
         return assert(false, "CUI.GoogleMap", "Unknown option. Known options: ['cui_content']");
     }
@@ -46534,8 +46534,11 @@ CUI.LeafletMap = (function(superClass) {
   }
 
   LeafletMap.defaults = {
-    mapboxToken: "pk.eyJ1Ijoicm9tYW4tcHJvZ3JhbW1mYWJyaWsiLCJhIjoiY2o4azVmb2duMDhwNTJ4bzNsMG9iMDN5diJ9.SfqU1rxrf5to9-ggCM6V9g",
-    urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+    urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css",
+    tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    tileLayerOptions: {
+      attribution: attributionHtml
+    }
   };
 
   LeafletMap.prototype.__getMapClassName = function() {
@@ -46545,12 +46548,7 @@ CUI.LeafletMap = (function(superClass) {
   LeafletMap.prototype.__buildMap = function() {
     var map, tileLayer;
     map = L.map(this.DOM);
-    tileLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: attributionHtml,
-      maxZoom: 20,
-      id: 'mapbox.streets',
-      accessToken: CUI.LeafletMap.defaults.mapboxToken
-    });
+    tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions);
     CUI.dom.waitForDOMInsert({
       node: this
     }).done((function(_this) {
@@ -46633,7 +46631,7 @@ CUI.LeafletMap = (function(superClass) {
 CUI.ready((function(_this) {
   return function() {
     var leafletDeferred;
-    if (!CUI.LeafletMap.defaults.mapboxToken || !CUI.LeafletMap.defaults.urlCss) {
+    if (!CUI.LeafletMap.defaults.urlCss) {
       return;
     }
     leafletDeferred = new CUI.Deferred();
@@ -46715,20 +46713,20 @@ CUI.Map = (function(superClass) {
     }
   }
 
-  Map.prototype.addMarkers = function(markers) {
-    var i, len, marker, results;
+  Map.prototype.addMarkers = function(optionsArray) {
+    var i, len, options, results;
     results = [];
-    for (i = 0, len = markers.length; i < len; i++) {
-      marker = markers[i];
-      results.push(this.addMarker(marker));
+    for (i = 0, len = optionsArray.length; i < len; i++) {
+      options = optionsArray[i];
+      results.push(this.addMarker(options));
     }
     return results;
   };
 
-  Map.prototype.addMarker = function(marker) {
-    var options;
-    options = this.__getMarkerOptions(marker);
-    marker = this.__buildMarker(options);
+  Map.prototype.addMarker = function(options) {
+    var marker, markerOptions;
+    markerOptions = this.__getMarkerOptions(options);
+    marker = this.__buildMarker(markerOptions);
     this._markers.push(marker);
     this.__addMarkerToMap(marker);
     return marker;
@@ -46774,18 +46772,18 @@ CUI.Map = (function(superClass) {
     return false;
   };
 
-  Map.prototype.__getMarkerOptions = function(marker) {
-    var key, options, value;
-    options = {};
-    for (key in marker) {
-      value = marker[key];
+  Map.prototype.__getMarkerOptions = function(options) {
+    var key, markerOptions, value;
+    markerOptions = {};
+    for (key in options) {
+      value = options[key];
       if (!key.startsWith("cui_")) {
-        options[key] = value;
+        markerOptions[key] = value;
         continue;
       }
-      this.__addCustomOption(options, key, value);
+      this.__addCustomOption(markerOptions, key, value);
     }
-    return options;
+    return markerOptions;
   };
 
   return Map;
@@ -53403,7 +53401,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /* 281 */
 /***/ (function(module, exports) {
 
-module.exports = "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>";
+module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors";
 
 /***/ }),
 /* 282 */
