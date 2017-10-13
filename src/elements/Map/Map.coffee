@@ -17,7 +17,7 @@ class CUI.Map extends CUI.DOMElement
 			zoom:
 				check: "Integer"
 				default: 10
-			markers:
+			markersOptions:
 				check: Array
 				default: []
 			clickable:
@@ -33,9 +33,12 @@ class CUI.Map extends CUI.DOMElement
 		@registerDOMElement(CUI.dom.div())
 		@addClass(@__getMapClassName())
 
+		@__markers = []
 		@__map = @__buildMap()
 		if @_clickable
 			@__bindOnClickMapEvent()
+
+		@addMarkers(@_markersOptions)
 
 	addMarkers: (optionsArray) ->
 		for options in optionsArray
@@ -44,7 +47,7 @@ class CUI.Map extends CUI.DOMElement
 	addMarker: (options) ->
 		markerOptions = @__getMarkerOptions(options)
 		marker = @__buildMarker(markerOptions)
-		@_markers.push(marker)
+		@__markers.push(marker)
 		@__addMarkerToMap(marker)
 		marker
 

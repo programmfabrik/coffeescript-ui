@@ -68,12 +68,12 @@ class CUI.GoogleMap extends CUI.Map
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
 	hideMarkers: ->
-		for marker in @_markers
+		for marker in @__markers
 			marker.setMap(null)
 		return
 
 	showMarkers: ->
-		for marker in @_markers
+		for marker in @__markers
 			marker.setMap(@__map)
 		return
 
@@ -81,10 +81,10 @@ class CUI.GoogleMap extends CUI.Map
 		for listener in @__listeners
 			listener.remove()
 
-		for marker in @_markers
+		for marker in @__markers
 			marker.setMap(null)
 
-		delete @_markers
+		delete @__markers
 		delete @__listeners
 		delete @__map
 		delete @__selectedMarker

@@ -19,7 +19,7 @@ map = new CUI.GoogleMap(options)
     - lat: `Number`
     - lng: `Number`
 - zoom `Number` (default 10)
-- markers `[PlainObject]` (see Marker Options)
+- markersOptions `[PlainObject]` (see options in *.addMarker* method)
 - clickable `Boolean` (default: *true*)
 - selectedMarkerLabel `String`
 - onMarkerSelected `Function`

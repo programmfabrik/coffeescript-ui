@@ -56,12 +56,12 @@ class CUI.LeafletMap extends CUI.Map
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
 	hideMarkers: ->
-		for marker in @_markers
+		for marker in @__markers
 			marker.setOpacity(0)
 		return
 
 	showMarkers: ->
-		for marker in @_markers
+		for marker in @__markers
 			marker.setOpacity(1)
 		return
 

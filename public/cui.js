@@ -46440,7 +46440,7 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.hideMarkers = function() {
     var i, len, marker, ref;
-    ref = this._markers;
+    ref = this.__markers;
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       marker.setMap(null);
@@ -46449,7 +46449,7 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.showMarkers = function() {
     var i, len, marker, ref;
-    ref = this._markers;
+    ref = this.__markers;
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       marker.setMap(this.__map);
@@ -46463,12 +46463,12 @@ CUI.GoogleMap = (function(superClass) {
       listener = ref[i];
       listener.remove();
     }
-    ref1 = this._markers;
+    ref1 = this.__markers;
     for (j = 0, len1 = ref1.length; j < len1; j++) {
       marker = ref1[j];
       marker.setMap(null);
     }
-    delete this._markers;
+    delete this.__markers;
     delete this.__listeners;
     delete this.__map;
     delete this.__selectedMarker;
@@ -46603,7 +46603,7 @@ CUI.LeafletMap = (function(superClass) {
 
   LeafletMap.prototype.hideMarkers = function() {
     var i, len, marker, ref;
-    ref = this._markers;
+    ref = this.__markers;
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       marker.setOpacity(0);
@@ -46612,7 +46612,7 @@ CUI.LeafletMap = (function(superClass) {
 
   LeafletMap.prototype.showMarkers = function() {
     var i, len, marker, ref;
-    ref = this._markers;
+    ref = this.__markers;
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       marker.setOpacity(1);
@@ -46685,7 +46685,7 @@ CUI.Map = (function(superClass) {
         check: "Integer",
         "default": 10
       },
-      markers: {
+      markersOptions: {
         check: Array,
         "default": []
       },
@@ -46707,10 +46707,12 @@ CUI.Map = (function(superClass) {
     Map.__super__.constructor.call(this, this.opts);
     this.registerDOMElement(CUI.dom.div());
     this.addClass(this.__getMapClassName());
+    this.__markers = [];
     this.__map = this.__buildMap();
     if (this._clickable) {
       this.__bindOnClickMapEvent();
     }
+    this.addMarkers(this._markersOptions);
   }
 
   Map.prototype.addMarkers = function(optionsArray) {
@@ -46727,7 +46729,7 @@ CUI.Map = (function(superClass) {
     var marker, markerOptions;
     markerOptions = this.__getMarkerOptions(options);
     marker = this.__buildMarker(markerOptions);
-    this._markers.push(marker);
+    this.__markers.push(marker);
     this.__addMarkerToMap(marker);
     return marker;
   };
