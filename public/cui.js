@@ -46577,6 +46577,14 @@ CUI.LeafletMap = (function(superClass) {
     })(this));
   };
 
+  LeafletMap.prototype.__afterMarkerCreated = function(marker, options) {
+    var onClickFunction;
+    onClickFunction = options["cui_onClick"];
+    if (onClickFunction) {
+      return marker.on("click", onClickFunction);
+    }
+  };
+
   LeafletMap.prototype.getSelectedMarkerPosition = function() {
     var ref;
     return (ref = this.__selectedMarker) != null ? ref.getLatLng() : void 0;
@@ -46729,6 +46737,7 @@ CUI.Map = (function(superClass) {
     var marker, markerOptions;
     markerOptions = this.__getMarkerOptions(options);
     marker = this.__buildMarker(markerOptions);
+    this.__afterMarkerCreated(marker, options);
     this.__markers.push(marker);
     this.__addMarkerToMap(marker);
     return marker;
@@ -46770,7 +46779,15 @@ CUI.Map = (function(superClass) {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__bindOnClickMapEvent needs to be implemented.");
   };
 
+  Map.prototype.__onMarkerClick = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__onMarkerClick needs to be implemented.");
+  };
+
   Map.prototype.__addCustomOption = function(options, key, value) {
+    return false;
+  };
+
+  Map.prototype.__afterMarkerCreated = function(marker, options) {
     return false;
   };
 

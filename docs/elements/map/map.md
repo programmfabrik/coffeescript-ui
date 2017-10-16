@@ -113,15 +113,26 @@ This method should bind a click event in **@__map** to handle it, but it's optio
 
 If there is options with the prefix 'cui_' when a marker is added, those options will not be mapped and this method is called instead, so you can add a different behaviour instead of plain mapping.
 
-## Initialization properties
-#### GoogleMap
+### .__afterMarkerCreated(marker, options)
+
+It's called after a marker is instantiated. 
+
+## Current implementations
+### GoogleMap
 
 ```
 CUI.GoogleMap.defaults.google_api.key = "<GOOGLE_API_KEY>"
 CUI.GoogleMap.defaults.google_api.language = 'en' # (optional, default: 'en')
 ``` 
 
-#### LeafletMap
+#### Custom options
+
+**cui_content** `HTMLDOMElement` | `String`
+
+It's used to show an infoWindow when the marker is clicked.
+
+
+### LeafletMap
 
 Leaflet is an open-source JavaScript library, so you don't need an api key as GoogleMap.
 However, It's possible to use different Tile layers.
@@ -138,3 +149,9 @@ CUI.LeafletMap.defaults.tileLayerOptions:
     maxZoom: 20,
     id: 'mapbox.streets',
 ```
+
+#### Custom options
+
+**cui_onClick** `Function`
+
+This function is called when the marker is clicked. It receives the *event* as parameter. It's possible to access to the marker options with *event.target.position*

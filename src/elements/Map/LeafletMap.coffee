@@ -35,6 +35,11 @@ class CUI.LeafletMap extends CUI.Map
 			@setSelectedMarkerPosition(event.latlng)
 		)
 
+	__afterMarkerCreated: (marker, options) ->
+		onClickFunction = options["cui_onClick"]
+		if onClickFunction
+			marker.on("click", onClickFunction)
+
 	getSelectedMarkerPosition: ->
 		@__selectedMarker?.getLatLng()
 

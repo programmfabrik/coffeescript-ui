@@ -47,6 +47,7 @@ class CUI.Map extends CUI.DOMElement
 	addMarker: (options) ->
 		markerOptions = @__getMarkerOptions(options)
 		marker = @__buildMarker(markerOptions)
+		@__afterMarkerCreated(marker, options)
 		@__markers.push(marker)
 		@__addMarkerToMap(marker)
 		marker
@@ -78,7 +79,13 @@ class CUI.Map extends CUI.DOMElement
 	__bindOnClickMapEvent: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__bindOnClickMapEvent needs to be implemented.")
 
+	__onMarkerClick: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__onMarkerClick needs to be implemented.")
+
 	__addCustomOption: (options, key, value) ->
+		return false
+
+	__afterMarkerCreated: (marker, options) ->
 		return false
 
 	__getMarkerOptions: (options) ->
