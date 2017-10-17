@@ -1000,6 +1000,8 @@ li > div {
   vertical-align: bottom;
   flex-shrink: 0;
   transform: translateZ(0); }
+  .cui-icon-svg use {
+    pointer-events: none; }
 
 .fa {
   font-size: 14px; }

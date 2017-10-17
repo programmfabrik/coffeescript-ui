@@ -23,7 +23,7 @@ class CUI.Icon extends CUI.Element
 			cls += " "+@_class
 
 		if svg_cls
-			@DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use style=\"pointer-events: none\" xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
+			@DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
 		else
 			@DOM = CUI.dom.element("I", class: "fa "+cls)
 

@@ -24756,7 +24756,7 @@ CUI.Icon = (function(superClass) {
       cls += " " + this._class;
     }
     if (svg_cls) {
-      this.DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg " + svg_cls + " " + cls + "\"><use style=\"pointer-events: none\" xlink:href=\"#" + (svg_cls.split(" ")[0]) + "\"></svg>")[0];
+      this.DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg " + svg_cls + " " + cls + "\"><use xlink:href=\"#" + (svg_cls.split(" ")[0]) + "\"></svg>")[0];
     } else {
       this.DOM = CUI.dom.element("I", {
         "class": "fa " + cls
