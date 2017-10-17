@@ -3138,8 +3138,7 @@ label[data-label-clickable],
   display: inline-block; }
 
 .cui-options-center {
-  min-height: 24px;
-  justify-content: flex-start; }
+  min-height: 24px; }
   .cui-options-center:empty {
     min-height: 0; }
   .cui-options-center .cui-button {
@@ -3182,9 +3181,6 @@ label[data-label-clickable],
 .cui-options--columns-12 .cui-checkbox {
   width: 8.33333% !important; }
 
-.cui-options--horizontal .cui-options-center {
-  flex-direction: row; }
-
 .cui-options--vertical .cui-options-inactive {
   display: flex;
   flex-direction: column; }
@@ -3192,8 +3188,9 @@ label[data-label-clickable],
 .cui-options--vertical [data-max-chars] {
   width: auto !important; }
 
-.cui-options--sortable .cui-options-center {
-  flex-direction: column; }
+.cui-options--vertical .cui-checkbox,
+.cui-options--sortable .cui-checkbox {
+  display: block; }
 
 .cui-options-title {
   font-weight: bold; }

@@ -4438,7 +4438,6 @@ label[data-label-clickable],
 // align options with label if there is only one option
 .cui-options-center {
 	min-height: 24px;
-	justify-content: flex-start;
 	// max-width: 450px; conflict - it only allows for two columns, not more
 
 	&:empty {
@@ -4466,12 +4465,6 @@ label[data-label-clickable],
 	}
 }
 
-.cui-options--horizontal {
-	.cui-options-center {
-		flex-direction: row;
-	}
-}
-
 .cui-options--vertical {
 	.cui-options-inactive {
 		display: flex;
@@ -4483,9 +4476,10 @@ label[data-label-clickable],
 	}
 }
 
+.cui-options--vertical,
 .cui-options--sortable {
-	.cui-options-center {
-		flex-direction: column;
+	.cui-checkbox {
+		display: block;
 	}
 }
 
