@@ -32572,7 +32572,7 @@ CUI.ConfirmationDialog = (function(superClass) {
       },
       padded: {
         check: Boolean,
-        "default": false
+        "default": true
       },
       markdown_opts: {
         check: "PlainObject"
@@ -32603,7 +32603,7 @@ CUI.ConfirmationDialog = (function(superClass) {
 
   ConfirmationDialog.prototype.setPane = function() {
     return ConfirmationDialog.__super__.setPane.call(this, {
-      padded: (this._padded === void 0 ? true : this._padded),
+      padded: this._padded,
       force_header: true,
       force_footer: true
     });

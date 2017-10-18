@@ -27,7 +27,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 				check: Boolean
 			padded:
 				check: Boolean
-				default: false
+				default: true
 			markdown_opts:
 				check: "PlainObject"
 			html:
@@ -47,7 +47,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		@removeOpt("pane")
 
 	setPane: ->
-		super(padded: (if @_padded is undefined then true else @_padded), force_header: true, force_footer: true)
+		super(padded: @_padded, force_header: true, force_footer: true)
 
 	readOpts: ->
 		super()
