@@ -1068,7 +1068,11 @@ li > div {
 .cui-button-href {
 	// max-width: 100%; makes button icons unsharp (datepicker)
 	cursor: pointer;
-	max-width: $input-width;
+	// max-width: $input-width; why limit the width of a button?
+}
+
+.cui-button-href {
+	max-width: 100%;
 }
 
 .cui-button-href.cui-button-appearance-link {
@@ -1557,7 +1561,6 @@ a[role="button"].cui-button-appearance-link {
 	box-sizing: content-box;
 
 	.cui-button {
-		max-width: 100%;
 		width: 100%;
 		height: 100%;
 		align-items: stretch;
@@ -2721,7 +2724,6 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button,
 	.cui-button-href {
-		max-width: 100%;
 	  align-items: stretch;
 
 	  .cui-button-visual {
@@ -2864,6 +2866,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-hint-popover {
 	min-width: 0;
+	max-width: 400px;
 	background: $popover-hint-background;
 	color: white;
 	padding: 7px 10px;
@@ -3803,7 +3806,8 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-td--key {
-	color: $secondary-color;
+	color: $form-label-color;
+	font-weight: $form-label-weight;
 	padding-right: 0;
 	vertical-align: top;
 }
