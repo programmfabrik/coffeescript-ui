@@ -979,21 +979,25 @@ li > div {
       padding: 0 5px;
       color: rgba(115, 130, 140, 0.5); }
 
-.cui-navigation-toolbar {
+.cui-navigation-toolbar--mini {
   background: none;
   min-height: 20px !important; }
-  .cui-navigation-toolbar .cui-horizontal-layout-left > .cui-label:first-child {
+  .cui-navigation-toolbar--mini .cui-horizontal-layout-left > .cui-label:first-child {
     color: #adb3b8;
     font-weight: normal;
-    padding-left: 5px; }
-  .cui-navigation-toolbar .cui-buttonbar {
+    padding-left: 5px;
+    margin-right: 0; }
+  .cui-navigation-toolbar--mini .cui-buttonbar {
     margin-bottom: 2px; }
-  .cui-navigation-toolbar .cui-button {
+  .cui-navigation-toolbar--mini .cui-button {
     padding: 0; }
-  .cui-navigation-toolbar .cui-input {
+  .cui-navigation-toolbar--mini .cui-input {
     padding: 0 3px;
     font-size: 11px;
     line-height: 18px; }
+
+.cui-navigation-toolbar > .cui-horizontal-layout-left > .cui-label:last-child {
+  margin-right: 10px; }
 
 .cui-icon-svg {
   fill: currentColor;
@@ -2373,8 +2377,6 @@ a[role="button"].cui-button-appearance-link {
     flex-shrink: 1;
     display: flex;
     flex-direction: column; }
-  .cui-list-view > .cui-vertical-layout-bottom .cui-toolbar {
-    border-top: 1px solid #cbd5dc; }
 
 .list-view-header-row .cui-label {
   align-items: flex-end;
