@@ -30621,6 +30621,7 @@ CUI.Button = (function(superClass) {
       }
     }
     if (this.hasMenu() && !this._menu_on_hover && this.getMenu().hasItems(ev)) {
+      console.error("onClickAction", ev, this.getUniqueId(), this);
       this.getMenu().show(ev);
       ev.preventDefault();
       return;
@@ -47276,10 +47277,19 @@ CUI.Menu = (function(superClass) {
   Menu.prototype.show = function(__event) {
     this.__event = __event;
     CUI.util.assert(!this.isDestroyed(), (CUI.util.getObjectClass(this)) + ".show", "Element is already destroyed.");
+    if (this.isShown()) {
+      this.position();
+      return this;
+    }
+    if (this.__loading) {
+      return this;
+    }
     if (this.__itemList) {
+      this.__loading = true;
       this.__itemList.render(this, this.__event).done((function(_this) {
         return function() {
-          return Menu.__super__.show.call(_this, _this.__event);
+          Menu.__super__.show.call(_this, _this.__event);
+          return _this.__loading = false;
         };
       })(this));
     } else {
@@ -50697,8 +50707,9 @@ CUI.Select = (function(superClass) {
           };
         })(this),
         items: (function(_this) {
-          return function(event) {
-            return _this.__loadOptions(event).done(function() {
+          return function(ev) {
+            console.error("getting items", ev);
+            return _this.__loadOptions(ev).done(function() {
               return _this.displayValue();
             });
           };
