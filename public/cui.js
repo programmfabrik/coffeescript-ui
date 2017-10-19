@@ -30621,7 +30621,6 @@ CUI.Button = (function(superClass) {
       }
     }
     if (this.hasMenu() && !this._menu_on_hover && this.getMenu().hasItems(ev)) {
-      console.error("onClickAction", ev, this.getUniqueId(), this);
       this.getMenu().show(ev);
       ev.preventDefault();
       return;
@@ -46647,7 +46646,7 @@ CUI.LeafletMap = (function(superClass) {
       });
       this.__selectedMarker.on('dragend', (function(_this) {
         return function() {
-          _this.__map.setView(_this.getSelectedMarkerPosition(), _this._zoom);
+          _this.__map.setView(_this.getSelectedMarkerPosition());
           return typeof _this._onMarkerSelected === "function" ? _this._onMarkerSelected(_this.getSelectedMarkerPosition()) : void 0;
         };
       })(this));
@@ -50707,9 +50706,8 @@ CUI.Select = (function(superClass) {
           };
         })(this),
         items: (function(_this) {
-          return function(ev) {
-            console.error("getting items", ev);
-            return _this.__loadOptions(ev).done(function() {
+          return function(event) {
+            return _this.__loadOptions(event).done(function() {
               return _this.displayValue();
             });
           };
