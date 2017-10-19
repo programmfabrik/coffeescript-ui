@@ -291,11 +291,11 @@ class CUI.dom
 					append_node = content
 
 		if append
-			CUI.util.assert(append_node instanceof Node, "CUI.dom.append", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
+			CUI.util.assert(append_node instanceof Node, "CUI.dom.append", "Content needs to be instanceof Node, string, boolean, or number.", node: append_node)
 			node.appendChild(append_node)
 		else
-			CUI.util.assert(append_node instanceof Node, "CUI.dom.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: content)
-			node.insertBefore(content, node.firstChild)
+			CUI.util.assert(append_node instanceof Node, "CUI.dom.prepend", "Content needs to be instanceof Node, string, boolean, or number.", node: append_node)
+			node.insertBefore(append_node, node.firstChild)
 
 		return node
 
