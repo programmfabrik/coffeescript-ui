@@ -406,8 +406,8 @@ class CUI.Layer extends CUI.DOMElement
 		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
-		body_scroll_top = document.body.scrollTop
-		body_scroll_left = document.body.scrollLeft
+		body_scroll_top = document.body.scrollTop + document.documentElement.scrollTop
+		body_scroll_left = document.body.scrollLeft + document.documentElement.scrollLeft
 
 		if @__element
 			dim_element = CUI.dom.getDimensions(@__element)
