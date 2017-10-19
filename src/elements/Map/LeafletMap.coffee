@@ -18,7 +18,11 @@ class CUI.LeafletMap extends CUI.Map
 		tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions)
 
 		CUI.dom.waitForDOMInsert(node: @).done =>
-			map.setView(@_center, @_zoom)
+			if @_zoomToFitAllMarkersOnInit
+				@zoomToFitAllMarkers()
+			else
+				map.setView(@_center, @_zoom)
+
 			tileLayer.addTo(map)
 
 		map
@@ -69,6 +73,14 @@ class CUI.LeafletMap extends CUI.Map
 		for marker in @__markers
 			marker.setOpacity(1)
 		return
+
+	zoomToFitAllMarkers: ->
+		CUI.dom.waitForDOMInsert(node: @).done =>
+			if @__markers.length > 0
+				group = new L.featureGroup(@__markers);
+				@__map.fitBounds(group.getBounds().pad(0.05));
+			else
+				@__map.setView(@_center, @_zoom)
 
 	destroy: ->
 		@__map.remove()

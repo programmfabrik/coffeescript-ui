@@ -16,7 +16,7 @@ class CUI.Map extends CUI.DOMElement
 					lng: 0
 			zoom:
 				check: "Integer"
-				default: 10
+				default: 1
 			markersOptions:
 				check: Array
 				default: []
@@ -27,6 +27,9 @@ class CUI.Map extends CUI.DOMElement
 				check: String
 			onMarkerSelected:
 				check: Function
+			zoomToFitAllMarkersOnInit:
+				check: Boolean
+				default: false
 
 	constructor: (@opts = {}) ->
 		super(@opts)
@@ -63,6 +66,9 @@ class CUI.Map extends CUI.DOMElement
 
 	showMarkers: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".showMarkers needs to be implemented.")
+
+	zoomToFitAllMarkers: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".zoomToFitAllMarkers needs to be implemented.")
 
 	__addMarkerToMap: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__addMarkerToMap needs to be implemented.")

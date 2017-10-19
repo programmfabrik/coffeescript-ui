@@ -16,14 +16,16 @@ class CUI.GoogleMap extends CUI.Map
 		"cui-google-map"
 
 	__buildMap: ->
-		map = new google.maps.Map(@DOM,
-			zoom: @_zoom
-		)
+		map = new google.maps.Map(@DOM)
 
 		# Workaround to 'refresh' the map once it's in the DOM tree.
 		CUI.dom.waitForDOMInsert(node: @).done =>
 			google.maps.event.trigger(map, 'resize');
-			map.setCenter(@_center)
+			if @_zoomToFitAllMarkersOnInit
+				@zoomToFitAllMarkers()
+			else
+				map.setCenter(@_center)
+				map.setZoom(@_zoom)
 
 		map
 
@@ -88,16 +90,28 @@ class CUI.GoogleMap extends CUI.Map
 		delete @__listeners
 		delete @__map
 		delete @__selectedMarker
+		delete @__bounds
 		CUI.dom.remove(@DOM)
 
 		@__destroyed = true
+
+	zoomToFitAllMarkers: ->
+		CUI.dom.waitForDOMInsert(node: @).done =>
+			if @__markers.length > 0
+				@__bounds = new google.maps.LatLngBounds();
+				for marker in @__markers
+					@__bounds.extend(marker.position);
+				@__map.fitBounds(@__bounds);
+			else
+				@__map.setCenter(@_center)
+				@__map.setZoom(@_zoom)
 
 	__addCustomOption: (markerOptions, key, value) ->
 		switch key
 			when "cui_content"
 				markerOptions.infoWindow = CUI.GoogleMap.getInfoWindow(value)
 			else
-				assert(false, "CUI.GoogleMap", "Unknown option. Known options: ['cui_content']")
+				CUI.util.assert(false, "CUI.GoogleMap", "Unknown option. Known options: ['cui_content']")
 
 	@getInfoWindow: (content) ->
 		div = CUI.dom.div()
