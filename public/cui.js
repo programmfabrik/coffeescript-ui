@@ -46373,15 +46373,18 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.__buildMap = function() {
     var map;
-    map = new google.maps.Map(this.DOM, {
-      zoom: this._zoom
-    });
+    map = new google.maps.Map(this.DOM);
     CUI.dom.waitForDOMInsert({
       node: this
     }).done((function(_this) {
       return function() {
         google.maps.event.trigger(map, 'resize');
-        return map.setCenter(_this._center);
+        if (_this._zoomToFitAllMarkersOnInit) {
+          return _this.zoomToFitAllMarkers();
+        } else {
+          map.setCenter(_this._center);
+          return map.setZoom(_this._zoom);
+        }
       };
     })(this));
     return map;
@@ -46476,8 +46479,31 @@ CUI.GoogleMap = (function(superClass) {
     delete this.__listeners;
     delete this.__map;
     delete this.__selectedMarker;
+    delete this.__bounds;
     CUI.dom.remove(this.DOM);
     return this.__destroyed = true;
+  };
+
+  GoogleMap.prototype.zoomToFitAllMarkers = function() {
+    return CUI.dom.waitForDOMInsert({
+      node: this
+    }).done((function(_this) {
+      return function() {
+        var i, len, marker, ref;
+        if (_this.__markers.length > 0) {
+          _this.__bounds = new google.maps.LatLngBounds();
+          ref = _this.__markers;
+          for (i = 0, len = ref.length; i < len; i++) {
+            marker = ref[i];
+            _this.__bounds.extend(marker.position);
+          }
+          return _this.__map.fitBounds(_this.__bounds);
+        } else {
+          _this.__map.setCenter(_this._center);
+          return _this.__map.setZoom(_this._zoom);
+        }
+      };
+    })(this));
   };
 
   GoogleMap.prototype.__addCustomOption = function(markerOptions, key, value) {
@@ -46485,7 +46511,7 @@ CUI.GoogleMap = (function(superClass) {
       case "cui_content":
         return markerOptions.infoWindow = CUI.GoogleMap.getInfoWindow(value);
       default:
-        return assert(false, "CUI.GoogleMap", "Unknown option. Known options: ['cui_content']");
+        return CUI.util.assert(false, "CUI.GoogleMap", "Unknown option. Known options: ['cui_content']");
     }
   };
 
@@ -46557,7 +46583,11 @@ CUI.LeafletMap = (function(superClass) {
       node: this
     }).done((function(_this) {
       return function() {
-        map.setView(_this._center, _this._zoom);
+        if (_this._zoomToFitAllMarkersOnInit) {
+          _this.zoomToFitAllMarkers();
+        } else {
+          map.setView(_this._center, _this._zoom);
+        }
         return tileLayer.addTo(map);
       };
     })(this));
@@ -46631,6 +46661,22 @@ CUI.LeafletMap = (function(superClass) {
     }
   };
 
+  LeafletMap.prototype.zoomToFitAllMarkers = function() {
+    return CUI.dom.waitForDOMInsert({
+      node: this
+    }).done((function(_this) {
+      return function() {
+        var group;
+        if (_this.__markers.length > 0) {
+          group = new L.featureGroup(_this.__markers);
+          return _this.__map.fitBounds(group.getBounds().pad(0.05));
+        } else {
+          return _this.__map.setView(_this._center, _this._zoom);
+        }
+      };
+    })(this));
+  };
+
   LeafletMap.prototype.destroy = function() {
     this.__map.remove();
     return CUI.dom.remove(this.DOM);
@@ -46695,7 +46741,7 @@ CUI.Map = (function(superClass) {
       },
       zoom: {
         check: "Integer",
-        "default": 10
+        "default": 1
       },
       markersOptions: {
         check: Array,
@@ -46710,6 +46756,10 @@ CUI.Map = (function(superClass) {
       },
       onMarkerSelected: {
         check: Function
+      },
+      zoomToFitAllMarkersOnInit: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -46761,6 +46811,10 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.showMarkers = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".showMarkers needs to be implemented.");
+  };
+
+  Map.prototype.zoomToFitAllMarkers = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".zoomToFitAllMarkers needs to be implemented.");
   };
 
   Map.prototype.__addMarkerToMap = function() {
