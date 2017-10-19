@@ -16,7 +16,9 @@ class CUI.GoogleMap extends CUI.Map
 		"cui-google-map"
 
 	__buildMap: ->
-		map = new google.maps.Map(@DOM)
+		map = new google.maps.Map(@DOM,
+			zoomControl: @_zoomControl
+		)
 
 		# Workaround to 'refresh' the map once it's in the DOM tree.
 		CUI.dom.waitForDOMInsert(node: @).done =>
@@ -32,7 +34,6 @@ class CUI.GoogleMap extends CUI.Map
 	__bindOnClickMapEvent: ->
 		@__listeners.push(@__map.addListener('click', (event) =>
 			@__map.setCenter(event.latLng)
-			@__map.setZoom(@_zoom)
 			@setSelectedMarkerPosition(event.latLng)
 		))
 
@@ -105,6 +106,12 @@ class CUI.GoogleMap extends CUI.Map
 			else
 				@__map.setCenter(@_center)
 				@__map.setZoom(@_zoom)
+
+	zoomIn: ->
+		@__map.setZoom(@__map.getZoom() + 1)
+
+	zoomOut: ->
+		@__map.setZoom(@__map.getZoom() - 1)
 
 	__addCustomOption: (markerOptions, key, value) ->
 		switch key

@@ -13,7 +13,9 @@ class CUI.LeafletMap extends CUI.Map
 		"cui-leaflet-map"
 
 	__buildMap: ->
-		map = L.map(@DOM)
+		map = L.map(@DOM,
+			zoomControl: @_zoomControl
+		)
 
 		tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions)
 
@@ -22,7 +24,6 @@ class CUI.LeafletMap extends CUI.Map
 				@zoomToFitAllMarkers()
 			else
 				map.setView(@_center, @_zoom)
-
 			tileLayer.addTo(map)
 
 		map
@@ -35,7 +36,7 @@ class CUI.LeafletMap extends CUI.Map
 
 	__bindOnClickMapEvent: ->
 		@__map.on('click', (event) =>
-			@__map.setView(event.latlng, @_zoom)
+			@__map.setView(event.latlng)
 			@setSelectedMarkerPosition(event.latlng)
 		)
 
@@ -81,6 +82,12 @@ class CUI.LeafletMap extends CUI.Map
 				@__map.fitBounds(group.getBounds().pad(0.05));
 			else
 				@__map.setView(@_center, @_zoom)
+
+	zoomIn: ->
+		@__map.setZoom(@__map.getZoom() + 1)
+
+	zoomOut: ->
+		@__map.setZoom(@__map.getZoom() - 1)
 
 	destroy: ->
 		@__map.remove()

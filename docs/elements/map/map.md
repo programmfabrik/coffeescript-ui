@@ -23,7 +23,8 @@ map = new CUI.GoogleMap(options)
 - clickable `Boolean` (default: *true*)
 - selectedMarkerLabel `String`
 - onMarkerSelected `Function`
-- zoomToFitAllMarkersOnInit `Function` (default: *false*)
+- zoomToFitAllMarkersOnInit `Boolean` (default: *false*)
+- zoomControl `Boolean` (default: *true*)
 
 If **zoomToFitAllMarkersOnInit** is *true* and map has markers, **zoom** and **center** will be ignored. 
 
@@ -68,6 +69,14 @@ Hide all the markers registered.
 ### .showMarkers()
 
 Show all the markers registered.
+
+### .zoomIn()
+
+Increases zoom
+
+### .zoomOut()
+
+Decreases zoom
 
 ## New map implementation
 
