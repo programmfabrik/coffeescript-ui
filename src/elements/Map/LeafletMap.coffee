@@ -59,7 +59,7 @@ class CUI.LeafletMap extends CUI.Map
 			)
 
 			@__selectedMarker.on('dragend', () =>
-				@__map.setView(@getSelectedMarkerPosition(), @_zoom)
+				@__map.setView(@getSelectedMarkerPosition())
 				@_onMarkerSelected?(@getSelectedMarkerPosition())
 			)
 
