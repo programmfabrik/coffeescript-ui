@@ -25260,8 +25260,8 @@ CUI.Layer = (function(superClass) {
     dim_layer = CUI.dom.getDimensions(this.__layer.DOM);
     allowed_placements = (this._placements || this.knownPlacements).slice(0);
     wanted_placement = this._placement || allowed_placements[0];
-    body_scroll_top = document.body.scrollTop;
-    body_scroll_left = document.body.scrollLeft;
+    body_scroll_top = document.body.scrollTop + document.documentElement.scrollTop;
+    body_scroll_left = document.body.scrollLeft + document.documentElement.scrollLeft;
     if (this.__element) {
       dim_element = CUI.dom.getDimensions(this.__element);
     } else if (this._show_at_position) {
