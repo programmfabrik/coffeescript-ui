@@ -27816,14 +27816,14 @@ CUI.dom = (function() {
     }
     if (append) {
       CUI.util.assert(append_node instanceof Node, "CUI.dom.append", "Content needs to be instanceof Node, string, boolean, or number.", {
-        node: content
+        node: append_node
       });
       node.appendChild(append_node);
     } else {
       CUI.util.assert(append_node instanceof Node, "CUI.dom.prepend", "Content needs to be instanceof Node, string, boolean, or number.", {
-        node: content
+        node: append_node
       });
-      node.insertBefore(content, node.firstChild);
+      node.insertBefore(append_node, node.firstChild);
     }
     return node;
   };
@@ -46373,7 +46373,9 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.__buildMap = function() {
     var map;
-    map = new google.maps.Map(this.DOM);
+    map = new google.maps.Map(this.DOM, {
+      zoomControl: this._zoomControl
+    });
     CUI.dom.waitForDOMInsert({
       node: this
     }).done((function(_this) {
@@ -46394,7 +46396,6 @@ CUI.GoogleMap = (function(superClass) {
     return this.__listeners.push(this.__map.addListener('click', (function(_this) {
       return function(event) {
         _this.__map.setCenter(event.latLng);
-        _this.__map.setZoom(_this._zoom);
         return _this.setSelectedMarkerPosition(event.latLng);
       };
     })(this)));
@@ -46506,6 +46507,14 @@ CUI.GoogleMap = (function(superClass) {
     })(this));
   };
 
+  GoogleMap.prototype.zoomIn = function() {
+    return this.__map.setZoom(this.__map.getZoom() + 1);
+  };
+
+  GoogleMap.prototype.zoomOut = function() {
+    return this.__map.setZoom(this.__map.getZoom() - 1);
+  };
+
   GoogleMap.prototype.__addCustomOption = function(markerOptions, key, value) {
     switch (key) {
       case "cui_content":
@@ -46577,7 +46586,9 @@ CUI.LeafletMap = (function(superClass) {
 
   LeafletMap.prototype.__buildMap = function() {
     var map, tileLayer;
-    map = L.map(this.DOM);
+    map = L.map(this.DOM, {
+      zoomControl: this._zoomControl
+    });
     tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions);
     CUI.dom.waitForDOMInsert({
       node: this
@@ -46605,7 +46616,7 @@ CUI.LeafletMap = (function(superClass) {
   LeafletMap.prototype.__bindOnClickMapEvent = function() {
     return this.__map.on('click', (function(_this) {
       return function(event) {
-        _this.__map.setView(event.latlng, _this._zoom);
+        _this.__map.setView(event.latlng);
         return _this.setSelectedMarkerPosition(event.latlng);
       };
     })(this));
@@ -46675,6 +46686,14 @@ CUI.LeafletMap = (function(superClass) {
         }
       };
     })(this));
+  };
+
+  LeafletMap.prototype.zoomIn = function() {
+    return this.__map.setZoom(this.__map.getZoom() + 1);
+  };
+
+  LeafletMap.prototype.zoomOut = function() {
+    return this.__map.setZoom(this.__map.getZoom() - 1);
   };
 
   LeafletMap.prototype.destroy = function() {
@@ -46760,6 +46779,10 @@ CUI.Map = (function(superClass) {
       zoomToFitAllMarkersOnInit: {
         check: Boolean,
         "default": false
+      },
+      zoomControl: {
+        check: Boolean,
+        "default": true
       }
     });
   };
@@ -46815,6 +46838,14 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.zoomToFitAllMarkers = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".zoomToFitAllMarkers needs to be implemented.");
+  };
+
+  Map.prototype.zoomIn = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".zoomIn needs to be implemented.");
+  };
+
+  Map.prototype.zoomOut = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".zoomOut needs to be implemented.");
   };
 
   Map.prototype.__addMarkerToMap = function() {
