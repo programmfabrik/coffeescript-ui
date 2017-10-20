@@ -629,42 +629,242 @@ It sets the absolute position of the **element** with **offset.left** and **offs
     <span style="position: relative;">Hello world</span>
 </div>
 ```
-
-    CUI.dom.setAbsolutePosition(div, {top: 10, left: 10})
-    > <div style="position: absolute; top: 10px; left: 10px;">
-          <span style="position: relative;">Hello world</span>
-      </div>
-     
-    CUI.dom.setAbsolutePosition(span, {top: 50, left: 30})
-    > <span style="position: relative; top: 40px; left: 20px;">Hello world</span>
+```
+CUI.dom.setAbsolutePosition(div, {top: 10, left: 10})
+> <div style="position: absolute; top: 10px; left: 10px;">
+      <span style="position: relative;">Hello world</span>
+  </div>
+ 
+CUI.dom.setAbsolutePosition(span, {top: 50, left: 30})
+> <span style="position: relative; top: 40px; left: 20px;">Hello world</span>
+```     
      
 ### CUI.dom.getNode(node)
 
-- node `Object`
+- node `Object` | `HTMLElement`
 
 It returns the attribute *DOM* of **node** if it exists and **node** is not *window*, otherwise returns **node**.
 
 ### CUI.dom.isNode(node)
 
-- node `Object`
+- node `Object` | `HTMLElement`
 
-It returns *true* if **node** is true, otherwise returns *false*
+It returns *true* if **node** is one of the following: `document.documentElement` | `document` | `window` or if **node** has the attribute `nodeType` | `DOM`, otherwise returns *false*
+
+### CUI.dom.waitForDOMRemove(options) : CUI.Promise
+
+- options `Object`
+    - node `Object` | `HTMLElement` (Checked with *CUI.dom.isNode*)
+    - ms `Number` (default 200)
+    
+It returns a promise, which will be resolved when **node** was removed from the DOM tree.
+Parameter **ms** is the quantity of milliseconds to be waited until repeat the recursive function to check if the element was removed.
+
+### CUI.dom.waitForDOMInsert(options) : CUI.Promise
+
+- options `Object`
+    - node `Object` | `HTMLElement` (Checked with *CUI.dom.isNode*)
+    
+It returns a promise, which will be resolved when **node** was inserted in the DOM tree.
+
+### CUI.dom.insertChildAtPosition(node, nodeInsert, position)
+
+- node `Object` | `HTMLElement`
+- nodeInsert `Object` | `HTMLElement`
+- position `Number`
+
+Inserts **nodeInsert** as a child of **node** in the **position**.
+
+#### Example
+
+```
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-2"></div>
+    <div class="child-3"></div>
+</div>
+
+newDiv
+> <div class="child-new"></div>​
+
+CUI.dom.insertChildAtPosition(div, newDiv, 2)
+
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-2"></div>
+    <div class="child-new"></div>
+    <div class="child-3"></div>
+</div>
+```
+
+### CUI.dom.insertBefore(node, nodeBefore)
+
+- node `Object` | `HTMLElement`
+- nodeBefore `Object` | `HTMLElement`
+
+Inserts **nodeBefore** before **node**
+
+#### Example
+
+```
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-2"></div>
+    <div class="child-3"></div>
+</div>
+
+CUI.dom.insertBefore(divChild2, newDiv)
+
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-new"></div>
+    <div class="child-2"></div>
+    <div class="child-3"></div>
+</div>
+```
 
 
-### CUI.dom.hasAnimatedClone(node)
-### CUI.dom.initAnimatedClone(node, selector)
-### CUI.dom.syncAnimatedClone(node)
-### CUI.dom.removeAnimatedClone(node)
-### CUI.dom.waitForDOMRemove(options)
-### CUI.dom.waitForDOMInsert(options)
-### CUI.dom.insertChildAtPosition(node, node_insert, position)
-### CUI.dom.insertBefore(node, node_before)
-### CUI.dom.insertAfter(node, node_after)
-### CUI.dom.is(node, selector)
+### CUI.dom.insertAfter(node, nodeAfter)
+
+- node `Object` | `HTMLElement`
+- nodeAfter `Object` | `HTMLElement`
+
+Inserts **nodeAfter** after **node**
+
+#### Example
+
+```
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-2"></div>
+    <div class="child-3"></div>
+</div>
+
+CUI.dom.insertAfter(divChild2, newDiv)
+
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-2"></div>
+    <div class="child-new"></div>
+    <div class="child-3"></div>
+</div>
+```
+
 ### CUI.dom.matches(node, selector)
+
+- node `HTMLElement`
+- selector `String`
+
+Returns *true* if **node** matches with **selector**, otherwise returns *false*
+
+### CUI.dom.is(node, selector)
+
+- node `HTMLElement`
+- selector `HTMLElement` | `Function` | `String`
+
+Evaluates **node** depending of **selector** type. 
+If **selector** is:
+- `HTMLElement`: Returns *true* if **node** is equals to **selector** 
+- `Function`: Returns the result of invoke **selector** function with **node** as parameter.
+- `String`: Returns the result of invoke the function *CUI.dom.matches* with **node** and **selector** as parameters. 
+
+Returns *false* if **node** is not a `HTMLElement`
+
+#### Examples
+
+```
+aFunction: (node) -> return true
+
+div
+> <div class="node"></div>
+
+CUI.dom.is(div, aFunction)
+> true
+
+CUI.dom.is(div, div)
+> true
+
+CUI.dom.is(div, anotherDiv)
+> false
+
+CUI.dom.is(div, ".node")
+> true
+
+CUI.dom.is(div, ".anotherClass")
+> false
+```
+
 ### CUI.dom.matchSelector(element, selector, trySelf)
+
+- element `HTMLElement` | *document*
+- selector `String`
+- trySelf `Boolean` (default *false*)
+
+Returns an array of all the children elements of **element** which matches with **selector**.
+If **trySelf** is *true*, it will check if **element** matches as well. 
+
+#### Examples
+
+```
+<div class="node">
+    <div class="child-1"></div>
+    <div class="child-2"></div>
+    <div class="child-find"></div>
+    <div class="child-3"></div>
+</div>
+
+CUI.dom.matchSelector(div, ".child-find")
+> [div.child-find]
+
+CUI.dom.matchSelector(div, ".node", false)
+> []
+
+CUI.dom.matchSelector(div, ".node", true)
+> [div.node]
+    
+```
+
 ### CUI.dom.find(selector)
-### CUI.dom.elementsUntil(element, selector, untilElement)
+
+- selector `String`
+
+Invokes *CUI.dom.matchSelector* with *document.documentElement* as **element** parameter.
+
+### CUI.dom.elementsUntil(element, selector, untilElement) : `[Node]`
+
+- element `Node` | *window*
+- selector `String`
+- untilElement `Node` | *window*
+
+Return an array of elements collected starting from **element** until matches **selector**.
+The collection is upwards, and ends at **untilElement**.
+
+#### Examples
+
+
+```
+divNode
+> <div class="node">
+    <div></div>
+    <div></div>
+    <div class="parent-3">
+        <div class="child-3"></div>
+    </div>
+</div>
+  
+CUI.dom.elementsUntil(divChild3, ".parent-3", divNode)
+> (2) [div.child-3, div.parent-3]
+
+CUI.dom.elementsUntil(divChild3, ".child-3", divNode)
+> [div.child-3]
+
+CUI.dom.elementsUntil(divChild3, ".node", divNode)
+> (3) [div.child-3, div.parent-3, div.node]
+
+CUI.dom.elementsUntil(divParent3, ".node", divNode)
+> (2) [div.parent-3, div.node]
+```
+
 ### CUI.dom.parent(element)
 ### CUI.dom.closestUntil(element, selector, untilElement)
 ### CUI.dom.closest(element, selector)
@@ -672,6 +872,11 @@ It returns *true* if **node** is true, otherwise returns *false*
 ### CUI.dom.parents(element, selector, untilElement)
 ### CUI.dom.isInDom(element)
 ### CUI.dom.replaceWith(node, new_node)
+
+### CUI.dom.hasAnimatedClone(node)
+### CUI.dom.initAnimatedClone(node, selector)
+### CUI.dom.syncAnimatedClone(node)
+### CUI.dom.removeAnimatedClone(node)
 ### CUI.dom.getRect(element)
 ### CUI.dom.getComputedStyle(element)
 ### CUI.dom.setStyle(element, style, append)
