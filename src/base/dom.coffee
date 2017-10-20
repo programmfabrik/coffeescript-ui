@@ -1444,6 +1444,9 @@ class CUI.dom
 				remove_mousemoved_class()
 
 	@requestFullscreen: (elem) ->
+		if elem.hasOwnProperty('DOM')
+			elem = elem.DOM
+
 		CUI.util.assert(elem instanceof HTMLElement, "startFullscreen", "element needs to be instance of HTMLElement", element: elem)
 		if elem.requestFullscreen
 			elem.requestFullscreen()
