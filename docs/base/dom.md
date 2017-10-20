@@ -38,7 +38,7 @@ It invokes **CUI.dom.data** with *"element"* string as the key.
 
     CUI.dom.data(node, "element", element)
 
-### CUI.dom.removeData(node, key)
+### CUI.dom.removeData(node, key) : `Object`
 
 - node `HTMLElement`
 - key `String`
@@ -56,7 +56,7 @@ It removes the value referenced by the **key** inside the data of **node** and r
     CUI.dom.data(div, "id")
     > undefined
 
-### CUI.dom.findElements(node, selector, nodeFilter, maxEls, forward, siblingOnly, elements)
+### CUI.dom.findElements(node, selector, nodeFilter, maxEls, forward, siblingOnly, elements) : `[HTMLElement]`
 
 - node `HTMLElement` (default value: *document.documentElement*)
 - selector `String` (default value: *null*)
@@ -116,7 +116,7 @@ Usages:
     CUI.dom.findElements(div, ".child", false, 10, true, true)
     > []
 
-### CUI.dom.findElement(node, selector, nodeFilter, forward, siblingOnly)
+### CUI.dom.findElement(node, selector, nodeFilter, forward, siblingOnly) : `HTMLElement`
 
 It uses *CUI.dom.findElements* function and returns the first element found. It returns *null* if no element was found.
 
@@ -128,7 +128,7 @@ It uses *CUI.dom.findElements* function and returns the first element found. It 
     CUI.dom.findElement(div, ".no-exist")
     > null
 
-### CUI.dom.findNextElement(node, selector, nodeFilter, forward, siblingOnly)
+### CUI.dom.findNextElement(node, selector, nodeFilter, forward, siblingOnly) : `HTMLElement`
 
 It uses **CUI.dom.findElement** function and returns the first element found. 
 The difference between **CUI.dom.findElement** and this function is that this function also searches for the element inside his parent's siblings and so on.
@@ -139,35 +139,34 @@ The difference between **CUI.dom.findElement** and this function is that this fu
     > <div class=​"sibling previous-sibling">​…​</div>​
      
     CUI.dom.findNextElement(div, ".sibling", false, true)
-    > <div class=​"sibling next-sibling">​…​</div>​
+    > <div class="sibling next-sibling">…</div>​
 
-
-### CUI.dom.findPreviousElement(node, selector, nodeFilter)
+### CUI.dom.findPreviousElement(node, selector, nodeFilter) : `HTMLElement`
 
 It uses **CUI.dom.findNextElement** with the **forward** parameter with *false* as value.
 
 #### Example
 
     CUI.dom.findPreviousElement(div, ".sibling")
-    > <div class=​"sibling previous-sibling">​…​</div>​
-
-### CUI.dom.findNextVisibleElement(node, selector, forward)
+    > <div class="sibling previous-sibling">…</div>​
+    
+### CUI.dom.findNextVisibleElement(node, selector, forward) : `HTMLElement`
 
 It uses **CUI.dom.findNextElement** with a function as parameter to filter the output node. This node has to be visible. 
 
-### CUI.dom.findPreviousVisibleElement(node, selector)
+### CUI.dom.findPreviousVisibleElement(node, selector : `HTMLElement`
 
 It uses **CUI.dom.findNextVisibleElement** with the **forward** parameter with *false* as value
 
-### CUI.dom.findNextSiblings(node, selector, nodeFilter)
+### CUI.dom.findNextSiblings(node, selector, nodeFilter) : `[HTMLElement]`
 
 It uses **CUI.dom.findElements** with the **forward** parameter with *true* as value and the **siblingOnly** parameter with *true* as value
 
-### CUI.dom.findPreviousSiblings(node, selector, nodeFilter)
+### CUI.dom.findPreviousSiblings(node, selector, nodeFilter) : `[HTMLElement]`
 
 It uses **CUI.dom.findElements** with the **forward** parameter with *false* as value and the **siblingOnly** parameter with *true* as value
 
-### CUI.dom.children(node, filter)
+### CUI.dom.children(node, filter) : `[HTMLElement]`
 
 - node `HTMLElement`
 - filter `HTMLElement` | `Function` | `String`
@@ -199,13 +198,13 @@ If **filter** is a `Function`, it should receive **node** as parameter and retur
     > [span.child]
     
 
-### CUI.dom.firstElementChild(node, filter)
+### CUI.dom.firstElementChild(node, filter) : `HTMLElement`
 
 It gets the first child of **node** which returns true in the **filter** function. The iteration will be from first child to last child.
 
 Returns null if no child were found.
 
-### CUI.dom.firstElementChild(node, filter)
+### CUI.dom.firstElementChild(node, filter) : `HTMLElement`
 
 It gets the first child of **node** which returns true in the **filter** function. The iteration will be from last child to first child.
 
@@ -249,7 +248,7 @@ It removes the attribute **key** in the **node** and returns the **node**
     CUI.dom.removeAttribute(div, "id")
     > <div>​</div>​
 
-### CUI.dom.getAttribute(node, key)
+### CUI.dom.getAttribute(node, key) : `String` | `Number` | `PlainObject`
 
 - node `HTMLElement`
 - key `String`
@@ -262,7 +261,7 @@ It returns the *value* stored inside **key** attribute of **node**
     CUI.dom.getAttribute(div, "id")
     > "idValue"
 
-### CUI.dom.hasAttribute(node, key)
+### CUI.dom.hasAttribute(node, key) : `Boolean`
 
 Returns *false* or *true* if **node** has an attribute called **key**
 
@@ -283,8 +282,7 @@ Returns *false* or *true* if **node** has an attribute called **key**
     
 It invokes **CUI.dom.setAttribute** once for each **key-value** inside **map**
 
-
-### CUI.dom.width(element, value)
+### CUI.dom.width(element, value) : `Number`
 
 - element `HTMLElement`| `window` | `document`
 - value `Number`
@@ -305,7 +303,7 @@ If element is `window` or `document` it returns the width of the `window`. It's 
     CUI.dom.width(window)
     > 1100
     
-### CUI.dom.height(element, value)
+### CUI.dom.height(element, value) : `Number`
 
 - element `HTMLElement`| `window` | `document`
 - value `Number`
@@ -327,7 +325,7 @@ If element is `window` or `document` it returns the height of the `window`. It's
     > 800
 
 
-### CUI.dom.replace(node, content)
+### CUI.dom.replace(node, content) : `HTMLElement`
 
 - node `HTMLElement`
 - content `HTMLElement` | `String`
@@ -346,7 +344,7 @@ It removes the current content inside **node** and appends the **content** in th
         <span></span>
       </div>
 
-### CUI.dom.append(node, content)
+### CUI.dom.append(node, content) : `HTMLElement`
 
 - node `HTMLElement`
 - content `HTMLElement` | `Node` | `Number` | `Boolean` | `String` | `HTMLCollection` | `NodeList`
@@ -390,7 +388,7 @@ It is a extended version of *HTML DOM appendChild()*. It accepts different types
         "nodeTwo"
       </div>​
 
-### CUI.dom.prepend(node, content)
+### CUI.dom.prepend(node, content) : `HTMLElement`
 
 - node `HTMLElement`
 - content `HTMLElement` | `Node` | `Number` | `Boolean` | `String` | `HTMLCollection` | `NodeList`
@@ -411,7 +409,7 @@ It is a extended version of *HTML DOM insertBefore()*. It accepts different type
       
 *See CUI.dom.append examples, are very similar*
 
-### CUI.dom.remove(element)
+### CUI.dom.remove(element) : `HTMLElement`
 
 - element `HTMLElement`
 
@@ -428,11 +426,11 @@ It removes the **element** and returns it.
     div
     > <div></div>​
 
-### CUI.dom.empty(element)
+### CUI.dom.empty(element) : `HTMLElement`
 
 - element `HTMLElement`
 
-It removes all child elements inside the **element**
+It removes all child elements inside the **element** and returns **element**
 
     div
     > <div>
@@ -441,7 +439,7 @@ It removes all child elements inside the **element**
     CUI.dom.empty(div)
     > <div></div>​
     
-### CUI.dom.hasClass(element, class)
+### CUI.dom.hasClass(element, class) : `Boolean`
 
 - element `HTMLElement`
 - class `String`
@@ -463,7 +461,7 @@ By sending a `String` with the **classes** separated by spaces, it returns *true
     CUI.dom.hasClass(div, "a-class b-class")
     > true
 
-### CUI.dom.addClass(element, class)
+### CUI.dom.addClass(element, class) : `HTMLElement`
 
 - element `HTMLElement`
 - class `String`
@@ -498,7 +496,7 @@ It is possible to remove a list of classes, by sending a `String` with the **cla
     CUI.dom.removeClass(div, "b-class c-class")
     > <div class="d-class"></div>​
 
-### CUI.dom.setClass(element, class, on_off)
+### CUI.dom.setClass(element, class, on_off) : `Boolean`
 
 - element `HTMLElement`
 - class `String`
@@ -526,7 +524,7 @@ If **on_off** argument is *false*, it removes the **class**
     > <div class=​"a-class b-class">​</div>​
 
 
-### CUI.dom.toggleClass(element, cls)
+### CUI.dom.toggleClass(element, cls) : `Boolean`
 
 - element `HTMLElement`
 - class `String`
@@ -548,20 +546,20 @@ It adds or removes a **class** of the *classList* of the **element** depending i
     div
     > <div class=​"a-class">​</div>​
 
-### CUI.dom.setAria(element, key, value)
+### CUI.dom.setAria(element, key, value) : `[HTMLElement]`
 
 - element `HTMLElement`
 - key `String`
 - value `String` | `Boolean`
 
-It invokes **CUI.dom.setAttribute** appending the string "*aria-*" to the **key**
+It invokes **CUI.dom.setAttribute** appending the string "*aria-*" to the **key**. Returns **element**
 
 #### Example
 
     CUI.dom.setAria(div, "attributekey", "attributeValue")
     > <div aria-attributekey=​"attributeValue">​</div>​  
 
-### CUI.dom.getRelativeOffset(element, untilElement, ignore_margin)
+### CUI.dom.getRelativeOffset(element, untilElement, ignore_margin) : `{parent: [HTMLElement], top: [Number], left: [Number]}`
 
 - element `HTMLElement`
 - untilElement `HTMLElement` (default value: *null*)
@@ -596,7 +594,7 @@ If **ignore_margin** is *true*, the offset will includes the margin of the **ele
     CUI.dom.getRelativeOffset(p, child_parent, true)
     > {parent: div#child_parent, top: 15, left: 0}
 
-### CUI.dom.getRelativePosition(element)
+### CUI.dom.getRelativePosition(element) : `{top: [Number], left: [Number]}`
 
 - element `HTMLElement`
 
@@ -613,14 +611,14 @@ It returns the relative position of the **element**
     CUI.dom.getRelativePosition(p)
     > {top: 150, left: 50}
 
-### CUI.dom.setAbsolutePosition(element, offset)
+### CUI.dom.setAbsolutePosition(element, offset) : `HTMLElement`
 
 - element `HTMLElement`
 - offset `Object`
     - left `Number`
     - top `Number`
 
-It sets the absolute position of the **element** with **offset.left** and **offset.top** values
+It sets the absolute position of the **element** with **offset.left** and **offset.top** values. Returns **element**
 
 #### Example
 
@@ -639,19 +637,19 @@ CUI.dom.setAbsolutePosition(span, {top: 50, left: 30})
 > <span style="position: relative; top: 40px; left: 20px;">Hello world</span>
 ```     
      
-### CUI.dom.getNode(node)
+### CUI.dom.getNode(node) : `HTMLElement`
 
 - node `Object` | `HTMLElement`
 
 It returns the attribute *DOM* of **node** if it exists and **node** is not *window*, otherwise returns **node**.
 
-### CUI.dom.isNode(node)
+### CUI.dom.isNode(node) : `Boolean`
 
 - node `Object` | `HTMLElement`
 
 It returns *true* if **node** is one of the following: `document.documentElement` | `document` | `window` or if **node** has the attribute `nodeType` | `DOM`, otherwise returns *false*
 
-### CUI.dom.waitForDOMRemove(options) : CUI.Promise
+### CUI.dom.waitForDOMRemove(options) : `CUI.Promise`
 
 - options `Object`
     - node `Object` | `HTMLElement` (Checked with *CUI.dom.isNode*)
@@ -660,7 +658,7 @@ It returns *true* if **node** is one of the following: `document.documentElement
 It returns a promise, which will be resolved when **node** was removed from the DOM tree.
 Parameter **ms** is the quantity of milliseconds to be waited until repeat the recursive function to check if the element was removed.
 
-### CUI.dom.waitForDOMInsert(options) : CUI.Promise
+### CUI.dom.waitForDOMInsert(options) : `CUI.Promise`
 
 - options `Object`
     - node `Object` | `HTMLElement` (Checked with *CUI.dom.isNode*)
@@ -750,14 +748,14 @@ CUI.dom.insertAfter(divChild2, newDiv)
 </div>
 ```
 
-### CUI.dom.matches(node, selector)
+### CUI.dom.matches(node, selector) : `Boolean`
 
 - node `HTMLElement`
 - selector `String`
 
 Returns *true* if **node** matches with **selector**, otherwise returns *false*
 
-### CUI.dom.is(node, selector)
+### CUI.dom.is(node, selector) : `Boolean`
 
 - node `HTMLElement`
 - selector `HTMLElement` | `Function` | `String`
@@ -794,7 +792,7 @@ CUI.dom.is(div, ".anotherClass")
 > false
 ```
 
-### CUI.dom.matchSelector(element, selector, trySelf)
+### CUI.dom.matchSelector(element, selector, trySelf) : `[Node]`
 
 - element `HTMLElement` | *document*
 - selector `String`
@@ -824,7 +822,7 @@ CUI.dom.matchSelector(div, ".node", true)
     
 ```
 
-### CUI.dom.find(selector)
+### CUI.dom.find(selector) : `[Node]`
 
 - selector `String`
 
