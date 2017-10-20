@@ -29131,6 +29131,9 @@ CUI.dom = (function() {
 
   dom.requestFullscreen = function(elem) {
     var dfr, fsc_ev;
+    if (elem.hasOwnProperty('DOM')) {
+      elem = elem.DOM;
+    }
     CUI.util.assert(elem instanceof HTMLElement, "startFullscreen", "element needs to be instance of HTMLElement", {
       element: elem
     });
@@ -46466,6 +46469,9 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.destroy = function() {
     var i, j, len, len1, listener, marker, ref, ref1;
+    if (!this.__map) {
+      return;
+    }
     ref = this.__listeners;
     for (i = 0, len = ref.length; i < len; i++) {
       listener = ref[i];
@@ -46697,8 +46703,21 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.destroy = function() {
+    var i, len, marker, ref;
+    if (!this.__map) {
+      return;
+    }
+    ref = this.__markers;
+    for (i = 0, len = ref.length; i < len; i++) {
+      marker = ref[i];
+      this.__map.removeLayer(marker);
+    }
     this.__map.remove();
-    return CUI.dom.remove(this.DOM);
+    delete this.__markers;
+    delete this.__map;
+    delete this.__selectedMarker;
+    CUI.dom.remove(this.DOM);
+    return this.__destroyed = true;
   };
 
   return LeafletMap;
