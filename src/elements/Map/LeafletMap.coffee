@@ -90,8 +90,21 @@ class CUI.LeafletMap extends CUI.Map
 		@__map.setZoom(@__map.getZoom() - 1)
 
 	destroy: ->
+		if not @__map
+			return
+
+		for marker in @__markers
+			@__map.removeLayer(marker)
+
 		@__map.remove()
+
+		delete @__markers
+		delete @__map
+		delete @__selectedMarker
+
 		CUI.dom.remove(@DOM)
+		@__destroyed = true
+
 
 CUI.ready =>
 	if not CUI.LeafletMap.defaults.urlCss
