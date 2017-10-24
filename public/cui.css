@@ -3015,7 +3015,6 @@ label[data-label-clickable],
   border-style: none; }
 
 .cui-data-field {
-  flex: 1 1 auto;
   max-width: 100%;
   margin: 0; }
   .cui-data-field .cui-list-view-grid-quadrant-3 {
