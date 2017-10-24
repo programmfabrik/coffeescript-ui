@@ -89,6 +89,9 @@ class CUI.LeafletMap extends CUI.Map
 	zoomOut: ->
 		@__map.setZoom(@__map.getZoom() - 1)
 
+	resize: ->
+		@__map.invalidateSize()
+
 	destroy: ->
 		if not @__map
 			return
@@ -103,7 +106,7 @@ class CUI.LeafletMap extends CUI.Map
 		delete @__selectedMarker
 
 		CUI.dom.remove(@DOM)
-		@__destroyed = true
+		super()
 
 
 CUI.ready =>

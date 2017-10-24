@@ -96,8 +96,7 @@ class CUI.GoogleMap extends CUI.Map
 		delete @__selectedMarker
 		delete @__bounds
 		CUI.dom.remove(@DOM)
-
-		@__destroyed = true
+		super()
 
 	zoomToFitAllMarkers: ->
 		CUI.dom.waitForDOMInsert(node: @).done =>
@@ -115,6 +114,9 @@ class CUI.GoogleMap extends CUI.Map
 
 	zoomOut: ->
 		@__map.setZoom(@__map.getZoom() - 1)
+
+	resize: ->
+		google.maps.event.trigger(@__map, 'resize');
 
 	__addCustomOption: (markerOptions, key, value) ->
 		switch key

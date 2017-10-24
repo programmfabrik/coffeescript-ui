@@ -79,6 +79,9 @@ class CUI.Map extends CUI.DOMElement
 	zoomOut: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".zoomOut needs to be implemented.")
 
+	resize: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".resize needs to be implemented.")
+
 	__addMarkerToMap: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__addMarkerToMap needs to be implemented.")
 
