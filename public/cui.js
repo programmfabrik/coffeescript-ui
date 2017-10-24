@@ -46488,7 +46488,7 @@ CUI.GoogleMap = (function(superClass) {
     delete this.__selectedMarker;
     delete this.__bounds;
     CUI.dom.remove(this.DOM);
-    return this.__destroyed = true;
+    return GoogleMap.__super__.destroy.call(this);
   };
 
   GoogleMap.prototype.zoomToFitAllMarkers = function() {
@@ -46519,6 +46519,10 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.zoomOut = function() {
     return this.__map.setZoom(this.__map.getZoom() - 1);
+  };
+
+  GoogleMap.prototype.resize = function() {
+    return google.maps.event.trigger(this.__map, 'resize');
   };
 
   GoogleMap.prototype.__addCustomOption = function(markerOptions, key, value) {
@@ -46702,6 +46706,10 @@ CUI.LeafletMap = (function(superClass) {
     return this.__map.setZoom(this.__map.getZoom() - 1);
   };
 
+  LeafletMap.prototype.resize = function() {
+    return this.__map.invalidateSize();
+  };
+
   LeafletMap.prototype.destroy = function() {
     var i, len, marker, ref;
     if (!this.__map) {
@@ -46717,7 +46725,7 @@ CUI.LeafletMap = (function(superClass) {
     delete this.__map;
     delete this.__selectedMarker;
     CUI.dom.remove(this.DOM);
-    return this.__destroyed = true;
+    return LeafletMap.__super__.destroy.call(this);
   };
 
   return LeafletMap;
@@ -46865,6 +46873,10 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.zoomOut = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".zoomOut needs to be implemented.");
+  };
+
+  Map.prototype.resize = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".resize needs to be implemented.");
   };
 
   Map.prototype.__addMarkerToMap = function() {
