@@ -1476,6 +1476,7 @@ class CUI.dom
 		dfr.promise()
 
 	@exitFullscreen: ->
+		dfr = new CUI.Deferred()
 
 		if document.exitFullscreen
 			document.exitFullscreen()
@@ -1485,7 +1486,19 @@ class CUI.dom
 			document.mozCancelFullScreen()
 		else if (document.webkitExitFullscreen)
 			document.webkitExitFullscreen()
-		return
+
+		fullscreenEvent = CUI.Events.listen
+			type: "fullscreenchange"
+			node: window
+			call: () =>
+				if not CUI.dom.isFullscreen()
+					dfr.notify()
+				else
+					CUI.Events.ignore(fullscreenEvent)
+					dfr.resolve()
+				return
+
+		return dfr.promise()
 
 	@fullscreenElement: ->
 		document.fullscreenElement or
