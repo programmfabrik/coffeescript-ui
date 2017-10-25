@@ -29165,6 +29165,8 @@ CUI.dom = (function() {
   };
 
   dom.exitFullscreen = function() {
+    var dfr, fullscreenEvent;
+    dfr = new CUI.Deferred();
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.msExitFullscreen) {
@@ -29174,6 +29176,21 @@ CUI.dom = (function() {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+    fullscreenEvent = CUI.Events.listen({
+      type: "fullscreenchange",
+      node: window,
+      call: (function(_this) {
+        return function() {
+          if (!CUI.dom.isFullscreen()) {
+            dfr.notify();
+          } else {
+            CUI.Events.ignore(fullscreenEvent);
+            dfr.resolve();
+          }
+        };
+      })(this)
+    });
+    return dfr.promise();
   };
 
   dom.fullscreenElement = function() {
