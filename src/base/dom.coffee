@@ -1490,15 +1490,12 @@ class CUI.dom
 		fullscreenEvent = CUI.Events.listen
 			type: "fullscreenchange"
 			node: window
-			call: () =>
-				if not CUI.dom.isFullscreen()
-					dfr.notify()
-				else
-					CUI.Events.ignore(fullscreenEvent)
-					dfr.resolve()
+			only_once: true
+			call: =>
+				dfr.resolve()
 				return
 
-		return dfr.promise()
+		dfr.promise()
 
 	@fullscreenElement: ->
 		document.fullscreenElement or

@@ -29179,14 +29179,10 @@ CUI.dom = (function() {
     fullscreenEvent = CUI.Events.listen({
       type: "fullscreenchange",
       node: window,
+      only_once: true,
       call: (function(_this) {
         return function() {
-          if (!CUI.dom.isFullscreen()) {
-            dfr.notify();
-          } else {
-            CUI.Events.ignore(fullscreenEvent);
-            dfr.resolve();
-          }
+          dfr.resolve();
         };
       })(this)
     });
