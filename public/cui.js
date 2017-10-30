@@ -46591,10 +46591,6 @@ __webpack_require__(293);
 CUI.LeafletMap = (function(superClass) {
   extend(LeafletMap, superClass);
 
-  function LeafletMap() {
-    return LeafletMap.__super__.constructor.apply(this, arguments);
-  }
-
   LeafletMap.defaults = {
     urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css",
     tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -46602,6 +46598,14 @@ CUI.LeafletMap = (function(superClass) {
       attribution: attributionHtml
     }
   };
+
+  function LeafletMap(opts) {
+    this.opts = opts != null ? opts : {};
+    if (!CUI.LeafletMap.loadCSSPromise) {
+      CUI.LeafletMap.loadCSSPromise = this.__loadCSS();
+    }
+    LeafletMap.__super__.constructor.call(this, this.opts);
+  }
 
   LeafletMap.prototype.__getMapClassName = function() {
     return "cui-leaflet-map";
@@ -46617,12 +46621,14 @@ CUI.LeafletMap = (function(superClass) {
       node: this
     }).done((function(_this) {
       return function() {
-        if (_this._zoomToFitAllMarkersOnInit) {
-          _this.zoomToFitAllMarkers();
-        } else {
-          map.setView(_this._center, _this._zoom);
-        }
-        return tileLayer.addTo(map);
+        return CUI.LeafletMap.loadCSSPromise.done(function() {
+          if (_this._zoomToFitAllMarkersOnInit) {
+            _this.zoomToFitAllMarkers();
+          } else {
+            map.setView(_this._center, _this._zoom);
+          }
+          return tileLayer.addTo(map);
+        });
       };
     })(this));
     return map;
@@ -46741,25 +46747,24 @@ CUI.LeafletMap = (function(superClass) {
     return LeafletMap.__super__.destroy.call(this);
   };
 
+  LeafletMap.prototype.__loadCSS = function() {
+    var leafletDeferred;
+    leafletDeferred = new CUI.Deferred();
+    if (CUI.LeafletMap.defaults.urlCss) {
+      new CUI.CSSLoader().load({
+        url: CUI.LeafletMap.defaults.urlCss
+      }).done(function() {
+        return leafletDeferred.resolve();
+      });
+    } else {
+      leafletDeferred.resolve();
+    }
+    return leafletDeferred.promise();
+  };
+
   return LeafletMap;
 
 })(CUI.Map);
-
-CUI.ready((function(_this) {
-  return function() {
-    var leafletDeferred;
-    if (!CUI.LeafletMap.defaults.urlCss) {
-      return;
-    }
-    leafletDeferred = new CUI.Deferred();
-    new CUI.CSSLoader().load({
-      url: CUI.LeafletMap.defaults.urlCss
-    }).done(function() {
-      return leafletDeferred.resolve();
-    });
-    return leafletDeferred.promise();
-  };
-})(this));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

@@ -9,6 +9,12 @@ class CUI.LeafletMap extends CUI.Map
 		tileLayerOptions:
 			attribution: attributionHtml
 
+	constructor: (@opts = {}) ->
+		if not CUI.LeafletMap.loadCSSPromise
+			CUI.LeafletMap.loadCSSPromise = @__loadCSS()
+		super(@opts)
+
+
 	__getMapClassName: ->
 		"cui-leaflet-map"
 
@@ -20,11 +26,12 @@ class CUI.LeafletMap extends CUI.Map
 		tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions)
 
 		CUI.dom.waitForDOMInsert(node: @).done =>
-			if @_zoomToFitAllMarkersOnInit
-				@zoomToFitAllMarkers()
-			else
-				map.setView(@_center, @_zoom)
-			tileLayer.addTo(map)
+			CUI.LeafletMap.loadCSSPromise.done =>
+				if @_zoomToFitAllMarkersOnInit
+					@zoomToFitAllMarkers()
+				else
+					map.setView(@_center, @_zoom)
+				tileLayer.addTo(map)
 
 		map
 
@@ -108,15 +115,12 @@ class CUI.LeafletMap extends CUI.Map
 		CUI.dom.remove(@DOM)
 		super()
 
-
-CUI.ready =>
-	if not CUI.LeafletMap.defaults.urlCss
-		return
-
-	leafletDeferred = new CUI.Deferred()
-
-	# Load Leaflet CSS to avoid bundle it.
-	new CUI.CSSLoader().load(url: CUI.LeafletMap.defaults.urlCss).done ->
-		leafletDeferred.resolve()
-
-	leafletDeferred.promise()
+	__loadCSS: ->
+		leafletDeferred = new CUI.Deferred()
+		# Load Leaflet CSS to avoid bundle it.
+		if CUI.LeafletMap.defaults.urlCss
+			new CUI.CSSLoader().load(url: CUI.LeafletMap.defaults.urlCss).done ->
+				leafletDeferred.resolve()
+		else
+			leafletDeferred.resolve()
+		leafletDeferred.promise()
