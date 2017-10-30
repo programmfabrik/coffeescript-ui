@@ -33256,7 +33256,7 @@ CUI.DataTable = (function(superClass) {
       if (!field.form) {
         field.form = {};
       }
-      if (!field.form.label) {
+      if (!CUI.util.isString(field.form.label)) {
         field.form.label = field.name;
       }
       field_opts.push(field);
