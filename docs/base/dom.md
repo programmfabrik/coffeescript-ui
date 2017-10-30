@@ -834,11 +834,10 @@ Invokes *CUI.dom.matchSelector* with *document.documentElement* as **element** p
 - selector `String`
 - untilElement `Node` | *window*
 
-Return an array of elements collected starting from **element** until matches **selector**.
+Returns an array of elements collected starting from **element** until matches **selector**.
 The collection is upwards, and ends at **untilElement**.
 
 #### Examples
-
 
 ```
 divNode
@@ -863,14 +862,44 @@ CUI.dom.elementsUntil(divParent3, ".node", divNode)
 > (2) [div.parent-3, div.node]
 ```
 
-### CUI.dom.parent(element)
+### CUI.dom.parent(element) : `HTMLElement`
+
+- element `HTMLElement` | *document* | *window*
+
+Returns parent's node of **element**.
+ 
+If **element** is *document*, returns *window*
+
+If **element** is *window*, returns *null*
+
+#### Example
+```
+CUI.dom.parent(divChild)
+> <div class="parent">
+      <div class="child"></div>
+  </div>
+```
+
+### CUI.dom.closest(element, selector) : `Node`
+
+- element `Node` | *window*
+- selector `String`
+
+Returns the first node which matches the **selector**, starting from **element**.
+As *CUI.dom.elementsUntil*, it goes upwards, and ends at *window*.
+
 ### CUI.dom.closestUntil(element, selector, untilElement)
-### CUI.dom.closest(element, selector)
-### CUI.dom.parentsUntil(element, selector, untilElement)
+
+- element `Node` | *window*
+- selector `String`
+- untilElement `Node` | *window*
+
+It does the same as CUI.dom.closest, with the difference that it ends at **untilElement** instead of *window*.
+
 ### CUI.dom.parents(element, selector, untilElement)
+### CUI.dom.parentsUntil(element, selector, untilElement)
 ### CUI.dom.isInDom(element)
 ### CUI.dom.replaceWith(node, new_node)
-
 ### CUI.dom.hasAnimatedClone(node)
 ### CUI.dom.initAnimatedClone(node, selector)
 ### CUI.dom.syncAnimatedClone(node)
