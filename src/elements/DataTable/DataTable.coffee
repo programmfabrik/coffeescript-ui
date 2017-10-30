@@ -90,7 +90,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			if not field.form
 				field.form = {}
 
-			if not field.form.label
+			if not CUI.util.isString(field.form.label)
 				field.form.label = field.name
 
 			field_opts.push(field)
