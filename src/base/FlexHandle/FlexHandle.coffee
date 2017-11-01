@@ -138,7 +138,7 @@ class CUI.FlexHandle extends CUI.Element
 				return
 
 
-		# CUI.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
+		# console.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
 
 		drag_start_size = null
 
@@ -252,7 +252,7 @@ class CUI.FlexHandle extends CUI.Element
 
 			if @__isAlive()
 				if CUI.dom.getDimension(@__pane, "contentBox"+@__css_value) == 0
-					CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane)
+					console.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane)
 					CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, 100)
 
 			@__pane.classList.remove("cui-is-manually-sized")
@@ -281,12 +281,12 @@ class CUI.FlexHandle extends CUI.Element
 			true
 
 	__resize: ->
-# CUI.debug "FlexHandle.__resize", @__uniqueId, @isDestroyed(), @__isInDOM, @__isAlive()
+# console.debug "FlexHandle.__resize", @__uniqueId, @isDestroyed(), @__isInDOM, @__isAlive()
 
 		if not @__isAlive()
 			return
 
-		# CUI.info "FlexHandle[#{@getName()}].resize."
+		# console.info "FlexHandle[#{@getName()}].resize."
 		CUI.Events.trigger
 			type: "viewport-resize"
 			info:
@@ -320,7 +320,7 @@ class CUI.FlexHandle extends CUI.Element
 		if not CUI.util.isUndef(state.size)
 			@__setSize(state.size)
 
-		# CUI.debug "setState", state
+		# console.debug "setState", state
 		@
 
 
@@ -459,7 +459,7 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	open: ->
-# CUI.debug "FlexHandle.show", @__uniqueId, @isOpen()
+# console.debug "FlexHandle.show", @__uniqueId, @isOpen()
 		if @isOpen()
 			return @
 
@@ -477,7 +477,7 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	show: ->
-# CUI.debug "FlexHandle.show", @__uniqueId, @isShown()
+# console.debug "FlexHandle.show", @__uniqueId, @isShown()
 		if @isShown()
 			return @
 		@_element.classList.remove("cui-flex-handle-hidden")

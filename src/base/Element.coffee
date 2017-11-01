@@ -21,7 +21,7 @@ class CUI.Element
 
 		@readOpts()
 		if not @__initOptsCalled
-			CUI.warn("new "+@__cls+": CUI.Element::initOpts not called.", opts: @opts)
+			console.warn("new "+@__cls+": CUI.Element::initOpts not called.", opts: @opts)
 
 		@_onConstruct?(@)
 
@@ -180,7 +180,7 @@ class CUI.Element
 		CUI.util.assert(CUI.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
 		set_opts = {}
 		for k, v of check_map
-			# CUI.debug "check map", cls, k, v.check, v.check?.name
+			# console.debug "check map", cls, k, v.check, v.check?.name
 			if opts.hasOwnProperty(k) and opts[k] != undefined
 				value = opts[k]
 				exists = true
@@ -206,7 +206,7 @@ class CUI.Element
 				else
 					post = ""
 
-				# CUI.error("%c #{cls}: opts.#{k} is deprecated.", "font-weight: bold; color: red; font-size: 1.2em;", post)
+				# console.error("%c #{cls}: opts.#{k} is deprecated.", "font-weight: bold; color: red; font-size: 1.2em;", post)
 				console.warn("#{cls}: opts.#{k} is deprecated.", value)
 
 			if v.check and (not CUI.util.isNull(value) or mandatory)
@@ -251,6 +251,6 @@ class CUI.Element
 				console.warn("#{cls}: opts.#{k}, not supported. check_map: ", check_map, "opts:", opts)
 				# delete(opts[k])
 
-		# CUI.warn "#{@__cls}.opts = ", CUI.util.dump(set_opts)
+		# console.warn "#{@__cls}.opts = ", CUI.util.dump(set_opts)
 		# @__timeEnd("readOpts")
 		set_opts

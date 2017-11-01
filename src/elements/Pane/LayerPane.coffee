@@ -46,6 +46,6 @@ class CUI.LayerPane extends CUI.Layer
 		CUI.Layer::replace.call(@, @__pane)
 
 	destroy: ->
-		# CUI.debug "destroying pane", @__pane
+		# console.debug "destroying pane", @__pane
 		@__pane.destroy()
 		super()

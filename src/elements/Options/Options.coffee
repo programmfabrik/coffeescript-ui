@@ -208,7 +208,7 @@ class CUI.Options extends CUI.DataField
 		for value in check
 			for opt in @__options
 				if opt.value == value
-					CUI.debug "value is ok.", @hasData(), @getData()[@_name]
+					console.debug "value is ok.", @hasData(), @getData()[@_name]
 					return
 		throw new CUI.CheckValueError("Value is not in the options.")
 
@@ -224,7 +224,7 @@ class CUI.Options extends CUI.DataField
 
 	render: ->
 		super()
-		# CUI.debug "Options.render", @getUniqueId()
+		# console.debug "Options.render", @getUniqueId()
 
 		unsorted_options = @getArrayFromOpt("options")
 
@@ -260,7 +260,7 @@ class CUI.Options extends CUI.DataField
 			for a, idx in arr
 				delete(a.___idx)
 
-			# CUI.debug "order_value_array:", arr.join(", ")
+			# console.debug "order_value_array:", arr.join(", ")
 
 		order_options_by_value_array = =>
 			if @hasData()
@@ -274,7 +274,7 @@ class CUI.Options extends CUI.DataField
 			for value in arr
 				@__options_order.push(find_value_in_options(value, unsorted_options))
 
-			# CUI.debug "order in unsorted:", @__options_order.join(", ")
+			# console.debug "order in unsorted:", @__options_order.join(", ")
 
 			missing_opts = []
 			# second put the inactive values
@@ -302,7 +302,7 @@ class CUI.Options extends CUI.DataField
 		@__options = unsorted_options.slice(0)
 
 		if @__options_order
-			# CUI.debug "rendering with order", @__options_order.join(", ")
+			# console.debug "rendering with order", @__options_order.join(", ")
 			sort_options()
 
 		@__checkboxes = []
@@ -407,7 +407,7 @@ class CUI.Options extends CUI.DataField
 
 		if @hasData()
 			@__setDataOnOptions()
-			# CUI.debug "setting data on options", @__radio, @getName(), @getData(), CUI.util.dump(@__options_data)
+			# console.debug "setting data on options", @__radio, @getName(), @getData(), CUI.util.dump(@__options_data)
 
 		if @__checkboxes.length
 			if @_sortable and not CUI.util.isEmpty(@_sortable_hint)

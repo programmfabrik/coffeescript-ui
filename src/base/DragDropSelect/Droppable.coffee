@@ -267,7 +267,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 				# console.debug "cui-drop event", ev, info, @__dropTarget
 
-				# CUI.debug "cui-drop", ev.getCurrentTarget()
+				# console.debug "cui-drop", ev.getCurrentTarget()
 				if not @__dropTarget
 					return
 

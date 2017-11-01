@@ -23,7 +23,7 @@ class CUI.Deferred
 		@__uniqueId
 
 	__callback: (types, args) ->
-		# CUI.error("callback:", @getUniqueId(), types, @__callbacks.length)
+		# console.error("callback:", @getUniqueId(), types, @__callbacks.length)
 		@__runningCallbacks = true
 		idx = 0
 		while idx < @__callbacks.length
@@ -41,11 +41,11 @@ class CUI.Deferred
 			idx++
 
 		@__runningCallbacks = false
-		# CUI.error("callback DONE:", @getUniqueId(), types, @__callbacks.length)
+		# console.error("callback DONE:", @getUniqueId(), types, @__callbacks.length)
 		@
 
 	__register: (type, func) ->
-		# CUI.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
+		# console.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
 		#
 		CUI.util.assert(CUI.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
 		if @__state == "rejected" and type == "done"
@@ -92,7 +92,7 @@ class CUI.Deferred
 		@__finished_args = arguments
 		# console.error "Deferred.resolve", @getUniqueId(), @__finished_args
 		@__state = "resolved"
-		# CUI.error("Deferred.resolve: calling done")
+		# console.error("Deferred.resolve: calling done")
 		@__callback(["done", "always"], arguments)
 		@
 

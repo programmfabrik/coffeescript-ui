@@ -33,7 +33,7 @@ class CUI.DataField extends CUI.DOMElement
 			node: @DOM
 			call: (ev, info) =>
 				if not info?.element
-					CUI.warn("#{CUI.util.getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
+					console.warn("#{CUI.util.getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
 					return
 				# @_onDataChanged?(info.element.getData(), info.element, ev, info)
 				@_onDataChanged?(@getData(), info.element, ev, info)
@@ -44,7 +44,7 @@ class CUI.DataField extends CUI.DOMElement
 
 		@init()
 		if @_data and not CUI.isFunction(@_data)
-			# CUI.debug "setting private data: "+@, @_data
+			# console.debug "setting private data: "+@, @_data
 			@setData(@_data)
 
 		@__initDisabled()
@@ -60,7 +60,7 @@ class CUI.DataField extends CUI.DOMElement
 		@__opacity = 1
 		@_onInit?(@)
 
-		# CUI.debug "new: "+@
+		# console.debug "new: "+@
 
 	initOpts: ->
 		super()
@@ -127,12 +127,12 @@ class CUI.DataField extends CUI.DOMElement
 	init: ->
 
 	debug: ->
-		CUI.debug "----"+@+"----", @
+		console.debug "----"+@+"----", @
 		if @__data
-			CUI.debug "data:", @getData()
-			CUI.debug "value:", @getValue()
-			CUI.debug "init-value:", @getInitValue()
-			CUI.debug "check-changed-value:", @getCheckChangedValue()
+			console.debug "data:", @getData()
+			console.debug "value:", @getValue()
+			console.debug "init-value:", @getInitValue()
+			console.debug "check-changed-value:", @getCheckChangedValue()
 
 	toString: ->
 		"[#{@__cls}[#{@__uniqueId}, #{@_name or '<no name>'}]}"
@@ -242,7 +242,7 @@ class CUI.DataField extends CUI.DOMElement
 
 	setData: (data, init_data=true) ->
 		if @__data and @_data and not CUI.isFunction(@_data)
-			# CUI.debug "private data already set", @_data
+			# console.debug "private data already set", @_data
 			# we have private data set, ignore a setData from
 			# e.g. a Form, as the private data is more important
 			# than the Form data
@@ -257,14 +257,14 @@ class CUI.DataField extends CUI.DOMElement
 
 		CUI.util.assert(CUI.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
 
-		# CUI.debug "initData", @__data, @__data.hasOwnProperty
+		# console.debug "initData", @__data, @__data.hasOwnProperty
 
 		if @setDataOnOthers()
 			@callOnOthers("setData", @__data, init_data)
 
 		if init_data
 			@initData()
-		# CUI.debug "setting data", @__uniqueId, @__data
+		# console.debug "setting data", @__uniqueId, @__data
 		@
 
 	setDataOnOthers: ->
@@ -482,7 +482,7 @@ class CUI.DataField extends CUI.DOMElement
 				return false
 			undo.idx = idx
 			@__data[@_name] = undo.values[undo.idx]
-			# CUI.debug @__uniqueId, @__data[@_name]
+			# console.debug @__uniqueId, @__data[@_name]
 			@displayValue()
 			@triggerDataChanged
 				action: "goto"
@@ -496,7 +496,7 @@ class CUI.DataField extends CUI.DOMElement
 	initData: ->
 		@_onDataInit?(@, @__data)
 
-		# CUI.debug "initData", @__cls, @_name, @__data
+		# console.debug "initData", @__cls, @_name, @__data
 		if not @hasData()
 			return
 
@@ -522,7 +522,7 @@ class CUI.DataField extends CUI.DOMElement
 
 	initValue: ->
 		if CUI.util.isUndef(@__data[@_name])
-			# CUI.debug "initValue", @getName(), @__data[@_name], @getDefaultValue()
+			# console.debug "initValue", @getName(), @__data[@_name], @getDefaultValue()
 			@__data[@_name] = @getDefaultValue()
 		@
 
@@ -544,7 +544,7 @@ class CUI.DataField extends CUI.DOMElement
 
 		if CUI.util.isUndef(@__data._undo)
 			@__data._undo = {}
-		# CUI.debug @__data, @__data._undo, @_name
+		# console.debug @__data, @__data._undo, @_name
 		if CUI.util.isUndef(undo = @__data._undo[@_name])
 			undo = @__data._undo[@_name] = {}
 		undo
@@ -558,7 +558,7 @@ class CUI.DataField extends CUI.DOMElement
 		store_last = flags.initial_activate != true and flags.no_store != true
 
 		if store_last and (undo = @getUndo())
-			# CUI.debug(".undo[#{@_name}][#{@undo.idx}]", @__data[@_name], ">", value)
+			# console.debug(".undo[#{@_name}][#{@undo.idx}]", @__data[@_name], ">", value)
 			undo.values[++undo.idx] = value
 			# clean evertyhing after the undo idx
 			undo.values.splice(undo.idx+1)
@@ -567,7 +567,7 @@ class CUI.DataField extends CUI.DOMElement
 
 		@checkChanged()
 		if store_last and not flags.no_trigger
-			# CUI.debug @__cls+".storeValue: triggering data-changed: ", @
+			# console.debug @__cls+".storeValue: triggering data-changed: ", @
 			@triggerDataChanged
 				action: "store"
 				undo_idx: undo?.idx

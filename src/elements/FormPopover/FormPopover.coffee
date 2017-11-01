@@ -8,7 +8,7 @@
 class CUI.FormPopover extends CUI.Form
 	constructor: (@opts={}) ->
 		super(@opts)
-		# CUI.debug "FormPopover", @opts
+		# console.debug "FormPopover", @opts
 		@__old_display = null
 		@__old_render = null
 
@@ -126,7 +126,7 @@ class CUI.FormPopover extends CUI.Form
 
 	callOnFields: (func, args...) ->
 		for df in @getFields()
-			# CUI.debug df.getName(), func, args
+			# console.debug df.getName(), func, args
 			df[func].apply(df, args)
 		@
 
@@ -141,7 +141,7 @@ class CUI.FormPopover extends CUI.Form
 			display = CUI.dom.textEmpty(text)
 		else
 			display = text = ""
-			# CUI.debug("display", display,@__formPopover.getGroupData())
+			# console.debug("display", display,@__formPopover.getGroupData())
 
 		if @_renderDisplayButton
 			if render == false
@@ -156,7 +156,7 @@ class CUI.FormPopover extends CUI.Form
 				@__button.setText(render)
 
 			if @__old_render != null
-				# CUI.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
+				# console.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
 				CUI.Events.trigger
 					type: "content-resize"
 					node: @DOM
@@ -202,7 +202,7 @@ class CUI.FormPopover extends CUI.Form
 		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
 		pop_opts.class += " cui-form-popover-popover"
-		# CUI.debug "getPopoverOpts", pop_opts
+		# console.debug "getPopoverOpts", pop_opts
 		pop_opts
 
 	getPopover: ->
@@ -264,7 +264,7 @@ class CUI.FormPopover extends CUI.Form
 			type: "data-changed"
 			node: @__popover
 			call: (ev, info={}) =>
-				# CUI.debug("data changed on popover, render display", @_trigger_data_changed_while_open)
+				# console.debug("data changed on popover, render display", @_trigger_data_changed_while_open)
 				@__renderDisplay()
 				@__dataChanged = info
 				if @_trigger_data_changed_while_open

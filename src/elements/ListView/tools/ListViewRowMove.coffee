@@ -69,7 +69,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 	end_drag: (ev) ->
 		super(ev)
 
-		# CUI.debug "end drag...", @target
+		# console.debug "end drag...", @target
 		if not @target
 			return
 
@@ -126,7 +126,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 
 		diff = cell.clientY - row_rect.top_abs
 
-		# CUI.debug diff, cell.clientY, row_rect.top, row_rect.top_abs
+		# console.debug diff, cell.clientY, row_rect.top, row_rect.top_abs
 
 		# before
 		if diff < row_rect.height / 2

@@ -121,9 +121,9 @@ class CUI.Select extends CUI.Checkbox
 				@default_opt = first_value_opt
 				@__value = @default_opt.value
 			else
-				CUI.warn("Select #{@getName()}: did not find a value opt and no empty text is defined.", opts: @opts)
+				console.warn("Select #{@getName()}: did not find a value opt and no empty text is defined.", opts: @opts)
 
-			# CUI.debug "load options", @__uniqueId, @__options, @default_opt
+			# console.debug "load options", @__uniqueId, @__options, @default_opt
 		@__optionsPromise
 
 	setData: (data) ->
@@ -195,7 +195,7 @@ class CUI.Select extends CUI.Checkbox
 
 
 	getDefaultValue: ->
-		# CUI.debug "getDefaultValue", @__uniqueId, @default_opt
+		# console.debug "getDefaultValue", @__uniqueId, @default_opt
 		if @default_opt
 			@default_opt.value
 		else

@@ -45,7 +45,7 @@ class CUI.Lasso extends CUI.Draggable
 			throw("DragDropSelect: Creating lasso failed, element is not in DOM.")
 
 		CUI.globalDrag.lasso = CUI.dom.div("cui-lasso")
-		# CUI.debug "create lasso", @_lassoClass
+		# console.debug "create lasso", @_lassoClass
 		#
 		CUI.dom.append(@element, CUI.globalDrag.lasso)
 		CUI.globalDrag.elements = []
@@ -54,7 +54,7 @@ class CUI.Lasso extends CUI.Draggable
 		"default"
 
 	do_drag: (ev, $target, diff) ->
-		# CUI.debug "Lasso do drag", CUI.globalDrag.start, CUI.globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
+		# console.debug "Lasso do drag", CUI.globalDrag.start, CUI.globalDrag.$source[0] == @element[0], diff, @scroll?.top, @element[0].scrollTop
 		left = 0
 		top = 0
 		width = 0

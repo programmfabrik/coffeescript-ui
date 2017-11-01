@@ -66,7 +66,7 @@ class CUI
 							return
 						if node.getAttribute("contenteditable") == "true"
 							return
-					# CUI.info("swalloded BACKSPACE keydown event to prevent default")
+					# console.info("swalloded BACKSPACE keydown event to prevent default")
 					ev.preventDefault()
 				return
 
@@ -165,7 +165,7 @@ class CUI
 			else
 				ret = args[idx]
 
-			# CUI.debug "idx", idx, "ret", ret, "state:", ret?.state?()
+			# console.debug "idx", idx, "ret", ret, "state:", ret?.state?()
 
 			idx++
 
@@ -276,7 +276,7 @@ class CUI
 				if dfr.state() == "rejected"
 					return
 
-				# CUI.debug idx, chunk, chunkSize, dfr.state()
+				# console.debug idx, chunk, chunkSize, dfr.state()
 				dfr.notify(objects[idx], idx)
 				if idx == objects.length-1
 					dfr.resolve()
@@ -300,7 +300,7 @@ class CUI
 
 	# proxy methods
 	@proxyMethods: (target, source, methods) ->
-		# CUI.debug target, source, methods
+		# console.debug target, source, methods
 		for k in methods
 			target.prototype[k] = source.prototype[k]
 
@@ -409,10 +409,10 @@ class CUI
 
 		if idx == -1
 			idx = @__scheduledCallbacks.length
-			# CUI.debug "...schedule", idx
+			# console.debug "...schedule", idx
 		else
 			# function already scheduled
-			# CUI.info("scheduleCallback, already scheduled: ", @__scheduledCallbacks[idx].timeout, CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeout))
+			# console.info("scheduleCallback, already scheduled: ", @__scheduledCallbacks[idx].timeout, CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeout))
 			CUI.resetTimeout(@__scheduledCallbacks[idx].timeoutID)
 			return @__scheduledCallbacks[idx].promise
 
@@ -486,7 +486,7 @@ class CUI
 			# first time we put the real id
 			timeout.id = real_id
 		timeout.real_id = real_id
-		# CUI.error "new timeout:", timeoutID, "ms:", ms, "current timeouts:", @__timeouts.length
+		# console.error "new timeout:", timeoutID, "ms:", ms, "current timeouts:", @__timeouts.length
 		timeout.id
 
 	@countTimeouts: ->

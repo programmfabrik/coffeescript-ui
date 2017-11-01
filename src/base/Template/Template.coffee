@@ -90,7 +90,7 @@ class CUI.Template extends CUI.Element
 			opts.element = fh_el
 			fh = new CUI.FlexHandle(opts)
 			if not CUI.util.isEmpty(fh_name = fh.getName())
-				# CUI.warn("Template.initFlexHandles", fh_name)
+				# console.warn("Template.initFlexHandles", fh_name)
 				@__flexHandles[fh_name] = fh
 				fh.init()
 		# console.timeEnd(txt)
@@ -130,7 +130,7 @@ class CUI.Template extends CUI.Element
 				report.push("* #{k}: not found (#{sel})")
 				misses++
 			else if map_obj.length > 1
-				CUI.debug(k, v, "found more than once", map_obj, @DOM)
+				console.debug(k, v, "found more than once", map_obj, @DOM)
 				report.push("* #{k}: found more than once (#{sel})")
 				misses++
 			else
@@ -156,7 +156,7 @@ class CUI.Template extends CUI.Element
 		el_map
 
 	destroy: ->
-		# CUI.error "destroying...", CUI.util.getObjectClass(DOM.data(@DOM, "element")), CUI.util.getObjectClass(@DOM[0])
+		# console.error "destroying...", CUI.util.getObjectClass(DOM.data(@DOM, "element")), CUI.util.getObjectClass(@DOM[0])
 		CUI.dom.remove(@DOM)
 		delete(@map)
 		super()
@@ -196,7 +196,7 @@ class CUI.Template extends CUI.Element
 
 		if key
 			CUI.util.assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
-			# CUI.debug "Template.destroyingChildren", key, @map[key]
+			# console.debug "Template.destroyingChildren", key, @map[key]
 			CUI.dom.empty(@map[key])
 
 			is_empty = true
@@ -284,7 +284,7 @@ class CUI.Template extends CUI.Element
 			CUI.util.assert(@map[key], "#{@__cls}.isEmpty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			!@map[key].firstChild
 			# if fc
-			# 	CUI.debug "isEmpty: false", key, fc
+			# 	console.debug "isEmpty: false", key, fc
 			# !fc
 
 	removeEmptySlots: ->

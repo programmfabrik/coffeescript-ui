@@ -29,7 +29,7 @@ class CUI.DateTimeInputBlock extends CUI.InputBlock
 
 	__changeBlock: (block, blocks, diff) ->
 
-		CUI.debug "change block", block, blocks, diff, @_datetime, @_input_format.format
+		console.debug "change block", block, blocks, diff, @_datetime, @_input_format.format
 
 		mom = moment(@_datetime, @_input_format.input)
 
@@ -44,5 +44,5 @@ class CUI.DateTimeInputBlock extends CUI.InputBlock
 		for bl in blocks
 			bl.setString(mom.format(bl._matcher.match_str))
 
-		# CUI.debug "inc block", @_datetime, diff, mom.toString()
+		# console.debug "inc block", @_datetime, diff, mom.toString()
 		return block

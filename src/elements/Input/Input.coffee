@@ -307,7 +307,7 @@ class CUI.Input extends CUI.DataFieldInput
 			type: "focus"
 			node: @__input
 			call: (ev) =>
-				# CUI.debug "input focus event", @DOM[0], "immediate:", @hasImmediateFocus(), "shadow:", @hasShadowFocus()
+				# console.debug "input focus event", @DOM[0], "immediate:", @hasImmediateFocus(), "shadow:", @hasShadowFocus()
 				if @hasShadowFocus()
 					return
 
@@ -374,7 +374,7 @@ class CUI.Input extends CUI.DataFieldInput
 			type: "input"
 			node: @__input
 			call: (ev, info) =>
-				# CUI.debug "#{@__cls}", ev.type, ev.isDefaultPrevented()
+				# console.debug "#{@__cls}", ev.type, ev.isDefaultPrevented()
 				if not ev.isDefaultPrevented()
 					# this can happen thru CTRL-X, so we need to check again
 					@checkInput()
@@ -398,7 +398,7 @@ class CUI.Input extends CUI.DataFieldInput
 				@_onClick?(@, ev)
 				return
 
-		# CUI.debug "listening for dom insert on ", @__input
+		# console.debug "listening for dom insert on ", @__input
 		#
 		if @_content_size
 			CUI.dom.waitForDOMInsert(node: @__input)
@@ -411,9 +411,9 @@ class CUI.Input extends CUI.DataFieldInput
 		@__input
 
 	__setCursor: (ev) ->
-		# CUI.debug "setting timeout"
+		# console.debug "setting timeout"
 		CUI.setTimeout =>
-			# CUI.debug "focus?", @hasClass("focus")
+			# console.debug "focus?", @hasClass("focus")
 			@initCursor(ev)
 			if @cursor == null and
 				(s = @__input.selectionStart) == @__input.selectionEnd and
@@ -456,7 +456,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @__shadow
 			return
 
-		# CUI.debug "focus shadow input"
+		# console.debug "focus shadow input"
 		@__shadow_focused = true
 		@__shadow.value = @__input.value
 		@__shadow.focus()
@@ -466,7 +466,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @hasShadowFocus()
 			return
 
-		# CUI.debug "unfocus shadow input"
+		# console.debug "unfocus shadow input"
 		@setContentSize()
 		@__input.focus()
 		@showCursor()
@@ -492,7 +492,7 @@ class CUI.Input extends CUI.DataFieldInput
 		@
 
 	__initContentSize: ->
-		# CUI.debug "initContentSize", @getUniqueId(), @__contentSize
+		# console.debug "initContentSize", @getUniqueId(), @__contentSize
 
 		if @__contentSize
 			return
@@ -503,7 +503,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 		style = window.getComputedStyle(@__input)
 
-		# CUI.debug style
+		# console.debug style
 
 		css = {}
 		for k in [
@@ -520,7 +520,7 @@ class CUI.Input extends CUI.DataFieldInput
 			"fontVariantLigatures"
 			"fontWeight"
 		]
-			# CUI.debug k, style[k]
+			# console.debug k, style[k]
 			css[k] = style[k]
 
 		if not @_textarea
@@ -578,7 +578,7 @@ class CUI.Input extends CUI.DataFieldInput
 			if CUI.dom.height(@__input) != previous_height
 				changed = true
 
-			# CUI.error "__setContentSize", @_textarea, @__input.value, @__contentSize.value, h
+			# console.error "__setContentSize", @_textarea, @__input.value, @__contentSize.value, h
 		else
 			w = @__contentSize.scrollWidth
 			if @__contentSize.value.length == 0
@@ -644,7 +644,7 @@ class CUI.Input extends CUI.DataFieldInput
 			blocks.push new CUI.NumberInputBlock
 				start: match_start
 				string: match_str
-		# CUI.debug "blocks", blocks
+		# console.debug "blocks", blocks
 		blocks
 
 	__overwriteBlocks: (v) ->
@@ -669,7 +669,7 @@ class CUI.Input extends CUI.DataFieldInput
 		e = @__input.selectionEnd
 
 		for block, idx in blocks
-			# CUI.debug match_start, match_end, match_str
+			# console.debug match_start, match_end, match_str
 			if block.start == s and block.end == e
 				return block
 		return null
@@ -727,15 +727,15 @@ class CUI.Input extends CUI.DataFieldInput
 		for block, idx in blocks
 			if idx == blocks.length-1
 				break
-			# CUI.debug idx, block.end, blocks[idx+1].start
+			# console.debug idx, block.end, blocks[idx+1].start
 			parts_inbetween.push(v.substring(block.end, blocks[idx+1].start))
 
 		last_block = blocks[blocks.length-1]
 		parts_inbetween.push(v.substring(last_block.end))
 
-		# CUI.debug "blocks:", blocks
-		# CUI.debug "parts_inbetween:", parts_inbetween
-		# CUI.debug "s", s, "e", e, "v", v
+		# console.debug "blocks:", blocks
+		# console.debug "parts_inbetween:", parts_inbetween
+		# console.debug "s", s, "e", e, "v", v
 		block_move = 0
 		if ev.keyCode() in [9, 33, 34]
 			# TAB, PAGE UP/DOWN  # TAB removed (above)
@@ -746,7 +746,7 @@ class CUI.Input extends CUI.DataFieldInput
 				block_move = 1
 
 		for block, idx in blocks
-			# CUI.debug match_start, match_end, match_str
+			# console.debug match_start, match_end, match_str
 			if block.start == s and block.end == e
 				if block_move
 					block_jump_to = idx+block_move
@@ -762,7 +762,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 			if (s == e or (@cursor and @cursor.start == @cursor.end)) and block.start <= s <= block.end
 				# mark block
-				# CUI.debug "cursor in block", s, e
+				# console.debug "cursor in block", s, e
 				block_jump_to = idx
 				continue
 
@@ -797,7 +797,7 @@ class CUI.Input extends CUI.DataFieldInput
 		@
 
 	__removeShadowInput: ->
-		# CUI.error "removeShadowInput", @getUniqueId()
+		# console.error "removeShadowInput", @getUniqueId()
 		@__removeContentSize()
 
 		CUI.dom.remove(@__shadow)
@@ -818,7 +818,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if @__shadow
 			return
 
-		# CUI.debug "initShadowInput", @getUniqueId()
+		# console.debug "initShadowInput", @getUniqueId()
 		#
 		if @_textarea
 			@__shadow = CUI.dom.$element("textarea", "cui-input-shadow")
@@ -838,7 +838,7 @@ class CUI.Input extends CUI.DataFieldInput
 			node: @__shadow
 			call: (ev) =>
 				@__shadowInput(ev)
-				# CUI.debug ev.type, "unfocus shadow input"
+				# console.debug ev.type, "unfocus shadow input"
 				@__unfocusShadowInput()
 				new CUI.Event
 					type: "input"
@@ -850,9 +850,9 @@ class CUI.Input extends CUI.DataFieldInput
 			type: "keyup"
 			node: @__shadow
 			call: (ev) =>
-				# CUI.debug ev.type, "unfocus shadow input"
+				# console.debug ev.type, "unfocus shadow input"
 				@__unfocusShadowInput()
-				# CUI.debug "shadow", ev.type
+				# console.debug "shadow", ev.type
 				return
 
 		@
@@ -874,9 +874,9 @@ class CUI.Input extends CUI.DataFieldInput
 			@__input.value = @correctValueForInput(shadow_v)
 			@__input.setSelectionRange(@__shadow.selectionStart, @__shadow.selectionEnd)
 
-		# CUI.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
+		# console.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
 		@initCursor(ev)
-		# CUI.debug "shadow after init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
+		# console.debug "shadow after init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
 		return
 
 	checkValue: (v) ->
@@ -1044,11 +1044,11 @@ class CUI.Input extends CUI.DataFieldInput
 			return
 
 		if blocks.length == 0
-			CUI.warn "initCursor: 0 cursor blocks"
+			console.warn "initCursor: 0 cursor blocks"
 			@cursor = null
 			return
 
-		# CUI.debug "initCursor", ev.type, ev.which, ev.shiftKey # , blocks
+		# console.debug "initCursor", ev.type, ev.which, ev.shiftKey # , blocks
 
 		# find block which fits the current selection
 		# positions
@@ -1057,7 +1057,7 @@ class CUI.Input extends CUI.DataFieldInput
 		e = @__input.selectionEnd
 		len = @__input.value.length
 
-		# CUI.debug "requested: start: ",s, "end: ",e
+		# console.debug "requested: start: ",s, "end: ",e
 
 		@cursor =
 			shift: @cursor?.shift
@@ -1076,7 +1076,7 @@ class CUI.Input extends CUI.DataFieldInput
 		@cursor.start = @findBlock(blocks, s, "left")
 		@cursor.end = @findBlock(blocks, e, "right")
 
-		# CUI.debug "found cursors", @cursor.start, @cursor.end
+		# console.debug "found cursors", @cursor.start, @cursor.end
 
 		if @cursor.end?.idx < @cursor.start?.idx
 			@cursor.end = @cursor.start
@@ -1104,11 +1104,11 @@ class CUI.Input extends CUI.DataFieldInput
 					@cursor.start = block_right
 				else
 					@cursor.start = block_left
-			# CUI.debug "found block in dist:", dist_left, dist_right
+			# console.debug "found block in dist:", dist_left, dist_right
 
 		range = @getRangeFromCursor()
 
-		# CUI.debug "cursor", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
+		# console.debug "cursor", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
 		if not @cursor.start and not @cursor.end
 			@cursor.start = @cursor.end = blocks[blocks.length-1]
 		else if not @cursor.start
@@ -1116,12 +1116,12 @@ class CUI.Input extends CUI.DataFieldInput
 		else if not @cursor.end
 			@cursor.end = @cursor.start
 
-		# CUI.debug "cursor CLEANED", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
-		# CUI.debug "range", range
+		# console.debug "cursor CLEANED", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
+		# console.debug "range", range
 
 		if range[0] == s and range[1] == e
 			1
-			# CUI.debug "cursor is good"
+			# console.debug "cursor is good"
 		return
 
 	showCursor: (ev) ->
@@ -1152,10 +1152,10 @@ class CUI.Input extends CUI.DataFieldInput
 
 		ev.preventDefault()
 
-		# CUI.debug "moveCursor", ev.type, ev.which
+		# console.debug "moveCursor", ev.type, ev.which
 		blocks = @getCursorBlocks()
 		if blocks == false or blocks.length == 0
-			# CUI.debug "no block found"
+			# console.debug "no block found"
 			@cursor = null
 			return
 
@@ -1186,7 +1186,7 @@ class CUI.Input extends CUI.DataFieldInput
 		e_idx = @cursor.end.idx
 
 		if not blocks[s_idx] or not blocks[e_idx]
-			CUI.warn "repositioning cursor, not executing cursor move"
+			console.warn "repositioning cursor, not executing cursor move"
 			@initCursor(ev)
 			return
 
@@ -1212,7 +1212,7 @@ class CUI.Input extends CUI.DataFieldInput
 				@cursor.start = @cursor.end
 		else
 			c_idx = @cursor.shift
-			# CUI.debug "SHIFT ME! ", "start:", s_idx, "end:", e_idx, "shift:", c_idx
+			# console.debug "SHIFT ME! ", "start:", s_idx, "end:", e_idx, "shift:", c_idx
 			if left
 				if c_idx >= e_idx
 					if s_idx > 0
@@ -1226,7 +1226,7 @@ class CUI.Input extends CUI.DataFieldInput
 					if e_idx < blocks.length-1
 						@cursor.end = blocks[e_idx+1]
 
-		#CUI.debug "moveCursor new range", @getRangeFromCursor()
+		#console.debug "moveCursor new range", @getRangeFromCursor()
 		@
 
 	destroy: ->

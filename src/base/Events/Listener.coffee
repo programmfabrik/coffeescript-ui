@@ -63,7 +63,7 @@ class CUI.Listener extends CUI.Element
 			CUI.util.assert(@__node instanceof HTMLElement or @__node == document, "new CUI.Listener", "opts.selector requires the node to be instance of HTMLElement.", opts: @opts)
 
 		@__handleDOMEvent = (ev) =>
-			# CUI.debug "handleDOMEvent", ev.type, @getUniqueId(), @
+			# console.debug "handleDOMEvent", ev.type, @getUniqueId(), @
 			@__handleDOMEventInternal(ev)
 
 		if @_selector
@@ -107,7 +107,7 @@ class CUI.Listener extends CUI.Element
 		# or dispatched by Event.dispatch
 		if ev.__cui_event
 			event = ev.__cui_event
-			# CUI.error "use event from eventsevent", ev, eventsEvent.getType(), eventsEvent.getUniqueId()
+			# console.error "use event from eventsevent", ev, eventsEvent.getType(), eventsEvent.getUniqueId()
 		else
 			event = CUI.Event.createFromDOMEvent(ev)
 
@@ -115,11 +115,11 @@ class CUI.Listener extends CUI.Element
 			# the same, throughout its livetime
 			ev.__cui_event = event
 
-			# CUI.error "create event from DOM event", ev, eventsEvent.getType(), eventsEvent.getUniqueId()
+			# console.error "create event from DOM event", ev, eventsEvent.getType(), eventsEvent.getUniqueId()
 
 		event.setCurrentTarget(currentTarget)
 
-		# CUI.debug "handleDOMEvent", @__cls, ev.type, eventsEvent.__cls
+		# console.debug "handleDOMEvent", @__cls, ev.type, eventsEvent.__cls
 		if @isCapture()
 			ret = @handleEvent(event, "capture")
 		else
@@ -175,7 +175,7 @@ class CUI.Listener extends CUI.Element
 				return @__depth
 
 		# if @getNode() == document
-		#  	CUI.debug "listener", @getNode(), DOM.parents(@__node), ev_node
+		#  	console.debug "listener", @getNode(), DOM.parents(@__node), ev_node
 
 		if event.isSink()
 			for parent in CUI.dom.parents(@__node)
@@ -198,7 +198,7 @@ class CUI.Listener extends CUI.Element
 		event.__setListener(@)
 
 		if @isOnlyOnce()
-			# CUI.debug "destroying one time event listener...", event, @
+			# console.debug "destroying one time event listener...", event, @
 			@destroy()
 			# this calls "destroy" on us
 
@@ -210,10 +210,10 @@ class CUI.Listener extends CUI.Element
 		# try
 		ret = @_call.call(@, event, event.getInfo())
 		# catch ex
-		# 	CUI.error("Handle Event error  \"#{ex}\". Type: ", event.getType(), @)
+		# 	console.error("Handle Event error  \"#{ex}\". Type: ", event.getType(), @)
 		# 	throw(ex)
 
-		# CUI.debug "CUI.Listener.handleEvent", event, info
+		# console.debug "CUI.Listener.handleEvent", event, info
 		if CUI.util.isPromise(ret)
 			info = event.getInfo()
 			if not info.__waits

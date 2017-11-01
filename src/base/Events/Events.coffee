@@ -87,12 +87,12 @@ class CUI.Events extends CUI.Element
 		node = listener.getNode()
 		arr = @__getListenersForNode(node)
 		CUI.util.assert(arr, "CUI.Events.unregisterListeners", "Listeners not found for node.", node: node, listener: listener)
-		# CUI.error "unregistring listeenr", listener.getUniqueId()
+		# console.error "unregistring listeenr", listener.getUniqueId()
 		CUI.util.removeFromArray(listener, arr)
 		if arr.length == 0 and node instanceof HTMLElement
 			node.removeAttribute("cui-events-listener-element")
 			CUI.dom.removeData(node, "listeners")
-			# CUI.debug "removing listeners from node", node[0]
+			# console.debug "removing listeners from node", node[0]
 		@
 
 	# wait for an event on a node
@@ -187,7 +187,7 @@ class CUI.Events extends CUI.Element
 		exclude = event.isExcludeSelf()
 		node = event.getNode()
 
-		# CUI.debug "trigger event", event.getType(), info, event.getUniqueId(), bubble, sink, exclude, event.isInDOM()
+		# console.debug "trigger event", event.getType(), info, event.getUniqueId(), bubble, sink, exclude, event.isInDOM()
 		if bubble or not event.isInDOM()
 			event.dispatch()
 		else
@@ -201,7 +201,7 @@ class CUI.Events extends CUI.Element
 
 		if sink or (not sink and not bubble and not exclude and event.isInDOM())
 			# if event.getType() == "toolbox"
-			# 	CUI.debug "sink event...", event.getType(), event.getNode()
+			# 	console.debug "sink event...", event.getType(), event.getNode()
 			triggerListeners = []
 			for listener, idx in @__getActiveListeners()
 				if event.getType() not in listener.getTypes()
@@ -210,12 +210,12 @@ class CUI.Events extends CUI.Element
 				if listener.matchesEvent(event) == null
 					continue
 
-				# CUI.error "triggering...", event.getType()
+				# console.error "triggering...", event.getType()
 
 				triggerListeners.push(listener)
 
 			# if triggerListeners.length == 0
-			# 	CUI.warn("CUI.Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
+			# 	console.warn("CUI.Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
 
 			triggerListeners.sort (a, b) ->
 				CUI.util.compareIndex(a.getDepthFromLastMatchedEvent(), b.getDepthFromLastMatchedEvent())
@@ -225,7 +225,7 @@ class CUI.Events extends CUI.Element
 
 			for listener in triggerListeners
 				listener_node = listener.getNode()
-				# CUI.debug "listener:", listener, listener.getDepthFromLastMatchedEvent()
+				# console.debug "listener:", listener, listener.getDepthFromLastMatchedEvent()
 
 				if listener_node and stopNodes.length > 0
 					listener_node_parents = CUI.dom.parents(listener_node)
@@ -244,13 +244,13 @@ class CUI.Events extends CUI.Element
 				listener.handleEvent(event, "sink")
 
 				if event.isImmediatePropagationStopped()
-					# CUI.debug "immediate stopped!"
+					# console.debug "immediate stopped!"
 					break
 
 				# add to stop nodes if the depth is at least 0 meaning that
 				# the listener has a node
 				if event.isPropagationStopped() and listener_node
-					# CUI.debug "adding stop node", listener_node[0]
+					# console.debug "adding stop node", listener_node[0]
 					stopNodes.push(listener_node)
 
 		return CUI.when(waits)
@@ -305,11 +305,11 @@ class CUI.Events extends CUI.Element
 				register_other_type(type)
 		else
 			if event.hasOwnProperty("DOMEvent")
-				CUI.error("event.DOMEvent is obsolete")
+				console.error("event.DOMEvent is obsolete")
 				delete(event.DOMEvent)
 
 			if event.hasOwnProperty("CUIEvent")
-				CUI.error("event.CUIEvent is obsolete")
+				console.error("event.CUIEvent is obsolete")
 				delete(event.CUIEvent)
 
 			@__eventRegistry[event.type] = event

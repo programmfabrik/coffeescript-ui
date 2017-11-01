@@ -163,5 +163,5 @@ CUI.ready =>
 					originalEvent.scrollPageX = 0
 				originalEvent.scrollPageX += originalEvent.scrollLeft-oldScrollLeft
 
-				# CUI.debug ev.mousemoveEvent.originalEvent.scrollPageY
+				# console.debug ev.mousemoveEvent.originalEvent.scrollPageY
 			ev.stopPropagation()

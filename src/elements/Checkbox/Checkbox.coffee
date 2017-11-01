@@ -172,7 +172,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 		if not @hasData()
 			return
 
-		# CUI.debug "Checkbox.displayValue", @DOM[0], @getName(), @opts, @getOptValue(), @getOptValueUnchecked(), @getValue()
+		# console.debug "Checkbox.displayValue", @DOM[0], @getName(), @opts, @getOptValue(), @getOptValueUnchecked(), @getValue()
 		if @getOptValue() == @getValue()
 			@__checkbox.activate(initial_activate: true)
 		else

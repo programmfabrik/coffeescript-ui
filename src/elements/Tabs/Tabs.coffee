@@ -232,13 +232,13 @@ class CUI.Tabs extends CUI.SimplePane
 					@__setActiveMarker()
 
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
-					# CUI.error @__uniqueId, "activate"
+					# console.error @__uniqueId, "activate"
 
 			CUI.Events.listen
 				node: tab
 				type: "tab_deactivate"
 				call: =>
-					# CUI.error @__uniqueId, "deactivate"
+					# console.error @__uniqueId, "deactivate"
 					@__active_tab = null
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", "")
 
@@ -331,10 +331,10 @@ class CUI.Tabs extends CUI.SimplePane
 
 	getTab: (tab_or_idx_or_name) ->
 		found_tab = null
-		# CUI.debug tab_or_idx_or_name, @, @__tabs.length
+		# console.debug tab_or_idx_or_name, @, @__tabs.length
 		if CUI.util.isString(tab_or_idx_or_name)
 			for tab in @__tabs
-				# CUI.debug tab._name, tab_or_idx_or_name
+				# console.debug tab._name, tab_or_idx_or_name
 				if tab._name == tab_or_idx_or_name
 					found_tab = tab
 					break

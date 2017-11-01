@@ -18,7 +18,7 @@ class CUI.Test
 		console.error("Test failed: eq: ", a, b, @test_func.toString())
 
 	test: (@test_func) ->
-		# CUI.info CUI.util.getObjectClass(@)+"##{@idx}", f.toString()
+		# console.info CUI.util.getObjectClass(@)+"##{@idx}", f.toString()
 		@test_func()
 		@idx++
 

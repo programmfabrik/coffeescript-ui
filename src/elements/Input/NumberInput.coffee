@@ -203,7 +203,7 @@ class CUI.NumberInput extends CUI.Input
 			return false
 
 		if number.length > 0 and not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
-			# CUI.debug "number not matched", number
+			# console.debug "number not matched", number
 			return false
 
 		if not CUI.util.isNull(@__min)
@@ -218,7 +218,7 @@ class CUI.NumberInput extends CUI.Input
 				return false
 
 		if not points.match(/^([0-9]*)$/)
-			# CUI.debug "points not matched", points
+			# console.debug "points not matched", points
 			return false
 
 		if points.length > @_decimals

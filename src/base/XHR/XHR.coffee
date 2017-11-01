@@ -70,7 +70,7 @@ class CUI.XHR extends CUI.Element
 		@__xhr = new XMLHttpRequest()
 		@__xhr.withCredentials = @_withCredentials
 
-		# CUI.debug "XHR.readOpts", @
+		# console.debug "XHR.readOpts", @
 		@__readyStatesSeen = [@readyState()]
 		@__registerEvents("download")
 		@__registerEvents("upload")
@@ -125,9 +125,9 @@ class CUI.XHR extends CUI.Element
 				continue
 
 			do (fn, k) =>
-				# CUI.debug "register", type, k, fn
+				# console.debug "register", type, k, fn
 				xhr.addEventListener k.toLowerCase(), (ev) =>
-					# CUI.debug ev.type, type # , ev
+					# console.debug ev.type, type # , ev
 					@[fn](ev)
 		@
 
@@ -144,7 +144,7 @@ class CUI.XHR extends CUI.Element
 		# console.warn("Timeout:", @__readyStatesSeen, @)
 
 	__download_loadend: ->
-		# CUI.info("Loadend:", @__readyStatesSeen, @__status, @status())
+		# console.info("Loadend:", @__readyStatesSeen, @__status, @status())
 		if @isSuccess()
 			@__dfr.resolve(@response(), @status(), @statusText())
 		else
@@ -222,7 +222,7 @@ class CUI.XHR extends CUI.Element
 		@__xhr.responseType = @_responseType
 		@__xhr.timeout = @_timeout
 
-		# CUI.debug "URL:", @__xhr.responseType, @__url, @_form, @_json_data
+		# console.debug "URL:", @__xhr.responseType, @__url, @_form, @_json_data
 		if @_form
 			data = new FormData()
 			for k, v of @_form
@@ -244,7 +244,7 @@ class CUI.XHR extends CUI.Element
 
 		@__dfr = new CUI.Deferred()
 		@__xhr.send(send_data)
-		# CUI.debug @__xhr, @getAllResponseHeaders()
+		# console.debug @__xhr, @getAllResponseHeaders()
 		@__dfr.promise()
 
 	getXHR: ->

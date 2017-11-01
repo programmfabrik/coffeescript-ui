@@ -21,7 +21,7 @@ class CUI.DOMElement extends CUI.Element
 	registerTemplate: (template, add_default_classes=true) ->
 		CUI.util.assert(template instanceof CUI.Template, "#{CUI.util.getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{CUI.util.getObjectClass(template)}.", template: template)
 		if @__template
-			CUI.warn("#{CUI.util.getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
+			console.warn("#{CUI.util.getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
 			@__template.destroy()
 		@__template = template
 		@registerDOMElement(@__template.DOM, add_default_classes)

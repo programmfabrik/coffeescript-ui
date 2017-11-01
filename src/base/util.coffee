@@ -156,7 +156,7 @@ class CUI.util
 	# of coordinates and element
 	@elementGetPosition: (coordinates, el) ->
 		rect = CUI.dom.getRect(el)
-		# CUI.debug(coordinates.pageX, coordinates.pageY, offset);
+		# console.debug(coordinates.pageX, coordinates.pageY, offset);
 		position =
 			left: coordinates.pageX  - rect.left # (offset.left + $el.cssInt("border-left-width"))
 			top: coordinates.pageY - rect.top # (offset.top + $el.cssInt("border-top-width"))

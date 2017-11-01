@@ -52,7 +52,7 @@ CUI.__when = =>
 		do (promise, idx) =>
 			promise[finished_func] =>
 				# console.error "CUI.when, resolve...", dfr.getUniqueId(), done_count, promises.length
-				# CUI.debug "promise done", done_count, promises.length
+				# console.debug "promise done", done_count, promises.length
 				finished_count++
 
 				if stop_on_failure and arguments.length <= 1

@@ -51,7 +51,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 	readOpts: ->
 		super()
 		if @_orientation == "horizontal"
-			CUI.error("new CUI.ItemList, orientation == horizontal needs implementation!")
+			console.error("new CUI.ItemList, orientation == horizontal needs implementation!")
 		@
 
 	setActiveIdx: (@__active_idx) ->
@@ -80,7 +80,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		items = @__getItems(event)
 		if CUI.util.isPromise(items)
-			CUI.warn("ItemList.hasItems: opts.items Function returned a Promise. Set opts.has_items to true, in order to avoid the call of that Function.")
+			console.warn("ItemList.hasItems: opts.items Function returned a Promise. Set opts.has_items to true, in order to avoid the call of that Function.")
 			true
 		else
 			items.length > 0
@@ -175,7 +175,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						return
 
 					if item.content
-						# CUI.debug "adding item content", item.content
+						# console.debug "adding item content", item.content
 						CUI.dom.append(@__body.DOM, item.content.DOM or item.content)
 						return
 

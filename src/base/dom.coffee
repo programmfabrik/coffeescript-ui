@@ -55,14 +55,14 @@ class CUI.dom
 	# find an element starting from node, with going up
 	@findNextElement: (node, selector, nodeFilter=false, forward=true, siblingOnly=true) ->
 		el = @findElement(node, selector, nodeFilter, forward, siblingOnly)
-		# CUI.debug "find next element", node, el
+		# console.debug "find next element", node, el
 		if el
 			return el
 
 		# find next parent node which has a sibling
 		while true
 			node = node.parentNode
-			# CUI.debug "checking next node", node
+			# console.debug "checking next node", node
 
 			if not node
 				return null
@@ -72,7 +72,7 @@ class CUI.dom
 			else
 				sibling = node.previousElementSibling
 
-			# CUI.debug "sibling", forward, sibling
+			# console.debug "sibling", forward, sibling
 
 			if sibling
 				break
@@ -84,7 +84,7 @@ class CUI.dom
 
 	@findNextVisibleElement: (node, selector, forward=true) ->
 		@findNextElement(node, selector, ((node) =>
-			# CUI.debug "node visible?", DOM.isVisible(node), node
+			# console.debug "node visible?", DOM.isVisible(node), node
 			CUI.dom.isVisible(node)), forward)
 
 	@findPreviousVisibleElement: (node, selector) ->
@@ -107,18 +107,18 @@ class CUI.dom
 			check_node = true
 
 		accept_node = not nodeFilter or nodeFilter(node)
-		# CUI.debug "findElement", maxEls, node, accept_node, nodeFilter
+		# console.debug "findElement", maxEls, node, accept_node, nodeFilter
 
 		if check_node and accept_node
-			# CUI.debug "checking node", node
+			# console.debug "checking node", node
 			if selector == null or CUI.dom.matches(node, selector)
-				# CUI.debug "node ok..."
+				# console.debug "node ok..."
 				elements.push(node)
 				if elements.length == maxEls
-					# CUI.debug "enough!", elements.length, maxEls
+					# console.debug "enough!", elements.length, maxEls
 					return elements
 			else
-				; # CUI.debug "node not ok..."
+				; # console.debug "node not ok..."
 
 
 		if forward
@@ -128,21 +128,21 @@ class CUI.dom
 			child = node.lastElementChild
 			sibling = node.previousElementSibling
 
-		# CUI.debug "child/sibling", child, sibling, siblingOnly
+		# console.debug "child/sibling", child, sibling, siblingOnly
 
 		if child and not siblingOnly and accept_node
-			# CUI.debug "dive to", node
+			# console.debug "dive to", node
 			@findElements(child, selector, nodeFilter, maxEls, forward, siblingOnly, elements)
 			if elements.length == maxEls
 				return elements
 
 		if sibling
-			# CUI.debug "sibling to", sibling
+			# console.debug "sibling to", sibling
 			@findElements(sibling, selector, nodeFilter, maxEls, forward, siblingOnly, elements)
 			if elements.length == maxEls
 				return elements
 
-		# CUI.debug "nothing found, returning with", elements.length
+		# console.debug "nothing found, returning with", elements.length
 		return elements
 
 
@@ -803,9 +803,9 @@ class CUI.dom
 	@matchSelector: (docElem, sel, trySelf=false) ->
 		CUI.util.assert(docElem instanceof HTMLElement or docElem == document, "CUI.dom.matchSelector", "docElem needs to be instanceof HTMLElement or document.", docElem: docElem)
 
-		# CUI.error "matchSelector", docElem, sel, trySelf
+		# console.error "matchSelector", docElem, sel, trySelf
 		list = docElem.querySelectorAll(sel)
-		# CUI.debug "DONE"
+		# console.debug "DONE"
 
 		if trySelf and list.length == 0
 			if docElem[CUI.dom.matchFunc](sel)

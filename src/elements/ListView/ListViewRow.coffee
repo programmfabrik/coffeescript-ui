@@ -87,7 +87,7 @@ class CUI.ListViewRow extends CUI.Element
 	moveRow: null
 
 	removeColumns: ->
-		# CUI.debug "this", @, @columns
+		# console.debug "this", @, @columns
 		for c in @columns
 			c.setRow()
 		@columns.splice(0)
@@ -151,10 +151,10 @@ class CUI.ListViewRow extends CUI.Element
 
 	select: (ev) ->
 		if @selected
-			CUI.debug "already selected", @
+			console.debug "already selected", @
 			return
 		if not @isSelectable()
-			CUI.debug "not selectable", @
+			console.debug "not selectable", @
 			return
 		@selected = true
 

@@ -118,7 +118,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 	addRow: (data={}) ->
 		@rows.push(data)
-		# CUI.debug "creating new data node"
+		# console.debug "creating new data node"
 		new_node = new CUI.DataTableNode
 			dataTable: @
 			data: data
@@ -132,7 +132,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@displayValue()
 		else
 			@listView.appendRow(new_node)
-		# CUI.debug "data-changed on CUI.DataTable PLUS storing values:", CUI.util.dump(@rows)
+		# console.debug "data-changed on CUI.DataTable PLUS storing values:", CUI.util.dump(@rows)
 		new_node
 
 	updateButtons: ->
@@ -196,7 +196,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				onBlur: (input) =>
 					input.setValue(null)
 				onDataChanged: =>
-					CUI.debug "input changed to", page_data.page
+					console.debug "input changed to", page_data.page
 					CUI.scheduleCallback
 						ms: 1000
 						call: load_page
@@ -309,7 +309,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				# present us as a whole
 				ev.stopPropagation()
 				# store value triggers a new data-changed
-				# CUI.debug "data-changed on CUI.DataTable storing values:", CUI.util.dump(@rows)
+				# console.debug "data-changed on CUI.DataTable storing values:", CUI.util.dump(@rows)
 
 				@storeValue(CUI.util.copyObject(@rows, true))
 				return

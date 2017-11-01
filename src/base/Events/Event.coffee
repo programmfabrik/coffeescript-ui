@@ -222,7 +222,7 @@ class CUI.Event extends CUI.Element
 		@__defaultPrevented
 
 	dispatch: ->
-		# CUI.info "CUI.Events.trigger jQuery DOMEvent", event.getType()
+		# console.info "CUI.Events.trigger jQuery DOMEvent", event.getType()
 		CUI.util.assert(not @getNativeEvent(), "CUI.Event.dispatch", "Can only dispatch once.", event: @)
 		ev = document.createEvent("Event")
 		ev.initEvent(@getType(), @isBubble(), true)
@@ -246,7 +246,7 @@ class CUI.Event extends CUI.Element
 		# we set it now
 		@setNativeEvent(ev)
 
-		# CUI.error "dispatch event on node:", @getType(), node, @getUniqueId(), ev
+		# console.error "dispatch event on node:", @getType(), node, @getUniqueId(), ev
 		node.dispatchEvent(ev)
 		ev
 
@@ -295,6 +295,6 @@ class CUI.Event extends CUI.Element
 			bubble: event.bubbles
 			node: event.target
 
-		# CUI.debug "Event.createFromDOMEvent", event.type, eventClass.name, ev.getUniqueId()
+		# console.debug "Event.createFromDOMEvent", event.type, eventClass.name, ev.getUniqueId()
 		ev.setNativeEvent(event)
 		ev

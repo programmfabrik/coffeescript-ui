@@ -123,7 +123,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		@
 
 	init: ->
-		# CUI.debug "Draggable", @options.selector
+		# console.debug "Draggable", @options.selector
 		CUI.util.assert(not @_helper_contain_element or CUI.dom.closest(@_element, @_helper_contain_element), "new CUI.sDraggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
 
 		CUI.dom.addClass(@element, "no-user-select")
@@ -184,7 +184,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# ev.getMousedownEvent?().preventDefault()
 
 		if CUI.globalDrag == false
-			# CUI.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
+			# console.debug("not creating drag handle, opts.create returned 'false'.", ev, @)
 			return
 
 		# ev.preventDefault()
@@ -383,7 +383,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			instance: @__ref
 			call: (ev) =>
 				# console.debug "event received: ", ev.getType()
-				# CUI.debug "draggable", ev.type
+				# console.debug "draggable", ev.type
 				if not CUI.globalDrag
 					return
 
@@ -393,7 +393,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 				end_drag(ev)
 				return ev.stop()
-				# CUI.debug "mouseup, resetting drag stuff"
+				# console.debug "mouseup, resetting drag stuff"
 				#
 		return
 
@@ -406,7 +406,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		# we need to end the drag are initialized before in init drag,
 		# so they are executed before
 
-		# CUI.debug "start drag", diff
+		# console.debug "start drag", diff
 		@_dragstart?(ev, CUI.globalDrag)
 		@init_helper(ev, $target, diff)
 		CUI.dom.addClass(CUI.globalDrag.$source, @_dragClass)
@@ -470,8 +470,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if not CUI.globalDrag.dragoverTarget
 			return
 
-		# CUI.debug "sending pf_dragleave", CUI.globalDrag.dragoverTarget
-		# CUI.debug "pf_dragleave.event", CUI.globalDrag.dragoverTarget
+		# console.debug "sending pf_dragleave", CUI.globalDrag.dragoverTarget
+		# console.debug "pf_dragleave.event", CUI.globalDrag.dragoverTarget
 
 		CUI.Events.trigger
 			node: CUI.globalDrag.dragoverTarget
@@ -500,7 +500,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		@
 
 	end_drag: (ev) ->
-		# CUI.debug CUI.globalDrag.dragoverTarget, ev.getType(), ev
+		# console.debug CUI.globalDrag.dragoverTarget, ev.getType(), ev
 		if @isDestroyed()
 			return
 		@__finish_drag(ev)
@@ -664,7 +664,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			if CUI.util.isUndef(pos[k])
 				pos[k] = v
 
-		# CUI.debug "limitRect", pos, defaults, limitRect
+		# console.debug "limitRect", pos, defaults, limitRect
 
 		for key in [
 			"min_w"
@@ -709,17 +709,17 @@ class CUI.Draggable extends CUI.DragDropSelect
 			pos[skey]-=diff
 
 			if skey == "h" and "s" in pos.fix
-				# CUI.debug "FIX y"
+				# console.debug "FIX y"
 				pos.y += diff
 			if skey == "w" and "e" in pos.fix
-				# CUI.debug "FIX x"
+				# console.debug "FIX x"
 				pos.x += diff
 			if skey == "x" and "e" in pos.fix
-				# CUI.debug "FIX w"
+				# console.debug "FIX w"
 				pos.w += diff
 			if skey == "y" and "s" in pos.fix
-				# CUI.debug "FIX h"
+				# console.debug "FIX h"
 				pos.h += diff
 
-		# CUI.debug "limitRect AFTER", pos, diff
+		# console.debug "limitRect AFTER", pos, diff
 		return pos

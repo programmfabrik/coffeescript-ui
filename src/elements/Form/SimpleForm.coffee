@@ -142,7 +142,7 @@ class CUI.SimpleForm extends CUI.DataField
 			CUI.util.assert(not CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
 
 		if @_name and not CUI.isFunction(data)
-			# CUI.debug "init data ", @_name, data, 1
+			# console.debug "init data ", @_name, data, 1
 			#
 
 			if @__checkbox
@@ -181,7 +181,7 @@ class CUI.SimpleForm extends CUI.DataField
 		# are not yet initialized
 		#
 		if CUI.isFunction(@_fields) and @__fields and @__fields.length == 0
-			# CUI.debug "fields depends on data...", @__data
+			# console.debug "fields depends on data...", @__data
 			@initFields()
 			@callOnOthers("setData", @__data)
 		@
@@ -286,7 +286,7 @@ class CUI.SimpleForm extends CUI.DataField
 		# 			continue
 		# 		table.classList.add(cls+"-table")
 
-		# CUI.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
+		# console.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
 
 		if @_class_table
 			CUI.dom.addClass(container, @_class_table)
@@ -514,7 +514,7 @@ class CUI.SimpleForm extends CUI.DataField
 				if not info.element
 					return
 
-				# CUI.debug "Form data-changed", @getData()
+				# console.debug "Form data-changed", @getData()
 
 				if info.action in ["goto", "reset"]
 					return
@@ -565,7 +565,7 @@ class CUI.SimpleForm extends CUI.DataField
 			return true
 
 		l = @__undo.log[--@__undo.idx]
-		# CUI.debug ""+@getRootForm(), l.name, @getRootForm().getFieldsByName(l.name)
+		# console.debug ""+@getRootForm(), l.name, @getRootForm().getFieldsByName(l.name)
 		for f in @getRootForm().getFieldsByName(l.name)
 			f.goto(l.undo_idx)
 		return true
@@ -623,10 +623,10 @@ class CUI.SimpleForm extends CUI.DataField
 	getFieldsByName: (name, found_fields = []) ->
 		CUI.util.assert(CUI.util.isString(name), "#{@__cls}.getFieldsByName", "name must be String.", name: name)
 
-		# CUI.debug @dataFields, @, typeof(@getFields)
+		# console.debug @dataFields, @, typeof(@getFields)
 
 		for _field in @getFields("getFieldsByName")
-			# CUI.debug _field, CUI.util.getObjectClass(_field), name, _field.getName
+			# console.debug _field, CUI.util.getObjectClass(_field), name, _field.getName
 			if _field.getName() == name
 				found_fields.push(_field)
 
@@ -635,12 +635,12 @@ class CUI.SimpleForm extends CUI.DataField
 
 
 		# if found_fields.length == 0
-		#	CUI.warn("#{@__cls}.getFieldsByName: No field found matching \"#{name}\".")
+		#	console.warn("#{@__cls}.getFieldsByName: No field found matching \"#{name}\".")
 
 		return found_fields
 
 	getFields: (func) ->
-		# CUI.debug "form get fields", @__fields
+		# console.debug "form get fields", @__fields
 		@__fields
 
 	isDataField: ->
@@ -653,7 +653,7 @@ class CUI.SimpleForm extends CUI.DataField
 		false
 
 	getValue: ->
-		# CUI.debug "getValue FORM", @_name, @__data
+		# console.debug "getValue FORM", @_name, @__data
 		if not @_name
 			data = {}
 			for field in @getDataFields()
@@ -661,7 +661,7 @@ class CUI.SimpleForm extends CUI.DataField
 					data[k] = field.getValue()
 			return data
 		else
-			# CUI.debug "getValue HENK", @_name, @__data
+			# console.debug "getValue HENK", @_name, @__data
 			data = CUI.util.copyObject(@__data, true)
 			delete(data._undo)
 			return data

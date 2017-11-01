@@ -233,12 +233,12 @@ class CUI.DateTime extends CUI.Input
 
 		regexp.push("("+CUI.util.escapeRegExp(s.slice(last_match_end).join(""))+")")
 
-		# CUI.debug "regexp found", @__input_format.regexp, @__input_format.matcher
+		# console.debug "regexp found", @__input_format.regexp, @__input_format.matcher
 
 		input_format.regexp = new RegExp("^"+regexp.join("")+"$")
 		input_format.matcher = matcher
 
-		# CUI.debug "initFormat", @__input_format.input, @__input_format.regexp
+		# console.debug "initFormat", @__input_format.input, @__input_format.regexp
 
 		# if @__current_input_format != @__input_format
 		# 	for k in ["digi_clock"]
@@ -316,7 +316,7 @@ class CUI.DateTime extends CUI.Input
 
 		CUI.util.assert(output_format, "CUI.DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
-		# CUI.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
+		# console.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
 
 		mom.format(output_format[type])
 
@@ -371,7 +371,7 @@ class CUI.DateTime extends CUI.Input
 		value = @getValue()
 		corrected_value = @parseValue(value, "store")
 		if corrected_value and corrected_value != value
-			CUI.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
+			console.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
 			@__data[@_name] = corrected_value
 		@
 
@@ -461,7 +461,7 @@ class CUI.DateTime extends CUI.Input
 			else
 				digits.push(static: ":")
 
-		# CUI.debug digits
+		# console.debug digits
 		@__digiDisplay = new CUI.DigiDisplay(digits: digits)
 
 
@@ -516,7 +516,7 @@ class CUI.DateTime extends CUI.Input
 		@
 
 	destroy: ->
-		# CUI.debug "destroying popover"
+		# console.debug "destroying popover"
 		@closePopover()
 		super()
 
@@ -548,7 +548,7 @@ class CUI.DateTime extends CUI.Input
 
 		mom_tz = mom.clone()
 		mom_tz.tz(CUI.tz_data.tz)
-		# CUI.debug @__input_format.timezone_display, mom_tz.format(@__input_format.timezone_display)
+		# console.debug @__input_format.timezone_display, mom_tz.format(@__input_format.timezone_display)
 		CUI.dom.empty(@__timezone_display)
 		CUI.dom.append(@__timezone_display, mom_tz.format(@__input_format.timezone_display))
 
@@ -577,7 +577,7 @@ class CUI.DateTime extends CUI.Input
 			for n in names
 				@__tz_data.push(by_name[n])
 
-			# CUI.debug "timezone data loaded", @__tz_data
+			# console.debug "timezone data loaded", @__tz_data
 
 	getTimezoneOpts: ->
 		if @__current_moment
@@ -617,7 +617,7 @@ class CUI.DateTime extends CUI.Input
 				else
 					@__input_format = @initFormat(@__default_format)
 				mom.locale(moment.locale())
-				# CUI.debug "parsing ok", mom, f, moment.locale()
+				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
 		return moment.invalid()
@@ -1033,7 +1033,7 @@ class CUI.DateTime extends CUI.Input
 			call: (ev) =>
 				ev.stopPropagation()
 				$target = ev.getTarget()
-				# CUI.debug "click on date table", ev.getTarget()
+				# console.debug "click on date table", ev.getTarget()
 				if CUI.dom.closest($target, ".cui-date-time-day")
 					data = CUI.dom.data(CUI.dom.closest($target, "td,.cui-td"))
 
@@ -1116,7 +1116,7 @@ class CUI.DateTime extends CUI.Input
 		for el in CUI.dom.matchSelector(@__dateTimeTmpl.DOM, ".cui-date-time-calendar .cui-date-time-selected")
 			CUI.dom.removeClass(el, "cui-date-time-selected")
 
-		# CUI.debug "markDay", @__current_moment, @__current_moment.__now
+		# console.debug "markDay", @__current_moment, @__current_moment.__now
 		if @__current_moment.__now
 			return
 
@@ -1126,7 +1126,7 @@ class CUI.DateTime extends CUI.Input
 			@__current_moment.date()
 		].join("-")
 
-		# CUI.debug "markDay", datestr
+		# console.debug "markDay", datestr
 		for el in CUI.dom.matchSelector(@__calendar, "[datestr=\"#{datestr}\"]")
 			CUI.dom.addClass(el, "cui-date-time-selected")
 		return
@@ -1150,7 +1150,7 @@ class CUI.DateTime extends CUI.Input
 
 	# 			ev.stopPropagation()
 	# 			$target = $(ev.getTarget())
-	# 			# CUI.debug "clicked on ", $target
+	# 			# console.debug "clicked on ", $target
 	# 			if $target.closest(".cui-date-time-grid-hour").length
 	# 				hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
 	# 				if @__input_formats[0].clock_am_pm
@@ -1305,7 +1305,7 @@ class CUI.DateTime extends CUI.Input
 		dt = new CUI.DateTime()
 
 		str = dt.format(datestr_or_moment, type, output_type)
-		# CUI.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
+		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
 
 	@display: (datestr_or_moment, opts={}) ->
@@ -1346,10 +1346,10 @@ class CUI.DateTime extends CUI.Input
 # 	next_year_jan_1st = new Date(d)
 # 	next_year_jan_1st.setUTCFullYear(d.getUTCFullYear()+1,0,1)
 
-# 	# CUI.debug "asked day", d
+# 	# console.debug "asked day", d
 # 	d.setUTCMonth(0,1)
 # 	first_day = d.getUTCDay()
-# 	# CUI.debug "first day", first_day, d
+# 	# console.debug "first day", first_day, d
 # 	first_day_of_week_ms = d.getTime() - ((first_day-start_day+7)%7)*day_offset
 # 	if first_day in [5, 6, 0] and not start_on_jan_1st
 # 		first_day_of_week_ms += week_offset
@@ -1359,7 +1359,7 @@ class CUI.DateTime extends CUI.Input
 # 		week_no = 1
 # 	else
 # 		week_no = Math.floor((current_ms - first_day_of_week_ms) / week_offset) + 1
-# 	# CUI.debug "first day of week", d.getUTCFullYear(), d
-# 	# CUI.debug "next jan 1st", next_year_jan_1st, (next_year_jan_1st.getTime()-current_ms) / day_offset
-# 	# CUI.debug "diff_ms", current_ms - first_day_of_week_ms, week_no
+# 	# console.debug "first day of week", d.getUTCFullYear(), d
+# 	# console.debug "next jan 1st", next_year_jan_1st, (next_year_jan_1st.getTime()-current_ms) / day_offset
+# 	# console.debug "diff_ms", current_ms - first_day_of_week_ms, week_no
 # 	week_no

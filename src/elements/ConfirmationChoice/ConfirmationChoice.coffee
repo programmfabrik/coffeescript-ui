@@ -90,7 +90,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 
 							@_onChoice?.call(@, ev, @__choice, @, btn)
 					).done (ret1, ret2) =>
-						# CUI.debug "chained call done", ret1, ret2, ev, @__choice
+						# console.debug "chained call done", ret1, ret2, ev, @__choice
 						if ev.isImmediatePropagationStopped() or
 							ret1 == false or
 							ret2 == false

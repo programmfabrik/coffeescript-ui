@@ -15,7 +15,7 @@ class CUI.FileReaderFile extends CUI.FileUploadFile
 				check: ["ArrayBuffer", "Text"]
 
 	upload: (file) ->
-		# CUI.debug "upload file", file
+		# console.debug "upload file", file
 		@__reader = new FileReader()
 
 		for key in [
@@ -28,7 +28,7 @@ class CUI.FileReaderFile extends CUI.FileUploadFile
 		]
 			do (key) =>
 				@__reader.addEventListener key.toLowerCase(), (ev) =>
-					# CUI.debug "caught event", key, @__reader
+					# console.debug "caught event", key, @__reader
 					@["__event_"+key](ev)
 
 		switch @_format
@@ -66,7 +66,7 @@ class CUI.FileReaderFile extends CUI.FileUploadFile
 		@__progress.total = total
 		@__progress.percent = percent
 
-		# CUI.debug @, @getProgress()
+		# console.debug @, @getProgress()
 		@__dfr.notify(@)
 		return
 
@@ -77,7 +77,7 @@ class CUI.FileReaderFile extends CUI.FileUploadFile
 	__event_load: ->
 
 	__event_loadend: ->
-		# CUI.debug @_file.name, "result:", @__reader.result.length, @__reader.result.byteLength
+		# console.debug @_file.name, "result:", @__reader.result.length, @__reader.result.byteLength
 		@__progress.data = @__reader.result
 		@__progress.status = "DONE"
 		@__upload = null

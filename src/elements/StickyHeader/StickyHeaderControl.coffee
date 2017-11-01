@@ -95,7 +95,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 		@
 
 	destroy: ->
-		# CUI.warn "destroying sticky header control"
+		# console.warn "destroying sticky header control"
 		CUI.dom.removeData(@_element, "stickyHeaderControl")
 		CUI.Events.ignore
 			instance: @

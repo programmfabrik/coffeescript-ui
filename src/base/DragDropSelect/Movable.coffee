@@ -53,10 +53,10 @@ class CUI.Movable extends CUI.Draggable
 
 
 	init_drag: (ev, $target) ->
-		# CUI.debug "init_drag target", ev.getTarget(), $target[0]
+		# console.debug "init_drag target", ev.getTarget(), $target[0]
 		if CUI.dom.closest(ev.getTarget(), ".cui-resizable-handle")
 			return
-		# CUI.debug "init_drag on #{@cls}", ev, $target[0]
+		# console.debug "init_drag on #{@cls}", ev, $target[0]
 		super(ev, $target)
 
 

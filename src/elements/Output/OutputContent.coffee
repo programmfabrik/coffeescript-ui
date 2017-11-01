@@ -25,7 +25,7 @@ class CUI.OutputContent extends CUI.DataFieldInput
 	# 	@removeClass("cui-data-field-disabled")
 
 	setContent: (content=null) ->
-		CUI.debug "setContent", @DOM, content
+		console.debug "setContent", @DOM, content
 		if not content
 			CUI.dom.addClass(@DOM, "cui-output-empty")
 			@empty()

@@ -85,7 +85,7 @@ class CUI.ProgressMeter extends CUI.DOMElement
 				@__meter.replace(new CUI.Icon(icon: icon), "icon")
 			else
 				@__meter.empty("icon")
-			# CUI.debug icon, @__state
+			# console.debug icon, @__state
 			@__meter.DOM.setAttribute("state", @__state)
 			@__meter.empty("text")
 

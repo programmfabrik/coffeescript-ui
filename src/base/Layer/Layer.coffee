@@ -1174,7 +1174,7 @@ class CUI.Layer extends CUI.DOMElement
 		@__shown
 
 	destroy: ->
-		# CUI.error "Layer.destroy",@, @isDestroyed()
+		# console.error "Layer.destroy",@, @isDestroyed()
 		@clearTimeout()
 		if @__shown
 			@hide()

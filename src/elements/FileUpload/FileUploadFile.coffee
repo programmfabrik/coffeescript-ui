@@ -17,7 +17,7 @@ class CUI.FileUploadFile extends CUI.Element
 
 		@__dfr = new CUI.Deferred()
 		# @__dfr.always =>
-		#	CUI.debug @_file.name, @getStatus()
+		#	console.debug @_file.name, @getStatus()
 		@__promise = @__dfr.promise()
 
 	initOpts: ->
@@ -137,7 +137,7 @@ class CUI.FileUploadFile extends CUI.Element
 		!!@__upload
 
 	upload: (url, name) ->
-		# CUI.debug "starting upload for", @_file.name
+		# console.debug "starting upload for", @_file.name
 		CUI.util.assert(not @__upload, "CUI.FileUploadFile.upload", "A file can only be uploaded once.", file: @)
 
 		form = {}
@@ -157,7 +157,7 @@ class CUI.FileUploadFile extends CUI.Element
 				if type == "download"
 					return
 
-				# CUI.debug loaded, total, percent
+				# console.debug loaded, total, percent
 				if @__progress.status == "ABORT"
 					return
 
@@ -174,7 +174,7 @@ class CUI.FileUploadFile extends CUI.Element
 				@__progress.data = data
 
 				onDone = =>
-					# CUI.debug @_file.name, "result:", @result
+					# console.debug @_file.name, "result:", @result
 					@__progress.status = "DONE"
 					@__upload = null
 					@__dfr.resolve(@)

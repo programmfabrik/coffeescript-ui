@@ -103,7 +103,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				inp.hide()
 
 		if not ok
-			CUI.warn("MulitInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
+			console.warn("MulitInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
 
 		CUI.Events.trigger
 			type: "content-resize"
@@ -139,7 +139,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			type: "multi-input-control-update"
 			node: @__multiInputDiv
 			call: (ev) =>
-				# CUI.debug ev.getType(), @__multiInputDiv[0], @_control.getKeys()
+				# console.debug ev.getType(), @__multiInputDiv[0], @_control.getKeys()
 				@setInputVisibility()
 
 		# DOM.registerEvent(multiInputDiv, "easydbui-multi-input-control-update")

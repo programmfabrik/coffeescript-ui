@@ -62,7 +62,7 @@ class CUI.ListView extends CUI.SimplePane
 				@__maxCols.push(len)
 				@__cols[len] = 'maximize'
 
-		# CUI.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
+		# console.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
 		@rowsCount = 0
 		@colsCount = @__cols.length
 
@@ -155,7 +155,7 @@ class CUI.ListView extends CUI.SimplePane
 		@
 
 	destroy: ->
-		# CUI.error "#{CUI.util.getObjectClass(@)}.destroy list-view-#{@listViewCounter} called. This is NOT an error."
+		# console.error "#{CUI.util.getObjectClass(@)}.destroy list-view-#{@listViewCounter} called. This is NOT an error."
 		delete(@colsOrder)
 		delete(@rowsOrder)
 		delete(@__fillRowQ3)
@@ -294,7 +294,7 @@ class CUI.ListView extends CUI.SimplePane
 		for col in [0..@colsCount-1] by 1
 			@__fillCells.push(CUI.dom.matchSelector(outer, ".cui-list-view-grid-fill-col-#{col}")[0])
 
-		# CUI.debug "ListView[#{@listViewCounter}]:", "fixedCols:", @fixedColsCount, "fixedRow", @fixedRowsCount, "cols:", @colsCount, "rows:", @__deferredRows.length
+		# console.debug "ListView[#{@listViewCounter}]:", "fixedCols:", @fixedColsCount, "fixedRow", @fixedRowsCount, "cols:", @colsCount, "rows:", @__deferredRows.length
 
 		on_scroll = =>
 			@__syncScrolling()
@@ -433,7 +433,7 @@ class CUI.ListView extends CUI.SimplePane
 	__syncScrolling: ->
 
 		@__currentScroll = @__getScrolling()
-		# CUI.debug "__syncScrolling", @__currentScroll
+		# console.debug "__syncScrolling", @__currentScroll
 
 		if @fixedColsCount > 0
 			@quadrant[2].scrollTop = @__currentScroll.top
@@ -509,7 +509,7 @@ class CUI.ListView extends CUI.SimplePane
 				col_i: parseInt($target.getAttribute("col"))
 				row_i: parseInt($target.getAttribute("row"))
 
-			# CUI.debug "getCellByTarget", $target[0], cell.col_i, cell.row_i
+			# console.debug "getCellByTarget", $target[0], cell.col_i, cell.row_i
 
 			# cell.$element = $target
 			cell.display_col_i = @getDisplayColIdx(cell.col_i)
@@ -599,14 +599,14 @@ class CUI.ListView extends CUI.SimplePane
 		@colsCount
 
 	resetColWidth: (col_i) ->
-		# CUI.debug "resetColWidth", col_i
+		# console.debug "resetColWidth", col_i
 		delete(@__manualColWidths[col_i])
 		@__resetColWidth(col_i)
 		@__doLayout(resetRows: true)
 		@
 
 	setColWidth: (col_i, width) ->
-		# CUI.debug "setColWidth", col_i, width
+		# console.debug "setColWidth", col_i, width
 		@__manualColWidths[col_i] = Math.max(5, width)
 		delete(@__colWidths[col_i])
 		@__doLayout(resetRows: true)
@@ -699,7 +699,7 @@ class CUI.ListView extends CUI.SimplePane
 
 	insertRowAt: (display_row_i, row) ->
 		CUI.util.assert(not @isDestroyed(), "ListView.insertRowAfter", "ListView #{@listViewCounter} is already destroyed.")
-		# CUI.debug "insertRowAt", display_row_i, @rowsCount
+		# console.debug "insertRowAt", display_row_i, @rowsCount
 		if display_row_i == @rowsCount or @rowsCount == 0
 			@appendRow(row)
 		else if display_row_i == 0
@@ -787,7 +787,7 @@ class CUI.ListView extends CUI.SimplePane
 		@__layoutIsStopped
 
 	stopLayout: ->
-		# CUI.error @getUniqueId(), "stopping layout..."
+		# console.error @getUniqueId(), "stopping layout..."
 		if @__layoutIsStopped
 			false
 		else
@@ -795,7 +795,7 @@ class CUI.ListView extends CUI.SimplePane
 			true
 
 	startLayout: ->
-		# CUI.error @getUniqueId(), "starting layout..."
+		# console.error @getUniqueId(), "starting layout..."
 		if @__layoutAfterStart
 			@__layoutAfterStart = false
 			@__doLayout()
@@ -978,7 +978,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		txt = "ListView[#{@listViewCounter}].__addRows: Adding "+listViewRows.length+" rows, starting at #{_row_i}."
 
-		# CUI.debug("__addRows", _row_i, listViewRows, mode, sibling_row_i)
+		# console.debug("__addRows", _row_i, listViewRows, mode, sibling_row_i)
 
 		html = [[],[],[],[]]
 
@@ -1002,7 +1002,7 @@ class CUI.ListView extends CUI.SimplePane
 
 			anchor_row = @__rows[row_i]
 			CUI.util.assert(anchor_row.length >= 1, "ListView.__addRows", "anchor row #{row_i} for mode #{mode} not found.", rows: @__rows, row_i: row_i, mode: _mode, mode_used: mode)
-			# CUI.debug("__addRows", anchor_row, row_i)
+			# console.debug("__addRows", anchor_row, row_i)
 
 		# prepare html for all rows
 		for row_i in [_row_i..row_i+listViewRows.length-1] by 1
@@ -1073,7 +1073,7 @@ class CUI.ListView extends CUI.SimplePane
 
 			row = anchor_row[anchor_row_idx]
 
-			# CUI.debug "qi", qi, anchor_row, anchor_row.length, html[qi]
+			# console.debug "qi", qi, anchor_row, anchor_row.length, html[qi]
 			anchor_row_idx++
 
 			if mode == "after"
@@ -1291,10 +1291,10 @@ class CUI.ListView extends CUI.SimplePane
 					text: "debug"
 					onClick: =>
 						@__debugCall "debug", =>
-							CUI.debug("ListView[##{@listViewCounter}]", @)
-							CUI.debug("opts:", @opts)
-							CUI.debug("manualColWidths:", CUI.util.dump(@__manualColWidths))
-							CUI.debug("colWidths:", CUI.util.dump(@__colWidths), "rowHeights:", @__rowHeights)
+							console.debug("ListView[##{@listViewCounter}]", @)
+							console.debug("opts:", @opts)
+							console.debug("manualColWidths:", CUI.util.dump(@__manualColWidths))
+							console.debug("colWidths:", CUI.util.dump(@__colWidths), "rowHeights:", @__rowHeights)
 				,
 					text: "appendRow"
 					onClick: =>

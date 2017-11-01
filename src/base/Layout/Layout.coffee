@@ -142,12 +142,12 @@ class CUI.Layout extends CUI.DOMElement
 
 			CUI.dom.waitForDOMInsert(node: @DOM)
 			.done =>
-				# CUI.debug "Layout[absolute] inserted", @__uniqueId
+				# console.debug "Layout[absolute] inserted", @__uniqueId
 				CUI.Layout.all()
 
 			# _call = (event) =>
-			# 	CUI.error "Layout.setAbsolute[#{event.getDebug()}]:", @DOM[0]
-			# 	# CUI.error "Layout[viewport-resize] received", @DOM[0]
+			# 	console.error "Layout.setAbsolute[#{event.getDebug()}]:", @DOM[0]
+			# 	# console.error "Layout[viewport-resize] received", @DOM[0]
 			# 	#
 			# 	event.stopPropagation()
 			# 	Layout.setAbsolute(@DOM)
@@ -174,7 +174,7 @@ class CUI.Layout extends CUI.DOMElement
 
 		if @hasFlexHandles()
 			has_flex_handles = true
-			# CUI.warn(CUI.util.getObjectClass(@)+".initFlexHandles", @opts, @__layout.__uniqueId, @DOM[0])
+			# console.warn(CUI.util.getObjectClass(@)+".initFlexHandles", @opts, @__layout.__uniqueId, @DOM[0])
 			pane_opts = {}
 			for pn in @__panes
 				pane = @["_#{pn}"]
@@ -201,7 +201,7 @@ class CUI.Layout extends CUI.DOMElement
 				if has_flex_handles and pn != "center" and not pane.flexHandle
 					@__layout.getFlexHandle(pn).destroy()
 			else
-				# CUI.debug(CUI.util.getObjectClass(@), "removing uninitialized pane", pn, @)
+				# console.debug(CUI.util.getObjectClass(@), "removing uninitialized pane", pn, @)
 				CUI.dom.remove(@__layout.map[pn])
 				if has_flex_handles
 					@__layout.getFlexHandle(pn).destroy()
@@ -255,7 +255,7 @@ class CUI.Layout extends CUI.DOMElement
 	getButtonbar: (key) ->
 		if not @__buttonbars[key]
 			@__buttonbars[key] = new CUI.Buttonbar()
-			# CUI.info("#{@__cls}: automatically generated Buttonbar for #{key}.")
+			# console.info("#{@__cls}: automatically generated Buttonbar for #{key}.")
 			CUI.DOMElement::append.call(@, @__buttonbars[key], key)
 		@__buttonbars[key]
 
@@ -328,7 +328,7 @@ class CUI.Layout extends CUI.DOMElement
 		CUI.util.assert(false, "#{@__cls}.getName", "Needs to be overwritten.")
 
 	@setAbsolute: (layout) ->
-		# CUI.error "Layout.setAbsolute", layout[0]
+		# console.error "Layout.setAbsolute", layout[0]
 		CUI.util.assert(CUI.util.isElement(layout), "Layout.setAbsolute", "layout needs to be HTMLElement", layout: layout)
 
 		direction = CUI.dom.getAttribute(layout, "data-cui-absolute-container")
@@ -365,7 +365,7 @@ class CUI.Layout extends CUI.DOMElement
 
 		if CUI.dom.getAttribute(layout, "data-cui-absolute-values") != abs_values
 			CUI.dom.setAttribute(layout, "data-cui-absolute-values", abs_values)
-			# CUI.debug(txt, values)
+			# console.debug(txt, values)
 
 			for child, idx in children
 				set = CUI.dom.getAttribute(child, "data-cui-absolute-set")
@@ -388,7 +388,7 @@ class CUI.Layout extends CUI.DOMElement
 								value = 0
 						else
 							CUI.util.assert(false, "Layout.setAbsolute: Unknown key #{key} in data-cui-absolute-set.")
-					# CUI.debug idx, key, value
+					# console.debug idx, key, value
 					css[key] = value
 				CUI.dom.setStyle(child, css)
 
@@ -406,7 +406,7 @@ class CUI.Layout extends CUI.DOMElement
 				changed++
 
 		if changed > 0
-			# CUI.info("Layout.setAbsolute[all]: changed: ", changed)
+			# console.info("Layout.setAbsolute[all]: changed: ", changed)
 			# console.debug "triggering viewport resize"
 			CUI.Events.trigger(type: "viewport-resize")
 		@

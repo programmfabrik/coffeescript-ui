@@ -163,7 +163,7 @@ class CUI.Label extends CUI.DOMElement
 		if @_markdown
 			CUI.util.assert(not @_content, "new "+@__cls, "opts.markdown cannot be combined with opts.content, use opts.text instead.", opts: @opts)
 			if not marked
-				CUI.error("new CUI.Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
+				console.error("new CUI.Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
 				@__markdown = false
 			else
 				@__markdown = true

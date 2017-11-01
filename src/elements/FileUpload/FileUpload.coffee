@@ -58,7 +58,7 @@ class CUI.FileUpload extends CUI.Element
 		@setUrl(@_url)
 
 	setUrl: (@__url) ->
-		# CUI.info("FileUpload.setUrl: #{@getUrl()}.")
+		# console.info("FileUpload.setUrl: #{@getUrl()}.")
 		@__url
 
 	getUrl: ->
@@ -113,7 +113,7 @@ class CUI.FileUpload extends CUI.Element
 
 	queueFiles: (files) ->
 		batch = ++@__batch_id
-		# CUI.debug "FileUpload.queueFiles", files
+		# console.debug "FileUpload.queueFiles", files
 
 		locked = false
 
@@ -273,7 +273,7 @@ class CUI.FileUpload extends CUI.Element
 				break
 
 		for file in files
-			# CUI.debug "uploading next file", file._file.name
+			# console.debug "uploading next file", file._file.name
 			@uploadFile(file)
 		@
 

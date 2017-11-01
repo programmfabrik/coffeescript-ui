@@ -82,11 +82,11 @@ class CUI.MultiInputControl extends CUI.Element
 				options.push
 					active: key.enabled
 					onActivate: ->
-						CUI.debug "control activate", key.tag
+						console.debug "control activate", key.tag
 						key.enabled = true
 						CUI.Events.trigger(type: "multi-input-control-update")
 					onDeactivate: (cb) ->
-						CUI.debug "control deactivate", key.tag
+						console.debug "control deactivate", key.tag
 						key.enabled = false
 						CUI.Events.trigger(type: "multi-input-control-update")
 					text: key.tag

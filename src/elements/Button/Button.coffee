@@ -686,7 +686,7 @@ class CUI.Button extends CUI.DOMElement
 			@deactivate(flags, event)
 
 	activate: (flags={}, event) ->
-		# CUI.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
+		# console.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
 
 		activate = =>
 			@addClass(@_active_css_class)
@@ -729,7 +729,7 @@ class CUI.Button extends CUI.DOMElement
 		@
 
 	deactivate: (flags={}, event) ->
-		# CUI.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
+		# console.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
 
 		deactivate = =>
 			@removeClass(@_active_css_class)
@@ -917,7 +917,7 @@ class CUI.Button extends CUI.DOMElement
 		@__hidden
 
 	destroy: ->
-		# CUI.debug "destroying button", @__uniqueId, @getText()
+		# console.debug "destroying button", @__uniqueId, @getText()
 		@__menu?.destroy()
 		@__menu = null
 		@__tooltip?.destroy()
