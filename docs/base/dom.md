@@ -888,22 +888,59 @@ CUI.dom.parent(divChild)
 Returns the first node which matches the **selector**, starting from **element**.
 As *CUI.dom.elementsUntil*, it goes upwards, and ends at *window*.
 
-### CUI.dom.closestUntil(element, selector, untilElement)
+### CUI.dom.closestUntil(element, selector, untilElement) : `Node`
 
 - element `Node` | *window*
 - selector `String`
 - untilElement `Node` | *window*
 
-It does the same as CUI.dom.closest, with the difference that it ends at **untilElement** instead of *window*.
+It does the same as *CUI.dom.closest*, with the difference that it ends at **untilElement** instead of *window*.
 
-### CUI.dom.parents(element, selector, untilElement)
-### CUI.dom.parentsUntil(element, selector, untilElement)
-### CUI.dom.isInDom(element)
-### CUI.dom.replaceWith(node, new_node)
-### CUI.dom.hasAnimatedClone(node)
-### CUI.dom.initAnimatedClone(node, selector)
-### CUI.dom.syncAnimatedClone(node)
-### CUI.dom.removeAnimatedClone(node)
+### CUI.dom.parentsUntil(element, selector, untilElement) : `[Node]`
+
+- element `Node` | *window*
+- selector `String`
+- untilElement `Node` | *window*
+
+It invokes *CUI.dom.elementsUntil* using parent's node of **element** as first parameter.
+
+### CUI.dom.parents(element, selector, untilElement) : `[Node]`
+
+- element `Node` | *window*
+- selector `String`
+- untilElement `Node` | *window*
+
+Returns an array of nodes that are the parents of **element** which matches with **selector**, until reach **untilElement**.
+The parameter **selector** can be *null*.
+
+### CUI.dom.isInDom(element) : `Boolean`
+
+- element `Node`
+
+Returns *true* if **element** is in the DOM tree, otherwise *false*.
+
+### CUI.dom.replaceWith(node, newNode) : `Node`
+
+- node `Node`
+- newNode `Node` | `NodeList`
+
+Replaces **node** with **newNode**. It returns the **node** replaced.
+
+#### Example
+
+```
+<div class="container">
+    <div class="node"></div>
+</div>
+ 
+CUI.dom.replaceWith(divNode, divNewNode)
+> <div class="node"></div>
+ 
+<div class="container">
+    <div class="newNode"></div>
+</div>
+```
+
 ### CUI.dom.getRect(element)
 ### CUI.dom.getComputedStyle(element)
 ### CUI.dom.setStyle(element, style, append)
@@ -963,8 +1000,9 @@ It does the same as CUI.dom.closest, with the difference that it ends at **until
 ### CUI.dom.textEmpty(text)
 ### CUI.dom.table_one_row()
 ### CUI.dom.tr_one_row()
-### CUI.dom.
-### CUI.dom.
-### CUI.dom.
+### CUI.dom.hasAnimatedClone(node)
+### CUI.dom.initAnimatedClone(node, selector)
+### CUI.dom.syncAnimatedClone(node)
+### CUI.dom.removeAnimatedClone(node)
 
 *Note: All the examples above were made in the browser's console.*
