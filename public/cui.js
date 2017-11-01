@@ -18605,7 +18605,7 @@ CUI.DOMElement = (function(superClass) {
       template: template
     });
     if (this.__template) {
-      CUI.warn((CUI.util.getObjectClass(this)) + ".registerDOMElement", "Already called before, destroying existing template", {
+      console.warn((CUI.util.getObjectClass(this)) + ".registerDOMElement", "Already called before, destroying existing template", {
         template: this.__template
       });
       this.__template.destroy();
@@ -18827,7 +18827,7 @@ CUI.DataField = (function(superClass) {
       call: (function(_this) {
         return function(ev, info) {
           if (!(info != null ? info.element : void 0)) {
-            CUI.warn((CUI.util.getObjectClass(_this)) + "[DataField].listen[data-changed]: received event with element not set.", ev, info, _this);
+            console.warn((CUI.util.getObjectClass(_this)) + "[DataField].listen[data-changed]: received event with element not set.", ev, info, _this);
             return;
           }
           if (typeof _this._onDataChanged === "function") {
@@ -18952,12 +18952,12 @@ CUI.DataField = (function(superClass) {
   DataField.prototype.init = function() {};
 
   DataField.prototype.debug = function() {
-    CUI.debug("----" + this + "----", this);
+    console.debug("----" + this + "----", this);
     if (this.__data) {
-      CUI.debug("data:", this.getData());
-      CUI.debug("value:", this.getValue());
-      CUI.debug("init-value:", this.getInitValue());
-      return CUI.debug("check-changed-value:", this.getCheckChangedValue());
+      console.debug("data:", this.getData());
+      console.debug("value:", this.getValue());
+      console.debug("init-value:", this.getInitValue());
+      return console.debug("check-changed-value:", this.getCheckChangedValue());
     }
   };
 
@@ -22138,7 +22138,7 @@ CUI.Element = (function() {
     }
     this.readOpts();
     if (!this.__initOptsCalled) {
-      CUI.warn("new " + this.__cls + ": CUI.Element::initOpts not called.", {
+      console.warn("new " + this.__cls + ": CUI.Element::initOpts not called.", {
         opts: this.opts
       });
     }
@@ -23227,11 +23227,11 @@ CUI.Events = (function(superClass) {
       }
     } else {
       if (event.hasOwnProperty("DOMEvent")) {
-        CUI.error("event.DOMEvent is obsolete");
+        console.error("event.DOMEvent is obsolete");
         delete event.DOMEvent;
       }
       if (event.hasOwnProperty("CUIEvent")) {
-        CUI.error("event.CUIEvent is obsolete");
+        console.error("event.CUIEvent is obsolete");
         delete event.CUIEvent;
       }
       this.__eventRegistry[event.type] = event;
@@ -24379,7 +24379,7 @@ CUI.FlexHandle = (function(superClass) {
       CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), "");
       if (this.__isAlive()) {
         if (CUI.dom.getDimension(this.__pane, "contentBox" + this.__css_value) === 0) {
-          CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", this.__pane);
+          console.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", this.__pane);
           CUI.dom.setDimension(this.__pane, "contentBox" + this.__css_value, 100);
         }
       }
@@ -26750,7 +26750,7 @@ CUI.Template = (function(superClass) {
         report.push("* " + k + ": not found (" + sel + ")");
         misses++;
       } else if (map_obj.length > 1) {
-        CUI.debug(k, v, "found more than once", map_obj, this.DOM);
+        console.debug(k, v, "found more than once", map_obj, this.DOM);
         report.push("* " + k + ": found more than once (" + sel + ")");
         misses++;
       } else {
@@ -33409,7 +33409,7 @@ CUI.DataTable = (function(superClass) {
         })(this),
         onDataChanged: (function(_this) {
           return function() {
-            CUI.debug("input changed to", page_data.page);
+            console.debug("input changed to", page_data.page);
             CUI.scheduleCallback({
               ms: 1000,
               call: load_page
@@ -34185,7 +34185,7 @@ CUI.DateTime = (function(superClass) {
     value = this.getValue();
     corrected_value = this.parseValue(value, "store");
     if (corrected_value && corrected_value !== value) {
-      CUI.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value);
+      console.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value);
       this.__data[this._name] = corrected_value;
     }
     return this;
@@ -35454,7 +35454,7 @@ CUI.DateTimeInputBlock = (function(superClass) {
 
   DateTimeInputBlock.prototype.__changeBlock = function(block, blocks, diff) {
     var bl, i, len, mom;
-    CUI.debug("change block", block, blocks, diff, this._datetime, this._input_format.format);
+    console.debug("change block", block, blocks, diff, this._datetime, this._input_format.format);
     mom = moment(this._datetime, this._input_format.input);
     if (CUI.isFunction(this._matcher.inc_func)) {
       this._matcher.inc_func(mom, diff);
@@ -40802,7 +40802,7 @@ CUI.Input = (function(superClass) {
       return;
     }
     if (blocks.length === 0) {
-      CUI.warn("initCursor: 0 cursor blocks");
+      console.warn("initCursor: 0 cursor blocks");
       this.cursor = null;
       return;
     }
@@ -40928,7 +40928,7 @@ CUI.Input = (function(superClass) {
     s_idx = this.cursor.start.idx;
     e_idx = this.cursor.end.idx;
     if (!blocks[s_idx] || !blocks[e_idx]) {
-      CUI.warn("repositioning cursor, not executing cursor move");
+      console.warn("repositioning cursor, not executing cursor move");
       this.initCursor(ev);
       return;
     }
@@ -41507,7 +41507,7 @@ CUI.ItemList = (function(superClass) {
   ItemList.prototype.readOpts = function() {
     ItemList.__super__.readOpts.call(this);
     if (this._orientation === "horizontal") {
-      CUI.error("new CUI.ItemList, orientation == horizontal needs implementation!");
+      console.error("new CUI.ItemList, orientation == horizontal needs implementation!");
     }
     return this;
   };
@@ -41547,7 +41547,7 @@ CUI.ItemList = (function(superClass) {
     }
     items = this.__getItems(event);
     if (CUI.util.isPromise(items)) {
-      CUI.warn("ItemList.hasItems: opts.items Function returned a Promise. Set opts.has_items to true, in order to avoid the call of that Function.");
+      console.warn("ItemList.hasItems: opts.items Function returned a Promise. Set opts.has_items to true, in order to avoid the call of that Function.");
       return true;
     } else {
       return items.length > 0;
@@ -41996,7 +41996,7 @@ CUI.Label = (function(superClass) {
         opts: this.opts
       });
       if (!marked) {
-        CUI.error("new CUI.Label: Could not find markdown renderer 'marked'. Disabling markedown option.", {
+        console.error("new CUI.Label: Could not find markdown renderer 'marked'. Disabling markedown option.", {
           opts: this.opts
         });
         this.__markdown = false;
@@ -43702,10 +43702,10 @@ CUI.ListView = (function(superClass) {
               text: "debug",
               onClick: function() {
                 return _this.__debugCall("debug", function() {
-                  CUI.debug("ListView[#" + _this.listViewCounter + "]", _this);
-                  CUI.debug("opts:", _this.opts);
-                  CUI.debug("manualColWidths:", CUI.util.dump(_this.__manualColWidths));
-                  return CUI.debug("colWidths:", CUI.util.dump(_this.__colWidths), "rowHeights:", _this.__rowHeights);
+                  console.debug("ListView[#" + _this.listViewCounter + "]", _this);
+                  console.debug("opts:", _this.opts);
+                  console.debug("manualColWidths:", CUI.util.dump(_this.__manualColWidths));
+                  return console.debug("colWidths:", CUI.util.dump(_this.__colWidths), "rowHeights:", _this.__rowHeights);
                 });
               }
             }, {
@@ -44280,11 +44280,11 @@ CUI.ListViewRow = (function(superClass) {
   ListViewRow.prototype.select = function(ev) {
     var base;
     if (this.selected) {
-      CUI.debug("already selected", this);
+      console.debug("already selected", this);
       return;
     }
     if (!this.isSelectable()) {
-      CUI.debug("not selectable", this);
+      console.debug("not selectable", this);
       return;
     }
     this.selected = true;
@@ -47833,7 +47833,7 @@ CUI.MultiInput = (function(superClass) {
       }
     }
     if (!ok) {
-      CUI.warn("MulitInput.setInputVisibility: No input visible.", {
+      console.warn("MulitInput.setInputVisibility: No input visible.", {
         input: this.__inputs,
         control: this._control
       });
@@ -48101,14 +48101,14 @@ CUI.MultiInputControl = (function(superClass) {
       return options.push({
         active: key.enabled,
         onActivate: function() {
-          CUI.debug("control activate", key.tag);
+          console.debug("control activate", key.tag);
           key.enabled = true;
           return CUI.Events.trigger({
             type: "multi-input-control-update"
           });
         },
         onDeactivate: function(cb) {
-          CUI.debug("control deactivate", key.tag);
+          console.debug("control deactivate", key.tag);
           key.enabled = false;
           return CUI.Events.trigger({
             type: "multi-input-control-update"
@@ -48856,7 +48856,7 @@ CUI.Options = (function(superClass) {
       for (j = 0, len1 = ref.length; j < len1; j++) {
         opt = ref[j];
         if (opt.value === value) {
-          CUI.debug("value is ok.", this.hasData(), this.getData()[this._name]);
+          console.debug("value is ok.", this.hasData(), this.getData()[this._name]);
           return;
         }
       }
@@ -49423,7 +49423,7 @@ CUI.OutputContent = (function(superClass) {
     if (content == null) {
       content = null;
     }
-    CUI.debug("setContent", this.DOM, content);
+    console.debug("setContent", this.DOM, content);
     if (!content) {
       CUI.dom.addClass(this.DOM, "cui-output-empty");
       return this.empty();
@@ -50674,7 +50674,7 @@ CUI.Select = (function(superClass) {
           _this.default_opt = first_value_opt;
           return _this.__value = _this.default_opt.value;
         } else {
-          return CUI.warn("Select " + (_this.getName()) + ": did not find a value opt and no empty text is defined.", {
+          return console.warn("Select " + (_this.getName()) + ": did not find a value opt and no empty text is defined.", {
             opts: _this.opts
           });
         }
