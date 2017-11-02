@@ -33,6 +33,9 @@ class CUI.LeafletMap extends CUI.Map
 					map.setView(@_center, @_zoom)
 				tileLayer.addTo(map)
 
+		if @_onClick
+			map.on("click", @_onClick)
+
 		map
 
 	__buildMarker: (options) ->

@@ -46635,6 +46635,9 @@ CUI.LeafletMap = (function(superClass) {
         });
       };
     })(this));
+    if (this._onClick) {
+      map.on("click", this._onClick);
+    }
     return map;
   };
 
@@ -46836,6 +46839,9 @@ CUI.Map = (function(superClass) {
       zoomControl: {
         check: Boolean,
         "default": true
+      },
+      onClick: {
+        check: Function
       }
     });
   };
