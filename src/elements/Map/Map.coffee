@@ -35,6 +35,8 @@ class CUI.Map extends CUI.DOMElement
 				default: true
 			onClick:
 				check: Function
+			onZoomEnd:
+				check: Function
 
 	constructor: (@opts = {}) ->
 		super(@opts)

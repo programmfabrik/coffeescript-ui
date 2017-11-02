@@ -36,6 +36,9 @@ class CUI.LeafletMap extends CUI.Map
 		if @_onClick
 			map.on("click", @_onClick)
 
+		if @_onZoomEnd
+			map.on("zoomend", @_onZoomEnd)
+
 		map
 
 	__buildMarker: (options) ->
@@ -109,10 +112,10 @@ class CUI.LeafletMap extends CUI.Map
 		return @__map.getZoom()
 
 	setZoom: (zoom) ->
-		@__map.setView(@__map.getCenter(), zoom)
+		@__map.setZoom(zoom)
 
-	setCenter: (position) ->
-		@__map.setView(position, @__map.getZoom())
+	setCenter: (position, zoom) ->
+		@__map.setView(position, zoom)
 
 	destroy: ->
 		if not @__map

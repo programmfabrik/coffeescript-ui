@@ -99,6 +99,7 @@ It changes the current zoom value.
 
 Set the latitude and longitude for the center.
 The parameter **position** may vary between a `PlainObject` or a specify class, depending *setCenter* implementation.
+Leaflet implementation accepts a second parameter, which is the **zoom**.
 
 ## New map implementation
 
