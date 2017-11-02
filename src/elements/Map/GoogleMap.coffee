@@ -48,6 +48,9 @@ class CUI.GoogleMap extends CUI.Map
 				marker.infoWindow.open(@__map, marker)
 			))
 
+	__removeMarker: (marker) ->
+		marker.setMap(null)
+
 	getSelectedMarkerPosition: ->
 		position = @__selectedMarker?.getPosition()
 		if position

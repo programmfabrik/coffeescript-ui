@@ -46,6 +46,12 @@ If **zoomToFitAllMarkersOnInit** is *true* and map has markers, **zoom** and **c
 
 Invoke *.addMaker* for each *options* inside **optionsArray** array.
 
+### .removeMarker(marker)
+
+- marker `Marker`
+
+It removes a marker. `Marker` is the class of the Library, for example **google.maps.Marker** for google maps.
+
 ### .getSelectedMarkerPosition() : position
 
 - position `PlainObject`

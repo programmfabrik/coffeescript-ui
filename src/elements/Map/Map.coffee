@@ -58,6 +58,17 @@ class CUI.Map extends CUI.DOMElement
 		@__addMarkerToMap(marker)
 		marker
 
+	removeMarkers: (markers) ->
+		for marker in markers
+			@removeMarker(marker)
+
+	removeMarker: (marker) ->
+		index = @__markers.indexOf(marker)
+		if index == -1
+			return false
+		@__markers.splice(index, 1)
+		@__removeMarker(marker)
+
 	getSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getSelectedMarkerPosition needs to be implemented.")
 
@@ -99,6 +110,9 @@ class CUI.Map extends CUI.DOMElement
 
 	__onMarkerClick: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__onMarkerClick needs to be implemented.")
+
+	__removeMarker: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__removeMarker needs to be implemented.")
 
 	__addCustomOption: (options, key, value) ->
 		return false

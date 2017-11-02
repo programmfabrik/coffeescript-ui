@@ -52,6 +52,9 @@ class CUI.LeafletMap extends CUI.Map
 		if onClickFunction
 			marker.on("click", onClickFunction)
 
+	__removeMarker: (marker) ->
+		@__map.removeLayer(marker)
+
 	getSelectedMarkerPosition: ->
 		@__selectedMarker?.getLatLng()
 
@@ -104,7 +107,7 @@ class CUI.LeafletMap extends CUI.Map
 			return
 
 		for marker in @__markers
-			@__map.removeLayer(marker)
+			@__removeMarker(marker)
 
 		@__map.remove()
 
