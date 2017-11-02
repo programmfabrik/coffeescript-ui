@@ -46432,6 +46432,10 @@ CUI.GoogleMap = (function(superClass) {
     }
   };
 
+  GoogleMap.prototype.__removeMarker = function(marker) {
+    return marker.setMap(null);
+  };
+
   GoogleMap.prototype.getSelectedMarkerPosition = function() {
     var position, ref;
     position = (ref = this.__selectedMarker) != null ? ref.getPosition() : void 0;
@@ -46659,6 +46663,10 @@ CUI.LeafletMap = (function(superClass) {
     }
   };
 
+  LeafletMap.prototype.__removeMarker = function(marker) {
+    return this.__map.removeLayer(marker);
+  };
+
   LeafletMap.prototype.getSelectedMarkerPosition = function() {
     var ref;
     return (ref = this.__selectedMarker) != null ? ref.getLatLng() : void 0;
@@ -46737,7 +46745,7 @@ CUI.LeafletMap = (function(superClass) {
     ref = this.__markers;
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
-      this.__map.removeLayer(marker);
+      this.__removeMarker(marker);
     }
     this.__map.remove();
     delete this.__markers;
@@ -46865,6 +46873,26 @@ CUI.Map = (function(superClass) {
     return marker;
   };
 
+  Map.prototype.removeMarkers = function(markers) {
+    var i, len, marker, results;
+    results = [];
+    for (i = 0, len = markers.length; i < len; i++) {
+      marker = markers[i];
+      results.push(this.removeMarker(marker));
+    }
+    return results;
+  };
+
+  Map.prototype.removeMarker = function(marker) {
+    var index;
+    index = this.__markers.indexOf(marker);
+    if (index === -1) {
+      return false;
+    }
+    this.__markers.splice(index, 1);
+    return this.__removeMarker(marker);
+  };
+
   Map.prototype.getSelectedMarkerPosition = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".getSelectedMarkerPosition needs to be implemented.");
   };
@@ -46919,6 +46947,10 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.__onMarkerClick = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__onMarkerClick needs to be implemented.");
+  };
+
+  Map.prototype.__removeMarker = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".__removeMarker needs to be implemented.");
   };
 
   Map.prototype.__addCustomOption = function(options, key, value) {
