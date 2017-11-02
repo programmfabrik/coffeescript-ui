@@ -46650,6 +46650,9 @@ CUI.LeafletMap = (function(superClass) {
     if (this._onClick) {
       map.on("click", this._onClick);
     }
+    if (this._onZoomEnd) {
+      map.on("zoomend", this._onZoomEnd);
+    }
     return map;
   };
 
@@ -46757,11 +46760,11 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.setZoom = function(zoom) {
-    return this.__map.setView(this.__map.getCenter(), zoom);
+    return this.__map.setZoom(zoom);
   };
 
-  LeafletMap.prototype.setCenter = function(position) {
-    return this.__map.setView(position, this.__map.getZoom());
+  LeafletMap.prototype.setCenter = function(position, zoom) {
+    return this.__map.setView(position, zoom);
   };
 
   LeafletMap.prototype.destroy = function() {
@@ -46865,6 +46868,9 @@ CUI.Map = (function(superClass) {
         "default": true
       },
       onClick: {
+        check: Function
+      },
+      onZoomEnd: {
         check: Function
       }
     });
