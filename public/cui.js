@@ -46542,6 +46542,18 @@ CUI.GoogleMap = (function(superClass) {
     return google.maps.event.trigger(this.__map, 'resize');
   };
 
+  GoogleMap.prototype.getZoom = function() {
+    return this.__map.getZoom();
+  };
+
+  GoogleMap.prototype.setZoom = function(zoom) {
+    return this.__map.setZoom(zoom);
+  };
+
+  GoogleMap.prototype.setCenter = function(position) {
+    return this.__map.setCenter(position);
+  };
+
   GoogleMap.prototype.__addCustomOption = function(markerOptions, key, value) {
     switch (key) {
       case "cui_content":
@@ -46740,6 +46752,18 @@ CUI.LeafletMap = (function(superClass) {
     return this.__map.invalidateSize();
   };
 
+  LeafletMap.prototype.getZoom = function() {
+    return this.__map.getZoom();
+  };
+
+  LeafletMap.prototype.setZoom = function(zoom) {
+    return this.__map.setView(this.__map.getCenter(), zoom);
+  };
+
+  LeafletMap.prototype.setCenter = function(position) {
+    return this.__map.setView(position, this.__map.getZoom());
+  };
+
   LeafletMap.prototype.destroy = function() {
     var i, len, marker, ref;
     if (!this.__map) {
@@ -46929,6 +46953,18 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.resize = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".resize needs to be implemented.");
+  };
+
+  Map.prototype.getZoom = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".getZoom needs to be implemented.");
+  };
+
+  Map.prototype.setZoom = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".setZoom needs to be implemented.");
+  };
+
+  Map.prototype.setCenter = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".setCenter needs to be implemented.");
   };
 
   Map.prototype.__addMarkerToMap = function() {

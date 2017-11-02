@@ -121,6 +121,15 @@ class CUI.GoogleMap extends CUI.Map
 	resize: ->
 		google.maps.event.trigger(@__map, 'resize');
 
+	getZoom: ->
+		return @__map.getZoom()
+
+	setZoom: (zoom) ->
+		@__map.setZoom(zoom)
+
+	setCenter: (position) ->
+		@__map.setCenter(position)
+
 	__addCustomOption: (markerOptions, key, value) ->
 		switch key
 			when "cui_content"

@@ -25,6 +25,7 @@ map = new CUI.GoogleMap(options)
 - onMarkerSelected `Function`
 - zoomToFitAllMarkersOnInit `Boolean` (default: *false*)
 - zoomControl `Boolean` (default: *true*)
+- onClick `Function`
 
 If **zoomToFitAllMarkersOnInit** is *true* and map has markers, **zoom** and **center** will be ignored. 
 
@@ -83,6 +84,21 @@ Increases zoom
 ### .zoomOut()
 
 Decreases zoom
+
+### .getZoom() : `Number`
+
+It returns the current zoom value.
+
+### .setZoom(zoom) : 
+
+- zoom `Number`
+
+It changes the current zoom value.
+
+### .setCenter(position)
+
+Set the latitude and longitude for the center.
+The parameter **position** may vary between a `PlainObject` or a specify class, depending *setCenter* implementation.
 
 ## New map implementation
 

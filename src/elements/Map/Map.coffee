@@ -95,6 +95,15 @@ class CUI.Map extends CUI.DOMElement
 	resize: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".resize needs to be implemented.")
 
+	getZoom: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getZoom needs to be implemented.")
+
+	setZoom: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".setZoom needs to be implemented.")
+
+	setCenter: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".setCenter needs to be implemented.")
+
 	__addMarkerToMap: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__addMarkerToMap needs to be implemented.")
 

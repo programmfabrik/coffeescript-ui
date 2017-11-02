@@ -105,6 +105,15 @@ class CUI.LeafletMap extends CUI.Map
 	resize: ->
 		@__map.invalidateSize()
 
+	getZoom: ->
+		return @__map.getZoom()
+
+	setZoom: (zoom) ->
+		@__map.setView(@__map.getCenter(), zoom)
+
+	setCenter: (position) ->
+		@__map.setView(position, @__map.getZoom())
+
 	destroy: ->
 		if not @__map
 			return
