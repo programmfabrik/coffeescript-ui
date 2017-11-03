@@ -37,6 +37,10 @@ class CUI.Map extends CUI.DOMElement
 				check: Function
 			onZoomEnd:
 				check: Function
+			onMoveEnd:
+				check: Function
+			onReady:
+				check: Function
 
 	constructor: (@opts = {}) ->
 		super(@opts)
@@ -105,6 +109,9 @@ class CUI.Map extends CUI.DOMElement
 
 	setCenter: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".setCenter needs to be implemented.")
+
+	getCenter: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getCenter needs to be implemented.")
 
 	__addMarkerToMap: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".__addMarkerToMap needs to be implemented.")

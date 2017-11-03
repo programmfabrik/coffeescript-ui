@@ -29,6 +29,8 @@ class CUI.GoogleMap extends CUI.Map
 				map.setCenter(@_center)
 				map.setZoom(@_zoom)
 
+			@_onReady?()
+
 		map
 
 	__bindOnClickMapEvent: ->

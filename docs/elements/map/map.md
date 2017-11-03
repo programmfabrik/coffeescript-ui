@@ -26,6 +26,9 @@ map = new CUI.GoogleMap(options)
 - zoomToFitAllMarkersOnInit `Boolean` (default: *false*)
 - zoomControl `Boolean` (default: *true*)
 - onClick `Function`
+- onZoomEnd `Function`
+- onMoveEnd `Function`
+- onReady `Function`
 
 If **zoomToFitAllMarkersOnInit** is *true* and map has markers, **zoom** and **center** will be ignored. 
 
@@ -97,9 +100,13 @@ It changes the current zoom value.
 
 ### .setCenter(position)
 
-Set the latitude and longitude for the center.
+Set the latitude and longitude of the center.
 The parameter **position** may vary between a `PlainObject` or a specify class, depending *setCenter* implementation.
 Leaflet implementation accepts a second parameter, which is the **zoom**.
+
+### .getCenter()
+
+Returns the latitude and longitude of the center.
 
 ## New map implementation
 

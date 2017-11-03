@@ -33,11 +33,16 @@ class CUI.LeafletMap extends CUI.Map
 					map.setView(@_center, @_zoom)
 				tileLayer.addTo(map)
 
+			@_onReady?()
+
 		if @_onClick
 			map.on("click", @_onClick)
 
 		if @_onZoomEnd
 			map.on("zoomend", @_onZoomEnd)
+
+		if @_onMoveEnd
+			map.on("moveend", @_onMoveEnd)
 
 		map
 
@@ -116,6 +121,9 @@ class CUI.LeafletMap extends CUI.Map
 
 	setCenter: (position, zoom) ->
 		@__map.setView(position, zoom)
+
+	getCenter: ->
+		return @__map.getCenter()
 
 	destroy: ->
 		if not @__map
