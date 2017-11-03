@@ -46398,11 +46398,12 @@ CUI.GoogleMap = (function(superClass) {
       return function() {
         google.maps.event.trigger(map, 'resize');
         if (_this._zoomToFitAllMarkersOnInit) {
-          return _this.zoomToFitAllMarkers();
+          _this.zoomToFitAllMarkers();
         } else {
           map.setCenter(_this._center);
-          return map.setZoom(_this._zoom);
+          map.setZoom(_this._zoom);
         }
+        return typeof _this._onReady === "function" ? _this._onReady() : void 0;
       };
     })(this));
     return map;
@@ -46637,7 +46638,7 @@ CUI.LeafletMap = (function(superClass) {
       node: this
     }).done((function(_this) {
       return function() {
-        return CUI.LeafletMap.loadCSSPromise.done(function() {
+        CUI.LeafletMap.loadCSSPromise.done(function() {
           if (_this._zoomToFitAllMarkersOnInit) {
             _this.zoomToFitAllMarkers();
           } else {
@@ -46645,6 +46646,7 @@ CUI.LeafletMap = (function(superClass) {
           }
           return tileLayer.addTo(map);
         });
+        return typeof _this._onReady === "function" ? _this._onReady() : void 0;
       };
     })(this));
     if (this._onClick) {
@@ -46652,6 +46654,9 @@ CUI.LeafletMap = (function(superClass) {
     }
     if (this._onZoomEnd) {
       map.on("zoomend", this._onZoomEnd);
+    }
+    if (this._onMoveEnd) {
+      map.on("moveend", this._onMoveEnd);
     }
     return map;
   };
@@ -46767,6 +46772,10 @@ CUI.LeafletMap = (function(superClass) {
     return this.__map.setView(position, zoom);
   };
 
+  LeafletMap.prototype.getCenter = function() {
+    return this.__map.getCenter();
+  };
+
   LeafletMap.prototype.destroy = function() {
     var i, len, marker, ref;
     if (!this.__map) {
@@ -46872,6 +46881,12 @@ CUI.Map = (function(superClass) {
       },
       onZoomEnd: {
         check: Function
+      },
+      onMoveEnd: {
+        check: Function
+      },
+      onReady: {
+        check: Function
       }
     });
   };
@@ -46971,6 +46986,10 @@ CUI.Map = (function(superClass) {
 
   Map.prototype.setCenter = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".setCenter needs to be implemented.");
+  };
+
+  Map.prototype.getCenter = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".getCenter needs to be implemented.");
   };
 
   Map.prototype.__addMarkerToMap = function() {
