@@ -941,14 +941,91 @@ CUI.dom.replaceWith(divNode, divNewNode)
 </div>
 ```
 
-### CUI.dom.getRect(element)
-### CUI.dom.getComputedStyle(element)
-### CUI.dom.setStyle(element, style, append)
-### CUI.dom.setStyleOne(element, key, value)
-### CUI.dom.getDimensions(element)
-### CUI.dom.parentsScrollable(node)
-### CUI.dom.setDimension(element, key, value)
+### CUI.dom.getRect(element) : `DOMRect`
+
+- element `HTMLElement`
+
+Invokes native function **getBoundingClientRect()**
+
+#### Example
+
+```
+CUI.dom.getRect(div)
+> DOMRect {x: 10, y: 10, width: 100, height: 100, top: 0, …}
+```
+
+### CUI.dom.getComputedStyle(element) : `CSSStyleDeclaration `
+
+- element `HTMLElement`
+
+Invokes native function **getComputedStyle**
+
+#### Example
+
+```
+CUI.dom.getComputedStyle(div)
+> CSSStyleDeclaration {alignContent: "", alignItems: "", alignSelf: "", alignmentBaseline: "", all: "", …}
+```
+
+### CUI.dom.setStyle(element, style, append) : `HTMLElement`
+
+- element `HTMLElement`
+- style `PlainObject`
+    - styleName `String`
+    - styleValue `String` | `Number`
+- append `String` (optional, default *"px"*)
+
+It sets style **styleName** to the **element** with value **styleValue** for all keys in **style**.
+If **styleValue** is a `Number`, **append** will be appended to **styleValue**.
+
+#### Example
+
+```
+style = 
+  width: 100,
+  display: "inline"
+  
+CUI.dom.setStyle(div, style)
+> <div style="width: 100px; display: inline;"></div>
+```
+
+### CUI.dom.setStyleOne(element, styleName, styleValue) : `HTMLElement`
+
+- element `HTMLElement`
+- styleName `String`
+- styleValue `String` | `Number`
+
+It sets style **styleName** to the **element** with value **styleValue**
+
+#### Example
+
+```
+CUI.dom.setStyleOne(div, "height", 100)
+> <div style="height: 100px;"></div>
+```
+
+### CUI.dom.getDimensions(element) : `PlainObject`
+
+- element `HTMLElement`
+
+It returns a very big object with dimensions related attributes. It has 89 keys to be exactly.
+
+#### Example
+
+```
+CUI.dom.getDimensions(div)
+> {computedStyle: CSSStyleDeclaration, clientBoundingRect: DOMRect, marginTop: 0, marginRight: 0, marginBottom: 0, …}
+```
+
 ### CUI.dom.getDimension(element, key)
+
+- element `HTMLElement`
+- key `String`
+
+It returns the *value* of the attribute **key** inside the object returned by **CUI.dom.getDimensions**.
+
+### CUI.dom.setDimension(element, key, value)
+### CUI.dom.parentsScrollable(node)
 ### CUI.dom.prepareSetDimensions(element)
 ### CUI.dom.setDimensions(element, dimension)
 ### CUI.dom.htmlToNodes(html)
