@@ -1054,6 +1054,10 @@ li > div {
 .cui-button-href {
   max-width: 100%; }
 
+.cui-button-href.cui-button-appearance-link .cui-button-visual {
+  height: auto;
+  line-height: normal; }
+
 .cui-button-href.cui-button-appearance-link .cui-button-right {
   flex-shrink: 0;
   align-self: flex-start;
@@ -1556,7 +1560,8 @@ a[role="button"].cui-button-appearance-link {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    word-break: break-word; }
 
 .cui-label-manage-overflow {
   position: relative;
