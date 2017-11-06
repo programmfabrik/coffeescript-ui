@@ -1382,6 +1382,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-checkbox {
 	min-width: 0;
 	display: inline-block;
+	vertical-align: top; // checkboxes next to each other should top-align
 
 	&.cui-data-field-disabled {
 		opacity: 1;

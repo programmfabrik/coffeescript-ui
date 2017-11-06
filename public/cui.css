@@ -1273,7 +1273,8 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-checkbox {
   min-width: 0;
-  display: inline-block; }
+  display: inline-block;
+  vertical-align: top; }
   .cui-checkbox.cui-data-field-disabled {
     opacity: 1; }
   .cui-checkbox--icon .cui-button-checkbox .cui-button-left i {
