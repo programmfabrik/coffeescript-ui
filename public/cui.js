@@ -18687,14 +18687,24 @@ CUI.DOMElement = (function(superClass) {
     return CUI.dom.removeClass(this.DOM, cls);
   };
 
-  DOMElement.prototype.hide = function() {
-    this.__assertDOMElement("hide");
-    return CUI.dom.hideElement(this.DOM);
+  DOMElement.prototype.hide = function(key) {
+    if (CUI.util.isEmpty(key)) {
+      this.__assertDOMElement("hide");
+      return CUI.dom.hideElement(this.DOM);
+    } else {
+      this.__assertTemplateElement("hide");
+      return this.__template.hide.call(this.__template, key);
+    }
   };
 
-  DOMElement.prototype.show = function() {
-    this.__assertDOMElement("show");
-    return CUI.dom.showElement(this.DOM);
+  DOMElement.prototype.show = function(key) {
+    if (CUI.util.isEmpty(key)) {
+      this.__assertDOMElement("show");
+      return CUI.dom.showElement(this.DOM);
+    } else {
+      this.__assertTemplateElement("show");
+      return this.__template.show.call(this.__template, key);
+    }
   };
 
   DOMElement.prototype.hasClass = function(cls) {
@@ -26825,6 +26835,14 @@ CUI.Template = (function(superClass) {
 
   Template.prototype.has = function(key) {
     return !!this.map[key];
+  };
+
+  Template.prototype.hide = function(key) {
+    return CUI.dom.hideElement(this.map[key]);
+  };
+
+  Template.prototype.show = function(key) {
+    return CUI.dom.showElement(this.map[key]);
   };
 
   Template.prototype.empty = function(key) {
