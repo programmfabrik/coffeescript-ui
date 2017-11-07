@@ -17,6 +17,7 @@ class CUI.DateTime extends CUI.Input
 
 	@defaults:
 		button_tooltip: "Open calendar"
+		bc_appendix: ["B.C.","BC"]
 
 	initOpts: ->
 		super()
@@ -83,7 +84,7 @@ class CUI.DateTime extends CUI.Input
 		@__input_format = @initFormat(@__default_format)
 		return
 
-	setInputFormat: (use_clock) ->
+	setInputFormat: (use_clock = (@__input_format_no_time == @__input_format)) ->
 		if use_clock == true
 			@__input_format = @initFormat(@__input_formats[0])
 		else
@@ -318,7 +319,10 @@ class CUI.DateTime extends CUI.Input
 
 		# console.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
 
-		mom.format(output_format[type])
+		v = mom.format(output_format[type])
+		if mom.bc
+			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
+		v
 
 	regexpMatcher: ->
 		YYYY:
@@ -383,20 +387,26 @@ class CUI.DateTime extends CUI.Input
 
 		mom = @parse(value)
 
-		if mom.isValid()
-			mom.format(@getCurrentFormatDisplay())
-		else
-			value
+		if not mom.isValid()
+			return value
+
+		v = mom.format(@getCurrentFormatDisplay())
+		if mom.bc
+			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
+		return v
 
 	getValueForInput: (v = @getValue()) ->
 		if CUI.util.isEmpty(v?.trim())
 			return ""
 
 		mom = @parse(v)
-		if mom.isValid()
-			return mom.format(@__input_format.input)
-		else
+		if not mom.isValid()
 			return v
+
+		v = mom.format(@__input_format.input)
+		if mom.bc
+			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
+		return v
 
 	__checkInput: (value) ->
 		if not CUI.util.isEmpty(value?.trim())
@@ -408,7 +418,7 @@ class CUI.DateTime extends CUI.Input
 		return true
 
 	__getInputBlocks: (v) ->
-		console.debug "getInputBlocks", v, @__input_format.regexp
+		# console.debug "getInputBlocks", v, @__input_format.regexp
 		match = v.match(@__input_format.regexp)
 		if not match
 			return false
@@ -439,6 +449,9 @@ class CUI.DateTime extends CUI.Input
 		mom = @parse(value)
 		if mom.isValid()
 			value = mom.format(@__input_format.store)
+			if mom.bc
+				value = "-"+value
+
 		else if @_store_invalid and value.trim().length > 0
 			value = 'invalid'
 		else
@@ -609,6 +622,19 @@ class CUI.DateTime extends CUI.Input
 		if not (s?.trim?().length > 0)
 			return moment.invalid()
 
+		bc = false
+		if s.startsWith("-")
+			bc = true
+			s = s.substring(1)
+		else
+			us = s.toLocaleUpperCase()
+			for appendix in CUI.DateTime.defaults.bc_appendix
+				ua = appendix.toLocaleUpperCase()
+				if us.endsWith(" "+ua)
+					s = s.substring(0, s.length - ua.length).trim()
+					bc = true
+					break
+
 		for format in formats
 			mom = @__parseFormat(format, s)
 			if mom
@@ -617,6 +643,8 @@ class CUI.DateTime extends CUI.Input
 				else
 					@__input_format = @initFormat(@__default_format)
 				mom.locale(moment.locale())
+				mom.bc = bc
+
 				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
@@ -632,10 +660,14 @@ class CUI.DateTime extends CUI.Input
 		if not output_format
 			return mom
 
-		if mom.isValid()
-			mom.format(@__input_format[output_format])
+		if not mom.isValid()
+			return null
+
+		v = mom.format(@__input_format[output_format])
+		if mom.bc
+			return "-"+v
 		else
-			null
+			return v
 
 	__parseFormat: (f, s) ->
 		for k in CUI.DateTime.formatTypes
@@ -678,6 +710,7 @@ class CUI.DateTime extends CUI.Input
 	drawDate: (_mom) ->
 		if not _mom
 			mom = @__current_moment.clone()
+			mom.bc = @__current_moment.bc
 		else
 			mom = _mom
 
@@ -692,6 +725,8 @@ class CUI.DateTime extends CUI.Input
 
 		if update_current_moment
 			@__current_moment = mom.clone()
+			@__current_moment.bc = mom.bc
+			@setInputFormat()
 			@setInputFromMoment()
 
 		console.info("CUI.DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
@@ -925,8 +960,6 @@ class CUI.DateTime extends CUI.Input
 					class: "cui-date-time-header-month"
 					buttons:
 						[
-							appearance: if CUI.__ng__ then undefined else "flat"
-							size: if CUI.__ng__ then undefined else "mini"
 							icon: "left"
 							onClick: (ev) =>
 								if mom.clone().subtract(1, "months").year() < @_min_year
@@ -954,8 +987,6 @@ class CUI.DateTime extends CUI.Input
 
 							# ).start()
 						,
-							appearance: if CUI.__ng__ then undefined else "flat"
-							size: if CUI.__ng__ then undefined else "mini"
 							icon: "right"
 							onClick: (ev) =>
 								if mom.clone().add(1, "months").year() > @_max_year
@@ -968,10 +999,8 @@ class CUI.DateTime extends CUI.Input
 				content: new CUI.Buttonbar
 					class: "cui-date-time-header-year"
 					buttons: [
-						appearance: if CUI.__ng__ then undefined else "flat"
-						size: if CUI.__ng__ then undefined else "mini"
 						icon: "left"
-						group: if CUI.__ng__ then "year" else null
+						group: "year"
 						onClick: (ev) =>
 							if data.year-1 < @_min_year
 								return
@@ -986,7 +1015,7 @@ class CUI.DateTime extends CUI.Input
 							placeholder: ""+now_year
 							data: data
 							name: "year"
-							group: if CUI.__ng__ then "year" else null
+							group: "year"
 							onDataChanged: (data) =>
 								if CUI.util.isEmpty(data.year)
 									year = now_year
@@ -995,10 +1024,8 @@ class CUI.DateTime extends CUI.Input
 								CUI.scheduleCallback(ms: 500, call: updateCalendar)
 						).start()
 					,
-						appearance: if CUI.__ng__ then undefined else "flat"
-						size: if CUI.__ng__ then undefined else "mini"
 						icon: "right"
-						group: if CUI.__ng__ then "year" else null
+						group: "year"
 						onClick: (ev) =>
 							if data.year+1 > @_max_year
 								return
@@ -1318,7 +1345,10 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		return mom.format(dt.getCurrentFormatDisplay())
+		v = mom.format(dt.getCurrentFormatDisplay())
+		if mom.bc
+			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
+		v
 
 	@toMoment: (datestr) ->
 		if CUI.util.isEmpty(datestr)
