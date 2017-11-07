@@ -300,6 +300,9 @@ class CUI.dom
 		return node
 
 	@replace: (node, content) ->
+		if node.hasOwnProperty('DOM')
+			node = node.DOM
+
 		@empty(node)
 		@append(node, content)
 
@@ -331,6 +334,10 @@ class CUI.dom
 	@empty: (node) ->
 		if not node
 			return null
+
+		if node.hasOwnProperty('DOM')
+			node = node.DOM
+
 		CUI.util.assert(CUI.util.isElement(node), "CUI.dom.empty", "top needs to be Element", node: node)
 		while last = node.lastChild
 			node.removeChild(last)
