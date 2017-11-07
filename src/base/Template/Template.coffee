@@ -186,10 +186,16 @@ class CUI.Template extends CUI.Element
 		!!@map[key]
 
 	hide: (key) ->
-		CUI.dom.hideElement(@map[key])
+		if not key
+			CUI.dom.hideElement(@DOM)
+		else
+			CUI.dom.hideElement(@map[key])
 
 	show: (key) ->
-		CUI.dom.showElement(@map[key])
+		if not key
+			CUI.dom.showElement(@DOM)
+		else
+			CUI.dom.showElement(@map[key])
 
 	empty: (key) ->
 		CUI.util.assert(@map, "Template[#{@_name}].empty [#{@getUniqueId()}]", "Already destroyed", template: @, name: @_name)
