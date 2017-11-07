@@ -89,13 +89,21 @@ class CUI.DOMElement extends CUI.Element
 		@__assertDOMElement("removeClass")
 		CUI.dom.removeClass(@DOM, cls)
 
-	hide: ->
-		@__assertDOMElement("hide")
-		CUI.dom.hideElement(@DOM)
+	hide: (key) ->
+		if CUI.util.isEmpty(key)
+			@__assertDOMElement("hide")
+			CUI.dom.hideElement(@DOM)
+		else
+			@__assertTemplateElement("hide")
+			@__template.hide.call(@__template, key)
 
-	show: ->
-		@__assertDOMElement("show")
-		CUI.dom.showElement(@DOM)
+	show: (key) ->
+		if CUI.util.isEmpty(key)
+			@__assertDOMElement("show")
+			CUI.dom.showElement(@DOM)
+		else
+			@__assertTemplateElement("show")
+			@__template.show.call(@__template, key)
 
 	hasClass: (cls) ->
 		CUI.util.assert(arguments.length == 1, "CUI.dom.hasClass", "Only one parameter allowed.")
