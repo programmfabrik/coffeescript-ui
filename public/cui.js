@@ -27829,6 +27829,9 @@ CUI.dom = (function() {
   };
 
   dom.replace = function(node, content) {
+    if (node.hasOwnProperty('DOM')) {
+      node = node.DOM;
+    }
     this.empty(node);
     return this.append(node, content);
   };
@@ -27866,6 +27869,9 @@ CUI.dom = (function() {
     var last;
     if (!node) {
       return null;
+    }
+    if (node.hasOwnProperty('DOM')) {
+      node = node.DOM;
     }
     CUI.util.assert(CUI.util.isElement(node), "CUI.dom.empty", "top needs to be Element", {
       node: node
