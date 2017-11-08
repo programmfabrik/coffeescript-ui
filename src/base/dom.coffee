@@ -302,7 +302,6 @@ class CUI.dom
 	@replace: (node, content) ->
 		if node.hasOwnProperty('DOM')
 			node = node.DOM
-
 		@empty(node)
 		@append(node, content)
 
@@ -1274,7 +1273,7 @@ class CUI.dom
 		@getBoxSizing(docElem) == "border-box"
 
 	@isContentBox: (docElem) ->
-		CUI.dom.getBoxSizing() == "content-box"
+		@getBoxSizing(docElem) == "content-box"
 
 	@hideElement: (docElem) ->
 		if not docElem
@@ -1523,9 +1522,6 @@ class CUI.dom
 			false
 
 	@$element: (tagName, cls, attrs={}, no_tables=false) ->
-		if not CUI.__ng__
-			no_tables = false
-
 		if not CUI.util.isEmpty(cls)
 			attrs.class = cls
 
