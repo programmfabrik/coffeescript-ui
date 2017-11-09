@@ -27677,7 +27677,7 @@ CUI.dom = (function() {
       if (!child) {
         return null;
       }
-      if (!nodeFilter || nodeFilter(child)) {
+      if (!nodeFilter || this.is(child, nodeFilter)) {
         return child;
       }
       child = child.nextElementSibling;
@@ -27691,7 +27691,7 @@ CUI.dom = (function() {
       if (!child) {
         return null;
       }
-      if (!nodeFilter || nodeFilter(child)) {
+      if (!nodeFilter || this.is(child, nodeFilter)) {
         return child;
       }
       child = child.previousElementSibling;
@@ -27705,7 +27705,7 @@ CUI.dom = (function() {
       if (!sibling) {
         return null;
       }
-      if (!nodeFilter || nodeFilter(sibling)) {
+      if (!nodeFilter || this.is(sibling, nodeFilter)) {
         return sibling;
       }
     }
@@ -27718,7 +27718,7 @@ CUI.dom = (function() {
       if (!sibling) {
         return null;
       }
-      if (!nodeFilter || nodeFilter(sibling)) {
+      if (!nodeFilter || this.is(sibling, nodeFilter)) {
         return sibling;
       }
     }
@@ -28928,7 +28928,7 @@ CUI.dom = (function() {
   };
 
   dom.isContentBox = function(docElem) {
-    return CUI.dom.getBoxSizing() === "content-box";
+    return this.getBoxSizing(docElem) === "content-box";
   };
 
   dom.hideElement = function(docElem) {
@@ -29239,9 +29239,6 @@ CUI.dom = (function() {
       attrs = {};
     }
     if (no_tables == null) {
-      no_tables = false;
-    }
-    if (!CUI.__ng__) {
       no_tables = false;
     }
     if (!CUI.util.isEmpty(cls)) {
