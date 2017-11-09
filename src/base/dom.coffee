@@ -163,7 +163,7 @@ class CUI.dom
 			if not child
 				return null
 
-			if not nodeFilter or nodeFilter(child)
+			if not nodeFilter or @is(child, nodeFilter)
 				return child
 
 			child = child.nextElementSibling
@@ -174,7 +174,7 @@ class CUI.dom
 			if not child
 				return null
 
-			if not nodeFilter or nodeFilter(child)
+			if not nodeFilter or @is(child, nodeFilter)
 				return child
 
 			child = child.previousElementSibling
@@ -185,7 +185,7 @@ class CUI.dom
 			if not sibling
 				return null
 
-			if not nodeFilter or nodeFilter(sibling)
+			if not nodeFilter or @is(sibling, nodeFilter)
 				return sibling
 
 
@@ -195,7 +195,7 @@ class CUI.dom
 			if not sibling
 				return null
 
-			if not nodeFilter or nodeFilter(sibling)
+			if not nodeFilter or @is(sibling, nodeFilter)
 				return sibling
 
 
