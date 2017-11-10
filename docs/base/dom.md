@@ -198,17 +198,47 @@ If **filter** is a `Function`, it should receive **node** as parameter and retur
     > [span.child]
     
 
-### CUI.dom.firstElementChild(node, filter) : `HTMLElement`
+### CUI.dom.firstElementChild(node, selector) : `HTMLElement`
 
-It gets the first child of **node** which returns true in the **filter** function. The iteration will be from first child to last child.
+- node `HTMLElement`
+- selector `HTMLElement` | `Function` | `String` | *null*
 
-Returns null if no child were found.
+It gets the first child of **node** that returns *true* to **CUI.dom.is** invocation with **node** and **selector** as parameters.
 
-### CUI.dom.firstElementChild(node, filter) : `HTMLElement`
+The iteration will be from first child to last child.
 
-It gets the first child of **node** which returns true in the **filter** function. The iteration will be from last child to first child.
+Returns the first child if **selector** is null.
+Returns *null* if no child were found.
 
-Returns null if no child were found.
+### CUI.dom.lastElementChild(node, selector) : `HTMLElement`
+
+- node `HTMLElement`
+- selector `HTMLElement` | `Function` | `String` | *null*
+
+It gets the first child of **node** that returns *true* to **CUI.dom.is** invocation with **node** and **selector** as parameters. 
+
+The iteration will be from last child to first child.
+
+Returns the first child if **selector** is null.
+Returns *null* if no child were found.
+
+### CUI.dom.nextElementSibling(node, selector) : `HTMLElement`
+
+- node `HTMLElement`
+- selector `HTMLElement` | `Function` | `String` | *null*
+
+It gets the first next sibling of **node** that returns *true* to **CUI.dom.is** invocation with **node** and **selector** as parameters.
+
+Returns *null* if no sibling were found.
+
+### CUI.dom.previousElementSibling(node, selector) : `HTMLElement` 
+
+- node `HTMLElement`
+- selector `HTMLElement` | `Function` | `String` | *null*
+
+It gets the first previous sibling of **node** that returns *true* to **CUI.dom.is** invocation with **node** and **selector** as parameters.
+
+Returns *null* if no sibling were found.
 
 ### CUI.dom.setAttribute(node, key, value)
 
