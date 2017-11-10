@@ -820,23 +820,6 @@ class CUI
 		p.url = p.url + p.path
 		p
 
-	@error: ->
-		console.warn("CUI.error is deprecated, use console.error.")
-		console.error.apply(console, arguments)
-
-	@debug: ->
-		console.warn("CUI.debug is deprecated, use console.debug.")
-		console.debug.apply(console, arguments)
-
-	@info: ->
-		console.warn("CUI.info is deprecated, use console.info.")
-		console.info.apply(console, arguments)
-
-	@warn: ->
-		console.warn("CUI.warn is deprecated, use console.warn.")
-		console.warn.apply(console, arguments)
-
-
 	@escapeAttribute: (data) ->
 		if CUI.util.isNull(data) or !CUI.util.isString(data)
 			return ""
