@@ -180,8 +180,10 @@ class CUI.dom
 			child = child.previousElementSibling
 
 	@nextElementSibling: (node, nodeFilter) ->
+		sibling = node
+
 		while true
-			sibling = node.nextElementSibling
+			sibling = sibling.nextElementSibling
 			if not sibling
 				return null
 
@@ -190,8 +192,10 @@ class CUI.dom
 
 
 	@previousElementSibling: (node, nodeFilter) ->
+		sibling = node
+
 		while true
-			sibling = node.previousElementSibling
+			sibling = sibling.previousElementSibling
 			if not sibling
 				return null
 
