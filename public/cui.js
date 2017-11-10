@@ -1113,26 +1113,6 @@ CUI = (function() {
     return p;
   };
 
-  CUI.error = function() {
-    console.warn("CUI.error is deprecated, use console.error.");
-    return console.error.apply(console, arguments);
-  };
-
-  CUI.debug = function() {
-    console.warn("CUI.debug is deprecated, use console.debug.");
-    return console.debug.apply(console, arguments);
-  };
-
-  CUI.info = function() {
-    console.warn("CUI.info is deprecated, use console.info.");
-    return console.info.apply(console, arguments);
-  };
-
-  CUI.warn = function() {
-    console.warn("CUI.warn is deprecated, use console.warn.");
-    return console.warn.apply(console, arguments);
-  };
-
   CUI.escapeAttribute = function(data) {
     if (CUI.util.isNull(data) || !CUI.util.isString(data)) {
       return "";
