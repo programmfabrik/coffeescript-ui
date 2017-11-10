@@ -27680,8 +27680,9 @@ CUI.dom = (function() {
 
   dom.nextElementSibling = function(node, nodeFilter) {
     var sibling;
+    sibling = node;
     while (true) {
-      sibling = node.nextElementSibling;
+      sibling = sibling.nextElementSibling;
       if (!sibling) {
         return null;
       }
@@ -27693,8 +27694,9 @@ CUI.dom = (function() {
 
   dom.previousElementSibling = function(node, nodeFilter) {
     var sibling;
+    sibling = node;
     while (true) {
-      sibling = node.previousElementSibling;
+      sibling = sibling.previousElementSibling;
       if (!sibling) {
         return null;
       }
