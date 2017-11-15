@@ -22,6 +22,9 @@ map = new CUI.GoogleMap(options)
 - markersOptions `[PlainObject]` (see options in *.addMarker* method)
 - clickable `Boolean` (default: *true*)
 - selectedMarkerLabel `String`
+- selectedMarkerPosition `PlainObject`
+    - lat: `Number`
+    - lng: `Number`
 - onMarkerSelected `Function`
 - zoomToFitAllMarkersOnInit `Boolean` (default: *false*)
 - zoomControl `Boolean` (default: *true*)

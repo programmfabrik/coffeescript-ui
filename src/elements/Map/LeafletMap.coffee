@@ -54,8 +54,8 @@ class CUI.LeafletMap extends CUI.Map
 
 	__bindOnClickMapEvent: ->
 		@__map.on('click', (event) =>
-			@__map.setView(event.latlng)
 			@setSelectedMarkerPosition(event.latlng)
+			@__map.setView(@getSelectedMarkerPosition())
 		)
 
 	__afterMarkerCreated: (marker, options) ->
@@ -70,6 +70,9 @@ class CUI.LeafletMap extends CUI.Map
 		@__selectedMarker?.getLatLng()
 
 	setSelectedMarkerPosition: (position) ->
+		if not @__isValidPosition(position)
+			return
+
 		if @__selectedMarker
 			@__selectedMarker.setLatLng(position)
 		else
@@ -79,9 +82,18 @@ class CUI.LeafletMap extends CUI.Map
 				title: @_selectedMarkerLabel
 			)
 
-			@__selectedMarker.on('dragend', () =>
+			@__selectedMarker.on('dragstart', =>
+				@__selectedMarkerPositionOnDragStart = @getSelectedMarkerPosition()
+			)
+
+			@__selectedMarker.on('dragend', =>
+				latLng = @getSelectedMarkerPosition()
+				if @__isValidPosition(latLng)
+					@_onMarkerSelected?(@getSelectedMarkerPosition())
+				else
+					@setSelectedMarkerPosition(@__selectedMarkerPositionOnDragStart)
+
 				@__map.setView(@getSelectedMarkerPosition())
-				@_onMarkerSelected?(@getSelectedMarkerPosition())
 			)
 
 		@_onMarkerSelected?(@getSelectedMarkerPosition())

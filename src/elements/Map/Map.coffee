@@ -6,11 +6,9 @@ class CUI.Map extends CUI.DOMElement
 			center:
 				check:
 					lat:
-						check: (value) =>
-							CUI.util.isNumber(value) and value <= 90 and value >= -90
+						check: @__isValidLatitude
 					lng:
-						check: (value) =>
-							CUI.util.isNumber(value) and value <= 180 and value >= -180
+						check: @__isValidLongitude
 				default:
 					lat: 0
 					lng: 0
@@ -25,6 +23,12 @@ class CUI.Map extends CUI.DOMElement
 				default: true
 			selectedMarkerLabel:
 				check: String
+			selectedMarkerPosition:
+				check:
+					lat:
+						check: @__isValidLatitude
+					lng:
+						check: @__isValidLongitude
 			onMarkerSelected:
 				check: Function
 			zoomToFitAllMarkersOnInit:
@@ -53,6 +57,9 @@ class CUI.Map extends CUI.DOMElement
 			@__bindOnClickMapEvent()
 
 		@addMarkers(@_markersOptions)
+
+		if @_selectedMarkerPosition
+			@setSelectedMarkerPosition(@_selectedMarkerPosition)
 
 	addMarkers: (optionsArray) ->
 		for options in optionsArray
@@ -139,6 +146,15 @@ class CUI.Map extends CUI.DOMElement
 
 	__afterMarkerCreated: (marker, options) ->
 		return false
+
+	__isValidLatitude: (value) ->
+		CUI.util.isNumber(value) and value <= 90 and value >= -90
+
+	__isValidLongitude: (value) ->
+		CUI.util.isNumber(value) and value <= 180 and value >= -180
+
+	__isValidPosition: (position) ->
+		@__isValidLatitude(position.lat) and @__isValidLongitude(position.lng)
 
 	__getMarkerOptions: (options) ->
 		markerOptions = {}
