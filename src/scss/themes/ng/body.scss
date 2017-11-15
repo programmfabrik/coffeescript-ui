@@ -896,6 +896,12 @@ li > div {
 			opacity: 0 !important;
 		}
 	}
+
+	&:first-child {
+		> .cui-horizontal-layout-center {
+			margin-top: 0;
+		}
+	}
 	
 	&:last-child {
 		// margin-bottom: $padding; anyoing in fields renderer

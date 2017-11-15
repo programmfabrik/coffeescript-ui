@@ -948,6 +948,8 @@ li > div {
   overflow: visible !important; }
   .cui-data-form-row--read-only .cui-drag-handle-row {
     opacity: 0 !important; }
+  .cui-data-form-row:first-child > .cui-horizontal-layout-center {
+    margin-top: 0; }
   .cui-data-form-row:last-child > .cui-horizontal-layout-center {
     margin-bottom: 0; }
   .cui-data-form-row.cui-data-form-row--trash > .cui-horizontal-layout-center {
