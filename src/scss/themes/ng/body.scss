@@ -610,11 +610,14 @@ li > div {
 	.cui-button,
 	.cui-button-href,
 	.cui-data-field {
-		align-self: stretch;
-		height: auto; // for checkbox
 		min-width: 0;
 		flex-shrink: 1;
 		padding: 5px;
+		
+		&.cui-checkbox {
+			height: auto;
+			padding: 0; // child already has a padding because its a button
+		}
 	}
 
 	.cui-button-checkbox {
@@ -1103,7 +1106,6 @@ li > div {
 .cui-button-button,
 .cui-button-select {
 	flex: 0 0 auto;
-	align-self: flex-start;
 	align-items: center;
 	justify-content: center;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
@@ -1290,6 +1292,8 @@ li > div {
 
 	.fa {
 		font-size: 11px;
+		line-height: 11px;
+		margin-top: 1px;
 	}
 
 	.cui-icon-svg {
@@ -1429,7 +1433,6 @@ a[role="button"].cui-button-appearance-link {
 	cursor: pointer;
 	min-height: 18px;
 	line-height: 18px;
-	align-self: flex-start;
 	max-width: 100%;
 	padding: 3px 0;
 	vertical-align: bottom; // fix height change on windows when checked

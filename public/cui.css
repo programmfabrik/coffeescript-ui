@@ -774,11 +774,14 @@ li > div {
   .cui-toolbar .cui-button,
   .cui-toolbar .cui-button-href,
   .cui-toolbar .cui-data-field {
-    align-self: stretch;
-    height: auto;
     min-width: 0;
     flex-shrink: 1;
     padding: 5px; }
+    .cui-toolbar .cui-button.cui-checkbox,
+    .cui-toolbar .cui-button-href.cui-checkbox,
+    .cui-toolbar .cui-data-field.cui-checkbox {
+      height: auto;
+      padding: 0; }
   .cui-toolbar .cui-button-checkbox {
     display: flex;
     align-items: center; }
@@ -1075,7 +1078,6 @@ li > div {
 .cui-button-button,
 .cui-button-select {
   flex: 0 0 auto;
-  align-self: flex-start;
   align-items: center;
   justify-content: center;
   display: inline-flex;
@@ -1214,7 +1216,9 @@ li > div {
     height: 20px;
     padding: 0 2.5px; }
   .cui-button-size-mini .fa {
-    font-size: 11px; }
+    font-size: 11px;
+    line-height: 11px;
+    margin-top: 1px; }
   .cui-button-size-mini .cui-icon-svg {
     transform: scale(0.75); }
     .cui-button-size-mini .cui-icon-svg.svg-close {
@@ -1300,7 +1304,6 @@ a[role="button"].cui-button-appearance-link {
   cursor: pointer;
   min-height: 18px;
   line-height: 18px;
-  align-self: flex-start;
   max-width: 100%;
   padding: 3px 0;
   vertical-align: bottom; }
