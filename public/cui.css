@@ -1739,8 +1739,11 @@ a[role="button"].cui-button-appearance-link {
   .cui-browser-ie:not(.cui-browser-edge) .cui-input textarea[data-max-chars] {
     min-height: 22px; }
 
+.cui-browser-ie:not(.cui-browser-edge) .cui-input-content-size textarea {
+  min-height: 40px; }
+
 .cui-input-content-size textarea {
-  height: 22px;
+  min-height: 40px;
   resize: none; }
 
 .cui-hint, .cui-options-order-hint,

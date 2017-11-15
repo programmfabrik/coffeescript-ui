@@ -2161,11 +2161,16 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+	.cui-input-content-size {
+		textarea {
+			min-height: 40px;
+		}
+	}
 }
 
 .cui-input-content-size {
 	textarea {
-		height: 22px;
+		min-height: 40px;
 		resize: none;
 	}
 }
