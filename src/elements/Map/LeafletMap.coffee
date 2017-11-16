@@ -70,7 +70,7 @@ class CUI.LeafletMap extends CUI.Map
 		@__selectedMarker?.getLatLng()
 
 	setSelectedMarkerPosition: (position) ->
-		if not @__isValidPosition(position)
+		if not CUI.Map.isValidPosition(position)
 			return
 
 		if @__selectedMarker
@@ -88,7 +88,7 @@ class CUI.LeafletMap extends CUI.Map
 
 			@__selectedMarker.on('dragend', =>
 				latLng = @getSelectedMarkerPosition()
-				if @__isValidPosition(latLng)
+				if CUI.Map.isValidPosition(latLng)
 					@_onMarkerSelected?(@getSelectedMarkerPosition())
 				else
 					@setSelectedMarkerPosition(@__selectedMarkerPositionOnDragStart)

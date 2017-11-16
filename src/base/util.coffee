@@ -4,6 +4,8 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CoordinatesParser = require('coordinate-parser');
+CoordinatesFormat = require('formatcoords');
 
 marked = require('marked')
 moment = require('moment')
@@ -458,6 +460,28 @@ class CUI.util
 	# base64 encoded ascii to ucs-2 string
 	@atou: (str) ->
 	    decodeURIComponent(escape(window.atob(str)))
+
+	# coordinates is a string, almost every coordinates format is accepted.
+	# Returns an object with lat and lng attributes, or false if wasn't possible to parse
+	@parseCoordinates: (coordinates) ->
+		CUI.util.assert(CUI.util.isString(coordinates), "parseCoordinates", "Parameter coordinates is String and mandatory", value: coordinates)
+
+		try
+			coordinates = new CoordinatesParser(coordinates)
+			return lat: coordinates.getLatitude(), lng: coordinates.getLongitude()
+		catch
+			return false
+
+	# coordinates is a PlainObject with lat and lng attributes, format is a string which indicates what format will be used.
+	# Returns a string formatted.
+	@formatCoordinates: (coordinates, format) ->
+		CUI.util.assert(CUI.Map.isValidPosition(coordinates), "formatCoordinates", "Coordinates must be a valid position object, with latitude and longitude attributes.", value: coordinates)
+		CUI.util.assert(CUI.util.isString(format), "formatCoordinates", "Parameter format is String and mandatory", value: coordinates)
+
+		coordinates = CoordinatesFormat(coordinates.lat, coordinates.lng)
+		return coordinates.format(format)
+
+
 
 CUI.util.moment = moment
 CUI.util.marked = marked

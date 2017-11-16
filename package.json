@@ -57,5 +57,9 @@
     "style-loader": "^0.18.2",
     "through2": "^0.6.5",
     "webpack": "^2.2.0"
+  },
+  "dependencies": {
+    "coordinate-parser": "^1.0.2",
+    "formatcoords": "^1.1.3"
   }
 }
