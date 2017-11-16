@@ -28305,11 +28305,14 @@ CUI.dom = (function() {
     return win.print();
   };
 
-  dom.isNode = function(node) {
+  dom.isNode = function(node, level) {
+    if (level == null) {
+      level = 0;
+    }
     if (!node) {
       return false;
     }
-    if (node === document.documentElement || node === window || node === document || node.nodeType || node.DOM) {
+    if (node === document.documentElement || node === window || node === document || node.nodeType || (this.isNode(node.DOM, level + 1) && level === 0)) {
       return true;
     } else {
       return false;
