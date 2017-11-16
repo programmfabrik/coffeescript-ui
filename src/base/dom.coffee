@@ -738,7 +738,7 @@ class CUI.dom
 			win.document.body.classList.add(cls)
 		win.print()
 
-	@isNode: (node) ->
+	@isNode: (node, level=0) ->
 		if not node
 			return false
 
@@ -746,7 +746,7 @@ class CUI.dom
 			node == window or
 			node == document or
 			node.nodeType or
-			node.DOM
+			(@isNode(node.DOM, level+1) and level == 0)
 				true
 		else
 			false
