@@ -954,10 +954,12 @@ li > div {
     margin-top: 0; }
   .cui-data-form-row:last-child > .cui-horizontal-layout-center {
     margin-bottom: 0; }
+  .cui-data-form-row:only-child > .cui-horizontal-layout-right {
+    width: 9px; }
   .cui-data-form-row.cui-data-form-row--trash > .cui-horizontal-layout-center {
     opacity: 0.5; }
   .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row {
-    margin: 10px 7px 0 0;
+    margin: 7px 7px 0 0;
     width: 12px;
     height: 10px;
     flex-grow: 0;
@@ -967,15 +969,15 @@ li > div {
       pointer-events: none;
       opacity: 0.33; }
   .cui-data-form-row > .cui-horizontal-layout-center {
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 0;
+    margin-bottom: 5px;
     min-width: 0;
     flex-direction: row;
     flex-wrap: wrap; }
   .cui-data-form-row > .cui-horizontal-layout-right {
     width: 28px; }
     .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
-      margin-top: 3px;
+      margin-top: 1px;
       position: relative; }
       .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden {
         pointer-events: none; }

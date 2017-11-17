@@ -914,6 +914,14 @@ li > div {
 			margin-bottom: 0;
 		}
 	}
+
+	&:only-child {
+		// make it as wide as the normal inputs
+		// as long as no trash bin is present
+		> .cui-horizontal-layout-right {
+			width: 9px;
+		}
+	}
 	
 	&.cui-data-form-row--trash {
 		> .cui-horizontal-layout-center {
@@ -923,7 +931,7 @@ li > div {
 
 	> .cui-horizontal-layout-left {
 		.cui-drag-handle-row {
-			margin: 10px 7px 0 0;
+			margin: 7px 7px 0 0;
 			width: 12px;
 			height: 10px;
 			flex-grow: 0;
@@ -938,8 +946,8 @@ li > div {
 	}
 
 	> .cui-horizontal-layout-center {
-		margin-top: 3px;
-		margin-bottom: 3px;
+		margin-top: 0;
+		margin-bottom: 5px;
 		min-width: 0;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -949,7 +957,7 @@ li > div {
 		width: 28px;
 		
 		.cui-button {
-			margin-top: 3px;
+			margin-top: 1px;
 			position: relative; // put forward
 			
 			&.cui-button-hidden {
