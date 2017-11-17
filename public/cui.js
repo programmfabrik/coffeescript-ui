@@ -34532,7 +34532,7 @@ CUI.DateTime = (function(superClass) {
     return opts;
   };
 
-  DateTime.prototype.parse = function(s, formats, use_formats) {
+  DateTime.prototype.parse = function(stringValue, formats, use_formats) {
     var appendix, bc, format, i, j, len, len1, mom, ref, ua, us;
     if (formats == null) {
       formats = this.__input_formats;
@@ -34540,29 +34540,32 @@ CUI.DateTime = (function(superClass) {
     if (use_formats == null) {
       use_formats = formats;
     }
-    if (!((s != null ? typeof s.trim === "function" ? s.trim().length : void 0 : void 0) > 0)) {
+    if (!((stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim().length : void 0 : void 0) > 0)) {
       return moment.invalid();
     }
     bc = false;
-    if (s.startsWith("-")) {
+    if (stringValue.startsWith("-")) {
       bc = true;
-      s = s.substring(1);
+      stringValue = stringValue.substring(1);
     } else {
-      us = s.toLocaleUpperCase();
+      us = stringValue.toLocaleUpperCase();
       ref = CUI.DateTime.defaults.bc_appendix;
       for (i = 0, len = ref.length; i < len; i++) {
         appendix = ref[i];
         ua = appendix.toLocaleUpperCase();
         if (us.endsWith(" " + ua)) {
-          s = s.substring(0, s.length - ua.length).trim();
+          stringValue = stringValue.substring(0, stringValue.length - ua.length).trim();
           bc = true;
           break;
         }
       }
     }
+    if (stringValue.length === 3) {
+      stringValue = 0 + stringValue;
+    }
     for (j = 0, len1 = formats.length; j < len1; j++) {
       format = formats[j];
-      mom = this.__parseFormat(format, s);
+      mom = this.__parseFormat(format, stringValue);
       if (mom) {
         if (indexOf.call(use_formats, format) >= 0) {
           this.__input_format = this.initFormat(format);
