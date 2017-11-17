@@ -4168,7 +4168,7 @@ a[role="button"].cui-button-appearance-link {
 		margin: 4px 0;
 		word-wrap: break-word;
 		color: $form-label-color;
-		color: $form-label-font-size;
+		font-size: $form-label-font-size;
 		font-weight: $form-label-weight;
 	}
 
@@ -5162,17 +5162,18 @@ label[data-label-clickable],
 
 	&.cui-block-level-1 {
 		> .cui-block-header {
-			font-size: 15px;
+			font-size: 16px;
 		}
 	}
 	&.cui-block-level-2 {
 		border-bottom-width: 0;
+		
 		> .cui-block-header {
-			font-size: 13px;
+			font-size: 14px;
 		}
 	}
 	> .cui-block-header {
-		font-weight: 700;
+		font-weight: 600;
 	}
 
 	&--padded {
@@ -5224,10 +5225,6 @@ label[data-label-clickable],
 }
 
 .cui-form-block {
-	.cui-block-header {
-		color: $form-block-color;
-	}
-
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}

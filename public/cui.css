@@ -2989,7 +2989,7 @@ a[role="button"].cui-button-appearance-link {
     margin: 4px 0;
     word-wrap: break-word;
     color: #444f5a;
-    color: 13px;
+    font-size: 13px;
     font-weight: 500; }
   .cui-form-field-type--checkbox > .cui-form-key label,
   .cui-form-field-type--checkbox > .cui-form-key .cui-label {
@@ -3653,13 +3653,13 @@ label[data-label-clickable],
   .cui-block:last-child {
     border-bottom-width: 0; }
   .cui-block.cui-block-level-1 > .cui-block-header {
-    font-size: 15px; }
+    font-size: 16px; }
   .cui-block.cui-block-level-2 {
     border-bottom-width: 0; }
     .cui-block.cui-block-level-2 > .cui-block-header {
-      font-size: 13px; }
+      font-size: 14px; }
   .cui-block > .cui-block-header {
-    font-weight: 700; }
+    font-weight: 600; }
   .cui-block--padded > .cui-block-content {
     padding: 0 10px 10px; }
   .cui-block.cui-form-block--has-checkbox > .cui-block-header {
@@ -3688,9 +3688,6 @@ label[data-label-clickable],
 .cui-block-content .cui-block-content {
   padding-left: 0;
   padding-right: 0; }
-
-.cui-form-block .cui-block-header {
-  color: #4f5963; }
 
 .cui-form-block:not(:last-child) .cui-block-content {
   padding-bottom: 0; }
