@@ -583,6 +583,8 @@ li > div {
       flex: 1 1 auto;
       min-height: 0;
       overflow: auto; }
+      .cui-vertical-layout.cui-maximize-vertical > .cui-vertical-layout-center > .cui-button {
+        align-self: flex-start; }
   .cui-vertical-layout.cui-absolute {
     position: relative;
     width: 100%;
@@ -1258,8 +1260,7 @@ a[role="button"].cui-button-appearance-link {
     word-wrap: break-word; }
 
 .cui-button-appearance-link[role] {
-  display: inline-flex;
-  width: auto !important; }
+  display: inline-flex; }
   .cui-button-appearance-link[role] .cui-button-visual, .cui-button-appearance-link[role]:active .cui-button-visual {
     padding: 0;
     border: none;
