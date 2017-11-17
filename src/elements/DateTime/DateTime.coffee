@@ -618,25 +618,29 @@ class CUI.DateTime extends CUI.Input
 	#              matched is not among them, init to the first check format.
 	#              these formats are the "allowed" formats, this is used in __checkInput
 
-	parse: (s, formats = @__input_formats, use_formats = formats) ->
-		if not (s?.trim?().length > 0)
+	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
+		if not (stringValue?.trim?().length > 0)
 			return moment.invalid()
 
 		bc = false
-		if s.startsWith("-")
+		if stringValue.startsWith("-")
 			bc = true
-			s = s.substring(1)
+			stringValue = stringValue.substring(1)
 		else
-			us = s.toLocaleUpperCase()
+			us = stringValue.toLocaleUpperCase()
 			for appendix in CUI.DateTime.defaults.bc_appendix
 				ua = appendix.toLocaleUpperCase()
 				if us.endsWith(" "+ua)
-					s = s.substring(0, s.length - ua.length).trim()
+					stringValue = stringValue.substring(0, stringValue.length - ua.length).trim()
 					bc = true
 					break
 
+		# In case that stringValue is a year of 3 digits, prepend a 0 digit.
+		if stringValue.length == 3
+			stringValue = 0 + stringValue
+
 		for format in formats
-			mom = @__parseFormat(format, s)
+			mom = @__parseFormat(format, stringValue)
 			if mom
 				if format in use_formats
 					@__input_format = @initFormat(format)
