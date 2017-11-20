@@ -129,7 +129,7 @@ textarea {
 [data-max-chars] {
 	box-sizing: content-box;
 	text-align: center;
-	width: 200px;
+	// width: 200px; // conflict: for example change history dropdown
 }
 
 // enlarge max-chars < 10
@@ -4275,6 +4275,17 @@ label[data-label-clickable],
 
 		.cui-data-field-disabled {
 			opacity: 1;
+		}
+	}
+
+	&--full-width {
+		width: 100%;
+		max-width: 100%;
+		
+		&.cui-select {
+			> .cui-button {
+				max-width: none;
+			}
 		}
 	}
 

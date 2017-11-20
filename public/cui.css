@@ -196,8 +196,7 @@ textarea {
 
 [data-max-chars] {
   box-sizing: content-box;
-  text-align: center;
-  width: 200px; }
+  text-align: center; }
 
 [data-max-chars="1"] {
   width: 2ch; }
@@ -3043,6 +3042,11 @@ label[data-label-clickable],
     opacity: 0.3; }
     .cui-data-field-disabled .cui-data-field-disabled {
       opacity: 1; }
+  .cui-data-field--full-width {
+    width: 100%;
+    max-width: 100%; }
+    .cui-data-field--full-width.cui-select > .cui-button {
+      max-width: none; }
   .cui-data-field .cui-object-dumper {
     border: 1px solid #e3e6e8; }
     .cui-data-field .cui-object-dumper .cui-list-view-grid-quadrant-3 {

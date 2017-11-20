@@ -18811,6 +18811,9 @@ CUI.DataField = (function(superClass) {
     this.__checkChangedValue = void 0;
     this.initTemplate();
     this.addClass("cui-data-field");
+    if (this._full_width) {
+      this.addClass('cui-data-field--full-width');
+    }
     CUI.Events.listen({
       type: "data-changed",
       node: this.DOM,
@@ -18852,6 +18855,10 @@ CUI.DataField = (function(superClass) {
     DataField.__super__.initOpts.call(this);
     return this.addOpts({
       name: this.getNameOpt(),
+      full_width: {
+        check: Boolean,
+        "default": false
+      },
       data: {
         check: function(v) {
           return CUI.isFunction(v != null ? v.hasOwnProperty : void 0) || CUI.isFunction(v);

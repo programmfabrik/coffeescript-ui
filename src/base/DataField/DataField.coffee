@@ -28,6 +28,9 @@ class CUI.DataField extends CUI.DOMElement
 
 		@addClass("cui-data-field")
 
+		if @_full_width
+			@addClass('cui-data-field--full-width')
+
 		CUI.Events.listen
 			type: "data-changed"
 			node: @DOM
@@ -66,6 +69,9 @@ class CUI.DataField extends CUI.DOMElement
 		super()
 		@addOpts
 			name: @getNameOpt()
+			full_width:
+				check: Boolean
+				default: false
 			data:
 				check: (v) ->
 					CUI.isFunction(v?.hasOwnProperty) or CUI.isFunction(v)
