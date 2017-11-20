@@ -3054,6 +3054,8 @@ label[data-label-clickable],
   flex-direction: column; }
   .cui-data-field-proxy > .cui-button-href {
     margin: 3px 0; }
+  .cui-data-field-proxy > .cui-button-button {
+    align-self: flex-start; }
 
 .cui-data-field-input > .cui-button-select {
   width: 100%;

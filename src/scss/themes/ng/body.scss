@@ -4290,12 +4290,16 @@ label[data-label-clickable],
 .cui-data-field-proxy {
 	// could be a list view, thus min-height: 0;
 	min-height: 0;
-  display: flex;
-  flex-direction: column;
-  
-  > .cui-button-href {
-  	margin: 3px 0;
-  }
+	display: flex;
+	flex-direction: column;
+	
+	> .cui-button-href {
+		margin: 3px 0;
+	}
+
+	> .cui-button-button {
+		align-self: flex-start;
+	}
 }
 
 // .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
