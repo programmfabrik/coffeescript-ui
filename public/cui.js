@@ -25987,10 +25987,14 @@ CUI.Layer = (function(superClass) {
     } else {
       this.__focused_on_show = false;
     }
-    if (this.__focused_on_show) {
+    if (this.__focused_on_show || this.forceFocusOnShow()) {
       this.DOM.focus();
     }
     return this;
+  };
+
+  Layer.prototype.forceFocusOnShow = function() {
+    return false;
   };
 
   Layer.prototype.focusOnHide = function(ev) {
@@ -48040,9 +48044,17 @@ CUI.Modal = (function(superClass) {
   };
 
   Modal.prototype.focusOnShow = function(ev) {
-    this.__focused_on_show = true;
+    if (ev === CUI.KeyboardEvent) {
+      this.__focused_on_show = true;
+    } else {
+      this.__focused_on_show = false;
+    }
     this.DOM.focus();
     return this;
+  };
+
+  Modal.prototype.forceFocusOnShow = function() {
+    return true;
   };
 
   Modal.prototype.empty = function(key) {
@@ -50774,6 +50786,10 @@ CUI.Popover = (function(superClass) {
   };
 
   Popover.prototype.knownPlacements = ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw"];
+
+  Popover.prototype.forceFocusOnShow = function() {
+    return false;
+  };
 
   return Popover;
 
