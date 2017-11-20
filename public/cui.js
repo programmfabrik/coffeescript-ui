@@ -34124,7 +34124,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.format = function(_s, type, output_type) {
-    var f, format, formats_tried, i, j, k, l, len, len1, len2, mom, output_format, ref, ref1, ref2, s, v;
+    var f, format, formats_tried, i, j, k, l, len, len1, len2, mom, output_format, ref, ref1, ref2, s;
     if (type == null) {
       type = "display";
     }
@@ -34174,11 +34174,7 @@ CUI.DateTime = (function(superClass) {
       formats: this.__input_formats_known,
       output_type: output_type
     });
-    v = mom.format(output_format[type]);
-    if (mom.bc) {
-      v = v + " " + CUI.DateTime.defaults.bc_appendix[0];
-    }
-    return v;
+    return CUI.DateTime.formatMomentWithBc(mom, output_format[type]);
   };
 
   DateTime.prototype.regexpMatcher = function() {
@@ -34227,6 +34223,11 @@ CUI.DateTime = (function(superClass) {
         regexp: "(?:am|pm)",
         inc_func: this.incAMPM,
         cursor: "am_pm"
+      },
+      Y: {
+        regexp: "(?:-|)[0-9]{1,}",
+        inc_func: "year",
+        cursor: "year"
       }
     };
   };
@@ -34254,7 +34255,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.getValueForDisplay = function() {
-    var mom, ref, v, value;
+    var mom, ref, value;
     value = (ref = this.getValue()) != null ? typeof ref.trim === "function" ? ref.trim() : void 0 : void 0;
     if (CUI.util.isEmpty(value)) {
       return "";
@@ -34263,11 +34264,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return value;
     }
-    v = mom.format(this.getCurrentFormatDisplay());
-    if (mom.bc) {
-      v = v + " " + CUI.DateTime.defaults.bc_appendix[0];
-    }
-    return v;
+    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay());
   };
 
   DateTime.prototype.getValueForInput = function(v) {
@@ -34282,11 +34279,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return v;
     }
-    v = mom.format(this.__input_format.input);
-    if (mom.bc) {
-      v = v + " " + CUI.DateTime.defaults.bc_appendix[0];
-    }
-    return v;
+    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input);
   };
 
   DateTime.prototype.__checkInput = function(value) {
@@ -34341,9 +34334,10 @@ CUI.DateTime = (function(superClass) {
     }
     mom = this.parse(value);
     if (mom.isValid()) {
-      value = mom.format(this.__input_format.store);
       if (mom.bc) {
-        value = "-" + value;
+        value = "-" + mom.bc;
+      } else {
+        value = mom.format(this.__input_format.store);
       }
     } else if (this._store_invalid && value.trim().length > 0) {
       value = 'invalid';
@@ -34542,40 +34536,24 @@ CUI.DateTime = (function(superClass) {
     return opts;
   };
 
-  DateTime.prototype.parse = function(stringValue, formats, use_formats) {
-    var appendix, bc, format, i, j, len, len1, mom, ref, ua, us;
+  DateTime.prototype.parse = function(s, formats, use_formats) {
+    var appendix, check_bc, format, i, j, len, len1, m, mom, ref, support_bc, ua, us;
     if (formats == null) {
       formats = this.__input_formats;
     }
     if (use_formats == null) {
       use_formats = formats;
     }
-    if (!((stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim().length : void 0 : void 0) > 0)) {
+    if (!((s != null ? typeof s.trim === "function" ? s.trim().length : void 0 : void 0) > 0)) {
       return moment.invalid();
     }
-    bc = false;
-    if (stringValue.startsWith("-")) {
-      bc = true;
-      stringValue = stringValue.substring(1);
-    } else {
-      us = stringValue.toLocaleUpperCase();
-      ref = CUI.DateTime.defaults.bc_appendix;
-      for (i = 0, len = ref.length; i < len; i++) {
-        appendix = ref[i];
-        ua = appendix.toLocaleUpperCase();
-        if (us.endsWith(" " + ua)) {
-          stringValue = stringValue.substring(0, stringValue.length - ua.length).trim();
-          bc = true;
-          break;
-        }
+    support_bc = false;
+    for (i = 0, len = formats.length; i < len; i++) {
+      format = formats[i];
+      if (format === "Y") {
+        support_bc = true;
       }
-    }
-    if (stringValue.length === 3) {
-      stringValue = 0 + stringValue;
-    }
-    for (j = 0, len1 = formats.length; j < len1; j++) {
-      format = formats[j];
-      mom = this.__parseFormat(format, stringValue);
+      mom = this.__parseFormat(format, s);
       if (mom) {
         if (indexOf.call(use_formats, format) >= 0) {
           this.__input_format = this.initFormat(format);
@@ -34583,15 +34561,40 @@ CUI.DateTime = (function(superClass) {
           this.__input_format = this.initFormat(this.__default_format);
         }
         mom.locale(moment.locale());
-        mom.bc = bc;
         return mom;
       }
     }
-    return moment.invalid();
+    check_bc = false;
+    if (s.startsWith("-")) {
+      check_bc = true;
+      s = s.substring(1);
+    } else {
+      us = s.toLocaleUpperCase();
+      ref = CUI.DateTime.defaults.bc_appendix;
+      for (j = 0, len1 = ref.length; j < len1; j++) {
+        appendix = ref[j];
+        ua = appendix.toLocaleUpperCase();
+        if (us.endsWith(" " + ua)) {
+          s = s.substring(0, s.length - ua.length).trim();
+          check_bc = true;
+          break;
+        }
+      }
+    }
+    if (!check_bc) {
+      return moment.invalid();
+    }
+    m = s.match(/[1-9][0-9]{1,}/);
+    if (!m) {
+      return moment.invalid();
+    }
+    mom = moment();
+    mom.bc = parseInt(s);
+    return mom;
   };
 
   DateTime.prototype.parseValue = function(value, output_format) {
-    var format, i, input_formats, len, mom, ref, v;
+    var format, i, input_formats, len, mom, ref;
     if (output_format == null) {
       output_format = null;
     }
@@ -34608,11 +34611,10 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    v = mom.format(this.__input_format[output_format]);
     if (mom.bc) {
-      return "-" + v;
+      return "-" + mom.bc;
     } else {
-      return v;
+      return mom.format(this.__input_format[output_format]);
     }
   };
 
@@ -35152,7 +35154,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.display = function(datestr_or_moment, opts) {
-    var dt, mom, v;
+    var dt, mom;
     if (opts == null) {
       opts = {};
     }
@@ -35164,11 +35166,20 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    v = mom.format(dt.getCurrentFormatDisplay());
+    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay());
+  };
+
+  DateTime.formatMomentWithBc = function(mom, format) {
+    var v;
     if (mom.bc) {
-      v = v + " " + CUI.DateTime.defaults.bc_appendix[0];
+      return mom.bc + " " + CUI.DateTime.defaults.bc_appendix[0];
     }
-    return v;
+    if (mom.year() >= 0) {
+      v = mom.format(format);
+      return v.replace("+" + mom.year(), "" + mom.year());
+    }
+    v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0];
+    return v.replace(mom.year(), "" + (-1 * mom.year()));
   };
 
   DateTime.toMoment = function(datestr) {
@@ -35260,16 +35271,16 @@ CUI.DateTimeFormats["de-DE"] = {
       parse: ["MM YYYY", "MM/YYYY"]
     }, {
       text: "Jahr",
-      input: "YYYY",
+      input: "Y",
       invalid: "Datum ungültig",
-      display: "YYYY",
-      display_short: "YYYY",
+      display: "Y",
+      display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "YYYY",
+      store: "Y",
       type: "year",
       clock: false,
-      parse: ["YYYY"]
+      parse: ["Y"]
     }
   ]
 };
@@ -35333,16 +35344,16 @@ CUI.DateTimeFormats["it-IT"] = {
       parse: ["MM YYYY", "MM/YYYY"]
     }, {
       text: "Jahr",
-      input: "YYYY",
+      input: "Y",
       invalid: "Datum ungültig",
-      display: "YYYY",
-      display_short: "YYYY",
+      display: "Y",
+      display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "YYYY",
+      store: "Y",
       type: "year",
       clock: false,
-      parse: ["YYYY"]
+      parse: ["Y"]
     }
   ]
 };
@@ -35406,16 +35417,16 @@ CUI.DateTimeFormats["es-ES"] = {
       parse: ["MM YYYY", "MM/YYYY"]
     }, {
       text: "Jahr",
-      input: "YYYY",
+      input: "Y",
       invalid: "Datum ungültig",
-      display: "YYYY",
-      display_short: "YYYY",
+      display: "Y",
+      display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "YYYY",
+      store: "Y",
       type: "year",
       clock: false,
-      parse: ["YYYY"]
+      parse: ["Y"]
     }
   ]
 };
@@ -35481,16 +35492,16 @@ CUI.DateTimeFormats["en-US"] = {
       parse: ["MM YYYY", "MM/YYYY"]
     }, {
       text: "Jahr",
-      input: "YYYY",
+      input: "Y",
       invalid: "Invalid date",
-      display: "YYYY",
-      display_short: "YYYY",
+      display: "Y",
+      display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "YYYY",
+      store: "Y",
       type: "year",
       clock: false,
-      parse: ["YYYY"]
+      parse: ["Y"]
     }
   ]
 };
@@ -48026,6 +48037,12 @@ CUI.Modal = (function(superClass) {
         this[this._cancel_action](ev, ret);
       }
     }
+  };
+
+  Modal.prototype.focusOnShow = function(ev) {
+    this.__focused_on_show = true;
+    this.DOM.focus();
+    return this;
   };
 
   Modal.prototype.empty = function(key) {
