@@ -124,6 +124,11 @@ class CUI.Modal extends CUI.LayerPane
 				@[@_cancel_action](ev, ret)
 		return
 
+	focusOnShow: (ev) ->
+		@__focused_on_show = true
+		@DOM.focus()
+		@
+
 	# PROXY some functions
 	empty: (key="center") ->
 		@getPane().empty(key)

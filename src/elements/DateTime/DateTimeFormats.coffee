@@ -101,18 +101,18 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Jahr"
-		input: "YYYY"
+		input: "Y"
 		invalid: "Datum ungültig"
-		display: "YYYY"
-		display_short: "YYYY"
+		display: "Y"
+		display_short: "Y"
 		display_attribute: "year"
 		display_short_attribute: "year"
-		store: "YYYY"
+		store: "Y"
 		type: "year"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"YYYY"
+			"Y"
 		]
 	]
 
@@ -208,18 +208,18 @@ CUI.DateTimeFormats["it-IT"] =
 		]
 	,
 		text: "Jahr"
-		input: "YYYY"
+		input: "Y"
 		invalid: "Datum ungültig"
-		display: "YYYY"
-		display_short: "YYYY"
+		display: "Y"
+		display_short: "Y"
 		display_attribute: "year"
 		display_short_attribute: "year"
-		store: "YYYY"
+		store: "Y"
 		type: "year"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"YYYY"
+			"Y"
 		]
 	]
 
@@ -315,18 +315,18 @@ CUI.DateTimeFormats["es-ES"] =
 		]
 	,
 		text: "Jahr"
-		input: "YYYY"
+		input: "Y"
 		invalid: "Datum ungültig"
-		display: "YYYY"
-		display_short: "YYYY"
+		display: "Y"
+		display_short: "Y"
 		display_attribute: "year"
 		display_short_attribute: "year"
-		store: "YYYY"
+		store: "Y"
 		type: "year"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"YYYY"
+			"Y"
 		]
 	]
 
@@ -425,17 +425,17 @@ CUI.DateTimeFormats["en-US"] =
 		]
 	,
 		text: "Jahr"
-		input: "YYYY"
+		input: "Y"
 		invalid: "Invalid date"
-		display: "YYYY"
-		display_short: "YYYY"
+		display: "Y"
+		display_short: "Y"
 		display_attribute: "year"
 		display_short_attribute: "year"
-		store: "YYYY"
+		store: "Y"
 		type: "year"
 		# digi_clock: false
 		clock: false
 		parse: [
-			"YYYY"
+			"Y"
 		]
 	]

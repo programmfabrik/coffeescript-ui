@@ -318,11 +318,7 @@ class CUI.DateTime extends CUI.Input
 		CUI.util.assert(output_format, "CUI.DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
 		# console.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
-
-		v = mom.format(output_format[type])
-		if mom.bc
-			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
-		v
+		return CUI.DateTime.formatMomentWithBc(mom, output_format[type])
 
 	regexpMatcher: ->
 		YYYY:
@@ -361,6 +357,10 @@ class CUI.DateTime extends CUI.Input
 			regexp: "(?:am|pm)"
 			inc_func: @incAMPM
 			cursor: "am_pm"
+		Y:
+			regexp: "(?:-|)[0-9]{1,}"
+			inc_func: "year"
+			cursor: "year"
 
 	incAMPM: (mom, diff) ->
 		current_hour = mom.hour()
@@ -390,10 +390,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return value
 
-		v = mom.format(@getCurrentFormatDisplay())
-		if mom.bc
-			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
-		return v
+		return CUI.DateTime.formatMomentWithBc(mom, @getCurrentFormatDisplay())
 
 	getValueForInput: (v = @getValue()) ->
 		if CUI.util.isEmpty(v?.trim())
@@ -403,10 +400,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return v
 
-		v = mom.format(@__input_format.input)
-		if mom.bc
-			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
-		return v
+		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input)
 
 	__checkInput: (value) ->
 		if not CUI.util.isEmpty(value?.trim())
@@ -448,9 +442,10 @@ class CUI.DateTime extends CUI.Input
 	storeValue: (value, flags={}) ->
 		mom = @parse(value)
 		if mom.isValid()
-			value = mom.format(@__input_format.store)
 			if mom.bc
-				value = "-"+value
+				value = "-"+mom.bc
+			else
+				value = mom.format(@__input_format.store)
 
 		else if @_store_invalid and value.trim().length > 0
 			value = 'invalid'
@@ -618,41 +613,55 @@ class CUI.DateTime extends CUI.Input
 	#              matched is not among them, init to the first check format.
 	#              these formats are the "allowed" formats, this is used in __checkInput
 
-	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
-		if not (stringValue?.trim?().length > 0)
+	parse: (s, formats = @__input_formats, use_formats = formats) ->
+		if not (s?.trim?().length > 0)
 			return moment.invalid()
 
-		bc = false
-		if stringValue.startsWith("-")
-			bc = true
-			stringValue = stringValue.substring(1)
-		else
-			us = stringValue.toLocaleUpperCase()
-			for appendix in CUI.DateTime.defaults.bc_appendix
-				ua = appendix.toLocaleUpperCase()
-				if us.endsWith(" "+ua)
-					stringValue = stringValue.substring(0, stringValue.length - ua.length).trim()
-					bc = true
-					break
-
-		# In case that stringValue is a year of 3 digits, prepend a 0 digit.
-		if stringValue.length == 3
-			stringValue = 0 + stringValue
+		support_bc = false
 
 		for format in formats
-			mom = @__parseFormat(format, stringValue)
+			if format == "Y"
+				# we support -1mio years
+				support_bc = true
+
+			mom = @__parseFormat(format, s)
 			if mom
 				if format in use_formats
 					@__input_format = @initFormat(format)
 				else
 					@__input_format = @initFormat(@__default_format)
 				mom.locale(moment.locale())
-				mom.bc = bc
 
 				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
-		return moment.invalid()
+		# lets see if the date is below zero
+		check_bc = false
+		if s.startsWith("-")
+			check_bc = true
+			s = s.substring(1)
+		else
+			us = s.toLocaleUpperCase()
+			for appendix in CUI.DateTime.defaults.bc_appendix
+				ua = appendix.toLocaleUpperCase()
+				if us.endsWith(" "+ua)
+					s = s.substring(0, s.length - ua.length).trim()
+					check_bc = true
+					break
+
+		if not check_bc
+			return moment.invalid()
+
+		# set bc to the value
+		m = s.match(/[1-9][0-9]{1,}/)
+		if not m
+			return moment.invalid()
+
+		# fake a moment
+		mom = moment()
+		mom.bc = parseInt(s)
+		return mom
+
 
 	# like parse, but it used all known input formats
 	# to recognize the value
@@ -667,11 +676,10 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		v = mom.format(@__input_format[output_format])
 		if mom.bc
-			return "-"+v
+			return "-"+mom.bc
 		else
-			return v
+			return mom.format(@__input_format[output_format])
 
 	__parseFormat: (f, s) ->
 		for k in CUI.DateTime.formatTypes
@@ -1349,10 +1357,20 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		v = mom.format(dt.getCurrentFormatDisplay())
+		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay())
+
+	@formatMomentWithBc: (mom, format) ->
 		if mom.bc
-			v = v + " " + CUI.DateTime.defaults.bc_appendix[0]
-		v
+			return mom.bc + " " + CUI.DateTime.defaults.bc_appendix[0]
+
+		if mom.year() >= 0
+			v = mom.format(format)
+			# remove the "+"
+			return v.replace("+"+mom.year(), ""+mom.year())
+
+		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
+		# remove the "-"
+		return v.replace(mom.year(), ""+(-1*mom.year()))
 
 	@toMoment: (datestr) ->
 		if CUI.util.isEmpty(datestr)
