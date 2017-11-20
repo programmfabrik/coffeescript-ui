@@ -28401,6 +28401,9 @@ CUI.dom = (function() {
     if (trySelf == null) {
       trySelf = false;
     }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     CUI.util.assert(docElem instanceof HTMLElement || docElem === document, "CUI.dom.matchSelector", "docElem needs to be instanceof HTMLElement or document.", {
       docElem: docElem
     });
