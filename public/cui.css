@@ -970,9 +970,7 @@ li > div {
   .cui-data-form-row > .cui-horizontal-layout-center {
     margin-top: 0;
     margin-bottom: 5px;
-    min-width: 0;
-    flex-direction: row;
-    flex-wrap: wrap; }
+    min-width: 0; }
   .cui-data-form-row > .cui-horizontal-layout-right {
     width: 28px; }
     .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
