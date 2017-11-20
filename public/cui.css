@@ -1094,6 +1094,7 @@ li > div {
     padding: 0 5px;
     height: 24px;
     min-width: 27px;
+    font-size: 13px;
     line-height: 22px;
     color: #50585e;
     background: white;
@@ -1233,8 +1234,7 @@ li > div {
       height: 9px; }
 
 .cui-button-size-big {
-  font-size: 11px;
-  height: 60px; }
+  font-size: 11px; }
   .cui-button-size-big.cui-button-appearance-flat {
     height: auto; }
   .cui-buttonbar-group .cui-button-size-big:not(:first-child) {

@@ -1136,6 +1136,7 @@ li > div {
 	  padding: 0 $padding/2;
 	  height: $button-height;
 	  min-width: 27px;
+	  font-size: $button-font-size;
 	  line-height: $button-height - 2px;
 	  color: $button-color;
 	  background: $button-background;
@@ -1328,7 +1329,7 @@ li > div {
 
 .cui-button-size-big {
 	font-size: 11px;
-	height: 60px;
+	// height: 60px; // conflict: too high in for example the easydb presentation editor
 
 	&.cui-button-appearance-flat {
 		height: auto;
