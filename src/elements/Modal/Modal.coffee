@@ -125,9 +125,17 @@ class CUI.Modal extends CUI.LayerPane
 		return
 
 	focusOnShow: (ev) ->
-		@__focused_on_show = true
+		if ev == CUI.KeyboardEvent
+			# set focus back on hide
+			@__focused_on_show = true
+		else
+			@__focused_on_show = false
+
 		@DOM.focus()
 		@
+
+	forceFocusOnShow: ->
+		true
 
 	# PROXY some functions
 	empty: (key="center") ->

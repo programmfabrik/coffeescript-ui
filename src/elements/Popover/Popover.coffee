@@ -24,6 +24,9 @@ class CUI.Popover extends CUI.Modal
 
 	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw"]
 
+	forceFocusOnShow: ->
+		false
+
 	# disableAllButtons: ->
 	# 	super()
 	# 	@disableBackdropClick()

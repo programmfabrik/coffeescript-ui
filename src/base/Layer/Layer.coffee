@@ -1155,9 +1155,12 @@ class CUI.Layer extends CUI.DOMElement
 		else
 			@__focused_on_show = false
 
-		if @__focused_on_show
+		if @__focused_on_show or @forceFocusOnShow()
 			@DOM.focus()
 		@
+
+	forceFocusOnShow: ->
+		false
 
 	focusOnHide: (ev) ->
 		if not @__element
