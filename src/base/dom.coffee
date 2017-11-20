@@ -811,6 +811,9 @@ class CUI.dom
 		@matchSelector(document.documentElement, sel)
 
 	@matchSelector: (docElem, sel, trySelf=false) ->
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
+
 		CUI.util.assert(docElem instanceof HTMLElement or docElem == document, "CUI.dom.matchSelector", "docElem needs to be instanceof HTMLElement or document.", docElem: docElem)
 
 		# console.error "matchSelector", docElem, sel, trySelf
