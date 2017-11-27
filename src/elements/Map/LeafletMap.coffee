@@ -98,6 +98,11 @@ class CUI.LeafletMap extends CUI.Map
 
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
+	removeSelectedMarkerPosition: ->
+		if @__selectedMarker
+			@__removeMarker(@__selectedMarker)
+			delete @__selectedMarker
+
 	hideMarkers: ->
 		for marker in @__markers
 			marker.setOpacity(0)
@@ -131,7 +136,7 @@ class CUI.LeafletMap extends CUI.Map
 	setZoom: (zoom) ->
 		@__map.setZoom(zoom)
 
-	setCenter: (position, zoom) ->
+	setCenter: (position, zoom = @getZoom()) ->
 		@__map.setView(position, zoom)
 
 	getCenter: ->

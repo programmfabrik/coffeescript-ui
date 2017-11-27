@@ -75,6 +75,11 @@ class CUI.GoogleMap extends CUI.Map
 
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
+	removeSelectedMarkerPosition: ->
+		if @__selectedMarker
+			@__removeMarker(@__selectedMarker)
+			delete @__selectedMarker
+
 	hideMarkers: ->
 		for marker in @__markers
 			marker.setMap(null)

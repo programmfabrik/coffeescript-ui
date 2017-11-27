@@ -464,7 +464,7 @@ class CUI.util
 	# coordinates is a string, almost every coordinates format is accepted.
 	# Returns an object with lat and lng attributes, or false if wasn't possible to parse
 	@parseCoordinates: (coordinates) ->
-		CUI.util.assert(CUI.util.isString(coordinates), "parseCoordinates", "Parameter coordinates is String and mandatory", value: coordinates)
+		CUI.util.assert(CUI.util.isString(coordinates), "parseCoordinates", "Parameter coordinates is String and mandatory.", value: coordinates)
 
 		try
 			coordinates = new CoordinatesParser(coordinates)
@@ -476,7 +476,7 @@ class CUI.util
 	# Returns a string formatted.
 	@formatCoordinates: (coordinates, format) ->
 		CUI.util.assert(CUI.Map.isValidPosition(coordinates), "formatCoordinates", "Coordinates must be a valid position object, with latitude and longitude attributes.", value: coordinates)
-		CUI.util.assert(CUI.util.isString(format), "formatCoordinates", "Parameter format is String and mandatory", value: coordinates)
+		CUI.util.assert(CUI.util.isString(format) and not CUI.util.isEmpty(format), "formatCoordinates", "Parameter format is String, mandatory and not empty.", value: coordinates)
 
 		coordinates = CoordinatesFormat(coordinates.lat, coordinates.lng)
 		return coordinates.format(format)

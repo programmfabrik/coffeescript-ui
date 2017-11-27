@@ -82,6 +82,9 @@ class CUI.Map extends CUI.DOMElement
 	setSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".setSelectedMarkerPosition needs to be implemented.")
 
+	removeSelectedMarkerPosition: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".removeSelectedMarkerPosition needs to be implemented.")
+
 	hideMarkers: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".hideMarkers needs to be implemented.")
 
