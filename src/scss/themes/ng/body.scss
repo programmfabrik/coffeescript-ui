@@ -920,6 +920,10 @@ li > div {
 		// as long as no trash bin is present
 		> .cui-horizontal-layout-right {
 			width: 9px;
+			
+			> .cui-buttonbar {
+				display: none;
+			}
 		}
 	}
 	

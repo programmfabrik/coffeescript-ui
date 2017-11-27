@@ -955,6 +955,8 @@ li > div {
     margin-bottom: 0; }
   .cui-data-form-row:only-child > .cui-horizontal-layout-right {
     width: 9px; }
+    .cui-data-form-row:only-child > .cui-horizontal-layout-right > .cui-buttonbar {
+      display: none; }
   .cui-data-form-row.cui-data-form-row--trash > .cui-horizontal-layout-center {
     opacity: 0.5; }
   .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row {
