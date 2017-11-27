@@ -1482,6 +1482,10 @@ a[role="button"].cui-button-appearance-link {
     color: #6d7478; }
     .cui-selected .cui-label-appearance-secondary {
       color: #56728f; }
+  .cui-label-appearance-muted {
+    color: #949a9e; }
+    .cui-selected .cui-label-appearance-muted {
+      color: #577ca2; }
   .cui-label--padded {
     padding: 10px; }
     .cui-label--padded + .cui-block > .cui-block-header {

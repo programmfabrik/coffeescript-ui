@@ -72,8 +72,6 @@ class CUI.Label extends CUI.DOMElement
 
 		if @_appearance
 			@addClass("cui-label-appearance-"+@_appearance)
-		else if not CUI.__ng__
-			@addClass("cui-label-appearance-auto cui-label-appearance-normal")
 
 		if @_manage_overflow
 
@@ -126,7 +124,7 @@ class CUI.Label extends CUI.DOMElement
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
-				check: ["normal","important","title","secondary"]
+				check: ["title","secondary","muted"]
 			# set to true if text is markdown
 			markdown:
 				mandatory: true

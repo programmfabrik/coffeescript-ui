@@ -41984,8 +41984,6 @@ CUI.Label = (function(superClass) {
     }
     if (this._appearance) {
       this.addClass("cui-label-appearance-" + this._appearance);
-    } else if (!CUI.__ng__) {
-      this.addClass("cui-label-appearance-auto cui-label-appearance-normal");
     }
     if (this._manage_overflow) {
       if (this._manage_overflow === true) {
@@ -42054,7 +42052,7 @@ CUI.Label = (function(superClass) {
         check: ["mini", "normal", "big", "bigger"]
       },
       appearance: {
-        check: ["normal", "important", "title", "secondary"]
+        check: ["title", "secondary", "muted"]
       },
       markdown: {
         mandatory: true,

@@ -1737,6 +1737,14 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	&-appearance-muted {
+		color: $muted-color;
+
+		.cui-selected & {
+			color: $on-row-highlight-muted-color;
+		}
+	}
+
 	&--padded {
 		padding: $padding;
 
