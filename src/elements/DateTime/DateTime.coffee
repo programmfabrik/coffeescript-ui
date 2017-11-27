@@ -275,6 +275,8 @@ class CUI.DateTime extends CUI.Input
 
 		@DOM.setAttribute("data-cui-date-time-format", attr)
 
+		@addClass("cui-data-field--with-button")
+
 		btn = new CUI.defaults.class.Button
 			icon: "calendar"
 			tooltip: text: CUI.DateTime.defaults.button_tooltip

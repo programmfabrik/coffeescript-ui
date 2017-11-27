@@ -3055,6 +3055,37 @@ label[data-label-clickable],
     border: 1px solid #e3e6e8; }
     .cui-data-field .cui-object-dumper .cui-list-view-grid-quadrant-3 {
       min-height: auto; }
+  .cui-data-field--with-button {
+    display: flex;
+    height: 24px;
+    align-items: flex-end;
+    line-height: 24px;
+    max-width: 275px; }
+
+.cui-data-field-center {
+  flex: 1 1 auto;
+  display: flex; }
+  .cui-data-field-center:focus {
+    z-index: 1; }
+  .cui-data-field-center input {
+    position: relative;
+    width: auto !important;
+    flex-grow: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0; }
+
+.cui-data-field-right {
+  position: relative; }
+  .cui-data-field-right .cui-button {
+    margin-left: -1px;
+    height: 100%;
+    vertical-align: bottom; }
+    .cui-data-field-right .cui-button .cui-button-visual {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      padding: 0 5px; }
+    .cui-data-field-right .cui-button:focus {
+      z-index: 1; }
 
 .cui-data-field-proxy {
   min-height: 0;
@@ -3269,11 +3300,6 @@ label[data-label-clickable],
     opacity: 0.8; }
 
 .cui-date-time {
-  display: flex;
-  align-items: flex-end;
-  height: 24px;
-  line-height: 24px;
-  max-width: 275px;
   /*
 
 	date: "dd, DD.MM.YYYY"
@@ -3287,8 +3313,6 @@ label[data-label-clickable],
   .cui-date-time .cui-input-invalid-hint {
     display: none; }
   .cui-date-time .cui-input {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     min-width: 90px; }
   .cui-date-time[data-cui-date-time-format="date"] .cui-input {
     min-width: 112px; }
@@ -3349,29 +3373,6 @@ label[data-label-clickable],
 
 .cui-buttonbar-group-time {
   margin-left: 10px; }
-
-.cui-date-time-input-center {
-  flex: 1 1 auto;
-  display: flex; }
-  .cui-date-time-input-center:focus {
-    z-index: 1; }
-  .cui-date-time-input-center input {
-    position: relative;
-    width: auto !important;
-    flex-grow: 1; }
-
-.cui-date-time-input-right {
-  position: relative; }
-  .cui-date-time-input-right .cui-button {
-    margin-left: -1px;
-    height: 100%;
-    vertical-align: bottom; }
-    .cui-date-time-input-right .cui-button .cui-button-visual {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      padding: 0 5px; }
-    .cui-date-time-input-right .cui-button:focus {
-      z-index: 1; }
 
 .cui-date-time-day {
   border-radius: 4px; }

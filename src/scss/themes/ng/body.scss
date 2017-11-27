@@ -4306,6 +4306,51 @@ label[data-label-clickable],
 			min-height: auto;
 		}
 	}
+
+	&--with-button {
+		display: flex;
+		height: 24px;
+		align-items: flex-end;
+		line-height: 24px;
+		max-width: $input-width;
+	}
+}
+
+.cui-data-field-center {
+	flex: 1 1 auto;
+	display: flex;
+
+	&:focus {
+		z-index: 1;
+	}
+
+	input {
+		position: relative;
+		width: auto !important;
+		flex-grow: 1;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+
+.cui-data-field-right {
+	position: relative;
+
+	.cui-button {
+		margin-left: -1px;
+		height: 100%;
+		vertical-align: bottom;
+
+		.cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			padding: 0 $padding/2;
+		}
+
+		&:focus {
+			z-index: 1;
+		}
+	}
 }
 
 .cui-data-field-proxy {
@@ -4615,19 +4660,11 @@ label[data-label-clickable],
 
 // DateTime
 .cui-date-time {
-	display: flex;
-	align-items: flex-end;
-	height: 24px;
-	line-height: 24px;
-	max-width: $input-width;
-
 	.cui-input-invalid-hint {
 		display: none;
 	}
 
 	.cui-input {
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
 		min-width: 90px; // date-short
 	}
 
@@ -4719,41 +4756,6 @@ label[data-label-clickable],
 
 .cui-buttonbar-group-time {
 	margin-left: $padding;
-}
-
-.cui-date-time-input-center {
-	flex: 1 1 auto;
-	display: flex;
-
-	&:focus {
-		z-index: 1;
-	}
-
-	input {
-		position: relative;
-		width: auto !important;
-		flex-grow: 1;
-	}
-}
-
-.cui-date-time-input-right {
-	position: relative;
-
-	.cui-button {
-		margin-left: -1px;
-		height: 100%;
-		vertical-align: bottom;
-
-		.cui-button-visual {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-			padding: 0 $padding/2;
-		}
-
-		&:focus {
-			z-index: 1;
-		}
-	}
 }
 
 .cui-date-time-day {
