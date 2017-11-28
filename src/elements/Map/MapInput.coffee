@@ -64,6 +64,8 @@ class CUI.MapInput extends CUI.Input
 	render: ->
 		super()
 
+		@addClass("cui-data-field--with-button")
+
 		@__initMap()
 
 		if CUI.util.isEmpty(@_placeholder)

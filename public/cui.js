@@ -47674,6 +47674,7 @@ CUI.MapInput = (function(superClass) {
   MapInput.prototype.render = function() {
     var openPopoverButton;
     MapInput.__super__.render.call(this);
+    this.addClass("cui-data-field--with-button");
     this.__initMap();
     if (CUI.util.isEmpty(this._placeholder)) {
       this.__input.setAttribute("placeholder", CUI.MapInput.defaults.placeholder);
