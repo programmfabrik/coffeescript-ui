@@ -324,15 +324,14 @@ class CUI.dom
 	@getAttribute: (node, key) ->
 		node.getAttribute(key)
 
-	@remove: (element) ->
-		if not element
+	@remove: (_node) ->
+		node = (_node?.DOM or _node)
+
+		if not node
 			return null
 
-		if element.DOM
-			element.parentNode?.removeChild(element.DOM)
-		else
-			element.parentNode?.removeChild(element)
-		element
+		node.parentNode?.removeChild(node)
+		node
 
 	@empty: (node) ->
 		if not node
