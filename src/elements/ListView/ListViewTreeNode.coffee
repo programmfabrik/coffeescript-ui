@@ -23,7 +23,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	readOpts: ->
 		super()
-		@colspan = @_colspan
+		@setColspan(@_colspan)
 		if @_children
 			@children = @opts.children
 			@initChildren()
@@ -36,6 +36,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@is_open = false
 		@html = @_html
 		@__loadingDeferred = null
+
+	setColspan: (@colspan) ->
+
+	getColspan: ->
+		@colspan
 
 	isLeaf: ->
 		leaf = (if @children
@@ -820,7 +825,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@prependColumn new CUI.ListViewColumn
 			element: element
 			class: "cui-tree-node-column cui-tree-node-level-#{@level()}"
-			colspan: @colspan
+			colspan: @getColspan()
 
 		# nodes can re-arrange the order of the columns
 		# so we call them last

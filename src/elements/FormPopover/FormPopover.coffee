@@ -264,9 +264,16 @@ class CUI.FormPopover extends CUI.Form
 			type: "data-changed"
 			node: @__popover
 			call: (ev, info={}) =>
-				# console.debug("data changed on popover, render display", @_trigger_data_changed_while_open)
+				# console.debug("data changed on popover, render display", @, @_trigger_data_changed_while_open)
 				@__renderDisplay()
 				@__dataChanged = info
+
+
+				CUI.setTimeout
+					ms: 0
+					call: =>
+						@__popover.position()
+
 				if @_trigger_data_changed_while_open
 					@__triggerDataChanged()
 				return
