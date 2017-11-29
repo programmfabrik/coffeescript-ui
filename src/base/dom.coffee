@@ -232,12 +232,18 @@ class CUI.dom
 
 		node.hasAttribute(key)
 
-	@setAttributeMap: (node, map) ->
-		if not node
+	@setAttributeMap: (_node, map) ->
+		if not _node
 			return null
+
+		node = _node.DOM or _node
+
+		if not map
+			return node
 
 		for key, value of map
 			CUI.dom.setAttribute(node, key, value)
+
 		node
 
 	@width: (docElem, value) ->
@@ -1316,7 +1322,7 @@ class CUI.dom
 			else
 				CUI.util.assert(false, "CUI.dom.space", "Unknown style: "+style)
 
-	@element: (tagName, attrs={}) ->
+	@element: (tagName, attrs) ->
 		CUI.dom.setAttributeMap(document.createElement(tagName), attrs)
 
 	@debugRect: ->

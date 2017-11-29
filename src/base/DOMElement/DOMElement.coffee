@@ -15,7 +15,6 @@ class CUI.DOMElement extends CUI.Element
 			qa:
 				check: String
 			attr:
-				default: {}
 				check: "PlainObject"
 
 	registerTemplate: (template, add_default_classes=true) ->

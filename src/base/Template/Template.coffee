@@ -34,6 +34,9 @@ class CUI.Template extends CUI.Element
 		if @_class
 			CUI.dom.addClass(@DOM, @_class)
 
+		if @_attr
+			CUI.dom.setAttributeMap(@DOM, @_attr)
+
 		#CUI.dom.setElement(@DOM, @)
 
 		# map elements which require mapping
@@ -68,6 +71,8 @@ class CUI.Template extends CUI.Element
 				default: {}
 			class:
 				check: String
+			attr:
+				check: "PlainObject"
 		@
 
 

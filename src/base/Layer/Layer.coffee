@@ -1230,7 +1230,7 @@ CUI.ready ->
 						capture: true
 						only_once: true
 						call: (ev) =>
-							console.error "eating click on layer opening element"
+							# console.error "eating click on layer opening element"
 							return ev.stop()
 
 				ev.cui_layer_closed = true
