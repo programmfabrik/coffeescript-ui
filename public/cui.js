@@ -18571,7 +18571,6 @@ CUI.DOMElement = (function(superClass) {
         check: String
       },
       attr: {
-        "default": {},
         check: "PlainObject"
       }
     });
@@ -26072,7 +26071,6 @@ CUI.ready(function() {
             only_once: true,
             call: (function(_this) {
               return function(ev) {
-                console.error("eating click on layer opening element");
                 return ev.stop();
               };
             })(this)
@@ -26635,6 +26633,9 @@ CUI.Template = (function(superClass) {
     if (this._class) {
       CUI.dom.addClass(this.DOM, this._class);
     }
+    if (this._attr) {
+      CUI.dom.setAttributeMap(this.DOM, this._attr);
+    }
     this.map = this.getElMap(this._map);
     if (!CUI.isEmptyObject(this.map) && this._set_template_empty) {
       CUI.dom.addClass(this.DOM, "cui-template-empty");
@@ -26671,6 +26672,9 @@ CUI.Template = (function(superClass) {
       },
       "class": {
         check: String
+      },
+      attr: {
+        check: "PlainObject"
       }
     });
     return this;
@@ -27749,10 +27753,14 @@ CUI.dom = (function() {
     return node.hasAttribute(key);
   };
 
-  dom.setAttributeMap = function(node, map) {
-    var key, value;
-    if (!node) {
+  dom.setAttributeMap = function(_node, map) {
+    var key, node, value;
+    if (!_node) {
       return null;
+    }
+    node = _node.DOM || _node;
+    if (!map) {
+      return node;
     }
     for (key in map) {
       value = map[key];
@@ -28985,9 +28993,6 @@ CUI.dom = (function() {
   };
 
   dom.element = function(tagName, attrs) {
-    if (attrs == null) {
-      attrs = {};
-    }
     return CUI.dom.setAttributeMap(document.createElement(tagName), attrs);
   };
 
@@ -39439,6 +39444,12 @@ CUI.FormPopover = (function(superClass) {
           }
           _this.__renderDisplay();
           _this.__dataChanged = info;
+          CUI.setTimeout({
+            ms: 0,
+            call: function() {
+              return _this.__popover.position();
+            }
+          });
           if (_this._trigger_data_changed_while_open) {
             _this.__triggerDataChanged();
           }
@@ -44907,7 +44918,7 @@ CUI.ListViewTreeNode = (function(superClass) {
 
   ListViewTreeNode.prototype.readOpts = function() {
     ListViewTreeNode.__super__.readOpts.call(this);
-    this.colspan = this._colspan;
+    this.setColspan(this._colspan);
     if (this._children) {
       this.children = this.opts.children;
       this.initChildren();
@@ -44920,6 +44931,14 @@ CUI.ListViewTreeNode = (function(superClass) {
     this.is_open = false;
     this.html = this._html;
     return this.__loadingDeferred = null;
+  };
+
+  ListViewTreeNode.prototype.setColspan = function(colspan) {
+    this.colspan = colspan;
+  };
+
+  ListViewTreeNode.prototype.getColspan = function() {
+    return this.colspan;
   };
 
   ListViewTreeNode.prototype.isLeaf = function() {
@@ -45917,7 +45936,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     this.prependColumn(new CUI.ListViewColumn({
       element: element,
       "class": "cui-tree-node-column cui-tree-node-level-" + (this.level()),
-      colspan: this.colspan
+      colspan: this.getColspan()
     }));
     contentDiv = CUI.dom.div("cui-tree-node-content");
     content = this.renderContent();
