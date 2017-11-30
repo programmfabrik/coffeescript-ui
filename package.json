@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack --progress",
     "build:watch": "webpack --watch --progress",
-    "build:all": "npm run build && npm run build -- --env.minify"
+    "build:all": "npm run build && npm run build -- --env.minify",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "homepage": "https://github.com/programmfabrik/coffeescript-ui#readme",
   "devDependencies": {
+    "babel-jest": "^21.2.0",
     "base64-inline-loader": "^1.1.0",
     "clean-webpack-plugin": "^0.1.16",
     "coffee": "^3.3.0",

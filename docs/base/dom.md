@@ -182,7 +182,7 @@ If **filter** is a `Function`, it should receive **node** as parameter and retur
     <div id="div">
         <span class="child"></span>
         <div class="child noFilter"></div>
-    <div>
+    </div>
      
     CUI.dom.children(div)
     > (2) [span.child, div.child]
@@ -219,7 +219,7 @@ It gets the first child of **node** that returns *true* to **CUI.dom.is** invoca
 
 The iteration will be from last child to first child.
 
-Returns the first child if **selector** is null.
+Returns the last child if **selector** is null.
 Returns *null* if no child were found.
 
 ### CUI.dom.nextElementSibling(node, selector) : `HTMLElement`

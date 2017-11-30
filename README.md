@@ -66,6 +66,14 @@ _Example:_
 
 _It will generate a different filename depending in the options that were used (see **Different versions**)_
 
+## Test
+
+To run the tests:
+
+**npm run test**
+
+The tests uses the public js files, so It's necessary to build them before.
+
 ## Documentation
 
 https://programmfabrik.gitbooks.io/coffeescript-ui/
