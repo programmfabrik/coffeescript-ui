@@ -272,7 +272,7 @@ class CUI.FormPopover extends CUI.Form
 				CUI.setTimeout
 					ms: 0
 					call: =>
-						@__popover.position()
+						@__popover?.position()
 
 				if @_trigger_data_changed_while_open
 					@__triggerDataChanged()
