@@ -94,9 +94,9 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		else
 			@father = new_father
 
-		if @children
-			for c in @children
-				c.setFather(@)
+		# if @children
+		# 	for c in @children
+		# 		c.setFather(@)
 		@
 
 	isRoot: ->
@@ -244,6 +244,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@do_open = false
 
 		if remove_self
+			# console.debug "removing ", @getUniqueId(), @getDOMNodes()?[0], @__is_rendered, @getRowIdx()
 			if @__is_rendered
 				tree = @getTree()
 				if tree and not tree.isDestroyed()
@@ -321,13 +322,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if not @__loadingDeferred
 			return
 
-		console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
+		# console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
 		if @__loadingDeferred.state == 'pending'
 			@__loadingDeferred.reject()
 		@__loadingDeferred = null
 		return
-
-	__open_counter: 0
 
 	# resolves with the opened node
 	open: ->
@@ -335,19 +334,17 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# we could return loading_deferred here
 		CUI.util.assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
 
-		@__open_counter++
-
-		open_counter = @__open_counter
-
-		# console.error @getUniqueId(), "opening...", "is open:", @is_open, open_counter
-
 		if @is_open
 			return CUI.resolvedPromise()
+
+		# console.error @getUniqueId(), "opening...", "is open:", @is_open, open_counter
 
 		@is_open = true
 		@do_open = false
 
 		dfr = @__loadingDeferred = new CUI.Deferred()
+
+		# console.warn("Start opening", @getUniqueId(), dfr.getUniqueId())
 
 		do_resolve = =>
 			if @__loadingDeferred.state() == "pending"
@@ -383,14 +380,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 						timeout: -1
 						call: (_items) =>
 							# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work"
-							if open_counter < @__open_counter
+							if dfr != @__loadingDeferred
 								# we are already in a new run, exit
 								return false
 							@__appendNode(_items[0], true) # , false, true))
 
 			.done =>
 				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work DONE"
-				if open_counter < @__open_counter
+				if dfr != @__loadingDeferred
 					return
 
 				if not @isRoot()
@@ -398,7 +395,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				do_resolve()
 			.fail =>
 				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work FAIL"
-				if open_counter < @__open_counter
+				if dfr != @__loadingDeferred
 					return
 
 				for c in @children
@@ -420,7 +417,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 					CUI.util.assert(CUI.util.isPromise(ret), "#{CUI.util.getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
 					ret
 					.done (@children) =>
-						if open_counter < @__open_counter
+						if dfr != @__loadingDeferred
 							return
 						load_children()
 						return
@@ -451,6 +448,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	initChildren: ->
 		for node, idx in @children
+			for _node, _idx in @children
+				if idx == _idx
+					continue
+				CUI.util.assert(_node != node, "ListViewTreeNode.initChildren", "Must have every child only once.", node: @, child: node)
+
 			node.setFather(@)
 		return
 
@@ -466,6 +468,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@children = []
 
 		CUI.util.assert(CUI.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
+
+		for _node in @children
+			CUI.util.assert(_node != node, "ListViewTreeNode.addNode", "Must have every child only once.", node: @, child: _node)
+
 		if append == true
 			@children.push(node)
 		else
@@ -514,10 +520,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if tree?.isDestroyed()
 			return CUI.rejectedPromise(node)
 
-		# console.debug @._key, node._key, node.__info?.text, @isRendered()
-
 		if not @isRendered()
 			return CUI.resolvedPromise(node)
+
+		# console.warn "appendNode", @getUniqueId(), "new:", node.getUniqueId(), "father open:", @getFather()?.isOpen()
 
 		child_idx = node.getChildIdx()
 		if @isRoot()
@@ -865,6 +871,3 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.resolvedPromise()
 
 	moveNodeAfter: (to_node, new_father, after) ->
-
-
-
