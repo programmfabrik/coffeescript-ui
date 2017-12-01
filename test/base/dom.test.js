@@ -393,3 +393,40 @@ describe('CUI.dom.getAttribute(node, key)', () => {
         expect(attributeValue).toBe("aValue")
     });
 });
+
+describe('CUI.dom.hasAttribute(node, key)', () => {
+    test("With existing attribute", () => {
+        document.body.innerHTML = `<div id="div" someKey="aValue"></div>`;
+
+        let hasAttribute = CUI.dom.hasAttribute(div, "someKey");
+        expect(hasAttribute).toBeTruthy()
+    });
+
+    test("Without existing attribute", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+
+        let hasAttribute = CUI.dom.hasAttribute(div, "someKey");
+        expect(hasAttribute).toBeFalsy()
+    });
+});
+
+describe('CUI.dom.setAttributeMap(node, map)', () => {
+
+    test("With valid plain object", () => {
+        let idKey = "id";
+        let aKey = "aKey";
+        let map = {
+            [idKey]: "idValue",
+            [aKey]: "aValue"
+        };
+
+        CUI.dom.setAttributeMap(genericDiv, map);
+
+        let idValue = CUI.dom.getAttribute(genericDiv, idKey);
+        expect(idValue).toBe(map[idKey]);
+
+        let aValue = CUI.dom.getAttribute(genericDiv, aKey);
+        expect(aValue).toBe(map[aKey]);
+    });
+});
+
