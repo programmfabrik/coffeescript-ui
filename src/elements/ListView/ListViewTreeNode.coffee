@@ -42,6 +42,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	getColspan: ->
 		@colspan
 
+	# overwrite with Method
+	getChildren: null
+
+	# overwrite with Method
+	hasChildren: null
+
 	isLeaf: ->
 		leaf = (if @children
 			false
@@ -231,8 +237,9 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# console.debug "remove from DOM", @getNodeId(), @is_open, @children?.length, remove_self
 		if @is_open
 			@do_open = true
-			for c in @children
-				c.removeFromDOM()
+			if @children
+				for c in @children
+					c.removeFromDOM()
 		else
 			@do_open = false
 
