@@ -45957,10 +45957,10 @@ CUI.ListViewTreeNode = (function(superClass) {
     if (CUI.isArray(content)) {
       for (k = 0, len = content.length; k < len; k++) {
         con = content[k];
-        CUI.dom.append(contentDiv, (con != null ? con.DOM : void 0) || content);
+        CUI.dom.append(contentDiv, con);
       }
     } else {
-      CUI.dom.append(contentDiv, (content != null ? content.DOM : void 0) || content);
+      CUI.dom.append(contentDiv, content);
     }
     CUI.dom.append(element, contentDiv);
     return this;
