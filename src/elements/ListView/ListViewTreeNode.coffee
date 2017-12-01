@@ -848,9 +848,9 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		content = @renderContent()
 		if CUI.isArray(content)
 			for con in content
-				CUI.dom.append(contentDiv, con?.DOM or content)
+				CUI.dom.append(contentDiv, con)
 		else
-			CUI.dom.append(contentDiv, content?.DOM or content)
+			CUI.dom.append(contentDiv, content)
 		CUI.dom.append(element, contentDiv)
 		@
 
