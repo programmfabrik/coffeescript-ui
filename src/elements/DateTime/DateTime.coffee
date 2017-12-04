@@ -84,7 +84,7 @@ class CUI.DateTime extends CUI.Input
 		@__input_format = @initFormat(@__default_format)
 		return
 
-	setInputFormat: (use_clock = (@__input_format_no_time == @__input_format)) ->
+	setInputFormat: (use_clock = @__input_formats[0].clock) ->
 		if use_clock == true
 			@__input_format = @initFormat(@__input_formats[0])
 		else
@@ -740,7 +740,6 @@ class CUI.DateTime extends CUI.Input
 		if update_current_moment
 			@__current_moment = mom.clone()
 			@__current_moment.bc = mom.bc
-			@setInputFormat()
 			@setInputFromMoment()
 
 		console.info("CUI.DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
@@ -1085,7 +1084,8 @@ class CUI.DateTime extends CUI.Input
 					@__current_moment.date(data.date)
 
 					@updateCalendar(@__current_moment)
-					@closePopover()
+					if not @__input_formats[0].clock
+						@closePopover()
 				return
 
 		# Wk, Mo, Tu, We, Th...
