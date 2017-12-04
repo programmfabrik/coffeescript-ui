@@ -3401,7 +3401,8 @@ label[data-label-clickable],
   .cui-date-time-footer > .cui-horizontal-layout-left .cui-label {
     flex: 1 1 auto;
     justify-content: center;
-    padding: 0; }
+    padding: 0;
+    margin: 0; }
 
 .cui-date-time-footer > .cui-horizontal-layout-center {
   flex-grow: 0 !important; }
