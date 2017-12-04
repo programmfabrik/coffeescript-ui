@@ -35666,7 +35666,7 @@ CUI.DateTimeFormats["de-DE"] = {
       display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "Y",
+      store: "YYYY",
       type: "year",
       clock: false,
       parse: ["Y"]
@@ -35739,7 +35739,7 @@ CUI.DateTimeFormats["it-IT"] = {
       display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "Y",
+      store: "YYYY",
       type: "year",
       clock: false,
       parse: ["Y"]
@@ -35812,7 +35812,7 @@ CUI.DateTimeFormats["es-ES"] = {
       display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "Y",
+      store: "YYYY",
       type: "year",
       clock: false,
       parse: ["Y"]
@@ -35887,7 +35887,7 @@ CUI.DateTimeFormats["en-US"] = {
       display_short: "Y",
       display_attribute: "year",
       display_short_attribute: "year",
-      store: "Y",
+      store: "YYYY",
       type: "year",
       clock: false,
       parse: ["Y"]
