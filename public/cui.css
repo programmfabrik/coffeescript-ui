@@ -1025,10 +1025,6 @@ li > div {
   height: 18px; }
 
 .cui-spin-stepped {
-  -webkit-animation: fa-spin 1s steps(8) infinite;
-  -moz-animation: fa-spin 1s steps(8) infinite;
-  -ms-animation: fa-spin 1s steps(8) infinite;
-  -o-animation: fa-spin 1s steps(8) infinite;
   animation: fa-spin 1s steps(8) infinite; }
 
 .fa-times-thin:before {
