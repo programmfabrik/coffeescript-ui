@@ -1188,6 +1188,10 @@ li > div {
 			border-color: darken($highlight-color, 3%);
 		}
 
+		&.cui-disabled {
+			opacity: 0.33;
+		}
+
 		&.cui-layer-open,
 		&:active {
 			.cui-button-visual {

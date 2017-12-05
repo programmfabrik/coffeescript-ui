@@ -1128,6 +1128,10 @@ li > div {
     color: white;
     background: #0071eb;
     border-color: #0063cc; }
+  .cui-button-button.cui-button-appearance-important.cui-disabled, .cui-button-button.cui-button--primary.cui-disabled,
+  .cui-button-select.cui-button-appearance-important.cui-disabled,
+  .cui-button-select.cui-button--primary.cui-disabled {
+    opacity: 0.33; }
   .cui-button-button.cui-button-appearance-important.cui-layer-open .cui-button-visual, .cui-button-button.cui-button-appearance-important:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-layer-open .cui-button-visual, .cui-button-button.cui-button--primary:active .cui-button-visual,
   .cui-button-select.cui-button-appearance-important.cui-layer-open .cui-button-visual,
   .cui-button-select.cui-button-appearance-important:active .cui-button-visual,
