@@ -4484,6 +4484,7 @@ label[data-label-clickable],
 	&.cui-vertical-layout {
 		display: flex;
 		flex-direction: column;
+		overflow: visible; // don't cut off outline
 	}
 
 	.cui-vertical-layout-center {

@@ -3162,7 +3162,8 @@ label[data-label-clickable],
 
 .cui-form-popover.cui-vertical-layout {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  overflow: visible; }
 
 .cui-form-popover .cui-vertical-layout-center .cui-button {
   flex-grow: 1;
