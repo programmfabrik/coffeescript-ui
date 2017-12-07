@@ -17,10 +17,10 @@ class CUI.Map extends CUI.DOMElement
 			clickable:
 				check: Boolean
 				default: true
-			selectedMarkerLabel:
-				check: String
 			selectedMarkerPosition:
 				check: CUI.Map.isValidPosition
+			selectedMarkerOptions:
+				check: "PlainObject"
 			onMarkerSelected:
 				check: Function
 			zoomToFitAllMarkersOnInit:
@@ -76,14 +76,19 @@ class CUI.Map extends CUI.DOMElement
 		@__markers.splice(index, 1)
 		@__removeMarker(marker)
 
+	updateSelectedMarkerOptions: (@_selectedMarkerOptions) ->
+		position = @getSelectedMarkerPosition()
+		@removeSelectedMarker()
+		@setSelectedMarkerPosition(position)
+
 	getSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getSelectedMarkerPosition needs to be implemented.")
 
 	setSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".setSelectedMarkerPosition needs to be implemented.")
 
-	removeSelectedMarkerPosition: ->
-		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".removeSelectedMarkerPosition needs to be implemented.")
+	removeSelectedMarker: ->
+		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".removeSelectedMarker needs to be implemented.")
 
 	hideMarkers: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".hideMarkers needs to be implemented.")

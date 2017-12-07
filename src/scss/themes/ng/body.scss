@@ -296,7 +296,7 @@ li > div {
 			flex: 1 1 auto;
 			min-height: 0;
 			overflow: auto;
-			
+
 			// left align direct child buttons
 			> .cui-button {
 				align-self: flex-start;
@@ -618,7 +618,7 @@ li > div {
 		min-width: 0;
 		flex-shrink: 1;
 		padding: 5px;
-		
+
 		&.cui-checkbox {
 			height: auto;
 			padding: 0; // child already has a padding because its a button
@@ -689,7 +689,7 @@ li > div {
 		border-color: $header-border;
 		min-height: $toolbar-height;
 		border-color: $header-border;
-		
+
 		.cui-label {
 			color: $header-color;
 			font-weight: $header-weight;
@@ -895,7 +895,7 @@ li > div {
 
 .cui-data-form-row {
 	overflow: visible !important;
-	
+
 	&--read-only {
 		.cui-drag-handle-row {
 			opacity: 0 !important;
@@ -907,7 +907,7 @@ li > div {
 			margin-top: 0;
 		}
 	}
-	
+
 	&:last-child {
 		// margin-bottom: $padding; anyoing in fields renderer
 		> .cui-horizontal-layout-center {
@@ -920,16 +920,16 @@ li > div {
 		// as long as no trash bin is present
 		> .cui-horizontal-layout-right {
 			width: 9px;
-			
+
 			> .cui-buttonbar {
 				display: none;
 			}
 		}
 	}
-	
+
 	&.cui-data-form-row--trash {
 		> .cui-horizontal-layout-center {
-			opacity: 0.5;	
+			opacity: 0.5;
 		}
 	}
 
@@ -941,7 +941,7 @@ li > div {
 			flex-grow: 0;
 			cursor: -webkit-grab;
 			cursor:         grab;
-			
+
 			&.is-hidden {
 				pointer-events: none;
 				opacity: 0.33;
@@ -957,18 +957,18 @@ li > div {
 
 	> .cui-horizontal-layout-right {
 		width: 28px;
-		
+
 		.cui-button {
 			margin-top: 1px;
 			position: relative; // put forward
-			
+
 			&.cui-button-hidden {
 				pointer-events: none;
-				
+
 				.cui-button-visual {
 					opacity: 0.1;
 				}
-			}	
+			}
 		}
 
 		.cui-button-visual {
@@ -996,11 +996,11 @@ li > div {
 		.cui-buttonbar {
 			margin-bottom: 2px;
 		}
-		
+
 		.cui-button {
 			padding: 0;
 		}
-		
+
 		.cui-input {
 			padding: 0 3px;
 			font-size: 11px;
@@ -1022,7 +1022,7 @@ li > div {
 	vertical-align: bottom;
 	flex-shrink: 0;
 	transform: translateZ(0); // make em icons sharp in Firefox
-	
+
 	use {
 		pointer-events: none;
 	}
@@ -1260,7 +1260,7 @@ li > div {
 
 .cui-button-select {
 	max-width: $input-width;
-	
+
 	.cui-button-visual {
 		padding: 0 4px 0 8px;
 	}
@@ -1377,7 +1377,7 @@ li > div {
 
 a[role="button"].cui-button-appearance-link {
 	height: initial;
-	
+
 	> .cui-button-center {
 		word-wrap: break-word;
 	}
@@ -1603,7 +1603,7 @@ a[role="button"].cui-button-appearance-link {
 		width: 100%;
 		height: 100%;
 		align-items: stretch;
-		
+
 		&-select {
 			max-width: 100%;
 		}
@@ -1923,7 +1923,7 @@ a[role="button"].cui-button-appearance-link {
 		bottom: 3px;
 		background: linear-gradient(to right, hsla(0,0%,100%,0), hsl(0,0%,100%) 10px);
 		padding: 0 0 0 10px !important;
-		
+
 		.cui-button-visual {
 			color: $highlight-color;
 			height: auto;
@@ -2128,7 +2128,7 @@ a[role="button"].cui-button-appearance-link {
 		line-height: 22px;
 		outline: none;
 		vertical-align: bottom;
-		
+
 		&:not([data-max-chars]) {
 			width: $input-width;
 		}
@@ -3186,21 +3186,21 @@ a[role="button"].cui-button-appearance-link {
 	display: grid !important;
 	grid-template-columns: 200px 1fr;
 	grid-template-rows: 1fr auto;
-	
+
 	// IE support
 	display: -ms-grid !important;
 	-ms-grid-columns: 200px 1fr;
 	-ms-grid-rows: 1fr auto;
-	
+
 	> .cui-vertical-layout-top {
 		grid-row: span 2;
 		-ms-grid-row-span: 2;
 	}
-	
+
 	> .cui-vertical-layout-center {
 		-ms-grid-column: 2;
 	}
-	
+
 	> .cui-vertical-layout-bottom {
 		-ms-grid-row: 2;
 		-ms-grid-column: 2;
@@ -3213,7 +3213,7 @@ a[role="button"].cui-button-appearance-link {
 		display: block;
 		overflow: auto;
 		height: 100%;
-		
+
 		> .cui-horizontal-layout-center {
 			overflow: visible !important;
 			display: block;
@@ -3232,7 +3232,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-tab-header-button {
 		padding: 0 !important;
 		display: block;
-		
+
 		.cui-button-visual {
 			border-radius: 0 !important;
 			height: auto;
@@ -4297,7 +4297,7 @@ label[data-label-clickable],
 	&--full-width {
 		width: 100%;
 		max-width: 100%;
-		
+
 		&.cui-select {
 			> .cui-button {
 				max-width: none;
@@ -4364,7 +4364,7 @@ label[data-label-clickable],
 	min-height: 0;
 	display: flex;
 	flex-direction: column;
-	
+
 	> .cui-button-href {
 		margin: 3px 0;
 	}
@@ -5203,7 +5203,7 @@ label[data-label-clickable],
 	}
 	&.cui-block-level-2 {
 		border-bottom-width: 0;
-		
+
 		> .cui-block-header {
 			font-size: 14px;
 		}
@@ -5614,4 +5614,8 @@ label[data-label-clickable],
 	width: 100%;
 	height: 300px;
 	overflow: hidden!important;
+}
+
+.cui-map-popover-options {
+	padding: 5px;
 }

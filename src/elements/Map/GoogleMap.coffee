@@ -62,11 +62,10 @@ class CUI.GoogleMap extends CUI.Map
 		if @__selectedMarker
 			@__selectedMarker.setPosition(position)
 		else
-			@__selectedMarker = @addMarker(
-				position: position
-				draggable: @_clickable
-				label: @_selectedMarkerLabel
-			)
+			options = @_selectedMarkerOptions or {}
+			options.position = position
+			options.draggable = @_clickable
+			@__selectedMarker = @addMarker(options)
 
 			@__listeners.push(@__selectedMarker.addListener('dragend', (event) =>
 				@__map.setCenter(event.latLng)
@@ -75,7 +74,7 @@ class CUI.GoogleMap extends CUI.Map
 
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
-	removeSelectedMarkerPosition: ->
+	removeSelectedMarker: ->
 		if @__selectedMarker
 			@__removeMarker(@__selectedMarker)
 			delete @__selectedMarker

@@ -7,6 +7,8 @@ class CUI.MapInput extends CUI.Input
 		placeholder: "Insert or paste coordinates"
 		displayFormat: "dms"
 		mapClass: CUI.LeafletMap
+		iconColors: ["#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"]
+		icons: ["fa-envelope", "fa-map-marker", "fa-home", "fa-building"]
 
 	@displayFormats:
 		dms: "FFf" # Degrees, minutes and seconds: 27° 43′ 31.796″ N 18° 1′ 27.484″ W
@@ -33,6 +35,8 @@ class CUI.MapInput extends CUI.Input
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
 		@removeOpt("checkInput")
+
+		@__selectedMarkerOptions = {}
 
 	readOpts: ->
 		super()
@@ -101,7 +105,7 @@ class CUI.MapInput extends CUI.Input
 			@__map.setSelectedMarkerPosition(currentPosition)
 			@__map.setCenter(currentPosition)
 		else
-			@__map.removeSelectedMarkerPosition()
+			@__map.removeSelectedMarker()
 
 		popover
 
@@ -112,6 +116,31 @@ class CUI.MapInput extends CUI.Input
 				header: true
 				center: true
 
+		iconColorSelect = new CUI.Select(
+			data: @__selectedMarkerOptions
+			name: "iconColor"
+			onDataChanged: =>
+				@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
+			options: =>
+				options = []
+				for color in CUI.MapInput.defaults.iconColors
+					options.push(text: color, value: color)
+				options
+		).start()
+
+		iconSelect = new CUI.Select(
+			data: @__selectedMarkerOptions
+			name: "iconName"
+			onDataChanged: =>
+				@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
+			options: =>
+				options = []
+				for icon in CUI.MapInput.defaults.icons
+					options.push(text: icon, value: icon)
+				options
+		).start()
+
+		popoverTemplate.append([iconColorSelect, iconSelect], "header")
 		popoverTemplate.append(@__map, "center")
 		popoverTemplate
 
@@ -129,6 +158,7 @@ class CUI.MapInput extends CUI.Input
 			currentPosition = CUI.util.parseCoordinates(value)
 			if currentPosition
 				@_mapOptions.selectedMarkerPosition = currentPosition
+				@_mapOptions.selectedMarkerOptions = @__selectedMarkerOptions
 				@_mapOptions.center = currentPosition
 
 		@__map = new CUI.MapInput.defaults.mapClass(@_mapOptions)
@@ -146,17 +176,17 @@ class CUI.MapInput extends CUI.Input
 	@getDefaultDisplayFormat: ->
 		CUI.MapInput.displayFormats[CUI.MapInput.defaults.displayFormat]
 
-#CUI.ready =>
-#	mapInput = new CUI.MapInput
-#		displayFormat: "ddm"
-#		mapOptions:
-#			zoom: 5
-#		name: "map"
-#		data:
-#			map:
-#				lat: 32.20
-#				lng: 30.30
-#
-#
-#	mapInput.render()
-#	CUI.dom.prepend(document.body, mapInput)
+CUI.ready =>
+	mapInput = new CUI.MapInput
+		displayFormat: "ddm"
+		mapOptions:
+			zoom: 5
+		name: "map"
+		data:
+			map:
+				lat: 32.20
+				lng: 30.30
+
+
+	mapInput.render()
+	CUI.dom.prepend(document.body, mapInput)

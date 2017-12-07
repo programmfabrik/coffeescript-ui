@@ -47,6 +47,15 @@ class CUI.LeafletMap extends CUI.Map
 		map
 
 	__buildMarker: (options) ->
+		if options.iconName and options.iconColor
+			options.icon = L.divIcon(
+				html: (new CUI.Icon(icon: options.iconName)).DOM.outerHTML
+				iconAnchor: [9, 9]
+				iconSize: [18, 18]
+			)
+			delete options.iconName
+			delete options.iconColor
+
 		L.marker(options.position, options)
 
 	__addMarkerToMap: (marker) ->
@@ -76,11 +85,10 @@ class CUI.LeafletMap extends CUI.Map
 		if @__selectedMarker
 			@__selectedMarker.setLatLng(position)
 		else
-			@__selectedMarker = @addMarker(
-				position: position
-				draggable: @_clickable
-				title: @_selectedMarkerLabel
-			)
+			options = @_selectedMarkerOptions or {}
+			options.position = position
+			options.draggable = @_clickable
+			@__selectedMarker = @addMarker(options)
 
 			@__selectedMarker.on('dragstart', =>
 				@__selectedMarkerPositionOnDragStart = @getSelectedMarkerPosition()
@@ -98,7 +106,7 @@ class CUI.LeafletMap extends CUI.Map
 
 		@_onMarkerSelected?(@getSelectedMarkerPosition())
 
-	removeSelectedMarkerPosition: ->
+	removeSelectedMarker: ->
 		if @__selectedMarker
 			@__removeMarker(@__selectedMarker)
 			delete @__selectedMarker
