@@ -78,8 +78,9 @@ class CUI.Map extends CUI.DOMElement
 
 	updateSelectedMarkerOptions: (@_selectedMarkerOptions) ->
 		position = @getSelectedMarkerPosition()
-		@removeSelectedMarker()
-		@setSelectedMarkerPosition(position)
+		if position
+			@removeSelectedMarker()
+			@setSelectedMarkerPosition(position)
 
 	getSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getSelectedMarkerPosition needs to be implemented.")

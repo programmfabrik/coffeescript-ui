@@ -8,7 +8,7 @@ class CUI.MapInput extends CUI.Input
 		displayFormat: "dms"
 		mapClass: CUI.LeafletMap
 		iconColors: ["#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"]
-		icons: ["fa-envelope", "fa-map-marker", "fa-home", "fa-building"]
+		icons: ["fa-envelope", "fa-automobile", "fa-home", "fa-building"]
 
 	@displayFormats:
 		dms: "FFf" # Degrees, minutes and seconds: 27° 43′ 31.796″ N 18° 1′ 27.484″ W
@@ -31,16 +31,25 @@ class CUI.MapInput extends CUI.Input
 				check: (value) =>
 					not CUI.util.isNull(CUI.MapInput.displayFormats[value])
 				default: CUI.MapInput.defaults.displayFormat
+			iconColor:
+				check: String
+			iconName:
+				check: String
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
 		@removeOpt("checkInput")
 
-		@__selectedMarkerOptions = {}
-
 	readOpts: ->
 		super()
 		@_checkInput = @__checkInput
+
+		@__selectedMarkerOptions = {}
+		if @_iconName
+			@__selectedMarkerOptions.iconName = @_iconName
+
+		if @_iconColor
+			@__selectedMarkerOptions.iconColor = @_iconColor
 
 	initValue: ->
 		super()
@@ -119,6 +128,7 @@ class CUI.MapInput extends CUI.Input
 		iconColorSelect = new CUI.Select(
 			data: @__selectedMarkerOptions
 			name: "iconColor"
+			disabled: CUI.util.isNull(@__selectedMarkerOptions.iconName)
 			onDataChanged: =>
 				@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
 			options: =>
@@ -133,14 +143,22 @@ class CUI.MapInput extends CUI.Input
 			name: "iconName"
 			onDataChanged: =>
 				@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
+				if not CUI.util.isNull(@__selectedMarkerOptions.iconName)
+					iconColorSelect.enable()
+				else
+					iconColorSelect.disable()
 			options: =>
-				options = []
+				options = [text: "Default", value: null]
 				for icon in CUI.MapInput.defaults.icons
 					options.push(text: icon, value: icon)
 				options
 		).start()
 
-		popoverTemplate.append([iconColorSelect, iconSelect], "header")
+		buttonBar = new CUI.Buttonbar()
+		buttonBar.addButton(iconSelect)
+		buttonBar.addButton(iconColorSelect)
+
+		popoverTemplate.append(buttonBar, "header")
 		popoverTemplate.append(@__map, "center")
 		popoverTemplate
 
@@ -176,17 +194,3 @@ class CUI.MapInput extends CUI.Input
 	@getDefaultDisplayFormat: ->
 		CUI.MapInput.displayFormats[CUI.MapInput.defaults.displayFormat]
 
-CUI.ready =>
-	mapInput = new CUI.MapInput
-		displayFormat: "ddm"
-		mapOptions:
-			zoom: 5
-		name: "map"
-		data:
-			map:
-				lat: 32.20
-				lng: 30.30
-
-
-	mapInput.render()
-	CUI.dom.prepend(document.body, mapInput)

@@ -5619,3 +5619,25 @@ label[data-label-clickable],
 .cui-map-popover-options {
 	padding: 5px;
 }
+
+.leaflet-div-icon {
+	background: none!important;
+	border: none!important;
+}
+
+.cui-icon-marker-container {
+	border: none;
+	border-radius: 12px;
+
+	i {
+		padding: 7px
+	}
+
+	.cui-icon-marker-arrow {
+		position: absolute;
+		left: 50%;
+		top: 22px;
+		transform: rotate(45deg);
+		background: inherit;
+	}
+}

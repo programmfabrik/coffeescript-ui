@@ -48,11 +48,16 @@ class CUI.LeafletMap extends CUI.Map
 
 	__buildMarker: (options) ->
 		if options.iconName and options.iconColor
+			iconMarker = new CUI.IconMarker(icon: options.iconName, color: options.iconColor)
+			iconSize = iconMarker.getSize()
+			iconAnchor = iconMarker.getAnchor()
+
 			options.icon = L.divIcon(
-				html: (new CUI.Icon(icon: options.iconName)).DOM.outerHTML
-				iconAnchor: [9, 9]
-				iconSize: [18, 18]
+				html: iconMarker.toHtml()
+				iconAnchor: [iconAnchor.left, iconAnchor.top]
+				iconSize: [iconSize, iconSize]
 			)
+
 			delete options.iconName
 			delete options.iconColor
 
