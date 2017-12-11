@@ -12,8 +12,9 @@ class CUI.LeafletMap extends CUI.Map
 	constructor: (@opts = {}) ->
 		if not CUI.LeafletMap.loadCSSPromise
 			CUI.LeafletMap.loadCSSPromise = @__loadCSS()
-		super(@opts)
 
+		@__groups = {}
+		super(@opts)
 
 	__getMapClassName: ->
 		"cui-leaflet-map"
@@ -61,15 +62,23 @@ class CUI.LeafletMap extends CUI.Map
 			delete options.iconName
 			delete options.iconColor
 
+		if options.group
+			@__groups[options.group] = @__groups[options.group] or {positions: []}
+			@__groups[options.group].positions.push([options.position.lat, options.position.lng])
+
+			delete options.group
+
 		L.marker(options.position, options)
 
 	__addMarkerToMap: (marker) ->
 		marker.addTo(@__map);
+		@__updateGroups()
 
 	__bindOnClickMapEvent: ->
 		@__map.on('click', (event) =>
 			@setSelectedMarkerPosition(event.latlng)
-			@__map.setView(@getSelectedMarkerPosition())
+			if @__selectedMarker
+				@__map.setView(@getSelectedMarkerPosition())
 		)
 
 	__afterMarkerCreated: (marker, options) ->
@@ -79,6 +88,13 @@ class CUI.LeafletMap extends CUI.Map
 
 	__removeMarker: (marker) ->
 		@__map.removeLayer(marker)
+
+	__updateGroups: ->
+		for groupName, group of @__groups
+			if group.polyline
+				@__map.removeLayer(group.polyline)
+			@__groups[groupName].polyline = L.polyline(group.positions, {color: 'red', weight: 2})
+			@__groups[groupName].polyline.addTo(@__map)
 
 	getSelectedMarkerPosition: ->
 		@__selectedMarker?.getLatLng()
@@ -161,6 +177,10 @@ class CUI.LeafletMap extends CUI.Map
 
 		for marker in @__markers
 			@__removeMarker(marker)
+
+		for _, group of @__groups
+			if group.polyline
+				@__map.removeLayer(group.polyline)
 
 		@__map.remove()
 
