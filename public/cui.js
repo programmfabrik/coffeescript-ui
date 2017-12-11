@@ -28961,6 +28961,9 @@ CUI.dom = (function() {
     if (append == null) {
       append = "px";
     }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     CUI.util.assert(docElem instanceof HTMLElement, "CUI.dom.setStyle", "docElem needs to be instanceof HTMLElement.", {
       docElem: docElem
     });
@@ -46981,14 +46984,14 @@ CUI.GoogleMap = (function(superClass) {
   };
 
   GoogleMap.prototype.setSelectedMarkerPosition = function(position) {
+    var options;
     if (this.__selectedMarker) {
       this.__selectedMarker.setPosition(position);
     } else {
-      this.__selectedMarker = this.addMarker({
-        position: position,
-        draggable: this._clickable,
-        label: this._selectedMarkerLabel
-      });
+      options = this._selectedMarkerOptions || {};
+      options.position = position;
+      options.draggable = this._clickable;
+      this.__selectedMarker = this.addMarker(options);
       this.__listeners.push(this.__selectedMarker.addListener('dragend', (function(_this) {
         return function(event) {
           _this.__map.setCenter(event.latLng);
@@ -46999,7 +47002,7 @@ CUI.GoogleMap = (function(superClass) {
     return typeof this._onMarkerSelected === "function" ? this._onMarkerSelected(this.getSelectedMarkerPosition()) : void 0;
   };
 
-  GoogleMap.prototype.removeSelectedMarkerPosition = function() {
+  GoogleMap.prototype.removeSelectedMarker = function() {
     if (this.__selectedMarker) {
       this.__removeMarker(this.__selectedMarker);
       return delete this.__selectedMarker;
@@ -47201,6 +47204,22 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.__buildMarker = function(options) {
+    var iconAnchor, iconMarker, iconSize;
+    if (options.iconName && options.iconColor) {
+      iconMarker = new CUI.IconMarker({
+        icon: options.iconName,
+        color: options.iconColor
+      });
+      iconSize = iconMarker.getSize();
+      iconAnchor = iconMarker.getAnchor();
+      options.icon = L.divIcon({
+        html: iconMarker.toHtml(),
+        iconAnchor: [iconAnchor.left, iconAnchor.top],
+        iconSize: [iconSize, iconSize]
+      });
+      delete options.iconName;
+      delete options.iconColor;
+    }
     return L.marker(options.position, options);
   };
 
@@ -47235,17 +47254,17 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.setSelectedMarkerPosition = function(position) {
+    var options;
     if (!CUI.Map.isValidPosition(position)) {
       return;
     }
     if (this.__selectedMarker) {
       this.__selectedMarker.setLatLng(position);
     } else {
-      this.__selectedMarker = this.addMarker({
-        position: position,
-        draggable: this._clickable,
-        title: this._selectedMarkerLabel
-      });
+      options = this._selectedMarkerOptions || {};
+      options.position = position;
+      options.draggable = this._clickable;
+      this.__selectedMarker = this.addMarker(options);
       this.__selectedMarker.on('dragstart', (function(_this) {
         return function() {
           return _this.__selectedMarkerPositionOnDragStart = _this.getSelectedMarkerPosition();
@@ -47269,7 +47288,7 @@ CUI.LeafletMap = (function(superClass) {
     return typeof this._onMarkerSelected === "function" ? this._onMarkerSelected(this.getSelectedMarkerPosition()) : void 0;
   };
 
-  LeafletMap.prototype.removeSelectedMarkerPosition = function() {
+  LeafletMap.prototype.removeSelectedMarker = function() {
     if (this.__selectedMarker) {
       this.__removeMarker(this.__selectedMarker);
       return delete this.__selectedMarker;
@@ -47412,11 +47431,11 @@ CUI.Map = (function(superClass) {
         check: Boolean,
         "default": true
       },
-      selectedMarkerLabel: {
-        check: String
-      },
       selectedMarkerPosition: {
         check: CUI.Map.isValidPosition
+      },
+      selectedMarkerOptions: {
+        check: "PlainObject"
       },
       onMarkerSelected: {
         check: Function
@@ -47500,6 +47519,16 @@ CUI.Map = (function(superClass) {
     return this.__removeMarker(marker);
   };
 
+  Map.prototype.updateSelectedMarkerOptions = function(_selectedMarkerOptions) {
+    var position;
+    this._selectedMarkerOptions = _selectedMarkerOptions;
+    position = this.getSelectedMarkerPosition();
+    if (position) {
+      this.removeSelectedMarker();
+      return this.setSelectedMarkerPosition(position);
+    }
+  };
+
   Map.prototype.getSelectedMarkerPosition = function() {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".getSelectedMarkerPosition needs to be implemented.");
   };
@@ -47508,8 +47537,8 @@ CUI.Map = (function(superClass) {
     return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".setSelectedMarkerPosition needs to be implemented.");
   };
 
-  Map.prototype.removeSelectedMarkerPosition = function() {
-    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".removeSelectedMarkerPosition needs to be implemented.");
+  Map.prototype.removeSelectedMarker = function() {
+    return CUI.util.assert(false, CUI.util.getObjectClass(this) + ".removeSelectedMarker needs to be implemented.");
   };
 
   Map.prototype.hideMarkers = function() {
@@ -47636,7 +47665,9 @@ CUI.MapInput = (function(superClass) {
     buttonTooltip: "Show map",
     placeholder: "Insert or paste coordinates",
     displayFormat: "dms",
-    mapClass: CUI.LeafletMap
+    mapClass: CUI.LeafletMap,
+    iconColors: ["#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"],
+    icons: ["fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"]
   };
 
   MapInput.displayFormats = {
@@ -47668,6 +47699,12 @@ CUI.MapInput = (function(superClass) {
           };
         })(this),
         "default": CUI.MapInput.defaults.displayFormat
+      },
+      iconColor: {
+        check: String
+      },
+      iconName: {
+        check: String
       }
     });
     this.removeOpt("getValueForDisplay");
@@ -47677,7 +47714,14 @@ CUI.MapInput = (function(superClass) {
 
   MapInput.prototype.readOpts = function() {
     MapInput.__super__.readOpts.call(this);
-    return this._checkInput = this.__checkInput;
+    this._checkInput = this.__checkInput;
+    this.__selectedMarkerOptions = {};
+    if (this._iconName) {
+      this.__selectedMarkerOptions.iconName = this._iconName;
+    }
+    if (this._iconColor) {
+      return this.__selectedMarkerOptions.iconColor = this._iconColor;
+    }
   };
 
   MapInput.prototype.initValue = function() {
@@ -47759,13 +47803,13 @@ CUI.MapInput = (function(superClass) {
       this.__map.setSelectedMarkerPosition(currentPosition);
       this.__map.setCenter(currentPosition);
     } else {
-      this.__map.removeSelectedMarkerPosition();
+      this.__map.removeSelectedMarker();
     }
     return popover;
   };
 
   MapInput.prototype.__buildPopoverContent = function() {
-    var popoverTemplate;
+    var buttonBar, iconColorSelect, iconSelect, popoverTemplate;
     popoverTemplate = new CUI.Template({
       name: "map-popover",
       map: {
@@ -47773,6 +47817,75 @@ CUI.MapInput = (function(superClass) {
         center: true
       }
     });
+    iconColorSelect = new CUI.Select({
+      data: this.__selectedMarkerOptions,
+      name: "iconColor",
+      disabled: CUI.util.isNull(this.__selectedMarkerOptions.iconName),
+      onDataChanged: (function(_this) {
+        return function() {
+          return _this.__map.updateSelectedMarkerOptions(_this.__selectedMarkerOptions);
+        };
+      })(this),
+      options: (function(_this) {
+        return function() {
+          var color, i, icon, len, options, ref;
+          options = [];
+          ref = CUI.MapInput.defaults.iconColors;
+          for (i = 0, len = ref.length; i < len; i++) {
+            color = ref[i];
+            icon = new CUI.Icon({
+              "class": "css-swatch"
+            });
+            CUI.dom.setStyle(icon, {
+              background: color
+            });
+            options.push({
+              icon: icon,
+              value: color
+            });
+          }
+          return options;
+        };
+      })(this)
+    }).start();
+    iconSelect = new CUI.Select({
+      data: this.__selectedMarkerOptions,
+      name: "iconName",
+      onDataChanged: (function(_this) {
+        return function() {
+          _this.__map.updateSelectedMarkerOptions(_this.__selectedMarkerOptions);
+          if (!CUI.util.isNull(_this.__selectedMarkerOptions.iconName)) {
+            return iconColorSelect.enable();
+          } else {
+            return iconColorSelect.disable();
+          }
+        };
+      })(this),
+      options: (function(_this) {
+        return function() {
+          var i, icon, len, options, ref;
+          options = [
+            {
+              text: "",
+              value: null
+            }
+          ];
+          ref = CUI.MapInput.defaults.icons;
+          for (i = 0, len = ref.length; i < len; i++) {
+            icon = ref[i];
+            options.push({
+              icon: icon,
+              value: icon
+            });
+          }
+          return options;
+        };
+      })(this)
+    }).start();
+    buttonBar = new CUI.Buttonbar();
+    buttonBar.addButton(iconSelect);
+    buttonBar.addButton(iconColorSelect);
+    popoverTemplate.append(buttonBar, "header");
     popoverTemplate.append(this.__map, "center");
     return popoverTemplate;
   };
@@ -47795,6 +47908,7 @@ CUI.MapInput = (function(superClass) {
       currentPosition = CUI.util.parseCoordinates(value);
       if (currentPosition) {
         this._mapOptions.selectedMarkerPosition = currentPosition;
+        this._mapOptions.selectedMarkerOptions = this.__selectedMarkerOptions;
         this._mapOptions.center = currentPosition;
       }
     }
@@ -54790,6 +54904,8 @@ __webpack_require__(223);
 
 __webpack_require__(225);
 
+__webpack_require__(322);
+
 __webpack_require__(124);
 
 __webpack_require__(121);
@@ -54891,7 +55007,7 @@ module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> 
 /* 290 */
 /***/ (function(module, exports) {
 
-module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n</div>\n\n<div data-template=\"map-popover\">\n    <div data-slot=\"header\"></div>\n    <div data-slot=\"center\"></div>\n</div>";
+module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n</div>\n\n<div data-template=\"map-popover\">\n    <div class=\"cui-map-popover-options\" data-slot=\"header\"></div>\n    <div data-slot=\"center\"></div>\n</div>\n\n<div class=\"cui-icon-marker-container\" data-template=\"map-div-marker\">\n    <div data-slot=\"icon\"></div>\n    <div class=\"cui-icon-marker-arrow\" data-slot=\"arrow\"></div>\n</div>";
 
 /***/ }),
 /* 291 */
@@ -55341,6 +55457,106 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(CUI) {var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.IconMarker = (function(superClass) {
+  extend(IconMarker, superClass);
+
+  IconMarker.prototype.initOpts = function() {
+    IconMarker.__super__.initOpts.call(this);
+    return this.addOpts({
+      icon: {
+        check: String
+      },
+      color: {
+        check: String
+      },
+      size: {
+        check: "Integer",
+        "default": 28
+      },
+      arrowSize: {
+        check: "Integer",
+        "default": 5
+      }
+    });
+  };
+
+  function IconMarker(opts) {
+    var template;
+    this.opts = opts != null ? opts : {};
+    IconMarker.__super__.constructor.call(this, this.opts);
+    template = new CUI.Template({
+      name: "map-div-marker",
+      map: {
+        icon: true,
+        arrow: true
+      }
+    });
+    this.registerTemplate(template);
+    this.render();
+    this;
+  }
+
+  IconMarker.prototype.render = function() {
+    var style, styleArrow;
+    style = {
+      "width": this._size,
+      "height": this._size,
+      "background": this._color
+    };
+    this.append(new CUI.Icon({
+      icon: this._icon
+    }), "icon");
+    CUI.dom.setStyle(this.DOM, style);
+    styleArrow = {
+      "width": this._arrowSize * 2,
+      "height": this._arrowSize * 2,
+      "margin-left": -this._arrowSize
+    };
+    return CUI.dom.setStyle(this.__template.map.arrow, styleArrow);
+  };
+
+  IconMarker.prototype.toHtml = function() {
+    return this.DOM.outerHTML;
+  };
+
+  IconMarker.prototype.getAnchor = function() {
+    return {
+      top: this._size + this._arrowSize,
+      left: this._size / 2
+    };
+  };
+
+  IconMarker.prototype.getSize = function() {
+    return this._size;
+  };
+
+  return IconMarker;
+
+})(CUI.DOMElement);
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);

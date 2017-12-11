@@ -940,6 +940,9 @@ class CUI.dom
 		window.getComputedStyle(docElem)
 
 	@setStyle: (docElem, style, append="px") ->
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
+
 		CUI.util.assert(docElem instanceof HTMLElement, "CUI.dom.setStyle", "docElem needs to be instanceof HTMLElement.", docElem: docElem)
 		for k, v of style
 			if v == undefined

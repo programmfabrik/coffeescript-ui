@@ -5627,16 +5627,17 @@ label[data-label-clickable],
 
 .cui-icon-marker-container {
 	border: none;
-	border-radius: 12px;
+	border-radius: 14px;
+	text-align: center;
 
 	i {
-		padding: 7px
+		padding-top: 6px
 	}
 
 	.cui-icon-marker-arrow {
 		position: absolute;
 		left: 50%;
-		top: 22px;
+		top: 21px;
 		transform: rotate(45deg);
 		background: inherit;
 	}

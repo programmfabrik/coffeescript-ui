@@ -3950,6 +3950,26 @@ label[data-label-clickable],
   height: 300px;
   overflow: hidden !important; }
 
+.cui-map-popover-options {
+  padding: 5px; }
+
+.leaflet-div-icon {
+  background: none !important;
+  border: none !important; }
+
+.cui-icon-marker-container {
+  border: none;
+  border-radius: 14px;
+  text-align: center; }
+  .cui-icon-marker-container i {
+    padding-top: 6px; }
+  .cui-icon-marker-container .cui-icon-marker-arrow {
+    position: absolute;
+    left: 50%;
+    top: 21px;
+    transform: rotate(45deg);
+    background: inherit; }
+
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH

@@ -8,7 +8,7 @@ class CUI.MapInput extends CUI.Input
 		displayFormat: "dms"
 		mapClass: CUI.LeafletMap
 		iconColors: ["#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"]
-		icons: ["fa-envelope", "fa-automobile", "fa-home", "fa-building"]
+		icons: ["fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"]
 
 	@displayFormats:
 		dms: "FFf" # Degrees, minutes and seconds: 27° 43′ 31.796″ N 18° 1′ 27.484″ W
@@ -134,7 +134,9 @@ class CUI.MapInput extends CUI.Input
 			options: =>
 				options = []
 				for color in CUI.MapInput.defaults.iconColors
-					options.push(text: color, value: color)
+					icon = new CUI.Icon(class: "css-swatch")
+					CUI.dom.setStyle(icon, background: color)
+					options.push(icon: icon, value: color)
 				options
 		).start()
 
@@ -148,9 +150,9 @@ class CUI.MapInput extends CUI.Input
 				else
 					iconColorSelect.disable()
 			options: =>
-				options = [text: "Default", value: null]
+				options = [text: "", value: null]
 				for icon in CUI.MapInput.defaults.icons
-					options.push(text: icon, value: icon)
+					options.push(icon: icon, value: icon)
 				options
 		).start()
 

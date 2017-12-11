@@ -42,7 +42,7 @@ class CUI.IconMarker extends CUI.DOMElement
 			"margin-left": - @_arrowSize
 		}
 
-		CUI.dom.setStyle(@template.map.arrow, styleArrow)
+		CUI.dom.setStyle(@__template.map.arrow, styleArrow)
 
 	toHtml: ->
 		@DOM.outerHTML
