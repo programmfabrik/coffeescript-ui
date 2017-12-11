@@ -130,7 +130,7 @@ class CUI.MapInput extends CUI.Input
 			name: "iconColor"
 			disabled: CUI.util.isNull(@__selectedMarkerOptions.iconName)
 			onDataChanged: =>
-				@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
+				@__onIconChanged()
 			options: =>
 				options = []
 				for color in CUI.MapInput.defaults.iconColors
@@ -144,7 +144,7 @@ class CUI.MapInput extends CUI.Input
 			data: @__selectedMarkerOptions
 			name: "iconName"
 			onDataChanged: =>
-				@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
+				@__onIconChanged()
 				if not CUI.util.isNull(@__selectedMarkerOptions.iconName)
 					iconColorSelect.enable()
 				else
@@ -163,6 +163,11 @@ class CUI.MapInput extends CUI.Input
 		popoverTemplate.append(buttonBar, "header")
 		popoverTemplate.append(@__map, "center")
 		popoverTemplate
+
+	__onIconChanged: ->
+		@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
+		@__data.iconName = @__selectedMarkerOptions.iconName
+		@__data.iconColor = @__selectedMarkerOptions.iconColor
 
 	__initMap: ->
 		@_mapOptions.onMarkerSelected = (marker) =>
