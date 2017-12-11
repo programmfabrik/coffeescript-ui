@@ -47163,6 +47163,7 @@ CUI.LeafletMap = (function(superClass) {
     if (!CUI.LeafletMap.loadCSSPromise) {
       CUI.LeafletMap.loadCSSPromise = this.__loadCSS();
     }
+    this.__groups = {};
     LeafletMap.__super__.constructor.call(this, this.opts);
   }
 
@@ -47220,18 +47221,28 @@ CUI.LeafletMap = (function(superClass) {
       delete options.iconName;
       delete options.iconColor;
     }
+    if (options.group) {
+      this.__groups[options.group] = this.__groups[options.group] || {
+        positions: []
+      };
+      this.__groups[options.group].positions.push([options.position.lat, options.position.lng]);
+      delete options.group;
+    }
     return L.marker(options.position, options);
   };
 
   LeafletMap.prototype.__addMarkerToMap = function(marker) {
-    return marker.addTo(this.__map);
+    marker.addTo(this.__map);
+    return this.__updateGroups();
   };
 
   LeafletMap.prototype.__bindOnClickMapEvent = function() {
     return this.__map.on('click', (function(_this) {
       return function(event) {
         _this.setSelectedMarkerPosition(event.latlng);
-        return _this.__map.setView(_this.getSelectedMarkerPosition());
+        if (_this.__selectedMarker) {
+          return _this.__map.setView(_this.getSelectedMarkerPosition());
+        }
       };
     })(this));
   };
@@ -47246,6 +47257,24 @@ CUI.LeafletMap = (function(superClass) {
 
   LeafletMap.prototype.__removeMarker = function(marker) {
     return this.__map.removeLayer(marker);
+  };
+
+  LeafletMap.prototype.__updateGroups = function() {
+    var group, groupName, ref, results;
+    ref = this.__groups;
+    results = [];
+    for (groupName in ref) {
+      group = ref[groupName];
+      if (group.polyline) {
+        this.__map.removeLayer(group.polyline);
+      }
+      this.__groups[groupName].polyline = L.polyline(group.positions, {
+        color: 'red',
+        weight: 2
+      });
+      results.push(this.__groups[groupName].polyline.addTo(this.__map));
+    }
+    return results;
   };
 
   LeafletMap.prototype.getSelectedMarkerPosition = function() {
@@ -47361,7 +47390,7 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.destroy = function() {
-    var i, len, marker, ref;
+    var _, group, i, len, marker, ref, ref1;
     if (!this.__map) {
       return;
     }
@@ -47369,6 +47398,13 @@ CUI.LeafletMap = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       this.__removeMarker(marker);
+    }
+    ref1 = this.__groups;
+    for (_ in ref1) {
+      group = ref1[_];
+      if (group.polyline) {
+        this.__map.removeLayer(group.polyline);
+      }
     }
     this.__map.remove();
     delete this.__markers;
