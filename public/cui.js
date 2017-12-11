@@ -47823,7 +47823,7 @@ CUI.MapInput = (function(superClass) {
       disabled: CUI.util.isNull(this.__selectedMarkerOptions.iconName),
       onDataChanged: (function(_this) {
         return function() {
-          return _this.__map.updateSelectedMarkerOptions(_this.__selectedMarkerOptions);
+          return _this.__onIconChanged();
         };
       })(this),
       options: (function(_this) {
@@ -47853,7 +47853,7 @@ CUI.MapInput = (function(superClass) {
       name: "iconName",
       onDataChanged: (function(_this) {
         return function() {
-          _this.__map.updateSelectedMarkerOptions(_this.__selectedMarkerOptions);
+          _this.__onIconChanged();
           if (!CUI.util.isNull(_this.__selectedMarkerOptions.iconName)) {
             return iconColorSelect.enable();
           } else {
@@ -47888,6 +47888,12 @@ CUI.MapInput = (function(superClass) {
     popoverTemplate.append(buttonBar, "header");
     popoverTemplate.append(this.__map, "center");
     return popoverTemplate;
+  };
+
+  MapInput.prototype.__onIconChanged = function() {
+    this.__map.updateSelectedMarkerOptions(this.__selectedMarkerOptions);
+    this.__data.iconName = this.__selectedMarkerOptions.iconName;
+    return this.__data.iconColor = this.__selectedMarkerOptions.iconColor;
   };
 
   MapInput.prototype.__initMap = function() {
