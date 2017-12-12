@@ -1169,13 +1169,13 @@ class CUI.Input extends CUI.DataFieldInput
 			@cursor.end = blocks[blocks.length-1]
 			return
 
-		if @lastKeyDownEvent.keyCode() == 46 # DELETE
+		if @lastKeyDownEvent?.keyCode() == 46 # DELETE
 			# dont move cursor, positioning will be down
 			# in keyup
 			@initCursor(@lastKeyDownEvent)
 			return
 
-		if @lastKeyDownEvent.keyCode() == 8 # BACKSPACE
+		if @lastKeyDownEvent?.keyCode() == 8 # BACKSPACE
 			@initCursor(@lastKeyDownEvent)
 			return
 

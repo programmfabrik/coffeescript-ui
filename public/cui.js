@@ -41411,7 +41411,7 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.moveCursor = function(ev) {
-    var blocks, c_idx, e_idx, left, right, s_idx;
+    var blocks, c_idx, e_idx, left, ref, ref1, right, s_idx;
     if (!this.cursor) {
       return;
     }
@@ -41431,11 +41431,11 @@ CUI.Input = (function(superClass) {
       this.cursor.end = blocks[blocks.length - 1];
       return;
     }
-    if (this.lastKeyDownEvent.keyCode() === 46) {
+    if (((ref = this.lastKeyDownEvent) != null ? ref.keyCode() : void 0) === 46) {
       this.initCursor(this.lastKeyDownEvent);
       return;
     }
-    if (this.lastKeyDownEvent.keyCode() === 8) {
+    if (((ref1 = this.lastKeyDownEvent) != null ? ref1.keyCode() : void 0) === 8) {
       this.initCursor(this.lastKeyDownEvent);
       return;
     }
