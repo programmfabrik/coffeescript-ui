@@ -1,4 +1,6 @@
-const CUI = require('../../public/cui');
+require("../../src/base/util.coffee");
+require("../../src/base/dom.coffee");
+
 let genericDiv;
 
 beforeEach(() => {
@@ -429,4 +431,3 @@ describe('CUI.dom.setAttributeMap(node, map)', () => {
         expect(aValue).toBe(map[aKey]);
     });
 });
-

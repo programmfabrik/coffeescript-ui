@@ -61,8 +61,6 @@ To run the tests:
 
 **npm run test**
 
-The tests uses the public js files, so It's necessary to build them before.
-
 ## Documentation
 
 https://programmfabrik.gitbooks.io/coffeescript-ui/
