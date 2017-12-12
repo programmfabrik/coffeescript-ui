@@ -431,3 +431,450 @@ describe('CUI.dom.setAttributeMap(node, map)', () => {
         expect(aValue).toBe(map[aKey]);
     });
 });
+
+describe('CUI.dom.replace(node, content)', () => {
+
+    test("With valid node element", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        let span = CUI.dom.span();
+
+        CUI.dom.replace(div, span);
+
+        expect(div.children[0]).toBe(span);
+    });
+});
+
+describe('CUI.dom.prepend(node, content)', () => {
+
+    test("With valid node element", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        let span = CUI.dom.span();
+
+        CUI.dom.prepend(div, span);
+
+        expect(div.children[0]).toBe(span);
+        expect(div.children[1]).toBeDefined();
+    });
+});
+
+describe('CUI.dom.append(node, content)', () => {
+
+    test("With valid node element", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        let span = CUI.dom.span();
+
+        CUI.dom.append(div, span);
+
+        expect(div.children[1]).toBe(span);
+        expect(div.children[0]).toBeDefined();
+    });
+});
+
+describe('CUI.dom.getAttribute(node, key)', () => {
+
+    test("With existing attribute", () => {
+        document.body.innerHTML = `<div id="div" key="some-value"></div>`;
+
+        let value = CUI.dom.getAttribute(div, "key");
+
+        expect(value).toBe("some-value");
+    });
+});
+
+describe('CUI.dom.remove(node)', () => {
+
+    test("With valid node element", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        CUI.dom.remove(div.children[0]);
+
+        expect(div.children.length).toBe(0);
+    });
+});
+
+describe('CUI.dom.empty(node)', () => {
+
+    test("With valid node element", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        CUI.dom.empty(div);
+
+        expect(div.children.length).toBe(0);
+    });
+});
+
+describe('CUI.dom.hasClass(node, className)', () => {
+
+    test("With an existing class", () => {
+        document.body.innerHTML = `<div id="div" class="some-class"></div>`;
+
+        let hasClass = CUI.dom.hasClass(div, "some-class");
+
+        expect(hasClass).toBeTruthy();
+    });
+
+    test("Without an existing class", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+
+        let hasClass = CUI.dom.hasClass(div, "some-class");
+
+        expect(hasClass).toBeFalsy();
+    });
+});
+
+describe('CUI.dom.toggleClass(node, className)', () => {
+
+    test("With existing class", () => {
+        document.body.innerHTML = `<div id="div" class="some-class"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.toggleClass(div, className);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeTruthy();
+        expect(hasClassAfter).toBeFalsy();
+    });
+
+    test("Without existing class", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.toggleClass(div, className);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeFalsy();
+        expect(hasClassAfter).toBeTruthy();
+    });
+});
+
+describe('CUI.dom.setClass(node, className, on_off)', () => {
+
+    test("With 'off' value, then removes the class", () => {
+        document.body.innerHTML = `<div id="div" class="some-class"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.setClass(div, className, false);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeTruthy();
+        expect(hasClassAfter).toBeFalsy();
+    });
+
+    test("With 'on' value, then adds the class", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.setClass(div, className, true);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeFalsy();
+        expect(hasClassAfter).toBeTruthy();
+    });
+
+    test("With 'on' value and existing class, then doesn't add the class", () => {
+        document.body.innerHTML = `<div id="div" class="some-class"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.setClass(div, className, true);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeTruthy();
+        expect(hasClassAfter).toBeTruthy();
+    });
+});
+
+describe('CUI.dom.addClass(node, className)', () => {
+
+    test("Without existing class", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.addClass(div, className);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeFalsy();
+        expect(hasClassAfter).toBeTruthy();
+    });
+});
+
+describe('CUI.dom.removeClass(node, className)', () => {
+
+    test("With existing class", () => {
+        document.body.innerHTML = `<div id="div" class="some-class"></div>`;
+        let className = "some-class";
+
+        let hasClassBefore = CUI.dom.hasClass(div, className);
+
+        CUI.dom.removeClass(div, className);
+
+        let hasClassAfter = CUI.dom.hasClass(div, className);
+
+        expect(hasClassBefore).toBeTruthy();
+        expect(hasClassAfter).toBeFalsy();
+    });
+});
+
+describe('CUI.dom.isNode(node, level)', () => {
+
+    test("With a div, returns true", () => {
+        let div = CUI.dom.div();
+
+        let isNode = CUI.dom.isNode(div);
+
+        expect(isNode).toBeTruthy();
+    });
+
+    test("With window, returns true", () => {
+        let isNode = CUI.dom.isNode(window);
+
+        expect(isNode).toBeTruthy();
+    });
+
+    test("With a number, returns false", () => {
+        let isNode = CUI.dom.isNode(123456);
+
+        expect(isNode).toBeFalsy();
+    });
+});
+
+describe('CUI.dom.insertChildAtPosition(node, nodeToInsert, position)', () => {
+
+    test("With a valid position", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                        <p></p>
+                                        <p></p>
+                                   </div>`;
+
+        let position = 1;
+        let span = CUI.dom.span();
+
+        CUI.dom.insertChildAtPosition(div, span, position);
+
+        expect(div.children[position]).toBe(span);
+        expect(div.children.length).toBe(4);
+    });
+
+    test("Without a valid position", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+        try {
+            let position = 999;
+            let span = CUI.dom.span();
+
+            CUI.dom.insertChildAtPosition(div, span, position);
+            expect(true).toBeFalsy();
+        } catch (error) {
+            expect(true).toBeTruthy();
+        }
+    });
+});
+
+describe('CUI.dom.insertBefore(node, nodeToInsert)', () => {
+
+    test("With a valid node", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        let span = CUI.dom.span();
+
+        CUI.dom.insertBefore(div.children[0], span);
+
+        expect(div.children[0]).toBe(span);
+        expect(div.children[1]).toBeDefined();
+        expect(div.children.length).toBe(2);
+    });
+});
+
+describe('CUI.dom.insertAfter(node, nodeToInsert)', () => {
+
+    test("With a valid node", () => {
+        document.body.innerHTML = `<div id="div">
+                                        <p></p>
+                                   </div>`;
+
+        let span = CUI.dom.span();
+
+        CUI.dom.insertAfter(div.children[0], span);
+
+        expect(div.children[0]).toBeDefined();
+        expect(div.children[1]).toBe(span);
+        expect(div.children.length).toBe(2);
+    });
+});
+
+describe('CUI.dom.is(node, selector)', () => {
+
+    test("With the same node as selector", () => {
+        document.body.innerHTML = `<div id="div" class="a-class"></div>`;
+
+        let is = CUI.dom.is(div, div);
+
+        expect(is).toBeTruthy();
+    });
+
+    test("With an existing class as selector", () => {
+        document.body.innerHTML = `<div id="div" class="a-class"></div>`;
+
+        let is = CUI.dom.is(div, ".a-class");
+
+        expect(is).toBeTruthy();
+    });
+
+    test("Without an existing class as selector", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+
+        let is = CUI.dom.is(div, ".a-class");
+
+        expect(is).toBeFalsy();
+    });
+
+    test("With a function as selector", () => {
+        document.body.innerHTML = `<div id="div" class="a-class"></div>`;
+
+        let is = CUI.dom.is(div, node => CUI.dom.hasClass(node, "a-class"));
+
+        expect(is).toBeTruthy();
+    });
+});
+
+describe('CUI.dom.matchSelector(node, selector, trySelf)', () => {
+    test("With one existing element with the selector", () => {
+        document.body.innerHTML = `<div id="div" class="a-class">
+                                       <span></span>
+                                       <div>
+                                           <span class="a-class"></span>
+                                       </div>
+                                   </div>`;
+
+        let elementsFound = CUI.dom.matchSelector(div, ".a-class");
+
+        expect(elementsFound.length).toBe(1);
+        let hasClass = CUI.dom.hasClass(elementsFound[0], "a-class");
+        expect(hasClass).toBeTruthy();
+    });
+
+    test("Without one existing element with the selector and try self true", () => {
+        document.body.innerHTML = `<div id="div" class="a-class">
+                                       <span></span>
+                                       <div>
+                                           <span></span>
+                                       </div>
+                                   </div>`;
+
+        let elementsFound = CUI.dom.matchSelector(div, ".a-class", true);
+
+        expect(elementsFound.length).toBe(1);
+        let hasClass = CUI.dom.hasClass(elementsFound[0], "a-class");
+        expect(hasClass).toBeTruthy();
+    });
+
+    test("Without one existing element with the selector and try self false", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <span></span>
+                                       <div>
+                                           <span></span>
+                                       </div>
+                                   </div>`;
+
+        let elementsFound = CUI.dom.matchSelector(div, ".a-class", false);
+
+        expect(elementsFound.length).toBe(0);
+    });
+});
+
+describe('CUI.dom.find(selector)', () => {
+    test("With one existing element with the selector", () => {
+        document.body.innerHTML = `<div id="div" class="a-class">
+                                       <span></span>
+                                       <div>
+                                           <span class="a-class"></span>
+                                       </div>
+                                   </div>`;
+
+        let elementsFound = CUI.dom.find(".a-class");
+
+        expect(elementsFound.length).toBe(2);
+        let hasClass = CUI.dom.hasClass(elementsFound[0], "a-class");
+        expect(hasClass).toBeTruthy();
+        hasClass = CUI.dom.hasClass(elementsFound[1], "a-class");
+        expect(hasClass).toBeTruthy();
+    });
+});
+
+describe('CUI.dom.elementsUntil(element, selector, untilElement)', () => {
+    let appendHtml = () => {
+        document.body.innerHTML = `<div id="divNode" class="node">
+                                       <div></div>
+                                       <div></div>
+                                       <div id="divParent3" class="parent-3">
+                                           <div id="divChild3" class="child-3"></div>
+                                       </div>
+                                   </div>`
+    }
+
+    test("Case 1", () => {
+        appendHtml();
+
+        let elements = CUI.dom.elementsUntil(divChild3, ".parent-3", divNode);
+
+        expect(elements.length).toBe(2);
+    });
+
+    test("Case 2", () => {
+        appendHtml();
+
+        let elements = CUI.dom.elementsUntil(divChild3, ".child-3", divNode);
+
+        expect(elements.length).toBe(1);
+    });
+
+    test("Case 3", () => {
+        appendHtml();
+
+        let elements = CUI.dom.elementsUntil(divChild3, ".node", divNode);
+
+        expect(elements.length).toBe(3);
+    });
+
+    test("Case 4", () => {
+        appendHtml();
+
+        let elements = CUI.dom.elementsUntil(divParent3, ".node", divNode);
+
+        expect(elements.length).toBe(2);
+    });
+});
