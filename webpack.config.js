@@ -63,8 +63,8 @@ const config = {
         extractSass,
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
-        })
-        //new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        }),
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|en|es|it/)
     ]
 };
 
@@ -82,7 +82,7 @@ module.exports = function (env) {
     }
 
     config.output.filename += ".js";
-    config.plugins.push(new CleanWebpackPlugin(config.output.filename));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + config.output.filename));
 
     return config
 };
