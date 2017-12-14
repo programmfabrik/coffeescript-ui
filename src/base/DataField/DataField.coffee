@@ -28,8 +28,7 @@ class CUI.DataField extends CUI.DOMElement
 
 		@addClass("cui-data-field")
 
-		if @_full_width
-			@addClass('cui-data-field--full-width')
+		@maximizeAddClasses()
 
 		CUI.Events.listen
 			type: "data-changed"
@@ -69,7 +68,12 @@ class CUI.DataField extends CUI.DOMElement
 		super()
 		@addOpts
 			name: @getNameOpt()
-			full_width:
+			maximize:
+				check: Boolean
+			maximize_horizontal:
+				check: Boolean
+				default: false
+			maximize_vertical:
 				check: Boolean
 				default: false
 			data:
@@ -116,6 +120,10 @@ class CUI.DataField extends CUI.DOMElement
 				if not @opts.hasOwnProperty(k)
 					@opts[k] = @opts.undo_and_changed_support
 		super()
+		CUI.Layout::maximizeReadOpts.call(@)
+
+	maximizeAddClasses: ->
+		CUI.Layout::maximizeAddClasses.call(@)
 
 	getUniqueIdForLabel: ->
 		null

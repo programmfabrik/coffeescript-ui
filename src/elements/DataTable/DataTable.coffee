@@ -6,9 +6,6 @@
 ###
 
 class CUI.DataTable extends CUI.DataFieldInput
-	constructor: (@opts) ->
-		super(@opts)
-		CUI.Layout::maximizeAddClasses.call(@)
 
 	@defaults:
 		plus_button_tooltip: null
@@ -36,14 +33,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 				check: Function
 			onNodeAdd:
 				check: Function
-			maximize:
-				check: Boolean
-			maximize_horizontal:
-				check: Boolean
-				default: false
-			maximize_vertical:
-				check: Boolean
-				default: false
 			footer_right:
 				check: (v) ->
 					CUI.util.isContent(v)
@@ -64,7 +53,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 		@__navi_prev = null
 		@__navi_next = null
 		@__offset = 0
-		CUI.Layout::maximizeReadOpts.call(@)
 		CUI.util.assert(not (@_chunk_size and @_rowMove), "new CUI.DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
 		@
 

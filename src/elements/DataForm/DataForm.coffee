@@ -216,7 +216,7 @@ class CUI.DataForm extends CUI.DataTable
 		hl = new CUI.HorizontalLayout
 			maximize_vertical: false
 			class: "cui-data-form-row"
-			maximize_horizontal: @___maximize_horizontal
+			maximize_horizontal: @__maximize_horizontal
 			left:
 				content: move
 			right:

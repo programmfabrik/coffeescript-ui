@@ -28,14 +28,6 @@ class CUI.SimpleForm extends CUI.DataField
 				default: "normal"
 				mandatory: true
 				check: ["normal","separators"]
-			# passed to underlying vertical layout
-			maximize:
-				default: false
-				check: Boolean
-			maximize_horizontal:
-				check: Boolean
-			maximize_vertical:
-				check: Boolean
 			render_as_block:
 				check: Boolean
 			render_as_grid:
@@ -52,13 +44,6 @@ class CUI.SimpleForm extends CUI.DataField
 			@__horizontal = null
 		else
 			@__horizontal = @_horizontal
-
-		if CUI.__ng__
-			if @__horizontal and @__horizontal != true
-				console.error("new CUI.Form: opts.horizontal not supported in CUI.Form 'ng'.", opts: @opts)
-			if @_header
-				console.error("new CUI.Form: opts.header not supported in CUI.Form 'ng'.", opts: @opts)
-
 
 		if @_form?.checkbox
 			# the form has a checkbox (for form context)
