@@ -844,7 +844,7 @@ describe('CUI.dom.elementsUntil(element, selector, untilElement)', () => {
                                            <div id="divChild3" class="child-3"></div>
                                        </div>
                                    </div>`
-    }
+    };
 
     test("Case 1", () => {
         appendHtml();
@@ -878,3 +878,258 @@ describe('CUI.dom.elementsUntil(element, selector, untilElement)', () => {
         expect(elements.length).toBe(2);
     });
 });
+
+describe('CUI.dom.parent(node)', () => {
+
+    test("With parent", () => {
+        document.body.innerHTML = `<div class="parent">
+                                      <div id="div"></div>
+                                   </div>`;
+
+        let parent = CUI.dom.parent(div);
+
+        let isParent = CUI.dom.hasClass(parent, "parent");
+        expect(isParent).toBeTruthy();
+    });
+
+    test("When node is document", () => {
+        let parent = CUI.dom.parent(document);
+
+        expect(parent).toBe(window);
+    });
+
+    test("When node is window", () => {
+        let parent = CUI.dom.parent(window);
+
+        expect(parent).toBeNull();
+    });
+});
+
+describe('CUI.dom.closest(node, selector)', () => {
+
+    let appendHtml = () => {
+        document.body.innerHTML = `<div id="divParent" class="node">
+                                       <div></div>
+                                       <div></div>
+                                       <div class="a-selector found-element">
+                                           <div id="div""></div>
+                                       </div>
+                                   </div>`
+    };
+
+    test("With existing element", () => {
+        appendHtml();
+
+        let elementFound = CUI.dom.closest(div, "a-selector");
+
+        let isCorrectElement = CUI.dom.hasClass(elementFound, "found-element");
+        expect(isCorrectElement).toBeDefined()
+    });
+
+    test("Without closest element", () => {
+        appendHtml();
+
+        let elementFound = CUI.dom.closest(divParent, "a-selector");
+
+        expect(elementFound).toBeNull();
+    });
+});
+
+describe('CUI.dom.replaceWith(node, newNode)', () => {
+
+    test("With existing node", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <div id="divToReplace"></div>
+                                   </div>`;
+
+        let classNewDiv = "new-div";
+        let newDiv = CUI.dom.div(classNewDiv);
+
+        CUI.dom.replaceWith(divToReplace, newDiv)
+
+        let childrenReplaced = div.children[0];
+        let isChildrenReplaced = CUI.dom.hasClass(childrenReplaced, classNewDiv);
+        expect(isChildrenReplaced).toBeTruthy();
+    });
+});
+
+describe('CUI.dom.setStyle(element, style, append)', () => {
+
+    test("All types of styles", () => {
+        let style = {
+            "padding-bottom": 10,
+            "display": "none",
+            "margin": null
+        };
+
+        CUI.dom.setStyle(genericDiv, style);
+
+        let divStyle = genericDiv.style;
+        expect(divStyle["padding-bottom"]).toBe("10px");
+        expect(divStyle["display"]).toBe("none");
+        expect(divStyle["margin"]).toBe("");
+    });
+
+    test("With different 'append' parameter", () => {
+        let append = "em";
+        let style = {
+            "padding-bottom": 1,
+        };
+
+        CUI.dom.setStyle(genericDiv, style, append);
+
+        let divStyle = genericDiv.style;
+        expect(divStyle["padding-bottom"]).toBe("1em");
+    });
+});
+
+describe('CUI.dom.setStyleOne(element, styleName, styleValue)', () => {
+
+    test("With number as value", () => {
+        let value = 10;
+
+        CUI.dom.setStyleOne(genericDiv, "width", value);
+
+        expect(genericDiv.style["width"]).toBe("10px");
+    });
+
+    test("With string as value", () => {
+        let value = "none";
+
+        CUI.dom.setStyleOne(genericDiv, "display", value);
+
+        expect(genericDiv.style["display"]).toBe(value);
+    });
+});
+
+describe('CUI.dom.htmlToNodes(html)', () => {
+    test("With valid html", () => {
+        let html = `<div><span></span></div><div><p></p><p></p></div>`;
+
+        let nodes = CUI.dom.htmlToNodes(html);
+
+        expect(nodes[0].children.length).toBe(1);
+        expect(nodes[1].children.length).toBe(2);
+    });
+});
+
+describe('CUI.dom.findTextInNodes(nodes, callback, texts)', () => {
+    test("With existing texts, without callback parameter", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <span>Text node 1</span>
+                                       <div>
+                                           <div>
+                                               <h1>Text node 2</h1>
+                                           </div>
+                                           <div>Text node 3</div>
+                                       </div>
+                                   </div>`;
+
+        let texts = CUI.dom.findTextInNodes([div]);
+
+        expect(texts.length).toBe(3);
+        expect(texts[0]).toBe("Text node 1");
+        expect(texts[1]).toBe("Text node 2");
+        expect(texts[2]).toBe("Text node 3");
+    });
+
+    test("With existing texts, with callback parameter", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <span>Text node 1</span>
+                                       <div>
+                                           <div>
+                                               <h1>Text node 2</h1>
+                                           </div>
+                                           <div>Text node 3</div>
+                                       </div>
+                                   </div>`;
+
+        let callbackTextArray = [];
+
+        let toUpperCase = (textNode, textContent) => {
+            callbackTextArray.push(textContent.toUpperCase())
+        };
+
+        let texts = CUI.dom.findTextInNodes([div], toUpperCase);
+
+        expect(callbackTextArray.length).toBe(3);
+        expect(callbackTextArray[0]).toBe("TEXT NODE 1");
+        expect(callbackTextArray[1]).toBe("TEXT NODE 2");
+        expect(callbackTextArray[2]).toBe("TEXT NODE 3");
+    });
+});
+
+describe('CUI.dom.getCSSFloatValue(value)', () => {
+    test("With value with px, then returns the number value", () => {
+        let value = "10px";
+
+        let floatValue = CUI.dom.getCSSFloatValue(value);
+
+        expect(floatValue).toBe(10.0);
+    });
+
+    test("With a number, then returns 0", () => {
+        let value = "10";
+
+        let floatValue = CUI.dom.getCSSFloatValue(value);
+
+        expect(floatValue).toBe(0);
+    });
+});
+
+describe('CUI.dom.isVisible(element)', () => {
+    test("When element is visible", () => {
+        document.body.innerHTML = `<div id="div" style="display: block;"></div>`;
+
+        let isVisible = CUI.dom.isVisible(div);
+
+        expect(isVisible).toBeTruthy();
+    });
+
+    test("When element is not visible, first case", () => {
+        document.body.innerHTML = `<div id="div" style="display: block; visibility: hidden;"></div>`;
+
+        let isVisible = CUI.dom.isVisible(div);
+
+        expect(isVisible).toBeFalsy();
+    });
+
+    test("When element is not visible, second case", () => {
+        document.body.innerHTML = `<div id="div" style="display: none;"></div>`;
+
+        let isVisible = CUI.dom.isVisible(div);
+
+        expect(isVisible).toBeFalsy();
+    });
+});
+
+describe('CUI.dom.hideElement(element)', () => {
+    test("When element is visible", () => {
+        document.body.innerHTML = `<div id="div"></div>`;
+
+        let isVisibleBefore = div.style["display"];
+
+        CUI.dom.hideElement(div)
+
+        let isVisibleAfter = div.style["display"];
+
+        expect(isVisibleBefore).toBe("");
+        expect(isVisibleAfter).toBe("none");
+    });
+});
+
+describe('CUI.dom.showElement(element)', () => {
+    test("When element is not visible", () => {
+        document.body.innerHTML = `<div id="div" style="display: none;"></div>`;
+
+        let isVisibleBefore = div.style["display"];
+
+        CUI.dom.showElement(div);
+
+        let isVisibleAfter = div.style["display"];
+
+        expect(isVisibleBefore).toBe("none");
+        expect(isVisibleAfter).toBe("");
+    });
+});
+
