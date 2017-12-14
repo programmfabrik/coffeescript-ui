@@ -1305,7 +1305,7 @@ It returns **element**
     <div></div>
 </div>
 
-CUI.dom.removeChildren(div4, ".noFilter")
+CUI.dom.removeChildren(div, ".noFilter")
 > <div id="div">
     <span class="child"></span>
     <div></div>

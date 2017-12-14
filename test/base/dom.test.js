@@ -1133,3 +1133,78 @@ describe('CUI.dom.showElement(element)', () => {
     });
 });
 
+describe('CUI.dom.removeChildren(element, filter)', () => {
+    test("With selector as filter", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <span class="child"></span>
+                                       <div class="child remove"></div>
+                                       <div></div>
+                                   </div>`;
+
+        CUI.dom.removeChildren(div, ".remove")
+
+        expect(div.children.length).toBe(2);
+        for (let child of div.children) {
+            let hasRemoveClass = CUI.dom.hasClass(child, "remove");
+            expect(hasRemoveClass).toBeFalsy();
+        }
+    });
+
+    test("With function as filter", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <span class="child"></span>
+                                       <div class="child remove"></div>
+                                       <div></div>
+                                   </div>`;
+
+        CUI.dom.removeChildren(div, element => CUI.dom.hasClass(element, "remove"));
+
+        expect(div.children.length).toBe(2);
+        for (let child of div.children) {
+            let hasRemoveClass = CUI.dom.hasClass(child, "remove");
+            expect(hasRemoveClass).toBeFalsy();
+        }
+    });
+
+    test("Without filter", () => {
+        document.body.innerHTML = `<div id="div">
+                                       <span class="child"></span>
+                                       <div class="child remove"></div>
+                                       <div></div>
+                                   </div>`;
+
+        CUI.dom.removeChildren(div);
+
+        expect(div.children.length).toBe(0);
+    });
+});
+
+describe('CUI.dom.space(style)', () => {
+    test("Without style", () => {
+        let divSpace = CUI.dom.space();
+
+        let isSpace = CUI.dom.hasClass(divSpace, "cui-space");
+        expect(isSpace).toBeTruthy();
+    });
+
+    test("With small style", () => {
+        let divSpace = CUI.dom.space("small");
+
+        let isSmallSpace = CUI.dom.hasClass(divSpace, "cui-small-space");
+        expect(isSmallSpace).toBeTruthy();
+    });
+
+    test("With large style", () => {
+        let divSpace = CUI.dom.space("large");
+
+        let isLargeSpace = CUI.dom.hasClass(divSpace, "cui-large-space");
+        expect(isLargeSpace).toBeTruthy();
+    });
+
+    test("With flexible style", () => {
+        let divSpace = CUI.dom.space("flexible");
+
+        let isFlexibleSpace = CUI.dom.hasClass(divSpace, "cui-flexible-space");
+        expect(isFlexibleSpace).toBeTruthy();
+    });
+});
