@@ -29211,13 +29211,6 @@ CUI.FormPopover = (function(superClass) {
           }
           _this.__renderDisplay();
           _this.__dataChanged = info;
-          CUI.setTimeout({
-            ms: 0,
-            call: function() {
-              var ref;
-              return (ref = _this.__popover) != null ? ref.position() : void 0;
-            }
-          });
           if (_this._trigger_data_changed_while_open) {
             _this.__triggerDataChanged();
           }
