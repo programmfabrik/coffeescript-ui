@@ -138,7 +138,6 @@ require('./elements/Map/Map.coffee')
 require('./elements/Map/GoogleMap.coffee')
 require('./elements/Map/LeafletMap.coffee')
 require('./elements/Map/MapInput.coffee')
-require('./elements/Map/IconMarker.coffee')
 require('./base/CSVData.coffee')
 require('./scss/themes/ng/main.scss')
 

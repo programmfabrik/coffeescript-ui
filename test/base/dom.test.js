@@ -1,5 +1,4 @@
-require("../../src/base/util.coffee");
-require("../../src/base/dom.coffee");
+require('../index');
 
 let genericDiv;
 

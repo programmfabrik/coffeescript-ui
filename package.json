@@ -32,7 +32,8 @@
   "jest": {
     "setupFiles": ["./test/setup.js"],
     "transform": {
-      ".*": "./test/preprocessor.js"
+      "^.+\\.coffee$": "./test/preprocessor.js",
+      "^.+\\.html$": "./test/html-loader.js"
     }
   },
   "devDependencies": {
