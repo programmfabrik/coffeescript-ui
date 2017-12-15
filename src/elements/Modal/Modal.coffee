@@ -89,9 +89,9 @@ class CUI.Modal extends CUI.LayerPane
 		@
 
 	__runOnAllButtons: (func) ->
-		for el in CUI.dom.matchSelector(@__layer.DOM, ".cui-button")
+		for el in CUI.dom.matchSelector(@__layer.DOM, ".cui-button,.cui-data-field")
 			btn = CUI.dom.data(el, "element")
-			if btn instanceof CUI.Button
+			if btn instanceof CUI.Button or btn instanceof CUI.DataField
 				btn[func]()
 		return
 
