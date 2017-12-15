@@ -38041,11 +38041,11 @@ CUI.Modal = (function(superClass) {
 
   Modal.prototype.__runOnAllButtons = function(func) {
     var btn, el, i, len, ref;
-    ref = CUI.dom.matchSelector(this.__layer.DOM, ".cui-button");
+    ref = CUI.dom.matchSelector(this.__layer.DOM, ".cui-button,.cui-data-field");
     for (i = 0, len = ref.length; i < len; i++) {
       el = ref[i];
       btn = CUI.dom.data(el, "element");
-      if (btn instanceof CUI.Button) {
+      if (btn instanceof CUI.Button || btn instanceof CUI.DataField) {
         btn[func]();
       }
     }
@@ -39358,20 +39358,6 @@ CUI.Options = (function(superClass) {
     throw new CUI.CheckValueError("Value is not in the options.");
   };
 
-  Options.prototype.disable = function() {
-    if (!CUI.__ng__) {
-      return;
-    }
-    return Options.__super__.disable.call(this);
-  };
-
-  Options.prototype.enable = function() {
-    if (!CUI.__ng__) {
-      return;
-    }
-    return Options.__super__.enable.call(this);
-  };
-
   Options.prototype.render = function() {
     var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
     Options.__super__.render.call(this);
@@ -39478,7 +39464,7 @@ CUI.Options = (function(superClass) {
     ref = this.__options;
     fn = (function(_this) {
       return function(_opt) {
-        var cb, chars, k, opt, ref1, ref2, v;
+        var cb, chars, k, opt, ref1, v;
         opt = {};
         for (k in _opt) {
           v = _opt[k];
@@ -39496,9 +39482,6 @@ CUI.Options = (function(superClass) {
         chars = ((ref1 = opt.text) != null ? ref1.length : void 0) || -1;
         if (_this.__maxChars < chars) {
           _this.__maxChars = chars;
-        }
-        if (CUI.__ng__ && ((ref2 = opt.form) != null ? ref2.right : void 0)) {
-          console.error("Options.render: form.right is obsolete. 'right' part will not appear.", _this, opt);
         }
         opt.radio = _this.__radio;
         if (_this._radio && _this._min_checked === 0) {
@@ -39528,12 +39511,12 @@ CUI.Options = (function(superClass) {
           }
         };
         opt.onDeactivate = function(_cb, flags) {
-          var arr, c, f, j, len1, ref3;
+          var arr, c, f, j, len1, ref2;
           if (!_this._radio) {
             c = 0;
-            ref3 = _this.__checkboxes;
-            for (j = 0, len1 = ref3.length; j < len1; j++) {
-              f = ref3[j];
+            ref2 = _this.__checkboxes;
+            for (j = 0, len1 = ref2.length; j < len1; j++) {
+              f = ref2[j];
               if (f.isActive()) {
                 c++;
               }
