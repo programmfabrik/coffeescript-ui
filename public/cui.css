@@ -1798,7 +1798,7 @@ a[role="button"].cui-button-appearance-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none; }
   .cui-layer-root .cui-layer {
     position: absolute;
