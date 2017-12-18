@@ -3955,6 +3955,19 @@ label[data-label-clickable],
   height: 300px;
   overflow: hidden !important; }
 
+.cui-map-zoom-buttons {
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+  display: block;
+  margin-top: 10px; }
+  .cui-map-zoom-buttons .buttons-upper-left .cui-buttonbar-group {
+    position: absolute;
+    margin-left: 10px; }
+  .cui-map-zoom-buttons .buttons-upper-right .cui-buttonbar-group {
+    position: absolute;
+    right: 10px; }
+
 .cui-map-popover-options {
   padding: 5px; }
 
