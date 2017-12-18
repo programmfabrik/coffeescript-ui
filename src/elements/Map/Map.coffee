@@ -1,4 +1,20 @@
+CUI.Template.loadTemplateText(require('./map.html'));
+
 class CUI.Map extends CUI.DOMElement
+
+	@defaults =
+		maxZoom: 18
+		minZoom: 0
+		zoomButtons:
+			plus:
+				icon: "zoom_in"
+				tooltip: "Zoom in"
+			reset:
+				icon: "fa-dot-circle-o"
+				tooltip: "Reset"
+			minus:
+				icon: "zoom_out"
+				tooltip: "Zoom out"
 
 	initOpts: ->
 		super()
@@ -26,9 +42,6 @@ class CUI.Map extends CUI.DOMElement
 			zoomToFitAllMarkersOnInit:
 				check: Boolean
 				default: false
-			zoomControl:
-				check: Boolean
-				default: true
 			onClick:
 				check: Function
 			onZoomEnd:
@@ -37,11 +50,44 @@ class CUI.Map extends CUI.DOMElement
 				check: Function
 			onReady:
 				check: Function
+			buttonsUpperRight:
+				check: Array
+			buttonsBottomRight:
+				check: Array
+			buttonsBottomLeft:
+				check: Array
 
 	constructor: (@opts = {}) ->
 		super(@opts)
-		@registerDOMElement(CUI.dom.div())
-		@addClass(@__getMapClassName())
+
+		template = new CUI.Template
+			name: "map"
+			map:
+				center: true
+				"buttons-upper-left": true
+				"buttons-upper-right": true
+				"buttons-bottom-left": true
+				"buttons-bottom-right": true
+
+		@registerTemplate(template)
+
+		@__template.addClass(@__getMapClassName(), "center")
+
+		@__zoomButtons = @__getZoomButtons()
+		buttonBar = new CUI.Buttonbar(buttons: @__zoomButtons)
+		@__template.append(buttonBar, "buttons-upper-left")
+
+		if @_buttonsUpperRight
+			buttonBar = new CUI.Buttonbar(buttons: @_buttonsUpperRight)
+			@__template.append(buttonBar, "buttons-upper-right")
+
+		if @_buttonsBottomRight
+			buttonBar = new CUI.Buttonbar(buttons: @_buttonsBottomRight)
+			@__template.append(buttonBar, "buttons-bottom-right")
+
+		if @_buttonsBottomLeft
+			buttonBar = new CUI.Buttonbar(buttons: @_buttonsBottomLeft)
+			@__template.append(buttonBar, "buttons-bottom-left")
 
 		@__markers = []
 		@__map = @__buildMap()
@@ -52,6 +98,7 @@ class CUI.Map extends CUI.DOMElement
 
 		if @_selectedMarkerPosition
 			@setSelectedMarkerPosition(@_selectedMarkerPosition)
+
 
 	addMarkers: (optionsArray) ->
 		for options in optionsArray
@@ -81,6 +128,10 @@ class CUI.Map extends CUI.DOMElement
 		if position
 			@removeSelectedMarker()
 			@setSelectedMarkerPosition(position)
+
+	setButtonBar: (buttons, position) ->
+		buttonBar = new CUI.Buttonbar(buttons: buttons)
+		@__template.append(buttonBar, "buttons-#{position}")
 
 	getSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getSelectedMarkerPosition needs to be implemented.")
@@ -159,6 +210,62 @@ class CUI.Map extends CUI.DOMElement
 			@__addCustomOption(markerOptions, key, value)
 
 		markerOptions
+
+	__onReady: ->
+		@__initZoom = @__map.getZoom()
+		@__initCenter = @__map.getCenter()
+		@__disableEnableZoomButtons()
+
+		@_onReady?()
+
+	__onMoveEnd: ->
+		@__disableEnableZoomButtons()
+		@_onMoveEnd?(arguments)
+
+	__disableEnableZoomButtons: ->
+		zoomInButton = @__zoomButtons[0]
+		centerButton = @__zoomButtons[1]
+		zoomOutButton = @__zoomButtons[2]
+		if @__map.getZoom() == CUI.Map.defaults.maxZoom
+			zoomInButton.disable()
+		else
+			zoomInButton.enable()
+
+		if @__map.getZoom() == CUI.Map.defaults.minZoom
+			zoomOutButton.disable()
+		else
+			zoomOutButton.enable()
+
+		currentCenter = @__map.getCenter()
+		if @__map.getZoom() == @__initZoom and Math.round(currentCenter.lat) == Math.round(@__initCenter.lat) and Math.round(currentCenter.lng) == Math.round(@__initCenter.lng)
+			centerButton.disable()
+		else
+			centerButton.enable()
+
+	__getZoomButtons: ->
+		return [
+				new CUI.Button
+					icon: CUI.Map.defaults.zoomButtons.plus.icon
+					tooltip: text: CUI.Map.defaults.zoomButtons.plus.tooltip
+					group: "zoom"
+					onClick: =>
+						@zoomIn()
+			,
+				new CUI.Button
+					icon: CUI.Map.defaults.zoomButtons.reset.icon
+					tooltip: text: CUI.Map.defaults.zoomButtons.reset.tooltip
+					group: "zoom"
+					onClick: =>
+						@setCenter(@__initCenter, @__initZoom)
+						@__disableEnableZoomButtons()
+			,
+				new CUI.Button
+					icon: CUI.Map.defaults.zoomButtons.minus.icon
+					tooltip: text: CUI.Map.defaults.zoomButtons.minus.tooltip
+					group: "zoom"
+					onClick: =>
+						@zoomOut()
+		]
 
 	@isValidLatitude: (value) ->
 		CUI.util.isNumber(value) and value <= 90 and value >= -90

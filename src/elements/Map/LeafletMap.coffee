@@ -11,6 +11,7 @@ class CUI.LeafletMap extends CUI.Map
 
 	constructor: (@opts = {}) ->
 		if not CUI.LeafletMap.loadCSSPromise
+			CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom
 			CUI.LeafletMap.loadCSSPromise = @__loadCSS()
 
 		@__groups = {}
@@ -20,8 +21,8 @@ class CUI.LeafletMap extends CUI.Map
 		"cui-leaflet-map"
 
 	__buildMap: ->
-		map = L.map(@DOM,
-			zoomControl: @_zoomControl
+		map = L.map(@__template.map.center,
+			zoomControl: false
 		)
 
 		tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions)
@@ -34,7 +35,7 @@ class CUI.LeafletMap extends CUI.Map
 					map.setView(@_center, @_zoom)
 				tileLayer.addTo(map)
 
-			@_onReady?()
+			@__onReady()
 
 		if @_onClick
 			map.on("click", @_onClick)
@@ -42,8 +43,7 @@ class CUI.LeafletMap extends CUI.Map
 		if @_onZoomEnd
 			map.on("zoomend", @_onZoomEnd)
 
-		if @_onMoveEnd
-			map.on("moveend", @_onMoveEnd)
+		map.on("moveend", => @__onMoveEnd(arguments))
 
 		map
 
@@ -188,7 +188,7 @@ class CUI.LeafletMap extends CUI.Map
 		delete @__map
 		delete @__selectedMarker
 
-		CUI.dom.remove(@DOM)
+		@__template.destroy()
 		super()
 
 	__loadCSS: ->
