@@ -2130,10 +2130,6 @@ a[role="button"].cui-button-appearance-link {
 		outline: none;
 		vertical-align: bottom;
 
-		&:not([data-max-chars]) {
-			width: $input-width;
-		}
-
 		&:focus {
 			@include border-focus;
 		}
@@ -2159,11 +2155,21 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	input {
+		&:not([data-max-chars]) {
+			width: $input-width;
+		}
+	}
+
 	textarea {
 		padding-top: 3px;
 		padding-bottom: 3px;
 		line-height: 16px;
 		height: 100px;
+		
+		&:not([data-max-chars]) {
+			width: $textarea-width;
+		}
 	}
 
 	&.cui-has-focus {
@@ -4973,6 +4979,10 @@ label[data-label-clickable],
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
 	background: $foreground;
+	
+	.cui-multi-input--textarea & {
+		width: $textarea-width;
+	}
 
 	&:focus,
 	&.cui-has-focus {

@@ -1702,9 +1702,6 @@ a[role="button"].cui-button-appearance-link {
   line-height: 22px;
   outline: none;
   vertical-align: bottom; }
-  .cui-input input:not([data-max-chars]),
-  .cui-input textarea:not([data-max-chars]) {
-    width: 275px; }
   .cui-input input:focus,
   .cui-input textarea:focus {
     box-shadow: 0 0 0 3px #b3d7ff;
@@ -1726,11 +1723,16 @@ a[role="button"].cui-button-appearance-link {
   .cui-input textarea::placeholder {
     color: #b9c0c6; }
 
+.cui-input input:not([data-max-chars]) {
+  width: 275px; }
+
 .cui-input textarea {
   padding-top: 3px;
   padding-bottom: 3px;
   line-height: 16px;
   height: 100px; }
+  .cui-input textarea:not([data-max-chars]) {
+    width: 550px; }
 
 .cui-input.cui-has-focus input,
 .cui-input.cui-has-focus textarea {
@@ -3517,6 +3519,8 @@ label[data-label-clickable],
   background: white; }
   .cui-multi-input-input:first-child {
     margin-top: 0; }
+  .cui-multi-input--textarea .cui-multi-input-input {
+    width: 550px; }
   .cui-multi-input-input:focus, .cui-multi-input-input.cui-has-focus {
     box-shadow: 0 0 0 3px #b3d7ff;
     border-color: #006adb;

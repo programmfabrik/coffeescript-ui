@@ -108,6 +108,7 @@ $input-radius: $button-radius;
 $input-placeholder: hsl(205,10%,75%);
 $input-shadow: 0 1px hsla(0,0%,0%,.03) inset, 0 2px hsla(0,0%,0%,.01) inset;
 $input-width: 275px;
+$textarea-width: $input-width * 2;
 
 $drag-handle-color: hsla(205,10%,50%,.5);
 
