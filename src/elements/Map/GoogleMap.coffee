@@ -16,8 +16,8 @@ class CUI.GoogleMap extends CUI.Map
 		"cui-google-map"
 
 	__buildMap: ->
-		map = new google.maps.Map(@DOM,
-			zoomControl: @_zoomControl
+		map = new google.maps.Map(@__template.map.center,
+			zoomControl: false
 		)
 
 		# Workaround to 'refresh' the map once it's in the DOM tree.
@@ -29,7 +29,7 @@ class CUI.GoogleMap extends CUI.Map
 				map.setCenter(@_center)
 				map.setZoom(@_zoom)
 
-			@_onReady?()
+			@__onReady()
 
 		map
 
@@ -104,7 +104,9 @@ class CUI.GoogleMap extends CUI.Map
 		delete @__map
 		delete @__selectedMarker
 		delete @__bounds
-		CUI.dom.remove(@DOM)
+
+		@__template.destroy()
+
 		super()
 
 	zoomToFitAllMarkers: ->
