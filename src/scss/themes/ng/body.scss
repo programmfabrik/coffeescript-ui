@@ -1770,18 +1770,22 @@ a[role="button"].cui-button-appearance-link {
 	display: block;
 
 	h1, h2, h3, h4, h5, h6 {
-		font-weight: normal;
-		margin: 0 0 $padding;
+		font-weight: 600;
+		line-height: 1.35;
+		margin: 0 0 7px;
 	}
 
 	h1 {
-		font-size: 24px;
-		line-height: 30px;
+		font-size: 18px;
 	}
 
 	h2 {
-		font-size: 20px;
-		line-height: 25px;
+		font-size: 16px;
+	}
+
+	h3 {
+		font-size: 1em;
+		margin-bottom: 0;
 	}
 
 	a {
@@ -1808,6 +1812,12 @@ a[role="button"].cui-button-appearance-link {
 		&:last-child {
 			margin-bottom: 0;
     }
+  }
+
+  blockquote > p {
+  	&:last-child {
+  		margin-bottom: 0;
+  	}
   }
 
   table {

@@ -1501,14 +1501,16 @@ a[role="button"].cui-button-appearance-link {
 .cui-label-markdown .cui-label-content {
   display: block; }
   .cui-label-markdown .cui-label-content h1, .cui-label-markdown .cui-label-content h2, .cui-label-markdown .cui-label-content h3, .cui-label-markdown .cui-label-content h4, .cui-label-markdown .cui-label-content h5, .cui-label-markdown .cui-label-content h6 {
-    font-weight: normal;
-    margin: 0 0 10px; }
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0 0 7px; }
   .cui-label-markdown .cui-label-content h1 {
-    font-size: 24px;
-    line-height: 30px; }
+    font-size: 18px; }
   .cui-label-markdown .cui-label-content h2 {
-    font-size: 20px;
-    line-height: 25px; }
+    font-size: 16px; }
+  .cui-label-markdown .cui-label-content h3 {
+    font-size: 1em;
+    margin-bottom: 0; }
   .cui-label-markdown .cui-label-content a {
     color: #006adb;
     text-decoration: underline; }
@@ -1524,6 +1526,8 @@ a[role="button"].cui-button-appearance-link {
   .cui-label-markdown .cui-label-content > pre:last-child,
   .cui-label-markdown .cui-label-content > table:last-child,
   .cui-label-markdown .cui-label-content > blockquote:last-child {
+    margin-bottom: 0; }
+  .cui-label-markdown .cui-label-content blockquote > p:last-child {
     margin-bottom: 0; }
   .cui-label-markdown .cui-label-content table {
     border: none;
