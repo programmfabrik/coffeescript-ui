@@ -38180,6 +38180,9 @@ CUI.MultiInput = (function(superClass) {
     this.opts = opts != null ? opts : {};
     MultiInput.__super__.constructor.call(this, this.opts);
     this.addClass("cui-multi-input");
+    if (this._textarea) {
+      this.addClass("cui-multi-input--textarea");
+    }
   }
 
   MultiInput.prototype.initOpts = function() {
