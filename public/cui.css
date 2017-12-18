@@ -822,8 +822,10 @@ li > div {
 .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header {
   background: #dadfe2;
   border-color: #bbc0c3;
-  min-height: 34px;
-  border-color: #bbc0c3; }
+  min-height: 34px; }
+  .cui-popover .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header {
+    background: #e2e6e9;
+    border-color: #c4c7ca; }
   .cui-pane--window > .cui-vertical-layout-top > .cui-pane-header .cui-label {
     color: #464e53;
     font-weight: 500; }

@@ -688,7 +688,11 @@ li > div {
 		background: $header-background;
 		border-color: $header-border;
 		min-height: $toolbar-height;
-		border-color: $header-border;
+		
+		.cui-popover & {
+			background: lighten($header-background, 3%);
+			border-color: lighten($header-border, 3%);
+		}
 
 		.cui-label {
 			color: $header-color;
