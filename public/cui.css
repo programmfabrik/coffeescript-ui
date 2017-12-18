@@ -1265,7 +1265,8 @@ a[role="button"].cui-button-appearance-link {
     word-wrap: break-word; }
 
 .cui-button-appearance-link[role] {
-  display: inline-flex; }
+  display: inline-flex;
+  align-self: flex-start; }
   .cui-button-appearance-link[role] .cui-button-visual, .cui-button-appearance-link[role]:active .cui-button-visual {
     padding: 0;
     border: none;
