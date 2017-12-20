@@ -917,6 +917,9 @@ class CUI.dom
 		if not docElem
 			return null
 
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
+
 		CUI.util.assert(docElem instanceof Node, "CUI.dom.isInDOM", "docElem needs to be instanceof Node.", docElem: docElem)
 		document.documentElement.contains(docElem)
 

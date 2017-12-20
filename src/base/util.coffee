@@ -462,8 +462,11 @@ class CUI.util
 	    decodeURIComponent(escape(window.atob(str)))
 
 	# coordinates is a string, almost every coordinates format is accepted.
-	# Returns an object with lat and lng attributes, or false if wasn't possible to parse
+	# Returns an object with lat and lng attributes, or false if wasn't possible to parse or if coordinates is null.
 	@parseCoordinates: (coordinates) ->
+		if CUI.util.isNull(coordinates)
+			return false
+
 		CUI.util.assert(CUI.util.isString(coordinates), "parseCoordinates", "Parameter coordinates is String and mandatory.", value: coordinates)
 
 		try

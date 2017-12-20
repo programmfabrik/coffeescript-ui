@@ -56,6 +56,9 @@ class CUI.Map extends CUI.DOMElement
 				check: Array
 			buttonsBottomLeft:
 				check: Array
+			showPolylines:
+				check: Boolean
+				default: true
 
 	constructor: (@opts = {}) ->
 		super(@opts)

@@ -35,7 +35,7 @@ class CUI.LeafletMap extends CUI.Map
 					map.setView(@_center, @_zoom)
 				tileLayer.addTo(map)
 
-			@__onReady()
+				@__onReady()
 
 		if @_onClick
 			map.on("click", @_onClick)
@@ -62,7 +62,7 @@ class CUI.LeafletMap extends CUI.Map
 			delete options.iconName
 			delete options.iconColor
 
-		if options.group
+		if options.group and @_showPolylines
 			@__groups[options.group] = @__groups[options.group] or {positions: []}
 			@__groups[options.group].positions.push([options.position.lat, options.position.lng])
 
@@ -90,11 +90,11 @@ class CUI.LeafletMap extends CUI.Map
 		@__map.removeLayer(marker)
 
 	__updateGroups: ->
-		for groupName, group of @__groups
+		for groupColor, group of @__groups
 			if group.polyline
 				@__map.removeLayer(group.polyline)
-			@__groups[groupName].polyline = L.polyline(group.positions, {color: 'red', weight: 2})
-			@__groups[groupName].polyline.addTo(@__map)
+			@__groups[groupColor].polyline = L.polyline(group.positions, {color: groupColor, weight: 2, dashArray: '4, 4'})
+			@__groups[groupColor].polyline.addTo(@__map)
 
 	getSelectedMarkerPosition: ->
 		@__selectedMarker?.getLatLng()
