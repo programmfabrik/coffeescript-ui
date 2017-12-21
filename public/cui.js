@@ -18488,6 +18488,9 @@ CUI.dom = (function() {
     if (!docElem) {
       return null;
     }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     CUI.util.assert(docElem instanceof Node, "CUI.dom.isInDOM", "docElem needs to be instanceof Node.", {
       docElem: docElem
     });
@@ -19959,6 +19962,9 @@ CUI.util = (function() {
   };
 
   util.parseCoordinates = function(coordinates) {
+    if (CUI.util.isNull(coordinates)) {
+      return false;
+    }
     CUI.util.assert(CUI.util.isString(coordinates), "parseCoordinates", "Parameter coordinates is String and mandatory.", {
       value: coordinates
     });
@@ -36789,15 +36795,15 @@ CUI.LeafletMap = (function(superClass) {
       node: this
     }).done((function(_this) {
       return function() {
-        CUI.LeafletMap.loadCSSPromise.done(function() {
+        return CUI.LeafletMap.loadCSSPromise.done(function() {
           if (_this._zoomToFitAllMarkersOnInit) {
             _this.zoomToFitAllMarkers();
           } else {
             map.setView(_this._center, _this._zoom);
           }
-          return tileLayer.addTo(map);
+          tileLayer.addTo(map);
+          return _this.__onReady();
         });
-        return _this.__onReady();
       };
     })(this));
     if (this._onClick) {
@@ -36831,7 +36837,7 @@ CUI.LeafletMap = (function(superClass) {
       delete options.iconName;
       delete options.iconColor;
     }
-    if (options.group) {
+    if (options.group && this._showPolylines) {
       this.__groups[options.group] = this.__groups[options.group] || {
         positions: []
       };
@@ -36870,19 +36876,20 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.__updateGroups = function() {
-    var group, groupName, ref, results;
+    var group, groupColor, ref, results;
     ref = this.__groups;
     results = [];
-    for (groupName in ref) {
-      group = ref[groupName];
+    for (groupColor in ref) {
+      group = ref[groupColor];
       if (group.polyline) {
         this.__map.removeLayer(group.polyline);
       }
-      this.__groups[groupName].polyline = L.polyline(group.positions, {
-        color: 'red',
-        weight: 2
+      this.__groups[groupColor].polyline = L.polyline(group.positions, {
+        color: groupColor,
+        weight: 2,
+        dashArray: '4, 4'
       });
-      results.push(this.__groups[groupName].polyline.addTo(this.__map));
+      results.push(this.__groups[groupColor].polyline.addTo(this.__map));
     }
     return results;
   };
@@ -37131,6 +37138,10 @@ CUI.Map = (function(superClass) {
       },
       buttonsBottomLeft: {
         check: Array
+      },
+      showPolylines: {
+        check: Boolean,
+        "default": true
       }
     });
   };
@@ -37451,12 +37462,16 @@ CUI.MapInput = (function(superClass) {
   extend(MapInput, superClass);
 
   MapInput.defaults = {
-    buttonTooltip: "Show map",
-    placeholder: "Insert or paste coordinates",
+    labels: {
+      mapButtonTooltip: "Show map",
+      iconButtonTooltip: "Show icon",
+      placeholder: "Insert or paste coordinates"
+    },
     displayFormat: "dms",
     mapClass: CUI.LeafletMap,
-    iconColors: ["#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"],
-    icons: ["fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"]
+    iconColors: ["#b8bfc4", "#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"],
+    icons: ["fa-map-marker", "fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"],
+    groupColors: ["#31a354", "#2b8cbe", "#dd1c77", "#8856a7", "#de2d26"]
   };
 
   MapInput.displayFormats = {
@@ -37488,35 +37503,28 @@ CUI.MapInput = (function(superClass) {
           };
         })(this),
         "default": CUI.MapInput.defaults.displayFormat
-      },
-      iconColor: {
-        check: String
-      },
-      iconName: {
-        check: String
       }
     });
     this.removeOpt("getValueForDisplay");
     this.removeOpt("getValueForInput");
+    this.removeOpt("getValueForStore");
     return this.removeOpt("checkInput");
   };
 
   MapInput.prototype.readOpts = function() {
     MapInput.__super__.readOpts.call(this);
     this._checkInput = this.__checkInput;
-    this.__selectedMarkerOptions = {};
-    if (this._iconName) {
-      this.__selectedMarkerOptions.iconName = this._iconName;
-    }
-    if (this._iconColor) {
-      return this.__selectedMarkerOptions.iconColor = this._iconColor;
-    }
+    return this.__selectedMarkerOptions = {};
   };
 
   MapInput.prototype.initValue = function() {
-    var formattedPosition, position;
+    var currentValue, formattedPosition, position;
     MapInput.__super__.initValue.call(this);
-    position = this.getValue();
+    currentValue = this.getValue();
+    this.__selectedMarkerOptions.iconName = currentValue.iconName || CUI.MapInput.defaults.icons[0];
+    this.__selectedMarkerOptions.iconColor = currentValue.iconColor || CUI.MapInput.defaults.iconColors[0];
+    this.__selectedMarkerOptions.groupColor = currentValue.groupColor;
+    position = this.__getPosition();
     if (position && CUI.Map.isValidPosition(position)) {
       formattedPosition = this.__getFormattedPosition(position);
       return this.setValue(formattedPosition);
@@ -37529,56 +37537,124 @@ CUI.MapInput = (function(superClass) {
     return new CUI.Template({
       name: "map-input",
       map: {
+        left: true,
         center: true,
-        right: true
+        right: true,
+        "out-right": true
       }
     });
   };
 
   MapInput.prototype.getValueForDisplay = function() {
-    var parsedPosition, value;
-    value = this.getValue();
-    parsedPosition = CUI.util.parseCoordinates(value);
-    if (!parsedPosition) {
+    return this.__getPositionForDisplay();
+  };
+
+  MapInput.prototype.getValueForInput = function() {
+    return this.__getPositionForDisplay();
+  };
+
+  MapInput.prototype.__getPositionForDisplay = function() {
+    var position;
+    position = this.__getPosition();
+    if (!position) {
       return "";
     }
-    return this.__getFormattedPosition(parsedPosition);
+    return this.__getFormattedPosition(position);
+  };
+
+  MapInput.prototype.getValueForStore = function(value) {
+    var objectValue, parsedPosition;
+    objectValue = {
+      iconName: this.__selectedMarkerOptions.iconName,
+      iconColor: this.__selectedMarkerOptions.iconColor,
+      groupColor: this.__selectedMarkerOptions.groupColor
+    };
+    parsedPosition = CUI.util.parseCoordinates(value);
+    objectValue.position = parsedPosition ? parsedPosition : "";
+    return objectValue;
   };
 
   MapInput.prototype.render = function() {
-    var openPopoverButton;
+    var groupSelect, openMapPopoverButton;
     MapInput.__super__.render.call(this);
     this.addClass("cui-data-field--with-button");
     this.__initMap();
     if (CUI.util.isEmpty(this._placeholder)) {
-      this.__input.setAttribute("placeholder", CUI.MapInput.defaults.placeholder);
+      this.__input.setAttribute("placeholder", CUI.MapInput.defaults.labels.placeholder);
     }
-    openPopoverButton = new CUI.defaults["class"].Button({
+    openMapPopoverButton = new CUI.defaults["class"].Button({
       icon: "fa-map-o",
       tooltip: {
-        text: CUI.MapInput.defaults.buttonTooltip
+        text: CUI.MapInput.defaults.labels.mapButtonTooltip
       },
       onClick: (function(_this) {
         return function() {
-          return _this.__openPopover(openPopoverButton);
+          return _this.__openMapPopover(openMapPopoverButton);
         };
       })(this)
     });
-    return this.replace(openPopoverButton, "right");
+    this.__openIconPopoverButton = new CUI.defaults["class"].Button({
+      "class": "cui-map-icon-popover-button",
+      icon: this.__selectedMarkerOptions.iconName,
+      tooltip: {
+        text: CUI.MapInput.defaults.labels.iconButtonTooltip
+      },
+      onClick: (function(_this) {
+        return function() {
+          return _this.__openIconPopover(_this.__openIconPopoverButton);
+        };
+      })(this)
+    });
+    this.replace(openMapPopoverButton, "right");
+    this.replace(this.__openIconPopoverButton, "left");
+    groupSelect = new CUI.Select({
+      data: this.__selectedMarkerOptions,
+      name: "groupColor",
+      onDataChanged: (function(_this) {
+        return function() {
+          return _this.__updateIconOptions();
+        };
+      })(this),
+      options: (function(_this) {
+        return function() {
+          var color, i, icon, len, options, ref;
+          options = [
+            {
+              text: "No group",
+              value: null
+            }
+          ];
+          ref = CUI.MapInput.defaults.groupColors;
+          for (i = 0, len = ref.length; i < len; i++) {
+            color = ref[i];
+            icon = new CUI.Icon({
+              "class": "css-swatch"
+            });
+            CUI.dom.setStyle(icon, {
+              background: color
+            });
+            options.push({
+              icon: icon,
+              value: color
+            });
+          }
+          return options;
+        };
+      })(this)
+    }).start();
+    this.replace(groupSelect, "out-right");
+    return this.__updateIconOptions();
   };
 
-  MapInput.prototype.__openPopover = function(button) {
+  MapInput.prototype.__openMapPopover = function(button) {
     var currentPosition, popover;
-    if (!this.__popoverContent) {
-      this.__popoverContent = this.__buildPopoverContent();
-    }
     popover = new CUI.Popover({
       element: button,
       handle_focus: false,
       placement: "se",
       "class": "cui-map-popover",
       pane: {
-        content: this.__popoverContent
+        content: this.__map
       },
       onHide: (function(_this) {
         return function() {
@@ -37587,7 +37663,7 @@ CUI.MapInput = (function(superClass) {
       })(this)
     });
     popover.show();
-    currentPosition = CUI.util.parseCoordinates(this.getValue());
+    currentPosition = this.__getPosition();
     if (currentPosition) {
       this.__map.setSelectedMarkerPosition(currentPosition);
       this.__map.setCenter(currentPosition);
@@ -37597,22 +37673,44 @@ CUI.MapInput = (function(superClass) {
     return popover;
   };
 
-  MapInput.prototype.__buildPopoverContent = function() {
-    var buttonBar, iconColorSelect, iconSelect, popoverTemplate;
-    popoverTemplate = new CUI.Template({
-      name: "map-popover",
-      map: {
-        header: true,
-        center: true
-      }
+  MapInput.prototype.__updateIconOptions = function() {
+    this.__map.updateSelectedMarkerOptions(this.__selectedMarkerOptions);
+    this.__openIconPopoverButton.setIcon(this.__selectedMarkerOptions.iconName);
+    return CUI.dom.setStyleOne(this.__openIconPopoverButton.getIcon(), "color", this.__selectedMarkerOptions.iconColor);
+  };
+
+  MapInput.prototype.__openIconPopover = function(button) {
+    var popover;
+    if (!this.__popoverContent) {
+      this.__popoverContent = this.__buildIconPopoverContent();
+    }
+    popover = new CUI.Popover({
+      element: button,
+      handle_focus: false,
+      placement: "se",
+      "class": "cui-map-popover",
+      pane: {
+        padded: true,
+        content: this.__popoverContent
+      },
+      onHide: (function(_this) {
+        return function() {
+          return popover.destroy();
+        };
+      })(this)
     });
+    popover.show();
+    return popover;
+  };
+
+  MapInput.prototype.__buildIconPopoverContent = function() {
+    var buttonbar, iconColorSelect, iconSelect;
     iconColorSelect = new CUI.Select({
       data: this.__selectedMarkerOptions,
       name: "iconColor",
-      disabled: CUI.util.isNull(this.__selectedMarkerOptions.iconName),
       onDataChanged: (function(_this) {
         return function() {
-          return _this.__onIconChanged();
+          return _this.__updateIconOptions();
         };
       })(this),
       options: (function(_this) {
@@ -37642,23 +37740,13 @@ CUI.MapInput = (function(superClass) {
       name: "iconName",
       onDataChanged: (function(_this) {
         return function() {
-          _this.__onIconChanged();
-          if (!CUI.util.isNull(_this.__selectedMarkerOptions.iconName)) {
-            return iconColorSelect.enable();
-          } else {
-            return iconColorSelect.disable();
-          }
+          return _this.__updateIconOptions();
         };
       })(this),
       options: (function(_this) {
         return function() {
           var i, icon, len, options, ref;
-          options = [
-            {
-              text: "",
-              value: null
-            }
-          ];
+          options = [];
           ref = CUI.MapInput.defaults.icons;
           for (i = 0, len = ref.length; i < len; i++) {
             icon = ref[i];
@@ -37671,22 +37759,14 @@ CUI.MapInput = (function(superClass) {
         };
       })(this)
     }).start();
-    buttonBar = new CUI.Buttonbar();
-    buttonBar.addButton(iconSelect);
-    buttonBar.addButton(iconColorSelect);
-    popoverTemplate.append(buttonBar, "header");
-    popoverTemplate.append(this.__map, "center");
-    return popoverTemplate;
-  };
-
-  MapInput.prototype.__onIconChanged = function() {
-    this.__map.updateSelectedMarkerOptions(this.__selectedMarkerOptions);
-    this.__data.iconName = this.__selectedMarkerOptions.iconName;
-    return this.__data.iconColor = this.__selectedMarkerOptions.iconColor;
+    buttonbar = new CUI.Buttonbar({
+      buttons: [iconSelect, iconColorSelect]
+    });
+    return buttonbar;
   };
 
   MapInput.prototype.__initMap = function() {
-    var currentPosition, value;
+    var currentPosition;
     this._mapOptions.onMarkerSelected = (function(_this) {
       return function(marker) {
         var formattedPosition;
@@ -37698,16 +37778,18 @@ CUI.MapInput = (function(superClass) {
         return _this.triggerDataChanged();
       };
     })(this);
-    value = this.getValue();
-    if (value) {
-      currentPosition = CUI.util.parseCoordinates(value);
-      if (currentPosition) {
-        this._mapOptions.selectedMarkerPosition = currentPosition;
-        this._mapOptions.selectedMarkerOptions = this.__selectedMarkerOptions;
-        this._mapOptions.center = currentPosition;
-      }
+    currentPosition = this.__getPosition();
+    if (currentPosition) {
+      this._mapOptions.selectedMarkerPosition = currentPosition;
+      this._mapOptions.selectedMarkerOptions = this.__selectedMarkerOptions;
+      this._mapOptions.center = currentPosition;
     }
+    this._mapOptions.showPolylines = false;
     return this.__map = new CUI.MapInput.defaults.mapClass(this._mapOptions);
+  };
+
+  MapInput.prototype.__getPosition = function() {
+    return this.getValue().position;
   };
 
   MapInput.prototype.__getFormattedPosition = function(position) {
@@ -38248,11 +38330,13 @@ CUI.Modal = (function(superClass) {
   };
 
   function Modal(opts) {
+    var toggleFillScreenButton;
     this.opts = opts != null ? opts : {};
     Modal.__super__.constructor.call(this, this.opts);
-    this.__addHeaderButton("fill_screen_button", CUI.Pane.getToggleFillScreenButton({
+    toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton({
       tooltip: this._fill_screen_button_tooltip
-    }));
+    });
+    this.__addHeaderButton("fill_screen_button", toggleFillScreenButton);
     this.__addHeaderButton("cancel", {
       "class": "ez5-modal-close-button",
       icon: "close",
@@ -38260,6 +38344,7 @@ CUI.Modal = (function(superClass) {
       appearance: CUI.__ng__ ? "normal" : "flat",
       onClick: (function(_this) {
         return function(ev, btn) {
+          toggleFillScreenButton.deactivate();
           return _this.doCancel(ev, false, btn);
         };
       })(this)
@@ -40395,7 +40480,12 @@ CUI.Pane = (function(superClass) {
     } else {
       end_fill_screen = (function(_this) {
         return function() {
+          var parentPopover;
           CUI.dom.insertBefore(_this.__placeholder, _this.DOM);
+          parentPopover = CUI.dom.data(CUI.dom.parent(_this.__placeholder), "element");
+          if (parentPopover instanceof CUI.Popover) {
+            parentPopover.setVisible(true);
+          }
           CUI.dom.remove(_this.__placeholder);
           _this.__fillscreenTmpl.destroy();
           delete _this.__fillscreenTmpl;
@@ -40427,7 +40517,7 @@ CUI.Pane = (function(superClass) {
   };
 
   Pane.prototype.startFillScreen = function() {
-    var adjust, checkToggle, dim_fill, dim_fill_inner, i, inner, key_copy, len, rect, ref, start_rect, vp;
+    var adjust, checkToggle, dim_fill, dim_fill_inner, i, inner, key_copy, len, parentPopover, rect, ref, start_rect, vp;
     if (this.getFillScreenState()) {
       return;
     }
@@ -40472,6 +40562,10 @@ CUI.Pane = (function(superClass) {
       CUI.dom.setStyleOne(this.__placeholder, key_copy, CUI.dom.getComputedStyle(this.DOM)[key_copy]);
     }
     CUI.dom.insertAfter(this.DOM, this.__placeholder);
+    parentPopover = CUI.dom.data(CUI.dom.parent(this.DOM), "element");
+    if (parentPopover instanceof CUI.Popover) {
+      parentPopover.setVisible(false);
+    }
     this.__fillscreenTmpl.replace(this.DOM, "inner");
     CUI.Events.wait({
       type: "transitionend",
@@ -40528,7 +40622,10 @@ CUI.Pane = (function(superClass) {
       "switch": true,
       onClick: (function(_this) {
         return function(ev, btn) {
-          return CUI.dom.data(CUI.dom.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen();
+          var pane, paneDiv;
+          paneDiv = CUI.dom.closest(btn.DOM, ".cui-pane");
+          pane = CUI.dom.data(paneDiv, "element");
+          return pane.toggleFillScreen();
         };
       })(this)
     };
@@ -44788,7 +44885,7 @@ module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> 
 /* 185 */
 /***/ (function(module, exports) {
 
-module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n</div>\n\n<div data-template=\"map-popover\">\n    <div class=\"cui-map-popover-options\" data-slot=\"header\"></div>\n    <div data-slot=\"center\"></div>\n</div>\n\n<div class=\"cui-icon-marker-container\" data-template=\"map-div-marker\">\n    <div data-slot=\"icon\"></div>\n    <div class=\"cui-icon-marker-arrow\" data-slot=\"arrow\"></div>\n</div>";
+module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-left\" data-slot=\"left\"></div>\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n    <div data-slot=\"out-right\"></div>\n</div>\n\n<div class=\"cui-icon-marker-container\" data-template=\"map-div-marker\">\n    <div data-slot=\"icon\"></div>\n    <div class=\"cui-icon-marker-arrow\" data-slot=\"arrow\"></div>\n</div>";
 
 /***/ }),
 /* 186 */

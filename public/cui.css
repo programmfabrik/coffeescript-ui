@@ -3100,6 +3100,19 @@ label[data-label-clickable],
     .cui-data-field-right .cui-button:focus {
       z-index: 1; }
 
+.cui-data-field-left {
+  position: relative; }
+  .cui-data-field-left .cui-button {
+    margin-right: -1px;
+    height: 100%;
+    vertical-align: bottom; }
+    .cui-data-field-left .cui-button .cui-button-visual {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 0 5px; }
+    .cui-data-field-left .cui-button:focus {
+      z-index: 1; }
+
 .cui-data-field-proxy {
   min-height: 0;
   display: flex;
@@ -3980,6 +3993,9 @@ label[data-label-clickable],
 .leaflet-div-icon {
   background: none !important;
   border: none !important; }
+
+.cui-map-input .cui-map-icon-popover-button {
+  width: 30px; }
 
 .cui-icon-marker-container {
   border: none;
