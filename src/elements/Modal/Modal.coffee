@@ -17,7 +17,8 @@ class CUI.Modal extends CUI.LayerPane
 	constructor: (@opts={}) ->
 		super(@opts)
 
-		@__addHeaderButton("fill_screen_button", CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip))
+		toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip)
+		@__addHeaderButton("fill_screen_button", toggleFillScreenButton)
 
 		@__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
@@ -25,6 +26,7 @@ class CUI.Modal extends CUI.LayerPane
 			tooltip: @_cancel_tooltip or CUI.Modal.defaults.cancel_tooltip
 			appearance: if CUI.__ng__ then "normal" else "flat"
 			onClick: (ev, btn) =>
+				toggleFillScreenButton.deactivate()
 				@doCancel(ev, false, btn)
 
 		@getPane().addClass("cui-pane--window")

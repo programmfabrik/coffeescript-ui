@@ -54,6 +54,10 @@ class CUI.Pane extends CUI.VerticalLayout
 			end_fill_screen = =>
 				#console.debug "Stopping", event
 				CUI.dom.insertBefore(@__placeholder, @DOM)
+
+				parentPopover = CUI.dom.data(CUI.dom.parent(@__placeholder), "element")
+				if parentPopover instanceof CUI.Popover
+					parentPopover.setVisible(true)
 				CUI.dom.remove(@__placeholder)
 
 				@__fillscreenTmpl.destroy()
@@ -140,8 +144,11 @@ class CUI.Pane extends CUI.VerticalLayout
 
 		CUI.dom.insertAfter(@DOM, @__placeholder)
 
-		@__fillscreenTmpl.replace(@DOM, "inner")
+		parentPopover = CUI.dom.data(CUI.dom.parent(@DOM), "element")
+		if parentPopover instanceof CUI.Popover
+			parentPopover.setVisible(false)
 
+		@__fillscreenTmpl.replace(@DOM, "inner")
 
 		CUI.Events.wait
 			type: "transitionend"
@@ -185,7 +192,9 @@ class CUI.Pane extends CUI.VerticalLayout
 			icon_active: new CUI.Icon(class: "fa-compress")
 			switch: true
 			onClick: (ev, btn) =>
-				CUI.dom.data(CUI.dom.closest(btn.DOM, ".cui-pane"), "element").toggleFillScreen()
+				paneDiv = CUI.dom.closest(btn.DOM, ".cui-pane")
+				pane = CUI.dom.data(paneDiv, "element")
+				pane.toggleFillScreen()
 		}
 			opts[k] = v
 
