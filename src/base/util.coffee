@@ -476,9 +476,14 @@ class CUI.util
 			return false
 
 	# coordinates is a PlainObject with lat and lng attributes, format is a string which indicates what format will be used.
+	# It is possible that format be a function, and it is invoked with coordinates as parameter.
 	# Returns a string formatted.
 	@formatCoordinates: (coordinates, format) ->
 		CUI.util.assert(CUI.Map.isValidPosition(coordinates), "formatCoordinates", "Coordinates must be a valid position object, with latitude and longitude attributes.", value: coordinates)
+
+		if CUI.isFunction(format)
+			return format(coordinates)
+
 		CUI.util.assert(CUI.util.isString(format) and not CUI.util.isEmpty(format), "formatCoordinates", "Parameter format is String, mandatory and not empty.", value: coordinates)
 
 		coordinates = CoordinatesFormat(coordinates.lat, coordinates.lng)

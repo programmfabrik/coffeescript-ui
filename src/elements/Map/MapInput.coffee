@@ -7,7 +7,7 @@ class CUI.MapInput extends CUI.Input
 			mapButtonTooltip: "Show map"
 			iconButtonTooltip: "Show icon"
 			placeholder: "Insert or paste coordinates"
-		displayFormat: "dms"
+		displayFormat: "ll"
 		mapClass: CUI.LeafletMap
 		iconColors: ["#b8bfc4", "#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"]
 		icons: ["fa-map-marker", "fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"]
@@ -17,6 +17,7 @@ class CUI.MapInput extends CUI.Input
 		dms: "FFf" # Degrees, minutes and seconds: 27° 43′ 31.796″ N 18° 1′ 27.484″ W
 		ddm: "Ff" # Degrees and decimal minutes: 27° 43.529933333333′ N -18° 1.4580666666667′ W
 		dd: "f"  # Decimal degrees: 27.725499° N 18.024301° W
+		ll: (position) -> "#{position.lat}, #{position.lng}" # Latitude and Longitude comma separated: 27.19234, 28.48822
 
 	getTemplateKeyForRender: ->
 		"center"
