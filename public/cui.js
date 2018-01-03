@@ -37527,7 +37527,8 @@ CUI.MapInput = (function(superClass) {
     labels: {
       mapButtonTooltip: "Show map",
       iconButtonTooltip: "Show icon",
-      placeholder: "Insert or paste coordinates"
+      placeholder: "Insert or paste coordinates",
+      noGroup: "No group"
     },
     displayFormat: "ll",
     mapClass: CUI.LeafletMap,
@@ -37685,7 +37686,7 @@ CUI.MapInput = (function(superClass) {
           var color, i, icon, len, options, ref;
           options = [
             {
-              text: "No group",
+              text: CUI.MapInput.defaults.labels.noGroup,
               value: null
             }
           ];

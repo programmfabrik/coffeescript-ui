@@ -7,6 +7,7 @@ class CUI.MapInput extends CUI.Input
 			mapButtonTooltip: "Show map"
 			iconButtonTooltip: "Show icon"
 			placeholder: "Insert or paste coordinates"
+			noGroup: "No group"
 		displayFormat: "ll"
 		mapClass: CUI.LeafletMap
 		iconColors: ["#b8bfc4", "#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"]
@@ -126,7 +127,7 @@ class CUI.MapInput extends CUI.Input
 			onDataChanged: =>
 				@__updateIconOptions()
 			options: =>
-				options = [text: "No group", value: null]
+				options = [text: CUI.MapInput.defaults.labels.noGroup, value: null]
 				for color in CUI.MapInput.defaults.groupColors
 					icon = new CUI.Icon(class: "css-swatch")
 					CUI.dom.setStyle(icon, background: color)
