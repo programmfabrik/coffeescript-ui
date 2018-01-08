@@ -21,7 +21,7 @@ class CUI.LeafletMap extends CUI.Map
 		"cui-leaflet-map"
 
 	__buildMap: ->
-		map = L.map(@__template.map.center,
+		map = L.map(@get("center"),
 			zoomControl: false
 		)
 

@@ -72,11 +72,14 @@ class CUI.DOMElement extends CUI.Element
 	__assertTemplateElement: (func) ->
 		CUI.util.assert(@__template, "#{@__cls}.#{func}", "registerTemplateElement needs to be called before \"#{func}\" is supported.")
 
-	addClass: (cls) ->
-		CUI.util.assert(arguments.length == 1, "CUI.dom.addClass", "Only one parameter allowed.")
-
-		@__assertDOMElement("addClass")
-		CUI.dom.addClass(@DOM, cls)
+	addClass: (className, key) ->
+		CUI.util.assert(arguments.length == 1 or arguments.length == 2, "addClass", "Only 'className' and 'key' parameters are allowed.")
+		if key
+			@__assertTemplateElement("addClass")
+			@__template.addClass.call(@__template, className, key, @)
+		else
+			@__assertDOMElement("addClass")
+			CUI.dom.addClass(@DOM, className)
 
 	setAria: (attr, value) ->
 		@__assertDOMElement("setAria")
@@ -131,6 +134,10 @@ class CUI.DOMElement extends CUI.Element
 	text: (value, key) ->
 		@__assertTemplateElement("text")
 		@__template.text.call(@__template, value, key, @)
+
+	get: (key) ->
+		@__assertTemplateElement("get")
+		@__template.get.call(@__template, key, @)
 
 	getFlexHandle: (key, do_assert) ->
 		@__assertTemplateElement("getFlexHandle")

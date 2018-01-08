@@ -293,6 +293,10 @@ class CUI.Template extends CUI.Element
 
 		node
 
+	get: (key) ->
+		CUI.util.assert(@map[key], "#{@__cls}.get", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+		return @map[key]
+
 	isEmpty: (key) ->
 		if not key
 			!@DOM.firstChild

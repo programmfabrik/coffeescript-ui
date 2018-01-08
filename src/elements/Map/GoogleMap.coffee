@@ -16,7 +16,7 @@ class CUI.GoogleMap extends CUI.Map
 		"cui-google-map"
 
 	__buildMap: ->
-		map = new google.maps.Map(@__template.map.center,
+		map = new google.maps.Map(@get("center"),
 			zoomControl: false
 		)
 
