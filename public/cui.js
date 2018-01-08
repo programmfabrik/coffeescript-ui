@@ -8657,10 +8657,15 @@ CUI.DOMElement = (function(superClass) {
     return CUI.util.assert(this.__template, this.__cls + "." + func, "registerTemplateElement needs to be called before \"" + func + "\" is supported.");
   };
 
-  DOMElement.prototype.addClass = function(cls) {
-    CUI.util.assert(arguments.length === 1, "CUI.dom.addClass", "Only one parameter allowed.");
-    this.__assertDOMElement("addClass");
-    return CUI.dom.addClass(this.DOM, cls);
+  DOMElement.prototype.addClass = function(className, key) {
+    CUI.util.assert(arguments.length === 1 || arguments.length === 2, "addClass", "Only 'className' and 'key' parameters are allowed.");
+    if (key) {
+      this.__assertTemplateElement("addClass");
+      return this.__template.addClass.call(this.__template, className, key, this);
+    } else {
+      this.__assertDOMElement("addClass");
+      return CUI.dom.addClass(this.DOM, className);
+    }
   };
 
   DOMElement.prototype.setAria = function(attr, value) {
@@ -8728,6 +8733,11 @@ CUI.DOMElement = (function(superClass) {
   DOMElement.prototype.text = function(value, key) {
     this.__assertTemplateElement("text");
     return this.__template.text.call(this.__template, value, key, this);
+  };
+
+  DOMElement.prototype.get = function(key) {
+    this.__assertTemplateElement("get");
+    return this.__template.get.call(this.__template, key, this);
   };
 
   DOMElement.prototype.getFlexHandle = function(key, do_assert) {
@@ -16986,6 +16996,14 @@ CUI.Template = (function(superClass) {
       }
     }
     return node;
+  };
+
+  Template.prototype.get = function(key) {
+    CUI.util.assert(this.map[key], this.__cls + ".get", "Key \"" + key + "\" not found in map. Template: \"" + this._name + "\".", {
+      map: this.map,
+      DOM: this.DOM
+    });
+    return this.map[key];
   };
 
   Template.prototype.isEmpty = function(key) {
@@ -29332,7 +29350,9 @@ CUI.FormPopover = (function(superClass) {
         if (this.__old_display !== null) {
           CUI.Events.trigger({
             type: "content-resize",
-            node: this.DOM
+            node: this.DOM,
+            sink: false,
+            bubble: false
           });
         }
         this.__old_display = display;
@@ -36513,7 +36533,7 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.__buildMap = function() {
     var map;
-    map = new google.maps.Map(this.__template.map.center, {
+    map = new google.maps.Map(this.get("center"), {
       zoomControl: false
     });
     CUI.dom.waitForDOMInsert({
@@ -36636,7 +36656,6 @@ CUI.GoogleMap = (function(superClass) {
     delete this.__map;
     delete this.__selectedMarker;
     delete this.__bounds;
-    this.__template.destroy();
     return GoogleMap.__super__.destroy.call(this);
   };
 
@@ -36786,7 +36805,7 @@ CUI.IconMarker = (function(superClass) {
       "height": this._arrowSize * 2,
       "margin-left": -this._arrowSize
     };
-    return CUI.dom.setStyle(this.__template.map.arrow, styleArrow);
+    return CUI.dom.setStyle(this.get("arrow"), styleArrow);
   };
 
   IconMarker.prototype.toHtml = function() {
@@ -36849,7 +36868,7 @@ CUI.LeafletMap = (function(superClass) {
 
   LeafletMap.prototype.__buildMap = function() {
     var map, tileLayer;
-    map = L.map(this.__template.map.center, {
+    map = L.map(this.get("center"), {
       zoomControl: false
     });
     tileLayer = L.tileLayer(CUI.LeafletMap.defaults.tileLayerUrl, CUI.LeafletMap.defaults.tileLayerOptions);
@@ -37089,7 +37108,6 @@ CUI.LeafletMap = (function(superClass) {
     delete this.__markers;
     delete this.__map;
     delete this.__selectedMarker;
-    this.__template.destroy();
     return LeafletMap.__super__.destroy.call(this);
   };
 
@@ -37223,29 +37241,29 @@ CUI.Map = (function(superClass) {
       }
     });
     this.registerTemplate(template);
-    this.__template.addClass(this.__getMapClassName(), "center");
+    this.addClass(this.__getMapClassName(), "center");
     this.__zoomButtons = this.__getZoomButtons();
     buttonBar = new CUI.Buttonbar({
       buttons: this.__zoomButtons
     });
-    this.__template.append(buttonBar, "buttons-upper-left");
+    this.append(buttonBar, "buttons-upper-left");
     if (this._buttonsUpperRight) {
       buttonBar = new CUI.Buttonbar({
         buttons: this._buttonsUpperRight
       });
-      this.__template.append(buttonBar, "buttons-upper-right");
+      this.append(buttonBar, "buttons-upper-right");
     }
     if (this._buttonsBottomRight) {
       buttonBar = new CUI.Buttonbar({
         buttons: this._buttonsBottomRight
       });
-      this.__template.append(buttonBar, "buttons-bottom-right");
+      this.append(buttonBar, "buttons-bottom-right");
     }
     if (this._buttonsBottomLeft) {
       buttonBar = new CUI.Buttonbar({
         buttons: this._buttonsBottomLeft
       });
-      this.__template.append(buttonBar, "buttons-bottom-left");
+      this.append(buttonBar, "buttons-bottom-left");
     }
     this.__markers = [];
     this.__map = this.__buildMap();
@@ -37313,7 +37331,7 @@ CUI.Map = (function(superClass) {
     buttonBar = new CUI.Buttonbar({
       buttons: buttons
     });
-    return this.__template.append(buttonBar, "buttons-" + position);
+    return this.append(buttonBar, "buttons-" + position);
   };
 
   Map.prototype.getSelectedMarkerPosition = function() {
