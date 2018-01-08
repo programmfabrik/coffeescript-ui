@@ -29351,7 +29351,6 @@ CUI.FormPopover = (function(superClass) {
           CUI.Events.trigger({
             type: "content-resize",
             node: this.DOM,
-            sink: false,
             bubble: false
           });
         }
