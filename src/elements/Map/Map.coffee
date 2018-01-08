@@ -74,23 +74,23 @@ class CUI.Map extends CUI.DOMElement
 
 		@registerTemplate(template)
 
-		@__template.addClass(@__getMapClassName(), "center")
+		@addClass(@__getMapClassName(), "center")
 
 		@__zoomButtons = @__getZoomButtons()
 		buttonBar = new CUI.Buttonbar(buttons: @__zoomButtons)
-		@__template.append(buttonBar, "buttons-upper-left")
+		@append(buttonBar, "buttons-upper-left")
 
 		if @_buttonsUpperRight
 			buttonBar = new CUI.Buttonbar(buttons: @_buttonsUpperRight)
-			@__template.append(buttonBar, "buttons-upper-right")
+			@append(buttonBar, "buttons-upper-right")
 
 		if @_buttonsBottomRight
 			buttonBar = new CUI.Buttonbar(buttons: @_buttonsBottomRight)
-			@__template.append(buttonBar, "buttons-bottom-right")
+			@append(buttonBar, "buttons-bottom-right")
 
 		if @_buttonsBottomLeft
 			buttonBar = new CUI.Buttonbar(buttons: @_buttonsBottomLeft)
-			@__template.append(buttonBar, "buttons-bottom-left")
+			@append(buttonBar, "buttons-bottom-left")
 
 		@__markers = []
 		@__map = @__buildMap()
@@ -134,7 +134,7 @@ class CUI.Map extends CUI.DOMElement
 
 	setButtonBar: (buttons, position) ->
 		buttonBar = new CUI.Buttonbar(buttons: buttons)
-		@__template.append(buttonBar, "buttons-#{position}")
+		@append(buttonBar, "buttons-#{position}")
 
 	getSelectedMarkerPosition: ->
 		CUI.util.assert(false, CUI.util.getObjectClass(@) + ".getSelectedMarkerPosition needs to be implemented.")

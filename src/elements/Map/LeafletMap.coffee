@@ -188,7 +188,6 @@ class CUI.LeafletMap extends CUI.Map
 		delete @__map
 		delete @__selectedMarker
 
-		@__template.destroy()
 		super()
 
 	__loadCSS: ->

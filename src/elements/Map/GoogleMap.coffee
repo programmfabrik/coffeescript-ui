@@ -105,8 +105,6 @@ class CUI.GoogleMap extends CUI.Map
 		delete @__selectedMarker
 		delete @__bounds
 
-		@__template.destroy()
-
 		super()
 
 	zoomToFitAllMarkers: ->
