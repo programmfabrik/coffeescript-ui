@@ -169,7 +169,6 @@ class CUI.FormPopover extends CUI.Form
 					CUI.Events.trigger
 						type: "content-resize"
 						node: @DOM
-						sink: false
 						bubble: false
 
 				@__old_display = display
