@@ -332,7 +332,7 @@ class CUI.ListView extends CUI.SimplePane
 					if not row.isSelectable()
 						return
 					ev.stopImmediatePropagation()
-					ret = @selectRow(ev, row)
+					@selectRow(ev, row)
 					return
 
 
@@ -472,34 +472,43 @@ class CUI.ListView extends CUI.SimplePane
 	selectRowByDisplayIdx: (row_display_idx) ->
 		@selectRowById(@getRowIdx(row_display_idx))
 
-	selectRow: (ev, row, no_deselect=false) ->
-		CUI.util.assert(CUI.util.isNull(row) or row instanceof CUI.ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", selectedRow: row)
+	selectRow: (ev, rowClicked, noDeselect=false) ->
+		CUI.util.assert(CUI.util.isNull(rowClicked) or rowClicked instanceof CUI.ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", selectedRow: rowClicked)
 
 		dfr = new CUI.Deferred()
 
-		do_select = =>
-			if row.isSelected()
-				if not no_deselect
-					row.deselect(ev, row).done(dfr.resolve).fail(dfr.reject)
+		selectRowClicked = =>
+			if rowClicked.isSelected()
+				if not noDeselect
+					rowClicked.deselect(ev, rowClicked).done(dfr.resolve).fail(dfr.reject)
 				else
 					dfr.resolve()
 			else
-				row.select(ev).done(dfr.resolve).fail(dfr.reject)
+				rowClicked.select(ev).done(dfr.resolve).fail(dfr.reject)
 			return
 
-		if @__selectableRows == true # only one row
+		deselectAllRows = (skipSelf = true) =>
 			promises = []
 			for _row in @getSelectedRows()
-				if row == _row
+				if rowClicked == _row and skipSelf
 					# we handle this in do_select
 					continue
+				promise = _row.deselect(null, rowClicked) # null is sent as event parameter, to avoids checks.
+				if CUI.util.isPromise(promise)
+					promises.push(promise)
+			CUI.when(promises).done(selectRowClicked).fail(dfr.reject)
 
-				ret = _row.deselect(ev, row)
-				if CUI.util.isPromise(ret)
-					promises.push(ret)
-			CUI.when(promises).done(do_select).fail(dfr.reject)
+		if @__selectableRows == true # only one row
+			deselectAllRows()
+		else if @__selectableRows == "multiple"
+			# If CTRL key is pressed, then It is allowed to select more rows.
+			# If not, all rows are unselected and the row clicked is selected.
+			if ev?.ctrlKey()
+				selectRowClicked()
+			else
+				deselectAllRows(false)
 		else
-			do_select()
+			selectRowClicked()
 
 		dfr.promise()
 

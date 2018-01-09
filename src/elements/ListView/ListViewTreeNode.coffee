@@ -652,20 +652,20 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	getSelectedNodeKey: ->
 		"selectedNode"
 
-	select: (ev) ->
-		dfr = new CUI.Deferred()
-		if ev and @getTree?().isSelectable()
-			ev.stopPropagation?()
+	select: (event) ->
+		deferred = new CUI.Deferred()
+		if event and @getTree?().isSelectable()
+			event.stopPropagation?()
 
-		dfr.done =>
-			@getTree().triggerNodeSelect(ev, @)
+		deferred.done =>
+			@getTree().triggerNodeSelect(event, @)
 
 		if not @isSelectable()
 			# console.debug "row is not selectable", "row:", @, "tree:", @getTree()
-			return dfr.reject().promise()
+			return deferred.reject().promise()
 
 		if @isSelected()
-			return dfr.resolve().promise()
+			return deferred.resolve().promise()
 
 		# console.debug "selecting node", sel_node
 
@@ -676,28 +676,27 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			.done =>
 				@addSelectedClass()
 				@selected = true
-				dfr.resolve()
-			.fail(dfr.reject)
+				deferred.resolve()
+			.fail(deferred.reject)
 
 		# the selected node is not us, so we ask the other
 		# node
-		sel_node = @getSelectedNode()
+		selectedNode = @getSelectedNode()
 
-		if sel_node
-			sel_node.check_deselect(ev, @)
-			.done =>
+		# If selectableRows is 'true' means that only one row can be selected at the same time, then it is deselected.
+		if selectedNode and @__selectableRows == true
+			selectedNode.check_deselect(event, @).done( =>
 				# don't pass event, so no check is performed
 				#console.debug "selected node:", sel_node
-				sel_node.deselect(null, @)
-				.done =>
+				selectedNode.deselect(null, @).done( =>
 					do_select()
-				.fail(dfr.reject)
-			.fail(dfr.reject)
+				).fail(deferred.reject)
+			).fail(deferred.reject)
 		else
 			do_select()
 
 		# console.debug "selecting node",
-		dfr.promise()
+		deferred.promise()
 
 	# resolves with the innermost node
 	openUpwards: (level=0) ->
