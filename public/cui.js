@@ -35757,7 +35757,7 @@ CUI.ListViewTreeNode = (function(superClass) {
   };
 
   ListViewTreeNode.prototype.select = function(event) {
-    var deferred, do_select, selectedNode;
+    var deferred, do_select, ref, selectedNode;
     deferred = new CUI.Deferred();
     if (event && (typeof this.getTree === "function" ? this.getTree().isSelectable() : void 0)) {
       if (typeof event.stopPropagation === "function") {
@@ -35786,7 +35786,7 @@ CUI.ListViewTreeNode = (function(superClass) {
       };
     })(this);
     selectedNode = this.getSelectedNode();
-    if (selectedNode && this.__selectableRows === true) {
+    if (selectedNode && ((ref = this.getTree()) != null ? ref.__selectableRows : void 0) === true) {
       selectedNode.check_deselect(event, this).done((function(_this) {
         return function() {
           return selectedNode.deselect(null, _this).done(function() {
