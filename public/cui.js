@@ -32805,25 +32805,25 @@ CUI.ListView = (function(superClass) {
     return this.selectRowById(this.getRowIdx(row_display_idx));
   };
 
-  ListView.prototype.selectRow = function(ev, rowClicked, noDeselect) {
-    var deselectAllRows, dfr, selectRowClicked;
+  ListView.prototype.selectRow = function(ev, rowChosen, noDeselect) {
+    var deselectAllRows, dfr, selectRowChosen;
     if (noDeselect == null) {
       noDeselect = false;
     }
-    CUI.util.assert(CUI.util.isNull(rowClicked) || rowClicked instanceof CUI.ListViewRow, this.__cls + ".setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", {
-      selectedRow: rowClicked
+    CUI.util.assert(CUI.util.isNull(rowChosen) || rowChosen instanceof CUI.ListViewRow, this.__cls + ".setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", {
+      selectedRow: rowChosen
     });
     dfr = new CUI.Deferred();
-    selectRowClicked = (function(_this) {
+    selectRowChosen = (function(_this) {
       return function() {
-        if (rowClicked.isSelected()) {
+        if (rowChosen.isSelected()) {
           if (!noDeselect) {
-            rowClicked.deselect(ev, rowClicked).done(dfr.resolve).fail(dfr.reject);
+            rowChosen.deselect(ev, rowChosen).done(dfr.resolve).fail(dfr.reject);
           } else {
             dfr.resolve();
           }
         } else {
-          rowClicked.select(ev).done(dfr.resolve).fail(dfr.reject);
+          rowChosen.select(ev).done(dfr.resolve).fail(dfr.reject);
         }
       };
     })(this);
@@ -32837,27 +32837,27 @@ CUI.ListView = (function(superClass) {
         ref = _this.getSelectedRows();
         for (j = 0, len1 = ref.length; j < len1; j++) {
           _row = ref[j];
-          if (rowClicked === _row && skipSelf) {
+          if (rowChosen === _row && skipSelf) {
             continue;
           }
-          promise = _row.deselect(null, rowClicked);
+          promise = _row.deselect(null, rowChosen);
           if (CUI.util.isPromise(promise)) {
             promises.push(promise);
           }
         }
-        return CUI.when(promises).done(selectRowClicked).fail(dfr.reject);
+        return CUI.when(promises).done(selectRowChosen).fail(dfr.reject);
       };
     })(this);
     if (this.__selectableRows === true) {
       deselectAllRows();
     } else if (this.__selectableRows === "multiple") {
       if (ev != null ? ev.ctrlKey() : void 0) {
-        selectRowClicked();
+        selectRowChosen();
       } else {
         deselectAllRows(false);
       }
     } else {
-      selectRowClicked();
+      selectRowChosen();
     }
     return dfr.promise();
   };

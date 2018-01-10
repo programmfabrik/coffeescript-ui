@@ -472,31 +472,31 @@ class CUI.ListView extends CUI.SimplePane
 	selectRowByDisplayIdx: (row_display_idx) ->
 		@selectRowById(@getRowIdx(row_display_idx))
 
-	selectRow: (ev, rowClicked, noDeselect=false) ->
-		CUI.util.assert(CUI.util.isNull(rowClicked) or rowClicked instanceof CUI.ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", selectedRow: rowClicked)
+	selectRow: (ev, rowChosen, noDeselect=false) ->
+		CUI.util.assert(CUI.util.isNull(rowChosen) or rowChosen instanceof CUI.ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", selectedRow: rowChosen)
 
 		dfr = new CUI.Deferred()
 
-		selectRowClicked = =>
-			if rowClicked.isSelected()
+		selectRowChosen = =>
+			if rowChosen.isSelected()
 				if not noDeselect
-					rowClicked.deselect(ev, rowClicked).done(dfr.resolve).fail(dfr.reject)
+					rowChosen.deselect(ev, rowChosen).done(dfr.resolve).fail(dfr.reject)
 				else
 					dfr.resolve()
 			else
-				rowClicked.select(ev).done(dfr.resolve).fail(dfr.reject)
+				rowChosen.select(ev).done(dfr.resolve).fail(dfr.reject)
 			return
 
 		deselectAllRows = (skipSelf = true) =>
 			promises = []
 			for _row in @getSelectedRows()
-				if rowClicked == _row and skipSelf
+				if rowChosen == _row and skipSelf
 					# we handle this in do_select
 					continue
-				promise = _row.deselect(null, rowClicked) # null is sent as event parameter, to avoids checks.
+				promise = _row.deselect(null, rowChosen) # null is sent as event parameter, to avoids checks.
 				if CUI.util.isPromise(promise)
 					promises.push(promise)
-			CUI.when(promises).done(selectRowClicked).fail(dfr.reject)
+			CUI.when(promises).done(selectRowChosen).fail(dfr.reject)
 
 		if @__selectableRows == true # only one row
 			deselectAllRows()
@@ -504,11 +504,11 @@ class CUI.ListView extends CUI.SimplePane
 			# If CTRL key is pressed, then It is allowed to select more rows.
 			# If not, all rows are unselected and the row clicked is selected.
 			if ev?.ctrlKey()
-				selectRowClicked()
+				selectRowChosen()
 			else
 				deselectAllRows(false)
 		else
-			selectRowClicked()
+			selectRowChosen()
 
 		dfr.promise()
 
