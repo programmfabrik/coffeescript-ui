@@ -684,7 +684,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		selectedNode = @getSelectedNode()
 
 		# If selectableRows is 'true' means that only one row can be selected at the same time, then it is deselected.
-		if selectedNode and @__selectableRows == true
+		if selectedNode and @getTree()?.__selectableRows == true
 			selectedNode.check_deselect(event, @).done( =>
 				# don't pass event, so no check is performed
 				#console.debug "selected node:", sel_node
