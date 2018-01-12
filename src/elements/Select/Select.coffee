@@ -149,7 +149,6 @@ class CUI.Select extends CUI.Checkbox
 		menu:
 			active_item_idx: @default_opt?._idx or null
 			allow_null: not CUI.util.isEmpty(@_empty_text)
-			class: "ez-menu-select"
 			# placements: ["c"]
 			# onPosition: (menu, vp) =>
 			# 	il = menu.getItemList()
@@ -175,8 +174,25 @@ class CUI.Select extends CUI.Checkbox
 			onClick: =>
 				@_onClick?.apply(@, arguments)
 			onShow: =>
+				@__keyDownEventListener = CUI.Events.listen
+					type: "keyup"
+					call: (event) =>
+						menu = @__checkbox.getMenu()
+						itemList = menu?.getItemList()
+						switch event.__keyboardKey()
+							when "Down"
+								itemList?.activateNextItem()
+								break
+							when "Up"
+								itemList?.activatePreviousItem()
+								break
+							when "Return"
+								menu.hide()
+								break
+						return
 				@_onShow?.apply(@, arguments)
 			onHide: =>
+				@__keyDownEventListener?.destroy()
 				@_onHide?.apply(@, arguments)
 			onActivate: (btn, item, idx, flags) =>
 				@storeValue(@__options[idx].value, flags)

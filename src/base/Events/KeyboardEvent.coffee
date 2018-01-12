@@ -17,6 +17,8 @@ class CUI.KeyboardEvent extends CUI.Event
 	# between OSs
 	__keyboardKey: ->
 		key = @keyCode()
+		if CUI.util.isUndef(key)
+			return
 		if key in [96..105]
 			s = "Num"+String.fromCharCode(key-48)
 		if key in [112..123]

@@ -269,3 +269,15 @@ class CUI.ItemList extends CUI.VerticalLayout
 		super()
 		@__body?.destroy()
 
+	activateNextItem: ->
+		@__activateItemByIndex(@__active_idx + 1)
+
+	activatePreviousItem: ->
+		@__activateItemByIndex(@__active_idx - 1)
+
+	__activateItemByIndex: (index) ->
+		itemToActivate = @__body.DOM.children[index]
+		itemToActivate = CUI.dom.data(itemToActivate, "element")
+		if itemToActivate instanceof CUI.Button
+			itemToActivate.activate()
+			@setActiveIdx(index)
