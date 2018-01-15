@@ -502,10 +502,18 @@ class CUI.ListView extends CUI.SimplePane
 			deselectAllRows()
 		else if @__selectableRows == "multiple"
 			# If CTRL key is pressed, then It is allowed to select more rows.
-			# If not, all rows are unselected and the row clicked is selected.
 			if ev?.ctrlKey()
 				selectRowChosen()
+			# If Shift key is pressed then all next or previous rows are selected.
+			else if ev?.shiftKey() and @getSelectedRows().length > 0
+				selectedRow = @getSelectedRows().pop()
+				idxSelectedRow = selectedRow.getRowIdx()
+				idxClickedRow = rowChosen.getRowIdx()
+				while(idxClickedRow != idxSelectedRow)
+					@getListViewRow(idxClickedRow).select(ev)
+					if idxClickedRow > idxSelectedRow then idxClickedRow-- else idxClickedRow++
 			else
+				# Otherwise all rows are deselected except for the clicked one.
 				deselectAllRows(false)
 		else
 			selectRowChosen()
