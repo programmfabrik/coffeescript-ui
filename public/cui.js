@@ -32806,7 +32806,7 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.selectRow = function(ev, rowChosen, noDeselect) {
-    var deselectAllRows, dfr, selectRowChosen;
+    var deselectAllRows, dfr, idxClickedRow, idxSelectedRow, selectRowChosen, selectedRow;
     if (noDeselect == null) {
       noDeselect = false;
     }
@@ -32853,6 +32853,18 @@ CUI.ListView = (function(superClass) {
     } else if (this.__selectableRows === "multiple") {
       if (ev != null ? ev.ctrlKey() : void 0) {
         selectRowChosen();
+      } else if ((ev != null ? ev.shiftKey() : void 0) && this.getSelectedRows().length > 0) {
+        selectedRow = this.getSelectedRows().pop();
+        idxSelectedRow = selectedRow.getRowIdx();
+        idxClickedRow = rowChosen.getRowIdx();
+        while (idxClickedRow !== idxSelectedRow) {
+          this.getListViewRow(idxClickedRow).select(ev);
+          if (idxClickedRow > idxSelectedRow) {
+            idxClickedRow--;
+          } else {
+            idxClickedRow++;
+          }
+        }
       } else {
         deselectAllRows(false);
       }
