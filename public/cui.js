@@ -37572,13 +37572,13 @@ CUI.MapInput = (function(superClass) {
       mapButtonTooltip: "Show map",
       iconButtonTooltip: "Show icon",
       placeholder: "Insert or paste coordinates",
-      noGroup: "No group"
+      iconLabel: "Icon",
+      colorLabel: "Color"
     },
     displayFormat: "ll",
     mapClass: CUI.LeafletMap,
     iconColors: ["#b8bfc4", "#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"],
-    icons: ["fa-map-marker", "fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"],
-    groupColors: ["#31a354", "#2b8cbe", "#dd1c77", "#8856a7", "#de2d26"]
+    icons: ["fa-map-marker", "fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"]
   };
 
   MapInput.displayFormats = {
@@ -37633,7 +37633,6 @@ CUI.MapInput = (function(superClass) {
     currentValue = this.getValue();
     this.__selectedMarkerOptions.iconName = currentValue.iconName || CUI.MapInput.defaults.icons[0];
     this.__selectedMarkerOptions.iconColor = currentValue.iconColor || CUI.MapInput.defaults.iconColors[0];
-    this.__selectedMarkerOptions.groupColor = currentValue.groupColor;
     position = this.__getPosition();
     if (position && CUI.Map.isValidPosition(position)) {
       formattedPosition = this.__getFormattedPosition(position);
@@ -37649,8 +37648,7 @@ CUI.MapInput = (function(superClass) {
       map: {
         left: true,
         center: true,
-        right: true,
-        "out-right": true
+        right: true
       }
     });
   };
@@ -37676,8 +37674,7 @@ CUI.MapInput = (function(superClass) {
     var objectValue, parsedPosition;
     objectValue = {
       iconName: this.__selectedMarkerOptions.iconName,
-      iconColor: this.__selectedMarkerOptions.iconColor,
-      groupColor: this.__selectedMarkerOptions.groupColor
+      iconColor: this.__selectedMarkerOptions.iconColor
     };
     parsedPosition = CUI.util.parseCoordinates(value);
     objectValue.position = parsedPosition ? parsedPosition : "";
@@ -37685,7 +37682,7 @@ CUI.MapInput = (function(superClass) {
   };
 
   MapInput.prototype.render = function() {
-    var groupSelect, openMapPopoverButton;
+    var openMapPopoverButton;
     MapInput.__super__.render.call(this);
     this.addClass("cui-data-field--with-button");
     this.__initMap();
@@ -37717,42 +37714,6 @@ CUI.MapInput = (function(superClass) {
     });
     this.replace(openMapPopoverButton, "right");
     this.replace(this.__openIconPopoverButton, "left");
-    groupSelect = new CUI.Select({
-      data: this.__selectedMarkerOptions,
-      name: "groupColor",
-      onDataChanged: (function(_this) {
-        return function() {
-          return _this.__updateIconOptions();
-        };
-      })(this),
-      options: (function(_this) {
-        return function() {
-          var color, i, icon, len, options, ref;
-          options = [
-            {
-              text: CUI.MapInput.defaults.labels.noGroup,
-              value: null
-            }
-          ];
-          ref = CUI.MapInput.defaults.groupColors;
-          for (i = 0, len = ref.length; i < len; i++) {
-            color = ref[i];
-            icon = new CUI.Icon({
-              "class": "css-swatch"
-            });
-            CUI.dom.setStyle(icon, {
-              background: color
-            });
-            options.push({
-              icon: icon,
-              value: color
-            });
-          }
-          return options;
-        };
-      })(this)
-    }).start();
-    this.replace(groupSelect, "out-right");
     return this.__updateIconOptions();
   };
 
@@ -37800,7 +37761,6 @@ CUI.MapInput = (function(superClass) {
       placement: "se",
       "class": "cui-map-popover",
       pane: {
-        padded: true,
         content: this.__popoverContent
       },
       onHide: (function(_this) {
@@ -37814,10 +37774,13 @@ CUI.MapInput = (function(superClass) {
   };
 
   MapInput.prototype.__buildIconPopoverContent = function() {
-    var buttonbar, iconColorSelect, iconSelect;
+    var form, iconColorSelect, iconSelect;
     iconColorSelect = new CUI.Select({
       data: this.__selectedMarkerOptions,
       name: "iconColor",
+      form: {
+        label: CUI.MapInput.defaults.labels.colorLabel
+      },
       onDataChanged: (function(_this) {
         return function() {
           return _this.__updateIconOptions();
@@ -37844,10 +37807,13 @@ CUI.MapInput = (function(superClass) {
           return options;
         };
       })(this)
-    }).start();
+    });
     iconSelect = new CUI.Select({
       data: this.__selectedMarkerOptions,
       name: "iconName",
+      form: {
+        label: CUI.MapInput.defaults.labels.iconLabel
+      },
       onDataChanged: (function(_this) {
         return function() {
           return _this.__updateIconOptions();
@@ -37868,11 +37834,12 @@ CUI.MapInput = (function(superClass) {
           return options;
         };
       })(this)
-    }).start();
-    buttonbar = new CUI.Buttonbar({
-      buttons: [iconSelect, iconColorSelect]
     });
-    return buttonbar;
+    form = new CUI.Form({
+      fields: [iconSelect, iconColorSelect]
+    });
+    form.start();
+    return form;
   };
 
   MapInput.prototype.__initMap = function() {
@@ -44995,7 +44962,7 @@ module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> 
 /* 185 */
 /***/ (function(module, exports) {
 
-module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-left\" data-slot=\"left\"></div>\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n    <div data-slot=\"out-right\"></div>\n</div>\n\n<div class=\"cui-icon-marker-container\" data-template=\"map-div-marker\">\n    <div data-slot=\"icon\"></div>\n    <div class=\"cui-icon-marker-arrow\" data-slot=\"arrow\"></div>\n</div>";
+module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-left\" data-slot=\"left\"></div>\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n</div>\n\n<div class=\"cui-icon-marker-container\" data-template=\"map-div-marker\">\n    <div data-slot=\"icon\"></div>\n    <div class=\"cui-icon-marker-arrow\" data-slot=\"arrow\"></div>\n</div>";
 
 /***/ }),
 /* 186 */
