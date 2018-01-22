@@ -7,12 +7,12 @@ class CUI.MapInput extends CUI.Input
 			mapButtonTooltip: "Show map"
 			iconButtonTooltip: "Show icon"
 			placeholder: "Insert or paste coordinates"
-			noGroup: "No group"
+			iconLabel: "Icon"
+			colorLabel: "Color"
 		displayFormat: "ll"
 		mapClass: CUI.LeafletMap
 		iconColors: ["#b8bfc4", "#80d76a", "#f95b53", "#ffaf0f", "#57a8ff"]
 		icons: ["fa-map-marker", "fa-envelope", "fa-automobile", "fa-home", "fa-bicycle", "fa-graduation-cap"]
-		groupColors: ["#31a354", "#2b8cbe", "#dd1c77", "#8856a7", "#de2d26"]
 
 	@displayFormats:
 		dms: "FFf" # Degrees, minutes and seconds: 27° 43′ 31.796″ N 18° 1′ 27.484″ W
@@ -53,7 +53,6 @@ class CUI.MapInput extends CUI.Input
 		currentValue = @getValue()
 		@__selectedMarkerOptions.iconName = currentValue.iconName or CUI.MapInput.defaults.icons[0]
 		@__selectedMarkerOptions.iconColor = currentValue.iconColor or CUI.MapInput.defaults.iconColors[0]
-		@__selectedMarkerOptions.groupColor = currentValue.groupColor
 
 		position = @__getPosition()
 		if position and CUI.Map.isValidPosition(position)
@@ -69,7 +68,6 @@ class CUI.MapInput extends CUI.Input
 				left: true
 				center: true
 				right: true
-				"out-right": true
 
 	getValueForDisplay: ->
 		@__getPositionForDisplay()
@@ -87,7 +85,6 @@ class CUI.MapInput extends CUI.Input
 		objectValue =
 			iconName: @__selectedMarkerOptions.iconName
 			iconColor: @__selectedMarkerOptions.iconColor
-			groupColor: @__selectedMarkerOptions.groupColor
 
 		parsedPosition = CUI.util.parseCoordinates(value)
 		objectValue.position = if parsedPosition then parsedPosition else ""
@@ -120,22 +117,6 @@ class CUI.MapInput extends CUI.Input
 
 		@replace(openMapPopoverButton, "right")
 		@replace(@__openIconPopoverButton, "left")
-
-		groupSelect = new CUI.Select(
-			data: @__selectedMarkerOptions
-			name: "groupColor"
-			onDataChanged: =>
-				@__updateIconOptions()
-			options: =>
-				options = [text: CUI.MapInput.defaults.labels.noGroup, value: null]
-				for color in CUI.MapInput.defaults.groupColors
-					icon = new CUI.Icon(class: "css-swatch")
-					CUI.dom.setStyle(icon, background: color)
-					options.push(icon: icon, value: color)
-				options
-		).start()
-
-		@replace(groupSelect, "out-right")
 
 		@__updateIconOptions()
 
@@ -177,7 +158,6 @@ class CUI.MapInput extends CUI.Input
 			placement: "se"
 			class: "cui-map-popover"
 			pane:
-				padded: true
 				content: @__popoverContent
 			onHide: =>
 				popover.destroy()
@@ -189,6 +169,8 @@ class CUI.MapInput extends CUI.Input
 		iconColorSelect = new CUI.Select(
 			data: @__selectedMarkerOptions
 			name: "iconColor"
+			form:
+				label: CUI.MapInput.defaults.labels.colorLabel
 			onDataChanged: =>
 				@__updateIconOptions()
 			options: =>
@@ -198,11 +180,13 @@ class CUI.MapInput extends CUI.Input
 					CUI.dom.setStyle(icon, background: color)
 					options.push(icon: icon, value: color)
 				options
-		).start()
+		)
 
 		iconSelect = new CUI.Select(
 			data: @__selectedMarkerOptions
 			name: "iconName"
+			form:
+				label: CUI.MapInput.defaults.labels.iconLabel
 			onDataChanged: =>
 				@__updateIconOptions()
 			options: =>
@@ -210,10 +194,13 @@ class CUI.MapInput extends CUI.Input
 				for icon in CUI.MapInput.defaults.icons
 					options.push(icon: icon, value: icon)
 				options
-		).start()
+		)
 
-		buttonbar = new CUI.Buttonbar(buttons: [iconSelect, iconColorSelect])
-		return buttonbar
+		form = new CUI.Form(
+			fields: [iconSelect, iconColorSelect]
+		)
+		form.start()
+		form
 
 	__initMap: ->
 		@_mapOptions.onMarkerSelected = (marker) =>
