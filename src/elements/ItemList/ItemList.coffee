@@ -136,6 +136,8 @@ class CUI.ItemList extends CUI.VerticalLayout
 		if not @__isInitActiveIdx
 			@__initActiveIdx()
 
+		@__preActiveIndex = @__active_idx
+
 		@__body.empty()
 
 		promise = @getItems(event)
@@ -229,11 +231,13 @@ class CUI.ItemList extends CUI.VerticalLayout
 							if @__radio
 								@__active_idx = idx
 							@_onActivate?(btn, item, idx, flags)
+							@__deselectPreActivated()
 
 						onDeactivate: (btn, flags) =>
 							if @__radio
 								@__active_idx = null
 							@_onDeactivate?(btn, item, idx, flags)
+							@__deselectPreActivated()
 
 					for k in opt_keys
 						if item.hasOwnProperty(k) and not opts.hasOwnProperty(k)
@@ -269,15 +273,33 @@ class CUI.ItemList extends CUI.VerticalLayout
 		super()
 		@__body?.destroy()
 
-	activateNextItem: ->
-		@__activateItemByIndex(@__active_idx + 1)
+	activatePreSelectedItem: ->
+		@__activateItemByIndex(@__preActiveIndex)
 
-	activatePreviousItem: ->
-		@__activateItemByIndex(@__active_idx - 1)
+	preActivateNextItem: ->
+		@__preActivateItemByIndex(@__preActiveIndex + 1)
+
+	preActivatePreviousItem: ->
+		@__preActivateItemByIndex(@__preActiveIndex - 1)
+
+	__preActivateItemByIndex: (newPreActiveIndex) ->
+		itemToPreActivate = @__getItemByIndex(newPreActiveIndex)
+		if itemToPreActivate instanceof CUI.Button
+			@__deselectPreActivated()
+			@__preActiveIndex = newPreActiveIndex
+			CUI.dom.addClass(itemToPreActivate, CUI.defaults.class.Button.defaults.active_css_class)
+
+	__deselectPreActivated: ->
+		previousItemSelected = @__getItemByIndex(@__preActiveIndex)
+		if previousItemSelected instanceof CUI.Button
+			CUI.dom.removeClass(previousItemSelected, CUI.defaults.class.Button.defaults.active_css_class)
 
 	__activateItemByIndex: (index) ->
-		itemToActivate = @__body.DOM.children[index]
-		itemToActivate = CUI.dom.data(itemToActivate, "element")
+		itemToActivate = @__getItemByIndex(index)
 		if itemToActivate instanceof CUI.Button
 			itemToActivate.activate()
 			@setActiveIdx(index)
+
+	__getItemByIndex: (index) ->
+		item = @__body?.DOM.children[index]
+		return CUI.dom.data(item, "element")

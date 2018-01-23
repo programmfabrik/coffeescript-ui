@@ -175,18 +175,19 @@ class CUI.Select extends CUI.Checkbox
 				@_onClick?.apply(@, arguments)
 			onShow: =>
 				@__keyDownEventListener = CUI.Events.listen
-					type: "keyup"
+					type: "keydown"
 					call: (event) =>
 						menu = @__checkbox.getMenu()
 						itemList = menu?.getItemList()
 						switch event.__keyboardKey()
 							when "Down"
-								itemList?.activateNextItem()
+								itemList?.preActivateNextItem()
 								break
 							when "Up"
-								itemList?.activatePreviousItem()
+								itemList?.preActivatePreviousItem()
 								break
 							when "Return"
+								itemList?.activatePreSelectedItem()
 								menu.hide()
 								break
 						return
