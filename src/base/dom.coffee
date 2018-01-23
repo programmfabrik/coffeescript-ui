@@ -1380,6 +1380,9 @@ class CUI.dom
 		if docElem.nodeType == 3 # textnode
 			docElem = docElem.parentNode
 
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
+
 		parents = CUI.dom.parentsUntil(docElem)
 		dim = null
 

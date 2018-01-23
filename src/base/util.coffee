@@ -497,6 +497,9 @@ CUI.util.marked = marked
 String.prototype.startsWith = (s) ->
 	@substr(0, s.length) == s
 
+String.prototype.startsWithIgnoreCase = (s) ->
+	@toUpperCase().startsWith(s.toUpperCase())
+
 String.prototype.endsWith = (s) ->
 	@substr(@length-s.length) == s
 
