@@ -204,7 +204,7 @@ class CUI.XHR extends CUI.Element
 			try
 				res = JSON.parse(@__xhr.response)
 			catch e
-				rest = @__xhr.response
+				res = @__xhr.response
 		else
 			res = @__xhr.response
 
