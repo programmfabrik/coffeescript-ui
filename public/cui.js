@@ -13459,6 +13459,9 @@ CUI.KeyboardEvent = (function(superClass) {
   KeyboardEvent.prototype.__keyboardKey = function() {
     var key, s;
     key = this.keyCode();
+    if (CUI.util.isUndef(key)) {
+      return;
+    }
     if (indexOf.call([96, 97, 98, 99, 100, 101, 102, 103, 104, 105], key) >= 0) {
       s = "Num" + String.fromCharCode(key - 48);
     }
@@ -19093,6 +19096,9 @@ CUI.dom = (function() {
     if (docElem.nodeType === 3) {
       docElem = docElem.parentNode;
     }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     parents = CUI.dom.parentsUntil(docElem);
     dim = null;
     measure = (function(_this) {
@@ -20080,6 +20086,10 @@ CUI.util.marked = marked;
 
 String.prototype.startsWith = function(s) {
   return this.substr(0, s.length) === s;
+};
+
+String.prototype.startsWithIgnoreCase = function(s) {
+  return this.toUpperCase().startsWith(s.toUpperCase());
 };
 
 String.prototype.endsWith = function(s) {
@@ -31734,6 +31744,7 @@ CUI.ItemList = (function(superClass) {
     if (!this.__isInitActiveIdx) {
       this.__initActiveIdx();
     }
+    this.__preActiveIndex = this.__active_idx;
     this.__body.empty();
     promise = this.getItems(event);
     promise.done((function(_this) {
@@ -31818,13 +31829,19 @@ CUI.ItemList = (function(superClass) {
               if (_this.__radio) {
                 _this.__active_idx = idx;
               }
-              return typeof _this._onActivate === "function" ? _this._onActivate(btn, item, idx, flags) : void 0;
+              if (typeof _this._onActivate === "function") {
+                _this._onActivate(btn, item, idx, flags);
+              }
+              return _this.__deselectPreActivated();
             },
             onDeactivate: function(btn, flags) {
               if (_this.__radio) {
                 _this.__active_idx = null;
               }
-              return typeof _this._onDeactivate === "function" ? _this._onDeactivate(btn, item, idx, flags) : void 0;
+              if (typeof _this._onDeactivate === "function") {
+                _this._onDeactivate(btn, item, idx, flags);
+              }
+              return _this.__deselectPreActivated();
             }
           };
           for (j = 0, len1 = opt_keys.length; j < len1; j++) {
@@ -31871,6 +31888,80 @@ CUI.ItemList = (function(superClass) {
     var ref;
     ItemList.__super__.destroy.call(this);
     return (ref = this.__body) != null ? ref.destroy() : void 0;
+  };
+
+  ItemList.prototype.preSelectByKeyword = function(keyword) {
+    var element, elementMatches, i, index, item, len, nextElement, nextIndex, ref, ref1, results;
+    elementMatches = (function(_this) {
+      return function(element) {
+        return (element instanceof CUI.Button || element instanceof CUI.Label) && element.getText().startsWithIgnoreCase(keyword);
+      };
+    })(this);
+    nextIndex = this.__preActiveIndex + 1;
+    nextElement = this.__getItemByIndex(nextIndex);
+    if (elementMatches(nextElement)) {
+      this.__preActivateItemByIndex(nextIndex);
+      return;
+    }
+    ref1 = (ref = this.__body) != null ? ref.DOM.children : void 0;
+    results = [];
+    for (index = i = 0, len = ref1.length; i < len; index = ++i) {
+      item = ref1[index];
+      element = CUI.dom.data(item, "element");
+      if (elementMatches(element)) {
+        this.__preActivateItemByIndex(index);
+        break;
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  };
+
+  ItemList.prototype.activatePreSelectedItem = function() {
+    return this.__activateItemByIndex(this.__preActiveIndex);
+  };
+
+  ItemList.prototype.preActivateNextItem = function() {
+    return this.__preActivateItemByIndex(this.__preActiveIndex + 1);
+  };
+
+  ItemList.prototype.preActivatePreviousItem = function() {
+    return this.__preActivateItemByIndex(this.__preActiveIndex - 1);
+  };
+
+  ItemList.prototype.__preActivateItemByIndex = function(newPreActiveIndex) {
+    var itemToPreActivate;
+    itemToPreActivate = this.__getItemByIndex(newPreActiveIndex);
+    if (itemToPreActivate instanceof CUI.Button) {
+      this.__deselectPreActivated();
+      this.__preActiveIndex = newPreActiveIndex;
+      CUI.dom.addClass(itemToPreActivate, CUI.defaults["class"].Button.defaults.active_css_class);
+      return CUI.dom.scrollIntoView(itemToPreActivate);
+    }
+  };
+
+  ItemList.prototype.__deselectPreActivated = function() {
+    var previousItemSelected;
+    previousItemSelected = this.__getItemByIndex(this.__preActiveIndex);
+    if (previousItemSelected instanceof CUI.Button) {
+      return CUI.dom.removeClass(previousItemSelected, CUI.defaults["class"].Button.defaults.active_css_class);
+    }
+  };
+
+  ItemList.prototype.__activateItemByIndex = function(index) {
+    var itemToActivate;
+    itemToActivate = this.__getItemByIndex(index);
+    if (itemToActivate instanceof CUI.Button) {
+      itemToActivate.activate();
+      return this.setActiveIdx(index);
+    }
+  };
+
+  ItemList.prototype.__getItemByIndex = function(index) {
+    var item, ref;
+    item = (ref = this.__body) != null ? ref.DOM.children[index] : void 0;
+    return CUI.dom.data(item, "element");
   };
 
   return ItemList;
@@ -41676,7 +41767,6 @@ CUI.Select = (function(superClass) {
       menu: {
         active_item_idx: ((ref = this.default_opt) != null ? ref._idx : void 0) || null,
         allow_null: !CUI.util.isEmpty(this._empty_text),
-        "class": "ez-menu-select",
         onDeactivate: (function(_this) {
           return function(btn, item, idx, flags) {
             if (flags.prior_activate) {
@@ -41698,14 +41788,59 @@ CUI.Select = (function(superClass) {
         })(this),
         onShow: (function(_this) {
           return function() {
-            var ref1;
+            var itemList, menu, preSelectByKeyword, ref1;
+            _this.__keyboardKeys = [];
+            menu = _this.__checkbox.getMenu();
+            itemList = menu != null ? menu.getItemList() : void 0;
+            preSelectByKeyword = function() {
+              if (itemList != null) {
+                itemList.preSelectByKeyword(_this.__keyboardKeys.join(""));
+              }
+              return _this.__keyboardKeys = [];
+            };
+            _this.__keyDownEventListener = CUI.Events.listen({
+              type: "keydown",
+              call: function(event) {
+                var keyboardKey;
+                keyboardKey = event.__keyboardKey();
+                switch (keyboardKey) {
+                  case "Down":
+                    if (itemList != null) {
+                      itemList.preActivateNextItem();
+                    }
+                    break;
+                  case "Up":
+                    if (itemList != null) {
+                      itemList.preActivatePreviousItem();
+                    }
+                    break;
+                  case "Return":
+                    if (itemList != null) {
+                      itemList.activatePreSelectedItem();
+                    }
+                    menu.hide();
+                    break;
+                  default:
+                    if (keyboardKey) {
+                      _this.__keyboardKeys.push(keyboardKey);
+                      CUI.scheduleCallback({
+                        ms: 200,
+                        call: preSelectByKeyword
+                      });
+                    }
+                }
+              }
+            });
             return (ref1 = _this._onShow) != null ? ref1.apply(_this, arguments) : void 0;
           };
         })(this),
         onHide: (function(_this) {
           return function() {
-            var ref1;
-            return (ref1 = _this._onHide) != null ? ref1.apply(_this, arguments) : void 0;
+            var ref1, ref2;
+            if ((ref1 = _this.__keyDownEventListener) != null) {
+              ref1.destroy();
+            }
+            return (ref2 = _this._onHide) != null ? ref2.apply(_this, arguments) : void 0;
           };
         })(this),
         onActivate: (function(_this) {
