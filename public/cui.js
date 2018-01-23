@@ -13237,7 +13237,7 @@ CUI.KeyboardEvent = (function(superClass) {
     return keys.join("+");
   };
 
-  KeyboardEvent.prototype.__keyboardKey = function() {
+  KeyboardEvent.prototype.getKeyboardKey = function() {
     var key, s;
     key = this.keyCode();
     if (CUI.util.isUndef(key)) {
@@ -13359,7 +13359,7 @@ CUI.KeyboardEvent = (function(superClass) {
       capture: true,
       call: function(ev) {
         if (!is_modifier(ev.keyCode())) {
-          CUI.util.pushOntoArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys);
+          CUI.util.pushOntoArray(ev.getKeyboardKey(), CUI.KeyboardEvent.__keys);
         }
       }
     });
@@ -13369,7 +13369,7 @@ CUI.KeyboardEvent = (function(superClass) {
       capture: true,
       call: function(ev) {
         if (!is_modifier(ev.keyCode())) {
-          CUI.util.removeFromArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys);
+          CUI.util.removeFromArray(ev.getKeyboardKey(), CUI.KeyboardEvent.__keys);
         }
       }
     });
@@ -31672,7 +31672,7 @@ CUI.ItemList = (function(superClass) {
   };
 
   ItemList.prototype.preSelectByKeyword = function(keyword) {
-    var element, elementMatches, i, index, item, len, nextElement, nextIndex, ref, ref1, results;
+    var element, elementMatches, i, index, item, len, nextElement, nextIndex, ref, ref1;
     elementMatches = (function(_this) {
       return function(element) {
         return (element instanceof CUI.Button || element instanceof CUI.Label) && element.getText().startsWithIgnoreCase(keyword);
@@ -31685,18 +31685,14 @@ CUI.ItemList = (function(superClass) {
       return;
     }
     ref1 = (ref = this.__body) != null ? ref.DOM.children : void 0;
-    results = [];
     for (index = i = 0, len = ref1.length; i < len; index = ++i) {
       item = ref1[index];
       element = CUI.dom.data(item, "element");
       if (elementMatches(element)) {
         this.__preActivateItemByIndex(index);
         break;
-      } else {
-        results.push(void 0);
       }
     }
-    return results;
   };
 
   ItemList.prototype.activatePreSelectedItem = function() {
@@ -41583,7 +41579,7 @@ CUI.Select = (function(superClass) {
               type: "keydown",
               call: function(event) {
                 var keyboardKey;
-                keyboardKey = event.__keyboardKey();
+                keyboardKey = event.getKeyboardKey();
                 switch (keyboardKey) {
                   case "Down":
                     if (itemList != null) {
