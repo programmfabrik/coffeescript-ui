@@ -174,12 +174,19 @@ class CUI.Select extends CUI.Checkbox
 			onClick: =>
 				@_onClick?.apply(@, arguments)
 			onShow: =>
+				@__keyboardKeys = []
+				menu = @__checkbox.getMenu()
+				itemList = menu?.getItemList()
+
+				preSelectByKeyword = =>
+					itemList?.preSelectByKeyword(@__keyboardKeys.join(""))
+					@__keyboardKeys = []
+
 				@__keyDownEventListener = CUI.Events.listen
 					type: "keydown"
 					call: (event) =>
-						menu = @__checkbox.getMenu()
-						itemList = menu?.getItemList()
-						switch event.__keyboardKey()
+						keyboardKey = event.__keyboardKey()
+						switch keyboardKey
 							when "Down"
 								itemList?.preActivateNextItem()
 								break
@@ -190,6 +197,11 @@ class CUI.Select extends CUI.Checkbox
 								itemList?.activatePreSelectedItem()
 								menu.hide()
 								break
+							else
+								if keyboardKey
+									@__keyboardKeys.push(keyboardKey)
+									CUI.scheduleCallback(ms: 200, call: preSelectByKeyword)
+
 						return
 				@_onShow?.apply(@, arguments)
 			onHide: =>

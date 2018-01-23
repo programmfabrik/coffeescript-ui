@@ -273,6 +273,22 @@ class CUI.ItemList extends CUI.VerticalLayout
 		super()
 		@__body?.destroy()
 
+	preSelectByKeyword: (keyword) ->
+		elementMatches = (element) =>
+			(element instanceof CUI.Button or element instanceof CUI.Label) and element.getText().startsWithIgnoreCase(keyword)
+
+		nextIndex = @__preActiveIndex + 1
+		nextElement = @__getItemByIndex(nextIndex)
+		if elementMatches(nextElement)
+			@__preActivateItemByIndex(nextIndex)
+			return
+
+		for item, index in @__body?.DOM.children
+			element = CUI.dom.data(item, "element")
+			if elementMatches(element)
+				@__preActivateItemByIndex(index)
+				break
+
 	activatePreSelectedItem: ->
 		@__activateItemByIndex(@__preActiveIndex)
 
@@ -288,6 +304,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			@__deselectPreActivated()
 			@__preActiveIndex = newPreActiveIndex
 			CUI.dom.addClass(itemToPreActivate, CUI.defaults.class.Button.defaults.active_css_class)
+			CUI.dom.scrollIntoView(itemToPreActivate)
 
 	__deselectPreActivated: ->
 		previousItemSelected = @__getItemByIndex(@__preActiveIndex)
