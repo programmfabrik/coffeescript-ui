@@ -185,7 +185,7 @@ class CUI.Select extends CUI.Checkbox
 				@__keyDownEventListener = CUI.Events.listen
 					type: "keydown"
 					call: (event) =>
-						keyboardKey = event.__keyboardKey()
+						keyboardKey = event.getKeyboardKey()
 						switch keyboardKey
 							when "Down"
 								itemList?.preActivateNextItem()

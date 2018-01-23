@@ -15,7 +15,7 @@ class CUI.KeyboardEvent extends CUI.Event
 	# Returns the visible keyboard key
 	# "key" only returns the native event key which is different
 	# between OSs
-	__keyboardKey: ->
+	getKeyboardKey: ->
 		key = @keyCode()
 		if CUI.util.isUndef(key)
 			return
@@ -100,7 +100,7 @@ class CUI.KeyboardEvent extends CUI.Event
 			capture: true
 			call: (ev) ->
 				if not is_modifier(ev.keyCode())
-					CUI.util.pushOntoArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
+					CUI.util.pushOntoArray(ev.getKeyboardKey(), CUI.KeyboardEvent.__keys)
 
 				return
 
@@ -111,7 +111,7 @@ class CUI.KeyboardEvent extends CUI.Event
 			call: (ev) ->
 
 				if not is_modifier(ev.keyCode())
-					CUI.util.removeFromArray(ev.__keyboardKey(), CUI.KeyboardEvent.__keys)
+					CUI.util.removeFromArray(ev.getKeyboardKey(), CUI.KeyboardEvent.__keys)
 
 				return
 

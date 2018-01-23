@@ -288,6 +288,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			if elementMatches(element)
 				@__preActivateItemByIndex(index)
 				break
+		return
 
 	activatePreSelectedItem: ->
 		@__activateItemByIndex(@__preActiveIndex)
