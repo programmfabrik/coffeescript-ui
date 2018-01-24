@@ -1303,6 +1303,14 @@ a[role="button"].cui-button-appearance-link {
 		margin: 0;
 	}
 
+	&.cui-simple-form {
+		max-width: 100%;
+	}
+
+	&--textarea {
+		max-width: $textarea-width;	
+	}
+
 	.cui-list-view-grid-quadrant-3 {
 		min-height: 3*$table-data-height; // for when using empty lists that can get filled
 	}
@@ -1677,6 +1685,12 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-horizontal-layout > .cui-horizontal-layout-center {
 		max-width: $input-width;
 		overflow: visible; // show focus outline
+	}
+
+	&.cui-data-form--multiple-fields {
+		> .cui-horizontal-layout > .cui-horizontal-layout-center {
+			max-width: 100%;
+		}
 	}
 }
 
@@ -4980,6 +4994,10 @@ label[data-label-clickable],
 
 
 // MultiInput
+	
+.cui-multi-input--textarea {
+	max-width: $textarea-width;
+}
 
 .cui-multi-input .cui-multi-input-container {
 	display: flex;
@@ -5013,10 +5031,6 @@ label[data-label-clickable],
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
 	background: $foreground;
-	
-	.cui-multi-input--textarea & {
-		width: $textarea-width;
-	}
 
 	&:focus,
 	&.cui-has-focus {

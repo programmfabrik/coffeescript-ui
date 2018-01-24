@@ -29519,6 +29519,9 @@ CUI.Input = (function(superClass) {
     this.opts = opts != null ? opts : {};
     Input.__super__.constructor.call(this, this.opts);
     this.addClass("cui-input");
+    if (this._textarea) {
+      this.addClass("cui-data-field--textarea");
+    }
     if (this._overwrite) {
       this.__getCursorBlocks = this.__overwriteBlocks;
     } else {

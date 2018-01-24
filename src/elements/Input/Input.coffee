@@ -10,6 +10,9 @@ class CUI.Input extends CUI.DataFieldInput
 		super(@opts)
 		@addClass("cui-input")
 
+		if @_textarea
+			@addClass("cui-data-field--textarea")
+
 		if @_overwrite
 			@__getCursorBlocks = @__overwriteBlocks
 		else

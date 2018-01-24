@@ -1232,6 +1232,10 @@ a[role="button"].cui-button-appearance-link {
   .cui-data-field.cui-form {
     max-width: 100%;
     margin: 0; }
+  .cui-data-field.cui-simple-form {
+    max-width: 100%; }
+  .cui-data-field--textarea {
+    max-width: 550px; }
   .cui-data-field .cui-list-view-grid-quadrant-3 {
     min-height: 96px; }
   .cui-data-field .cui-lv-row-move-handle-column {
@@ -1469,6 +1473,8 @@ a[role="button"].cui-button-appearance-link {
   .cui-data-form--movable-rows > .cui-horizontal-layout > .cui-horizontal-layout-center {
     max-width: 275px;
     overflow: visible; }
+  .cui-data-form--movable-rows.cui-data-form--multiple-fields > .cui-horizontal-layout > .cui-horizontal-layout-center {
+    max-width: 100%; }
 
 .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
@@ -3513,6 +3519,9 @@ label[data-label-clickable],
 .cui-date-time-clock {
   display: none; }
 
+.cui-multi-input--textarea {
+  max-width: 550px; }
+
 .cui-multi-input .cui-multi-input-container {
   display: flex;
   flex-direction: column;
@@ -3541,8 +3550,6 @@ label[data-label-clickable],
   background: white; }
   .cui-multi-input-input:first-child {
     margin-top: 0; }
-  .cui-multi-input--textarea .cui-multi-input-input {
-    width: 550px; }
   .cui-multi-input-input:focus, .cui-multi-input-input.cui-has-focus {
     box-shadow: 0 0 0 3px #b3d7ff;
     border-color: #006adb;
