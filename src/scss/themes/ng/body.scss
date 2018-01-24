@@ -866,123 +866,6 @@ li > div {
 	}
 }
 
-// DataForm
-.cui-data-form--multiple-fields {
-	> .cui-data-form-row {
-		> .cui-horizontal-layout-center {
-			position: relative;
-			padding: 4px 4px 4px 10px;
-			border-left: 1px solid hsl(240,8%,87%);
-
-			&:after,
-			&:before {
-				content: "";
-				position: absolute;
-				background: hsl(240,8%,87%);
-				width: 10px;
-				height: 1px;
-				left: 0;
-				top: 0;
-			}
-
-			&:after {
-				top: auto;
-				bottom: 0;
-			}
-
-			> .cui-data-field > .cui-form-table {
-				margin: 0;
-			}
-		}
-	}
-}
-
-.cui-data-form-row {
-	overflow: visible !important;
-
-	&--read-only {
-		.cui-drag-handle-row {
-			opacity: 0 !important;
-		}
-	}
-
-	&:first-child {
-		> .cui-horizontal-layout-center {
-			margin-top: 0;
-		}
-	}
-
-	&:last-child {
-		// margin-bottom: $padding; anyoing in fields renderer
-		> .cui-horizontal-layout-center {
-			margin-bottom: 0;
-		}
-	}
-
-	&:only-child {
-		// make it as wide as the normal inputs
-		// as long as no trash bin is present
-		> .cui-horizontal-layout-right {
-			width: 9px;
-
-			> .cui-buttonbar {
-				display: none;
-			}
-		}
-	}
-
-	&.cui-data-form-row--trash {
-		> .cui-horizontal-layout-center {
-			opacity: 0.5;
-		}
-	}
-
-	> .cui-horizontal-layout-left {
-		.cui-drag-handle-row {
-			margin: 7px 7px 0 0;
-			width: 12px;
-			height: 10px;
-			flex-grow: 0;
-			cursor: -webkit-grab;
-			cursor:         grab;
-
-			&.is-hidden {
-				pointer-events: none;
-				opacity: 0.33;
-			}
-		}
-	}
-
-	> .cui-horizontal-layout-center {
-		margin-top: 0;
-		margin-bottom: 5px;
-		min-width: 0;
-	}
-
-	> .cui-horizontal-layout-right {
-		width: 28px;
-
-		.cui-button {
-			margin-top: 1px;
-			position: relative; // put forward
-
-			&.cui-button-hidden {
-				pointer-events: none;
-
-				.cui-button-visual {
-					opacity: 0.1;
-				}
-			}
-		}
-
-		.cui-button-visual {
-			min-width: 0;
-			padding: 0 5px;
-			color: $drag-handle-color;
-		}
-	}
-}
-
 // Navigation Toolbar
 
 .cui-navigation-toolbar {
@@ -1092,7 +975,6 @@ li > div {
 .cui-button-href {
 	// max-width: 100%; makes button icons unsharp (datepicker)
 	cursor: pointer;
-	// max-width: $input-width; why limit the width of a button?
 }
 
 .cui-button-href {
@@ -1131,7 +1013,6 @@ li > div {
 	justify-content: center;
 	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
 	white-space: nowrap;
-	// max-width: 100%; would overwrite the $input-width max-width
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
@@ -1263,8 +1144,6 @@ li > div {
 }
 
 .cui-button-select {
-	max-width: $input-width;
-
 	.cui-button-visual {
 		padding: 0 4px 0 8px;
 	}
@@ -1415,9 +1294,150 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-data-field {
+	max-width: $input-width;
+	margin: 0;
+	
+	&.cui-form {
+		max-width: 100%;
+		margin: 0;
+	}
+
+	.cui-list-view-grid-quadrant-3 {
+		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+	}
+
+	.cui-lv-row-move-handle-column {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	&-disabled {
+		opacity: 0.3;
+
+		.cui-data-field-disabled {
+			opacity: 1;
+		}
+	}
+
+	&--full-width {
+		width: 100%;
+		max-width: 100%;
+
+		&.cui-select {
+			> .cui-button {
+				max-width: none;
+			}
+		}
+	}
+
+	.cui-object-dumper {
+		border: 1px solid $table-border;
+
+		.cui-list-view-grid-quadrant-3 {
+			min-height: auto;
+		}
+	}
+
+	&--with-button {
+		display: flex;
+		height: 24px;
+		align-items: flex-end;
+		line-height: 24px;
+	}
+}
+
+.cui-data-field-center {
+	flex: 1 1 auto;
+	display: flex;
+
+	&:focus {
+		z-index: 1;
+	}
+
+	input {
+		position: relative;
+		width: auto !important;
+		flex-grow: 1;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+
+.cui-data-field-right {
+	position: relative;
+
+	.cui-button {
+		margin-left: -1px;
+		height: 100%;
+		vertical-align: bottom;
+
+		.cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			padding: 0 $padding/2;
+		}
+
+		&:focus {
+			z-index: 1;
+		}
+	}
+}
+
+.cui-data-field-left {
+	position: relative;
+
+	.cui-button {
+		margin-right: -1px;
+		height: 100%;
+		vertical-align: bottom;
+
+		.cui-button-visual {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			padding: 0 $padding/2;
+		}
+
+		&:focus {
+			z-index: 1;
+		}
+	}
+}
+
+.cui-data-field-proxy {
+	// could be a list view, thus min-height: 0;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+
+	> .cui-button-href {
+		margin: 3px 0;
+	}
+
+	> .cui-button-button {
+		align-self: flex-start;
+	}
+}
+
+// .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
+.cui-data-field-input	> .cui-button-select {
+	width: 100%;
+	padding: 0; // remove double padding
+}
+
+.cui-data-field-proxy > .cui-label,
+.cui-data-field-output-label {
+	padding: 3px 0;
+
+	&.cui-label-multiline {
+		max-width: 400px;
+	}
+}
+
 // Checkbox
 .cui-checkbox {
 	min-width: 0;
+	max-width: 100%;
 	display: inline-block;
 	vertical-align: top; // checkboxes next to each other should top-align
 
@@ -1645,6 +1665,133 @@ a[role="button"].cui-button-appearance-link {
 
 		.fa-angle-right {
 			margin-top: -1px;
+		}
+	}
+}
+
+
+// DataForm
+.cui-data-form--movable-rows {
+	max-width: 100%;
+	
+	> .cui-horizontal-layout > .cui-horizontal-layout-center {
+		max-width: $input-width;
+		overflow: visible; // show focus outline
+	}
+}
+
+.cui-data-form--multiple-fields {
+	> .cui-data-form-row {
+		> .cui-horizontal-layout-center {
+			position: relative;
+			padding: 4px 4px 4px 10px;
+			border-left: 1px solid hsl(240,8%,87%);
+
+			&:after,
+			&:before {
+				content: "";
+				position: absolute;
+				background: hsl(240,8%,87%);
+				width: 10px;
+				height: 1px;
+				left: 0;
+				top: 0;
+			}
+
+			&:after {
+				top: auto;
+				bottom: 0;
+			}
+
+			> .cui-data-field > .cui-form-table {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.cui-data-form-row {
+	overflow: visible !important;
+
+	&--read-only {
+		.cui-drag-handle-row {
+			opacity: 0 !important;
+		}
+	}
+
+	&:first-child {
+		> .cui-horizontal-layout-center {
+			margin-top: 0;
+		}
+	}
+
+	&:last-child {
+		// margin-bottom: $padding; anyoing in fields renderer
+		> .cui-horizontal-layout-center {
+			margin-bottom: 0;
+		}
+	}
+
+	&:only-child {
+		// make it as wide as the normal inputs
+		// as long as no trash bin is present
+		> .cui-horizontal-layout-right {
+			width: 9px;
+
+			> .cui-buttonbar {
+				display: none;
+			}
+		}
+	}
+
+	&.cui-data-form-row--trash {
+		> .cui-horizontal-layout-center {
+			opacity: 0.5;
+		}
+	}
+
+	> .cui-horizontal-layout-left {
+		.cui-drag-handle-row {
+			margin: 7px 7px 0 0;
+			width: 12px;
+			height: 10px;
+			flex-grow: 0;
+			cursor: -webkit-grab;
+			cursor:         grab;
+
+			&.is-hidden {
+				pointer-events: none;
+				opacity: 0.33;
+			}
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		margin-top: 0;
+		margin-bottom: 5px;
+		min-width: 0;
+	}
+
+	> .cui-horizontal-layout-right {
+		width: 28px;
+
+		.cui-button {
+			margin-top: 1px;
+			position: relative; // put forward
+
+			&.cui-button-hidden {
+				pointer-events: none;
+
+				.cui-button-visual {
+					opacity: 0.1;
+				}
+			}
+		}
+
+		.cui-button-visual {
+			min-width: 0;
+			padding: 0 5px;
+			color: $drag-handle-color;
 		}
 	}
 }
@@ -2169,21 +2316,11 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	input {
-		&:not([data-max-chars]) {
-			width: $input-width;
-		}
-	}
-
 	textarea {
 		padding-top: 3px;
 		padding-bottom: 3px;
 		line-height: 16px;
 		height: 100px;
-		
-		&:not([data-max-chars]) {
-			width: $textarea-width;
-		}
 	}
 
 	&.cui-has-focus {
@@ -4294,142 +4431,6 @@ label[data-label-clickable],
 	}
 }
 
-.cui-data-field {
-	max-width: 100%;
-	margin: 0;
-
-	.cui-list-view-grid-quadrant-3 {
-		min-height: 3*$table-data-height; // for when using empty lists that can get filled
-	}
-
-	.cui-lv-row-move-handle-column {
-		padding-top: 0;
-		padding-bottom: 0;
-	}
-
-	&-disabled {
-		opacity: 0.3;
-
-		.cui-data-field-disabled {
-			opacity: 1;
-		}
-	}
-
-	&--full-width {
-		width: 100%;
-		max-width: 100%;
-
-		&.cui-select {
-			> .cui-button {
-				max-width: none;
-			}
-		}
-	}
-
-	.cui-object-dumper {
-		border: 1px solid $table-border;
-
-		.cui-list-view-grid-quadrant-3 {
-			min-height: auto;
-		}
-	}
-
-	&--with-button {
-		display: flex;
-		height: 24px;
-		align-items: flex-end;
-		line-height: 24px;
-		max-width: $input-width;
-	}
-}
-
-.cui-data-field-center {
-	flex: 1 1 auto;
-	display: flex;
-
-	&:focus {
-		z-index: 1;
-	}
-
-	input {
-		position: relative;
-		width: auto !important;
-		flex-grow: 1;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-}
-
-.cui-data-field-right {
-	position: relative;
-
-	.cui-button {
-		margin-left: -1px;
-		height: 100%;
-		vertical-align: bottom;
-
-		.cui-button-visual {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-			padding: 0 $padding/2;
-		}
-
-		&:focus {
-			z-index: 1;
-		}
-	}
-}
-
-.cui-data-field-left {
-	position: relative;
-
-	.cui-button {
-		margin-right: -1px;
-		height: 100%;
-		vertical-align: bottom;
-
-		.cui-button-visual {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-			padding: 0 $padding/2;
-		}
-
-		&:focus {
-			z-index: 1;
-		}
-	}
-}
-
-.cui-data-field-proxy {
-	// could be a list view, thus min-height: 0;
-	min-height: 0;
-	display: flex;
-	flex-direction: column;
-
-	> .cui-button-href {
-		margin: 3px 0;
-	}
-
-	> .cui-button-button {
-		align-self: flex-start;
-	}
-}
-
-// .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
-.cui-data-field-input	> .cui-button-select {
-	width: 100%;
-	padding: 0; // remove double padding
-}
-
-.cui-data-field-proxy > .cui-label,
-.cui-data-field-output-label {
-	padding: 3px 0;
-
-	&.cui-label-multiline {
-		max-width: 400px;
-	}
-}
-
 .cui-output {
 	&-empty {
 		color: $muted-color;
@@ -5006,7 +5007,6 @@ label[data-label-clickable],
 	margin-right: 0;
 	@include margin-top(0.5);
 	position: relative;
-	width: $input-width;
 	max-width: 100%;
 
 	border: 1px solid $input-border;
