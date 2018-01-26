@@ -117,8 +117,12 @@ class CUI.Draggable extends CUI.DragDropSelect
 		return
 
 	destroy: ->
+		CUI.dom.removeClass(@element, "no-user-select")
+
 		super()
+
 		CUI.dom.remove(CUI.globalDrag?.helperNode)
+
 		@__cleanup()
 		@
 

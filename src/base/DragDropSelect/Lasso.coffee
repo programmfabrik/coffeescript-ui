@@ -33,6 +33,10 @@ class CUI.Lasso extends CUI.Draggable
 		super()
 		@_helper = null
 
+	destroy: ->
+		CUI.dom.removeClass(@element, "cui-lasso-area")
+		super()
+
 	init: ->
 		super()
 		# @makeElementRelative @element
