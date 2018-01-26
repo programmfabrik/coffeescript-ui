@@ -10166,6 +10166,7 @@ CUI.Draggable = (function(superClass) {
 
   Draggable.prototype.destroy = function() {
     var ref;
+    CUI.dom.removeClass(this.element, "no-user-select");
     Draggable.__super__.destroy.call(this);
     CUI.dom.remove((ref = CUI.globalDrag) != null ? ref.helperNode : void 0);
     this.__cleanup();
@@ -11248,6 +11249,11 @@ CUI.Lasso = (function(superClass) {
   Lasso.prototype.readOpts = function() {
     Lasso.__super__.readOpts.call(this);
     return this._helper = null;
+  };
+
+  Lasso.prototype.destroy = function() {
+    CUI.dom.removeClass(this.element, "cui-lasso-area");
+    return Lasso.__super__.destroy.call(this);
   };
 
   Lasso.prototype.init = function() {
