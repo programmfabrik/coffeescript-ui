@@ -1365,12 +1365,20 @@ a[role="button"].cui-button-appearance-link {
 		z-index: 1;
 	}
 
+	&:not(:first-child) input {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	&:not(:last-child) input {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
 	input {
 		position: relative;
 		width: auto !important;
 		flex-grow: 1;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
 	}
 }
 
@@ -5718,6 +5726,7 @@ label[data-label-clickable],
 	border: none;
 	border-radius: 14px;
 	text-align: center;
+	margin-bottom: 5px;
 
 	i {
 		padding-top: 6px
