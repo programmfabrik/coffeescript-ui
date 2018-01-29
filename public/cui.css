@@ -1233,7 +1233,7 @@ a[role="button"].cui-button-appearance-link {
   .cui-data-field.cui-form {
     max-width: 100%;
     margin: 0; }
-  .cui-data-field.cui-simple-form {
+  .cui-data-field.cui-maximize-horizontal, .cui-data-field.cui-simple-form {
     max-width: 100%; }
   .cui-data-field--textarea {
     max-width: 550px; }
