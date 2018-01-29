@@ -1297,6 +1297,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-data-field {
 	max-width: $input-width;
 	margin: 0;
+	flex-grow: 1;
 	
 	&.cui-form {
 		max-width: 100%;
@@ -4164,7 +4165,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-data-field {
 		max-width: 100%;
 	}
-	
+
 	> div > .cui-form-table {
 		display: flex;
 		flex-wrap: wrap;
