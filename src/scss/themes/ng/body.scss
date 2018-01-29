@@ -4161,6 +4161,10 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form--grid {
+	.cui-data-field {
+		max-width: 100%;
+	}
+	
 	> div > .cui-form-table {
 		display: flex;
 		flex-wrap: wrap;

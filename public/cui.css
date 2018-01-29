@@ -2954,6 +2954,9 @@ a[role="button"].cui-button-appearance-link {
       flex-shrink: 1;
       min-width: 0; }
 
+.cui-form--grid .cui-data-field {
+  max-width: 100%; }
+
 .cui-form--grid > div > .cui-form-table {
   display: flex;
   flex-wrap: wrap;
