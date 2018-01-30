@@ -25,11 +25,13 @@ class CUI.Input extends CUI.DataFieldInput
 			@addClass("cui-input-required")
 
 		if @_checkInput
-			@addClass("cui-input-has-check-input")
 			@__checkInput = @_checkInput
 
 		if @_prevent_invalid_input
 			@addClass("cui-input-has-prevent-invalid-input")
+
+		if @__checkInput
+			@addClass("cui-input-has-check-input")
 
 		@__inputHints = {}
 		@__inputHintTexts = {}
