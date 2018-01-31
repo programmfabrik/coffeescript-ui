@@ -96,7 +96,9 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 							ret2 == false
 								return
 
-						@__deferred.resolve(@__getResolveValue(), btn, ev)
+						# its possible that a previous click caused an error
+						# so @__deferred would already be unset
+						@__deferred?.resolve(@__getResolveValue(), btn, ev)
 						@destroy()
 					return
 
