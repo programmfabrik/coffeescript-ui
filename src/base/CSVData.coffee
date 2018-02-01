@@ -262,7 +262,7 @@ class CUI.CSVData extends CUI.Element
 				call: do_work
 
 			dfr.done =>
-				@debug()
+				; # @debug()
 
 			return dfr.promise()
 		else
