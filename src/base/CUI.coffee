@@ -208,7 +208,6 @@ class CUI
 				check: (v) ->
 					v instanceof Function
 
-		data = []
 		chunk_size = opts.chunk_size
 		timeout = opts.timeout
 
@@ -227,12 +226,9 @@ class CUI
 				len: len
 				chunk_size: chunk_size
 
-			go_on = (responseData) =>
-				if responseData
-					data.push(responseData)
-
+			go_on = =>
 				if idx + chunk_size >= len
-					dfr.resolve(data)
+					dfr.resolve()
 				else
 					idx = idx + chunk_size
 					if timeout == -1
@@ -263,7 +259,7 @@ class CUI
 				if len > 0
 					next_chunk()
 				else
-					dfr.resolve(data)
+					dfr.resolve()
 
 		return dfr.promise()
 

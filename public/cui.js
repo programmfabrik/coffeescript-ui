@@ -291,7 +291,7 @@ CUI = (function() {
   };
 
   CUI.chunkWork = function(_opts) {
-    var chunk_size, data, dfr, idx, len, next_chunk, opts, timeout;
+    var chunk_size, dfr, idx, len, next_chunk, opts, timeout;
     if (_opts == null) {
       _opts = {};
     }
@@ -323,7 +323,6 @@ CUI = (function() {
         }
       }
     });
-    data = [];
     chunk_size = opts.chunk_size;
     timeout = opts.timeout;
     CUI.util.assert(this !== CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.");
@@ -339,12 +338,9 @@ CUI = (function() {
           len: len,
           chunk_size: chunk_size
         });
-        go_on = function(responseData) {
-          if (responseData) {
-            data.push(responseData);
-          }
+        go_on = function() {
           if (idx + chunk_size >= len) {
-            dfr.resolve(data);
+            dfr.resolve();
           } else {
             idx = idx + chunk_size;
             if (timeout === -1) {
@@ -377,7 +373,7 @@ CUI = (function() {
           if (len > 0) {
             return next_chunk();
           } else {
-            return dfr.resolve(data);
+            return dfr.resolve();
           }
         };
       })(this)
