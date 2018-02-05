@@ -2944,6 +2944,8 @@ a[role="button"].cui-button-appearance-link {
   overflow: visible; }
   .cui-form.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
     display: block; }
+    .cui-form.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table .cui-form-table {
+      display: block; }
     .cui-form.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table .cui-form-tr {
       display: flex; }
     .cui-form.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table .cui-form-td {
@@ -2960,6 +2962,8 @@ a[role="button"].cui-button-appearance-link {
     .cui-form.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table .cui-form-value {
       flex-shrink: 1;
       min-width: 0; }
+      .cui-form.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table .cui-form-value input {
+        min-width: 0; }
 
 .cui-form--grid .cui-data-field {
   max-width: 100%; }

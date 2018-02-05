@@ -4149,6 +4149,10 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
 		display: block;
+		
+		.cui-form-table {
+			display: block;
+		}
 
 		.cui-form-tr {
 			display: flex;
@@ -4174,6 +4178,10 @@ a[role="button"].cui-button-appearance-link {
 		.cui-form-value {
 			flex-shrink: 1;
 			min-width: 0;
+			
+			input {
+				min-width: 0;
+			}
 		}
 	}
 }
