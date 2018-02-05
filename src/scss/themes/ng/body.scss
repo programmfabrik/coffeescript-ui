@@ -1309,6 +1309,14 @@ a[role="button"].cui-button-appearance-link {
 		max-width: 100%;
 	}
 
+	&.cui-maximize-horizontal {
+		&.cui-output {
+			.cui-data-field-output-label.cui-label-multiline {
+				max-width: 700px;
+			}
+		}
+	}
+
 	&--textarea {
 		max-width: $textarea-width;	
 	}

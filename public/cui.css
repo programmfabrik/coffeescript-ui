@@ -1235,6 +1235,8 @@ a[role="button"].cui-button-appearance-link {
     margin: 0; }
   .cui-data-field.cui-maximize-horizontal, .cui-data-field.cui-simple-form {
     max-width: 100%; }
+  .cui-data-field.cui-maximize-horizontal.cui-output .cui-data-field-output-label.cui-label-multiline {
+    max-width: 700px; }
   .cui-data-field--textarea {
     max-width: 550px; }
   .cui-data-field .cui-list-view-grid-quadrant-3 {
