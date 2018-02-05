@@ -5549,7 +5549,8 @@ label[data-label-clickable],
 
 	&:hover,
 	&:focus {
-		background: hsl(205,17%,98%);
+		color: $item-list-color;
+		background: $item-list-hover;
 	}
 
 	em {

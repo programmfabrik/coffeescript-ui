@@ -3894,7 +3894,8 @@ label[data-label-clickable],
   color: #34393c;
   outline: none; }
   .cui-autocompletion-popup-item:hover, .cui-autocompletion-popup-item:focus {
-    background: #f9fafb; }
+    color: #34393c;
+    background: #e6e8ea; }
   .cui-autocompletion-popup-item em {
     font-weight: bold;
     font-style: normal; }
