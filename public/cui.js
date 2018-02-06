@@ -22225,6 +22225,7 @@ CUI.Prompt = (function(superClass) {
         {
           type: CUI.Output,
           multiline: true,
+          markdown: this._markdown,
           text: text
         }, {
           type: CUI.Input,
@@ -42386,13 +42387,16 @@ CUI.Table = (function(superClass) {
   };
 
   Table.prototype.addRow = function(row) {
-    var col, i, len, ref, td, tr, value;
+    var col, col_idx, i, len, ref, td, tr, value;
     tr = CUI.dom.tr("cui-table-row");
     ref = this.__columns;
-    for (i = 0, len = ref.length; i < len; i++) {
-      col = ref[i];
+    for (col_idx = i = 0, len = ref.length; i < len; col_idx = ++i) {
+      col = ref[col_idx];
       td = CUI.dom.td("cui-table-td" + col.__class);
       value = row[col.name];
+      if (value === void 0) {
+        value = row[col_idx];
+      }
       if (CUI.util.isString(value)) {
         CUI.dom.addClass(td, "cui-td--text-content");
         td.textContent = value;
