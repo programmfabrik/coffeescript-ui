@@ -272,7 +272,10 @@ class CUI.Select extends CUI.Checkbox
 			# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
 			if found_opt
 				if found_opt.icon
-					@__checkbox.setIcon(found_opt.icon)
+					if found_opt.icon instanceof CUI.Icon
+						@__checkbox.setIcon(found_opt.icon.copy())
+					else
+						@__checkbox.setIcon(found_opt.icon)
 				else
 					@__checkbox.setIcon(null)
 
