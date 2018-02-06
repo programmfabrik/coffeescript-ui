@@ -275,7 +275,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 	preSelectByKeyword: (keyword) ->
 		elementMatches = (element) =>
-			(element instanceof CUI.Button or element instanceof CUI.Label) and element.getText().startsWithIgnoreCase(keyword)
+			(element instanceof CUI.Button or element instanceof CUI.Label) and element.getText()?.startsWithIgnoreCase(keyword)
 
 		nextIndex = @__preActiveIndex + 1
 		nextElement = @__getItemByIndex(nextIndex)
