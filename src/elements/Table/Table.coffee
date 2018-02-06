@@ -121,9 +121,12 @@ class CUI.Table extends CUI.DOMElement
 
 	addRow: (row) ->
 		tr = CUI.dom.tr("cui-table-row")
-		for col in @__columns
+		for col, col_idx in @__columns
 			td = CUI.dom.td("cui-table-td"+col.__class)
 			value = row[col.name]
+			if value == undefined
+				value = row[col_idx]
+
 			if CUI.util.isString(value)
 				CUI.dom.addClass(td, "cui-td--text-content")
 				td.textContent = value

@@ -34,6 +34,7 @@ class CUI.Prompt extends CUI.Confirm
 			fields: [
 				type: CUI.Output
 				multiline: true
+				markdown: @_markdown
 				text: text
 			,
 				type: CUI.Input
