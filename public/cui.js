@@ -24641,7 +24641,7 @@ CUI.DateTime = (function(superClass) {
     if (!check_bc) {
       return moment.invalid();
     }
-    m = s.match(/[1-9][0-9]{1,}/);
+    m = s.match(/[1-9][0-9]*/);
     if (!m) {
       return moment.invalid();
     }
