@@ -37029,7 +37029,7 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.__buildMarker = function(options) {
-    var iconAnchor, iconMarker, iconSize;
+    var iconAnchor, iconMarker, iconSize, marker, ref;
     if (options.iconName && options.iconColor) {
       iconMarker = new CUI.IconMarker({
         icon: options.iconName,
@@ -37045,19 +37045,21 @@ CUI.LeafletMap = (function(superClass) {
       delete options.iconName;
       delete options.iconColor;
     }
-    if (options.group && this._showPolylines) {
-      this.__groups[options.group] = this.__groups[options.group] || {
-        positions: []
-      };
-      this.__groups[options.group].positions.push([options.position.lat, options.position.lng]);
+    marker = L.marker(options.position, options);
+    if (((ref = options.group) != null ? ref.number : void 0) && this._showPolylines) {
+      this.__groups[options.group.number] = this.__groups[options.group.number] || [];
+      this.__groups[options.group.number].push({
+        marker: marker,
+        options: options.group.options
+      });
       delete options.group;
     }
-    return L.marker(options.position, options);
+    return marker;
   };
 
   LeafletMap.prototype.__addMarkerToMap = function(marker) {
     marker.addTo(this.__map);
-    return this.__updateGroups();
+    return this.__updateGroupsPolylines();
   };
 
   LeafletMap.prototype.__bindOnClickMapEvent = function() {
@@ -37080,26 +37082,51 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.__removeMarker = function(marker) {
-    return this.__map.removeLayer(marker);
+    var _, foundElement, group, indexOfElement, ref;
+    ref = this.__groups;
+    for (_ in ref) {
+      group = ref[_];
+      foundElement = group.filter((function(_this) {
+        return function(element) {
+          return element.marker === marker;
+        };
+      })(this));
+      if (foundElement = foundElement[0]) {
+        indexOfElement = group.indexOf(foundElement);
+        group.splice(indexOfElement, 1);
+        break;
+      }
+    }
+    if (foundElement && foundElement.polyline) {
+      this.__map.removeLayer(foundElement.polyline);
+    }
+    this.__map.removeLayer(marker);
+    marker = null;
   };
 
-  LeafletMap.prototype.__updateGroups = function() {
-    var group, groupColor, ref, results;
+  LeafletMap.prototype.__updateGroupsPolylines = function() {
+    var _, group, ref;
     ref = this.__groups;
-    results = [];
-    for (groupColor in ref) {
-      group = ref[groupColor];
-      if (group.polyline) {
-        this.__map.removeLayer(group.polyline);
-      }
-      this.__groups[groupColor].polyline = L.polyline(group.positions, {
-        color: groupColor,
-        weight: 2,
-        dashArray: '4, 4'
-      });
-      results.push(this.__groups[groupColor].polyline.addTo(this.__map));
+    for (_ in ref) {
+      group = ref[_];
+      group.reduce((function(_this) {
+        return function(elementOne, elementTwo) {
+          if (!elementTwo) {
+            return;
+          }
+          if (elementOne.polyline) {
+            return elementTwo;
+          }
+          elementOne.polyline = L.polyline([elementOne.marker.getLatLng(), elementTwo.marker.getLatLng()], {
+            weight: 1.5,
+            color: elementOne.options.color,
+            dashArray: elementOne.options.polyline
+          });
+          elementOne.polyline.addTo(_this.__map);
+          return elementTwo;
+        };
+      })(this));
     }
-    return results;
   };
 
   LeafletMap.prototype.getSelectedMarkerPosition = function() {
@@ -37215,7 +37242,7 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.destroy = function() {
-    var _, group, i, len, marker, ref, ref1;
+    var i, len, marker, ref;
     if (!this.__map) {
       return;
     }
@@ -37223,13 +37250,6 @@ CUI.LeafletMap = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       this.__removeMarker(marker);
-    }
-    ref1 = this.__groups;
-    for (_ in ref1) {
-      group = ref1[_];
-      if (group.polyline) {
-        this.__map.removeLayer(group.polyline);
-      }
     }
     this.__map.remove();
     delete this.__markers;
