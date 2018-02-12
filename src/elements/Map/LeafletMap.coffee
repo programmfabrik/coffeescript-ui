@@ -62,17 +62,19 @@ class CUI.LeafletMap extends CUI.Map
 			delete options.iconName
 			delete options.iconColor
 
-		if options.group and @_showPolylines
-			@__groups[options.group] = @__groups[options.group] or {positions: []}
-			@__groups[options.group].positions.push([options.position.lat, options.position.lng])
+		marker = L.marker(options.position, options)
+
+		if options.group?.number and @_showPolylines
+			@__groups[options.group.number] = @__groups[options.group.number] or []
+			@__groups[options.group.number].push(marker: marker, options: options.group.options)
 
 			delete options.group
 
-		L.marker(options.position, options)
+		marker
 
 	__addMarkerToMap: (marker) ->
 		marker.addTo(@__map);
-		@__updateGroups()
+		@__updateGroupsPolylines()
 
 	__bindOnClickMapEvent: ->
 		@__map.on('click', (event) =>
@@ -87,14 +89,38 @@ class CUI.LeafletMap extends CUI.Map
 			marker.on("click", onClickFunction)
 
 	__removeMarker: (marker) ->
-		@__map.removeLayer(marker)
+		for _, group of @__groups
+			foundElement = group.filter((element) => element.marker == marker)
+			if foundElement = foundElement[0]
+				indexOfElement = group.indexOf(foundElement)
+				group.splice(indexOfElement, 1)
+				break
 
-	__updateGroups: ->
-		for groupColor, group of @__groups
-			if group.polyline
-				@__map.removeLayer(group.polyline)
-			@__groups[groupColor].polyline = L.polyline(group.positions, {color: groupColor, weight: 2, dashArray: '4, 4'})
-			@__groups[groupColor].polyline.addTo(@__map)
+		if foundElement && foundElement.polyline
+			@__map.removeLayer(foundElement.polyline)
+
+		@__map.removeLayer(marker)
+		marker = null
+		return
+
+	__updateGroupsPolylines: ->
+		for _, group of @__groups
+			group.reduce((elementOne, elementTwo) =>
+				if not elementTwo
+					return
+
+				if elementOne.polyline
+					return elementTwo
+
+				elementOne.polyline = L.polyline([elementOne.marker.getLatLng(), elementTwo.marker.getLatLng()],
+					weight: 1.5
+					color: elementOne.options.color
+					dashArray: elementOne.options.polyline
+				)
+				elementOne.polyline.addTo(@__map)
+				return elementTwo
+			)
+		return
 
 	getSelectedMarkerPosition: ->
 		@__selectedMarker?.getLatLng()
@@ -177,10 +203,6 @@ class CUI.LeafletMap extends CUI.Map
 
 		for marker in @__markers
 			@__removeMarker(marker)
-
-		for _, group of @__groups
-			if group.polyline
-				@__map.removeLayer(group.polyline)
 
 		@__map.remove()
 
