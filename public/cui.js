@@ -38974,7 +38974,8 @@ CUI.MultiInput = (function(superClass) {
             return _this._control.showUserControl(ev, btn, _this.__multiInputDiv);
           },
           role: "multi-input-tag",
-          "class": "cui-multi-input-tag-button"
+          "class": "cui-multi-input-tag-button",
+          tooltip: key.tooltip
         });
         input.append(btn, "right");
         return CUI.Events.listen({

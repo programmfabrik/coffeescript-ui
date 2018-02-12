@@ -179,6 +179,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 						@_control.showUserControl(ev, btn, @__multiInputDiv)
 					role: "multi-input-tag"
 					class: "cui-multi-input-tag-button"
+					tooltip: key.tooltip
 
 				input.append(btn, "right")
 
