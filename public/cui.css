@@ -3226,6 +3226,9 @@ label[data-label-clickable],
   .cui-form-popover .cui-vertical-layout-center + .cui-vertical-layout-bottom .cui-empty-label {
     padding: 0; }
 
+.cui-options {
+  max-width: none; }
+
 .cui-options-inactive {
   margin-top: 10px; }
   .cui-options-inactive:empty {

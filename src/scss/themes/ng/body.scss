@@ -4602,6 +4602,10 @@ label[data-label-clickable],
 
 // Options
 
+.cui-options {
+	max-width: none;
+}
+
 .cui-options-inactive {
 	margin-top: $padding;
 
