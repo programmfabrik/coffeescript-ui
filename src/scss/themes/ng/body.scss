@@ -1035,60 +1035,6 @@ li > div {
 	  }
 	}
 
-	&.cui-disabled {
-	  cursor: default;
-	  opacity: 1;
-	  pointer-events: auto;
-
-		.cui-button-visual {
-		  color: $disabled-color;
-		  border-color: $button-border;
-	  }
-
-	  &:active {
-	  	.cui-button-visual {
-	  		background: $button-background;
-	  	}
-	  }
-
-	  &.cui-active,
-	  &.cui-active:active {
-	  	.cui-button-visual {
-	  		color: $button-active-disabled-text;
-	  		background: $button-active;
-	  		border-color: $button-active-border;
-	  	}
-	  }
-	}
-
-	&.cui-button-appearance-important, // removed [role] - makes it too specific
-	&.cui-button--primary {
-		.cui-button-visual {
-			color: $on-highlight-color;
-			background: lighten($highlight-color, 3%);
-			border-color: darken($highlight-color, 3%);
-		}
-
-		&.cui-layer-open,
-		&:active {
-			.cui-button-visual {
-				color: darken($on-highlight-color, 6%);
-				background: darken($highlight-color, 6%);
-				border-color: darken($highlight-color, 12%);
-			}
-		}
-
-		&.cui-disabled {
-			opacity: 0.33;
-
-		  &:active {
-		  	.cui-button-visual {
-		  		background: lighten($highlight-color, 3%);
-		  	}
-		  }
-		}
-	}
-
 	&.cui-active {
 		.cui-button-visual {
 			color: $button-active-text;
@@ -1111,6 +1057,62 @@ li > div {
 
 		.cui-button-visual {
 			@include border-focus;
+		}
+	}
+}
+
+.cui-button-button {
+	&.cui-disabled {
+		cursor: default;
+		opacity: 1;
+		pointer-events: auto;
+
+		.cui-button-visual {
+			color: $disabled-color;
+			border-color: $button-border;
+		}
+
+		&:active {
+			.cui-button-visual {
+				background: $button-background;
+			}
+		}
+
+		&.cui-active,
+		&.cui-active:active {
+			.cui-button-visual {
+				color: $button-active-disabled-text;
+				background: $button-active;
+				border-color: $button-active-border;
+			}
+		}
+	}
+
+	&.cui-button-appearance-important, // removed [role] - makes it too specific
+	&.cui-button--primary {
+		.cui-button-visual {
+			color: $on-highlight-color;
+			background: lighten($highlight-color, 3%);
+			border-color: darken($highlight-color, 3%);
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				color: darken($on-highlight-color, 6%);
+				background: darken($highlight-color, 6%);
+				border-color: darken($highlight-color, 12%);
+			}
+		}
+
+		&.cui-disabled {
+			opacity: 0.33;
+
+			&:active {
+				.cui-button-visual {
+					background: lighten($highlight-color, 3%);
+				}
+			}
 		}
 	}
 }
@@ -1331,9 +1333,13 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-disabled {
-		opacity: 0.3;
+		-webkit-user-select: none;
+		    -ms-user-select: none;
+		        user-select: none;
+		opacity: 0.33;
+		pointer-events: none;
 
-		.cui-data-field-disabled {
+		& & {
 			opacity: 1;
 		}
 	}
@@ -1467,10 +1473,6 @@ a[role="button"].cui-button-appearance-link {
 	display: inline-block;
 	vertical-align: top; // checkboxes next to each other should top-align
 
-	&.cui-data-field-disabled {
-		opacity: 1;
-	}
-
 	&--icon {
 		.cui-button-checkbox {
 			.cui-button-left i {
@@ -1518,16 +1520,6 @@ a[role="button"].cui-button-appearance-link {
 
 	[data-max-chars] {
 		text-align: inherit;
-	}
-
-	&.cui-disabled {
-		color: $disabled-color;
-		opacity: 1;
-		pointer-events: none;
-
-		.cui-button-left {
-			opacity: 0.27;
-		}
 	}
 
 	&:focus {
@@ -3006,17 +2998,6 @@ a[role="button"].cui-button-appearance-link {
 	  		background: $button-active;
 	  	}
 	  }
-
-		&.cui-disabled {
-			&,
-			&:hover,
-			&.cui-active {
-				.cui-button-visual {
-					color: $disabled-color;
-					background: none;
-				}
-			}
-		}
 
 	  .cui-button-center {
 	    padding: 0;
@@ -5627,6 +5608,10 @@ label[data-label-clickable],
 	        user-select: none;
 	opacity: 0.33;
 	pointer-events: none;
+	
+	.cui-data-field-disabled & {
+		opacity: 1;
+	}
 }
 
 // CUI technical stuff
