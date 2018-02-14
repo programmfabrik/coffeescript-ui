@@ -1042,46 +1042,6 @@ li > div {
   .cui-button-select:active .cui-button-visual,
   .cui-button-select.cui-active .cui-button-visual {
     background: #e6e8ea; }
-  .cui-button-button.cui-disabled,
-  .cui-button-select.cui-disabled {
-    cursor: default;
-    opacity: 1;
-    pointer-events: auto; }
-    .cui-button-button.cui-disabled .cui-button-visual,
-    .cui-button-select.cui-disabled .cui-button-visual {
-      color: #b5bbbf;
-      border-color: #b9c0c6; }
-    .cui-button-button.cui-disabled:active .cui-button-visual,
-    .cui-button-select.cui-disabled:active .cui-button-visual {
-      background: white; }
-    .cui-button-button.cui-disabled.cui-active .cui-button-visual, .cui-button-button.cui-disabled.cui-active:active .cui-button-visual,
-    .cui-button-select.cui-disabled.cui-active .cui-button-visual,
-    .cui-button-select.cui-disabled.cui-active:active .cui-button-visual {
-      color: #8a9ca8;
-      background: #5d707e;
-      border-color: #5d707e; }
-  .cui-button-button.cui-button-appearance-important .cui-button-visual, .cui-button-button.cui-button--primary .cui-button-visual,
-  .cui-button-select.cui-button-appearance-important .cui-button-visual,
-  .cui-button-select.cui-button--primary .cui-button-visual {
-    color: white;
-    background: #0071eb;
-    border-color: #0063cc; }
-  .cui-button-button.cui-button-appearance-important.cui-layer-open .cui-button-visual, .cui-button-button.cui-button-appearance-important:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-layer-open .cui-button-visual, .cui-button-button.cui-button--primary:active .cui-button-visual,
-  .cui-button-select.cui-button-appearance-important.cui-layer-open .cui-button-visual,
-  .cui-button-select.cui-button-appearance-important:active .cui-button-visual,
-  .cui-button-select.cui-button--primary.cui-layer-open .cui-button-visual,
-  .cui-button-select.cui-button--primary:active .cui-button-visual {
-    color: #f0f0f0;
-    background: #005bbd;
-    border-color: #004c9e; }
-  .cui-button-button.cui-button-appearance-important.cui-disabled, .cui-button-button.cui-button--primary.cui-disabled,
-  .cui-button-select.cui-button-appearance-important.cui-disabled,
-  .cui-button-select.cui-button--primary.cui-disabled {
-    opacity: 0.33; }
-    .cui-button-button.cui-button-appearance-important.cui-disabled:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-disabled:active .cui-button-visual,
-    .cui-button-select.cui-button-appearance-important.cui-disabled:active .cui-button-visual,
-    .cui-button-select.cui-button--primary.cui-disabled:active .cui-button-visual {
-      background: #0071eb; }
   .cui-button-button.cui-active .cui-button-visual,
   .cui-button-select.cui-active .cui-button-visual {
     color: white;
@@ -1101,6 +1061,35 @@ li > div {
       box-shadow: 0 0 0 3px #b3d7ff;
       border-color: #006adb;
       z-index: 1; }
+
+.cui-button-button.cui-disabled {
+  cursor: default;
+  opacity: 1;
+  pointer-events: auto; }
+  .cui-button-button.cui-disabled .cui-button-visual {
+    color: #b5bbbf;
+    border-color: #b9c0c6; }
+  .cui-button-button.cui-disabled:active .cui-button-visual {
+    background: white; }
+  .cui-button-button.cui-disabled.cui-active .cui-button-visual, .cui-button-button.cui-disabled.cui-active:active .cui-button-visual {
+    color: #8a9ca8;
+    background: #5d707e;
+    border-color: #5d707e; }
+
+.cui-button-button.cui-button-appearance-important .cui-button-visual, .cui-button-button.cui-button--primary .cui-button-visual {
+  color: white;
+  background: #0071eb;
+  border-color: #0063cc; }
+
+.cui-button-button.cui-button-appearance-important.cui-layer-open .cui-button-visual, .cui-button-button.cui-button-appearance-important:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-layer-open .cui-button-visual, .cui-button-button.cui-button--primary:active .cui-button-visual {
+  color: #f0f0f0;
+  background: #005bbd;
+  border-color: #004c9e; }
+
+.cui-button-button.cui-button-appearance-important.cui-disabled, .cui-button-button.cui-button--primary.cui-disabled {
+  opacity: 0.33; }
+  .cui-button-button.cui-button-appearance-important.cui-disabled:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-disabled:active .cui-button-visual {
+    background: #0071eb; }
 
 .cui-button-appearance-flat {
   align-self: auto;
@@ -1245,7 +1234,11 @@ a[role="button"].cui-button-appearance-link {
     padding-top: 0;
     padding-bottom: 0; }
   .cui-data-field-disabled {
-    opacity: 0.3; }
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    opacity: 0.33;
+    pointer-events: none; }
     .cui-data-field-disabled .cui-data-field-disabled {
       opacity: 1; }
   .cui-data-field--full-width {
@@ -1330,8 +1323,6 @@ a[role="button"].cui-button-appearance-link {
   max-width: 100%;
   display: inline-block;
   vertical-align: top; }
-  .cui-checkbox.cui-data-field-disabled {
-    opacity: 1; }
   .cui-checkbox--icon .cui-button-checkbox .cui-button-left i {
     border: none;
     background: none;
@@ -1360,12 +1351,6 @@ a[role="button"].cui-button-appearance-link {
   vertical-align: bottom; }
   .cui-button-checkbox [data-max-chars] {
     text-align: inherit; }
-  .cui-button-checkbox.cui-disabled {
-    color: #b5bbbf;
-    opacity: 1;
-    pointer-events: none; }
-    .cui-button-checkbox.cui-disabled .cui-button-left {
-      opacity: 0.27; }
   .cui-button-checkbox:focus {
     outline: none; }
     .cui-button-checkbox:focus .cui-button-left span,
@@ -2233,12 +2218,6 @@ a[role="button"].cui-button-appearance-link {
   .cui-item-list .cui-button-href.cui-active:hover .cui-button-visual {
     color: white;
     background: #5d707e; }
-  .cui-item-list .cui-button.cui-disabled .cui-button-visual, .cui-item-list .cui-button.cui-disabled:hover .cui-button-visual, .cui-item-list .cui-button.cui-disabled.cui-active .cui-button-visual,
-  .cui-item-list .cui-button-href.cui-disabled .cui-button-visual,
-  .cui-item-list .cui-button-href.cui-disabled:hover .cui-button-visual,
-  .cui-item-list .cui-button-href.cui-disabled.cui-active .cui-button-visual {
-    color: #b5bbbf;
-    background: none; }
   .cui-item-list .cui-button .cui-button-center,
   .cui-item-list .cui-button-href .cui-button-center {
     padding: 0; }
@@ -3944,6 +3923,8 @@ label[data-label-clickable],
   user-select: none;
   opacity: 0.33;
   pointer-events: none; }
+  .cui-data-field-disabled .cui-disabled {
+    opacity: 1; }
 
 .cui-tmpl,
 [data-template] {
