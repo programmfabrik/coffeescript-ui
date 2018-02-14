@@ -186,23 +186,44 @@ class CUI.Pane extends CUI.VerticalLayout
 			@startFillScreen()
 
 	# creates a button that can be used in paneheader (or somewhere else) to toggle fillscreen
-	@getToggleFillScreenButton: (opts={}) ->
-		for k, v of {
-			icon_inactive: new CUI.Icon(class: "fa-expand")
-			icon_active: new CUI.Icon(class: "fa-compress")
+	@getToggleFillScreenButton: (_opts={}) ->
+		opts = CUI.Element.readOpts(_opts, "Pane.getToggleFillScreenButton",
+			icon_inactive:
+				mandatory: true
+				check: (v) =>
+					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.isPlainObject(v)
+				default: "fa-expand"
+			icon_active:
+				mandatory: true
+				check: (v) =>
+					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.isPlainObject(v)
+				default: "fa-compress"
+			group:
+				mandatory: false
+				check: String
+			tooltip:
+				mandatory: true
+				check: (v) =>
+					v instanceof CUI.Tooltip or CUI.isPlainObject(v)
+				default: CUI.Pane.defaults.button_tooltip
+		)
+
+		if CUI.util.isString(opts.icon_inactive)
+			opts.icon_inactive = new CUI.Icon(class: opts.icon_inactive)
+
+		if CUI.util.isString(opts.icon_active)
+			opts.icon_active = new CUI.Icon(class: opts.icon_active)
+
+		for key, value of {
 			switch: true
 			onClick: (ev, btn) =>
 				paneDiv = CUI.dom.closest(btn.DOM, ".cui-pane")
 				pane = CUI.dom.data(paneDiv, "element")
 				pane.toggleFillScreen()
 		}
-			opts[k] = v
-
-		if not opts.tooltip
-			opts.tooltip = CUI.Pane.defaults.button_tooltip
+			opts[key] = value
 
 		new CUI.defaults.class.Button(opts)
-
 
 CUI.Events.registerEvent
 	type: ["start-fill-screen", "end-fill-screen"]

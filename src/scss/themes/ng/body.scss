@@ -5702,6 +5702,10 @@ label[data-label-clickable],
 	width: 100%;
 	height: 300px;
 	overflow: hidden!important;
+
+	.cui-vertical-layout-center {
+		overflow: hidden!important;
+	}
 }
 
 .cui-map-zoom-buttons {
@@ -5711,12 +5715,12 @@ label[data-label-clickable],
 	display: block;
 	margin-top: 10px;
 
-	.buttons-upper-left .cui-buttonbar-group {
+	.buttons-upper-left .cui-buttonbar {
 		position: absolute;
 		margin-left: 10px;
 	}
 
-	.buttons-upper-right .cui-buttonbar-group {
+	.buttons-upper-right .cui-buttonbar {
 		position: absolute;
 		right: 10px;
 	}

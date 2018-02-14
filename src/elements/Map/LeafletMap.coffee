@@ -32,7 +32,7 @@ class CUI.LeafletMap extends CUI.Map
 				if @_zoomToFitAllMarkersOnInit
 					@zoomToFitAllMarkers()
 				else
-					map.setView(@_center, @_zoom)
+					map.setView(@_centerPosition, @_zoom)
 				tileLayer.addTo(map)
 
 				@__onReady()
@@ -64,9 +64,9 @@ class CUI.LeafletMap extends CUI.Map
 
 		marker = L.marker(options.position, options)
 
-		if options.group?.number and @_showPolylines
-			@__groups[options.group.number] = @__groups[options.group.number] or []
-			@__groups[options.group.number].push(marker: marker, options: options.group.options)
+		if options.group?.type and @_showPolylines
+			@__groups[options.group.type] = @__groups[options.group.type] or []
+			@__groups[options.group.type].push(marker: marker, options: options.group.options)
 
 			delete options.group
 
@@ -174,7 +174,7 @@ class CUI.LeafletMap extends CUI.Map
 				group = new L.featureGroup(@__markers);
 				@__map.fitBounds(group.getBounds().pad(0.05));
 			else
-				@__map.setView(@_center, @_zoom)
+				@__map.setView(@_centerPosition, @_zoom)
 
 	zoomIn: ->
 		@__map.setZoom(@__map.getZoom() + 1)

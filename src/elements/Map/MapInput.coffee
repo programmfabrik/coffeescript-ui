@@ -18,7 +18,7 @@ class CUI.MapInput extends CUI.Input
 		dms: "FFf" # Degrees, minutes and seconds: 27° 43′ 31.796″ N 18° 1′ 27.484″ W
 		ddm: "Ff" # Degrees and decimal minutes: 27° 43.529933333333′ N -18° 1.4580666666667′ W
 		dd: "f"  # Decimal degrees: 27.725499° N 18.024301° W
-		ll: (position) -> "#{position.lat}, #{position.lng}" # Latitude and Longitude comma separated: 27.19234, 28.48822
+		ll: (position) -> "#{position.lat.toFixed(5)}, #{position.lng.toFixed(5)}" # Latitude and Longitude comma separated: 27.19234, 28.48822
 
 	getTemplateKeyForRender: ->
 		"center"
@@ -126,8 +126,7 @@ class CUI.MapInput extends CUI.Input
 			handle_focus: false
 			placement: "se"
 			class: "cui-map-popover"
-			pane:
-				content: @__map
+			pane: @__map
 			onHide: =>
 				popover.destroy()
 
@@ -156,7 +155,6 @@ class CUI.MapInput extends CUI.Input
 			element: button
 			handle_focus: false
 			placement: "se"
-			class: "cui-map-popover"
 			pane:
 				content: @__popoverContent
 			onHide: =>
@@ -215,7 +213,7 @@ class CUI.MapInput extends CUI.Input
 		if currentPosition
 			@_mapOptions.selectedMarkerPosition = currentPosition
 			@_mapOptions.selectedMarkerOptions = @__selectedMarkerOptions
-			@_mapOptions.center = currentPosition
+			@_mapOptions.centerPosition = currentPosition
 
 		@_mapOptions.showPolylines = false
 		@__map = new CUI.MapInput.defaults.mapClass(@_mapOptions)

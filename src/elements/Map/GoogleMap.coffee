@@ -26,7 +26,7 @@ class CUI.GoogleMap extends CUI.Map
 			if @_zoomToFitAllMarkersOnInit
 				@zoomToFitAllMarkers()
 			else
-				map.setCenter(@_center)
+				map.setCenter(@_centerPosition)
 				map.setZoom(@_zoom)
 
 			@__onReady()
@@ -115,7 +115,7 @@ class CUI.GoogleMap extends CUI.Map
 					@__bounds.extend(marker.position);
 				@__map.fitBounds(@__bounds);
 			else
-				@__map.setCenter(@_center)
+				@__map.setCenter(@_centerPosition)
 				@__map.setZoom(@_zoom)
 
 	zoomIn: ->
