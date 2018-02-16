@@ -113,6 +113,9 @@ class CUI.DataField extends CUI.DOMElement
 				check: Function
 			onRender:
 				check: Function
+			render_as_block:
+				check: Boolean
+
 
 	readOpts: ->
 		if @opts.hasOwnProperty("undo_and_changed_support")
@@ -352,7 +355,7 @@ class CUI.DataField extends CUI.DOMElement
 		data_fields
 
 	renderAsBlock: ->
-		false
+		!!@_render_as_block
 
 	isDataField: ->
 		@hasData()

@@ -28,8 +28,6 @@ class CUI.SimpleForm extends CUI.DataField
 				default: "normal"
 				mandatory: true
 				check: ["normal","separators"]
-			render_as_block:
-				check: Boolean
 			render_as_grid:
 				default: false
 				mandatory: true
