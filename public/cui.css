@@ -2218,6 +2218,12 @@ a[role="button"].cui-button-appearance-link {
   .cui-item-list .cui-button-href.cui-active:hover .cui-button-visual {
     color: white;
     background: #5d707e; }
+  .cui-item-list .cui-button.cui-disabled .cui-button-visual, .cui-item-list .cui-button.cui-disabled:hover .cui-button-visual, .cui-item-list .cui-button.cui-disabled.cui-active .cui-button-visual,
+  .cui-item-list .cui-button-href.cui-disabled .cui-button-visual,
+  .cui-item-list .cui-button-href.cui-disabled:hover .cui-button-visual,
+  .cui-item-list .cui-button-href.cui-disabled.cui-active .cui-button-visual {
+    color: #b5bbbf;
+    background: none; }
   .cui-item-list .cui-button .cui-button-center,
   .cui-item-list .cui-button-href .cui-button-center {
     padding: 0; }
