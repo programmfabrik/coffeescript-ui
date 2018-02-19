@@ -2542,6 +2542,8 @@ a[role="button"].cui-button-appearance-link {
     min-height: 0; }
   .cui-lv-td-max {
     flex-grow: 1; }
+  .cui-lv-td .cui-data-field-input {
+    flex-grow: 1; }
 
 .cui-lv-th {
   cursor: default; }
@@ -3490,7 +3492,8 @@ label[data-label-clickable],
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  flex: 1 1 auto; }
+  flex: 1 1 auto;
+  min-width: 100px; }
 
 .cui-data-field-multi-input-center {
   flex: 1 1 auto; }
