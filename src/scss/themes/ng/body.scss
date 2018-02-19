@@ -2537,16 +2537,6 @@ a[role="button"].cui-button-appearance-link {
 		min-height: 0;
 	}
 
-	.cui-form-key {
-		max-width: $td-width;
-		width: auto;
-		min-width: 100px;
-
-		@include phone {
-			max-width: none;
-		}
-	}
-
 	.cui-form-table {
 		&.cui-form-table-has-not-left-column {
 			> .cui-tr > .cui-form-value > .cui-data-field {
@@ -3959,6 +3949,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-table {
 	display: table;
 	// border: 1px solid $table-border;
+	
+	&.cui-maximize-horizontal {
+		width: 100%;
+	}
 
 	&--has-datafields {
 		.cui-td--text-content {
@@ -4131,44 +4125,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-form {
 	margin: $padding;
 	overflow: visible;
-
-	&.cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table {
-		display: block;
-		
-		.cui-form-table {
-			display: block;
-		}
-
-		.cui-form-tr {
-			display: flex;
-		}
-
-		.cui-form-td {
-			display: block;
-		}
-
-		.cui-form-key {
-			flex-shrink: 0;
-			width: $td-width;
-			max-width: none;
-
-			label {
-				word-wrap: break-word;
-				white-space: normal;
-				min-width: $td-min-width;
-				max-width: 100%;
-			}
-		}
-
-		.cui-form-value {
-			flex-shrink: 1;
-			min-width: 0;
-			
-			input {
-				min-width: 0;
-			}
-		}
-	}
 }
 
 .cui-form--grid {
@@ -4268,43 +4224,15 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-table {
-	display: table;
-	width: 100%;
 	margin: 0;
-
-	@include phone {
-		display: block;
-	}
+	display: block;
 
 	&[cui-form-depth="0"] {
-		width: calc(100% - #{2*$padding});
 		margin: $padding;
-	}
 
-	& + .cui-form-table {
-		margin-top: -$padding;
-	}
-
-	.cui-tr {
-		display: table-row;
-
-		&:nth-child(2n+1) {
-			background: none;
+		& + .cui-form-table {
+			margin-top: -$padding;
 		}
-	}
-
-	.cui-th,
-	.cui-td {
-		display: table-cell;
-		width: auto;
-	}
-
-	.cui-data-field {
-		// margin: 0;	// UNCLEAR conflict with multi-input spacing
-	}
-
-	.cui-select [data-max-chars] {
-		width: auto;
 	}
 }
 
@@ -4316,7 +4244,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-form-tr,
 .cui-form-tr-header {
-	display: table-row;
+	display: flex;
 
 	@include phone {
 		display: block;
@@ -4355,21 +4283,24 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-td {
-	display: table-cell;
 	padding: $padding/2 0;
 	vertical-align: top;
 }
 
-
 .cui-form-key {
+	flex-shrink: 0;
 	width: $td-width;
 	min-width: $td-width;
+	max-width: none;
 	padding-right: 10px;
 
 	label,
 	.cui-label {
 		display: inline-block;
 		margin: 4px 0;
+		white-space: normal;
+		min-width: $td-min-width;
+		max-width: 100%;
 		word-wrap: break-word;
 		color: $form-label-color;
 		font-size: $form-label-font-size;
@@ -4400,8 +4331,14 @@ label[data-label-clickable],
 
 .cui-form-value {
 	flex-grow: 1;
+	flex-shrink: 1;
+	min-width: 0;
 	// CONFLICT: kills the spacing when the label is multi-line
 	// vertical-align: middle;
+	
+	input {
+		min-width: 0;
+	}
 
 	> .cui-options {
 		margin: 2px 0; // align with label
@@ -5335,6 +5272,8 @@ label[data-label-clickable],
 }
 
 .cui-form-block {
+	border-bottom: none;
+	
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}
