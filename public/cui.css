@@ -3004,14 +3004,6 @@ a[role="button"].cui-button-appearance-link {
     margin: 10px; }
     .cui-form-table[cui-form-depth="0"] + .cui-form-table {
       margin-top: -10px; }
-  .cui-form-table--table-layout {
-    display: table; }
-    .cui-form-table--table-layout[cui-form-depth="0"] {
-      width: calc(100% - 20px); }
-    .cui-form-table--table-layout > .cui-form-tr {
-      display: table-row; }
-      .cui-form-table--table-layout > .cui-form-tr > .cui-form-td {
-        display: table-cell; }
 
 .cui-form-table-has-not-left-column > .cui-tr > .cui-td.cui-form-key {
   display: none; }
