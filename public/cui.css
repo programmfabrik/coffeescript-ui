@@ -2901,10 +2901,6 @@ a[role="button"].cui-button-appearance-link {
   .cui-th:last-child:after {
     display: none; }
 
-.cui-td--url input {
-  min-width: 300px;
-  width: 300px; }
-
 .status-2d-map .cui-tr:nth-child(odd):not(:first-child) {
   background: rgba(30, 54, 72, 0.04); }
 

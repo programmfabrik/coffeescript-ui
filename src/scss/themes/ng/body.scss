@@ -4094,13 +4094,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// Table Row Base-Widths
-
-.cui-td--url input {
-	min-width: 300px;
-	width: 300px;
-}
-
 .status-2d-map {
 	.cui-tr {
 		&:nth-child(odd):not(:first-child) {
