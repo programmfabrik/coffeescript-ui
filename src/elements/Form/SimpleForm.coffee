@@ -470,6 +470,21 @@ class CUI.SimpleForm extends CUI.DataField
 
 				table.appendChild(tr)
 			else
+				ff = field._form
+				if ff
+					if ff.maximize
+						classes.push("cui-maximize")
+
+					if (ff.maximize and ff.maximize_horizontal != false) or
+						ff.maximize_horizontal == true
+							classes.push("cui-maximize-horizontal")
+
+					if (ff.maximize and ff.maximize_vertical != false) or
+						ff.maximize_vertical == true
+							classes.push("cui-maximize-vertical")
+
+					console.debug("ff:", ff, classes)
+
 				row = CUI.dom.element("DIV", class: "cui-form-row "+classes.join(" "), "data-for-field": field.getUniqueId())
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
