@@ -2985,6 +2985,8 @@ a[role="button"].cui-button-appearance-link {
       min-width: 0;
       margin-bottom: 0;
       margin-right: 10px; }
+      .cui-form-container.cui-form--horizontal > .cui-form-row.cui-maximize-horizontal {
+        flex-grow: 1; }
       .cui-form-container.cui-form--horizontal > .cui-form-row:last-child {
         margin-right: 0; }
   .cui-form-container .cui-form[cui-form-depth="0"] {

@@ -688,7 +688,7 @@ li > div {
 		background: $header-background;
 		border-color: $header-border;
 		min-height: $toolbar-height;
-		
+
 		.cui-popover & {
 			background: lighten($header-background, 3%);
 			border-color: lighten($header-border, 3%);
@@ -1299,7 +1299,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-data-field {
 	max-width: $input-width;
 	margin: 0;
-	
+
 	&.cui-form {
 		max-width: 100%;
 		margin: 0;
@@ -1320,7 +1320,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&--textarea {
-		max-width: $textarea-width;	
+		max-width: $textarea-width;
 	}
 
 	.cui-list-view-grid-quadrant-3 {
@@ -1691,7 +1691,7 @@ a[role="button"].cui-button-appearance-link {
 // DataForm
 .cui-data-form--movable-rows {
 	max-width: 100%;
-	
+
 	> .cui-horizontal-layout > .cui-horizontal-layout-center {
 		max-width: $input-width;
 		overflow: visible; // show focus outline
@@ -3953,7 +3953,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-table {
 	display: table;
 	// border: 1px solid $table-border;
-	
+
 	&.cui-maximize-horizontal {
 		width: 100%;
 	}
@@ -4200,6 +4200,9 @@ a[role="button"].cui-button-appearance-link {
 
 		> .cui-form-row {
 			flex-grow: 0;
+			&.cui-maximize-horizontal {
+				flex-grow:1;
+			}
 			min-width: 0;
 			margin-bottom: 0;
 			margin-right: $padding;
@@ -4209,6 +4212,7 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 	}
+
 
 	.cui-form[cui-form-depth="0"] {
 		margin: $padding;
@@ -4339,7 +4343,7 @@ label[data-label-clickable],
 	min-width: 0;
 	// CONFLICT: kills the spacing when the label is multi-line
 	// vertical-align: middle;
-	
+
 	input {
 		min-width: 0;
 	}
@@ -4954,7 +4958,7 @@ label[data-label-clickable],
 
 
 // MultiInput
-	
+
 .cui-multi-input--textarea {
 	max-width: $textarea-width;
 }
@@ -5278,7 +5282,7 @@ label[data-label-clickable],
 
 .cui-form-block {
 	border-bottom: none;
-	
+
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}
@@ -5556,7 +5560,7 @@ label[data-label-clickable],
 	        user-select: none;
 	opacity: 0.33;
 	pointer-events: none;
-	
+
 	.cui-data-field-disabled & {
 		opacity: 1;
 	}
