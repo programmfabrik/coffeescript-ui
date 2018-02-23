@@ -36,8 +36,8 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		if @_parse_json and CUI.util.isString(data)
 			try
 				@__data = JSON.parse(data)
-				if not CUI.isPlainObject(@__data)
-					@__data(data)
+				if CUI.util.isString(@__data)
+					@__data = data
 			catch e
 				@__data = data
 		else
