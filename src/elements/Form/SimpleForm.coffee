@@ -483,8 +483,6 @@ class CUI.SimpleForm extends CUI.DataField
 						ff.maximize_vertical == true
 							classes.push("cui-maximize-vertical")
 
-					console.debug("ff:", ff, classes)
-
 				row = CUI.dom.element("DIV", class: "cui-form-row "+classes.join(" "), "data-for-field": field.getUniqueId())
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
