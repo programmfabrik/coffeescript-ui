@@ -28674,7 +28674,6 @@ CUI.SimpleForm = (function(superClass) {
             if ((ff.maximize && ff.maximize_vertical !== false) || ff.maximize_vertical === true) {
               classes.push("cui-maximize-vertical");
             }
-            console.debug("ff:", ff, classes);
           }
           row = CUI.dom.element("DIV", {
             "class": "cui-form-row " + classes.join(" "),
