@@ -272,6 +272,7 @@ li > div {
 .cui-vertical-layout {
 	flex-shrink: 0;
 	overflow: hidden;
+	max-width: 100%;
 
 	&.cui-maximize-vertical {
 		display: flex;
