@@ -1304,6 +1304,7 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-form {
 		max-width: 100%;
 		margin: 0;
+		flex-grow: 1;
 	}
 
 	&.cui-maximize-horizontal,
