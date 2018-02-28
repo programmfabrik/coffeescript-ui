@@ -64,3 +64,11 @@ To run the tests:
 ## Documentation
 
 https://programmfabrik.gitbooks.io/coffeescript-ui/
+
+## Live DEMO
+
+https://programmfabrik.github.io/coffeescript-ui/demo/index.html
+
+## Live Tutorial
+
+https://programmfabrik.github.io/coffeescript-ui/tutorial/index.html
