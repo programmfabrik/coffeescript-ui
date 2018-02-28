@@ -1,0 +1,44 @@
+{
+	"medien_ab": {
+		"text1": "Titel1",
+		"schlagwoerter": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			{
+				"lk_schlagwort_id": "haselnuss"
+			}
+		],
+		"personen": [
+			null,
+			null,
+			null,
+			{
+				"person": "Sebastian"
+			}
+		],
+		"fotograf": "Maxima, Charlotte",
+		"zusatzliche_titel": [
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			{
+				"zusatz_titel": "Titel8"
+			}
+		],
+		"_pool": {
+			"pool": {
+				"_id": 2
+			}
+		},
+		"_id_parent": null,
+		"_version": 1
+	},
+	"_mask": "medien_ab__all_fields"
+}

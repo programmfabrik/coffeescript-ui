@@ -1,0 +1,17 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
+$font_awesome_url: '../font-awesome/css/font-awesome.min.css';
+@import "../../../../../src/scss/themes/ng_debug/header.scss";
+
+// put debug demo ng stuff here
+$bgColor: #ffffc8;
+
+@import "../../../../../src/scss/themes/ng_debug/body.scss";
+@import "../../../../../src/scss/themes/ng_debug/footer.scss";
+
+@import "../ng/demo.scss";

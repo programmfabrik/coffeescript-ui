@@ -1,0 +1,91 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
+
+
+.cui-tmpl-demo-root {
+	//fill screen and start flex
+	height: 100%;
+	@include flex_display(flex);
+
+	//.cui-pane {
+	//	@include outer_pane_padding(bigger);
+	//}
+}
+
+//make sure the demo content page is always scrolling
+.cui-horizontal-layout.cui-maximize > .cui-horizontal-layout-center.cui-demo-pane-center {
+	overflow: auto;
+}
+
+.cui-root-layout {
+	margin-left: 0;
+}
+
+
+.cui-demo-table {
+	$divider_color: lightgrey;
+	//background-color: $default_background_color;
+
+	> tbody > tr {
+		&.cui-demo-divider {
+			background-color: $divider_color;
+		}
+
+		> td:first-child {
+			max-width: 400px;
+		}
+
+		> td {
+			padding: $grid_size*.5 $grid_size;
+			border-top: 1px solid $divider_color;
+		}
+	}
+
+}
+
+//TODO remove experimental code when finished
+.cui-demo-datafield-row {
+	> div {
+		display: inline-block;
+	}
+
+	&.flex {
+		@include flex_display(flex);
+		@include flex_direction(row);
+		@include flex(0,0);
+		@include flex_wrap(wrap);
+		@include justify_content(flex-start);
+		@include flex_align_items(center);
+
+		> div {
+			margin-top: 10px;
+		}
+	}
+
+	&.vertical-align {
+		> div {
+			vertical-align: middle;
+			margin: 2px 0px;
+		}
+	}
+}
+
+
+//defining the main or root pane
+// has special background in pane header and footer and a special flexhandle style
+
+//creates flex handles that are showing the root background, leaf cells are filled with default background color
+//%root_pane_layout_style() {
+//	&:not(.cui-pane) {
+//		@include ERROR_MARKER("root_pane_layout_style needs to be inside a cui-pane!");
+//	}
+//
+//	> .cui-layout-cell {
+//		background-color: $default_background_color;
+//	}
+//}
