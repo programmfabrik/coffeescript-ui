@@ -12,4 +12,6 @@ npm-debug.log
 !public/cui.js
 !public/cui.min.js
 !public/cui.css
+!public/cui-tutorial.js
+!public/cui-demo.js
 tutorial/public

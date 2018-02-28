@@ -2,7 +2,7 @@
 
 class WeatherService
 
-	@urlService = "http://weathers.co/api.php?city="
+	@urlService = "public/weather-service.json?city="
 
 	@getWeather: (city) ->
 		deferred = new CUI.Deferred()

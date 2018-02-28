@@ -18,7 +18,7 @@
     
 
 #### Tutorial
-* [Tutorial](tutorial/tutorial.md)
+* [Tutorial](../tutorial/tutorial.md)
 
 
 

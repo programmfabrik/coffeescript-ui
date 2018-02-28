@@ -1,4 +1,5 @@
 #CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
 require('./scss/base.scss')
 
 Weather = require('./modules/weather/Weather.coffee')

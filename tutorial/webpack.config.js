@@ -6,16 +6,20 @@ const APP_DIR = path.resolve(__dirname, 'src');
 
 const config = {
     context: APP_DIR,
-    entry: './app.coffee',
+    entry: './App.coffee',
     output: {
         path: BUILD_DIR,
-        filename: 'bundle.js'
+        filename: 'cui-tutorial.js'
     },
     module: {
         loaders: [
             {
                 test: /\.coffee/,
                 loader: 'coffee-loader'
+            },
+            {
+                test: /\.css$/,
+                loaders: ['style-loader', 'css-loader']
             },
             {
                 test: /\.scss$/,

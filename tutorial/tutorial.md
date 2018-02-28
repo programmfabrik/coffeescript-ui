@@ -3,7 +3,7 @@
 This tutorial uses [webpack](https://webpack.github.io/) as main dependency to bundle all files together.
 It's not obligatory to use it, but It's recommended
 
-If you use webpack we recommend you to use *webpack.ProvidePlugin*. The final solution of this tutorial is using that plugin.
+If you use webpack we recommend you to use [webpack.ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/). This plugin is useful by letting you not to write ```require("coffeescript-ui/public/cui.js")``` in each file.
 
 ## Dependencies
 
@@ -29,6 +29,7 @@ If you use webpack we recommend you to use *webpack.ProvidePlugin*. The final so
 
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
 CUI.alert({text: "Hello world"})
 ```
 
@@ -42,6 +43,8 @@ Inside that class we require **coffeescript-ui** so we can use its *ready* event
 **App.coffee**
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
+
 class App
   constructor: ->
     body = "Hello world!"
@@ -58,6 +61,7 @@ There is different types of layouts that we can use as main dom element. We use 
 **App.coffee**
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
   
 class App
   constructor: ->
@@ -86,6 +90,7 @@ After that we have to choose which classes our elements should use.
 **App.coffee**
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
 require('./scss/base.scss')
   
 class App
@@ -130,10 +135,10 @@ CUI.ready ->
 ### Fetching data
 
 It's easy to fetch data with *CUI.XHR*. Also we combine it with *CUI.Deferred* as an example, 
-but It's not necesarry because the method *start()* of an instance of *CUI.XHR* returns a CUI.Promise.
+but It's not necesarry because the method *start()* of *CUI.XHR* class returns a CUI.Promise.
 
-We use a weather-api-rest as an example.
 So, to separate responsibilities, we create a new class called "WeatherService". Its responsibility will be just fetch data from the api-rest.
+(As an example, we get a json file instead of invoking a real api.)
 
 **modules/weather/WeatherService.coffee**
 ```coffeescript
@@ -141,7 +146,7 @@ CUI = require("coffeescript-ui/public/cui.js")
 	
 class WeatherService
 	
-  @urlService = "http://weathers.co/api.php?city="
+  @urlService = "public/weather-service.json?city="
 	
   @getWeather: (city) ->
     deferred = new CUI.Deferred()
@@ -163,6 +168,7 @@ After that, we modify the main class so it can use this new class and get the da
 **App.coffee**
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
 require('./scss/base.scss')
   
 WeatherService = require('./modules/weather/WeatherService.coffee')
@@ -302,6 +308,7 @@ The main class suffered some modifications in the wake of these changes.
 **App.coffee**
 ```coffeescript
 CUI = require("coffeescript-ui/public/cui.js")
+require('coffeescript-ui/public/cui.css')
 require('./scss/base.scss')
  
 Weather = require('./modules/weather/Weather.coffee')
