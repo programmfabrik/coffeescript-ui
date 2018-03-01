@@ -1,0 +1,2704 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Coffeescript-UI Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>CUI</span>
+    &raquo;
+    <span class='title'>dom</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        CUI.dom
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>base&#47;dom.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <ul>
+<li>coffeescript-ui - Coffeescript User Interface System (CUI)</li>
+<li>Copyright (c) 2013 - 2016 Programmfabrik GmbH</li>
+<li>MIT Licence</li>
+<li><a href="https://github.com/programmfabrik/coffeescript-ui">https://github.com/programmfabrik/coffeescript-ui</a>, <a href="http://www.coffeescript-ui.org">http://www.coffeescript-ui.org</a></li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='__failedDOMInserts-variable'>
+    __failedDOMInserts
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0</code></pre>
+    
+  </dd>
+</dl>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#setElement-static'>
+        .
+(void)
+<b>setElement</b><span>(element, inst)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#data-static'>
+        .
+(void)
+<b>data</b><span>(node, key, data)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeData-static'>
+        .
+(void)
+<b>removeData</b><span>(node, key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findElement-static'>
+        .
+(void)
+<b>findElement</b><span>(node, selector, nodeFilter, forward = true, siblingOnly = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      find an element starting from node, but never going up
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findNextElement-static'>
+        .
+(void)
+<b>findNextElement</b><span>(node, selector, nodeFilter = false, forward = true, siblingOnly = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      find an element starting from node, with going up 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findPreviousElement-static'>
+        .
+(void)
+<b>findPreviousElement</b><span>(node, selector, nodeFilter = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findNextVisibleElement-static'>
+        .
+(void)
+<b>findNextVisibleElement</b><span>(node, selector, forward = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findPreviousVisibleElement-static'>
+        .
+(void)
+<b>findPreviousVisibleElement</b><span>(node, selector)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findNextSiblings-static'>
+        .
+(void)
+<b>findNextSiblings</b><span>(node, selector, nodeFilter = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findPreviousSiblings-static'>
+        .
+(void)
+<b>findPreviousSiblings</b><span>(node, selector, nodeFilter = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findElements-static'>
+        .
+(void)
+<b>findElements</b><span>(node = document.documentElement, selector = null, nodeFilter = false, maxEls = null, forward = true, siblingOnly = false, elements)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      find the next node starting from node start which matches the selector
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#children-static'>
+        .
+(void)
+<b>children</b><span>(node, filter)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#firstElementChild-static'>
+        .
+(void)
+<b>firstElementChild</b><span>(node, nodeFilter)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      finds the first element child which is not filtered by the optional node filter
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#lastElementChild-static'>
+        .
+(void)
+<b>lastElementChild</b><span>(node, nodeFilter)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#nextElementSibling-static'>
+        .
+(void)
+<b>nextElementSibling</b><span>(node, nodeFilter)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#previousElementSibling-static'>
+        .
+(void)
+<b>previousElementSibling</b><span>(node, nodeFilter)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeAttribute-static'>
+        .
+(void)
+<b>removeAttribute</b><span>(node, key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setAttribute-static'>
+        .
+(void)
+<b>setAttribute</b><span>(_node, key, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasAttribute-static'>
+        .
+(void)
+<b>hasAttribute</b><span>(node, key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setAttributeMap-static'>
+        .
+(void)
+<b>setAttributeMap</b><span>(_node, map)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#width-static'>
+        .
+(void)
+<b>width</b><span>(docElem, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#height-static'>
+        .
+(void)
+<b>height</b><span>(docElem, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__append-static'>
+        .
+(void)
+<b>__append</b><span>(node, content, append = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#replace-static'>
+        .
+(void)
+<b>replace</b><span>(node, content)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prepend-static'>
+        .
+(void)
+<b>prepend</b><span>(node, content)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#append-static'>
+        .
+(void)
+<b>append</b><span>(node, content)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getAttribute-static'>
+        .
+(void)
+<b>getAttribute</b><span>(node, key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#remove-static'>
+        .
+(void)
+<b>remove</b><span>(_node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#empty-static'>
+        .
+(void)
+<b>empty</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasClass-static'>
+        .
+(void)
+<b>hasClass</b><span>(element, cls)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      checks if any of the classes are set 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#toggleClass-static'>
+        .
+(void)
+<b>toggleClass</b><span>(element, cls)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setClass-static'>
+        .
+(void)
+<b>setClass</b><span>(element, cls, on_off)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setAria-static'>
+        .
+(void)
+<b>setAria</b><span>(element, attr, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addClass-static'>
+        .
+(void)
+<b>addClass</b><span>(element, cls)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeClass-static'>
+        .
+(void)
+<b>removeClass</b><span>(element, cls)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getRelativeOffset-static'>
+        .
+(void)
+<b>getRelativeOffset</b><span>(node, untilElem = null, ignore_margin = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      returns the relative position of either the next scrollable parent or positioned parent
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasAnimatedClone-static'>
+        .
+(void)
+<b>hasAnimatedClone</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initAnimatedClone-static'>
+        .
+(void)
+<b>initAnimatedClone</b><span>(node, selector)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      if selector is set, watch matched nodes 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#syncAnimatedClone-static'>
+        .
+(void)
+<b>syncAnimatedClone</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeAnimatedClone-static'>
+        .
+(void)
+<b>removeAnimatedClone</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setAbsolutePosition-static'>
+        .
+(void)
+<b>setAbsolutePosition</b><span>(element, offset)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      sets the absolute position of an element 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#waitForDOMRemove-static'>
+        .
+(void)
+<b>waitForDOMRemove</b><span>(_opts)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#waitForDOMInsert-static'>
+        .
+(void)
+<b>waitForDOMInsert</b><span>(_opts)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getNode-static'>
+        .
+(void)
+<b>getNode</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#printElement-static'>
+        .
+(void)
+<b>printElement</b><span>(_opts)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      small experiment, testing... 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isNode-static'>
+        .
+(void)
+<b>isNode</b><span>(node, level = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#insertChildAtPosition-static'>
+        .
+(void)
+<b>insertChildAtPosition</b><span>(node, node_insert, pos)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      Inserts the node like array &quot;slice&quot; 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#insertBefore-static'>
+        .
+(void)
+<b>insertBefore</b><span>(_node, node_before)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#insertAfter-static'>
+        .
+(void)
+<b>insertAfter</b><span>(_node, node_after)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#is-static'>
+        .
+(void)
+<b>is</b><span>(node, selector)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#matches-static'>
+        .
+(void)
+<b>matches</b><span>(node, selector)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find-static'>
+        .
+(void)
+<b>find</b><span>(sel)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#matchSelector-static'>
+        .
+(void)
+<b>matchSelector</b><span>(docElem, sel, trySelf = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#elementsUntil-static'>
+        .
+(void)
+<b>elementsUntil</b><span>(docElem, selector, untilDocElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      returns the element matching first the selector upwards, ends at untilDocElem
+selector &amp; untilDocElem: collect everything until selector matches, but
+                         not further than untilDocElem
+selector: collection eveverything until selector matches, null if no match
+untilDocElem: stop collecting at docElem
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#parent-static'>
+        .
+(void)
+<b>parent</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#closest-static'>
+        .
+(void)
+<b>closest</b><span>(docElem, selector)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#closestUntil-static'>
+        .
+(void)
+<b>closestUntil</b><span>(docElem, selector, untilDocElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#parentsUntil-static'>
+        .
+(void)
+<b>parentsUntil</b><span>(docElem, selector, untilDocElem = document.documentElement)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      selector is a stopper (like untiDocElem) 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#parents-static'>
+        .
+(void)
+<b>parents</b><span>(docElem, selector, untilDocElem = document.documentElement)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      selector is a filter 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isInDOM-static'>
+        .
+(void)
+<b>isInDOM</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#replaceWith-static'>
+        .
+(void)
+<b>replaceWith</b><span>(node, new_node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      new nodes can be node or Array of nodes 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getRect-static'>
+        .
+(void)
+<b>getRect</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getComputedStyle-static'>
+        .
+(void)
+<b>getComputedStyle</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setStyle-static'>
+        .
+(void)
+<b>setStyle</b><span>(docElem, style, append = &quot;px&quot;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setStyleOne-static'>
+        .
+(void)
+<b>setStyleOne</b><span>(docElem, key, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setStylePx-static'>
+        .
+(void)
+<b>setStylePx</b><span>(docElem, style)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getRelativePosition-static'>
+        .
+(void)
+<b>getRelativePosition</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getDimensions-static'>
+        .
+(void)
+<b>getDimensions</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#parentsScrollable-static'>
+        .
+(void)
+<b>parentsScrollable</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      returns the scrollable parents 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setDimension-static'>
+        .
+(void)
+<b>setDimension</b><span>(docElem, key, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getDimension-static'>
+        .
+(void)
+<b>getDimension</b><span>(docElem, key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prepareSetDimensions-static'>
+        .
+(void)
+<b>prepareSetDimensions</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setDimensions-static'>
+        .
+(void)
+<b>setDimensions</b><span>(docElem, _dim)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#htmlToNodes-static'>
+        .
+(void)
+<b>htmlToNodes</b><span>(html)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#findTextInNodes-static'>
+        .
+(void)
+<b>findTextInNodes</b><span>(nodes, callback, texts = [])</span>
+      </a>
+    </span>
+    <span class='desc'>
+      runs callback on each textnode 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getCSSFloatValue-static'>
+        .
+(void)
+<b>getCSSFloatValue</b><span>(v)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      turns 14.813px into a Number 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isPositioned-static'>
+        .
+(void)
+<b>isPositioned</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isVisible-static'>
+        .
+(void)
+<b>isVisible</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getBoxSizing-static'>
+        .
+(void)
+<b>getBoxSizing</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isBorderBox-static'>
+        .
+(void)
+<b>isBorderBox</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isContentBox-static'>
+        .
+(void)
+<b>isContentBox</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hideElement-static'>
+        .
+(void)
+<b>hideElement</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeChildren-static'>
+        .
+(void)
+<b>removeChildren</b><span>(docElem, filter)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      remove all children from a DOM node (detach) 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#showElement-static'>
+        .
+(void)
+<b>showElement</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#space-static'>
+        .
+(void)
+<b>space</b><span>(style = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#element-static'>
+        .
+(void)
+<b>element</b><span>(tagName, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#debugRect-static'>
+        .
+(void)
+<b>debugRect</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#scrollIntoView-static'>
+        .
+(void)
+<b>scrollIntoView</b><span>(docElem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setClassOnMousemove-static'>
+        .
+(void)
+<b>setClassOnMousemove</b><span>(_opts = {})</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#requestFullscreen-static'>
+        .
+(void)
+<b>requestFullscreen</b><span>(elem)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#exitFullscreen-static'>
+        .
+(void)
+<b>exitFullscreen</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#fullscreenElement-static'>
+        .
+(void)
+<b>fullscreenElement</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#fullscreenEnabled-static'>
+        .
+(void)
+<b>fullscreenEnabled</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isFullscreen-static'>
+        .
+(void)
+<b>isFullscreen</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#$element-static'>
+        .
+(void)
+<b>$element</b><span>(tagName, cls, attrs = {}, no_tables = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#div-static'>
+        .
+(void)
+<b>div</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#video-static'>
+        .
+(void)
+<b>video</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#audio-static'>
+        .
+(void)
+<b>audio</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#source-static'>
+        .
+(void)
+<b>source</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#span-static'>
+        .
+(void)
+<b>span</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#table-static'>
+        .
+(void)
+<b>table</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#img-static'>
+        .
+(void)
+<b>img</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#tr-static'>
+        .
+(void)
+<b>tr</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#th-static'>
+        .
+(void)
+<b>th</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#td-static'>
+        .
+(void)
+<b>td</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#i-static'>
+        .
+(void)
+<b>i</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#p-static'>
+        .
+(void)
+<b>p</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#pre-static'>
+        .
+(void)
+<b>pre</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#ul-static'>
+        .
+(void)
+<b>ul</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#a-static'>
+        .
+(void)
+<b>a</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#b-static'>
+        .
+(void)
+<b>b</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#li-static'>
+        .
+(void)
+<b>li</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#label-static'>
+        .
+(void)
+<b>label</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#h1-static'>
+        .
+(void)
+<b>h1</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#h2-static'>
+        .
+(void)
+<b>h2</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#h3-static'>
+        .
+(void)
+<b>h3</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#h4-static'>
+        .
+(void)
+<b>h4</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#h5-static'>
+        .
+(void)
+<b>h5</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#h6-static'>
+        .
+(void)
+<b>h6</b><span>(cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#text-static'>
+        .
+(void)
+<b>text</b><span>(text, cls, attrs)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#textEmpty-static'>
+        .
+(void)
+<b>textEmpty</b><span>(text)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#table_one_row-static'>
+        .
+(void)
+<b>table_one_row</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#tr_one_row-static'>
+        .
+(void)
+<b>tr_one_row</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='setElement-static'>
+      .
+(void)
+<b>setElement</b><span>(element, inst)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='data-static'>
+      .
+(void)
+<b>data</b><span>(node, key, data)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeData-static'>
+      .
+(void)
+<b>removeData</b><span>(node, key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findElement-static'>
+      .
+(void)
+<b>findElement</b><span>(node, selector, nodeFilter, forward = true, siblingOnly = false)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>find an element starting from node, but never going
+up</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findNextElement-static'>
+      .
+(void)
+<b>findNextElement</b><span>(node, selector, nodeFilter = false, forward = true, siblingOnly = true)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>find an element starting from node, with going up</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findPreviousElement-static'>
+      .
+(void)
+<b>findPreviousElement</b><span>(node, selector, nodeFilter = false)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findNextVisibleElement-static'>
+      .
+(void)
+<b>findNextVisibleElement</b><span>(node, selector, forward = true)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findPreviousVisibleElement-static'>
+      .
+(void)
+<b>findPreviousVisibleElement</b><span>(node, selector)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findNextSiblings-static'>
+      .
+(void)
+<b>findNextSiblings</b><span>(node, selector, nodeFilter = false)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findPreviousSiblings-static'>
+      .
+(void)
+<b>findPreviousSiblings</b><span>(node, selector, nodeFilter = false)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findElements-static'>
+      .
+(void)
+<b>findElements</b><span>(node = document.documentElement, selector = null, nodeFilter = false, maxEls = null, forward = true, siblingOnly = false, elements)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>find the next node starting from node start
+which matches the selector</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='children-static'>
+      .
+(void)
+<b>children</b><span>(node, filter)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='firstElementChild-static'>
+      .
+(void)
+<b>firstElementChild</b><span>(node, nodeFilter)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>finds the first element child which is not
+filtered by the optional node filter</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='lastElementChild-static'>
+      .
+(void)
+<b>lastElementChild</b><span>(node, nodeFilter)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='nextElementSibling-static'>
+      .
+(void)
+<b>nextElementSibling</b><span>(node, nodeFilter)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='previousElementSibling-static'>
+      .
+(void)
+<b>previousElementSibling</b><span>(node, nodeFilter)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeAttribute-static'>
+      .
+(void)
+<b>removeAttribute</b><span>(node, key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setAttribute-static'>
+      .
+(void)
+<b>setAttribute</b><span>(_node, key, value)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasAttribute-static'>
+      .
+(void)
+<b>hasAttribute</b><span>(node, key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setAttributeMap-static'>
+      .
+(void)
+<b>setAttributeMap</b><span>(_node, map)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='width-static'>
+      .
+(void)
+<b>width</b><span>(docElem, value)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='height-static'>
+      .
+(void)
+<b>height</b><span>(docElem, value)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__append-static'>
+      .
+(void)
+<b>__append</b><span>(node, content, append = true)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='replace-static'>
+      .
+(void)
+<b>replace</b><span>(node, content)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prepend-static'>
+      .
+(void)
+<b>prepend</b><span>(node, content)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='append-static'>
+      .
+(void)
+<b>append</b><span>(node, content)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getAttribute-static'>
+      .
+(void)
+<b>getAttribute</b><span>(node, key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='remove-static'>
+      .
+(void)
+<b>remove</b><span>(_node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='empty-static'>
+      .
+(void)
+<b>empty</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasClass-static'>
+      .
+(void)
+<b>hasClass</b><span>(element, cls)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>checks if any of the classes are set</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='toggleClass-static'>
+      .
+(void)
+<b>toggleClass</b><span>(element, cls)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setClass-static'>
+      .
+(void)
+<b>setClass</b><span>(element, cls, on_off)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setAria-static'>
+      .
+(void)
+<b>setAria</b><span>(element, attr, value)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addClass-static'>
+      .
+(void)
+<b>addClass</b><span>(element, cls)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeClass-static'>
+      .
+(void)
+<b>removeClass</b><span>(element, cls)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getRelativeOffset-static'>
+      .
+(void)
+<b>getRelativeOffset</b><span>(node, untilElem = null, ignore_margin = false)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>returns the relative position of either
+the next scrollable parent or positioned parent</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasAnimatedClone-static'>
+      .
+(void)
+<b>hasAnimatedClone</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='initAnimatedClone-static'>
+      .
+(void)
+<b>initAnimatedClone</b><span>(node, selector)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>if selector is set, watch matched nodes</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='syncAnimatedClone-static'>
+      .
+(void)
+<b>syncAnimatedClone</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeAnimatedClone-static'>
+      .
+(void)
+<b>removeAnimatedClone</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setAbsolutePosition-static'>
+      .
+(void)
+<b>setAbsolutePosition</b><span>(element, offset)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>sets the absolute position of an element</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='waitForDOMRemove-static'>
+      .
+(void)
+<b>waitForDOMRemove</b><span>(_opts)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='waitForDOMInsert-static'>
+      .
+(void)
+<b>waitForDOMInsert</b><span>(_opts)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getNode-static'>
+      .
+(void)
+<b>getNode</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='printElement-static'>
+      .
+(void)
+<b>printElement</b><span>(_opts)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>small experiment, testing...</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isNode-static'>
+      .
+(void)
+<b>isNode</b><span>(node, level = 0)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='insertChildAtPosition-static'>
+      .
+(void)
+<b>insertChildAtPosition</b><span>(node, node_insert, pos)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Inserts the node like array &quot;slice&quot;</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='insertBefore-static'>
+      .
+(void)
+<b>insertBefore</b><span>(_node, node_before)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='insertAfter-static'>
+      .
+(void)
+<b>insertAfter</b><span>(_node, node_after)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='is-static'>
+      .
+(void)
+<b>is</b><span>(node, selector)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='matches-static'>
+      .
+(void)
+<b>matches</b><span>(node, selector)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find-static'>
+      .
+(void)
+<b>find</b><span>(sel)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='matchSelector-static'>
+      .
+(void)
+<b>matchSelector</b><span>(docElem, sel, trySelf = false)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='elementsUntil-static'>
+      .
+(void)
+<b>elementsUntil</b><span>(docElem, selector, untilDocElem)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>returns the element matching first the selector
+upwards, ends at untilDocElem
+selector &amp; untilDocElem: collect everything until selector matches, but
+                         not further than untilDocElem
+selector: collection eveverything until selector matches, null if no match
+untilDocElem: stop collecting at docElem</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='parent-static'>
+      .
+(void)
+<b>parent</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='closest-static'>
+      .
+(void)
+<b>closest</b><span>(docElem, selector)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='closestUntil-static'>
+      .
+(void)
+<b>closestUntil</b><span>(docElem, selector, untilDocElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='parentsUntil-static'>
+      .
+(void)
+<b>parentsUntil</b><span>(docElem, selector, untilDocElem = document.documentElement)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>selector is a stopper (like untiDocElem)</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='parents-static'>
+      .
+(void)
+<b>parents</b><span>(docElem, selector, untilDocElem = document.documentElement)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>selector is a filter</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isInDOM-static'>
+      .
+(void)
+<b>isInDOM</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='replaceWith-static'>
+      .
+(void)
+<b>replaceWith</b><span>(node, new_node)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>new nodes can be node or Array of nodes</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getRect-static'>
+      .
+(void)
+<b>getRect</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getComputedStyle-static'>
+      .
+(void)
+<b>getComputedStyle</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setStyle-static'>
+      .
+(void)
+<b>setStyle</b><span>(docElem, style, append = &quot;px&quot;)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setStyleOne-static'>
+      .
+(void)
+<b>setStyleOne</b><span>(docElem, key, value)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setStylePx-static'>
+      .
+(void)
+<b>setStylePx</b><span>(docElem, style)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getRelativePosition-static'>
+      .
+(void)
+<b>getRelativePosition</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getDimensions-static'>
+      .
+(void)
+<b>getDimensions</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='parentsScrollable-static'>
+      .
+(void)
+<b>parentsScrollable</b><span>(node)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>returns the scrollable parents</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setDimension-static'>
+      .
+(void)
+<b>setDimension</b><span>(docElem, key, value)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getDimension-static'>
+      .
+(void)
+<b>getDimension</b><span>(docElem, key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prepareSetDimensions-static'>
+      .
+(void)
+<b>prepareSetDimensions</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setDimensions-static'>
+      .
+(void)
+<b>setDimensions</b><span>(docElem, _dim)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='htmlToNodes-static'>
+      .
+(void)
+<b>htmlToNodes</b><span>(html)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='findTextInNodes-static'>
+      .
+(void)
+<b>findTextInNodes</b><span>(nodes, callback, texts = [])</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>runs callback on each textnode</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getCSSFloatValue-static'>
+      .
+(void)
+<b>getCSSFloatValue</b><span>(v)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>turns 14.813px into a Number</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isPositioned-static'>
+      .
+(void)
+<b>isPositioned</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isVisible-static'>
+      .
+(void)
+<b>isVisible</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getBoxSizing-static'>
+      .
+(void)
+<b>getBoxSizing</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isBorderBox-static'>
+      .
+(void)
+<b>isBorderBox</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isContentBox-static'>
+      .
+(void)
+<b>isContentBox</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hideElement-static'>
+      .
+(void)
+<b>hideElement</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeChildren-static'>
+      .
+(void)
+<b>removeChildren</b><span>(docElem, filter)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>remove all children from a DOM node (detach)</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='showElement-static'>
+      .
+(void)
+<b>showElement</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='space-static'>
+      .
+(void)
+<b>space</b><span>(style = null)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='element-static'>
+      .
+(void)
+<b>element</b><span>(tagName, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='debugRect-static'>
+      .
+(void)
+<b>debugRect</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='scrollIntoView-static'>
+      .
+(void)
+<b>scrollIntoView</b><span>(docElem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setClassOnMousemove-static'>
+      .
+(void)
+<b>setClassOnMousemove</b><span>(_opts = {})</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='requestFullscreen-static'>
+      .
+(void)
+<b>requestFullscreen</b><span>(elem)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='exitFullscreen-static'>
+      .
+(void)
+<b>exitFullscreen</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='fullscreenElement-static'>
+      .
+(void)
+<b>fullscreenElement</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='fullscreenEnabled-static'>
+      .
+(void)
+<b>fullscreenEnabled</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isFullscreen-static'>
+      .
+(void)
+<b>isFullscreen</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='$element-static'>
+      .
+(void)
+<b>$element</b><span>(tagName, cls, attrs = {}, no_tables = false)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='div-static'>
+      .
+(void)
+<b>div</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='video-static'>
+      .
+(void)
+<b>video</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='audio-static'>
+      .
+(void)
+<b>audio</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='source-static'>
+      .
+(void)
+<b>source</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='span-static'>
+      .
+(void)
+<b>span</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='table-static'>
+      .
+(void)
+<b>table</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='img-static'>
+      .
+(void)
+<b>img</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='tr-static'>
+      .
+(void)
+<b>tr</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='th-static'>
+      .
+(void)
+<b>th</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='td-static'>
+      .
+(void)
+<b>td</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='i-static'>
+      .
+(void)
+<b>i</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='p-static'>
+      .
+(void)
+<b>p</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='pre-static'>
+      .
+(void)
+<b>pre</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='ul-static'>
+      .
+(void)
+<b>ul</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='a-static'>
+      .
+(void)
+<b>a</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='b-static'>
+      .
+(void)
+<b>b</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='li-static'>
+      .
+(void)
+<b>li</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='label-static'>
+      .
+(void)
+<b>label</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='h1-static'>
+      .
+(void)
+<b>h1</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='h2-static'>
+      .
+(void)
+<b>h2</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='h3-static'>
+      .
+(void)
+<b>h3</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='h4-static'>
+      .
+(void)
+<b>h4</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='h5-static'>
+      .
+(void)
+<b>h5</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='h6-static'>
+      .
+(void)
+<b>h6</b><span>(cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='text-static'>
+      .
+(void)
+<b>text</b><span>(text, cls, attrs)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='textEmpty-static'>
+      .
+(void)
+<b>textEmpty</b><span>(text)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='table_one_row-static'>
+      .
+(void)
+<b>table_one_row</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='tr_one_row-static'>
+      .
+(void)
+<b>tr_one_row</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

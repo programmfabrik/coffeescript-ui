@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Coffeescript-UI Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>CUI</span>
+    &raquo;
+    <span class='title'>ListViewTreeNode</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        CUI.ListViewTreeNode
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>elements&#47;ListView&#47;ListViewTreeNode.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/CUI/ListViewRow.html'>CUI.ListViewRow</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <ul>
+<li>coffeescript-ui - Coffeescript User Interface System (CUI)</li>
+<li>Copyright (c) 2013 - 2016 Programmfabrik GmbH</li>
+<li>MIT Licence</li>
+<li><a href="https://github.com/programmfabrik/coffeescript-ui">https://github.com/programmfabrik/coffeescript-ui</a>, <a href="http://www.coffeescript-ui.org">http://www.coffeescript-ui.org</a></li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/CUI/ListViewTreeHeaderNode.html'>CUI.ListViewTreeHeaderNode</a>
+        <a href='../../class/CUI/ObjectDumperNode.html'>CUI.ObjectDumperNode</a>
+      </p>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='getChildren-variable'>
+    getChildren
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>null</code></pre>
+    <div class='docstring'>
+  <p>overwrite with Method</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+  <dt id='hasChildren-variable'>
+    hasChildren
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>null</code></pre>
+    <div class='docstring'>
+  <p>overwrite with Method</p>
+</div>
+<div class='tags'>
+</div>
+  </dd>
+</dl>
+      <h3 class='inherited'>
+        Variable inherited from
+        <a href='../../class/CUI/ListViewRow.html'>CUI.ListViewRow</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../../class/CUI/ListViewRow.html#moveRow-variable'>moveRow</a>
+        <a href='../../class/CUI/ListViewRow.html#__selectableClass-variable'>__selectableClass</a>
+        <a href='../../class/CUI/ListViewRow.html#__movableClass-variable'>__movableClass</a>
+        <a href='../../class/CUI/ListViewRow.html#defaults-variable'>defaults</a>
+        <a href='../../class/CUI/Element.html#uniqueId-variable'>uniqueId</a>
+      </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#initOpts-dynamic'>
+        #
+(void)
+<b>initOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#readOpts-dynamic'>
+        #
+(void)
+<b>readOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setColspan-dynamic'>
+        #
+(void)
+<b>setColspan</b><span>(colspan)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getColspan-dynamic'>
+        #
+(void)
+<b>getColspan</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isLeaf-dynamic'>
+        #
+(void)
+<b>isLeaf</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getClass-dynamic'>
+        #
+(void)
+<b>getClass</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isSelectable-dynamic'>
+        #
+(void)
+<b>isSelectable</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getFather-dynamic'>
+        #
+(void)
+<b>getFather</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setFather-dynamic'>
+        #
+(void)
+<b>setFather</b><span>(new_father)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isRoot-dynamic'>
+        #
+(void)
+<b>isRoot</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setTree-dynamic'>
+        #
+(void)
+<b>setTree</b><span>(tree)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getRoot-dynamic'>
+        #
+(void)
+<b>getRoot</b><span>(call = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#dump-dynamic'>
+        #
+(void)
+<b>dump</b><span>(lines = [], depth = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#dumpString-dynamic'>
+        #
+(void)
+<b>dumpString</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTree-dynamic'>
+        #
+(void)
+<b>getTree</b><span>(call = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#find-dynamic'>
+        #
+(void)
+<b>find</b><span>(eq_func = null, nodes = [])</span>
+      </a>
+    </span>
+    <span class='desc'>
+      find tree nodes, using the provided compare function
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#filter-dynamic'>
+        #
+(void)
+<b>filter</b><span>(filter_func, filtered_nodes = [])</span>
+      </a>
+    </span>
+    <span class='desc'>
+      filters the children by function 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getPath-dynamic'>
+        #
+(void)
+<b>getPath</b><span>(include_self = false, path = [], call = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getChildIdx-dynamic'>
+        #
+(void)
+<b>getChildIdx</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getNodeId-dynamic'>
+        #
+(void)
+<b>getNodeId</b><span>(include_self = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getOpenChildNodes-dynamic'>
+        #
+(void)
+<b>getOpenChildNodes</b><span>(nodes = [])</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getRowsToMove-dynamic'>
+        #
+(void)
+<b>getRowsToMove</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isRendered-dynamic'>
+        #
+(void)
+<b>isRendered</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#sort-dynamic'>
+        #
+(void)
+<b>sort</b><span>(func, level = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#close-dynamic'>
+        #
+(void)
+<b>close</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeFromDOM-dynamic'>
+        #
+(void)
+<b>removeFromDOM</b><span>(remove_self = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      remove_self == false only removs children 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#replaceSelf-dynamic'>
+        #
+(void)
+<b>replaceSelf</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      replaces node_element with a new render of ourself 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#openRecursively-dynamic'>
+        #
+(void)
+<b>openRecursively</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      opens all children and grandchilden 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#closeRecursively-dynamic'>
+        #
+(void)
+<b>closeRecursively</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__actionRecursively-dynamic'>
+        #
+(void)
+<b>__actionRecursively</b><span>(action)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isOpen-dynamic'>
+        #
+(void)
+<b>isOpen</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isLoading-dynamic'>
+        #
+(void)
+<b>isLoading</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getLoading-dynamic'>
+        #
+(void)
+<b>getLoading</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#abortLoading-dynamic'>
+        #
+(void)
+<b>abortLoading</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#open-dynamic'>
+        #
+(void)
+<b>open</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      resolves with the opened node 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prependChild-dynamic'>
+        #
+(void)
+<b>prependChild</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addChild-dynamic'>
+        #
+(void)
+<b>addChild</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#prependSibling-dynamic'>
+        #
+(void)
+<b>prependSibling</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#appendSibling-dynamic'>
+        #
+(void)
+<b>appendSibling</b><span>(node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initChildren-dynamic'>
+        #
+(void)
+<b>initChildren</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addNode-dynamic'>
+        #
+(void)
+<b>addNode</b><span>(node, append = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__appendNode-dynamic'>
+        #
+(void)
+<b>__appendNode</b><span>(node, append = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      resolves with the appended node 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#remove-dynamic'>
+        #
+(void)
+<b>remove</b><span>(keep_children_array = false, select_after = true)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeChild-dynamic'>
+        #
+(void)
+<b>removeChild</b><span>(child, keep_children_array = false)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#deselect-dynamic'>
+        #
+(void)
+<b>deselect</b><span>(ev, new_node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#allowRowMove-dynamic'>
+        #
+(void)
+<b>allowRowMove</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#check_deselect-dynamic'>
+        #
+(void)
+<b>check_deselect</b><span>(ev, new_node)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isSelected-dynamic'>
+        #
+(void)
+<b>isSelected</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addSelectedClass-dynamic'>
+        #
+(void)
+<b>addSelectedClass</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeSelectedClass-dynamic'>
+        #
+(void)
+<b>removeSelectedClass</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setSelectedNode-dynamic'>
+        #
+(void)
+<b>setSelectedNode</b><span>(node = null, key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getSelectedNode-dynamic'>
+        #
+(void)
+<b>getSelectedNode</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getSelectedNodeKey-dynamic'>
+        #
+(void)
+<b>getSelectedNodeKey</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#select-dynamic'>
+        #
+(void)
+<b>select</b><span>(event)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#openUpwards-dynamic'>
+        #
+(void)
+<b>openUpwards</b><span>(level = 0)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      resolves with the innermost node 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#level-dynamic'>
+        #
+(void)
+<b>level</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#renderContent-dynamic'>
+        #
+(void)
+<b>renderContent</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update-dynamic'>
+        #
+(void)
+<b>update</b><span>(update_root = false)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#reload-dynamic'>
+        #
+(void)
+<b>reload</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#showSpinner-dynamic'>
+        #
+(void)
+<b>showSpinner</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hideSpinner-dynamic'>
+        #
+(void)
+<b>hideSpinner</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#render-dynamic'>
+        #
+(void)
+<b>render</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#moveToNewFather-dynamic'>
+        #
+(void)
+<b>moveToNewFather</b><span>(new_father, new_child_idx)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#moveNodeBefore-dynamic'>
+        #
+(void)
+<b>moveNodeBefore</b><span>(to_node, new_father, after)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      needs to return a promise 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#moveNodeAfter-dynamic'>
+        #
+(void)
+<b>moveNodeAfter</b><span>(to_node, new_father, after)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/CUI/ListViewRow.html'>CUI.ListViewRow</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/CUI/ListViewRow.html#initOpts-dynamic'>#initOpts</a>
+          <a href='../../class/CUI/ListViewRow.html#readOpts-dynamic'>#readOpts</a>
+          <a href='../../class/CUI/ListViewRow.html#addColumn-dynamic'>#addColumn</a>
+          <a href='../../class/CUI/ListViewRow.html#setColumn-dynamic'>#setColumn</a>
+          <a href='../../class/CUI/ListViewRow.html#prependColumn-dynamic'>#prependColumn</a>
+          <a href='../../class/CUI/ListViewRow.html#setSelectable-dynamic'>#setSelectable</a>
+          <a href='../../class/CUI/ListViewRow.html#isSelectable-dynamic'>#isSelectable</a>
+          <a href='../../class/CUI/ListViewRow.html#isMovable-dynamic'>#isMovable</a>
+          <a href='../../class/CUI/ListViewRow.html#removeColumns-dynamic'>#removeColumns</a>
+          <a href='../../class/CUI/ListViewRow.html#getColumns-dynamic'>#getColumns</a>
+          <a href='../../class/CUI/ListViewRow.html#setRowIdx-dynamic'>#setRowIdx</a>
+          <a href='../../class/CUI/ListViewRow.html#getDOMNodes-dynamic'>#getDOMNodes</a>
+          <a href='../../class/CUI/ListViewRow.html#getRowIdx-dynamic'>#getRowIdx</a>
+          <a href='../../class/CUI/ListViewRow.html#scrollIntoView-dynamic'>#scrollIntoView</a>
+          <a href='../../class/CUI/ListViewRow.html#getDisplayRowIdx-dynamic'>#getDisplayRowIdx</a>
+          <a href='../../class/CUI/ListViewRow.html#addedToListView-dynamic'>#addedToListView</a>
+          <a href='../../class/CUI/ListViewRow.html#isAddedToListView-dynamic'>#isAddedToListView</a>
+          <a href='../../class/CUI/ListViewRow.html#setListView-dynamic'>#setListView</a>
+          <a href='../../class/CUI/ListViewRow.html#getListView-dynamic'>#getListView</a>
+          <a href='../../class/CUI/ListViewRow.html#getClass-dynamic'>#getClass</a>
+          <a href='../../class/CUI/ListViewRow.html#setClass-dynamic'>#setClass</a>
+          <a href='../../class/CUI/ListViewRow.html#addClass-dynamic'>#addClass</a>
+          <a href='../../class/CUI/ListViewRow.html#removeClass-dynamic'>#removeClass</a>
+          <a href='../../class/CUI/ListViewRow.html#select-dynamic'>#select</a>
+          <a href='../../class/CUI/ListViewRow.html#deselect-dynamic'>#deselect</a>
+          <a href='../../class/CUI/ListViewRow.html#isSelected-dynamic'>#isSelected</a>
+          <a href='../../class/CUI/ListViewRow.html#remove-dynamic'>#remove</a>
+          <a href='../../class/CUI/Element.html#getElementClass-dynamic'>#getElementClass</a>
+          <a href='../../class/CUI/Element.html#getUniqueId-dynamic'>#getUniqueId</a>
+          <a href='../../class/CUI/Element.html#getOpts-dynamic'>#getOpts</a>
+          <a href='../../class/CUI/Element.html#getOpt-dynamic'>#getOpt</a>
+          <a href='../../class/CUI/Element.html#hasOpt-dynamic'>#hasOpt</a>
+          <a href='../../class/CUI/Element.html#getSetOpt-dynamic'>#getSetOpt</a>
+          <a href='../../class/CUI/Element.html#hasSetOpt-dynamic'>#hasSetOpt</a>
+          <a href='../../class/CUI/Element.html#copy-dynamic'>#copy</a>
+          <a href='../../class/CUI/Element.html#mergeOpt-dynamic'>#mergeOpt</a>
+          <a href='../../class/CUI/Element.html#removeOpt-dynamic'>#removeOpt</a>
+          <a href='../../class/CUI/Element.html#addOpt-dynamic'>#addOpt</a>
+          <a href='../../class/CUI/Element.html#addOpts-dynamic'>#addOpts</a>
+          <a href='../../class/CUI/Element.html#mergeOpts-dynamic'>#mergeOpts</a>
+          <a href='../../class/CUI/Element.html#__getCheckMap-dynamic'>#__getCheckMap</a>
+          <a href='../../class/CUI/Element.html#readOptsFromAttr-dynamic'>#readOptsFromAttr</a>
+          <a href='../../class/CUI/Element.html#proxy-dynamic'>#proxy</a>
+          <a href='../../class/CUI/Element.html#destroy-dynamic'>#destroy</a>
+          <a href='../../class/CUI/Element.html#isDestroyed-dynamic'>#isDestroyed</a>
+          <a href='../../class/CUI/Element.html#getOptKeys-static'>.getOptKeys</a>
+        </p>
+      </h2>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='initOpts-dynamic'>
+      #
+(void)
+<b>initOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='readOpts-dynamic'>
+      #
+(void)
+<b>readOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setColspan-dynamic'>
+      #
+(void)
+<b>setColspan</b><span>(colspan)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getColspan-dynamic'>
+      #
+(void)
+<b>getColspan</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isLeaf-dynamic'>
+      #
+(void)
+<b>isLeaf</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getClass-dynamic'>
+      #
+(void)
+<b>getClass</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isSelectable-dynamic'>
+      #
+(void)
+<b>isSelectable</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getFather-dynamic'>
+      #
+(void)
+<b>getFather</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setFather-dynamic'>
+      #
+(void)
+<b>setFather</b><span>(new_father)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isRoot-dynamic'>
+      #
+(void)
+<b>isRoot</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setTree-dynamic'>
+      #
+(void)
+<b>setTree</b><span>(tree)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getRoot-dynamic'>
+      #
+(void)
+<b>getRoot</b><span>(call = 0)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='dump-dynamic'>
+      #
+(void)
+<b>dump</b><span>(lines = [], depth = 0)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='dumpString-dynamic'>
+      #
+(void)
+<b>dumpString</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTree-dynamic'>
+      #
+(void)
+<b>getTree</b><span>(call = 0)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='find-dynamic'>
+      #
+(void)
+<b>find</b><span>(eq_func = null, nodes = [])</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>find tree nodes, using the provided compare
+function</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='filter-dynamic'>
+      #
+(void)
+<b>filter</b><span>(filter_func, filtered_nodes = [])</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>filters the children by function</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getPath-dynamic'>
+      #
+(void)
+<b>getPath</b><span>(include_self = false, path = [], call = 0)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getChildIdx-dynamic'>
+      #
+(void)
+<b>getChildIdx</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getNodeId-dynamic'>
+      #
+(void)
+<b>getNodeId</b><span>(include_self = true)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getOpenChildNodes-dynamic'>
+      #
+(void)
+<b>getOpenChildNodes</b><span>(nodes = [])</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getRowsToMove-dynamic'>
+      #
+(void)
+<b>getRowsToMove</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isRendered-dynamic'>
+      #
+(void)
+<b>isRendered</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='sort-dynamic'>
+      #
+(void)
+<b>sort</b><span>(func, level = 0)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='close-dynamic'>
+      #
+(void)
+<b>close</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeFromDOM-dynamic'>
+      #
+(void)
+<b>removeFromDOM</b><span>(remove_self = true)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>remove_self == false only removs children</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='replaceSelf-dynamic'>
+      #
+(void)
+<b>replaceSelf</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>replaces node_element with a new render of ourself</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='openRecursively-dynamic'>
+      #
+(void)
+<b>openRecursively</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>opens all children and grandchilden</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='closeRecursively-dynamic'>
+      #
+(void)
+<b>closeRecursively</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__actionRecursively-dynamic'>
+      #
+(void)
+<b>__actionRecursively</b><span>(action)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isOpen-dynamic'>
+      #
+(void)
+<b>isOpen</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isLoading-dynamic'>
+      #
+(void)
+<b>isLoading</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getLoading-dynamic'>
+      #
+(void)
+<b>getLoading</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='abortLoading-dynamic'>
+      #
+(void)
+<b>abortLoading</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='open-dynamic'>
+      #
+(void)
+<b>open</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>resolves with the opened node</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prependChild-dynamic'>
+      #
+(void)
+<b>prependChild</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addChild-dynamic'>
+      #
+(void)
+<b>addChild</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='prependSibling-dynamic'>
+      #
+(void)
+<b>prependSibling</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='appendSibling-dynamic'>
+      #
+(void)
+<b>appendSibling</b><span>(node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='initChildren-dynamic'>
+      #
+(void)
+<b>initChildren</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addNode-dynamic'>
+      #
+(void)
+<b>addNode</b><span>(node, append = true)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__appendNode-dynamic'>
+      #
+(void)
+<b>__appendNode</b><span>(node, append = true)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>resolves with the appended node</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='remove-dynamic'>
+      #
+(void)
+<b>remove</b><span>(keep_children_array = false, select_after = true)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeChild-dynamic'>
+      #
+(void)
+<b>removeChild</b><span>(child, keep_children_array = false)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='deselect-dynamic'>
+      #
+(void)
+<b>deselect</b><span>(ev, new_node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='allowRowMove-dynamic'>
+      #
+(void)
+<b>allowRowMove</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='check_deselect-dynamic'>
+      #
+(void)
+<b>check_deselect</b><span>(ev, new_node)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isSelected-dynamic'>
+      #
+(void)
+<b>isSelected</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addSelectedClass-dynamic'>
+      #
+(void)
+<b>addSelectedClass</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeSelectedClass-dynamic'>
+      #
+(void)
+<b>removeSelectedClass</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setSelectedNode-dynamic'>
+      #
+(void)
+<b>setSelectedNode</b><span>(node = null, key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getSelectedNode-dynamic'>
+      #
+(void)
+<b>getSelectedNode</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getSelectedNodeKey-dynamic'>
+      #
+(void)
+<b>getSelectedNodeKey</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='select-dynamic'>
+      #
+(void)
+<b>select</b><span>(event)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='openUpwards-dynamic'>
+      #
+(void)
+<b>openUpwards</b><span>(level = 0)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>resolves with the innermost node</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='level-dynamic'>
+      #
+(void)
+<b>level</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='renderContent-dynamic'>
+      #
+(void)
+<b>renderContent</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update-dynamic'>
+      #
+(void)
+<b>update</b><span>(update_root = false)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='reload-dynamic'>
+      #
+(void)
+<b>reload</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='showSpinner-dynamic'>
+      #
+(void)
+<b>showSpinner</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hideSpinner-dynamic'>
+      #
+(void)
+<b>hideSpinner</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='render-dynamic'>
+      #
+(void)
+<b>render</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='moveToNewFather-dynamic'>
+      #
+(void)
+<b>moveToNewFather</b><span>(new_father, new_child_idx)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='moveNodeBefore-dynamic'>
+      #
+(void)
+<b>moveNodeBefore</b><span>(to_node, new_father, after)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>needs to return a promise</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='moveNodeAfter-dynamic'>
+      #
+(void)
+<b>moveNodeAfter</b><span>(to_node, new_father, after)</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

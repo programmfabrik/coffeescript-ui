@@ -137,9 +137,7 @@ class CUI.FlexHandle extends CUI.Element
 					@storeState()
 				return
 
-
 		# console.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
-
 		drag_start_size = null
 
 		new CUI.Draggable
@@ -150,8 +148,7 @@ class CUI.FlexHandle extends CUI.Element
 				if @isClosed()
 					return false
 
-# helper_remove_always: true
-
+			# helper_remove_always: true
 			dragstart: (ev, gd) =>
 				if @__pane_idx < @__element_idx
 					flip = 1
@@ -192,23 +189,6 @@ class CUI.FlexHandle extends CUI.Element
 					return "ew-resize"
 				else
 					return "ns-resize"
-
-# helper_set_pos: (gd, helper_pos) ->
-# 	data = gd.__pane_data
-# 	if data.axis == "x"
-# 		key = "left"
-# 	else
-# 		key = "top"
-
-# 	new_value = data.value + gd.dragDiff[data.axis] * data.flip
-# 	if new_value < data.min
-# 		new_value = data.min
-# 	else if new_value > data.max
-# 		new_value = data.max
-
-# 	helper_pos[key] = (new_value - data.value) * data.flip + helper_pos.start[key]
-
-# 	return
 
 			dragend: (ev, gd) =>
 				dragging(gd)
@@ -259,7 +239,6 @@ class CUI.FlexHandle extends CUI.Element
 			@_element.classList.remove("cui-is-manually-sized")
 			@__size = null
 		else
-# console.debug "DOM set dimension", size, @__css_value, @__pane
 			@__pane.classList.add("cui-is-manually-sized")
 			@_element.classList.add("cui-is-manually-sized")
 			CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, size)
@@ -281,7 +260,7 @@ class CUI.FlexHandle extends CUI.Element
 			true
 
 	__resize: ->
-# console.debug "FlexHandle.__resize", @__uniqueId, @isDestroyed(), @__isInDOM, @__isAlive()
+		# console.debug "FlexHandle.__resize", @__uniqueId, @isDestroyed(), @__isInDOM, @__isAlive()
 
 		if not @__isAlive()
 			return
@@ -291,11 +270,6 @@ class CUI.FlexHandle extends CUI.Element
 			type: "viewport-resize"
 			info:
 				FlexHandle: true
-
-# CUI.Events.trigger
-# 	type: "viewport-resize"
-# 	node: @_element.parent()
-
 
 	__getState: ->
 		value = CUI.getLocalStorage(@__state_name)
@@ -366,9 +340,8 @@ class CUI.FlexHandle extends CUI.Element
 
 		if do_stretch
 
-# first we set all the value to explicit "px"
-# so that the transition works
-#
+			# first we set all the value to explicit "px"
+			# so that the transition works
 			for el in els
 				el.classList.add("cui-flex-handle-hide-for-stretch")
 				el.classList.add("cui-flex-handle-hide-for-stretch-#{direction}")
@@ -459,7 +432,7 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	open: ->
-# console.debug "FlexHandle.show", @__uniqueId, @isOpen()
+	# console.debug "FlexHandle.show", @__uniqueId, @isOpen()
 		if @isOpen()
 			return @
 
@@ -477,7 +450,7 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	show: ->
-# console.debug "FlexHandle.show", @__uniqueId, @isShown()
+	# console.debug "FlexHandle.show", @__uniqueId, @isShown()
 		if @isShown()
 			return @
 		@_element.classList.remove("cui-flex-handle-hidden")

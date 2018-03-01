@@ -7,6 +7,7 @@
     "build:watch": "webpack --watch --progress",
     "build:all": "npm run build && npm run build:min",
     "build:min": "npm run build -- --env.minify",
+    "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest"
   },
   "repository": {
@@ -30,7 +31,9 @@
   },
   "homepage": "https://github.com/programmfabrik/coffeescript-ui#readme",
   "jest": {
-    "setupFiles": ["./test/setup.js"],
+    "setupFiles": [
+      "./test/setup.js"
+    ],
     "transform": {
       "^.+\\.coffee$": "./test/preprocessor.js",
       "^.+\\.html$": "./test/html-loader.js"
@@ -40,6 +43,7 @@
     "babel-jest": "^21.2.0",
     "base64-inline-loader": "^1.1.0",
     "clean-webpack-plugin": "^0.1.16",
+    "codo": "^2.1.2",
     "coffee": "^3.3.0",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",

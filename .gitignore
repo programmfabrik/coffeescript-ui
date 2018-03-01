@@ -9,6 +9,8 @@ node_modules
 .\#*
 .idea
 npm-debug.log
+src/**.js
+src/**.js.map
 !public/cui.js
 !public/cui.min.js
 !public/cui.css

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Coffeescript-UI Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>CUI</span>
+    &raquo;
+    <span class='title'>ListViewTreeHeaderNode</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        CUI.ListViewTreeHeaderNode
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>elements&#47;ListView&#47;ListViewTreeHeaderNode.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/CUI/ListViewTreeNode.html'>CUI.ListViewTreeNode</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Variables Summary</h2>
+      
+      <h3 class='inherited'>
+        Variable inherited from
+        <a href='../../class/CUI/ListViewTreeNode.html'>CUI.ListViewTreeNode</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../../class/CUI/ListViewTreeNode.html#getChildren-variable'>getChildren</a>
+        <a href='../../class/CUI/ListViewTreeNode.html#hasChildren-variable'>hasChildren</a>
+        <a href='../../class/CUI/ListViewRow.html#moveRow-variable'>moveRow</a>
+        <a href='../../class/CUI/ListViewRow.html#__selectableClass-variable'>__selectableClass</a>
+        <a href='../../class/CUI/ListViewRow.html#__movableClass-variable'>__movableClass</a>
+        <a href='../../class/CUI/ListViewRow.html#defaults-variable'>defaults</a>
+        <a href='../../class/CUI/Element.html#uniqueId-variable'>uniqueId</a>
+      </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#initOpts-dynamic'>
+        #
+(void)
+<b>initOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#render-dynamic'>
+        #
+(void)
+<b>render</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/CUI/ListViewTreeNode.html'>CUI.ListViewTreeNode</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/CUI/ListViewTreeNode.html#initOpts-dynamic'>#initOpts</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#readOpts-dynamic'>#readOpts</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#setColspan-dynamic'>#setColspan</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getColspan-dynamic'>#getColspan</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isLeaf-dynamic'>#isLeaf</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getClass-dynamic'>#getClass</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isSelectable-dynamic'>#isSelectable</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getFather-dynamic'>#getFather</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#setFather-dynamic'>#setFather</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isRoot-dynamic'>#isRoot</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#setTree-dynamic'>#setTree</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getRoot-dynamic'>#getRoot</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#dump-dynamic'>#dump</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#dumpString-dynamic'>#dumpString</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getTree-dynamic'>#getTree</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#find-dynamic'>#find</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#filter-dynamic'>#filter</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getPath-dynamic'>#getPath</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getChildIdx-dynamic'>#getChildIdx</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getNodeId-dynamic'>#getNodeId</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getOpenChildNodes-dynamic'>#getOpenChildNodes</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getRowsToMove-dynamic'>#getRowsToMove</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isRendered-dynamic'>#isRendered</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#sort-dynamic'>#sort</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#close-dynamic'>#close</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#removeFromDOM-dynamic'>#removeFromDOM</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#replaceSelf-dynamic'>#replaceSelf</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#openRecursively-dynamic'>#openRecursively</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#closeRecursively-dynamic'>#closeRecursively</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#__actionRecursively-dynamic'>#__actionRecursively</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isOpen-dynamic'>#isOpen</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isLoading-dynamic'>#isLoading</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getLoading-dynamic'>#getLoading</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#abortLoading-dynamic'>#abortLoading</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#open-dynamic'>#open</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#prependChild-dynamic'>#prependChild</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#addChild-dynamic'>#addChild</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#prependSibling-dynamic'>#prependSibling</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#appendSibling-dynamic'>#appendSibling</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#initChildren-dynamic'>#initChildren</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#addNode-dynamic'>#addNode</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#__appendNode-dynamic'>#__appendNode</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#remove-dynamic'>#remove</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#removeChild-dynamic'>#removeChild</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#deselect-dynamic'>#deselect</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#allowRowMove-dynamic'>#allowRowMove</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#check_deselect-dynamic'>#check_deselect</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#isSelected-dynamic'>#isSelected</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#addSelectedClass-dynamic'>#addSelectedClass</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#removeSelectedClass-dynamic'>#removeSelectedClass</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#setSelectedNode-dynamic'>#setSelectedNode</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getSelectedNode-dynamic'>#getSelectedNode</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#getSelectedNodeKey-dynamic'>#getSelectedNodeKey</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#select-dynamic'>#select</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#openUpwards-dynamic'>#openUpwards</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#level-dynamic'>#level</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#renderContent-dynamic'>#renderContent</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#update-dynamic'>#update</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#reload-dynamic'>#reload</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#showSpinner-dynamic'>#showSpinner</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#hideSpinner-dynamic'>#hideSpinner</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#render-dynamic'>#render</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#moveToNewFather-dynamic'>#moveToNewFather</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#moveNodeBefore-dynamic'>#moveNodeBefore</a>
+          <a href='../../class/CUI/ListViewTreeNode.html#moveNodeAfter-dynamic'>#moveNodeAfter</a>
+          <a href='../../class/CUI/ListViewRow.html#addColumn-dynamic'>#addColumn</a>
+          <a href='../../class/CUI/ListViewRow.html#setColumn-dynamic'>#setColumn</a>
+          <a href='../../class/CUI/ListViewRow.html#prependColumn-dynamic'>#prependColumn</a>
+          <a href='../../class/CUI/ListViewRow.html#setSelectable-dynamic'>#setSelectable</a>
+          <a href='../../class/CUI/ListViewRow.html#isMovable-dynamic'>#isMovable</a>
+          <a href='../../class/CUI/ListViewRow.html#removeColumns-dynamic'>#removeColumns</a>
+          <a href='../../class/CUI/ListViewRow.html#getColumns-dynamic'>#getColumns</a>
+          <a href='../../class/CUI/ListViewRow.html#setRowIdx-dynamic'>#setRowIdx</a>
+          <a href='../../class/CUI/ListViewRow.html#getDOMNodes-dynamic'>#getDOMNodes</a>
+          <a href='../../class/CUI/ListViewRow.html#getRowIdx-dynamic'>#getRowIdx</a>
+          <a href='../../class/CUI/ListViewRow.html#scrollIntoView-dynamic'>#scrollIntoView</a>
+          <a href='../../class/CUI/ListViewRow.html#getDisplayRowIdx-dynamic'>#getDisplayRowIdx</a>
+          <a href='../../class/CUI/ListViewRow.html#addedToListView-dynamic'>#addedToListView</a>
+          <a href='../../class/CUI/ListViewRow.html#isAddedToListView-dynamic'>#isAddedToListView</a>
+          <a href='../../class/CUI/ListViewRow.html#setListView-dynamic'>#setListView</a>
+          <a href='../../class/CUI/ListViewRow.html#getListView-dynamic'>#getListView</a>
+          <a href='../../class/CUI/ListViewRow.html#setClass-dynamic'>#setClass</a>
+          <a href='../../class/CUI/ListViewRow.html#addClass-dynamic'>#addClass</a>
+          <a href='../../class/CUI/ListViewRow.html#removeClass-dynamic'>#removeClass</a>
+          <a href='../../class/CUI/Element.html#getElementClass-dynamic'>#getElementClass</a>
+          <a href='../../class/CUI/Element.html#getUniqueId-dynamic'>#getUniqueId</a>
+          <a href='../../class/CUI/Element.html#getOpts-dynamic'>#getOpts</a>
+          <a href='../../class/CUI/Element.html#getOpt-dynamic'>#getOpt</a>
+          <a href='../../class/CUI/Element.html#hasOpt-dynamic'>#hasOpt</a>
+          <a href='../../class/CUI/Element.html#getSetOpt-dynamic'>#getSetOpt</a>
+          <a href='../../class/CUI/Element.html#hasSetOpt-dynamic'>#hasSetOpt</a>
+          <a href='../../class/CUI/Element.html#copy-dynamic'>#copy</a>
+          <a href='../../class/CUI/Element.html#mergeOpt-dynamic'>#mergeOpt</a>
+          <a href='../../class/CUI/Element.html#removeOpt-dynamic'>#removeOpt</a>
+          <a href='../../class/CUI/Element.html#addOpt-dynamic'>#addOpt</a>
+          <a href='../../class/CUI/Element.html#addOpts-dynamic'>#addOpts</a>
+          <a href='../../class/CUI/Element.html#mergeOpts-dynamic'>#mergeOpts</a>
+          <a href='../../class/CUI/Element.html#__getCheckMap-dynamic'>#__getCheckMap</a>
+          <a href='../../class/CUI/Element.html#readOptsFromAttr-dynamic'>#readOptsFromAttr</a>
+          <a href='../../class/CUI/Element.html#proxy-dynamic'>#proxy</a>
+          <a href='../../class/CUI/Element.html#destroy-dynamic'>#destroy</a>
+          <a href='../../class/CUI/Element.html#isDestroyed-dynamic'>#isDestroyed</a>
+          <a href='../../class/CUI/Element.html#getOptKeys-static'>.getOptKeys</a>
+        </p>
+      </h2>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='initOpts-dynamic'>
+      #
+(void)
+<b>initOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='render-dynamic'>
+      #
+(void)
+<b>render</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

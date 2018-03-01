@@ -25,14 +25,14 @@ class CUI.WaitBlock extends CUI.Block
 		@removeOpt("content")
 
 		@addOpts
-# inactive is used to block content
-# from being accessed
+			# inactive is used to block content
+			# from being accessed
 			inactive:
 				check: Boolean
 			element:
 				check: (v) ->
 					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
-# use to put this wait block fullscreen
+			# use to put this wait block fullscreen
 			fullscreen:
 				check: Boolean
 

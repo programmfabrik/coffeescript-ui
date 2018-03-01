@@ -65,6 +65,8 @@ To run the tests:
 
 https://programmfabrik.gitbooks.io/coffeescript-ui/
 
+https://programmfabrik.github.io/coffeescript-ui/doc/index.html
+
 ## Live DEMO
 
 https://programmfabrik.github.io/coffeescript-ui/demo/index.html

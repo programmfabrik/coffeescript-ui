@@ -20,7 +20,7 @@ class CUI.DOMElement extends CUI.Element
 	registerTemplate: (template, add_default_classes=true) ->
 		CUI.util.assert(template instanceof CUI.Template, "#{CUI.util.getObjectClass(@)}.registerDOMElement", "template must be instance of Template but is #{CUI.util.getObjectClass(template)}.", template: template)
 		if @__template
-			console.warn("#{CUI.util.getObjectClass(@)}.registerDOMElement", "Already called before, destroying existing template", template: @__template)
+			console.warn("#{CUI.util.getObjectClass(@)}.registerDO MElement", "Already called before, destroying existing template", template: @__template)
 			@__template.destroy()
 		@__template = template
 		@registerDOMElement(@__template.DOM, add_default_classes)
@@ -52,8 +52,8 @@ class CUI.DOMElement extends CUI.Element
 		@__assertDOMElement('setElement')
 		CUI.dom.setElement(@DOM, @)
 
-# if used as parameter in "Layer", overwrite to
-# a different element to position the layer with
+	# if used as parameter in "Layer", overwrite to
+	# a different element to position the layer with
 	getElementForLayer: ->
 		@DOM
 
@@ -144,11 +144,10 @@ class CUI.DOMElement extends CUI.Element
 		@__template.getFlexHandle.call(@__template, key, do_assert)
 
 	destroy: ->
-# we need to set "isDestroyed" first, so
+	# we need to set "isDestroyed" first, so
 		super()
 		if @__template
 			@__template?.destroy()
 		else if @DOM
 			CUI.dom.remove(@DOM)
 		@
-# CUI.Events.ignore(node: @DOM)
