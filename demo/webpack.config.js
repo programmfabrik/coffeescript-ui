@@ -1,7 +1,6 @@
 const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
@@ -41,7 +40,6 @@ const config = {
     },
     plugins: [
     new CleanWebpackPlugin(BUILD_DIR),
-    new CopyWebpackPlugin([{from: 'index.html'}]),
     new webpack.ProvidePlugin({
         'Demo': APP_DIR + '/Demo.coffee',
         'CUI': 'coffeescript-ui/public/cui.js'
