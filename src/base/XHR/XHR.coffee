@@ -211,6 +211,7 @@ class CUI.XHR extends CUI.Element
 		if @_responseType == "json"
 			# be more compatible with jQuery
 			@__xhr.responseJSON = res
+
 		res
 
 	start: ->
@@ -227,6 +228,7 @@ class CUI.XHR extends CUI.Element
 			data = new FormData()
 			for k, v of @_form
 				data.append(k, v)
+
 			send_data = data
 			# let the browser set the content-type
 		else if @_json_data

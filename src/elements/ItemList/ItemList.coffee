@@ -119,11 +119,11 @@ class CUI.ItemList extends CUI.VerticalLayout
 						active_idx = idx
 						break
 
-					# we only get here, if any
-					# of out items has an
-					# "active" property
-					if CUI.util.isUndef(active_idx)
-				        active_idx = null
+				# we only get here, if any
+				# of out items has an
+				# "active" property
+				if CUI.util.isUndef(active_idx)
+					active_idx = null
 
 		if not CUI.util.isUndef(active_idx)
 			@__active_idx = active_idx
