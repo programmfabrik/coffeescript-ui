@@ -8371,7 +8371,7 @@ CUI.DOMElement = (function(superClass) {
       template: template
     });
     if (this.__template) {
-      console.warn((CUI.util.getObjectClass(this)) + ".registerDOMElement", "Already called before, destroying existing template", {
+      console.warn((CUI.util.getObjectClass(this)) + ".registerDO MElement", "Already called before, destroying existing template", {
         template: this.__template
       });
       this.__template.destroy();
@@ -31532,9 +31532,9 @@ CUI.ItemList = (function(superClass) {
             active_idx = idx;
             break;
           }
-          if (CUI.util.isUndef(active_idx)) {
-            active_idx = null;
-          }
+        }
+        if (CUI.util.isUndef(active_idx)) {
+          active_idx = null;
         }
       }
     }
