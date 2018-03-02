@@ -32,7 +32,7 @@ class CUI.Modal extends CUI.LayerPane
 		@getPane().addClass("cui-pane--window")
 
 		if @_onToggleFillScreen
-			Events.listen
+			CUI.Events.listen
 				type: ["start-fill-screen", "end-fill-screen"]
 				node: @getPane()
 				call: (ev) =>
