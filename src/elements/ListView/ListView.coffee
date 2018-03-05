@@ -49,7 +49,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@__maxCols = []
 		for col, col_i in @__cols
-			CUI.util.assert(col in ["auto", "maximize", "fixed", "manual"], "new #{@__cls}", "Unkown type of col: \"#{col}\". opts.cols can only contain \"auto\" and \"maximize\" elements.")
+			CUI.util.assert(col in ["auto", "maximize", "fixed", "manual"], "new #{@__cls}", "Unknown type of col: \"#{col}\". opts.cols can only contain \"auto\" and \"maximize\" elements.")
 			if col == "maximize"
 				# CUI.util.assert(@_maximize, "new CUI.ListView", "maximized columns can only exist inside an maximized ListView", opts: @opts)
 				CUI.util.assert(col_i >= @fixedColsCount, "new CUI.ListView", "maximized columns can only be in the non-fixed side of the ListView.", opts: @opts)
