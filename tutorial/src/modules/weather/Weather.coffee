@@ -1,8 +1,8 @@
 #CUI = require("coffeescript-ui/public/cui.js")
 WeatherService = require('./WeatherService.coffee')
 htmlTemplate = require('./weather.html')
+CUI.Template.loadTemplateText(htmlTemplate)
 
-CUI.Template.loadTemplateText(htmlTemplate);
 
 class Weather extends CUI.Element
 
