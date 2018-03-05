@@ -32466,7 +32466,7 @@ CUI.ListView = (function(superClass) {
     ref = this.__cols;
     for (col_i = j = 0, len1 = ref.length; j < len1; col_i = ++j) {
       col = ref[col_i];
-      CUI.util.assert(col === "auto" || col === "maximize" || col === "fixed" || col === "manual", "new " + this.__cls, "Unkown type of col: \"" + col + "\". opts.cols can only contain \"auto\" and \"maximize\" elements.");
+      CUI.util.assert(col === "auto" || col === "maximize" || col === "fixed" || col === "manual", "new " + this.__cls, "Unknown type of col: \"" + col + "\". opts.cols can only contain \"auto\" and \"maximize\" elements.");
       if (col === "maximize") {
         CUI.util.assert(col_i >= this.fixedColsCount, "new CUI.ListView", "maximized columns can only be in the non-fixed side of the ListView.", {
           opts: this.opts
@@ -44935,6 +44935,8 @@ __webpack_require__(20);
 
 __webpack_require__(22);
 
+__webpack_require__(219);
+
 __webpack_require__(56);
 
 __webpack_require__(47);
@@ -45499,6 +45501,144 @@ module.exports = function(module) {
 /***/ (function(module, exports) {
 
 module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-zoom-buttons\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div>\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(CUI) {var DataFieldProxy,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.DataFieldProxy = (function(superClass) {
+  extend(DataFieldProxy, superClass);
+
+  function DataFieldProxy() {
+    return DataFieldProxy.__super__.constructor.apply(this, arguments);
+  }
+
+  DataFieldProxy.prototype.readOpts = function() {
+    DataFieldProxy.__super__.readOpts.call(this);
+    return this.__element = null;
+  };
+
+  DataFieldProxy.prototype.initOpts = function() {
+    DataFieldProxy.__super__.initOpts.call(this);
+    return this.addOpts({
+      call_others: {
+        "default": true,
+        check: Boolean
+      },
+      element: {
+        mandatory: true,
+        check: function(v) {
+          return CUI.util.isContent(v);
+        }
+      },
+      getDefaultValue: {
+        check: Function
+      }
+    });
+  };
+
+  DataFieldProxy.prototype.getFields = function() {
+    var _el, df, el, fields, i, len, ref, search_el;
+    fields = [];
+    if (!this._call_others) {
+      return fields;
+    }
+    if (!this.__element) {
+      if (CUI.isFunction(this._element)) {
+        return fields;
+      }
+      search_el = this._element;
+    } else {
+      search_el = this.__element;
+    }
+    if (search_el instanceof CUI.DOMElement) {
+      if (search_el.isDestroyed()) {
+        return fields;
+      }
+      _el = search_el.DOM;
+    } else {
+      _el = search_el;
+    }
+    ref = CUI.dom.matchSelector(_el, "[cui-data-field-name]");
+    for (i = 0, len = ref.length; i < len; i++) {
+      el = ref[i];
+      df = CUI.dom.data(el, "element");
+      if (!df) {
+        continue;
+      }
+      fields.push(df);
+    }
+    return fields;
+  };
+
+  DataFieldProxy.prototype.remove = function() {
+    this.__detach();
+    return DataFieldProxy.__super__.remove.call(this);
+  };
+
+  DataFieldProxy.prototype.__detach = function() {
+    if (!this.__element) {
+      return this;
+    }
+    CUI.Events.ignore({
+      type: "data-changed",
+      node: this.__element
+    });
+    if (this.__element.DOM) {
+      CUI.dom.remove(this.__element.DOM);
+    } else {
+      CUI.dom.remove(this.__element);
+    }
+    this.__element = null;
+    return this;
+  };
+
+  DataFieldProxy.prototype.destroy = function() {
+    this.__detach();
+    return DataFieldProxy.__super__.destroy.call(this);
+  };
+
+  DataFieldProxy.prototype.render = function() {
+    if (CUI.isFunction(this._element)) {
+      this.__element = this._element.call(this, this);
+    } else {
+      this.__element = this._element;
+    }
+    this.replace(this.__element);
+    CUI.Events.listen({
+      type: "data-changed",
+      node: this.__element,
+      call: (function(_this) {
+        return function(ev, info) {
+          ev.stopImmediatePropagation();
+          info.element = _this;
+          return CUI.Events.trigger({
+            type: "data-changed",
+            node: _this.DOM,
+            info: info
+          });
+        };
+      })(this)
+    });
+    DataFieldProxy.__super__.render.call(this);
+    return this;
+  };
+
+  DataFieldProxy.prototype.setCheckChangedValue = function() {};
+
+  DataFieldProxy.prototype.initData = function() {};
+
+  return DataFieldProxy;
+
+})(CUI.DataField);
+
+DataFieldProxy = CUI.DataFieldProxy;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);
