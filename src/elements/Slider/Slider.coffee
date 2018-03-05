@@ -108,9 +108,13 @@ class CUI.Slider extends CUI.DataField
 	getHandle: ->
 		@__slider.map.handle
 
-	setValue: (_v, flags) ->
+	setValue: (_v, flags={}) ->
 		v = Math.round(Math.min(Math.max(@_min, _v), @_max))
 		@__value = v
+
+		if flags.no_trigger == undefined
+			flags.no_trigger = false
+
 		super(@__value, flags)
 		@
 
