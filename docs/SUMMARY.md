@@ -16,10 +16,3 @@
 #### Elements
 * [CUI.Map](elements/map/map.md)
     
-
-#### Tutorial
-* [Tutorial](../tutorial/tutorial.md)
-
-
-
-
