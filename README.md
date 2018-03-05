@@ -1,34 +1,40 @@
 # Coffeescript User Interface System (CUI)
 
-## Installation and usage
+## Installation
 
     npm install --save-dev git+https://github.com/programmfabrik/coffeescript-ui.git
 
-### Different versions
+### Versions
 
 - **cui.min.js**: Minified (default version)     
-- **cui.js**: No minified
+- **cui.js**: No minified (recommended for development)
 
-### Usage with *require*
+### Usage 
+
+With *require*
 
     require('coffeescript-ui') (uses default version)
     require('coffeescript-ui/public/cui.js')
         
-### Usage with *\<script\>* tag
+With *\<script\>* tag
  
     <script src="node_modules/coffeescript-ui/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="node_modules/coffeescript-ui/public/cui.js" type="text/javascript" charset="utf-8"></script>
   
-### Use cui.css
+#### Use cui.css (Optional, recommended)
 
 With CUI.CSSLoader
 
     CUI.ready ->
-        new CUI.CSSLoader().load({url: 'node_modules/coffeescript-ui/public/cui.css'})
+        new CUI.CSSLoader().load(url: 'node_modules/coffeescript-ui/public/cui.css')
 
 With require
         
     require('coffeescript-ui/public/cui.css')
+    
+With *\<link\>* tag
+
+    <link rel="stylesheet" type="text/css" href="node_modules/coffeescript-ui/public/cui.css">
 
 ### Usage with webpack
 
@@ -37,7 +43,7 @@ It's recommended to use **webpack.ProvidePlugin** to avoid "require" in each fil
     plugins: [
         ...
         new webpack.ProvidePlugin({
-            'CUI': "coffeescript-ui"
+            'CUI': "coffeescript-ui" - or "coffeescript-ui/public/cui.js" (for development)
         })
         ...
     ] 
@@ -55,6 +61,8 @@ After that, it's necessary to run one of the following build commands
 
 You will find the bundled file inside **public** folder.
 
+It's not necessary to build the project before use it, because **public** directory has always the last version.
+
 ## Test
 
 To run the tests:
@@ -67,7 +75,7 @@ https://programmfabrik.gitbooks.io/coffeescript-ui/
 
 https://programmfabrik.github.io/coffeescript-ui/doc/index.html
 
-## Live DEMO
+## Live Demo
 
 https://programmfabrik.github.io/coffeescript-ui/demo/index.html
 
