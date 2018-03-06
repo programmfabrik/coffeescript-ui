@@ -99,6 +99,10 @@ class CUI.Menu extends CUI.Layer
 			itemList.maximize_vertical = false
 			itemList.maximize_horizontal = true
 
+			if not itemList.hasOwnProperty("active_item_idx")
+				# tell item list to not manage active item
+				itemList.active_item_idx = null
+
 			@__itemList = new CUI.ItemList(itemList)
 
 		@replace(@__itemList)
