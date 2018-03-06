@@ -31515,7 +31515,7 @@ CUI.ItemList = (function(superClass) {
   ItemList.prototype.__initActiveIdx = function() {
     var active_idx, i, idx, item, items, len;
     active_idx = this._active_item_idx;
-    if (active_idx === void 0) {
+    if (CUI.util.isUndef(active_idx)) {
       items = this.__getItems();
       if (CUI.util.isPromise(items)) {
         active_idx = null;
@@ -31533,12 +31533,12 @@ CUI.ItemList = (function(superClass) {
             break;
           }
         }
-        if (active_idx === void 0) {
+        if (CUI.util.isUndef(active_idx)) {
           active_idx = null;
         }
       }
     }
-    if (!active_idx === void 0) {
+    if (!CUI.util.isUndef(active_idx)) {
       this.__active_idx = active_idx;
       this.__radio = "item-list--" + this.getUniqueId();
     }
