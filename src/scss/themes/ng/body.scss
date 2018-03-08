@@ -108,7 +108,7 @@ textarea {
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
 	box-shadow: $input-shadow;
-	background: $foreground;
+	background: $input-background;
 	font-family: inherit;
 	padding: 2px 3px;
 	margin: 0;
@@ -4993,7 +4993,7 @@ label[data-label-clickable],
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
-	background: $foreground;
+	background: $input-background;
 
 	&:focus,
 	&.cui-has-focus {
