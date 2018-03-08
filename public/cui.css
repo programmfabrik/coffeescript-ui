@@ -3820,12 +3820,14 @@ label[data-label-clickable],
 
 .cui-autocompletion-popup {
   flex: 1 1 auto;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
   min-height: 0; }
   .cui-autocompletion-popup .cui-lv-td {
     width: 100%;
     box-sizing: border-box; }
+
+.cui-tmpl-autocompletion-popup {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
 
 .cui-autocompletion-popup-container {
   padding: 4px 0;

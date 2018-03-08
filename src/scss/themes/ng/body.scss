@@ -5442,14 +5442,17 @@ label[data-label-clickable],
 // Autocomplete
 .cui-autocompletion-popup {
 	flex: 1 1 auto;
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
 	min-height: 0;
 
 	.cui-lv-td {
 		width: 100%;
 		box-sizing: border-box;
 	}
+}
+
+.cui-tmpl-autocompletion-popup {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 .cui-autocompletion-popup-container {
