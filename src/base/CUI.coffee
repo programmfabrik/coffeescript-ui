@@ -108,11 +108,13 @@ class CUI
 		asserts_alert: 'js' # or 'cui' or 'off' or 'debugger'
 		class: {}
 
+	# Returns a resolved CUI.Promise.
 	@resolvedPromise: ->
 		dfr = new CUI.Deferred()
 		dfr.resolve.apply(dfr, arguments)
 		dfr.promise()
 
+	# Returns a rejected CUI.Promise.
 	@rejectedPromise: ->
 		dfr = new CUI.Deferred()
 		dfr.reject.apply(dfr, arguments)
@@ -186,7 +188,8 @@ class CUI
 		init_next()
 		dfr.promise()
 
-
+	# Executes 'call' function in batches of 'chunk_size' for all the 'items'.
+	# It must be called with '.call(this, opts)'
 	@chunkWork: (_opts = {}) ->
 		opts = CUI.Element.readOpts _opts, "CUI.chunkWork",
 			items:

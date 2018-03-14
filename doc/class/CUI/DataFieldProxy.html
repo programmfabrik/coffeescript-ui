@@ -17,18 +17,18 @@
     &raquo;
     <span class='title'>CUI</span>
     &raquo;
-    <span class='title'>Slider</span>
+    <span class='title'>DataFieldProxy</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        CUI.Slider
+        CUI.DataFieldProxy
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>elements&#47;Slider&#47;Slider.coffee</td>
+          <td>base&#47;DataField&#47;DataFieldProxy.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
@@ -52,17 +52,6 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#initOpts-dynamic'>
-        #
-(void)
-<b>initOpts</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#readOpts-dynamic'>
         #
 (void)
@@ -74,10 +63,10 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#getTemplate-dynamic'>
+      <a href='#initOpts-dynamic'>
         #
 (void)
-<b>getTemplate</b><span>()</span>
+<b>initOpts</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -85,10 +74,43 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#initDimensions-dynamic'>
+      <a href='#getFields-dynamic'>
         #
 (void)
-<b>initDimensions</b><span>()</span>
+<b>getFields</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#remove-dynamic'>
+        #
+(void)
+<b>remove</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__detach-dynamic'>
+        #
+(void)
+<b>__detach</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#destroy-dynamic'>
+        #
+(void)
+<b>destroy</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -107,10 +129,10 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#getValue-dynamic'>
+      <a href='#setCheckChangedValue-dynamic'>
         #
 (void)
-<b>getValue</b><span>()</span>
+<b>setCheckChangedValue</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -118,54 +140,10 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#getHandle-dynamic'>
+      <a href='#initData-dynamic'>
         #
 (void)
-<b>getHandle</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#setValue-dynamic'>
-        #
-(void)
-<b>setValue</b><span>(_v, flags = {})</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#getDefaultValue-dynamic'>
-        #
-(void)
-<b>getDefaultValue</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#displayValue-dynamic'>
-        #
-(void)
-<b>displayValue</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#checkValue-dynamic'>
-        #
-(void)
-<b>checkValue</b><span>(v, flags)</span>
+<b>initData</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -289,15 +267,6 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='initOpts-dynamic'>
-      #
-(void)
-<b>initOpts</b><span>()</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
     <p class='signature' id='readOpts-dynamic'>
       #
 (void)
@@ -307,19 +276,46 @@
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='getTemplate-dynamic'>
+    <p class='signature' id='initOpts-dynamic'>
       #
 (void)
-<b>getTemplate</b><span>()</span>
+<b>initOpts</b><span>()</span>
       <br>
     </p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='initDimensions-dynamic'>
+    <p class='signature' id='getFields-dynamic'>
       #
 (void)
-<b>initDimensions</b><span>()</span>
+<b>getFields</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='remove-dynamic'>
+      #
+(void)
+<b>remove</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__detach-dynamic'>
+      #
+(void)
+<b>__detach</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-dynamic'>
+      #
+(void)
+<b>destroy</b><span>()</span>
       <br>
     </p>
     
@@ -334,55 +330,19 @@
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='getValue-dynamic'>
+    <p class='signature' id='setCheckChangedValue-dynamic'>
       #
 (void)
-<b>getValue</b><span>()</span>
+<b>setCheckChangedValue</b><span>()</span>
       <br>
     </p>
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='getHandle-dynamic'>
+    <p class='signature' id='initData-dynamic'>
       #
 (void)
-<b>getHandle</b><span>()</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='setValue-dynamic'>
-      #
-(void)
-<b>setValue</b><span>(_v, flags = {})</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='getDefaultValue-dynamic'>
-      #
-(void)
-<b>getDefaultValue</b><span>()</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='displayValue-dynamic'>
-      #
-(void)
-<b>displayValue</b><span>()</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='checkValue-dynamic'>
-      #
-(void)
-<b>checkValue</b><span>(v, flags)</span>
+<b>initData</b><span>()</span>
       <br>
     </p>
     
