@@ -354,7 +354,7 @@ class CUI.SimpleForm extends CUI.DataField
 					append(get_append(field._form.right), hint_div)
 
 			if field.renderAsBlock()
-				level = parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))+1
+				level = field.getFormDepth() + 1
 				if not level
 					level = 1
 
