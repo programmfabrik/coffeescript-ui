@@ -104,11 +104,11 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		active_idx = @_active_item_idx
 
-		if CUI.util.isUndef(active_idx)
+		if active_idx == undefined
 			items = @__getItems()
 
 			if CUI.util.isPromise(items)
-				active_idx = null
+				active_idx = -1
 			else
 				for item, idx in items
 					if not item
@@ -122,13 +122,18 @@ class CUI.ItemList extends CUI.VerticalLayout
 				# we only get here, if any
 				# of out items has an
 				# "active" property
-				if CUI.util.isUndef(active_idx)
-					active_idx = null
+				if active_idx == undefined
+					active_idx = -1
 
-		if not CUI.util.isUndef(active_idx)
-			@__active_idx = active_idx
+		if active_idx != null
+			if active_idx == -1
+				@__active_idx = null
+			else
+				@__active_idx = active_idx
+
 			@__radio = "item-list--"+@getUniqueId()
 
+		# console.debug "active:", active_idx, @__radio
 		@__isInitActiveIdx = true
 
 

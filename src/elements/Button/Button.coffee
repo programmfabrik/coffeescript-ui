@@ -113,14 +113,10 @@ class CUI.Button extends CUI.DOMElement
 		else if @_right != true
 			@append(@_right, "right")
 
-		if not CUI.__ng__ and not @_size
-			@_size='normal' #need to set normal as default for mediathek! and light
 		@setSize(@_size)
 
 		if @_appearance
 			@addClass("cui-button-appearance-"+@_appearance)
-		else if not CUI.__ng__
-			@addClass("cui-button-appearance-auto cui-button-appearance-normal")
 
 		if @_primary
 			@addClass("cui-button--primary")
