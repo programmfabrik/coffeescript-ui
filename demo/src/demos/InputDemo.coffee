@@ -18,6 +18,10 @@ class Demo.InputDemo extends Demo
 			dollars: 12345589
 			content_size_textarea: "wqsio qsq woisjqwo sjqwois jwqios jwqiosj wqoisjqw oisjwq sjwqois jqwisowqj soiwjqsoiwqj siojqw soiwjqsoi wqjsioq wjsioqw jsoiwqjs oqiwsj qwoisjq woisjqw oisjwqis jqw soijqwsio wqsioqwjs ioqwjs oiwqjsioqw sjoiwq jsoqiws"
 			euros: 123456
+			multiOutput: {
+				"de-DE": "DE DE DE DE",
+				"en-US": "US US US US"
+			}
 
 		multi_input_control = new CUI.MultiInputControl
 			user_control: true
@@ -257,6 +261,17 @@ class Demo.InputDemo extends Demo
 				type: CUI.Input
 				textarea: true
 				content_size: true
+			,
+				form: label: "Multioutput with showOnlyPreferredKey: true"
+				name: "multiOutput"
+				type: CUI.MultiOutput
+				control: multi_input_control
+			,
+				form: label: "Multioutput"
+				name: "multiOutput"
+				showOnlyPreferredKey: false
+				type: CUI.MultiOutput
+				control: multi_input_control
 			]
 
 
