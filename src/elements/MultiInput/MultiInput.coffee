@@ -150,10 +150,6 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		@__inputs = []
 
 		for key, idx in @_control.getKeys()
-			CUI.util.assert(CUI.isPlainObject(key), "new #{@__cls}", "opts.keys[#{idx}] needs to be PlainObject.", opts: @opts)
-			CUI.util.assert(CUI.util.isString(key.name), "new #{@__cls}", "opts.keys[#{idx}].name needs to be String.", opts: @opts)
-			CUI.util.assert(CUI.util.isString(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag needs to be String.", opts: @opts)
-
 			input_opts =
 				class: "cui-multi-input-input"
 				textarea: @_textarea

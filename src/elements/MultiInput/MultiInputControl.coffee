@@ -6,32 +6,13 @@
 ###
 
 class CUI.MultiInputControl extends CUI.Element
+
+
 	constructor: (@opts={}) ->
 		super(@opts)
 		@__body = document.body
-		@__keys = []
 
-		if not @_keys
-			return
-
-		key_names = {}
-		for key, idx in @_keys
-			CUI.util.assert(CUI.util.isString(key.name) and not CUI.util.isEmpty(key.name), "new #{@__cls}", "opts.keys[#{idx}].name must be non-empty String.", opts: @opts, key: key)
-			CUI.util.assert(CUI.util.isString(key.tag) and not CUI.util.isEmpty(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag must be non-empty String.", opts: @opts, key: key)
-			CUI.util.assert(CUI.util.isUndef(key.enabled) or CUI.util.isBoolean(key.enabled), "new #{@__cls}", "opts.keys[#{idx}].enabled must be Boolean.", opts: @opts, key: key)
-
-			if key_names.hasOwnProperty(key.name)
-				CUI.util.assert(false, "new #{@__cls}", "Duplicate opts.keys[#{idx}].name \"#{key.name}\", name already used in ##{idx}. Skipping.", opts: @opts, key: key)
-				continue
-
-			key_names[key.name] = idx
-
-			@__keys.push
-				name: key.name
-				tag: key.tag
-				enabled: key.enabled
-				__idx: idx
-
+		@setKeys(@_keys)
 		@setPreferredKey(@_preferred_key)
 
 	initOpts: ->
@@ -45,6 +26,33 @@ class CUI.MultiInputControl extends CUI.Element
 			user_control:
 				default: true
 				check: Boolean
+
+	setKeys: (keys) ->
+		@__keys = []
+
+		if not keys
+			return
+
+		key_names = {}
+		for key, idx in keys
+			CUI.util.assert(CUI.util.isString(key.name) and not CUI.util.isEmpty(key.name), "new #{@__cls}", "opts.keys[#{idx}].name must be non-empty String.", key: key)
+			CUI.util.assert(CUI.util.isString(key.tag) and not CUI.util.isEmpty(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag must be non-empty String.", key: key)
+			CUI.util.assert(CUI.util.isUndef(key.enabled) or CUI.util.isBoolean(key.enabled), "new #{@__cls}", "opts.keys[#{idx}].enabled must be Boolean.", key: key)
+
+			if not CUI.util.isUndef(key_names[key.name])
+				CUI.util.assert(false, "new #{@__cls}", "Duplicate opts.keys[#{idx}].name \"#{key.name}\", name already used in ##{idx}.", key: key)
+				continue
+
+			key_names[key.name] = idx
+
+			@__keys.push
+				name: key.name
+				tag: key.tag
+				enabled: key.enabled
+				tooltip: key.tooltip
+				__idx: idx
+
+		@
 
 	setPreferredKey: (key_name) ->
 		@__preferred_key = null
