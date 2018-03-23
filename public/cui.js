@@ -39204,6 +39204,9 @@ CUI.MultiOutput = (function(superClass) {
       ref = this._control.getKeys();
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
         key = ref[idx];
+        if (!this._control.isEnabled(key.name)) {
+          continue;
+        }
         value = this.getValue()[key.name];
         if (CUI.util.isEmpty(value)) {
           continue;
