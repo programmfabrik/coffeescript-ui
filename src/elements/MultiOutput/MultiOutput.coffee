@@ -26,6 +26,9 @@ class CUI.MultiOutput extends CUI.DataField
 			@replace(label)
 		else
 			for key, idx in @_control.getKeys()
+				if not @_control.isEnabled(key.name)
+					continue
+
 				value = @getValue()[key.name]
 				if CUI.util.isEmpty(value)
 					continue
