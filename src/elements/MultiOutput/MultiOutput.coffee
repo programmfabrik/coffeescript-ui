@@ -17,6 +17,10 @@ class CUI.MultiOutput extends CUI.DataField
 				check: Boolean
 				default: true
 
+	readOpts: ->
+		super()
+		@__keyTemplates = {}
+
 	render: ->
 		super()
 		if @_showOnlyPreferredKey
@@ -26,15 +30,22 @@ class CUI.MultiOutput extends CUI.DataField
 			@replace(label)
 		else
 			for key, idx in @_control.getKeys()
-				if not @_control.isEnabled(key.name)
-					continue
-
 				value = @getValue()[key.name]
 				if CUI.util.isEmpty(value)
 					continue
 
 				template = @__buildTemplateForKey(key)
+				@__keyTemplates[key.name] = template
+
 				@append(template)
+
+			@__updateListener = CUI.Events.listen
+				type: "multi-input-control-update"
+				node: @DOM
+				call: =>
+					@__hideShowElements()
+			@__hideShowElements()
+
 		@
 
 	__buildTemplateForKey: (key) ->
@@ -45,6 +56,7 @@ class CUI.MultiOutput extends CUI.DataField
 			map:
 				center: true
 				right: true
+
 		template.append(label, "center")
 
 		button = new CUI.defaults.class.Button
@@ -58,3 +70,16 @@ class CUI.MultiOutput extends CUI.DataField
 
 		template.append(button, "right")
 		return template
+
+	__hideShowElements: ->
+		for key, template of @__keyTemplates
+			if @_control.isEnabled(key)
+				template.show()
+			else
+				template.hide()
+
+	destroy: ->
+		@__updateListener.destroy()
+		delete @__keyTemplates
+
+		super()
