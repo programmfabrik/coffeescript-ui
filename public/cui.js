@@ -39188,6 +39188,11 @@ CUI.MultiOutput = (function(superClass) {
     });
   };
 
+  MultiOutput.prototype.readOpts = function() {
+    MultiOutput.__super__.readOpts.call(this);
+    return this.__keyTemplates = {};
+  };
+
   MultiOutput.prototype.render = function() {
     var i, idx, key, label, len, ref, template, value;
     MultiOutput.__super__.render.call(this);
@@ -39204,16 +39209,24 @@ CUI.MultiOutput = (function(superClass) {
       ref = this._control.getKeys();
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
         key = ref[idx];
-        if (!this._control.isEnabled(key.name)) {
-          continue;
-        }
         value = this.getValue()[key.name];
         if (CUI.util.isEmpty(value)) {
           continue;
         }
         template = this.__buildTemplateForKey(key);
+        this.__keyTemplates[key.name] = template;
         this.append(template);
       }
+      this.__updateListener = CUI.Events.listen({
+        type: "multi-input-control-update",
+        node: this.DOM,
+        call: (function(_this) {
+          return function() {
+            return _this.__hideShowElements();
+          };
+        })(this)
+      });
+      this.__hideShowElements();
     }
     return this;
   };
@@ -39245,6 +39258,27 @@ CUI.MultiOutput = (function(superClass) {
     });
     template.append(button, "right");
     return template;
+  };
+
+  MultiOutput.prototype.__hideShowElements = function() {
+    var key, ref, results, template;
+    ref = this.__keyTemplates;
+    results = [];
+    for (key in ref) {
+      template = ref[key];
+      if (this._control.isEnabled(key)) {
+        results.push(template.show());
+      } else {
+        results.push(template.hide());
+      }
+    }
+    return results;
+  };
+
+  MultiOutput.prototype.destroy = function() {
+    this.__updateListener.destroy();
+    delete this.__keyTemplates;
+    return MultiOutput.__super__.destroy.call(this);
   };
 
   return MultiOutput;
