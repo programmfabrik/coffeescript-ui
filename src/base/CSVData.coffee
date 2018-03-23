@@ -74,6 +74,10 @@ class CUI.CSVData extends CUI.Element
 				default: String.fromCharCode(10)
 				check: (v) =>
 					CUI.util.isString(v) and v.length > 0
+			add_bom:
+				default: false
+				mandatory: true
+				check: Boolean
 
 		if opts.equal_columns
 			@giveAllRowsSameNumberOfColumns()
@@ -114,7 +118,10 @@ class CUI.CSVData extends CUI.Element
 
 			_rows.push(_row.join(""))
 
-		_rows.join(opts.newline)
+		if opts.add_bom
+			'\ufeff'+_rows.join(opts.newline)
+		else
+			_rows.join(opts.newline)
 
 	# parse csv info array
 	parse: (_opts={}) ->
