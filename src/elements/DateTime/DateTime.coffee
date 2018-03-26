@@ -320,7 +320,11 @@ class CUI.DateTime extends CUI.Input
 		CUI.util.assert(output_format, "CUI.DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
 		# console.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
-		return CUI.DateTime.formatMomentWithBc(mom, output_format[type])
+		switch type
+			when "store"
+				return CUI.DateTime.formatMoment(mom, output_format[type])
+			else
+				return CUI.DateTime.formatMomentWithBc(mom, output_format[type])
 
 	regexpMatcher: ->
 		YYYY:
@@ -1360,6 +1364,12 @@ class CUI.DateTime extends CUI.Input
 			return null
 
 		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay())
+
+	@formatMoment: (mom, format) ->
+		if mom.bc
+			return "-"+mom.bc
+
+		return mom.format(format)
 
 	@formatMomentWithBc: (mom, format) ->
 		if mom.bc
