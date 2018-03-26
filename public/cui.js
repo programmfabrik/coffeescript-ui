@@ -24010,7 +24010,12 @@ CUI.DateTime = (function(superClass) {
       formats: this.__input_formats_known,
       output_type: output_type
     });
-    return CUI.DateTime.formatMomentWithBc(mom, output_format[type]);
+    switch (type) {
+      case "store":
+        return CUI.DateTime.formatMoment(mom, output_format[type]);
+      default:
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[type]);
+    }
   };
 
   DateTime.prototype.regexpMatcher = function() {
@@ -25004,6 +25009,13 @@ CUI.DateTime = (function(superClass) {
       return null;
     }
     return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay());
+  };
+
+  DateTime.formatMoment = function(mom, format) {
+    if (mom.bc) {
+      return "-" + mom.bc;
+    }
+    return mom.format(format);
   };
 
   DateTime.formatMomentWithBc = function(mom, format) {
