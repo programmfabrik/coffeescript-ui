@@ -328,6 +328,9 @@ class CUI.dom
 	# 	DOM.data(dom_el, "element")
 
 	@getAttribute: (node, key) ->
+		if node.hasOwnProperty('DOM')
+			node = node.DOM
+
 		node.getAttribute(key)
 
 	@remove: (_node) ->
@@ -874,6 +877,8 @@ class CUI.dom
 		else if docElem == document
 			window
 		else
+			if docElem.hasOwnProperty('DOM')
+				docElem = docElem.DOM
 			docElem.parentNode
 
 	@closest: (docElem, selector) ->
