@@ -3125,6 +3125,10 @@ a[role="button"].cui-button-appearance-link {
 	z-index: 1;
 	display: flex;
 	color: $muted-color;
+
+	&.appearance-invisible-background .cui-wait-block-glass {
+		background: none !important;
+	}
 }
 
 .cui-wait-block-glass {
