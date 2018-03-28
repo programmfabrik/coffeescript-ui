@@ -44069,6 +44069,9 @@ CUI.WaitBlock = (function(superClass) {
       },
       fullscreen: {
         check: Boolean
+      },
+      appearance: {
+        check: ["invisible-background"]
       }
     });
   };
