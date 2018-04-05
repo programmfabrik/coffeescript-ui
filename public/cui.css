@@ -1566,7 +1566,8 @@ a[role="button"].cui-button-appearance-link {
   .cui-label-size-bigger {
     font-size: 18px; }
   .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-    padding-left: 7px; }
+    padding-left: 7px;
+    flex-shrink: 1; }
   .cui-label-content {
     flex: 0 0 auto;
     max-width: 100%;

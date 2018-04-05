@@ -1889,6 +1889,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&-icon:not(:empty) + .cui-label-content:not(:empty) {
 		padding-left: 7px;
+		flex-shrink: 1; // the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
 	}
 
 	&-content {
