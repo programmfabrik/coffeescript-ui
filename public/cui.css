@@ -1221,8 +1221,7 @@ a[role="button"].cui-button-appearance-link {
   margin: 0; }
   .cui-data-field.cui-form {
     max-width: 100%;
-    margin: 0;
-    flex-grow: 1; }
+    margin: 0; }
   .cui-data-field.cui-maximize-horizontal, .cui-data-field.cui-simple-form {
     max-width: 100%;
     flex-grow: 1; }
