@@ -3559,6 +3559,28 @@ label[data-label-clickable],
   line-height: 22px !important;
   box-shadow: 0 1px rgba(0, 0, 0, 0.03) inset, 0 2px rgba(0, 0, 0, 0.01) inset; }
 
+.cui-data-field-multi-output {
+  display: flex;
+  margin-bottom: 3px; }
+  .cui-data-field-multi-output:last-child {
+    margin-bottom: 0; }
+  .cui-data-field-multi-output-left .cui-button {
+    height: 100%;
+    border-right: 1px solid #e3e9ed;
+    padding-right: 5px;
+    margin-right: 5px;
+    align-items: flex-start; }
+  .cui-data-field-multi-output-left .cui-button-visual {
+    padding: 0;
+    border-radius: 0;
+    height: auto;
+    line-height: 18px !important;
+    min-width: 13px;
+    font-size: 9px;
+    justify-content: flex-start; }
+  .cui-data-field-multi-output-left .cui-button-center {
+    padding: 0; }
+
 .cui-drag-drop-select-helper {
   position: absolute !important;
   z-index: 3 !important;

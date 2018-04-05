@@ -54,8 +54,8 @@ class CUI.MultiOutput extends CUI.DataField
 		template = new CUI.Template
 			name: "data-field-multi-output"
 			map:
+				left: true
 				center: true
-				right: true
 
 		template.append(label, "center")
 
@@ -65,10 +65,11 @@ class CUI.MultiOutput extends CUI.DataField
 			disabled: !@_control.hasUserControl()
 			role: "multi-output-tag"
 			tooltip: key.tooltip
+			appearance: "flat"
 			onClick: (ev) =>
 				@_control.showUserControl(ev, button)
 
-		template.append(button, "right")
+		template.append(button, "left")
 		return template
 
 	__hideShowElements: ->
