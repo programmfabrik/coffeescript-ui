@@ -104,7 +104,6 @@ CUI = (function() {
     var icons, trigger_viewport_resize;
     trigger_viewport_resize = (function(_this) {
       return function() {
-        console.info("CUI: trigger viewport resize.");
         return CUI.Events.trigger({
           type: "viewport-resize"
         });
@@ -115,7 +114,6 @@ CUI = (function() {
       node: window,
       call: (function(_this) {
         return function(ev, info) {
-          console.info("CUI: caught window resize event.");
           if (!CUI.browser.ie) {
             trigger_viewport_resize();
           } else {
@@ -8404,13 +8402,8 @@ CUI.DOMElement = (function(superClass) {
     if (this._qa && CUI.DOMElement.defaults.qa) {
       CUI.dom.setAttribute(this.DOM, 'data-qa', this._qa);
     }
-    this.setElement();
+    CUI.dom.data(this.DOM, "element", this);
     return this;
-  };
-
-  DOMElement.prototype.setElement = function() {
-    this.__assertDOMElement('setElement');
-    return CUI.dom.setElement(this.DOM, this);
   };
 
   DOMElement.prototype.getElementForLayer = function() {
@@ -17287,10 +17280,6 @@ CUI.XHR = (function(superClass) {
  */
 CUI.dom = (function() {
   function dom() {}
-
-  dom.setElement = function(element, inst) {
-    return CUI.dom.data(element, "element", inst);
-  };
 
   dom.data = function(node, key, data) {
     var k, ref, v;
