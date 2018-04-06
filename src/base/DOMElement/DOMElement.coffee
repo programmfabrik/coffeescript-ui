@@ -45,12 +45,8 @@ class CUI.DOMElement extends CUI.Element
 		if @_qa and CUI.DOMElement.defaults.qa
 			CUI.dom.setAttribute(@DOM, 'data-qa', @_qa)
 
-		@setElement()
+		CUI.dom.data(@DOM, "element", @)
 		@
-
-	setElement: ->
-		@__assertDOMElement('setElement')
-		CUI.dom.setElement(@DOM, @)
 
 	# if used as parameter in "Layer", overwrite to
 	# a different element to position the layer with

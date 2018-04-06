@@ -7,9 +7,6 @@
 
 class CUI.dom
 
-	@setElement: (element, inst) ->
-		CUI.dom.data(element, "element", inst)
-
 	@data: (node, key, data) ->
 		if not node
 			return undefined

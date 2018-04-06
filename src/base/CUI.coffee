@@ -23,7 +23,7 @@ class CUI
 	@start: ->
 
 		trigger_viewport_resize = =>
-			console.info("CUI: trigger viewport resize.")
+			# console.info("CUI: trigger viewport resize.")
 			CUI.Events.trigger
 				type: "viewport-resize"
 
@@ -31,7 +31,7 @@ class CUI
 			type: "resize"
 			node: window
 			call: (ev, info) =>
-				console.info("CUI: caught window resize event.")
+				# console.info("CUI: caught window resize event.")
 				if !CUI.browser.ie
 					trigger_viewport_resize()
 				else
