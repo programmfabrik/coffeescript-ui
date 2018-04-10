@@ -1532,13 +1532,17 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&.cui-active {
-		.cui-button-left i {
-			position: relative;
-			background: hsl(240,2%,61%);
-			border-color: hsl(240,3%,58%);
-			color: white;
-			text-shadow: 0 1px rgba(0,0,0,.2);
+	&.cui-active,
+	&.cui-indeterminate {
+		.cui-button-left {
+			i,
+			span { // span = indeterminate
+				position: relative;
+				background: hsl(240,2%,61%);
+				border-color: hsl(240,3%,58%);
+				color: white;
+				text-shadow: 0 1px rgba(0,0,0,.2);
+			}
 		}
 
 		&[role="radio"] {
@@ -1565,6 +1569,20 @@ a[role="button"].cui-button-appearance-link {
 					box-shadow: 0 1px rgba(0,0,0,.2);
 				}
 			}
+		}
+	}
+
+	&.cui-indeterminate {
+		.cui-button-left span:after {
+			content: "";
+			position: absolute;
+			left: 2px;
+			width: 6px;
+			top: 50%;
+			margin-top: -1px;
+			height: 2px;
+			background: currentColor;
+			box-shadow: 0 1px rgba(0,0,0,.2);
 		}
 	}
 

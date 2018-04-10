@@ -1359,19 +1359,21 @@ a[role="button"].cui-button-appearance-link {
       box-shadow: 0 0 0 3px #b3d7ff;
       border-color: #006adb;
       z-index: 1; }
-  .cui-button-checkbox.cui-active .cui-button-left i {
+  .cui-button-checkbox.cui-active .cui-button-left i,
+  .cui-button-checkbox.cui-active .cui-button-left span, .cui-button-checkbox.cui-indeterminate .cui-button-left i,
+  .cui-button-checkbox.cui-indeterminate .cui-button-left span {
     position: relative;
     background: #9a9a9e;
     border-color: #919197;
     color: white;
     text-shadow: 0 1px rgba(0, 0, 0, 0.2); }
-  .cui-button-checkbox.cui-active[role="radio"] .cui-button-left i {
+  .cui-button-checkbox.cui-active[role="radio"] .cui-button-left i, .cui-button-checkbox.cui-indeterminate[role="radio"] .cui-button-left i {
     color: transparent;
     text-shadow: none;
     border-radius: none;
     border-color: transparent;
     background: radial-gradient(#9a9a9e, #919197); }
-    .cui-button-checkbox.cui-active[role="radio"] .cui-button-left i:after {
+    .cui-button-checkbox.cui-active[role="radio"] .cui-button-left i:after, .cui-button-checkbox.cui-indeterminate[role="radio"] .cui-button-left i:after {
       content: "";
       position: absolute;
       left: 50%;
@@ -1382,6 +1384,16 @@ a[role="button"].cui-button-appearance-link {
       border-radius: 100%;
       background: white;
       box-shadow: 0 1px rgba(0, 0, 0, 0.2); }
+  .cui-button-checkbox.cui-indeterminate .cui-button-left span:after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    width: 6px;
+    top: 50%;
+    margin-top: -1px;
+    height: 2px;
+    background: currentColor;
+    box-shadow: 0 1px rgba(0, 0, 0, 0.2); }
   .cui-button-checkbox .cui-button-visual {
     justify-content: flex-start;
     flex: 1 0 auto;
