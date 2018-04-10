@@ -42390,7 +42390,6 @@ CUI.StickyHeaderControl = (function(superClass) {
     }
     this.__positioned = true;
     this.initNewStickyHeaders();
-    CUI.dom.append(this._element, this.__control);
     scrollTop = this._element.scrollTop;
     slots = [];
     extraTop = 0;
