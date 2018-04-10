@@ -74,6 +74,7 @@ class CUI.FormPopover extends CUI.Form
 			"enable"
 			"disable"
 			"getFieldsByName"
+			"hasUserData"
 			"getFieldByIdx"
 			"setFormDepth"
 			"getDataFields"

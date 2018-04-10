@@ -530,6 +530,12 @@ class CUI.SimpleForm extends CUI.DataField
 			return
 		CUI.Events.ignore({node: @getLayout().center(), instance: @})
 
+	hasUserData: (data) ->
+		for f in @getFields("hasUserData")
+			if f.hasUserData(data)
+				return true
+		return false
+
 	remove: ->
 		@unregisterTableListeners()
 		super()
