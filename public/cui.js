@@ -28510,6 +28510,18 @@ CUI.SimpleForm = (function(superClass) {
     });
   };
 
+  SimpleForm.prototype.hasUserData = function(data) {
+    var f, i, len1, ref;
+    ref = this.getFields("hasUserData");
+    for (i = 0, len1 = ref.length; i < len1; i++) {
+      f = ref[i];
+      if (f.hasUserData(data)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   SimpleForm.prototype.remove = function() {
     this.unregisterTableListeners();
     return SimpleForm.__super__.remove.call(this);
@@ -29064,7 +29076,7 @@ CUI.FormPopover = (function(superClass) {
     if (func === "render" || func === "displayValue") {
       return [];
     }
-    if (func === "show" || func === "hide" || func === "remove" || func === "enable" || func === "disable" || func === "getFieldsByName" || func === "getFieldByIdx" || func === "setFormDepth" || func === "getDataFields") {
+    if (func === "show" || func === "hide" || func === "remove" || func === "enable" || func === "disable" || func === "getFieldsByName" || func === "hasUserData" || func === "getFieldByIdx" || func === "setFormDepth" || func === "getDataFields") {
       return this.__fields || [];
     }
     CUI.util.assert(this.__fields, "FormPopover.getFields(" + func + ")", "Fields not rendered yet. This is a programming error in CUI.");
