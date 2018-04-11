@@ -20871,6 +20871,32 @@ CUI.Button = (function(superClass) {
     }
   };
 
+  Button.prototype.__callOnGroup = function(call, flags, event) {
+    var btn, group, i, len, ref, started;
+    group = this.getGroup();
+    if (!group || !(event != null ? event.ctrlKey() : void 0) || flags.ignore_ctrl) {
+      return;
+    }
+    flags.ignore_ctrl = true;
+    if (!event.altKey()) {
+      started = true;
+    } else {
+      started = false;
+    }
+    ref = this.getGroupButtons();
+    for (i = 0, len = ref.length; i < len; i++) {
+      btn = ref[i];
+      if (btn === this) {
+        started = true;
+        continue;
+      }
+      if (!started) {
+        continue;
+      }
+      btn[call](flags, event);
+    }
+  };
+
   Button.prototype.activate = function(flags, event) {
     var activate, btn, i, idx, len, ref, ret;
     if (flags == null) {
@@ -20878,23 +20904,10 @@ CUI.Button = (function(superClass) {
     }
     activate = (function(_this) {
       return function() {
-        var btn, group, i, len, ref;
         _this.addClass(_this._active_css_class);
         _this.setAria("pressed", true);
         _this.__setState();
-        group = _this.getGroup();
-        if (!group || !(event != null ? event.ctrlKey() : void 0) || flags.ignore_ctrl) {
-          return;
-        }
-        flags.ignore_ctrl = true;
-        ref = _this.getGroupButtons();
-        for (i = 0, len = ref.length; i < len; i++) {
-          btn = ref[i];
-          if (btn === _this) {
-            continue;
-          }
-          btn.activate(flags, event);
-        }
+        _this.__callOnGroup("activate", flags, event);
       };
     })(this);
     if (this._activate_initial === false && flags.initial_activate) {
@@ -20939,25 +20952,10 @@ CUI.Button = (function(superClass) {
     }
     deactivate = (function(_this) {
       return function() {
-        var btn, group, i, len, ref, results;
         _this.removeClass(_this._active_css_class);
         _this.setAria("pressed", false);
         _this.__setState();
-        group = _this.getGroup();
-        if (!group || !(event != null ? event.ctrlKey() : void 0) || flags.ignore_ctrl) {
-          return;
-        }
-        flags.ignore_ctrl = true;
-        ref = _this.getGroupButtons();
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          btn = ref[i];
-          if (btn === _this) {
-            continue;
-          }
-          results.push(btn.deactivate(flags, event));
-        }
-        return results;
+        _this.__callOnGroup("deactivate", flags, event);
       };
     })(this);
     if (this._activate_initial === false && flags.initial_activate) {
