@@ -681,6 +681,27 @@ class CUI.Button extends CUI.DOMElement
 		else
 			@deactivate(flags, event)
 
+	__callOnGroup: (call, flags, event) ->
+
+		group = @getGroup()
+		if not group or not event?.ctrlKey() or flags.ignore_ctrl
+			return
+
+		flags.ignore_ctrl = true
+		if not event.altKey()
+			started = true
+		else
+			started = false
+
+		for btn in @getGroupButtons()
+			if btn == @
+				started = true
+				continue
+			if not started
+				continue
+			btn[call](flags, event)
+		return
+
 	activate: (flags={}, event) ->
 		# console.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
 
@@ -688,15 +709,7 @@ class CUI.Button extends CUI.DOMElement
 			@addClass(@_active_css_class)
 			@setAria("pressed", true)
 			@__setState()
-			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl
-				return
-
-			flags.ignore_ctrl = true
-			for btn in @getGroupButtons()
-				if btn == @
-					continue
-				btn.activate(flags, event)
+			@__callOnGroup("activate", flags, event)
 			return
 
 		if @_activate_initial == false and flags.initial_activate
@@ -724,6 +737,7 @@ class CUI.Button extends CUI.DOMElement
 		activate()
 		@
 
+
 	deactivate: (flags={}, event) ->
 		# console.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
 
@@ -731,15 +745,8 @@ class CUI.Button extends CUI.DOMElement
 			@removeClass(@_active_css_class)
 			@setAria("pressed", false)
 			@__setState()
-			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl
-				return
-
-			flags.ignore_ctrl = true
-			for btn in @getGroupButtons()
-				if btn == @
-					continue
-				btn.deactivate(flags, event)
+			@__callOnGroup("deactivate", flags, event)
+			return
 
 		if @_activate_initial == false and flags.initial_activate
 			@__active = false
@@ -951,4 +958,3 @@ CUI.defaults.class.Button = CUI.Button
 CUI.Events.registerEvent
 	type: ["show", "hide", "cui-button-click"]
 	bubble: true
-
