@@ -32,12 +32,6 @@ CUI.dom.data(div)
 > {id: "myId", keyOne: "valueOne", keyTwo: "valueTwo"}
 ```
 
-### CUI.dom.setElement(node, element)
-
-It invokes **CUI.dom.data** with *"element"* string as the key.
-
-    CUI.dom.data(node, "element", element)
-
 ### CUI.dom.removeData(node, key) : `Object`
 
 - node `HTMLElement`

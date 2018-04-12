@@ -26,16 +26,6 @@ describe('CUI.dom.data(node, key, value)', () => {
     });
 });
 
-describe('CUI.dom.setElement(node, element)', () => {
-    test("Set element value", () => {
-        let expectedValue = "someValue";
-        CUI.dom.setElement(genericDiv, expectedValue);
-
-        let setValue = CUI.dom.data(genericDiv, "element");
-        expect(setValue).toBe(expectedValue);
-    });
-});
-
 describe('CUI.dom.removeData(node, key)', () => {
     test("Remove value from data", () => {
         let expectedValue = "idValue";
