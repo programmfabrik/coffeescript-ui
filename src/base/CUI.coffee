@@ -528,14 +528,6 @@ class CUI
 		a= "body"
 		CUI.dom.addClass(a, "cui-webdriver-test")
 
-	@mergeMap: (targetMap, mergeMap) ->
-		for k, v of mergeMap
-			if not targetMap.hasOwnProperty(k)
-				targetMap[k] = v
-			else if CUI.isPlainObject(targetMap[k]) and CUI.isPlainObject(v)
-				CUI.mergeMap(targetMap[k], v)
-		targetMap
-
 	@getParameterByName: (name, search=document.location.search) ->
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
 		regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
@@ -670,13 +662,23 @@ class CUI
 	@decodeUrlDataArray: (url, replace_map = null, connect = "&", connect_pair = "=") ->
 		@decodeUrlData(url, replace_map, connect, connect_pair, true)
 
+	# Deprecated -> Use CUI.util
+	@mergeMap: (targetMap, mergeMap) ->
+		for k, v of mergeMap
+			if not targetMap.hasOwnProperty(k)
+				targetMap[k] = v
+			else if CUI.isPlainObject(targetMap[k]) and CUI.isPlainObject(v)
+				CUI.mergeMap(targetMap[k], v)
+		targetMap
 
+	# Deprecated -> Use CUI.util
 	@revertMap: (map) ->
 		map_reverted = {}
 		for k, v of map
 			map_reverted[v] = k
 		map_reverted
 
+	# Deprecated -> Use CUI.util
 	@stringMapReplace: (s, map) ->
 		regex = []
 		for key of map
@@ -689,26 +691,33 @@ class CUI
 		else
 			s
 
+	# Deprecated -> Use CUI.util
 	@isFunction: (v) ->
 		v and typeof(v) == "function"
 
+	# Deprecated -> Use CUI.util
 	@isPlainObject: (v) ->
 		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
 
+	# Deprecated -> Use CUI.util
 	@isEmptyObject: (v) ->
 		for k of v
 			return false
 		return true
 
+	# Deprecated -> Use CUI.util
 	@isMap: (v) ->
 		@isPlainObject(v)
 
+	# Deprecated -> Use CUI.util
 	@isArray: (v) ->
 		Array.isArray(v)
 
+	# Deprecated -> Use CUI.util
 	@inArray: (value, array) ->
 		array.indexOf(value)
 
+	# Deprecated -> Use CUI.util
 	@isString: (s) ->
 		typeof(s) == "string"
 

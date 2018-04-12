@@ -489,7 +489,51 @@ class CUI.util
 		coordinates = CoordinatesFormat(coordinates.lat, coordinates.lng)
 		return coordinates.format(format)
 
+	@isArray: (v) ->
+		Array.isArray(v)
 
+	@inArray: (value, array) ->
+		array.indexOf(value)
+
+	@isMap: (v) ->
+		@isPlainObject(v)
+
+	@isFunction: (v) ->
+		v and typeof(v) == "function"
+
+	@isPlainObject: (v) ->
+		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
+
+	@isEmptyObject: (v) ->
+		for k of v
+			return false
+		return true
+
+	@revertMap: (map) ->
+		map_reverted = {}
+		for k, v of map
+			map_reverted[v] = k
+		map_reverted
+
+	@stringMapReplace: (s, map) ->
+		regex = []
+		for key of map
+			if CUI.util.isEmpty(key)
+				continue
+			regex.push(key.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
+
+		if regex.length > 0
+			s.replace(new RegExp(regex.join('|'),"g"), (word) -> map[word])
+		else
+			s
+
+	@mergeMap: (targetMap, mergeMap) ->
+		for k, v of mergeMap
+			if not targetMap.hasOwnProperty(k)
+				targetMap[k] = v
+			else if CUI.util.isPlainObject(targetMap[k]) and CUI.util.isPlainObject(v)
+				CUI.util.mergeMap(targetMap[k], v)
+		targetMap
 
 CUI.util.moment = moment
 CUI.util.marked = marked

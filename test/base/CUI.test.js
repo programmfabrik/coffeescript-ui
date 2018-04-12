@@ -123,6 +123,8 @@ describe('CUI.scheduleCallbackCancel', () => {
         expect(wasCancelled).toBeFalsy();
     });
 });
+
+// Deprecated. Remove when implementation is removed.
 describe('CUI.mergeMap', () => {
     test("With valid maps", () => {
         let targetMap = {
@@ -216,6 +218,7 @@ describe('CUI.decodeUrlData', () => {
     });
 });
 
+// Deprecated. Remove when implementation is removed.
 describe('CUI.revertMap', () => {
     test("With correct map", () => {
         let map = {
@@ -232,6 +235,7 @@ describe('CUI.revertMap', () => {
     });
 });
 
+// Deprecated. Remove when implementation is removed.
 describe('CUI.isFunction', () => {
     test("True case", () => {
         let aFunction = () => {};
@@ -246,6 +250,7 @@ describe('CUI.isFunction', () => {
     });
 });
 
+// Deprecated. Remove when implementation is removed.
 describe('CUI.isPlainObject', () => {
     test("True case", () => {
         let plainObject = {};
@@ -266,6 +271,7 @@ describe('CUI.isPlainObject', () => {
     });
 });
 
+// Deprecated. Remove when implementation is removed.
 describe('CUI.isEmptyObject', () => {
     test("True case", () => {
         let plainObject = {};
@@ -280,6 +286,7 @@ describe('CUI.isEmptyObject', () => {
     });
 });
 
+// Deprecated. Remove when implementation is removed.
 describe('CUI.inArray', () => {
     test("True case", () => {
         let anArray = [1,2,3,4,5];
@@ -294,6 +301,7 @@ describe('CUI.inArray', () => {
     });
 });
 
+// Deprecated. Remove when implementation is removed.
 describe('CUI.isString', () => {
     test("True case", () => {
         let aString = "test";
