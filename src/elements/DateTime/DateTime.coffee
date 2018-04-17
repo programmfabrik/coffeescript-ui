@@ -623,12 +623,7 @@ class CUI.DateTime extends CUI.Input
 		if not (s?.trim?().length > 0)
 			return moment.invalid()
 
-		support_bc = false
-
 		for format in formats
-			if format == "Y"
-				# we support -1mio years
-				support_bc = true
 
 			mom = @__parseFormat(format, s)
 			if mom
@@ -640,6 +635,10 @@ class CUI.DateTime extends CUI.Input
 
 				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
+
+		# Moment support not all BC dates, we get here
+		# if the year is below that, or ends with a supported
+		# appendix like "v. Chr."
 
 		# lets see if the date is below zero
 		check_bc = false
@@ -666,6 +665,15 @@ class CUI.DateTime extends CUI.Input
 		# fake a moment
 		mom = moment()
 		mom.bc = parseInt(s)
+		if mom.bc < 10
+			mom.bc = "000"+mom.bc
+		else if mom.bc < 100
+			mom.bc = "00"+mom.bc
+		else if mom.bc < 1000
+			mom.bc = "0"+mom.bc
+		else
+			mom.bc = ""+mom.bc
+
 		return mom
 
 
