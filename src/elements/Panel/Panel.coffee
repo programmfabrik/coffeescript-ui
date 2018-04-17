@@ -36,11 +36,11 @@ class CUI.Panel extends CUI.DOMElement
 			icon_active: @_icon_opened
 			icon_inactive: @_icon_closed
 			onActivate: (btn, flags, event) =>
-				@open(not flags.initial_activate)
+				@__open(not flags.initial_activate)
 				@_onActivate?(btn, flags, event)
 
 			onDeactivate: (btn, flags, event) =>
-				@close(not flags.initial_activate)
+				@__close(not flags.initial_activate)
 				@_onDeactivate?(btn, flags, event)
 
 		@append(@button, "header")
@@ -103,7 +103,15 @@ class CUI.Panel extends CUI.DOMElement
 	isOpen: ->
 		!@isClosed()
 
-	close: (trigger = true) ->
+	open: ->
+		@button.activate()
+		@
+
+	close: ->
+		@button.deactivate()
+		@
+
+	__close: (trigger = true) ->
 		CUI.dom.addClass(@DOM, "cui-panel-closed")
 
 		if trigger
@@ -112,7 +120,7 @@ class CUI.Panel extends CUI.DOMElement
 				node: @DOM
 		@
 
-	open: (trigger = true) ->
+	__open: (trigger = true) ->
 		done = =>
 			CUI.dom.removeClass(@DOM, "cui-panel-closed")
 			if trigger
@@ -158,5 +166,3 @@ class CUI.Panel extends CUI.DOMElement
 		else
 			@append(content, key)
 		@
-
-
