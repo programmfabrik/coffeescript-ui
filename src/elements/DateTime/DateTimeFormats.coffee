@@ -15,6 +15,7 @@ CUI.DateTimeFormats["de-DE"] =
 	tab_week: "Wo"
 	formats: [
 		text: "Datum+Zeit"
+		support_bc: false
 		invalid: "Datum ungültig"
 		type: "date_time"
 		clock: true
@@ -43,6 +44,7 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Datum+Zeit+Sekunden"
+		support_bc: false
 		invalid: "Datum ungültig"
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
@@ -67,6 +69,7 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Datum"
+		support_bc: false
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
@@ -85,6 +88,7 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Jahr-Monat"
+		support_bc: false
 		input: "MM.YYYY"
 		invalid: "Datum ungültig"
 		store: "YYYY-MM"
@@ -101,6 +105,7 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Jahr"
+		support_bc: true
 		input: "Y"
 		invalid: "Datum ungültig"
 		display: "Y"
@@ -124,6 +129,7 @@ CUI.DateTimeFormats["it-IT"] =
 	tab_week: "Wk"
 	formats: [
 		text: "Datum+Zeit"
+		support_bc: false
 		invalid: "Datum ungültig"
 		type: "date_time"
 		clock: true
@@ -152,6 +158,7 @@ CUI.DateTimeFormats["it-IT"] =
 		]
 	,
 		text: "Datum+Zeit+Sekunden"
+		support_bc: false
 		invalid: "Datum ungültig"
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
@@ -174,6 +181,7 @@ CUI.DateTimeFormats["it-IT"] =
 		]
 	,
 		text: "Datum"
+		support_bc: false
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
@@ -192,6 +200,7 @@ CUI.DateTimeFormats["it-IT"] =
 		]
 	,
 		text: "Jahr-Monat"
+		support_bc: false
 		input: "MM.YYYY"
 		invalid: "Datum ungültig"
 		store: "YYYY-MM"
@@ -208,6 +217,7 @@ CUI.DateTimeFormats["it-IT"] =
 		]
 	,
 		text: "Jahr"
+		support_bc: true
 		input: "Y"
 		invalid: "Datum ungültig"
 		display: "Y"
@@ -231,6 +241,7 @@ CUI.DateTimeFormats["es-ES"] =
 	tab_week: "Wk"
 	formats: [
 		text: "Datum+Zeit"
+		support_bc: false
 		invalid: "Datum ungültig"
 		type: "date_time"
 		clock: true
@@ -259,6 +270,7 @@ CUI.DateTimeFormats["es-ES"] =
 		]
 	,
 		text: "Datum+Zeit+Sekunden"
+		support_bc: false
 		invalid: "Datum ungültig"
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
@@ -281,6 +293,7 @@ CUI.DateTimeFormats["es-ES"] =
 		]
 	,
 		text: "Datum"
+		support_bc: false
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
@@ -299,6 +312,7 @@ CUI.DateTimeFormats["es-ES"] =
 		]
 	,
 		text: "Jahr-Monat"
+		support_bc: false
 		input: "MM.YYYY"
 		invalid: "Datum ungültig"
 		store: "YYYY-MM"
@@ -315,6 +329,7 @@ CUI.DateTimeFormats["es-ES"] =
 		]
 	,
 		text: "Jahr"
+		support_bc: true
 		input: "Y"
 		invalid: "Datum ungültig"
 		display: "Y"
@@ -339,6 +354,7 @@ CUI.DateTimeFormats["en-US"] =
 	tab_week: "Wk"
 	formats: [
 		text: "Date+Time"
+		support_bc: false
 		invalid: "Invalid Date"
 		type: "date_time"
 		clock: true
@@ -368,6 +384,7 @@ CUI.DateTimeFormats["en-US"] =
 		]
 	,
 		text: "Date+Time+Seconds"
+		support_bc: false
 		invalid: "Invalid Date"
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
@@ -391,6 +408,7 @@ CUI.DateTimeFormats["en-US"] =
 		]
 	,
 		text: "Date"
+		support_bc: false
 		input: "MM/DD/YYYY"
 		invalid: "Invalid date"
 		display: "dd, MM/DD/YYYY"
@@ -409,6 +427,7 @@ CUI.DateTimeFormats["en-US"] =
 		]
 	,
 		text: "Jahr-Monat"
+		support_bc: false
 		input: "MM/YYYY"
 		invalid: "Invalid date"
 		store: "YYYY-MM"
@@ -425,6 +444,7 @@ CUI.DateTimeFormats["en-US"] =
 		]
 	,
 		text: "Jahr"
+		support_bc: true
 		input: "Y"
 		invalid: "Invalid date"
 		display: "Y"

@@ -636,6 +636,9 @@ class CUI.DateTime extends CUI.Input
 				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
+		if not formats.some((format) -> format.support_bc)
+			return moment.invalid()
+
 		# Moment support not all BC dates, we get here
 		# if the year is below that, or ends with a supported
 		# appendix like "v. Chr."
