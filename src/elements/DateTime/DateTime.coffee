@@ -658,7 +658,7 @@ class CUI.DateTime extends CUI.Input
 			return moment.invalid()
 
 		# set bc to the value
-		m = s.match(/[1-9][0-9]*/)
+		m = s.match(/^[0-9]+$/)
 		if not m
 			return moment.invalid()
 
