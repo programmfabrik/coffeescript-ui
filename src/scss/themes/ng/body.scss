@@ -5069,22 +5069,39 @@ label[data-label-clickable],
 
 // Multi Output
 
+.cui-multi-output {
+	display: table;
+}
+
 .cui-data-field-multi-output {
-	display: flex;
-	margin-bottom: 3px;
+	display: table-row;
+	
+	&:first-child {		
+		.cui-data-field-multi-output-left,
+		.cui-data-field-multi-output-center {
+			padding-top: 0;
+		}
+	}
 	
 	&:last-child {
-		margin-bottom: 0;
+		border-bottom: none;
+		
+		.cui-data-field-multi-output-left,
+		.cui-data-field-multi-output-center {
+			padding-bottom: 0;
+			border-bottom: none;
+		}
+	}
+
+	&-left,
+	&-center {
+		display: table-cell;
+		padding: 2px 0;
+		border-bottom: 1px solid $soft-border;
 	}
 	
 	&-left {
-		.cui-button {
-			height: 100%;
-			border-right: 1px solid $soft-border;
-			padding-right: 5px;
-			margin-right: 5px;
-			align-items: flex-start;
-		}
+		text-align: right;
 
 		.cui-button-visual {
 			padding: 0;
@@ -5099,6 +5116,10 @@ label[data-label-clickable],
 		.cui-button-center {
 			padding: 0;
 		}
+	}
+
+	&-center {
+		padding-left: 5px;
 	}
 }
 
