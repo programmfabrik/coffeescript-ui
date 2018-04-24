@@ -2114,26 +2114,26 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
-			max-height: 131px;
+			max-height: 126px;
 		}
 	}
 
 	> .cui-label-content {
-		max-height: 99px;
+		max-height: 108px;
 		overflow: hidden;
 	}
 
 	.cui-label-manage-overflow-button {
 		position: absolute;
 		right: 0;
-		bottom: 3px;
+		bottom: 0;
 		background: linear-gradient(to right, hsla(0,0%,100%,0), hsl(0,0%,100%) 10px);
 		padding: 0 0 0 10px !important;
 
 		.cui-button-visual {
 			color: $highlight-color;
 			height: auto;
-			padding: 0;
+			padding: 0 0 1px;
 		}
 	}
 
@@ -3119,7 +3119,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 400px;
 	background: $popover-hint-background;
 	color: white;
-	padding: 7px 10px;
+	// padding: 7px 10px; CONFLICT: use padded to add padding
 	box-shadow: // remove dark outline from normal layer for a sharper edge
 		0 4px 20px hsla(205,20%,30%,.4),
 		0 2px 4px hsla(0,0%,0%,.1);
