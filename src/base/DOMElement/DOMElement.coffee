@@ -81,11 +81,14 @@ class CUI.DOMElement extends CUI.Element
 		@__assertDOMElement("setAria")
 		CUI.dom.setAria(@DOM, attr, value)
 
-	removeClass: (cls) ->
-		CUI.util.assert(arguments.length == 1, "CUI.dom.removeClass", "Only one parameter allowed.")
-
-		@__assertDOMElement("removeClass")
-		CUI.dom.removeClass(@DOM, cls)
+	removeClass: (className, key) ->
+		CUI.util.assert(arguments.length == 1 or arguments.length == 2, "removeClass", "Only 'className' and 'key' parameters are allowed.")
+		if key
+			@__assertTemplateElement("removeClass")
+			@__template.removeClass.call(@__template, className, key, @)
+		else
+			@__assertDOMElement("removeClass")
+			CUI.dom.removeClass(@DOM, className)
 
 	hide: (key) ->
 		if CUI.util.isEmpty(key)
