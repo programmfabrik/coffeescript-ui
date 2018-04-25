@@ -723,11 +723,14 @@ class CUI
 
 	@downloadData: (data, fileName) ->
 		blob = new Blob([data], type: "octet/stream")
-		url = window.URL.createObjectURL(blob)
-		@__downloadDataElement.href = url
-		@__downloadDataElement.download = fileName
-		@__downloadDataElement.click()
-		window.URL.revokeObjectURL(url)
+		if window.navigator.msSaveOrOpenBlob
+			window.navigator.msSaveOrOpenBlob(blob, fileName)
+		else
+			url = window.URL.createObjectURL(blob)
+			@__downloadDataElement.href = url
+			@__downloadDataElement.download = fileName
+			@__downloadDataElement.click()
+			window.URL.revokeObjectURL(url)
 
 
 	# https://gist.github.com/dperini/729294
