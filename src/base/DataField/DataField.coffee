@@ -328,6 +328,7 @@ class CUI.DataField extends CUI.DOMElement
 		if @isHidden()
 			@hide(true)
 		@callOnOthers("render")
+		@_onRender?(@)
 		@
 
 	displayValue: ->
@@ -342,7 +343,6 @@ class CUI.DataField extends CUI.DOMElement
 		@__initDisabled()
 		@render()
 		@displayValue()
-		@_onRender?(@)
 		@
 
 	getAllDataFields: (all=false)->
