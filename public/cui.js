@@ -9212,6 +9212,9 @@ CUI.DataField = (function(superClass) {
       this.hide(true);
     }
     this.callOnOthers("render");
+    if (typeof this._onRender === "function") {
+      this._onRender(this);
+    }
     return this;
   };
 
@@ -9235,9 +9238,6 @@ CUI.DataField = (function(superClass) {
     this.__initDisabled();
     this.render();
     this.displayValue();
-    if (typeof this._onRender === "function") {
-      this._onRender(this);
-    }
     return this;
   };
 
