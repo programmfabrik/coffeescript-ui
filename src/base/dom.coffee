@@ -1494,7 +1494,6 @@ class CUI.dom
 			type: "fullscreenchange"
 			node: window
 			call: (ev) =>
-				# console.debug "fullscreenchange caught...", ev, DOM.isFullscreen()
 				if CUI.dom.isFullscreen()
 					dfr.notify()
 				else
@@ -1530,18 +1529,21 @@ class CUI.dom
 		document.fullscreenElement or
 			document.webkitFullscreenElement or
 			document.mozFullScreenElement or
+			document.msFullscreenElement or
 			undefined
 
 	@fullscreenEnabled: ->
 		document.fullscreenEnabled or
 			document.webkitFullscreenEnabled or
 			document.mozFullScreenEnabled or
+			document.msFullscreenEnabled or
 			false
 
 	@isFullscreen: ->
 		document.fullscreen or
 			document.webkitIsFullScreen or
 			document.mozFullScreen or
+			!!document.msFullscreenElement or
 			false
 
 	@$element: (tagName, cls, attrs={}, no_tables=false) ->
