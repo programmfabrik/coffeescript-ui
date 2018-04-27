@@ -36902,9 +36902,6 @@ CUI.GoogleMap = (function(superClass) {
 
   GoogleMap.prototype.destroy = function() {
     var i, j, len, len1, listener, marker, ref, ref1;
-    if (!this.__map) {
-      return;
-    }
     ref = this.__listeners;
     for (i = 0, len = ref.length; i < len; i++) {
       listener = ref[i];
@@ -37379,16 +37376,15 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.destroy = function() {
-    var i, len, marker, ref;
-    if (!this.__map) {
-      return;
-    }
+    var i, len, marker, ref, ref1;
     ref = this.__markers;
     for (i = 0, len = ref.length; i < len; i++) {
       marker = ref[i];
       this.__removeMarker(marker);
     }
-    this.__map.remove();
+    if ((ref1 = this.__map) != null) {
+      ref1.remove();
+    }
     delete this.__markers;
     delete this.__map;
     delete this.__selectedMarker;
@@ -38035,20 +38031,17 @@ CUI.MapInput = (function(superClass) {
   };
 
   MapInput.prototype.__openMapPopover = function(button) {
-    var currentPosition, popover;
-    popover = new CUI.Popover({
-      element: button,
-      handle_focus: false,
-      placement: "se",
-      "class": "cui-map-popover",
-      pane: this.__map,
-      onHide: (function(_this) {
-        return function() {
-          return popover.destroy();
-        };
-      })(this)
-    });
-    popover.show();
+    var currentPosition;
+    if (!this.__mapPopover) {
+      this.__mapPopover = new CUI.Popover({
+        element: button,
+        handle_focus: false,
+        placement: "se",
+        "class": "cui-map-popover",
+        pane: this.__map
+      });
+    }
+    this.__mapPopover.show();
     currentPosition = this.__getPosition();
     if (currentPosition) {
       this.__map.setSelectedMarkerPosition(currentPosition);
@@ -38056,7 +38049,7 @@ CUI.MapInput = (function(superClass) {
     } else {
       this.__map.removeSelectedMarker();
     }
-    return popover;
+    return this.__mapPopover;
   };
 
   MapInput.prototype.__updateIconOptions = function() {
@@ -38066,25 +38059,18 @@ CUI.MapInput = (function(superClass) {
   };
 
   MapInput.prototype.__openIconPopover = function(button) {
-    var popover;
-    if (!this.__popoverContent) {
-      this.__popoverContent = this.__buildIconPopoverContent();
+    if (!this.__iconPopover) {
+      this.__iconPopover = new CUI.Popover({
+        element: button,
+        handle_focus: false,
+        placement: "se",
+        pane: {
+          content: this.__buildIconPopoverContent()
+        }
+      });
     }
-    popover = new CUI.Popover({
-      element: button,
-      handle_focus: false,
-      placement: "se",
-      pane: {
-        content: this.__popoverContent
-      },
-      onHide: (function(_this) {
-        return function() {
-          return popover.destroy();
-        };
-      })(this)
-    });
-    popover.show();
-    return popover;
+    this.__iconPopover.show();
+    return this.__iconPopover;
   };
 
   MapInput.prototype.__buildIconPopoverContent = function() {
@@ -38196,6 +38182,14 @@ CUI.MapInput = (function(superClass) {
       return false;
     }
     return true;
+  };
+
+  MapInput.prototype.destroy = function() {
+    delete this.__selectedMarkerOptions;
+    this.__map.destroy();
+    this.__mapPopover.destroy();
+    this.__iconPopover.destroy();
+    return MapInput.__super__.destroy.call(this);
   };
 
   MapInput.getDefaultDisplayFormat = function() {
