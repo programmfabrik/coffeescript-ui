@@ -90,9 +90,6 @@ class CUI.GoogleMap extends CUI.Map
 		return
 
 	destroy: ->
-		if not @__map
-			return
-
 		for listener in @__listeners
 			listener.remove()
 

@@ -121,16 +121,15 @@ class CUI.MapInput extends CUI.Input
 		@__updateIconOptions()
 
 	__openMapPopover: (button) ->
-		popover = new CUI.Popover
-			element: button
-			handle_focus: false
-			placement: "se"
-			class: "cui-map-popover"
-			pane: @__map
-			onHide: =>
-				popover.destroy()
+		if not @__mapPopover
+			@__mapPopover = new CUI.Popover
+				element: button
+				handle_focus: false
+				placement: "se"
+				class: "cui-map-popover"
+				pane: @__map
 
-		popover.show()
+		@__mapPopover.show()
 
 		currentPosition = @__getPosition()
 		if currentPosition
@@ -139,7 +138,7 @@ class CUI.MapInput extends CUI.Input
 		else
 			@__map.removeSelectedMarker()
 
-		popover
+		@__mapPopover
 
 	__updateIconOptions: ->
 		@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
@@ -148,20 +147,16 @@ class CUI.MapInput extends CUI.Input
 		CUI.dom.setStyleOne(@__openIconPopoverButton.getIcon(), "color", @__selectedMarkerOptions.iconColor)
 
 	__openIconPopover: (button) ->
-		if not @__popoverContent
-			@__popoverContent = @__buildIconPopoverContent()
+		if not @__iconPopover
+			@__iconPopover = new CUI.Popover
+				element: button
+				handle_focus: false
+				placement: "se"
+				pane:
+					content: @__buildIconPopoverContent()
 
-		popover = new CUI.Popover
-			element: button
-			handle_focus: false
-			placement: "se"
-			pane:
-				content: @__popoverContent
-			onHide: =>
-				popover.destroy()
-
-		popover.show()
-		popover
+		@__iconPopover.show()
+		@__iconPopover
 
 	__buildIconPopoverContent: ->
 		iconColorSelect = new CUI.Select(
@@ -230,6 +225,14 @@ class CUI.MapInput extends CUI.Input
 		if not parsedCoordinates
 			return false
 		return true
+
+	destroy: ->
+		delete @__selectedMarkerOptions
+
+		@__map.destroy()
+		@__mapPopover.destroy()
+		@__iconPopover.destroy()
+		super()
 
 	@getDefaultDisplayFormat: ->
 		CUI.MapInput.displayFormats[CUI.MapInput.defaults.displayFormat]

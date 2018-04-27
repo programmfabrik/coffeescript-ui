@@ -198,13 +198,10 @@ class CUI.LeafletMap extends CUI.Map
 		return @__map.getCenter()
 
 	destroy: ->
-		if not @__map
-			return
-
 		for marker in @__markers
 			@__removeMarker(marker)
 
-		@__map.remove()
+		@__map?.remove()
 
 		delete @__markers
 		delete @__map
