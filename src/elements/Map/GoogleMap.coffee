@@ -96,9 +96,7 @@ class CUI.GoogleMap extends CUI.Map
 		for marker in @__markers
 			marker.setMap(null)
 
-		delete @__markers
 		delete @__listeners
-		delete @__map
 		delete @__selectedMarker
 		delete @__bounds
 

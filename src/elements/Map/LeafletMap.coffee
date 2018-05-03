@@ -203,9 +203,8 @@ class CUI.LeafletMap extends CUI.Map
 
 		@__map?.remove()
 
-		delete @__markers
-		delete @__map
 		delete @__selectedMarker
+		delete @__groups
 
 		super()
 

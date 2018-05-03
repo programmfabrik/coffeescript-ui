@@ -317,6 +317,22 @@ class CUI.Map extends CUI.Pane
 
 	destroy: ->
 		@__viewportResizeListener?.destroy()
+		delete @__viewportResizeListener
+
+		@__mapTemplate?.destroy()
+		delete @__mapTemplate
+
+		for button in @__zoomButtons
+			button.destroy()
+
+		delete @__zoomButtons
+		delete @__initZoom
+		delete @__initCenter
+
+		delete @__markers
+		delete @__map
+
+		super()
 
 	@isValidLatitude: (value) ->
 		CUI.util.isNumber(value) and value <= 90 and value >= -90
