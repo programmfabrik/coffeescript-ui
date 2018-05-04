@@ -45,7 +45,7 @@ class CUI.DateTime extends CUI.Input
 				check: "Integer"
 			max_year:
 				mandatory: true
-				default: 2499
+				default: 9999
 				check: "Integer"
 			store_invalid:
 				mandatory: true
@@ -277,13 +277,13 @@ class CUI.DateTime extends CUI.Input
 
 		@addClass("cui-data-field--with-button")
 
-		btn = new CUI.defaults.class.Button
+		@__calendarButton = new CUI.defaults.class.Button
 			icon: "calendar"
 			tooltip: text: CUI.DateTime.defaults.button_tooltip
 			onClick: =>
-				@openPopover(btn)
+				@openPopover(@__calendarButton)
 
-		@replace(btn, "right")
+		@replace(@__calendarButton, "right")
 		# @append(@__status = CUI.dom.div("cui-date-time-status"), "center")
 
 	format: (_s, type="display", output_type=null) ->
@@ -409,10 +409,16 @@ class CUI.DateTime extends CUI.Input
 		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input)
 
 	__checkInput: (value) ->
+		@__calendarButton.enable()
+
 		if not CUI.util.isEmpty(value?.trim())
 			mom = @parse(value)
 			if not mom.isValid()
 				return false
+
+			if mom.bc
+				@__calendarButton.disable()
+
 		else
 			@__input_format = @initFormat(@__default_format)
 		return true
@@ -633,6 +639,9 @@ class CUI.DateTime extends CUI.Input
 					@__input_format = @initFormat(@__default_format)
 				mom.locale(moment.locale())
 
+				if mom.year() > @_max_year # Year must not be greater than max year.
+					return moment.invalid()
+
 				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
@@ -830,13 +839,17 @@ class CUI.DateTime extends CUI.Input
 			onDataChanged: =>
 				@updateCalendar(mom.year(data.year))
 			options: =>
-				opts = []
-				for year in [data.year-20..data.year+20]
-					opts.push
-						text: ""+year
+				options = []
+				minYear = data.year - 20
+				if minYear < @_min_year
+					minYear = @_min_year
+
+				for year in [minYear..data.year + 20]
+					options.push
+						text: "#{year}"
 						value: year
 
-				opts
+				options
 		).start()
 
 		if @__input_formats[0].clock
@@ -1029,9 +1042,10 @@ class CUI.DateTime extends CUI.Input
 					buttons: [
 						icon: "left"
 						group: "year"
-						onClick: (ev) =>
-							if data.year-1 < @_min_year
+						onClick: =>
+							if data.year - 1 < @_min_year
 								return
+
 							mom.subtract(1, "years")
 							@drawDate(mom)
 					,
@@ -1054,8 +1068,8 @@ class CUI.DateTime extends CUI.Input
 					,
 						icon: "right"
 						group: "year"
-						onClick: (ev) =>
-							if data.year+1 > @_max_year
+						onClick: =>
+							if data.year + 1 > @_max_year
 								return
 							mom.add(1, "years")
 							@drawDate(mom)
