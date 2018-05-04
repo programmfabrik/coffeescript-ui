@@ -24012,7 +24012,7 @@ CUI.DateTime = (function(superClass) {
       },
       max_year: {
         mandatory: true,
-        "default": 2499,
+        "default": 9999,
         check: "Integer"
       },
       store_invalid: {
@@ -24218,7 +24218,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.render = function() {
-    var attr, btn, display_key;
+    var attr, display_key;
     DateTime.__super__.render.call(this);
     if (CUI.util.isEmpty(this._placeholder)) {
       this.__input.setAttribute("placeholder", this.__input_formats[0].text);
@@ -24236,18 +24236,18 @@ CUI.DateTime = (function(superClass) {
     }
     this.DOM.setAttribute("data-cui-date-time-format", attr);
     this.addClass("cui-data-field--with-button");
-    btn = new CUI.defaults["class"].Button({
+    this.__calendarButton = new CUI.defaults["class"].Button({
       icon: "calendar",
       tooltip: {
         text: CUI.DateTime.defaults.button_tooltip
       },
       onClick: (function(_this) {
         return function() {
-          return _this.openPopover(btn);
+          return _this.openPopover(_this.__calendarButton);
         };
       })(this)
     });
-    return this.replace(btn, "right");
+    return this.replace(this.__calendarButton, "right");
   };
 
   DateTime.prototype.format = function(_s, type, output_type) {
@@ -24416,10 +24416,14 @@ CUI.DateTime = (function(superClass) {
 
   DateTime.prototype.__checkInput = function(value) {
     var mom;
+    this.__calendarButton.enable();
     if (!CUI.util.isEmpty(value != null ? value.trim() : void 0)) {
       mom = this.parse(value);
       if (!mom.isValid()) {
         return false;
+      }
+      if (mom.bc) {
+        this.__calendarButton.disable();
       }
     } else {
       this.__input_format = this.initFormat(this.__default_format);
@@ -24689,6 +24693,9 @@ CUI.DateTime = (function(superClass) {
           this.__input_format = this.initFormat(this.__default_format);
         }
         mom.locale(moment.locale());
+        if (mom.year() > this._max_year) {
+          return moment.invalid();
+        }
         return mom;
       }
     }
@@ -24923,15 +24930,19 @@ CUI.DateTime = (function(superClass) {
       })(this),
       options: (function(_this) {
         return function() {
-          var i, opts, ref, ref1, year;
-          opts = [];
-          for (year = i = ref = data.year - 20, ref1 = data.year + 20; ref <= ref1 ? i <= ref1 : i >= ref1; year = ref <= ref1 ? ++i : --i) {
-            opts.push({
+          var i, minYear, options, ref, ref1, year;
+          options = [];
+          minYear = data.year - 20;
+          if (minYear < _this._min_year) {
+            minYear = _this._min_year;
+          }
+          for (year = i = ref = minYear, ref1 = data.year + 20; ref <= ref1 ? i <= ref1 : i >= ref1; year = ref <= ref1 ? ++i : --i) {
+            options.push({
               text: "" + year,
               value: year
             });
           }
-          return opts;
+          return options;
         };
       })(this)
     }).start();
@@ -25124,7 +25135,7 @@ CUI.DateTime = (function(superClass) {
               icon: "left",
               group: "year",
               onClick: (function(_this) {
-                return function(ev) {
+                return function() {
                   if (data.year - 1 < _this._min_year) {
                     return;
                   }
@@ -25159,7 +25170,7 @@ CUI.DateTime = (function(superClass) {
               icon: "right",
               group: "year",
               onClick: (function(_this) {
-                return function(ev) {
+                return function() {
                   if (data.year + 1 > _this._max_year) {
                     return;
                   }
