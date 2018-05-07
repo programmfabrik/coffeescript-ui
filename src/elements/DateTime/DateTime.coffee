@@ -416,7 +416,7 @@ class CUI.DateTime extends CUI.Input
 			if not mom.isValid()
 				return false
 
-			if mom.bc
+			if mom.bc or value.startsWith("-")
 				@__calendarButton.disable()
 
 		else
