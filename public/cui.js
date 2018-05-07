@@ -24422,7 +24422,7 @@ CUI.DateTime = (function(superClass) {
       if (!mom.isValid()) {
         return false;
       }
-      if (mom.bc) {
+      if (mom.bc || value.startsWith("-")) {
         this.__calendarButton.disable();
       }
     } else {
