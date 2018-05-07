@@ -37125,9 +37125,9 @@ CUI.LeafletMap = (function(superClass) {
   function LeafletMap(opts) {
     this.opts = opts != null ? opts : {};
     if (!CUI.LeafletMap.loadCSSPromise) {
-      CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom;
       CUI.LeafletMap.loadCSSPromise = this.__loadCSS();
     }
+    CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom;
     this.__groups = {};
     LeafletMap.__super__.constructor.call(this, this.opts);
   }
@@ -37217,10 +37217,32 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   LeafletMap.prototype.__afterMarkerCreated = function(marker, options) {
-    var onClickFunction;
+    var isDoubleClick, onClickFunction, onDoubleClickFunction;
     onClickFunction = options["cui_onClick"];
+    onDoubleClickFunction = options["cui_onDoubleClick"];
+    if (onClickFunction && onDoubleClickFunction) {
+      isDoubleClick = false;
+      onClickFunction = function(event) {
+        return CUI.setTimeout(function() {
+          if (!isDoubleClick) {
+            return options["cui_onClick"](event);
+          }
+        }, 200);
+      };
+      onDoubleClickFunction = function(event) {
+        isDoubleClick = true;
+        options["cui_onDoubleClick"](event);
+        return CUI.setTimeout(function() {
+          return isDoubleClick = false;
+        }, 250);
+      };
+    }
     if (onClickFunction) {
-      return marker.on("click", onClickFunction);
+      marker.on("click", onClickFunction);
+    }
+    if (onDoubleClickFunction) {
+      this.__map.doubleClickZoom.disable();
+      marker.on("dblclick", onDoubleClickFunction);
     }
   };
 
