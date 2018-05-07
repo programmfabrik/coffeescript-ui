@@ -11,9 +11,9 @@ class CUI.LeafletMap extends CUI.Map
 
 	constructor: (@opts = {}) ->
 		if not CUI.LeafletMap.loadCSSPromise
-			CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom
 			CUI.LeafletMap.loadCSSPromise = @__loadCSS()
 
+		CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom
 		@__groups = {}
 		super(@opts)
 
@@ -85,8 +85,33 @@ class CUI.LeafletMap extends CUI.Map
 
 	__afterMarkerCreated: (marker, options) ->
 		onClickFunction = options["cui_onClick"]
+		onDoubleClickFunction = options["cui_onDoubleClick"]
+
+		# Workaround to fix a Leaflet non-implemented feature https://github.com/Leaflet/Leaflet/issues/108
+		if onClickFunction and onDoubleClickFunction
+			isDoubleClick = false
+
+			onClickFunction = (event) ->
+				CUI.setTimeout( ->
+					if not isDoubleClick
+						options["cui_onClick"](event)
+				, 200)
+
+			onDoubleClickFunction = (event) ->
+				isDoubleClick = true
+				options["cui_onDoubleClick"](event)
+				CUI.setTimeout( ->
+					isDoubleClick = false
+				, 250)
+
 		if onClickFunction
 			marker.on("click", onClickFunction)
+
+		if onDoubleClickFunction
+			@__map.doubleClickZoom.disable() # If at least 1 marker has 'onDoubleClick' event, the map disables zoom on double click.
+			marker.on("dblclick", onDoubleClickFunction)
+
+		return
 
 	__removeMarker: (marker) ->
 		for _, group of @__groups
