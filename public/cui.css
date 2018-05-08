@@ -1121,7 +1121,8 @@ li > div {
 .cui-button-select .cui-button-center {
   padding: 0; }
   .cui-button-select .cui-button-center [data-max-chars] {
-    text-align: inherit; }
+    text-align: inherit;
+    width: auto; }
   .cui-button-select .cui-button-center span:empty:after {
     content: "\A0"; }
 
