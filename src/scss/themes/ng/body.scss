@@ -2114,12 +2114,12 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
-			max-height: 126px;
+			max-height: 131px;
 		}
 	}
 
 	> .cui-label-content {
-		max-height: 108px;
+		max-height: 99px;
 		overflow: hidden;
 	}
 
@@ -2133,11 +2133,17 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			color: $highlight-color;
 			height: auto;
-			padding: 0 0 1px;
+			padding: 0 0 3px;
 		}
 	}
 
 	&.cui-label--show-overflow {
+		&:after { // clearfix
+			content: "";
+			display: block;
+			clear: right;
+		}
+		
 		> .cui-label-content {
 			max-height: none !important;
 		}

@@ -1698,9 +1698,9 @@ a[role="button"].cui-button-appearance-link {
   position: relative;
   display: block; }
   .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
-    max-height: 126px; }
+    max-height: 131px; }
   .cui-label-manage-overflow > .cui-label-content {
-    max-height: 108px;
+    max-height: 99px;
     overflow: hidden; }
   .cui-label-manage-overflow .cui-label-manage-overflow-button {
     position: absolute;
@@ -1711,7 +1711,11 @@ a[role="button"].cui-button-appearance-link {
     .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
       color: #006adb;
       height: auto;
-      padding: 0 0 1px; }
+      padding: 0 0 3px; }
+  .cui-label-manage-overflow.cui-label--show-overflow:after {
+    content: "";
+    display: block;
+    clear: right; }
   .cui-label-manage-overflow.cui-label--show-overflow > .cui-label-content {
     max-height: none !important; }
   .cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button {
