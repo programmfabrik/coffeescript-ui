@@ -3865,7 +3865,8 @@ label[data-label-clickable],
 
 .cui-autocompletion-popup {
   flex: 1 1 auto;
-  min-height: 0; }
+  min-height: 0;
+  max-width: 500px; }
   .cui-autocompletion-popup .cui-lv-td {
     width: 100%;
     box-sizing: border-box; }
@@ -3875,8 +3876,7 @@ label[data-label-clickable],
   -webkit-overflow-scrolling: touch; }
 
 .cui-autocompletion-popup-container {
-  padding: 4px 0;
-  max-width: 500px; }
+  padding: 4px 0; }
   .cui-autocompletion-popup-container:empty {
     display: none; }
     .cui-autocompletion-popup-container:empty + .cui-autocompletion-popup-container.container-status {

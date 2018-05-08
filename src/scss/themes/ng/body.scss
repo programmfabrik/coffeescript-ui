@@ -5521,6 +5521,7 @@ label[data-label-clickable],
 .cui-autocompletion-popup {
 	flex: 1 1 auto;
 	min-height: 0;
+	max-width: 500px; // prevent autocompletions from growing too wide
 
 	.cui-lv-td {
 		width: 100%;
@@ -5535,7 +5536,6 @@ label[data-label-clickable],
 
 .cui-autocompletion-popup-container {
 	padding: 4px 0;
-	max-width: 500px; // prevent autocompletions from growing too wide
 
 	&:empty {
 		display: none;
