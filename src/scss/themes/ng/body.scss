@@ -140,11 +140,10 @@ textarea {
 	}
 }
 
-// damp max-chars > 10
-// e.g. max-chars 30 = 26ch
+// keep max-chars > 10 1:1
 @for $i from 10 through 40 {
 	[data-max-chars="#{$i}"] {
-		width: #{$i*(1 - ($i - 10)/30*0.15)}ch;
+		width: #{$i}ch;
 	}
 }
 

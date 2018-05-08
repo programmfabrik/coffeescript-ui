@@ -229,94 +229,94 @@ textarea {
   width: 10ch; }
 
 [data-max-chars="11"] {
-  width: 10.945ch; }
+  width: 11ch; }
 
 [data-max-chars="12"] {
-  width: 11.88ch; }
+  width: 12ch; }
 
 [data-max-chars="13"] {
-  width: 12.805ch; }
+  width: 13ch; }
 
 [data-max-chars="14"] {
-  width: 13.72ch; }
+  width: 14ch; }
 
 [data-max-chars="15"] {
-  width: 14.625ch; }
+  width: 15ch; }
 
 [data-max-chars="16"] {
-  width: 15.52ch; }
+  width: 16ch; }
 
 [data-max-chars="17"] {
-  width: 16.405ch; }
+  width: 17ch; }
 
 [data-max-chars="18"] {
-  width: 17.28ch; }
+  width: 18ch; }
 
 [data-max-chars="19"] {
-  width: 18.145ch; }
-
-[data-max-chars="20"] {
   width: 19ch; }
 
+[data-max-chars="20"] {
+  width: 20ch; }
+
 [data-max-chars="21"] {
-  width: 19.845ch; }
+  width: 21ch; }
 
 [data-max-chars="22"] {
-  width: 20.68ch; }
+  width: 22ch; }
 
 [data-max-chars="23"] {
-  width: 21.505ch; }
+  width: 23ch; }
 
 [data-max-chars="24"] {
-  width: 22.32ch; }
+  width: 24ch; }
 
 [data-max-chars="25"] {
-  width: 23.125ch; }
+  width: 25ch; }
 
 [data-max-chars="26"] {
-  width: 23.92ch; }
+  width: 26ch; }
 
 [data-max-chars="27"] {
-  width: 24.705ch; }
-
-[data-max-chars="28"] {
-  width: 25.48ch; }
-
-[data-max-chars="29"] {
-  width: 26.245ch; }
-
-[data-max-chars="30"] {
   width: 27ch; }
 
+[data-max-chars="28"] {
+  width: 28ch; }
+
+[data-max-chars="29"] {
+  width: 29ch; }
+
+[data-max-chars="30"] {
+  width: 30ch; }
+
 [data-max-chars="31"] {
-  width: 27.745ch; }
+  width: 31ch; }
 
 [data-max-chars="32"] {
-  width: 28.48ch; }
+  width: 32ch; }
 
 [data-max-chars="33"] {
-  width: 29.205ch; }
+  width: 33ch; }
 
 [data-max-chars="34"] {
-  width: 29.92ch; }
+  width: 34ch; }
 
 [data-max-chars="35"] {
-  width: 30.625ch; }
+  width: 35ch; }
 
 [data-max-chars="36"] {
-  width: 31.32ch; }
+  width: 36ch; }
 
 [data-max-chars="37"] {
-  width: 32.005ch; }
+  width: 37ch; }
 
 [data-max-chars="38"] {
-  width: 32.68ch; }
+  width: 38ch; }
 
 [data-max-chars="39"] {
-  width: 33.345ch; }
+  width: 39ch; }
 
 [data-max-chars="40"] {
-  width: 34ch; }
+  width: 40ch; }
 
 .cui-browser-ie:not(.cui-browser-edge) [data-max-chars="1"] {
   width: 2.5ch; }
