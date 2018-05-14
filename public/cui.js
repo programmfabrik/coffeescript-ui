@@ -259,7 +259,7 @@ CUI = (function() {
           dfr.resolve.apply(dfr, return_values);
           return;
         }
-        if (CUI.isFunction(args[idx])) {
+        if (CUI.util.isFunction(args[idx])) {
           if (__this !== CUI) {
             ret = args[idx].call(__this);
           } else {
@@ -297,7 +297,7 @@ CUI = (function() {
       items: {
         mandatory: true,
         check: function(v) {
-          return CUI.isArray(v);
+          return CUI.util.isArray(v);
         }
       },
       chunk_size: {
@@ -497,7 +497,7 @@ CUI = (function() {
     if (ms == null) {
       ms = 0;
     }
-    if (CUI.isPlainObject(_func)) {
+    if (CUI.util.isPlainObject(_func)) {
       ms = _func.ms || 0;
       track = _func.track;
       func = _func.call;
@@ -513,7 +513,7 @@ CUI = (function() {
         track = true;
       }
     }
-    CUI.util.assert(CUI.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", {
+    CUI.util.assert(CUI.util.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", {
       parameter: _func
     });
     timeout = {
@@ -823,11 +823,11 @@ CUI = (function() {
     }
     url = [];
     if (replacer) {
-      if (CUI.isFunction(replacer)) {
+      if (CUI.util.isFunction(replacer)) {
         encode_func = replacer;
       } else {
         encode_func = function(v) {
-          return CUI.stringMapReplace(v + "", replace_map);
+          return CUI.util.stringMapReplace(v + "", replace_map);
         };
       }
     } else {
@@ -837,7 +837,7 @@ CUI = (function() {
     }
     for (k in params) {
       v = params[k];
-      if (CUI.isArray(v)) {
+      if (CUI.util.isArray(v)) {
         for (j = 0, len1 = v.length; j < len1; j++) {
           _v = v[j];
           url.push(encode_func(k) + connect_pair + encode_func(_v));
@@ -889,11 +889,11 @@ CUI = (function() {
     }
     params = {};
     if (replacer) {
-      if (CUI.isFunction(replacer)) {
+      if (CUI.util.isFunction(replacer)) {
         decode_func = replacer;
       } else {
         decode_func = function(v) {
-          return CUI.stringMapReplace(v + "", replacer);
+          return CUI.util.stringMapReplace(v + "", replacer);
         };
       }
     } else {
@@ -946,8 +946,8 @@ CUI = (function() {
       v = mergeMap[k];
       if (!targetMap.hasOwnProperty(k)) {
         targetMap[k] = v;
-      } else if (CUI.isPlainObject(targetMap[k]) && CUI.isPlainObject(v)) {
-        CUI.mergeMap(targetMap[k], v);
+      } else if (CUI.util.isPlainObject(targetMap[k]) && CUI.util.isPlainObject(v)) {
+        CUI.util.mergeMap(targetMap[k], v);
       }
     }
     return targetMap;
@@ -1058,7 +1058,7 @@ CUI = (function() {
 
   CUI.parseLocation = function(url) {
     var _match, match, p;
-    if (!CUI.isFunction(url != null ? url.match : void 0) || url.length === 0) {
+    if (!CUI.util.isFunction(url != null ? url.match : void 0) || url.length === 0) {
       return null;
     }
     match = url.match(this.urlRegex);
@@ -8225,7 +8225,7 @@ CUI.CSVData = (function(superClass) {
     return this.addOpts({
       rows: {
         check: function(v) {
-          return CUI.isArray(v) && v.length > 0;
+          return CUI.util.isArray(v) && v.length > 0;
         }
       }
     });
@@ -8848,7 +8848,7 @@ CUI.DataField = (function(superClass) {
       this.DOM.setAttribute("cui-data-field-name", this.getName());
     }
     this.init();
-    if (this._data && !CUI.isFunction(this._data)) {
+    if (this._data && !CUI.util.isFunction(this._data)) {
       this.setData(this._data);
     }
     this.__initDisabled();
@@ -8883,7 +8883,7 @@ CUI.DataField = (function(superClass) {
       },
       data: {
         check: function(v) {
-          return CUI.isFunction(v != null ? v.hasOwnProperty : void 0) || CUI.isFunction(v);
+          return CUI.util.isFunction(v != null ? v.hasOwnProperty : void 0) || CUI.util.isFunction(v);
         }
       },
       data_not_for_others: {
@@ -8893,7 +8893,7 @@ CUI.DataField = (function(superClass) {
       disabled: {
         "default": false,
         check: function(v) {
-          return CUI.util.isBoolean(v) || CUI.isFunction(v);
+          return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
         }
       },
       disabled_depends_on_data: {
@@ -9117,7 +9117,7 @@ CUI.DataField = (function(superClass) {
   };
 
   DataField.prototype.updateData = function(data) {
-    if (CUI.isFunction(this._data)) {
+    if (CUI.util.isFunction(this._data)) {
       this.__data = this._data.call(this, data, this);
     } else {
       this.__data = data;
@@ -9130,19 +9130,19 @@ CUI.DataField = (function(superClass) {
     if (init_data == null) {
       init_data = true;
     }
-    if (this.__data && this._data && !CUI.isFunction(this._data)) {
+    if (this.__data && this._data && !CUI.util.isFunction(this._data)) {
       return;
     }
     CUI.util.assert(!this.__data, this + ".setData", "data is already set.", {
       opts: this.opts,
       data: this.__data
     });
-    if (CUI.isFunction(this._data)) {
+    if (CUI.util.isFunction(this._data)) {
       this.__data = this._data.call(this, data, this);
     } else {
       this.__data = data;
     }
-    CUI.util.assert(CUI.isPlainObject(this.__data) || ((ref = this.__data) != null ? typeof ref.hasOwnProperty === "function" ? ref.hasOwnProperty(this.getName()) : void 0 : void 0), this + ".setData", "data needs to be PlainObject or have a property \"" + (this.getName()) + "\".", {
+    CUI.util.assert(CUI.util.isPlainObject(this.__data) || ((ref = this.__data) != null ? typeof ref.hasOwnProperty === "function" ? ref.hasOwnProperty(this.getName()) : void 0 : void 0), this + ".setData", "data needs to be PlainObject or have a property \"" + (this.getName()) + "\".", {
       data: data,
       opts: this.opts
     });
@@ -9280,7 +9280,7 @@ CUI.DataField = (function(superClass) {
     }
     for (i = 0, len = other_fields.length; i < len; i++) {
       df = other_fields[i];
-      if (!df || !CUI.isFunction(df[func])) {
+      if (!df || !CUI.util.isFunction(df[func])) {
         CUI.util.assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"" + func + "\".", {
           field: df,
           other_fields: other_fields
@@ -9314,9 +9314,9 @@ CUI.DataField = (function(superClass) {
       allowDeferred = false;
     }
     v = this["_" + opt];
-    if (CUI.isFunction(v)) {
+    if (CUI.util.isFunction(v)) {
       arr = v.call(this, this, event);
-      CUI.util.assert(CUI.isArray(arr) || (CUI.util.isPromise(arr) && allowDeferred), this.__cls + ".getArrayFromOpt", "opts." + opt + "(dataField) did not return Array or Promise.", {
+      CUI.util.assert(CUI.util.isArray(arr) || (CUI.util.isPromise(arr) && allowDeferred), this.__cls + ".getArrayFromOpt", "opts." + opt + "(dataField) did not return Array or Promise.", {
         options: arr,
         opts: this.opts
       });
@@ -9474,7 +9474,7 @@ CUI.DataField = (function(superClass) {
     }
     this.initValue();
     undo = this.getUndo();
-    if (CUI.isPlainObject(undo) && CUI.isEmptyObject(undo)) {
+    if (CUI.util.isPlainObject(undo) && CUI.util.isEmptyObject(undo)) {
       undo.values = [this.getValue()];
       undo.idx = 0;
     }
@@ -9613,7 +9613,7 @@ CUI.DataField = (function(superClass) {
     if (field instanceof CUI.DataField) {
       return field;
     }
-    CUI.util.assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", {
+    CUI.util.assert(CUI.util.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", {
       field: field,
       delete_keys: delete_keys,
       default_data: default_data
@@ -9637,7 +9637,7 @@ CUI.DataField = (function(superClass) {
       }
       field_opts[k] = v;
     }
-    CUI.util.assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"" + type + "\".", {
+    CUI.util.assert(CUI.util.isFunction(type), "CUI.DataField.new", "type is unknown: \"" + type + "\".", {
       field: field
     });
     _field = new type(field_opts);
@@ -9770,7 +9770,7 @@ CUI.Deferred = (function() {
   };
 
   Deferred.prototype.__register = function(type, func) {
-    CUI.util.assert(CUI.isFunction(func), "Deferred." + type + ": Callback needs to be Function.", {
+    CUI.util.assert(CUI.util.isFunction(func), "Deferred." + type + ": Callback needs to be Function.", {
       callback: func
     });
     if (this.__state === "rejected" && type === "done") {
@@ -10279,7 +10279,7 @@ CUI.Draggable = (function(superClass) {
       helper: {
         "default": "clone",
         check: function(v) {
-          return v === "clone" || CUI.util.isElement(v) || CUI.isFunction(v) || null;
+          return v === "clone" || CUI.util.isElement(v) || CUI.util.isFunction(v) || null;
         }
       },
       helper_contain_element: {
@@ -10326,7 +10326,7 @@ CUI.Draggable = (function(superClass) {
       selector: {
         check: (function(_this) {
           return function(v) {
-            return CUI.util.isString(v) || CUI.isFunction(v);
+            return CUI.util.isString(v) || CUI.util.isFunction(v);
           };
         })(this)
       }
@@ -10451,7 +10451,7 @@ CUI.Draggable = (function(superClass) {
     if (CUI.util.isNull(CUI.globalDrag) || CUI.globalDrag === true) {
       CUI.globalDrag = {};
     }
-    CUI.util.assert(CUI.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", {
+    CUI.util.assert(CUI.util.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", {
       data: CUI.globalDrag
     });
     point = CUI.util.getCoordinatesFromEvent(ev);
@@ -10862,7 +10862,7 @@ CUI.Draggable = (function(superClass) {
         top: CUI.globalDrag.start.top,
         left: CUI.globalDrag.start.left
       };
-    } else if (CUI.isFunction(helper)) {
+    } else if (CUI.util.isFunction(helper)) {
       hn = CUI.globalDrag.helperNode = helper(CUI.globalDrag);
       set_dim = null;
     } else {
@@ -11148,7 +11148,7 @@ CUI.Droppable = (function(superClass) {
       selector: {
         check: (function(_this) {
           return function(v) {
-            return CUI.util.isString(v) || CUI.isFunction(v);
+            return CUI.util.isString(v) || CUI.util.isFunction(v);
           };
         })(this)
       }
@@ -11673,7 +11673,7 @@ CUI.Movable = (function(superClass) {
       limitRect: {
         "default": {},
         check: function(v) {
-          return CUI.isPlainObject(v) || v instanceof Function;
+          return CUI.util.isPlainObject(v) || v instanceof Function;
         }
       },
       onPositioned: {
@@ -11698,7 +11698,7 @@ CUI.Movable = (function(superClass) {
   };
 
   Movable.prototype.getLimitRect = function() {
-    if (CUI.isFunction(this._limitRect)) {
+    if (CUI.util.isFunction(this._limitRect)) {
       return this._limitRect();
     } else {
       return this._limitRect;
@@ -11707,7 +11707,7 @@ CUI.Movable = (function(superClass) {
 
   Movable.prototype.setElementCss = function(pos) {
     var setCss;
-    CUI.util.assert(CUI.isPlainObject(pos), CUI.util.getObjectClass(this), "opts.position must return a PlainObject containing any of x, y, w, h", {
+    CUI.util.assert(CUI.util.isPlainObject(pos), CUI.util.getObjectClass(this), "opts.position must return a PlainObject containing any of x, y, w, h", {
       pos: pos
     });
     setCss = {};
@@ -12260,7 +12260,7 @@ CUI.Element = (function() {
     if (CUI.util.isNull(check_map)) {
       return;
     }
-    CUI.util.assert(CUI.isPlainObject(check_map), this.__cls + "." + fn, "check_map needs to be Map", {
+    CUI.util.assert(CUI.util.isPlainObject(check_map), this.__cls + "." + fn, "check_map needs to be Map", {
       key: key,
       check_map: check_map
     });
@@ -12270,7 +12270,7 @@ CUI.Element = (function() {
 
   Element.prototype.addOpts = function(map) {
     var k, v;
-    CUI.util.assert(CUI.isPlainObject(map), this.__cls + ".addOpts", "Parameter needs to be Map", {
+    CUI.util.assert(CUI.util.isPlainObject(map), this.__cls + ".addOpts", "Parameter needs to be Map", {
       map: map
     });
     for (k in map) {
@@ -12282,7 +12282,7 @@ CUI.Element = (function() {
 
   Element.prototype.mergeOpts = function(map) {
     var k, v;
-    CUI.util.assert(CUI.isPlainObject(map), this.__cls + ".mergeOpts", "Parameter needs to be Map", {
+    CUI.util.assert(CUI.util.isPlainObject(map), this.__cls + ".mergeOpts", "Parameter needs to be Map", {
       map: map
     });
     for (k in map) {
@@ -12343,7 +12343,7 @@ CUI.Element = (function() {
       element: element,
       methods: methods
     });
-    CUI.util.assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", {
+    CUI.util.assert(CUI.util.isArray(methods), "Element.proxy", "methods given must be Array.", {
       element: element,
       methods: methods
     });
@@ -12418,11 +12418,11 @@ CUI.Element = (function() {
       }
       return set_opts;
     }
-    CUI.util.assert(CUI.isPlainObject(opts), cls, "opts needs to be PlainObject.", {
+    CUI.util.assert(CUI.util.isPlainObject(opts), cls, "opts needs to be PlainObject.", {
       opts: opts,
       check_map: check_map
     });
-    CUI.util.assert(CUI.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", {
+    CUI.util.assert(CUI.util.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", {
       opts: opts,
       check_map: check_map
     });
@@ -12438,7 +12438,7 @@ CUI.Element = (function() {
       } else {
         exists = false;
       }
-      if (CUI.isFunction(v.mandatory)) {
+      if (CUI.util.isFunction(v.mandatory)) {
         mandatory = v.mandatory.call(this, value);
       } else {
         mandatory = v.mandatory;
@@ -12461,13 +12461,13 @@ CUI.Element = (function() {
         console.warn(cls + ": opts." + k + " is deprecated.", value);
       }
       if (v.check && (!CUI.util.isNull(value) || mandatory)) {
-        if (CUI.isArray(v.check)) {
+        if (CUI.util.isArray(v.check)) {
           CUI.util.assert(v.check.indexOf(value) > -1, cls, "opts." + k + " needs to be one of [\"" + (v.check.join('\",\"')) + "\"].", {
             opts: opts
           });
         } else if (v.check === Boolean || v.check === String || v.check === Function || v.check === Array) {
           CUI.util.assertInstanceOf.call(this, k, v.check, void 0, value);
-        } else if (CUI.isFunction(v.check) && !v.check.__super__) {
+        } else if (CUI.util.isFunction(v.check) && !v.check.__super__) {
           CUI.util.assert(CUI.util.isEmpty(v.check.name) || v.check.name === "check", cls, k + ".check is \"" + v.check.name + "\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", {
             opts: opts,
             key: k,
@@ -12493,7 +12493,7 @@ CUI.Element = (function() {
               opts: opts
             });
           }
-        } else if (CUI.isPlainObject(v.check)) {
+        } else if (CUI.util.isPlainObject(v.check)) {
           value = CUI.Element.readOpts(value, cls + " [opts." + k + "]", v.check);
         } else if (CUI.util.isNull(value) && mandatory) {
           CUI.util.assert(false, cls, "opts." + k + " is mandatory, but is " + value + ".", {
@@ -12888,14 +12888,14 @@ CUI.Event = (function(superClass) {
 
   Event.require = function(event, func) {
     var ev, ev_info, eventClass;
-    if (CUI.isPlainObject(event)) {
+    if (CUI.util.isPlainObject(event)) {
       ev_info = CUI.Events.getEventType(event.type);
       if (ev_info.eventClass) {
         eventClass = ev_info.eventClass;
       } else {
         eventClass = CUI.Event;
       }
-      CUI.mergeMap(event, ev_info);
+      CUI.util.mergeMap(event, ev_info);
       delete event.eventClass;
       delete event.listenerClass;
       ev = new eventClass(event);
@@ -13182,7 +13182,7 @@ CUI.Events = (function(superClass) {
     ref = this.__getActiveListeners(doc);
     for (j = 0, len = ref.length; j < len; j++) {
       listener = ref[j];
-      if (!filter || CUI.isEmptyObject(filter) || listener.matchesFilter(filter)) {
+      if (!filter || CUI.util.isEmptyObject(filter) || listener.matchesFilter(filter)) {
         listener.destroy();
       }
     }
@@ -13197,7 +13197,7 @@ CUI.Events = (function(superClass) {
     ref = this.__getActiveListeners();
     for (j = 0, len = ref.length; j < len; j++) {
       listener = ref[j];
-      if (CUI.isEmptyObject(filter) || listener.matchesFilter(filter)) {
+      if (CUI.util.isEmptyObject(filter) || listener.matchesFilter(filter)) {
         console.debug("Listener", listener.getTypes(), (listener.getNode() ? "NODE" : "-"), listener);
       }
     }
@@ -13239,7 +13239,7 @@ CUI.Events = (function(superClass) {
     if (allow_array == null) {
       allow_array = true;
     }
-    if (!CUI.isArray(event.type) || !allow_array) {
+    if (!CUI.util.isArray(event.type) || !allow_array) {
       CUI.util.assert(CUI.util.isString(event != null ? event.type : void 0) && event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", {
         event: event
       });
@@ -13252,7 +13252,7 @@ CUI.Events = (function(superClass) {
         return _this.registerEvent(_event, false);
       };
     })(this);
-    if (CUI.isArray(event.type)) {
+    if (CUI.util.isArray(event.type)) {
       ref = event.type;
       for (j = 0, len = ref.length; j < len; j++) {
         type = ref[j];
@@ -13416,7 +13416,7 @@ CUI.Events = (function(superClass) {
         results1 = [];
         for (type in events) {
           ev = events[type];
-          CUI.mergeMap(ev, defaults[block]);
+          CUI.util.mergeMap(ev, defaults[block]);
           ev.type = type;
           results1.push(this.registerEvent(ev));
         }
@@ -13651,7 +13651,7 @@ CUI.Listener = (function(superClass) {
       type: {
         mandatory: true,
         check: function(v) {
-          return CUI.util.isString(v) || CUI.isArray(v);
+          return CUI.util.isString(v) || CUI.util.isArray(v);
         }
       },
       node: {
@@ -13664,7 +13664,7 @@ CUI.Listener = (function(superClass) {
       call: {
         mandatory: true,
         check: function(v) {
-          return CUI.isFunction(v);
+          return CUI.util.isFunction(v);
         }
       },
       only_once: {
@@ -13672,7 +13672,7 @@ CUI.Listener = (function(superClass) {
       },
       selector: {
         check: function(v) {
-          return CUI.util.isString(v) || CUI.isFunction(v);
+          return CUI.util.isString(v) || CUI.util.isFunction(v);
         }
       },
       instance: {},
@@ -13869,7 +13869,7 @@ CUI.Listener = (function(superClass) {
     if (filter instanceof CUI.Listener) {
       return filter === this;
     }
-    CUI.util.assert(CUI.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.");
+    CUI.util.assert(CUI.util.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.");
     match = true;
     filtered = false;
     if (filter.node) {
@@ -13879,7 +13879,7 @@ CUI.Listener = (function(superClass) {
     }
     if (match && filter.type) {
       filtered = true;
-      if (CUI.isArray(filter.type)) {
+      if (CUI.util.isArray(filter.type)) {
         match = false;
         ref = filter.type;
         for (i = 0, len = ref.length; i < len; i++) {
@@ -13909,7 +13909,7 @@ CUI.Listener = (function(superClass) {
 
   Listener.require = function(listener, func) {
     var ev, i, len, listen, listenerFunc, type, types;
-    if (CUI.isPlainObject(listener)) {
+    if (CUI.util.isPlainObject(listener)) {
       listenerFunc = null;
       if (!(listener.type instanceof Array)) {
         types = [listener.type];
@@ -14229,7 +14229,7 @@ CUI.FlexHandle = (function(superClass) {
       },
       label: {
         check: function(v) {
-          return v instanceof CUI.Label || CUI.isPlainObject(v);
+          return v instanceof CUI.Label || CUI.util.isPlainObject(v);
         }
       },
       hidden: {
@@ -15093,7 +15093,7 @@ CUI.Layer = (function(superClass) {
           content: null
         },
         check: function(v) {
-          if (CUI.isPlainObject(v) || v === false) {
+          if (CUI.util.isPlainObject(v) || v === false) {
             return true;
           }
         }
@@ -15126,7 +15126,7 @@ CUI.Layer = (function(superClass) {
       placements: {
         check: function(v) {
           var a, i, len;
-          if (!CUI.isArray(v)) {
+          if (!CUI.util.isArray(v)) {
             return false;
           }
           for (i = 0, len = v.length; i < len; i++) {
@@ -15149,7 +15149,7 @@ CUI.Layer = (function(superClass) {
       },
       show_at_position: {
         check: function(v) {
-          return CUI.isPlainObject(v) && v.top >= 0 && v.left >= 0;
+          return CUI.util.isPlainObject(v) && v.top >= 0 && v.left >= 0;
         }
       },
       fill_space: {
@@ -16207,7 +16207,7 @@ CUI.Layout = (function(superClass) {
       pn = ref[i];
       results.push(this.addOpt(pn, {
         check: function(v) {
-          return CUI.isPlainObject(v) || v === false;
+          return CUI.util.isPlainObject(v) || v === false;
         }
       }));
     }
@@ -16442,18 +16442,18 @@ CUI.Layout = (function(superClass) {
 
   Layout.prototype.__callAutoButtonbar = function(value, key) {
     var _v, get_value, i, len, results, v;
-    if (CUI.isFunction(value)) {
+    if (CUI.util.isFunction(value)) {
       value = value(this);
     }
     get_value = function(v) {
-      if (CUI.isPlainObject(v)) {
+      if (CUI.util.isPlainObject(v)) {
         return new CUI.defaults["class"].Button(v);
       } else {
         return v;
       }
     };
     value = get_value(value);
-    if (CUI.isArray(value)) {
+    if (CUI.util.isArray(value)) {
       results = [];
       for (i = 0, len = value.length; i < len; i++) {
         _v = value[i];
@@ -16677,7 +16677,7 @@ CUI.Template = (function(superClass) {
       CUI.dom.setAttributeMap(this.DOM, this._attr);
     }
     this.map = this.getElMap(this._map);
-    if (!CUI.isEmptyObject(this.map) && this._set_template_empty) {
+    if (!CUI.util.isEmptyObject(this.map) && this._set_template_empty) {
       CUI.dom.addClass(this.DOM, "cui-template-empty");
     }
     if (this._init_flex_handles) {
@@ -16918,7 +16918,7 @@ CUI.Template = (function(superClass) {
       }
       return this.map[key];
     }
-    if (CUI.isEmptyObject(this.map)) {
+    if (CUI.util.isEmptyObject(this.map)) {
       CUI.dom.empty(this.DOM);
     } else {
       for (key in this.map) {
@@ -16976,10 +16976,10 @@ CUI.Template = (function(superClass) {
         map: this.map
       });
     }
-    if (CUI.isFunction(value)) {
+    if (CUI.util.isFunction(value)) {
       value = value(element);
     }
-    if (!CUI.isArray(value)) {
+    if (!CUI.util.isArray(value)) {
       value = [value];
     }
     appends = [];
@@ -17520,7 +17520,7 @@ CUI.dom = (function() {
     if (key === void 0) {
       return node.__dom_data || {};
     }
-    if (CUI.isPlainObject(key)) {
+    if (CUI.util.isPlainObject(key)) {
       for (k in key) {
         v = key[k];
         CUI.dom.data(node, k, v);
@@ -17543,7 +17543,7 @@ CUI.dom = (function() {
     }
     if (node.__dom_data) {
       delete node.__dom_data[key];
-      if (CUI.isEmptyObject(node.__dom_data)) {
+      if (CUI.util.isEmptyObject(node.__dom_data)) {
         delete node.__dom_data;
       }
     }
@@ -17853,7 +17853,7 @@ CUI.dom = (function() {
     if (CUI.util.isNull(content)) {
       return node;
     }
-    if (CUI.isArray(content) || content instanceof HTMLCollection || content instanceof NodeList) {
+    if (CUI.util.isArray(content) || content instanceof HTMLCollection || content instanceof NodeList) {
       idx = 0;
       len = content.length;
       while (idx < len) {
@@ -18424,7 +18424,7 @@ CUI.dom = (function() {
     if (selector instanceof HTMLElement) {
       return node === selector;
     }
-    if (CUI.isFunction(selector)) {
+    if (CUI.util.isFunction(selector)) {
       return !!selector(node);
     }
     if (!(node instanceof HTMLElement)) {
@@ -19058,7 +19058,7 @@ CUI.dom = (function() {
     if (arguments.length === 0) {
       return;
     }
-    if (arguments.length === 2 || !CUI.isArray(arguments[0])) {
+    if (arguments.length === 2 || !CUI.util.isArray(arguments[0])) {
       dim = arguments[0];
       pattern = arguments[1];
       arr = [];
@@ -19073,7 +19073,7 @@ CUI.dom = (function() {
         }
         arr.push(value);
       }
-    } else if (CUI.isArray(arguments[0])) {
+    } else if (CUI.util.isArray(arguments[0])) {
       arr = arguments[0];
     } else {
       console.error("CUI.dom.debugRect: Argument Error.");
@@ -19438,7 +19438,7 @@ CUI.dom = (function() {
       add_content = (function(_this) {
         return function(___a) {
           var a, i, len1;
-          if (CUI.isArray(___a)) {
+          if (CUI.util.isArray(___a)) {
             for (i = 0, len1 = ___a.length; i < len1; i++) {
               a = ___a[i];
               add_content(a);
@@ -19454,7 +19454,7 @@ CUI.dom = (function() {
     };
     for (i = 0, len1 = arguments.length; i < len1; i++) {
       a = arguments[i];
-      if (CUI.isArray(a)) {
+      if (CUI.util.isArray(a)) {
         for (j = 0, len2 = a.length; j < len2; j++) {
           _a = a[j];
           append(_a);
@@ -19564,7 +19564,7 @@ CUI.util = (function() {
     needs = [];
     for (j = 0, len = methods.length; j < len; j++) {
       method = methods[j];
-      if (!CUI.isFunction(inst[method])) {
+      if (!CUI.util.isFunction(inst[method])) {
         needs.push(method);
       }
     }
@@ -19589,12 +19589,12 @@ CUI.util = (function() {
     if (!CUI.defaults.asserts) {
       return;
     }
-    if (!CUI.isFunction(classClass) && !classClass === "PlainObject") {
+    if (!CUI.util.isFunction(classClass) && !classClass === "PlainObject") {
       throw "assertInstanceOf: class is not a Function";
     }
     if (value === void 0) {
       value = opts[variableName];
-      CUI.util.assert(CUI.isPlainObject(opts), "new " + arguments.callee.caller.name, "opts needs to be PlainObject but it is " + (CUI.util.getObjectClass(opts)) + ".", {
+      CUI.util.assert(CUI.util.isPlainObject(opts), "new " + arguments.callee.caller.name, "opts needs to be PlainObject but it is " + (CUI.util.getObjectClass(opts)) + ".", {
         opts: opts
       });
     }
@@ -19606,7 +19606,7 @@ CUI.util = (function() {
       cond = CUI.util.isInteger(value);
     } else if (classClass === "PlainObject") {
       cn = "PlainObject";
-      cond = CUI.isPlainObject(value);
+      cond = CUI.util.isPlainObject(value);
     } else if ((new String) instanceof classClass) {
       cn = "String";
       cond = CUI.util.isString(value);
@@ -19704,10 +19704,10 @@ CUI.util = (function() {
   };
 
   util.isEmpty = function(obj) {
-    if (CUI.isArray(obj)) {
+    if (CUI.util.isArray(obj)) {
       return obj.length === 0;
-    } else if (CUI.isPlainObject(obj)) {
-      return CUI.isEmptyObject(obj);
+    } else if (CUI.util.isPlainObject(obj)) {
+      return CUI.util.isEmptyObject(obj);
     } else {
       return CUI.util.isNull(obj) || obj === "" || obj === false;
     }
@@ -19734,7 +19734,7 @@ CUI.util = (function() {
   };
 
   util.isContent = function(obj) {
-    return CUI.util.isElement(obj) || obj instanceof HTMLCollection || obj instanceof NodeList || CUI.isArray(obj) || CUI.isFunction(obj) || CUI.util.isElement(obj != null ? obj.DOM : void 0);
+    return CUI.util.isElement(obj) || obj instanceof HTMLCollection || obj instanceof NodeList || CUI.util.isArray(obj) || CUI.util.isFunction(obj) || CUI.util.isElement(obj != null ? obj.DOM : void 0);
   };
 
   util.isNumber = function(n) {
@@ -19840,7 +19840,7 @@ CUI.util = (function() {
     if (obj instanceof CUI.Dummy) {
       return obj;
     }
-    if (CUI.isPlainObject(obj)) {
+    if (CUI.util.isPlainObject(obj)) {
       new_obj = {};
       for (k in obj) {
         v = obj[k];
@@ -19858,7 +19858,7 @@ CUI.util = (function() {
       }
       return new_obj;
     }
-    if (CUI.isArray(obj)) {
+    if (CUI.util.isArray(obj)) {
       if (!deep) {
         return obj.slice(0);
       }
@@ -19882,14 +19882,14 @@ CUI.util = (function() {
     }
     clean_obj = function(obj) {
       var item, j, k, len, ref, result, v;
-      if (CUI.isArray(obj)) {
+      if (CUI.util.isArray(obj)) {
         result = [];
         for (j = 0, len = obj.length; j < len; j++) {
           item = obj[j];
           result.push(clean_obj(item));
         }
         return result;
-      } else if (CUI.isPlainObject(obj)) {
+      } else if (CUI.util.isPlainObject(obj)) {
         result = {};
         for (k in obj) {
           v = obj[k];
@@ -19955,7 +19955,7 @@ CUI.util = (function() {
 
   util.removeFromArray = function(value, arr, compFunc) {
     var idx, removed;
-    CUI.util.assert(CUI.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", {
+    CUI.util.assert(CUI.util.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", {
       value: value,
       array: arr,
       compFunc: compFunc
@@ -20024,7 +20024,7 @@ CUI.util = (function() {
     idx = -1;
     for (i = j = 0, len = arr.length; j < len; i = ++j) {
       a = arr[i];
-      if (CUI.isFunction(compFunc)) {
+      if (CUI.util.isFunction(compFunc)) {
         if (compFunc(a, value)) {
           idx = i;
           break;
@@ -20077,7 +20077,7 @@ CUI.util = (function() {
     CUI.util.assert(CUI.Map.isValidPosition(coordinates), "formatCoordinates", "Coordinates must be a valid position object, with latitude and longitude attributes.", {
       value: coordinates
     });
-    if (CUI.isFunction(format)) {
+    if (CUI.util.isFunction(format)) {
       return format(coordinates);
     }
     CUI.util.assert(CUI.util.isString(format) && !CUI.util.isEmpty(format), "formatCoordinates", "Parameter format is String, mandatory and not empty.", {
@@ -20888,7 +20888,7 @@ CUI.Button = (function(superClass) {
       disabled: {
         "default": false,
         check: function(v) {
-          return CUI.util.isBoolean(v) || CUI.isFunction(v);
+          return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
         }
       },
       active_css_class: {
@@ -20950,7 +20950,7 @@ CUI.Button = (function(superClass) {
       },
       hidden: {
         check: function(v) {
-          return CUI.util.isBoolean(v) || CUI.isFunction(v);
+          return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
         }
       },
       menu: {
@@ -21213,7 +21213,7 @@ CUI.Button = (function(superClass) {
       activate();
       return this;
     }
-    if (this.__active === true && CUI.isEmptyObject(flags)) {
+    if (this.__active === true && CUI.util.isEmptyObject(flags)) {
       return this;
     }
     if (this.__radio) {
@@ -21261,7 +21261,7 @@ CUI.Button = (function(superClass) {
       deactivate();
       return this;
     }
-    if (this.__active === false && CUI.isEmptyObject(flags)) {
+    if (this.__active === false && CUI.util.isEmptyObject(flags)) {
       return this;
     }
     this.__active = false;
@@ -21771,7 +21771,7 @@ CUI.Buttonbar = (function(superClass) {
     if (CUI.util.isNull(btn)) {
       return;
     }
-    if (CUI.isPlainObject(btn)) {
+    if (CUI.util.isPlainObject(btn)) {
       btn = new CUI.defaults["class"].Button(btn);
     }
     if (btn instanceof CUI.Button || btn instanceof CUI.DataFieldInput) {
@@ -22301,7 +22301,7 @@ CUI.ConfirmationChoice = (function(superClass) {
         "default": [],
         check: function(v) {
           var choice, i, idx, len;
-          if (!CUI.isArray(v)) {
+          if (!CUI.util.isArray(v)) {
             return false;
           }
           for (idx = i = 0, len = v.length; i < len; idx = ++i) {
@@ -22802,7 +22802,7 @@ CUI.ConfirmationDialog = (function(superClass) {
       },
       buttons: {
         check: function(v) {
-          return (CUI.isArray(v) && v.length > 0) || CUI.isFunction(v);
+          return (CUI.util.isArray(v) && v.length > 0) || CUI.util.isFunction(v);
         }
       },
       footer_left: {},
@@ -23345,7 +23345,7 @@ CUI.DataTable = (function(superClass) {
       fields: {
         mandatory: true,
         check: function(v) {
-          return CUI.isArray(v) || CUI.isFunction(v);
+          return CUI.util.isArray(v) || CUI.util.isFunction(v);
         }
       },
       new_rows: {
@@ -23374,7 +23374,7 @@ CUI.DataTable = (function(superClass) {
         mandatory: true,
         "default": [],
         check: function(v) {
-          return CUI.isArray(v);
+          return CUI.util.isArray(v);
         }
       },
       chunk_size: {
@@ -23759,7 +23759,7 @@ CUI.DataTable = (function(superClass) {
         this.__navi_next.disable();
       }
     }
-    CUI.util.assert(CUI.isArray(this.rows), "DataTable.displayValue", "\"value\" needs to be Array.", {
+    CUI.util.assert(CUI.util.isArray(this.rows), "DataTable.displayValue", "\"value\" needs to be Array.", {
       data: this.getData(),
       value: this.getValue()
     });
@@ -23995,7 +23995,7 @@ CUI.DateTime = (function(superClass) {
         "default": locale,
         check: function(v) {
           var ref;
-          return CUI.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
+          return CUI.util.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
         }
       },
       input_types: {
@@ -25742,7 +25742,7 @@ CUI.DateTimeInputBlock = (function(superClass) {
     var bl, i, len, mom;
     console.debug("change block", block, blocks, diff, this._datetime, this._input_format.format);
     mom = moment(this._datetime, this._input_format.input);
-    if (CUI.isFunction(this._matcher.inc_func)) {
+    if (CUI.util.isFunction(this._matcher.inc_func)) {
       this._matcher.inc_func(mom, diff);
     } else {
       if (diff < 0) {
@@ -25925,7 +25925,7 @@ CUI.DocumentBrowser = (function(superClass) {
         mandatory: true,
         check: function(v) {
           var _k, _v;
-          if (!CUI.isPlainObject(v)) {
+          if (!CUI.util.isPlainObject(v)) {
             return false;
           }
           for (_k in v) {
@@ -28284,7 +28284,7 @@ CUI.SimpleForm = (function(superClass) {
       fields: {
         mandatory: true,
         check: function(v) {
-          return CUI.isFunction(v) || CUI.isArray(v);
+          return CUI.util.isFunction(v) || CUI.util.isArray(v);
         }
       },
       class_table: {
@@ -28323,7 +28323,7 @@ CUI.SimpleForm = (function(superClass) {
       this.__horizontal = this._horizontal;
     }
     if ((ref = this._form) != null ? ref.checkbox : void 0) {
-      CUI.util.assert(CUI.isPlainObject(this._form.checkbox, "new CUI.Form", "opts.form.checkbox needs to be PlainObject.", {
+      CUI.util.assert(CUI.util.isPlainObject(this._form.checkbox, "new CUI.Form", "opts.form.checkbox needs to be PlainObject.", {
         opts: this.opts
       }));
       CUI.util.assert(this._name, "new CUI.Form", "opts.form.checkbox requires opts.name to be set.", {
@@ -28379,7 +28379,7 @@ CUI.SimpleForm = (function(superClass) {
       if (!field) {
         continue;
       }
-      if (CUI.isFunction(field)) {
+      if (CUI.util.isFunction(field)) {
         _field = CUI.DataField["new"](field(this));
       } else {
         _field = CUI.DataField["new"](field);
@@ -28428,11 +28428,11 @@ CUI.SimpleForm = (function(superClass) {
 
   SimpleForm.prototype.setData = function(data) {
     if (this._name && this.__checkbox) {
-      CUI.util.assert(!CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", {
+      CUI.util.assert(!CUI.util.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", {
         opts: this.opts
       });
     }
-    if (this._name && !CUI.isFunction(data)) {
+    if (this._name && !CUI.util.isFunction(data)) {
       if (this.__checkbox) {
         this.__checkbox_set_data = data;
         if (data[this._name]) {
@@ -28453,7 +28453,7 @@ CUI.SimpleForm = (function(superClass) {
     } else {
       SimpleForm.__super__.setData.call(this, data);
     }
-    if (CUI.isFunction(this._fields) && this.__fields && this.__fields.length === 0) {
+    if (CUI.util.isFunction(this._fields) && this.__fields && this.__fields.length === 0) {
       this.initFields();
       this.callOnOthers("setData", this.__data);
     }
@@ -28572,7 +28572,7 @@ CUI.SimpleForm = (function(superClass) {
         }
         if (v instanceof CUI.Form) {
           return v.DOM;
-        } else if (CUI.isPlainObject(v)) {
+        } else if (CUI.util.isPlainObject(v)) {
           return new CUI.MultilineLabel(v).DOM;
         } else if (CUI.util.isString(v)) {
           return new CUI.MultilineLabel({
@@ -28580,7 +28580,7 @@ CUI.SimpleForm = (function(superClass) {
           }).DOM;
         } else if (v != null ? v.DOM : void 0) {
           return v.DOM;
-        } else if (CUI.isFunction(v)) {
+        } else if (CUI.util.isFunction(v)) {
           return get_append(v(info));
         } else if (CUI.util.isEmpty(v)) {
           return null;
@@ -29169,7 +29169,7 @@ CUI.FormModal = (function(superClass) {
           },
           check: (function(_this) {
             return function(v) {
-              return CUI.isPlainObject(v);
+              return CUI.util.isPlainObject(v);
             };
           })(this)
         }
@@ -29234,7 +29234,7 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.setData = function(data) {
-    if (this._name && !CUI.isFunction(data)) {
+    if (this._name && !CUI.util.isFunction(data)) {
       if (data[this._name]) {
         this.__orig_data = CUI.util.copyObject(data[this._name], true);
       } else {
@@ -29285,7 +29285,7 @@ CUI.FormModal = (function(superClass) {
     if (!pop_opts.pane) {
       pop_opts.pane = {};
     }
-    CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", {
+    CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", {
       opts: pop_opts
     });
     pop_opts["class"] += " cui-form-modal-modal";
@@ -29352,7 +29352,7 @@ CUI.FormPopover = (function(superClass) {
       button: {
         "default": {},
         check: function(v) {
-          return CUI.isPlainObject(v) && !v.onClick;
+          return CUI.util.isPlainObject(v) && !v.onClick;
         }
       },
       trigger_data_changed_while_open: {
@@ -29374,7 +29374,7 @@ CUI.FormPopover = (function(superClass) {
       this.__class = this._class;
       delete this._class;
     }
-    this.__fields_is_func = CUI.isFunction(this._fields);
+    this.__fields_is_func = CUI.util.isFunction(this._fields);
     if (this.__fields_is_func) {
       return CUI.util.assert(this._data_not_for_others !== true, "new CUI.FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", {
         opts: this.opts
@@ -29545,7 +29545,7 @@ CUI.FormPopover = (function(superClass) {
     if (!pop_opts.pane) {
       pop_opts.pane = {};
     }
-    CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", {
+    CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", {
       opts: pop_opts
     });
     if (CUI.util.isEmpty(pop_opts["class"])) {
@@ -29968,17 +29968,17 @@ CUI.Input = (function(superClass) {
       },
       emptyHint: {
         check: function(v) {
-          return CUI.util.isString(v) || v instanceof CUI.Label || CUI.isPlainObject(v);
+          return CUI.util.isString(v) || v instanceof CUI.Label || CUI.util.isPlainObject(v);
         }
       },
       invalidHint: {
         check: function(v) {
-          return CUI.util.isString(v) || v instanceof CUI.Label || CUI.isPlainObject(v);
+          return CUI.util.isString(v) || v instanceof CUI.Label || CUI.util.isPlainObject(v);
         }
       },
       validHint: {
         check: function(v) {
-          return CUI.util.isString(v) || v instanceof CUI.Label || CUI.isPlainObject(v);
+          return CUI.util.isString(v) || v instanceof CUI.Label || CUI.util.isPlainObject(v);
         }
       },
       maxLength: {
@@ -30017,12 +30017,12 @@ CUI.Input = (function(superClass) {
       },
       getCursorBlocks: {
         check: function(v) {
-          return CUI.isFunction(v) && !this._overwrite;
+          return CUI.util.isFunction(v) && !this._overwrite;
         }
       },
       placeholder: {
         check: function(v) {
-          return CUI.isFunction(v) || CUI.util.isString(v);
+          return CUI.util.isFunction(v) || CUI.util.isString(v);
         }
       },
       readonly: {
@@ -30144,7 +30144,7 @@ CUI.Input = (function(superClass) {
     if (!this._placeholder) {
       return void 0;
     }
-    if (CUI.isFunction(this._placeholder)) {
+    if (CUI.util.isFunction(this._placeholder)) {
       return this._placeholder(this, this.getData());
     } else {
       return this._placeholder;
@@ -30554,7 +30554,7 @@ CUI.Input = (function(superClass) {
 
   Input.prototype.checkBlocks = function(blocks) {
     var b, idx, j, len1;
-    if (!CUI.isArray(blocks)) {
+    if (!CUI.util.isArray(blocks)) {
       return false;
     }
     for (idx = j = 0, len1 = blocks.length; j < len1; idx = ++j) {
@@ -31765,7 +31765,7 @@ CUI.ItemList = (function(superClass) {
       items: {
         mandatory: true,
         check: function(v) {
-          return CUI.isFunction(v) || CUI.isArray(v);
+          return CUI.util.isFunction(v) || CUI.util.isArray(v);
         }
       },
       active_item_idx: {
@@ -31846,7 +31846,7 @@ CUI.ItemList = (function(superClass) {
   };
 
   ItemList.prototype.__getItems = function(event) {
-    if (CUI.isFunction(this._items)) {
+    if (CUI.util.isFunction(this._items)) {
       return this._items(event, this) || [];
     } else {
       return this._items;
@@ -31928,7 +31928,7 @@ CUI.ItemList = (function(superClass) {
           if (item.label) {
             if (item.label instanceof CUI.Label) {
               label = item.label;
-            } else if (CUI.isPlainObject(item.label)) {
+            } else if (CUI.util.isPlainObject(item.label)) {
               label = new CUI.defaults["class"].Label(item.label);
             } else {
               label = new CUI.defaults["class"].Label({
@@ -32028,7 +32028,7 @@ CUI.ItemList = (function(superClass) {
         };
         for (idx = i = 0, len = items.length; i < len; idx = ++i) {
           _item = items[idx];
-          if (CUI.isFunction(_item)) {
+          if (CUI.util.isFunction(_item)) {
             item = _item(_this, menu, event);
           } else {
             item = _item;
@@ -32350,7 +32350,7 @@ CUI.Label = (function(superClass) {
       },
       manage_overflow: {
         check: function(v) {
-          return CUI.isPlainObject(v) || v === true || v === false;
+          return CUI.util.isPlainObject(v) || v === true || v === false;
         }
       }
     });
@@ -33158,7 +33158,7 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.getColIdx = function(display_col_i) {
-    CUI.util.assert(CUI.isArray(this.colsOrder), "ListView[" + this.listViewCounter + "].getColIdx", "colsOrder Array is missing", {
+    CUI.util.assert(CUI.util.isArray(this.colsOrder), "ListView[" + this.listViewCounter + "].getColIdx", "colsOrder Array is missing", {
       "this": this,
       display_col_i: display_col_i
     });
@@ -33964,7 +33964,7 @@ CUI.ListView = (function(superClass) {
     var cls, col_cls, ref;
     col_cls = (ref = this.__colClasses) != null ? ref[col_i] : void 0;
     cls = [];
-    if (CUI.isArray(col_cls)) {
+    if (CUI.util.isArray(col_cls)) {
       cls.push.apply(cls, col_cls);
     } else if (!CUI.util.isEmpty(col_cls)) {
       cls.push(col_cls);
@@ -34293,7 +34293,7 @@ CUI.ListViewColumn = (function(superClass) {
 
   ListViewColumn.prototype.getColspan = function() {
     var cp;
-    if (CUI.isFunction(this._colspan)) {
+    if (CUI.util.isFunction(this._colspan)) {
       cp = parseInt(this._colspan());
     } else {
       cp = parseInt(this._colspan);
@@ -34373,7 +34373,7 @@ CUI.ListViewHeaderColumn = (function(superClass) {
       },
       label: {
         check: function(v) {
-          if (CUI.isPlainObject(v) || v instanceof CUI.Label) {
+          if (CUI.util.isPlainObject(v) || v instanceof CUI.Label) {
             return true;
           } else {
             return false;
@@ -35657,7 +35657,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     })(this);
     load_children = (function(_this) {
       return function() {
-        CUI.util.assert(CUI.isArray(_this.children), "ListViewTreeNode.open", "children to be loaded must be an Array", {
+        CUI.util.assert(CUI.util.isArray(_this.children), "ListViewTreeNode.open", "children to be loaded must be an Array", {
           children: _this.children,
           listViewTreeNode: _this
         });
@@ -35714,7 +35714,7 @@ CUI.ListViewTreeNode = (function(superClass) {
       func = this.opts.getChildren || this.getChildren;
       if (func) {
         ret = func.call(this);
-        if (CUI.isArray(ret)) {
+        if (CUI.util.isArray(ret)) {
           this.children = ret;
           load_children();
         } else {
@@ -35796,7 +35796,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     if (!this.children) {
       this.children = [];
     }
-    CUI.util.assert(CUI.isArray(this.children), "Tree.addNode", "Cannot add node, children needs to be an Array in node", {
+    CUI.util.assert(CUI.util.isArray(this.children), "Tree.addNode", "Cannot add node, children needs to be an Array in node", {
       node: this,
       new_node: node
     });
@@ -36127,7 +36127,7 @@ CUI.ListViewTreeNode = (function(superClass) {
   };
 
   ListViewTreeNode.prototype.renderContent = function() {
-    if (CUI.isFunction(this.html)) {
+    if (CUI.util.isFunction(this.html)) {
       return this.html.call(this.opts, this);
     } else if (this.html) {
       return this.html;
@@ -36237,7 +36237,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     }));
     contentDiv = CUI.dom.div("cui-tree-node-content");
     content = this.renderContent();
-    if (CUI.isArray(content)) {
+    if (CUI.util.isArray(content)) {
       for (k = 0, len = content.length; k < len; k++) {
         con = content[k];
         CUI.dom.append(contentDiv, con);
@@ -38590,7 +38590,7 @@ CUI.Menu = (function(superClass) {
     this.addOpts({
       itemList: {
         check: function(v) {
-          return v instanceof CUI.ItemList || CUI.isPlainObject(v);
+          return v instanceof CUI.ItemList || CUI.util.isPlainObject(v);
         }
       },
       auto_close_after_click: {
@@ -38839,7 +38839,7 @@ CUI.Modal = (function(superClass) {
   };
 
   Modal.prototype.readOpts = function() {
-    if (this.opts.cancel && CUI.isPlainObject(this.opts.pane)) {
+    if (this.opts.cancel && CUI.util.isPlainObject(this.opts.pane)) {
       this.opts.pane.force_header = true;
     }
     return Modal.__super__.readOpts.call(this);
@@ -38850,7 +38850,7 @@ CUI.Modal = (function(superClass) {
     if (!this["_" + pname]) {
       return;
     }
-    if (CUI.isPlainObject(_btn)) {
+    if (CUI.util.isPlainObject(_btn)) {
       btn = new CUI.defaults["class"].Button(_btn);
     } else {
       btn = _btn;
@@ -39321,7 +39321,7 @@ CUI.MultiInputControl = (function(superClass) {
       },
       keys: {
         check: function(v) {
-          return CUI.isArray(v) && v.length > 0;
+          return CUI.util.isArray(v) && v.length > 0;
         }
       },
       user_control: {
@@ -39703,7 +39703,7 @@ CUI.ObjectDumper = (function(superClass) {
       object: {
         mandatory: true,
         check: function(v) {
-          if (CUI.isArray(v) || CUI.isPlainObject(v)) {
+          if (CUI.util.isArray(v) || CUI.util.isPlainObject(v)) {
             return true;
           } else {
             return false;
@@ -39767,7 +39767,7 @@ CUI.ObjectDumper = (function(superClass) {
     var key, value;
     for (key in object) {
       value = object[key];
-      if (CUI.isPlainObject(value) || CUI.isArray(value)) {
+      if (CUI.util.isPlainObject(value) || CUI.util.isArray(value)) {
         return false;
       }
     }
@@ -39909,12 +39909,12 @@ CUI.ObjectDumperNode = (function(superClass) {
       info.text = '"' + data + '"';
     } else {
       info.cls = CUI.util.getObjectClass(data);
-      if (CUI.isArray(data) || CUI.isPlainObject(data)) {
-        info.has_children = !CUI.isEmptyObject(data);
-        if (CUI.isArray(data)) {
+      if (CUI.util.isArray(data) || CUI.util.isPlainObject(data)) {
+        info.has_children = !CUI.util.isEmptyObject(data);
+        if (CUI.util.isArray(data)) {
           info.text = info.cls + " [" + data.length + "]";
         }
-        if (CUI.isPlainObject(data)) {
+        if (CUI.util.isPlainObject(data)) {
           info.text = info.cls + " {" + Object.keys(data).length + "}";
         }
       } else {
@@ -40016,7 +40016,7 @@ CUI.Options = (function(superClass) {
       options: {
         mandatory: true,
         check: function(v) {
-          return CUI.isArray(v) || CUI.isFunction(v);
+          return CUI.util.isArray(v) || CUI.util.isFunction(v);
         }
       },
       horizontal: {
@@ -40121,7 +40121,7 @@ CUI.Options = (function(superClass) {
   Options.prototype.setData = function(data) {
     Options.__super__.setData.call(this, data);
     if (this._radio) {
-      if (CUI.isArray(this.getValue())) {
+      if (CUI.util.isArray(this.getValue())) {
         this.__radio_use_array = true;
       } else {
         this.__radio_use_array = false;
@@ -40252,7 +40252,7 @@ CUI.Options = (function(superClass) {
   Options.prototype.checkValue = function(_value) {
     var check, i, j, len, len1, opt, ref, value;
     if (this.__radio_use_array || !this._radio) {
-      if (!CUI.isArray(_value)) {
+      if (!CUI.util.isArray(_value)) {
         throw new CUI.CheckValueError("Value must be Array.");
       }
       check = _value;
@@ -40884,7 +40884,7 @@ CUI.LayerPane = (function(superClass) {
         mandatory: true,
         "default": new CUI.SimplePane(),
         check: function(v) {
-          return v instanceof CUI.Pane || CUI.isPlainObject(v);
+          return v instanceof CUI.Pane || CUI.util.isPlainObject(v);
         }
       }
     });
@@ -40895,7 +40895,7 @@ CUI.LayerPane = (function(superClass) {
   };
 
   LayerPane.prototype.setPane = function(pane) {
-    if (CUI.isPlainObject(pane)) {
+    if (CUI.util.isPlainObject(pane)) {
       this.__pane = new CUI.SimplePane(pane);
     } else {
       this.__pane = pane;
@@ -41138,7 +41138,7 @@ CUI.Pane = (function(superClass) {
         mandatory: true,
         check: (function(_this) {
           return function(v) {
-            return v instanceof CUI.Icon || CUI.util.isString(v) || CUI.isPlainObject(v);
+            return v instanceof CUI.Icon || CUI.util.isString(v) || CUI.util.isPlainObject(v);
           };
         })(this),
         "default": "fa-expand"
@@ -41147,7 +41147,7 @@ CUI.Pane = (function(superClass) {
         mandatory: true,
         check: (function(_this) {
           return function(v) {
-            return v instanceof CUI.Icon || CUI.util.isString(v) || CUI.isPlainObject(v);
+            return v instanceof CUI.Icon || CUI.util.isString(v) || CUI.util.isPlainObject(v);
           };
         })(this),
         "default": "fa-compress"
@@ -41160,7 +41160,7 @@ CUI.Pane = (function(superClass) {
         mandatory: true,
         check: (function(_this) {
           return function(v) {
-            return v instanceof CUI.Tooltip || CUI.isPlainObject(v);
+            return v instanceof CUI.Tooltip || CUI.util.isPlainObject(v);
           };
         })(this),
         "default": CUI.Pane.defaults.button_tooltip
@@ -41513,7 +41513,7 @@ CUI.Panel = (function(superClass) {
       this.append(this._content_placeholder, "content");
       this.__has_placeholder = true;
     }
-    if (CUI.isFunction(this._content)) {
+    if (CUI.util.isFunction(this._content)) {
       if (!this._load_on_open) {
         this.loadContent();
       }
@@ -41668,7 +41668,7 @@ CUI.Panel = (function(superClass) {
 
   Panel.prototype.loadContent = function() {
     var dfr, ret;
-    if (CUI.isFunction(this._content)) {
+    if (CUI.util.isFunction(this._content)) {
       ret = this._content(this);
     } else {
       ret = this._content;
@@ -41999,7 +41999,7 @@ CUI.Select = (function(superClass) {
       options: {
         mandatory: true,
         check: function(v) {
-          return CUI.isArray(v) || CUI.isFunction(v);
+          return CUI.util.isArray(v) || CUI.util.isFunction(v);
         }
       },
       group: {
@@ -42016,7 +42016,7 @@ CUI.Select = (function(superClass) {
 
   Select.prototype.init = function() {
     this.__value = null;
-    if (!CUI.isFunction(this._options)) {
+    if (!CUI.util.isFunction(this._options)) {
       return this.__loadOptions();
     }
   };
@@ -42137,7 +42137,7 @@ CUI.Select = (function(superClass) {
 
   Select.prototype.setData = function(data) {
     Select.__super__.setData.call(this, data, false);
-    if (CUI.isFunction(this._options)) {
+    if (CUI.util.isFunction(this._options)) {
       this.__loadOptions().done((function(_this) {
         return function() {
           return _this.initData();
@@ -42283,7 +42283,7 @@ CUI.Select = (function(superClass) {
   };
 
   Select.prototype.reload = function() {
-    if (CUI.isFunction(this._options)) {
+    if (CUI.util.isFunction(this._options)) {
       this.__loadOptions();
     }
     return Select.__super__.reload.call(this);
@@ -42300,7 +42300,7 @@ CUI.Select = (function(superClass) {
 
   Select.prototype.displayValue = function() {
     CUI.DataFieldInput.prototype.displayValue.call(this);
-    if (!this.__optionsPromise && CUI.isFunction(this._options)) {
+    if (!this.__optionsPromise && CUI.util.isFunction(this._options)) {
       this.__loadOptions();
     }
     this.__optionsPromise.done((function(_this) {
@@ -42904,14 +42904,14 @@ CUI.Table = (function(superClass) {
     is_array_of_maps = (function(_this) {
       return function(v, check) {
         var _v, i, idx, len;
-        if (!CUI.isArray(v)) {
+        if (!CUI.util.isArray(v)) {
           return false;
         }
         for (idx = i = 0, len = v.length; i < len; idx = ++i) {
           _v = v[idx];
           if (check) {
             v[idx] = CUI.Element.readOpts(_v, "new CUI.Table", check);
-          } else if (!CUI.isPlainObject(_v)) {
+          } else if (!CUI.util.isPlainObject(_v)) {
             return false;
           }
         }
@@ -42954,7 +42954,7 @@ CUI.Table = (function(superClass) {
         mandatory: true,
         "default": [],
         check: function(v) {
-          return CUI.isArray(v);
+          return CUI.util.isArray(v);
         }
       },
       flex: {
@@ -43081,7 +43081,7 @@ CUI.Tab = (function(superClass) {
       this.append(this._content_placeholder);
       this.__has_placeholder = true;
     }
-    if (CUI.isFunction(this._content)) {
+    if (CUI.util.isFunction(this._content)) {
       if (!this._load_on_show) {
         this.loadContent();
       }
@@ -43323,7 +43323,7 @@ CUI.Tabs = (function(superClass) {
       tabs: {
         mandatory: true,
         check: function(v) {
-          return CUI.isArray(v) && v.length > 0;
+          return CUI.util.isArray(v) && v.length > 0;
         }
       },
       active_idx: {
@@ -43480,7 +43480,7 @@ CUI.Tabs = (function(superClass) {
       }
       if (tab instanceof CUI.Tab) {
         _tab = this.addTab(tab);
-      } else if (CUI.isPlainObject(tab)) {
+      } else if (CUI.util.isPlainObject(tab)) {
         _tab = this.addTab(new CUI.Tab(tab));
       } else {
         CUI.util.assert(false, "new " + this.__cls, "opts.tabs[" + idx + "] must be PlainObject or Tab but is " + (CUI.util.getObjectClass(tab)), {
@@ -43854,7 +43854,7 @@ CUI.Tooltip = (function(superClass) {
     this.addOpts({
       text: {
         check: function(v) {
-          return CUI.util.isString(v) || CUI.isFunction(v);
+          return CUI.util.isString(v) || CUI.util.isFunction(v);
         }
       },
       markdown: {
@@ -43864,7 +43864,7 @@ CUI.Tooltip = (function(superClass) {
       },
       content: {
         check: function(v) {
-          return CUI.util.isString(v) || CUI.isFunction(v) || CUI.util.isElement(v) || CUI.isArray(v) || CUI.util.isElement(v != null ? v.DOM : void 0);
+          return CUI.util.isString(v) || CUI.util.isFunction(v) || CUI.util.isElement(v) || CUI.util.isArray(v) || CUI.util.isElement(v != null ? v.DOM : void 0);
         }
       },
       on_click: {
@@ -43874,7 +43874,7 @@ CUI.Tooltip = (function(superClass) {
       },
       on_hover: {
         check: function(v) {
-          return CUI.util.isBoolean(v) || CUI.isFunction(v);
+          return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
         }
       }
     });
@@ -43991,7 +43991,7 @@ CUI.Tooltip = (function(superClass) {
         return dfr.resolve();
       };
     })(this);
-    if (CUI.isFunction(this._text)) {
+    if (CUI.util.isFunction(this._text)) {
       ret = this._text.call(this, this);
       if (CUI.util.isPromise(ret)) {
         ret.done(function(text) {
@@ -44003,7 +44003,7 @@ CUI.Tooltip = (function(superClass) {
       } else {
         fill_text(ret);
       }
-    } else if (CUI.isFunction(this._content)) {
+    } else if (CUI.util.isFunction(this._content)) {
       ret = this._content.call(this, this);
       if (CUI.util.isPromise(ret)) {
         ret.done(function(text) {
@@ -44020,7 +44020,7 @@ CUI.Tooltip = (function(superClass) {
     } else {
       fill_content(this._content);
     }
-    if (!CUI.isFunction(this._text) && !CUI.isFunction(this._content)) {
+    if (!CUI.util.isFunction(this._text) && !CUI.util.isFunction(this._content)) {
       this.__static = true;
     } else {
       this.__static = false;
@@ -45817,7 +45817,7 @@ CUI.DataFieldProxy = (function(superClass) {
       return fields;
     }
     if (!this.__element) {
-      if (CUI.isFunction(this._element)) {
+      if (CUI.util.isFunction(this._element)) {
         return fields;
       }
       search_el = this._element;
@@ -45872,7 +45872,7 @@ CUI.DataFieldProxy = (function(superClass) {
   };
 
   DataFieldProxy.prototype.render = function() {
-    if (CUI.isFunction(this._element)) {
+    if (CUI.util.isFunction(this._element)) {
       this.__element = this._element.call(this, this);
     } else {
       this.__element = this._element;
