@@ -456,7 +456,7 @@ class CUI.Button extends CUI.DOMElement
 			disabled:
 				default: false
 				check: (v) ->
-					CUI.util.isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 			active_css_class:
 				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String
@@ -502,7 +502,7 @@ class CUI.Button extends CUI.DOMElement
 				check: String
 			hidden:
 				check: (v) ->
-					CUI.util.isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 			menu:
 				check: "PlainObject"
 			menu_on_hover:
@@ -717,7 +717,7 @@ class CUI.Button extends CUI.DOMElement
 			activate()
 			return @
 
-		if @__active == true and CUI.isEmptyObject(flags)
+		if @__active == true and CUI.util.isEmptyObject(flags)
 			return @
 
 		if @__radio
@@ -753,7 +753,7 @@ class CUI.Button extends CUI.DOMElement
 			deactivate()
 			return @
 
-		if @__active == false and CUI.isEmptyObject(flags)
+		if @__active == false and CUI.util.isEmptyObject(flags)
 			return @
 
 		@__active = false

@@ -45,7 +45,7 @@ class CUI.DataField extends CUI.DOMElement
 			@DOM.setAttribute("cui-data-field-name", @getName())
 
 		@init()
-		if @_data and not CUI.isFunction(@_data)
+		if @_data and not CUI.util.isFunction(@_data)
 			# console.debug "setting private data: "+@, @_data
 			@setData(@_data)
 
@@ -78,14 +78,14 @@ class CUI.DataField extends CUI.DOMElement
 				default: false
 			data:
 				check: (v) ->
-					CUI.isFunction(v?.hasOwnProperty) or CUI.isFunction(v)
+					CUI.util.isFunction(v?.hasOwnProperty) or CUI.util.isFunction(v)
 			data_not_for_others:
 				default: false
 				check: Boolean
 			disabled:
 				default: false
 				check: (v) ->
-					CUI.util.isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 			disabled_depends_on_data:
 				check: Function
 			tooltip:
@@ -251,14 +251,14 @@ class CUI.DataField extends CUI.DOMElement
 		!@isHidden()
 
 	updateData: (data) ->
-		if CUI.isFunction(@_data)
+		if CUI.util.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 		@displayValue()
 
 	setData: (data, init_data=true) ->
-		if @__data and @_data and not CUI.isFunction(@_data)
+		if @__data and @_data and not CUI.util.isFunction(@_data)
 			# console.debug "private data already set", @_data
 			# we have private data set, ignore a setData from
 			# e.g. a Form, as the private data is more important
@@ -267,12 +267,12 @@ class CUI.DataField extends CUI.DOMElement
 
 		CUI.util.assert(not @__data, "#{@}.setData", "data is already set.", opts: @opts, data: @__data)
 
-		if CUI.isFunction(@_data)
+		if CUI.util.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 
-		CUI.util.assert(CUI.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
+		CUI.util.assert(CUI.util.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
 
 		# console.debug "initData", @__data, @__data.hasOwnProperty
 
@@ -369,7 +369,7 @@ class CUI.DataField extends CUI.DOMElement
 			other_fields = []
 
 		for df in other_fields
-			if not df or not CUI.isFunction(df[func])
+			if not df or not CUI.util.isFunction(df[func])
 				CUI.util.assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
 				return @
 
@@ -390,9 +390,9 @@ class CUI.DataField extends CUI.DOMElement
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]
-		if CUI.isFunction(v)
+		if CUI.util.isFunction(v)
 			arr = v.call(@, @, event)
-			CUI.util.assert(CUI.isArray(arr) or (CUI.util.isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
+			CUI.util.assert(CUI.util.isArray(arr) or (CUI.util.isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
 		else
 			arr = v
 		return arr
@@ -520,7 +520,7 @@ class CUI.DataField extends CUI.DOMElement
 		@initValue()
 
 		undo = @getUndo()
-		if CUI.isPlainObject(undo) and CUI.isEmptyObject(undo)
+		if CUI.util.isPlainObject(undo) and CUI.util.isEmptyObject(undo)
 			undo.values = [ @getValue() ]
 			undo.idx = 0
 
@@ -629,7 +629,7 @@ class CUI.DataField extends CUI.DOMElement
 		if field instanceof CUI.DataField
 			return field
 
-		CUI.util.assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
+		CUI.util.assert(CUI.util.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
 
 		field_opts = {}
 		for k, v of field
@@ -648,7 +648,7 @@ class CUI.DataField extends CUI.DOMElement
 				continue
 			field_opts[k] = v
 
-		CUI.util.assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
+		CUI.util.assert(CUI.util.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
 		_field = new type(field_opts)
 		CUI.util.assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{CUI.util.getObjectClass(_field)}.", field: field)
 		return _field

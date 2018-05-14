@@ -48,12 +48,12 @@ class CUI.Table extends CUI.DOMElement
 	initOpts: ->
 		super()
 		is_array_of_maps = (v, check) =>
-			if not CUI.isArray(v)
+			if not CUI.util.isArray(v)
 				return false
 			for _v, idx in v
 				if check
 					v[idx] = CUI.Element.readOpts(_v, "new CUI.Table", check)
-				else if not CUI.isPlainObject(_v)
+				else if not CUI.util.isPlainObject(_v)
 					return false
 			true
 
@@ -84,7 +84,7 @@ class CUI.Table extends CUI.DOMElement
 				mandatory: true
 				default: []
 				check: (v) ->
-					CUI.isArray(v)
+					CUI.util.isArray(v)
 			flex:
 				default: false
 				check: Boolean

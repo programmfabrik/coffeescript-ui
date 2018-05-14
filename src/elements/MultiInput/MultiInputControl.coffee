@@ -22,7 +22,7 @@ class CUI.MultiInputControl extends CUI.Element
 				check: String
 			keys:
 				check: (v) ->
-					CUI.isArray(v) and v.length > 0
+					CUI.util.isArray(v) and v.length > 0
 			user_control:
 				default: true
 				check: Boolean

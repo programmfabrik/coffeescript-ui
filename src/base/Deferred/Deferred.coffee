@@ -47,7 +47,7 @@ class CUI.Deferred
 	__register: (type, func) ->
 		# console.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
 		#
-		CUI.util.assert(CUI.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
+		CUI.util.assert(CUI.util.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
 		if @__state == "rejected" and type == "done"
 			# nothing to do
 			return

@@ -14,7 +14,7 @@ class CUI.Listener extends CUI.Element
 			type:
 				mandatory: true
 				check: (v) ->
-					CUI.util.isString(v) or CUI.isArray(v)
+					CUI.util.isString(v) or CUI.util.isArray(v)
 
 			# an optional element to bind this listener to
 			# if given, the event will only be triggered
@@ -28,7 +28,7 @@ class CUI.Listener extends CUI.Element
 			call:
 				mandatory: true
 				check: (v) ->
-					CUI.isFunction(v)
+					CUI.util.isFunction(v)
 
 			# if set only listen once
 			only_once:
@@ -37,7 +37,7 @@ class CUI.Listener extends CUI.Element
 			# passthru for jquery selector
 			selector:
 				check: (v) ->
-					CUI.util.isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.util.isFunction(v)
 
 			# abritrary object to match when "ignore" is called
 			instance: {}
@@ -230,7 +230,7 @@ class CUI.Listener extends CUI.Element
 		if filter instanceof CUI.Listener
 			return filter == @
 
-		CUI.util.assert(CUI.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.")
+		CUI.util.assert(CUI.util.isPlainObject(filter), "CUI.Listener.matchesFilter", "filter needs to be PlainObject.")
 		match = true
 		filtered = false
 
@@ -241,7 +241,7 @@ class CUI.Listener extends CUI.Element
 
 		if match and filter.type
 			filtered = true
-			if CUI.isArray(filter.type)
+			if CUI.util.isArray(filter.type)
 				match = false
 				for _type in filter.type
 					match = _type in @__types
@@ -264,7 +264,7 @@ class CUI.Listener extends CUI.Element
 
 
 	@require: (listener, func) ->
-		if CUI.isPlainObject(listener)
+		if CUI.util.isPlainObject(listener)
 			listenerFunc = null
 			if listener.type not instanceof Array
 				types = [listener.type]

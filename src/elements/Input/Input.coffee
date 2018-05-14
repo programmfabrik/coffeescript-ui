@@ -80,13 +80,13 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Function
 			emptyHint:
 				check: (v) ->
-					CUI.util.isString(v) or v instanceof CUI.Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			invalidHint:
 				check: (v) ->
-					CUI.util.isString(v) or v instanceof CUI.Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			validHint:
 				check: (v) ->
-					CUI.util.isString(v) or v instanceof CUI.Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			maxLength:
 				check: (v) ->
 					v >= 0
@@ -114,10 +114,10 @@ class CUI.Input extends CUI.DataFieldInput
 			# takes place
 			getCursorBlocks:
 				check: (v) ->
-					CUI.isFunction(v) and not @_overwrite
+					CUI.util.isFunction(v) and not @_overwrite
 			placeholder:
 				check: (v) ->
-					CUI.isFunction(v) or CUI.util.isString(v)
+					CUI.util.isFunction(v) or CUI.util.isString(v)
 			readonly:
 				check: Boolean
 			readonly_select_all:
@@ -208,7 +208,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @_placeholder
 			return undefined
 
-		if CUI.isFunction(@_placeholder)
+		if CUI.util.isFunction(@_placeholder)
 			@_placeholder(@, @getData())
 		else
 			@_placeholder
@@ -606,7 +606,7 @@ class CUI.Input extends CUI.DataFieldInput
 		@
 
 	checkBlocks: (blocks) ->
-		if not CUI.isArray(blocks)
+		if not CUI.util.isArray(blocks)
 			return false
 		for b, idx in blocks
 			CUI.util.assert(b instanceof CUI.InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of CUI.InputBlock.", blocks: blocks, block: b)

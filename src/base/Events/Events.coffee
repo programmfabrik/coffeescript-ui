@@ -259,7 +259,7 @@ class CUI.Events extends CUI.Element
 	@ignore: (filter, doc=document) -> # , debug=false) ->
 		# console.debug "CUI.Events.ignore", filter, filter.instance?.getUniqueId?()
 		for listener in @__getActiveListeners(doc)
-			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
+			if not filter or CUI.util.isEmptyObject(filter) or listener.matchesFilter(filter)
 				# if debug
 				# 	console.debug("CUI.Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
 				listener.destroy()
@@ -267,7 +267,7 @@ class CUI.Events extends CUI.Element
 
 	@dump: (filter={}) ->
 		for listener in @__getActiveListeners()
-			if CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
+			if CUI.util.isEmptyObject(filter) or listener.matchesFilter(filter)
 				console.debug("Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener)
 		@
 
@@ -292,7 +292,7 @@ class CUI.Events extends CUI.Element
 		@getEventType(type).alias or [type]
 
 	@registerEvent: (event, allow_array=true) ->
-		if not CUI.isArray(event.type) or not allow_array
+		if not CUI.util.isArray(event.type) or not allow_array
 			CUI.util.assert(CUI.util.isString(event?.type) and event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", event: event)
 
 		register_other_type = (_type) =>
@@ -300,7 +300,7 @@ class CUI.Events extends CUI.Element
 			_event.type = _type
 			@registerEvent(_event, false)
 
-		if CUI.isArray(event.type)
+		if CUI.util.isArray(event.type)
 			for type in event.type
 				register_other_type(type)
 		else
@@ -431,7 +431,7 @@ class CUI.Events extends CUI.Element
 				"viewport-resize": {}
 		}
 			for type, ev of events
-				CUI.mergeMap(ev, defaults[block])
+				CUI.util.mergeMap(ev, defaults[block])
 				ev.type = type
 				@registerEvent(ev)
 

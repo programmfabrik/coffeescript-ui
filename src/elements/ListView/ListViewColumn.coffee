@@ -86,7 +86,7 @@ class CUI.ListViewColumn extends CUI.Element
 		@_colspan = colspan
 
 	getColspan: =>
-		if CUI.isFunction(@_colspan)
+		if CUI.util.isFunction(@_colspan)
 			cp = parseInt(@_colspan())
 		else
 			cp = parseInt(@_colspan)

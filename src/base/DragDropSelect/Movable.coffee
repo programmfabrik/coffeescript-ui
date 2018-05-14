@@ -14,7 +14,7 @@ class CUI.Movable extends CUI.Draggable
 			limitRect:
 				default: {}
 				check: (v) ->
-					CUI.isPlainObject(v) or v instanceof Function
+					CUI.util.isPlainObject(v) or v instanceof Function
 			onPositioned:
 				check: Function
 			onPosition:
@@ -31,13 +31,13 @@ class CUI.Movable extends CUI.Draggable
 		@_helper = null
 
 	getLimitRect: ->
-		if CUI.isFunction(@_limitRect)
+		if CUI.util.isFunction(@_limitRect)
 			@_limitRect()
 		else
 			@_limitRect
 
 	setElementCss: (pos) ->
-		CUI.util.assert(CUI.isPlainObject(pos), CUI.util.getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
+		CUI.util.assert(CUI.util.isPlainObject(pos), CUI.util.getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
 		setCss = {}
 		if not CUI.util.isEmpty(pos.x)
 			setCss.left = pos.x

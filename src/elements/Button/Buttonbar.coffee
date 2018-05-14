@@ -116,7 +116,7 @@ class CUI.Buttonbar extends CUI.DOMElement
 		if CUI.util.isNull(btn)
 			return
 
-		if CUI.isPlainObject(btn)
+		if CUI.util.isPlainObject(btn)
 			btn = new CUI.defaults.class.Button(btn)
 
 		if btn instanceof CUI.Button or btn instanceof CUI.DataFieldInput

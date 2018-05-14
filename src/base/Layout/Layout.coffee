@@ -45,7 +45,7 @@ class CUI.Layout extends CUI.DOMElement
 		for pn in @getSupportedPanes()
 			@addOpt(pn,
 				check: (v) ->
-					CUI.isPlainObject(v) or v == false
+					CUI.util.isPlainObject(v) or v == false
 			)
 
 
@@ -262,18 +262,18 @@ class CUI.Layout extends CUI.DOMElement
 
 	__callAutoButtonbar: (value, key) ->
 
-		if CUI.isFunction(value)
+		if CUI.util.isFunction(value)
 			value = value(@)
 
 		get_value = (v) ->
-			if CUI.isPlainObject(v)
+			if CUI.util.isPlainObject(v)
 				return new CUI.defaults.class.Button(v)
 			else
 				return v
 
 		value = get_value(value)
 
-		if CUI.isArray(value)
+		if CUI.util.isArray(value)
 			for _v in value
 				v = get_value(_v)
 				if v instanceof CUI.Button

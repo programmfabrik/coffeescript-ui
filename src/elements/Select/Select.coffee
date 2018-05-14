@@ -18,7 +18,7 @@ class CUI.Select extends CUI.Checkbox
 			options:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v) or CUI.isFunction(v)
+					CUI.util.isArray(v) or CUI.util.isFunction(v)
 			#group can be used for buttonbars to specify a group css style
 			group:
 				check: String
@@ -30,7 +30,7 @@ class CUI.Select extends CUI.Checkbox
 
 	init: ->
 		@__value = null
-		if not CUI.isFunction(@_options)
+		if not CUI.util.isFunction(@_options)
 			@__loadOptions()
 
 		# @DOM.prop("title", @getName()+":"+@__uniqueId)
@@ -128,7 +128,7 @@ class CUI.Select extends CUI.Checkbox
 
 	setData: (data) ->
 		super(data, false)  # dont init data, only set
-		if CUI.isFunction(@_options)
+		if CUI.util.isFunction(@_options)
 			@__loadOptions()
 			.done =>
 				@initData()
@@ -240,7 +240,7 @@ class CUI.Select extends CUI.Checkbox
 		true
 
 	reload: ->
-		if CUI.isFunction(@_options)
+		if CUI.util.isFunction(@_options)
 			@__loadOptions()
 		super()
 
@@ -254,7 +254,7 @@ class CUI.Select extends CUI.Checkbox
 	displayValue: ->
 		CUI.DataFieldInput::displayValue.call(@)
 
-		if not @__optionsPromise and CUI.isFunction(@_options)
+		if not @__optionsPromise and CUI.util.isFunction(@_options)
 			@__loadOptions()
 
 		@__optionsPromise

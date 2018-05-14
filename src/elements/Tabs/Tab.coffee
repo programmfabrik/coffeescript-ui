@@ -26,7 +26,7 @@ class CUI.Tab extends CUI.DOMElement
 			@append(@_content_placeholder)
 			@__has_placeholder = true
 
-		if CUI.isFunction(@_content)
+		if CUI.util.isFunction(@_content)
 			if not @_load_on_show
 				@loadContent()
 		else if @_content

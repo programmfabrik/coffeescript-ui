@@ -357,7 +357,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@__loadingDeferred = null
 
 		load_children = =>
-			CUI.util.assert(CUI.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
+			CUI.util.assert(CUI.util.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
 
 			# console.debug @._key, @getUniqueId(), "children loaded", @children.length
 
@@ -410,7 +410,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			func = @opts.getChildren or @getChildren
 			if func
 				ret = func.call(@)
-				if CUI.isArray(ret)
+				if CUI.util.isArray(ret)
 					@children = ret
 					load_children()
 				else
@@ -467,7 +467,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if not @children
 			@children = []
 
-		CUI.util.assert(CUI.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
+		CUI.util.assert(CUI.util.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
 
 		for _node in @children
 			CUI.util.assert(_node != node, "ListViewTreeNode.addNode", "Must have every child only once.", node: @, child: _node)
@@ -750,7 +750,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@father.level()+1
 
 	renderContent: ->
-		if CUI.isFunction(@html)
+		if CUI.util.isFunction(@html)
 			@html.call(@opts, @)
 		else if @html
 			@html
@@ -845,7 +845,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# append Content
 		contentDiv = CUI.dom.div("cui-tree-node-content")
 		content = @renderContent()
-		if CUI.isArray(content)
+		if CUI.util.isArray(content)
 			for con in content
 				CUI.dom.append(contentDiv, con)
 		else

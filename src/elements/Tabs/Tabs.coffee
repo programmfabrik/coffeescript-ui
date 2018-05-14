@@ -24,7 +24,7 @@ class CUI.Tabs extends CUI.SimplePane
 			tabs:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v) and v.length > 0
+					CUI.util.isArray(v) and v.length > 0
 			#autoSizeY:
 			#	default: false
 			#	check: Boolean
@@ -157,7 +157,7 @@ class CUI.Tabs extends CUI.SimplePane
 				continue
 			if tab instanceof CUI.Tab
 				_tab = @addTab(tab)
-			else if CUI.isPlainObject(tab)
+			else if CUI.util.isPlainObject(tab)
 				_tab = @addTab(new CUI.Tab(tab))
 			else
 				CUI.util.assert(false, "new #{@__cls}", "opts.tabs[#{idx}] must be PlainObject or Tab but is #{CUI.util.getObjectClass(tab)}", opts: @opts)

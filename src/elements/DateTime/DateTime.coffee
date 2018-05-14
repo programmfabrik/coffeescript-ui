@@ -33,7 +33,7 @@ class CUI.DateTime extends CUI.Input
 				mandatory: true
 				default: locale
 				check: (v) ->
-					CUI.isArray(CUI.DateTimeFormats[v]?.formats)
+					CUI.util.isArray(CUI.DateTimeFormats[v]?.formats)
 			input_types:
 				check: Array
 			display_type:

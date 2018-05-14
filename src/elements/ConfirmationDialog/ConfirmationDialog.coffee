@@ -40,7 +40,7 @@ class CUI.ConfirmationDialog extends CUI.Modal
 					v instanceof CUI.Icon or CUI.util.isString(v)
 			buttons:
 				check: (v) ->
-					(CUI.isArray(v) and v.length > 0) or CUI.isFunction(v)
+					(CUI.util.isArray(v) and v.length > 0) or CUI.util.isFunction(v)
 			footer_left: {}
 			header_right: {}
 

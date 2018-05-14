@@ -24,7 +24,7 @@ class CUI.FormModal extends CUI.FormPopover
 					default:
 						text: "Ok"
 					check: (v) =>
-						CUI.isPlainObject(v)
+						CUI.util.isPlainObject(v)
 
 	initPopover: (opts) ->
 
@@ -78,7 +78,7 @@ class CUI.FormModal extends CUI.FormPopover
 		@
 
 	setData: (data) ->
-		if @_name and not CUI.isFunction(data)
+		if @_name and not CUI.util.isFunction(data)
 			if data[@_name]
 				@__orig_data = CUI.util.copyObject(data[@_name], true)
 			else
@@ -122,7 +122,7 @@ class CUI.FormModal extends CUI.FormPopover
 		pop_opts.element = null
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", opts: pop_opts)
 		pop_opts.class += " cui-form-modal-modal"
 		pop_opts
 

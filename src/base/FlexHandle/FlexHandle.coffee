@@ -75,7 +75,7 @@ class CUI.FlexHandle extends CUI.Element
 				check: Boolean
 			label:
 				check: (v) ->
-					v instanceof CUI.Label or CUI.isPlainObject(v)
+					v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			hidden:
 				check: Boolean
 			direction:

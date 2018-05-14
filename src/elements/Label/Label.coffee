@@ -150,7 +150,7 @@ class CUI.Label extends CUI.DOMElement
 				check: Boolean
 			manage_overflow:
 				check: (v) ->
-					CUI.isPlainObject(v) or v == true or v == false
+					CUI.util.isPlainObject(v) or v == true or v == false
 
 
 	readOpts: ->

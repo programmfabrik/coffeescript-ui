@@ -548,7 +548,7 @@ class CUI.ListView extends CUI.SimplePane
 		@rowsOrder.indexOf(parseInt(row_i))
 
 	getColIdx: (display_col_i) ->
-		CUI.util.assert(CUI.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
+		CUI.util.assert(CUI.util.isArray(@colsOrder), "ListView[#{@listViewCounter}].getColIdx", "colsOrder Array is missing", this: @, display_col_i: display_col_i)
 		@colsOrder[display_col_i]
 
 	getRowIdx: (display_row_i) ->
@@ -1199,7 +1199,7 @@ class CUI.ListView extends CUI.SimplePane
 	__getColClass: (col_i) ->
 		col_cls = @__colClasses?[col_i]
 		cls = []
-		if CUI.isArray(col_cls)
+		if CUI.util.isArray(col_cls)
 			cls.push.apply(cls, col_cls)
 		else if not CUI.util.isEmpty(col_cls)
 			cls.push(col_cls)

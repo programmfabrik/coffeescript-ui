@@ -78,18 +78,18 @@ class CUI.Element
 		CUI.util.assert(CUI.util.isString(key), "#{@__cls}.#{fn}", "key needs to be String", key: key, check_map: check_map)
 		if CUI.util.isNull(check_map)
 			return
-		CUI.util.assert(CUI.isPlainObject(check_map), "#{@__cls}.#{fn}", "check_map needs to be Map", key: key, check_map: check_map)
+		CUI.util.assert(CUI.util.isPlainObject(check_map), "#{@__cls}.#{fn}", "check_map needs to be Map", key: key, check_map: check_map)
 		@__check_map[key] = check_map
 		@
 
 	addOpts: (map) ->
-		CUI.util.assert(CUI.isPlainObject(map), "#{@__cls}.addOpts", "Parameter needs to be Map", map: map)
+		CUI.util.assert(CUI.util.isPlainObject(map), "#{@__cls}.addOpts", "Parameter needs to be Map", map: map)
 		for k, v of map
 			@addOpt(k, v)
 		@
 
 	mergeOpts: (map) ->
-		CUI.util.assert(CUI.isPlainObject(map), "#{@__cls}.mergeOpts", "Parameter needs to be Map", map: map)
+		CUI.util.assert(CUI.util.isPlainObject(map), "#{@__cls}.mergeOpts", "Parameter needs to be Map", map: map)
 		for k, v of map
 			@mergeOpt(k, v)
 		@
@@ -124,7 +124,7 @@ class CUI.Element
 	# proxy given methods to given element
 	proxy: (element, methods) ->
 		CUI.util.assert(element instanceof CUI.Element, "CUI.Element.proxy", "element given must be instance of CUI.Element.", element: element, methods: methods)
-		CUI.util.assert(CUI.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
+		CUI.util.assert(CUI.util.isArray(methods), "Element.proxy", "methods given must be Array.", element: element, methods: methods)
 		for method in methods
 			do (method) =>
 				@[method] = =>
@@ -176,8 +176,8 @@ class CUI.Element
 			return set_opts
 
 		# @__time("readOpts")
-		CUI.util.assert(CUI.isPlainObject(opts), cls, "opts needs to be PlainObject.", opts: opts, check_map: check_map)
-		CUI.util.assert(CUI.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
+		CUI.util.assert(CUI.util.isPlainObject(opts), cls, "opts needs to be PlainObject.", opts: opts, check_map: check_map)
+		CUI.util.assert(CUI.util.isPlainObject(check_map), cls, "check_map needs to be PlainObject.", opts: opts, check_map: check_map)
 		set_opts = {}
 		for k, v of check_map
 			# console.debug "check map", cls, k, v.check, v.check?.name
@@ -190,7 +190,7 @@ class CUI.Element
 			else
 				exists = false
 
-			if CUI.isFunction(v.mandatory)
+			if CUI.util.isFunction(v.mandatory)
 				mandatory = v.mandatory.call(@, value)
 			else
 				mandatory = v.mandatory
@@ -210,11 +210,11 @@ class CUI.Element
 				console.warn("#{cls}: opts.#{k} is deprecated.", value)
 
 			if v.check and (not CUI.util.isNull(value) or mandatory)
-				if CUI.isArray(v.check)
+				if CUI.util.isArray(v.check)
 					CUI.util.assert(v.check.indexOf(value) > -1, cls, "opts.#{k} needs to be one of [\"#{v.check.join('\",\"')}\"].", opts: opts)
 				else if v.check == Boolean or v.check == String or v.check == Function or v.check == Array
 					CUI.util.assertInstanceOf.call(@, k, v.check, undefined, value)
-				else if CUI.isFunction(v.check) and not v.check.__super__ # super is from coffeescript and shows us that we have a "class" here
+				else if CUI.util.isFunction(v.check) and not v.check.__super__ # super is from coffeescript and shows us that we have a "class" here
 					CUI.util.assert(CUI.util.isEmpty(v.check.name) or v.check.name == "check", cls, "#{k}.check is \"#{v.check.name}\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", opts: opts, key: k, value: v)
 					check = v.check.call(@, value)
 					if not(CUI.util.isNull(check) or CUI.util.isBoolean(check) or CUI.util.isString(check))
@@ -230,7 +230,7 @@ class CUI.Element
 						else
 							err = "needs to match\n\n"+v.check.toString()
 						CUI.util.assert(false, cls, "opts.#{k}: #{err}.", opts: opts)
-				else if CUI.isPlainObject(v.check)
+				else if CUI.util.isPlainObject(v.check)
 					value = CUI.Element.readOpts(value, cls+" [opts."+k+"]", v.check)
 				else if CUI.util.isNull(value) and mandatory
 					CUI.util.assert(false, cls, "opts.#{k} is mandatory, but is #{value}.", opts: opts)

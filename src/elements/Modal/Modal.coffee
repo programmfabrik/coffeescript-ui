@@ -69,7 +69,7 @@ class CUI.Modal extends CUI.LayerPane
 			default: "c"
 
 	readOpts: ->
-		if @opts.cancel and CUI.isPlainObject(@opts.pane)
+		if @opts.cancel and CUI.util.isPlainObject(@opts.pane)
 			@opts.pane.force_header = true
 
 		super()
@@ -78,7 +78,7 @@ class CUI.Modal extends CUI.LayerPane
 		if not @["_#{pname}"]
 			return
 
-		if CUI.isPlainObject(_btn)
+		if CUI.util.isPlainObject(_btn)
 			btn = new CUI.defaults.class.Button(_btn)
 		else
 			btn = _btn

@@ -39,7 +39,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 			selector:
 				check: (v) =>
-					CUI.util.isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.util.isFunction(v)
 
 	accept: (ev, info) ->
 		@_accept?(ev, info)

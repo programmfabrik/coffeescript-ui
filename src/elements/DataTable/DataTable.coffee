@@ -17,7 +17,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			fields:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v) or CUI.isFunction(v)
+					CUI.util.isArray(v) or CUI.util.isFunction(v)
 			new_rows:
 				default: "edit"
 				check: ["edit", "append", "remove_only", "none"]
@@ -41,7 +41,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				mandatory: true
 				default: []
 				check: (v) ->
-					CUI.isArray(v)
+					CUI.util.isArray(v)
 			chunk_size:
 				default: 0
 				mandatory: true
@@ -339,7 +339,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			else
 				@__navi_next.disable()
 
-		CUI.util.assert(CUI.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
+		CUI.util.assert(CUI.util.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
 
 		if @rows
 			if @_chunk_size > 0

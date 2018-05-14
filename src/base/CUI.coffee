@@ -159,7 +159,7 @@ class CUI
 				return
 
 
-			if CUI.isFunction(args[idx])
+			if CUI.util.isFunction(args[idx])
 				if __this != CUI
 					ret = args[idx].call(__this)
 				else
@@ -195,7 +195,7 @@ class CUI
 			items:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v)
+					CUI.util.isArray(v)
 			chunk_size:
 				mandatory: true
 				default: 10
@@ -348,7 +348,7 @@ class CUI
 
 
 	@setTimeout: (_func, ms=0, track) ->
-		if CUI.isPlainObject(_func)
+		if CUI.util.isPlainObject(_func)
 			ms = _func.ms or 0
 			track = _func.track
 			func = _func.call
@@ -363,7 +363,7 @@ class CUI
 			else
 				track = true
 
-		CUI.util.assert(CUI.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
+		CUI.util.assert(CUI.util.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
 		timeout =
 			call: =>
 				timeout.__isRunning = true
@@ -598,15 +598,15 @@ class CUI
 	@encodeUrlData: (params, replacer = null, connect = "&", connect_pair = "=") ->
 		url = []
 		if replacer
-			if CUI.isFunction(replacer)
+			if CUI.util.isFunction(replacer)
 				encode_func = replacer
 			else
-				encode_func = (v) -> CUI.stringMapReplace(v+"", replace_map)
+				encode_func = (v) -> CUI.util.stringMapReplace(v+"", replace_map)
 		else
 			encode_func = (v) -> encodeURIComponent(v)
 
 		for k, v of params
-			if CUI.isArray(v)
+			if CUI.util.isArray(v)
 				for _v in v
 					url.push(encode_func(k) + connect_pair + encode_func(_v))
 			else if not CUI.util.isEmpty(v)
@@ -631,10 +631,10 @@ class CUI
 	@decodeUrlData: (url, replacer = null, connect = "&", connect_pair = "=", use_array=false) ->
 		params = {}
 		if replacer
-			if CUI.isFunction(replacer)
+			if CUI.util.isFunction(replacer)
 				decode_func = replacer
 			else
-				decode_func = (v) -> CUI.stringMapReplace(v+"", replacer)
+				decode_func = (v) -> CUI.util.stringMapReplace(v+"", replacer)
 		else
 			decode_func = (v) -> decodeURIComponent(v)
 
@@ -667,8 +667,8 @@ class CUI
 		for k, v of mergeMap
 			if not targetMap.hasOwnProperty(k)
 				targetMap[k] = v
-			else if CUI.isPlainObject(targetMap[k]) and CUI.isPlainObject(v)
-				CUI.mergeMap(targetMap[k], v)
+			else if CUI.util.isPlainObject(targetMap[k]) and CUI.util.isPlainObject(v)
+				CUI.util.mergeMap(targetMap[k], v)
 		targetMap
 
 	# Deprecated -> Use CUI.util
@@ -780,7 +780,7 @@ class CUI
 		url
 
 	@parseLocation: (url) ->
-		if not CUI.isFunction(url?.match) or url.length == 0
+		if not CUI.util.isFunction(url?.match) or url.length == 0
 			return null
 
 		match = url.match(@urlRegex)

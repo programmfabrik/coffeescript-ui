@@ -17,7 +17,7 @@ class CUI.Menu extends CUI.Layer
 		@addOpts
 			itemList:
 				check: (v) ->
-					v instanceof CUI.ItemList or CUI.isPlainObject(v)
+					v instanceof CUI.ItemList or CUI.util.isPlainObject(v)
 
 			auto_close_after_click:
 				default: true

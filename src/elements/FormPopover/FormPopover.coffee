@@ -23,7 +23,7 @@ class CUI.FormPopover extends CUI.Form
 			button:
 				default: {}
 				check: (v) ->
-					CUI.isPlainObject(v) and not v.onClick
+					CUI.util.isPlainObject(v) and not v.onClick
 			trigger_data_changed_while_open:
 				default: false
 				check: Boolean
@@ -38,7 +38,7 @@ class CUI.FormPopover extends CUI.Form
 			@__class = @_class
 			delete(@_class)
 
-		@__fields_is_func = CUI.isFunction(@_fields)
+		@__fields_is_func = CUI.util.isFunction(@_fields)
 
 		if @__fields_is_func
 			CUI.util.assert(@_data_not_for_others != true, "new CUI.FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
@@ -200,7 +200,7 @@ class CUI.FormPopover extends CUI.Form
 		if not pop_opts.pane
 			pop_opts.pane = {}
 
-		CUI.util.assert(CUI.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
 
 		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""

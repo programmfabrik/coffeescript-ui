@@ -19,13 +19,13 @@ class CUI.LayerPane extends CUI.Layer
 				default:
 					new CUI.SimplePane()
 				check: (v) ->
-					v instanceof CUI.Pane or CUI.isPlainObject(v)
+					v instanceof CUI.Pane or CUI.util.isPlainObject(v)
 
 	getPane: ->
 		@__pane
 
 	setPane: (pane) ->
-		if CUI.isPlainObject(pane)
+		if CUI.util.isPlainObject(pane)
 			# for k in ["force_header", "force_footer"]
 			# 	if not pane.hasOwnProperty(k)
 			# 		pane[k] = true

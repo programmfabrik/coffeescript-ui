@@ -16,7 +16,7 @@ class CUI.dom
 		if key == undefined
 			return node.__dom_data or {}
 
-		if CUI.isPlainObject(key)
+		if CUI.util.isPlainObject(key)
 			for k, v of key
 				CUI.dom.data(node, k, v)
 			return node
@@ -36,7 +36,7 @@ class CUI.dom
 
 		if node.__dom_data
 			delete(node.__dom_data[key])
-			if CUI.isEmptyObject(node.__dom_data)
+			if CUI.util.isEmptyObject(node.__dom_data)
 				delete(node.__dom_data)
 		node
 
@@ -269,7 +269,7 @@ class CUI.dom
 		if CUI.util.isNull(content)
 			return node
 
-		if CUI.isArray(content) or content instanceof HTMLCollection or content instanceof NodeList
+		if CUI.util.isArray(content) or content instanceof HTMLCollection or content instanceof NodeList
 			idx = 0
 			len = content.length
 
@@ -789,7 +789,7 @@ class CUI.dom
 		if selector instanceof HTMLElement
 			return node == selector
 
-		if CUI.isFunction(selector)
+		if CUI.util.isFunction(selector)
 			return !!selector(node)
 
 		if node not instanceof HTMLElement
@@ -1338,7 +1338,7 @@ class CUI.dom
 		if arguments.length == 0
 			return
 
-		if arguments.length == 2 or not CUI.isArray(arguments[0])
+		if arguments.length == 2 or not CUI.util.isArray(arguments[0])
 			dim = arguments[0]
 			pattern = arguments[1]
 			arr = []
@@ -1350,7 +1350,7 @@ class CUI.dom
 					value = dim[pattern.replace("*", k)]
 
 				arr.push(value)
-		else if CUI.isArray(arguments[0])
+		else if CUI.util.isArray(arguments[0])
 			arr = arguments[0]
 		else
 			console.error("CUI.dom.debugRect: Argument Error.")
@@ -1653,7 +1653,7 @@ class CUI.dom
 			CUI.dom.append(tr, td)
 
 			add_content = (___a) =>
-				if CUI.isArray(___a)
+				if CUI.util.isArray(___a)
 					for a in ___a
 						add_content(a)
 				else if ___a?.DOM
@@ -1667,7 +1667,7 @@ class CUI.dom
 			return
 
 		for a in arguments
-			if CUI.isArray(a)
+			if CUI.util.isArray(a)
 				for _a in a
 					append(_a)
 			else

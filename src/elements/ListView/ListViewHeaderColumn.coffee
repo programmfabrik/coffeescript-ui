@@ -20,7 +20,7 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 				check: Boolean
 			label:
 				check: (v) ->
-					if CUI.isPlainObject(v) or v instanceof CUI.Label
+					if CUI.util.isPlainObject(v) or v instanceof CUI.Label
 						true
 					else
 						false

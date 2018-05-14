@@ -20,7 +20,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				default: {}
 				mandatory: true
 				check: (v) ->
-					if not CUI.isPlainObject(v)
+					if not CUI.util.isPlainObject(v)
 						return false
 					for _k, _v of v
 						if _k in ["image", "link"]

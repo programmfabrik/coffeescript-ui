@@ -13,7 +13,7 @@ class CUI.SimpleForm extends CUI.DataField
 			fields:
 				mandatory: true
 				check: (v) ->
-					CUI.isFunction(v) or CUI.isArray(v)
+					CUI.util.isFunction(v) or CUI.util.isArray(v)
 			class_table:
 				check: String
 			header:
@@ -45,7 +45,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 		if @_form?.checkbox
 			# the form has a checkbox (for form context)
-			CUI.util.assert(CUI.isPlainObject(@_form.checkbox, "new CUI.Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
+			CUI.util.assert(CUI.util.isPlainObject(@_form.checkbox, "new CUI.Form", "opts.form.checkbox needs to be PlainObject.", opts: @opts))
 			CUI.util.assert(@_name, "new CUI.Form", "opts.form.checkbox requires opts.name to be set.", opts: @opts)
 			CUI.util.assert(not @_form.checkbox.data, "new CUI.Form", "opts.form.checkbox cannot have 'data' set.", opts: @opts)
 			CUI.util.assert(not @_form.checkbox.name, "new CUI.Form", "opts.form.checkbox cannot have 'name' set.", opts: @opts)
@@ -85,7 +85,7 @@ class CUI.SimpleForm extends CUI.DataField
 		for field, idx in fields
 			if not field
 				continue
-			if CUI.isFunction(field)
+			if CUI.util.isFunction(field)
 				_field = CUI.DataField.new(field(@))
 			else
 				_field = CUI.DataField.new(field)
@@ -122,9 +122,9 @@ class CUI.SimpleForm extends CUI.DataField
 
 	setData: (data) ->
 		if @_name and @__checkbox
-			CUI.util.assert(not CUI.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
+			CUI.util.assert(not CUI.util.isFunction(data), "Form.setData", "opts.data cannot be set by Function when data is managed by opts.form.checkbox.", opts: @opts)
 
-		if @_name and not CUI.isFunction(data)
+		if @_name and not CUI.util.isFunction(data)
 			# console.debug "init data ", @_name, data, 1
 			#
 
@@ -163,7 +163,7 @@ class CUI.SimpleForm extends CUI.DataField
 		# it can happen, like in FormPopover, that fields
 		# are not yet initialized
 		#
-		if CUI.isFunction(@_fields) and @__fields and @__fields.length == 0
+		if CUI.util.isFunction(@_fields) and @__fields and @__fields.length == 0
 			# console.debug "fields depends on data...", @__data
 			@initFields()
 			@callOnOthers("setData", @__data)
@@ -277,7 +277,7 @@ class CUI.SimpleForm extends CUI.DataField
 		get_append = (v, info=@) =>
 			if v instanceof CUI.Form
 				v.DOM
-			else if CUI.isPlainObject(v) # assume a label constructor
+			else if CUI.util.isPlainObject(v) # assume a label constructor
 				# new CUI.Label(v).DOM
 				new CUI.MultilineLabel(v).DOM
 			else if CUI.util.isString(v)
@@ -285,7 +285,7 @@ class CUI.SimpleForm extends CUI.DataField
 				new CUI.MultilineLabel(text: v).DOM
 			else if v?.DOM
 				v.DOM
-			else if CUI.isFunction(v)
+			else if CUI.util.isFunction(v)
 				get_append(v(info))
 			else if CUI.util.isEmpty(v)
 				null

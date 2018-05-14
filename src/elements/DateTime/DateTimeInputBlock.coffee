@@ -33,7 +33,7 @@ class CUI.DateTimeInputBlock extends CUI.InputBlock
 
 		mom = moment(@_datetime, @_input_format.input)
 
-		if CUI.isFunction(@_matcher.inc_func)
+		if CUI.util.isFunction(@_matcher.inc_func)
 			@_matcher.inc_func(mom, diff)
 		else
 			if diff < 0

@@ -22,7 +22,7 @@ class CUI.Panel extends CUI.DOMElement
 			@append(@_content_placeholder, "content")
 			@__has_placeholder = true
 
-		if CUI.isFunction(@_content)
+		if CUI.util.isFunction(@_content)
 			if not @_load_on_open
 				@loadContent()
 		else if @_content
@@ -136,7 +136,7 @@ class CUI.Panel extends CUI.DOMElement
 		@
 
 	loadContent: ->
-		if CUI.isFunction(@_content)
+		if CUI.util.isFunction(@_content)
 			ret = @_content(@)
 		else
 			ret = @_content

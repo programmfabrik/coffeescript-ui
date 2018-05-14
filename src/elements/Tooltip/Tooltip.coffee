@@ -62,14 +62,14 @@ class CUI.Tooltip extends CUI.LayerPane
 		@addOpts
 			text:
 				check: (v) ->
-					CUI.util.isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.util.isFunction(v)
 			markdown:
 				mandatory: true
 				default: false
 				check: Boolean
 			content:
 				check: (v) ->
-					CUI.util.isString(v) or CUI.isFunction(v) or CUI.util.isElement(v) or CUI.isArray(v) or CUI.util.isElement(v?.DOM)
+					CUI.util.isString(v) or CUI.util.isFunction(v) or CUI.util.isElement(v) or CUI.util.isArray(v) or CUI.util.isElement(v?.DOM)
 			# hide/show on click on element
 			on_click:
 				mandatory: true
@@ -78,7 +78,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			# hide/show on click on hover
 			on_hover:
 				check: (v) ->
-					CUI.util.isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 
 		return
 
@@ -170,7 +170,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			@__pane.replace(content, "center")
 			dfr.resolve()
 
-		if CUI.isFunction(@_text)
+		if CUI.util.isFunction(@_text)
 			ret = @_text.call(@, @)
 			if CUI.util.isPromise(ret)
 				ret.done (text) ->
@@ -179,7 +179,7 @@ class CUI.Tooltip extends CUI.LayerPane
 					dfr.reject()
 			else
 				fill_text(ret)
-		else if CUI.isFunction(@_content)
+		else if CUI.util.isFunction(@_content)
 			ret = @_content.call(@, @)
 			if CUI.util.isPromise(ret)
 				ret.done (text) ->
@@ -193,7 +193,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		else
 			fill_content(@_content)
 
-		if not CUI.isFunction(@_text) and not CUI.isFunction(@_content)
+		if not CUI.util.isFunction(@_text) and not CUI.util.isFunction(@_content)
 			# avoid this next time
 			@__static = true
 		else

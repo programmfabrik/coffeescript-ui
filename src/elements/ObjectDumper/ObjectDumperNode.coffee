@@ -100,11 +100,11 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		else
 			info.cls = CUI.util.getObjectClass(data)
 
-			if CUI.isArray(data) or CUI.isPlainObject(data)
-				info.has_children = not CUI.isEmptyObject(data)
-				if CUI.isArray(data)
+			if CUI.util.isArray(data) or CUI.util.isPlainObject(data)
+				info.has_children = not CUI.util.isEmptyObject(data)
+				if CUI.util.isArray(data)
 					info.text = info.cls + " [" + data.length + "]"
-				if CUI.isPlainObject(data)
+				if CUI.util.isPlainObject(data)
 					info.text = info.cls + " {" + Object.keys(data).length + "}"
 			else
 				info.has_children = true

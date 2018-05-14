@@ -23,7 +23,7 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 			object:
 				mandatory: true
 				check: (v) ->
-					if CUI.isArray(v) or CUI.isPlainObject(v)
+					if CUI.util.isArray(v) or CUI.util.isPlainObject(v)
 						true
 					else
 						false
@@ -65,6 +65,6 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 
 	__hasOnlyPlainValues: (object) ->
 		for key, value of object
-			if CUI.isPlainObject(value) or CUI.isArray(value)
+			if CUI.util.isPlainObject(value) or CUI.util.isArray(value)
 				return false
 		return true

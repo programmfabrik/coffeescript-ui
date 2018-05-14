@@ -209,7 +209,7 @@ class CUI.Layer extends CUI.DOMElement
 					content: null
 
 				check: (v) ->
-					if CUI.isPlainObject(v) or v == false
+					if CUI.util.isPlainObject(v) or v == false
 						return true
 
 			# if added, a bounce class will be added and after a css transition
@@ -242,7 +242,7 @@ class CUI.Layer extends CUI.DOMElement
 				check: String
 			placements:
 				check: (v) ->
-					if not CUI.isArray(v)
+					if not CUI.util.isArray(v)
 						return false
 					for a in v
 						if @knownPlacements.indexOf(a) == -1
@@ -260,7 +260,7 @@ class CUI.Layer extends CUI.DOMElement
 
 			show_at_position:
 				check: (v) ->
-					CUI.isPlainObject(v) and v.top >= 0 and v.left >= 0
+					CUI.util.isPlainObject(v) and v.top >= 0 and v.left >= 0
 
 			# fills the available space to the maximum
 			# if used with "placement", the placement is not

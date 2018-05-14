@@ -24,7 +24,7 @@ class CUI.DataFieldProxy extends CUI.DataField
 			return fields
 
 		if not @__element
-			if CUI.isFunction(@_element)
+			if CUI.util.isFunction(@_element)
 				# console.warn("DataFieldProxy.getFields", "element is a function and DataFieldProxy.render has not been called yet, unable to getFields", opts: @opts)
 				return fields
 			search_el = @_element
@@ -74,7 +74,7 @@ class CUI.DataFieldProxy extends CUI.DataField
 	render: ->
 		# console.debug "DataFieldsProxy.render", @
 		# console.debug "rendering data field proxy", @opts
-		if CUI.isFunction(@_element)
+		if CUI.util.isFunction(@_element)
 			@__element = @_element.call(@, @)
 		else
 			@__element = @_element

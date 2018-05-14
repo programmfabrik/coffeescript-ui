@@ -264,14 +264,14 @@ class CUI.Event extends CUI.Element
 		false
 
 	@require: (event, func) ->
-		if CUI.isPlainObject(event)
+		if CUI.util.isPlainObject(event)
 			ev_info = CUI.Events.getEventType(event.type)
 			if ev_info.eventClass
 				eventClass = ev_info.eventClass
 			else
 				eventClass = CUI.Event
 
-			CUI.mergeMap(event, ev_info)
+			CUI.util.mergeMap(event, ev_info)
 			delete(event.eventClass)
 			delete(event.listenerClass)
 			ev = new eventClass(event)

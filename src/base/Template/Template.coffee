@@ -41,7 +41,7 @@ class CUI.Template extends CUI.Element
 
 		# map elements which require mapping
 		@map = @getElMap(@_map)
-		if not CUI.isEmptyObject(@map) and @_set_template_empty
+		if not CUI.util.isEmptyObject(@map) and @_set_template_empty
 			CUI.dom.addClass(@DOM, "cui-template-empty")
 
 		#
@@ -226,7 +226,7 @@ class CUI.Template extends CUI.Element
 
 			return @map[key]
 
-		if CUI.isEmptyObject(@map)
+		if CUI.util.isEmptyObject(@map)
 			# without map we empty the whole @DOM
 			CUI.dom.empty(@DOM)
 		else
@@ -266,10 +266,10 @@ class CUI.Template extends CUI.Element
 		if key
 			CUI.util.assert(@map[key], "#{@__cls}.#{fn}", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 
-		if CUI.isFunction(value)
+		if CUI.util.isFunction(value)
 			value = value(element)
 
-		if not CUI.isArray(value)
+		if not CUI.util.isArray(value)
 			value = [value]
 
 		appends = []

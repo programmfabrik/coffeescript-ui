@@ -79,7 +79,7 @@ class CUI.util
 
 		needs = []
 		for method in methods
-			if not CUI.isFunction(inst[method])
+			if not CUI.util.isFunction(inst[method])
 				needs.push(method)
 		CUI.util.assert(needs.length == 0, "#{CUI.util.getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
 		return
@@ -96,12 +96,12 @@ class CUI.util
 		if not CUI.defaults.asserts
 			return
 
-		if not CUI.isFunction(classClass) and not classClass == "PlainObject"
+		if not CUI.util.isFunction(classClass) and not classClass == "PlainObject"
 			throw "assertInstanceOf: class is not a Function"
 
 		if value == undefined
 			value = opts[variableName]
-			CUI.util.assert(CUI.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{CUI.util.getObjectClass(opts)}.", opts: opts)
+			CUI.util.assert(CUI.util.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{CUI.util.getObjectClass(opts)}.", opts: opts)
 
 		if classClass == "Array"
 			cn = "Array"
@@ -111,7 +111,7 @@ class CUI.util
 			cond = CUI.util.isInteger(value)
 		else if classClass == "PlainObject"
 			cn = "PlainObject"
-			cond = CUI.isPlainObject(value)
+			cond = CUI.util.isPlainObject(value)
 		else if (new String) instanceof classClass
 			cn = "String"
 			cond = CUI.util.isString(value)
@@ -200,10 +200,10 @@ class CUI.util
 		(typeof obj == "string")
 
 	@isEmpty: (obj) ->
-		if CUI.isArray(obj)
+		if CUI.util.isArray(obj)
 			obj.length == 0
-		else if CUI.isPlainObject(obj)
-			CUI.isEmptyObject(obj)
+		else if CUI.util.isPlainObject(obj)
+			CUI.util.isEmptyObject(obj)
 		else
 			(CUI.util.isNull(obj) || obj == "" || obj == false)
 
@@ -223,7 +223,7 @@ class CUI.util
 		CUI.util.isInteger(obj) and obj >= 0
 
 	@isContent: (obj) ->
-		CUI.util.isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.isArray(obj) or CUI.isFunction(obj) or CUI.util.isElement(obj?.DOM)
+		CUI.util.isElement(obj) or obj instanceof HTMLCollection or obj instanceof NodeList or CUI.util.isArray(obj) or CUI.util.isFunction(obj) or CUI.util.isElement(obj?.DOM)
 
 	@isNumber: (n) ->
 		CUI.util.isInteger(n) or CUI.util.isFloat(n)
@@ -301,7 +301,7 @@ class CUI.util
 		if obj instanceof CUI.Dummy
 			return obj
 
-		if CUI.isPlainObject(obj)
+		if CUI.util.isPlainObject(obj)
 			new_obj = {}
 			for k, v of obj
 				if deep
@@ -315,7 +315,7 @@ class CUI.util
 
 			return new_obj
 
-		if CUI.isArray(obj)
+		if CUI.util.isArray(obj)
 			if !deep
 				return obj.slice(0)
 
@@ -329,12 +329,12 @@ class CUI.util
 
 	@dump: (obj, space="\t") ->
 		clean_obj = (obj) ->
-			if CUI.isArray(obj)
+			if CUI.util.isArray(obj)
 				result = []
 				for item in obj
 					result.push(clean_obj(item))
 				return result
-			else if CUI.isPlainObject(obj)
+			else if CUI.util.isPlainObject(obj)
 				result = {}
 				for k, v of obj
 					result[k] = clean_obj(v)
@@ -384,7 +384,7 @@ class CUI.util
 	# remove all occurrances of value from array
 	# returns the number of items removed
 	@removeFromArray: (value, arr, compFunc) ->
-		CUI.util.assert(CUI.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
+		CUI.util.assert(CUI.util.isArray(arr), "removeFromArray", "Second parameter needs to be an Array", value: value, array: arr, compFunc: compFunc)
 		removed = 0
 		while true
 			idx = CUI.util.idxInArray(value, arr, compFunc)
@@ -437,7 +437,7 @@ class CUI.util
 		idx = -1
 		# compFunc needs to be a method name or a function
 		for a, i in arr
-			if CUI.isFunction(compFunc)
+			if CUI.util.isFunction(compFunc)
 				if compFunc(a, value)
 					idx = i
 					break
@@ -481,7 +481,7 @@ class CUI.util
 	@formatCoordinates: (coordinates, format) ->
 		CUI.util.assert(CUI.Map.isValidPosition(coordinates), "formatCoordinates", "Coordinates must be a valid position object, with latitude and longitude attributes.", value: coordinates)
 
-		if CUI.isFunction(format)
+		if CUI.util.isFunction(format)
 			return format(coordinates)
 
 		CUI.util.assert(CUI.util.isString(format) and not CUI.util.isEmpty(format), "formatCoordinates", "Parameter format is String, mandatory and not empty.", value: coordinates)

@@ -32,7 +32,7 @@ class CUI.Options extends CUI.DataField
 			options:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v) or CUI.isFunction(v)
+					CUI.util.isArray(v) or CUI.util.isFunction(v)
 
 			# true: all fields horizontal
 			# int: n fields horizontal
@@ -114,7 +114,7 @@ class CUI.Options extends CUI.DataField
 	setData: (data) ->
 		super(data)
 		if @_radio
-			if CUI.isArray(@getValue())
+			if CUI.util.isArray(@getValue())
 				@__radio_use_array = true
 			else
 				@__radio_use_array = false
@@ -199,7 +199,7 @@ class CUI.Options extends CUI.DataField
 
 	checkValue: (_value) ->
 		if @__radio_use_array or not @_radio
-			if not CUI.isArray(_value)
+			if not CUI.util.isArray(_value)
 				throw new CUI.CheckValueError("Value must be Array.")
 			check = _value
 		else

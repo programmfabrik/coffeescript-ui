@@ -191,12 +191,12 @@ class CUI.Pane extends CUI.VerticalLayout
 			icon_inactive:
 				mandatory: true
 				check: (v) =>
-					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.isPlainObject(v)
+					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.util.isPlainObject(v)
 				default: "fa-expand"
 			icon_active:
 				mandatory: true
 				check: (v) =>
-					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.isPlainObject(v)
+					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.util.isPlainObject(v)
 				default: "fa-compress"
 			group:
 				mandatory: false
@@ -204,7 +204,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			tooltip:
 				mandatory: true
 				check: (v) =>
-					v instanceof CUI.Tooltip or CUI.isPlainObject(v)
+					v instanceof CUI.Tooltip or CUI.util.isPlainObject(v)
 				default: CUI.Pane.defaults.button_tooltip
 		)
 

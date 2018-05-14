@@ -20,7 +20,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			items:
 				mandatory: true
 				check: (v) ->
-					CUI.isFunction(v) or CUI.isArray(v)
+					CUI.util.isFunction(v) or CUI.util.isArray(v)
 			# if set no "null", don't manage this for us
 			# otherwise ItemList sets the active item
 			# according to the active idx
@@ -86,7 +86,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			items.length > 0
 
 	__getItems: (event) ->
-		if CUI.isFunction(@_items)
+		if CUI.util.isFunction(@_items)
 			@_items(event, @) or []
 		else
 			@_items
@@ -153,7 +153,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			list_has_button_left = false
 
 			for _item, idx in items
-				if CUI.isFunction(_item)
+				if CUI.util.isFunction(_item)
 					item = _item(@, menu, event)
 				else
 					item = _item
@@ -171,7 +171,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 					if item.label
 						if item.label instanceof CUI.Label
 							label = item.label
-						else if CUI.isPlainObject(item.label)
+						else if CUI.util.isPlainObject(item.label)
 							label = new CUI.defaults.class.Label(item.label)
 						else
 							label = new CUI.defaults.class.Label(text: item.label)

@@ -4,7 +4,7 @@ class CUI.CSVData extends CUI.Element
 		@addOpts
 			rows:
 				check: (v) ->
-					CUI.isArray(v) and v.length > 0
+					CUI.util.isArray(v) and v.length > 0
 
 	readOpts: ->
 		super()

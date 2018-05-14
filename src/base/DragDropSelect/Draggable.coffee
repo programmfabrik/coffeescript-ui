@@ -18,7 +18,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			helper:
 				default: "clone"
 				check: (v) ->
-					v == "clone" or CUI.util.isElement(v) or CUI.isFunction(v) or null
+					v == "clone" or CUI.util.isElement(v) or CUI.util.isFunction(v) or null
 
 			helper_contain_element:
 				check: (v) ->
@@ -72,7 +72,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			selector:
 				check: (v) =>
-					CUI.util.isString(v) or CUI.isFunction(v)
+					CUI.util.isString(v) or CUI.util.isFunction(v)
 
 	readOpts: ->
 		super()
@@ -196,7 +196,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if CUI.util.isNull(CUI.globalDrag) or CUI.globalDrag == true
 			CUI.globalDrag = {}
 
-		CUI.util.assert(CUI.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: CUI.globalDrag)
+		CUI.util.assert(CUI.util.isPlainObject(CUI.globalDrag), "CUI.Draggable.init_drag", "returned data must be a plain object", data: CUI.globalDrag)
 		point = CUI.util.getCoordinatesFromEvent(ev)
 		position = CUI.util.elementGetPosition(point, $target)
 
@@ -611,7 +611,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 			offset =
 				top: CUI.globalDrag.start.top
 				left: CUI.globalDrag.start.left
-		else if CUI.isFunction(helper)
+		else if CUI.util.isFunction(helper)
 			hn = CUI.globalDrag.helperNode = helper(CUI.globalDrag)
 			set_dim = null
 		else
