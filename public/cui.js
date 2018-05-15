@@ -37265,6 +37265,7 @@ CUI.LeafletMap = (function(superClass) {
     if (foundElement && foundElement.polyline) {
       this.__map.removeLayer(foundElement.polyline);
     }
+    marker.off();
     this.__map.removeLayer(marker);
     marker = null;
   };
@@ -38079,46 +38080,39 @@ CUI.MapInput = (function(superClass) {
   };
 
   MapInput.prototype.__openMapPopover = function(button) {
-    var currentPosition;
-    if (!this.__mapPopover) {
-      this.__mapPopover = new CUI.Popover({
-        element: button,
-        handle_focus: false,
-        placement: "se",
-        "class": "cui-map-popover",
-        pane: this.__map
-      });
-    }
-    this.__mapPopover.show();
-    currentPosition = this.__getPosition();
-    if (currentPosition) {
-      this.__map.setSelectedMarkerPosition(currentPosition);
-      this.__map.setCenter(currentPosition);
-    } else {
-      this.__map.removeSelectedMarker();
-    }
-    return this.__mapPopover;
+    var mapPopover;
+    mapPopover = new CUI.Popover({
+      element: button,
+      handle_focus: false,
+      placement: "se",
+      "class": "cui-map-popover",
+      pane: this.__buildMap(),
+      onHide: function() {
+        return mapPopover.destroy();
+      }
+    });
+    mapPopover.show();
   };
 
   MapInput.prototype.__updateIconOptions = function() {
-    this.__map.updateSelectedMarkerOptions(this.__selectedMarkerOptions);
     this.__openIconPopoverButton.setIcon(this.__selectedMarkerOptions.iconName);
     return CUI.dom.setStyleOne(this.__openIconPopoverButton.getIcon(), "color", this.__selectedMarkerOptions.iconColor);
   };
 
   MapInput.prototype.__openIconPopover = function(button) {
-    if (!this.__iconPopover) {
-      this.__iconPopover = new CUI.Popover({
-        element: button,
-        handle_focus: false,
-        placement: "se",
-        pane: {
-          content: this.__buildIconPopoverContent()
-        }
-      });
-    }
-    this.__iconPopover.show();
-    return this.__iconPopover;
+    var iconPopover;
+    iconPopover = new CUI.Popover({
+      element: button,
+      handle_focus: false,
+      placement: "se",
+      pane: {
+        content: this.__buildIconPopoverContent()
+      },
+      onHide: function() {
+        return iconPopover.destroy();
+      }
+    });
+    iconPopover.show();
   };
 
   MapInput.prototype.__buildIconPopoverContent = function() {
@@ -38191,7 +38185,9 @@ CUI.MapInput = (function(superClass) {
   };
 
   MapInput.prototype.__initMap = function() {
-    var currentPosition;
+    var onMarkerSelected;
+    this._mapOptions.showPolylines = false;
+    onMarkerSelected = this._mapOptions.onMarkerSelected;
     this._mapOptions.onMarkerSelected = (function(_this) {
       return function(marker) {
         var formattedPosition;
@@ -38200,17 +38196,21 @@ CUI.MapInput = (function(superClass) {
           lng: marker.lng
         });
         _this.setValue(formattedPosition);
-        return _this.triggerDataChanged();
+        _this.triggerDataChanged();
+        return typeof onMarkerSelected === "function" ? onMarkerSelected() : void 0;
       };
     })(this);
+  };
+
+  MapInput.prototype.__buildMap = function() {
+    var currentPosition;
+    this._mapOptions.selectedMarkerOptions = this.__selectedMarkerOptions;
     currentPosition = this.__getPosition();
     if (currentPosition) {
       this._mapOptions.selectedMarkerPosition = currentPosition;
-      this._mapOptions.selectedMarkerOptions = this.__selectedMarkerOptions;
       this._mapOptions.centerPosition = currentPosition;
     }
-    this._mapOptions.showPolylines = false;
-    return this.__map = new CUI.MapInput.defaults.mapClass(this._mapOptions);
+    return new CUI.MapInput.defaults.mapClass(this._mapOptions);
   };
 
   MapInput.prototype.__getPosition = function() {
@@ -38230,14 +38230,6 @@ CUI.MapInput = (function(superClass) {
       return false;
     }
     return true;
-  };
-
-  MapInput.prototype.destroy = function() {
-    delete this.__selectedMarkerOptions;
-    this.__map.destroy();
-    this.__mapPopover.destroy();
-    this.__iconPopover.destroy();
-    return MapInput.__super__.destroy.call(this);
   };
 
   MapInput.getDefaultDisplayFormat = function() {
