@@ -121,42 +121,34 @@ class CUI.MapInput extends CUI.Input
 		@__updateIconOptions()
 
 	__openMapPopover: (button) ->
-		if not @__mapPopover
-			@__mapPopover = new CUI.Popover
-				element: button
-				handle_focus: false
-				placement: "se"
-				class: "cui-map-popover"
-				pane: @__map
+		mapPopover = new CUI.Popover
+			element: button
+			handle_focus: false
+			placement: "se"
+			class: "cui-map-popover"
+			pane: @__buildMap()
+			onHide: ->
+				mapPopover.destroy()
 
-		@__mapPopover.show()
-
-		currentPosition = @__getPosition()
-		if currentPosition
-			@__map.setSelectedMarkerPosition(currentPosition)
-			@__map.setCenter(currentPosition)
-		else
-			@__map.removeSelectedMarker()
-
-		@__mapPopover
+		mapPopover.show()
+		return
 
 	__updateIconOptions: ->
-		@__map.updateSelectedMarkerOptions(@__selectedMarkerOptions)
-
 		@__openIconPopoverButton.setIcon(@__selectedMarkerOptions.iconName)
 		CUI.dom.setStyleOne(@__openIconPopoverButton.getIcon(), "color", @__selectedMarkerOptions.iconColor)
 
 	__openIconPopover: (button) ->
-		if not @__iconPopover
-			@__iconPopover = new CUI.Popover
-				element: button
-				handle_focus: false
-				placement: "se"
-				pane:
-					content: @__buildIconPopoverContent()
+		iconPopover = new CUI.Popover
+			element: button
+			handle_focus: false
+			placement: "se"
+			pane:
+				content: @__buildIconPopoverContent()
+			onHide: ->
+				iconPopover.destroy()
 
-		@__iconPopover.show()
-		@__iconPopover
+		iconPopover.show()
+		return
 
 	__buildIconPopoverContent: ->
 		iconColorSelect = new CUI.Select(
@@ -196,6 +188,9 @@ class CUI.MapInput extends CUI.Input
 		form
 
 	__initMap: ->
+		@_mapOptions.showPolylines = false
+
+		onMarkerSelected = @_mapOptions.onMarkerSelected
 		@_mapOptions.onMarkerSelected = (marker) =>
 			formattedPosition = @__getFormattedPosition(
 				lat: marker.lat
@@ -203,15 +198,19 @@ class CUI.MapInput extends CUI.Input
 			)
 			@setValue(formattedPosition)
 			@triggerDataChanged()
+			onMarkerSelected?()
+
+		return
+
+	__buildMap: ->
+		@_mapOptions.selectedMarkerOptions = @__selectedMarkerOptions
 
 		currentPosition = @__getPosition()
 		if currentPosition
 			@_mapOptions.selectedMarkerPosition = currentPosition
-			@_mapOptions.selectedMarkerOptions = @__selectedMarkerOptions
 			@_mapOptions.centerPosition = currentPosition
 
-		@_mapOptions.showPolylines = false
-		@__map = new CUI.MapInput.defaults.mapClass(@_mapOptions)
+		return new CUI.MapInput.defaults.mapClass(@_mapOptions)
 
 	__getPosition: ->
 		@getValue().position
@@ -225,14 +224,6 @@ class CUI.MapInput extends CUI.Input
 		if not parsedCoordinates
 			return false
 		return true
-
-	destroy: ->
-		delete @__selectedMarkerOptions
-
-		@__map.destroy()
-		@__mapPopover.destroy()
-		@__iconPopover.destroy()
-		super()
 
 	@getDefaultDisplayFormat: ->
 		CUI.MapInput.displayFormats[CUI.MapInput.defaults.displayFormat]

@@ -124,6 +124,7 @@ class CUI.LeafletMap extends CUI.Map
 		if foundElement && foundElement.polyline
 			@__map.removeLayer(foundElement.polyline)
 
+		marker.off()
 		@__map.removeLayer(marker)
 		marker = null
 		return
