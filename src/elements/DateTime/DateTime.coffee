@@ -510,7 +510,6 @@ class CUI.DateTime extends CUI.Input
 		# 	@__updatePopoverInterval = null
 		if @__popover
 			@__popover.destroy()
-			@__gridTable = null
 			delete(@__popover)
 		@
 
@@ -1101,11 +1100,12 @@ class CUI.DateTime extends CUI.Input
 			type: "click"
 			call: (ev) =>
 				ev.stopPropagation()
-				$target = ev.getTarget()
+				target = ev.getTarget()
 				# console.debug "click on date table", ev.getTarget()
-				if CUI.dom.closest($target, ".cui-date-time-day")
-					data = CUI.dom.data(CUI.dom.closest($target, "td,.cui-td"))
+				if CUI.dom.closest(target, ".cui-date-time-day")
+					data = CUI.dom.data(CUI.dom.closest(target, "td,.cui-td"))
 
+					@__input_format = @initFormat(@__default_format)
 					# order here is important, we need to set the month
 					# before we set the date!
 					@__current_moment.year(data.year)
