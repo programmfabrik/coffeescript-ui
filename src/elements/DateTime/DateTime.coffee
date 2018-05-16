@@ -875,6 +875,7 @@ class CUI.DateTime extends CUI.Input
 							@updateCalendar(mom.hour(data.hour+data.am_pm))
 						else
 							@updateCalendar(mom.hour(data.hour))
+					@__popover.position()
 				options: =>
 					opts = emtpy_clock_opts.slice(0)
 					if am_pm
@@ -904,6 +905,7 @@ class CUI.DateTime extends CUI.Input
 					else
 						@setInputFormat(true)
 						@updateCalendar(mom.minute(data.minute))
+					@__popover.position()
 				options: =>
 
 					opts = emtpy_clock_opts.slice(0)
@@ -928,6 +930,7 @@ class CUI.DateTime extends CUI.Input
 						else
 							@setInputFormat(true)
 							@updateCalendar(mom.hour(data.hour+data.am_pm))
+						@__popover.position()
 
 					options: =>
 						opts = emtpy_clock_opts.slice(0)
@@ -1113,7 +1116,9 @@ class CUI.DateTime extends CUI.Input
 					@__current_moment.date(data.date)
 
 					@updateCalendar(@__current_moment)
-					if not @__input_formats[0].clock
+					if @__input_formats[0].clock
+						@__popover.position()
+					else
 						@closePopover()
 				return
 
