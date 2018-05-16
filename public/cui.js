@@ -24556,7 +24556,6 @@ CUI.DateTime = (function(superClass) {
   DateTime.prototype.closePopover = function() {
     if (this.__popover) {
       this.__popover.destroy();
-      this.__gridTable = null;
       delete this.__popover;
     }
     return this;
@@ -25197,11 +25196,12 @@ CUI.DateTime = (function(superClass) {
       type: "click",
       call: (function(_this) {
         return function(ev) {
-          var $target, data;
+          var data, target;
           ev.stopPropagation();
-          $target = ev.getTarget();
-          if (CUI.dom.closest($target, ".cui-date-time-day")) {
-            data = CUI.dom.data(CUI.dom.closest($target, "td,.cui-td"));
+          target = ev.getTarget();
+          if (CUI.dom.closest(target, ".cui-date-time-day")) {
+            data = CUI.dom.data(CUI.dom.closest(target, "td,.cui-td"));
+            _this.__input_format = _this.initFormat(_this.__default_format);
             _this.__current_moment.year(data.year);
             _this.__current_moment.month(data.month);
             _this.__current_moment.date(data.date);
