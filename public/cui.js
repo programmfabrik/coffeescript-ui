@@ -24964,15 +24964,16 @@ CUI.DateTime = (function(superClass) {
           return function(_data) {
             if (_data.hour === null) {
               _this.setInputFormat(false);
-              return _this.updateCalendar(mom);
+              _this.updateCalendar(mom);
             } else {
               _this.setInputFormat(true);
               if (am_pm) {
-                return _this.updateCalendar(mom.hour(data.hour + data.am_pm));
+                _this.updateCalendar(mom.hour(data.hour + data.am_pm));
               } else {
-                return _this.updateCalendar(mom.hour(data.hour));
+                _this.updateCalendar(mom.hour(data.hour));
               }
             }
+            return _this.__popover.position();
           };
         })(this),
         options: (function(_this) {
@@ -25007,11 +25008,12 @@ CUI.DateTime = (function(superClass) {
           return function(_data) {
             if (_data.minute === null) {
               _this.setInputFormat(false);
-              return _this.updateCalendar(mom);
+              _this.updateCalendar(mom);
             } else {
               _this.setInputFormat(true);
-              return _this.updateCalendar(mom.minute(data.minute));
+              _this.updateCalendar(mom.minute(data.minute));
             }
+            return _this.__popover.position();
           };
         })(this),
         options: (function(_this) {
@@ -25038,11 +25040,12 @@ CUI.DateTime = (function(superClass) {
             return function(_data) {
               if (_data.am_pm === null) {
                 _this.setInputFormat(false);
-                return _this.updateCalendar(mom);
+                _this.updateCalendar(mom);
               } else {
                 _this.setInputFormat(true);
-                return _this.updateCalendar(mom.hour(data.hour + data.am_pm));
+                _this.updateCalendar(mom.hour(data.hour + data.am_pm));
               }
+              return _this.__popover.position();
             };
           })(this),
           options: (function(_this) {
@@ -25206,7 +25209,9 @@ CUI.DateTime = (function(superClass) {
             _this.__current_moment.month(data.month);
             _this.__current_moment.date(data.date);
             _this.updateCalendar(_this.__current_moment);
-            if (!_this.__input_formats[0].clock) {
+            if (_this.__input_formats[0].clock) {
+              _this.__popover.position();
+            } else {
               _this.closePopover();
             }
           }
