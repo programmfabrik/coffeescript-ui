@@ -165,7 +165,6 @@ input[data-max-chars] {
 	min-width: 0;
 }
 
-
 .css-swatch {
 	width: 24px;
 	height: 12px;
@@ -3983,8 +3982,9 @@ a[role="button"].cui-button-appearance-link {
 
 // Table
 .cui-table {
-	display: table;
-	// border: 1px solid $table-border;
+	// specific chrome fix to allow horizontal scrollbars: `display: block` instead of `display: table` and `overflow-x: auto`
+	display: block;
+	overflow-x: auto;
 
 	&.cui-maximize-horizontal {
 		width: 100%;
@@ -5105,11 +5105,10 @@ label[data-label-clickable],
 	&-center {
 		display: table-cell;
 		padding: 2px 0;
-		border-bottom: 1px solid $soft-border;
+		border-bottom: 1px solid $light-border;
 	}
 	
 	&-left {
-
 		.cui-button-visual {
 			padding: 0;
 			border-radius: 0;
@@ -5118,6 +5117,7 @@ label[data-label-clickable],
 			min-width: 13px;
 			font-size: 9px;
 			justify-content: flex-start;
+			color: $muted-color;
 		}
 
 		.cui-button-center {

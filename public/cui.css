@@ -2834,7 +2834,8 @@ a[role="button"].cui-button-appearance-link {
   display: none !important; }
 
 .cui-table {
-  display: table; }
+  display: block;
+  overflow-x: auto; }
   .cui-table.cui-maximize-horizontal {
     width: 100%; }
   .cui-table--has-datafields .cui-td--text-content {
@@ -3594,7 +3595,7 @@ label[data-label-clickable],
   .cui-data-field-multi-output-left, .cui-data-field-multi-output-center {
     display: table-cell;
     padding: 2px 0;
-    border-bottom: 1px solid #e3e9ed; }
+    border-bottom: 1px solid #f0f3f5; }
   .cui-data-field-multi-output-left .cui-button-visual {
     padding: 0;
     border-radius: 0;
@@ -3602,7 +3603,8 @@ label[data-label-clickable],
     line-height: 18px !important;
     min-width: 13px;
     font-size: 9px;
-    justify-content: flex-start; }
+    justify-content: flex-start;
+    color: #949a9e; }
   .cui-data-field-multi-output-left .cui-button-center {
     padding: 0; }
   .cui-data-field-multi-output-center {
