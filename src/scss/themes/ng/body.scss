@@ -1017,7 +1017,6 @@ li > div {
 	.cui-button-visual {
 	  padding: 0 $padding/2;
 	  height: $button-height;
-	  min-width: 27px;
 	  font-size: $button-font-size;
 	  line-height: $button-height - 2px;
 	  color: $button-color;
@@ -1178,6 +1177,10 @@ li > div {
 	&:empty {
 		display: none;
 	}
+}
+
+.cui-button-left {
+	min-width: 20px; // wide enough so that the width doesn't jump when the icon turns into a spinner
 }
 
 .cui-button-center {
@@ -2113,13 +2116,23 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
-			max-height: 131px;
+			max-height: 8 * 18px; // only limit if its more than 8 lines
 		}
 	}
 
 	> .cui-label-content {
-		max-height: 99px;
+		max-height: 6 * 18px; // limit at 6 lines
 		overflow: hidden;
+	}
+
+	&.cui-label-size-mini { // 14px line-height
+		&.cui-label--measure-overflow > .cui-label-content {
+			max-height: 8 * 14px;
+		}
+
+		> .cui-label-content {
+			max-height: 6 * 14px;
+		}
 	}
 
 	.cui-label-manage-overflow-button {
@@ -2132,7 +2145,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			color: $highlight-color;
 			height: auto;
-			padding: 0 0 3px;
+			padding: 0 0 1px;
 		}
 	}
 
@@ -5058,38 +5071,20 @@ label[data-label-clickable],
 
 // Multi Output
 
-.cui-multi-output {
-	display: table;
-}
-
 .cui-data-field-multi-output {
-	display: table-row;
+	display: flex;
+	padding: 2px 0;
+	border-bottom: 1px solid $light-border;
 	
 	&:first-child {		
-		.cui-data-field-multi-output-left,
-		.cui-data-field-multi-output-center {
-			padding-top: 0;
-		}
+		padding-top: 0;
 	}
 	
 	&:last-child {
 		border-bottom: none;
-		
-		.cui-data-field-multi-output-left,
-		.cui-data-field-multi-output-center {
-			padding-bottom: 0;
-			border-bottom: none;
-		}
-	}
-
-	&-left,
-	&-center {
-		display: table-cell;
-		padding: 2px 0;
-		border-bottom: 1px solid $light-border;
 	}
 	
-	&-left {
+	&-aside {
 		.cui-button-visual {
 			padding: 0;
 			border-radius: 0;
@@ -5107,7 +5102,8 @@ label[data-label-clickable],
 	}
 
 	&-center {
-		padding-left: 5px;
+		flex-grow: 1;
+		padding-right: 5px;
 	}
 }
 

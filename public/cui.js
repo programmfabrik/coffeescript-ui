@@ -39663,8 +39663,8 @@ CUI.MultiOutput = (function(superClass) {
     template = new CUI.Template({
       name: "data-field-multi-output",
       map: {
-        left: true,
-        center: true
+        center: true,
+        aside: true
       }
     });
     template.append(label, "center");
@@ -39681,7 +39681,7 @@ CUI.MultiOutput = (function(superClass) {
         };
       })(this)
     });
-    template.append(button, "left");
+    template.append(button, "aside");
     return template;
   };
 
@@ -45959,7 +45959,7 @@ DataFieldProxy = CUI.DataFieldProxy;
 /* 220 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div class=\"cui-data-field-multi-output\" data-template=\"data-field-multi-output\">\n\t<div class=\"cui-data-field-multi-output-left\"></div>\n\t<div class=\"cui-data-field-multi-output-center\"></div>\n</div>\n";
+module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div class=\"cui-data-field-multi-output\" data-template=\"data-field-multi-output\">\n\t<div class=\"cui-data-field-multi-output-center\"></div>\n\t<div class=\"cui-data-field-multi-output-aside\"></div>\n</div>\n";
 
 /***/ })
 /******/ ]);
