@@ -3121,25 +3121,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-hint-popover {
-	min-width: 0;
-	max-width: 400px;
-	background: $popover-hint-background;
-	color: white;
-	// padding: 7px 10px; CONFLICT: use padded to add padding
-	box-shadow: // remove dark outline from normal layer for a sharper edge
-		0 4px 20px hsla(205,20%,30%,.4),
-		0 2px 4px hsla(0,0%,0%,.1);
-
-	.cui-button-appearance-link[role] .cui-button-visual {
-		color: lighten(desaturate($highlight-color, 10%), 20%);
-	}
-
-	.cui-empty-label {
-		color: lighten($muted-color, 14%);
-	}
-}
-
 // WaitBlock
 .cui-wait-block {
 	position: absolute;

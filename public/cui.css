@@ -2292,17 +2292,6 @@ a[role="button"].cui-button-appearance-link {
     background: #3d4f5c;
     box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.1); }
 
-.cui-hint-popover {
-  min-width: 0;
-  max-width: 400px;
-  background: #3d4f5c;
-  color: white;
-  box-shadow: 0 4px 20px rgba(61, 79, 92, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1); }
-  .cui-hint-popover .cui-button-appearance-link[role] .cui-button-visual {
-    color: #4c9ef6; }
-  .cui-hint-popover .cui-empty-label {
-    color: #b9bdc0; }
-
 .cui-wait-block {
   position: absolute;
   top: 0;
