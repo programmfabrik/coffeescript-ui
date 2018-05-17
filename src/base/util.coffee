@@ -495,6 +495,40 @@ class CUI.util
 	@inArray: (value, array) ->
 		array.indexOf(value)
 
+	@isEqual: (x, y) ->
+		#// if both are function
+		if x instanceof Function
+			if y instanceof Function
+				return x.toString() == y.toString()
+			return false
+
+		if x == null or x == undefined or y == null or y == undefined
+			return x == y
+
+		if x == y or x.valueOf() == y.valueOf()
+			return true
+
+		# if one of them is date, they must had equal valueOf
+		if x instanceof Date
+			return false
+
+		if y instanceof Date
+			return false
+
+		# if they are not function or strictly equal, they both need to be Objects
+		if not (x instanceof Object)
+			return false
+
+		if not (y instanceof Object)
+			return false
+
+		p = Object.keys(x)
+		if Object.keys(y).every( (i) -> return p.indexOf(i) != -1 )
+			return p.every((i) => return @isEqual(x[i], y[i]))
+		else
+			return false
+
+
 	@isMap: (v) ->
 		@isPlainObject(v)
 
