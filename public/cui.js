@@ -19876,6 +19876,46 @@ CUI.util = (function() {
     return array.indexOf(value);
   };
 
+  util.isEqual = function(x, y) {
+    var p;
+    if (x instanceof Function) {
+      if (y instanceof Function) {
+        return x.toString() === y.toString();
+      }
+      return false;
+    }
+    if (x === null || x === void 0 || y === null || y === void 0) {
+      return x === y;
+    }
+    if (x === y || x.valueOf() === y.valueOf()) {
+      return true;
+    }
+    if (x instanceof Date) {
+      return false;
+    }
+    if (y instanceof Date) {
+      return false;
+    }
+    if (!(x instanceof Object)) {
+      return false;
+    }
+    if (!(y instanceof Object)) {
+      return false;
+    }
+    p = Object.keys(x);
+    if (Object.keys(y).every(function(i) {
+      return p.indexOf(i) !== -1;
+    })) {
+      return p.every((function(_this) {
+        return function(i) {
+          return _this.isEqual(x[i], y[i]);
+        };
+      })(this));
+    } else {
+      return false;
+    }
+  };
+
   util.isMap = function(v) {
     return this.isPlainObject(v);
   };
