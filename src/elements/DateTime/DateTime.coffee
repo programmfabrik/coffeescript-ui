@@ -624,13 +624,13 @@ class CUI.DateTime extends CUI.Input
 	#              matched is not among them, init to the first check format.
 	#              these formats are the "allowed" formats, this is used in __checkInput
 
-	parse: (s, formats = @__input_formats, use_formats = formats) ->
-		if not (s?.trim?().length > 0)
+	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
+		if not (stringValue?.trim?().length > 0)
 			return moment.invalid()
 
 		for format in formats
 
-			mom = @__parseFormat(format, s)
+			mom = @__parseFormat(format, stringValue)
 			if mom
 				if format in use_formats
 					@__input_format = @initFormat(format)
@@ -652,30 +652,34 @@ class CUI.DateTime extends CUI.Input
 		# appendix like "v. Chr."
 
 		# lets see if the date is below zero
-		check_bc = false
-		if s.startsWith("-")
-			check_bc = true
-			s = s.substring(1)
+		checkBC = false
+		hasBCAppendix = false
+		if stringValue.startsWith("-")
+			checkBC = true
+			stringValue = stringValue.substring(1)
 		else
-			us = s.toLocaleUpperCase()
+			us = stringValue.toLocaleUpperCase()
 			for appendix in CUI.DateTime.defaults.bc_appendix
 				ua = appendix.toLocaleUpperCase()
 				if us.endsWith(" "+ua)
-					s = s.substring(0, s.length - ua.length).trim()
-					check_bc = true
+					stringValue = stringValue.substring(0, stringValue.length - ua.length).trim()
+					hasBCAppendix = checkBC = true
 					break
 
-		if not check_bc
+		if not checkBC
 			return moment.invalid()
 
 		# set bc to the value
-		m = s.match(/^[0-9]+$/)
+		m = stringValue.match(/^[0-9]+$/)
 		if not m
 			return moment.invalid()
 
 		# fake a moment
 		mom = moment()
-		mom.bc = parseInt(s)
+		mom.bc = parseInt(stringValue)
+		if hasBCAppendix # If it has BC appendix, means that the number value of the year is one less.
+			mom.bc--
+
 		if mom.bc < 10
 			mom.bc = "000"+mom.bc
 		else if mom.bc < 100
@@ -1401,18 +1405,24 @@ class CUI.DateTime extends CUI.Input
 
 		return mom.format(format)
 
+	# BC appendix always adds one year. Therefore year 0 is 1 BC.
 	@formatMomentWithBc: (mom, format) ->
-		if mom.bc
-			return mom.bc + " " + CUI.DateTime.defaults.bc_appendix[0]
+		if mom.year() == 0
+			return "1 #{CUI.DateTime.defaults.bc_appendix[0]}"
 
-		if mom.year() >= 0
+		if mom.bc
+			bc = parseInt(mom.bc) + 1
+			return "#{(bc)} #{CUI.DateTime.defaults.bc_appendix[0]}"
+
+		if mom.year() > 0
 			v = mom.format(format)
 			# remove the "+"
 			return v.replace("+"+mom.year(), ""+mom.year())
 
+		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
 		# remove the "-"
-		return v.replace(mom.year(), ""+(-1*mom.year()))
+		return v.replace(mom.year(), ""+(-1 * mom.year()))
 
 	@toMoment: (datestr) ->
 		if CUI.util.isEmpty(datestr)
