@@ -234,24 +234,9 @@ class CUI.DateTime extends CUI.Input
 
 		regexp.push("("+CUI.util.escapeRegExp(s.slice(last_match_end).join(""))+")")
 
-		# console.debug "regexp found", @__input_format.regexp, @__input_format.matcher
-
 		input_format.regexp = new RegExp("^"+regexp.join("")+"$")
 		input_format.matcher = matcher
 
-		# console.debug "initFormat", @__input_format.input, @__input_format.regexp
-
-		# if @__current_input_format != @__input_format
-		# 	for k in ["digi_clock"]
-		# 		if @__current_input_format?[k] != @__input_format[k]
-		# 			if @__input_format[k]
-		# 				@__input_format["__#{k}"] = @__input_format[k]
-		# 			else
-		# 				@__input_format["__#{k}"] = null
-		# 			@__dateTimeTmpl.replace(@__input_format["__#{k}"], k)
-
-		# 	@pop?.position()
-		# @__current_input_format = @__input_format
 		input_format
 
 	getTemplateKeyForRender: ->
@@ -284,7 +269,6 @@ class CUI.DateTime extends CUI.Input
 				@openPopover(@__calendarButton)
 
 		@replace(@__calendarButton, "right")
-		# @append(@__status = CUI.dom.div("cui-date-time-status"), "center")
 
 	format: (_s, type="display", output_type=null) ->
 		CUI.util.assert(type in CUI.DateTime.formatTypes, "CUI.DateTime.format", "type must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
@@ -368,7 +352,7 @@ class CUI.DateTime extends CUI.Input
 			inc_func: "year"
 			cursor: "year"
 
-	incAMPM: (mom, diff) ->
+	incAMPM: (mom) ->
 		current_hour = mom.hour()
 		if current_hour < 12 # AM
 			# set PM
@@ -1429,41 +1413,3 @@ class CUI.DateTime extends CUI.Input
 			return null
 		dt = new CUI.DateTime(input_types: null)
 		dt.parse(datestr)
-
-# Date.prototype.getWeek = (us=false) ->
-# 	if us
-# 		# US week
-# 		start_day = 0
-# 		start_on_jan_1st = true
-# 		days_week_in_next_year = 6
-# 	else
-# 		# get the ISO week
-# 		start_day = 1
-# 		start_on_jan_1st = false
-# 		days_week_in_next_year = 3
-
-# 	day_offset = 24*60*60*1000
-# 	week_offset = day_offset * 7
-# 	d = new Date(this)
-# 	d.setUTCHours(0,0,0,0)
-# 	current_ms = d.getTime()
-# 	next_year_jan_1st = new Date(d)
-# 	next_year_jan_1st.setUTCFullYear(d.getUTCFullYear()+1,0,1)
-
-# 	# console.debug "asked day", d
-# 	d.setUTCMonth(0,1)
-# 	first_day = d.getUTCDay()
-# 	# console.debug "first day", first_day, d
-# 	first_day_of_week_ms = d.getTime() - ((first_day-start_day+7)%7)*day_offset
-# 	if first_day in [5, 6, 0] and not start_on_jan_1st
-# 		first_day_of_week_ms += week_offset
-# 	d.setTime(first_day_of_week_ms)
-
-# 	if (next_year_jan_1st.getTime()-current_ms) / day_offset <= days_week_in_next_year
-# 		week_no = 1
-# 	else
-# 		week_no = Math.floor((current_ms - first_day_of_week_ms) / week_offset) + 1
-# 	# console.debug "first day of week", d.getUTCFullYear(), d
-# 	# console.debug "next jan 1st", next_year_jan_1st, (next_year_jan_1st.getTime()-current_ms) / day_offset
-# 	# console.debug "diff_ms", current_ms - first_day_of_week_ms, week_no
-# 	week_no
