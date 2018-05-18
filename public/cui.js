@@ -24404,7 +24404,7 @@ CUI.DateTime = (function(superClass) {
     };
   };
 
-  DateTime.prototype.incAMPM = function(mom, diff) {
+  DateTime.prototype.incAMPM = function(mom) {
     var current_hour;
     current_hour = mom.hour();
     if (current_hour < 12) {
@@ -25442,9 +25442,9 @@ CUI.DateTimeFormats["de-DE"] = {
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_seconds: false,
-      input: "DD.MM.YYYY HH:mm",
-      display: "dd, DD.MM.YYYY HH:mm",
-      display_short: "DD.MM.YYYY HH:mm",
+      input: "DD.MM.YYYY hh:mm A",
+      display: "dd, DD.MM.YYYY hh:mm A",
+      display_short: "DD.MM.YYYY hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
@@ -25520,9 +25520,9 @@ CUI.DateTimeFormats["it-IT"] = {
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_seconds: false,
-      input: "DD.MM.YYYY HH:mm",
-      display: "dd, DD.MM.YYYY HH:mm",
-      display_short: "DD.MM.YYYY HH:mm",
+      input: "DD.MM.YYYY hh:mm A",
+      display: "dd, DD.MM.YYYY hh:mm A",
+      display_short: "DD.MM.YYYY hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
@@ -25598,9 +25598,9 @@ CUI.DateTimeFormats["es-ES"] = {
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_seconds: false,
-      input: "DD.MM.YYYY HH:mm",
-      display: "dd, DD.MM.YYYY HH:mm",
-      display_short: "DD.MM.YYYY HH:mm",
+      input: "DD/MM/YYYY hh:mm A",
+      display: "dd, DD/MM/YYYY hh:mm A",
+      display_short: "DD/MM/YYYY hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
@@ -25677,9 +25677,9 @@ CUI.DateTimeFormats["en-US"] = {
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_am_pm: true,
       clock_seconds: false,
-      input: "MM/DD/YYYY HH:mm",
-      display: "dd, MM/DD/YYYY HH:mm",
-      display_short: "MM/DD/YYYY HH:mm",
+      input: "MM/DD/YYYY hh:mm A",
+      display: "dd, MM/DD/YYYY hh:mm A",
+      display_short: "MM/DD/YYYY hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
