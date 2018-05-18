@@ -4027,15 +4027,28 @@ label[data-label-clickable],
   border-radius: 14px;
   text-align: center;
   margin-bottom: 5px;
-  position: relative; }
-  .cui-icon-marker-container i {
-    padding-top: 6px; }
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
   .cui-icon-marker-container .cui-icon-marker-arrow {
     position: absolute;
     left: 50%;
     top: 21px;
     transform: rotate(45deg);
     background: inherit; }
+  .cui-icon-marker-container .cui-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    height: 100%; }
+    .cui-icon-marker-container .cui-button:active .cui-button-visual {
+      color: inherit; }
+    .cui-icon-marker-container .cui-button-visual {
+      height: 100%;
+      color: inherit; }
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
