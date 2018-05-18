@@ -13,6 +13,10 @@ class CUI.IconMarker extends CUI.DOMElement
 			arrowSize:
 				check: "Integer"
 				default: 5
+			onClick:
+				check: Function
+			tooltip:
+				check: "PlainObject"
 
 	constructor: (@opts = {}) ->
 		super(@opts)
@@ -33,7 +37,13 @@ class CUI.IconMarker extends CUI.DOMElement
 			"background": @_color
 		}
 
-		@append(new CUI.Icon(icon: @_icon), "icon")
+		if @_onClick
+			icon = new CUI.Button(icon: @_icon, tooltip: @_tooltip, onClick: @_onClick, appearance: "flat")
+		else
+			icon = new CUI.Icon(icon: @_icon)
+
+		@append(icon, "icon")
+
 		CUI.dom.setStyle(@DOM, style)
 
 		styleArrow = {

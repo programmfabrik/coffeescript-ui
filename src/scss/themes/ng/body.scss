@@ -5751,10 +5751,9 @@ label[data-label-clickable],
 	text-align: center;
 	margin-bottom: 5px;
 	position: relative;
-
-	i {
-		padding-top: 6px
-	}
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	.cui-icon-marker-arrow {
 		position: absolute;
@@ -5762,5 +5761,23 @@ label[data-label-clickable],
 		top: 21px;
 		transform: rotate(45deg);
 		background: inherit;
+	}
+
+	.cui-button {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+		height: 100%;
+
+		&:active .cui-button-visual {
+			color: inherit;
+		}
+
+		&-visual {
+			height: 100%;
+			color: inherit;
+		}
 	}
 }
