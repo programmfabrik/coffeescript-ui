@@ -1777,17 +1777,17 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&:only-child {
-		// make it as wide as the normal inputs
-		// as long as no trash bin is present
-		> .cui-horizontal-layout-right {
-			width: 9px;
+	// &:only-child {
+	// 	// make it as wide as the normal inputs
+	// 	// as long as no trash bin is present
+	// 	> .cui-horizontal-layout-right {
+	// 		width: 9px;
 
-			> .cui-buttonbar {
-				display: none;
-			}
-		}
-	}
+	// 		> .cui-buttonbar {
+	// 			display: none;
+	// 		}
+	// 	}
+	// }
 
 	&.cui-data-form-row--trash {
 		> .cui-horizontal-layout-center {
