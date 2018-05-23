@@ -3992,7 +3992,10 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&--flex {
-		display: block;
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		flex-grow: 1;
 
 		.cui-tr {
 			display: flex;
