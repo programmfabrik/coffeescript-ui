@@ -471,7 +471,11 @@ class CUI.util
 
 		try
 			coordinates = new CoordinatesParser(coordinates)
-			return lat: coordinates.getLatitude(), lng: coordinates.getLongitude()
+			position = lat: coordinates.getLatitude(), lng: coordinates.getLongitude()
+			if CUI.Map.isValidPosition(position)
+				return position
+			else
+				return false
 		catch
 			return false
 

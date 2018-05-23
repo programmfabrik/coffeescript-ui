@@ -217,6 +217,8 @@ class CUI.MapInput extends CUI.Input
 
 	__getFormattedPosition: (position) ->
 		displayFormat = CUI.MapInput.displayFormats[@_displayFormat]
+		if not CUI.Map.isValidPosition(position)
+			return ""
 		return CUI.util.formatCoordinates(position, displayFormat)
 
 	__checkInput: (value) ->
