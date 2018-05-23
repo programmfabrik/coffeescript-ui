@@ -117,6 +117,10 @@
   width: 14px;
   height: 14px; }
 
+.svg-drupal {
+  width: 14px;
+  height: 14px; }
+
 table {
   border-collapse: collapse; }
 
@@ -2833,7 +2837,10 @@ a[role="button"].cui-button-appearance-link {
     padding-top: 9px;
     padding-bottom: 9px; }
   .cui-table--flex {
-    display: block; }
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-grow: 1; }
     .cui-table--flex .cui-tr {
       display: flex; }
     .cui-table--flex .cui-td--key {
