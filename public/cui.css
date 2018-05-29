@@ -3570,6 +3570,8 @@ label[data-label-clickable],
   font-size: 10px;
   line-height: 22px !important;
   box-shadow: 0 1px rgba(0, 0, 0, 0.03) inset, 0 2px rgba(0, 0, 0, 0.01) inset; }
+  .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
+    padding: 0 6px; }
 
 .cui-data-field-multi-output {
   display: flex;

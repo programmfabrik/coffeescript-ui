@@ -5068,6 +5068,10 @@ label[data-label-clickable],
 		font-size: 10px;
   	line-height: 22px !important;
   	box-shadow: $input-shadow;
+  	
+  	.cui-button-center {
+  		padding: 0 6px;
+  	}
   }
 }
 
