@@ -3949,7 +3949,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-tree-node-content {
 	display: flex;
 	flex: 1 1 auto;
-	min-width: 0;
 	flex-wrap: wrap;
 	min-width: 50px; // prevent them from turning into scrabble when several are unfolded
 
@@ -5367,10 +5366,15 @@ label[data-label-clickable],
 	font-weight: bold;
 	color: $color;
 	flex-basis: 100%;
+	flex-shrink: 0;
 	border-bottom: 1px solid transparentize(darken($soft-border, 50%), 0.85);
 
 	.cui-label {
 		line-height: normal;
+	}
+
+	.cui-tab > & {
+		flex-basis: auto;
 	}
 }
 

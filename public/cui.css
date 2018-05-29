@@ -2811,7 +2811,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-tree-node-content {
   display: flex;
   flex: 1 1 auto;
-  min-width: 0;
   flex-wrap: wrap;
   min-width: 50px; }
   .cui-tree-node-content .cui-label {
@@ -3760,9 +3759,12 @@ label[data-label-clickable],
   font-weight: bold;
   color: #1a1a1a;
   flex-basis: 100%;
+  flex-shrink: 0;
   border-bottom: 1px solid rgba(84, 108, 125, 0.15); }
   .cui-sticky-header .cui-label {
     line-height: normal; }
+  .cui-tab > .cui-sticky-header {
+    flex-basis: auto; }
 
 .cui-sticky-header-control {
   position: fixed;
