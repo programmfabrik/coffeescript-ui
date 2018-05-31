@@ -1,8 +1,18 @@
 # Coffeescript User Interface System (CUI)
 
+## Documentation
+
+https://programmfabrik.gitbooks.io/coffeescript-ui/
+
+https://programmfabrik.github.io/coffeescript-ui/doc/index.html
+
 ## Installation
 
-    npm install --save-dev git+https://github.com/programmfabrik/coffeescript-ui.git
+```
+npm install --save-dev git+https://github.com/programmfabrik/coffeescript-ui.git
+```
+
+**Icons:** It is necessary to include [font-awesome](https://fontawesome.com) to be able to use icons. CUI also provides some icons which can be used with **svg-** prefix.
 
 ### Versions
 
@@ -13,40 +23,52 @@
 
 With *require*
 
-    require('coffeescript-ui') (uses default version)
-    require('coffeescript-ui/public/cui.js')
+```
+require('coffeescript-ui') (uses default version)
+require('coffeescript-ui/public/cui.js')
+```
         
 With *\<script\>* tag
  
-    <script src="node_modules/coffeescript-ui/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="node_modules/coffeescript-ui/public/cui.js" type="text/javascript" charset="utf-8"></script>
+``` 
+<script src="node_modules/coffeescript-ui/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="node_modules/coffeescript-ui/public/cui.js" type="text/javascript" charset="utf-8"></script>
+```
   
 #### Use cui.css (Optional, recommended)
 
 With CUI.CSSLoader
 
-    CUI.ready ->
-        new CUI.CSSLoader().load(url: 'node_modules/coffeescript-ui/public/cui.css')
+```
+CUI.ready ->
+    new CUI.CSSLoader().load(url: 'node_modules/coffeescript-ui/public/cui.css')
+```
 
 With require
-        
-    require('coffeescript-ui/public/cui.css')
+   
+```        
+require('coffeescript-ui/public/cui.css')
+```
     
 With *\<link\>* tag
 
-    <link rel="stylesheet" type="text/css" href="node_modules/coffeescript-ui/public/cui.css">
+```
+<link rel="stylesheet" type="text/css" href="node_modules/coffeescript-ui/public/cui.css">
+```
 
 ### Usage with webpack
 
 It's recommended to use **webpack.ProvidePlugin** to avoid "require" in each file.
 
-    plugins: [
-        ...
-        new webpack.ProvidePlugin({
-            'CUI': "coffeescript-ui" - or "coffeescript-ui/public/cui.js" (for development)
-        })
-        ...
-    ] 
+```
+plugins: [
+    ...
+    new webpack.ProvidePlugin({
+        'CUI': "coffeescript-ui" // or "coffeescript-ui/public/cui.js" (for development)
+    })
+    ...
+] 
+```
   
 ## Build
 
@@ -69,16 +91,10 @@ To run the tests:
 
 **npm run test**
 
-## Documentation
-
-https://programmfabrik.gitbooks.io/coffeescript-ui/
-
-https://programmfabrik.github.io/coffeescript-ui/doc/index.html
-
 ## Live Demo
 
 https://programmfabrik.github.io/coffeescript-ui/demo/index.html
 
 ## Live Tutorial
 
-https://programmfabrik.github.io/coffeescript-ui/tutorial/index.html
+https://programmfabrik.github.io/coffeescript-ui/tutorial/index.html  

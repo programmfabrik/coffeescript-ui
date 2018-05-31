@@ -1,5 +1,3 @@
-require("font-awesome-webpack");
-
 CUI = require('./base/CUI.coffee')
 
 require('./base/util.coffee')
