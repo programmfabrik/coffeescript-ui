@@ -1,3 +1,5 @@
+[![NPM version](https://img.shields.io/npm/v/coffeescript-ui.svg)](https://www.npmjs.com/package/coffeescript-ui)
+
 # Coffeescript User Interface System (CUI)
 
 ## Documentation
