@@ -33,27 +33,15 @@
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../../class/CUI/Output.html'>CUI.Output</a>
+            <a href='../../class/CUI/DataField.html'>CUI.DataField</a>
           </td>
         </tr>
       </table>
-      <h2>Overview</h2>
-      <div class='docstring'>
-  <ul>
-<li>coffeescript-ui - Coffeescript User Interface System (CUI)</li>
-<li>Copyright (c) 2013 - 2016 Programmfabrik GmbH</li>
-<li>MIT Licence</li>
-<li><a href="https://github.com/programmfabrik/coffeescript-ui">https://github.com/programmfabrik/coffeescript-ui</a>, <a href="http://www.coffeescript-ui.org">http://www.coffeescript-ui.org</a></li>
-</ul>
-
-</div>
-<div class='tags'>
-</div>
       <h2>Variables Summary</h2>
       
       <h3 class='inherited'>
         Variable inherited from
-        <a href='../../class/CUI/Output.html'>CUI.Output</a>
+        <a href='../../class/CUI/DataField.html'>CUI.DataField</a>
       </h3>
       <p class='inherited'>
         <a href='../../class/CUI/DataField.html#changed_marker_css_class-variable'>changed_marker_css_class</a>
@@ -75,10 +63,54 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#displayValue-dynamic'>
+      <a href='#readOpts-dynamic'>
         #
 (void)
-<b>displayValue</b><span>()</span>
+<b>readOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#render-dynamic'>
+        #
+(void)
+<b>render</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__buildTemplateForKey-dynamic'>
+        #
+(void)
+<b>__buildTemplateForKey</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__hideShowElements-dynamic'>
+        #
+(void)
+<b>__hideShowElements</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#destroy-dynamic'>
+        #
+(void)
+<b>destroy</b><span>()</span>
       </a>
     </span>
     <span class='desc'>
@@ -89,23 +121,17 @@
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../../class/CUI/Output.html'>CUI.Output</a>
+          <a href='../../class/CUI/DataField.html'>CUI.DataField</a>
         </h3>
         <p class='inherited'>
-          <a href='../../class/CUI/Output.html#initOpts-dynamic'>#initOpts</a>
-          <a href='../../class/CUI/Output.html#readOpts-dynamic'>#readOpts</a>
-          <a href='../../class/CUI/Output.html#init-dynamic'>#init</a>
-          <a href='../../class/CUI/Output.html#setText-dynamic'>#setText</a>
-          <a href='../../class/CUI/Output.html#checkValue-dynamic'>#checkValue</a>
-          <a href='../../class/CUI/Output.html#displayValue-dynamic'>#displayValue</a>
-          <a href='../../class/CUI/Output.html#getValue-dynamic'>#getValue</a>
-          <a href='../../class/CUI/Output.html#render-dynamic'>#render</a>
-          <a href='../../class/CUI/DataFieldInput.html#getGroup-dynamic'>#getGroup</a>
-          <a href='../../class/CUI/DataFieldInput.html#isResizable-dynamic'>#isResizable</a>
+          <a href='../../class/CUI/DataField.html#initOpts-dynamic'>#initOpts</a>
+          <a href='../../class/CUI/DataField.html#readOpts-dynamic'>#readOpts</a>
           <a href='../../class/CUI/DataField.html#maximizeAddClasses-dynamic'>#maximizeAddClasses</a>
           <a href='../../class/CUI/DataField.html#getUniqueIdForLabel-dynamic'>#getUniqueIdForLabel</a>
           <a href='../../class/CUI/DataField.html#initTemplate-dynamic'>#initTemplate</a>
           <a href='../../class/CUI/DataField.html#getTemplate-dynamic'>#getTemplate</a>
+          <a href='../../class/CUI/DataField.html#isResizable-dynamic'>#isResizable</a>
+          <a href='../../class/CUI/DataField.html#init-dynamic'>#init</a>
           <a href='../../class/CUI/DataField.html#debug-dynamic'>#debug</a>
           <a href='../../class/CUI/DataField.html#reload-dynamic'>#reload</a>
           <a href='../../class/CUI/DataField.html#remove-dynamic'>#remove</a>
@@ -131,6 +157,8 @@
           <a href='../../class/CUI/DataField.html#hide-dynamic'>#hide</a>
           <a href='../../class/CUI/DataField.html#show-dynamic'>#show</a>
           <a href='../../class/CUI/DataField.html#isRendered-dynamic'>#isRendered</a>
+          <a href='../../class/CUI/DataField.html#render-dynamic'>#render</a>
+          <a href='../../class/CUI/DataField.html#displayValue-dynamic'>#displayValue</a>
           <a href='../../class/CUI/DataField.html#start-dynamic'>#start</a>
           <a href='../../class/CUI/DataField.html#getAllDataFields-dynamic'>#getAllDataFields</a>
           <a href='../../class/CUI/DataField.html#getDataFields-dynamic'>#getDataFields</a>
@@ -143,6 +171,8 @@
           <a href='../../class/CUI/DataField.html#getArrayFromOpt-dynamic'>#getArrayFromOpt</a>
           <a href='../../class/CUI/DataField.html#getName-dynamic'>#getName</a>
           <a href='../../class/CUI/DataField.html#getDefaultValue-dynamic'>#getDefaultValue</a>
+          <a href='../../class/CUI/DataField.html#getValue-dynamic'>#getValue</a>
+          <a href='../../class/CUI/DataField.html#checkValue-dynamic'>#checkValue</a>
           <a href='../../class/CUI/DataField.html#setValue-dynamic'>#setValue</a>
           <a href='../../class/CUI/DataField.html#getInitValue-dynamic'>#getInitValue</a>
           <a href='../../class/CUI/DataField.html#getLastValue-dynamic'>#getLastValue</a>
@@ -165,7 +195,6 @@
           <a href='../../class/CUI/DOMElement.html#registerTemplate-dynamic'>#registerTemplate</a>
           <a href='../../class/CUI/DOMElement.html#getDOMElementClasses-dynamic'>#getDOMElementClasses</a>
           <a href='../../class/CUI/DOMElement.html#registerDOMElement-dynamic'>#registerDOMElement</a>
-          <a href='../../class/CUI/DOMElement.html#setElement-dynamic'>#setElement</a>
           <a href='../../class/CUI/DOMElement.html#getElementForLayer-dynamic'>#getElementForLayer</a>
           <a href='../../class/CUI/DOMElement.html#unregisterDOMElement-dynamic'>#unregisterDOMElement</a>
           <a href='../../class/CUI/DOMElement.html#__assertDOMElement-dynamic'>#__assertDOMElement</a>
@@ -213,10 +242,46 @@
     
   </div>
   <div class='method_details'>
-    <p class='signature' id='displayValue-dynamic'>
+    <p class='signature' id='readOpts-dynamic'>
       #
 (void)
-<b>displayValue</b><span>()</span>
+<b>readOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='render-dynamic'>
+      #
+(void)
+<b>render</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__buildTemplateForKey-dynamic'>
+      #
+(void)
+<b>__buildTemplateForKey</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__hideShowElements-dynamic'>
+      #
+(void)
+<b>__hideShowElements</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-dynamic'>
+      #
+(void)
+<b>destroy</b><span>()</span>
       <br>
     </p>
     

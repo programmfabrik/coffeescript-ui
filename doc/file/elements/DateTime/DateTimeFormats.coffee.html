@@ -67,6 +67,7 @@
   formats: [
     {
       text: &quot;Datum+Zeit&quot;,
+      support_bc: false,
       invalid: &quot;Datum ungültig&quot;,
       type: &quot;date_time&quot;,
       clock: true,
@@ -76,9 +77,9 @@
       &#47;*
       digi_clock: &quot;HH:mm&quot;
        *&#47;
-      input: &quot;DD.MM.YYYY HH:mm&quot;,
-      display: &quot;dd, DD.MM.YYYY HH:mm&quot;,
-      display_short: &quot;DD.MM.YYYY HH:mm&quot;,
+      input: &quot;DD.MM.YYYY hh:mm A&quot;,
+      display: &quot;dd, DD.MM.YYYY hh:mm A&quot;,
+      display_short: &quot;DD.MM.YYYY hh:mm A&quot;,
       display_attribute: &quot;date-time&quot;,
       display_short_attribute: &quot;date-time-short&quot;,
 
@@ -88,6 +89,7 @@
       parse: [&quot;YYYY-MM-DDTHH:mm:ss.SSSZ&quot;, &quot;YYYY-MM-DDTHH:mm:ssZ&quot;, &quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;, &quot;D.M.YYYY HH:mm&quot;, &quot;DD.M.YYYY HH:mm&quot;, &quot;D.MM.YYYY HH:mm&quot;, &quot;D.MM.YY HH:mm&quot;, &quot;DD.M.YY HH:mm&quot;]
     }, {
       text: &quot;Datum+Zeit+Sekunden&quot;,
+      support_bc: false,
       invalid: &quot;Datum ungültig&quot;,
 
       &#47;*
@@ -113,6 +115,7 @@
       parse: [&quot;YYYY-MM-DDTHH:mm:ssZ&quot;, &quot;YYYY-MM-DD HH:mm:ss&quot;, &quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;]
     }, {
       text: &quot;Datum&quot;,
+      support_bc: false,
       input: &quot;DD.MM.YYYY&quot;,
       invalid: &quot;Datum ungültig&quot;,
       display: &quot;dd, DD.MM.YYYY&quot;,
@@ -129,6 +132,7 @@
       parse: [&quot;D.M.YYYY&quot;, &quot;D.MM.YYYY&quot;, &quot;DD.M.YYYY&quot;, &quot;YYYYMMDD&quot;]
     }, {
       text: &quot;Jahr-Monat&quot;,
+      support_bc: false,
       input: &quot;MM.YYYY&quot;,
       invalid: &quot;Datum ungültig&quot;,
       store: &quot;YYYY-MM&quot;,
@@ -145,6 +149,7 @@
       parse: [&quot;MM YYYY&quot;, &quot;MM&#47;YYYY&quot;]
     }, {
       text: &quot;Jahr&quot;,
+      support_bc: true,
       input: &quot;Y&quot;,
       invalid: &quot;Datum ungültig&quot;,
       display: &quot;Y&quot;,
@@ -178,6 +183,7 @@
   formats: [
     {
       text: &quot;Datum+Zeit&quot;,
+      support_bc: false,
       invalid: &quot;Datum ungültig&quot;,
       type: &quot;date_time&quot;,
       clock: true,
@@ -187,9 +193,9 @@
       &#47;*
       digi_clock: &quot;HH:mm&quot;
        *&#47;
-      input: &quot;DD.MM.YYYY HH:mm&quot;,
-      display: &quot;dd, DD.MM.YYYY HH:mm&quot;,
-      display_short: &quot;DD.MM.YYYY HH:mm&quot;,
+      input: &quot;DD.MM.YYYY hh:mm A&quot;,
+      display: &quot;dd, DD.MM.YYYY hh:mm A&quot;,
+      display_short: &quot;DD.MM.YYYY hh:mm A&quot;,
       display_attribute: &quot;date-time&quot;,
       display_short_attribute: &quot;date-time-short&quot;,
 
@@ -199,6 +205,7 @@
       parse: [&quot;YYYY-MM-DDTHH:mm:ss.SSSZ&quot;, &quot;YYYY-MM-DDTHH:mm:ssZ&quot;, &quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;, &quot;D.M.YYYY HH:mm&quot;, &quot;DD.M.YYYY HH:mm&quot;, &quot;D.MM.YYYY HH:mm&quot;, &quot;D.MM.YY HH:mm&quot;, &quot;DD.M.YY HH:mm&quot;]
     }, {
       text: &quot;Datum+Zeit+Sekunden&quot;,
+      support_bc: false,
       invalid: &quot;Datum ungültig&quot;,
 
       &#47;*
@@ -224,6 +231,7 @@
       parse: [&quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;]
     }, {
       text: &quot;Datum&quot;,
+      support_bc: false,
       input: &quot;DD.MM.YYYY&quot;,
       invalid: &quot;Datum ungültig&quot;,
       display: &quot;dd, DD.MM.YYYY&quot;,
@@ -240,6 +248,7 @@
       parse: [&quot;D.M.YYYY&quot;, &quot;D.MM.YYYY&quot;, &quot;DD.M.YYYY&quot;, &quot;YYYYMMDD&quot;]
     }, {
       text: &quot;Jahr-Monat&quot;,
+      support_bc: false,
       input: &quot;MM.YYYY&quot;,
       invalid: &quot;Datum ungültig&quot;,
       store: &quot;YYYY-MM&quot;,
@@ -256,6 +265,7 @@
       parse: [&quot;MM YYYY&quot;, &quot;MM&#47;YYYY&quot;]
     }, {
       text: &quot;Jahr&quot;,
+      support_bc: true,
       input: &quot;Y&quot;,
       invalid: &quot;Datum ungültig&quot;,
       display: &quot;Y&quot;,
@@ -289,6 +299,7 @@
   formats: [
     {
       text: &quot;Datum+Zeit&quot;,
+      support_bc: false,
       invalid: &quot;Datum ungültig&quot;,
       type: &quot;date_time&quot;,
       clock: true,
@@ -298,9 +309,9 @@
       &#47;*
       digi_clock: &quot;HH:mm&quot;
        *&#47;
-      input: &quot;DD.MM.YYYY HH:mm&quot;,
-      display: &quot;dd, DD.MM.YYYY HH:mm&quot;,
-      display_short: &quot;DD.MM.YYYY HH:mm&quot;,
+      input: &quot;DD&#47;MM&#47;YYYY hh:mm A&quot;,
+      display: &quot;dd, DD&#47;MM&#47;YYYY hh:mm A&quot;,
+      display_short: &quot;DD&#47;MM&#47;YYYY hh:mm A&quot;,
       display_attribute: &quot;date-time&quot;,
       display_short_attribute: &quot;date-time-short&quot;,
 
@@ -310,6 +321,7 @@
       parse: [&quot;YYYY-MM-DDTHH:mm:ss.SSSZ&quot;, &quot;YYYY-MM-DDTHH:mm:ssZ&quot;, &quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;, &quot;D.M.YYYY HH:mm&quot;, &quot;DD.M.YYYY HH:mm&quot;, &quot;D.MM.YYYY HH:mm&quot;, &quot;D.MM.YY HH:mm&quot;, &quot;DD.M.YY HH:mm&quot;]
     }, {
       text: &quot;Datum+Zeit+Sekunden&quot;,
+      support_bc: false,
       invalid: &quot;Datum ungültig&quot;,
 
       &#47;*
@@ -335,6 +347,7 @@
       parse: [&quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;]
     }, {
       text: &quot;Datum&quot;,
+      support_bc: false,
       input: &quot;DD.MM.YYYY&quot;,
       invalid: &quot;Datum ungültig&quot;,
       display: &quot;dd, DD.MM.YYYY&quot;,
@@ -351,6 +364,7 @@
       parse: [&quot;D.M.YYYY&quot;, &quot;D.MM.YYYY&quot;, &quot;DD.M.YYYY&quot;, &quot;YYYYMMDD&quot;]
     }, {
       text: &quot;Jahr-Monat&quot;,
+      support_bc: false,
       input: &quot;MM.YYYY&quot;,
       invalid: &quot;Datum ungültig&quot;,
       store: &quot;YYYY-MM&quot;,
@@ -367,6 +381,7 @@
       parse: [&quot;MM YYYY&quot;, &quot;MM&#47;YYYY&quot;]
     }, {
       text: &quot;Jahr&quot;,
+      support_bc: true,
       input: &quot;Y&quot;,
       invalid: &quot;Datum ungültig&quot;,
       display: &quot;Y&quot;,
@@ -400,6 +415,7 @@
   formats: [
     {
       text: &quot;Date+Time&quot;,
+      support_bc: false,
       invalid: &quot;Invalid Date&quot;,
       type: &quot;date_time&quot;,
       clock: true,
@@ -410,9 +426,9 @@
       &#47;*
       digi_clock: &quot;HH:mm&quot;
        *&#47;
-      input: &quot;MM&#47;DD&#47;YYYY HH:mm&quot;,
-      display: &quot;dd, MM&#47;DD&#47;YYYY HH:mm&quot;,
-      display_short: &quot;MM&#47;DD&#47;YYYY HH:mm&quot;,
+      input: &quot;MM&#47;DD&#47;YYYY hh:mm A&quot;,
+      display: &quot;dd, MM&#47;DD&#47;YYYY hh:mm A&quot;,
+      display_short: &quot;MM&#47;DD&#47;YYYY hh:mm A&quot;,
       display_attribute: &quot;date-time&quot;,
       display_short_attribute: &quot;date-time-short&quot;,
 
@@ -422,6 +438,7 @@
       parse: [&quot;YYYY-MM-DDTHH:mm:ss.SSSZ&quot;, &quot;YYYY-MM-DDTHH:mm:ssZ&quot;, &quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;, &quot;D.M.YYYY HH:mm&quot;, &quot;DD.M.YYYY HH:mm&quot;, &quot;D.MM.YYYY HH:mm&quot;, &quot;D.MM.YY HH:mm&quot;, &quot;DD.M.YY HH:mm&quot;]
     }, {
       text: &quot;Date+Time+Seconds&quot;,
+      support_bc: false,
       invalid: &quot;Invalid Date&quot;,
 
       &#47;*
@@ -448,6 +465,7 @@
       parse: [&quot;D.M.YYYY HH:mm:ss&quot;, &quot;DD.M.YYYY HH:mm:ss&quot;, &quot;D.MM.YYYY HH:mm:ss&quot;, &quot;D.MM.YY HH:mm:ss&quot;, &quot;DD.M.YY HH:mm:ss&quot;]
     }, {
       text: &quot;Date&quot;,
+      support_bc: false,
       input: &quot;MM&#47;DD&#47;YYYY&quot;,
       invalid: &quot;Invalid date&quot;,
       display: &quot;dd, MM&#47;DD&#47;YYYY&quot;,
@@ -464,6 +482,7 @@
       parse: [&quot;D.M.YYYY&quot;, &quot;D.MM.YYYY&quot;, &quot;DD.M.YYYY&quot;, &quot;YYYYMMDD&quot;]
     }, {
       text: &quot;Jahr-Monat&quot;,
+      support_bc: false,
       input: &quot;MM&#47;YYYY&quot;,
       invalid: &quot;Invalid date&quot;,
       store: &quot;YYYY-MM&quot;,
@@ -480,6 +499,7 @@
       parse: [&quot;MM YYYY&quot;, &quot;MM&#47;YYYY&quot;]
     }, {
       text: &quot;Jahr&quot;,
+      support_bc: true,
       input: &quot;Y&quot;,
       invalid: &quot;Invalid date&quot;,
       display: &quot;Y&quot;,
