@@ -30,15 +30,6 @@
     "url": "https://github.com/programmfabrik/coffeescript-ui/issues"
   },
   "homepage": "https://github.com/programmfabrik/coffeescript-ui#readme",
-  "jest": {
-    "setupFiles": [
-      "./test/setup.js"
-    ],
-    "transform": {
-      "^.+\\.coffee$": "./test/preprocessor.js",
-      "^.+\\.html$": "./test/html-loader.js"
-    }
-  },
   "devDependencies": {
     "babel-jest": "^21.2.0",
     "base64-inline-loader": "^1.1.0",
