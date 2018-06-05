@@ -2987,6 +2987,13 @@ a[role="button"].cui-button-appearance-link {
 	margin: 6px 0;
 }
 
+.cui-select-menu {
+	.cui-browser-firefox &,
+	.cui-browser-ie & {
+		overflow-y: scroll; // prevents overlap with scrollbar in Firefox & IE but adds a deactivated scrollbar when no scrollbar is neccesary
+	}
+}
+
 .cui-button--has-caret {
 	// IE 11 ignoring margin: auto when justify-content is set bugfix
 	// http://stackoverflow.com/a/37535548

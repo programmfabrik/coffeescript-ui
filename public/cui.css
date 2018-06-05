@@ -2208,6 +2208,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-menu-divider {
   margin: 6px 0; }
 
+.cui-browser-firefox .cui-select-menu,
+.cui-browser-ie .cui-select-menu {
+  overflow-y: scroll; }
+
 .cui-button--has-caret .cui-button-visual {
   justify-content: flex-start; }
 
