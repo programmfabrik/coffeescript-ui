@@ -964,6 +964,16 @@ class CUI.dom
 						docElem.style[k] = v + append
 		docElem
 
+	@getStyle: (element) ->
+		if element.hasOwnProperty('DOM')
+			element = element.DOM
+
+		styles = {}
+		for styleKey, styleValue of element.style
+			if not CUI.util.isNull(styleValue)
+				styles[styleKey] = styleValue
+		styles
+
 	@setStyleOne: (docElem, key, value) ->
 		map = {}
 		map[key] = value

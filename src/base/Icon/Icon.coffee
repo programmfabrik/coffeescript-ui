@@ -44,7 +44,10 @@ class CUI.Icon extends CUI.Element
 				check: "PlainObject"
 
 	copy: ->
-		new CUI.Icon(@opts)
+		copyIcon = super()
+		styles = CUI.dom.getStyle(@)
+		CUI.dom.setStyle(copyIcon, styles)
+		return copyIcon
 
 	hide: ->
 		CUI.dom.hideElement(@DOM)
