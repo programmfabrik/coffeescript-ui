@@ -254,7 +254,9 @@ class CUI.Input extends CUI.DataFieldInput
 			call: (ev) =>
 				# console.debug "keydown on input", ev.hasModifierKey(), ev.keyCode(), @_incNumbers
 
-				if ev.ctrlKey() or ev.metaKey()
+				# dont return here if CTRL-Z is pressed
+				if (ev.ctrlKey() and not ev.keyCode() == 90) or ev.metaKey()
+					# console.debug "leaving keydown"
 					return
 
 				@lastKeyDownEvent = ev
@@ -303,6 +305,7 @@ class CUI.Input extends CUI.DataFieldInput
 						@showCursor(ev)
 
 					return
+
 				@initCursor(ev)
 				@showCursor(ev)
 
@@ -841,7 +844,6 @@ class CUI.Input extends CUI.DataFieldInput
 
 		if @_content_size
 			@__initContentSize()
-
 
 		CUI.Events.listen
 			type: "input"
