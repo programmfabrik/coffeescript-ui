@@ -24071,17 +24071,17 @@ CUI.DateTime = (function(superClass) {
     return this.replace(this.__calendarButton, "right");
   };
 
-  DateTime.prototype.format = function(_s, type, output_type) {
+  DateTime.prototype.format = function(_s, _output_format, output_type) {
     var f, format, formats_tried, i, j, k, l, len, len1, len2, mom, output_format, ref, ref1, ref2, s;
-    if (type == null) {
-      type = "display";
+    if (_output_format == null) {
+      _output_format = "display";
     }
     if (output_type == null) {
       output_type = null;
     }
-    CUI.util.assert(indexOf.call(CUI.DateTime.formatTypes, type) >= 0, "CUI.DateTime.format", "type must be on of \"" + (CUI.DateTime.formatTypes.join(',')) + "\".", {
+    CUI.util.assert(indexOf.call(CUI.DateTime.formatTypes, _output_format) >= 0, "CUI.DateTime.format", "output_format must be on of \"" + (CUI.DateTime.formatTypes.join(',')) + "\".", {
       parm1: _s,
-      type: type
+      output_format: output_format
     });
     if (moment.isMoment(_s)) {
       mom = _s;
@@ -24122,11 +24122,11 @@ CUI.DateTime = (function(superClass) {
       formats: this.__input_formats_known,
       output_type: output_type
     });
-    switch (type) {
+    switch (_output_format) {
       case "store":
-        return CUI.DateTime.formatMoment(mom, output_format[type]);
+        return CUI.DateTime.formatMoment(mom, output_format[_output_format]);
       default:
-        return CUI.DateTime.formatMomentWithBc(mom, output_format[type]);
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format]);
     }
   };
 
@@ -25130,11 +25130,26 @@ CUI.DateTime = (function(superClass) {
     return CUI.DateTime.__locale = locale;
   };
 
-  DateTime.format = function(datestr_or_moment, type, output_type) {
+  DateTime.format = function(datestr_or_moment, output_format, output_type) {
     var dt, str;
     dt = new CUI.DateTime();
-    str = dt.format(datestr_or_moment, type, output_type);
+    str = dt.format(datestr_or_moment, output_format, output_type);
     return str;
+  };
+
+  DateTime.formatWithInputTypes = function(datestr, output_types, output_format) {
+    var dt, mom;
+    if (!datestr) {
+      return null;
+    }
+    dt = new CUI.DateTime({
+      input_types: output_types
+    });
+    mom = dt.parseValue(datestr);
+    if (!mom.isValid()) {
+      return null;
+    }
+    return dt.format(mom, output_format);
   };
 
   DateTime.display = function(datestr_or_moment, opts) {
@@ -25223,9 +25238,9 @@ CUI.DateTimeFormats["de-DE"] = {
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_seconds: false,
-      input: "DD.MM.YYYY hh:mm A",
-      display: "dd, DD.MM.YYYY hh:mm A",
-      display_short: "DD.MM.YYYY hh:mm A",
+      input: "DD.MM.YYYY HH:mm",
+      display: "dd, DD.MM.YYYY HH:mm",
+      display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
@@ -25301,9 +25316,9 @@ CUI.DateTimeFormats["it-IT"] = {
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_seconds: false,
-      input: "DD.MM.YYYY hh:mm A",
-      display: "dd, DD.MM.YYYY hh:mm A",
-      display_short: "DD.MM.YYYY hh:mm A",
+      input: "DD.MM.YYYY HH:mm",
+      display: "dd, DD.MM.YYYY HH:mm",
+      display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
@@ -25379,9 +25394,9 @@ CUI.DateTimeFormats["es-ES"] = {
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_seconds: false,
-      input: "DD/MM/YYYY hh:mm A",
-      display: "dd, DD/MM/YYYY hh:mm A",
-      display_short: "DD/MM/YYYY hh:mm A",
+      input: "DD/MM/YYYY HH:mm",
+      display: "dd, DD/MM/YYYY HH:mm",
+      display_short: "DD/MM/YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
@@ -27090,6 +27105,11 @@ CUI.FileUpload = (function(superClass) {
         "default": CUI.defaults.FileUpload.name,
         check: String
       },
+      add_filename_to_url: {
+        "default": false,
+        mandatory: true,
+        check: Boolean
+      },
       parallel: {
         "default": 2,
         check: function(v) {
@@ -27425,7 +27445,11 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.uploadFile = function(file) {
-    return file.upload(this.getUrl(), this._name);
+    if (this._add_filename_to_url) {
+      return file.upload(this.getUrl() + file.getName(), this._name);
+    } else {
+      return file.upload(this.getUrl(), this._name);
+    }
   };
 
   FileUpload.prototype.checkBatchDone = function(file) {
