@@ -1664,9 +1664,10 @@ a[role="button"].cui-button-appearance-link {
 	box-sizing: content-box;
 
 	.cui-button {
-		width: 100%;
+		width: calc(100% - 6px);
 		height: 100%;
 		align-items: stretch;
+		margin: 3px;
 
 		&-select {
 			max-width: 100%;
@@ -1676,8 +1677,9 @@ a[role="button"].cui-button-appearance-link {
 			@include button-reset;
 			line-height: 22px;
 			justify-content: flex-start;
-			padding: 6px $padding;
+			padding: 3px $padding;
 			color: $button-color;
+			font-weight: bold;
 		}
 
 		&:active {
