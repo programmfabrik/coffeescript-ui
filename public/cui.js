@@ -42034,6 +42034,7 @@ CUI.Select = (function(superClass) {
       menu: {
         active_item_idx: ((ref = this.default_opt) != null ? ref._idx : void 0) || null,
         allow_null: !CUI.util.isEmpty(this._empty_text),
+        "class": "cui-select-menu",
         onDeactivate: (function(_this) {
           return function(btn, item, idx, flags) {
             if (flags.prior_activate) {
