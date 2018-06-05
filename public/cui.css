@@ -2852,7 +2852,10 @@ a[role="button"].cui-button-appearance-link {
   display: block;
   overflow-x: auto; }
   .cui-table.cui-maximize-horizontal {
-    width: 100%; }
+    width: 100%;
+    display: table; }
+  .cui-table--bordered {
+    border: 1px solid #e3e6e8; }
   .cui-table--has-datafields .cui-td--text-content {
     padding-top: 9px;
     padding-bottom: 9px; }

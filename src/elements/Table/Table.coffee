@@ -22,6 +22,9 @@ class CUI.Table extends CUI.DOMElement
 		if @_flex
 			cls.push("cui-table--flex")
 
+		if @_bordered
+			cls.push("cui-table--bordered")
+
 		@__table = CUI.dom.table(cls.join(" "))
 
 		@registerDOMElement(@__table, false)
@@ -63,6 +66,9 @@ class CUI.Table extends CUI.DOMElement
 			header:
 				mandatory: true
 				default: true
+				check: Boolean
+			bordered:
+				default: false
 				check: Boolean
 			columns:
 				check: (v) ->
