@@ -29772,6 +29772,9 @@ CUI.Input = (function(superClass) {
     if (this.__checkInput) {
       this.addClass("cui-input-has-check-input");
     }
+    if (this._appearance) {
+      this.addClass("cui-input-appearance-" + this._appearance);
+    }
     this.__inputHints = {};
     this.__inputHintTexts = {};
     ref = ["empty", "invalid", "valid"];
@@ -29910,6 +29913,9 @@ CUI.Input = (function(superClass) {
       required: {
         "default": false,
         check: Boolean
+      },
+      appearance: {
+        check: ["code"]
       }
     });
   };

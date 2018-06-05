@@ -33,6 +33,9 @@ class CUI.Input extends CUI.DataFieldInput
 		if @__checkInput
 			@addClass("cui-input-has-check-input")
 
+		if @_appearance
+			@addClass("cui-input-appearance-"+@_appearance)
+
 		@__inputHints = {}
 		@__inputHintTexts = {}
 
@@ -138,6 +141,8 @@ class CUI.Input extends CUI.DataFieldInput
 			required:
 				default: false
 				check: Boolean
+			appearance:
+				check: ["code"]
 
 	readOpts: ->
 

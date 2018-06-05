@@ -1864,6 +1864,21 @@ a[role="button"].cui-button-appearance-link {
   font-size: 12px;
   color: #949a9e; }
 
+.cui-input-appearance-code input,
+.cui-input-appearance-code textarea {
+  font-family: monospace;
+  color: #2afd17;
+  background: black;
+  border-color: black;
+  box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset, 0 2px rgba(255, 255, 255, 0.1) inset, 0 -1px rgba(255, 255, 255, 0.3) inset, 0 -2px rgba(255, 255, 255, 0.1) inset; }
+  .cui-input-appearance-code input:focus,
+  .cui-input-appearance-code textarea:focus {
+    border-color: black;
+    box-shadow: 0 0 0 3px #b3d7ff, 0 1px rgba(255, 255, 255, 0.3) inset, 0 2px rgba(255, 255, 255, 0.1) inset, 0 -1px rgba(255, 255, 255, 0.3) inset, 0 -2px rgba(255, 255, 255, 0.1) inset; }
+  .cui-input-appearance-code input::placeholder,
+  .cui-input-appearance-code textarea::placeholder {
+    color: #368a2e; }
+
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
 .cui-browser-ie:not(.cui-browser-edge) .cui-input textarea {
   min-height: 24px; }

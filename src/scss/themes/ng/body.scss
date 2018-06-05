@@ -2398,6 +2398,35 @@ a[role="button"].cui-button-appearance-link {
 		font-size: 12px;
 		color: $muted-color;
 	}
+
+	&-appearance-code {
+		input,
+		textarea {
+			font-family: monospace;
+			color: hsl(115,98%,54%);
+			background: black;
+			border-color: black;
+			box-shadow: 
+				0 1px hsla(0,0%,100%,.3) inset,
+				0 2px hsla(0,0%,100%,.1) inset,
+				0 -1px hsla(0,0%,100%,.3) inset,
+				0 -2px hsla(0,0%,100%,.1) inset;
+				
+			&:focus {
+				border-color: black;
+				box-shadow: 
+					0 0 0 3px $row-highlight,
+					0 1px hsla(0,0%,100%,.3) inset,
+					0 2px hsla(0,0%,100%,.1) inset,
+					0 -1px hsla(0,0%,100%,.3) inset,
+					0 -2px hsla(0,0%,100%,.1) inset;
+			}
+
+			&::placeholder {
+				color: hsl(115,50%,36%);
+			}
+		}
+	}
 }
 
 .cui-browser-ie:not(.cui-browser-edge) {
