@@ -22,6 +22,10 @@ class CUI.FileUpload extends CUI.Element
 			name:
 				default: CUI.defaults.FileUpload.name
 				check: String
+			add_filename_to_url:
+				default: false
+				mandatory: true
+				check: Boolean
 			parallel:
 				default: 2
 				check: (v) ->
@@ -278,7 +282,10 @@ class CUI.FileUpload extends CUI.Element
 		@
 
 	uploadFile: (file) ->
-		file.upload(@getUrl(), @_name)
+		if @_add_filename_to_url
+			file.upload(@getUrl()+file.getName(), @_name)
+		else
+			file.upload(@getUrl(), @_name)
 
 	checkBatchDone: (file) ->
 		alarm = false
