@@ -30054,7 +30054,7 @@ CUI.Input = (function(superClass) {
       call: (function(_this) {
         return function(ev) {
           var ref, ref1, ref2;
-          if (ev.ctrlKey() || ev.metaKey()) {
+          if ((ev.ctrlKey() && !ev.keyCode() === 90) || ev.metaKey()) {
             return;
           }
           _this.lastKeyDownEvent = ev;
