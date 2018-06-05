@@ -3464,18 +3464,35 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-tabs-pane-header {
+		.cui-buttonbar {
+			padding: 10px;
+		}
+	}
+
 	.cui-tab-header-button {
 		padding: 0 !important;
 		display: block;
+		margin-left: 0 !important;
+		margin-top: -1px;
+
+		&:first-child .cui-button-visual {
+			border-radius: 3px 3px 0 0;
+			margin-top: 0;
+		}
+
+		&:last-child .cui-button-visual {
+			border-radius: 0 0 3px 3px;	
+		}
 
 		.cui-button-visual {
-			border-radius: 0 !important;
-			height: auto;
-			line-height: normal;
-			border: none;
-			border-bottom: 1px solid $border;
-			padding: $compensating-padding $padding;
-			justify-content: flex-start;
+			// border-radius: 0 !important;
+			// height: auto;
+			// line-height: normal;
+			// border: none;
+			// border-bottom: 1px solid $border;
+			// padding: $compensating-padding $padding;
+			// justify-content: flex-start;
 		}
 	}
 }

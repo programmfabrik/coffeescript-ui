@@ -2512,17 +2512,18 @@ a[role="button"].cui-button-appearance-link {
     .cui-tabs--vertical .cui-tabs-pane-header .cui-buttonbar,
     .cui-tabs--vertical .cui-tabs-pane-header .cui-buttonbar-group {
       display: block; }
+  .cui-tabs--vertical .cui-tabs-pane-header .cui-buttonbar {
+    padding: 10px; }
   .cui-tabs--vertical .cui-tab-header-button {
     padding: 0 !important;
-    display: block; }
-    .cui-tabs--vertical .cui-tab-header-button .cui-button-visual {
-      border-radius: 0 !important;
-      height: auto;
-      line-height: normal;
-      border: none;
-      border-bottom: 1px solid #cbd5dc;
-      padding: 7px 10px;
-      justify-content: flex-start; }
+    display: block;
+    margin-left: 0 !important;
+    margin-top: -1px; }
+    .cui-tabs--vertical .cui-tab-header-button:first-child .cui-button-visual {
+      border-radius: 3px 3px 0 0;
+      margin-top: 0; }
+    .cui-tabs--vertical .cui-tab-header-button:last-child .cui-button-visual {
+      border-radius: 0 0 3px 3px; }
 
 .cui-list-view {
   min-height: 0;
