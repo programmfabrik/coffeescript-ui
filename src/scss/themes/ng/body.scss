@@ -4833,6 +4833,8 @@ label[data-label-clickable],
 }
 
 .cui-date-time-footer {
+	overflow: visible !important; // show year input outline
+	
 	.cui-buttonbar > *:not(:last-child) {
 		margin-right: 0;
 	}
@@ -4855,6 +4857,10 @@ label[data-label-clickable],
 
 	> .cui-horizontal-layout-center {
 		flex-grow: 0 !important;
+	}
+
+	> .cui-horizontal-layout-right {
+		overflow: visible !important; // show year input outline
 	}
 
 	.cui-button-visual {
@@ -4966,6 +4972,7 @@ label[data-label-clickable],
 					box-sizing: content-box;
 					min-width: 0;
 					text-align: center;
+					position: relative;
 				}
 			}
 		}
