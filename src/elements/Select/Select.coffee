@@ -162,7 +162,7 @@ class CUI.Select extends CUI.Checkbox
 			# 	console.debug "adjust", adjust, item_top, vp.dim_element.viewportTop, vp.layer_pos.top, DOM.getDimensions(active_item).viewportTop
 			# 	vp.layer_pos.top = vp.layer_pos.top + adjust
 			# 	vp.layer_pos.left += 20
-
+			class: "cui-select-menu"
 			onDeactivate: (btn, item, idx, flags) =>
 				if flags.prior_activate
 					return
