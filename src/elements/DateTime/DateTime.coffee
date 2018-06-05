@@ -270,8 +270,9 @@ class CUI.DateTime extends CUI.Input
 
 		@replace(@__calendarButton, "right")
 
-	format: (_s, type="display", output_type=null) ->
-		CUI.util.assert(type in CUI.DateTime.formatTypes, "CUI.DateTime.format", "type must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, type: type)
+
+	format: (_s, _output_format="display", output_type=null) ->
+		CUI.util.assert(_output_format in CUI.DateTime.formatTypes, "CUI.DateTime.format", "output_format must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, output_format: output_format)
 
 		if moment.isMoment(_s)
 			mom = _s
@@ -303,12 +304,11 @@ class CUI.DateTime extends CUI.Input
 
 		CUI.util.assert(output_format, "CUI.DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
-		# console.debug "display format", s, output_type, CUI.util.dump(output_format), output_format[type], type
-		switch type
+		switch _output_format
 			when "store"
-				return CUI.DateTime.formatMoment(mom, output_format[type])
+				return CUI.DateTime.formatMoment(mom, output_format[_output_format])
 			else
-				return CUI.DateTime.formatMomentWithBc(mom, output_format[type])
+				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format])
 
 	regexpMatcher: ->
 		YYYY:
@@ -1362,14 +1362,26 @@ class CUI.DateTime extends CUI.Input
 		CUI.DateTime.__locale = locale
 
 	# format the date_str
-	# input_type "display_short", "display", "store", "input"
+	# output_format "display_short", "display", "store", "input"
 	# output_type "date_time", "date", "date_time_secons", "year_month",v "year"
-	@format: (datestr_or_moment, type, output_type) ->
+	@format: (datestr_or_moment, output_format, output_type) ->
 		dt = new CUI.DateTime()
-
-		str = dt.format(datestr_or_moment, type, output_type)
+		str = dt.format(datestr_or_moment, output_format, output_type)
 		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
+
+	# limit output to the given types
+	# the library is very awkward here...
+	@formatWithInputTypes: (datestr, output_types, output_format) ->
+		if not datestr
+			return null
+
+		dt = new CUI.DateTime(input_types: output_types)
+		mom = dt.parseValue(datestr)
+		if not mom.isValid()
+			return null
+
+		dt.format(mom, output_format)
 
 	@display: (datestr_or_moment, opts={}) ->
 		if not opts.hasOwnProperty("input_types")
