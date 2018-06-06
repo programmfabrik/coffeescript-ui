@@ -2527,6 +2527,8 @@ a[role="button"].cui-button-appearance-link {
       margin-top: 0; }
     .cui-tabs--vertical .cui-tab-header-button:last-child .cui-button-visual {
       border-radius: 0 0 3px 3px; }
+    .cui-tabs--vertical .cui-tab-header-button .cui-button-visual {
+      justify-content: flex-start; }
 
 .cui-list-view {
   min-height: 0;
