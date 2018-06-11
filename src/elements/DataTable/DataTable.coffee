@@ -47,6 +47,9 @@ class CUI.DataTable extends CUI.DataFieldInput
 				mandatory: true
 				check: (v) ->
 					v >= 0
+			padded:
+				check: Boolean
+				default: false
 
 	readOpts: ->
 		super()
@@ -258,6 +261,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 		@listView = new CUI.ListView
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
+			padded: @_padded
 			onSelect: =>
 				@updateButtons()
 			onDeselect: =>
