@@ -436,7 +436,7 @@ class CUI.Button extends CUI.DOMElement
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
-				check: ["link","flat","normal","important"]
+				check: ["link","flat","normal","important","transparent-border"]
 			primary:
 				mandatory: true
 				default: false

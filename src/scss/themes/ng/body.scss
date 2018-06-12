@@ -1119,6 +1119,58 @@ li > div {
 	}
 }
 
+// turns the border into a box-shadow that lets the background shine through
+// in order to do so the height has to be made smaller because we're working with the border-box box-model
+.cui-button-appearance-transparent-border {
+	.cui-buttonbar-group > & {
+		// add gap between buttons
+		margin-left: 1px;
+		
+		&.cui-first-visible-child {
+			margin-left: 0;
+		}
+	}
+
+	&.cui-active {
+		.cui-button-visual {
+			box-shadow: 0 0 0 1px transparentize(darken($highlight-color, 7%), 0.8);
+		}
+	}
+
+	&.cui-active {
+	.cui-button-visual {
+		border-color: transparent;
+		box-shadow: 0 0 0 1px $button-active-border;
+	}
+
+	&.cui-layer-open,
+	&:active {
+		.cui-button-visual {
+			border-color: transparent;
+			box-shadow: 0 0 0 1px $button-active-pressed;
+		}
+	}
+}
+
+	&.cui-disabled {
+		.cui-button-visual {
+			border-color: transparent;
+		}
+	}
+
+	.cui-button-visual {
+		height: 22px;
+		border-color: transparent;
+		box-shadow: 0 0 0 1px hsla(0,0%,0%,.1);
+	}
+
+	&.cui-button-size-mini {
+		.cui-button-visual {
+			height: 18px;
+		}
+	}
+}
+
 .cui-button-appearance-flat {
 	align-self: auto;
 	vertical-align: top;

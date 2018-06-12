@@ -1097,6 +1097,33 @@ li > div {
   .cui-button-button.cui-button-appearance-important.cui-disabled:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-disabled:active .cui-button-visual {
     background: #0071eb; }
 
+.cui-buttonbar-group > .cui-button-appearance-transparent-border {
+  margin-left: 1px; }
+  .cui-buttonbar-group > .cui-button-appearance-transparent-border.cui-first-visible-child {
+    margin-left: 0; }
+
+.cui-button-appearance-transparent-border.cui-active .cui-button-visual {
+  box-shadow: 0 0 0 1px rgba(0, 89, 184, 0.2); }
+
+.cui-button-appearance-transparent-border.cui-active .cui-button-visual {
+  border-color: transparent;
+  box-shadow: 0 0 0 1px #5d707e; }
+
+.cui-button-appearance-transparent-border.cui-active.cui-layer-open .cui-button-visual, .cui-button-appearance-transparent-border.cui-active:active .cui-button-visual {
+  border-color: transparent;
+  box-shadow: 0 0 0 1px #4a5964; }
+
+.cui-button-appearance-transparent-border.cui-disabled .cui-button-visual {
+  border-color: transparent; }
+
+.cui-button-appearance-transparent-border .cui-button-visual {
+  height: 22px;
+  border-color: transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); }
+
+.cui-button-appearance-transparent-border.cui-button-size-mini .cui-button-visual {
+  height: 18px; }
+
 .cui-button-appearance-flat {
   align-self: auto;
   vertical-align: top; }
