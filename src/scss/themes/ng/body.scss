@@ -271,6 +271,10 @@ li > div {
 	flex-shrink: 0;
 	overflow: hidden;
 	max-width: 100%;
+	
+	&.cui-maximize-horizontal {
+		align-self: stretch;
+	}
 
 	&.cui-maximize-vertical {
 		display: flex;
@@ -3486,12 +3490,8 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		.cui-button-visual {
-			// border-radius: 0 !important;
-			// height: auto;
-			// line-height: normal;
-			// border: none;
-			// border-bottom: 1px solid $border;
-			// padding: $compensating-padding $padding;
+			height: 30px;
+			line-height: 28px;
 			justify-content: flex-start;
 		}
 	}

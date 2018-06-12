@@ -168,7 +168,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+  -webkit-tap-highlight-color: transparent; }
 
 input,
 textarea {
@@ -567,6 +567,8 @@ li > div {
   flex-shrink: 0;
   overflow: hidden;
   max-width: 100%; }
+  .cui-vertical-layout.cui-maximize-horizontal {
+    align-self: stretch; }
   .cui-vertical-layout.cui-maximize-vertical {
     display: flex;
     flex-direction: column;
@@ -2525,6 +2527,8 @@ a[role="button"].cui-button-appearance-link {
     .cui-tabs--vertical .cui-tab-header-button:last-child .cui-button-visual {
       border-radius: 0 0 3px 3px; }
     .cui-tabs--vertical .cui-tab-header-button .cui-button-visual {
+      height: 30px;
+      line-height: 28px;
       justify-content: flex-start; }
 
 .cui-list-view {
