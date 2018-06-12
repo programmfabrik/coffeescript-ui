@@ -3612,7 +3612,7 @@ label[data-label-clickable],
 .cui-data-field-multi-output {
   display: flex;
   padding: 2px 0;
-  border-bottom: 1px solid #f0f3f5; }
+  border-bottom: 1px solid rgba(102, 132, 153, 0.1); }
   .cui-data-field-multi-output:first-child {
     padding-top: 0; }
   .cui-data-field-multi-output:last-child {

@@ -5147,7 +5147,7 @@ label[data-label-clickable],
 .cui-data-field-multi-output {
 	display: flex;
 	padding: 2px 0;
-	border-bottom: 1px solid $light-border;
+	border-bottom: 1px solid $light-border-transparent;
 
 	&:first-child {
 		padding-top: 0;
