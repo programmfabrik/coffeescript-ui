@@ -1147,19 +1147,19 @@ li > div {
     border-radius: 4px;
     z-index: 1; }
 
-.cui-button-select .cui-button-visual {
-  padding: 0 4px 0 8px; }
-
-.cui-button-select .cui-button-center {
-  padding: 0; }
-  .cui-button-select .cui-button-center [data-max-chars] {
-    text-align: inherit;
-    width: auto; }
-  .cui-button-select .cui-button-center span:empty:after {
-    content: "\A0"; }
-
-.cui-button-select .cui-button-left:empty + .cui-button-center {
-  padding: 0 6px 0 3px; }
+.cui-button-select {
+  min-width: 64px; }
+  .cui-button-select .cui-button-visual {
+    padding: 0 4px 0 8px; }
+  .cui-button-select .cui-button-center {
+    padding: 0; }
+    .cui-button-select .cui-button-center [data-max-chars] {
+      text-align: inherit;
+      width: auto; }
+    .cui-button-select .cui-button-center span:empty:after {
+      content: "\A0"; }
+  .cui-button-select .cui-button-left:empty + .cui-button-center {
+    padding: 0 6px 0 3px; }
 
 .cui-button-left,
 .cui-button-center,
