@@ -1326,10 +1326,6 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&--textarea {
-		max-width: $textarea-width;
-	}
-
 	.cui-list-view-grid-quadrant-3 {
 		min-height: 3*$table-data-height; // for when using empty lists that can get filled
 	}
@@ -5053,10 +5049,6 @@ label[data-label-clickable],
 
 
 // MultiInput
-
-.cui-multi-input--textarea {
-	max-width: $textarea-width;
-}
 
 .cui-multi-input .cui-multi-input-container {
 	display: flex;

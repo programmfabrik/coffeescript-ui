@@ -1236,8 +1236,6 @@ a[role="button"].cui-button-appearance-link {
     flex-grow: 1; }
   .cui-data-field.cui-maximize-horizontal.cui-output .cui-data-field-output-label.cui-label-multiline {
     max-width: 700px; }
-  .cui-data-field--textarea {
-    max-width: 550px; }
   .cui-data-field .cui-list-view-grid-quadrant-3 {
     min-height: 96px; }
   .cui-data-field .cui-lv-row-move-handle-column {
@@ -3538,9 +3536,6 @@ label[data-label-clickable],
 
 .cui-date-time-clock {
   display: none; }
-
-.cui-multi-input--textarea {
-  max-width: 550px; }
 
 .cui-multi-input .cui-multi-input-container {
   display: flex;
