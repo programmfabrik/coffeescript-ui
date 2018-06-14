@@ -41887,6 +41887,10 @@ CUI.Select = (function(superClass) {
     return Select.__super__.constructor.apply(this, arguments);
   }
 
+  Select.defaults = {
+    not_found: "- not found -"
+  };
+
   Select.prototype.initOpts = function() {
     Select.__super__.initOpts.call(this);
     return this.addOpts({
@@ -41894,7 +41898,7 @@ CUI.Select = (function(superClass) {
         check: String
       },
       not_found_text: {
-        "default": "- not found -",
+        "default": CUI.Select.defaults.not_found,
         check: String
       },
       options: {
@@ -42063,7 +42067,7 @@ CUI.Select = (function(superClass) {
       role: "select",
       left: true,
       menu: {
-        active_item_idx: ((ref = this.default_opt) != null ? ref._idx : void 0) || null,
+        active_item_idx: ((ref = this.default_opt) != null ? ref._idx : void 0) || -1,
         allow_null: !CUI.util.isEmpty(this._empty_text),
         "class": "cui-select-menu",
         onDeactivate: (function(_this) {
@@ -42236,9 +42240,9 @@ CUI.Select = (function(superClass) {
           if (_this.getValue() === null && !CUI.util.isEmpty(_this._empty_text)) {
             txt = _this._empty_text;
           } else {
-            txt = _this._not_found_text + ":" + _this.getValue();
+            txt = _this._not_found_text.trim() + " " + _this.getValue();
           }
-          _this.__checkbox.menuSetActiveIdx(null);
+          _this.__checkbox.menuSetActiveIdx(-1);
         }
         _this.__checkbox.setText(txt);
         if ((txt != null ? txt.length : void 0) > max_chars) {
@@ -42270,6 +42274,8 @@ CUI.Select = (function(superClass) {
   return Select;
 
 })(CUI.Checkbox);
+
+CUI.defaults["class"].Select = CUI.Select;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
