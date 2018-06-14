@@ -178,7 +178,6 @@ class CUI.Button extends CUI.DOMElement
 				else
 					@__menu_opts.class = @_class
 
-
 			if @_menu.itemList
 				@__menu_opts.itemList = @_menu.itemList
 			else

@@ -24,6 +24,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			# if set no "null", don't manage this for us
 			# otherwise ItemList sets the active item
 			# according to the active idx
+			# set to -1, if you want manage, but nothing can be highlighted
 			active_item_idx:
 				check: "Integer"
 

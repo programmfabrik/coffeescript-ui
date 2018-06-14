@@ -6,6 +6,8 @@
 ###
 
 class CUI.Select extends CUI.Checkbox
+	@defaults:
+		not_found: "- not found -"
 
 	initOpts: ->
 		super()
@@ -13,7 +15,7 @@ class CUI.Select extends CUI.Checkbox
 			empty_text:
 				check: String
 			not_found_text:
-				default: "- not found -"
+				default: CUI.Select.defaults.not_found
 				check: String
 			options:
 				mandatory: true
@@ -147,7 +149,7 @@ class CUI.Select extends CUI.Checkbox
 		role: "select"
 		left: true # make sure we have a "left" container for the icon
 		menu:
-			active_item_idx: @default_opt?._idx or null
+			active_item_idx: @default_opt?._idx or -1
 			allow_null: not CUI.util.isEmpty(@_empty_text)
 			# placements: ["c"]
 			# onPosition: (menu, vp) =>
@@ -287,9 +289,9 @@ class CUI.Select extends CUI.Checkbox
 					txt = @_empty_text
 				else
 					# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
-					txt = @_not_found_text+":"+@getValue()
+					txt = @_not_found_text.trim()+" "+@getValue()
 
-				@__checkbox.menuSetActiveIdx(null)
+				@__checkbox.menuSetActiveIdx(-1)
 
 			@__checkbox.setText(txt)
 
@@ -312,3 +314,5 @@ class CUI.Select extends CUI.Checkbox
 		else
 			new CUI.Select(opts)
 
+
+CUI.defaults.class.Select = CUI.Select
