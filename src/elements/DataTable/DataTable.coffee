@@ -187,7 +187,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 				onBlur: (input) =>
 					input.setValue(null)
 				onDataChanged: =>
-					console.debug "input changed to", page_data.page
 					CUI.scheduleCallback
 						ms: 1000
 						call: load_page
