@@ -23666,7 +23666,6 @@ CUI.DataTable = (function(superClass) {
         })(this),
         onDataChanged: (function(_this) {
           return function() {
-            console.debug("input changed to", page_data.page);
             CUI.scheduleCallback({
               ms: 1000,
               call: load_page

@@ -3930,26 +3930,6 @@ label[data-label-clickable],
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
-.cui-autocompletion-popup-container {
-  padding: 4px 0; }
-  .cui-autocompletion-popup-container:empty {
-    display: none; }
-    .cui-autocompletion-popup-container:empty + .cui-autocompletion-popup-container.container-status {
-      border-top: none; }
-  .cui-autocompletion-popup-container.container-status {
-    padding: 4px 10px 7px;
-    background: #eef0f1;
-    border-top: 1px solid #e3e9ed; }
-    .cui-autocompletion-popup-container.container-status .cui-label {
-      color: #949a9e;
-      cursor: default;
-      font-size: 11px;
-      line-height: 14px; }
-      .cui-autocompletion-popup-container.container-status .cui-label + .cui-button {
-        display: block;
-        padding: 7px 0 0;
-        height: auto; }
-
 .cui-autocompletion-popup-item {
   padding: 3px 10px;
   cursor: pointer;
