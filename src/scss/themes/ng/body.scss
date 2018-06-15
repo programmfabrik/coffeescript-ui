@@ -5642,37 +5642,6 @@ label[data-label-clickable],
 	-webkit-overflow-scrolling: touch;
 }
 
-.cui-autocompletion-popup-container {
-	padding: 4px 0;
-
-	&:empty {
-		display: none;
-
-		+ .cui-autocompletion-popup-container.container-status {
-			border-top: none;
-		}
-	}
-
-	&.container-status {
-		padding: 4px $padding 7px;
-		background: $toolbar-background;
-		border-top: 1px solid $soft-border;
-
-		.cui-label {
-			color: $muted-color;
-			cursor: default;
-			font-size: 11px;
-			line-height: 14px;
-
-			& + .cui-button {
-				display: block;
-				padding: 7px 0 0;
-				height: auto;
-			}
-		}
-	}
-}
-
 .cui-autocompletion-popup-item {
 	padding: 3px $padding;
 	cursor: pointer;
