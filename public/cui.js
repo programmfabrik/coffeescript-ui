@@ -8199,7 +8199,7 @@ CUI.CSVData = (function(superClass) {
         end_column = function() {
           columns[column_idx] = column_chars.join("");
           column_chars.splice(0);
-          return column_idx = column_idx + 1;
+          column_idx = column_idx + 1;
         };
         end_row = function() {
           if (columns.length > 0) {
@@ -8207,7 +8207,7 @@ CUI.CSVData = (function(superClass) {
             _this.rows.push(columns);
             columns = [];
           }
-          return column_idx = 0;
+          column_idx = 0;
         };
         while (idx < len) {
           char = text.charAt(idx);
@@ -8248,6 +8248,11 @@ CUI.CSVData = (function(superClass) {
           charCode = text.charCodeAt(idx);
           nextCharCode = text.charCodeAt(idx + 1);
           if (charCode === 13 || charCode === 10) {
+            if (charCode === 13 && nextCharCode === 10) {
+              idx = idx + 2;
+            } else {
+              idx = idx + 1;
+            }
             if (in_quotes) {
               column_chars.push(String.fromCharCode(10));
             } else {
@@ -8265,11 +8270,6 @@ CUI.CSVData = (function(superClass) {
                 });
                 return;
               }
-            }
-            if (charCode === 13 && nextCharCode === 10) {
-              idx = idx + 2;
-            } else {
-              idx = idx + 1;
             }
             continue;
           }
