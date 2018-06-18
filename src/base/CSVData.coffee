@@ -166,6 +166,7 @@ class CUI.CSVData extends CUI.Element
 				columns[column_idx] = column_chars.join("")
 				column_chars.splice(0)
 				column_idx = column_idx + 1
+				return
 
 			end_row = =>
 				if columns.length > 0
@@ -174,6 +175,8 @@ class CUI.CSVData extends CUI.Element
 					columns = []
 
 				column_idx = 0
+				return
+
 
 			while (idx < len)
 				char = text.charAt(idx)
@@ -219,6 +222,11 @@ class CUI.CSVData extends CUI.Element
 				# do we have a line ending
 				if charCode == 13 or charCode == 10
 
+					if (charCode == 13 and nextCharCode == 10)
+						idx = idx + 2
+					else
+						idx = idx + 1
+
 					if in_quotes
 						column_chars.push(String.fromCharCode(10))
 					else
@@ -230,12 +238,8 @@ class CUI.CSVData extends CUI.Element
 							CUI.setTimeout
 								ms: 10
 								call: do_work
-							return
 
-					if (charCode == 13 and nextCharCode == 10)
-						idx = idx + 2
-					else
-						idx = idx + 1
+							return
 
 					continue
 
