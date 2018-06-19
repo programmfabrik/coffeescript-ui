@@ -28262,6 +28262,9 @@ CUI.SimpleForm = (function(superClass) {
       if (!field) {
         continue;
       }
+      if (this._maximize_horizontal) {
+        field.maximize_horizontal = true;
+      }
       if (CUI.util.isFunction(field)) {
         _field = CUI.DataField["new"](field(this));
       } else {
