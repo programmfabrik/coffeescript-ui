@@ -42784,6 +42784,7 @@ CUI.Table = (function(superClass) {
     }
     this.__table = CUI.dom.table(cls.join(" "));
     this.registerDOMElement(this.__table, false);
+    CUI.Layout.prototype.maximizeAddClasses.call(this);
     if (this._header) {
       header = CUI.dom.tr("cui-table-header");
       ref = this.__columns;
@@ -42879,6 +42880,15 @@ CUI.Table = (function(superClass) {
         mandatory: true,
         "default": "normal",
         check: ["normal", "mini"]
+      },
+      maximize: {
+        check: Boolean
+      },
+      maximize_horizontal: {
+        check: Boolean
+      },
+      maximize_vertical: {
+        check: Boolean
       }
     });
   };
@@ -42913,6 +42923,7 @@ CUI.Table = (function(superClass) {
         col.__class += " " + col["class"];
       }
     }
+    CUI.Layout.prototype.maximizeReadOpts.call(this);
     return this;
   };
 
