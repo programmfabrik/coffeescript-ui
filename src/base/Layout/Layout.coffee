@@ -61,7 +61,6 @@ class CUI.Layout extends CUI.DOMElement
 			CUI.util.assert(@__maximize, "new "+@__cls, "opts.absolute needs opts.maximize to be set.", opts: @opts)
 		@
 
-
 	maximizeAddClasses: ->
 		if @__maximize
 			@addClass("cui-maximize")

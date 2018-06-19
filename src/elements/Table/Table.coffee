@@ -29,6 +29,8 @@ class CUI.Table extends CUI.DOMElement
 
 		@registerDOMElement(@__table, false)
 
+		CUI.Layout::maximizeAddClasses.call(@)
+
 		if @_header
 			# add header column
 			header = CUI.dom.tr("cui-table-header")
@@ -99,6 +101,12 @@ class CUI.Table extends CUI.DOMElement
 				mandatory: true
 				default: "normal"
 				check: ["normal", "mini"]
+			maximize:
+				check: Boolean
+			maximize_horizontal:
+				check: Boolean
+			maximize_vertical:
+				check: Boolean
 
 	readOpts: ->
 		super()
@@ -123,6 +131,7 @@ class CUI.Table extends CUI.DOMElement
 			if not CUI.util.isEmpty(col.class)
 				col.__class += " "+col.class
 
+		CUI.Layout::maximizeReadOpts.call(@)
 		@
 
 	addRow: (row) ->
