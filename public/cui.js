@@ -8799,11 +8799,22 @@ CUI.DataField = (function(superClass) {
     return this._label;
   };
 
+  DataField.prototype.getMaximizeHorizontal = function() {
+    return this.__maximize_horizontal;
+  };
+
   DataField.prototype.setForm = function(form) {
     CUI.util.assertImplements(form, ["getFieldsByName", "getFieldByIdx", "getData", "getFields"]);
     this.__form = form;
     if (!this.getForm().getFormPath) {
       return this;
+    }
+    console.error("set form:", this.__form, this.__form.getMaximizeHorizontal(), this.__maximize_horizontal);
+    if (this.__form.getMaximizeHorizontal()) {
+      if (this.getOpt("maximize_horizontal") !== false) {
+        console.error("adding class");
+        this.addClass("cui-maximize-horizontal");
+      }
     }
     this.setFormDepth();
     return this;
@@ -28261,9 +28272,6 @@ CUI.SimpleForm = (function(superClass) {
       field = fields[idx];
       if (!field) {
         continue;
-      }
-      if (this._maximize_horizontal) {
-        field.maximize_horizontal = true;
       }
       if (CUI.util.isFunction(field)) {
         _field = CUI.DataField["new"](field(this));
