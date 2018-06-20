@@ -86,9 +86,6 @@ class CUI.SimpleForm extends CUI.DataField
 			if not field
 				continue
 
-			if @_maximize_horizontal
-				field.maximize_horizontal = true
-
 			if CUI.util.isFunction(field)
 				_field = CUI.DataField.new(field(@))
 			else

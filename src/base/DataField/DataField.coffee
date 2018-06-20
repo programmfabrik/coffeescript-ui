@@ -176,6 +176,9 @@ class CUI.DataField extends CUI.DOMElement
 	getLabel: ->
 		@_label
 
+	getMaximizeHorizontal: ->
+		@__maximize_horizontal
+
 	setForm: (form) ->
 		CUI.util.assertImplements(form, [
 			"getFieldsByName"
@@ -186,6 +189,10 @@ class CUI.DataField extends CUI.DOMElement
 		@__form = form
 		if not @getForm().getFormPath
 			return @
+
+		if @__form.getMaximizeHorizontal()
+			if @getOpt("maximize_horizontal") != false
+				@addClass("cui-maximize-horizontal")
 
 		@setFormDepth()
 		@
