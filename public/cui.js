@@ -8809,10 +8809,8 @@ CUI.DataField = (function(superClass) {
     if (!this.getForm().getFormPath) {
       return this;
     }
-    console.error("set form:", this.__form, this.__form.getMaximizeHorizontal(), this.__maximize_horizontal);
     if (this.__form.getMaximizeHorizontal()) {
       if (this.getOpt("maximize_horizontal") !== false) {
-        console.error("adding class");
         this.addClass("cui-maximize-horizontal");
       }
     }
