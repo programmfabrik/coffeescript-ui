@@ -2145,12 +2145,16 @@ a[role="button"].cui-button-appearance-link {
   max-width: 300px; }
 
 .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center {
+  display: block;
   position: relative;
   min-height: 66px;
   max-width: 375px;
-  padding-left: 74px;
-  margin-right: 9px;
+  padding: 0 9px 0 74px;
   justify-content: center; }
+  .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center > :first-child {
+    padding-top: 10px; }
+  .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center > :last-child {
+    padding-bottom: 10px; }
   .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center:before {
     font-family: 'FontAwesome';
     content: "\F071";
