@@ -3483,6 +3483,7 @@ a[role="button"].cui-button-appearance-link {
 	display: grid !important;
 	grid-template-columns: 200px 1fr;
 	grid-template-rows: 1fr auto;
+	height: 100%;
 
 	// IE support
 	display: -ms-grid !important;

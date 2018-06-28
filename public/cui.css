@@ -2517,6 +2517,7 @@ a[role="button"].cui-button-appearance-link {
   display: grid !important;
   grid-template-columns: 200px 1fr;
   grid-template-rows: 1fr auto;
+  height: 100%;
   display: -ms-grid !important;
   -ms-grid-columns: 200px 1fr;
   -ms-grid-rows: 1fr auto; }
