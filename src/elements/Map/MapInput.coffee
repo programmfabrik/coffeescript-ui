@@ -81,13 +81,16 @@ class CUI.MapInput extends CUI.Input
 			return ""
 		return @__getFormattedPosition(position)
 
-	getValueForStore: (value) ->
+	getValueForStore: (stringCoordinates) ->
 		objectValue =
 			iconName: @__selectedMarkerOptions.iconName
 			iconColor: @__selectedMarkerOptions.iconColor
 
-		parsedPosition = CUI.util.parseCoordinates(value)
-		objectValue.position = if parsedPosition then parsedPosition else ""
+		if stringCoordinates
+			parsedPosition = CUI.util.parseCoordinates(stringCoordinates)
+			objectValue.position = if parsedPosition then parsedPosition else ""
+		else
+			objectValue.position = @__getPosition()
 		return objectValue
 
 	render: ->
@@ -157,6 +160,7 @@ class CUI.MapInput extends CUI.Input
 			form:
 				label: CUI.MapInput.defaults.labels.colorLabel
 			onDataChanged: =>
+				@storeValue()
 				@__updateIconOptions()
 			options: =>
 				options = []
@@ -173,6 +177,7 @@ class CUI.MapInput extends CUI.Input
 			form:
 				label: CUI.MapInput.defaults.labels.iconLabel
 			onDataChanged: =>
+				@storeValue()
 				@__updateIconOptions()
 			options: =>
 				options = []
