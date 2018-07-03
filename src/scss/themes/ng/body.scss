@@ -2650,7 +2650,7 @@ a[role="button"].cui-button-appearance-link {
 					border: none;
 					border-bottom: 1px solid $border;
 				}
-				
+
 				&:only-child > .cui-list-view {
 					border: none;
 				}
@@ -2915,19 +2915,19 @@ a[role="button"].cui-button-appearance-link {
 	.cui-alert-problem {
 		> .cui-layer-pane {
 			> .cui-vertical-layout-center {
-				display: block; // prevent content cut-off when its overflowing
-				position: relative;
 				min-height: 66px;
 				max-width: 375px;
-				padding: 0 9px 0 74px;
-				justify-content: center;
+				padding: 0 14px 0 74px;
+				overflow-x: hidden;
 				
 				> :first-child {
 					padding-top: 10px;
+					margin-top: auto;
 				}
 				
 				> :last-child {
 					padding-bottom: 10px;
+					margin-bottom: auto;
 				}
 
 				&:before {

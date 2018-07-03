@@ -2150,16 +2150,16 @@ a[role="button"].cui-button-appearance-link {
   max-width: 300px; }
 
 .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center {
-  display: block;
-  position: relative;
   min-height: 66px;
   max-width: 375px;
-  padding: 0 9px 0 74px;
-  justify-content: center; }
+  padding: 0 14px 0 74px;
+  overflow-x: hidden; }
   .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center > :first-child {
-    padding-top: 10px; }
+    padding-top: 10px;
+    margin-top: auto; }
   .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center > :last-child {
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    margin-bottom: auto; }
   .cui-confirmation-dialog .cui-alert-problem > .cui-layer-pane > .cui-vertical-layout-center:before {
     font-family: 'FontAwesome';
     content: "\F071";
