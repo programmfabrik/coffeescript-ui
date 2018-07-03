@@ -2644,6 +2644,17 @@ a[role="button"].cui-button-appearance-link {
 			> .cui-form {
 				margin: 0;
 			}
+
+			> .cui-data-table {
+				&:first-child > .cui-list-view {
+					border: none;
+					border-bottom: 1px solid $border;
+				}
+				
+				&:only-child > .cui-list-view {
+					border: none;
+				}
+			}
 		}
 
 		// layer-footer
