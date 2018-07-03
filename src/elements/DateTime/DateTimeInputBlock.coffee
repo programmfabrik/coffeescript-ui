@@ -4,6 +4,7 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+moment = require('moment')
 
 class CUI.DateTimeInputBlock extends CUI.InputBlock
 	initOpts: ->
