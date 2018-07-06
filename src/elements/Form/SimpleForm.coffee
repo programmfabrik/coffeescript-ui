@@ -55,6 +55,18 @@ class CUI.SimpleForm extends CUI.DataField
 			cb_opts.data = @__checkbox_data = checkbox: false
 			cb_opts.name = "checkbox"
 
+			onActivate = cb_opts.onActivate
+
+			cb_opts.onActivate = (cb, flags, ev) =>
+				onActivate?(cb, flags, ev)
+				if not ev.ctrlKey()
+					return
+
+				for cb_el in CUI.dom.matchSelector(@DOM, ".cui-checkbox")
+					CUI.dom.data(cb_el).element.activate()
+
+				return
+
 			@__checkbox = new CUI.Checkbox(cb_opts).start()
 			CUI.Events.listen
 				type: "data-changed"

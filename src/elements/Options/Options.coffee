@@ -70,9 +70,8 @@ class CUI.Options extends CUI.DataField
 		CUI.util.assert(not @_sortable or not @_radio, "new CUI.Options", "opts.sortable and opts.radio cannot be used together.", opts: @opts)
 		CUI.util.assert(not @_sortable or not @opts.horizontal, "new CUI.Options", "opts.sortable and opts.horizontal cannot be used together.", opts: @opts)
 
-		if CUI.__ng__
-			if @opts.horizontal == undefined
-				@_horizontal = not @_sortable
+		if @opts.horizontal == undefined
+			@_horizontal = not @_sortable
 
 		if @_sortable and @_activatable == undefined
 			@_activatable = true
@@ -81,8 +80,6 @@ class CUI.Options extends CUI.DataField
 
 
 	getTemplate: ->
-		if not CUI.__ng__
-			return super()
 
 		if @_activatable
 			@__tmpl = new CUI.Template
@@ -315,20 +312,15 @@ class CUI.Options extends CUI.DataField
 				if @__maxChars < chars
 					@__maxChars = chars
 
-				# if CUI.__ng__ and opt.form?.right
-				# 	console.error("Options.render: form.right is obsolete. 'right' part will not appear.", @, opt)
-
-				# if @_sortable
-				# 	if not opt.form
-				# 		opt.form = {}
-				# 	opt.form.label = CUI.dom.div("cui-options-sortable-drag-handle cui-drag-handle-row")
-
 				opt.radio = @__radio
-				if @_radio and @_min_checked == 0
+				if @__radio and @_min_checked == 0
 					if @__options.length == 1
 						delete(opt.radio)
 					else
 						opt.radio_allow_null = true
+
+				if not @__radio
+					opt.group = "group-"+@getUniqueId()
 
 				opt.onActivate = (_cb, flags) =>
 					if _cb.hasData()
@@ -383,7 +375,6 @@ class CUI.Options extends CUI.DataField
 					opt.data = @__options_data
 					opt.data_not_for_others = true
 
-
 				cb = new CUI.Checkbox(opt)
 				CUI.Events.listen
 					type: "data-changed"
@@ -415,65 +406,49 @@ class CUI.Options extends CUI.DataField
 			else
 				top = undefined
 
-			if CUI.__ng__
+			@replace(bottom, "bottom")
+			@replace(top, "top")
 
-				@replace(bottom, "bottom")
-				@replace(top, "top")
+			if @_horizontal
+				@addClass("cui-options--horizontal")
+			else
+				@addClass("cui-options--vertical")
 
-				if @_horizontal
-					@addClass("cui-options--horizontal")
+			if @_columns > 1
+				@addClass("cui-options--columns-#{@_columns}")
+
+			if @_activatable
+				@empty("active")
+				@empty("inactive")
+			else
+				@empty("center")
+
+			for cb in @__checkboxes
+				cb.start()
+				if @__maxChars > 0
+					cb.setTextMaxChars(@__maxChars)
+
+				if @_sortable and cb.isActive()
+					# we need extra markup around our checkbox
+					el = CUI.dom.element("DIV", class: "cui-options-sortable-option")
+					drag_handle = CUI.dom.element("DIV", class: "cui-options-sortable-drag-handle")
+					drag_handle_inner = CUI.dom.element("DIV", class: "cui-drag-handle-row")
+					drag_handle.appendChild(drag_handle_inner)
+					el.appendChild(drag_handle)
+					el.appendChild(cb.DOM)
 				else
-					@addClass("cui-options--vertical")
-
-				if @_columns > 1
-					@addClass("cui-options--columns-#{@_columns}")
+					el = cb.DOM
 
 				if @_activatable
-					@empty("active")
-					@empty("inactive")
+					if cb.isActive()
+						@append(el, "active")
+					else
+						@append(el, "inactive")
 				else
-					@empty("center")
+					@append(el, "center")
 
-				for cb in @__checkboxes
-					cb.start()
-					if @__maxChars > 0
-						cb.setTextMaxChars(@__maxChars)
-
-					if @_sortable and cb.isActive()
-						# we need extra markup around our checkbox
-						el = CUI.dom.element("DIV", class: "cui-options-sortable-option")
-						drag_handle = CUI.dom.element("DIV", class: "cui-options-sortable-drag-handle")
-						drag_handle_inner = CUI.dom.element("DIV", class: "cui-drag-handle-row")
-						drag_handle.appendChild(drag_handle_inner)
-						el.appendChild(drag_handle)
-						el.appendChild(cb.DOM)
-					else
-						el = cb.DOM
-
-					if @_activatable
-						if cb.isActive()
-							@append(el, "active")
-						else
-							@append(el, "inactive")
-					else
-						@append(el, "center")
-
-				sortable_element = @__tmpl.map.active
-				sortable_selector = ".cui-options-sortable-drag-handle"
-			else
-				@__optionsForm = new CUI.Form
-					class: "cui-options-form cui-form-options" # form-options needed by old design
-					horizontal: if @_horizontal != false then @_horizontal else undefined
-					top: top
-					bottom: bottom
-					fields: @__checkboxes
-
-				@replace(@__optionsForm)
-				@proxy(@__optionsForm, ["disable", "enable"])
-				@__optionsForm.render()
-
-				sortable_element = @__optionsForm.getTable()
-				sortable_selector = undefined
+			sortable_element = @__tmpl.map.active
+			sortable_selector = ".cui-options-sortable-drag-handle"
 
 			if @_sortable
 				new CUI.Sortable
