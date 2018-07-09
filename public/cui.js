@@ -28355,7 +28355,7 @@ CUI.SimpleForm = (function(superClass) {
   };
 
   SimpleForm.prototype.readOpts = function() {
-    var cb_opts, ref;
+    var cb_opts, onActivate, ref;
     SimpleForm.__super__.readOpts.call(this);
     if (this._horizontal === 1) {
       this.__horizontal = null;
@@ -28380,6 +28380,23 @@ CUI.SimpleForm = (function(superClass) {
         checkbox: false
       };
       cb_opts.name = "checkbox";
+      onActivate = cb_opts.onActivate;
+      cb_opts.onActivate = (function(_this) {
+        return function(cb, flags, ev) {
+          var cb_el, i, len1, ref1;
+          if (typeof onActivate === "function") {
+            onActivate(cb, flags, ev);
+          }
+          if (!ev.ctrlKey()) {
+            return;
+          }
+          ref1 = CUI.dom.matchSelector(_this.DOM, ".cui-checkbox");
+          for (i = 0, len1 = ref1.length; i < len1; i++) {
+            cb_el = ref1[i];
+            CUI.dom.data(cb_el).element.activate();
+          }
+        };
+      })(this);
       this.__checkbox = new CUI.Checkbox(cb_opts).start();
       CUI.Events.listen({
         type: "data-changed",
@@ -40127,10 +40144,8 @@ CUI.Options = (function(superClass) {
     CUI.util.assert(!this._sortable || !this.opts.horizontal, "new CUI.Options", "opts.sortable and opts.horizontal cannot be used together.", {
       opts: this.opts
     });
-    if (CUI.__ng__) {
-      if (this.opts.horizontal === void 0) {
-        this._horizontal = !this._sortable;
-      }
+    if (this.opts.horizontal === void 0) {
+      this._horizontal = !this._sortable;
     }
     if (this._sortable && this._activatable === void 0) {
       this._activatable = true;
@@ -40141,9 +40156,6 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.getTemplate = function() {
-    if (!CUI.__ng__) {
-      return Options.__super__.getTemplate.call(this);
-    }
     if (this._activatable) {
       return this.__tmpl = new CUI.Template({
         name: "options-activatable",
@@ -40462,12 +40474,15 @@ CUI.Options = (function(superClass) {
           _this.__maxChars = chars;
         }
         opt.radio = _this.__radio;
-        if (_this._radio && _this._min_checked === 0) {
+        if (_this.__radio && _this._min_checked === 0) {
           if (_this.__options.length === 1) {
             delete opt.radio;
           } else {
             opt.radio_allow_null = true;
           }
+        }
+        if (!_this.__radio) {
+          opt.group = "group-" + _this.getUniqueId();
         }
         opt.onActivate = function(_cb, flags) {
           var arr;
@@ -40573,72 +40588,57 @@ CUI.Options = (function(superClass) {
       } else {
         top = void 0;
       }
-      if (CUI.__ng__) {
-        this.replace(bottom, "bottom");
-        this.replace(top, "top");
-        if (this._horizontal) {
-          this.addClass("cui-options--horizontal");
-        } else {
-          this.addClass("cui-options--vertical");
+      this.replace(bottom, "bottom");
+      this.replace(top, "top");
+      if (this._horizontal) {
+        this.addClass("cui-options--horizontal");
+      } else {
+        this.addClass("cui-options--vertical");
+      }
+      if (this._columns > 1) {
+        this.addClass("cui-options--columns-" + this._columns);
+      }
+      if (this._activatable) {
+        this.empty("active");
+        this.empty("inactive");
+      } else {
+        this.empty("center");
+      }
+      ref1 = this.__checkboxes;
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        cb = ref1[j];
+        cb.start();
+        if (this.__maxChars > 0) {
+          cb.setTextMaxChars(this.__maxChars);
         }
-        if (this._columns > 1) {
-          this.addClass("cui-options--columns-" + this._columns);
+        if (this._sortable && cb.isActive()) {
+          el = CUI.dom.element("DIV", {
+            "class": "cui-options-sortable-option"
+          });
+          drag_handle = CUI.dom.element("DIV", {
+            "class": "cui-options-sortable-drag-handle"
+          });
+          drag_handle_inner = CUI.dom.element("DIV", {
+            "class": "cui-drag-handle-row"
+          });
+          drag_handle.appendChild(drag_handle_inner);
+          el.appendChild(drag_handle);
+          el.appendChild(cb.DOM);
+        } else {
+          el = cb.DOM;
         }
         if (this._activatable) {
-          this.empty("active");
-          this.empty("inactive");
+          if (cb.isActive()) {
+            this.append(el, "active");
+          } else {
+            this.append(el, "inactive");
+          }
         } else {
-          this.empty("center");
+          this.append(el, "center");
         }
-        ref1 = this.__checkboxes;
-        for (j = 0, len1 = ref1.length; j < len1; j++) {
-          cb = ref1[j];
-          cb.start();
-          if (this.__maxChars > 0) {
-            cb.setTextMaxChars(this.__maxChars);
-          }
-          if (this._sortable && cb.isActive()) {
-            el = CUI.dom.element("DIV", {
-              "class": "cui-options-sortable-option"
-            });
-            drag_handle = CUI.dom.element("DIV", {
-              "class": "cui-options-sortable-drag-handle"
-            });
-            drag_handle_inner = CUI.dom.element("DIV", {
-              "class": "cui-drag-handle-row"
-            });
-            drag_handle.appendChild(drag_handle_inner);
-            el.appendChild(drag_handle);
-            el.appendChild(cb.DOM);
-          } else {
-            el = cb.DOM;
-          }
-          if (this._activatable) {
-            if (cb.isActive()) {
-              this.append(el, "active");
-            } else {
-              this.append(el, "inactive");
-            }
-          } else {
-            this.append(el, "center");
-          }
-        }
-        sortable_element = this.__tmpl.map.active;
-        sortable_selector = ".cui-options-sortable-drag-handle";
-      } else {
-        this.__optionsForm = new CUI.Form({
-          "class": "cui-options-form cui-form-options",
-          horizontal: this._horizontal !== false ? this._horizontal : void 0,
-          top: top,
-          bottom: bottom,
-          fields: this.__checkboxes
-        });
-        this.replace(this.__optionsForm);
-        this.proxy(this.__optionsForm, ["disable", "enable"]);
-        this.__optionsForm.render();
-        sortable_element = this.__optionsForm.getTable();
-        sortable_selector = void 0;
       }
+      sortable_element = this.__tmpl.map.active;
+      sortable_selector = ".cui-options-sortable-drag-handle";
       if (this._sortable) {
         new CUI.Sortable({
           axis: "y",
