@@ -842,6 +842,20 @@ class CUI
 		data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
 		data
 
+	@loadScript: (src) ->
+		deferred = new CUI.Deferred
+		script = CUI.dom.element("script", src: src)
+		script.addEventListener("load", (ev) =>
+			deferred.resolve(ev)
+			document.body.removeChild(script)
+		)
+		script.addEventListener("error", (ev) =>
+			deferred.reject(ev)
+			document.body.removeChild(script)
+		)
+		document.body.appendChild(script)
+		return deferred.promise()
+
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 	@browser: (->
 		map =
