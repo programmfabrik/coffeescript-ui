@@ -3150,38 +3150,39 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-button,
 	.cui-button-href {
-	  align-items: stretch;
-	  max-width: 100%; // button-select
+		align-items: stretch;
+		max-width: 100%; // button-select
 
-	  .cui-button-visual {
-	  	display: block; // make button center and button right layout inline
-	  	// justify-content: flex-start;
-	  	flex-grow: 1;
-		  padding: 0 $padding;
+		.cui-button-visual {
+			display: block; // make button center and button right layout inline
+			// justify-content: flex-start;
+			flex-grow: 1;
+			padding: 0 $padding;
 			border: none;
 			border-radius: 0;
-	  	height: auto;
-	  	line-height: $line-height;
-	  	padding-top: 5px;
-	  	padding-bottom: 5px;
-	  	
-	  	.cui-button-left,
-	  	.cui-button-center,
-	  	.cui-button-right,
-	  	.cui-label,
-	  	.cui-label-content {
-	  		display: inline;
-	  	}
+			height: auto;
+			line-height: $line-height;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			
+			.cui-button-left,
+			.cui-button-center,
+			.cui-button-right,
+			.cui-label,
+			.cui-label-content {
+				display: inline;
+			}
 
-	  	.cui-label {
-	  		color: $muted-color;
-	  	}
-	  	
-	  	span {
-	  		white-space: normal;
-	  		overflow: inherit;
-	  	}
-	  }
+			.cui-label {
+				color: $muted-color;
+
+			}
+			
+			span {
+				white-space: normal;
+				overflow: inherit;
+			}
+		}
 
 		&.cui-layer-open,
 		&:active {
@@ -3191,22 +3192,22 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-	  &:hover {
-	  	.cui-button-visual {
-	  		color: $item-list-color;
+		&:hover {
+			.cui-button-visual {
+				color: $item-list-color;
 				background: $item-list-hover;
 			}
-	  }
+		}
 
-	  &.cui-active,
-	  &.cui-active:hover {
-	  	.cui-button-visual {
-	  		color: $button-active-text;
-	  		background: $button-active;
-	  	}
-	  }
+		&.cui-active,
+		&.cui-active:hover {
+			.cui-button-visual {
+				color: $button-active-text;
+				background: $button-active;
+			}
+		}
 
-	  &.cui-disabled {
+		&.cui-disabled {
 			&,
 			&:hover,
 			&.cui-active {
@@ -3217,20 +3218,24 @@ a[role="button"].cui-button-appearance-link {
 			}
 		}
 
-		&.cui-button-appearance-important {
+		&.cui-button-appearance-important:not(:hover):not(.cui-active) {
 			.cui-button-visual {
 				background: none;
 				color: $button-color;
-				
+			}
+		}
+
+		&.cui-button-appearance-important {
+			.cui-button-visual {
 				.cui-button-center {
 					font-weight: bold;
 				}
 			}
 		}
 
-	  .cui-button-center {
-	    padding: 0;
-	  }
+		.cui-button-center {
+			padding: 0;
+		}
 	}
 
 	.cui-options .cui-button {
@@ -3240,10 +3245,10 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			padding-top: 4px;
 			padding-bottom: 4px;
-  		line-height: 18px;
-  		height: auto;
-  		min-height: 26px;
-  	}
+			line-height: 18px;
+			height: auto;
+			min-height: 26px;
+		}
 	}
 }
 

@@ -2356,13 +2356,13 @@ a[role="button"].cui-button-appearance-link {
   .cui-item-list .cui-button-href.cui-disabled.cui-active .cui-button-visual {
     color: #b5bbbf;
     background: none; }
-  .cui-item-list .cui-button.cui-button-appearance-important .cui-button-visual,
-  .cui-item-list .cui-button-href.cui-button-appearance-important .cui-button-visual {
+  .cui-item-list .cui-button.cui-button-appearance-important:not(:hover):not(.cui-active) .cui-button-visual,
+  .cui-item-list .cui-button-href.cui-button-appearance-important:not(:hover):not(.cui-active) .cui-button-visual {
     background: none;
     color: #50585e; }
-    .cui-item-list .cui-button.cui-button-appearance-important .cui-button-visual .cui-button-center,
-    .cui-item-list .cui-button-href.cui-button-appearance-important .cui-button-visual .cui-button-center {
-      font-weight: bold; }
+  .cui-item-list .cui-button.cui-button-appearance-important .cui-button-visual .cui-button-center,
+  .cui-item-list .cui-button-href.cui-button-appearance-important .cui-button-visual .cui-button-center {
+    font-weight: bold; }
   .cui-item-list .cui-button .cui-button-center,
   .cui-item-list .cui-button-href .cui-button-center {
     padding: 0; }
