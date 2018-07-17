@@ -968,7 +968,9 @@ li > div {
 .fa-angle-right,
 .fa-angle-left,
 .fa-angle-down,
-.fa-angle-up {
+.fa-angle-double-down,
+.fa-angle-up,
+.fa-angle-double-up {
 	&:before {
 		font-size: 1.34em;
 	}
