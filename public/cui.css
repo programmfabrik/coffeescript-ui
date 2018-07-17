@@ -168,7 +168,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 input,
 textarea {
@@ -1000,7 +1000,9 @@ li > div {
 .fa-angle-right:before,
 .fa-angle-left:before,
 .fa-angle-down:before,
-.fa-angle-up:before {
+.fa-angle-double-down:before,
+.fa-angle-up:before,
+.fa-angle-double-up:before {
   font-size: 1.34em; }
 
 .fa-angle-right {
