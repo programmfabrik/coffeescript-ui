@@ -2273,17 +2273,28 @@ a[role="button"].cui-button-appearance-link {
 .cui-button--has-caret .cui-button-right {
   margin-left: auto; }
 
-.cui-item-list .cui-menu-item.cui-label {
-  cursor: default;
-  padding: 13px 10px 3px;
+.cui-item-list .cui-label {
   font-size: 0.9em;
+  cursor: default; }
+
+.cui-item-list .cui-menu-item.cui-label:first-child,
+.cui-item-list .cui-empty-label:first-child {
+  padding-top: 6px; }
+
+.cui-item-list .cui-menu-item.cui-label:last-child,
+.cui-item-list .cui-empty-label:last-child {
+  padding-bottom: 6px; }
+
+.cui-item-list .cui-menu-item.cui-label {
+  padding: 13px 10px 3px;
   color: #7c8083; }
-  .cui-item-list .cui-menu-item.cui-label.cui-empty-label {
-    padding: 6px 10px; }
-  .cui-item-list .cui-menu-item.cui-label:first-child {
-    padding-top: 6px; }
-  .cui-item-list .cui-menu-item.cui-label:last-child {
-    padding-bottom: 6px; }
+
+.cui-item-list .cui-menu-divider + .cui-menu-item.cui-label {
+  padding-top: 3px; }
+
+.cui-item-list .cui-empty-label {
+  padding: 6px 10px;
+  color: #b5bbbf; }
 
 .cui-item-list .cui-button,
 .cui-item-list .cui-button-href {

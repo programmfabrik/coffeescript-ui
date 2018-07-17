@@ -3109,23 +3109,34 @@ a[role="button"].cui-button-appearance-link {
 
 // ItemList
 .cui-item-list {
+	.cui-label {
+		font-size: 0.9em;
+		cursor: default;
+	}
+
+	.cui-menu-item.cui-label,
+	.cui-empty-label {
+		&:first-child {
+			padding-top: 6px;
+		}
+
+		&:last-child {
+			padding-bottom: 6px;
+		}
+	}
+
 	.cui-menu-item.cui-label {
-	  cursor: default;
-	  padding: $padding+3px $padding 3px;
-	  font-size: 0.9em;
-	  color: hsl(205,3%,50%);
+		padding: $padding+3px $padding 3px;
+		color: hsl(205,3%,50%);
+	}
+	
+	.cui-menu-divider + .cui-menu-item.cui-label {
+		padding-top: 3px;
+	}
 
-	  &.cui-empty-label {
-	  	padding: 6px $padding;
-	  }
-
-	  &:first-child {
-	  	padding-top: 6px;
-	  }
-
-	  &:last-child {
-	  	padding-bottom: 6px;
-	  }
+	.cui-empty-label {
+		padding: 6px $padding;
+		color: $disabled-color;
 	}
 
 	.cui-button,
