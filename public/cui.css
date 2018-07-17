@@ -1745,6 +1745,14 @@ a[role="button"].cui-button-appearance-link {
   display: block; }
   .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
     max-height: 144px; }
+  .cui-label-manage-overflow:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(transparent, white); }
   .cui-label-manage-overflow > .cui-label-content {
     max-height: 108px;
     overflow: hidden; }
@@ -1753,6 +1761,7 @@ a[role="button"].cui-button-appearance-link {
   .cui-label-manage-overflow.cui-label-size-mini > .cui-label-content {
     max-height: 84px; }
   .cui-label-manage-overflow .cui-label-manage-overflow-button {
+    z-index: 1;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -1763,9 +1772,7 @@ a[role="button"].cui-button-appearance-link {
       height: auto;
       padding: 0 0 1px; }
   .cui-label-manage-overflow.cui-label--show-overflow:after {
-    content: "";
-    display: block;
-    clear: right; }
+    display: none; }
   .cui-label-manage-overflow.cui-label--show-overflow > .cui-label-content {
     max-height: none !important; }
   .cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button {
@@ -2758,9 +2765,17 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even) > .cui-lv-tr > .cui-lv-td {
   background: rgba(30, 54, 72, 0.04); }
 
+.cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow:after,
+.cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow:after {
+  background: linear-gradient(rgba(246, 247, 248, 0), #f6f7f8); }
+
 .cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow-button,
 .cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow-button {
   background: linear-gradient(to right, rgba(246, 247, 248, 0), #f6f7f8 10px); }
+
+.cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow:after,
+.cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow:after {
+  background: linear-gradient(rgba(179, 215, 255, 0), #b3d7ff); }
 
 .cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow-button,
 .cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow-button {
@@ -2785,6 +2800,8 @@ a[role="button"].cui-button-appearance-link {
     background: #b3d7ff; }
   .cui-lv-tr-outer.cui-selected .cui-empty-label, .cui-lv-tr-outer.cui-selected:nth-child(even) .cui-empty-label, .cui-lv-tr-outer:focus .cui-empty-label, .cui-lv-tr-outer:focus:nth-child(even) .cui-empty-label {
     color: #56728f; }
+  .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer:focus.cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer:focus:nth-child(even).cui-selected .cui-label-manage-overflow:after {
+    background: linear-gradient(rgba(179, 215, 255, 0), #b3d7ff); }
   .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer:focus.cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer:focus:nth-child(even).cui-selected .cui-label-manage-overflow-button {
     background: linear-gradient(to right, rgba(179, 215, 255, 0), #b3d7ff 10px); }
 

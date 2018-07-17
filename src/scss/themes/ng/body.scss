@@ -2196,6 +2196,16 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	&:after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 20px;
+		background: linear-gradient(transparent, white);
+	}
+
 	> .cui-label-content {
 		max-height: 6 * 18px; // limit at 6 lines
 		overflow: hidden;
@@ -2212,6 +2222,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-label-manage-overflow-button {
+		z-index: 1;
 		position: absolute;
 		right: 0;
 		bottom: 0;
@@ -2226,10 +2237,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-label--show-overflow {
-		&:after { // clearfix
-			content: "";
-			display: block;
-			clear: right;
+		&:after {
+			display: none;
 		}
 
 		> .cui-label-content {
@@ -3875,11 +3884,19 @@ a[role="button"].cui-button-appearance-link {
 				background: $zebra-color;
 			}
 
+			.cui-label-manage-overflow:after {
+				background: linear-gradient(transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color);
+			}
+
 			.cui-label-manage-overflow-button {
 				background: linear-gradient(to right, transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color 10px);
 			}
 
 			&.cui-selected {
+				.cui-label-manage-overflow:after {
+					background: linear-gradient(transparentize($row-highlight, 1), $row-highlight);
+				}
+
 				.cui-label-manage-overflow-button {
 					background: linear-gradient(to right, transparentize($row-highlight, 1), $row-highlight 10px);
 				}
@@ -3924,6 +3941,10 @@ a[role="button"].cui-button-appearance-link {
 		}
 
 		&.cui-selected {
+			.cui-label-manage-overflow:after {
+				background: linear-gradient(transparentize($row-highlight, 1), $row-highlight);
+			}
+
 			.cui-label-manage-overflow-button {
 				background: linear-gradient(to right, transparentize($row-highlight, 1), $row-highlight 10px);
 			}
