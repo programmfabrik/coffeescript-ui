@@ -2711,6 +2711,12 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	.cui-form-button {
+		.cui-button {
+			max-width: 100%;
+		}
+	}
+
 	.cui-data-field-input {
 		min-width: 150px;
 
@@ -3103,7 +3109,7 @@ a[role="button"].cui-button-appearance-link {
 
 // ItemList
 .cui-item-list {
-	.cui-label {
+	.cui-menu-item.cui-label {
 	  cursor: default;
 	  padding: $padding+3px $padding 3px;
 	  font-size: 0.9em;
@@ -3133,8 +3139,15 @@ a[role="button"].cui-button-appearance-link {
 		  padding: 0 $padding;
 			border: none;
 			border-radius: 0;
-			height: 26px;
-			line-height: 26px;
+	  	height: auto;
+	  	line-height: $line-height;
+	  	padding-top: 5px;
+	  	padding-bottom: 5px;
+	  	
+	  	span {
+	  		white-space: inherit;
+	  		overflow: inherit;
+	  	}
 	  }
 
 		&.cui-layer-open,
