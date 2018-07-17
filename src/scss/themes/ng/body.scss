@@ -1074,6 +1074,10 @@ li > div {
 				border-color: $button-active-pressed;
 			}
 		}
+
+		.cui-label-appearance-secondary {
+			color: $button-active-text;
+		}
 	}
 
 	&:focus {
@@ -3104,6 +3108,20 @@ a[role="button"].cui-button-appearance-link {
 	.cui-browser-ie & {
 		overflow-y: scroll; // prevents overlap with scrollbar in Firefox & IE but adds a deactivated scrollbar when no scrollbar is neccesary
 	}
+
+	.cui-button {
+		.cui-button-visual {
+			display: inline;
+		}
+		
+		.cui-button-left,
+		.cui-button-center,
+		.cui-button-right,
+		.cui-label,
+		.cui-label-content {
+			display: inline;
+		}
+	}
 }
 
 .cui-button--has-caret {
@@ -3156,8 +3174,7 @@ a[role="button"].cui-button-appearance-link {
 		max-width: 100%; // button-select
 
 		.cui-button-visual {
-			display: block; // make button center and button right layout inline
-			// justify-content: flex-start;
+			justify-content: flex-start;
 			flex-grow: 1;
 			padding: 0 $padding;
 			border: none;
@@ -3166,19 +3183,6 @@ a[role="button"].cui-button-appearance-link {
 			line-height: $line-height;
 			padding-top: 5px;
 			padding-bottom: 5px;
-			
-			.cui-button-left,
-			.cui-button-center,
-			.cui-button-right,
-			.cui-label,
-			.cui-label-content {
-				display: inline;
-			}
-
-			.cui-label {
-				color: $muted-color;
-
-			}
 			
 			span {
 				white-space: normal;

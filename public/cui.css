@@ -1076,6 +1076,9 @@ li > div {
     color: #e8e8e8;
     background: #4a5964;
     border-color: #4a5964; }
+  .cui-button-button.cui-active .cui-label-appearance-secondary,
+  .cui-button-select.cui-active .cui-label-appearance-secondary {
+    color: white; }
   .cui-button-button:focus,
   .cui-button-select:focus {
     outline: none; }
@@ -2276,6 +2279,16 @@ a[role="button"].cui-button-appearance-link {
 .cui-browser-ie .cui-select-menu {
   overflow-y: scroll; }
 
+.cui-select-menu .cui-button .cui-button-visual {
+  display: inline; }
+
+.cui-select-menu .cui-button .cui-button-left,
+.cui-select-menu .cui-button .cui-button-center,
+.cui-select-menu .cui-button .cui-button-right,
+.cui-select-menu .cui-button .cui-label,
+.cui-select-menu .cui-button .cui-label-content {
+  display: inline; }
+
 .cui-button--has-caret .cui-button-visual {
   justify-content: flex-start; }
 
@@ -2311,7 +2324,7 @@ a[role="button"].cui-button-appearance-link {
   max-width: 100%; }
   .cui-item-list .cui-button .cui-button-visual,
   .cui-item-list .cui-button-href .cui-button-visual {
-    display: block;
+    justify-content: flex-start;
     flex-grow: 1;
     padding: 0 10px;
     border: none;
@@ -2320,20 +2333,6 @@ a[role="button"].cui-button-appearance-link {
     line-height: 16px;
     padding-top: 5px;
     padding-bottom: 5px; }
-    .cui-item-list .cui-button .cui-button-visual .cui-button-left,
-    .cui-item-list .cui-button .cui-button-visual .cui-button-center,
-    .cui-item-list .cui-button .cui-button-visual .cui-button-right,
-    .cui-item-list .cui-button .cui-button-visual .cui-label,
-    .cui-item-list .cui-button .cui-button-visual .cui-label-content,
-    .cui-item-list .cui-button-href .cui-button-visual .cui-button-left,
-    .cui-item-list .cui-button-href .cui-button-visual .cui-button-center,
-    .cui-item-list .cui-button-href .cui-button-visual .cui-button-right,
-    .cui-item-list .cui-button-href .cui-button-visual .cui-label,
-    .cui-item-list .cui-button-href .cui-button-visual .cui-label-content {
-      display: inline; }
-    .cui-item-list .cui-button .cui-button-visual .cui-label,
-    .cui-item-list .cui-button-href .cui-button-visual .cui-label {
-      color: #949a9e; }
     .cui-item-list .cui-button .cui-button-visual span,
     .cui-item-list .cui-button-href .cui-button-visual span {
       white-space: normal;
