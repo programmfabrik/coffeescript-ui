@@ -2302,7 +2302,7 @@ a[role="button"].cui-button-appearance-link {
     padding-bottom: 5px; }
     .cui-item-list .cui-button .cui-button-visual span,
     .cui-item-list .cui-button-href .cui-button-visual span {
-      white-space: inherit;
+      white-space: normal;
       overflow: inherit; }
   .cui-item-list .cui-button.cui-layer-open .cui-button-visual, .cui-item-list .cui-button:active .cui-button-visual,
   .cui-item-list .cui-button-href.cui-layer-open .cui-button-visual,
