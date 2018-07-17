@@ -2309,7 +2309,7 @@ a[role="button"].cui-button-appearance-link {
   max-width: 100%; }
   .cui-item-list .cui-button .cui-button-visual,
   .cui-item-list .cui-button-href .cui-button-visual {
-    justify-content: flex-start;
+    display: block;
     flex-grow: 1;
     padding: 0 10px;
     border: none;
@@ -2318,6 +2318,20 @@ a[role="button"].cui-button-appearance-link {
     line-height: 16px;
     padding-top: 5px;
     padding-bottom: 5px; }
+    .cui-item-list .cui-button .cui-button-visual .cui-button-left,
+    .cui-item-list .cui-button .cui-button-visual .cui-button-center,
+    .cui-item-list .cui-button .cui-button-visual .cui-button-right,
+    .cui-item-list .cui-button .cui-button-visual .cui-label,
+    .cui-item-list .cui-button .cui-button-visual .cui-label-content,
+    .cui-item-list .cui-button-href .cui-button-visual .cui-button-left,
+    .cui-item-list .cui-button-href .cui-button-visual .cui-button-center,
+    .cui-item-list .cui-button-href .cui-button-visual .cui-button-right,
+    .cui-item-list .cui-button-href .cui-button-visual .cui-label,
+    .cui-item-list .cui-button-href .cui-button-visual .cui-label-content {
+      display: inline; }
+    .cui-item-list .cui-button .cui-button-visual .cui-label,
+    .cui-item-list .cui-button-href .cui-button-visual .cui-label {
+      color: #949a9e; }
     .cui-item-list .cui-button .cui-button-visual span,
     .cui-item-list .cui-button-href .cui-button-visual span {
       white-space: normal;
@@ -2342,6 +2356,13 @@ a[role="button"].cui-button-appearance-link {
   .cui-item-list .cui-button-href.cui-disabled.cui-active .cui-button-visual {
     color: #b5bbbf;
     background: none; }
+  .cui-item-list .cui-button.cui-button-appearance-important .cui-button-visual,
+  .cui-item-list .cui-button-href.cui-button-appearance-important .cui-button-visual {
+    background: none;
+    color: #50585e; }
+    .cui-item-list .cui-button.cui-button-appearance-important .cui-button-visual .cui-button-center,
+    .cui-item-list .cui-button-href.cui-button-appearance-important .cui-button-visual .cui-button-center {
+      font-weight: bold; }
   .cui-item-list .cui-button .cui-button-center,
   .cui-item-list .cui-button-href .cui-button-center {
     padding: 0; }

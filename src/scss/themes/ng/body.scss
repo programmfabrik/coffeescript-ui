@@ -3154,7 +3154,8 @@ a[role="button"].cui-button-appearance-link {
 	  max-width: 100%; // button-select
 
 	  .cui-button-visual {
-	  	justify-content: flex-start;
+	  	display: block; // make button center and button right layout inline
+	  	// justify-content: flex-start;
 	  	flex-grow: 1;
 		  padding: 0 $padding;
 			border: none;
@@ -3163,6 +3164,18 @@ a[role="button"].cui-button-appearance-link {
 	  	line-height: $line-height;
 	  	padding-top: 5px;
 	  	padding-bottom: 5px;
+	  	
+	  	.cui-button-left,
+	  	.cui-button-center,
+	  	.cui-button-right,
+	  	.cui-label,
+	  	.cui-label-content {
+	  		display: inline;
+	  	}
+
+	  	.cui-label {
+	  		color: $muted-color;
+	  	}
 	  	
 	  	span {
 	  		white-space: normal;
@@ -3200,6 +3213,17 @@ a[role="button"].cui-button-appearance-link {
 				.cui-button-visual {
 					color: $disabled-color;
 					background: none;
+				}
+			}
+		}
+
+		&.cui-button-appearance-important {
+			.cui-button-visual {
+				background: none;
+				color: $button-color;
+				
+				.cui-button-center {
+					font-weight: bold;
 				}
 			}
 		}
