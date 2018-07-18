@@ -62,13 +62,10 @@ class CUI.ListView extends CUI.SimplePane
 				@__maxCols.push(len)
 				@__cols[len] = 'maximize'
 
-		# console.debug @fixedColsCount, @fixedRowsCount, @__maxCols, @__cols, @tools
 		@rowsCount = 0
 		@colsCount = @__cols.length
 
 		@listViewCounter = CUI.ListView.counter++
-
-		# @cssUniqueId = "list-view-#{@listViewCounter}-style"
 
 		@__manualColWidths = []
 		@__colspanRows = {}
@@ -294,8 +291,6 @@ class CUI.ListView extends CUI.SimplePane
 		for col in [0..@colsCount-1] by 1
 			@__fillCells.push(CUI.dom.matchSelector(outer, ".cui-list-view-grid-fill-col-#{col}")[0])
 
-		# console.debug "ListView[#{@listViewCounter}]:", "fixedCols:", @fixedColsCount, "fixedRow", @fixedRowsCount, "cols:", @colsCount, "rows:", @__deferredRows.length
-
 		on_scroll = =>
 			@__syncScrolling()
 			@_onScroll?()
@@ -304,24 +299,12 @@ class CUI.ListView extends CUI.SimplePane
 			node: @quadrant[3]
 			type: "scroll"
 			call: on_scroll
-			# (ev) =>
-			# 	CUI.scheduleCallback
-			# 		ms: 20
-			# 		call: on_scroll
-			# 	return
 
 		@__currentScroll = top: 0, left: 0
 
 		if @hasSelectableRows()
 
 			selector = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer"
-
-			# CUI.Events.listen
-			# 	type: ["touchstart"]
-			# 	node: @DOM
-			# 	call: (ev) =>
-			# 		# console.debug "touchstart prevent default", @DOM
-			# 		ev.preventDefault()
 
 			CUI.Events.listen
 				type: ["click"]
@@ -367,7 +350,6 @@ class CUI.ListView extends CUI.SimplePane
 			type: "viewport-resize"
 			node: @grid
 			call: (ev, info) =>
-				# console.error "ListView[##{@listViewCounter}][#{ev.getDebug()}]:",@DOM[0],"hasLayout: ", @__hasLayout, @, info
 				if not @__hasLayout
 					return
 
@@ -398,9 +380,6 @@ class CUI.ListView extends CUI.SimplePane
 				@__resetRowDim(row)
 				@__scheduleLayout()
 				return
-
-		if CUI.defaults.debug
-			@__addDebugControl()
 
 		if @isInactive()
 			@setInactive(true)
@@ -433,7 +412,6 @@ class CUI.ListView extends CUI.SimplePane
 	__syncScrolling: ->
 
 		@__currentScroll = @__getScrolling()
-		# console.debug "__syncScrolling", @__currentScroll
 
 		if @fixedColsCount > 0
 			@quadrant[2].scrollTop = @__currentScroll.top
@@ -526,9 +504,6 @@ class CUI.ListView extends CUI.SimplePane
 				col_i: parseInt($target.getAttribute("col"))
 				row_i: parseInt($target.getAttribute("row"))
 
-			# console.debug "getCellByTarget", $target[0], cell.col_i, cell.row_i
-
-			# cell.$element = $target
 			cell.display_col_i = @getDisplayColIdx(cell.col_i)
 			cell.display_row_i = @getDisplayRowIdx(cell.row_i)
 			cell
@@ -570,7 +545,6 @@ class CUI.ListView extends CUI.SimplePane
 		else
 			func = CUI.dom.insertBefore
 
-		# console.debug "moveRow", from_i, to_i, after, @rowsOrder.join(",")
 		for row, idx in @getRow(from_i)
 			func(@getRow(to_i)[idx], (row))
 
@@ -616,14 +590,12 @@ class CUI.ListView extends CUI.SimplePane
 		@colsCount
 
 	resetColWidth: (col_i) ->
-		# console.debug "resetColWidth", col_i
 		delete(@__manualColWidths[col_i])
 		@__resetColWidth(col_i)
 		@__doLayout(resetRows: true)
 		@
 
 	setColWidth: (col_i, width) ->
-		# console.debug "setColWidth", col_i, width
 		@__manualColWidths[col_i] = Math.max(5, width)
 		delete(@__colWidths[col_i])
 		@__doLayout(resetRows: true)
@@ -660,7 +632,6 @@ class CUI.ListView extends CUI.SimplePane
 			contentWidthAdjust: dim.contentWidthAdjust
 			contentHeightAdjust: dim.contentHeightAdjust
 
-		# console.debug "dim:", cell, rect
 		rect
 
 
@@ -716,7 +687,6 @@ class CUI.ListView extends CUI.SimplePane
 
 	insertRowAt: (display_row_i, row) ->
 		CUI.util.assert(not @isDestroyed(), "ListView.insertRowAfter", "ListView #{@listViewCounter} is already destroyed.")
-		# console.debug "insertRowAt", display_row_i, @rowsCount
 		if display_row_i == @rowsCount or @rowsCount == 0
 			@appendRow(row)
 		else if display_row_i == 0
@@ -824,7 +794,6 @@ class CUI.ListView extends CUI.SimplePane
 		css = []
 		add_css = (col_i, width) =>
 			css.push("."+@__lvClass+"-cell[col=\""+col_i+"\"] { width: #{width}px !important; flex: 0 0 auto !important;}")
-		# console.debug @__fillCells.length, @__maxCols, @getColIdx(@__fillCells.length-2), @__manualColWidths[col_i]
 		has_max_cols = false
 		has_manually_sized_column =  false
 
@@ -867,8 +836,6 @@ class CUI.ListView extends CUI.SimplePane
 					# are never torn apart, so it is
 					# safe to add "1" here
 					width = width + @__colWidths[parseInt(col_i)+i]
-
-				# console.debug row_i, col_i, colspan, width
 
 				dim = CUI.dom.getDimensions(cell)
 				if dim.computedStyle.boxSizing == "border-box"
@@ -948,10 +915,6 @@ class CUI.ListView extends CUI.SimplePane
 		@__waitBlock.show()
 		@
 
-	__debugRect: (func, ms) ->
-		viewport = @grid.rect()
-		@grid.rect(true, 500, "ListView[##{@listViewCounter}].#{func} #{ms}ms "+viewport.width+"x"+viewport.height)
-
 	appendRows: (rows) ->
 		CUI.util.assert(not @isDestroyed(), "ListView.appendRow", "ListView #{@listViewCounter} is already destroyed.")
 		for row, idx in rows
@@ -993,10 +956,6 @@ class CUI.ListView extends CUI.SimplePane
 
 		CUI.util.assert(mode in ["append", "prepend", "after", "replace"], "ListView.__addRows", "mode \"#{mode}\" not supported", row_i: _row_i)
 
-		txt = "ListView[#{@listViewCounter}].__addRows: Adding "+listViewRows.length+" rows, starting at #{_row_i}."
-
-		# console.debug("__addRows", _row_i, listViewRows, mode, sibling_row_i)
-
 		html = [[],[],[],[]]
 
 		# if @__hasLayout
@@ -1019,7 +978,6 @@ class CUI.ListView extends CUI.SimplePane
 
 			anchor_row = @__rows[row_i]
 			CUI.util.assert(anchor_row.length >= 1, "ListView.__addRows", "anchor row #{row_i} for mode #{mode} not found.", rows: @__rows, row_i: row_i, mode: _mode, mode_used: mode)
-			# console.debug("__addRows", anchor_row, row_i)
 
 		# prepare html for all rows
 		for row_i in [_row_i..row_i+listViewRows.length-1] by 1
@@ -1089,8 +1047,6 @@ class CUI.ListView extends CUI.SimplePane
 				continue
 
 			row = anchor_row[anchor_row_idx]
-
-			# console.debug "qi", qi, anchor_row, anchor_row.length, html[qi]
 			anchor_row_idx++
 
 			if mode == "after"
@@ -1127,10 +1083,7 @@ class CUI.ListView extends CUI.SimplePane
 				@__appendCells(listViewRow, _row_i+idx)
 
 		@__scheduleLayout()
-
-		# console.timeEnd(txt)
 		@
-
 
 	__appendCells: (listViewRow, row_i) ->
 		CUI.util.assert(listViewRow instanceof CUI.ListViewRow, "ListView.addRow", "listViewRow needs to be instance of ListViewRow or Deferred which returns a ListViewRow", listViewRow: listViewRow)
@@ -1210,7 +1163,6 @@ class CUI.ListView extends CUI.SimplePane
 
 	__resetRowDim: (row_i) ->
 		delete(@__cellDims[row_i])
-		delete(@__rowHeights[row_i])
 
 		if @fixedColsCount > 0 and @__rows[row_i]
 			for row in @__rows[row_i]
@@ -1242,7 +1194,6 @@ class CUI.ListView extends CUI.SimplePane
 	__resetCellDims: (col_i) ->
 		@__cellDims = []
 		@__colWidths = []
-		@__rowHeights = []
 
 	__isMaximizedCol: (col_i) ->
 		col_i in @__maxCols and not @__manualColWidths.hasOwnProperty(col_i)
@@ -1262,82 +1213,3 @@ class CUI.ListView extends CUI.SimplePane
 			[accWidth, maxi]
 		else
 			[@__colWidths[col_i], @__isMaximizedCol(col_i)]
-
-
-
-	__debugCall: (name, func) ->
-		if not CUI.defaults.debug
-			return func()
-
-		getMs = ->
-			(new Date()).getTime()
-
-		start = getMs()
-		func()
-		end = getMs()
-		@__debugRect(name, end - start)
-
-	__addDebugControl: ->
-		CUI.Events.listen
-			type: "contextmenu"
-			node: @DOM
-			call: (ev) =>
-				if not (ev.altKey() and not (ev.ctrlKey() or ev.shiftKey() or ev.metaKey()))
-					return
-
-				ev.preventDefault()
-				ev.stopPropagation()
-
-				@grid.rect(true, 500)
-
-				get_maximize_text = (name, on_off) =>
-					name+": "+(if on_off then "ON" else "OFF")
-
-				items = [
-					label: "ListView[##{@listViewCounter}] Debug Menu"
-				,
-					text: "layout"
-					onClick: =>
-						@__debugCall "__doLayout", =>
-							@__doLayout(resetRows: true)
-				,
-					text: "flash"
-					onClick: =>
-						@grid.rect(true, 1000, "ListView[##{@listViewCounter}]")
-				,
-					text: "debug"
-					onClick: =>
-						@__debugCall "debug", =>
-							console.debug("ListView[##{@listViewCounter}]", @)
-							console.debug("opts:", @opts)
-							console.debug("manualColWidths:", CUI.util.dump(@__manualColWidths))
-							console.debug("colWidths:", CUI.util.dump(@__colWidths), "rowHeights:", @__rowHeights)
-				,
-					text: "appendRow"
-					onClick: =>
-						lv = new CUI.ListViewRow()
-						for col, display_col_i in @_cols
-							col_i = @getColIdx(display_col_i)
-							lv.addColumn(new CUI.ListViewColumn(text: @getColdef(col_i)+" "+@rowsCount))
-						@appendRow(lv)
-				,
-					text: "removeRow"
-					onClick: =>
-						@removeRow(@getRowIdx(@rowsCount-1))
-				,
-					text: "close"
-					onClick: =>
-						@__control.destroy()
-				]
-
-				(new CUI.Menu
-					auto_close_after_click: false
-					itemList:
-						items: items
-					show_at_position:
-						top: ev.pageY()
-						left: ev.pageX()
-				).show()
-				return false
-		@
-
