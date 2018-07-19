@@ -845,15 +845,26 @@ class CUI
 	@loadScript: (src) ->
 		deferred = new CUI.Deferred
 		script = CUI.dom.element("script", src: src)
-		script.addEventListener("load", (ev) =>
-			deferred.resolve(ev)
-			document.body.removeChild(script)
-		)
-		script.addEventListener("error", (ev) =>
-			deferred.reject(ev)
-			document.body.removeChild(script)
-		)
-		document.body.appendChild(script)
+
+		CUI.Events.listen
+			type: "load"
+			node: script
+			only_once: true
+			call: (ev) =>
+				document.head.removeChild(script)
+				deferred.resolve(ev)
+				return
+
+		CUI.Events.listen
+			type: "error"
+			node: script
+			only_once: true
+			call: (ev) =>
+				document.head.removeChild(script)
+				deferred.reject(ev)
+				return
+
+		document.head.appendChild(script)
 		return deferred.promise()
 
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
