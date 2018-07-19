@@ -849,20 +849,22 @@ class CUI
 		CUI.Events.listen
 			type: "load"
 			node: script
-			only_once: true
+			instance: script
 			call: (ev) =>
-				document.head.removeChild(script)
 				deferred.resolve(ev)
 				return
 
 		CUI.Events.listen
 			type: "error"
 			node: script
-			only_once: true
+			instance: script
 			call: (ev) =>
 				document.head.removeChild(script)
 				deferred.reject(ev)
 				return
+
+		deferred.always =>
+			CUI.Events.ignore(instance: script)
 
 		document.head.appendChild(script)
 		return deferred.promise()
