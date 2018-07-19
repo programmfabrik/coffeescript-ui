@@ -1129,19 +1129,29 @@ CUI = (function() {
     script = CUI.dom.element("script", {
       src: src
     });
-    script.addEventListener("load", (function(_this) {
-      return function(ev) {
-        deferred.resolve(ev);
-        return document.body.removeChild(script);
-      };
-    })(this));
-    script.addEventListener("error", (function(_this) {
-      return function(ev) {
-        deferred.reject(ev);
-        return document.body.removeChild(script);
-      };
-    })(this));
-    document.body.appendChild(script);
+    CUI.Events.listen({
+      type: "load",
+      node: script,
+      only_once: true,
+      call: (function(_this) {
+        return function(ev) {
+          document.head.removeChild(script);
+          deferred.resolve(ev);
+        };
+      })(this)
+    });
+    CUI.Events.listen({
+      type: "error",
+      node: script,
+      only_once: true,
+      call: (function(_this) {
+        return function(ev) {
+          document.head.removeChild(script);
+          deferred.reject(ev);
+        };
+      })(this)
+    });
+    document.head.appendChild(script);
     return deferred.promise();
   };
 
