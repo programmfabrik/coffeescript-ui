@@ -1132,10 +1132,9 @@ CUI = (function() {
     CUI.Events.listen({
       type: "load",
       node: script,
-      only_once: true,
+      instance: script,
       call: (function(_this) {
         return function(ev) {
-          document.head.removeChild(script);
           deferred.resolve(ev);
         };
       })(this)
@@ -1143,7 +1142,7 @@ CUI = (function() {
     CUI.Events.listen({
       type: "error",
       node: script,
-      only_once: true,
+      instance: script,
       call: (function(_this) {
         return function(ev) {
           document.head.removeChild(script);
@@ -1151,6 +1150,13 @@ CUI = (function() {
         };
       })(this)
     });
+    deferred.always((function(_this) {
+      return function() {
+        return CUI.Events.ignore({
+          instance: script
+        });
+      };
+    })(this));
     document.head.appendChild(script);
     return deferred.promise();
   };
