@@ -981,6 +981,17 @@ class CUI.DateTime extends CUI.Input
 
 		now_year = moment().year()
 
+		month_label_max_chars = 0
+
+		for opt in month_opts
+			if opt.text?.length > month_label_max_chars
+				month_label_max_chars = opt.text?.length
+
+		month_label = new CUI.Label
+			text: month_opts[data.month].text
+
+		month_label.setTextMaxChars(month_label_max_chars)
+
 		##### HEADER includes YEAR and MONTH
 		header_year_month = new CUI.HorizontalLayout
 			maximize_vertical: false
@@ -999,8 +1010,7 @@ class CUI.DateTime extends CUI.Input
 								mom.subtract(1, "months")
 								@drawDate(mom)
 						,
-							new CUI.Label
-								text: month_opts[data.month].text
+							month_label
 							# new CUI.Select(
 							# 	attr:
 							# 		cursor: "month"

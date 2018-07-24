@@ -24968,7 +24968,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.drawYearMonthsSelect = function(mom) {
-    var data, header_year_month, i, idx, len, m, month_opts, now_year, ref, updateCalendar, year;
+    var data, header_year_month, i, idx, j, len, len1, m, month_label, month_label_max_chars, month_opts, now_year, opt, ref, ref1, ref2, updateCalendar, year;
     year = null;
     updateCalendar = (function(_this) {
       return function() {
@@ -24989,6 +24989,17 @@ CUI.DateTime = (function(superClass) {
       });
     }
     now_year = moment().year();
+    month_label_max_chars = 0;
+    for (j = 0, len1 = month_opts.length; j < len1; j++) {
+      opt = month_opts[j];
+      if (((ref1 = opt.text) != null ? ref1.length : void 0) > month_label_max_chars) {
+        month_label_max_chars = (ref2 = opt.text) != null ? ref2.length : void 0;
+      }
+    }
+    month_label = new CUI.Label({
+      text: month_opts[data.month].text
+    });
+    month_label.setTextMaxChars(month_label_max_chars);
     header_year_month = new CUI.HorizontalLayout({
       maximize_vertical: false,
       maximize_horizontal: true,
@@ -25008,9 +25019,7 @@ CUI.DateTime = (function(superClass) {
                   return _this.drawDate(mom);
                 };
               })(this)
-            }, new CUI.Label({
-              text: month_opts[data.month].text
-            }), {
+            }, month_label, {
               icon: "right",
               onClick: (function(_this) {
                 return function(ev) {

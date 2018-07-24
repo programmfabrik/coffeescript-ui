@@ -3495,8 +3495,20 @@ label[data-label-clickable],
 
 .cui-date-time-calendar .cui-buttonbar {
   justify-content: space-between; }
+  .cui-date-time-calendar .cui-buttonbar [cui-data-field-name="year"] .cui-button-select .cui-button-center {
+    min-width: 39px; }
   .cui-date-time-calendar .cui-buttonbar .cui-button-select {
-    width: auto; }
+    width: auto;
+    min-width: 0; }
+    .cui-date-time-calendar .cui-buttonbar .cui-button-select .cui-button-visual {
+      justify-content: center; }
+    .cui-date-time-calendar .cui-buttonbar .cui-button-select .cui-button-center {
+      padding-left: 5px;
+      padding-right: 0;
+      min-width: 24px;
+      text-align: center; }
+    .cui-date-time-calendar .cui-buttonbar .cui-button-select .cui-button-right {
+      margin-left: 0; }
 
 .cui-buttonbar-group-date .cui-select:not(:last-child) .cui-button .cui-button-visual,
 .cui-buttonbar-group-time .cui-select:not(:last-child) .cui-button .cui-button-visual {
@@ -3535,11 +3547,6 @@ label[data-label-clickable],
 .cui-buttonbar-group-time .cui-select .cui-button .cui-button-visual {
   padding: 0; }
 
-.cui-buttonbar-group-date .cui-select .cui-button-center,
-.cui-buttonbar-group-time .cui-select .cui-button-center {
-  text-align: right;
-  padding-right: 3px; }
-
 .cui-buttonbar-group-time {
   margin-left: 10px; }
 
@@ -3570,7 +3577,6 @@ label[data-label-clickable],
     .cui-date-time-footer > .cui-horizontal-layout-left .cui-label {
       flex: 1 1 auto;
       justify-content: center;
-      padding: 0;
       margin: 0; }
   .cui-date-time-footer > .cui-horizontal-layout-center {
     flex-grow: 0 !important; }
@@ -3593,20 +3599,30 @@ label[data-label-clickable],
       display: none; }
   .cui-date-time-date .cui-td,
   .cui-date-time-date .cui-th {
-    width: calc(100% / 8);
+    width: 27px;
     text-align: center;
     cursor: default;
-    justify-content: center;
-    padding: 5px 7px;
-    line-height: 18px;
+    padding: 0;
+    line-height: 25px;
     display: block; }
     .cui-date-time-date .cui-td.cui-date-time-day,
     .cui-date-time-date .cui-th.cui-date-time-day {
       cursor: pointer; }
+    .cui-date-time-date .cui-td.cui-date-time-week,
+    .cui-date-time-date .cui-th.cui-date-time-week {
+      font-size: 0.846em;
+      line-height: 28px;
+      margin: 0 3px 0 0;
+      border-right: 1px solid #eef0f1; }
+    .cui-date-time-date .cui-td.cui-date-time-week-title,
+    .cui-date-time-date .cui-th.cui-date-time-week-title {
+      width: 30px; }
   .cui-date-time-date .cui-td {
-    width: calc(100% / 8 - 4px);
-    padding: 3px 5px;
     margin: 2px; }
+  .cui-date-time-date .cui-th:not(.cui-date-time-week-title) {
+    width: calc((100% - 30px) / 7); }
+  .cui-date-time-date .cui-date-time-day {
+    width: calc((100% - 30px) / 7 - 4px); }
 
 .cui-menu.cui-date-time-60-select .cui-item-list-body {
   box-sizing: content-box;

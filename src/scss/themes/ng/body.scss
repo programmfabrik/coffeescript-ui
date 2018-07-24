@@ -4993,9 +4993,29 @@ label[data-label-clickable],
 
 .cui-date-time-calendar .cui-buttonbar {
 	justify-content: space-between;
+	
+	[cui-data-field-name="year"] .cui-button-select .cui-button-center {
+		min-width: 39px;
+	}
 
 	.cui-button-select {
 		width: auto;
+		min-width: 0;
+		
+		.cui-button-visual {
+			justify-content: center;
+		}
+		
+		.cui-button-center {
+			padding-left: 5px;
+			padding-right: 0;
+			min-width: 24px;
+			text-align: center;
+		}
+
+		.cui-button-right {
+			margin-left: 0;
+		}
 	}
 }
 
@@ -5040,11 +5060,6 @@ label[data-label-clickable],
 		.cui-button .cui-button-visual {
 			padding: 0;
 		}
-
-		.cui-button-center {
-			text-align: right;
-			padding-right: 3px;
-		}
 	}
 }
 
@@ -5059,7 +5074,7 @@ label[data-label-clickable],
 .cui-date-time-previous-month,
 .cui-date-time-next-month,
 .cui-date-time-week {
-	color: hsl(205,10%,79%);
+	color: $subtle-color;
 }
 
 .cui-date-time-selected {
@@ -5089,7 +5104,6 @@ label[data-label-clickable],
 		.cui-label { // June, September
 			flex: 1 1 auto;
 			justify-content: center;
-			padding: 0;
 			margin: 0;
 		}
 	}
@@ -5130,23 +5144,39 @@ label[data-label-clickable],
 
 	.cui-td,
 	.cui-th {
-		width: calc(100% / 8); // 8 columns
+		width: 27px;
 		text-align: center;
 		cursor: default;
-		justify-content: center;
-		padding: 5px 7px;
-		line-height: 18px;
+		padding: 0;
+		line-height: 25px;
 		display: block;
 
 		&.cui-date-time-day {
 			cursor: pointer;
 		}
+
+		&.cui-date-time-week {
+			font-size: 0.846em;
+			line-height: 28px;
+			margin: 0 3px 0 0;
+			border-right: 1px solid $table-header-border;
+		}
+
+		&.cui-date-time-week-title {
+			width: 30px;
+		}
 	}
 
 	.cui-td {
-		width: calc(100% / 8 - 4px); // 8 columns
-		padding: 3px 5px;
 		margin: 2px;
+	}
+
+	.cui-th:not(.cui-date-time-week-title) {
+		width: calc((100% - 30px) / 7);
+	}
+
+	.cui-date-time-day {
+		width: calc((100% - 30px) / 7 - 4px);
 	}
 }
 
