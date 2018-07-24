@@ -168,7 +168,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+  -webkit-tap-highlight-color: transparent; }
 
 input,
 textarea {
@@ -2333,6 +2333,7 @@ a[role="button"].cui-button-appearance-link {
     border: none;
     border-radius: 0;
     height: auto;
+    min-height: 24px;
     line-height: 16px;
     padding-top: 5px;
     padding-bottom: 5px; }

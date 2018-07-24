@@ -3184,6 +3184,7 @@ a[role="button"].cui-button-appearance-link {
 			border: none;
 			border-radius: 0;
 			height: auto;
+			min-height: $button-height;
 			line-height: $line-height;
 			padding-top: 5px;
 			padding-bottom: 5px;
