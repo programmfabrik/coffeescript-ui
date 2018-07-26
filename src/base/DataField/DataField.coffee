@@ -264,6 +264,10 @@ class CUI.DataField extends CUI.DOMElement
 			@__data = data
 		@displayValue()
 
+	unSetData: ->
+		delete @__data
+		return
+
 	setData: (data, init_data=true) ->
 		if @__data and @_data and not CUI.util.isFunction(@_data)
 			# console.debug "private data already set", @_data
