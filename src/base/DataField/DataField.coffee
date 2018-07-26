@@ -264,8 +264,10 @@ class CUI.DataField extends CUI.DOMElement
 			@__data = data
 		@displayValue()
 
-	unSetData: ->
+	unsetData: ->
 		delete @__data
+		if @setDataOnOthers()
+			@callOnOthers("unsetData")
 		return
 
 	setData: (data, init_data=true) ->

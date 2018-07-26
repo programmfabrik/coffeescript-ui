@@ -122,7 +122,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 	reload: ->
 		@initFields()
-		@callOnOthers("unSetData")
+		@callOnOthers("unsetData")
 		@callOnOthers("setData", @__data)
 		super()
 
@@ -133,11 +133,6 @@ class CUI.SimpleForm extends CUI.DataField
 
 	getParentData: ->
 		@__parent_data or @__data
-
-	unSetData: ->
-		if @__fields
-			@callOnOthers("unSetData")
-		return super()
 
 	setData: (data) ->
 		if @_name and @__checkbox
