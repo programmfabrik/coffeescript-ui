@@ -49,6 +49,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			return
 		for inp in @__inputs
 			inp.disable()
+		return
 
 	enable: ->
 		super()
@@ -56,6 +57,14 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			return
 		for inp in @__inputs
 			inp.enable()
+		return
+
+	remove: ->
+		if @__inputs
+			for input in @__inputs
+				input.destroy()
+			delete @__inputs
+		return super()
 
 	initValue: ->
 		if CUI.util.isNull(v = @__data[@_name])
