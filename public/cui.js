@@ -9179,8 +9179,11 @@ CUI.DataField = (function(superClass) {
     return this.displayValue();
   };
 
-  DataField.prototype.unSetData = function() {
+  DataField.prototype.unsetData = function() {
     delete this.__data;
+    if (this.setDataOnOthers()) {
+      this.callOnOthers("unsetData");
+    }
   };
 
   DataField.prototype.setData = function(data, init_data) {
@@ -28606,7 +28609,7 @@ CUI.SimpleForm = (function(superClass) {
 
   SimpleForm.prototype.reload = function() {
     this.initFields();
-    this.callOnOthers("unSetData");
+    this.callOnOthers("unsetData");
     this.callOnOthers("setData", this.__data);
     return SimpleForm.__super__.reload.call(this);
   };
@@ -28620,13 +28623,6 @@ CUI.SimpleForm = (function(superClass) {
 
   SimpleForm.prototype.getParentData = function() {
     return this.__parent_data || this.__data;
-  };
-
-  SimpleForm.prototype.unSetData = function() {
-    if (this.__fields) {
-      this.callOnOthers("unSetData");
-    }
-    return SimpleForm.__super__.unSetData.call(this);
   };
 
   SimpleForm.prototype.setData = function(data) {
