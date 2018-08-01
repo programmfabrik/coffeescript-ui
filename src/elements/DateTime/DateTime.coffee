@@ -1126,12 +1126,13 @@ class CUI.DateTime extends CUI.Input
 
 		td_func = CUI.dom.th
 
-		CUI.dom.div("cui-date-time-dow").textContent = @__locale_format.tab_week
-		CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), CUI.dom.div("cui-date-time-dow")))
+		tabWeekDiv = CUI.dom.div("cui-date-time-dow")
+		tabWeekDiv.textContent = @__locale_format.tab_week
+		CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), tabWeekDiv))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
-			CUI.dom.div("cui-date-time-dow").textContent = weekday
 			day_div = CUI.dom.div("cui-date-time-dow")
+			day_div.textContent = weekday
 			CUI.dom.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
 			CUI.dom.append(tr, CUI.dom.append(td_func(), day_div))
 
