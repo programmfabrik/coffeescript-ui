@@ -15404,6 +15404,18 @@ CUI.Layer = (function(superClass) {
         continue;
       }
       vp = vp_pl[placement];
+      if (vp.window_top > vp.top) {
+        vp.top = vp.window_top;
+      }
+      if (vp.window_left > vp.left) {
+        vp.left = vp.window_left;
+      }
+      if (vp.window_bottom < vp.bottom) {
+        vp.bottom = vp.window_bottom;
+      }
+      if (vp.window_right < vp.right) {
+        vp.right = vp.window_right;
+      }
       vp.width = vp.right - vp.left;
       vp.height = vp.bottom - vp.top;
       if (vp.width < 10 || vp.height < 10) {
