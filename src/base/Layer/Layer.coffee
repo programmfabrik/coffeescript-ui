@@ -449,7 +449,6 @@ class CUI.Layer extends CUI.DOMElement
 			vp.dim_element = dim_element
 			vp.dim_pointer = dim_pointer[placement]
 
-
 			switch placement
 				when "c"
 					vp.top = vp.window_top
@@ -535,6 +534,19 @@ class CUI.Layer extends CUI.DOMElement
 				continue
 
 			vp = vp_pl[placement]
+
+			if vp.window_top > vp.top
+				vp.top = vp.window_top
+
+			if vp.window_left > vp.left
+				vp.left = vp.window_left
+
+			if vp.window_bottom < vp.bottom
+				vp.bottom = vp.window_bottom
+
+			if vp.window_right < vp.right
+				vp.right = vp.window_right
+
 			vp.width = vp.right - vp.left
 			vp.height = vp.bottom - vp.top
 
@@ -571,8 +583,6 @@ class CUI.Layer extends CUI.DOMElement
 					layer_pos.width = dim_layer.borderBoxWidth
 					layer_pos.height = dim_layer.borderBoxHeight
 
-			# console.debug placement, vp, layer_pos.width, layer_pos.height, vp.width, vp.height
-
 			if layer_pos.width > vp.width
 				layer_pos.width = vp.width
 				vp.cuts++
@@ -580,6 +590,8 @@ class CUI.Layer extends CUI.DOMElement
 			if layer_pos.height > vp.height
 				layer_pos.height = vp.height
 				vp.cuts++
+
+			# console.debug @_fill_space, placement, vp, layer_pos.width, layer_pos.height, vp.width, vp.height
 
 			# now align the layer within the available viewport
 			switch vp.align_horizontal
