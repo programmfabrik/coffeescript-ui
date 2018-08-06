@@ -38029,7 +38029,7 @@ CUI.Map = (function(superClass) {
   };
 
   Map.isValidPosition = function(position) {
-    return CUI.Map.isValidLatitude(position.lat) && CUI.Map.isValidLongitude(position.lng);
+    return position && CUI.Map.isValidLatitude(position.lat) && CUI.Map.isValidLongitude(position.lng);
   };
 
   return Map;
