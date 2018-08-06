@@ -341,4 +341,4 @@ class CUI.Map extends CUI.Pane
 		CUI.util.isNumber(value) and value <= 180 and value >= -180
 
 	@isValidPosition: (position) ->
-		CUI.Map.isValidLatitude(position.lat) and CUI.Map.isValidLongitude(position.lng)
+		return position and CUI.Map.isValidLatitude(position.lat) and CUI.Map.isValidLongitude(position.lng)
