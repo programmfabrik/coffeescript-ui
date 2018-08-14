@@ -43,6 +43,9 @@ class CUI.ConfirmationDialog extends CUI.Modal
 					(CUI.util.isArray(v) and v.length > 0) or CUI.util.isFunction(v)
 			footer_left: {}
 			header_right: {}
+			show_inline:
+				check: (v) ->
+					CUI.dom.isNode(v)
 
 		@removeOpt("pane")
 
@@ -53,6 +56,26 @@ class CUI.ConfirmationDialog extends CUI.Modal
 		super()
 		# this needs to be set here, so that Modal / LayerPane are happy
 		@_pane = {}
+
+	show: (ev) ->
+		if @_show_inline
+			CUI.dom.addClass(@__layer, "cui-confirmation-dialog--show-inline")
+			CUI.dom.addClass(@__show_inline, "cui-confirmation-dialog--has-show-inline")
+			CUI.dom.prepend(@_show_inline, @__layer)
+			# trigger Layout.all (absolute layouts)
+			CUI.Events.trigger(type: "viewport-resize")
+		else
+			super(ev)
+
+	hide: (ev) ->
+		if @_show_inline
+			CUI.dom.removeClass(@__layer, "cui-confirmation-dialog--show-inline")
+			CUI.dom.removeClass(@__show_inline, "cui-confirmation-dialog--has-show-inline")
+			CUI.dom.remove(@__layer)
+			# trigger Layout.all (absolute layouts)
+			CUI.Events.trigger(type: "viewport-resize")
+		else
+			super(ev)
 
 	init: ->
 
