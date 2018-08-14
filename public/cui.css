@@ -2178,6 +2178,9 @@ a[role="button"].cui-button-appearance-link {
     word-wrap: break-word;
     white-space: pre-wrap; }
 
+.cui-layer.cui-confirmation-dialog--show-inline {
+  z-index: 1; }
+
 .cui-confirmation-choice .cui-layer > .cui-layer-pane > .cui-vertical-layout-center {
   max-width: 300px; }
 
