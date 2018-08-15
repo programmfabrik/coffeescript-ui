@@ -35814,6 +35814,11 @@ CUI.ListViewTreeNode = (function(superClass) {
     }
   };
 
+  ListViewTreeNode.prototype.setChildren = function(children1) {
+    this.children = children1;
+    this.initChildren();
+  };
+
   ListViewTreeNode.prototype.initChildren = function() {
     var _idx, _node, idx, j, k, len, len1, node, ref, ref1;
     ref = this.children;
