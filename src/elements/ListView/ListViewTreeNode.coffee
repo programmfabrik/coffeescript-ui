@@ -446,6 +446,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		else
 			@father.addNode(node, idx)
 
+	setChildren: (@children) ->
+		@initChildren()
+		return
+
 	initChildren: ->
 		for node, idx in @children
 			for _node, _idx in @children
