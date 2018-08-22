@@ -14,7 +14,7 @@ class CUI.Output extends CUI.DataFieldInput
 				check: String
 			text:
 				check: String
-			# set to yes for placeholder and text
+			# set to yes for placeholder and text and value
 			markdown:
 				mandatory: true
 				default: false
@@ -49,17 +49,14 @@ class CUI.Output extends CUI.DataFieldInput
 	# enable: ->
 	# 	@removeClass("cui-data-field-disabled")
 
-	setText: (txt, markdown = null) ->
+	setText: (txt) ->
 		if CUI.util.isEmpty(txt)
 			@__textSpan.addClass("cui-output-empty")
 			txt = @_placeholder
 		else
 			@__textSpan.removeClass("cui-output-empty")
 
-		if markdown == null
-			@__textSpan.setText(txt, @_markdown)
-		else
-			@__textSpan.setText(txt, markdown)
+		@__textSpan.setText(txt, @_markdown or false)
 
 	checkValue: ->
 		# CUI.Output does not care about values
@@ -75,7 +72,7 @@ class CUI.Output extends CUI.DataFieldInput
 			if CUI.util.isContent(ret)
 				@replace(ret)
 			else
-				@setText(ret, false) # don't use markdown for data driven output
+				@setText(ret)
 		@
 
 	getValue: ->
