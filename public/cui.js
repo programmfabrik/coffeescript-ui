@@ -40756,21 +40756,14 @@ CUI.Output = (function(superClass) {
     return this.__textSpan;
   };
 
-  Output.prototype.setText = function(txt, markdown) {
-    if (markdown == null) {
-      markdown = null;
-    }
+  Output.prototype.setText = function(txt) {
     if (CUI.util.isEmpty(txt)) {
       this.__textSpan.addClass("cui-output-empty");
       txt = this._placeholder;
     } else {
       this.__textSpan.removeClass("cui-output-empty");
     }
-    if (markdown === null) {
-      return this.__textSpan.setText(txt, this._markdown);
-    } else {
-      return this.__textSpan.setText(txt, markdown);
-    }
+    return this.__textSpan.setText(txt, this._markdown || false);
   };
 
   Output.prototype.checkValue = function() {};
@@ -40792,7 +40785,7 @@ CUI.Output = (function(superClass) {
       if (CUI.util.isContent(ret)) {
         this.replace(ret);
       } else {
-        this.setText(ret, false);
+        this.setText(ret);
       }
     }
     return this;
