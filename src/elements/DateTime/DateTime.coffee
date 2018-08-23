@@ -1157,8 +1157,10 @@ class CUI.DateTime extends CUI.Input
 
 			div_type = CUI.dom.td
 
+			day_span = CUI.dom.span()
+			day_span.textContent = day_no
 			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-"))
-			day_div.textContent = day_no
+			CUI.dom.append(day_div, day_span)
 
 			if curr_m < month
 				CUI.dom.addClass(day_div, "cui-date-time-previous-month")

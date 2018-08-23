@@ -5000,6 +5000,8 @@ label[data-label-clickable],
 
 .cui-date-time-calendar .cui-buttonbar {
 	justify-content: space-between;
+	background: $header-background;
+	padding: $padding/2;
 
 	[cui-data-field-name="year"] .cui-button-select .cui-button-center {
 		min-width: 39px;
@@ -5016,7 +5018,7 @@ label[data-label-clickable],
 		.cui-button-center {
 			padding-left: 5px;
 			padding-right: 0;
-			min-width: 24px;
+			min-width: 25px;
 			text-align: center;
 		}
 
@@ -5074,27 +5076,10 @@ label[data-label-clickable],
 	margin-left: $padding;
 }
 
-.cui-date-time-day {
-	border-radius: $button-radius;
-}
-
-.cui-date-time-previous-month,
-.cui-date-time-next-month,
-.cui-date-time-week {
-	color: $subtle-color;
-}
-
-.cui-date-time-selected {
-	background: $highlight-color !important;
-	color: $on-highlight-color !important;
-}
-
-.cui-date-time-now {
-	background: hsl(205,20%,92%);
-}
-
 .cui-date-time-footer {
 	overflow: visible !important; // show year input outline
+	background: $header-background;
+	border-top: 1px solid $header-border;
 
 	.cui-buttonbar > *:not(:last-child) {
 		margin-right: 0;
@@ -5132,17 +5117,30 @@ label[data-label-clickable],
 
 .cui-date-time-date {
 	width: 100%;
-	margin: $padding 0;
+	background: $border;
 	flex-grow: 1;
 	border: none;
 
 	.cui-tr {
 		padding: 0;
 		display: flex;
+		
+		&:last-child {
+			.cui-td {
+				margin-bottom: 0;
+			}
+		}
+		
+		&.cui-date-time-month-header {
+			background: $toolbar-background;
+			border-top: 1px solid $header-border;
+			border-bottom: 1px solid $border;
+		}
 	}
 
 	.cui-th {
 		font-size: inherit;
+		width: calc(100% / 8);
 
 		&:after {
 			display: none;
@@ -5151,39 +5149,58 @@ label[data-label-clickable],
 
 	.cui-td,
 	.cui-th {
-		width: 27px;
 		text-align: center;
 		cursor: default;
 		padding: 0;
-		line-height: 25px;
+		line-height: 28px;
 		display: block;
-
-		&.cui-date-time-day {
-			cursor: pointer;
-		}
-
-		&.cui-date-time-week {
-			font-size: 0.846em;
-			line-height: 28px;
-			margin: 0 3px 0 0;
-			border-right: 1px solid $table-header-border;
-		}
-
-		&.cui-date-time-week-title {
-			width: 30px;
-		}
 	}
 
 	.cui-td {
-		margin: 2px;
+		position: relative;
+		margin-right: 1px;
+		margin-bottom: 1px;
+		width: calc((100% - 7px) / 8);
+		
+		&:last-child {
+			margin-right: 0;
+		}
+		
+		span {
+			display: block;
+			margin: 3px;
+			border-radius: 999px;
+		}
 	}
 
-	.cui-th:not(.cui-date-time-week-title) {
-		width: calc((100% - 30px) / 7);
+	.cui-date-time-week {
+		font-size: 12px;
+		background: $toolbar-background;
+		color: $secondary-color;
 	}
 
 	.cui-date-time-day {
-		width: calc((100% - 30px) / 7 - 4px);
+		background: white;
+		cursor: pointer;
+	}
+
+	.cui-date-time-previous-month,
+	.cui-date-time-next-month {
+		background: hsl(178,7%,97%);
+	}
+
+	.cui-date-time-now {
+		span {
+			background: hsl(205,20%,92%);
+		}
+	}
+
+	.cui-date-time-selected {
+		color: $on-highlight-color;
+		
+		span {
+			background: $highlight-color;
+		}
 	}
 }
 
@@ -5212,10 +5229,6 @@ label[data-label-clickable],
 
 
 .cui-date-time-popover {
-	.cui-simple-pane > .cui-vertical-layout-center {
-		padding: $padding;
-	}
-
 	.cui-date-time-popover-inner {
 		flex: 1 1 auto;
 

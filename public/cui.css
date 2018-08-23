@@ -168,7 +168,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+  -webkit-tap-highlight-color: transparent; }
 
 input,
 textarea {
@@ -3497,7 +3497,9 @@ label[data-label-clickable],
     min-width: 175px; }
 
 .cui-date-time-calendar .cui-buttonbar {
-  justify-content: space-between; }
+  justify-content: space-between;
+  background: #dadfe2;
+  padding: 5px; }
   .cui-date-time-calendar .cui-buttonbar [cui-data-field-name="year"] .cui-button-select .cui-button-center {
     min-width: 39px; }
   .cui-date-time-calendar .cui-buttonbar .cui-button-select {
@@ -3508,7 +3510,7 @@ label[data-label-clickable],
     .cui-date-time-calendar .cui-buttonbar .cui-button-select .cui-button-center {
       padding-left: 5px;
       padding-right: 0;
-      min-width: 24px;
+      min-width: 25px;
       text-align: center; }
     .cui-date-time-calendar .cui-buttonbar .cui-button-select .cui-button-right {
       margin-left: 0; }
@@ -3553,23 +3555,10 @@ label[data-label-clickable],
 .cui-buttonbar-group-time {
   margin-left: 10px; }
 
-.cui-date-time-day {
-  border-radius: 4px; }
-
-.cui-date-time-previous-month,
-.cui-date-time-next-month,
-.cui-date-time-week {
-  color: #c4cacf; }
-
-.cui-date-time-selected {
-  background: #006adb !important;
-  color: white !important; }
-
-.cui-date-time-now {
-  background: #e7ebef; }
-
 .cui-date-time-footer {
-  overflow: visible !important; }
+  overflow: visible !important;
+  background: #dadfe2;
+  border-top: 1px solid #bbc0c3; }
   .cui-date-time-footer .cui-buttonbar > *:not(:last-child) {
     margin-right: 0; }
   .cui-date-time-footer .cui-label {
@@ -3590,42 +3579,57 @@ label[data-label-clickable],
 
 .cui-date-time-date {
   width: 100%;
-  margin: 10px 0;
+  background: #cbd5dc;
   flex-grow: 1;
   border: none; }
   .cui-date-time-date .cui-tr {
     padding: 0;
     display: flex; }
+    .cui-date-time-date .cui-tr:last-child .cui-td {
+      margin-bottom: 0; }
+    .cui-date-time-date .cui-tr.cui-date-time-month-header {
+      background: #eef0f1;
+      border-top: 1px solid #bbc0c3;
+      border-bottom: 1px solid #cbd5dc; }
   .cui-date-time-date .cui-th {
-    font-size: inherit; }
+    font-size: inherit;
+    width: calc(100% / 8); }
     .cui-date-time-date .cui-th:after {
       display: none; }
   .cui-date-time-date .cui-td,
   .cui-date-time-date .cui-th {
-    width: 27px;
     text-align: center;
     cursor: default;
     padding: 0;
-    line-height: 25px;
+    line-height: 28px;
     display: block; }
-    .cui-date-time-date .cui-td.cui-date-time-day,
-    .cui-date-time-date .cui-th.cui-date-time-day {
-      cursor: pointer; }
-    .cui-date-time-date .cui-td.cui-date-time-week,
-    .cui-date-time-date .cui-th.cui-date-time-week {
-      font-size: 0.846em;
-      line-height: 28px;
-      margin: 0 3px 0 0;
-      border-right: 1px solid #eef0f1; }
-    .cui-date-time-date .cui-td.cui-date-time-week-title,
-    .cui-date-time-date .cui-th.cui-date-time-week-title {
-      width: 30px; }
   .cui-date-time-date .cui-td {
-    margin: 2px; }
-  .cui-date-time-date .cui-th:not(.cui-date-time-week-title) {
-    width: calc((100% - 30px) / 7); }
+    position: relative;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    width: calc((100% - 7px) / 8); }
+    .cui-date-time-date .cui-td:last-child {
+      margin-right: 0; }
+    .cui-date-time-date .cui-td span {
+      display: block;
+      margin: 3px;
+      border-radius: 999px; }
+  .cui-date-time-date .cui-date-time-week {
+    font-size: 12px;
+    background: #eef0f1;
+    color: #6d7478; }
   .cui-date-time-date .cui-date-time-day {
-    width: calc((100% - 30px) / 7 - 4px); }
+    background: white;
+    cursor: pointer; }
+  .cui-date-time-date .cui-date-time-previous-month,
+  .cui-date-time-date .cui-date-time-next-month {
+    background: #f7f8f8; }
+  .cui-date-time-date .cui-date-time-now span {
+    background: #e7ebef; }
+  .cui-date-time-date .cui-date-time-selected {
+    color: white; }
+    .cui-date-time-date .cui-date-time-selected span {
+      background: #006adb; }
 
 .cui-menu.cui-date-time-60-select .cui-item-list-body {
   box-sizing: content-box;
@@ -3640,9 +3644,6 @@ label[data-label-clickable],
     height: 30px;
     align-items: center;
     text-align: center; }
-
-.cui-date-time-popover .cui-simple-pane > .cui-vertical-layout-center {
-  padding: 10px; }
 
 .cui-date-time-popover .cui-date-time-popover-inner {
   flex: 1 1 auto; }
