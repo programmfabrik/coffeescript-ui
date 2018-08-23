@@ -10362,7 +10362,6 @@ CUI.Draggable = (function(superClass) {
 
   Draggable.prototype.destroy = function() {
     var ref;
-    CUI.dom.removeClass(this.element, "no-user-select");
     Draggable.__super__.destroy.call(this);
     CUI.dom.remove((ref = CUI.globalDrag) != null ? ref.helperNode : void 0);
     this.__cleanup();
@@ -10373,7 +10372,6 @@ CUI.Draggable = (function(superClass) {
     CUI.util.assert(!this._helper_contain_element || CUI.dom.closest(this._element, this._helper_contain_element), "new CUI.sDraggable", "opts.helper_contain_element needs to be parent of opts.element", {
       opts: this.opts
     });
-    CUI.dom.addClass(this.element, "no-user-select");
     return CUI.Events.listen({
       type: this.__event_types.start,
       node: this.element,
