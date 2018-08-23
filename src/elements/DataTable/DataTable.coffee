@@ -13,6 +13,9 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 	initOpts: ->
 		super()
+
+		# VALUE can have __class in each row, this sets a class on the tree node
+
 		@addOpts
 			fields:
 				mandatory: true
@@ -354,6 +357,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				node = new CUI.DataTableNode
 					dataTable: @
 					data: row
+					class: row.__class
 					dataRowIdx: idx
 					rows: @rows
 					check_changed_data: @getInitValue()?[idx]
