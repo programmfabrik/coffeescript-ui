@@ -117,8 +117,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 		return
 
 	destroy: ->
-		CUI.dom.removeClass(@element, "no-user-select")
-
 		super()
 
 		CUI.dom.remove(CUI.globalDrag?.helperNode)
@@ -129,8 +127,6 @@ class CUI.Draggable extends CUI.DragDropSelect
 	init: ->
 		# console.debug "Draggable", @options.selector
 		CUI.util.assert(not @_helper_contain_element or CUI.dom.closest(@_element, @_helper_contain_element), "new CUI.sDraggable", "opts.helper_contain_element needs to be parent of opts.element", opts: @opts)
-
-		CUI.dom.addClass(@element, "no-user-select")
 
 		CUI.Events.listen
 			type: @__event_types.start
