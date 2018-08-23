@@ -2024,7 +2024,6 @@ a[role="button"].cui-button-appearance-link {
   margin: 10px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   background: white;
   outline: none;
   border-radius: 5px;
