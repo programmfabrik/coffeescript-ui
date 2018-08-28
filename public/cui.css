@@ -3879,13 +3879,13 @@ label[data-label-clickable],
   .cui-block:last-child {
     border-bottom-width: 0; }
   .cui-block.cui-block-level-1 > .cui-block-header {
-    font-size: 16px; }
-  .cui-block.cui-block-level-2 {
-    border-bottom-width: 0; }
-    .cui-block.cui-block-level-2 > .cui-block-header {
-      font-size: 14px; }
-  .cui-block > .cui-block-header {
+    font-size: 16px;
     font-weight: 600; }
+  .cui-block.cui-block-level-2 > .cui-block-header {
+    font-size: 14px;
+    font-weight: 600; }
+  .cui-block.cui-block-level-3 > .cui-block-header {
+    font-size: 14px; }
   .cui-block--padded > .cui-block-content {
     padding: 0 10px 10px; }
   .cui-block.cui-form-block--has-checkbox > .cui-block-header {

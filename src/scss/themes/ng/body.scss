@@ -5585,17 +5585,19 @@ label[data-label-clickable],
 	&.cui-block-level-1 {
 		> .cui-block-header {
 			font-size: 16px;
+			font-weight: 600;
 		}
 	}
 	&.cui-block-level-2 {
-		border-bottom-width: 0;
-
+		> .cui-block-header {
+			font-size: 14px;
+			font-weight: 600;
+		}
+	}
+	&.cui-block-level-3 {
 		> .cui-block-header {
 			font-size: 14px;
 		}
-	}
-	> .cui-block-header {
-		font-weight: 600;
 	}
 
 	&--padded {
