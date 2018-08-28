@@ -4783,6 +4783,8 @@ label[data-label-clickable],
 	}
 
 	.cui-vertical-layout-center {
+		display: flex;
+		
 		.cui-button {
 			flex-grow: 1;
 			padding: 0;
