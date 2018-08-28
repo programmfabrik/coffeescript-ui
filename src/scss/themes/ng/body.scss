@@ -4786,8 +4786,11 @@ label[data-label-clickable],
 		display: flex;
 		
 		.cui-button {
-			flex-grow: 1;
 			padding: 0;
+		}
+
+		.cui-button--has-caret {
+			flex-grow: 1;
 		}
 
 		+ .cui-vertical-layout-bottom {

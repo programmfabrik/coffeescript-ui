@@ -3335,8 +3335,9 @@ label[data-label-clickable],
 .cui-form-popover .cui-vertical-layout-center {
   display: flex; }
   .cui-form-popover .cui-vertical-layout-center .cui-button {
-    flex-grow: 1;
     padding: 0; }
+  .cui-form-popover .cui-vertical-layout-center .cui-button--has-caret {
+    flex-grow: 1; }
   .cui-form-popover .cui-vertical-layout-center + .cui-vertical-layout-bottom {
     margin: 5px 0 0; }
     .cui-form-popover .cui-vertical-layout-center + .cui-vertical-layout-bottom:empty {
