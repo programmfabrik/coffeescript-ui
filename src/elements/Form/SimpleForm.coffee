@@ -34,6 +34,9 @@ class CUI.SimpleForm extends CUI.DataField
 				check: Boolean
 			top: {}
 			bottom: {}
+			blockLevelOffset:
+				check: "Integer"
+				default: 0
 
 
 	readOpts: ->
@@ -368,9 +371,7 @@ class CUI.SimpleForm extends CUI.DataField
 					append(get_append(field._form.right), hint_div)
 
 			if field.renderAsBlock()
-				level = field.getFormDepth() + 1
-				if not level
-					level = 1
+				level = field.getFormDepth() + @getBlockLevelOffset() + 1
 
 				if level > 3
 					level = 3
@@ -687,6 +688,13 @@ class CUI.SimpleForm extends CUI.DataField
 			if _field.isChanged()
 				return true
 		return false
+
+	getBlockLevelOffset: ->
+		parentBlockLevelOffset = @getForm()?.getBlockLevelOffset() or 0
+		return parentBlockLevelOffset + @_blockLevelOffset
+
+	setBlockLevelOffset: (@_blockLevelOffset) ->
+		return @_blockLevelOffset
 
 	destroy: ->
 		if @table
