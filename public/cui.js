@@ -40971,7 +40971,6 @@ CUI.OutputContent = (function(superClass) {
     if (content == null) {
       content = null;
     }
-    console.debug("setContent", this.DOM, content);
     if (!content) {
       CUI.dom.addClass(this.DOM, "cui-output-empty");
       return this.empty();
