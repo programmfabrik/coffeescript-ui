@@ -39255,9 +39255,9 @@ CUI.MultiInput = (function(superClass) {
         control: this._control
       });
     }
-    return CUI.Events.trigger({
+    CUI.Events.trigger({
       type: "content-resize",
-      node: inp.DOM
+      node: this.DOM
     });
   };
 
@@ -43493,6 +43493,10 @@ CUI.Tabs = (function(superClass) {
     CUI.dom.addClass(this.__pane_header.DOM, "cui-tabs-pane-header");
     if (this._appearance === 'mini') {
       CUI.dom.addClass(this.__pane_header.DOM, "cui-tabs-pane-header--mini");
+    }
+    if (this._padded) {
+      this.addClass('cui-tabs--padded');
+      this.removeClass('cui-pane--padded');
     }
     this.addClass('cui-tabs--' + this._orientation);
     this.__buttonbar = new CUI.Buttonbar();
