@@ -92,6 +92,10 @@ class CUI.Tabs extends CUI.SimplePane
 		if @_appearance == 'mini'
 			CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
 
+		if @_padded
+			@addClass('cui-tabs--padded')
+			@removeClass('cui-pane--padded')
+
 		@addClass('cui-tabs--'+@_orientation)
 
 		@__buttonbar = new CUI.Buttonbar()
@@ -275,12 +279,12 @@ class CUI.Tabs extends CUI.SimplePane
 		# remove previously set dimensions
 		for tab in @__tabs
 			CUI.dom.setStyle(tab.getBody(),
-				"min-width": "", 
+				"min-width": "",
 				"height": ""
 			)
 
 		CUI.dom.setStyle(@__tabs_bodies.DOM,
-			"min-width": "", 
+			"min-width": "",
 			"height": ""
 		)
 
@@ -299,13 +303,13 @@ class CUI.Tabs extends CUI.SimplePane
 				max_height = dim.height
 
 		CUI.dom.setStyle(@__tabs_bodies.DOM,
-			"min-width": max_width, 
+			"min-width": max_width,
 			"height": max_height
 		)
 
 		for tab in @__tabs
 			CUI.dom.setStyle(tab.getBody(),
-				"min-width": max_width, 
+				"min-width": max_width,
 				height: max_height
 			)
 

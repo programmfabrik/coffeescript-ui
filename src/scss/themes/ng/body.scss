@@ -3421,6 +3421,16 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-absolute > .cui-vertical-layout-center {
 		top: $toolbar-height + 1px; // 1px border
 	}
+
+	&--padded {
+		> .cui-vertical-layout-center {
+			> .cui-tabs-bodies {
+				> .cui-tab-body {
+					padding: $padding;
+				}
+			}
+		}
+	}
 }
 
 .cui-tabs-pane-header {
@@ -4784,7 +4794,7 @@ label[data-label-clickable],
 
 	.cui-vertical-layout-center {
 		display: flex;
-		
+
 		.cui-button {
 			padding: 0;
 		}
@@ -5128,13 +5138,13 @@ label[data-label-clickable],
 	.cui-tr {
 		padding: 0;
 		display: flex;
-		
+
 		&:last-child {
 			.cui-td {
 				margin-bottom: 0;
 			}
 		}
-		
+
 		&.cui-date-time-month-header {
 			background: $toolbar-background;
 			border-top: 1px solid $header-border;
@@ -5165,11 +5175,11 @@ label[data-label-clickable],
 		margin-right: 1px;
 		margin-bottom: 1px;
 		width: calc((100% - 7px) / 8);
-		
+
 		&:last-child {
 			margin-right: 0;
 		}
-		
+
 		span {
 			display: block;
 			margin: 3px;
@@ -5201,7 +5211,7 @@ label[data-label-clickable],
 
 	.cui-date-time-selected {
 		color: $on-highlight-color;
-		
+
 		span {
 			background: $highlight-color;
 		}

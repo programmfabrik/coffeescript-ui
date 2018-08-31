@@ -67,6 +67,7 @@ class CUI.Block extends CUI.DOMElement
 	readOpts: ->
 		super()
 		CUI.util.assert(not ((@_text or @_icon) and @_header), "new CUI.Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
+
 		@
 
 	getTemplateName: ->
@@ -94,4 +95,3 @@ class CUI.Block extends CUI.DOMElement
 
 	appendContent: (content) ->
 		@__block.append(content, "content")
-
