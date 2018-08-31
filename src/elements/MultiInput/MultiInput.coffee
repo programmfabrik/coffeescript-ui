@@ -118,7 +118,9 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 		CUI.Events.trigger
 			type: "content-resize"
-			node: inp.DOM # last one
+			node: @DOM
+
+		return
 
 	getUniqueIdForLabel: ->
 		@__initInputs()
