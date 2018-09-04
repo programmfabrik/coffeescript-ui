@@ -4848,7 +4848,7 @@ Demo.RunDemo = (function(superClass) {
 
   RunDemo.prototype.displayDemo = function() {
     var _demo, bd, demo, demo_content, demo_name, dfr, end_wall_time, j, len, ref, ref1, txt;
-    demo_name = (ref = document.location.hash.match('^#([a-zA-Z &]+)')) != null ? ref[1] : void 0;
+    demo_name = (ref = decodeURIComponent(document.location.hash).match('^#([a-zA-Z &]+)')) != null ? ref[1] : void 0;
     demo = null;
     ref1 = this.demos;
     for (j = 0, len = ref1.length; j < len; j++) {
