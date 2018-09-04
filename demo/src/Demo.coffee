@@ -244,7 +244,7 @@ class Demo.RunDemo extends CUI.Element
 		@displayDemo()
 
 	displayDemo: ->
-		demo_name = document.location.hash.match('^#([a-zA-Z &]+)')?[1]
+		demo_name = decodeURIComponent(document.location.hash).match('^#([a-zA-Z &]+)')?[1]
 
 		demo = null
 		for _demo in @demos
