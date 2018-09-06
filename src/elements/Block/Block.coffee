@@ -56,10 +56,9 @@ class CUI.Block extends CUI.DOMElement
 				default: 1
 				check: [1, 2, 3]
 			appearance:
-				deprectated: true
 				default: "normal"
 				mandatory: true
-				check: ["title","subtitle","normal"]
+				check: ["normal","wide"]
 			padded:
 				check: Boolean
 				default: true
