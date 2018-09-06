@@ -5584,43 +5584,120 @@ label[data-label-clickable],
 // Block
 
 .cui-block {
-	// border-bottom: 1px solid $soft-border;
 	flex-shrink: 0;
-
+	padding-bottom: 2*$padding;
+	
 	&:last-child {
-		border-bottom-width: 0;
+		padding-bottom: 0;
+	}
+
+	&.cui-block-level-1,
+	&.cui-block-level-2 {
+		&.appearance-wide {
+			background: $toolbar-background;
+			padding: 1.5*$padding 2*$padding;
+			position: relative;
+			
+			&:after {
+				content: "";
+				bottom: 0;
+				margin: 0 $padding;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: $border;
+				position: absolute;
+			}
+
+			&:last-child {
+				&:after {
+					display: none;
+				}
+			}
+		}
 	}
 
 	&.cui-block-level-1 {
 		> .cui-block-header {
-			font-size: 18px;
+			font-size: 16px;
 			font-weight: 600;
-			margin-bottom: $padding;
-			padding-bottom: $padding / 2;
-			border-bottom: 3px solid $border;
 		}
-		padding-bottom: $padding * 2;
+
+		&.appearance-wide {
+			> .cui-block-header {
+				font-size: 28px;
+				padding-bottom: 0;
+				
+				.cui-label {
+					line-height: 1.5;
+				}
+			}
+
+			> .cui-block-content {
+				color: $secondary-color;
+			}
+		}
 	}
 
 	&.cui-block-level-2 {
 		> .cui-block-header {
-			font-size: 16px;
+			font-size: 14px;
 			font-weight: 600;
-			margin-bottom: $padding / 2;
-			.cui-label > .cui-label-content > span {
-				border-bottom: 2px solid $border;
+		}
+
+		&.appearance-wide {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			
+			// fill in vertical space with gray background
+			&:last-child {
+				flex-grow: 1;
+			}
+			
+			> .cui-block-header {
+				font-size: 16px;
+				width: 250px;
+				flex-grow: .2;
+				padding: 2*$padding 1.5*$padding $padding;
+				padding-left: 0;
+			}
+			
+			> .cui-block-content {
+				$p: 1.5*$padding;
+				background: $foreground;
+				border: 1px solid $border;
+				border-radius: 5px;
+				padding: $p;
+				min-width: 500px;
+				flex: 1 0 0%;
+				box-shadow: 0 1px 2px hsla(205,10%,50%, 0.12);
+				
+				.cui-block {
+					border-top: 1px solid $border;
+					border-bottom: 1px solid $border;
+					margin: $p -#{$p};
+					padding: $p;
+				
+					&:last-child {
+						border-bottom-width: 0;
+						margin-bottom: 0;
+						padding-bottom: 0;
+					}
+				}
 			}
 		}
-		padding-bottom: $padding * 2;
 	}
 
 	&.cui-block-level-3 {
-		> .cui-block-header {
-			font-size: 14px;
-			font-weight: 600;
-			margin-bottom: $padding / 2;
-		}
 		padding-bottom: $padding;
+		
+		> .cui-block-header {
+			font-size: 12px;
+			font-weight: 600;
+			text-transform: uppercase;
+			margin-bottom: 1.5*$padding;
+		}
 	}
 
 	&.cui-form-block--has-checkbox {
