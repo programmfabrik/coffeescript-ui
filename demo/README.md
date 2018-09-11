@@ -18,8 +18,12 @@ Then you can run different targets, with *npm run **%TARGET%***
 
 As output, there will be two files: *cui-demo.js* and *index.html*, located in **public** directory. Open **public/index.html** too see the demo.
 
+## Run
 
-## Using **coffeescript-ui** as local
+- npm start
+- Open http://localhost:8080/
+
+## Using **coffeescript-ui** locally
 
 If it's required to work with coffeescript-ui as local dependency, it's necessary to change the next line in *package.json*:
 
