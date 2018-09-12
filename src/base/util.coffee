@@ -199,6 +199,15 @@ class CUI.util
 	@isString: (obj) ->
 		(typeof obj == "string")
 
+	@isJSON: (obj) ->
+		if not @isString(obj)
+			return false
+		try
+			JSON.parse(obj)
+			return true
+
+		return false
+
 	@isEmpty: (obj) ->
 		if CUI.util.isArray(obj)
 			obj.length == 0

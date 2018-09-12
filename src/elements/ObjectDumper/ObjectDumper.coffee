@@ -67,4 +67,6 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 		for key, value of object
 			if CUI.util.isPlainObject(value) or CUI.util.isArray(value)
 				return false
+			if @_parse_json and CUI.util.isJSON(value)
+				return false
 		return true
