@@ -19997,6 +19997,17 @@ CUI.util = (function() {
     return typeof obj === "string";
   };
 
+  util.isJSON = function(obj) {
+    if (!this.isString(obj)) {
+      return false;
+    }
+    try {
+      JSON.parse(obj);
+      return true;
+    } catch (error) {}
+    return false;
+  };
+
   util.isEmpty = function(obj) {
     if (CUI.util.isArray(obj)) {
       return obj.length === 0;
@@ -40150,6 +40161,9 @@ CUI.ObjectDumper = (function(superClass) {
     for (key in object) {
       value = object[key];
       if (CUI.util.isPlainObject(value) || CUI.util.isArray(value)) {
+        return false;
+      }
+      if (this._parse_json && CUI.util.isJSON(value)) {
         return false;
       }
     }
