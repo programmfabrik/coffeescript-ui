@@ -3198,6 +3198,8 @@ a[role="button"].cui-button-appearance-link {
 			span {
 				white-space: normal;
 				overflow: inherit;
+				word-wrap: break-word;
+				word-break: break-word;
 			}
 		}
 
