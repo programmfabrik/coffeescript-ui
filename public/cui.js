@@ -20554,6 +20554,7 @@ CUI.Block = (function(superClass) {
   extend(Block, superClass);
 
   function Block(opts) {
+    var arr;
     this.opts = opts != null ? opts : {};
     Block.__super__.constructor.call(this, this.opts);
     this.__block = new CUI.Template({
@@ -20567,13 +20568,25 @@ CUI.Block = (function(superClass) {
     if (this._header) {
       this.setHeader(this._header);
     } else {
+      arr = [];
       if (this._text || this._icon) {
         this.__label = new CUI.Label({
+          "class": "cui-block-title",
           text: this._text,
           icon: this._icon,
           multiline: true
         });
-        this.setHeader(this.__label);
+        arr.push(this.__label);
+      }
+      if (this._description) {
+        arr.push(new CUI.Label({
+          "class": "cui-block-description",
+          text: this._description,
+          multiline: true
+        }));
+      }
+      if (arr.length > 0) {
+        this.setHeader(arr);
       }
     }
     if (this._content) {
@@ -20590,6 +20603,9 @@ CUI.Block = (function(superClass) {
     Block.__super__.initOpts.call(this);
     return this.addOpts({
       text: {
+        check: String
+      },
+      description: {
         check: String
       },
       header: {
