@@ -22,12 +22,23 @@ class CUI.Block extends CUI.DOMElement
 		if @_header
 			@setHeader(@_header)
 		else
+			arr = []
 			if @_text or @_icon
 				@__label = new CUI.Label
+					class: "cui-block-title"
 					text: @_text
 					icon: @_icon
 					multiline: true
-				@setHeader(@__label)
+				arr.push(@__label)
+
+			if @_description
+				arr.push new CUI.Label
+					class: "cui-block-description"
+					text: @_description
+					multiline: true
+
+			if arr.length > 0
+				@setHeader(arr)
 
 		if @_content
 			@setContent(@_content)
@@ -42,6 +53,8 @@ class CUI.Block extends CUI.DOMElement
 		super()
 		@addOpts
 			text:
+				check: String
+			description:
 				check: String
 			header:
 				check: (v) ->
