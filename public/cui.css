@@ -3920,7 +3920,7 @@ label[data-label-clickable],
     .cui-block.cui-block-level-2.appearance-wide:last-child {
       flex-grow: 1; }
     .cui-block.cui-block-level-2.appearance-wide > .cui-block-header {
-      width: 250px;
+      width: 200px;
       flex-grow: .2;
       padding-right: 15px; }
       .cui-block.cui-block-level-2.appearance-wide > .cui-block-header .cui-block-title {
