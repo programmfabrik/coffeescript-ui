@@ -3965,6 +3965,14 @@ label[data-label-clickable],
 .cui-block-content .cui-form-table {
   width: 100%;
   margin: 10px 0; }
+  .cui-block-content .cui-form-table:first-child {
+    margin-top: 0; }
+    .cui-block-content .cui-form-table:first-child .cui-form-tr:first-child .cui-form-td {
+      padding-top: 0; }
+  .cui-block-content .cui-form-table:last-child {
+    margin-bottom: 0; }
+    .cui-block-content .cui-form-table:last-child .cui-form-tr:last-child .cui-form-td {
+      padding-bottom: 0; }
 
 .cui-block-content .cui-block {
   margin-top: 10px;

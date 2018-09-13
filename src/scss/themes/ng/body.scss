@@ -5733,6 +5733,22 @@ label[data-label-clickable],
 	.cui-form-table {
 		width: 100%;
 		margin: $padding 0;
+		
+		&:first-child {
+			margin-top: 0;
+
+			.cui-form-tr:first-child .cui-form-td {
+				padding-top: 0;
+			}
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+
+			.cui-form-tr:last-child .cui-form-td {
+				padding-bottom: 0;
+			}
+		}
 	}
 
 	.cui-block {
