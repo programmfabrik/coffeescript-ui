@@ -5591,11 +5591,17 @@ label[data-label-clickable],
 		padding-bottom: 0;
 	}
 
+	.cui-block-description {
+		color: $secondary-color;
+		margin-top: 0;
+		margin-bottom: $padding;
+	}
+
 	&.cui-block-level-1,
 	&.cui-block-level-2 {
 		&.appearance-wide {
 			background: $toolbar-background;
-			padding: 1.5*$padding 2*$padding;
+			padding: 2*$padding 2*$padding;
 			position: relative;
 			
 			&:after {
@@ -5618,17 +5624,17 @@ label[data-label-clickable],
 	}
 
 	&.cui-block-level-1 {
-		> .cui-block-header {
+		> .cui-block-header .cui-block-title {
 			font-size: 16px;
 			font-weight: 600;
 		}
 
 		&.appearance-wide {
 			> .cui-block-header {
-				font-size: 28px;
 				padding-bottom: 0;
-				
-				.cui-label {
+
+				.cui-block-title {
+					font-size: 28px;
 					line-height: 1.5;
 				}
 			}
@@ -5640,7 +5646,7 @@ label[data-label-clickable],
 	}
 
 	&.cui-block-level-2 {
-		> .cui-block-header {
+		> .cui-block-header .cui-block-title {
 			font-size: 14px;
 			font-weight: 600;
 		}
@@ -5656,11 +5662,14 @@ label[data-label-clickable],
 			}
 			
 			> .cui-block-header {
-				font-size: 16px;
 				width: 250px;
 				flex-grow: .2;
-				padding: 2*$padding 1.5*$padding $padding;
-				padding-left: 0;
+				padding-right: $padding * 1.5;
+				
+				.cui-block-title {
+					font-size: 15px;
+					padding: $padding 0;
+				}
 			}
 			
 			> .cui-block-content {
@@ -5692,7 +5701,7 @@ label[data-label-clickable],
 	&.cui-block-level-3 {
 		padding-bottom: $padding;
 		
-		> .cui-block-header {
+		> .cui-block-header .cui-block-title {
 			font-size: 12px;
 			font-weight: 600;
 			text-transform: uppercase;
@@ -5701,7 +5710,7 @@ label[data-label-clickable],
 	}
 
 	&.cui-form-block--has-checkbox {
-		> .cui-block-header {
+		> .cui-block-header .cui-block-title {
 			font-size: inherit;
 			font-weight: inherit;
 		}
