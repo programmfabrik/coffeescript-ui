@@ -15891,9 +15891,11 @@ CUI.Layer = (function(superClass) {
       vp = vp_pl[placement];
       available_placements.push(placement);
     }
-    CUI.util.assert(available_placements.length > 0, "Layer.position", "No available placements found.", {
-      vp_pl: vp_pl
-    });
+    if (available_placements.length === 0) {
+      this.hide();
+      console.warn("Layer.position", "No available placements found.");
+      return;
+    }
     available_placements.sort(function(pl1, pl2) {
       var value;
       value = function(pl) {
