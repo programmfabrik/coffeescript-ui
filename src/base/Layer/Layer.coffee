@@ -756,7 +756,10 @@ class CUI.Layer extends CUI.DOMElement
 		for placement, vp of vp_pl
 			available_placements.push(placement)
 
-		CUI.util.assert(available_placements.length > 0, "Layer.position", "No available placements found.", vp_pl: vp_pl)
+		if available_placements.length == 0
+			@hide()
+			console.warn("Layer.position", "No available placements found.")
+			return
 
 		# console.debug "sorting placements BEFORE", ((pl+"["+vp_pl[pl].ranking+"]") for pl in available_placements).join(", ")
 		# sort available placements
