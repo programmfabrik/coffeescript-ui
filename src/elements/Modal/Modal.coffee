@@ -20,14 +20,17 @@ class CUI.Modal extends CUI.LayerPane
 		toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip)
 		@__addHeaderButton("fill_screen_button", toggleFillScreenButton)
 
-		@__addHeaderButton "cancel",
+		do_cancel = (ev) =>
+			toggleFillScreenButton.deactivate()
+			@doCancel(ev, false, htbn)
+
+		htbn = @__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
 			icon:  "close"
 			tooltip: @_cancel_tooltip or CUI.Modal.defaults.cancel_tooltip
-			appearance: if CUI.__ng__ then "normal" else "flat"
-			onClick: (ev, btn) =>
-				toggleFillScreenButton.deactivate()
-				@doCancel(ev, false, btn)
+			appearance: "normal"
+			onClick: (ev) =>
+				do_cancel(ev)
 
 		@getPane().addClass("cui-pane--window")
 
@@ -37,6 +40,15 @@ class CUI.Modal extends CUI.LayerPane
 				node: @getPane()
 				call: (ev) =>
 					@_onToggleFillScreen.call(@, ev, @)
+
+		if @_cancel and @_fill_space == "auto"
+			bd = @getBackdrop()
+			if bd
+				CUI.Events.listen
+					type: "click"
+					node: bd
+					call: (ev) =>
+						do_cancel(ev)
 
 		return
 
@@ -88,7 +100,7 @@ class CUI.Modal extends CUI.LayerPane
 		CUI.util.assert(@__pane instanceof CUI.SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
 
 		@append(btn, "header_right")
-		@
+		return btn
 
 	__runOnAllButtons: (func) ->
 		for el in CUI.dom.matchSelector(@__layer.DOM, ".cui-button,.cui-data-field")

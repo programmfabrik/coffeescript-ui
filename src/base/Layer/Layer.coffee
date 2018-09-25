@@ -115,7 +115,6 @@ class CUI.Layer extends CUI.DOMElement
 
 									@__layer.addClass(bc)
 									return
-
 					else
 						CUI.util.assert("new #{@__cls}", "Unknown backdrop policy: \"#{@__bd_policy}\".")
 
@@ -184,6 +183,9 @@ class CUI.Layer extends CUI.DOMElement
 	setBackdropContent: (content) ->
 		CUI.util.assert(@__backdrop, "CUI.Layer.setBackdropContent", "No backdrop found in layer", layer: @)
 		CUI.dom.append(@__backdrop.DOM, content)
+
+	getBackdrop: ->
+		@__backdrop
 
 	getTemplate: ->
 		new CUI.Template(name: "layer")
