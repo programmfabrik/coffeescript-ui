@@ -15335,6 +15335,10 @@ CUI.Layer = (function(superClass) {
     return CUI.dom.append(this.__backdrop.DOM, content);
   };
 
+  Layer.prototype.getBackdrop = function() {
+    return this.__backdrop;
+  };
+
   Layer.prototype.getTemplate = function() {
     return new CUI.Template({
       name: "layer"
@@ -39168,22 +39172,27 @@ CUI.Modal = (function(superClass) {
   };
 
   function Modal(opts) {
-    var toggleFillScreenButton;
+    var bd, do_cancel, htbn, toggleFillScreenButton;
     this.opts = opts != null ? opts : {};
     Modal.__super__.constructor.call(this, this.opts);
     toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton({
       tooltip: this._fill_screen_button_tooltip
     });
     this.__addHeaderButton("fill_screen_button", toggleFillScreenButton);
-    this.__addHeaderButton("cancel", {
+    do_cancel = (function(_this) {
+      return function(ev) {
+        toggleFillScreenButton.deactivate();
+        return _this.doCancel(ev, false, htbn);
+      };
+    })(this);
+    htbn = this.__addHeaderButton("cancel", {
       "class": "ez5-modal-close-button",
       icon: "close",
       tooltip: this._cancel_tooltip || CUI.Modal.defaults.cancel_tooltip,
-      appearance: CUI.__ng__ ? "normal" : "flat",
+      appearance: "normal",
       onClick: (function(_this) {
-        return function(ev, btn) {
-          toggleFillScreenButton.deactivate();
-          return _this.doCancel(ev, false, btn);
+        return function(ev) {
+          return do_cancel(ev);
         };
       })(this)
     });
@@ -39198,6 +39207,20 @@ CUI.Modal = (function(superClass) {
           };
         })(this)
       });
+    }
+    if (this._cancel && this._fill_space === "auto") {
+      bd = this.getBackdrop();
+      if (bd) {
+        CUI.Events.listen({
+          type: "click",
+          node: bd,
+          call: (function(_this) {
+            return function(ev) {
+              return do_cancel(ev);
+            };
+          })(this)
+        });
+      }
     }
     return;
   }
@@ -39265,7 +39288,7 @@ CUI.Modal = (function(superClass) {
       opts: this.opts
     });
     this.append(btn, "header_right");
-    return this;
+    return btn;
   };
 
   Modal.prototype.__runOnAllButtons = function(func) {
