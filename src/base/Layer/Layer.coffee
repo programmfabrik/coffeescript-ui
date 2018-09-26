@@ -1271,9 +1271,7 @@ CUI.ready ->
 			if not layer_element
 				return
 
-			# ignore Esc in input fields
-			element = CUI.dom.closest(ev.getTarget(), "[tabindex],select,input,textarea")
-			if (element in [layer_element])
+			if ev.getTarget() not in [layer_element, document.body]
 				return
 
 			layer = CUI.dom.data(layer_element, "element")

@@ -16409,7 +16409,7 @@ CUI.ready(function() {
     type: ["keyup"],
     node: document.body,
     call: function(ev) {
-      var element, layer, layer_element, layer_elements;
+      var layer, layer_element, layer_elements, ref;
       if (ev.keyCode() !== 27 || CUI.globalDrag) {
         return;
       }
@@ -16418,8 +16418,7 @@ CUI.ready(function() {
       if (!layer_element) {
         return;
       }
-      element = CUI.dom.closest(ev.getTarget(), "[tabindex],select,input,textarea");
-      if ((element === layer_element)) {
+      if ((ref = ev.getTarget()) !== layer_element && ref !== document.body) {
         return;
       }
       layer = CUI.dom.data(layer_element, "element");
