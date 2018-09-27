@@ -9127,7 +9127,11 @@ CUI.DataField = (function(superClass) {
   };
 
   DataField.prototype.registerLabel = function(lbl) {
-    return lbl.setAttribute('for', this.getUniqueIdForLabel());
+    var _for;
+    _for = this.getUniqueIdForLabel();
+    if (_for) {
+      lbl.setAttribute('for', _for);
+    }
   };
 
   DataField.prototype.getLabel = function() {
@@ -29176,6 +29180,9 @@ CUI.SimpleForm = (function(superClass) {
             left_side = cb;
           } else {
             left_side = get_label(field);
+            if ((left_side != null ? left_side.nodeName : void 0) === "LABEL") {
+              left_side.classList.add("cui-block-title");
+            }
           }
           blk = new CUI.Block({
             attr: {
