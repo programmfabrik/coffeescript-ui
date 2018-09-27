@@ -708,13 +708,13 @@ li > div {
 // Pane
 .cui-pane--window {
 	> .cui-vertical-layout-top > .cui-pane-header {
-		background: $header-background;
-		border-color: $header-border;
 		min-height: $toolbar-height;
+		border-bottom: none;
 
-		.cui-popover & {
-			background: lighten($header-background, 3%);
-			border-color: lighten($header-border, 3%);
+		.cui-layer &:only-child,
+		.cui-popover &:only-child {
+			background: $header-background;
+			border-bottom: 1px solid $header-border;
 		}
 
 		.cui-label {
@@ -5684,7 +5684,7 @@ label[data-label-clickable],
 				flex: 1 0 0%;
 				box-shadow: 0 1px 2px hsla(205,10%,50%, 0.12);
 				
-				.cui-block {
+				.cui-block:not(.cui-form-block) {
 					border-top: 1px solid $border;
 					border-bottom: 1px solid $border;
 					margin: $p -#{$p};
