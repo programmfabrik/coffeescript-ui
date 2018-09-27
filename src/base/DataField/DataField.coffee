@@ -171,7 +171,10 @@ class CUI.DataField extends CUI.DOMElement
 		check: String
 
 	registerLabel: (lbl) ->
-		lbl.setAttribute('for', @getUniqueIdForLabel())
+		_for = @getUniqueIdForLabel()
+		if _for
+			lbl.setAttribute('for', _for)
+		return
 
 	getLabel: ->
 		@_label

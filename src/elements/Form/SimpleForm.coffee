@@ -397,6 +397,9 @@ class CUI.SimpleForm extends CUI.DataField
 				else
 					left_side = get_label(field)
 
+					if left_side?.nodeName == "LABEL"
+						left_side.classList.add("cui-block-title")
+
 				blk = new CUI.Block
 					attr:
 						"cui-form-depth": form_depth
