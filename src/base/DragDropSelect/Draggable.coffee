@@ -263,6 +263,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 					pointTarget = ev.getTarget()
 
 				$target = pointTarget
+				if not $target
+					return
 
 				if CUI.globalDrag.ended
 					return
