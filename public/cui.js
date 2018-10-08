@@ -10779,6 +10779,9 @@ CUI.Draggable = (function(superClass) {
             pointTarget = ev.getTarget();
           }
           $target = pointTarget;
+          if (!$target) {
+            return;
+          }
           if (CUI.globalDrag.ended) {
             return;
           }
@@ -40703,7 +40706,6 @@ CUI.Options = (function(superClass) {
       for (j = 0, len1 = ref.length; j < len1; j++) {
         opt = ref[j];
         if (opt.value === value) {
-          console.debug("value is ok.", this.hasData(), this.getData()[this._name]);
           return;
         }
       }
