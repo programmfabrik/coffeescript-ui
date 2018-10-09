@@ -1977,6 +1977,11 @@ a[role="button"].cui-button-appearance-link {
     .cui-form-hint-label .cui-label-multiline .cui-label-content {
       flex-basis: 0%; }
 
+.cui-form-hint {
+  max-width: 275px; }
+  .cui-data-field.maximize-horizontal + .cui-form-hint {
+    max-width: 100%; }
+
 .cui-input-valid-hint {
   font-size: 11px;
   margin-top: 2.5px; }

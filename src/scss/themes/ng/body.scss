@@ -2581,6 +2581,14 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+.cui-form-hint {
+	max-width: $input-width;
+	
+	.cui-data-field.maximize-horizontal + & {
+		max-width: 100%;
+	}
+}
+
 .cui-input-valid-hint {
 	font-size: 11px;
 	margin-top: $padding/4;
