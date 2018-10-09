@@ -4274,6 +4274,16 @@ a[role="button"].cui-button-appearance-link {
 	.cui-input input:not([data-max-chars]) {
 		width: 100%;
 	}
+
+	.cui-block & {
+		.cui-td:first-child {
+			padding-left: 0;
+		}
+
+		.cui-td:last-child {
+			padding-right: 0;
+		}
+	}
 }
 
 .cui-table-row {
@@ -5587,10 +5597,16 @@ label[data-label-clickable],
 
 .cui-block {
 	flex-shrink: 0;
-	padding-bottom: 2*$padding;
+	padding-top: 1.5*$padding;
 	
-	&:last-child {
-		padding-bottom: 0;
+	&:first-child {
+		padding-top: 0;
+	}
+
+	> .cui-block-header {		
+		.cui-block-title {
+			font-weight: 600;
+		}
 	}
 
 	.cui-block-description {
@@ -5628,7 +5644,6 @@ label[data-label-clickable],
 	&.cui-block-level-1 {
 		> .cui-block-header .cui-block-title {
 			font-size: 16px;
-			font-weight: 600;
 		}
 
 		&.appearance-wide {
@@ -5650,7 +5665,6 @@ label[data-label-clickable],
 	&.cui-block-level-2 {
 		> .cui-block-header .cui-block-title {
 			font-size: 14px;
-			font-weight: 600;
 		}
 
 		&.appearance-wide {
@@ -5684,11 +5698,17 @@ label[data-label-clickable],
 				flex: 1 0 0%;
 				box-shadow: 0 1px 2px hsla(205,10%,50%, 0.12);
 				
-				.cui-block {
+				.cui-block-level-3 {
 					border-top: 1px solid $border;
 					border-bottom: 1px solid $border;
 					margin: $p -#{$p};
 					padding: $p;
+				
+					&:first-child {
+						border-top-width: 0;
+						margin-top: 0;
+						padding-top: 0;
+					}
 				
 					&:last-child {
 						border-bottom-width: 0;
@@ -5703,11 +5723,14 @@ label[data-label-clickable],
 	&.cui-block-level-3 {
 		padding-bottom: $padding;
 		
-		> .cui-block-header .cui-block-title {
-			font-size: 12px;
-			font-weight: 600;
-			text-transform: uppercase;
-			margin-bottom: 1.5*$padding;
+		> .cui-block-header {
+			padding-bottom: 1.5*$padding;
+				
+			.cui-block-title {
+				font-size: 12px;
+				text-transform: uppercase;
+				margin-bottom: 1.5*$padding;
+			}
 		}
 	}
 
@@ -5763,6 +5786,7 @@ label[data-label-clickable],
 	}
 
 	.cui-block {
+		padding-top: 0;
 		margin-top: $padding;
 		margin-bottom: $padding;
 	}
@@ -5775,10 +5799,8 @@ label[data-label-clickable],
 }
 
 .cui-form-block {
-
 	> .cui-block-header {
-		border-bottom: none;
-		padding-bottom: 0;
+		padding-bottom: 1.5*$padding;
 	}
 
 	&:not(:last-child) .cui-block-content {
