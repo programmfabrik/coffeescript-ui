@@ -88,7 +88,7 @@ $highlight-color: map-get($highlight, 'dark');
 $row-highlight: map-get($highlight, 'light');
 $on-highlight-color: white;
 $on-highlight-muted-color: desaturate($row-highlight, 50%);
-$on-row-highlight-muted-color: darken(desaturate($row-highlight, 70%), 36%);
+$on-row-highlight-muted-color: darken(desaturate($row-highlight, 70%), 25%);
 $on-row-highlight-secondary-color: darken(desaturate($row-highlight, 75%), 40%);
 
 $button-background: white;

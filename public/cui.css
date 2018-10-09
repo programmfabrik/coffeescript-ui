@@ -1656,7 +1656,7 @@ a[role="button"].cui-button-appearance-link {
   .cui-label-appearance-muted {
     color: #949a9e; }
     .cui-selected .cui-label-appearance-muted {
-      color: #577ca2; }
+      color: #7a98b8; }
   .cui-label--padded {
     padding: 10px; }
     .cui-label--padded + .cui-block > .cui-block-header {
@@ -3967,8 +3967,11 @@ label[data-label-clickable],
   .cui-block.cui-form-block--has-checkbox > .cui-block-content {
     margin-left: 17px; }
   .cui-block--padded {
-    padding-left: 10px;
-    padding-right: 10px; }
+    padding: 10px; }
+    .cui-block--padded:first-child {
+      padding-top: 10px; }
+    .cui-block--padded:last-child {
+      padding-bottom: 10px; }
 
 .cui-block-header {
   padding: 0 0 5px; }
@@ -3999,9 +4002,6 @@ label[data-label-clickable],
 .cui-block-content .cui-block-content {
   margin-left: 0;
   margin-right: 0; }
-
-.cui-form-block > .cui-block-header {
-  padding-bottom: 15px; }
 
 .cui-form-block:not(:last-child) .cui-block-content {
   padding-bottom: 0; }
