@@ -1161,6 +1161,10 @@ li > div {
 		}
 	}
 
+	.cui-toolbar & {
+		padding: 5px 6px;
+	}
+
 	&.cui-active {
 		.cui-button-visual {
 			box-shadow: 0 0 0 1px transparentize(darken($highlight-color, 7%), 0.8);
@@ -1189,6 +1193,8 @@ li > div {
 	}
 
 	.cui-button-visual {
+		padding: 0 4px;
+		border-radius: $button-radius - 1px;
 		height: 22px;
 		border-color: transparent;
 		box-shadow: 0 0 0 1px hsla(0,0%,0%,.1);
