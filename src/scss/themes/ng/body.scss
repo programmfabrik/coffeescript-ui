@@ -5676,7 +5676,6 @@ label[data-label-clickable],
 	&.cui-block-level-2 {
 		> .cui-block-header .cui-block-title {
 			font-size: 14px;
-			color: $header-color;
 		}
 
 		&.appearance-wide {
@@ -5696,6 +5695,7 @@ label[data-label-clickable],
 				
 				.cui-block-title {
 					font-size: 15px;
+					color: $header-color;
 					padding: $padding 0;
 				}
 			}
