@@ -31,7 +31,7 @@ class CUI.CSVData extends CUI.Element
 		for row in @rows
 			if row.length < @__max_column_count
 				for idx in [row.length...@__max_column_count]
-					row[idx] = null
+					row[idx] = ""
 		return
 
 	getMaxColumnCount: ->
