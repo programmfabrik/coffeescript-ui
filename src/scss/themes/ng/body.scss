@@ -5364,10 +5364,6 @@ label[data-label-clickable],
 
 	&.cui-data-field-hidden {
 		display: none !important;
-
-		+ .cui-multi-input-input {
-			margin-top: 0;
-		}
 	}
 
 	.cui-input,

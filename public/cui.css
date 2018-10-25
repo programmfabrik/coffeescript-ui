@@ -3727,8 +3727,6 @@ label[data-label-clickable],
       box-shadow: none; }
   .cui-multi-input-input.cui-data-field-hidden {
     display: none !important; }
-    .cui-multi-input-input.cui-data-field-hidden + .cui-multi-input-input {
-      margin-top: 0; }
   .cui-multi-input-input .cui-input,
   .cui-multi-input-input .cui-textarea {
     width: 100% !important;
