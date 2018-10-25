@@ -5663,7 +5663,7 @@ label[data-label-clickable],
 				.cui-block-title {
 					font-size: 28px;
 					line-height: 1.5;
-					color: $header-color;
+					color: darken($header-color, 6%);
 				}
 			}
 
@@ -5695,7 +5695,7 @@ label[data-label-clickable],
 				
 				.cui-block-title {
 					font-size: 15px;
-					color: $header-color;
+					color: darken($header-color, 14%);
 					padding: $padding 0;
 				}
 			}
@@ -5742,6 +5742,7 @@ label[data-label-clickable],
 				font-size: 12px;
 				text-transform: uppercase;
 				margin-bottom: 1.5*$padding;
+				letter-spacing: 0.03em;
 			}
 		}
 	}
