@@ -21574,7 +21574,7 @@ CUI.Button = (function(superClass) {
   };
 
   Button.prototype.activate = function(flags, event) {
-    var activate, btn, i, idx, len, ref, ret;
+    var _flags, activate, btn, i, idx, len, ref, ret;
     if (flags == null) {
       flags = {};
     }
@@ -21595,16 +21595,17 @@ CUI.Button = (function(superClass) {
       return this;
     }
     if (this.__radio) {
+      _flags = {
+        prior_activate: this,
+        initial_activate: flags.initial_activate
+      };
       ref = this.getRadioButtons();
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
         btn = ref[idx];
         if (btn === this || !btn.isActive()) {
           continue;
         }
-        btn.deactivate({
-          prior_activate: true,
-          initial_activate: flags.initial_activate
-        });
+        btn.deactivate(_flags);
       }
     }
     this.__active = true;
@@ -28834,6 +28835,9 @@ CUI.SimpleForm = (function(superClass) {
         node: this.__checkbox,
         call: (function(_this) {
           return function() {
+            if (!_this.__checkbox_set_data) {
+              return;
+            }
             if (_this.__checkbox_data.checkbox) {
               return _this.__checkbox_set_data[_this._name] = _this.__checkbox_form_data;
             } else {
@@ -29188,6 +29192,7 @@ CUI.SimpleForm = (function(superClass) {
             }
           }
           blk = new CUI.Block({
+            padded: false,
             attr: {
               "cui-form-depth": form_depth
             },
@@ -43555,7 +43560,7 @@ CUI.Tab = (function(superClass) {
       },
       active: false,
       onActivate: (function(_this) {
-        return function(btn) {
+        return function(btn, flags, event) {
           _this.__activations++;
           if (_this._load_on_show && !_this.__content_loaded) {
             _this.loadContent();
@@ -43567,7 +43572,7 @@ CUI.Tab = (function(superClass) {
             }
           }
           if (typeof _this._onActivate === "function") {
-            _this._onActivate(_this);
+            _this._onActivate(_this, flags, event);
           }
           return CUI.Events.trigger({
             type: "tab_activate",
@@ -43576,10 +43581,10 @@ CUI.Tab = (function(superClass) {
         };
       })(this),
       onDeactivate: (function(_this) {
-        return function(btn) {
+        return function(btn, flags, event) {
           _this.hide();
           if (typeof _this._onDeactivate === "function") {
-            _this._onDeactivate(_this);
+            _this._onDeactivate(_this, flags, event);
           }
           return CUI.Events.trigger({
             type: "tab_deactivate",
@@ -43905,20 +43910,6 @@ CUI.Tabs = (function(superClass) {
     this.getLayout().append(this.__tabs_bodies, "center");
     if (this._appearance === "mini") {
       this.addClass("cui-tabs--mini");
-    }
-    if (!CUI.__ng__) {
-      if (!this.__maximize_horizontal || !this.__maximize_vertical) {
-        CUI.Events.listen({
-          node: this.getLayout(),
-          type: "content-resize",
-          call: (function(_this) {
-            return function(event, info) {
-              event.stopPropagation();
-              return _this.__doLayout();
-            };
-          })(this)
-        });
-      }
     }
     this.__tabs = [];
     ref = this._tabs;
