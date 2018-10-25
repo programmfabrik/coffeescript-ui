@@ -3900,7 +3900,7 @@ label[data-label-clickable],
     margin-bottom: 10px; }
   .cui-block.cui-block-level-1.appearance-wide, .cui-block.cui-block-level-2.appearance-wide {
     background: #eef0f1;
-    padding: 20px 20px;
+    padding: 20px;
     position: relative; }
     .cui-block.cui-block-level-1.appearance-wide:after, .cui-block.cui-block-level-2.appearance-wide:after {
       content: "";
@@ -3915,16 +3915,19 @@ label[data-label-clickable],
       display: none; }
   .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
     font-size: 16px; }
-  .cui-block.cui-block-level-1.appearance-wide > .cui-block-header {
-    padding-bottom: 0; }
-    .cui-block.cui-block-level-1.appearance-wide > .cui-block-header .cui-block-title {
-      font-size: 28px;
-      line-height: 1.5;
-      color: #383e42; }
-  .cui-block.cui-block-level-1.appearance-wide > .cui-block-content {
-    color: #6d7478; }
+  .cui-block.cui-block-level-1.appearance-wide {
+    padding-top: 13px; }
+    .cui-block.cui-block-level-1.appearance-wide > .cui-block-header {
+      padding-bottom: 0; }
+      .cui-block.cui-block-level-1.appearance-wide > .cui-block-header .cui-block-title {
+        font-size: 28px;
+        line-height: 1.5;
+        color: #464e53; }
+    .cui-block.cui-block-level-1.appearance-wide > .cui-block-content {
+      color: #6d7478; }
   .cui-block.cui-block-level-2 > .cui-block-header .cui-block-title {
-    font-size: 14px; }
+    font-size: 14px;
+    color: #464e53; }
   .cui-block.cui-block-level-2.appearance-wide {
     display: flex;
     flex-wrap: wrap;

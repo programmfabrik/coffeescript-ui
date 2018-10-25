@@ -5627,7 +5627,7 @@ label[data-label-clickable],
 	&.cui-block-level-2 {
 		&.appearance-wide {
 			background: $toolbar-background;
-			padding: 2*$padding 2*$padding;
+			padding: 2*$padding;
 			position: relative;
 			
 			&:after {
@@ -5655,13 +5655,15 @@ label[data-label-clickable],
 		}
 
 		&.appearance-wide {
+			padding-top: 13px; // compensate for the headline line-height
+
 			> .cui-block-header {
 				padding-bottom: 0;
 
 				.cui-block-title {
 					font-size: 28px;
 					line-height: 1.5;
-					color: darken($header-color, 6%);
+					color: $header-color;
 				}
 			}
 
@@ -5674,6 +5676,7 @@ label[data-label-clickable],
 	&.cui-block-level-2 {
 		> .cui-block-header .cui-block-title {
 			font-size: 14px;
+			color: $header-color;
 		}
 
 		&.appearance-wide {
