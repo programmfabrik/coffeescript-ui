@@ -50,7 +50,7 @@ class CUI.Tab extends CUI.DOMElement
 			attr:
 				tab: @_name
 			active: false
-			onActivate: (btn) =>
+			onActivate: (btn, flags, event) =>
 				@__activations++
 				if @_load_on_show and not @__content_loaded
 					@loadContent()
@@ -59,14 +59,14 @@ class CUI.Tab extends CUI.DOMElement
 				if @__activations == 1
 					@_onFirstActivate?(@)
 
-				@_onActivate?(@)
+				@_onActivate?(@, flags, event)
 				CUI.Events.trigger
 					type: "tab_activate"
 					node: @DOM
 
-			onDeactivate: (btn) =>
+			onDeactivate: (btn, flags, event) =>
 				@hide()
-				@_onDeactivate?(@)
+				@_onDeactivate?(@, flags, event)
 				CUI.Events.trigger
 					type: "tab_deactivate"
 					node: @DOM

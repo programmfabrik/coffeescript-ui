@@ -143,18 +143,6 @@ class CUI.Tabs extends CUI.SimplePane
 		if @_appearance == "mini"
 			@addClass("cui-tabs--mini")
 
-		if not CUI.__ng__
-			if not @__maximize_horizontal or not @__maximize_vertical
-				CUI.Events.listen
-					node: @getLayout()
-					type: "content-resize"
-					call: (event, info) =>
-						event.stopPropagation()
-						@__doLayout()
-
-			# if not @_footer_left and not @_footer_right
-			#       @tabs.map.footer.css("display","none")
-
 		@__tabs = []
 		for tab, idx in @_tabs
 			if not tab

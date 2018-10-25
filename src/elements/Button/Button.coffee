@@ -720,11 +720,17 @@ class CUI.Button extends CUI.DOMElement
 			return @
 
 		if @__radio
+			_flags =
+				prior_activate: @
+				initial_activate: flags.initial_activate
+
 			for btn, idx in @getRadioButtons()
 				if btn == @ or not btn.isActive()
 					continue
 
-				btn.deactivate(prior_activate: true, initial_activate: flags.initial_activate)
+				# don't send the event here, since this happens
+				# code driven
+				btn.deactivate(_flags)
 
 		@__active = true
 		ret = @_onActivate?(@, flags, event)

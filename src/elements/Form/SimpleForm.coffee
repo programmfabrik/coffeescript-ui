@@ -75,6 +75,8 @@ class CUI.SimpleForm extends CUI.DataField
 				type: "data-changed"
 				node: @__checkbox
 				call: =>
+					if not @__checkbox_set_data
+						return
 					if @__checkbox_data.checkbox
 						@__checkbox_set_data[@_name] = @__checkbox_form_data
 					else
@@ -401,6 +403,7 @@ class CUI.SimpleForm extends CUI.DataField
 						left_side.classList.add("cui-block-title")
 
 				blk = new CUI.Block
+					padded: false
 					attr:
 						"cui-form-depth": form_depth
 					class: "cui-form-block"
