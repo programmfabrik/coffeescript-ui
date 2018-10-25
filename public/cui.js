@@ -8368,7 +8368,7 @@ CUI.CSVData = (function(superClass) {
       row = ref1[j];
       if (row.length < this.__max_column_count) {
         for (idx = k = ref2 = row.length, ref3 = this.__max_column_count; ref2 <= ref3 ? k < ref3 : k > ref3; idx = ref2 <= ref3 ? ++k : --k) {
-          row[idx] = null;
+          row[idx] = "";
         }
       }
     }
