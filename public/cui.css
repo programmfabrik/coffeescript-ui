@@ -3919,7 +3919,8 @@ label[data-label-clickable],
     padding-bottom: 0; }
     .cui-block.cui-block-level-1.appearance-wide > .cui-block-header .cui-block-title {
       font-size: 28px;
-      line-height: 1.5; }
+      line-height: 1.5;
+      color: #383e42; }
   .cui-block.cui-block-level-1.appearance-wide > .cui-block-content {
     color: #6d7478; }
   .cui-block.cui-block-level-2 > .cui-block-header .cui-block-title {
