@@ -407,8 +407,8 @@ class CUI.Layer extends CUI.DOMElement
 		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
-		body_scroll_top = dim_body.scrollTop
-		body_scroll_left = dim_body.scrollLeft
+		body_scroll_top = dim_body.scrollTop + document.documentElement.scrollTop
+		body_scroll_left = dim_body.scrollLeft + document.documentElement.scrollLeft
 
 		if @__element
 			dim_element = CUI.dom.getDimensions(@__element)
@@ -890,8 +890,8 @@ class CUI.Layer extends CUI.DOMElement
 		CUI.dom.setAttribute(@__layer_root.DOM, "cui-fill-space", @_fill_space)
 
 		set_css =
-			top: vp.layer_pos.top + body_scroll_top
-			left: vp.layer_pos.left + body_scroll_left
+			top: vp.layer_pos.top
+			left: vp.layer_pos.left
 			minWidth: minWidth
 			margin: 0
 
@@ -912,19 +912,21 @@ class CUI.Layer extends CUI.DOMElement
 			set_css.left = vp.layer_pos.left
 		else
 			@__layer_root.DOM.removeAttribute("cui-layer-fixed")
+
+			set_root_css =
+				top: body_scroll_top
+				left: body_scroll_left
+				bottom: 0
+				right: 0
+
 			# if the body is positioned, we need to adjust the root layer's position
 			if dim_body.isPositioned
-				CUI.dom.setStyle @__layer_root.DOM,
-					top: - (dim_body.marginTop + dim_body.borderTopWidth)
-					left: - (dim_body.marginLeft + dim_body.borderLeftWidth)
-					bottom: - (dim_body.marginBottom + dim_body.borderBottomWidth)
-					right: - (dim_body.marginRight + dim_body.borderRightWidth)
-			else
-				CUI.dom.setStyle @__layer_root.DOM,
-					top: null
-					left: null
-					bottom: null
-					right: null
+				set_root_css.top -= (dim_body.marginTop + dim_body.borderTopWidth)
+				set_root_css.left -= (dim_body.marginLeft + dim_body.borderLeftWidth)
+				set_root_css.bottom -= (dim_body.marginBottom + dim_body.borderBottomWidth)
+				set_root_css.right -= (dim_body.marginRight + dim_body.borderRightWidth)
+
+			CUI.dom.setStyle(@__layer_root.DOM, set_root_css)
 
 		if placement == "c" and not CUI.browser.ie
 			# placement can be done by pure CSS
@@ -955,8 +957,8 @@ class CUI.Layer extends CUI.DOMElement
 					margin: 0
 			else
 				CUI.dom.setStyle @__pointer,
-					top: vp.pointer_pos.top + body_scroll_top
-					left: vp.pointer_pos.left + body_scroll_left
+					top: vp.pointer_pos.top
+					left: vp.pointer_pos.left
 					margin: 0
 
 			CUI.dom.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
