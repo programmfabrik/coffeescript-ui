@@ -333,8 +333,12 @@ class CUI.Layer extends CUI.DOMElement
 		if not @isShown()
 			return @
 
+		dim_body = CUI.dom.getDimensions(document.body)
+
+		dim_body.isPositioned = dim_body.computedStyle.position in ["relative", "fixed", "absolute"]
+
 		dim_window =
-			width: document.body.clientWidth
+			width: window.innerWidth
 			height: window.innerHeight
 
 		get_pointer_direction = (placement) ->
@@ -347,12 +351,7 @@ class CUI.Layer extends CUI.DOMElement
 			}[placement]
 
 		get_pointer_class = (direction) =>
-			if CUI.__ng__
-				"cui-layer-pointer--"+direction
-			else
-				# we need to map this back, the interpretatin
-				# in old css was different
-				"cui-pointer-placement-"+get_pointer_direction(direction)
+			"cui-layer-pointer--"+direction
 
 		if @__pointer
 			# reset pointer
@@ -408,8 +407,8 @@ class CUI.Layer extends CUI.DOMElement
 		allowed_placements = (@_placements or @knownPlacements).slice(0)
 		wanted_placement = @_placement or allowed_placements[0]
 
-		body_scroll_top = document.body.scrollTop + document.documentElement.scrollTop
-		body_scroll_left = document.body.scrollLeft + document.documentElement.scrollLeft
+		body_scroll_top = dim_body.scrollTop
+		body_scroll_left = dim_body.scrollLeft
 
 		if @__element
 			dim_element = CUI.dom.getDimensions(@__element)
@@ -422,7 +421,6 @@ class CUI.Layer extends CUI.DOMElement
 			dim_element.viewportBottom = dim_element.viewportTop
 			dim_element.viewportRight = dim_element.viewportLeft
 		else
-
 			dim_element =
 				viewportTop: 0
 				viewportLeft: 0
@@ -914,6 +912,19 @@ class CUI.Layer extends CUI.DOMElement
 			set_css.left = vp.layer_pos.left
 		else
 			@__layer_root.DOM.removeAttribute("cui-layer-fixed")
+			# if the body is positioned, we need to adjust the root layer's position
+			if dim_body.isPositioned
+				CUI.dom.setStyle @__layer_root.DOM,
+					top: - (dim_body.marginTop + dim_body.borderTopWidth)
+					left: - (dim_body.marginLeft + dim_body.borderLeftWidth)
+					bottom: - (dim_body.marginBottom + dim_body.borderBottomWidth)
+					right: - (dim_body.marginRight + dim_body.borderRightWidth)
+			else
+				CUI.dom.setStyle @__layer_root.DOM,
+					top: null
+					left: null
+					bottom: null
+					right: null
 
 		if placement == "c" and not CUI.browser.ie
 			# placement can be done by pure CSS

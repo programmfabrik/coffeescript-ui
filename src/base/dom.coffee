@@ -1277,9 +1277,6 @@ class CUI.dom
 
 	@isPositioned: (docElem) ->
 		CUI.util.assert(docElem instanceof HTMLElement, "CUI.dom.isPositioned", "docElem needs to be instance of HTMLElement.", docElem: docElem)
-		if docElem == document.body or docElem == document.documentElement
-			return true
-
 		@getComputedStyle(docElem).position in ["relative", "absolute", "fixed"]
 
 	@isVisible: (docElem) ->
