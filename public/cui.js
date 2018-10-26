@@ -15501,7 +15501,7 @@ CUI.Layer = (function(superClass) {
   };
 
   Layer.prototype.position = function(ev) {
-    var allowed_placements, available_placements, body_scroll_left, body_scroll_top, dbg_pl, dim_body, dim_element, dim_layer, dim_pointer, dim_window, direction, get_pointer_class, get_pointer_direction, i, is_fixed, j, k, l, layer_pos, layer_pos_bottom, layer_pos_right, len, len1, len2, len3, len4, listener, m, marginBottom, marginLeft, marginRight, marginTop, minWidth, overlap_bottom, overlap_height, overlap_right, overlap_width, placement, placement_parts, pointer_direction, pointer_pos, pointer_pos_bottom, pointer_pos_right, pushNeeded, ref, ref1, ref2, ref3, ref4, ref5, ref6, set_css, show_dbg_div, sibl, spaceAvailable, vp, vp_pl, wanted_placement, wanted_rank;
+    var allowed_placements, available_placements, body_scroll_left, body_scroll_top, dbg_pl, dim_body, dim_element, dim_layer, dim_pointer, dim_window, direction, get_pointer_class, get_pointer_direction, i, is_fixed, j, k, l, layer_pos, layer_pos_bottom, layer_pos_right, len, len1, len2, len3, len4, listener, m, marginBottom, marginLeft, marginRight, marginTop, minWidth, overlap_bottom, overlap_height, overlap_right, overlap_width, placement, placement_parts, pointer_direction, pointer_pos, pointer_pos_bottom, pointer_pos_right, pushNeeded, ref, ref1, ref2, ref3, ref4, ref5, ref6, set_css, set_root_css, show_dbg_div, sibl, spaceAvailable, vp, vp_pl, wanted_placement, wanted_rank;
     if (!this.isShown()) {
       return this;
     }
@@ -15571,8 +15571,8 @@ CUI.Layer = (function(superClass) {
     dim_layer = CUI.dom.getDimensions(this.__layer.DOM);
     allowed_placements = (this._placements || this.knownPlacements).slice(0);
     wanted_placement = this._placement || allowed_placements[0];
-    body_scroll_top = dim_body.scrollTop;
-    body_scroll_left = dim_body.scrollLeft;
+    body_scroll_top = dim_body.scrollTop + document.documentElement.scrollTop;
+    body_scroll_left = dim_body.scrollLeft + document.documentElement.scrollLeft;
     if (this.__element) {
       dim_element = CUI.dom.getDimensions(this.__element);
     } else if (this._show_at_position) {
@@ -16016,8 +16016,8 @@ CUI.Layer = (function(superClass) {
     CUI.dom.setAttribute(this.__layer_root.DOM, "cui-placement", placement);
     CUI.dom.setAttribute(this.__layer_root.DOM, "cui-fill-space", this._fill_space);
     set_css = {
-      top: vp.layer_pos.top + body_scroll_top,
-      left: vp.layer_pos.left + body_scroll_left,
+      top: vp.layer_pos.top,
+      left: vp.layer_pos.left,
       minWidth: minWidth,
       margin: 0
     };
@@ -16038,21 +16038,19 @@ CUI.Layer = (function(superClass) {
       set_css.left = vp.layer_pos.left;
     } else {
       this.__layer_root.DOM.removeAttribute("cui-layer-fixed");
+      set_root_css = {
+        top: body_scroll_top,
+        left: body_scroll_left,
+        bottom: 0,
+        right: 0
+      };
       if (dim_body.isPositioned) {
-        CUI.dom.setStyle(this.__layer_root.DOM, {
-          top: -(dim_body.marginTop + dim_body.borderTopWidth),
-          left: -(dim_body.marginLeft + dim_body.borderLeftWidth),
-          bottom: -(dim_body.marginBottom + dim_body.borderBottomWidth),
-          right: -(dim_body.marginRight + dim_body.borderRightWidth)
-        });
-      } else {
-        CUI.dom.setStyle(this.__layer_root.DOM, {
-          top: null,
-          left: null,
-          bottom: null,
-          right: null
-        });
+        set_root_css.top -= dim_body.marginTop + dim_body.borderTopWidth;
+        set_root_css.left -= dim_body.marginLeft + dim_body.borderLeftWidth;
+        set_root_css.bottom -= dim_body.marginBottom + dim_body.borderBottomWidth;
+        set_root_css.right -= dim_body.marginRight + dim_body.borderRightWidth;
       }
+      CUI.dom.setStyle(this.__layer_root.DOM, set_root_css);
     }
     if (placement === "c" && !CUI.browser.ie) {
 
@@ -16073,8 +16071,8 @@ CUI.Layer = (function(superClass) {
         });
       } else {
         CUI.dom.setStyle(this.__pointer, {
-          top: vp.pointer_pos.top + body_scroll_top,
-          left: vp.pointer_pos.left + body_scroll_left,
+          top: vp.pointer_pos.top,
+          left: vp.pointer_pos.left,
           margin: 0
         });
       }
