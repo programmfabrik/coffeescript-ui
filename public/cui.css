@@ -700,7 +700,7 @@ li > div {
 
 .cui-pane-fill-screen {
   transition: top ease-out 0.5s,right ease-out 0.5s,left ease-out 0.5s,bottom ease-out 0.5s;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -2001,8 +2001,8 @@ a[role="button"].cui-button-appearance-link {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4093,9 +4093,9 @@ label[data-label-clickable],
 .cui-progress-meter[state="percent"] .cui-progress-meter-fill {
   display: flex; }
 
-.cui-file-upload-drop-zone {
+div.cui-file-upload-drop-zone {
   position: relative; }
-  .cui-file-upload-drop-zone.cui-file-upload-drag-over:after {
+  div.cui-file-upload-drop-zone.cui-file-upload-drag-over:after {
     content: '';
     pointer-events: none;
     display: block;
