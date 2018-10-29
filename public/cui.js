@@ -28224,8 +28224,40 @@ CUI.FileUpload = (function(superClass) {
     return this;
   };
 
+  FileUpload.prototype.openDialog = function(_opts) {
+    var fp, opts;
+    opts = CUI.Element.readOpts(_opts, "FileUpload.openDialog", {
+      directory: {
+        check: Boolean,
+        mandatory: true,
+        "default": false
+      },
+      multiple: {
+        check: Boolean,
+        mandatory: true,
+        "default": false
+      },
+      fileUpload: {
+        check: function(v) {
+          if ((v != null ? v.nodeName : void 0) === "INPUT" && v.type === "file") {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    });
+    fp = this.initFilePicker(opts);
+    opts.fileUpload.click();
+    return fp;
+  };
+
   FileUpload.prototype.initFilePicker = function(opts) {
     var dfr, i, inp, k, len, ref;
+    if (!opts.fileUpload) {
+      opts.fileUpload = document.getElementById("cui-file-upload-button");
+    }
+    opts.fileUpload.form.reset();
     inp = opts.fileUpload;
     ref = ["webkitdirectory", "mozdirectory", "directory"];
     for (i = 0, len = ref.length; i < len; i++) {
@@ -28351,11 +28383,7 @@ CUI.FileUploadButton = (function(superClass) {
   FileUploadButton.prototype.getTemplateName = function() {
     this.__has_left = true;
     this.__has_right = true;
-    if (CUI.__ng__) {
-      return "file-upload-button-ng";
-    } else {
-      return "file-upload-button";
-    }
+    return "file-upload-button-ng";
   };
 
   FileUploadButton.prototype.readOpts = function() {
@@ -28364,20 +28392,21 @@ CUI.FileUploadButton = (function(superClass) {
     return FileUploadButton.__super__.readOpts.call(this);
   };
 
+  FileUploadButton.prototype.run = function(ev, btn) {
+    return this.__onClick(ev);
+  };
+
   FileUploadButton.prototype.__onClick = function(ev, btn) {
-    var ref, uploadBtn;
+    var ref;
     if ((ref = this.__ownClick) != null) {
       ref.call(this, ev, btn);
     }
     if (ev.isDefaultPrevented() || ev.isImmediatePropagationStopped()) {
       return;
     }
-    uploadBtn = document.getElementById("cui-file-upload-button");
-    uploadBtn.form.reset();
     this._fileUpload.initFilePicker({
       directory: (ev.altKey() || ev.shiftKey() && this._multiple) || this._directory,
-      multiple: this._multiple,
-      fileUpload: uploadBtn
+      multiple: this._multiple
     });
   };
 
