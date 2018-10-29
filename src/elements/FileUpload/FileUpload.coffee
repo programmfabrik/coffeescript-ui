@@ -409,10 +409,35 @@ class CUI.FileUpload extends CUI.Element
 				el.classList.remove("cui-file-upload-drag-over")
 		@
 
+
+	openDialog: (_opts) ->
+
+		opts = CUI.Element.readOpts _opts, "FileUpload.openDialog",
+			directory:
+				check: Boolean
+				mandatory: true
+				default: false
+			multiple:
+				check: Boolean
+				mandatory: true
+				default: false
+			fileUpload:
+				check: (v) ->
+					if v?.nodeName == "INPUT" and v.type == "file"
+						return true
+					else
+						return false
+
+		fp = @initFilePicker(opts)
+		opts.fileUpload.click()
+		return fp
+
 	initFilePicker: (opts) ->
-		# opts.directory
-		# opts.multiple
-		# opts.fileUpload (input)
+		if not opts.fileUpload
+			opts.fileUpload = document.getElementById("cui-file-upload-button")
+
+		opts.fileUpload.form.reset()
+
 		inp = opts.fileUpload
 		for k in ["webkitdirectory", "mozdirectory", "directory"]
 			if opts.directory

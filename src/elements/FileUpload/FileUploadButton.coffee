@@ -13,7 +13,6 @@ class CUI.FileUploadButton extends CUI.Button
 		if @_drop
 			@_fileUpload.initDropZone(dropZone: @DOM)
 
-
 	initOpts: ->
 		super()
 		@addOpts
@@ -32,15 +31,15 @@ class CUI.FileUploadButton extends CUI.Button
 	getTemplateName: ->
 		@__has_left = true
 		@__has_right = true
-		if CUI.__ng__
-			return "file-upload-button-ng"
-		else
-			return "file-upload-button"
+		return "file-upload-button-ng"
 
 	readOpts: ->
 		@__ownClick = @opts.onClick
 		@opts.onClick = @__onClick
 		super()
+
+	run: (ev, btn) ->
+		@__onClick(ev)
 
 	__onClick: (ev, btn) =>
 
@@ -49,13 +48,9 @@ class CUI.FileUploadButton extends CUI.Button
 		if ev.isDefaultPrevented() or ev.isImmediatePropagationStopped()
 			return
 
-		uploadBtn = document.getElementById("cui-file-upload-button")
-		uploadBtn.form.reset()
-
 		@_fileUpload.initFilePicker
 			directory: (ev.altKey() or ev.shiftKey() and @_multiple) or @_directory
 			multiple: @_multiple
-			fileUpload: uploadBtn
 
 		return
 
