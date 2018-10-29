@@ -142,6 +142,7 @@ class CUI.CSVData extends CUI.Element
 
 		lines = 0
 
+		space_chars = [' ']
 		auto_quotechars = ['"',"'"]
 		auto_delimiters = [",",";","\t"]
 		# space_chars = [" "]
@@ -182,6 +183,10 @@ class CUI.CSVData extends CUI.Element
 				char = text.charAt(idx)
 				# console.debug "char:", idx, char, text.charCodeAt(idx)
 
+				if not in_quotes and char in space_chars
+					idx = idx + 1
+					continue
+
 				if quotechar == null and char in auto_quotechars
 					quotechar = char
 					# console.info("CSVData.parse: detected quotechar:", quotechar)
@@ -190,7 +195,7 @@ class CUI.CSVData extends CUI.Element
 					delimiter = char
 					# console.info("CSVData.parse: detected delimiter:", delimiter)
 
-				if char == quotechar
+				if char == quotechar and (column_chars.length == 0 or in_quotes)
 					if in_quotes
 						if text[idx+1] == quotechar
 							column_chars.push(char)
