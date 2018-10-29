@@ -183,7 +183,8 @@ class CUI.CSVData extends CUI.Element
 				char = text.charAt(idx)
 				# console.debug "char:", idx, char, text.charCodeAt(idx)
 
-				if not in_quotes and char in space_chars
+				if column_chars.length == 0 and not in_quotes and char in space_chars
+					# ignore spaces outside quotes at the beginning of a column
 					idx = idx + 1
 					continue
 
