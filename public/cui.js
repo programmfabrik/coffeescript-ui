@@ -8547,7 +8547,7 @@ CUI.CSVData = (function(superClass) {
         };
         while (idx < len) {
           char = text.charAt(idx);
-          if (!in_quotes && indexOf.call(space_chars, char) >= 0) {
+          if (column_chars.length === 0 && !in_quotes && indexOf.call(space_chars, char) >= 0) {
             idx = idx + 1;
             continue;
           }
