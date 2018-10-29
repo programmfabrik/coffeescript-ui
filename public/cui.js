@@ -8483,7 +8483,7 @@ CUI.CSVData = (function(superClass) {
   };
 
   CSVData.prototype.parse = function(_opts) {
-    var auto_delimiters, auto_quotechars, column_chars, column_idx, columns, delimiter, dfr, do_work, idx, in_quotes, len, lines, opts, quotechar, text;
+    var auto_delimiters, auto_quotechars, column_chars, column_idx, columns, delimiter, dfr, do_work, idx, in_quotes, len, lines, opts, quotechar, space_chars, text;
     if (_opts == null) {
       _opts = {};
     }
@@ -8513,6 +8513,7 @@ CUI.CSVData = (function(superClass) {
     idx = 0;
     in_quotes = false;
     lines = 0;
+    space_chars = [' '];
     auto_quotechars = ['"', "'"];
     auto_delimiters = [",", ";", "\t"];
     if (opts.delimiter !== void 0) {
@@ -8546,13 +8547,17 @@ CUI.CSVData = (function(superClass) {
         };
         while (idx < len) {
           char = text.charAt(idx);
+          if (!in_quotes && indexOf.call(space_chars, char) >= 0) {
+            idx = idx + 1;
+            continue;
+          }
           if (quotechar === null && indexOf.call(auto_quotechars, char) >= 0) {
             quotechar = char;
           }
           if (delimiter === null && indexOf.call(auto_delimiters, char) >= 0) {
             delimiter = char;
           }
-          if (char === quotechar) {
+          if (char === quotechar && (column_chars.length === 0 || in_quotes)) {
             if (in_quotes) {
               if (text[idx + 1] === quotechar) {
                 column_chars.push(char);
