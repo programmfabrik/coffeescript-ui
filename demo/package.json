@@ -6,7 +6,7 @@
     "build": "webpack --progress",
     "build:watch": "webpack --watch --progress",
     "build:no-css": "npm run build -- --env.noCss",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
