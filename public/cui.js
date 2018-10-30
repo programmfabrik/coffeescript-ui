@@ -43449,12 +43449,15 @@ CUI.Table = (function(superClass) {
         check: ["normal", "mini"]
       },
       maximize: {
+        "default": false,
         check: Boolean
       },
       maximize_horizontal: {
+        "default": false,
         check: Boolean
       },
       maximize_vertical: {
+        "default": false,
         check: Boolean
       }
     });

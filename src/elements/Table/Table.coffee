@@ -102,10 +102,13 @@ class CUI.Table extends CUI.DOMElement
 				default: "normal"
 				check: ["normal", "mini"]
 			maximize:
+				default: false
 				check: Boolean
 			maximize_horizontal:
+				default: false
 				check: Boolean
 			maximize_vertical:
+				default: false
 				check: Boolean
 
 	readOpts: ->

@@ -2993,6 +2993,8 @@ a[role="button"].cui-button-appearance-link {
   overflow-x: auto; }
   .cui-table.cui-maximize-horizontal {
     width: 100%; }
+  .cui-data-field-proxy > .cui-table {
+    align-self: flex-start; }
   .cui-table.cui-maximize-vertical {
     flex-grow: 1; }
   .cui-table--bordered {
@@ -4027,11 +4029,13 @@ label[data-label-clickable],
   margin-left: 0;
   margin-right: 0; }
 
-.cui-form-block:not(:last-child) .cui-block-content {
-  padding-bottom: 0; }
-
-.cui-form-block > .cui-block-content > .cui-form {
-  margin: 0; }
+.cui-form-block {
+  margin-left: 10px;
+  margin-right: 10px; }
+  .cui-form-block:not(:last-child) .cui-block-content {
+    padding-bottom: 0; }
+  .cui-form-block > .cui-block-content > .cui-form {
+    margin: 0; }
 
 .cui-sticky-header {
   padding: 5px 10px;

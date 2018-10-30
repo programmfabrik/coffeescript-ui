@@ -4251,6 +4251,10 @@ a[role="button"].cui-button-appearance-link {
 		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
 	}
 
+	.cui-data-field-proxy > & {
+		align-self: flex-start;
+	}
+
 	&.cui-maximize-vertical {
 		flex-grow: 1;
 	}
