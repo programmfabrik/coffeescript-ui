@@ -4101,19 +4101,20 @@ label[data-label-clickable],
 .cui-progress-meter[state="percent"] .cui-progress-meter-fill {
   display: flex; }
 
-div.cui-file-upload-drop-zone {
+.cui-file-upload-drop-zone {
   position: relative; }
-  div.cui-file-upload-drop-zone.cui-file-upload-drag-over:after {
-    content: '';
-    pointer-events: none;
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    box-shadow: 0 0 0 2px #006adb inset;
-    z-index: 1; }
+
+.cui-file-upload-drag-over:after {
+  content: '';
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0 0 2px #006adb inset;
+  z-index: 1; }
 
 .cui-digi-display {
   align-self: flex-start;
