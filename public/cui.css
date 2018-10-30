@@ -1970,14 +1970,15 @@ a[role="button"].cui-button-appearance-link {
   margin-top: 5px; }
   .cui-form-hint .cui-label-icon:not(:empty) + .cui-label-content:not(:empty),
   .cui-form-hint-label .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-    padding-left: 5px; }
+    padding-left: 7px; }
   .cui-form-hint .fa,
   .cui-form-hint-label .fa {
     font-size: 12px; }
   .cui-form-hint .cui-label-multiline,
   .cui-form-hint-label .cui-label-multiline {
     flex-grow: 1;
-    display: flex; }
+    display: flex;
+    align-items: flex-start; }
     .cui-form-hint .cui-label-multiline .cui-label-content,
     .cui-form-hint-label .cui-label-multiline .cui-label-content {
       flex-basis: 0%; }
@@ -3185,6 +3186,13 @@ a[role="button"].cui-button-appearance-link {
   margin-bottom: 10px; }
   .cui-form-row:last-child {
     margin-bottom: 0; }
+
+.cui-form-field-type--checkbox {
+  margin-bottom: 0; }
+  .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-row:first-child {
+    margin-right: 4px; }
+  .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-field-type--input {
+    margin-top: 2px; }
 
 .cui-form-table {
   margin: 0;

@@ -2569,7 +2569,7 @@ a[role="button"].cui-button-appearance-link {
 	margin-top: 5px;
 
 	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-		padding-left: 5px;
+		padding-left: 7px;
 	}
 
 	.fa {
@@ -2580,6 +2580,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-label-multiline {
 		flex-grow: 1;
 		display: flex;
+		align-items: flex-start;
 
 		.cui-label-content {
 			flex-basis: 0%;
@@ -4537,6 +4538,24 @@ a[role="button"].cui-button-appearance-link {
 
 	&:last-child {
 		margin-bottom: 0;
+	}
+}
+
+.cui-form-field-type--checkbox {
+	margin-bottom: 0;
+	
+	// Own value field
+	+ .cui-form-row {
+
+		.cui-form-container.cui-form--horizontal {
+			> .cui-form-row:first-child {
+				margin-right: 4px;
+			}
+
+			> .cui-form-field-type--input {
+				margin-top: 2px;
+			}
+		}
 	}
 }
 
