@@ -5844,6 +5844,9 @@ label[data-label-clickable],
 }
 
 .cui-form-block {
+	margin-left: 10px;
+	margin-right: 10px;
+	
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}
