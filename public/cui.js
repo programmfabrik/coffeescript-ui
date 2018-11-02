@@ -8187,13 +8187,14 @@ CUI.CSSLoader = (function(superClass) {
   };
 
   CSSLoader.prototype.load = function(_opts) {
-    var cssNode, css_href, dfr, i, is_loading, len, oldCssNode, opts, ref, url;
+    var active, cssNode, css_href, dfr, i, is_loading, len, oldCssNode, old_css_nodes, opts, ref, url;
     if (_opts == null) {
       _opts = {};
     }
     opts = CUI.Element.readOpts(_opts, "CSSLoader", {
       theme: {
-        check: String
+        check: String,
+        "default": ""
       },
       url: {
         mandatory: true,
@@ -8210,6 +8211,10 @@ CUI.CSSLoader = (function(superClass) {
         });
         return CUI.rejectedPromise();
       }
+    }
+    active = this.getActiveCSS();
+    if (active && opts.url === active.url && active.theme === opts.theme) {
+      return CUI.resolvedPromise();
     }
     url = opts.url;
     dfr = new CUI.Deferred();
@@ -8229,6 +8234,7 @@ CUI.CSSLoader = (function(superClass) {
       "data-cui-url": opts.url,
       href: css_href
     });
+    old_css_nodes = CUI.dom.matchSelector(document.head, "link[name='" + this.__cssName + "']");
     dfr.always((function(_this) {
       return function() {
         return CUI.dom.removeAttribute(cssNode, "data-cui-loading");
@@ -8245,7 +8251,7 @@ CUI.CSSLoader = (function(superClass) {
       type: "load",
       call: (function(_this) {
         return function(ev, info) {
-          var css_node, ex, found_stylesheet, j, k, len1, len2, old_css_nodes, ref1, ref2, ref3, styleSheet;
+          var css_node, ex, found_stylesheet, j, k, len1, len2, ref1, ref2, styleSheet;
           if (dfr.state() !== "pending") {
             console.warn("CSSLoader.loadTheme: Caught event load second time, ignoring. IE does that for some reason.");
             return;
@@ -8275,14 +8281,12 @@ CUI.CSSLoader = (function(superClass) {
               return;
             }
           }
-          old_css_nodes = [];
-          ref3 = CUI.dom.matchSelector(document.head, "link[name='" + _this.__cssName + "']");
-          for (k = 0, len2 = ref3.length; k < len2; k++) {
-            css_node = ref3[k];
-            if (css_node !== cssNode) {
-              CUI.dom.remove(css_node);
-              old_css_nodes.push(css_node);
+          for (k = 0, len2 = old_css_nodes.length; k < len2; k++) {
+            css_node = old_css_nodes[k];
+            if (css_node === cssNode) {
+              continue;
             }
+            CUI.dom.remove(css_node);
           }
           CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme);
           CUI.Events.trigger({
@@ -8305,7 +8309,11 @@ CUI.CSSLoader = (function(superClass) {
         };
       })(this)
     });
-    document.head.appendChild(cssNode);
+    if (old_css_nodes.length > 0) {
+      CUI.dom.insertAfter(old_css_nodes[old_css_nodes.length - 1], cssNode);
+    } else {
+      document.head.appendChild(cssNode);
+    }
     return dfr.promise();
   };
 
