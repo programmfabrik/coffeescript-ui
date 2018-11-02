@@ -34,16 +34,21 @@ class CUI.CSSLoader extends CUI.Element
 		opts = CUI.Element.readOpts _opts, "CSSLoader",
 			theme:
 				check: String
+				default: ""
 			url:
 				mandatory: true
 				check: String
 
-		# console.error "nodes:", @__getCSSNodes()
+		# console.error "nodes:", @__getCSSNodes(), opts, @getActiveCSS()
 		for oldCssNode in @__getCSSNodes()
 			is_loading = CUI.dom.getAttribute(oldCssNode, "data-cui-loading")
 			if is_loading
 				console.warn("CSSLoader.load. CSS already loading.", opts: opts)
 				return CUI.rejectedPromise()
+
+		active = @getActiveCSS()
+		if active and opts.url == active.url and active.theme == opts.theme
+			return CUI.resolvedPromise()
 
 		url = opts.url
 
@@ -70,6 +75,8 @@ class CUI.CSSLoader extends CUI.Element
 			"data-cui-theme": opts.theme
 			"data-cui-url": opts.url
 			href: css_href
+
+		old_css_nodes = CUI.dom.matchSelector(document.head, "link[name='"+@__cssName+"']")
 
 		dfr.always =>
 			CUI.dom.removeAttribute(cssNode, "data-cui-loading")
@@ -109,12 +116,13 @@ class CUI.CSSLoader extends CUI.Element
 						dfr.reject(css_href)
 						return
 
-				old_css_nodes = []
-				for css_node in CUI.dom.matchSelector(document.head, "link[name='"+@__cssName+"']") # :not([loading])")
-					if css_node != cssNode
+				# old_css_nodes = []
+				for css_node in old_css_nodes # :not([loading])")
+					if css_node == cssNode
+						continue
 						# console.info("CSSLoader.loadTheme: Removing old css node:", CUI.dom.getAttribute(css_node, "href"), "New Node is:", CUI.dom.getAttribute(cssNode, "href"), "Is loading:", CUI.dom.getAttribute(css_node, "loading"))
-						CUI.dom.remove(css_node)
-						old_css_nodes.push(css_node)
+					CUI.dom.remove(css_node)
+						# old_css_nodes.push(css_node)
 
 				CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme)
 
@@ -135,5 +143,8 @@ class CUI.CSSLoader extends CUI.Element
 				dfr.reject(css_href)
 				return
 
-		document.head.appendChild(cssNode)
+		if old_css_nodes.length > 0
+			CUI.dom.insertAfter(old_css_nodes[old_css_nodes.length - 1], cssNode)
+		else
+			document.head.appendChild(cssNode)
 		dfr.promise()
