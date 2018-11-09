@@ -955,14 +955,16 @@ class CUI.dom
 				continue
 			switch v
 				when "", null
-					docElem.style[k] = ""
+					set = ""
 				else
 					if isNaN(Number(v))
-						docElem.style[k] = v
+						set = v
 					else if v == 0 or v == "0"
-						docElem.style[k] = 0
+						set = 0
 					else
-						docElem.style[k] = v + append
+						set = v + append
+			docElem.style.setProperty(k, set)
+
 		docElem
 
 	@getStyle: (element) ->

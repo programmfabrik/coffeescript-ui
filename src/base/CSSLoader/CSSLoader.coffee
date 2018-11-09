@@ -14,7 +14,17 @@ class CUI.CSSLoader extends CUI.Element
 
 	readOpts: ->
 		super()
-		@__cssName = "cui-css-"+@getUniqueId()
+		if @_cssName
+			@__cssName = @_cssName
+		else
+			@__cssName = "cui-css-"+@getUniqueId()
+		return
+
+	initOpts: ->
+		super()
+		@addOpts
+			cssName:
+				check: String
 
 	__getCSSNodes: ->
 		CUI.dom.matchSelector(document.documentElement, "link[name=\""+@__cssName+"\"]")
