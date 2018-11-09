@@ -8163,7 +8163,20 @@ CUI.CSSLoader = (function(superClass) {
 
   CSSLoader.prototype.readOpts = function() {
     CSSLoader.__super__.readOpts.call(this);
-    return this.__cssName = "cui-css-" + this.getUniqueId();
+    if (this._cssName) {
+      this.__cssName = this._cssName;
+    } else {
+      this.__cssName = "cui-css-" + this.getUniqueId();
+    }
+  };
+
+  CSSLoader.prototype.initOpts = function() {
+    CSSLoader.__super__.initOpts.call(this);
+    return this.addOpts({
+      cssName: {
+        check: String
+      }
+    });
   };
 
   CSSLoader.prototype.__getCSSNodes = function() {
@@ -18933,7 +18946,7 @@ CUI.dom = (function() {
   };
 
   dom.setStyle = function(docElem, style, append) {
-    var k, v;
+    var k, set, v;
     if (append == null) {
       append = "px";
     }
@@ -18951,17 +18964,18 @@ CUI.dom = (function() {
       switch (v) {
         case "":
         case null:
-          docElem.style[k] = "";
+          set = "";
           break;
         default:
           if (isNaN(Number(v))) {
-            docElem.style[k] = v;
+            set = v;
           } else if (v === 0 || v === "0") {
-            docElem.style[k] = 0;
+            set = 0;
           } else {
-            docElem.style[k] = v + append;
+            set = v + append;
           }
       }
+      docElem.style.setProperty(k, set);
     }
     return docElem;
   };
