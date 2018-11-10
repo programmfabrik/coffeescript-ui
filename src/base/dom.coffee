@@ -963,7 +963,12 @@ class CUI.dom
 						set = 0
 					else
 						set = v + append
-			docElem.style.setProperty(k, set)
+
+			if k.startsWith("--")
+				docElem.style.setProperty(k, set)
+			else
+				docElem.style[k] = set
+
 
 		docElem
 
