@@ -18975,7 +18975,11 @@ CUI.dom = (function() {
             set = v + append;
           }
       }
-      docElem.style.setProperty(k, set);
+      if (k.startsWith("--")) {
+        docElem.style.setProperty(k, set);
+      } else {
+        docElem.style[k] = set;
+      }
     }
     return docElem;
   };
