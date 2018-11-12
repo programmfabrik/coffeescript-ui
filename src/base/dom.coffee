@@ -928,6 +928,7 @@ class CUI.dom
 	# new nodes can be node or Array of nodes
 	@replaceWith: (node, new_node) ->
 		CUI.util.assert(node instanceof Node and (new_node instanceof Node or new_node instanceof NodeList), "CUI.dom.replaceWidth", "nodes need to be instanceof Node.", node: node, newNode: new_node)
+		CUI.util.assert(node.parentNode instanceof Node, "CUI.dom.replaceWith", "parentNode of node needs to be an instance of Node", node: node, parentNode: node.parentNode)
 
 		if new_node instanceof NodeList
 			first_node = new_node[0]
@@ -936,7 +937,6 @@ class CUI.dom
 				@insertAfter(first_node, new_node[new_node.length-1])
 			return first_node
 		else
-			CUI.util.assert(node.parentNode instanceof Node, "CUI.dom.replaceWith", "parentNode of node needs to be an instance of Node", node: node, parentNode: node.parentNode)
 			return node.parentNode.replaceChild(new_node, node)
 
 	@getRect: (docElem) ->
