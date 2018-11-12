@@ -18908,6 +18908,10 @@ CUI.dom = (function() {
       node: node,
       newNode: new_node
     });
+    CUI.util.assert(node.parentNode instanceof Node, "CUI.dom.replaceWith", "parentNode of node needs to be an instance of Node", {
+      node: node,
+      parentNode: node.parentNode
+    });
     if (new_node instanceof NodeList) {
       first_node = new_node[0];
       node.parentNode.replaceChild(first_node, node);
@@ -18916,10 +18920,6 @@ CUI.dom = (function() {
       }
       return first_node;
     } else {
-      CUI.util.assert(node.parentNode instanceof Node, "CUI.dom.replaceWith", "parentNode of node needs to be an instance of Node", {
-        node: node,
-        parentNode: node.parentNode
-      });
       return node.parentNode.replaceChild(new_node, node);
     }
   };
