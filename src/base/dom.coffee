@@ -936,6 +936,7 @@ class CUI.dom
 				@insertAfter(first_node, new_node[new_node.length-1])
 			return first_node
 		else
+			CUI.util.assert(node.parentNode instanceof Node, "CUI.dom.replaceWith", "parentNode of node needs to be an instance of Node", node: node, parentNode: node.parentNode)
 			return node.parentNode.replaceChild(new_node, node)
 
 	@getRect: (docElem) ->
