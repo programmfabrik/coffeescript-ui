@@ -7,31 +7,15 @@
 
 @import '../../icons/_svg-dimensions.scss';
 
-// mixins that are based on header colors
-
-@mixin focus() {
-	box-shadow: 0 0 0 3px var(--highlight-light);
-	border-radius: $button-radius;
-	z-index: 1; // put forward to see outline
+html {
+	@include variableList($default-color);
+	--top-header-background: #{$header-background};
 }
 
-@mixin inner-focus() {
-	box-shadow: 0 0 0 3px var(--highlight-light) inset;
-	border-radius: $button-radius;
-	z-index: 1; // put forward to see outline
-}
-
-@mixin border-focus() {
-	box-shadow: 0 0 0 3px var(--highlight-light);
-	border-color: var(--highlight);
-	z-index: 1; // put forward to see outline
-}
-
-@mixin outer-focus() {
-	box-shadow:
-		0 0 0 1px var(--highlight),
-		0 0 0 4px var(--highlight-light);
-	z-index: 1; // put forward to see outline
+@each $name, $color in $colors {
+	[data-theme-color="#{$name}"] {
+		@include variableList($color);
+	}
 }
 
 // reset

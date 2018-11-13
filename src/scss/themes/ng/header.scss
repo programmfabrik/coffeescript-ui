@@ -58,16 +58,6 @@ $default-color: map-get($colors, "blue");
 	--on-highlight-light-secondary-color: #{darken(desaturate(map-get($color, "highlight-light"), 75%), 40%)};
 }
 
-html {
-	@include variableList($default-color);
-}
-
-@each $name, $color in $colors {
-	[data-theme-color="#{$name}"] {
-		@include variableList($color);
-	}
-}
-
 $padding: 10px;
 // compensating padding compensates for line-height
 $compensating-padding: 7px;
@@ -269,4 +259,29 @@ $popover-hint-background: hsl(205,20%,30%);
 @mixin icon($code){
 	@extend %icon;
 	content: $code;
+}
+
+@mixin focus() {
+	box-shadow: 0 0 0 3px var(--highlight-light);
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin inner-focus() {
+	box-shadow: 0 0 0 3px var(--highlight-light) inset;
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin border-focus() {
+	box-shadow: 0 0 0 3px var(--highlight-light);
+	border-color: var(--highlight);
+	z-index: 1; // put forward to see outline
+}
+
+@mixin outer-focus() {
+	box-shadow:
+		0 0 0 1px var(--highlight),
+		0 0 0 4px var(--highlight-light);
+	z-index: 1; // put forward to see outline
 }

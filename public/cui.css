@@ -11,96 +11,6 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
-html {
-  --highlight: #0065d1;
-  --highlight-light: #b3d7ff;
-  --highlight-light-transparent: rgba(179, 215, 255, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #c6d8ec;
-  --on-highlight-light-muted-color: #7a98b8;
-  --on-highlight-light-secondary-color: #56728f; }
-
-[data-theme-color="red"] {
-  --highlight: #f00c00;
-  --highlight-light: #ffbbb8;
-  --highlight-light-transparent: rgba(255, 187, 184, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #edcbc9;
-  --on-highlight-light-muted-color: #b9817e;
-  --on-highlight-light-secondary-color: #935b58; }
-
-[data-theme-color="orange"] {
-  --highlight: #eb8900;
-  --highlight-light: #ffdfb3;
-  --highlight-light-transparent: rgba(255, 223, 179, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #ecdcc6;
-  --on-highlight-light-muted-color: #b89e7a;
-  --on-highlight-light-secondary-color: #8f7856; }
-
-[data-theme-color="yellow"] {
-  --highlight: #dbaf00;
-  --highlight-light: #ffe680;
-  --highlight-light-transparent: rgba(255, 230, 128, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #dfd29f;
-  --on-highlight-light-muted-color: #a69659;
-  --on-highlight-light-secondary-color: #706743; }
-
-[data-theme-color="green"] {
-  --highlight: #53cf26;
-  --highlight-light: #c0f6ac;
-  --highlight-light-transparent: rgba(192, 246, 172, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #cbdfc3;
-  --on-highlight-light-muted-color: #8c9c86;
-  --on-highlight-light-secondary-color: #697066; }
-
-[data-theme-color="blue"] {
-  --highlight: #0065d1;
-  --highlight-light: #b3d7ff;
-  --highlight-light-transparent: rgba(179, 215, 255, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #c6d8ec;
-  --on-highlight-light-muted-color: #7a98b8;
-  --on-highlight-light-secondary-color: #56728f; }
-
-[data-theme-color="purple"] {
-  --highlight: #cd74e2;
-  --highlight-light: #f8d6ff;
-  --highlight-light-transparent: rgba(248, 214, 255, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #f1e0f5;
-  --on-highlight-light-muted-color: #bb92c4;
-  --on-highlight-light-secondary-color: #9866a3; }
-
-[data-theme-color="pink"] {
-  --highlight: #ff2969;
-  --highlight-light: #ffbdd1;
-  --highlight-light-transparent: rgba(255, 189, 209, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #eecdd7;
-  --on-highlight-light-muted-color: #bb8192;
-  --on-highlight-light-secondary-color: #965a6c; }
-
-[data-theme-color="brown"] {
-  --highlight: #a2845d;
-  --highlight-light: #eddeca;
-  --highlight-light-transparent: rgba(237, 222, 202, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #dbdbdb;
-  --on-highlight-light-muted-color: #9c9c9c;
-  --on-highlight-light-secondary-color: #757575; }
-
-[data-theme-color="graphite"] {
-  --highlight: #6e6e72;
-  --highlight-light: #d7d7db;
-  --highlight-light-transparent: rgba(215, 215, 219, 0);
-  --on-highlight-color: white;
-  --on-highlight-muted-color: #d9d9d9;
-  --on-highlight-light-muted-color: #999999;
-  --on-highlight-light-secondary-color: #737373; }
-
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
@@ -210,6 +120,97 @@ html {
 .svg-typo3 {
   width: 14px;
   height: 14px; }
+
+html {
+  --highlight: #0065d1;
+  --highlight-light: #b3d7ff;
+  --highlight-light-transparent: rgba(179, 215, 255, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #c6d8ec;
+  --on-highlight-light-muted-color: #7a98b8;
+  --on-highlight-light-secondary-color: #56728f;
+  --top-header-background: #dadfe2; }
+
+[data-theme-color="red"] {
+  --highlight: #f00c00;
+  --highlight-light: #ffbbb8;
+  --highlight-light-transparent: rgba(255, 187, 184, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #edcbc9;
+  --on-highlight-light-muted-color: #b9817e;
+  --on-highlight-light-secondary-color: #935b58; }
+
+[data-theme-color="orange"] {
+  --highlight: #eb8900;
+  --highlight-light: #ffdfb3;
+  --highlight-light-transparent: rgba(255, 223, 179, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #ecdcc6;
+  --on-highlight-light-muted-color: #b89e7a;
+  --on-highlight-light-secondary-color: #8f7856; }
+
+[data-theme-color="yellow"] {
+  --highlight: #dbaf00;
+  --highlight-light: #ffe680;
+  --highlight-light-transparent: rgba(255, 230, 128, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #dfd29f;
+  --on-highlight-light-muted-color: #a69659;
+  --on-highlight-light-secondary-color: #706743; }
+
+[data-theme-color="green"] {
+  --highlight: #53cf26;
+  --highlight-light: #c0f6ac;
+  --highlight-light-transparent: rgba(192, 246, 172, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #cbdfc3;
+  --on-highlight-light-muted-color: #8c9c86;
+  --on-highlight-light-secondary-color: #697066; }
+
+[data-theme-color="blue"] {
+  --highlight: #0065d1;
+  --highlight-light: #b3d7ff;
+  --highlight-light-transparent: rgba(179, 215, 255, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #c6d8ec;
+  --on-highlight-light-muted-color: #7a98b8;
+  --on-highlight-light-secondary-color: #56728f; }
+
+[data-theme-color="purple"] {
+  --highlight: #cd74e2;
+  --highlight-light: #f8d6ff;
+  --highlight-light-transparent: rgba(248, 214, 255, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #f1e0f5;
+  --on-highlight-light-muted-color: #bb92c4;
+  --on-highlight-light-secondary-color: #9866a3; }
+
+[data-theme-color="pink"] {
+  --highlight: #ff2969;
+  --highlight-light: #ffbdd1;
+  --highlight-light-transparent: rgba(255, 189, 209, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #eecdd7;
+  --on-highlight-light-muted-color: #bb8192;
+  --on-highlight-light-secondary-color: #965a6c; }
+
+[data-theme-color="brown"] {
+  --highlight: #a2845d;
+  --highlight-light: #eddeca;
+  --highlight-light-transparent: rgba(237, 222, 202, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #dbdbdb;
+  --on-highlight-light-muted-color: #9c9c9c;
+  --on-highlight-light-secondary-color: #757575; }
+
+[data-theme-color="graphite"] {
+  --highlight: #6e6e72;
+  --highlight-light: #d7d7db;
+  --highlight-light-transparent: rgba(215, 215, 219, 0);
+  --on-highlight-color: white;
+  --on-highlight-muted-color: #d9d9d9;
+  --on-highlight-light-muted-color: #999999;
+  --on-highlight-light-secondary-color: #737373; }
 
 table {
   border-collapse: collapse; }
