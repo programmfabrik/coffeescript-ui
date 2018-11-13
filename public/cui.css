@@ -986,7 +986,7 @@ li > div {
   width: 1em; }
 
 .fa-download {
-  margin-top: calc(1em / 14); }
+  margin-top: 0.07143em; }
 
 .svg-spinner {
   height: 18px; }

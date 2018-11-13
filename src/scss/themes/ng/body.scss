@@ -949,7 +949,7 @@ li > div {
 }
 
 .fa-download {
-	margin-top: calc(1em / 14);
+	margin-top: (1em / 14); // move up by 10% of the font-size
 }
 
 .svg-spinner {
