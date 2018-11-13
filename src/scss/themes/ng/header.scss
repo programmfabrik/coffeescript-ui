@@ -7,48 +7,66 @@
 
 // header for "ng*"
 
-$cui-highlight-color: "blue" !default;
-
 $colors: (
 	"red": (
-		dark: hsl(3,100%,59%),
-		light: hsl(3,100%,86%)
+		highlight: hsl(3,100%,47%),
+		highlight-light: hsl(3,100%,86%)
 	),
 	"orange": (
-		dark: hsl(35,100%,50%),
-		light: hsl(35,100%,85%)
+		highlight: hsl(35,100%,46%),
+		highlight-light: hsl(35,100%,85%)
 	),
 	"yellow": (
-		dark: hsl(48,100%,50%),
-		light: hsl(48,100%,85%)
+		highlight: hsl(48,100%,43%),
+		highlight-light: hsl(48,100%,75%)
 	),
 	"green": (
-		dark: hsl(104,69%,54%),
-		light: hsl(104,80%,82%)
+		highlight: hsl(104,69%,48%),
+		highlight-light: hsl(104,80%,82%)
 	),
 	"blue": (
-		dark: hsl(211,100%,43%),
-		light: hsl(211,100%,85%)
+		highlight: hsl(211,100%,41%),
+		highlight-light: hsl(211,100%,85%)
 	),
 	"purple": (
-		dark: hsl(289,65%,67%),
-		light: hsl(289,100%,92%)
+		highlight: hsl(289,65%,67%),
+		highlight-light: hsl(289,100%,92%)
 	),
 	"pink": (
-		dark: hsl(342,100%,58%),
-		light: hsl(342,100%,87%)
+		highlight: hsl(342,100%,58%),
+		highlight-light: hsl(342,100%,87%)
 	),
 	"brown": (
-		dark: hsl(34,27%,50%),
-		light: hsl(34,49%,86%)
+		highlight: hsl(34,27%,50%),
+		highlight-light: hsl(34,49%,86%)
 	),
 	"graphite": (
-		dark: hsl(240,2%,44%),
-		light: hsl(240,5%,85%)
+		highlight: hsl(240,2%,44%),
+		highlight-light: hsl(240,5%,85%)
 	)
 );
 
-$highlight: map-get($colors, $cui-highlight-color);
+$default-color: map-get($colors, "blue");
+
+@mixin variableList($color) {
+	--highlight: #{map-get($color, "highlight")};
+	--highlight-light: #{map-get($color, "highlight-light")};
+	--highlight-light-transparent: #{transparentize(map-get($color, "highlight-light"), 1)}; // needed for gradients from transparent .. highlight-light
+	--on-highlight-color: white;
+	--on-highlight-muted-color: #{desaturate(map-get($color, "highlight-light"), 50%)};
+	--on-highlight-light-muted-color: #{darken(desaturate(map-get($color, "highlight-light"), 70%), 25%)};
+	--on-highlight-light-secondary-color: #{darken(desaturate(map-get($color, "highlight-light"), 75%), 40%)};
+}
+
+html {
+	@include variableList($default-color);
+}
+
+@each $name, $color in $colors {
+	[data-theme-color="#{$name}"] {
+		@include variableList($color);
+	}
+}
 
 $padding: 10px;
 // compensating padding compensates for line-height
@@ -84,17 +102,10 @@ $form-label-weight: 500;
 $form-label-font-size: 13px;
 $form-block-color: hsl(210,11%,35%);
 
-$highlight-color: map-get($highlight, 'dark');
-$row-highlight: map-get($highlight, 'light');
-$on-highlight-color: white;
-$on-highlight-muted-color: desaturate($row-highlight, 50%);
-$on-row-highlight-muted-color: darken(desaturate($row-highlight, 70%), 25%);
-$on-row-highlight-secondary-color: darken(desaturate($row-highlight, 75%), 40%);
-
 $button-background: white;
 $button-pressed: hsl(205,10%,91%);
 $button-active: hsl(205,15%,43%);
-$button-active-text: $on-highlight-color;
+$button-active-text: white;
 $button-active-border: hsl(205,15%,43%);
 $button-active-pressed: darken($button-active, 9%);
 $button-active-pressed-text: darken($button-active-text, 9%);

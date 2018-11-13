@@ -10,27 +10,27 @@
 // mixins that are based on header colors
 
 @mixin focus() {
-	box-shadow: 0 0 0 3px $row-highlight;
+	box-shadow: 0 0 0 3px var(--highlight-light);
 	border-radius: $button-radius;
 	z-index: 1; // put forward to see outline
 }
 
 @mixin inner-focus() {
-	box-shadow: 0 0 0 3px $row-highlight inset;
+	box-shadow: 0 0 0 3px var(--highlight-light) inset;
 	border-radius: $button-radius;
 	z-index: 1; // put forward to see outline
 }
 
 @mixin border-focus() {
-	box-shadow: 0 0 0 3px $row-highlight;
-	border-color: $highlight-color;
+	box-shadow: 0 0 0 3px var(--highlight-light);
+	border-color: var(--highlight);
 	z-index: 1; // put forward to see outline
 }
 
 @mixin outer-focus() {
 	box-shadow:
-		0 0 0 1px $highlight-color,
-		0 0 0 4px $row-highlight;
+		0 0 0 1px var(--highlight),
+		0 0 0 4px var(--highlight-light);
 	z-index: 1; // put forward to see outline
 }
 
@@ -398,7 +398,7 @@ li > div {
 			content: "";
 			top: 0;
 			left: $padding - 1px;
-			border-right: 3px dotted $highlight-color;
+			border-right: 3px dotted var(--highlight);
 			height: 100%;
 			opacity: 0.5;
 			position: absolute;
@@ -1127,17 +1127,16 @@ li > div {
 	&.cui-button-appearance-important, // removed [role] - makes it too specific
 	&.cui-button--primary {
 		.cui-button-visual {
-			color: $on-highlight-color;
-			background: lighten($highlight-color, 3%);
-			border-color: darken($highlight-color, 3%);
+			color: var(--on-highlight-color);
+			background: var(--highlight);
+			border-color: hsla(0,0%,0%,.14);
 		}
 
 		&.cui-layer-open,
 		&:active {
 			.cui-button-visual {
-				color: darken($on-highlight-color, 6%);
-				background: darken($highlight-color, 6%);
-				border-color: darken($highlight-color, 12%);
+				opacity: 0.9;
+				border-color: hsla(0,0%,0%,.14);
 			}
 		}
 
@@ -1146,7 +1145,7 @@ li > div {
 
 			&:active {
 				.cui-button-visual {
-					background: lighten($highlight-color, 3%);
+					background: var(--highlight);
 				}
 			}
 		}
@@ -1169,18 +1168,7 @@ li > div {
 		padding: 5px 6px;
 	}
 
-	&.cui-active {
-		.cui-button-visual {
-			box-shadow: 0 0 0 1px transparentize(darken($highlight-color, 7%), 0.8);
-		}
-	}
-
-	&.cui-active {
-	.cui-button-visual {
-		border-color: transparent;
-		box-shadow: 0 0 0 1px $button-active-border;
-	}
-
+	&.cui-active,
 	&.cui-layer-open,
 	&:active {
 		.cui-button-visual {
@@ -1188,7 +1176,6 @@ li > div {
 			box-shadow: 0 0 0 1px $button-active-pressed;
 		}
 	}
-}
 
 	&.cui-disabled {
 		.cui-button-visual {
@@ -1219,8 +1206,8 @@ li > div {
 		@include button-reset;
 		height: 24px;
 		padding: 3px 0;
-		border-radius: $button-radius;
-		color: desaturate($highlight-color, 80%);
+		border-radius: $button-radius; // for the focus outline
+		color: var(--highlight);
 	}
 
 	&:active,
@@ -1228,7 +1215,8 @@ li > div {
 	&.cui-active {
 		.cui-button-visual {
 			background: none;
-			color: desaturate($highlight-color, 40%);
+			color: var(--highlight);
+			opacity: 0.75;
 		}
 	}
 
@@ -1377,7 +1365,7 @@ a[role="button"].cui-button-appearance-link {
 	&:active {
 		.cui-button-visual {
 			@include button-reset;
-			color: $highlight-color;
+			color: var(--highlight);
 			line-height: 18px;
 		}
 	}
@@ -2037,7 +2025,7 @@ a[role="button"].cui-button-appearance-link {
 		color: $secondary-color;
 
 		.cui-selected & {
-			color: $on-row-highlight-secondary-color;
+			color: var(--on-highlight-light-secondary-color);
 		}
 	}
 
@@ -2045,7 +2033,7 @@ a[role="button"].cui-button-appearance-link {
 		color: $muted-color;
 
 		.cui-selected & {
-			color: $on-row-highlight-muted-color;
+			color: var(--on-highlight-light-muted-color);
 		}
 	}
 
@@ -2082,7 +2070,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	a {
-		color: $highlight-color;
+		color: var(--highlight);
 		text-decoration: underline;
 	}
 
@@ -2250,7 +2238,7 @@ a[role="button"].cui-button-appearance-link {
 		padding: 0 0 0 10px !important;
 
 		.cui-button-visual {
-			color: $highlight-color;
+			color: var(--highlight);
 			height: auto;
 			padding: 0 0 1px;
 		}
@@ -2520,7 +2508,7 @@ a[role="button"].cui-button-appearance-link {
 			&:focus {
 				border-color: black;
 				box-shadow:
-					0 0 0 3px $row-highlight,
+					0 0 0 3px var(--highlight-light),
 					0 1px hsla(0,0%,100%,.3) inset,
 					0 2px hsla(0,0%,100%,.1) inset,
 					0 -1px hsla(0,0%,100%,.3) inset,
@@ -3548,7 +3536,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-active {
 		.cui-button-visual {
-			color: $on-highlight-color;
+			color: var(--on-highlight-color);
 			background: $button-active;
 			border-color: $button-active-border;
 		}
@@ -3737,7 +3725,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-lv-row-move-target {
 	height: 4px;
-	background: $highlight-color;
+	background: var(--highlight);
 	margin-top: -2px;
 	position: absolute;
 	z-index: 4;
@@ -3747,7 +3735,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-lv-row-move {
 	position: absolute;
 	z-index: 4;
-	background: $highlight-color;
+	background: var(--highlight);
 	opacity: 0.3;
 }
 
@@ -3971,11 +3959,11 @@ a[role="button"].cui-button-appearance-link {
 
 			&.cui-selected {
 				.cui-label-manage-overflow:after {
-					background: linear-gradient(transparentize($row-highlight, 1), $row-highlight);
+					background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
 				}
 
 				.cui-label-manage-overflow-button {
-					background: linear-gradient(to right, transparentize($row-highlight, 1), $row-highlight 10px);
+					background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
 				}
 			}
 		}
@@ -4010,20 +3998,20 @@ a[role="button"].cui-button-appearance-link {
 	&:focus,
 	&:focus:nth-child(even) {
 		> .cui-lv-tr > .cui-lv-td {
-			background: $row-highlight;
+			background: var(--highlight-light);
 		}
 
 		.cui-empty-label {
-			color: $on-row-highlight-secondary-color;
+			color: var(--on-highlight-light-secondary-color);
 		}
 
 		&.cui-selected {
 			.cui-label-manage-overflow:after {
-				background: linear-gradient(transparentize($row-highlight, 1), $row-highlight);
+				background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
 			}
 
 			.cui-label-manage-overflow-button {
-				background: linear-gradient(to right, transparentize($row-highlight, 1), $row-highlight 10px);
+				background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
 			}
 		}
 	}
@@ -5263,10 +5251,10 @@ label[data-label-clickable],
 	}
 
 	.cui-date-time-selected {
-		color: $on-highlight-color;
+		color: var(--on-highlight-color);
 
 		span {
-			background: $highlight-color;
+			background: var(--highlight);
 		}
 	}
 }
@@ -5499,7 +5487,7 @@ label[data-label-clickable],
 }
 
 .cui-droppable-drop-helper {
-	box-shadow: 0 0 0 2px $highlight-color inset;
+	box-shadow: 0 0 0 2px var(--highlight) inset;
 	position: absolute;
 	z-index: 2;
 	pointer-events: none;
@@ -5617,12 +5605,13 @@ label[data-label-clickable],
 	height: 1px;
 	left: 0;
 	top: 0;
-	background-color: transparentize($highlight-color, 0.77);
+	background-color: var(--highlight);
 	display: block;
 	pointer-events: none;
 	z-index: 1;
 	will-change: transform;
 	transform-origin: left top;
+	opacity: .33;
 }
 
 .cui-drag-drop-select-lasso-element-in-lasso {
@@ -5920,12 +5909,12 @@ label[data-label-clickable],
 		// to make sure that the border-radius will cut off all child backgrounds
 		// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
 		opacity: 0.9999;
-		background: lighten(desaturate($highlight-color, 93%), 26%);
+		background: hsl(205,4%,79%);
 		color: white;
 
 		.cui-progress-meter-fill {
 			display: none;
-			background: $highlight-color;
+			background: var(--highlight);
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -5974,7 +5963,7 @@ label[data-label-clickable],
 	bottom: 0;
 	left: 0;
 	right: 0;
-	box-shadow: 0 0 0 2px $highlight-color inset;
+	box-shadow: 0 0 0 2px var(--highlight) inset;
 	z-index: 1;
 }
 
