@@ -15343,6 +15343,9 @@ CUI.Layer = (function(superClass) {
     if (this._element) {
       this.__setElement(this._element);
     }
+    if (this._size) {
+      this.addClass("cui-layer--size-" + this._size);
+    }
     if (this._use_element_width_as_min_width) {
       CUI.util.assert(this.__element, "new CUI.Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", {
         opts: this.opts
@@ -15415,6 +15418,9 @@ CUI.Layer = (function(superClass) {
       },
       onHide: {
         check: Function
+      },
+      size: {
+        check: ["xs", "s", "m", "l", "xl"]
       },
       handle_focus: {
         "default": true,
@@ -23723,11 +23729,14 @@ CUI.DataForm = (function(superClass) {
         onClick: (function(_this) {
           return function() {
             var ref;
-            if ((ref = _this._onRowRemove) != null) {
-              ref.call(_this, data);
-            }
-            _this.__removeRow(data);
-            return _this.__updateView();
+            CUI.decide((ref = _this._onBeforeRowRemove) != null ? ref.call(_this, data) : void 0).done(function() {
+              var ref;
+              _this.__removeRow(data);
+              if ((ref = _this._onRowRemove) != null) {
+                ref.call(_this, data);
+              }
+              return _this.__updateView();
+            });
           };
         })(this)
       });
@@ -23811,6 +23820,9 @@ CUI.DataTable = (function(superClass) {
       rowMove: {
         "default": false,
         check: Boolean
+      },
+      onBeforeRowRemove: {
+        check: Function
       },
       onRowRemove: {
         check: Function
@@ -24336,11 +24348,14 @@ CUI.DataTableNode = (function(superClass) {
 
   DataTableNode.prototype.remove = function() {
     var ref;
-    DataTableNode.__super__.remove.call(this);
-    if ((ref = this._dataTable._onRowRemove) != null) {
-      ref.call(this, this.__data);
-    }
-    return CUI.util.removeFromArray(this.__data, this.__rows);
+    return CUI.decide((ref = this._dataTable._onBeforeRowRemove) != null ? ref.call(this, this.__data) : void 0).done((function(_this) {
+      return function() {
+        var ref;
+        DataTableNode.__super__.remove.call(_this);
+        CUI.util.removeFromArray(_this.__data, _this.__rows);
+        return (ref = _this._dataTable._onRowRemove) != null ? ref.call(_this, _this.__data) : void 0;
+      };
+    })(this));
   };
 
   DataTableNode.prototype.getDataTable = function() {
@@ -30667,6 +30682,7 @@ CUI.Input = (function(superClass) {
       this.__regexp = new RegExp(this._regexp, this._regexp_flags);
       this.__checkInput = (function(_this) {
         return function(value) {
+          console.debug("checking input: '" + value + "'", _this.__checkInputRegexp(value));
           if (!_this.__checkInputRegexp(value)) {
             return false;
           } else if (_this._checkInput) {
@@ -39294,7 +39310,7 @@ CUI.Modal = (function(superClass) {
         })(this)
       });
     }
-    if (this._cancel && this._fill_space === "auto") {
+    if (this._cancel_with_click_on_baskdrop && this._cancel && this._fill_space === "auto") {
       bd = this.getBackdrop();
       if (bd) {
         CUI.Events.listen({
@@ -39330,6 +39346,11 @@ CUI.Modal = (function(superClass) {
       },
       cancel_tooltip: {
         check: "PlainObject"
+      },
+      cancel_with_click_on_baskdrop: {
+        mandatory: true,
+        "default": true,
+        check: Boolean
       },
       onCancel: {
         check: Function
