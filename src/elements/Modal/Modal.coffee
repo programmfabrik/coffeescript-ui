@@ -41,7 +41,7 @@ class CUI.Modal extends CUI.LayerPane
 				call: (ev) =>
 					@_onToggleFillScreen.call(@, ev, @)
 
-		if @_cancel and @_fill_space == "auto"
+		if @_cancel_with_click_on_baskdrop and @_cancel and @_fill_space == "auto"
 			bd = @getBackdrop()
 			if bd
 				CUI.Events.listen
@@ -67,6 +67,10 @@ class CUI.Modal extends CUI.LayerPane
 				check: ["destroy", "hide"]
 			cancel_tooltip:
 				check: "PlainObject"
+			cancel_with_click_on_baskdrop:
+				mandatory: true
+				default: true
+				check: Boolean
 			onCancel:
 				check: Function
 			# show a fill screen button

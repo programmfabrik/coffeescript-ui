@@ -209,9 +209,12 @@ class CUI.DataForm extends CUI.DataTable
 				onMouseleave: =>
 					CUI.dom.removeClass(hl, "cui-data-form-row--trash")
 				onClick: =>
-					@_onRowRemove?.call(@, data)
-					@__removeRow(data)
-					@__updateView()
+					CUI.decide(@_onBeforeRowRemove?.call(@, data))
+					.done =>
+						@__removeRow(data)
+						@_onRowRemove?.call(@, data)
+						@__updateView()
+					return
 
 		hl = new CUI.HorizontalLayout
 			maximize_vertical: false

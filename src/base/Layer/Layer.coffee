@@ -129,6 +129,9 @@ class CUI.Layer extends CUI.DOMElement
 		if @_element
 			@__setElement(@_element)
 
+		if @_size
+			@addClass("cui-layer--size-"+@_size)
+
 		if @_use_element_width_as_min_width
 			CUI.util.assert(@__element, "new CUI.Layer", "opts.use_element_width_as_min_width requires opts.element to be set.", opts: @opts)
 
@@ -228,6 +231,9 @@ class CUI.Layer extends CUI.DOMElement
 				check: Function
 			onHide:
 				check: Function
+			# add a size class
+			size:
+				check: ["xs", "s", "m", "l", "xl"]
 
 			# handle focus on tab index
 			handle_focus:

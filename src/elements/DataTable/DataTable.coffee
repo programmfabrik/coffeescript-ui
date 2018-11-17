@@ -32,6 +32,10 @@ class CUI.DataTable extends CUI.DataFieldInput
 			rowMove:
 				default: false
 				check: Boolean
+			# used in DataTableNode
+			onBeforeRowRemove:
+				check: Function
+			# used in DataTableNode
 			onRowRemove:
 				check: Function
 			onNodeAdd:
