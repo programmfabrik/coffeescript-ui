@@ -2538,8 +2538,6 @@ a[role="button"].cui-button-appearance-link {
   z-index: 1;
   display: flex;
   color: #949a9e; }
-  .cui-wait-block.appearance-invisible-background .cui-wait-block-glass {
-    background: none !important; }
 
 .cui-wait-block-glass {
   position: absolute;
@@ -2547,6 +2545,7 @@ a[role="button"].cui-button-appearance-link {
   left: 0;
   right: 0;
   bottom: 0;
+  opacity: 0.5;
   background: white; }
 
 .cui-wait-block-inner {

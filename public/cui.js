@@ -8835,6 +8835,20 @@ CUI.DOMElement = (function(superClass) {
     }
   };
 
+  DOMElement.prototype.showWaitBlock = function() {
+    this.__assertDOMElement("showWaitBlock");
+    this.__wb = new CUI.WaitBlock({
+      element: this.DOM
+    }).show();
+    return this;
+  };
+
+  DOMElement.prototype.hideWaitBlock = function() {
+    this.__wb.destroy();
+    delete this.__wb;
+    return this;
+  };
+
   DOMElement.prototype.hasClass = function(cls) {
     CUI.util.assert(arguments.length === 1, "CUI.dom.hasClass", "Only one parameter allowed.");
     this.__assertDOMElement("hasClass");
@@ -24353,7 +24367,10 @@ CUI.DataTableNode = (function(superClass) {
         var ref;
         DataTableNode.__super__.remove.call(_this);
         CUI.util.removeFromArray(_this.__data, _this.__rows);
-        return (ref = _this._dataTable._onRowRemove) != null ? ref.call(_this, _this.__data) : void 0;
+        if ((ref = _this._dataTable._onRowRemove) != null) {
+          ref.call(_this, _this.__data);
+        }
+        return _this._dataTable.updateButtons();
       };
     })(this));
   };
@@ -39346,7 +39363,7 @@ CUI.Modal = (function(superClass) {
       cancel_tooltip: {
         check: "PlainObject"
       },
-      cancel_with_click_on_baskdrop: {
+      cancel_with_click_on_backdrop: {
         mandatory: true,
         "default": true,
         check: Boolean
@@ -44764,9 +44781,6 @@ CUI.WaitBlock = (function(superClass) {
       },
       fullscreen: {
         check: Boolean
-      },
-      appearance: {
-        check: ["invisible-background"]
       }
     });
   };
