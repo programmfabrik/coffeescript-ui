@@ -56,6 +56,7 @@ class CUI.DataTableNode extends CUI.ListViewRow
 			super()
 			CUI.util.removeFromArray(@__data, @__rows)
 			@_dataTable._onRowRemove?.call(@, @__data)
+			@_dataTable.updateButtons()
 
 	getDataTable: ->
 		@_dataTable

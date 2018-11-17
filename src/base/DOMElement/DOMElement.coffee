@@ -106,6 +106,18 @@ class CUI.DOMElement extends CUI.Element
 			@__assertTemplateElement("show")
 			@__template.show.call(@__template, key)
 
+	showWaitBlock: ->
+		@__assertDOMElement("showWaitBlock")
+		@__wb = new CUI.WaitBlock
+			element: @DOM
+		.show()
+		@
+
+	hideWaitBlock: ->
+		@__wb.destroy()
+		delete(@__wb)
+		@
+
 	hasClass: (cls) ->
 		CUI.util.assert(arguments.length == 1, "CUI.dom.hasClass", "Only one parameter allowed.")
 		@__assertDOMElement("hasClass")

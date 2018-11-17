@@ -3367,10 +3367,6 @@ $layer-sizes: (
 	z-index: 1;
 	display: flex;
 	color: $muted-color;
-
-	&.appearance-invisible-background .cui-wait-block-glass {
-		background: none !important;
-	}
 }
 
 .cui-wait-block-glass {
@@ -3379,6 +3375,7 @@ $layer-sizes: (
 	left: 0;
 	right: 0;
 	bottom: 0;
+	opacity: 0.5;
 	background: $foreground;
 }
 

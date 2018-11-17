@@ -67,7 +67,7 @@ class CUI.Modal extends CUI.LayerPane
 				check: ["destroy", "hide"]
 			cancel_tooltip:
 				check: "PlainObject"
-			cancel_with_click_on_baskdrop:
+			cancel_with_click_on_backdrop:
 				mandatory: true
 				default: true
 				check: Boolean

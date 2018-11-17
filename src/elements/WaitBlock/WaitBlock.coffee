@@ -35,8 +35,6 @@ class CUI.WaitBlock extends CUI.Block
 			# use to put this wait block fullscreen
 			fullscreen:
 				check: Boolean
-			appearance:
-				check: ["invisible-background"]
 
 	readOpts: ->
 		super()
