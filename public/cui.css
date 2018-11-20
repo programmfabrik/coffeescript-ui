@@ -4087,7 +4087,7 @@ label[data-label-clickable],
     font-size: inherit;
     font-weight: inherit; }
   .cui-block.cui-form-block--has-checkbox > .cui-block-content {
-    margin-left: 17px; }
+    margin-left: 24px; }
   .cui-block--padded {
     padding: 10px; }
     .cui-block--padded:first-child {
@@ -4128,6 +4128,9 @@ label[data-label-clickable],
 .cui-form-block {
   margin: 10px;
   padding: 0; }
+  .cui-block .cui-form-block {
+    margin-left: 0;
+    margin-right: 0; }
   .cui-form-block:not(:last-child) .cui-block-content {
     padding-bottom: 0; }
   .cui-form-block > .cui-block-content > .cui-form {

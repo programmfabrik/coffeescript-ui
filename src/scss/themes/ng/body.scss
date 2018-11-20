@@ -5789,7 +5789,7 @@ label[data-label-clickable],
 		}
 
 		> .cui-block-content {
-			margin-left: 17px;
+			margin-left: 24px;
 		}
 	}
 
@@ -5856,6 +5856,11 @@ label[data-label-clickable],
 .cui-form-block {
 	margin: 10px;
 	padding: 0;
+	
+	.cui-block & {
+		margin-left: 0;
+		margin-right: 0;
+	}
 	
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
