@@ -2148,6 +2148,27 @@ a[role="button"].cui-button-appearance-link {
   .cui-layer .cui-buttonbar .cui-data-field-input {
     min-width: 0; }
 
+.cui-layer--size-xs {
+  width: 400px; }
+
+.cui-layer--size-s {
+  width: 500px; }
+
+.cui-layer--size-m {
+  width: 600px; }
+
+.cui-layer--size-l {
+  width: 700px; }
+
+.cui-layer--size-xl {
+  width: 800px; }
+
+.cui-layer--size-xxl {
+  width: 900px; }
+
+.cui-layer--size-xxxl {
+  width: 1000px; }
+
 .cui-layer-pointer {
   position: absolute;
   z-index: 1;

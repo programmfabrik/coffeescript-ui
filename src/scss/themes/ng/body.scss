@@ -2751,6 +2751,22 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
+$layer-sizes: (
+	"xs": 400,
+	"s": 500,
+	"m": 600,
+	"l": 700,
+	"xl": 800,
+	"xxl": 900,
+	"xxxl": 1000
+);
+
+@each $name, $width in $layer-sizes {
+	.cui-layer--size-#{$name} {
+		width: #{$width}px;
+	}
+}
+
 .cui-layer-pointer {
 	position: absolute;
 	z-index: 1;

@@ -30682,7 +30682,6 @@ CUI.Input = (function(superClass) {
       this.__regexp = new RegExp(this._regexp, this._regexp_flags);
       this.__checkInput = (function(_this) {
         return function(value) {
-          console.debug("checking input: '" + value + "'", _this.__checkInputRegexp(value));
           if (!_this.__checkInputRegexp(value)) {
             return false;
           } else if (_this._checkInput) {
