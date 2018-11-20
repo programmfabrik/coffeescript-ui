@@ -1152,13 +1152,12 @@ li > div {
 		padding: 5px 6px;
 	}
 
-	&.cui-active,
 	&.cui-layer-open,
-	&:active {
+	&:active,
+	&.cui-active {
 		.cui-button-visual {
-			border-color: transparent;
-			box-shadow: 0 0 0 1px $button-active-pressed;
-		}
+	  	background: transparentize($button-background,.5);
+	  }
 	}
 
 	&.cui-disabled {

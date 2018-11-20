@@ -1203,9 +1203,8 @@ li > div {
 .cui-toolbar .cui-button-appearance-transparent-border {
   padding: 5px 6px; }
 
-.cui-button-appearance-transparent-border.cui-active .cui-button-visual, .cui-button-appearance-transparent-border.cui-layer-open .cui-button-visual, .cui-button-appearance-transparent-border:active .cui-button-visual {
-  border-color: transparent;
-  box-shadow: 0 0 0 1px #4a5964; }
+.cui-button-appearance-transparent-border.cui-layer-open .cui-button-visual, .cui-button-appearance-transparent-border:active .cui-button-visual, .cui-button-appearance-transparent-border.cui-active .cui-button-visual {
+  background: rgba(255, 255, 255, 0.5); }
 
 .cui-button-appearance-transparent-border.cui-disabled .cui-button-visual {
   border-color: transparent; }
