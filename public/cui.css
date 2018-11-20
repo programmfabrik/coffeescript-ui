@@ -1191,7 +1191,7 @@ li > div {
   border-color: rgba(0, 0, 0, 0.14); }
 
 .cui-button-button.cui-button-appearance-important.cui-disabled, .cui-button-button.cui-button--primary.cui-disabled {
-  opacity: 0.33; }
+  opacity: 0.5; }
   .cui-button-button.cui-button-appearance-important.cui-disabled:active .cui-button-visual, .cui-button-button.cui-button--primary.cui-disabled:active .cui-button-visual {
     background: var(--highlight); }
 
@@ -1368,7 +1368,7 @@ a[role="button"].cui-button-appearance-link {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    opacity: 0.33;
+    opacity: 0.5;
     pointer-events: none; }
     .cui-data-field-disabled .cui-data-field-disabled {
       opacity: 1; }
@@ -4291,7 +4291,7 @@ label[data-label-clickable],
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  opacity: 0.33;
+  opacity: 0.5;
   pointer-events: none; }
   .cui-data-field-disabled .cui-disabled {
     opacity: 1; }

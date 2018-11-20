@@ -1125,7 +1125,7 @@ li > div {
 		}
 
 		&.cui-disabled {
-			opacity: 0.33;
+			opacity: 0.5;
 
 			&:active {
 				.cui-button-visual {
@@ -1404,7 +1404,7 @@ a[role="button"].cui-button-appearance-link {
 		-webkit-user-select: none;
 		    -ms-user-select: none;
 		        user-select: none;
-		opacity: 0.33;
+		opacity: 0.5;
 		pointer-events: none;
 
 		& & {
@@ -6091,7 +6091,7 @@ label[data-label-clickable],
 	-webkit-user-select: none;
 	    -ms-user-select: none;
 	        user-select: none;
-	opacity: 0.33;
+	opacity: 0.5;
 	pointer-events: none;
 
 	.cui-data-field-disabled & {
