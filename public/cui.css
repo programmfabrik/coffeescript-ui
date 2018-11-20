@@ -4120,8 +4120,8 @@ label[data-label-clickable],
   margin-right: 0; }
 
 .cui-form-block {
-  margin-left: 10px;
-  margin-right: 10px; }
+  margin: 10px;
+  padding: 0; }
   .cui-form-block:not(:last-child) .cui-block-content {
     padding-bottom: 0; }
   .cui-form-block > .cui-block-content > .cui-form {
