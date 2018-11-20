@@ -4403,6 +4403,19 @@ $layer-sizes: (
 }
 
 .status-2d-map {
+	border: 1px solid $table-border;
+	display: table;
+	
+	.cui-block & .cui-td {
+		&:first-child {
+			padding-left: $padding;
+		}
+
+		&:last-child {
+			padding-right: $padding;
+		}
+	}
+
 	.cui-tr {
 		&:nth-child(odd):not(:first-child) {
 			background: $zebra-color;
