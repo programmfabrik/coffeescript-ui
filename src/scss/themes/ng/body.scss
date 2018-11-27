@@ -156,7 +156,7 @@ input[data-max-chars] {
 
 	@each $color, $values in $colors {
 		&.cui-swatch-color-#{$color} {
-			background: map-get($values, 'light');
+			background: map-get($values, 'highlight-light');
 		}
 	}
 }
