@@ -543,6 +543,24 @@ input[data-max-chars] {
   width: 24px;
   height: 12px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.14) inset; }
+  .css-swatch.cui-swatch-color-red {
+    background: #ffbbb8; }
+  .css-swatch.cui-swatch-color-orange {
+    background: #ffdfb3; }
+  .css-swatch.cui-swatch-color-yellow {
+    background: #ffe680; }
+  .css-swatch.cui-swatch-color-green {
+    background: #c0f6ac; }
+  .css-swatch.cui-swatch-color-blue {
+    background: #b3d7ff; }
+  .css-swatch.cui-swatch-color-purple {
+    background: #f8d6ff; }
+  .css-swatch.cui-swatch-color-pink {
+    background: #ffbdd1; }
+  .css-swatch.cui-swatch-color-brown {
+    background: #eddeca; }
+  .css-swatch.cui-swatch-color-graphite {
+    background: #d7d7db; }
 
 body[data-cursor] {
   -webkit-user-select: none;
