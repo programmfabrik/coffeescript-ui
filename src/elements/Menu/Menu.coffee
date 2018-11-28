@@ -7,7 +7,6 @@
 
 class CUI.Menu extends CUI.Layer
 	constructor: (@opts={}) ->
-		# @opts.role = "menu"
 		super(@opts)
 		if @_itemList
 			@setItemList(@_itemList)
@@ -58,15 +57,10 @@ class CUI.Menu extends CUI.Layer
 
 		if @__itemList
 			@__loading = true
-			@__itemList.render(@, @__event)
-			.done =>
+			@__itemList.render(@, @__event).done( =>
 				super(@__event)
 				@__loading = false
-
-				# CUI.Events.trigger
-				# 	type: "content-resize"
-				# 	node: @__itemList
-
+			)
 		else
 			super(@__event)
 
@@ -98,6 +92,7 @@ class CUI.Menu extends CUI.Layer
 			delete(itemList.maximize)
 			itemList.maximize_vertical = false
 			itemList.maximize_horizontal = true
+			itemList.keyboardControl = true
 
 			if not itemList.hasOwnProperty("active_item_idx")
 				# tell item list to not manage active item

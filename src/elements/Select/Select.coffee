@@ -176,45 +176,14 @@ class CUI.Select extends CUI.Checkbox
 			onClick: =>
 				@_onClick?.apply(@, arguments)
 			onShow: =>
-				@__keyboardKeys = []
-				menu = @__checkbox.getMenu()
-				itemList = menu?.getItemList()
-
-				preSelectByKeyword = =>
-					itemList?.preSelectByKeyword(@__keyboardKeys.join(""))
-					@__keyboardKeys = []
-
-				@__keyDownEventListener = CUI.Events.listen
-					type: "keydown"
-					call: (event) =>
-						keyboardKey = event.getKeyboardKey()
-						switch keyboardKey
-							when "Down"
-								itemList?.preActivateNextItem()
-								break
-							when "Up"
-								itemList?.preActivatePreviousItem()
-								break
-							when "Return"
-								itemList?.activatePreSelectedItem()
-								menu.hide()
-								break
-							else
-								if keyboardKey
-									@__keyboardKeys.push(keyboardKey)
-									CUI.scheduleCallback(ms: 200, call: preSelectByKeyword)
-
-						return
 				@_onShow?.apply(@, arguments)
 			onHide: =>
-				@__keyDownEventListener?.destroy()
 				@_onHide?.apply(@, arguments)
 			onActivate: (btn, item, idx, flags) =>
 				@storeValue(@__options[idx].value, flags)
 				if @isDestroyed()
 					return
 				@displayValue()
-				# @DOM.trigger("list-view-resize")
 				@
 			items: (event) =>
 				@__loadOptions(event)

@@ -47,6 +47,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 			orientation:
 				default: "vertical"
 				check: ["horizontal","vertical"]
+			keyboardControl:
+				check: Boolean
+				default: false
 		@
 
 	readOpts: ->
@@ -272,11 +275,44 @@ class CUI.ItemList extends CUI.VerticalLayout
 				else
 					@__body.removeClass("cui-item-list--has-button-left")
 
+
+			@__keyboardKeys = []
+			preSelectByKeyword = =>
+				@preSelectByKeyword(@__keyboardKeys.join(""))
+				@__keyboardKeys = []
+
+			if @_keyboardControl and not @__keydownListener
+				@__keydownListener = CUI.Events.listen
+					type: "keydown"
+					call: (event) =>
+						if not CUI.dom.isInDOM(@__body)
+							@__keydownListener?.destroy()
+							delete @__keydownListener
+							return
+
+						keyboardKey = event.getKeyboardKey()
+						switch keyboardKey
+							when "Down"
+								@__preActivateNextItem()
+								break
+							when "Up"
+								@__preActivatePreviousItem()
+								break
+							when "Return"
+								@__activatePreSelected(event)
+								break
+							else
+								if keyboardKey
+									@__keyboardKeys.push(keyboardKey)
+									CUI.scheduleCallback(ms: 200, call: preSelectByKeyword)
+						return
+
 			return
 		promise
 
 	destroy: ->
 		super()
+		@__keydownListener?.destroy()
 		@__body?.destroy()
 
 	preSelectByKeyword: (keyword) ->
@@ -296,16 +332,22 @@ class CUI.ItemList extends CUI.VerticalLayout
 				break
 		return
 
-	activatePreSelectedItem: ->
-		@__activateItemByIndex(@__preActiveIndex)
+	__activatePreSelected: (event) ->
+		itemToActivate = @__getItemByIndex(@__preActiveIndex)
+		if itemToActivate instanceof CUI.Button
+			itemToActivate.onClickAction(event)
+			CUI.dom.removeClass(itemToActivate, CUI.defaults.class.Button.defaults.active_css_class)
 
-	preActivateNextItem: ->
+	__preActivateNextItem: ->
 		@__preActivateItemByIndex(@__preActiveIndex + 1)
 
-	preActivatePreviousItem: ->
+	__preActivatePreviousItem: ->
 		@__preActivateItemByIndex(@__preActiveIndex - 1)
 
 	__preActivateItemByIndex: (newPreActiveIndex) ->
+		if not newPreActiveIndex or newPreActiveIndex < 0
+			newPreActiveIndex = 0
+
 		itemToPreActivate = @__getItemByIndex(newPreActiveIndex)
 		if itemToPreActivate instanceof CUI.Button
 			@__deselectPreActivated()
@@ -318,12 +360,14 @@ class CUI.ItemList extends CUI.VerticalLayout
 		if previousItemSelected instanceof CUI.Button
 			CUI.dom.removeClass(previousItemSelected, CUI.defaults.class.Button.defaults.active_css_class)
 
-	__activateItemByIndex: (index) ->
-		itemToActivate = @__getItemByIndex(index)
-		if itemToActivate instanceof CUI.Button
-			itemToActivate.activate()
-			@setActiveIdx(index)
-
 	__getItemByIndex: (index) ->
-		item = @__body?.DOM.children[index]
+		if not @__body
+			return
+
+		children = Array::filter.call(@__body.DOM.children, (item) =>
+			element = CUI.dom.data(item, "element")
+			return element instanceof CUI.Button or element instanceof CUI.DataField or element instanceof CUI.Label
+		)
+
+		item = children[index]
 		return CUI.dom.data(item, "element")
