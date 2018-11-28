@@ -1127,6 +1127,7 @@ CUI = (function() {
     var deferred, script;
     deferred = new CUI.Deferred;
     script = CUI.dom.element("script", {
+      charset: "utf-8",
       src: src
     });
     CUI.Events.listen({
