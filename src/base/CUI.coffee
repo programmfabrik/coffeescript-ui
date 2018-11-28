@@ -844,7 +844,7 @@ class CUI
 
 	@loadScript: (src) ->
 		deferred = new CUI.Deferred
-		script = CUI.dom.element("script", src: src)
+		script = CUI.dom.element("script", charset: "utf-8", src: src)
 
 		CUI.Events.listen
 			type: "load"
