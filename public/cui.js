@@ -32406,6 +32406,10 @@ CUI.ItemList = (function(superClass) {
       orientation: {
         "default": "vertical",
         check: ["horizontal", "vertical"]
+      },
+      keyboardControl: {
+        check: Boolean,
+        "default": false
       }
     });
     return this;
@@ -32526,7 +32530,7 @@ CUI.ItemList = (function(superClass) {
     promise = this.getItems(event);
     promise.done((function(_this) {
       return function(items) {
-        var _item, fn, i, idx, item, len, list_has_button_left, opt_keys;
+        var _item, fn, i, idx, item, len, list_has_button_left, opt_keys, preSelectByKeyword;
         opt_keys = CUI.defaults["class"].Button.getOptKeys();
         list_has_button_left = false;
         fn = function(item, idx) {
@@ -32656,15 +32660,58 @@ CUI.ItemList = (function(superClass) {
             _this.__body.removeClass("cui-item-list--has-button-left");
           }
         }
+        _this.__keyboardKeys = [];
+        preSelectByKeyword = function() {
+          _this.preSelectByKeyword(_this.__keyboardKeys.join(""));
+          return _this.__keyboardKeys = [];
+        };
+        if (_this._keyboardControl && !_this.__keydownListener) {
+          _this.__keydownListener = CUI.Events.listen({
+            type: "keydown",
+            call: function(event) {
+              var keyboardKey, ref;
+              if (!CUI.dom.isInDOM(_this.__body)) {
+                if ((ref = _this.__keydownListener) != null) {
+                  ref.destroy();
+                }
+                delete _this.__keydownListener;
+                return;
+              }
+              keyboardKey = event.getKeyboardKey();
+              switch (keyboardKey) {
+                case "Down":
+                  _this.__preActivateNextItem();
+                  break;
+                case "Up":
+                  _this.__preActivatePreviousItem();
+                  break;
+                case "Return":
+                  _this.__activatePreSelected(event);
+                  break;
+                default:
+                  if (keyboardKey) {
+                    _this.__keyboardKeys.push(keyboardKey);
+                    CUI.scheduleCallback({
+                      ms: 200,
+                      call: preSelectByKeyword
+                    });
+                  }
+              }
+            }
+          });
+        }
       };
     })(this));
     return promise;
   };
 
   ItemList.prototype.destroy = function() {
-    var ref;
+    var ref, ref1;
     ItemList.__super__.destroy.call(this);
-    return (ref = this.__body) != null ? ref.destroy() : void 0;
+    if ((ref = this.__keydownListener) != null) {
+      ref.destroy();
+    }
+    return (ref1 = this.__body) != null ? ref1.destroy() : void 0;
   };
 
   ItemList.prototype.preSelectByKeyword = function(keyword) {
@@ -32692,20 +32739,28 @@ CUI.ItemList = (function(superClass) {
     }
   };
 
-  ItemList.prototype.activatePreSelectedItem = function() {
-    return this.__activateItemByIndex(this.__preActiveIndex);
+  ItemList.prototype.__activatePreSelected = function(event) {
+    var itemToActivate;
+    itemToActivate = this.__getItemByIndex(this.__preActiveIndex);
+    if (itemToActivate instanceof CUI.Button) {
+      itemToActivate.onClickAction(event);
+      return CUI.dom.removeClass(itemToActivate, CUI.defaults["class"].Button.defaults.active_css_class);
+    }
   };
 
-  ItemList.prototype.preActivateNextItem = function() {
+  ItemList.prototype.__preActivateNextItem = function() {
     return this.__preActivateItemByIndex(this.__preActiveIndex + 1);
   };
 
-  ItemList.prototype.preActivatePreviousItem = function() {
+  ItemList.prototype.__preActivatePreviousItem = function() {
     return this.__preActivateItemByIndex(this.__preActiveIndex - 1);
   };
 
   ItemList.prototype.__preActivateItemByIndex = function(newPreActiveIndex) {
     var itemToPreActivate;
+    if (!newPreActiveIndex || newPreActiveIndex < 0) {
+      newPreActiveIndex = 0;
+    }
     itemToPreActivate = this.__getItemByIndex(newPreActiveIndex);
     if (itemToPreActivate instanceof CUI.Button) {
       this.__deselectPreActivated();
@@ -32723,18 +32778,19 @@ CUI.ItemList = (function(superClass) {
     }
   };
 
-  ItemList.prototype.__activateItemByIndex = function(index) {
-    var itemToActivate;
-    itemToActivate = this.__getItemByIndex(index);
-    if (itemToActivate instanceof CUI.Button) {
-      itemToActivate.activate();
-      return this.setActiveIdx(index);
-    }
-  };
-
   ItemList.prototype.__getItemByIndex = function(index) {
-    var item, ref;
-    item = (ref = this.__body) != null ? ref.DOM.children[index] : void 0;
+    var children, item;
+    if (!this.__body) {
+      return;
+    }
+    children = Array.prototype.filter.call(this.__body.DOM.children, (function(_this) {
+      return function(item) {
+        var element;
+        element = CUI.dom.data(item, "element");
+        return element instanceof CUI.Button || element instanceof CUI.DataField || element instanceof CUI.Label;
+      };
+    })(this));
+    item = children[index];
     return CUI.dom.data(item, "element");
   };
 
@@ -39205,6 +39261,7 @@ CUI.Menu = (function(superClass) {
       delete itemList.maximize;
       itemList.maximize_vertical = false;
       itemList.maximize_horizontal = true;
+      itemList.keyboardControl = true;
       if (!itemList.hasOwnProperty("active_item_idx")) {
         itemList.active_item_idx = null;
       }
@@ -42725,59 +42782,14 @@ CUI.Select = (function(superClass) {
         })(this),
         onShow: (function(_this) {
           return function() {
-            var itemList, menu, preSelectByKeyword, ref1;
-            _this.__keyboardKeys = [];
-            menu = _this.__checkbox.getMenu();
-            itemList = menu != null ? menu.getItemList() : void 0;
-            preSelectByKeyword = function() {
-              if (itemList != null) {
-                itemList.preSelectByKeyword(_this.__keyboardKeys.join(""));
-              }
-              return _this.__keyboardKeys = [];
-            };
-            _this.__keyDownEventListener = CUI.Events.listen({
-              type: "keydown",
-              call: function(event) {
-                var keyboardKey;
-                keyboardKey = event.getKeyboardKey();
-                switch (keyboardKey) {
-                  case "Down":
-                    if (itemList != null) {
-                      itemList.preActivateNextItem();
-                    }
-                    break;
-                  case "Up":
-                    if (itemList != null) {
-                      itemList.preActivatePreviousItem();
-                    }
-                    break;
-                  case "Return":
-                    if (itemList != null) {
-                      itemList.activatePreSelectedItem();
-                    }
-                    menu.hide();
-                    break;
-                  default:
-                    if (keyboardKey) {
-                      _this.__keyboardKeys.push(keyboardKey);
-                      CUI.scheduleCallback({
-                        ms: 200,
-                        call: preSelectByKeyword
-                      });
-                    }
-                }
-              }
-            });
+            var ref1;
             return (ref1 = _this._onShow) != null ? ref1.apply(_this, arguments) : void 0;
           };
         })(this),
         onHide: (function(_this) {
           return function() {
-            var ref1, ref2;
-            if ((ref1 = _this.__keyDownEventListener) != null) {
-              ref1.destroy();
-            }
-            return (ref2 = _this._onHide) != null ? ref2.apply(_this, arguments) : void 0;
+            var ref1;
+            return (ref1 = _this._onHide) != null ? ref1.apply(_this, arguments) : void 0;
           };
         })(this),
         onActivate: (function(_this) {
