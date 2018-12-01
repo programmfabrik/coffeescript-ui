@@ -616,13 +616,18 @@ class CUI
 
 		url.join(connect)
 
+	# keep "," and ":" in url intact, encodeURI all other parts
 	@encodeURIComponentNicely: (str="") ->
 		s = []
-		for v in (str+"").split("")
-			if v in [",",":"]
-				s.push(v)
-			else
-				s.push(encodeURIComponent(v))
+		for v, idx in (str+"").split(",")
+			if idx > 0
+				s.push(",")
+
+			for v2, idx2 in v.split(":")
+				if idx2 > 0
+					s.push(":")
+
+				s.push(encodeURIComponent(v2))
 		s.join("")
 
 	@decodeURIComponentNicely: (v) ->
