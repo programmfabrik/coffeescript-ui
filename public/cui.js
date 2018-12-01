@@ -852,18 +852,24 @@ CUI = (function() {
   };
 
   CUI.encodeURIComponentNicely = function(str) {
-    var j, len1, ref, s, v;
+    var idx, idx2, j, l, len1, len2, ref, ref1, s, v, v2;
     if (str == null) {
       str = "";
     }
     s = [];
-    ref = (str + "").split("");
-    for (j = 0, len1 = ref.length; j < len1; j++) {
-      v = ref[j];
-      if (v === "," || v === ":") {
-        s.push(v);
-      } else {
-        s.push(encodeURIComponent(v));
+    ref = (str + "").split(",");
+    for (idx = j = 0, len1 = ref.length; j < len1; idx = ++j) {
+      v = ref[idx];
+      if (idx > 0) {
+        s.push(",");
+      }
+      ref1 = v.split(":");
+      for (idx2 = l = 0, len2 = ref1.length; l < len2; idx2 = ++l) {
+        v2 = ref1[idx2];
+        if (idx2 > 0) {
+          s.push(":");
+        }
+        s.push(encodeURIComponent(v2));
       }
     }
     return s.join("");
