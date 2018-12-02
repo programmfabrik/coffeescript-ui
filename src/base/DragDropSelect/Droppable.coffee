@@ -72,6 +72,7 @@ class CUI.Droppable extends CUI.DragDropSelect
 			for el in CUI.dom.findElements(@_element, @_selector)
 				el.classList.remove("cui-droppable-target-helper")
 
+
 		@__dropTarget = undefined
 		@__dropTargetPos = undefined
 
@@ -140,29 +141,39 @@ class CUI.Droppable extends CUI.DragDropSelect
 			else
 				return true
 
-		if @__dropTarget == undefined
+		if not @__initialized
 			# check axis
 			last_dim = null
-			@__axis = null
+			@__axis = undefined
+
 			for el in CUI.dom.findElements(@_element, @_selector)
 				if @_targetHelper
 					el.classList.add("cui-droppable-target-helper")
 
-				if CUI.util.isNull(last_dim) or CUI.util.isNull(@__axis)
-					dim = CUI.dom.getDimensions(el)
-					if last_dim and not @__axis
-						if last_dim.viewportLeft == dim.viewportLeft
-							@__axis = "y"
+				# we only need to check the first two elements
+				# if we only have one we cannot determine the "axis" anyway
+				if @__axis != undefined
+					continue
 
-						if last_dim.viewportTop == dim.viewportTop
-							@__axis = "x"
-					last_dim = dim
+				dim = CUI.dom.getDimensions(el)
+				if last_dim
+
+					@__axis = null
+					if last_dim.viewportLeft == dim.viewportLeft
+						@__axis = "y"
+
+					if last_dim.viewportTop == dim.viewportTop
+						@__axis = "x"
+
+				last_dim = dim
 
 			if not @__axis
 				@__axis = "x"
 
 			@__dropTargetPos = null
 			@__dropTarget = null
+
+			@__initialized = true
 
 		CUI.dom.removeClass(@__selectedTarget, @_hoverClass)
 		if @_selector
@@ -277,4 +288,3 @@ class CUI.Droppable extends CUI.DragDropSelect
 				@syncTargetHelper(ev, info)
 				ev.stopPropagation()
 				return
-
