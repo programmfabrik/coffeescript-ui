@@ -278,7 +278,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 			@__keyboardKeys = []
 			preSelectByKeyword = =>
-				@preSelectByKeyword(@__keyboardKeys.join(""))
+				@__preSelectByKeyword(@__keyboardKeys.join(""))
 				@__keyboardKeys = []
 
 			if @_keyboardControl and not @__keydownListener
@@ -290,12 +290,17 @@ class CUI.ItemList extends CUI.VerticalLayout
 							delete @__keydownListener
 							return
 
+						if menu.DOM != document.activeElement
+							return
+
 						keyboardKey = event.getKeyboardKey()
 						switch keyboardKey
 							when "Down"
+								event.preventDefault()
 								@__preActivateNextItem()
 								break
 							when "Up"
+								event.preventDefault()
 								@__preActivatePreviousItem()
 								break
 							when "Return"
@@ -315,7 +320,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 		@__keydownListener?.destroy()
 		@__body?.destroy()
 
-	preSelectByKeyword: (keyword) ->
+	__preSelectByKeyword: (keyword) ->
 		elementMatches = (element) =>
 			(element instanceof CUI.Button or element instanceof CUI.Label) and element.getText()?.startsWithIgnoreCase(keyword)
 

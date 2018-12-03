@@ -151,19 +151,6 @@ class CUI.Select extends CUI.Checkbox
 		menu:
 			active_item_idx: @default_opt?._idx or -1
 			allow_null: not CUI.util.isEmpty(@_empty_text)
-			# placements: ["c"]
-			# onPosition: (menu, vp) =>
-			# 	il = menu.getItemList()
-
-			# 	active_item = il.getBody().DOM.children[il.getActiveIdx()]
-			# 	if not active_item
-			# 		return
-
-			# 	item_top = vp.layer_pos.top - vp.dim_layer.marginTop + DOM.getDimensions(active_item).viewportTop
-			# 	adjust = vp.dim_element.viewportTop - item_top
-			# 	console.debug "adjust", adjust, item_top, vp.dim_element.viewportTop, vp.layer_pos.top, DOM.getDimensions(active_item).viewportTop
-			# 	vp.layer_pos.top = vp.layer_pos.top + adjust
-			# 	vp.layer_pos.left += 20
 			class: "cui-select-menu"
 			onDeactivate: (btn, item, idx, flags) =>
 				if flags.prior_activate
@@ -192,7 +179,6 @@ class CUI.Select extends CUI.Checkbox
 					# we need to adjust the active idx
 					@displayValue()
 			has_items: true
-
 
 	getDefaultValue: ->
 		# console.debug "getDefaultValue", @__uniqueId, @default_opt

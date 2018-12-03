@@ -64,8 +64,11 @@ class CUI.Menu extends CUI.Layer
 		else
 			super(@__event)
 
+		@__previousFocusedElement = document.activeElement
+		@DOM.focus()
+
 		CUI.Events.listen
-			type: "keydown"
+			type: "keyup"
 			instance: @  # will be ignored by onHide in Layer
 			node: @DOM
 			capture: true
@@ -73,7 +76,7 @@ class CUI.Menu extends CUI.Layer
 				if ev.hasModifierKey()
 					return
 
-				if ev.keyCode() == 27
+				if ev.getKeyboardKey() in ["Esc", "Tab"]
 					@hide()
 					ev.stop()
 
@@ -117,8 +120,8 @@ class CUI.Menu extends CUI.Layer
 		super()
 
 	hide: (ev) ->
-		# ev?.preventDefault()
 		super(ev)
+		@__previousFocusedElement.focus()
 		@
 
 	hideAll: (ev) ->
