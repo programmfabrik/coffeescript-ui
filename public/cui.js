@@ -32668,7 +32668,7 @@ CUI.ItemList = (function(superClass) {
         }
         _this.__keyboardKeys = [];
         preSelectByKeyword = function() {
-          _this.preSelectByKeyword(_this.__keyboardKeys.join(""));
+          _this.__preSelectByKeyword(_this.__keyboardKeys.join(""));
           return _this.__keyboardKeys = [];
         };
         if (_this._keyboardControl && !_this.__keydownListener) {
@@ -32683,12 +32683,17 @@ CUI.ItemList = (function(superClass) {
                 delete _this.__keydownListener;
                 return;
               }
+              if (menu.DOM !== document.activeElement) {
+                return;
+              }
               keyboardKey = event.getKeyboardKey();
               switch (keyboardKey) {
                 case "Down":
+                  event.preventDefault();
                   _this.__preActivateNextItem();
                   break;
                 case "Up":
+                  event.preventDefault();
                   _this.__preActivatePreviousItem();
                   break;
                 case "Return":
@@ -32720,7 +32725,7 @@ CUI.ItemList = (function(superClass) {
     return (ref1 = this.__body) != null ? ref1.destroy() : void 0;
   };
 
-  ItemList.prototype.preSelectByKeyword = function(keyword) {
+  ItemList.prototype.__preSelectByKeyword = function(keyword) {
     var element, elementMatches, i, index, item, len, nextElement, nextIndex, ref, ref1;
     elementMatches = (function(_this) {
       return function(element) {
@@ -39231,17 +39236,20 @@ CUI.Menu = (function(superClass) {
     } else {
       Menu.__super__.show.call(this, this.__event);
     }
+    this.__previousFocusedElement = document.activeElement;
+    this.DOM.focus();
     CUI.Events.listen({
-      type: "keydown",
+      type: "keyup",
       instance: this,
       node: this.DOM,
       capture: true,
       call: (function(_this) {
         return function(ev) {
+          var ref;
           if (ev.hasModifierKey()) {
             return;
           }
-          if (ev.keyCode() === 27) {
+          if ((ref = ev.getKeyboardKey()) === "Esc" || ref === "Tab") {
             _this.hide();
             return ev.stop();
           }
@@ -39299,6 +39307,7 @@ CUI.Menu = (function(superClass) {
 
   Menu.prototype.hide = function(ev) {
     Menu.__super__.hide.call(this, ev);
+    this.__previousFocusedElement.focus();
     return this;
   };
 
