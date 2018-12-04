@@ -284,6 +284,11 @@ class CUI.util
 			data
 
 	@copyObject: (obj, deep = false, level = 0) ->
+
+		if level > 100
+			console.error("CUI.util.copyObject: ***Recursion protection after 100 levels.***")
+			return
+
 		if typeof(obj) in ["string", "number", "boolean", "function"]
 			return obj
 
