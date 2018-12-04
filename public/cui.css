@@ -3294,6 +3294,10 @@ a[role="button"].cui-button-appearance-link {
         margin-right: 0; }
   .cui-form-container .cui-form[cui-form-depth="0"] {
     margin: 10px; }
+  .cui-form-container .cui-lv-td > .cui-form[cui-form-depth="0"] {
+    margin: 0; }
+    .cui-form-container .cui-lv-td > .cui-form[cui-form-depth="0"] .cui-form-table[cui-form-depth="0"] {
+      margin: 0; }
 
 .cui-form-row {
   flex-grow: 1;
