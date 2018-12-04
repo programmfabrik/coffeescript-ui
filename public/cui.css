@@ -3314,10 +3314,15 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-table {
   margin: 0;
   display: block; }
-  .cui-form-table[cui-form-depth="0"] {
-    margin: 10px; }
-    .cui-form-table[cui-form-depth="0"] + .cui-form-table {
-      margin-top: -10px; }
+
+.cui-form-table[cui-form-depth="0"],
+.cui-form-container[cui-form-depth="0"] {
+  margin: 10px; }
+  .cui-form-table[cui-form-depth="0"] + .cui-form-table,
+  .cui-form-table[cui-form-depth="0"] + .cui-form-container,
+  .cui-form-container[cui-form-depth="0"] + .cui-form-table,
+  .cui-form-container[cui-form-depth="0"] + .cui-form-container {
+    margin-top: -10px; }
 
 .cui-form-table-has-not-left-column > .cui-tr > .cui-td.cui-form-key {
   display: none; }
