@@ -4572,15 +4572,11 @@ $layer-sizes: (
 .cui-form-table {
 	margin: 0;
 	display: block;
-}
-
-.cui-form-table,
-.cui-form-container {
+	
 	&[cui-form-depth="0"] {
 		margin: $padding;
 
-		& + .cui-form-table,
-		& + .cui-form-container {
+		& + .cui-form-table {
 			margin-top: -$padding;
 		}
 	}
