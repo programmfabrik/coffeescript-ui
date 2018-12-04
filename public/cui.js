@@ -20209,6 +20209,10 @@ CUI.util = (function() {
     if (level == null) {
       level = 0;
     }
+    if (level > 100) {
+      console.error("CUI.util.copyObject: ***Recursion protection after 100 levels.***");
+      return;
+    }
     if ((ref = typeof obj) === "string" || ref === "number" || ref === "boolean" || ref === "function") {
       return obj;
     }
