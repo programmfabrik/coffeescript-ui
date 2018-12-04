@@ -73,6 +73,7 @@ class CUI.Icon extends CUI.Element
 		no_right: "fa-slack"
 		file: "fa-file"
 		filter: "fa-filter"
+		sliders: "fa-sliders"
 		refresh: "fa-refresh"
 		zip: "fa fa-file-archive-o"
 		rotate_right: "fa-rotate-right"
