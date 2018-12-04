@@ -6019,49 +6019,6 @@ label[data-label-clickable],
 	}
 }
 
-// Autocomplete
-.cui-autocompletion-popup {
-	flex: 1 1 auto;
-	min-height: 0;
-	max-width: 500px; // prevent autocompletions from growing too wide
-
-	.cui-lv-td {
-		width: 100%;
-		box-sizing: border-box;
-	}
-}
-
-.cui-tmpl-autocompletion-popup {
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
-}
-
-.cui-autocompletion-popup-item {
-	padding: 3px $padding;
-	cursor: pointer;
-	color: hsl(205,7%,22%);
-	outline: none;
-
-	&:hover,
-	&:focus {
-		color: $item-list-color;
-		background: $item-list-hover;
-	}
-
-	em {
-		font-weight: bold;
-		font-style: normal;
-	}
-
-	.cui-label {
-		max-width: 100%;
-	}
-
-	.cui-label-content {
-		flex-shrink: 1;
-	}
-}
-
 // Space
 .cui-space {
 	margin: $padding;

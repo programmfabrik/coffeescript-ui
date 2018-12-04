@@ -4260,34 +4260,6 @@ label[data-label-clickable],
   .cui-digi-display .cui-digi-display-static {
     height: 20px; }
 
-.cui-autocompletion-popup {
-  flex: 1 1 auto;
-  min-height: 0;
-  max-width: 500px; }
-  .cui-autocompletion-popup .cui-lv-td {
-    width: 100%;
-    box-sizing: border-box; }
-
-.cui-tmpl-autocompletion-popup {
-  overflow: auto;
-  -webkit-overflow-scrolling: touch; }
-
-.cui-autocompletion-popup-item {
-  padding: 3px 10px;
-  cursor: pointer;
-  color: #34393c;
-  outline: none; }
-  .cui-autocompletion-popup-item:hover, .cui-autocompletion-popup-item:focus {
-    color: #34393c;
-    background: #e6e8ea; }
-  .cui-autocompletion-popup-item em {
-    font-weight: bold;
-    font-style: normal; }
-  .cui-autocompletion-popup-item .cui-label {
-    max-width: 100%; }
-  .cui-autocompletion-popup-item .cui-label-content {
-    flex-shrink: 1; }
-
 .cui-space {
   margin: 10px;
   display: inline-block; }
