@@ -10815,17 +10815,12 @@ CUI.Draggable = (function(superClass) {
       instance: this.__ref,
       call: (function(_this) {
         return function(ev) {
-          var coordinates, diff, pointTarget;
+          var coordinates, diff;
           if (!CUI.globalDrag) {
             return;
           }
           ev.preventDefault();
-          if (CUI.browser.firefox) {
-            pointTarget = ev.getPointTarget();
-          } else {
-            pointTarget = ev.getTarget();
-          }
-          $target = pointTarget;
+          $target = ev.getTarget();
           if (!$target) {
             return;
           }
@@ -11594,19 +11589,21 @@ CUI.Droppable = (function(superClass) {
       ref = CUI.dom.findElements(this._element, this._selector);
       for (i = 0, len = ref.length; i < len; i++) {
         el = ref[i];
-        dim = CUI.dom.getDimensions(el);
-        if (last_dim && !this.__axis) {
-          if (last_dim.viewportLeft === dim.viewportLeft) {
-            this.__axis = "y";
-          }
-          if (last_dim.viewportTop === dim.viewportTop) {
-            this.__axis = "x";
-          }
-        }
         if (this._targetHelper) {
           el.classList.add("cui-droppable-target-helper");
         }
-        last_dim = dim;
+        if (CUI.util.isNull(last_dim) || CUI.util.isNull(this.__axis)) {
+          dim = CUI.dom.getDimensions(el);
+          if (last_dim && !this.__axis) {
+            if (last_dim.viewportLeft === dim.viewportLeft) {
+              this.__axis = "y";
+            }
+            if (last_dim.viewportTop === dim.viewportTop) {
+              this.__axis = "x";
+            }
+          }
+          last_dim = dim;
+        }
       }
       if (!this.__axis) {
         this.__axis = "x";
@@ -14327,6 +14324,14 @@ CUI.MouseEvent = (function(superClass) {
       }
     }
     return MouseEvent.__super__.setNativeEvent.call(this, ev);
+  };
+
+  MouseEvent.prototype.getTarget = function() {
+    var ref;
+    if (CUI.browser.firefox && ((ref = this.getType()) === "mousemove" || ref === "mouseup")) {
+      return this.getPointTarget();
+    }
+    return MouseEvent.__super__.getTarget.call(this);
   };
 
   return MouseEvent;
@@ -19948,14 +19953,6 @@ CUI.util = (function() {
     CUI.util.assert(needs.length === 0, "" + (CUI.util.getObjectClass(inst)), "Needs implementations for " + (needs.join(', ')) + ".", {
       instance: inst
     });
-    return;
-    if (ev.scrollPageY) {
-      coord.pageY += ev.scrollPageY;
-    }
-    if (ev.scrollPageX) {
-      coord.pageX += ev.scrollPageX;
-    }
-    return coord;
   };
 
   util.assertInstanceOf = function(variableName, classClass, opts, value) {
