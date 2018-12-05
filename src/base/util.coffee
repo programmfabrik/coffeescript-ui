@@ -84,14 +84,6 @@ class CUI.util
 		CUI.util.assert(needs.length == 0, "#{CUI.util.getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
 		return
 
-		# scrollPageX and scrollPageY are faked attributes
-		# which are set by DragDropSelect
-		if ev.scrollPageY
-			coord.pageY += ev.scrollPageY
-		if ev.scrollPageX
-			coord.pageX += ev.scrollPageX
-		coord
-
 	@assertInstanceOf: (variableName, classClass, opts, value=undefined) ->
 		if not CUI.defaults.asserts
 			return
