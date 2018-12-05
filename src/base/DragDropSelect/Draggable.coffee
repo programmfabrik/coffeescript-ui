@@ -254,15 +254,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 				# we drag
 				ev.preventDefault()
 
-				if CUI.browser.firefox
-					# ok, in firefox the target of the mousemove
-					# event is WRONG while dragging. we need to overwrite
-					# this with elementFromPoint, true story :(
-					pointTarget = ev.getPointTarget()
-				else
-					pointTarget = ev.getTarget()
-
-				$target = pointTarget
+				$target = ev.getTarget()
 				if not $target
 					return
 

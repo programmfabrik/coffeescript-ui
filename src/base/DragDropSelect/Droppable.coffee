@@ -66,14 +66,11 @@ class CUI.Droppable extends CUI.DragDropSelect
 			@__selectedTarget = null
 
 		if @__dropHelper
-			# console.error "removing drop helper.."
 			CUI.dom.remove(@__dropHelper)
 
 		if @_targetHelper
 			for el in CUI.dom.findElements(@_element, @_selector)
 				el.classList.remove("cui-droppable-target-helper")
-
-		# console.error "removing helper.."
 
 		@__dropTarget = undefined
 		@__dropTargetPos = undefined
@@ -123,7 +120,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if ev.getType() == "cui-dragleave"
 			new_target = info.originalEvent.getTarget()
-
 			if CUI.dom.closest(new_target, ".cui-drag-drop-select-droppable") != @_element
 				# outside us
 				@removeHelper()
@@ -140,7 +136,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 			if @accept(ev, info) == false
 				@removeHelper()
-				# console.error("Cannot accept drop here...")
 				return false
 			else
 				return true
@@ -150,18 +145,18 @@ class CUI.Droppable extends CUI.DragDropSelect
 			last_dim = null
 			@__axis = null
 			for el in CUI.dom.findElements(@_element, @_selector)
-				dim = CUI.dom.getDimensions(el)
-				if last_dim and not @__axis
-					if last_dim.viewportLeft == dim.viewportLeft
-						@__axis = "y"
-
-					if last_dim.viewportTop == dim.viewportTop
-						@__axis = "x"
-
 				if @_targetHelper
 					el.classList.add("cui-droppable-target-helper")
 
-				last_dim = dim
+				if CUI.util.isNull(last_dim) or CUI.util.isNull(@__axis)
+					dim = CUI.dom.getDimensions(el)
+					if last_dim and not @__axis
+						if last_dim.viewportLeft == dim.viewportLeft
+							@__axis = "y"
+
+						if last_dim.viewportTop == dim.viewportTop
+							@__axis = "x"
+					last_dim = dim
 
 			if not @__axis
 				@__axis = "x"
@@ -206,16 +201,13 @@ class CUI.Droppable extends CUI.DragDropSelect
 				@__dropTarget = @_element
 				@__dropTargetPos = null
 				@syncDropHelper()
-				# console.debug "is acceptable..", @__dropHelper, DOM.isInDOM(@__dropHelper)
 			else
 				console.info("No selected target, no dropHelper...")
 				@removeHelper()
 				# bubble
 				return true
-
 			return
 
-		# console.error "removing drop helper.."
 		CUI.dom.remove(@__dropHelper)
 
 		dim = CUI.dom.getDimensions(@__selectedTarget)
@@ -250,8 +242,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 		return
 
 	init: ->
-		# console.error "register droppable on", @element
-
 		CUI.Events.listen
 			node: @element
 			type: "cui-dragend"
@@ -264,15 +254,8 @@ class CUI.Droppable extends CUI.DragDropSelect
 			type: "cui-drop"
 			instance: @
 			call: (ev, info) =>
-
-				# console.debug "cui-drop event", ev, info, @__dropTarget
-
-				# console.debug "cui-drop", ev.getCurrentTarget()
 				if not @__dropTarget
 					return
-
-				# console.debug "cui-drop", info
-
 				info.dropTarget = @__dropTarget
 				if @_targetHelper
 					info.dropTargetPos = @__dropTargetPos
