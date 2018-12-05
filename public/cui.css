@@ -1745,6 +1745,7 @@ a[role="button"].cui-button-appearance-link {
     .cui-selected .cui-label-appearance-secondary {
       color: var(--on-highlight-light-secondary-color); }
   .cui-label-appearance-title {
+    display: flex;
     font-weight: bold;
     font-size: 14px; }
   .cui-label-appearance-muted {
