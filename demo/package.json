@@ -24,7 +24,7 @@
     "coffee": "^3.3.0",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",
-    "coffeescript-ui": "^1.0.0",
+    "coffeescript-ui": "^1.5.2",
     "css-loader": "^0.28.4",
     "html-loader": "^0.5.1",
     "less": "^2.7.2",
