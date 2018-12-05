@@ -16633,33 +16633,36 @@ CUI.Droppable = (function(superClass) {
         }
       };
     })(this);
-    if (this.__dropTarget === void 0) {
+    if (!this.__initialized) {
       last_dim = null;
-      this.__axis = null;
+      this.__axis = void 0;
       ref = CUI.dom.findElements(this._element, this._selector);
       for (i = 0, len = ref.length; i < len; i++) {
         el = ref[i];
         if (this._targetHelper) {
           el.classList.add("cui-droppable-target-helper");
         }
-        if (CUI.util.isNull(last_dim) || CUI.util.isNull(this.__axis)) {
-          dim = CUI.dom.getDimensions(el);
-          if (last_dim && !this.__axis) {
-            if (last_dim.viewportLeft === dim.viewportLeft) {
-              this.__axis = "y";
-            }
-            if (last_dim.viewportTop === dim.viewportTop) {
-              this.__axis = "x";
-            }
-          }
-          last_dim = dim;
+        if (this.__axis !== void 0) {
+          continue;
         }
+        dim = CUI.dom.getDimensions(el);
+        if (last_dim) {
+          this.__axis = null;
+          if (last_dim.viewportLeft === dim.viewportLeft) {
+            this.__axis = "y";
+          }
+          if (last_dim.viewportTop === dim.viewportTop) {
+            this.__axis = "x";
+          }
+        }
+        last_dim = dim;
       }
       if (!this.__axis) {
         this.__axis = "x";
       }
       this.__dropTargetPos = null;
       this.__dropTarget = null;
+      this.__initialized = true;
     }
     CUI.dom.removeClass(this.__selectedTarget, this._hoverClass);
     if (this._selector) {
