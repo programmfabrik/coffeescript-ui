@@ -2,7 +2,7 @@
 
 ## Live demo
 
-https://programmfabrik.github.io/coffeescript-ui-demo/public/index.html
+https://programmfabrik.github.io/coffeescript-ui/demo/index.html
 
 ## Installation
 
