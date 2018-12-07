@@ -121,7 +121,7 @@ class CUI.Menu extends CUI.Layer
 
 	hide: (ev) ->
 		super(ev)
-		@__previousFocusedElement.focus()
+		@__previousFocusedElement?.focus()
 		@
 
 	hideAll: (ev) ->
