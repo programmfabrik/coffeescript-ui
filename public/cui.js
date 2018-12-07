@@ -39307,8 +39307,11 @@ CUI.Menu = (function(superClass) {
   };
 
   Menu.prototype.hide = function(ev) {
+    var ref;
     Menu.__super__.hide.call(this, ev);
-    this.__previousFocusedElement.focus();
+    if ((ref = this.__previousFocusedElement) != null) {
+      ref.focus();
+    }
     return this;
   };
 
