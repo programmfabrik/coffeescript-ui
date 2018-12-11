@@ -4534,16 +4534,9 @@ $layer-sizes: (
 		}
 	}
 
+
 	.cui-form[cui-form-depth="0"] {
 		margin: $padding;
-	}
-		
-	.cui-lv-td > .cui-form[cui-form-depth="0"] {
-		margin: 0;
-		
-		.cui-form-table[cui-form-depth="0"] {
-			margin: 0;
-		}
 	}
 }
 
