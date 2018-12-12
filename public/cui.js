@@ -21068,11 +21068,29 @@ CUI.Button = (function(superClass) {
       capture: true,
       call: (function(_this) {
         return function(ev) {
-          var el, left, ref7, right;
+          var el, left, menu, ref7, ref8, right;
           if (ev.hasModifierKey()) {
             return;
           }
-          if ((ref7 = ev.keyCode()) === 13 || ref7 === 32) {
+          menu = _this.getMenu();
+          if (menu != null ? menu.isShown() : void 0) {
+            if ((ref7 = ev.getKeyboardKey()) === "Tab" || ref7 === "Esc") {
+              menu.hide();
+              ev.stop();
+              return;
+            } else {
+              CUI.Events.trigger({
+                node: menu.DOM,
+                type: "item-list-keydown",
+                info: {
+                  event: ev
+                }
+              });
+              ev.stop();
+              return;
+            }
+          }
+          if ((ref8 = ev.keyCode()) === 13 || ref8 === 32) {
             _this.onClickAction(ev);
             ev.stop();
             return;
@@ -21278,6 +21296,7 @@ CUI.Button = (function(superClass) {
       }
     }
     if (this.hasMenu() && !this._menu_on_hover && this.getMenu().hasItems(ev)) {
+      this.DOM.focus();
       this.getMenu().show(ev);
       ev.preventDefault();
       return;
@@ -32379,7 +32398,10 @@ CUI.ItemList = (function(superClass) {
     this.__body = new CUI.Template({
       name: "item-list-body"
     });
-    return this.append(this.__body, "center");
+    this.append(this.__body, "center");
+    if (this._keyboardControl) {
+      return this.__initKeydownListener();
+    }
   };
 
   ItemList.prototype.initOpts = function() {
@@ -32532,12 +32554,11 @@ CUI.ItemList = (function(superClass) {
     if (!this.__isInitActiveIdx) {
       this.__initActiveIdx();
     }
-    this.__preActiveIndex = this.__active_idx;
     this.__body.empty();
     promise = this.getItems(event);
     promise.done((function(_this) {
       return function(items) {
-        var _item, fn, i, idx, item, len, list_has_button_left, opt_keys, preSelectByKeyword;
+        var _item, fn, i, idx, item, len, list_has_button_left, opt_keys;
         opt_keys = CUI.defaults["class"].Button.getOptKeys();
         list_has_button_left = false;
         fn = function(item, idx) {
@@ -32667,63 +32688,62 @@ CUI.ItemList = (function(superClass) {
             _this.__body.removeClass("cui-item-list--has-button-left");
           }
         }
-        _this.__keyboardKeys = [];
-        preSelectByKeyword = function() {
-          _this.__preSelectByKeyword(_this.__keyboardKeys.join(""));
-          return _this.__keyboardKeys = [];
-        };
-        if (_this._keyboardControl && !_this.__keydownListener) {
-          _this.__keydownListener = CUI.Events.listen({
-            type: "keydown",
-            call: function(event) {
-              var keyboardKey, ref;
-              if (!CUI.dom.isInDOM(_this.__body)) {
-                if ((ref = _this.__keydownListener) != null) {
-                  ref.destroy();
-                }
-                delete _this.__keydownListener;
-                return;
-              }
-              if (menu.DOM !== document.activeElement) {
-                return;
-              }
-              keyboardKey = event.getKeyboardKey();
-              switch (keyboardKey) {
-                case "Down":
-                  event.preventDefault();
-                  _this.__preActivateNextItem();
-                  break;
-                case "Up":
-                  event.preventDefault();
-                  _this.__preActivatePreviousItem();
-                  break;
-                case "Return":
-                  _this.__activatePreSelected(event);
-                  break;
-                default:
-                  if (keyboardKey) {
-                    _this.__keyboardKeys.push(keyboardKey);
-                    CUI.scheduleCallback({
-                      ms: 200,
-                      call: preSelectByKeyword
-                    });
-                  }
-              }
-            }
-          });
-        }
+        _this.__preActiveIndex = _this.__initPreActiveIndex();
       };
     })(this));
     return promise;
   };
 
   ItemList.prototype.destroy = function() {
-    var ref, ref1;
+    var ref;
     ItemList.__super__.destroy.call(this);
-    if ((ref = this.__keydownListener) != null) {
-      ref.destroy();
-    }
-    return (ref1 = this.__body) != null ? ref1.destroy() : void 0;
+    return (ref = this.__body) != null ? ref.destroy() : void 0;
+  };
+
+  ItemList.prototype.__initKeydownListener = function() {
+    var preSelectByKeyword;
+    this.__keyboardKeys = [];
+    preSelectByKeyword = (function(_this) {
+      return function() {
+        _this.__preSelectByKeyword(_this.__keyboardKeys.join(""));
+        return _this.__keyboardKeys = [];
+      };
+    })(this);
+    return CUI.Events.listen({
+      type: "item-list-keydown",
+      node: this.DOM,
+      call: (function(_this) {
+        return function(_, info) {
+          var event, keyboardKey;
+          event = info.event;
+          if (!CUI.dom.isInDOM(_this.__body)) {
+            return;
+          }
+          keyboardKey = event.getKeyboardKey();
+          switch (keyboardKey) {
+            case "Down":
+              event.preventDefault();
+              _this.__preActivateNextItem();
+              break;
+            case "Up":
+              event.preventDefault();
+              _this.__preActivatePreviousItem();
+              break;
+            case "Return":
+              _this.__activatePreSelected(event);
+              break;
+            default:
+              if (keyboardKey) {
+                _this.__keyboardKeys.push(keyboardKey);
+                CUI.scheduleCallback({
+                  ms: 200,
+                  call: preSelectByKeyword
+                });
+              }
+          }
+        };
+      })(this)
+    });
   };
 
   ItemList.prototype.__preSelectByKeyword = function(keyword) {
@@ -32770,9 +32790,6 @@ CUI.ItemList = (function(superClass) {
 
   ItemList.prototype.__preActivateItemByIndex = function(newPreActiveIndex) {
     var itemToPreActivate;
-    if (!newPreActiveIndex || newPreActiveIndex < 0) {
-      newPreActiveIndex = 0;
-    }
     itemToPreActivate = this.__getItemByIndex(newPreActiveIndex);
     if (itemToPreActivate instanceof CUI.Button) {
       this.__deselectPreActivated();
@@ -32792,7 +32809,7 @@ CUI.ItemList = (function(superClass) {
 
   ItemList.prototype.__getItemByIndex = function(index) {
     var children, item;
-    if (!this.__body) {
+    if (!this.__body || CUI.util.isNull(index) || index < 0) {
       return;
     }
     children = Array.prototype.filter.call(this.__body.DOM.children, (function(_this) {
@@ -32806,9 +32823,33 @@ CUI.ItemList = (function(superClass) {
     return CUI.dom.data(item, "element");
   };
 
+  ItemList.prototype.__initPreActiveIndex = function() {
+    var i, index, item, len, ref;
+    if (this.__active_idx) {
+      return this.__active_idx;
+    }
+    ref = this.__body.DOM.children;
+    for (index = i = 0, len = ref.length; i < len; index = ++i) {
+      item = ref[index];
+      if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
+        return index;
+      }
+    }
+    return -1;
+  };
+
   return ItemList;
 
 })(CUI.VerticalLayout);
+
+CUI.ready((function(_this) {
+  return function() {
+    return CUI.Events.registerEvent({
+      type: "item-list-keydown",
+      sink: true
+    });
+  };
+})(this));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -39237,8 +39278,6 @@ CUI.Menu = (function(superClass) {
     } else {
       Menu.__super__.show.call(this, this.__event);
     }
-    this.__previousFocusedElement = document.activeElement;
-    this.DOM.focus();
     CUI.Events.listen({
       type: "keyup",
       instance: this,
@@ -39304,15 +39343,6 @@ CUI.Menu = (function(superClass) {
       ref.destroy();
     }
     return Menu.__super__.destroy.call(this);
-  };
-
-  Menu.prototype.hide = function(ev) {
-    var ref;
-    Menu.__super__.hide.call(this, ev);
-    if ((ref = this.__previousFocusedElement) != null) {
-      ref.focus();
-    }
-    return this;
   };
 
   Menu.prototype.hideAll = function(ev) {
