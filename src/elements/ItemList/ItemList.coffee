@@ -14,6 +14,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 		@__body = new CUI.Template(name: "item-list-body")
 		@append(@__body, "center")
 
+		if @_keyboardControl
+			@__initKeydownListener()
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -145,8 +148,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 		if not @__isInitActiveIdx
 			@__initActiveIdx()
 
-		@__preActiveIndex = @__active_idx
-
 		@__body.empty()
 
 		promise = @getItems(event)
@@ -275,50 +276,46 @@ class CUI.ItemList extends CUI.VerticalLayout
 				else
 					@__body.removeClass("cui-item-list--has-button-left")
 
-
-			@__keyboardKeys = []
-			preSelectByKeyword = =>
-				@__preSelectByKeyword(@__keyboardKeys.join(""))
-				@__keyboardKeys = []
-
-			if @_keyboardControl and not @__keydownListener
-				@__keydownListener = CUI.Events.listen
-					type: "keydown"
-					call: (event) =>
-						if not CUI.dom.isInDOM(@__body)
-							@__keydownListener?.destroy()
-							delete @__keydownListener
-							return
-
-						if menu.DOM != document.activeElement
-							return
-
-						keyboardKey = event.getKeyboardKey()
-						switch keyboardKey
-							when "Down"
-								event.preventDefault()
-								@__preActivateNextItem()
-								break
-							when "Up"
-								event.preventDefault()
-								@__preActivatePreviousItem()
-								break
-							when "Return"
-								@__activatePreSelected(event)
-								break
-							else
-								if keyboardKey
-									@__keyboardKeys.push(keyboardKey)
-									CUI.scheduleCallback(ms: 200, call: preSelectByKeyword)
-						return
-
+			@__preActiveIndex = @__initPreActiveIndex()
 			return
 		promise
 
 	destroy: ->
 		super()
-		@__keydownListener?.destroy()
 		@__body?.destroy()
+
+	__initKeydownListener: ->
+		@__keyboardKeys = []
+		preSelectByKeyword = =>
+			@__preSelectByKeyword(@__keyboardKeys.join(""))
+			@__keyboardKeys = []
+
+		CUI.Events.listen
+			type: "item-list-keydown"
+			node: @DOM
+			call: (_, info) =>
+				event = info.event
+				if not CUI.dom.isInDOM(@__body)
+					return
+
+				keyboardKey = event.getKeyboardKey()
+				switch keyboardKey
+					when "Down"
+						event.preventDefault()
+						@__preActivateNextItem()
+						break
+					when "Up"
+						event.preventDefault()
+						@__preActivatePreviousItem()
+						break
+					when "Return"
+						@__activatePreSelected(event)
+						break
+					else
+						if keyboardKey
+							@__keyboardKeys.push(keyboardKey)
+							CUI.scheduleCallback(ms: 200, call: preSelectByKeyword)
+				return
 
 	__preSelectByKeyword: (keyword) ->
 		elementMatches = (element) =>
@@ -350,9 +347,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 		@__preActivateItemByIndex(@__preActiveIndex - 1)
 
 	__preActivateItemByIndex: (newPreActiveIndex) ->
-		if not newPreActiveIndex or newPreActiveIndex < 0
-			newPreActiveIndex = 0
-
 		itemToPreActivate = @__getItemByIndex(newPreActiveIndex)
 		if itemToPreActivate instanceof CUI.Button
 			@__deselectPreActivated()
@@ -366,7 +360,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			CUI.dom.removeClass(previousItemSelected, CUI.defaults.class.Button.defaults.active_css_class)
 
 	__getItemByIndex: (index) ->
-		if not @__body
+		if not @__body or CUI.util.isNull(index) or index < 0
 			return
 
 		children = Array::filter.call(@__body.DOM.children, (item) =>
@@ -376,3 +370,18 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 		item = children[index]
 		return CUI.dom.data(item, "element")
+
+	__initPreActiveIndex: ->
+		if @__active_idx
+			return @__active_idx
+
+		for item, index in @__body.DOM.children
+			if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
+				return index
+
+		return -1
+
+CUI.ready =>
+	CUI.Events.registerEvent
+		type: "item-list-keydown"
+		sink: true

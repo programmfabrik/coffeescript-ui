@@ -64,9 +64,6 @@ class CUI.Menu extends CUI.Layer
 		else
 			super(@__event)
 
-		@__previousFocusedElement = document.activeElement
-		@DOM.focus()
-
 		CUI.Events.listen
 			type: "keyup"
 			instance: @  # will be ignored by onHide in Layer
@@ -118,11 +115,6 @@ class CUI.Menu extends CUI.Layer
 	destroy: ->
 		@__itemList?.destroy()
 		super()
-
-	hide: (ev) ->
-		super(ev)
-		@__previousFocusedElement?.focus()
-		@
 
 	hideAll: (ev) ->
 		@hide(ev)
