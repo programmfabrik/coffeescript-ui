@@ -2489,7 +2489,7 @@ module.exports = CUI;
 
     var defaultLocaleWeek = {
         dow : 0, // Sunday is the first day of the week.
-        doy : 6  // The week that contains Jan 1st is the first week of the year.
+        doy : 6  // The week that contains Jan 6th is the first week of the year.
     };
 
     function localeFirstDayOfWeek () {
@@ -3365,13 +3365,13 @@ module.exports = CUI;
                     weekdayOverflow = true;
                 }
             } else if (w.e != null) {
-                // local weekday -- counting starts from begining of week
+                // local weekday -- counting starts from beginning of week
                 weekday = w.e + dow;
                 if (w.e < 0 || w.e > 6) {
                     weekdayOverflow = true;
                 }
             } else {
-                // default to begining of week
+                // default to beginning of week
                 weekday = dow;
             }
         }
@@ -3965,7 +3965,7 @@ module.exports = CUI;
             years = normalizedInput.year || 0,
             quarters = normalizedInput.quarter || 0,
             months = normalizedInput.month || 0,
-            weeks = normalizedInput.week || 0,
+            weeks = normalizedInput.week || normalizedInput.isoWeek || 0,
             days = normalizedInput.day || 0,
             hours = normalizedInput.hour || 0,
             minutes = normalizedInput.minute || 0,
@@ -4269,7 +4269,7 @@ module.exports = CUI;
                 ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
             };
         } else if (!!(match = isoRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : (match[1] === '+') ? 1 : 1;
+            sign = (match[1] === '-') ? -1 : 1;
             duration = {
                 y : parseIso(match[2], sign),
                 M : parseIso(match[3], sign),
@@ -4420,7 +4420,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() > localInput.valueOf();
         } else {
@@ -4433,7 +4433,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() < localInput.valueOf();
         } else {
@@ -4442,9 +4442,14 @@ module.exports = CUI;
     }
 
     function isBetween (from, to, units, inclusivity) {
+        var localFrom = isMoment(from) ? from : createLocal(from),
+            localTo = isMoment(to) ? to : createLocal(to);
+        if (!(this.isValid() && localFrom.isValid() && localTo.isValid())) {
+            return false;
+        }
         inclusivity = inclusivity || '()';
-        return (inclusivity[0] === '(' ? this.isAfter(from, units) : !this.isBefore(from, units)) &&
-            (inclusivity[1] === ')' ? this.isBefore(to, units) : !this.isAfter(to, units));
+        return (inclusivity[0] === '(' ? this.isAfter(localFrom, units) : !this.isBefore(localFrom, units)) &&
+            (inclusivity[1] === ')' ? this.isBefore(localTo, units) : !this.isAfter(localTo, units));
     }
 
     function isSame (input, units) {
@@ -4453,7 +4458,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(units || 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() === localInput.valueOf();
         } else {
@@ -4463,11 +4468,11 @@ module.exports = CUI;
     }
 
     function isSameOrAfter (input, units) {
-        return this.isSame(input, units) || this.isAfter(input,units);
+        return this.isSame(input, units) || this.isAfter(input, units);
     }
 
     function isSameOrBefore (input, units) {
-        return this.isSame(input, units) || this.isBefore(input,units);
+        return this.isSame(input, units) || this.isBefore(input, units);
     }
 
     function diff (input, units, asFloat) {
@@ -5686,7 +5691,7 @@ module.exports = CUI;
     // Side effect imports
 
 
-    hooks.version = '2.22.2';
+    hooks.version = '2.23.0';
 
     setHookCallback(createLocal);
 
@@ -5727,7 +5732,7 @@ module.exports = CUI;
         TIME: 'HH:mm',                                  // <input type="time" />
         TIME_SECONDS: 'HH:mm:ss',                       // <input type="time" step="1" />
         TIME_MS: 'HH:mm:ss.SSS',                        // <input type="time" step="0.001" />
-        WEEK: 'YYYY-[W]WW',                             // <input type="week" />
+        WEEK: 'GGGG-[W]WW',                             // <input type="week" />
         MONTH: 'YYYY-MM'                                // <input type="month" />
     };
 
@@ -7963,7 +7968,7 @@ if (true) {
         ordinal : '%dº',
         week : {
             dow : 0, // Sunday is the first day of the week.
-            doy : 6  // The week that contains Jan 1st is the first week of the year.
+            doy : 6  // The week that contains Jan 6th is the first week of the year.
         }
     });
 
@@ -8976,8 +8981,7 @@ CUI.DataField = (function(superClass) {
 
   function DataField(opts) {
     var tt_opts;
-    this.opts = opts != null ? opts : {};
-    DataField.__super__.constructor.call(this, this.opts);
+    DataField.__super__.constructor.call(this, opts);
     CUI.util.assertImplements(this, ["render"]);
     if (this._name) {
       CUI.util.assertImplements(this, ["getDefaultValue"]);
@@ -9853,8 +9857,7 @@ CUI.DataFieldInput = (function(superClass) {
   extend(DataFieldInput, superClass);
 
   function DataFieldInput(opts) {
-    this.opts = opts != null ? opts : {};
-    DataFieldInput.__super__.constructor.call(this, this.opts);
+    DataFieldInput.__super__.constructor.call(this, opts);
     CUI.dom.setAttributeMap(this.DOM, this._attr);
     this.addClass("cui-data-field-input");
   }
@@ -10388,8 +10391,7 @@ CUI.DragDropSelect = (function(superClass) {
   extend(DragDropSelect, superClass);
 
   function DragDropSelect(opts) {
-    this.opts = opts != null ? opts : {};
-    DragDropSelect.__super__.constructor.call(this, this.opts);
+    DragDropSelect.__super__.constructor.call(this, opts);
     this.init();
   }
 
@@ -12443,7 +12445,11 @@ CUI.Sortable = (function(superClass) {
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
  */
 CUI.Dummy = (function() {
-  function Dummy() {
+  function Dummy(opts) {
+    if (opts == null) {
+      opts = {};
+    }
+    this.opts = opts;
     this.__uniqueId = CUI.Dummy.uniqueId++;
     this.__cls = CUI.util.getObjectClass(this);
   }
@@ -12887,8 +12893,7 @@ CUI.Event = (function(superClass) {
   extend(Event, superClass);
 
   function Event(opts) {
-    this.opts = opts != null ? opts : {};
-    Event.__super__.constructor.call(this, this.opts);
+    Event.__super__.constructor.call(this, opts);
     if (this._require_node_in_dom) {
       console.debug("require node in dom", this.isInDOM(), this.__node);
       CUI.util.assert(this.isInDOM(), "new Event", "node is not in DOM, unable to create event.", {
@@ -14471,10 +14476,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.FlexHandle = (function(superClass) {
   extend(FlexHandle, superClass);
 
-  function FlexHandle(opts1) {
+  function FlexHandle(opts) {
     var c, children, i, idx, len;
-    this.opts = opts1 != null ? opts1 : {};
-    FlexHandle.__super__.constructor.call(this, this.opts);
+    FlexHandle.__super__.constructor.call(this, opts);
     this.__pane = null;
     children = this._element.parentNode.children;
     for (idx = i = 0, len = children.length; i < len; idx = ++i) {
@@ -15098,8 +15102,7 @@ CUI.Icon = (function(superClass) {
 
   function Icon(opts) {
     var cls, svg_cls;
-    this.opts = opts != null ? opts : {};
-    Icon.__super__.constructor.call(this, this.opts);
+    Icon.__super__.constructor.call(this, opts);
     svg_cls = "";
     cls = "";
     if (this._icon) {
@@ -15276,8 +15279,7 @@ CUI.Layer = (function(superClass) {
 
   function Layer(opts) {
     var bc, body_clone, cls;
-    this.opts = opts != null ? opts : {};
-    Layer.__super__.constructor.call(this, this.opts);
+    Layer.__super__.constructor.call(this, opts);
     this.__layer = this.getTemplate();
     this.registerTemplate(this.__layer);
     this.__layer_root = new CUI.Template({
@@ -16531,9 +16533,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.Layout = (function(superClass) {
   extend(Layout, superClass);
 
-  function Layout(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    Layout.__super__.constructor.call(this, this.opts);
+  function Layout(opts) {
+    Layout.__super__.constructor.call(this, opts);
     this.__isInit = false;
     this.init();
   }
@@ -17026,10 +17027,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.Template = (function(superClass) {
   extend(Template, superClass);
 
-  function Template(opts1) {
+  function Template(opts) {
     var node;
-    this.opts = opts1 != null ? opts1 : {};
-    Template.__super__.constructor.call(this, this.opts);
+    Template.__super__.constructor.call(this, opts);
     node = CUI.Template.nodeByName[this._name];
     CUI.util.assert(node, "CUI.Template", this._name + " not found. Make sure to call Template.loadFile(...).");
     this.DOM = node.cloneNode(true);
@@ -20642,8 +20642,7 @@ CUI.Block = (function(superClass) {
 
   function Block(opts) {
     var arr;
-    this.opts = opts != null ? opts : {};
-    Block.__super__.constructor.call(this, this.opts);
+    Block.__super__.constructor.call(this, opts);
     this.__block = new CUI.Template({
       name: this.getTemplateName(),
       map: {
@@ -20875,8 +20874,7 @@ CUI.Button = (function(superClass) {
 
   function Button(opts) {
     var icon_left, itemList_opts, k, menu_start_hide, menu_stop_hide, ref, ref1, ref2, ref3, ref4, ref5, ref6, tname, v;
-    this.opts = opts != null ? opts : {};
-    Button.__super__.constructor.call(this, this.opts);
+    Button.__super__.constructor.call(this, opts);
     if (this._tooltip) {
       if (this._tooltip.text || this._tooltip.content) {
         this.__tooltipOpts = this._tooltip;
@@ -22037,8 +22035,7 @@ CUI.ButtonHref = (function(superClass) {
 
   function ButtonHref(opts) {
     var attr;
-    this.opts = opts != null ? opts : {};
-    ButtonHref.__super__.constructor.call(this, this.opts);
+    ButtonHref.__super__.constructor.call(this, opts);
     attr = {
       href: this._href,
       tabindex: "0",
@@ -22114,10 +22111,9 @@ CUI.Buttonbar = (function(superClass) {
   extend(Buttonbar, superClass);
 
   function Buttonbar(opts) {
-    var btn, i, idx, len, ref, tt_opts;
-    this.opts = opts != null ? opts : {};
     this.__setVisibilityClasses = bind(this.__setVisibilityClasses, this);
-    Buttonbar.__super__.constructor.call(this, this.opts);
+    var btn, i, idx, len, ref, tt_opts;
+    Buttonbar.__super__.constructor.call(this, opts);
     this.__box = new CUI.Template({
       name: "buttonbar"
     });
@@ -22377,8 +22373,7 @@ CUI.Checkbox = (function(superClass) {
   };
 
   function Checkbox(opts) {
-    this.opts = opts != null ? opts : {};
-    Checkbox.__super__.constructor.call(this, this.opts);
+    Checkbox.__super__.constructor.call(this, opts);
     if (this._multiline) {
       this.addClass("cui-checkbox--multiline");
     }
@@ -22748,10 +22743,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 CUI.ConfirmationChoice = (function(superClass) {
   extend(ConfirmationChoice, superClass);
 
-  function ConfirmationChoice(opts1) {
-    this.opts = opts1;
+  function ConfirmationChoice(opts) {
     this.__getResolveValue = bind(this.__getResolveValue, this);
-    ConfirmationChoice.__super__.constructor.call(this, this.opts);
+    ConfirmationChoice.__super__.constructor.call(this, opts);
     this.__layer_root.addClass("cui-confirmation-choice");
   }
 
@@ -23228,8 +23222,7 @@ CUI.ConfirmationDialog = (function(superClass) {
   extend(ConfirmationDialog, superClass);
 
   function ConfirmationDialog(opts) {
-    this.opts = opts;
-    ConfirmationDialog.__super__.constructor.call(this, this.opts);
+    ConfirmationDialog.__super__.constructor.call(this, opts);
     this.__layer_root.addClass("cui-confirmation-dialog");
     this.init();
   }
@@ -23435,8 +23428,7 @@ CUI.Console = (function(superClass) {
   extend(Console, superClass);
 
   function Console(opts) {
-    this.opts = opts != null ? opts : {};
-    Console.__super__.constructor.call(this, this.opts);
+    Console.__super__.constructor.call(this, opts);
     this.__console = CUI.dom.element("DIV", {
       "class": "cui-console"
     });
@@ -24489,9 +24481,8 @@ moment = __webpack_require__(1);
 CUI.DateTime = (function(superClass) {
   extend(DateTime, superClass);
 
-  function DateTime(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    DateTime.__super__.constructor.call(this, this.opts);
+  function DateTime(opts) {
+    DateTime.__super__.constructor.call(this, opts);
     this.init();
   }
 
@@ -25183,9 +25174,16 @@ CUI.DateTime = (function(superClass) {
       if (!mom && tz.name !== CUI.DateTimeFormats["de-DE"].timezone) {
         continue;
       }
+      if (mom) {
+        span = CUI.dom.span("cui-timezone-offset").setAttribute("title", tz.geo);
+        span.textContent = mom.tz(tz.name).format("zZ");
+        span;
+      } else {
+        span = null;
+      }
       opts.push({
         text: tz.print_name,
-        right: mom ? (span = CUI.dom.span("cui-timezone-offset").setAttribute("title", tz.geo), span.textContent = mom.tz(tz.name).format("zZ"), span) : null,
+        right: span,
         value: tz.name
       });
     }
@@ -26347,8 +26345,7 @@ CUI.DigiDisplay = (function(superClass) {
   extend(DigiDisplay, superClass);
 
   function DigiDisplay(opts) {
-    this.opts = opts != null ? opts : {};
-    DigiDisplay.__super__.constructor.call(this, this.opts);
+    DigiDisplay.__super__.constructor.call(this, opts);
     this.__digitsMap = [];
     this.createMarkup();
     this.registerDOMElement(this.__displayDiv);
@@ -26526,7 +26523,7 @@ CUI.DocumentBrowser = (function(superClass) {
 
   DocumentBrowser.prototype.readOpts = function() {
     var k, ref, renderer, v;
-    DocumentBrowser.__super__.readOpts.call(this, this.opts);
+    DocumentBrowser.__super__.readOpts.call(this);
     this.__marked_opts = CUI.util.copyObject(this._marked_opts);
     if (!this.__marked_opts.renderer) {
       this.__marked_opts.renderer = new marked.Renderer();
@@ -27655,7 +27652,7 @@ CUI.FileReader = (function(superClass) {
       type: type
     });
     if (window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveBlob(blob, filename);
+      return window.navigator.msSaveBlob(blob, filename);
     } else {
       elem = window.document.createElement('a');
       elem.href = window.URL.createObjectURL(blob);
@@ -27663,8 +27660,8 @@ CUI.FileReader = (function(superClass) {
       document.body.appendChild(elem);
       elem.click();
       document.body.removeChild(elem);
+      return window.URL.revokeObjectURL(blob);
     }
-    return window.URL.revokeObjectURL(blob);
   };
 
   return FileReader;
@@ -27800,9 +27797,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.FileUpload = (function(superClass) {
   extend(FileUpload, superClass);
 
-  function FileUpload(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FileUpload.__super__.constructor.call(this, this.opts);
+  function FileUpload(opts) {
+    FileUpload.__super__.constructor.call(this, opts);
     this.__files = [];
     this.__dropZones = [];
     this.__batch_id = 0;
@@ -28442,9 +28438,8 @@ CUI.FileUploadButton = (function(superClass) {
   extend(FileUploadButton, superClass);
 
   function FileUploadButton(opts) {
-    this.opts = opts != null ? opts : {};
     this.__onClick = bind(this.__onClick, this);
-    FileUploadButton.__super__.constructor.call(this, this.opts);
+    FileUploadButton.__super__.constructor.call(this, opts);
     this.addClass("cui-button");
     if (this._drop) {
       this._fileUpload.initDropZone({
@@ -28533,8 +28528,7 @@ CUI.FileUploadFile = (function(superClass) {
   extend(FileUploadFile, superClass);
 
   function FileUploadFile(opts) {
-    this.opts = opts != null ? opts : {};
-    FileUploadFile.__super__.constructor.call(this, this.opts);
+    FileUploadFile.__super__.constructor.call(this, opts);
     this.__progress = {
       status: "CREATED",
       total: this._file.size,
@@ -29724,9 +29718,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.FormButton = (function(superClass) {
   extend(FormButton, superClass);
 
-  function FormButton(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FormButton.__super__.constructor.call(this, this.opts);
+  function FormButton(opts) {
+    FormButton.__super__.constructor.call(this, opts);
   }
 
   FormButton.prototype.getButtonOpts = function() {
@@ -29788,9 +29781,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.FormModal = (function(superClass) {
   extend(FormModal, superClass);
 
-  function FormModal(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FormModal.__super__.constructor.call(this, this.opts);
+  function FormModal(opts) {
+    FormModal.__super__.constructor.call(this, opts);
     this.__old_text = null;
     this.__old_display = null;
   }
@@ -29974,9 +29966,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 CUI.FormPopover = (function(superClass) {
   extend(FormPopover, superClass);
 
-  function FormPopover(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    FormPopover.__super__.constructor.call(this, this.opts);
+  function FormPopover(opts) {
+    FormPopover.__super__.constructor.call(this, opts);
     this.__old_display = null;
     this.__old_render = null;
     this;
@@ -30527,8 +30518,7 @@ CUI.Input = (function(superClass) {
 
   function Input(opts) {
     var hint, j, k, len1, ref;
-    this.opts = opts != null ? opts : {};
-    Input.__super__.constructor.call(this, this.opts);
+    Input.__super__.constructor.call(this, opts);
     this.addClass("cui-input");
     if (this._textarea) {
       this.addClass("cui-data-field--textarea");
@@ -31946,8 +31936,7 @@ CUI.InputBlock = (function(superClass) {
   extend(InputBlock, superClass);
 
   function InputBlock(opts) {
-    this.opts = opts != null ? opts : {};
-    InputBlock.__super__.constructor.call(this, this.opts);
+    InputBlock.__super__.constructor.call(this, opts);
     this.__start = this._start;
     this.setString(this._string);
   }
@@ -32918,8 +32907,7 @@ CUI.EmptyLabel = (function(superClass) {
   extend(EmptyLabel, superClass);
 
   function EmptyLabel(opts) {
-    this.opts = opts != null ? opts : {};
-    EmptyLabel.__super__.constructor.call(this, this.opts);
+    EmptyLabel.__super__.constructor.call(this, opts);
     this.addClass("cui-empty-label");
   }
 
@@ -32965,8 +32953,7 @@ CUI.Label = (function(superClass) {
 
   function Label(opts) {
     var btn_opts, k, ref, tname, tt_opts, v;
-    this.opts = opts != null ? opts : {};
-    Label.__super__.constructor.call(this, this.opts);
+    Label.__super__.constructor.call(this, opts);
     if (this._rotate_90) {
       tname = "label-rotate-90";
     } else if (this._icon || !CUI.__ng__) {
@@ -33291,8 +33278,7 @@ CUI.MultilineLabel = (function(superClass) {
   extend(MultilineLabel, superClass);
 
   function MultilineLabel(opts) {
-    this.opts = opts != null ? opts : {};
-    MultilineLabel.__super__.constructor.call(this, this.opts);
+    MultilineLabel.__super__.constructor.call(this, opts);
     this.addClass("cui-label");
   }
 
@@ -33331,9 +33317,8 @@ CUI.ListView = (function(superClass) {
     row_move_handle_tooltip: "Drag to move row"
   };
 
-  function ListView(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
-    ListView.__super__.constructor.call(this, this.opts);
+  function ListView(opts) {
+    ListView.__super__.constructor.call(this, opts);
     this.initListView();
   }
 
@@ -35419,10 +35404,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 CUI.ListViewTree = (function(superClass) {
   extend(ListViewTree, superClass);
 
-  function ListViewTree(opts1) {
-    this.opts = opts1 != null ? opts1 : {};
+  function ListViewTree(opts) {
     this.__actionOnNode = bind(this.__actionOnNode, this);
-    ListViewTree.__super__.constructor.call(this, this.opts);
+    ListViewTree.__super__.constructor.call(this, opts);
     CUI.util.assert(this.root instanceof CUI.ListViewTreeNode, "new CUI.ListViewTree", "opts.root must be instance of ListViewTreeNode", {
       opts: this.opts
     });
@@ -37460,10 +37444,9 @@ CUI.GoogleMap = (function(superClass) {
   };
 
   function GoogleMap(opts) {
-    this.opts = opts != null ? opts : {};
     CUI.util.assert(CUI.GoogleMap.defaults.google_api.key, "It's necessary to add a google maps api key in order to use CUI.GoogleMap");
+    GoogleMap.__super__.constructor.call(this, opts);
     this.__listeners = [];
-    GoogleMap.__super__.constructor.call(this, this.opts);
   }
 
   GoogleMap.prototype.__getMapClassName = function() {
@@ -37715,8 +37698,7 @@ CUI.IconMarker = (function(superClass) {
 
   function IconMarker(opts) {
     var template;
-    this.opts = opts != null ? opts : {};
-    IconMarker.__super__.constructor.call(this, this.opts);
+    IconMarker.__super__.constructor.call(this, opts);
     template = new CUI.Template({
       name: "map-div-marker",
       map: {
@@ -37803,13 +37785,12 @@ CUI.LeafletMap = (function(superClass) {
   };
 
   function LeafletMap(opts) {
-    this.opts = opts != null ? opts : {};
+    LeafletMap.__super__.constructor.call(this, opts);
     if (!CUI.LeafletMap.loadCSSPromise) {
       CUI.LeafletMap.loadCSSPromise = this.__loadCSS();
     }
     CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom;
     this.__groups = {};
-    LeafletMap.__super__.constructor.call(this, this.opts);
   }
 
   LeafletMap.prototype.__getMapClassName = function() {
@@ -38237,8 +38218,7 @@ CUI.Map = (function(superClass) {
 
   function Map(opts) {
     var buttonBar, buttonsUpperLeft, buttonsUpperRight, fullscreenButtonOpts;
-    this.opts = opts != null ? opts : {};
-    Map.__super__.constructor.call(this, this.opts);
+    Map.__super__.constructor.call(this, opts);
     this.__mapTemplate = new CUI.Template({
       name: "map",
       map: {
@@ -38609,6 +38589,10 @@ CUI.Template.loadTemplateText(__webpack_require__(176));
 CUI.MapInput = (function(superClass) {
   extend(MapInput, superClass);
 
+  function MapInput() {
+    return MapInput.__super__.constructor.apply(this, arguments);
+  }
+
   MapInput.defaults = {
     labels: {
       mapButtonTooltip: "Show map",
@@ -38635,11 +38619,6 @@ CUI.MapInput = (function(superClass) {
   MapInput.prototype.getTemplateKeyForRender = function() {
     return "center";
   };
-
-  function MapInput(opts) {
-    this.opts = opts != null ? opts : {};
-    MapInput.__super__.constructor.call(this, this.opts);
-  }
 
   MapInput.prototype.initOpts = function() {
     MapInput.__super__.initOpts.call(this);
@@ -39259,8 +39238,7 @@ CUI.Menu = (function(superClass) {
   extend(Menu, superClass);
 
   function Menu(opts) {
-    this.opts = opts != null ? opts : {};
-    Menu.__super__.constructor.call(this, this.opts);
+    Menu.__super__.constructor.call(this, opts);
     if (this._itemList) {
       this.setItemList(this._itemList);
     }
@@ -39445,8 +39423,7 @@ CUI.Modal = (function(superClass) {
 
   function Modal(opts) {
     var bd, do_cancel, htbn, toggleFillScreenButton;
-    this.opts = opts != null ? opts : {};
-    Modal.__super__.constructor.call(this, this.opts);
+    Modal.__super__.constructor.call(this, opts);
     toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton({
       tooltip: this._fill_screen_button_tooltip
     });
@@ -39706,8 +39683,7 @@ CUI.MultiInput = (function(superClass) {
   extend(MultiInput, superClass);
 
   function MultiInput(opts) {
-    this.opts = opts != null ? opts : {};
-    MultiInput.__super__.constructor.call(this, this.opts);
+    MultiInput.__super__.constructor.call(this, opts);
     this.addClass("cui-multi-input");
     if (this._textarea) {
       this.addClass("cui-multi-input--textarea");
@@ -40017,8 +39993,7 @@ CUI.MultiInputControl = (function(superClass) {
   extend(MultiInputControl, superClass);
 
   function MultiInputControl(opts) {
-    this.opts = opts != null ? opts : {};
-    MultiInputControl.__super__.constructor.call(this, this.opts);
+    MultiInputControl.__super__.constructor.call(this, opts);
     this.__body = document.body;
     this.setKeys(this._keys);
     this.setPreferredKey(this._preferred_key);
@@ -40396,8 +40371,7 @@ CUI.ObjectDumper = (function(superClass) {
 
   function ObjectDumper(opts) {
     var headerRow;
-    this.opts = opts != null ? opts : {};
-    ObjectDumper.__super__.constructor.call(this, this.opts);
+    ObjectDumper.__super__.constructor.call(this, opts);
     if (this._headers) {
       headerRow = new CUI.ListViewTreeHeaderNode({
         headers: this._headers
@@ -40700,8 +40674,7 @@ CUI.Options = (function(superClass) {
   extend(Options, superClass);
 
   function Options(opts) {
-    this.opts = opts != null ? opts : {};
-    Options.__super__.constructor.call(this, this.opts);
+    Options.__super__.constructor.call(this, opts);
     if (this._sortable) {
       CUI.dom.addClass(this.DOM, "cui-options--sortable");
     }
@@ -41560,8 +41533,7 @@ CUI.LayerPane = (function(superClass) {
   extend(LayerPane, superClass);
 
   function LayerPane(opts) {
-    this.opts = opts != null ? opts : {};
-    LayerPane.__super__.constructor.call(this, this.opts);
+    LayerPane.__super__.constructor.call(this, opts);
     this.setPane(this._pane);
   }
 
@@ -42187,8 +42159,7 @@ CUI.Panel = (function(superClass) {
   extend(Panel, superClass);
 
   function Panel(opts) {
-    this.opts = opts != null ? opts : {};
-    Panel.__super__.constructor.call(this, this.opts);
+    Panel.__super__.constructor.call(this, opts);
     this.panel = new CUI.Template({
       name: "panel",
       map: {
@@ -42518,8 +42489,7 @@ CUI.ProgressMeter = (function(superClass) {
   extend(ProgressMeter, superClass);
 
   function ProgressMeter(opts) {
-    this.opts = opts != null ? opts : {};
-    ProgressMeter.__super__.constructor.call(this, this.opts);
+    ProgressMeter.__super__.constructor.call(this, opts);
     this.__meter = new CUI.Template({
       name: "progress-meter",
       map: {
@@ -43238,8 +43208,7 @@ CUI.StickyHeader = (function(superClass) {
   extend(StickyHeader, superClass);
 
   function StickyHeader(opts) {
-    this.opts = opts != null ? opts : {};
-    StickyHeader.__super__.constructor.call(this, this.opts);
+    StickyHeader.__super__.constructor.call(this, opts);
     this.header = new CUI.Template({
       name: "sticky-header",
       map: {
@@ -43305,8 +43274,7 @@ CUI.StickyHeaderControl = (function(superClass) {
 
   function StickyHeaderControl(opts) {
     var ref;
-    this.opts = opts != null ? opts : {};
-    StickyHeaderControl.__super__.constructor.call(this, this.opts);
+    StickyHeaderControl.__super__.constructor.call(this, opts);
     if ((ref = CUI.dom.data(this._element, "stickyHeaderControl")) != null) {
       ref.destroy();
     }
@@ -43510,8 +43478,7 @@ CUI.Table = (function(superClass) {
 
   function Table(opts) {
     var cls, col, header, i, j, len, len1, ref, ref1, row, th, txt;
-    this.opts = opts != null ? opts : {};
-    Table.__super__.constructor.call(this, this.opts);
+    Table.__super__.constructor.call(this, opts);
     cls = [];
     if (this._size === "mini") {
       cls.push("cui-table--mini");
@@ -43736,8 +43703,7 @@ CUI.Tab = (function(superClass) {
 
   function Tab(opts) {
     var cls;
-    this.opts = opts != null ? opts : {};
-    Tab.__super__.constructor.call(this, this.opts);
+    Tab.__super__.constructor.call(this, opts);
     if (!CUI.util.isEmpty(this._name)) {
       cls = "ez-tab-" + (CUI.util.toClass(this._name));
     } else {
@@ -44446,8 +44412,7 @@ CUI.Tooltip = (function(superClass) {
   extend(Tooltip, superClass);
 
   function Tooltip(opts) {
-    this.opts = opts != null ? opts : {};
-    Tooltip.__super__.constructor.call(this, this.opts);
+    Tooltip.__super__.constructor.call(this, opts);
     CUI.util.assert(CUI.util.xor(this._text, this._content), "new " + this.__cls, "One of opts.text or opts.content must be set.", {
       opts: this.opts
     });
@@ -44860,8 +44825,7 @@ CUI.WaitBlock = (function(superClass) {
   extend(WaitBlock, superClass);
 
   function WaitBlock(opts) {
-    this.opts = opts != null ? opts : {};
-    WaitBlock.__super__.constructor.call(this, this.opts);
+    WaitBlock.__super__.constructor.call(this, opts);
     if (this._inactive) {
       CUI.dom.addClass(this.DOM, "cui-wait-block-inactive");
     }
