@@ -32404,7 +32404,7 @@ CUI.ItemList = (function(superClass) {
     });
     this.append(this.__body, "center");
     if (this._keyboardControl) {
-      return this.__initKeydownListener();
+      return this.__initListeners();
     }
   };
 
@@ -32704,7 +32704,7 @@ CUI.ItemList = (function(superClass) {
     return (ref = this.__body) != null ? ref.destroy() : void 0;
   };
 
-  ItemList.prototype.__initKeydownListener = function() {
+  ItemList.prototype.__initListeners = function() {
     var preSelectByKeyword;
     this.__keyboardKeys = [];
     preSelectByKeyword = (function(_this) {
@@ -32713,7 +32713,7 @@ CUI.ItemList = (function(superClass) {
         return _this.__keyboardKeys = [];
       };
     })(this);
-    return CUI.Events.listen({
+    CUI.Events.listen({
       type: "item-list-keydown",
       node: this.DOM,
       call: (function(_this) {
@@ -32727,11 +32727,11 @@ CUI.ItemList = (function(superClass) {
           switch (keyboardKey) {
             case "Down":
               event.preventDefault();
-              _this.__preActivateNextItem();
+              _this.__preActivateNextButton();
               break;
             case "Up":
               event.preventDefault();
-              _this.__preActivatePreviousItem();
+              _this.__preActivatePreviousButton();
               break;
             case "Return":
               _this.__activatePreSelected(event);
@@ -32748,6 +32748,23 @@ CUI.ItemList = (function(superClass) {
         };
       })(this)
     });
+    CUI.Events.listen({
+      type: "mouseover",
+      node: this.DOM,
+      call: (function(_this) {
+        return function(ev) {
+          var index, item;
+          item = CUI.dom.parents(ev.getTarget(), ".cui-button")[0];
+          if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
+            return;
+          }
+          index = _this.__getButtonIndex(item);
+          if (!CUI.util.isNull(index)) {
+            _this.__preActivateButtonByIndex(index);
+          }
+        };
+      })(this)
+    });
   };
 
   ItemList.prototype.__preSelectByKeyword = function(keyword) {
@@ -32759,9 +32776,9 @@ CUI.ItemList = (function(superClass) {
       };
     })(this);
     nextIndex = this.__preActiveIndex + 1;
-    nextElement = this.__getItemByIndex(nextIndex);
+    nextElement = this.__getButtonByIndex(nextIndex);
     if (elementMatches(nextElement)) {
-      this.__preActivateItemByIndex(nextIndex);
+      this.__preActivateButtonByIndex(nextIndex);
       return;
     }
     ref1 = (ref = this.__body) != null ? ref.DOM.children : void 0;
@@ -32769,7 +32786,7 @@ CUI.ItemList = (function(superClass) {
       item = ref1[index];
       element = CUI.dom.data(item, "element");
       if (elementMatches(element)) {
-        this.__preActivateItemByIndex(index);
+        this.__preActivateButtonByIndex(index);
         break;
       }
     }
@@ -32777,54 +32794,81 @@ CUI.ItemList = (function(superClass) {
 
   ItemList.prototype.__activatePreSelected = function(event) {
     var itemToActivate;
-    itemToActivate = this.__getItemByIndex(this.__preActiveIndex);
+    itemToActivate = this.__getButtonByIndex(this.__preActiveIndex);
     if (itemToActivate instanceof CUI.Button) {
       itemToActivate.onClickAction(event);
       return CUI.dom.removeClass(itemToActivate, CUI.defaults["class"].Button.defaults.active_css_class);
     }
   };
 
-  ItemList.prototype.__preActivateNextItem = function() {
-    return this.__preActivateItemByIndex(this.__preActiveIndex + 1);
+  ItemList.prototype.__preActivateNextButton = function() {
+    var index;
+    if (CUI.util.isNull(this.__preActiveIndex)) {
+      index = 0;
+    } else {
+      index = this.__preActiveIndex + 1;
+    }
+    return this.__preActivateButtonByIndex(index);
   };
 
-  ItemList.prototype.__preActivatePreviousItem = function() {
-    return this.__preActivateItemByIndex(this.__preActiveIndex - 1);
+  ItemList.prototype.__preActivatePreviousButton = function() {
+    var index, items;
+    if (CUI.util.isNull(this.__preActiveIndex)) {
+      items = this.__getButtonItems();
+      index = items.length - 1;
+    } else {
+      index = this.__preActiveIndex - 1;
+    }
+    return this.__preActivateButtonByIndex(index);
   };
 
-  ItemList.prototype.__preActivateItemByIndex = function(newPreActiveIndex) {
-    var itemToPreActivate;
-    itemToPreActivate = this.__getItemByIndex(newPreActiveIndex);
-    if (itemToPreActivate instanceof CUI.Button) {
+  ItemList.prototype.__preActivateButtonByIndex = function(newPreActiveIndex) {
+    var buttonToPreActivate;
+    buttonToPreActivate = this.__getButtonByIndex(newPreActiveIndex);
+    if (buttonToPreActivate instanceof CUI.Button) {
       this.__deselectPreActivated();
       this.__preActiveIndex = newPreActiveIndex;
-      CUI.dom.addClass(itemToPreActivate, CUI.defaults["class"].Button.defaults.active_css_class);
-      return CUI.dom.scrollIntoView(itemToPreActivate);
+      CUI.dom.addClass(buttonToPreActivate, CUI.defaults["class"].Button.defaults.active_css_class);
+      return CUI.dom.scrollIntoView(buttonToPreActivate);
     }
   };
 
   ItemList.prototype.__deselectPreActivated = function() {
     var previousItemSelected;
-    previousItemSelected = this.__getItemByIndex(this.__preActiveIndex);
+    previousItemSelected = this.__getButtonByIndex(this.__preActiveIndex);
     if (previousItemSelected instanceof CUI.Button) {
       return CUI.dom.removeClass(previousItemSelected, CUI.defaults["class"].Button.defaults.active_css_class);
     }
   };
 
-  ItemList.prototype.__getItemByIndex = function(index) {
-    var children, item;
+  ItemList.prototype.__getButtonByIndex = function(index) {
+    var item;
     if (!this.__body || CUI.util.isNull(index) || index < 0) {
       return;
     }
-    children = Array.prototype.filter.call(this.__body.DOM.children, (function(_this) {
+    item = this.__getButtonItems()[index];
+    return CUI.dom.data(item, "element");
+  };
+
+  ItemList.prototype.__getButtonIndex = function(item) {
+    var i, index, itemButton, len, ref;
+    ref = this.__getButtonItems();
+    for (index = i = 0, len = ref.length; i < len; index = ++i) {
+      itemButton = ref[index];
+      if (item === itemButton) {
+        return index;
+      }
+    }
+  };
+
+  ItemList.prototype.__getButtonItems = function() {
+    return Array.prototype.filter.call(this.__body.DOM.children, (function(_this) {
       return function(item) {
         var element;
         element = CUI.dom.data(item, "element");
-        return element instanceof CUI.Button || element instanceof CUI.DataField || element instanceof CUI.Label;
+        return element instanceof CUI.Button;
       };
     })(this));
-    item = children[index];
-    return CUI.dom.data(item, "element");
   };
 
   ItemList.prototype.__initPreActiveIndex = function() {
@@ -32839,7 +32883,6 @@ CUI.ItemList = (function(superClass) {
         return index;
       }
     }
-    return -1;
   };
 
   return ItemList;
