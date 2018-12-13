@@ -23,8 +23,8 @@
 #
 
 class CUI.Template extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		#try find it inside cached list
 		node = CUI.Template.nodeByName[@_name]

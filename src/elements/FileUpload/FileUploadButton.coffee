@@ -7,8 +7,8 @@
 CUI.Template.loadTemplateText(require('./FileUploadButton.html'));
 
 class CUI.FileUploadButton extends CUI.Button
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-button")
 		if @_drop
 			@_fileUpload.initDropZone(dropZone: @DOM)

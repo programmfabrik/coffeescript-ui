@@ -72,8 +72,8 @@ class CUI.Map extends CUI.Pane
 				check: Boolean
 				default: true
 
-	constructor: (@opts = {}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__mapTemplate = new CUI.Template
 			name: "map"

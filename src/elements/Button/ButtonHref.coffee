@@ -8,8 +8,8 @@ CUI.Template.loadTemplateText(require('./ButtonHref.html'));
 CUI.Template.loadTemplateText(require('./ButtonHref_ng.html'));
 
 class CUI.ButtonHref extends CUI.Button
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		attr =
 			href: @_href
 			tabindex: "0"

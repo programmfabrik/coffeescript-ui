@@ -9,13 +9,13 @@ class CUI.LeafletMap extends CUI.Map
 		tileLayerOptions:
 			attribution: attributionHtml
 
-	constructor: (@opts = {}) ->
+	constructor: (opts) ->
+		super(opts)
 		if not CUI.LeafletMap.loadCSSPromise
 			CUI.LeafletMap.loadCSSPromise = @__loadCSS()
 
 		CUI.LeafletMap.defaults.tileLayerOptions.maxZoom = CUI.Map.defaults.maxZoom
 		@__groups = {}
-		super(@opts)
 
 	__getMapClassName: ->
 		"cui-leaflet-map"

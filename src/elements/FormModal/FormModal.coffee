@@ -6,8 +6,8 @@
 ###
 
 class CUI.FormModal extends CUI.FormPopover
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		# console.debug "FormPopover", @opts
 		@__old_text = null
 		@__old_display = null

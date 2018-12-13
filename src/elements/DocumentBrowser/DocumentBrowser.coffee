@@ -38,7 +38,7 @@ class CUI.DocumentBrowser extends CUI.Element
 					!!CUI.parseLocation(v)
 
 	readOpts: ->
-		super(@opts)
+		super()
 
 		@__marked_opts = CUI.util.copyObject(@_marked_opts)
 

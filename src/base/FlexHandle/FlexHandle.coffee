@@ -7,8 +7,8 @@
 
 # this class initializes a flex handle
 class CUI.FlexHandle extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__pane = null
 		children = @_element.parentNode.children

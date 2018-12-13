@@ -42,9 +42,9 @@ class CUI.Button extends CUI.DOMElement
 	#   "link", standard button without border and a underlined text.
 	#   "important", emphasized button , to show the user that the button is important.
 
-	constructor: (@opts={}) ->
+	constructor: (opts) ->
 
-		super(@opts)
+		super(opts)
 
 		if @_tooltip
 			if @_tooltip.text or @_tooltip.content

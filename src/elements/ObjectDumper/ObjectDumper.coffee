@@ -7,8 +7,8 @@
 
 class CUI.ObjectDumper extends CUI.ListViewTree
 
-	constructor: (@opts = {}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		if @_headers
 			headerRow = new CUI.ListViewTreeHeaderNode(headers: @_headers)

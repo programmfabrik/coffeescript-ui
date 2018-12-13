@@ -6,8 +6,8 @@
 ###
 
 class CUI.Icon extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		svg_cls = ""
 		cls = ""
 		if @_icon

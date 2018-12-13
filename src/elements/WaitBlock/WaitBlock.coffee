@@ -7,8 +7,8 @@
 CUI.Template.loadTemplateText(require('./WaitBlock.html'));
 
 class CUI.WaitBlock extends CUI.Block
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		if @_inactive
 			CUI.dom.addClass(@DOM, "cui-wait-block-inactive")
 

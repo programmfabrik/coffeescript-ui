@@ -242,7 +242,7 @@ class CUI.util
 		n instanceof CUI.Deferred
 
 	@escapeRegExp: (str) ->
-	  str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+		str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 	@getIntOrString: (s) ->
 		CUI.util.getInt(s, true)
@@ -461,11 +461,11 @@ class CUI.util
 
 	# ucs-2 string to base64 encoded ascii
 	@utoa: (str) ->
-	    window.btoa(unescape(encodeURIComponent(str)))
+		window.btoa(unescape(encodeURIComponent(str)))
 
 	# base64 encoded ascii to ucs-2 string
 	@atou: (str) ->
-	    decodeURIComponent(escape(window.atob(str)))
+		decodeURIComponent(escape(window.atob(str)))
 
 	# coordinates is a string, almost every coordinates format is accepted.
 	# Returns an object with lat and lng attributes, or false if wasn't possible to parse or if coordinates is null.

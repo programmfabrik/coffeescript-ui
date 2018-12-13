@@ -6,8 +6,8 @@
 ###
 
 class CUI.EmptyLabel extends CUI.MultilineLabel
-	constructor: (@opts = {}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-empty-label")
 
 	readOpts: ->

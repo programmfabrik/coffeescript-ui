@@ -6,8 +6,8 @@
 ###
 
 class CUI.MultiInput extends CUI.DataFieldInput
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-multi-input")
 		if @_textarea
 			@addClass("cui-multi-input--textarea")

@@ -23,9 +23,6 @@ class CUI.MapInput extends CUI.Input
 	getTemplateKeyForRender: ->
 		"center"
 
-	constructor: (@opts = {}) ->
-		super(@opts)
-
 	initOpts: ->
 		super()
 		@addOpts

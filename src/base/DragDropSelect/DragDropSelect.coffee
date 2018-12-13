@@ -6,8 +6,8 @@
 ###
 
 class CUI.DragDropSelect extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@init()
 
 	initOpts: ->

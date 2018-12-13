@@ -7,8 +7,8 @@
 CUI.Template.loadTemplateText(require('./ProgressMeter.html'));
 
 class CUI.ProgressMeter extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__meter = new CUI.Template
 			name: "progress-meter"

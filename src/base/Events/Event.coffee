@@ -7,8 +7,8 @@
 
 class CUI.Event extends CUI.Element
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		if @_require_node_in_dom
 			console.debug "require node in dom", @isInDOM(), @__node

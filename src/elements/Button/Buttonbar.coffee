@@ -13,8 +13,8 @@ class CUI.Buttonbar extends CUI.DOMElement
 	# @param [Object] options for {Buttonbar} creation
 	# @option options [Array] buttons is an array of {Button} Objects. Use thie 'group' option in {Button} to let {Buttonbar} sort the buttons into groups.
 	# @option options [Object] tooltip is a list of options for creating a {Tooltip} for the {Buttonbar}.
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__box = new CUI.Template
 			name: "buttonbar"

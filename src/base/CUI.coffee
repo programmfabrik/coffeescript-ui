@@ -468,19 +468,17 @@ class CUI
 			c = array[i++]
 			switch(c >> 4)
 				when 0, 1, 2, 3, 4, 5, 6, 7
-			        # 0xxxxxxx
-			        out.push(String.fromCharCode(c))
+					# 0xxxxxxx
+					out.push(String.fromCharCode(c))
 				when 12, 13
-			        # 110x xxxx   10xx xxxx
-			        char2 = array[i++]
-			        out.push(String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F)))
+					# 110x xxxx   10xx xxxx
+					char2 = array[i++]
+					out.push(String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F)))
 				when 14
-			        # 1110 xxxx  10xx xxxx  10xx xxxx
-			        char2 = array[i++]
-			        char3 = array[i++]
-			        out.push(String.fromCharCode(((c & 0x0F) << 12) |
-                       ((char2 & 0x3F) << 6) |
-                       ((char3 & 0x3F) << 0)))
+					# 1110 xxxx  10xx xxxx  10xx xxxx
+					char2 = array[i++]
+					char3 = array[i++]
+					out.push(String.fromCharCode(((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0)))
 		out.join("")
 
 	@__startTimeout: (timeout) ->
@@ -760,10 +758,10 @@ class CUI
 		# last identifier
 		"(?:[a-z\\u00a1-\\uffff]{2,})" +
 		"))|)" +
-	    # port number
-	    "(?::(\\d{2,5}))?" +
-	    # resource path
-	    "(?:([/?#]\\S*))?" +
+		# port number
+		"(?::(\\d{2,5}))?" +
+		# resource path
+		"(?:([/?#]\\S*))?" +
 		"$", "i"
 	)
 

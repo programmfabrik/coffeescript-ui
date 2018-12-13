@@ -6,8 +6,8 @@
 ###
 
 class CUI.Tooltip extends CUI.LayerPane
-	constructor: (@opts = {}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		CUI.util.assert(CUI.util.xor(@_text, @_content), "new #{@__cls}", "One of opts.text or opts.content must be set.", opts: @opts)
 
 		@__dummyInst = =>

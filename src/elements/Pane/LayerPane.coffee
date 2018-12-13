@@ -7,8 +7,8 @@
 
 class CUI.LayerPane extends CUI.Layer
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@setPane(@_pane)
 
 	initOpts: ->

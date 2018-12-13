@@ -18,8 +18,8 @@ class CUI.Layout extends CUI.DOMElement
 	# @option options [Object] pane name of the pane on its options, check {Layout.initPane} for the options.
 	# TODO document other options
 	# TODO create a Pane Class
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__isInit = false
 		@init()
 

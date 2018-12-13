@@ -49,8 +49,8 @@ class CUI.Checkbox extends CUI.DataFieldInput
 				check: (v) ->
 					v instanceof CUI.Icon or CUI.util.isString(v)
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		if @_multiline
 			@addClass("cui-checkbox--multiline")

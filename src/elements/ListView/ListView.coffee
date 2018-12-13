@@ -14,8 +14,8 @@ class CUI.ListView extends CUI.SimplePane
 	#
 	# @param [Object] options for listview creation
 	# @option options [String] TODO
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@initListView()
 
 	initListView: ->

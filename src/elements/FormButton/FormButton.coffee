@@ -7,8 +7,8 @@
 
 class CUI.FormButton extends CUI.Checkbox
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 	getButtonOpts: ->
 		opts = icon: @_icon

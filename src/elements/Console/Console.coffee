@@ -6,8 +6,8 @@
 ###
 
 class CUI.Console extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__console = CUI.dom.element("DIV", class: "cui-console")
 		@registerDOMElement(@__console)
 

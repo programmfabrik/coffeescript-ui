@@ -14,8 +14,8 @@ class CUI.DataField extends CUI.DOMElement
 	@defaults:
 		undo_and_changed_support: false
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		CUI.util.assertImplements(@, ["render"])
 

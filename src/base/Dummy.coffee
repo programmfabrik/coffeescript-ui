@@ -8,7 +8,8 @@
 # dummy class so we can use "extend" to mark
 # our classes for use in CUI.Element.readOpts
 class CUI.Dummy
-	constructor: ->
+	constructor: (opts = {}) ->
+		@opts = opts
 		@__uniqueId = CUI.Dummy.uniqueId++
 		@__cls = CUI.util.getObjectClass(@)
 

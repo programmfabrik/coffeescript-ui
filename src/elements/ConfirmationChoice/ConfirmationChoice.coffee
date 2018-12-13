@@ -6,8 +6,8 @@
 ###
 
 class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
-	constructor: (@opts) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__layer_root.addClass("cui-confirmation-choice")
 
 	@defaults:
