@@ -6,8 +6,8 @@
 ###
 
 class CUI.ListViewTree extends CUI.ListView
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		CUI.util.assert(@root instanceof CUI.ListViewTreeNode, "new CUI.ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#

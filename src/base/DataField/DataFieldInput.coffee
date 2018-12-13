@@ -6,8 +6,8 @@
 ###
 
 class CUI.DataFieldInput extends CUI.DataField
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		CUI.dom.setAttributeMap(@DOM, @_attr)
 		@addClass("cui-data-field-input")
 

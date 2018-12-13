@@ -11,8 +11,8 @@ CUI.Template.loadTemplateText(require('./DateTime.html'));
 moment = require('moment')
 
 class CUI.DateTime extends CUI.Input
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@init()
 
 	@defaults:
@@ -591,14 +591,14 @@ class CUI.DateTime extends CUI.Input
 			if not mom and tz.name != CUI.DateTimeFormats["de-DE"].timezone
 				continue
 
+			if mom
+				span = CUI.dom.span("cui-timezone-offset").setAttribute("title", tz.geo)
+				span.textContent = mom.tz(tz.name).format("zZ")
+			else
+				span = null
 			opts.push
 				text: tz.print_name
-				right: if mom
-								 span = CUI.dom.span("cui-timezone-offset").setAttribute("title", tz.geo)
-								 span.textContent = mom.tz(tz.name).format("zZ")
-								 span
-							 else
-							   null
+				right: span
 				value: tz.name
 		opts
 

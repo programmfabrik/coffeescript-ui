@@ -7,8 +7,8 @@
 
 class CUI.MultilineLabel extends CUI.Label
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-label")
 
 	initOpts: ->

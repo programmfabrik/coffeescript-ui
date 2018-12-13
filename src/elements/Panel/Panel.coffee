@@ -8,8 +8,8 @@
 CUI.Template.loadTemplateText(require('./Panel.html'));
 
 class CUI.Panel extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@panel = new CUI.Template
 			name: "panel"
 			map:

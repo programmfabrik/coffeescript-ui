@@ -8,8 +8,8 @@
 class CUI.MultiInputControl extends CUI.Element
 
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__body = document.body
 
 		@setKeys(@_keys)

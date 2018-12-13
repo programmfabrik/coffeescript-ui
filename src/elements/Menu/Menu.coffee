@@ -6,8 +6,8 @@
 ###
 
 class CUI.Menu extends CUI.Layer
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		if @_itemList
 			@setItemList(@_itemList)
 

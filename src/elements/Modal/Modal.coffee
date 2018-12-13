@@ -14,8 +14,8 @@ class CUI.Modal extends CUI.LayerPane
 
 	#Construct a new CUI.Modal.
 	#
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip)
 		@__addHeaderButton("fill_screen_button", toggleFillScreenButton)

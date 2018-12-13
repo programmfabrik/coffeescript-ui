@@ -1,16 +1,16 @@
 # All classes are created in the same file to give it read simplicity, but it shouldn't be like this in a real application.
 
 class HelloWorld extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		label = new CUI.Label(text: "Hello World!", centered: true)
 		@registerDOMElement(label.DOM)
 
 class HelloWorldTemplate extends CUI.DOMElement
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		template = new CUI.Template
 			name: "hello-world"

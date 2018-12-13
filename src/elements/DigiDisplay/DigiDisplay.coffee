@@ -7,8 +7,8 @@
 
 class CUI.DigiDisplay extends CUI.DOMElement
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__digitsMap = []
 		@createMarkup()
 		@registerDOMElement(@__displayDiv)

@@ -8,8 +8,8 @@
 CUI.Template.loadTemplateText(require('./Tab.html'));
 
 class CUI.Tab extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		if not CUI.util.isEmpty(@_name)
 			cls = "ez-tab-#{CUI.util.toClass(@_name)}"

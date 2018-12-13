@@ -8,8 +8,8 @@
 CUI.Template.loadTemplateText(require('./Block.html'));
 
 class CUI.Block extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__block = new CUI.Template
 			name: @getTemplateName()

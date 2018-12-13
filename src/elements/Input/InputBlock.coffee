@@ -6,8 +6,8 @@
 ###
 
 class CUI.InputBlock extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__start = @_start
 		@setString(@_string)
 

@@ -6,8 +6,8 @@
 ###
 
 class CUI.ConfirmationDialog extends CUI.Modal
-	constructor: (@opts) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__layer_root.addClass("cui-confirmation-dialog")
 		@init()
 

@@ -8,8 +8,8 @@
 CUI.Template.loadTemplateText(require('./StickyHeader.html'));
 
 class CUI.StickyHeader extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@header = new CUI.Template
 			name: "sticky-header"

@@ -6,8 +6,8 @@
 ###
 
 class CUI.FileUploadFile extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__progress =
 			status: "CREATED"

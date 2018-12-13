@@ -25,9 +25,17 @@ const config = {
     module: {
         loaders: [
             {
-
-                test: /\.coffee/,
-                loader: 'happypack/loader'
+                test: /\.coffee$/,
+                use: [
+                    {
+                        loader: 'coffee-loader',
+                        options: {
+                            transpile: {
+                                presets: ['@babel/preset-env']
+                            }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.scss$/,
@@ -56,10 +64,10 @@ const config = {
     },
     plugins: [
         new HardSourceWebpackPlugin(),
-        new HappyPack({
-            threads: 4,
-            loaders: ['coffee-loader']
-        }),
+        // new HappyPack({
+        //     threads: 4,
+        //     loaders: ['coffee-loader']
+        // }),
         extractSass,
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'

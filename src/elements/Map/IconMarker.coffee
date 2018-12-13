@@ -18,8 +18,8 @@ class CUI.IconMarker extends CUI.DOMElement
 			tooltip:
 				check: "PlainObject"
 
-	constructor: (@opts = {}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		template = new CUI.Template
 			name: "map-div-marker"
 			map:

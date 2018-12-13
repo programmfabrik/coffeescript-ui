@@ -6,8 +6,8 @@
 ###
 
 class CUI.Table extends CUI.DOMElement
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		# CUI.__ng__: when we only have "ng", use CUI.dom.element instead
 

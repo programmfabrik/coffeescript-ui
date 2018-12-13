@@ -14,8 +14,8 @@ CUI.Template.loadTemplateText(require('./Layer.html'));
 
 class CUI.Layer extends CUI.DOMElement
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		@__layer = @getTemplate()
 

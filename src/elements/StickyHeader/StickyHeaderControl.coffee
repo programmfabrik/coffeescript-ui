@@ -6,8 +6,8 @@
 ###
 
 class CUI.StickyHeaderControl extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		# destroy old instances, in case we are re-initialized
 		# on an .empty()ied element

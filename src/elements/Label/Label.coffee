@@ -18,8 +18,8 @@ class CUI.Label extends CUI.DOMElement
 			icon_active: "up"
 			active_css_class: ""
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		if @_rotate_90
 			tname = "label-rotate-90"
