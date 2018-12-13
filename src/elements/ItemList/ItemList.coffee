@@ -15,7 +15,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 		@append(@__body, "center")
 
 		if @_keyboardControl
-			@__initKeydownListener()
+			@__initListeners()
 
 	initOpts: ->
 		super()
@@ -284,7 +284,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 		super()
 		@__body?.destroy()
 
-	__initKeydownListener: ->
+	__initListeners: ->
 		@__keyboardKeys = []
 		preSelectByKeyword = =>
 			@__preSelectByKeyword(@__keyboardKeys.join(""))
@@ -302,11 +302,11 @@ class CUI.ItemList extends CUI.VerticalLayout
 				switch keyboardKey
 					when "Down"
 						event.preventDefault()
-						@__preActivateNextItem()
+						@__preActivateNextButton()
 						break
 					when "Up"
 						event.preventDefault()
-						@__preActivatePreviousItem()
+						@__preActivatePreviousButton()
 						break
 					when "Return"
 						@__activatePreSelected(event)
@@ -317,59 +317,90 @@ class CUI.ItemList extends CUI.VerticalLayout
 							CUI.scheduleCallback(ms: 200, call: preSelectByKeyword)
 				return
 
+		CUI.Events.listen
+			type: "mouseover"
+			node: @DOM
+			call: (ev) =>
+				item = CUI.dom.parents(ev.getTarget(), ".cui-button")[0]
+				if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
+					return
+
+				index = @__getButtonIndex(item)
+				if not CUI.util.isNull(index)
+					@__preActivateButtonByIndex(index)
+				return
+
+		return
+
 	__preSelectByKeyword: (keyword) ->
 		elementMatches = (element) =>
 			(element instanceof CUI.Button or element instanceof CUI.Label) and element.getText()?.startsWithIgnoreCase(keyword)
 
 		nextIndex = @__preActiveIndex + 1
-		nextElement = @__getItemByIndex(nextIndex)
+		nextElement = @__getButtonByIndex(nextIndex)
 		if elementMatches(nextElement)
-			@__preActivateItemByIndex(nextIndex)
+			@__preActivateButtonByIndex(nextIndex)
 			return
 
 		for item, index in @__body?.DOM.children
 			element = CUI.dom.data(item, "element")
 			if elementMatches(element)
-				@__preActivateItemByIndex(index)
+				@__preActivateButtonByIndex(index)
 				break
 		return
 
 	__activatePreSelected: (event) ->
-		itemToActivate = @__getItemByIndex(@__preActiveIndex)
+		itemToActivate = @__getButtonByIndex(@__preActiveIndex)
 		if itemToActivate instanceof CUI.Button
 			itemToActivate.onClickAction(event)
 			CUI.dom.removeClass(itemToActivate, CUI.defaults.class.Button.defaults.active_css_class)
 
-	__preActivateNextItem: ->
-		@__preActivateItemByIndex(@__preActiveIndex + 1)
+	__preActivateNextButton: ->
+		if CUI.util.isNull(@__preActiveIndex)
+			index = 0
+		else
+			index = @__preActiveIndex + 1
+		@__preActivateButtonByIndex(index)
 
-	__preActivatePreviousItem: ->
-		@__preActivateItemByIndex(@__preActiveIndex - 1)
+	__preActivatePreviousButton: ->
+		if CUI.util.isNull(@__preActiveIndex)
+			items = @__getButtonItems()
+			index = items.length - 1
+		else
+			index = @__preActiveIndex - 1
+		@__preActivateButtonByIndex(index)
 
-	__preActivateItemByIndex: (newPreActiveIndex) ->
-		itemToPreActivate = @__getItemByIndex(newPreActiveIndex)
-		if itemToPreActivate instanceof CUI.Button
+	__preActivateButtonByIndex: (newPreActiveIndex) ->
+		buttonToPreActivate = @__getButtonByIndex(newPreActiveIndex)
+		if buttonToPreActivate instanceof CUI.Button
 			@__deselectPreActivated()
 			@__preActiveIndex = newPreActiveIndex
-			CUI.dom.addClass(itemToPreActivate, CUI.defaults.class.Button.defaults.active_css_class)
-			CUI.dom.scrollIntoView(itemToPreActivate)
+			CUI.dom.addClass(buttonToPreActivate, CUI.defaults.class.Button.defaults.active_css_class)
+			CUI.dom.scrollIntoView(buttonToPreActivate)
 
 	__deselectPreActivated: ->
-		previousItemSelected = @__getItemByIndex(@__preActiveIndex)
+		previousItemSelected = @__getButtonByIndex(@__preActiveIndex)
 		if previousItemSelected instanceof CUI.Button
 			CUI.dom.removeClass(previousItemSelected, CUI.defaults.class.Button.defaults.active_css_class)
 
-	__getItemByIndex: (index) ->
+	__getButtonByIndex: (index) ->
 		if not @__body or CUI.util.isNull(index) or index < 0
 			return
 
-		children = Array::filter.call(@__body.DOM.children, (item) =>
-			element = CUI.dom.data(item, "element")
-			return element instanceof CUI.Button or element instanceof CUI.DataField or element instanceof CUI.Label
-		)
-
-		item = children[index]
+		item = @__getButtonItems()[index]
 		return CUI.dom.data(item, "element")
+
+	__getButtonIndex: (item) ->
+		for itemButton, index in @__getButtonItems()
+			if item == itemButton
+				return index
+		return
+
+	__getButtonItems: ->
+		return Array::filter.call(@__body.DOM.children, (item) =>
+			element = CUI.dom.data(item, "element")
+			return element instanceof CUI.Button
+		)
 
 	__initPreActiveIndex: ->
 		if @__active_idx
@@ -378,8 +409,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 		for item, index in @__body.DOM.children
 			if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
 				return index
-
-		return -1
 
 CUI.ready =>
 	CUI.Events.registerEvent
