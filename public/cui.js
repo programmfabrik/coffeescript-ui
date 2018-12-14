@@ -32853,7 +32853,7 @@ CUI.ItemList = (function(superClass) {
       return function(item) {
         var element;
         element = CUI.dom.data(item, "element");
-        return element instanceof CUI.Button;
+        return element instanceof CUI.Button && element.isEnabled();
       };
     })(this));
   };
