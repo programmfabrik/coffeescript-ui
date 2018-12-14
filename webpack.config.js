@@ -4,7 +4,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const HappyPack = require('happypack');
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
@@ -27,7 +26,7 @@ const config = {
             {
 
                 test: /\.coffee/,
-                loader: 'happypack/loader'
+                loader: 'coffee-loader'
             },
             {
                 test: /\.scss$/,
@@ -56,10 +55,6 @@ const config = {
     },
     plugins: [
         new HardSourceWebpackPlugin(),
-        new HappyPack({
-            threads: 4,
-            loaders: ['coffee-loader']
-        }),
         extractSass,
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
