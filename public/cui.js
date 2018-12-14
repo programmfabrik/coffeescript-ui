@@ -20898,9 +20898,7 @@ CUI.Button = (function(superClass) {
     this.__disabled = false;
     this.__hidden = false;
     this.__txt = null;
-    if (CUI.__ng__) {
-      this.addClass("cui-button-button");
-    }
+    this.addClass("cui-button-button");
     if (CUI.util.isString((ref = this.__tooltipOpts) != null ? ref.text : void 0)) {
       this.setAria("label", (ref1 = this.__tooltipOpts) != null ? ref1.text : void 0);
       this.__hasAriaLabel = true;
@@ -32743,7 +32741,7 @@ CUI.ItemList = (function(superClass) {
       call: (function(_this) {
         return function(ev) {
           var index, item;
-          item = CUI.dom.parents(ev.getTarget(), ".cui-button")[0];
+          item = CUI.dom.parents(ev.getTarget(), ".cui-button-button")[0];
           if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
             return;
           }
