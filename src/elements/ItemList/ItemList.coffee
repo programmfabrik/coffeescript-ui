@@ -399,7 +399,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 	__getButtonItems: ->
 		return Array::filter.call(@__body.DOM.children, (item) =>
 			element = CUI.dom.data(item, "element")
-			return element instanceof CUI.Button
+			return element instanceof CUI.Button and element.isEnabled()
 		)
 
 	__initPreActiveIndex: ->
