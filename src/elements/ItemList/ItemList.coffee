@@ -321,7 +321,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			type: "mouseover"
 			node: @DOM
 			call: (ev) =>
-				item = CUI.dom.parents(ev.getTarget(), ".cui-button")[0]
+				item = CUI.dom.parents(ev.getTarget(), ".cui-button-button")[0]
 				if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
 					return
 

@@ -72,8 +72,7 @@ class CUI.Button extends CUI.DOMElement
 		@__hidden = false
 		@__txt =  null
 
-		if CUI.__ng__
-			@addClass("cui-button-button")
+		@addClass("cui-button-button")
 
 		if CUI.util.isString(@__tooltipOpts?.text)
 			@setAria("label", @__tooltipOpts?.text)
