@@ -32857,7 +32857,7 @@ CUI.ItemList = (function(superClass) {
     if (this.__active_idx) {
       return this.__active_idx;
     }
-    ref = this.__body.DOM.children;
+    ref = this.__getButtonItems();
     for (index = i = 0, len = ref.length; i < len; index = ++i) {
       item = ref[index];
       if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
