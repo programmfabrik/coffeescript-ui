@@ -406,7 +406,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 		if @__active_idx
 			return @__active_idx
 
-		for item, index in @__body.DOM.children
+		for item, index in @__getButtonItems()
 			if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
 				return index
 
