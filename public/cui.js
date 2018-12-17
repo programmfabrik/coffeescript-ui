@@ -18915,7 +18915,7 @@ CUI.dom = (function() {
     if (untilDocElem == null) {
       untilDocElem = document.documentElement;
     }
-    CUI.util.assert(docElem instanceof HTMLElement || docElem === document || docElem === window, "CUI.dom.parents", "element needs to be instanceof HTMLElement, document, or window.", {
+    CUI.util.assert(docElem instanceof Element || docElem === document || docElem === window, "CUI.dom.parents", "element needs to be instanceof HTMLElement, document, or window.", {
       element: docElem
     });
     path = this.parentsUntil(docElem, null, untilDocElem);
