@@ -1263,11 +1263,6 @@ li > div {
 
 .cui-button-size-mini {
 	font-size: 12px;
-	height: 26px;
-
-	&.cui-button-appearance-flat {
-		height: auto;
-	}
 
 	.cui-button-visual {
 		min-width: 22px;
@@ -2337,6 +2332,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-buttonbar-group {
 	display: flex;
 	align-self: stretch; // use full height for bigger click area for buttons (example: tabs)
+	max-width: 100%;
 
 	> * {
 		position: relative;
@@ -3518,8 +3514,6 @@ $layer-sizes: (
 	}
 
 	&.cui-button-size-mini {
-		height: auto;
-
 		.cui-button-visual {
 			height: 24px;
 			line-height: 23px;

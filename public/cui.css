@@ -1299,10 +1299,7 @@ li > div {
     text-overflow: ellipsis; }
 
 .cui-button-size-mini {
-  font-size: 12px;
-  height: 26px; }
-  .cui-button-size-mini.cui-button-appearance-flat {
-    height: auto; }
+  font-size: 12px; }
   .cui-button-size-mini .cui-button-visual {
     min-width: 22px;
     height: 20px;
@@ -1929,7 +1926,8 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-buttonbar-group {
   display: flex;
-  align-self: stretch; }
+  align-self: stretch;
+  max-width: 100%; }
   .cui-buttonbar-group > * {
     position: relative;
     align-self: stretch;
@@ -2657,13 +2655,10 @@ a[role="button"].cui-button-appearance-link {
     min-width: 40px;
     padding: 0 10px;
     border: 1px solid; }
-  .cui-toolbar .cui-tab-header-button-overflow.cui-button-size-mini,
-  .cui-toolbar .cui-tab-header-button.cui-button-size-mini {
-    height: auto; }
-    .cui-toolbar .cui-tab-header-button-overflow.cui-button-size-mini .cui-button-visual,
-    .cui-toolbar .cui-tab-header-button.cui-button-size-mini .cui-button-visual {
-      height: 24px;
-      line-height: 23px; }
+  .cui-toolbar .cui-tab-header-button-overflow.cui-button-size-mini .cui-button-visual,
+  .cui-toolbar .cui-tab-header-button.cui-button-size-mini .cui-button-visual {
+    height: 24px;
+    line-height: 23px; }
   .cui-toolbar .cui-tab-header-button-overflow:first-child .cui-button-visual,
   .cui-toolbar .cui-tab-header-button:first-child .cui-button-visual {
     border-top-left-radius: 3px;
