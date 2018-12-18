@@ -339,11 +339,11 @@ class CUI.DataField extends CUI.DOMElement
 		# 	@append(content, p)
 
 		@__isRendered = true
+		@callOnOthers("render")
 		if @isDisabled()
 			@disable()
 		if @isHidden()
 			@hide(true)
-		@callOnOthers("render")
 		@_onRender?(@)
 		@
 
