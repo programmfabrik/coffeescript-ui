@@ -9380,13 +9380,13 @@ CUI.DataField = (function(superClass) {
       dataField: this
     });
     this.__isRendered = true;
+    this.callOnOthers("render");
     if (this.isDisabled()) {
       this.disable();
     }
     if (this.isHidden()) {
       this.hide(true);
     }
-    this.callOnOthers("render");
     if (typeof this._onRender === "function") {
       this._onRender(this);
     }
