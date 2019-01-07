@@ -19634,7 +19634,10 @@ CUI.dom = (function() {
   };
 
   dom.exitFullscreen = function() {
-    var dfr, fullscreenEvent;
+    var dfr;
+    if (!CUI.dom.isFullscreen()) {
+      return CUI.resolvedPromise();
+    }
     dfr = new CUI.Deferred();
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -19645,7 +19648,7 @@ CUI.dom = (function() {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
-    fullscreenEvent = CUI.Events.listen({
+    CUI.Events.listen({
       type: "fullscreenchange",
       node: window,
       only_once: true,
