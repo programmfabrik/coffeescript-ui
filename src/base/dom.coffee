@@ -1519,6 +1519,9 @@ class CUI.dom
 		dfr.promise()
 
 	@exitFullscreen: ->
+		if not CUI.dom.isFullscreen()
+			return CUI.resolvedPromise()
+
 		dfr = new CUI.Deferred()
 
 		if document.exitFullscreen
@@ -1530,7 +1533,7 @@ class CUI.dom
 		else if (document.webkitExitFullscreen)
 			document.webkitExitFullscreen()
 
-		fullscreenEvent = CUI.Events.listen
+		CUI.Events.listen
 			type: "fullscreenchange"
 			node: window
 			only_once: true
