@@ -86,6 +86,7 @@ CUI.DateTimeFormats["de-DE"] =
 			"D.MM.YYYY"
 			"DD.M.YYYY"
 			"YYYYMMDD"
+			"YYYY-M-D"
 		]
 	,
 		text: "Jahr-Monat"
@@ -199,6 +200,7 @@ CUI.DateTimeFormats["it-IT"] =
 			"D.MM.YYYY"
 			"DD.M.YYYY"
 			"YYYYMMDD"
+			"YYYY-M-D"
 		]
 	,
 		text: "Jahr-Monat"
@@ -312,6 +314,7 @@ CUI.DateTimeFormats["es-ES"] =
 			"D.MM.YYYY"
 			"DD.M.YYYY"
 			"YYYYMMDD"
+			"YYYY-M-D"
 		]
 	,
 		text: "Jahr-Monat"
@@ -428,6 +431,7 @@ CUI.DateTimeFormats["en-US"] =
 			"D.MM.YYYY"
 			"DD.M.YYYY"
 			"YYYYMMDD"
+			"YYYY-M-D"
 		]
 	,
 		text: "Jahr-Monat"
