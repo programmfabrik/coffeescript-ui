@@ -32720,6 +32720,14 @@ CUI.ItemList = (function(superClass) {
             case "Return":
               _this.__activatePreSelected(event);
               break;
+            case "Right":
+              event.preventDefault();
+              _this.__preActivateNextButton();
+              break;
+            case "Left":
+              event.preventDefault();
+              _this.__preActivatePreviousButton();
+              break;
             default:
               if (keyboardKey) {
                 _this.__keyboardKeys.push(keyboardKey);
