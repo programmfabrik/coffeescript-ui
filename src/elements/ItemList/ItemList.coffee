@@ -311,6 +311,14 @@ class CUI.ItemList extends CUI.VerticalLayout
 					when "Return"
 						@__activatePreSelected(event)
 						break
+					when "Right"
+						event.preventDefault()
+						@__preActivateNextButton()
+						break
+					when "Left"
+						event.preventDefault()
+						@__preActivatePreviousButton()
+						break
 					else
 						if keyboardKey
 							@__keyboardKeys.push(keyboardKey)
