@@ -17178,7 +17178,7 @@ CUI.Template = (function(superClass) {
       }
     }
     if (misses) {
-      alert(("Not all required elements were found for Template:\n\n\"" + this._name + "\"\n\n") + report.join("\n"));
+      CUI.util.assert(false, ("Not all required elements were found for Template:\n\n\"" + this._name + "\"\n\n") + report.join("\n"));
     }
     return el_map;
   };
