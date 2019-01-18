@@ -157,7 +157,8 @@ class CUI.Template extends CUI.Element
 						el_map[k]
 
 		if misses
-			alert("Not all required elements were found for Template:\n\n\"#{@_name}\"\n\n"+report.join("\n"))
+			CUI.util.assert(false, "Not all required elements were found for Template:\n\n\"#{@_name}\"\n\n"+report.join("\n"))
+
 		el_map
 
 	destroy: ->
