@@ -93,6 +93,7 @@ class CUI.FlexHandle extends CUI.Element
 			return
 
 		CUI.dom.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
+		CUI.dom.append(@_element, CUI.dom.div("cui-flex-handle-element"))
 
 		if @__closed
 			@close()
