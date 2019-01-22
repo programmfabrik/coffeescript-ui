@@ -4141,7 +4141,6 @@ label[data-label-clickable],
       .cui-block.cui-block-level-3 > .cui-block-header .cui-block-title {
         font-size: 12px;
         text-transform: uppercase;
-        margin-bottom: 15px;
         letter-spacing: 0.03em; }
   .cui-block.cui-form-block--has-checkbox > .cui-block-header .cui-block-title {
     font-size: inherit;
