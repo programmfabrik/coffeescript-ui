@@ -3770,6 +3770,14 @@ $layer-sizes: (
 
 	.cui-lv-td {
 		display: flex;
+		
+		&:first-child {
+			padding-left: $padding + $tree-node-handle-width;
+
+			.cui-list-view-tree-no-hierarchy & {
+				padding-left: $padding;
+			}
+		}
 	}
 }
 
@@ -4218,7 +4226,7 @@ $layer-sizes: (
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
-	width: 14px;
+	width: $tree-node-handle-width;
 	flex: 0 0 auto;
 
 	.fa-caret-right {
