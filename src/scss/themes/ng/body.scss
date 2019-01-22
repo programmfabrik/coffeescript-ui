@@ -3771,12 +3771,8 @@ $layer-sizes: (
 	.cui-lv-td {
 		display: flex;
 		
-		&:first-child {
+		.cui-list-view-tree-hierarchy &:first-child {
 			padding-left: $padding + $tree-node-handle-width;
-
-			.cui-list-view-tree-no-hierarchy & {
-				padding-left: $padding;
-			}
 		}
 	}
 }

@@ -2815,10 +2815,8 @@ a[role="button"].cui-button-appearance-link {
 
 .list-view-header-row .cui-lv-td {
   display: flex; }
-  .list-view-header-row .cui-lv-td:first-child {
+  .cui-list-view-tree-hierarchy .list-view-header-row .cui-lv-td:first-child {
     padding-left: 24px; }
-    .cui-list-view-tree-no-hierarchy .list-view-header-row .cui-lv-td:first-child {
-      padding-left: 10px; }
 
 .cui-lv-row-move-target {
   height: 4px;
