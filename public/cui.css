@@ -2270,6 +2270,9 @@ a[role="button"].cui-button-appearance-link {
 .cui-pane--has-header .cui-layer-pointer--n:after {
   background: #dadfe2; }
 
+.cui-pane--has-header.cui-layer-root-popover .cui-layer-pointer--n:after {
+  background: #e2e6e9; }
+
 .cui-pane--has-header .cui-layer-pointer--e,
 .cui-pane--has-header .cui-layer-pointer--w {
   margin-top: 34px; }

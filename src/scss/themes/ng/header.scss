@@ -142,11 +142,8 @@ $toolbar-height: 34px;
 
 $layer-background: $foreground;
 
-$layer-header-pointer-background: $header-background;
-$layer-header-border: $header-border;
-
-$layer-footer-background: $header-background;
-$layer-footer-border: $layer-header-border;
+$popover-header-background: lighten($header-background, 3%);
+$popover-header-border: lighten($header-border, 3%);
 
 $item-list-color: hsl(205,7%,22%);
 $item-list-hover: $button-pressed;
