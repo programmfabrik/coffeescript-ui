@@ -4093,7 +4093,7 @@ label[data-label-clickable],
   .cui-block.cui-block-level-1.appearance-wide {
     padding-top: 13px; }
     .cui-block.cui-block-level-1.appearance-wide > .cui-block-header {
-      padding-bottom: 0; }
+      padding-bottom: 3px; }
       .cui-block.cui-block-level-1.appearance-wide > .cui-block-header .cui-block-title {
         font-size: 28px;
         line-height: 1.5;
