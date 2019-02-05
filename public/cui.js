@@ -14574,7 +14574,6 @@ CUI.FlexHandle = (function(superClass) {
       return;
     }
     CUI.dom.addClass(this._element, "cui-flex-handle cui-flex-handle-" + this.__direction + " cui-flex-handle-" + this._name);
-    CUI.dom.append(this._element, CUI.dom.div("cui-flex-handle-element"));
     if (this.__closed) {
       this.close();
     }

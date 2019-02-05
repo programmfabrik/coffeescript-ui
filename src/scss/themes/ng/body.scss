@@ -373,60 +373,6 @@ li > div {
 			display: none;
 		}
 	}
-
-	&:hover,
-	&.cui-dragging {
-		.cui-flex-handle-element {
-			opacity: 1;
-		}
-	}
-
-	&-element {
-		$handle-width: 40px;
-		$handle-height: 11px;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: $handle-width;
-		margin-left: -$handle-width/2;
-		background: $foreground;
-		border: 1px solid $border;
-		border-radius: 5px;
-		height: $handle-height;
-		margin-top: -$handle-height/2;
-		opacity: 0;
-		transition: opacity 120ms 240ms;
-		
-		&:after {
-			content: "";
-			position: absolute;
-			width: 14px;
-			top: 1px;
-			bottom: 1px;
-			left: 50%;
-			margin-left: -7px;
-			background: linear-gradient($foreground, $foreground 50%, $border 50%, $border);
-			background-size: 100% 2px;
-		}
-		
-		.cui-flex-handle-row & {
-			height: $handle-width;
-			margin-top: -$handle-width/2;
-			width: $handle-height;
-			margin-left: -$handle-height/2;
-			
-			&:after {
-				width: auto;
-				left: 1px;
-				right: 1px;
-				height: 14px;
-				top: 50%;
-				margin: -7px 0 0;
-				background: linear-gradient(to right, $foreground, $foreground 50%, $border 50%, $border);
-				background-size: 2px 100%;
-			}
-		}
-	}
 }
 
 // Show the flex handle helper in IE because real time dragging is turned off because of performance reasons
