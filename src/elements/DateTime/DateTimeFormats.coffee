@@ -104,6 +104,9 @@ CUI.DateTimeFormats["de-DE"] =
 		parse: [
 			"MM YYYY"
 			"MM/YYYY"
+			"MM.YYYY"
+			"YYYY-M"
+			"YYYY-MM"
 		]
 	,
 		text: "Jahr"
@@ -218,6 +221,9 @@ CUI.DateTimeFormats["it-IT"] =
 		parse: [
 			"MM YYYY"
 			"MM/YYYY"
+			"MM.YYYY"
+			"YYYY-M"
+			"YYYY-MM"
 		]
 	,
 		text: "Jahr"
@@ -332,6 +338,9 @@ CUI.DateTimeFormats["es-ES"] =
 		parse: [
 			"MM YYYY"
 			"MM/YYYY"
+			"MM.YYYY"
+			"YYYY-M"
+			"YYYY-MM"
 		]
 	,
 		text: "Jahr"
@@ -449,6 +458,9 @@ CUI.DateTimeFormats["en-US"] =
 		parse: [
 			"MM YYYY"
 			"MM/YYYY"
+			"MM.YYYY"
+			"YYYY-M"
+			"YYYY-MM"
 		]
 	,
 		text: "Jahr"
