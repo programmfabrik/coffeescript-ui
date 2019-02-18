@@ -874,12 +874,6 @@ class CUI.ListView extends CUI.SimplePane
 
 		@__addRowsOddEvenClasses()
 
-		if not @__maximize_horizontal or not @__maximize_vertical
-			CUI.Events.trigger
-				type: "content-resize"
-				exclude_self: true
-				node: @DOM
-
 		@__hasLayout = true
 		@
 
