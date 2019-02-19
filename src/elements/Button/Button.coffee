@@ -26,6 +26,7 @@ class CUI.Button extends CUI.DOMElement
 		confirm_cancel: "Cancel"
 		confirm_title: "Confirmation"
 		disabled_css_class: "cui-disabled"
+		loading_css_class: "cui-loading"
 		active_css_class: "cui-active"
 
 	#Construct a new CUI.Button.
@@ -69,6 +70,7 @@ class CUI.Button extends CUI.DOMElement
 
 		@__active = null
 		@__disabled = false
+		@__loading = false
 		@__hidden = false
 		@__txt =  null
 
@@ -127,6 +129,9 @@ class CUI.Button extends CUI.DOMElement
 
 		if @_disabled and (@_disabled == true or @_disabled.call(@, @))
 			@disable()
+
+		if @_loading and (@_loading == true or @_loading.call(@, @))
+			@setLoading(true)
 
 		if @_hidden and (@_hidden == true or @_hidden.call(@, @))
 			@hide()
@@ -467,6 +472,10 @@ class CUI.Button extends CUI.DOMElement
 			tooltip:
 				check: "PlainObject"
 			disabled:
+				default: false
+				check: (v) ->
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
+			loading:
 				default: false
 				check: (v) ->
 					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
@@ -875,6 +884,17 @@ class CUI.Button extends CUI.DOMElement
 			@enable()
 		else
 			@disable()
+
+	setLoading: (on_off) ->
+		if on_off
+			CUI.dom.addClass(@DOM, CUI.defaults.class.Button.defaults.loading_css_class)
+			@__loading = true
+		else
+			CUI.dom.removeClass(@DOM, CUI.defaults.class.Button.defaults.loading_css_class)
+			@__loading = false
+
+	isLoading: ->
+		@__loading
 
 	disable: ->
 		CUI.dom.addClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)

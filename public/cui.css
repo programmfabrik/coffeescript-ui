@@ -1122,6 +1122,9 @@ li > div {
 .cui-button-href {
   cursor: pointer; }
 
+.cui-button.cui-loading > .cui-button-visual {
+  color: #ff00c6 !important; }
+
 .cui-button-href {
   max-width: 100%; }
 
