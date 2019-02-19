@@ -20866,6 +20866,7 @@ CUI.Button = (function(superClass) {
     confirm_cancel: "Cancel",
     confirm_title: "Confirmation",
     disabled_css_class: "cui-disabled",
+    loading_css_class: "cui-loading",
     active_css_class: "cui-active"
   };
 
@@ -20893,6 +20894,7 @@ CUI.Button = (function(superClass) {
     this.registerTemplate(this.__box);
     this.__active = null;
     this.__disabled = false;
+    this.__loading = false;
     this.__hidden = false;
     this.__txt = null;
     this.addClass("cui-button-button");
@@ -20952,6 +20954,9 @@ CUI.Button = (function(superClass) {
     }
     if (this._disabled && (this._disabled === true || this._disabled.call(this, this))) {
       this.disable();
+    }
+    if (this._loading && (this._loading === true || this._loading.call(this, this))) {
+      this.setLoading(true);
     }
     if (this._hidden && (this._hidden === true || this._hidden.call(this, this))) {
       this.hide();
@@ -21351,6 +21356,12 @@ CUI.Button = (function(superClass) {
         check: "PlainObject"
       },
       disabled: {
+        "default": false,
+        check: function(v) {
+          return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
+        }
+      },
+      loading: {
         "default": false,
         check: function(v) {
           return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
@@ -21865,6 +21876,20 @@ CUI.Button = (function(superClass) {
     } else {
       return this.disable();
     }
+  };
+
+  Button.prototype.setLoading = function(on_off) {
+    if (on_off) {
+      CUI.dom.addClass(this.DOM, CUI.defaults["class"].Button.defaults.loading_css_class);
+      return this.__loading = true;
+    } else {
+      CUI.dom.removeClass(this.DOM, CUI.defaults["class"].Button.defaults.loading_css_class);
+      return this.__loading = false;
+    }
+  };
+
+  Button.prototype.isLoading = function() {
+    return this.__loading;
   };
 
   Button.prototype.disable = function() {
