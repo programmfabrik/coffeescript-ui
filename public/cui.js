@@ -21070,29 +21070,11 @@ CUI.Button = (function(superClass) {
       capture: true,
       call: (function(_this) {
         return function(ev) {
-          var el, left, menu, ref7, ref8, right;
+          var el, left, ref7, right;
           if (ev.hasModifierKey()) {
             return;
           }
-          menu = _this.getMenu();
-          if (menu != null ? menu.isShown() : void 0) {
-            if ((ref7 = ev.getKeyboardKey()) === "Tab" || ref7 === "Esc") {
-              menu.hide();
-              ev.stop();
-              return;
-            } else {
-              CUI.Events.trigger({
-                node: menu.DOM,
-                type: "item-list-keydown",
-                info: {
-                  event: ev
-                }
-              });
-              ev.stop();
-              return;
-            }
-          }
-          if ((ref8 = ev.keyCode()) === 13 || ref8 === 32) {
+          if ((ref7 = ev.keyCode()) === 13 || ref7 === 32) {
             _this.onClickAction(ev);
             ev.stop();
             return;
@@ -21298,7 +21280,6 @@ CUI.Button = (function(superClass) {
       }
     }
     if (this.hasMenu() && !this._menu_on_hover && this.getMenu().hasItems(ev)) {
-      this.DOM.focus();
       this.getMenu().show(ev);
       ev.preventDefault();
       return;
@@ -32766,11 +32747,21 @@ CUI.ItemList = (function(superClass) {
       })(this)
     });
     CUI.Events.listen({
+      type: "mouseleave",
+      node: this.DOM,
+      call: (function(_this) {
+        return function() {
+          _this.__deselectPreActivated();
+        };
+      })(this)
+    });
+    CUI.Events.listen({
       type: "mouseover",
       node: this.DOM,
       call: (function(_this) {
         return function(ev) {
           var index, item;
+          _this.DOM.focus();
           item = CUI.dom.parents(ev.getTarget(), ".cui-button-button")[0];
           if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
             return;
@@ -32851,10 +32842,13 @@ CUI.ItemList = (function(superClass) {
   };
 
   ItemList.prototype.__deselectPreActivated = function() {
-    var previousItemSelected;
-    previousItemSelected = this.__getButtonByIndex(this.__preActiveIndex);
-    if (previousItemSelected instanceof CUI.Button) {
-      return CUI.dom.removeClass(previousItemSelected, CUI.defaults["class"].Button.defaults.active_css_class);
+    var button, buttons, i, len;
+    buttons = this.__getButtonItems();
+    for (i = 0, len = buttons.length; i < len; i++) {
+      button = buttons[i];
+      if (CUI.dom.hasClass(button, CUI.defaults["class"].Button.defaults.active_css_class)) {
+        CUI.dom.removeClass(button, CUI.defaults["class"].Button.defaults.active_css_class);
+      }
     }
   };
 
@@ -39304,8 +39298,10 @@ CUI.Menu = (function(superClass) {
   };
 
   Menu.prototype.show = function(__event) {
+    var ref;
     this.__event = __event;
     CUI.util.assert(!this.isDestroyed(), (CUI.util.getObjectClass(this)) + ".show", "Element is already destroyed.");
+    this.__openedByKeyboard = ((ref = this.__event) != null ? ref.getNativeEvent() : void 0) instanceof KeyboardEvent;
     if (this.isShown()) {
       this.position();
       return this;
@@ -39324,25 +39320,59 @@ CUI.Menu = (function(superClass) {
     } else {
       Menu.__super__.show.call(this, this.__event);
     }
-    CUI.Events.listen({
+    this.DOM.focus();
+    this.__keyUpListener = CUI.Events.listen({
       type: "keyup",
-      instance: this,
       node: this.DOM,
       capture: true,
       call: (function(_this) {
         return function(ev) {
-          var ref;
+          var ref1;
           if (ev.hasModifierKey()) {
             return;
           }
-          if ((ref = ev.getKeyboardKey()) === "Esc" || ref === "Tab") {
+          if ((ref1 = ev.getKeyboardKey()) === "Esc" || ref1 === "Tab") {
             _this.hide();
-            return ev.stop();
+            ev.stop();
+          }
+        };
+      })(this)
+    });
+    this.__keydownListener = CUI.Events.listen({
+      type: "keydown",
+      node: this.DOM,
+      capture: true,
+      call: (function(_this) {
+        return function(ev) {
+          if (_this.__itemList) {
+            CUI.Events.trigger({
+              node: _this.__itemList.DOM,
+              type: "item-list-keydown",
+              info: {
+                event: ev
+              }
+            });
           }
         };
       })(this)
     });
     return this;
+  };
+
+  Menu.prototype.hide = function() {
+    var ref, ref1, ref2;
+    if (this.__openedByKeyboard) {
+      if ((ref = this.getButton()) != null) {
+        ref.DOM.focus();
+      }
+    }
+    if ((ref1 = this.__keyUpListener) != null) {
+      ref1.destroy();
+    }
+    if ((ref2 = this.__keydownListener) != null) {
+      ref2.destroy();
+    }
+    return Menu.__super__.hide.call(this);
   };
 
   Menu.prototype.hasItems = function(event) {
