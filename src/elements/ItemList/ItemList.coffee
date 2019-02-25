@@ -326,9 +326,17 @@ class CUI.ItemList extends CUI.VerticalLayout
 				return
 
 		CUI.Events.listen
+			type: "mouseleave"
+			node: @DOM
+			call: =>
+				@__deselectPreActivated()
+				return
+
+		CUI.Events.listen
 			type: "mouseover"
 			node: @DOM
 			call: (ev) =>
+				@DOM.focus()
 				item = CUI.dom.parents(ev.getTarget(), ".cui-button-button")[0]
 				if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
 					return
@@ -387,9 +395,11 @@ class CUI.ItemList extends CUI.VerticalLayout
 			CUI.dom.scrollIntoView(buttonToPreActivate)
 
 	__deselectPreActivated: ->
-		previousItemSelected = @__getButtonByIndex(@__preActiveIndex)
-		if previousItemSelected instanceof CUI.Button
-			CUI.dom.removeClass(previousItemSelected, CUI.defaults.class.Button.defaults.active_css_class)
+		buttons = @__getButtonItems()
+		for button in buttons
+			if CUI.dom.hasClass(button, CUI.defaults.class.Button.defaults.active_css_class)
+				CUI.dom.removeClass(button, CUI.defaults.class.Button.defaults.active_css_class)
+		return
 
 	__getButtonByIndex: (index) ->
 		if not @__body or CUI.util.isNull(index) or index < 0

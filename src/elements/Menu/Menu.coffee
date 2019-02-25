@@ -48,6 +48,10 @@ class CUI.Menu extends CUI.Layer
 
 	show: (@__event) ->
 		CUI.util.assert(not @isDestroyed(), "#{CUI.util.getObjectClass(@)}.show", "Element is already destroyed.")
+
+		# It is necessary to save this status, to be able to focus again the button after the menu is closed.
+		@__openedByKeyboard = @__event?.getNativeEvent() instanceof KeyboardEvent
+
 		if @isShown()
 			@position()
 			return @
@@ -64,9 +68,9 @@ class CUI.Menu extends CUI.Layer
 		else
 			super(@__event)
 
-		CUI.Events.listen
+		@DOM.focus()
+		@__keyUpListener = CUI.Events.listen
 			type: "keyup"
-			instance: @  # will be ignored by onHide in Layer
 			node: @DOM
 			capture: true
 			call: (ev) =>
@@ -77,7 +81,29 @@ class CUI.Menu extends CUI.Layer
 					@hide()
 					ev.stop()
 
+				return
+
+		@__keydownListener = CUI.Events.listen
+			type: "keydown"
+			node: @DOM
+			capture: true
+			call: (ev) =>
+				if @__itemList
+					CUI.Events.trigger
+						node: @__itemList.DOM
+						type: "item-list-keydown"
+						info:
+							event: ev
+				return
 		@
+
+	hide: ->
+		if @__openedByKeyboard
+			@getButton()?.DOM.focus()
+
+		@__keyUpListener?.destroy()
+		@__keydownListener?.destroy()
+		return super();
 
 	hasItems: (event) ->
 		@__itemList?.hasItems(event)

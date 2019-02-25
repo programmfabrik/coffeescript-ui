@@ -223,21 +223,6 @@ class CUI.Button extends CUI.DOMElement
 				if ev.hasModifierKey()
 					return
 
-				menu = @getMenu()
-				if menu?.isShown()
-					if ev.getKeyboardKey() in ["Tab", "Esc"]
-						menu.hide()
-						ev.stop()
-						return
-					else
-						CUI.Events.trigger
-							node: menu.DOM
-							type: "item-list-keydown"
-							info:
-								event: ev
-						ev.stop()
-						return
-
 				if ev.keyCode() in [13, 32]
 					#space / return
 					@onClickAction(ev)
@@ -420,7 +405,6 @@ class CUI.Button extends CUI.DOMElement
 			# not (ev.ctrlKey or ev.shiftKey or ev.altKey or ev.metaKey) and
 			not @_menu_on_hover and
 			@getMenu().hasItems(ev)
-				@DOM.focus()
 				@getMenu().show(ev)
 
 				# in some contexts (like FileUploadButton), this
