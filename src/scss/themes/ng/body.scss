@@ -1915,6 +1915,10 @@ a[role="button"].cui-button-appearance-link {
 	align-items: center;
 	max-width: 100%;
 	line-height: 18px;
+	
+	.cui-vertical-layout-center > & {
+		display: flex;
+	}
 
 	&.cui-label-rotate-90 {
 		white-space: nowrap;
