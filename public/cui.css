@@ -2436,7 +2436,9 @@ a[role="button"].cui-button-appearance-link {
   justify-content: flex-start; }
 
 .cui-button--has-caret .cui-button-right {
-  margin-left: auto; }
+  margin-left: auto;
+  min-width: 20px;
+  margin-right: 1px; }
 
 .cui-item-list .cui-label {
   font-size: 0.9em;
