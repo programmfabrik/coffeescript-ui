@@ -994,8 +994,13 @@ li > div {
 	cursor: pointer;
 }
 
-.cui-button.cui-loading > .cui-button-visual {
-	color: #ff00c6 !important;
+.cui-button.cui-loading {
+	animation: 1.2s pulse linear alternate infinite;
+}
+
+@keyframes pulse {
+	from { opacity: .33; }
+	to { opacity: 1; }
 }
 
 .cui-button-href {
