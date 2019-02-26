@@ -1122,8 +1122,14 @@ li > div {
 .cui-button-href {
   cursor: pointer; }
 
-.cui-button.cui-loading > .cui-button-visual {
-  color: #ff00c6 !important; }
+.cui-button.cui-loading {
+  animation: 1.2s pulse linear alternate infinite; }
+
+@keyframes pulse {
+  from {
+    opacity: .33; }
+  to {
+    opacity: 1; } }
 
 .cui-button-href {
   max-width: 100%; }
@@ -1697,6 +1703,8 @@ a[role="button"].cui-button-appearance-link {
   align-items: center;
   max-width: 100%;
   line-height: 18px; }
+  .cui-vertical-layout-center > .cui-label {
+    display: flex; }
   .cui-label.cui-label-rotate-90 {
     white-space: nowrap;
     margin: 5px 0;
