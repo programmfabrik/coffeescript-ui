@@ -39320,7 +39320,9 @@ CUI.Menu = (function(superClass) {
     } else {
       Menu.__super__.show.call(this, this.__event);
     }
-    this.DOM.focus();
+    if (this.getButton()) {
+      this.DOM.focus();
+    }
     this.__keyUpListener = CUI.Events.listen({
       type: "keyup",
       node: this.DOM,
