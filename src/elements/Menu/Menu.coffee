@@ -68,7 +68,9 @@ class CUI.Menu extends CUI.Layer
 		else
 			super(@__event)
 
-		@DOM.focus()
+		if @getButton()
+			@DOM.focus()
+
 		@__keyUpListener = CUI.Events.listen
 			type: "keyup"
 			node: @DOM
