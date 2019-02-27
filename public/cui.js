@@ -2489,7 +2489,7 @@ module.exports = CUI;
 
     var defaultLocaleWeek = {
         dow : 0, // Sunday is the first day of the week.
-        doy : 6  // The week that contains Jan 1st is the first week of the year.
+        doy : 6  // The week that contains Jan 6th is the first week of the year.
     };
 
     function localeFirstDayOfWeek () {
@@ -3365,13 +3365,13 @@ module.exports = CUI;
                     weekdayOverflow = true;
                 }
             } else if (w.e != null) {
-                // local weekday -- counting starts from begining of week
+                // local weekday -- counting starts from beginning of week
                 weekday = w.e + dow;
                 if (w.e < 0 || w.e > 6) {
                     weekdayOverflow = true;
                 }
             } else {
-                // default to begining of week
+                // default to beginning of week
                 weekday = dow;
             }
         }
@@ -3965,7 +3965,7 @@ module.exports = CUI;
             years = normalizedInput.year || 0,
             quarters = normalizedInput.quarter || 0,
             months = normalizedInput.month || 0,
-            weeks = normalizedInput.week || 0,
+            weeks = normalizedInput.week || normalizedInput.isoWeek || 0,
             days = normalizedInput.day || 0,
             hours = normalizedInput.hour || 0,
             minutes = normalizedInput.minute || 0,
@@ -4269,7 +4269,7 @@ module.exports = CUI;
                 ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
             };
         } else if (!!(match = isoRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : (match[1] === '+') ? 1 : 1;
+            sign = (match[1] === '-') ? -1 : 1;
             duration = {
                 y : parseIso(match[2], sign),
                 M : parseIso(match[3], sign),
@@ -4420,7 +4420,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() > localInput.valueOf();
         } else {
@@ -4433,7 +4433,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() < localInput.valueOf();
         } else {
@@ -4442,9 +4442,14 @@ module.exports = CUI;
     }
 
     function isBetween (from, to, units, inclusivity) {
+        var localFrom = isMoment(from) ? from : createLocal(from),
+            localTo = isMoment(to) ? to : createLocal(to);
+        if (!(this.isValid() && localFrom.isValid() && localTo.isValid())) {
+            return false;
+        }
         inclusivity = inclusivity || '()';
-        return (inclusivity[0] === '(' ? this.isAfter(from, units) : !this.isBefore(from, units)) &&
-            (inclusivity[1] === ')' ? this.isBefore(to, units) : !this.isAfter(to, units));
+        return (inclusivity[0] === '(' ? this.isAfter(localFrom, units) : !this.isBefore(localFrom, units)) &&
+            (inclusivity[1] === ')' ? this.isBefore(localTo, units) : !this.isAfter(localTo, units));
     }
 
     function isSame (input, units) {
@@ -4453,7 +4458,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(units || 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() === localInput.valueOf();
         } else {
@@ -4463,11 +4468,11 @@ module.exports = CUI;
     }
 
     function isSameOrAfter (input, units) {
-        return this.isSame(input, units) || this.isAfter(input,units);
+        return this.isSame(input, units) || this.isAfter(input, units);
     }
 
     function isSameOrBefore (input, units) {
-        return this.isSame(input, units) || this.isBefore(input,units);
+        return this.isSame(input, units) || this.isBefore(input, units);
     }
 
     function diff (input, units, asFloat) {
@@ -5686,7 +5691,7 @@ module.exports = CUI;
     // Side effect imports
 
 
-    hooks.version = '2.22.2';
+    hooks.version = '2.23.0';
 
     setHookCallback(createLocal);
 
@@ -5727,7 +5732,7 @@ module.exports = CUI;
         TIME: 'HH:mm',                                  // <input type="time" />
         TIME_SECONDS: 'HH:mm:ss',                       // <input type="time" step="1" />
         TIME_MS: 'HH:mm:ss.SSS',                        // <input type="time" step="0.001" />
-        WEEK: 'YYYY-[W]WW',                             // <input type="week" />
+        WEEK: 'GGGG-[W]WW',                             // <input type="week" />
         MONTH: 'YYYY-MM'                                // <input type="month" />
     };
 
@@ -7963,7 +7968,7 @@ if (true) {
         ordinal : '%dº',
         week : {
             dow : 0, // Sunday is the first day of the week.
-            doy : 6  // The week that contains Jan 1st is the first week of the year.
+            doy : 6  // The week that contains Jan 6th is the first week of the year.
         }
     });
 
@@ -15525,6 +15530,8 @@ CUI.Layer = (function(superClass) {
     }
   };
 
+  Layer.prototype.__allPlacements = ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"];
+
   Layer.prototype.knownPlacements = ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"];
 
   Layer.prototype.__setElement = function(element) {
@@ -15648,7 +15655,7 @@ CUI.Layer = (function(superClass) {
       };
     }
     vp_pl = {};
-    ref3 = this.knownPlacements;
+    ref3 = this.__allPlacements;
     for (k = 0, len2 = ref3.length; k < len2; k++) {
       placement = ref3[k];
       if (placement !== "n" && placement !== "s" && placement !== "e" && placement !== "w" && placement !== "c") {
@@ -15708,7 +15715,7 @@ CUI.Layer = (function(superClass) {
       vp.pointer_align_horizontal = vp.align_horizontal;
       vp.overlap_align = null;
     }
-    ref4 = this.knownPlacements;
+    ref4 = this.__allPlacements;
     for (l = 0, len3 = ref4.length; l < len3; l++) {
       placement = ref4[l];
       if (placement === "n" || placement === "s" || placement === "e" || placement === "w" || placement === "c") {
@@ -15746,7 +15753,7 @@ CUI.Layer = (function(superClass) {
           vp.overlap_align = "left";
       }
     }
-    ref5 = this.knownPlacements;
+    ref5 = this.__allPlacements;
     for (m = 0, len4 = ref5.length; m < len4; m++) {
       placement = ref5[m];
       if (indexOf.call(allowed_placements, placement) < 0) {
@@ -15940,8 +15947,8 @@ CUI.Layer = (function(superClass) {
         }
       }
       vp.layer_pos.estate = vp.layer_pos.width * vp.layer_pos.height;
-      vp.layer_pos.aspect_ratio = vp.layer_pos.width / vp.layer_pos.height;
-      vp.dim_layer.aspect_ratio = vp.dim_layer.borderBoxWidth / vp.dim_layer.borderBoxHeight;
+      vp.layer_pos.aspect_ratio = (vp.layer_pos.width || 1) / (vp.layer_pos.height || 1);
+      vp.dim_layer.aspect_ratio = (vp.dim_layer.borderBoxWidth || 1) / (vp.dim_layer.borderBoxHeight || 1);
       wanted_rank = allowed_placements.length - CUI.util.idxInArray(placement, allowed_placements);
       if (wanted_placement === placement) {
         wanted_rank = allowed_placements.length + 1;
@@ -15968,6 +15975,7 @@ CUI.Layer = (function(superClass) {
     available_placements.reverse();
     placement = available_placements[0];
     if (ev != null ? ev.hasModifierKey() : void 0) {
+      console.debug("Layer.position", this, this.opts);
       console.debug("layer", dim_layer);
       console.debug("element", dim_element);
       console.debug("pointer", dim_pointer);
