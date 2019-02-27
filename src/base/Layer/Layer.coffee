@@ -314,6 +314,8 @@ class CUI.Layer extends CUI.DOMElement
 		else
 			CUI.dom.setStyleOne(@__layer_root.DOM, "visibility", "hidden")
 
+	__allPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
+
 	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw", "c"]
 
 	__setElement: (element) ->
@@ -440,7 +442,7 @@ class CUI.Layer extends CUI.DOMElement
 		vp_pl = {}
 
 		# calc all possible layer viewports
-		for placement in @knownPlacements
+		for placement in @__allPlacements
 			if placement not in ["n", "s", "e", "w", "c"]
 				continue
 
@@ -499,7 +501,7 @@ class CUI.Layer extends CUI.DOMElement
 			vp.overlap_align = null
 
 		# add two-direction placements
-		for placement in @knownPlacements
+		for placement in @__allPlacements
 			if placement in ["n", "s", "e", "w", "c"]
 				continue
 
@@ -534,7 +536,7 @@ class CUI.Layer extends CUI.DOMElement
 					vp.overlap_align = "left"
 
 		# throw out placements which are too small
-		for placement in @knownPlacements
+		for placement in @__allPlacements
 			if placement not in allowed_placements
 				delete(vp_pl[placement])
 				continue
@@ -745,8 +747,8 @@ class CUI.Layer extends CUI.DOMElement
 
 			# the higher this number, the better
 			vp.layer_pos.estate = vp.layer_pos.width * vp.layer_pos.height
-			vp.layer_pos.aspect_ratio = vp.layer_pos.width / vp.layer_pos.height
-			vp.dim_layer.aspect_ratio = vp.dim_layer.borderBoxWidth / vp.dim_layer.borderBoxHeight
+			vp.layer_pos.aspect_ratio = (vp.layer_pos.width or 1) / (vp.layer_pos.height or 1)
+			vp.dim_layer.aspect_ratio = (vp.dim_layer.borderBoxWidth or 1) / (vp.dim_layer.borderBoxHeight or 1)
 
 			wanted_rank = (allowed_placements.length - CUI.util.idxInArray(placement, allowed_placements))
 			if wanted_placement == placement
@@ -781,6 +783,7 @@ class CUI.Layer extends CUI.DOMElement
 		placement = available_placements[0]
 
 		if ev?.hasModifierKey()
+			console.debug "Layer.position", @, @opts
 			console.debug "layer", dim_layer
 			console.debug "element", dim_element
 			console.debug "pointer", dim_pointer
