@@ -32769,6 +32769,7 @@ CUI.ItemList = (function(superClass) {
           if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
             return;
           }
+          _this.__deselectPreActivated();
           index = _this.__getButtonIndex(item);
           if (!CUI.util.isNull(index)) {
             _this.__preActivateButtonByIndex(index);
