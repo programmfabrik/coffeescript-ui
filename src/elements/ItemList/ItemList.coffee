@@ -341,6 +341,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 				if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
 					return
 
+				@__deselectPreActivated()
 				index = @__getButtonIndex(item)
 				if not CUI.util.isNull(index)
 					@__preActivateButtonByIndex(index)
