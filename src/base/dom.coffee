@@ -1318,6 +1318,20 @@ class CUI.dom
 		docElem.style.display = "none"
 		docElem
 
+	@focus: (element) ->
+		if not element
+			return
+		if element.DOM
+			element = element.DOM
+		element.focus()
+
+	@blur: (element) ->
+		if not element
+			return
+		if element.DOM
+			element = element.DOM
+		element.blur()
+
 	# remove all children from a DOM node (detach)
 	@removeChildren: (docElem, filter) ->
 		CUI.util.assert(docElem instanceof HTMLElement, "CUI.dom.removeChildren", "element needs to be instance of HTMLElement", element: docElem)
