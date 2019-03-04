@@ -19382,6 +19382,26 @@ CUI.dom = (function() {
     return docElem;
   };
 
+  dom.focus = function(element) {
+    if (!element) {
+      return;
+    }
+    if (element.DOM) {
+      element = element.DOM;
+    }
+    return element.focus();
+  };
+
+  dom.blur = function(element) {
+    if (!element) {
+      return;
+    }
+    if (element.DOM) {
+      element = element.DOM;
+    }
+    return element.blur();
+  };
+
   dom.removeChildren = function(docElem, filter) {
     var child, i, len1, ref;
     CUI.util.assert(docElem instanceof HTMLElement, "CUI.dom.removeChildren", "element needs to be instance of HTMLElement", {
