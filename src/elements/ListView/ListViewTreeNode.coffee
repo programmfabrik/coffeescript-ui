@@ -334,7 +334,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# we could return loading_deferred here
 		CUI.util.assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
 
-		if @is_open
+		if @is_open or @isLeaf()
 			return CUI.resolvedPromise()
 
 		# console.error @getUniqueId(), "opening...", "is open:", @is_open, open_counter
