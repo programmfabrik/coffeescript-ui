@@ -36315,7 +36315,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     CUI.util.assert(!this.isLoading(), "ListViewTreeNode.open", "Cannot open node " + (this.getUniqueId()) + ", during opening. This can happen if the same node exists multiple times in the same tree.", {
       node: this
     });
-    if (this.is_open) {
+    if (this.is_open || this.isLeaf()) {
       return CUI.resolvedPromise();
     }
     this.is_open = true;
