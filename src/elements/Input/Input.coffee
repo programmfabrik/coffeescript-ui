@@ -143,9 +143,6 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			appearance:
 				check: ["code"]
-			input_type:
-				check: ["text", "password"]
-				default: "text"
 
 	readOpts: ->
 
@@ -226,7 +223,7 @@ class CUI.Input extends CUI.DataFieldInput
 	# - up/down cursor number decrement/increment
 	# - input masking
 
-	__createElement: () ->
+	__createElement: (input_type="text") ->
 		if @_textarea ==  true
 			@__input = CUI.dom.$element "textarea", "cui-textarea",
 				placeholder: @getPlaceholder()
@@ -236,7 +233,7 @@ class CUI.Input extends CUI.DataFieldInput
 				spellcheck: @__spellcheck
 		else
 			@__input = CUI.dom.$element "input", "cui-input",
-				type: @_input_type
+				type: input_type
 				size: 1
 				placeholder: @getPlaceholder()
 				tabindex: "0"
