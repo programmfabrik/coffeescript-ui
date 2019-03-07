@@ -740,7 +740,7 @@ class CUI
 	@urlRegex: new RegExp(
 		"^" +
 		# protocol identifier
-		"(?:(?:(ftp|ftps|https|http))://|)" +
+		"(?:(?:(sftp|ftp|ftps|https|http))://|)" +
 		# user:pass authentication
 		"(?:(\\S+?)(?::(\\S*))?@)?" +
 		"((?:(?:" +
