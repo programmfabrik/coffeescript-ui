@@ -30711,10 +30711,6 @@ CUI.Input = (function(superClass) {
       },
       appearance: {
         check: ["code"]
-      },
-      input_type: {
-        check: ["text", "password"],
-        "default": "text"
       }
     });
   };
@@ -30815,8 +30811,11 @@ CUI.Input = (function(superClass) {
     }
   };
 
-  Input.prototype.__createElement = function() {
+  Input.prototype.__createElement = function(input_type) {
     var oldSizes;
+    if (input_type == null) {
+      input_type = "text";
+    }
     if (this._textarea === true) {
       this.__input = CUI.dom.$element("textarea", "cui-textarea", {
         placeholder: this.getPlaceholder(),
@@ -30827,7 +30826,7 @@ CUI.Input = (function(superClass) {
       });
     } else {
       this.__input = CUI.dom.$element("input", "cui-input", {
-        type: this._input_type,
+        type: input_type,
         size: 1,
         placeholder: this.getPlaceholder(),
         tabindex: "0",
