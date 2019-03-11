@@ -985,7 +985,8 @@ class CUI.Input extends CUI.DataFieldInput
 
 	displayValue: ->
 		super()
-		value = @getValueForDisplay()
+		value = @getValueForDisplay() or ""
+
 		if value != @__input.value
 			# prevent focus loss if value is the same
 			@__input.value = value
