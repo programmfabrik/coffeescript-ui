@@ -356,6 +356,9 @@ class CUI.dom
 		if not element or not cls
 			return null
 
+		if element.DOM
+			element = element.DOM
+
 		for _cls in cls.trim().split(/\s+/)
 			if _cls == ""
 				continue
