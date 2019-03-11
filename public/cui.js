@@ -31654,7 +31654,7 @@ CUI.Input = (function(superClass) {
   Input.prototype.displayValue = function() {
     var value;
     Input.__super__.displayValue.call(this);
-    value = this.getValueForDisplay();
+    value = this.getValueForDisplay() || "";
     if (value !== this.__input.value) {
       this.__input.value = value;
     }
