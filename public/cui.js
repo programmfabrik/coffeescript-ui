@@ -18316,6 +18316,9 @@ CUI.dom = (function() {
     if (!element || !cls) {
       return null;
     }
+    if (element.DOM) {
+      element = element.DOM;
+    }
     ref = cls.trim().split(/\s+/);
     for (i = 0, len1 = ref.length; i < len1; i++) {
       _cls = ref[i];
