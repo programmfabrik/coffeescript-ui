@@ -3761,7 +3761,7 @@ $layer-sizes: (
 }
 
 .cui-lv-tree-node--is-branch {
-	@extend %clickable;
+	@include clickable;
 }
 
 .cui-lv-td {
