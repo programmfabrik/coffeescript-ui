@@ -94,7 +94,7 @@ class CUI.DataForm extends CUI.DataTable
 				@__removeEmptyRows()
 				@__storeValue()
 
-		CUI.dom.setAttribute(new_form.DOM, "cui-form-depth", @getFormDepth() + 1)
+		# CUI.dom.setAttribute(new_form.DOM, "cui-form-depth", @getFormDepth() + 1)
 		new_form
 
 	__updateView: ->
