@@ -3760,10 +3760,6 @@ $layer-sizes: (
 	opacity: 0.3;
 }
 
-.cui-lv-tree-node--is-branch {
-	@include clickable;
-}
-
 .cui-lv-td {
 	padding: $table-data-padding $padding;
 	width: 125px;
@@ -4039,6 +4035,10 @@ $layer-sizes: (
 				background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
 			}
 		}
+	}
+
+	&.cui-lv-tree-node--is-branch {
+		@include clickable;
 	}
 }
 
