@@ -213,9 +213,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 	renderTable: ->
 
-
 		add_listener = (node) =>
-			console.warn("adding listener:", node)
 			CUI.Events.listen
 				node: node
 				type: "form-check-row-visibility"
@@ -517,11 +515,6 @@ class CUI.SimpleForm extends CUI.DataField
 		@__undo.log.splice(@__undo.idx+1)
 		return
 
-	unregisterTableListeners: ->
-		if @getLayout().isDestroyed()
-			return
-		CUI.Events.ignore({node: @getLayout().center(), instance: @})
-
 	hasUserData: (data) ->
 		for f in @getFields("hasUserData")
 			if f.hasUserData(data)
@@ -529,7 +522,6 @@ class CUI.SimpleForm extends CUI.DataField
 		return false
 
 	remove: ->
-		@unregisterTableListeners()
 		super()
 
 	__initUndo: ->

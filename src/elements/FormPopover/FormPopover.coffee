@@ -212,37 +212,33 @@ class CUI.FormPopover extends CUI.Form
 
 	renderTable: ->
 		super()
-		@table = @getLayout().center()
 		@getLayout().addClass(@__class)
 		return
 
-	resetTableAndFields: ->
-		# console.error "resetTableAndFields", @table
+	removeFields: ->
 		@callOnFields("remove")
-		@unregisterTableListeners()
-		# console.error "resetTableAndFields", DOM.data(@getLayout().center())
-		CUI.dom.remove(@table)
-		@table = null
+
+		@__rendered = null
 		@__fields = null
 		@
 
 	__openPopover: ->
 		# console.time "FormPopover"
 
-		# console.debug "open popover", @__data, @table, @__fields
-
 		pop_opts = @getPopoverOpts()
 
 		if @__fields_is_func
 			# dynamic fields, we need to reload the form
-			if @table
-				@resetTableAndFields()
+			if @__rendered
+				@removeFields()
+				@getLayout().empty()
 
 			@initFields()
 			@callOnFields("setData", @__data)
 
 		if not @table
 			@renderTable()
+			@__rendered = true
 			@callOnFields("start")
 
 		if not pop_opts.hasOwnProperty("element")
@@ -313,7 +309,6 @@ class CUI.FormPopover extends CUI.Form
 	enable: ->
 		super()
 		@__button?.enable()
-
 
 	destroy: ->
 		super()
