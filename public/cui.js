@@ -30183,6 +30183,7 @@ CUI.FormPopover = (function(superClass) {
     if (!pop_opts.pane) {
       pop_opts.pane = {};
     }
+    pop_opts.pane.padded = true;
     CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", {
       opts: pop_opts
     });
