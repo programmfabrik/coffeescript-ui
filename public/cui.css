@@ -1017,31 +1017,6 @@ li > div {
   .cui-data-table .cui-pane-footer {
     min-height: 0;
     padding: 0; }
-    .cui-data-table .cui-pane-footer .cui-button-button {
-      padding: 0; }
-      .cui-data-table .cui-pane-footer .cui-button-button .cui-button-visual {
-        padding: 0;
-        border: none;
-        background: none;
-        color: inherit;
-        border-radius: 0;
-        height: auto;
-        line-height: inherit;
-        color: #424b52;
-        height: 23px;
-        padding: 0 5px;
-        border-right: 1px solid #c0c5c9 !important; }
-      .cui-data-table .cui-pane-footer .cui-button-button:first-child {
-        padding-left: 0; }
-      .cui-data-table .cui-pane-footer .cui-button-button.cui-disabled {
-        opacity: 1;
-        pointer-events: auto; }
-        .cui-data-table .cui-pane-footer .cui-button-button.cui-disabled .cui-button-visual * {
-          opacity: 0.5; }
-      .cui-data-table .cui-pane-footer .cui-button-button:before {
-        display: none; }
-    .cui-data-table .cui-pane-footer .cui-buttonbar .cui-button {
-      margin: 0; }
   .cui-data-table input,
   .cui-data-table textarea {
     min-width: 0; }
@@ -1328,22 +1303,25 @@ li > div {
       width: 9px;
       height: 9px; }
 
-.cui-button-size-big {
-  font-size: 11px; }
-  .cui-button-size-big.cui-button-appearance-flat {
-    height: auto; }
-  .cui-buttonbar-group .cui-button-size-big:not(:first-child) {
-    margin-left: 1px; }
-  .cui-button-size-big .cui-button-visual {
-    line-height: 18px;
-    height: auto;
-    flex-direction: column;
-    border-width: 0;
-    padding: 1px 5px; }
-  .cui-button-size-big .cui-button-left {
-    padding: 3px; }
-  .cui-button-size-big .fa {
-    font-size: 21px; }
+.cui-button-size-big.cui-button-appearance-flat {
+  height: auto; }
+
+.cui-buttonbar-group .cui-button-size-big:not(:first-child) {
+  margin-left: 1px; }
+
+.cui-button-size-big .cui-button-visual {
+  font-size: 9px;
+  line-height: 18px;
+  height: auto;
+  flex-direction: column;
+  border-width: 0;
+  padding: 4px 5px 0; }
+
+.cui-button-size-big .cui-button-left {
+  padding: 3px; }
+
+.cui-button-size-big .fa {
+  font-size: 21px; }
 
 .cui-button-size-bigger {
   font-size: 18px;
@@ -3248,6 +3226,8 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-form {
   overflow: visible; }
+  .cui-form--padded {
+    padding: 10px; }
 
 .cui-form--grid .cui-data-field {
   max-width: 100%; }
@@ -3255,7 +3235,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-form--grid > div > .cui-form-table {
   display: flex;
   flex-wrap: wrap;
-  margin: 10px 0 !important;
+  margin: 10px -10px !important;
   width: 100% !important; }
   .cui-form--grid > div > .cui-form-table .cui-form-tr {
     display: block;
@@ -3375,6 +3355,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-td {
   padding: 5px 0;
   vertical-align: top; }
+  .cui-form-tr:first-child .cui-form-td {
+    padding-top: 0; }
+  .cui-form-tr:last-child .cui-form-td {
+    padding-bottom: 0; }
 
 .cui-form-key {
   flex-shrink: 0;
@@ -4106,9 +4090,9 @@ label[data-label-clickable],
           padding-bottom: 0; }
   .cui-block.cui-block-level-3 {
     padding-bottom: 10px; }
-    .cui-block.cui-block-level-3 > .cui-block-header {
+    .cui-block.cui-block-level-3.appearance-wide > .cui-block-header {
       padding-bottom: 15px; }
-      .cui-block.cui-block-level-3 > .cui-block-header .cui-block-title {
+      .cui-block.cui-block-level-3.appearance-wide > .cui-block-header .cui-block-title {
         font-size: 12px;
         text-transform: uppercase;
         letter-spacing: 0.03em; }
@@ -4117,6 +4101,8 @@ label[data-label-clickable],
     font-weight: inherit; }
   .cui-block.cui-form-block--has-checkbox > .cui-block-content {
     margin-left: 24px; }
+  .cui-block.cui-form-block--has-checkbox .cui-block-header {
+    padding-bottom: 0; }
   .cui-block--padded {
     padding: 10px; }
     .cui-block--padded:first-child {
@@ -4153,17 +4139,6 @@ label[data-label-clickable],
 .cui-block-content .cui-block-content {
   margin-left: 0;
   margin-right: 0; }
-
-.cui-form-block {
-  /* margin: 10px; */
-  padding: 0; }
-  .cui-block .cui-form-block {
-    margin-left: 0;
-    margin-right: 0; }
-  .cui-form-block:not(:last-child) .cui-block-content {
-    padding-bottom: 0; }
-  .cui-form-block > .cui-block-content > .cui-form {
-    margin: 0; }
 
 .cui-sticky-header {
   padding: 5px 10px;
