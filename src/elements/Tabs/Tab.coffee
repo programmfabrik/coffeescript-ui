@@ -76,6 +76,8 @@ class CUI.Tab extends CUI.DOMElement
 	initOpts: ->
 		super()
 		@addOpts
+			padded:
+				check: Boolean
 			name:
 				check: String
 			button_id:
@@ -102,6 +104,7 @@ class CUI.Tab extends CUI.DOMElement
 					CUI.util.isContent(v)
 			load_on_show:
 				check: Boolean
+
 
 	loadContent: ->
 		CUI.Panel::loadContent.call(@)

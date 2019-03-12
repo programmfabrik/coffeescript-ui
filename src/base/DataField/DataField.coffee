@@ -34,11 +34,7 @@ class CUI.DataField extends CUI.DOMElement
 			type: "data-changed"
 			node: @DOM
 			call: (ev, info) =>
-				if not info?.element
-					console.warn("#{CUI.util.getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
-					return
-				# @_onDataChanged?(info.element.getData(), info.element, ev, info)
-				@_onDataChanged?(@getData(), info.element, ev, info)
+				@onDataChanged(ev, info)
 				return
 
 		if @getName()
@@ -64,6 +60,12 @@ class CUI.DataField extends CUI.DOMElement
 
 		# console.debug "new: "+@
 
+	onDataChanged: (ev, info) ->
+		if not info?.element
+			console.warn("#{CUI.util.getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
+			return
+		@_onDataChanged?(@getData(), info.element, ev, info)
+
 	initOpts: ->
 		super()
 		@addOpts
@@ -74,6 +76,9 @@ class CUI.DataField extends CUI.DOMElement
 				check: Boolean
 				default: false
 			maximize_vertical:
+				check: Boolean
+				default: false
+			padded:
 				check: Boolean
 				default: false
 			data:
@@ -197,18 +202,18 @@ class CUI.DataField extends CUI.DOMElement
 			if @getOpt("maximize_horizontal") != false
 				@addClass("cui-maximize-horizontal")
 
-		@setFormDepth()
+		# @setFormDepth()
 		@
 
-	getFormDepth: ->
-		parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))
+	# getFormDepth: ->
+	# 	parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))
 
-	setFormDepth: ->
-		# update depth
-		path = @getFormPath()
-		CUI.dom.setAttribute(@DOM, "cui-form-depth", path.length)
-		@callOnOthers("setFormDepth")
-		path.length
+	# setFormDepth: ->
+	# 	# update depth
+	# 	path = @getFormPath()
+	# 	CUI.dom.setAttribute(@DOM, "cui-form-depth", path.length)
+	# 	@callOnOthers("setFormDepth")
+	# 	path.length
 
 	getFormPath: (include_self=false, path=[], call=0) ->
 		CUI.util.assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")

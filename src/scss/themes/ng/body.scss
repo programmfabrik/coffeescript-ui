@@ -1920,7 +1920,7 @@ a[role="button"].cui-button-appearance-link {
 	align-items: center;
 	max-width: 100%;
 	line-height: 18px;
-	
+
 	.cui-vertical-layout-center > & {
 		display: flex;
 	}
@@ -2580,7 +2580,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-form-hint {
 	max-width: $input-width;
-	
+
 	.cui-data-field.maximize-horizontal + & {
 		max-width: 100%;
 	}
@@ -3450,12 +3450,10 @@ $layer-sizes: (
 		top: $toolbar-height + 1px; // 1px border
 	}
 
-	&--padded {
-		> .cui-vertical-layout-center {
-			> .cui-tabs-bodies {
-				> .cui-tab-body {
-					padding: $padding;
-				}
+	> .cui-vertical-layout-center {
+		> .cui-tabs-bodies {
+			> .cui-tab-body.cui-tab--padded {
+				padding: $padding;
 			}
 		}
 	}
@@ -3737,7 +3735,7 @@ $layer-sizes: (
 
 	.cui-lv-td {
 		display: flex;
-		
+
 		.cui-list-view-tree-hierarchy &:first-child:before {
 			content: "";
 			display: inline-block;
@@ -4424,7 +4422,7 @@ $layer-sizes: (
 .status-2d-map {
 	border: 1px solid $table-border;
 	display: table;
-	
+
 	.cui-block & .cui-td {
 		&:first-child {
 			padding-left: $padding;
@@ -4469,7 +4467,7 @@ $layer-sizes: (
 
 // Form
 .cui-form {
-	margin: $padding;
+	// margin: $padding;
 	overflow: visible;
 }
 
@@ -4481,7 +4479,7 @@ $layer-sizes: (
 	> div > .cui-form-table {
 		display: flex;
 		flex-wrap: wrap;
-		margin: 10px 0 !important; // overwrite cui-form-table[cui-form-depth="0"]
+		margin: 10px 0 !important; 
 		width: 100% !important;
 
 		.cui-form-tr {
@@ -4555,10 +4553,6 @@ $layer-sizes: (
 		}
 	}
 
-
-	.cui-form[cui-form-depth="0"] {
-		margin: $padding;
-	}
 }
 
 .cui-form-row {
@@ -4575,7 +4569,7 @@ $layer-sizes: (
 
 .cui-form-field-type--checkbox {
 	margin-bottom: 0;
-	
+
 	// Own value field
 	+ .cui-form-row {
 
@@ -4594,14 +4588,6 @@ $layer-sizes: (
 .cui-form-table {
 	margin: 0;
 	display: block;
-	
-	&[cui-form-depth="0"] {
-		margin: $padding;
-
-		& + .cui-form-table {
-			margin-top: -$padding;
-		}
-	}
 }
 
 .cui-form-table-has-not-left-column {
@@ -4689,14 +4675,6 @@ label[data-label-clickable],
 	@include clickable;
 }
 
-.cui-form-table:not([cui-form-depth="0"]) {
-	// CONFLICT: break ins layer
-	// .cui-form-value {
-	// 	// push the width in inner tables to the maximum
-	// 	width: 100%;
-	// }
-}
-
 .cui-form-value {
 	flex-grow: 1;
 	flex-shrink: 1;
@@ -4742,26 +4720,6 @@ label[data-label-clickable],
 .cui-form-table-has-not-right-column {
 	> .cui-form-tr > .cui-form-td.cui-form-right {
 		display: none;
-	}
-}
-
-.cui-form[cui-data-field-form-depth="0"] {
-	> .cui-vertical-layout-center {
-		> .cui-form-table {
-			> .cui-form-tr:last-child {
-				border-color: #ff44ee;
-			}
-		}
-	}
-}
-
-.cui-form:not([cui-data-field-form-depth="0"]) {
-	> .cui-vertical-layout-center {
-		> .cui-form-table {
-			> .cui-form-tr:last-child {
-				border-style: none;
-			}
-		}
 	}
 }
 
@@ -5660,12 +5618,12 @@ label[data-label-clickable],
 .cui-block {
 	flex-shrink: 0;
 	padding-top: 1.5*$padding;
-	
+
 	&:first-child {
 		padding-top: 0;
 	}
 
-	> .cui-block-header {		
+	> .cui-block-header {
 		.cui-block-title {
 			font-weight: 600;
 		}
@@ -5683,7 +5641,7 @@ label[data-label-clickable],
 			background: $toolbar-background;
 			padding: 2*$padding;
 			position: relative;
-			
+
 			&:after {
 				content: "";
 				bottom: 0;
@@ -5736,24 +5694,24 @@ label[data-label-clickable],
 			display: flex;
 			flex-wrap: wrap;
 			align-items: flex-start;
-			
+
 			// fill in vertical space with gray background
 			&:last-child {
 				flex-grow: 1;
 			}
-			
+
 			> .cui-block-header {
 				width: 200px;
 				flex-grow: .2;
 				padding-right: $padding * 1.5;
-				
+
 				.cui-block-title {
 					font-size: 15px;
 					color: darken($header-color, 14%);
 					padding: $padding 0;
 				}
 			}
-			
+
 			> .cui-block-content {
 				$p: 1.5*$padding;
 				background: $foreground;
@@ -5763,19 +5721,19 @@ label[data-label-clickable],
 				min-width: 500px;
 				flex: 1 0 0%;
 				box-shadow: 0 1px 2px hsla(205,10%,50%, 0.12);
-				
+
 				.cui-block-level-3 {
 					border-top: 1px solid $border;
 					border-bottom: 1px solid $border;
 					margin: $p -#{$p};
 					padding: $p;
-				
+
 					&:first-child {
 						border-top-width: 0;
 						margin-top: 0;
 						padding-top: 0;
 					}
-				
+
 					&:last-child {
 						border-bottom-width: 0;
 						margin-bottom: 0;
@@ -5788,10 +5746,10 @@ label[data-label-clickable],
 
 	&.cui-block-level-3 {
 		padding-bottom: $padding;
-		
+
 		> .cui-block-header {
 			padding-bottom: 1.5*$padding;
-				
+
 			.cui-block-title {
 				font-size: 12px;
 				text-transform: uppercase;
@@ -5813,11 +5771,11 @@ label[data-label-clickable],
 
 	&--padded {
 		padding: $padding;
-		
+
 		&:first-child {
 			padding-top: $padding;
 		}
-		
+
 		&:last-child {
 			padding-bottom: $padding;
 		}
@@ -5840,7 +5798,7 @@ label[data-label-clickable],
 	.cui-form-table {
 		width: 100%;
 		margin: $padding 0;
-		
+
 		&:first-child {
 			margin-top: 0;
 
@@ -5860,8 +5818,8 @@ label[data-label-clickable],
 
 	.cui-block {
 		padding-top: 0;
-		margin-top: $padding;
-		margin-bottom: $padding;
+		/* margin-top: $padding; */
+		/* margin-bottom: $padding; */
 	}
 
 	.cui-block-header,
@@ -5872,14 +5830,14 @@ label[data-label-clickable],
 }
 
 .cui-form-block {
-	margin: 10px;
+	/* margin: 10px; */
 	padding: 0;
-	
+
 	.cui-block & {
 		margin-left: 0;
 		margin-right: 0;
 	}
-	
+
 	&:not(:last-child) .cui-block-content {
 		padding-bottom: 0;
 	}
@@ -6179,7 +6137,7 @@ label[data-label-clickable],
 		background-color: hsl(41,27%,93%);
 		background-size: 14px 14px;
 		background-position: center;
-		background-image: 
+		background-image:
 			linear-gradient(to right, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px),
 			linear-gradient(to bottom, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px);
 	}

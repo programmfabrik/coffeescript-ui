@@ -14,8 +14,6 @@ class CUI.SimpleForm extends CUI.DataField
 				mandatory: true
 				check: (v) ->
 					CUI.util.isFunction(v) or CUI.util.isArray(v)
-			class_table:
-				check: String
 			header:
 				check: Array
 			# true: all fields horizontal
@@ -32,8 +30,6 @@ class CUI.SimpleForm extends CUI.DataField
 				default: false
 				mandatory: true
 				check: Boolean
-			top: {}
-			bottom: {}
 			blockLevelOffset:
 				check: "Integer"
 				default: 0
@@ -87,8 +83,6 @@ class CUI.SimpleForm extends CUI.DataField
 
 		@initLayout()
 
-	getTableContainer: ->
-		@DOM
 
 	initLayout: ->
 
@@ -119,7 +113,7 @@ class CUI.SimpleForm extends CUI.DataField
 	init: ->
 		@__initUndo()
 		@initFields()
-		@setFormDepth()
+		# @setFormDepth()
 
 	initFields: ->
 		@__fields = @__createFields()
@@ -217,81 +211,19 @@ class CUI.SimpleForm extends CUI.DataField
 			CUI.dom.showElement(@DOM)
 		@
 
-	getTable: ->
-		CUI.util.assert(not CUI.__ng__, "Form.getTable is obsolete in \"ng\" design.", form: @)
-		@table
-
-	renderAsBlock: ->
-		if @getCheckbox()
-			return true
-
-		if @_render_as_block == false
-			return false
-
-		if @_render_as_block == true
-			return true
-
-		fields = @getFields()
-		for f in fields
-			if f._form?.label
-				return true
-
-			if f instanceof CUI.Form
-				if f.renderAsBlock()
-					return true
-
-		return false
-
-	hasContentForAppend: ->
-		if @__fields?.length > 0
-			true
-		else
-			false
-
 	renderTable: ->
 
-		form_depth = @getFormDepth()
-
-		container = @getTableContainer()
-
-		CUI.Events.listen
-			node: container
-			type: "form-check-row-visibility"
-			instance: @
-			call: (ev) =>
-				tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
-				# console.error "check row visibility", ev, tr
-				ev.stopPropagation()
-				if tr
-					@__setRowVisibility(tr)
-				return
+		# form_depth = @getFormDepth()
 
 		table = null
 		table_has_left = null
 
 		append = (stuff, to) =>
 			if not to
-				CUI.dom.append(container, stuff)
+				@appendToContainer(stuff)
 			else if stuff
 				to.appendChild(stuff)
 			return
-
-		# getTable = =>
-		# 	table = jQuery(CUI.dom.element("TABLE", class: "cui-form-table"))
-
-		# 	if @_class_table
-		# 		table.addClass(@_class_table)
-
-		# 	# add all classes from the top level
-		# 	for cls in (@_class or "").split(/\s+/)
-		# 		if CUI.util.isEmpty(cls)
-		# 			continue
-		# 		table.classList.add(cls+"-table")
-
-		# console.error "Form.renderTable", @table[0], @__horizontal, @getFields().length
-
-		if @_class_table
-			CUI.dom.addClass(container, @_class_table)
 
 		get_append = (v, info=@) =>
 			if v instanceof CUI.Form
@@ -373,7 +305,7 @@ class CUI.SimpleForm extends CUI.DataField
 					append(get_append(field._form.right), hint_div)
 
 			if field.renderAsBlock()
-				level = field.getFormDepth() + @getBlockLevelOffset() + 1
+				level = @getBlockLevelOffset() + 1
 
 				if level > 3
 					level = 3
@@ -404,8 +336,8 @@ class CUI.SimpleForm extends CUI.DataField
 
 				blk = new CUI.Block
 					padded: false
-					attr:
-						"cui-form-depth": form_depth
+					# attr:
+					# 	"cui-form-depth": form_depth
 					class: "cui-form-block"
 					level: level
 					header: left_side
@@ -453,8 +385,7 @@ class CUI.SimpleForm extends CUI.DataField
 				if @__horizontal
 					CUI.dom.addClass(table, "cui-form--horizontal")
 
-				CUI.dom.setAttribute(table, "cui-form-depth", form_depth)
-
+				# CUI.dom.setAttribute(table, "cui-form-depth", form_depth)
 				append(table)
 
 			name = field.getName()
@@ -519,32 +450,57 @@ class CUI.SimpleForm extends CUI.DataField
 
 			render_next_field()
 
-
-
 		render_next_field()
+		return
 
-		CUI.Events.listen
-			type: "data-changed"
-			node: container
-			instance: @
-			call: (ev, info) =>
-				if not info.element
-					return
+	renderAsBlock: ->
+		if @getCheckbox()
+			return true
 
-				# console.debug "Form data-changed", @getData()
+		if @_render_as_block == false
+			return false
 
-				if info.action in ["goto", "reset"]
-					return
+		if @_render_as_block == true
+			return true
 
-				@__undo.log[++@__undo.idx] =
-					name: info.element.getName()
-					undo_idx: info.undo_idx
-					action: info.action
+		fields = @getFields()
+		for f in fields
+			if f._form?.label
+				return true
 
-				@__undo.log.splice(@__undo.idx+1)
-				return
+			if f instanceof CUI.Form
+				if f.renderAsBlock()
+					return true
 
-		container
+		return false
+
+	hasContentForAppend: ->
+		if @__fields?.length > 0
+			true
+		else
+			false
+
+	appendToContainer: (stuff) ->
+		@append(stuff)
+
+	onDataChanged: (ev, info) ->
+		super(ev, info)
+
+		if not info.element
+			return
+
+		# console.debug "Form data-changed", @getData()
+
+		if info.action in ["goto", "reset"]
+			return
+
+		@__undo.log[++@__undo.idx] =
+			name: info.element.getName()
+			undo_idx: info.undo_idx
+			action: info.action
+
+		@__undo.log.splice(@__undo.idx+1)
+		return
 
 	unregisterTableListeners: ->
 		if @getLayout().isDestroyed()

@@ -49,7 +49,7 @@ class CUI.FormPopover extends CUI.Form
 
 		@__initUndo()
 		# don't initFields here, if fields are a function
-		@setFormDepth()
+		# @setFormDepth()
 
 	setDataOnOthers: ->
 		if @__fields_is_func
@@ -177,12 +177,6 @@ class CUI.FormPopover extends CUI.Form
 		@checkChanged()
 		@
 
-	renderTable: ->
-		@table = super()
-		# in "ng" design, table is the center element of layout
-		CUI.dom.addClass(@getLayout().DOM, @__class)
-		@table
-
 	# overwritten in FormModal
 	initPopover: (opts) ->
 		new CUI.Popover(opts)
@@ -214,15 +208,18 @@ class CUI.FormPopover extends CUI.Form
 	renderAsBlock: ->
 		false
 
+	renderTable: ->
+		super()
+		@table = @getLayout().center()
+		@getLayout().addClass(@__class)
+		return
+
 	resetTableAndFields: ->
 		# console.error "resetTableAndFields", @table
 		@callOnFields("remove")
 		@unregisterTableListeners()
 		# console.error "resetTableAndFields", DOM.data(@getLayout().center())
-		if CUI.__ng__
-			CUI.dom.empty(@table)
-		else
-			CUI.dom.remove(@table)
+		CUI.dom.remove(@table)
 		@table = null
 		@__fields = null
 		@

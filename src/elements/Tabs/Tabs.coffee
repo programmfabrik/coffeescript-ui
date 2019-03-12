@@ -92,9 +92,10 @@ class CUI.Tabs extends CUI.SimplePane
 		if @_appearance == 'mini'
 			CUI.dom.addClass(@__pane_header.DOM, "cui-tabs-pane-header--mini")
 
+		@removeClass('cui-pane--padded')
+
 		if @_padded
 			@addClass('cui-tabs--padded')
-			@removeClass('cui-pane--padded')
 
 		@addClass('cui-tabs--'+@_orientation)
 
@@ -243,6 +244,11 @@ class CUI.Tabs extends CUI.SimplePane
 					idx--
 					@__tabs[idx]?.activate()
 
+		tab_padded = tab.getSetOpt("padded")
+
+		if (tab_padded != false and @_padded) or
+			(tab_padded == true)
+				tab.addClass("cui-tab--padded")
 
 		tab.hide()
 		tab.initButton(@)

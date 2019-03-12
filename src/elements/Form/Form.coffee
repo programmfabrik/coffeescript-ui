@@ -1,5 +1,20 @@
 class CUI.Form extends CUI.SimpleForm
 
+	constructor: (opts) ->
+		super(opts)
+		if @_padded
+			@addClass("cui-form--padded")
+		return
+
+	initOpts: ->
+		super()
+		@addOpts
+			top: {}
+			bottom: {}
+			padded:
+				check: Boolean
+				default: false
+
 	initTemplate: ->
 		@registerTemplate(@__verticalLayout.getLayout())
 
@@ -30,11 +45,6 @@ class CUI.Form extends CUI.SimpleForm
 	getLayout: ->
 		@__verticalLayout
 
-
-	getTableContainer: ->
-		layout = @getLayout()
-		form_depth = parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))
-		CUI.dom.setAttribute(layout.center(), "cui-form-depth", form_depth)
-		layout.empty("center")
-		layout.center()
+	appendToContainer: (stuff) ->
+		@__verticalLayout.append(stuff, "center")
 
