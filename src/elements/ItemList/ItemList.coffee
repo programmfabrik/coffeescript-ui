@@ -183,12 +183,12 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 						# DOM.data(label.DOM[0], "itemListIdx", idx)
 						label.addClass("cui-menu-item")
-						CUI.dom.append(@__body.DOM, label.DOM)
+						@__body.append(label)
 						return
 
 					if item.content
 						# console.debug "adding item content", item.content
-						CUI.dom.append(@__body.DOM, item.content.DOM or item.content)
+						@__body.append(item.content)
 						return
 
 					listenButtonClick = (btn) =>
@@ -230,7 +230,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						item instanceof CUI.DataField or
 						item instanceof CUI.Label
 
-							CUI.dom.append(@__body.DOM, item.DOM)
+							@__body.append(item)
 							return
 
 					opts =
@@ -268,7 +268,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 						list_has_button_left = true
 
 					# DOM.data(btn.DOM[0], "itemListIdx", idx)
-					CUI.dom.append(@__body.DOM, btn.DOM)
+					@__body.append(btn)
 					return
 
 				if list_has_button_left

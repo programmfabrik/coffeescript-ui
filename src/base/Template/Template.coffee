@@ -37,14 +37,11 @@ class CUI.Template extends CUI.Element
 		if @_attr
 			CUI.dom.setAttributeMap(@DOM, @_attr)
 
-		#CUI.dom.setElement(@DOM, @)
-
 		# map elements which require mapping
 		@map = @getElMap(@_map)
-		if not CUI.util.isEmptyObject(@map) and @_set_template_empty
-			CUI.dom.addClass(@DOM, "cui-template-empty")
 
-		#
+		@__updateTemplateEmpty()
+
 		if @_init_flex_handles
 			@initFlexHandles()
 
@@ -61,10 +58,6 @@ class CUI.Template extends CUI.Element
 			init_flex_handles:
 				mandatory: true
 				default: false
-				check: Boolean
-			set_template_empty:
-				mandatory: true
-				default: true
 				check: Boolean
 			map:
 				type: "PlainObject"
@@ -203,7 +196,59 @@ class CUI.Template extends CUI.Element
 		else
 			CUI.dom.showElement(@map[key])
 
+	__updateTemplateEmpty: ->
+
+		if CUI.util.isEmptyObject(@map)
+			is_empty = @isEmpty()
+		else
+			is_empty = true
+			for key of @map
+				if not @isEmpty(key)
+					is_empty = false
+					break
+
+		if is_empty
+			CUI.dom.addClass(@DOM, "cui-template-empty")
+		else
+			CUI.dom.removeClass(@DOM, "cui-template-empty")
+
+		return
+
+	replace: (value, key, element) ->
+		CUI.util.assert(@map, "Template[#{@_name}].replace [#{@getUniqueId()}]", "Already destroyed")
+		if key
+			CUI.util.assert(@map[key], "#{@__cls}.replace", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
+		@__empty(key)
+		node = @__append(value, key, element)
+		@__updateTemplateEmpty()
+		return node
+
+	text: (value, key, element) ->
+		CUI.util.assert(CUI.util.isString(value), "#{@__cls}.text", "Value must be String", value: value, key: key, element: element)
+		if key
+			@map[key].textContent = value
+		else
+			@DOM.textContent = value
+
+		@__updateTemplateEmpty()
+		return
+
+	prepend: (value, key, element) ->
+		node = @__append(value, key, element, true)
+		@__updateTemplateEmpty()
+		return node
+
+	append: (value, key, element) ->
+		node = @__append(value, key, element, false)
+		@__updateTemplateEmpty()
+		return node
+
 	empty: (key) ->
+		node = @__empty(key)
+		@__updateTemplateEmpty()
+		return node
+
+	__empty: (key) ->
 		CUI.util.assert(@map, "Template[#{@_name}].empty [#{@getUniqueId()}]", "Already destroyed", template: @, name: @_name)
 		if @isEmpty(key)
 			if key
@@ -215,16 +260,6 @@ class CUI.Template extends CUI.Element
 			CUI.util.assert(@map[key], "#{@__cls}.empty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
 			# console.debug "Template.destroyingChildren", key, @map[key]
 			CUI.dom.empty(@map[key])
-
-			is_empty = true
-			for key of @map
-				if not @isEmpty(key)
-					is_empty = false
-					break
-
-			if is_empty and @_set_template_empty
-				CUI.dom.addClass(@DOM, "cui-template-empty")
-
 			return @map[key]
 
 		if CUI.util.isEmptyObject(@map)
@@ -235,29 +270,9 @@ class CUI.Template extends CUI.Element
 			for key of @map
 				CUI.dom.empty(@map[key])
 
-			if @_set_template_empty
-				CUI.dom.addClass(@DOM, "cui-template-empty")
-
 		return @DOM
 
-	replace: (value, key, element) ->
-		CUI.util.assert(@map, "Template[#{@_name}].replace [#{@getUniqueId()}]", "Already destroyed")
-		if key
-			CUI.util.assert(@map[key], "#{@__cls}.replace", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map, DOM: @DOM)
-		@empty(key)
-		@append(value, key, element)
-
-	text: (value, key, element) ->
-		CUI.util.assert(CUI.util.isString(value), "#{@__cls}.text", "Value must be String", value: value, key: key, element: element)
-		if key
-			@map[key].textContent = value
-		else
-			@DOM.textContent = value
-
-	prepend: (value, key, element) ->
-		@append(value, key, element, true)
-
-	append: (value, key, element, prepend = false) ->
+	__append: (value, key, element, prepend) ->
 		if prepend
 			fn = "prepend"
 		else
@@ -289,8 +304,6 @@ class CUI.Template extends CUI.Element
 
 		if appends.length > 0
 			CUI.dom[fn](node, appends)
-			if @_set_template_empty
-				CUI.dom.removeClass(@DOM, "cui-template-empty")
 
 		node
 
@@ -300,13 +313,10 @@ class CUI.Template extends CUI.Element
 
 	isEmpty: (key) ->
 		if not key
-			!@DOM.firstChild
-		else
-			CUI.util.assert(@map[key], "#{@__cls}.isEmpty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
-			!@map[key].firstChild
-			# if fc
-			# 	console.debug "isEmpty: false", key, fc
-			# !fc
+			return !@DOM.firstChild
+
+		CUI.util.assert(@map[key], "#{@__cls}.isEmpty", "Key \"#{key}\" not found in map. Template: \"#{@_name}\".", map: @map)
+		return !@map[key].firstChild
 
 	removeEmptySlots: ->
 		for key, node of @map
