@@ -323,8 +323,6 @@ class CUI.DataField extends CUI.DOMElement
 		@removeClass("cui-data-field-hidden")
 		@callOnOthers("show")
 		if trigger_event
-			# FIXME: too many events were triggered and I dont
-			# know where this is really
 			CUI.Events.trigger
 				type: "form-check-row-visibility"
 				node: @DOM

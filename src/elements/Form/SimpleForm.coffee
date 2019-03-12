@@ -213,6 +213,20 @@ class CUI.SimpleForm extends CUI.DataField
 
 	renderTable: ->
 
+
+		add_listener = (node) =>
+			console.warn("adding listener:", node)
+			CUI.Events.listen
+				node: node
+				type: "form-check-row-visibility"
+				call: (ev) =>
+					tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
+					console.error "check row visibility", ev, tr
+					ev.stopPropagation()
+					if tr
+						@__setRowVisibility(tr)
+					return
+
 		# form_depth = @getFormDepth()
 
 		table = null
@@ -220,6 +234,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 		append = (stuff, to) =>
 			if not to
+				add_listener(stuff)
 				@appendToContainer(stuff)
 			else if stuff
 				to.appendChild(stuff)

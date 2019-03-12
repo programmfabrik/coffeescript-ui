@@ -263,7 +263,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 					text: label
 					multiline: true
 
-
 		@listView = new CUI.ListView
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
