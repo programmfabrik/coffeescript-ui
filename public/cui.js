@@ -2489,7 +2489,7 @@ module.exports = CUI;
 
     var defaultLocaleWeek = {
         dow : 0, // Sunday is the first day of the week.
-        doy : 6  // The week that contains Jan 1st is the first week of the year.
+        doy : 6  // The week that contains Jan 6th is the first week of the year.
     };
 
     function localeFirstDayOfWeek () {
@@ -3365,13 +3365,13 @@ module.exports = CUI;
                     weekdayOverflow = true;
                 }
             } else if (w.e != null) {
-                // local weekday -- counting starts from begining of week
+                // local weekday -- counting starts from beginning of week
                 weekday = w.e + dow;
                 if (w.e < 0 || w.e > 6) {
                     weekdayOverflow = true;
                 }
             } else {
-                // default to begining of week
+                // default to beginning of week
                 weekday = dow;
             }
         }
@@ -3965,7 +3965,7 @@ module.exports = CUI;
             years = normalizedInput.year || 0,
             quarters = normalizedInput.quarter || 0,
             months = normalizedInput.month || 0,
-            weeks = normalizedInput.week || 0,
+            weeks = normalizedInput.week || normalizedInput.isoWeek || 0,
             days = normalizedInput.day || 0,
             hours = normalizedInput.hour || 0,
             minutes = normalizedInput.minute || 0,
@@ -4269,7 +4269,7 @@ module.exports = CUI;
                 ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
             };
         } else if (!!(match = isoRegex.exec(input))) {
-            sign = (match[1] === '-') ? -1 : (match[1] === '+') ? 1 : 1;
+            sign = (match[1] === '-') ? -1 : 1;
             duration = {
                 y : parseIso(match[2], sign),
                 M : parseIso(match[3], sign),
@@ -4420,7 +4420,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() > localInput.valueOf();
         } else {
@@ -4433,7 +4433,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(!isUndefined(units) ? units : 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() < localInput.valueOf();
         } else {
@@ -4442,9 +4442,14 @@ module.exports = CUI;
     }
 
     function isBetween (from, to, units, inclusivity) {
+        var localFrom = isMoment(from) ? from : createLocal(from),
+            localTo = isMoment(to) ? to : createLocal(to);
+        if (!(this.isValid() && localFrom.isValid() && localTo.isValid())) {
+            return false;
+        }
         inclusivity = inclusivity || '()';
-        return (inclusivity[0] === '(' ? this.isAfter(from, units) : !this.isBefore(from, units)) &&
-            (inclusivity[1] === ')' ? this.isBefore(to, units) : !this.isAfter(to, units));
+        return (inclusivity[0] === '(' ? this.isAfter(localFrom, units) : !this.isBefore(localFrom, units)) &&
+            (inclusivity[1] === ')' ? this.isBefore(localTo, units) : !this.isAfter(localTo, units));
     }
 
     function isSame (input, units) {
@@ -4453,7 +4458,7 @@ module.exports = CUI;
         if (!(this.isValid() && localInput.isValid())) {
             return false;
         }
-        units = normalizeUnits(units || 'millisecond');
+        units = normalizeUnits(units) || 'millisecond';
         if (units === 'millisecond') {
             return this.valueOf() === localInput.valueOf();
         } else {
@@ -4463,11 +4468,11 @@ module.exports = CUI;
     }
 
     function isSameOrAfter (input, units) {
-        return this.isSame(input, units) || this.isAfter(input,units);
+        return this.isSame(input, units) || this.isAfter(input, units);
     }
 
     function isSameOrBefore (input, units) {
-        return this.isSame(input, units) || this.isBefore(input,units);
+        return this.isSame(input, units) || this.isBefore(input, units);
     }
 
     function diff (input, units, asFloat) {
@@ -5686,7 +5691,7 @@ module.exports = CUI;
     // Side effect imports
 
 
-    hooks.version = '2.22.2';
+    hooks.version = '2.23.0';
 
     setHookCallback(createLocal);
 
@@ -5727,7 +5732,7 @@ module.exports = CUI;
         TIME: 'HH:mm',                                  // <input type="time" />
         TIME_SECONDS: 'HH:mm:ss',                       // <input type="time" step="1" />
         TIME_MS: 'HH:mm:ss.SSS',                        // <input type="time" step="0.001" />
-        WEEK: 'YYYY-[W]WW',                             // <input type="week" />
+        WEEK: 'GGGG-[W]WW',                             // <input type="week" />
         MONTH: 'YYYY-MM'                                // <input type="month" />
     };
 
@@ -7963,7 +7968,7 @@ if (true) {
         ordinal : '%dº',
         week : {
             dow : 0, // Sunday is the first day of the week.
-            doy : 6  // The week that contains Jan 1st is the first week of the year.
+            doy : 6  // The week that contains Jan 6th is the first week of the year.
         }
     });
 
@@ -29144,7 +29149,6 @@ CUI.SimpleForm = (function(superClass) {
     var add_listener, append, field_has_left, field_idx, fields, get_append, get_label, len, render_next_field, table, table_has_left;
     add_listener = (function(_this) {
       return function(node) {
-        console.warn("adding listener:", node);
         return CUI.Events.listen({
           node: node,
           type: "form-check-row-visibility",
@@ -29474,16 +29478,6 @@ CUI.SimpleForm = (function(superClass) {
     this.__undo.log.splice(this.__undo.idx + 1);
   };
 
-  SimpleForm.prototype.unregisterTableListeners = function() {
-    if (this.getLayout().isDestroyed()) {
-      return;
-    }
-    return CUI.Events.ignore({
-      node: this.getLayout().center(),
-      instance: this
-    });
-  };
-
   SimpleForm.prototype.hasUserData = function(data) {
     var f, i, len1, ref;
     ref = this.getFields("hasUserData");
@@ -29497,7 +29491,6 @@ CUI.SimpleForm = (function(superClass) {
   };
 
   SimpleForm.prototype.remove = function() {
-    this.unregisterTableListeners();
     return SimpleForm.__super__.remove.call(this);
   };
 
@@ -30204,15 +30197,12 @@ CUI.FormPopover = (function(superClass) {
 
   FormPopover.prototype.renderTable = function() {
     FormPopover.__super__.renderTable.call(this);
-    this.table = this.getLayout().center();
     this.getLayout().addClass(this.__class);
   };
 
-  FormPopover.prototype.resetTableAndFields = function() {
+  FormPopover.prototype.removeFields = function() {
     this.callOnFields("remove");
-    this.unregisterTableListeners();
-    CUI.dom.remove(this.table);
-    this.table = null;
+    this.__rendered = null;
     this.__fields = null;
     return this;
   };
@@ -30221,14 +30211,16 @@ CUI.FormPopover = (function(superClass) {
     var onHide, onShow, pop_opts;
     pop_opts = this.getPopoverOpts();
     if (this.__fields_is_func) {
-      if (this.table) {
-        this.resetTableAndFields();
+      if (this.__rendered) {
+        this.removeFields();
+        this.getLayout().empty();
       }
       this.initFields();
       this.callOnFields("setData", this.__data);
     }
     if (!this.table) {
       this.renderTable();
+      this.__rendered = true;
       this.callOnFields("start");
     }
     if (!pop_opts.hasOwnProperty("element")) {
