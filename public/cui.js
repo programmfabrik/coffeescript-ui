@@ -8989,13 +8989,7 @@ CUI.DataField = (function(superClass) {
       node: this.DOM,
       call: (function(_this) {
         return function(ev, info) {
-          if (!(info != null ? info.element : void 0)) {
-            console.warn((CUI.util.getObjectClass(_this)) + "[DataField].listen[data-changed]: received event with element not set.", ev, info, _this);
-            return;
-          }
-          if (typeof _this._onDataChanged === "function") {
-            _this._onDataChanged(_this.getData(), info.element, ev, info);
-          }
+          _this.onDataChanged(ev, info);
         };
       })(this)
     });
@@ -9021,6 +9015,14 @@ CUI.DataField = (function(superClass) {
     }
   }
 
+  DataField.prototype.onDataChanged = function(ev, info) {
+    if (!(info != null ? info.element : void 0)) {
+      console.warn((CUI.util.getObjectClass(this)) + "[DataField].listen[data-changed]: received event with element not set.", ev, info, this);
+      return;
+    }
+    return typeof this._onDataChanged === "function" ? this._onDataChanged(this.getData(), info.element, ev, info) : void 0;
+  };
+
   DataField.prototype.initOpts = function() {
     DataField.__super__.initOpts.call(this);
     return this.addOpts({
@@ -9033,6 +9035,10 @@ CUI.DataField = (function(superClass) {
         "default": false
       },
       maximize_vertical: {
+        check: Boolean,
+        "default": false
+      },
+      padded: {
         check: Boolean,
         "default": false
       },
@@ -9198,20 +9204,7 @@ CUI.DataField = (function(superClass) {
         this.addClass("cui-maximize-horizontal");
       }
     }
-    this.setFormDepth();
     return this;
-  };
-
-  DataField.prototype.getFormDepth = function() {
-    return parseInt(CUI.dom.getAttribute(this.DOM, "cui-form-depth"));
-  };
-
-  DataField.prototype.setFormDepth = function() {
-    var path;
-    path = this.getFormPath();
-    CUI.dom.setAttribute(this.DOM, "cui-form-depth", path.length);
-    this.callOnOthers("setFormDepth");
-    return path.length;
   };
 
   DataField.prototype.getFormPath = function(include_self, path, call) {
@@ -23645,7 +23638,6 @@ CUI.DataForm = (function(superClass) {
         };
       })(this)
     });
-    CUI.dom.setAttribute(new_form.DOM, "cui-form-depth", this.getFormDepth() + 1);
     return new_form;
   };
 
@@ -28838,9 +28830,25 @@ CUI.FileUploadFile = (function(superClass) {
 CUI.Form = (function(superClass) {
   extend(Form, superClass);
 
-  function Form() {
-    return Form.__super__.constructor.apply(this, arguments);
+  function Form(opts) {
+    Form.__super__.constructor.call(this, opts);
+    if (this._padded) {
+      this.addClass("cui-form--padded");
+    }
+    return;
   }
+
+  Form.prototype.initOpts = function() {
+    Form.__super__.initOpts.call(this);
+    return this.addOpts({
+      top: {},
+      bottom: {},
+      padded: {
+        check: Boolean,
+        "default": false
+      }
+    });
+  };
 
   Form.prototype.initTemplate = function() {
     return this.registerTemplate(this.__verticalLayout.getLayout());
@@ -28879,13 +28887,8 @@ CUI.Form = (function(superClass) {
     return this.__verticalLayout;
   };
 
-  Form.prototype.getTableContainer = function() {
-    var form_depth, layout;
-    layout = this.getLayout();
-    form_depth = parseInt(CUI.dom.getAttribute(this.DOM, "cui-form-depth"));
-    CUI.dom.setAttribute(layout.center(), "cui-form-depth", form_depth);
-    layout.empty("center");
-    return layout.center();
+  Form.prototype.appendToContainer = function(stuff) {
+    return this.__verticalLayout.append(stuff, "center");
   };
 
   return Form;
@@ -28924,9 +28927,6 @@ CUI.SimpleForm = (function(superClass) {
           return CUI.util.isFunction(v) || CUI.util.isArray(v);
         }
       },
-      class_table: {
-        check: String
-      },
       header: {
         check: Array
       },
@@ -28946,8 +28946,6 @@ CUI.SimpleForm = (function(superClass) {
         mandatory: true,
         check: Boolean
       },
-      top: {},
-      bottom: {},
       blockLevelOffset: {
         check: "Integer",
         "default": 0
@@ -29021,10 +29019,6 @@ CUI.SimpleForm = (function(superClass) {
     return this.initLayout();
   };
 
-  SimpleForm.prototype.getTableContainer = function() {
-    return this.DOM;
-  };
-
   SimpleForm.prototype.initLayout = function() {};
 
   SimpleForm.prototype.getCheckbox = function() {
@@ -29061,8 +29055,7 @@ CUI.SimpleForm = (function(superClass) {
 
   SimpleForm.prototype.init = function() {
     this.__initUndo();
-    this.initFields();
-    return this.setFormDepth();
+    return this.initFields();
   };
 
   SimpleForm.prototype.initFields = function() {
@@ -29152,81 +29145,38 @@ CUI.SimpleForm = (function(superClass) {
     return this;
   };
 
-  SimpleForm.prototype.getTable = function() {
-    CUI.util.assert(!CUI.__ng__, "Form.getTable is obsolete in \"ng\" design.", {
-      form: this
-    });
-    return this.table;
-  };
-
-  SimpleForm.prototype.renderAsBlock = function() {
-    var f, fields, i, len1, ref;
-    if (this.getCheckbox()) {
-      return true;
-    }
-    if (this._render_as_block === false) {
-      return false;
-    }
-    if (this._render_as_block === true) {
-      return true;
-    }
-    fields = this.getFields();
-    for (i = 0, len1 = fields.length; i < len1; i++) {
-      f = fields[i];
-      if ((ref = f._form) != null ? ref.label : void 0) {
-        return true;
-      }
-      if (f instanceof CUI.Form) {
-        if (f.renderAsBlock()) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
-  SimpleForm.prototype.hasContentForAppend = function() {
-    var ref;
-    if (((ref = this.__fields) != null ? ref.length : void 0) > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   SimpleForm.prototype.renderTable = function() {
-    var append, container, field_has_left, field_idx, fields, form_depth, get_append, get_label, len, render_next_field, table, table_has_left;
-    form_depth = this.getFormDepth();
-    container = this.getTableContainer();
-    CUI.Events.listen({
-      node: container,
-      type: "form-check-row-visibility",
-      instance: this,
-      call: (function(_this) {
-        return function(ev) {
-          var tr;
-          tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row");
-          ev.stopPropagation();
-          if (tr) {
-            _this.__setRowVisibility(tr);
+    var add_listener, append, field_has_left, field_idx, fields, get_append, get_label, len, render_next_field, table, table_has_left;
+    add_listener = (function(_this) {
+      return function(node) {
+        console.warn("adding listener:", node);
+        return CUI.Events.listen({
+          node: node,
+          type: "form-check-row-visibility",
+          call: function(ev) {
+            var tr;
+            tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row");
+            console.error("check row visibility", ev, tr);
+            ev.stopPropagation();
+            if (tr) {
+              _this.__setRowVisibility(tr);
+            }
           }
-        };
-      })(this)
-    });
+        });
+      };
+    })(this);
     table = null;
     table_has_left = null;
     append = (function(_this) {
       return function(stuff, to) {
         if (!to) {
-          CUI.dom.append(container, stuff);
+          add_listener(stuff);
+          _this.appendToContainer(stuff);
         } else if (stuff) {
           to.appendChild(stuff);
         }
       };
     })(this);
-    if (this._class_table) {
-      CUI.dom.addClass(container, this._class_table);
-    }
     get_append = (function(_this) {
       return function(v, info) {
         if (info == null) {
@@ -29328,7 +29278,7 @@ CUI.SimpleForm = (function(superClass) {
           }
         }
         if (field.renderAsBlock()) {
-          level = field.getFormDepth() + _this.getBlockLevelOffset() + 1;
+          level = _this.getBlockLevelOffset() + 1;
           if (level > 3) {
             level = 3;
           }
@@ -29362,9 +29312,6 @@ CUI.SimpleForm = (function(superClass) {
           }
           blk = new CUI.Block({
             padded: false,
-            attr: {
-              "cui-form-depth": form_depth
-            },
             "class": "cui-form-block",
             level: level,
             header: left_side,
@@ -29408,7 +29355,6 @@ CUI.SimpleForm = (function(superClass) {
           if (_this.__horizontal) {
             CUI.dom.addClass(table, "cui-form--horizontal");
           }
-          CUI.dom.setAttribute(table, "cui-form-depth", form_depth);
           append(table);
         }
         name = field.getName();
@@ -29475,29 +29421,62 @@ CUI.SimpleForm = (function(superClass) {
       };
     })(this);
     render_next_field();
-    CUI.Events.listen({
-      type: "data-changed",
-      node: container,
-      instance: this,
-      call: (function(_this) {
-        return function(ev, info) {
-          var ref;
-          if (!info.element) {
-            return;
-          }
-          if ((ref = info.action) === "goto" || ref === "reset") {
-            return;
-          }
-          _this.__undo.log[++_this.__undo.idx] = {
-            name: info.element.getName(),
-            undo_idx: info.undo_idx,
-            action: info.action
-          };
-          _this.__undo.log.splice(_this.__undo.idx + 1);
-        };
-      })(this)
-    });
-    return container;
+  };
+
+  SimpleForm.prototype.renderAsBlock = function() {
+    var f, fields, i, len1, ref;
+    if (this.getCheckbox()) {
+      return true;
+    }
+    if (this._render_as_block === false) {
+      return false;
+    }
+    if (this._render_as_block === true) {
+      return true;
+    }
+    fields = this.getFields();
+    for (i = 0, len1 = fields.length; i < len1; i++) {
+      f = fields[i];
+      if ((ref = f._form) != null ? ref.label : void 0) {
+        return true;
+      }
+      if (f instanceof CUI.Form) {
+        if (f.renderAsBlock()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  SimpleForm.prototype.hasContentForAppend = function() {
+    var ref;
+    if (((ref = this.__fields) != null ? ref.length : void 0) > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  SimpleForm.prototype.appendToContainer = function(stuff) {
+    return this.append(stuff);
+  };
+
+  SimpleForm.prototype.onDataChanged = function(ev, info) {
+    var ref;
+    SimpleForm.__super__.onDataChanged.call(this, ev, info);
+    if (!info.element) {
+      return;
+    }
+    if ((ref = info.action) === "goto" || ref === "reset") {
+      return;
+    }
+    this.__undo.log[++this.__undo.idx] = {
+      name: info.element.getName(),
+      undo_idx: info.undo_idx,
+      action: info.action
+    };
+    this.__undo.log.splice(this.__undo.idx + 1);
   };
 
   SimpleForm.prototype.unregisterTableListeners = function() {
@@ -30057,8 +30036,7 @@ CUI.FormPopover = (function(superClass) {
     if (!this.__fields_is_func) {
       return FormPopover.__super__.init.call(this);
     }
-    this.__initUndo();
-    return this.setFormDepth();
+    return this.__initUndo();
   };
 
   FormPopover.prototype.setDataOnOthers = function() {
@@ -30194,12 +30172,6 @@ CUI.FormPopover = (function(superClass) {
     return this;
   };
 
-  FormPopover.prototype.renderTable = function() {
-    this.table = FormPopover.__super__.renderTable.call(this);
-    CUI.dom.addClass(this.getLayout().DOM, this.__class);
-    return this.table;
-  };
-
   FormPopover.prototype.initPopover = function(opts) {
     return new CUI.Popover(opts);
   };
@@ -30234,14 +30206,16 @@ CUI.FormPopover = (function(superClass) {
     return false;
   };
 
+  FormPopover.prototype.renderTable = function() {
+    FormPopover.__super__.renderTable.call(this);
+    this.table = this.getLayout().center();
+    this.getLayout().addClass(this.__class);
+  };
+
   FormPopover.prototype.resetTableAndFields = function() {
     this.callOnFields("remove");
     this.unregisterTableListeners();
-    if (CUI.__ng__) {
-      CUI.dom.empty(this.table);
-    } else {
-      CUI.dom.remove(this.table);
-    }
+    CUI.dom.remove(this.table);
     this.table = null;
     this.__fields = null;
     return this;
@@ -35937,6 +35911,9 @@ CUI.ListViewTreeNode = (function(superClass) {
     var cls;
     cls = ListViewTreeNode.__super__.getClass.call(this);
     cls = cls + " cui-lv-tree-node";
+    if (!this.isLeaf()) {
+      cls = cls + " cui-lv-tree-node--is-branch";
+    }
     return cls;
   };
 
@@ -43879,6 +43856,9 @@ CUI.Tab = (function(superClass) {
   Tab.prototype.initOpts = function() {
     Tab.__super__.initOpts.call(this);
     return this.addOpts({
+      padded: {
+        check: Boolean
+      },
       name: {
         check: String
       },
@@ -44131,9 +44111,9 @@ CUI.Tabs = (function(superClass) {
     if (this._appearance === 'mini') {
       CUI.dom.addClass(this.__pane_header.DOM, "cui-tabs-pane-header--mini");
     }
+    this.removeClass('cui-pane--padded');
     if (this._padded) {
       this.addClass('cui-tabs--padded');
-      this.removeClass('cui-pane--padded');
     }
     this.addClass('cui-tabs--' + this._orientation);
     this.__buttonbar = new CUI.Buttonbar();
@@ -44263,6 +44243,7 @@ CUI.Tabs = (function(superClass) {
   };
 
   Tabs.prototype.addTab = function(tab) {
+    var tab_padded;
     CUI.util.assert(tab instanceof CUI.Tab, this.__cls + ".addTab", "Tab must be instance of Tab but is " + (CUI.util.getObjectClass(tab)), {
       tab: tab
     });
@@ -44312,6 +44293,10 @@ CUI.Tabs = (function(superClass) {
           };
         })(this)
       });
+    }
+    tab_padded = tab.getSetOpt("padded");
+    if ((tab_padded !== false && this._padded) || (tab_padded === true)) {
+      tab.addClass("cui-tab--padded");
     }
     tab.hide();
     tab.initButton(this);
