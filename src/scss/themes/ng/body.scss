@@ -3760,6 +3760,10 @@ $layer-sizes: (
 	opacity: 0.3;
 }
 
+.cui-lv-tree-node--is-branch {
+	@extend %clickable;
+}
+
 .cui-lv-td {
 	padding: $table-data-padding $padding;
 	width: 125px;
