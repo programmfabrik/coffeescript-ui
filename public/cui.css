@@ -1964,6 +1964,10 @@ a[role="button"].cui-button-appearance-link {
   border-color: #f33b16;
   background: rgba(243, 59, 22, 0.15); }
 
+.cui-input.cui-maximize-vertical {
+  display: flex;
+  flex-direction: column; }
+
 .cui-input input,
 .cui-input textarea {
   max-width: 100%;
