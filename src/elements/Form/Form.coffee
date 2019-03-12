@@ -4,6 +4,7 @@ class CUI.Form extends CUI.SimpleForm
 		super(opts)
 		if @_padded
 			@addClass("cui-form--padded")
+
 		return
 
 	initOpts: ->
@@ -47,4 +48,3 @@ class CUI.Form extends CUI.SimpleForm
 
 	appendToContainer: (stuff) ->
 		@__verticalLayout.append(stuff, "center")
-
