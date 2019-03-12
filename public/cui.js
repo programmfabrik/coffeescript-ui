@@ -17037,9 +17037,7 @@ CUI.Template = (function(superClass) {
       CUI.dom.setAttributeMap(this.DOM, this._attr);
     }
     this.map = this.getElMap(this._map);
-    if (!CUI.util.isEmptyObject(this.map) && this._set_template_empty) {
-      CUI.dom.addClass(this.DOM, "cui-template-empty");
-    }
+    this.__updateTemplateEmpty();
     if (this._init_flex_handles) {
       this.initFlexHandles();
     }
@@ -17059,11 +17057,6 @@ CUI.Template = (function(superClass) {
       init_flex_handles: {
         mandatory: true,
         "default": false,
-        check: Boolean
-      },
-      set_template_empty: {
-        mandatory: true,
-        "default": true,
         check: Boolean
       },
       map: {
@@ -17248,8 +17241,77 @@ CUI.Template = (function(superClass) {
     }
   };
 
+  Template.prototype.__updateTemplateEmpty = function() {
+    var is_empty, key;
+    if (CUI.util.isEmptyObject(this.map)) {
+      is_empty = this.isEmpty();
+    } else {
+      is_empty = true;
+      for (key in this.map) {
+        if (!this.isEmpty(key)) {
+          is_empty = false;
+          break;
+        }
+      }
+    }
+    if (is_empty) {
+      CUI.dom.addClass(this.DOM, "cui-template-empty");
+    } else {
+      CUI.dom.removeClass(this.DOM, "cui-template-empty");
+    }
+  };
+
+  Template.prototype.replace = function(value, key, element) {
+    var node;
+    CUI.util.assert(this.map, "Template[" + this._name + "].replace [" + (this.getUniqueId()) + "]", "Already destroyed");
+    if (key) {
+      CUI.util.assert(this.map[key], this.__cls + ".replace", "Key \"" + key + "\" not found in map. Template: \"" + this._name + "\".", {
+        map: this.map,
+        DOM: this.DOM
+      });
+    }
+    this.__empty(key);
+    node = this.__append(value, key, element);
+    this.__updateTemplateEmpty();
+    return node;
+  };
+
+  Template.prototype.text = function(value, key, element) {
+    CUI.util.assert(CUI.util.isString(value), this.__cls + ".text", "Value must be String", {
+      value: value,
+      key: key,
+      element: element
+    });
+    if (key) {
+      this.map[key].textContent = value;
+    } else {
+      this.DOM.textContent = value;
+    }
+    this.__updateTemplateEmpty();
+  };
+
+  Template.prototype.prepend = function(value, key, element) {
+    var node;
+    node = this.__append(value, key, element, true);
+    this.__updateTemplateEmpty();
+    return node;
+  };
+
+  Template.prototype.append = function(value, key, element) {
+    var node;
+    node = this.__append(value, key, element, false);
+    this.__updateTemplateEmpty();
+    return node;
+  };
+
   Template.prototype.empty = function(key) {
-    var is_empty;
+    var node;
+    node = this.__empty(key);
+    this.__updateTemplateEmpty();
+    return node;
+  };
+
+  Template.prototype.__empty = function(key) {
     CUI.util.assert(this.map, "Template[" + this._name + "].empty [" + (this.getUniqueId()) + "]", "Already destroyed", {
       template: this,
       name: this._name
@@ -17266,16 +17328,6 @@ CUI.Template = (function(superClass) {
         map: this.map
       });
       CUI.dom.empty(this.map[key]);
-      is_empty = true;
-      for (key in this.map) {
-        if (!this.isEmpty(key)) {
-          is_empty = false;
-          break;
-        }
-      }
-      if (is_empty && this._set_template_empty) {
-        CUI.dom.addClass(this.DOM, "cui-template-empty");
-      }
       return this.map[key];
     }
     if (CUI.util.isEmptyObject(this.map)) {
@@ -17284,47 +17336,12 @@ CUI.Template = (function(superClass) {
       for (key in this.map) {
         CUI.dom.empty(this.map[key]);
       }
-      if (this._set_template_empty) {
-        CUI.dom.addClass(this.DOM, "cui-template-empty");
-      }
     }
     return this.DOM;
   };
 
-  Template.prototype.replace = function(value, key, element) {
-    CUI.util.assert(this.map, "Template[" + this._name + "].replace [" + (this.getUniqueId()) + "]", "Already destroyed");
-    if (key) {
-      CUI.util.assert(this.map[key], this.__cls + ".replace", "Key \"" + key + "\" not found in map. Template: \"" + this._name + "\".", {
-        map: this.map,
-        DOM: this.DOM
-      });
-    }
-    this.empty(key);
-    return this.append(value, key, element);
-  };
-
-  Template.prototype.text = function(value, key, element) {
-    CUI.util.assert(CUI.util.isString(value), this.__cls + ".text", "Value must be String", {
-      value: value,
-      key: key,
-      element: element
-    });
-    if (key) {
-      return this.map[key].textContent = value;
-    } else {
-      return this.DOM.textContent = value;
-    }
-  };
-
-  Template.prototype.prepend = function(value, key, element) {
-    return this.append(value, key, element, true);
-  };
-
-  Template.prototype.append = function(value, key, element, prepend) {
+  Template.prototype.__append = function(value, key, element, prepend) {
     var _value, appends, fn, i, len, node;
-    if (prepend == null) {
-      prepend = false;
-    }
     if (prepend) {
       fn = "prepend";
     } else {
@@ -17363,9 +17380,6 @@ CUI.Template = (function(superClass) {
     }
     if (appends.length > 0) {
       CUI.dom[fn](node, appends);
-      if (this._set_template_empty) {
-        CUI.dom.removeClass(this.DOM, "cui-template-empty");
-      }
     }
     return node;
   };
@@ -17381,12 +17395,11 @@ CUI.Template = (function(superClass) {
   Template.prototype.isEmpty = function(key) {
     if (!key) {
       return !this.DOM.firstChild;
-    } else {
-      CUI.util.assert(this.map[key], this.__cls + ".isEmpty", "Key \"" + key + "\" not found in map. Template: \"" + this._name + "\".", {
-        map: this.map
-      });
-      return !this.map[key].firstChild;
     }
+    CUI.util.assert(this.map[key], this.__cls + ".isEmpty", "Key \"" + key + "\" not found in map. Template: \"" + this._name + "\".", {
+      map: this.map
+    });
+    return !this.map[key].firstChild;
   };
 
   Template.prototype.removeEmptySlots = function() {
@@ -32604,11 +32617,11 @@ CUI.ItemList = (function(superClass) {
               });
             }
             label.addClass("cui-menu-item");
-            CUI.dom.append(_this.__body.DOM, label.DOM);
+            _this.__body.append(label);
             return;
           }
           if (item.content) {
-            CUI.dom.append(_this.__body.DOM, item.content.DOM || item.content);
+            _this.__body.append(item.content);
             return;
           }
           listenButtonClick = function(btn) {
@@ -32647,7 +32660,7 @@ CUI.ItemList = (function(superClass) {
             }
           }
           if (item instanceof CUI.Button || item instanceof CUI.DataField || item instanceof CUI.Label) {
-            CUI.dom.append(_this.__body.DOM, item.DOM);
+            _this.__body.append(item);
             return;
           }
           opts = {
@@ -32692,7 +32705,7 @@ CUI.ItemList = (function(superClass) {
           if (btn.hasLeft()) {
             list_has_button_left = true;
           }
-          CUI.dom.append(_this.__body.DOM, btn.DOM);
+          _this.__body.append(btn);
         };
         for (idx = i = 0, len = items.length; i < len; idx = ++i) {
           _item = items[idx];
