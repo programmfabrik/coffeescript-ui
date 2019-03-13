@@ -219,7 +219,6 @@ class CUI.SimpleForm extends CUI.DataField
 				type: "form-check-row-visibility"
 				call: (ev) =>
 					tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row")
-					console.error "check row visibility", ev, tr
 					ev.stopPropagation()
 					if tr
 						@__setRowVisibility(tr)
