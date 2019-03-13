@@ -229,7 +229,6 @@ class CUI.FormPopover extends CUI.Form
 			# dynamic fields, we need to reload the form
 			if @__rendered
 				@removeFields()
-				@getLayout().empty()
 
 			@initFields()
 			@callOnFields("setData", @__data)

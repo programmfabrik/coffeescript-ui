@@ -213,6 +213,7 @@ class CUI.SimpleForm extends CUI.DataField
 
 	renderTable: ->
 
+		@getLayout().empty()
 		add_listener = (node) =>
 			CUI.Events.listen
 				node: node
