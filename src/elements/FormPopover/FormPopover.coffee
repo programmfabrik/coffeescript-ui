@@ -190,13 +190,11 @@ class CUI.FormPopover extends CUI.Form
 		if not pop_opts.backdrop.policy
 			pop_opts.backdrop.policy = "click"
 
-		# pop_opts.element = @__button
 		if not pop_opts.pane
 			pop_opts.pane = {}
 
-		pop_opts.pane.padded = true
-
 		CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.mergeMap(pop_opts.pane, padded: true)
 
 		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
