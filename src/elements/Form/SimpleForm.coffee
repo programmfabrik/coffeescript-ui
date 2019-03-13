@@ -657,9 +657,14 @@ class CUI.SimpleForm extends CUI.DataField
 				return true
 		return false
 
-	getBlockLevelOffset: ->
-		parentBlockLevelOffset = @getForm()?.getBlockLevelOffset?() or 0
-		return parentBlockLevelOffset + @_blockLevelOffset
+	getBlockLevelOffset: (level = 0) ->
+
+		if @getForm()
+			parent = (@getForm().getBlockLevelOffset() or 0) + 1
+		else
+			parent = 0
+
+		return @_blockLevelOffset + parent
 
 	setBlockLevelOffset: (@_blockLevelOffset) ->
 		return @_blockLevelOffset
