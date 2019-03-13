@@ -29155,7 +29155,6 @@ CUI.SimpleForm = (function(superClass) {
           call: function(ev) {
             var tr;
             tr = CUI.dom.closest(ev.getNode(), ".cui-form-tr,.cui-form-block,.cui-form-row");
-            console.error("check row visibility", ev, tr);
             ev.stopPropagation();
             if (tr) {
               _this.__setRowVisibility(tr);
