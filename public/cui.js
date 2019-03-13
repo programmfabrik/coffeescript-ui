@@ -24176,7 +24176,7 @@ CUI.DataTable = (function(superClass) {
       }
     }
     if (maxis.length === 0) {
-      maxis.push(0);
+      maxis.push(this.__fieldList.length - 1);
     }
     ref2 = this.__fieldList;
     for (idx = j = 0, len2 = ref2.length; j < len2; idx = ++j) {
