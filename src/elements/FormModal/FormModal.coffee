@@ -70,7 +70,7 @@ class CUI.FormModal extends CUI.FormPopover
 
 		@setData(@__orig_set_data)
 
-		@resetTableAndFields()
+		@removeFields()
 
 		CUI.Events.trigger
 			type: "data-changed"
