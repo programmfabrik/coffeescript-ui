@@ -29677,9 +29677,13 @@ CUI.SimpleForm = (function(superClass) {
   };
 
   SimpleForm.prototype.getBlockLevelOffset = function() {
-    var parentBlockLevelOffset, ref;
-    parentBlockLevelOffset = ((ref = this.getForm()) != null ? typeof ref.getBlockLevelOffset === "function" ? ref.getBlockLevelOffset() : void 0 : void 0) || 0;
-    return parentBlockLevelOffset + this._blockLevelOffset;
+    var base, parent;
+    if (this.getForm()) {
+      parent = ((typeof (base = this.getForm()).getBlockLevelOffset === "function" ? base.getBlockLevelOffset() : void 0) || 0) + 1;
+    } else {
+      parent = 0;
+    }
+    return this._blockLevelOffset + parent;
   };
 
   SimpleForm.prototype.setBlockLevelOffset = function(_blockLevelOffset) {
@@ -29863,7 +29867,7 @@ CUI.FormModal = (function(superClass) {
       delete this.__orig_set_data[this._name];
     }
     this.setData(this.__orig_set_data);
-    this.resetTableAndFields();
+    this.removeFields();
     CUI.Events.trigger({
       type: "data-changed",
       node: this.getPopover()
@@ -30175,9 +30179,11 @@ CUI.FormPopover = (function(superClass) {
     if (!pop_opts.pane) {
       pop_opts.pane = {};
     }
-    pop_opts.pane.padded = true;
     CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", {
       opts: pop_opts
+    });
+    CUI.util.mergeMap(pop_opts.pane, {
+      padded: true
     });
     if (CUI.util.isEmpty(pop_opts["class"])) {
       pop_opts["class"] = "";
@@ -30217,7 +30223,7 @@ CUI.FormPopover = (function(superClass) {
       this.initFields();
       this.callOnFields("setData", this.__data);
     }
-    if (!this.table) {
+    if (!this.__rendered) {
       this.renderTable();
       this.__rendered = true;
       this.callOnFields("start");
