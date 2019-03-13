@@ -211,6 +211,9 @@ class CUI.SimpleForm extends CUI.DataField
 			CUI.dom.showElement(@DOM)
 		@
 
+	getLayout: ->
+		@
+
 	renderTable: ->
 
 		@getLayout().empty()
