@@ -232,7 +232,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 					maxis.push(idx)
 
 		if maxis.length == 0
-			maxis.push(0)
+			# push the last as max
+			maxis.push(@__fieldList.length-1)
 
 		for f, idx in @__fieldList
 			if CUI.util.idxInArray(idx, maxis) > -1
