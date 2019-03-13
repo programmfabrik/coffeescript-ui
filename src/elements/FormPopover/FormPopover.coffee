@@ -236,7 +236,7 @@ class CUI.FormPopover extends CUI.Form
 			@initFields()
 			@callOnFields("setData", @__data)
 
-		if not @table
+		if not @__rendered
 			@renderTable()
 			@__rendered = true
 			@callOnFields("start")
