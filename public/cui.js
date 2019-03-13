@@ -29147,6 +29147,7 @@ CUI.SimpleForm = (function(superClass) {
 
   SimpleForm.prototype.renderTable = function() {
     var add_listener, append, field_has_left, field_idx, fields, get_append, get_label, len, render_next_field, table, table_has_left;
+    this.getLayout().empty();
     add_listener = (function(_this) {
       return function(node) {
         return CUI.Events.listen({
@@ -30218,7 +30219,6 @@ CUI.FormPopover = (function(superClass) {
     if (this.__fields_is_func) {
       if (this.__rendered) {
         this.removeFields();
-        this.getLayout().empty();
       }
       this.initFields();
       this.callOnFields("setData", this.__data);
