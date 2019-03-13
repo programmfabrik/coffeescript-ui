@@ -29145,6 +29145,10 @@ CUI.SimpleForm = (function(superClass) {
     return this;
   };
 
+  SimpleForm.prototype.getLayout = function() {
+    return this;
+  };
+
   SimpleForm.prototype.renderTable = function() {
     var add_listener, append, field_has_left, field_idx, fields, get_append, get_label, len, render_next_field, table, table_has_left;
     this.getLayout().empty();
