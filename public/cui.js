@@ -18980,10 +18980,16 @@ CUI.dom = (function() {
   };
 
   dom.getRect = function(docElem) {
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     return docElem.getBoundingClientRect();
   };
 
   dom.getComputedStyle = function(docElem) {
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     return window.getComputedStyle(docElem);
   };
 
@@ -19076,6 +19082,9 @@ CUI.dom = (function() {
         width: window.innerWidth,
         height: window.innerHeight
       };
+    }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
     }
     cs = this.getComputedStyle(docElem);
     rect = this.getRect(docElem);
