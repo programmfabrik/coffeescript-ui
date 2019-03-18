@@ -1002,50 +1002,8 @@ class CUI.Layer extends CUI.DOMElement
 		@__dbg_div3 = null
 
 
-	clearTimeout: ->
-		if @__timeout
-			CUI.clearTimeout(@__timeout)
-		@__timeout = null
-		@
-
-	showTimeout: (ms=@_show_ms, ev) ->
-		# console.error "Layer.showTimeout ", @getUniqueId(), @__element, CUI.dom.isInDOM(@__element), @isDestroyed()
-
-		@clearTimeout()
-		dfr = new CUI.Deferred()
-		@__timeout = CUI.setTimeout
-			ms: ms
-			track: false
-			onReset: =>
-				dfr.reject()
-			onDone: =>
-				dfr.resolve()
-			call: =>
-				if @__element and not CUI.dom.isInDOM(@__element)
-					@destroy()
-					return
-				@show(null, ev)
-		dfr.promise()
-
-	hideTimeout: (ms=@_hide_ms, ev) ->
-		@clearTimeout()
-		dfr = new CUI.Deferred()
-
-		@__timeout = CUI.setTimeout
-			ms: ms
-			track: false
-			onReset: =>
-				dfr.reject()
-			onDone: =>
-				dfr.resolve()
-			call: =>
-				@hide(ev)
-
-		dfr.promise()
-
 	hide: (ev) ->
 		#remove our fixed size
-		@clearTimeout()
 		if @isDestroyed()
 			return
 
@@ -1108,10 +1066,6 @@ class CUI.Layer extends CUI.DOMElement
 
 		CUI.util.assert(not @isDestroyed(), "#{@__cls}.show", "Unable to show, Layer ##{@getUniqueId()} is already destroyed", layer: @)
 
-		if CUI.Tooltip.current and @ not instanceof CUI.Tooltip
-			CUI.Tooltip.current.hide()
-
-		@clearTimeout()
 		if @isShown()
 			@position()
 			return @
@@ -1217,7 +1171,6 @@ class CUI.Layer extends CUI.DOMElement
 
 	destroy: ->
 		# console.error "Layer.destroy",@, @isDestroyed()
-		@clearTimeout()
 		if @__shown
 			@hide()
 

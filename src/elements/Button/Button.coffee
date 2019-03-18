@@ -318,7 +318,7 @@ class CUI.Button extends CUI.DOMElement
 
 					if @__tooltipOpts
 						@__initTooltip()
-						@getTooltip().showTimeout(null, ev)
+						@getTooltip().showTimeout().start()
 
 					if @_menu_on_hover
 						menu = @getMenu()
@@ -366,8 +366,6 @@ class CUI.Button extends CUI.DOMElement
 					return
 
 				@_onMouseleave?(ev)
-
-				@getTooltip()?.hideTimeout(ev)
 
 				if @_menu_on_hover
 					menu_start_hide(ev, 100)

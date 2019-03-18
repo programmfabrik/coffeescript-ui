@@ -13,30 +13,10 @@ class CUI.Tooltip extends CUI.LayerPane
 		@__dummyInst = =>
 
 		if @_on_hover
-			CUI.Events.listen
-				type: "mouseenter"
-				instance: @__dummyInst
-				node: @__element
-				call: (ev) =>
-					if CUI.globalDrag
-						return
+			if @_on_hover == true or @_on_hover(@)
+				CUI.dom.addClass(@__element, "cui-dom-element-has-tooltip-on-hover")
+				@showTimeout()
 
-					if @_on_hover == true or @_on_hover(@)
-						@showTimeout(null, ev)
-					return
-
-			CUI.Events.listen
-				type: "mouseleave"
-				instance: @__dummyInst
-				node: @__element
-				call: (ev) =>
-					if CUI.globalDrag
-						@hide(ev)
-					else
-						@hideTimeout(null, ev)
-					return
-
-			CUI.dom.addClass(@__element, "cui-dom-element-has-tooltip-on-hover")
 			return
 
 		if @_on_click
@@ -116,28 +96,28 @@ class CUI.Tooltip extends CUI.LayerPane
 
 	focusOnShow: (ev) ->
 
-	showTimeout: (ms=@_show_ms, ev) ->
-		# console.error "Tooltip.showTimeout ", @getUniqueId(), !!Tooltip.current
+	showTimeout: ->
+		@__mouseStillEvent?.destroy()
 
-		if CUI.Tooltip.current
-			@show(ev)
-			return CUI.resolvedPromise()
-		else
-			CUI.Tooltip.current = @
-			return super(ms, ev)
+		@__mouseStillEvent = new CUI.Events.MouseIsStill
+			ms: @_show_ms
+			node: @_element
+			call: (ev) =>
+				@show(ev)
+				CUI.Events.listen
+					type: ["mousemove", "mousedown"]
+					node: @_element
+					only_once: true
+					call: (ev) =>
+						CUI.setTimeout
+							ms: @_hide_ms
+							call: =>
+								@hide(ev)
 
-	hideTimeout: (ms=@_show_ms, ev) ->
-		CUI.Tooltip.current = null
-		super(ev)
+		return @__mouseStillEvent
 
-	hide: (ev) ->
-		CUI.Tooltip.current = null
-		super(ev)
 
 	show: (ev) ->
-		if CUI.Tooltip.current and CUI.Tooltip.current != @
-			CUI.Tooltip.current.hide(ev)
-		CUI.Tooltip.current = @
 		if @__static
 			super(ev)
 		else
@@ -210,7 +190,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		CUI.dom.setStyleOne(@DOM, "max-width", @__viewport.width/2)
 
 	destroy: ->
-		# console.error "destroying ", @getUniqueId()
+		@__mouseStillEvent?.destroy()
 		CUI.Events.ignore(instance: @__dummyInst)
 		super()
 		CUI.dom.removeClass(@__element, "cui-dom-element-has-tooltip-on-hover cui-dom-element-has-tooltip-on-click")

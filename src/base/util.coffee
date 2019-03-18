@@ -579,6 +579,7 @@ class CUI.util
 				CUI.util.mergeMap(targetMap[k], v)
 		targetMap
 
+
 CUI.util.moment = moment
 CUI.util.marked = marked
 
