@@ -943,9 +943,13 @@ class CUI.dom
 			return node.parentNode.replaceChild(new_node, node)
 
 	@getRect: (docElem) ->
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
 		docElem.getBoundingClientRect()
 
 	@getComputedStyle: (docElem) ->
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
 		window.getComputedStyle(docElem)
 
 	@setStyle: (docElem, style, append="px") ->
@@ -1010,6 +1014,9 @@ class CUI.dom
 				width: window.innerWidth
 				height: window.innerHeight
 			}
+
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
 
 		cs = @getComputedStyle(docElem)
 		rect = @getRect(docElem)
