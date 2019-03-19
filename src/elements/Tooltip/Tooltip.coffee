@@ -105,7 +105,8 @@ class CUI.Tooltip extends CUI.LayerPane
 			call: (ev) =>
 				@show(ev)
 				CUI.Events.listen
-					type: ["mousemove", "mousedown"]
+					type: ["click", "dblclick", "mouseout"]
+					capture: true
 					node: @_element
 					only_once: true
 					call: (ev) =>
