@@ -2644,9 +2644,7 @@ a[role="button"].cui-button-appearance-link {
 	background: $layer-background;
 	outline: none;
 	border-radius: 5px;
-	// to make sure that the border-radius will cut off all child backgrounds
-	// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
-	opacity: 0.9999;
+	overflow: hidden;
 	box-shadow:
 		0 0 0 1px hsla(205,20%,30%,.15),
 		0 8px 10px 1px hsla(0,0%,0%,.14),
