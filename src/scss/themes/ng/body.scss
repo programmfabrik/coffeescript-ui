@@ -1631,7 +1631,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-button-left {
-		padding: 3px 2px 0 0;
+		padding: 3px 3px 0 0;
+		min-width: 12px;
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -2520,15 +2521,31 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-hint,
-.cui-form-hint,
-.cui-form-hint-label {
+.cui-form-hint {
 	font-size: 12px;
 	color: $muted-color;
+	
+	.cui-label {
+		line-height: 1.38;
+	}
 }
 
-.cui-form-hint,
-.cui-form-hint-label {
+.cui-form-hint {
+	max-width: $input-width;
 	margin-top: 5px;
+	
+	.cui-checkbox + &,
+	.cui-data-field.cui-maximize-horizontal + & {
+		max-width: 100%;
+	}
+
+	.cui-data-form + & {
+		margin-top: 10px;
+	}
+
+	.cui-checkbox + & {
+		margin-top: 0;
+	}
 
 	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
 		padding-left: 7px;
@@ -2547,14 +2564,6 @@ a[role="button"].cui-button-appearance-link {
 		.cui-label-content {
 			flex-basis: 0%;
 		}
-	}
-}
-
-.cui-form-hint {
-	max-width: $input-width;
-
-	.cui-data-field.maximize-horizontal + & {
-		max-width: 100%;
 	}
 }
 
@@ -4690,6 +4699,10 @@ label[data-label-clickable],
 		.cui-button-checkbox {
 			padding: 0;
 		}
+			
+		> .cui-form-hint {
+			margin-top: 2px;
+		}
 	}
 }
 
@@ -5708,6 +5721,11 @@ label[data-label-clickable],
 				min-width: 500px;
 				flex: 1 0 0%;
 				box-shadow: 0 1px 2px hsla(205,10%,50%, 0.12);
+				
+				.cui-data-form--multiple-fields .cui-block-level-3 {
+					border-width: 0;
+					padding-top: 0;
+				}
 
 				.cui-block-level-3 {
 					border-top: 1px solid $border;
@@ -5810,7 +5828,10 @@ label[data-label-clickable],
 	}
 
 	.cui-block {
-		padding-top: 0;
+		// padding-top: 0; // conflict: block after form-table
+		&:first-child {
+			padding-top: 0;
+		}
 		/* margin-top: $padding; */
 		/* margin-bottom: $padding; */
 	}
