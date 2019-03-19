@@ -44631,7 +44631,8 @@ CUI.Tooltip = (function(superClass) {
         return function(ev) {
           _this.show(ev);
           return CUI.Events.listen({
-            type: ["mousemove", "mousedown"],
+            type: ["click", "dblclick", "mouseout"],
+            capture: true,
             node: _this._element,
             only_once: true,
             call: function(ev) {
