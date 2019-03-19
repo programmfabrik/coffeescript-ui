@@ -2880,6 +2880,7 @@ $layer-sizes: (
 	right: 0;
 	bottom: 0;
 	display: flex;
+	z-index: -1;
 
 	&--visible {
 		background: radial-gradient(hsla(205,30%,20%,.4), hsla(205,30%,20%,.6));

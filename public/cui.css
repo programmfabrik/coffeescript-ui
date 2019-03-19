@@ -2263,7 +2263,8 @@ a[role="button"].cui-button-appearance-link {
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex; }
+  display: flex;
+  z-index: -1; }
   .cui-layer-backdrop--visible {
     background: radial-gradient(rgba(36, 54, 66, 0.4), rgba(36, 54, 66, 0.6)); }
   .cui-layer-backdrop > div {
