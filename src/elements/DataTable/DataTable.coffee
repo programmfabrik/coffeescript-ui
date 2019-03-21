@@ -38,6 +38,10 @@ class CUI.DataTable extends CUI.DataFieldInput
 			# used in DataTableNode
 			onRowRemove:
 				check: Function
+			onRowSelect:
+				check: Function
+			onRowDeselect:
+				check: Function
 			onNodeAdd:
 				check: Function
 			footer_right:
@@ -268,9 +272,11 @@ class CUI.DataTable extends CUI.DataFieldInput
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
 			padded: @_padded
-			onSelect: =>
+			onSelect: (ev, info) =>
+				@_onRowSelect?(ev, info)
 				@updateButtons()
 			onDeselect: =>
+				@_onRowDeselect?()
 				@updateButtons()
 			onRowMove: (display_from_i, display_to_i, after) =>
 				fr = @listView.fixedRowsCount

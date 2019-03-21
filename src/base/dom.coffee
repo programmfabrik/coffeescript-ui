@@ -1323,6 +1323,10 @@ class CUI.dom
 	@hideElement: (docElem) ->
 		if not docElem
 			return
+
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
+
 		if docElem.style.display != "none"
 			docElem.__saved_display = docElem.style.display
 		docElem.style.display = "none"
@@ -1352,6 +1356,10 @@ class CUI.dom
 	@showElement: (docElem) ->
 		if not docElem
 			return
+
+		if docElem.hasOwnProperty('DOM')
+			docElem = docElem.DOM
+
 		docElem.style.display = docElem.__saved_display or ""
 		delete(docElem.__saved_display)
 		docElem
