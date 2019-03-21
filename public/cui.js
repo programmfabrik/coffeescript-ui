@@ -15366,6 +15366,8 @@ CUI.Template.loadTemplateText(__webpack_require__(163));
 CUI.Layer = (function(superClass) {
   extend(Layer, superClass);
 
+  Layer.FILL_SPACE_CHECK_ARRAY = ["auto", "both", "horizontal", "vertical"];
+
   function Layer(opts) {
     var bc, body_clone, cls;
     Layer.__super__.constructor.call(this, opts);
@@ -15585,7 +15587,7 @@ CUI.Layer = (function(superClass) {
       fill_space: {
         "default": "auto",
         mandatory: true,
-        check: ["auto", "both", "horizontal", "vertical"]
+        check: CUI.Layer.FILL_SPACE_CHECK_ARRAY
       },
       check_for_element: {
         "default": false,
@@ -15611,6 +15613,12 @@ CUI.Layer = (function(superClass) {
         })(this)
       }
     });
+    return this;
+  };
+
+  Layer.prototype.readOpts = function() {
+    Layer.__super__.readOpts.call(this);
+    this.__fill_space = this._fill_space;
     return this;
   };
 
@@ -15879,7 +15887,7 @@ CUI.Layer = (function(superClass) {
       layer_pos = vp.layer_pos = {};
       pointer_pos = vp.pointer_pos = {};
       vp.cuts = 0;
-      switch (this._fill_space) {
+      switch (this.__fill_space) {
         case "both":
           layer_pos.width = vp.width;
           layer_pos.height = vp.height;
@@ -16170,7 +16178,7 @@ CUI.Layer = (function(superClass) {
       minWidth = void 0;
     }
     CUI.dom.setAttribute(this.__layer_root.DOM, "cui-placement", placement);
-    CUI.dom.setAttribute(this.__layer_root.DOM, "cui-fill-space", this._fill_space);
+    CUI.dom.setAttribute(this.__layer_root.DOM, "cui-fill-space", this.__fill_space);
     set_css = {
       top: vp.layer_pos.top,
       left: vp.layer_pos.left,
@@ -16460,6 +16468,15 @@ CUI.Layer = (function(superClass) {
       ref2.destroy();
     }
     return this.__backdrop = null;
+  };
+
+  Layer.prototype.setFillSpace = function(fillSpace) {
+    CUI.util.assert(indexOf.call(Layer.FILL_SPACE_CHECK_ARRAY, fillSpace) >= 0, "Layer.setFillSpace", "Parameter fillSpace should be: " + (Layer.FILL_SPACE_CHECK_ARRAY.join('')), {
+      fillSpace: fillSpace
+    });
+    this.__fill_space = fillSpace;
+    this.position();
+    return this;
   };
 
   return Layer;
@@ -19419,6 +19436,9 @@ CUI.dom = (function() {
     if (!docElem) {
       return;
     }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
+    }
     if (docElem.style.display !== "none") {
       docElem.__saved_display = docElem.style.display;
     }
@@ -19462,6 +19482,9 @@ CUI.dom = (function() {
   dom.showElement = function(docElem) {
     if (!docElem) {
       return;
+    }
+    if (docElem.hasOwnProperty('DOM')) {
+      docElem = docElem.DOM;
     }
     docElem.style.display = docElem.__saved_display || "";
     delete docElem.__saved_display;
@@ -23927,6 +23950,12 @@ CUI.DataTable = (function(superClass) {
       onRowRemove: {
         check: Function
       },
+      onRowSelect: {
+        check: Function
+      },
+      onRowDeselect: {
+        check: Function
+      },
       onNodeAdd: {
         check: Function
       },
@@ -24245,12 +24274,18 @@ CUI.DataTable = (function(superClass) {
       selectableRows: this._new_rows !== "none",
       padded: this._padded,
       onSelect: (function(_this) {
-        return function() {
+        return function(ev, info) {
+          if (typeof _this._onRowSelect === "function") {
+            _this._onRowSelect(ev, info);
+          }
           return _this.updateButtons();
         };
       })(this),
       onDeselect: (function(_this) {
         return function() {
+          if (typeof _this._onRowDeselect === "function") {
+            _this._onRowDeselect();
+          }
           return _this.updateButtons();
         };
       })(this),
