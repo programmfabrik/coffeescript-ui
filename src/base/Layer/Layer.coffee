@@ -14,6 +14,8 @@ CUI.Template.loadTemplateText(require('./Layer.html'));
 
 class CUI.Layer extends CUI.DOMElement
 
+	@FILL_SPACE_CHECK_ARRAY = ["auto", "both", "horizontal", "vertical"]
+
 	constructor: (opts) ->
 		super(opts)
 
@@ -283,7 +285,7 @@ class CUI.Layer extends CUI.DOMElement
 			fill_space:
 				default: "auto"
 				mandatory: true
-				check: ["auto", "both", "horizontal", "vertical"]
+				check: CUI.Layer.FILL_SPACE_CHECK_ARRAY
 
 			# if set, the Layer, when shown checks if the "element"
 			# is still in the DOM tree
@@ -307,6 +309,11 @@ class CUI.Layer extends CUI.DOMElement
 			#
 		@
 
+	readOpts: ->
+		super()
+
+		@__fill_space = @_fill_space
+		return @
 
 	setVisible: (on_off=true) ->
 		if on_off
@@ -577,7 +584,7 @@ class CUI.Layer extends CUI.DOMElement
 			# set width on height on the layer
 			# depending on the available viewport and the
 			# fill space policy
-			switch @_fill_space
+			switch @__fill_space
 				when "both"
 					layer_pos.width = vp.width
 					layer_pos.height = vp.height
@@ -896,7 +903,7 @@ class CUI.Layer extends CUI.DOMElement
 			minWidth = undefined
 
 		CUI.dom.setAttribute(@__layer_root.DOM, "cui-placement", placement)
-		CUI.dom.setAttribute(@__layer_root.DOM, "cui-fill-space", @_fill_space)
+		CUI.dom.setAttribute(@__layer_root.DOM, "cui-fill-space", @__fill_space)
 
 		set_css =
 			top: vp.layer_pos.top
@@ -1188,6 +1195,11 @@ class CUI.Layer extends CUI.DOMElement
 		@__backdrop?.destroy()
 		@__backdrop = null
 
+	setFillSpace: (fillSpace) ->
+		CUI.util.assert(fillSpace in Layer.FILL_SPACE_CHECK_ARRAY, "Layer.setFillSpace", "Parameter fillSpace should be: #{Layer.FILL_SPACE_CHECK_ARRAY.join('')}", fillSpace: fillSpace)
+		@__fill_space = fillSpace
+		@position()
+		return @
 
 CUI.ready ->
 
