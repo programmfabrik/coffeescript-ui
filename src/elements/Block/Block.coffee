@@ -45,6 +45,7 @@ class CUI.Block extends CUI.DOMElement
 
 		@addClass("appearance-"+@_appearance)
 		@addClass("cui-block-level-"+@_level)
+		@maximizeAddClasses()
 
 		if @_padded
 			@addClass("cui-block--padded")
@@ -75,12 +76,23 @@ class CUI.Block extends CUI.DOMElement
 			padded:
 				check: Boolean
 				default: true
+			maximize:
+				check: Boolean
+			maximize_horizontal:
+				check: Boolean
+				default: false
+			maximize_vertical:
+				check: Boolean
+				default: false
 
 	readOpts: ->
 		super()
 		CUI.util.assert(not ((@_text or @_icon) and @_header), "new CUI.Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
-
+		CUI.Layout::maximizeReadOpts.call(@)
 		@
+
+	maximizeAddClasses: ->
+		CUI.Layout::maximizeAddClasses.call(@)
 
 	getTemplateName: ->
 		"block"
