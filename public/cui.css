@@ -3118,8 +3118,6 @@ a[role="button"].cui-button-appearance-link {
     flex-grow: 1; }
   .cui-table--bordered {
     border: 1px solid #e3e6e8; }
-  .cui-table--padded {
-    margin: 4px 1px; }
   .cui-table--has-datafields .cui-td--text-content {
     padding-top: 9px;
     padding-bottom: 9px; }
@@ -3335,10 +3333,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-form-table {
   margin: 0;
   display: block; }
-  .cui-form-table--padded {
-    margin: 10px; }
-    .cui-form-table--padded + .cui-form-block {
-      padding-top: 0; }
 
 .cui-form-table-has-not-left-column > .cui-tr > .cui-td.cui-form-key {
   display: none; }

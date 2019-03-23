@@ -20767,6 +20767,7 @@ CUI.Block = (function(superClass) {
     }
     this.addClass("appearance-" + this._appearance);
     this.addClass("cui-block-level-" + this._level);
+    this.maximizeAddClasses();
     if (this._padded) {
       this.addClass("cui-block--padded");
     }
@@ -20807,6 +20808,17 @@ CUI.Block = (function(superClass) {
       padded: {
         check: Boolean,
         "default": true
+      },
+      maximize: {
+        check: Boolean
+      },
+      maximize_horizontal: {
+        check: Boolean,
+        "default": false
+      },
+      maximize_vertical: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -20816,7 +20828,12 @@ CUI.Block = (function(superClass) {
     CUI.util.assert(!((this._text || this._icon) && this._header), "new CUI.Block", "opts.text and opts.header are mutually exclusive.", {
       opts: this.opts
     });
+    CUI.Layout.prototype.maximizeReadOpts.call(this);
     return this;
+  };
+
+  Block.prototype.maximizeAddClasses = function() {
+    return CUI.Layout.prototype.maximizeAddClasses.call(this);
   };
 
   Block.prototype.getTemplateName = function() {
@@ -29015,10 +29032,6 @@ CUI.SimpleForm = (function(superClass) {
       blockLevelOffset: {
         check: "Integer",
         "default": 0
-      },
-      pad_form_table: {
-        "default": false,
-        check: Boolean
       }
     });
   };
@@ -29312,7 +29325,7 @@ CUI.SimpleForm = (function(superClass) {
     })(this);
     render_next_field = (function(_this) {
       return function() {
-        var add_hint_div, blk, block_classes, cb, classes, ff, field, grid, has_left, hint_div, i, idx, left_side, level, name, ref, ref1, ref2, row, td, tr;
+        var add_hint_div, blk, cb, classes, ff, field, grid, has_left, hint_div, i, idx, left_side, level, name, ref, ref1, ref2, row, td, tr;
         field_idx = field_idx + 1;
         if (field_idx === len) {
           return;
@@ -29383,19 +29396,12 @@ CUI.SimpleForm = (function(superClass) {
               left_side.classList.add("cui-block-title");
             }
           }
-          block_classes = ['cui-form-block'];
-          if (field._maximize) {
-            block_classes.push("cui-maximize");
-          }
-          if ((field._maximize && field._maximize_horizontal !== false) || field._maximize_horizontal === true) {
-            block_classes.push("cui-maximize-horizontal");
-          }
-          if ((field._maximize && field._maximize_vertical !== false) || field._maximize_vertical === true) {
-            block_classes.push("cui-maximize-vertical");
-          }
           blk = new CUI.Block({
             padded: false,
-            "class": block_classes.join(" "),
+            maximize: _this.__maximize,
+            maximize_horizontal: _this.__maximize_horizontal,
+            maximize_vertical: _this.__maximize_vertical,
+            "class": "cui-form-block",
             level: level,
             header: left_side,
             content: [get_append(field), hint_div]
@@ -29434,9 +29440,6 @@ CUI.SimpleForm = (function(superClass) {
               "class": "cui-form-table"
             });
             table_has_left = true;
-            if (_this._pad_form_table) {
-              CUI.dom.addClass(table, "cui-form-table--padded");
-            }
           }
           if (_this.__horizontal) {
             CUI.dom.addClass(table, "cui-form--horizontal");
