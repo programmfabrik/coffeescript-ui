@@ -4261,10 +4261,6 @@ $layer-sizes: (
 		border: 1px solid $table-border;
 	}
 
-	&--padded {
-		margin: 4px 1px;
-	}
-
 	&--has-datafields {
 		.cui-td--text-content {
 			padding-top: 9px;
@@ -4596,14 +4592,6 @@ $layer-sizes: (
 .cui-form-table {
 	margin: 0;
 	display: block;
-	
-	&--padded {
-		margin: $padding;
-		
-		+ .cui-form-block {
-			padding-top: 0;
-		}
-	}
 }
 
 .cui-form-table-has-not-left-column {
