@@ -4257,6 +4257,10 @@ $layer-sizes: (
 		border: 1px solid $table-border;
 	}
 
+	&--padded {
+		margin: 4px 1px;
+	}
+
 	&--has-datafields {
 		.cui-td--text-content {
 			padding-top: 9px;
