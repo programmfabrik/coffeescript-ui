@@ -102,11 +102,16 @@ class CUI.Label extends CUI.DOMElement
 			# push in global markup
 			@append(@__overflow_button)
 
+			# throttle the check to partially mitigate the performance bottleneck
+			# when resizing via resize handle  when a lot of "manage overflow" 
+			# labels are in the DOM
+			checkOverflow = => @checkOverflowSize()
+
 			CUI.Events.listen
 				node: @DOM
 				type: "viewport-resize"
 				call: =>
-					@checkOverflowSize()
+					CUI.scheduleCallback(ms: 500, call: checkOverflow)
 		return
 
 	initOpts: ->
