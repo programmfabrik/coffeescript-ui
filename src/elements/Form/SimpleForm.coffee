@@ -33,6 +33,9 @@ class CUI.SimpleForm extends CUI.DataField
 			blockLevelOffset:
 				check: "Integer"
 				default: 0
+			pad_form_table:
+				default: false
+				check: Boolean
 
 
 	readOpts: ->
@@ -350,11 +353,24 @@ class CUI.SimpleForm extends CUI.DataField
 					if left_side?.nodeName == "LABEL"
 						left_side.classList.add("cui-block-title")
 
+				block_classes = ['cui-form-block']
+
+				if field._maximize
+					block_classes.push("cui-maximize")
+
+				if (field._maximize and field._maximize_horizontal != false) or
+					field._maximize_horizontal == true
+						block_classes.push("cui-maximize-horizontal")
+
+				if (field._maximize and field._maximize_vertical != false) or
+					field._maximize_vertical == true
+						block_classes.push("cui-maximize-vertical")
+
 				blk = new CUI.Block
 					padded: false
 					# attr:
 					# 	"cui-form-depth": form_depth
-					class: "cui-form-block"
+					class: block_classes.join(" ")
 					level: level
 					header: left_side
 					content: [
@@ -397,6 +413,9 @@ class CUI.SimpleForm extends CUI.DataField
 				else
 					table = CUI.dom.element("DIV", class: "cui-form-table")
 					table_has_left = true
+
+					if @_pad_form_table
+						CUI.dom.addClass(table, "cui-form-table--padded")
 
 				if @__horizontal
 					CUI.dom.addClass(table, "cui-form--horizontal")

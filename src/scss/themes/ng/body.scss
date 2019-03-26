@@ -811,6 +811,7 @@ li > div {
 
 	&.cui-maximize-vertical {
 		display: flex;
+		flex: 1;
 	}
 
 	&.cui-maximize {
@@ -4572,9 +4573,29 @@ $layer-sizes: (
 	}
 }
 
+.cui-form-block {
+	&.cui-maximize-vertical,
+	&.cui-maximize {
+		&,
+		> .cui-block-content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
+
 .cui-form-table {
 	margin: 0;
 	display: block;
+	
+	&--padded {
+		margin: $padding;
+		
+		+ .cui-form-block {
+			padding-top: 0;
+		}
+	}
 }
 
 .cui-form-table-has-not-left-column {
