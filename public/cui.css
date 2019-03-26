@@ -1005,7 +1005,8 @@ li > div {
   .cui-data-table.cui-maximize-horizontal {
     display: block; }
   .cui-data-table.cui-maximize-vertical {
-    display: flex; }
+    display: flex;
+    flex: 1; }
   .cui-data-table.cui-maximize {
     flex-basis: 0%; }
     .cui-data-table.cui-maximize > .cui-list-view {
@@ -3115,6 +3116,8 @@ a[role="button"].cui-button-appearance-link {
     flex-grow: 1; }
   .cui-table--bordered {
     border: 1px solid #e3e6e8; }
+  .cui-table--padded {
+    margin: 4px 1px; }
   .cui-table--has-datafields .cui-td--text-content {
     padding-top: 9px;
     padding-bottom: 9px; }
@@ -3320,9 +3323,20 @@ a[role="button"].cui-button-appearance-link {
   .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-field-type--input {
     margin-top: 2px; }
 
+.cui-form-block.cui-maximize-vertical,
+.cui-form-block.cui-maximize-vertical > .cui-block-content, .cui-form-block.cui-maximize,
+.cui-form-block.cui-maximize > .cui-block-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column; }
+
 .cui-form-table {
   margin: 0;
   display: block; }
+  .cui-form-table--padded {
+    margin: 10px; }
+    .cui-form-table--padded + .cui-form-block {
+      padding-top: 0; }
 
 .cui-form-table-has-not-left-column > .cui-tr > .cui-td.cui-form-key {
   display: none; }
