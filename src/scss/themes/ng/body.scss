@@ -1343,6 +1343,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-data-field {
 	max-width: $input-width;
 	margin: 0;
+	
+	.cui-form-value & {
+		max-width: none;
+	}
 
 	&.cui-form {
 		max-width: 100%;

@@ -1358,6 +1358,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-data-field {
   max-width: 275px;
   margin: 0; }
+  .cui-form-value .cui-data-field {
+    max-width: none; }
   .cui-data-field.cui-form {
     max-width: 100%;
     margin: 0; }
