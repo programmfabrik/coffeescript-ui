@@ -1742,6 +1742,8 @@ a[role="button"].cui-button-appearance-link {
     display: flex;
     font-weight: bold;
     font-size: 14px; }
+    .cui-label-appearance-title.cui-label-size-big {
+      font-size: 16px; }
   .cui-label-appearance-muted {
     color: #949a9e; }
     .cui-selected .cui-label-appearance-muted {
