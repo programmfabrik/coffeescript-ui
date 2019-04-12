@@ -403,6 +403,13 @@ class CUI.Layer extends CUI.DOMElement
 
 			dim_pointer[placement].direction = pointer_direction
 
+		# store scroll positions
+		for el in CUI.dom.matchSelector(@__layer.DOM, "*")
+			if el.scrollTop
+				el._storedScrollTop = el.scrollTop
+			if el.scrollLeft
+				el._storedScrollLeft = el.scrollLeft
+
 		# reset previously set layer dimensions
 		CUI.dom.setStyle @__layer.DOM,
 			position: ""
@@ -960,10 +967,19 @@ class CUI.Layer extends CUI.DOMElement
 			CUI.dom.remove(@__layer_root)
 
 
+		# restore scroll positions
+		for el in CUI.dom.matchSelector(@__layer.DOM, "*")
+			if el._storedScrollTop
+				el.scrollTop = el._storedScrollTop
+				delete(el._storedScrollTop)
+
+			if el._storedScrollLeft
+				el.scrollLeft = el._storedScrollLeft
+				delete(el._storedScrollLeft)
+
 		CUI.dom.setStyle(@__layer.DOM, set_css)
 
 		# console.debug "pos:", dim_element, vp.layer_pos.top, "body scroll:", body_scroll_top
-
 		if @__pointer
 			# set pointer
 			if is_fixed
@@ -991,6 +1007,8 @@ class CUI.Layer extends CUI.DOMElement
 				height: dim_window.height
 				top: -vp.layer_pos.top
 				left: -vp.layer_pos.left
+
+
 
 		if CUI.browser.ie
 			CUI.dom.insertAfter(sibl, @__layer_root.DOM)
