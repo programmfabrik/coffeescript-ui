@@ -16235,18 +16235,6 @@ CUI.Layer = (function(superClass) {
       sibl = this.__layer_root.DOM.previousElementSibling;
       CUI.dom.remove(this.__layer_root);
     }
-    ref8 = CUI.dom.matchSelector(this.__layer.DOM, "*");
-    for (o = 0, len6 = ref8.length; o < len6; o++) {
-      el = ref8[o];
-      if (el._storedScrollTop) {
-        el.scrollTop = el._storedScrollTop;
-        delete el._storedScrollTop;
-      }
-      if (el._storedScrollLeft) {
-        el.scrollLeft = el._storedScrollLeft;
-        delete el._storedScrollLeft;
-      }
-    }
     CUI.dom.setStyle(this.__layer.DOM, set_css);
     if (this.__pointer) {
       if (is_fixed) {
@@ -16280,6 +16268,18 @@ CUI.Layer = (function(superClass) {
     }
     if (CUI.browser.ie) {
       CUI.dom.insertAfter(sibl, this.__layer_root.DOM);
+    }
+    ref8 = CUI.dom.matchSelector(this.__layer.DOM, "*");
+    for (o = 0, len6 = ref8.length; o < len6; o++) {
+      el = ref8[o];
+      if (el._storedScrollTop) {
+        el.scrollTop = el._storedScrollTop;
+        delete el._storedScrollTop;
+      }
+      if (el._storedScrollLeft) {
+        el.scrollLeft = el._storedScrollLeft;
+        delete el._storedScrollLeft;
+      }
     }
     return this;
   };
