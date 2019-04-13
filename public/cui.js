@@ -15664,7 +15664,7 @@ CUI.Layer = (function(superClass) {
   };
 
   Layer.prototype.position = function(ev) {
-    var allowed_placements, available_placements, body_scroll_left, body_scroll_top, dbg_pl, dim_body, dim_element, dim_layer, dim_pointer, dim_window, direction, get_pointer_class, get_pointer_direction, i, is_fixed, j, k, l, layer_pos, layer_pos_bottom, layer_pos_right, len, len1, len2, len3, len4, listener, m, marginBottom, marginLeft, marginRight, marginTop, minWidth, overlap_bottom, overlap_height, overlap_right, overlap_width, placement, placement_parts, pointer_direction, pointer_pos, pointer_pos_bottom, pointer_pos_right, pushNeeded, ref, ref1, ref2, ref3, ref4, ref5, ref6, set_css, set_root_css, show_dbg_div, sibl, spaceAvailable, vp, vp_pl, wanted_placement, wanted_rank;
+    var allowed_placements, available_placements, body_scroll_left, body_scroll_top, dbg_pl, dim_body, dim_element, dim_layer, dim_pointer, dim_window, direction, el, get_pointer_class, get_pointer_direction, i, is_fixed, j, k, l, layer_pos, layer_pos_bottom, layer_pos_right, len, len1, len2, len3, len4, len5, len6, listener, m, marginBottom, marginLeft, marginRight, marginTop, minWidth, n, o, overlap_bottom, overlap_height, overlap_right, overlap_width, placement, placement_parts, pointer_direction, pointer_pos, pointer_pos_bottom, pointer_pos_right, pushNeeded, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, set_css, set_root_css, show_dbg_div, sibl, spaceAvailable, vp, vp_pl, wanted_placement, wanted_rank;
     if (!this.isShown()) {
       return this;
     }
@@ -15720,6 +15720,16 @@ CUI.Layer = (function(superClass) {
       }
       dim_pointer[placement].direction = pointer_direction;
     }
+    ref3 = CUI.dom.matchSelector(this.__layer.DOM, "*");
+    for (k = 0, len2 = ref3.length; k < len2; k++) {
+      el = ref3[k];
+      if (el.scrollTop) {
+        el._storedScrollTop = el.scrollTop;
+      }
+      if (el.scrollLeft) {
+        el._storedScrollLeft = el.scrollLeft;
+      }
+    }
     CUI.dom.setStyle(this.__layer.DOM, {
       position: "",
       top: "",
@@ -15758,9 +15768,9 @@ CUI.Layer = (function(superClass) {
       };
     }
     vp_pl = {};
-    ref3 = this.__allPlacements;
-    for (k = 0, len2 = ref3.length; k < len2; k++) {
-      placement = ref3[k];
+    ref4 = this.__allPlacements;
+    for (l = 0, len3 = ref4.length; l < len3; l++) {
+      placement = ref4[l];
       if (placement !== "n" && placement !== "s" && placement !== "e" && placement !== "w" && placement !== "c") {
         continue;
       }
@@ -15818,9 +15828,9 @@ CUI.Layer = (function(superClass) {
       vp.pointer_align_horizontal = vp.align_horizontal;
       vp.overlap_align = null;
     }
-    ref4 = this.__allPlacements;
-    for (l = 0, len3 = ref4.length; l < len3; l++) {
-      placement = ref4[l];
+    ref5 = this.__allPlacements;
+    for (m = 0, len4 = ref5.length; m < len4; m++) {
+      placement = ref5[m];
       if (placement === "n" || placement === "s" || placement === "e" || placement === "w" || placement === "c") {
         continue;
       }
@@ -15856,9 +15866,9 @@ CUI.Layer = (function(superClass) {
           vp.overlap_align = "left";
       }
     }
-    ref5 = this.__allPlacements;
-    for (m = 0, len4 = ref5.length; m < len4; m++) {
-      placement = ref5[m];
+    ref6 = this.__allPlacements;
+    for (n = 0, len5 = ref6.length; n < len5; n++) {
+      placement = ref6[n];
       if (indexOf.call(allowed_placements, placement) < 0) {
         delete vp_pl[placement];
         continue;
@@ -16194,7 +16204,7 @@ CUI.Layer = (function(superClass) {
     if (placement === "c") {
       is_fixed = true;
     } else {
-      is_fixed = ((ref6 = this.__layer_root.DOM.previousElementSibling) != null ? ref6.hasAttribute("cui-layer-fixed") : void 0) || false;
+      is_fixed = ((ref7 = this.__layer_root.DOM.previousElementSibling) != null ? ref7.hasAttribute("cui-layer-fixed") : void 0) || false;
     }
     if (is_fixed) {
       this.__layer_root.DOM.setAttribute("cui-layer-fixed", "");
@@ -16224,6 +16234,18 @@ CUI.Layer = (function(superClass) {
       set_css.height = Math.ceil(vp.layer_pos.height);
       sibl = this.__layer_root.DOM.previousElementSibling;
       CUI.dom.remove(this.__layer_root);
+    }
+    ref8 = CUI.dom.matchSelector(this.__layer.DOM, "*");
+    for (o = 0, len6 = ref8.length; o < len6; o++) {
+      el = ref8[o];
+      if (el._storedScrollTop) {
+        el.scrollTop = el._storedScrollTop;
+        delete el._storedScrollTop;
+      }
+      if (el._storedScrollLeft) {
+        el.scrollLeft = el._storedScrollLeft;
+        delete el._storedScrollLeft;
+      }
     }
     CUI.dom.setStyle(this.__layer.DOM, set_css);
     if (this.__pointer) {
