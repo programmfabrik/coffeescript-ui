@@ -967,16 +967,6 @@ class CUI.Layer extends CUI.DOMElement
 			CUI.dom.remove(@__layer_root)
 
 
-		# restore scroll positions
-		for el in CUI.dom.matchSelector(@__layer.DOM, "*")
-			if el._storedScrollTop
-				el.scrollTop = el._storedScrollTop
-				delete(el._storedScrollTop)
-
-			if el._storedScrollLeft
-				el.scrollLeft = el._storedScrollLeft
-				delete(el._storedScrollLeft)
-
 		CUI.dom.setStyle(@__layer.DOM, set_css)
 
 		# console.debug "pos:", dim_element, vp.layer_pos.top, "body scroll:", body_scroll_top
@@ -1009,9 +999,18 @@ class CUI.Layer extends CUI.DOMElement
 				left: -vp.layer_pos.left
 
 
-
 		if CUI.browser.ie
 			CUI.dom.insertAfter(sibl, @__layer_root.DOM)
+
+		# restore scroll positions
+		for el in CUI.dom.matchSelector(@__layer.DOM, "*")
+			if el._storedScrollTop
+				el.scrollTop = el._storedScrollTop
+				delete(el._storedScrollTop)
+
+			if el._storedScrollLeft
+				el.scrollLeft = el._storedScrollLeft
+				delete(el._storedScrollLeft)
 
 		# We could re-read the layer width & height here to actually
 		# set it in Style. By doing that we could have support for transitions
