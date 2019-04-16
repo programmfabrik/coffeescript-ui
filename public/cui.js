@@ -35774,15 +35774,16 @@ CUI.ListViewTree = (function(superClass) {
   };
 
   ListViewTree.prototype.moveRow = function(from_i, to_i, after) {
-    var from_node, new_father, promise, ref, to_node;
+    var deferred, from_node, moveNodePromise, new_father, ref, to_node;
     ref = this.getNodesForMove(from_i, to_i, after), from_node = ref[0], to_node = ref[1], new_father = ref[2];
-    promise = from_node.moveNodeBefore(to_node, new_father, after);
-    CUI.util.assert(CUI.util.isPromise(promise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", {
-      promise: promise
+    moveNodePromise = from_node.moveNodeBefore(to_node, new_father, after);
+    CUI.util.assert(CUI.util.isPromise(moveNodePromise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", {
+      promise: moveNodePromise
     });
-    promise.done((function(_this) {
+    deferred = new CUI.Deferred();
+    moveNodePromise.done((function(_this) {
       return function() {
-        var display_from_i, display_to_i;
+        var display_from_i, display_to_i, reloadPromises;
         display_from_i = _this.getDisplayRowIdx(from_i);
         display_to_i = _this.getDisplayRowIdx(to_i);
         ListViewTree.__super__.moveRow.call(_this, from_i, to_i, after, false);
@@ -35802,26 +35803,28 @@ CUI.ListViewTree = (function(superClass) {
             from_node.setFather(to_node.father);
           }
         }
-        from_node.reload();
-        if (new_father != null) {
-          new_father.reload();
+        reloadPromises = [from_node.reload()];
+        if (new_father) {
+          reloadPromises.push(new_father.reload());
         }
-        from_node.moveNodeAfter(to_node, new_father, after);
-        if (typeof _this._onRowMove === "function") {
-          _this._onRowMove(display_from_i, display_to_i, after);
-        }
-        return CUI.Events.trigger({
-          node: _this.grid,
-          type: "row_moved",
-          info: {
-            from_i: from_i,
-            to_i: to_i,
-            after: after
+        return CUI.whenAll(reloadPromises).done(function() {
+          if (typeof _this._onRowMove === "function") {
+            _this._onRowMove(display_from_i, display_to_i, after);
           }
-        });
+          CUI.Events.trigger({
+            node: _this.grid,
+            type: "row_moved",
+            info: {
+              from_i: from_i,
+              to_i: to_i,
+              after: after
+            }
+          });
+          return deferred.resolve();
+        }).fail(deferred.reject);
       };
-    })(this));
-    return promise;
+    })(this)).fail(deferred.reject);
+    return deferred.promise();
   };
 
   ListViewTree.prototype.getRootChildren = function() {
