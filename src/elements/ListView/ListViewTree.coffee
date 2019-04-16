@@ -215,10 +215,11 @@ class CUI.ListViewTree extends CUI.ListView
 		# console.error "moveRow", "from_i:", from_i, "to_i:", to_i, "after:", after, "display_from_i:", @getDisplayRowIdx(from_i), "display_to_i:", @getDisplayRowIdx(to_i)
 		[ from_node, to_node, new_father ] = @getNodesForMove(from_i, to_i, after)
 
-		promise = from_node.moveNodeBefore(to_node, new_father, after)
+		moveNodePromise = from_node.moveNodeBefore(to_node, new_father, after)
+		CUI.util.assert(CUI.util.isPromise(moveNodePromise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: moveNodePromise)
 
-		CUI.util.assert(CUI.util.isPromise(promise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: promise)
-		promise.done =>
+		deferred = new CUI.Deferred()
+		moveNodePromise.done( =>
 			display_from_i = @getDisplayRowIdx(from_i)
 			display_to_i = @getDisplayRowIdx(to_i)
 
@@ -241,21 +242,25 @@ class CUI.ListViewTree extends CUI.ListView
 
 					from_node.setFather(to_node.father)
 
-			from_node.reload()
-			new_father?.reload()
+			reloadPromises = [ from_node.reload() ]
+			if new_father
+				reloadPromises.push(new_father.reload())
 
-			from_node.moveNodeAfter(to_node, new_father, after)
-			@_onRowMove?(display_from_i, display_to_i, after)
+			CUI.whenAll(reloadPromises).done(=>
+				@_onRowMove?(display_from_i, display_to_i, after)
 
-			CUI.Events.trigger
-				node: @grid
-				type: "row_moved"
-				info:
-					from_i: from_i
-					to_i: to_i
-					after: after
+				CUI.Events.trigger
+					node: @grid
+					type: "row_moved"
+					info:
+						from_i: from_i
+						to_i: to_i
+						after: after
 
-		promise
+				deferred.resolve()
+			).fail(deferred.reject)
+		).fail(deferred.reject)
+		deferred.promise()
 
 	getRootChildren: ->
 		@root.children
