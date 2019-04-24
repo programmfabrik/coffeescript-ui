@@ -42,6 +42,16 @@ CUI.DateTimeFormats["de-DE"] =
 			"D.MM.YYYY HH:mm"
 			"D.MM.YY HH:mm"
 			"DD.M.YY HH:mm"
+			"M/D/YYYY HH:DD:ss"
+			"MM/D/YYYY HH:DD:ss"
+			"M/DD/YYYY HH:DD:ss"
+			"M/DD/YY HH:DD:ss"
+			"MM/D/YY HH:DD:ss"
+			"M/D/YYYY HH:DD"
+			"MM/D/YYYY HH:DD"
+			"M/DD/YYYY HH:DD"
+			"M/DD/YY HH:DD"
+			"MM/D/YY HH:DD"
 		]
 	,
 		text: "Datum+Zeit+Sekunden"
@@ -67,6 +77,11 @@ CUI.DateTimeFormats["de-DE"] =
 			"D.MM.YYYY HH:mm:ss"
 			"D.MM.YY HH:mm:ss"
 			"DD.M.YY HH:mm:ss"
+			"M/D/YYYY HH:DD:ss"
+			"MM/D/YYYY HH:DD:ss"
+			"M/DD/YYYY HH:DD:ss"
+			"M/DD/YY HH:DD:ss"
+			"MM/D/YY HH:DD:ss"
 		]
 	,
 		text: "Datum"
@@ -87,6 +102,9 @@ CUI.DateTimeFormats["de-DE"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"M/D/YYYY"
+			"MM/D/YYYY"
+			"M/DD/YYYY"
 		]
 	,
 		text: "Jahr-Monat"
