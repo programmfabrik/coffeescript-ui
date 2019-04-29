@@ -24480,7 +24480,11 @@ CUI.DataTableNode = (function(superClass) {
       f = ref[i];
       fopts = f.getOpts();
       fopts.undo_support = false;
-      _f = new CUI[f.getElementClass()](fopts);
+      if (CUI[f.getElementClass()]) {
+        _f = new CUI[f.getElementClass()](fopts);
+      } else {
+        _f = new window[f.getElementClass()](fopts);
+      }
       _f.setForm(this);
       _f.setData(this.__data);
       if (f.hasData()) {
