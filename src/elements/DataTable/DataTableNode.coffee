@@ -38,7 +38,11 @@ class CUI.DataTableNode extends CUI.ListViewRow
 		for f in @__dataTable.getFieldList()
 			fopts = f.getOpts()
 			fopts.undo_support = false
-			_f = new CUI[f.getElementClass()](fopts)
+			if CUI[f.getElementClass()]
+				_f = new CUI[f.getElementClass()](fopts)
+			else
+				_f = new window[f.getElementClass()](fopts)
+
 			_f.setForm(@)
 			_f.setData(@__data)
 			if f.hasData()
