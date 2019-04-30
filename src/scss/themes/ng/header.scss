@@ -277,6 +277,10 @@ $popover-hint-background: hsl(205,20%,30%);
 	z-index: 1; // put forward to see outline
 }
 
+@mixin border-focus-on-highlight-light() {
+	box-shadow: 0 0 0 3px var(--on-highlight-light-muted-color);
+}
+
 @mixin outer-focus() {
 	box-shadow:
 		0 0 0 1px var(--highlight),

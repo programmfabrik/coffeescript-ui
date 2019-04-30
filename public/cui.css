@@ -1986,6 +1986,9 @@ a[role="button"].cui-button-appearance-link {
     box-shadow: 0 0 0 3px var(--highlight-light);
     border-color: var(--highlight);
     z-index: 1; }
+    .cui-selected .cui-input input:focus, .cui-selected
+    .cui-input textarea:focus {
+      box-shadow: 0 0 0 3px var(--on-highlight-light-muted-color); }
   .cui-input input::-webkit-input-placeholder,
   .cui-input textarea::-webkit-input-placeholder {
     color: #b9c0c6; }

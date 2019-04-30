@@ -2428,6 +2428,10 @@ a[role="button"].cui-button-appearance-link {
 
 		&:focus {
 			@include border-focus;
+			
+			.cui-selected & {
+				@include border-focus-on-highlight-light;
+			}
 		}
 
 		&::-webkit-input-placeholder {
