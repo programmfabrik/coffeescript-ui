@@ -976,6 +976,8 @@ li > div {
 }
 
 .cui-button-href.cui-button-appearance-link {
+	word-break: break-all;
+	
 	.cui-button-visual {
 		height: auto;
 		line-height: normal;
