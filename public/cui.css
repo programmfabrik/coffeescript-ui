@@ -1110,16 +1110,17 @@ li > div {
 .cui-button-href {
   max-width: 100%; }
 
-.cui-button-href.cui-button-appearance-link .cui-button-visual {
-  height: auto;
-  line-height: normal; }
-
-.cui-button-href.cui-button-appearance-link .cui-button-right {
-  flex-shrink: 0;
-  align-self: flex-start;
-  margin-top: 2px; }
-  .cui-button-href.cui-button-appearance-link .cui-button-right:empty {
-    display: block; }
+.cui-button-href.cui-button-appearance-link {
+  word-break: break-all; }
+  .cui-button-href.cui-button-appearance-link .cui-button-visual {
+    height: auto;
+    line-height: normal; }
+  .cui-button-href.cui-button-appearance-link .cui-button-right {
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 2px; }
+    .cui-button-href.cui-button-appearance-link .cui-button-right:empty {
+      display: block; }
 
 .cui-button-visual {
   display: flex;
@@ -2150,6 +2151,8 @@ a[role="button"].cui-button-appearance-link {
     border-top-color: #bbc0c3;
     background: #dadfe2;
     border-radius: 0 0 5px 5px; }
+    .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer .cui-toolbar {
+      background: none; }
   .cui-layer .cui-toolbar {
     min-height: 34px; }
   .cui-layer .cui-data-table .cui-pane-footer {
