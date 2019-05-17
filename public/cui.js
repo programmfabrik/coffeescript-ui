@@ -20704,6 +20704,24 @@ CUI.util = (function() {
     return targetMap;
   };
 
+  util.copyToClipboard = function(text) {
+    var textarea;
+    if (!text) {
+      return;
+    }
+    textarea = CUI.dom.element("textarea", {
+      style: {
+        position: 'absolute',
+        left: '-9999px'
+      }
+    });
+    textarea.value = text;
+    CUI.dom.append(document.body, textarea);
+    textarea.select();
+    document.execCommand('copy');
+    CUI.dom.remove(textarea);
+  };
+
   return util;
 
 })();
