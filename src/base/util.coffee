@@ -579,6 +579,21 @@ class CUI.util
 				CUI.util.mergeMap(targetMap[k], v)
 		targetMap
 
+	@copyToClipboard: (text) ->
+		if not text
+			return
+			
+		textarea = CUI.dom.element("textarea",
+			style:
+				position: 'absolute'
+				left: '-9999px'
+		)
+		textarea.value = text
+		CUI.dom.append(document.body, textarea)
+		textarea.select()
+		document.execCommand('copy')
+		CUI.dom.remove(textarea)
+		return
 
 CUI.util.moment = moment
 CUI.util.marked = marked
