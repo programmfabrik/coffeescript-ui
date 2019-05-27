@@ -26716,7 +26716,11 @@ CUI.DateTimeInputBlock = (function(superClass) {
 
   DateTimeRangeGrammar.stringToDateRange = function(input) {
     var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
-    CUI.util.assert(CUI.util.isString(input), "CUI.DateTimeRangeGrammar.stringToDateRange", "input needs to be string", input);
+    if (CUI.util.isEmpty(input) || !CUI.util.isString(input)) {
+      return {
+        error: "Input needs to be a non empty string: " + input
+      };
+    }
     input = input.trim();
     tokens = [];
     ref = input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE);
