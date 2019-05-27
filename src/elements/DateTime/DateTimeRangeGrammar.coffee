@@ -76,12 +76,18 @@ class CUI.DateTimeRangeGrammar
 		["YEAR_DOT Jhd. vor Chr.", "century", [0], [true]]
 		["YEAR_DOT Jhd. v. Chr", "century", [0], [true]]
 		["YEAR_DOT Jhd. v. Chr.", "century", [0], [true], "CENTURY_BC"]
+		["YEAR Jhd. vor Chr", "century", [0], [true]]
+		["YEAR Jhd. vor Chr.", "century", [0], [true]]
+		["YEAR Jhd. v. Chr", "century", [0], [true]]
+		["YEAR Jhd. v. Chr.", "century", [0], [true]]
 		["YEAR Jhd ac", "century", [0], [true]]
 		["YEAR Jh ac", "century", [0], [true]]
 		["YEAR Jh. ac", "century", [0], [true]]
 		["YEAR Jhd", "century", [0]]
+		["YEAR Jhd.", "century", [0]]
 		["YEAR Jh", "century", [0]]
 		["YEAR Jh.", "century", [0]]
+		["YEAR Jhd.", "century", [0], null]
 		["YEAR_DOT Jhd.", "century", [0], null, "CENTURY"]
 		["YEAR_DOT Jhd. nach Chr.", "century", [0]]
 		["YEAR_DOT Jhd. nach Chr", "century", [0]]
@@ -311,12 +317,12 @@ class CUI.DateTimeRangeGrammar
 				type: type
 				value: value
 
-		stringToParse = tokens.map((token) -> token.type).join(" ")
+		stringToParse = tokens.map((token) -> token.type).join(" ").toUpperCase()
 
 		# Check if there is a grammar that applies to the input.
 		for _, grammars of CUI.DateTimeRangeGrammar.PARSE_GRAMMARS
 			for grammar in grammars
-				if grammar[0] == stringToParse
+				if grammar[0].toUpperCase() == stringToParse
 					method = CUI.DateTimeRangeGrammar[grammar[1]]
 					if not CUI.util.isFunction(method) or not grammar[2]
 						continue

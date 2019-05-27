@@ -316,6 +316,24 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.to).toBe("1200-12-31");
     });
 
+    test("stringToDateRange :: 12. JHD.", () => {
+        const input = "12. JHD.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1101-01-01");
+        expect(output.to).toBe("1200-12-31");
+    });
+
+    test("stringToDateRange :: 12 Jhd.", () => {
+        const input = "12 Jhd.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1101-01-01");
+        expect(output.to).toBe("1200-12-31");
+    });
+
     test("stringToDateRange :: 20th century", () => {
         const input = "20th century";
 
