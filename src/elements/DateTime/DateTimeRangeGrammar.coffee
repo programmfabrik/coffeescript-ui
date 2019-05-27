@@ -294,7 +294,9 @@ class CUI.DateTimeRangeGrammar
 
 	# Main method to check against every grammar.
 	@stringToDateRange: (input) ->
-		CUI.util.assert(CUI.util.isString(input), "CUI.DateTimeRangeGrammar.stringToDateRange", "input needs to be string", input)
+		if CUI.util.isEmpty(input) or not CUI.util.isString(input)
+			return error: "Input needs to be a non empty string: #{input}"
+
 		input = input.trim()
 
 		tokens = []

@@ -1,6 +1,22 @@
 require('../index');
 
 describe('CUI.DateTime.stringToDateRange', () => {
+    test("stringToDateRange :: Empty string", () => {
+        const input = "";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.error).toBeDefined()
+    });
+
+    test("stringToDateRange :: Null", () => {
+        const input = null;
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.error).toBeDefined()
+    });
+
     test("stringToDateRange :: 1999-12-31", () => {
         const input = "1999-12-31";
 
