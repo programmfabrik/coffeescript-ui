@@ -123,6 +123,7 @@ CUI.DateTimeFormats["de-DE"] =
 			"MM YYYY"
 			"MM/YYYY"
 			"MM.YYYY"
+			"M.YYYY"
 			"YYYY-M"
 			"YYYY-MM"
 		]
@@ -240,6 +241,7 @@ CUI.DateTimeFormats["it-IT"] =
 			"MM YYYY"
 			"MM/YYYY"
 			"MM.YYYY"
+			"M.YYYY"
 			"YYYY-M"
 			"YYYY-MM"
 		]
@@ -357,6 +359,7 @@ CUI.DateTimeFormats["es-ES"] =
 			"MM YYYY"
 			"MM/YYYY"
 			"MM.YYYY"
+			"M.YYYY"
 			"YYYY-M"
 			"YYYY-MM"
 		]
@@ -477,6 +480,7 @@ CUI.DateTimeFormats["en-US"] =
 			"MM YYYY"
 			"MM/YYYY"
 			"MM.YYYY"
+			"M.YYYY"
 			"YYYY-M"
 			"YYYY-MM"
 		]

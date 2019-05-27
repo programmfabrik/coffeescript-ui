@@ -22,11 +22,7 @@ class CUI.DateTime extends CUI.Input
 	initOpts: ->
 		super()
 
-		if CUI.DateTime.__locale
-			locale = CUI.DateTime.__locale
-		else
-			for locale of CUI.DateTimeFormats
-				break
+		locale = CUI.DateTime.getLocale()
 
 		@addOpts
 			locale:
@@ -1376,6 +1372,14 @@ class CUI.DateTime extends CUI.Input
 		CUI.util.assert(CUI.DateTimeFormats[locale], "CUI.DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: CUI.DateTimeFormats)
 		CUI.DateTime.__locale = locale
 
+	@getLocale: ->
+		if CUI.DateTime.__locale
+			locale = CUI.DateTime.__locale
+		else
+			for locale of CUI.DateTimeFormats
+				break
+		return locale
+
 	# format the date_str
 	# output_format "display_short", "display", "store", "input"
 	# output_type "date_time", "date", "date_time_secons", "year_month",v "year"
@@ -1440,3 +1444,9 @@ class CUI.DateTime extends CUI.Input
 			return null
 		dt = new CUI.DateTime(input_types: null)
 		dt.parse(datestr)
+
+	@stringToDateRange: (string) ->
+		return CUI.DateTimeRangeGrammar.stringToDateRange(string)
+
+	@dateRangeToString: (from, to) ->
+		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to)
