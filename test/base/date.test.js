@@ -1121,7 +1121,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("5. Jhd. v. Chr.")
     });
 
-    test("dateRangeToString :: -0500 - -0401", () => {
+    test("dateRangeToString :: -0505 - -0406", () => {
         const from = "-0505"
         const to = "-0406"
 
@@ -1251,4 +1251,13 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("01/1285")
     });
 
+    test("dateRangeToString :: 1901-01-01 - 2000-12-31", () => {
+        CUI.DateTime.setLocale("en-US")
+        const from = "1901-01-01"
+        const to = "2000-12-31"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("20th century")
+    });
 });

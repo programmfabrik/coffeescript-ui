@@ -254,10 +254,10 @@ class CUI.DateTimeRangeGrammar
 			else if yearsDifference == 99 # Century
 				isBC = toYear < 0
 				if isBC
-					century = -from / 100
+					century = -fromYear / 100
 					possibleString = getPossibleString("CENTURY_BC", [century])
 				else
-					century = to / 100
+					century = toYear / 100
 					possibleString = getPossibleString("CENTURY", [century])
 
 				if possibleString
