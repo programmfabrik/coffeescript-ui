@@ -1491,32 +1491,42 @@ class CUI.dom
 					v instanceof HTMLElement
 			instance: {}
 
-		remove_mousemoved_class = =>
+		add_class = ->
+			CUI.dom.addClass(opts.element, opts.class)
+			schedule_remove_mousemoved_class()
+
+		remove_mousemoved_class = ->
 			if opts.delayRemove?() or CUI.globalDrag
 				schedule_remove_mousemoved_class()
 				return
-			opts.element.classList.remove(opts.class)
+			CUI.dom.removeClass(opts.element, opts.class)
 
-		schedule_remove_mousemoved_class = =>
+		schedule_remove_mousemoved_class = ->
 			CUI.scheduleCallback
 				ms: opts.ms
 				call: remove_mousemoved_class
 
 		CUI.Events.listen
 			node: opts.element
+			type: "wheel"
+			instance: opts.instance
+			call: ->
+				add_class()
+				return
+
+		CUI.Events.listen
+			node: opts.element
 			type: "mousemove"
 			instance: opts.instance
-			call: (ev) =>
-				if not opts.element.classList.contains(opts.class)
-					opts.element.classList.add(opts.class)
-				schedule_remove_mousemoved_class()
+			call: (ev) ->
+				add_class()
 				return
 
 		CUI.Events.listen
 			node: opts.element
 			type: "mouseleave"
 			instance: opts.instance
-			call: (ev) =>
+			call: ->
 				remove_mousemoved_class()
 
 	@requestFullscreen: (elem) ->
