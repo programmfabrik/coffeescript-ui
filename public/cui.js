@@ -19641,7 +19641,7 @@ CUI.dom = (function() {
   };
 
   dom.setClassOnMousemove = function(_opts) {
-    var opts, remove_mousemoved_class, schedule_remove_mousemoved_class;
+    var add_class, opts, remove_mousemoved_class, schedule_remove_mousemoved_class;
     if (_opts == null) {
       _opts = {};
     }
@@ -19668,45 +19668,46 @@ CUI.dom = (function() {
       },
       instance: {}
     });
-    remove_mousemoved_class = (function(_this) {
-      return function() {
-        if ((typeof opts.delayRemove === "function" ? opts.delayRemove() : void 0) || CUI.globalDrag) {
-          schedule_remove_mousemoved_class();
-          return;
-        }
-        return opts.element.classList.remove(opts["class"]);
-      };
-    })(this);
-    schedule_remove_mousemoved_class = (function(_this) {
-      return function() {
-        return CUI.scheduleCallback({
-          ms: opts.ms,
-          call: remove_mousemoved_class
-        });
-      };
-    })(this);
+    add_class = function() {
+      CUI.dom.addClass(opts.element, opts["class"]);
+      return schedule_remove_mousemoved_class();
+    };
+    remove_mousemoved_class = function() {
+      if ((typeof opts.delayRemove === "function" ? opts.delayRemove() : void 0) || CUI.globalDrag) {
+        schedule_remove_mousemoved_class();
+        return;
+      }
+      return CUI.dom.removeClass(opts.element, opts["class"]);
+    };
+    schedule_remove_mousemoved_class = function() {
+      return CUI.scheduleCallback({
+        ms: opts.ms,
+        call: remove_mousemoved_class
+      });
+    };
+    CUI.Events.listen({
+      node: opts.element,
+      type: "wheel",
+      instance: opts.instance,
+      call: function() {
+        add_class();
+      }
+    });
     CUI.Events.listen({
       node: opts.element,
       type: "mousemove",
       instance: opts.instance,
-      call: (function(_this) {
-        return function(ev) {
-          if (!opts.element.classList.contains(opts["class"])) {
-            opts.element.classList.add(opts["class"]);
-          }
-          schedule_remove_mousemoved_class();
-        };
-      })(this)
+      call: function(ev) {
+        add_class();
+      }
     });
     return CUI.Events.listen({
       node: opts.element,
       type: "mouseleave",
       instance: opts.instance,
-      call: (function(_this) {
-        return function(ev) {
-          return remove_mousemoved_class();
-        };
-      })(this)
+      call: function() {
+        return remove_mousemoved_class();
+      }
     });
   };
 
