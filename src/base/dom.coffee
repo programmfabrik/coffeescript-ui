@@ -1508,15 +1508,7 @@ class CUI.dom
 
 		CUI.Events.listen
 			node: opts.element
-			type: "wheel"
-			instance: opts.instance
-			call: ->
-				add_class()
-				return
-
-		CUI.Events.listen
-			node: opts.element
-			type: "mousemove"
+			type: ["mousemove", "wheel"]
 			instance: opts.instance
 			call: (ev) ->
 				add_class()
