@@ -174,15 +174,11 @@ class CUI.DateTimeRangeGrammar
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(from)
 			fromYear = parseInt(from)
-			if fromYear > 1000
-				return CUI.DateTimeFormats[locale].formats[0].invalid
 		else if fromMoment.isValid() and fromMoment.date() == 1 and fromMoment.month() == 0 # First day of year.
 			fromYear = fromMoment.year()
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)
 			toYear = parseInt(to)
-			if toYear > 1000
-				return CUI.DateTimeFormats[locale].formats[0].invalid
 		else if toMoment.isValid() and toMoment.date() == 31 and toMoment.month() == 11 # Last day of year
 			toYear = toMoment.year()
 
@@ -453,14 +449,14 @@ class CUI.DateTimeRangeGrammar
 		if not momentInput?.isValid()
 			return
 
-		from = to = CUI.DateTimeRangeGrammar.format(momentInput)
-
-		if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_MONTH)
+		if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_YEAR)
+			from = to = CUI.DateTimeRangeGrammar.format(momentInput)
+		else if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_MONTH)
+			from = CUI.DateTimeRangeGrammar.format(momentInput, false)
 			momentInput.endOf('month');
-			to = CUI.DateTimeRangeGrammar.format(momentInput)
-		else if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_YEAR)
-			momentInput.endOf('year');
-			to = CUI.DateTimeRangeGrammar.format(momentInput)
+			to = CUI.DateTimeRangeGrammar.format(momentInput, false)
+		else
+			from = to = CUI.DateTimeRangeGrammar.format(momentInput, false)
 
 		return from: from, to: to
 
@@ -471,8 +467,8 @@ class CUI.DateTimeRangeGrammar
 			return
 		return from: from.from, to: to.to
 
-	@format: (dateMoment) ->
-		if dateMoment.year() <= 1000
+	@format: (dateMoment, yearFormat = true) ->
+		if yearFormat
 			outputType = CUI.DateTimeRangeGrammar.OUTPUT_YEAR
 		else
 			outputType = CUI.DateTimeRangeGrammar.OUTPUT_DATE

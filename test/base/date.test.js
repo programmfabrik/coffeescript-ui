@@ -17,8 +17,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.error).toBeDefined()
     });
 
-    test("stringToDateRange :: 1999-12-31", () => {
-        const input = "1999-12-31";
+    test("stringToDateRange :: 1999", () => {
+        const input = "1999";
 
         const output = CUI.DateTime.stringToDateRange(input)
 
@@ -66,8 +66,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1972-01-01");
-        expect(output.to).toBe("1974-12-31");
+        expect(output.from).toBe("1972");
+        expect(output.to).toBe("1974");
     });
 
     test("stringToDateRange :: 3.2010 - 3.2011", () => {
@@ -129,8 +129,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("2000-01-01");
-        expect(output.to).toBe("2000-12-31");
+        expect(output.from).toBe("2000");
+        expect(output.to).toBe("2000");
     });
 
     test("stringToDateRange :: um 2000", () => {
@@ -138,8 +138,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1500-01-01");
-        expect(output.to).toBe("2500-12-31");
+        expect(output.from).toBe("1500");
+        expect(output.to).toBe("2500");
     });
 
     test("stringToDateRange :: um 2000", () => {
@@ -147,8 +147,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1500-01-01");
-        expect(output.to).toBe("2500-12-31");
+        expect(output.from).toBe("1500");
+        expect(output.to).toBe("2500");
     });
 
     test("stringToDateRange :: um 1900", () => {
@@ -156,8 +156,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1850-01-01");
-        expect(output.to).toBe("1950-12-31");
+        expect(output.from).toBe("1850");
+        expect(output.to).toBe("1950");
     });
 
     test("stringToDateRange :: um 1950", () => {
@@ -165,8 +165,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1935-01-01");
-        expect(output.to).toBe("1965-12-31");
+        expect(output.from).toBe("1935");
+        expect(output.to).toBe("1965");
     });
 
     test("stringToDateRange :: um 1910", () => {
@@ -174,8 +174,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1905-01-01");
-        expect(output.to).toBe("1915-12-31");
+        expect(output.from).toBe("1905");
+        expect(output.to).toBe("1915");
     });
 
     test("stringToDateRange :: um 1999", () => {
@@ -183,8 +183,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1997-01-01");
-        expect(output.to).toBe("2001-12-31");
+        expect(output.from).toBe("1997");
+        expect(output.to).toBe("2001");
     });
 
     test("stringToDateRange :: ca. 1970", () => {
@@ -192,8 +192,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1965-01-01");
-        expect(output.to).toBe("1975-12-31");
+        expect(output.from).toBe("1965");
+        expect(output.to).toBe("1975");
     });
 
     test("stringToDateRange :: vor 2000", () => {
@@ -201,8 +201,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1500-01-01");
-        expect(output.to).toBe("2000-12-31");
+        expect(output.from).toBe("1500");
+        expect(output.to).toBe("2000");
     });
 
     test("stringToDateRange :: before 2000", () => {
@@ -210,8 +210,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1500-01-01");
-        expect(output.to).toBe("2000-12-31");
+        expect(output.from).toBe("1500");
+        expect(output.to).toBe("2000");
     });
 
     test("stringToDateRange :: vor 1900", () => {
@@ -219,8 +219,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1850-01-01");
-        expect(output.to).toBe("1900-12-31");
+        expect(output.from).toBe("1850");
+        expect(output.to).toBe("1900");
     });
 
     test("stringToDateRange :: vor 1950", () => {
@@ -228,8 +228,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1935-01-01");
-        expect(output.to).toBe("1950-12-31");
+        expect(output.from).toBe("1935");
+        expect(output.to).toBe("1950");
     });
 
     test("stringToDateRange :: vor 1970", () => {
@@ -237,8 +237,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1965-01-01");
-        expect(output.to).toBe("1970-12-31");
+        expect(output.from).toBe("1965");
+        expect(output.to).toBe("1970");
     });
 
     test("stringToDateRange :: vor 1999", () => {
@@ -246,8 +246,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1997-01-01");
-        expect(output.to).toBe("1999-12-31");
+        expect(output.from).toBe("1997");
+        expect(output.to).toBe("1999");
     });
 
     test("stringToDateRange :: nach 2000", () => {
@@ -255,8 +255,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("2000-01-01");
-        expect(output.to).toBe("2500-12-31");
+        expect(output.from).toBe("2000");
+        expect(output.to).toBe("2500");
     });
 
     test("stringToDateRange :: nach 1900", () => {
@@ -264,8 +264,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1900-01-01");
-        expect(output.to).toBe("1950-12-31");
+        expect(output.from).toBe("1900");
+        expect(output.to).toBe("1950");
     });
 
     test("stringToDateRange :: nach 1950", () => {
@@ -273,8 +273,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1950-01-01");
-        expect(output.to).toBe("1965-12-31");
+        expect(output.from).toBe("1950");
+        expect(output.to).toBe("1965");
     });
 
 
@@ -283,8 +283,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1910-01-01");
-        expect(output.to).toBe("1915-12-31");
+        expect(output.from).toBe("1910");
+        expect(output.to).toBe("1915");
     });
 
     test("stringToDateRange :: nach 1999", () => {
@@ -292,8 +292,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1999-01-01");
-        expect(output.to).toBe("2001-12-31");
+        expect(output.from).toBe("1999");
+        expect(output.to).toBe("2001");
     });
 
     test("stringToDateRange :: 1900 n. Chr.", () => {
@@ -301,8 +301,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1900-01-01");
-        expect(output.to).toBe("1900-12-31");
+        expect(output.from).toBe("1900");
+        expect(output.to).toBe("1900");
     });
 
     test("stringToDateRange :: 1900 v. Chr.", () => {
@@ -328,8 +328,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1101-01-01");
-        expect(output.to).toBe("1200-12-31");
+        expect(output.from).toBe("1101");
+        expect(output.to).toBe("1200");
     });
 
     test("stringToDateRange :: 12. JHD.", () => {
@@ -337,8 +337,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1101-01-01");
-        expect(output.to).toBe("1200-12-31");
+        expect(output.from).toBe("1101");
+        expect(output.to).toBe("1200");
     });
 
     test("stringToDateRange :: 12 Jhd.", () => {
@@ -346,8 +346,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1101-01-01");
-        expect(output.to).toBe("1200-12-31");
+        expect(output.from).toBe("1101");
+        expect(output.to).toBe("1200");
     });
 
     test("stringToDateRange :: 20th century", () => {
@@ -355,8 +355,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1901-01-01");
-        expect(output.to).toBe("2000-12-31");
+        expect(output.from).toBe("1901");
+        expect(output.to).toBe("2000");
     });
 
     test("stringToDateRange :: Anfang 16. Jh.", () => {
@@ -364,8 +364,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1501-01-01");
-        expect(output.to).toBe("1516-12-31");
+        expect(output.from).toBe("1501");
+        expect(output.to).toBe("1516");
     });
 
     test("stringToDateRange :: Anfang 16. Jh. v. Chr.", () => {
@@ -382,8 +382,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1501-01-01");
-        expect(output.to).toBe("1516-12-31");
+        expect(output.from).toBe("1501");
+        expect(output.to).toBe("1516");
     });
 
     test("stringToDateRange :: Early 16th century BC", () => {
@@ -400,8 +400,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1285-01-01");
-        expect(output.to).toBe("1300-12-31");
+        expect(output.from).toBe("1285");
+        expect(output.to).toBe("1300");
     });
 
     test("stringToDateRange :: Ende 13. Jh. v. Chr.", () => {
@@ -418,8 +418,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1285-01-01");
-        expect(output.to).toBe("1300-12-31");
+        expect(output.from).toBe("1285");
+        expect(output.to).toBe("1300");
     });
 
     test("stringToDateRange :: Late 13th century BC", () => {
@@ -508,8 +508,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1784-01-01");
-        expect(output.to).toBe("1786-12-31");
+        expect(output.from).toBe("1784");
+        expect(output.to).toBe("1786");
     });
 
     test("stringToDateRange :: -244 - 249 n. Chr.", () => {
@@ -590,8 +590,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("2010-01-01");
-        expect(output.to).toBe("2015-12-31");
+        expect(output.from).toBe("2010");
+        expect(output.to).toBe("2015");
     });
 
     test("stringToDateRange :: 1001 bis 1500", () => {
@@ -599,8 +599,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1001-01-01");
-        expect(output.to).toBe("1500-12-31");
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1500");
     });
 
     test("stringToDateRange :: 1000 bis 1500", () => {
@@ -609,7 +609,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
         const output = CUI.DateTime.stringToDateRange(input)
 
         expect(output.from).toBe("1000");
-        expect(output.to).toBe("1500-12-31");
+        expect(output.to).toBe("1500");
     });
 
     test("stringToDateRange :: 200 bis 250", () => {
@@ -642,8 +642,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1450-01-01");
-        expect(output.to).toBe("1500-12-31");
+        expect(output.from).toBe("1450");
+        expect(output.to).toBe("1500");
     });
 
     test("stringToDateRange :: vor 150", () => {
@@ -669,8 +669,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1500-01-01");
-        expect(output.to).toBe("1550-12-31");
+        expect(output.from).toBe("1500");
+        expect(output.to).toBe("1550");
     });
 
     test("stringToDateRange :: nach 150", () => {
@@ -696,8 +696,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("1450-01-01");
-        expect(output.to).toBe("1550-12-31");
+        expect(output.from).toBe("1450");
+        expect(output.to).toBe("1550");
     });
 
     test("stringToDateRange :: um 150", () => {
@@ -767,8 +767,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("2000-01-01");
-        expect(output.to).toBe("2000-12-31");
+        expect(output.from).toBe("2000");
+        expect(output.to).toBe("2000");
     });
 
     test("stringToDateRange :: 5. Jhd. nach Chr.", () => {
@@ -932,11 +932,38 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
     test("dateRangeToString :: Invalid case", () => {
         const from = null
-        const to = "2000-01-01"
+        const to = "2000"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBeUndefined()
+    });
+
+    test("dateRangeToString :: 2000 - 2000", () => {
+        const from = "2000"
+        const to = "2000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("2000")
+    });
+
+    test("dateRangeToString :: 2000 - 2500-12-20", () => {
+        const from = "2000"
+        const to = "2500-12-20"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("2000 - 2500-12-20")
+    });
+
+    test("dateRangeToString :: 2000 - 2500", () => {
+        const from = "2000"
+        const to = "2500"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("nach 2000")
     });
 
     test("dateRangeToString :: 2000-01-01 - 2000-01-01", () => {
@@ -948,63 +975,45 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("2000-01-01")
     });
 
-    test("dateRangeToString :: 2000-01-01 - 2500-12-20", () => {
-        const from = "2000-01-01"
-        const to = "2500-12-20"
-
-        const output = CUI.DateTime.dateRangeToString(from, to)
-
-        expect(output).toBe("2000-01-01 bis 2500-12-20")
-    });
-
     test("dateRangeToString :: 2000-01-01 - 2500-12-31", () => {
         const from = "2000-01-01"
         const to = "2500-12-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("nach 2000")
+        expect(output).toBe("2000-01-01 bis 2500-12-31")
     });
 
-    test("dateRangeToString :: 2000 - 2500", () => {
-        const from = "2000"
-        const to = "2500"
-
-        const output = CUI.DateTime.dateRangeToString(from, to)
-
-        expect(output).toBe("Datum ungültig")
-    });
-
-    test("dateRangeToString :: 1900-01-01 - 1950-12-31", () => {
-        const from = "1900-01-01"
-        const to = "1950-12-31"
+    test("dateRangeToString :: 1900 - 1950", () => {
+        const from = "1900"
+        const to = "1950"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("nach 1900")
     });
 
-    test("dateRangeToString :: 1950-01-01 - 1965-12-31", () => {
-        const from = "1950-01-01"
-        const to = "1965-12-31"
+    test("dateRangeToString :: 1950 - 1965", () => {
+        const from = "1950"
+        const to = "1965"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("nach 1950")
     });
 
-    test("dateRangeToString :: 1910-01-01 - 1915-12-31", () => {
-        const from = "1910-01-01"
-        const to = "1915-12-31"
+    test("dateRangeToString :: 1910 - 1915", () => {
+        const from = "1910"
+        const to = "1915"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("nach 1910")
     });
 
-    test("dateRangeToString :: 1999-01-01 - 2001-12-31", () => {
-        const from = "1999-01-01"
-        const to = "2001-12-31"
+    test("dateRangeToString :: 1999 - 2001", () => {
+        const from = "1999"
+        const to = "2001"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
@@ -1020,36 +1029,36 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("nach 1000 v. Chr.")
     });
 
-    test("dateRangeToString :: 1500-01-01 - 2000-12-31", () => {
-        const from = "1500-01-01"
-        const to = "2000-12-31"
+    test("dateRangeToString :: 1500 - 2000", () => {
+        const from = "1500"
+        const to = "2000"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("vor 2000")
     });
 
-    test("dateRangeToString :: 1850-01-01 - 1900-12-31", () => {
-        const from = "1850-01-01"
-        const to = "1900-12-31"
+    test("dateRangeToString :: 1850 - 1900", () => {
+        const from = "1850"
+        const to = "1900"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("vor 1900")
     });
 
-    test("dateRangeToString :: 1935-01-01 - 1950-12-31", () => {
-        const from = "1850-01-01"
-        const to = "1900-12-31"
+    test("dateRangeToString :: 1935 - 1950", () => {
+        const from = "1850"
+        const to = "1900"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("vor 1900")
     });
 
-    test("dateRangeToString :: 1965-01-01 - 1970-12-31", () => {
-        const from = "1965-01-01"
-        const to = "1970-12-31"
+    test("dateRangeToString :: 1965 - 1970", () => {
+        const from = "1965"
+        const to = "1970"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
@@ -1065,36 +1074,36 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("vor 660 v. Chr.")
     });
 
-    test("dateRangeToString :: 1500-01-01 - 2500-12-31", () => {
-        const from = "1500-01-01"
-        const to = "2500-12-31"
+    test("dateRangeToString :: 1500 - 2500", () => {
+        const from = "1500"
+        const to = "2500"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("um 2000")
     });
 
-    test("dateRangeToString :: 1935-01-01 - 1965-12-31", () => {
-        const from = "1935-01-01"
-        const to = "1965-12-31"
+    test("dateRangeToString :: 1935 - 1965", () => {
+        const from = "1935"
+        const to = "1965"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("um 1950")
     });
 
-    test("dateRangeToString :: 1935-01-01 - 1965-12-31", () => {
-        const from = "1905-01-01"
-        const to = "1915-12-31"
+    test("dateRangeToString :: 1935 - 1965", () => {
+        const from = "1905"
+        const to = "1915"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("um 1910")
     });
 
-    test("dateRangeToString :: 1997-01-01 - 2001-12-31", () => {
-        const from = "1997-01-01"
-        const to = "2001-12-31"
+    test("dateRangeToString :: 1997 - 2001", () => {
+        const from = "1997"
+        const to = "2001"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
@@ -1164,19 +1173,19 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("Anfang 16. Jh. v. Chr.")
     });
 
-    test("dateRangeToString :: 1501-01-01 - 1516-12-31", () => {
-        const from = "1501-01-01"
-        const to = "1516-12-31"
+    test("dateRangeToString :: 1501 - 1516", () => {
+        const from = "1501"
+        const to = "1516"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("Anfang 16. Jh.")
     });
 
-    test("dateRangeToString :: 1501-01-01 - 1516-12-31", () => {
+    test("dateRangeToString :: 1501 - 1516", () => {
         CUI.DateTime.setLocale("en-US")
-        const from = "1501-01-01"
-        const to = "1516-12-31"
+        const from = "1501"
+        const to = "1516"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
@@ -1192,41 +1201,41 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("Ende 13. Jh. v. Chr.")
     });
 
-    test("dateRangeToString :: 1285-01-01 - 1300-12-31", () => {
-        const from = "1285-01-01"
-        const to = "1300-12-31"
+    test("dateRangeToString :: 1285 - 1300", () => {
+        const from = "1285"
+        const to = "1300"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("Ende 13. Jh.")
     });
 
-    test("dateRangeToString :: 1285-01-01 - 1285-12-31", () => {
-        const from = "1285-01-01"
-        const to = "1285-12-31"
+    test("dateRangeToString :: 1285 - 1285", () => {
+        const from = "1285"
+        const to = "1285"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("1285")
     });
 
-    test("dateRangeToString :: 1285-01-01 - 1285-05-31", () => {
-        const from = "1285-01-01"
+    test("dateRangeToString :: 1285 - 1285-05-31", () => {
+        const from = "1285"
         const to = "1285-05-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("1285-01-01 bis 1285-05-31")
+        expect(output).toBe("1285 - 1285-05-31")
     });
 
-    test("dateRangeToString :: 1285-01-01 - 1285-05-31", () => {
+    test("dateRangeToString :: 1285 - 1285-05-31", () => {
         CUI.DateTime.setLocale("en-US")
-        const from = "1285-01-01"
+        const from = "1285-03-01"
         const to = "1285-05-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("1285-01-01 to 1285-05-31")
+        expect(output).toBe("1285-03-01 to 1285-05-31")
     });
 
     test("dateRangeToString :: Invalid date", () => {
@@ -1248,8 +1257,8 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("Invalid Date")
     });
 
-    test("dateRangeToString :: 1285-01-01 - 1285-01-31", () => {
-        const from = "1285-01-01"
+    test("dateRangeToString :: 1285 - 1285-01-31", () => {
+        const from = "1285"
         const to = "1285-01-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
@@ -1257,9 +1266,9 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("01.1285")
     });
 
-    test("dateRangeToString :: 1285-01-01 - 1285-01-31", () => {
+    test("dateRangeToString :: 1285 - 1285-01-31", () => {
         CUI.DateTime.setLocale("en-US")
-        const from = "1285-01-01"
+        const from = "1285"
         const to = "1285-01-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
@@ -1267,10 +1276,10 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("01/1285")
     });
 
-    test("dateRangeToString :: 1901-01-01 - 2000-12-31", () => {
+    test("dateRangeToString :: 1901 - 2000", () => {
         CUI.DateTime.setLocale("en-US")
-        const from = "1901-01-01"
-        const to = "2000-12-31"
+        const from = "1901"
+        const to = "2000"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
