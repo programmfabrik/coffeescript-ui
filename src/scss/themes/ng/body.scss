@@ -1503,7 +1503,7 @@ a[role="button"].cui-button-appearance-link {
 	padding: 0; // remove double padding
 }
 
-.cui-data-field-input > .cui-label {
+.cui-data-field-input > .cui-label:not(.cui-data-field-output-label) {
 	line-height: 24px;
 }
 
