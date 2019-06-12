@@ -3341,9 +3341,19 @@ a[role="button"].cui-button-appearance-link {
   display: flex;
   flex-direction: column; }
 
+.cui-form-block + .cui-form-block {
+  padding-top: 0;
+  margin-top: 10px; }
+
+.cui-form-block + .cui-form-table {
+  margin-top: 10px; }
+
 .cui-form-table {
   margin: 0;
   display: block; }
+  .cui-form-table + .cui-form-block {
+    padding-top: 0;
+    margin-top: 10px; }
 
 .cui-form-table-has-not-left-column > .cui-tr > .cui-td.cui-form-key {
   display: none; }

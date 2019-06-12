@@ -4605,11 +4605,20 @@ $layer-sizes: (
 			flex-direction: column;
 		}
 	}
+
+	+ .cui-form-table {
+		margin-top: $padding;
+	}
 }
 
 .cui-form-table {
 	margin: 0;
 	display: block;
+	
+	+ .cui-form-block {
+		padding-top: 0;
+		margin-top: $padding;
+	}
 }
 
 .cui-form-table-has-not-left-column {
