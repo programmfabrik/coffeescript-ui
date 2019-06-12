@@ -1452,6 +1452,9 @@ a[role="button"].cui-button-appearance-link {
   width: 100%;
   padding: 0; }
 
+.cui-data-field-input > .cui-label {
+  line-height: 24px; }
+
 .cui-data-field-proxy > .cui-label,
 .cui-data-field-output-label {
   padding: 3px 0; }
