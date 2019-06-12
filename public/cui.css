@@ -1339,6 +1339,8 @@ a[role="button"].cui-button-appearance-link {
 .cui-button-appearance-link[role] {
   display: inline-flex;
   align-self: flex-start; }
+  .cui-button-appearance-link[role].cui-button-size-mini .cui-button-visual {
+    font-size: 11px; }
   .cui-button-appearance-link[role] .cui-button-visual, .cui-button-appearance-link[role]:active .cui-button-visual {
     padding: 0;
     border: none;

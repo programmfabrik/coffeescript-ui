@@ -1317,6 +1317,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-button-appearance-link[role] {
 	display: inline-flex;
 	align-self: flex-start;
+	
+	&.cui-button-size-mini .cui-button-visual {
+		font-size: $label-mini;
+	}
 
 	&,
 	&:active {
