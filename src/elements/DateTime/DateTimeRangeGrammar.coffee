@@ -130,6 +130,7 @@ class CUI.DateTimeRangeGrammar
 		["YEAR B.C. - YEAR AD", "range", [0, 3], [true]]
 		["YEAR B.C. - YEAR CE", "range", [0, 3], [true]]
 		["YEAR B.C. - YEAR ad", "range", [0, 3], [true]]
+		["YEAR B.C. to YEAR", "range", [0, 3], [true]]
 		["YEAR bc - YEAR A.D.", "range", [0, 3], [true]]
 		["YEAR bc - YEAR AD", "range", [0, 3], [true]]
 		["YEAR bc - YEAR CE", "range", [0, 3], [true]]
@@ -165,6 +166,9 @@ class CUI.DateTimeRangeGrammar
 		if not CUI.util.isString(from) or not CUI.util.isString(to)
 			return
 
+		if from == to
+			return from
+
 		locale = CUI.DateTime.getLocale()
 		fromMoment = CUI.DateTimeRangeGrammar.getMoment(from)
 		toMoment = CUI.DateTimeRangeGrammar.getMoment(to)
@@ -173,11 +177,13 @@ class CUI.DateTimeRangeGrammar
 			return CUI.DateTimeFormats[locale].formats[0].invalid
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(from)
+			fromIsYear = true
 			fromYear = parseInt(from)
 		else if fromMoment.isValid() and fromMoment.date() == 1 and fromMoment.month() == 0 # First day of year.
 			fromYear = fromMoment.year()
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)
+			toIsYear = true
 			toYear = parseInt(to)
 		else if toMoment.isValid() and toMoment.date() == 31 and toMoment.month() == 11 # Last day of year
 			toYear = toMoment.year()
@@ -281,8 +287,12 @@ class CUI.DateTimeRangeGrammar
 					if format.display_attribute == CUI.DateTimeRangeGrammar.DISPLAY_ATTRIBUTE_YEAR_MONTH
 						return toMoment.format(format.display_short)
 
-		if from == to
-			return from
+		if fromIsYear or toIsYear
+			if fromIsYear
+				from = CUI.DateTime.format(from)
+			if toIsYear
+				to = CUI.DateTime.format(to)
+			return "#{from} - #{to}"
 
 		possibleString = getPossibleString("RANGE", [from, to])
 		if possibleString
@@ -397,10 +407,12 @@ class CUI.DateTimeRangeGrammar
 		return CUI.DateTimeRangeGrammar.getFromToWithRange("#{from}", "#{to}")
 
 	@range: (from, to, fromBC = false, toBC = false) ->
-		if fromBC and not from.startsWith(CUI.DateTimeRangeGrammar.DASH)
-			from = "-#{from}"
 		if toBC and not to.startsWith(CUI.DateTimeRangeGrammar.DASH)
-			to = "-#{to}"
+			to = @__toBC(to)
+
+		if (fromBC or toBC) and not from.startsWith(CUI.DateTimeRangeGrammar.DASH)
+			from = @__toBC(from)
+
 
 		return CUI.DateTimeRangeGrammar.getFromToWithRange(from, to)
 		
@@ -440,9 +452,9 @@ class CUI.DateTimeRangeGrammar
 
 		return from: from, to: to
 
-	@getFromTo: (inputString, isBc = false) ->
-		if isBc and not inputString.startsWith(CUI.DateTimeRangeGrammar.DASH)
-			inputString = "-#{inputString}"
+	@getFromTo: (inputString, isBC = false) ->
+		if isBC and not inputString.startsWith(CUI.DateTimeRangeGrammar.DASH)
+			inputString = @__toBC(inputString)
 
 		momentInput = CUI.DateTimeRangeGrammar.getMoment(inputString)
 
@@ -483,3 +495,8 @@ class CUI.DateTimeRangeGrammar
 		momentInput = dateTime.parseValue(inputString);
 		dateTime.destroy()
 		return momentInput
+
+	@__toBC: (inputString) ->
+		if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_YEAR)
+			inputString = parseInt(inputString) - 1
+		return "-#{inputString}"

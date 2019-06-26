@@ -9,7 +9,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.error).toBeDefined()
     });
 
-    test("stringToDateRange :: Null", () => {
+    test("stringToDateRange :: null", () => {
         const input = null;
 
         const output = CUI.DateTime.stringToDateRange(input)
@@ -310,8 +310,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-1900");
-        expect(output.to).toBe("-1900");
+        expect(output.from).toBe("-1899");
+        expect(output.to).toBe("-1899");
     });
 
     test("stringToDateRange :: 1900 BCE", () => {
@@ -319,8 +319,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-1900");
-        expect(output.to).toBe("-1900");
+        expect(output.from).toBe("-1899");
+        expect(output.to).toBe("-1899");
     });
 
     test("stringToDateRange :: 12 Jhd", () => {
@@ -749,7 +749,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0250");
+        expect(output.from).toBe("-0249");
         expect(output.to).toBe("0250");
     });
 
@@ -758,8 +758,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-2000");
-        expect(output.to).toBe("-2000");
+        expect(output.from).toBe("-1999");
+        expect(output.to).toBe("-1999");
     });
 
     test("stringToDateRange :: 2000 AD", () => {
@@ -830,7 +830,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0554");
+        expect(output.from).toBe("-0553");
         expect(output.to).toBe("0062");
     });
 
@@ -839,8 +839,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0311");
-        expect(output.to).toBe("-0289");
+        expect(output.from).toBe("-0310");
+        expect(output.to).toBe("-0288");
     });
 
     test("stringToDateRange :: 311 - 289 v. Chr.", () => {
@@ -848,8 +848,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0311");
-        expect(output.to).toBe("-0289");
+        expect(output.from).toBe("-0310");
+        expect(output.to).toBe("-0288");
     });
 
     test("stringToDateRange :: 311 - 289 B.C.", () => {
@@ -857,8 +857,8 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0311");
-        expect(output.to).toBe("-0289");
+        expect(output.from).toBe("-0310");
+        expect(output.to).toBe("-0288");
     });
 
     test("stringToDateRange :: 543 BC - 876 nach Chr.", () => {
@@ -866,7 +866,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0543");
+        expect(output.from).toBe("-0542");
         expect(output.to).toBe("0876");
     });
 
@@ -875,7 +875,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0123");
+        expect(output.from).toBe("-0122");
         expect(output.to).toBe("0678");
     });
 
@@ -884,7 +884,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0800");
+        expect(output.from).toBe("-0799");
         expect(output.to).toBe("0900");
     });
 
@@ -893,7 +893,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         const output = CUI.DateTime.stringToDateRange(input)
 
-        expect(output.from).toBe("-0800");
+        expect(output.from).toBe("-0799");
         expect(output.to).toBe("0900");
     });
 
@@ -922,6 +922,15 @@ describe('CUI.DateTime.stringToDateRange', () => {
 
         expect(output.from).toBe("0300");
         expect(output.to).toBe("0350");
+    });
+
+    test("stringToDateRange :: 21 B.C. - 10", () => {
+        const input = "21 B.C. to 10";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0020");
+        expect(output.to).toBe("0010");
     });
 });
 
@@ -1152,7 +1161,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("-0505 bis -0406")
+        expect(output).toBe("506 B.C. - 407 B.C.")
     });
 
     test("dateRangeToString :: 0401 - 0500", () => {
@@ -1284,5 +1293,50 @@ describe('CUI.DateTime.dateRangeToString', () => {
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("20th century")
+    });
+
+    test("dateRangeToString :: -0010 - 10", () => {
+        const from = "-0010"
+        const to = "10"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("11 B.C. - 10")
+    });
+
+    test("dateRangeToString :: -0020 - -10", () => {
+        const from = "-0020"
+        const to = "-10"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("21 B.C. - 11 B.C.")
+    });
+
+    test("dateRangeToString :: -0020 - 0010", () => {
+        const from = "-0020"
+        const to = "0010"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("21 B.C. - 10")
+    });
+
+    test("dateRangeToString :: 0100 - 2010-12-31", () => {
+        const from = "0100"
+        const to = "2010-12-31"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("100 - 2010-12-31")
+    });
+
+    test("dateRangeToString :: 0100 - 2010-01-29", () => {
+        const from = "0100"
+        const to = "2010-01-29"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("100 - 2010-01-29")
     });
 });
