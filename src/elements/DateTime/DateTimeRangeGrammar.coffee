@@ -113,12 +113,24 @@ class CUI.DateTimeRangeGrammar
 		["YEAR_DOT Jhd. n. Chr", "century", [0]]
 		["YEAR_DOT Jhd n. Chr.", "century", [0]]
 		["YEAR_DOT Jhd n. Chr", "century", [0]]
-		["YEAR_DOT Jt. v. Chr.", "millennium", [0], null, "MILLENNIUM"]
-		["YEAR_DOT Jt v. Chr.", "millennium", [0]]
-		["YEAR_DOT Jt bc", "millennium", [0]]
-		["YEAR_DOT Jt. bc", "millennium", [0]]
-		["YEAR_DOT Jt BC", "millennium", [0]]
-		["YEAR_DOT Jt. BC", "millennium", [0]]
+		["YEAR_DOT Jt. v. Chr.", "millennium", [0], [true], "MILLENNIUM_BC"]
+		["YEAR_DOT Jt v. Chr.", "millennium", [0], [true]]
+		["YEAR_DOT Jt bc", "millennium", [0], [true]]
+		["YEAR_DOT Jt. bc", "millennium", [0], [true]]
+		["YEAR_DOT Jt BC", "millennium", [0], [true]]
+		["YEAR_DOT Jt. BC", "millennium", [0], [true]]
+		["YEAR_DOT Jt.", "millennium", [0], null, "MILLENNIUM"]
+		["YEAR_DOT Jt.", "millennium", [0]]
+		["YEAR_DOT Jt", "millennium", [0]]
+		["YEAR Jt. v. Chr.", "millennium", [0], [true]]
+		["YEAR Jt v. Chr.", "millennium", [0], [true]]
+		["YEAR Jt bc", "millennium", [0], [true]]
+		["YEAR Jt. bc", "millennium", [0], [true]]
+		["YEAR Jt BC", "millennium", [0], [true]]
+		["YEAR Jt. BC", "millennium", [0], [true]]
+		["YEAR Jt.", "millennium", [0]]
+		["YEAR Jt.", "millennium", [0]]
+		["YEAR Jt", "millennium", [0]]
 		["Anfang YEAR_DOT Jhd", "earlyCentury", [1]]
 		["Anfang YEAR_DOT Jh", "earlyCentury", [1]]
 		["Anfang YEAR_DOT Jh.", "earlyCentury", [1], null, "EARLY_CENTURY"]
@@ -166,6 +178,9 @@ class CUI.DateTimeRangeGrammar
 		["around YEAR", "yearRange", [1], [false, true, true], "AROUND"]
 		["around YEAR BC", "yearRange", [1], [true, true, true], "AROUND_BC"]
 		["YEAR_DOT millennium", "millennium", [0], null, "MILLENNIUM"]
+		["YEAR_DOT millennium BC", "millennium", [0], [true], "MILLENNIUM_BC"]
+		["YEAR millennium", "millennium", [0]]
+		["YEAR millennium BC", "millennium", [0], [true]]
 		["YEAR BCE", "getFromTo", [0], [true]]
 		["YEAR bc", "getFromTo", [0], [true]]
 		["YEAR BC", "getFromTo", [0], [true]]
@@ -240,7 +255,7 @@ class CUI.DateTimeRangeGrammar
 			if fromYear == toYear
 				return "#{fromYear}"
 
-			isBC = fromYear < 0
+			isBC = fromYear <= 0
 			if isBC
 				possibleString = getPossibleString("AFTER_BC", [Math.abs(fromYear)])
 			else
@@ -249,7 +264,7 @@ class CUI.DateTimeRangeGrammar
 			if possibleString
 				return possibleString
 
-			isBC = toYear < 0
+			isBC = toYear <= 0
 			if isBC
 				possibleString = getPossibleString("BEFORE_BC", [Math.abs(toYear)])
 			else
@@ -259,7 +274,7 @@ class CUI.DateTimeRangeGrammar
 				return possibleString
 
 			centerYear = (toYear + fromYear) / 2
-			isBC = centerYear < 0
+			isBC = centerYear <= 0
 			if isBC
 				possibleString = getPossibleString("AROUND_BC", [Math.abs(centerYear)])
 			else
@@ -270,15 +285,21 @@ class CUI.DateTimeRangeGrammar
 
 			yearsDifference = toYear - fromYear
 			if yearsDifference == 999 # Millennium
-				millennium = (-from + 1) / 1000
-				possibleString = getPossibleString("MILLENNIUM", [millennium])
+				isBC = toYear <= 0
+				if isBC
+					millennium = (-from + 1) / 1000
+					possibleString = getPossibleString("MILLENNIUM_BC", [millennium])
+				else
+					millennium = to / 1000
+					possibleString = getPossibleString("MILLENNIUM", [millennium])
+
 
 				if possibleString
 					return possibleString
 			else if yearsDifference == 99 # Century
-				isBC = toYear < 0
+				isBC = toYear <= 0
 				if isBC
-					century = -fromYear / 100
+					century = -(fromYear - 1) / 100
 					possibleString = getPossibleString("CENTURY_BC", [century])
 				else
 					century = toYear / 100
@@ -287,7 +308,7 @@ class CUI.DateTimeRangeGrammar
 				if possibleString
 					return possibleString
 			else if yearsDifference == 15 # Early/Late
-				isBC = fromYear < 0
+				isBC = fromYear <= 0
 				century = Math.ceil(Math.abs(fromYear) / 100)
 				if isBC
 					for key in ["EARLY_CENTURY_BC", "LATE_CENTURY_BC"]
@@ -392,27 +413,31 @@ class CUI.DateTimeRangeGrammar
 		return error: "NoDateRangeFound #{input}"
 
 
-	@millennium: (millennium) ->
-		from = millennium * 1000 - 1
-		to = (millennium - 1) * 1000
-		return CUI.DateTimeRangeGrammar.getFromToWithRange("-#{from}", "-#{to}")
+	@millennium: (millennium, isBC) ->
+		if isBC
+			from = -(millennium * 1000 - 1)
+			to = -((millennium - 1) * 1000)
+		else
+			to = millennium * 1000
+			from = to - 999
+		return CUI.DateTimeRangeGrammar.getFromToWithRange("#{from}", "#{to}")
 
 	@century: (century, isBC) ->
 		century = century * 100
 		if isBC
-			to = -(century - 99)
-			from = -century
+			to = -(century - 100)
+			from = -century + 1
 		else
 			to = century
 			from = century - 99
 		return CUI.DateTimeRangeGrammar.getFromToWithRange("#{from}", "#{to}")
 
 	# 15 -> 1401 - 1416
-	# 15 -> 1500 1485
+	# 15 -> 1499 1484
 	@earlyCentury: (century, isBC) ->
 		century = century * 100
 		if isBC
-			from = -century
+			from = -century + 1
 			to = from + 15
 		else
 			from = century - 99
@@ -420,11 +445,11 @@ class CUI.DateTimeRangeGrammar
 		return CUI.DateTimeRangeGrammar.getFromToWithRange("#{from}", "#{to}")
 
 	# 15 - -1416 -1401
-	# 15 - 1485 - 1500
+	# 15 - 1484 - 1499
 	@lateCentury: (century, isBC) ->
 		century = century * 100
 		if isBC
-			to = -(century - 99)
+			to = -(century - 101)
 			from = to - 15
 		else
 			to = century
