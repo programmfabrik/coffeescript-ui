@@ -76,14 +76,29 @@ class CUI.DateTimeRangeGrammar
 		["YEAR_DOT Jhd. vor Chr.", "century", [0], [true]]
 		["YEAR_DOT Jhd. v. Chr", "century", [0], [true]]
 		["YEAR_DOT Jhd. v. Chr.", "century", [0], [true], "CENTURY_BC"]
+		["YEAR_DOT Jhd vor Chr", "century", [0], [true]]
+		["YEAR_DOT Jhd vor Chr.", "century", [0], [true]]
+		["YEAR_DOT Jhd v. Chr", "century", [0], [true]]
+		["YEAR_DOT Jhd v. Chr.", "century", [0], [true]]
+		["YEAR_DOT Jh vor Chr", "century", [0], [true]]
+		["YEAR_DOT Jh vor Chr.", "century", [0], [true]]
+		["YEAR_DOT Jh v. Chr", "century", [0], [true]]
+		["YEAR_DOT Jh v. Chr.", "century", [0], [true]]
+		["YEAR_DOT Jh. vor Chr", "century", [0], [true]]
+		["YEAR_DOT Jh. vor Chr.", "century", [0], [true]]
+		["YEAR_DOT Jh. v. Chr", "century", [0], [true]]
+		["YEAR_DOT Jh. v. Chr.", "century", [0], [true]]
 		["YEAR Jhd. vor Chr", "century", [0], [true]]
 		["YEAR Jhd. vor Chr.", "century", [0], [true]]
 		["YEAR Jhd. v. Chr", "century", [0], [true]]
 		["YEAR Jhd. v. Chr.", "century", [0], [true]]
+		["YEAR Jhd vor Chr", "century", [0], [true]]
+		["YEAR Jhd vor Chr.", "century", [0], [true]]
+		["YEAR Jhd v. Chr", "century", [0], [true]]
+		["YEAR Jhd v. Chr.", "century", [0], [true]]
 		["YEAR Jhd ac", "century", [0], [true]]
 		["YEAR Jh ac", "century", [0], [true]]
 		["YEAR Jh. ac", "century", [0], [true]]
-		["YEAR Jhd", "century", [0]]
 		["YEAR Jhd.", "century", [0]]
 		["YEAR Jhd", "century", [0]]
 		["YEAR Jh", "century", [0]]
@@ -93,8 +108,11 @@ class CUI.DateTimeRangeGrammar
 		["YEAR_DOT Jhd nach Chr.", "century", [0]]
 		["YEAR_DOT Jhd. nach Chr.", "century", [0]]
 		["YEAR_DOT Jhd. nach Chr", "century", [0]]
+		["YEAR_DOT Jhd nach Chr", "century", [0]]
 		["YEAR_DOT Jhd. n. Chr.", "century", [0]]
 		["YEAR_DOT Jhd. n. Chr", "century", [0]]
+		["YEAR_DOT Jhd n. Chr.", "century", [0]]
+		["YEAR_DOT Jhd n. Chr", "century", [0]]
 		["YEAR_DOT Jt. v. Chr.", "millennium", [0], null, "MILLENNIUM"]
 		["YEAR_DOT Jt v. Chr.", "millennium", [0]]
 		["YEAR_DOT Jt bc", "millennium", [0]]
@@ -155,7 +173,7 @@ class CUI.DateTimeRangeGrammar
 		["YEAR AD", "getFromTo", [0]]
 		["YEAR A.D.", "getFromTo", [0]]
 		["CENTURY century", "century", [0], null, "CENTURY"]
-		["CENTURY century BC", "century", [0], null, "CENTURY_BC"]
+		["CENTURY century BC", "century", [0], [true], "CENTURY_BC"]
 		["Early CENTURY century", "earlyCentury", [1], null, "EARLY_CENTURY"]
 		["Early CENTURY century BC", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"]
 		["Late CENTURY century", "lateCentury", [1], null, "LATE_CENTURY"]
@@ -165,9 +183,6 @@ class CUI.DateTimeRangeGrammar
 	@dateRangeToString: (from, to) ->
 		if not CUI.util.isString(from) or not CUI.util.isString(to)
 			return
-
-		if from == to
-			return from
 
 		locale = CUI.DateTime.getLocale()
 		fromMoment = CUI.DateTimeRangeGrammar.getMoment(from)
@@ -181,6 +196,9 @@ class CUI.DateTimeRangeGrammar
 			fromYear = parseInt(from)
 		else if fromMoment.isValid() and fromMoment.date() == 1 and fromMoment.month() == 0 # First day of year.
 			fromYear = fromMoment.year()
+
+		if from == to
+			return CUI.DateTime.format(from, "display_short")
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)
 			toIsYear = true
@@ -207,6 +225,8 @@ class CUI.DateTimeRangeGrammar
 						parameters[index] += "."
 					else if possibleStringArray[value] == "CENTURY"
 						parameters[index] += "th"
+					else if CUI.util.isString(parameters[index])
+						parameters[index] = CUI.DateTime.format(parameters[index], "display_short")
 					possibleStringArray[value] = parameters[index]
 
 			possibleString = possibleStringArray.join(" ")
@@ -289,9 +309,15 @@ class CUI.DateTimeRangeGrammar
 
 		if fromIsYear or toIsYear
 			if fromIsYear
-				from = CUI.DateTime.format(from)
+				from = CUI.DateTime.format(from, "display_short")
 			if toIsYear
-				to = CUI.DateTime.format(to)
+				to = CUI.DateTime.format(to, "display_short")
+
+				# Removes the 'BC' / v. Chr. from 'from' to only show it in the end. For example: 15 - 10 v. Chr.
+				fromSplit = from.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)
+				toSplit = to.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)
+				if fromSplit[1] == toSplit[1]
+					from = fromSplit[0]
 			return "#{from} - #{to}"
 
 		possibleString = getPossibleString("RANGE", [from, to])
@@ -413,7 +439,6 @@ class CUI.DateTimeRangeGrammar
 		if (fromBC or toBC) and not from.startsWith(CUI.DateTimeRangeGrammar.DASH)
 			from = @__toBC(from)
 
-
 		return CUI.DateTimeRangeGrammar.getFromToWithRange(from, to)
 		
 	@yearRange: (year, isBC = false, fromAddYears = false, toAddYears = false) ->
@@ -477,6 +502,7 @@ class CUI.DateTimeRangeGrammar
 		to = CUI.DateTimeRangeGrammar.getFromTo(toDate)
 		if not from or not to
 			return
+
 		return from: from.from, to: to.to
 
 	@format: (dateMoment, yearFormat = true) ->
