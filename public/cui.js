@@ -30157,6 +30157,7 @@ CUI.SimpleForm = (function(superClass) {
           append(get_append(field), row);
           append(hint_div, row);
           CUI.dom.data(row, "data-field", field);
+          _this.__setRowVisibility(row);
           if (grid) {
             row.setAttribute("data-cui-grid", grid);
           }
