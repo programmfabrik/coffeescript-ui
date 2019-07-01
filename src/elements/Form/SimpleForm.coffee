@@ -459,6 +459,8 @@ class CUI.SimpleForm extends CUI.DataField
 				# used to set row visibility
 				CUI.dom.data(row, "data-field", field)
 
+				@__setRowVisibility(row)
+
 				if grid
 					row.setAttribute("data-cui-grid", grid)
 
