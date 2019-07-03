@@ -754,9 +754,12 @@ class CUI
 		"(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
 		"|" +
 		# host & domain name
-		"(?:[a-z\\u00a1-\\uffff0-9-*][a-z\\u00a1-\\uffff0-9-]*\\.)*" +
+		"(?:[a-z0-9\\u00a1-\\uffff][a-z\\u00a1-\\uffff0-9-]*[a-z0-9\\u00a1-\\uffff]\\.)*" +
 		# last identifier
 		"(?:[a-z\\u00a1-\\uffff]{2,})" +
+		# hostname only
+		"|" +
+		"(?:[a-z0-9\\u00a1-\\uffff][a-z0-9-\\u00a1-\\uffff]*[a-z0-9\\u00a1-\\uffff])" +
 		"))|)" +
 		# port number
 		"(?::(\\d{2,5}))?" +
