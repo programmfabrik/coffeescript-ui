@@ -227,6 +227,9 @@ class CUI.dom
 		if not node
 			return false
 
+		if node.hasOwnProperty('DOM')
+			node = node.DOM
+
 		node.hasAttribute(key)
 
 	@setAttributeMap: (_node, map) ->

@@ -4022,9 +4022,7 @@ $layer-sizes: (
 	cursor: default;
 
 	&.cui-selected,
-	&.cui-selected:nth-child(even),
-	&:focus,
-	&:focus:nth-child(even) {
+	&.cui-selected:nth-child(even) {
 		> .cui-lv-tr > .cui-lv-td {
 			background: var(--highlight-light);
 		}
@@ -4042,6 +4040,11 @@ $layer-sizes: (
 				background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
 			}
 		}
+	}
+
+	&:focus,
+	&:focus:nth-child(even) {
+		@include inner-focus;
 	}
 
 	&.cui-lv-tree-node--is-branch {

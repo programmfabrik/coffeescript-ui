@@ -318,6 +318,23 @@ class CUI.ListView extends CUI.SimplePane
 					@selectRow(ev, row)
 					return
 
+			selectorFocus = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer:focus"
+
+			CUI.Events.listen
+				type: ["keydown"]
+				node: @DOM
+				selector: selectorFocus
+				call: (ev) =>
+					if ev.getKeyboard() not in ["Return", "Space"]
+						return
+
+					row = CUI.dom.data(ev.getCurrentTarget(), "listViewRow")
+					if not row.isSelectable()
+						return
+
+					ev.stopImmediatePropagation()
+					@selectRow(ev, row)
+					return
 
 		if @quadrant[2]
 			CUI.Events.listen
@@ -984,10 +1001,10 @@ class CUI.ListView extends CUI.SimplePane
 				if ft.to < ft.from
 					continue
 
-				if @fixedColsCount > 0
-					html[qi].push("<div class=\"cui-lv-tr-outer\" cui-lv-tr-unmeasured=\"#{@listViewCounter}\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
-				else
-					html[qi].push("<div class=\"cui-lv-tr-outer\" row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
+				tabindex = if @hasSelectableRows() then "tabindex=\"1\"" else ""
+				unmeasuredAttribute = if @fixedColsCount > 0 then "cui-lv-tr-unmeasured=\"#{@listViewCounter}\"" else ""
+
+				html[qi].push("<div class=\"cui-lv-tr-outer\" #{tabindex} #{unmeasuredAttribute} row=\"#{row_i}\"><div class=\"cui-lv-tr\">")
 
 				for display_col_i in [ft.from..ft.to] by 1
 					col_i = @getColIdx(display_col_i)
