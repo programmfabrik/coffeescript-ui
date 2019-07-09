@@ -2969,14 +2969,18 @@ a[role="button"].cui-button-appearance-link {
   min-width: 0;
   outline: none;
   cursor: default; }
-  .cui-lv-tr-outer.cui-selected > .cui-lv-tr > .cui-lv-td, .cui-lv-tr-outer.cui-selected:nth-child(even) > .cui-lv-tr > .cui-lv-td, .cui-lv-tr-outer:focus > .cui-lv-tr > .cui-lv-td, .cui-lv-tr-outer:focus:nth-child(even) > .cui-lv-tr > .cui-lv-td {
+  .cui-lv-tr-outer.cui-selected > .cui-lv-tr > .cui-lv-td, .cui-lv-tr-outer.cui-selected:nth-child(even) > .cui-lv-tr > .cui-lv-td {
     background: var(--highlight-light); }
-  .cui-lv-tr-outer.cui-selected .cui-empty-label, .cui-lv-tr-outer.cui-selected:nth-child(even) .cui-empty-label, .cui-lv-tr-outer:focus .cui-empty-label, .cui-lv-tr-outer:focus:nth-child(even) .cui-empty-label {
+  .cui-lv-tr-outer.cui-selected .cui-empty-label, .cui-lv-tr-outer.cui-selected:nth-child(even) .cui-empty-label {
     color: var(--on-highlight-light-secondary-color); }
-  .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer:focus.cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer:focus:nth-child(even).cui-selected .cui-label-manage-overflow:after {
+  .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow:after {
     background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light)); }
-  .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer:focus.cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer:focus:nth-child(even).cui-selected .cui-label-manage-overflow-button {
+  .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow-button {
     background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px); }
+  .cui-lv-tr-outer:focus, .cui-lv-tr-outer:focus:nth-child(even) {
+    box-shadow: 0 0 0 3px var(--highlight-light) inset;
+    border-radius: 4px;
+    z-index: 1; }
   .cui-lv-tr-outer.cui-lv-tree-node--is-branch {
     cursor: pointer;
     -webkit-user-select: none;

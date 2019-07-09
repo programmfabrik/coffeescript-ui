@@ -18331,6 +18331,9 @@ CUI.dom = (function() {
     if (!node) {
       return false;
     }
+    if (node.hasOwnProperty('DOM')) {
+      node = node.DOM;
+    }
     return node.hasAttribute(key);
   };
 
@@ -34333,7 +34336,7 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.render = function() {
-    var add_quadrant, cls, col, html, j, on_scroll, outer, ref, selector;
+    var add_quadrant, cls, col, html, j, on_scroll, outer, ref, selector, selectorFocus;
     CUI.util.assert(!this.grid, "ListView.render", "ListView already rendered", {
       opts: this.opts
     });
@@ -34446,6 +34449,26 @@ CUI.ListView = (function(superClass) {
         call: (function(_this) {
           return function(ev) {
             var row;
+            row = CUI.dom.data(ev.getCurrentTarget(), "listViewRow");
+            if (!row.isSelectable()) {
+              return;
+            }
+            ev.stopImmediatePropagation();
+            _this.selectRow(ev, row);
+          };
+        })(this)
+      });
+      selectorFocus = "." + this.__lvClass + "-quadrant > .cui-lv-tr-outer:focus";
+      CUI.Events.listen({
+        type: ["keydown"],
+        node: this.DOM,
+        selector: selectorFocus,
+        call: (function(_this) {
+          return function(ev) {
+            var ref1, row;
+            if ((ref1 = ev.getKeyboard()) !== "Return" && ref1 !== "Space") {
+              return;
+            }
             row = CUI.dom.data(ev.getCurrentTarget(), "listViewRow");
             if (!row.isSelectable()) {
               return;
@@ -35269,7 +35292,7 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.__addRows = function(_row_i, listViewRows, mode, sibling_row_i) {
-    var _mode, _qi, _qi_s, anchor_row, anchor_row_idx, cls, col_i, display_col_i, find_cells_and_rows, fixedRows, ft, html, i, idx, j, k, l, len1, len2, len3, listViewRow, m, maxi, n, node, o, outer, p, qi, ref, ref1, ref2, ref3, ref4, ref5, ref6, row, row_i, width;
+    var _mode, _qi, _qi_s, anchor_row, anchor_row_idx, cls, col_i, display_col_i, find_cells_and_rows, fixedRows, ft, html, i, idx, j, k, l, len1, len2, len3, listViewRow, m, maxi, n, node, o, outer, p, qi, ref, ref1, ref2, ref3, ref4, ref5, ref6, row, row_i, tabindex, unmeasuredAttribute, width;
     if (listViewRows == null) {
       listViewRows = [];
     }
@@ -35321,11 +35344,9 @@ CUI.ListView = (function(superClass) {
         if (ft.to < ft.from) {
           continue;
         }
-        if (this.fixedColsCount > 0) {
-          html[qi].push("<div class=\"cui-lv-tr-outer\" cui-lv-tr-unmeasured=\"" + this.listViewCounter + "\" row=\"" + row_i + "\"><div class=\"cui-lv-tr\">");
-        } else {
-          html[qi].push("<div class=\"cui-lv-tr-outer\" row=\"" + row_i + "\"><div class=\"cui-lv-tr\">");
-        }
+        tabindex = this.hasSelectableRows() ? "tabindex=\"1\"" : "";
+        unmeasuredAttribute = this.fixedColsCount > 0 ? "cui-lv-tr-unmeasured=\"" + this.listViewCounter + "\"" : "";
+        html[qi].push("<div class=\"cui-lv-tr-outer\" " + tabindex + " " + unmeasuredAttribute + " row=\"" + row_i + "\"><div class=\"cui-lv-tr\">");
         for (display_col_i = l = ref3 = ft.from, ref4 = ft.to; l <= ref4; display_col_i = l += 1) {
           col_i = this.getColIdx(display_col_i);
           ref5 = this.__getColWidth(row_i, col_i), width = ref5[0], maxi = ref5[1];
