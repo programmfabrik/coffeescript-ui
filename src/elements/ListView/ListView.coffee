@@ -126,6 +126,9 @@ class CUI.ListView extends CUI.SimplePane
 			selectableRows:
 				check: (v) ->
 					v == false or v == true or v == "multiple"
+			focusable:
+				check: Boolean
+				default: false
 			onSelect:
 				check: Function
 			onDeselect:
@@ -222,11 +225,11 @@ class CUI.ListView extends CUI.SimplePane
 		html.push("<style></style>")
 
 		add_quadrant = (qi) =>
-			if qi is 3
+			if @__isFocusable()
 				# add tabindex="-1"
-				html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\" tabindex=\"-1\">")
-			else
 				html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\">")
+			else
+				html.push("<div cui-lv-quadrant=\"#{qi}\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-#{qi} #{@__lvClass}-quadrant\" tabindex=\"-1\">")
 
 			if qi in [2, 3]
 				html.push("<div class=\"cui-lv-tr-fill-outer\"><div class=\"cui-lv-tr\">")
@@ -318,6 +321,7 @@ class CUI.ListView extends CUI.SimplePane
 					@selectRow(ev, row)
 					return
 
+		if @__isFocusable()
 			selectorFocus = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer:focus"
 
 			CUI.Events.listen
@@ -460,6 +464,9 @@ class CUI.ListView extends CUI.SimplePane
 
 	hasSelectableRows: ->
 		!!@__selectableRows
+
+	__isFocusable: ->
+		return @_focusable
 
 	selectRowById: (row_id) ->
 		@selectRow(null, @getListViewRow(row_id), true)
@@ -1001,7 +1008,7 @@ class CUI.ListView extends CUI.SimplePane
 				if ft.to < ft.from
 					continue
 
-				tabindex = if @hasSelectableRows() then "tabindex=\"1\"" else ""
+				tabindex = if @__isFocusable() then "tabindex=\"1\"" else ""
 				unmeasuredAttribute = if @fixedColsCount > 0 then "cui-lv-tr-unmeasured=\"#{@listViewCounter}\"" else ""
 
 				html[qi].push("<div class=\"cui-lv-tr-outer\" #{tabindex} #{unmeasuredAttribute} row=\"#{row_i}\"><div class=\"cui-lv-tr\">")

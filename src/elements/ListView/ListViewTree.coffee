@@ -138,7 +138,32 @@ class CUI.ListViewTree extends CUI.ListView
 		else
 			CUI.dom.addClass(@grid, "cui-list-view-tree-hierarchy")
 
-		@DOM
+		if @__isFocusable()
+			selectorFocus = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer:focus"
+
+			CUI.Events.listen
+				type: ["keydown"]
+				node: @DOM
+				selector: selectorFocus
+				call: (ev) =>
+					node = CUI.dom.data(ev.getCurrentTarget(), "listViewRow")
+					if not node.isSelectable()
+						return
+
+					focusNode = (node) =>
+						rowIdx = node.getRowIdx()
+						row = @getRow(rowIdx)[0]
+						row.focus()
+						return
+
+					if ev.getKeyboard() == "Right" and not node.isOpen()
+						node.open().done(() => focusNode(node))
+					else if ev.getKeyboard() == "Left" and node.isOpen()
+						node.close().done(() => focusNode(node))
+
+					return
+
+		return @DOM
 
 	toggleNode: (ev, node) ->
 
