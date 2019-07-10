@@ -34241,6 +34241,10 @@ CUI.ListView = (function(superClass) {
           return v === false || v === true || v === "multiple";
         }
       },
+      focusable: {
+        check: Boolean,
+        "default": false
+      },
       onSelect: {
         check: Function
       },
@@ -34367,10 +34371,10 @@ CUI.ListView = (function(superClass) {
     add_quadrant = (function(_this) {
       return function(qi) {
         var col_i, ft, j, ref, ref1;
-        if (qi === 3) {
-          html.push("<div cui-lv-quadrant=\"" + qi + "\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-" + qi + " " + _this.__lvClass + "-quadrant\" tabindex=\"-1\">");
-        } else {
+        if (_this.__isFocusable()) {
           html.push("<div cui-lv-quadrant=\"" + qi + "\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-" + qi + " " + _this.__lvClass + "-quadrant\">");
+        } else {
+          html.push("<div cui-lv-quadrant=\"" + qi + "\" class=\"cui-drag-scroll cui-list-view-grid-quadrant cui-lv-tbody cui-list-view-grid-quadrant-" + qi + " " + _this.__lvClass + "-quadrant\" tabindex=\"-1\">");
         }
         if (qi === 2 || qi === 3) {
           html.push("<div class=\"cui-lv-tr-fill-outer\"><div class=\"cui-lv-tr\">");
@@ -34458,6 +34462,8 @@ CUI.ListView = (function(superClass) {
           };
         })(this)
       });
+    }
+    if (this.__isFocusable()) {
       selectorFocus = "." + this.__lvClass + "-quadrant > .cui-lv-tr-outer:focus";
       CUI.Events.listen({
         type: ["keydown"],
@@ -34622,6 +34628,10 @@ CUI.ListView = (function(superClass) {
 
   ListView.prototype.hasSelectableRows = function() {
     return !!this.__selectableRows;
+  };
+
+  ListView.prototype.__isFocusable = function() {
+    return this._focusable;
   };
 
   ListView.prototype.selectRowById = function(row_id) {
@@ -35344,7 +35354,7 @@ CUI.ListView = (function(superClass) {
         if (ft.to < ft.from) {
           continue;
         }
-        tabindex = this.hasSelectableRows() ? "tabindex=\"1\"" : "";
+        tabindex = this.__isFocusable() ? "tabindex=\"1\"" : "";
         unmeasuredAttribute = this.fixedColsCount > 0 ? "cui-lv-tr-unmeasured=\"" + this.listViewCounter + "\"" : "";
         html[qi].push("<div class=\"cui-lv-tr-outer\" " + tabindex + " " + unmeasuredAttribute + " row=\"" + row_i + "\"><div class=\"cui-lv-tr\">");
         for (display_col_i = l = ref3 = ft.from, ref4 = ft.to; l <= ref4; display_col_i = l += 1) {
@@ -36338,7 +36348,7 @@ CUI.ListViewTree = (function(superClass) {
   };
 
   ListViewTree.prototype.render = function() {
-    var handle_event;
+    var handle_event, selectorFocus;
     handle_event = (function(_this) {
       return function(ev) {
         var node;
@@ -36382,6 +36392,38 @@ CUI.ListViewTree = (function(superClass) {
       CUI.dom.addClass(this.grid, "cui-list-view-tree-no-hierarchy");
     } else {
       CUI.dom.addClass(this.grid, "cui-list-view-tree-hierarchy");
+    }
+    if (this.__isFocusable()) {
+      selectorFocus = "." + this.__lvClass + "-quadrant > .cui-lv-tr-outer:focus";
+      CUI.Events.listen({
+        type: ["keydown"],
+        node: this.DOM,
+        selector: selectorFocus,
+        call: (function(_this) {
+          return function(ev) {
+            var focusNode, node;
+            node = CUI.dom.data(ev.getCurrentTarget(), "listViewRow");
+            if (!node.isSelectable()) {
+              return;
+            }
+            focusNode = function(node) {
+              var row, rowIdx;
+              rowIdx = node.getRowIdx();
+              row = _this.getRow(rowIdx)[0];
+              row.focus();
+            };
+            if (ev.getKeyboard() === "Right" && !node.isOpen()) {
+              node.open().done(function() {
+                return focusNode(node);
+              });
+            } else if (ev.getKeyboard() === "Left" && node.isOpen()) {
+              node.close().done(function() {
+                return focusNode(node);
+              });
+            }
+          };
+        })(this)
+      });
     }
     return this.DOM;
   };
