@@ -1693,6 +1693,9 @@ a[role="button"].cui-button-appearance-link {
   line-height: 18px; }
   .cui-vertical-layout-center > .cui-label {
     display: flex; }
+  .cui-label > .cui-label-content a {
+    color: var(--highlight);
+    text-decoration: underline; }
   .cui-label.cui-label-rotate-90 {
     white-space: nowrap;
     margin: 5px 0;
