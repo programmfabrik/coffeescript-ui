@@ -1908,6 +1908,11 @@ a[role="button"].cui-button-appearance-link {
 		display: flex;
 	}
 
+	> .cui-label-content a {
+		color: var(--highlight);
+		text-decoration: underline;
+	}
+
 	&.cui-label-rotate-90 {
 		white-space: nowrap;
 		margin: $padding/2 0;

@@ -16,6 +16,14 @@ class CUI.MultiOutput extends CUI.DataField
 			showOnlyPreferredKey:
 				check: Boolean
 				default: true
+			markdown:
+				mandatory: true
+				default: false
+				check: Boolean
+			markdown_opts:
+				check: "PlainObject"
+			text_node_func:
+				check: Function
 
 	readOpts: ->
 		super()
@@ -26,7 +34,7 @@ class CUI.MultiOutput extends CUI.DataField
 		if @_showOnlyPreferredKey
 			key = @_control.getPreferredKey()
 			CUI.util.assert(key, "Output.displayValue", "MultiInputControl: no preferred key set.", control: @_control)
-			label = new CUI.Label(text: @getValue()[key.name])
+			label = new CUI.Label(text: @getValue()[key.name], text_node_func: @_text_node_func, markdown: @_markdown, markdown_opts: @_markdown_opts)
 			@replace(label)
 		else
 			for key, idx in @_control.getKeys()
@@ -49,7 +57,7 @@ class CUI.MultiOutput extends CUI.DataField
 		@
 
 	__buildTemplateForKey: (key) ->
-		label =  new CUI.Label(text: @getValue()[key.name])
+		label =  new CUI.Label(text: @getValue()[key.name], text_node_func: @_text_node_func, markdown: @_markdown, markdown_opts: @_markdown_opts)
 
 		template = new CUI.Template
 			name: "data-field-multi-output"

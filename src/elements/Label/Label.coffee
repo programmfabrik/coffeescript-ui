@@ -103,7 +103,7 @@ class CUI.Label extends CUI.DOMElement
 			@append(@__overflow_button)
 
 			# throttle the check to partially mitigate the performance bottleneck
-			# when resizing via resize handle  when a lot of "manage overflow" 
+			# when resizing via resize handle  when a lot of "manage overflow"
 			# labels are in the DOM
 			checkOverflow = => @checkOverflowSize()
 
@@ -120,6 +120,8 @@ class CUI.Label extends CUI.DOMElement
 			text:
 				check: (v) ->
 					CUI.util.isString(v) or CUI.util.isNumber(v)
+			text_node_func:
+				check: Function
 			content:
 				check: (v) ->
 					CUI.util.isContent(v) or CUI.util.isString(v)
@@ -191,6 +193,9 @@ class CUI.Label extends CUI.DOMElement
 		else if markdown
 			@setContent(CUI.dom.htmlToNodes(marked(@__currentText, @__markdown_opts)))
 			@addClass("cui-label-markdown")
+		else if @_text_node_func
+			@setContent(@_text_node_func(@__currentText))
+			@removeClass("cui-label-markdown")
 		else
 			@setContent(CUI.dom.text(@__currentText))
 			@removeClass("cui-label-markdown")
@@ -267,6 +272,40 @@ class CUI.Label extends CUI.DOMElement
 	destroy: ->
 		@__tooltip?.destroy()
 		super()
+
+	# reads the input txt, parses links and returns
+	# dom notes. suitable to use as text_node_func.
+	@parseLinks: (txt) ->
+		nodes = []
+		text = []
+
+		append_text = =>
+			if text.length == 0
+				return
+			nodes.push(CUI.dom.text(text.join(" ")))
+			text = []
+			return
+
+		for el, idx in txt.split(/(\n| )/)
+			m = el.match("^(?:(www)\..+|http:\/\/|https:\/\//)")
+			if not m
+				text.push(el)
+				continue
+
+			# append the link
+			append_text()
+			if m[1]
+				prefix = "http://"
+			else
+				prefix = ""
+
+			a_node = CUI.dom.element("a", target: "_blank", href: prefix+el)
+			a_node.textContent = el
+			nodes.push(a_node)
+
+		append_text()
+		return nodes
+
 
 
 CUI.defaults.class.Label = CUI.Label
