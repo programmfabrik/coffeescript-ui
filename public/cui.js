@@ -31598,7 +31598,7 @@ CUI.Input = (function(superClass) {
       type: "keydown",
       call: (function(_this) {
         return function(ev) {
-          var ref, ref1, ref2;
+          var ref, ref1, ref2, ref3;
           if ((ev.ctrlKey() && !ev.keyCode() === 90) || ev.metaKey()) {
             return;
           }
@@ -31614,13 +31614,13 @@ CUI.Input = (function(superClass) {
           if ((ref1 = ev.keyCode()) === 9 || ref1 === 16 || ref1 === 17 || ref1 === 18 || ref1 === 27 || ref1 === 33 || ref1 === 34 || ref1 === 35 || ref1 === 36 || ref1 === 38 || ref1 === 40) {
             return;
           }
-          if (ev.getKeyboard() === "Control+A") {
+          if ((ev.ctrlKey() || ev.metaKey()) && ((ref2 = ev.keyCode()) === 65 || ref2 === 67 || ref2 === 86 || ref2 === 88)) {
             return;
           }
           if (!_this._textarea && ev.keyCode() === 13) {
             return;
           }
-          if (ev.keyCode() === 8 && (0 === (ref2 = _this.__input.selectionStart) && ref2 === _this.__input.selectionEnd)) {
+          if (ev.keyCode() === 8 && (0 === (ref3 = _this.__input.selectionStart) && ref3 === _this.__input.selectionEnd)) {
             return;
           }
           _this.__focusShadowInput();
