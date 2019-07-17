@@ -272,8 +272,8 @@ class CUI.Input extends CUI.DataFieldInput
 				if ev.keyCode() in [9, 16, 17, 18, 27, 33, 34, 35, 36, 38, 40]
 					return
 
-				# Return because it selects all.
-				if ev.getKeyboard() == "Control+A"
+				# Select all, copy, paste, cut.
+				if (ev.ctrlKey() or ev.metaKey()) and ev.keyCode() in [65, 67, 86, 88] # 'A', 'C', 'V', 'X'
 					return
 
 				if not @_textarea and ev.keyCode() == 13
