@@ -46,6 +46,7 @@ class CUI.Events.MouseIsStill extends CUI.Element
 		@__event = CUI.Events.listen
 			type: "mousemove"
 			node: @_node
+			instance: @
 			call: (ev) =>
 				CUI.clearTimeout(@__timeout)
 				@__timeout = CUI.setTimeout

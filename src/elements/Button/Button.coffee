@@ -916,7 +916,7 @@ class CUI.Button extends CUI.DOMElement
 			CUI.dom.removeAttribute(@DOM, "button-group")
 
 	__initTooltip: ->
-		if @__tooltip
+		if @__tooltip and not @__tooltip.isDestroyed()
 			return @
 
 		tt_opts = CUI.util.copyObject(@__tooltipOpts)
