@@ -4450,6 +4450,20 @@ label[data-label-clickable],
       height: 100%;
       color: inherit; }
 
+.cui-object-dumper .cui-object-dumper-node-string .cui-object-dumper-value span {
+  color: #c72424; }
+
+.cui-object-dumper .cui-object-dumper-node-number .cui-object-dumper-value span,
+.cui-object-dumper .cui-object-dumper-node-nan .cui-object-dumper-value span {
+  color: #1a1abd; }
+
+.cui-object-dumper .cui-object-dumper-node-boolean .cui-object-dumper-value span {
+  color: #11119e; }
+
+.cui-object-dumper .cui-object-dumper-node-undefined .cui-object-dumper-value span,
+.cui-object-dumper .cui-object-dumper-node-null .cui-object-dumper-value span {
+  color: #716f6f; }
+
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH

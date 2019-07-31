@@ -41520,6 +41520,14 @@ CUI.ObjectDumperNode = (function(superClass) {
         "class": "cui-object-dumper-node-value",
         element: new CUI.Label({
           text: this.__info.text,
+          text_node_func: (function(_this) {
+            return function() {
+              if (!_this.__info.cls === "String") {
+                return _this.__info.text;
+              }
+              return CUI.Label.parseLinks(_this.__info.text);
+            };
+          })(this),
           multiline: true
         })
       }));
@@ -41560,7 +41568,7 @@ CUI.ObjectDumperNode = (function(superClass) {
       info.text = "" + data;
     } else if (CUI.util.isString(data)) {
       info.cls = "String";
-      info.text = '"' + data + '"';
+      info.text = data;
     } else {
       info.cls = CUI.util.getObjectClass(data);
       if (CUI.util.isArray(data) || CUI.util.isPlainObject(data)) {
