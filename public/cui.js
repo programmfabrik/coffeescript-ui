@@ -14503,6 +14503,7 @@ CUI.Events.MouseIsStill = (function(superClass) {
     this.__event = CUI.Events.listen({
       type: "mousemove",
       node: this._node,
+      instance: this,
       call: (function(_this) {
         return function(ev) {
           CUI.clearTimeout(_this.__timeout);
@@ -22175,7 +22176,7 @@ CUI.Button = (function(superClass) {
 
   Button.prototype.__initTooltip = function() {
     var i, k, len, ref, tt_opts;
-    if (this.__tooltip) {
+    if (this.__tooltip && !this.__tooltip.isDestroyed()) {
       return this;
     }
     tt_opts = CUI.util.copyObject(this.__tooltipOpts);
