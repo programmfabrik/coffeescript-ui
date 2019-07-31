@@ -282,7 +282,7 @@ class CUI.Label extends CUI.DOMElement
 		append_text = =>
 			if text.length == 0
 				return
-			nodes.push(CUI.dom.text(text.join(" ")))
+			nodes.push(CUI.dom.text(text.join("")))
 			text = []
 			return
 
