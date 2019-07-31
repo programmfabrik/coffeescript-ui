@@ -6270,3 +6270,26 @@ label[data-label-clickable],
 		}
 	}
 }
+
+
+.cui-object-dumper {
+	.cui-object-dumper-node {
+		&-string .cui-object-dumper-value span {
+			color: #c72424
+		}
+
+		&-number .cui-object-dumper-value span,
+		&-nan .cui-object-dumper-value span {
+			color: #1a1abd
+		}
+
+		&-boolean .cui-object-dumper-value span {
+			color: #11119e
+		}
+
+		&-undefined .cui-object-dumper-value span,
+		&-null .cui-object-dumper-value span {
+			color: #716f6f
+		}
+	}
+}
