@@ -303,6 +303,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 						@_dragging?(ev, CUI.globalDrag, diff)
 				return
 
+		# Stop is used by ESC button to stop the dragging.
 		end_drag = (ev, stop = false) =>
 
 			start_target = CUI.globalDrag.$source
@@ -568,6 +569,8 @@ class CUI.Draggable extends CUI.DragDropSelect
 		CUI.dom.setDimensions CUI.globalDrag.helperNode,
 			borderBoxWidth: new_width
 			borderBoxHeight: new_height
+
+		CUI.globalDrag.helperPos = helper_pos
 
 		return
 
