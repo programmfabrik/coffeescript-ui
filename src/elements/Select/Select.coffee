@@ -177,7 +177,7 @@ class CUI.Select extends CUI.Checkbox
 				.done =>
 					# in case we have updated options
 					# we need to adjust the active idx
-					@displayValue()
+					@__displayValue()
 			has_items: true
 
 	getDefaultValue: ->
@@ -211,50 +211,53 @@ class CUI.Select extends CUI.Checkbox
 	displayValue: ->
 		CUI.DataFieldInput::displayValue.call(@)
 
-		if not @__optionsPromise and CUI.util.isFunction(@_options)
+		if CUI.util.isFunction(@_options) and not @__optionsPromise
 			@__loadOptions()
 
 		@__optionsPromise
 		.done =>
-			found_opt = null
-			max_chars = null
-
-			for opt, idx in @__options
-				if found_opt == null and opt.value == @getValue()
-					found_opt = opt
-
-				if opt.text?.length > max_chars
-					max_chars = opt.text?.length
-
-			# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
-			if found_opt
-				if found_opt.icon
-					if found_opt.icon instanceof CUI.Icon
-						@__checkbox.setIcon(found_opt.icon.copy())
-					else
-						@__checkbox.setIcon(found_opt.icon)
-				else
-					@__checkbox.setIcon(null)
-
-				txt = found_opt.text_selected or found_opt.text
-
-				@__checkbox.menuSetActiveIdx(found_opt._idx)
-			else
-				if @getValue() == null and not CUI.util.isEmpty(@_empty_text)
-					txt = @_empty_text
-				else
-					# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
-					txt = @_not_found_text.trim()+" "+@getValue()
-
-				@__checkbox.menuSetActiveIdx(-1)
-
-			@__checkbox.setText(txt)
-
-			if txt?.length > max_chars
-				max_chars = txt.length
-
-			@__checkbox.setTextMaxChars(max_chars)
+			@__displayValue()
 		@
+
+	__displayValue: ->
+		found_opt = null
+		max_chars = null
+
+		for opt, idx in @__options
+			if found_opt == null and opt.value == @getValue()
+				found_opt = opt
+
+			if opt.text?.length > max_chars
+				max_chars = opt.text?.length
+
+		# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
+		if found_opt
+			if found_opt.icon
+				if found_opt.icon instanceof CUI.Icon
+					@__checkbox.setIcon(found_opt.icon.copy())
+				else
+					@__checkbox.setIcon(found_opt.icon)
+			else
+				@__checkbox.setIcon(null)
+
+			txt = found_opt.text_selected or found_opt.text
+
+			@__checkbox.menuSetActiveIdx(found_opt._idx)
+		else
+			if @getValue() == null and not CUI.util.isEmpty(@_empty_text)
+				txt = @_empty_text
+			else
+				# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
+				txt = @_not_found_text.trim()+" "+@getValue()
+
+			@__checkbox.menuSetActiveIdx(-1)
+
+		@__checkbox.setText(txt)
+
+		if txt?.length > max_chars
+			max_chars = txt.length
+
+		@__checkbox.setTextMaxChars(max_chars)
 
 
 	getOptions: ->

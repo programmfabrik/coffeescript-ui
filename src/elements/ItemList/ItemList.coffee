@@ -191,6 +191,8 @@ class CUI.ItemList extends CUI.VerticalLayout
 						@__body.append(item.content)
 						return
 
+					# console.debug "output item:", @_active_item_idx, @__active_idx, idx, item
+
 					listenButtonClick = (btn) =>
 
 						CUI.Events.listen
