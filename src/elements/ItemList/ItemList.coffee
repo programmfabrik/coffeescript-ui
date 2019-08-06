@@ -328,13 +328,6 @@ class CUI.ItemList extends CUI.VerticalLayout
 				return
 
 		CUI.Events.listen
-			type: "mouseleave"
-			node: @DOM
-			call: =>
-				@__deselectPreActivated()
-				return
-
-		CUI.Events.listen
 			type: "mouseover"
 			node: @DOM
 			call: (ev) =>

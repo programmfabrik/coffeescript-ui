@@ -59,17 +59,22 @@ class CUI.Menu extends CUI.Layer
 		if @__loading
 			return @
 
+		# After the menu is shown, it is focused so keydown/keyup events work.
+		onShow = =>
+			if @getButton()
+				@DOM.focus()
+			return
+
 		if @__itemList
 			@__loading = true
 			@__itemList.render(@, @__event).done( =>
 				super(@__event)
+				onShow()
 				@__loading = false
 			)
 		else
 			super(@__event)
-
-		if @getButton()
-			@DOM.focus()
+			onShow()
 
 		@__keyUpListener = CUI.Events.listen
 			type: "keyup"

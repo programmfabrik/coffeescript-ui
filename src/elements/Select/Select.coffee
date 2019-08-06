@@ -259,6 +259,20 @@ class CUI.Select extends CUI.Checkbox
 
 		@__checkbox.setTextMaxChars(max_chars)
 
+	render: ->
+		super()
+
+		if button = @getButton()
+			CUI.Events.listen
+				type: "keydown"
+				node: @DOM
+				capture: true
+				call: (ev) =>
+					if ev.getKeyboardKey() not in ["Up", "Down"]
+						return
+					button.onClickAction(ev)
+					ev.stopPropagation()
+					return
 
 	getOptions: ->
 		@__options
