@@ -56,15 +56,18 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 
 	renderContent: ->
 		if @isLeaf() or not @isOpen()
+			label = new CUI.Label
+				text: @__info.text
+				text_node_func: =>
+					if not @__info.cls == "String"
+						return @__info.text
+					return CUI.Label.parseLinks(@__info.text)
+				multiline: true
+			CUI.dom.setAttribute(label, "data-type", @__info.cls)
+
 			@addColumn(new CUI.ListViewColumn(
 				class: "cui-object-dumper-node-value"
-				element: new CUI.Label
-					text: @__info.text
-					text_node_func: =>
-						if not @__info.cls == "String"
-							return @__info.text
-						return CUI.Label.parseLinks(@__info.text)
-					multiline: true
+				element: label
 			))
 		new CUI.Label(
 			class: "cui-object-dumper-node-key"
@@ -98,7 +101,7 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 			info.cls = "number"
 			info.text = ""+data
 		else if CUI.util.isString(data)
-			info.cls = "String"
+			info.cls = "string"
 			info.text = data
 		else
 			info.cls = CUI.util.getObjectClass(data)

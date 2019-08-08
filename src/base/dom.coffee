@@ -11,6 +11,9 @@ class CUI.dom
 		if not node
 			return undefined
 
+		if node.hasOwnProperty('DOM')
+			node = node.DOM
+
 		CUI.util.assert(node instanceof HTMLElement, "dom.data","node needs to be instance of HTMLElement", node: node)
 
 		if key == undefined

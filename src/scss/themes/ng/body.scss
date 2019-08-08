@@ -2033,6 +2033,24 @@ a[role="button"].cui-button-appearance-link {
 			padding-top: $padding/2;
 		}
 	}
+
+	&[data-type="string"] {
+		color: #c72424
+	}
+
+	&[data-type="boolean"] {
+		color: #11119e
+	}
+
+	&[data-type="NaN"],
+	&[data-type="number"] {
+		color: #1a1abd
+	}
+
+	&[data-type="undefined"],
+	&[data-type="null"] {
+		color: #716f6f
+	}
 }
 
 // Label: Markdown
@@ -6267,29 +6285,6 @@ label[data-label-clickable],
 		&-visual {
 			height: 100%;
 			color: inherit;
-		}
-	}
-}
-
-
-.cui-object-dumper {
-	.cui-object-dumper-node {
-		&-string .cui-object-dumper-value span {
-			color: #c72424
-		}
-
-		&-number .cui-object-dumper-value span,
-		&-nan .cui-object-dumper-value span {
-			color: #1a1abd
-		}
-
-		&-boolean .cui-object-dumper-value span {
-			color: #11119e
-		}
-
-		&-undefined .cui-object-dumper-value span,
-		&-null .cui-object-dumper-value span {
-			color: #716f6f
 		}
 	}
 }
