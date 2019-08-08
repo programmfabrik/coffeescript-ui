@@ -18047,6 +18047,9 @@ CUI.dom = (function() {
     if (!node) {
       return void 0;
     }
+    if (node.hasOwnProperty('DOM')) {
+      node = node.DOM;
+    }
     CUI.util.assert(node instanceof HTMLElement, "dom.data", "node needs to be instance of HTMLElement", {
       node: node
     });
@@ -41507,21 +41510,24 @@ CUI.ObjectDumperNode = (function(superClass) {
   };
 
   ObjectDumperNode.prototype.renderContent = function() {
+    var label;
     if (this.isLeaf() || !this.isOpen()) {
+      label = new CUI.Label({
+        text: this.__info.text,
+        text_node_func: (function(_this) {
+          return function() {
+            if (!_this.__info.cls === "String") {
+              return _this.__info.text;
+            }
+            return CUI.Label.parseLinks(_this.__info.text);
+          };
+        })(this),
+        multiline: true
+      });
+      CUI.dom.setAttribute(label, "data-type", this.__info.cls);
       this.addColumn(new CUI.ListViewColumn({
         "class": "cui-object-dumper-node-value",
-        element: new CUI.Label({
-          text: this.__info.text,
-          text_node_func: (function(_this) {
-            return function() {
-              if (!_this.__info.cls === "String") {
-                return _this.__info.text;
-              }
-              return CUI.Label.parseLinks(_this.__info.text);
-            };
-          })(this),
-          multiline: true
-        })
+        element: label
       }));
     }
     return new CUI.Label({
@@ -41559,7 +41565,7 @@ CUI.ObjectDumperNode = (function(superClass) {
       info.cls = "number";
       info.text = "" + data;
     } else if (CUI.util.isString(data)) {
-      info.cls = "String";
+      info.cls = "string";
       info.text = data;
     } else {
       info.cls = CUI.util.getObjectClass(data);

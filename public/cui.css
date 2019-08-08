@@ -1761,6 +1761,14 @@ a[role="button"].cui-button-appearance-link {
     padding: 10px; }
     .cui-label--padded + .cui-block > .cui-block-header {
       padding-top: 5px; }
+  .cui-label[data-type="string"] {
+    color: #c72424; }
+  .cui-label[data-type="boolean"] {
+    color: #11119e; }
+  .cui-label[data-type="NaN"], .cui-label[data-type="number"] {
+    color: #1a1abd; }
+  .cui-label[data-type="undefined"], .cui-label[data-type="null"] {
+    color: #716f6f; }
 
 .cui-label-markdown .cui-label-content {
   display: block; }
@@ -4449,20 +4457,6 @@ label[data-label-clickable],
     .cui-icon-marker-container .cui-button-visual {
       height: 100%;
       color: inherit; }
-
-.cui-object-dumper .cui-object-dumper-node-string .cui-object-dumper-value span {
-  color: #c72424; }
-
-.cui-object-dumper .cui-object-dumper-node-number .cui-object-dumper-value span,
-.cui-object-dumper .cui-object-dumper-node-nan .cui-object-dumper-value span {
-  color: #1a1abd; }
-
-.cui-object-dumper .cui-object-dumper-node-boolean .cui-object-dumper-value span {
-  color: #11119e; }
-
-.cui-object-dumper .cui-object-dumper-node-undefined .cui-object-dumper-value span,
-.cui-object-dumper .cui-object-dumper-node-null .cui-object-dumper-value span {
-  color: #716f6f; }
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
