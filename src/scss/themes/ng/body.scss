@@ -2035,21 +2035,18 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&[data-type="string"] {
-		color: #c72424
-	}
-
-	&[data-type="boolean"] {
-		color: #11119e
+		color: #50a14f;
 	}
 
 	&[data-type="NaN"],
 	&[data-type="number"] {
-		color: #1a1abd
+		color: #986801;
 	}
 
+	&[data-type="boolean"],
 	&[data-type="undefined"],
 	&[data-type="null"] {
-		color: #716f6f
+		color: #0184bb;
 	}
 }
 
