@@ -1762,13 +1762,11 @@ a[role="button"].cui-button-appearance-link {
     .cui-label--padded + .cui-block > .cui-block-header {
       padding-top: 5px; }
   .cui-label[data-type="string"] {
-    color: #c72424; }
-  .cui-label[data-type="boolean"] {
-    color: #11119e; }
+    color: #50a14f; }
   .cui-label[data-type="NaN"], .cui-label[data-type="number"] {
-    color: #1a1abd; }
-  .cui-label[data-type="undefined"], .cui-label[data-type="null"] {
-    color: #716f6f; }
+    color: #986801; }
+  .cui-label[data-type="boolean"], .cui-label[data-type="undefined"], .cui-label[data-type="null"] {
+    color: #0184bb; }
 
 .cui-label-markdown .cui-label-content {
   display: block; }

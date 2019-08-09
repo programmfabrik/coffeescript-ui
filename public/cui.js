@@ -39597,13 +39597,19 @@ CUI.MapInput = (function(superClass) {
       iconName: this.__selectedMarkerOptions.iconName,
       iconColor: this.__selectedMarkerOptions.iconColor
     };
-    if (stringCoordinates) {
-      parsedPosition = CUI.util.parseCoordinates(stringCoordinates);
-      objectValue.position = parsedPosition ? parsedPosition : "";
-    } else {
-      objectValue.position = this.__getPosition();
-    }
+    parsedPosition = CUI.util.parseCoordinates(stringCoordinates);
+    objectValue.position = parsedPosition ? parsedPosition : "";
     return objectValue;
+  };
+
+  MapInput.prototype.checkValue = function(v) {
+    if (CUI.util.isEmpty(v)) {
+      return true;
+    }
+    if (this.__checkInput(v)) {
+      return true;
+    }
+    throw new Error(this.__cls + ".setValue(value): Value needs to be valid coordinates.");
   };
 
   MapInput.prototype.render = function() {
@@ -39669,6 +39675,7 @@ CUI.MapInput = (function(superClass) {
       handle_focus: false,
       placement: "se",
       pane: {
+        padded: true,
         content: this.__buildIconPopoverContent()
       },
       onHide: function() {
