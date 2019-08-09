@@ -83,12 +83,17 @@ class CUI.MapInput extends CUI.Input
 			iconName: @__selectedMarkerOptions.iconName
 			iconColor: @__selectedMarkerOptions.iconColor
 
-		if stringCoordinates
-			parsedPosition = CUI.util.parseCoordinates(stringCoordinates)
-			objectValue.position = if parsedPosition then parsedPosition else ""
-		else
-			objectValue.position = @__getPosition()
+		parsedPosition = CUI.util.parseCoordinates(stringCoordinates)
+		objectValue.position = if parsedPosition then parsedPosition else ""
+
 		return objectValue
+
+	checkValue: (v) ->
+		if CUI.util.isEmpty(v)
+			return true
+		if @__checkInput(v)
+			return true
+		throw new Error("#{@__cls}.setValue(value): Value needs to be valid coordinates.")
 
 	render: ->
 		super()
@@ -143,6 +148,7 @@ class CUI.MapInput extends CUI.Input
 			handle_focus: false
 			placement: "se"
 			pane:
+				padded: true
 				content: @__buildIconPopoverContent()
 			onHide: ->
 				iconPopover.destroy()
@@ -183,9 +189,8 @@ class CUI.MapInput extends CUI.Input
 				options
 		)
 
-		form = new CUI.Form(
+		form = new CUI.Form
 			fields: [iconSelect, iconColorSelect]
-		)
 		form.start()
 		form
 
