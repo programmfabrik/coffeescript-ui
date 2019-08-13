@@ -1780,7 +1780,7 @@ a[role="button"].cui-button-appearance-link {
     font-size: 16px; }
   .cui-label-markdown .cui-label-content h3 {
     font-size: 1em;
-    margin-bottom: 0; }
+    margin-bottom: 5px; }
   .cui-label-markdown .cui-label-content a {
     color: var(--highlight);
     text-decoration: underline; }
@@ -1803,6 +1803,9 @@ a[role="button"].cui-button-appearance-link {
     margin-bottom: 0; }
   .cui-label-markdown .cui-label-content blockquote > p:last-child {
     margin-bottom: 0; }
+  .cui-label-markdown .cui-label-content img {
+    max-width: 100%;
+    height: auto; }
   .cui-label-markdown .cui-label-content table {
     border: none;
     table-layout: auto;
@@ -1826,7 +1829,9 @@ a[role="button"].cui-button-appearance-link {
   .cui-label-markdown .cui-label-content code {
     border: none;
     background: #f7f7f7;
-    white-space: pre-wrap; }
+    white-space: pre-wrap;
+    padding: 0 5px;
+    border-radius: 2px; }
   .cui-label-markdown .cui-label-content pre {
     padding: 12px 15px;
     font-size: 13px;
@@ -1837,6 +1842,9 @@ a[role="button"].cui-button-appearance-link {
     border: none;
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
+    .cui-label-markdown .cui-label-content pre code {
+      padding: 0;
+      border-radius: 0; }
   .cui-label-markdown .cui-label-content hr {
     margin-top: 6px;
     margin-bottom: 6px;
@@ -1894,7 +1902,8 @@ a[role="button"].cui-button-appearance-link {
   .cui-label-manage-overflow.cui-label--show-overflow:after {
     display: none; }
   .cui-label-manage-overflow.cui-label--show-overflow > .cui-label-content {
-    max-height: none !important; }
+    max-height: none !important;
+    overflow: visible; }
   .cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button {
     position: static;
     float: right; }
@@ -3943,6 +3952,9 @@ label[data-label-clickable],
     padding-top: 0; }
   .cui-data-field-multi-output:last-child {
     border-bottom: none; }
+  .cui-data-field-multi-output-aside .cui-button {
+    position: sticky;
+    top: 0; }
   .cui-data-field-multi-output-aside .cui-button-visual {
     padding: 0;
     border-radius: 0;

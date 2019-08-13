@@ -2070,7 +2070,7 @@ a[role="button"].cui-button-appearance-link {
 
 	h3 {
 		font-size: 1em;
-		margin-bottom: 0;
+		margin-bottom: 5px;
 	}
 
 	a {
@@ -2109,6 +2109,11 @@ a[role="button"].cui-button-appearance-link {
   	}
   }
 
+  img {
+  	max-width: 100%;
+  	height: auto;
+  }
+
   table {
     border: none;
     table-layout: auto;
@@ -2145,6 +2150,8 @@ a[role="button"].cui-button-appearance-link {
     border: none;
     background: hsl(0,0%,97%);
     white-space: pre-wrap;
+    padding: 0 5px;
+    border-radius: 2px;
   }
 
   pre {
@@ -2157,6 +2164,11 @@ a[role="button"].cui-button-appearance-link {
     border: none;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    
+    code {
+      padding: 0;
+      border-radius: 0;
+    }
   }
 
   hr {
@@ -2262,6 +2274,7 @@ a[role="button"].cui-button-appearance-link {
 
 		> .cui-label-content {
 			max-height: none !important;
+			overflow: visible;
 		}
 
 		.cui-label-manage-overflow-button {
@@ -5505,6 +5518,11 @@ label[data-label-clickable],
 	}
 
 	&-aside {
+		.cui-button {
+			position: sticky;
+			top: 0;
+		}
+		
 		.cui-button-visual {
 			padding: 0;
 			border-radius: 0;
