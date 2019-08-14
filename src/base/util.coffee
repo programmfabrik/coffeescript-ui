@@ -571,6 +571,8 @@ class CUI.util
 		else
 			s
 
+	# mergeMap merges mergeMap values to targetMap, if
+	# the targetMap does not contain a value
 	@mergeMap: (targetMap, mergeMap) ->
 		for k, v of mergeMap
 			if not targetMap.hasOwnProperty(k)
@@ -582,7 +584,7 @@ class CUI.util
 	@copyToClipboard: (text) ->
 		if not text
 			return
-			
+
 		textarea = CUI.dom.element("textarea",
 			style:
 				position: 'absolute'
