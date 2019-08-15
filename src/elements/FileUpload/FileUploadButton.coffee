@@ -27,6 +27,8 @@ class CUI.FileUploadButton extends CUI.Button
 			# whether to allow file drop on the button
 			drop:
 				check: Boolean
+			accept:
+				check: String
 
 	getTemplateName: ->
 		@__has_left = true
@@ -51,6 +53,7 @@ class CUI.FileUploadButton extends CUI.Button
 		@_fileUpload.initFilePicker
 			directory: (ev.altKey() or ev.shiftKey() and @_multiple) or @_directory
 			multiple: @_multiple
+			accept: @_accept
 
 		return
 

@@ -445,6 +445,11 @@ class CUI.FileUpload extends CUI.Element
 			else
 				CUI.dom.removeAttribute(inp, k)
 
+		if opts.accept
+			CUI.dom.setAttribute(inp, "accept", opts.accept)
+		else
+			CUI.dom.removeAttribute(inp, "accept")
+
 		if opts.multiple
 			CUI.dom.setAttribute(inp, "multiple", true)
 		else
