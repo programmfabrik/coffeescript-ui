@@ -28745,7 +28745,9 @@ CUI.FileUpload = (function(superClass) {
       multiple: {
         mandatory: true,
         "default": true,
-        check: Boolean
+        check: function(v) {
+          return v === true || v === false || v instanceof Function;
+        }
       },
       selector: {
         check: String
@@ -28804,6 +28806,9 @@ CUI.FileUpload = (function(superClass) {
               file = ref1[i];
               files.push(file);
               if (multiple === false) {
+                break;
+              }
+              if (multiple instanceof Function && multiple() === false) {
                 break;
               }
             }
@@ -29008,7 +29013,11 @@ CUI.FileUploadButton = (function(superClass) {
       },
       multiple: {
         "default": true,
-        check: Boolean
+        check: (function(_this) {
+          return function(v) {
+            return v === true || v === false || v instanceof Function;
+          };
+        })(this)
       },
       directory: {
         check: Boolean
@@ -29031,7 +29040,7 @@ CUI.FileUploadButton = (function(superClass) {
   FileUploadButton.prototype.readOpts = function() {
     this.__ownClick = this.opts.onClick;
     this.opts.onClick = this.__onClick;
-    return FileUploadButton.__super__.readOpts.call(this);
+    FileUploadButton.__super__.readOpts.call(this);
   };
 
   FileUploadButton.prototype.run = function(ev, btn) {
@@ -29039,16 +29048,21 @@ CUI.FileUploadButton = (function(superClass) {
   };
 
   FileUploadButton.prototype.__onClick = function(ev, btn) {
-    var ref;
+    var multiple, ref;
     if ((ref = this.__ownClick) != null) {
       ref.call(this, ev, btn);
     }
     if (ev.isDefaultPrevented() || ev.isImmediatePropagationStopped()) {
       return;
     }
+    if (this._multiple instanceof Function) {
+      multiple = this._multiple.call(this, ev, btn) === true;
+    } else {
+      multiple = this._multiple;
+    }
     this._fileUpload.initFilePicker({
-      directory: (ev.altKey() || ev.shiftKey() && this._multiple) || this._directory,
-      multiple: this._multiple,
+      directory: ((ev.altKey() || ev.shiftKey()) && this._multiple) || this._directory,
+      multiple: multiple,
       accept: this._accept
     });
   };
