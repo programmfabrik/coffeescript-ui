@@ -21,7 +21,8 @@ class CUI.FileUploadButton extends CUI.Button
 				check: CUI.FileUpload
 			multiple:
 				default: true
-				check: Boolean
+				check: (v) =>
+					v == true or v == false or v instanceof Function
 			directory:
 				check: Boolean
 			# whether to allow file drop on the button
@@ -39,6 +40,7 @@ class CUI.FileUploadButton extends CUI.Button
 		@__ownClick = @opts.onClick
 		@opts.onClick = @__onClick
 		super()
+		return
 
 	run: (ev, btn) ->
 		@__onClick(ev)
@@ -50,9 +52,14 @@ class CUI.FileUploadButton extends CUI.Button
 		if ev.isDefaultPrevented() or ev.isImmediatePropagationStopped()
 			return
 
+		if @_multiple instanceof Function
+			multiple = @_multiple.call(@, ev, btn) == true
+		else
+			multiple = @_multiple
+
 		@_fileUpload.initFilePicker
-			directory: (ev.altKey() or ev.shiftKey() and @_multiple) or @_directory
-			multiple: @_multiple
+			directory: ((ev.altKey() or ev.shiftKey()) and @_multiple) or @_directory
+			multiple: multiple
 			accept: @_accept
 
 		return

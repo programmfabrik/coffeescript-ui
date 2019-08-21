@@ -311,7 +311,8 @@ class CUI.FileUpload extends CUI.Element
 			multiple:
 				mandatory: true
 				default: true
-				check: Boolean
+				check: (v) ->
+					v == true or v == false or v instanceof Function
 			selector:
 				check: String
 			allow_drop: (ev) =>
@@ -364,6 +365,8 @@ class CUI.FileUpload extends CUI.Element
 						# else
 						files.push(file)
 						if multiple == false
+							break
+						if multiple instanceof Function and multiple() == false
 							break
 
 					if warn.length > 0
