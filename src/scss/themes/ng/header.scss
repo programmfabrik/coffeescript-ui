@@ -54,6 +54,7 @@ $default-color: map-get($colors, "blue");
 	--highlight-light-transparent: #{transparentize(map-get($color, "highlight-light"), 1)}; // needed for gradients from transparent .. highlight-light
 	--on-highlight-color: white;
 	--on-highlight-muted-color: #{desaturate(map-get($color, "highlight-light"), 50%)};
+	--on-highlight-border: #{lighten(desaturate(map-get($color, "highlight"), 17%), 28%)};
 	--on-highlight-light-muted-color: #{darken(desaturate(map-get($color, "highlight-light"), 70%), 25%)};
 	--on-highlight-light-secondary-color: #{darken(desaturate(map-get($color, "highlight-light"), 75%), 40%)};
 }
@@ -114,6 +115,8 @@ $input-shadow: 0 1px hsla(0,0%,0%,.03) inset, 0 2px hsla(0,0%,0%,.01) inset;
 $input-width: 275px;
 $input-background: $foreground;
 $input-min-width: 100px;
+
+$multi-output-tag-width: 18px;
 
 $drag-handle-color: hsla(205,10%,50%,.5);
 
@@ -275,10 +278,16 @@ $popover-hint-background: hsl(205,20%,30%);
 	box-shadow: 0 0 0 3px var(--highlight-light);
 	border-color: var(--highlight);
 	z-index: 1; // put forward to see outline
+	
+	.cui-selected & {
+		box-shadow: 0 0 0 3px var(--on-highlight-border);
+	}
 }
 
-@mixin border-focus-on-highlight-light() {
-	box-shadow: 0 0 0 3px var(--on-highlight-light-muted-color);
+@mixin disable-focus() {
+	&:focus {
+		box-shadow: none !important;
+	}
 }
 
 @mixin outer-focus() {

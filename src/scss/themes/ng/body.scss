@@ -2478,10 +2478,6 @@ a[role="button"].cui-button-appearance-link {
 
 		&:focus {
 			@include border-focus;
-			
-			.cui-selected & {
-				@include border-focus-on-highlight-light;
-			}
 		}
 
 		&::-webkit-input-placeholder {
@@ -5472,10 +5468,7 @@ label[data-label-clickable],
 		background: none;
 		border-radius: 0;
 		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
-
-		&:focus {
-			box-shadow: none;
-		}
+		@include disable-focus;
 	}
 }
 
