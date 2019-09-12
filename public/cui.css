@@ -1936,7 +1936,8 @@ a[role="button"].cui-button-appearance-link {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  padding: 10px; }
   .cui-label-centered > .cui-label-content {
     text-align: center;
     flex-grow: 0; }
@@ -2055,7 +2056,8 @@ a[role="button"].cui-button-appearance-link {
   padding-top: 3px;
   padding-bottom: 3px;
   line-height: 16px;
-  height: 100px; }
+  height: 100px;
+  min-height: 22px; }
 
 .cui-input.cui-has-focus input,
 .cui-input.cui-has-focus textarea {
