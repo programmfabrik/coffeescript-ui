@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
+// const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
@@ -54,7 +54,7 @@ const config = {
         ]
     },
     plugins: [
-        new HardSourceWebpackPlugin(),
+        // new HardSourceWebpackPlugin(), We comment out the plugin due to https://github.com/mzgoddard/hard-source-webpack-plugin/issues/480
         extractSass,
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
