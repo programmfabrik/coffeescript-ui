@@ -31262,9 +31262,14 @@ CUI.CodeInput = (function(superClass) {
     return CodeInput.__super__.constructor.apply(this, arguments);
   }
 
+  CodeInput.availableModes = ["javascript", "json", "css"];
+
   CodeInput.prototype.readOpts = function() {
     CodeInput.__super__.readOpts.call(this);
     this._textarea = true;
+    if (!CUI.CodeInput.loadAcePromise) {
+      CUI.CodeInput.loadAcePromise = this.__fetchLibrary();
+    }
     return this;
   };
 
@@ -31272,7 +31277,7 @@ CUI.CodeInput = (function(superClass) {
     CodeInput.__super__.initOpts.call(this);
     return this.addOpts({
       mode: {
-        check: ["javascript", "json"],
+        check: CUI.CodeInput.availableModes,
         "default": "javascript"
       }
     });
@@ -31312,18 +31317,25 @@ CUI.CodeInput = (function(superClass) {
     return CodeInput.__super__.destroy.call(this);
   };
 
+  CodeInput.prototype.__fetchLibrary = function() {
+    var deferred;
+    deferred = new CUI.Deferred();
+    CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js").done(function() {
+      var i, len, mode, modePromises, ref;
+      modePromises = [];
+      ref = CUI.CodeInput.availableModes;
+      for (i = 0, len = ref.length; i < len; i++) {
+        mode = ref[i];
+        modePromises.push(CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-" + mode + ".js"));
+      }
+      return CUI.whenAll(modePromises).done(deferred.resolve).fail(deferred.reject);
+    }).fail(deferred.reject);
+    return deferred.promise();
+  };
+
   return CodeInput;
 
 })(CUI.Input);
-
-CUI.ready(function() {
-  var deferred;
-  deferred = new CUI.Deferred();
-  CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js").done(function() {
-    return CUI.whenAll([CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-javascript.js"), CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-json.js")]).done(deferred.resolve).fail(deferred.reject);
-  }).fail(deferred.reject);
-  return CUI.CodeInput.loadAcePromise = deferred.promise();
-});
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
