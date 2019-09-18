@@ -1,15 +1,21 @@
 class CUI.CodeInput extends CUI.Input
 
+	@availableModes = ["javascript", "json", "css"]
+
 	readOpts: ->
 		super()
 		@_textarea = true
+
+		if not CUI.CodeInput.loadAcePromise
+			CUI.CodeInput.loadAcePromise = @__fetchLibrary()
+
 		return @
 
 	initOpts: ->
 		super()
 		@addOpts
 			mode:
-				check: ["javascript", "json"]
+				check: CUI.CodeInput.availableModes
 				default: "javascript"
 
 	render: ->
@@ -40,16 +46,15 @@ class CUI.CodeInput extends CUI.Input
 		@__aceEditor?.destroy()
 		return super()
 
-CUI.ready ->
+	__fetchLibrary: ->
+		deferred = new CUI.Deferred()
 
-	deferred = new CUI.Deferred()
+		# Load library
+		CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js").done(->
+			modePromises = []
+			for mode in CUI.CodeInput.availableModes
+				modePromises.push(CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-#{mode}.js"))
+			CUI.whenAll(modePromises).done(deferred.resolve).fail(deferred.reject)
+		).fail(deferred.reject)
 
-	# Load library
-	CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js").done(->
-		CUI.whenAll([ # Load modes.
-			CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-javascript.js")
-			CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-json.js")
-		]).done(deferred.resolve).fail(deferred.reject)
-	).fail(deferred.reject)
-
-	CUI.CodeInput.loadAcePromise = deferred.promise()
+		return deferred.promise()
