@@ -287,19 +287,28 @@ class CUI.Label extends CUI.DOMElement
 			return
 
 		for el, idx in txt.split(/(\n| )/)
-			m = el.match("^(?:(www)\..+|http:\/\/|https:\/\//)")
-			if not m
+
+			if CUI.EmailInput.regexp.exec(el)
+				a_node = CUI.dom.element("a", href: "mailto:"+el)
+			else
+				m = el.match("^(?:www\..+\..+|(http(?:s|)):\/\/)")
+				if not m
+					a_node = null
+				else
+					if not m[1]
+						prefix = "http://"
+					else
+						prefix = "" # use the given prefix
+
+					a_node = CUI.dom.element("a", target: "_blank", href: prefix+el)
+
+			if not a_node
 				text.push(el)
 				continue
 
 			# append the link
 			append_text()
-			if m[1]
-				prefix = "http://"
-			else
-				prefix = ""
 
-			a_node = CUI.dom.element("a", target: "_blank", href: prefix+el)
 			a_node.textContent = el
 			nodes.push(a_node)
 
