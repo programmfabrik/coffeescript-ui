@@ -1799,7 +1799,8 @@ a[role="button"].cui-button-appearance-link {
     margin-bottom: 5px; }
   .cui-label-markdown .cui-label-content a {
     color: var(--highlight);
-    text-decoration: underline; }
+    text-decoration: underline;
+    word-break: break-all; }
   .cui-label-markdown .cui-label-content em {
     background: none;
     font-style: italic; }
@@ -2087,10 +2088,6 @@ a[role="button"].cui-button-appearance-link {
   .cui-input-appearance-code input::placeholder,
   .cui-input-appearance-code textarea::placeholder {
     color: #368a2e; }
-
-.cui-code-input pre {
-  height: 400px;
-  margin: auto; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
 .cui-browser-ie:not(.cui-browser-edge) .cui-input textarea {
