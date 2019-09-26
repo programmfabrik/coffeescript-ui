@@ -505,7 +505,7 @@ class CUI.util
 	@inArray: (value, array) ->
 		array.indexOf(value)
 
-	@isEqual: (x, y) ->
+	@isEqual: (x, y, debug) ->
 		#// if both are function
 		if x instanceof Function
 			if y instanceof Function
@@ -534,7 +534,15 @@ class CUI.util
 
 		p = Object.keys(x)
 		if Object.keys(y).every( (i) -> return p.indexOf(i) != -1 )
-			return p.every((i) => return @isEqual(x[i], y[i]))
+			return p.every((i) =>
+				eq = @isEqual(x[i], y[i], debug)
+				if not eq
+					if debug
+						console.debug("X: ",x, "Differs to:", y, "Key: ", i, "x:", x[i], y[i])
+					return false
+				else
+					return true
+			)
 		else
 			return false
 
