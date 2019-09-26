@@ -20465,7 +20465,7 @@ CUI.util = (function() {
     return array.indexOf(value);
   };
 
-  util.isEqual = function(x, y) {
+  util.isEqual = function(x, y, debug) {
     var p;
     if (x instanceof Function) {
       if (y instanceof Function) {
@@ -20497,7 +20497,16 @@ CUI.util = (function() {
     })) {
       return p.every((function(_this) {
         return function(i) {
-          return _this.isEqual(x[i], y[i]);
+          var eq;
+          eq = _this.isEqual(x[i], y[i], debug);
+          if (!eq) {
+            if (debug) {
+              console.debug("X: ", x, "Differs to:", y, "Key: ", i, "x:", x[i], y[i]);
+            }
+            return false;
+          } else {
+            return true;
+          }
         };
       })(this));
     } else {
