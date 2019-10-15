@@ -31564,6 +31564,12 @@ CUI.Input = (function(superClass) {
       textarea: {
         check: Boolean
       },
+      min_rows: {
+        check: function(v) {
+          return v >= 4;
+        },
+        "default": 4
+      },
       rows: {
         check: function(v) {
           return v >= 1;
@@ -31684,7 +31690,7 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__createElement = function(input_type) {
-    var oldSizes;
+    var calculateBaseHeight, oldSizes, resize;
     if (input_type == null) {
       input_type = "text";
     }
@@ -31694,8 +31700,43 @@ CUI.Input = (function(superClass) {
         tabindex: "0",
         maxLength: this._maxLength,
         id: "cui-input-" + this.getUniqueId(),
-        spellcheck: this.__spellcheck
+        spellcheck: this.__spellcheck,
+        rows: this._min_rows
       });
+      resize = (function(_this) {
+        return function() {
+          var rows;
+          _this.__input.rows = _this._min_rows;
+          rows = Math.ceil((_this.__input.scrollHeight - _this.__baseScrollHeight) / _this.__lineHeight);
+          return _this.__input.rows = _this._min_rows + rows;
+        };
+      })(this);
+      calculateBaseHeight = (function(_this) {
+        return function() {
+          var value;
+          value = _this.__input.value;
+          _this.__input.value = "";
+          _this.__baseScrollHeight = _this.__input.scrollHeight;
+          _this.__input.value = value;
+          return _this.__lineHeight = parseInt(CUI.dom.getComputedStyle(_this.__input).lineHeight, 10);
+        };
+      })(this);
+      CUI.Events.listen({
+        node: this.__input,
+        type: "input",
+        call: resize
+      });
+      CUI.dom.waitForDOMInsert({
+        node: this.__input
+      }).done((function(_this) {
+        return function() {
+          if (_this.isDestroyed()) {
+            return;
+          }
+          calculateBaseHeight();
+          return resize();
+        };
+      })(this));
     } else {
       this.__input = CUI.dom.$element("input", "cui-input", {
         type: input_type,
