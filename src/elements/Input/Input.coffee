@@ -128,6 +128,10 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			textarea:
 				check: Boolean
+			min_rows:
+				check: (v) ->
+					v >= 4
+				default: 4
 			# limit the amount of rows in textarea input
 			rows:
 				check: (v) ->
@@ -222,7 +226,6 @@ class CUI.Input extends CUI.DataFieldInput
 	# - tab block advance
 	# - up/down cursor number decrement/increment
 	# - input masking
-
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
 			@__input = CUI.dom.$element "textarea", "cui-textarea",
@@ -231,6 +234,31 @@ class CUI.Input extends CUI.DataFieldInput
 				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
+				rows: @_min_rows
+
+			resize = =>
+				@__input.rows = @_min_rows
+				rows = Math.ceil((@__input.scrollHeight - @__baseScrollHeight) / @__lineHeight);
+				@__input.rows = @_min_rows + rows;
+
+			calculateBaseHeight = =>
+				value = @__input.value
+				@__input.value = ""
+				@__baseScrollHeight = @__input.scrollHeight
+				@__input.value = value
+				@__lineHeight = parseInt(CUI.dom.getComputedStyle(@__input).lineHeight, 10)
+
+			CUI.Events.listen
+				node: @__input
+				type: "input"
+				call: resize
+
+			CUI.dom.waitForDOMInsert(node: @__input).done(=>
+				if @isDestroyed()
+					return
+				calculateBaseHeight()
+				resize()
+			)
 		else
 			@__input = CUI.dom.$element "input", "cui-input",
 				type: input_type

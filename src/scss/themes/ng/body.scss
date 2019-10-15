@@ -2507,8 +2507,8 @@ a[role="button"].cui-button-appearance-link {
 		padding-top: 3px;
 		padding-bottom: 3px;
 		line-height: 16px;
-		height: 100px;
-		min-height: 22px;
+		resize: none;
+		min-height: 72px;
 	}
 
 	&.cui-has-focus {
