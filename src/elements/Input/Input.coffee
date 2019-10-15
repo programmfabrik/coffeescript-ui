@@ -130,8 +130,8 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			min_rows:
 				check: (v) ->
-					v >= 4
-				default: 4
+					v >= 2
+				default: 2
 			# limit the amount of rows in textarea input
 			rows:
 				check: (v) ->
@@ -235,6 +235,7 @@ class CUI.Input extends CUI.DataFieldInput
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				rows: @_min_rows
+			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
 
 			resize = =>
 				@__input.rows = @_min_rows

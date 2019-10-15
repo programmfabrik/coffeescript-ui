@@ -2504,11 +2504,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	textarea {
+		--textarea-min-rows: 1;
 		padding-top: 3px;
 		padding-bottom: 3px;
 		line-height: 16px;
 		resize: none;
-		min-height: 72px;
+		min-height: calc(16px * var(--textarea-min-rows) + 6px + 2px); // 16px: Line height, 6px: padding, 2px: border.
 	}
 
 	&.cui-has-focus {
