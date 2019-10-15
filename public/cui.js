@@ -31566,9 +31566,9 @@ CUI.Input = (function(superClass) {
       },
       min_rows: {
         check: function(v) {
-          return v >= 4;
+          return v >= 2;
         },
-        "default": 4
+        "default": 2
       },
       rows: {
         check: function(v) {
@@ -31703,6 +31703,7 @@ CUI.Input = (function(superClass) {
         spellcheck: this.__spellcheck,
         rows: this._min_rows
       });
+      this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
           var rows;
