@@ -65,6 +65,7 @@
     "webpack": "^2.7.0"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "moment-timezone": "^0.5.27"
   }
 }
