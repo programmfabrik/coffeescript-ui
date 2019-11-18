@@ -33,6 +33,10 @@ class CUI.ListViewTree extends CUI.ListView
 				check: Function
 			onClose:
 				check: Function
+			onSelect:
+				check: Function
+			onDeselect:
+				check: Function
 
 	readOpts: ->
 		super()
@@ -214,8 +218,13 @@ class CUI.ListViewTree extends CUI.ListView
 		return ret
 		# console.timeEnd("#{@__uniqueId}: action on node #{action}")
 
-	# selectRow: (ev, row) ->
-	# 	row.select(ev)
+	deselectRow: (ev, row, newRow) ->
+		if @__selectableRows == "multiple"
+			return super(ev, row, newRow)
+
+		# we ignore this here, because our "ListViewTreeNode" handles
+		# deselect during "select"
+		return CUI.resolvedPromise()
 
 	getNodesForMove: (from_i, to_i, after) ->
 		from_node = @getListViewRow(from_i)

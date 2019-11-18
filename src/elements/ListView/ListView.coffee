@@ -129,10 +129,6 @@ class CUI.ListView extends CUI.SimplePane
 			focusable:
 				check: Boolean
 				default: false
-			onSelect:
-				check: Function
-			onDeselect:
-				check: Function
 			onRowMove:
 				check: Function
 			onScroll:
@@ -474,7 +470,14 @@ class CUI.ListView extends CUI.SimplePane
 	selectRowByDisplayIdx: (row_display_idx) ->
 		@selectRowById(@getRowIdx(row_display_idx))
 
+	# deselectRow deselects the given row, this
+	# method is here, so it can be overwritten in ListViewTree where
+	# we support different selection groups
+	deselectRow: (ev, row, newRow) ->
+		return row.deselect(ev, newRow)
+
 	selectRow: (ev, rowChosen, noDeselect=false) ->
+
 		CUI.util.assert(CUI.util.isNull(rowChosen) or rowChosen instanceof CUI.ListViewRow, "#{@__cls}.setSelectedRow", "Parameter needs to be instance of CUI.ListViewRow.", selectedRow: rowChosen)
 
 		dfr = new CUI.Deferred()
@@ -482,7 +485,9 @@ class CUI.ListView extends CUI.SimplePane
 		selectRowChosen = =>
 			if rowChosen.isSelected()
 				if not noDeselect
-					rowChosen.deselect(ev, rowChosen).done(dfr.resolve).fail(dfr.reject)
+					# this is a "toggle", so if the row is selected, we deselect it
+					# otherwise it is selected.
+					@deselectRow(ev, rowChosen, rowChosen)
 				else
 					dfr.resolve()
 			else
@@ -495,7 +500,7 @@ class CUI.ListView extends CUI.SimplePane
 				if rowChosen == _row and skipSelf
 					# we handle this in do_select
 					continue
-				promise = _row.deselect(null, rowChosen) # null is sent as event parameter, to avoids checks.
+				promise = @deselectRow(null, _row, rowChosen) # null is sent as event parameter, to avoids checks.
 				if CUI.util.isPromise(promise)
 					promises.push(promise)
 			CUI.when(promises).done(selectRowChosen).fail(dfr.reject)
