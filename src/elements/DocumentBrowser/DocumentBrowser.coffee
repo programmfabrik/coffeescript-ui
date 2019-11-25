@@ -46,12 +46,6 @@ class CUI.DocumentBrowser extends CUI.Element
 			@__marked_opts.renderer = new marked.Renderer()
 		renderer = @__marked_opts.renderer
 
-		for k, v of {
-			sanitize: false
-		}
-			if not @__marked_opts.hasOwnProperty(k)
-				@__marked_opts[k] = v
-
 		renderer.image = (href, title, text) =>
 			@__node.rendererImage(href, title, text)
 
