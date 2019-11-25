@@ -33,10 +33,6 @@ class CUI.ListViewTree extends CUI.ListView
 				check: Function
 			onClose:
 				check: Function
-			onSelect:
-				check: Function
-			onDeselect:
-				check: Function
 
 	readOpts: ->
 		super()

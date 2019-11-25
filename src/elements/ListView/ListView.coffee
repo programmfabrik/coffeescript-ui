@@ -137,7 +137,10 @@ class CUI.ListView extends CUI.SimplePane
 				deprecated: true
 			footer:
 				deprecated: true
-
+			onSelect:
+				check: Function
+			onDeselect:
+				check: Function
 
 	readOpts: ->
 		if @opts.header
