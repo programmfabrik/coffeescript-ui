@@ -34589,6 +34589,12 @@ CUI.ListView = (function(superClass) {
       },
       footer: {
         deprecated: true
+      },
+      onSelect: {
+        check: Function
+      },
+      onDeselect: {
+        check: Function
       }
     });
   };
@@ -36595,12 +36601,6 @@ CUI.ListViewTree = (function(superClass) {
         check: Function
       },
       onClose: {
-        check: Function
-      },
-      onSelect: {
-        check: Function
-      },
-      onDeselect: {
         check: Function
       }
     });
