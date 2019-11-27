@@ -432,9 +432,12 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	open: ->
-	# console.debug "FlexHandle.show", @__uniqueId, @isOpen()
 		if @isOpen()
 			return @
+
+		CUI.Events.trigger
+			node: @getPane()
+			type: "flex-open"
 
 		@_element.classList.remove("cui-flex-handle-closed")
 		CUI.dom.setStyleOne(@__pane, "display", "")
@@ -450,7 +453,6 @@ class CUI.FlexHandle extends CUI.Element
 		@
 
 	show: ->
-	# console.debug "FlexHandle.show", @__uniqueId, @isShown()
 		if @isShown()
 			return @
 		@_element.classList.remove("cui-flex-handle-hidden")
@@ -510,5 +512,5 @@ class CUI.FlexHandle extends CUI.Element
 
 
 CUI.Events.registerEvent
-	type: ["flex-stretch-start", "flex-stretch-end", "flex-close"]
+	type: ["flex-stretch-start", "flex-stretch-end", "flex-close", "flex-open"]
 	sink: true
