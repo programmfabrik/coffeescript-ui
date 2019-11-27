@@ -15169,6 +15169,10 @@ CUI.FlexHandle = (function(superClass) {
     if (this.isOpen()) {
       return this;
     }
+    CUI.Events.trigger({
+      node: this.getPane(),
+      type: "flex-open"
+    });
     this._element.classList.remove("cui-flex-handle-closed");
     CUI.dom.setStyleOne(this.__pane, "display", "");
     delete this.__closed;
@@ -15267,7 +15271,7 @@ CUI.FlexHandle = (function(superClass) {
 })(CUI.Element);
 
 CUI.Events.registerEvent({
-  type: ["flex-stretch-start", "flex-stretch-end", "flex-close"],
+  type: ["flex-stretch-start", "flex-stretch-end", "flex-close", "flex-open"],
   sink: true
 });
 
