@@ -160,7 +160,7 @@ class CUI.NumberInput extends CUI.Input
 		nn.join("")
 
 	correctValueForInput: (value) ->
-		value.replace(/[,\.]/, @_decimalpoint)
+		return value.replace(/[,\.]/g, @_decimalpoint)
 
 	getValueForInput: ->
 		@formatValueForDisplay(null, true)
