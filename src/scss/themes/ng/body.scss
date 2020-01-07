@@ -2559,6 +2559,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-code-input pre {
 	height: 400px;
 	margin: auto;
+
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
 }
 
 .cui-browser-ie:not(.cui-browser-edge) {
