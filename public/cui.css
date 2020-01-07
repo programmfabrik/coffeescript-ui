@@ -2092,7 +2092,9 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-code-input pre {
   height: 400px;
-  margin: auto; }
+  margin: auto;
+  border: 1px solid #bfcbd4;
+  border-radius: 4px; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
 .cui-browser-ie:not(.cui-browser-edge) .cui-input textarea {
