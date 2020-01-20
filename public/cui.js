@@ -33696,6 +33696,54 @@ CUI.NumberInput = (function(superClass) {
     }
   };
 
+  NumberInput.parse = function(string, decimals) {
+    var commaIndex, decimal, dotIndex, ref, thousandSeparatorRegex;
+    if (isNaN(string.replace(/[,\.]/g, ""))) {
+      return null;
+    }
+    if (isNaN(decimals)) {
+      decimals = 0;
+    }
+    commaIndex = string.indexOf(",");
+    dotIndex = string.indexOf(".");
+    if (commaIndex === -1 && dotIndex === -1) {
+      return parseInt(string);
+    }
+    if (dotIndex > 0 && commaIndex > 0) {
+      if (dotIndex > commaIndex) {
+        thousandSeparatorRegex = /,/g;
+      } else {
+        thousandSeparatorRegex = /\./g;
+      }
+    }
+    if (!thousandSeparatorRegex && decimals > 0) {
+      decimal = string[string.length - 1 - decimals];
+      if (decimal === ",") {
+        thousandSeparatorRegex = /\./g;
+      } else if (decimal === ".") {
+        thousandSeparatorRegex = /,/g;
+      }
+    }
+    if (!thousandSeparatorRegex && decimals === 0) {
+      if (((ref = string.match(/^\d{1,3}([\.,]\d{3})+/)) != null ? ref[0] : void 0) === string) {
+        if (dotIndex > 0) {
+          thousandSeparatorRegex = /\./g;
+        } else {
+          thousandSeparatorRegex = /,/g;
+        }
+      }
+    }
+    if (thousandSeparatorRegex) {
+      string = string.replace(thousandSeparatorRegex, "");
+    }
+    if (decimals === 0) {
+      return parseInt(string);
+    } else {
+      string = string.replace(/,/, ".");
+      return parseFloat(string);
+    }
+  };
+
   return NumberInput;
 
 })(CUI.Input);

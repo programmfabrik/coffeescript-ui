@@ -2094,6 +2094,7 @@ a[role="button"].cui-button-appearance-link {
   height: 400px;
   margin: auto;
   border: 1px solid #bfcbd4;
+  border-top-color: #b6c4ce;
   border-radius: 4px; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
