@@ -226,7 +226,6 @@ class CUI.NumberInput extends CUI.Input
 
 		return true # v.replace(".", @_decimalpoint)
 
-
 	@format: (v, opts={}) ->
 		if CUI.util.isEmpty(v)
 			v = null
@@ -243,3 +242,48 @@ class CUI.NumberInput extends CUI.Input
 			null
 		else
 			ni.formatValueForDisplay(v)
+
+	@parse: (string, decimals) ->
+		if isNaN(string.replace(/[,\.]/g, "")) # Remove comma to check if the input is valid.
+			return null
+
+		if isNaN(decimals)
+			decimals = 0
+
+		commaIndex = string.indexOf(",")
+		dotIndex = string.indexOf(".")
+		# Comma or dot not found, nothing to do.
+		if commaIndex == -1 and dotIndex == -1
+			return parseInt(string)
+
+		# In case both are found, we assume that the first one will be the thousand and the second one the decimal separator.
+		if dotIndex > 0 and commaIndex > 0
+			if dotIndex > commaIndex
+				thousandSeparatorRegex = /,/g
+			else
+				thousandSeparatorRegex = /\./g
+
+		# When decimal defined, we can guess the decimal separator if the input has the correct amount of decimals.
+		if not thousandSeparatorRegex and decimals > 0
+			decimal = string[string.length - 1 - decimals]
+			if decimal == ","
+				thousandSeparatorRegex = /\./g
+			else if decimal == "."
+				thousandSeparatorRegex = /,/g
+
+		# When there is no decimals it is possible to check with a regexp whether the separator is a valid thousand separator.
+		if not thousandSeparatorRegex and decimals == 0
+			if string.match(/^\d{1,3}([\.,]\d{3})+/)?[0] == string
+				if dotIndex > 0
+					thousandSeparatorRegex = /\./g
+				else
+					thousandSeparatorRegex = /,/g
+
+		if thousandSeparatorRegex
+			string = string.replace(thousandSeparatorRegex, "")
+
+		if decimals == 0
+			return parseInt(string)
+		else
+			string = string.replace(/,/, ".")
+			return parseFloat(string)
