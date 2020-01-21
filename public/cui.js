@@ -37186,7 +37186,11 @@ CUI.ListViewTree = (function(superClass) {
         if (hide_spinner) {
           node.hideSpinner();
         }
-        return _this.startLayout();
+        _this.startLayout();
+        return CUI.Events.trigger({
+          type: "content-resize",
+          node: _this.DOM
+        });
       };
     })(this));
     return ret;
