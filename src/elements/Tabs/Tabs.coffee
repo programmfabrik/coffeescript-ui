@@ -175,9 +175,6 @@ class CUI.Tabs extends CUI.SimplePane
 			@__checkOverflowButton()
 			@__setActiveMarker()
 
-			if not CUI.__ng__
-				@__doLayout()
-
 		@addClass("cui-tabs")
 
 		@__max_width = -1
@@ -192,16 +189,6 @@ class CUI.Tabs extends CUI.SimplePane
 		# @tabs.map.footer.css("display","")
 		@replace(content, "footer_left")
 
-	__doLayout: ->
-		if @__maximize_horizontal and @__maximize_vertical
-			return
-
-		if @__measureAndSetBodyWidth()
-			# size has changed
-			CUI.Events.trigger
-				type: "content-resize"
-				node: @DOM.parentNode
-		@
 
 	addTab: (tab) ->
 		CUI.util.assert(tab instanceof CUI.Tab, "#{@__cls}.addTab", "Tab must be instance of Tab but is #{CUI.util.getObjectClass(tab)}", tab: tab)
@@ -255,73 +242,6 @@ class CUI.Tabs extends CUI.SimplePane
 		@__buttonbar.addButton(tab.getButton())
 		@__tabs_bodies.append(tab)
 		tab
-
-
-	__measureAndSetBodyWidth: ->
-
-		for parent in CUI.dom.parents(@DOM)
-			if parent.scrollTop or parent.scrollLeft
-				scrollSaveParent =
-						node: parent
-						top: parent.scrollTop
-						left: parent.scrollLeft
-				break
-
-		# measure and set body
-		#
-
-		# remove previously set dimensions
-		for tab in @__tabs
-			CUI.dom.setStyle(tab.getBody(),
-				"min-width": "",
-				"height": ""
-			)
-
-		CUI.dom.setStyle(@__tabs_bodies.DOM,
-			"min-width": "",
-			"height": ""
-		)
-
-		# measure
-		max_width = -1
-		max_height = -1
-
-		for tab in @__tabs
-			dim =
-				width: CUI.dom.getDimensions(tab.getBody()).marginBoxWidth
-				height: CUI.dom.getDimensions(tab.getBody()).marginBoxHeight
-
-			if dim.width > max_width
-				max_width = dim.width
-			if dim.height > max_height
-				max_height = dim.height
-
-		CUI.dom.setStyle(@__tabs_bodies.DOM,
-			"min-width": max_width,
-			"height": max_height
-		)
-
-		for tab in @__tabs
-			CUI.dom.setStyle(tab.getBody(),
-				"min-width": max_width,
-				height: max_height
-			)
-
-		if @max_width != @__max_width or @max_height != @__max_height
-			@__max_width = max_width
-			@__max_height = max_height
-
-			size_has_changed = true
-		else
-			size_has_changed = false
-
-		# set back scroll position
-		if scrollSaveParent
-			scrollSaveParent.node.scrollTop = scrollSaveParent.top
-			scrollSaveParent.node.scrollLeft = scrollSaveParent.left
-
-		return size_has_changed
-
 
 	# true or false if a tab exists
 	hasTab: (tab_or_idx_or_name) ->

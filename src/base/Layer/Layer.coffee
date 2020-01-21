@@ -955,10 +955,11 @@ class CUI.Layer extends CUI.DOMElement
 			# placement can be done by pure CSS
 			; # return @
 
-		if CUI.browser.ie
-			set_css.width = Math.ceil(vp.layer_pos.width)
-			set_css.height = Math.ceil(vp.layer_pos.height)
 
+		set_css.width = Math.ceil(vp.layer_pos.width)
+		set_css.height = Math.ceil(vp.layer_pos.height)
+
+		if CUI.browser.ie
 			# IE 11 (Edge renderer) cannot perfectly update a DIVs CSS
 			# without leaving scrollbars in some cases, we need to fully
 			# DOM detach the DIV and put it back in.
