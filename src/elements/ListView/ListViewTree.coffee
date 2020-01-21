@@ -166,7 +166,6 @@ class CUI.ListViewTree extends CUI.ListView
 		return @DOM
 
 	toggleNode: (ev, node) ->
-
 		if node.isOpen()
 			@__runTrigger(ev, "close", node)
 		else
@@ -180,6 +179,7 @@ class CUI.ListViewTree extends CUI.ListView
 			@__actionOnNode(ev, action+"Recursively", node)
 		else
 			@__actionOnNode(ev, action, node)
+
 		return
 
 
@@ -210,6 +210,12 @@ class CUI.ListViewTree extends CUI.ListView
 				node.hideSpinner()
 
 			@startLayout()
+
+			CUI.Events.trigger
+					type: "content-resize"
+					node: @DOM
+
+
 
 		return ret
 		# console.timeEnd("#{@__uniqueId}: action on node #{action}")
