@@ -16650,9 +16650,9 @@ CUI.Layer = (function(superClass) {
     if (placement === "c" && !CUI.browser.ie) {
 
     }
+    set_css.width = Math.ceil(vp.layer_pos.width);
+    set_css.height = Math.ceil(vp.layer_pos.height);
     if (CUI.browser.ie) {
-      set_css.width = Math.ceil(vp.layer_pos.width);
-      set_css.height = Math.ceil(vp.layer_pos.height);
       sibl = this.__layer_root.DOM.previousElementSibling;
       CUI.dom.remove(this.__layer_root);
     }
@@ -45819,10 +45819,7 @@ CUI.Tabs = (function(superClass) {
         });
         CUI.util.assert(CUI.dom.isInDOM(_this.getLayout().DOM), "Tabs getting DOM insert event without being in DOM.");
         _this.__checkOverflowButton();
-        _this.__setActiveMarker();
-        if (!CUI.__ng__) {
-          return _this.__doLayout();
-        }
+        return _this.__setActiveMarker();
       };
     })(this));
     this.addClass("cui-tabs");
@@ -45837,19 +45834,6 @@ CUI.Tabs = (function(superClass) {
 
   Tabs.prototype.setFooterLeft = function(content) {
     return this.replace(content, "footer_left");
-  };
-
-  Tabs.prototype.__doLayout = function() {
-    if (this.__maximize_horizontal && this.__maximize_vertical) {
-      return;
-    }
-    if (this.__measureAndSetBodyWidth()) {
-      CUI.Events.trigger({
-        type: "content-resize",
-        node: this.DOM.parentNode
-      });
-    }
-    return this;
   };
 
   Tabs.prototype.addTab = function(tab) {
@@ -45913,74 +45897,6 @@ CUI.Tabs = (function(superClass) {
     this.__buttonbar.addButton(tab.getButton());
     this.__tabs_bodies.append(tab);
     return tab;
-  };
-
-  Tabs.prototype.__measureAndSetBodyWidth = function() {
-    var dim, i, j, k, l, len, len1, len2, len3, max_height, max_width, parent, ref, ref1, ref2, ref3, scrollSaveParent, size_has_changed, tab;
-    ref = CUI.dom.parents(this.DOM);
-    for (i = 0, len = ref.length; i < len; i++) {
-      parent = ref[i];
-      if (parent.scrollTop || parent.scrollLeft) {
-        scrollSaveParent = {
-          node: parent,
-          top: parent.scrollTop,
-          left: parent.scrollLeft
-        };
-        break;
-      }
-    }
-    ref1 = this.__tabs;
-    for (j = 0, len1 = ref1.length; j < len1; j++) {
-      tab = ref1[j];
-      CUI.dom.setStyle(tab.getBody(), {
-        "min-width": "",
-        "height": ""
-      });
-    }
-    CUI.dom.setStyle(this.__tabs_bodies.DOM, {
-      "min-width": "",
-      "height": ""
-    });
-    max_width = -1;
-    max_height = -1;
-    ref2 = this.__tabs;
-    for (k = 0, len2 = ref2.length; k < len2; k++) {
-      tab = ref2[k];
-      dim = {
-        width: CUI.dom.getDimensions(tab.getBody()).marginBoxWidth,
-        height: CUI.dom.getDimensions(tab.getBody()).marginBoxHeight
-      };
-      if (dim.width > max_width) {
-        max_width = dim.width;
-      }
-      if (dim.height > max_height) {
-        max_height = dim.height;
-      }
-    }
-    CUI.dom.setStyle(this.__tabs_bodies.DOM, {
-      "min-width": max_width,
-      "height": max_height
-    });
-    ref3 = this.__tabs;
-    for (l = 0, len3 = ref3.length; l < len3; l++) {
-      tab = ref3[l];
-      CUI.dom.setStyle(tab.getBody(), {
-        "min-width": max_width,
-        height: max_height
-      });
-    }
-    if (this.max_width !== this.__max_width || this.max_height !== this.__max_height) {
-      this.__max_width = max_width;
-      this.__max_height = max_height;
-      size_has_changed = true;
-    } else {
-      size_has_changed = false;
-    }
-    if (scrollSaveParent) {
-      scrollSaveParent.node.scrollTop = scrollSaveParent.top;
-      scrollSaveParent.node.scrollLeft = scrollSaveParent.left;
-    }
-    return size_has_changed;
   };
 
   Tabs.prototype.hasTab = function(tab_or_idx_or_name) {

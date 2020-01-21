@@ -673,7 +673,8 @@ li > div {
   overflow: hidden;
   max-width: 100%; }
   .cui-vertical-layout.cui-maximize-horizontal {
-    align-self: stretch; }
+    align-self: stretch;
+    width: 100%; }
   .cui-vertical-layout.cui-maximize-vertical {
     display: flex;
     flex-direction: column;
