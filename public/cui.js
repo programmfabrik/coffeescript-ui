@@ -17132,21 +17132,6 @@ CUI.Layout = (function(superClass) {
       map: this.getTemplateMap()
     });
     this.registerTemplate(this.__layout);
-    if (this.__maximize_horizontal && this.__maximize_vertical) {
-      CUI.Events.listen({
-        type: "content-resize",
-        instance: this,
-        node: this.DOM,
-        call: (function(_this) {
-          return function(ev) {
-            if (CUI.dom.closest(ev.getTarget(), '.cui-absolute')) {
-              return;
-            }
-            return ev.stopPropagation();
-          };
-        })(this)
-      });
-    }
     this.maximizeAddClasses();
     this.addClass(this.getMapPrefix());
     if (this._absolute) {
