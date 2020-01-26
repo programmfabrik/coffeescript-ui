@@ -2537,7 +2537,7 @@ a[role="button"].cui-button-appearance-link {
     .cui-item-list .cui-button .cui-button-visual span,
     .cui-item-list .cui-button-href .cui-button-visual span {
       white-space: normal;
-      overflow: overflow; }
+      overflow: hidden; }
   .cui-item-list .cui-button.cui-layer-open .cui-button-visual, .cui-item-list .cui-button:active .cui-button-visual,
   .cui-item-list .cui-button-href.cui-layer-open .cui-button-visual,
   .cui-item-list .cui-button-href:active .cui-button-visual {
