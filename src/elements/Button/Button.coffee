@@ -688,7 +688,7 @@ class CUI.Button extends CUI.DOMElement
 	__callOnGroup: (call, flags, event) ->
 
 		group = @getGroup()
-		if not group or not event?.ctrlKey() or flags.ignore_ctrl
+		if not group or not event?.hasModifierKey() or flags.ignore_ctrl
 			return
 
 		flags.ignore_ctrl = true
