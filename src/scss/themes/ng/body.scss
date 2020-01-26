@@ -3283,9 +3283,7 @@ $layer-sizes: (
 
 			span {
 				white-space: normal;
-				overflow: inherit;
-				word-wrap: break-word;
-				word-break: break-word;
+				overflow: overflow;
 			}
 		}
 
