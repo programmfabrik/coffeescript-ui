@@ -22192,7 +22192,7 @@ CUI.Button = (function(superClass) {
   Button.prototype.__callOnGroup = function(call, flags, event) {
     var btn, group, i, len, ref, started;
     group = this.getGroup();
-    if (!group || !(event != null ? event.ctrlKey() : void 0) || flags.ignore_ctrl) {
+    if (!group || !(event != null ? event.hasModifierKey() : void 0) || flags.ignore_ctrl) {
       return;
     }
     flags.ignore_ctrl = true;
