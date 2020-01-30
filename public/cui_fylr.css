@@ -203,8 +203,7 @@ span {
   .cui-horizontal-layout.cui-maximize-horizontal > .cui-horizontal-layout-left,
   .cui-horizontal-layout.cui-maximize-horizontal > .cui-horizontal-layout-right {
     position: relative;
-    overflow: hidden;
-    max-width: 45%; }
+    overflow: hidden; }
   .cui-horizontal-layout.cui-maximize-horizontal > .cui-horizontal-layout-center {
     position: relative;
     flex: 1 1 auto;
