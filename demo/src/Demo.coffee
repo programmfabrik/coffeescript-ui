@@ -156,32 +156,10 @@ class Demo.RunDemo extends CUI.Element
 				text: "Pick a theme!"
 			menu:
 				onClick: (ev, btn, item) =>
-					#	for k in Demo.themeNames
-					#		if not theme
-					#			theme = k
-
-					#	Demo.cssLoader.registerTheme(name: k, )
-					#		if k == window.localStorage.getItem("theme")
-					#			theme = k
-
-					#	Demo.cssLoader.loadTheme(theme)
-					#	.done =>
-
-					old_theme = Demo.cssLoader.getActiveCSS()?.theme
-
-#					if CUI.util.xor(old_theme.startsWith("ng"), item.value.startsWith("ng"))
-#						reload = true
-#					else
-#						reload = false
-
 					theme = item.value
 					Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "/css/cui_#{theme}.css").done( =>
 						console.debug "load theme done, setting item", item.value
 						window.localStorage.setItem("theme", item.value)
-						# FIXME: once "ng" is finished, we can remove the reload
-#						if reload
-#							CUI.toaster(text: "Reloading...", show_ms: null)
-#							document.location.reload()
 					).fail =>
 						CUI.alert
 							title: "Error"
