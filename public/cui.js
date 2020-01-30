@@ -45522,15 +45522,17 @@ CUI.Tab = (function(superClass) {
 
   Tab.prototype.show = function() {
     CUI.dom.removeClass(this.DOM, "cui-tab-hidden");
-    if (CUI.__ng__) {
-      CUI.Events.trigger({
-        type: "viewport-resize",
-        node: this.DOM,
-        info: {
-          tab: true
-        }
-      });
-    }
+    CUI.Events.trigger({
+      type: "viewport-resize",
+      node: this.DOM,
+      info: {
+        tab: true
+      }
+    });
+    CUI.Events.trigger({
+      type: "content-resize",
+      node: this.DOM
+    });
     return this;
   };
 
