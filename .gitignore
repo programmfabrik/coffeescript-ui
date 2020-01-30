@@ -18,5 +18,6 @@ src/**.js.map
 !public/cui_debug.css
 !public/cui-tutorial.js
 !demo/public/cui-demo.js
+!demo/public/cui-demo.css
 !demo/public/css
 coverage/*
