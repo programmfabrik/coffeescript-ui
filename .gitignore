@@ -14,6 +14,9 @@ src/**.js.map
 !public/cui.js
 !public/cui.min.js
 !public/cui.css
+!public/cui_fylr.css
+!public/cui_debug.css
 !public/cui-tutorial.js
-!public/cui-demo.js
+!demo/public/cui-demo.js
+!demo/public/css
 coverage/*
