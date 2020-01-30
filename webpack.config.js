@@ -2,16 +2,16 @@ const path = require('path');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 
 // const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
 
-const extractSass = new ExtractTextPlugin({
-    filename: "cui.css"
-});
+const extractSass = new ExtractTextWebpackPlugin("cui.css");
+const fylrExtractSass = new ExtractTextWebpackPlugin("cui_fylr.css");
+const debugExtractSass = new ExtractTextWebpackPlugin("cui_debug.css");
 
 const config = {
     context: APP_DIR,
@@ -22,15 +22,35 @@ const config = {
         library: "CUI"
     },
     module: {
-        loaders: [
+        rules: [
             {
 
                 test: /\.coffee/,
                 loader: 'coffee-loader'
             },
             {
-                test: /\.scss$/,
+                test: /ng\/.*\.scss$/,
                 use: extractSass.extract({
+                    use: [{
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader"
+                    }]
+                })
+            },
+            {
+                test: /fylr\/.*\.scss$/,
+                use: fylrExtractSass.extract({
+                    use: [{
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader"
+                    }]
+                })
+            },
+            {
+                test: /debug\/.*\.scss$/,
+                use: debugExtractSass.extract({
                     use: [{
                         loader: "css-loader"
                     }, {
@@ -56,6 +76,8 @@ const config = {
     plugins: [
         // new HardSourceWebpackPlugin(), We comment out the plugin due to https://github.com/mzgoddard/hard-source-webpack-plugin/issues/480
         extractSass,
+        fylrExtractSass,
+        debugExtractSass,
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         }),

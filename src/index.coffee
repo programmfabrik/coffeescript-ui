@@ -143,5 +143,7 @@ require('./elements/Map/MapInput.coffee')
 require('./elements/Map/IconMarker.coffee')
 require('./base/CSVData.coffee')
 require('./scss/themes/ng/main.scss')
+require('./scss/themes/fylr/main.scss')
+require('./scss/themes/debug/main.scss')
 
 module.exports = CUI
