@@ -14,7 +14,6 @@ Then you can run different targets, with *npm run **%TARGET%***
 
 - **build**: Builds the demo with CSS
 - **build:watch**: Builds the demo with CSS and watch for changes
-- **build:no-css** Builds the demo without CSS
 
 As output, there will be two files: *cui-demo.js* and *index.html*, located in **public** directory. Open **public/index.html** too see the demo.
 
