@@ -43,7 +43,7 @@ class Demo extends CUI.DOMElement
 		else
 			s
 
-	@themeNames: ["ng", "ng_debug"]
+	@themeNames: ["ng", "debug", "fylr"]
 
 	@cssLoader = new CUI.CSSLoader()
 
