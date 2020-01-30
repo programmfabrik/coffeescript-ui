@@ -175,7 +175,7 @@ class Demo.RunDemo extends CUI.Element
 #						reload = false
 
 					theme = item.value
-					Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "../css/cui_#{theme}.css").done( =>
+					Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "/css/cui_#{theme}.css").done( =>
 						console.debug "load theme done, setting item", item.value
 						window.localStorage.setItem("theme", item.value)
 						# FIXME: once "ng" is finished, we can remove the reload
