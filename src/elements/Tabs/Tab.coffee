@@ -128,12 +128,15 @@ class CUI.Tab extends CUI.DOMElement
 		# move to first position
 		CUI.dom.removeClass(@DOM, "cui-tab-hidden")
 
-		if CUI.__ng__
-			CUI.Events.trigger
-				type: "viewport-resize"
-				node: @DOM
-				info:
-					tab: true
+		CUI.Events.trigger
+			type: "viewport-resize"
+			node: @DOM
+			info:
+				tab: true
+
+		CUI.Events.trigger
+			type: "content-resize"
+			node: @DOM
 		@
 
 	destroy: ->
