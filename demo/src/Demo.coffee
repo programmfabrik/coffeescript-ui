@@ -149,43 +149,54 @@ class Demo.RunDemo extends CUI.Element
 				icon: "menu"
 			icon_right: false
 
-#		@themeSwitch = new CUI.Button
-#			class: "theme-switch"
-#			text: "Theme"
-#			tooltip:
-#				text: "Pick a theme!"
-#			menu:
-#				onClick: (ev, btn, item) ->
-#					old_theme = @cssLoader.getActiveTheme()?.name
-#
+		@themeSwitch = new CUI.Button
+			class: "theme-switch"
+			text: "Theme"
+			tooltip:
+				text: "Pick a theme!"
+			menu:
+				onClick: (ev, btn, item) =>
+					#	for k in Demo.themeNames
+					#		if not theme
+					#			theme = k
+
+					#	Demo.cssLoader.registerTheme(name: k, )
+					#		if k == window.localStorage.getItem("theme")
+					#			theme = k
+
+					#	Demo.cssLoader.loadTheme(theme)
+					#	.done =>
+
+					old_theme = Demo.cssLoader.getActiveCSS()?.theme
+
 #					if CUI.util.xor(old_theme.startsWith("ng"), item.value.startsWith("ng"))
 #						reload = true
 #					else
 #						reload = false
-#
-#					@cssLoader.loadTheme(item.value)
-#					.done =>
-#						console.debug "load theme done, setting item", item.value
-#						window.localStorage.setItem("theme", item.value)
-#						# FIXME: once "ng" is finished, we can remove the reload
+
+					theme = item.value
+					Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "../css/cui_#{theme}.css").done( =>
+						console.debug "load theme done, setting item", item.value
+						window.localStorage.setItem("theme", item.value)
+						# FIXME: once "ng" is finished, we can remove the reload
 #						if reload
 #							CUI.toaster(text: "Reloading...", show_ms: null)
 #							document.location.reload()
-#					.fail =>
-#						CUI.alert
-#							title: "Error"
-#							text: "There was an error loading the \""+item.value+"\". Use 'make css_other' to produce the necessary files."
-#
-#				active_item_idx: null
-#				items: ->
-#					theme_items = []
-#					for theme in Demo.themeNames
-#						theme_items.push
-#							text: theme
-#							value: theme
-#							active: theme == @cssLoader.getActiveTheme()?.name
-#
-#					theme_items
+					).fail =>
+						CUI.alert
+							title: "Error"
+							text: "There was an error loading the \""+item.value+"\". Use 'make css_other' to produce the necessary files."
+
+				active_item_idx: null
+				items: =>
+					theme_items = []
+					for theme in Demo.themeNames
+						theme_items.push
+							text: theme
+							value: theme
+							active: theme == Demo.cssLoader.getActiveCSS()?.theme
+
+					theme_items
 
 		@menu_title_label = new CUI.Label
 			class: "cui-demo-title"
@@ -213,8 +224,6 @@ class Demo.RunDemo extends CUI.Element
 					hidden: false
 					closed: false
 
-
-
 		@main_menu_pane = new CUI.VerticalLayout
 			class: "cui-root-layout"
 			top:
@@ -229,11 +238,11 @@ class Demo.RunDemo extends CUI.Element
 										@menu_title_label
 										@menu_sub_title_label
 									]
-#							right:
-#								content:
-#										[
-#											@themeSwitch
-#										]
+							right:
+								content:
+										[
+											@themeSwitch
+										]
 					]
 			center:
 				class: "cui-demo-root-center"
@@ -348,18 +357,6 @@ class Demo.DemoTable
 		CUI.dom.append(@table, CUI.dom.append(CUI.dom.tr("cui-demo-full-row"), td))
 
 CUI.ready ->
-
-# FIX ME: Using the CSS of CUI.
-#	for k in Demo.themeNames
-#		if not theme
-#			theme = k
-
-#	Demo.cssLoader.registerTheme(name: k, url: CUI.getPathToScript()+"../css/cui_demo_#{k}.css")
-#		if k == window.localStorage.getItem("theme")
-#			theme = k
-
-#	Demo.cssLoader.loadTheme(theme)
-#	.done =>
 	splash_node = document.getElementById("cui-demo-splash")
 
 	CUI.Events.wait

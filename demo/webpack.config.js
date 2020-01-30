@@ -1,6 +1,7 @@
 const path = require('path');
-
 const webpack = require('webpack');
+
+const CopyPlugin = require('copy-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
@@ -38,10 +39,15 @@ const config = {
         ]
     },
     plugins: [
-    new webpack.ProvidePlugin({
-        'Demo': APP_DIR + '/Demo.coffee',
-        'CUI': 'coffeescript-ui/public/cui.js'
-    })
+        new webpack.ProvidePlugin({
+            'Demo': APP_DIR + '/Demo.coffee',
+            'CUI': 'coffeescript-ui/public/cui.js'
+        }),
+        new CopyPlugin([
+            { from: '../node_modules/coffeescript-ui/public/cui.css', to: BUILD_DIR + "/css/cui_ng.css" },
+            { from: '../node_modules/coffeescript-ui/public/cui_fylr.css', to: BUILD_DIR + "/css" },
+            { from: '../node_modules/coffeescript-ui/public/cui_debug.css', to: BUILD_DIR + "/css" }
+        ])
     ]
 };
 
