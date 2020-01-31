@@ -348,6 +348,12 @@ class CUI.Layer extends CUI.DOMElement
 		if not @isShown()
 			return @
 
+		# console.warn "position:", @__currentPlacement, ev?.getType()
+
+		# re-use current placement for "content-resize"
+		if ev?.getType() != "content-resize"
+			@__currentPlacement = null
+
 		dim_body = CUI.dom.getDimensions(document.body)
 
 		dim_body.isPositioned = dim_body.computedStyle.position in ["relative", "fixed", "absolute"]
@@ -794,7 +800,8 @@ class CUI.Layer extends CUI.DOMElement
 		available_placements.reverse()
 		# console.debug "sorting placements AFTER", available_placements.join(", ")
 
-		placement = available_placements[0]
+		if @__currentPlacement not in available_placements
+			@__currentPlacement = available_placements[0]
 
 		if ev?.hasModifierKey()
 			console.debug "Layer.position", @, @opts
@@ -803,7 +810,7 @@ class CUI.Layer extends CUI.DOMElement
 			console.debug "pointer", dim_pointer
 			console.debug "window", dim_window
 
-			console.debug "placements", placement, vp_pl
+			console.debug "placements", @__currentPlacement, vp_pl
 
 			show_dbg_div = (placement) =>
 
@@ -893,7 +900,7 @@ class CUI.Layer extends CUI.DOMElement
 					return
 
 
-		vp = vp_pl[placement]
+		vp = vp_pl[@__currentPlacement]
 
 		# console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
 
@@ -1051,6 +1058,8 @@ class CUI.Layer extends CUI.DOMElement
 
 		@__updateLayerStackCounter()
 
+		@__currentPlacement = null
+
 		@__shown = false
 
 		if @_handle_focus
@@ -1114,7 +1123,7 @@ class CUI.Layer extends CUI.DOMElement
 					instance: @
 					node: scroll_parent
 					call: =>
-						@position()
+						@position(ev)
 
 			if @_check_for_element
 				@__check_for_element = CUI.setInterval =>
@@ -1131,7 +1140,7 @@ class CUI.Layer extends CUI.DOMElement
 			node: @__layer
 			call: (ev) =>
 				# console.error "Layer caught event:", ev.getType()
-				@position()
+				@position(ev)
 
 		CUI.Events.listen
 			type: "viewport-resize"
@@ -1143,7 +1152,7 @@ class CUI.Layer extends CUI.DOMElement
 					return
 
 				# console.info("Layer caught event:", ev.getType)
-				@position()
+				@position(ev)
 				return
 
 		@_onBeforeShow?(@, ev)
