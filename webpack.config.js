@@ -100,6 +100,9 @@ module.exports = function (env) {
 
     config.output.filename += ".js";
     config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + config.output.filename));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + "cui.css"));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + "cui_fylr.css"));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + "cui_debug.css"));
 
     return config
 };
