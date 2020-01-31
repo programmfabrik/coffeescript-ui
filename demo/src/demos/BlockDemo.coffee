@@ -30,7 +30,7 @@ class Demo.BlockDemo extends Demo
 			content:
 				[
 					new CUI.Block
-						text: "Title of block A"
+						text: "Title of block A1"
 						content: [
 							new CUI.Label
 								text: "content of main block"
@@ -91,7 +91,7 @@ class Demo.BlockDemo extends Demo
 				[
 					new CUI.Block
 						text: "Title of main block"
-						appearance: "title"
+						appearance: "normal"
 						content: [
 							new CUI.Label
 								text: "content of main block"

@@ -100,8 +100,15 @@ class Demo.RunDemo extends CUI.Element
 		@__console = new Demo.DemoConsole()
 		@registerDemos()
 
-		theme = Demo.themeNames[0]
+		theme = Demo.themeNames[2]
 		Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "css/cui_#{theme}.css")
+
+		window.setInterval(
+			(=>
+				cssNode = document.getElementsByName("cui-css-0")[0]
+				cssNode.href = cssNode.dataset.cuiUrl+"?"+(new Date()).getTime()
+			), 1000
+		)
 
 		CUI.Events.listen
 			type: "hashchange"
