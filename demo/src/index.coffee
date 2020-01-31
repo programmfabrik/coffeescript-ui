@@ -38,3 +38,8 @@ require('./demos/Map/GoogleMapDemo.coffee')
 require('./demos/Map/LeafletMapDemo.coffee')
 
 require('./scss/demo.scss')
+
+# Themes
+require('../../src/scss/themes/ng/main.scss')
+require('../../src/scss/themes/fylr/main.scss')
+require('../../src/scss/themes/debug/main.scss')

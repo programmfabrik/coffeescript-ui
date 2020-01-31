@@ -101,7 +101,7 @@ class Demo.RunDemo extends CUI.Element
 		@registerDemos()
 
 		theme = Demo.themeNames[0]
-		Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "/css/cui_#{theme}.css")
+		Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "css/cui_#{theme}.css")
 
 		CUI.Events.listen
 			type: "hashchange"
@@ -160,7 +160,7 @@ class Demo.RunDemo extends CUI.Element
 			menu:
 				onClick: (ev, btn, item) =>
 					theme = item.value
-					Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "/css/cui_#{theme}.css").done( =>
+					Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "css/cui_#{theme}.css").done( =>
 						console.debug "load theme done, setting item", item.value
 						window.localStorage.setItem("theme", item.value)
 					).fail =>

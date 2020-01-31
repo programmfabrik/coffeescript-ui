@@ -2,12 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 
 const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
-const CopyPlugin = require('copy-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
 
 const extractSass = new ExtractTextWebpackPlugin("cui-demo.css");
+const ngExtractSass = new ExtractTextWebpackPlugin("css/cui_ng.css");
+const fylrExtractSass = new ExtractTextWebpackPlugin("css/cui_fylr.css");
+const debugExtractSass = new ExtractTextWebpackPlugin("css/cui_debug.css");
 
 const config = {
     context: APP_DIR,
@@ -23,8 +25,38 @@ const config = {
             loader: 'coffee-loader'
         },
         {
-            test: /\.scss|\.css$/,
+            test: /demo\.scss$/,
             use: extractSass.extract({
+                use: [{
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader"
+                }]
+            })
+        },
+        {
+            test: /themes\/ng\/.*\.scss$/,
+            use: ngExtractSass.extract({
+                use: [{
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader"
+                }]
+            })
+        },
+        {
+            test: /themes\/fylr\/.*\.scss$/,
+            use: fylrExtractSass.extract({
+                use: [{
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader"
+                }]
+            }),
+        },
+        {
+            test: /themes\/debug\/.*\.scss$/,
+            use: debugExtractSass.extract({
                 use: [{
                     loader: "css-loader"
                 }, {
@@ -49,15 +81,13 @@ const config = {
     },
     plugins: [
         extractSass,
+        ngExtractSass,
+        fylrExtractSass,
+        debugExtractSass,
         new webpack.ProvidePlugin({
             'Demo': APP_DIR + '/Demo.coffee',
             'CUI': 'coffeescript-ui/public/cui.js'
-        }),
-        new CopyPlugin([
-            { from: '../node_modules/coffeescript-ui/public/cui.css', to: BUILD_DIR + "/css/cui_ng.css" },
-            { from: '../node_modules/coffeescript-ui/public/cui_fylr.css', to: BUILD_DIR + "/css" },
-            { from: '../node_modules/coffeescript-ui/public/cui_debug.css', to: BUILD_DIR + "/css" }
-        ])
+        })
     ]
 };
 
