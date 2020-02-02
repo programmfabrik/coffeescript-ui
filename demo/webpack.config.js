@@ -21,7 +21,6 @@ module.exports = function(env) {
             path: BUILD_DIR,
             filename: 'cui-demo.js'
         },
-        // devtool: env.development ? 'source-map' : '',
         devtool: (!isProduction ? 'source-map' : undefined),
         devServer: {
             publicPath: '/public/',
