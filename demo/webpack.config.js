@@ -18,6 +18,10 @@ const config = {
         path: BUILD_DIR,
         filename: 'cui-demo.js'
     },
+    devServer: {
+        publicPath: '/public/',
+        // hot: true, // ExtractTextWebpackPlugin does not support HMR
+    },
     module: {
         rules: [
         {
