@@ -5,7 +5,6 @@
   "scripts": {
     "build": "webpack --progress",
     "build:watch": "webpack --watch --progress",
-    "build:no-css": "npm run build -- --env.noCss",
     "start": "webpack-dev-server --host 0.0.0.0"
   },
   "repository": {
@@ -25,7 +24,6 @@
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",
     "coffeescript-ui": "1.7.1",
-    "copy-webpack-plugin": "4.0.1",
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "2.1.2",
     "html-loader": "^0.5.1",

@@ -29,7 +29,7 @@ const config = {
                 loader: 'coffee-loader'
             },
             {
-                test: /ng\/.*\.scss$/,
+                test: /themes\/ng\/.*\.scss$/,
                 use: extractSass.extract({
                     use: [{
                         loader: "css-loader"
@@ -39,17 +39,17 @@ const config = {
                 })
             },
             {
-                test: /fylr\/.*\.scss$/,
+                test: /themes\/fylr\/.*\.scss$/,
                 use: fylrExtractSass.extract({
                     use: [{
                         loader: "css-loader"
                     }, {
                         loader: "sass-loader"
                     }]
-                })
+                }),
             },
             {
-                test: /debug\/.*\.scss$/,
+                test: /themes\/debug\/.*\.scss$/,
                 use: debugExtractSass.extract({
                     use: [{
                         loader: "css-loader"
@@ -100,6 +100,9 @@ module.exports = function (env) {
 
     config.output.filename += ".js";
     config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + config.output.filename));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + "cui.css"));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + "cui_fylr.css"));
+    config.plugins.push(new CleanWebpackPlugin(BUILD_DIR + "/" + "cui_debug.css"));
 
     return config
 };
