@@ -15081,6 +15081,9 @@ CUI.FlexHandle = (function(superClass) {
       },
       "class": {
         check: String
+      },
+      onResize: {
+        check: Function
       }
     });
   };
@@ -15236,12 +15239,16 @@ CUI.FlexHandle = (function(superClass) {
     })(this);
     if (this._manage_state) {
       if (!this._state_name) {
-        console.error("new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", this.opts);
+        console.warn("new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", this.opts);
       }
       this.__state_name = this._state_name;
       this.__setState();
     }
     return this;
+  };
+
+  FlexHandle.prototype.getElement = function() {
+    return this._element;
   };
 
   FlexHandle.prototype.__setSize = function(size) {
@@ -15270,7 +15277,7 @@ CUI.FlexHandle = (function(superClass) {
     return this;
   };
 
-  FlexHandle.prototype.__getSize = function() {
+  FlexHandle.prototype.getSize = function() {
     return this.__size;
   };
 
@@ -15285,6 +15292,9 @@ CUI.FlexHandle = (function(superClass) {
   FlexHandle.prototype.__resize = function() {
     if (!this.__isAlive()) {
       return;
+    }
+    if (typeof this._onResize === "function") {
+      this._onResize(this, this.getSize());
     }
     return CUI.Events.trigger({
       type: "viewport-resize",
@@ -15331,7 +15341,7 @@ CUI.FlexHandle = (function(superClass) {
     }
     state = {
       closed: this.isClosed(),
-      size: this.__getSize()
+      size: this.getSize()
     };
     value = JSON.stringify(state);
     CUI.setLocalStorage(this.__state_name, value);
@@ -16085,9 +16095,12 @@ CUI.Layer = (function(superClass) {
   };
 
   Layer.prototype.position = function(ev) {
-    var allowed_placements, available_placements, body_scroll_left, body_scroll_top, dbg_pl, dim_body, dim_element, dim_layer, dim_pointer, dim_window, direction, el, get_pointer_class, get_pointer_direction, i, is_fixed, j, k, l, layer_pos, layer_pos_bottom, layer_pos_right, len, len1, len2, len3, len4, len5, len6, listener, m, marginBottom, marginLeft, marginRight, marginTop, minWidth, n, o, overlap_bottom, overlap_height, overlap_right, overlap_width, placement, placement_parts, pointer_direction, pointer_pos, pointer_pos_bottom, pointer_pos_right, pushNeeded, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, set_css, set_root_css, show_dbg_div, sibl, spaceAvailable, vp, vp_pl, wanted_placement, wanted_rank;
+    var allowed_placements, available_placements, body_scroll_left, body_scroll_top, dbg_pl, dim_body, dim_element, dim_layer, dim_pointer, dim_window, direction, el, get_pointer_class, get_pointer_direction, i, is_fixed, j, k, l, layer_pos, layer_pos_bottom, layer_pos_right, len, len1, len2, len3, len4, len5, len6, listener, m, marginBottom, marginLeft, marginRight, marginTop, minWidth, n, o, overlap_bottom, overlap_height, overlap_right, overlap_width, placement, placement_parts, pointer_direction, pointer_pos, pointer_pos_bottom, pointer_pos_right, pushNeeded, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, set_css, set_root_css, show_dbg_div, sibl, spaceAvailable, vp, vp_pl, wanted_placement, wanted_rank;
     if (!this.isShown()) {
       return this;
+    }
+    if ((ev != null ? ev.getType() : void 0) !== "content-resize") {
+      this.__currentPlacement = null;
     }
     dim_body = CUI.dom.getDimensions(document.body);
     dim_body.isPositioned = (ref = dim_body.computedStyle.position) === "relative" || ref === "fixed" || ref === "absolute";
@@ -16507,14 +16520,16 @@ CUI.Layer = (function(superClass) {
       return CUI.util.compareIndex(value(pl1), value(pl2));
     });
     available_placements.reverse();
-    placement = available_placements[0];
+    if (ref7 = this.__currentPlacement, indexOf.call(available_placements, ref7) < 0) {
+      this.__currentPlacement = available_placements[0];
+    }
     if (ev != null ? ev.hasModifierKey() : void 0) {
       console.debug("Layer.position", this, this.opts);
       console.debug("layer", dim_layer);
       console.debug("element", dim_element);
       console.debug("pointer", dim_pointer);
       console.debug("window", dim_window);
-      console.debug("placements", placement, vp_pl);
+      console.debug("placements", this.__currentPlacement, vp_pl);
       show_dbg_div = (function(_this) {
         return function(placement) {
           var _vp, span, style1, style2, style3;
@@ -16599,7 +16614,7 @@ CUI.Layer = (function(superClass) {
         })(this)
       });
     }
-    vp = vp_pl[placement];
+    vp = vp_pl[this.__currentPlacement];
     if (vp.layer_pos.width < 10 || vp.layer_pos.height < 10) {
 
     }
@@ -16625,7 +16640,7 @@ CUI.Layer = (function(superClass) {
     if (placement === "c") {
       is_fixed = true;
     } else {
-      is_fixed = ((ref7 = this.__layer_root.DOM.previousElementSibling) != null ? ref7.hasAttribute("cui-layer-fixed") : void 0) || false;
+      is_fixed = ((ref8 = this.__layer_root.DOM.previousElementSibling) != null ? ref8.hasAttribute("cui-layer-fixed") : void 0) || false;
     }
     if (is_fixed) {
       this.__layer_root.DOM.setAttribute("cui-layer-fixed", "");
@@ -16690,9 +16705,9 @@ CUI.Layer = (function(superClass) {
     if (CUI.browser.ie) {
       CUI.dom.insertAfter(sibl, this.__layer_root.DOM);
     }
-    ref8 = CUI.dom.matchSelector(this.__layer.DOM, "*");
-    for (o = 0, len6 = ref8.length; o < len6; o++) {
-      el = ref8[o];
+    ref9 = CUI.dom.matchSelector(this.__layer.DOM, "*");
+    for (o = 0, len6 = ref9.length; o < len6; o++) {
+      el = ref9[o];
       if (el._storedScrollTop) {
         el.scrollTop = el._storedScrollTop;
         delete el._storedScrollTop;
@@ -16734,6 +16749,7 @@ CUI.Layer = (function(superClass) {
       "cui-layer-stack-count": null
     });
     this.__updateLayerStackCounter();
+    this.__currentPlacement = null;
     this.__shown = false;
     if (this._handle_focus) {
       this.focusOnHide(ev);
@@ -16786,7 +16802,7 @@ CUI.Layer = (function(superClass) {
           node: scroll_parent,
           call: (function(_this) {
             return function() {
-              return _this.position();
+              return _this.position(ev);
             };
           })(this)
         });
@@ -16808,7 +16824,7 @@ CUI.Layer = (function(superClass) {
       node: this.__layer,
       call: (function(_this) {
         return function(ev) {
-          return _this.position();
+          return _this.position(ev);
         };
       })(this)
     });
@@ -16821,7 +16837,7 @@ CUI.Layer = (function(superClass) {
           if (_this.__element && !CUI.dom.isInDOM(_this.__element)) {
             return;
           }
-          _this.position();
+          _this.position(ev);
         };
       })(this)
     });
@@ -16938,6 +16954,9 @@ CUI.ready(function() {
       for (i = layer_elements.length - 1; i >= 0; i += -1) {
         layer_element = layer_elements[i];
         if (!CUI.dom.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")) {
+          return;
+        }
+        if (CUI.dom.hasClass(layer_element, "cui-layer-sidebar")) {
           return;
         }
         if (CUI.dom.closest(target, layer_element)) {

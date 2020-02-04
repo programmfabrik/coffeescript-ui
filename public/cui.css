@@ -2167,9 +2167,6 @@ a[role="button"].cui-button-appearance-link {
   .cui-layer-root .cui-layer {
     position: absolute;
     pointer-events: auto; }
-  .cui-layer-root[cui-placement="c"] .cui-layer {
-    position: static;
-    margin: 10px; }
   .cui-layer-root[cui-placement="c"] .cui-layer-pointer {
     display: none; }
   .cui-layer-root[cui-fill-space="both"] .cui-layer {
