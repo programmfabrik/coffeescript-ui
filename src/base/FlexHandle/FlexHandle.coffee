@@ -87,6 +87,8 @@ class CUI.FlexHandle extends CUI.Element
 				check: String
 			class:
 				check: String
+			onResize:
+				check: Function
 
 	init: ->
 		if @isDestroyed()
@@ -219,12 +221,15 @@ class CUI.FlexHandle extends CUI.Element
 
 		if @_manage_state
 			if not @_state_name
-				console.error "new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", @opts
+				console.warn("new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", @opts)
 
 			@__state_name = @_state_name
 			@__setState()
 
 		@
+
+	getElement: ->
+		@_element
 
 	__setSize: (size) ->
 		if CUI.util.isNull(size)
@@ -250,7 +255,7 @@ class CUI.FlexHandle extends CUI.Element
 		@__setSize(null)
 		@
 
-	__getSize: ->
+	getSize: ->
 		@__size
 
 	__isAlive: ->
@@ -264,6 +269,8 @@ class CUI.FlexHandle extends CUI.Element
 
 		if not @__isAlive()
 			return
+
+		@_onResize?(@, @getSize())
 
 		# console.info "FlexHandle[#{@getName()}].resize."
 		CUI.Events.trigger
@@ -304,7 +311,7 @@ class CUI.FlexHandle extends CUI.Element
 
 		state =
 			closed: @isClosed()
-			size: @__getSize()
+			size: @getSize()
 
 		value = JSON.stringify(state)
 

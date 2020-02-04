@@ -1245,6 +1245,9 @@ CUI.ready ->
 				if not CUI.dom.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")
 					return
 
+				if CUI.dom.hasClass(layer_element, "cui-layer-sidebar")
+					return
+
 				if CUI.dom.closest(target, layer_element)
 					return
 

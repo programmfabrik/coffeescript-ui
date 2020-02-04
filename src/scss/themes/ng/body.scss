@@ -2674,8 +2674,8 @@ a[role="button"].cui-button-appearance-link {
 	// centered gets placed by the browser
 	&[cui-placement="c"] {
 		.cui-layer {
-			position: static;
-			margin: $padding;
+			// position: static;
+			// margin: $padding;
 		}
 
 		.cui-layer-pointer {
