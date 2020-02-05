@@ -493,7 +493,7 @@ li > div {
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    right: 0 !important;
+    right: var(--layer-sidebar-width) !important;
   }
 }
 
@@ -6307,4 +6307,11 @@ label[data-label-clickable],
 			color: inherit;
 		}
 	}
+}
+
+
+/* This is set by Pane.coffee to compensate an active
+   sidebar in the fillScreen calculations */
+:root {
+	--layer-sidebar-width: 0px;
 }

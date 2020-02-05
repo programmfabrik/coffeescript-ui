@@ -85,6 +85,8 @@ class CUI.Pane extends CUI.VerticalLayout
 		if @getFillScreenState()
 			return
 
+		document.body.style.setProperty("--layer-sidebar-width", CUI.dom.getLayerSidebarWidth()+"px")
+
 		@__fillscreenTmpl = new CUI.Template
 			name: "pane-fill-screen"
 			map:

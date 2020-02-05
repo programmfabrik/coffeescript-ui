@@ -359,7 +359,7 @@ class CUI.Layer extends CUI.DOMElement
 		dim_body.isPositioned = dim_body.computedStyle.position in ["relative", "fixed", "absolute"]
 
 		dim_window =
-			width: window.innerWidth
+			width: window.innerWidth - CUI.dom.getLayerSidebarWidth()
 			height: window.innerHeight
 
 		get_pointer_direction = (placement) ->
