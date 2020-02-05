@@ -15084,6 +15084,11 @@ CUI.FlexHandle = (function(superClass) {
       },
       onResize: {
         check: Function
+      },
+      maxValue: {
+        check: function(v) {
+          return v > 0;
+        }
       }
     });
   };
@@ -15181,6 +15186,9 @@ CUI.FlexHandle = (function(superClass) {
             adj_data = get_data(_this.__adjacent_pane);
             max_diff = adj_data.value - adj_data.min;
             data.max = Math.max(0, data.value + max_diff);
+          }
+          if (_this._maxValue) {
+            data.max = _this._maxValue;
           }
           drag_start_size = _this.__pane.style[_this.__css_value.toLowerCase()];
           gd.__pane_data = {
@@ -16125,6 +16133,7 @@ CUI.Layer = (function(superClass) {
       CUI.dom.setStyle(this.__pointer, {
         top: 0,
         left: 0,
+        display: "",
         margin: ""
       });
       ref1 = ["w", "s", "e", "n"];
@@ -16209,6 +16218,7 @@ CUI.Layer = (function(superClass) {
         continue;
       }
       vp_pl[placement] = vp = {};
+      vp.placement = placement;
       vp.window_top = dim_layer.marginTop;
       vp.window_left = dim_layer.marginLeft;
       vp.window_right = dim_window.width - dim_layer.marginRight;
@@ -16270,6 +16280,7 @@ CUI.Layer = (function(superClass) {
       }
       placement_parts = placement.split("");
       vp_pl[placement] = vp = CUI.util.copyObject(vp_pl[placement_parts[0]]);
+      vp.placement = placement;
       vp.dim_pointer = dim_pointer[placement_parts[0]];
       if (!vp) {
         continue;
@@ -16447,7 +16458,7 @@ CUI.Layer = (function(superClass) {
           }
         }
       }
-      if (this.__pointer) {
+      if (this.__pointer && vp.dim_pointer) {
         layer_pos_right = vp.layer_pos.left + vp.layer_pos.width;
         layer_pos_bottom = vp.layer_pos.top + vp.layer_pos.height;
         pointer_pos_right = vp.pointer_pos.left + vp.pointer_pos.width;
@@ -16662,9 +16673,6 @@ CUI.Layer = (function(superClass) {
       }
       CUI.dom.setStyle(this.__layer_root.DOM, set_root_css);
     }
-    if (placement === "c" && !CUI.browser.ie) {
-
-    }
     set_css.width = Math.ceil(vp.layer_pos.width);
     set_css.height = Math.ceil(vp.layer_pos.height);
     if (CUI.browser.ie) {
@@ -16673,20 +16681,26 @@ CUI.Layer = (function(superClass) {
     }
     CUI.dom.setStyle(this.__layer.DOM, set_css);
     if (this.__pointer) {
-      if (is_fixed) {
-        CUI.dom.setStyle(this.__pointer, {
-          top: vp.pointer_pos.top,
-          left: vp.pointer_pos.left,
-          margin: 0
-        });
+      if (vp.dim_pointer) {
+        if (is_fixed) {
+          CUI.dom.setStyle(this.__pointer, {
+            top: vp.pointer_pos.top,
+            left: vp.pointer_pos.left,
+            margin: 0
+          });
+        } else {
+          CUI.dom.setStyle(this.__pointer, {
+            top: vp.pointer_pos.top,
+            left: vp.pointer_pos.left,
+            margin: 0
+          });
+        }
+        CUI.dom.addClass(this.__pointer, get_pointer_class(vp.pointer_pos.direction));
       } else {
         CUI.dom.setStyle(this.__pointer, {
-          top: vp.pointer_pos.top,
-          left: vp.pointer_pos.left,
-          margin: 0
+          display: "none"
         });
       }
-      CUI.dom.addClass(this.__pointer, get_pointer_class(vp.pointer_pos.direction));
     }
     if (this.__backdrop_crop) {
       CUI.dom.setStyle(this.__backdrop_crop, {
