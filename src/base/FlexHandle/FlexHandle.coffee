@@ -89,6 +89,9 @@ class CUI.FlexHandle extends CUI.Element
 				check: String
 			onResize:
 				check: Function
+			maxValue:
+				check: (v) ->
+					return v > 0
 
 	init: ->
 		if @isDestroyed()
@@ -173,6 +176,9 @@ class CUI.FlexHandle extends CUI.Element
 					adj_data = get_data(@__adjacent_pane)
 					max_diff = adj_data.value - adj_data.min # this is the maximum change for the adj value
 					data.max = Math.max(0, data.value+max_diff)
+
+				if @_maxValue
+					data.max = @_maxValue
 
 				drag_start_size = @__pane.style[@__css_value.toLowerCase()]
 
