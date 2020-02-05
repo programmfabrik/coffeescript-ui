@@ -2190,7 +2190,8 @@ a[role="button"].cui-button-appearance-link {
   background: white;
   outline: none;
   border-radius: 5px;
-  overflow: hidden;
+  overflow: auto;
+  /* hidden; */
   box-shadow: 0 0 0 1px rgba(61, 79, 92, 0.15), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4); }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
     border-radius: 5px 5px 0 0; }

@@ -34967,6 +34967,9 @@ CUI.ListView = (function(superClass) {
       onScroll: {
         check: Function
       },
+      onColumnResize: {
+        check: Function
+      },
       header: {
         deprecated: true
       },
@@ -38629,7 +38632,11 @@ CUI.ListViewColResize = (function(superClass) {
   };
 
   ListViewColResize.prototype.end_drag = function(ev) {
+    var base;
     ListViewColResize.__super__.end_drag.call(this, ev);
+    if (typeof (base = this.__listView)._onColumnResize === "function") {
+      base._onColumnResize(this._column, this.__new_width);
+    }
     return this.__setColWidth(this.__new_width);
   };
 
