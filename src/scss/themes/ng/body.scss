@@ -2717,7 +2717,7 @@ a[role="button"].cui-button-appearance-link {
 	background: $layer-background;
 	outline: none;
 	border-radius: 5px;
-	overflow: hidden;
+	overflow: auto; /* hidden; */
 	box-shadow:
 		0 0 0 1px hsla(205,20%,30%,.15),
 		0 8px 10px 1px hsla(0,0%,0%,.14),
