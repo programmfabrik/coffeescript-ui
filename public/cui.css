@@ -828,7 +828,7 @@ li > div {
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    right: 0 !important; }
+    right: var(--layer-sidebar-width) !important; }
 
 .cui-border-layout-north:empty,
 .cui-border-layout-south:empty,
@@ -4495,6 +4495,11 @@ label[data-label-clickable],
     .cui-icon-marker-container .cui-button-visual {
       height: 100%;
       color: inherit; }
+
+/* This is set by Pane.coffee to compensate an active
+   sidebar in the fillScreen calculations */
+:root {
+  --layer-sidebar-width: 0px; }
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)

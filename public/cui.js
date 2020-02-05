@@ -16105,7 +16105,7 @@ CUI.Layer = (function(superClass) {
     dim_body = CUI.dom.getDimensions(document.body);
     dim_body.isPositioned = (ref = dim_body.computedStyle.position) === "relative" || ref === "fixed" || ref === "absolute";
     dim_window = {
-      width: window.innerWidth,
+      width: window.innerWidth - CUI.dom.getLayerSidebarWidth(),
       height: window.innerHeight
     };
     get_pointer_direction = function(placement) {
@@ -20173,6 +20173,17 @@ CUI.dom = (function() {
       })(this)
     });
     return dfr.promise();
+  };
+
+  dom.getLayerSidebarWidth = function() {
+    var dim_sidebar, sidebar;
+    sidebar = CUI.dom.matchSelector(document.documentElement, ".cui-layer-sidebar--active");
+    if (sidebar[0]) {
+      dim_sidebar = CUI.dom.getDimensions(sidebar[0]);
+      return dim_sidebar.marginBoxWidth;
+    } else {
+      return 0;
+    }
   };
 
   dom.exitFullscreen = function() {
@@ -43364,6 +43375,7 @@ CUI.Pane = (function(superClass) {
     if (this.getFillScreenState()) {
       return;
     }
+    document.body.style.setProperty("--layer-sidebar-width", CUI.dom.getLayerSidebarWidth() + "px");
     this.__fillscreenTmpl = new CUI.Template({
       name: "pane-fill-screen",
       map: {
