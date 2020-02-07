@@ -1564,6 +1564,14 @@ class CUI.dom
 
 		dfr.promise()
 
+	@getLayerSidebarWidth: ->
+		sidebar = CUI.dom.matchSelector(document.documentElement, ".cui-layer-sidebar--active")
+		if sidebar[0]
+			dim_sidebar = CUI.dom.getDimensions(sidebar[0])
+			return dim_sidebar.marginBoxWidth
+		else
+			return 0
+
 	@exitFullscreen: ->
 		if not CUI.dom.isFullscreen()
 			return CUI.resolvedPromise()

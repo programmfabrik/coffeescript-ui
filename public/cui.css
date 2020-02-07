@@ -828,7 +828,7 @@ li > div {
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    right: 0 !important; }
+    right: var(--layer-sidebar-width) !important; }
 
 .cui-border-layout-north:empty,
 .cui-border-layout-south:empty,
@@ -2167,9 +2167,6 @@ a[role="button"].cui-button-appearance-link {
   .cui-layer-root .cui-layer {
     position: absolute;
     pointer-events: auto; }
-  .cui-layer-root[cui-placement="c"] .cui-layer {
-    position: static;
-    margin: 10px; }
   .cui-layer-root[cui-placement="c"] .cui-layer-pointer {
     display: none; }
   .cui-layer-root[cui-fill-space="both"] .cui-layer {
@@ -2193,7 +2190,8 @@ a[role="button"].cui-button-appearance-link {
   background: white;
   outline: none;
   border-radius: 5px;
-  overflow: hidden;
+  overflow: auto;
+  /* hidden; */
   box-shadow: 0 0 0 1px rgba(61, 79, 92, 0.15), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4); }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
     border-radius: 5px 5px 0 0; }
@@ -4498,6 +4496,11 @@ label[data-label-clickable],
     .cui-icon-marker-container .cui-button-visual {
       height: 100%;
       color: inherit; }
+
+/* This is set by Pane.coffee to compensate an active
+   sidebar in the fillScreen calculations */
+:root {
+  --layer-sidebar-width: 0px; }
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)

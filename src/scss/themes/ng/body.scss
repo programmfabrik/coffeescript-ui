@@ -493,7 +493,7 @@ li > div {
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
-    right: 0 !important;
+    right: var(--layer-sidebar-width) !important;
   }
 }
 
@@ -2674,8 +2674,8 @@ a[role="button"].cui-button-appearance-link {
 	// centered gets placed by the browser
 	&[cui-placement="c"] {
 		.cui-layer {
-			position: static;
-			margin: $padding;
+			// position: static;
+			// margin: $padding;
 		}
 
 		.cui-layer-pointer {
@@ -2717,7 +2717,7 @@ a[role="button"].cui-button-appearance-link {
 	background: $layer-background;
 	outline: none;
 	border-radius: 5px;
-	overflow: hidden;
+	overflow: auto; /* hidden; */
 	box-shadow:
 		0 0 0 1px hsla(205,20%,30%,.15),
 		0 8px 10px 1px hsla(0,0%,0%,.14),
@@ -6307,4 +6307,11 @@ label[data-label-clickable],
 			color: inherit;
 		}
 	}
+}
+
+
+/* This is set by Pane.coffee to compensate an active
+   sidebar in the fillScreen calculations */
+:root {
+	--layer-sidebar-width: 0px;
 }

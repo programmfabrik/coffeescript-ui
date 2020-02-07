@@ -133,6 +133,8 @@ class CUI.ListView extends CUI.SimplePane
 				check: Function
 			onScroll:
 				check: Function
+			onColumnResize:
+				check: Function
 			header:
 				deprecated: true
 			footer:

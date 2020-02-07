@@ -88,6 +88,7 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 
 	end_drag: (ev) ->
 		super(ev)
+		@__listView._onColumnResize?(@_column, @__new_width)
 		@__setColWidth(@__new_width)
 
 	destroy: ->

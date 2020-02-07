@@ -348,12 +348,18 @@ class CUI.Layer extends CUI.DOMElement
 		if not @isShown()
 			return @
 
+		# console.warn "position:", @__currentPlacement, ev?.getType()
+
+		# re-use current placement for "content-resize"
+		if ev?.getType() != "content-resize"
+			@__currentPlacement = null
+
 		dim_body = CUI.dom.getDimensions(document.body)
 
 		dim_body.isPositioned = dim_body.computedStyle.position in ["relative", "fixed", "absolute"]
 
 		dim_window =
-			width: window.innerWidth
+			width: window.innerWidth - CUI.dom.getLayerSidebarWidth()
 			height: window.innerHeight
 
 		get_pointer_direction = (placement) ->
@@ -373,6 +379,7 @@ class CUI.Layer extends CUI.DOMElement
 			CUI.dom.setStyle(@__pointer,
 				top: 0
 				left: 0
+				display: ""
 				margin: ""
 			)
 
@@ -462,6 +469,8 @@ class CUI.Layer extends CUI.DOMElement
 
 			vp_pl[placement] = vp = {}
 
+			vp.placement = placement
+
 			vp.window_top = dim_layer.marginTop
 			vp.window_left = dim_layer.marginLeft
 			vp.window_right = dim_window.width - dim_layer.marginRight
@@ -487,6 +496,7 @@ class CUI.Layer extends CUI.DOMElement
 					vp.bottom = dim_element.viewportTop - vp.dim_pointer.borderBoxHeight - vp.dim_pointer.marginBottom
 					vp.align_vertical = "bottom"
 					vp.align_horizontal = "center"
+
 				when "s"
 					vp.top = dim_element.viewportBottom + vp.dim_pointer.borderBoxHeight + vp.dim_pointer.marginTop
 					vp.left = dim_layer.marginLeft
@@ -494,6 +504,7 @@ class CUI.Layer extends CUI.DOMElement
 					vp.bottom = dim_window.height - dim_layer.marginBottom
 					vp.align_vertical = "top"
 					vp.align_horizontal = "center"
+
 				when "e"
 					vp.top = dim_layer.marginTop
 					vp.right = dim_window.width - dim_layer.marginRight
@@ -501,6 +512,7 @@ class CUI.Layer extends CUI.DOMElement
 					vp.left = dim_element.viewportRight + vp.dim_pointer.borderBoxWidth + vp.dim_pointer.marginLeft
 					vp.align_vertical = "center"
 					vp.align_horizontal = "left"
+
 				when "w"
 					vp.top = dim_layer.marginTop
 					vp.bottom = dim_window.height - dim_layer.marginBottom
@@ -522,6 +534,7 @@ class CUI.Layer extends CUI.DOMElement
 			placement_parts = placement.split("")
 			vp_pl[placement] = vp = CUI.util.copyObject(vp_pl[placement_parts[0]])
 
+			vp.placement = placement
 			vp.dim_pointer = dim_pointer[placement_parts[0]]
 
 			if not vp
@@ -533,21 +546,25 @@ class CUI.Layer extends CUI.DOMElement
 					vp.align_vertical = "top"
 					vp.pointer_align_vertical = "center"
 					vp.overlap_align = "bottom"
+
 				when "n"
 					vp.bottom = dim_element.viewportBottom
 					vp.align_vertical = "bottom"
 					vp.pointer_align_vertical = "center"
 					vp.overlap_align = "top"
+
 				when "e"
 					vp.left = dim_element.viewportLeft
 					vp.align_horizontal = "left"
 					vp.pointer_align_horizontal = "center"
 					vp.overlap_align = "right"
+
 				when "w"
 					vp.right = dim_element.viewportRight
 					vp.align_horizontal = "right"
 					vp.pointer_align_horizontal = "center"
 					vp.overlap_align = "left"
+
 
 		# throw out placements which are too small
 		for placement in @__allPlacements
@@ -577,6 +594,7 @@ class CUI.Layer extends CUI.DOMElement
 			# here, so the design can decide on a minimum
 			if vp.width < 10 or vp.height < 10
 				delete(vp_pl[placement])
+
 
 		# now we need to position the layer within the available viewport
 		for placement, vp of vp_pl
@@ -706,7 +724,7 @@ class CUI.Layer extends CUI.DOMElement
 							layer_pos.width = layer_pos.width + vp.overlap_width
 
 
-			if @__pointer
+			if @__pointer and vp.dim_pointer
 
 				layer_pos_right = vp.layer_pos.left + vp.layer_pos.width
 				layer_pos_bottom = vp.layer_pos.top + vp.layer_pos.height
@@ -794,7 +812,8 @@ class CUI.Layer extends CUI.DOMElement
 		available_placements.reverse()
 		# console.debug "sorting placements AFTER", available_placements.join(", ")
 
-		placement = available_placements[0]
+		if @__currentPlacement not in available_placements
+			@__currentPlacement = available_placements[0]
 
 		if ev?.hasModifierKey()
 			console.debug "Layer.position", @, @opts
@@ -803,7 +822,7 @@ class CUI.Layer extends CUI.DOMElement
 			console.debug "pointer", dim_pointer
 			console.debug "window", dim_window
 
-			console.debug "placements", placement, vp_pl
+			console.debug "placements", @__currentPlacement, vp_pl
 
 			show_dbg_div = (placement) =>
 
@@ -893,7 +912,7 @@ class CUI.Layer extends CUI.DOMElement
 					return
 
 
-		vp = vp_pl[placement]
+		vp = vp_pl[@__currentPlacement]
 
 		# console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
 
@@ -951,11 +970,6 @@ class CUI.Layer extends CUI.DOMElement
 
 			CUI.dom.setStyle(@__layer_root.DOM, set_root_css)
 
-		if placement == "c" and not CUI.browser.ie
-			# placement can be done by pure CSS
-			; # return @
-
-
 		set_css.width = Math.ceil(vp.layer_pos.width)
 		set_css.height = Math.ceil(vp.layer_pos.height)
 
@@ -973,18 +987,21 @@ class CUI.Layer extends CUI.DOMElement
 		# console.debug "pos:", dim_element, vp.layer_pos.top, "body scroll:", body_scroll_top
 		if @__pointer
 			# set pointer
-			if is_fixed
-				CUI.dom.setStyle @__pointer,
-					top: vp.pointer_pos.top
-					left: vp.pointer_pos.left
-					margin: 0
+			if vp.dim_pointer
+				if is_fixed
+					CUI.dom.setStyle @__pointer,
+						top: vp.pointer_pos.top
+						left: vp.pointer_pos.left
+						margin: 0
+				else
+					CUI.dom.setStyle @__pointer,
+						top: vp.pointer_pos.top
+						left: vp.pointer_pos.left
+						margin: 0
+				CUI.dom.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
 			else
 				CUI.dom.setStyle @__pointer,
-					top: vp.pointer_pos.top
-					left: vp.pointer_pos.left
-					margin: 0
-
-			CUI.dom.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
+					display: "none"
 
 		if @__backdrop_crop
 			CUI.dom.setStyle @__backdrop_crop,
@@ -998,7 +1015,6 @@ class CUI.Layer extends CUI.DOMElement
 				height: dim_window.height
 				top: -vp.layer_pos.top
 				left: -vp.layer_pos.left
-
 
 		if CUI.browser.ie
 			CUI.dom.insertAfter(sibl, @__layer_root.DOM)
@@ -1050,6 +1066,8 @@ class CUI.Layer extends CUI.DOMElement
 			"cui-layer-stack-count": null
 
 		@__updateLayerStackCounter()
+
+		@__currentPlacement = null
 
 		@__shown = false
 
@@ -1114,7 +1132,7 @@ class CUI.Layer extends CUI.DOMElement
 					instance: @
 					node: scroll_parent
 					call: =>
-						@position()
+						@position(ev)
 
 			if @_check_for_element
 				@__check_for_element = CUI.setInterval =>
@@ -1131,7 +1149,7 @@ class CUI.Layer extends CUI.DOMElement
 			node: @__layer
 			call: (ev) =>
 				# console.error "Layer caught event:", ev.getType()
-				@position()
+				@position(ev)
 
 		CUI.Events.listen
 			type: "viewport-resize"
@@ -1143,7 +1161,7 @@ class CUI.Layer extends CUI.DOMElement
 					return
 
 				# console.info("Layer caught event:", ev.getType)
-				@position()
+				@position(ev)
 				return
 
 		@_onBeforeShow?(@, ev)
@@ -1234,6 +1252,9 @@ CUI.ready ->
 			for layer_element in layer_elements by -1
 
 				if not CUI.dom.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")
+					return
+
+				if CUI.dom.hasClass(layer_element, "cui-layer-sidebar")
 					return
 
 				if CUI.dom.closest(target, layer_element)
