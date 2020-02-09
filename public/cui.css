@@ -2167,15 +2167,6 @@ a[role="button"].cui-button-appearance-link {
   .cui-layer-root .cui-layer {
     position: absolute;
     pointer-events: auto; }
-  .cui-layer-root[cui-placement="c"] .cui-layer-pointer {
-    display: none; }
-  .cui-layer-root[cui-fill-space="both"] .cui-layer {
-    width: 100%;
-    height: 100%; }
-  .cui-layer-root[cui-fill-space="horizontal"] .cui-layer {
-    width: 100%; }
-  .cui-layer-root[cui-fill-space="vertical"] .cui-layer {
-    height: 100%; }
 
 .cui-layer-backdrop-policy-modal,
 .cui-layer-backdrop-policy-click {
