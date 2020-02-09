@@ -914,7 +914,7 @@ class CUI.Layer extends CUI.DOMElement
 
 		vp = vp_pl[@__currentPlacement]
 
-		# console.debug "Layer.position: Placement:", placement, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
+		# console.debug "Layer.position: Placement:", @__currentPlacement, vp, "Wanted:", wanted_placement, "Allowed:", allowed_placements, "Viewports:", vp_pl, @
 
 		# console.info "PLACEMENT --- ", placement, "---"
 		# console.debug "Layer POS", vp.layer_pos, "align:", vp.align_horizontal, "/", vp.align_vertical, "overlap:", vp.overlap_align, vp.push_left, vp.push_right

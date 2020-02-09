@@ -2671,36 +2671,6 @@ a[role="button"].cui-button-appearance-link {
 		pointer-events: auto;
 	}
 
-	// centered gets placed by the browser
-	&[cui-placement="c"] {
-		.cui-layer {
-			// position: static;
-			// margin: $padding;
-		}
-
-		.cui-layer-pointer {
-			display: none;
-		}
-	}
-
-	&[cui-fill-space="both"] {
-		.cui-layer {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	&[cui-fill-space="horizontal"] {
-		.cui-layer {
-			width: 100%;
-		}
-	}
-
-	&[cui-fill-space="vertical"] {
-		.cui-layer {
-			height: 100%;
-		}
-	}
 }
 
 .cui-layer-backdrop-policy-modal,
