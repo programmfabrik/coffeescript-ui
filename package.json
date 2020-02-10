@@ -3,9 +3,9 @@
   "version": "1.7.1",
   "description": "Coffeescript User Interface System",
   "scripts": {
-    "build": "webpack --progress --env.development",
-    "build:production": "webpack --progress --env.production",
-    "build:watch": "webpack --watch --progress",
+    "build": "npm run rmdist && webpack --progress --env.development",
+    "build:production": "npm run rmdist && webpack --progress --env.production",
+    "build:watch": "npm run rmdist && webpack --watch --progress",
     "build:all": "npm run build:production",
     "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
