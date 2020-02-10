@@ -6,8 +6,8 @@
     "build": "webpack --progress --env.development",
     "build:production": "webpack --progress --env.production",
     "build:watch": "webpack --watch --progress",
-    "build:all": "npm run build && npm run build:min",
-    "build:min": "npm run build -- --env.minify",
+    "build:all": "npm run build:production",
+    "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest",
     "rmdist": "rimraf public/*"
