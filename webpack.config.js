@@ -35,7 +35,7 @@ module.exports = function (env, argv) {
             BUILD_DIR + '/' + 'cui_debug.css.map',
         ]),
         new StylelintPlugin({ 
-            fix: true,
+            // fix: true,
             context: APP_DIR + '/scss/themes/fylr',
             syntax: 'scss',
             failOnError: !argv.watch,
@@ -70,6 +70,7 @@ module.exports = function (env, argv) {
         },
         optimization: {
             namedChunks: true, // needed so we can use [id].css to name the extracted css files,
+            minimize: isProduction,
             minimizer: [
                 new TerserPlugin({
                     cache: true,
