@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Demo - Coffeescript",
   "scripts": {
-    "build": "webpack --progress --env.development",
-    "build:production": "webpack --progress --env.production",
-    "build:watch": "webpack --watch --progress",
-    "start": "webpack-dev-server --host 0.0.0.0",
+    "build": "npm run rmdist && webpack --progress --env.development",
+    "build:production": "npm run rmdist && webpack --progress --env.production",
+    "build:watch": "npm run rmdist && webpack --watch --progress",
+    "start": "npm run rmdist && webpack-dev-server --host 0.0.0.0",
     "rmdist": "rimraf public/*"
   },
   "repository": {
