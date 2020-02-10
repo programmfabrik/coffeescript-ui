@@ -1,5 +1,5 @@
 const cssnanoConfig = {
-  preset: ['default', { discardComments: { removeAll: true } }]
+  preset: ['default', { discardComments: true }]
 };
 
 module.exports = function({ file, options }) {
