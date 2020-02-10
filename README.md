@@ -78,10 +78,13 @@ The first step is to download all dependencies with *npm install*
 
 After that, it's necessary to run one of the following build commands 
 
-- **npm run build**: Builds the default version
+- **npm run build**: Builds the default version for development
+- **npm run build:production**: Builds the default version for production (minified, no sourcemaps)
+- **npm run build:watch**: Builds the default version and watch for changes
+
+# Deprecated:
 - **npm run build:minify**: Builds the minified version
 - **npm run build:all**: Builds one of each version
-- **npm run build:watch**: Builds the default version and watch for changes
 
 You will find the bundled file inside **public** folder.
 
