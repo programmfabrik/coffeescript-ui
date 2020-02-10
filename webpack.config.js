@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const TerserPlugin = require('terser-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
@@ -33,6 +34,12 @@ module.exports = function (env, argv) {
             BUILD_DIR + '/' + 'cui_debug.css',
             BUILD_DIR + '/' + 'cui_debug.css.map',
         ]),
+        new StylelintPlugin({ 
+            fix: true,
+            context: APP_DIR + '/scss/themes/fylr',
+            syntax: 'scss',
+            failOnError: !argv.watch,
+        }),        
     ];
 
     return {
