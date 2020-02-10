@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Demo - Coffeescript",
   "scripts": {
-    "build": "webpack --progress --env.production",
+    "build": "webpack --progress --env.development",
+    "build:production": "webpack --progress --env.production",
     "build:watch": "webpack --watch --progress",
     "start": "webpack-dev-server --host 0.0.0.0",
-    "rmpub": "rimraf public/*"
+    "rmdist": "rimraf public/*"
   },
   "repository": {
     "type": "git",
@@ -23,21 +24,22 @@
     "autoprefixer": "^9.7.4",
     "base64-inline-loader": "^1.1.1",
     "coffee": "^3.3.3",
-    "coffee-loader": "^0.7.3",
-    "coffee-script": "^1.12.7",
+    "coffee-loader": "0.9.0",
+    "coffeescript": "^1.12.7",
     "coffeescript-ui": "1.7.1",
-    "css-loader": "^0.28.11",
+    "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
-    "extract-text-webpack-plugin": "2.1.2",
     "html-loader": "^0.5.1",
     "less": "^2.7.2",
+    "mini-css-extract-plugin": "^0.9.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
-    "raw-loader": "^0.5.1",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
-    "webpack": "^2.7.0",
-    "webpack-dev-server": "^2.11.5"
+    "raw-loader": "^4.0.0",
+    "sass": "^1.23.7",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.41.5",
+    "webpack-dev-server": "^3.10.3"
   }
 }
