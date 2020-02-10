@@ -75,7 +75,7 @@ module.exports = function(env) {
                 ],
             },            
             {
-                test: /(icons\.svg|\.txt|\.json)/,
+                test: /(icons\.svg|\.txt)/,
                 loader: 'raw-loader'
             },            
             {
