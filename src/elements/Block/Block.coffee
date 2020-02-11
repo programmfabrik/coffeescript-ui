@@ -35,6 +35,7 @@ class CUI.Block extends CUI.DOMElement
 				arr.push new CUI.Label
 					class: "cui-block-description"
 					text: @_description
+					markdown: true
 					multiline: true
 
 			if arr.length > 0
