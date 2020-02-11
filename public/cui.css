@@ -1606,12 +1606,14 @@ a[role="button"].cui-button-appearance-link {
   flex-shrink: 0;
   box-sizing: content-box; }
   .cui-panel-header .cui-button {
-    width: calc(100% - 6px);
+    width: 100%;
     height: 100%;
-    align-items: stretch;
-    margin: 3px; }
+    align-items: stretch; }
     .cui-panel-header .cui-button-select {
       max-width: 100%; }
+    .cui-panel-header .cui-button.cui-active .cui-button-visual {
+      padding-bottom: 5px;
+      border-bottom: 1px solid #cbd5dc; }
     .cui-panel-header .cui-button .cui-button-visual {
       padding: 0;
       border: none;
@@ -1622,12 +1624,13 @@ a[role="button"].cui-button-appearance-link {
       line-height: inherit;
       line-height: 22px;
       justify-content: flex-start;
-      padding: 3px 10px;
+      padding: 6px;
       color: #50585e;
       font-weight: bold; }
     .cui-panel-header .cui-button:active .cui-button-visual {
       background: rgba(23, 41, 54, 0.04);
-      color: #50585e; }
+      color: #50585e;
+      border-color: #cbd5dc; }
     .cui-panel-header .cui-button .cui-button-left {
       width: 22px;
       padding-top: 1px; }
