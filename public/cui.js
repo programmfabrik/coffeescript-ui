@@ -21259,6 +21259,7 @@ CUI.Block = (function(superClass) {
         arr.push(new CUI.Label({
           "class": "cui-block-description",
           text: this._description,
+          markdown: true,
           multiline: true
         }));
       }
