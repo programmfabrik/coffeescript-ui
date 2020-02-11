@@ -3714,6 +3714,8 @@ label[data-label-clickable],
     display: none; }
   .cui-date-time .cui-input {
     min-width: 90px; }
+  .cui-date-time--select-menu {
+    max-height: 330px; }
   .cui-date-time[data-cui-date-time-format="date"] .cui-input {
     min-width: 112px; }
   .cui-date-time[data-cui-date-time-format="date-time-short"] .cui-input {

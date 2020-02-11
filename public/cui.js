@@ -26014,6 +26014,7 @@ CUI.DateTime = (function(superClass) {
     };
     date_sel = new CUI.Select({
       name: "date",
+      menu_class: "cui-date-time--select-menu",
       data: data,
       group: "date",
       onDataChanged: (function(_this) {
@@ -26037,6 +26038,7 @@ CUI.DateTime = (function(superClass) {
     }).start();
     month_sel = new CUI.Select({
       name: "month",
+      menu_class: "cui-date-time--select-menu",
       data: data,
       group: "date",
       onDataChanged: (function(_this) {
@@ -26060,6 +26062,7 @@ CUI.DateTime = (function(superClass) {
     }).start();
     year_sel = new CUI.Select({
       name: "year",
+      menu_class: "cui-date-time--select-menu",
       data: data,
       group: "date",
       onDataChanged: (function(_this) {
@@ -26098,6 +26101,7 @@ CUI.DateTime = (function(superClass) {
       }
       hour_sel = new CUI.Select({
         name: "hour",
+        menu_class: "cui-date-time--select-menu",
         data: data,
         group: "time",
         onDataChanged: (function(_this) {
@@ -26142,6 +26146,7 @@ CUI.DateTime = (function(superClass) {
       minute_sel = new CUI.Select({
         "class": "cui-date-time-60-select",
         name: "minute",
+        menu_class: "cui-date-time--select-menu",
         group: "time",
         data: data,
         onDataChanged: (function(_this) {
@@ -44367,6 +44372,9 @@ CUI.Select = (function(superClass) {
       },
       onHide: {
         check: Function
+      },
+      menu_class: {
+        check: String
       }
     });
   };
@@ -44521,7 +44529,7 @@ CUI.Select = (function(superClass) {
       menu: {
         active_item_idx: ((ref = this.default_opt) != null ? ref._idx : void 0) || -1,
         allow_null: !CUI.util.isEmpty(this._empty_text),
-        "class": "cui-select-menu",
+        "class": "cui-select-menu " + (this._menu_class ? this._menu_class : ""),
         onDeactivate: (function(_this) {
           return function(btn, item, idx, flags) {
             if (flags.prior_activate) {
