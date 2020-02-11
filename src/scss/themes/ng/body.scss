@@ -5091,6 +5091,9 @@ label[data-label-clickable],
 		min-width: 90px; // date-short
 	}
 
+	&--select-menu {
+		max-height: 330px;
+	}
 	/*
 
 	date: "dd, DD.MM.YYYY"

@@ -787,6 +787,7 @@ class CUI.DateTime extends CUI.Input
 
 		date_sel = new CUI.Select(
 			name: "date"
+			menu_class: "cui-date-time--select-menu"
 			data: data
 			group: "date"
 			onDataChanged: =>
@@ -803,6 +804,7 @@ class CUI.DateTime extends CUI.Input
 
 		month_sel = new CUI.Select(
 			name: "month"
+			menu_class: "cui-date-time--select-menu"
 			data: data
 			group: "date"
 			onDataChanged: =>
@@ -819,6 +821,7 @@ class CUI.DateTime extends CUI.Input
 
 		year_sel = new CUI.Select(
 			name: "year"
+			menu_class: "cui-date-time--select-menu"
 			data: data
 			group: "date"
 			onDataChanged: =>
@@ -849,6 +852,7 @@ class CUI.DateTime extends CUI.Input
 
 			hour_sel = new CUI.Select(
 				name: "hour"
+				menu_class: "cui-date-time--select-menu"
 				data: data
 				group: "time"
 				onDataChanged: (_data) =>
@@ -882,6 +886,7 @@ class CUI.DateTime extends CUI.Input
 			minute_sel = new CUI.Select(
 				class: "cui-date-time-60-select"
 				name: "minute"
+				menu_class: "cui-date-time--select-menu"
 				group: "time"
 				data: data
 				onDataChanged: (_data) =>
