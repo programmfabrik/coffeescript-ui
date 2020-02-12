@@ -2,12 +2,14 @@ module.exports = {
     'extends': 'stylelint-config-standard',
     'rules': {
         'indentation': 'tab',
+        'string-quotes': 'single',
         'no-empty-source': null,
         'color-hex-length': null,
         'max-empty-lines': 2,
         'declaration-block-no-redundant-longhand-properties': null,
         'selector-list-comma-newline-after': null,
         'no-descending-specificity': null,
+        'no-eol-whitespace': null,
         'at-rule-no-unknown': [
             true,
             {
