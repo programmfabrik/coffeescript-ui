@@ -5,6 +5,22 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
 
-@import "header.scss";
-@import "body.scss";
-@import "footer.scss";
+// common, vars, mixins
+@import '_functions';
+@import '_variables';
+@import '_mixins';
+@import '_root';
+@import '_resets';
+@import '_typography';
+@import '_global';
+
+// components
+@import '../../icons/_svg-dimensions.scss';
+
+// layout
+@import '_layout';
+
+// specific views or 'pages'
+
+// todo: make obsolete
+@import 'body';

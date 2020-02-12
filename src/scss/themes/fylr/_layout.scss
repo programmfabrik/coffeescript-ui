@@ -1,0 +1,138 @@
+// Everything concerning layout (horizontal / vertical etc.)
+
+html {
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+
+// HorizontalLayout
+.cui-horizontal-layout {
+	&.cui-maximize-horizontal {
+		flex-direction: row;
+		overflow: hidden;
+
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-right {
+			position: relative;
+			overflow: hidden;
+		}
+
+		> .cui-horizontal-layout-center {
+			position: relative;
+			flex: 1 1 auto;
+			overflow: auto;
+		}
+	}
+
+	&.cui-maximize-vertical {
+		flex: 1 1 auto;
+		overflow: hidden;
+	}
+
+	&:not(.cui-maximize-horizontal) {
+		flex-direction: row;
+		align-self: flex-start;
+	}
+
+	// Layout Absolute Horizontal
+	&.cui-absolute {
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		& > div {
+			position: absolute !important; // overwrite 'relative' from above
+			top: 0;
+			bottom: 0;
+			// height: 100%;
+		}
+
+		& > .cui-horizontal-layout-left {
+			left: 0;
+		}
+
+		& > .cui-horizontal-layout-center {
+			left: 0;  // overwritten by Layout.coffee
+			right: 0;  // overwritten by Layout.coffee
+		}
+
+		& > .cui-horizontal-layout-right {
+			right: 0;
+		}
+	}
+}
+
+
+// VerticalLayout
+.cui-vertical-layout {
+	&.cui-maximize-vertical {
+		flex: 1 1 auto;
+		overflow: hidden;
+
+		> .cui-vertical-layout-top,
+		> .cui-vertical-layout-bottom {
+			position: relative;
+			overflow: hidden;
+		}
+
+		> .cui-vertical-layout-center {
+			position: relative;
+			flex: 1 1 auto;
+			overflow: auto;
+		}
+	}
+
+	&.cui-maximize-horizontal {
+		overflow: hidden;
+	}
+
+	&:not(.cui-maximize-horizontal) {
+		align-self: flex-start;
+	}
+
+	// Layout Absolute Vertical
+	&.cui-absolute {
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		& > div {
+			position: absolute !important; // overwrite 'relative' from above
+			left: 0;
+			right: 0;
+			width: 100%;
+		}
+
+		& > .cui-vertical-layout-top {
+			top: 0;
+		}
+
+		& > .cui-vertical-layout-center {
+			top: 0; // overwritten by Layout.coffee
+			bottom: 0; // overwritten by Layout.coffee
+		}
+
+		& > .cui-vertical-layout-bottom {
+			bottom: 0;
+		}
+	}
+}
+
+// BorderLayout
+
+.cui-border-layout-north,
+.cui-border-layout-south {
+	background-color: #ffd890;
+}
+
+.cui-border-layout-west,
+.cui-border-layout-east {
+	background-color: #ffefd1;
+}

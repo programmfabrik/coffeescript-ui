@@ -1,0 +1,17 @@
+// Typography
+//
+
+html {
+	font-size: 16px;
+}
+
+body {
+	font-family: $font-family-base, sans-serif;
+	font-weight: $font-weight-base;
+	line-height: $line-height-base;
+	color: $body-color;
+}
+
+p {
+	margin-bottom: $paragraph-margin-bottom;
+}
