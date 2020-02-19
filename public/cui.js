@@ -43686,7 +43686,7 @@ CUI.SimplePane = (function(superClass) {
   SimplePane.prototype.__init = function() {
     var i, k, len, ref, value;
     SimplePane.__super__.__init.call(this);
-    ref = ["header_left", "header_center", "header_right", "footer_left", "footer_right"];
+    ref = ["header_left", "header_center", "header_right", "footer_left", "footer_center", "footer_right"];
     for (i = 0, len = ref.length; i < len; i++) {
       k = ref[i];
       value = this["_" + k];
@@ -43713,6 +43713,7 @@ CUI.SimplePane = (function(superClass) {
       header_center: {},
       header_left: {},
       footer_left: {},
+      footer_center: {},
       footer_right: {},
       content: {},
       force_header: {
@@ -43745,7 +43746,7 @@ CUI.SimplePane = (function(superClass) {
         content: this.__pane_header
       };
     }
-    if (this.forceFooter() || !(CUI.util.isUndef(this._footer_left) && CUI.util.isUndef(this._footer_right))) {
+    if (this.forceFooter() || !(CUI.util.isUndef(this._footer_left) && CUI.util.isUndef(this._footer_center) && CUI.util.isUndef(this._footer_right))) {
       this.__pane_footer = new CUI.PaneFooter();
       this._bottom = {
         content: this.__pane_footer
