@@ -12,10 +12,35 @@ body {
 	height: 100%;
 }
 
+.cui-root-layout {
+	overflow: hidden;
+}
+
+// Layout System with flexbox
+//
+// - container always grows if maximize
+// - center column always grows if maximize
+
+// Everything needs to stretch to their max size by default
+// this imitizes a "display:block"-like layout but with stretching
+.cui-horizontal-layout-left,
+.cui-horizontal-layout-center,
+.cui-horizontal-layout-right,
+.cui-vertical-layout-top,
+.cui-vertical-layout-center,
+.cui-vertical-layout-bottom {
+	display: flex;
+	flex-direction: column;
+}
+
+
 // HorizontalLayout
+
 .cui-horizontal-layout {
+	display: flex;
+	flex-direction: row;
+
 	&.cui-maximize-horizontal {
-		flex-direction: row;
 		overflow: hidden;
 
 		> .cui-horizontal-layout-left,
@@ -24,6 +49,7 @@ body {
 			overflow: hidden;
 		}
 
+		// Center child grows to max width
 		> .cui-horizontal-layout-center {
 			position: relative;
 			flex: 1 1 auto;
@@ -31,13 +57,14 @@ body {
 		}
 	}
 
+	// Container grows to max height
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
 		overflow: hidden;
 	}
 
+	// Container behaves like "inline-flex"
 	&:not(.cui-maximize-horizontal) {
-		flex-direction: row;
 		align-self: flex-start;
 	}
 
@@ -71,7 +98,12 @@ body {
 
 
 // VerticalLayout
+
 .cui-vertical-layout {
+	display: flex;
+	flex-direction: column;
+
+	// Container grows too max height
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
 		overflow: hidden;
@@ -82,6 +114,7 @@ body {
 			overflow: hidden;
 		}
 
+		// Center grows to max height
 		> .cui-vertical-layout-center {
 			position: relative;
 			flex: 1 1 auto;
@@ -93,6 +126,7 @@ body {
 		overflow: hidden;
 	}
 
+	// Container behaves like "inline-flex"
 	&:not(.cui-maximize-horizontal) {
 		align-self: flex-start;
 	}
@@ -125,7 +159,15 @@ body {
 	}
 }
 
-// BorderLayout
+// Horizontal List
+
+.cui-horizontal-list {
+	> .cui-horizontal-layout-center {
+		flex-direction: row;
+	}
+}
+
+// Border Layout
 
 .cui-border-layout-north,
 .cui-border-layout-south {
