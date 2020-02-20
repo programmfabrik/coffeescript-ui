@@ -19,6 +19,7 @@
 //    md
 @function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
 	$n: index($breakpoint-names, $name);
+
 	@return if($n != null and $n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
@@ -28,6 +29,7 @@
 //    576px
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
 	$min: map-get($breakpoints, $name);
+
 	@return if($min != 0, $min, null);
 }
 
@@ -42,6 +44,7 @@
 //    767.98px
 @function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
 	$next: breakpoint-next($name, $breakpoints);
+
 	@return if($next, breakpoint-min($next, $breakpoints) - 0.02, null);
 }
 
@@ -60,11 +63,14 @@
 // Makes the @content apply to the given breakpoint and wider.
 @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
 	$min: breakpoint-min($name, $breakpoints);
+
 	@if $min {
 		@media (min-width: $min) {
 			@content;
 		}
-	} @else {
+	}
+
+	@else {
 		@content;
 	}
 }
@@ -73,11 +79,14 @@
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
 	$max: breakpoint-max($name, $breakpoints);
+
 	@if $max {
 		@media (max-width: $max) {
 			@content;
 		}
-	} @else {
+	}
+
+	@else {
 		@content;
 	}
 }
@@ -92,11 +101,15 @@
 		@media (min-width: $min) and (max-width: $max) {
 			@content;
 		}
-	} @else if $max == null {
+	}
+
+	@else if $max == null {
 		@include media-breakpoint-up($lower, $breakpoints) {
 			@content;
 		}
-	} @else if $min == null {
+	}
+
+	@else if $min == null {
 		@include media-breakpoint-down($upper, $breakpoints) {
 			@content;
 		}
@@ -114,11 +127,15 @@
 		@media (min-width: $min) and (max-width: $max) {
 			@content;
 		}
-	} @else if $max == null {
+	}
+
+	@else if $max == null {
 		@include media-breakpoint-up($name, $breakpoints) {
 			@content;
 		}
-	} @else if $min == null {
+	}
+
+	@else if $min == null {
 		@include media-breakpoint-down($name, $breakpoints) {
 			@content;
 		}
