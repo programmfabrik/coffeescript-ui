@@ -15,14 +15,6 @@ input {
 	overflow: hidden;
 }
 
-div, a, label {
-	display: flex;
-	flex: 0 0 auto;
-	align-items: stretch;
-	box-sizing: border-box;
-	flex-direction: column;
-}
-
 label {
 	padding: 3px;
 }
@@ -40,11 +32,6 @@ span {
 	flex-direction: row;
 }
 
-.cui-horizontal-list {
-	> .cui-horizontal-layout-center {
-		flex-direction: row;
-	}
-}
 
 // Flexhandle
 
