@@ -13,6 +13,19 @@
 
 @mixin button-flat() {
 	border: 0;
-	box-shadow: none;
 	background-color: transparent;
+	box-shadow: none;
+}
+
+@mixin button-focus() {
+	// todo: find focus color that works with all colored buttons
+	@if $enable-btn-border-radius {
+		box-shadow: 0 0 0 3px rgba($cyan, 0.4) !important; // keeps border-radius, but what about buttongroup buttons ?
+	}
+
+	@else {
+		outline: 3px solid rgba($cyan, 0.4); // use outline and not box-shadow because flat buttons remove the shadow
+	}
+
+	z-index: 1; // put forward to see outline
 }

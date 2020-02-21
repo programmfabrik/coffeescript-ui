@@ -19,7 +19,7 @@
 			position: relative;
 
 			// hide the box shadow of previous button and add separator
-			&::before {
+			&::after {
 				content: '';
 				position: absolute;
 				box-sizing: content-box;
@@ -31,6 +31,10 @@
 				background: gray('200');
 				border-right: 1px solid $btn-bg-color;
 			}
+		}
+
+		&:focus .cui-button-visual::after {
+			opacity: 0;
 		}
 	}
 

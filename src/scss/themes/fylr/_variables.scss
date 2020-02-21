@@ -215,27 +215,27 @@ $border-radius-sm: 	0 !default;
 // ==========================================
 // We use an absolute height to define the button height instead of padding-y.
 // This is more predictable and can be better combined with toolbar and panel header heights etc.
+$enable-btn-border-radius: 	1; // 1 | 0
 
 $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
 $btn-border-width: 			0 !default;
 $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
-// $btn-box-shadow:			1px 2px 4px -1px rgba(0, 0, 0, 0.14) !default;
 $btn-bg-color: 				$white;
 
 // Normal size
 $btn-padding-x: 			0.85rem !default;
 $btn-height: 				34px !default;
 $btn-font-size: 			$font-size-sm !default;
-$btn-border-radius:			2px !default;
+$btn-border-radius:			$enable-btn-border-radius * 2px !default;
 // Small size
 $btn-padding-x-sm: 			0.5rem !default;
 $btn-height-sm: 			28px !default;
 $btn-font-size-sm: 			$btn-font-size * 0.8575 !default;
-$btn-border-radius-sm:		1px !default;
+$btn-border-radius-sm:		$enable-btn-border-radius * 1px !default;
 // Large size
 $btn-padding-x-lg: 			1.25rem !default;
 $btn-height-lg: 			46px !default;
 $btn-font-size-lg: 			$btn-font-size * 1.25 !default;
-$btn-border-radius-lg:		3px !default;
+$btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
 
