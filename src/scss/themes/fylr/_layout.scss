@@ -12,16 +12,23 @@ body {
 	height: 100%;
 }
 
+
+// Layout System with flexbox
+// ---------------------------------------------------------------------------
+// - container always grows if maximize
+// - center column always grows if maximize
+
+// ! If you need to add exceptions or special cases, add extra classes or
+// ! try to style the specific children within a layout element, see "Special cases" below
+// ! keep layout styles clean, simple and intuitive
+
+// ------------------- START: Basic system ------------------------------------
+
 .cui-root-layout {
 	overflow: hidden;
 }
 
-// Layout System with flexbox
-//
-// - container always grows if maximize
-// - center column always grows if maximize
-
-// Everything needs to stretch to their max size by default
+// All children need to stretch to their max size by default
 // this imitizes a "display:block"-like layout but with stretching
 .cui-horizontal-layout-left,
 .cui-horizontal-layout-center,
@@ -111,6 +118,7 @@ body {
 		> .cui-vertical-layout-bottom {
 			position: relative;
 			overflow: hidden;
+			// overflow: auto; // better with scrollbar?
 		}
 
 		// Center grows to max height
@@ -156,6 +164,8 @@ body {
 	}
 }
 
+// ------------------- END: Basic system ------------------------------------
+
 // Horizontal List
 
 .cui-horizontal-list {
@@ -174,4 +184,14 @@ body {
 .cui-border-layout-west,
 .cui-border-layout-east {
 	background-color: #ffefd1;
+}
+
+// ! Special cases within layout
+
+.cui-vertical-layout-top,
+.cui-vertical-layout-center,
+.cui-vertical-layout-bottom {
+	> .cui-sticky-header {
+		flex-basis: auto;
+	}
 }
