@@ -7,6 +7,21 @@
 
 /*$font_awesome_url: '../cui/font-awesome/css/font-awesome.min.css';*/
 
+
+.cui-button-demo-limit-width {
+	max-width: 150px;
+}
+
+.cui-button-demo {
+	> .cui-tr > .cui-td {
+		padding-bottom: 1rem !important;
+	}
+}
+
+.cui-demo-example-content .cui-buttonbar {
+	margin-bottom: 1rem;
+}
+
 /* Content Area */
 .cui-document-browser-center {
 

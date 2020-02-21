@@ -287,10 +287,17 @@ class Demo.ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("appearance: \"important\"",
+		@__addButton("appearance: \"important\" (OBSOLETE ???)",
 			icon_left: new CUI.Icon(class: "fa-bank")
 			appearance: "important"
 			text: "Important Button"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)
+
+		@__addButton("primary button",
+			primary: true
+			text: "Primary Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
@@ -321,7 +328,7 @@ class Demo.ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("size: \"bigger\"",
+		@__addButton("size: \"bigger\" (OBSOLETE ???)",
 			icon_left: new CUI.Icon(class: "fa-bank")
 			size: "bigger"
 			text: "Bigger Button"
@@ -340,7 +347,7 @@ class Demo.ButtonDemo extends Demo
 		)
 
 
-		@__addDivider("Custom css classes")
+		@__addDivider("Custom css classes OBSOLETE ???")
 
 		@__addButton "Centered, fixed width",
 			text: "Centered, fixed width"
