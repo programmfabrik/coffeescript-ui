@@ -4,6 +4,10 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
+// todo: make obsolete
+// stylelint-disable
+@import 'body_ng';
+// stylelint-enable
 
 // common, vars, mixins
 @import '_functions';
@@ -15,12 +19,12 @@
 @import '_global';
 
 // components
-@import '../../icons/_svg-dimensions.scss';
+@import '../../icons/_svg-dimensions';
+@import 'components/_buttons';
+@import 'components/_buttonbar';
+@import 'components/_progress-meter';
 
 // layout
 @import '_layout';
 
 // specific views or 'pages'
-
-// todo: make obsolete
-@import 'body_ng';

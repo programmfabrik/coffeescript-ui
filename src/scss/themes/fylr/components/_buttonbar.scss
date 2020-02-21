@@ -1,0 +1,54 @@
+.cui-buttonbar {
+	display: flex;
+	align-items: center;
+
+	> *:not(:last-child) {
+		margin-right: $spacer-sm;
+	}
+}
+
+.cui-buttonbar-group {
+	display: flex;
+
+	// use the following selector if the active button state has a colored background
+	// *:not(.cui-button-appearance-flat):not(.cui-active) + *:not(.cui-button-appearance-flat):not(.cui-active) {
+	// use the following selector if the active button state has a colored text
+	// use * to select .cui-button and/or .cui-select
+	*:not(.cui-button-appearance-flat) + *:not(.cui-button-appearance-flat) {
+		.cui-button-visual {
+			position: relative;
+
+			// hide the box shadow of previous button and add separator
+			&::before {
+				content: '';
+				position: absolute;
+				box-sizing: content-box;
+				top: 0;
+				left: -2px;
+				bottom: 0;
+				width: 1px;
+				height: 100%;
+				background: gray('200');
+				border-right: 1px solid $btn-bg-color;
+			}
+		}
+	}
+
+	.cui-button,
+	.cui-select {
+		&:first-child:not(:only-child) .cui-button-visual {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+
+		&:last-child:not(:only-child) .cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+
+		&:not(:first-child):not(:last-child) .cui-button-visual {
+			border-radius: 0;
+		}
+	}
+}
+

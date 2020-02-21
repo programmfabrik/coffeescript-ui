@@ -1,0 +1,18 @@
+// Button sizes
+@mixin button-size($height, $padding-x, $font-size, $border-radius) {
+	padding: 0 $padding-x;
+	height: $height;
+	font-size: $font-size;
+	border-radius: $border-radius;
+}
+
+@mixin button-primary() {
+	background-color: theme-color('primary');
+	color: color-yiq(theme-color('primary'));
+}
+
+@mixin button-flat() {
+	border: 0;
+	box-shadow: none;
+	background-color: transparent;
+}

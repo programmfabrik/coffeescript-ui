@@ -1,0 +1,130 @@
+.cui-button,
+.cui-button-href {
+	cursor: pointer;
+}
+
+.cui-button-button,
+.cui-button-select {
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
+	white-space: nowrap;
+	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
+}
+
+.cui-button-visual {
+	display: flex;
+	max-width: 100%; // needed for ellipsis
+	align-items: center;
+	justify-content: center;
+	// max-width: 100%;
+	// flex-grow: 1;
+	font-family: $btn-font-family;
+	font-weight: $btn-font-weight;
+	color: $body-color;
+	text-align: center;
+	vertical-align: middle;
+	user-select: none;
+	//
+	border: $btn-border-width solid transparent;
+	box-shadow: $btn-box-shadow;
+	// todo: make color mixin?
+	background-color: $btn-bg-color;
+
+	@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
+
+	// Button Content
+	> *:not(:last-child) {
+		margin-right: 0.35em;
+	}
+
+	.cui-button-left,
+	.cui-button-right {
+		display: inline-flex;
+	}
+
+	.cui-button-center {
+		@include text-truncate();
+	}
+
+	// Button states
+	.cui-active & {
+		// @include button-primary();
+		color: theme-color('primary');
+	}
+
+	// Button variants
+	.cui-button-appearance-flat & {
+		@include button-flat();
+	}
+
+	.cui-button-appearance-link & {
+		@include button-flat();
+
+		color: $link-color;
+		text-decoration: underline;
+		word-break: break-all;
+		height: auto;
+
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+
+	.cui-button--primary & {
+		@include button-primary();
+	}
+
+	// Deprecated, use primary instead
+	.cui-button-appearance-important & {
+		@include button-primary();
+	}
+
+	// Button sizes
+	.cui-button-size-mini & {
+		@include button-size($btn-height-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+
+		.fa {
+			font-size: 11px;
+			line-height: 11px;
+		}
+
+		.cui-icon-svg {
+			transform: scale(0.85);
+
+			&.svg-close {
+				transform: none;
+				width: 9px;
+				height: 9px;
+			}
+		}
+	}
+
+	.cui-button-size-big & {
+		@include button-size($btn-height-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
+	}
+	// todo: Do we actually use this?
+	.cui-button-size-bigger & {
+		$biggerBy: 1;
+
+		@include button-size(
+			$btn-height-lg*$biggerBy,
+			$btn-padding-x-lg*$biggerBy,
+			$btn-font-size-lg*$biggerBy,
+			$btn-border-radius-lg*$biggerBy
+		);
+	}
+}
+
+
+// Loading
+.cui-button.cui-loading {
+	animation: 1.2s pulse linear alternate infinite;
+}
+
+@keyframes pulse {
+	from { opacity: 0.33; }
+	to { opacity: 1; }
+}
