@@ -1,0 +1,6466 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
+// header for "ng*"
+
+$colors: (
+	'red': (
+		highlight: hsl(3, 100%, 47%),
+		highlight-light: hsl(3, 100%, 86%)
+	),
+	'orange': (
+		highlight: hsl(35, 100%, 46%),
+		highlight-light: hsl(35, 100%, 85%)
+	),
+	'yellow': (
+		highlight: hsl(48, 100%, 43%),
+		highlight-light: hsl(48, 100%, 75%)
+	),
+	'green': (
+		highlight: hsl(104, 69%, 48%),
+		highlight-light: hsl(104, 80%, 82%)
+	),
+	'blue': (
+		highlight: hsl(211, 100%, 41%),
+		highlight-light: hsl(211, 100%, 85%)
+	),
+	'purple': (
+		highlight: hsl(289, 65%, 67%),
+		highlight-light: hsl(289, 100%, 92%)
+	),
+	'pink': (
+		highlight: hsl(342, 100%, 58%),
+		highlight-light: hsl(342, 100%, 87%)
+	),
+	'brown': (
+		highlight: hsl(34, 27%, 50%),
+		highlight-light: hsl(34, 49%, 86%)
+	),
+	'graphite': (
+		highlight: hsl(240, 2%, 44%),
+		highlight-light: hsl(240, 5%, 85%)
+	)
+);
+
+$default-color: map-get($colors, 'blue');
+
+@mixin variableList($color) {
+	--highlight: #{map-get($color, 'highlight')};
+	--highlight-light: #{map-get($color, 'highlight-light')};
+	--highlight-light-transparent: #{transparentize(map-get($color, 'highlight-light'), 1)}; // needed for gradients from transparent .. highlight-light
+	--on-highlight-color: white;
+	--on-highlight-muted-color: #{desaturate(map-get($color, 'highlight-light'), 50%)};
+	--on-highlight-border: #{lighten(desaturate(map-get($color, 'highlight'), 17%), 28%)};
+	--on-highlight-light-muted-color: #{darken(desaturate(map-get($color, 'highlight-light'), 70%), 25%)};
+	--on-highlight-light-secondary-color: #{darken(desaturate(map-get($color, 'highlight-light'), 75%), 40%)};
+}
+
+$padding: 10px;
+// compensating padding compensates for line-height
+$compensating-padding: 7px;
+$gap: 10px;
+$small-gap: 7px;
+$background: hsl(205, 2%, 97%);
+$foreground: white;
+$border: hsl(205, 20%, 83%);
+$soft-border: hsl(205, 20%, 91%);
+$light-border: hsl(205, 18%, 95%);
+$light-border-transparent: hsla(205, 20%, 50%, 0.1);
+$color: hsl(0, 0%, 10%);
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-size: 13px;
+$line-height: 16px;
+
+$secondary-color: hsl(205, 5%, 45%);
+$muted-color: hsl(205, 5%, 60%);
+$disabled-color: hsl(205, 7%, 73%);
+$subtle-color: hsl(205, 10%, 79%);
+
+$header-background: hsl(205, 13%, 87%);
+$header-border: hsl(205, 6%, 75%);
+$header-color: hsl(205, 8%, 30%);
+$header-weight: 500;
+
+$label-mini: 11px;
+$label-big: 16px;
+$label-bigger: 18px;
+$form-label-color: hsl(210, 14%, 31%);
+$form-label-weight: 500;
+$form-label-font-size: 13px;
+$form-block-color: hsl(210, 11%, 35%);
+
+$button-background: white;
+$button-pressed: hsl(205, 10%, 91%);
+$button-active: hsl(205, 15%, 43%);
+$button-active-text: white;
+$button-active-border: hsl(205, 15%, 43%);
+$button-active-pressed: darken($button-active, 9%);
+$button-active-pressed-text: darken($button-active-text, 9%);
+$button-active-pressed-border: darken($button-active-pressed, 5%);
+$button-active-disabled-text: lighten($button-active, 17%);
+$button-color: hsl(205, 8%, 34%);
+$button-border: hsl(205, 10%, 75%);
+$button-radius: 4px;
+$button-height: 24px;
+$button-font-size: $font-size;
+
+$input-border: hsl(205, 20%, 79%);
+$input-radius: $button-radius;
+$input-placeholder: hsl(205, 10%, 75%);
+$input-shadow: 0 1px hsla(0, 0%, 0%, 0.03) inset, 0 2px hsla(0, 0%, 0%, 0.01) inset;
+$input-width: 275px;
+$input-background: $foreground;
+$input-min-width: 100px;
+
+$multi-output-tag-width: 18px;
+
+$drag-handle-color: hsla(205, 10%, 50%, 0.5);
+
+// Table Colors
+$zebra-color: hsla(205, 41%, 20%, 0.04);
+$zebra-on-foreground-color: hsl(210, 12%, 97%);
+$table-border: hsl(205, 8%, 90%);
+$table-header-border: hsl(205, 8%, 94%);
+$table-row-border: $soft-border;
+
+$table-data-height: 32px;
+$table-data-padding: 4px;
+$td-width: 135px;
+$td-min-width: 100px;
+$td-height: 18px;
+$row-move-handle-width: $padding/2 + $table-data-padding*2+2;
+$tree-node-handle-width: 14px;
+
+$error-color: hsl(10, 90%, 52%);
+$on-error-color: white;
+$neutral-color: hsl(48, 100%, 58%);
+$positive-color: hsl(100, 69%, 50%);
+
+$toolbar-background: hsl(205, 10%, 94%);
+$toolbar-height: 34px;
+
+$layer-background: $foreground;
+
+$popover-header-background: lighten($header-background, 3%);
+$popover-header-border: lighten($header-border, 3%);
+
+$item-list-color: hsl(205, 7%, 22%);
+$item-list-hover: $button-pressed;
+$item-list-pressed: $button-pressed;
+
+$popover-hint-background: hsl(205, 20%, 30%);
+
+@mixin desktop {
+	@media screen and (min-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@media screen and (max-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin xs {
+	@media screen and (max-width: 440px) {
+		@content;
+	}
+}
+
+@mixin phone {
+	@media screen and (max-width: 767px) {
+		@content;
+	}
+}
+
+@mixin clickable {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	touch-action: manipulation;
+}
+
+@mixin ellipsis() {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin margin($factor: 1) {
+	margin-bottom: $padding * $factor;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@mixin margin-top($factor: 1) {
+	margin-top: $padding * $factor;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+@mixin padding($factor: 1) {
+	padding: $padding * $factor;
+}
+
+@mixin padding-y($factor: 1) {
+	padding-top: $padding * $factor;
+	padding-bottom: $padding * $factor;
+}
+
+// Flex for selected TABLE
+@mixin flex-table() {
+	display: flex; // yes, this is fun :)
+	box-sizing: border-box;
+	flex: 0 0 auto;
+	flex-direction: column;
+
+	> tr {
+		display: flex; // yes, this is fun :)
+		box-sizing: border-box;
+		flex: 1 1 auto;
+
+		> td {
+			display: flex; // yes, this is fun :)
+			box-sizing: border-box;
+			flex: 0 0 auto;
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+}
+
+@mixin button-reset() {
+	padding: 0;
+	border: none;
+	background: none;
+	color: inherit;
+	border-radius: 0;
+	height: auto;
+	line-height: inherit;
+}
+
+%icon {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin icon($code) {
+	@extend %icon;
+
+	content: $code;
+}
+
+@mixin focus() {
+	box-shadow: 0 0 0 3px var(--highlight-light);
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin inner-focus() {
+	box-shadow: 0 0 0 3px var(--highlight-light) inset;
+	border-radius: $button-radius;
+	z-index: 1; // put forward to see outline
+}
+
+@mixin border-focus() {
+	box-shadow: 0 0 0 3px var(--highlight-light);
+	border-color: var(--highlight);
+	z-index: 1; // put forward to see outline
+
+	.cui-selected & {
+		box-shadow: 0 0 0 3px var(--on-highlight-border);
+	}
+}
+
+@mixin disable-focus() {
+	&:focus {
+		box-shadow: none !important;
+	}
+}
+
+@mixin outer-focus() {
+	box-shadow:
+		0 0 0 1px var(--highlight),
+		0 0 0 4px var(--highlight-light);
+	z-index: 1; // put forward to see outline
+}
+
+//--------------------------------------------------------------------
+@import '../../icons/_svg-dimensions.scss';
+
+html {
+	@include variableList($default-color);
+
+	--top-header-background: #{$header-background};
+}
+
+@each $name, $color in $colors {
+	[data-theme-color="#{$name}"] {
+		@include variableList($color);
+	}
+}
+
+// reset
+
+table {
+	border-collapse: collapse;
+}
+
+td {
+	vertical-align: top;
+	padding: 0;
+	margin: 0;
+}
+
+ul {
+	margin: 0;
+	padding-left: 16px;
+}
+
+a {
+	text-decoration: none;
+	color: $color;
+}
+
+kbd {
+	padding: 1px 5px;
+	display: inline-block;
+	border: 1px solid hsl(0, 0%, 67%);
+	background: white;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.italic {
+	font-style: italic;
+}
+
+// basics
+
+html {
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	color: $color;
+}
+
+label {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: $font-family;
+	font-size: $font-size;
+	line-height: $line-height;
+	background: $background;
+	color: $color;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input,
+textarea {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	min-width: $input-min-width;
+	font-size: inherit;
+	color: $button-color;
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
+	box-shadow: $input-shadow;
+	background: $input-background;
+	font-family: inherit;
+	padding: 2px 3px;
+	margin: 0;
+	flex: 1 1 auto;
+	box-sizing: border-box;
+	resize: vertical;
+
+	&.cui-input-shadow {
+		position: absolute;
+		display: block;
+		padding: 0;
+		border: none;
+		top: -1000px;
+		left: -1000px;
+	}
+}
+
+[data-max-chars] {
+	box-sizing: content-box;
+	text-align: center;
+	// width: 200px; // conflict: for example change history dropdown
+}
+
+// enlarge max-chars < 10
+// e.g. max-chars 5 = 5.5ch
+@for $i from 1 to 10 {
+	[data-max-chars="#{$i}"] {
+		width: #{$i + 1}ch;
+	}
+}
+
+// keep max-chars > 10 1:1
+@for $i from 10 through 40 {
+	[data-max-chars="#{$i}"] {
+		width: #{$i}ch;
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	@for $i from 1 through 10 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i + 1.5}ch;
+		}
+	}
+
+	@for $i from 10 through 40 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i*(1.54 - ($i - 10)/30*0.15)}ch;
+		}
+	}
+}
+
+input[data-max-chars] {
+	min-width: 0;
+}
+
+.css-swatch {
+	width: 24px;
+	height: 12px;
+	box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.14) inset;
+
+	@each $color, $values in $colors {
+		&.cui-swatch-color-#{$color} {
+			background: map-get($values, 'highlight-light');
+		}
+	}
+}
+
+$drag-cursors: default, move, col-resize, row-resize, n-resize, e-resize, s-resize, w-resize, ne-resize, nw-resize, se-resize, sw-resize, ew-resize, ns-resize, nesw-resize, nwse-resize;
+
+body[data-cursor] {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@for $i from 1 to length($drag-cursors) {
+	$cursor: nth($drag-cursors, $i);
+
+	body[data-cursor="#{$cursor}"] * {
+		cursor: $cursor !important;
+	}
+}
+
+// special case with prefix
+body[data-cursor='grabbing'] * {
+	cursor: -webkit-grabbing !important;
+	cursor: grabbing !important;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+li > div {
+	display: inline-flex;
+}
+
+
+// Flexhandle
+
+.cui-flex-handle-hidden {
+	display: none;
+}
+
+.cui-flex-handle {
+	position: relative;
+	z-index: 2;
+	flex-shrink: 0;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
+		.cui-label {
+			display: none;
+		}
+	}
+}
+
+// Show the flex handle helper in IE because real time dragging is turned off because of performance reasons
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-flex-handle.drag-drop-select-helper {
+		&::after {
+			content: '';
+			top: 0;
+			left: $padding - 1px;
+			border-right: 3px dotted var(--highlight);
+			height: 100%;
+			opacity: 0.5;
+			position: absolute;
+		}
+	}
+}
+
+.cui-flex-handle-row {
+	width: 10px;
+	margin: 0 -5px;
+
+	&:not(.cui-flex-handle-closed) {
+		cursor: ew-resize;
+	}
+
+	&.cui-flex-handle-closed {
+		cursor: pointer;
+		overflow: hidden;
+	}
+
+	&.cui-flex-handle-manual-size {
+		// background-color: #64fdd8;
+	}
+
+	&.cui-flex-handle-has-label.cui-flex-handle-closed {
+		width: 32px;
+		margin: 0;
+		background: white;
+
+		.cui-label.cui-label-rotate-90 {
+			font-size: 14px;
+			margin: 11px 0;
+			margin-left: -2px;
+
+			.cui-label-transform {
+				transform: rotate(-90deg) translateY(150%);
+				transform-origin: left bottom;
+			}
+		}
+	}
+}
+
+.cui-flex-handle-column {
+	height: 10px;
+	margin: -5px 0;
+	width: 100%;
+
+	&.cui-flex-handle-has-label.cui-flex-handle-closed {
+		margin: 0;
+	}
+
+	&:not(.cui-flex-handle-closed) {
+		cursor: ns-resize;
+	}
+
+	&.cui-flex-handle-closed {
+		cursor: pointer;
+	}
+}
+
+
+.cui-flex-handle-stretched {
+	flex: 1 1 auto !important;
+}
+
+.cui-flex-handle-hide-for-stretch {
+	display: none;
+}
+
+.cui-is-manually-sized {
+	flex-grow: 0 !important;
+	flex-shrink: 0 !important;
+
+	& + .cui-flex-handle + * {
+		flex-shrink: 1 !important;
+	}
+}
+
+
+.cui-pane-fill-screen {
+	transition: top ease-out 0.5s, right ease-out 0.5s, left ease-out 0.5s, bottom ease-out 0.5s;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+
+	// Pane Fillscreen
+	.cui-pane-fill-screen {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: white;
+
+		.cui-pane-fill-screen-inner {
+			width: 100%;
+			height: 100%;
+
+			> .cui-maximize-vertical.cui-vertical-layout {
+				height: 100%;
+			}
+		}
+	}
+
+	// overwrite "style" set by code
+	&.cui-pane-fill-screen-is-on {
+		top: 0 !important;
+		left: 0 !important;
+		bottom: 0 !important;
+		right: var(--layer-sidebar-width) !important;
+	}
+}
+
+// BorderLayout
+
+.cui-border-layout-north,
+.cui-border-layout-south,
+.cui-border-layout-west,
+.cui-border-layout-east {
+	&:empty {
+		display: none;
+	}
+}
+
+.cui-border {
+	border: 1px solid $border;
+}
+
+.cui-border-top {
+	border-top: 1px solid $border;
+}
+
+.cui-border-bottom {
+	border-bottom: 1px solid $border;
+}
+
+.cui-border-right {
+	border-right: 1px solid $border;
+}
+
+.cui-border-left {
+	border-left: 1px solid $border;
+}
+
+// Toolbar
+.cui-toolbar {
+	display: flex;
+	min-height: $toolbar-height;
+	justify-content: space-between;
+	background: $toolbar-background;
+	// needed in listview, to align all: content-box for all!
+	box-sizing: content-box;
+	overflow: visible !important;
+
+	& + & {
+		padding-bottom: 1px;
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+
+	&.cui-pane-toolbar {
+		border-bottom: 1px solid $border;
+	}
+
+	> .cui-horizontal-layout-left,
+	> .cui-horizontal-layout-right {
+		flex-direction: row;
+		min-width: 0;
+		overflow: visible !important;
+	}
+
+	> .cui-horizontal-layout-center {
+		justify-content: center;
+		flex-direction: row;
+		overflow: visible !important;
+	}
+
+	> div > .cui-maximize-horizontal {
+		// in column direction this is solved by
+		// align-items: stretch, but here
+		// we need to overwrite this
+		flex: 1 1 auto;
+		align-self: stretch;
+		overflow: visible;
+
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-center,
+		> .cui-horizontal-layout-right {
+			overflow: visible;
+		}
+	}
+
+	.cui-horizontal-layout-left {
+		> .cui-label {
+			// reset padding: 0 $padding; in cui-horizontal-layout-left
+			&:first-child {
+				padding-left: $padding;
+			}
+
+			&:last-child {
+				padding-right: 0;
+			}
+		}
+	}
+
+	.cui-horizontal-layout-right {
+		flex-shrink: 0;
+
+		> .cui-label {
+			&:last-child {
+				padding-right: $padding;
+			}
+		}
+	}
+
+	&.cui-template-empty {
+		display: none;
+	}
+
+	.cui-data-field-input {
+		display: flex;
+		align-items: center;
+		min-width: 0;
+
+		&.cui-vertical-layout {
+			align-items: stretch;
+			justify-content: center;
+		}
+
+		.cui-input {
+			flex-grow: 0;
+		}
+	}
+
+	.cui-button,
+	.cui-button-href,
+	.cui-data-field {
+		min-width: 0;
+		flex-shrink: 1;
+		padding: 5px;
+
+		&.cui-checkbox {
+			height: auto;
+			padding: 0; // child already has a padding because its a button
+		}
+	}
+
+	.cui-button-checkbox {
+		display: flex;
+		align-items: center;
+	}
+
+	.cui-checkbox {
+		max-width: none !important;
+	}
+
+	.cui-buttonbar {
+		margin-bottom: 0;
+		min-width: 0;
+
+		.cui-button,
+		.cui-data-field,
+		.cui-button-href {
+			&:not(:first-child) {
+				padding-left: 0;
+			}
+
+			&:not(:last-child) {
+				padding-right: 0;
+			}
+
+			&.cui-button-appearance-flat {
+				.cui-button-visual {
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+		}
+
+		.cui-data-field {
+			.cui-button {
+				padding: 0;
+			}
+		}
+	}
+
+	.cui-label {
+		flex-shrink: 1;
+		min-width: 0;
+		align-self: center;
+		cursor: default;
+
+		.cui-label-content {
+			flex-shrink: 1;
+			min-width: 0;
+			display: block;
+		}
+	}
+}
+
+.cui-result-navigation-toolbar {
+	min-height: $toolbar-height;
+}
+
+// Pane
+.cui-pane--window {
+	> .cui-vertical-layout-top > .cui-pane-header {
+		background: $header-background;
+		border-color: $header-border;
+		min-height: $toolbar-height;
+
+		.cui-popover & {
+			background: $popover-header-background;
+			border-color: $popover-header-border;
+		}
+
+		.cui-label {
+			color: $header-color;
+			font-weight: $header-weight;
+		}
+	}
+}
+
+.cui-pane-header {
+	flex-wrap: nowrap;
+	border-bottom: 1px solid $border;
+	padding-right: 0;
+
+	.cui-label {
+		font-size: 14px;
+		height: 100%;
+		cursor: default;
+		display: flex;
+		align-items: center;
+
+		&-size-mini {
+			font-size: $label-mini;
+		}
+
+		&-size-big {
+			font-size: $label-big;
+		}
+
+		&-size-bigger {
+			font-size: $label-bigger;
+		}
+	}
+
+	.cui-horizontal-layout-left {
+		> *:only-child {
+			padding-right: 0;
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		margin-right: $padding/2;
+	}
+
+	> .cui-horizontal-layout-right {
+		margin-left: 0;
+	}
+
+	.cui-toolbar {
+		min-height: 0;
+		background: none;
+		border-bottom-width: 0;
+		flex-wrap: nowrap;
+	}
+}
+
+.cui-pane-footer {
+	border-top: 1px solid $border;
+	min-height: $toolbar-height;
+
+	.cui-horizontal-layout-left,
+	.cui-horizontal-layout-right {
+		min-width: auto;
+	}
+
+	.cui-label {
+		color: $secondary-color;
+		font-size: 12px;
+
+		&-size-mini {
+			font-size: $label-mini;
+		}
+
+		&-size-big {
+			font-size: $label-big;
+		}
+
+		&-size-bigger {
+			font-size: $label-bigger;
+		}
+	}
+
+	.cui-button-size-big .cui-button-visual {
+		border-width: 1px;
+	}
+}
+
+// Pane
+.cui-pane--padded {
+	> .cui-vertical-layout-center {
+		padding: $padding;
+	}
+}
+
+// Simple Pane
+.cui-simple-pane {
+	> .cui-vertical-layout-center {
+		overflow: auto;
+	}
+}
+
+// Data Table
+.cui-data-table {
+	flex-shrink: 1;
+	display: inline-block;
+
+	&.cui-maximize-horizontal {
+		display: block;
+	}
+
+	&.cui-maximize-vertical {
+		display: flex;
+		flex: 1;
+	}
+
+	&.cui-maximize {
+		flex-basis: 0%; // IE 11 correct scrollbar in list-view
+
+		> .cui-list-view {
+			border: none;
+		}
+	}
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+	}
+
+	> .cui-list-view {
+		border: 1px solid $border;
+	}
+
+	.cui-pane-footer {
+		min-height: 0;
+		padding: 0;
+	}
+
+	input,
+	textarea {
+		min-width: 0;
+	}
+}
+
+// Navigation Toolbar
+
+.cui-navigation-toolbar {
+	&--mini {
+		background: none;
+		min-height: 20px !important;
+
+		.cui-horizontal-layout-left > .cui-label:first-child {
+			color: hsl(205, 7%, 70%);
+			font-weight: normal;
+			padding-left: $padding/2;
+			margin-right: 0;
+		}
+
+		.cui-buttonbar {
+			margin-bottom: 2px;
+		}
+
+		.cui-button {
+			padding: 0;
+		}
+
+		.cui-input {
+			padding: 0 3px;
+			font-size: 11px;
+			line-height: 18px;
+		}
+	}
+
+	> .cui-horizontal-layout-left {
+		> .cui-label:last-child {
+			margin-right: $padding;
+		}
+	}
+}
+
+
+// Icons
+.cui-icon-svg {
+	fill: currentColor;
+	vertical-align: bottom;
+	flex-shrink: 0;
+	transform: translateZ(0); // make em icons sharp in Firefox
+
+	use {
+		pointer-events: none;
+	}
+}
+
+.fa {
+	font-size: 14px;
+	// FIXME: why no pointer events? this breaks tooltips on icons
+	// pointer-events: none;
+}
+
+.fa-spinner {
+	width: 1em;
+}
+
+.fa-download {
+	margin-top: (1em / 14); // move up by 10% of the font-size
+}
+
+.svg-spinner {
+	height: 18px;
+}
+
+.cui-spin-stepped {
+	animation: fa-spin 1s steps(8) infinite;
+}
+
+// adjust close x size
+.fa-times-thin::before {
+	font-size: 1.58em;
+	content: '\00d7';
+	display: block;
+	margin-top: -0.09em;
+}
+
+// adjust arrow-left, arrow-right size
+.fa-angle-right,
+.fa-angle-left,
+.fa-angle-down,
+.fa-angle-double-down,
+.fa-angle-up,
+.fa-angle-double-up {
+	&::before {
+		font-size: 1.34em;
+	}
+}
+
+.fa-angle-double-down {
+	margin-top: 1px;
+}
+
+// compensate right arrow spacing
+.fa-angle-right {
+	margin-left: 2px;
+}
+
+// compensate left arrow spacing
+.fa-angle-left {
+	margin-right: 2px;
+}
+
+// compensate down arrow spacing
+.fa-angle-down {
+	margin-bottom: -1px;
+}
+
+.fa-play {
+	margin-left: 1px; // aligns it with the stop button
+}
+
+// Button / Select
+.cui-button,
+.cui-button-href {
+	// max-width: 100%; makes button icons unsharp (datepicker)
+	cursor: pointer;
+}
+
+.cui-button.cui-loading {
+	animation: 1.2s pulse linear alternate infinite;
+}
+
+@keyframes pulse {
+	from { opacity: 0.33; }
+	to { opacity: 1; }
+}
+
+.cui-button-href {
+	max-width: 100%;
+}
+
+.cui-button-href.cui-button-appearance-link {
+	word-break: break-all;
+
+	.cui-button-visual {
+		height: auto;
+		line-height: normal;
+	}
+
+	.cui-button-right {
+		flex-shrink: 0;
+		align-self: flex-start;
+		margin-top: 2px;
+
+		&:empty {
+			display: block;
+		}
+	}
+}
+
+.cui-button-visual {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 100%;
+	flex-grow: 1;
+}
+
+.cui-button-button,
+.cui-button-select {
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
+	white-space: nowrap;
+	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
+
+	.cui-button-visual {
+		padding: 0 $padding/2;
+		height: $button-height;
+		font-size: $button-font-size;
+		line-height: $button-height - 2px;
+		color: $button-color;
+		background: $button-background;
+		border: 1px solid $button-border;
+		border-radius: $button-radius;
+	}
+
+	&.cui-layer-open,
+	&:active,
+	&.cui-active {
+		.cui-button-visual {
+			background: $button-pressed;
+		}
+	}
+
+	&.cui-active {
+		.cui-button-visual {
+			color: $button-active-text;
+			background: $button-active;
+			border-color: $button-active-border;
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				color: $button-active-pressed-text;
+				background: $button-active-pressed;
+				border-color: $button-active-pressed;
+			}
+		}
+
+		.cui-label-appearance-secondary {
+			color: $button-active-text;
+		}
+	}
+
+	&:focus {
+		outline: none;
+
+		.cui-button-visual {
+			@include border-focus;
+		}
+	}
+}
+
+.cui-button-button {
+	&.cui-disabled {
+		cursor: default;
+		opacity: 1;
+		pointer-events: auto;
+
+		.cui-button-visual {
+			color: $disabled-color;
+			border-color: $button-border;
+		}
+
+		&:active {
+			.cui-button-visual {
+				background: $button-background;
+			}
+		}
+
+		&.cui-active,
+		&.cui-active:active {
+			.cui-button-visual {
+				color: $button-active-disabled-text;
+				background: $button-active;
+				border-color: $button-active-border;
+			}
+		}
+	}
+
+	&.cui-button-appearance-important, // removed [role] - makes it too specific
+	&.cui-button--primary {
+		.cui-button-visual {
+			color: var(--on-highlight-color);
+			background: var(--highlight);
+			border-color: hsla(0, 0%, 0%, 0.14);
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				opacity: 0.9;
+				border-color: hsla(0, 0%, 0%, 0.14);
+			}
+		}
+
+		&.cui-disabled {
+			opacity: 0.5;
+
+			&:active {
+				.cui-button-visual {
+					background: var(--highlight);
+				}
+			}
+		}
+	}
+}
+
+// turns the border into a box-shadow that lets the background shine through
+// in order to do so the height has to be made smaller because we're working with the border-box box-model
+.cui-button-appearance-transparent-border {
+	.cui-buttonbar-group > & {
+		// add gap between buttons
+		margin-left: 1px;
+
+		&.cui-first-visible-child {
+			margin-left: 0;
+		}
+	}
+
+	.cui-toolbar & {
+		padding: 5px 6px;
+	}
+
+	&.cui-layer-open,
+	&:active,
+	&.cui-active {
+		.cui-button-visual {
+			background: transparentize($button-background, 0.5);
+		}
+	}
+
+	&.cui-disabled {
+		.cui-button-visual {
+			border-color: transparent;
+		}
+	}
+
+	.cui-button-visual {
+		padding: 0 4px;
+		border-radius: $button-radius - 1px;
+		height: 22px;
+		border-color: transparent;
+		box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1);
+	}
+
+	&.cui-button-size-mini {
+		.cui-button-visual {
+			height: 18px;
+		}
+	}
+}
+
+.cui-button-appearance-flat {
+	align-self: auto;
+	vertical-align: top;
+
+	.cui-button-visual {
+		@include button-reset;
+
+		height: 24px;
+		padding: 3px 0;
+		border-radius: $button-radius; // for the focus outline
+		color: var(--highlight);
+	}
+
+	&:active,
+	&.cui-layer-open,
+	&.cui-active {
+		.cui-button-visual {
+			background: none;
+			color: var(--highlight);
+			opacity: 0.75;
+		}
+	}
+
+	&:focus {
+		.cui-button-visual {
+			@include inner-focus;
+		}
+	}
+}
+
+.cui-button-select {
+	min-width: 64px;
+
+	.cui-button-visual {
+		padding: 0 4px 0 8px;
+	}
+
+	.cui-button-center {
+		padding: 0;
+
+		[data-max-chars] {
+			text-align: inherit;
+			width: auto;
+		}
+
+		span:empty::after {
+			content: ' ';
+		}
+	}
+
+	.cui-button-left:empty + .cui-button-center {
+		padding: 0 6px 0 3px;
+	}
+}
+
+.cui-button-left,
+.cui-button-center,
+.cui-button-right {
+	display: flex;
+	flex: 0 0 auto;
+	justify-content: center;
+	padding: 0 3px;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.cui-button-left {
+	min-width: 20px; // wide enough so that the width doesn't jump when the icon turns into a spinner
+}
+
+.cui-button-center {
+	flex-shrink: 1;
+	min-width: 0;
+
+	span {
+		@include ellipsis;
+	}
+}
+
+.cui-button-size-mini {
+	font-size: 12px;
+
+	.cui-button-visual {
+		min-width: 22px;
+		height: 20px;
+		padding: 0 $padding/4;
+	}
+
+	.fa {
+		font-size: 11px;
+		line-height: 11px;
+		margin-top: 1px;
+	}
+
+	.cui-icon-svg {
+		transform: scale(0.75);
+
+		&.svg-close {
+			transform: none;
+			width: 9px;
+			height: 9px;
+		}
+	}
+}
+
+.cui-button-size-big {
+	// height: 60px; // conflict: too high in for example the easydb presentation editor
+
+	&.cui-button-appearance-flat {
+		height: auto;
+	}
+
+	.cui-buttonbar-group & {
+		&:not(:first-child) {
+			margin-left: 1px;
+		}
+	}
+
+	.cui-button-visual {
+		font-size: 9px;
+		line-height: 18px;
+		height: auto;
+		flex-direction: column;
+		border-width: 0;
+		padding: 4px $padding/2 0; // had a padding-bottom: 0 and padding-top: $padding/2 - looks weird for the presentation play button (without text)
+	}
+
+	.cui-button-left {
+		padding: 3px;
+	}
+
+	.fa {
+		font-size: 21px;
+	}
+}
+
+.cui-button-size-bigger {
+	font-size: 18px;
+	height: 43px;
+
+	&.cui-button-appearance-flat {
+		height: auto;
+	}
+}
+
+a[role='button'].cui-button-appearance-link {
+	height: initial;
+
+	> .cui-button-center {
+		word-wrap: break-word;
+	}
+}
+
+.cui-button-appearance-link[role] {
+	display: inline-flex;
+	align-self: flex-start;
+
+	&.cui-button-size-mini .cui-button-visual {
+		font-size: $label-mini;
+	}
+
+	&,
+	&:active {
+		.cui-button-visual {
+			@include button-reset;
+
+			color: var(--highlight);
+			line-height: 18px;
+		}
+	}
+
+	&:focus {
+		.cui-button-visual {
+			text-decoration: underline;
+		}
+	}
+
+	.cui-button-center {
+		padding: 0;
+
+		span {
+			white-space: normal;
+		}
+	}
+}
+
+.cui-data-field {
+	max-width: $input-width;
+	margin: 0;
+
+	.cui-form-value & {
+		max-width: none;
+	}
+
+	&.cui-form {
+		max-width: 100%;
+		margin: 0;
+	}
+
+	&.cui-maximize-horizontal,
+	&.cui-simple-form {
+		max-width: 100%;
+		flex-grow: 1;
+	}
+
+	&.cui-maximize-horizontal {
+		&.cui-output {
+			.cui-data-field-output-label.cui-label-multiline {
+				max-width: 700px;
+			}
+		}
+	}
+
+	.cui-list-view-grid-quadrant-3 {
+		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+	}
+
+	.cui-lv-row-move-handle-column {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	&-disabled {
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		opacity: 0.5;
+		pointer-events: none;
+
+		& & {
+			opacity: 1;
+		}
+	}
+
+	&--full-width {
+		width: 100%;
+		max-width: 100%;
+
+		&.cui-select {
+			> .cui-button {
+				max-width: none;
+			}
+		}
+	}
+
+	.cui-object-dumper {
+		border: 1px solid $table-border;
+
+		.cui-list-view-grid-quadrant-3 {
+			min-height: auto;
+		}
+	}
+
+	&--with-button {
+		display: flex;
+		height: 24px;
+		align-items: flex-end;
+		line-height: 24px;
+	}
+}
+
+.cui-data-field-center {
+	flex: 1 1 auto;
+	display: flex;
+
+	&:focus {
+		z-index: 1;
+	}
+
+	&:not(:first-child) input {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	&:not(:last-child) input {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	input {
+		position: relative;
+		width: auto !important;
+		flex-grow: 1;
+	}
+}
+
+.cui-data-field-right {
+	position: relative;
+
+	.cui-button {
+		margin-left: -1px;
+		height: 100%;
+		vertical-align: bottom;
+
+		.cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			padding: 0 $padding/2;
+		}
+
+		&:focus {
+			z-index: 1;
+		}
+	}
+}
+
+.cui-data-field-left {
+	position: relative;
+
+	.cui-button {
+		margin-right: -1px;
+		height: 100%;
+		vertical-align: bottom;
+
+		.cui-button-visual {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			padding: 0 $padding/2;
+		}
+
+		&:focus {
+			z-index: 1;
+		}
+	}
+}
+
+.cui-data-field-proxy {
+	// could be a list view, thus min-height: 0;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+
+	> .cui-button-href {
+		margin: 3px 0;
+	}
+
+	> .cui-button-button {
+		align-self: flex-start;
+	}
+}
+
+// .cui-data-field-proxy	> .cui-button-button, #conflict: makes the "go to" button in the sharing modal too wide
+.cui-data-field-input > .cui-button-select {
+	width: 100%;
+	padding: 0; // remove double padding
+}
+
+.cui-data-field-input > .cui-label:not(.cui-data-field-output-label) {
+	line-height: 24px;
+}
+
+.cui-data-field-proxy > .cui-label,
+.cui-data-field-output-label {
+	padding: 3px 0;
+
+	&.cui-label-multiline {
+		max-width: 400px;
+	}
+}
+
+// Checkbox
+.cui-checkbox {
+	min-width: 0;
+	max-width: 100%;
+	display: inline-block;
+	vertical-align: top; // checkboxes next to each other should top-align
+
+	&--icon {
+		.cui-button-checkbox {
+			.cui-button-left i {
+				border: none;
+				background: none;
+				font-size: 14px;
+				opacity: 0.2;
+			}
+
+			&.cui-active {
+				.cui-button-left i {
+					background: none;
+					color: inherit;
+					text-shadow: none;
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	&--multiline {
+		.cui-button-checkbox {
+			white-space: initial;
+
+			.cui-button-center {
+				span {
+					white-space: normal;
+					word-wrap: break-word;
+					text-overflow: clip;
+				}
+			}
+		}
+	}
+}
+
+.cui-button-checkbox {
+	display: inline-flex; // so that the click area is not wider than the text
+	flex-direction: row;
+	cursor: pointer;
+	min-height: 18px;
+	line-height: 18px;
+	max-width: 100%;
+	padding: 3px 0;
+	vertical-align: bottom; // fix height change on windows when checked
+
+	[data-max-chars] {
+		text-align: inherit;
+	}
+
+	&:focus {
+		outline: none;
+
+		.cui-button-left span,
+		.cui-button-left i {
+			@include border-focus;
+		}
+	}
+
+	&.cui-active,
+	&.cui-indeterminate {
+		.cui-button-left {
+			i,
+			span { // span = indeterminate
+				position: relative;
+				background: hsl(240, 2%, 61%);
+				border-color: hsl(240, 3%, 58%);
+				color: white;
+				text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+			}
+		}
+
+		&[role='radio'] {
+			.cui-button-left i {
+				color: transparent;
+				text-shadow: none;
+
+				// use radial gradient instead of border-radius
+				// for a nice round form (otherwise its more of an egg)
+				border-radius: none;
+				border-color: transparent;
+				background: radial-gradient(hsl(240, 2%, 61%), hsl(240, 3%, 58%));
+
+				&::after { // radio dot
+					content: '';
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					width: 6px;
+					height: 6px;
+					margin: -3px 0 0 -3px;
+					border-radius: 100%;
+					background: white;
+					box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+				}
+			}
+		}
+	}
+
+	&.cui-indeterminate {
+		.cui-button-left span::after {
+			content: '';
+			position: absolute;
+			left: 2px;
+			width: 6px;
+			top: 50%;
+			margin-top: -1px;
+			height: 2px;
+			background: currentColor;
+			box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+		}
+	}
+
+	.cui-button-visual {
+		justify-content: flex-start;
+		flex: 1 0 auto;
+		align-items: flex-start;
+	}
+
+	.cui-button-left {
+		padding: 3px 3px 0 0;
+		min-width: 12px;
+		// empty checkbox: span
+		// filled checkbox: i
+		span,
+		i {
+			display: inline-block;
+			width: 12px;
+			height: 12px;
+			border: 1px solid hsl(0, 0%, 72%);
+			border-top-color: hsl(0, 0%, 65%);
+			border-bottom-color: hsl(0, 0%, 72%);
+			background: white;
+			font-size: 11px;
+			line-height: 11px;
+			border-radius: 2px;
+			box-shadow: 0 1px rgba(0, 0, 0, 0.05) inset;
+		}
+	}
+
+	.cui-button-center {
+		min-width: 0;
+		flex: 1 1 auto;
+		padding-right: 5px;
+		justify-content: flex-start;
+	}
+
+	&[role='radio'] {
+		.cui-button-left {
+			padding-top: 2px;
+			padding-right: 4px;
+
+			span,
+			i {
+				width: 14px;
+				height: 14px;
+				border-radius: 100%;
+			}
+		}
+	}
+}
+
+// Panel
+.cui-panel {
+	border-top: 1px solid $header-border;
+	border-bottom: 1px solid $header-border;
+
+	& + &,
+	&:first-child {
+		border-top: none;
+	}
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&-closed {
+		> .cui-panel-body {
+			display: none;
+		}
+	}
+}
+
+.cui-panel-header {
+	background: $toolbar-background;
+	position: relative;
+	flex-shrink: 0;
+	box-sizing: content-box;
+
+	.cui-button {
+		width: calc(100% - 6px);
+		height: 100%;
+		align-items: stretch;
+		margin: 3px;
+
+		&-select {
+			max-width: 100%;
+		}
+
+		.cui-button-visual {
+			@include button-reset;
+
+			line-height: 22px;
+			justify-content: flex-start;
+			padding: 3px $padding;
+			color: $button-color;
+			font-weight: bold;
+		}
+
+		&:active {
+			.cui-button-visual {
+				background: darken($zebra-color, 5%);
+				color: $button-color;
+			}
+		}
+
+		.cui-button-left {
+			width: 22px;
+			padding-top: 1px;
+		}
+
+		.cui-button-center {
+			span {
+				white-space: normal;
+			}
+		}
+
+		.fa-angle-right {
+			padding-left: 3px;
+		}
+
+		.fa-angle-right {
+			margin-top: -1px;
+		}
+	}
+}
+
+
+// DataForm
+.cui-data-form--movable-rows {
+	max-width: 100%;
+
+	> .cui-horizontal-layout > .cui-horizontal-layout-center {
+		max-width: $input-width;
+		overflow: visible; // show focus outline
+	}
+
+	&.cui-data-form--multiple-fields {
+		> .cui-horizontal-layout > .cui-horizontal-layout-center {
+			max-width: 100%;
+		}
+	}
+}
+
+.cui-data-form--multiple-fields {
+	> .cui-data-form-row {
+		> .cui-horizontal-layout-center {
+			position: relative;
+			padding: 4px 4px 4px 10px;
+			border-left: 1px solid hsl(240, 8%, 87%);
+
+			&::after,
+			&::before {
+				content: '';
+				position: absolute;
+				background: hsl(240, 8%, 87%);
+				width: 10px;
+				height: 1px;
+				left: 0;
+				top: 0;
+			}
+
+			&::after {
+				top: auto;
+				bottom: 0;
+			}
+
+			> .cui-data-field > .cui-form-table {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.cui-data-form-row {
+	overflow: visible !important;
+
+	&--read-only {
+		.cui-drag-handle-row {
+			opacity: 0 !important;
+		}
+	}
+
+	&:first-child {
+		> .cui-horizontal-layout-center {
+			margin-top: 0;
+		}
+	}
+
+	&:last-child {
+		// margin-bottom: $padding; anyoing in fields renderer
+		> .cui-horizontal-layout-center {
+			margin-bottom: 0;
+		}
+	}
+
+	// &:only-child {
+	// 	// make it as wide as the normal inputs
+	// 	// as long as no trash bin is present
+	// 	> .cui-horizontal-layout-right {
+	// 		width: 9px;
+
+	// 		> .cui-buttonbar {
+	// 			display: none;
+	// 		}
+	// 	}
+	// }
+
+	&.cui-data-form-row--trash {
+		> .cui-horizontal-layout-center {
+			opacity: 0.5;
+		}
+	}
+
+	> .cui-horizontal-layout-left {
+		.cui-drag-handle-row {
+			margin: 7px 7px 0 0;
+			width: 12px;
+			height: 10px;
+			flex-grow: 0;
+			cursor: -webkit-grab;
+			cursor: grab;
+
+			&.is-hidden {
+				pointer-events: none;
+				opacity: 0.33;
+			}
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		margin-top: 0;
+		margin-bottom: 5px;
+		min-width: 0;
+	}
+
+	> .cui-horizontal-layout-right {
+		width: 30px;
+
+		.cui-button {
+			margin-top: 1px;
+			position: relative; // put forward
+
+			&.cui-button-hidden {
+				pointer-events: none;
+
+				.cui-button-visual {
+					opacity: 0.1;
+				}
+			}
+		}
+
+		.cui-button-visual {
+			min-width: 0;
+			padding: 0 5px;
+			color: $drag-handle-color;
+		}
+	}
+}
+
+
+// Label
+.cui-label {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	max-width: 100%;
+	line-height: 18px;
+
+	.cui-vertical-layout-center > & {
+		display: flex;
+	}
+
+	> .cui-label-content a {
+		color: var(--highlight);
+		text-decoration: underline;
+	}
+
+	&.cui-label-rotate-90 {
+		white-space: nowrap;
+		margin: $padding/2 0;
+		flex-shrink: 0;
+		max-width: none;
+		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
+
+		&::before {
+			content: '';
+			float: left;
+			margin-top: calc(100% - #{$padding});
+		}
+
+		> .cui-label-transform {
+			transform: rotate(-90deg)  translateX(-3px) translateY(100%);
+			transform-origin: left bottom;
+			clear: left;
+		}
+
+		.cui-label-content {
+			white-space: nowrap !important;
+		}
+	}
+
+	&-icon {
+		&:empty {
+			display: none;
+		}
+
+		.fa {
+			line-height: 18px;
+		}
+	}
+
+	&-size-mini {
+		font-size: $label-mini;
+		line-height: 14px;
+	}
+
+	&-size-big,
+	&-size-bigger {
+		.cui-label-icon {
+			.fa {
+				font-size: inherit;
+			}
+		}
+	}
+
+	&-size-big {
+		font-size: $label-big;
+	}
+
+	&-size-bigger {
+		font-size: $label-bigger;
+	}
+
+	&-icon:not(:empty) + .cui-label-content:not(:empty) {
+		padding-left: 7px;
+		flex-shrink: 1; // the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
+	}
+
+	&-content {
+		flex: 0 0 auto;
+		max-width: 100%;
+
+		@include ellipsis;
+
+		&:empty {
+			display: none;
+		}
+
+		p {
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		// highlight
+		em {
+			background: hsl(55, 100%, 60%);
+			font-style: normal;
+		}
+	}
+
+	&-appearance-secondary {
+		color: $secondary-color;
+
+		.cui-selected & {
+			color: var(--on-highlight-light-secondary-color);
+		}
+	}
+
+	&-appearance-title {
+		display: flex;
+		font-weight: bold;
+		font-size: 14px;
+
+		&.cui-label-size-big {
+			font-size: 16px;
+		}
+	}
+
+	&-appearance-muted {
+		color: $muted-color;
+
+		.cui-selected & {
+			color: var(--on-highlight-light-muted-color);
+		}
+	}
+
+	&--padded {
+		padding: $padding;
+
+		+ .cui-block > .cui-block-header {
+			padding-top: $padding/2;
+		}
+	}
+
+	&[data-type='string'] {
+		color: #50a14f;
+	}
+
+	&[data-type='NaN'],
+	&[data-type='number'] {
+		color: #986801;
+	}
+
+	&[data-type='boolean'],
+	&[data-type='undefined'],
+	&[data-type='null'] {
+		color: #0184bb;
+	}
+}
+
+// Label: Markdown
+.cui-label-markdown .cui-label-content {
+	display: block;
+
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: 600;
+		line-height: 1.35;
+		margin: 0 0 7px;
+	}
+
+	h1 {
+		font-size: 18px;
+	}
+
+	h2 {
+		font-size: 16px;
+	}
+
+	h3 {
+		font-size: 1em;
+		margin-bottom: 5px;
+	}
+
+	a {
+		color: var(--highlight);
+		text-decoration: underline;
+		word-break: break-all;
+	}
+
+	em {
+		background: none;
+		font-style: italic;
+	}
+
+	p,
+	pre,
+	blockquote,
+	table,
+	ul,
+	ol {
+		margin: 0 0 16px;
+	}
+
+	& > p,
+	& > pre,
+	& > table,
+	& > blockquote,
+	& > ul,
+	& > ol {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	blockquote > p {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	table {
+		border: none;
+		table-layout: auto;
+		display: block;
+		width: 100%;
+		overflow: auto;
+		word-break: keep-all;
+
+		td, th {
+			padding: 7px 12px;
+			border: 1px solid hsl(0, 0%, 87%);
+		}
+
+		th {
+			font-weight: bold;
+			text-align: center;
+		}
+
+		tbody tr:nth-child(odd) {
+			background: hsl(0, 0%, 97%);
+		}
+
+		col {
+			width: auto;
+		}
+	}
+
+	blockquote {
+		padding: 8px 12px;
+		border-left: 5px solid #eee;
+	}
+
+	code {
+		border: none;
+		background: hsl(0, 0%, 97%);
+		white-space: pre-wrap;
+		padding: 0 5px;
+		border-radius: 2px;
+	}
+
+	pre {
+		padding: 12px 15px;
+		font-size: 13px;
+		line-height: 1.45;
+		background: hsl(0, 0%, 97%);
+		white-space: pre-wrap;
+		border-radius: 3px;
+		border: none;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+
+		code {
+			padding: 0;
+			border-radius: 0;
+		}
+	}
+
+	hr {
+		margin-top: 6px;
+		margin-bottom: 6px;
+		border: 0;
+		border-top: 1px solid #dfdfdf;
+	}
+}
+
+.cui-label-multiline,
+.cui-label-markdown {
+	> .cui-label-content {
+		flex: 1 1 auto;
+		white-space: normal;
+		overflow: visible;
+		text-overflow: clip;
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+}
+
+// Label: Multiline
+.cui-label-multiline {
+	// Conflict: makes it center vertically align in center
+	// align-self: stretch;
+	max-width: 100%; // prevent overflow when its the child of a flex parent
+	display: flex;
+
+	& + & {
+		margin-top: 7px;
+	}
+
+	&:not(.cui-label-markdown) {
+		> .cui-label-content {
+			white-space: pre-wrap;
+		}
+	}
+
+	.cui-label-content span {
+		// white-space: normal;
+		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
+		// example: collection description
+	}
+}
+
+// Label: Manage Overflow
+
+.cui-label-manage-overflow {
+	position: relative;
+	display: block;
+
+	&.cui-label--measure-overflow {
+		> .cui-label-content {
+			max-height: 8 * 18px; // only limit if its more than 8 lines
+		}
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 20px;
+		background: linear-gradient(transparent, white);
+	}
+
+	> .cui-label-content {
+		max-height: 6 * 18px; // limit at 6 lines
+		overflow: hidden;
+	}
+
+	&.cui-label-size-mini { // 14px line-height
+		&.cui-label--measure-overflow > .cui-label-content {
+			max-height: 8 * 14px;
+		}
+
+		> .cui-label-content {
+			max-height: 6 * 14px;
+		}
+	}
+
+	.cui-label-manage-overflow-button {
+		z-index: 1;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(to right, hsla(0, 0%, 100%, 0), hsl(0, 0%, 100%) 10px);
+		padding: 0 0 0 10px !important;
+
+		.cui-button-visual {
+			color: var(--highlight);
+			height: auto;
+			padding: 0 0 1px;
+		}
+	}
+
+	&.cui-label--show-overflow {
+		&::after {
+			display: none;
+		}
+
+		> .cui-label-content {
+			max-height: none !important;
+			overflow: visible;
+		}
+
+		.cui-label-manage-overflow-button {
+			position: static;
+			float: right;
+		}
+	}
+}
+
+// Label: Placeholder
+.cui-empty-label {
+	color: $muted-color;
+	font-style: italic;
+	margin: 0;
+	cursor: default;
+
+	.cui-label-content {
+		display: inline-block;
+	}
+}
+
+// Label: Centered
+.cui-label-centered {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: $padding;
+
+	> .cui-label-content {
+		text-align: center;
+		flex-grow: 0;
+	}
+}
+
+
+// Buttonbar
+.cui-buttonbar {
+	display: flex;
+	align-items: center;
+	// justify-content: space-between; CONFLICT: looks bad sometimes
+
+	// > *:not(:last-child) {
+	// 	margin-right: $gap;
+	// }
+
+	.cui-label {
+		margin: 0 $small-gap;
+		align-self: center;
+
+		// CONFLICT: spacing needed around first/last labels
+		// &:first-child {
+		// 	margin-left: 0;
+		// }
+
+		// &:last-child {
+		// 	margin-right: 0;
+		// }
+	}
+
+	.cui-label-content {
+		align-self: center; // Date-Time picker month label in footer
+	}
+
+	> .cui-button,
+	> .cui-button-button,
+	> .cui-data-field-input {
+		+ .cui-button,
+		+ .cui-button-button,
+		+ .cui-data-field-input {
+			margin-left: $padding;
+		}
+	}
+
+	> .cui-button,
+	> .cui-button-button,
+	> .cui-data-field-input {
+		+ .cui-buttonbar-group {
+			margin-left: $padding/2;
+		}
+	}
+
+	.cui-button-href {
+		height: 100%;
+	}
+
+	.cui-buttonbar-group {
+		+ .cui-button,
+		+ .cui-button-href {
+			margin-left: $padding/2;
+		}
+	}
+}
+
+// Buttonbar Group
+.cui-buttonbar-group {
+	display: flex;
+	align-self: stretch; // use full height for bigger click area for buttons (example: tabs)
+	max-width: 100%;
+
+	> * {
+		position: relative;
+		align-self: stretch; // make sure that buttons are full height
+		margin-left: -1px;
+
+		.cui-button-visual,
+		.cui-input {
+			border-radius: 0;
+		}
+
+		&:first-child,
+		&.cui-first-visible-child {
+			margin-left: 0;
+
+			.cui-button-visual,
+			.cui-input {
+				border-top-left-radius: $button-radius;
+				border-bottom-left-radius: $button-radius;
+			}
+
+			&::before {
+				display: none;
+			}
+		}
+
+		&:last-child,
+		&.cui-last-visible-child {
+			.cui-button-visual,
+			.cui-input {
+				border-top-right-radius: $button-radius;
+				border-bottom-right-radius: $button-radius;
+			}
+		}
+
+		&.cui-active {
+			z-index: 1;
+		}
+	}
+
+	.cui-label {
+		border: 1px solid $button-border;
+		background: $foreground;
+		margin-left: -1px;
+		margin-right: 0;
+		padding: 0 7px;
+		color: $secondary-color;
+
+		&-size-mini {
+			height: 20px;
+		}
+	}
+
+	> .cui-data-field {
+		margin-left: -1px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+
+		& + *::before {
+			display: none;
+		}
+	}
+}
+
+// Input
+.cui-input {
+	// state classes:
+	// cui-input-invalid
+	// cui-input-has-no-user-input
+	// cui-input-has-user-input
+	// cui-has-focus
+	// cui-has-check-input
+	//
+	// hint:
+	// cui-input-has-invalid-hint
+	// cui-input-has-valid-hint
+	// cui-input-has-input-hin:
+	//
+
+	&.cui-input-has-check-input {
+		&.cui-input-invalid {
+			input {
+				border-color: $error-color;
+				background: transparentize($error-color, 0.85);
+			}
+		}
+	}
+
+	&.cui-maximize-vertical {
+		display: flex;
+		flex-direction: column;
+	}
+
+	input,
+	textarea {
+		max-width: 100%;
+		padding: 0 7px;
+		line-height: 22px;
+		outline: none;
+		vertical-align: bottom;
+
+		&:focus {
+			@include border-focus;
+		}
+
+		&::-webkit-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::-moz-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&:-ms-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::-ms-input-placeholder {
+			color: $input-placeholder;
+		}
+
+		&::placeholder {
+			color: $input-placeholder;
+		}
+	}
+
+	textarea {
+		--textarea-min-rows: 1;
+
+		padding-top: 3px;
+		padding-bottom: 3px;
+		line-height: 16px;
+		resize: none;
+		min-height: calc(16px * var(--textarea-min-rows) + 6px + 2px); // 16px: Line height, 6px: padding, 2px: border.
+	}
+
+	&.cui-has-focus {
+		input,
+		textarea {
+			@include border-focus;
+		}
+	}
+
+	// hint
+	+ .cui-label {
+		margin-top: 5px;
+		font-size: 12px;
+		color: $muted-color;
+	}
+
+	&-appearance-code {
+		input,
+		textarea {
+			font-family: monospace;
+			color: hsl(115, 98%, 54%);
+			background: black;
+			border-color: black;
+			box-shadow:
+				0 1px hsla(0, 0%, 100%, 0.3) inset,
+				0 2px hsla(0, 0%, 100%, 0.1) inset,
+				0 -1px hsla(0, 0%, 100%, 0.3) inset,
+				0 -2px hsla(0, 0%, 100%, 0.1) inset;
+
+			&:focus {
+				border-color: black;
+				box-shadow:
+					0 0 0 3px var(--highlight-light),
+					0 1px hsla(0, 0%, 100%, 0.3) inset,
+					0 2px hsla(0, 0%, 100%, 0.1) inset,
+					0 -1px hsla(0, 0%, 100%, 0.3) inset,
+					0 -2px hsla(0, 0%, 100%, 0.1) inset;
+			}
+
+			&::placeholder {
+				color: hsl(115, 50%, 36%);
+			}
+		}
+	}
+}
+
+.cui-code-input pre {
+	height: 400px;
+	margin: auto;
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-input {
+		input,
+		textarea {
+			min-height: 24px;
+
+			&[data-max-chars] {
+				min-height: 22px;
+			}
+		}
+	}
+
+	.cui-input-content-size {
+		textarea {
+			min-height: 40px;
+			height: 40px;
+		}
+	}
+}
+
+.cui-input-content-size {
+	textarea {
+		min-height: 40px;
+		height: 40px;
+		resize: none;
+	}
+}
+
+.cui-hint,
+.cui-form-hint {
+	font-size: 12px;
+	color: $muted-color;
+
+	.cui-label {
+		line-height: 1.38;
+	}
+}
+
+.cui-form-hint {
+	max-width: $input-width;
+	margin-top: 5px;
+
+	.cui-checkbox + &,
+	.cui-data-field.cui-maximize-horizontal + & {
+		max-width: 100%;
+	}
+
+	.cui-data-form + & {
+		margin-top: 10px;
+	}
+
+	.cui-checkbox + & {
+		margin-top: 0;
+	}
+
+	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+		padding-left: 7px;
+	}
+
+	.fa {
+		font-size: 12px;
+	}
+
+	// IE layout fix: (layer form hint)
+	.cui-label-multiline {
+		flex-grow: 1;
+		display: flex;
+		align-items: flex-start;
+
+		.cui-label-content {
+			flex-basis: 0%;
+		}
+	}
+}
+
+.cui-input-valid-hint {
+	font-size: 11px;
+	margin-top: $padding/4;
+}
+
+::-ms-clear {
+	display: none;
+}
+
+.cui-layer-root[cui-layer-fixed] {
+	position: fixed !important;
+}
+
+// Layer
+.cui-layer-root {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+	pointer-events: none;
+
+	.cui-layer {
+		position: absolute;
+		pointer-events: auto;
+	}
+
+	// centered gets placed by the browser
+	&[cui-placement='c'] {
+		.cui-layer {
+			// position: static;
+			// margin: $padding;
+		}
+
+		.cui-layer-pointer {
+			display: none;
+		}
+	}
+
+	&[cui-fill-space='both'] {
+		.cui-layer {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&[cui-fill-space='horizontal'] {
+		.cui-layer {
+			width: 100%;
+		}
+	}
+
+	&[cui-fill-space='vertical'] {
+		.cui-layer {
+			height: 100%;
+		}
+	}
+}
+
+.cui-layer-backdrop-policy-modal,
+.cui-layer-backdrop-policy-click {
+	pointer-events: auto;
+}
+
+.cui-layer {
+	min-width: 200px;
+	min-height: 30px;
+	margin: $padding;
+	display: flex;
+	flex-direction: column;
+	background: $layer-background;
+	outline: none;
+	border-radius: 5px;
+	overflow: auto; /* hidden; */
+	box-shadow:
+		0 0 0 1px hsla(205, 20%, 30%, 0.15),
+		0 8px 10px 1px hsla(0, 0%, 0%, 0.14),
+		0 3px 14px 2px hsla(0, 0%, 0%, 0.12),
+		0 5px 5px -3px hsla(0, 0%, 0%, 0.4);
+
+	// redundaten:? > .cui-simple-pane,
+	> .cui-pane {
+		// layer-header
+		> .cui-vertical-layout-top > .cui-pane-header {
+			border-radius: 5px 5px 0 0;
+		}
+
+		// layer-body
+		> .cui-vertical-layout-center {
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+
+			> .cui-form {
+				margin: 0;
+			}
+
+			> .cui-data-table {
+				&:first-child > .cui-list-view {
+					border: none;
+					border-bottom: 1px solid $border;
+				}
+
+				&:only-child > .cui-list-view {
+					border: none;
+				}
+			}
+		}
+
+		// layer-footer
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			border-top-color: $header-border;
+			background: $header-background;
+			border-radius: 0 0 5px 5px;
+
+			.cui-toolbar {
+				background: none;
+			}
+		}
+	}
+
+	.cui-toolbar {
+		min-height: $toolbar-height;
+	}
+
+	.cui-data-table .cui-pane-footer {
+		min-height: 0;
+	}
+
+	.cui-form-table {
+		&.cui-form-table-has-not-left-column {
+			> .cui-tr > .cui-form-value > .cui-data-field {
+				&.cui-data-table > .cui-list-view {
+					border: none;
+				}
+
+				> .cui-list-view {
+					margin: -15px -20px;
+				}
+			}
+		}
+
+		.cui-data-field {
+			width: auto;
+		}
+	}
+
+	.cui-form-button {
+		.cui-button {
+			max-width: 100%;
+		}
+	}
+
+	.cui-data-field-input {
+		min-width: 150px;
+
+		&.cui-checkbox {
+			min-width: 13px;
+		}
+
+		&.cui-data-table {
+			min-width: 200px;
+		}
+	}
+
+	.cui-list-view {
+		.cui-data-field-input {
+			min-width: 0;
+		}
+	}
+
+	.cui-toolbar,
+	.cui-buttonbar {
+		.cui-data-field-input {
+			min-width: 0;
+		}
+	}
+}
+
+$layer-sizes: (
+	'xs': 400,
+	's': 500,
+	'm': 600,
+	'l': 700,
+	'xl': 800,
+	'xxl': 900,
+	'xxxl': 1000
+);
+
+@each $name, $width in $layer-sizes {
+	.cui-layer--size-#{$name} {
+		width: #{$width}px;
+	}
+}
+
+.cui-layer-pointer {
+	position: absolute;
+	z-index: 1;
+	width: 46px;
+	height: 16px;
+	margin: 6px;
+	overflow: hidden;
+
+	&::after { // arrow (north)
+		content: '';
+		position: absolute;
+		width: 18px;
+		height: 18px;
+		background: $layer-background;
+		transform: rotate(45deg);
+		box-shadow:
+			0 0 0 1px hsla(205, 20%, 30%, 0.15),
+			4px 4px 10px 1px hsla(0, 0%, 0%, 0.14),
+			1px 1px 14px 2px hsla(0, 0%, 0%, 0.12),
+			2px 2px 5px -3px hsla(0, 0%, 0%, 0.4);
+	}
+}
+
+.cui-layer-pointer--n,
+.cui-layer-pointer--s {
+	margin: 0 6px;
+	height: 14px;
+
+	&::after {
+		top: 5px;
+		left: 14px;
+	}
+}
+
+.cui-pane--has-footer {
+	.cui-layer-pointer--s::after {
+		background: $header-background;
+	}
+
+	// make sure that white layer pointers on the side
+	// only end above the footer
+	.cui-layer-pointer--e,
+	.cui-layer-pointer--w {
+		margin-bottom: $toolbar-height;
+	}
+}
+
+.cui-layer-pointer--s::after {
+	top: -9px;
+}
+
+.cui-pane--has-header {
+	// color northern layer pointer in header color
+	.cui-layer-pointer--n::after {
+		background: $header-background;
+	}
+
+	&.cui-layer-root-popover {
+		.cui-layer-pointer--n::after {
+			background: $popover-header-background;
+		}
+	}
+
+	// make sure that white layer pointers on the side
+	// only start below the header
+	.cui-layer-pointer--e,
+	.cui-layer-pointer--w {
+		margin-top: $toolbar-height;
+	}
+}
+
+.cui-layer-pointer--e,
+.cui-layer-pointer--w {
+	width: 12px;
+	height: 46px;
+	margin: 6px 0;
+
+	&::after {
+		left: 5px;
+		top: 14px;
+	}
+}
+
+.cui-layer-pointer--e::after {
+	left: -11px;
+}
+
+.cui-layer-root-menu .cui-layer-pointer {
+	height: 12px;
+
+	&.cui-layer-pointer--e,
+	&.cui-layer-pointer--w {
+		width: 9px;
+		height: 37px;
+
+		&::after {
+			top: 9px;
+		}
+	}
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&::after {
+			left: 7px;
+		}
+	}
+
+	&::after {
+		background: white;
+	}
+}
+
+.cui-layer-backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	z-index: -1;
+
+	&--visible {
+		background: radial-gradient(hsla(205, 30%, 20%, 0.4), hsla(205, 30%, 20%, 0.6));
+	}
+
+	> div {
+		flex: 1 1 auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+}
+
+.cui-layer-backdrop-body-clone {
+	position: absolute;
+	overflow: hidden;
+
+	> *:first-child {
+		position: absolute;
+	}
+}
+
+.cui-layer-root.cui-layer-root-backdrop-blur {
+	> .cui-layer-backdrop {
+		-webkit-filter: blur(5px);
+		-moz-filter: blur(5px);
+		-ms-filter: blur(5px);
+		filter: blur(5px);
+		overflow: hidden;
+	}
+
+	> .cui-layer {
+		// blur effect, make layer transparent
+		background-color: rgba(255, 255, 255, 0.39);
+
+		.cui-item-list-body {
+			.cui-button {
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+// Modal
+
+.cui-modal {
+	> .cui-simple-pane {
+		// layer-footer
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			border-radius: 0 0 5px 5px;
+		}
+	}
+}
+
+// Confirmation Dialog
+.cui-confirmation-dialog {
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			max-width: 500px;
+
+			// turn all labels into multiline labels
+			.cui-label:not(.cui-label-markdown) {
+				.cui-label-content {
+					word-wrap: break-word;
+					white-space: pre-wrap;
+				}
+			}
+		}
+	}
+}
+
+// detached from layer root, inline
+.cui-layer.cui-confirmation-dialog--show-inline {
+	// temp fix
+	z-index: 1;
+}
+
+// Confirmation Choice
+.cui-confirmation-choice {
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			max-width: 300px; // don't make this bigger, make the text shorter
+		}
+	}
+}
+
+// Alert Problem (red)
+.cui-confirmation-dialog {
+	.cui-alert-problem {
+		> .cui-layer-pane {
+			> .cui-vertical-layout-center {
+				min-height: 66px;
+				max-width: 375px;
+				padding: 0 14px 0 74px;
+				overflow-x: hidden;
+
+				> :first-child {
+					padding-top: 10px;
+					margin-top: auto;
+				}
+
+				> :last-child {
+					padding-bottom: 10px;
+					margin-bottom: auto;
+				}
+
+				&::before {
+					font-family: 'FontAwesome';
+					content: '\f071';
+					font-size: 42px;
+					line-height: 1;
+					color: $neutral-color;
+					left: 14px;
+					top: 14px;
+					position: absolute;
+				}
+			}
+		}
+	}
+}
+
+.cui-alert {
+	.cui-pane-footer .cui-button {
+		min-width: 60px;
+	}
+}
+
+// Spinner
+.cui-spinner {
+	min-width: 0;
+}
+
+// Tooltip
+.cui-layer-root-tooltip .cui-layer-pointer {
+	width: $padding / 2;
+	height: $padding / 2;
+
+	&::after {
+		display: none;
+	}
+}
+
+.cui-tooltip {
+	max-width: 260px;
+	// max-height: 100px;
+	min-width: 0;
+	min-height: 0;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	background: $layer-background;
+	border-radius: 2px;
+	box-shadow:
+		0 0 0 1px hsla(0, 0%, 0%, 0.1),
+		0 7px 14px hsla(0, 0%, 0%, 0.1);
+	cursor: default;
+
+	.cui-label {
+		font-size: 11px;
+		line-height: 14px;
+		padding: 3px 6px;
+	}
+
+	> .cui-simple-pane > .cui-vertical-layout-center {
+		padding: 0;
+
+		> .cui-label:only-child {
+			margin: 0;
+		}
+	}
+}
+
+
+// Toaster
+.cui-layer-root-toaster .cui-layer {
+	font-size: 14px;
+	width: auto;
+	max-width: none;
+	min-width: 0;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+
+	> .cui-layer-pane > .cui-vertical-layout-center {
+		padding: 7px $padding;
+	}
+}
+
+// Menu
+.cui-menu {
+	min-height: 0;
+	min-width: 0;
+	background: white;
+	border-radius: 4px;
+	padding: 4px 0;
+	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+
+	.cui-item-list {
+		font-size: inherit;
+	}
+
+	.cui-item-list-body {
+		> .cui-label {
+			max-width: 200px;
+		}
+	}
+
+	.cui-vertical-layout {
+		overflow: visible;
+	}
+
+	.cui-item-list-body > .cui-options:last-child {
+		border-top: 1px solid $border;
+		padding: 6px 0;
+		margin-top: 4px;
+		margin-bottom: -4px;
+		background: $toolbar-background;
+		font-size: 12px;
+
+		.cui-button-checkbox {
+			display: flex;
+
+			.cui-button-visual {
+				min-height: 0;
+				padding: 1px $padding;
+				background: none;
+				color: inherit;
+			}
+		}
+	}
+}
+
+.cui-menu-divider {
+	margin: 6px 0;
+}
+
+.cui-select-menu {
+	.cui-browser-firefox &,
+	.cui-browser-ie & {
+		overflow-y: scroll; // prevents overlap with scrollbar in Firefox & IE but adds a deactivated scrollbar when no scrollbar is neccesary
+	}
+
+	.cui-button {
+		.cui-button-visual {
+			display: inline;
+		}
+
+		.cui-button-left,
+		.cui-button-center,
+		.cui-button-right,
+		.cui-label,
+		.cui-label-content {
+			display: inline;
+		}
+	}
+}
+
+.cui-button--has-caret {
+	// IE 11 ignoring margin: auto when justify-content is set bugfix
+	// http://stackoverflow.com/a/37535548
+	.cui-button-visual {
+		justify-content: flex-start;
+	}
+
+	.cui-button-right {
+		margin-left: auto;
+		min-width: 20px;
+		margin-right: 1px;
+	}
+}
+
+// ItemList
+.cui-item-list {
+	.cui-label {
+		font-size: 0.9em;
+		cursor: default;
+	}
+
+	.cui-menu-item.cui-label,
+	.cui-empty-label {
+		&:first-child {
+			padding-top: 6px;
+		}
+
+		&:last-child {
+			padding-bottom: 6px;
+		}
+	}
+
+	.cui-menu-item.cui-label {
+		padding: $padding+3px $padding 3px;
+		color: hsl(205, 3%, 50%);
+	}
+
+	.cui-menu-divider + .cui-menu-item.cui-label {
+		padding-top: 3px;
+	}
+
+	.cui-empty-label {
+		padding: 6px $padding;
+		color: $disabled-color;
+	}
+
+	.cui-button,
+	.cui-button-href {
+		align-items: stretch;
+		max-width: 100%; // button-select
+
+		.cui-button-visual {
+			justify-content: flex-start;
+			flex-grow: 1;
+			padding: 0 $padding;
+			border: none;
+			border-radius: 0;
+			height: auto;
+			min-height: $button-height;
+			line-height: $line-height;
+			padding-top: 5px;
+			padding-bottom: 5px;
+
+			span {
+				white-space: normal;
+				overflow: hidden;
+			}
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				color: $item-list-color;
+				background: $item-list-pressed;
+			}
+		}
+
+		&:hover {
+			.cui-button-visual {
+				color: $item-list-color;
+				background: $item-list-hover;
+			}
+		}
+
+		&.cui-active,
+		&.cui-active:hover {
+			.cui-button-visual {
+				color: $button-active-text;
+				background: $button-active;
+			}
+		}
+
+		&.cui-disabled {
+			&,
+			&:hover,
+			&.cui-active {
+				.cui-button-visual {
+					color: $disabled-color;
+					background: none;
+				}
+			}
+		}
+
+		&.cui-button-appearance-important:not(:hover):not(.cui-active) {
+			.cui-button-visual {
+				background: none;
+				color: $button-color;
+			}
+		}
+
+		&.cui-button-appearance-important {
+			.cui-button-visual {
+				.cui-button-center {
+					font-weight: bold;
+				}
+			}
+		}
+
+		.cui-button-center {
+			padding: 0;
+		}
+	}
+
+	.cui-options .cui-button {
+		padding: 0;
+		flex: 1 1 auto;
+
+		.cui-button-visual {
+			padding-top: 4px;
+			padding-bottom: 4px;
+			line-height: 18px;
+			height: auto;
+			min-height: 26px;
+		}
+	}
+}
+
+.cui-item-list-divider {
+	height: 1px;
+	background: hsl(210, 11%, 93%);
+}
+
+.cui-item-list-body {
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		flex: 0 0 auto;
+	}
+
+	a[role='button'],.cui-button {
+		align-self: stretch;
+	}
+
+	&.cui-item-list--has-button-left {
+		// this button always has a left side
+		.cui-button-left {
+			padding-right: $padding;
+			min-width: 15px;
+			box-sizing: content-box;
+			padding-left: 1px;
+
+			&:only-child {
+				padding-right: 0;
+			}
+		}
+		// add space to button without icon
+		.cui-button-center:first-child {
+			padding-left: 3px + $padding + 13px;
+		}
+	}
+}
+
+// Popover
+
+.cui-popover {
+	background: $layer-background;
+	min-width: 247px;
+}
+
+// Hint Popover
+
+.cui-layer-root-hint-popover .cui-layer-pointer {
+	height: 10px;
+	width: 32px;
+
+	&.cui-layer-pointer--e,
+	&.cui-layer-pointer--w {
+		width: 9px;
+		height: 37px;
+
+		&::after {
+			top: 9px;
+		}
+	}
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&::after {
+			left: 7px;
+		}
+	}
+
+	&::after {
+		top: 3px;
+		background: $popover-hint-background;
+		box-shadow: 3px 3px 14px hsla(0, 0%, 0%, 0.1);
+	}
+}
+
+// WaitBlock
+.cui-wait-block {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	display: flex;
+	color: $muted-color;
+}
+
+.cui-wait-block-glass {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0.5;
+	background: $foreground;
+}
+
+.cui-wait-block-inner {
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+}
+
+.cui-wait-block-header {
+	display: flex;
+	flex: 1 1 auto;
+	justify-content: center;
+	align-self: center;
+
+	.cui-label {
+		.svg-spinner {
+			height: auto;
+			width: 28px;
+		}
+
+		.cui-label-content {
+			padding-left: $padding;
+		}
+	}
+}
+
+.cui-wait-block-content {
+	display: none;
+}
+
+// Tabs
+.cui-tabs {
+	.cui-tabs-active-marker {
+		display: none;
+		position: absolute;
+		bottom: 0;
+		// left + width are set by javascript
+		height: 3px;
+		background: yellow;
+		transition: width 0.3s ease, left 0.3s ease;
+	}
+
+	> .cui-vertical-layout-center {
+		flex-grow: 1;
+
+		> .cui-tabs-bodies {
+			display: flex;
+			flex: 1 1 auto;
+			overflow: hidden;
+		}
+	}
+
+	&.cui-absolute > .cui-vertical-layout-center {
+		top: $toolbar-height + 1px; // 1px border
+	}
+
+	> .cui-vertical-layout-center {
+		> .cui-tabs-bodies {
+			> .cui-tab-body.cui-tab--padded {
+				padding: $padding;
+			}
+		}
+	}
+}
+
+.cui-tabs-pane-header {
+	min-height: $toolbar-height;
+	background: $toolbar-background;
+
+	&.cui-tabs-pane-header--mini {
+		background: none;
+		border-bottom-width: 0;
+	}
+
+	.cui-buttonbar {
+		min-width: 0;
+	}
+
+	overflow: hidden;
+
+	> .cui-horizontal-layout-center {
+		flex-grow: 0;
+		margin-right: 0;
+	}
+
+	/* overflowing tabs */
+	&.cui-tabs-pane-header--overflow {
+		> .cui-horizontal-layout-center {
+			padding-right: 0;
+			margin-right: 0;
+			overflow: hidden !important; // overwrite toolbar > center overflow visible
+
+			.cui-tab-header-button:last-child {
+				padding-right: 0;
+
+				.cui-button-visual {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+					border-right: none;
+				}
+			}
+		}
+	}
+}
+
+.cui-tab {
+	margin-left: 0 !important;
+	display: flex;
+	flex-direction: column;
+	// border-bottom: 1px solid hsl(210,11%,93%); // no border bottom plz says Felix 19.10.16
+	flex: 1 1 auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+
+	&.cui-tab-hidden {
+		display: none;
+	}
+
+	> .cui-empty-label:only-child {
+		margin: $padding 0;
+	}
+}
+
+.cui-toolbar .cui-tab-header-button-overflow,
+.cui-toolbar .cui-tab-header-button {
+	font-size: inherit;
+	padding: 0;
+	flex-shrink: 0;
+
+	.cui-button-visual {
+		background: none;
+		color: $button-active;
+		height: 26px;
+		line-height: 24px;
+		min-width: 40px;
+		padding: 0 $padding;
+		border: 1px solid;
+	}
+
+	&.cui-button-size-mini {
+		.cui-button-visual {
+			height: 24px;
+			line-height: 23px;
+		}
+	}
+
+	&:first-child .cui-button-visual {
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
+
+	&:last-child .cui-button-visual {
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+
+	&.cui-active {
+		.cui-button-visual {
+			color: var(--on-highlight-color);
+			background: $button-active;
+			border-color: $button-active-border;
+		}
+
+		&:active {
+			.cui-button-visual {
+				color: $button-active-pressed-text;
+				background: $button-active-pressed;
+				border-color: $button-active-pressed-border;
+			}
+		}
+	}
+
+	&.cui-disabled {
+		.cui-button-visual {
+			color: lighten($button-active, 32%);
+		}
+
+		&:not(:first-child) {
+			.cui-button-visual {
+				border-left-color: $button-active;
+			}
+		}
+
+		+ .cui-disabled {
+			.cui-button-visual {
+				border-left-color: currentColor;
+			}
+		}
+	}
+}
+
+.cui-toolbar .cui-tab-header-button {
+	&:first-child {
+		padding-left: $padding;
+	}
+
+	&:last-child {
+		padding-right: $padding;
+	}
+}
+
+.cui-toolbar .cui-tab-header-button-overflow {
+	padding-right: $padding;
+}
+
+.cui-toolbar {
+	&.cui-tabs-pane-header--scroll-at-end {
+		.cui-tab-header-button-overflow .cui-button-visual {
+			box-shadow: none;
+		}
+	}
+
+	.cui-tab-header-button-overflow {
+		align-self: center;
+		position: relative;
+		z-index: 1; // to overlap active buttons
+
+		.cui-button-visual {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			box-shadow:
+				-1px 0 hsla(0, 0%, 0%, 0.1),
+				-2px 0 hsla(0, 0%, 0%, 0.08),
+				-3px 0 hsla(0, 0%, 0%, 0.05),
+				-4px 0 hsla(0, 0%, 0%, 0.02),
+				-5px 0 hsla(0, 0%, 0%, 0.01);
+		}
+	}
+}
+
+.cui-tabs--vertical {
+	display: grid !important;
+	grid-template-columns: 200px 1fr;
+	grid-template-rows: 1fr auto;
+	height: 100%;
+
+	// IE support
+	display: -ms-grid !important;
+	-ms-grid-columns: 200px 1fr;
+	-ms-grid-rows: 1fr auto;
+
+	> .cui-vertical-layout-top {
+		grid-row: span 2;
+		-ms-grid-row-span: 2;
+	}
+
+	> .cui-vertical-layout-center {
+		-ms-grid-column: 2;
+	}
+
+	> .cui-vertical-layout-bottom {
+		-ms-grid-row: 2;
+		-ms-grid-column: 2;
+	}
+
+	.cui-tabs-pane-header {
+		border-bottom: none;
+		padding: 0 !important;
+		border-right: 1px solid $border;
+		display: block;
+		overflow: auto;
+		height: 100%;
+
+		> .cui-horizontal-layout-center {
+			overflow: visible !important;
+			display: block;
+		}
+
+		> .cui-horizontal-layout-right {
+			display: none;
+		}
+
+		.cui-buttonbar,
+		.cui-buttonbar-group {
+			display: block;
+		}
+	}
+
+	.cui-tabs-pane-header {
+		.cui-buttonbar {
+			padding: 10px;
+		}
+	}
+
+	.cui-tab-header-button {
+		padding: 0 !important;
+		display: block;
+		margin-left: 0 !important;
+		margin-top: -1px;
+
+		&:first-child .cui-button-visual {
+			border-radius: 3px 3px 0 0;
+			margin-top: 0;
+		}
+
+		&:last-child .cui-button-visual {
+			border-radius: 0 0 3px 3px;
+		}
+
+		.cui-button-visual {
+			height: 30px;
+			line-height: 28px;
+			justify-content: flex-start;
+		}
+	}
+}
+
+// ListView
+.cui-list-view {
+	min-height: 0;
+	flex-direction: column;
+
+	.cui-label-size-normal {
+		line-height: $table-data-height - $table-data-padding*2;
+	}
+
+	// Conflict: looks bad in list-views that include buttons
+	// .cui-data-field-output-label {
+	// 	padding: 6px 0;
+	// }
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	// nested list-view
+	// CONFLICT: background is not wanted in table views
+	// .cui-list-view {
+	// 	background: $foreground;
+	// }
+}
+
+.list-view-header-row {
+	.cui-label {
+		align-items: flex-end;
+		font-weight: bold;
+	}
+
+	.cui-lv-td {
+		display: flex;
+
+		.cui-list-view-tree-hierarchy &:first-child::before {
+			content: '';
+			display: inline-block;
+			width: $tree-node-handle-width;
+		}
+	}
+}
+
+.cui-lv-row-move-target {
+	height: 4px;
+	background: var(--highlight);
+	margin-top: -2px;
+	position: absolute;
+	z-index: 4;
+	pointer-events: none !important;
+}
+
+.cui-lv-row-move {
+	position: absolute;
+	z-index: 4;
+	background: var(--highlight);
+	opacity: 0.3;
+}
+
+.cui-lv-td {
+	padding: $table-data-padding $padding;
+	width: 125px;
+	min-height: $td-height;
+	overflow: hidden;
+	flex-shrink: 0;
+	display: block;
+	box-sizing: content-box;
+
+	.cui-lv-td {
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+
+	&-rotate-90 {
+		width: 12px;
+
+		.cui-tree-node-spacer {
+			display: none;
+		}
+
+		> .cui-label-rotate-90 {
+			word-wrap: break-word;
+			margin-left: -3px;
+			max-width: none !important;
+		}
+
+		.cui-data-field {
+			flex-grow: 0;
+		}
+	}
+
+	&-fill {
+		// UNCLEAR - why padding? has to be reset when its not used
+		//padding: 2px;
+		min-height: 0;
+	}
+
+	&-max {
+		flex-grow: 1;
+	}
+
+	.cui-label-multiline {
+		// UNCLEAR - doesn't look good on single line multiline labels
+		// align-self: flex-start;
+	}
+
+	.cui-data-field-input {
+		flex-grow: 1;
+	}
+}
+
+.cui-lv-th {
+	cursor: default;
+}
+
+// List View Grid
+
+.cui-list-view-grid {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+
+	&.cui-lv--max-last-col {
+		> div > .cui-list-view-grid-quadrant {
+			> .cui-lv-tr-outer,
+			> .cui-lv-tr-fill-outer {
+				> .cui-lv-tr {
+					> .cui-lv-td:last-child {
+						flex-grow: 1;
+					}
+				}
+			}
+		}
+	}
+}
+
+// eg. header
+.cui-list-view-grid-quadrant-0,
+.cui-list-view-grid-quadrant-1 {
+	overflow: hidden;
+
+	.cui-button {
+		height: 100%;
+		flex: 1 1 auto;
+		align-items: stretch;
+
+		.cui-button-left {
+			padding-right: 6px;
+		}
+
+		.cui-button-center {
+			flex: 1 1 auto;
+			justify-content: flex-start;
+		}
+
+		.cui-button-visual {
+			@include button-reset;
+		}
+	}
+
+	.cui-label {
+		font-weight: bold;
+
+		&-multiline {
+			align-self: flex-end;
+			max-width: none;
+			flex-shrink: 1;
+			max-width: 100%;
+		}
+	}
+
+	.cui-lv-td {
+		align-items: flex-end;
+		position: relative;
+		overflow: visible;
+
+		&.cui-lv-td-rotate-90 {
+			overflow: hidden;
+		}
+
+		&::after { // table-head line
+			content: '';
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			width: 1px;
+			background: $table-header-border;
+		}
+	}
+}
+
+.cui-list-view-grid-quadrant-0 {
+	flex: 0 0 auto;
+}
+
+.cui-list-view-grid-quadrant-1 {
+	flex: 1 1 auto;
+
+	.cui-lv-td:last-child::after {
+		display: none;
+	}
+}
+
+.cui-list-view-grid-has-fixed-rows {
+	.cui-list-view-grid-inner-top {
+		.cui-list-view-grid-quadrant {
+			border-bottom: 1px solid $table-border;
+
+			&:empty {
+				border-bottom-width: 0;
+			}
+		}
+	}
+}
+
+// &.cui-maximize-vertical {
+//	> .cui-vertical-layout-center {
+//		> .cui-list-view-grid {
+//			height: 100%;
+//		}
+//	}
+// }
+
+// &.cui-maximize-horizontal {
+//	> .cui-vertical-layout-center {
+//		> .cui-list-view-grid {
+//			width: 100%;
+//		}
+//	}
+// }
+
+.cui-list-view-grid-inner-top {
+	flex: 0 0 auto;
+	display: flex;
+
+	// breaks the headers - they should be left aligned
+	// .cui-lv-td {
+	// 	justify-content: flex-end;
+	// }
+}
+
+.cui-list-view-grid-inner-bottom {
+	flex: 1 1 auto; // IE 11 needs 0% basis - CONFLICT: apparently IE11 needs a auto basis
+	display: flex;
+	min-height: 0; // FF scroll fix
+}
+
+.cui-list-view-grid-quadrant-2 {
+	flex: 0 0 auto;
+	overflow: hidden;
+}
+
+.cui-list-view-grid-quadrant-3 {
+	flex: 1 1 auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.cui-list-view-grid-quadrant-2,
+.cui-list-view-grid-quadrant-3 {
+	.cui-lv-tr-outer {
+		&:nth-child(even) {
+			> .cui-lv-tr > .cui-lv-td {
+				background: $zebra-color;
+			}
+
+			.cui-label-manage-overflow::after {
+				background: linear-gradient(transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color);
+			}
+
+			.cui-label-manage-overflow-button {
+				background: linear-gradient(to right, transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color 10px);
+			}
+
+			&.cui-selected {
+				.cui-label-manage-overflow::after {
+					background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
+				}
+
+				.cui-label-manage-overflow-button {
+					background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
+				}
+			}
+		}
+	}
+}
+
+.cui-list-view-grid-quadrant-3:focus {
+	outline: none;
+}
+
+
+// outside .cui-list-liew, we can use
+// this in Form too
+
+.cui-lv-tbody {
+	display: flex;
+	flex-direction: column;
+	max-width: 100%;
+	min-width: 0;
+	// flex-shrink: 1; CONFLICT: overwrites shrink: 0 of quadrant-0 and 2
+}
+
+.cui-lv-tr-outer {
+	display: flex;
+	flex: 0 0 auto;
+	min-width: 0;
+	outline: none;
+	cursor: default;
+
+	&.cui-selected,
+	&.cui-selected:nth-child(even) {
+		> .cui-lv-tr > .cui-lv-td {
+			background: var(--highlight-light);
+		}
+
+		.cui-empty-label {
+			color: var(--on-highlight-light-secondary-color);
+		}
+
+		&.cui-selected {
+			.cui-label-manage-overflow::after {
+				background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
+			}
+
+			.cui-label-manage-overflow-button {
+				background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
+			}
+		}
+	}
+
+	&:focus,
+	&:focus:nth-child(even) {
+		@include inner-focus;
+	}
+
+	&.cui-lv-tree-node--is-branch {
+		@include clickable;
+	}
+}
+
+.cui-lv-tr {
+	flex: 1 1 auto;
+	display: flex;
+	max-width: 100%;
+
+	&:empty {
+		padding: 0;
+	}
+}
+
+.cui-list-view-row-selectable {
+	@include clickable;
+}
+
+.cui-lv-row-move-handle-column {
+	&::after {
+		display: none;
+	}
+
+	&.cui-lv-td {
+		width: $row-move-handle-width;
+		padding-left: $table-data-padding+2;
+		padding-right: 0;
+	}
+
+	.cui-drag-handle-row {
+		display: none;
+	}
+}
+
+.cui-list-view-row-movable .cui-lv-row-move-handle-column {
+	cursor: -webkit-grab;
+	cursor: grab;
+
+	.cui-drag-handle-row {
+		display: block;
+	}
+}
+
+.cui-lv-tr-fill-outer {
+	flex: 1 1 auto;
+	display: flex;
+
+	> .cui-lv-tr > .cui-lv-td {
+		border-style: none;
+		background: linear-gradient($zebra-color 50%, white 50%);
+		background-size: 100% ($td-height + 2*$table-data-padding)*2;
+	}
+
+	.cui-lv-td {
+		// leave padding-left and padding-right
+		// because its used to measure
+		// the column width for headers
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
+		height: 0 !important;
+	}
+}
+
+.cui-list-view-grid-rows-even .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
+	background-image: linear-gradient(white 50%, $zebra-color 50%);
+}
+
+.cui-data-table {
+	.cui-lv-tr-fill-outer {
+		> .cui-lv-tr > .cui-lv-td {
+			background-size: 100% $table-data-height*2;
+		}
+	}
+}
+
+.cui-lv-col-resize {
+	cursor: ew-resize !important;
+	// bigger grab area
+	margin: 0 -4px;
+	padding: 0 4px;
+
+	> div {
+		width: 1px;
+		margin-left: -1px;
+		height: 100%;
+		background: $table-header-border;
+	}
+}
+
+.cui-lv-draggable {
+	position: absolute;
+	// background: $zebra-color;
+	opacity: 0.5;
+}
+
+// List View with DataFields
+
+// Position tree-node- and drag-handle lower
+// because input fields make the rows higher
+// and make the filler higher
+.cui-lv--has-datafields {
+	// its sick.. but the only known way to make sure that it doesn't affect nested elements
+	> .cui-vertical-layout-center {
+		> .cui-list-view-grid {
+			> .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant,
+			> .cui-list-view-grid-quadrant {
+				> .cui-lv-tr-outer {
+					> .cui-lv-tr {
+						> .cui-lv-td {
+							> .cui-tree-node {
+								> .cui-tree-node-handle {
+									height: 24px;
+								}
+
+								> .cui-tree-node-content {
+									min-height: 24px;
+								}
+							}
+
+							> .cui-label {
+								padding-top: 3px;
+								padding-bottom: 3px;
+							}
+
+							> .cui-drag-handle-row {
+								margin-top: 7px;
+							}
+
+							&.cui-lv-row-move-handle-column {
+								padding-top: $table-data-padding;
+								padding-bottom: $table-data-padding;
+							}
+						}
+					}
+				}
+
+				> .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
+					background-size: 100% 64px;
+				}
+			}
+		}
+	}
+}
+
+// Tree Node + Handle
+.cui-tree-node {
+	display: flex;
+	flex: 1 1 auto;
+	max-width: 100%;
+	align-items: flex-start;
+}
+
+.cui-tree-node-handle,
+.cui-tree-node-spacer {
+	width: $tree-node-handle-width;
+	flex: 0 0 auto;
+
+	.fa-caret-right {
+		width: 8px;
+	}
+
+	.svg-spinner {
+		width: 10px;
+		height: 10px;
+	}
+}
+
+.cui-tree-node-handle {
+	height: 18px;
+	display: flex;
+	text-align: center;
+	// justify-content: flex-end; // conflict: left-align icons
+	align-items: center;
+
+	&.cui-tree-node-is-closed {
+		cursor: pointer;
+	}
+
+	&.cui-tree-node-is-open {
+		cursor: pointer;
+
+		.fa {
+			margin-top: 1px;
+		}
+	}
+}
+
+.cui-tree-node-content {
+	display: flex;
+	flex: 1 1 auto;
+	flex-wrap: wrap;
+	min-width: 50px; // prevent them from turning into scrabble when several are unfolded
+
+	.cui-label {
+		min-width: 0;
+		flex-shrink: 1;
+		// padding: 0; CONFLICT removes padding from tags that are inside node content
+
+		.fa {
+			line-height: 1;
+		}
+	}
+}
+
+// ListViewTree
+.cui-list-view-grid {
+	&.cui-list-view-tree-no-hierarchy {
+		.cui-tree-node-handle,
+		.cui-tree-node-spacer {
+			display: none !important;
+		}
+	}
+}
+
+// Table
+.cui-table {
+	// specific chrome fix to allow horizontal scrollbars: `display: block` instead of `display: table` and `overflow-x: auto`
+	display: block;
+	overflow-x: auto;
+
+	&.cui-maximize-horizontal {
+		width: 100%;
+		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
+	}
+
+	.cui-data-field-proxy > & {
+		align-self: flex-start;
+	}
+
+	&.cui-maximize-vertical {
+		flex-grow: 1;
+	}
+
+	&--bordered {
+		border: 1px solid $table-border;
+	}
+
+	&--has-datafields {
+		.cui-td--text-content {
+			padding-top: 9px;
+			padding-bottom: 9px;
+		}
+	}
+
+	&--flex {
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		flex-grow: 1;
+
+		.cui-tr {
+			display: flex;
+		}
+
+		.cui-td--key {
+			width: $td-width;
+			flex-shrink: 0;
+			word-wrap: break-word;
+			display: block;
+		}
+
+		.cui-td--value {
+			flex-grow: 1;
+			width: auto;
+			display: block;
+		}
+	}
+
+	.cui-input input:not([data-max-chars]) {
+		width: 100%;
+	}
+
+	.cui-block & {
+		.cui-td:first-child {
+			padding-left: 0;
+		}
+
+		.cui-td:last-child {
+			padding-right: 0;
+		}
+	}
+}
+
+.cui-table-row {
+	&:nth-child(even) .cui-table-td {
+		background: $zebra-color;
+	}
+}
+
+.cui-table-td {
+	vertical-align: middle;
+}
+
+.cui-table-header {
+	~ .cui-table-row {
+		&:nth-child(odd) .cui-table-td {
+			background: $zebra-color;
+		}
+
+		&:nth-child(even) .cui-table-td {
+			background: none;
+		}
+	}
+}
+
+.cui-tr {
+	display: table-row;
+
+	// &:nth-child(odd) {
+	// 	background: $zebra-color;
+	// }
+
+	&.cui-table-header {
+		background: transparent;
+	}
+}
+
+.cui-th,
+.cui-td {
+	display: table-cell;
+	padding: $padding/2 $padding;
+	vertical-align: top;
+
+	&[colspan] {
+		> label,
+		> .cui-label {
+			margin-bottom: $padding/2;
+		}
+	}
+
+	> .cui-empty-label {
+		padding: 0;
+	}
+}
+
+.cui-td--key {
+	color: $form-label-color;
+	font-weight: $form-label-weight;
+	padding-right: 0;
+	vertical-align: top;
+}
+
+.cui-td--text-content {
+	vertical-align: top;
+	white-space: pre-wrap;
+}
+
+.cui-td--value {
+	vertical-align: top;
+	word-wrap: break-word;
+	word-break: break-all;
+	word-break: break-word;
+	width: 100%;
+	// position: relative;
+
+	// > span {
+	// 	position: absolute;
+	//    right: 10px;
+	//    left: 10px;
+	//    @include ellipsis;
+	//  }
+}
+
+.cui-th {
+	position: relative;
+	border-bottom: 1px solid $table-header-border;
+	padding: $padding/2 - 1px $padding;
+	font-size: 0.85em;
+
+	&::after { // table-head line
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 2px;
+		bottom: 2px;
+		width: 1px;
+		background: $table-header-border;
+	}
+
+	&:last-child::after {
+		display: none;
+	}
+}
+
+.status-2d-map {
+	border: 1px solid $table-border;
+	display: table;
+
+	.cui-block & .cui-td {
+		&:first-child {
+			padding-left: $padding;
+		}
+
+		&:last-child {
+			padding-right: $padding;
+		}
+	}
+
+	.cui-tr {
+		&:nth-child(odd):not(:first-child) {
+			background: $zebra-color;
+		}
+
+		&:first-child {
+			.cui-td {
+				border-bottom: 1px solid $table-border;
+				position: relative;
+
+				&:not(:last-child)::after {
+					content: '';
+					position: absolute;
+					right: 0;
+					margin: 3px 0;
+					top: 0;
+					bottom: 0;
+					width: 1px;
+					background: $table-border;
+				}
+			}
+		}
+	}
+}
+
+// Nested Table
+.cui-table .cui-table {
+	.cui-tr {
+		background: $foreground;
+	}
+}
+
+// Form
+.cui-form {
+	overflow: visible;
+
+	&--padded {
+		padding: $padding;
+	}
+}
+
+.cui-form--grid {
+	.cui-data-field {
+		max-width: 100%;
+	}
+
+	> div > .cui-form-table {
+		display: flex;
+		flex-wrap: wrap;
+		margin: $padding #{-$padding} !important;
+		width: 100% !important;
+
+		.cui-form-tr {
+			display: block;
+			padding: 0 $padding;
+			width: 100%;
+
+			$sizes: '1/2', '1/3', '2/3', '1/4', '2/4', '3/4', '1/5', '2/5', '3/5', '4/5';
+
+			@each $size in $sizes {
+				&[data-cui-grid="#{$size}"] {
+					width: calc(#{$size} * 100%);
+				}
+			}
+
+			@include xs {
+				width: 100% !important;
+			}
+		}
+
+		.cui-form-td {
+			display: block;
+
+			@include xs {
+				&.cui-form-key {
+					padding-bottom: 2px;
+				}
+
+				&.cui-form-value {
+					padding-top: 0;
+				}
+			}
+		}
+
+		.cui-form-key {
+			max-width: none;
+			width: auto;
+			min-width: 0;
+			padding-bottom: 2px;
+			padding-right: 0;
+		}
+
+		.cui-form-value {
+			width: auto;
+			padding-top: 0;
+		}
+	}
+}
+
+.cui-form-container {
+	flex-grow: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+
+	&.cui-form--horizontal {
+		flex-direction: row;
+
+		> .cui-form-row {
+			flex-grow: 0;
+
+			&.cui-maximize-horizontal {
+				flex-grow: 1;
+			}
+
+			min-width: 0;
+			margin-bottom: 0;
+			margin-right: $padding;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.cui-form-row {
+	flex-grow: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: $padding;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.cui-form-field-type--checkbox {
+	margin-bottom: 0;
+
+	// Own value field
+	+ .cui-form-row {
+		.cui-form-container.cui-form--horizontal {
+			> .cui-form-row:first-child {
+				margin-right: 4px;
+			}
+
+			> .cui-form-field-type--input {
+				margin-top: 2px;
+			}
+		}
+	}
+}
+
+.cui-form-block {
+	&.cui-maximize-vertical,
+	&.cui-maximize {
+		&,
+		> .cui-block-content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	+ .cui-form-table {
+		margin-top: $padding;
+	}
+}
+
+.cui-form-table {
+	margin: 0;
+	display: block;
+
+	+ .cui-form-block {
+		padding-top: 0;
+		margin-top: $padding;
+	}
+}
+
+.cui-form-table-has-not-left-column {
+	> .cui-tr > .cui-td.cui-form-key {
+		display: none;
+	}
+}
+
+.cui-form-tr,
+.cui-form-tr-header {
+	display: flex;
+
+	@include phone {
+		display: block;
+	}
+}
+
+.cui-form-tr {
+	.cui-form-options-table,
+	.cui-form-table-horizontal {
+		margin-top: -$padding;
+		margin-bottom: -$padding;
+
+		.cui-form-tr {
+			&::before {
+				left: 0;
+				right: 0;
+			}
+		}
+
+		.cui-form-key,
+		.cui-form-right {
+			max-width: none;
+			width: auto;
+			min-width: 0;
+		}
+
+		.cui-form-key {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+
+	.cui-form-options-table .cui-form-value {
+		width: 70px;
+	}
+}
+
+.cui-form-td {
+	padding: $padding/2 0;
+	vertical-align: top;
+
+	.cui-form-tr:first-child & {
+		padding-top: 0;
+	}
+
+	.cui-form-tr:last-child & {
+		padding-bottom: 0;
+	}
+}
+
+.cui-form-key {
+	flex-shrink: 0;
+	width: $td-width;
+	min-width: $td-width;
+	max-width: none;
+	padding-right: 10px;
+
+	label,
+	.cui-label {
+		display: inline-block;
+		margin: 4px 0;
+		white-space: normal;
+		min-width: $td-min-width;
+		max-width: 100%;
+		word-wrap: break-word;
+		color: $form-label-color;
+		font-size: $form-label-font-size;
+		font-weight: $form-label-weight;
+	}
+
+	.cui-form-field-type--checkbox > & {
+		label,
+		.cui-label {
+			margin: 1px 0;
+			line-height: 16px;
+		}
+	}
+}
+
+label[data-label-clickable],
+.cui-label[data-label-clickable] {
+	@include clickable;
+}
+
+.cui-form-value {
+	flex-grow: 1;
+	flex-shrink: 1;
+	min-width: 0;
+	// CONFLICT: kills the spacing when the label is multi-line
+	// vertical-align: middle;
+
+	input {
+		min-width: 0;
+	}
+
+	> .cui-options {
+		margin: 2px 0; // align with label
+		// CONFLICT: can't do this because it makes the checkbox 26px high
+
+		.cui-options-center {
+			min-height: 0;
+		}
+	}
+
+	> .cui-data-field {
+		min-width: 0;
+	}
+
+	.cui-form-field-type--checkbox > & {
+		.cui-button-checkbox {
+			padding: 0;
+		}
+
+		> .cui-form-hint {
+			margin-top: 2px;
+		}
+	}
+}
+
+.cui-form-tr-content-is-form-vertical {
+	.cui-form-table {
+		margin: 0;
+		width: 100%;
+	}
+
+	> .cui-form-value {
+		padding: 0 !important;
+	}
+}
+
+.cui-form-table-has-not-right-column {
+	> .cui-form-tr > .cui-form-td.cui-form-right {
+		display: none;
+	}
+}
+
+.cui-output {
+	&-empty {
+		color: $muted-color;
+	}
+
+	&--deletable {
+		display: flex;
+		border: 1px solid $button-border;
+		border-radius: $button-radius;
+		color: $button-color;
+		cursor: default;
+
+		.cui-label {
+			flex: 1 1 0;
+			min-width: 0;
+			margin-left: $padding;
+			padding: 2px 0;
+		}
+
+		.cui-button {
+			margin-left: $padding/2;
+
+			&-visual {
+				color: inherit;
+			}
+
+			.svg-close {
+				width: 9px;
+				height: 9px;
+			}
+		}
+	}
+
+	&--no-padding {
+		.cui-label {
+			padding: 0;
+		}
+	}
+}
+
+.cui-data-field-hidden {
+	display: none !important;
+}
+
+.cui-form-table-has-left-column {
+	.cui-form-key,
+	.cui-form-right {
+		// width: $td-width;
+		// UNCLEAR breaks web-link configuration popover table layout
+	}
+
+	.cui-form-key {
+		line-height: 24px;
+		text-align: right;
+
+		@include ellipsis;
+	}
+
+	.cui-form-value {
+		padding-right: $padding;
+	}
+
+	.cui-form-td {
+		border-top: 1px solid hsl(205, 10%, 96%);
+	}
+
+	.cui-form-tr,
+	.cui-form-tr-header {
+		// padding-top: 1px;
+		// UNCLEAR forms already have padding in
+		// padding: $padding 0 $padding - 1px;
+
+		&:first-child .cui-form-td {
+			border-top-width: 0;
+		}
+	}
+}
+
+.cui-maximize-horizontal > .cui-vertical-layout-center {
+	> .cui-form-table {
+		> tr {
+			> .cui-form-td.cui-form-value {
+				flex: 1 1 auto;
+				width: 200px;
+			}
+		}
+	}
+
+	> .cui-form-table-vertical {
+		> .cui-tr {
+			> .cui-form-value {
+				flex-shrink: 1;
+				min-width: 0;
+			}
+		}
+	}
+}
+
+.cui-form-popover {
+	&.cui-vertical-layout {
+		display: flex;
+		flex-direction: column;
+		overflow: visible; // don't cut off outline
+	}
+
+	.cui-vertical-layout-center {
+		display: flex;
+
+		.cui-button {
+			padding: 0;
+		}
+
+		.cui-button--has-caret {
+			flex-grow: 1;
+		}
+
+		+ .cui-vertical-layout-bottom {
+			margin: 5px 0 0;
+
+			&:empty {
+				display: none;
+			}
+
+			.cui-empty-label {
+				padding: 0;
+			}
+		}
+	}
+}
+
+
+// Options
+
+.cui-options {
+	max-width: none;
+}
+
+.cui-options-inactive {
+	margin-top: $padding;
+
+	&:empty {
+		margin-top: 0;
+	}
+}
+
+.cui-options-sortable-option {
+	display: flex;
+
+	.cui-options-sortable-drag-handle {
+		width: 16px;
+		display: flex;
+		flex-shrink: 0;
+		margin-right: 2px;
+		padding: 0 4px 0 0;
+		cursor: -webkit-grab;
+		cursor: grab;
+
+		.cui-drag-handle-row {
+			margin-top: 5px;
+		}
+	}
+
+	// the following 3 statements are duplicate here
+	// because when dragged it doesn't have the options-center parent
+
+	.cui-button {
+		padding: 1px 0;
+	}
+
+	.cui-data-field {
+		flex-grow: 0;
+	}
+
+	.cui-empty-label {
+		margin: 3px 0;
+	}
+}
+
+.cui-options-top .cui-label span:not(:empty) {
+	padding-bottom: 3px;
+	display: inline-block;
+}
+
+// align options with label if there is only one option
+.cui-options-center {
+	min-height: 24px;
+	// max-width: 450px; conflict - it only allows for two columns, not more
+
+	&:empty {
+		min-height: 0;
+	}
+
+	.cui-button {
+		padding: 1px 0;
+	}
+
+	.cui-data-field {
+		flex-grow: 0;
+	}
+
+	.cui-empty-label {
+		margin: 3px 0;
+	}
+}
+
+@for $i from 2 to 13 {
+	.cui-options--columns-#{$i} {
+		.cui-checkbox {
+			width: 100% / $i !important; // have to overwrite the cui-layer data-field auto width rule
+		}
+	}
+}
+
+.cui-options--vertical {
+	.cui-options-inactive {
+		display: flex;
+		flex-direction: column;
+	}
+
+	[data-max-chars] {
+		width: auto !important;
+	}
+}
+
+.cui-options--vertical,
+.cui-options--sortable {
+	.cui-checkbox {
+		display: block;
+	}
+}
+
+.cui-options-title {
+	font-weight: bold;
+}
+
+.cui-options-order-hint {
+	max-width: 250px;
+	margin-top: $compensating-padding;
+	margin-left: 18px;
+	margin-bottom: 4px !important;
+
+	@extend .cui-hint;
+}
+
+.cui-drag-drop-select-draggable,
+.cui-drag-drop-select-sortable {
+	cursor: -webkit-grab;
+	cursor: grab;
+}
+
+
+.cui-lv-col-resize-handle {
+	position: absolute;
+	cursor: ew-resize;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: 0 -5px;
+	width: 10px;
+	z-index: 1;
+}
+
+.cui-drag-drop-select-lasso {
+	cursor: default;
+}
+
+.cui-drag-drop-select-sortable,
+.drag-drop-select-helper {
+	.cui-data-field {
+		max-width: none;
+	}
+}
+
+.cui-drag-handle-row {
+	margin-top: 4px; // 4px to center it next to our normal line-height of 18px
+	flex: 1 1 auto;
+	height: 10px;
+	width: 100%;
+	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
+	background-size: 100% 3px;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+// DateTime
+.cui-date-time {
+	.cui-input-invalid-hint {
+		display: none;
+	}
+
+	.cui-input {
+		min-width: 90px; // date-short
+	}
+
+	/*
+
+	date: "dd, DD.MM.YYYY"
+	date-short: "DD.MM.YYYY"
+	date-time: "dd, DD.MM.YYYY HH:mm"
+	date-time-short = "DD.MM.YYYY HH:mm"
+	date-time-seconds: "dd, DD.MM.YYYY HH:mm:ss"
+	date-time-seconds-short: "DD.MM.YYYY HH:mm:ss"
+
+	*/
+
+	&[data-cui-date-time-format='date'] .cui-input {
+		min-width: 112px;
+	}
+
+	&[data-cui-date-time-format='date-time-short'] .cui-input {
+		min-width: 129px;
+	}
+
+	&[data-cui-date-time-format='date-time'] .cui-input,
+	&[data-cui-date-time-format='date-time-seconds-short'] .cui-input {
+		min-width: 150px;
+	}
+
+	&[data-cui-date-time-format='date-time-seconds'] .cui-input {
+		min-width: 175px;
+	}
+}
+
+.cui-date-time-calendar .cui-buttonbar {
+	justify-content: space-between;
+	background: $header-background;
+	padding: $padding/2;
+
+	[cui-data-field-name='year'] .cui-button-select .cui-button-center {
+		min-width: 39px;
+	}
+
+	.cui-button-select {
+		width: auto;
+		min-width: 0;
+
+		.cui-button-visual {
+			justify-content: center;
+		}
+
+		.cui-button-center {
+			padding-left: 5px;
+			padding-right: 0;
+			min-width: 25px;
+			text-align: center;
+		}
+
+		.cui-button-right {
+			margin-left: 0;
+		}
+	}
+}
+
+.cui-buttonbar-group-date,
+.cui-buttonbar-group-time { // DateTime Day:Month:Year Hour:Minute
+	.cui-select {
+		&:not(:last-child) .cui-button .cui-button-visual {
+			border-right-width: 0;
+		}
+
+		&:last-child .cui-button .cui-button-visual {
+			border-right-width: 1px;
+			border-top-right-radius: $button-radius;
+			border-bottom-right-radius: $button-radius;
+			padding-right: 4px;
+		}
+
+		&:not(:first-child) .cui-button .cui-button-visual {
+			border-left-width: 0;
+		}
+
+		&:first-child .cui-button {
+			.cui-button-visual {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+			&::before {
+				display: none;
+			}
+		}
+
+		&:last-child .cui-button .cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+
+		&:not(:first-child):not(:last-child) .cui-button .cui-button-visual {
+			border-radius: 0;
+		}
+
+		.cui-button .cui-button-visual {
+			padding: 0;
+		}
+	}
+}
+
+.cui-buttonbar-group-time {
+	margin-left: $padding;
+}
+
+.cui-date-time-footer {
+	overflow: visible !important; // show year input outline
+	background: $header-background;
+	border-top: 1px solid $header-border;
+
+	.cui-buttonbar > *:not(:last-child) {
+		margin-right: 0;
+	}
+
+	.cui-label {
+		cursor: default;
+	}
+
+	> .cui-horizontal-layout-left {
+		flex: 1 0 auto;
+		margin-right: $gap;
+
+		.cui-label { // June, September
+			flex: 1 1 auto;
+			justify-content: center;
+			margin: 0;
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		flex-grow: 0 !important;
+	}
+
+	> .cui-horizontal-layout-right {
+		overflow: visible !important; // show year input outline
+	}
+
+	.cui-button-visual {
+		padding: 0 $padding/2;
+	}
+}
+
+// DateTimeDate
+
+.cui-date-time-date {
+	width: 100%;
+	background: $border;
+	flex-grow: 1;
+	border: none;
+
+	.cui-tr {
+		padding: 0;
+		display: flex;
+
+		&:last-child {
+			.cui-td {
+				margin-bottom: 0;
+			}
+		}
+
+		&.cui-date-time-month-header {
+			background: $toolbar-background;
+			border-top: 1px solid $header-border;
+			border-bottom: 1px solid $border;
+		}
+	}
+
+	.cui-th {
+		font-size: inherit;
+		width: calc(100% / 8);
+
+		&::after {
+			display: none;
+		}
+	}
+
+	.cui-td,
+	.cui-th {
+		text-align: center;
+		cursor: default;
+		padding: 0;
+		line-height: 28px;
+		display: block;
+	}
+
+	.cui-td {
+		position: relative;
+		margin-right: 1px;
+		margin-bottom: 1px;
+		width: calc((100% - 7px) / 8);
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		span {
+			display: block;
+			margin: 3px;
+			border-radius: 999px;
+		}
+	}
+
+	.cui-date-time-week {
+		font-size: 12px;
+		background: $toolbar-background;
+		color: $secondary-color;
+	}
+
+	.cui-date-time-day {
+		background: white;
+		cursor: pointer;
+	}
+
+	.cui-date-time-previous-month,
+	.cui-date-time-next-month {
+		background: hsl(178, 7%, 97%);
+	}
+
+	.cui-date-time-now {
+		span {
+			background: hsl(205, 20%, 92%);
+		}
+	}
+
+	.cui-date-time-selected {
+		color: var(--on-highlight-color);
+
+		span {
+			background: var(--highlight);
+		}
+	}
+}
+
+// DateTime Popover
+
+.cui-menu.cui-date-time-60-select {
+	.cui-item-list-body {
+		box-sizing: content-box;
+		width: 370px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		> * {
+			box-sizing: border-box;
+		}
+
+		.cui-button {
+			width: 37px;
+			height: 30px;
+			align-items: center;
+			text-align: center;
+		}
+	}
+}
+
+
+.cui-date-time-popover {
+	.cui-date-time-popover-inner {
+		flex: 1 1 auto;
+
+		.cui-date-time-header {
+			display: none;
+		}
+
+		&[browser='time'] {
+			.cui-date-time-calendar {
+				margin-left: -100%;
+			}
+		}
+
+		.cui-date-time-browser {
+			.cui-date-time-calendar,
+			.cui-date-time-clock {
+				width: 100%;
+			}
+
+			.cui-date-time-calendar {
+				transition: margin-left 0.5s ease-out;
+			}
+
+			display: flex;
+			// overflow: hidden; cuts off year-picker outline
+			flex: 1 1 auto;
+
+			.cui-number-input {
+				input {
+					width: 4ch;
+					box-sizing: content-box;
+					min-width: 0;
+					text-align: center;
+					position: relative;
+				}
+			}
+		}
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-date-time-browser .cui-number-input {
+		input {
+			width: 6ch;
+		}
+	}
+}
+
+.cui-date-time-clock {
+	display: none;
+}
+
+
+// MultiInput
+
+.cui-multi-input .cui-multi-input-container {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	flex: 1 1 auto;
+	min-width: $input-min-width;
+}
+
+.cui-data-field-multi-input-center {
+	flex: 1 1 auto;
+}
+
+.cui-data-field-multi-input-right {
+	flex: 0 0 auto;
+	vertical-align: top;
+}
+
+.cui-multi-input-input {
+	display: flex;
+	margin-left: 0;
+	margin-right: 0;
+
+	@include margin-top(0.5);
+
+	position: relative;
+	max-width: 100%;
+	border: 1px solid $input-border;
+	border-top-color: darken($input-border, 3%);
+	border-radius: $input-radius;
+	background: $input-background;
+
+	&:focus,
+	&.cui-has-focus {
+		@include border-focus;
+
+		textarea {
+			box-shadow: none;
+		}
+	}
+
+	&.cui-data-field-hidden {
+		display: none !important;
+	}
+
+	.cui-input,
+	.cui-textarea {
+		width: 100% !important;
+		border: none;
+		background: none;
+		border-radius: 0;
+		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
+
+		@include disable-focus;
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	.cui-multi-input-input {
+		input,
+		textarea {
+			min-height: 22px;
+		}
+	}
+}
+
+.cui-multi-input-tag-button {
+	.cui-button-visual {
+		@include button-reset;
+
+		color: hsl(0, 0%, 30%);
+		font-size: 10px;
+		line-height: 22px !important;
+		box-shadow: $input-shadow;
+
+		.cui-button-center {
+			padding: 0 6px;
+		}
+	}
+}
+
+// Multi Output
+
+.cui-data-field-multi-output {
+	display: flex;
+	padding: 2px 0;
+	border-bottom: 1px solid $light-border-transparent;
+
+	&:first-child {
+		padding-top: 0;
+	}
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&-aside {
+		.cui-button {
+			position: sticky;
+			top: 0;
+		}
+
+		.cui-button-visual {
+			padding: 0;
+			border-radius: 0;
+			height: auto;
+			line-height: 18px !important;
+			min-width: 13px;
+			font-size: 9px;
+			justify-content: flex-start;
+			color: $muted-color;
+		}
+
+		.cui-button-center {
+			padding: 0;
+		}
+	}
+
+	&-center {
+		flex-grow: 1;
+		padding-right: 5px;
+	}
+}
+
+// Drag & Drop
+
+.cui-drag-drop-select-helper {
+	position: absolute !important;
+	z-index: 3 !important; // above drop helper
+	pointer-events: none !important;
+
+	* {
+		pointer-events: none !important;
+	}
+
+	&.cui-tr {
+		padding: 0;
+	}
+}
+
+.cui-sortable-placeholder {
+	opacity: 0;
+}
+
+
+// Droppable
+
+.cui-droppable {
+	// marks an active droppable
+	// - in list views not neccesary because we have the droppable helper
+	// opacity: 0.5;
+}
+
+.cui-droppable-drop-helper {
+	box-shadow: 0 0 0 2px var(--highlight) inset;
+	position: absolute;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.cui-droppable-target-helper {
+	//overwrite any other animation, its just temporary
+	transition: transform 300ms ease !important;
+}
+
+.cui-droppable-target-helper-y--after {
+	transform: translateY(-25%);
+}
+
+.cui-droppable-target-helper-y--before {
+	transform: translateY(25%);
+}
+
+.cui-droppable-target-helper-x--after {
+	transform: translateX(-25%);
+}
+
+.cui-droppable-target-helper-x--before {
+	transform: translateX(25%);
+}
+
+// Movable
+.cui-drag-drop-select-movable {
+	cursor: -webkit-grab;
+	cursor: grab;
+}
+
+// Resizable
+.cui-drag-drop-select-resizable {
+	position: relative;
+}
+
+.cui-resizable-handle {
+	position: absolute;
+
+	&.cui-resizable-handle-se {
+		bottom: -8px;
+		right: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-nw {
+		top: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-sw {
+		bottom: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-ne {
+		right: -8px;
+		top: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-s {
+		left: 8px;
+		right: 8px;
+		bottom: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-n {
+		left: 8px;
+		right: 8px;
+		top: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-e {
+		right: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+
+	&.cui-resizable-handle-w {
+		left: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+}
+
+
+// Lasso
+.cui-lasso-area {
+	position: relative;
+}
+
+.cui-lasso {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	left: 0;
+	top: 0;
+	background-color: var(--highlight);
+	display: block;
+	pointer-events: none;
+	z-index: 1;
+	will-change: transform;
+	transform-origin: left top;
+	opacity: 0.33;
+}
+
+.cui-drag-drop-select-lasso-element-in-lasso {
+	opacity: 0.8;
+}
+
+
+// Block
+
+.cui-block {
+	flex-shrink: 0;
+	padding-top: 1.5*$padding;
+
+	&:first-child {
+		padding-top: 0;
+	}
+
+	> .cui-block-header {
+		.cui-block-title {
+			font-weight: 600;
+		}
+	}
+
+	.cui-block-description {
+		color: $secondary-color;
+		margin-top: 0;
+		margin-bottom: $padding;
+	}
+
+	&.cui-block-level-1,
+	&.cui-block-level-2 {
+		&.appearance-wide {
+			background: $toolbar-background;
+			padding: 2*$padding;
+			position: relative;
+
+			&::after {
+				content: '';
+				bottom: 0;
+				margin: 0 $padding;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: $border;
+				position: absolute;
+			}
+
+			&:last-child {
+				&::after {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&.cui-block-level-1 {
+		> .cui-block-header .cui-block-title {
+			font-size: 16px;
+		}
+
+		&.appearance-wide {
+			padding-top: 13px; // compensate for the headline line-height
+
+			> .cui-block-header {
+				padding-bottom: 3px;
+
+				.cui-block-title {
+					font-size: 28px;
+					line-height: 1.5;
+					color: darken($header-color, 6%);
+				}
+			}
+
+			> .cui-block-content {
+				color: $secondary-color;
+			}
+		}
+	}
+
+	&.cui-block-level-2 {
+		> .cui-block-header .cui-block-title {
+			font-size: 14px;
+		}
+
+		&.appearance-wide {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
+
+			// fill in vertical space with gray background
+			&:last-child {
+				flex-grow: 1;
+			}
+
+			> .cui-block-header {
+				width: 200px;
+				flex-grow: 0.2;
+				padding-right: $padding * 1.5;
+
+				.cui-block-title {
+					font-size: 15px;
+					color: darken($header-color, 14%);
+					padding: $padding 0;
+				}
+			}
+
+			> .cui-block-content {
+				$p: 1.5*$padding;
+
+				background: $foreground;
+				border: 1px solid $border;
+				border-radius: 5px;
+				padding: $p;
+				min-width: 500px;
+				flex: 1 0 0%;
+				box-shadow: 0 1px 2px hsla(205, 10%, 50%, 0.12);
+
+				.cui-data-form--multiple-fields .cui-block-level-3 {
+					border-width: 0;
+					padding-top: 0;
+				}
+
+				.cui-block-level-3 {
+					border-top: 1px solid $border;
+					border-bottom: 1px solid $border;
+					margin: $p -#{$p};
+					padding: $p;
+
+					&:first-child {
+						border-top-width: 0;
+						margin-top: 0;
+						padding-top: 0;
+					}
+
+					&:last-child {
+						border-bottom-width: 0;
+						margin-bottom: 0;
+						padding-bottom: 0;
+					}
+				}
+			}
+		}
+	}
+
+	&.cui-block-level-3 {
+		padding-bottom: $padding;
+
+		&.appearance-wide {
+			> .cui-block-header {
+				padding-bottom: 1.5*$padding;
+
+				.cui-block-title {
+					font-size: 12px;
+					text-transform: uppercase;
+					letter-spacing: 0.03em;
+				}
+			}
+		}
+	}
+
+	&.cui-form-block--has-checkbox {
+		> .cui-block-header .cui-block-title {
+			font-size: inherit;
+			font-weight: inherit;
+		}
+
+		> .cui-block-content {
+			margin-left: 24px;
+		}
+
+		.cui-block-header {
+			padding-bottom: 0;
+		}
+	}
+
+	&--padded {
+		padding: $padding;
+
+		&:first-child {
+			padding-top: $padding;
+		}
+
+		&:last-child {
+			padding-bottom: $padding;
+		}
+	}
+}
+
+.cui-block-header {
+	padding: 0 0 5px;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.cui-block-content {
+	&:empty {
+		display: none;
+	}
+
+	.cui-form-table {
+		width: 100%;
+		margin: $padding 0;
+
+		&:first-child {
+			margin-top: 0;
+
+			.cui-form-tr:first-child .cui-form-td {
+				padding-top: 0;
+			}
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+
+			.cui-form-tr:last-child .cui-form-td {
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	.cui-block {
+		// padding-top: 0; // conflict: block after form-table
+		&:first-child {
+			padding-top: 0;
+		}
+
+		/* margin-top: $padding; */
+
+		/* margin-bottom: $padding; */
+	}
+
+	.cui-block-header,
+	.cui-block-content {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+// StickyHeader
+
+.cui-sticky-header {
+	padding: 5px $padding;
+	font-size: 13px;
+	font-weight: bold;
+	color: $color;
+	flex-basis: 100%;
+	flex-shrink: 0;
+	border-bottom: 1px solid transparentize(darken($soft-border, 50%), 0.85);
+
+	.cui-label {
+		line-height: normal;
+	}
+
+	.cui-tab > & {
+		flex-basis: auto;
+	}
+}
+
+.cui-sticky-header-control {
+	position: fixed;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 0;
+	z-index: 1;
+
+	.cui-sticky-header {
+		position: absolute;
+		left: 0;
+		right: 0;
+		font-weight: bold;
+		background: hsla(0, 0%, 100%, 0.94);
+	}
+}
+
+.cui-sticky-header-level-1,
+.cui-sticky-header-level-2,
+.cui-sticky-header-level-3,
+.cui-sticky-header-level-4 {
+	font-size: 11px;
+}
+
+// ProgressMeter
+.cui-progress-meter {
+	.cui-progress-meter-bar {
+		width: 100%;
+		max-width: 200px;
+		min-width: 30px;
+		height: $button-height;
+		line-height: $button-height;
+		border-radius: $button-radius;
+		overflow: hidden;
+		position: relative;
+		// to make sure that the border-radius will cut off all child backgrounds
+		// http://stackoverflow.com/questions/5736503/how-to-make-css3-rounded-corners-hide-overflow-in-chrome-opera
+		opacity: 0.9999;
+		background: hsl(205, 4%, 79%);
+		color: white;
+
+		.cui-progress-meter-fill {
+			display: none;
+			background: var(--highlight);
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.cui-progress-meter-text {
+			display: none;
+			justify-content: center;
+			position: relative;
+		}
+
+		.cui-progress-meter-icon {
+			text-align: center;
+			position: relative;
+
+			.svg-spinner {
+				height: $button-height;
+			}
+		}
+	}
+
+	&[state='waiting'] {
+	}
+
+	&[state='percent'] {
+		.cui-progress-meter-icon {
+			display: none;
+		}
+
+		.cui-progress-meter-text,
+		.cui-progress-meter-fill {
+			display: flex;
+		}
+	}
+}
+
+.cui-file-upload-drop-zone {
+	position: relative;
+}
+
+.cui-file-upload-drag-over::after {
+	content: '';
+	pointer-events: none;
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-shadow: 0 0 0 2px var(--highlight) inset;
+	z-index: 1;
+}
+
+// DigiDisplay
+
+.cui-digi-display {
+	// border: 1px solid black;
+	align-self: flex-start;
+	display: flex;
+
+	> div {
+		vertical-align: bottom;
+		height: 20px;
+		// border-right: 1px solid #c0c0c0;
+		&:last-child {
+			border-right: 0;
+		}
+
+		text-align: center;
+		overflow: hidden;
+		padding: 1px;
+		font-family: monospace;
+		font-size: 16px;
+		line-height: 18px;
+	}
+
+	.cui-digi-display-digit {
+		transition: margin-top 0.3s ease;
+		height: 18px;
+	}
+
+	.cui-digi-display-static {
+		height: 20px;
+	}
+}
+
+// Space
+.cui-space {
+	margin: $padding;
+	display: inline-block;
+
+	&:empty {
+		margin: $padding/2;
+	}
+}
+
+.cui-small-space {
+	margin: $padding/2;
+	display: inline-block;
+
+	&:empty {
+		margin: $padding/4;
+	}
+}
+
+.cui-large-space {
+	margin: $padding*2;
+	display: inline-block;
+
+	&:empty {
+		margin: $padding;
+	}
+}
+
+.cui-flexible-space {
+	flex: 1 1 auto;
+}
+
+// Console
+.cui-console {
+	padding: $padding;
+	font-family: monospace;
+
+	.cui-label-multiline {
+		margin: 0;
+	}
+
+	.cui-label:not(:last-child) {
+		border-bottom: 1px solid hsl(0, 0%, 94%);
+	}
+}
+
+.cui-disabled {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	opacity: 0.5;
+	pointer-events: none;
+
+	.cui-data-field-disabled & {
+		opacity: 1;
+	}
+}
+
+// CUI technical stuff
+.cui-tmpl,
+[data-template] {
+	// hide all templates
+	display: none !important;
+}
+
+@keyframes nodeInserted {
+	from { opacity: 0.99; }
+	to { opacity: 1; }
+}
+
+.cui-template-empty {
+	&.cui-label {
+		display: none !important;
+	}
+}
+
+[hidden] {
+	display: none !important;
+}
+
+.cui-slider {
+	height: 18px;
+	display: flex;
+	padding: 6px 0;
+	position: relative;
+
+	&--dragging {
+		.cui-slider-track-visual {
+			background: hsl(208, 10%, 89%);
+		}
+	}
+
+	&-track-visual {
+		width: 100%;
+		background: hsl(208, 10%, 93%);
+		border: 1px solid $button-border;
+		border-radius: 999px;
+	}
+
+	&-track {
+		position: absolute;
+		left: 0;
+		right: 16px;
+		top: 50%;
+	}
+
+	&-handle {
+		position: absolute;
+		margin-top: -8px;
+		width: 16px;
+		height: 16px;
+		background: $button-background;
+		border: 1px solid $button-border;
+		border-radius: 999px;
+	}
+
+	&-text {
+		width: 40px;
+		text-align: center;
+	}
+}
+
+.cui-google-map {
+	width: 100%;
+	height: 300px;
+}
+
+.cui-leaflet-map {
+	width: 100%;
+	height: 300px;
+	overflow: hidden !important;
+
+	.cui-vertical-layout-center {
+		overflow: hidden !important;
+	}
+
+	.leaflet-container {
+		background-color: hsl(41, 27%, 93%);
+		background-size: 14px 14px;
+		background-position: center;
+		background-image:
+			linear-gradient(to right, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px),
+			linear-gradient(to bottom, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px);
+	}
+}
+
+.cui-map-zoom-buttons {
+	position: absolute;
+	width: 100%;
+	z-index: 1000;
+	display: block;
+	margin-top: 10px;
+
+	.buttons-upper-left .cui-buttonbar {
+		position: absolute;
+		margin-left: 10px;
+	}
+
+	.buttons-upper-right .cui-buttonbar {
+		position: absolute;
+		right: 10px;
+	}
+}
+
+.cui-map-popover-options {
+	padding: 5px;
+}
+
+.leaflet-div-icon {
+	background: none !important;
+	border: none !important;
+}
+
+.cui-map-input {
+	.cui-map-icon-popover-button {
+		width: 30px;
+	}
+}
+
+.cui-icon-marker-container {
+	border: none;
+	border-radius: 14px;
+	text-align: center;
+	margin-bottom: 5px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.cui-icon-marker-arrow {
+		position: absolute;
+		left: 50%;
+		top: 21px;
+		transform: rotate(45deg);
+		background: inherit;
+	}
+
+	.cui-button {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+		height: 100%;
+
+		&:active .cui-button-visual {
+			color: inherit;
+		}
+
+		&-visual {
+			height: 100%;
+			color: inherit;
+		}
+	}
+}
+
+
+/* This is set by Pane.coffee to compensate an active
+   sidebar in the fillScreen calculations */
+:root {
+	--layer-sidebar-width: 0;
+}
