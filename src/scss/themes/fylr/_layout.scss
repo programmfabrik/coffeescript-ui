@@ -31,17 +31,20 @@ body {
 .cui-vertical-layout-bottom {
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 }
-
 
 // HorizontalLayout
 
 .cui-horizontal-layout {
 	display: flex;
 	flex-direction: row;
+	align-self: flex-start;
 
+	// Container grows to max width
 	&.cui-maximize-horizontal {
 		overflow: hidden;
+		align-self: stretch;
 
 		> .cui-horizontal-layout-left,
 		> .cui-horizontal-layout-right {
@@ -61,11 +64,6 @@ body {
 	&.cui-maximize-vertical {
 		flex: 1 1 auto;
 		overflow: hidden;
-	}
-
-	// Container behaves like "inline-flex"
-	&:not(.cui-maximize-horizontal) {
-		align-self: flex-start;
 	}
 
 	// Layout Absolute Horizontal
@@ -102,6 +100,7 @@ body {
 .cui-vertical-layout {
 	display: flex;
 	flex-direction: column;
+	align-self: flex-start;
 
 	// Container grows too max height
 	&.cui-maximize-vertical {
@@ -122,13 +121,11 @@ body {
 		}
 	}
 
+	// Container grows too max width
 	&.cui-maximize-horizontal {
 		overflow: hidden;
-	}
-
-	// Container behaves like "inline-flex"
-	&:not(.cui-maximize-horizontal) {
-		align-self: flex-start;
+		// overflow: auto; // better with scrollbar?
+		align-self: stretch;
 	}
 
 	// Layout Absolute Vertical
