@@ -229,7 +229,7 @@ class Demo.ButtonDemo extends Demo
 								text: "Bruscetta"
 							]
 					,
-						text: "A really really really long Main Course"
+						text: "A really really really long Main Course and even longer and longer"
 						appearance: "important"
 					,
 						divider: true
@@ -298,6 +298,14 @@ class Demo.ButtonDemo extends Demo
 		@__addButton("primary button",
 			primary: true
 			text: "Primary Button"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)
+
+		@__addButton("flat primary button (tbd, don't use in production)",
+			primary: true
+			appearance: "flat"
+			text: "Flat Primary Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
