@@ -1,0 +1,143 @@
+// ItemList
+.cui-item-list-body {
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		flex: 0 0 auto;
+	}
+
+	// Buttons within item-list
+	// --------------------------------
+	.cui-button,
+	.cui-button-href {
+		// max-width: 100%; // ? button-select
+
+		.cui-button-visual {
+			justify-content: flex-start;
+			flex: 1 0 auto;
+			border: 0;
+			border-radius: 0;
+			box-shadow: none;
+
+			// make sure the buttons could wrap onto new line
+			height: auto;
+			min-height: $item-list-height;
+			padding-top: 0.35em;
+			padding-bottom: 0.45em;
+
+			span {
+				white-space: normal;
+				overflow: hidden;
+			}
+			// end wrap nl
+		}
+
+		&:active,
+		&:hover {
+			.cui-button-visual {
+				color: $item-list-hover-color;
+				background: $item-list-hover-background;
+			}
+		}
+
+		// todo: fix component in coffeescript: do NOT use cui-active as a hover class, this will mess up the state of the actual active item
+		&.cui-active {
+			.cui-button-visual {
+				color: $item-list-active-color;
+				background: $item-list-active-background;
+			}
+		}
+
+		&.cui-active:hover {
+			.cui-button-visual {
+				color: $item-list-hover-color;
+				background: $item-list-hover-background;
+			}
+		}
+
+		&.cui-button-appearance-important,
+		&.cui-button--primary {
+			.cui-button-visual {
+				color: $item-list-hover-background;
+				background: none;
+			}
+		}
+	}
+
+	// Labels within item-list
+	// --------------------------------
+	.cui-label {
+		font-size: $font-size-xs;
+		cursor: default;
+
+		&.cui-menu-item {
+			padding: 0 $item-list-indent;
+			height: $item-list-height;
+			color: gray('600');
+		}
+	}
+
+	// Options within item-list
+	// --------------------------------
+	// todo: style in a real world example (these are the original styles from ng theme)
+	.cui-options .cui-button {
+		padding: 0;
+		flex: 1 1 auto;
+
+		.cui-button-visual {
+			padding-top: 4px;
+			padding-bottom: 4px;
+			line-height: 18px;
+			height: auto;
+			min-height: 26px;
+		}
+	}
+
+	// item list modifier
+	// --------------------------------
+
+	// Indent all buttons within specific kind of item-list
+	&.cui-item-list--has-button-left {
+		--indent: #{1.5*$spacer};
+		--fa-size: 14px;
+
+		&.cui-item-list--small {
+			--indent: #{1.25*$spacer};
+			--fa-size: 12px;
+		}
+
+		// this button always has a left side
+		.cui-button-left {
+			width: var(--indent);
+			margin-right: 0;
+
+			.fa {
+				font-size: var(--fa-size);
+			}
+		}
+
+		// indent all other buttons to be in line with the button that has a left side
+		.cui-button-center:first-child {
+			padding-left: var(--indent);
+		}
+	}
+
+	// Small list
+	// todo: this is a new class, add this as an option to component ?
+	&.cui-item-list--small {
+		.cui-button,
+		.cui-button-href {
+			.cui-button-visual {
+				min-height: $item-list-height-sm;
+				padding-top: 0.25em;
+				padding-bottom: 0.35em;
+			}
+		}
+	}
+}
+
+.cui-item-list-divider {
+	height: 1px;
+	background: gray('200');
+}
