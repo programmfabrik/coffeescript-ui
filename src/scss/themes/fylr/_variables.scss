@@ -211,6 +211,9 @@ $border-radius-sm: 	2px !default;
 $border-radius: 	3px !default;
 $border-radius-lg:  4px !default;
 
+$hr-border-color:   gray('200') !default;
+$hr-border-width:   1px !default;
+
 
 // Buttons
 // ==========================================
@@ -255,3 +258,7 @@ $item-list-height-sm: 			$btn-height-sm !default;
 // Menu
 // ==========================================
 $menu-border-radius: $border-radius-lg !default;
+
+// Panel
+// ==========================================
+$panel-border-color: gray('400') !default;
