@@ -1,0 +1,44 @@
+// Panel
+.cui-panel {
+	border-bottom: 1px solid $panel-border-color;
+
+	&-closed {
+		> .cui-panel-body {
+			display: none;
+		}
+	}
+}
+
+.cui-panel-header {
+	padding-left: $spacer-sm;
+	padding-right: $spacer-sm;
+
+	.cui-button {
+		width: 100%;
+		padding: $spacer-xs 0;
+		justify-content: flex-start;
+
+		&-select {
+			max-width: 100%;
+		}
+
+		.cui-button-visual {
+			padding: 0;
+
+			.cui-button-left {
+				width: $spacer;
+				justify-content: center;
+			}
+
+			.cui-button-center {
+				span {
+					white-space: normal;
+				}
+			}
+		}
+	}
+}
+
+.cui-panel-body {
+	padding: 0 $spacer-sm $spacer-sm;
+}

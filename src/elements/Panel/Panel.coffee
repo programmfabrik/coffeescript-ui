@@ -31,6 +31,7 @@ class CUI.Panel extends CUI.DOMElement
 		@button = new CUI.Button
 			text: @_text
 			class: "cui-panel-header-button"
+			appearance: "flat"
 			radio: @_radio
 			radio_allow_null: @_radio_allow_null
 			icon_active: @_icon_opened
