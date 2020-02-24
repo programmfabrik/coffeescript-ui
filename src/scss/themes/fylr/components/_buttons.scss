@@ -22,7 +22,6 @@
 		font-family: $btn-font-family;
 		font-weight: $btn-font-weight;
 		color: $body-color;
-		text-align: center;
 		vertical-align: middle;
 		user-select: none;
 		//
@@ -95,6 +94,16 @@
 		}
 	}
 
+	// todo: tbd, do not use in production, not sure we want even more button states ??
+	&.cui-button-appearance-flat.cui-button--primary {
+		.cui-button-visual {
+			@include button-flat();
+
+			border: 1px solid theme-color('primary');
+			color: theme-color('primary');
+		}
+	}
+
 	// Deprecated, use primary instead
 	&.cui-button-appearance-important {
 		.cui-button-visual {
@@ -142,6 +151,18 @@
 				$btn-border-radius-lg*$biggerBy
 			);
 		}
+	}
+}
+
+.cui-button--has-caret {
+	// IE 11 ignoring margin: auto when justify-content is set bugfix
+	// http://stackoverflow.com/a/37535548
+	.cui-button-visual {
+		justify-content: flex-start;
+	}
+
+	.cui-button-right {
+		margin-left: auto;
 	}
 }
 
