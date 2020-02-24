@@ -138,6 +138,6 @@
 }
 
 .cui-item-list-divider {
-	height: 1px;
-	background: gray('200');
+	height: $hr-border-width;
+	background: $hr-border-color;
 }
