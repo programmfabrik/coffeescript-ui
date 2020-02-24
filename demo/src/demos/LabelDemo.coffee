@@ -89,8 +89,8 @@ class Demo.LabelDemo extends Demo
 		label = new CUI.Label
 			text: "Label with Icon"
 			icon: "rotate_right"
-			appearance: "important"
-		@__addLabel("apperance: important",label)
+			appearance: "secondary"
+		@__addLabel("apperance: secondary",label)
 
 		label = new CUI.Label
 			text: "Label with Icon"
@@ -177,8 +177,8 @@ class Demo.LabelDemo extends Demo
 			multiline: true
 			text: "First line\nfollowed by a second.\nPlus an Icon"
 			icon: "rotate_left"
-			appearance: "important"
-		@__addLabel("multiline: true, apperance: important",label)
+			appearance: "muted"
+		@__addLabel("multiline: true, apperance: muted",label)
 
 		@__addDivider("Markdown Label")
 		label = new CUI.Label
