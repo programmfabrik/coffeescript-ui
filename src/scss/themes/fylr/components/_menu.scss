@@ -1,0 +1,47 @@
+
+// Menu
+.cui-menu {
+	min-height: 0;
+	min-width: 0;
+	background: $white;
+	border-radius: $menu-border-radius;
+	padding: $spacer-xs 0;
+	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+
+	.cui-item-list-body {
+		> .cui-label {
+			max-width: 200px;
+		}
+	}
+
+	.cui-vertical-layout {
+		overflow: visible;
+	}
+
+	// todo: find an example (these are the ng theme styles)
+	.cui-item-list-body > .cui-options:last-child {
+		border-top: 1px solid $hr-border-color;
+		padding: 6px 0;
+		margin-top: 4px;
+		margin-bottom: -4px;
+		background: red; // todo
+		font-size: 12px;
+
+		.cui-button-checkbox {
+			display: flex;
+
+			.cui-button-visual {
+				min-height: 0;
+				padding: 1px $spacer;
+				background: none;
+				color: inherit;
+			}
+		}
+	}
+}
+
+.cui-menu-divider {
+	margin: $spacer-xs 0;
+}
