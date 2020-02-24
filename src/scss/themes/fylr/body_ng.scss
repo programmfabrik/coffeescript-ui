@@ -1410,81 +1410,6 @@ li > div {
 	}
 }
 
-// Panel
-.cui-panel {
-	border-top: 1px solid $header-border;
-	border-bottom: 1px solid $header-border;
-
-	& + &,
-	&:first-child {
-		border-top: none;
-	}
-
-	&:last-child {
-		border-bottom: none;
-	}
-
-	&-closed {
-		> .cui-panel-body {
-			display: none;
-		}
-	}
-}
-
-.cui-panel-header {
-	background: $toolbar-background;
-	position: relative;
-	flex-shrink: 0;
-	box-sizing: content-box;
-
-	.cui-button {
-		width: calc(100% - 6px);
-		height: 100%;
-		align-items: stretch;
-		margin: 3px;
-
-		&-select {
-			max-width: 100%;
-		}
-
-		.cui-button-visual {
-			@include button-reset;
-
-			line-height: 22px;
-			justify-content: flex-start;
-			padding: 3px $padding;
-			color: $button-color;
-			font-weight: bold;
-		}
-
-		&:active {
-			.cui-button-visual {
-				background: darken($zebra-color, 5%);
-				color: $button-color;
-			}
-		}
-
-		.cui-button-left {
-			width: 22px;
-			padding-top: 1px;
-		}
-
-		.cui-button-center {
-			span {
-				white-space: normal;
-			}
-		}
-
-		.fa-angle-right {
-			padding-left: 3px;
-		}
-
-		.fa-angle-right {
-			margin-top: -1px;
-		}
-	}
-}
-
 
 // DataForm
 .cui-data-form--movable-rows {
@@ -2737,56 +2662,6 @@ $layer-sizes: (
 	> .cui-layer-pane > .cui-vertical-layout-center {
 		padding: 7px $padding;
 	}
-}
-
-// Menu
-.cui-menu {
-	min-height: 0;
-	min-width: 0;
-	background: white;
-	border-radius: 4px;
-	padding: 4px 0;
-	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
-
-	.cui-item-list {
-		font-size: inherit;
-	}
-
-	.cui-item-list-body {
-		> .cui-label {
-			max-width: 200px;
-		}
-	}
-
-	.cui-vertical-layout {
-		overflow: visible;
-	}
-
-	.cui-item-list-body > .cui-options:last-child {
-		border-top: 1px solid $border;
-		padding: 6px 0;
-		margin-top: 4px;
-		margin-bottom: -4px;
-		background: $toolbar-background;
-		font-size: 12px;
-
-		.cui-button-checkbox {
-			display: flex;
-
-			.cui-button-visual {
-				min-height: 0;
-				padding: 1px $padding;
-				background: none;
-				color: inherit;
-			}
-		}
-	}
-}
-
-.cui-menu-divider {
-	margin: 6px 0;
 }
 
 .cui-select-menu {
@@ -4773,7 +4648,7 @@ label[data-label-clickable],
 }
 
 // DateTime Popover
-
+// todo: is this obsolete ??
 .cui-menu.cui-date-time-60-select {
 	.cui-item-list-body {
 		box-sizing: content-box;
