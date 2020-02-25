@@ -28,7 +28,7 @@
 		border: $btn-border-width solid transparent;
 		box-shadow: $btn-box-shadow;
 		// todo: make color mixin?
-		background-color: $btn-bg-color;
+		background-color: $btn-background;
 
 		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
 
@@ -48,6 +48,15 @@
 	}
 
 	// Button states
+	&:hover {
+		.cui-button-visual {
+			// todo: tbd
+			// color: theme-color('primary');
+			// background-color: gray('100');
+			// box-shadow: $btn-box-shadow, 0 0 2px white;
+		}
+	}
+
 	&:focus {
 		outline: none;
 
@@ -60,7 +69,6 @@
 	&:active,
 	&.cui-active {
 		.cui-button-visual {
-			// @include button-primary();
 			color: theme-color('primary');
 		}
 	}
@@ -69,6 +77,22 @@
 	&.cui-button-appearance-flat {
 		.cui-button-visual {
 			@include button-flat();
+		}
+
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				background-color: gray('200');
+			}
+		}
+
+		&.cui-active {
+			&:hover,
+			&:focus {
+				.cui-button-visual {
+					background-color: transparent;
+				}
+			}
 		}
 	}
 
@@ -80,9 +104,11 @@
 			text-decoration: underline;
 			word-break: break-all;
 			height: auto;
+		}
 
-			&:hover,
-			&:focus {
+		&:hover,
+		&:focus {
+			.cui-button-visual {
 				text-decoration: none;
 			}
 		}

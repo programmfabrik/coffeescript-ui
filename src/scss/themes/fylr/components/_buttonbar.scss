@@ -5,6 +5,21 @@
 	> *:not(:last-child) {
 		margin-right: $spacer-sm;
 	}
+
+	> .cui-button-appearance-flat {
+		margin-right: 0;
+
+		// assuming this is an icon-only button (no text), the icon should be a little bigger
+		.cui-button-left:only-child {
+			.fa {
+				font-size: $font-size-base;
+			}
+		}
+
+		+ .cui-buttonbar-group {
+			margin-left: $spacer-sm;
+		}
+	}
 }
 
 .cui-buttonbar-group {
@@ -29,7 +44,7 @@
 				width: 1px;
 				height: 100%;
 				background: gray('200');
-				border-right: 1px solid $btn-bg-color;
+				border-right: 1px solid $btn-background;
 			}
 		}
 
@@ -52,6 +67,16 @@
 
 		&:not(:first-child):not(:last-child) .cui-button-visual {
 			border-radius: 0;
+		}
+	}
+
+	.cui-button-appearance-flat {
+		.cui-button-visual {
+			border: 1px solid $body-color;
+		}
+
+		&:not(:last-child) .cui-button-visual {
+			border-right: 0;
 		}
 	}
 }

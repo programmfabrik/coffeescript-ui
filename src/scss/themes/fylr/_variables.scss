@@ -225,7 +225,8 @@ $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
 $btn-border-width: 			0 !default;
 $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
-$btn-bg-color: 				$white;
+$btn-background: 			$white;
+$btn-color: 				$body-color;
 
 // Normal size
 $btn-padding-x: 			0.85rem !default;
