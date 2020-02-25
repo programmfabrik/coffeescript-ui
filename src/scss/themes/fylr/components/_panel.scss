@@ -36,6 +36,13 @@
 				}
 			}
 		}
+
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				background: none;
+			}
+		}
 	}
 }
 
