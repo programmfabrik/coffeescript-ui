@@ -1,3 +1,15 @@
+// Variables
+// Naming conventions:
+
+// GLOBAL_PROPERTY_MODIFIER or for components: COMPONENT_PROPERTY_MODIFIER
+// COMPONENT is the component name
+// PROPERTY is the main property to style, e.g. height, padding or a custom attribute name that is specific to that component
+// MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
+
+// - use XXX-color to define a font color, e.g. btn-color
+// - use XXX-background for background colors, e.g. XXX-active-background
+
+
 @import url('https://fonts.googleapis.com/css?family=Lato:400,900&display=swap');
 
 // Color system
