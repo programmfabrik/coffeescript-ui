@@ -27,23 +27,42 @@
 		//
 		border: $btn-border-width solid transparent;
 		box-shadow: $btn-box-shadow;
+		margin-bottom: 3px; // block space below the button so the box-shadow is always visible
 		// todo: make color mixin?
 		background-color: $btn-background;
 
 		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
 
 		// Button Content
-		> *:not(:last-child) {
-			margin-right: 0.35em;
-		}
-
 		.cui-button-left,
 		.cui-button-right {
 			display: inline-flex;
+
+			&:only-child {
+				.fa {
+					font-size: $font-size-base; // todo: make fa-icon 16px by default ?
+				}
+			}
+		}
+
+		.cui-button-left {
+			&:not(:empty):not(:only-child) {
+				padding-left: $btn-padding-x;
+				margin-right: -0.5*$btn-padding-x;
+			}
+		}
+
+		.cui-button-right {
+			&:not(:empty):not(:only-child) {
+				padding-right: $btn-padding-x;
+				margin-left: -0.5*$btn-padding-x;
+			}
 		}
 
 		.cui-button-center {
 			@include text-truncate();
+
+			padding: 0 $btn-padding-x;
 		}
 	}
 
@@ -75,55 +94,21 @@
 
 	// Button variants
 	&.cui-button-appearance-flat {
-		.cui-button-visual {
-			@include button-flat();
-		}
-
-		&:hover,
-		&:focus {
-			.cui-button-visual {
-				background-color: gray('200');
-			}
-		}
-
-		&.cui-active {
-			&:hover,
-			&:focus {
-				.cui-button-visual {
-					background-color: transparent;
-				}
-			}
-		}
+		@include button-flat();
 	}
 
 	&.cui-button-appearance-link {
-		.cui-button-visual {
-			@include button-flat();
-
-			color: $link-color;
-			text-decoration: underline;
-			word-break: break-all;
-			height: auto;
-		}
-
-		&:hover,
-		&:focus {
-			.cui-button-visual {
-				text-decoration: none;
-			}
-		}
+		@include button-link();
 	}
 
 	&.cui-button--primary {
-		.cui-button-visual {
-			@include button-primary();
-		}
+		@include button-primary();
 	}
 
 	// todo: tbd, do not use in production, not sure we want even more button states ??
 	&.cui-button-appearance-flat.cui-button--primary {
 		.cui-button-visual {
-			@include button-flat();
+			@include button-reset();
 
 			border: 1px solid theme-color('primary');
 			color: theme-color('primary');
@@ -132,9 +117,7 @@
 
 	// Deprecated, use primary instead
 	&.cui-button-appearance-important {
-		.cui-button-visual {
-			@include button-primary();
-		}
+		@include button-primary();
 	}
 
 	// Button sizes

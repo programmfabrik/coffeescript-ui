@@ -1,20 +1,64 @@
 // Button sizes
 @mixin button-size($height, $padding-x, $font-size, $border-radius) {
-	padding: 0 $padding-x;
+	// padding: 0 $padding-x;
 	height: $height;
+	min-width: 1.1*$height; // make icon-only buttons optically square
 	font-size: $font-size;
 	border-radius: $border-radius;
 }
 
 @mixin button-primary() {
-	background-color: theme-color('primary');
-	color: color-yiq(theme-color('primary'));
+	.cui-button-visual {
+		background-color: theme-color('primary');
+		color: color-yiq(theme-color('primary'));
+	}
 }
 
-@mixin button-flat() {
+@mixin button-reset() {
 	border: 0;
 	background-color: transparent;
 	box-shadow: none;
+	margin-bottom: 0;
+}
+
+@mixin button-flat() {
+	.cui-button-visual {
+		@include button-reset();
+	}
+
+	&:hover,
+	&:focus {
+		.cui-button-visual {
+			background-color: rgba(gray('200'), 0.75);
+		}
+	}
+
+	&.cui-active {
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+@mixin button-link() {
+	.cui-button-visual {
+		@include button-reset();
+
+		color: $link-color;
+		text-decoration: underline;
+		word-break: break-all;
+		height: auto;
+	}
+
+	&:hover,
+	&:focus {
+		.cui-button-visual {
+			text-decoration: none;
+		}
+	}
 }
 
 @mixin button-focus() {
