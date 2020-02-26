@@ -1,0 +1,58 @@
+// Toolbar
+.cui-toolbar {
+	display: flex;
+	min-height: $toolbar-height;
+	justify-content: space-between;
+	align-items: center;
+	background: $toolbar-background;
+	padding: $spacer-sm;
+	// needed in listview, to align all: content-box for all!
+	// box-sizing: content-box; // todo
+	overflow: visible !important;
+
+	&.cui-template-empty {
+		display: none;
+	}
+
+	> .cui-horizontal-layout-left,
+	> .cui-horizontal-layout-right {
+		flex-direction: row;
+		min-width: 0;
+		overflow: visible !important;
+	}
+
+	> .cui-horizontal-layout-center {
+		justify-content: center;
+		flex-direction: row;
+		overflow: visible !important;
+	}
+
+	// todo: find an example in fylr, what is this special case for, do we still need it?
+	// see: .ez5-quicksearch-input | .cui-navigation-toolbar
+	> div > .cui-maximize-horizontal {
+		// in column direction this is solved by
+		// align-items: stretch, but here
+		// we need to overwrite this
+		flex: 1 1 auto;
+		align-self: stretch;
+		overflow: visible;
+
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-center,
+		> .cui-horizontal-layout-right {
+			overflow: visible;
+		}
+	}
+
+	// .cui-horizontal-layout-left {
+	// }
+
+	.cui-horizontal-layout-right {
+		flex-shrink: 0;
+	}
+}
+
+// todo
+.cui-result-navigation-toolbar {
+	min-height: $toolbar-height;
+}

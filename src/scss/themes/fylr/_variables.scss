@@ -124,9 +124,8 @@ $spacer-xl: 	$spacer * 3 !default;
 //
 // Settings for the `<body>` element.
 
-$body-bg:		$white; // $gray-100 !default;
+$body-bg:		$white !default; // $gray-100 !default;
 $body-color:	$gray-900 !default;
-
 
 // Links
 // ==========================================
@@ -275,3 +274,14 @@ $menu-border-radius: $border-radius-lg !default;
 // Panel
 // ==========================================
 $panel-border-color: gray('400') !default;
+
+// Toolbar
+// ==========================================
+// todo: add !default once the old vars are deleted
+$toolbar-height: 40px;
+$toolbar-background: transparent;
+
+// Pane
+// ==========================================
+$pane-background:  theme-color('light') !default;
+

@@ -1,0 +1,69 @@
+.cui-pane {
+	background-color: $pane-background;
+}
+
+.cui-pane-header {
+	flex-wrap: nowrap;
+	background-color: $body-bg;
+	padding-left: 0;
+	padding-right: 0;
+
+	// todo: tbd, should we style the buttons in pane header or should be change the appearance attr in the component?
+	.cui-button {
+		@include button-flat();
+	}
+
+	.cui-buttonbar > * {
+		margin-right: 0;
+	}
+	// todo: end
+
+	.cui-label {
+		// todo: header label sizes and color?
+	}
+}
+
+.cui-pane-footer {
+	.cui-horizontal-layout-left,
+	.cui-horizontal-layout-right {
+		min-width: auto;
+	}
+
+	.cui-label {
+		// todo: footer label sizes and color?
+	}
+}
+
+// Pane modifier
+
+// this is a special kind of pane
+// todo: when should we use this?
+.cui-pane--window {
+	> .cui-vertical-layout-top > .cui-pane-header {
+		background: red; // todo
+
+		// todo: popover
+		// .cui-popover & {
+		// 	background: $popover-header-background;
+		// 	border-color: $popover-header-border;
+		// }
+
+		.cui-label {
+			color: white; // todo
+		}
+	}
+}
+
+// Padded
+.cui-pane--padded {
+	> .cui-vertical-layout-center {
+		padding: $spacer-sm; // todo
+	}
+}
+
+// Simple Pane
+.cui-simple-pane {
+	> .cui-vertical-layout-center {
+		overflow: auto;
+	}
+}
