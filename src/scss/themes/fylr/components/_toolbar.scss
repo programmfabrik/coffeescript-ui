@@ -5,7 +5,7 @@
 	justify-content: space-between;
 	align-items: center;
 	background: $toolbar-background;
-	padding: $spacer-sm;
+	padding: $toolbar-padding;
 	// needed in listview, to align all: content-box for all!
 	// box-sizing: content-box; // todo
 	overflow: visible !important;

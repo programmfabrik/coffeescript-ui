@@ -184,7 +184,7 @@ $container-max-widths: (
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      'Lato', sans-serif;
+$font-family-sans-serif:      'Lato', sans-serif !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
@@ -236,8 +236,8 @@ $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
 $btn-border-width: 			0 !default;
 $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
-$btn-background: 			$white;
-$btn-color: 				$body-color;
+$btn-background: 			$white !default;
+$btn-color: 				$body-color !default;
 
 // Normal size
 $btn-padding-x: 			0.85rem !default;
@@ -277,11 +277,11 @@ $panel-border-color: gray('400') !default;
 
 // Toolbar
 // ==========================================
-// todo: add !default once the old vars are deleted
-$toolbar-height: 40px;
-$toolbar-background: transparent;
+$toolbar-height: 40px !default;
+$toolbar-background: theme-color('light') !default;
+$toolbar-padding: $spacer-sm !default;
 
 // Pane
 // ==========================================
 $pane-background:  theme-color('light') !default;
-
+$pane-padding: $toolbar-padding !default;

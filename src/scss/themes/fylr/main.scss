@@ -4,19 +4,21 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
-// todo: make obsolete
-// stylelint-disable
-@import 'body_ng';
-// stylelint-enable
+
 
 // common, vars, mixins
 @import '_functions';
 @import '_variables';
+// todo: make obsolete
+// stylelint-disable
+@import 'body_ng';
+// stylelint-enable
 @import '_mixins';
 @import '_root';
 @import '_resets';
 @import '_typography';
 @import '_global';
+
 
 // layout
 @import '_layout';
