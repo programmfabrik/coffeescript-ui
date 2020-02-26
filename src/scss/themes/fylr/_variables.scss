@@ -261,7 +261,7 @@ $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
 // ==========================================
 $item-list-hover-color: 		$white !default;
 $item-list-hover-background:	theme-color('primary') !default;
-$item-list-active-color: 		$body-color;
+$item-list-active-color: 		$body-color !default;
 $item-list-active-background:	gray('200') !default;
 $item-list-indent: 				$btn-padding-x !default;
 $item-list-height: 				$btn-height !default;
