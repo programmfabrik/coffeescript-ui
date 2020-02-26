@@ -50,6 +50,24 @@
 	.cui-horizontal-layout-right {
 		flex-shrink: 0;
 	}
+
+	// Toolbar Content
+
+	// e.g. in search: .ez5-quicksearch-input | .ez5-navi-input
+	.cui-data-field-input {
+		display: flex;
+		align-items: center;
+		min-width: 0;
+
+		&.cui-vertical-layout {
+			align-items: stretch;
+			justify-content: center;
+		}
+
+		.cui-input {
+			flex-grow: 0;
+		}
+	}
 }
 
 // todo
