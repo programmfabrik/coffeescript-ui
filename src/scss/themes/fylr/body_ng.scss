@@ -239,16 +239,6 @@ $popover-hint-background: hsl(205, 20%, 30%);
 	}
 }
 
-@mixin button-reset() {
-	padding: 0;
-	border: none;
-	background: none;
-	color: inherit;
-	border-radius: 0;
-	height: auto;
-	line-height: inherit;
-}
-
 %icon {
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
