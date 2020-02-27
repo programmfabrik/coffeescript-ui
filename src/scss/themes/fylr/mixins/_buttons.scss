@@ -15,16 +15,16 @@
 }
 
 @mixin button-reset() {
-	border: 0;
-	background-color: transparent;
-	box-shadow: none;
-	margin-bottom: 0;
+	.cui-button-visual {
+		border: 0;
+		background-color: transparent;
+		box-shadow: none;
+		margin-bottom: 0;
+	}
 }
 
 @mixin button-flat() {
-	.cui-button-visual {
-		@include button-reset();
-	}
+	@include button-reset();
 
 	&:hover,
 	&:focus {
@@ -44,9 +44,9 @@
 }
 
 @mixin button-link() {
-	.cui-button-visual {
-		@include button-reset();
+	@include button-reset();
 
+	.cui-button-visual {
 		color: $link-color;
 		text-decoration: underline;
 		word-break: break-all;
@@ -62,13 +62,13 @@
 }
 
 @mixin button-focus() {
-	// todo: find focus color that works with all colored buttons
+	// todo: find focus color that works with all colored buttons, see mixins/_forms
 	@if $enable-btn-border-radius {
-		box-shadow: 0 0 0 3px rgba($cyan, 0.4) !important; // keeps border-radius, but what about buttongroup buttons ?
+		box-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.35) !important; // keeps border-radius, but what about buttongroup buttons ?
 	}
 
 	@else {
-		outline: 3px solid rgba($cyan, 0.4); // use outline and not box-shadow because flat buttons remove the shadow
+		outline: 3px solid rgba(theme-color('focused'), 0.35); // use outline and not box-shadow because flat buttons remove the shadow
 	}
 
 	z-index: 1; // put forward to see outline

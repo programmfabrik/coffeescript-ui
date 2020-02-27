@@ -108,9 +108,9 @@
 
 	// todo: tbd, do not use in production, not sure we want even more button states ??
 	&.cui-button-appearance-flat.cui-button--primary {
-		.cui-button-visual {
-			@include button-reset();
+		@include button-reset();
 
+		.cui-button-visual {
 			border: 1px solid theme-color('primary');
 			color: theme-color('primary');
 		}
