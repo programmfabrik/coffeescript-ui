@@ -102,6 +102,8 @@ $theme-colors: map-merge(
 		'dark':       $dark,
 		'muted':      $muted,
 		'disabled':   $disabled,
+		// use for button and form focus state:
+		'focused':    $cyan,
 	),
 	$theme-colors
 );
@@ -295,3 +297,8 @@ $toolbar-padding: $spacer-sm !default;
 // ==========================================
 $pane-background:  theme-color('light') !default;
 $pane-padding: $toolbar-padding !default;
+
+// Form
+// ==========================================
+$form-padding: $spacer-sm !default;
+

@@ -1,0 +1,58 @@
+.cui-form {
+	overflow: visible;
+
+	&--padded {
+		padding: $form-padding;
+	}
+}
+
+// Form hints (validation, input types etc.)
+.cui-hint,
+.cui-form-hint,
+.cui-input-invalid-hint,
+.cui-input-valid-hint,
+.cui-input-empty-hint {
+	@include form-hint();
+}
+
+.cui-input-invalid-hint {
+	color: theme-color('danger');
+}
+
+// todo: test in the app
+.cui-form-hint {
+	max-width: $data-field-width;
+
+	.cui-checkbox + &,
+	.cui-data-field.cui-maximize-horizontal + & {
+		max-width: 100%;
+	}
+
+	.cui-data-form + & {
+		margin-top: $spacer-sm;
+	}
+
+	.cui-checkbox + & {
+		margin-top: 0;
+	}
+
+	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+		padding-left: $spacer-sm;
+	}
+
+	.fa {
+		font-size: 12px;
+	}
+
+	// IE layout fix: (layer form hint)
+	.cui-label-multiline {
+		flex-grow: 1;
+		display: flex;
+		align-items: flex-start;
+
+		.cui-label-content {
+			flex-basis: 0%;
+		}
+	}
+}
+

@@ -1,0 +1,16 @@
+@mixin form-hint() {
+	margin-top: $spacer-xs;
+	font-size: $font-size-xs;
+	color: theme-color('muted');
+}
+
+@mixin input-focus() {
+	box-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3); // see mixins/_buttons
+	border-color: rgba(theme-color('focused'), 0.5);
+}
+
+@mixin disable-input-focus() {
+	&:focus {
+		box-shadow: none !important;
+	}
+}
