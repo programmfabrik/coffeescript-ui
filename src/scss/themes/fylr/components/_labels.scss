@@ -1,0 +1,401 @@
+label[data-label-clickable],
+.cui-label[data-label-clickable] {
+	@include clickable;
+}
+
+.cui-label {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	max-width: 100%;
+
+	.cui-vertical-layout-center > & {
+		display: flex;
+	}
+
+	// Sizes
+	&-size-mini {
+		font-size: $font-size-xs;
+	}
+
+	&-size-big {
+		font-size: $font-size-lg;
+	}
+
+	&-size-bigger {
+		font-size: $font-size-xl;
+	}
+
+	&-size-big,
+	&-size-bigger {
+		.cui-label-icon {
+			.fa {
+				font-size: inherit;
+			}
+		}
+	}
+
+	// Content
+	&-icon {
+		&:empty {
+			display: none;
+		}
+
+		&:not(:empty) + .cui-label-content:not(:empty) {
+			padding-left: $spacer-sm;
+			flex-shrink: 1; // todo: ? the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
+		}
+	}
+
+	&-content {
+		flex: 0 0 auto;
+		max-width: 100%;
+
+		@include text-truncate();
+
+		&:empty {
+			display: none;
+		}
+
+		p {
+			margin-bottom: $spacer-sm;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		// highlight
+		em {
+			background: hsl(55, 100%, 60%); // todo
+			font-style: normal;
+			padding: 0.05em 0.2em;
+		}
+	}
+
+	// appearance
+	&-appearance-secondary {
+		color: theme-color('secondary');
+
+		.cui-selected & {
+			color: theme-color('primary'); // todo: when is this ever selected?
+		}
+	}
+
+	&-appearance-title {
+		display: flex; // todo: why?
+		font-weight: $font-weight-bold;
+		font-size: $font-size-lg; // todo: should this work with the size classes or not?, maybe its better to declare a title size and prevent utility classes to override it
+	}
+
+	&-appearance-muted {
+		color: theme-color('muted');
+
+		.cui-selected & {
+			color: rgba(theme-color('primary'), 0.55); // todo: when is this ever selected?
+		}
+	}
+
+	&--padded {
+		padding: $spacer-sm;
+	}
+
+	&[data-type='string'] {
+		color: $teal;
+	}
+
+	&[data-type='NaN'],
+	&[data-type='number'] {
+		color: $brown;
+	}
+
+	&[data-type='boolean'],
+	&[data-type='undefined'],
+	&[data-type='null'] {
+		color: $cyan;
+	}
+
+	// Rotate
+	&.cui-label-rotate-90 {
+		white-space: nowrap;
+		margin: $spacer-sm 0;
+		flex-shrink: 0;
+		max-width: none;
+		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
+
+		&::before {
+			content: '';
+			float: left;
+			margin-top: calc(100% - #{$spacer});
+		}
+
+		> .cui-label-transform {
+			display: flex;
+			transform: rotate(-90deg)  translateX(-3px) translateY(100%);
+			transform-origin: left bottom;
+			clear: left;
+		}
+
+		.cui-label-content {
+			white-space: nowrap !important;
+		}
+	}
+}
+
+// Placeholder / Empty
+.cui-empty-label {
+	color: theme-color('muted');
+	font-style: italic;
+	margin: 0;
+	cursor: default;
+
+	.cui-label-content {
+		display: inline-block;
+	}
+}
+
+// Centered
+.cui-label-centered {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: $spacer-xs;
+
+	> .cui-label-content {
+		text-align: center;
+		flex-grow: 0;
+	}
+}
+
+// Multiline
+.cui-label-multiline,
+.cui-label-markdown {
+	> .cui-label-content {
+		flex: 1 1 auto;
+		white-space: normal;
+		overflow: visible;
+		text-overflow: clip;
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+}
+
+.cui-label-multiline {
+	// Conflict: makes it center vertically align in center
+	// align-self: stretch;
+	max-width: 100%; // prevent overflow when its the child of a flex parent
+	display: flex;
+
+	& + & {
+		margin-top: $spacer-sm;
+	}
+
+	&:not(.cui-label-markdown) {
+		> .cui-label-content {
+			white-space: pre-wrap;
+		}
+	}
+
+	// todo ??
+	.cui-label-content span {
+		// white-space: normal;
+		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
+		// example: collection description
+	}
+}
+
+// Manage Overflow
+.cui-label-manage-overflow {
+	--lh: #{$line-height-base * 1em};
+
+	line-height: var(--lh);
+	position: relative;
+
+	&.cui-label--measure-overflow {
+		> .cui-label-content {
+			--max-lines: 8;
+
+			max-height: calc(var(--max-lines) * var(--lh)); // only limit if its more than 8 lines
+		}
+	}
+
+	&:not(.cui-label--show-overflow) {
+		> .cui-label-content {
+			--max-lines: 6;
+
+			max-height: calc(var(--max-lines) * var(--lh)); // limit at 6 lines
+			overflow: hidden;
+		}
+	}
+
+	&.cui-label--show-overflow {
+		.cui-label-manage-overflow-button {
+			left: auto;
+		}
+	}
+
+	.cui-label-manage-overflow-button {
+		z-index: 1;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(transparent, white);
+
+		.cui-button-visual {
+			color: $link-color;
+			background: linear-gradient(to right, hsla(0, 0%, 100%, 0), hsl(0, 0%, 100%) 10px);
+			height: var(--lh);
+			margin-left: auto;
+		}
+
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				background-color: transparent !important;
+				color: $link-hover-color;
+			}
+		}
+	}
+}
+
+// Markdown
+.cui-label-markdown .cui-label-content {
+	display: block;
+
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: $headings-font-weight;
+		line-height: $headings-line-height;
+		margin: 0 0 $spacer-xs;
+	}
+
+	// todo: set font sizes
+	h1 {
+		font-size: $h4-font-size;
+	}
+
+	h2 {
+		font-size: $h5-font-size;
+	}
+
+	h3 {
+		font-size: $font-size-lg;
+	}
+
+	h4, h5, h6 {
+		font-size: $font-size-base;
+	}
+
+	a {
+		word-break: break-all;
+	}
+
+	em {
+		background: none;
+		font-style: italic;
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ol {
+		list-style-type: decimal;
+	}
+
+	p,
+	pre,
+	blockquote,
+	table,
+	ul,
+	ol {
+		margin: 0 0 $paragraph-margin-bottom;
+	}
+
+	& > p,
+	& > pre,
+	& > table,
+	& > blockquote,
+	& > ul,
+	& > ol {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	blockquote > p {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	table {
+		border: none;
+		table-layout: auto;
+		display: block;
+		width: 100%;
+		overflow: auto;
+		word-break: keep-all;
+
+		td, th {
+			padding: $spacer-xs $spacer-sm;
+			border: 1px solid gray('200');
+		}
+
+		th {
+			font-weight: $font-weight-bold;
+			text-align: center;
+		}
+
+		tbody tr:nth-child(odd) {
+			background: gray('200');
+		}
+
+		col {
+			width: auto;
+		}
+	}
+
+	blockquote {
+		padding: $spacer-xs $spacer-sm;
+		border-left: 5px solid gray('300');
+	}
+
+	code {
+		border: none;
+		background: theme-color('light');
+		white-space: pre-wrap;
+		padding: 0 $spacer-xs;
+		border-radius: $border-radius-sm;
+	}
+
+	pre {
+		padding: $spacer;
+		font-size: $font-size-sm;
+		background: theme-color('light');
+		white-space: pre-wrap;
+		border-radius: $border-radius;
+		border: none;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+
+		code {
+			padding: 0;
+			border-radius: 0;
+		}
+	}
+
+	hr {
+		margin-top: $spacer-sm;
+		margin-bottom: $spacer-sm;
+		border: 0;
+		border-top: $hr-border-width solid $hr-border-color;
+	}
+}
+

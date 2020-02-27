@@ -9,11 +9,11 @@
 // common, vars, mixins
 @import '_functions';
 @import '_variables';
+@import '_mixins';
 // todo: make obsolete
 // stylelint-disable
 @import 'body_ng';
 // stylelint-enable
-@import '_mixins';
 @import '_root';
 @import '_resets';
 @import '_typography';
@@ -24,15 +24,22 @@
 @import '_layout';
 
 // components (order might be important, because the components inherit from each other)
+
+// 1.) "atoms" - very low level components
 @import '../../icons/_svg-dimensions';
+@import 'components/_labels';
 @import 'components/_buttons';
+
+// 2.) "molecules" - atom combinations
 @import 'components/_buttonbar';
 @import 'components/_progress-meter';
 @import 'components/_item-list';
 @import 'components/_menu';
+//
 @import 'components/_panel';
 @import 'components/_toolbar';
 @import 'components/_pane';
 
 
+// 3.) "organisms" -
 // specific views or 'pages'
