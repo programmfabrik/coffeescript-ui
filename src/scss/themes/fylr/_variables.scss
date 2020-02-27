@@ -302,3 +302,15 @@ $pane-padding: $toolbar-padding !default;
 // ==========================================
 $form-padding: $spacer-sm !default;
 
+// Input
+// ==========================================
+// $input-font-size: $font-size-base !default;
+$input-height: 			$btn-height !default;
+$input-border-color: 	gray('400') !default;
+$input-border-radius: 	$btn-border-radius !default;
+$input-placeholder-color: gray('500') !default;
+$input-min-width:		100px !default;
+
+// Data-Field
+// ==========================================
+$data-field-width: 275px !default; // used to be: "$input-width"
