@@ -6,3 +6,8 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+// deprecated, use text-truncate instead
+@mixin ellipsis() {
+	@include text-truncate();
+}

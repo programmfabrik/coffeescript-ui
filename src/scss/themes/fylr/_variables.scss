@@ -10,7 +10,7 @@
 // - use XXX-background for background colors, e.g. XXX-active-background
 
 
-@import url('https://fonts.googleapis.com/css?family=Lato:400,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:200,300,400,700,900&display=swap');
 
 // Color system
 // ==========================================
@@ -54,6 +54,7 @@ $yellow:  #ffbf00 !default;
 $green:   #28a745 !default;
 $teal:    #73d4a2 !default;
 $cyan:    #17a2b8 !default;
+$brown:   #986801 !default;
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -84,6 +85,8 @@ $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
+$muted:         $gray-500 !default;
+$disabled:      $muted !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -96,7 +99,9 @@ $theme-colors: map-merge(
 		'warning':    $warning,
 		'danger':     $danger,
 		'light':      $light,
-		'dark':       $dark
+		'dark':       $dark,
+		'muted':      $muted,
+		'disabled':   $disabled,
 	),
 	$theme-colors
 );
@@ -133,9 +138,9 @@ $body-color:	$gray-900 !default;
 // Style anchor elements.
 
 $link-color:			theme-color('primary') !default;
-$link-decoration:		none !default;
+$link-decoration:		underline !default;
 $link-hover-color:		darken($link-color, 15%) !default;
-$link-hover-decoration:	underline !default;
+$link-hover-decoration:	none !default;
 
 
 // Paragraphs
@@ -190,15 +195,16 @@ $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
 $font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
-$font-size-lg:                $font-size-base * 1.25 !default;
+$font-size-xl:                $font-size-base * 1.25 !default; // todo: do we really need this "bigger" font size
+$font-size-lg:                $font-size-base * 1.125 !default;
 $font-size-sm:                $font-size-base * 0.875 !default;
 $font-size-xs:                $font-size-base * 0.7875 !default;
 
-$font-weight-lighter:         lighter !default;
+$font-weight-lighter:         200 !default;
 $font-weight-light:           300 !default;
 $font-weight-normal:          400 !default;
 $font-weight-bold:            700 !default;
-$font-weight-bolder:          bolder !default;
+$font-weight-bolder:          900 !default;
 
 $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
@@ -212,7 +218,7 @@ $h6-font-size:                $font-size-base !default;
 
 $headings-margin-bottom:      $spacer / 2 !default;
 $headings-font-family:        $font-family-base !default;
-$headings-font-weight:        500 !default;
+$headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.2 !default;
 $headings-color:              null !default;
 

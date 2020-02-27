@@ -15,3 +15,26 @@ body {
 p {
 	margin-bottom: $paragraph-margin-bottom;
 }
+
+a {
+	color: $link-color;
+	text-decoration: $link-decoration;
+
+	&:hover,
+	&:focus {
+		color: $link-hover-color;
+		text-decoration: $link-hover-decoration;
+	}
+}
+
+b, strong {
+	font-weight: $font-weight-bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+ul, ol {
+	padding-left: $spacer;
+}
