@@ -41397,13 +41397,19 @@ CUI.MultiInput = (function(superClass) {
       content_size: {
         "default": false,
         check: Boolean
+      },
+      user_selectable: {
+        "default": false,
+        check: Boolean
       }
     });
   };
 
   MultiInput.prototype.readOpts = function() {
     MultiInput.__super__.readOpts.call(this);
-    return this.__inputs = null;
+    this.__inputs = null;
+    this.__userSelectedData = {};
+    return this.__user_selectable = this._user_selectable;
   };
 
   MultiInput.prototype.disable = function() {
@@ -41466,13 +41472,12 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.setDataOnInputs = function() {
-    var i, input, input_data, len, ref, results, v;
+    var i, input, input_data, len, ref, v;
     if (!this.__inputs) {
       return;
     }
     input_data = CUI.util.copyObject(this.getValue(), true);
     ref = this.__inputs;
-    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       input = ref[i];
       input.setData(input_data);
@@ -41481,9 +41486,9 @@ CUI.MultiInput = (function(superClass) {
       } else {
         v = this.getValue()[input.getName()];
       }
-      results.push(input.setCheckChangedValue(v));
+      input.setCheckChangedValue(v);
+      this.__userSelectedData[input.getName()] = !this.__user_selectable || (this.__user_selectable && !CUI.util.isEmpty(v));
     }
-    return results;
   };
 
   MultiInput.prototype.setInputVisibility = function() {
@@ -41508,7 +41513,7 @@ CUI.MultiInput = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       inp = ref[i];
       CUI.dom.append(this.__multiInputDiv, inp.DOM);
-      if (this._control.isEnabled(inp.getName())) {
+      if (this._control.isEnabled(inp.getName()) && this.__userSelectedData[inp.getName()]) {
         inp.show();
         ok = true;
       } else {
@@ -41516,7 +41521,7 @@ CUI.MultiInput = (function(superClass) {
       }
     }
     if (!ok) {
-      console.warn("MulitInput.setInputVisibility: No input visible.", {
+      console.warn("MultiInput.setInputVisibility: No input visible.", {
         input: this.__inputs,
         control: this._control
       });
@@ -41573,7 +41578,10 @@ CUI.MultiInput = (function(superClass) {
       type: "multi-input-control-update",
       node: this.__multiInputDiv,
       call: (function(_this) {
-        return function(ev) {
+        return function(_, info) {
+          if (!CUI.util.isUndef(info.user_selectable)) {
+            _this.__user_selectable = info.user_selectable;
+          }
           return _this.setInputVisibility();
         };
       })(this)
@@ -41582,19 +41590,58 @@ CUI.MultiInput = (function(superClass) {
     ref = this._control.getKeys();
     fn = (function(_this) {
       return function(input, key) {
-        var btn;
-        btn = new CUI.defaults["class"].Button({
+        var button, form, userSelectablePopover;
+        button = new CUI.defaults["class"].Button({
           text: key.tag,
           tabindex: null,
-          disabled: !_this._control.hasUserControl(),
-          onClick: function(ev, btn) {
-            return _this._control.showUserControl(ev, btn, _this.__multiInputDiv);
-          },
+          disabled: !_this._control.hasUserControl() && !_this.__user_selectable,
           role: "multi-input-tag",
           "class": "cui-multi-input-tag-button",
-          tooltip: key.tooltip
+          tooltip: key.tooltip,
+          onClick: function(ev) {
+            if (_this.__user_selectable) {
+              form.reload();
+              return userSelectablePopover.show();
+            } else {
+              return _this._control.showUserControl(ev, button, _this.__multiInputDiv);
+            }
+          }
         });
-        input.append(btn, "right");
+        form = new CUI.Form({
+          data: _this.__userSelectedData,
+          fields: function() {
+            var fields;
+            fields = _this._control.getKeys().map(function(key) {
+              return {
+                type: CUI.Checkbox,
+                name: key.name,
+                text: key.tooltip.text,
+                onDataChanged: function(data, field) {
+                  if (Object.values(_this.__userSelectedData).some(function(val) {
+                    return val;
+                  })) {
+                    return;
+                  }
+                  data[field.getName()] = true;
+                  return field.reload();
+                }
+              };
+            });
+            return fields;
+          },
+          onDataChanged: function() {
+            return _this.setInputVisibility();
+          }
+        });
+        form.start();
+        userSelectablePopover = new CUI.Popover({
+          pane: {
+            padded: true,
+            content: form
+          },
+          element: button
+        });
+        input.append(button, "right");
         return CUI.Events.listen({
           type: "data-changed",
           node: input,
@@ -41621,7 +41668,14 @@ CUI.MultiInput = (function(superClass) {
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
-        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0
+        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0,
+        onDataInit: (function(_this) {
+          return function(field, data) {
+            if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
+              field.hide();
+            }
+          };
+        })(this)
       };
       input = new CUI.MultiInputInput(input_opts);
       input.render();
