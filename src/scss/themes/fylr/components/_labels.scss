@@ -97,7 +97,7 @@ label[data-label-clickable],
 	}
 
 	&--padded {
-		padding: $spacer-sm;
+		padding: $label-padding;
 	}
 
 	&[data-type='string'] {
