@@ -1,0 +1,38 @@
+[data-max-chars] {
+	box-sizing: content-box;
+	text-align: center;
+	// width: 200px; // conflict: for example change history dropdown
+}
+
+// enlarge max-chars < 10
+// e.g. max-chars 5 = 5.5ch
+@for $i from 1 to 10 {
+	[data-max-chars="#{$i}"] {
+		width: #{$i + 1}ch;
+	}
+}
+
+// keep max-chars > 10 1:1
+@for $i from 10 through 40 {
+	[data-max-chars="#{$i}"] {
+		width: #{$i}ch;
+	}
+}
+
+.cui-browser-ie:not(.cui-browser-edge) {
+	@for $i from 1 through 10 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i + 1.5}ch;
+		}
+	}
+
+	@for $i from 10 through 40 {
+		[data-max-chars="#{$i}"] {
+			width: #{$i*(1.54 - ($i - 10)/30*0.15)}ch;
+		}
+	}
+}
+
+input[data-max-chars] {
+	min-width: 0;
+}
