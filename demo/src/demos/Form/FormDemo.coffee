@@ -672,8 +672,6 @@ class Demo.FormDemo extends Demo
 		form2 = new CUI.Form
 			# horizontal: true
 			fields: [
-				form:
-					use_field_as_label: true
 				type: CUI.Output
 				text: "Label with Colspan"
 			,
