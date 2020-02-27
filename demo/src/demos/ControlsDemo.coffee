@@ -12,7 +12,7 @@ class Demo.ControlsDemo extends Demo
 	addControlExample: (text,control) ->
 		CUI.dom.addClass(control.DOM, "cui-control")
 
-		container_div = 
+		container_div =
 		CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div('cui-controls-demo-control-container'),
 		CUI.dom.div('cui-controls-demo-text-baseline-debug')), CUI.dom.div('cui-controls-demo-text-bottomline-debug')), control.DOM), CUI.dom.div('cui-controls-demo-text-bottomline-debug'))
 
@@ -247,6 +247,11 @@ class Demo.ControlsDemo extends Demo
 		,
 			type: CUI.Output
 			placeholder: "OutputPlaceholder"
+		,
+			type: CUI.Output
+			placeholder: "OutputPlaceholder Deletable"
+			name: "Deletable Output"
+			allow_delete: true
 		,
 			type: CUI.Input
 			name: "Input"
