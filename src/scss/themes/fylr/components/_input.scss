@@ -8,7 +8,7 @@ textarea {
 	font-size: inherit;
 	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
-	padding: $spacer-xs $spacer-sm;
+	padding: $input-padding-y $input-padding-x;
 	flex: 1 1 auto;
 	resize: vertical;
 
@@ -159,7 +159,7 @@ textarea {
 }
 
 .cui-multi-input-tag-button {
-	@include multi-input-tag-button();
+	@include input-control-button(22px, 18px);
 }
 
 // todo: test

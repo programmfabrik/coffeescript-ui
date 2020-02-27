@@ -74,14 +74,15 @@
 	z-index: 1; // put forward to see outline
 }
 
-@mixin multi-input-tag-button() {
+// Control button
+@mixin input-control-button($width: 22px, $height: 20px) {
 	@include button-flat();
 
 	.cui-button-visual {
 		color: gray('600');
 		font-size: 10px;
-		width: 22px;
-		height: 18px;
+		width: $width;
+		height: $height;
 		min-width: 0;
 		margin: 2px;
 
