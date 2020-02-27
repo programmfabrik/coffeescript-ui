@@ -1,0 +1,22 @@
+// Multi Output
+.cui-data-field-multi-output {
+	display: flex;
+
+	&:not(:last-child) {
+		border-bottom: 1px solid $hr-border-color;
+	}
+
+	&-aside {
+		.cui-button {
+			position: sticky;
+			top: 0;
+		}
+
+		@include multi-input-tag-button();
+	}
+
+	&-center {
+		flex-grow: 1;
+		padding-right: $spacer-xs;
+	}
+}
