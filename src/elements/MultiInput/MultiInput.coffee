@@ -38,10 +38,15 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			content_size:
 				default: false
 				check: Boolean
+			user_selectable:
+				default: false
+				check: Boolean
 
 	readOpts: ->
 		super()
 		@__inputs = null
+		@__userSelectedData = {}
+		@__user_selectable = @_user_selectable
 
 	disable: ->
 		super()
@@ -93,9 +98,12 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 			input.setCheckChangedValue(v)
 
+			# All keys are selected when user_selectable option is false, otherwise the only ones with values are selected.
+			@__userSelectedData[input.getName()] = not @__user_selectable or (@__user_selectable and not CUI.util.isEmpty(v))
+		return
+
 	setInputVisibility: ->
 		# the "append" re-orders the input, if needed
-
 		names = (key.name for key in @_control.getKeys())
 		# sort input by key
 		@__inputs.sort (a, b) =>
@@ -107,14 +115,14 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		ok = false
 		for inp in @__inputs
 			CUI.dom.append(@__multiInputDiv, inp.DOM)
-			if @_control.isEnabled(inp.getName())
+			if @_control.isEnabled(inp.getName()) and @__userSelectedData[inp.getName()]
 				inp.show()
 				ok = true
 			else
 				inp.hide()
 
 		if not ok
-			console.warn("MulitInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
+			console.warn("MultiInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
 
 		CUI.Events.trigger
 			type: "content-resize"
@@ -151,12 +159,10 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		CUI.Events.listen
 			type: "multi-input-control-update"
 			node: @__multiInputDiv
-			call: (ev) =>
-				# console.debug ev.getType(), @__multiInputDiv[0], @_control.getKeys()
+			call: (_, info) =>
+				if not CUI.util.isUndef(info.user_selectable)
+					@__user_selectable = info.user_selectable
 				@setInputVisibility()
-
-		# DOM.registerEvent(multiInputDiv, "easydbui-multi-input-control-update")
-		# multiInputDiv.on "easydbui-multi-input-control-update", (ev)
 
 		@__inputs = []
 
@@ -173,22 +179,54 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				undo_support: false
 				content_size: @_content_size
 				placeholder: @_placeholder?[key.name]
+				onDataInit: (field, data) =>
+					if @__user_selectable and CUI.util.isEmpty(data[field.getName()])
+						field.hide()
+					return
 
 			input = new CUI.MultiInputInput(input_opts)
 			input.render()
 
 			do (input, key) =>
-				btn = new CUI.defaults.class.Button
+				button = new CUI.defaults.class.Button
 					text: key.tag
 					tabindex: null
-					disabled: !@_control.hasUserControl()
-					onClick: (ev, btn) =>
-						@_control.showUserControl(ev, btn, @__multiInputDiv)
+					disabled: not @_control.hasUserControl() and not @__user_selectable
 					role: "multi-input-tag"
 					class: "cui-multi-input-tag-button"
 					tooltip: key.tooltip
+					onClick: (ev) =>
+						if @__user_selectable
+							form.reload()
+							userSelectablePopover.show()
+						else
+							@_control.showUserControl(ev, button, @__multiInputDiv)
 
-				input.append(btn, "right")
+				form = new CUI.Form
+					data: @__userSelectedData
+					fields: =>
+						fields = @_control.getKeys().map((key) =>
+							type: CUI.Checkbox
+							name: key.name
+							text: key.tooltip.text
+							onDataChanged: (data, field) =>
+								if Object.values(@__userSelectedData).some((val) -> val)
+									return
+								data[field.getName()] = true
+								field.reload()
+						)
+						return fields
+					onDataChanged: =>
+						@setInputVisibility()
+				form.start()
+
+				userSelectablePopover = new CUI.Popover
+					pane:
+						padded: true
+						content: form
+					element: button
+
+				input.append(button, "right")
 
 				CUI.Events.listen
 					type: "data-changed"
@@ -201,7 +239,6 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 			@__inputs.push(input)
 		return
-
 
 	render: ->
 		super()
