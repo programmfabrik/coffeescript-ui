@@ -41513,7 +41513,7 @@ CUI.MultiInput = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       inp = ref[i];
       CUI.dom.append(this.__multiInputDiv, inp.DOM);
-      if (this._control.isEnabled(inp.getName()) || (this.__userSelectedData[inp.getName()] && this.__user_selectable)) {
+      if ((this._control.isEnabled(inp.getName()) && !this.__user_selectable) || (this.__userSelectedData[inp.getName()] && this.__user_selectable)) {
         inp.show();
         ok = true;
       } else {
@@ -41616,6 +41616,13 @@ CUI.MultiInput = (function(superClass) {
                 type: CUI.Checkbox,
                 name: key.name,
                 text: key.tooltip.text,
+                onRender: function(field) {
+                  if (CUI.util.isEmpty(_this.getValue()[field.getName()])) {
+                    return CUI.dom.removeClass(field, "ez-design-bold");
+                  } else {
+                    return CUI.dom.addClass(field, "ez-design-bold");
+                  }
+                },
                 onDataChanged: function(data, field) {
                   if (Object.values(_this.__userSelectedData).some(function(val) {
                     return val;
