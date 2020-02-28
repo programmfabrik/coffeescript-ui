@@ -115,7 +115,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		ok = false
 		for inp in @__inputs
 			CUI.dom.append(@__multiInputDiv, inp.DOM)
-			if @_control.isEnabled(inp.getName()) and @__userSelectedData[inp.getName()]
+			if @_control.isEnabled(inp.getName()) or (@__userSelectedData[inp.getName()] and @__user_selectable)
 				inp.show()
 				ok = true
 			else
