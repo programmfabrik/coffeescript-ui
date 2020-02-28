@@ -41513,7 +41513,7 @@ CUI.MultiInput = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       inp = ref[i];
       CUI.dom.append(this.__multiInputDiv, inp.DOM);
-      if (this._control.isEnabled(inp.getName()) && this.__userSelectedData[inp.getName()]) {
+      if (this._control.isEnabled(inp.getName()) || (this.__userSelectedData[inp.getName()] && this.__user_selectable)) {
         inp.show();
         ok = true;
       } else {
