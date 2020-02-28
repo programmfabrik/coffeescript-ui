@@ -351,6 +351,8 @@ class Demo.FormDemo extends Demo
 					right: actionButton
 				name: "sortable_group"
 				sortable: true
+				sortable_hint: "Sort checked options, unchecked are sorted alphabetically"
+				title: "Title at the top"
 				options: [
 					value: 1
 					text: "One"
