@@ -210,6 +210,7 @@ $font-weight-bolder:          900 !default;
 
 $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
+$line-height-sm:			  1.3 !default;
 
 $h1-font-size:                $font-size-base * 2.5 !default;
 $h2-font-size:                $font-size-base * 2 !default;
@@ -325,3 +326,4 @@ $checkbox-active-background: 	$body-color !default;
 $checkbox-size: 				16px !default;
 $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
+$checkbox-margin:				$checkbox-icon-size/2 !default;

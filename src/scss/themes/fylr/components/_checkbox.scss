@@ -44,6 +44,7 @@
 
 	.cui-button-left {
 		min-width: $checkbox-size;
+		margin-right: $checkbox-margin;
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -68,7 +69,7 @@
 		display: flex; // the child span[data-max-chars] will set explicit width
 		min-width: 0;
 		flex: 1 1 auto;
-		padding: 0 $spacer-sm 0 0.35em;
+		padding-right: $spacer-sm;
 	}
 
 	&[role='radio'] {
