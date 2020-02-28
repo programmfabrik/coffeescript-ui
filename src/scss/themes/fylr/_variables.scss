@@ -316,3 +316,12 @@ $input-padding-y: 		$spacer-xs !default;
 // Data-Field
 // ==========================================
 $data-field-width: 275px !default; // used to be: "$input-width"
+
+// Checkbox
+// ==========================================
+$checkbox-border-color: 		$body-color !default;
+$checkbox-background: 			$white !default;
+$checkbox-active-background: 	$body-color !default;
+$checkbox-size: 				16px !default;
+$checkbox-icon-size: 			12px !default;
+$checkbox-border-radius: 		2px !default;

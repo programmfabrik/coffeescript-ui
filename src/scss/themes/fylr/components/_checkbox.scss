@@ -1,0 +1,136 @@
+// Checkbox
+.cui-checkbox {
+	min-width: 0;
+	max-width: none;
+	display: inline-block;
+	line-height: 1.3;
+
+	&--icon {
+		.cui-button-checkbox {
+			.cui-button-left i {
+				// just a tiny bit bigger so the icon is not too cramped
+				// todo: test this in real life
+				width: $checkbox-size * 1.15;
+				height: $checkbox-size * 1.1;
+			}
+		}
+	}
+
+	&--multiline {
+		.cui-button-visual {
+			align-items: baseline;
+			white-space: initial;
+
+			.cui-button-center {
+				span {
+					white-space: normal;
+					word-wrap: break-word;
+					text-overflow: clip;
+				}
+			}
+		}
+	}
+}
+
+.cui-button-checkbox {
+	display: inline-flex; // so that the click area is not wider than the text
+	flex-direction: row;
+	cursor: pointer;
+	max-width: 100%;
+
+	[data-max-chars] {
+		text-align: inherit;
+	}
+
+	.cui-button-left {
+		min-width: $checkbox-size;
+		// empty checkbox: span
+		// filled checkbox: i
+		span,
+		i {
+			position: relative;
+			top: -1px;
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			width: $checkbox-size;
+			height: $checkbox-size;
+			border: 1px solid $checkbox-border-color;
+			background: $checkbox-background;
+			font-size: $checkbox-icon-size;
+			line-height: $checkbox-icon-size + 2px;
+			border-radius: $checkbox-border-radius;
+			vertical-align: middle; // keep <i> and <span> in sync
+		}
+	}
+
+	.cui-button-center {
+		display: flex; // the child span[data-max-chars] will set explicit width
+		min-width: 0;
+		flex: 1 1 auto;
+		padding: 0 $spacer-sm 0 0.35em;
+	}
+
+	&[role='radio'] {
+		.cui-button-left {
+			span,
+			i {
+				border-radius: 100%;
+			}
+		}
+	}
+
+	&:focus {
+		outline: none;
+
+		.cui-button-left span,
+		.cui-button-left i {
+			@include input-focus;
+		}
+	}
+
+	&.cui-active {
+		// checkbox
+		.cui-button-left i {
+			background: $checkbox-active-background;
+			color: $white;
+		}
+
+		// radio
+		&[role='radio'] {
+			.cui-button-left i {
+				color: transparent;
+				background: $checkbox-border-color;
+
+				&::after { // radio dot
+					content: '';
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					width: 6px;
+					height: 6px;
+					margin: -3px 0 0 -3px;
+					border-radius: 100%;
+					background: $checkbox-background;
+				}
+			}
+		}
+	}
+
+	&.cui-indeterminate {
+		.cui-button-left span {
+			background-color: gray('200');
+
+			&::after {
+				content: '';
+				position: absolute;
+				left: 2px;
+				width: calc(100% - 4px);
+				top: 50%;
+				margin-top: -1px;
+				height: 2px;
+				background: currentColor;
+			}
+		}
+	}
+}
