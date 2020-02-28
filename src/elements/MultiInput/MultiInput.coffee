@@ -115,7 +115,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		ok = false
 		for inp in @__inputs
 			CUI.dom.append(@__multiInputDiv, inp.DOM)
-			if @_control.isEnabled(inp.getName()) or (@__userSelectedData[inp.getName()] and @__user_selectable)
+			if (@_control.isEnabled(inp.getName()) and not @__user_selectable) or (@__userSelectedData[inp.getName()] and @__user_selectable)
 				inp.show()
 				ok = true
 			else
@@ -209,6 +209,11 @@ class CUI.MultiInput extends CUI.DataFieldInput
 							type: CUI.Checkbox
 							name: key.name
 							text: key.tooltip.text
+							onRender: (field) =>
+								if CUI.util.isEmpty(@getValue()[field.getName()])
+									CUI.dom.removeClass(field, "ez-design-bold")
+								else
+									CUI.dom.addClass(field, "ez-design-bold")
 							onDataChanged: (data, field) =>
 								if Object.values(@__userSelectedData).some((val) -> val)
 									return
