@@ -41468,7 +41468,7 @@ CUI.MultiInput = (function(superClass) {
 
   MultiInput.prototype.setData = function(data) {
     MultiInput.__super__.setData.call(this, data);
-    return this.setDataOnInputs();
+    this.setDataOnInputs();
   };
 
   MultiInput.prototype.setDataOnInputs = function() {
@@ -41487,8 +41487,27 @@ CUI.MultiInput = (function(superClass) {
         v = this.getValue()[input.getName()];
       }
       input.setCheckChangedValue(v);
-      this.__userSelectedData[input.getName()] = !this.__user_selectable || (this.__user_selectable && !CUI.util.isEmpty(v));
     }
+    this.__setUserSelectedData();
+  };
+
+  MultiInput.prototype.__setUserSelectedData = function() {
+    var i, input, len, ref, results, v;
+    if (!this.__inputs) {
+      return;
+    }
+    ref = this.__inputs;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      input = ref[i];
+      if (this._undo_support) {
+        v = this.getInitValue()[input.getName()];
+      } else {
+        v = this.getValue()[input.getName()];
+      }
+      results.push(this.__userSelectedData[input.getName()] = !this.__user_selectable || (this.__user_selectable && !CUI.util.isEmpty(v)));
+    }
+    return results;
   };
 
   MultiInput.prototype.setInputVisibility = function() {
@@ -41582,6 +41601,7 @@ CUI.MultiInput = (function(superClass) {
           if (!CUI.util.isUndef(info.user_selectable)) {
             _this.__user_selectable = info.user_selectable;
           }
+          _this.__setUserSelectedData();
           return _this.setInputVisibility();
         };
       })(this)
