@@ -83,6 +83,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 	setData: (data) ->
 		super(data)
 		@setDataOnInputs()
+		return
 
 	setDataOnInputs: ->
 		if not @__inputs
@@ -98,9 +99,20 @@ class CUI.MultiInput extends CUI.DataFieldInput
 
 			input.setCheckChangedValue(v)
 
+		@__setUserSelectedData()
+		return
+
+	__setUserSelectedData: ->
+		if not @__inputs
+			return
+
+		for input in @__inputs
+			if @_undo_support
+				v = @getInitValue()[input.getName()]
+			else
+				v = @getValue()[input.getName()]
 			# All keys are selected when user_selectable option is false, otherwise the only ones with values are selected.
 			@__userSelectedData[input.getName()] = not @__user_selectable or (@__user_selectable and not CUI.util.isEmpty(v))
-		return
 
 	setInputVisibility: ->
 		# the "append" re-orders the input, if needed
@@ -162,6 +174,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			call: (_, info) =>
 				if not CUI.util.isUndef(info.user_selectable)
 					@__user_selectable = info.user_selectable
+				@__setUserSelectedData()
 				@setInputVisibility()
 
 		@__inputs = []
