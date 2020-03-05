@@ -420,24 +420,18 @@ body.cui-demo-docs {
 }
 
 .cui-demo-table {
-	display: flex !important;
-	flex-direction: column;
-	align-items: flex-start;
 	margin: 10px;
 
 	> .cui-tr {
-		display: flex;
-		margin-bottom: 1rem;
-
-		> .cui-td {
-			display: block;
-			padding: 0;
-		}
-
 		+ .cui-demo-divider {
 			> .cui-td {
-				padding-top: 2rem;
+				padding-top: 20px;
 			}
+		}
+
+		> .cui-td {
+			vertical-align: top;
+			padding: 2px 2px 30px 2px;
 		}
 
 		&.cui-demo-full-row > .cui-td {
@@ -445,13 +439,14 @@ body.cui-demo-docs {
 		}
 
 		&:not(.cui-demo-full-row) > .cui-td {
-			position: relative;
-			flex: 1 1 auto;
-
 			&:nth-child(1) {
-				width: 300px;
+				width: 200px;
 				flex: 0 0 auto;
-				padding-right: 1rem;
+			}
+
+			&:nth-child(2) {
+				position: relative;
+				flex: 1 1 auto;
 			}
 		}
 	}
