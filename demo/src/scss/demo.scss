@@ -420,6 +420,9 @@ body.cui-demo-docs {
 }
 
 .cui-demo-table {
+	display: flex !important;
+	flex-direction: column;
+	align-items: flex-start;
 	margin: 10px;
 
 	> .cui-tr {
