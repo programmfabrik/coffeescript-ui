@@ -44,7 +44,7 @@
 
 			&:only-child {
 				.fa {
-					font-size: $font-size-base; // todo: make fa-icon 16px by default, do we need sm/lg sizes ?
+					font-size: $font-size-base; // todo: this only works if there is no empty button-center, such a things exists at least in the demo, try to change markup if possible
 				}
 			}
 		}
