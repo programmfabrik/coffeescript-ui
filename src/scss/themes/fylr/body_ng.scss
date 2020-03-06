@@ -3310,23 +3310,6 @@ $layer-sizes: (
 	font-size: 11px;
 }
 
-.cui-file-upload-drop-zone {
-	position: relative;
-}
-
-.cui-file-upload-drag-over::after {
-	content: '';
-	pointer-events: none;
-	display: block;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	box-shadow: 0 0 0 2px var(--highlight) inset;
-	z-index: 1;
-}
-
 // DigiDisplay
 
 .cui-digi-display {
