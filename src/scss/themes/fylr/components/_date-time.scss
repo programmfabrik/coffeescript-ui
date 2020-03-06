@@ -1,7 +1,7 @@
 // Calendar Popup
 .cui-date-time-popover .cui-date-time-popover-inner {
 	--calendar-background: #{$calendar-background};
-	--calendar-static-cells-background: #{gray('200')};
+	--calendar-static-cells-background: #{$calendar-static-cells-background};
 
 	background-color: var(--calendar-background);
 	flex: 1 1 auto;
@@ -39,7 +39,7 @@
 // Calendar
 // DateTime Format | Day:Month:Year | Hour:Minute |
 .cui-date-time-calendar {
-	font-size: $font-size-sm;
+	font-size: $calendar-font-size;
 
 	// todo: there is no way we can mark these up as flat buttons
 	.cui-button-select,
@@ -174,7 +174,6 @@
 		cursor: default;
 
 		&:last-child {
-			// margin-right: 0;
 			border-right: 0;
 		}
 
@@ -185,10 +184,12 @@
 		span,
 		div {
 			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			display: block;
 			width: $calendar-cell-size;
 			height: $calendar-cell-size;
 			line-height: $calendar-cell-size;
@@ -198,18 +199,18 @@
 	}
 
 	.cui-th {
-		font-size: $font-size-xs;
+		font-size: $calendar-font-size * 0.8575;
 		border: 0;
 	}
 
 	.cui-date-time-week {
-		font-size: $font-size-xs;
+		font-size: $calendar-font-size * 0.8575;
 		background: var(--calendar-static-cells-background);
-		color: theme-color('secondary');
+		color: $calendar-static-cells-color;
 	}
 
 	.cui-date-time-week-title {
-		color: theme-color('secondary');
+		color: $calendar-static-cells-color;
 	}
 
 	.cui-date-time-day {
@@ -218,31 +219,28 @@
 
 		&:hover {
 			span {
-				color: theme-color('primary');
+				color: $body-color;
+				background-color: $calendar-date-hover-background;
 			}
 		}
 	}
 
 	.cui-date-time-previous-month,
 	.cui-date-time-next-month {
-		background: gray('100');
+		color: $calendar-date-previous-color;
 	}
 
 	.cui-date-time-now {
 		span {
-			background: gray('300');
+			border: 1px solid currentColor;
 		}
 	}
 
 	.cui-date-time-selected {
-		color: $white;
-
+		&:hover span,
 		span {
-			background: theme-color('primary');
-		}
-
-		&:hover span {
 			color: $white;
+			background: $calendar-date-active-background;
 		}
 	}
 }

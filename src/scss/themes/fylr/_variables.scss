@@ -341,6 +341,12 @@ $table-data-height: 	32px;
 
 // Calendar
 // ==========================================
-$calendar-cell-size:	28px !default;
-$calendar-cell-count:	8 !default;
-$calendar-background:	$white;
+$calendar-font-size: 				$font-size-sm !default;
+$calendar-cell-size:				28px !default;
+$calendar-cell-count:				8 !default;
+$calendar-background:				$white !default;
+$calendar-static-cells-background: 	lighten(gray('200'), 1%) !default;
+$calendar-static-cells-color: 		gray('500') !default;
+$calendar-date-active-background:	theme-color('primary') !default;
+$calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
+$calendar-date-previous-color:		gray('500') !default;
