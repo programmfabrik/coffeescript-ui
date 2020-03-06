@@ -35,6 +35,13 @@ textarea {
 input {
 	height: $input-height;
 	line-height: $input-height;
+
+	&[type='file'] {
+		height: auto;
+		line-height: $line-height-base;
+		padding: $input-padding-y;
+		font-size: $font-size-sm;
+	}
 }
 
 textarea {
