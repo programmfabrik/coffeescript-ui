@@ -2828,38 +2828,6 @@ $layer-sizes: (
 	}
 }
 
-.cui-form-popover {
-	&.cui-vertical-layout {
-		display: flex;
-		flex-direction: column;
-		overflow: visible; // don't cut off outline
-	}
-
-	.cui-vertical-layout-center {
-		display: flex;
-
-		.cui-button {
-			padding: 0;
-		}
-
-		.cui-button--has-caret {
-			flex-grow: 1;
-		}
-
-		+ .cui-vertical-layout-bottom {
-			margin: 5px 0 0;
-
-			&:empty {
-				display: none;
-			}
-
-			.cui-empty-label {
-				padding: 0;
-			}
-		}
-	}
-}
-
 .cui-drag-drop-select-draggable,
 .cui-drag-drop-select-sortable {
 	cursor: -webkit-grab;
