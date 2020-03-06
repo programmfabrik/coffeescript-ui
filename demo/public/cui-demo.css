@@ -8,11 +8,14 @@
 .cui-button-demo-limit-width {
   max-width: 150px; }
 
-.cui-button-demo > .cui-tr > .cui-td {
-  padding-bottom: 1rem !important; }
+.cui-demo-input-demo .cui-form-table {
+  margin: 10px; }
 
-.cui-demo-example-content .cui-buttonbar {
-  margin-bottom: 1rem; }
+.cui-demo-controls-demo .cui-output--deletable .cui-button {
+  display: block !important; }
+
+.cui-form-demo-form .cui-form-tr {
+  margin-bottom: 3rem; }
 
 /* Content Area */
 .cui-document-browser-center {
@@ -225,7 +228,7 @@ body.cui-demo-docs .cui-demo-root-center > .cui-horizontal-layout > .cui-demo-pa
     padding-top: 20px; }
   .cui-demo-table > .cui-tr > .cui-td {
     vertical-align: top;
-    padding: 2px; }
+    padding: 2px 2px 30px 2px; }
   .cui-demo-table > .cui-tr.cui-demo-full-row > .cui-td {
     -webkit-box-flex: 1;
             flex: 1 1 auto; }
@@ -240,6 +243,10 @@ body.cui-demo-docs .cui-demo-root-center > .cui-horizontal-layout > .cui-demo-pa
 
 .cui-demo-pane-center {
   overflow: auto; }
+  .cui-demo-pane-center > .cui-pane {
+    background-color: white; }
+  .cui-demo-pane-center .cui-demo-table > .cui-tr {
+    margin-bottom: 3rem; }
 
 .cui-demo-pane-right {
   width: 300px;
