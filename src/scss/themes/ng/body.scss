@@ -1773,20 +1773,26 @@ a[role="button"].cui-button-appearance-link {
 .cui-data-form--movable-rows {
 	max-width: 100%;
 
-	> .cui-horizontal-layout > .cui-horizontal-layout-center {
+	> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
 		max-width: $input-width;
 		overflow: visible; // show focus outline
 	}
 
 	&.cui-data-form--multiple-fields {
-		> .cui-horizontal-layout > .cui-horizontal-layout-center {
+		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
 			max-width: 100%;
 		}
 	}
 }
 
+.cui-data-form--add-button {
+	> .cui-vertical-layout > .cui-vertical-layout-bottom {
+		padding-top: 10px;
+	}
+}
+
 .cui-data-form--multiple-fields {
-	> .cui-data-form-row {
+	> .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row {
 		> .cui-horizontal-layout-center {
 			position: relative;
 			padding: 4px 4px 4px 10px;
