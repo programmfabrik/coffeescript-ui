@@ -6,6 +6,7 @@ textarea {
 	max-width: 100%;
 	outline: none;
 	font-size: inherit;
+	background-color: $input-background;
 	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
 	padding: $input-padding-y $input-padding-x;

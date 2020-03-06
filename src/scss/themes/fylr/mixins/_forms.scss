@@ -6,8 +6,9 @@
 }
 
 @mixin input-focus() {
-	box-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3); // see mixins/_buttons
-	border-color: rgba(theme-color('focused'), 0.5);
+	box-shadow: $input-focus-shadow; // see mixins/_buttons
+	border-color: $input-focus-border-color;
+	z-index: 1;
 }
 
 @mixin disable-input-focus() {
