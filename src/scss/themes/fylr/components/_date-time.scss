@@ -1,0 +1,271 @@
+// Calendar Popup
+.cui-date-time-popover .cui-date-time-popover-inner {
+	--calendar-background: #{$calendar-background};
+	--calendar-static-cells-background: #{gray('200')};
+
+	background-color: var(--calendar-background);
+	flex: 1 1 auto;
+
+	.cui-date-time-header {
+		display: none; // todo: remove from markup?
+	}
+
+	&[browser='time'] {
+		.cui-date-time-calendar {
+			margin-left: -100%;
+		}
+	}
+
+	.cui-date-time-browser {
+		display: flex;
+		// overflow: hidden; cuts off year-picker outline
+		flex: 1 1 auto;
+
+		.cui-date-time-calendar,
+		.cui-date-time-clock {
+			width: 100%;
+		}
+
+		.cui-date-time-calendar {
+			transition: margin-left 0.5s ease-out;
+		}
+	}
+}
+
+.cui-date-time-clock {
+	display: none; // todo: remove from markup?
+}
+
+// Calendar
+// DateTime Format | Day:Month:Year | Hour:Minute |
+.cui-date-time-calendar {
+	font-size: $font-size-sm;
+
+	// todo: there is no way we can mark these up as flat buttons
+	.cui-button-select,
+	.cui-button {
+		@include button-flat($input-background, theme-color('primary'));
+		@include button-size-sm();
+
+		.cui-button-visual {
+			background-color: $input-background;
+
+			&::after {
+				display: none !important; // button flat
+			}
+		}
+	}
+
+	.cui-button-select {
+		.cui-button-center {
+			min-width: 32px;
+
+			span:empty::after {
+				content: '00';
+				color: theme-color('muted');
+			}
+		}
+	}
+
+	.cui-buttonbar {
+		padding: $spacer-sm;
+		justify-content: space-between;
+	}
+
+	.cui-buttonbar-group-time {
+		background: $input-background;
+
+		.cui-select:not(:last-child)::after {
+			content: ':';
+			color: theme-color('muted');
+		}
+	}
+}
+
+.cui-date-time-footer {
+	overflow: visible !important; // show year input outline
+
+	.cui-buttonbar > *:not(:last-child) {
+		margin-right: 0;
+	}
+
+	[cui-data-field-name='year'] input {
+		$year-padding: $spacer-xs;
+
+		width: calc(4ch + 4 * #{$year-padding});
+		min-width: 0;
+		height: $input-height-sm;
+		text-align: center;
+		position: relative;
+		padding: 0 $year-padding;
+
+		.cui-browser-ie:not(.cui-browser-edge) & {
+			width: calc(6ch + 4 * #{$year-padding});
+		}
+	}
+
+	.cui-label {
+		cursor: default;
+	}
+
+	> .cui-horizontal-layout-left {
+		flex: 1 0 auto;
+		margin-right: $spacer;
+
+		.cui-label { // June, September
+			flex: 1 1 auto;
+			justify-content: center;
+			margin: 0;
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		flex-grow: 0 !important;
+	}
+
+	> .cui-horizontal-layout-right {
+		overflow: visible !important; // show year input outline
+	}
+}
+
+.cui-date-time-date {
+	width: 100%;
+	flex-grow: 1;
+
+	.cui-tr {
+		padding: 0;
+		display: flex;
+
+		&:last-child {
+			.cui-td {
+				margin-bottom: 0;
+			}
+		}
+
+		&.cui-date-time-month-header {
+			position: relative;
+			background: var(--calendar-static-cells-background);
+
+			&::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 1px;
+				width: 100%;
+				background-color: var(--calendar-background);
+			}
+		}
+	}
+
+	.cui-td,
+	.cui-th {
+		$width: calc((100% - 7px) / #{$calendar-cell-count});
+
+		position: relative;
+		width: $width;
+		padding: 0;
+		padding-top: calc(#{$width} * 0.95); // make the cells visually square
+		display: flex;
+		justify-content: center;
+		align-self: center;
+		border-right: 1px solid var(--calendar-background);
+		border-bottom: 1px solid var(--calendar-background);
+		cursor: default;
+
+		&:last-child {
+			// margin-right: 0;
+			border-right: 0;
+		}
+
+		&::after {
+			display: none;
+		}
+
+		span,
+		div {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: block;
+			width: $calendar-cell-size;
+			height: $calendar-cell-size;
+			line-height: $calendar-cell-size;
+			text-align: center;
+			border-radius: 999px;
+		}
+	}
+
+	.cui-th {
+		font-size: $font-size-xs;
+		border: 0;
+	}
+
+	.cui-date-time-week {
+		font-size: $font-size-xs;
+		background: var(--calendar-static-cells-background);
+		color: theme-color('secondary');
+	}
+
+	.cui-date-time-week-title {
+		color: theme-color('secondary');
+	}
+
+	.cui-date-time-day {
+		background: $white;
+		cursor: pointer;
+
+		&:hover {
+			span {
+				color: theme-color('primary');
+			}
+		}
+	}
+
+	.cui-date-time-previous-month,
+	.cui-date-time-next-month {
+		background: gray('100');
+	}
+
+	.cui-date-time-now {
+		span {
+			background: gray('300');
+		}
+	}
+
+	.cui-date-time-selected {
+		color: $white;
+
+		span {
+			background: theme-color('primary');
+		}
+
+		&:hover span {
+			color: $white;
+		}
+	}
+}
+
+// DateTime Popover
+// todo: is this obsolete ??
+.cui-menu.cui-date-time-60-select {
+	.cui-item-list-body {
+		box-sizing: content-box;
+		width: 370px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		> * {
+			box-sizing: border-box;
+		}
+
+		.cui-button {
+			width: 37px;
+			height: 30px;
+			align-items: center;
+			text-align: center;
+		}
+	}
+}
