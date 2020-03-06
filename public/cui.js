@@ -24094,7 +24094,39 @@ CUI.DataForm = (function(superClass) {
   }
 
   DataForm.prototype.render = function() {
+    var addButton;
     CUI.DataFieldInput.prototype.render.call(this);
+    if (this._has_add_button) {
+      addButton = new CUI.Button({
+        icon: "plus",
+        onClick: (function(_this) {
+          return function() {
+            var lastRow, ref;
+            lastRow = (ref = _this.__rowRegistry[_this.__rowRegistry.length - 1]) != null ? ref.data : void 0;
+            if (lastRow && lastRow._new) {
+              delete lastRow._new;
+              _this.rows.push(lastRow);
+            }
+            _this.__appendRow({
+              _new: true
+            });
+            _this.__updateView();
+            _this.__removeEmptyRows();
+            return _this.__storeValue();
+          };
+        })(this)
+      });
+    }
+    this.__verticalLayout = new CUI.VerticalLayout({
+      maximize_horizontal: this.__maximize_horizontal,
+      center: {
+        content: void 0
+      },
+      bottom: {
+        content: addButton
+      }
+    });
+    this.append(this.__verticalLayout);
     CUI.Events.listen({
       type: "data-changed",
       node: this.DOM,
@@ -24106,7 +24138,7 @@ CUI.DataForm = (function(superClass) {
     });
     if (this._rowMove) {
       new CUI.Sortable({
-        element: this.DOM,
+        element: this.__verticalLayout.center(),
         selector: ".cui-drag-handle-row",
         create: function(ev, target) {
           var data;
@@ -24127,7 +24159,6 @@ CUI.DataForm = (function(superClass) {
         })(this),
         sorted: (function(_this) {
           return function(ev, from_idx, to_idx) {
-            console.debug(from_idx, ">", to_idx);
             CUI.util.moveInArray(from_idx, to_idx, _this.rows, from_idx < to_idx);
             _this.__storeValue();
             return _this.__updateView();
@@ -24147,6 +24178,10 @@ CUI.DataForm = (function(superClass) {
         check: function(v) {
           return CUI.util.isPosInt(v);
         }
+      },
+      has_add_button: {
+        check: Boolean,
+        "default": false
       }
     });
     this.removeOpt("onNodeAdd");
@@ -24163,13 +24198,17 @@ CUI.DataForm = (function(superClass) {
       this.removeClass('cui-data-form--multiple-fields');
     }
     if (this._rowMove) {
-      return this.addClass('cui-data-form--movable-rows');
+      this.addClass('cui-data-form--movable-rows');
+    }
+    if (this._has_add_button) {
+      return this.addClass('cui-data-form--add-button');
     }
   };
 
   DataForm.prototype.readOpts = function() {
     DataForm.__super__.readOpts.call(this);
-    return this.__rowRegistry = [];
+    this.__rowRegistry = [];
+    return this;
   };
 
   DataForm.prototype.getFieldOpts = function() {
@@ -24289,7 +24328,7 @@ CUI.DataForm = (function(superClass) {
   DataForm.prototype.displayValue = function() {
     var i, len, ref, row;
     this.rows = this.getValue();
-    this.empty();
+    this.__verticalLayout.empty("center");
     ref = this.rows;
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
@@ -24302,6 +24341,9 @@ CUI.DataForm = (function(superClass) {
   DataForm.prototype.__appendNewRow = function() {
     var ref;
     if ((ref = this._new_rows) !== "edit" && ref !== "append") {
+      return;
+    }
+    if (this._has_add_button && this.rows.length > 0) {
       return;
     }
     return this.__appendRow({
@@ -24401,7 +24443,7 @@ CUI.DataForm = (function(superClass) {
       }
     });
     CUI.dom.data(hl.DOM, "data", data);
-    if (data._new) {
+    if (data._new && !this._has_add_button) {
       CUI.dom.addClass(move, 'is-hidden');
       trash.hide();
     }
@@ -24411,7 +24453,7 @@ CUI.DataForm = (function(superClass) {
       trash: trash,
       move: move
     });
-    return this.append(hl);
+    this.__verticalLayout.append(hl, "center");
   };
 
   return DataForm;
