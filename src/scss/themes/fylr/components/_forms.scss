@@ -56,3 +56,27 @@
 	}
 }
 
+// Button that opens a form in a popup or in a modal
+.cui-form-popover,
+.cui-form-modal {
+	&.cui-vertical-layout {
+		overflow: visible; // don't cut off outline
+	}
+
+	.cui-vertical-layout-center {
+		display: block;
+
+		+ .cui-vertical-layout-bottom {
+			margin: $spacer-xs 0 0;
+
+			&:empty {
+				display: none;
+			}
+
+			.cui-empty-label {
+				padding: 0;
+			}
+		}
+	}
+}
+
