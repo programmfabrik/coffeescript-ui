@@ -1,5 +1,9 @@
 module.exports = {
-    'extends': 'stylelint-config-standard',
+	'extends': 'stylelint-config-standard',
+	"ignoreFiles": [
+		"src/scss/themes/fylr/body_ng.scss",
+		"src/scss/themes/fylr/components/old/*.scss",
+	],
     'rules': {
         'indentation': 'tab',
         'string-quotes': 'single',
