@@ -56,7 +56,7 @@
 		}
 	}
 
-	.cui-button-select {
+	.cui-select {
 		.cui-button-center {
 			min-width: 32px;
 
@@ -64,6 +64,20 @@
 				content: '\2013\2013';
 				color: theme-color('muted');
 				letter-spacing: 0.1em;
+			}
+		}
+
+		&.cui-date-time-am-pm-select .cui-button-center {
+			min-width: 38px;
+			margin-left: -5px;
+
+			span:empty::after {
+				content: 'am';
+				display: block;
+				position: relative;
+				top: -1px;
+				color: theme-color('muted');
+				font-size: 10px;
 			}
 		}
 	}
@@ -101,7 +115,7 @@
 			content: 'Uhrzeit';
 		}
 
-		.cui-select:not(:last-child)::after {
+		.cui-select:not(.cui-date-time-am-pm-select):not(:first-child)::before {
 			content: ':';
 			position: relative;
 			top: 1px;
