@@ -1,0 +1,178 @@
+// Data Fields
+
+.cui-data-field {
+	max-width: $data-field-width;
+	margin: 0;
+
+	.cui-form-value & {
+		max-width: none;
+	}
+
+	&.cui-form {
+		max-width: 100%;
+		margin: 0;
+	}
+
+	&.cui-maximize-horizontal,
+	&.cui-simple-form {
+		max-width: 100%;
+		flex-grow: 1;
+	}
+
+	&.cui-maximize-horizontal {
+		&.cui-output {
+			.cui-data-field-output-label.cui-label-multiline {
+				max-width: 700px;
+			}
+		}
+	}
+
+	.cui-list-view-grid-quadrant-3 {
+		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+	}
+
+	.cui-lv-row-move-handle-column {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	&-disabled {
+		user-select: none;
+		opacity: 0.5;
+		pointer-events: none;
+
+		& & {
+			opacity: 1;
+		}
+	}
+
+	&--full-width {
+		width: 100%;
+		max-width: 100%;
+
+		&.cui-select {
+			> .cui-button {
+				max-width: none;
+			}
+		}
+	}
+
+	.cui-object-dumper {
+		border: 1px solid $table-border;
+
+		.cui-list-view-grid-quadrant-3 {
+			min-height: auto;
+		}
+	}
+
+	&--with-button {
+		display: flex;
+		align-items: flex-end;
+
+		// if focused outline the whole data-field including the right button
+		&.cui-has-focus {
+			border-radius: $input-border-radius;
+
+			@include input-focus();
+
+			input {
+				@include disable-input-focus();
+			}
+
+			.cui-data-field-right .cui-button .cui-button-visual {
+				border-color: $input-focus-border-color;
+			}
+		}
+	}
+}
+
+.cui-data-field-center {
+	flex: 1 1 auto;
+	display: flex;
+
+	&:focus {
+		z-index: 1;
+	}
+
+	&:not(:first-child) input {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	&:not(:last-child) input {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	input {
+		position: relative;
+		width: auto !important;
+		flex-grow: 1;
+	}
+}
+
+.cui-data-field-right {
+	position: relative;
+
+	.cui-button {
+		@include button-flat();
+
+		margin-left: -1px;
+		height: 100%;
+		vertical-align: bottom;
+
+		.cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border: 1px solid $input-border-color;
+		}
+
+		&:focus {
+			z-index: 1;
+
+			.cui-button-visual {
+				border-radius: $input-border-radius;
+				border-color: $input-focus-border-color;
+			}
+		}
+	}
+}
+
+// DateTime
+.cui-date-time {
+	.cui-input-invalid-hint {
+		display: none;
+	}
+
+	.cui-input {
+		min-width: 90px; // date-short
+	}
+
+	/*
+
+	date: "dd, DD.MM.YYYY"
+	date-short: "DD.MM.YYYY"
+	date-time: "dd, DD.MM.YYYY HH:mm"
+	date-time-short = "DD.MM.YYYY HH:mm"
+	date-time-seconds: "dd, DD.MM.YYYY HH:mm:ss"
+	date-time-seconds-short: "DD.MM.YYYY HH:mm:ss"
+
+	*/
+
+	&[data-cui-date-time-format='date'] .cui-input {
+		min-width: 112px;
+	}
+
+	&[data-cui-date-time-format='date-time-short'] .cui-input {
+		min-width: 129px;
+	}
+
+	&[data-cui-date-time-format='date-time'] .cui-input,
+	&[data-cui-date-time-format='date-time-seconds-short'] .cui-input {
+		min-width: 150px;
+	}
+
+	&[data-cui-date-time-format='date-time-seconds'] .cui-input {
+		min-width: 175px;
+	}
+}

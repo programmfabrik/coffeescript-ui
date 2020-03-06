@@ -308,15 +308,15 @@ $form-padding: $spacer-sm !default;
 // Input
 // ==========================================
 // $input-font-size: $font-size-base !default;
-$input-height: 			$btn-height !default;
+$input-height: 				$btn-height !default;
 $input-height-sm: 			$btn-height-sm !default;
 $input-background: 			$white !default;
-$input-border-color: 	gray('400') !default;
-$input-border-radius: 	$btn-border-radius !default;
-$input-placeholder-color: gray('500') !default;
-$input-min-width:		100px !default;
-$input-padding-x: 		$spacer-sm !default;
-$input-padding-y: 		$spacer-xs !default;
+$input-border-color: 		gray('400') !default;
+$input-border-radius: 		$btn-border-radius !default;
+$input-placeholder-color: 	gray('500') !default;
+$input-min-width:			100px !default;
+$input-padding-x: 			$spacer-sm !default;
+$input-padding-y: 			$spacer-xs !default;
 $input-focus-shadow:		$btn-focus-shadow !default;
 $input-focus-border-color:	rgba(theme-color('focused'), 0.5) !default;
 
@@ -333,3 +333,9 @@ $checkbox-size: 				16px !default;
 $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
 $checkbox-margin:				$checkbox-icon-size/2 !default;
+
+// Table
+// ==========================================
+$table-border: 			red; // todo
+$table-data-height: 	32px;
+
