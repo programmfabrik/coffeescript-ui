@@ -212,6 +212,7 @@ $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
 $line-height-sm:			  1.3 !default;
 
+// todo
 $h1-font-size:                $font-size-base * 2.5 !default;
 $h2-font-size:                $font-size-base * 2 !default;
 $h3-font-size:                $font-size-base * 1.75 !default;
@@ -281,7 +282,6 @@ $item-list-indent: 				$btn-padding-x !default;
 $item-list-height: 				$btn-height !default;
 $item-list-height-sm: 			$btn-height-sm !default;
 
-
 // Menu
 // ==========================================
 $menu-border-radius: $border-radius-lg !default;
@@ -350,3 +350,8 @@ $calendar-static-cells-color: 		gray('500') !default;
 $calendar-date-active-background:	theme-color('primary') !default;
 $calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
 $calendar-date-previous-color:		gray('500') !default;
+
+// Block
+// ==========================================
+$block-padding: 			$spacer-sm !default;
+$block-header-column-width:	200px !default;
