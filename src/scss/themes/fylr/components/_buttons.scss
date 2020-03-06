@@ -22,6 +22,8 @@
 	white-space: nowrap;
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
+	@include button-size-base();
+
 	.cui-button-visual {
 		font-family: $btn-font-family;
 		font-weight: $btn-font-weight;
@@ -35,8 +37,6 @@
 		// todo: make color mixin?
 		background-color: $btn-background;
 
-		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
-
 		// Button Content
 		.cui-button-left,
 		.cui-button-right {
@@ -44,29 +44,9 @@
 
 			&:only-child {
 				.fa {
-					font-size: $font-size-base; // todo: make fa-icon 16px by default ?
+					font-size: $font-size-base; // todo: make fa-icon 16px by default, do we need sm/lg sizes ?
 				}
 			}
-		}
-
-		.cui-button-left {
-			&:not(:empty):not(:only-child) {
-				padding-left: $btn-padding-x;
-				margin-right: -0.5*$btn-padding-x;
-			}
-		}
-
-		.cui-button-right {
-			&:not(:empty):not(:only-child) {
-				padding-right: $btn-padding-x;
-				margin-left: -0.5*$btn-padding-x;
-			}
-		}
-
-		.cui-button-center {
-			@include text-truncate();
-
-			padding: 0 $btn-padding-x;
 		}
 	}
 
@@ -126,30 +106,11 @@
 
 	// Button sizes
 	&.cui-button-size-mini {
-		.cui-button-visual {
-			@include button-size($btn-height-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
-
-			.fa {
-				font-size: 11px;
-				line-height: 11px;
-			}
-
-			.cui-icon-svg {
-				transform: scale(0.85);
-
-				&.svg-close {
-					transform: none;
-					width: 9px;
-					height: 9px;
-				}
-			}
-		}
+		@include button-size-sm();
 	}
 
 	&.cui-button-size-big {
-		.cui-button-visual {
-			@include button-size($btn-height-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
-		}
+		@include button-size-lg();
 	}
 
 	// todo: Do we actually use this?

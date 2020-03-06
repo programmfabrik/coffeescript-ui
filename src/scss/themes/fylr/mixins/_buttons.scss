@@ -5,6 +5,59 @@
 	min-width: 1.1*$height; // make icon-only buttons optically square
 	font-size: $font-size;
 	border-radius: $border-radius;
+
+	.cui-button-left {
+		&:not(:empty):not(:only-child) {
+			padding-left: $padding-x;
+			margin-right: -0.5*$padding-x;
+		}
+	}
+
+	.cui-button-right {
+		&:not(:empty):not(:only-child) {
+			padding-right: $padding-x;
+			margin-left: -0.5*$padding-x;
+		}
+	}
+
+	.cui-button-center {
+		@include text-truncate();
+
+		padding: 0 $padding-x;
+	}
+}
+
+@mixin button-size-base() {
+	.cui-button-visual {
+		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
+	}
+}
+
+@mixin button-size-sm() {
+	.cui-button-visual {
+		@include button-size($btn-height-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+
+		.fa {
+			font-size: 11px;
+			line-height: 11px;
+		}
+
+		.cui-icon-svg {
+			transform: scale(0.85);
+
+			&.svg-close {
+				transform: none;
+				width: 9px;
+				height: 9px;
+			}
+		}
+	}
+}
+
+@mixin button-size-lg() {
+	.cui-button-visual {
+		@include button-size($btn-height-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
+	}
 }
 
 @mixin button-primary() {
@@ -23,13 +76,14 @@
 	}
 }
 
-@mixin button-flat() {
+@mixin button-flat($background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: transparent, $color-active: inherit) {
 	@include button-reset();
 
 	&:hover,
 	&:focus {
 		.cui-button-visual {
-			background-color: rgba(gray('200'), 0.75);
+			color: $color-hover;
+			background-color: $background-hover;
 		}
 	}
 
@@ -37,7 +91,8 @@
 		&:hover,
 		&:focus {
 			.cui-button-visual {
-				background-color: transparent;
+				color: $color-active;
+				background-color: $background-active;
 			}
 		}
 	}
@@ -64,17 +119,18 @@
 @mixin button-focus() {
 	// todo: find focus color that works with all colored buttons, see mixins/_forms
 	@if $enable-btn-border-radius {
-		box-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.35) !important; // keeps border-radius, but what about buttongroup buttons ?
+		box-shadow: $btn-focus-shadow !important; // keeps border-radius, but what about buttongroup buttons ?
 	}
 
 	@else {
-		outline: 3px solid rgba(theme-color('focused'), 0.35); // use outline and not box-shadow because flat buttons remove the shadow
+		outline: 3px solid rgba(theme-color('focused'), 0.3); // use outline and not box-shadow because flat buttons remove the shadow
 	}
 
 	z-index: 1; // put forward to see outline
 }
 
 // Control button
+// e.g. multi-input-tag-button (language selection), delete icon button in --deleteable
 @mixin input-control-button($width: 22px, $height: 20px) {
 	@include button-flat();
 
