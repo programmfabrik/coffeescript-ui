@@ -73,11 +73,38 @@
 		justify-content: space-between;
 	}
 
+	.cui-buttonbar-group-date,
+	.cui-buttonbar-group-time {
+		position: relative;
+		padding-top: 1.75rem;
+
+		&::before {
+			position: absolute;
+			top: 0.15rem;
+			left: 0.5rem;
+			font-weight: bold;
+		}
+	}
+
+	.cui-buttonbar-group-date {
+		&::before {
+			// todo: add in the markup?, localization?
+			content: 'Datum';
+		}
+	}
+
 	.cui-buttonbar-group-time {
 		background: $input-background;
 
+		&::before {
+			// todo: add in the markup?, localization?
+			content: 'Uhrzeit';
+		}
+
 		.cui-select:not(:last-child)::after {
 			content: ':';
+			position: relative;
+			top: 1px;
 			color: theme-color('muted');
 		}
 	}
