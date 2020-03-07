@@ -190,3 +190,42 @@ textarea {
 		}
 	}
 }
+
+// DateTime Input
+.cui-date-time {
+	.cui-input-invalid-hint {
+		display: none;
+	}
+
+	.cui-input {
+		min-width: 90px; // date-short
+	}
+
+	/*
+
+	date: "dd, DD.MM.YYYY"
+	date-short: "DD.MM.YYYY"
+	date-time: "dd, DD.MM.YYYY HH:mm"
+	date-time-short = "DD.MM.YYYY HH:mm"
+	date-time-seconds: "dd, DD.MM.YYYY HH:mm:ss"
+	date-time-seconds-short: "DD.MM.YYYY HH:mm:ss"
+
+	*/
+
+	&[data-cui-date-time-format='date'] .cui-input {
+		min-width: 112px;
+	}
+
+	&[data-cui-date-time-format='date-time-short'] .cui-input {
+		min-width: 129px;
+	}
+
+	&[data-cui-date-time-format='date-time'] .cui-input,
+	&[data-cui-date-time-format='date-time-seconds-short'] .cui-input {
+		min-width: 150px;
+	}
+
+	&[data-cui-date-time-format='date-time-seconds'] .cui-input {
+		min-width: 175px;
+	}
+}
