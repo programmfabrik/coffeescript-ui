@@ -3,6 +3,8 @@ module.exports = {
 	"ignoreFiles": [
 		"src/scss/themes/fylr/body_ng.scss",
 		"src/scss/themes/fylr/components/old/*.scss",
+		"src/scss/themes/debug/*.scss",
+		"src/scss/themes/ng/*.scss",
 	],
     'rules': {
         'indentation': 'tab',
