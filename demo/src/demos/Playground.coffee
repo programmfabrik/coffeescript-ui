@@ -612,28 +612,126 @@ class Demo.Playground extends Demo
 		]
 
 	getTableTab: ->
+		ttab = new Demo.DemoTable()
+
+		table = @getTableDefault()
+		ttab.addExample("Default Table with Border", table)
+
+		table = @getTableZebra()
+		ttab.addExample("Zebra Table maximized", table)
+
+		table = @getTableKeyvalue()
+		ttab.addExample("Flex Table with Border and key/value", table)
+
+	getTableZebra: ->
 		table = new CUI.Table
+			zebra: true
+			class: 'cui-maximize-horizontal'
 			columns: [
 				name: "a"
-				text: "a"
+				text: "alpha"
 				class: "a-class"
 			,
 				name: "b"
-				text: "b"
+				text: "beta"
 				class: "b-class"
+			,
+				name: "c"
+				text: "gamma"
+				class: "c-class"
+			,
+				name: "d"
+				text: "delta"
+				class: "d-class"
 			]
 			rows: [
 				a: "a0"
 				b: "b0"
+				c: "Hello"
+				d: "world"
 			,
 				a: "a1"
 				b: "b1"
+				c: "how"
+				d: "are you"
 			]
 
 		for i in [2..5]
 			table.addRow
 				a: "a"+i
 				b: "b"+i
+
+		table
+
+	getTableDefault: ->
+		table = new CUI.Table
+			bordered: true
+			columns: [
+				name: "a"
+				text: "alpha"
+				class: "a-class"
+			,
+				name: "b"
+				text: "beta"
+				class: "b-class"
+			,
+				name: "c"
+				text: "gamma"
+				class: "c-class"
+			,
+				name: "d"
+				text: "delta"
+				class: "d-class"
+			]
+			rows: [
+				a: "a0"
+				b: "b0"
+				c: "Hello"
+				d: "world"
+			,
+				a: "a1"
+				b: "b1"
+				c: "how"
+				d: "are you"
+			]
+
+		for i in [2..5]
+			table.addRow
+				a: "a"+i
+				b: "b"+i
+
+		table
+
+	getTableKeyvalue: ->
+		table = new CUI.Table
+			flex: true
+			bordered: true
+			key_value: true
+
+		someInfoData = [
+			key: "compiled"
+			value: "pdf document, 3 pages, 727.5 kB"
+		,
+			key: "compiled_create_date"
+			value: "1489755602.23"
+		,
+			key: "compiled_create_date_iso8601"
+			value: "2017-03-17 T13:00:02+00:00"
+		,
+			key: "compiled_create_date_source"
+			value: "m"
+		,
+			key: "extension"
+			value: "pdf"
+		,
+			key: "fileclass"
+			value: "office"
+		]
+
+		for info in someInfoData
+			table.addRow
+				key: info.key
+				value: info.value
 
 		table
 
