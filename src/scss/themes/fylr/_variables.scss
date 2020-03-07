@@ -336,8 +336,14 @@ $checkbox-margin:				$checkbox-icon-size/2 !default;
 
 // Table
 // ==========================================
-$table-border: 			red; // todo
-$table-data-height: 	32px;
+$table-border: 			gray('200') !default;
+$table-border-radius:	$border-radius-sm !default;
+$table-data-height: 	32px !default;
+$table-data-width: 		135px !default; // old: $td-width
+$table-even-background:	gray('100') !default;
+$table-odd-background:	transparent !default;
+$table-padding-x:		$spacer-lg/2 !default;
+$table-padding-y:		$spacer-xs !default;
 
 // Calendar
 // ==========================================
