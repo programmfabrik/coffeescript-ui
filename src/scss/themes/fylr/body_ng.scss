@@ -123,7 +123,6 @@ $drag-handle-color: hsla(205, 10%, 50%, 0.5);
 // Table Colors
 $zebra-color: hsla(205, 41%, 20%, 0.04);
 $zebra-on-foreground-color: hsl(210, 12%, 97%);
-$table-border: hsl(205, 8%, 90%);
 $table-header-border: hsl(205, 8%, 94%);
 $table-row-border: $soft-border;
 
@@ -2264,176 +2263,6 @@ $layer-sizes: (
 	}
 }
 
-// Table
-.cui-table {
-	// specific chrome fix to allow horizontal scrollbars: `display: block` instead of `display: table` and `overflow-x: auto`
-	display: block;
-	overflow-x: auto;
-
-	&.cui-maximize-horizontal {
-		width: 100%;
-		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
-	}
-
-	.cui-data-field-proxy > & {
-		align-self: flex-start;
-	}
-
-	&.cui-maximize-vertical {
-		flex-grow: 1;
-	}
-
-	&--bordered {
-		border: 1px solid $table-border;
-	}
-
-	&--has-datafields {
-		.cui-td--text-content {
-			padding-top: 9px;
-			padding-bottom: 9px;
-		}
-	}
-
-	&--flex {
-		display: flex;
-		flex-direction: column;
-		flex-shrink: 0;
-		flex-grow: 1;
-
-		.cui-tr {
-			display: flex;
-		}
-
-		.cui-td--key {
-			width: $td-width;
-			flex-shrink: 0;
-			word-wrap: break-word;
-			display: block;
-		}
-
-		.cui-td--value {
-			flex-grow: 1;
-			width: auto;
-			display: block;
-		}
-	}
-
-	.cui-input input:not([data-max-chars]) {
-		width: 100%;
-	}
-
-	.cui-block & {
-		.cui-td:first-child {
-			padding-left: 0;
-		}
-
-		.cui-td:last-child {
-			padding-right: 0;
-		}
-	}
-}
-
-.cui-table-row {
-	&:nth-child(even) .cui-table-td {
-		background: $zebra-color;
-	}
-}
-
-.cui-table-td {
-	vertical-align: middle;
-}
-
-.cui-table-header {
-	~ .cui-table-row {
-		&:nth-child(odd) .cui-table-td {
-			background: $zebra-color;
-		}
-
-		&:nth-child(even) .cui-table-td {
-			background: none;
-		}
-	}
-}
-
-.cui-tr {
-	display: table-row;
-
-	// &:nth-child(odd) {
-	// 	background: $zebra-color;
-	// }
-
-	&.cui-table-header {
-		background: transparent;
-	}
-}
-
-.cui-th,
-.cui-td {
-	display: table-cell;
-	padding: $padding/2 $padding;
-	vertical-align: top;
-
-	&[colspan] {
-		> label,
-		> .cui-label {
-			margin-bottom: $padding/2;
-		}
-	}
-
-	> .cui-empty-label {
-		padding: 0;
-	}
-}
-
-.cui-td--key {
-	color: $form-label-color;
-	font-weight: $form-label-weight;
-	padding-right: 0;
-	vertical-align: top;
-}
-
-.cui-td--text-content {
-	vertical-align: top;
-	white-space: pre-wrap;
-}
-
-.cui-td--value {
-	vertical-align: top;
-	word-wrap: break-word;
-	word-break: break-all;
-	word-break: break-word;
-	width: 100%;
-	// position: relative;
-
-	// > span {
-	// 	position: absolute;
-	//    right: 10px;
-	//    left: 10px;
-	//    @include ellipsis;
-	//  }
-}
-
-.cui-th {
-	position: relative;
-	border-bottom: 1px solid $table-header-border;
-	padding: $padding/2 - 1px $padding;
-	font-size: 0.85em;
-
-	&::after { // table-head line
-		content: '';
-		position: absolute;
-		right: 0;
-		top: 2px;
-		bottom: 2px;
-		width: 1px;
-		background: $table-header-border;
-	}
-
-	&:last-child::after {
-		display: none;
-	}
-}
-
 .status-2d-map {
 	border: 1px solid $table-border;
 	display: table;
@@ -2470,13 +2299,6 @@ $layer-sizes: (
 				}
 			}
 		}
-	}
-}
-
-// Nested Table
-.cui-table .cui-table {
-	.cui-tr {
-		background: $foreground;
 	}
 }
 
