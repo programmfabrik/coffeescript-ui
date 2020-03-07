@@ -11,7 +11,8 @@ class Demo.ListViewTreeDemo extends Demo
 	loadFiles: ->
 		dfr = new CUI.Deferred()
 
-		data = require('./files.txt')
+		# webpack will use the raw-loader to load txt file, we need to reference the default export here
+		data = require('./files.txt').default
 
 		@files = []
 		for line in data.split("\n")
