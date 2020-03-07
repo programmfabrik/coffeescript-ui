@@ -1,6 +1,14 @@
 // Data Fields
 
 .cui-data-field {
+	// todo: be very careful when to apply a max-width, this class is probably too generic
+	// - get sets in DataField class, which is extended by Input, Output, Options, Checkbox, Select,
+	// FormButton, DataTable, DataForm, SimpleForm, Form, FormPopover
+	//
+	// find out when the max-width is actually needed
+	// this width should probably only be applied to input fields or else???
+	// see: demo#DataFrom: cui-data-field class is applied to several outer form containers and this might cause unexpected behaviour
+	// see: focus state of dateTime input
 	max-width: $data-field-width;
 	margin: 0;
 
@@ -8,8 +16,12 @@
 		max-width: none;
 	}
 
-	&.cui-form {
-		max-width: 100%;
+	// todo:
+	// reset the max-width set above
+	// maybe the above max-width should be restricted to inputs by default instead
+	&.cui-form,
+	&.cui-data-form {
+		max-width: 100%; // or none?
 		margin: 0;
 	}
 
