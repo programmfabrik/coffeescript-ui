@@ -16,7 +16,7 @@ p {
 	margin-bottom: $paragraph-margin-bottom;
 }
 
-a {
+a:not(.cui-button-button) {
 	color: $link-color;
 	text-decoration: $link-decoration;
 
