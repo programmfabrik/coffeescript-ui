@@ -361,3 +361,17 @@ $calendar-date-previous-color:		gray('500') !default;
 // ==========================================
 $block-padding: 			$spacer-sm !default;
 $block-header-column-width:	200px !default;
+
+// Slider
+// ==========================================
+$slider-handle-size:				1rem !default;
+$slider-handle-background:			$dark !default;
+$slider-handle-border-width:		0 !default;
+$slider-handle-border-color:		$input-border-color !default;
+$slider-handle-border-radius:		999px !default;
+$slider-track-height: 				4px !default;
+$slider-track-background: 			$input-border-color !default;
+$slider-track-active-background: 	$slider-handle-background !default;
+$slider-track-border-width:			0 !default;
+$slider-track-border-color:			$input-border-color !default;
+$slider-track-border-radius:		$border-radius-sm !default;
