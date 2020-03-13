@@ -13,10 +13,12 @@
 	padding-left: $spacer-sm;
 	padding-right: $spacer-sm;
 
-	.cui-button {
-		width: 100%;
+	.cui-button-button.cui-button-appearance-flat {
+		display: flex;
+		width: auto;
 		padding: $spacer-xs 0;
 		justify-content: flex-start;
+		margin: 0 -#{$spacer-sm};
 
 		&-select {
 			max-width: 100%;
@@ -24,6 +26,7 @@
 
 		.cui-button-visual {
 			padding: 0;
+			justify-content: flex-start;
 
 			.cui-button-left {
 				width: $spacer;
@@ -31,6 +34,8 @@
 			}
 
 			.cui-button-center {
+				padding-left: $spacer;
+
 				span {
 					white-space: normal;
 				}
@@ -38,9 +43,11 @@
 		}
 
 		&:hover,
-		&:focus {
+		&:focus,
+		&.cui-active {
 			.cui-button-visual {
 				background: none;
+				color: theme-color('primary');
 			}
 		}
 	}

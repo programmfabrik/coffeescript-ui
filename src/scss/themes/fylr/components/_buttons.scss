@@ -13,6 +13,8 @@
 	flex-grow: 1;
 }
 
+// .cui-button-button includes cui-button-href, which does NOT have the class cui-button
+// almost all buttons have the class cui-button-button
 .cui-button-button,
 .cui-button-select {
 	flex: 0 0 auto;
