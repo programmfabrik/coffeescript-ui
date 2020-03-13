@@ -3011,48 +3011,6 @@ $layer-sizes: (
 	display: none !important;
 }
 
-.cui-slider {
-	height: 18px;
-	display: flex;
-	padding: 6px 0;
-	position: relative;
-
-	&--dragging {
-		.cui-slider-track-visual {
-			background: hsl(208, 10%, 89%);
-		}
-	}
-
-	&-track-visual {
-		width: 100%;
-		background: hsl(208, 10%, 93%);
-		border: 1px solid $button-border;
-		border-radius: 999px;
-	}
-
-	&-track {
-		position: absolute;
-		left: 0;
-		right: 16px;
-		top: 50%;
-	}
-
-	&-handle {
-		position: absolute;
-		margin-top: -8px;
-		width: 16px;
-		height: 16px;
-		background: $button-background;
-		border: 1px solid $button-border;
-		border-radius: 999px;
-	}
-
-	&-text {
-		width: 40px;
-		text-align: center;
-	}
-}
-
 .cui-google-map {
 	width: 100%;
 	height: 300px;
