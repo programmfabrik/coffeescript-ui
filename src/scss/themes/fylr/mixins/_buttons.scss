@@ -4,6 +4,7 @@
 	height: $height;
 	min-width: 1.1*$height; // make icon-only buttons optically square
 	font-size: $font-size;
+	line-height: $height;
 	border-radius: $border-radius;
 
 	.cui-button-left {
@@ -81,7 +82,7 @@
 	}
 }
 
-@mixin button-flat($background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: transparent, $color-active: inherit) {
+@mixin button-flat($background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
 	@include button-reset();
 
 	&:hover,
