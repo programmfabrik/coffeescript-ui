@@ -1916,7 +1916,7 @@ $layer-sizes: (
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
 		.cui-list-view-grid-quadrant {
-			border-bottom: 1px solid $table-border;
+			border-bottom: 1px solid $table-border-color;
 
 			&:empty {
 				border-bottom-width: 0;
@@ -2264,7 +2264,7 @@ $layer-sizes: (
 }
 
 .status-2d-map {
-	border: 1px solid $table-border;
+	border: 1px solid $table-border-color;
 	display: table;
 
 	.cui-block & .cui-td {
@@ -2284,7 +2284,7 @@ $layer-sizes: (
 
 		&:first-child {
 			.cui-td {
-				border-bottom: 1px solid $table-border;
+				border-bottom: 1px solid $table-border-color;
 				position: relative;
 
 				&:not(:last-child)::after {
@@ -2295,7 +2295,7 @@ $layer-sizes: (
 					top: 0;
 					bottom: 0;
 					width: 1px;
-					background: $table-border;
+					background: $table-border-color;
 				}
 			}
 		}
