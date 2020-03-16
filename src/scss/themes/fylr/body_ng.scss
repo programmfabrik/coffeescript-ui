@@ -2679,19 +2679,6 @@ $layer-sizes: (
 	}
 }
 
-.cui-drag-handle-row {
-	margin-top: 4px; // 4px to center it next to our normal line-height of 18px
-	flex: 1 1 auto;
-	height: 10px;
-	width: 100%;
-	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
-	background-size: 100% 3px;
-
-	&:hover {
-		opacity: 0.8;
-	}
-}
-
 // Drag & Drop
 
 .cui-drag-drop-select-helper {
