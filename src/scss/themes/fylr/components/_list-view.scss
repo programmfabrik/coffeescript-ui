@@ -1,0 +1,515 @@
+// List View & List View Grid
+
+$list-view-data-height: 1rem;
+$list-view-data-width: 125px;
+
+.cui-list-view {
+	min-height: 0;
+	flex-direction: column;
+	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
+	background-color: transparent; // reset from cui-pane
+	font-size: $list-view-font-size;
+	border-left: 1px solid $table-border-color;
+	border-right: 1px solid $table-border-color;
+
+	// todo: when --bordered style draw ALL borders incl the row borders ?
+	// &--bordered {
+	// 	border-left: 1px solid $table-border-color;
+	// 	border-right: 1px solid $table-border-color;
+	// 	// bottom & top will come from the rows
+	// }
+
+	// todo: add zebra option?
+
+	// todO: what should be the default style??
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	// nested
+	.cui-list-view {
+		background-color: transparent; // reset
+		margin: $spacer 0;
+	}
+}
+
+// Body
+
+// outside .cui-list-liew, we can use this in Form too
+// <div class="cui-list-view-grid-quadrant cui-lv-tbody">
+
+.cui-lv-tbody {
+	display: flex;
+	flex-direction: column;
+	max-width: 100%;
+	min-width: 0;
+	// flex-shrink: 1; CONFLICT: overwrites shrink: 0 of quadrant-0 and 2
+}
+
+// Columns
+
+.cui-lv-td {
+	width: $list-view-data-width;
+	min-height: $list-view-data-height; // todo
+	overflow: hidden;
+	flex-shrink: 0;
+	// flex: 1 0 auto; // won't work when resizing the columns
+	display: block;
+	box-sizing: content-box; // todo: really?
+	padding: $table-padding-y $table-padding-x;
+
+	.cui-lv-td {
+		max-width: 100%;
+		box-sizing: border-box; // ???
+	}
+
+	&-rotate-90 {
+		width: 12px;
+
+		.cui-tree-node-spacer {
+			display: none;
+		}
+
+		> .cui-label-rotate-90 {
+			word-wrap: break-word;
+			margin-left: -3px;
+			max-width: none !important;
+		}
+
+		.cui-data-field {
+			flex-grow: 0;
+		}
+	}
+
+	&-fill {
+		min-height: 0;
+	}
+
+	&-max {
+		flex-grow: 1;
+	}
+
+	.cui-data-field-input {
+		flex-grow: 1;
+	}
+}
+
+.cui-lv-th {
+	cursor: default;
+}
+
+// Rows
+
+// <div class="cui-lv-tr-outer list-view-row">
+// 	<div class="cui-lv-tr">...</div>
+// </div>
+
+.cui-lv-tr-outer {
+	display: flex;
+	flex: 0 0 auto;
+	min-width: 0;
+	outline: none;
+	cursor: default;
+
+	// > .cui-lv-tr {
+	// 	border-bottom: 1px solid $table-border-color;
+	// }
+
+	&.cui-selected {
+		> .cui-lv-tr > .cui-lv-td {
+			background: $list-view-selected-row-background;
+		}
+
+		.cui-empty-label {
+			color: theme-color('secondary'); // todo: find use-case and adjust colors
+		}
+
+		// todo: find use-case and adjust colors
+		&.cui-selected {
+			// todo: obsolete ??
+			// .cui-label-manage-overflow::after {
+			// 	background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
+			// }
+
+			.cui-label-manage-overflow-button {
+				background: linear-gradient(to right, rgba($list-view-selected-row-background, 0.02), $list-view-selected-row-background 10px);
+			}
+		}
+	}
+
+	// todo: find use-case, the default element with .cui-lv-tr-outer is just a div and not focusable by default
+	&:focus {
+		box-shadow: #{$input-focus-shadow} inset;
+		border-radius: $input-border-radius;
+		z-index: 1; // put forward to see outline
+	}
+
+	&.cui-lv-tree-node--is-branch {
+		@include clickable;
+	}
+}
+
+// Special Header Row
+
+// <div class="cui-lv-tr-outer list-view-header-row">
+
+.list-view-header-row {
+	.cui-label {
+		align-items: flex-end;
+		font-weight: $headings-font-weight;
+	}
+
+	.cui-lv-td {
+		display: flex;
+
+		// todo: find use-case, this should probably go into the listViewTree styles
+		.cui-list-view-tree-hierarchy &:first-child::before {
+			content: '';
+			display: inline-block;
+			width: $tree-node-handle-width; // todo
+		}
+	}
+}
+
+.cui-lv-tr {
+	flex: 1 1 auto;
+	display: flex;
+	max-width: 100%;
+
+	&:empty {
+		padding: 0; // todo: probably obsolete?
+	}
+}
+
+// in quadrant 2 or 3 the class 'cui-lv-tr-fill-outer' could be added
+// todo: find out why and when (is this when a row is added by the user?)
+.cui-lv-tr-fill-outer {
+	flex: 1 1 auto;
+	display: flex;
+
+	// todo: find use-case
+	> .cui-lv-tr > .cui-lv-td {
+		border-style: none;
+		background: linear-gradient($table-even-background 50%, white 50%);
+		background-size: 100% ($list-view-data-height + 2*$table-padding-y)*2;
+	}
+
+	.cui-lv-td {
+		// leave padding-left and padding-right
+		// because its used to measure
+		// the column width for headers
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
+		height: 0 !important;
+	}
+}
+
+// List View Grid
+// <div class="cui-list-view-grid">
+// 	<div class="cui-list-view-grid-inner-top">
+// 		<div class="cui-list-view-grid-quadrant cui-lv-tbody"></div>
+// 	</div>
+// 	<div class="cui-list-view-grid-inner-bottom">
+// 		<div class="cui-list-view-grid-quadrant cui-lv-tbody"></div>
+// 	</div>
+// </div>
+
+.cui-list-view-grid {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+
+	> .cui-lv-tbody:last-child {
+		border-top: 1px solid $table-border-color;
+	}
+
+	&.cui-lv--max-last-col {
+		> div > .cui-list-view-grid-quadrant {
+			> .cui-lv-tr-outer,
+			> .cui-lv-tr-fill-outer {
+				> .cui-lv-tr {
+					> .cui-lv-td:last-child {
+						flex-grow: 1;
+					}
+				}
+			}
+		}
+	}
+}
+
+// eg. header
+.cui-list-view-grid-quadrant-0,
+.cui-list-view-grid-quadrant-1 {
+	overflow: hidden;
+
+	// todo: find use-case
+	.cui-button {
+		height: 100%;
+		flex: 1 1 auto;
+		align-items: stretch;
+
+		@include button-reset();
+
+		.cui-button-left {
+			padding-right: $spacer-sm;
+		}
+
+		.cui-button-center {
+			flex: 1 1 auto;
+			justify-content: flex-start;
+		}
+	}
+
+	.cui-label {
+		font-weight: $headings-font-weight;
+
+		&-multiline {
+			align-self: flex-end;
+			flex-shrink: 1;
+			max-width: 100%;
+		}
+	}
+
+	.cui-lv-td {
+		align-items: flex-end;
+		position: relative;
+		overflow: visible;
+
+		&.cui-lv-td-rotate-90 {
+			overflow: hidden;
+		}
+
+		&::after { // table-head line
+			content: '';
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			width: 1px;
+			background: transparentize($table-border-color, 0.6);
+		}
+	}
+}
+
+.cui-list-view-grid-quadrant-0 {
+	flex: 0 0 auto;
+}
+
+.cui-list-view-grid-quadrant-1 {
+	flex: 1 1 auto;
+
+	.cui-lv-td:last-child::after {
+		display: none;
+	}
+}
+
+.cui-list-view-grid-has-fixed-rows {
+	.cui-list-view-grid-inner-top {
+		.cui-list-view-grid-quadrant {
+			// border-bottom: 1px solid $table-border-color;
+
+			&:empty {
+				// border-bottom-width: 0;
+			}
+		}
+	}
+}
+
+.cui-list-view-grid-inner-top {
+	flex: 0 0 auto;
+	display: flex;
+	border-top: 1px solid $table-border-color;
+	border-bottom: 1px solid $table-border-color;
+
+	// breaks the headers - they should be left aligned
+	// .cui-lv-td {
+	// 	justify-content: flex-end;
+	// }
+}
+
+.cui-list-view-grid-inner-bottom {
+	flex: 1 1 auto; // IE 11 needs 0% basis - CONFLICT: apparently IE11 needs a auto basis
+	display: flex;
+	min-height: 0; // FF scroll fix
+}
+
+// content body
+.cui-list-view-grid-quadrant-2 {
+	flex: 0 0 auto;
+	overflow: hidden;
+
+	> .cui-lv-tr-outer {
+		&:hover {
+			> .cui-lv-tr {
+				.cui-lv-row-move-handle-column {
+					background: $white; // reset
+				}
+			}
+		}
+	}
+}
+
+.cui-list-view-grid-quadrant-3 {
+	flex: 1 1 auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+
+	// todo: do we need this, find use-case
+	&:focus {
+		outline: none;
+	}
+}
+
+.cui-list-view-grid-quadrant-2,
+.cui-list-view-grid-quadrant-3 {
+	> .cui-lv-tr-outer {
+		> .cui-lv-tr {
+			border-bottom: 1px solid $table-border-color;
+		}
+
+		&:hover {
+			> .cui-lv-tr {
+				background: $table-row-hover-background;
+			}
+		}
+	}
+}
+
+// Modifier
+
+.cui-list-view-row-selectable {
+	@include clickable;
+}
+
+// Move a row via drag & drop
+.cui-lv-row-move-target {
+	height: 4px;
+	background: $list-view-move-target-area-background;
+	margin-top: -2px;
+	position: absolute;
+	z-index: 4;
+	pointer-events: none !important;
+}
+
+.cui-lv-row-move {
+	position: absolute;
+	z-index: 4;
+	background: $list-view-move-target-area-background;
+	opacity: 0.2;
+}
+
+.cui-lv-row-move-handle-column {
+	&::after {
+		display: none;
+	}
+
+	&.cui-lv-td {
+		width: $list-view-move-handle-width;
+		padding-left: 0.5*$table-padding-x;
+		padding-right: 0;
+		box-sizing: content-box;
+	}
+
+	.cui-drag-handle-row {
+		display: none;
+	}
+
+	.cui-list-view-row-movable & {
+		cursor: -webkit-grab;
+		cursor: grab;
+
+		.cui-drag-handle-row {
+			display: block;
+			margin-top: 0.45em;
+		}
+	}
+}
+
+// Resize column in the header
+.cui-lv-col-resize-handle {
+	position: absolute;
+	cursor: ew-resize;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: 0 -5px;
+	width: 10px;
+	z-index: 1;
+}
+
+// Resize column ??
+// todo: find use-case
+.cui-lv-col-resize {
+	cursor: ew-resize !important;
+	// bigger grab area
+	margin: 0 -4px;
+	padding: 0 4px;
+
+	> div {
+		width: 1px;
+		margin-left: -1px;
+		height: 100%;
+		background: $table-border-color;
+	}
+}
+
+.cui-lv-draggable {
+	position: absolute;
+	opacity: 0.5;
+}
+
+// List View with DataFields
+
+// Position tree-node- and drag-handle lower
+// because input fields make the rows higher
+// and make the filler higher
+.cui-lv--has-datafields {
+	// its sick.. but the only known way to make sure that it doesn't affect nested elements
+	> .cui-vertical-layout-center {
+		> .cui-list-view-grid {
+			> .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant,
+			> .cui-list-view-grid-quadrant {
+				> .cui-lv-tr-outer {
+					> .cui-lv-tr {
+						> .cui-lv-td {
+							> .cui-tree-node {
+								> .cui-tree-node-handle {
+									height: 24px; // todo
+								}
+
+								> .cui-tree-node-content {
+									min-height: 24px;  // todo
+								}
+							}
+
+							> .cui-label {
+								padding-top: $spacer-xs;
+								padding-bottom: $spacer-xs;
+							}
+
+							> .cui-drag-handle-row {
+								margin-top: $spacer-sm;
+							}
+
+							&.cui-lv-row-move-handle-column {
+								padding-top: $table-padding-y;
+								padding-bottom: $table-padding-y;
+							}
+						}
+					}
+				}
+
+				> .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
+					background-size: 100% 64px;  // todo
+				}
+			}
+		}
+	}
+}

@@ -334,7 +334,7 @@ $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
 $checkbox-margin:				$checkbox-icon-size/2 !default;
 
-// Table
+// Table & ListView
 // ==========================================
 $table-border-color: 	gray('200') !default;
 $table-border-radius:	$border-radius-sm !default;
@@ -345,6 +345,13 @@ $table-odd-background:	transparent !default;
 $table-padding-x:		$spacer-lg/2 !default;
 $table-padding-y:		$spacer-xs !default;
 $table-row-hover-background: gray('100') !default;
+
+// List View
+// ==========================================
+$list-view-font-size:					$font-size-sm !default;
+$list-view-selected-row-background:		rgba(theme-color('focused'), 0.2) !default;
+$list-view-move-handle-width:			$list-view-font-size !default;
+$list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
 
 // Calendar
 // ==========================================

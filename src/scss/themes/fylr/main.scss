@@ -51,6 +51,8 @@
 @import 'components/_panel';
 @import 'components/_toolbar';
 @import 'components/_pane';
+@import 'components/_list-view'; // extends pane
+@import 'components/_tabs'; // extends pane
 
 
 // 3.) "organisms" -
