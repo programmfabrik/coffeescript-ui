@@ -72,7 +72,7 @@
 		cursor: grab;
 
 		.cui-drag-handle-row {
-			margin-top: 7px; // no way to calculate this from
+			margin-top: $spacer-sm; // no way to calculate this from
 		}
 	}
 }
