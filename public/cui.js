@@ -46112,6 +46112,13 @@ CUI.Tabs = (function(superClass) {
     return this;
   };
 
+  Tabs.prototype.destroy = function() {
+    while (this.__tabs.length > 0) {
+      this.__tabs[0].destroy();
+    }
+    return Tabs.__super__.destroy.call(this);
+  };
+
   return Tabs;
 
 })(CUI.SimplePane);
