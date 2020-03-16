@@ -47,9 +47,9 @@
 @import 'components/_forms';
 @import 'components/_table';
 @import 'components/_date-time'; // calendar
-//
+// todo: specific order needed ??
 @import 'components/_panel';
-@import 'components/_toolbar';
+@import 'components/_toolbar'; // inside of pane
 @import 'components/_pane';
 @import 'components/_list-view'; // extends pane
 @import 'components/_tabs'; // extends pane
