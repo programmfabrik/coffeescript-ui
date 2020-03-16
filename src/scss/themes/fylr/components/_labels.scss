@@ -229,16 +229,10 @@ label[data-label-clickable],
 		}
 	}
 
-	&.cui-label--show-overflow {
-		.cui-label-manage-overflow-button {
-			left: auto;
-		}
-	}
-
 	.cui-label-manage-overflow-button {
 		z-index: 1;
 		position: absolute;
-		left: 0;
+		left: auto;
 		right: 0;
 		bottom: 0;
 		background: linear-gradient(transparent, white);
