@@ -38,6 +38,14 @@
 		}
 	}
 
+	.cui-table-row {
+		&:hover {
+			.cui-table-td {
+				background-color: $table-row-hover-background;
+			}
+		}
+	}
+
 	.cui-table-td {
 		vertical-align: middle;
 	}
