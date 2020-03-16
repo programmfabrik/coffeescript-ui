@@ -1006,9 +1006,7 @@ class Demo.ListViewDemo extends Demo
 			closed: true
 			content: list_view2.DOM
 
-		layout = CUI.dom.append(CUI.dom.append(CUI.dom.div("listview-in-panel-panels-container"), p1.DOM), p2.DOM)
-
-		demo_table.addListview("Listviews inside Panels",layout)
+		demo_table.addExample("Listviews inside Panels", [p1, p2])
 
 		#----------------------
 
