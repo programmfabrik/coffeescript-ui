@@ -5,8 +5,7 @@
 	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
 	background-color: transparent; // reset from cui-pane
 	font-size: $list-view-font-size;
-	border-left: 1px solid $table-border-color;
-	border-right: 1px solid $table-border-color;
+	border: 1px solid $table-border-color;
 
 	// todo: when --bordered style draw ALL borders incl the row borders ?
 	// &--bordered {
@@ -109,10 +108,6 @@
 	min-width: 0;
 	outline: none;
 	cursor: default;
-
-	// > .cui-lv-tr {
-	// 	border-bottom: 1px solid $table-border-color;
-	// }
 
 	&.cui-selected {
 		> .cui-lv-tr > .cui-lv-td {
@@ -222,10 +217,6 @@
 	position: relative;
 	overflow: hidden;
 
-	> .cui-lv-tbody:last-child {
-		border-top: 1px solid $table-border-color;
-	}
-
 	&.cui-lv--max-last-col {
 		> div > .cui-list-view-grid-quadrant {
 			> .cui-lv-tr-outer,
@@ -306,22 +297,9 @@
 	}
 }
 
-.cui-list-view-grid-has-fixed-rows {
-	.cui-list-view-grid-inner-top {
-		.cui-list-view-grid-quadrant {
-			// border-bottom: 1px solid $table-border-color;
-
-			&:empty {
-				// border-bottom-width: 0;
-			}
-		}
-	}
-}
-
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
 	display: flex;
-	border-top: 1px solid $table-border-color;
 	border-bottom: 1px solid $table-border-color;
 
 	// breaks the headers - they should be left aligned
@@ -366,8 +344,10 @@
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
 	> .cui-lv-tr-outer {
+		& + .cui-lv-tr-outer {
 		> .cui-lv-tr {
-			border-bottom: 1px solid $table-border-color;
+				border-top: 1px solid $table-border-color;
+			}
 		}
 
 		&:hover {
