@@ -342,8 +342,8 @@ $table-data-height: 	32px !default;
 $table-data-width: 		135px !default; // old: $td-width
 $table-even-background:	gray('100') !default;
 $table-odd-background:	transparent !default;
-$table-padding-x:		$spacer-lg/2 !default;
-$table-padding-y:		$spacer-xs !default;
+$table-padding-x:		$spacer-sm*2 !default;
+$table-padding-y:		$spacer-sm !default;
 $table-row-hover-background: gray('100') !default;
 
 // List View
