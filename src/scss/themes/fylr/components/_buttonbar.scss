@@ -9,13 +9,6 @@
 	> .cui-button-appearance-flat {
 		margin-right: 0;
 
-		// assuming this is an icon-only button (no text), the icon should be a little bigger
-		.cui-button-left:only-child {
-			.fa {
-				font-size: $font-size-base;
-			}
-		}
-
 		+ .cui-buttonbar-group {
 			margin-left: $spacer-sm;
 		}

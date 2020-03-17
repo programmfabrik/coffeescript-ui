@@ -42,21 +42,6 @@
 @mixin button-size-sm() {
 	.cui-button-visual {
 		@include button-size($btn-height-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
-
-		.fa {
-			font-size: 11px;
-			line-height: 11px;
-		}
-
-		.cui-icon-svg {
-			transform: scale(0.85);
-
-			&.svg-close {
-				transform: none;
-				width: 9px;
-				height: 9px;
-			}
-		}
 	}
 }
 
@@ -84,6 +69,13 @@
 
 @mixin button-flat($background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
 	@include button-reset();
+
+	.cui-button-left,
+	.cui-button-right {
+		.fa {
+			font-size: $font-size-base; // todo: this only works if there is no empty button-center, such a things exists at least in the demo, try to change markup if possible
+		}
+	}
 
 	&:hover,
 	&:focus {
