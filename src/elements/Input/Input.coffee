@@ -36,6 +36,9 @@ class CUI.Input extends CUI.DataFieldInput
 		if @_appearance
 			@addClass("cui-input-appearance-"+@_appearance)
 
+		if @_size
+			@addClass("cui-input-size-"+@_size)
+
 		@__inputHints = {}
 		@__inputHintTexts = {}
 
@@ -147,6 +150,8 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			appearance:
 				check: ["code"]
+			size:
+				check: ["mini"]
 
 	readOpts: ->
 

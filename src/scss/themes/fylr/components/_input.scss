@@ -86,6 +86,13 @@ textarea {
 	// 	@include form-hint();
 	// }
 
+	&-size-mini {
+		input {
+			height: $input-height-sm;
+			line-height: $input-height-sm;
+		}
+	}
+
 	&-appearance-code {
 		input,
 		textarea {
