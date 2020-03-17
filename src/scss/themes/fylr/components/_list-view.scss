@@ -36,6 +36,13 @@
 		background-color: transparent;
 		border-top: 1px solid $table-border-color;
 	}
+
+	// input are all mini size
+	.cui-input {
+		input {
+			@include input-size-mini();
+		}
+	}
 }
 
 // Body

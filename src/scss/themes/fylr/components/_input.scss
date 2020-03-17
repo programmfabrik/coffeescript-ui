@@ -88,8 +88,7 @@ textarea {
 
 	&-size-mini {
 		input {
-			height: $input-height-sm;
-			line-height: $input-height-sm;
+			@include input-size-mini();
 		}
 	}
 

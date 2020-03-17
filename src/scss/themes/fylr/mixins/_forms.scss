@@ -11,6 +11,11 @@
 	z-index: 1;
 }
 
+@mixin input-size-mini() {
+	height: $input-height-sm;
+	line-height: $input-height-sm;
+}
+
 @mixin disable-input-focus() {
 	&:focus {
 		box-shadow: none !important;
