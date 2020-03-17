@@ -51,7 +51,8 @@ class Demo.ListViewTreeDemo extends Demo
 
 			minusButton = new CUI.Button
 				icon: new CUI.Icon(class: "fa-minus")
-				group: "plus-minus"
+				appearance: "flat"
+				size: "mini"
 				disabled: true
 				onClick: ->
 					CUI.dom.remove(_lv.getSelectedNode())
@@ -59,13 +60,15 @@ class Demo.ListViewTreeDemo extends Demo
 			bb = (new CUI.Buttonbar
 				buttons: [
 					new CUI.Button
-						group: "plus-minus"
 						icon: new CUI.Icon(class: "fa-plus")
+						appearance: "flat"
+						size: "mini"
 						onClick: =>
 							_lv.addNode(new Demo.ListViewTreeDemoDummyNode(demo: @, date: new Date()))
 					new CUI.Button
-						group: "plus-minus"
 						icon: new CUI.Icon(class: "fa-plus")
+						appearance: "flat"
+						size: "mini"
 						text: "Nested"
 						onClick: =>
 							_lv.addNode(new Demo.ListViewNestedNode(demo: @, cols: 6))
