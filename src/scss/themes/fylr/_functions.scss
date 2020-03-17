@@ -66,4 +66,9 @@
 @function gray($key: '100') {
 	@return map-get($grays, $key);
 }
+
+// Pixel to rem conversion
+@function calculate-rem($size) {
+	@return $size / 16px * 1rem;
+}
 // stylelint-enable at-rule-empty-line-before
