@@ -27,7 +27,7 @@
 	// nested
 	.cui-list-view {
 		background-color: transparent; // reset
-		margin: $spacer 0;
+		// margin: $spacer 0; // no margin to keep in line with e.g. input fields
 	}
 }
 
@@ -53,8 +53,8 @@
 	flex-shrink: 0;
 	// flex: 1 0 auto; // won't work when resizing the columns
 	display: block;
-	box-sizing: content-box; // todo: really?
-	padding: $table-padding-y $table-padding-x;
+	box-sizing: content-box;
+	padding: $list-view-padding-y $list-view-padding-x;
 
 	.cui-lv-td {
 		max-width: 100%;
@@ -94,6 +94,7 @@
 
 .cui-lv-th {
 	cursor: default;
+	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 }
 
 // Rows
