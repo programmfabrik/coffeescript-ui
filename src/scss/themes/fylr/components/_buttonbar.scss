@@ -2,24 +2,44 @@
 	display: flex;
 	align-items: center;
 
-	> *:not(:last-child) {
-		margin-right: $buttonbar-gap;
-	}
+	&--stack-horizontal {
+		flex-direction: row;
 
-	> .cui-button-appearance-flat {
-		&:not(.cui-button--bordered) {
-			margin-right: 0;
+		> *:not(:last-child) {
+			margin-right: $buttonbar-gap;
+		}
 
-			& + .cui-button--bordered {
+		> .cui-button-appearance-flat {
+			&:not(.cui-button--bordered) {
+				// remove gap between un-bordered flat buttons
+				margin-right: 0;
+
+				// add gap back if un-bordered is followed by a bordered button
+				& + .cui-button--bordered {
+					margin-left: $buttonbar-gap;
+				}
+			}
+
+			+ .cui-buttonbar-group {
 				margin-left: $buttonbar-gap;
 			}
 		}
+	}
 
-		+ .cui-buttonbar-group {
-			margin-left: $buttonbar-gap;
+	&--stack-vertical {
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+
+		> *:not(:last-child) {
+			margin-bottom: $buttonbar-gap;
 		}
 	}
 }
+
+// Buttonbar Group
+// all buttons within a buttonbar-group are visually and functionally a unit, like radio buttons
+// e.g. options, radio buttons
 
 .cui-buttonbar-group {
 	display: flex;
