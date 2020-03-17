@@ -1,0 +1,40 @@
+// Data Table
+.cui-data-table {
+	flex-shrink: 1;
+	display: inline-block;
+
+	&.cui-maximize-horizontal {
+		display: block;
+	}
+
+	&.cui-maximize-vertical {
+		display: flex;
+		flex: 1;
+	}
+
+	&.cui-maximize {
+		flex-basis: 0; // IE 11 correct scrollbar in list-view
+	}
+
+	> .cui-vertical-layout-center {
+		flex-shrink: 1;
+	}
+
+	.cui-pane-footer {
+		min-height: 0;
+		padding: $list-view-padding-y; // adjust according to (header) rows of the list-view, see .cui-lv-td & .cui-lv-th
+		background-color: transparent;
+		border-top: 1px solid $table-border-color;
+	}
+
+	input,
+	textarea {
+		min-width: 0;
+	}
+
+	.cui-lv-tr-fill-outer {
+		> .cui-lv-tr > .cui-lv-td {
+			background-size: 100% $table-data-height*2; // todo: find use-case
+		}
+	}
+}

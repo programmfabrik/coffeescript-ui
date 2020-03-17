@@ -52,6 +52,7 @@
 @import 'components/_toolbar'; // inside of pane
 @import 'components/_pane';
 @import 'components/_list-view'; // extends pane
+@import 'components/_data-table'; // special case if list-view
 @import 'components/_tabs'; // extends pane
 
 
