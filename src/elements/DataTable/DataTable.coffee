@@ -182,6 +182,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 				icon: "left"
 				disabled: true
 				group: "navi"
+				appearance: "flat"
+				size: "mini"
 				onClick: =>
 					@__offset = @__offset - @_chunk_size
 					@displayValue()
@@ -194,6 +196,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			@__navi_input = new CUI.NumberInput
 				group: "navi"
+				size: "mini"
 				placeholder: "henk"
 				data: page_data
 				name: 'page'
@@ -215,6 +218,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 				icon: "right"
 				disabled: true
 				group: "navi"
+				appearance: "flat"
+				size: "mini"
 				onClick: =>
 					@__offset = @__offset + @_chunk_size
 					@displayValue()
