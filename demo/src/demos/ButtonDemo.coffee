@@ -287,6 +287,12 @@ class Demo.ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
+		@__addButton("appearance: \"link\"",
+			icon_right: new CUI.Icon(class: "fa-plus")
+			appearance: "link"
+			text: "Link Button Plus"
+		)
+
 		@__addButton("appearance: \"important\" (OBSOLETE ???)",
 			icon_left: new CUI.Icon(class: "fa-bank")
 			appearance: "important"

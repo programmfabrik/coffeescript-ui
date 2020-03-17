@@ -47,6 +47,7 @@
 	}
 
 	// Button states
+
 	&:hover {
 		.cui-button-visual {
 			// todo: tbd
@@ -73,6 +74,7 @@
 	}
 
 	// Button variants
+
 	&.cui-button-appearance-flat {
 		@include button-flat();
 
@@ -127,6 +129,23 @@
 				$btn-border-radius-lg*$biggerBy
 			);
 		}
+	}
+}
+
+.cui-button-select {
+	.cui-button-center {
+		[data-max-chars] {
+			text-align: inherit;
+			width: auto;
+		}
+	}
+}
+
+a[role='button'].cui-button-appearance-link {
+	height: initial;
+
+	> .cui-button-center {
+		word-wrap: break-word;
 	}
 }
 

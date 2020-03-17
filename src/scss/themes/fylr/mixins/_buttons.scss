@@ -101,9 +101,12 @@
 
 	.cui-button-visual {
 		color: $link-color;
-		text-decoration: underline;
-		word-break: break-all;
 		height: auto;
+
+		.cui-button-center {
+			text-decoration: underline;
+			word-break: break-all;
+		}
 	}
 
 	&:hover,
