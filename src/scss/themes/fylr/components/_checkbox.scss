@@ -34,9 +34,12 @@
 
 .cui-button-checkbox {
 	display: inline-flex; // so that the click area is not wider than the text
-	flex-direction: row;
-	cursor: pointer;
+	height: $input-height;
 	max-width: 100%;
+	flex-direction: row;
+	align-items: center;
+	line-height: $input-height;
+	cursor: pointer;
 
 	[data-max-chars] {
 		text-align: inherit;
