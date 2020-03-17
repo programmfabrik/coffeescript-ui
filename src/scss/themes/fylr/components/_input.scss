@@ -69,7 +69,8 @@ textarea {
 
 	&.cui-input-has-check-input {
 		&.cui-input-invalid {
-			input {
+			input,
+			.cui-data-field-right .cui-button .cui-button-visual {
 				border-color: theme-color('danger');
 				background: transparentize(theme-color('danger'), 0.85);
 			}
