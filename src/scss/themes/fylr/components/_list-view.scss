@@ -30,7 +30,7 @@
 		// margin: $spacer 0; // no margin to keep in line with e.g. input fields
 	}
 
-	.cui-pane-footer {
+	> .cui-vertical-layout-bottom > .cui-pane-footer {
 		min-height: 0;
 		padding: $list-view-padding-y; // adjust according to (header) rows of the list-view, see .cui-lv-td & .cui-lv-th
 		background-color: transparent;
