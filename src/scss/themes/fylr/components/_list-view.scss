@@ -193,7 +193,7 @@
 	> .cui-lv-tr > .cui-lv-td {
 		border-style: none;
 		background: linear-gradient($table-even-background 50%, white 50%);
-		background-size: 100% ($list-view-data-height + 2*$table-padding-y)*2;
+		background-size: 100% ($list-view-data-height + 2*$table-padding-y) *2;
 	}
 
 	.cui-lv-td {
@@ -352,8 +352,9 @@
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
 	> .cui-lv-tr-outer {
+		// can't select last-child because there is usually a .cui-lv-tr-fill-outer element as the last-child
 		& + .cui-lv-tr-outer {
-		> .cui-lv-tr {
+			> .cui-lv-tr {
 				border-top: 1px solid $table-border-color;
 			}
 		}
@@ -466,6 +467,7 @@
 							> .cui-tree-node {
 								> .cui-tree-node-handle {
 									height: 24px; // todo
+									background-color: red;
 								}
 
 								> .cui-tree-node-content {
