@@ -96,6 +96,7 @@
 
 	.cui-data-field-input {
 		flex-grow: 1;
+		margin: 0 -2px;
 	}
 }
 
@@ -513,12 +514,11 @@
 							}
 
 							> .cui-drag-handle-row {
-								margin-top: $spacer-sm;
+								margin-top: $input-height*0.5;
 							}
 
 							&.cui-lv-row-move-handle-column {
-								padding-top: $table-padding-y;
-								padding-bottom: $table-padding-y;
+								padding-left: 0.75rem;
 							}
 						}
 					}
