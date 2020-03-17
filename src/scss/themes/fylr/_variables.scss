@@ -267,6 +267,10 @@ $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
 
 $btn-focus-shadow: 			0 0 0 3px rgba(theme-color('focused'), 0.3);
 
+// Buttonbar
+// ==========================================
+$buttonbar-gap: 	$spacer-sm !default;
+
 // Labels
 // ==========================================
 $label-padding: $spacer-sm !default;

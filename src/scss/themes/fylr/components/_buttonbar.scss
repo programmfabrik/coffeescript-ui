@@ -3,7 +3,7 @@
 	align-items: center;
 
 	> *:not(:last-child) {
-		margin-right: $spacer-sm;
+		margin-right: $buttonbar-gap;
 	}
 
 	> .cui-button-appearance-flat {
