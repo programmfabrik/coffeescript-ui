@@ -7,10 +7,16 @@
 	}
 
 	> .cui-button-appearance-flat {
-		margin-right: 0;
+		&:not(.cui-button--bordered) {
+			margin-right: 0;
+
+			& + .cui-button--bordered {
+				margin-left: $buttonbar-gap;
+			}
+		}
 
 		+ .cui-buttonbar-group {
-			margin-left: $spacer-sm;
+			margin-left: $buttonbar-gap;
 		}
 	}
 }
