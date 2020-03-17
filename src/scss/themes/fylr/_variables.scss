@@ -349,6 +349,8 @@ $table-row-hover-background: gray('100') !default;
 // List View
 // ==========================================
 $list-view-font-size:					$font-size-sm !default;
+$list-view-data-height: 				1rem !default;
+$list-view-data-width: 					125px !default;
 $list-view-selected-row-background:		rgba(theme-color('focused'), 0.2) !default;
 $list-view-move-handle-width:			$list-view-font-size !default;
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
