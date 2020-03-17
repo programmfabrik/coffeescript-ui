@@ -335,8 +335,9 @@ class Demo.ListViewNestedNode extends Demo.ListViewTreeDemoNode
 			cols: ((if idx == 1 then "auto" else "auto") for c, idx in columns)
 			footer_left: new CUI.Buttonbar buttons: [
 				new CUI.Button
-					group: "plus-minus"
 					icon: new CUI.Icon(class: "fa-plus")
+					appearance: "flat"
+					size: "mini"
 					onClick: ->
 						columns = __getColumns(-> ""+Math.floor(Math.random()*1000))
 						lv.appendRow(new CUI.ListViewRow(columns: columns))
@@ -344,10 +345,11 @@ class Demo.ListViewNestedNode extends Demo.ListViewTreeDemoNode
 						lb.enable()
 
 				lb = new CUI.Button
-					group: "plus-minus"
 					disabled: true
 					icon: new CUI.Icon(class: "fa-minus")
 					text: "Last"
+					appearance: "flat"
+					size: "mini"
 					onClick: ->
 						if lv.rowsCount > 1
 							lv.removeRow(lv.getRowIdx(lv.rowsCount-1))
