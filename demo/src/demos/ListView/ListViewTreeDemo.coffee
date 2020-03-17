@@ -216,11 +216,18 @@ class Demo.ListViewTreeDemoDummyNode extends CUI.ListViewTreeNode
 		@columns.splice(0,0, new CUI.ListViewColumn(text: @getNodeId()))
 
 		d = CUI.dom.div()
+		# todo: in a perfect world this should be a buttonbar with stack: "vertical"
 		btn = new CUI.Button(
 			text: "More Content"
+			size: "mini"
+			appearance: "flat"
+			bordered: true
 			onClick: ->
 				b = new CUI.Button
 					text: ""+Math.random()
+					size: "mini"
+					appearance: "flat"
+					bordered: true
 					onClick: ->
 						CUI.DOM.remove(@DOM.parent())
 						@destroy()
