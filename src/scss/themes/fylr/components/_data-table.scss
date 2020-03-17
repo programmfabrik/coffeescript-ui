@@ -20,13 +20,6 @@
 		flex-shrink: 1;
 	}
 
-	.cui-pane-footer {
-		min-height: 0;
-		padding: $list-view-padding-y; // adjust according to (header) rows of the list-view, see .cui-lv-td & .cui-lv-th
-		background-color: transparent;
-		border-top: 1px solid $table-border-color;
-	}
-
 	input,
 	textarea {
 		min-width: 0;
