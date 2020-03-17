@@ -54,12 +54,12 @@
 // Columns
 
 .cui-lv-td {
+	display: block;
 	width: $list-view-data-width;
 	min-height: $list-view-data-height; // todo
 	overflow: hidden;
 	flex-shrink: 0;
 	// flex: 1 0 auto; // won't work when resizing the columns
-	display: block;
 	box-sizing: content-box;
 	padding: $list-view-padding-y $list-view-padding-x;
 
