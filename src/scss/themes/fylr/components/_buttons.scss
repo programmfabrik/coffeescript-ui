@@ -81,6 +81,16 @@
 	// Button variants
 	&.cui-button-appearance-flat {
 		@include button-flat();
+
+		&.cui-button--bordered {
+			.cui-button-visual {
+				border: 1px solid currentColor;
+			}
+
+			+ .cui-button--bordered {
+				margin-left: $buttonbar-gap;
+			}
+		}
 	}
 
 	&.cui-button-appearance-link {

@@ -119,6 +119,9 @@ class CUI.Button extends CUI.DOMElement
 		if @_appearance
 			@addClass("cui-button-appearance-"+@_appearance)
 
+		if @_bordered
+			@addClass("cui-button--bordered")
+
 		if @_primary
 			@addClass("cui-button--primary")
 
@@ -437,6 +440,9 @@ class CUI.Button extends CUI.DOMElement
 				check: ["mini","normal","big","bigger"]
 			appearance:
 				check: ["link","flat","normal","important","transparent-border"]
+			bordered:
+				check: Boolean
+				default: false
 			primary:
 				mandatory: true
 				default: false
