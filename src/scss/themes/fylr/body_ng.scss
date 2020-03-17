@@ -533,47 +533,6 @@ li > div {
 }
 
 
-// Data Table
-.cui-data-table {
-	flex-shrink: 1;
-	display: inline-block;
-
-	&.cui-maximize-horizontal {
-		display: block;
-	}
-
-	&.cui-maximize-vertical {
-		display: flex;
-		flex: 1;
-	}
-
-	&.cui-maximize {
-		flex-basis: 0%; // IE 11 correct scrollbar in list-view
-
-		> .cui-list-view {
-			border: none;
-		}
-	}
-
-	> .cui-vertical-layout-center {
-		flex-shrink: 1;
-	}
-
-	> .cui-list-view {
-		border: 1px solid $border;
-	}
-
-	.cui-pane-footer {
-		min-height: 0;
-		padding: 0;
-	}
-
-	input,
-	textarea {
-		min-width: 0;
-	}
-}
-
 // Navigation Toolbar
 
 .cui-navigation-toolbar {
