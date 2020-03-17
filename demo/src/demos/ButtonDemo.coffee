@@ -679,8 +679,19 @@ class Demo.ButtonDemo extends Demo
 				new CUI.Button(text: "groupA", group: "groupA")
 			]
 		)
-
 		@__demo_table.addExample("example 6", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
+
+		bb = new CUI.Buttonbar(
+			stack: "vertical"
+			buttons: [
+				new CUI.Button(text: "groupA")
+				new CUI.Button(text: "groupA")
+				new CUI.Button(text: "groupA")
+			]
+		)
+		@__demo_table.addExample("example 7, vertical stack", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
 
 		bb = new CUI.Buttonbar(
 			tooltip:
