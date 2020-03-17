@@ -753,9 +753,9 @@ class Demo.ButtonDemo extends Demo
 			buttons: [
 				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
 				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
-				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat")
-				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat")
-				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat")
+				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat", bordered: true)
+				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat", bordered: true)
+				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat", bordered: true)
 				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-share"))
 				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-refresh"))
 			]
@@ -765,12 +765,12 @@ class Demo.ButtonDemo extends Demo
 
 		bb = new CUI.Buttonbar(
 			buttons: [
-				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
-				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
-				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"))
-				new CUI.Button(text: "Eins", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
-				new CUI.Button(text: "Zwei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
-				new CUI.Button(text: "Drei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"))
+				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"), bordered: true)
+				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"), bordered: true)
+				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"), bordered: true)
+				new CUI.Button(text: "Eins", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"), bordered: true)
+				new CUI.Button(text: "Zwei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"), bordered: true)
+				new CUI.Button(text: "Drei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"), bordered: true)
 			]
 		)
 		@__demo_table.addExample("example 3 flat, two group with icon", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )

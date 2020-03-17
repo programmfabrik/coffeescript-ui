@@ -90,12 +90,18 @@
 	}
 
 	.cui-button-appearance-flat {
-		.cui-button-visual {
-			border: 1px solid $body-color;
-		}
+		margin: 0 $buttonbar-gap;
 
-		&:not(:last-child) .cui-button-visual {
-			border-right: 0;
+		&.cui-button--bordered {
+			margin: 0;
+
+			.cui-button-visual {
+				border: 1px solid $body-color;
+			}
+
+			&:not(:last-child) .cui-button-visual {
+				border-right: 0;
+			}
 		}
 	}
 }
