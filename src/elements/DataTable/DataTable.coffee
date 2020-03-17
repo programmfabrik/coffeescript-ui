@@ -149,15 +149,17 @@ class CUI.DataTable extends CUI.DataFieldInput
 			if @_new_rows != "remove_only"
 				buttons.push
 					icon: "plus"
+					appearance: "flat"
+					size: "mini"
 					tooltip: text: CUI.DataTable.defaults.plus_button_tooltip
-					group: "plus-minus"
 					onClick: =>
 						@addRow()
 
 
 			@minusButton = new CUI.defaults.class.Button
 				icon: "minus"
-				group: "plus-minus"
+				appearance: "flat"
+				size: "mini"
 				tooltip: text: CUI.DataTable.defaults.minus_button_tooltip
 				disabled: true
 				onClick: =>
