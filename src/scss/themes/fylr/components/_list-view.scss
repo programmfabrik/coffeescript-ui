@@ -118,8 +118,31 @@
 	cursor: default;
 
 	&.cui-selected {
-		> .cui-lv-tr > .cui-lv-td {
-			background: $list-view-selected-row-background;
+		> .cui-lv-tr {
+			position: relative;
+
+			> .cui-lv-td {
+				background: $list-view-selected-row-background;
+			}
+
+			&::before,
+			&::after {
+				content: '';
+				display: block;
+				position: absolute;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: $list-view-selected-row-background;
+			}
+
+			&::before {
+				top: -1px;
+			}
+
+			&::after {
+				bottom: -1px;
+			}
 		}
 
 		.cui-empty-label {
@@ -308,7 +331,6 @@
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
 	display: flex;
-	border-bottom: 1px solid $table-border-color;
 
 	// breaks the headers - they should be left aligned
 	// .cui-lv-td {
@@ -362,6 +384,16 @@
 		&:hover {
 			> .cui-lv-tr {
 				background: $table-row-hover-background;
+			}
+		}
+	}
+
+	.cui-list-view-grid-inner-bottom & {
+		> .cui-lv-tr-outer {
+			&:first-child {
+				> .cui-lv-tr {
+					border-top: 1px solid $table-border-color;
+				}
 			}
 		}
 	}
