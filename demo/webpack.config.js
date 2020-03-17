@@ -17,21 +17,21 @@ module.exports = function(env) {
         entry: {
             main_js: './index.coffee',
             cui_demo: APP_DIR + '/scss/demo.scss',
-            cui_fylr: '../../src/scss/themes/fylr/main.scss', 
-            cui_debug: '../../src/scss/themes/debug/main.scss',             
-            cui_ng: '../../src/scss/themes/ng/main.scss', 
+            cui_fylr: '../../src/scss/themes/fylr/main.scss',
+            cui_debug: '../../src/scss/themes/debug/main.scss',
+            cui_ng: '../../src/scss/themes/ng/main.scss',
         },
         output: {
             path: BUILD_DIR,
-            filename: (chunkData) => {   
+            filename: (chunkData) => {
                 // we cannot prevent wp from generating a js output for each css only entry,
                 // each emitted js file must therefore have a unique filename to prevent error: "Multiple chunks emit assets to the same filename"
                 if (chunkData.chunk.id === 'main_js') {
-                    return 'cui-demo.js';              
+                    return 'cui-demo.js';
                 } else {
                     return '[name].js'
                 }
-            },            
+            },
         },
         optimization: {
             namedChunks: true, // needed so we can use [id].css to name the extracted css files,
@@ -49,8 +49,8 @@ module.exports = function(env) {
                         keep_fnames: true,
                     }
                 }),
-            ],   
-        },        
+            ],
+        },
         devtool: (!isProduction ? 'source-map' : undefined),
         devServer: {
             publicPath: '/public/',
@@ -67,17 +67,17 @@ module.exports = function(env) {
                 use: [
                     { loader: MiniCssExtractPlugin.loader },
                     { loader: 'css-loader', options: { sourceMap: true } },
-                    { loader: 'postcss-loader', options: { 
+                    { loader: 'postcss-loader', options: {
                         config: { path: __dirname, ctx: { optimize: isProduction } },
                         sourceMap: true,
                     }},
-                    { loader: 'sass-loader', options: { sourceMap: true } }, 
+                    { loader: 'sass-loader', options: { sourceMap: true } },
                 ],
-            },            
+            },
             {
                 test: /(icons\.svg|\.txt)/,
                 loader: 'raw-loader'
-            },            
+            },
             {
                 test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
                 exclude: /icons\.svg/,
@@ -86,12 +86,12 @@ module.exports = function(env) {
             {
                 test: /\.(html)$/,
                 loader: 'html-loader'
-            }
+			},
             ]
         },
         plugins: [
             new FixStyleOnlyEntriesPlugin(), // Removes extraneous js files that are emitted from the scss only entries
-            new MiniCssExtractPlugin({ 
+            new MiniCssExtractPlugin({
                 moduleFilename: ({ id }) => {
                     if ( id === 'cui_demo') {
                         return 'cui-demo.css';
