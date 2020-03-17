@@ -704,8 +704,37 @@ class Demo.ButtonDemo extends Demo
 				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
 			]
 		)
-
 		@__demo_table.addExample("example 2 flat, no group", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
+
+		bb = new CUI.Buttonbar(
+			tooltip:
+				text: "example 2 flat, with border"
+			buttons: [
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-lightbulb-o")
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-cog")
+				)
+				new CUI.Button(
+					text: "Download"
+					icon_left: new CUI.Icon(class: "fa-download")
+					appearance: "flat"
+					bordered: true
+				)
+				new CUI.Button(
+					text: "Hinzufügen"
+					icon_left: new CUI.Icon(class: "fa-plus")
+					appearance: "flat"
+					bordered: true
+				)
+			]
+		)
+		@__demo_table.addExample("example 2 flat, with border", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
 
 		bb = new CUI.Buttonbar(
 			tooltip:
@@ -720,8 +749,55 @@ class Demo.ButtonDemo extends Demo
 				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-refresh"))
 			]
 		)
-
 		@__demo_table.addExample("example 3 flat, mixed", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
+
+		bb = new CUI.Buttonbar(
+			buttons: [
+				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
+				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
+				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"))
+				new CUI.Button(text: "Eins", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
+				new CUI.Button(text: "Zwei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
+				new CUI.Button(text: "Drei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"))
+			]
+		)
+		@__demo_table.addExample("example 3 flat, two group with icon", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
+
+		bb = new CUI.Buttonbar(
+			buttons: [
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					text: "Nested"
+				)
+			]
+		)
+		@__demo_table.addExample("example 4 flat, icon and optional text", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
+
+		bb = new CUI.Buttonbar(
+			buttons: [
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					size: "mini"
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					size: "mini",
+					text: "Nested"
+				)
+			]
+		)
+		@__demo_table.addExample("example 4 flat, icon and optional text, mini", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
 
 		@__addDivider("Using Styles on Buttons inside buttonbar")
 
