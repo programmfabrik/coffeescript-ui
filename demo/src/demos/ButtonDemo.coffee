@@ -799,6 +799,45 @@ class Demo.ButtonDemo extends Demo
 		@__demo_table.addExample("example 4 flat, icon and optional text, mini", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
 
 
+		bb = new CUI.Buttonbar(
+			stack: "vertical"
+			buttons: [
+				new CUI.Button(
+					text: "Vertical"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					text: "Stack"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					text: "Hinzufügen"
+					appearance: "flat",
+					bordered: true
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					text: "Stack"
+					appearance: "flat",
+					bordered: true
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-cog"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					bordered: true
+					icon_left: new CUI.Icon(class: "fa-cog"),
+				)
+			]
+		)
+		@__demo_table.addExample("example 5, vertically stacked buttonbar", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+
+
 		@__addDivider("Using Styles on Buttons inside buttonbar")
 
 		bb = new CUI.Buttonbar(
