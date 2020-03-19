@@ -41537,12 +41537,11 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__setUserSelectedData = function() {
-    var i, input, len, ref, results, v;
+    var i, input, len, ref, v;
     if (!this.__inputs) {
       return;
     }
     ref = this.__inputs;
-    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       input = ref[i];
       if (this._undo_support) {
@@ -41550,9 +41549,13 @@ CUI.MultiInput = (function(superClass) {
       } else {
         v = this.getValue()[input.getName()];
       }
-      results.push(this.__userSelectedData[input.getName()] = !this.__user_selectable || (this.__user_selectable && !CUI.util.isEmpty(v)));
+      this.__userSelectedData[input.getName()] = !this.__user_selectable || (this.__user_selectable && !CUI.util.isEmpty(v));
     }
-    return results;
+    if (!Object.values(this.__userSelectedData).some(function(enabled) {
+      return enabled;
+    })) {
+      return this.__userSelectedData[this.__inputs[0].getName()] = true;
+    }
   };
 
   MultiInput.prototype.setInputVisibility = function() {
