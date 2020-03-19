@@ -301,7 +301,7 @@ $panel-border-color: gray('400') !default;
 // Toolbar
 // ==========================================
 $toolbar-height: 40px !default;
-$toolbar-background: theme-color('light') !default;
+$toolbar-background: transparent !default; // leave transparent by default and style dependent on where the toolbar is used
 $toolbar-padding: $spacer-sm !default;
 
 // Pane
@@ -401,3 +401,19 @@ $slider-track-active-background: 	$slider-handle-background !default;
 $slider-track-border-width:			0 !default;
 $slider-track-border-color:			$input-border-color !default;
 $slider-track-border-radius:		$border-radius-sm !default;
+
+// Layer
+// ==========================================
+$layer-sizes: (
+	xs: 	400,
+	s: 		500,
+	m: 		600,
+	l: 		700,
+	xl: 	800,
+	xxl: 	900,
+	xxxl: 	1000
+) !default;
+
+$layer-background: 			$body-bg !default;
+$layer-border-radius: 		$border-radius !default;
+$layer-footer-background: 	theme-color('light') !default; // todo: do we really need/want a footer background?

@@ -1,0 +1,318 @@
+// Layer
+
+/*
+<div class="cui-layer-root cui-layer-root-layer">
+	<div class="cui-layer-backdrop"></div>
+	<div class="cui-layer">
+		<div class="cui-simple-pane cui-vertical-layout cui-pane"> ... </div>
+	</div>
+	<div class="cui-layer-pointer"></div>
+</div>
+*/
+
+.cui-layer-root {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+	pointer-events: none;
+
+	&[cui-layer-fixed] {
+		position: fixed !important;
+	}
+
+	.cui-layer {
+		position: absolute;
+		pointer-events: auto;
+	}
+
+	// centered gets placed by flex
+	&[cui-placement='c'] {
+		.cui-layer-pointer {
+			display: none;
+		}
+	}
+
+	&[cui-fill-space='both'] {
+		.cui-layer {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&[cui-fill-space='horizontal'] {
+		.cui-layer {
+			width: 100%;
+		}
+	}
+
+	&[cui-fill-space='vertical'] {
+		.cui-layer {
+			height: 100%;
+		}
+	}
+}
+
+
+// * Backdrop
+
+.cui-layer-backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	z-index: -1;
+
+	&--visible {
+		background: radial-gradient(hsla(205, 30%, 20%, 0.4), hsla(205, 30%, 20%, 0.6));
+	}
+
+	> div {
+		flex: 1 1 auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+}
+
+.cui-layer-backdrop-body-clone {
+	position: absolute;
+	overflow: hidden;
+
+	> *:first-child {
+		position: absolute;
+	}
+}
+
+.cui-layer-root.cui-layer-root-backdrop-blur {
+	> .cui-layer-backdrop {
+		filter: blur(5px);
+		overflow: hidden;
+	}
+
+	> .cui-layer {
+		// blur effect, make layer transparent
+		background-color: rgba(255, 255, 255, 0.39);
+
+		.cui-item-list-body {
+			.cui-button {
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+.cui-layer-backdrop-policy-modal,
+.cui-layer-backdrop-policy-click {
+	pointer-events: auto;
+}
+
+// * Layer
+
+.cui-layer {
+	// the sizes are not really used, but lets keep the classes for now
+	@each $name, $width in $layer-sizes {
+		&--size-#{$name} {
+			width: #{$width}px;
+		}
+	}
+
+	display: flex;
+	flex-direction: column;
+	min-width: 200px;
+	min-height: 30px;
+	margin: $spacer-sm;
+	background-color: $layer-background;
+	outline: none;
+	border-radius: $layer-border-radius;
+	overflow: auto; /* hidden; */
+	box-shadow:
+		0 0 0 1px hsla(205, 20%, 30%, 0.15),
+		0 8px 10px 1px hsla(0, 0%, 0%, 0.14),
+		0 3px 14px 2px hsla(0, 0%, 0%, 0.12),
+		0 5px 5px -3px hsla(0, 0%, 0%, 0.4);
+
+	> .cui-pane {
+		background-color: transparent; // reset from cui-pane
+
+		// layer-header
+		> .cui-vertical-layout-top > .cui-pane-header {
+			border-radius: $layer-border-radius $layer-border-radius 0 0;
+		}
+
+		// layer-body
+		> .cui-vertical-layout-center {
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		// layer-footer
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			border-radius: 0 0 $layer-border-radius $layer-border-radius;
+			background-color: $layer-footer-background; // todo
+		}
+	}
+
+	.cui-form-table {
+		.cui-data-field {
+			width: auto;
+		}
+	}
+
+	// todo: find use-case
+	.cui-form-button {
+		.cui-button {
+			max-width: 100%;
+		}
+	}
+
+	.cui-data-field-input {
+		min-width: 150px;
+
+		&.cui-checkbox {
+			min-width: 1rem;
+		}
+
+		&.cui-data-table {
+			min-width: 200px;
+		}
+	}
+
+	.cui-list-view {
+		.cui-data-field-input {
+			min-width: 0;
+		}
+	}
+
+	.cui-toolbar,
+	.cui-buttonbar {
+		.cui-data-field-input {
+			min-width: 0;
+		}
+	}
+}
+
+// * Layer Pointer
+
+.cui-layer-pointer {
+	position: absolute;
+	z-index: 1;
+	width: 46px;
+	height: 16px;
+	margin: 6px;
+	overflow: hidden;
+
+	&::after { // arrow (north)
+		content: '';
+		position: absolute;
+		width: 18px;
+		height: 18px;
+		background: $layer-background;
+		transform: rotate(45deg);
+		box-shadow:
+			0 0 0 1px hsla(205, 20%, 30%, 0.15),
+			4px 4px 10px 1px hsla(0, 0%, 0%, 0.14),
+			1px 1px 14px 2px hsla(0, 0%, 0%, 0.12),
+			2px 2px 5px -3px hsla(0, 0%, 0%, 0.4);
+	}
+
+	&--n,
+	&--s {
+		margin: 0 6px;
+		height: 14px;
+
+		&::after {
+			left: 14px;
+		}
+	}
+
+	&--n::after {
+		top: 5px;
+	}
+
+	&--s::after {
+		top: -9px;
+
+		.cui-pane--has-footer & {
+			background: $layer-footer-background;
+		}
+	}
+
+	&--e,
+	&--w {
+		width: 12px;
+		height: 46px;
+		margin: 6px 0;
+
+		&::after {
+			top: 14px;
+		}
+	}
+
+	&--e::after {
+		left: -11px;
+	}
+
+	&--w::after {
+		left: 5px;
+	}
+}
+
+// todo: find use-case
+.cui-pane--has-footer {
+	// make sure that white layer pointers on the side
+	// only end above the footer
+	.cui-layer-pointer--e,
+	.cui-layer-pointer--w {
+		margin-bottom: $toolbar-height;
+	}
+}
+
+.cui-pane--has-header {
+	// make sure that white layer pointers on the side
+	// only start below the header
+	.cui-layer-pointer--e,
+	.cui-layer-pointer--w {
+		margin-top: $toolbar-height;
+	}
+
+	// todo: find use-case
+	&.cui-layer-root-popover {
+		.cui-layer-pointer--n::after {
+			background: red;
+		}
+	}
+}
+
+// * Root Menu Layer Pointer
+
+.cui-layer-root-menu .cui-layer-pointer {
+	height: 12px;
+
+	&--e,
+	&--w {
+		width: 9px;
+		height: 37px;
+
+		&::after {
+			top: 9px;
+		}
+	}
+
+	&--n,
+	&--s {
+		&::after {
+			left: 7px;
+		}
+	}
+
+	&::after {
+		background: white; // todo
+	}
+}
