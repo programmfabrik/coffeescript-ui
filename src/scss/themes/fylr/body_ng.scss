@@ -417,38 +417,6 @@ li > div {
 	}
 }
 
-// BorderLayout
-
-.cui-border-layout-north,
-.cui-border-layout-south,
-.cui-border-layout-west,
-.cui-border-layout-east {
-	&:empty {
-		display: none;
-	}
-}
-
-.cui-border {
-	border: 1px solid $border;
-}
-
-.cui-border-top {
-	border-top: 1px solid $border;
-}
-
-.cui-border-bottom {
-	border-bottom: 1px solid $border;
-}
-
-.cui-border-right {
-	border-right: 1px solid $border;
-}
-
-.cui-border-left {
-	border-left: 1px solid $border;
-}
-
-
 // Navigation Toolbar
 
 .cui-navigation-toolbar {

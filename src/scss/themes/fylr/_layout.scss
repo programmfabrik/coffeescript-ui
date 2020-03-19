@@ -175,15 +175,13 @@ body {
 }
 
 // Border Layout
-
 .cui-border-layout-north,
-.cui-border-layout-south {
-	background-color: #ffd890;
-}
-
+.cui-border-layout-south,
 .cui-border-layout-west,
 .cui-border-layout-east {
-	background-color: #ffefd1;
+	&:empty {
+		display: none;
+	}
 }
 
 // ! Special cases within layout
