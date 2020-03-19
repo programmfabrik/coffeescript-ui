@@ -38,3 +38,12 @@ b, strong {
 ul, ol {
 	padding-left: $spacer;
 }
+
+kbd {
+	padding: 1px $spacer-xs;
+	display: inline-block;
+	border: 1px solid gray('400');
+	background: white;
+	border-radius: $border-radius-sm;
+	text-align: center;
+}
