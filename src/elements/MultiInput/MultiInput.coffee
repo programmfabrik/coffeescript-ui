@@ -114,6 +114,9 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			# All keys are selected when user_selectable option is false, otherwise the only ones with values are selected.
 			@__userSelectedData[input.getName()] = not @__user_selectable or (@__user_selectable and not CUI.util.isEmpty(v))
 
+		if not Object.values(@__userSelectedData).some((enabled) -> enabled)
+			@__userSelectedData[@__inputs[0].getName()] = true
+
 	setInputVisibility: ->
 		# the "append" re-orders the input, if needed
 		names = (key.name for key in @_control.getKeys())
