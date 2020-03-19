@@ -1,3 +1,11 @@
+// cui-form
+// cui-form-table
+// cui-form-container
+// cui-form-block
+// cui-data-form
+// hint, valid/invalid
+
+
 .cui-form {
 	overflow: visible;
 
@@ -6,7 +14,255 @@
 	}
 }
 
-// Form hints (validation, input types etc.)
+// * Form - Table
+
+/*
+<div class="cui-form">
+	<div class="cui-vertical-layout-center">
+		<div class="cui-form-table">
+			<div class="cui-form-tr">
+				<div class="cui-form-td cui-form-key"></div>
+				<div class="cui-form-td cui-form-value"></div>
+			</div>
+		</div>
+	</div>
+</div>
+*/
+
+.cui-form-table {
+	.cui-form-block + & {
+		margin-top: $spacer-sm;
+	}
+}
+
+.cui-form-tr,
+.cui-form-tr-header {
+	display: flex;
+
+	@include media-breakpoint-down(sm) {
+		display: block;
+	}
+}
+
+.cui-form-td {
+	padding-bottom: $form-cell-gap;
+}
+
+.cui-form-key {
+	flex: 0 0 auto;
+	width: $form-key-width;
+	min-width: $form-key-width;
+	max-width: none;
+	padding-right: $form-cell-gap;
+
+	label,
+	.cui-label {
+		display: inline-block;
+		padding-top: 0.41em; // see .cui-form-value label, needs to be in line, , depends on the font-size
+		white-space: normal;
+		min-width: $form-key-min-width;
+		max-width: 100%;
+		word-wrap: break-word;
+		// todo:
+		color: $form-label-color;
+		font-size: $form-label-font-size;
+		font-weight: $form-label-font-weight;
+		line-height: $line-height-sm;
+	}
+}
+
+.cui-form-value {
+	flex: 1 1 auto;
+	min-width: 0;
+
+	input {
+		min-width: 0;
+	}
+
+	label,
+	.cui-label {
+		padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
+	}
+
+	> .cui-options {
+		.cui-options-center {
+			min-height: 0;
+		}
+	}
+
+	> .cui-data-field {
+		min-width: 0;
+	}
+}
+
+.cui-maximize-horizontal > .cui-vertical-layout-center {
+	> .cui-form-table {
+		> tr {
+			> .cui-form-td.cui-form-value {
+				flex: 1 1 auto;
+				width: 200px;
+			}
+		}
+	}
+
+	> .cui-form-table-vertical {
+		> .cui-tr {
+			> .cui-form-value {
+				flex-shrink: 1;
+				min-width: 0;
+			}
+		}
+	}
+}
+
+// * Form - Block
+
+/*
+<div class="cui-form">
+	<div class="cui-vertical-layout-center">
+		<div class="cui-form-table">
+			<div class="cui-form-tr">
+				<div class="cui-block cui-form-block">
+					<div class="cui-block-header"></div>
+					<div class="cui-block-content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+*/
+
+.cui-form-block {
+	&.cui-maximize-vertical,
+	&.cui-maximize {
+		&,
+		> .cui-block-content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	.cui-form-table + & {
+		margin-top: $form-cell-gap;
+	}
+}
+
+
+// * Form - Container
+
+/*
+<div class="cui-form">
+	<div class="cui-vertical-layout-center">
+		<div class="cui-form-container">
+			<div class="cui-form-row"></div>
+		</div>
+	</div>
+</div>
+*/
+
+.cui-form-container {
+	flex: 1 0 auto;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+
+	&.cui-form--horizontal {
+		flex-direction: row;
+	}
+}
+
+.cui-form-row {
+	flex: 1 0 auto;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+
+	&:not(:last-child) {
+		margin-bottom: $form-cell-gap;
+	}
+
+	.cui-form-container.cui-form--horizontal > & {
+		flex: 0 0 auto;
+		min-width: 0;
+		margin-bottom: 0;
+
+		&:not(:last-child) {
+			margin-right: $form-cell-gap;
+		}
+
+		&.cui-maximize-horizontal {
+			flex-grow: 1;
+		}
+	}
+}
+
+// todo: find use-case
+.cui-form-field-type--checkbox {
+	// Own value field
+	+ .cui-form-row {
+		.cui-form-container.cui-form--horizontal {
+			> .cui-form-row:first-child {
+				margin-right: $form-cell-gap;
+			}
+
+			> .cui-form-field-type--input {
+				margin-top: $form-cell-gap;
+			}
+		}
+	}
+}
+
+// * Form Grid
+// See: SessionTrayApp, in the header click button "root" then "Einstellungen"
+
+.cui-form--grid {
+	.cui-data-field {
+		max-width: 100%;
+	}
+
+	> div > .cui-form-table {
+		.cui-form-td {
+			display: block;
+			padding: 0 0 $spacer-xs;
+		}
+
+		.cui-form-key {
+			max-width: none;
+			width: auto;
+			min-width: 0;
+		}
+
+		.cui-form-value {
+			width: auto;
+		}
+
+		@include media-breakpoint-up(sm) {
+			display: flex;
+			flex-wrap: wrap;
+			margin: 0 #{-$form-cell-gap};
+			width: auto; // negative margins!
+
+			.cui-form-tr {
+				display: block;
+				padding: 0 $form-cell-gap;
+				width: 100%;
+				margin-bottom: $form-cell-gap;
+
+				$sizes: '1/2', '1/3', '2/3', '1/4', '2/4', '3/4', '1/5', '2/5', '3/5', '4/5';
+
+				@each $size in $sizes {
+					&[data-cui-grid='#{$size}'] {
+						width: calc(#{$size} * 100%);
+					}
+				}
+			}
+		}
+	}
+}
+
+// * Form hints (validation, input types etc.)
+
 .cui-hint,
 .cui-form-hint,
 .cui-input-invalid-hint,

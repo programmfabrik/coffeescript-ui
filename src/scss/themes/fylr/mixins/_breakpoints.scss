@@ -1,6 +1,35 @@
 // stylelint-disable at-rule-empty-line-before
 // stylelint-disable block-closing-brace-newline-after
 
+// todo: replace these breakpoint mixins to the explicit media breakpoint declarations
+// usage: @include media-berakpoint-up()
+@mixin desktop {
+	@media screen and (min-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@media screen and (max-width: 1024px) {
+		@content;
+	}
+}
+
+// = @include media-breakpoint-down(xs) // 576
+@mixin xs {
+	@media screen and (max-width: 440px) {
+		@content;
+	}
+}
+
+// = @include media-breakpoint-down(sm) // 768
+@mixin phone {
+	@media screen and (max-width: 767px) {
+		@content;
+	}
+}
+
+
 // Breakpoint viewport sizes and media queries.
 //
 // Breakpoints are defined as a map of (name: minimum width), order from small to large:
@@ -141,5 +170,5 @@
 		}
 	}
 }
-// stylelint-enable at-rule-empty-line-before 
+// stylelint-enable at-rule-empty-line-before
 // stylelint-enable block-closing-brace-newline-after

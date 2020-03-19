@@ -306,10 +306,6 @@ $toolbar-padding: $spacer-sm !default;
 $pane-background:  theme-color('light') !default;
 $pane-padding: $toolbar-padding !default;
 
-// Form
-// ==========================================
-$form-padding: $spacer-sm !default;
-
 // Input
 // ==========================================
 // $input-font-size: $font-size-base !default;
@@ -361,6 +357,16 @@ $list-view-padding-y:					$spacer-xs !default; // was: $table-padding-y, needs t
 $list-view-selected-row-background:		rgba(theme-color('focused'), 0.2) !default;
 $list-view-move-handle-width:			$list-view-font-size !default;
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
+
+// Form
+// ==========================================
+$form-padding: 				$spacer-sm !default;
+$form-key-width:			$table-data-width !default;
+$form-key-min-width:		100px !default;
+$form-label-color: 			gray('600') !default;
+$form-label-font-weight: 	$font-weight-normal !default;
+$form-label-font-size: 		$font-size-base !default; // if changed, you need to change the padding of labels in cui-form-key + cui-form-value
+$form-cell-gap: 			$spacer-sm !default;
 
 // Calendar
 // ==========================================
