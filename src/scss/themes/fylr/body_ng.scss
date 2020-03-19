@@ -1726,16 +1726,6 @@ $layer-sizes: (
 	}
 }
 
-// ListViewTree
-.cui-list-view-grid {
-	&.cui-list-view-tree-no-hierarchy {
-		.cui-tree-node-handle,
-		.cui-tree-node-spacer {
-			display: none !important;
-		}
-	}
-}
-
 .status-2d-map {
 	border: 1px solid $table-border-color;
 	display: table;

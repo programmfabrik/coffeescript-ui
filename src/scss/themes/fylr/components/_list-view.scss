@@ -261,6 +261,13 @@
 			}
 		}
 	}
+
+	&.cui-list-view-tree-no-hierarchy {
+		.cui-tree-node-handle,
+		.cui-tree-node-spacer {
+			display: none !important;
+		}
+	}
 }
 
 // eg. header
