@@ -20791,6 +20791,9 @@ CUI.util = (function() {
       }
     }
     if (obj instanceof HTMLElement) {
+      if (obj.cloneNode) {
+        return obj.cloneNode(true);
+      }
       return obj;
     }
     if (obj instanceof CUI.Dummy) {
