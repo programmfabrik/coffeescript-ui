@@ -3,6 +3,6 @@
 	flex: 1 1 auto;
 	height: 10px;
 	width: 12px;
-	background: linear-gradient(gray('400') 1px, transparent 1px, transparent 2px);
+	background: linear-gradient($handle-color 1px, transparent 1px, transparent 2px);
 	background-size: 100% 2.5px;
 }

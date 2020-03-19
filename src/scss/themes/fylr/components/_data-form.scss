@@ -1,0 +1,120 @@
+// Data Form
+
+/*
+<div class="cui-form-value">
+	<div class="cui-data-form cui-data-form--movable-rows">
+		<div class="cui-data-form-row cui-horizontal-layout">
+			<div class="cui-horizontal-layout-left">
+				<div class="cui-drag-handle-row"></div>
+			</div>
+			<div class="cui-horizontal-layout-center">
+				<div class="cui-simple-form">
+					<div class="cui-form-container">
+						<div class="cui-form-row"> ... cui-input ... </div>
+					</div>
+				</div>
+			</div>
+			<div class="cui-horizontal-layout-right">
+				<div class="cui-buttonbar"> ... delete button ... </div>
+			</div>
+		</div>
+	</div>
+</div>
+*/
+
+.cui-data-form {
+	&--movable-rows {
+		max-width: 100%;
+
+		> .cui-horizontal-layout > .cui-horizontal-layout-center {
+			max-width: $data-field-width;
+		}
+
+		&.cui-data-form--multiple-fields {
+			> .cui-horizontal-layout > .cui-horizontal-layout-center {
+				max-width: 100%;
+			}
+		}
+	}
+
+	&--multiple-fields {
+		> .cui-data-form-row {
+			> .cui-horizontal-layout-center {
+				position: relative;
+				padding: $spacer-xs $spacer-xs $spacer-xs $spacer-sm;
+				border-left: 1px solid $handle-color;
+
+				&::after,
+				&::before {
+					content: '';
+					position: absolute;
+					background: $handle-color;
+					width: 10px;
+					height: 1px;
+					left: 0;
+					top: 0;
+				}
+
+				&::after {
+					top: auto;
+					bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+.cui-data-form-row {
+	overflow: visible !important;
+	margin-bottom: $spacer-xs;
+
+	&--read-only {
+		.cui-drag-handle-row {
+			opacity: 0 !important;
+		}
+	}
+
+	> .cui-horizontal-layout-left {
+		.cui-drag-handle-row {
+			margin: 0.75rem $spacer-sm 0 0;
+			flex-grow: 0;
+			cursor: grab;
+
+			&.is-hidden {
+				pointer-events: none;
+				opacity: 0.5;
+			}
+		}
+	}
+
+	> .cui-horizontal-layout-center {
+		min-width: 0;
+	}
+
+	> .cui-horizontal-layout-right {
+		.cui-buttonbar {
+			height: 100%;
+		}
+
+		.cui-button-visual {
+			color: gray('500');
+
+			.fa {
+				font-size: 0.9rem;
+			}
+		}
+
+		&:hover {
+			.cui-button-visual {
+				background-color: transparent;
+			}
+		}
+	}
+
+	// on mouseenter of the row
+	&.cui-data-form-row--trash {
+		> .cui-horizontal-layout-center {
+			opacity: 0.5;
+		}
+	}
+}

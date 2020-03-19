@@ -204,6 +204,7 @@ class CUI.DataForm extends CUI.DataTable
 			trash = new CUI.defaults.class.Button
 				icon: "fa-trash-o"
 				appearance: "flat"
+				size: "mini"
 				onMouseenter: =>
 					CUI.dom.addClass(hl, "cui-data-form-row--trash")
 				onMouseleave: =>
