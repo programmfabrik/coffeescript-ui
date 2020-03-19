@@ -615,12 +615,6 @@ li > div {
 	margin-left: 1px; // aligns it with the stop button
 }
 
-
-
-::-ms-clear {
-	display: none;
-}
-
 .cui-layer-root[cui-layer-fixed] {
 	position: fixed !important;
 }
