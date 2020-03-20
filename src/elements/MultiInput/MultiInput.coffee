@@ -115,7 +115,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			@__userSelectedData[input.getName()] = not @__user_selectable or (@__user_selectable and not CUI.util.isEmpty(v))
 
 		if not Object.values(@__userSelectedData).some((enabled) -> enabled)
-			@__userSelectedData[@__inputs[0].getName()] = true
+			@__userSelectedData[@_control.getKeys()[0].name] = true
 
 	setInputVisibility: ->
 		# the "append" re-orders the input, if needed
