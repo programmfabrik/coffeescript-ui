@@ -41554,7 +41554,7 @@ CUI.MultiInput = (function(superClass) {
     if (!Object.values(this.__userSelectedData).some(function(enabled) {
       return enabled;
     })) {
-      return this.__userSelectedData[this.__inputs[0].getName()] = true;
+      return this.__userSelectedData[this._control.getKeys()[0].name] = true;
     }
   };
 
