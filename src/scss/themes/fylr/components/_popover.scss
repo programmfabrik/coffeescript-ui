@@ -1,0 +1,36 @@
+// * Popover
+
+.cui-popover {
+	min-width: 247px;
+}
+
+// * Hint Popover
+// todo: obsolete ?
+
+.cui-layer-root-hint-popover .cui-layer-pointer {
+	height: 10px;
+	width: 32px;
+
+	&.cui-layer-pointer--e,
+	&.cui-layer-pointer--w {
+		width: 9px;
+		height: 37px;
+
+		&::after {
+			top: 9px;
+		}
+	}
+
+	&.cui-layer-pointer--n,
+	&.cui-layer-pointer--s {
+		&::after {
+			left: 7px;
+		}
+	}
+
+	&::after {
+		top: 3px;
+		// background: $popover-hint-background;
+		box-shadow: 3px 3px 14px hsla(0, 0%, 0%, 0.1);
+	}
+}

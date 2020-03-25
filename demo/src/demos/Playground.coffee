@@ -176,6 +176,7 @@ class Demo.Playground extends Demo
 								text: """# Markdown\n\nYo Test Test"""
 							footer_right:
 								text: "Ok"
+								primary: true
 								onClick: =>
 									mod.destroy()
 					mod.show()

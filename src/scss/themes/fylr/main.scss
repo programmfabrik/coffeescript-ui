@@ -60,6 +60,7 @@
 @import 'components/_tabs'; // extends pane
 @import 'components/_layer';
 @import 'components/_dialogs'; // confirmation-dialog, prompt, alert etc., extends layer
+@import 'components/_popover'; // extends modal and layer
 
 
 // 3.) "organisms" -

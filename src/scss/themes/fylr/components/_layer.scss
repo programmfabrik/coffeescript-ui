@@ -158,7 +158,7 @@
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
 			border-radius: 0 0 $layer-border-radius $layer-border-radius;
-			background-color: $layer-footer-background; // todo
+			background-color: $pane-background; // todo
 
 			// make buttons a little more prominent in the footer, they are typically "primary" action buttons ("OK" is pretty short otherwise)
 			.cui-button-visual {
@@ -242,13 +242,17 @@
 
 	&--n::after {
 		top: 5px;
+
+		.cui-pane--has-header & {
+			background: $pane-background;
+		}
 	}
 
 	&--s::after {
 		top: -9px;
 
 		.cui-pane--has-footer & {
-			background: $layer-footer-background;
+			background: $pane-background;
 		}
 	}
 
@@ -288,13 +292,6 @@
 	.cui-layer-pointer--e,
 	.cui-layer-pointer--w {
 		margin-top: $toolbar-height;
-	}
-
-	// todo: find use-case
-	&.cui-layer-root-popover {
-		.cui-layer-pointer--n::after {
-			background: red;
-		}
 	}
 }
 

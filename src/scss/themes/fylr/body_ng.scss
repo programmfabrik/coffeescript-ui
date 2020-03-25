@@ -132,14 +132,9 @@ $on-error-color: white;
 $neutral-color: hsl(48, 100%, 58%);
 $positive-color: hsl(100, 69%, 50%);
 
-$popover-header-background: lighten($header-background, 3%);
-$popover-header-border: lighten($header-border, 3%);
-
 $item-list-color: hsl(205, 7%, 22%);
 $item-list-hover: $button-pressed;
 $item-list-pressed: $button-pressed;
-
-$popover-hint-background: hsl(205, 20%, 30%);
 
 @mixin margin($factor: 1) {
 	margin-bottom: $padding * $factor;
@@ -591,43 +586,6 @@ li > div {
 		.cui-label-content {
 			display: inline;
 		}
-	}
-}
-
-// Popover
-
-.cui-popover {
-	background: $layer-background;
-	min-width: 247px;
-}
-
-// Hint Popover
-
-.cui-layer-root-hint-popover .cui-layer-pointer {
-	height: 10px;
-	width: 32px;
-
-	&.cui-layer-pointer--e,
-	&.cui-layer-pointer--w {
-		width: 9px;
-		height: 37px;
-
-		&::after {
-			top: 9px;
-		}
-	}
-
-	&.cui-layer-pointer--n,
-	&.cui-layer-pointer--s {
-		&::after {
-			left: 7px;
-		}
-	}
-
-	&::after {
-		top: 3px;
-		background: $popover-hint-background;
-		box-shadow: 3px 3px 14px hsla(0, 0%, 0%, 0.1);
 	}
 }
 
