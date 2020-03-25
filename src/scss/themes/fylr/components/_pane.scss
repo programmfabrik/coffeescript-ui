@@ -30,21 +30,27 @@
 
 // Pane modifier
 
-// this is a special kind of pane
-// todo: when should we use this?
+// this is a special kind of pane with a distinct styling (like a window ?)
+// todo: do we need this and if yes, how do we style it?
 .cui-pane--window {
-	> .cui-vertical-layout-top > .cui-pane-header {
-		background: red; // todo
+	> .cui-vertical-layout-top > .cui-pane-header,
+	> .cui-vertical-layout-bottom > .cui-pane-footer {
+		background: $pane-background; // todo
+		padding: $pane-padding;
 
 		// todo: popover
 		// .cui-popover & {
 		// 	background: $popover-header-background;
 		// 	border-color: $popover-header-border;
 		// }
+	}
 
-		.cui-label {
-			color: white; // todo
-		}
+	> .cui-vertical-layout-top > .cui-pane-header {
+		border-bottom: 1px solid $pane-window-border-color;
+	}
+
+	> .cui-vertical-layout-bottom > .cui-pane-footer {
+		border-top: 1px solid $pane-window-border-color;
 	}
 }
 

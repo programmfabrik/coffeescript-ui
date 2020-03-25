@@ -306,8 +306,9 @@ $toolbar-padding: $spacer-sm !default;
 
 // Pane
 // ==========================================
-$pane-background:  theme-color('light') !default;
-$pane-padding: $toolbar-padding !default;
+$pane-background:  				theme-color('light') !default;
+$pane-padding: 					$toolbar-padding !default;
+$pane-window-border-color: 		gray('200') !default;
 
 // Input
 // ==========================================
