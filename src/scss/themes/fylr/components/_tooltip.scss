@@ -1,0 +1,52 @@
+// * Tooltip
+
+/*
+<div class="cui-layer-root cui-layer-root-tooltip">
+	<div class="cui-layer cui-tooltip">
+		<div class="cui-simple-pane cui-vertical-layout cui-pane cui-layer-pane"> ... </div>
+	</div>
+	<div class="cui-layer-pointer"></div>
+</div>
+*/
+
+.cui-layer-root-tooltip .cui-layer-pointer {
+	&--n,
+	&--s {
+		// the pointer is a rotated 8x8 square, the width after the rotation is about 12px
+		width: 1.5 * $tooltip-pointer-size;
+		height: $tooltip-pointer-size;
+	}
+
+	&--e,
+	&--w {
+		width: $tooltip-pointer-size;
+		height: 1.5 * $tooltip-pointer-size;
+	}
+
+	&::after {
+		background-color: $tooltip-background;
+		width: $tooltip-pointer-size;
+		height: $tooltip-pointer-size;
+		box-shadow: none;
+	}
+}
+
+.cui-tooltip {
+	max-width: 260px;
+	min-width: 0;
+	min-height: 0;
+	cursor: default;
+	-webkit-overflow-scrolling: touch;
+	background-color: $tooltip-background;
+	color: $tooltip-color;
+	border-radius: $border-radius-sm;
+	box-shadow:
+		0 0 0 1px hsla(0, 0%, 0%, 0.1),
+		0 7px 14px hsla(0, 0%, 0%, 0.1);
+
+	.cui-label {
+		font-size: $tooltip-font-size;
+		line-height: $line-height-sm;
+		padding: $spacer-xs $spacer-sm 1.25*$spacer-xs;
+	}
+}

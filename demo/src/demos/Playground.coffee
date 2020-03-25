@@ -180,7 +180,11 @@ class Demo.Playground extends Demo
 								onClick: =>
 									mod.destroy()
 					mod.show()
-			,
+			])
+		)
+
+		dt.addExample("Tooltip",
+			new CUI.Buttonbar(buttons: [
 				text: "Tooltip (Short)"
 				switch: true
 				activate_initial: false
@@ -204,6 +208,51 @@ class Demo.Playground extends Demo
 						text: Playground.longText
 						on_click: false
 						on_hover: false
+					.show()
+				onDeactivate: (btn) =>
+					btn.___tt.destroy()
+					delete(btn.___tt)
+			,
+				text: "Placement West"
+				switch: true
+				activate_initial: false
+				onActivate: (btn) =>
+					btn.___tt = new CUI.Tooltip
+						element: btn
+						text: "Tooltip with short Text"
+						on_click: false
+						on_hover: false
+						placement: "w"
+					.show()
+				onDeactivate: (btn) =>
+					btn.___tt.destroy()
+					delete(btn.___tt)
+			,
+				text: "Placement East"
+				switch: true
+				activate_initial: false
+				onActivate: (btn) =>
+					btn.___tt = new CUI.Tooltip
+						element: btn
+						text: "Tooltip with short Text"
+						on_click: false
+						on_hover: false
+						placement: "e"
+					.show()
+				onDeactivate: (btn) =>
+					btn.___tt.destroy()
+					delete(btn.___tt)
+			,
+				text: "Placement SW"
+				switch: true
+				activate_initial: false
+				onActivate: (btn) =>
+					btn.___tt = new CUI.Tooltip
+						element: btn
+						text: "Tooltip with short Text Tooltip with short Text"
+						on_click: false
+						on_hover: false
+						placement: "sw"
 					.show()
 				onDeactivate: (btn) =>
 					btn.___tt.destroy()
