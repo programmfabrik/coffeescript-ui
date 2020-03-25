@@ -35,8 +35,11 @@ label[data-label-clickable],
 		}
 	}
 
-	// Content
+	// .cui-label-icon
 	&-icon {
+		display: flex;
+		align-items: center;
+
 		&:empty {
 			display: none;
 		}
@@ -47,6 +50,7 @@ label[data-label-clickable],
 		}
 	}
 
+	// .cui-label-content
 	&-content {
 		flex: 0 0 auto;
 		max-width: 100%;
