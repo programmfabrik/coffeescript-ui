@@ -1,0 +1,64 @@
+
+// Icons
+.cui-icon-svg {
+	fill: currentColor;
+	vertical-align: baseline; // was: bottom
+	flex-shrink: 0;
+	transform: translateZ(0); // make em icons sharp in Firefox
+
+	use {
+		pointer-events: none;
+	}
+}
+
+.fa {
+	font-size: $icon-font-size;
+}
+
+.cui-spin-stepped {
+	animation: fa-spin 1s steps(8) infinite;
+}
+
+// adjust close x size
+.fa-times-thin::before {
+	font-size: 1.58em;
+	content: '\00d7';
+	display: block;
+	margin-top: -0.09em;
+}
+
+// adjust arrow-left, arrow-right size
+.fa-angle-right,
+.fa-angle-left,
+.fa-angle-down,
+.fa-angle-double-down,
+.fa-angle-up,
+.fa-angle-double-up {
+	&::before {
+		font-size: 1.34em;
+	}
+}
+
+.fa-angle-double-down {
+	margin-top: 1px;
+}
+
+// compensate right arrow spacing
+.fa-angle-right {
+	margin-left: 2px;
+}
+
+// compensate left arrow spacing
+.fa-angle-left {
+	margin-right: 2px;
+}
+
+// compensate down arrow spacing
+.fa-angle-down {
+	margin-bottom: -1px;
+}
+
+// align with the stop button
+.fa-play {
+	margin-left: 1px;
+}

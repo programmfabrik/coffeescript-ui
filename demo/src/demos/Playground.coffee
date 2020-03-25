@@ -848,6 +848,49 @@ class Demo.Playground extends Demo
 				content: @getMultiLabel()
 		]
 
+	getIconsTab: ->
+		dt = new Demo.DemoTable()
+
+		icons = ["play", "fa-angle-left", "fa-angle-right", "fa-angle-up", "fa-angle-down", "fa-angle-double-up", "fa-angle-double-down"]
+		@__icon_container = CUI.dom.div("cui-demo-icon-container")
+
+		for i in icons
+			@__icon = CUI.dom.div("cui-demo-icon")
+			CUI.dom.append(@__icon, new CUI.Icon(icon: i).DOM)
+			CUI.dom.append(@__icon_container, @__icon)
+
+		dt.addExample("Single Icon",
+			new CUI.Block
+				class: "cui-demo-icons"
+				text: "Font Awesome icons that are tweaked"
+				content: [
+					@__icon_container
+				]
+		)
+
+		dt.addExample("Icon in Buttons",
+			new CUI.Buttonbar(buttons: @getButtons(icon: "download"))
+		)
+
+		dt.addExample("SVG Spinner",
+			new CUI.Label
+				text: "Label"
+				icon: "spinner"
+		)
+
+		dt.addExample("FA Spinner",
+			new CUI.Label
+				text: "Label"
+				icon: "fa-spinner"
+		)
+
+		dt.addExample("Times Thin",
+			new CUI.Label
+				text: "Close"
+				icon: "fa-times-thin"
+		)
+
+
 	display: ->
 
 		tabs = new CUI.Tabs
@@ -870,6 +913,9 @@ class Demo.Playground extends Demo
 			,
 				text: "Table"
 				content: @getTableTab()
+			,
+				text: "Icons"
+				content: @getIconsTab()
 			]
 
 

@@ -37,9 +37,6 @@ label[data-label-clickable],
 
 	// .cui-label-icon
 	&-icon {
-		display: flex;
-		align-items: center;
-
 		&:empty {
 			display: none;
 		}

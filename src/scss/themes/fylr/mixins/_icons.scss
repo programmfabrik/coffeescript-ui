@@ -1,0 +1,9 @@
+@mixin icon($code) {
+	content: $code;
+	display: inline-block;
+	// stylelint-disable-next-line
+	font: normal normal normal $icon-font-size/1 'FontAwesome';
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}

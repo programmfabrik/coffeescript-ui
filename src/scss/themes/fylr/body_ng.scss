@@ -183,20 +183,6 @@ $item-list-pressed: $button-pressed;
 	}
 }
 
-%icon {
-	display: inline-block;
-	font: normal normal normal 14px/1 FontAwesome;
-	text-rendering: auto;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-@mixin icon($code) {
-	@extend %icon;
-
-	content: $code;
-}
-
 @mixin focus() {
 	box-shadow: 0 0 0 3px var(--highlight-light);
 	border-radius: $button-radius;
@@ -231,9 +217,6 @@ $item-list-pressed: $button-pressed;
 		0 0 0 4px var(--highlight-light);
 	z-index: 1; // put forward to see outline
 }
-
-//--------------------------------------------------------------------
-@import '../../icons/_svg-dimensions.scss';
 
 html {
 	@include variableList($default-color);
@@ -445,90 +428,6 @@ li > div {
 		}
 	}
 }
-
-
-// Icons
-.cui-icon-svg {
-	fill: currentColor;
-	vertical-align: bottom;
-	flex-shrink: 0;
-	transform: translateZ(0); // make em icons sharp in Firefox
-
-	use {
-		pointer-events: none;
-	}
-}
-
-.fa {
-	font-size: 14px;
-	// FIXME: why no pointer events? this breaks tooltips on icons
-	// pointer-events: none;
-}
-
-.fa-spinner {
-	width: 1em;
-}
-
-.fa-download {
-	margin-top: (1em / 14); // move up by 10% of the font-size
-}
-
-.svg-spinner {
-	height: 18px;
-}
-
-.cui-spin-stepped {
-	animation: fa-spin 1s steps(8) infinite;
-}
-
-// adjust close x size
-.fa-times-thin::before {
-	font-size: 1.58em;
-	content: '\00d7';
-	display: block;
-	margin-top: -0.09em;
-}
-
-// adjust arrow-left, arrow-right size
-.fa-angle-right,
-.fa-angle-left,
-.fa-angle-down,
-.fa-angle-double-down,
-.fa-angle-up,
-.fa-angle-double-up {
-	&::before {
-		font-size: 1.34em;
-	}
-}
-
-.fa-angle-double-down {
-	margin-top: 1px;
-}
-
-// compensate right arrow spacing
-.fa-angle-right {
-	margin-left: 2px;
-}
-
-// compensate left arrow spacing
-.fa-angle-left {
-	margin-right: 2px;
-}
-
-// compensate down arrow spacing
-.fa-angle-down {
-	margin-bottom: -1px;
-}
-
-.fa-play {
-	margin-left: 1px; // aligns it with the stop button
-}
-
-// Spinner
-.cui-spinner {
-	min-width: 0;
-}
-
 
 .cui-select-menu {
 	.cui-browser-firefox &,
