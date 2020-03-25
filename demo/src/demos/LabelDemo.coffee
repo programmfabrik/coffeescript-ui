@@ -49,6 +49,11 @@ class Demo.LabelDemo extends Demo
 		@__addLabel("normal label+icon",label)
 
 		label = new CUI.Label
+			text: "Label with SVG icon"
+			icon: "spinner"
+		@__addLabel("Label with SVG icon",label)
+
+		label = new CUI.Label
 			text: "Label Rotated by 90deg"
 			icon: "rotate_right"
 			size: "big"
