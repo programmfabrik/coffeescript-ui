@@ -1,4 +1,4 @@
-// Dialog Layers: alert, prompt, choice, confirmation, problem, toaster
+// Dialog Layers: alert, prompt, choice, confirmation, problem, toaster, spinner
 
 /*
 <div class="cui-layer-root cui-layer-root-layer cui-confirmation-dialog">
@@ -95,4 +95,11 @@
 	> .cui-layer-pane > .cui-vertical-layout-center {
 		padding: $spacer-sm;
 	}
+}
+
+
+// * Spinner
+
+.cui-spinner {
+	min-width: 0;
 }
