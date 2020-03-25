@@ -851,21 +851,127 @@ class Demo.Playground extends Demo
 	getIconsTab: ->
 		dt = new Demo.DemoTable()
 
+		# Font Awesome Icons
 		icons = ["play", "fa-angle-left", "fa-angle-right", "fa-angle-up", "fa-angle-down", "fa-angle-double-up", "fa-angle-double-down"]
-		@__icon_container = CUI.dom.div("cui-demo-icon-container")
-
-		for i in icons
-			@__icon = CUI.dom.div("cui-demo-icon")
-			CUI.dom.append(@__icon, new CUI.Icon(icon: i).DOM)
-			CUI.dom.append(@__icon_container, @__icon)
-
 		dt.addExample("Single Icon",
 			new CUI.Block
 				class: "cui-demo-icons"
-				text: "Font Awesome icons that are tweaked"
-				content: [
-					@__icon_container
-				]
+				text: "Font Awesome icons that are customized"
+				content: @getIconCollection(icons)
+		)
+
+		# All Font Awesome Icons
+		icons = [
+			"fa-crop",
+			"fa-arrows-alt",
+			"fa-warning",
+			"fa-slack",
+			"fa-file",
+			"fa-filter",
+			"fa-sliders",
+			"fa-refresh",
+			"fa fa-file-archive-o",
+			"fa-rotate-right",
+			"fa-rotate-left",
+			"fa-arrows-v",
+			"fa-arrows-h",
+			"fa-calendar",
+			"fa-question",
+			"fa-question",
+			"fa-question",
+			"fa-cog",
+			"fa-download",
+			"fa-download",
+			"fa-question",
+			"fa-upload",
+			"fa-envelope-o",
+			"fa-envelope",
+			"fa-floppy-o",
+			"fa-heart",
+			"fa-user",
+			"fa-clock-o",
+			"fa-plus",
+			"fa-pencil",
+			"fa-files-o",
+			"fa-search",
+			"fa-share",
+			"fa-play",
+			"fa-music",
+			"fa-play",
+			"fa-stop",
+			"fa-print",
+			"fa-minus",
+			"fa-caret-right",
+			"fa-caret-down",
+			"fa-ellipsis-h",
+			"fa-ellipsis-v",
+			"fa-bars",
+			"fa-info-circle",
+			"fa-bolt",
+			"fa-check",
+			"fa-warning",
+			"fa-legal",
+			"fa-cloud",
+			"fa-angle-left",
+			"fa-angle-right",
+			"fa-angle-right",
+			"fa-search-plus",
+			"fa-search-minus",
+			"fa-compress",
+			"fa-expand",
+			"fa-envelope-o",
+			"fa-file-text",
+			"fa-file-text-o",
+			"fa-bullhorn",
+			"fa-angle-left",
+			"fa-angle-right",
+			"fa-angle-down",
+			"fa-angle-up",
+			"fa-caret-up",
+			"fa-caret-down",
+			"fa-camera",
+			"fa-list-ul",
+			"fa-picture-o",
+		]
+		dt.addExample("Single Icon",
+			new CUI.Block
+				class: "cui-demo-icons"
+				text: "All Font Awesome icons"
+				content: @getIconCollection(icons)
+		)
+
+		# SVG Icons
+		icons = [
+			"svg-arrow-right",
+			"svg-close",
+			"svg-drupal",
+			"svg-easydb",
+			"svg-external-link",
+			"svg-falcon-io",
+			"svg-folder-shared-upload",
+			"svg-folder-shared",
+			"svg-folder-upload",
+			"svg-folder",
+			"svg-grid",
+			"svg-hierarchy",
+			"svg-info-circle",
+			"svg-multiple",
+			"svg-popup",
+			"svg-reset",
+			"svg-rows",
+			"svg-select-all",
+			"svg-select-pages",
+			"svg-spinner",
+			"svg-table",
+			"svg-tag-o",
+			"svg-trash",
+			"svg-typo3",
+		]
+		dt.addExample("Single Icon",
+			new CUI.Block
+				class: "cui-demo-icons"
+				text: "SVG icons"
+				content: @getIconCollection(icons)
 		)
 
 		dt.addExample("Icon in Buttons",
@@ -884,11 +990,30 @@ class Demo.Playground extends Demo
 				icon: "fa-spinner"
 		)
 
-		dt.addExample("Times Thin",
+		dt.addExample("Times Thin, regular font icon (not FA)",
 			new CUI.Label
 				text: "Close"
 				icon: "fa-times-thin"
 		)
+
+	getIconCollection: (icons = []) ->
+		icon_container = CUI.dom.div("cui-demo-icon-container")
+
+		for i in icons
+			icon_wrap = CUI.dom.div("cui-demo-icon")
+			icon = new CUI.Icon
+				icon: i
+
+			new CUI.Tooltip
+				element: icon_wrap
+				show_ms: 1000
+				hide_ms: 200
+				text: i
+
+			CUI.dom.append(icon_wrap, icon.DOM)
+			CUI.dom.append(icon_container, icon_wrap)
+
+		icon_container
 
 
 	display: ->
