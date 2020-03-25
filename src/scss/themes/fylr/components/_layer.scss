@@ -222,7 +222,7 @@
 		width: 18px;
 		height: 18px;
 		background: $layer-background;
-		transform: rotate(45deg);
+		transform: translate(-50%, -50%) rotate(45deg);
 		box-shadow:
 			0 0 0 1px hsla(205, 20%, 30%, 0.15),
 			4px 4px 10px 1px hsla(0, 0%, 0%, 0.14),
@@ -236,12 +236,12 @@
 		height: 14px;
 
 		&::after {
-			left: 14px;
+			left: 50%;
 		}
 	}
 
 	&--n::after {
-		top: 5px;
+		top: 100%;
 
 		.cui-pane--has-header & {
 			background: $pane-background;
@@ -249,7 +249,7 @@
 	}
 
 	&--s::after {
-		top: -9px;
+		top: 0;
 
 		.cui-pane--has-footer & {
 			background: $pane-background;
@@ -263,16 +263,16 @@
 		margin: 6px 0;
 
 		&::after {
-			top: 14px;
+			top: 50%;
 		}
 	}
 
 	&--e::after {
-		left: -11px;
+		left: 0;
 	}
 
 	&--w::after {
-		left: 5px;
+		left: 100%;
 	}
 }
 

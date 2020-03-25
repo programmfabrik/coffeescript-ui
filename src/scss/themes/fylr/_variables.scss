@@ -417,3 +417,10 @@ $layer-sizes: (
 
 $layer-background: 			$body-bg !default;
 $layer-border-radius: 		$border-radius !default;
+
+// Tooltip
+// ==========================================
+$tooltip-background: 	gray('800') !default;
+$tooltip-color: 		$white !default;
+$tooltip-font-size: 	12px !default;
+
