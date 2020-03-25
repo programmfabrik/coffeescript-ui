@@ -116,7 +116,7 @@
 // * Layer
 
 .cui-layer {
-	// the sizes are not really used, but lets keep the classes for now
+	// the sizes are not really used anywhere, but lets keep the classes for now
 	@each $name, $width in $layer-sizes {
 		&--size-#{$name} {
 			width: #{$width}px;
@@ -159,6 +159,11 @@
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
 			border-radius: 0 0 $layer-border-radius $layer-border-radius;
 			background-color: $layer-footer-background; // todo
+
+			// make buttons a little more prominent in the footer, they are typically "primary" action buttons ("OK" is pretty short otherwise)
+			.cui-button-visual {
+				min-width: 60px;
+			}
 		}
 	}
 

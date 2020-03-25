@@ -1,0 +1,83 @@
+// Dialog Layers
+
+/*
+<div class="cui-layer-root cui-layer-root-layer cui-confirmation-dialog">
+	<div class="cui-layer-backdrop"></div>
+	<div class="cui-layer cui-modal cui-alert cui-confirmation-dialog cui-confirm cui-prompt">
+		<div class="cui-simple-pane cui-vertical-layout cui-pane"> ... </div>
+	</div>
+	<div class="cui-layer-pointer"></div>
+</div>
+*/
+
+// * Confirmation
+
+.cui-confirmation-dialog {
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			max-width: 500px;
+
+			// turn all labels into multiline labels
+			.cui-label:not(.cui-label-markdown) {
+				.cui-label-content {
+					word-wrap: break-word;
+					white-space: pre-wrap;
+				}
+			}
+		}
+	}
+
+	// Alert Problem (red), this is a ez5 theme class only, not used in CUI
+	// todo: find use-case
+	.cui-alert-problem {
+		> .cui-layer-pane {
+			> .cui-vertical-layout-center {
+				min-height: 66px;
+				max-width: 375px;
+				padding: 0 14px 0 74px;
+				overflow-x: hidden;
+
+				> :first-child {
+					padding-top: 10px;
+					margin-top: auto;
+				}
+
+				> :last-child {
+					padding-bottom: 10px;
+					margin-bottom: auto;
+				}
+
+				&::before {
+					font-family: 'FontAwesome', sans-serif;
+					content: '\f071';
+					font-size: 42px;
+					line-height: 1;
+					color: $neutral-color;
+					left: 14px;
+					top: 14px;
+					position: absolute;
+				}
+			}
+		}
+	}
+}
+
+// detached from layer root, inline
+.cui-layer.cui-confirmation-dialog--show-inline {
+	// temp fix
+	z-index: 1;
+}
+
+// * Confirmation Choice
+
+.cui-confirmation-choice {
+	.cui-layer > .cui-layer-pane {
+		> .cui-vertical-layout-center {
+			max-width: 300px; // don't make this bigger, make the text shorter
+		}
+	}
+}
+
+// * Alert
+
+// .cui-alert {}
