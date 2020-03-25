@@ -202,6 +202,7 @@ class Demo.PaneDemo extends Demo
 							content: [
 								new CUI.Button
 									text: "Button"
+									appearance: "flat"
 							]
 					new CUI.PaneToolbar
 				]
@@ -213,7 +214,11 @@ class Demo.PaneDemo extends Demo
 						left:
 							content: "PaneFooter Left"
 						right:
-							content: "PaneFooter Right"
+							content: [
+								new CUI.Button
+									text: "Button"
+									appearance: "flat"
+							]
 				]
 
 		@demo_table.addExample("Window Pane.",pane)
@@ -231,7 +236,8 @@ class Demo.PaneDemo extends Demo
 						right:
 							content: [
 								new CUI.Button
-									text: "Button"
+									text: "Flat Button"
+									appearance: "flat"
 							]
 					new CUI.PaneToolbar
 				]

@@ -8,15 +8,9 @@
 	padding-left: 0;
 	padding-right: 0;
 
-	// todo: tbd, should we style the buttons in pane header or should be change the appearance attr in the component?
-	.cui-button {
-		@include button-flat();
-	}
-
 	.cui-buttonbar > * {
 		margin-right: 0;
 	}
-	// todo: end
 
 	.cui-label {
 		// todo: header label sizes and color?
