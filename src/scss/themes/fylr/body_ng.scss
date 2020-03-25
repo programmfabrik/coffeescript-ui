@@ -573,23 +573,6 @@ li > div {
 	}
 }
 
-
-// Toaster
-.cui-layer-root-toaster .cui-layer {
-	font-size: 14px;
-	width: auto;
-	max-width: none;
-	min-width: 0;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	cursor: default;
-
-	> .cui-layer-pane > .cui-vertical-layout-center {
-		padding: 7px $padding;
-	}
-}
-
 .cui-select-menu {
 	.cui-browser-firefox &,
 	.cui-browser-ie & {
