@@ -271,27 +271,6 @@ li > div {
 	}
 }
 
-.cui-select-menu {
-	.cui-browser-firefox &,
-	.cui-browser-ie & {
-		overflow-y: scroll; // prevents overlap with scrollbar in Firefox & IE but adds a deactivated scrollbar when no scrollbar is neccesary
-	}
-
-	.cui-button {
-		.cui-button-visual {
-			display: inline;
-		}
-
-		.cui-button-left,
-		.cui-button-center,
-		.cui-button-right,
-		.cui-label,
-		.cui-label-content {
-			display: inline;
-		}
-	}
-}
-
 
 // Tabs
 .cui-tabs {

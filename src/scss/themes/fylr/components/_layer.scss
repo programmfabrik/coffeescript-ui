@@ -297,6 +297,7 @@
 
 // * Root Menu Layer Pointer
 
+// todo: move into another file ?
 .cui-layer-root-menu .cui-layer-pointer {
 	height: 12px;
 
@@ -321,3 +322,14 @@
 		background: white; // todo
 	}
 }
+
+// * Select menu
+
+// todo: check if we still need this
+.cui-select-menu {
+	.cui-browser-firefox &,
+	.cui-browser-ie & {
+		overflow-y: scroll; // prevents overlap with scrollbar in Firefox & IE but adds a deactivated scrollbar when no scrollbar is neccesary
+	}
+}
+
