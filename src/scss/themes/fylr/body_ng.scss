@@ -450,55 +450,6 @@ li > div {
 	}
 }
 
-// WaitBlock
-.cui-wait-block {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 1;
-	display: flex;
-	color: $muted-color;
-}
-
-.cui-wait-block-glass {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	opacity: 0.5;
-	background: $foreground;
-}
-
-.cui-wait-block-inner {
-	display: flex;
-	flex: 1 1 auto;
-	position: relative;
-}
-
-.cui-wait-block-header {
-	display: flex;
-	flex: 1 1 auto;
-	justify-content: center;
-	align-self: center;
-
-	.cui-label {
-		.svg-spinner {
-			height: auto;
-			width: 28px;
-		}
-
-		.cui-label-content {
-			padding-left: $padding;
-		}
-	}
-}
-
-.cui-wait-block-content {
-	display: none;
-}
 
 // Tabs
 .cui-tabs {
