@@ -12,7 +12,9 @@
 	max-width: $data-field-width;
 	margin: 0;
 
-	.cui-form-value & {
+	.cui-form-value &,
+	.cui-drag-drop-select-sortable &,
+	.drag-drop-select-helper & {
 		max-width: none;
 	}
 

@@ -429,3 +429,8 @@ $tooltip-background: 	gray('800') !default;
 $tooltip-color: 		$white !default;
 $tooltip-font-size: 	12px !default;
 
+// Drag & Drop
+// ==========================================
+$drop-area-focus-shadow: 	$btn-focus-shadow !default;
+$drop-area-border-radius: 	$border-radius-sm !default;
+$drag-lasso-background: 	theme-color('focused') !default;

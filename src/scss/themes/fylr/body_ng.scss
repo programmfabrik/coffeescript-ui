@@ -269,21 +269,6 @@ li > div {
 	}
 }
 
-// Show the flex handle helper in IE because real time dragging is turned off because of performance reasons
-.cui-browser-ie:not(.cui-browser-edge) {
-	.cui-flex-handle.drag-drop-select-helper {
-		&::after {
-			content: '';
-			top: 0;
-			left: $padding - 1px;
-			border-right: 3px dotted var(--highlight);
-			height: 100%;
-			opacity: 0.5;
-			position: absolute;
-		}
-	}
-}
-
 .cui-flex-handle-row {
 	width: 10px;
 	margin: 0 -5px;
@@ -828,91 +813,6 @@ li > div {
 	}
 }
 
-.cui-drag-drop-select-draggable,
-.cui-drag-drop-select-sortable {
-	cursor: -webkit-grab;
-	cursor: grab;
-}
-
-.cui-drag-drop-select-lasso {
-	cursor: default;
-}
-
-.cui-drag-drop-select-sortable,
-.drag-drop-select-helper {
-	.cui-data-field {
-		max-width: none;
-	}
-}
-
-// Drag & Drop
-
-.cui-drag-drop-select-helper {
-	position: absolute !important;
-	z-index: 3 !important; // above drop helper
-	pointer-events: none !important;
-
-	* {
-		pointer-events: none !important;
-	}
-
-	&.cui-tr {
-		padding: 0;
-	}
-}
-
-.cui-sortable-placeholder {
-	opacity: 0;
-}
-
-
-// Droppable
-
-.cui-droppable {
-	// marks an active droppable
-	// - in list views not neccesary because we have the droppable helper
-	// opacity: 0.5;
-}
-
-.cui-droppable-drop-helper {
-	box-shadow: 0 0 0 2px var(--highlight) inset;
-	position: absolute;
-	z-index: 2;
-	pointer-events: none;
-}
-
-.cui-droppable-target-helper {
-	//overwrite any other animation, its just temporary
-	transition: transform 300ms ease !important;
-}
-
-.cui-droppable-target-helper-y--after {
-	transform: translateY(-25%);
-}
-
-.cui-droppable-target-helper-y--before {
-	transform: translateY(25%);
-}
-
-.cui-droppable-target-helper-x--after {
-	transform: translateX(-25%);
-}
-
-.cui-droppable-target-helper-x--before {
-	transform: translateX(25%);
-}
-
-// Movable
-.cui-drag-drop-select-movable {
-	cursor: -webkit-grab;
-	cursor: grab;
-}
-
-// Resizable
-.cui-drag-drop-select-resizable {
-	position: relative;
-}
-
 .cui-resizable-handle {
 	position: absolute;
 
@@ -979,31 +879,6 @@ li > div {
 		width: 16px;
 		cursor: ew-resize;
 	}
-}
-
-
-// Lasso
-.cui-lasso-area {
-	position: relative;
-}
-
-.cui-lasso {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	left: 0;
-	top: 0;
-	background-color: var(--highlight);
-	display: block;
-	pointer-events: none;
-	z-index: 1;
-	will-change: transform;
-	transform-origin: left top;
-	opacity: 0.33;
-}
-
-.cui-drag-drop-select-lasso-element-in-lasso {
-	opacity: 0.8;
 }
 
 // StickyHeader
