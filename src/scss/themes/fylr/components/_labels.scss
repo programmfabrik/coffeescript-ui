@@ -132,9 +132,41 @@ label[data-label-clickable],
 
 		> .cui-label-transform {
 			display: flex;
-			transform: rotate(-90deg)  translateX(-3px) translateY(100%);
+			transform: rotate(-90deg) translateX(-3px) translateY(100%);
 			transform-origin: left bottom;
 			clear: left;
+		}
+
+		@supports (writing-mode: vertical-rl) {
+			display: inline-flex;
+
+			&::before {
+				display: none;
+			}
+
+			> .cui-label-transform {
+				display: flex;
+				align-items: center;
+				writing-mode: vertical-rl;
+				transform: rotate(180deg);
+				transform-origin: unset;
+				text-align: right;
+
+				// Alternative: upright text
+				// @supports (text-orientation: upright) {
+				// 	writing-mode: vertical-rl;
+				// 	text-orientation: upright;
+				// 	text-transform: uppercase;
+				// 	letter-spacing: -0.2em;
+				// 	transform: none;
+				// 	// font-family: $font-family-monospace;
+				// }
+
+				.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+					padding-left: 0;
+					padding-top: $spacer-sm;
+				}
+			}
 		}
 
 		.cui-label-content {
