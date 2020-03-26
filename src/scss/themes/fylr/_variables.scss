@@ -438,3 +438,9 @@ $tooltip-font-size: 	12px !default;
 $drop-area-focus-shadow: 	$btn-focus-shadow !default;
 $drop-area-border-radius: 	$border-radius-sm !default;
 $drag-lasso-background: 	theme-color('focused') !default;
+
+// Sticky Header
+// ==========================================
+$sticky-header-font-size: 		$font-size-xs !default;
+$sticky-header-color: 			$body-color !default;
+$sticky-header-border-color:	theme-color('dark') !default;

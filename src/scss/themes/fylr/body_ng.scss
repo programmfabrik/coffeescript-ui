@@ -588,51 +588,6 @@ li > div {
 	}
 }
 
-// StickyHeader
-
-.cui-sticky-header {
-	padding: 5px $padding;
-	font-size: 13px;
-	font-weight: bold;
-	color: $color;
-	flex-basis: 100%;
-	flex-shrink: 0;
-	border-bottom: 1px solid transparentize(darken($soft-border, 50%), 0.85);
-
-	.cui-label {
-		line-height: normal;
-	}
-
-	.cui-tab > & {
-		flex-basis: auto;
-	}
-}
-
-.cui-sticky-header-control {
-	position: fixed;
-	overflow: hidden;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 0;
-	z-index: 1;
-
-	.cui-sticky-header {
-		position: absolute;
-		left: 0;
-		right: 0;
-		font-weight: bold;
-		background: hsla(0, 0%, 100%, 0.94);
-	}
-}
-
-.cui-sticky-header-level-1,
-.cui-sticky-header-level-2,
-.cui-sticky-header-level-3,
-.cui-sticky-header-level-4 {
-	font-size: 11px;
-}
-
 // DigiDisplay
 
 .cui-digi-display {
