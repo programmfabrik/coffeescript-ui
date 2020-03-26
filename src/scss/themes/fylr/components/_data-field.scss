@@ -155,3 +155,7 @@
 .cui-data-field-hidden {
 	display: none !important;
 }
+
+.cui-data-field-disabled .cui-disabled {
+	opacity: 1;
+}

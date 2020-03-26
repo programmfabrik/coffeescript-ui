@@ -621,37 +621,3 @@ li > div {
 	flex: 1 1 auto;
 }
 
-
-.cui-disabled {
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	opacity: 0.5;
-	pointer-events: none;
-
-	.cui-data-field-disabled & {
-		opacity: 1;
-	}
-}
-
-// CUI technical stuff
-.cui-tmpl,
-[data-template] {
-	// hide all templates
-	display: none !important;
-}
-
-@keyframes nodeInserted {
-	from { opacity: 0.99; }
-	to { opacity: 1; }
-}
-
-.cui-template-empty {
-	&.cui-label {
-		display: none !important;
-	}
-}
-
-[hidden] {
-	display: none !important;
-}

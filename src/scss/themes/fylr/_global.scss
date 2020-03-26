@@ -23,3 +23,21 @@ body {
 .cui-border-left {
 	border-left: 1px solid $hr-border-color;
 }
+
+[hidden],
+.cui-tmpl,
+[data-template],
+.cui-template-empty.cui-label {
+	display: none !important;
+}
+
+.cui-disabled {
+	user-select: none;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+@keyframes nodeInserted {
+	from { opacity: 0.99; }
+	to { opacity: 1; }
+}
