@@ -366,6 +366,10 @@ $list-view-selected-row-background:		rgba(theme-color('focused'), 0.2) !default;
 $list-view-move-handle-width:			$list-view-font-size !default;
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
 
+// List View Tree
+// ==========================================
+$tree-node-handle-width: 14px !default;
+
 // Form
 // ==========================================
 $form-padding: 				$spacer-sm !default;

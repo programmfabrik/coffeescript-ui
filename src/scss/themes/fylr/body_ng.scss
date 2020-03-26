@@ -125,7 +125,6 @@ $table-data-height: 32px;
 $table-data-padding: 4px;
 $td-height: 18px;
 $row-move-handle-width: $padding/2 + $table-data-padding*2+2;
-$tree-node-handle-width: 14px;
 
 $error-color: hsl(10, 90%, 52%);
 $on-error-color: white;
@@ -615,67 +614,6 @@ li > div {
 			height: 30px;
 			line-height: 28px;
 			justify-content: flex-start;
-		}
-	}
-}
-
-
-// Tree Node + Handle
-.cui-tree-node {
-	display: flex;
-	flex: 1 1 auto;
-	max-width: 100%;
-	align-items: flex-start;
-}
-
-.cui-tree-node-handle,
-.cui-tree-node-spacer {
-	width: $tree-node-handle-width;
-	flex: 0 0 auto;
-
-	.fa-caret-right {
-		width: 8px;
-	}
-
-	.svg-spinner {
-		width: 10px;
-		height: 10px;
-	}
-}
-
-.cui-tree-node-handle {
-	height: 18px;
-	display: flex;
-	text-align: center;
-	// justify-content: flex-end; // conflict: left-align icons
-	align-items: center;
-
-	&.cui-tree-node-is-closed {
-		cursor: pointer;
-	}
-
-	&.cui-tree-node-is-open {
-		cursor: pointer;
-
-		.fa {
-			margin-top: 1px;
-		}
-	}
-}
-
-.cui-tree-node-content {
-	display: flex;
-	flex: 1 1 auto;
-	flex-wrap: wrap;
-	min-width: 50px; // prevent them from turning into scrabble when several are unfolded
-
-	.cui-label {
-		min-width: 0;
-		flex-shrink: 1;
-		// padding: 0; CONFLICT removes padding from tags that are inside node content
-
-		.fa {
-			line-height: 1;
 		}
 	}
 }

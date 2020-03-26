@@ -1,4 +1,5 @@
-// List View & List View Grid
+// * List View & List View Grid
+
 .cui-list-view {
 	min-height: 0;
 	flex-direction: column;
@@ -38,7 +39,7 @@
 	}
 }
 
-// Body
+// * Body
 
 // outside .cui-list-liew, we can use this in Form too
 // <div class="cui-list-view-grid-quadrant cui-lv-tbody">
@@ -51,7 +52,7 @@
 	// flex-shrink: 1; CONFLICT: overwrites shrink: 0 of quadrant-0 and 2
 }
 
-// Columns
+// * Columns
 
 .cui-lv-td {
 	display: block;
@@ -105,7 +106,7 @@
 	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 }
 
-// Rows
+// * Rows
 
 // <div class="cui-lv-tr-outer list-view-row">
 // 	<div class="cui-lv-tr">...</div>
@@ -175,7 +176,7 @@
 	}
 }
 
-// Special Header Row
+// * Special Header Row
 
 // <div class="cui-lv-tr-outer list-view-header-row">
 
@@ -232,7 +233,8 @@
 	}
 }
 
-// List View Grid
+// * List View Grid
+
 // <div class="cui-list-view-grid">
 // 	<div class="cui-list-view-grid-inner-top">
 // 		<div class="cui-list-view-grid-quadrant cui-lv-tbody"></div>
@@ -407,7 +409,7 @@
 	}
 }
 
-// Modifier
+// * Modifier
 
 .cui-list-view-row-selectable {
 	@include clickable;
@@ -490,7 +492,7 @@
 	opacity: 0.5;
 }
 
-// List View with DataFields
+// * List View with DataFields
 
 // Position tree-node- and drag-handle lower
 // because input fields make the rows higher
