@@ -621,19 +621,6 @@ li > div {
 	flex: 1 1 auto;
 }
 
-// Console
-.cui-console {
-	padding: $padding;
-	font-family: monospace;
-
-	.cui-label-multiline {
-		margin: 0;
-	}
-
-	.cui-label:not(:last-child) {
-		border-bottom: 1px solid hsl(0, 0%, 94%);
-	}
-}
 
 .cui-disabled {
 	-webkit-user-select: none;
