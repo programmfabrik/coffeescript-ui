@@ -588,38 +588,6 @@ li > div {
 	}
 }
 
-// DigiDisplay
-
-.cui-digi-display {
-	// border: 1px solid black;
-	align-self: flex-start;
-	display: flex;
-
-	> div {
-		vertical-align: bottom;
-		height: 20px;
-		// border-right: 1px solid #c0c0c0;
-		&:last-child {
-			border-right: 0;
-		}
-
-		text-align: center;
-		overflow: hidden;
-		padding: 1px;
-		font-family: monospace;
-		font-size: 16px;
-		line-height: 18px;
-	}
-
-	.cui-digi-display-digit {
-		transition: margin-top 0.3s ease;
-		height: 18px;
-	}
-
-	.cui-digi-display-static {
-		height: 20px;
-	}
-}
 
 // Space
 .cui-space {
