@@ -13,7 +13,7 @@ body {
 }
 
 
-// Layout System with flexbox
+// * Layout System with flexbox
 // ---------------------------------------------------------------------------
 // - container always grows if maximize
 // - center column always grows if maximize
@@ -41,7 +41,7 @@ body {
 	flex-shrink: 0;
 }
 
-// HorizontalLayout
+// * HorizontalLayout
 
 .cui-horizontal-layout {
 	display: flex;
@@ -102,7 +102,7 @@ body {
 }
 
 
-// VerticalLayout
+// * VerticalLayout
 
 .cui-vertical-layout {
 	display: flex;
