@@ -34,10 +34,21 @@
 		> *:not(:last-child) {
 			margin-bottom: $buttonbar-gap;
 		}
+
+		.cui-buttonbar-group {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+
+			> *:not(:last-child) {
+				margin-bottom: $buttonbar-gap;
+			}
+		}
 	}
 }
 
-// Buttonbar Group
+// * Buttonbar Group
 // all buttons within a buttonbar-group are visually and functionally a unit, like radio buttons
 // e.g. options, radio buttons
 

@@ -452,3 +452,14 @@ $sticky-header-border-color:	theme-color('dark') !default;
 $digi-display-font-size: 	15px !default;
 $digi-display-line-height: 	$line-height-sm !default;
 $digi-display-font-family: 	$font-family-monospace !default;
+
+// Tabs
+// ==========================================
+$tabs-padding: 						$component-padding-base !default;
+$tabs-header-height: 				$btn-height + 6px !default;
+$tabs-header-height-sm:			$btn-height-sm + 2px !default;
+$tabs-header-border-color: 			gray('300') !default;
+$tabs-header-border-width: 			3px !default;
+$tabs-header-border-width-sm: 		2px !default;
+$tabs-overflow-button-background: 	darken($tabs-header-border-color, 5%) !default;
+$tabs-overflow-button-color: 		$body-color !default;

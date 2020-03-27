@@ -1,8 +1,278 @@
 // todo: tabs within list-view
+// * Tabs
+
+/*
+<div class="cui-tabs [ cui-tabs--horizontal | cui-tabs--vertical ] cui-pane cui-maximize cui-maximize-horizontal cui-maximize-vertical cui-vertical-layout">
+	<div class="cui-vertical-layout-top">
+		<div class="cui-pane-header cui-tabs-pane-header cui-toolbar cui-maximize-horizontal cui-horizontal-layout [cui-tabs-pane-header--overflow]">
+			<div class="cui-horizontal-layout-left"></div>
+			<div class="cui-horizontal-layout-center">
+				<div class="cui-buttonbar cui-buttonbar--stack-horizontal">
+					<div class="cui-buttonbar-group cui-buttonbar-group-tabs">
+						<div class="cui-button cui-tab-header-button cui-button-button"> ... </div>
+					</div>
+				</div>
+				<div class="cui-tabs-active-marker"></div>
+			</div>
+			<div class="cui-horizontal-layout-right">
+				[ <div class="cui-button cui-tab-header-button-overflow cui-button-button"> ... </div> ]
+			</div>
+		</div>
+	</div>
+	<div class="cui-vertical-layout-center">
+		<div class="cui-tabs-bodies">
+			<div class="cui-tab-body cui-tab [cui-tab-hidden]">
+				...
+			</div>
+		</div>
+	</div>
+	<div class="cui-vertical-layout-bottom">
+		<div class="cui-pane-footer cui-toolbar cui-maximize-horizontal cui-horizontal-layout">
+			<div class="cui-horizontal-layout-left"></div>
+			<div class="cui-horizontal-layout-center"></div>
+			<div class="cui-horizontal-layout-right">
+				[ <div class="cui-buttonbar cui-buttonbar--stack-horizontal"> ... </div> ]
+			</div>
+		</div>
+	</div>
+</div>
+*/
+
+// * Tab Layout
+
 .cui-tabs {
 	background-color: transparent; // reset cui-pane
 
+	&.cui-absolute > .cui-vertical-layout-center {
+		top: $toolbar-height + 1px; // todo: find use-case
+	}
+
 	.cui-toolbar {
 		background-color: transparent; // reset cui-toolbar
+	}
+
+	> .cui-vertical-layout-center {
+		flex-grow: 1;
+
+		> .cui-tabs-bodies {
+			display: flex;
+			flex: 1 1 auto;
+			overflow: hidden;
+
+			> .cui-tab-body {
+				display: flex;
+				flex-direction: column;
+				margin-left: 0 !important;
+				flex: 1 1 auto;
+				overflow: auto;
+				-webkit-overflow-scrolling: touch;
+
+				&.cui-tab-hidden {
+					display: none;
+				}
+
+				&.cui-tab--padded {
+					padding: $tabs-padding;
+				}
+
+				> .cui-empty-label:only-child {
+					margin: $spacer-sm 0;
+				}
+			}
+		}
+	}
+}
+
+// * Tab Header with Buttons
+
+.cui-tabs-pane-header {
+	padding: 0; // reset .cui-toolbar
+	min-height: 0; // reset .cui-toolbar
+	border-bottom: 1px solid $tabs-header-border-color;
+
+	> .cui-horizontal-layout-center {
+		overflow: auto !important; //! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
+		justify-content: flex-start; // reset .cui-toolbar
+	}
+
+	.cui-buttonbar {
+		min-width: 0;
+	}
+
+	// overflowing tabs
+	&.cui-tabs-pane-header--overflow {
+		> .cui-horizontal-layout-center {
+			padding-right: 0;
+			margin-right: 0;
+			overflow: hidden !important; // overwrite toolbar > center overflow visible
+		}
+	}
+
+	// * Buttons
+
+	.cui-tab-header-button,
+	.cui-tab-header-button-overflow {
+		margin: 0;
+
+		.cui-button-visual {
+			height: $tabs-header-height;
+			text-transform: uppercase;
+			padding: 0 $spacer-sm;
+		}
+
+		&.cui-button-size-mini {
+			.cui-button-visual {
+				height: $tabs-header-height-sm;
+				padding: 0 $spacer-xs;
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+				box-shadow: none !important;
+			}
+		}
+	}
+
+	// * Overflow Button
+
+	.cui-tab-header-button-overflow {
+		align-self: center;
+		position: relative;
+		z-index: 1; // to overlap active buttons
+		border-bottom: 1px solid $tabs-overflow-button-background;
+
+		// white blocker gradient
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			width: 40px;
+			transform: translateX(-100%);
+			opacity: 0.6;
+
+			@include scrim-gradient($body-bg, $direction: 'to left');
+		}
+
+		// shadow gradient
+		&::after {
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			width: 10px;
+			transform: translateX(-100%);
+			opacity: 0.1;
+
+			@include scrim-gradient($body-color, $direction: 'to left');
+		}
+
+		.cui-button-visual {
+			position: relative;
+			background-color: $tabs-overflow-button-background;
+			color: $tabs-overflow-button-color;
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+		}
+
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				background-color: darken($tabs-overflow-button-background, 8%);
+			}
+		}
+	}
+}
+
+// * Vertical tabs
+
+.cui-tabs--vertical {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	grid-template-rows: 1fr auto;
+	grid-template-areas:
+		't_header t_body'
+		't_footer t_footer';
+
+	> .cui-vertical-layout-top {
+		grid-area: t_header;
+	}
+
+	> .cui-vertical-layout-center {
+		grid-area: t_body;
+	}
+
+	> .cui-vertical-layout-bottom {
+		grid-area: t_footer;
+	}
+
+	// * Header
+
+	.cui-tabs-pane-header {
+		border-bottom: none;
+		border-right: 1px solid $tabs-header-border-color;
+		overflow: auto;
+
+		> .cui-horizontal-layout-center {
+			overflow: visible !important;
+			display: block;
+		}
+
+		> .cui-horizontal-layout-right {
+			display: none;
+		}
+
+		.cui-buttonbar-group {
+			width: 100%;
+
+			> * {
+				width: 100%;
+				margin-bottom: 0;
+			}
+
+			.cui-button-visual {
+				justify-content: flex-start;
+			}
+		}
+	}
+}
+
+// * Tab Marker
+
+.cui-tabs-active-marker {
+	position: absolute;
+	background: theme-color('primary');
+	z-index: 1;
+
+	// * Horizontal
+
+	.cui-tabs--horizontal & {
+		bottom: 0;
+		height: $tabs-header-border-width;
+		// left + width are set by javascript
+		transition: width 0.3s ease, left 0.3s ease;
+
+		.cui-tabs-pane-header--mini & {
+			height: $tabs-header-border-width-sm;
+		}
+	}
+
+	// * Vertical
+
+	.cui-tabs--vertical & {
+		right: 0;
+		width: $tabs-header-border-width;
+		// top + height are set by javascript
+		transition: height 0.3s ease, top 0.3s ease;
+
+		.cui-tabs-pane-header--mini & {
+			width: $tabs-header-border-width-sm;
+		}
 	}
 }

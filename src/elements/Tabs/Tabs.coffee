@@ -74,9 +74,15 @@ class CUI.Tabs extends CUI.SimplePane
 
 		CUI.dom.showElement(@__tabs_marker)
 		btn_dim = CUI.dom.getDimensions(btn)
-		CUI.dom.setStyle @__tabs_marker,
-			left: btn_dim.offsetLeft
-			width: btn_dim.borderBoxWidth
+
+		if @_orientation == "horizontal"
+			CUI.dom.setStyle @__tabs_marker,
+				left: btn_dim.offsetLeft
+				width: btn_dim.borderBoxWidth
+		else
+			CUI.dom.setStyle @__tabs_marker,
+				top: btn_dim.offsetTop
+				height: btn_dim.borderBoxHeight
 		@
 
 	init: ->
@@ -99,7 +105,7 @@ class CUI.Tabs extends CUI.SimplePane
 
 		@addClass('cui-tabs--'+@_orientation)
 
-		@__buttonbar = new CUI.Buttonbar()
+		@__buttonbar = new CUI.Buttonbar(stack: @_orientation)
 
 		pane_key = "center"
 
@@ -120,6 +126,7 @@ class CUI.Tabs extends CUI.SimplePane
 		@__overflowBtn = new CUI.Button
 			icon: "ellipsis_h"
 			class: "cui-tab-header-button-overflow"
+			appearance: "flat"
 			icon_right: false
 			size: if @_appearance == "mini" then "mini" else undefined
 			tooltip: text: CUI.Tabs.defaults.overflow_button_tooltip
