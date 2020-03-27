@@ -125,6 +125,8 @@ $spacer-sm: 	$spacer * 0.5 !default;
 $spacer-base: 	$spacer !default;
 $spacer-lg: 	$spacer * 1.5 !default;
 $spacer-xl: 	$spacer * 3 !default;
+// The component padding is to be used for the default component padding (usually with the modifier "--padding")
+$component-padding-base: $spacer-sm !default;
 
 // Body
 // ==========================================
@@ -306,12 +308,12 @@ $panel-border-color: gray('400') !default;
 // ==========================================
 $toolbar-height: 40px !default;
 $toolbar-background: transparent !default; // leave transparent by default and style dependent on where the toolbar is used
-$toolbar-padding: $spacer-sm !default;
+$toolbar-padding: $component-padding-base !default;
 
 // Pane
 // ==========================================
 $pane-background:  				theme-color('light') !default;
-$pane-padding: 					$toolbar-padding !default;
+$pane-padding: 					$component-padding-base !default;
 $pane-window-border-color: 		gray('200') !default;
 
 // Input
@@ -324,7 +326,7 @@ $input-border-color: 		gray('400') !default;
 $input-border-radius: 		$btn-border-radius !default;
 $input-placeholder-color: 	gray('500') !default;
 $input-min-width:			100px !default;
-$input-padding-x: 			$spacer-sm !default;
+$input-padding-x: 			$component-padding-base !default;
 $input-padding-y: 			$spacer-xs !default;
 $input-focus-shadow:		$btn-focus-shadow !default;
 $input-focus-border-color:	rgba(theme-color('focused'), 0.5) !default;
@@ -351,8 +353,8 @@ $table-data-height: 	34px !default;
 $table-data-width: 		135px !default; // old: $td-width
 $table-even-background:	gray('100') !default;
 $table-odd-background:	transparent !default;
-$table-padding-x:		$spacer-sm*2 !default;
-$table-padding-y:		$spacer-sm !default;
+$table-padding-x:		$spacer-sm*2 !default; // todo: use $component-padding-base ??
+$table-padding-y:		$spacer-sm !default; // todo: $component-padding-base ??
 $table-row-hover-background: gray('100') !default;
 
 // List View
@@ -372,7 +374,7 @@ $tree-node-handle-width: 14px !default;
 
 // Form
 // ==========================================
-$form-padding: 				$spacer-sm !default;
+$form-padding: 				$component-padding-base !default;
 $form-key-width:			$table-data-width !default;
 $form-key-min-width:		100px !default;
 $form-label-color: 			gray('600') !default;
@@ -394,7 +396,7 @@ $calendar-date-previous-color:		gray('500') !default;
 
 // Block
 // ==========================================
-$block-padding: 			$spacer-sm !default;
+$block-padding: 			$component-padding-base !default;
 $block-header-column-width:	200px !default;
 
 // Slider
