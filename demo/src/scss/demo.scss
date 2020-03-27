@@ -72,6 +72,17 @@
 	}
 }
 
+.cui-demo-tabs-demo {
+	.cui-demo-pane-center > .cui-pane {
+		overflow: visible;
+	}
+
+	.cui-label + .cui-tabs {
+		margin-bottom: 3rem;
+	}
+}
+
+
 /* Content Area */
 .cui-document-browser-center {
 
