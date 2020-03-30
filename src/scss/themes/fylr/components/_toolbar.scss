@@ -74,3 +74,39 @@
 .cui-result-navigation-toolbar {
 	min-height: $toolbar-height;
 }
+
+// Navigation Toolbar
+// todo: find use-case
+.cui-navigation-toolbar {
+	&--mini {
+		background: none;
+		min-height: 20px !important;
+
+		.cui-horizontal-layout-left > .cui-label:first-child {
+			color: theme-color('dark'); // todo
+			font-weight: normal;
+			padding-left: $spacer-sm;
+			margin-right: 0;
+		}
+
+		.cui-buttonbar {
+			margin-bottom: 2px;
+		}
+
+		.cui-button {
+			padding: 0;
+		}
+
+		.cui-input {
+			padding: 0 3px;
+			font-size: 11px;
+			line-height: 18px;
+		}
+	}
+
+	> .cui-horizontal-layout-left {
+		> .cui-label:last-child {
+			margin-right: $spacer;
+		}
+	}
+}
