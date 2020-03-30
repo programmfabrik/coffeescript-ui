@@ -311,36 +311,3 @@ li > div {
 	}
 }
 
-
-// Space
-.cui-space {
-	margin: $padding;
-	display: inline-block;
-
-	&:empty {
-		margin: $padding/2;
-	}
-}
-
-.cui-small-space {
-	margin: $padding/2;
-	display: inline-block;
-
-	&:empty {
-		margin: $padding/4;
-	}
-}
-
-.cui-large-space {
-	margin: $padding*2;
-	display: inline-block;
-
-	&:empty {
-		margin: $padding;
-	}
-}
-
-.cui-flexible-space {
-	flex: 1 1 auto;
-}
-

@@ -4,6 +4,8 @@ body {
 	background-color: $body-bg;
 }
 
+// * Borders
+
 .cui-border {
 	border: 1px solid $hr-border-color;
 }
@@ -24,6 +26,8 @@ body {
 	border-left: 1px solid $hr-border-color;
 }
 
+// * Visibilty
+
 [hidden],
 .cui-tmpl,
 [data-template],
@@ -40,4 +44,43 @@ body {
 @keyframes nodeInserted {
 	from { opacity: 0.99; }
 	to { opacity: 1; }
+}
+
+// * Spacing
+
+.cui-space {
+	margin: $spacer;
+	display: inline-block;
+
+	&:empty {
+		margin: $spacer-sm;
+	}
+}
+
+.cui-space-sm,
+// deprecated:
+.cui-small-space {
+	margin: $spacer-sm;
+	display: inline-block;
+
+	&:empty {
+		margin: $spacer-xs;
+	}
+}
+
+.cui-space-lg,
+// deprecated:
+.cui-large-space {
+	margin: $spacer-lg;
+	display: inline-block;
+
+	&:empty {
+		margin: $spacer;
+	}
+}
+
+.cui-space-flexible,
+// deprecated:
+.cui-flexible-space {
+	flex: 1 1 auto;
 }

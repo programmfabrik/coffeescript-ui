@@ -1,13 +1,25 @@
-// Variables
-// Naming conventions:
+/*
 
-// GLOBAL_PROPERTY_MODIFIER or for components: COMPONENT_PROPERTY_MODIFIER
-// COMPONENT is the component name
-// PROPERTY is the main property to style, e.g. height, padding or a custom attribute name that is specific to that component
-// MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
+* Variables
 
-// - use XXX-color to define a font color, e.g. btn-color
-// - use XXX-background for background colors, e.g. XXX-active-background
+Naming conventions:
+GLOBAL_PROPERTY_MODIFIER or for components: COMPONENT_PROPERTY_MODIFIER
+COMPONENT is the component name
+PROPERTY is the main property to style, e.g. height, padding or a custom attribute name that is specific to that component
+MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
+- use XXX-color to define a font color, e.g. btn-color
+- use XXX-background for background colors, e.g. XXX-active-background
+
+
+* Naming conventions for classnames
+
+- always prefix with ".cui-"
+- use same pattern as variables: GLOBAL_PROPERTY_MODIFIER, see above
+
+- DO: cui-box-sm | cui-box-md | cui-box-lg (modifier or qualifier at the end!)
+- DON'T: cui-small-box | cui-medium-box | cui-large-box  (modifier or qualifier in the middle)
+
+*/
 
 
 @import url('https://fonts.googleapis.com/css?family=Lato:200,300,400,700,900&display=swap');
