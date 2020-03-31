@@ -43,6 +43,11 @@
 		.cui-button-left,
 		.cui-button-right {
 			display: inline-flex;
+			flex: 0 0 auto;
+		}
+
+		.cui-button-center {
+			flex: 0 1 auto; // allow text-truncate
 		}
 	}
 
@@ -154,10 +159,10 @@ a[role='button'].cui-button-appearance-link {
 	// http://stackoverflow.com/a/37535548
 	.cui-button-visual {
 		justify-content: flex-start;
-	}
 
-	.cui-button-right {
-		margin-left: auto;
+		.cui-button-right {
+			margin-left: auto;
+		}
 	}
 }
 

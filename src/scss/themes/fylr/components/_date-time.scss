@@ -44,7 +44,7 @@
 	// todo: there is no way we can mark these up as flat buttons
 	.cui-button-select,
 	.cui-button {
-		@include button-flat($input-background, theme-color('primary'));
+		@include button-flat(transparent, $body-color, $input-background, theme-color('primary'));
 		@include button-size-sm();
 
 		.cui-button-visual {

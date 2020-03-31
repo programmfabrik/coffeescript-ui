@@ -8,16 +8,26 @@
 	border-radius: $border-radius;
 
 	.cui-button-left {
-		&:not(:empty):not(:only-child) {
-			padding-left: $padding-x;
-			margin-right: -0.5*$padding-x;
+		padding-left: $padding-x;
+		margin-right: -0.5*$padding-x;
+
+		// reset, do not use :not, so we can easily override these styles if needed
+		&:empty,
+		&:only-child {
+			padding-left: 0;
+			margin-right: 0;
 		}
 	}
 
 	.cui-button-right {
-		&:not(:empty):not(:only-child) {
-			padding-right: $padding-x;
-			margin-left: -0.5*$padding-x;
+		padding-right: $padding-x;
+		margin-left: -0.5*$padding-x;
+
+		// reset, do not use :not, so we can easily override these styles if needed
+		&:empty,
+		&:only-child {
+			padding-right: 0;
+			margin-left: 0;
 		}
 	}
 
@@ -58,17 +68,18 @@
 	}
 }
 
-@mixin button-reset() {
+@mixin button-reset($background: transparent, $color: $body-color) {
 	.cui-button-visual {
 		border: 0;
-		background-color: transparent;
+		background-color: $background;
+		color: $color;
 		box-shadow: none;
 		margin-bottom: 0;
 	}
 }
 
-@mixin button-flat($background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
-	@include button-reset();
+@mixin button-flat($background: transparent, $color: $body-color, $background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
+	@include button-reset($background, $color);
 
 	.cui-button-left,
 	.cui-button-right {
@@ -111,7 +122,7 @@
 
 	&:hover,
 	&:focus {
-		.cui-button-visual {
+		.cui-button-visual .cui-button-center {
 			text-decoration: none;
 		}
 	}

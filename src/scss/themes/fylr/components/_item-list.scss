@@ -23,8 +23,8 @@
 			// make sure the buttons could wrap onto new line
 			height: auto;
 			min-height: $item-list-height;
-			padding-top: 0.35em;
-			padding-bottom: 0.45em;
+			// padding-top: 0.35em;
+			// padding-bottom: 0.45em;
 
 			span {
 				white-space: normal;
@@ -70,12 +70,6 @@
 	.cui-label {
 		font-size: $font-size-xs;
 		cursor: default;
-
-		&.cui-menu-item {
-			padding: 0 $item-list-indent;
-			height: $item-list-height;
-			color: gray('600');
-		}
 	}
 
 	// Options within item-list
