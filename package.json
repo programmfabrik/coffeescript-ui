@@ -6,7 +6,7 @@
     "build": "npm run rmdist && webpack --progress --env.development",
     "build:production": "npm run rmdist && webpack --progress --env.production",
     "build:watch": "npm run rmdist && webpack --watch --progress",
-    "build:all": "npm run build:production",
+    "build:all": "npm run rmdist && webpack --progress --env.development && webpack --progress --env.production --env.all",
     "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest",

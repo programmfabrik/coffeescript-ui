@@ -11,36 +11,33 @@ const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
 const APP_DIR = path.resolve(__dirname + path.sep, 'src');
 
 module.exports = function (env, argv) {
-    const isProduction = !!(env && env.production);
+	const isProduction = !!(env && env.production);
+	const isBuildAll = !!(env && env.all);
+	const removeMaps = isBuildAll;
 
     let plugins = [
         // new HardSourceWebpackPlugin(), We comment out the plugin due to https://github.com/mzgoddard/hard-source-webpack-plugin/issues/480
 
         new FixStyleOnlyEntriesPlugin(), // Removes extraneous js files that are emitted from the scss only entries
-        new MiniCssExtractPlugin({ filename: '[id].css' }),
+        new MiniCssExtractPlugin({ filename: '[id]' + (isBuildAll ? '.min' : '') + '.css' }),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         }),
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|en|es|it/),
-        new CleanWebpackPlugin([
-            BUILD_DIR + '/' + 'cui.js',
-            BUILD_DIR + '/' + 'cui.js.map',
-            BUILD_DIR + '/' + 'cui.min.js',
-            BUILD_DIR + '/' + 'cui.min.js.map',
-            BUILD_DIR + '/' + 'cui.css',
-            BUILD_DIR + '/' + 'cui.css.map',
-            BUILD_DIR + '/' + 'cui_fylr.css',
-            BUILD_DIR + '/' + 'cui_fylr.css.map',
-            BUILD_DIR + '/' + 'cui_debug.css',
-            BUILD_DIR + '/' + 'cui_debug.css.map',
-        ]),
+		new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|en|es|it/),
         new StylelintPlugin({
             fix: true,
             context: APP_DIR + '/scss/themes/fylr',
             syntax: 'scss',
             failOnError: !argv.watch,
         }),
-    ];
+	];
+
+	// optionally remove maps, e.g. when running build:all
+	if (removeMaps) {
+		plugins.push(new CleanWebpackPlugin([
+            BUILD_DIR + '/' + '*.map',
+    	]));
+	}
 
     return {
         mode: isProduction ? 'production' : 'development',
@@ -56,12 +53,12 @@ module.exports = function (env, argv) {
                 // we cannot prevent wp from generating a js output for each css only entry,
                 // each emitted js file must therefore have a unique filename to prevent error: "Multiple chunks emit assets to the same filename"
                 if (chunkData.chunk.id === 'main_js') {
-                    return 'cui' + (isProduction ? '.min' : '') + '.js';
+                    return 'cui' + (isProduction ? '.min' : '') + '.js'; // cui.min.js | cui.js will be copied into the final webfrontend build folder, see makefile
                 } else if (chunkData.chunk.id === 'cui') {
                     // since cui.js already exists from `main_js` output, we need to create a more unique name here
-                    return '[name]_[id].js';
+					return '[name]_[id].js';
                 } else {
-                    return '[name].js'
+					return '[name].js'
                 }
             },
             path: BUILD_DIR,
