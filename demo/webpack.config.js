@@ -2,7 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
@@ -29,7 +29,7 @@ module.exports = function(env) {
                 if (chunkData.chunk.id === 'main_js') {
                     return 'cui-demo.js';
                 } else {
-                    return '[name].js'
+                    return 'not-needed/[name].js'
                 }
             },
         },
@@ -90,7 +90,11 @@ module.exports = function(env) {
             ]
         },
         plugins: [
-            new FixStyleOnlyEntriesPlugin(), // Removes extraneous js files that are emitted from the scss only entries
+			new CleanWebpackPlugin({
+				cleanAfterEveryBuildPatterns: [
+					BUILD_DIR + '/not-needed', // Removes not-needed js files that are emitted from the scss only entries
+				]
+			}),
             new MiniCssExtractPlugin({
                 moduleFilename: ({ id }) => {
                     if ( id === 'cui_demo') {
