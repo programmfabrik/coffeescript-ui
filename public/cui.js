@@ -9609,7 +9609,7 @@ CUI = (function() {
       }
     });
     document.body.scrollTop = 0;
-    icons = __webpack_require__(/*! ../scss/icons/icons.svg */ "./scss/icons/icons.svg");
+    icons = __webpack_require__(/*! ../scss/icons/icons.svg */ "./scss/icons/icons.svg")["default"];
     CUI.Template.loadText(icons);
     CUI.Template.load();
     this.chainedCall.apply(this, this.__readyFuncs).always((function(_this) {
@@ -23208,6 +23208,9 @@ CUI.Button = (function(superClass) {
     if (this._appearance) {
       this.addClass("cui-button-appearance-" + this._appearance);
     }
+    if (this._bordered) {
+      this.addClass("cui-button--bordered");
+    }
     if (this._primary) {
       this.addClass("cui-button--primary");
     }
@@ -23574,6 +23577,10 @@ CUI.Button = (function(superClass) {
       },
       appearance: {
         check: ["link", "flat", "normal", "important", "transparent-border"]
+      },
+      bordered: {
+        check: Boolean,
+        "default": false
       },
       primary: {
         mandatory: true,
@@ -24448,6 +24455,9 @@ CUI.Buttonbar = (function(superClass) {
     if (this._size) {
       this.addClass("cui-buttonbar--size-" + this._size);
     }
+    if (this._stack) {
+      this.addClass("cui-buttonbar--stack-" + this._stack);
+    }
     this.__checkVisibility();
   }
 
@@ -24464,6 +24474,10 @@ CUI.Buttonbar = (function(superClass) {
       },
       tooltip: {
         check: "PlainObject"
+      },
+      stack: {
+        check: ["vertical", "horizontal"],
+        "default": "horizontal"
       }
     });
   };
@@ -24948,7 +24962,8 @@ CUI.Alert = (function(superClass) {
     if (!this._choices) {
       return this._choices = [
         {
-          text: this._button_text_ok
+          text: this._button_text_ok,
+          primary: true
         }
       ];
     }
@@ -26128,6 +26143,7 @@ CUI.DataForm = (function(superClass) {
       trash = new CUI.defaults["class"].Button({
         icon: "fa-trash-o",
         appearance: "flat",
+        size: "mini",
         onMouseenter: (function(_this) {
           return function() {
             return CUI.dom.addClass(hl, "cui-data-form-row--trash");
@@ -26409,10 +26425,11 @@ CUI.DataTable = (function(superClass) {
       if (this._new_rows !== "remove_only") {
         buttons.push({
           icon: "plus",
+          appearance: "flat",
+          size: "mini",
           tooltip: {
             text: CUI.DataTable.defaults.plus_button_tooltip
           },
-          group: "plus-minus",
           onClick: (function(_this) {
             return function() {
               return _this.addRow();
@@ -26422,7 +26439,8 @@ CUI.DataTable = (function(superClass) {
       }
       this.minusButton = new CUI.defaults["class"].Button({
         icon: "minus",
-        group: "plus-minus",
+        appearance: "flat",
+        size: "mini",
         tooltip: {
           text: CUI.DataTable.defaults.minus_button_tooltip
         },
@@ -26455,6 +26473,8 @@ CUI.DataTable = (function(superClass) {
         icon: "left",
         disabled: true,
         group: "navi",
+        appearance: "flat",
+        size: "mini",
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset - _this._chunk_size;
@@ -26471,6 +26491,7 @@ CUI.DataTable = (function(superClass) {
       })(this);
       this.__navi_input = new CUI.NumberInput({
         group: "navi",
+        size: "mini",
         placeholder: "henk",
         data: page_data,
         name: 'page',
@@ -26498,6 +26519,8 @@ CUI.DataTable = (function(superClass) {
         icon: "right",
         disabled: true,
         group: "navi",
+        appearance: "flat",
+        size: "mini",
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset + _this._chunk_size;
@@ -33853,6 +33876,9 @@ CUI.Input = (function(superClass) {
     if (this._appearance) {
       this.addClass("cui-input-appearance-" + this._appearance);
     }
+    if (this._size) {
+      this.addClass("cui-input-size-" + this._size);
+    }
     this.__inputHints = {};
     this.__inputHintTexts = {};
     ref = ["empty", "invalid", "valid"];
@@ -34000,6 +34026,9 @@ CUI.Input = (function(superClass) {
       },
       appearance: {
         check: ["code"]
+      },
+      size: {
+        check: ["mini"]
       }
     });
   };
@@ -36933,6 +36962,9 @@ CUI.ListView = (function(superClass) {
         return _this.__doLayout();
       };
     })(this);
+    if (this._bordered) {
+      this.addClass("cui-list-view--bordered");
+    }
     return this.addClass("cui-list-view");
   };
 
@@ -36998,6 +37030,10 @@ CUI.ListView = (function(superClass) {
       },
       onDeselect: {
         check: Function
+      },
+      bordered: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -43250,7 +43286,7 @@ CUI.Modal = (function(superClass) {
       "class": "ez5-modal-close-button",
       icon: "close",
       tooltip: this._cancel_tooltip || CUI.Modal.defaults.cancel_tooltip,
-      appearance: "normal",
+      appearance: "flat",
       onClick: (function(_this) {
         return function(ev) {
           return do_cancel(ev);
@@ -45753,6 +45789,10 @@ CUI.Pane = (function(superClass) {
           };
         })(this),
         "default": CUI.Pane.defaults.button_tooltip
+      },
+      appearance: {
+        mandatory: false,
+        "default": "flat"
       }
     });
     if (CUI.util.isString(opts.icon_inactive)) {
@@ -47211,6 +47251,9 @@ CUI.Slider = (function(superClass) {
     CUI.dom.setStyle(this.__handle, {
       left: percent + '%'
     });
+    CUI.dom.setStyle(this.__slider, {
+      '--slider-distance': percent + '%'
+    });
     return typeof this._onUpdate === "function" ? this._onUpdate(this, this.getValue()) : void 0;
   };
 
@@ -47568,6 +47611,9 @@ CUI.Table = (function(superClass) {
     if (this._bordered) {
       cls.push("cui-table--bordered");
     }
+    if (this._zebra) {
+      cls.push("cui-table--zebra");
+    }
     this.__table = CUI.dom.table(cls.join(" "));
     this.registerDOMElement(this.__table, false);
     CUI.Layout.prototype.maximizeAddClasses.call(this);
@@ -47625,6 +47671,10 @@ CUI.Table = (function(superClass) {
         check: Boolean
       },
       bordered: {
+        "default": false,
+        check: Boolean
+      },
+      zebra: {
         "default": false,
         check: Boolean
       },
@@ -47817,6 +47867,7 @@ CUI.Tab = (function(superClass) {
       role: "tab-header",
       radio: "tabs--" + tabs.getUniqueId(),
       "class": "cui-tab-header-button",
+      appearance: "flat",
       disabled: this._disabled,
       qa: this._qa ? this._qa + "-button" : void 0,
       id: this._button_id,
@@ -48120,10 +48171,17 @@ CUI.Tabs = (function(superClass) {
     }
     CUI.dom.showElement(this.__tabs_marker);
     btn_dim = CUI.dom.getDimensions(btn);
-    CUI.dom.setStyle(this.__tabs_marker, {
-      left: btn_dim.offsetLeft,
-      width: btn_dim.borderBoxWidth
-    });
+    if (this._orientation === "horizontal") {
+      CUI.dom.setStyle(this.__tabs_marker, {
+        left: btn_dim.offsetLeft,
+        width: btn_dim.borderBoxWidth
+      });
+    } else {
+      CUI.dom.setStyle(this.__tabs_marker, {
+        top: btn_dim.offsetTop,
+        height: btn_dim.borderBoxHeight
+      });
+    }
     return this;
   };
 
@@ -48145,7 +48203,9 @@ CUI.Tabs = (function(superClass) {
       this.addClass('cui-tabs--padded');
     }
     this.addClass('cui-tabs--' + this._orientation);
-    this.__buttonbar = new CUI.Buttonbar();
+    this.__buttonbar = new CUI.Buttonbar({
+      stack: this._orientation
+    });
     pane_key = "center";
     this.__pane_header.append(this.__buttonbar, pane_key);
     this.__pane_header.append(this.__tabs_marker, pane_key);
@@ -48165,6 +48225,7 @@ CUI.Tabs = (function(superClass) {
     this.__overflowBtn = new CUI.Button({
       icon: "ellipsis_h",
       "class": "cui-tab-header-button-overflow",
+      appearance: "flat",
       icon_right: false,
       size: this._appearance === "mini" ? "mini" : void 0,
       tooltip: {
