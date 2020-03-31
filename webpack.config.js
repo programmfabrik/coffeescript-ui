@@ -24,7 +24,7 @@ module.exports = function (env, argv) {
 				BUILD_DIR + '/not-needed', // removes not-needed js files that are emitted from the scss only entries
 			]
 		}),
-        new MiniCssExtractPlugin({ filename: '[id]' + (isBuildAll ? '.min' : '') + '.css' }),
+        new MiniCssExtractPlugin({ filename: '[id]' + (isProduction && isBuildAll ? '.min' : '') + '.css' }),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         }),
@@ -81,7 +81,7 @@ module.exports = function (env, argv) {
                 }),
             ],
         },
-        devtool: (!isProduction && !isBuildAll ? 'source-map' : undefined),
+        devtool: (!isProduction ? 'source-map' : undefined),
         module: {
             rules: [
                 {
