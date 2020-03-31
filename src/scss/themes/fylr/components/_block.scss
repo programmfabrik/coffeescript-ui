@@ -69,7 +69,7 @@
 		&.cui-block-level-2 {
 			display: grid;
 			grid-template-columns: $block-header-column-width 1fr;
-			grid-gap: 0 $spacer-xl;
+			grid-gap: 0 $spacer-xl; // todo: needs IE fix, use grid-template-areas
 		}
 
 		// Level 3
