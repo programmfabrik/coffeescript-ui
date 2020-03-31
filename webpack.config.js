@@ -1,9 +1,8 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const TerserPlugin = require('terser-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
@@ -13,12 +12,18 @@ const APP_DIR = path.resolve(__dirname + path.sep, 'src');
 module.exports = function (env, argv) {
 	const isProduction = !!(env && env.production);
 	const isBuildAll = !!(env && env.all);
-	const removeMaps = isBuildAll;
 
     let plugins = [
         // new HardSourceWebpackPlugin(), We comment out the plugin due to https://github.com/mzgoddard/hard-source-webpack-plugin/issues/480
 
-        new FixStyleOnlyEntriesPlugin(), // Removes extraneous js files that are emitted from the scss only entries
+		// use CleanWebpackPlugin to explicitly clear the not-needed folder ONLY
+		new CleanWebpackPlugin({
+			cleanStaleWebpackAssets: false,
+			cleanOnceBeforeBuildPatterns: [], // disables the default behavior that removes all files from the build directory before running
+			cleanAfterEveryBuildPatterns: [
+				BUILD_DIR + '/not-needed', // removes not-needed js files that are emitted from the scss only entries
+			]
+		}),
         new MiniCssExtractPlugin({ filename: '[id]' + (isBuildAll ? '.min' : '') + '.css' }),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
@@ -31,13 +36,6 @@ module.exports = function (env, argv) {
             failOnError: !argv.watch,
         }),
 	];
-
-	// optionally remove maps, e.g. when running build:all
-	if (removeMaps) {
-		plugins.push(new CleanWebpackPlugin([
-            BUILD_DIR + '/' + '*.map',
-    	]));
-	}
 
     return {
         mode: isProduction ? 'production' : 'development',
@@ -56,9 +54,9 @@ module.exports = function (env, argv) {
                     return 'cui' + (isProduction ? '.min' : '') + '.js'; // cui.min.js | cui.js will be copied into the final webfrontend build folder, see makefile
                 } else if (chunkData.chunk.id === 'cui') {
                     // since cui.js already exists from `main_js` output, we need to create a more unique name here
-					return '[name]_[id].js';
+					return 'not-needed/[name]_[id].js';
                 } else {
-					return '[name].js'
+					return 'not-needed/[name].js'
                 }
             },
             path: BUILD_DIR,
@@ -83,7 +81,7 @@ module.exports = function (env, argv) {
                 }),
             ],
         },
-        devtool: (!isProduction ? 'source-map' : undefined),
+        devtool: (!isProduction && !isBuildAll ? 'source-map' : undefined),
         module: {
             rules: [
                 {

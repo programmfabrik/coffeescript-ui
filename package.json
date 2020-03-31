@@ -6,7 +6,7 @@
     "build": "npm run rmdist && webpack --progress --env.development",
     "build:production": "npm run rmdist && webpack --progress --env.production",
     "build:watch": "npm run rmdist && webpack --watch --progress",
-    "build:all": "npm run rmdist && webpack --progress --env.development && webpack --progress --env.production --env.all",
+    "build:all": "npm run rmdist && webpack --progress --env.development --env.all && webpack --progress --env.production --env.all",
     "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest",
@@ -36,7 +36,7 @@
     "autoprefixer": "^9.7.4",
     "babel-jest": "^21.2.0",
     "base64-inline-loader": "^1.1.1",
-    "clean-webpack-plugin": "^0.1.16",
+    "clean-webpack-plugin": "^3.0.0",
     "codo": "^2.1.2",
     "coffee-loader": "0.9.0",
     "coffeescript": "^1.12.7",
@@ -68,8 +68,7 @@
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",
     "through2": "^0.6.5",
-    "webpack": "^4.41.5",
-    "webpack-fix-style-only-entries": "^0.4.0"
+    "webpack": "^4.41.5"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",

@@ -81,7 +81,7 @@ After that, it's necessary to run one of the following build commands
 - **npm run build**: Builds the default version for development
 - **npm run build:production**: Builds the default version for production (minified, no sourcemaps)
 - **npm run build:watch**: Builds the default version and watch for changes
-- **npm run build:all**: Builds one of each version (minified JS and CSS. "cui.min.js" | "cui.js" can be required in the final build, see makefile. "cui.js" is used in the DEMO.)
+- **npm run build:all**: Builds both minified JS and CSS as well as non-minified/development versions with no sourcemaps. "cui.min.js" or "cui.js" are used in the final build (see makefile), "cui.js" is used in the DEMO.)
 
 # Deprecated:
 - **npm run build:min**: Builds the minified version, run **npm run build:production** instead

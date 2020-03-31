@@ -22,3 +22,4 @@ src/**.js.map
 !demo/public/css
 coverage/*
 *.map
+_obsolete.scss
