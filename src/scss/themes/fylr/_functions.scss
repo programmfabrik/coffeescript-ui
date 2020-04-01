@@ -71,4 +71,11 @@
 @function calculate-rem($size) {
 	@return $size / 16px * 1rem;
 }
+
+// Retrieve headline font-size
+@function headline-size($key: 'h1') {
+	@return map-get($headline-sizes, $key);
+}
+
+
 // stylelint-enable at-rule-empty-line-before

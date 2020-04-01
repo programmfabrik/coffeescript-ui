@@ -1,0 +1,32 @@
+@mixin headline($size: 'h1') {
+	font-family: $headings-font-family;
+	font-size: headline-size($size);
+	font-weight: $headings-font-weight;
+	line-height: $headings-line-height;
+	color: $headings-color;
+	margin-bottom: $headings-margin-bottom;
+}
+
+@mixin h1() {
+	@include headline('h1');
+}
+
+@mixin h2() {
+	@include headline('h2');
+}
+
+@mixin h3() {
+	@include headline('h3');
+}
+
+@mixin h4() {
+	@include headline('h4');
+}
+
+@mixin h5() {
+	@include headline('h5');
+}
+
+@mixin h6() {
+	@include headline('h6');
+}
