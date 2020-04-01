@@ -398,13 +398,16 @@ CUI.DateTimeFormats["en-US"] =
 		clock_am_pm: true
 		clock_seconds: false
 		# digi_clock: "HH:mm"
-		input: "MM/DD/YYYY hh:mm A"
-		display: "dd, MM/DD/YYYY hh:mm A"
-		display_short: "MM/DD/YYYY hh:mm A"
+		input: "YYYY-MM-DD hh:mm A"
+		display: "dd, YYYY-MM-DD hh:mm A"
+		display_short: "YYYY-MM-DD hh:mm A"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"MM/DD/YYYY HH:mm:ss"
+			"MM/DD/YYYYTHH:mm:ss.SSSZ"
+			"MM/DD/YYYYTHH:mm:ssZ"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -426,9 +429,9 @@ CUI.DateTimeFormats["en-US"] =
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
-		input: "MM/DD/YYYY HH:mm:ss"
-		display: "dd, MM/DD/YYYY HH:mm:ss"
-		display_short: "MM/DD/YYYY HH:mm:ss"
+		input: "YYYY-MM-DD HH:mm:ss"
+		display: "dd, YYYY-MM-DD HH:mm:ss"
+		display_short: "YYYY-MM-DD HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
@@ -437,6 +440,7 @@ CUI.DateTimeFormats["en-US"] =
 		clock_seconds: true
 		# digi_clock: "HH:mm:ss"
 		parse: [
+			"MM/DD/YYYY HH:mm:ss"
 			"D.M.YYYY HH:mm:ss"
 			"DD.M.YYYY HH:mm:ss"
 			"D.MM.YYYY HH:mm:ss"
@@ -446,10 +450,10 @@ CUI.DateTimeFormats["en-US"] =
 	,
 		text: "Date"
 		support_bc: false
-		input: "MM/DD/YYYY"
+		input: "YYYY-MM-DD"
 		invalid: "Invalid date"
-		display: "dd, MM/DD/YYYY"
-		display_short: "MM/DD/YYYY"
+		display: "dd, YYYY-MM-DD"
+		display_short: "YYYY-MM-DD"
 		display_attribute: "date"
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
@@ -457,6 +461,7 @@ CUI.DateTimeFormats["en-US"] =
 		# digi_clock: false
 		clock: false
 		parse: [
+			"MM/DD/YYYY"
 			"D.M.YYYY"
 			"D.MM.YYYY"
 			"DD.M.YYYY"
@@ -466,11 +471,11 @@ CUI.DateTimeFormats["en-US"] =
 	,
 		text: "Jahr-Monat"
 		support_bc: false
-		input: "MM/YYYY"
+		input: "MM-YYYY"
 		invalid: "Invalid date"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM/YYYY"
+		display_short: "MM-YYYY"
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"

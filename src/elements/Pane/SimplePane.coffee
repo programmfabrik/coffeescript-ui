@@ -22,6 +22,7 @@ class CUI.SimplePane extends CUI.Pane
 			"header_center"
 			"header_right"
 			"footer_left"
+			"footer_center"
 			"footer_right"
 		]
 			value = @["_#{k}"]
@@ -44,6 +45,7 @@ class CUI.SimplePane extends CUI.Pane
 			header_center: {}
 			header_left: {}
 			footer_left: {}
+			footer_center: {}
 			footer_right: {}
 			content: {}
 			force_header:
@@ -76,7 +78,7 @@ class CUI.SimplePane extends CUI.Pane
 				@_top =
 					content: @__pane_header
 
-		if @forceFooter() or not (CUI.util.isUndef(@_footer_left) and CUI.util.isUndef(@_footer_right))
+		if @forceFooter() or not (CUI.util.isUndef(@_footer_left) and CUI.util.isUndef(@_footer_center) and CUI.util.isUndef(@_footer_right))
 			@__pane_footer = new CUI.PaneFooter()
 
 			@_bottom =

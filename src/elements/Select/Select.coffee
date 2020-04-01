@@ -28,6 +28,8 @@ class CUI.Select extends CUI.Checkbox
 				check: Function
 			onHide:
 				check: Function
+			menu_class:
+				check: String
 
 
 	init: ->
@@ -151,7 +153,7 @@ class CUI.Select extends CUI.Checkbox
 		menu:
 			active_item_idx: @default_opt?._idx or -1
 			allow_null: not CUI.util.isEmpty(@_empty_text)
-			class: "cui-select-menu"
+			class: "cui-select-menu "+(if @_menu_class then @_menu_class else "")
 			onDeactivate: (btn, item, idx, flags) =>
 				if flags.prior_activate
 					return

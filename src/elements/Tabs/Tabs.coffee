@@ -278,3 +278,9 @@ class CUI.Tabs extends CUI.SimplePane
 		tab = @getTab(tab_or_idx_or_name)
 		tab.activate()
 		@
+
+	destroy: ->
+		while @__tabs.length > 0
+			# Tab destroy triggers 'tab_destroy' event which makes the tab to be removed from the array.
+			@__tabs[0].destroy()
+		super()

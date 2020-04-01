@@ -3,6 +3,27 @@ class CUI.DataForm extends CUI.DataTable
 	render: ->
 		CUI.DataFieldInput::render.call(@)
 
+		if @_has_add_button
+			addButton = new CUI.Button
+				icon: "plus"
+				onClick: =>
+					lastRow = @__rowRegistry[@__rowRegistry.length - 1]?.data
+					if lastRow and lastRow._new
+						delete lastRow._new
+						@rows.push(lastRow)
+
+					@__appendRow(_new: true)
+					@__updateView()
+					@__removeEmptyRows()
+					@__storeValue()
+
+		@__verticalLayout = new CUI.VerticalLayout
+			maximize_horizontal: @__maximize_horizontal
+			center: content: undefined
+			bottom: content: addButton
+
+		@append(@__verticalLayout)
+
 		CUI.Events.listen
 			type: "data-changed"
 			node: @DOM
@@ -11,7 +32,7 @@ class CUI.DataForm extends CUI.DataTable
 
 		if @_rowMove
 			new CUI.Sortable
-				element: @DOM
+				element: @__verticalLayout.center()
 				selector: ".cui-drag-handle-row"
 				create: (ev, target) ->
 					data = CUI.dom.data(target, "data")
@@ -24,7 +45,6 @@ class CUI.DataForm extends CUI.DataTable
 				allowSort: (ev, from_idx, to_idx) =>
 					!!@rows[to_idx]
 				sorted: (ev, from_idx, to_idx) =>
-					console.debug from_idx, ">", to_idx
 					CUI.util.moveInArray(from_idx, to_idx, @rows, from_idx < to_idx)
 					@__storeValue()
 					@__updateView()
@@ -39,6 +59,9 @@ class CUI.DataForm extends CUI.DataTable
 				mandatory: true
 				check: (v) ->
 					CUI.util.isPosInt(v)
+			has_add_button:
+				check: Boolean
+				default: false
 
 		@removeOpt("onNodeAdd")
 		@removeOpt("footer_right")
@@ -55,11 +78,13 @@ class CUI.DataForm extends CUI.DataTable
 		if @_rowMove
 			@addClass('cui-data-form--movable-rows')
 
+		if @_has_add_button
+			@addClass('cui-data-form--add-button')
 
 	readOpts: ->
 		super()
 		@__rowRegistry = []
-
+		@
 
 	getFieldOpts: ->
 		field_opts = super()
@@ -154,7 +179,7 @@ class CUI.DataForm extends CUI.DataTable
 		@rows = @getValue()
 		# console.warn "display", @_name, rows.length
 
-		@empty()
+		@__verticalLayout.empty("center")
 		for row in @rows
 			@__appendRow(row)
 
@@ -167,6 +192,8 @@ class CUI.DataForm extends CUI.DataTable
 		if @_new_rows not in ["edit", "append"]
 			return
 
+		if @_has_add_button and @rows.length > 0
+			return
 		@__appendRow(_new: true)
 
 	__updateButtons: ->
@@ -230,7 +257,7 @@ class CUI.DataForm extends CUI.DataTable
 
 		CUI.dom.data(hl.DOM, "data", data)
 
-		if data._new
+		if data._new and not @_has_add_button
 			CUI.dom.addClass(move, 'is-hidden')
 			trash.hide()
 
@@ -240,4 +267,5 @@ class CUI.DataForm extends CUI.DataTable
 			trash: trash
 			move: move
 
-		@append(hl)
+		@__verticalLayout.append(hl, "center")
+		return
