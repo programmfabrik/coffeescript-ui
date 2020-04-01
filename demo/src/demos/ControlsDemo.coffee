@@ -188,12 +188,15 @@ class Demo.ControlsDemo extends Demo
 				name: "de-DE"
 				tag: "DE"
 				enabled: true
+				tooltip: text: "de-DE"
 			,
 				name: "en-US"
 				tag: "EN"
+				tooltip: text: "en-US"
 			,
 				name: "fr-FR"
 				tag: "FR"
+				tooltip: text: "fr-FR"
 			]
 
 		data_fields = []

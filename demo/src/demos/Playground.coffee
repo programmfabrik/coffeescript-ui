@@ -417,12 +417,15 @@ class Demo.Playground extends Demo
 				name: "de-DE"
 				tag: "DE"
 				enabled: true
+				tooltip: text: "de-DE"
 			,
 				name: "en-US"
 				tag: "EN"
+				tooltip: text: "en-US"
 			,
 				name: "fr-FR"
 				tag: "FR"
+				tooltip: text: "fr-FR"
 			]
 
 
@@ -564,12 +567,14 @@ class Demo.Playground extends Demo
 			name: "password"
 
 		fields.push new CUI.MultiInput
+			name: "MultiInput"
 			form:
 				label: "MultiInput"
 			spellcheck: true
 			control: multi_input_control
 
 		fields.push new CUI.MultiInput
+			name: "MultiInputTextarea"
 			form:
 				label: "MultiInput [Textarea]"
 			spellcheck: true
