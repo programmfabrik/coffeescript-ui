@@ -22497,6 +22497,9 @@ CUI.util = (function() {
       }
     }
     if (obj instanceof HTMLElement) {
+      if (obj.cloneNode) {
+        return obj.cloneNode(true);
+      }
       return obj;
     }
     if (obj instanceof CUI.Dummy) {
@@ -22970,6 +22973,7 @@ CUI.Block = (function(superClass) {
         arr.push(new CUI.Label({
           "class": "cui-block-description",
           text: this._description,
+          markdown: true,
           multiline: true
         }));
       }
@@ -25966,7 +25970,39 @@ CUI.DataForm = (function(superClass) {
   }
 
   DataForm.prototype.render = function() {
+    var addButton;
     CUI.DataFieldInput.prototype.render.call(this);
+    if (this._has_add_button) {
+      addButton = new CUI.Button({
+        icon: "plus",
+        onClick: (function(_this) {
+          return function() {
+            var lastRow, ref;
+            lastRow = (ref = _this.__rowRegistry[_this.__rowRegistry.length - 1]) != null ? ref.data : void 0;
+            if (lastRow && lastRow._new) {
+              delete lastRow._new;
+              _this.rows.push(lastRow);
+            }
+            _this.__appendRow({
+              _new: true
+            });
+            _this.__updateView();
+            _this.__removeEmptyRows();
+            return _this.__storeValue();
+          };
+        })(this)
+      });
+    }
+    this.__verticalLayout = new CUI.VerticalLayout({
+      maximize_horizontal: this.__maximize_horizontal,
+      center: {
+        content: void 0
+      },
+      bottom: {
+        content: addButton
+      }
+    });
+    this.append(this.__verticalLayout);
     CUI.Events.listen({
       type: "data-changed",
       node: this.DOM,
@@ -25978,7 +26014,7 @@ CUI.DataForm = (function(superClass) {
     });
     if (this._rowMove) {
       new CUI.Sortable({
-        element: this.DOM,
+        element: this.__verticalLayout.center(),
         selector: ".cui-drag-handle-row",
         create: function(ev, target) {
           var data;
@@ -25999,7 +26035,6 @@ CUI.DataForm = (function(superClass) {
         })(this),
         sorted: (function(_this) {
           return function(ev, from_idx, to_idx) {
-            console.debug(from_idx, ">", to_idx);
             CUI.util.moveInArray(from_idx, to_idx, _this.rows, from_idx < to_idx);
             _this.__storeValue();
             return _this.__updateView();
@@ -26019,6 +26054,10 @@ CUI.DataForm = (function(superClass) {
         check: function(v) {
           return CUI.util.isPosInt(v);
         }
+      },
+      has_add_button: {
+        check: Boolean,
+        "default": false
       }
     });
     this.removeOpt("onNodeAdd");
@@ -26035,13 +26074,17 @@ CUI.DataForm = (function(superClass) {
       this.removeClass('cui-data-form--multiple-fields');
     }
     if (this._rowMove) {
-      return this.addClass('cui-data-form--movable-rows');
+      this.addClass('cui-data-form--movable-rows');
+    }
+    if (this._has_add_button) {
+      return this.addClass('cui-data-form--add-button');
     }
   };
 
   DataForm.prototype.readOpts = function() {
     DataForm.__super__.readOpts.call(this);
-    return this.__rowRegistry = [];
+    this.__rowRegistry = [];
+    return this;
   };
 
   DataForm.prototype.getFieldOpts = function() {
@@ -26161,7 +26204,7 @@ CUI.DataForm = (function(superClass) {
   DataForm.prototype.displayValue = function() {
     var i, len, ref, row;
     this.rows = this.getValue();
-    this.empty();
+    this.__verticalLayout.empty("center");
     ref = this.rows;
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
@@ -26174,6 +26217,9 @@ CUI.DataForm = (function(superClass) {
   DataForm.prototype.__appendNewRow = function() {
     var ref;
     if ((ref = this._new_rows) !== "edit" && ref !== "append") {
+      return;
+    }
+    if (this._has_add_button && this.rows.length > 0) {
       return;
     }
     return this.__appendRow({
@@ -26274,7 +26320,7 @@ CUI.DataForm = (function(superClass) {
       }
     });
     CUI.dom.data(hl.DOM, "data", data);
-    if (data._new) {
+    if (data._new && !this._has_add_button) {
       CUI.dom.addClass(move, 'is-hidden');
       trash.hide();
     }
@@ -26284,7 +26330,7 @@ CUI.DataForm = (function(superClass) {
       trash: trash,
       move: move
     });
-    return this.append(hl);
+    this.__verticalLayout.append(hl, "center");
   };
 
   return DataForm;
@@ -27910,6 +27956,7 @@ CUI.DateTime = (function(superClass) {
     };
     date_sel = new CUI.Select({
       name: "date",
+      menu_class: "cui-date-time--select-menu",
       data: data,
       group: "date",
       onDataChanged: (function(_this) {
@@ -27933,6 +27980,7 @@ CUI.DateTime = (function(superClass) {
     }).start();
     month_sel = new CUI.Select({
       name: "month",
+      menu_class: "cui-date-time--select-menu",
       data: data,
       group: "date",
       onDataChanged: (function(_this) {
@@ -27956,6 +28004,7 @@ CUI.DateTime = (function(superClass) {
     }).start();
     year_sel = new CUI.Select({
       name: "year",
+      menu_class: "cui-date-time--select-menu",
       data: data,
       group: "date",
       onDataChanged: (function(_this) {
@@ -27994,6 +28043,7 @@ CUI.DateTime = (function(superClass) {
       }
       hour_sel = new CUI.Select({
         name: "hour",
+        menu_class: "cui-date-time--select-menu",
         data: data,
         group: "time",
         onDataChanged: (function(_this) {
@@ -28038,6 +28088,7 @@ CUI.DateTime = (function(superClass) {
       minute_sel = new CUI.Select({
         "class": "cui-date-time-60-select",
         name: "minute",
+        menu_class: "cui-date-time--select-menu",
         group: "time",
         data: data,
         onDataChanged: (function(_this) {
@@ -28732,48 +28783,48 @@ CUI.DateTimeFormats["en-US"] = {
       store: "YYYY-MM-DDTHH:mm:00Z",
       clock_am_pm: true,
       clock_seconds: false,
-      input: "MM/DD/YYYY hh:mm A",
-      display: "dd, MM/DD/YYYY hh:mm A",
-      display_short: "MM/DD/YYYY hh:mm A",
+      input: "YYYY-MM-DD hh:mm A",
+      display: "dd, YYYY-MM-DD hh:mm A",
+      display_short: "YYYY-MM-DD hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+      parse: ["MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
     }, {
       text: "Date+Time+Seconds",
       support_bc: false,
       invalid: "Invalid Date",
       type: "date_time_seconds",
       store: "YYYY-MM-DDTHH:mm:ssZ",
-      input: "MM/DD/YYYY HH:mm:ss",
-      display: "dd, MM/DD/YYYY HH:mm:ss",
-      display_short: "MM/DD/YYYY HH:mm:ss",
+      input: "YYYY-MM-DD HH:mm:ss",
+      display: "dd, YYYY-MM-DD HH:mm:ss",
+      display_short: "YYYY-MM-DD HH:mm:ss",
       display_attribute: "date-time-seconds",
       display_short_attribute: "date-time-seconds-short",
       clock: true,
       clock_am_pm: true,
       clock_seconds: true,
-      parse: ["D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss"]
+      parse: ["MM/DD/YYYY HH:mm:ss", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss"]
     }, {
       text: "Date",
       support_bc: false,
-      input: "MM/DD/YYYY",
+      input: "YYYY-MM-DD",
       invalid: "Invalid date",
-      display: "dd, MM/DD/YYYY",
-      display_short: "MM/DD/YYYY",
+      display: "dd, YYYY-MM-DD",
+      display_short: "YYYY-MM-DD",
       display_attribute: "date",
       display_short_attribute: "date-short",
       store: "YYYY-MM-DD",
       type: "date",
       clock: false,
-      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D"]
+      parse: ["MM/DD/YYYY", "D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D"]
     }, {
       text: "Jahr-Monat",
       support_bc: false,
-      input: "MM/YYYY",
+      input: "MM-YYYY",
       invalid: "Invalid date",
       store: "YYYY-MM",
       display: "MMMM YYYY",
-      display_short: "MM/YYYY",
+      display_short: "MM-YYYY",
       display_attribute: "year-month",
       display_short_attribute: "year-month-short",
       type: "year_month",
@@ -43668,13 +43719,19 @@ CUI.MultiInput = (function(superClass) {
       content_size: {
         "default": false,
         check: Boolean
+      },
+      user_selectable: {
+        "default": false,
+        check: Boolean
       }
     });
   };
 
   MultiInput.prototype.readOpts = function() {
     MultiInput.__super__.readOpts.call(this);
-    return this.__inputs = null;
+    this.__inputs = null;
+    this.__userSelectedData = {};
+    return this.__user_selectable = this._user_selectable;
   };
 
   MultiInput.prototype.disable = function() {
@@ -43733,17 +43790,16 @@ CUI.MultiInput = (function(superClass) {
 
   MultiInput.prototype.setData = function(data) {
     MultiInput.__super__.setData.call(this, data);
-    return this.setDataOnInputs();
+    this.setDataOnInputs();
   };
 
   MultiInput.prototype.setDataOnInputs = function() {
-    var i, input, input_data, len, ref, results, v;
+    var i, input, input_data, len, ref, v;
     if (!this.__inputs) {
       return;
     }
     input_data = CUI.util.copyObject(this.getValue(), true);
     ref = this.__inputs;
-    results = [];
     for (i = 0, len = ref.length; i < len; i++) {
       input = ref[i];
       input.setData(input_data);
@@ -43752,9 +43808,31 @@ CUI.MultiInput = (function(superClass) {
       } else {
         v = this.getValue()[input.getName()];
       }
-      results.push(input.setCheckChangedValue(v));
+      input.setCheckChangedValue(v);
     }
-    return results;
+    this.__setUserSelectedData();
+  };
+
+  MultiInput.prototype.__setUserSelectedData = function() {
+    var i, input, len, ref, v;
+    if (!this.__inputs) {
+      return;
+    }
+    ref = this.__inputs;
+    for (i = 0, len = ref.length; i < len; i++) {
+      input = ref[i];
+      if (this._undo_support) {
+        v = this.getInitValue()[input.getName()];
+      } else {
+        v = this.getValue()[input.getName()];
+      }
+      this.__userSelectedData[input.getName()] = !this.__user_selectable || (this.__user_selectable && !CUI.util.isEmpty(v));
+    }
+    if (!Object.values(this.__userSelectedData).some(function(enabled) {
+      return enabled;
+    })) {
+      return this.__userSelectedData[this._control.getKeys()[0].name] = true;
+    }
   };
 
   MultiInput.prototype.setInputVisibility = function() {
@@ -43779,7 +43857,7 @@ CUI.MultiInput = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       inp = ref[i];
       CUI.dom.append(this.__multiInputDiv, inp.DOM);
-      if (this._control.isEnabled(inp.getName())) {
+      if ((this._control.isEnabled(inp.getName()) && !this.__user_selectable) || (this.__userSelectedData[inp.getName()] && this.__user_selectable)) {
         inp.show();
         ok = true;
       } else {
@@ -43787,7 +43865,7 @@ CUI.MultiInput = (function(superClass) {
       }
     }
     if (!ok) {
-      console.warn("MulitInput.setInputVisibility: No input visible.", {
+      console.warn("MultiInput.setInputVisibility: No input visible.", {
         input: this.__inputs,
         control: this._control
       });
@@ -43844,7 +43922,11 @@ CUI.MultiInput = (function(superClass) {
       type: "multi-input-control-update",
       node: this.__multiInputDiv,
       call: (function(_this) {
-        return function(ev) {
+        return function(_, info) {
+          if (!CUI.util.isUndef(info.user_selectable)) {
+            _this.__user_selectable = info.user_selectable;
+          }
+          _this.__setUserSelectedData();
           return _this.setInputVisibility();
         };
       })(this)
@@ -43853,19 +43935,65 @@ CUI.MultiInput = (function(superClass) {
     ref = this._control.getKeys();
     fn = (function(_this) {
       return function(input, key) {
-        var btn;
-        btn = new CUI.defaults["class"].Button({
+        var button, form, userSelectablePopover;
+        button = new CUI.defaults["class"].Button({
           text: key.tag,
           tabindex: null,
-          disabled: !_this._control.hasUserControl(),
-          onClick: function(ev, btn) {
-            return _this._control.showUserControl(ev, btn, _this.__multiInputDiv);
-          },
+          disabled: !_this._control.hasUserControl() && !_this.__user_selectable,
           role: "multi-input-tag",
           "class": "cui-multi-input-tag-button",
-          tooltip: key.tooltip
+          tooltip: key.tooltip,
+          onClick: function(ev) {
+            if (_this.__user_selectable) {
+              form.reload();
+              return userSelectablePopover.show();
+            } else {
+              return _this._control.showUserControl(ev, button, _this.__multiInputDiv);
+            }
+          }
         });
-        input.append(btn, "right");
+        form = new CUI.Form({
+          data: _this.__userSelectedData,
+          fields: function() {
+            var fields;
+            fields = _this._control.getKeys().map(function(key) {
+              return {
+                type: CUI.Checkbox,
+                name: key.name,
+                text: key.tooltip.text,
+                onRender: function(field) {
+                  if (CUI.util.isEmpty(_this.getValue()[field.getName()])) {
+                    return CUI.dom.removeClass(field, "ez-design-bold");
+                  } else {
+                    return CUI.dom.addClass(field, "ez-design-bold");
+                  }
+                },
+                onDataChanged: function(data, field) {
+                  if (Object.values(_this.__userSelectedData).some(function(val) {
+                    return val;
+                  })) {
+                    return;
+                  }
+                  data[field.getName()] = true;
+                  return field.reload();
+                }
+              };
+            });
+            return fields;
+          },
+          onDataChanged: function() {
+            return _this.setInputVisibility();
+          }
+        });
+        form.start();
+        userSelectablePopover = new CUI.Popover({
+          pane: {
+            padded: true,
+            content: form
+          },
+          element: button
+        });
+        input.append(button, "right");
         return CUI.Events.listen({
           type: "data-changed",
           node: input,
@@ -43892,7 +44020,14 @@ CUI.MultiInput = (function(superClass) {
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
-        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0
+        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0,
+        onDataInit: (function(_this) {
+          return function(field, data) {
+            if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
+              field.hide();
+            }
+          };
+        })(this)
       };
       input = new CUI.MultiInputInput(input_opts);
       input.render();
@@ -46075,7 +46210,7 @@ CUI.SimplePane = (function(superClass) {
   SimplePane.prototype.__init = function() {
     var i, k, len, ref, value;
     SimplePane.__super__.__init.call(this);
-    ref = ["header_left", "header_center", "header_right", "footer_left", "footer_right"];
+    ref = ["header_left", "header_center", "header_right", "footer_left", "footer_center", "footer_right"];
     for (i = 0, len = ref.length; i < len; i++) {
       k = ref[i];
       value = this["_" + k];
@@ -46102,6 +46237,7 @@ CUI.SimplePane = (function(superClass) {
       header_center: {},
       header_left: {},
       footer_left: {},
+      footer_center: {},
       footer_right: {},
       content: {},
       force_header: {
@@ -46134,7 +46270,7 @@ CUI.SimplePane = (function(superClass) {
         content: this.__pane_header
       };
     }
-    if (this.forceFooter() || !(CUI.util.isUndef(this._footer_left) && CUI.util.isUndef(this._footer_right))) {
+    if (this.forceFooter() || !(CUI.util.isUndef(this._footer_left) && CUI.util.isUndef(this._footer_center) && CUI.util.isUndef(this._footer_right))) {
       this.__pane_footer = new CUI.PaneFooter();
       this._bottom = {
         content: this.__pane_footer
@@ -46810,6 +46946,9 @@ CUI.Select = (function(superClass) {
       },
       onHide: {
         check: Function
+      },
+      menu_class: {
+        check: String
       }
     });
   };
@@ -46964,7 +47103,7 @@ CUI.Select = (function(superClass) {
       menu: {
         active_item_idx: ((ref = this.default_opt) != null ? ref._idx : void 0) || -1,
         allow_null: !CUI.util.isEmpty(this._empty_text),
-        "class": "cui-select-menu",
+        "class": "cui-select-menu " + (this._menu_class ? this._menu_class : ""),
         onDeactivate: (function(_this) {
           return function(btn, item, idx, flags) {
             if (flags.prior_activate) {
@@ -48504,6 +48643,13 @@ CUI.Tabs = (function(superClass) {
     tab = this.getTab(tab_or_idx_or_name);
     tab.activate();
     return this;
+  };
+
+  Tabs.prototype.destroy = function() {
+    while (this.__tabs.length > 0) {
+      this.__tabs[0].destroy();
+    }
+    return Tabs.__super__.destroy.call(this);
   };
 
   return Tabs;
@@ -79441,13 +79587,22 @@ Demo.CUIDemo = (function(superClass) {
         {
           name: "de-DE",
           tag: "DE",
-          enabled: true
+          enabled: true,
+          tooltip: {
+            text: "de-DE"
+          }
         }, {
           name: "en-US",
-          tag: "EN"
+          tag: "EN",
+          tooltip: {
+            text: "en-US"
+          }
         }, {
           name: "fr-FR",
-          tag: "FR"
+          tag: "FR",
+          tooltip: {
+            text: "fr-FR"
+          }
         }
       ]
     });
@@ -79851,13 +80006,22 @@ Demo.ControlsDemo = (function(superClass) {
         {
           name: "de-DE",
           tag: "DE",
-          enabled: true
+          enabled: true,
+          tooltip: {
+            text: "de-DE"
+          }
         }, {
           name: "en-US",
-          tag: "EN"
+          tag: "EN",
+          tooltip: {
+            text: "en-US"
+          }
         }, {
           name: "fr-FR",
-          tag: "FR"
+          tag: "FR",
+          tooltip: {
+            text: "fr-FR"
+          }
         }
       ]
     });
@@ -81939,13 +82103,22 @@ Demo.FormDemo = (function(superClass) {
         {
           name: "de-DE",
           tag: "DE",
-          enabled: true
+          enabled: true,
+          tooltip: {
+            text: "de-DE"
+          }
         }, {
           name: "en-US",
-          tag: "EN"
+          tag: "EN",
+          tooltip: {
+            text: "en-US"
+          }
         }, {
           name: "fr-FR",
-          tag: "FR"
+          tag: "FR",
+          tooltip: {
+            text: "fr-FR"
+          }
         }
       ]
     });
@@ -83050,13 +83223,22 @@ Demo.InputDemo = (function(superClass) {
         {
           name: "de-DE",
           tag: "DE",
-          enabled: true
+          enabled: true,
+          tooltip: {
+            text: "de-DE"
+          }
         }, {
           name: "en-US",
-          tag: "EN"
+          tag: "EN",
+          tooltip: {
+            text: "en-US"
+          }
         }, {
           name: "fr-FR",
-          tag: "FR"
+          tag: "FR",
+          tooltip: {
+            text: "fr-FR"
+          }
         }
       ]
     });
@@ -87958,13 +88140,22 @@ Demo.Playground = (function(superClass) {
         {
           name: "de-DE",
           tag: "DE",
-          enabled: true
+          enabled: true,
+          tooltip: {
+            text: "de-DE"
+          }
         }, {
           name: "en-US",
-          tag: "EN"
+          tag: "EN",
+          tooltip: {
+            text: "en-US"
+          }
         }, {
           name: "fr-FR",
-          tag: "FR"
+          tag: "FR",
+          tooltip: {
+            text: "fr-FR"
+          }
         }
       ]
     });
@@ -88123,6 +88314,7 @@ Demo.Playground = (function(superClass) {
       name: "password"
     }));
     fields.push(new CUI.MultiInput({
+      name: "MultiInput",
       form: {
         label: "MultiInput"
       },
@@ -88130,6 +88322,7 @@ Demo.Playground = (function(superClass) {
       control: multi_input_control
     }));
     fields.push(new CUI.MultiInput({
+      name: "MultiInputTextarea",
       form: {
         label: "MultiInput [Textarea]"
       },
