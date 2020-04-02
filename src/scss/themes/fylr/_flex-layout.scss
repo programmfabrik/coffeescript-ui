@@ -1,19 +1,4 @@
-// Everything concerning layout (horizontal / vertical etc.)
-
-html {
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-}
-
-body {
-	display: flex;
-	width: 100%;
-	height: 100%;
-}
-
-
-// * Layout System with flexbox
+// * Layout System with flexbox / Horizontal + Vertical Layout
 // ---------------------------------------------------------------------------
 // - container always grows if maximize
 // - center column always grows if maximize
@@ -174,12 +159,3 @@ body {
 	}
 }
 
-// Border Layout
-.cui-border-layout-north,
-.cui-border-layout-south,
-.cui-border-layout-west,
-.cui-border-layout-east {
-	&:empty {
-		display: none;
-	}
-}

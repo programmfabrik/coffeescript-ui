@@ -19,10 +19,8 @@
 @import '_cursors';
 @import '_typography';
 @import '_global';
-
-
-// layout
-@import '_layout';
+// flex layout, import BEFORE any components, because it can be used within and adjusted by individual components
+@import '_flex-layout';
 
 // components (order might be important, because the components inherit from each other)
 
@@ -71,7 +69,7 @@
 
 
 // 3.) "organisms" -
-// specific views or 'pages'
+// specific screens or 'pages'
 
 
 // not used atm
