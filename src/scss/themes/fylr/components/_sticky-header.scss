@@ -48,6 +48,15 @@
 	}
 }
 
+// Special cases within layout
+.cui-vertical-layout-top,
+.cui-vertical-layout-center,
+.cui-vertical-layout-bottom {
+	> .cui-sticky-header {
+		flex-basis: auto;
+	}
+}
+
 .cui-sticky-header-control {
 	position: fixed;
 	overflow: hidden;

@@ -167,7 +167,7 @@ body {
 // ------------------- END: Basic system ------------------------------------
 
 // Horizontal List
-
+// todo: obsolete ?
 .cui-horizontal-list {
 	> .cui-horizontal-layout-center {
 		flex-direction: row;
@@ -181,15 +181,5 @@ body {
 .cui-border-layout-east {
 	&:empty {
 		display: none;
-	}
-}
-
-// ! Special cases within layout
-
-.cui-vertical-layout-top,
-.cui-vertical-layout-center,
-.cui-vertical-layout-bottom {
-	> .cui-sticky-header {
-		flex-basis: auto;
 	}
 }
