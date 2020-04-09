@@ -21,8 +21,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 */
 
-
-@import url('https://fonts.googleapis.com/css?family=Lato:200,300,400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,900&display=swap');
 
 // Color system
 // ==========================================
@@ -205,7 +204,7 @@ $container-max-widths: (
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      'Lato', sans-serif !default;
+$font-family-sans-serif:      'Source Sans Pro', sans-serif !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
@@ -250,7 +249,7 @@ $headline-sizes: map-merge(
 
 $headings-margin-bottom:      $spacer / 2 !default;
 $headings-font-family:        $font-family-base !default;
-$headings-font-weight:        $font-weight-bolder !default;
+$headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.2 !default;
 $headings-color:              null !default;
 
