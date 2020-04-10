@@ -175,8 +175,6 @@
 // Control button
 // e.g. multi-input-tag-button (language selection), delete icon button in --deleteable
 @mixin input-control-button($width: 22px, $height: 20px) {
-	// @include button-flat();
-
 	.cui-button-visual {
 		color: gray('600');
 		font-size: 10px;
