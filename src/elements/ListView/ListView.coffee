@@ -89,9 +89,6 @@ class CUI.ListView extends CUI.SimplePane
 		@__doLayoutBound = =>
 			@__doLayout()
 
-		if @_bordered
-			@addClass("cui-list-view--bordered")
-
 		@addClass("cui-list-view")
 
 	initOpts: ->
@@ -145,9 +142,6 @@ class CUI.ListView extends CUI.SimplePane
 				check: Function
 			onDeselect:
 				check: Function
-			bordered:
-				check: Boolean
-				default: false
 
 	readOpts: ->
 		if @opts.header

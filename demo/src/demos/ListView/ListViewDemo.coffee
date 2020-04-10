@@ -321,7 +321,6 @@ class Demo.ListViewDemo extends Demo
 		options = {
 			maximize_column: [0]
 			listViewOptions:
-				bordered: true
 				fixedCols: 0
 			oversized_cells: [4,10]
 		}

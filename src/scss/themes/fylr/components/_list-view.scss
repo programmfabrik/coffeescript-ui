@@ -8,13 +8,6 @@
 	font-size: $list-view-font-size;
 	border: 1px solid $table-border-color;
 
-	// todo: when --bordered style draw ALL borders incl the row borders ?
-	// &--bordered {
-	// 	border-left: 1px solid $table-border-color;
-	// 	border-right: 1px solid $table-border-color;
-	// 	// bottom & top will come from the rows
-	// }
-
 	// todo: add zebra option?
 
 	// todO: what should be the default style??
