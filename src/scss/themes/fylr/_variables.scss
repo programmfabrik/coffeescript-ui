@@ -22,9 +22,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 */
 
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,900&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Lato:200,300,400,700,900&display=swap');
 
-// Color system
-// ==========================================
+// * Color system
+// * ==========================================
 
 $white:    #ffffff !default;
 $gray-100: #f8f9fa !default;
@@ -129,8 +130,8 @@ $yiq-text-dark:             $gray-900 !default;
 $yiq-text-light:            $white !default;
 
 
-// Spacing
-// ==========================================
+// * Spacing
+// * ==========================================
 
 $spacer: 		1rem !default;
 $spacer-xs: 	$spacer * 0.25 !default;
@@ -141,16 +142,16 @@ $spacer-xl: 	$spacer * 3 !default;
 // The component padding is to be used for the default component padding (usually with the modifier "--padding")
 $component-padding-base: $spacer-sm !default;
 
-// Body
-// ==========================================
+// * Body
+// * ==========================================
 //
 // Settings for the `<body>` element.
 
 $body-bg:		$white !default; // $gray-100 !default;
 $body-color:	$gray-900 !default;
 
-// Links
-// ==========================================
+// * Links
+// * ==========================================
 //
 // Style anchor elements.
 
@@ -160,16 +161,16 @@ $link-hover-color:		darken($link-color, 15%) !default;
 $link-hover-decoration:	none !default;
 
 
-// Paragraphs
-// ==========================================
+// * Paragraphs
+// * ==========================================
 //
 // Style p element.
 
 $paragraph-margin-bottom:   1rem !default;
 
 
-// Grid breakpoints
-// ==========================================
+// * Grid breakpoints
+// * ==========================================
 //
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
@@ -186,7 +187,7 @@ $grid-breakpoints: (
 @include _assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
 
 
-// Grid containers
+// * Grid containers
 //
 // Define the maximum width of `.container` for different screen sizes.
 
@@ -200,13 +201,14 @@ $container-max-widths: (
 @include _assert-ascending($container-max-widths, '$container-max-widths');
 
 
-// Typography
-// ==========================================
+// * Typography
+// * ==========================================
 //
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
 $font-family-sans-serif:      'Source Sans Pro', sans-serif !default;
+// $font-family-sans-serif:      'Lato', sans-serif !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
@@ -255,8 +257,8 @@ $headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.2 !default;
 $headings-color:              null !default;
 
-// Borders
-// ==========================================
+// * Borders
+// * ==========================================
 $border-radius-sm: 	2px !default;
 $border-radius: 	3px !default;
 $border-radius-lg:  4px !default;
@@ -264,13 +266,13 @@ $border-radius-lg:  4px !default;
 $hr-border-color:   gray('200') !default;
 $hr-border-width:   1px !default;
 
-// Icons
-// ==========================================
+// * Icons
+// * ==========================================
 $icon-font-size: 	$font-size-sm !default; // was: 14px
 
 
-// Buttons
-// ==========================================
+// * Buttons
+// * ==========================================
 // We use an absolute height to define the button height instead of padding-y.
 // This is more predictable and can be better combined with toolbar and panel header heights etc.
 
@@ -302,20 +304,21 @@ $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
 
 $btn-focus-shadow: 			0 0 0 3px rgba(theme-color('focused'), 0.3);
 
-// Buttonbar
-// ==========================================
+
+// * Buttonbar
+// * ==========================================
 $buttonbar-gap: 	$spacer-sm !default;
 
-// Labels
-// ==========================================
+// * Labels
+// * ==========================================
 $label-padding: $spacer-sm !default;
 
-// Handle (Drag & Drop, Move Rows etc.)
-// ==========================================
+// * Handle (Drag & Drop, Move Rows etc.)
+// * ==========================================
 $handle-color: 		gray('400');
 
-// Item list
-// ==========================================
+// * Item list
+// * ==========================================
 $item-list-hover-color: 		$white !default;
 $item-list-hover-background:	theme-color('primary') !default;
 $item-list-active-color: 		$body-color !default;
@@ -324,28 +327,28 @@ $item-list-indent: 				$btn-padding-x !default;
 $item-list-height: 				$btn-height !default;
 $item-list-height-sm: 			$btn-height-sm !default;
 
-// Menu
-// ==========================================
+// * Menu
+// * ==========================================
 $menu-border-radius: $border-radius-lg !default;
 
-// Panel
-// ==========================================
+// * Panel
+// * ==========================================
 $panel-border-color: gray('400') !default;
 
-// Toolbar
-// ==========================================
+// * Toolbar
+// * ==========================================
 $toolbar-height: 40px !default;
 $toolbar-background: transparent !default; // leave transparent by default and style dependent on where the toolbar is used
 $toolbar-padding: $component-padding-base !default;
 
-// Pane
-// ==========================================
+// * Pane
+// * ==========================================
 $pane-background:  				theme-color('light') !default;
 $pane-padding: 					$component-padding-base !default;
 $pane-window-border-color: 		gray('200') !default;
 
-// Input
-// ==========================================
+// * Input
+// * ==========================================
 // $input-font-size: $font-size-base !default;
 $input-height: 				$btn-height !default;
 $input-height-sm: 			$btn-height-sm !default;
@@ -359,12 +362,12 @@ $input-padding-y: 			$spacer-xs !default;
 $input-focus-shadow:		$btn-focus-shadow !default;
 $input-focus-border-color:	rgba(theme-color('focused'), 0.5) !default;
 
-// Data-Field
-// ==========================================
+// * Data-Field
+// * ==========================================
 $data-field-width: 275px !default; // used to be: "$input-width"
 
-// Checkbox
-// ==========================================
+// * Checkbox
+// * ==========================================
 $checkbox-border-color: 		$body-color !default;
 $checkbox-background: 			$white !default;
 $checkbox-active-background: 	$body-color !default;
@@ -373,8 +376,8 @@ $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
 $checkbox-margin:				$checkbox-icon-size/2 !default;
 
-// Table & ListView
-// ==========================================
+// * Table & ListView
+// * ==========================================
 $table-border-color: 	gray('200') !default;
 $table-border-radius:	$border-radius-sm !default;
 $table-data-height: 	34px !default;
@@ -385,8 +388,8 @@ $table-padding-x:		$spacer-sm*2 !default; // todo: use $component-padding-base ?
 $table-padding-y:		$spacer-sm !default; // todo: $component-padding-base ??
 $table-row-hover-background: gray('100') !default;
 
-// List View
-// ==========================================
+// * List View
+// * ==========================================
 $list-view-font-size:					$font-size-sm !default;
 $list-view-data-height: 				1rem !default;
 $list-view-data-width: 					125px !default;
@@ -396,12 +399,12 @@ $list-view-selected-row-background:		rgba(theme-color('focused'), 0.2) !default;
 $list-view-move-handle-width:			$list-view-font-size !default;
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
 
-// List View Tree
-// ==========================================
+// * List View Tree
+// * ==========================================
 $tree-node-handle-width: 14px !default;
 
-// Form
-// ==========================================
+// * Form
+// * ==========================================
 $form-padding: 				$component-padding-base !default;
 $form-key-width:			$table-data-width !default;
 $form-key-min-width:		100px !default;
@@ -410,8 +413,8 @@ $form-label-font-weight: 	$font-weight-normal !default;
 $form-label-font-size: 		$font-size-base !default; // if changed, you need to change the padding of labels in cui-form-key + cui-form-value
 $form-cell-gap: 			$spacer-sm !default;
 
-// Calendar
-// ==========================================
+// * Calendar
+// * ==========================================
 $calendar-font-size: 				$font-size-sm !default;
 $calendar-cell-size:				28px !default;
 $calendar-cell-count:				8 !default;
@@ -422,13 +425,13 @@ $calendar-date-active-background:	theme-color('primary') !default;
 $calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
 $calendar-date-previous-color:		gray('500') !default;
 
-// Block
-// ==========================================
+// * Block
+// * ==========================================
 $block-padding: 			$component-padding-base !default;
 $block-header-column-width:	200px !default;
 
-// Slider
-// ==========================================
+// * Slider
+// * ==========================================
 $slider-handle-size:				1rem !default;
 $slider-handle-background:			$dark !default;
 $slider-handle-border-width:		0 !default;
@@ -441,8 +444,8 @@ $slider-track-border-width:			0 !default;
 $slider-track-border-color:			$input-border-color !default;
 $slider-track-border-radius:		$border-radius-sm !default;
 
-// Layer
-// ==========================================
+// * Layer
+// * ==========================================
 $layer-sizes: (
 	xs: 	400,
 	s: 		500,
@@ -456,33 +459,33 @@ $layer-sizes: (
 $layer-background: 			$body-bg !default;
 $layer-border-radius: 		$border-radius !default;
 
-// Tooltip
-// ==========================================
+// * Tooltip
+// * ==========================================
 $tooltip-pointer-size:  8px !default;
 $tooltip-background: 	gray('800') !default;
 $tooltip-color: 		$white !default;
 $tooltip-font-size: 	12px !default;
 
-// Drag & Drop
-// ==========================================
+// * Drag & Drop
+// * ==========================================
 $drop-area-focus-shadow: 	$btn-focus-shadow !default;
 $drop-area-border-radius: 	$border-radius-sm !default;
 $drag-lasso-background: 	theme-color('focused') !default;
 
-// Sticky Header
-// ==========================================
+// * Sticky Header
+// * ==========================================
 $sticky-header-font-size: 		$font-size-xs !default;
 $sticky-header-color: 			$body-color !default;
 $sticky-header-border-color:	theme-color('dark') !default;
 
-// Digi Display
-// ==========================================
+// * Digi Display
+// * ==========================================
 $digi-display-font-size: 	15px !default;
 $digi-display-line-height: 	$line-height-sm !default;
 $digi-display-font-family: 	$font-family-monospace !default;
 
-// Tabs
-// ==========================================
+// * Tabs
+// * ==========================================
 $tabs-padding: 						$component-padding-base !default;
 $tabs-header-height: 				$btn-height + 6px !default;
 $tabs-header-height-sm:			$btn-height-sm + 2px !default;
