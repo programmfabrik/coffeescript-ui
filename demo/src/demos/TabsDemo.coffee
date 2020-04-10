@@ -89,7 +89,7 @@ Very very short. 2
 
 		# Small tab buttons
 		tabsSmall = new CUI.Tabs
-			appearance: "mini"
+			class: "cui-demo-tabs-small"
 			tabs: [
 				text: "Atlanta"
 				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
@@ -109,7 +109,31 @@ Very very short. 2
 
 		# Vertical tabs
 		tabsVertical = new CUI.Tabs
-			orientation: "vertical"
+			class: "cui-demo-tabs-vertical"
+			tabs: [
+				text: "Atlanta"
+				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+			,
+				text: "New York"
+				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+			,
+				text: "Chicago"
+				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+			,
+				text: "San Fransisco"
+				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+			,
+				text: "Detroit"
+				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+			,
+				text: "Minneapolis"
+				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+			]
+			maximize: true
+
+		# Vertical tabs
+		tabsVerticalSmall = new CUI.Tabs
+			class: "cui-demo-tabs-vertical-small"
 			tabs: [
 				text: "Atlanta"
 				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
@@ -147,6 +171,9 @@ Very very short. 2
 							new CUI.Label
 								text: "Vertical Tabs"
 							tabsVertical
+							new CUI.Label
+								text: "Vertical Tabs"
+							tabsVerticalSmall
 						]
 
 		return @demo_elements

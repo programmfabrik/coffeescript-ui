@@ -32,10 +32,6 @@ class CUI.Tabs extends CUI.SimplePane
 				check: 'Integer'
 			appearance:
 				check: ['normal', 'mini']
-			orientation:
-				check: ['vertical', 'horizontal']
-				mandatory: true
-				default: 'horizontal'
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
@@ -75,14 +71,11 @@ class CUI.Tabs extends CUI.SimplePane
 		CUI.dom.showElement(@__tabs_marker)
 		btn_dim = CUI.dom.getDimensions(btn)
 
-		if @_orientation == "horizontal"
-			CUI.dom.setStyle @__tabs_marker,
-				left: btn_dim.offsetLeft
-				width: btn_dim.borderBoxWidth
-		else
-			CUI.dom.setStyle @__tabs_marker,
-				top: btn_dim.offsetTop
-				height: btn_dim.borderBoxHeight
+		CUI.dom.setStyle(@__buttonbar, '--active-tab-width': btn_dim.borderBoxWidth)
+		CUI.dom.setStyle(@__buttonbar, '--active-tab-height': btn_dim.borderBoxHeight)
+		CUI.dom.setStyle(@__buttonbar, '--active-tab-left': btn_dim.offsetLeft)
+		CUI.dom.setStyle(@__buttonbar, '--active-tab-top': btn_dim.offsetTop)
+
 		@
 
 	init: ->
@@ -103,9 +96,7 @@ class CUI.Tabs extends CUI.SimplePane
 		if @_padded
 			@addClass('cui-tabs--padded')
 
-		@addClass('cui-tabs--'+@_orientation)
-
-		@__buttonbar = new CUI.Buttonbar(stack: @_orientation)
+		@__buttonbar = new CUI.Buttonbar()
 
 		pane_key = "center"
 

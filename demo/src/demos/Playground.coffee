@@ -1025,6 +1025,7 @@ class Demo.Playground extends Demo
 			tabs: [
 				text: "Controls"
 				content: @getControlsTab()
+				class: "cui-demo-playground-tab-control"
 			,
 				text: "Inputs"
 				content: @getInputsTab()

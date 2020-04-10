@@ -97,6 +97,25 @@
 
 	.cui-buttonbar {
 		min-width: 0;
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			display: block;
+			background: theme-color('primary');
+			width: var(--active-tab-width);
+			height: $tabs-header-border-width;
+			bottom: 0;
+			left: 0;
+			transform: translate(var(--active-tab-left), 0);
+			transition: all 0.3s ease;
+			z-index: 1;
+		}
+	}
+
+	.cui-buttonbar-group {
+		@include ungroup-visually();
 	}
 
 	// overflowing tabs
@@ -118,13 +137,6 @@
 			height: $tabs-header-height;
 			text-transform: uppercase;
 			padding: 0 $spacer-sm;
-		}
-
-		&.cui-button-size-mini {
-			.cui-button-visual {
-				height: $tabs-header-height-sm;
-				padding: 0 $spacer-xs;
-			}
 		}
 
 		&:focus {
@@ -190,89 +202,7 @@
 	}
 }
 
-// * Vertical tabs
-
-.cui-tabs--vertical {
-	display: grid;
-	grid-template-columns: 200px 1fr;
-	grid-template-rows: 1fr auto;
-	grid-template-areas:
-		't_header t_body'
-		't_footer t_footer';
-
-	> .cui-vertical-layout-top {
-		grid-area: t_header;
-	}
-
-	> .cui-vertical-layout-center {
-		grid-area: t_body;
-	}
-
-	> .cui-vertical-layout-bottom {
-		grid-area: t_footer;
-	}
-
-	// * Header
-
-	.cui-tabs-pane-header {
-		border-bottom: none;
-		border-right: 1px solid $tabs-header-border-color;
-		overflow: auto;
-
-		> .cui-horizontal-layout-center {
-			overflow: visible !important;
-			display: block;
-		}
-
-		> .cui-horizontal-layout-right {
-			display: none;
-		}
-
-		.cui-buttonbar-group {
-			width: 100%;
-
-			> * {
-				width: 100%;
-				margin-bottom: 0;
-			}
-
-			.cui-button-visual {
-				justify-content: flex-start;
-			}
-		}
-	}
-}
-
-// * Tab Marker
-
+// Hide tab Marker, will be rendered in .cui-buttonbar
 .cui-tabs-active-marker {
-	position: absolute;
-	background: theme-color('primary');
-	z-index: 1;
-
-	// * Horizontal
-
-	.cui-tabs--horizontal & {
-		bottom: 0;
-		height: $tabs-header-border-width;
-		// left + width are set by javascript
-		transition: width 0.3s ease, left 0.3s ease;
-
-		.cui-tabs-pane-header--mini & {
-			height: $tabs-header-border-width-sm;
-		}
-	}
-
-	// * Vertical
-
-	.cui-tabs--vertical & {
-		right: 0;
-		width: $tabs-header-border-width;
-		// top + height are set by javascript
-		transition: height 0.3s ease, top 0.3s ease;
-
-		.cui-tabs-pane-header--mini & {
-			width: $tabs-header-border-width-sm;
-		}
-	}
+	display: none;
 }

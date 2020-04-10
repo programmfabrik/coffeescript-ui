@@ -80,6 +80,12 @@
 	.cui-demo-table-zebra {
 		@include table-zebra();
 	}
+
+	.cui-demo-playground-tab-control {
+		.cui-buttonbar {
+			margin-bottom: 1rem;
+		}
+	}
 }
 
 .cui-demo-tabs-demo {
@@ -89,6 +95,19 @@
 
 	.cui-label + .cui-tabs {
 		margin-bottom: 3rem;
+	}
+
+	.cui-demo-tabs-vertical {
+		@include tabs-vertical();
+	}
+
+	.cui-demo-tabs-small {
+		@include tabs-horizontal-sm();
+	}
+
+	.cui-demo-tabs-vertical-small {
+		@include tabs-vertical();
+		@include tabs-vertical-sm();
 	}
 }
 

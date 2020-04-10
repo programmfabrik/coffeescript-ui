@@ -1,0 +1,97 @@
+@mixin tabs-vertical() {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	grid-template-rows: 1fr auto;
+	grid-template-areas:
+		't_header t_body'
+		't_footer t_footer';
+
+	> .cui-vertical-layout-top {
+		grid-area: t_header;
+	}
+
+	> .cui-vertical-layout-center {
+		grid-area: t_body;
+	}
+
+	> .cui-vertical-layout-bottom {
+		grid-area: t_footer;
+	}
+
+	// * Header
+
+	.cui-tabs-pane-header {
+		border-bottom: none;
+		border-right: 1px solid $tabs-header-border-color;
+		overflow: auto;
+
+		> .cui-horizontal-layout-center {
+			overflow: visible !important;
+			display: block;
+		}
+
+		> .cui-horizontal-layout-right {
+			display: none;
+		}
+
+		.cui-buttonbar {
+			position: relative;
+
+			&::after {
+				height: var(--active-tab-height);
+				width: $tabs-header-border-width;
+				bottom: auto;
+				left: auto;
+				right: 0;
+				top: 0;
+				transform: translate(0, var(--active-tab-top));
+			}
+		}
+
+		.cui-buttonbar-group {
+			width: 100%;
+
+			@include buttonbar-vertical();
+			@include buttonbar-vertical-tight();
+
+			> * {
+				width: 100%;
+				margin-bottom: 0;
+			}
+
+			.cui-button-visual {
+				justify-content: flex-start;
+			}
+		}
+	}
+}
+
+@mixin tabs-horizontal-sm() {
+	.cui-tabs-pane-header {
+		@include _tabs-sm;
+
+		.cui-buttonbar::after {
+			height: $tabs-header-border-width-sm;
+		}
+	}
+}
+
+@mixin tabs-vertical-sm() {
+	.cui-tabs-pane-header {
+		@include _tabs-sm;
+
+		.cui-buttonbar::after {
+			width: $tabs-header-border-width-sm;
+		}
+	}
+}
+
+@mixin _tabs-sm() {
+	.cui-tab-header-button,
+	.cui-tab-header-button-overflow {
+		.cui-button-visual {
+			height: $tabs-header-height-sm;
+			padding: 0 $spacer-xs;
+		}
+	}
+}
