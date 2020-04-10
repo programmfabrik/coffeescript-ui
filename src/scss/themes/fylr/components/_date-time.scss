@@ -45,6 +45,10 @@
 .cui-date-time-calendar {
 	font-size: $calendar-font-size;
 
+	.cui-table {
+		border: 0;
+	}
+
 	.cui-button-select,
 	.cui-button {
 		@include button-color(transparent, $body-color, $input-background, theme-color('primary'));

@@ -585,6 +585,7 @@ body.cui-demo-docs {
 
 .cui-demo-table {
 	margin: 10px;
+	border: 0 !important;
 
 	> .cui-tr {
 		+ .cui-demo-divider {
