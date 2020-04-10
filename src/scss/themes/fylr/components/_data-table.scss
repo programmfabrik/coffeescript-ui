@@ -42,8 +42,8 @@
 		}
 
 		// this is semantically not necessarily a group, but it is marked up as one
-		.cui-buttonbar-group .cui-button-visual {
-			border: 0;
+		.cui-buttonbar-group {
+			@include ungroup-visually();
 		}
 	}
 }

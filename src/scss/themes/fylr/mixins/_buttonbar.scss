@@ -98,3 +98,11 @@
 		}
 	}
 }
+
+// Helper
+@mixin ungroup-visually {
+	.cui-button-visual {
+		border: 0 !important;
+		border-radius: $btn-border-radius;
+	}
+}

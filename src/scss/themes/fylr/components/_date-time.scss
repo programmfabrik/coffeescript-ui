@@ -92,6 +92,8 @@
 
 	.cui-buttonbar-group-date,
 	.cui-buttonbar-group-time {
+		@include ungroup-visually();
+
 		position: relative;
 		padding-top: 1.75rem;
 
@@ -132,6 +134,10 @@
 
 	.cui-buttonbar > *:not(:last-child) {
 		margin-right: 0;
+	}
+
+	.cui-buttonbar-group {
+		@include ungroup-visually();
 	}
 
 	[cui-data-field-name='year'] input {
