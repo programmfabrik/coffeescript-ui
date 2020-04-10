@@ -24,26 +24,21 @@
 	white-space: nowrap;
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
-	@include button-size-base();
-
 	.cui-button-visual {
 		font-family: $btn-font-family;
 		font-weight: $btn-font-weight;
-		color: $body-color;
 		vertical-align: middle;
 		user-select: none;
-		//
-		border: $btn-border-width solid transparent;
-		box-shadow: $btn-box-shadow, 0 -1px 0 0 rgba(0, 0, 0, 0.03); // todo
-		margin-bottom: 3px; // block space below the button so the box-shadow is always visible
-		// todo: make color mixin?
-		background-color: $btn-background;
 
 		// Button Content
 		.cui-button-left,
 		.cui-button-right {
 			display: inline-flex;
 			flex: 0 0 auto;
+
+			.fa {
+				font-size: $font-size-base; // todo: this only works if there is no empty button-center, such a things exists at least in the demo, try to change markup if possible
+			}
 		}
 
 		.cui-button-center {
@@ -51,90 +46,18 @@
 		}
 	}
 
-	// Button states
+	@include button-size-base();
+	@include button-color();
 
-	&:hover {
-		.cui-button-visual {
-			// todo: tbd
-			// color: theme-color('primary');
-			// background-color: gray('100');
-			// box-shadow: $btn-box-shadow, 0 0 2px white;
-		}
-	}
-
-	&:focus {
-		outline: none;
-
-		.cui-button-visual {
-			@include button-focus();
-		}
-	}
-
-	&.cui-layer-open,
-	&:active,
-	&.cui-active {
-		.cui-button-visual {
-			color: theme-color('primary');
-		}
-	}
-
-	// Button variants
-
-	&.cui-button-appearance-flat {
-		@include button-flat();
-
-		&.cui-button--bordered {
-			.cui-button-visual {
-				border: 1px solid currentColor;
-			}
-		}
-	}
-
-	&.cui-button-appearance-link {
-		@include button-link();
-	}
+	// Modifier
 
 	&.cui-button--primary {
 		@include button-primary();
 	}
+}
 
-	// todo: tbd, do not use in production, not sure we want even more button states ??
-	&.cui-button-appearance-flat.cui-button--primary {
-		@include button-reset();
-
-		.cui-button-visual {
-			border: 1px solid theme-color('primary');
-			color: theme-color('primary');
-		}
-	}
-
-	// Deprecated, use primary instead
-	&.cui-button-appearance-important {
-		@include button-primary();
-	}
-
-	// Button sizes
-	&.cui-button-size-mini {
-		@include button-size-sm();
-	}
-
-	&.cui-button-size-big {
-		@include button-size-lg();
-	}
-
-	// todo: Do we actually use this?
-	&.cui-button-size-bigger {
-		.cui-button-visual {
-			$biggerBy: 1;
-
-			@include button-size(
-				$btn-height-lg*$biggerBy,
-				$btn-padding-x-lg*$biggerBy,
-				$btn-font-size-lg*$biggerBy,
-				$btn-border-radius-lg*$biggerBy
-			);
-		}
-	}
+.cui-button-href {
+	@include button-link();
 }
 
 .cui-button-select {
@@ -155,17 +78,14 @@ a[role='button'].cui-button-appearance-link {
 }
 
 .cui-button--has-caret {
-	// IE 11 ignoring margin: auto when justify-content is set bugfix
-	// http://stackoverflow.com/a/37535548
-	.cui-button-visual {
-		justify-content: flex-start;
-
-		.cui-button-right {
-			margin-left: auto;
+	&[role='menu-item'] {
+		.cui-button-visual {
+			.cui-button-right {
+				margin-left: auto;
+			}
 		}
 	}
 }
-
 
 // Loading
 .cui-button.cui-loading {

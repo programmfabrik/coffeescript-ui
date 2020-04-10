@@ -61,31 +61,10 @@
 	}
 }
 
-@mixin button-primary() {
+@mixin button-color($background: transparent, $color: $body-color, $background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
 	.cui-button-visual {
-		background-color: theme-color('primary');
-		color: color-yiq(theme-color('primary'));
-	}
-}
-
-@mixin button-reset($background: transparent, $color: $body-color) {
-	.cui-button-visual {
-		border: 0;
 		background-color: $background;
 		color: $color;
-		box-shadow: none;
-		margin-bottom: 0;
-	}
-}
-
-@mixin button-flat($background: transparent, $color: $body-color, $background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
-	@include button-reset($background, $color);
-
-	.cui-button-left,
-	.cui-button-right {
-		.fa {
-			font-size: $font-size-base; // todo: this only works if there is no empty button-center, such a things exists at least in the demo, try to change markup if possible
-		}
 	}
 
 	&:hover,
@@ -93,6 +72,14 @@
 		.cui-button-visual {
 			color: $color-hover;
 			background-color: $background-hover;
+		}
+	}
+
+	&:focus {
+		outline: none;
+
+		.cui-button-visual {
+			@include button-focus();
 		}
 	}
 
@@ -105,13 +92,37 @@
 			}
 		}
 	}
+
+	&.cui-layer-open,
+	&:active,
+	&.cui-active {
+		.cui-button-visual {
+			color: $color-active;
+		}
+	}
+}
+
+@mixin button-color-reset($background: transparent, $color: $body-color) {
+	@include button-color(transparent, $body-color, transparent, $body-color, transparent, $body-color);
+}
+
+@mixin button-primary() {
+	$background: $btn-primary-background;
+	$color: color-yiq($btn-primary-background);
+
+	$background-hover: darken($btn-primary-background, 10%);
+	$color-hover: $color;
+
+	$background-active: $background-hover;
+	$color-active: $color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
 @mixin button-link() {
-	@include button-reset();
+	@include button-color(transparent, $link-color, transparent, $link-color, transparent, $link-color);
 
 	.cui-button-visual {
-		color: $link-color;
 		height: auto;
 
 		.cui-button-center {
@@ -124,6 +135,26 @@
 	&:focus {
 		.cui-button-visual .cui-button-center {
 			text-decoration: none;
+		}
+	}
+}
+
+@mixin button-bordered($border-color: currentColor) {
+	.cui-button-visual {
+		border: $btn-border-width solid $border-color;
+	}
+
+	&:focus .cui-button-visual {
+		border-color: theme-color('focused');
+	}
+
+	&.cui-button--primary {
+		.cui-button-visual {
+			border-color: $btn-primary-background;
+		}
+
+		&:focus .cui-button-visual {
+			border-color: darken($btn-primary-background, 15%);
 		}
 	}
 }
@@ -144,7 +175,7 @@
 // Control button
 // e.g. multi-input-tag-button (language selection), delete icon button in --deleteable
 @mixin input-control-button($width: 22px, $height: 20px) {
-	@include button-flat();
+	// @include button-flat();
 
 	.cui-button-visual {
 		color: gray('600');

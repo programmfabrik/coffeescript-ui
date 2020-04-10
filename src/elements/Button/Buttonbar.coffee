@@ -35,11 +35,9 @@ class CUI.Buttonbar extends CUI.DOMElement
 		for btn, idx in @_buttons
 			@addButton(btn, false)
 
+		# legacy, do not use
 		if @_size
 			@addClass("cui-buttonbar--size-"+@_size)
-
-		if @_stack
-			@addClass("cui-buttonbar--stack-"+@_stack)
 
 		@__checkVisibility()
 
@@ -54,9 +52,6 @@ class CUI.Buttonbar extends CUI.DOMElement
 				check: Array
 			tooltip:
 				check: "PlainObject"
-			stack:
-				check: ["vertical", "horizontal"]
-				default: "horizontal"
 
 	__proxy: (func, args...) ->
 		for el in CUI.dom.matchSelector(@__buttons, ".cui-button,.cui-select")

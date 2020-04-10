@@ -29,7 +29,7 @@ class CUI.Button extends CUI.DOMElement
 		loading_css_class: "cui-loading"
 		active_css_class: "cui-active"
 
-	#Construct a new CUI.Button.
+	# Construct a new CUI.Button, legacy
 	#
 	# @param [Object] options for button creation
 	# @option options [String] size controls the size of the button.
@@ -118,9 +118,6 @@ class CUI.Button extends CUI.DOMElement
 
 		if @_appearance
 			@addClass("cui-button-appearance-"+@_appearance)
-
-		if @_bordered
-			@addClass("cui-button--bordered")
 
 		if @_primary
 			@addClass("cui-button--primary")
@@ -436,13 +433,16 @@ class CUI.Button extends CUI.DOMElement
 				default: 0
 				check: (v) ->
 					CUI.util.isInteger(v) or v == false
+
+			# legacy, do not use
 			size:
 				check: ["mini","normal","big","bigger"]
+
+			# legacy, do not use
+			# link: use ButtonHref instead; important: use "primary: true" instead
 			appearance:
 				check: ["link","flat","normal","important","transparent-border"]
-			bordered:
-				check: Boolean
-				default: false
+
 			primary:
 				mandatory: true
 				default: false

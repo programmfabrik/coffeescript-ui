@@ -129,8 +129,6 @@
 	position: relative;
 
 	.cui-button {
-		@include button-flat();
-
 		margin-left: -1px;
 		height: 100%;
 		vertical-align: bottom;
