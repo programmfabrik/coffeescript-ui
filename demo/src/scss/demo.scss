@@ -7,6 +7,10 @@
 
 /*$font_awesome_url: '../cui/font-awesome/css/font-awesome.min.css';*/
 
+@import '../../../src/scss/themes/fylr/_functions';
+@import '../../../src/scss/themes/fylr/_variables';
+@import '../../../src/scss/themes/fylr/_mixins';
+
 
 .cui-button-demo-limit-width {
 	max-width: 150px;
@@ -79,6 +83,76 @@
 
 	.cui-label + .cui-tabs {
 		margin-bottom: 3rem;
+	}
+}
+
+// * Button Demo
+
+.cui-demo-button-demo[data-cui-theme='fylr'] {
+	.cui-button-button.cui-demo-button-size-large-link {
+		@include button-link();
+		@include button-size-lg();
+	}
+
+	.cui-demo-button-pair {
+		.cui-last-visible-child {
+			@include button-bordered();
+		}
+
+		&.cui-demo-button-size-small .cui-button-button {
+			@include button-size-sm();
+		}
+
+		&.cui-demo-button-size-large .cui-button-button {
+			@include button-size-lg();
+		}
+	}
+
+	.cui-demo-buttonbar-pair {
+		display: flex;
+		flex-wrap: wrap;
+
+		> * {
+			flex: 0 0 auto;
+
+			&:not(:last-child) {
+				margin-right: 4rem;
+			}
+		}
+
+		.cui-buttonbar:last-child > {
+			.cui-button-select,
+			.cui-button {
+				@include button-bordered();
+			}
+		}
+	}
+
+	.cui-demo-buttonbar-stack-vertical .cui-buttonbar,
+	.cui-demo-buttonbar-stack-vertical.cui-buttonbar {
+		@include buttonbar-vertical();
+	}
+
+	.cui-demo-buttonbar-small-buttons .cui-button {
+		@include button-size-sm();
+	}
+
+	.cui-demo-buttonbar-large-buttons .cui-button {
+		@include button-size-lg();
+	}
+
+	.cui-demo-buttonbar-tight > *:first-child,
+	.cui-demo-buttonbar-tight.cui-buttonbar {
+		@include buttonbar-horizontal-tight();
+	}
+}
+
+.cui-demo-button-demo[data-cui-theme='ng'] {
+	.cui-demo-button-pair,
+	.cui-demo-buttonbar-pair {
+		> *:last-child {
+			display: none;
+		}
 	}
 }
 
