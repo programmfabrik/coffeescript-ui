@@ -1,4 +1,8 @@
 // Calendar Popup
+.cui-layer-root-cui-date-time-popover .cui-layer > .cui-pane > .cui-vertical-layout-center {
+	overflow: hidden; // override default, see: .cui-layer > .cui-pane > .cui-vertical-layout-center
+}
+
 .cui-date-time-popover .cui-date-time-popover-inner {
 	--calendar-background: #{$calendar-background};
 	--calendar-static-cells-background: #{$calendar-static-cells-background};
