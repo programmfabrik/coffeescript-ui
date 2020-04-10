@@ -1,0 +1,23 @@
+@mixin label-sm() {
+	font-size: $font-size-xs;
+}
+
+@mixin label-lg() {
+	font-size: $font-size-lg;
+
+	.cui-label-icon {
+		.fa {
+			font-size: inherit;
+		}
+	}
+}
+
+@mixin label-xl() {
+	font-size: $font-size-xl;
+
+	.cui-label-icon {
+		.fa {
+			font-size: inherit;
+		}
+	}
+}

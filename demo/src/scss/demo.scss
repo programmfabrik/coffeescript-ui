@@ -181,6 +181,18 @@
 	}
 }
 
+.cui-demo-label-sm {
+	@include label-sm();
+}
+
+.cui-demo-label-lg {
+	@include label-lg();
+}
+
+.cui-demo-label-xl {
+	@include label-xl();
+}
+
 
 /* Content Area */
 .cui-document-browser-center {

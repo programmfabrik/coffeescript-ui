@@ -71,6 +71,7 @@ class Demo.LabelDemo extends Demo
 			text: "Label with Icon"
 			icon: "rotate_right"
 			size: "mini"
+			class: "cui-demo-label-sm"
 		@__addLabel("size: mini",label)
 
 		label = new CUI.Label
@@ -83,12 +84,14 @@ class Demo.LabelDemo extends Demo
 			text: "Label with Icon"
 			icon: "rotate_right"
 			size: "big"
+			class: "cui-demo-label-lg"
 		@__addLabel("size: big",label)
 
 		label = new CUI.Label
 			text: "Label with Icon"
 			icon: "rotate_right"
 			size: "bigger"
+			class: "cui-demo-label-xl"
 		@__addLabel("size: bigger",label)
 
 		label = new CUI.Label

@@ -13,28 +13,6 @@ label[data-label-clickable],
 		display: flex;
 	}
 
-	// Sizes
-	&-size-mini {
-		font-size: $font-size-xs;
-	}
-
-	&-size-big {
-		font-size: $font-size-lg;
-	}
-
-	&-size-bigger {
-		font-size: $font-size-xl;
-	}
-
-	&-size-big,
-	&-size-bigger {
-		.cui-label-icon {
-			.fa {
-				font-size: inherit;
-			}
-		}
-	}
-
 	// .cui-label-icon
 	&-icon {
 		&:empty {
