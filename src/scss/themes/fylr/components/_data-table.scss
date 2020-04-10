@@ -30,4 +30,20 @@
 			background-size: 100% $table-data-height*2; // todo: find use-case
 		}
 	}
+
+	// Footer
+	.cui-list-view .cui-pane-footer .cui-buttonbar {
+		.cui-button {
+			@include button-size-sm();
+		}
+
+		input {
+			@include input-size-mini();
+		}
+
+		// this is semantically not necessarily a group, but it is marked up as one
+		.cui-buttonbar-group .cui-button-visual {
+			border: 0;
+		}
+	}
 }

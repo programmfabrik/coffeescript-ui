@@ -149,17 +149,15 @@ class CUI.DataTable extends CUI.DataFieldInput
 			if @_new_rows != "remove_only"
 				buttons.push
 					icon: "plus"
-					appearance: "flat"
-					size: "mini"
 					tooltip: text: CUI.DataTable.defaults.plus_button_tooltip
+					group: "plus-minus"
 					onClick: =>
 						@addRow()
 
 
 			@minusButton = new CUI.defaults.class.Button
 				icon: "minus"
-				appearance: "flat"
-				size: "mini"
+				group: "plus-minus"
 				tooltip: text: CUI.DataTable.defaults.minus_button_tooltip
 				disabled: true
 				onClick: =>
@@ -182,8 +180,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 				icon: "left"
 				disabled: true
 				group: "navi"
-				appearance: "flat"
-				size: "mini"
 				onClick: =>
 					@__offset = @__offset - @_chunk_size
 					@displayValue()
@@ -217,8 +213,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 				icon: "right"
 				disabled: true
 				group: "navi"
-				appearance: "flat"
-				size: "mini"
 				onClick: =>
 					@__offset = @__offset + @_chunk_size
 					@displayValue()
