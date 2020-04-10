@@ -26265,7 +26265,6 @@ CUI.DataForm = (function(superClass) {
       trash = new CUI.defaults["class"].Button({
         icon: "fa-trash-o",
         appearance: "flat",
-        size: "mini",
         onMouseenter: (function(_this) {
           return function() {
             return CUI.dom.addClass(hl, "cui-data-form-row--trash");
@@ -26547,11 +26546,10 @@ CUI.DataTable = (function(superClass) {
       if (this._new_rows !== "remove_only") {
         buttons.push({
           icon: "plus",
-          appearance: "flat",
-          size: "mini",
           tooltip: {
             text: CUI.DataTable.defaults.plus_button_tooltip
           },
+          group: "plus-minus",
           onClick: (function(_this) {
             return function() {
               return _this.addRow();
@@ -26561,8 +26559,7 @@ CUI.DataTable = (function(superClass) {
       }
       this.minusButton = new CUI.defaults["class"].Button({
         icon: "minus",
-        appearance: "flat",
-        size: "mini",
+        group: "plus-minus",
         tooltip: {
           text: CUI.DataTable.defaults.minus_button_tooltip
         },
@@ -26595,8 +26592,6 @@ CUI.DataTable = (function(superClass) {
         icon: "left",
         disabled: true,
         group: "navi",
-        appearance: "flat",
-        size: "mini",
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset - _this._chunk_size;
@@ -26613,7 +26608,6 @@ CUI.DataTable = (function(superClass) {
       })(this);
       this.__navi_input = new CUI.NumberInput({
         group: "navi",
-        size: "mini",
         placeholder: "henk",
         data: page_data,
         name: 'page',
@@ -26641,8 +26635,6 @@ CUI.DataTable = (function(superClass) {
         icon: "right",
         disabled: true,
         group: "navi",
-        appearance: "flat",
-        size: "mini",
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset + _this._chunk_size;
@@ -34003,9 +33995,6 @@ CUI.Input = (function(superClass) {
     if (this._appearance) {
       this.addClass("cui-input-appearance-" + this._appearance);
     }
-    if (this._size) {
-      this.addClass("cui-input-size-" + this._size);
-    }
     this.__inputHints = {};
     this.__inputHintTexts = {};
     ref = ["empty", "invalid", "valid"];
@@ -34153,9 +34142,6 @@ CUI.Input = (function(superClass) {
       },
       appearance: {
         check: ["code"]
-      },
-      size: {
-        check: ["mini"]
       }
     });
   };
@@ -37089,9 +37075,6 @@ CUI.ListView = (function(superClass) {
         return _this.__doLayout();
       };
     })(this);
-    if (this._bordered) {
-      this.addClass("cui-list-view--bordered");
-    }
     return this.addClass("cui-list-view");
   };
 
@@ -37157,10 +37140,6 @@ CUI.ListView = (function(superClass) {
       },
       onDeselect: {
         check: Function
-      },
-      bordered: {
-        check: Boolean,
-        "default": false
       }
     });
   };
@@ -43413,7 +43392,7 @@ CUI.Modal = (function(superClass) {
       "class": "ez5-modal-close-button",
       icon: "close",
       tooltip: this._cancel_tooltip || CUI.Modal.defaults.cancel_tooltip,
-      appearance: "flat",
+      appearance: "normal",
       onClick: (function(_this) {
         return function(ev) {
           return do_cancel(ev);
@@ -46000,10 +45979,6 @@ CUI.Pane = (function(superClass) {
           };
         })(this),
         "default": CUI.Pane.defaults.button_tooltip
-      },
-      appearance: {
-        mandatory: false,
-        "default": "flat"
       }
     });
     if (CUI.util.isString(opts.icon_inactive)) {
@@ -46399,7 +46374,6 @@ CUI.Panel = (function(superClass) {
     this.button = new CUI.Button({
       text: this._text,
       "class": "cui-panel-header-button",
-      appearance: "flat",
       radio: this._radio,
       radio_allow_null: this._radio_allow_null,
       icon_active: this._icon_opened,
@@ -47826,9 +47800,6 @@ CUI.Table = (function(superClass) {
     if (this._bordered) {
       cls.push("cui-table--bordered");
     }
-    if (this._zebra) {
-      cls.push("cui-table--zebra");
-    }
     this.__table = CUI.dom.table(cls.join(" "));
     this.registerDOMElement(this.__table, false);
     CUI.Layout.prototype.maximizeAddClasses.call(this);
@@ -47886,10 +47857,6 @@ CUI.Table = (function(superClass) {
         check: Boolean
       },
       bordered: {
-        "default": false,
-        check: Boolean
-      },
-      zebra: {
         "default": false,
         check: Boolean
       },
@@ -48082,7 +48049,6 @@ CUI.Tab = (function(superClass) {
       role: "tab-header",
       radio: "tabs--" + tabs.getUniqueId(),
       "class": "cui-tab-header-button",
-      appearance: "flat",
       disabled: this._disabled,
       qa: this._qa ? this._qa + "-button" : void 0,
       id: this._button_id,
@@ -48336,11 +48302,6 @@ CUI.Tabs = (function(superClass) {
       },
       appearance: {
         check: ['normal', 'mini']
-      },
-      orientation: {
-        check: ['vertical', 'horizontal'],
-        mandatory: true,
-        "default": 'horizontal'
       }
     });
   };
@@ -48386,17 +48347,18 @@ CUI.Tabs = (function(superClass) {
     }
     CUI.dom.showElement(this.__tabs_marker);
     btn_dim = CUI.dom.getDimensions(btn);
-    if (this._orientation === "horizontal") {
-      CUI.dom.setStyle(this.__tabs_marker, {
-        left: btn_dim.offsetLeft,
-        width: btn_dim.borderBoxWidth
-      });
-    } else {
-      CUI.dom.setStyle(this.__tabs_marker, {
-        top: btn_dim.offsetTop,
-        height: btn_dim.borderBoxHeight
-      });
-    }
+    CUI.dom.setStyle(this.__buttonbar, {
+      '--active-tab-width': btn_dim.borderBoxWidth
+    });
+    CUI.dom.setStyle(this.__buttonbar, {
+      '--active-tab-height': btn_dim.borderBoxHeight
+    });
+    CUI.dom.setStyle(this.__buttonbar, {
+      '--active-tab-left': btn_dim.offsetLeft
+    });
+    CUI.dom.setStyle(this.__buttonbar, {
+      '--active-tab-top': btn_dim.offsetTop
+    });
     return this;
   };
 
@@ -48417,10 +48379,7 @@ CUI.Tabs = (function(superClass) {
     if (this._padded) {
       this.addClass('cui-tabs--padded');
     }
-    this.addClass('cui-tabs--' + this._orientation);
-    this.__buttonbar = new CUI.Buttonbar({
-      stack: this._orientation
-    });
+    this.__buttonbar = new CUI.Buttonbar();
     pane_key = "center";
     this.__pane_header.append(this.__buttonbar, pane_key);
     this.__pane_header.append(this.__tabs_marker, pane_key);
@@ -77559,8 +77518,8 @@ Demo.BlockDemo = (function(superClass) {
     this.demo_table.addDivider("blocks");
     this.demo_table.addExample("Blocks", this.createBlocks());
     this.demo_table.addExample("Blocks with line separator mixin", this.createSimpleBlocks("cui-block-demo-separator"));
-    this.demo_table.addExample("Blocks appearance wide and padded", this.createSimpleBlocksWide());
-    this.demo_table.addExample("Blocks appearance wide and NOT padded", this.createSimpleBlocksWideNotPadded());
+    this.demo_table.addExample("Blocks as grid and padded", this.createSimpleBlocksWide());
+    this.demo_table.addExample("Blocks as grid and NOT padded", this.createSimpleBlocksWideNotPadded());
     this.createWaitBlockExample();
     return this.demo_table.table;
   };
@@ -77613,6 +77572,7 @@ Demo.BlockDemo = (function(superClass) {
         new CUI.Block({
           text: "Wide block A",
           appearance: "wide",
+          "class": "cui-demo-block-grid",
           level: 1,
           content: [
             new CUI.Label({
@@ -77622,6 +77582,7 @@ Demo.BlockDemo = (function(superClass) {
         }), new CUI.Block({
           text: "Wide block B",
           appearance: "wide",
+          "class": "cui-demo-block-grid",
           level: 2,
           content: [
             new CUI.Label({
@@ -77632,6 +77593,7 @@ Demo.BlockDemo = (function(superClass) {
         }), new CUI.Block({
           text: "Wide block C",
           appearance: "wide",
+          "class": "cui-demo-block-grid",
           level: 2,
           content: [
             new CUI.Label({
@@ -77657,6 +77619,7 @@ Demo.BlockDemo = (function(superClass) {
         new CUI.Block({
           text: "Wide block A - Level 1",
           appearance: "wide",
+          "class": "cui-demo-block-grid",
           padded: false,
           level: 1,
           content: [
@@ -77667,6 +77630,7 @@ Demo.BlockDemo = (function(superClass) {
         }), new CUI.Block({
           text: "Wide block B - Level 2",
           appearance: "wide",
+          "class": "cui-demo-block-grid",
           padded: false,
           level: 2,
           content: [
@@ -77678,6 +77642,7 @@ Demo.BlockDemo = (function(superClass) {
         }), new CUI.Block({
           text: "Wide block C - Level 3",
           appearance: "wide",
+          "class": "cui-demo-block-grid",
           padded: false,
           level: 3,
           content: [
@@ -83712,7 +83677,8 @@ Demo.LabelDemo = (function(superClass) {
     label = new CUI.Label({
       text: "Label with Icon",
       icon: "rotate_right",
-      size: "mini"
+      size: "mini",
+      "class": "cui-demo-label-sm"
     });
     this.__addLabel("size: mini", label);
     label = new CUI.Label({
@@ -83724,13 +83690,15 @@ Demo.LabelDemo = (function(superClass) {
     label = new CUI.Label({
       text: "Label with Icon",
       icon: "rotate_right",
-      size: "big"
+      size: "big",
+      "class": "cui-demo-label-lg"
     });
     this.__addLabel("size: big", label);
     label = new CUI.Label({
       text: "Label with Icon",
       icon: "rotate_right",
-      size: "bigger"
+      size: "bigger",
+      "class": "cui-demo-label-xl"
     });
     this.__addLabel("size: bigger", label);
     label = new CUI.Label({
@@ -84866,7 +84834,6 @@ Demo.ListViewDemo = (function(superClass) {
     options = {
       maximize_column: [0],
       listViewOptions: {
-        bordered: true,
         fixedCols: 0
       },
       oversized_cells: [4, 10]
@@ -88410,8 +88377,7 @@ Demo.Playground = (function(superClass) {
   Playground.prototype.getTableZebra = function() {
     var i, l, table;
     table = new CUI.Table({
-      zebra: true,
-      "class": 'cui-maximize-horizontal',
+      "class": 'cui-maximize-horizontal cui-demo-table-zebra',
       columns: [
         {
           name: "a",
@@ -88457,7 +88423,6 @@ Demo.Playground = (function(superClass) {
   Playground.prototype.getTableDefault = function() {
     var i, l, table;
     table = new CUI.Table({
-      bordered: true,
       columns: [
         {
           name: "a",
@@ -88504,7 +88469,6 @@ Demo.Playground = (function(superClass) {
     var info, l, len, someInfoData, table;
     table = new CUI.Table({
       flex: true,
-      bordered: true,
       key_value: true
     });
     someInfoData = [
@@ -88684,7 +88648,8 @@ Demo.Playground = (function(superClass) {
       tabs: [
         {
           text: "Controls",
-          content: this.getControlsTab()
+          content: this.getControlsTab(),
+          "class": "cui-demo-playground-tab-control"
         }, {
           text: "Inputs",
           content: this.getInputsTab()
@@ -89973,7 +89938,7 @@ Demo.TabsDemo = (function(superClass) {
   }
 
   TabsDemo.prototype.display = function() {
-    var _tabs, _tabs2, createButtonbar, i, idx, j, k, len, len1, ref, ref1, tabs, tabs2, tabs3, tabsSmall, tabsVertical;
+    var _tabs, _tabs2, createButtonbar, i, idx, j, k, len, len1, ref, ref1, tabs, tabs2, tabs3, tabsSmall, tabsVertical, tabsVerticalSmall;
     _tabs = [];
     ref = ["Atlanta", "New York", "Chicago"];
     for (idx = j = 0, len = ref.length; j < len; idx = ++j) {
@@ -90066,7 +90031,7 @@ Demo.TabsDemo = (function(superClass) {
     });
     tabs3.setFooterRight(createButtonbar(tabs));
     tabsSmall = new CUI.Tabs({
-      appearance: "mini",
+      "class": "cui-demo-tabs-small",
       tabs: [
         {
           text: "Atlanta",
@@ -90094,7 +90059,44 @@ Demo.TabsDemo = (function(superClass) {
     });
     tabsSmall.setFooterRight(createButtonbar(tabs));
     tabsVertical = new CUI.Tabs({
-      orientation: "vertical",
+      "class": "cui-demo-tabs-vertical",
+      tabs: [
+        {
+          text: "Atlanta",
+          content: new CUI.Label({
+            text: "1 Very short test text. Very very short. 1"
+          }).DOM
+        }, {
+          text: "New York",
+          content: new CUI.Label({
+            text: "1 Very short test text. Very very short. 1"
+          }).DOM
+        }, {
+          text: "Chicago",
+          content: new CUI.Label({
+            text: "1 Very short test text. Very very short. 1"
+          }).DOM
+        }, {
+          text: "San Fransisco",
+          content: new CUI.Label({
+            text: "1 Very short test text. Very very short. 1"
+          }).DOM
+        }, {
+          text: "Detroit",
+          content: new CUI.Label({
+            text: "1 Very short test text. Very very short. 1"
+          }).DOM
+        }, {
+          text: "Minneapolis",
+          content: new CUI.Label({
+            text: "1 Very short test text. Very very short. 1"
+          }).DOM
+        }
+      ],
+      maximize: true
+    });
+    tabsVerticalSmall = new CUI.Tabs({
+      "class": "cui-demo-tabs-vertical-small",
       tabs: [
         {
           text: "Atlanta",
@@ -90141,7 +90143,9 @@ Demo.TabsDemo = (function(superClass) {
         text: "Tabs not maximized"
       }), tabs3, new CUI.Label({
         text: "Vertical Tabs"
-      }), tabsVertical
+      }), tabsVertical, new CUI.Label({
+        text: "Vertical Tabs"
+      }), tabsVerticalSmall
     ];
     return this.demo_elements;
   };
