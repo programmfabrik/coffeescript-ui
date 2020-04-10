@@ -87,12 +87,6 @@ textarea {
 	// 	@include form-hint();
 	// }
 
-	&-size-mini {
-		input {
-			@include input-size-mini();
-		}
-	}
-
 	&-appearance-code {
 		input,
 		textarea {

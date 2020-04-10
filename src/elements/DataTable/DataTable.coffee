@@ -196,7 +196,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			@__navi_input = new CUI.NumberInput
 				group: "navi"
-				size: "mini"
 				placeholder: "henk"
 				data: page_data
 				name: 'page'
