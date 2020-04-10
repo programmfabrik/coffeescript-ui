@@ -11,7 +11,7 @@
 	z-index: 1;
 }
 
-@mixin input-size-mini() {
+@mixin input-size-sm() {
 	height: $input-height-sm;
 	line-height: $input-height-sm;
 }

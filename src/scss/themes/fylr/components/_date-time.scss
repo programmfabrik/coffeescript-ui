@@ -143,7 +143,7 @@
 	[cui-data-field-name='year'] input {
 		$year-padding: $spacer-xs;
 
-		@include input-size-mini();
+		@include input-size-sm();
 
 		width: calc(4ch + 4 * #{$year-padding});
 		min-width: 0;

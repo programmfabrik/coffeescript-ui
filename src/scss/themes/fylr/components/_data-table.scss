@@ -38,7 +38,7 @@
 		}
 
 		input {
-			@include input-size-mini();
+			@include input-size-sm();
 		}
 
 		// this is semantically not necessarily a group, but it is marked up as one
