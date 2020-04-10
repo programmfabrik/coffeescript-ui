@@ -28,7 +28,7 @@ class CUI.Modal extends CUI.LayerPane
 			class: "ez5-modal-close-button"
 			icon:  "close"
 			tooltip: @_cancel_tooltip or CUI.Modal.defaults.cancel_tooltip
-			appearance: "flat"
+			appearance: "normal"
 			onClick: (ev) =>
 				do_cancel(ev)
 
