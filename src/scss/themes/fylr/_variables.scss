@@ -99,6 +99,8 @@ $dark:          $gray-800 !default;
 $muted:         $gray-500 !default;
 $disabled:      $muted !default;
 
+$disabled-opacity: 0.5 !default;
+
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $theme-colors: map-merge(

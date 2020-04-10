@@ -11,5 +11,13 @@
 
 .cui-buttonbar-group {
 	display: flex;
+
+	.cui-disabled {
+		opacity: 1;
+
+		.cui-button-visual > * {
+			opacity: $disabled-opacity;
+		}
+	}
 }
 

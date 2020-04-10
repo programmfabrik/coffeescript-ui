@@ -55,7 +55,7 @@ body {
 
 .cui-disabled {
 	user-select: none;
-	opacity: 0.5;
+	opacity: $disabled-opacity;
 	pointer-events: none;
 }
 
