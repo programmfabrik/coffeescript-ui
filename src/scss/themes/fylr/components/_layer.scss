@@ -116,7 +116,7 @@
 // * Layer
 
 .cui-layer {
-	// the sizes are not really used anywhere, but lets keep the classes for now
+	// todo: the sizes are not really used anywhere, but lets keep the classes for now
 	@each $name, $width in $layer-sizes {
 		&--size-#{$name} {
 			width: #{$width}px;
