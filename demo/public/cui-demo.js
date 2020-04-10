@@ -23302,9 +23302,6 @@ CUI.Button = (function(superClass) {
     if (this._appearance) {
       this.addClass("cui-button-appearance-" + this._appearance);
     }
-    if (this._bordered) {
-      this.addClass("cui-button--bordered");
-    }
     if (this._primary) {
       this.addClass("cui-button--primary");
     }
@@ -23671,10 +23668,6 @@ CUI.Button = (function(superClass) {
       },
       appearance: {
         check: ["link", "flat", "normal", "important", "transparent-border"]
-      },
-      bordered: {
-        check: Boolean,
-        "default": false
       },
       primary: {
         mandatory: true,
@@ -24549,9 +24542,6 @@ CUI.Buttonbar = (function(superClass) {
     if (this._size) {
       this.addClass("cui-buttonbar--size-" + this._size);
     }
-    if (this._stack) {
-      this.addClass("cui-buttonbar--stack-" + this._stack);
-    }
     this.__checkVisibility();
   }
 
@@ -24568,10 +24558,6 @@ CUI.Buttonbar = (function(superClass) {
       },
       tooltip: {
         check: "PlainObject"
-      },
-      stack: {
-        check: ["vertical", "horizontal"],
-        "default": "horizontal"
       }
     });
   };
@@ -78239,6 +78225,57 @@ Demo.ButtonDemo = (function(superClass) {
     return button;
   };
 
+  ButtonDemo.prototype.__addButtonPair = function(description, opts, extraClass) {
+    var btn, i, len, opts2, pair, wrap;
+    if (opts == null) {
+      opts = {};
+    }
+    if (extraClass == null) {
+      extraClass = "";
+    }
+    opts2 = CUI.util.copyObject(opts, true);
+    pair = [new CUI.Button(opts), new CUI.Button(opts2)];
+    for (i = 0, len = pair.length; i < len; i++) {
+      btn = pair[i];
+      this.__buttons.push(btn);
+    }
+    wrap = new CUI.Buttonbar({
+      buttons: pair,
+      "class": "cui-demo-button-pair"
+    });
+    if (extraClass) {
+      CUI.dom.addClass(wrap, extraClass);
+    }
+    this.__demo_table.addExample(description, [wrap.DOM]);
+    return wrap;
+  };
+
+  ButtonDemo.prototype.__addButtonbar = function(description, opts) {
+    var bb;
+    if (opts == null) {
+      opts = {};
+    }
+    bb = new CUI.Buttonbar(opts);
+    return this.__demo_table.addExample(description, [bb.DOM]);
+  };
+
+  ButtonDemo.prototype.__addButtonbarPair = function(description, opts, extraClass) {
+    var bb1, bb2, ref;
+    if (opts == null) {
+      opts = {};
+    }
+    if (extraClass == null) {
+      extraClass = "";
+    }
+    bb1 = new CUI.Buttonbar(opts).DOM;
+    bb2 = bb1.cloneNode(true);
+    return this.__demo_table.addExample(description, [
+      CUI.dom.append(CUI.dom.div((ref = "cui-demo-buttonbar-pair " + extraClass) != null ? ref : {
+        extraClass: ""
+      }), [bb1, bb2])
+    ]);
+  };
+
   ButtonDemo.prototype.__addDivider = function(text) {
     return this.__demo_table.addDivider(text);
   };
@@ -78262,18 +78299,13 @@ Demo.ButtonDemo = (function(superClass) {
       })(this)
     });
     this.__addDivider("button icons");
-    this.__addButton("Icon Left", {
+    this.__addButtonPair("Icon Left", {
       icon_left: new CUI.Icon({
         "class": "fa-trash-o"
       }),
-      text: "Trash",
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
+      text: "Trash"
     });
-    this.__addButton("Icon (with Tooltip)", {
+    this.__addButtonPair("Icon (with Tooltip)", {
       icon_left: "trash",
       tooltip: {
         text: "I am Trashy"
@@ -78285,7 +78317,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("Icons Left+Right", {
+    this.__addButtonPair("Icons Left+Right", {
       icon_left: new CUI.Icon({
         "class": "fa-bolt"
       }),
@@ -78301,7 +78333,7 @@ Demo.ButtonDemo = (function(superClass) {
     });
     span = CUI.dom.span();
     span.innerHTML = "<big>Ce</big><b>n</b>t<i>e</i>r";
-    this.__addButton("With Picture & Content", {
+    this.__addButtonPair("With Picture & Content", {
       left: CUI.dom.div("cui-button-demo-pic"),
       center: span,
       onClick: (function(_this) {
@@ -78318,7 +78350,15 @@ Demo.ButtonDemo = (function(superClass) {
     });
     this.__buttons.push(btn);
     this.__demo_table.addExample("ButtonHref", btn.DOM);
-    this.__addButton("With Small Tooltip & Confirm", {
+    btn = new CUI.ButtonHref({
+      text: "Open Google",
+      target: "_blank",
+      appearance: "link",
+      href: "http://www.google.com"
+    });
+    this.__buttons.push(btn);
+    this.__demo_table.addExample("ButtonHref with appearance: link", btn.DOM);
+    this.__addButtonPair("With Small Tooltip & Confirm", {
       icon_left: new CUI.Icon({
         "class": "fa-lightbulb-o"
       }),
@@ -78328,7 +78368,7 @@ Demo.ButtonDemo = (function(superClass) {
         text: "Small but beautiful!"
       }
     });
-    this.__addButton("With Huge Tooltip", {
+    this.__addButtonPair("With Huge Tooltip", {
       text: "Hover to show a tooltip",
       tooltip: {
         text: this.getBlindText()
@@ -78339,7 +78379,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("Switch", {
+    this.__addButtonPair("Switch", {
       "switch": true,
       text: "On/Off",
       onClick: (function(_this) {
@@ -78348,7 +78388,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("Button with text ellipsis", {
+    this.__addButtonPair("Button with text ellipsis", {
       "class": "cui-button-demo-limit-width",
       text: "Button with text ellipsis",
       onClick: (function(_this) {
@@ -78357,7 +78397,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("Counter (use Shift)", {
+    this.__addButtonPair("Counter (use Shift)", {
       text: "1",
       onClick: function(ev, btn) {
         var inc;
@@ -78420,7 +78460,7 @@ Demo.ButtonDemo = (function(superClass) {
         }
       })
     ];
-    this.__addButton("With Menu (try +Alt)", {
+    this.__addButtonPair("With Menu (try +Alt)", {
       menu: {
         active_item_idx: 0,
         onHide: function() {
@@ -78500,7 +78540,7 @@ Demo.ButtonDemo = (function(superClass) {
       text: "What's for Dinner?"
     });
     this.__addDivider("Button option: appearance ");
-    this.__addButton("appearance: \"normal\"", {
+    this.__addButtonPair("appearance: \"normal\"", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78512,7 +78552,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("appearance: \"flat\"", {
+    this.__addButtonPair("appearance: \"flat\"", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78524,7 +78564,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("appearance: \"link\"", {
+    this.__addButtonPair("appearance: \"link\"", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78536,14 +78576,14 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("appearance: \"link\"", {
+    this.__addButtonPair("appearance: \"link\"", {
       icon_right: new CUI.Icon({
         "class": "fa-plus"
       }),
       appearance: "link",
       text: "Link Button Plus"
     });
-    this.__addButton("appearance: \"important\" (OBSOLETE ???)", {
+    this.__addButtonPair("appearance: \"important\" (OBSOLETE ???)", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78555,7 +78595,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("primary button", {
+    this.__addButtonPair("primary button", {
       primary: true,
       text: "Primary Button",
       onClick: (function(_this) {
@@ -78564,18 +78604,8 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("flat primary button (tbd, don't use in production)", {
-      primary: true,
-      appearance: "flat",
-      text: "Flat Primary Button",
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
-    });
     this.__addDivider("Button option: size ");
-    this.__addButton("size: \"normal\"", {
+    this.__addButtonPair("size: \"normal\"", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78587,7 +78617,7 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButton("size: \"mini\"", {
+    this.__addButtonPair("size: \"mini\"", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78598,8 +78628,8 @@ Demo.ButtonDemo = (function(superClass) {
           return _this.log("Clicked: " + button.getText());
         };
       })(this)
-    });
-    this.__addButton("size: \"big\"", {
+    }, "cui-demo-button-size-small");
+    this.__addButtonPair("size: \"big\"", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
@@ -78610,76 +78640,16 @@ Demo.ButtonDemo = (function(superClass) {
           return _this.log("Clicked: " + button.getText());
         };
       })(this)
-    });
-    this.__addButton("size: \"bigger\" (OBSOLETE ???)", {
-      icon_left: new CUI.Icon({
-        "class": "fa-bank"
-      }),
-      size: "bigger",
-      text: "Bigger Button",
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
-    });
+    }, "cui-demo-button-size-large");
     this.__addDivider("Buttons with mixed options");
-    this.__addButton("size: \"big\", appearance: \"link\" ", {
+    this.__addButton("Big link button", {
       icon_left: new CUI.Icon({
         "class": "fa-bank"
       }),
       size: "big",
       appearance: "link",
+      "class": "cui-demo-button-size-large-link ",
       text: "Big Link Button",
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
-    });
-    this.__addDivider("Custom css classes OBSOLETE ???");
-    this.__addButton("Centered, fixed width", {
-      text: "Centered, fixed width",
-      "class": "cui-button-demo-centered-fixed-width",
-      icon_left: new CUI.Icon({
-        "class": "fa-bolt"
-      }),
-      icon_right: new CUI.Icon({
-        "class": "fa-filter"
-      }),
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
-    });
-    this.__addButton("Custom color class", {
-      text: "My Colors A",
-      size: "big",
-      "class": "cui-button-demo-custom-colors-a",
-      "switch": true,
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
-    });
-    this.__addButton("Custom color class", {
-      text: "My Colors B",
-      size: "big",
-      "class": "cui-button-demo-custom-colors-b",
-      "switch": true,
-      onClick: (function(_this) {
-        return function(evt, button) {
-          return _this.log("Clicked: " + button.getText());
-        };
-      })(this)
-    });
-    this.__addButton("Custom color class", {
-      text: "My Colors C",
-      size: "big",
-      "class": "cui-button-demo-custom-colors-c",
-      "switch": true,
       onClick: (function(_this) {
         return function(evt, button) {
           return _this.log("Clicked: " + button.getText());
@@ -78780,7 +78750,7 @@ Demo.ButtonDemo = (function(superClass) {
   };
 
   ButtonDemo.prototype.createButtonbarDemo = function() {
-    var bb, bb2, buttons, c, rb, select;
+    var bb, buttons, c, rb, select;
     this.__addDivider("buttonbars");
     buttons = [
       new CUI.Button({
@@ -78833,9 +78803,9 @@ Demo.ButtonDemo = (function(superClass) {
         }
       })
     ];
-    this.__demo_table.addExample("Radio", new CUI.Buttonbar({
+    this.__addButtonbar("Radio", {
       buttons: buttons
-    }).DOM);
+    });
     c = function(ev, btn) {
       return btn.hide();
     };
@@ -78887,7 +78857,7 @@ Demo.ButtonDemo = (function(superClass) {
     });
     this.__demo_table.addExample("Buttonbar FAILS needs last-visible-child-info", [bb.DOM, rb.DOM]);
     this.__addDivider("Buttonbar with mixed controls");
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Buttonbar 1", {
       tooltip: {
         text: "mixed buttons and labels"
       },
@@ -78931,7 +78901,7 @@ Demo.ButtonDemo = (function(superClass) {
       }
     });
     select.start();
-    bb2 = new CUI.Buttonbar({
+    this.__addButtonbar("Buttonbar 2", {
       tooltip: {
         text: "mixed buttons and selects"
       },
@@ -78945,10 +78915,8 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("Buttonbar", [bb.DOM]);
-    this.__demo_table.addExample("Buttonbar", [bb2.DOM]);
     this.__addDivider("Buttonbar in different grouping Variations");
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Example 1", {
       tooltip: {
         text: "example 1"
       },
@@ -78966,8 +78934,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 1", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Example 2", {
       tooltip: {
         text: "example 2"
       },
@@ -78984,8 +78951,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 2", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Example 3", {
       tooltip: {
         text: "example 3"
       },
@@ -79001,8 +78967,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 3", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Example 4", {
       tooltip: {
         text: "example 4"
       },
@@ -79017,8 +78982,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 4", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Example 5", {
       tooltip: {
         text: "example 5"
       },
@@ -79033,8 +78997,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 5", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbar("Example 6", {
       tooltip: {
         text: "example 6"
       },
@@ -79057,49 +79020,80 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 6", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
-      stack: "vertical",
+    this.__addButtonbarPair("example 7, vertical stack, no group !", {
       buttons: [
         new CUI.Button({
-          text: "groupA"
+          text: "some"
         }), new CUI.Button({
-          text: "groupA"
+          text: "button"
         }), new CUI.Button({
-          text: "groupA"
+          text: "here"
+        })
+      ]
+    }, "cui-demo-buttonbar-stack-vertical");
+    this.__addButtonbar("example 1, group", {
+      tooltip: {
+        text: "example 1"
+      },
+      buttons: [
+        new CUI.Button({
+          text: "Eins",
+          group: "groupA",
+          active: true
+        }), new CUI.Button({
+          text: "Zwei",
+          group: "groupA"
+        }), new CUI.Button({
+          text: "Dreizehn",
+          group: "groupA"
+        }), new CUI.Button({
+          text: "Vierzig",
+          group: "groupA"
         })
       ]
     });
-    this.__demo_table.addExample("example 7, vertical stack", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbarPair("example 1, no group, packed 'tight'", {
       tooltip: {
-        text: "example 1 flat"
+        text: "example 1"
+      },
+      buttons: [
+        new CUI.Button({
+          text: "Eins",
+          active: true
+        }), new CUI.Button({
+          text: "Zwei"
+        }), new CUI.Button({
+          text: "Dreizehn"
+        }), new CUI.Button({
+          text: "Vierzig"
+        })
+      ]
+    }, "cui-demo-buttonbar-tight");
+    this.__addButtonbar("example 1, group, vertical", {
+      "class": "cui-demo-buttonbar-stack-vertical",
+      tooltip: {
+        text: "example 1"
       },
       buttons: [
         new CUI.Button({
           text: "1",
           group: "groupA",
-          appearance: "flat",
           active: true
         }), new CUI.Button({
           text: "2",
-          group: "groupA",
-          appearance: "flat"
+          group: "groupA"
         }), new CUI.Button({
           text: "3",
-          group: "groupA",
-          appearance: "flat"
+          group: "groupA"
         }), new CUI.Button({
           text: "4",
-          group: "groupA",
-          appearance: "flat"
+          group: "groupA"
         })
       ]
     });
-    this.__demo_table.addExample("example 1 flat", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbarPair("example 2, no group, packed tight", {
       tooltip: {
-        text: "example 2 flat, no group"
+        text: "example 2, no group"
       },
       buttons: [
         new CUI.Button({
@@ -79119,42 +79113,8 @@ Demo.ButtonDemo = (function(superClass) {
           })
         })
       ]
-    });
-    this.__demo_table.addExample("example 2 flat, no group", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
-      tooltip: {
-        text: "example 2 flat, with border"
-      },
-      buttons: [
-        new CUI.Button({
-          appearance: "flat",
-          icon_left: new CUI.Icon({
-            "class": "fa-lightbulb-o"
-          })
-        }), new CUI.Button({
-          appearance: "flat",
-          icon_left: new CUI.Icon({
-            "class": "fa-cog"
-          })
-        }), new CUI.Button({
-          text: "Download",
-          icon_left: new CUI.Icon({
-            "class": "fa-download"
-          }),
-          appearance: "flat",
-          bordered: true
-        }), new CUI.Button({
-          text: "Hinzufügen",
-          icon_left: new CUI.Icon({
-            "class": "fa-plus"
-          }),
-          appearance: "flat",
-          bordered: true
-        })
-      ]
-    });
-    this.__demo_table.addExample("example 2 flat, with border", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    }, "cui-demo-buttonbar-tight");
+    this.__addButtonbarPair("example 3 flat, mixed, packed tight", {
       tooltip: {
         text: "example 3 flat, mixed"
       },
@@ -79172,18 +79132,15 @@ Demo.ButtonDemo = (function(superClass) {
         }), new CUI.Button({
           text: "Eins",
           group: "groupA",
-          appearance: "flat",
-          bordered: true
+          appearance: "flat"
         }), new CUI.Button({
           text: "Zwei",
           group: "groupA",
-          appearance: "flat",
-          bordered: true
+          appearance: "flat"
         }), new CUI.Button({
           text: "Drei",
           group: "groupA",
-          appearance: "flat",
-          bordered: true
+          appearance: "flat"
         }), new CUI.Button({
           appearance: "flat",
           icon_left: new CUI.Icon({
@@ -79196,9 +79153,8 @@ Demo.ButtonDemo = (function(superClass) {
           })
         })
       ]
-    });
-    this.__demo_table.addExample("example 3 flat, mixed", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    }, "cui-demo-buttonbar-tight");
+    this.__addButtonbar("example 3 flat, two group with icon", {
       buttons: [
         new CUI.Button({
           text: "Eins",
@@ -79206,53 +79162,46 @@ Demo.ButtonDemo = (function(superClass) {
           appearance: "flat",
           icon_left: new CUI.Icon({
             "class": "fa-cog"
-          }),
-          bordered: true
+          })
         }), new CUI.Button({
           text: "Zwei",
           group: "groupA",
           appearance: "flat",
           icon_left: new CUI.Icon({
             "class": "fa-download"
-          }),
-          bordered: true
+          })
         }), new CUI.Button({
           text: "Drei",
           group: "groupA",
           appearance: "flat",
           icon_left: new CUI.Icon({
             "class": "fa-plus"
-          }),
-          bordered: true
+          })
         }), new CUI.Button({
           text: "Eins",
           group: "groupB",
           appearance: "flat",
           icon_left: new CUI.Icon({
             "class": "fa-cog"
-          }),
-          bordered: true
+          })
         }), new CUI.Button({
           text: "Zwei",
           group: "groupB",
           appearance: "flat",
           icon_left: new CUI.Icon({
             "class": "fa-download"
-          }),
-          bordered: true
+          })
         }), new CUI.Button({
           text: "Drei",
           group: "groupB",
           appearance: "flat",
           icon_left: new CUI.Icon({
             "class": "fa-plus"
-          }),
-          bordered: true
+          })
         })
       ]
     });
-    this.__demo_table.addExample("example 3 flat, two group with icon", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbarPair("example 4 flat, icon and optional text", {
       buttons: [
         new CUI.Button({
           appearance: "flat",
@@ -79268,8 +79217,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__demo_table.addExample("example 4 flat, icon and optional text", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
+    this.__addButtonbarPair("example 4 flat, icon and optional text, mini", {
       buttons: [
         new CUI.Button({
           appearance: "flat",
@@ -79286,10 +79234,26 @@ Demo.ButtonDemo = (function(superClass) {
           text: "Nested"
         })
       ]
-    });
-    this.__demo_table.addExample("example 4 flat, icon and optional text, mini", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    bb = new CUI.Buttonbar({
-      stack: "vertical",
+    }, "cui-demo-buttonbar-small-buttons");
+    this.__addButtonbarPair("example 4 flat, icon and optional text, large", {
+      buttons: [
+        new CUI.Button({
+          appearance: "flat",
+          icon_left: new CUI.Icon({
+            "class": "fa-plus"
+          }),
+          size: "big"
+        }), new CUI.Button({
+          appearance: "flat",
+          icon_left: new CUI.Icon({
+            "class": "fa-plus"
+          }),
+          size: "big",
+          text: "Nested"
+        })
+      ]
+    }, "cui-demo-buttonbar-large-buttons");
+    this.__addButtonbarPair("example 5, vertically stacked buttonbar", {
       buttons: [
         new CUI.Button({
           text: "Vertical",
@@ -79306,14 +79270,12 @@ Demo.ButtonDemo = (function(superClass) {
         }), new CUI.Button({
           text: "Hinzufügen",
           appearance: "flat",
-          bordered: true,
           icon_left: new CUI.Icon({
             "class": "fa-plus"
           })
         }), new CUI.Button({
           text: "Stack",
           appearance: "flat",
-          bordered: true,
           icon_left: new CUI.Icon({
             "class": "fa-plus"
           })
@@ -79324,36 +79286,36 @@ Demo.ButtonDemo = (function(superClass) {
           })
         }), new CUI.Button({
           appearance: "flat",
-          bordered: true,
+          icon_left: new CUI.Icon({
+            "class": "fa-cog"
+          })
+        })
+      ]
+    }, "cui-demo-buttonbar-stack-vertical");
+    this.__addButtonbar("example 5, vertically stacked buttonbar, packed tight", {
+      "class": "cui-demo-buttonbar-stack-vertical cui-demo-buttonbar-tight",
+      buttons: [
+        new CUI.Button({
+          text: "Stack",
+          appearance: "flat",
+          icon_left: new CUI.Icon({
+            "class": "fa-plus"
+          })
+        }), new CUI.Button({
+          appearance: "flat",
+          text: "Now",
+          icon_left: new CUI.Icon({
+            "class": "fa-cog"
+          })
+        }), new CUI.Button({
+          appearance: "flat",
+          text: "Stack",
           icon_left: new CUI.Icon({
             "class": "fa-cog"
           })
         })
       ]
     });
-    this.__demo_table.addExample("example 5, vertically stacked buttonbar", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
-    this.__addDivider("Using Styles on Buttons inside buttonbar");
-    bb = new CUI.Buttonbar({
-      tooltip: {
-        text: "example 1"
-      },
-      buttons: [
-        new CUI.Button({
-          text: "groupA",
-          group: "groupA",
-          "class": "cui-dialog"
-        }), new CUI.Button({
-          text: "groupB",
-          group: "groupB",
-          "class": "cui-dialog"
-        }), new CUI.Button({
-          text: "groupB",
-          group: "groupB",
-          "class": "cui-dialog"
-        })
-      ]
-    });
-    this.__demo_table.addExample("example 1", [CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))]);
     return this;
   };
 
