@@ -208,9 +208,6 @@ class CUI.Pane extends CUI.VerticalLayout
 				check: (v) =>
 					v instanceof CUI.Tooltip or CUI.util.isPlainObject(v)
 				default: CUI.Pane.defaults.button_tooltip
-			appearance:
-				mandatory: false
-				default: "flat"
 		)
 
 		if CUI.util.isString(opts.icon_inactive)
