@@ -16,8 +16,8 @@ class Demo.BlockDemo extends Demo
 
 		@demo_table.addExample("Blocks", @createBlocks() )
 		@demo_table.addExample("Blocks with line separator mixin", @createSimpleBlocks("cui-block-demo-separator") )
-		@demo_table.addExample("Blocks appearance wide and padded", @createSimpleBlocksWide() )
-		@demo_table.addExample("Blocks appearance wide and NOT padded", @createSimpleBlocksWideNotPadded() )
+		@demo_table.addExample("Blocks as grid and padded", @createSimpleBlocksWide() )
+		@demo_table.addExample("Blocks as grid and NOT padded", @createSimpleBlocksWideNotPadded() )
 
 		@createWaitBlockExample()
 
@@ -66,6 +66,7 @@ class Demo.BlockDemo extends Demo
 					new CUI.Block
 						text: "Wide block A"
 						appearance: "wide"
+						class: "cui-demo-block-grid"
 						level: 1
 						content: [
 							new CUI.Label
@@ -75,6 +76,7 @@ class Demo.BlockDemo extends Demo
 					new CUI.Block
 						text: "Wide block B"
 						appearance: "wide"
+						class: "cui-demo-block-grid"
 						level: 2
 						content: [
 							new CUI.Label
@@ -85,6 +87,7 @@ class Demo.BlockDemo extends Demo
 					new CUI.Block
 						text: "Wide block C"
 						appearance: "wide"
+						class: "cui-demo-block-grid"
 						level: 2
 						content: [
 							new CUI.Label
@@ -107,6 +110,7 @@ class Demo.BlockDemo extends Demo
 					new CUI.Block
 						text: "Wide block A - Level 1"
 						appearance: "wide"
+						class: "cui-demo-block-grid"
 						padded: false
 						level: 1
 						content: [
@@ -117,6 +121,7 @@ class Demo.BlockDemo extends Demo
 					new CUI.Block
 						text: "Wide block B - Level 2"
 						appearance: "wide"
+						class: "cui-demo-block-grid"
 						padded: false
 						level: 2
 						content: [
@@ -127,6 +132,7 @@ class Demo.BlockDemo extends Demo
 					new CUI.Block
 						text: "Wide block C - Level 3"
 						appearance: "wide"
+						class: "cui-demo-block-grid"
 						padded: false
 						level: 3
 						content: [

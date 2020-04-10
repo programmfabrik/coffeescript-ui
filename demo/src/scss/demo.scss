@@ -193,6 +193,11 @@
 	@include label-xl();
 }
 
+.cui-demo-block-grid {
+	@include block-grid();
+}
+
+
 
 /* Content Area */
 .cui-document-browser-center {
