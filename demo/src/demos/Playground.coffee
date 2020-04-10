@@ -680,8 +680,7 @@ class Demo.Playground extends Demo
 
 	getTableZebra: ->
 		table = new CUI.Table
-			zebra: true
-			class: 'cui-maximize-horizontal'
+			class: 'cui-maximize-horizontal cui-demo-table-zebra'
 			columns: [
 				name: "a"
 				text: "alpha"
@@ -720,7 +719,6 @@ class Demo.Playground extends Demo
 
 	getTableDefault: ->
 		table = new CUI.Table
-			bordered: true
 			columns: [
 				name: "a"
 				text: "alpha"
@@ -760,7 +758,6 @@ class Demo.Playground extends Demo
 	getTableKeyvalue: ->
 		table = new CUI.Table
 			flex: true
-			bordered: true
 			key_value: true
 
 		someInfoData = [

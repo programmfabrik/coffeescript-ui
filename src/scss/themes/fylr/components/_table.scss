@@ -3,6 +3,8 @@
 	// display: block;
 	display: inline-table; // todo: ??
 	overflow-x: auto;
+	border: 1px solid $table-border-color;
+	border-radius: $table-border-radius;
 
 	// use .cui-table-row or .cui-table-td when styling data tables
 	// .cui-tr and .cui-td will be used in a more generic layouty way as well (without cui-table-td class)
@@ -57,30 +59,6 @@
 
 	&.cui-maximize-vertical {
 		flex-grow: 1;
-	}
-
-	&--bordered {
-		border: 1px solid $table-border-color;
-		border-radius: $table-border-radius;
-	}
-
-	// todo: add new option "zebra"
-	&--zebra {
-		> .cui-tr + .cui-tr {
-			> .cui-table-td {
-				border-top: 0;
-			}
-		}
-
-		.cui-table-row {
-			&:nth-child(odd) .cui-table-td {
-				background: $table-odd-background;
-			}
-
-			&:nth-child(even) .cui-table-td {
-				background: $table-even-background;
-			}
-		}
 	}
 
 	&--flex {

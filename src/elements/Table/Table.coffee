@@ -25,10 +25,6 @@ class CUI.Table extends CUI.DOMElement
 		if @_bordered
 			cls.push("cui-table--bordered")
 
-		if @_zebra
-			cls.push("cui-table--zebra")
-
-
 		@__table = CUI.dom.table(cls.join(" "))
 
 		@registerDOMElement(@__table, false)
@@ -74,9 +70,6 @@ class CUI.Table extends CUI.DOMElement
 				default: true
 				check: Boolean
 			bordered:
-				default: false
-				check: Boolean
-			zebra:
 				default: false
 				check: Boolean
 			columns:
