@@ -82,6 +82,7 @@
 // * Flex handle
 
 // todo:
+$flex-handle-size: 10px; // width or height
 $flex-handle-dot-width: 6px;
 $flex-handle-dot-color: gray('400');
 $flex-handle-color: gray('400');
@@ -102,8 +103,8 @@ $flex-handle-bocker-offset: 4px;
 }
 
 .cui-flex-handle-row {
-	width: 10px;
-	margin: 0 -5px;
+	width: $flex-handle-size;
+	margin: 0;
 
 	&:hover {
 		background-image:
@@ -158,8 +159,8 @@ $flex-handle-bocker-offset: 4px;
 }
 
 .cui-flex-handle-column {
-	height: 10px;
-	margin: -5px 0;
+	height: $flex-handle-size;
+	margin: 0;
 	width: 100%;
 
 	&:hover {
