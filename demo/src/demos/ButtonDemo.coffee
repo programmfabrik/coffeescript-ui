@@ -293,7 +293,7 @@ class Demo.ButtonDemo extends Demo
 		@__addDivider("Button option: appearance ")
 
 		@__addButtonPair("appearance: \"normal\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "normal"
 			text: "Normal Button"
 			onClick: (evt,button) =>
@@ -301,7 +301,7 @@ class Demo.ButtonDemo extends Demo
 		)
 
 		@__addButtonPair("appearance: \"flat\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "flat"
 			text: "Flat Button"
 			onClick: (evt,button) =>
@@ -309,7 +309,7 @@ class Demo.ButtonDemo extends Demo
 		)
 
 		@__addButtonPair("appearance: \"link\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "link"
 			text: "Link Button"
 			onClick: (evt,button) =>
@@ -323,7 +323,7 @@ class Demo.ButtonDemo extends Demo
 		)
 
 		@__addButtonPair("appearance: \"important\" (OBSOLETE ???)",
-			icon_left: new CUI.Icon(class: "fa-bank")
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "important"
 			text: "Important Button"
 			onClick: (evt,button) =>
@@ -339,24 +339,24 @@ class Demo.ButtonDemo extends Demo
 
 		@__addDivider("Button option: size ")
 
-		@__addButtonPair("size: \"normal\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("size: \"base\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "normal"
 			text: "Normal Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButtonPair("size: \"mini\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("size: \"sm\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "mini"
 			text: "Mini Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		, "cui-demo-button-size-small")
 
-		@__addButtonPair("size: \"big\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("size: \"lg\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "big"
 			text: "Big Button"
 			onClick: (evt,button) =>
@@ -365,7 +365,7 @@ class Demo.ButtonDemo extends Demo
 
 		@__addDivider("Buttons with mixed options")
 		@__addButton("Big link button",
-			icon_left: new CUI.Icon(class: "fa-bank")
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "big"
 			appearance: "link"
 			class: "cui-demo-button-size-large-link "
@@ -774,7 +774,7 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-		@__addButtonbarPair("example 4 flat, icon and optional text, mini",
+		@__addButtonbarPair("example 4 flat, icon and optional text, small",
 			buttons: [
 				new CUI.Button(
 					appearance: "flat",
