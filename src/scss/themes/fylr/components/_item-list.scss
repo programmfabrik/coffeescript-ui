@@ -88,45 +88,25 @@
 		}
 	}
 
-	// item list modifier
+	// Allow for mixed items in a list: with or without a left-side icon, Button Labels must be vertically left aligned
 	// --------------------------------
-
-	// Indent all buttons within specific kind of item-list
+	// see Menu.coffee, RootMenu.coffee (root has pretty much its own custom styling)
 	&.cui-item-list--has-button-left {
-		--indent: #{1.5*$spacer};
-		--fa-size: 14px;
-
-		&.cui-item-list--small {
-			--indent: #{1.25*$spacer};
-			--fa-size: 12px;
-		}
+		$indent: 1.5*$spacer;
 
 		// this button always has a left side
 		.cui-button-left {
-			width: var(--indent);
+			width: $indent;
 			margin-right: 0;
 
 			.fa {
-				font-size: var(--fa-size);
+				font-size: $icon-font-size;
 			}
 		}
 
 		// indent all other buttons to be in line with the button that has a left side
 		.cui-button-center:first-child {
-			padding-left: var(--indent);
-		}
-	}
-
-	// Small list
-	// todo: this is a new class, add this as an option to component ?
-	&.cui-item-list--small {
-		.cui-button,
-		.cui-button-href {
-			.cui-button-visual {
-				min-height: $item-list-height-sm;
-				padding-top: 0.25em;
-				padding-bottom: 0.35em;
-			}
+			margin-left: $indent;
 		}
 	}
 }
