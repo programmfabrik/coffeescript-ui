@@ -268,7 +268,8 @@ $hr-border-width:   1px !default;
 
 // * Icons
 // * ==========================================
-$icon-font-size: 	$font-size-sm !default; // was: 14px
+$icon-font-size: 	$font-size-base !default; // was: 14px
+$icon-line-height: 	$line-height-base !default;
 
 
 // * Buttons

@@ -35,10 +35,6 @@
 		.cui-button-right {
 			display: inline-flex;
 			flex: 0 0 auto;
-
-			.fa {
-				font-size: $font-size-base; // todo: this only works if there is no empty button-center, such a things exists at least in the demo, try to change markup if possible
-			}
 		}
 
 		.cui-button-center {

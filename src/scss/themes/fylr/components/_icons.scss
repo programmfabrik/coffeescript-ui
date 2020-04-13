@@ -13,6 +13,7 @@
 
 .fa {
 	font-size: $icon-font-size;
+	line-height: $icon-line-height;
 }
 
 .cui-spin-stepped {
@@ -61,4 +62,11 @@
 // align with the stop button
 .fa-play {
 	margin-left: 1px;
+}
+
+//
+.fa-bank {
+	&::before {
+		font-size: 0.9em;
+	}
 }
