@@ -185,7 +185,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
-  height: 30px;
+  height: 26px;
   padding: 0 0.25rem; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-buttonbar::after {
@@ -286,7 +286,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
                 justify-content: flex-start; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
-    height: 30px;
+    height: 26px;
     padding: 0 0.25rem; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::after {
     width: 2px; }
@@ -302,15 +302,21 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:focus {
   outline: none; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual {
+    outline: none;
     box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
     z-index: 1; }
 
-.cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active:focus .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:active .cui-button-visual {
+  color: #ff5724;
+  background-color: rgba(0, 0, 0, 0); }
+
+.cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open .cui-button-visual {
   color: #ff5724;
   background-color: transparent; }
 
-.cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:active .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active .cui-button-visual {
-  color: #ff5724; }
+.cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open:focus .cui-button-visual {
+  color: #ff5724;
+  background-color: transparent; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   height: auto; }
@@ -348,7 +354,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       margin-left: -0.625rem; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-last-visible-child .cui-button-visual {
-  border: 1px solid currentColor; }
+  border: 1px solid #212121; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-last-visible-child:focus .cui-button-visual {
   border-color: #17a2b8; }
@@ -360,20 +366,20 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   border-color: #d73200; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual {
-  height: 28px;
-  min-width: 30.8px;
+  height: 24px;
+  min-width: 26.4px;
   font-size: 0.7875rem;
-  line-height: 28px;
+  line-height: 24px;
   border-radius: 2px; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-left {
-    padding-left: 0.65rem;
-    margin-right: -0.325rem; }
+    padding-left: 0.5rem;
+    margin-right: -0.25rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-left:empty, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-left:only-child {
       padding-left: 0;
       margin-right: 0; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-right {
-    padding-right: 0.65rem;
-    margin-left: -0.325rem; }
+    padding-right: 0.5rem;
+    margin-left: -0.25rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-right:empty, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-right:only-child {
       padding-right: 0;
       margin-left: 0; }
@@ -381,9 +387,9 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 0 0.65rem; }
+    padding: 0 0.5rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual .cui-button-center:empty:last-child {
-      margin-left: -0.325rem; }
+      margin-left: -0.25rem; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-large .cui-button-button .cui-button-visual {
   height: 42px;
@@ -422,7 +428,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       margin-right: 4rem; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select .cui-button-visual,
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button .cui-button-visual {
-    border: 1px solid currentColor; }
+    border: 1px solid #212121; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
     border-color: #17a2b8; }
@@ -489,20 +495,20 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       border-radius: 0; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual {
-  height: 28px;
-  min-width: 30.8px;
+  height: 24px;
+  min-width: 26.4px;
   font-size: 0.7875rem;
-  line-height: 28px;
+  line-height: 24px;
   border-radius: 2px; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-left {
-    padding-left: 0.65rem;
-    margin-right: -0.325rem; }
+    padding-left: 0.5rem;
+    margin-right: -0.25rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-left:empty, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-left:only-child {
       padding-left: 0;
       margin-right: 0; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-right {
-    padding-right: 0.65rem;
-    margin-left: -0.325rem; }
+    padding-right: 0.5rem;
+    margin-left: -0.25rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-right:empty, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-right:only-child {
       padding-right: 0;
       margin-left: 0; }
@@ -510,9 +516,9 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 0 0.65rem; }
+    padding: 0 0.5rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual .cui-button-center:empty:last-child {
-      margin-left: -0.325rem; }
+      margin-left: -0.25rem; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-large-buttons .cui-button .cui-button-visual {
   height: 42px;
@@ -578,8 +584,15 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     margin: 0 0.5rem; }
 
 .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title {
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 1.5rem;
-  line-height: 1.2; }
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem; }
+  .cui-pane-header .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title,
+  .cui-toolbar .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title,
+  .cui-buttonbar .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title {
+    margin-bottom: 0; }
 
 .cui-demo-block-grid.cui-block-level-1 > .cui-block-content {
   color: #6c757d; }

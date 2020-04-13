@@ -78507,7 +78507,7 @@ Demo.ButtonDemo = (function(superClass) {
     this.__addDivider("Button option: appearance ");
     this.__addButtonPair("appearance: \"normal\"", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       appearance: "normal",
       text: "Normal Button",
@@ -78519,7 +78519,7 @@ Demo.ButtonDemo = (function(superClass) {
     });
     this.__addButtonPair("appearance: \"flat\"", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       appearance: "flat",
       text: "Flat Button",
@@ -78531,7 +78531,7 @@ Demo.ButtonDemo = (function(superClass) {
     });
     this.__addButtonPair("appearance: \"link\"", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       appearance: "link",
       text: "Link Button",
@@ -78550,7 +78550,7 @@ Demo.ButtonDemo = (function(superClass) {
     });
     this.__addButtonPair("appearance: \"important\" (OBSOLETE ???)", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       appearance: "important",
       text: "Important Button",
@@ -78570,9 +78570,9 @@ Demo.ButtonDemo = (function(superClass) {
       })(this)
     });
     this.__addDivider("Button option: size ");
-    this.__addButtonPair("size: \"normal\"", {
+    this.__addButtonPair("size: \"base\"", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       size: "normal",
       text: "Normal Button",
@@ -78582,9 +78582,9 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     });
-    this.__addButtonPair("size: \"mini\"", {
+    this.__addButtonPair("size: \"sm\"", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       size: "mini",
       text: "Mini Button",
@@ -78594,9 +78594,9 @@ Demo.ButtonDemo = (function(superClass) {
         };
       })(this)
     }, "cui-demo-button-size-small");
-    this.__addButtonPair("size: \"big\"", {
+    this.__addButtonPair("size: \"lg\"", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       size: "big",
       text: "Big Button",
@@ -78609,7 +78609,7 @@ Demo.ButtonDemo = (function(superClass) {
     this.__addDivider("Buttons with mixed options");
     this.__addButton("Big link button", {
       icon_left: new CUI.Icon({
-        "class": "fa-bank"
+        "class": "fa-cloud"
       }),
       size: "big",
       appearance: "link",
@@ -79182,7 +79182,7 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     });
-    this.__addButtonbarPair("example 4 flat, icon and optional text, mini", {
+    this.__addButtonbarPair("example 4 flat, icon and optional text, small", {
       buttons: [
         new CUI.Button({
           appearance: "flat",
@@ -87293,51 +87293,6 @@ Demo.PaneDemo = (function(superClass) {
       }
     });
     this.demo_table.addExample("Pane with a toolbar that contains a mixture of buttons and labels in different sizes.", pane);
-    pane = new CUI.Pane({
-      "class": "cui-demo-pane-pane cui-pane--window",
-      top: {
-        content: [
-          new CUI.PaneHeader({
-            left: {
-              content: [
-                new CUI.Label({
-                  text: "Todo Window pane"
-                })
-              ]
-            },
-            right: {
-              content: [
-                new CUI.Button({
-                  text: "Button",
-                  appearance: "flat"
-                })
-              ]
-            }
-          }), new CUI.PaneToolbar
-        ]
-      },
-      center: {
-        content: "center"
-      },
-      bottom: {
-        content: [
-          new CUI.PaneFooter({
-            left: {
-              content: "PaneFooter Left"
-            },
-            right: {
-              content: [
-                new CUI.Button({
-                  text: "Button",
-                  appearance: "flat"
-                })
-              ]
-            }
-          })
-        ]
-      }
-    });
-    this.demo_table.addExample("Window Pane.", pane);
     pane = new CUI.Pane({
       "class": "cui-demo-pane-pane cui-pane--padded",
       top: {
