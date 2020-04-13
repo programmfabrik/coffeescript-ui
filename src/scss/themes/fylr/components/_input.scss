@@ -93,11 +93,11 @@ textarea {
 			font-family: $font-family-monospace;
 			font-size: $font-size-sm;
 			color: $teal; // todo
-			background: $black;
-			border-color: $black;
+			background: gray('900');
+			border-color: gray('900');
 
 			&:focus {
-				border-color: $black;
+				border-color: gray('900');
 			}
 		}
 	}
