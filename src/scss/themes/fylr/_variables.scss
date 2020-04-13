@@ -293,8 +293,8 @@ $btn-height: 				34px !default;
 $btn-font-size: 			$font-size-sm !default;
 $btn-border-radius:			$enable-btn-border-radius * 2px !default;
 // Small size
-$btn-padding-x-sm: 			0.65rem !default;
-$btn-height-sm: 			28px !default;
+$btn-padding-x-sm: 			0.5rem !default;
+$btn-height-sm: 			24px !default; // make in-line with default font-size of 16px
 $btn-font-size-sm: 			$font-size-xs !default;
 $btn-border-radius-sm:		$enable-btn-border-radius * 2px !default;
 // Large size
@@ -488,7 +488,7 @@ $digi-display-font-family: 	$font-family-monospace !default;
 // * ==========================================
 $tabs-padding: 						$component-padding-base !default;
 $tabs-header-height: 				$btn-height + 6px !default;
-$tabs-header-height-sm:			$btn-height-sm + 2px !default;
+$tabs-header-height-sm:				$btn-height-sm + 2px !default;
 $tabs-header-border-color: 			gray('300') !default;
 $tabs-header-border-width: 			3px !default;
 $tabs-header-border-width-sm: 		2px !default;

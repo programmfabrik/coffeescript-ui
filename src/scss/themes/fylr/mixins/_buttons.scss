@@ -61,7 +61,13 @@
 	}
 }
 
-@mixin button-color($background: transparent, $color: $body-color, $background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $background-hover, $color-active: theme-color('primary')) {
+@mixin button-size-xs() {
+	.cui-button-visual {
+		@include button-size(16px, 0.25em, 12px, 2px);
+	}
+}
+
+@mixin button-color($background: transparent, $color: $body-color, $background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $body-color, $color-active: $white) {
 	.cui-button-visual {
 		background-color: $background;
 		color: $color;
@@ -83,21 +89,26 @@
 		}
 	}
 
-	&.cui-active {
+	&:active {
+		.cui-button-visual {
+			color: $color-hover;
+			background-color: darken($background-hover, 6%);
+		}
+	}
+
+	&.cui-active,
+	&.cui-layer-open {
+		.cui-button-visual {
+			color: $color-active;
+			background-color: $background-active;
+		}
+
 		&:hover,
 		&:focus {
 			.cui-button-visual {
 				color: $color-active;
 				background-color: $background-active;
 			}
-		}
-	}
-
-	&.cui-layer-open,
-	&:active,
-	&.cui-active {
-		.cui-button-visual {
-			color: $color-active;
 		}
 	}
 }
@@ -139,7 +150,7 @@
 	}
 }
 
-@mixin button-bordered($border-color: currentColor) {
+@mixin button-bordered($border-color: $body-color) {
 	.cui-button-visual {
 		border: $btn-border-width solid $border-color;
 	}
@@ -160,6 +171,8 @@
 }
 
 @mixin button-focus() {
+	outline: none;
+
 	// todo: find focus color that works with all colored buttons, see mixins/_forms
 	@if $enable-btn-border-radius {
 		box-shadow: $btn-focus-shadow !important; // keeps border-radius, but what about buttongroup buttons ?
