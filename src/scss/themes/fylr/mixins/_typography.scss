@@ -5,6 +5,12 @@
 	line-height: $headings-line-height;
 	color: $headings-color;
 	margin-bottom: $headings-margin-bottom;
+
+	.cui-pane-header &,
+	.cui-toolbar &,
+	.cui-buttonbar & {
+		margin-bottom: 0;
+	}
 }
 
 @mixin h1() {
