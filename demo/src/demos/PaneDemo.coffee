@@ -188,40 +188,40 @@ class Demo.PaneDemo extends Demo
 		@demo_table.addExample("Pane with a toolbar that contains a mixture of buttons and labels in different sizes.",pane)
 
 
-		pane = new CUI.Pane
-			class: "cui-demo-pane-pane cui-pane--window"
-			top:
-				content: [
-					new CUI.PaneHeader
-						left:
-							content: [
-								new CUI.Label
-									text: "Todo Window pane"
-							]
-						right:
-							content: [
-								new CUI.Button
-									text: "Button"
-									appearance: "flat"
-							]
-					new CUI.PaneToolbar
-				]
-			center:
-				content: "center"
-			bottom:
-				content: [
-					new CUI.PaneFooter
-						left:
-							content: "PaneFooter Left"
-						right:
-							content: [
-								new CUI.Button
-									text: "Button"
-									appearance: "flat"
-							]
-				]
+		# pane = new CUI.Pane
+		# 	class: "cui-demo-pane-pane cui-pane--window"
+		# 	top:
+		# 		content: [
+		# 			new CUI.PaneHeader
+		# 				left:
+		# 					content: [
+		# 						new CUI.Label
+		# 							text: "Todo Window pane"
+		# 					]
+		# 				right:
+		# 					content: [
+		# 						new CUI.Button
+		# 							text: "Button"
+		# 							appearance: "flat"
+		# 					]
+		# 			new CUI.PaneToolbar
+		# 		]
+		# 	center:
+		# 		content: "center"
+		# 	bottom:
+		# 		content: [
+		# 			new CUI.PaneFooter
+		# 				left:
+		# 					content: "PaneFooter Left"
+		# 				right:
+		# 					content: [
+		# 						new CUI.Button
+		# 							text: "Button"
+		# 							appearance: "flat"
+		# 					]
+		# 		]
 
-		@demo_table.addExample("Window Pane.",pane)
+		# @demo_table.addExample("Window Pane.",pane)
 
 		pane = new CUI.Pane
 			class: "cui-demo-pane-pane cui-pane--padded"

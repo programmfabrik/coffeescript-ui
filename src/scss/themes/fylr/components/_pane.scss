@@ -42,31 +42,10 @@
 	}
 }
 
-// * Pane modifier
+// .cui-pane--window {} // #legacy
+// class is added in arbitrary templates, there is no Component Class that generates it, so it would be easy to just ignore this class in fylr and
+// style this pane just like the general a cui-pane
 
-// this is a special kind of pane with a distinct styling (like a window ?)
-// todo: do we need this and if yes, how do we style it?
-.cui-pane--window {
-	> .cui-vertical-layout-top > .cui-pane-header,
-	> .cui-vertical-layout-bottom > .cui-pane-footer {
-		background: $pane-background; // todo
-		padding: $pane-padding;
-
-		// todo: popover
-		// .cui-popover & {
-		// 	background: $popover-header-background;
-		// 	border-color: $popover-header-border;
-		// }
-	}
-
-	> .cui-vertical-layout-top > .cui-pane-header {
-		border-bottom: 1px solid $pane-window-border-color;
-	}
-
-	> .cui-vertical-layout-bottom > .cui-pane-footer {
-		border-top: 1px solid $pane-window-border-color;
-	}
-}
 
 // * Simple Pane
 
