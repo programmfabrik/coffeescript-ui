@@ -154,6 +154,7 @@
 	display: none !important;
 }
 
-.cui-data-field-disabled .cui-disabled {
-	opacity: 1;
-}
+// todo: find use-case, this renders the disabled checkboxes within .cui-layer-root-view-select-popover as "enabled" checkboxes
+// .cui-data-field-disabled .cui-disabled {
+// 	opacity: 1;
+// }
