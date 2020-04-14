@@ -484,7 +484,7 @@ h1, .h1 {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 0.5rem; }
   .cui-pane-header h1,
   .cui-toolbar h1,
@@ -497,7 +497,7 @@ h2, .h2 {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 0.5rem; }
   .cui-pane-header h2,
   .cui-toolbar h2,
@@ -510,7 +510,7 @@ h3, .h3 {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 0.5rem; }
   .cui-pane-header h3,
   .cui-toolbar h3,
@@ -523,7 +523,7 @@ h4, .h4 {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 0.5rem; }
   .cui-pane-header h4,
   .cui-toolbar h4,
@@ -536,7 +536,7 @@ h5, .h5 {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 0.5rem; }
   .cui-pane-header h5,
   .cui-toolbar h5,
@@ -549,7 +549,7 @@ h6, .h6 {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 0.5rem; }
   .cui-pane-header h6,
   .cui-toolbar h6,
@@ -1360,7 +1360,7 @@ label[data-label-clickable],
   display: block; }
   .cui-label-markdown .cui-label-content h1, .cui-label-markdown .cui-label-content h2, .cui-label-markdown .cui-label-content h3, .cui-label-markdown .cui-label-content h4, .cui-label-markdown .cui-label-content h5, .cui-label-markdown .cui-label-content h6 {
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.1;
     margin: 0 0 0.25rem; }
   .cui-label-markdown .cui-label-content h1 {
     font-size: 1.1rem; }
@@ -2275,9 +2275,6 @@ textarea {
 
 .cui-data-field-hidden {
   display: none !important; }
-
-.cui-data-field-disabled .cui-disabled {
-  opacity: 1; }
 
 .cui-block {
   flex-shrink: 0; }
