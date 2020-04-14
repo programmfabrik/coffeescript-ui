@@ -71,7 +71,7 @@
 		left: 0;
 		right: 0;
 		font-weight: bold;
-		background: rgba($body-bg, 0.94);
+		background: rgba($body-bg, $sticky-header-opacity);
 	}
 }
 
