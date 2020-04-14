@@ -130,6 +130,21 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
+@mixin button-on-colored-background() {
+	$background-color: gray('200');
+
+	$background: rgba($background-color, 0.6);
+	$color: color-yiq($background);
+
+	$background-hover: rgba($background-color, 0.95);
+	$color-hover: $color;
+
+	$background-active: $background-hover;
+	$color-active: $color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+}
+
 @mixin button-link() {
 	@include button-color(transparent, $link-color, transparent, $link-color, transparent, $link-color);
 
