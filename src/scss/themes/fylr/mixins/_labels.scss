@@ -21,3 +21,10 @@
 		}
 	}
 }
+
+@mixin field-label() {
+	text-transform: uppercase;
+	color: theme-color('muted');
+	font-weight: $font-weight-bold;
+	line-height: $line-height-sm;
+}
