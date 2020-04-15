@@ -1687,8 +1687,9 @@ textarea {
     color: #adb5bd; }
   input:focus,
   textarea:focus {
+    outline: none;
     box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3);
-    border-color: rgba(23, 162, 184, 0.5);
+    border: 1px solid rgba(23, 162, 184, 0.5);
     z-index: 1; }
   input.cui-input-shadow,
   textarea.cui-input-shadow {
@@ -1776,8 +1777,9 @@ textarea {
   .cui-multi-input-input + .cui-multi-input-input {
     margin-top: 0.5rem; }
   .cui-multi-input-input:focus, .cui-multi-input-input.cui-has-focus {
+    outline: none;
     box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3);
-    border-color: rgba(23, 162, 184, 0.5);
+    border: 1px solid rgba(23, 162, 184, 0.5);
     z-index: 1; }
   .cui-multi-input-input.cui-data-field-hidden {
     display: none !important; }
@@ -1960,8 +1962,9 @@ textarea {
     outline: none; }
     .cui-button-checkbox:focus .cui-button-left span,
     .cui-button-checkbox:focus .cui-button-left i {
+      outline: none;
       box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3);
-      border-color: rgba(23, 162, 184, 0.5);
+      border: 1px solid rgba(23, 162, 184, 0.5);
       z-index: 1; }
   .cui-button-checkbox.cui-active .cui-button-left i {
     background: #212121;
@@ -2230,8 +2233,9 @@ textarea {
             align-items: flex-end; }
     .cui-data-field--with-button.cui-has-focus {
       border-radius: 2px;
+      outline: none;
       box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3);
-      border-color: rgba(23, 162, 184, 0.5);
+      border: 1px solid rgba(23, 162, 184, 0.5);
       z-index: 1; }
       .cui-data-field--with-button.cui-has-focus input:focus {
         box-shadow: none !important; }
