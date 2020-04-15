@@ -266,6 +266,8 @@ $border-radius-lg:  4px !default;
 $hr-border-color:   gray('200') !default;
 $hr-border-width:   1px !default;
 
+$component-focus-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3) !default;
+
 // * Icons
 // * ==========================================
 $icon-font-size: 	$font-size-base !default; // was: 14px
@@ -303,7 +305,7 @@ $btn-height-lg: 			42px !default;
 $btn-font-size-lg: 			$font-size-lg !default;
 $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
 
-$btn-focus-shadow: 			0 0 0 3px rgba(theme-color('focused'), 0.3);
+$btn-focus-shadow: 			$component-focus-shadow !default;
 
 
 // * Buttonbar
@@ -359,7 +361,7 @@ $input-placeholder-color: 	gray('500') !default;
 $input-min-width:			100px !default;
 $input-padding-x: 			$component-padding-base !default;
 $input-padding-y: 			$spacer-xs !default;
-$input-focus-shadow:		$btn-focus-shadow !default;
+$input-focus-shadow:		$component-focus-shadow !default;
 $input-focus-border-color:	rgba(theme-color('focused'), 0.5) !default;
 
 // * Data-Field
@@ -468,7 +470,7 @@ $tooltip-font-size: 	12px !default;
 
 // * Drag & Drop
 // * ==========================================
-$drop-area-focus-shadow: 	$btn-focus-shadow !default;
+$drop-area-focus-shadow: 	$component-focus-shadow !default;
 $drop-area-border-radius: 	$border-radius-sm !default;
 $drag-lasso-background: 	theme-color('focused') !default;
 
