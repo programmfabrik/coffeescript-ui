@@ -89,6 +89,7 @@
 	padding: 0; // reset .cui-toolbar
 	min-height: 0; // reset .cui-toolbar
 	border-bottom: 1px solid $tabs-header-border-color;
+	margin-bottom: $spacer-sm;
 
 	> .cui-horizontal-layout-center {
 		overflow: auto !important; //! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
@@ -134,14 +135,23 @@
 		margin: 0;
 
 		.cui-button-visual {
-			height: $tabs-header-height;
 			text-transform: uppercase;
+			height: $tabs-header-height;
 			padding: 0 $spacer-sm;
+			border-radius: 0;
 		}
 
 		&:focus {
 			.cui-button-visual {
 				box-shadow: none !important;
+			}
+		}
+
+		&:active,
+		&.cui-active {
+			.cui-button-visual {
+				background-color: gray('100');
+				color: $btn-hover-color;
 			}
 		}
 	}

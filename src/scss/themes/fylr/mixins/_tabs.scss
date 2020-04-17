@@ -91,7 +91,9 @@
 	.cui-tab-header-button-overflow {
 		.cui-button-visual {
 			height: $tabs-header-height-sm;
+			line-height: $tabs-header-height-sm;
 			padding: 0 $spacer-xs;
+			font-size: $font-size-xs;
 		}
 	}
 }
