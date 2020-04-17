@@ -145,6 +145,18 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
+@mixin button-dimmed() {
+	opacity: 0.5;
+
+	&:hover {
+		opacity: 1;
+
+		.cui-button-visual {
+			background-color: transparent;
+		}
+	}
+}
+
 @mixin button-link() {
 	@include button-color(transparent, $link-color, transparent, $link-color, transparent, $link-color);
 
@@ -203,8 +215,10 @@
 // Control button
 // e.g. multi-input-tag-button (language selection), delete icon button in --deleteable
 @mixin input-control-button($width: 22px, $height: 20px) {
+	@include button-dimmed();
+
 	.cui-button-visual {
-		color: gray('600');
+		// color: gray('600');
 		font-size: 10px;
 		width: $width;
 		height: $height;
