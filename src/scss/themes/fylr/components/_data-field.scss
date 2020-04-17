@@ -12,15 +12,16 @@
 	max-width: $data-field-width;
 	margin: 0;
 
-	.cui-form-value &,
-	.cui-drag-drop-select-sortable &,
-	.drag-drop-select-helper & {
-		max-width: none;
-	}
-
 	// todo:
 	// reset the max-width set above
 	// maybe the above max-width should be restricted to inputs by default instead
+	.cui-form-value &,
+	.cui-drag-drop-select-sortable &,
+	.drag-drop-select-helper &,
+	.ez5-field & {
+		max-width: none;
+	}
+
 	&.cui-form,
 	&.cui-data-form {
 		max-width: 100%; // or none?
