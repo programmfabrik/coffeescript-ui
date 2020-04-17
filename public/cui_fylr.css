@@ -1796,15 +1796,20 @@ textarea {
     .cui-multi-input-input .cui-textarea:focus {
       box-shadow: none !important; }
 
-.cui-multi-input-tag-button .cui-button-visual {
-  color: #6c757d;
-  font-size: 10px;
-  width: 22px;
-  height: 18px;
-  min-width: 0;
-  margin: 2px; }
-  .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
-    padding: 0 0.25rem; }
+.cui-multi-input-tag-button {
+  opacity: 0.5; }
+  .cui-multi-input-tag-button:hover {
+    opacity: 1; }
+    .cui-multi-input-tag-button:hover .cui-button-visual {
+      background-color: transparent; }
+  .cui-multi-input-tag-button .cui-button-visual {
+    font-size: 10px;
+    width: 22px;
+    height: 18px;
+    min-width: 0;
+    margin: 2px; }
+    .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
+      padding: 0 0.25rem; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
 .cui-browser-ie:not(.cui-browser-edge) .cui-input textarea {
@@ -1858,9 +1863,13 @@ textarea {
     min-width: 0;
     padding: 0.25rem 0.5rem; }
   .cui-output--deletable .cui-button {
+    opacity: 0.5;
     margin: 0.25rem; }
+    .cui-output--deletable .cui-button:hover {
+      opacity: 1; }
+      .cui-output--deletable .cui-button:hover .cui-button-visual {
+        background-color: transparent; }
     .cui-output--deletable .cui-button .cui-button-visual {
-      color: #6c757d;
       font-size: 10px;
       width: 22px;
       height: 20px;
@@ -1880,19 +1889,24 @@ textarea {
   display: flex; }
   .cui-data-field-multi-output:not(:last-child) {
     border-bottom: 1px solid #e9ecef; }
-  .cui-data-field-multi-output-aside .cui-button {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0; }
-  .cui-data-field-multi-output-aside .cui-button-visual {
-    color: #6c757d;
-    font-size: 10px;
-    width: 22px;
-    height: 18px;
-    min-width: 0;
-    margin: 2px; }
-    .cui-data-field-multi-output-aside .cui-button-visual .cui-button-center {
-      padding: 0 0.25rem; }
+  .cui-data-field-multi-output-aside {
+    opacity: 0.5; }
+    .cui-data-field-multi-output-aside .cui-button {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0; }
+    .cui-data-field-multi-output-aside:hover {
+      opacity: 1; }
+      .cui-data-field-multi-output-aside:hover .cui-button-visual {
+        background-color: transparent; }
+    .cui-data-field-multi-output-aside .cui-button-visual {
+      font-size: 10px;
+      width: 22px;
+      height: 18px;
+      min-width: 0;
+      margin: 2px; }
+      .cui-data-field-multi-output-aside .cui-button-visual .cui-button-center {
+        padding: 0 0.25rem; }
   .cui-data-field-multi-output-center {
     -webkit-box-flex: 1;
             flex-grow: 1;
@@ -2193,7 +2207,8 @@ textarea {
   margin: 0; }
   .cui-form-value .cui-data-field,
   .cui-drag-drop-select-sortable .cui-data-field,
-  .drag-drop-select-helper .cui-data-field {
+  .drag-drop-select-helper .cui-data-field,
+  .ez5-field .cui-data-field {
     max-width: none; }
   .cui-data-field.cui-form, .cui-data-field.cui-data-form {
     max-width: 100%;
@@ -4173,7 +4188,8 @@ textarea {
 .cui-tabs-pane-header {
   padding: 0;
   min-height: 0;
-  border-bottom: 1px solid #dee2e6; }
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 0.5rem; }
   .cui-tabs-pane-header > .cui-horizontal-layout-center {
     overflow: auto !important;
     -webkit-box-pack: start;
@@ -4207,12 +4223,18 @@ textarea {
     margin: 0; }
     .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
     .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
-      height: 40px;
       text-transform: uppercase;
-      padding: 0 0.5rem; }
+      height: 40px;
+      padding: 0 0.5rem;
+      border-radius: 0; }
     .cui-tabs-pane-header .cui-tab-header-button:focus .cui-button-visual,
     .cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
       box-shadow: none !important; }
+    .cui-tabs-pane-header .cui-tab-header-button:active .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-active .cui-button-visual,
+    .cui-tabs-pane-header .cui-tab-header-button-overflow:active .cui-button-visual,
+    .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active .cui-button-visual {
+      background-color: #f8f9fa;
+      color: inherit; }
   .cui-tabs-pane-header .cui-tab-header-button-overflow {
     -ms-grid-row-align: center;
         align-self: center;

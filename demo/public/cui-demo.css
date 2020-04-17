@@ -185,8 +185,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
-  height: 26px;
-  padding: 0 0.25rem; }
+  height: 28px;
+  line-height: 28px;
+  padding: 0 0.25rem;
+  font-size: 0.7875rem; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-buttonbar::after {
   height: 2px; }
@@ -286,8 +288,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
                 justify-content: flex-start; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
-    height: 26px;
-    padding: 0 0.25rem; }
+    height: 28px;
+    line-height: 28px;
+    padding: 0 0.25rem;
+    font-size: 0.7875rem; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::after {
     width: 2px; }
 
