@@ -285,9 +285,16 @@ $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
 $btn-border-width: 			1px !default;
 $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
-$btn-background: 			$white !default;
+$btn-background: 			transparent !default;
 $btn-primary-background: 	theme-color('primary') !default;
 $btn-color: 				$body-color !default;
+
+// Button states
+$btn-hover-color:			inherit !default;
+$btn-hover-background:		rgba(gray('200'), 0.75) !default;
+$btn-active-color: 			$white !default;
+$btn-active-background: 	$body-color !default;
+$btn-focus-shadow: 			$component-focus-shadow !default;
 
 // Normal size
 $btn-padding-x: 			0.85rem !default;
@@ -304,9 +311,6 @@ $btn-padding-x-lg: 			1.25rem !default;
 $btn-height-lg: 			42px !default;
 $btn-font-size-lg: 			$font-size-lg !default;
 $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
-
-$btn-focus-shadow: 			$component-focus-shadow !default;
-
 
 // * Buttonbar
 // * ==========================================

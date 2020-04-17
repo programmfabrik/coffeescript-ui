@@ -67,7 +67,7 @@
 	}
 }
 
-@mixin button-color($background: transparent, $color: $body-color, $background-hover: rgba(gray('200'), 0.75), $color-hover: inherit, $background-active: $body-color, $color-active: $white) {
+@mixin button-color($background: $btn-background, $color: $btn-color, $background-hover: $btn-hover-background, $color-hover: $btn-hover-color, $background-active: $btn-active-background, $color-active: $btn-active-color) {
 	.cui-button-visual {
 		background-color: $background;
 		color: $color;
