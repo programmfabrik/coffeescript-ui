@@ -20,7 +20,7 @@ label[data-label-clickable],
 		}
 
 		&:not(:empty) + .cui-label-content:not(:empty) {
-			padding-left: $spacer-sm;
+			padding-left: 0.5em;
 			flex-shrink: 1; // todo: ? the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
 		}
 	}
