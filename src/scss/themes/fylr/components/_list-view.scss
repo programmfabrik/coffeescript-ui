@@ -157,13 +157,6 @@
 		}
 	}
 
-	// todo: find use-case, the default element with .cui-lv-tr-outer is just a div and not focusable by default
-	&:focus {
-		box-shadow: #{$input-focus-shadow} inset;
-		border-radius: $input-border-radius;
-		z-index: 1; // put forward to see outline
-	}
-
 	&.cui-lv-tree-node--is-branch {
 		@include clickable;
 	}
@@ -194,11 +187,6 @@
 .cui-lv-tr {
 	flex: 1 1 auto;
 	display: flex;
-	max-width: 100%;
-
-	&:empty {
-		padding: 0; // todo: probably obsolete?
-	}
 }
 
 // in quadrant 2 or 3 the class 'cui-lv-tr-fill-outer' could be added
@@ -312,7 +300,7 @@
 			top: 0;
 			bottom: 0;
 			width: 1px;
-			background: transparentize($table-border-color, 0.6);
+			background: transparentize($table-border-color, 0.4);
 		}
 	}
 }
