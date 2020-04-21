@@ -146,15 +146,16 @@
 }
 
 @mixin button-dimmed() {
-	opacity: 0.5;
+	$background: transparent;
+	$color: $gray-500;
 
-	&:hover {
-		opacity: 1;
+	$background-hover: transparent;
+	$color-hover: $body-color;
 
-		.cui-button-visual {
-			background-color: transparent;
-		}
-	}
+	$background-active: transparent;
+	$color-active: $body-color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
 @mixin button-link() {
