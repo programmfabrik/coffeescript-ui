@@ -11,3 +11,14 @@
 @mixin ellipsis() {
 	@include text-truncate();
 }
+
+@mixin line-clamp($lines: 2) {
+	@supports (-webkit-line-clamp: 1) {
+		white-space: normal;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: $lines;
+		overflow: hidden;
+		word-break: break-word;
+	}
+}
