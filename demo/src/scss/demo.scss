@@ -116,7 +116,7 @@
 .cui-demo-button-demo[data-cui-theme='fylr'] {
 	.cui-button-button.cui-demo-button-size-large-link {
 		@include button-link();
-		@include button-size-lg();
+		@include button-lg();
 	}
 
 	.cui-demo-button-pair {
@@ -125,11 +125,11 @@
 		}
 
 		&.cui-demo-button-size-small .cui-button-button {
-			@include button-size-sm();
+			@include button-sm();
 		}
 
 		&.cui-demo-button-size-large .cui-button-button {
-			@include button-size-lg();
+			@include button-lg();
 		}
 	}
 
@@ -159,11 +159,11 @@
 	}
 
 	.cui-demo-buttonbar-small-buttons .cui-button {
-		@include button-size-sm();
+		@include button-sm();
 	}
 
 	.cui-demo-buttonbar-large-buttons .cui-button {
-		@include button-size-lg();
+		@include button-lg();
 	}
 
 	.cui-demo-buttonbar-tight > *:first-child,
