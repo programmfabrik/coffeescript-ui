@@ -70,9 +70,31 @@
 	}
 }
 
-// todo
 .cui-result-navigation-toolbar {
 	min-height: $toolbar-height;
+
+	.cui-label {
+		@include label-sm();
+	}
+
+	.cui-button-button {
+		@include button-sm();
+	}
+
+	.cui-buttonbar-group-navi {
+		@include ungroup-visually();
+
+		.cui-number-input {
+			margin: 0 $spacer-xs;
+
+			input {
+				@include input-sm();
+
+				padding-top: 0;
+				padding-bottom: 0;
+			}
+		}
+	}
 }
 
 // Navigation Toolbar
