@@ -43,25 +43,25 @@
 	}
 }
 
-@mixin button-size-base() {
+@mixin button-md() {
 	.cui-button-visual {
 		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
 	}
 }
 
-@mixin button-size-sm() {
+@mixin button-sm() {
 	.cui-button-visual {
 		@include button-size($btn-height-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
 	}
 }
 
-@mixin button-size-lg() {
+@mixin button-lg() {
 	.cui-button-visual {
 		@include button-size($btn-height-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
 	}
 }
 
-@mixin button-size-xs() {
+@mixin button-xs() {
 	.cui-button-visual {
 		@include button-size(16px, 0.25em, 12px, 2px);
 	}

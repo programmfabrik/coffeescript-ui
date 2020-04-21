@@ -1,5 +1,11 @@
-@mixin label-sm() {
+@mixin label-xs() {
 	font-size: $font-size-xs;
+	line-height: $line-height-sm;
+}
+
+@mixin label-sm() {
+	font-size: $font-size-sm;
+	line-height: $line-height-sm;
 }
 
 @mixin label-lg() {

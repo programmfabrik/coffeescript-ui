@@ -52,7 +52,7 @@
 	.cui-button-select,
 	.cui-button {
 		@include button-color(transparent, $body-color, $input-background, theme-color('primary'));
-		@include button-size-sm();
+		@include button-sm();
 
 		.cui-button-visual {
 			background-color: $input-background;
@@ -147,7 +147,7 @@
 	[cui-data-field-name='year'] input {
 		$year-padding: $spacer-xs;
 
-		@include input-size-sm();
+		@include input-sm();
 
 		width: calc(4ch + 4 * #{$year-padding});
 		min-width: 0;

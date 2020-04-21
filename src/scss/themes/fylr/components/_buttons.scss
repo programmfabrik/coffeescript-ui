@@ -42,7 +42,7 @@
 		}
 	}
 
-	@include button-size-base();
+	@include button-md();
 	@include button-color();
 
 	// Modifier

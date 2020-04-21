@@ -34,11 +34,11 @@
 	// Footer
 	.cui-list-view .cui-pane-footer .cui-buttonbar {
 		.cui-button {
-			@include button-size-sm();
+			@include button-sm();
 		}
 
 		input {
-			@include input-size-sm();
+			@include input-sm();
 		}
 
 		// this is semantically not necessarily a group, but it is marked up as one
