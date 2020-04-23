@@ -9,11 +9,11 @@
 	background-color: $pane-background;
 
 	// Padded
-	&--padded {
-		> .cui-vertical-layout-center {
-			padding: $pane-padding; // todo
-		}
-	}
+	// &--padded {
+	// 	> .cui-vertical-layout-center {
+	// 		padding: $pane-padding; // todo
+	// 	}
+	// }
 }
 
 .cui-pane-header {
