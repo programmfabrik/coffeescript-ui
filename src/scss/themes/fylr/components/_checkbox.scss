@@ -73,6 +73,10 @@
 		min-width: 0;
 		flex: 1 1 auto;
 		padding-right: $spacer-sm;
+
+		&:empty {
+			display: none;
+		}
 	}
 
 	&[role='radio'] {
@@ -89,7 +93,7 @@
 
 		.cui-button-left span,
 		.cui-button-left i {
-			@include input-focus;
+			@include input-focus();
 		}
 	}
 
