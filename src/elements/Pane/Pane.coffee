@@ -217,6 +217,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			opts.icon_active = new CUI.Icon(class: opts.icon_active)
 
 		for key, value of {
+			class: "cui-button-toggle-fill-screen"
 			switch: true
 			onClick: (ev, btn) =>
 				paneDiv = CUI.dom.closest(btn.DOM, ".cui-pane")

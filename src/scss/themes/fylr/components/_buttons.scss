@@ -85,6 +85,15 @@ a[role='button'].cui-button-appearance-link {
 	}
 }
 
+// Button with default active state removes
+.cui-button-toggle-fill-screen {
+	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-background, $btn-color);
+
+	&.cui-active:hover {
+		background-color: $btn-hover-background;
+	}
+}
+
 // Loading
 .cui-button.cui-loading {
 	animation: 1.2s pulse linear alternate infinite;
