@@ -101,6 +101,7 @@
 	}
 }
 
+// todo: use combobox mixin from the theme ?
 .cui-data-field-center {
 	flex: 1 1 auto;
 	display: flex;
@@ -137,7 +138,17 @@
 		.cui-button-visual {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
+			background-color: $input-background;
 			border: 1px solid $input-border-color;
+			border-left: 1px solid gray('200');
+		}
+
+		&.cui-layer-open {
+			.cui-button-visual {
+				background-color: $btn-active-background;
+				color: $btn-active-color;
+				border-left: transparent;
+			}
 		}
 
 		&:focus {
