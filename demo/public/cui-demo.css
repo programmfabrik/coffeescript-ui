@@ -78,7 +78,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   .cui-demo-playground .cui-demo-table-zebra .cui-table-row:nth-child(odd) .cui-table-td {
     background: transparent; }
   .cui-demo-playground .cui-demo-table-zebra .cui-table-row:nth-child(even) .cui-table-td {
-    background: #f8f9fa; }
+    background: #f5f5f5; }
 
 .cui-demo-playground .cui-demo-playground-tab-control .cui-buttonbar {
   margin-bottom: 1rem; }
@@ -574,6 +574,18 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   font-size: 1.25rem; }
   .cui-demo-label-xl .cui-label-icon .fa {
     font-size: inherit; }
+
+.cui-demo-label-title {
+  font-weight: 700;
+  font-size: 1.125rem; }
+
+.cui-demo-label-subtitle {
+  font-weight: 700; }
+
+.cui-demo-label-muted {
+  color: #adb5bd; }
+  .cui-selected .cui-demo-label-muted {
+    color: rgba(255, 87, 36, 0.55); }
 
 .cui-demo-block-grid.cui-block-level-1, .cui-demo-block-grid.cui-block-level-2, .cui-demo-block-grid.cui-block-level-3 {
   position: relative; }

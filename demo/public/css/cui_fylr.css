@@ -53,7 +53,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --info: #17a2b8;
   --warning: #ffbf00;
   --danger: #dc3545;
-  --light: #f8f9fa;
+  --light: #f5f5f5;
   --dark: #343a40;
   --muted: #adb5bd;
   --disabled: #adb5bd;
@@ -1230,11 +1230,6 @@ label[data-label-clickable],
     color: #6c757d; }
     .cui-selected .cui-label-appearance-secondary {
       color: #ff5724; }
-  .cui-label-appearance-title {
-    display: -webkit-box;
-    display: flex;
-    font-weight: 700;
-    font-size: 1.125rem; }
   .cui-label-appearance-muted {
     color: #adb5bd; }
     .cui-selected .cui-label-appearance-muted {
@@ -1424,14 +1419,14 @@ label[data-label-clickable],
     border-left: 5px solid #dee2e6; }
   .cui-label-markdown .cui-label-content code {
     border: none;
-    background: #f8f9fa;
+    background: #f5f5f5;
     white-space: pre-wrap;
     padding: 0 0.25rem;
     border-radius: 2px; }
   .cui-label-markdown .cui-label-content pre {
     padding: 1rem;
     font-size: 0.875rem;
-    background: #f8f9fa;
+    background: #f5f5f5;
     white-space: pre-wrap;
     border-radius: 3px;
     border: none;
@@ -1632,6 +1627,18 @@ label[data-label-clickable],
 .cui-button-href:hover .cui-button-visual .cui-button-center, .cui-button-href:focus .cui-button-visual .cui-button-center {
   text-decoration: none; }
 
+.cui-button-select .cui-button-visual {
+  border: 1px solid #212121; }
+
+.cui-button-select:focus .cui-button-visual {
+  border-color: #17a2b8; }
+
+.cui-button-select.cui-button--primary .cui-button-visual {
+  border-color: #ff5724; }
+
+.cui-button-select.cui-button--primary:focus .cui-button-visual {
+  border-color: #d73200; }
+
 .cui-button-select .cui-button-center [data-max-chars] {
   text-align: inherit;
   width: auto; }
@@ -1671,7 +1678,7 @@ textarea {
   outline: none;
   font-size: inherit;
   background-color: #ffffff;
-  border: 1px solid #ced4da;
+  border: 1px solid transparent;
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
   -webkit-box-flex: 1;
@@ -1743,7 +1750,7 @@ textarea {
 .cui-code-input pre {
   height: 400px;
   margin: auto;
-  border: 1px solid #ced4da;
+  border: 1px solid transparent;
   border-radius: 2px; }
 
 .cui-input-content-size textarea {
@@ -1775,7 +1782,7 @@ textarea {
   display: -webkit-box;
   display: flex;
   max-width: 100%;
-  border: 1px solid #ced4da;
+  border: 1px solid transparent;
   border-radius: 2px; }
   .cui-multi-input-input + .cui-multi-input-input {
     margin-top: 0.5rem; }
@@ -1875,7 +1882,7 @@ textarea {
   display: -webkit-box;
   display: flex;
   height: 34px;
-  border: 1px solid #ced4da;
+  border: 1px solid transparent;
   border-radius: 2px;
   cursor: default; }
   .cui-output--deletable .cui-label {
@@ -2228,10 +2235,10 @@ textarea {
       -webkit-transform: translateY(-50%);
               transform: translateY(-50%);
       height: 4px;
-      border-width: 0 solid #ced4da;
+      border-width: 0 solid transparent;
       border-radius: 2px; }
     .cui-slider-track-visual::before {
-      background: #ced4da; }
+      background: transparent; }
     .cui-slider-track-visual::after {
       width: 0;
       width: var(--slider-distance);
@@ -2247,7 +2254,7 @@ textarea {
     width: 1rem;
     height: 1rem;
     background: #343a40;
-    border: 0 solid #ced4da;
+    border: 0 solid transparent;
     border-radius: 999px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4); }
   .cui-slider-text {
@@ -2337,7 +2344,9 @@ textarea {
     .cui-data-field-right .cui-button .cui-button-visual {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      border: 1px solid #ced4da; }
+      background-color: #ffffff;
+      border: 1px solid transparent;
+      border-left: 1px solid #e9ecef; }
     .cui-data-field-right .cui-button:focus {
       z-index: 1; }
       .cui-data-field-right .cui-button:focus .cui-button-visual {
@@ -2904,7 +2913,7 @@ textarea {
   .cui-table > .cui-tr + .cui-tr > .cui-table-td {
     border-top: 1px solid #e9ecef; }
   .cui-table .cui-table-row:hover .cui-table-td {
-    background-color: #f8f9fa; }
+    background-color: #f5f5f5; }
   .cui-table .cui-table-td {
     vertical-align: middle; }
   .cui-table.cui-maximize-horizontal {
@@ -3635,9 +3644,7 @@ textarea {
   --layer-sidebar-width: 0; }
 
 .cui-pane {
-  background-color: #f8f9fa; }
-  .cui-pane--padded > .cui-vertical-layout-center {
-    padding: 0.5rem; }
+  background-color: #f5f5f5; }
 
 .cui-pane-header {
   flex-wrap: nowrap;
@@ -3811,8 +3818,8 @@ textarea {
   display: flex; }
   .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
     border-style: none;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #f8f9fa), color-stop(50%, white));
-    background: linear-gradient(#f8f9fa 50%, white 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #f5f5f5), color-stop(50%, white));
+    background: linear-gradient(#f5f5f5 50%, white 50%);
     background-size: 100% 4rem; }
   .cui-lv-tr-fill-outer .cui-lv-td {
     padding-top: 0 !important;
@@ -3929,7 +3936,7 @@ textarea {
 
 .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer:hover > .cui-lv-tr,
 .cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer:hover > .cui-lv-tr {
-  background: #f8f9fa; }
+  background: #f5f5f5; }
 
 .cui-list-view-grid-inner-bottom .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer:first-child > .cui-lv-tr, .cui-list-view-grid-inner-bottom
 .cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer:first-child > .cui-lv-tr {
@@ -4316,7 +4323,7 @@ textarea {
     .cui-tabs-pane-header .cui-tab-header-button:active .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-active .cui-button-visual,
     .cui-tabs-pane-header .cui-tab-header-button-overflow:active .cui-button-visual,
     .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active .cui-button-visual {
-      background-color: #f8f9fa;
+      background-color: #f5f5f5;
       color: inherit; }
   .cui-tabs-pane-header .cui-tab-header-button-overflow {
     -ms-grid-row-align: center;
@@ -4471,13 +4478,14 @@ textarea {
     background-color: transparent; }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
     border-radius: 3px 3px 0 0;
-    padding: 0.5rem; }
+    padding: 0.5rem;
+    background-color: transparent; }
   .cui-layer > .cui-pane > .cui-vertical-layout-center {
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
   .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
     border-radius: 0 0 3px 3px;
-    background-color: #f8f9fa; }
+    background-color: #f5f5f5; }
     .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer .cui-button-visual {
       min-width: 60px; }
   .cui-layer .cui-form-table .cui-data-field {
@@ -4520,11 +4528,11 @@ textarea {
   .cui-layer-pointer--n::after {
     top: 100%; }
     .cui-pane--has-header .cui-layer-pointer--n::after {
-      background: #f8f9fa; }
+      background: #f5f5f5; }
   .cui-layer-pointer--s::after {
     top: 0; }
     .cui-pane--has-footer .cui-layer-pointer--s::after {
-      background: #f8f9fa; }
+      background: #f5f5f5; }
   .cui-layer-pointer--e, .cui-layer-pointer--w {
     width: 12px;
     height: 46px;
@@ -4620,6 +4628,13 @@ textarea {
 
 .cui-popover {
   min-width: 247px; }
+  .cui-popover > .cui-pane > .cui-vertical-layout-center {
+    padding: 0.5rem; }
+  .cui-popover .cui-pane-header .cui-label {
+    font-weight: 700;
+    margin-right: 1.5rem; }
+  .cui-popover .cui-pane-header .cui-select {
+    margin-right: 0.25rem; }
 
 .cui-layer-root-hint-popover .cui-layer-pointer {
   height: 10px;

@@ -83706,14 +83706,25 @@ Demo.LabelDemo = (function(superClass) {
       icon: "rotate_right",
       appearance: "secondary"
     });
-    this.__addLabel("apperance: secondary", label);
+    this.__addLabel("secondary label", label);
+    label = new CUI.Label({
+      text: "Title Label",
+      icon: "rotate_right",
+      "class": "cui-demo-label-title"
+    });
+    this.__addLabel("title label", label);
+    label = new CUI.Label({
+      text: "Subtitle Label",
+      icon: "rotate_right",
+      "class": "cui-demo-label-subtitle"
+    });
+    this.__addLabel("subtitle label", label);
     label = new CUI.Label({
       text: "Label with Icon",
       icon: "rotate_right",
-      appearance: "title",
-      size: "bigger"
+      "class": "cui-demo-label-muted"
     });
-    this.__addLabel("apperance: title, size: bigger", label);
+    this.__addLabel("muted label", label);
     div = CUI.dom.append(CUI.dom.div("cui-label-demo-centered-label-parent"), new CUI.Label({
       centered: true,
       text: "Centered",
@@ -87121,7 +87132,7 @@ Demo.PaneDemo = (function(superClass) {
             left: {
               content: new CUI.Label({
                 text: "Pane",
-                appearance: "title"
+                "class": "cui-demo-label-title"
               })
             },
             center: {
