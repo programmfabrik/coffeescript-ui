@@ -57,6 +57,8 @@
 }
 
 .cui-button-select {
+	@include button-bordered();
+
 	.cui-button-center {
 		[data-max-chars] {
 			text-align: inherit;
