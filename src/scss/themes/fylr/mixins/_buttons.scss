@@ -67,7 +67,7 @@
 	}
 }
 
-@mixin button-color($background: $btn-background, $color: $btn-color, $background-hover: $btn-hover-background, $color-hover: $btn-hover-color, $background-active: $btn-active-background, $color-active: $btn-active-color) {
+@mixin button-color($background: $btn-background, $color: $btn-color, $background-hover: $btn-hover-background, $color-hover: $btn-hover-color, $background-active: $btn-active-background, $color-active: $btn-active-color, $focus-inset: 0) {
 	.cui-button-visual {
 		background-color: $background;
 		color: $color;
@@ -85,7 +85,7 @@
 		outline: none;
 
 		.cui-button-visual {
-			@include button-focus();
+			@include button-focus($focus-inset);
 		}
 	}
 
@@ -145,7 +145,7 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
-@mixin button-dimmed() {
+@mixin button-dimmed($focus-inset: 0) {
 	$background: transparent;
 	$color: $gray-500;
 
@@ -155,7 +155,7 @@
 	$background-active: transparent;
 	$color-active: $body-color;
 
-	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active, $focus-inset);
 }
 
 @mixin button-link() {
@@ -198,12 +198,18 @@
 	}
 }
 
-@mixin button-focus() {
+@mixin button-focus($focus-inset: 0) {
 	outline: none;
 
 	// todo: find focus color that works with all colored buttons, see mixins/_forms
 	@if $enable-btn-border-radius {
+		@if $focus-inset == 1 {
+			box-shadow: inset $btn-focus-shadow !important;
+		}
+
+		@else {
 		box-shadow: $btn-focus-shadow !important; // keeps border-radius, but what about buttongroup buttons ?
+	}
 	}
 
 	@else {

@@ -5,15 +5,22 @@
 	color: theme-color('muted');
 }
 
-@mixin input-focus() {
-	box-shadow: $input-focus-shadow; // see mixins/_buttons
-	border-color: $input-focus-border-color;
-	z-index: 1;
-}
-
 @mixin input-sm() {
 	height: $input-height-sm;
 	line-height: $input-height-sm;
+}
+
+@mixin input-focus($focus-inset: 0) {
+	@if $focus-inset == 1 {
+		box-shadow: inset $input-focus-shadow; // see mixins/_buttons
+	}
+
+	@else {
+		box-shadow: $input-focus-shadow; // see mixins/_buttons
+	}
+
+	border-color: $input-focus-border-color;
+	z-index: 1;
 }
 
 @mixin disable-input-focus() {
