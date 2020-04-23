@@ -6,18 +6,6 @@
 	> .cui-pane > .cui-vertical-layout-center {
 		padding: $pane-padding;
 	}
-
-	.cui-pane-header {
-		.cui-label {
-			@include label-subtitle();
-
-			margin-right: $spacer-lg;
-		}
-
-		.cui-select {
-			margin-right: $spacer-xs;
-		}
-	}
 }
 
 // * Hint Popover

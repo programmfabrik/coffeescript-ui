@@ -27,12 +27,22 @@
 	padding-left: 0;
 	padding-right: 0;
 
+	// todo: header label sizes and color?
+	// make the left most label a subtitle by default
+	.cui-horizontal-layout-left {
+		.cui-label {
+			@include label-subtitle();
+
+			margin-right: $spacer-lg;
+		}
+	}
+
 	.cui-buttonbar > * {
 		margin-right: 0;
 	}
 
-	.cui-label {
-		// todo: header label sizes and color?
+	.cui-select {
+		margin-right: $spacer-xs;
 	}
 }
 
@@ -46,6 +56,7 @@
 		// todo: footer label sizes and color?
 	}
 }
+
 
 // .cui-pane--window {} // #legacy
 // class is added in arbitrary templates, there is no Component Class that generates it, so it would be easy to just ignore this class in fylr and
@@ -86,6 +97,12 @@
 
 			> .cui-maximize-vertical.cui-vertical-layout {
 				height: 100%;
+			}
+
+			// topmost header
+			> .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
+				background-color: transparent;
+				padding: $spacer-sm;
 			}
 		}
 	}
