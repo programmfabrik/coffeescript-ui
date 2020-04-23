@@ -142,6 +142,7 @@ textarea {
 	max-width: 100%;
 	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
+	background-color: $input-background;
 
 	+ .cui-multi-input-input {
 		margin-top: $spacer-sm;
