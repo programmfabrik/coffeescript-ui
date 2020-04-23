@@ -19,7 +19,7 @@
 		.cui-menu-item {
 			padding: 0 $item-list-indent;
 			height: $item-list-height;
-			color: gray('600');
+			color: $item-list-label-color;
 		}
 	}
 
