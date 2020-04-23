@@ -53,6 +53,7 @@
 
 	> .cui-vertical-layout-center {
 		flex-grow: 1;
+		padding: 0; // reset default cui-pane padding
 
 		> .cui-tabs-bodies {
 			display: flex;

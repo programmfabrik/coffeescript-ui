@@ -14,6 +14,11 @@
 	// 		padding: $pane-padding; // todo
 	// 	}
 	// }
+
+	// todo: we should probably do this of this is the most used case, and then override if necessary
+	> .cui-vertical-layout-center {
+		padding: $pane-padding;
+	}
 }
 
 .cui-pane-header {
