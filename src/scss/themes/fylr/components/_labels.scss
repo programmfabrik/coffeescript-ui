@@ -54,25 +54,11 @@ label[data-label-clickable],
 
 	// appearance
 	&-appearance-secondary {
-		color: theme-color('secondary');
-
-		.cui-selected & {
-			color: theme-color('primary'); // todo: when is this ever selected?
-		}
-	}
-
-	&-appearance-title {
-		display: flex; // todo: why?
-		font-weight: $font-weight-bold;
-		font-size: $font-size-lg; // todo: should this work with the size classes or not?, maybe its better to declare a title size and prevent utility classes to override it
+		@include label-secondary();
 	}
 
 	&-appearance-muted {
-		color: theme-color('muted');
-
-		.cui-selected & {
-			color: rgba(theme-color('primary'), 0.55); // todo: when is this ever selected?
-		}
+		@include label-muted();
 	}
 
 	&--padded {

@@ -28,9 +28,39 @@
 	}
 }
 
-@mixin field-label() {
+@mixin label-secondary() {
+	color: theme-color('secondary');
+
+	.cui-selected & {
+		color: theme-color('primary'); // todo: when is this ever selected?
+	}
+}
+
+@mixin label-title() {
+	font-weight: $font-weight-bold;
+	font-size: $font-size-lg;
+}
+
+@mixin label-subtitle() {
+	font-weight: $font-weight-bold;
+}
+
+@mixin label-muted() {
+	color: theme-color('muted');
+
+	.cui-selected & {
+		color: rgba(theme-color('primary'), 0.55); // todo: when is this ever selected?
+	}
+}
+
+// Label in a field
+@mixin label-field() {
 	text-transform: uppercase;
 	color: theme-color('muted');
 	font-weight: $font-weight-bold;
 	line-height: $line-height-sm;
+}
+
+@mixin label-field-subtitle() {
+	font-weight: $font-weight-normal;
 }
