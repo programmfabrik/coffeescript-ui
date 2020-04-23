@@ -23305,6 +23305,9 @@ CUI.Button = (function(superClass) {
     if (this._primary) {
       this.addClass("cui-button--primary");
     }
+    if (this._class) {
+      this.addClass(this._class);
+    }
     if (this._center) {
       this.append(this._center, "center");
     } else if (this._text) {
@@ -23701,6 +23704,9 @@ CUI.Button = (function(superClass) {
         check: function(v) {
           return CUI.util.isBoolean(v) || CUI.util.isFunction(v);
         }
+      },
+      "class": {
+        check: String
       },
       active_css_class: {
         "default": CUI.defaults["class"].Button.defaults.active_css_class,
@@ -45992,6 +45998,7 @@ CUI.Pane = (function(superClass) {
       });
     }
     ref = {
+      "class": "cui-button-toggle-fill-screen",
       "switch": true,
       onClick: (function(_this) {
         return function(ev, btn) {
