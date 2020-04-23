@@ -143,14 +143,16 @@
 
 		&:focus {
 			.cui-button-visual {
-				box-shadow: none !important;
+				$focus-inset: 1;
+
+				@include button-focus($focus-inset);
 			}
 		}
 
 		&:active,
 		&.cui-active {
 			.cui-button-visual {
-				background-color: gray('100');
+				background-color: $tabs-active-background;
 				color: $btn-hover-color;
 			}
 		}

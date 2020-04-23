@@ -501,5 +501,6 @@ $tabs-header-height-sm:				$btn-height-sm + 4px !default;
 $tabs-header-border-color: 			gray('300') !default;
 $tabs-header-border-width: 			3px !default;
 $tabs-header-border-width-sm: 		2px !default;
+$tabs-active-background: 			darken(gray('100'), 2%) !default;
 $tabs-overflow-button-background: 	darken($tabs-header-border-color, 5%) !default;
 $tabs-overflow-button-color: 		$body-color !default;
