@@ -68,6 +68,15 @@
 			flex-grow: 0;
 		}
 	}
+
+	// Buttons should always shrink in a toolbar
+	.cui-button-button,
+	.cui-button-select,
+	.cui-button-href,
+	.cui-data-field {
+		min-width: 0;
+		flex-shrink: 1;
+	}
 }
 
 .cui-result-navigation-toolbar {
