@@ -104,6 +104,10 @@
 			}
 		}
 	}
+
+	.cui-buttonbar + .cui-label {
+		margin-left: $spacer-sm;
+	}
 }
 
 // Navigation Toolbar
