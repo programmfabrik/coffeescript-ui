@@ -41,15 +41,20 @@
 
 	&:not(:last-child) {
 		border-bottom: 1px solid $hr-border-color;
+		padding-bottom: 0.25em;
+	}
+
+	&:not(:first-child) {
+		padding-top: 0.25em;
 	}
 
 	.cui-data-field-multi-output-aside {
-		.cui-button {
-			position: sticky;
-			top: 0;
-		}
+		position: relative;
+		top: 1px;
 
-		@include input-control-button(22px, 18px);
+		.cui-button-button {
+			@include input-control-button(22px, 18px);
+		}
 	}
 
 	.cui-data-field-multi-output-center {
