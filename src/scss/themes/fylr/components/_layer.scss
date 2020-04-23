@@ -147,6 +147,7 @@
 		> .cui-vertical-layout-top > .cui-pane-header {
 			border-radius: $layer-border-radius $layer-border-radius 0 0;
 			padding: $pane-padding;
+			background-color: transparent; // reset default .cui-pane-header
 		}
 
 		// layer-body
@@ -212,15 +213,15 @@
 	position: absolute;
 	z-index: 1;
 	width: 46px;
-	height: 16px;
+	height: $layer-pointer-size;
 	margin: 6px;
 	overflow: hidden;
 
 	&::after { // arrow (north)
 		content: '';
 		position: absolute;
-		width: 18px;
-		height: 18px;
+		width: $layer-pointer-size;
+		height: $layer-pointer-size;
 		background: $layer-background;
 		transform: translate(-50%, -50%) rotate(45deg);
 		box-shadow:

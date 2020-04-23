@@ -463,8 +463,9 @@ $layer-sizes: (
 	xxxl: 	1000
 ) !default;
 
-$layer-background: 			$body-bg !default;
+$layer-background: 			$pane-background !default;
 $layer-border-radius: 		$border-radius !default;
+$layer-pointer-size: 		20px !default;
 
 // * Tooltip
 // * ==========================================
