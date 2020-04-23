@@ -43,7 +43,7 @@
 		border-bottom: 1px solid $hr-border-color;
 	}
 
-	&-aside {
+	.cui-data-field-multi-output-aside {
 		.cui-button {
 			position: sticky;
 			top: 0;
@@ -52,7 +52,7 @@
 		@include input-control-button(22px, 18px);
 	}
 
-	&-center {
+	.cui-data-field-multi-output-center {
 		flex-grow: 1;
 		padding-right: $spacer-xs;
 	}
