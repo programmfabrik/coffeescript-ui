@@ -98,14 +98,27 @@ class Demo.LabelDemo extends Demo
 			text: "Label with Icon"
 			icon: "rotate_right"
 			appearance: "secondary"
-		@__addLabel("apperance: secondary",label)
+		@__addLabel("secondary label",label)
+
+		label = new CUI.Label
+			text: "Title Label"
+			icon: "rotate_right"
+			class: "cui-demo-label-title"
+			# appearance: "title" // legacy
+			# size: "bigger" // legacy
+		@__addLabel("title label",label)
+
+		label = new CUI.Label
+			text: "Subtitle Label"
+			icon: "rotate_right"
+			class: "cui-demo-label-subtitle"
+		@__addLabel("subtitle label",label)
 
 		label = new CUI.Label
 			text: "Label with Icon"
 			icon: "rotate_right"
-			appearance: "title"
-			size: "bigger"
-		@__addLabel("apperance: title, size: bigger",label)
+			class: "cui-demo-label-muted"
+		@__addLabel("muted label",label)
 
 		div = CUI.dom.append(CUI.dom.div("cui-label-demo-centered-label-parent"),
 			new CUI.Label

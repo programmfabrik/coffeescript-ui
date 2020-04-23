@@ -193,6 +193,18 @@
 	@include label-xl();
 }
 
+.cui-demo-label-title {
+	@include label-title();
+}
+
+.cui-demo-label-subtitle {
+	@include label-subtitle();
+}
+
+.cui-demo-label-muted {
+	@include label-muted();
+}
+
 .cui-demo-block-grid {
 	@include block-grid();
 }

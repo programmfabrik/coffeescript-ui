@@ -20,7 +20,8 @@ class Demo.PaneDemo extends Demo
 							content:
 								new CUI.Label
 									text: "Pane"
-									appearance: "title"
+									# appearance: "title"
+									class: "cui-demo-label-title"
 						center:
 							content:
 								new CUI.Label
