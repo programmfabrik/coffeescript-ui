@@ -8,6 +8,7 @@
 @mixin input-sm() {
 	height: $input-height-sm;
 	line-height: $input-height-sm;
+	font-size: $font-size-sm;
 }
 
 @mixin input-focus($focus-inset: 0) {
