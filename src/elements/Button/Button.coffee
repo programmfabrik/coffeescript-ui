@@ -122,6 +122,9 @@ class CUI.Button extends CUI.DOMElement
 		if @_primary
 			@addClass("cui-button--primary")
 
+		if @_class
+			@addClass(@_class)
+
 		if @_center
 			@append(@_center, "center")
 		else if @_text
@@ -467,6 +470,8 @@ class CUI.Button extends CUI.DOMElement
 				default: false
 				check: (v) ->
 					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
+			class:
+				check: String
 			active_css_class:
 				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String
