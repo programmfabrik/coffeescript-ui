@@ -221,8 +221,8 @@
 		}
 
 		@else {
-		box-shadow: $btn-focus-shadow !important; // keeps border-radius, but what about buttongroup buttons ?
-	}
+			box-shadow: $btn-focus-shadow !important; // keeps border-radius, but what about buttongroup buttons ?
+		}
 	}
 
 	@else {
