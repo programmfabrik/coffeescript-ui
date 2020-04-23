@@ -50,6 +50,14 @@ label[data-label-clickable],
 			font-style: normal;
 			padding: 0.05em 0.2em;
 		}
+
+		span + span {
+			padding-left: 0.25em;
+		}
+
+		.italic {
+			padding-right: 0.25em; // make sure italic text is not cut off, overflow: hidden is set on parent due to text-truncate
+		}
 	}
 
 	// appearance
