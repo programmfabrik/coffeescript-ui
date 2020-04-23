@@ -393,7 +393,7 @@ $table-even-background:	gray('100') !default;
 $table-odd-background:	transparent !default;
 $table-padding-x:		$spacer-sm*2 !default; // todo: use $component-padding-base ??
 $table-padding-y:		$spacer-sm !default; // todo: $component-padding-base ??
-$table-row-hover-background: gray('100') !default;
+$table-row-hover-background: #f7f7f7 !default;
 
 // * List View
 // * ==========================================
@@ -402,7 +402,7 @@ $list-view-data-height: 				1rem !default;
 $list-view-data-width: 					125px !default;
 $list-view-padding-x:					$spacer-xs*3 !default; // was: $table-padding-x
 $list-view-padding-y:					$spacer-xs !default; // was: $table-padding-y, needs to be small so the explicit height of the fixed rows will cut off the text correctly after the first line
-$list-view-selected-row-background:		rgba(theme-color('focused'), 0.2) !default;
+$list-view-selected-row-background:		rgba(theme-color('focused'), 0.15) !default;
 $list-view-move-handle-width:			$list-view-font-size !default;
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
 
