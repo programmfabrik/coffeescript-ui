@@ -130,6 +130,19 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
+@mixin button-secondary() {
+	$background: $btn-secondary-background;
+	$color: color-yiq($btn-secondary-background);
+
+	$background-hover: darken($btn-secondary-background, 10%);
+	$color-hover: $color;
+
+	$background-active: $background-hover;
+	$color-active: $color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+}
+
 @mixin button-on-colored-background() {
 	$background-color: gray('200');
 
@@ -217,6 +230,12 @@
 	}
 
 	z-index: 1; // put forward to see outline
+}
+
+@mixin disable-button-focus() {
+	box-shadow: none;
+	outline: 0;
+	z-index: 0;
 }
 
 // Control button
