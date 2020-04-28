@@ -263,8 +263,9 @@ $border-radius-sm: 	2px !default;
 $border-radius: 	3px !default;
 $border-radius-lg:  4px !default;
 
-$hr-border-color:   gray('200') !default;
-$hr-border-width:   1px !default;
+$hr-border-color:   	gray('200') !default;
+$hr-border-color-dark:  theme-color('dark') !default;
+$hr-border-width:   	1px !default;
 
 $component-focus-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3) !default;
 
@@ -486,7 +487,7 @@ $drag-lasso-background: 	theme-color('focused') !default;
 // * ==========================================
 $sticky-header-font-size: 		$font-size-xs !default;
 $sticky-header-color: 			$body-color !default;
-$sticky-header-border-color:	theme-color('dark') !default;
+$sticky-header-border-color:	$hr-border-color-dark !default;
 $sticky-header-opacity:			0.94 !default;
 
 // * Digi Display
