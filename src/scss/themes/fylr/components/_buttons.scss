@@ -50,6 +50,10 @@
 	&.cui-button--primary {
 		@include button-primary();
 	}
+
+	&.cui-button--secondary {
+		@include button-secondary();
+	}
 }
 
 .cui-button-href {
