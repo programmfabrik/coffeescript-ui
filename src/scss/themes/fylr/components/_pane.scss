@@ -27,12 +27,13 @@
 	padding-left: 0;
 	padding-right: 0;
 
-	// todo: header label sizes and color?
-	// make the left most label a subtitle by default
+	// make all labels a subtitle by default
+	.cui-label {
+		@include label-subtitle();
+	}
+
 	.cui-horizontal-layout-left {
 		.cui-label {
-			@include label-subtitle();
-
 			margin-right: $spacer-lg;
 		}
 	}
