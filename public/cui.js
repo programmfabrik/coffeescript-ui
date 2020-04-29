@@ -23215,6 +23215,9 @@ CUI.Button = (function(superClass) {
     if (this._primary) {
       this.addClass("cui-button--primary");
     }
+    if (this._secondary && !this._primary) {
+      this.addClass("cui-button--secondary");
+    }
     if (this._class) {
       this.addClass(this._class);
     }
@@ -23585,6 +23588,9 @@ CUI.Button = (function(superClass) {
       primary: {
         mandatory: true,
         "default": false,
+        check: Boolean
+      },
+      secondary: {
         check: Boolean
       },
       onClick: {
