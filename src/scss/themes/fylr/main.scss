@@ -47,7 +47,6 @@
 @import 'components/_buttonbar';
 @import 'components/_progress-meter';
 @import 'components/_item-list';
-@import 'components/_menu';
 @import 'components/_options';
 @import 'components/_table';
 @import 'components/_date-time'; // calendar
@@ -63,6 +62,7 @@
 @import 'components/_data-form'; // special form
 @import 'components/_tabs'; // extends pane
 @import 'components/_layer';
+@import 'components/_menu'; // after layer
 @import 'components/_dialogs'; // confirmation-dialog, prompt, alert etc., extends layer
 @import 'components/_popover'; // extends modal and layer
 @import 'components/_tooltip'; // extends layerPane and layer
