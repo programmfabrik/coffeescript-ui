@@ -114,7 +114,7 @@
 }
 
 @mixin button-color-reset($background: transparent, $color: $body-color) {
-	@include button-color(transparent, $body-color, transparent, $body-color, transparent, $body-color);
+	@include button-color($background, $color, $background, $color, $background, $color);
 }
 
 @mixin button-primary() {
@@ -143,10 +143,10 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
-@mixin button-on-colored-background() {
+@mixin button-on-colored-background($opacity: 0.6) {
 	$background-color: gray('200');
 
-	$background: rgba($background-color, 0.6);
+	$background: rgba($background-color, $opacity);
 	$color: color-yiq($background);
 
 	$background-hover: rgba($background-color, 0.95);
