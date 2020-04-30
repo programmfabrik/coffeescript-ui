@@ -2827,42 +2827,6 @@ textarea {
   height: 1px;
   background: #e9ecef; }
 
-.cui-menu {
-  min-height: 0;
-  min-width: 0;
-  background: #ffffff;
-  border-radius: 4px;
-  padding: 0.25rem 0;
-  height: auto;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch; }
-  .cui-menu .cui-item-list-body > .cui-label {
-    max-width: 200px; }
-  .cui-menu .cui-item-list-body .cui-menu-item {
-    padding: 0 0.85rem;
-    height: 34px;
-    color: #6c757d; }
-  .cui-menu .cui-vertical-layout {
-    overflow: visible; }
-  .cui-menu .cui-item-list-body > .cui-options:last-child {
-    border-top: 1px solid #e9ecef;
-    padding: 6px 0;
-    margin-top: 4px;
-    margin-bottom: -4px;
-    background: red;
-    font-size: 12px; }
-    .cui-menu .cui-item-list-body > .cui-options:last-child .cui-button-checkbox {
-      display: -webkit-box;
-      display: flex; }
-      .cui-menu .cui-item-list-body > .cui-options:last-child .cui-button-checkbox .cui-button-visual {
-        min-height: 0;
-        padding: 1px 1rem;
-        background: none;
-        color: inherit; }
-
-.cui-menu-divider {
-  margin: 0.25rem 0; }
-
 .cui-options {
   max-width: none; }
 
@@ -4671,6 +4635,42 @@ textarea {
 
 .cui-autocompletion-popup {
   background-color: #ffffff; }
+
+.cui-menu {
+  min-height: 0;
+  min-width: 0;
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 0.25rem 0;
+  height: auto;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
+  .cui-menu .cui-item-list-body > .cui-label {
+    max-width: 200px; }
+  .cui-menu .cui-item-list-body .cui-menu-item {
+    padding: 0 0.85rem;
+    height: 34px;
+    color: #6c757d; }
+  .cui-menu .cui-vertical-layout {
+    overflow: visible; }
+  .cui-menu .cui-item-list-body > .cui-options:last-child {
+    border-top: 1px solid #e9ecef;
+    padding: 6px 0;
+    margin-top: 4px;
+    margin-bottom: -4px;
+    background: red;
+    font-size: 12px; }
+    .cui-menu .cui-item-list-body > .cui-options:last-child .cui-button-checkbox {
+      display: -webkit-box;
+      display: flex; }
+      .cui-menu .cui-item-list-body > .cui-options:last-child .cui-button-checkbox .cui-button-visual {
+        min-height: 0;
+        padding: 1px 1rem;
+        background: none;
+        color: inherit; }
+
+.cui-menu-divider {
+  margin: 0.25rem 0; }
 
 /*
 <div class="cui-layer-root cui-layer-root-layer cui-confirmation-dialog">
