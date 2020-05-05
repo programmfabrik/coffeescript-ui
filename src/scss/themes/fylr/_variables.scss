@@ -401,7 +401,7 @@ $table-row-hover-background: #f7f7f7 !default;
 
 // * List View
 // * ==========================================
-$list-view-font-size:					$font-size-sm !default;
+$list-view-font-size:					inherit !default;
 $list-view-data-height: 				1rem !default;
 $list-view-data-width: 					125px !default;
 $list-view-padding-x:					$spacer-xs*3 !default; // was: $table-padding-x
