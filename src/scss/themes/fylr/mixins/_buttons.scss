@@ -181,6 +181,16 @@
 			text-decoration: underline;
 			word-break: break-all;
 		}
+
+		.cui-button-center:first-child,
+		.cui-button-left:empty + .cui-button-center {
+			padding-left: 0;
+		}
+
+		.cui-button-center:last-child,
+		.cui-button-center:only-child {
+			padding-right: 0;
+		}
 	}
 
 	&:hover,
