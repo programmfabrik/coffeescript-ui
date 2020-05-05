@@ -327,6 +327,12 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-center {
     text-decoration: underline;
     word-break: break-all; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-center:first-child,
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-left:empty + .cui-button-center {
+    padding-left: 0; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-center:last-child,
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-center:only-child {
+    padding-right: 0; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:hover .cui-button-visual .cui-button-center, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual .cui-button-center {
   text-decoration: none; }

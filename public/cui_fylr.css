@@ -1660,6 +1660,12 @@ label[data-label-clickable],
   .cui-button-href .cui-button-visual .cui-button-center {
     text-decoration: underline;
     word-break: break-all; }
+  .cui-button-href .cui-button-visual .cui-button-center:first-child,
+  .cui-button-href .cui-button-visual .cui-button-left:empty + .cui-button-center {
+    padding-left: 0; }
+  .cui-button-href .cui-button-visual .cui-button-center:last-child,
+  .cui-button-href .cui-button-visual .cui-button-center:only-child {
+    padding-right: 0; }
 
 .cui-button-href:hover .cui-button-visual .cui-button-center, .cui-button-href:focus .cui-button-visual .cui-button-center {
   text-decoration: none; }
@@ -3754,7 +3760,7 @@ textarea {
   -webkit-box-direction: normal;
           flex-direction: column;
   background-color: transparent;
-  font-size: 0.875rem;
+  font-size: inherit;
   line-height: 1.3;
   border: 1px solid #e9ecef; }
   .cui-list-view > .cui-vertical-layout-center {
@@ -4029,7 +4035,7 @@ textarea {
   display: none; }
 
 .cui-lv-row-move-handle-column.cui-lv-td {
-  width: 0.875rem;
+  width: inherit;
   padding-left: 0.5rem;
   padding-right: 0;
   box-sizing: content-box; }
@@ -4070,8 +4076,7 @@ textarea {
 
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-handle,
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-handle {
-  height: 24px;
-  background-color: red; }
+  height: 24px; }
 
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-content,
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-content {
@@ -4724,16 +4729,12 @@ textarea {
       -ms-user-select: none;
           user-select: none;
   cursor: default; }
-  .cui-layer-root-toaster .cui-layer > .cui-layer-pane > .cui-vertical-layout-center {
-    padding: 0.5rem; }
 
 .cui-spinner {
   min-width: 0; }
 
 .cui-popover {
   min-width: 247px; }
-  .cui-popover > .cui-pane > .cui-vertical-layout-center {
-    padding: 0.5rem; }
 
 .cui-layer-root-hint-popover .cui-layer-pointer {
   height: 10px;
