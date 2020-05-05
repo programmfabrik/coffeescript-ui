@@ -51,6 +51,6 @@
 	}
 
 	> .cui-pane > .cui-vertical-layout-center {
-		padding: 0; // reset default cui-pane padding
+		@include pane-padding-reset();
 	}
 }

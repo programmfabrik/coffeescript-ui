@@ -1,0 +1,7 @@
+@mixin pane-padding() {
+	padding: $pane-padding;
+}
+
+@mixin pane-padding-reset() {
+	padding: 0;
+}
