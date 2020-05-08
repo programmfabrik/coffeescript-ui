@@ -7,14 +7,18 @@
 	}
 
 	&--padded {
+		// todo: remove
 		padding: $block-padding;
+	}
+
+	.cui-block-header,
+	.cui-block-description {
+		margin-bottom: $block-padding;
 	}
 
 	.cui-block-header,
 	.cui-block-content,
 	.cui-block-description {
-		margin-bottom: $block-padding;
-
 		&:empty {
 			display: none;
 		}
