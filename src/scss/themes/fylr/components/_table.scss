@@ -52,6 +52,12 @@
 		vertical-align: middle;
 	}
 
+	.cui-td--value {
+		word-wrap: break-word;
+		word-break: break-all;
+		word-break: break-word;
+	}
+
 	&.cui-maximize-horizontal {
 		width: 100%;
 		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
