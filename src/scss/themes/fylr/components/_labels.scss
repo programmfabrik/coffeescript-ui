@@ -62,11 +62,12 @@ label[data-label-clickable],
 		}
 	}
 
-	// appearance
+	// cui-label-appearance-secondary
 	&-appearance-secondary {
 		@include label-secondary();
 	}
 
+	// cui-label-appearance-muted
 	&-appearance-muted {
 		@include label-muted();
 	}
@@ -193,6 +194,7 @@ label[data-label-clickable],
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
 	display: flex;
+	line-height: $line-height-sm;
 
 	& + & {
 		margin-top: $spacer-sm;
