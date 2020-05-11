@@ -30,6 +30,8 @@
 */
 
 .cui-form-table {
+	--form-key-width: #{$form-key-width};
+
 	.cui-form-block + & {
 		margin-top: $spacer-sm;
 	}
@@ -39,21 +41,23 @@
 .cui-form-tr-header {
 	display: flex;
 
+	&:not(:last-child) {
+		margin-bottom: $form-cell-gap;
+	}
+
 	@include media-breakpoint-down(sm) {
 		display: block;
 	}
 }
 
-.cui-form-td {
-	padding-bottom: $form-cell-gap;
-}
-
 .cui-form-key {
 	flex: 0 0 auto;
-	width: $form-key-width;
-	min-width: $form-key-width;
+	width: $form-key-width; // fallback
+	width: var(--form-key-width);
+	min-width: $form-key-width; // fallback
+	min-width: var(--form-key-width);
 	max-width: none;
-	padding-right: $form-cell-gap;
+	padding-right: 2*$form-cell-gap;
 
 	label,
 	.cui-label {
@@ -282,10 +286,6 @@
 
 	.cui-data-form + & {
 		margin-top: $spacer-sm;
-	}
-
-	.cui-checkbox + & {
-		margin-top: 0;
 	}
 
 	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
