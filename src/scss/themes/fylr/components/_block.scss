@@ -6,6 +6,10 @@
 		margin-bottom: $block-padding;
 	}
 
+	*:not(.cui-block) + & {
+		margin-top: $block-padding;
+	}
+
 	&--padded {
 		// todo: remove
 		padding: $block-padding;
