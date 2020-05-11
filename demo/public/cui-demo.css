@@ -37,8 +37,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 .cui-demo-controls-demo .cui-output--deletable .cui-button {
   display: block !important; }
 
-.cui-form-demo-form .cui-form-tr {
-  margin-bottom: 3rem; }
+.cui-form-demo-form {
+  background-color: #f5f5f5; }
+  .cui-form-demo-form .cui-form-tr {
+    margin-bottom: 3rem; }
 
 .cui-demo-list-view-demo .cui-demo-example-label {
   font-size: 11px;
@@ -606,17 +608,6 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   .cui-demo-block-grid.cui-block-level-1.cui-block--padded::after, .cui-demo-block-grid.cui-block-level-2.cui-block--padded::after, .cui-demo-block-grid.cui-block-level-3.cui-block--padded::after {
     margin: 0 0.5rem; }
 
-.cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0.5rem; }
-  .cui-pane-header .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title,
-  .cui-toolbar .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title,
-  .cui-buttonbar .cui-demo-block-grid.cui-block-level-1 > .cui-block-header .cui-block-title {
-    margin-bottom: 0; }
-
 .cui-demo-block-grid.cui-block-level-1 > .cui-block-content {
   color: #6c757d; }
 
@@ -626,11 +617,6 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   -ms-grid-columns: 200px 1fr;
   grid-template-columns: 200px 1fr;
   grid-gap: 0 3rem; }
-
-.cui-demo-block-grid.cui-block-level-3 > .cui-block-header .cui-block-title {
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em; }
 
 /* Content Area */
 .cui-document-browser-center {

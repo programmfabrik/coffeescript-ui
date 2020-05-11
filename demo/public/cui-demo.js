@@ -17652,7 +17652,7 @@ CUI.Layer = (function(superClass) {
         check: Function
       },
       size: {
-        check: ["xs", "s", "m", "l", "xl"]
+        check: ["xs", "s", "m", "l", "xl", "xxl", "xxxl"]
       },
       handle_focus: {
         "default": true,
@@ -78576,6 +78576,15 @@ Demo.ButtonDemo = (function(superClass) {
     this.__addButtonPair("primary button", {
       primary: true,
       text: "Primary Button",
+      onClick: (function(_this) {
+        return function(evt, button) {
+          return _this.log("Clicked: " + button.getText());
+        };
+      })(this)
+    });
+    this.__addButtonPair("secondary button", {
+      secondary: true,
+      text: "Secondary Button",
       onClick: (function(_this) {
         return function(evt, button) {
           return _this.log("Clicked: " + button.getText());
