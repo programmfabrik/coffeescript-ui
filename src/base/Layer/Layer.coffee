@@ -235,7 +235,7 @@ class CUI.Layer extends CUI.DOMElement
 				check: Function
 			# add a size class
 			size:
-				check: ["xs", "s", "m", "l", "xl"]
+				check: ["xs", "s", "m", "l", "xl", "xxl", "xxxl"]
 
 			# handle focus on tab index
 			handle_focus:
