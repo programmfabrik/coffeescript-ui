@@ -178,7 +178,8 @@
 	flex-direction: column;
 	min-height: 0;
 
-	&:not(:last-child) {
+	// :not(.cui-form-field-type--checkbox) use case see: .ez5-download-manager-confirmation-dialog
+	&:not(:last-child):not(.cui-form-field-type--checkbox) {
 		margin-bottom: $form-cell-gap;
 	}
 
@@ -197,17 +198,12 @@
 	}
 }
 
-// todo: find use-case
+// Radio button + Input field (like an option "other" with free text)
 .cui-form-field-type--checkbox {
-	// Own value field
 	+ .cui-form-row {
 		.cui-form-container.cui-form--horizontal {
 			> .cui-form-row:first-child {
-				margin-right: $form-cell-gap;
-			}
-
-			> .cui-form-field-type--input {
-				margin-top: $form-cell-gap;
+				margin-right: 0;
 			}
 		}
 	}
