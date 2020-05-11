@@ -337,6 +337,13 @@ class Demo.ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
+		@__addButtonPair("secondary button",
+			secondary: true
+			text: "Secondary Button"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)
+
 		@__addDivider("Button option: size ")
 
 		@__addButtonPair("size: \"base\"",
