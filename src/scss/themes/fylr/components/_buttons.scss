@@ -69,6 +69,10 @@
 			width: auto;
 		}
 	}
+
+	.cui-data-field-input > & {
+		width: 100%;
+	}
 }
 
 a[role='button'].cui-button-appearance-link {
@@ -80,11 +84,9 @@ a[role='button'].cui-button-appearance-link {
 }
 
 .cui-button--has-caret {
-	&[role='menu-item'] {
-		.cui-button-visual {
-			.cui-button-right {
-				margin-left: auto;
-			}
+	.cui-button-visual {
+		.cui-button-right {
+			margin-left: auto;
 		}
 	}
 }
