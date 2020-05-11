@@ -134,7 +134,7 @@
 	$background: $btn-secondary-background;
 	$color: color-yiq($btn-secondary-background);
 
-	$background-hover: darken($btn-secondary-background, 10%);
+	$background-hover: darken($btn-secondary-background, 5%);
 	$color-hover: $color;
 
 	$background-active: $background-hover;
