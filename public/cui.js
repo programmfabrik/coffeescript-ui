@@ -17562,7 +17562,7 @@ CUI.Layer = (function(superClass) {
         check: Function
       },
       size: {
-        check: ["xs", "s", "m", "l", "xl"]
+        check: ["xs", "s", "m", "l", "xl", "xxl", "xxxl"]
       },
       handle_focus: {
         "default": true,
