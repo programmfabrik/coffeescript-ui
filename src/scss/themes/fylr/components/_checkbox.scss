@@ -3,7 +3,6 @@
 	min-width: 0;
 	max-width: none;
 	display: inline-block;
-	line-height: 1.3;
 
 	&--icon {
 		.cui-button-checkbox {
@@ -34,15 +33,17 @@
 
 .cui-button-checkbox {
 	display: inline-flex; // so that the click area is not wider than the text
-	height: $input-height;
+	min-height: $input-height;
 	max-width: 100%;
-	flex-direction: row;
-	align-items: center;
 	line-height: $input-height;
 	cursor: pointer;
 
 	[data-max-chars] {
 		text-align: inherit;
+	}
+
+	.cui-button-visual {
+		align-items: baseline;
 	}
 
 	.cui-button-left {
@@ -73,6 +74,7 @@
 		min-width: 0;
 		flex: 1 1 auto;
 		padding-right: $spacer-sm;
+		line-height: 1.1;
 
 		&:empty {
 			display: none;
