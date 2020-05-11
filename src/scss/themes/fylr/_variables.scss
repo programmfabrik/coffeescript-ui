@@ -439,6 +439,7 @@ $calendar-date-previous-color:		gray('500') !default;
 // * Block
 // * ==========================================
 $block-padding: 			$component-padding-base !default;
+$block-margin: 				2*$block-padding !default;
 $block-header-column-width:	200px !default;
 
 // * Slider

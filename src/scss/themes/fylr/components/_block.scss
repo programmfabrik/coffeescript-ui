@@ -3,7 +3,7 @@
 	flex-shrink: 0;
 
 	&:not(:last-child) {
-		margin-bottom: $block-padding;
+		margin-bottom: $block-margin;
 	}
 
 	*:not(.cui-block) + & {
@@ -32,23 +32,22 @@
 		color: theme-color('secondary');
 	}
 
+	// Titles apply to all block types (default and grid)
 	> .cui-block-header .cui-block-title {
-		font-weight: $headings-font-weight;
+		@include h6();
 	}
 
-	// Special
-	// todo: find use-case
-	&.cui-form-block--has-checkbox {
-		background: red;
-
+	&.cui-block-level-1 {
 		> .cui-block-header .cui-block-title {
-			font-size: inherit;
-			font-weight: inherit;
-		}
+			@include h5();
 
-		> .cui-block-content {
-			margin-left: $spacer-xl;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
 		}
+	}
+
+	&.cui-block-level-2 {
+		margin-top: $block-margin;
 	}
 }
 
@@ -61,10 +60,6 @@
 			margin-bottom: $block-padding;
 		}
 	}
-
-	// todo: find use-case
-	// .cui-block {
-	// }
 }
 
 // * WaitBlock

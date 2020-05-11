@@ -1,4 +1,4 @@
-@mixin block-grid {
+@mixin block-grid() {
 	// with border-bottom
 	&.cui-block-level-1,
 	&.cui-block-level-2,
@@ -24,10 +24,6 @@
 
 	// Level 1
 	&.cui-block-level-1 {
-		> .cui-block-header .cui-block-title {
-			@include h2();
-		}
-
 		> .cui-block-content {
 			color: theme-color('secondary');
 		}
@@ -38,15 +34,5 @@
 		display: grid;
 		grid-template-columns: $block-header-column-width 1fr;
 		grid-gap: 0 $spacer-xl; // todo: needs IE fix, use grid-template-areas
-	}
-
-	// Level 3
-	// todo: find use-case
-	&.cui-block-level-3 {
-		> .cui-block-header .cui-block-title {
-			font-size: $font-size-sm;
-			text-transform: uppercase;
-			letter-spacing: 0.03em;
-		}
 	}
 }
