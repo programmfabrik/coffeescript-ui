@@ -158,6 +158,16 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
+@mixin button-inverted($border: 0) {
+	@include button-color(rgba(gray('900'), 0.6), gray('300'), $body-color, $white, $body-color, $white);
+
+	@if $border == 1 {
+		.cui-button-visual {
+			border-color: rgba(gray('200'), 0.3);
+		}
+	}
+}
+
 @mixin button-dimmed($focus-inset: 0) {
 	$background: transparent;
 	$color: $gray-500;
