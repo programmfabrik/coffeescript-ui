@@ -42,7 +42,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --orange: #ff5724;
   --yellow: #ffbf00;
   --green: #28a745;
-  --teal: #73d4a2;
+  --teal: #3e9e88;
   --cyan: #17a2b8;
   --white: #ffffff;
   --gray: #6c757d;
@@ -1244,7 +1244,7 @@ label[data-label-clickable],
   .cui-label--padded {
     padding: 0.5rem; }
   .cui-label[data-type='string'] {
-    color: #73d4a2; }
+    color: #3e9e88; }
   .cui-label[data-type='NaN'], .cui-label[data-type='number'] {
     color: #986801; }
   .cui-label[data-type='boolean'], .cui-label[data-type='undefined'], .cui-label[data-type='null'] {
@@ -1820,7 +1820,7 @@ textarea {
 .cui-input-appearance-code textarea {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875rem;
-  color: #73d4a2;
+  color: #3e9e88;
   background: #212121;
   border-color: #212121; }
   .cui-input-appearance-code input:focus,
@@ -2646,6 +2646,8 @@ textarea {
     line-height: normal; }
   .cui-tab > .cui-sticky-header {
     flex-basis: auto; }
+  .cui-table + .cui-sticky-header {
+    margin-top: 0.5rem; }
 
 .cui-vertical-layout-top > .cui-sticky-header,
 .cui-vertical-layout-center > .cui-sticky-header,
