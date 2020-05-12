@@ -46,6 +46,10 @@
 	.cui-tab > & {
 		flex-basis: auto;
 	}
+
+	.cui-table + & {
+		margin-top: $spacer-sm;
+	}
 }
 
 // Special cases within layout
