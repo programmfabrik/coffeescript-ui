@@ -42,7 +42,9 @@
 		}
 
 		// todo: fix component in coffeescript: do NOT use cui-active as a hover class, this will mess up the state of the actual active item
-		&.cui-active {
+		&.cui-active,
+		// workaround
+		&[aria-pressed='true'] {
 			.cui-button-visual {
 				color: $item-list-active-color;
 				background: $item-list-active-background;
