@@ -2816,8 +2816,9 @@ textarea {
   .cui-item-list-body .cui-button-href:hover .cui-button-visual {
     color: #ffffff;
     background: #ff5724; }
-  .cui-item-list-body .cui-button.cui-active .cui-button-visual,
-  .cui-item-list-body .cui-button-href.cui-active .cui-button-visual {
+  .cui-item-list-body .cui-button.cui-active .cui-button-visual, .cui-item-list-body .cui-button[aria-pressed='true'] .cui-button-visual,
+  .cui-item-list-body .cui-button-href.cui-active .cui-button-visual,
+  .cui-item-list-body .cui-button-href[aria-pressed='true'] .cui-button-visual {
     color: #212121;
     background: #e9ecef; }
   .cui-item-list-body .cui-button.cui-active:hover .cui-button-visual,
