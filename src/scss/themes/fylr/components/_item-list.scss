@@ -22,7 +22,7 @@
 
 			// make sure the buttons could wrap onto new line
 			height: auto;
-			min-height: $item-list-height;
+			// min-height: $item-list-height; // conflict with button sizes, see: .cui-date-time--select-menu
 			// padding-top: 0.35em;
 			// padding-bottom: 0.45em;
 

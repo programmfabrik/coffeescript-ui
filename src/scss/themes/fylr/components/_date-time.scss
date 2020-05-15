@@ -1,6 +1,8 @@
 // Calendar Popup
 .cui-layer-root-cui-date-time-popover .cui-layer > .cui-pane > .cui-vertical-layout-center {
 	overflow: hidden; // override default, see: .cui-layer > .cui-pane > .cui-vertical-layout-center
+
+	@include pane-padding-reset();
 }
 
 .cui-date-time-popover .cui-date-time-popover-inner {
@@ -47,6 +49,10 @@
 
 	.cui-table {
 		border: 0;
+	}
+
+	.cui-buttonbar-group {
+		@include ungroup-visually();
 	}
 
 	.cui-button-select,
@@ -107,6 +113,10 @@
 			left: 0.5rem;
 			font-weight: bold;
 		}
+
+		.cui-data-field-input > .cui-button-select {
+			width: auto;
+		}
 	}
 
 	.cui-buttonbar-group-date {
@@ -154,6 +164,7 @@
 		text-align: center;
 		position: relative;
 		padding: 0 $year-padding;
+		border-color: $input-border-color-light;
 
 		.cui-browser-ie:not(.cui-browser-edge) & {
 			width: calc(6ch + 4 * #{$year-padding});
@@ -320,6 +331,17 @@
 			height: 30px;
 			align-items: center;
 			text-align: center;
+		}
+	}
+}
+
+.cui-date-time--select-menu {
+	.cui-button-button {
+		@include button-sm();
+
+		.cui-button-center {
+			overflow: visible;
+			padding: 0 0.15em;
 		}
 	}
 }
