@@ -348,16 +348,6 @@
 .cui-list-view-grid-quadrant-2 {
 	flex: 0 0 auto;
 	overflow: hidden;
-
-	> .cui-lv-tr-outer {
-		&:hover {
-			> .cui-lv-tr {
-				.cui-lv-row-move-handle-column {
-					background: $white; // reset
-				}
-			}
-		}
-	}
 }
 
 .cui-list-view-grid-quadrant-3 {
@@ -382,13 +372,18 @@
 		}
 
 		&:hover {
-			> .cui-lv-tr {
+			> .cui-lv-tr > .cui-lv-td {
 				background: $table-row-hover-background;
+			}
+
+			> .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column {
+				background: transparent; // reset
 			}
 		}
 	}
 
-	.cui-list-view-grid-inner-bottom & {
+	// only if there is a -top which usually hold the header
+	.cui-list-view-grid-inner-top + .cui-list-view-grid-inner-bottom & {
 		> .cui-lv-tr-outer {
 			&:first-child {
 				> .cui-lv-tr {
