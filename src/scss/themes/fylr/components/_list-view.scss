@@ -507,7 +507,10 @@
 							}
 
 							> .cui-drag-handle-row {
-								margin-top: $input-height*0.5;
+								position: relative;
+								top: 50%;
+								transform: translateY(-50%);
+								margin-top: 0;
 							}
 
 							&.cui-lv-row-move-handle-column {
