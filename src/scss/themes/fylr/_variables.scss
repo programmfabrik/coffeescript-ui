@@ -272,6 +272,7 @@ $component-focus-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3) !default;
 // * Icons
 // * ==========================================
 $icon-font-size: 	$font-size-base !default; // was: 14px
+$icon-font-size-lg: 20px !default;
 $icon-line-height: 	$line-height-base !default;
 
 
@@ -364,6 +365,7 @@ $input-height: 				$btn-height !default;
 $input-height-sm: 			$btn-height-sm !default;
 $input-background: 			$white !default;
 $input-border-color: 		transparent !default;
+$input-border-color-light: 	gray('300') !default; // todo: temp, test ??
 $input-border-radius: 		$btn-border-radius !default;
 $input-placeholder-color: 	gray('500') !default;
 $input-min-width:			100px !default;
