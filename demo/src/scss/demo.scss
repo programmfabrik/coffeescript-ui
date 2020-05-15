@@ -36,6 +36,14 @@
 	}
 }
 
+.cui-demo-data-form-demo {
+	.cui-demo-pane-center {
+		> .cui-pane {
+			background-color: theme-color('light');
+		}
+	}
+}
+
 .cui-demo-list-view-demo {
 	.cui-demo-example-label {
 		font-size: 11px;
