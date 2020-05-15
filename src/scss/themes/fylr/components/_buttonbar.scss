@@ -3,7 +3,20 @@
 	align-items: center;
 
 	@include buttonbar-horizontal(); // default stack horizontally
+
+	.cui-toolbar > .cui-horizontal-layout-right > & {
+		margin-left: $spacer-sm;
+	}
+
+	.cui-toolbar > .cui-horizontal-layout-left:empty + .cui-horizontal-layout-center:empty + .cui-horizontal-layout-right > &:only-child {
+		margin-left: 0; // reset if left and center are empty
+	}
+
+	+ .cui-buttonbar {
+		margin-left: $spacer-sm;
+	}
 }
+
 
 // * Buttonbar Group
 // all buttons within a buttonbar-group are visually and functionally a unit, like radio buttons, there always have a border by default, see buttonbar mixins
