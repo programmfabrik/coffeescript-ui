@@ -23,11 +23,18 @@
 */
 
 .cui-data-form {
+	// .cui-data-form--movable-rows
 	&--movable-rows {
 		max-width: 100%;
 
-		> .cui-horizontal-layout > .cui-horizontal-layout-center {
+		// todo: find use-case, commented out because of the nested-fields in the editor
+		// > .cui-horizontal-layout > .cui-horizontal-layout-center {
+		// 	// max-width: $data-field-width;
+		// }
+
+		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
 			max-width: $data-field-width;
+			overflow: visible; // show focus outline
 		}
 
 		&.cui-data-form--multiple-fields {
@@ -67,6 +74,7 @@
 .cui-data-form-row {
 	overflow: visible !important;
 	margin-bottom: $spacer-xs;
+	width: 100%; // see editor: ez5-nested
 
 	&--read-only {
 		.cui-drag-handle-row {
