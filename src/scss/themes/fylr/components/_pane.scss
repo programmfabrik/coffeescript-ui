@@ -38,9 +38,11 @@
 		}
 	}
 
-	.cui-buttonbar > * {
-		margin-right: 0;
-	}
+	// see ez5-main-right ez5-editor pane-header: here we should not remove the margin
+	// Todo: find use-case where we needed to reset the margin
+	// .cui-buttonbar > * {
+	// 	margin-right: 0;
+	// }
 
 	.cui-select {
 		margin-right: $spacer-xs;
