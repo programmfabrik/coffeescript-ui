@@ -36,8 +36,8 @@
 
 		padding: 0 $padding-x;
 
-		// there are some button that have an empty center element
-		&:empty:last-child {
+		// there are some button that have an empty center element, adjust accordingly
+		&:empty {
 			margin-left: -0.5*$padding-x;
 		}
 	}
