@@ -371,7 +371,7 @@
 			}
 		}
 
-		&:hover {
+		&:not(.cui-selected):hover {
 			> .cui-lv-tr > .cui-lv-td {
 				background: $table-row-hover-background;
 			}
