@@ -66,6 +66,12 @@
 			line-height: $checkbox-icon-size + 2px;
 			border-radius: $checkbox-border-radius;
 			vertical-align: middle; // keep <i> and <span> in sync
+
+			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
+			.cui-active &,
+			.cui-layer-open & {
+				border-color: theme-color('light');
+			}
 		}
 	}
 
@@ -104,6 +110,12 @@
 		.cui-button-left i {
 			background: $checkbox-active-background;
 			color: $checkbox-active-color;
+
+			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
+			.cui-active &,
+			.cui-layer-open & {
+				color: theme-color('light');
+			}
 		}
 
 		// radio
@@ -129,7 +141,14 @@
 
 	&.cui-indeterminate {
 		.cui-button-left span {
-			background-color: gray('200');
+			// background-color: gray('200'); // looks weird on white background
+
+			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
+			.cui-active &,
+			.cui-layer-open & {
+				// background-color: transparent;
+				border-color: theme-color('light');
+			}
 
 			&::after {
 				content: '';
