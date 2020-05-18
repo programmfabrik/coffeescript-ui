@@ -5,3 +5,7 @@
 @mixin pane-padding-reset() {
 	padding: 0;
 }
+
+@mixin pane-padding-bottom-reset() {
+	padding-bottom: 0;
+}
