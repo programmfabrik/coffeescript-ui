@@ -607,7 +607,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     left: 0;
     right: 0;
     height: 1px;
-    background: #e9ecef; }
+    background: rgba(173, 181, 189, 0.15); }
   .cui-demo-block-grid.cui-block-level-1.cui-block--padded::after, .cui-demo-block-grid.cui-block-level-2.cui-block--padded::after, .cui-demo-block-grid.cui-block-level-3.cui-block--padded::after {
     margin: 0 0.5rem; }
 
