@@ -2,7 +2,7 @@
 // stylelint-disable block-closing-brace-newline-after
 
 // todo: replace these breakpoint mixins to the explicit media breakpoint declarations
-// usage: @include media-berakpoint-up()
+// usage: @include media-breakpoint-up()
 @mixin desktop {
 	@media screen and (min-width: 1024px) {
 		@content;
