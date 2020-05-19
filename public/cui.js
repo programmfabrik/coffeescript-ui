@@ -25173,6 +25173,10 @@ CUI.ConfirmationChoice = (function(superClass) {
       "default": false,
       check: Boolean
     },
+    secondary: {
+      "default": false,
+      check: Boolean
+    },
     disabled: {
       mandatory: true,
       "default": false,

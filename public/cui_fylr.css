@@ -2371,7 +2371,12 @@ textarea {
   width: 10px;
   margin: 0; }
   .cui-flex-handle-row:hover {
-    background-image: linear-gradient(90deg, #ced4da 1px, white 1px, white 2px, white 4px, #ced4da 4px), linear-gradient(90deg, white, white), linear-gradient(0deg, #ced4da 25%, white 0);
+    background-image: linear-gradient(90deg, #ced4da 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, #ced4da 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(0deg, #ced4da 25%, #ffffff 0);
+    background-position: 50% 50%, 50% 50%, 50% 0;
+    background-size: 5px 18px, 5px 22px, 1px 6px;
+    background-repeat: no-repeat, no-repeat, repeat-y; }
+  .cui-pane .cui-flex-handle-row:hover {
+    background-image: linear-gradient(90deg, #ced4da 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, #ced4da 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, #ced4da 25%, #f5f5f5 0);
     background-position: 50% 50%, 50% 50%, 50% 0;
     background-size: 5px 18px, 5px 22px, 1px 6px;
     background-repeat: no-repeat, no-repeat, repeat-y; }
@@ -2399,7 +2404,12 @@ textarea {
   margin: 0;
   width: 100%; }
   .cui-flex-handle-column:hover {
-    background-image: linear-gradient(0deg, #ced4da 1px, white 1px, white 2px, white 4px, #ced4da 4px), linear-gradient(0deg, white, white), linear-gradient(90deg, #ced4da 25%, white 0);
+    background-image: linear-gradient(0deg, #ced4da 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, #ced4da 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(90deg, #ced4da 25%, #ffffff 0);
+    background-position: 50% 50%, 50% 50%, 0 50%;
+    background-size: 18px 5px, 22px 5px, 6px 1px;
+    background-repeat: no-repeat, no-repeat, repeat-x; }
+  .cui-pane .cui-flex-handle-column:hover {
+    background-image: linear-gradient(0deg, #ced4da 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, #ced4da 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, #ced4da 25%, #f5f5f5 0);
     background-position: 50% 50%, 50% 50%, 0 50%;
     background-size: 18px 5px, 22px 5px, 6px 1px;
     background-repeat: no-repeat, no-repeat, repeat-x; }
@@ -3694,6 +3704,12 @@ textarea {
   font-size: 0.7875rem;
   line-height: 1.3;
   color: #adb5bd; }
+  .cui-hint .cui-label,
+  .cui-form-hint .cui-label,
+  .cui-input-invalid-hint .cui-label,
+  .cui-input-valid-hint .cui-label,
+  .cui-input-empty-hint .cui-label {
+    padding-top: 0; }
 
 .cui-input-invalid-hint {
   color: #dc3545; }
