@@ -9,9 +9,10 @@
 .cui-form {
 	overflow: visible;
 
-	&--padded {
-		padding: $form-padding;
-	}
+	// todo: make obsolete
+	// &--padded {
+	// 	padding: $form-padding;
+	// }
 }
 
 // * Form - Table
@@ -40,6 +41,7 @@
 .cui-form-tr,
 .cui-form-tr-header {
 	display: flex;
+	min-height: $form-row-height;
 
 	&:not(:last-child) {
 		margin-bottom: $form-cell-gap;
@@ -57,12 +59,12 @@
 	min-width: $form-key-width; // fallback
 	min-width: var(--form-key-width);
 	max-width: none;
-	padding-right: 2*$form-cell-gap;
+	padding-right: $form-cell-gap;
 
 	label,
 	.cui-label {
 		display: inline-block;
-		padding-top: 0.41em; // see .cui-form-value label, needs to be in line, , depends on the font-size
+		// padding-top: 0.41em; // see .cui-form-value label, needs to be in line, , depends on the font-size
 		white-space: normal;
 		min-width: $form-key-min-width;
 		max-width: 100%;
@@ -85,7 +87,7 @@
 
 	label,
 	.cui-label {
-		padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
+		// padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
 	}
 
 	> .cui-options {
@@ -214,52 +216,12 @@
 }
 
 // * Form Grid
-// See: SessionTrayApp, in the header click button "root" then "Einstellungen"
+// former use-case: SessionTrayApp, in the header click button "root" then "Einstellungen"
+// in fylr we do not want this to be displayed as a grid
 
-.cui-form--grid {
-	.cui-data-field {
-		max-width: 100%;
-	}
-
-	> div > .cui-form-table {
-		.cui-form-td {
-			display: block;
-			padding: 0 0 $spacer-xs;
-		}
-
-		.cui-form-key {
-			max-width: none;
-			width: auto;
-			min-width: 0;
-		}
-
-		.cui-form-value {
-			width: auto;
-		}
-
-		@include media-breakpoint-up(sm) {
-			display: flex;
-			flex-wrap: wrap;
-			margin: 0 #{-$form-cell-gap};
-			width: auto; // negative margins!
-
-			.cui-form-tr {
-				display: block;
-				padding: 0 $form-cell-gap;
-				width: 100%;
-				margin-bottom: $form-cell-gap;
-
-				$sizes: '1/2', '1/3', '2/3', '1/4', '2/4', '3/4', '1/5', '2/5', '3/5', '4/5';
-
-				@each $size in $sizes {
-					&[data-cui-grid='#{$size}'] {
-						width: calc(#{$size} * 100%);
-					}
-				}
-			}
-		}
-	}
-}
+// .cui-form--grid {
+// 	@include form-as-grid();
+// }
 
 // * Form hints (validation, input types etc.)
 
@@ -281,7 +243,7 @@
 
 // todo: test in the app
 .cui-form-hint {
-	max-width: $data-field-width;
+	// max-width: $data-field-width; // todo: do we really want to restrict the width, why?
 
 	.cui-checkbox + &,
 	.cui-data-field.cui-maximize-horizontal + & {
