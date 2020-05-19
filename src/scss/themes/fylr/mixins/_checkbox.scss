@@ -1,0 +1,9 @@
+@mixin checkbox-sm() {
+	min-height: $input-height-sm;
+	line-height: $input-height-sm;
+
+	.cui-button-visual {
+		font-size: $font-size-sm;
+		line-height: $line-height-sm;
+	}
+}
