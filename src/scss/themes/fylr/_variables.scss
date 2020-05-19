@@ -141,6 +141,7 @@ $spacer-lg: 	$spacer * 1.5 !default;
 $spacer-xl: 	$spacer * 3 !default;
 // The component padding is to be used for the default component padding (usually with the modifier "--padding")
 $component-padding-base: $spacer-sm !default;
+$component-padding-lg: $spacer !default;
 
 // * Body
 // * ==========================================
@@ -474,6 +475,8 @@ $layer-sizes: (
 $layer-background: 			$pane-background !default;
 $layer-border-radius: 		$border-radius !default;
 $layer-pointer-size: 		20px !default;
+$layer-padding-x: 			$component-padding-lg !default;
+$layer-padding-y: 			$component-padding-base !default;
 
 // * Tooltip
 // * ==========================================

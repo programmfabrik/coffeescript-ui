@@ -146,12 +146,17 @@
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header {
 			border-radius: $layer-border-radius $layer-border-radius 0 0;
-			padding: $pane-padding;
+			padding: $layer-padding-y $layer-padding-x;
 			background-color: transparent; // reset default .cui-pane-header
+
+			> .cui-horizontal-layout-right > .cui-buttonbar {
+				margin-right: -0.5*$layer-padding-x;
+			}
 		}
 
 		// layer-body
 		> .cui-vertical-layout-center {
+			padding: $layer-padding-y $layer-padding-x;
 			overflow: auto;
 			-webkit-overflow-scrolling: touch;
 		}
@@ -159,7 +164,7 @@
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
 			border-radius: 0 0 $layer-border-radius $layer-border-radius;
-			background-color: $pane-background; // todo
+			padding: $layer-padding-x;
 
 			// make buttons a little more prominent in the footer, they are typically "primary" action buttons ("OK" is pretty short otherwise)
 			.cui-button-visual {
