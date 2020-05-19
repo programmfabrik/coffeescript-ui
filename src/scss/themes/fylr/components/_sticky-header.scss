@@ -76,6 +76,10 @@
 		right: 0;
 		font-weight: bold;
 		background: rgba($body-bg, $sticky-header-opacity);
+
+		.cui-pane & {
+			background-color: rgba($pane-background, $sticky-header-opacity);
+		}
 	}
 }
 
