@@ -106,23 +106,10 @@ $flex-handle-bocker-offset: 4px;
 	width: $flex-handle-size;
 	margin: 0;
 
-	&:hover {
-		background-image:
-			linear-gradient(90deg, $flex-handle-color 1px, white 1px, white 2px, white 4px, $flex-handle-color 4px),
-			linear-gradient(90deg, white, white),
-			linear-gradient(0deg, $flex-handle-dot-color 25%, white 0);
-		background-position:
-			50% 50%,
-			50% 50%,
-			50% 0;
-		background-size:
-			5px $flex-handle-length,
-			5px $flex-handle-length + $flex-handle-bocker-offset,
-			1px $flex-handle-dot-width;
-		background-repeat:
-			no-repeat,
-			no-repeat,
-			repeat-y;
+	@include flex-handle-row();
+
+	.cui-pane & {
+		@include flex-handle-row($pane-background);
 	}
 
 	&:not(.cui-flex-handle-closed) {
@@ -163,23 +150,10 @@ $flex-handle-bocker-offset: 4px;
 	margin: 0;
 	width: 100%;
 
-	&:hover {
-		background-image:
-			linear-gradient(0deg, $flex-handle-color 1px, white 1px, white 2px, white 4px, $flex-handle-color 4px),
-			linear-gradient(0deg, white, white),
-			linear-gradient(90deg, $flex-handle-dot-color 25%, white 0);
-		background-position:
-			50% 50%,
-			50% 50%,
-			0 50%;
-		background-size:
-			$flex-handle-length 5px,
-			$flex-handle-length + $flex-handle-bocker-offset 5px,
-			$flex-handle-dot-width 1px;
-		background-repeat:
-			no-repeat,
-			no-repeat,
-			repeat-x;
+	@include flex-handle-column();
+
+	.cui-pane & {
+		@include flex-handle-column($pane-background);
 	}
 
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
