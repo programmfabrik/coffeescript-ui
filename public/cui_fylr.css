@@ -3494,8 +3494,6 @@ textarea {
 
 .cui-form {
   overflow: visible; }
-  .cui-form--padded {
-    padding: 0.5rem; }
 
 /*
 <div class="cui-form">
@@ -3517,10 +3515,11 @@ textarea {
 .cui-form-tr,
 .cui-form-tr-header {
   display: -webkit-box;
-  display: flex; }
+  display: flex;
+  min-height: 34px; }
   .cui-form-tr:not(:last-child),
   .cui-form-tr-header:not(:last-child) {
-    margin-bottom: 0.5rem; }
+    margin-bottom: 1rem; }
   @media (max-width: 767.98px) {
     .cui-form-tr,
     .cui-form-tr-header {
@@ -3538,7 +3537,6 @@ textarea {
   .cui-form-key label,
   .cui-form-key .cui-label {
     display: inline-block;
-    padding-top: 0.41em;
     white-space: normal;
     min-width: 100px;
     max-width: 100%;
@@ -3554,9 +3552,6 @@ textarea {
   min-width: 0; }
   .cui-form-value input {
     min-width: 0; }
-  .cui-form-value label,
-  .cui-form-value .cui-label {
-    padding-top: 0.28em; }
   .cui-form-value > .cui-options .cui-options-center {
     min-height: 0; }
   .cui-form-value > .cui-data-field {
@@ -3597,7 +3592,7 @@ textarea {
           flex-direction: column; }
 
 .cui-form-table + .cui-form-block {
-  margin-top: 0.5rem; }
+  margin-top: 1rem; }
 
 /*
 <div class="cui-form">
@@ -3632,68 +3627,20 @@ textarea {
           flex-direction: column;
   min-height: 0; }
   .cui-form-row:not(:last-child):not(.cui-form-field-type--checkbox) {
-    margin-bottom: 0.5rem; }
+    margin-bottom: 1rem; }
   .cui-form-container.cui-form--horizontal > .cui-form-row {
     -webkit-box-flex: 0;
             flex: 0 0 auto;
     min-width: 0;
     margin-bottom: 0; }
     .cui-form-container.cui-form--horizontal > .cui-form-row:not(:last-child) {
-      margin-right: 0.5rem; }
+      margin-right: 1rem; }
     .cui-form-container.cui-form--horizontal > .cui-form-row.cui-maximize-horizontal {
       -webkit-box-flex: 1;
               flex-grow: 1; }
 
 .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-row:first-child {
   margin-right: 0; }
-
-.cui-form--grid .cui-data-field {
-  max-width: 100%; }
-
-.cui-form--grid > div > .cui-form-table .cui-form-td {
-  display: block;
-  padding: 0 0 0.25rem; }
-
-.cui-form--grid > div > .cui-form-table .cui-form-key {
-  max-width: none;
-  width: auto;
-  min-width: 0; }
-
-.cui-form--grid > div > .cui-form-table .cui-form-value {
-  width: auto; }
-
-@media (min-width: 576px) {
-  .cui-form--grid > div > .cui-form-table {
-    display: -webkit-box;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -0.5rem;
-    width: auto; }
-    .cui-form--grid > div > .cui-form-table .cui-form-tr {
-      display: block;
-      padding: 0 0.5rem;
-      width: 100%;
-      margin-bottom: 0.5rem; }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='1/2'] {
-        width: calc(1/2 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='1/3'] {
-        width: calc(1/3 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='2/3'] {
-        width: calc(2/3 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='1/4'] {
-        width: calc(1/4 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='2/4'] {
-        width: calc(2/4 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='3/4'] {
-        width: calc(3/4 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='1/5'] {
-        width: calc(1/5 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='2/5'] {
-        width: calc(2/5 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='3/5'] {
-        width: calc(3/5 * 100%); }
-      .cui-form--grid > div > .cui-form-table .cui-form-tr[data-cui-grid='4/5'] {
-        width: calc(4/5 * 100%); } }
 
 .cui-hint,
 .cui-form-hint,
@@ -3714,26 +3661,28 @@ textarea {
 .cui-input-invalid-hint {
   color: #dc3545; }
 
-.cui-form-hint {
-  max-width: 275px; }
-  .cui-checkbox + .cui-form-hint,
-  .cui-data-field.cui-maximize-horizontal + .cui-form-hint {
-    max-width: 100%; }
-  .cui-data-form + .cui-form-hint {
-    margin-top: 0.5rem; }
-  .cui-form-hint .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-    padding-left: 0.5rem; }
-  .cui-form-hint .fa {
-    font-size: 12px; }
-  .cui-form-hint .cui-label-multiline {
-    -webkit-box-flex: 1;
-            flex-grow: 1;
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-align: start;
-            align-items: flex-start; }
-    .cui-form-hint .cui-label-multiline .cui-label-content {
-      flex-basis: 0%; }
+.cui-checkbox + .cui-form-hint,
+.cui-data-field.cui-maximize-horizontal + .cui-form-hint {
+  max-width: 100%; }
+
+.cui-data-form + .cui-form-hint {
+  margin-top: 0.5rem; }
+
+.cui-form-hint .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+  padding-left: 0.5rem; }
+
+.cui-form-hint .fa {
+  font-size: 12px; }
+
+.cui-form-hint .cui-label-multiline {
+  -webkit-box-flex: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: start;
+          align-items: flex-start; }
+  .cui-form-hint .cui-label-multiline .cui-label-content {
+    flex-basis: 0%; }
 
 .cui-form-popover.cui-vertical-layout,
 .cui-form-modal.cui-vertical-layout {
@@ -4835,14 +4784,17 @@ textarea {
     background-color: transparent; }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
     border-radius: 3px 3px 0 0;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     background-color: transparent; }
+    .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar {
+      margin-right: -0.5rem; }
   .cui-layer > .cui-pane > .cui-vertical-layout-center {
+    padding: 0.5rem 1rem;
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
   .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
     border-radius: 0 0 3px 3px;
-    background-color: #f5f5f5; }
+    padding: 1rem; }
     .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer .cui-button-visual {
       min-width: 60px; }
   .cui-layer .cui-form-table .cui-data-field {
