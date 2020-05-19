@@ -269,6 +269,10 @@
 .cui-input-valid-hint,
 .cui-input-empty-hint {
 	@include form-hint();
+
+	.cui-label {
+		padding-top: 0;
+	}
 }
 
 .cui-input-invalid-hint {
