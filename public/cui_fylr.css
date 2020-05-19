@@ -2809,6 +2809,8 @@ textarea {
     right: 0;
     font-weight: bold;
     background: rgba(255, 255, 255, 0.94); }
+    .cui-pane .cui-sticky-header-control .cui-sticky-header {
+      background-color: rgba(245, 245, 245, 0.94); }
 
 .cui-sticky-header-level-1,
 .cui-sticky-header-level-2,
