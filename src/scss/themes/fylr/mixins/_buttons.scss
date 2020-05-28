@@ -4,7 +4,7 @@
 	height: $height;
 	min-width: 1.1*$height; // make icon-only buttons optically square
 	font-size: $font-size;
-	line-height: $height;
+	line-height: $btn-line-height;
 	border-radius: $border-radius;
 
 	.cui-button-left {

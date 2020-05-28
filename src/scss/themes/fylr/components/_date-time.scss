@@ -337,7 +337,13 @@
 
 .cui-date-time--select-menu {
 	.cui-button-button {
-		@include button-sm();
+		.cui-button-visual {
+			display: flex;
+			height: auto;
+			min-height: $btn-height-sm + 2px;
+			justify-content: center;
+			border-radius: 0;
+		}
 
 		.cui-button-center {
 			overflow: visible;
