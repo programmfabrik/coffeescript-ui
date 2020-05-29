@@ -322,7 +322,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 	loadPage: (page) ->
 		maxPage = Math.floor(@rows?.length / @_chunk_size)
 		if not CUI.util.isNumber(page) or maxPage < 0 or page > maxPage
-			return
+			page = 0
 
 		@__offset = page * @_chunk_size
 		@displayValue()
