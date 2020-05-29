@@ -56,9 +56,9 @@
 // Label in a field
 @mixin label-field() {
 	text-transform: uppercase;
-	color: theme-color('muted');
 	font-weight: $font-weight-bold;
 	line-height: $line-height-sm;
+	font-size: $font-size-sm;
 }
 
 @mixin label-field-subtitle() {
