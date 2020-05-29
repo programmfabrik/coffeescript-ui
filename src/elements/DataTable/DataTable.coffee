@@ -61,6 +61,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 			padded:
 				check: Boolean
 				default: false
+			onLoadPage:
+				check: Function
 
 	readOpts: ->
 		super()
@@ -171,7 +173,6 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			buttons.push(@minusButton)
 
-
 		if @_chunk_size > 0
 
 			buttons.push
@@ -182,13 +183,12 @@ class CUI.DataTable extends CUI.DataFieldInput
 				group: "navi"
 				onClick: =>
 					@__offset = @__offset - @_chunk_size
-					@displayValue()
+					@loadPage(@__offset / @_chunk_size)
 
 			page_data = {}
 
 			load_page = =>
-				@__offset = (page_data.page - 1) * @_chunk_size
-				@displayValue()
+				@loadPage(page_data.page - 1)
 
 			@__navi_input = new CUI.NumberInput
 				group: "navi"
@@ -215,7 +215,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				group: "navi"
 				onClick: =>
 					@__offset = @__offset + @_chunk_size
-					@displayValue()
+					@loadPage(@__offset / @_chunk_size)
 
 		if buttons.length
 			new CUI.Buttonbar(buttons: buttons)
@@ -318,6 +318,16 @@ class CUI.DataTable extends CUI.DataFieldInput
 				@storeValue(CUI.util.copyObject(@rows, true))
 				return
 		@
+
+	loadPage: (page) ->
+		maxPage = Math.floor(@rows?.length / @_chunk_size)
+		if not CUI.util.isNumber(page) or maxPage < 0 or page > maxPage
+			page = 0
+
+		@__offset = page * @_chunk_size
+		@displayValue()
+		@_onLoadPage?(page)
+		return
 
 	displayValue: ->
 		@listView.removeAllRows()
