@@ -968,6 +968,8 @@ class Demo.Playground extends Demo
 			"svg-tag-o",
 			"svg-trash",
 			"svg-typo3",
+			"svg-easydb",
+			"svg-fylr-logo",
 		]
 		dt.addExample("Single Icon",
 			new CUI.Block
