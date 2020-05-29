@@ -4,6 +4,6 @@
 @mixin selected() {
 	outline: none;
 	box-shadow:
-		0 0 0 4px rgba(theme-color('focused'), 0.4),
+		0 0 0 3px rgba(theme-color('focused'), 0.4),
 		0 0 1px 1px rgba(theme-color('focused'), 0.3);
 }
