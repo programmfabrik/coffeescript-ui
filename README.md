@@ -90,6 +90,9 @@ You will find the bundled file inside **public** folder.
 
 It's not necessary to build the project before use it, because **public** directory has always the last version.
 
+# Icons:
+- **gulp svgstore**: Build the icons.svg from all icons included in /scss/icons
+
 ## Test
 
 To run the tests:
