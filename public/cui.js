@@ -24548,6 +24548,9 @@ CUI.DataTable = (function(superClass) {
       padded: {
         check: Boolean,
         "default": false
+      },
+      onLoadPage: {
+        check: Function
       }
     });
   };
@@ -24731,15 +24734,14 @@ CUI.DataTable = (function(superClass) {
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset - _this._chunk_size;
-            return _this.displayValue();
+            return _this.loadPage(_this.__offset / _this._chunk_size);
           };
         })(this)
       });
       page_data = {};
       load_page = (function(_this) {
         return function() {
-          _this.__offset = (page_data.page - 1) * _this._chunk_size;
-          return _this.displayValue();
+          return _this.loadPage(page_data.page - 1);
         };
       })(this);
       this.__navi_input = new CUI.NumberInput({
@@ -24774,7 +24776,7 @@ CUI.DataTable = (function(superClass) {
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset + _this._chunk_size;
-            return _this.displayValue();
+            return _this.loadPage(_this.__offset / _this._chunk_size);
           };
         })(this)
       });
@@ -24896,6 +24898,19 @@ CUI.DataTable = (function(superClass) {
       })(this)
     });
     return this;
+  };
+
+  DataTable.prototype.loadPage = function(page) {
+    var maxPage, ref;
+    maxPage = Math.floor(((ref = this.rows) != null ? ref.length : void 0) / this._chunk_size);
+    if (!CUI.util.isNumber(page) || maxPage < 0 || page > maxPage) {
+      return;
+    }
+    this.__offset = page * this._chunk_size;
+    this.displayValue();
+    if (typeof this._onLoadPage === "function") {
+      this._onLoadPage(page);
+    }
   };
 
   DataTable.prototype.displayValue = function() {
