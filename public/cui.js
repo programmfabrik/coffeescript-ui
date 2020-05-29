@@ -24904,7 +24904,7 @@ CUI.DataTable = (function(superClass) {
     var maxPage, ref;
     maxPage = Math.floor(((ref = this.rows) != null ? ref.length : void 0) / this._chunk_size);
     if (!CUI.util.isNumber(page) || maxPage < 0 || page > maxPage) {
-      return;
+      page = 0;
     }
     this.__offset = page * this._chunk_size;
     this.displayValue();
