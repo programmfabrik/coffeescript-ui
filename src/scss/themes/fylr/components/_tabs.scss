@@ -89,35 +89,11 @@
 .cui-tabs-pane-header {
 	padding: 0; // reset .cui-toolbar
 	min-height: 0; // reset .cui-toolbar
-	border-bottom: 1px solid $tabs-header-border-color;
 	margin-bottom: $spacer-sm;
 
 	> .cui-horizontal-layout-center {
 		overflow: auto !important; //! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
 		justify-content: flex-start; // reset .cui-toolbar
-	}
-
-	.cui-buttonbar {
-		min-width: 0;
-		position: relative;
-
-		&::after {
-			content: '';
-			position: absolute;
-			display: block;
-			background: theme-color('primary');
-			width: var(--active-tab-width);
-			height: $tabs-header-border-width;
-			bottom: 0;
-			left: 0;
-			transform: translate(var(--active-tab-left), 0);
-			transition: all 0.3s ease;
-			z-index: 1;
-		}
-	}
-
-	.cui-buttonbar-group {
-		@include ungroup-visually();
 	}
 
 	// overflowing tabs
@@ -140,6 +116,8 @@
 			height: $tabs-header-height;
 			padding: 0 $spacer-sm;
 			border-radius: 0;
+			background-color: $tabs-background;
+			border-color: $tabs-header-border-color;
 		}
 
 		&:focus {
@@ -165,7 +143,7 @@
 		align-self: center;
 		position: relative;
 		z-index: 1; // to overlap active buttons
-		border-bottom: 1px solid $tabs-overflow-button-background;
+		margin-top: $tabs-marker-border-width;
 
 		// white blocker gradient
 		&::before {
@@ -210,6 +188,56 @@
 		&:focus {
 			.cui-button-visual {
 				background-color: darken($tabs-overflow-button-background, 8%);
+			}
+		}
+	}
+
+	.cui-buttonbar {
+		min-width: 0;
+		width: 100%;
+		position: relative;
+		margin-top: $tabs-marker-border-offset;
+
+		// active marker
+		&::before {
+			content: '';
+			position: absolute;
+			display: block;
+			background: theme-color('primary');
+			width: var(--active-tab-width);
+			height: $tabs-marker-border-width;
+			top: -#{$tabs-marker-border-offset};
+			left: 0;
+			transform: translate(var(--active-tab-left), 0);
+			transition: all 0.3s ease;
+			z-index: 2;
+		}
+
+		// tab border extension
+		&::after {
+			content: '';
+			display: block;
+			flex: 1 1 auto;
+			height: 1px;
+			background: $tabs-header-border-color;
+			align-self: flex-end;
+		}
+
+		// Override border color
+		.cui-buttonbar-group {
+			position: relative;
+
+			.cui-tab-header-button {
+				.cui-button-visual {
+					border-color: $tabs-header-border-color;
+				}
+
+				&:active,
+				&.cui-active {
+					.cui-button-visual {
+						border-bottom-color: $tabs-active-background;
+					}
+				}
 			}
 		}
 	}
