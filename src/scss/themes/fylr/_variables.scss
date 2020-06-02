@@ -426,7 +426,7 @@ $form-padding: 				$component-padding-base !default;
 $form-row-height:			$input-height !default;
 $form-key-width:			$table-data-width !default;
 $form-key-min-width:		100px !default;
-$form-label-color: 			gray('600') !default;
+$form-label-color: 			$body-color !default;
 $form-label-font-weight: 	$font-weight-normal !default;
 $form-label-font-size: 		$font-size-base !default; // if changed, you need to change the padding of labels in cui-form-key + cui-form-value
 $form-cell-gap: 			$spacer !default; // todo: check more forms
