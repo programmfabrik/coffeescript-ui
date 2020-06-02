@@ -1,10 +1,11 @@
+// todo:
 @mixin label-xs() {
-	font-size: $font-size-xs;
+	font-size: $font-size-sm;
 	line-height: $line-height-sm;
 }
 
+// todo:
 @mixin label-sm() {
-	font-size: $font-size-sm;
 	line-height: $line-height-sm;
 }
 
@@ -37,8 +38,8 @@
 }
 
 @mixin label-title() {
-	font-weight: $font-weight-bold;
 	font-size: $font-size-lg;
+	font-weight: $font-weight-bold;
 }
 
 @mixin label-subtitle() {
@@ -58,7 +59,6 @@
 	text-transform: uppercase;
 	font-weight: $font-weight-bold;
 	line-height: $line-height-sm;
-	font-size: $font-size-sm;
 }
 
 @mixin label-field-subtitle() {

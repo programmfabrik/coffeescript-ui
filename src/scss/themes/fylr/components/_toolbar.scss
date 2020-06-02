@@ -87,10 +87,6 @@
 .cui-result-navigation-toolbar {
 	min-height: $toolbar-height;
 
-	.cui-label {
-		@include label-sm();
-	}
-
 	.cui-button-button {
 		@include button-sm();
 	}

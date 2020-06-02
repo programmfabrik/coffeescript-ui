@@ -167,7 +167,7 @@ $link-hover-decoration:	none !default;
 //
 // Style p element.
 
-$paragraph-margin-bottom:   1rem !default;
+$paragraph-margin-bottom:   $spacer !default;
 
 
 // * Grid breakpoints
@@ -214,11 +214,11 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, 'Liberati
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
-$font-size-xl:                $font-size-base * 1.25 !default; // todo: do we really need this "bigger" font size
-$font-size-lg:                $font-size-base * 1.125 !default; // 18
-$font-size-sm:                $font-size-base * 0.875 !default; // 14
-$font-size-xs:                $font-size-base * 0.7875 !default; // 12,6
+$font-size-xxl:               1rem * 1.25 !default; // 20,  todo: do we really need this "bigger" font size
+$font-size-xl:                1rem * 1.125 !default; // 18
+$font-size-lg:                1rem !default; // 16
+$font-size-base:              0.875 * 1rem !default; // 14
+$font-size-sm:                1rem * 0.75 !default; // 12
 
 $font-weight-lighter:         200 !default;
 $font-weight-light:           300 !default;
@@ -231,12 +231,12 @@ $line-height-base:            1.5 !default;
 $line-height-sm:			  1.3 !default;
 
 // todo
-$h1-font-size:                $font-size-base * 1.5 !default; // upper case
-$h2-font-size:                $font-size-base * 1.5 !default; // normal case
-$h3-font-size:                $font-size-base * 1.25 !default;
-$h4-font-size:                $font-size-base * 1.1 !default;
-$h5-font-size:                $font-size-base * 1 !default;
-$h6-font-size:                $font-size-base !default;
+$h1-font-size:                1rem * 1.5 !default; 		// 24, upper case
+$h2-font-size:                1rem * 1.5 !default; 		// 24, normal case
+$h3-font-size:                1rem * 1.25 !default; 	// 20
+$h4-font-size:                1rem * 1.125 !default;	// 18
+$h5-font-size:                1rem !default;			// 16
+$h6-font-size:                $font-size-base !default;	// 14
 
 $headline-sizes: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -304,13 +304,13 @@ $btn-focus-shadow: 			$component-focus-shadow !default;
 // Normal size
 $btn-padding-x: 			0.85rem !default;
 $btn-height: 				34px !default;
-$btn-font-size: 			$font-size-sm !default;
+$btn-font-size: 			$font-size-base !default;
 $btn-line-height: 			$line-height-sm !default;
 $btn-border-radius:			$enable-btn-border-radius * 2px !default;
 // Small size
 $btn-padding-x-sm: 			0.5rem !default;
 $btn-height-sm: 			24px !default; // make in-line with default font-size of 16px
-$btn-font-size-sm: 			$font-size-xs !default;
+$btn-font-size-sm: 			$font-size-sm !default;
 $btn-border-radius-sm:		$enable-btn-border-radius * 2px !default;
 // Large size
 $btn-padding-x-lg: 			1.25rem !default;
@@ -338,7 +338,7 @@ $item-list-active-color: 		$body-color !default;
 $item-list-active-background:	gray('200') !default;
 $item-list-indent: 				$btn-padding-x !default;
 $item-list-height: 				$btn-height !default;
-$item-list-label-font-size:		$font-size-xs !default;
+$item-list-label-font-size:		$font-size-sm !default;
 $item-list-label-color:			$body-color !default;
 
 // * Menu
@@ -432,7 +432,7 @@ $form-cell-gap: 			$spacer !default; // todo: check more forms
 
 // * Calendar
 // * ==========================================
-$calendar-font-size: 				$font-size-sm !default;
+$calendar-font-size: 				$font-size-base !default;
 $calendar-cell-size:				28px !default;
 $calendar-cell-count:				8 !default;
 $calendar-background:				$white !default;
@@ -495,7 +495,7 @@ $drag-lasso-background: 	theme-color('focused') !default;
 
 // * Sticky Header
 // * ==========================================
-$sticky-header-font-size: 		$font-size-xs !default;
+$sticky-header-font-size: 		$font-size-sm !default;
 $sticky-header-color: 			$body-color !default;
 $sticky-header-border-color:	$hr-border-color-dark !default;
 $sticky-header-opacity:			0.94 !default;
