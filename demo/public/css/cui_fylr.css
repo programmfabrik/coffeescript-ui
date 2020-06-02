@@ -481,6 +481,7 @@ html {
 body {
   font-family: "Source Sans Pro", sans-serif, sans-serif;
   font-weight: 400;
+  font-size: 0.875rem;
   line-height: 1.5;
   color: #212121; }
 
@@ -525,7 +526,7 @@ h3, .h3 {
 
 h4, .h4 {
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 0.5rem; }
@@ -551,7 +552,7 @@ h5, .h5 {
 
 h6, .h6 {
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 0.5rem; }
@@ -1270,7 +1271,7 @@ input[data-max-chars='40'] {
     pointer-events: none; }
 
 .fa {
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 1.5; }
 
 .cui-spin-stepped {
@@ -1443,15 +1444,19 @@ label[data-label-clickable],
     -webkit-box-flex: 0;
             flex-grow: 0; }
 
-.cui-label-multiline > .cui-label-content,
-.cui-label-markdown > .cui-label-content {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  white-space: normal;
-  overflow: visible;
-  text-overflow: clip;
-  word-wrap: break-word;
-  word-break: break-word; }
+.cui-label-multiline,
+.cui-label-markdown {
+  -webkit-box-align: baseline;
+          align-items: baseline; }
+  .cui-label-multiline > .cui-label-content,
+  .cui-label-markdown > .cui-label-content {
+    -webkit-box-flex: 1;
+            flex: 1 1 auto;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-wrap: break-word;
+    word-break: break-word; }
 
 .cui-label-multiline {
   max-width: 100%;
@@ -1498,13 +1503,13 @@ label[data-label-clickable],
     line-height: 1.1;
     margin: 0 0 0.25rem; }
   .cui-label-markdown .cui-label-content h1 {
-    font-size: 1.1rem; }
+    font-size: 1.125rem; }
   .cui-label-markdown .cui-label-content h2 {
     font-size: 1rem; }
   .cui-label-markdown .cui-label-content h3 {
-    font-size: 1.125rem; }
-  .cui-label-markdown .cui-label-content h4, .cui-label-markdown .cui-label-content h5, .cui-label-markdown .cui-label-content h6 {
     font-size: 1rem; }
+  .cui-label-markdown .cui-label-content h4, .cui-label-markdown .cui-label-content h5, .cui-label-markdown .cui-label-content h6 {
+    font-size: 0.875rem; }
   .cui-label-markdown .cui-label-content a {
     word-break: break-all; }
   .cui-label-markdown .cui-label-content em {
@@ -1561,7 +1566,6 @@ label[data-label-clickable],
     border-radius: 2px; }
   .cui-label-markdown .cui-label-content pre {
     padding: 1rem;
-    font-size: 0.875rem;
     background: #f5f5f5;
     white-space: pre-wrap;
     border-radius: 3px;
@@ -1909,6 +1913,9 @@ textarea {
     box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3);
     border-color: rgba(23, 162, 184, 0.5);
     z-index: 1; }
+  .cui-data-field-disabled input, .cui-data-field-disabled
+  textarea {
+    background-color: #ced4da; }
   input.cui-input-shadow,
   textarea.cui-input-shadow {
     position: absolute;
@@ -1924,8 +1931,7 @@ input {
   input[type='file'] {
     height: auto;
     line-height: 1.5;
-    padding: 0.25rem;
-    font-size: 0.875rem; }
+    padding: 0.25rem; }
 
 textarea {
   --textarea-min-rows: 1;
@@ -1947,7 +1953,6 @@ textarea {
 .cui-input-appearance-code input,
 .cui-input-appearance-code textarea {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875rem;
   color: #3e9e88;
   background: #212121;
   border-color: #212121; }
@@ -2013,10 +2018,10 @@ textarea {
 
 .cui-multi-input-tag-button .cui-button-visual {
   background-color: transparent;
-  color: #adb5bd; }
+  color: #212121; }
 
 .cui-multi-input-tag-button:hover .cui-button-visual, .cui-multi-input-tag-button:focus .cui-button-visual {
-  color: #212121;
+  color: #6c757d;
   background-color: transparent; }
 
 .cui-multi-input-tag-button:focus {
@@ -2027,7 +2032,7 @@ textarea {
     z-index: 1; }
 
 .cui-multi-input-tag-button:active .cui-button-visual {
-  color: #212121;
+  color: #6c757d;
   background-color: rgba(0, 0, 0, 0); }
 
 .cui-multi-input-tag-button.cui-active .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open .cui-button-visual {
@@ -2102,9 +2107,9 @@ textarea {
     margin: 0.25rem; }
     .cui-output--deletable .cui-button .cui-button-visual {
       background-color: transparent;
-      color: #adb5bd; }
+      color: #212121; }
     .cui-output--deletable .cui-button:hover .cui-button-visual, .cui-output--deletable .cui-button:focus .cui-button-visual {
-      color: #212121;
+      color: #6c757d;
       background-color: transparent; }
     .cui-output--deletable .cui-button:focus {
       outline: none; }
@@ -2113,7 +2118,7 @@ textarea {
         box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
         z-index: 1; }
     .cui-output--deletable .cui-button:active .cui-button-visual {
-      color: #212121;
+      color: #6c757d;
       background-color: rgba(0, 0, 0, 0); }
     .cui-output--deletable .cui-button.cui-active .cui-button-visual, .cui-output--deletable .cui-button.cui-layer-open .cui-button-visual {
       color: #212121;
@@ -2140,18 +2145,17 @@ textarea {
   display: -webkit-box;
   display: flex; }
   .cui-data-field-multi-output:not(:last-child) {
-    border-bottom: 1px solid rgba(173, 181, 189, 0.15);
     padding-bottom: 0.25em; }
   .cui-data-field-multi-output:not(:first-child) {
-    padding-top: 0.25em; }
+    border-top: 1px solid rgba(173, 181, 189, 0.15); }
   .cui-data-field-multi-output .cui-data-field-multi-output-aside {
     position: relative;
     top: 1px; }
     .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button .cui-button-visual {
       background-color: transparent;
-      color: #adb5bd; }
+      color: #212121; }
     .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:focus .cui-button-visual {
-      color: #212121;
+      color: #6c757d;
       background-color: transparent; }
     .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:focus {
       outline: none; }
@@ -2160,7 +2164,7 @@ textarea {
         box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
         z-index: 1; }
     .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:active .cui-button-visual {
-      color: #212121;
+      color: #6c757d;
       background-color: rgba(0, 0, 0, 0); }
     .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open .cui-button-visual {
       color: #212121;
@@ -2309,7 +2313,7 @@ textarea {
           flex: 1 1 auto;
   height: 10px;
   width: 12px;
-  background: linear-gradient(#ced4da 1px, transparent 1px, transparent 2px);
+  background: linear-gradient(#212121 1px, transparent 1px, transparent 2px);
   background-size: 100% 2px; }
 
 .cui-resizable-handle {
@@ -2403,7 +2407,6 @@ textarea {
         -webkit-box-pack: center;
                 justify-content: center; } }
     .cui-flex-handle-row.cui-flex-handle-has-label.cui-flex-handle-closed .cui-label.cui-label-rotate-90 .cui-label-transform {
-      font-size: 0.875rem;
       line-height: 1.3; }
 
 .cui-flex-handle-column {
@@ -2609,7 +2612,7 @@ textarea {
     color: #6c757d; }
   .cui-block > .cui-block-header .cui-block-title {
     font-family: "Source Sans Pro", sans-serif;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 0.5rem; }
@@ -2784,7 +2787,7 @@ textarea {
 .cui-sticky-header {
   position: relative;
   padding: 0.25rem 0;
-  font-size: 0.7875rem;
+  font-size: 0.75rem;
   font-weight: bold;
   color: #212121;
   flex-basis: 100%;
@@ -2859,7 +2862,7 @@ textarea {
 .cui-console {
   padding: 0.5rem;
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.7875rem; }
+  font-size: 0.75rem; }
   .cui-console .cui-label-multiline {
     margin: 0.25rem 0; }
   .cui-console .cui-label:not(:last-child) {
@@ -2915,9 +2918,7 @@ textarea {
   line-height: 34px;
   border-radius: 2px;
   overflow: hidden;
-  position: relative;
-  background: #adb5bd;
-  color: white; }
+  position: relative; }
   .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-fill {
     display: none;
     background: #ff5724;
@@ -2936,6 +2937,13 @@ textarea {
     position: relative; }
     .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon .svg-spinner {
       height: 34px; }
+
+.cui-progress-meter[state='spinning'] .cui-progress-meter-icon {
+  color: #212121; }
+
+.cui-progress-meter[state='percent'] .cui-progress-meter-bar {
+  background: #adb5bd;
+  color: white; }
 
 .cui-progress-meter[state='percent'] .cui-progress-meter-icon {
   display: none; }
@@ -2989,7 +2997,7 @@ textarea {
     color: #ff5724;
     background: none; }
   .cui-item-list-body .cui-label {
-    font-size: 0.7875rem;
+    font-size: 0.75rem;
     cursor: default; }
   .cui-item-list-body .cui-options .cui-button {
     padding: 0;
@@ -3005,7 +3013,7 @@ textarea {
     width: 1.5rem;
     margin-right: 0; }
     .cui-item-list-body.cui-item-list--has-button-left .cui-button-left .fa {
-      font-size: 1rem; }
+      font-size: 0.875rem; }
   .cui-item-list-body.cui-item-list--has-button-left .cui-button-center:first-child {
     margin-left: 1.5rem; }
 
@@ -3028,7 +3036,7 @@ textarea {
 
 .cui-options-order-hint {
   margin-top: 0.25rem;
-  font-size: 0.7875rem;
+  font-size: 0.75rem;
   line-height: 1.3;
   color: #adb5bd;
   max-width: 250px;
@@ -3246,7 +3254,7 @@ textarea {
   .cui-date-time-calendar .cui-button .cui-button-visual {
     height: 24px;
     min-width: 26.4px;
-    font-size: 0.7875rem;
+    font-size: 0.75rem;
     line-height: 1.3;
     border-radius: 2px; }
     .cui-date-time-calendar .cui-button-select .cui-button-visual .cui-button-left,
@@ -3341,7 +3349,6 @@ textarea {
   .cui-date-time-footer [cui-data-field-name='year'] input {
     height: 24px;
     line-height: 24px;
-    font-size: 0.875rem;
     width: calc(4ch + 4 * 0.25rem);
     min-width: 0;
     text-align: center;
@@ -3534,8 +3541,8 @@ textarea {
     min-width: 100px;
     max-width: 100%;
     word-wrap: break-word;
-    color: #6c757d;
-    font-size: 1rem;
+    color: #212121;
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.3; }
 
@@ -3641,7 +3648,7 @@ textarea {
 .cui-input-valid-hint,
 .cui-input-empty-hint {
   margin-top: 0.25rem;
-  font-size: 0.7875rem;
+  font-size: 0.75rem;
   line-height: 1.3;
   color: #adb5bd; }
   .cui-hint .cui-label,
@@ -3861,13 +3868,10 @@ textarea {
 
 .cui-result-navigation-toolbar {
   min-height: 40px; }
-  .cui-result-navigation-toolbar .cui-label {
-    font-size: 0.875rem;
-    line-height: 1.3; }
   .cui-result-navigation-toolbar .cui-button-button .cui-button-visual {
     height: 24px;
     min-width: 26.4px;
-    font-size: 0.7875rem;
+    font-size: 0.75rem;
     line-height: 1.3;
     border-radius: 2px; }
     .cui-result-navigation-toolbar .cui-button-button .cui-button-visual .cui-button-left {
@@ -3897,7 +3901,6 @@ textarea {
     .cui-result-navigation-toolbar .cui-buttonbar-group-navi .cui-number-input input {
       height: 24px;
       line-height: 24px;
-      font-size: 0.875rem;
       padding-top: 0;
       padding-bottom: 0; }
   .cui-result-navigation-toolbar .cui-buttonbar + .cui-label {
@@ -4399,7 +4402,7 @@ textarea {
   .cui-data-table .cui-list-view .cui-pane-footer .cui-buttonbar .cui-button .cui-button-visual {
     height: 24px;
     min-width: 26.4px;
-    font-size: 0.7875rem;
+    font-size: 0.75rem;
     line-height: 1.3;
     border-radius: 2px; }
     .cui-data-table .cui-list-view .cui-pane-footer .cui-buttonbar .cui-button .cui-button-visual .cui-button-left {
@@ -4423,8 +4426,7 @@ textarea {
         margin-left: -0.25rem; }
   .cui-data-table .cui-list-view .cui-pane-footer .cui-buttonbar input {
     height: 24px;
-    line-height: 24px;
-    font-size: 0.875rem; }
+    line-height: 24px; }
   .cui-data-table .cui-list-view .cui-pane-footer .cui-buttonbar .cui-buttonbar-group .cui-button-visual {
     border: 0 !important;
     border-radius: 2px !important; }
@@ -4461,11 +4463,11 @@ textarea {
 .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
   padding: 0.25rem 0.25rem 0.25rem 0.5rem;
-  border-left: 1px solid #ced4da; }
+  border-left: 1px solid #212121; }
   .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center::after, .cui-data-form--multiple-fields > .cui-data-form-row > .cui-horizontal-layout-center::before {
     content: '';
     position: absolute;
-    background: #ced4da;
+    background: #212121;
     width: 10px;
     height: 1px;
     left: 0;
@@ -4789,6 +4791,9 @@ textarea {
     width: 1000px; }
   .cui-layer > .cui-pane:not(.cui-pane--window) {
     background-color: transparent; }
+  .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header,
+  .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-toolbar {
+    padding: 0.5rem 1rem; }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
     border-radius: 3px 3px 0 0;
     padding: 0.5rem 1rem;
@@ -4799,9 +4804,11 @@ textarea {
     padding: 0.5rem 1rem;
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
-  .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
-    border-radius: 0 0 3px 3px;
+  .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer,
+  .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-toolbar {
     padding: 1rem; }
+  .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
+    border-radius: 0 0 3px 3px; }
     .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer .cui-button-visual {
       min-width: 60px; }
   .cui-layer .cui-form-table .cui-data-field {
@@ -4886,6 +4893,8 @@ textarea {
 
 .cui-autocompletion-popup {
   background-color: #ffffff; }
+  .cui-autocompletion-popup > .cui-pane > .cui-vertical-layout-center {
+    padding: 0; }
 
 .cui-menu {
   min-height: 0;
@@ -4946,7 +4955,6 @@ textarea {
   max-width: 300px; }
 
 .cui-layer-root-toaster .cui-layer {
-  font-size: 0.875rem;
   width: auto;
   max-width: none;
   min-width: 0;
