@@ -112,7 +112,8 @@ Very very short. 2
 			class: "cui-demo-tabs-vertical"
 			tabs: [
 				text: "Atlanta"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+				# content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
+				content: @getBlindText(idx*2+1)
 			,
 				text: "New York"
 				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM

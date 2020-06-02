@@ -101,6 +101,7 @@
 .cui-demo-tabs-demo {
 	.cui-demo-pane-center > .cui-pane {
 		overflow: visible;
+		background-color: theme-color('light');
 	}
 
 	.cui-label + .cui-tabs {
