@@ -328,7 +328,7 @@ $label-padding: $spacer-sm !default;
 
 // * Handle (Drag & Drop, Move Rows etc.)
 // * ==========================================
-$handle-color: 		gray('400');
+$handle-color: 		$body-color;
 
 // * Item list
 // * ==========================================

@@ -170,10 +170,10 @@
 
 @mixin button-dimmed($focus-inset: 0) {
 	$background: transparent;
-	$color: $gray-500;
+	$color: $btn-color;
 
 	$background-hover: transparent;
-	$color-hover: $body-color;
+	$color-hover: $gray-600;
 
 	$background-active: transparent;
 	$color-active: $body-color;
