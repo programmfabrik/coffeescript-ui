@@ -89,7 +89,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   margin-bottom: 1rem; }
 
 .cui-demo-tabs-demo .cui-demo-pane-center > .cui-pane {
-  overflow: visible; }
+  overflow: visible;
+  background-color: #f5f5f5; }
 
 .cui-demo-tabs-demo .cui-label + .cui-tabs {
   margin-bottom: 3rem; }
@@ -116,25 +117,39 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     -ms-grid-column-span: 2;
     grid-area: t_footer; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header {
-    border-bottom: none;
-    border-right: 1px solid #dee2e6;
-    overflow: auto; }
+    height: 100%;
+    -webkit-box-align: start;
+            align-items: flex-start;
+    overflow: auto;
+    margin-bottom: 0;
+    margin-right: 0.5rem; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header > .cui-horizontal-layout-center {
       overflow: visible !important;
-      display: block; }
+      display: block;
+      height: 100%; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header > .cui-horizontal-layout-right {
       display: none; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar {
-      position: relative; }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar::after {
+      position: relative;
+      width: auto;
+      height: 100%;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+              flex-direction: column;
+      margin-top: 0;
+      margin-left: 2px; }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar::before {
         height: var(--active-tab-height);
         width: 3px;
         bottom: auto;
-        left: auto;
-        right: 0;
+        left: -2px;
+        right: auto;
         top: 0;
         -webkit-transform: translate(0, var(--active-tab-top));
                 transform: translate(0, var(--active-tab-top)); }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar::after {
+        width: 1px;
+        height: auto; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group {
       width: 100%;
       -webkit-box-orient: vertical;
@@ -184,9 +199,15 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group > * {
         width: 100%;
         margin-bottom: 0; }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-button-visual {
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
         -webkit-box-pack: start;
-                justify-content: flex-start; }
+                justify-content: flex-start;
+        border-right: 1px solid rgba(206, 212, 218, 0.5); }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:not(:last-child) .cui-button-visual {
+        border-bottom: 0; }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual {
+        border-bottom-color: rgba(206, 212, 218, 0.5);
+        border-right-color: transparent; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
@@ -195,8 +216,9 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   padding: 0 0.25rem;
   font-size: 0.7875rem; }
 
-.cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-buttonbar::after {
-  height: 2px; }
+.cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-buttonbar::before {
+  height: 2px;
+  top: -1px; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small {
   display: -ms-grid;
@@ -220,25 +242,39 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     -ms-grid-column-span: 2;
     grid-area: t_footer; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header {
-    border-bottom: none;
-    border-right: 1px solid #dee2e6;
-    overflow: auto; }
+    height: 100%;
+    -webkit-box-align: start;
+            align-items: flex-start;
+    overflow: auto;
+    margin-bottom: 0;
+    margin-right: 0.5rem; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header > .cui-horizontal-layout-center {
       overflow: visible !important;
-      display: block; }
+      display: block;
+      height: 100%; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header > .cui-horizontal-layout-right {
       display: none; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar {
-      position: relative; }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::after {
+      position: relative;
+      width: auto;
+      height: 100%;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+              flex-direction: column;
+      margin-top: 0;
+      margin-left: 2px; }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::before {
         height: var(--active-tab-height);
         width: 3px;
         bottom: auto;
-        left: auto;
-        right: 0;
+        left: -2px;
+        right: auto;
         top: 0;
         -webkit-transform: translate(0, var(--active-tab-top));
                 transform: translate(0, var(--active-tab-top)); }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::after {
+        width: 1px;
+        height: auto; }
     .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group {
       width: 100%;
       -webkit-box-orient: vertical;
@@ -288,17 +324,24 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group > * {
         width: 100%;
         margin-bottom: 0; }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-button-visual {
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
         -webkit-box-pack: start;
-                justify-content: flex-start; }
+                justify-content: flex-start;
+        border-right: 1px solid rgba(206, 212, 218, 0.5); }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:not(:last-child) .cui-button-visual {
+        border-bottom: 0; }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual {
+        border-bottom-color: rgba(206, 212, 218, 0.5);
+        border-right-color: transparent; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
     height: 28px;
     line-height: 28px;
     padding: 0 0.25rem;
     font-size: 0.7875rem; }
-  .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::after {
-    width: 2px; }
+  .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::before {
+    width: 2px;
+    left: -1px; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   background-color: transparent;
