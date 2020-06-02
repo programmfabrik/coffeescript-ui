@@ -40,12 +40,11 @@
 	display: flex;
 
 	&:not(:last-child) {
-		border-bottom: 1px solid $hr-border-color;
 		padding-bottom: 0.25em;
 	}
 
 	&:not(:first-child) {
-		padding-top: 0.25em;
+		border-top: 1px solid $hr-border-color;
 	}
 
 	.cui-data-field-multi-output-aside {
