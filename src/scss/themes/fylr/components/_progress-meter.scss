@@ -9,8 +9,6 @@
 		border-radius: $btn-border-radius;
 		overflow: hidden;
 		position: relative;
-		background: gray('500');
-		color: white;
 
 		.cui-progress-meter-fill {
 			display: none;
@@ -41,7 +39,18 @@
 	// &[state='waiting'] {
 	// }
 
+	&[state='spinning'] {
+		.cui-progress-meter-icon {
+			color: $body-color;
+		}
+	}
+
 	&[state='percent'] {
+		.cui-progress-meter-bar {
+			background: gray('500');
+			color: white;
+		}
+
 		.cui-progress-meter-icon {
 			display: none;
 		}
