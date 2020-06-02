@@ -22,6 +22,10 @@ textarea {
 		@include input-focus();
 	}
 
+	.cui-data-field-disabled & {
+		background-color: $input-background-disabled;
+	}
+
 	// keep this exactly here, do not move into .cui-input selector
 	&.cui-input-shadow {
 		position: absolute;
