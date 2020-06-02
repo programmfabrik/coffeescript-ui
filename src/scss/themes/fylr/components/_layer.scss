@@ -353,5 +353,12 @@
 
 .cui-autocompletion-popup {
 	background-color: $body-bg;
+
+	> .cui-pane {
+		// reset
+		> .cui-vertical-layout-center {
+			padding: 0;
+		}
+	}
 }
 
