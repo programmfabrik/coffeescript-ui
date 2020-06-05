@@ -76,20 +76,45 @@
 			.cui-tab-header-button {
 				.cui-button-visual {
 					justify-content: flex-start;
-					border-right: 1px solid $tabs-header-border-color;
-				}
+					// border-right: 1px solid $tabs-active-border-color;
+					// border-left: 1px solid transparent;
+					// border-top: 0;
+					// border-bottom: 0;
 
-				&:not(:last-child) {
-					.cui-button-visual {
-						border-bottom: 0;
+					&::after {
+						border: 0;
+						border-right: 1px solid $tabs-active-border-color;
 					}
 				}
 
 				&:active,
 				&.cui-active {
 					.cui-button-visual {
-						border-bottom-color: $tabs-header-border-color;
-						border-right-color: $tabs-active-background;
+						// border-right-color: $tabs-active-background;
+						// border-left-color: $tabs-active-border-color;
+
+						// &::before,
+						// &::after {
+						// 	top: auto;
+						// 	bottom: auto;
+						// 	left: 0;
+						// 	right: -1px;
+						// 	width: auto;
+						// 	height: 1px;
+						// }
+
+						// &::before {
+						// 	top: 0;
+						// }
+
+						// &::after {
+						// 	bottom: 0;
+						// }
+
+						&::after {
+							border: 1px solid $tabs-active-border-color;
+							border-right: 0;
+						}
 					}
 				}
 			}
