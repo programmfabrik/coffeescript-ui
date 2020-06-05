@@ -201,13 +201,13 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
         margin-bottom: 0; }
       .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
         -webkit-box-pack: start;
-                justify-content: flex-start;
-        border-right: 1px solid rgba(206, 212, 218, 0.5); }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:not(:last-child) .cui-button-visual {
-        border-bottom: 0; }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual {
-        border-bottom-color: rgba(206, 212, 218, 0.5);
-        border-right-color: transparent; }
+                justify-content: flex-start; }
+        .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button .cui-button-visual::after {
+          border: 0;
+          border-right: 1px solid #212121; }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual::after, .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
+        border: 1px solid #212121;
+        border-right: 0; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
@@ -217,8 +217,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   font-size: 0.75rem; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-small .cui-tabs-pane-header .cui-buttonbar::before {
-  height: 2px;
-  top: -1px; }
+  height: 3px;
+  top: -2px; }
 
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small {
   display: -ms-grid;
@@ -326,13 +326,13 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
         margin-bottom: 0; }
       .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
         -webkit-box-pack: start;
-                justify-content: flex-start;
-        border-right: 1px solid rgba(206, 212, 218, 0.5); }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:not(:last-child) .cui-button-visual {
-        border-bottom: 0; }
-      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual {
-        border-bottom-color: rgba(206, 212, 218, 0.5);
-        border-right-color: transparent; }
+                justify-content: flex-start; }
+        .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button .cui-button-visual::after {
+          border: 0;
+          border-right: 1px solid #212121; }
+      .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual::after, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
+        border: 1px solid #212121;
+        border-right: 0; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
     height: 28px;
@@ -340,8 +340,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     padding: 0 0.25rem;
     font-size: 0.75rem; }
   .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header .cui-buttonbar::before {
-    width: 2px;
-    left: -1px; }
+    width: 3px;
+    left: -2px; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   background-color: transparent;
