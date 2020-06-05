@@ -9,7 +9,7 @@ class Demo.TabsDemo extends Demo
 
 	display: ->
 		_tabs = []
-		for i, idx in ["Atlanta", "New York", "Chicago"]
+		for i, idx in ["Atlanta", "New York", "Chicago", "Minneapolis & St. Paul"]
 			_tabs.push
 				text: i
 				content: i+": "+@getBlindText(idx*2+1)
