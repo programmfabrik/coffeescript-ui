@@ -296,14 +296,4 @@
 			}
 		}
 	}
-
-	.cui-button-button {
-		@include button-secondary();
-	}
 }
-
-// FormButton.coffee
-.cui-button-form-button {
-	@include button-secondary();
-}
-
