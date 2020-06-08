@@ -3,6 +3,10 @@
 
 .cui-options {
 	max-width: none;
+
+	.cui-button-checkbox {
+		@include checkbox-sm();
+	}
 }
 
 .cui-options-inactive:not(:empty) {
