@@ -2195,6 +2195,7 @@ textarea {
             align-items: baseline;
     white-space: initial; }
     .cui-checkbox--multiline .cui-button-visual .cui-button-center span {
+      max-width: 100%;
       white-space: normal;
       word-wrap: break-word;
       text-overflow: clip; }
@@ -3750,6 +3751,9 @@ textarea {
         width: 1rem;
         -webkit-box-pack: center;
                 justify-content: center; }
+        .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left .fa-chevron-right {
+          position: relative;
+          top: 1px; }
       .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center {
         padding-left: 0.75em; }
         .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center span {
