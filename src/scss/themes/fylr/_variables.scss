@@ -347,7 +347,7 @@ $menu-border-radius: $border-radius-lg !default;
 
 // * Panel
 // * ==========================================
-$panel-border-color: gray('400') !default;
+$panel-border-color: $body-color !default;
 
 // * Toolbar
 // * ==========================================

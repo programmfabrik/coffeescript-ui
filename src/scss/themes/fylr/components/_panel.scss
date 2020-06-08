@@ -24,9 +24,12 @@
 			max-width: 100%;
 		}
 
+		@include button-sm();
+
 		.cui-button-visual {
 			padding: 0;
 			justify-content: flex-start;
+			font-weight: $font-weight-bold;
 
 			.cui-button-left {
 				width: $spacer;
@@ -34,7 +37,7 @@
 			}
 
 			.cui-button-center {
-				padding-left: $spacer;
+				padding-left: 0.75em;
 
 				span {
 					white-space: normal;
@@ -46,8 +49,8 @@
 		&:focus,
 		&.cui-active {
 			.cui-button-visual {
+				color: $body-color;
 				background: none;
-				color: theme-color('primary');
 			}
 		}
 	}
