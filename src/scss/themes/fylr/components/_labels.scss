@@ -72,9 +72,10 @@ label[data-label-clickable],
 		@include label-muted();
 	}
 
-	&--padded {
-		padding: $label-padding;
-	}
+	// todo: make obsolete
+	// &--padded {
+	// 	padding: $label-padding;
+	// }
 
 	&[data-type='string'] {
 		color: $teal;
