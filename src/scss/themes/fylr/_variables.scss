@@ -519,7 +519,7 @@ $tabs-marker-border-width-sm: 		3px !default;
 $tabs-marker-border-offset: 		$tabs-marker-border-width - 1px;
 $tabs-marker-border-offset-sm: 		$tabs-marker-border-width-sm - 1px;
 
-$tabs-background: 					rgba(gray('300'), 0.5) !default;
+$tabs-background: 					transparent !default;
 $tabs-active-background: 			transparent !default;
 $tabs-border-color:					transparent !default;
 $tabs-active-border-color:			$body-color !default;

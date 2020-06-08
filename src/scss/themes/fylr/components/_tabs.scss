@@ -72,9 +72,10 @@
 					display: none;
 				}
 
-				&.cui-tab--padded {
-					padding: $tabs-padding;
-				}
+				// todo: make obsolete
+				// &.cui-tab--padded {
+				// 	padding: $tabs-padding;
+				// }
 
 				> .cui-empty-label:only-child {
 					margin: $spacer-sm 0;
