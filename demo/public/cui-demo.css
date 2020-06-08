@@ -345,10 +345,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   background-color: transparent;
-  color: #ff5724; }
+  color: #212121; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual {
-  color: #ff5724;
+  color: #212121;
   background-color: transparent; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:focus {
@@ -359,15 +359,15 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     z-index: 1; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:active .cui-button-visual {
-  color: #ff5724;
+  color: #212121;
   background-color: rgba(0, 0, 0, 0); }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open .cui-button-visual {
-  color: #ff5724;
+  color: #212121;
   background-color: transparent; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open:focus .cui-button-visual {
-  color: #ff5724;
+  color: #212121;
   background-color: transparent; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
@@ -650,8 +650,6 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     right: 0;
     height: 1px;
     background: rgba(173, 181, 189, 0.15); }
-  .cui-demo-block-grid.cui-block-level-1.cui-block--padded::after, .cui-demo-block-grid.cui-block-level-2.cui-block--padded::after, .cui-demo-block-grid.cui-block-level-3.cui-block--padded::after {
-    margin: 0 0.5rem; }
 
 .cui-demo-block-grid.cui-block-level-1 > .cui-block-content {
   color: #6c757d; }
