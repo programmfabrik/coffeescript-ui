@@ -8,7 +8,13 @@
 CUI.Template.loadTemplateText(require('./Panel.html'));
 
 class CUI.Panel extends CUI.DOMElement
+
+	@defaults:
+		arrow_down: "fa-angle-down"
+		arrow_right: "fa-angle-right"
+
 	constructor: (opts) ->
+		console.debug "new Panel", opts
 		super(opts)
 		@panel = new CUI.Template
 			name: "panel"
@@ -28,6 +34,8 @@ class CUI.Panel extends CUI.DOMElement
 		else if @_content
 			@append(@_content, "content")
 
+		@__activations = 0
+
 		@button = new CUI.Button
 			text: @_text
 			class: "cui-panel-header-button"
@@ -36,6 +44,10 @@ class CUI.Panel extends CUI.DOMElement
 			icon_active: @_icon_opened
 			icon_inactive: @_icon_closed
 			onActivate: (btn, flags, event) =>
+				@__activations++
+				if @__activations == 1
+					@_onFirstActivate?(@)
+
 				@__open(not flags.initial_activate)
 				@_onActivate?(btn, flags, event)
 
@@ -78,10 +90,10 @@ class CUI.Panel extends CUI.DOMElement
 				default: true
 				check: Boolean
 			icon_opened:
-				default: "fa-angle-down"
+				default: CUI.defaults.class.Panel.arrow_down
 				check: String
 			icon_closed:
-				default: "fa-angle-right"
+				default: CUI.defaults.class.Panel.arrow_right
 				check: String
 			footer_right: {}
 			footer_left: {}
@@ -166,3 +178,5 @@ class CUI.Panel extends CUI.DOMElement
 		else
 			@append(content, key)
 		@
+
+CUI.defaults.class.Panel = CUI.Panel.defaults
