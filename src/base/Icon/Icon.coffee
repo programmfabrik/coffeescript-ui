@@ -106,8 +106,6 @@ class CUI.Icon extends CUI.Element
 		stop: "fa-stop"
 		print: "fa-print"
 		minus: "fa-minus"
-		tree_open: "fa-caret-right"
-		tree_close: "fa-caret-down"
 		ellipsis_h: "fa-ellipsis-h"
 		ellipsis_v: "fa-ellipsis-v" #used for sidemenu buttons
 		menu: "fa-bars"

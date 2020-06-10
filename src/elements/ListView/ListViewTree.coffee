@@ -6,6 +6,10 @@
 ###
 
 class CUI.ListViewTree extends CUI.ListView
+	@defaults:
+		arrow_down: "fa-caret-down"
+		arrow_right: "fa-caret-right"
+
 	constructor: (opts) ->
 		super(opts)
 		CUI.util.assert(@root instanceof CUI.ListViewTreeNode, "new CUI.ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
@@ -323,6 +327,7 @@ class CUI.ListViewTree extends CUI.ListView
 		row = @getRow(row_index)
 		CUI.dom.data(row[0], "listViewRow").open()
 
+CUI.defaults.class.ListViewTree = CUI.ListViewTree.defaults
 
 CUI.Events.registerEvent
 	bubble: true

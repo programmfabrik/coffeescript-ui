@@ -28,6 +28,8 @@ class CUI.Button extends CUI.DOMElement
 		disabled_css_class: "cui-disabled"
 		loading_css_class: "cui-loading"
 		active_css_class: "cui-active"
+		arrow_down: "fa-angle-down"
+		arrow_right: "fa-angle-right"
 
 	#Construct a new CUI.Button.
 	#
@@ -107,9 +109,9 @@ class CUI.Button extends CUI.DOMElement
 				@addClass("cui-button--has-caret")
 
 				if @_menu_parent
-					@setIconRight("fa-angle-right")
+					@setIconRight(CUI.defaults.class.Button.arrow_right)
 				else
-					@setIconRight("fa-angle-down")
+					@setIconRight(CUI.defaults.class.Button.arrow_down)
 
 		else if @_right != true
 			@append(@_right, "right")
