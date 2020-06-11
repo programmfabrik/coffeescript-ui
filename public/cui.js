@@ -37307,6 +37307,9 @@ CUI.ListViewTree = (function(superClass) {
       },
       onClose: {
         check: Function
+      },
+      onBeforeSelect: {
+        check: Function
       }
     });
   };
@@ -37534,7 +37537,7 @@ CUI.ListViewTree = (function(superClass) {
   };
 
   ListViewTree.prototype.deselectRow = function(ev, row, newRow) {
-    if (this.__selectableRows === "multiple") {
+    if (this.__selectableRows === "multiple" || row === newRow) {
       return ListViewTree.__super__.deselectRow.call(this, ev, row, newRow);
     }
     return CUI.resolvedPromise();
@@ -38604,6 +38607,10 @@ CUI.ListViewTreeNode = (function(superClass) {
     }
     do_select = (function(_this) {
       return function() {
+        var base;
+        if (typeof (base = _this.getTree())._onBeforeSelect === "function") {
+          base._onBeforeSelect(_this);
+        }
         _this.setSelectedNode(_this);
         return _this.openUpwards().done(function() {
           _this.addSelectedClass();
