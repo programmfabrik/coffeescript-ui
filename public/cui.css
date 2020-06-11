@@ -1466,8 +1466,7 @@ a[role="button"].cui-button-appearance-link {
     margin: 0; }
   .cui-data-field.cui-maximize-horizontal, .cui-data-field.cui-simple-form {
     max-width: 100%;
-    -webkit-box-flex: 1;
-            flex-grow: 1; }
+    /* flex-grow: 1; */ }
   .cui-data-field.cui-maximize-horizontal.cui-output .cui-data-field-output-label.cui-label-multiline {
     max-width: 700px; }
   .cui-data-field .cui-list-view-grid-quadrant-3 {

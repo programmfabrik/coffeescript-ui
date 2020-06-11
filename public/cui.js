@@ -17319,8 +17319,6 @@ CUI.Icon = (function(superClass) {
     stop: "fa-stop",
     print: "fa-print",
     minus: "fa-minus",
-    tree_open: "fa-caret-right",
-    tree_close: "fa-caret-down",
     ellipsis_h: "fa-ellipsis-h",
     ellipsis_v: "fa-ellipsis-v",
     menu: "fa-bars",
@@ -23135,7 +23133,9 @@ CUI.Button = (function(superClass) {
     confirm_title: "Confirmation",
     disabled_css_class: "cui-disabled",
     loading_css_class: "cui-loading",
-    active_css_class: "cui-active"
+    active_css_class: "cui-active",
+    arrow_down: "fa-angle-down",
+    arrow_right: "fa-angle-right"
   };
 
   function Button(opts) {
@@ -23200,9 +23200,9 @@ CUI.Button = (function(superClass) {
       } else if (this._menu && this._icon_right !== false) {
         this.addClass("cui-button--has-caret");
         if (this._menu_parent) {
-          this.setIconRight("fa-angle-right");
+          this.setIconRight(CUI.defaults["class"].Button.arrow_right);
         } else {
-          this.setIconRight("fa-angle-down");
+          this.setIconRight(CUI.defaults["class"].Button.arrow_down);
         }
       }
     } else if (this._right !== true) {
@@ -39316,6 +39316,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 CUI.ListViewTree = (function(superClass) {
   extend(ListViewTree, superClass);
 
+  ListViewTree.defaults = {
+    arrow_down: "fa-caret-down",
+    arrow_right: "fa-caret-right"
+  };
+
   function ListViewTree(opts) {
     this.__actionOnNode = bind(this.__actionOnNode, this);
     ListViewTree.__super__.constructor.call(this, opts);
@@ -39706,6 +39711,8 @@ CUI.ListViewTree = (function(superClass) {
   return ListViewTree;
 
 })(CUI.ListView);
+
+CUI.defaults["class"].ListViewTree = CUI.ListViewTree.defaults;
 
 CUI.Events.registerEvent({
   bubble: true,
@@ -40830,13 +40837,13 @@ CUI.ListViewTreeNode = (function(superClass) {
     }
     cls = ["cui-tree-node-handle"];
     if (this.is_open) {
-      this.__handleIcon = "tree_close";
+      this.__handleIcon = CUI.defaults["class"].ListViewTree.arrow_down;
       cls.push("cui-tree-node-is-open");
     } else if (this.isLeaf()) {
       this.__handleIcon = null;
       cls.push("cui-tree-node-is-leaf");
     } else {
-      this.__handleIcon = "tree_open";
+      this.__handleIcon = CUI.defaults["class"].ListViewTree.arrow_right;
       cls.push("cui-tree-node-is-closed");
     }
     if (((ref1 = this.children) != null ? ref1.length : void 0) === 0) {
@@ -46526,7 +46533,13 @@ CUI.Template.loadTemplateText(__webpack_require__(/*! ./Panel.html */ "./element
 CUI.Panel = (function(superClass) {
   extend(Panel, superClass);
 
+  Panel.defaults = {
+    arrow_down: "fa-angle-down",
+    arrow_right: "fa-angle-right"
+  };
+
   function Panel(opts) {
+    console.debug("new Panel", opts);
     Panel.__super__.constructor.call(this, opts);
     this.panel = new CUI.Template({
       name: "panel",
@@ -46547,6 +46560,7 @@ CUI.Panel = (function(superClass) {
     } else if (this._content) {
       this.append(this._content, "content");
     }
+    this.__activations = 0;
     this.button = new CUI.Button({
       text: this._text,
       "class": "cui-panel-header-button",
@@ -46556,6 +46570,12 @@ CUI.Panel = (function(superClass) {
       icon_inactive: this._icon_closed,
       onActivate: (function(_this) {
         return function(btn, flags, event) {
+          _this.__activations++;
+          if (_this.__activations === 1) {
+            if (typeof _this._onFirstActivate === "function") {
+              _this._onFirstActivate(_this);
+            }
+          }
           _this.__open(!flags.initial_activate);
           return typeof _this._onActivate === "function" ? _this._onActivate(btn, flags, event) : void 0;
         };
@@ -46611,11 +46631,11 @@ CUI.Panel = (function(superClass) {
         check: Boolean
       },
       icon_opened: {
-        "default": "fa-angle-down",
+        "default": CUI.defaults["class"].Panel.arrow_down,
         check: String
       },
       icon_closed: {
-        "default": "fa-angle-right",
+        "default": CUI.defaults["class"].Panel.arrow_right,
         check: String
       },
       footer_right: {},
@@ -46743,6 +46763,8 @@ CUI.Panel = (function(superClass) {
   return Panel;
 
 })(CUI.DOMElement);
+
+CUI.defaults["class"].Panel = CUI.Panel.defaults;
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee")))
 
