@@ -676,6 +676,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		# console.debug "selecting node", sel_node
 
 		do_select = =>
+			@getTree()._onBeforeSelect?(@)
 			@setSelectedNode(@)
 			# console.error "openUpwards", @getNodeId(), @is_open
 			@openUpwards()

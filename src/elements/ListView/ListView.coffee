@@ -139,6 +139,7 @@ class CUI.ListView extends CUI.SimplePane
 				deprecated: true
 			footer:
 				deprecated: true
+			# ListViewRow uses _onSelect and _onDeselect
 			onSelect:
 				check: Function
 			onDeselect:
