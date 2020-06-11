@@ -10,8 +10,8 @@
     "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest",
-		"rmdist": "rimraf public/*",
-		"svg": "gulp svgstore"
+    "rmdist": "rimraf public/*",
+    "svg": "gulp svgstore"
   },
   "repository": {
     "type": "git",
