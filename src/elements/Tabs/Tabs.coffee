@@ -36,6 +36,11 @@ class CUI.Tabs extends CUI.SimplePane
 				check: ['vertical', 'horizontal']
 				mandatory: true
 				default: 'horizontal'
+			onActivate:
+				check: Function
+			onDeactivate:
+				check: Function
+
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
@@ -198,20 +203,19 @@ class CUI.Tabs extends CUI.SimplePane
 				node: tab
 				type: "tab_activate"
 				call: =>
-
 					if @__overflowBtn.isShown()
 						CUI.dom.scrollIntoView(tab.getButton().DOM)
 
-					if CUI.__ng__
-						if not @_maximize_vertical
-							# set left margin on first tab
-							# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
-							CUI.dom.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
+					if not @_maximize_vertical
+						# set left margin on first tab
+						# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
+						CUI.dom.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
 					@__setActiveMarker()
 
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
+					@_onActivate?(@, tab)
 					# console.error @__uniqueId, "activate"
 
 			CUI.Events.listen
@@ -221,6 +225,7 @@ class CUI.Tabs extends CUI.SimplePane
 					# console.error @__uniqueId, "deactivate"
 					@__active_tab = null
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", "")
+					@_onDeactivate?(@, tab)
 
 			CUI.Events.listen
 				node: tab

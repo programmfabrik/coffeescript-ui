@@ -16,6 +16,9 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 
 		@render()
 		@root.open()
+		.always =>
+			@_onAfterRender?(@)
+		return
 
 	initOpts: ->
 		super()
@@ -43,6 +46,8 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 				mandatory: true
 				default: false
 				check: Boolean
+			onAfterRender:
+				check: Function
 
 		@removeOpt("root")
 		@removeOpt("cols")
