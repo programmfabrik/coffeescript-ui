@@ -42460,7 +42460,12 @@ CUI.ObjectDumper = (function(superClass) {
       this.root.children.splice(0, 0, headerRow);
     }
     this.render();
-    this.root.open();
+    this.root.open().always((function(_this) {
+      return function() {
+        return typeof _this._onAfterRender === "function" ? _this._onAfterRender(_this) : void 0;
+      };
+    })(this));
+    return;
   }
 
   ObjectDumper.prototype.initOpts = function() {
@@ -42501,6 +42506,9 @@ CUI.ObjectDumper = (function(superClass) {
         mandatory: true,
         "default": false,
         check: Boolean
+      },
+      onAfterRender: {
+        check: Function
       }
     });
     this.removeOpt("root");
@@ -46116,6 +46124,12 @@ CUI.Tabs = (function(superClass) {
         check: ['vertical', 'horizontal'],
         mandatory: true,
         "default": 'horizontal'
+      },
+      onActivate: {
+        check: Function
+      },
+      onDeactivate: {
+        check: Function
       }
     });
   };
@@ -46311,16 +46325,15 @@ CUI.Tabs = (function(superClass) {
             if (_this.__overflowBtn.isShown()) {
               CUI.dom.scrollIntoView(tab.getButton().DOM);
             }
-            if (CUI.__ng__) {
-              if (!_this._maximize_vertical) {
-                CUI.dom.setStyle(_this.__tabs[0].DOM, {
-                  marginLeft: -100 * CUI.util.idxInArray(tab, _this.__tabs) + "%"
-                });
-              }
+            if (!_this._maximize_vertical) {
+              CUI.dom.setStyle(_this.__tabs[0].DOM, {
+                marginLeft: -100 * CUI.util.idxInArray(tab, _this.__tabs) + "%"
+              });
             }
             _this.__active_tab = tab;
             _this.__setActiveMarker();
-            return CUI.dom.setAttribute(_this.DOM, "active-tab-idx", CUI.util.idxInArray(tab, _this.__tabs));
+            CUI.dom.setAttribute(_this.DOM, "active-tab-idx", CUI.util.idxInArray(tab, _this.__tabs));
+            return typeof _this._onActivate === "function" ? _this._onActivate(_this, tab) : void 0;
           };
         })(this)
       });
@@ -46330,7 +46343,8 @@ CUI.Tabs = (function(superClass) {
         call: (function(_this) {
           return function() {
             _this.__active_tab = null;
-            return CUI.dom.setAttribute(_this.DOM, "active-tab-idx", "");
+            CUI.dom.setAttribute(_this.DOM, "active-tab-idx", "");
+            return typeof _this._onDeactivate === "function" ? _this._onDeactivate(_this, tab) : void 0;
           };
         })(this)
       });
