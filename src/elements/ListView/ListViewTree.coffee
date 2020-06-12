@@ -332,8 +332,6 @@ class CUI.ListViewTree extends CUI.ListView
 		row = @getRow(row_index)
 		CUI.dom.data(row[0], "listViewRow").open()
 
-CUI.defaults.class.ListViewTree = CUI.ListViewTree.defaults
-
 CUI.Events.registerEvent
 	bubble: true
 	type: [
@@ -343,3 +341,5 @@ CUI.Events.registerEvent
 		"row_selected"
 		"row_deselected"
 	]
+
+CUI.defaults.class.ListViewTree = CUI.ListViewTree

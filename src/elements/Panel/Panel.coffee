@@ -90,10 +90,10 @@ class CUI.Panel extends CUI.DOMElement
 				default: true
 				check: Boolean
 			icon_opened:
-				default: CUI.defaults.class.Panel.arrow_down
+				default: CUI.defaults.class.Panel.defaults.arrow_down
 				check: String
 			icon_closed:
-				default: CUI.defaults.class.Panel.arrow_right
+				default: CUI.defaults.class.Panel.defaults.arrow_right
 				check: String
 			footer_right: {}
 			footer_left: {}
@@ -179,4 +179,4 @@ class CUI.Panel extends CUI.DOMElement
 			@append(content, key)
 		@
 
-CUI.defaults.class.Panel = CUI.Panel.defaults
+CUI.defaults.class.Panel = CUI.Panel

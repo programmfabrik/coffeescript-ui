@@ -822,13 +822,13 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		cls = ["cui-tree-node-handle"]
 
 		if @is_open
-			@__handleIcon = CUI.defaults.class.ListViewTree.arrow_down
+			@__handleIcon = CUI.defaults.class.ListViewTree.defaults.arrow_down
 			cls.push("cui-tree-node-is-open")
 		else if @isLeaf()
 			@__handleIcon = null
 			cls.push("cui-tree-node-is-leaf")
 		else
-			@__handleIcon = CUI.defaults.class.ListViewTree.arrow_right
+			@__handleIcon = CUI.defaults.class.ListViewTree.defaults.arrow_right
 			cls.push("cui-tree-node-is-closed")
 
 		if @children?.length == 0

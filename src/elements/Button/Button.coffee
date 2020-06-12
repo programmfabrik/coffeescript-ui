@@ -109,9 +109,9 @@ class CUI.Button extends CUI.DOMElement
 				@addClass("cui-button--has-caret")
 
 				if @_menu_parent
-					@setIconRight(CUI.defaults.class.Button.arrow_right)
+					@setIconRight(CUI.defaults.class.Button.defaults.arrow_right)
 				else
-					@setIconRight(CUI.defaults.class.Button.arrow_down)
+					@setIconRight(CUI.defaults.class.Button.defaults.arrow_down)
 
 		else if @_right != true
 			@append(@_right, "right")
@@ -976,8 +976,8 @@ class CUI.Button extends CUI.DOMElement
 		mouseup: ['mouseup', 'mousedown']
 		dblclick: ['click', 'mousedown']
 
-CUI.defaults.class.Button = CUI.Button
-
 CUI.Events.registerEvent
 	type: ["show", "hide", "cui-button-click"]
 	bubble: true
+
+CUI.defaults.class.Button = CUI.Button
