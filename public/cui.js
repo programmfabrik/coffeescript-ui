@@ -21547,9 +21547,9 @@ CUI.Button = (function(superClass) {
       } else if (this._menu && this._icon_right !== false) {
         this.addClass("cui-button--has-caret");
         if (this._menu_parent) {
-          this.setIconRight(CUI.defaults["class"].Button.arrow_right);
+          this.setIconRight(CUI.defaults["class"].Button.defaults.arrow_right);
         } else {
-          this.setIconRight(CUI.defaults["class"].Button.arrow_down);
+          this.setIconRight(CUI.defaults["class"].Button.defaults.arrow_down);
         }
       }
     } else if (this._right !== true) {
@@ -22615,12 +22615,12 @@ CUI.Button = (function(superClass) {
 
 })(CUI.DOMElement);
 
-CUI.defaults["class"].Button = CUI.Button;
-
 CUI.Events.registerEvent({
   type: ["show", "hide", "cui-button-click"],
   bubble: true
 });
+
+CUI.defaults["class"].Button = CUI.Button;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -37665,12 +37665,12 @@ CUI.ListViewTree = (function(superClass) {
 
 })(CUI.ListView);
 
-CUI.defaults["class"].ListViewTree = CUI.ListViewTree.defaults;
-
 CUI.Events.registerEvent({
   bubble: true,
   type: ["row_removed", "row_added", "row_moved", "row_selected", "row_deselected"]
 });
+
+CUI.defaults["class"].ListViewTree = CUI.ListViewTree;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -38784,13 +38784,13 @@ CUI.ListViewTreeNode = (function(superClass) {
     }
     cls = ["cui-tree-node-handle"];
     if (this.is_open) {
-      this.__handleIcon = CUI.defaults["class"].ListViewTree.arrow_down;
+      this.__handleIcon = CUI.defaults["class"].ListViewTree.defaults.arrow_down;
       cls.push("cui-tree-node-is-open");
     } else if (this.isLeaf()) {
       this.__handleIcon = null;
       cls.push("cui-tree-node-is-leaf");
     } else {
-      this.__handleIcon = CUI.defaults["class"].ListViewTree.arrow_right;
+      this.__handleIcon = CUI.defaults["class"].ListViewTree.defaults.arrow_right;
       cls.push("cui-tree-node-is-closed");
     }
     if (((ref1 = this.children) != null ? ref1.length : void 0) === 0) {
@@ -44358,11 +44358,11 @@ CUI.Panel = (function(superClass) {
         check: Boolean
       },
       icon_opened: {
-        "default": CUI.defaults["class"].Panel.arrow_down,
+        "default": CUI.defaults["class"].Panel.defaults.arrow_down,
         check: String
       },
       icon_closed: {
-        "default": CUI.defaults["class"].Panel.arrow_right,
+        "default": CUI.defaults["class"].Panel.defaults.arrow_right,
         check: String
       },
       footer_right: {},
@@ -44491,7 +44491,7 @@ CUI.Panel = (function(superClass) {
 
 })(CUI.DOMElement);
 
-CUI.defaults["class"].Panel = CUI.Panel.defaults;
+CUI.defaults["class"].Panel = CUI.Panel;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
