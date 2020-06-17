@@ -1286,7 +1286,7 @@ li > div {
 		height: auto;
 		flex-direction: column;
 		border-width: 0;
-		padding: 4px $padding/2 0; // had a padding-bottom: 0 and padding-top: $padding/2 - looks weird for the presentation play button (without text)
+		padding: 1px $padding/2;
 	}
 
 	.cui-button-left {
