@@ -126,29 +126,7 @@
 	&.cui-selected {
 		> .cui-lv-tr {
 			position: relative;
-
-			> .cui-lv-td {
-				background: $list-view-selected-row-background;
-			}
-
-			&::before,
-			&::after {
-				content: '';
-				display: block;
-				position: absolute;
-				left: 0;
-				right: 0;
-				height: 1px;
-				background: $list-view-selected-row-background;
-			}
-
-			&::before {
-				top: -1px;
-			}
-
-			&::after {
-				bottom: -1px;
-			}
+			box-shadow: inset 0 0 0 $list-view-selected-row-border-width $list-view-selected-row-border-color;
 		}
 
 		.cui-empty-label {
