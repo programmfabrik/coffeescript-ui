@@ -21309,7 +21309,7 @@ CUI.Block = (function(superClass) {
       appearance: {
         "default": "normal",
         mandatory: true,
-        check: ["normal", "wide"]
+        check: ["normal", "wide", "muted"]
       },
       padded: {
         check: Boolean,
@@ -34858,7 +34858,7 @@ CUI.Label = (function(superClass) {
         check: ["mini", "normal", "big", "bigger"]
       },
       appearance: {
-        check: ["title", "secondary", "muted"]
+        check: ["title", "secondary", "muted", "transparent-border"]
       },
       markdown: {
         mandatory: true,
