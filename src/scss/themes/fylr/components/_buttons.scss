@@ -83,14 +83,6 @@ a[role='button'].cui-button-appearance-link {
 	}
 }
 
-.cui-button--has-caret {
-	.cui-button-visual {
-		.cui-button-right {
-			margin-left: auto;
-		}
-	}
-}
-
 // Button with default active state removes
 .cui-button-toggle-fill-screen {
 	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-background, $btn-color);

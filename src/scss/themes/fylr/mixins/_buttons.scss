@@ -2,7 +2,7 @@
 @mixin button-size($height, $padding-x, $font-size, $border-radius) {
 	// padding: 0 $padding-x;
 	height: $height;
-	min-width: 1.1*$height; // make icon-only buttons optically square
+	min-width: $btn-visually-square-factor * $height; // make icon-only buttons optically square
 	font-size: $font-size;
 	line-height: $btn-line-height;
 	border-radius: $border-radius;
