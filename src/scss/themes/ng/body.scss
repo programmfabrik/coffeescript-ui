@@ -5729,6 +5729,12 @@ label[data-label-clickable],
 		margin-bottom: $padding;
 	}
 
+	&.appearance-muted {
+		.cui-block-header > .cui-block-title {
+			color: $muted-color;
+		}
+	}
+
 	&.cui-block-level-1,
 	&.cui-block-level-2 {
 		&.appearance-wide {
@@ -5849,13 +5855,13 @@ label[data-label-clickable],
 		&.appearance-wide {
 			> .cui-block-header {
 				padding-bottom: 1.5*$padding;
-
-				.cui-block-title {
-					font-size: 12px;
-					text-transform: uppercase;
-					letter-spacing: 0.03em;
-				}
 			}
+		}
+
+		.cui-block-title {
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
 		}
 	}
 
