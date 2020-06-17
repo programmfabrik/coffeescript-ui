@@ -370,16 +370,6 @@
 				border-top: 1px solid $table-border-color;
 			}
 		}
-
-		&:not(.cui-selected):hover {
-			> .cui-lv-tr > .cui-lv-td {
-				background: $table-row-hover-background;
-			}
-
-			> .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column {
-				background: transparent; // reset
-			}
-		}
 	}
 
 	// only if there is a -top which usually hold the header

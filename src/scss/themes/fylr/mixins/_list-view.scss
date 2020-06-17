@@ -1,0 +1,17 @@
+@mixin list-view-row-hover() {
+	.cui-list-view-grid-quadrant-2,
+	.cui-list-view-grid-quadrant-3 {
+		> .cui-lv-tr-outer {
+			&:not(.cui-selected):hover {
+				> .cui-lv-tr > .cui-lv-td {
+					background: $table-row-hover-background;
+				}
+
+				> .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column {
+					background: transparent; // reset
+				}
+			}
+		}
+	}
+}
+
