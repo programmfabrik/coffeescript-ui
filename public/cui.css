@@ -85,6 +85,14 @@
   width: 15px;
   height: 14px; }
 
+.svg-presentation-play {
+  width: 15px;
+  height: 14px; }
+
+.svg-presentation {
+  width: 15px;
+  height: 14px; }
+
 .svg-remove-icon {
   width: 512px;
   height: 512px; }
@@ -1331,7 +1339,7 @@ li > div {
   height: auto;
   flex-direction: column;
   border-width: 0;
-  padding: 4px 5px 0; }
+  padding: 1px 5px; }
 
 .cui-button-size-big .cui-button-left {
   padding: 3px; }
