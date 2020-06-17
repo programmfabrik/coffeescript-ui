@@ -35,7 +35,7 @@
 	}
 }
 
-// Multi Output
+// Multi Output / Languages
 .cui-data-field-multi-output {
 	display: flex;
 
@@ -43,13 +43,12 @@
 		padding-bottom: 0.25em;
 	}
 
-	&:not(:first-child) {
-		border-top: 1px solid $hr-border-color;
-	}
-
+	// Language code
 	.cui-data-field-multi-output-aside {
+		order: -1;
 		position: relative;
 		top: 1px;
+		margin-left: -#{$spacer-xs};
 
 		.cui-button-button {
 			@include input-control-button(22px, 18px);
@@ -58,6 +57,5 @@
 
 	.cui-data-field-multi-output-center {
 		flex-grow: 1;
-		padding-right: $spacer-xs;
 	}
 }
