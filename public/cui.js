@@ -23200,9 +23200,9 @@ CUI.Button = (function(superClass) {
       } else if (this._menu && this._icon_right !== false) {
         this.addClass("cui-button--has-caret");
         if (this._menu_parent) {
-          this.setIconRight(CUI.defaults["class"].Button.arrow_right);
+          this.setIconRight(CUI.defaults["class"].Button.defaults.arrow_right);
         } else {
-          this.setIconRight(CUI.defaults["class"].Button.arrow_down);
+          this.setIconRight(CUI.defaults["class"].Button.defaults.arrow_down);
         }
       }
     } else if (this._right !== true) {
@@ -48536,36 +48536,9 @@ CUI.Tabs = (function(superClass) {
     return this;
   };
 
-  Tabs.prototype.__setActiveMarker = function() {
-    var btn, btn_dim, ref;
-    btn = (ref = this.getActiveTab()) != null ? ref.getButton().DOM : void 0;
-    if (!btn) {
-      CUI.dom.hideElement(this.__tabs_marker);
-      return;
-    }
-    CUI.dom.showElement(this.__tabs_marker);
-    btn_dim = CUI.dom.getDimensions(btn);
-    CUI.dom.setStyle(this.__buttonbar, {
-      '--active-tab-width': btn_dim.borderBoxWidth
-    });
-    CUI.dom.setStyle(this.__buttonbar, {
-      '--active-tab-height': btn_dim.borderBoxHeight
-    });
-    CUI.dom.setStyle(this.__buttonbar, {
-      '--active-tab-left': btn_dim.offsetLeft
-    });
-    CUI.dom.setStyle(this.__buttonbar, {
-      '--active-tab-top': btn_dim.offsetTop
-    });
-    return this;
-  };
-
   Tabs.prototype.init = function() {
     var _tab, i, idx, len, pane_key, ref, tab;
     Tabs.__super__.init.call(this);
-    this.__tabs_marker = CUI.dom.element("DIV", {
-      "class": "cui-tabs-active-marker"
-    });
     this.__tabs_bodies = new CUI.Template({
       name: "tabs-bodies"
     });
@@ -48580,7 +48553,6 @@ CUI.Tabs = (function(superClass) {
     this.__buttonbar = new CUI.Buttonbar();
     pane_key = "center";
     this.__pane_header.append(this.__buttonbar, pane_key);
-    this.__pane_header.append(this.__tabs_marker, pane_key);
     this.__header = this.__pane_header[pane_key]();
     CUI.Events.listen({
       type: "scroll",
@@ -48665,13 +48637,11 @@ CUI.Tabs = (function(superClass) {
           node: _this.getLayout(),
           type: "viewport-resize",
           call: function() {
-            _this.__checkOverflowButton();
-            return _this.__setActiveMarker();
+            return _this.__checkOverflowButton();
           }
         });
         CUI.util.assert(CUI.dom.isInDOM(_this.getLayout().DOM), "Tabs getting DOM insert event without being in DOM.");
-        _this.__checkOverflowButton();
-        return _this.__setActiveMarker();
+        return _this.__checkOverflowButton();
       };
     })(this));
     this.addClass("cui-tabs");
@@ -48711,7 +48681,6 @@ CUI.Tabs = (function(superClass) {
               }
             }
             _this.__active_tab = tab;
-            _this.__setActiveMarker();
             return CUI.dom.setAttribute(_this.DOM, "active-tab-idx", CUI.util.idxInArray(tab, _this.__tabs));
           };
         })(this)
