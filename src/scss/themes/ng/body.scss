@@ -2434,6 +2434,16 @@ a[role="button"].cui-button-appearance-link {
 		margin-right: 0;
 		padding: 0 7px;
 		color: $secondary-color;
+		
+		&.cui-label-appearance-transparent-border {
+			border: none;
+			margin-left: 1px;
+			box-shadow: 0 0 0 1px hsla(0,0%,0%,.1);
+			
+			&.cui-label-size-mini {
+				height: 18px;
+			}
+		}
 
 		&-size-mini {
 			height: 20px;
