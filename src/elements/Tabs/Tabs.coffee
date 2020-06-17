@@ -61,27 +61,8 @@ class CUI.Tabs extends CUI.SimplePane
 			CUI.dom.removeClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 		@
 
-	__setActiveMarker: ->
-		btn = @getActiveTab()?.getButton().DOM
-
-		if not btn
-			CUI.dom.hideElement(@__tabs_marker)
-			return
-
-		CUI.dom.showElement(@__tabs_marker)
-		btn_dim = CUI.dom.getDimensions(btn)
-
-		CUI.dom.setStyle(@__buttonbar, '--active-tab-width': btn_dim.borderBoxWidth)
-		CUI.dom.setStyle(@__buttonbar, '--active-tab-height': btn_dim.borderBoxHeight)
-		CUI.dom.setStyle(@__buttonbar, '--active-tab-left': btn_dim.offsetLeft)
-		CUI.dom.setStyle(@__buttonbar, '--active-tab-top': btn_dim.offsetTop)
-
-		@
-
 	init: ->
 		super()
-		# slider to mark active tab
-		@__tabs_marker = CUI.dom.element("DIV", class: "cui-tabs-active-marker")
 
 		@__tabs_bodies = new CUI.Template
 			name: "tabs-bodies"
@@ -101,8 +82,6 @@ class CUI.Tabs extends CUI.SimplePane
 		pane_key = "center"
 
 		@__pane_header.append(@__buttonbar, pane_key)
-
-		@__pane_header.append(@__tabs_marker, pane_key)
 
 		@__header = @__pane_header[pane_key]()
 
@@ -167,11 +146,9 @@ class CUI.Tabs extends CUI.SimplePane
 				type: "viewport-resize"
 				call: =>
 					@__checkOverflowButton()
-					@__setActiveMarker()
 
 			CUI.util.assert( CUI.dom.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
-			@__setActiveMarker()
 
 		@addClass("cui-tabs")
 
@@ -207,7 +184,6 @@ class CUI.Tabs extends CUI.SimplePane
 							CUI.dom.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
-					@__setActiveMarker()
 
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
 					# console.error @__uniqueId, "activate"

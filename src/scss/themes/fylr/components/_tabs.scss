@@ -196,22 +196,6 @@
 		min-width: 0;
 		width: 100%;
 		position: relative;
-		margin-top: $tabs-marker-border-offset;
-
-		// active marker
-		&::before {
-			content: '';
-			position: absolute;
-			display: block;
-			background-color: $tabs-marker-border-color;
-			width: var(--active-tab-width);
-			height: $tabs-marker-border-width;
-			top: -#{$tabs-marker-border-offset};
-			left: 0;
-			transform: translate(var(--active-tab-left), 0);
-			transition: all 0.3s ease;
-			z-index: 2;
-		}
 
 		// tab border extension
 		&::after {
@@ -285,9 +269,4 @@
 			}
 		}
 	}
-}
-
-// Hide tab Marker, will be rendered in .cui-buttonbar
-.cui-tabs-active-marker {
-	display: none;
 }

@@ -128,7 +128,6 @@
 
 		.cui-buttonbar::before {
 			height: $tabs-marker-border-width-sm;
-			top: -#{$tabs-marker-border-offset-sm};
 		}
 	}
 }
@@ -139,7 +138,6 @@
 
 		.cui-buttonbar::before {
 			width: $tabs-marker-border-width-sm;
-			left: -#{$tabs-marker-border-offset-sm};
 		}
 	}
 }
