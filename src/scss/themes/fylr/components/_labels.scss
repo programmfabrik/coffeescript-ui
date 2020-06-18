@@ -180,7 +180,9 @@ label[data-label-clickable],
 // Multiline
 .cui-label-multiline,
 .cui-label-markdown {
-	align-items: baseline;
+	&:not(.cui-label-centered) {
+		align-items: baseline;
+	}
 
 	> .cui-label-content {
 		flex: 1 1 auto;
