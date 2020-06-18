@@ -516,17 +516,18 @@ $digi-display-font-family: 	$font-family-monospace !default;
 // * Tabs
 // * ==========================================
 $tabs-padding: 						$component-padding-base !default;
-$tabs-header-height: 				$btn-height + 6px !default;
-$tabs-header-height-sm:				$btn-height-sm + 4px !default;
-
 $tabs-marker-border-color: 			$body-color !default;
 $tabs-marker-border-width: 			3px !default;
 $tabs-marker-border-width-sm: 		3px !default;
+$tabs-header-height: 				$btn-height !default; // = tab button height
+$tabs-header-height-sm:				$btn-height-sm !default; // = small tab button height
 
 $tabs-background: 					transparent !default;
 $tabs-active-background: 			transparent !default;
 $tabs-border-color:					transparent !default;
 $tabs-active-border-color:			$body-color !default;
 
-$tabs-overflow-button-background: 	darken($tabs-background, 15%) !default;
-$tabs-overflow-button-color: 		$body-color !default;
+$tabs-overflow-button-background: 		transparent !default;
+$tabs-overflow-button-background-hover: transparent !default;
+$tabs-overflow-button-color: 			$body-color !default;
+$tabs-overflow-button-color-hover: 		rgba($body-color, 0.7) !default;

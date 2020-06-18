@@ -114,7 +114,6 @@
 
 		.cui-button-visual {
 			height: $tabs-header-height;
-			padding: 0 $spacer-sm;
 			border-radius: 0;
 			background-color: $tabs-background;
 			font-weight: $font-weight-bold;
@@ -146,19 +145,19 @@
 		margin-top: $tabs-marker-border-width;
 
 		// white blocker gradient
-		&::before {
-			content: '';
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 0;
-			bottom: 0;
-			width: 40px;
-			transform: translateX(-100%);
-			opacity: 0.6;
+		// &::before {
+		// 	content: '';
+		// 	display: block;
+		// 	position: absolute;
+		// 	left: 0;
+		// 	top: 0;
+		// 	bottom: 0;
+		// 	width: 40px;
+		// 	transform: translateX(-100%);
+		// 	opacity: 0.6;
 
-			@include scrim-gradient($body-bg, $direction: 'to left');
-		}
+		// 	@include scrim-gradient($body-bg, $direction: 'to left');
+		// }
 
 		// shadow gradient
 		&::after {
@@ -168,7 +167,7 @@
 			left: 0;
 			top: 0;
 			bottom: 0;
-			width: 10px;
+			width: 30px;
 			transform: translateX(-100%);
 			opacity: 0.1;
 
@@ -182,12 +181,14 @@
 			border-top-left-radius: 0 !important;
 			border-bottom-left-radius: 0 !important;
 			border-bottom-right-radius: 0 !important;
+			border-bottom: 1px solid $tabs-active-border-color;
 		}
 
 		&:hover,
 		&:focus {
 			.cui-button-visual {
-				background-color: darken($tabs-overflow-button-background, 8%);
+				background-color: $tabs-overflow-button-background-hover;
+				color: $tabs-overflow-button-color-hover;
 			}
 		}
 	}
