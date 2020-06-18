@@ -270,8 +270,8 @@ $hr-border-width:   	1px !default;
 
 $component-focus-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3) !default;
 
-$component-selected-border-width: 2px !default;
-$component-selected-border-color: rgba(theme-color('primary'), 0.8) !default;
+$component-selected-border-width: 1px !default;
+$component-selected-border-color: theme-color('primary') !default;
 
 // * Icons
 // * ==========================================
