@@ -1147,7 +1147,9 @@ li > div {
 
 	&.cui-disabled {
 		.cui-button-visual {
+			background: transparentize($button-background,.3);
 			border-color: transparent;
+			color: desaturate(lighten($button-color, 33%), 10%);
 		}
 	}
 
