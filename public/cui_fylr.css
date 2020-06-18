@@ -1448,19 +1448,20 @@ label[data-label-clickable],
     -webkit-box-flex: 0;
             flex-grow: 0; }
 
-.cui-label-multiline,
-.cui-label-markdown {
+.cui-label-multiline:not(.cui-label-centered),
+.cui-label-markdown:not(.cui-label-centered) {
   -webkit-box-align: baseline;
           align-items: baseline; }
-  .cui-label-multiline > .cui-label-content,
-  .cui-label-markdown > .cui-label-content {
-    -webkit-box-flex: 1;
-            flex: 1 1 auto;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    word-wrap: break-word;
-    word-break: break-word; }
+
+.cui-label-multiline > .cui-label-content,
+.cui-label-markdown > .cui-label-content {
+  -webkit-box-flex: 1;
+          flex: 1 1 auto;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-wrap: break-word;
+  word-break: break-word; }
 
 .cui-label-multiline {
   max-width: 100%;
