@@ -48,10 +48,6 @@
 
 @mixin label-muted() {
 	color: theme-color('muted');
-
-	.cui-selected & {
-		color: rgba(theme-color('primary'), 0.55); // todo: when is this ever selected?
-	}
 }
 
 // Label in a field
