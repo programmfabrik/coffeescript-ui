@@ -143,21 +143,6 @@
 		position: relative;
 		z-index: 1; // to overlap active buttons
 
-		// white blocker gradient
-		// &::before {
-		// 	content: '';
-		// 	display: block;
-		// 	position: absolute;
-		// 	left: 0;
-		// 	top: 0;
-		// 	bottom: 0;
-		// 	width: 40px;
-		// 	transform: translateX(-100%);
-		// 	opacity: 0.6;
-
-		// 	@include scrim-gradient($body-bg, $direction: 'to left');
-		// }
-
 		// shadow gradient
 		&::after {
 			content: '';
@@ -217,8 +202,6 @@
 
 					// reset border and start afresh
 					border: 0;
-					// border-bottom: 1px solid $tabs-active-border-color;
-					// border-top: 1px solid transparent;
 
 					&::after {
 						content: '';
@@ -237,29 +220,6 @@
 				&:active,
 				&.cui-active {
 					.cui-button-visual {
-						// position: relative;
-						// border-bottom-color: $tabs-active-background;
-						// border-top-color: $tabs-active-border-color;
-
-						// &::before,
-						// &::after {
-						// 	content: '';
-						// 	display: block;
-						// 	position: absolute;
-						// 	top: 0;
-						// 	bottom: -1px;
-						// 	width: 1px;
-						// 	background-color: $tabs-active-border-color;
-						// }
-
-						// &::before {
-						// 	left: 0;
-						// }
-
-						// &::after {
-						// 	right: 0;
-						// }
-
 						&::after {
 							border: 1px solid $tabs-active-border-color;
 							border-bottom: 1px solid transparent;
