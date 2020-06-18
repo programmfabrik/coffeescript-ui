@@ -73,7 +73,7 @@ class CUI.Block extends CUI.DOMElement
 			appearance:
 				default: "normal"
 				mandatory: true
-				check: ["normal","wide"]
+				check: ["normal","wide","muted"]
 			padded:
 				check: Boolean
 				default: true

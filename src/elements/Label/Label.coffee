@@ -131,7 +131,7 @@ class CUI.Label extends CUI.DOMElement
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
-				check: ["title","secondary","muted"]
+				check: ["title","secondary","muted","transparent-border"]
 			# set to true if text is markdown
 			markdown:
 				mandatory: true

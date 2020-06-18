@@ -32,6 +32,15 @@ class CUI.Tabs extends CUI.SimplePane
 				check: 'Integer'
 			appearance:
 				check: ['normal', 'mini']
+			orientation:
+				check: ['vertical', 'horizontal']
+				mandatory: true
+				default: 'horizontal'
+			onActivate:
+				check: Function
+			onDeactivate:
+				check: Function
+
 			#header_right: {}
 			#footer_right: {}
 			#footer_left: {}
@@ -61,8 +70,24 @@ class CUI.Tabs extends CUI.SimplePane
 			CUI.dom.removeClass(@__pane_header.DOM, "cui-tabs-pane-header--overflow")
 		@
 
+	__setActiveMarker: ->
+		btn = @getActiveTab()?.getButton().DOM
+
+		if not btn
+			CUI.dom.hideElement(@__tabs_marker)
+			return
+
+		CUI.dom.showElement(@__tabs_marker)
+		btn_dim = CUI.dom.getDimensions(btn)
+		CUI.dom.setStyle @__tabs_marker,
+			left: btn_dim.offsetLeft
+			width: btn_dim.borderBoxWidth
+		@
+
 	init: ->
 		super()
+		# slider to mark active tab
+		@__tabs_marker = CUI.dom.element("DIV", class: "cui-tabs-active-marker")
 
 		@__tabs_bodies = new CUI.Template
 			name: "tabs-bodies"
@@ -77,11 +102,15 @@ class CUI.Tabs extends CUI.SimplePane
 		if @_padded
 			@addClass('cui-tabs--padded')
 
+		@addClass('cui-tabs--'+@_orientation)
+
 		@__buttonbar = new CUI.Buttonbar()
 
 		pane_key = "center"
 
 		@__pane_header.append(@__buttonbar, pane_key)
+
+		@__pane_header.append(@__tabs_marker, pane_key)
 
 		@__header = @__pane_header[pane_key]()
 
@@ -96,7 +125,6 @@ class CUI.Tabs extends CUI.SimplePane
 		@__overflowBtn = new CUI.Button
 			icon: "ellipsis_h"
 			class: "cui-tab-header-button-overflow"
-			appearance: "flat"
 			icon_right: false
 			size: if @_appearance == "mini" then "mini" else undefined
 			tooltip: text: CUI.Tabs.defaults.overflow_button_tooltip
@@ -146,9 +174,11 @@ class CUI.Tabs extends CUI.SimplePane
 				type: "viewport-resize"
 				call: =>
 					@__checkOverflowButton()
+					@__setActiveMarker()
 
 			CUI.util.assert( CUI.dom.isInDOM(@getLayout().DOM),"Tabs getting DOM insert event without being in DOM." )
 			@__checkOverflowButton()
+			@__setActiveMarker()
 
 		@addClass("cui-tabs")
 
@@ -173,19 +203,19 @@ class CUI.Tabs extends CUI.SimplePane
 				node: tab
 				type: "tab_activate"
 				call: =>
-
 					if @__overflowBtn.isShown()
 						CUI.dom.scrollIntoView(tab.getButton().DOM)
 
-					if CUI.__ng__
-						if not @_maximize_vertical
-							# set left margin on first tab
-							# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
-							CUI.dom.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
+					if not @_maximize_vertical
+						# set left margin on first tab
+						# console.debug "style", @__tabs[0].DOM[0], -100*CUI.util.idxInArray(tab, @__tabs)+"%"
+						CUI.dom.setStyle(@__tabs[0].DOM, marginLeft: -100*CUI.util.idxInArray(tab, @__tabs)+"%")
 
 					@__active_tab = tab
+					@__setActiveMarker()
 
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", CUI.util.idxInArray(tab, @__tabs))
+					@_onActivate?(@, tab)
 					# console.error @__uniqueId, "activate"
 
 			CUI.Events.listen
@@ -195,6 +225,7 @@ class CUI.Tabs extends CUI.SimplePane
 					# console.error @__uniqueId, "deactivate"
 					@__active_tab = null
 					CUI.dom.setAttribute(@DOM, "active-tab-idx", "")
+					@_onDeactivate?(@, tab)
 
 			CUI.Events.listen
 				node: tab

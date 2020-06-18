@@ -1132,11 +1132,16 @@ li > div {
 		padding: 5px 6px;
 	}
 
-	&.cui-layer-open,
-	&:active,
-	&.cui-active {
+	&:active {
 		.cui-button-visual {
 	  	background: transparentize($button-background,.5);
+	  }
+	}
+
+	&.cui-layer-open,
+	&.cui-active {
+		.cui-button-visual {
+	  	box-shadow: 0 0 0 1px $button-active-border;
 	  }
 	}
 
@@ -1286,7 +1291,7 @@ li > div {
 		height: auto;
 		flex-direction: column;
 		border-width: 0;
-		padding: 4px $padding/2 0; // had a padding-bottom: 0 and padding-top: $padding/2 - looks weird for the presentation play button (without text)
+		padding: 1px $padding/2;
 	}
 
 	.cui-button-left {
@@ -2434,6 +2439,16 @@ a[role="button"].cui-button-appearance-link {
 		margin-right: 0;
 		padding: 0 7px;
 		color: $secondary-color;
+		
+		&.cui-label-appearance-transparent-border {
+			border: none;
+			margin-left: 1px;
+			box-shadow: 0 0 0 1px hsla(0,0%,0%,.1);
+			
+			&.cui-label-size-mini {
+				height: 18px;
+			}
+		}
 
 		&-size-mini {
 			height: 20px;
@@ -5719,6 +5734,12 @@ label[data-label-clickable],
 		margin-bottom: $padding;
 	}
 
+	&.appearance-muted {
+		.cui-block-header > .cui-block-title {
+			color: $muted-color;
+		}
+	}
+
 	&.cui-block-level-1,
 	&.cui-block-level-2 {
 		&.appearance-wide {
@@ -5839,13 +5860,13 @@ label[data-label-clickable],
 		&.appearance-wide {
 			> .cui-block-header {
 				padding-bottom: 1.5*$padding;
-
-				.cui-block-title {
-					font-size: 12px;
-					text-transform: uppercase;
-					letter-spacing: 0.03em;
-				}
 			}
+		}
+
+		.cui-block-title {
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
 		}
 	}
 
