@@ -45,17 +45,6 @@
 			margin-top: 0;
 			margin-left: 2px;
 
-			// active marker
-			&::before {
-				height: var(--active-tab-height);
-				width: $tabs-marker-border-width;
-				bottom: auto;
-				left: -2px;
-				right: auto;
-				top: 0;
-				transform: translate(0, var(--active-tab-top));
-			}
-
 			&::after {
 				width: 1px;
 				height: auto;
@@ -125,20 +114,12 @@
 @mixin tabs-horizontal-sm() {
 	.cui-tabs-pane-header {
 		@include _tabs-sm;
-
-		.cui-buttonbar::before {
-			height: $tabs-marker-border-width-sm;
-		}
 	}
 }
 
 @mixin tabs-vertical-sm() {
 	.cui-tabs-pane-header {
 		@include _tabs-sm;
-
-		.cui-buttonbar::before {
-			width: $tabs-marker-border-width-sm;
-		}
 	}
 }
 

@@ -142,7 +142,6 @@
 		align-self: center;
 		position: relative;
 		z-index: 1; // to overlap active buttons
-		margin-top: $tabs-marker-border-width;
 
 		// white blocker gradient
 		// &::before {
