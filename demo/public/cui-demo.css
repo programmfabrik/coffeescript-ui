@@ -610,8 +610,6 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-label-muted {
   color: #adb5bd; }
-  .cui-selected .cui-demo-label-muted {
-    color: rgba(255, 87, 36, 0.55); }
 
 .cui-demo-block-grid.cui-block-level-1, .cui-demo-block-grid.cui-block-level-2, .cui-demo-block-grid.cui-block-level-3 {
   position: relative; }

@@ -1376,8 +1376,6 @@ label[data-label-clickable],
       color: #ff5724; }
   .cui-label-appearance-muted {
     color: #adb5bd; }
-    .cui-selected .cui-label-appearance-muted {
-      color: rgba(255, 87, 36, 0.55); }
   .cui-label[data-type='string'] {
     color: #3e9e88; }
   .cui-label[data-type='NaN'], .cui-label[data-type='number'] {
@@ -4023,7 +4021,7 @@ textarea {
   cursor: default; }
   .cui-lv-tr-outer.cui-selected > .cui-lv-tr {
     position: relative;
-    box-shadow: inset 0 0 0 2px rgba(255, 87, 36, 0.8); }
+    box-shadow: inset 0 0 0 1px #ff5724; }
   .cui-lv-tr-outer.cui-selected .cui-empty-label {
     color: #6c757d; }
   .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow-button {
