@@ -70,8 +70,18 @@
 		}
 	}
 
+	// todo: should this really be the default?
 	.cui-data-field-input > & {
 		width: 100%;
+
+		// if we allow the select to be 100% wide, then we need to push the caret to the right
+		&.cui-button--has-caret {
+			.cui-button-visual {
+				.cui-button-right {
+					margin-left: auto;
+				}
+			}
+		}
 	}
 }
 
