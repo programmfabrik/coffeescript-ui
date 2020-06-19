@@ -1644,7 +1644,7 @@ label[data-label-clickable],
   .cui-button-button .cui-button-visual,
   .cui-button-select .cui-button-visual {
     height: 30px;
-    min-width: 33px;
+    min-width: 32.025px;
     font-size: 0.875rem;
     line-height: 1.3;
     border-radius: 2px; }
@@ -3261,7 +3261,7 @@ textarea {
   .cui-date-time-calendar .cui-button-select .cui-button-visual,
   .cui-date-time-calendar .cui-button .cui-button-visual {
     height: 24px;
-    min-width: 26.4px;
+    min-width: 25.62px;
     font-size: 0.75rem;
     line-height: 1.3;
     border-radius: 2px; }
@@ -3727,7 +3727,7 @@ textarea {
       max-width: 100%; }
     .cui-panel-header .cui-button-button .cui-button-visual {
       height: 24px;
-      min-width: 26.4px;
+      min-width: 25.62px;
       font-size: 0.75rem;
       line-height: 1.3;
       border-radius: 2px; }
@@ -3839,7 +3839,7 @@ textarea {
   min-height: 30px; }
   .cui-result-navigation-toolbar .cui-button-button .cui-button-visual {
     height: 24px;
-    min-width: 26.4px;
+    min-width: 25.62px;
     font-size: 0.75rem;
     line-height: 1.3;
     border-radius: 2px; }
@@ -4347,7 +4347,7 @@ textarea {
     background-size: 100% 68px; }
   .cui-data-table .cui-list-view .cui-pane-footer .cui-buttonbar .cui-button .cui-button-visual {
     height: 24px;
-    min-width: 26.4px;
+    min-width: 25.62px;
     font-size: 0.75rem;
     line-height: 1.3;
     border-radius: 2px; }
