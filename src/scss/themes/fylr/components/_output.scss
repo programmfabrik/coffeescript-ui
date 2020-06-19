@@ -39,10 +39,6 @@
 .cui-data-field-multi-output {
 	display: flex;
 
-	&:not(:last-child) {
-		padding-bottom: 0.25em;
-	}
-
 	// Language code
 	.cui-data-field-multi-output-aside {
 		order: -1;
