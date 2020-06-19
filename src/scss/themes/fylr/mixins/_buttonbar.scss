@@ -2,7 +2,7 @@
 	flex-direction: row;
 
 	> *:not(:last-child) {
-		margin-right: $buttonbar-gap;
+		margin-right: $buttonbar-gap; // todo: maybe only apply margin if the child is a buttonbar-group (not a button, buttons should be closer together)
 	}
 
 	.cui-buttonbar-group {
