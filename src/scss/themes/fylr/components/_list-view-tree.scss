@@ -55,10 +55,5 @@
 	.cui-label {
 		min-width: 0;
 		flex-shrink: 1;
-		// padding: 0; CONFLICT removes padding from tags that are inside node content
-
-		.fa {
-			line-height: 1;
-		}
 	}
 }
