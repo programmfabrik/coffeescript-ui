@@ -258,11 +258,16 @@ label[data-label-clickable],
 		left: auto;
 		right: 0;
 		bottom: 0;
-		background: linear-gradient(transparent, white);
+
+		&::before {
+			content: '...';
+			position: relative;
+			top: -1px;
+			margin-right: -#{$spacer-sm};
+		}
 
 		.cui-button-visual {
 			color: $link-color;
-			background: linear-gradient(to right, hsla(0, 0%, 100%, 0), hsl(0, 0%, 100%) 10px);
 			height: var(--lh);
 			margin-left: auto;
 		}
@@ -273,6 +278,12 @@ label[data-label-clickable],
 				background-color: transparent !important;
 				color: $link-hover-color;
 			}
+		}
+	}
+
+	&.cui-label--show-overflow .cui-label-manage-overflow-button {
+		&::before {
+			display: none;
 		}
 	}
 }
