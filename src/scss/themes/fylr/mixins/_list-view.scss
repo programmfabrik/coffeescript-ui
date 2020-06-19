@@ -15,3 +15,12 @@
 	}
 }
 
+@mixin list-view-without-border() {
+	border: 0;
+
+	.cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer + .cui-lv-tr-outer > .cui-lv-tr,
+	.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer + .cui-lv-tr-outer > .cui-lv-tr {
+		border: 0;
+	}
+}
+
