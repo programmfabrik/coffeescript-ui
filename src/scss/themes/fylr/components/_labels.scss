@@ -184,6 +184,15 @@ label[data-label-clickable],
 		align-items: baseline;
 	}
 
+	> .cui-label-icon {
+		// fix baseline alignment of SVG icons
+		.cui-icon-svg {
+			position: relative;
+			top: 0.25em;
+			margin-top: -0.5em;
+		}
+	}
+
 	> .cui-label-content {
 		flex: 1 1 auto;
 		white-space: normal;
