@@ -31,7 +31,7 @@
 	&.cui-maximize-horizontal,
 	&.cui-simple-form {
 		max-width: 100%;
-		flex-grow: 1;
+		// flex-grow: 1; // breaks .ez5-quicksearch-input
 	}
 
 	&.cui-maximize-horizontal {
