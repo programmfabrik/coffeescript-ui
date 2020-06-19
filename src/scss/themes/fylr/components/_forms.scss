@@ -42,10 +42,7 @@
 .cui-form-tr-header {
 	display: flex;
 	min-height: $form-row-height;
-
-	&:not(:last-child) {
-		margin-bottom: $form-cell-gap;
-	}
+	margin-bottom: $form-cell-gap;
 
 	@include media-breakpoint-down(sm) {
 		display: block;
