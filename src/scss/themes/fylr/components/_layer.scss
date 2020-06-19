@@ -157,6 +157,12 @@
 			> .cui-horizontal-layout-right > .cui-buttonbar {
 				margin-right: -0.5*$layer-padding-x;
 			}
+
+			// add some white space if pane-header is empty
+			&.cui-template-empty {
+				display: block;
+				min-height: 0;
+			}
 		}
 
 		// layer-body
