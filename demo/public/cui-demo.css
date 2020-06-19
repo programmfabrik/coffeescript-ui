@@ -360,7 +360,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   height: 36px;
-  min-width: 39.6px;
+  min-width: 38.43px;
   font-size: 1rem;
   line-height: 1.3;
   border-radius: 3px; }
@@ -398,7 +398,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual {
   height: 24px;
-  min-width: 26.4px;
+  min-width: 25.62px;
   font-size: 0.75rem;
   line-height: 1.3;
   border-radius: 2px; }
@@ -424,7 +424,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair.cui-demo-button-size-large .cui-button-button .cui-button-visual {
   height: 36px;
-  min-width: 39.6px;
+  min-width: 38.43px;
   font-size: 1rem;
   line-height: 1.3;
   border-radius: 3px; }
@@ -527,7 +527,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-small-buttons .cui-button .cui-button-visual {
   height: 24px;
-  min-width: 26.4px;
+  min-width: 25.62px;
   font-size: 0.75rem;
   line-height: 1.3;
   border-radius: 2px; }
@@ -553,7 +553,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-large-buttons .cui-button .cui-button-visual {
   height: 36px;
-  min-width: 39.6px;
+  min-width: 38.43px;
   font-size: 1rem;
   line-height: 1.3;
   border-radius: 3px; }

@@ -1495,17 +1495,21 @@ label[data-label-clickable],
     position: absolute;
     left: auto;
     right: 0;
-    bottom: 0;
-    background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(white));
-    background: linear-gradient(transparent, white); }
+    bottom: 0; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button::before {
+      content: '...';
+      position: relative;
+      top: -1px;
+      margin-right: -0.5rem; }
     .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
       color: #212121;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0), white 10px);
       height: var(--lh);
       margin-left: auto; }
     .cui-label-manage-overflow .cui-label-manage-overflow-button:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual {
       background-color: transparent !important;
       color: #212121; }
+  .cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button::before {
+    display: none; }
 
 .cui-label-markdown .cui-label-content {
   display: block; }
@@ -2154,8 +2158,6 @@ textarea {
 .cui-data-field-multi-output {
   display: -webkit-box;
   display: flex; }
-  .cui-data-field-multi-output:not(:last-child) {
-    padding-bottom: 0.25em; }
   .cui-data-field-multi-output .cui-data-field-multi-output-aside {
     -webkit-box-ordinal-group: 0;
             order: -1;
@@ -3994,13 +3996,6 @@ textarea {
   min-width: 0;
   outline: none;
   cursor: default; }
-  .cui-lv-tr-outer.cui-selected > .cui-lv-tr {
-    position: relative;
-    box-shadow: inset 0 0 0 1px #ff5724; }
-  .cui-lv-tr-outer.cui-selected .cui-empty-label {
-    color: #6c757d; }
-  .cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow-button {
-    background: linear-gradient(to right, rgba(255, 87, 36, 0.02), rgba(255, 87, 36, 0.15) 10px); }
   .cui-lv-tr-outer.cui-lv-tree-node--is-branch {
     cursor: pointer;
     -webkit-user-select: none;
@@ -4293,8 +4288,6 @@ textarea {
   .cui-tree-node-content .cui-label {
     min-width: 0;
     flex-shrink: 1; }
-    .cui-tree-node-content .cui-label .fa {
-      line-height: 1; }
 
 .cui-data-table {
   flex-shrink: 1;
@@ -4461,6 +4454,8 @@ textarea {
     top: 31px; }
   .cui-tabs .cui-toolbar {
     background-color: transparent; }
+  .cui-tabs .cui-list-view {
+    border: 0; }
   .cui-tabs > .cui-vertical-layout-center {
     -webkit-box-flex: 1;
             flex-grow: 1;
