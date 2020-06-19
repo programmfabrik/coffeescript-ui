@@ -168,7 +168,7 @@
 	}
 }
 
-@mixin button-dimmed($focus-inset: 0) {
+@mixin button-hover-dimmed($focus-inset: 0) {
 	$background: transparent;
 	$color: $btn-color;
 
@@ -177,6 +177,19 @@
 
 	$background-active: transparent;
 	$color-active: $body-color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active, $focus-inset);
+}
+
+@mixin button-dimmed($focus-inset: 0) {
+	$background: transparent;
+	$color: $btn-color-dimmed;
+
+	$background-hover: transparent;
+	$color-hover: $btn-color;
+
+	$background-active: transparent;
+	$color-active: $btn-color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active, $focus-inset);
 }
@@ -261,7 +274,7 @@
 // Control button
 // e.g. multi-input-tag-button (language selection), delete icon button in --deleteable
 @mixin input-control-button($width: 22px, $height: 20px) {
-	@include button-dimmed();
+	@include button-hover-dimmed();
 
 	.cui-button-visual {
 		font-size: 10px;

@@ -297,6 +297,7 @@ $btn-background: 			transparent !default;
 $btn-primary-background: 	theme-color('primary') !default;
 $btn-secondary-background: 	gray('200') !default;
 $btn-color: 				$body-color !default;
+$btn-color-dimmed: 			theme-color('muted') !default;
 
 // Button states
 $btn-hover-color:			inherit !default;
