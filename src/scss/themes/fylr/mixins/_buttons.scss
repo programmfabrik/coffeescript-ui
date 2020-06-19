@@ -224,6 +224,13 @@
 	}
 }
 
+@mixin button-link-sm() {
+	.cui-button-visual {
+		font-size: $btn-font-size-sm;
+		line-height: $line-height-sm;
+	}
+}
+
 @mixin button-bordered($border-color: $body-color) {
 	.cui-button-visual {
 		border: $btn-border-width solid $border-color;
