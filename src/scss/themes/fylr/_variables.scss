@@ -418,9 +418,6 @@ $list-view-data-height: 				1rem !default;
 $list-view-data-width: 					125px !default;
 $list-view-padding-x:					$spacer-xs*3 !default; // was: $table-padding-x
 $list-view-padding-y:					$spacer-xs !default; // was: $table-padding-y, needs to be small so the explicit height of the fixed rows will cut off the text correctly after the first line
-$list-view-selected-row-background:		rgba(theme-color('primary'), 0.15) !default;
-$list-view-selected-row-border-width:	$component-selected-border-width !default;
-$list-view-selected-row-border-color:	$component-selected-border-color !default;
 $list-view-move-handle-width:			$list-view-font-size !default;
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
 
