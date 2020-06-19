@@ -84075,6 +84075,22 @@ Demo.LabelDemo = (function(superClass) {
     label = new CUI.Label({
       "class": "cui-label-demo-multiline-with-limited-width",
       multiline: true,
+      manage_overflow: true,
+      text: "A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.\nA good and long text that includes a veryverysuperlongword to show that it can break into lines.\nA good and long text that includes a veryverysuperlongword to show that it can break into lines.\nA good and long text that includes a veryverysuperlongword to show that it can break into lines.",
+      icon: "folder"
+    });
+    this.__addLabel("multiline: true, manage_overflow: true, SVG Icon", label);
+    label = new CUI.Label({
+      "class": "cui-label-demo-multiline-with-limited-width",
+      multiline: true,
+      manage_overflow: true,
+      text: "A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.\nA good and long text that includes a veryverysuperlongword to show that it can break into lines.\nA good and long text that includes a veryverysuperlongword to show that it can break into lines.\nA good and long text that includes a veryverysuperlongword to show that it can break into lines.",
+      icon: "folder_upload"
+    });
+    this.__addLabel("multiline: true, manage_overflow: true, SVG Icon", label);
+    label = new CUI.Label({
+      "class": "cui-label-demo-multiline-with-limited-width",
+      multiline: true,
       manage_overflow: {
         active_css_class: "",
         text_inactive: "More...",
