@@ -166,6 +166,33 @@ class Demo.LabelDemo extends Demo
 		label = new CUI.Label
 			class: "cui-label-demo-multiline-with-limited-width"
 			multiline: true
+			manage_overflow: true
+			text: """
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			"""
+			icon: "folder"
+		@__addLabel("multiline: true, manage_overflow: true, SVG Icon", label)
+
+
+		label = new CUI.Label
+			class: "cui-label-demo-multiline-with-limited-width"
+			multiline: true
+			manage_overflow: true
+			text: """
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			"""
+			icon: "folder_upload"
+		@__addLabel("multiline: true, manage_overflow: true, SVG Icon", label)
+
+		label = new CUI.Label
+			class: "cui-label-demo-multiline-with-limited-width"
+			multiline: true
 			manage_overflow:
 				active_css_class: ""
 				text_inactive: "More..."
