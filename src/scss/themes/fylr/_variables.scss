@@ -356,9 +356,9 @@ $panel-border-color: $body-color !default;
 
 // * Toolbar
 // * ==========================================
-$toolbar-height: 40px !default;
-$toolbar-background: transparent !default; // leave transparent by default and style dependent on where the toolbar is used
-$toolbar-padding: $component-padding-base !default;
+$toolbar-height: 		30px !default; // == $btn-height
+$toolbar-background: 	transparent !default; // leave transparent by default and style dependent on where the toolbar is used
+$toolbar-padding: 		$component-padding-base !default;
 
 // * Pane
 // * ==========================================
