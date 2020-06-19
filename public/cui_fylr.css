@@ -3524,10 +3524,8 @@ textarea {
 .cui-form-tr-header {
   display: -webkit-box;
   display: flex;
-  min-height: 30px; }
-  .cui-form-tr:not(:last-child),
-  .cui-form-tr-header:not(:last-child) {
-    margin-bottom: 1rem; }
+  min-height: 30px;
+  margin-bottom: 1rem; }
   @media (max-width: 767.98px) {
     .cui-form-tr,
     .cui-form-tr-header {
@@ -3778,7 +3776,7 @@ textarea {
 .cui-toolbar {
   display: -webkit-box;
   display: flex;
-  min-height: 40px;
+  min-height: 30px;
   -webkit-box-pack: justify;
           justify-content: space-between;
   -webkit-box-align: center;
@@ -3838,7 +3836,7 @@ textarea {
     flex-shrink: 1; }
 
 .cui-result-navigation-toolbar {
-  min-height: 40px; }
+  min-height: 30px; }
   .cui-result-navigation-toolbar .cui-button-button .cui-button-visual {
     height: 24px;
     min-width: 26.4px;
@@ -4463,7 +4461,6 @@ textarea {
 						<div class="cui-button cui-tab-header-button cui-button-button"> ... </div>
 					</div>
 				</div>
-				<div class="cui-tabs-active-marker"></div>
 			</div>
 			<div class="cui-horizontal-layout-right">
 				[ <div class="cui-button cui-tab-header-button-overflow cui-button-button"> ... </div> ]
@@ -4491,7 +4488,7 @@ textarea {
 .cui-tabs {
   background-color: transparent; }
   .cui-tabs.cui-absolute > .cui-vertical-layout-center {
-    top: 41px; }
+    top: 31px; }
   .cui-tabs .cui-toolbar {
     background-color: transparent; }
   .cui-tabs > .cui-vertical-layout-center {
@@ -4727,6 +4724,9 @@ textarea {
     background-color: transparent; }
     .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar {
       margin-right: -0.5rem; }
+    .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header.cui-template-empty {
+      display: block;
+      min-height: 0; }
   .cui-layer > .cui-pane > .cui-vertical-layout-center {
     padding: 0.5rem 1rem;
     overflow: auto;
@@ -4796,11 +4796,11 @@ textarea {
 
 .cui-pane--has-footer .cui-layer-pointer--e,
 .cui-pane--has-footer .cui-layer-pointer--w {
-  margin-bottom: 40px; }
+  margin-bottom: 30px; }
 
 .cui-pane--has-header .cui-layer-pointer--e,
 .cui-pane--has-header .cui-layer-pointer--w {
-  margin-top: 40px; }
+  margin-top: 30px; }
 
 .cui-layer-root-menu .cui-layer-pointer {
   height: 12px; }
