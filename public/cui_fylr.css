@@ -1480,7 +1480,8 @@ label[data-label-clickable],
     white-space: pre-wrap; }
 
 .cui-label-manage-overflow {
-  --lh: 1.5em;
+  --lh-base: 1.5;
+  --lh: calc(var(--lh-base) * 1em);
   line-height: var(--lh);
   position: relative; }
   .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
@@ -3984,7 +3985,8 @@ textarea {
     -webkit-box-flex: 1;
             flex-grow: 1; }
 
-.cui-lv-th {
+.cui-lv-th,
+.list-view-header-row .cui-lv-td {
   cursor: default;
   line-height: 24px; }
 
@@ -4099,10 +4101,10 @@ textarea {
       content: '';
       position: absolute;
       right: 0;
-      top: 0;
-      bottom: 0;
+      top: 0.5rem;
+      bottom: 0.5rem;
       width: 1px;
-      background: rgba(233, 236, 239, 0.6); }
+      background: #212121; }
 
 .cui-list-view-grid-quadrant-0 {
   -webkit-box-flex: 0;
