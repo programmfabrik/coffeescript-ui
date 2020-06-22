@@ -105,7 +105,8 @@
 	}
 }
 
-.cui-lv-th {
+.cui-lv-th,
+.list-view-header-row .cui-lv-td {
 	cursor: default;
 	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 }
@@ -266,10 +267,10 @@
 			content: '';
 			position: absolute;
 			right: 0;
-			top: 0;
-			bottom: 0;
+			top: $spacer-sm;
+			bottom: $spacer-sm;
 			width: 1px;
-			background: transparentize($table-border-color, 0.4);
+			background: $body-color;
 		}
 	}
 }
