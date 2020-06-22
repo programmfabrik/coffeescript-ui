@@ -230,7 +230,8 @@ label[data-label-clickable],
 
 // Manage Overflow
 .cui-label-manage-overflow {
-	--lh: #{$line-height-base * 1em};
+	--lh-base: #{$line-height-base};
+	--lh: calc(var(--lh-base) * 1em);
 
 	line-height: var(--lh);
 	position: relative;
