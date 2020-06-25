@@ -285,10 +285,9 @@
 
 	.cui-button-visual {
 		font-size: 10px;
-		width: $width;
+		min-width: $width;
 		height: $height;
 		line-height: $height;
-		min-width: 0;
 
 		.cui-button-center {
 			padding: 0 $spacer-xs;

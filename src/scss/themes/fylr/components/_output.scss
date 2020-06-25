@@ -35,13 +35,19 @@
 	}
 }
 
+.cui-multi-output {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-auto-flow: dense;
+}
+
 // Multi Output / Languages
 .cui-data-field-multi-output {
-	display: flex;
+	display: contents;
 
 	// Language code
 	.cui-data-field-multi-output-aside {
-		order: -1;
+		grid-column: 1 / 2;
 		position: relative;
 		top: 1px;
 		margin-left: -#{$spacer-xs};
@@ -51,7 +57,8 @@
 		}
 	}
 
+	// Content
 	.cui-data-field-multi-output-center {
-		flex-grow: 1;
+		grid-column: 2 / 3;
 	}
 }
