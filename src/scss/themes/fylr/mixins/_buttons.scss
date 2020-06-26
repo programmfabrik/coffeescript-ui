@@ -4,7 +4,7 @@
 	height: $height;
 	min-width: $btn-visually-square-factor * $height; // make icon-only buttons optically square
 	font-size: $font-size;
-	line-height: $btn-line-height;
+	line-height: $height; // force the button text to align center, especially the small button needs a seemingly larger lh
 	border-radius: $border-radius;
 
 	.cui-button-left {
