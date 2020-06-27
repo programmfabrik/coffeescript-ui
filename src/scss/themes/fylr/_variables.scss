@@ -481,9 +481,11 @@ $layer-sizes: (
 
 $layer-background: 			$pane-background !default;
 $layer-border-radius: 		$border-radius !default;
-$layer-pointer-size: 		20px !default;
+$layer-pointer-size: 		16px !default;
+$layer-pointer-container-size: 	20px !default;
 $layer-padding-x: 			$component-padding-lg !default;
 $layer-padding-y: 			$component-padding-base !default;
+$layer-border-color:		gray('600');
 
 // * Tooltip
 // * ==========================================

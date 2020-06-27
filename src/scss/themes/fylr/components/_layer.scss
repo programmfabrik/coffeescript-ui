@@ -133,10 +133,10 @@
 	border-radius: $layer-border-radius;
 	overflow: auto; /* hidden; */
 	box-shadow:
-		0 0 0 1px hsla(205, 20%, 30%, 0.15),
-		0 8px 10px 1px hsla(0, 0%, 0%, 0.14),
-		0 3px 14px 2px hsla(0, 0%, 0%, 0.12),
-		0 5px 5px -3px hsla(0, 0%, 0%, 0.4);
+		0 0 0 1px rgba($layer-border-color, 0.15),
+		0 8px 10px 1px rgba($layer-border-color, 0.14),
+		0 3px 14px 2px rgba($layer-border-color, 0.12),
+		0 5px 5px -3px rgba($layer-border-color, 0.4);
 
 	> .cui-pane:not(.cui-pane--window) {
 		background-color: transparent; // reset from cui-pane
@@ -232,7 +232,7 @@
 .cui-layer-pointer {
 	position: absolute;
 	z-index: 1;
-	width: 46px;
+	width: $layer-pointer-container-size;
 	height: $layer-pointer-size;
 	margin: 6px;
 	overflow: hidden;
@@ -244,11 +244,7 @@
 		height: $layer-pointer-size;
 		background: $layer-background;
 		transform: translate(-50%, -50%) rotate(45deg);
-		box-shadow:
-			0 0 0 1px hsla(205, 20%, 30%, 0.15),
-			4px 4px 10px 1px hsla(0, 0%, 0%, 0.14),
-			1px 1px 14px 2px hsla(0, 0%, 0%, 0.12),
-			2px 2px 5px -3px hsla(0, 0%, 0%, 0.4);
+		box-shadow: inset 0 0 0 1px rgba($layer-border-color, 0.28);
 	}
 
 	&--n,
@@ -280,7 +276,7 @@
 	&--e,
 	&--w {
 		width: 12px;
-		height: 46px;
+		height: $layer-pointer-container-size;
 		margin: 6px 0;
 
 		&::after {
