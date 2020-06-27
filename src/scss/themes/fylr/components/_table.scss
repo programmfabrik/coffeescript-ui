@@ -44,23 +44,30 @@
 		vertical-align: middle;
 	}
 
+	.cui-td--key {
+		word-wrap: break-word;
+		font-weight: $font-weight-bold;
+	}
+
 	.cui-td--value {
 		word-wrap: break-word;
 		word-break: break-all;
 		word-break: break-word;
+		padding-left: 0;
 	}
 
-	&.cui-maximize-horizontal {
-		width: 100%;
-		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
+	.cui-td--text-content {
+		vertical-align: top;
+		white-space: pre-wrap;
 	}
 
-	&.cui-maximize-vertical {
-		flex-grow: 1;
+	.cui-td--key,
+	.cui-td--value {
+		line-height: $line-height-sm;
 	}
 
+	// with --flex you can set a fixed width for .cui-td--key via --tableDataKeyWidth for an individual cui-table
 	&--flex {
-		// display: flex;
 		display: inline-flex; // todo: see inline-table above
 		flex-direction: column;
 		flex: 1 0 auto;
@@ -70,17 +77,24 @@
 		}
 
 		.cui-td--key {
-			width: $table-data-width;
 			flex-shrink: 0;
-			word-wrap: break-word;
-			display: block;
+			width: $table-data-width;
+			width: var(--tableDataKeyWidth, $table-data-width);
 		}
 
 		.cui-td--value {
 			flex-grow: 1;
 			width: auto;
-			display: block;
 		}
+	}
+
+	&.cui-maximize-horizontal {
+		width: 100%;
+		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
+	}
+
+	&.cui-maximize-vertical {
+		flex-grow: 1;
 	}
 }
 
