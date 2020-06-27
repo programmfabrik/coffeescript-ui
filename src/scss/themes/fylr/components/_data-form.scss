@@ -84,13 +84,13 @@
 
 	> .cui-horizontal-layout-left {
 		.cui-drag-handle-row {
-			margin: 0.75rem $spacer-sm 0 0;
+			margin: 0.6rem $spacer-sm 0 0; // see editor
 			flex-grow: 0;
 			cursor: grab;
 
 			&.is-hidden {
 				pointer-events: none;
-				opacity: 0.5;
+				opacity: 0.25;
 			}
 		}
 	}
