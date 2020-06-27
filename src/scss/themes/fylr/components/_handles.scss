@@ -82,12 +82,11 @@
 // * Flex handle
 
 // todo:
-$flex-handle-size: 10px; // width or height
-$flex-handle-dot-width: 6px;
-$flex-handle-dot-color: gray('400');
-$flex-handle-color: gray('400');
+$flex-handle-size: 11px; // width or height, odd number so we can put a 1px line in the very center
+$flex-handle-color: rgba(gray('500'), 0.8); // theme-color('primary'); // rgba(gray('400'), 0.8);
+$flex-handle-divider-color: $flex-handle-color;
 $flex-handle-length: 18px;
-$flex-handle-bocker-offset: 4px;
+$flex-handle-blocker-offset: 4px;
 
 .cui-flex-handle {
 	position: relative;
