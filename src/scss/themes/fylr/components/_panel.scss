@@ -24,8 +24,6 @@
 			max-width: 100%;
 		}
 
-		@include button-sm();
-
 		.cui-button-visual {
 			padding: 0;
 			justify-content: flex-start;
@@ -42,7 +40,7 @@
 			}
 
 			.cui-button-center {
-				padding-left: 0.75em;
+				padding-left: 1em;
 
 				span {
 					white-space: normal;
