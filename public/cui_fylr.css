@@ -830,6 +830,10 @@ body {
   width: 14px;
   height: 14px; }
 
+.svg-info-circle-2 {
+  width: 16px;
+  height: 16px; }
+
 .svg-info-circle {
   width: 14px;
   height: 14px; }
@@ -1320,6 +1324,10 @@ input[data-max-chars='40'] {
 
 .svg-fylr-logo {
   width: 30px; }
+
+.svg-info-circle-2 {
+  width: 14px;
+  height: 14px; }
 
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
@@ -2398,18 +2406,18 @@ textarea {
     display: none; }
 
 .cui-flex-handle-row {
-  width: 10px;
+  width: 11px;
   margin: 0; }
   .cui-flex-handle-row:hover {
-    background-image: linear-gradient(90deg, #ced4da 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, #ced4da 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(0deg, #ced4da 25%, #ffffff 0);
-    background-position: 50% 50%, 50% 50%, 50% 0;
-    background-size: 5px 18px, 5px 22px, 1px 6px;
-    background-repeat: no-repeat, no-repeat, repeat-y; }
+    background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+    background-position: 50% 50%, 50% 50%, 0 0;
+    background-size: 5px 18px, 5px 22px, 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-pane .cui-flex-handle-row:hover {
-    background-image: linear-gradient(90deg, #ced4da 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, #ced4da 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, #ced4da 25%, #f5f5f5 0);
-    background-position: 50% 50%, 50% 50%, 50% 0;
-    background-size: 5px 18px, 5px 22px, 1px 6px;
-    background-repeat: no-repeat, no-repeat, repeat-y; }
+    background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+    background-position: 50% 50%, 50% 50%, 0 0;
+    background-size: 5px 18px, 5px 22px, 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-flex-handle-row:not(.cui-flex-handle-closed) {
     cursor: ew-resize; }
   .cui-flex-handle-row.cui-flex-handle-closed {
@@ -2429,19 +2437,19 @@ textarea {
       line-height: 1.3; }
 
 .cui-flex-handle-column {
-  height: 10px;
+  height: 11px;
   margin: 0;
   width: 100%; }
   .cui-flex-handle-column:hover {
-    background-image: linear-gradient(0deg, #ced4da 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, #ced4da 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(90deg, #ced4da 25%, #ffffff 0);
-    background-position: 50% 50%, 50% 50%, 0 50%;
-    background-size: 18px 5px, 22px 5px, 6px 1px;
-    background-repeat: no-repeat, no-repeat, repeat-x; }
+    background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+    background-position: 50% 50%, 50% 50%, 0 0;
+    background-size: 18px 5px, 22px 5px, 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-pane .cui-flex-handle-column:hover {
-    background-image: linear-gradient(0deg, #ced4da 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, #ced4da 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, #ced4da 25%, #f5f5f5 0);
-    background-position: 50% 50%, 50% 50%, 0 50%;
-    background-size: 18px 5px, 22px 5px, 6px 1px;
-    background-repeat: no-repeat, no-repeat, repeat-x; }
+    background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+    background-position: 50% 50%, 50% 50%, 0 0;
+    background-size: 18px 5px, 22px 5px, 100%;
+    background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-flex-handle-column.cui-flex-handle-has-label.cui-flex-handle-closed {
     margin: 0; }
   .cui-flex-handle-column:not(.cui-flex-handle-closed) {
@@ -2615,7 +2623,7 @@ textarea {
   .cui-block:not(:last-child) {
     margin-bottom: 1rem; }
   *:not(.cui-block) + .cui-block {
-    margin-top: 0.5rem; }
+    margin-top: 1rem; }
   .cui-block .cui-block-header,
   .cui-block .cui-block-description {
     margin-bottom: 0.5rem; }
@@ -2639,12 +2647,10 @@ textarea {
       margin-top: 0.5rem; }
   .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
     font-family: "Source Sans Pro", sans-serif;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.03em; }
+    margin-bottom: 0; }
     .cui-pane-header .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
     .cui-toolbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
     .cui-buttonbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
@@ -3742,31 +3748,6 @@ textarea {
     .cui-panel-header .cui-button-button-select {
       max-width: 100%; }
     .cui-panel-header .cui-button-button .cui-button-visual {
-      height: 24px;
-      min-width: 25.62px;
-      font-size: 0.75rem;
-      line-height: 24px;
-      border-radius: 2px; }
-      .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left {
-        padding-left: 0.5rem;
-        margin-right: -0.25rem; }
-        .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left:empty, .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left:only-child {
-          padding-left: 0;
-          margin-right: 0; }
-      .cui-panel-header .cui-button-button .cui-button-visual .cui-button-right {
-        padding-right: 0.5rem;
-        margin-left: -0.25rem; }
-        .cui-panel-header .cui-button-button .cui-button-visual .cui-button-right:empty, .cui-panel-header .cui-button-button .cui-button-visual .cui-button-right:only-child {
-          padding-right: 0;
-          margin-left: 0; }
-      .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 0 0.5rem; }
-        .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center:empty {
-          margin-left: -0.25rem; }
-    .cui-panel-header .cui-button-button .cui-button-visual {
       padding: 0;
       -webkit-box-pack: start;
               justify-content: flex-start;
@@ -3779,7 +3760,7 @@ textarea {
           position: relative;
           top: 1px; }
       .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center {
-        padding-left: 0.75em; }
+        padding-left: 1em; }
         .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center span {
           white-space: normal; }
     .cui-panel-header .cui-button-button:hover .cui-button-visual, .cui-panel-header .cui-button-button:focus .cui-button-visual, .cui-panel-header .cui-button-button.cui-active .cui-button-visual {
