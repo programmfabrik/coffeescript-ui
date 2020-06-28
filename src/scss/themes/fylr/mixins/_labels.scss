@@ -1,11 +1,6 @@
 // todo:
-@mixin label-xs() {
-	font-size: $font-size-sm;
-	line-height: $line-height-sm;
-}
-
-// todo:
 @mixin label-sm() {
+	font-size: $font-size-sm;
 	line-height: $line-height-sm;
 }
 
