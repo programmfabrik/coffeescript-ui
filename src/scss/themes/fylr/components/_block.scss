@@ -7,13 +7,8 @@
 	}
 
 	*:not(.cui-block) + & {
-		margin-top: $block-padding;
+		margin-top: $block-margin;
 	}
-
-	// &--padded {
-	// 	// todo: remove
-	// 	padding: $block-padding;
-	// }
 
 	.cui-block-header,
 	.cui-block-description {
@@ -41,17 +36,29 @@
 		}
 	}
 
+	// Level 1
 	&.cui-block-level-1 {
 		> .cui-block-header .cui-block-title {
-			@include h5(0);
-
-			text-transform: uppercase;
-			letter-spacing: 0.03em;
+			@include h6(0);
 		}
 	}
 
+	// Level 2
 	&.cui-block-level-2 {
 		margin-top: $block-margin;
+
+		// todo
+		// > .cui-block-header .cui-block-title {
+		// 	color: theme-color('secondary');
+		// }
+	}
+
+	// Level 3
+	&.cui-block-level-3 {
+		// todo
+		// > .cui-block-header .cui-block-title {
+		// 	color: theme-color('secondary');
+		// }
 	}
 }
 
