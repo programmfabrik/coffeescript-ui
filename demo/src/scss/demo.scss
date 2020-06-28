@@ -193,7 +193,7 @@
 }
 
 .cui-demo-label-sm {
-	@include label-sm();
+	line-height: $line-height-sm;
 }
 
 .cui-demo-label-lg {
