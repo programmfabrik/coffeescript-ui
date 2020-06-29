@@ -44266,7 +44266,6 @@ CUI.Panel = (function(superClass) {
   };
 
   function Panel(opts) {
-    console.debug("new Panel", opts);
     Panel.__super__.constructor.call(this, opts);
     this.panel = new CUI.Template({
       name: "panel",
