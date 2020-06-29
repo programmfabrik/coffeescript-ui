@@ -14,7 +14,6 @@ class CUI.Panel extends CUI.DOMElement
 		arrow_right: "fa-angle-right"
 
 	constructor: (opts) ->
-		console.debug "new Panel", opts
 		super(opts)
 		@panel = new CUI.Template
 			name: "panel"
