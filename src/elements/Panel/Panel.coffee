@@ -45,7 +45,7 @@ class CUI.Panel extends CUI.DOMElement
 			onActivate: (btn, flags, event) =>
 				@__activations++
 				if @__activations == 1
-					@_onFirstActivate?(@)
+					@_onFirstActivate?(@, flags, event)
 
 				@__open(not flags.initial_activate)
 				@_onActivate?(btn, flags, event)
