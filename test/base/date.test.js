@@ -995,6 +995,97 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.from).toBe("-0020");
         expect(output.to).toBe("-0010");
     });
+
+    test("stringToDateRange :: 21 - 11 B.C.", () => {
+        const input = "21 - 11 B.C.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0020");
+        expect(output.to).toBe("-0010");
+    });
+
+    test("stringToDateRange :: 19th century - 20th century", () => {
+        const input = "19th century - 20th century";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1801");
+        expect(output.to).toBe("2000");
+    });
+
+    test("stringToDateRange :: 11. Jhd. - 12. Jhd.", () => {
+        const input = "11. Jhd. - 12. Jhd.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11 Jhd. - 12 Jhd.", () => {
+        const input = "11 Jhd. - 12 Jhd.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11. Jhd - 12. Jhd", () => {
+        const input = "11. Jhd - 12. Jhd";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11 Jhd - 12 Jhd", () => {
+        const input = "11 Jhd - 12 Jhd";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11 Jh. - 12 Jh.", () => {
+        const input = "11 Jh. - 12 Jh.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11 Jh - 12 Jh", () => {
+        const input = "11 Jh - 12 Jh";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11. Jh. - 12. Jh.", () => {
+        const input = "11. Jh. - 12. Jh.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
+    test("stringToDateRange :: 11. Jh - 12. Jh", () => {
+        const input = "11. Jh - 12. Jh";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("1001");
+        expect(output.to).toBe("1200");
+    });
+
 });
 
 describe('CUI.DateTime.dateRangeToString', () => {
@@ -1300,14 +1391,14 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("1285 - 1285-05-31")
     });
 
-    test("dateRangeToString :: 1285 - 1285-05-31", () => {
+    test("dateRangeToString :: 1285 - 1285-05-31 [US]", () => {
         CUI.DateTime.setLocale("en-US")
         const from = "1285-03-01"
         const to = "1285-05-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("03/01/1285 to 05/31/1285")
+        expect(output).toBe("1285-03-01 to 1285-05-31")
     });
 
     test("dateRangeToString :: Invalid date", () => {
@@ -1338,14 +1429,14 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("01.1285")
     });
 
-    test("dateRangeToString :: 1285 - 1285-01-31", () => {
+    test("dateRangeToString :: 1285 - 1285-01-31 [US]", () => {
         CUI.DateTime.setLocale("en-US")
         const from = "1285"
         const to = "1285-01-31"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("01/1285")
+        expect(output).toBe("01-1285")
     });
 
     test("dateRangeToString :: 1901 - 2000", () => {
@@ -1419,5 +1510,42 @@ describe('CUI.DateTime.dateRangeToString', () => {
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("2. Jt.")
+    });
+
+    test("dateRangeToString :: 1801 - 2000", () => {
+        const from = "1801"
+        const to = "2000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("19. Jhd. - 20. Jhd.")
+    });
+
+    test("dateRangeToString :: 1801 - 2000 [US]", () => {
+        CUI.DateTime.setLocale("en-US")
+        const from = "1801"
+        const to = "2000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("19th century - 20th century")
+    });
+
+    test("dateRangeToString :: 1802 - 2000", () => {
+        const from = "1802"
+        const to = "2000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("1802 - 2000")
+    });
+
+    test("dateRangeToString :: 1799 - 2000", () => {
+        const from = "1799"
+        const to = "2000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("1799 - 2000")
     });
 });

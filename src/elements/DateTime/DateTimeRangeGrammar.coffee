@@ -10,6 +10,7 @@ class CUI.DateTimeRangeGrammar
 	@TYPE_YEAR = "YEAR"
 	@TYPE_YEAR_DOT = "YEAR_DOT"
 	@TYPE_CENTURY = "CENTURY"
+	@TYPE_CENTURY_RANGE = "CENTURY_RANGE"
 	@DASH = "-"
 	@STORE_FORMAT = "store"
 	@OUTPUT_YEAR = "year"
@@ -143,6 +144,14 @@ class CUI.DateTimeRangeGrammar
 		["Ende YEAR_DOT Jhd v. Chr.", "lateCentury", [1], [true]]
 		["Ende YEAR_DOT Jh v. Chr.", "lateCentury", [1], [true]]
 		["Ende YEAR_DOT Jh. v. Chr.", "lateCentury", [1], [true], "LATE_CENTURY_BC"]
+		["YEAR_DOT Jhd. - YEAR_DOT Jhd.", "centuryRange", [0, 3], null, "CENTURY_RANGE"]
+		["YEAR_DOT Jhd - YEAR_DOT Jhd", "centuryRange", [0, 3]]
+		["YEAR Jhd. - YEAR Jhd.", "centuryRange", [0, 3]]
+		["YEAR Jhd - YEAR Jhd", "centuryRange", [0, 3]]
+		["YEAR Jh. - YEAR Jh.", "centuryRange", [0, 3]]
+		["YEAR Jh - YEAR Jh", "centuryRange", [0, 3]]
+		["YEAR_DOT Jh. - YEAR_DOT Jh.", "centuryRange", [0, 3]]
+		["YEAR_DOT Jh - YEAR_DOT Jh", "centuryRange", [0, 3]]
 	]
 	@PARSE_GRAMMARS["en-US"] = [
 		["DATE to DATE", "range", [0, 2], null, "RANGE"]
@@ -193,6 +202,7 @@ class CUI.DateTimeRangeGrammar
 		["Early CENTURY century BC", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"]
 		["Late CENTURY century", "lateCentury", [1], null, "LATE_CENTURY"]
 		["Late CENTURY century BC", "lateCentury", [1], [true], "LATE_CENTURY_BC"]
+		["CENTURY century - CENTURY century", "centuryRange", [0, 3], null, "CENTURY_RANGE"]
 	]
 
 	@dateRangeToString: (from, to) ->
@@ -320,6 +330,12 @@ class CUI.DateTimeRangeGrammar
 						possibleString = getPossibleString(key, [century])
 						if possibleString
 							return possibleString
+			else if (yearsDifference + 1) % 100 == 0 and (fromYear - 1) % 100 == 0 and toYear % 100 == 0
+				fromCentury = (fromYear + 99) / 100
+				toCentury = toYear / 100
+				possibleString = getPossibleString("CENTURY_RANGE", [fromCentury, toCentury])
+				if possibleString
+					return possibleString
 
 		if fromMoment.year() == toMoment.year() and
 			fromMoment.month() == toMoment.month() and
@@ -431,6 +447,11 @@ class CUI.DateTimeRangeGrammar
 			to = century
 			from = century - 99
 		return CUI.DateTimeRangeGrammar.getFromToWithRange("#{from}", "#{to}")
+
+	@centuryRange: (centuryFrom, centuryTo) ->
+		from = @century(centuryFrom)
+		to = @century(centuryTo)
+		return from: from.from, to: to.to
 
 	# 15 -> 1401 - 1416
 	# 15 -> 1499 1484
