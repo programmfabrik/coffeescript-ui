@@ -44299,7 +44299,7 @@ CUI.Panel = (function(superClass) {
           _this.__activations++;
           if (_this.__activations === 1) {
             if (typeof _this._onFirstActivate === "function") {
-              _this._onFirstActivate(_this);
+              _this._onFirstActivate(_this, flags, event);
             }
           }
           _this.__open(!flags.initial_activate);
