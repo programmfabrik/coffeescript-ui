@@ -19,28 +19,38 @@
 		padding: $spacer-xs 0;
 		justify-content: flex-start;
 		margin: 0 -#{$spacer-sm};
+		min-height: $btn-height;
 
 		&-select {
 			max-width: 100%;
 		}
 
 		.cui-button-visual {
-			padding: 0;
+			height: auto;
 			justify-content: flex-start;
+			padding: 0;
 			font-weight: $font-weight-bold;
+			line-height: 1.2;
+			align-items: baseline;
 
 			.cui-button-left {
-				width: $spacer;
+				width: $panel-content-padding;
 				justify-content: center;
+				padding-left: 0;
+				margin-right: 0;
 
-				.fa-chevron-right {
+				.fa {
 					position: relative;
-					top: 1px;
+					left: -2px;
+
+					&.fa-chevron-right {
+						top: 1px;
+					}
 				}
 			}
 
 			.cui-button-center {
-				padding-left: 1em;
+				padding-left: 0;
 
 				span {
 					white-space: normal;
@@ -60,5 +70,5 @@
 }
 
 .cui-panel-body {
-	padding: 0 $spacer-sm $spacer-sm;
+	padding: $spacer-xs $spacer-sm $spacer-sm $panel-content-padding; // left aligned with panel header text
 }

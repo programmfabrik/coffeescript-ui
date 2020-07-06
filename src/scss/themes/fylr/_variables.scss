@@ -352,7 +352,8 @@ $menu-border-radius: $border-radius-lg !default;
 
 // * Panel
 // * ==========================================
-$panel-border-color: $body-color !default;
+$panel-border-color: 	$body-color !default;
+$panel-content-padding: $spacer * 1.15 !default;
 
 // * Toolbar
 // * ==========================================
