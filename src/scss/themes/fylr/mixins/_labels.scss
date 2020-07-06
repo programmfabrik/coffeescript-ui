@@ -33,8 +33,10 @@
 }
 
 @mixin label-title() {
-	font-size: $font-size-lg;
 	font-weight: $font-weight-bold;
+	color: gray('500');
+	text-transform: uppercase;
+	letter-spacing: 3px;
 }
 
 @mixin label-subtitle() {
