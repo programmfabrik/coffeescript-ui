@@ -145,7 +145,7 @@
 	> .cui-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header,
-		> .cui-vertical-layout-top > .cui-pane-toolbar {
+		> .cui-vertical-layout-top > .cui-toolbar {
 			padding: $layer-padding-y $layer-padding-x;
 		}
 
@@ -174,7 +174,7 @@
 
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer,
-		> .cui-vertical-layout-bottom > .cui-pane-toolbar {
+		> .cui-vertical-layout-bottom > .cui-toolbar {
 			padding: $layer-padding-x;
 		}
 
@@ -185,6 +185,11 @@
 			.cui-button-visual {
 				min-width: 60px;
 			}
+		}
+
+		// nested panes
+		.cui-pane > .cui-vertical-layout-center {
+			@include pane-padding-reset();
 		}
 	}
 
