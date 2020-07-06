@@ -14,7 +14,6 @@ class CUI.Panel extends CUI.DOMElement
 		arrow_right: "fa-angle-right"
 
 	constructor: (opts) ->
-		console.debug "new Panel", opts
 		super(opts)
 		@panel = new CUI.Template
 			name: "panel"
@@ -46,7 +45,7 @@ class CUI.Panel extends CUI.DOMElement
 			onActivate: (btn, flags, event) =>
 				@__activations++
 				if @__activations == 1
-					@_onFirstActivate?(@)
+					@_onFirstActivate?(@, flags, event)
 
 				@__open(not flags.initial_activate)
 				@_onActivate?(btn, flags, event)
