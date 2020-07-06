@@ -43,15 +43,21 @@
 	}
 }
 
-@mixin button-md() {
+@mixin button-icon() {
 	.cui-button-visual {
-		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
+		@include button-size(16px, 0, $font-size-sm, 0);
 	}
 }
 
 @mixin button-sm() {
 	.cui-button-visual {
 		@include button-size($btn-height-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+	}
+}
+
+@mixin button-md() {
+	.cui-button-visual {
+		@include button-size($btn-height, $btn-padding-x, $btn-font-size, $btn-border-radius);
 	}
 }
 
