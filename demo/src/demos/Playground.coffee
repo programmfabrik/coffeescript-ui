@@ -877,7 +877,7 @@ class Demo.Playground extends Demo
 			"fa-rotate-left",
 			"fa-arrows-v",
 			"fa-arrows-h",
-			"fa-calendar",
+			"fa-calendar-plus-o",
 			"fa-question",
 			"fa-question",
 			"fa-question",
