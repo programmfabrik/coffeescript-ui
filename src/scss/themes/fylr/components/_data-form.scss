@@ -73,18 +73,28 @@
 
 .cui-data-form-row {
 	overflow: visible !important;
-	margin-bottom: $spacer-xs;
 	width: 100%; // see editor: ez5-nested
+	display: grid;
+	grid-template-columns: repeat($data-form-utilities-count, $data-form-utilities-column-width) 1fr;
+	grid-template-rows: auto;
+	grid-template-areas: 'offset move delete content';
 
-	&--read-only {
-		.cui-drag-handle-row {
-			opacity: 0 !important;
-		}
+	&:not(:last-child) {
+		margin-bottom: $spacer-lg;
+	}
+
+	&::before {
+		content: '';
+		grid-area: offset;
 	}
 
 	> .cui-horizontal-layout-left {
+		grid-area: move;
+		align-self: start;
+		justify-self: center;
+
 		.cui-drag-handle-row {
-			margin: 0.6rem $spacer-sm 0 0; // see editor
+			margin: $spacer-xs;
 			flex-grow: 0;
 			cursor: grab;
 
@@ -97,11 +107,27 @@
 
 	> .cui-horizontal-layout-center {
 		min-width: 0;
+		grid-area: content;
+
+		.ez5-nested-fields {
+			margin-bottom: 0 !important;
+		}
 	}
 
 	> .cui-horizontal-layout-right {
+		grid-area: delete;
+		align-self: start;
+		justify-self: center;
+
 		.cui-buttonbar {
 			height: 100%;
+		}
+
+		.cui-button-button {
+			$focus-inset: 1;
+
+			@include button-hover-dimmed($focus-inset);
+			@include button-icon();
 		}
 
 		.cui-button-visual {
@@ -116,6 +142,12 @@
 			.cui-button-visual {
 				background-color: transparent;
 			}
+		}
+	}
+
+	&--read-only {
+		.cui-drag-handle-row {
+			opacity: 0 !important;
 		}
 	}
 
