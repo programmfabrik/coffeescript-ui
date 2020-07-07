@@ -111,3 +111,12 @@ a[role='button'].cui-button-appearance-link {
 	from { opacity: 0.33; }
 	to { opacity: 1; }
 }
+
+// Hidden
+.cui-button-hidden {
+	pointer-events: none;
+
+	.cui-button-visual {
+		opacity: $disabled-opacity;
+	}
+}

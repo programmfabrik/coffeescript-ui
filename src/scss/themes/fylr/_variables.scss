@@ -100,7 +100,8 @@ $dark:          $gray-800 !default;
 $muted:         $gray-500 !default; // used in field-label, block description, empty label
 $disabled:      $muted !default;
 
-$disabled-opacity: 0.5 !default;
+$disabled-opacity: 		0.5 !default;
+$disabled-opacity-icon: 0.25 !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default

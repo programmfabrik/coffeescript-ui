@@ -90,7 +90,7 @@
 
 			&.is-hidden {
 				pointer-events: none;
-				opacity: 0.25;
+				opacity: $disabled-opacity-icon;
 			}
 		}
 	}
@@ -122,7 +122,7 @@
 	// on mouseenter of the row
 	&.cui-data-form-row--trash {
 		> .cui-horizontal-layout-center {
-			opacity: 0.5;
+			opacity: $disabled-opacity-icon;
 		}
 	}
 }
