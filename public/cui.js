@@ -33936,9 +33936,13 @@ CUI.NumberInput = (function(superClass) {
   };
 
   NumberInput.prototype.__addSeparator = function(str) {
-    var i, idx, len, n, nn, ref;
+    var i, idx, isNegative, len, n, nn, ref;
     if (CUI.util.isEmpty(this._separator)) {
       return str;
+    }
+    isNegative = str.startsWith("-");
+    if (isNegative) {
+      str = str.substr(1);
     }
     nn = [];
     ref = str.split("").reverse();
@@ -33948,6 +33952,9 @@ CUI.NumberInput = (function(superClass) {
         nn.push(this._separator);
       }
       nn.push(n);
+    }
+    if (isNegative) {
+      nn.push("-");
     }
     nn.reverse();
     return nn.join("");
