@@ -151,11 +151,18 @@ class CUI.NumberInput extends CUI.Input
 		if CUI.util.isEmpty(@_separator)
 			return str
 
+		isNegative = str.startsWith("-")
+		if isNegative
+			str = str.substr(1)
 		nn = []
 		for n,idx in str.split("").reverse()
 			if idx%3 == 0 and idx > 0
 				nn.push(@_separator)
 			nn.push(n)
+
+		if isNegative
+			nn.push("-")
+
 		nn.reverse()
 		nn.join("")
 
