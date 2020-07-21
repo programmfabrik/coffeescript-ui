@@ -182,8 +182,10 @@
 			border-radius: 0 0 $layer-border-radius $layer-border-radius;
 
 			// make buttons a little more prominent in the footer, they are typically "primary" action buttons ("OK" is pretty short otherwise)
-			.cui-button-visual {
-				min-width: 60px;
+			.cui-toolbar:not(.cui-navigation-toolbar) {
+				.cui-button-visual {
+					min-width: 60px;
+				}
 			}
 		}
 
