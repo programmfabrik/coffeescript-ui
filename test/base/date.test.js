@@ -1123,6 +1123,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
     });
 
     test("stringToDateRange :: 1th century BC - 1th century", () => {
+        CUI.DateTime.setLocale("en-US")
         const input = "1th century BC - 1th century";
 
         const output = CUI.DateTime.stringToDateRange(input)
@@ -1132,6 +1133,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
     });
 
     test("stringToDateRange :: 1th century B.C. - 1th century", () => {
+        CUI.DateTime.setLocale("en-US")
         const input = "1th century B.C. - 1th century";
 
         const output = CUI.DateTime.stringToDateRange(input)
@@ -1141,6 +1143,7 @@ describe('CUI.DateTime.stringToDateRange', () => {
     });
 
     test("stringToDateRange :: 2th century BC - 1th century BC", () => {
+        CUI.DateTime.setLocale("en-US")
         const input = "2th century BC - 1th century BC";
 
         const output = CUI.DateTime.stringToDateRange(input)
@@ -1150,12 +1153,23 @@ describe('CUI.DateTime.stringToDateRange', () => {
     });
 
     test("stringToDateRange :: 2th century B.C. - 1th century B.C.", () => {
+        CUI.DateTime.setLocale("en-US")
         const input = "2th century B.C. - 1th century B.C.";
 
         const output = CUI.DateTime.stringToDateRange(input)
 
         expect(output.from).toBe("-0199");
         expect(output.to).toBe("0000");
+    });
+
+    test("stringToDateRange :: 1. Jhd. v. Chr. - 2. Jhd.", () => {
+        CUI.DateTime.setLocale("en-US")
+        const input = "1. Jhd. v. Chr. - 2. Jhd.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0099");
+        expect(output.to).toBe("0200");
     });
 });
 
@@ -1618,5 +1632,14 @@ describe('CUI.DateTime.dateRangeToString', () => {
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("1799 - 2000")
+    });
+
+    test("dateRangeToString :: -0099 - 0200", () => {
+        const from = "-0099"
+        const to = "0200"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("100 B.C. - 200")
     });
 });

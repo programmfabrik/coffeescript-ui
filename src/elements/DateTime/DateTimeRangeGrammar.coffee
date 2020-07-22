@@ -471,7 +471,7 @@ class CUI.DateTimeRangeGrammar
 	@centuryRange: (centuryFrom, centuryTo, fromIsBC, toIsBC) ->
 		from = @century(centuryFrom, fromIsBC)
 		to = @century(centuryTo, toIsBC)
-		return from: from.from, to: to.to
+		return from: from?.from, to: to?.to
 
 	# 15 -> 1401 - 1416
 	# 15 -> 1499 1484
