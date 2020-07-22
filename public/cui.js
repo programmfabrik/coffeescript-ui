@@ -27620,8 +27620,8 @@ CUI.DateTimeInputBlock = (function(superClass) {
     from = this.century(centuryFrom, fromIsBC);
     to = this.century(centuryTo, toIsBC);
     return {
-      from: from.from,
-      to: to.to
+      from: from != null ? from.from : void 0,
+      to: to != null ? to.to : void 0
     };
   };
 
