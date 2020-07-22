@@ -1086,6 +1086,77 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.to).toBe("1200");
     });
 
+    test("stringToDateRange :: 1. Jhd. v. Chr. - 1. Jhd.", () => {
+        const input = "1. Jhd. v. Chr. - 1. Jhd.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0099");
+        expect(output.to).toBe("0100");
+    });
+
+    test("stringToDateRange :: 1 Jhd. v. Chr. - 1 Jhd.", () => {
+        const input = "1 Jhd. v. Chr. - 1 Jhd.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0099");
+        expect(output.to).toBe("0100");
+    });
+
+    test("stringToDateRange :: 2. Jhd. v. Chr. - 1. Jhd. v. Chr.", () => {
+        const input = "2. Jhd. v. Chr. - 1. Jhd. v. Chr.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0199");
+        expect(output.to).toBe("0000");
+    });
+
+    test("stringToDateRange :: 2 Jhd. v. Chr. - 1 Jhd. v. Chr.", () => {
+        const input = "2 Jhd. v. Chr. - 1 Jhd. v. Chr.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0199");
+        expect(output.to).toBe("0000");
+    });
+
+    test("stringToDateRange :: 1th century BC - 1th century", () => {
+        const input = "1th century BC - 1th century";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0099");
+        expect(output.to).toBe("0100");
+    });
+
+    test("stringToDateRange :: 1th century B.C. - 1th century", () => {
+        const input = "1th century B.C. - 1th century";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0099");
+        expect(output.to).toBe("0100");
+    });
+
+    test("stringToDateRange :: 2th century BC - 1th century BC", () => {
+        const input = "2th century BC - 1th century BC";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0199");
+        expect(output.to).toBe("0000");
+    });
+
+    test("stringToDateRange :: 2th century B.C. - 1th century B.C.", () => {
+        const input = "2th century B.C. - 1th century B.C.";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0199");
+        expect(output.to).toBe("0000");
+    });
 });
 
 describe('CUI.DateTime.dateRangeToString', () => {

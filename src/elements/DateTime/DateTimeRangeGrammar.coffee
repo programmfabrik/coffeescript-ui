@@ -152,6 +152,22 @@ class CUI.DateTimeRangeGrammar
 		["YEAR Jh - YEAR Jh", "centuryRange", [0, 3]]
 		["YEAR_DOT Jh. - YEAR_DOT Jh.", "centuryRange", [0, 3]]
 		["YEAR_DOT Jh - YEAR_DOT Jh", "centuryRange", [0, 3]]
+		["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd.", "centuryRange", [0, 5], [true], "CENTURY_RANGE_FROM_BC"]
+		["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd", "centuryRange", [0, 5], [true]]
+		["YEAR Jhd. v. Chr. - YEAR Jhd.", "centuryRange", [0, 5], [true]]
+		["YEAR Jhd v. Chr. - YEAR Jhd", "centuryRange", [0, 5], [true]]
+		["YEAR Jh. v. Chr. - YEAR Jh.", "centuryRange", [0, 5], [true]]
+		["YEAR Jh v. Chr. - YEAR Jh", "centuryRange", [0, 5], [true]]
+		["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh.", "centuryRange", [0, 5], [true]]
+		["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh", "centuryRange", [0, 5], [true]]
+		["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd. v. Chr.", "centuryRange", [0, 5], [true, true], "CENTURY_RANGE_BC"]
+		["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd v. Chr.", "centuryRange", [0, 5], [true, true]]
+		["YEAR Jhd. v. Chr. - YEAR Jhd. v. Chr.", "centuryRange", [0, 5], [true, true]]
+		["YEAR Jhd v. Chr. - YEAR Jhd v. Chr.", "centuryRange", [0, 5], [true, true]]
+		["YEAR Jh. v. Chr. - YEAR Jh. v. Chr.", "centuryRange", [0, 5], [true, true]]
+		["YEAR Jh v. Chr. - YEAR Jh v. Chr.", "centuryRange", [0, 5], [true, true]]
+		["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh. v. Chr.", "centuryRange", [0, 5], [true, true]]
+		["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh v. Chr.", "centuryRange", [0, 5], [true, true]]
 	]
 	@PARSE_GRAMMARS["en-US"] = [
 		["DATE to DATE", "range", [0, 2], null, "RANGE"]
@@ -203,6 +219,10 @@ class CUI.DateTimeRangeGrammar
 		["Late CENTURY century", "lateCentury", [1], null, "LATE_CENTURY"]
 		["Late CENTURY century BC", "lateCentury", [1], [true], "LATE_CENTURY_BC"]
 		["CENTURY century - CENTURY century", "centuryRange", [0, 3], null, "CENTURY_RANGE"]
+		["CENTURY century BC - CENTURY century", "centuryRange", [0, 4], [true], "CENTURY_RANGE_FROM_BC"]
+		["CENTURY century B.C. - CENTURY century", "centuryRange", [0, 4], [true]]
+		["CENTURY century BC - CENTURY century BC", "centuryRange", [0, 4], [true, true], "CENTURY_RANGE_BC"]
+		["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]
 	]
 
 	@dateRangeToString: (from, to) ->
@@ -448,9 +468,9 @@ class CUI.DateTimeRangeGrammar
 			from = century - 99
 		return CUI.DateTimeRangeGrammar.getFromToWithRange("#{from}", "#{to}")
 
-	@centuryRange: (centuryFrom, centuryTo) ->
-		from = @century(centuryFrom)
-		to = @century(centuryTo)
+	@centuryRange: (centuryFrom, centuryTo, fromIsBC, toIsBC) ->
+		from = @century(centuryFrom, fromIsBC)
+		to = @century(centuryTo, toIsBC)
 		return from: from.from, to: to.to
 
 	# 15 -> 1401 - 1416
