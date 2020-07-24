@@ -4790,7 +4790,7 @@ textarea {
     padding: 1rem; }
   .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer {
     border-radius: 0 0 3px 3px; }
-    .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer .cui-button-visual {
+    .cui-layer > .cui-pane > .cui-vertical-layout-bottom > .cui-pane-footer .cui-toolbar:not(.cui-navigation-toolbar) .cui-button-visual {
       min-width: 60px; }
   .cui-layer > .cui-pane .cui-pane > .cui-vertical-layout-center {
     padding: 0; }
