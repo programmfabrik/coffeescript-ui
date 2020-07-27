@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,900&display=swap);
+@charset "UTF-8";
 /*!
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
@@ -2636,7 +2637,9 @@ textarea {
   display: none !important; }
 
 .cui-block {
-  flex-shrink: 0; }
+  flex-shrink: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--block-color); }
   .cui-block:not(:last-child) {
     margin-bottom: 1rem; }
   *:not(.cui-block) + .cui-block {
@@ -2660,20 +2663,40 @@ textarea {
     .cui-toolbar .cui-block > .cui-block-header .cui-block-title,
     .cui-buttonbar .cui-block > .cui-block-header .cui-block-title {
       margin-bottom: 0; }
+    .cui-block > .cui-block-header .cui-block-title::before {
+      content: "";
+      display: inline-block;
+      font: normal normal normal 8px "FontAwesome";
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      top: -1px;
+      color: var(--block-color);
+      padding: 1px 1px 0 1px;
+      border: 1px solid currentColor;
+      margin-right: 0.75em; }
     .cui-block > .cui-block-header .cui-block-title + * {
       margin-top: 0.5rem; }
-  .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
-    font-family: "Source Sans Pro", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 0; }
-    .cui-pane-header .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
-    .cui-toolbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
-    .cui-buttonbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
+  .cui-block .cui-block {
+    margin-left: 1.5rem; }
+  .cui-block.cui-block-level-1 {
+    --block-color: #212121; }
+    .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
+      font-family: "Source Sans Pro", sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 1.1;
       margin-bottom: 0; }
+      .cui-pane-header .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
+      .cui-toolbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
+      .cui-buttonbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
+        margin-bottom: 0; }
   .cui-block.cui-block-level-2 {
+    --block-color: #6c757d;
     margin-top: 1rem; }
+  .cui-block.cui-block-level-3 {
+    --block-color: #adb5bd; }
 
 .cui-block-content .cui-form-table {
   width: 100%; }
@@ -3808,7 +3831,8 @@ textarea {
   padding: 0.5rem;
   overflow: visible !important; }
   .cui-toolbar .cui-toolbar {
-    padding: 0; }
+    padding: 0;
+    min-height: 0; }
   .cui-toolbar.cui-template-empty {
     display: none; }
   .cui-toolbar > .cui-horizontal-layout-left,
