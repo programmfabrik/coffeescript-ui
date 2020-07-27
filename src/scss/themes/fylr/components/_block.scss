@@ -1,6 +1,8 @@
 // todo: padding, margins, use-cases ?
-.cui-block {
+.cui-block {	
 	flex-shrink: 0;
+	padding-bottom: $spacer-sm;
+	border-bottom: 1px solid var(--block-color);
 
 	&:not(:last-child) {
 		margin-bottom: $block-margin;
@@ -31,13 +33,31 @@
 	> .cui-block-header .cui-block-title {
 		@include h6(0);
 
+		&::before {
+			@include icon('\f039', 8px);
+			
+			position: relative;
+			top: -1px;
+			color: var(--block-color);
+			padding: 1px 1px 0 1px;
+			border: 1px solid currentColor;
+			margin-right: 0.75em;
+		}
+
 		+ * {
 			margin-top: $spacer-sm;
 		}
 	}
 
+	// nested blocks indention
+	.cui-block {
+		margin-left: $spacer-lg;
+	}
+
 	// Level 1
 	&.cui-block-level-1 {
+		--block-color: #{gray('900')};
+
 		> .cui-block-header .cui-block-title {
 			@include h6(0);
 		}
@@ -45,6 +65,8 @@
 
 	// Level 2
 	&.cui-block-level-2 {
+		--block-color: #{gray('600')};
+
 		margin-top: $block-margin;
 
 		// todo
@@ -55,8 +77,9 @@
 
 	// Level 3
 	// todo
-	// &.cui-block-level-3 {
-	// }
+	&.cui-block-level-3 {
+		--block-color: #{gray('500')};
+	}
 }
 
 // Content
