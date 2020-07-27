@@ -72,6 +72,10 @@
 	@return $size / 16px * 1rem;
 }
 
+@function calculate-px($size) {
+	@return $size / 1rem * 16px;
+}
+
 // Retrieve headline font-size
 @function headline-size($key: 'h1') {
 	@return map-get($headline-sizes, $key);

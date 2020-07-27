@@ -358,9 +358,9 @@ $panel-content-padding: $spacer * 1.15 !default;
 
 // * Toolbar
 // * ==========================================
-$toolbar-height: 		30px !default; // == $btn-height
 $toolbar-background: 	transparent !default; // leave transparent by default and style dependent on where the toolbar is used
 $toolbar-padding: 		$component-padding-base !default;
+$toolbar-height: 		$btn-height + calculate-px(2*$toolbar-padding) !default; // make toolbar always visible, even when no buttons are displayed in it yet
 
 // * Pane
 // * ==========================================
