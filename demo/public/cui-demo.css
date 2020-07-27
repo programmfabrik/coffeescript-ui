@@ -602,8 +602,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     font-size: inherit; }
 
 .cui-demo-label-title {
-  font-size: 1rem;
-  font-weight: 700; }
+  font-weight: 700;
+  color: #adb5bd;
+  text-transform: uppercase;
+  letter-spacing: 3px; }
 
 .cui-demo-label-subtitle {
   font-weight: 700; }
