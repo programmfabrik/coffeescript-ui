@@ -235,6 +235,7 @@ label[data-label-clickable],
 
 	line-height: var(--lh);
 	position: relative;
+	padding-bottom: $spacer;
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
@@ -254,31 +255,16 @@ label[data-label-clickable],
 	}
 
 	.cui-label-manage-overflow-button {
+		@include button-sm();
+
 		z-index: 1;
 		position: absolute;
 		left: auto;
 		right: 0;
-		bottom: 0;
-
-		&::before {
-			content: '...';
-			position: relative;
-			top: -1px;
-			margin-right: -#{$spacer-sm};
-		}
+		bottom: -$spacer-sm;
 
 		.cui-button-visual {
-			color: $link-color;
-			height: var(--lh);
 			margin-left: auto;
-		}
-
-		&:hover,
-		&:focus {
-			.cui-button-visual {
-				background-color: transparent !important;
-				color: $link-hover-color;
-			}
 		}
 	}
 
