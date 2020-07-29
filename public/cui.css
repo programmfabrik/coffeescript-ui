@@ -1240,9 +1240,8 @@ li > div {
   box-shadow: 0 0 0 1px #5d707e; }
 
 .cui-button-appearance-transparent-border.cui-disabled .cui-button-visual {
-  background: rgba(255, 255, 255, 0.7);
   border-color: transparent;
-  color: #ababab; }
+  opacity: .5; }
 
 .cui-button-appearance-transparent-border .cui-button-visual {
   padding: 0 4px;
