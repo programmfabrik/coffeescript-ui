@@ -1,0 +1,17 @@
+@mixin debug($outline: red) {
+	.dev & {
+		outline: 1px solid $outline;
+	}
+}
+
+@mixin debug-hard($outline: red) {
+	.dev & {
+		border: 1px solid $outline;
+	}
+}
+
+@mixin debug-bg($bg: red) {
+	.dev & {
+		background: $bg;
+	}
+}
