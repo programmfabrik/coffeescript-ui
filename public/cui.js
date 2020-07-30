@@ -15061,6 +15061,12 @@ CUI.FlexHandle = (function(superClass) {
         "default": false,
         check: Boolean
       },
+      open_button_icon: {
+        mandatory: false,
+        check: function(v) {
+          return CUI.util.isString(v) || v instanceof CUI.Icon;
+        }
+      },
       label: {
         check: function(v) {
           return v instanceof CUI.Label || CUI.util.isPlainObject(v);
@@ -15115,39 +15121,43 @@ CUI.FlexHandle = (function(superClass) {
       axis = "y";
       this.__css_value = "Height";
     }
-    CUI.Events.listen({
-      type: "dblclick",
-      node: this._element,
-      call: (function(_this) {
-        return function(ev) {
-          if (_this.__size === null) {
+    if (!this._open_button_icon) {
+      CUI.Events.listen({
+        type: "dblclick",
+        node: this._element,
+        call: (function(_this) {
+          return function(ev) {
+            if (_this.__size === null) {
+              if (_this.isClosed()) {
+                _this.open();
+              } else if (_this._closable) {
+                _this.close();
+              }
+            } else {
+              _this.resetSize();
+            }
+            _this.storeState();
+          };
+        })(this)
+      });
+      CUI.Events.listen({
+        type: ["click"],
+        node: this._element,
+        call: (function(_this) {
+          return function(ev) {
+            if (!_this.__label) {
+              return;
+            }
             if (_this.isClosed()) {
               _this.open();
-            } else if (_this._closable) {
-              _this.close();
+              _this.storeState();
             }
-          } else {
-            _this.resetSize();
-          }
-          _this.storeState();
-        };
-      })(this)
-    });
-    CUI.Events.listen({
-      type: ["click"],
-      node: this._element,
-      call: (function(_this) {
-        return function(ev) {
-          if (!_this.__label) {
-            return;
-          }
-          if (_this.isClosed()) {
-            _this.open();
-            _this.storeState();
-          }
-        };
-      })(this)
-    });
+          };
+        })(this)
+      });
+    } else {
+      this._element.classList.add("cui-flex-handle-with-button-icon");
+    }
     drag_start_size = null;
     new CUI.Draggable({
       element: this._element,
@@ -15442,6 +15452,7 @@ CUI.FlexHandle = (function(superClass) {
   };
 
   FlexHandle.prototype.addLabel = function(opts) {
+    var button;
     if (opts == null) {
       opts = {};
     }
@@ -15452,6 +15463,20 @@ CUI.FlexHandle = (function(superClass) {
         opts.rotate_90 = true;
       }
       this.__label = new CUI.defaults["class"].Label(opts);
+    }
+    if (this._open_button_icon) {
+      button = new CUI.Button({
+        icon: this._open_button_icon,
+        onClick: (function(_this) {
+          return function() {
+            if (_this.isClosed()) {
+              _this.open();
+              _this.storeState();
+            }
+          };
+        })(this)
+      });
+      CUI.dom.append(this._element, button);
     }
     CUI.dom.append(this._element, this.__label.DOM);
     return CUI.dom.addClass(this._element, "cui-flex-handle-has-label");
@@ -46476,18 +46501,16 @@ CUI.Toolbar = (function(superClass) {
 
   Toolbar.prototype.initOpts = function() {
     Toolbar.__super__.initOpts.call(this);
-    if (CUI.__ng__) {
-      this.removeOpt("maximize");
-      this.removeOpt("maximize_horizontal");
-      this.removeOpt("maximize_vertical");
-      return this.addOpts({
-        maximize_horizontal: {
-          "default": true,
-          mandatory: true,
-          check: Boolean
-        }
-      });
-    }
+    this.removeOpt("maximize");
+    this.removeOpt("maximize_horizontal");
+    this.removeOpt("maximize_vertical");
+    return this.addOpts({
+      maximize_horizontal: {
+        "default": true,
+        mandatory: true,
+        check: Boolean
+      }
+    });
   };
 
   Toolbar.prototype.hasFlexHandles = function() {

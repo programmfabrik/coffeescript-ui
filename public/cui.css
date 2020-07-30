@@ -757,6 +757,7 @@ li > div {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none; }
+  .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-button,
   .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-label {
     display: none; }
 
@@ -777,6 +778,8 @@ li > div {
   .cui-flex-handle-row.cui-flex-handle-closed {
     cursor: pointer;
     overflow: hidden; }
+    .cui-flex-handle-row.cui-flex-handle-closed.cui-flex-handle-with-button-icon {
+      cursor: default; }
   .cui-flex-handle-row.cui-flex-handle-has-label.cui-flex-handle-closed {
     width: 32px;
     margin: 0;
