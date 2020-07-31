@@ -56,14 +56,14 @@ $grays: map-merge(
 	$grays
 );
 
-$blue:    #45a3ba !default;
+$blue:    #6bb2bb !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
-$pink:    #f25754 !default;
+$pink:    #b64b7c !default;
 $red:     #dc3545 !default;
 $orange:  #ff5724 !default;
-$yellow:  #ffbf00 !default;
-$green:   #28a745 !default;
+$yellow:  #d6b13a !default;
+$green:   #7ca751 !default;
 $teal:    #3e9e88 !default;
 $cyan:    #17a2b8 !default;
 $brown:   #986801 !default;
@@ -513,7 +513,7 @@ $tooltip-font-size: 	12px !default;
 // * ==========================================
 $drop-area-focus-shadow: 	$component-focus-shadow !default;
 $drop-area-border-radius: 	$border-radius-sm !default;
-$drag-lasso-background: 	theme-color('focused') !default;
+$drag-lasso-background: 	theme-color('primary') !default;
 
 // * Sticky Header
 // * ==========================================
