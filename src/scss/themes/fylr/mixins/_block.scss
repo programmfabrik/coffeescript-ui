@@ -36,3 +36,34 @@
 		grid-gap: 0 $spacer-xl; // todo: needs IE fix, use grid-template-areas
 	}
 }
+
+@mixin block-icon($color) {
+	content: '';
+	position: absolute;
+	padding: 1px 1px 0 1px;
+	border: 3px solid $color;
+	border-left: 0;
+	border-right: 0;
+	width: $block-icon-width;
+	height: $block-icon-height;
+}
+
+@mixin reset-block-icon() {
+	&::before,
+	&::after {
+		display: none;
+	}
+
+	> .cui-block-header .cui-block-title {
+		padding-left: 0;
+		
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
+
+	.cui-block-content {
+		padding-left: 0;
+	}
+}

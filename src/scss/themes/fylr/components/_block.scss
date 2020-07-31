@@ -1,8 +1,23 @@
 // todo: padding, margins, use-cases ?
-.cui-block {	
+.cui-block {
 	flex-shrink: 0;
-	padding-bottom: $spacer-sm;
-	border-bottom: 1px solid var(--block-color);
+	padding-bottom: $spacer-lg;
+	border-bottom: 0 solid var(--block-color, currentColor);
+	position: relative;
+
+	&::after {
+		@include block-icon(var(--block-color));
+		
+		right: $block-icon-offset-x;
+		bottom: 0;
+	}
+	
+	&::before {
+		@include block-icon(var(--block-color));
+		
+		left: $block-icon-offset-x;
+		bottom: 0;
+	}
 
 	&:not(:last-child) {
 		margin-bottom: $block-margin;
@@ -33,15 +48,13 @@
 	> .cui-block-header .cui-block-title {
 		@include h6(0);
 
+		padding-left: $block-content-padding;
+
 		&::before {
-			@include icon('\f039', 8px);
-			
-			position: relative;
-			top: -1px;
-			color: var(--block-color);
-			padding: 1px 1px 0 1px;
-			border: 1px solid currentColor;
-			margin-right: 0.75em;
+			@include block-icon(var(--block-color));
+		
+			top: 3px;
+			left: $block-icon-offset-x;
 		}
 
 		+ * {
@@ -84,6 +97,8 @@
 
 // Content
 .cui-block-content {
+	padding-left: $block-content-padding;
+
 	.cui-form-table {
 		width: 100%;
 
