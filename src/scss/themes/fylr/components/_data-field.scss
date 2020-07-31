@@ -127,27 +127,23 @@
 	}
 }
 
+.cui-data-field-left,
 .cui-data-field-right {
 	position: relative;
 
 	.cui-button {
-		margin-left: -1px;
 		height: 100%;
 		vertical-align: bottom;
 
 		.cui-button-visual {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
 			background-color: $input-background;
 			border: 1px solid $input-border-color;
-			border-left: 1px solid gray('200');
 		}
 
 		&.cui-layer-open {
 			.cui-button-visual {
 				background-color: $btn-active-background;
 				color: $btn-active-color;
-				border-left: transparent;
 			}
 		}
 
@@ -159,6 +155,40 @@
 				border-color: $input-focus-border-color;
 			}
 		}
+	}
+}
+
+.cui-data-field-left {
+	.cui-button {
+		.cui-button-visual {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			border-right: 1px solid gray('200');
+		}
+
+		&.cui-layer-open {
+			.cui-button-visual {
+				border-right: transparent;
+			}
+		}		
+	}
+}
+
+.cui-data-field-right {
+	.cui-button {
+		margin-left: -1px;
+
+		.cui-button-visual {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-left: 1px solid gray('200');
+		}
+
+		&.cui-layer-open {
+			.cui-button-visual {
+				border-left: transparent;
+			}
+		}		
 	}
 }
 
