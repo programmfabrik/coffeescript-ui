@@ -165,11 +165,11 @@
 }
 
 @mixin button-inverted($border: 0) {
-	@include button-color(rgba(gray('900'), 0.6), gray('300'), $body-color, $white, $body-color, $white);
+	@include button-color($btn-inverted-background, $btn-inverted-color, $btn-inverted-background, $white, $btn-inverted-background, $white);
 
 	@if $border == 1 {
 		.cui-button-visual {
-			border-color: rgba(gray('200'), 0.3);
+			border-color: $btn-inverted-border-color;
 		}
 	}
 }

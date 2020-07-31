@@ -323,6 +323,10 @@ $btn-padding-x-lg: 			1.25rem !default;
 $btn-height-lg: 			36px !default;
 $btn-font-size-lg: 			$font-size-lg !default;
 $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
+// Inverted Button 
+$btn-inverted-background: 	rgba(gray('900'), 0.6) !default;
+$btn-inverted-color: 		gray('300') !default;
+$btn-inverted-border-color: rgba(gray('200'), 0.3) !default;
 
 // * Buttonbar
 // * ==========================================
