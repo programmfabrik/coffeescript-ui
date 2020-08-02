@@ -370,6 +370,7 @@ li > div {
 	        user-select: none;
 
 	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
+		.cui-button,
 		.cui-label {
 			display: none;
 		}
@@ -401,6 +402,9 @@ li > div {
 	&.cui-flex-handle-closed {
 		cursor: pointer;
 		overflow: hidden;
+		&.cui-flex-handle-with-button-icon {
+			cursor: default;
+		}
 	}
 	&.cui-flex-handle-manual-size {
 		// background-color: #64fdd8;
@@ -1147,9 +1151,8 @@ li > div {
 
 	&.cui-disabled {
 		.cui-button-visual {
-			background: transparentize($button-background,.3);
 			border-color: transparent;
-			color: desaturate(lighten($button-color, 33%), 10%);
+			opacity: .5;
 		}
 	}
 

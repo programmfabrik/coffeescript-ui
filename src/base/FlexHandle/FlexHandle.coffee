@@ -73,6 +73,10 @@ class CUI.FlexHandle extends CUI.Element
 				mandatory: true
 				default: false
 				check: Boolean
+			open_button_icon:
+				mandatory: false
+				check: (v) ->
+					CUI.util.isString(v) or v instanceof CUI.Icon
 			label:
 				check: (v) ->
 					v instanceof CUI.Label or CUI.util.isPlainObject(v)
@@ -116,31 +120,34 @@ class CUI.FlexHandle extends CUI.Element
 			@__css_value = "Height"
 
 
-		CUI.Events.listen
-			type: "dblclick"
-			node: @_element
-			call: (ev) =>
-				if @__size == null # CUI.util.isEmpty(@__pane[0].style[@__css_value])
+		if not @_open_button_icon
+			CUI.Events.listen
+				type: "dblclick"
+				node: @_element
+				call: (ev) =>
+					if @__size == null # CUI.util.isEmpty(@__pane[0].style[@__css_value])
+						if @isClosed()
+							@open()
+						else if @_closable
+							@close()
+					else
+						@resetSize()
+
+					@storeState()
+					return
+
+			CUI.Events.listen
+				type: ["click"]
+				node: @_element
+				call: (ev) =>
+					if not @__label
+						return
 					if @isClosed()
 						@open()
-					else if @_closable
-						@close()
-				else
-					@resetSize()
-
-				@storeState()
-				return
-
-		CUI.Events.listen
-			type: ["click"]
-			node: @_element
-			call: (ev) =>
-				if not @__label
+						@storeState()
 					return
-				if @isClosed()
-					@open()
-					@storeState()
-				return
+		else
+			@_element.classList.add("cui-flex-handle-with-button-icon")
 
 		# console.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
 		drag_start_size = null
@@ -406,6 +413,17 @@ class CUI.FlexHandle extends CUI.Element
 				opts.rotate_90 = true
 
 			@__label = new CUI.defaults.class.Label(opts)
+
+		if @_open_button_icon
+			button = new CUI.Button
+				icon: @_open_button_icon
+				onClick: =>
+					if @isClosed()
+						@open()
+						@storeState()
+					return
+			CUI.dom.append(@_element, button)
+
 		CUI.dom.append(@_element, @__label.DOM)
 		CUI.dom.addClass(@_element, "cui-flex-handle-has-label")
 
