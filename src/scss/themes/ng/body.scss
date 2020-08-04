@@ -375,6 +375,15 @@ li > div {
 			display: none;
 		}
 	}
+
+	.cui-button {
+		width: 100%;
+		padding: $padding/2 $padding/2 0;
+		
+		&-left {
+			min-width: 0;
+		}
+	}
 }
 
 // Show the flex handle helper in IE because real time dragging is turned off because of performance reasons
