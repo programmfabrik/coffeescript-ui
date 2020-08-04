@@ -792,6 +792,11 @@ li > div {
   .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-button,
   .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-label {
     display: none; }
+  .cui-flex-handle .cui-button {
+    width: 100%;
+    padding: 5px 5px 0; }
+    .cui-flex-handle .cui-button-left {
+      min-width: 0; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-flex-handle.drag-drop-select-helper:after {
   content: "";
