@@ -63,18 +63,23 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap; }
-  .cui-demo-playground .cui-demo-icons .cui-demo-icon-container .cui-demo-icon {
-    display: -webkit-box;
-    display: flex;
-    -webkit-box-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-            align-items: center;
-    width: 40px;
-    height: 38px;
-    border: 1px solid currentColor;
-    margin: -1px 0 0 -1px;
-    cursor: pointer; }
+
+.cui-demo-playground .cui-demo-icons .cui-demo-icon {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  width: 40px;
+  height: 38px;
+  border: 1px solid currentColor;
+  margin: -1px 0 0 -1px;
+  cursor: pointer; }
+
+.cui-demo-playground .cui-demo-asset-icons .cui-demo-icon {
+  width: 100px;
+  height: 100px; }
 
 .cui-demo-playground .cui-demo-table-zebra {
   border: 0; }
