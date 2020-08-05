@@ -239,7 +239,6 @@ label[data-label-clickable],
 
 	line-height: var(--lh);
 	position: relative;
-	padding-bottom: $spacer;
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
@@ -255,6 +254,7 @@ label[data-label-clickable],
 
 			max-height: calc(var(--max-lines) * var(--lh)); // limit at 6 lines
 			overflow: hidden;
+			margin-bottom: $spacer;
 		}
 	}
 
