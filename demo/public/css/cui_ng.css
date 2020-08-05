@@ -21,6 +21,14 @@
   width: 31.49px;
   height: 31.49px; }
 
+.svg-asset-failed {
+  width: 70px;
+  height: 70px; }
+
+.svg-asset-missing {
+  width: 70px;
+  height: 70px; }
+
 .svg-close {
   width: 12px;
   height: 12px; }
@@ -789,8 +797,14 @@ li > div {
   -ms-user-select: none;
   -moz-user-select: none;
        user-select: none; }
+  .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-button,
   .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-label {
     display: none; }
+  .cui-flex-handle .cui-button {
+    width: 100%;
+    padding: 5px 5px 0; }
+    .cui-flex-handle .cui-button-left {
+      min-width: 0; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-flex-handle.drag-drop-select-helper:after {
   content: "";
@@ -809,6 +823,8 @@ li > div {
   .cui-flex-handle-row.cui-flex-handle-closed {
     cursor: pointer;
     overflow: hidden; }
+    .cui-flex-handle-row.cui-flex-handle-closed.cui-flex-handle-with-button-icon {
+      cursor: default; }
   .cui-flex-handle-row.cui-flex-handle-has-label.cui-flex-handle-closed {
     width: 32px;
     margin: 0;
@@ -1315,9 +1331,8 @@ li > div {
   box-shadow: 0 0 0 1px #5d707e; }
 
 .cui-button-appearance-transparent-border.cui-disabled .cui-button-visual {
-  background: rgba(255, 255, 255, 0.7);
   border-color: transparent;
-  color: #ababab; }
+  opacity: .5; }
 
 .cui-button-appearance-transparent-border .cui-button-visual {
   padding: 0 4px;

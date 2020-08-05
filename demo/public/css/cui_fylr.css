@@ -34,14 +34,14 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
 :root {
-  --blue: #45a3ba;
+  --blue: #6bb2bb;
   --indigo: #6610f2;
   --purple: #6f42c1;
-  --pink: #f25754;
+  --pink: #b64b7c;
   --red: #dc3545;
   --orange: #ff5724;
-  --yellow: #ffbf00;
-  --green: #28a745;
+  --yellow: #d6b13a;
+  --green: #7ca751;
   --teal: #3e9e88;
   --cyan: #17a2b8;
   --white: #ffffff;
@@ -49,9 +49,9 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --gray-dark: #343a40;
   --primary: #ff5724;
   --secondary: #6c757d;
-  --success: #28a745;
+  --success: #7ca751;
   --info: #17a2b8;
-  --warning: #ffbf00;
+  --warning: #d6b13a;
   --danger: #dc3545;
   --light: #f5f5f5;
   --dark: #343a40;
@@ -781,6 +781,14 @@ body {
 .svg-arrow-right {
   width: 31.49px;
   height: 31.49px; }
+
+.svg-asset-failed {
+  width: 70px;
+  height: 70px; }
+
+.svg-asset-missing {
+  width: 70px;
+  height: 70px; }
 
 .svg-close {
   width: 12px;
@@ -2857,7 +2865,7 @@ textarea {
   height: 1px;
   left: 0;
   top: 0;
-  background-color: #17a2b8;
+  background-color: #ff5724;
   display: block;
   pointer-events: none;
   z-index: 1;
@@ -2873,7 +2881,7 @@ textarea {
   content: '';
   top: 0;
   left: 0.5rem - 1px;
-  border-right: 3px dotted #17a2b8;
+  border-right: 3px dotted #ff5724;
   height: 100%;
   opacity: 0.5;
   position: absolute; }

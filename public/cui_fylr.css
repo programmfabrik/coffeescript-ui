@@ -782,6 +782,14 @@ body {
   width: 31.49px;
   height: 31.49px; }
 
+.svg-asset-failed {
+  width: 70px;
+  height: 70px; }
+
+.svg-asset-missing {
+  width: 70px;
+  height: 70px; }
+
 .svg-close {
   width: 12px;
   height: 12px; }
