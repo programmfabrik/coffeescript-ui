@@ -16,6 +16,14 @@ module.exports = {
         'selector-list-comma-newline-after': null,
         'no-descending-specificity': null,
         'no-eol-whitespace': null,
+        "at-rule-empty-line-before": [
+            "always",
+            {
+              except: ['blockless-after-same-name-blockless', 'first-nested'],
+              ignore: ['after-comment'],
+              ignoreAtRules: ['else'],
+            },
+        ],        
         'at-rule-no-unknown': [
             true,
             {
