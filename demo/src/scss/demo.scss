@@ -73,17 +73,24 @@
 		.cui-demo-icon-container {
 			display: flex;
 			flex-wrap: wrap;
+		}
 
-			.cui-demo-icon {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 40px;
-				height: 38px;
-				border: 1px solid currentColor;
-				margin: -1px 0 0 -1px;
-				cursor: pointer;
-			}
+		.cui-demo-icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			height: 38px;
+			border: 1px solid currentColor;
+			margin: -1px 0 0 -1px;
+			cursor: pointer;
+		}
+	}
+
+	.cui-demo-asset-icons {
+		.cui-demo-icon {
+			width: 100px;
+			height: 100px;
 		}
 	}
 

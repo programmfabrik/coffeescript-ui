@@ -978,6 +978,18 @@ class Demo.Playground extends Demo
 				content: @getIconCollection(icons)
 		)
 
+		asset_icons = [
+			"svg-asset-missing",
+			"svg-asset-failed",
+		]
+		
+		dt.addExample("Asset Icons",
+			new CUI.Block
+				class: "cui-demo-icons cui-demo-asset-icons"
+				text: "Asset icons"
+				content: @getIconCollection(asset_icons)
+		)
+
 		dt.addExample("Icon in Buttons",
 			new CUI.Buttonbar(buttons: @getButtons(icon: "download"))
 		)
