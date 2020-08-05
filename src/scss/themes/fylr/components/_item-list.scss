@@ -65,11 +65,19 @@
 		}
 	}
 
+	.cui-button-href .cui-button-visual .cui-button-center {
+		text-decoration: none;
+	}
+
 	// Labels within item-list
 	// --------------------------------
 	.cui-label {
 		font-size: $item-list-label-font-size;
 		cursor: default;
+	}
+
+	> .cui-label {
+		padding: 0 $btn-padding-x;
 	}
 
 	// Options within item-list
