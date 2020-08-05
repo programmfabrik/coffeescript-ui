@@ -934,6 +934,7 @@ class Demo.Playground extends Demo
 			"fa-camera",
 			"fa-list-ul",
 			"fa-picture-o",
+			"fa-sitemap",
 		]
 		dt.addExample("Single Icon",
 			new CUI.Block
