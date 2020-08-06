@@ -300,3 +300,23 @@
 		}
 	}
 }
+
+@mixin button-info-icon() {
+	@include button-sm();
+	@include button-hover-dimmed();
+
+	.cui-button-visual {
+		height: 1.3em;
+		min-width: 1.3em;
+		margin-left: 0.25rem;
+	}
+
+	.cui-button-left {
+		padding: 0;
+
+		.svg-info-circle {
+			width: clamp(10px, 1em, 14px);
+			height: clamp(10px, 1em, 14px);
+		}
+	}	
+}
