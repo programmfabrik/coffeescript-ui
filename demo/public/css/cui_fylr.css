@@ -2269,7 +2269,9 @@ textarea {
     text-align: inherit; }
   .cui-button-checkbox .cui-button-visual {
     -webkit-box-align: baseline;
-            align-items: baseline; }
+            align-items: baseline;
+    -webkit-box-pack: start;
+            justify-content: flex-start; }
   .cui-button-checkbox .cui-button-left {
     min-width: 16px;
     margin-right: 6px; }
