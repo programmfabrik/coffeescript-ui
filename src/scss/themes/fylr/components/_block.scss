@@ -2,22 +2,7 @@
 .cui-block {
 	flex-shrink: 0;
 	padding-bottom: $spacer-lg;
-	border-bottom: 0 solid var(--block-color, currentColor);
 	position: relative;
-
-	&::after {
-		@include block-icon(var(--block-color));
-		
-		right: $block-icon-offset-x;
-		bottom: 0;
-	}
-	
-	&::before {
-		@include block-icon(var(--block-color));
-		
-		left: $block-icon-offset-x;
-		bottom: 0;
-	}
 
 	&:not(:last-child) {
 		margin-bottom: $block-margin;
@@ -50,13 +35,6 @@
 
 		padding-left: $block-content-padding;
 
-		&::before {
-			@include block-icon(var(--block-color));
-		
-			top: 3px;
-			left: $block-icon-offset-x;
-		}
-
 		+ * {
 			margin-top: $spacer-sm;
 		}
@@ -69,8 +47,6 @@
 
 	// Level 1
 	&.cui-block-level-1 {
-		--block-color: #{gray('900')};
-
 		> .cui-block-header .cui-block-title {
 			@include h6(0);
 		}
@@ -78,8 +54,6 @@
 
 	// Level 2
 	&.cui-block-level-2 {
-		--block-color: #{gray('600')};
-
 		margin-top: $block-margin;
 
 		// todo
@@ -90,9 +64,7 @@
 
 	// Level 3
 	// todo
-	&.cui-block-level-3 {
-		--block-color: #{gray('500')};
-	}
+	// &.cui-block-level-3 {}
 }
 
 // Content
