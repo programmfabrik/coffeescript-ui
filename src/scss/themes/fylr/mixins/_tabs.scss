@@ -133,3 +133,17 @@
 		}
 	}
 }
+
+// helper mixin to keep code more readable
+@mixin tab-header-button-overflow($bg: $body-bg) {
+	@include scrim-gradient($bg, $direction: 'to left');
+}
+
+// use this mixin to override the default background color
+@mixin tabs-header-overflow($bg: $body-bg) {
+	.cui-tabs-pane-header .cui-tab-header-button-overflow {
+		&::after {
+			@include tab-header-button-overflow($bg);
+		}
+	}
+}

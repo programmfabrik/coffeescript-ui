@@ -153,12 +153,12 @@
 			position: absolute;
 			left: 0;
 			top: 0;
-			bottom: 0;
-			width: 30px;
+			bottom: 1px;
+			width: 50px;
 			transform: translateX(-100%);
-			opacity: 0.1;
+			opacity: 0.8;
 
-			@include scrim-gradient($body-color, $direction: 'to left');
+			@include tab-header-button-overflow($body-bg);
 		}
 
 		.cui-button-visual {
