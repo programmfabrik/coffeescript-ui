@@ -4975,6 +4975,19 @@ textarea {
   .cui-autocompletion-popup > .cui-pane > .cui-vertical-layout-center {
     padding: 0; }
 
+/*
+	<div class="cui-layer cui-hint-popover [cui-hint-popover--padded]"></div>
+*/
+.cui-hint-popover.cui-hint-popover--padded {
+  padding: 0.5rem 1rem; }
+
+.cui-hint-popover .cui-table {
+  border: 0; }
+
+.cui-hint-popover + .cui-layer-pointer::after {
+  width: 16px;
+  height: 16px; }
+
 .cui-menu {
   min-height: 0;
   min-width: 0;
@@ -5048,13 +5061,6 @@ textarea {
 
 .cui-popover {
   min-width: 247px; }
-
-.cui-layer-root-hint-popover .cui-layer .cui-table {
-  border: 0; }
-
-.cui-layer-root-hint-popover .cui-layer-pointer::after {
-  width: 16px;
-  height: 16px; }
 
 /*
 <div class="cui-layer-root cui-layer-root-tooltip">
