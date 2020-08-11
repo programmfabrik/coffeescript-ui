@@ -3,19 +3,3 @@
 .cui-popover {
 	min-width: 247px;
 }
-
-// * Hint Popover
-// see ez5-path-info-button
-
-.cui-layer-root-hint-popover {
-	.cui-layer .cui-table {
-		border: 0;
-	}
-
-	.cui-layer-pointer {
-		&::after {
-			width: $layer-pointer-size;
-			height: $layer-pointer-size;
-		}
-	}
-}
