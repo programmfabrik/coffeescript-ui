@@ -2671,30 +2671,7 @@ textarea {
 .cui-block {
   flex-shrink: 0;
   padding-bottom: 1.5rem;
-  border-bottom: 0 solid var(--block-color, currentColor);
   position: relative; }
-  .cui-block::after {
-    content: '';
-    position: absolute;
-    padding: 1px 1px 0 1px;
-    border: 3px solid var(--block-color);
-    border-left: 0;
-    border-right: 0;
-    width: 9px;
-    height: 8px;
-    right: 3px;
-    bottom: 0; }
-  .cui-block::before {
-    content: '';
-    position: absolute;
-    padding: 1px 1px 0 1px;
-    border: 3px solid var(--block-color);
-    border-left: 0;
-    border-right: 0;
-    width: 9px;
-    height: 8px;
-    left: 3px;
-    bottom: 0; }
   .cui-block:not(:last-child) {
     margin-bottom: 1rem; }
   *:not(.cui-block) + .cui-block {
@@ -2719,38 +2696,22 @@ textarea {
     .cui-toolbar .cui-block > .cui-block-header .cui-block-title,
     .cui-buttonbar .cui-block > .cui-block-header .cui-block-title {
       margin-bottom: 0; }
-    .cui-block > .cui-block-header .cui-block-title::before {
-      content: '';
-      position: absolute;
-      padding: 1px 1px 0 1px;
-      border: 3px solid var(--block-color);
-      border-left: 0;
-      border-right: 0;
-      width: 9px;
-      height: 8px;
-      top: 3px;
-      left: 3px; }
     .cui-block > .cui-block-header .cui-block-title + * {
       margin-top: 0.5rem; }
   .cui-block .cui-block {
     margin-left: 1.5rem; }
-  .cui-block.cui-block-level-1 {
-    --block-color: #212121; }
-    .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
-      font-family: "Source Sans Pro", sans-serif;
-      font-size: 0.875rem;
-      font-weight: 700;
-      line-height: 1.1;
+  .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0; }
+    .cui-pane-header .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
+    .cui-toolbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
+    .cui-buttonbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
       margin-bottom: 0; }
-      .cui-pane-header .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
-      .cui-toolbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title,
-      .cui-buttonbar .cui-block.cui-block-level-1 > .cui-block-header .cui-block-title {
-        margin-bottom: 0; }
   .cui-block.cui-block-level-2 {
-    --block-color: #6c757d;
     margin-top: 1rem; }
-  .cui-block.cui-block-level-3 {
-    --block-color: #adb5bd; }
 
 .cui-block-content {
   padding-left: 1.15rem; }
