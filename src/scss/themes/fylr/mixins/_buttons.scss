@@ -346,12 +346,17 @@
 	}
 
 	// todo: hover
-	// @include button-hover-dimmed();
+	&:hover {
+		.cui-button-visual {
+			background-color: $input-background;
+			color: $gray-600;
+		}
+	}
 	
 	.cui-has-focus & {
 		.cui-button-visual {
 			border-color: $input-focus-border-color;
-		}		
+		}
 	}
 	
 	&:focus {
@@ -359,7 +364,7 @@
 	
 		.cui-button-visual {
 			border-radius: $input-border-radius;
-			border-color: $input-focus-border-color;	
+			border-color: $input-focus-border-color;
 		}
 	}
 }
