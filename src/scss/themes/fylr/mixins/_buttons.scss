@@ -308,7 +308,7 @@
 	
 	.cui-button-visual {
 		display: flex;
-		height: 100%;		
+		height: 100%;
 		align-items: flex-start; // in case we have a textarea input or any other longer left input, the icon should always be top aligned
 		background-color: $input-background;
 		border: 1px solid $input-border-color;
@@ -335,7 +335,7 @@
 	}
 
 	&.cui-layer-open,
-	&.cui-active {		
+	&.cui-active {
 		.cui-button-visual {
 			background-color: $btn-active-background;
 			color: $btn-active-color;

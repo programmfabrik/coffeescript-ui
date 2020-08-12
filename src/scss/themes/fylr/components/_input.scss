@@ -167,7 +167,7 @@ textarea {
 .cui-multi-input-tag-button {
 	@include button-combobox();
 
-	.cui-button-visual {		
+	.cui-button-visual {
 		.cui-button-center {
 			@include button-combobox-center-icon();
 
