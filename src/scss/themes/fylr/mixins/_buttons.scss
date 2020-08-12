@@ -45,7 +45,7 @@
 
 @mixin button-icon() {
 	.cui-button-visual {
-		@include button-size(16px, 0, $font-size-sm, 0);
+		@include button-size($btn-height-xs, 0, $font-size-sm, 0);
 	}
 }
 
