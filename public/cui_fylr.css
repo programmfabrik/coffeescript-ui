@@ -2069,40 +2069,32 @@ textarea {
     .cui-multi-input-input .cui-textarea:focus {
       box-shadow: none !important; }
 
-.cui-multi-input-tag-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121; }
-
-.cui-multi-input-tag-button:hover .cui-button-visual, .cui-multi-input-tag-button:focus .cui-button-visual {
-  color: #6c757d;
-  background-color: transparent; }
-
-.cui-multi-input-tag-button:focus {
-  outline: none; }
-  .cui-multi-input-tag-button:focus .cui-button-visual {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
+.cui-multi-input-tag-button {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: start;
+          align-items: flex-start;
+  height: 100%;
+  background-color: #ffffff;
+  border-left: 1px solid #e9ecef; }
+  .cui-multi-input-tag-button .cui-button-visual {
+    border: 1px solid transparent;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0; }
+  .cui-multi-input-tag-button.cui-layer-open, .cui-multi-input-tag-button.cui-active {
+    border-left: transparent; }
+    .cui-multi-input-tag-button.cui-layer-open .cui-button-visual, .cui-multi-input-tag-button.cui-active .cui-button-visual {
+      background-color: #212121;
+      color: #ffffff; }
+  .cui-multi-input-tag-button:focus {
     z-index: 1; }
-
-.cui-multi-input-tag-button:active .cui-button-visual {
-  color: #6c757d;
-  background-color: rgba(0, 0, 0, 0); }
-
-.cui-multi-input-tag-button.cui-active .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open .cui-button-visual {
-  color: #212121;
-  background-color: transparent; }
-
-.cui-multi-input-tag-button.cui-active:hover .cui-button-visual, .cui-multi-input-tag-button.cui-active:focus .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:focus .cui-button-visual {
-  color: #212121;
-  background-color: transparent; }
-
-.cui-multi-input-tag-button .cui-button-visual {
-  font-size: 10px;
-  min-width: 22px;
-  height: 18px;
-  line-height: 18px; }
-  .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
-    padding: 0 0.25rem; }
+    .cui-multi-input-tag-button:focus .cui-button-visual {
+      border-radius: 2px;
+      border-color: rgba(23, 162, 184, 0.5); }
+  .cui-multi-input-tag-button .cui-button-visual {
+    font-size: 0.75rem; }
+    .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
+      padding: 0; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
 .cui-browser-ie:not(.cui-browser-edge) .cui-input textarea {
@@ -2625,45 +2617,55 @@ textarea {
     -webkit-box-flex: 1;
             flex-grow: 1; }
 
-.cui-data-field-left,
-.cui-data-field-right {
+.cui-data-field-left {
   position: relative; }
-  .cui-data-field-left .cui-button,
-  .cui-data-field-right .cui-button {
+  .cui-data-field-left .cui-button-button {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: start;
+            align-items: flex-start;
     height: 100%;
-    vertical-align: bottom; }
-    .cui-data-field-left .cui-button .cui-button-visual,
-    .cui-data-field-right .cui-button .cui-button-visual {
-      background-color: #ffffff;
-      border: 1px solid transparent; }
-    .cui-data-field-left .cui-button.cui-layer-open .cui-button-visual,
-    .cui-data-field-right .cui-button.cui-layer-open .cui-button-visual {
-      background-color: #212121;
-      color: #ffffff; }
-    .cui-data-field-left .cui-button:focus,
-    .cui-data-field-right .cui-button:focus {
+    background-color: #ffffff;
+    border-right: 1px solid #e9ecef; }
+    .cui-data-field-left .cui-button-button .cui-button-visual {
+      border: 1px solid transparent;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; }
+    .cui-data-field-left .cui-button-button.cui-layer-open, .cui-data-field-left .cui-button-button.cui-active {
+      border-right: transparent; }
+      .cui-data-field-left .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active .cui-button-visual {
+        background-color: #212121;
+        color: #ffffff; }
+    .cui-data-field-left .cui-button-button:focus {
       z-index: 1; }
-      .cui-data-field-left .cui-button:focus .cui-button-visual,
-      .cui-data-field-right .cui-button:focus .cui-button-visual {
+      .cui-data-field-left .cui-button-button:focus .cui-button-visual {
         border-radius: 2px;
         border-color: rgba(23, 162, 184, 0.5); }
 
-.cui-data-field-left .cui-button .cui-button-visual {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-right: 1px solid #e9ecef; }
-
-.cui-data-field-left .cui-button.cui-layer-open .cui-button-visual {
-  border-right: transparent; }
-
-.cui-data-field-right .cui-button {
-  margin-left: -1px; }
-  .cui-data-field-right .cui-button .cui-button-visual {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+.cui-data-field-right {
+  position: relative; }
+  .cui-data-field-right .cui-button-button {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: start;
+            align-items: flex-start;
+    height: 100%;
+    background-color: #ffffff;
     border-left: 1px solid #e9ecef; }
-  .cui-data-field-right .cui-button.cui-layer-open .cui-button-visual {
-    border-left: transparent; }
+    .cui-data-field-right .cui-button-button .cui-button-visual {
+      border: 1px solid transparent;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; }
+    .cui-data-field-right .cui-button-button.cui-layer-open, .cui-data-field-right .cui-button-button.cui-active {
+      border-left: transparent; }
+      .cui-data-field-right .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active .cui-button-visual {
+        background-color: #212121;
+        color: #ffffff; }
+    .cui-data-field-right .cui-button-button:focus {
+      z-index: 1; }
+      .cui-data-field-right .cui-button-button:focus .cui-button-visual {
+        border-radius: 2px;
+        border-color: rgba(23, 162, 184, 0.5); }
 
 .cui-data-field-hidden {
   display: none !important; }
