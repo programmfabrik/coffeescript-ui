@@ -265,6 +265,9 @@ class Demo.ControlsDemo extends Demo
 			type: CUI.DateTime
 			name: "DateTime"
 		,
+			type: CUI.MapInput
+			name: "Map"	
+		,
 			type: CUI.Select
 			options: sel_opts
 			name: "Select FAILS 1px in firefox"
