@@ -169,8 +169,10 @@ textarea {
 
 	.cui-button-visual {		
 		.cui-button-center {
+			@include button-combobox-center-icon();
+
 			font-size: $font-size-sm;
-			line-height: 1.6;
+			line-height: 1;
 			padding: 0 $spacer-xs;
 		}
 	}

@@ -309,8 +309,7 @@
 	.cui-button-visual {
 		display: flex;
 		height: 100%;		
-		align-items: flex-start; // in case we have a textarea input or any other longer left input
-		padding-top: $spacer-xs; // fake align-items :center
+		align-items: flex-start; // in case we have a textarea input or any other longer left input, the icon should always be top aligned
 		background-color: $input-background;
 		border: 1px solid $input-border-color;
 		
@@ -327,6 +326,11 @@
 			border-right: 1px solid gray('200');
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
+		}
+
+		// usually contains the icon
+		.cui-button-left {
+			@include button-combobox-center-icon();
 		}
 	}
 
@@ -367,6 +371,15 @@
 			border-color: $input-focus-border-color;
 		}
 	}
+}
+
+// we need to set an explicit icon container height and vertically center the icon within, 
+// because the parent .cui-button-visual needs to have flex align-items: flex-start
+// this way the icon will always be centered optically within its container
+@mixin button-combobox-center-icon() {
+	min-height: $btn-height - 2px;
+	display: flex;
+	align-items: center;
 }
 
 @mixin button-info-icon() {
