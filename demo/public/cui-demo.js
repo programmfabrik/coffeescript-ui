@@ -44241,11 +44241,10 @@ CUI.MultiInput = (function(superClass) {
           onClick: function(ev) {
             if (_this.__user_selectable) {
               form.reload();
-              userSelectablePopover.show();
+              return userSelectablePopover.show();
             } else {
-              _this._control.showUserControl(ev, button, _this.__multiInputDiv);
+              return _this._control.showUserControl(ev, button, _this.__multiInputDiv);
             }
-            return CUI.dom.addClass(button, 'cui-active');
           }
         });
         form = new CUI.Form({
