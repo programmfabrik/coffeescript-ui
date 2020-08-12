@@ -2071,13 +2071,18 @@ textarea {
     height: 100%;
     -webkit-box-align: start;
             align-items: flex-start;
-    padding-top: 0.25rem;
     background-color: #ffffff;
     border: 1px solid transparent;
     border-left: 1px solid #e9ecef;
     margin-left: -1px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0; }
+    .cui-multi-input-tag-button .cui-button-visual .cui-button-left {
+      min-height: 28px;
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-align: center;
+              align-items: center; }
   .cui-multi-input-tag-button.cui-layer-open .cui-button-visual, .cui-multi-input-tag-button.cui-active .cui-button-visual {
     background-color: #212121;
     color: #ffffff;
@@ -2093,8 +2098,13 @@ textarea {
       border-radius: 2px;
       border-color: rgba(23, 162, 184, 0.5); }
   .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
+    min-height: 28px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+            align-items: center;
     font-size: 0.75rem;
-    line-height: 1.6;
+    line-height: 1;
     padding: 0 0.25rem; }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
@@ -2624,7 +2634,6 @@ textarea {
       height: 100%;
       -webkit-box-align: start;
               align-items: flex-start;
-      padding-top: 0.25rem;
       background-color: #ffffff;
       border: 1px solid transparent;
       z-index: 1;
@@ -2633,6 +2642,12 @@ textarea {
       border-right: 1px solid #e9ecef;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0; }
+      .cui-data-field-left .cui-button-button .cui-button-visual .cui-button-left {
+        min-height: 28px;
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-align: center;
+                align-items: center; }
     .cui-data-field-left .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active .cui-button-visual {
       background-color: #212121;
       color: #ffffff;
@@ -2658,13 +2673,18 @@ textarea {
       height: 100%;
       -webkit-box-align: start;
               align-items: flex-start;
-      padding-top: 0.25rem;
       background-color: #ffffff;
       border: 1px solid transparent;
       border-left: 1px solid #e9ecef;
       margin-left: -1px;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0; }
+      .cui-data-field-right .cui-button-button .cui-button-visual .cui-button-left {
+        min-height: 28px;
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-align: center;
+                align-items: center; }
     .cui-data-field-right .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active .cui-button-visual {
       background-color: #212121;
       color: #ffffff;
