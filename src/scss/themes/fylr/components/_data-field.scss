@@ -82,7 +82,6 @@
 
 	&--with-button {
 		display: flex;
-		align-items: flex-end;
 
 		// if focused outline the whole data-field including the right button
 		&.cui-has-focus {
@@ -92,10 +91,6 @@
 
 			input {
 				@include disable-input-focus();
-			}
-
-			.cui-data-field-right .cui-button .cui-button-visual {
-				border-color: $input-focus-border-color;
 			}
 		}
 	}
@@ -127,68 +122,20 @@
 	}
 }
 
-.cui-data-field-left,
+// used in MapInput (only?)
+.cui-data-field-left {
+	position: relative;
+
+	.cui-button-button {
+		@include button-combobox('left');
+	}
+}
+
 .cui-data-field-right {
 	position: relative;
 
-	.cui-button {
-		height: 100%;
-		vertical-align: bottom;
-
-		.cui-button-visual {
-			background-color: $input-background;
-			border: 1px solid $input-border-color;
-		}
-
-		&.cui-layer-open {
-			.cui-button-visual {
-				background-color: $btn-active-background;
-				color: $btn-active-color;
-			}
-		}
-
-		&:focus {
-			z-index: 1;
-
-			.cui-button-visual {
-				border-radius: $input-border-radius;
-				border-color: $input-focus-border-color;
-			}
-		}
-	}
-}
-
-.cui-data-field-left {
-	.cui-button {
-		.cui-button-visual {
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
-			border-right: 1px solid gray('200');
-		}
-
-		&.cui-layer-open {
-			.cui-button-visual {
-				border-right: transparent;
-			}
-		}
-	}
-}
-
-.cui-data-field-right {
-	.cui-button {
-		margin-left: -1px;
-
-		.cui-button-visual {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-			border-left: 1px solid gray('200');
-		}
-
-		&.cui-layer-open {
-			.cui-button-visual {
-				border-left: transparent;
-			}
-		}
+	.cui-button-button {
+		@include button-combobox('right');
 	}
 }
 

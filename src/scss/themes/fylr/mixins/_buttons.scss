@@ -284,8 +284,8 @@
 	z-index: 0;
 }
 
-// Control button
-// e.g. multi-input-tag-button (language selection), delete icon button in --deleteable
+// Special control buttons
+// e.g. cui-data-field-multi-output-aside (localized output), delete icon button in --deleteable
 @mixin input-control-button($width: 22px, $height: 20px) {
 	@include button-hover-dimmed();
 
@@ -297,6 +297,69 @@
 
 		.cui-button-center {
 			padding: 0 $spacer-xs;
+		}
+	}
+}
+
+@mixin button-combobox($button-position: 'right') {
+	// applied to .cui-button-button
+
+	height: 100%;
+	
+	.cui-button-visual {
+		display: flex;
+		height: 100%;		
+		align-items: flex-start; // in case we have a textarea input or any other longer left input
+		padding-top: $spacer-xs; // fake align-items :center
+		background-color: $input-background;
+		border: 1px solid $input-border-color;
+		
+		@if $button-position == 'right' {
+			border-left: 1px solid gray('200');
+			margin-left: -1px;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		@else if $button-position == 'left' {
+			z-index: 1;
+			position: relative;
+			margin-right: -1px;
+			border-right: 1px solid gray('200');
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+
+	&.cui-layer-open,
+	&.cui-active {		
+		.cui-button-visual {
+			background-color: $btn-active-background;
+			color: $btn-active-color;
+
+			@if $button-position == 'right' {
+				border-left: transparent;
+			}
+			@else if $button-position == 'left' {
+				border-right: transparent;
+			}
+		}
+	}
+
+	// todo: hover
+	// @include button-hover-dimmed();
+	
+	.cui-has-focus & {
+		.cui-button-visual {
+			border-color: $input-focus-border-color;
+		}		
+	}
+	
+	&:focus {
+		z-index: 1;
+	
+		.cui-button-visual {
+			border-radius: $input-border-radius;
+			border-color: $input-focus-border-color;	
 		}
 	}
 }

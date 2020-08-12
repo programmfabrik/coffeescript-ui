@@ -53,6 +53,7 @@ textarea {
 
 	resize: none; // todo: bad UI ?
 	min-height: calc(#{$line-height-base} * 1em * var(--textarea-min-rows) + #{$spacer-xs} + 2px); // 16px: Line height, 6px: padding, 2px: border.
+	line-height: $line-height-base;
 }
 
 
@@ -133,18 +134,11 @@ textarea {
 	flex: 1 1 auto;
 }
 
-.cui-data-field-multi-input-right {
-	flex: 0 0 auto;
-	vertical-align: top;
-}
-
 .cui-multi-input-input {
 	position: relative;
 	display: flex;
 	max-width: 100%;
-	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
-	background-color: $input-background;
 
 	+ .cui-multi-input-input {
 		margin-top: $spacer-sm;
@@ -162,16 +156,24 @@ textarea {
 	.cui-input,
 	.cui-textarea {
 		width: 100% !important;
-		border: none;
-		border-radius: 0;
 		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 
 		@include disable-input-focus();
 	}
 }
 
 .cui-multi-input-tag-button {
-	@include input-control-button(22px, 18px);
+	@include button-combobox();
+
+	.cui-button-visual {		
+		.cui-button-center {
+			font-size: $font-size-sm;
+			line-height: $line-height-base;
+			padding: 0 $spacer-xs;
+		}
+	}
 }
 
 // todo: test
