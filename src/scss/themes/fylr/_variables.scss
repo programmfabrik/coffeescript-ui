@@ -353,10 +353,6 @@ $item-list-height: 				$btn-height !default;
 $item-list-label-font-size:		$font-size-sm !default;
 $item-list-label-color:			$body-color !default;
 
-// * Menu
-// * ==========================================
-$menu-border-radius: $border-radius-lg !default;
-
 // * Panel
 // * ==========================================
 $panel-border-color: 	$body-color !default;
@@ -497,13 +493,20 @@ $layer-sizes: (
 	xxxl: 	1000
 ) !default;
 
-$layer-background: 			$pane-background !default;
-$layer-border-radius: 		$border-radius !default;
-$layer-pointer-size: 		16px !default;
-$layer-pointer-container-size: 	20px !default;
+$layer-background: 			$gray-200; // $pane-background !default; == gray-100
+$layer-border-radius: 		$border-radius-sm !default;
+$layer-border-color:		$body-color !default;
+$layer-border-size:			3px !default;
+$layer-shadow-color:		gray('700');
+$layer-pointer-size: 		10px !default;
+$layer-pointer-container-size: 	16px !default;
+$layer-pointer-background:	$layer-border-color !default;
 $layer-padding-x: 			$component-padding-lg !default;
 $layer-padding-y: 			$component-padding-base !default;
-$layer-border-color:		gray('600');
+
+// * Menu
+// * ==========================================
+$menu-border-radius: $layer-border-radius !default;
 
 // * Tooltip
 // * ==========================================

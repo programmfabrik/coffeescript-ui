@@ -7,8 +7,36 @@
 	border-radius: $menu-border-radius;
 	padding: $spacer-xs 0;
 	height: auto; // WEIRD reset: cui-menu on selects gets class button-select
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
+
+	&:not(.ez5-root-menu-button) {
+		[cui-placement='sw'] &,
+		[cui-placement='se'] & {
+			@include layer-border($position: 'top');
+			
+			transform: translateY(-1px); // compensate for button border
+		}
+
+		[cui-placement='en'] &,
+		[cui-placement='es'] & {
+			@include layer-border($position: 'left');
+		}
+
+		[cui-placement='wn'] &,
+		[cui-placement='ws'] & {
+			@include layer-border($position: 'right');
+		}
+		
+		[cui-placement='nw'] &,
+		[cui-placement='ne'] & {
+			@include layer-border($position: 'bottom');
+		}
+	}
+
+	// add overflow to item-list, so the layer-border applied to cui-menu will be fixed
+	> .cui-item-list {
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
 
 	.cui-item-list-body {
 		> .cui-label,
@@ -16,36 +44,31 @@
 			max-width: 300px;
 		}
 
-
 		.cui-menu-item {
 			padding: 0 $item-list-indent;
 			min-height: $item-list-height;
 			font-weight: $font-weight-bold;
 			color: $item-list-label-color;
 		}
-	}
-
-	.cui-vertical-layout {
-		overflow: visible;
-	}
-
-	// todo: find an example (these are the ng theme styles)
-	.cui-item-list-body > .cui-options:last-child {
-		border-top: 1px solid $hr-border-color;
-		padding: 6px 0;
-		margin-top: 4px;
-		margin-bottom: -4px;
-		background: red; // todo
-		font-size: 12px;
-
-		.cui-button-checkbox {
-			display: flex;
-
-			.cui-button-visual {
-				min-height: 0;
-				padding: 1px $spacer;
-				background: none;
-				color: inherit;
+		
+		// todo: find an example (these are the ng theme styles)
+		> .cui-options:last-child {
+			border-top: 1px solid $hr-border-color;
+			padding: 6px 0;
+			margin-top: 4px;
+			margin-bottom: -4px;
+			background: red; // todo
+			font-size: 12px;
+	
+			.cui-button-checkbox {
+				display: flex;
+	
+				.cui-button-visual {
+					min-height: 0;
+					padding: 1px $spacer;
+					background: none;
+					color: inherit;
+				}
 			}
 		}
 	}

@@ -98,7 +98,7 @@
 
 	> .cui-layer {
 		// blur effect, make layer transparent
-		background-color: rgba(255, 255, 255, 0.39);
+		background-color: rgba($layer-background, 0.4);
 
 		.cui-item-list-body {
 			.cui-button {
@@ -133,15 +133,33 @@
 	border-radius: $layer-border-radius;
 	overflow: auto; /* hidden; */
 	box-shadow:
-		0 0 0 1px rgba($layer-border-color, 0.15),
-		0 8px 10px 1px rgba($layer-border-color, 0.14),
-		0 3px 14px 2px rgba($layer-border-color, 0.12),
-		0 5px 5px -3px rgba($layer-border-color, 0.4);
+		inset 0 0 0 1px rgba($layer-border-color, 0.03),
+		0 2px 4px 0 rgba($layer-shadow-color, 0.2),
+		0 2px 7px 0 rgba($layer-shadow-color, 0.5),
+		0 6px 20px 10px rgba($layer-shadow-color, 0.09);
 
-	> .cui-pane:not(.cui-pane--window) {
-		background-color: transparent; // reset from cui-pane
+	&:not(.cui-tooltip):not(.ez5-root-menu-button) {
+		&.has-cui-layer-pointer--n {
+			@include layer-border('top');
+		}
+	
+		&.has-cui-layer-pointer--s {
+			@include layer-border('bottom');
+		}
+		
+		&.has-cui-layer-pointer--e {
+			@include layer-border('right');
+		}
+	
+		&.has-cui-layer-pointer--w {
+			@include layer-border('left');
+		}
 	}
 
+	.cui-pane {
+		background-color: transparent; // reset from cui-pane
+	}
+	
 	> .cui-pane {
 		// layer-header
 		> .cui-vertical-layout-top > .cui-pane-header,
@@ -249,15 +267,15 @@
 		position: absolute;
 		width: $layer-pointer-size;
 		height: $layer-pointer-size;
-		background: $layer-background;
+		background: $layer-pointer-background;
 		transform: translate(-50%, -50%) rotate(45deg);
-		box-shadow: inset 0 0 0 1px rgba($layer-border-color, 0.28);
+		box-shadow: inset 0 0 0 1px rgba($layer-shadow-color, 0.28);
 	}
 
 	&--n,
 	&--s {
 		margin: 0 6px;
-		height: 14px;
+		height: $layer-pointer-size - 2px;
 
 		&::after {
 			left: 50%;
@@ -266,23 +284,15 @@
 
 	&--n::after {
 		top: 100%;
-
-		.cui-pane--has-header & {
-			background: $pane-background;
-		}
 	}
 
 	&--s::after {
 		top: 0;
-
-		.cui-pane--has-footer & {
-			background: $pane-background;
-		}
 	}
 
 	&--e,
 	&--w {
-		width: 12px;
+		width: $layer-pointer-size - 2px;
 		height: $layer-pointer-container-size;
 		margin: 6px 0;
 
