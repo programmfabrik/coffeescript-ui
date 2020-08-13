@@ -11,8 +11,9 @@
 	-webkit-overflow-scrolling: touch;
 
 	.cui-item-list-body {
-		> .cui-label {
-			max-width: 200px;
+		> .cui-label,
+		> .cui-button {
+			max-width: 300px;
 		}
 
 

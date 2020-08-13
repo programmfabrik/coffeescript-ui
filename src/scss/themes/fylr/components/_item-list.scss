@@ -23,7 +23,8 @@
 			// make sure the buttons could wrap onto new line
 			height: auto;
 			min-height: $item-list-height;
-
+			line-height: $line-height-sm;
+			
 			span {
 				white-space: normal;
 				overflow: hidden;
