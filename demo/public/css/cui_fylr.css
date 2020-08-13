@@ -2725,8 +2725,7 @@ textarea {
     font-size: 0.875rem;
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: 0;
-    padding-left: 1.15rem; }
+    margin-bottom: 0; }
     .cui-pane-header .cui-block > .cui-block-header .cui-block-title,
     .cui-toolbar .cui-block > .cui-block-header .cui-block-title,
     .cui-buttonbar .cui-block > .cui-block-header .cui-block-title {
@@ -2748,12 +2747,10 @@ textarea {
   .cui-block.cui-block-level-2 {
     margin-top: 1rem; }
 
-.cui-block-content {
-  padding-left: 1.15rem; }
-  .cui-block-content .cui-form-table {
-    width: 100%; }
-    .cui-block-content .cui-form-table:not(:last-child) {
-      margin-bottom: 0.5rem; }
+.cui-block-content .cui-form-table {
+  width: 100%; }
+  .cui-block-content .cui-form-table:not(:last-child) {
+    margin-bottom: 0.5rem; }
 
 .cui-wait-block {
   position: absolute;
