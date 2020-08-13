@@ -24,3 +24,9 @@
 	}
 }
 
+@mixin list-view-tight() {
+	.cui-lv-td {
+		padding: 0;
+	}
+}
+
