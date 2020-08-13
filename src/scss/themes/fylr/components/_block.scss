@@ -33,8 +33,6 @@
 	> .cui-block-header .cui-block-title {
 		@include h6(0);
 
-		padding-left: $block-content-padding;
-
 		+ * {
 			margin-top: $spacer-sm;
 		}
@@ -69,8 +67,6 @@
 
 // Content
 .cui-block-content {
-	padding-left: $block-content-padding;
-
 	.cui-form-table {
 		width: 100%;
 
