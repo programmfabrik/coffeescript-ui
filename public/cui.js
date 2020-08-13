@@ -18299,6 +18299,7 @@ CUI.Layer = (function(superClass) {
           });
         }
         CUI.dom.addClass(this.__pointer, get_pointer_class(vp.pointer_pos.direction));
+        CUI.dom.addClass(this.__layer, "has-" + get_pointer_class(vp.pointer_pos.direction));
       } else {
         CUI.dom.setStyle(this.__pointer, {
           display: "none"
@@ -23451,13 +23452,6 @@ CUI.Button = (function(superClass) {
           if (ms == null) {
             ms = 700;
           }
-          menu_stop_hide();
-          return CUI.Button.menu_timeout = CUI.setTimeout({
-            ms: ms,
-            call: function() {
-              return _this.getMenu().hide(ev);
-            }
-          });
         };
       })(this);
     }
