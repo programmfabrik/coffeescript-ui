@@ -980,7 +980,6 @@ class Demo.Playground extends Demo
 		)
 
 		asset_icons = [
-			"svg-asset-missing",
 			"svg-asset-failed",
 		]
 		
