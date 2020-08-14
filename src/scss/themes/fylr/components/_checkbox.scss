@@ -82,7 +82,7 @@
 		min-width: 0;
 		flex: 1 1 auto;
 		padding-right: $spacer-sm;
-		line-height: 1.1;
+		line-height: $line-height-sm;
 
 		&:empty {
 			display: none;
