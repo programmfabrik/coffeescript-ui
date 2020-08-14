@@ -2309,7 +2309,7 @@ textarea {
     -webkit-box-flex: 1;
             flex: 1 1 auto;
     padding-right: 0.5rem;
-    line-height: 1.1; }
+    line-height: 1.3; }
     .cui-button-checkbox .cui-button-center:empty {
       display: none; }
   .cui-button-checkbox[role='radio'] .cui-button-left span,

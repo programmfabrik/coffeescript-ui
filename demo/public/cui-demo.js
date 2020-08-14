@@ -23542,6 +23542,13 @@ CUI.Button = (function(superClass) {
           if (ms == null) {
             ms = 700;
           }
+          menu_stop_hide();
+          return CUI.Button.menu_timeout = CUI.setTimeout({
+            ms: ms,
+            call: function() {
+              return _this.getMenu().hide(ev);
+            }
+          });
         };
       })(this);
     }
