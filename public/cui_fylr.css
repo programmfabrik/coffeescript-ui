@@ -786,10 +786,6 @@ body {
   width: 70px;
   height: 70px; }
 
-.svg-asset-missing {
-  width: 70px;
-  height: 70px; }
-
 .svg-close {
   width: 12px;
   height: 12px; }
@@ -4871,7 +4867,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   .cui-layer:not(.cui-tooltip):not(.ez5-root-menu-button).has-cui-layer-pointer--s {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0; }
@@ -4884,7 +4881,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   .cui-layer:not(.cui-tooltip):not(.ez5-root-menu-button).has-cui-layer-pointer--e {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0; }
@@ -4897,7 +4895,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   .cui-layer:not(.cui-tooltip):not(.ez5-root-menu-button).has-cui-layer-pointer--w {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0; }
@@ -4910,7 +4909,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   .cui-layer .cui-pane {
     background-color: transparent; }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header,
@@ -5055,7 +5055,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   [cui-placement='en'] .cui-menu:not(.ez5-root-menu-button),
   [cui-placement='es'] .cui-menu:not(.ez5-root-menu-button) {
     border-top-left-radius: 0;
@@ -5070,7 +5071,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   [cui-placement='wn'] .cui-menu:not(.ez5-root-menu-button),
   [cui-placement='ws'] .cui-menu:not(.ez5-root-menu-button) {
     border-top-right-radius: 0;
@@ -5085,7 +5087,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   [cui-placement='nw'] .cui-menu:not(.ez5-root-menu-button),
   [cui-placement='ne'] .cui-menu:not(.ez5-root-menu-button) {
     border-bottom-left-radius: 0;
@@ -5100,7 +5103,8 @@ textarea {
       left: 0;
       right: 0;
       bottom: 0;
-      pointer-events: none; }
+      pointer-events: none;
+      z-index: 1; }
   .cui-menu > .cui-item-list {
     overflow: auto;
     -webkit-overflow-scrolling: touch; }
