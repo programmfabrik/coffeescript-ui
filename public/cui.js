@@ -24122,10 +24122,9 @@ CUI.DataForm = (function(superClass) {
   }
 
   DataForm.prototype.render = function() {
-    var addButton;
     CUI.DataFieldInput.prototype.render.call(this);
     if (this._has_add_button) {
-      addButton = new CUI.Button({
+      this.__addButton = new CUI.Button({
         icon: "plus",
         onClick: (function(_this) {
           return function() {
@@ -24139,7 +24138,6 @@ CUI.DataForm = (function(superClass) {
               _new: true
             });
             _this.__updateView();
-            _this.__removeEmptyRows();
             return _this.__storeValue();
           };
         })(this)
@@ -24151,7 +24149,7 @@ CUI.DataForm = (function(superClass) {
         content: void 0
       },
       bottom: {
-        content: addButton
+        content: this.__addButton
       }
     });
     this.append(this.__verticalLayout);
@@ -24276,7 +24274,9 @@ CUI.DataForm = (function(superClass) {
             _this.__appendNewRow();
           }
           ev.stopPropagation();
-          _this.__removeEmptyRows();
+          if (!_this._has_add_button) {
+            _this.__removeEmptyRows();
+          }
           return _this.__storeValue();
         };
       })(this)
@@ -24291,7 +24291,7 @@ CUI.DataForm = (function(superClass) {
   DataForm.prototype.__removeEmptyRows = function() {
     var row;
     this.__updateEmptyInRows();
-    while (this.rows.length > 0) {
+    while (this.rows.length > 1) {
       row = this.rows[this.rows.length - 1];
       if (row._empty) {
         this.__removeRow(row);
