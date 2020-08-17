@@ -4,7 +4,7 @@ class CUI.DataForm extends CUI.DataTable
 		CUI.DataFieldInput::render.call(@)
 
 		if @_has_add_button
-			addButton = new CUI.Button
+			@__addButton = new CUI.Button
 				icon: "plus"
 				onClick: =>
 					lastRow = @__rowRegistry[@__rowRegistry.length - 1]?.data
@@ -14,13 +14,12 @@ class CUI.DataForm extends CUI.DataTable
 
 					@__appendRow(_new: true)
 					@__updateView()
-					@__removeEmptyRows()
 					@__storeValue()
 
 		@__verticalLayout = new CUI.VerticalLayout
 			maximize_horizontal: @__maximize_horizontal
 			center: content: undefined
-			bottom: content: addButton
+			bottom: content: @__addButton
 
 		@append(@__verticalLayout)
 
@@ -116,7 +115,8 @@ class CUI.DataForm extends CUI.DataTable
 					@__appendNewRow()
 
 				ev.stopPropagation()
-				@__removeEmptyRows()
+				if not @_has_add_button
+					@__removeEmptyRows()
 				@__storeValue()
 
 		# CUI.dom.setAttribute(new_form.DOM, "cui-form-depth", @getFormDepth() + 1)
@@ -129,7 +129,7 @@ class CUI.DataForm extends CUI.DataTable
 		@__updateEmptyInRows()
 
 		# makes sure that one empty row is at the end and not more
-		while @rows.length > 0
+		while @rows.length > 1
 			row = @rows[@rows.length-1]
 			if row._empty
 				# remove row
