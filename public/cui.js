@@ -24126,19 +24126,15 @@ CUI.DataForm = (function(superClass) {
     if (this._has_add_button) {
       this.__addButton = new CUI.Button({
         icon: "plus",
+        disabled: true,
         onClick: (function(_this) {
           return function() {
-            var lastRow, ref;
-            lastRow = (ref = _this.__rowRegistry[_this.__rowRegistry.length - 1]) != null ? ref.data : void 0;
-            if (lastRow && lastRow._new) {
-              delete lastRow._new;
-              _this.rows.push(lastRow);
-            }
             _this.__appendRow({
               _new: true
             });
             _this.__updateView();
-            return _this.__storeValue();
+            _this.__storeValue();
+            _this.__addButton.disable();
           };
         })(this)
       });
@@ -24274,10 +24270,12 @@ CUI.DataForm = (function(superClass) {
             _this.__appendNewRow();
           }
           ev.stopPropagation();
-          if (!_this._has_add_button) {
+          if (_this._has_add_button) {
+            _this.__updateEmptyInRows();
+          } else {
             _this.__removeEmptyRows();
           }
-          return _this.__storeValue();
+          _this.__storeValue();
         };
       })(this)
     });
@@ -24285,7 +24283,16 @@ CUI.DataForm = (function(superClass) {
   };
 
   DataForm.prototype.__updateView = function() {
-    return this.__updateButtons();
+    this.__updateButtons();
+    if (this._has_add_button) {
+      if (this.rows.some(function(row) {
+        return row._empty;
+      })) {
+        return this.__addButton.disable();
+      } else {
+        return this.__addButton.enable();
+      }
+    }
   };
 
   DataForm.prototype.__removeEmptyRows = function() {
