@@ -6,15 +6,13 @@ class CUI.DataForm extends CUI.DataTable
 		if @_has_add_button
 			@__addButton = new CUI.Button
 				icon: "plus"
+				disabled: true
 				onClick: =>
-					lastRow = @__rowRegistry[@__rowRegistry.length - 1]?.data
-					if lastRow and lastRow._new
-						delete lastRow._new
-						@rows.push(lastRow)
-
 					@__appendRow(_new: true)
 					@__updateView()
 					@__storeValue()
+					@__addButton.disable()
+					return
 
 		@__verticalLayout = new CUI.VerticalLayout
 			maximize_horizontal: @__maximize_horizontal
@@ -115,15 +113,25 @@ class CUI.DataForm extends CUI.DataTable
 					@__appendNewRow()
 
 				ev.stopPropagation()
-				if not @_has_add_button
-					@__removeEmptyRows()
-				@__storeValue()
 
-		# CUI.dom.setAttribute(new_form.DOM, "cui-form-depth", @getFormDepth() + 1)
+				if @_has_add_button
+					@__updateEmptyInRows()
+				else
+					@__removeEmptyRows()
+
+				@__storeValue()
+				return
+
 		new_form
 
 	__updateView: ->
 		@__updateButtons()
+
+		if @_has_add_button
+			if @rows.some((row) -> row._empty)
+				@__addButton.disable()
+			else
+				@__addButton.enable()
 
 	__removeEmptyRows: ->
 		@__updateEmptyInRows()
@@ -177,13 +185,11 @@ class CUI.DataForm extends CUI.DataTable
 
 	displayValue: ->
 		@rows = @getValue()
-		# console.warn "display", @_name, rows.length
 
 		@__verticalLayout.empty("center")
 		for row in @rows
 			@__appendRow(row)
 
-		# console.warn "initData", @__data, @_name
 		@__appendNewRow()
 		@__updateButtons()
 		return
@@ -267,4 +273,6 @@ class CUI.DataForm extends CUI.DataTable
 			move: move
 
 		@__verticalLayout.append(hl, "center")
+
+
 		return
