@@ -24284,14 +24284,19 @@ CUI.DataForm = (function(superClass) {
 
   DataForm.prototype.__updateView = function() {
     this.__updateButtons();
-    if (this._has_add_button) {
-      if (this.rows.some(function(row) {
-        return row._empty;
-      })) {
-        return this.__addButton.disable();
-      } else {
-        return this.__addButton.enable();
-      }
+    return this.__updateAddButton();
+  };
+
+  DataForm.prototype.__updateAddButton = function() {
+    if (!this._has_add_button) {
+      return;
+    }
+    if (this.rows.some(function(row) {
+      return row._empty;
+    })) {
+      return this.__addButton.disable();
+    } else {
+      return this.__addButton.enable();
     }
   };
 
@@ -24368,6 +24373,9 @@ CUI.DataForm = (function(superClass) {
     for (i = 0, len = ref.length; i < len; i++) {
       row = ref[i];
       this.__appendRow(row);
+    }
+    if (this.rows.length > 0) {
+      this.__updateAddButton();
     }
     this.__appendNewRow();
     this.__updateButtons();
