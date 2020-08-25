@@ -146,21 +146,6 @@
 		position: relative;
 		z-index: 1; // to overlap active buttons
 
-		// shadow gradient
-		&::after {
-			content: '';
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 0;
-			bottom: 1px;
-			width: 50px;
-			transform: translateX(-100%);
-			opacity: 0.8;
-
-			@include tab-header-button-overflow($body-bg);
-		}
-
 		.cui-button-visual {
 			position: relative;
 			background-color: $tabs-overflow-button-background;
@@ -169,6 +154,12 @@
 			border-bottom-left-radius: 0 !important;
 			border-bottom-right-radius: 0 !important;
 			border-bottom: 1px solid $tabs-active-border-color;
+
+			.cui-button-left {
+				.fa-ellipsis-h {
+					transform: translateY(4px);
+				}
+			}
 		}
 
 		&:hover,
