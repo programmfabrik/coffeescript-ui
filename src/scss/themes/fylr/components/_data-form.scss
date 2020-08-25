@@ -86,10 +86,9 @@
 	> .cui-horizontal-layout-left {
 		grid-area: move;
 		align-self: start;
-		justify-self: center;
 
 		.cui-drag-handle-row {
-			margin: $spacer-xs;
+			margin: $spacer-xs 0;
 			flex-grow: 0;
 			cursor: grab;
 
@@ -117,7 +116,6 @@
 	> .cui-horizontal-layout-right {
 		grid-area: delete;
 		align-self: start;
-		justify-self: center;
 
 		.cui-buttonbar {
 			height: 100%;
