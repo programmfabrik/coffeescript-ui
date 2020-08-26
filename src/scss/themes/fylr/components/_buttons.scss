@@ -69,6 +69,14 @@
 	@include button-link();
 }
 
+// Reduce space between button text and caret
+.cui-button-select,
+.cui-button-button.cui-button--has-caret {
+	.cui-button-visual .cui-button-center {
+		padding-right: $btn-padding-x/2;
+	}
+}
+
 .cui-button-select {
 	@include button-bordered();
 
