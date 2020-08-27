@@ -177,17 +177,16 @@
 				}
 			}
 
-			// // add some white space if pane-header is empty
-			// &.cui-template-empty {
-			// 	display: block;
-			// 	min-height: 0;
-			// 	padding-bottom: 0;
-			// 	background-color: transparent;
-			// }
-
-			// offset the following toolbar
+			// offset the following top toolbar
 			+ .cui-toolbar {
 				margin-top: $spacer-sm;
+			}
+		}
+
+		// Top toolbar
+		> .cui-vertical-layout-top > .cui-toolbar {
+			.cui-button {
+				@include button-bordered();
 			}
 		}
 
