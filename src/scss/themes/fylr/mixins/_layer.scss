@@ -1,31 +1,5 @@
-@mixin layer-border($position: 'top') {
-	@if $position == 'top' {
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-	}
-	@else if $position == 'bottom' {
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-	@else if $position == 'left' {
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-	}
-	@else if $position == 'right' {
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-		
-	&::before {
-		border-#{$position}: $layer-border-size solid $layer-border-color;
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		pointer-events: none;
-		z-index: 1;
-	}
+// Mixins for all layer types (popover, modals, menu etc.)
+
+@mixin layer-title() {
+	@include h5(0.1em);
 }

@@ -493,16 +493,18 @@ $layer-sizes: (
 	xxxl: 	1000
 ) !default;
 
-$layer-background: 			$gray-200; // $pane-background !default; == gray-100
+$layer-background: 			$pane-background !default;
+$layer-header-background: 	$body-color !default;
+$layer-header-color: 		$white !default;
 $layer-border-radius: 		$border-radius-sm !default;
 $layer-border-color:		$body-color !default;
-$layer-border-size:			3px !default;
+$layer-border-size:			0 !default;
 $layer-shadow-color:		gray('700');
 $layer-pointer-size: 		10px !default;
 $layer-pointer-container-size: 	16px !default;
-$layer-pointer-background:	$layer-border-color !default;
+$layer-pointer-background:	$layer-background !default;
 $layer-padding-x: 			$component-padding-lg !default;
-$layer-padding-y: 			$component-padding-base !default;
+$layer-padding-y: 			$component-padding-lg !default;
 
 // * Menu
 // * ==========================================

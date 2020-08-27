@@ -131,6 +131,7 @@
 	background-color: $layer-background;
 	outline: none;
 	border-radius: $layer-border-radius;
+	border: $layer-border-size solid $layer-border-color;
 	overflow: auto; /* hidden; */
 	box-shadow:
 		inset 0 0 0 1px rgba($layer-border-color, 0.03),
@@ -138,62 +139,70 @@
 		0 2px 7px 0 rgba($layer-shadow-color, 0.5),
 		0 6px 20px 10px rgba($layer-shadow-color, 0.09);
 
-	&:not(.cui-tooltip):not(.ez5-root-menu-button) {
-		&.has-cui-layer-pointer--n {
-			@include layer-border('top');
-		}
-	
-		&.has-cui-layer-pointer--s {
-			@include layer-border('bottom');
-		}
-		
-		&.has-cui-layer-pointer--e {
-			@include layer-border('right');
-		}
-	
-		&.has-cui-layer-pointer--w {
-			@include layer-border('left');
-		}
-	}
-
 	.cui-pane {
 		background-color: transparent; // reset from cui-pane
 	}
 	
 	> .cui-pane {
-		// layer-header
+		// layer-header & toolbar
 		> .cui-vertical-layout-top > .cui-pane-header,
 		> .cui-vertical-layout-top > .cui-toolbar {
-			padding: $layer-padding-y $layer-padding-x;
+			&:not(.cui-template-empty) {
+				padding: 0 $layer-padding-x;
+			}
 		}
 
+		// layer header only
 		> .cui-vertical-layout-top > .cui-pane-header {
 			border-radius: $layer-border-radius $layer-border-radius 0 0;
-			padding: $layer-padding-y $layer-padding-x;
-			background-color: transparent; // reset default .cui-pane-header
+			background-color: $layer-header-background;
+			color: $layer-header-color;
+			
+			// Title
+			.cui-horizontal-layout-left .cui-label {
+				@include layer-title();
+			}
 
+			// Align buttonbar to the right because we use inverted, borderless buttons in the header
 			> .cui-horizontal-layout-right > .cui-buttonbar {
 				margin-right: -0.5*$layer-padding-x;
 			}
+			
+			// Invert buttons
+			.cui-button {
+				@include button-inverted();
 
-			// add some white space if pane-header is empty
-			&.cui-template-empty {
-				display: block;
-				min-height: 0;
+				&:not(:last-child) {
+					margin-right: 0;
+				}
+			}
+
+			// // add some white space if pane-header is empty
+			// &.cui-template-empty {
+			// 	display: block;
+			// 	min-height: 0;
+			// 	padding-bottom: 0;
+			// 	background-color: transparent;
+			// }
+
+			// offset the following toolbar
+			+ .cui-toolbar {
+				margin-top: $spacer-sm;
 			}
 		}
 
 		// layer-body
 		> .cui-vertical-layout-center {
-			padding: $layer-padding-y $layer-padding-x;
+			padding: 0;
+			margin: $layer-padding-y $layer-padding-x; // use margin instead of padding so a possible scrollbar will be inside
 			overflow: auto;
 			-webkit-overflow-scrolling: touch;
 		}
 
-		// layer-footer
+		// layer-footer & toolbar
 		> .cui-vertical-layout-bottom > .cui-pane-footer,
 		> .cui-vertical-layout-bottom > .cui-toolbar {
-			padding: $layer-padding-x;
+			padding: 0 $layer-padding-y $layer-padding-x;
 		}
 
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
@@ -269,7 +278,9 @@
 		height: $layer-pointer-size;
 		background: $layer-pointer-background;
 		transform: translate(-50%, -50%) rotate(45deg);
-		box-shadow: inset 0 0 0 1px rgba($layer-shadow-color, 0.28);
+		box-shadow:
+			inset 0 0 0 1px rgba($layer-shadow-color, 0.28),
+			0 0 1px 0 rgba($layer-shadow-color, 0.43);
 	}
 
 	&--n,
@@ -284,6 +295,7 @@
 
 	&--n::after {
 		top: 100%;
+		background: $layer-header-background;
 	}
 
 	&--s::after {
@@ -326,34 +338,6 @@
 	.cui-layer-pointer--e,
 	.cui-layer-pointer--w {
 		margin-top: $toolbar-height;
-	}
-}
-
-// * Root Menu Layer Pointer
-
-// todo: move into another file ?
-.cui-layer-root-menu .cui-layer-pointer {
-	height: 12px;
-
-	&--e,
-	&--w {
-		width: 9px;
-		height: 37px;
-
-		&::after {
-			top: 9px;
-		}
-	}
-
-	&--n,
-	&--s {
-		&::after {
-			left: 7px;
-		}
-	}
-
-	&::after {
-		background: white; // todo
 	}
 }
 

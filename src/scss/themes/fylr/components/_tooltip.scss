@@ -52,5 +52,7 @@
 
 	> .cui-pane > .cui-vertical-layout-center {
 		@include pane-padding-reset();
+		
+		margin: 0;
 	}
 }
