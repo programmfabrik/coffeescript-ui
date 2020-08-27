@@ -126,12 +126,15 @@ class CUI.DataForm extends CUI.DataTable
 
 	__updateView: ->
 		@__updateButtons()
+		@__updateAddButton()
 
-		if @_has_add_button
-			if @rows.some((row) -> row._empty)
-				@__addButton.disable()
-			else
-				@__addButton.enable()
+	__updateAddButton: ->
+		if not @_has_add_button
+			return
+		if @rows.some((row) -> row._empty)
+			@__addButton.disable()
+		else
+			@__addButton.enable()
 
 	__removeEmptyRows: ->
 		@__updateEmptyInRows()
@@ -190,6 +193,8 @@ class CUI.DataForm extends CUI.DataTable
 		for row in @rows
 			@__appendRow(row)
 
+		if @rows.length > 0
+			@__updateAddButton()
 		@__appendNewRow()
 		@__updateButtons()
 		return
