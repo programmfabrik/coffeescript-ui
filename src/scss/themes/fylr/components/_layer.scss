@@ -183,13 +183,6 @@
 			}
 		}
 
-		// Top toolbar
-		> .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header) {
-			.cui-button {
-				@include button-bordered();
-			}
-		}
-
 		// layer-body
 		> .cui-vertical-layout-center {
 			padding: 0;

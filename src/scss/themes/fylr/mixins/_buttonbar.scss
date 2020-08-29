@@ -13,7 +13,7 @@
 			}
 
 			&:not(:last-child) .cui-button-visual {
-				border-right: 0;
+				border-right: 0 !important;
 			}
 
 			&:first-child:not(:only-child) .cui-button-visual {
@@ -55,7 +55,7 @@
 			}
 
 			&:not(:last-child) .cui-button-visual {
-				border-bottom: 0;
+				border-bottom: 0 !important;
 			}
 
 			&:first-child:not(:only-child) .cui-button-visual {
