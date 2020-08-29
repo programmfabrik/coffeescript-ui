@@ -76,7 +76,8 @@ class Demo.ButtonDemo extends Demo
 	__addButtonbarPair: (description, opts={}, extraClass="") ->
 		bb1 = new CUI.Buttonbar(opts).DOM
 		bb2 = bb1.cloneNode(true)
-		@__demo_table.addExample(description, [ CUI.dom.append(CUI.dom.div("cui-demo-buttonbar-pair " + extraClass ? extraClass : ""), [bb1, bb2]) ])
+		@__demo_table.addExample(description, [ CUI.dom.append(CUI.dom.div("cui-demo-buttonbar-pair " + extraClass ? extraClass : ""), [bb1, bb2]) ])	
+	
 
 	__addDivider: (text) ->
 		@__demo_table.addDivider(text)
@@ -330,14 +331,14 @@ class Demo.ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButtonPair("primary button",
+		@__addButton("primary button",
 			primary: true
 			text: "Primary Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButtonPair("secondary button",
+		@__addButton("secondary button",
 			secondary: true
 			text: "Secondary Button"
 			onClick: (evt,button) =>
@@ -369,6 +370,77 @@ class Demo.ButtonDemo extends Demo
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		, "cui-demo-button-size-large")
+
+		@__addButton("size: \"Icon\"",
+			icon_left: new CUI.Icon(class: "fa-ellipsis-v")
+			text: ""			
+		, "cui-demo-button-size-icon")		
+
+		@__addButton("size: \"Icon\"",
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: ""			
+		, "cui-demo-button-size-icon")		
+					
+
+		@__addDivider("Buttons Inverted")	
+		inverted = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+		)
+		invertedBorder = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+			class: "with-border"
+		)	
+		invertedClose = new CUI.Button(
+			icon_left: "close"
+			text: ""
+			class: "small"
+		)	
+		invertedDive = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-angle-right")
+			text: ""
+			class: "with-border small"
+		)						
+		@__demo_table.addExample("Buttons Inverted", [
+			inverted.DOM, 
+			invertedBorder.DOM, 
+			invertedClose.DOM, 
+			invertedDive.DOM
+			], 
+			null, 
+			"cui-demo-button-inverted"
+		)
+
+		@__addDivider("Buttons on Image")	
+		inverted = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+		)
+		invertedBorder = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+			class: "with-border"
+		)	
+		invertedClose = new CUI.Button(
+			icon_left: "close"
+			text: ""
+			class: "small"
+		)	
+		invertedDive = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-angle-right")
+			text: ""
+			class: "with-border small"
+		)						
+		@__demo_table.addExample("Buttons on Image", [
+			inverted.DOM, 
+			invertedBorder.DOM, 
+			invertedClose.DOM, 
+			invertedDive.DOM
+			], 
+			null, 
+			"cui-demo-button-on-image cui-demo-button-inverted"
+		)		
 
 		@__addDivider("Buttons with mixed options")
 		@__addButton("Big link button",

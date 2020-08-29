@@ -138,7 +138,7 @@
 	}
 
 	.cui-demo-button-pair {
-		.cui-last-visible-child {
+		.cui-first-visible-child {
 			@include button-bordered();
 		}
 
@@ -148,6 +148,10 @@
 
 		&.cui-demo-button-size-large .cui-button-button {
 			@include button-lg();
+		}
+
+		&.cui-demo-button-size-icon .cui-button-button {
+			@include button-icon();
 		}
 	}
 
@@ -170,6 +174,36 @@
 			}
 		}
 	}
+
+	.cui-demo-button-inverted .cui-demo-example-content {
+		background-color: $body-color;
+		padding: $spacer-sm;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.cui-button-button {
+			margin-right: $spacer-sm;
+
+			@include button-inverted();
+
+			&.with-border {
+				@include button-bordered();
+				@include button-inverted(1);
+			}
+			
+			&.small {
+				@include button-sm();
+			}
+		}
+	}
+
+	.cui-demo-button-on-image .cui-demo-example-content {
+		min-height: 200px;
+		background: url('https://eas.5.easydb.de/eas/partitions-inline/319/1002/1002980000/1002980005/fcac5aeb283353c89f7e6a0d7ee5a580eff8bcfa/image/jpeg');
+		background-size: cover;
+		background-repeat: no-repeat;		
+	}	
 
 	.cui-demo-buttonbar-stack-vertical .cui-buttonbar,
 	.cui-demo-buttonbar-stack-vertical.cui-buttonbar {
