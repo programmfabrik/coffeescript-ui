@@ -5,15 +5,12 @@
 
 	&--deletable {
 		display: flex;
-		height: $input-height;
-		border: 1px solid $input-border-color;
-		border-radius: $input-border-radius;
+		align-items: baseline;
 		cursor: default;
 
 		.cui-label {
 			flex: 1 1 0;
 			min-width: 0;
-			padding: $input-padding-y $input-padding-x;
 		}
 
 		.cui-button {
