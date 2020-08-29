@@ -122,24 +122,7 @@
 		}
 
 		.cui-button-button {
-			$focus-inset: 1;
-
-			@include button-hover-dimmed($focus-inset);
 			@include button-icon();
-		}
-
-		.cui-button-visual {
-			color: gray('500');
-
-			.fa {
-				font-size: 0.9rem;
-			}
-		}
-
-		&:hover {
-			.cui-button-visual {
-				background-color: transparent;
-			}
 		}
 	}
 

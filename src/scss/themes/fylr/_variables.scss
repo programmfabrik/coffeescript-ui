@@ -289,7 +289,8 @@ $icon-line-height: 	$line-height-base !default;
 // This is more predictable and can be better combined with toolbar and panel header heights etc.
 
 $enable-btn-border-radius: 	1; // 1 | 0
-
+$btn-hover-alpha:			0.65;
+// General Button styles
 $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
 $btn-border-width: 			1px !default;
@@ -301,12 +302,25 @@ $btn-color: 				$body-color !default;
 $btn-color-dimmed: 			theme-color('muted') !default;
 
 // Button states
-$btn-hover-color:			inherit !default;
-$btn-hover-background:		rgba(gray('200'), 0.75) !default;
+$btn-hover-color:			rgba($btn-color, $btn-hover-alpha) !default;
+$btn-hover-background:		transparent !default;
 $btn-active-color: 			$white !default;
 $btn-active-background: 	$body-color !default;
 $btn-focus-shadow: 			$component-focus-shadow !default;
 
+// Bordered Button states
+$btn-bordered-hover-color:			inherit !default;
+$btn-bordered-hover-background:		rgba(gray('200'), $btn-hover-alpha) !default;
+$btn-bordered-active-color: 		$btn-active-color !default;
+$btn-bordered-active-background: 	$btn-active-background !default;
+$btn-bordered-focus-shadow: 		$btn-focus-shadow !default;
+
+// Inverted Button 
+$btn-inverted-color: 			$white !default;
+$btn-inverted-background: 		gray('900') !default; // need an actual background so we can use this on images as well
+$btn-inverted-border-color: 	rgba($white, 0.45) !default;
+
+// Button Sizes
 $btn-visually-square-factor: 1.0675 !default;
 // Normal size
 $btn-padding-x: 			0.85rem !default;
@@ -323,11 +337,7 @@ $btn-padding-x-lg: 			1.25rem !default;
 $btn-height-lg: 			36px !default;
 $btn-font-size-lg: 			$font-size-lg !default;
 $btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
-// Inverted Button 
-$btn-inverted-background: 	rgba(gray('900'), 0.6) !default;
-$btn-inverted-color: 		gray('300') !default;
-$btn-inverted-border-color: rgba(gray('200'), 0.3) !default;
-// icon Button
+// Icon Button
 $btn-height-xs:				16px;
 
 // * Buttonbar
@@ -543,8 +553,9 @@ $tabs-header-height: 				$btn-height !default; // = tab button height
 $tabs-header-height-sm:				$btn-height-sm !default; // = small tab button height
 
 $tabs-background: 					transparent !default;
-$tabs-active-background: 			transparent !default;
 $tabs-border-color:					transparent !default;
+$tabs-active-background: 			transparent !default;
+$tabs-active-color: 				$body-color !default;
 $tabs-active-border-color:			$body-color !default;
 
 $tabs-overflow-button-background: 		transparent !default;

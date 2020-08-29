@@ -93,6 +93,11 @@
 	}
 }
 
+// todo
+.cui-button-form-button {
+	@include button-bordered();
+}
+
 // todo: remove appearance-link class
 a[role='button'].cui-button-appearance-link {
 	height: initial;

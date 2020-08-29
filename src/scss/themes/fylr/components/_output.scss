@@ -17,13 +17,11 @@
 		}
 
 		.cui-button {
-			@include input-control-button();
-
-			margin: $spacer-xs;
+			@include button-icon();
 
 			.svg-close {
-				width: 9px;
-				height: 9px;
+				width: 10px;
+				height: 10px;
 			}
 		}
 	}
@@ -53,7 +51,16 @@
 		margin-left: -#{$spacer-xs};
 
 		.cui-button-button {
-			@include input-control-button(22px, 18px);
+			.cui-button-visual {
+				font-size: 10px;
+				min-width: 22px;
+				height: 18px;
+				line-height: 18px;
+		
+				.cui-button-center {
+					padding: 0 $spacer-xs;
+				}
+			}
 		}
 	}
 

@@ -1,6 +1,5 @@
 // Button sizes
 @mixin button-size($height, $padding-x, $font-size, $border-radius) {
-	// padding: 0 $padding-x;
 	height: $height;
 	min-width: $btn-visually-square-factor * $height; // make icon-only buttons optically square
 	font-size: $font-size;
@@ -149,55 +148,29 @@
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 }
 
-@mixin button-on-colored-background($opacity: 0.6) {
-	$background-color: gray('200');
+@mixin button-inverted($border: 0) {
+	$background: rgba($btn-inverted-background, 0.6);
+	$color: $btn-inverted-color;
 
-	$background: rgba($background-color, $opacity);
-	$color: color-yiq($background);
-
-	$background-hover: rgba($background-color, 0.95);
-	$color-hover: $color;
+	$background-hover: rgba($btn-inverted-background, 0.7);
+	$color-hover: rgba($color, $btn-hover-alpha);
 
 	$background-active: $background-hover;
 	$color-active: $color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
-}
-
-@mixin button-inverted($border: 0) {
-	@include button-color($btn-inverted-background, $btn-inverted-color, $btn-inverted-background, $white, $btn-inverted-background, $white);
-
+	
 	@if $border == 1 {
 		.cui-button-visual {
 			border-color: $btn-inverted-border-color;
 		}
+
+		&:hover {
+			.cui-button-visual {
+				border-color: rgba($btn-inverted-border-color, 0.35);
+			}
+		}
 	}
-}
-
-@mixin button-hover-dimmed($focus-inset: 0) {
-	$background: transparent;
-	$color: $btn-color;
-
-	$background-hover: transparent;
-	$color-hover: $gray-600;
-
-	$background-active: transparent;
-	$color-active: $body-color;
-
-	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active, $focus-inset);
-}
-
-@mixin button-dimmed($focus-inset: 0) {
-	$background: transparent;
-	$color: $btn-color-dimmed;
-
-	$background-hover: transparent;
-	$color-hover: $btn-color;
-
-	$background-active: transparent;
-	$color-active: $btn-color;
-
-	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active, $focus-inset);
 }
 
 @mixin button-link() {
@@ -242,18 +215,14 @@
 		border: $btn-border-width solid $border-color;
 	}
 
+	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
+
 	&:focus .cui-button-visual {
 		border-color: theme-color('focused');
 	}
 
-	&.cui-button--primary {
-		.cui-button-visual {
-			border-color: $btn-primary-background;
-		}
-
-		&:focus .cui-button-visual {
-			border-color: darken($btn-primary-background, 15%);
-		}
+	&:hover .cui-button-visual {
+		border-color: rgba($border-color, $btn-hover-alpha);
 	}
 }
 
@@ -282,23 +251,6 @@
 	box-shadow: none;
 	outline: 0;
 	z-index: 0;
-}
-
-// Special control buttons
-// e.g. cui-data-field-multi-output-aside (localized output), delete icon button in --deleteable
-@mixin input-control-button($width: 22px, $height: 20px) {
-	@include button-hover-dimmed();
-
-	.cui-button-visual {
-		font-size: 10px;
-		min-width: $width;
-		height: $height;
-		line-height: $height;
-
-		.cui-button-center {
-			padding: 0 $spacer-xs;
-		}
-	}
 }
 
 @mixin button-combobox($button-position: 'right') {
@@ -353,7 +305,6 @@
 	&:hover {
 		.cui-button-visual {
 			background-color: $input-background;
-			color: $gray-600;
 		}
 	}
 	
@@ -384,7 +335,6 @@
 
 @mixin button-info-icon() {
 	@include button-sm();
-	@include button-hover-dimmed();
 
 	.cui-button-visual {
 		height: 1.3em;
