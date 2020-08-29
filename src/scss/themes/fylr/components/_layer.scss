@@ -184,7 +184,7 @@
 		}
 
 		// Top toolbar
-		> .cui-vertical-layout-top > .cui-toolbar {
+		> .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header) {
 			.cui-button {
 				@include button-bordered();
 			}
