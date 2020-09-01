@@ -152,8 +152,8 @@
 	$background: $btn-inverted-background;
 	$color: $btn-inverted-color;
 
-	$background-hover: $btn-inverted-background;
-	$color-hover: rgba($color, $btn-hover-alpha);
+	$background-hover: $btn-inverted-hover-background;
+	$color-hover: $btn-inverted-hover-color;
 
 	$background-active: $background-hover;
 	$color-active: $color;
@@ -167,7 +167,7 @@
 
 		&:hover {
 			.cui-button-visual {
-				border-color: rgba($btn-inverted-border-color, 0.35);
+				border-color: $btn-inverted-hover-border-color;
 			}
 		}
 	}

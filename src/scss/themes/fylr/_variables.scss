@@ -317,9 +317,12 @@ $btn-bordered-active-background: 	$btn-active-background !default;
 $btn-bordered-focus-shadow: 		$btn-focus-shadow !default;
 
 // Inverted Button 
-$btn-inverted-color: 			$white !default;
-$btn-inverted-background: 		rgba(gray('900'), 0.6) !default; // need an actual background so we can use this on images as well
-$btn-inverted-border-color: 	rgba($white, 0.45) !default;
+$btn-inverted-color: 				$white !default;
+$btn-inverted-background: 			rgba(gray('900'), 0.6) !default; // need an actual background so we can use this on images as well
+$btn-inverted-border-color: 		rgba($white, 0.45) !default;
+$btn-inverted-hover-color: 			rgba($btn-inverted-color, $btn-hover-alpha) !default;
+$btn-inverted-hover-background: 	$btn-inverted-background !default;
+$btn-inverted-hover-border-color: 	rgba($btn-inverted-border-color, 0.35) !default;
 
 // Button Sizes
 $btn-visually-square-factor: 1.0675 !default;
@@ -465,8 +468,8 @@ $calendar-font-size: 				$font-size-base !default;
 $calendar-cell-size:				28px !default;
 $calendar-cell-count:				8 !default;
 $calendar-background:				$white !default;
-$calendar-static-cells-background: 	lighten(gray('200'), 1%) !default;
-$calendar-static-cells-color: 		gray('500') !default;
+$calendar-static-cells-background: 	$calendar-background !default;
+$calendar-static-cells-color: 		theme-color('primary') !default;
 $calendar-date-active-background:	theme-color('primary') !default;
 $calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
 $calendar-date-previous-color:		gray('500') !default;
