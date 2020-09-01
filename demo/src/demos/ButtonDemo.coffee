@@ -431,12 +431,21 @@ class Demo.ButtonDemo extends Demo
 			icon_left: new CUI.Icon(class: "fa-angle-right")
 			text: ""
 			class: "with-border small"
-		)						
+		)	
+		invertedNavigation = new CUI.Buttonbar(
+			class: "cui-demo-buttonbar-navigation-border"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)								
 		@__demo_table.addExample("Buttons on Image", [
 			inverted.DOM, 
 			invertedBorder.DOM, 
 			invertedClose.DOM, 
-			invertedDive.DOM
+			invertedDive.DOM,
+			invertedNavigation.DOM
 			], 
 			null, 
 			"cui-demo-button-on-image cui-demo-button-inverted"
@@ -791,6 +800,48 @@ class Demo.ButtonDemo extends Demo
 				new CUI.Button(text: "Vierzig")
 			]
 		, "cui-demo-buttonbar-tight")
+
+
+		@__addButtonbar("navigation toolbar no border (default)",
+			class: "cui-demo-buttonbar-navigation"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)
+
+		@__addButtonbar("navigation toolbar with border",
+			class: "cui-demo-buttonbar-navigation-border"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)	
+
+		@__addButtonbar("navigation toolbar with border and number input",
+			class: "cui-demo-buttonbar-navigation-border"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Input(
+					class: "cui-number-input"
+					data: value: ""
+					group: "navi"
+				)
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)
+
+		@__addButtonbar("small navigation toolbar with border",
+			class: "cui-demo-buttonbar-navigation-border-small"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)					
+
 
 		@__addButtonbar("example 1, group, vertical",
 			class: "cui-demo-buttonbar-stack-vertical"
