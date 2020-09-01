@@ -87,11 +87,7 @@
 
 .cui-result-navigation-toolbar {
 	.cui-buttonbar-group-navi {
-		@include ungroup-visually();
-
-		.cui-number-input {
-			margin: 0 $spacer-xs;
-		}
+		@include buttonbar-group-navigation();
 	}
 
 	.cui-buttonbar + .cui-label {

@@ -33,7 +33,7 @@
 	}
 }
 
-@mixin buttonbar-vertical {
+@mixin buttonbar-vertical() {
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
@@ -51,7 +51,7 @@
 		.cui-button,
 		.cui-select {
 			.cui-button-visual {
-				border: $btn-border-width solid $body-color;
+				border: $btn-border-width solid $body-color !important;
 			}
 
 			&:not(:last-child) .cui-button-visual {
@@ -96,6 +96,70 @@
 		~ .cui-buttonbar-group {
 			margin: $buttonbar-gap 0;
 		}
+	}
+}
+
+@mixin buttonbar-group-navigation($border: 0) {
+	.cui-label,
+	.cui-number-input {
+		padding: 0 $spacer-xs;
+	}
+	
+	// use separate border to cirumvent border styles on hover for the inverted buttons
+	@include ungroup-visually();
+
+	@if $border == 1 {
+		--border-color: #{$btn-border-color};
+
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			display: block;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+			border-radius: $btn-border-radius;
+			border: 1px solid var(--border-color);
+		}
+	}
+}
+
+@mixin buttonbar-group-navigation-sm() {
+	.cui-button-button {
+		@include button-sm();
+	}
+
+	.cui-label {
+		@include label-sm();
+
+		line-height: 1;
+		padding: 0;
+	}
+
+	.cui-number-input input {
+		@include input-sm();
+	}
+}
+
+@mixin buttonbar-group-navigation-inverted($border: 0) {
+	@include buttonbar-group-navigation($border);
+	
+	.cui-button-button {
+		@include button-inverted();
+	}
+	
+	.cui-label,
+	.cui-number-input {
+		color: $btn-inverted-color;
+		background-color: $btn-inverted-background;
+	}
+
+	@if $border == 1 {
+		--border-color: #{$btn-inverted-border-color};
 	}
 }
 

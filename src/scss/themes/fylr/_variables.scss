@@ -293,13 +293,14 @@ $btn-hover-alpha:			0.65;
 // General Button styles
 $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
-$btn-border-width: 			1px !default;
 $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
 $btn-background: 			transparent !default;
 $btn-primary-background: 	theme-color('primary') !default;
 $btn-secondary-background: 	gray('200') !default;
 $btn-color: 				$body-color !default;
 $btn-color-dimmed: 			theme-color('muted') !default;
+$btn-border-width: 			1px !default;
+$btn-border-color: 			$btn-color !default;
 
 // Button states
 $btn-hover-color:			rgba($btn-color, $btn-hover-alpha) !default;
@@ -317,7 +318,7 @@ $btn-bordered-focus-shadow: 		$btn-focus-shadow !default;
 
 // Inverted Button 
 $btn-inverted-color: 			$white !default;
-$btn-inverted-background: 		gray('900') !default; // need an actual background so we can use this on images as well
+$btn-inverted-background: 		rgba(gray('900'), 0.6) !default; // need an actual background so we can use this on images as well
 $btn-inverted-border-color: 	rgba($white, 0.45) !default;
 
 // Button Sizes

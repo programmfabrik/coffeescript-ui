@@ -149,10 +149,10 @@
 }
 
 @mixin button-inverted($border: 0) {
-	$background: rgba($btn-inverted-background, 0.6);
+	$background: $btn-inverted-background;
 	$color: $btn-inverted-color;
 
-	$background-hover: rgba($btn-inverted-background, 0.7);
+	$background-hover: $btn-inverted-background;
 	$color-hover: rgba($color, $btn-hover-alpha);
 
 	$background-active: $background-hover;
@@ -210,7 +210,7 @@
 	}
 }
 
-@mixin button-bordered($border-color: $body-color) {
+@mixin button-bordered($border-color: $btn-border-color) {
 	.cui-button-visual {
 		border: $btn-border-width solid $border-color;
 	}
@@ -219,10 +219,6 @@
 
 	&:focus .cui-button-visual {
 		border-color: theme-color('focused');
-	}
-
-	&:hover .cui-button-visual {
-		border-color: rgba($border-color, $btn-hover-alpha);
 	}
 }
 
