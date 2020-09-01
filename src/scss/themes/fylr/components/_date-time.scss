@@ -3,6 +3,8 @@
 	overflow: hidden; // override default, see: .cui-layer > .cui-pane > .cui-vertical-layout-center
 
 	@include pane-padding-reset();
+
+	margin: 0;
 }
 
 .cui-date-time-popover .cui-date-time-popover-inner {
@@ -49,23 +51,71 @@
 
 	.cui-table {
 		border: 0;
+		margin-top: $spacer-sm;
 	}
 
-	.cui-buttonbar-group {
-		@include ungroup-visually();
+	.cui-buttonbar {
+		padding: $spacer-sm;
+		justify-content: space-between;
+	}
+	
+	// Apply layer header styling
+	> .cui-buttonbar {
+		background: $layer-header-background;
+		color: $layer-header-color;
+		padding: $spacer $spacer-sm;
+		display: grid;
+		grid-template-columns: auto auto;
+		grid-template-rows: auto 1fr;
+		grid-template-areas:
+			'd_title t_title'
+			'date time';
+
+		@include ungroup-visually-inverted();
+
+		.cui-button-select {
+			@include button-inverted();
+			@include button-sm();
+		}
+
+		.cui-select-date-title,
+		.cui-select-time-title {
+			@include layer-title();
+	
+			margin-bottom: $spacer-sm;
+			margin-left: $spacer-sm;
+		}
+	
+		.cui-select-date-title {
+			grid-area: d_title;
+		}
+	
+		.cui-select-time-title {
+			grid-area: t_title;
+		}
+	
+		.cui-buttonbar-group-date {
+			grid-area: date;
+		}
+	
+		.cui-buttonbar-group-time {
+			grid-area: time;
+		}
 	}
 
-	.cui-button-select,
-	.cui-button {
-		@include button-color(transparent, $body-color, $input-background, theme-color('primary'));
-		@include button-sm();
+	.cui-buttonbar-group-date,
+	.cui-buttonbar-group-time {
+		.cui-data-field-input > .cui-button-select {
+			width: auto;
+		}
+	}
 
-		.cui-button-visual {
-			background-color: $input-background;
-
-			&::after {
-				display: none !important; // button flat
-			}
+	.cui-buttonbar-group-time {
+		.cui-select:not(.cui-date-time-am-pm-select):not(:first-child)::before {
+			content: ':';
+			position: relative;
+			top: 1px;
+			color: theme-color('muted');
 		}
 	}
 
@@ -94,77 +144,31 @@
 			}
 		}
 	}
-
-	.cui-buttonbar {
-		padding: $spacer-sm;
-		justify-content: space-between;
-	}
-
-	.cui-buttonbar-group-date,
-	.cui-buttonbar-group-time {
-		@include ungroup-visually();
-
-		position: relative;
-		padding-top: 1.75rem;
-
-		&::before {
-			position: absolute;
-			top: 0.15rem;
-			left: 0.5rem;
-			font-weight: bold;
-		}
-
-		.cui-data-field-input > .cui-button-select {
-			width: auto;
-		}
-	}
-
-	.cui-buttonbar-group-date {
-		&::before {
-			// todo: add in the markup?, localization?
-			content: 'Datum';
-		}
-	}
-
-	.cui-buttonbar-group-time {
-		background: $input-background;
-
-		&::before {
-			// todo: add in the markup?, localization?
-			content: 'Uhrzeit';
-		}
-
-		.cui-select:not(.cui-date-time-am-pm-select):not(:first-child)::before {
-			content: ':';
-			position: relative;
-			top: 1px;
-			color: theme-color('muted');
-		}
-	}
 }
 
 .cui-date-time-footer {
 	overflow: visible !important; // show year input outline
+	margin-bottom: $spacer-xs;
 
 	.cui-buttonbar > *:not(:last-child) {
 		margin-right: 0;
 	}
-
-	.cui-buttonbar-group {
+		
+	.cui-date-time-header-month,
+	.cui-date-time-header-year .cui-buttonbar-group {
 		@include ungroup-visually();
+		@include buttonbar-group-navigation();
 	}
 
 	[cui-data-field-name='year'] input {
 		$year-padding: $spacer-xs;
-
-		@include input-sm();
 
 		width: calc(4ch + 4 * #{$year-padding});
 		min-width: 0;
 		text-align: center;
 		position: relative;
 		padding: 0 $year-padding;
-		border-color: $input-border-color-light;
+		border-color: currentColor;
 
 		.cui-browser-ie:not(.cui-browser-edge) & {
 			width: calc(6ch + 4 * #{$year-padding});
@@ -212,6 +216,7 @@
 		&.cui-date-time-month-header {
 			position: relative;
 			background: var(--calendar-static-cells-background);
+			color: $calendar-static-cells-color;
 
 			&::after {
 				content: '';
@@ -277,7 +282,7 @@
 	}
 
 	.cui-date-time-week-title {
-		color: $calendar-static-cells-color;
+		font-weight: $font-weight-normal;
 	}
 
 	.cui-date-time-day {
