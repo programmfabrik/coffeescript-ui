@@ -78593,7 +78593,7 @@ Demo.ButtonDemo = (function(superClass) {
   };
 
   ButtonDemo.prototype.createButtonDemo = function() {
-    var btn, buttons, inverted, invertedBorder, invertedClose, invertedDive, span;
+    var btn, buttons, inverted, invertedBorder, invertedClose, invertedDive, invertedNavigation, span;
     this.__addDivider("button states");
     this.__toggle_enabled_state_button = this.__addButton("Disable/Enable Buttons", {
       "switch": true,
@@ -79027,7 +79027,22 @@ Demo.ButtonDemo = (function(superClass) {
       text: "",
       "class": "with-border small"
     });
-    this.__demo_table.addExample("Buttons on Image", [inverted.DOM, invertedBorder.DOM, invertedClose.DOM, invertedDive.DOM], null, "cui-demo-button-on-image cui-demo-button-inverted");
+    invertedNavigation = new CUI.Buttonbar({
+      "class": "cui-demo-buttonbar-navigation-border",
+      buttons: [
+        new CUI.Button({
+          icon: "fa-angle-left",
+          group: "navi"
+        }), new CUI.Label({
+          text: "1/3",
+          group: "navi"
+        }), new CUI.Button({
+          icon: "fa-angle-right",
+          group: "navi"
+        })
+      ]
+    });
+    this.__demo_table.addExample("Buttons on Image", [inverted.DOM, invertedBorder.DOM, invertedClose.DOM, invertedDive.DOM, invertedNavigation.DOM], null, "cui-demo-button-on-image cui-demo-button-inverted");
     this.__addDivider("Buttons with mixed options");
     this.__addButton("Big link button", {
       icon_left: new CUI.Icon({
@@ -79456,6 +79471,69 @@ Demo.ButtonDemo = (function(superClass) {
         })
       ]
     }, "cui-demo-buttonbar-tight");
+    this.__addButtonbar("navigation toolbar no border (default)", {
+      "class": "cui-demo-buttonbar-navigation",
+      buttons: [
+        new CUI.Button({
+          icon: "fa-angle-left",
+          group: "navi"
+        }), new CUI.Label({
+          text: "1/3",
+          group: "navi"
+        }), new CUI.Button({
+          icon: "fa-angle-right",
+          group: "navi"
+        })
+      ]
+    });
+    this.__addButtonbar("navigation toolbar with border", {
+      "class": "cui-demo-buttonbar-navigation-border",
+      buttons: [
+        new CUI.Button({
+          icon: "fa-angle-left",
+          group: "navi"
+        }), new CUI.Label({
+          text: "1/3",
+          group: "navi"
+        }), new CUI.Button({
+          icon: "fa-angle-right",
+          group: "navi"
+        })
+      ]
+    });
+    this.__addButtonbar("navigation toolbar with border and number input", {
+      "class": "cui-demo-buttonbar-navigation-border",
+      buttons: [
+        new CUI.Button({
+          icon: "fa-angle-left",
+          group: "navi"
+        }), new CUI.Input({
+          "class": "cui-number-input",
+          data: {
+            value: ""
+          },
+          group: "navi"
+        }), new CUI.Button({
+          icon: "fa-angle-right",
+          group: "navi"
+        })
+      ]
+    });
+    this.__addButtonbar("small navigation toolbar with border", {
+      "class": "cui-demo-buttonbar-navigation-border-small",
+      buttons: [
+        new CUI.Button({
+          icon: "fa-angle-left",
+          group: "navi"
+        }), new CUI.Label({
+          text: "1/3",
+          group: "navi"
+        }), new CUI.Button({
+          icon: "fa-angle-right",
+          group: "navi"
+        })
+      ]
+    });
     this.__addButtonbar("example 1, group, vertical", {
       "class": "cui-demo-buttonbar-stack-vertical",
       tooltip: {
