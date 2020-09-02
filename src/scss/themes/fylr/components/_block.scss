@@ -1,7 +1,6 @@
 // todo: padding, margins, use-cases ?
 .cui-block {
 	flex-shrink: 0;
-	padding-bottom: $spacer-lg;
 	position: relative;
 
 	&:not(:last-child) {
@@ -52,7 +51,7 @@
 
 	// Level 2
 	&.cui-block-level-2 {
-		margin-top: $block-margin;
+		// margin-top: $block-margin; // duplicate margin
 
 		// todo
 		// > .cui-block-header .cui-block-title {
