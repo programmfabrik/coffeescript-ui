@@ -16,8 +16,8 @@
 
 	.cui-item-list-body {
 		> .cui-label,
-		> .cui-button {
-			max-width: 300px;
+		> .cui-button .cui-button-center {
+			max-width: 500px;
 		}
 
 		> .cui-button:first-child .cui-button-visual,
