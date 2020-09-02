@@ -88862,6 +88862,8 @@ Demo.Playground = (function(superClass) {
     ttab = new Demo.DemoTable();
     table = this.getTableDefault();
     ttab.addExample("Default Table with Border", table);
+    table = this.getTableDefaultNoBorder();
+    ttab.addExample("Default Table with no border", table);
     table = this.getTableZebra();
     ttab.addExample("Zebra Table maximized", table);
     table = this.getTableKeyvalue();
@@ -88917,6 +88919,52 @@ Demo.Playground = (function(superClass) {
   Playground.prototype.getTableDefault = function() {
     var i, l, table;
     table = new CUI.Table({
+      columns: [
+        {
+          name: "a",
+          text: "alpha",
+          "class": "a-class"
+        }, {
+          name: "b",
+          text: "beta",
+          "class": "b-class"
+        }, {
+          name: "c",
+          text: "gamma",
+          "class": "c-class"
+        }, {
+          name: "d",
+          text: "delta",
+          "class": "d-class"
+        }
+      ],
+      rows: [
+        {
+          a: "a0",
+          b: "b0",
+          c: "Hello",
+          d: "world"
+        }, {
+          a: "a1",
+          b: "b1",
+          c: "how",
+          d: "are you"
+        }
+      ]
+    });
+    for (i = l = 2; l <= 5; i = ++l) {
+      table.addRow({
+        a: "a" + i,
+        b: "b" + i
+      });
+    }
+    return table;
+  };
+
+  Playground.prototype.getTableDefaultNoBorder = function() {
+    var i, l, table;
+    table = new CUI.Table({
+      "class": 'cui-maximize-horizontal cui-demo-table-no-border',
       columns: [
         {
           name: "a",

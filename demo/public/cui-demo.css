@@ -115,6 +115,11 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   width: 100px;
   height: 100px; }
 
+.cui-demo-playground .cui-demo-table-no-border {
+  border: 0; }
+  .cui-demo-playground .cui-demo-table-no-border > .cui-tr + .cui-tr > .cui-table-td {
+    border-top: 0; }
+
 .cui-demo-playground .cui-demo-table-zebra {
   border: 0; }
   .cui-demo-playground .cui-demo-table-zebra > .cui-tr + .cui-tr > .cui-table-td {
