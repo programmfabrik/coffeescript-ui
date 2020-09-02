@@ -104,7 +104,10 @@
 
 @mixin buttonbar-group-navigation($border: 0) {	
 	// use separate border to cirumvent border styles on hover for the inverted buttons
-	@include ungroup-visually();
+	@include ungroup-visually(0, 0);
+
+	border-radius: $btn-border-radius;
+	overflow: hidden;
 
 	@if $border == 1 {
 		--border-color: #{$btn-border-color};
@@ -145,15 +148,18 @@
 
 @mixin buttonbar-group-navigation-inverted($border: 0) {
 	@include buttonbar-group-navigation($border);
-	
-	.cui-button-button {
-		@include button-inverted();
+
+	// add background to buttonbar-group !
+	background-color: $btn-inverted-background;
+
+	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
+	.cui-button-button.cui-button-button {
+		@include button-color(transparent, $btn-inverted-color, transparent, $btn-inverted-hover-color, transparent, $btn-inverted-color);
 	}
 	
 	.cui-label,
 	.cui-number-input {
 		color: $btn-inverted-color;
-		background-color: $btn-inverted-background;
 	}
 
 	@if $border == 1 {
@@ -162,10 +168,10 @@
 }
 
 // Helper
-@mixin ungroup-visually($inverted: 0) {
+@mixin ungroup-visually($inverted: 0, $border-radius: $btn-border-radius) {
 	.cui-button-visual {
 		border: 0 !important;
-		border-radius: $btn-border-radius !important;
+		border-radius: $border-radius !important;
 	}
 
 	.cui-button:hover .cui-button-visual {
