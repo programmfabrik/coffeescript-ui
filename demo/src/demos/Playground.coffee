@@ -672,6 +672,9 @@ class Demo.Playground extends Demo
 		table = @getTableDefault()
 		ttab.addExample("Default Table with Border", table)
 
+		table = @getTableDefaultNoBorder()
+		ttab.addExample("Default Table with no border", table)		
+
 		table = @getTableZebra()
 		ttab.addExample("Zebra Table maximized", table)
 
@@ -754,6 +757,45 @@ class Demo.Playground extends Demo
 				b: "b"+i
 
 		table
+
+	getTableDefaultNoBorder: ->
+		table = new CUI.Table
+			class: 'cui-maximize-horizontal cui-demo-table-no-border'
+			columns: [
+				name: "a"
+				text: "alpha"
+				class: "a-class"
+			,
+				name: "b"
+				text: "beta"
+				class: "b-class"
+			,
+				name: "c"
+				text: "gamma"
+				class: "c-class"
+			,
+				name: "d"
+				text: "delta"
+				class: "d-class"
+			]
+			rows: [
+				a: "a0"
+				b: "b0"
+				c: "Hello"
+				d: "world"
+			,
+				a: "a1"
+				b: "b1"
+				c: "how"
+				d: "are you"
+			]
+
+		for i in [2..5]
+			table.addRow
+				a: "a"+i
+				b: "b"+i
+
+		table		
 
 	getTableKeyvalue: ->
 		table = new CUI.Table

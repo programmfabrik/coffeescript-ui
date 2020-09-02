@@ -100,6 +100,10 @@
 		}
 	}
 
+	.cui-demo-table-no-border {
+		@include table-no-border();
+	}
+
 	.cui-demo-table-zebra {
 		@include table-zebra();
 	}
