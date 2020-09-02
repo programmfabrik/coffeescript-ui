@@ -214,11 +214,17 @@
 	.cui-button-visual {
 		border: $btn-border-width solid $border-color;
 	}
-
+	
 	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
-
+	
 	&:focus .cui-button-visual {
 		border-color: theme-color('focused');
+	}
+
+	// todo: test combo
+	&.cui-button-select,
+	&.cui-button--has-caret {
+		@include button-reset-combobox-divider();
 	}
 }
 
@@ -258,22 +264,23 @@
 		display: flex;
 		height: 100%;
 		align-items: flex-start; // in case we have a textarea input or any other longer left input, the icon should always be top aligned
-		background-color: $input-background;
-		border: 1px solid $input-border-color;
-		
-		@if $button-position == 'right' {
-			border-left: 1px solid gray('200');
-			margin-left: -1px;
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-		@else if $button-position == 'left' {
-			z-index: 1;
-			position: relative;
-			margin-right: -1px;
-			border-right: 1px solid gray('200');
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
+		background-color: $combobox-input-background;
+		border: 1px solid $combobox-border-color;
+
+		// todo: test combo
+		body:not(.nocombo) & {
+			@if $button-position == 'right' {
+				border-left: var(--combobox-divider-border, #{$combobox-divider-border});
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+			@else if $button-position == 'left' {
+				z-index: 1;
+				position: relative;
+				border-right: var(--combobox-divider-border, #{$combobox-divider-border});
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
 		}
 
 		// usually contains the icon
@@ -344,6 +351,21 @@
 		.svg-info-circle {
 			width: clamp(10px, 1em, 14px);
 			height: clamp(10px, 1em, 14px);
+		}
+	}
+}
+
+
+@mixin button-reset-combobox-divider() {
+	.cui-button-center {
+		padding-right: 0;
+	}
+	
+	.cui-button-right {
+		border-left: 0;
+		
+		.fa {
+			transform: translateX(-1px); // optics
 		}
 	}
 }

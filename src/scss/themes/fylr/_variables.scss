@@ -327,7 +327,7 @@ $btn-inverted-hover-border-color: 	rgba($btn-inverted-border-color, 0.35) !defau
 // Button Sizes
 $btn-visually-square-factor: 1.0675 !default;
 // Normal size
-$btn-padding-x: 			0.85rem !default;
+$btn-padding-x: 			0.75rem !default;
 $btn-height: 				30px !default;
 $btn-font-size: 			$font-size-base !default;
 $btn-border-radius:			$enable-btn-border-radius * 2px !default;
@@ -400,6 +400,15 @@ $input-padding-x: 			$component-padding-base !default;
 $input-padding-y: 			$spacer-xs !default;
 $input-focus-shadow:		$component-focus-shadow !default;
 $input-focus-border-color:	rgba(theme-color('focused'), 0.5) !default;
+
+// * Combobox
+// * ==========================================
+$combobox-divider-border: 				1px solid gray('200') !default;
+$combobox-input-background: 			$input-background !default;
+$combobox-input-disabled-background: 	$combobox-input-background;
+$combobox-border-color: 				$input-border-color !default;
+$combobox-button-background: 			$input-background !default;
+$combobox-button-hover-color: 			$gray-600 !default;
 
 // * Data-Field
 // * ==========================================
