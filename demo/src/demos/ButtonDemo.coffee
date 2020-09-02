@@ -814,7 +814,7 @@ class Demo.ButtonDemo extends Demo
 		@__addButtonbar("navigation toolbar with border",
 			class: "cui-demo-buttonbar-navigation-border"
 			buttons: [
-				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Button(icon: "fa-angle-left", group: "navi", disabled: true)
 				new CUI.Label(text: "1/3", group: "navi")
 				new CUI.Button(icon: "fa-angle-right", group: "navi")
 			]
