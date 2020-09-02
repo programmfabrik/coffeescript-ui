@@ -1,9 +1,9 @@
 .cui-output {
-	&-empty {
-		color: theme-color('muted');
+	.cui-output-empty {
+		color: theme-color('secondary');
 	}
 
-	&--deletable {
+	.cui-output--deletable {
 		display: flex;
 		align-items: baseline;
 		cursor: default;
@@ -23,7 +23,7 @@
 		}
 	}
 
-	&--no-padding {
+	.cui-output--no-padding {
 		.cui-label {
 			padding: 0;
 		}

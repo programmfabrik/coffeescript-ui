@@ -1,8 +1,6 @@
 @mixin form-hint() {
 	margin-top: $spacer-xs;
-	font-size: $font-size-sm;
-	line-height: $line-height-sm;
-	color: theme-color('muted');
+	color: theme-color('secondary');
 }
 
 @mixin input-sm() {

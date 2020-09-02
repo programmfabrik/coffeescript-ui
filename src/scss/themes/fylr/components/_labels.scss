@@ -153,7 +153,7 @@ label[data-label-clickable],
 
 // Placeholder / Empty
 .cui-empty-label {
-	color: gray('700');
+	color: theme-color('secondary');
 	font-style: italic;
 	margin: 0;
 	cursor: default;
