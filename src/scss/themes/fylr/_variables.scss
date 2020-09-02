@@ -416,8 +416,8 @@ $data-field-width: 275px !default; // used to be: "$input-width"
 
 // * Checkbox
 // * ==========================================
-$checkbox-border-color: 		$body-color !default;
-$checkbox-background: 			transparent !default;
+$checkbox-border-color: 		transparent !default;
+$checkbox-background: 			$white !default;
 $checkbox-active-background: 	$body-color !default;
 $checkbox-active-color: 		$white !default;
 $checkbox-size: 				16px !default;

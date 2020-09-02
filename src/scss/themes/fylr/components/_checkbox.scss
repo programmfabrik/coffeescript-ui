@@ -124,7 +124,7 @@
 		&[role='radio'] {
 			.cui-button-left i {
 				color: transparent;
-				background: $checkbox-border-color;
+				background: $checkbox-active-background;
 
 				&::after { // radio dot
 					content: '';
