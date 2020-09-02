@@ -4,7 +4,7 @@
 	max-width: none;
 	display: inline-block;
 
-	&--icon {
+	.cui-checkbox--icon {
 		.cui-button-checkbox {
 			.cui-button-left i {
 				// just a tiny bit bigger so the icon is not too cramped
@@ -15,7 +15,7 @@
 		}
 	}
 
-	&--multiline {
+	.cui-checkbox--multiline {
 		.cui-button-visual {
 			align-items: baseline;
 			white-space: initial;
@@ -34,8 +34,8 @@
 
 .cui-button-checkbox {
 	display: inline-flex; // so that the click area is not wider than the text
-	min-height: $input-height;
 	max-width: 100%;
+	min-height: $input-height;
 	line-height: $input-height;
 	cursor: pointer;
 
