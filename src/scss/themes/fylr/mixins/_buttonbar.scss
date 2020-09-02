@@ -1,4 +1,4 @@
-@mixin buttonbar-horizontal {
+@mixin buttonbar-horizontal() {
 	flex-direction: row;
 
 	> *:not(:last-child) {
@@ -6,12 +6,15 @@
 	}
 
 	.cui-buttonbar-group {
+		&:not(.cui-buttonbar-group-tabs) {
+			.cui-button-button,
+			.cui-button-select {
+				@include button-bordered();
+			}
+		}
+		
 		.cui-button,
 		.cui-select {
-			.cui-button-visual {
-				border: $btn-border-width solid $body-color;
-			}
-
 			&:not(:last-child) .cui-button-visual {
 				border-right: 0 !important;
 			}
@@ -51,7 +54,7 @@
 		.cui-button,
 		.cui-select {
 			.cui-button-visual {
-				border: $btn-border-width solid $body-color !important;
+				border-right: $btn-border-width solid $btn-border-color !important; // need to override the 0 reset from the default buttonbar-horizontal()
 			}
 
 			&:not(:last-child) .cui-button-visual {
