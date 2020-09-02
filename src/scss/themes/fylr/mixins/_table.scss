@@ -1,13 +1,7 @@
 @mixin table-zebra() {
 	//.cui-table
 
-	border: 0;
-
-	> .cui-tr + .cui-tr {
-		> .cui-table-td {
-			border-top: 0;
-		}
-	}
+	@include table-no-border();
 
 	.cui-table-row {
 		&:nth-child(odd) .cui-table-td {
@@ -26,6 +20,16 @@
 			.cui-table-td {
 				background-color: $table-row-hover-background;
 			}
+		}
+	}
+}
+
+@mixin table-no-border() {
+	border: 0;
+
+	> .cui-tr + .cui-tr {
+		> .cui-table-td {
+			border-top: 0;
 		}
 	}
 }
