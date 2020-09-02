@@ -27887,7 +27887,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.getDateTimeDrawer = function(mom) {
-    var am_pm, am_pm_sel, data, date_sel, emtpy_clock_opts, hour_sel, minute_sel, month_sel, pad0, year_sel;
+    var am_pm, am_pm_sel, data, date_sel, date_title, emtpy_clock_opts, hour_sel, minute_sel, month_sel, pad0, time_title, year_sel;
     am_pm = this.__input_formats[0].clock_am_pm;
     data = {
       month: mom.month(),
@@ -27914,6 +27914,10 @@ CUI.DateTime = (function(superClass) {
         return "" + n;
       }
     };
+    date_title = new CUI.Label({
+      text: this.__locale_format.tab_date,
+      "class": "cui-select-date-title"
+    });
     date_sel = new CUI.Select({
       name: "date",
       menu_class: "cui-date-time--select-menu",
@@ -28001,6 +28005,10 @@ CUI.DateTime = (function(superClass) {
       } else {
         emtpy_clock_opts = [];
       }
+      time_title = new CUI.Label({
+        text: this.__locale_format.tab_time,
+        "class": "cui-select-time-title"
+      });
       hour_sel = new CUI.Select({
         name: "hour",
         menu_class: "cui-date-time--select-menu",
@@ -28114,7 +28122,7 @@ CUI.DateTime = (function(superClass) {
       }
     }
     return new CUI.Buttonbar({
-      buttons: [date_sel, month_sel, year_sel, hour_sel, minute_sel, am_pm_sel]
+      buttons: [date_title, date_sel, month_sel, year_sel, time_title, hour_sel, minute_sel, am_pm_sel]
     }).DOM;
   };
 

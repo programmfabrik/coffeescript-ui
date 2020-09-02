@@ -4062,6 +4062,9 @@ label[data-label-clickable],
       text-align: center; }
     .cui-date-time-calendar .cui-buttonbar .cui-button-select .cui-button-right {
       margin-left: 0; }
+  .cui-date-time-calendar .cui-buttonbar .cui-select-date-title,
+  .cui-date-time-calendar .cui-buttonbar .cui-select-time-title {
+    display: none; }
 
 .cui-buttonbar-group-date .cui-select:not(:last-child) .cui-button .cui-button-visual,
 .cui-buttonbar-group-time .cui-select:not(:last-child) .cui-button .cui-button-visual {

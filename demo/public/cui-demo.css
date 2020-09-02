@@ -550,23 +550,23 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
     border-color: #17a2b8; }
 
-.cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-label,
-.cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-number-input {
-  padding: 0 0.25rem; }
-
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button-visual {
   border: 0 !important;
   border-radius: 2px !important; }
 
+.cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:hover .cui-button-visual {
+  background-color: transparent;
+  color: rgba(33, 33, 33, 0.65); }
+
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group {
   --border-color: #212121;
   position: relative; }
-  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-label,
-  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-number-input {
-    padding: 0 0.25rem; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-visual {
     border: 0 !important;
     border-radius: 2px !important; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover .cui-button-visual {
+    background-color: transparent;
+    color: rgba(33, 33, 33, 0.65); }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group::after {
     content: '';
     position: absolute;
@@ -582,12 +582,12 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group {
   --border-color: #212121;
   position: relative; }
-  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-label,
-  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-number-input {
-    padding: 0 0.25rem; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button-visual {
     border: 0 !important;
     border-radius: 2px !important; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:hover .cui-button-visual {
+    background-color: transparent;
+    color: rgba(33, 33, 33, 0.65); }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group::after {
     content: '';
     position: absolute;
@@ -744,12 +744,12 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     --border-color: #212121;
     position: relative;
     --border-color: rgba(255, 255, 255, 0.45); }
-    .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-label,
-    .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-number-input {
-      padding: 0 0.25rem; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-visual {
       border: 0 !important;
       border-radius: 2px !important; }
+    .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover .cui-button-visual {
+      background-color: transparent;
+      color: rgba(33, 33, 33, 0.65); }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group::after {
       content: '';
       position: absolute;
