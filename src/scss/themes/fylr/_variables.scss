@@ -390,7 +390,7 @@ $pane-window-border-color: 		gray('200') !default;
 $input-height: 				$btn-height !default;
 $input-height-sm: 			$btn-height-sm !default;
 $input-background: 			$white !default;
-$input-background-disabled:	gray('400') !default; // disabled state will add opacity:0.5 by default
+$input-background-disabled:	$input-background !default; // disabled state will add opacity:0.5 by default
 $input-border-color: 		transparent !default;
 $input-border-color-light: 	gray('300') !default; // todo: temp, test ??
 $input-border-radius: 		$btn-border-radius !default;
