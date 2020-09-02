@@ -214,7 +214,7 @@ label[data-label-clickable],
 	display: flex;
 	line-height: $line-height-sm;
 
-	& + & {
+	&:not(.cui-template-empty) + & {
 		margin-top: $spacer-sm;
 	}
 
