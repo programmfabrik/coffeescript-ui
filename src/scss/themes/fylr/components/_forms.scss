@@ -8,6 +8,9 @@
 
 .cui-form {
 	overflow: visible;
+	background-color: $light; // todo: should we set a default background because of the white form elements ?
+	// needs to apply padding on a contextual basis
+	// padding: $spacer-sm;
 
 	// todo: make obsolete
 	// &--padded {
@@ -41,7 +44,7 @@
 .cui-form-tr,
 .cui-form-tr-header {
 	display: flex;
-	min-height: $form-row-height;
+	min-height: $form-row-height; // todo: needed?
 	margin-bottom: $form-cell-gap;
 
 	@include media-breakpoint-down(sm) {
@@ -61,7 +64,7 @@
 	label,
 	.cui-label {
 		display: inline-block;
-		// padding-top: 0.41em; // see .cui-form-value label, needs to be in line, , depends on the font-size
+		padding-top: 0.41em;
 		white-space: normal;
 		min-width: $form-key-min-width;
 		max-width: 100%;
@@ -82,10 +85,10 @@
 		min-width: 0;
 	}
 
-	label,
-	.cui-label {
-		// padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
-	}
+	// label,
+	// .cui-label {
+	// 	padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
+	// }
 
 	> .cui-options {
 		.cui-options-center {
@@ -208,6 +211,10 @@
 			> .cui-form-row:first-child {
 				margin-right: 0;
 			}
+		}
+
+		.cui-form.cui-data-field {
+			margin-top: $spacer-sm;
 		}
 	}
 }
