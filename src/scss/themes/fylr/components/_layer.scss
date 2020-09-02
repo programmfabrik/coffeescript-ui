@@ -352,7 +352,8 @@
 	> .cui-pane {
 		// reset
 		> .cui-vertical-layout-center {
-			padding: 0;
+			@include pane-padding-reset();
+			@include pane-margin-reset();
 		}
 	}
 }
