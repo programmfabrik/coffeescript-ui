@@ -79499,7 +79499,8 @@ Demo.ButtonDemo = (function(superClass) {
       buttons: [
         new CUI.Button({
           icon: "fa-angle-left",
-          group: "navi"
+          group: "navi",
+          disabled: true
         }), new CUI.Label({
           text: "1/3",
           group: "navi"
