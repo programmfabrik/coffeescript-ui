@@ -72,25 +72,27 @@
 // Reduce space between button text and caret
 .cui-button-select,
 .cui-button-button.cui-button--has-caret {
-	.cui-button-visual {
-		.cui-button-center {
-			padding-right: $btn-padding-x/2;
-		}
-		
-		.cui-button-right {
-			position: relative;
-			height: 100%;
-			width: $btn-visually-square-factor * $btn-height;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0;
-			border-left: var(--combobox-divider-border, #{$combobox-divider-border}); // todo: test combo: remove var 
-		}
-		
-		// todo: test combo -- turn on combobox divider for ALL selects
-		.nocombo & {
-			@include button-reset-combobox-divider();
+	&:not([role='menu-item']) {
+		.cui-button-visual {
+			.cui-button-center {
+				padding-right: $btn-padding-x/2;
+			}
+			
+			.cui-button-right {
+				position: relative;
+				height: 100%;
+				width: $btn-visually-square-factor * $btn-height;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0;
+				border-left: var(--combobox-divider-border, #{$combobox-divider-border}); // todo: test combo: remove var 
+			}
+			
+			// todo: test combo -- turn on combobox divider for ALL selects
+			.nocombo & {
+				@include button-reset-combobox-divider();
+			}
 		}
 	}
 }
