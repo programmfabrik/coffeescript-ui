@@ -34,6 +34,12 @@
 	.cui-form-tr {
 		margin-bottom: 3rem;
 	}
+
+	.cui-form-hint .cui-button-button {		
+		@include button-bordered();
+
+		margin-top: $spacer-sm;
+	}
 }
 
 .cui-demo-data-form-demo {
