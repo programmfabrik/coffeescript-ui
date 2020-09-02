@@ -70,6 +70,7 @@
 				flex: 1 1 auto;
 				overflow: auto;
 				-webkit-overflow-scrolling: touch;
+				padding-right: $spacer-sm; // space for scrollbar
 
 				&.cui-tab-hidden {
 					display: none;
@@ -93,7 +94,7 @@
 .cui-tabs-pane-header {
 	padding: 0; // reset .cui-toolbar
 	min-height: 0; // reset .cui-toolbar
-	margin-bottom: $spacer-sm;
+	margin-bottom: $spacer;
 
 	> .cui-horizontal-layout-center {
 		overflow: auto !important; //! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
