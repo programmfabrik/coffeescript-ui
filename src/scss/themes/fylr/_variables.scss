@@ -471,18 +471,6 @@ $data-form-utilities-column-width: 	1.15 * $spacer !default;
 $data-form-utilities-count: 		2 !default;
 $data-form-content-offset: 			$spacer-xs !default;
 
-// * Calendar
-// * ==========================================
-$calendar-font-size: 				$font-size-base !default;
-$calendar-cell-size:				28px !default;
-$calendar-cell-count:				8 !default;
-$calendar-background:				$white !default;
-$calendar-static-cells-background: 	$calendar-background !default;
-$calendar-static-cells-color: 		theme-color('primary') !default;
-$calendar-date-active-background:	theme-color('primary') !default;
-$calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
-$calendar-date-previous-color:		gray('500') !default;
-
 // * Block
 // * ==========================================
 $block-padding: 			$component-padding-base !default;
@@ -532,6 +520,18 @@ $layer-padding-y: 			$component-padding-lg !default;
 // * Menu
 // * ==========================================
 $menu-border-radius: $layer-border-radius !default;
+
+// * Calendar
+// * ==========================================
+$calendar-font-size: 				$font-size-base !default;
+$calendar-cell-size:				28px !default;
+$calendar-cell-count:				8 !default;
+$calendar-background:				$layer-background !default;
+$calendar-static-cells-background: 	$calendar-background !default;
+$calendar-static-cells-color: 		theme-color('primary') !default;
+$calendar-date-active-background:	theme-color('primary') !default;
+$calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
+$calendar-date-previous-color:		gray('500') !default;
 
 // * Tooltip
 // * ==========================================
