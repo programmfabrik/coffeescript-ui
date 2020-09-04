@@ -98,15 +98,6 @@
 		}
 	}
 
-	&:focus {
-		outline: none;
-
-		.cui-button-left span,
-		.cui-button-left i {
-			@include input-focus();
-		}
-	}
-
 	&.cui-active {
 		// checkbox
 		.cui-button-left i {
@@ -137,6 +128,22 @@
 					border-radius: 100%;
 					background: $checkbox-active-color;
 				}
+			}
+		}
+	}
+
+	&:focus {
+		outline: none;
+
+		.cui-button-left span,
+		.cui-button-left i {
+			@include input-focus();
+		}
+
+		&.cui-active {
+			.cui-button-left span,
+			.cui-button-left i {
+				background-color: theme-color('focused'); // make more prominent
 			}
 		}
 	}

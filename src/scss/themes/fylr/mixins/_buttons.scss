@@ -219,6 +219,7 @@
 	
 	&:focus .cui-button-visual {
 		border-color: theme-color('focused');
+		box-shadow: $btn-focus-shadow !important;
 	}
 
 	// todo: test combo
@@ -230,8 +231,9 @@
 
 @mixin button-focus() {
 	outline: none;
-	box-shadow: $btn-focus-shadow !important;
+	box-shadow: 0 0 0 1px $input-focus-border-color, $btn-focus-shadow !important;
 }
+
 
 @mixin disable-button-focus() {
 	box-shadow: none;
@@ -303,6 +305,7 @@
 		.cui-button-visual {
 			border-radius: $input-border-radius !important;
 			border-color: $input-focus-border-color !important;
+			box-shadow: $btn-focus-shadow !important;
 		}
 	}
 }

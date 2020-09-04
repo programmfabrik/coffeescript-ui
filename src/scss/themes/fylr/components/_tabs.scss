@@ -122,18 +122,21 @@
 			background-color: $tabs-background;
 			font-weight: $font-weight-bold;
 		}
-
-		&:focus {
-			.cui-button-visual {
-				@include button-focus();
-			}
-		}
-
+		
 		&:active,
 		&.cui-active {
 			.cui-button-visual {
 				background-color: $tabs-active-background;
 				color: $tabs-active-color;
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+				// add custom focus style
+				background-color: rgba(theme-color('focused'), 0.05);
+				color: $tabs-active-color;
+				box-shadow: $btn-focus-shadow !important;
 			}
 		}
 	}

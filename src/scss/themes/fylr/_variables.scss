@@ -269,7 +269,8 @@ $hr-border-color:   	rgba(gray('500'), 0.15) !default; // make sure hr is visibl
 $hr-border-color-dark:  theme-color('dark') !default;
 $hr-border-width:   	1px !default;
 
-$component-focus-shadow: inset 0 0 0 2px rgba(theme-color('focused'), 0.25) !default;
+$component-focus-shadow-color: rgba(theme-color('focused'), 0.25) !default;
+$component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color !default;
 
 $component-selected-border-width: 1px !default;
 $component-selected-border-color: theme-color('primary') !default;
