@@ -72,7 +72,7 @@
 	}
 }
 
-@mixin button-color($background: $btn-background, $color: $btn-color, $background-hover: $btn-hover-background, $color-hover: $btn-hover-color, $background-active: $btn-active-background, $color-active: $btn-active-color, $focus-inset: 0) {
+@mixin button-color($background: $btn-background, $color: $btn-color, $background-hover: $btn-hover-background, $color-hover: $btn-hover-color, $background-active: $btn-active-background, $color-active: $btn-active-color) {
 	.cui-button-visual {
 		background-color: $background;
 		color: $color;
@@ -90,7 +90,7 @@
 		outline: none;
 
 		.cui-button-visual {
-			@include button-focus($focus-inset);
+			@include button-focus();
 		}
 	}
 
@@ -219,6 +219,7 @@
 	
 	&:focus .cui-button-visual {
 		border-color: theme-color('focused');
+		box-shadow: $btn-focus-shadow !important;
 	}
 
 	// todo: test combo
@@ -228,26 +229,11 @@
 	}
 }
 
-@mixin button-focus($focus-inset: 0) {
+@mixin button-focus() {
 	outline: none;
-
-	// todo: find focus color that works with all colored buttons, see mixins/_forms
-	@if $enable-btn-border-radius {
-		@if $focus-inset == 1 {
-			box-shadow: inset $btn-focus-shadow !important;
-		}
-
-		@else {
-			box-shadow: $btn-focus-shadow !important; // keeps border-radius, but what about buttongroup buttons ?
-		}
-	}
-
-	@else {
-		outline: 3px solid rgba(theme-color('focused'), 0.3); // use outline and not box-shadow because flat buttons remove the shadow
-	}
-
-	z-index: 1; // put forward to see outline
+	box-shadow: 0 0 0 1px $input-focus-border-color, $btn-focus-shadow !important;
 }
+
 
 @mixin disable-button-focus() {
 	box-shadow: none;
@@ -313,18 +299,13 @@
 		}
 	}
 	
-	.cui-has-focus & {
-		.cui-button-visual {
-			border-color: $input-focus-border-color;
-		}
-	}
-	
 	&:focus {
 		z-index: 1;
 	
 		.cui-button-visual {
-			border-radius: $input-border-radius;
-			border-color: $input-focus-border-color;
+			border-radius: $input-border-radius !important;
+			border-color: $input-focus-border-color !important;
+			box-shadow: $btn-focus-shadow !important;
 		}
 	}
 }

@@ -269,7 +269,8 @@ $hr-border-color:   	rgba(gray('500'), 0.15) !default; // make sure hr is visibl
 $hr-border-color-dark:  theme-color('dark') !default;
 $hr-border-width:   	1px !default;
 
-$component-focus-shadow: 0 0 0 3px rgba(theme-color('focused'), 0.3) !default;
+$component-focus-shadow-color: rgba(theme-color('focused'), 0.25) !default;
+$component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color !default;
 
 $component-selected-border-width: 1px !default;
 $component-selected-border-color: theme-color('primary') !default;
@@ -285,10 +286,6 @@ $icon-line-height: 	$line-height-base !default;
 
 // * Buttons
 // * ==========================================
-// We use an absolute height to define the button height instead of padding-y.
-// This is more predictable and can be better combined with toolbar and panel header heights etc.
-
-$enable-btn-border-radius: 	1; // 1 | 0
 $btn-hover-alpha:			0.65;
 // General Button styles
 $btn-font-family: 			$font-family-base !default;
@@ -325,22 +322,24 @@ $btn-inverted-hover-background: 	$btn-inverted-background !default;
 $btn-inverted-hover-border-color: 	rgba($btn-inverted-border-color, 0.35) !default;
 
 // Button Sizes
+// We use an absolute height to define the button height instead of padding-y.
+// This is more predictable and can be better combined with toolbar and panel header heights etc.
 $btn-visually-square-factor: 1.0675 !default;
 // Normal size
 $btn-padding-x: 			0.75rem !default;
 $btn-height: 				30px !default;
 $btn-font-size: 			$font-size-base !default;
-$btn-border-radius:			$enable-btn-border-radius * 2px !default;
+$btn-border-radius:			2px !default;
 // Small size
 $btn-padding-x-sm: 			0.5rem !default;
 $btn-height-sm: 			24px !default;
 $btn-font-size-sm: 			$font-size-sm !default;
-$btn-border-radius-sm:		$enable-btn-border-radius * 2px !default;
+$btn-border-radius-sm:		2px !default;
 // Large size
 $btn-padding-x-lg: 			1.25rem !default;
 $btn-height-lg: 			36px !default;
 $btn-font-size-lg: 			$font-size-lg !default;
-$btn-border-radius-lg:		$enable-btn-border-radius * 3px !default;
+$btn-border-radius-lg:		3px !default;
 // Icon Button
 $btn-height-xs:				16px;
 
