@@ -72,7 +72,9 @@
 // Reduce space between button text and caret
 .cui-button-select,
 .cui-button-button.cui-button--has-caret {
-	&:not([role='menu-item']) {
+	// todo: can we apply the "combobox divider" on a more generic selector, using :not() here is ok, but seems a little too brittle
+	// ?? can we find a contextual selector that will apply style correctly without using :not() 
+	&:not([role='menu-item']):not([button-group='date']):not([button-group='time']) {
 		.cui-button-visual {
 			.cui-button-center {
 				padding-right: $btn-padding-x/2;

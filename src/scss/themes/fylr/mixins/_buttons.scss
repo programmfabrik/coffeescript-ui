@@ -290,16 +290,18 @@
 	}
 
 	&.cui-layer-open,
-	&.cui-active {
+	&.cui-layer-open:hover,
+	&.cui-active,
+	&.cui-active:hover {
 		.cui-button-visual {
 			background-color: $btn-active-background;
 			color: $btn-active-color;
 
 			@if $button-position == 'right' {
-				border-left: transparent;
+				border-left-color: $btn-active-background !important;
 			}
 			@else if $button-position == 'left' {
-				border-right: transparent;
+				border-right-color: $btn-active-background !important;
 			}
 		}
 	}
