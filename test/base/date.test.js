@@ -1171,6 +1171,26 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.from).toBe("-0099");
         expect(output.to).toBe("0200");
     });
+
+    test("stringToDateRange :: August 2020", () => {
+        CUI.DateTime.setLocale("en-US")
+        const input = "August 2020";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("2020-08-01");
+        expect(output.to).toBe("2020-08-31");
+    });
+
+    test("stringToDateRange :: Oktober 2020", () => {
+        CUI.DateTime.setLocale("de-DE")
+        const input = "Oktober 2020";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("2020-10-01");
+        expect(output.to).toBe("2020-10-31");
+    });
 });
 
 describe('CUI.DateTime.dateRangeToString', () => {
@@ -1511,7 +1531,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("01.1285")
+        expect(output).toBe("Januar 1285")
     });
 
     test("dateRangeToString :: 1285 - 1285-01-31 [US]", () => {
@@ -1521,7 +1541,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("01-1285")
+        expect(output).toBe("January 1285")
     });
 
     test("dateRangeToString :: 1901 - 2000", () => {
@@ -1641,5 +1661,14 @@ describe('CUI.DateTime.dateRangeToString', () => {
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("100 B.C. - 200")
+    });
+
+    test("dateRangeToString :: 2020-08-01 - 2020-08-31", () => {
+        const from = "2020-08-01"
+        const to = "2020-08-31"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("August 2020")
     });
 });

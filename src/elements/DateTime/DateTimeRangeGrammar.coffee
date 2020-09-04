@@ -11,11 +11,42 @@ class CUI.DateTimeRangeGrammar
 	@TYPE_YEAR_DOT = "YEAR_DOT"
 	@TYPE_CENTURY = "CENTURY"
 	@TYPE_CENTURY_RANGE = "CENTURY_RANGE"
+	@TYPE_MONTH = "MONTH"
 	@DASH = "-"
 	@STORE_FORMAT = "store"
 	@OUTPUT_YEAR = "year"
 	@OUTPUT_DATE = "date"
 	@DISPLAY_ATTRIBUTE_YEAR_MONTH = "year-month"
+
+	@MONTHS = {}
+	@MONTHS["de-DE"] = [
+		"Januar"
+		"Februar"
+		"März"
+		"April"
+		"Mai"
+		"Juni"
+		"Juli"
+		"August"
+		"September"
+		"Oktober"
+		"November"
+		"Dezember"
+	]
+	@MONTHS["en-US"] = [
+		"January"
+		"February"
+		"March"
+		"April"
+		"May"
+		"June"
+		"July"
+		"August"
+		"September"
+		"October"
+		"November"
+		"December"
+	]
 
 	### How to add new grammars:
 	# [<GRAMMAR>, <FUNCTION>, <ARRAY_TOKEN_POSITION>, <ARRAY_FUNCTION_ARGUMENTS>, <KEY>]
@@ -196,6 +227,7 @@ class CUI.DateTimeRangeGrammar
 		["YEAR ac - YEAR ad", "range", [0, 3], [true]]
 		["YEAR - YEAR BC", "range", [0, 2], [true, true]]
 		["YEAR - YEAR B.C.", "range", [0, 2], [true, true]]
+		["MONTH YEAR", "monthRange", [0, 1]]
 		["after YEAR", "yearRange", [1], [false, false, true], "AFTER"]
 		["after YEAR BC", "yearRange", [1], [true, false, true], "AFTER_BC"]
 		["before YEAR", "yearRange", [1], [false, true], "BEFORE"]
@@ -357,12 +389,14 @@ class CUI.DateTimeRangeGrammar
 				if possibleString
 					return possibleString
 
+		# Month range XXXX-XX-01 - XXXX-XX-31
 		if fromMoment.year() == toMoment.year() and
 			fromMoment.month() == toMoment.month() and
 			fromMoment.date() == 1 and toMoment.date() == toMoment.endOf("month").date()
 				for format in CUI.DateTimeFormats[locale].formats
 					if format.display_attribute == CUI.DateTimeRangeGrammar.DISPLAY_ATTRIBUTE_YEAR_MONTH
-						return toMoment.format(format.display_short)
+						month = CUI.DateTimeRangeGrammar.MONTHS[locale][toMoment.month()]
+						return "#{month} #{toMoment.year()}"
 
 		if fromIsYear or toIsYear
 			if fromIsYear
@@ -388,6 +422,7 @@ class CUI.DateTimeRangeGrammar
 		if CUI.util.isEmpty(input) or not CUI.util.isString(input)
 			return error: "Input needs to be a non empty string: #{input}"
 
+		locale = CUI.DateTime.getLocale()
 		input = input.trim()
 
 		tokens = []
@@ -403,6 +438,9 @@ class CUI.DateTimeRangeGrammar
 			else if CUI.DateTimeRangeGrammar.REGEXP_CENTURY.test(s)
 				type = CUI.DateTimeRangeGrammar.TYPE_CENTURY
 				value = s.split("th")[0]
+			else if value in CUI.DateTimeRangeGrammar.MONTHS[locale]
+				type = CUI.DateTimeRangeGrammar.TYPE_MONTH
+				value = CUI.DateTimeRangeGrammar.MONTHS[locale].indexOf(value)
 			else
 				type = s # The type for everything else is the value.
 
@@ -506,7 +544,17 @@ class CUI.DateTimeRangeGrammar
 			from = @__toBC(from)
 
 		return CUI.DateTimeRangeGrammar.getFromToWithRange(from, to)
-		
+
+	@monthRange: (month, year) ->
+		momentDate = CUI.DateTimeRangeGrammar.getMoment(year)
+		momentDate.month(month)
+
+		momentDate.startOf("month")
+		from = CUI.DateTimeRangeGrammar.format(momentDate, false)
+		momentDate.endOf("month")
+		to= CUI.DateTimeRangeGrammar.format(momentDate, false)
+		return from: from, to: to
+
 	@yearRange: (year, isBC = false, fromAddYears = false, toAddYears = false) ->
 		if isBC and not year.startsWith(CUI.DateTimeRangeGrammar.DASH)
 			year = "-#{year}"
