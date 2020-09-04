@@ -125,9 +125,7 @@
 
 		&:focus {
 			.cui-button-visual {
-				$focus-inset: 1;
-
-				@include button-focus($focus-inset);
+				@include button-focus();
 			}
 		}
 

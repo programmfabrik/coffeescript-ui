@@ -97,10 +97,6 @@
 			border-radius: $input-border-radius;
 
 			@include input-focus();
-
-			input {
-				@include disable-input-focus();
-			}
 		}
 	}
 }
