@@ -2,4 +2,6 @@
 
 @mixin layer-title() {
 	@include h5(0.1em);
+
+	margin-top: 0.1em;
 }
