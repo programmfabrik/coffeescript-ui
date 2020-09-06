@@ -439,13 +439,22 @@ class Demo.ButtonDemo extends Demo
 				new CUI.Label(text: "1/3", group: "navi")
 				new CUI.Button(icon: "fa-angle-right", group: "navi")
 			]
-		)								
+		)
+		invertedButtonbarGroup = new CUI.Buttonbar(
+			class: "cui-demo-buttonbar-group-inverted"
+			buttons: [
+				new CUI.Button(icon: "fa-trash", group: "trash")
+				new CUI.Button(icon: "fa-trash", group: "trash")
+				new CUI.Button(icon: "fa-trash", group: "trash")
+			]
+		)										
 		@__demo_table.addExample("Buttons on Image", [
 			inverted.DOM, 
 			invertedBorder.DOM, 
 			invertedClose.DOM, 
 			invertedDive.DOM,
-			invertedNavigation.DOM
+			invertedNavigation.DOM,
+			invertedButtonbarGroup.DOM
 			], 
 			null, 
 			"cui-demo-button-on-image cui-demo-button-inverted"
