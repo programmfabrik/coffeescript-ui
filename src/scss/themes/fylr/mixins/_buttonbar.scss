@@ -167,6 +167,19 @@
 	}
 }
 
+@mixin buttonbar-group-inverted($border: 0) {
+	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
+	.cui-button-button.cui-button-button {
+		@include button-color(transparent, $btn-inverted-color, transparent, $btn-inverted-hover-color, transparent, $btn-inverted-color);
+
+		@if $border == 1 {
+			.cui-button-visual {
+				border-color: $btn-inverted-border-color;
+			}
+		}
+	}
+}
+
 // Helper
 @mixin ungroup-visually($inverted: 0, $border-radius: $btn-border-radius) {
 	.cui-button-visual {
