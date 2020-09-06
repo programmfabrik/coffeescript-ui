@@ -45,10 +45,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --teal: #3e9e88;
   --cyan: #17a2b8;
   --white: #ffffff;
-  --gray: #6c757d;
+  --gray: #777777;
   --gray-dark: #343a40;
   --primary: #ff5724;
-  --secondary: #6c757d;
+  --secondary: #777777;
   --success: #7ca751;
   --info: #17a2b8;
   --warning: #d6b13a;
@@ -1379,7 +1379,7 @@ label[data-label-clickable],
     .cui-label-content .italic {
       padding-right: 0.25em; }
   .cui-label-appearance-secondary {
-    color: #6c757d; }
+    color: #777777; }
     .cui-selected .cui-label-appearance-secondary {
       color: #ff5724; }
   .cui-label-appearance-muted {
@@ -1434,7 +1434,7 @@ label[data-label-clickable],
       white-space: nowrap !important; }
 
 .cui-empty-label {
-  color: #6c757d;
+  color: #777777;
   font-style: italic;
   margin: 0;
   cursor: default; }
@@ -2216,7 +2216,7 @@ textarea {
     min-width: 175px; }
 
 .cui-output .cui-output-empty {
-  color: #6c757d; }
+  color: #777777; }
 
 .cui-output .cui-output--deletable {
   display: -webkit-box;
@@ -2636,6 +2636,8 @@ textarea {
     pointer-events: none; }
     .cui-data-field-disabled .cui-data-field-disabled {
       opacity: 1; }
+    .cui-data-field-disabled + .cui-form-hint {
+      opacity: 0.5; }
   .cui-data-field--full-width {
     width: 100%;
     max-width: 100%; }
@@ -2748,9 +2750,6 @@ textarea {
 .cui-data-field-hidden {
   display: none !important; }
 
-.cui-data-field-disabled + .cui-form-hint {
-  opacity: 0.5; }
-
 .cui-block {
   flex-shrink: 0;
   position: relative; }
@@ -2766,7 +2765,7 @@ textarea {
   .cui-block .cui-block-description:empty {
     display: none; }
   .cui-block .cui-block-description {
-    color: #6c757d; }
+    color: #777777; }
   .cui-block > .cui-block-header .cui-block-title {
     font-family: "Source Sans Pro", sans-serif;
     font-size: 0.875rem;
@@ -3251,7 +3250,7 @@ textarea {
 
 .cui-options-order-hint {
   margin-top: 0.25rem;
-  color: #6c757d;
+  color: #777777;
   max-width: 250px;
   margin: 0.5rem 22px 1rem; }
 
@@ -3868,7 +3867,7 @@ textarea {
 .cui-input-valid-hint,
 .cui-input-empty-hint {
   margin-top: 0.25rem;
-  color: #6c757d; }
+  color: #777777; }
   .cui-hint .cui-label,
   .cui-form-hint .cui-label,
   .cui-input-invalid-hint .cui-label,
