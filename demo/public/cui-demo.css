@@ -55,8 +55,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       outline: none; }
       .cui-form-demo-form .cui-form-hint .cui-button-button:focus .cui-button-visual {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-        z-index: 1; }
+        box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-form-demo-form .cui-form-hint .cui-button-button:active .cui-button-visual {
       color: inherit;
       background-color: rgba(213, 218, 223, 0.65); }
@@ -67,7 +66,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       color: #ffffff;
       background-color: #212121; }
     .cui-form-demo-form .cui-form-hint .cui-button-button:focus .cui-button-visual {
-      border-color: #17a2b8; }
+      border-color: #17a2b8;
+      box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-form-demo-form .cui-form-hint .cui-button-button.cui-button-select .cui-button-center, .cui-form-demo-form .cui-form-hint .cui-button-button.cui-button--has-caret .cui-button-center {
       padding-right: 0; }
     .cui-form-demo-form .cui-form-hint .cui-button-button.cui-button-select .cui-button-right, .cui-form-demo-form .cui-form-hint .cui-button-button.cui-button--has-caret .cui-button-right {
@@ -372,8 +372,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   outline: none; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-    z-index: 1; }
+    box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-button-button.cui-demo-button-size-large-link:active .cui-button-visual {
   color: #212121;
@@ -443,8 +442,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   outline: none; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-first-visible-child:focus .cui-button-visual {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-    z-index: 1; }
+    box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-first-visible-child:active .cui-button-visual {
   color: inherit;
@@ -459,7 +457,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   background-color: #212121; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-first-visible-child:focus .cui-button-visual {
-  border-color: #17a2b8; }
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-first-visible-child.cui-button-select .cui-button-center, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-pair .cui-first-visible-child.cui-button--has-caret .cui-button-center {
   padding-right: 0; }
@@ -576,8 +575,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-      z-index: 1; }
+      box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:active .cui-button-visual,
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:active .cui-button-visual {
     color: inherit;
@@ -596,7 +594,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     background-color: #212121; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
-    border-color: #17a2b8; }
+    border-color: #17a2b8;
+    box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-button-select .cui-button-center, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-button--has-caret .cui-button-center,
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-button-select .cui-button-center,
   .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-button--has-caret .cui-button-center {
@@ -721,8 +720,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       outline: none; }
       .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:focus .cui-button-visual {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-        z-index: 1; }
+        box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:active .cui-button-visual {
       color: rgba(255, 255, 255, 0.65);
       background-color: rgba(18, 18, 18, 0.6); }
@@ -744,8 +742,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       outline: none; }
       .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-        z-index: 1; }
+        box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:active .cui-button-visual {
       color: inherit;
       background-color: rgba(213, 218, 223, 0.65); }
@@ -756,7 +753,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       color: #ffffff;
       background-color: #212121; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
-      border-color: #17a2b8; }
+      border-color: #17a2b8;
+      box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-button-select .cui-button-center, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-button--has-caret .cui-button-center {
       padding-right: 0; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-button-select .cui-button-right, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-button--has-caret .cui-button-right {
@@ -774,8 +772,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       outline: none; }
       .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-        z-index: 1; }
+        box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:active .cui-button-visual {
       color: rgba(255, 255, 255, 0.65);
       background-color: rgba(18, 18, 18, 0.6); }
@@ -848,8 +845,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
       outline: none; }
       .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.3) !important;
-        z-index: 1; }
+        box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual {
       color: rgba(255, 255, 255, 0.65);
       background-color: rgba(0, 0, 0, 0); }
@@ -895,6 +891,28 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-number-input input {
       height: 24px;
       line-height: 24px; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual {
+    background-color: transparent;
+    color: #ffffff; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual {
+    color: rgba(255, 255, 255, 0.65);
+    background-color: transparent; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus {
+    outline: none; }
+    .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual {
+      outline: none;
+      box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual {
+    color: rgba(255, 255, 255, 0.65);
+    background-color: rgba(0, 0, 0, 0); }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open .cui-button-visual {
+    color: #ffffff;
+    background-color: transparent; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:focus .cui-button-visual {
+    color: #ffffff;
+    background-color: transparent; }
+  .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual {
+    border-color: rgba(255, 255, 255, 0.45); }
 
 .cui-demo-button-demo[data-cui-theme='fylr'] .cui-demo-button-on-image .cui-demo-example-content {
   min-height: 200px;
@@ -1057,7 +1075,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
     background: rgba(173, 181, 189, 0.15); }
 
 .cui-demo-block-grid.cui-block-level-1 > .cui-block-content {
-  color: #6c757d; }
+  color: #777777; }
 
 .cui-demo-block-grid.cui-block-level-2 {
   display: -ms-grid;

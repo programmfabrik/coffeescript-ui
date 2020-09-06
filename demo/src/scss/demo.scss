@@ -234,6 +234,12 @@
 				@include buttonbar-group-navigation-sm();
 			}
 		}
+
+		.cui-demo-buttonbar-group-inverted {
+			.cui-buttonbar-group {
+			 @include buttonbar-group-inverted(1);
+			}
+		}		
 	}
 
 	.cui-demo-button-on-image .cui-demo-example-content {
