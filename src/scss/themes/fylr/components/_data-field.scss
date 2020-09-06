@@ -68,6 +68,10 @@
 		& & {
 			opacity: 1;
 		}
+
+		+ .cui-form-hint {
+			opacity: $disabled-opacity;
+		}
 	}
 
 	&--full-width {
@@ -152,9 +156,3 @@
 // .cui-data-field-disabled .cui-disabled {
 // 	opacity: 1;
 // }
-
-.cui-data-field-disabled {
-	+ .cui-form-hint {
-		opacity: $disabled-opacity;
-	}
-}
