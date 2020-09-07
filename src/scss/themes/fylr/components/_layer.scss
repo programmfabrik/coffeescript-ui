@@ -177,6 +177,10 @@
 				}
 			}
 
+			.cui-buttonbar .cui-buttonbar-group {
+				@include buttonbar-group-inverted();
+			}
+
 			// offset the following top toolbar
 			+ .cui-toolbar {
 				margin-top: $spacer-sm;
