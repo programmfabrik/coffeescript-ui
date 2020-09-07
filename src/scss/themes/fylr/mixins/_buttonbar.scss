@@ -6,7 +6,7 @@
 	}
 
 	.cui-buttonbar-group {
-		&:not(.cui-buttonbar-group-tabs):not(.cui-buttonbar-group-date):not(.cui-buttonbar-group-time) {
+		&:not(.cui-buttonbar-group-tabs):not(.cui-buttonbar-group-date):not(.cui-buttonbar-group-time):not(.cui-buttonbar-group-year) {
 			.cui-button-button,
 			.cui-button-select {
 				@include button-bordered();

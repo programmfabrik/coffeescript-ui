@@ -165,7 +165,6 @@
 	.cui-date-time-header-month,
 	.cui-date-time-header-year .cui-buttonbar-group {
 		@include ungroup-visually();
-		@include buttonbar-group-navigation();
 	}
 
 	[cui-data-field-name='year'] input {
@@ -294,7 +293,6 @@
 	}
 
 	.cui-date-time-day {
-		background: $white;
 		cursor: pointer;
 
 		&:hover {

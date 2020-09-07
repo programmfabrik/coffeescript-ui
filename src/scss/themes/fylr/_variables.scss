@@ -525,7 +525,7 @@ $menu-border-radius: $layer-border-radius !default;
 $calendar-font-size: 				$font-size-base !default;
 $calendar-cell-size:				28px !default;
 $calendar-cell-count:				8 !default;
-$calendar-background:				$layer-background !default;
+$calendar-background:				$white !default;
 $calendar-static-cells-background: 	$calendar-background !default;
 $calendar-static-cells-color: 		theme-color('primary') !default;
 $calendar-date-active-background:	theme-color('primary') !default;
