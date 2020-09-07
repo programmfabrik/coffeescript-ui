@@ -11,7 +11,6 @@ class CUI.FormPopover extends CUI.Form
 		# console.debug "FormPopover", @opts
 		@__old_display = null
 		@__old_render = null
-
 		@
 
 	initOpts: ->
@@ -86,11 +85,17 @@ class CUI.FormPopover extends CUI.Form
 
 	# this is for the button container
 	initTemplate: ->
-		vl = new CUI.VerticalLayout
+		# @__horLayout = new CUI.HorizontalLayout
+		# 	maximize: false
+		# 	right: {}
+
+		# for now we leave a vertical layout here, the
+		# design is adjusted to this
+		@__horLayout = new CUI.VerticalLayout
 			maximize: false
 			bottom: {}
 
-		@registerTemplate(vl.getLayout())
+		@registerTemplate(@__horLayout.getLayout())
 
 	hasContentForAppend: ->
 		# FormPopver always shows a button
@@ -165,7 +170,7 @@ class CUI.FormPopover extends CUI.Form
 
 		else
 			if @__old_display == null or @__old_display != display
-				@replace(display, "bottom")
+				@replace(display, "bottom") # change to "right" for horLayout
 				if @__old_display != null
 					CUI.Events.trigger
 						type: "content-resize"
@@ -311,3 +316,5 @@ class CUI.FormPopover extends CUI.Form
 		super()
 		@__popover?.destroy()
 		@__dataChanged = null
+		@__horLayout = null
+		@__button = null

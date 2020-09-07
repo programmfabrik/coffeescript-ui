@@ -31722,12 +31722,11 @@ CUI.FormPopover = (function(superClass) {
   };
 
   FormPopover.prototype.initTemplate = function() {
-    var vl;
-    vl = new CUI.VerticalLayout({
+    this.__horLayout = new CUI.VerticalLayout({
       maximize: false,
       bottom: {}
     });
-    return this.registerTemplate(vl.getLayout());
+    return this.registerTemplate(this.__horLayout.getLayout());
   };
 
   FormPopover.prototype.hasContentForAppend = function() {
@@ -31983,7 +31982,9 @@ CUI.FormPopover = (function(superClass) {
     if ((ref = this.__popover) != null) {
       ref.destroy();
     }
-    return this.__dataChanged = null;
+    this.__dataChanged = null;
+    this.__horLayout = null;
+    return this.__button = null;
   };
 
   return FormPopover;
