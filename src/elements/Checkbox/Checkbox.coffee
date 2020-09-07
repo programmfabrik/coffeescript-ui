@@ -19,6 +19,10 @@ class CUI.Checkbox extends CUI.DataFieldInput
 				default: false
 			text:
 				check: String
+			text_active:
+				check: String
+			text_inactive:
+				check: String
 			multiline:
 				default: false
 				check: Boolean
@@ -123,6 +127,8 @@ class CUI.Checkbox extends CUI.DataFieldInput
 
 		for k in [
 			"text"
+			"text_active"
+			"text_inactive"
 			"radio_allow_null"
 			"active"
 		]

@@ -22963,6 +22963,12 @@ CUI.Checkbox = (function(superClass) {
       text: {
         check: String
       },
+      text_active: {
+        check: String
+      },
+      text_inactive: {
+        check: String
+      },
       multiline: {
         "default": false,
         check: Boolean
@@ -23109,7 +23115,7 @@ CUI.Checkbox = (function(superClass) {
         };
       })(this);
     }
-    ref = ["text", "radio_allow_null", "active"];
+    ref = ["text", "text_active", "text_inactive", "radio_allow_null", "active"];
     for (i = 0, len = ref.length; i < len; i++) {
       k = ref[i];
       if (!CUI.util.isUndef(btn_opts[k])) {
