@@ -64,7 +64,7 @@
 	label,
 	.cui-label {
 		display: inline-block;
-		padding-top: 0.41em;
+		// padding-top: 0.41em; // uncommented becasue if alignment in cui-layer-root-view-select-popover
 		white-space: normal;
 		min-width: $form-key-min-width;
 		max-width: 100%;
@@ -91,6 +91,8 @@
 	// }
 
 	> .cui-options {
+		margin-bottom: $spacer-sm; // todo
+
 		.cui-options-center {
 			min-height: 0;
 		}
