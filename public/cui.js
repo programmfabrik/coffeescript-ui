@@ -24699,6 +24699,12 @@ CUI.Checkbox = (function(superClass) {
       text: {
         check: String
       },
+      text_active: {
+        check: String
+      },
+      text_inactive: {
+        check: String
+      },
       multiline: {
         "default": false,
         check: Boolean
@@ -24845,7 +24851,7 @@ CUI.Checkbox = (function(superClass) {
         };
       })(this);
     }
-    ref = ["text", "radio_allow_null", "active"];
+    ref = ["text", "text_active", "text_inactive", "radio_allow_null", "active"];
     for (i = 0, len = ref.length; i < len; i++) {
       k = ref[i];
       if (!CUI.util.isUndef(btn_opts[k])) {
@@ -33647,12 +33653,11 @@ CUI.FormPopover = (function(superClass) {
   };
 
   FormPopover.prototype.initTemplate = function() {
-    var vl;
-    vl = new CUI.VerticalLayout({
+    this.__horLayout = new CUI.VerticalLayout({
       maximize: false,
       bottom: {}
     });
-    return this.registerTemplate(vl.getLayout());
+    return this.registerTemplate(this.__horLayout.getLayout());
   };
 
   FormPopover.prototype.hasContentForAppend = function() {
@@ -33908,7 +33913,9 @@ CUI.FormPopover = (function(superClass) {
     if ((ref = this.__popover) != null) {
       ref.destroy();
     }
-    return this.__dataChanged = null;
+    this.__dataChanged = null;
+    this.__horLayout = null;
+    return this.__button = null;
   };
 
   return FormPopover;
