@@ -362,3 +362,10 @@
 		}
 	}
 }
+
+
+.cui-layer-pointer-cui-date-time-popover {
+	&::after {
+		background-color: $calendar-background !important;
+	}
+}
