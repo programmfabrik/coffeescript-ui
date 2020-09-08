@@ -37584,7 +37584,7 @@ CUI.ListViewTree = (function(superClass) {
   };
 
   ListViewTree.prototype.__runTrigger = function(ev, action, node) {
-    if (ev.ctrlKey()) {
+    if (ev.ctrlKey() || ev.metaKey()) {
       this.__actionOnNode(ev, action + "Recursively", node);
     } else {
       this.__actionOnNode(ev, action, node);
