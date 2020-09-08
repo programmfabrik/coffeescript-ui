@@ -26,6 +26,7 @@
 
 @mixin label-secondary() {
 	color: theme-color('secondary');
+	font-weight: $font-weight-light;
 
 	.cui-selected & {
 		color: theme-color('primary'); // todo: when is this ever selected?

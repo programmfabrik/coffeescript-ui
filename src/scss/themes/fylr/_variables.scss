@@ -33,7 +33,7 @@ $gray-200: #e6e9ec !default; // #e9ecef
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default;
-$gray-600: #777777 !default; // #6c757d !default;
+$gray-600: #6c757d; //#777777 !default; // #6c757d !default;
 $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212121 !default;
@@ -393,7 +393,7 @@ $input-background-disabled:	$input-background !default; // disabled state will a
 $input-border-color: 		transparent !default;
 $input-border-color-light: 	gray('300') !default; // todo: temp, test ??
 $input-border-radius: 		$btn-border-radius !default;
-$input-placeholder-color: 	gray('500') !default;
+$input-placeholder-color: 	theme-color('muted') !default;
 $input-min-width:			100px !default;
 $input-padding-x: 			$component-padding-base !default;
 $input-padding-y: 			$spacer-xs !default;

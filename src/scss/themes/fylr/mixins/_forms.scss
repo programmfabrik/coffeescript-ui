@@ -1,6 +1,7 @@
 @mixin form-hint() {
+	@include label-secondary();
+	
 	margin-top: $spacer-xs;
-	color: theme-color('secondary');
 }
 
 @mixin input-sm() {
