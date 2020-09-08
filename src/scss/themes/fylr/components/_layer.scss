@@ -291,7 +291,10 @@
 
 	&--n::after {
 		top: 100%;
-		background: $layer-header-background;
+		// only if header is present
+		.cui-pane--has-header & {
+			background: $layer-header-background;
+		}
 	}
 
 	&--s::after {
