@@ -70,7 +70,7 @@
 				flex: 1 1 auto;
 				overflow: auto;
 				-webkit-overflow-scrolling: touch;
-				padding-right: $spacer-sm; // space for scrollbar
+				// padding-right: $spacer-sm; // ? space for scrollbar, uncommented because fields-render--root vs .fields-renderer im detail and editor
 
 				&.cui-tab-hidden {
 					display: none;
