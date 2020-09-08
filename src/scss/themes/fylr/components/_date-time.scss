@@ -77,17 +77,21 @@
 		}
 
 		@include ungroup-visually-inverted();
-
-		.cui-button-select {
-			@include button-inverted();
-
-			.cui-button-center {
-				padding-left: $btn-padding-x/2;
-				padding-right: $btn-padding-x/2;
-			}
-
-			.cui-button-right {
-				padding-right: $spacer-xs;
+		
+		.cui-buttonbar-group {
+			@include buttonbar-group-inverted();
+			
+			.cui-button-select {
+				@include button-inverted();
+	
+				.cui-button-center {
+					padding-left: $btn-padding-x/2 !important;
+					padding-right: $btn-padding-x/2 !important;
+				}
+	
+				.cui-button-right {
+					padding-right: $spacer-xs;
+				}
 			}
 		}
 
