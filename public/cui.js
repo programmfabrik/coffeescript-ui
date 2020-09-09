@@ -38261,7 +38261,7 @@ CUI.ListViewTreeNode = (function(superClass) {
       return function() {
         var child, j, len, promises, ref;
         promises = [];
-        ref = _this.children;
+        ref = _this.children || [];
         for (j = 0, len = ref.length; j < len; j++) {
           child = ref[j];
           promises.push(child[action + "Recursively"]());
