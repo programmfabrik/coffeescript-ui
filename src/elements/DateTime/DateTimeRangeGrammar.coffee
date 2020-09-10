@@ -317,7 +317,7 @@ class CUI.DateTimeRangeGrammar
 			if fromYear == toYear
 				return "#{fromYear}"
 
-			isBC = fromYear <= 0
+			isBC = fromYear < 0
 			if isBC
 				possibleString = getPossibleString("AFTER_BC", [Math.abs(fromYear)])
 			else
@@ -326,7 +326,7 @@ class CUI.DateTimeRangeGrammar
 			if possibleString
 				return possibleString
 
-			isBC = toYear <= 0
+			isBC = toYear < 0
 			if isBC
 				possibleString = getPossibleString("BEFORE_BC", [Math.abs(toYear)])
 			else
@@ -383,9 +383,20 @@ class CUI.DateTimeRangeGrammar
 						if possibleString
 							return possibleString
 			else if (yearsDifference + 1) % 100 == 0 and (fromYear - 1) % 100 == 0 and toYear % 100 == 0
-				fromCentury = (fromYear + 99) / 100
-				toCentury = toYear / 100
-				possibleString = getPossibleString("CENTURY_RANGE", [fromCentury, toCentury])
+				toCentury = (toYear / 100)
+				if fromYear < 0
+					fromCentury = -(fromYear - 1) / 100
+					if toYear <= 0
+						toCentury += 1
+						grammarKey = "CENTURY_RANGE_BC"
+					else
+						grammarKey = "CENTURY_RANGE_FROM_BC"
+				else
+					grammarKey = "CENTURY_RANGE"
+					fromCentury = (fromYear + 99) / 100
+					toCentury = toYear / 100
+
+				possibleString = getPossibleString(grammarKey, [fromCentury, toCentury])
 				if possibleString
 					return possibleString
 

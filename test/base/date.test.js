@@ -1654,13 +1654,13 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("1799 - 2000")
     });
 
-    test("dateRangeToString :: -0099 - 0200", () => {
+    test("dateRangeToString :: -0099 - 0205", () => {
         const from = "-0099"
-        const to = "0200"
+        const to = "0205"
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("100 B.C. - 200")
+        expect(output).toBe("100 B.C. - 205")
     });
 
     test("dateRangeToString :: 2020-08-01 - 2020-08-31", () => {
@@ -1670,5 +1670,49 @@ describe('CUI.DateTime.dateRangeToString', () => {
         const output = CUI.DateTime.dateRangeToString(from, to)
 
         expect(output).toBe("August 2020")
+    });
+
+    test("dateRangeToString :: -0199 - 0000", () => {
+        CUI.DateTime.setLocale("de-DE")
+
+        const from = "-0199"
+        const to = "0000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("2. Jhd. v. Chr. - 1. Jhd. v. Chr.")
+    });
+
+    test("dateRangeToString :: -0199 - -0099", () => {
+        CUI.DateTime.setLocale("de-DE")
+
+        const from = "-0199"
+        const to = "-0100"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("2. Jhd. v. Chr.")
+    });
+
+    test("dateRangeToString :: -0099 - 0000", () => {
+        CUI.DateTime.setLocale("de-DE")
+
+        const from = "-0099"
+        const to = "0000"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("1. Jhd. v. Chr.")
+    });
+
+    test("dateRangeToString :: -0199 - 0100", () => {
+        CUI.DateTime.setLocale("de-DE")
+
+        const from = "-0199"
+        const to = "0100"
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("2. Jhd. v. Chr. - 1. Jhd.")
     });
 });
