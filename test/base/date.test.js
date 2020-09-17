@@ -43,6 +43,24 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.error).toBeDefined()
     });
 
+    test("stringToDateRange :: 12.3.2010 – 14.3.2010", () => {
+        const input = "12.3.2010 – 14.3.2010";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("2010-03-12");
+        expect(output.to).toBe("2010-03-14");
+    });
+
+    test("stringToDateRange :: 12.3.2010 — 14.3.2010", () => {
+        const input = "12.3.2010 — 14.3.2010";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("2010-03-12");
+        expect(output.to).toBe("2010-03-14");
+    });
+
     test("stringToDateRange :: 12.3.2010 - 14.3.2010", () => {
         const input = "12.3.2010 - 14.3.2010";
 
@@ -1623,7 +1641,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("19. Jhd. - 20. Jhd.")
+        expect(output).toBe("19. Jhd. – 20. Jhd.")
     });
 
     test("dateRangeToString :: 1801 - 2000 [US]", () => {
@@ -1633,7 +1651,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("19th century - 20th century")
+        expect(output).toBe("19th century – 20th century")
     });
 
     test("dateRangeToString :: 1802 - 2000", () => {
@@ -1680,10 +1698,10 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("2. Jhd. v. Chr. - 1. Jhd. v. Chr.")
+        expect(output).toBe("2. Jhd. v. Chr. – 1. Jhd. v. Chr.")
     });
 
-    test("dateRangeToString :: -0199 - -0099", () => {
+    test("dateRangeToString :: -0199 – -0099", () => {
         CUI.DateTime.setLocale("de-DE")
 
         const from = "-0199"
@@ -1705,7 +1723,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("1. Jhd. v. Chr.")
     });
 
-    test("dateRangeToString :: -0199 - 0100", () => {
+    test("dateRangeToString :: -0199 – 0100", () => {
         CUI.DateTime.setLocale("de-DE")
 
         const from = "-0199"
@@ -1713,6 +1731,6 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("2. Jhd. v. Chr. - 1. Jhd.")
+        expect(output).toBe("2. Jhd. v. Chr. – 1. Jhd.")
     });
 });

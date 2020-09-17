@@ -6,6 +6,7 @@ class CUI.DateTimeRangeGrammar
 	@REGEXP_YEAR_DOT = /^[0-9]+.$/ # Matches Year ending with dot.
 	@REGEXP_CENTURY = /^[0-9]+th$/ # Matches Year ending with th.
 	@REGEXP_SPACE = /\s+/
+	@REGEXP_DASH = /[\–\—]/g # Matches 'EN' and 'EM' dashes.
 	@TYPE_DATE = "DATE"
 	@TYPE_YEAR = "YEAR"
 	@TYPE_YEAR_DOT = "YEAR_DOT"
@@ -17,6 +18,7 @@ class CUI.DateTimeRangeGrammar
 	@OUTPUT_YEAR = "year"
 	@OUTPUT_DATE = "date"
 	@DISPLAY_ATTRIBUTE_YEAR_MONTH = "year-month"
+	@EN_DASH = "–"
 
 	@MONTHS = {}
 	@MONTHS["de-DE"] = [
@@ -311,7 +313,7 @@ class CUI.DateTimeRangeGrammar
 			if not output or output.to != to or output.from != from
 				return
 
-			return possibleString
+			return possibleString.replace(" #{DateTimeRangeGrammar.DASH} ", " #{DateTimeRangeGrammar.EN_DASH} ")
 
 		if not CUI.util.isUndef(fromYear) and not CUI.util.isUndef(toYear)
 			if fromYear == toYear
@@ -426,7 +428,7 @@ class CUI.DateTimeRangeGrammar
 		if possibleString
 			return possibleString
 
-		return "#{from} - #{to}"
+		return "#{from} #{DateTimeRangeGrammar.EN_DASH} #{to}"
 
 	# Main method to check against every grammar.
 	@stringToDateRange: (input) ->
@@ -435,6 +437,8 @@ class CUI.DateTimeRangeGrammar
 
 		locale = CUI.DateTime.getLocale()
 		input = input.trim()
+
+		input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH)
 
 		tokens = []
 		for s in input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)
