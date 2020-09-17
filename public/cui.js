@@ -27331,6 +27331,8 @@ CUI.DateTimeRangeGrammar = (function() {
 
   DateTimeRangeGrammar.REGEXP_SPACE = /\s+/;
 
+  DateTimeRangeGrammar.REGEXP_DASH = /[\–\—]/g;
+
   DateTimeRangeGrammar.TYPE_DATE = "DATE";
 
   DateTimeRangeGrammar.TYPE_YEAR = "YEAR";
@@ -27352,6 +27354,8 @@ CUI.DateTimeRangeGrammar = (function() {
   DateTimeRangeGrammar.OUTPUT_DATE = "date";
 
   DateTimeRangeGrammar.DISPLAY_ATTRIBUTE_YEAR_MONTH = "year-month";
+
+  DateTimeRangeGrammar.EN_DASH = "–";
 
   DateTimeRangeGrammar.MONTHS = {};
 
@@ -27441,7 +27445,7 @@ CUI.DateTimeRangeGrammar = (function() {
       if (!output || output.to !== to || output.from !== from) {
         return;
       }
-      return possibleString;
+      return possibleString.replace(" " + DateTimeRangeGrammar.DASH + " ", " " + DateTimeRangeGrammar.EN_DASH + " ");
     };
     if (!CUI.util.isUndef(fromYear) && !CUI.util.isUndef(toYear)) {
       if (fromYear === toYear) {
@@ -27571,7 +27575,7 @@ CUI.DateTimeRangeGrammar = (function() {
     if (possibleString) {
       return possibleString;
     }
-    return from + " - " + to;
+    return from + " " + DateTimeRangeGrammar.EN_DASH + " " + to;
   };
 
   DateTimeRangeGrammar.stringToDateRange = function(input) {
@@ -27583,6 +27587,7 @@ CUI.DateTimeRangeGrammar = (function() {
     }
     locale = CUI.DateTime.getLocale();
     input = input.trim();
+    input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH);
     tokens = [];
     ref = input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE);
     for (i = 0, len = ref.length; i < len; i++) {
