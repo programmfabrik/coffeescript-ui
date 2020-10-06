@@ -42,11 +42,21 @@
 	}
 }
 
+@mixin button-ellipsis() {
+	.cui-button-visual {
+		@include button-size(18px, 0, 18px, $btn-border-radius-sm); // fake baseline alignment via line-height/height 
+
+		min-width: 0;
+		width: 8px;
+	}
+}
+
 @mixin button-icon() {
 	.cui-button-visual {
 		@include button-size($btn-height-xs, 0, $font-size-sm, 0);
 	}
 }
+
 
 @mixin button-sm() {
 	.cui-button-visual {
