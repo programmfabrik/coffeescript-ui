@@ -13,8 +13,7 @@ label[data-label-clickable],
 		display: flex;
 	}
 
-	// .cui-label-icon
-	&-icon {
+	.cui-label-icon {
 		display: flex; // if SVG icon inside
 
 		&:empty {
@@ -27,8 +26,7 @@ label[data-label-clickable],
 		}
 	}
 
-	// .cui-label-content
-	&-content {
+	.cui-label-content {
 		flex: 0 0 auto;
 		max-width: 100%;
 
@@ -62,18 +60,16 @@ label[data-label-clickable],
 		}
 	}
 
-	// cui-label-appearance-secondary
-	&-appearance-secondary {
+	&.cui-label-appearance-secondary {
 		@include label-secondary();
 	}
 
-	// cui-label-appearance-muted
-	&-appearance-muted {
+	&.cui-label-appearance-muted {
 		@include label-muted();
 	}
 
 	// todo: make obsolete
-	// &--padded {
+	// &.cui-label--padded {
 	// 	padding: $label-padding;
 	// }
 
@@ -153,9 +149,10 @@ label[data-label-clickable],
 
 // Placeholder / Empty
 .cui-empty-label {
-	color: theme-color('muted');
 	margin: 0;
 	cursor: default;
+
+	@include label-empty();
 
 	.cui-label-content {
 		display: inline-block;

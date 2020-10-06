@@ -48,6 +48,10 @@
 	color: theme-color('muted');
 }
 
+@mixin label-empty() {
+	color: theme-color('muted');
+}
+
 // Label in a field
 @mixin label-field() {
 	text-transform: uppercase;
