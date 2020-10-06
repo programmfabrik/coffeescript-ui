@@ -1349,41 +1349,41 @@ label[data-label-clickable],
   .cui-vertical-layout-center > .cui-label {
     display: -webkit-box;
     display: flex; }
-  .cui-label-icon {
+  .cui-label .cui-label-icon {
     display: -webkit-box;
     display: flex; }
-    .cui-label-icon:empty {
+    .cui-label .cui-label-icon:empty {
       display: none; }
-    .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+    .cui-label .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
       padding-left: 0.5em;
       flex-shrink: 1; }
-  .cui-label-content {
+  .cui-label .cui-label-content {
     -webkit-box-flex: 0;
             flex: 0 0 auto;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
-    .cui-label-content:empty {
+    .cui-label .cui-label-content:empty {
       display: none; }
-    .cui-label-content p {
+    .cui-label .cui-label-content p {
       margin-bottom: 0.5rem; }
-      .cui-label-content p:last-child {
+      .cui-label .cui-label-content p:last-child {
         margin-bottom: 0; }
-    .cui-label-content em {
+    .cui-label .cui-label-content em {
       background: #ffee33;
       font-style: normal;
       padding: 0.05em 0.2em; }
-    .cui-label-content span + span {
+    .cui-label .cui-label-content span + span {
       padding-left: 0.25em; }
-    .cui-label-content .italic {
+    .cui-label .cui-label-content .italic {
       padding-right: 0.25em; }
-  .cui-label-appearance-secondary {
+  .cui-label.cui-label-appearance-secondary {
     color: #6c757d;
     font-weight: 300; }
-    .cui-selected .cui-label-appearance-secondary {
+    .cui-selected .cui-label.cui-label-appearance-secondary {
       color: #ff5724; }
-  .cui-label-appearance-muted {
+  .cui-label.cui-label-appearance-muted {
     color: #adb5bd; }
   .cui-label[data-type='string'] {
     color: #3e9e88; }
@@ -1435,9 +1435,9 @@ label[data-label-clickable],
       white-space: nowrap !important; }
 
 .cui-empty-label {
-  color: #adb5bd;
   margin: 0;
-  cursor: default; }
+  cursor: default;
+  color: #adb5bd; }
   .cui-empty-label .cui-label-content {
     display: inline-block; }
 
