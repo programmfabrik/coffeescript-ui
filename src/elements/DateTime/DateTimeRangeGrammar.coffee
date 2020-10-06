@@ -6,6 +6,7 @@ class CUI.DateTimeRangeGrammar
 	@REGEXP_YEAR_DOT = /^[0-9]+.$/ # Matches Year ending with dot.
 	@REGEXP_CENTURY = /^[0-9]+th$/ # Matches Year ending with th.
 	@REGEXP_SPACE = /\s+/
+	@REGEXP_DASH = /[\–\—]/g # Matches 'EN' and 'EM' dashes.
 	@TYPE_DATE = "DATE"
 	@TYPE_YEAR = "YEAR"
 	@TYPE_YEAR_DOT = "YEAR_DOT"
@@ -17,6 +18,7 @@ class CUI.DateTimeRangeGrammar
 	@OUTPUT_YEAR = "year"
 	@OUTPUT_DATE = "date"
 	@DISPLAY_ATTRIBUTE_YEAR_MONTH = "year-month"
+	@EN_DASH = "–"
 
 	@MONTHS = {}
 	@MONTHS["de-DE"] = [
@@ -311,13 +313,13 @@ class CUI.DateTimeRangeGrammar
 			if not output or output.to != to or output.from != from
 				return
 
-			return possibleString
+			return possibleString.replace(" #{DateTimeRangeGrammar.DASH} ", " #{DateTimeRangeGrammar.EN_DASH} ")
 
 		if not CUI.util.isUndef(fromYear) and not CUI.util.isUndef(toYear)
 			if fromYear == toYear
 				return "#{fromYear}"
 
-			isBC = fromYear <= 0
+			isBC = fromYear < 0
 			if isBC
 				possibleString = getPossibleString("AFTER_BC", [Math.abs(fromYear)])
 			else
@@ -326,7 +328,7 @@ class CUI.DateTimeRangeGrammar
 			if possibleString
 				return possibleString
 
-			isBC = toYear <= 0
+			isBC = toYear < 0
 			if isBC
 				possibleString = getPossibleString("BEFORE_BC", [Math.abs(toYear)])
 			else
@@ -383,9 +385,20 @@ class CUI.DateTimeRangeGrammar
 						if possibleString
 							return possibleString
 			else if (yearsDifference + 1) % 100 == 0 and (fromYear - 1) % 100 == 0 and toYear % 100 == 0
-				fromCentury = (fromYear + 99) / 100
-				toCentury = toYear / 100
-				possibleString = getPossibleString("CENTURY_RANGE", [fromCentury, toCentury])
+				toCentury = (toYear / 100)
+				if fromYear < 0
+					fromCentury = -(fromYear - 1) / 100
+					if toYear <= 0
+						toCentury += 1
+						grammarKey = "CENTURY_RANGE_BC"
+					else
+						grammarKey = "CENTURY_RANGE_FROM_BC"
+				else
+					grammarKey = "CENTURY_RANGE"
+					fromCentury = (fromYear + 99) / 100
+					toCentury = toYear / 100
+
+				possibleString = getPossibleString(grammarKey, [fromCentury, toCentury])
 				if possibleString
 					return possibleString
 
@@ -415,7 +428,7 @@ class CUI.DateTimeRangeGrammar
 		if possibleString
 			return possibleString
 
-		return "#{from} - #{to}"
+		return "#{from} #{DateTimeRangeGrammar.EN_DASH} #{to}"
 
 	# Main method to check against every grammar.
 	@stringToDateRange: (input) ->
@@ -424,6 +437,8 @@ class CUI.DateTimeRangeGrammar
 
 		locale = CUI.DateTime.getLocale()
 		input = input.trim()
+
+		input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH)
 
 		tokens = []
 		for s in input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)

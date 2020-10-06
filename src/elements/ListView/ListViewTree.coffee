@@ -183,7 +183,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 
 	__runTrigger: (ev, action, node) ->
-		if ev.ctrlKey()
+		if ev.ctrlKey() or ev.metaKey()
 			@__actionOnNode(ev, action+"Recursively", node)
 		else
 			@__actionOnNode(ev, action, node)

@@ -303,7 +303,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		ret.done =>
 			promises = []
-			for child in @children
+			for child in @children or []
 				promises.push(child["#{action}Recursively"]())
 			CUI.when(promises)
 			.done(dfr.resolve)
