@@ -86,7 +86,7 @@
 }
 
 .cui-result-navigation-toolbar {
-	.cui-buttonbar-group-navi {
+	.cui-buttonbar .cui-buttonbar-group-navi {
 		@include buttonbar-group-navigation();
 	}
 
@@ -99,8 +99,8 @@
 // todo: find use-case, replace --mini
 // use-case: editor
 .cui-navigation-toolbar {
-	.cui-buttonbar-group {
-		@include ungroup-visually();
+	.cui-buttonbar .cui-buttonbar-group {
+		@include buttonbar-group-navigation();
 
 		.cui-number-input {
 			margin: 0 $spacer-xs;
