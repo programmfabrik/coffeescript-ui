@@ -355,6 +355,14 @@ $label-padding: $spacer-sm !default;
 // * ==========================================
 $handle-color: 		$body-color;
 
+// * Flex Handle (Resize panes etc.)
+// * ==========================================
+$flex-handle-size: 			11px; // width or height, odd number so we can put a 1px line in the very center
+$flex-handle-color: 		rgba(gray('500'), 0.8); // theme-color('primary'); // rgba(gray('400'), 0.8);
+$flex-handle-divider-color: $flex-handle-color;
+$flex-handle-length: 		18px;
+$flex-handle-blocker-offset: 4px;
+
 // * Item list
 // * ==========================================
 $item-list-hover-color: 		$white !default;
