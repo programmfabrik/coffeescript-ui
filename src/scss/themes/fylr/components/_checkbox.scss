@@ -103,6 +103,7 @@
 		.cui-button-left i {
 			background: $checkbox-active-background;
 			color: $checkbox-active-color;
+			border-color: $checkbox-active-background;
 
 			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
 			.cui-active &,
@@ -114,8 +115,9 @@
 		// radio
 		&[role='radio'] {
 			.cui-button-left i {
-				color: transparent;
 				background: $checkbox-active-background;
+				color: transparent;
+				border-color: $checkbox-active-background;
 
 				&::after { // radio dot
 					content: '';
