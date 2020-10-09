@@ -235,8 +235,8 @@ $line-height-sm:			  1.3 !default;
 $h1-font-size:                1rem * 1.5 !default; 		// 24, upper case, ex: page-title
 $h2-font-size:                1rem * 1.5 !default; 		// 24, normal case
 $h3-font-size:                1rem * 1.25 !default; 	// 20, ex: pane titles (Suche), sidebar titles (Detail, Editor), applied via .h3 class in tpl
-$h4-font-size:                1rem * 1.125 !default;	// 18
-$h5-font-size:                1rem !default;			// 16, ex: standard-1
+$h4-font-size:                1rem * 1.125 !default;	// 18, ex: standard-1
+$h5-font-size:                1rem !default;			// 16, 
 $h6-font-size:                $font-size-base !default;	// 14, base font + bold, ex: tabs, panels, tab-title (tab system)
 
 $headline-sizes: () !default;
