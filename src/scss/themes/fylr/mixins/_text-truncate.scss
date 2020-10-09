@@ -7,6 +7,12 @@
 	white-space: nowrap;
 }
 
+@mixin revert-text-truncate() {
+	overflow: initial;
+	text-overflow: initial;
+	white-space: initial;
+}
+
 // deprecated, use text-truncate instead
 @mixin ellipsis() {
 	@include text-truncate();
