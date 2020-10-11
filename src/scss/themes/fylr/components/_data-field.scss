@@ -25,6 +25,7 @@
 	&.cui-form,
 	&.cui-data-form {
 		max-width: 100%; // or none?
+		width: 100%; // ? always stretch to fill avaiable width ?, ex: Developer Menu
 		margin: 0;
 	}
 
