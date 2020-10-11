@@ -171,6 +171,13 @@
 				color: $tabs-overflow-button-color-hover;
 			}
 		}
+
+		&.cui-layer-open {
+			.cui-button-visual {
+				color: $btn-active-color;
+				background-color: $btn-active-background;
+			}
+		}
 	}
 
 	.cui-buttonbar {
