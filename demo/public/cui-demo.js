@@ -76530,9 +76530,9 @@ function (_BaseClient) {
 
 /***/ }),
 
-/***/ "../node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:8080":
+/***/ "../node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:8081":
 /*!*********************************************************************!*\
-  !*** ../node_modules/webpack-dev-server/client?http://0.0.0.0:8080 ***!
+  !*** ../node_modules/webpack-dev-server/client?http://0.0.0.0:8081 ***!
   \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -76714,7 +76714,7 @@ var onSocketMessage = {
   }
 };
 socket(socketUrl, onSocketMessage);
-/* WEBPACK VAR INJECTION */}.call(this, "?http://0.0.0.0:8080"))
+/* WEBPACK VAR INJECTION */}.call(this, "?http://0.0.0.0:8081"))
 
 /***/ }),
 
@@ -91148,12 +91148,12 @@ __webpack_require__(/*! ./demos/Map/LeafletMapDemo.coffee */ "./demos/Map/Leafle
 
 /***/ 0:
 /*!******************************************************************************************!*\
-  !*** multi ../node_modules/webpack-dev-server/client?http://0.0.0.0:8080 ./index.coffee ***!
+  !*** multi ../node_modules/webpack-dev-server/client?http://0.0.0.0:8081 ./index.coffee ***!
   \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/Fylr.io/app/fylr/pkg/webfrontend/easydb-webfrontend/coffeescript-ui/demo/node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:8080 */"../node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:8080");
+__webpack_require__(/*! /Applications/MAMP/htdocs/Fylr.io/app/fylr/pkg/webfrontend/easydb-webfrontend/coffeescript-ui/demo/node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:8081 */"../node_modules/webpack-dev-server/client/index.js?http://0.0.0.0:8081");
 module.exports = __webpack_require__(/*! ./index.coffee */"./index.coffee");
 
 
