@@ -5,3 +5,84 @@
 
 	margin-top: 0.1em;
 }
+
+/* Layer pane styles:
+ - spacing
+ - black header and white title
+ - invert buttons
+ */
+
+@mixin layer-pane-layout() {
+	// layer-header & toolbar
+	> .cui-vertical-layout-top > .cui-pane-header,
+	> .cui-vertical-layout-top > .cui-toolbar {
+		&:not(.cui-template-empty) {
+			padding: 0 $layer-padding-x;
+		}
+	}
+
+	// layer header only
+	> .cui-vertical-layout-top > .cui-pane-header {
+		border-radius: $layer-border-radius $layer-border-radius 0 0;
+		background-color: $layer-header-background;
+		color: $layer-header-color;
+		
+		// Title
+		.cui-horizontal-layout-left .cui-label {
+			@include layer-title();
+		}
+
+		// Align buttonbar to the right because we use inverted, borderless buttons in the header
+		> .cui-horizontal-layout-right > .cui-buttonbar {
+			margin-right: -0.5*$layer-padding-x;
+		}
+		
+		// Invert buttons
+		.cui-button {
+			@include button-inverted();
+
+			&:not(:last-child) {
+				margin-right: 0;
+			}
+		}
+
+		.cui-buttonbar .cui-buttonbar-group {
+			@include buttonbar-group-inverted();
+		}
+
+		// offset the following top toolbar
+		+ .cui-toolbar {
+			margin-top: $spacer-sm;
+		}
+	}
+
+	// layer-body
+	> .cui-vertical-layout-center {
+		padding: 0;
+		margin: $layer-padding-y $layer-padding-x; // use margin instead of padding so a possible scrollbar will be inside
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	// layer-footer & toolbar
+	> .cui-vertical-layout-bottom > .cui-pane-footer,
+	> .cui-vertical-layout-bottom > .cui-toolbar {
+		padding: 0 $layer-padding-y $layer-padding-x;
+	}
+
+	> .cui-vertical-layout-bottom > .cui-pane-footer {
+		border-radius: 0 0 $layer-border-radius $layer-border-radius;
+
+		// make buttons a little more prominent in the footer, they are typically "primary" action buttons ("OK" is pretty short otherwise)
+		.cui-toolbar:not(.cui-navigation-toolbar) {
+			.cui-button-visual {
+				min-width: 60px;
+			}
+		}
+	}
+
+	// nested panes
+	.cui-pane > .cui-vertical-layout-center {
+		@include pane-padding-reset();
+	}
+}

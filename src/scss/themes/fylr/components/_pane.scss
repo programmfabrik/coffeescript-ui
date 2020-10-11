@@ -77,6 +77,30 @@
 
 // * Pane Fill Screen
 
+// Used when expanding a popover layer into full-screen
+
+/*
+	<div class="cui-pane-fill-screen cui-pane-fill-screen-is-on">
+		<div class="cui-pane-fill-screen">
+			<div class="cui-pane-fill-screen-inner">
+				<div class="cui-pane cui-layer-pane cui-pane--window">
+					<top>
+						<div class="cui-pane-header cui-toolbar"></div>
+						<div class="cui-toolbar"></div>
+					</top>
+					<center>
+						<div class="cui-vertical-layout">...</div>
+					</center>
+					<bottom>
+						<div class="cui-pane-toolbar cui-toolbar"></div>
+						<div class="cui-pane-footer cui-toolbar"></div>
+					</bottom>
+				</div>
+			</div>
+		</div>
+	</div>
+*/
+
 .cui-pane-fill-screen {
 	transition: top ease-out 0.5s, right ease-out 0.5s, left ease-out 0.5s, bottom ease-out 0.5s;
 	position: fixed;
@@ -103,10 +127,9 @@
 				height: 100%;
 			}
 
-			// topmost header
-			> .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
-				background-color: transparent;
-				padding: $spacer-sm;
+			// apply layout and style just like the popover layer
+			> .cui-pane {
+				@include layer-pane-layout();
 			}
 		}
 	}
