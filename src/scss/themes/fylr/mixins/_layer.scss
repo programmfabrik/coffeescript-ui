@@ -6,7 +6,7 @@
 	margin-top: 0.1em;
 }
 
-/* Layer pane styles:
+/* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
  - invert buttons
@@ -85,4 +85,9 @@
 	.cui-pane > .cui-vertical-layout-center {
 		@include pane-padding-reset();
 	}
+}
+
+@mixin fullscreen-layer-pane() {
+	// is .cui-layer
+	background-color: $body-bg;
 }
