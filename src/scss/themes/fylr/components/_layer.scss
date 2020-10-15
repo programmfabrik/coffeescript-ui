@@ -168,12 +168,8 @@
 		}
 	}
 
-	.cui-data-field-input {
+	.cui-data-field-input:not(.cui-checkbox) {
 		min-width: 150px;
-
-		&.cui-checkbox {
-			min-width: 1rem;
-		}
 
 		&.cui-data-table {
 			min-width: 200px;
