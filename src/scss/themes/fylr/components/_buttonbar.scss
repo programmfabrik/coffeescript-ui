@@ -8,6 +8,10 @@
 		margin-left: $spacer-sm;
 	}
 
+	.cui-toolbar > .cui-horizontal-layout-left > & {
+		margin-right: $spacer-sm;
+	}
+
 	.cui-toolbar > .cui-horizontal-layout-left:empty + .cui-horizontal-layout-center:empty + .cui-horizontal-layout-right > &:only-child {
 		margin-left: 0; // reset if left and center are empty
 	}
