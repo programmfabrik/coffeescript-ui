@@ -214,6 +214,8 @@
 }
 
 @mixin button-link-sm() {
+	@include button-link();
+	
 	.cui-button-visual {
 		font-size: $btn-font-size-sm;
 		line-height: $line-height-sm;
