@@ -219,13 +219,14 @@
 						border-bottom: 1px solid $tabs-active-border-color;
 					}
 				}
-
-				&:active,
+				
 				&.cui-active {
 					.cui-button-visual {
 						&::after {
 							border: 1px solid $tabs-active-border-color;
 							border-bottom: 1px solid transparent;
+							border-top-left-radius: $btn-border-radius;
+							border-top-right-radius: $btn-border-radius;
 						}
 					}
 				}
