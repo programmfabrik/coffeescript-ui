@@ -236,6 +236,10 @@ label[data-label-clickable],
 	line-height: var(--lh);
 	position: relative;
 
+	> .cui-label-content {
+		margin-bottom: $spacer;
+	}
+
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
 			--max-lines: 8;
@@ -250,18 +254,17 @@ label[data-label-clickable],
 
 			max-height: calc(var(--max-lines) * var(--lh)); // limit at 6 lines
 			overflow: hidden;
-			margin-bottom: $spacer;
 		}
 	}
 
 	.cui-label-manage-overflow-button {
-		@include button-sm();
+		@include button-link-sm();
 
 		z-index: 1;
 		position: absolute;
 		left: auto;
 		right: 0;
-		bottom: -$spacer-sm;
+		bottom: 0;
 
 		.cui-button-visual {
 			margin-left: auto;
