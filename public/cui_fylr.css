@@ -1338,6 +1338,7 @@ input[data-max-chars='40'] {
   opacity: 1; }
   .cui-hourglass-animation i {
     opacity: 0;
+    line-height: inherit;
     -webkit-animation: hourglass 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite;
             animation: hourglass 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite; }
   .cui-hourglass-animation > i:nth-child(1) {
@@ -3188,8 +3189,14 @@ textarea {
             justify-content: center;
     position: relative; }
   .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon {
-    text-align: center;
-    position: relative; }
+    position: relative;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
+    text-align: center; }
     .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon .svg-spinner {
       height: 30px; }
 

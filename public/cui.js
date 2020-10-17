@@ -47180,7 +47180,7 @@ CUI.ProgressMeter = (function(superClass) {
       i = hourglass_icons[j];
       icon = new CUI.Icon({
         icon: i,
-        "class": "fa-stack-2x"
+        "class": "fa-stack-1x"
       });
       CUI.dom.append(hourglass_container, icon.DOM);
     }
