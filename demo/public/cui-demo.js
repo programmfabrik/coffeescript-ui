@@ -47159,7 +47159,7 @@ CUI.ProgressMeter = (function(superClass) {
   };
 
   ProgressMeter.prototype.initOpts = function() {
-    var i, len, ref, results, state;
+    var j, len, ref, results, state;
     ProgressMeter.__super__.initOpts.call(this);
     if (!this.opts.states) {
       this.opts.states = Object.keys(CUI.defaults.ProgressMeter.states);
@@ -47195,8 +47195,8 @@ CUI.ProgressMeter = (function(superClass) {
     });
     ref = this.opts.states;
     results = [];
-    for (i = 0, len = ref.length; i < len; i++) {
-      state = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      state = ref[j];
       results.push(this.addOpt("icon_" + state, {
         "default": CUI.defaults.ProgressMeter.states[state],
         check: (function(_this) {
@@ -47230,15 +47230,19 @@ CUI.ProgressMeter = (function(superClass) {
     }
     this.__state = state;
     if (ref = this.__state, indexOf.call(this._states, ref) >= 0) {
-      icon = this["_icon_" + this.__state];
-      if (icon instanceof CUI.Icon) {
-        this.__meter.replace(icon, "icon");
-      } else if (!CUI.util.isEmpty(icon)) {
-        this.__meter.replace(new CUI.Icon({
-          icon: icon
-        }), "icon");
+      if (this.__state === "spinning2") {
+        this.__meter.replace(this.getAnimatedHourglassIcon(), "icon");
       } else {
-        this.__meter.empty("icon");
+        icon = this["_icon_" + this.__state];
+        if (icon instanceof CUI.Icon) {
+          this.__meter.replace(icon, "icon");
+        } else if (!CUI.util.isEmpty(icon)) {
+          this.__meter.replace(new CUI.Icon({
+            icon: icon
+          }), "icon");
+        } else {
+          this.__meter.empty("icon");
+        }
       }
       this.__meter.DOM.setAttribute("state", this.__state);
       this.__meter.empty("text");
@@ -47258,6 +47262,21 @@ CUI.ProgressMeter = (function(superClass) {
     return this;
   };
 
+  ProgressMeter.prototype.getAnimatedHourglassIcon = function() {
+    var hourglass_container, hourglass_icons, i, icon, j, len;
+    hourglass_icons = ["fa-hourglass-start", "fa-hourglass-half", "fa-hourglass-end", "fa-hourglass-end", "fa-hourglass-o"];
+    hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack");
+    for (j = 0, len = hourglass_icons.length; j < len; j++) {
+      i = hourglass_icons[j];
+      icon = new CUI.Icon({
+        icon: i,
+        "class": "fa-stack-2x"
+      });
+      CUI.dom.append(hourglass_container, icon.DOM);
+    }
+    return hourglass_container;
+  };
+
   return ProgressMeter;
 
 })(CUI.DOMElement);
@@ -47265,7 +47284,8 @@ CUI.ProgressMeter = (function(superClass) {
 CUI.defaults.ProgressMeter = {
   states: {
     waiting: "fa-hourglass",
-    spinning: "svg-spinner cui-spin-stepped"
+    spinning: "svg-spinner cui-spin-stepped",
+    spinning2: "fa-hourglass"
   }
 };
 
@@ -89196,7 +89216,7 @@ Demo.Playground = (function(superClass) {
       text: "Font Awesome icons that are customized",
       content: this.getIconCollection(icons)
     }));
-    icons = ["fa-crop", "fa-arrows-alt", "fa-warning", "fa-slack", "fa-file", "fa-filter", "fa-sliders", "fa-refresh", "fa fa-file-archive-o", "fa-rotate-right", "fa-rotate-left", "fa-arrows-v", "fa-arrows-h", "fa-calendar-plus-o", "fa-question", "fa-question", "fa-question", "fa-cog", "fa-download", "fa-download", "fa-question", "fa-upload", "fa-envelope-o", "fa-envelope", "fa-floppy-o", "fa-heart", "fa-user", "fa-clock-o", "fa-plus", "fa-pencil", "fa-files-o", "fa-search", "fa-share", "fa-play", "fa-music", "fa-play", "fa-stop", "fa-print", "fa-minus", "fa-caret-right", "fa-caret-down", "fa-ellipsis-h", "fa-ellipsis-v", "fa-bars", "fa-info-circle", "fa-bolt", "fa-check", "fa-warning", "fa-legal", "fa-cloud", "fa-angle-left", "fa-angle-right", "fa-angle-right", "fa-search-plus", "fa-search-minus", "fa-compress", "fa-expand", "fa-envelope-o", "fa-file-text", "fa-file-text-o", "fa-bullhorn", "fa-angle-left", "fa-angle-right", "fa-angle-down", "fa-angle-up", "fa-caret-up", "fa-caret-down", "fa-camera", "fa-list-ul", "fa-picture-o", "fa-sitemap"];
+    icons = ["fa-crop", "fa-arrows-alt", "fa-warning", "fa-slack", "fa-file", "fa-filter", "fa-sliders", "fa-refresh", "fa fa-file-archive-o", "fa-rotate-right", "fa-rotate-left", "fa-arrows-v", "fa-arrows-h", "fa-calendar-plus-o", "fa-question", "fa-question", "fa-question", "fa-cog", "fa-download", "fa-download", "fa-question", "fa-upload", "fa-envelope-o", "fa-envelope", "fa-floppy-o", "fa-heart", "fa-user", "fa-clock-o", "fa-plus", "fa-pencil", "fa-files-o", "fa-search", "fa-share", "fa-play", "fa-music", "fa-play", "fa-stop", "fa-print", "fa-minus", "fa-caret-right", "fa-caret-down", "fa-ellipsis-h", "fa-ellipsis-v", "fa-bars", "fa-info-circle", "fa-bolt", "fa-check", "fa-warning", "fa-legal", "fa-cloud", "fa-angle-left", "fa-angle-right", "fa-angle-right", "fa-search-plus", "fa-search-minus", "fa-compress", "fa-expand", "fa-envelope-o", "fa-file-text", "fa-file-text-o", "fa-bullhorn", "fa-angle-left", "fa-angle-right", "fa-angle-down", "fa-angle-up", "fa-caret-up", "fa-caret-down", "fa-camera", "fa-list-ul", "fa-picture-o", "fa-sitemap", "fa-hourglass-half"];
     dt.addExample("Single Icon", new CUI.Block({
       "class": "cui-demo-icons",
       text: "All Font Awesome icons",
@@ -89227,10 +89247,29 @@ Demo.Playground = (function(superClass) {
       text: "Label",
       icon: "fa-spinner"
     }));
+    dt.addExample("Hourglass spinner", new CUI.Block({
+      "class": "cui-demo-hourglass",
+      content: this.getHourglassIcon()
+    }));
     return dt.addExample("Times Thin, regular font icon (not FA)", new CUI.Label({
       text: "Close",
       icon: "fa-times-thin"
     }));
+  };
+
+  Playground.prototype.getHourglassIcon = function() {
+    var hourglass_container, hourglass_icons, i, icon, l, len;
+    hourglass_icons = ["fa-hourglass-start", "fa-hourglass-half", "fa-hourglass-end", "fa-hourglass-end", "fa-hourglass-o"];
+    hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack");
+    for (l = 0, len = hourglass_icons.length; l < len; l++) {
+      i = hourglass_icons[l];
+      icon = new CUI.Icon({
+        icon: i,
+        "class": "fa-stack-1x"
+      });
+      CUI.dom.append(hourglass_container, icon.DOM);
+    }
+    return hourglass_container;
   };
 
   Playground.prototype.getIconCollection = function(icons) {

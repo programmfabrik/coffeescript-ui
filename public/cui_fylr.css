@@ -1334,6 +1334,84 @@ input[data-max-chars='40'] {
   width: 12px;
   height: 12px; }
 
+.cui-hourglass-animation {
+  opacity: 1; }
+  .cui-hourglass-animation i {
+    opacity: 0;
+    -webkit-animation: hourglass 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite;
+            animation: hourglass 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite; }
+  .cui-hourglass-animation > i:nth-child(1) {
+    -webkit-animation-delay: 0s, 0s;
+            animation-delay: 0s, 0s; }
+  .cui-hourglass-animation > i:nth-child(2) {
+    -webkit-animation-delay: 0.6s, 0s;
+            animation-delay: 0.6s, 0s; }
+  .cui-hourglass-animation > i:nth-child(3) {
+    -webkit-animation-delay: 1.2s, 0s;
+            animation-delay: 1.2s, 0s; }
+  .cui-hourglass-animation > i:nth-child(4) {
+    -webkit-animation-delay: 1.8s, 0s;
+            animation-delay: 1.8s, 0s; }
+  .cui-hourglass-animation > i:nth-child(4) {
+    -webkit-animation: hourglass-end 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite;
+            animation: hourglass-end 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite; }
+  .cui-hourglass-animation > i:nth-child(5) {
+    opacity: 1;
+    -webkit-animation: hourglass-spin 2.4s ease-out infinite;
+            animation: hourglass-spin 2.4s ease-out infinite; }
+
+@-webkit-keyframes hourglass {
+  0% {
+    opacity: 1; }
+  24% {
+    opacity: 0.9; }
+  26% {
+    opacity: 0; } }
+
+@keyframes hourglass {
+  0% {
+    opacity: 1; }
+  24% {
+    opacity: 0.9; }
+  26% {
+    opacity: 0; } }
+
+@-webkit-keyframes hourglass-end {
+  0% {
+    opacity: 0; }
+  70% {
+    opacity: 0; }
+  75% {
+    opacity: 1; }
+  100% {
+    opacity: 1; } }
+
+@keyframes hourglass-end {
+  0% {
+    opacity: 0; }
+  70% {
+    opacity: 0; }
+  75% {
+    opacity: 1; }
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes hourglass-spin {
+  75% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); } }
+
+@keyframes hourglass-spin {
+  75% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); } }
+
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
   cursor: pointer;

@@ -47069,7 +47069,7 @@ CUI.ProgressMeter = (function(superClass) {
   };
 
   ProgressMeter.prototype.initOpts = function() {
-    var i, len, ref, results, state;
+    var j, len, ref, results, state;
     ProgressMeter.__super__.initOpts.call(this);
     if (!this.opts.states) {
       this.opts.states = Object.keys(CUI.defaults.ProgressMeter.states);
@@ -47105,8 +47105,8 @@ CUI.ProgressMeter = (function(superClass) {
     });
     ref = this.opts.states;
     results = [];
-    for (i = 0, len = ref.length; i < len; i++) {
-      state = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      state = ref[j];
       results.push(this.addOpt("icon_" + state, {
         "default": CUI.defaults.ProgressMeter.states[state],
         check: (function(_this) {
@@ -47140,15 +47140,19 @@ CUI.ProgressMeter = (function(superClass) {
     }
     this.__state = state;
     if (ref = this.__state, indexOf.call(this._states, ref) >= 0) {
-      icon = this["_icon_" + this.__state];
-      if (icon instanceof CUI.Icon) {
-        this.__meter.replace(icon, "icon");
-      } else if (!CUI.util.isEmpty(icon)) {
-        this.__meter.replace(new CUI.Icon({
-          icon: icon
-        }), "icon");
+      if (this.__state === "spinning2") {
+        this.__meter.replace(this.getAnimatedHourglassIcon(), "icon");
       } else {
-        this.__meter.empty("icon");
+        icon = this["_icon_" + this.__state];
+        if (icon instanceof CUI.Icon) {
+          this.__meter.replace(icon, "icon");
+        } else if (!CUI.util.isEmpty(icon)) {
+          this.__meter.replace(new CUI.Icon({
+            icon: icon
+          }), "icon");
+        } else {
+          this.__meter.empty("icon");
+        }
       }
       this.__meter.DOM.setAttribute("state", this.__state);
       this.__meter.empty("text");
@@ -47168,6 +47172,21 @@ CUI.ProgressMeter = (function(superClass) {
     return this;
   };
 
+  ProgressMeter.prototype.getAnimatedHourglassIcon = function() {
+    var hourglass_container, hourglass_icons, i, icon, j, len;
+    hourglass_icons = ["fa-hourglass-start", "fa-hourglass-half", "fa-hourglass-end", "fa-hourglass-end", "fa-hourglass-o"];
+    hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack");
+    for (j = 0, len = hourglass_icons.length; j < len; j++) {
+      i = hourglass_icons[j];
+      icon = new CUI.Icon({
+        icon: i,
+        "class": "fa-stack-2x"
+      });
+      CUI.dom.append(hourglass_container, icon.DOM);
+    }
+    return hourglass_container;
+  };
+
   return ProgressMeter;
 
 })(CUI.DOMElement);
@@ -47175,7 +47194,8 @@ CUI.ProgressMeter = (function(superClass) {
 CUI.defaults.ProgressMeter = {
   states: {
     waiting: "fa-hourglass",
-    spinning: "svg-spinner cui-spin-stepped"
+    spinning: "svg-spinner cui-spin-stepped",
+    spinning2: "fa-hourglass"
   }
 };
 
