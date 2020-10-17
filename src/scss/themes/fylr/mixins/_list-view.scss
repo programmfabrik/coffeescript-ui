@@ -16,12 +16,14 @@
 }
 
 @mixin list-view-without-border() {
-	border: 0;
-
-	.cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer + .cui-lv-tr-outer > .cui-lv-tr,
-	.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer + .cui-lv-tr-outer > .cui-lv-tr {
-		border: 0;
-	}
+	// border
+	--list-view-border-width: 0;
+	// header rows & columns
+	--list-view-header-row-border-width: 0;
+	--list-view-header-column-border-width: 0;
+	// inner rows & columns
+	--list-view-inner-row-border-width: 0;
+	--list-view-inner-column-border-width: 0;
 }
 
 @mixin list-view-tight() {
