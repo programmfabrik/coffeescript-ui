@@ -977,6 +977,7 @@ class Demo.Playground extends Demo
 			"fa-list-ul",
 			"fa-picture-o",
 			"fa-sitemap",
+			"fa-hourglass-half",
 		]
 		dt.addExample("Single Icon",
 			new CUI.Block
@@ -1047,12 +1048,38 @@ class Demo.Playground extends Demo
 				text: "Label"
 				icon: "fa-spinner"
 		)
+		
+		dt.addExample("Hourglass spinner",
+			new CUI.Block
+				class: "cui-demo-hourglass"
+				content: @getHourglassIcon()
+		)
 
 		dt.addExample("Times Thin, regular font icon (not FA)",
 			new CUI.Label
 				text: "Close"
 				icon: "fa-times-thin"
 		)
+
+	getHourglassIcon: ->
+		hourglass_icons = [
+			"fa-hourglass-start"
+			"fa-hourglass-half"
+			"fa-hourglass-end"
+			"fa-hourglass-end"
+			"fa-hourglass-o"
+		]
+		hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack")
+
+		for i in hourglass_icons
+			icon = new CUI.Icon
+				icon: i
+				class: "fa-stack-1x"
+
+			CUI.dom.append(hourglass_container, icon.DOM)
+		
+		hourglass_container
+
 
 	getIconCollection: (icons = []) ->
 		icon_container = CUI.dom.div("cui-demo-icon-container")
