@@ -4694,10 +4694,6 @@ textarea {
     min-width: 0;
     flex-shrink: 1; }
 
-.cui-tree-node-column[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1),
-.cui-tree-node-column[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1) ~ .cui-lv-td {
-  background-color: var(--tree-node-level-background); }
-
 .cui-data-table {
   flex-shrink: 1;
   display: inline-block; }
