@@ -75,10 +75,3 @@
 // 		}
 // 	}
 // }
-
-.cui-tree-node-column {
-	&[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1),
-	&[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1) ~ .cui-lv-td {
-		background-color: var(--tree-node-level-background);
-	}
-}
