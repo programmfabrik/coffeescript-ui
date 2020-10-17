@@ -339,4 +339,12 @@
 			height: clamp(10px, 1em, 14px);
 		}
 	}
+
+	// reset default active styles
+	&.cui-layer-open {
+		.cui-button-visual {
+			color: inherit;
+			background-color: transparent;
+		}
+	}
 }
