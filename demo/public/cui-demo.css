@@ -28,7 +28,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 - DON'T: cui-small-box | cui-medium-box | cui-large-box  (modifier or qualifier in the middle)
 
 */
-/* Layer pane styles:
+/* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
  - invert buttons

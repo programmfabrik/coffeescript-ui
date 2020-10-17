@@ -27,7 +27,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 - DON'T: cui-small-box | cui-medium-box | cui-large-box  (modifier or qualifier in the middle)
 
 */
-/* Layer pane styles:
+/* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
  - invert buttons
@@ -1501,45 +1501,57 @@ label[data-label-clickable],
   --lh: calc(var(--lh-base) * 1em);
   line-height: var(--lh);
   position: relative; }
+  .cui-label-manage-overflow > .cui-label-content {
+    margin-bottom: 1rem; }
   .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
     --max-lines: 8;
     max-height: calc(var(--max-lines) * var(--lh)); }
   .cui-label-manage-overflow:not(.cui-label--show-overflow) > .cui-label-content {
     --max-lines: 6;
     max-height: calc(var(--max-lines) * var(--lh));
-    overflow: hidden;
-    margin-bottom: 1rem; }
+    overflow: hidden; }
   .cui-label-manage-overflow .cui-label-manage-overflow-button {
     z-index: 1;
     position: absolute;
     left: auto;
     right: 0;
-    bottom: -0.5rem; }
+    bottom: 0; }
     .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
-      height: 24px;
-      min-width: 25.62px;
-      font-size: 0.75rem;
-      line-height: 24px;
-      border-radius: 2px; }
-      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left {
-        padding-left: 0.5rem;
-        margin-right: -0.25rem; }
-        .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left:empty, .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left:only-child {
-          padding-left: 0;
-          margin-right: 0; }
-      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-right {
-        padding-right: 0.5rem;
-        margin-left: -0.25rem; }
-        .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-right:empty, .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-right:only-child {
-          padding-right: 0;
-          margin-left: 0; }
+      background-color: transparent;
+      color: #212121; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual {
+      color: #212121;
+      background-color: transparent; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button:focus {
+      outline: none; }
+      .cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual {
+        outline: none;
+        box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button:active .cui-button-visual {
+      color: #212121;
+      background-color: rgba(0, 0, 0, 0); }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open .cui-button-visual {
+      color: #212121;
+      background-color: transparent; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:focus .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:focus .cui-button-visual {
+      color: #212121;
+      background-color: transparent; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
+      height: auto; }
       .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        padding: 0 0.5rem; }
-        .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:empty {
-          margin-left: -0.25rem; }
+        text-decoration: underline;
+        word-break: break-all; }
+      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:first-child,
+      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left:empty + .cui-button-center {
+        padding-left: 0; }
+      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:last-child,
+      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:only-child {
+        padding-right: 0; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button:hover .cui-button-visual .cui-button-center, .cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual .cui-button-center {
+      text-decoration: none; }
+    .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
+      font-size: 0.75rem;
+      line-height: 1.3; }
     .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
       margin-left: auto; }
   .cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button::before {
@@ -3057,6 +3069,8 @@ textarea {
     border-radius: 0; }
   .cui-toolbar > .cui-horizontal-layout-right > .cui-buttonbar {
     margin-left: 0.5rem; }
+  .cui-toolbar > .cui-horizontal-layout-left > .cui-buttonbar {
+    margin-right: 0.5rem; }
   .cui-toolbar > .cui-horizontal-layout-left:empty + .cui-horizontal-layout-center:empty + .cui-horizontal-layout-right > .cui-buttonbar:only-child {
     margin-left: 0; }
   .cui-buttonbar + .cui-buttonbar {
@@ -3287,7 +3301,7 @@ textarea {
 
 .cui-options-center .cui-button,
 .cui-options-sortable-option .cui-button {
-  padding: 2px 0; }
+  padding: 3px 0; }
 
 .cui-options-center .cui-data-field,
 .cui-options-sortable-option .cui-data-field {
@@ -4054,29 +4068,71 @@ textarea {
 
 .cui-pane {
   background-color: #f5f5f5; }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select .cui-button-visual {
     border: 1px solid #212121; }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select .cui-button-visual {
     background-color: transparent;
     color: #212121; }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button:hover .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button:focus .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button:hover .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select:focus .cui-button-visual {
     color: inherit;
     background-color: rgba(230, 233, 236, 0.65); }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button:focus {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button:focus,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select:focus,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button:focus,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select:focus {
     outline: none; }
-    .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button:focus .cui-button-visual {
+    .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button:focus .cui-button-visual,
+    .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select:focus .cui-button-visual,
+    .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button:focus .cui-button-visual,
+    .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select:focus .cui-button-visual {
       outline: none;
       box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button:active .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button:active .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select:active .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button:active .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select:active .cui-button-visual {
     color: inherit;
     background-color: rgba(213, 218, 223, 0.65); }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button.cui-active .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button.cui-layer-open .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button.cui-active .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button.cui-layer-open .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select.cui-active .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select.cui-layer-open .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button.cui-active .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button.cui-layer-open .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select.cui-active .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select.cui-layer-open .cui-button-visual {
     color: #ffffff;
     background-color: #212121; }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button.cui-active:hover .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button.cui-active:focus .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button.cui-layer-open:hover .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button.cui-layer-open:focus .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button.cui-active:hover .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button.cui-active:focus .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button.cui-layer-open:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select.cui-active:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select.cui-active:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select.cui-layer-open:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select.cui-layer-open:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button.cui-active:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button.cui-active:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button.cui-layer-open:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button.cui-layer-open:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select.cui-active:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select.cui-active:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select.cui-layer-open:hover .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select.cui-layer-open:focus .cui-button-visual {
     color: #ffffff;
     background-color: #212121; }
-  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button:focus .cui-button-visual {
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-button:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default) .cui-button-select:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-button:focus .cui-button-visual,
+  .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) .cui-button-select:focus .cui-button-visual {
     border-color: #17a2b8;
     box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
   .cui-pane > .cui-vertical-layout-center {
@@ -4240,6 +4296,21 @@ textarea {
     right: var(--layer-sidebar-width) !important; }
 
 .cui-list-view {
+  --list-view-border-color: rgba(206, 212, 218, 0.5);
+  --list-view-border-width: 0;
+  --list-view-background: transparent;
+  --list-view-header-background: transparent;
+  --list-view-header-color: #212121;
+  --list-view-header-row-border-color: rgba(206, 212, 218, 0.5);
+  --list-view-header-row-border-width: 1px;
+  --list-view-header-column-border-color: rgba(206, 212, 218, 0.5);
+  --list-view-header-column-border-width: 1px;
+  --list-view-inner-border-color: rgba(206, 212, 218, 0.5);
+  --list-view-inner-row-border-width: 1px;
+  --list-view-inner-column-border-width: 0;
+  --list-view-selected-row-border-width: 0;
+  --list-view-selected-row-border-color: transparent;
+  --list-view-selected-row-background: rgba(206, 212, 218, 0.3);
   min-height: 0;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -4247,7 +4318,7 @@ textarea {
   background-color: transparent;
   font-size: inherit;
   line-height: 1.3;
-  border: 1px solid rgba(206, 212, 218, 0.5); }
+  border: var(--list-view-border-width) solid var(--list-view-border-color); }
   .cui-list-view > .cui-vertical-layout-center {
     flex-shrink: 1;
     display: -webkit-box;
@@ -4255,20 +4326,14 @@ textarea {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
             flex-direction: column;
+    background-color: var(--list-view-background);
     padding: 0; }
   .cui-list-view .cui-list-view {
     background-color: transparent; }
   .cui-list-view > .cui-vertical-layout-bottom > .cui-pane-footer {
     min-height: 0;
-    padding: 0.25rem;
-    background-color: transparent;
-    border-top: 1px solid rgba(206, 212, 218, 0.5); }
-    .cui-list-view > .cui-vertical-layout-bottom > .cui-pane-footer .cui-buttonbar-group-plus-minus .cui-button-visual {
-      border: 0 !important;
-      border-radius: 2px !important; }
-    .cui-list-view > .cui-vertical-layout-bottom > .cui-pane-footer .cui-buttonbar-group-plus-minus .cui-button:hover .cui-button-visual {
-      background-color: transparent;
-      color: rgba(33, 33, 33, 0.65); }
+    padding: 1rem 0.25rem 0;
+    background-color: transparent; }
 
 .cui-lv-tbody {
   display: -webkit-box;
@@ -4287,6 +4352,8 @@ textarea {
   flex-shrink: 0;
   box-sizing: content-box;
   padding: 0.25rem 0.5rem; }
+  .cui-lv-td:not(:last-child) {
+    border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-border-color); }
   .cui-lv-td:only-child {
     padding: 0.25rem; }
   .cui-lv-td .cui-lv-td {
@@ -4326,8 +4393,8 @@ textarea {
   outline: none;
   cursor: default; }
   .cui-lv-tr-outer.cui-selected > .cui-lv-tr {
-    box-shadow: inset 0 0 0 0 #ff5724;
-    background-color: rgba(206, 212, 218, 0.3); }
+    box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
+    background-color: var(--list-view-selected-row-background); }
   .cui-lv-tr-outer.cui-lv-tree-node--is-branch {
     cursor: pointer;
     -webkit-user-select: none;
@@ -4341,13 +4408,18 @@ textarea {
           align-items: flex-end;
   font-weight: 700; }
 
+.list-view-header-row .cui-lv-tr {
+  border-bottom: var(--list-view-header-row-border-width) solid var(--list-view-header-row-border-color); }
+
 .list-view-header-row .cui-lv-td {
   display: -webkit-box;
   display: flex; }
-  .cui-list-view-tree-hierarchy .list-view-header-row .cui-lv-td:first-child::before {
-    content: '';
-    display: inline-block;
-    width: 14px; }
+  .list-view-header-row .cui-lv-td:not(:last-child):not(:empty) {
+    border-color: var(--list-view-header-column-border-color);
+    border-width: var(--list-view-header-column-border-width); }
+  .list-view-header-row .cui-lv-td.cui-lv-td-rotate-90 {
+    overflow: hidden;
+    line-height: 1; }
 
 .cui-lv-tr {
   -webkit-box-flex: 1;
@@ -4417,24 +4489,23 @@ textarea {
       align-self: flex-end;
       flex-shrink: 1;
       max-width: 100%; }
+  .cui-list-view-grid-quadrant-0 .cui-lv-tr,
+  .cui-list-view-grid-quadrant-1 .cui-lv-tr {
+    border-bottom: var(--list-view-header-row-border-width) solid var(--list-view-header-row-border-color); }
   .cui-list-view-grid-quadrant-0 .cui-lv-td,
   .cui-list-view-grid-quadrant-1 .cui-lv-td {
     -webkit-box-align: end;
             align-items: flex-end;
     position: relative;
     overflow: visible; }
+    .cui-list-view-grid-quadrant-0 .cui-lv-td:not(:last-child):not(:empty),
+    .cui-list-view-grid-quadrant-1 .cui-lv-td:not(:last-child):not(:empty) {
+      border-color: var(--list-view-header-column-border-color);
+      border-width: var(--list-view-header-column-border-width); }
     .cui-list-view-grid-quadrant-0 .cui-lv-td.cui-lv-td-rotate-90,
     .cui-list-view-grid-quadrant-1 .cui-lv-td.cui-lv-td-rotate-90 {
-      overflow: hidden; }
-    .cui-list-view-grid-quadrant-0 .cui-lv-td::after,
-    .cui-list-view-grid-quadrant-1 .cui-lv-td::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0.5rem;
-      bottom: 0.5rem;
-      width: 1px;
-      background: #212121; }
+      overflow: hidden;
+      line-height: 1; }
 
 .cui-list-view-grid-quadrant-0 {
   -webkit-box-flex: 0;
@@ -4450,7 +4521,9 @@ textarea {
   -webkit-box-flex: 0;
           flex: 0 0 auto;
   display: -webkit-box;
-  display: flex; }
+  display: flex;
+  background-color: var(--list-view-header-background);
+  color: var(--list-view-header-color); }
 
 .cui-list-view-grid-inner-bottom {
   -webkit-box-flex: 1;
@@ -4472,13 +4545,9 @@ textarea {
   .cui-list-view-grid-quadrant-3:focus {
     outline: none; }
 
-.cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer + .cui-lv-tr-outer > .cui-lv-tr,
-.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer + .cui-lv-tr-outer > .cui-lv-tr {
-  border-top: 1px solid rgba(206, 212, 218, 0.5); }
-
-.cui-list-view-grid-inner-top + .cui-list-view-grid-inner-bottom .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer:first-child > .cui-lv-tr, .cui-list-view-grid-inner-top + .cui-list-view-grid-inner-bottom
-.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer:first-child > .cui-lv-tr {
-  border-top: 1px solid rgba(206, 212, 218, 0.5); }
+.cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer > .cui-lv-tr,
+.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer > .cui-lv-tr {
+  border-bottom: var(--list-view-inner-row-border-width) solid var(--list-view-inner-border-color); }
 
 .cui-list-view-row-selectable {
   cursor: pointer;
@@ -4506,10 +4575,10 @@ textarea {
   display: none; }
 
 .cui-lv-row-move-handle-column.cui-lv-td {
-  width: inherit;
+  width: 14px;
   padding-left: 0.25rem;
   padding-right: 0;
-  box-sizing: content-box; }
+  border: 0 !important; }
 
 .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: none; }
@@ -4519,6 +4588,7 @@ textarea {
   cursor: grab; }
   .cui-list-view-row-movable .cui-lv-row-move-handle-column .cui-drag-handle-row {
     display: block;
+    margin: 0;
     margin-top: 0.45em; }
 
 .cui-lv-col-resize-handle {
@@ -4528,7 +4598,7 @@ textarea {
   top: 0;
   bottom: 0;
   margin: 0 -5px;
-  width: 10px;
+  width: 9px;
   z-index: 1; }
 
 .cui-lv-col-resize {
@@ -4564,15 +4634,14 @@ textarea {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  margin-top: 0; }
-
-.cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column,
-.cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column {
-  padding-left: 0.75rem; }
+  margin: 0; }
 
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td,
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
   background-size: 100% 64px; }
+
+.cui-list-view-tree {
+  --tree-node-level-background: rgba(23, 162, 184, 0.05); }
 
 .cui-tree-node {
   display: -webkit-box;
@@ -4583,7 +4652,7 @@ textarea {
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
-  width: 14px;
+  width: 16px;
   -webkit-box-flex: 0;
           flex: 0 0 auto; }
   .cui-tree-node-handle .fa-caret-right,
@@ -4604,7 +4673,9 @@ textarea {
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;
-          justify-content: center; }
+          justify-content: center;
+  margin-left: -4px;
+  margin-right: 2px; }
   .cui-tree-node-handle.cui-tree-node-is-closed {
     cursor: pointer; }
   .cui-tree-node-handle.cui-tree-node-is-open {
@@ -4622,6 +4693,10 @@ textarea {
   .cui-tree-node-content .cui-label {
     min-width: 0;
     flex-shrink: 1; }
+
+.cui-tree-node-column[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1),
+.cui-tree-node-column[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1) ~ .cui-lv-td {
+  background-color: var(--tree-node-level-background); }
 
 .cui-data-table {
   flex-shrink: 1;
@@ -4838,8 +4913,6 @@ textarea {
     top: 47px; }
   .cui-tabs .cui-toolbar {
     background-color: transparent; }
-  .cui-tabs .cui-list-view {
-    border: 0; }
   .cui-tabs > .cui-vertical-layout-center {
     -webkit-box-flex: 1;
             flex-grow: 1;
@@ -4947,9 +5020,11 @@ textarea {
           width: 100%;
           height: 100%;
           border-bottom: 1px solid #212121; }
-      .cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button:active .cui-button-visual::after, .cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
+      .cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
         border: 1px solid #212121;
-        border-bottom: 1px solid transparent; }
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px; }
 
 /*
 <div class="cui-layer-root cui-layer-root-layer">
@@ -5154,11 +5229,9 @@ textarea {
     width: auto; }
   .cui-layer .cui-form-button .cui-button {
     max-width: 100%; }
-  .cui-layer .cui-data-field-input {
+  .cui-layer .cui-data-field-input:not(.cui-checkbox) {
     min-width: 150px; }
-    .cui-layer .cui-data-field-input.cui-checkbox {
-      min-width: 1rem; }
-    .cui-layer .cui-data-field-input.cui-data-table {
+    .cui-layer .cui-data-field-input:not(.cui-checkbox).cui-data-table {
       min-width: 200px; }
   .cui-layer .cui-list-view .cui-data-field-input {
     min-width: 0; }
