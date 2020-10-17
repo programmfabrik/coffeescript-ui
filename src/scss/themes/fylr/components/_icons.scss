@@ -93,6 +93,7 @@ $hourglass-colors: $gray-800, $gray-800, $gray-900, $gray-800, $gray-900;
   
 	i {
 		opacity: 0;
+		line-height: inherit; // from fa-stack, makes animation smoother
 		animation:
 			hourglass ($hourglass-animation-speed * 4s) ease-in infinite,
 			$_animationSpin;

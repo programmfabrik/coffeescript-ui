@@ -27,8 +27,11 @@
 		}
 
 		.cui-progress-meter-icon {
-			text-align: center;
 			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
 
 			.svg-spinner {
 				height: $btn-height;
