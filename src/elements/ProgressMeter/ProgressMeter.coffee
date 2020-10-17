@@ -18,6 +18,7 @@ class CUI.ProgressMeter extends CUI.DOMElement
 				fill: true
 
 		@registerTemplate(@__meter)
+
 		if @_state
 			@setState(@_state)
 		else if @_states.length
@@ -78,13 +79,17 @@ class CUI.ProgressMeter extends CUI.DOMElement
 
 		@__state = state
 		if @__state in @_states
-			icon = @["_icon_"+@__state]
-			if icon instanceof CUI.Icon
-				@__meter.replace(icon, "icon")
-			else if not CUI.util.isEmpty(icon)
-				@__meter.replace(new CUI.Icon(icon: icon), "icon")
+			if @__state == "spinning2"
+				@__meter.replace(@getAnimatedHourglassIcon(), "icon")
 			else
-				@__meter.empty("icon")
+				icon = @["_icon_"+@__state]
+				if icon instanceof CUI.Icon
+					@__meter.replace(icon, "icon")
+				else if not CUI.util.isEmpty(icon)
+					@__meter.replace(new CUI.Icon(icon: icon), "icon")
+				else
+					@__meter.empty("icon")
+			
 			# console.debug icon, @__state
 			@__meter.DOM.setAttribute("state", @__state)
 			@__meter.empty("text")
@@ -102,7 +107,27 @@ class CUI.ProgressMeter extends CUI.DOMElement
 		@_onUpdate?.call(@, @)
 		@
 
+	getAnimatedHourglassIcon: ->
+		hourglass_icons = [
+			"fa-hourglass-start"
+			"fa-hourglass-half"
+			"fa-hourglass-end"
+			"fa-hourglass-end"
+			"fa-hourglass-o"
+		]
+		hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack")
+
+		for i in hourglass_icons
+			icon = new CUI.Icon
+				icon: i
+				class: "fa-stack-2x"
+
+			CUI.dom.append(hourglass_container, icon.DOM)
+		
+		hourglass_container
+
 CUI.defaults.ProgressMeter =
 	states:
 		waiting: "fa-hourglass"
 		spinning: "svg-spinner cui-spin-stepped"
+		spinning2: "fa-hourglass"

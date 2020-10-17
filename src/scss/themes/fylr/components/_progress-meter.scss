@@ -36,14 +36,19 @@
 		}
 	}
 
+	// non animated hourglass
 	// &[state='waiting'] {
 	// }
 
+	// spinner
 	&[state='spinning'] {
 		.cui-progress-meter-icon {
 			color: $body-color;
 		}
 	}
+
+	// animated hourglass icon
+	// &[state='spinning2'] {}
 
 	&[state='percent'] {
 		.cui-progress-meter-bar {

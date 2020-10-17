@@ -79,3 +79,59 @@
 	width: 12px;
 	height: 12px;
 }
+
+
+// Hourglass animation
+$hourglass-animation-speed: 0.6;
+// if we want the colors to animate as well, use:
+$hourglass-colors: $gray-800, $gray-800, $gray-900, $gray-800, $gray-900;
+
+.cui-hourglass-animation {
+	opacity: 1;
+
+	$_animationSpin: hourglass-spin ($hourglass-animation-speed * 4s) ease-out infinite;
+  
+	i {
+		opacity: 0;
+		animation:
+			hourglass ($hourglass-animation-speed * 4s) ease-in infinite,
+			$_animationSpin;
+	}
+
+	@for $i from 1 through 4 {
+		& > i:nth-child(#{$i}) {
+			// color: nth($hourglass-colors, $i);
+			animation-delay: $hourglass-animation-speed * ($i - 1) * 1s, 0s;
+		}
+	}
+
+	& > i:nth-child(4) {
+		animation:
+			hourglass-end ($hourglass-animation-speed * 4s) ease-in infinite,
+			$_animationSpin;
+	}
+
+	& > i:nth-child(5) {
+		// color: nth($hourglass-colors, 5);
+		opacity: 1;
+		animation: $_animationSpin;
+	}
+}
+
+@keyframes hourglass {
+	0% { opacity: 1; }
+	24% { opacity: 0.9; }
+	26% { opacity: 0; }
+}
+
+@keyframes hourglass-end {
+	0% { opacity: 0; }
+	70% { opacity: 0; }
+	75% { opacity: 1; }
+	100% { opacity: 1; }
+}
+
+@keyframes hourglass-spin {
+	75% { transform: rotate(0deg); }
+	100% { transform: rotate(180deg); }
+}
