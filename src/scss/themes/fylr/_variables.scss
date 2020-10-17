@@ -451,9 +451,9 @@ $list-view-data-height: 				1rem !default;
 $list-view-data-width: 					125px !default;
 $list-view-padding-x:					$component-padding-base !default; // was: $table-padding-x
 $list-view-padding-y:					$component-padding-base/2 !default; // was: $table-padding-y, needs to be small so the explicit height of the fixed rows will cut off the text correctly after the first line
-$list-view-move-handle-width:			$list-view-font-size !default;
+$list-view-move-handle-width:			14px !default; // ! must be explicit size in px or
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
-$list-view-selected-row-border-width:	0 !default;
+$list-view-selected-row-border-width:	1px !default;
 $list-view-selected-row-border-color: 	theme-color('primary') !default;
 $list-view-selected-row-background: 	rgba(gray('400'), 0.3) !default;
 

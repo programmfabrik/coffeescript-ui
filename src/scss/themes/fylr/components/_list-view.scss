@@ -1,22 +1,42 @@
 // * List View & List View Grid
 
 .cui-list-view {
+	// border
+	--list-view-border-color: #{$table-border-color};
+	--list-view-border-width: 0;
+	--list-view-background: transparent;
+	// header rows & columns
+	--list-view-header-background: transparent; // #{$table-border-color};
+	--list-view-header-color: #{$body-color};
+	--list-view-header-row-border-color: #{$table-border-color};
+	--list-view-header-row-border-width: 1px;
+	--list-view-header-column-border-color: #{$table-border-color};
+	--list-view-header-column-border-width: 1px;
+	// inner rows & columns
+	--list-view-inner-border-color: #{$table-border-color};
+	--list-view-inner-row-border-width: 1px;
+	--list-view-inner-column-border-width: 0;
+	// selected
+	--list-view-selected-row-border-width: 0;
+	--list-view-selected-row-border-color: transparent;
+	--list-view-selected-row-background: #{$list-view-selected-row-background};
+
+
 	min-height: 0;
 	flex-direction: column;
 	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
 	background-color: transparent; // reset from cui-pane
 	font-size: $list-view-font-size; // todo
 	line-height: $line-height-sm;
-	border: 1px solid $table-border-color;
+	border: var(--list-view-border-width) solid var(--list-view-border-color);
 
 	// todo: add zebra option?
-
-	// todO: what should be the default style??
 
 	> .cui-vertical-layout-center {
 		flex-shrink: 1;
 		display: flex;
 		flex-direction: column;
+		background-color: var(--list-view-background); // only apply colored background to the center (bottom might contain buttons etc.)
 
 		@include pane-padding-reset();
 	}
@@ -29,14 +49,8 @@
 
 	> .cui-vertical-layout-bottom > .cui-pane-footer {
 		min-height: 0;
-		padding: $list-view-padding-y; // adjust according to (header) rows of the list-view, see .cui-lv-td & .cui-lv-th
+		padding: $spacer $list-view-padding-y 0; // adjust according to (header) rows of the list-view, see .cui-lv-td & .cui-lv-th
 		background-color: transparent;
-		border-top: 1px solid $table-border-color;
-
-		// Remove buttonbar-group border for plus/minus buttons by default
-		.cui-buttonbar-group-plus-minus {
-			@include ungroup-visually();
-		}
 	}
 }
 
@@ -64,6 +78,10 @@
 	// flex: 1 0 auto; // won't work when resizing the columns
 	box-sizing: content-box;
 	padding: $list-view-padding-y $list-view-padding-x;
+
+	&:not(:last-child) {
+		border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-border-color);
+	}
 
 	&:only-child {
 		padding: $list-view-padding-y;
@@ -127,8 +145,8 @@
 	// be careful to apply a default select state, it's probably best to do this contextually in the theme
 	&.cui-selected {
 		> .cui-lv-tr {
-			box-shadow: inset 0 0 0 $list-view-selected-row-border-width $list-view-selected-row-border-color;
-			background-color: $list-view-selected-row-background;
+			box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
+			background-color: var(--list-view-selected-row-background);
 		}
 	}
 
@@ -147,14 +165,21 @@
 		font-weight: $headings-font-weight;
 	}
 
+	.cui-lv-tr {
+		border-bottom: var(--list-view-header-row-border-width) solid var(--list-view-header-row-border-color);
+	}
+	
 	.cui-lv-td {
 		display: flex;
 
-		// todo: find use-case, this should probably go into the listViewTree styles
-		.cui-list-view-tree-hierarchy &:first-child::before {
-			content: '';
-			display: inline-block;
-			width: $tree-node-handle-width; // todo
+		&:not(:last-child):not(:empty) {
+			border-color: var(--list-view-header-column-border-color);
+			border-width: var(--list-view-header-column-border-width);
+		}
+
+		&.cui-lv-td-rotate-90 {
+			overflow: hidden;
+			line-height: 1;
 		}
 	}
 }
@@ -259,23 +284,23 @@
 		}
 	}
 
+	.cui-lv-tr {
+		border-bottom: var(--list-view-header-row-border-width) solid var(--list-view-header-row-border-color);
+	}
+	
 	.cui-lv-td {
 		align-items: flex-end;
 		position: relative;
 		overflow: visible;
 
-		&.cui-lv-td-rotate-90 {
-			overflow: hidden;
+		&:not(:last-child):not(:empty) {
+			border-color: var(--list-view-header-column-border-color);
+			border-width: var(--list-view-header-column-border-width);
 		}
 
-		&::after { // table-head line
-			content: '';
-			position: absolute;
-			right: 0;
-			top: $spacer-sm;
-			bottom: $spacer-sm;
-			width: 1px;
-			background: $body-color;
+		&.cui-lv-td-rotate-90 {
+			overflow: hidden;
+			line-height: 1;
 		}
 	}
 }
@@ -295,6 +320,8 @@
 .cui-list-view-grid-inner-top {
 	flex: 0 0 auto;
 	display: flex;
+	background-color: var(--list-view-header-background);
+	color: var(--list-view-header-color);
 
 	// breaks the headers - they should be left aligned
 	// .cui-lv-td {
@@ -327,23 +354,13 @@
 
 .cui-list-view-grid-quadrant-2,
 .cui-list-view-grid-quadrant-3 {
+	// can't select last-child because there is usually a .cui-lv-tr-fill-outer element as the last-child
+	// the following might leave the list with a seemingly double border at the very bottom, this is due to the scrollbar having a fine border as well
+	// since we cannot style "last-of-class", we have to style border-bottom (instead of border-top) to get a final border even if the list is very short and stops in the middle of a pane or screen
+	// alternatively if we did style border-top, the last element would still be .cui-lv-tr-fill-outer which could have a 0 height, leaving again a seemingly double border at the bottom
 	> .cui-lv-tr-outer {
-		// can't select last-child because there is usually a .cui-lv-tr-fill-outer element as the last-child
-		& + .cui-lv-tr-outer {
-			> .cui-lv-tr {
-				border-top: 1px solid $table-border-color;
-			}
-		}
-	}
-
-	// only if there is a -top which usually hold the header
-	.cui-list-view-grid-inner-top + .cui-list-view-grid-inner-bottom & {
-		> .cui-lv-tr-outer {
-			&:first-child {
-				> .cui-lv-tr {
-					border-top: 1px solid $table-border-color;
-				}
-			}
+		> .cui-lv-tr {
+			border-bottom: var(--list-view-inner-row-border-width) solid var(--list-view-inner-border-color);
 		}
 	}
 }
@@ -380,7 +397,7 @@
 		width: $list-view-move-handle-width;
 		padding-left: 0.5*$table-padding-x;
 		padding-right: 0;
-		box-sizing: content-box;
+		border: 0 !important; // ! column width calculation will be off otherwise
 	}
 
 	.cui-drag-handle-row {
@@ -393,6 +410,7 @@
 
 		.cui-drag-handle-row {
 			display: block;
+			margin: 0;
 			margin-top: 0.45em;
 		}
 	}
@@ -406,7 +424,7 @@
 	top: 0;
 	bottom: 0;
 	margin: 0 -5px;
-	width: 10px;
+	width: 9px;
 	z-index: 1;
 }
 
@@ -464,11 +482,11 @@
 								position: relative;
 								top: 50%;
 								transform: translateY(-50%);
-								margin-top: 0;
+								margin: 0;
 							}
 
 							&.cui-lv-row-move-handle-column {
-								padding-left: 0.75rem;
+								// padding-left: 0.75rem; // ! column width calculation will be off
 							}
 						}
 					}

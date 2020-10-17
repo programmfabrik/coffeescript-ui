@@ -1,3 +1,7 @@
+.cui-list-view-tree {
+	--tree-node-level-background: #{rgba($cyan, 0.05)}; // yellowish: #fff3240d;
+}
+
 // * Tree Node
 
 .cui-tree-node {
@@ -31,6 +35,8 @@
 	text-align: center;
 	align-items: center;
 	justify-content: center;
+	margin-left: -4px;
+	margin-right: 2px;
 
 	&.cui-tree-node-is-closed {
 		cursor: pointer;
@@ -56,5 +62,23 @@
 	.cui-label {
 		min-width: 0;
 		flex-shrink: 1;
+	}
+}
+
+// Reserve space for tree node handle in the first column of the header row 
+// .cui-list-view-tree-hierarchy {
+// 	.list-view-header-row {
+// 		.cui-lv-td:first-child::before {
+// 			content: '';
+// 			display: inline-block;
+// 			width: $tree-node-handle-width;
+// 		}
+// 	}
+// }
+
+.cui-tree-node-column {
+	&[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1),
+	&[class*='cui-tree-node-level-']:not(.cui-tree-node-level-1) ~ .cui-lv-td {
+		background-color: var(--tree-node-level-background);
 	}
 }
