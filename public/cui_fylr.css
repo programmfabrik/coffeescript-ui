@@ -1565,6 +1565,10 @@ label[data-label-clickable],
   word-wrap: break-word;
   word-break: break-word; }
 
+.cui-label-multiline ul li:not(:last-child),
+.cui-label-markdown ul li:not(:last-child) {
+  padding-bottom: 0.25rem; }
+
 .cui-label-multiline {
   max-width: 100%;
   display: -webkit-box;
@@ -4439,8 +4443,6 @@ textarea {
   padding: 0.25rem 0.5rem; }
   .cui-lv-td:not(:last-child) {
     border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-border-color); }
-  .cui-lv-td:only-child {
-    padding: 0.25rem; }
   .cui-lv-td .cui-lv-td {
     max-width: 100%;
     box-sizing: border-box; }
