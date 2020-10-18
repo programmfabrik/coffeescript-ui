@@ -83,10 +83,6 @@
 		border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-border-color);
 	}
 
-	&:only-child {
-		padding: $list-view-padding-y;
-	}
-
 	.cui-lv-td {
 		max-width: 100%;
 		box-sizing: border-box; // ???
