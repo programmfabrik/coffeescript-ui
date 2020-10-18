@@ -201,6 +201,10 @@ label[data-label-clickable],
 		word-wrap: break-word;
 		word-break: break-word;
 	}
+
+	ul li:not(:last-child) {
+		padding-bottom: $spacer-xs;
+	}
 }
 
 .cui-label-multiline {
