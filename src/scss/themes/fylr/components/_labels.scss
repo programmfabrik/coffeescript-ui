@@ -176,15 +176,13 @@ label[data-label-clickable],
 // Multiline
 .cui-label-multiline,
 .cui-label-markdown {
-	&:not(.cui-label-centered) {
-		align-items: baseline;
-	}
-
 	&.cui-empty-label {
 		margin: auto 0; // center
 	}
 
 	> .cui-label-icon {
+		align-self: baseline;
+		
 		// fix baseline alignment of SVG icons
 		.cui-icon-svg {
 			position: relative;
