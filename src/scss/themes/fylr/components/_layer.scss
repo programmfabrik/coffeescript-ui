@@ -224,10 +224,6 @@
 
 	&--n::after {
 		top: 100%;
-		// only if header is present
-		.cui-pane--has-header & {
-			background: $layer-header-background;
-		}
 	}
 
 	&--s::after {
@@ -251,6 +247,18 @@
 
 	&--w::after {
 		left: 100%;
+	}
+}
+
+// Black pointer
+// only if header is present
+// only for date popovers which have a (black) header as well
+.cui-layer-pointer--n {
+	.cui-pane--has-header &,
+	.cui-date-time-popover + & {
+		&::after {
+			background: $layer-header-background;
+		}
 	}
 }
 
