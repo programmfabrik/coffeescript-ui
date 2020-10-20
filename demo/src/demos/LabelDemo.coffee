@@ -156,6 +156,26 @@ class Demo.LabelDemo extends Demo
 			centered: true
 		@__addLabel("multiline: true, Icon, centered: true",label)		
 
+		label = new CUI.Label
+			multiline: true
+			manage_overflow: false
+			text: """
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			"""
+			icon: "rotate_left"
+		@__addLabel("multiline: true, manage_overflow: false, Icon", label)		
+
+		label = new CUI.Label
+			multiline: true
+			manage_overflow: true
+			text: """
+			Aaaa that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that.
+			"""
+			icon: "rotate_left"
+		@__addLabel("multiline: true, manage_overflow: true but not active, Icon", label)				
 
 		label = new CUI.Label
 			class: "cui-label-demo-multiline-with-limited-width"
