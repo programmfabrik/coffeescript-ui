@@ -788,8 +788,8 @@ body {
   height: 31.49px; }
 
 .svg-asset-failed {
-  width: 70px;
-  height: 70px; }
+  width: 38.38704px;
+  height: 38.38704px; }
 
 .svg-close {
   width: 12px;
@@ -1547,11 +1547,6 @@ label[data-label-clickable],
 .cui-label-multiline > .cui-label-icon,
 .cui-label-markdown > .cui-label-icon {
   align-self: baseline; }
-  .cui-label-multiline > .cui-label-icon .cui-icon-svg,
-  .cui-label-markdown > .cui-label-icon .cui-icon-svg {
-    position: relative;
-    top: 0.25em;
-    margin-top: -0.25em; }
 
 .cui-label-multiline > .cui-label-content,
 .cui-label-markdown > .cui-label-content {
@@ -1595,7 +1590,7 @@ label[data-label-clickable],
   --lh: calc(var(--lh-base) * 1em);
   line-height: var(--lh);
   position: relative; }
-  .cui-label-manage-overflow > .cui-label-content {
+  .cui-label-manage-overflow.cui-label--has-overflow-button > .cui-label-content {
     margin-bottom: 1rem; }
   .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
     --max-lines: 8;
