@@ -182,13 +182,6 @@ label[data-label-clickable],
 
 	> .cui-label-icon {
 		align-self: baseline;
-		
-		// fix baseline alignment of SVG icons
-		.cui-icon-svg {
-			position: relative;
-			top: 0.25em;
-			margin-top: -0.25em;
-		}
 	}
 
 	> .cui-label-content {
