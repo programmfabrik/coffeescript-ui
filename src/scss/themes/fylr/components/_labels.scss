@@ -21,7 +21,7 @@ label[data-label-clickable],
 		}
 
 		&:not(:empty) + .cui-label-content:not(:empty) {
-			padding-left: 0.5em;
+			padding-left: 0.5em; // be aware that using :not(XYZ) will add class specificity
 			flex-shrink: 1; // todo: ? the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
 		}
 	}
@@ -187,7 +187,7 @@ label[data-label-clickable],
 		.cui-icon-svg {
 			position: relative;
 			top: 0.25em;
-			margin-top: -0.5em;
+			margin-top: -0.25em;
 		}
 	}
 
@@ -202,6 +202,18 @@ label[data-label-clickable],
 
 	ul li:not(:last-child) {
 		padding-bottom: $spacer-xs;
+	}
+
+	&.cui-label-centered {
+		flex-direction: column;
+
+		.cui-label-icon {
+			align-self: center;
+		}
+
+		.cui-label-content {
+			padding: 0 $spacer-sm;
+		}
 	}
 }
 
