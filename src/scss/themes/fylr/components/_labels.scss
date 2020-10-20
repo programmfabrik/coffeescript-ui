@@ -243,8 +243,10 @@ label[data-label-clickable],
 	line-height: var(--lh);
 	position: relative;
 
-	> .cui-label-content {
-		margin-bottom: $spacer;
+	&.cui-label--has-overflow-button {
+		> .cui-label-content {
+			margin-bottom: $spacer;
+		}
 	}
 
 	&.cui-label--measure-overflow {
