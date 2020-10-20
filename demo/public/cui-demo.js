@@ -47270,7 +47270,7 @@ CUI.ProgressMeter = (function(superClass) {
       i = hourglass_icons[j];
       icon = new CUI.Icon({
         icon: i,
-        "class": "fa-stack-2x"
+        "class": "fa-stack-1x"
       });
       CUI.dom.append(hourglass_container, icon.DOM);
     }
@@ -84349,6 +84349,13 @@ Demo.LabelDemo = (function(superClass) {
       icon: "rotate_left"
     });
     this.__addLabel("multiline: true, Icon", label);
+    label = new CUI.Label({
+      multiline: true,
+      text: "A very long text that includes a veryverysuperlongword to show that it can break into lines.",
+      icon: "rotate_left",
+      centered: true
+    });
+    this.__addLabel("multiline: true, Icon, centered: true", label);
     label = new CUI.Label({
       "class": "cui-label-demo-multiline-with-limited-width",
       multiline: true,

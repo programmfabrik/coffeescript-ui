@@ -1338,6 +1338,7 @@ input[data-max-chars='40'] {
   opacity: 1; }
   .cui-hourglass-animation i {
     opacity: 0;
+    line-height: inherit;
     -webkit-animation: hourglass 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite;
             animation: hourglass 2.4s ease-in infinite, hourglass-spin 2.4s ease-out infinite; }
   .cui-hourglass-animation > i:nth-child(1) {
@@ -1539,20 +1540,18 @@ label[data-label-clickable],
     -webkit-box-flex: 0;
             flex-grow: 0; }
 
-.cui-label-multiline:not(.cui-label-centered),
-.cui-label-markdown:not(.cui-label-centered) {
-  -webkit-box-align: baseline;
-          align-items: baseline; }
-
 .cui-label-multiline.cui-empty-label,
 .cui-label-markdown.cui-empty-label {
   margin: auto 0; }
 
-.cui-label-multiline > .cui-label-icon .cui-icon-svg,
-.cui-label-markdown > .cui-label-icon .cui-icon-svg {
-  position: relative;
-  top: 0.25em;
-  margin-top: -0.5em; }
+.cui-label-multiline > .cui-label-icon,
+.cui-label-markdown > .cui-label-icon {
+  align-self: baseline; }
+  .cui-label-multiline > .cui-label-icon .cui-icon-svg,
+  .cui-label-markdown > .cui-label-icon .cui-icon-svg {
+    position: relative;
+    top: 0.25em;
+    margin-top: -0.25em; }
 
 .cui-label-multiline > .cui-label-content,
 .cui-label-markdown > .cui-label-content {
@@ -1563,6 +1562,23 @@ label[data-label-clickable],
   text-overflow: clip;
   word-wrap: break-word;
   word-break: break-word; }
+
+.cui-label-multiline ul li:not(:last-child),
+.cui-label-markdown ul li:not(:last-child) {
+  padding-bottom: 0.25rem; }
+
+.cui-label-multiline.cui-label-centered,
+.cui-label-markdown.cui-label-centered {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column; }
+  .cui-label-multiline.cui-label-centered .cui-label-icon,
+  .cui-label-markdown.cui-label-centered .cui-label-icon {
+    -ms-grid-row-align: center;
+        align-self: center; }
+  .cui-label-multiline.cui-label-centered .cui-label-content,
+  .cui-label-markdown.cui-label-centered .cui-label-content {
+    padding: 0 0.5rem; }
 
 .cui-label-multiline {
   max-width: 100%;
@@ -3188,8 +3204,14 @@ textarea {
             justify-content: center;
     position: relative; }
   .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon {
-    text-align: center;
-    position: relative; }
+    position: relative;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
+    text-align: center; }
     .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon .svg-spinner {
       height: 30px; }
 
@@ -3779,9 +3801,6 @@ textarea {
   overflow: visible;
   padding: 0 0.15em; }
 
-.cui-layer-pointer-cui-date-time-popover::after {
-  background-color: #ffffff !important; }
-
 .cui-form {
   overflow: visible;
   background-color: #f5f5f5; }
@@ -4124,7 +4143,7 @@ textarea {
     color: rgba(33, 33, 33, 0.65); }
 
 .cui-result-navigation-toolbar .cui-buttonbar + .cui-label {
-  margin-left: 1rem; }
+  margin-left: 0.5rem; }
 
 .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group {
   border-radius: 2px;
@@ -4432,8 +4451,6 @@ textarea {
   padding: 0.25rem 0.5rem; }
   .cui-lv-td:not(:last-child) {
     border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-border-color); }
-  .cui-lv-td:only-child {
-    padding: 0.25rem; }
   .cui-lv-td .cui-lv-td {
     max-width: 100%;
     box-sizing: border-box; }
@@ -5336,8 +5353,6 @@ textarea {
       left: 50%; }
   .cui-layer-pointer--n::after {
     top: 100%; }
-    .cui-pane--has-header .cui-layer-pointer--n::after {
-      background: #212121; }
   .cui-layer-pointer--s::after {
     top: 0; }
   .cui-layer-pointer--e, .cui-layer-pointer--w {
@@ -5350,6 +5365,10 @@ textarea {
     left: 0; }
   .cui-layer-pointer--w::after {
     left: 100%; }
+
+.cui-pane--has-header .cui-layer-pointer--n::after,
+.cui-date-time-popover + .cui-layer-pointer--n::after {
+  background: #212121; }
 
 .cui-pane--has-footer .cui-layer-pointer--e,
 .cui-pane--has-footer .cui-layer-pointer--w {
