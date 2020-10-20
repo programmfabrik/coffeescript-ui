@@ -80,7 +80,7 @@
 	grid-template-areas: 'move delete content';
 
 	&:not(:last-child) {
-		margin-bottom: $spacer;
+		margin-bottom: $spacer-xs;
 	}
 
 	> .cui-horizontal-layout-left {
