@@ -149,6 +149,13 @@ class Demo.LabelDemo extends Demo
 			icon: "rotate_left"
 		@__addLabel("multiline: true, Icon",label)
 
+		label = new CUI.Label
+			multiline: true
+			text: "A very long text that includes a veryverysuperlongword to show that it can break into lines."
+			icon: "rotate_left"
+			centered: true
+		@__addLabel("multiline: true, Icon, centered: true",label)		
+
 
 		label = new CUI.Label
 			class: "cui-label-demo-multiline-with-limited-width"
