@@ -125,6 +125,10 @@
 	border-radius: $btn-border-radius;
 	overflow: hidden;
 
+	> *:last-child {
+		margin-right: 0;
+	}
+
 	@if $border == 1 {
 		--border-color: #{$btn-border-color};
 
