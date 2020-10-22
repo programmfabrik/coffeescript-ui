@@ -1,9 +1,21 @@
 @mixin buttonbar-horizontal() {
 	flex-direction: row;
 
-	> *:not(:last-child) {
-		margin-right: $buttonbar-gap; // todo: maybe only apply margin if the child is a buttonbar-group (not a button, buttons should be closer together)
+	// ! start button margins
+	// this is the only margin that keeps elements WITHIN a buttonbar spaced apart correctly
+	// we cannot add margins to the buttonbar directly, because in some cases we have buttons inside the buttonbar that are hidden (via display: none)
+	// then a margin that is applied to the buttonbar would still show even though there are no buttons within actually visible
+	> * {
+		margin-right: $buttonbar-gap;
 	}
+
+	// reset margin-right from the last child in the last buttonbar in a layout-right
+	.cui-horizontal-layout-right & {
+		&:last-child > *:last-child {
+			margin-right: 0;
+		}
+	}
+	// ! end button margins
 
 	.cui-buttonbar-group {
 		&:not(.cui-buttonbar-group-tabs) {
@@ -41,8 +53,12 @@
 	align-items: flex-start;
 	justify-content: center;
 
-	> *:not(:last-child) {
-		margin-bottom: $buttonbar-gap;
+	> * {
+		margin-right: 0; // reset 
+		
+		&:not(:last-child) {
+			margin-bottom: $buttonbar-gap;
+		}
 	}
 
 	.cui-buttonbar-group {
