@@ -27,6 +27,17 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 - DON'T: cui-small-box | cui-medium-box | cui-large-box  (modifier or qualifier in the middle)
 
 */
+body.dev.is-server2::after {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 8px solid rgba(255, 87, 36, 0.4);
+  pointer-events: none; }
+
 /* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
@@ -2194,7 +2205,7 @@ textarea {
   max-width: 100%;
   border-radius: 2px; }
   .cui-multi-input-input + .cui-multi-input-input {
-    margin-top: 0.5rem; }
+    margin-top: 0.25rem; }
   .cui-multi-input-input:focus, .cui-multi-input-input.cui-has-focus {
     box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25);
     border-color: rgba(23, 162, 184, 0.5);
@@ -3101,8 +3112,10 @@ textarea {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
           flex-direction: row; }
-  .cui-buttonbar > *:not(:last-child) {
+  .cui-buttonbar > * {
     margin-right: 0.5rem; }
+  .cui-horizontal-layout-right .cui-buttonbar:last-child > *:last-child {
+    margin-right: 0; }
   .cui-buttonbar .cui-buttonbar-group:not(.cui-buttonbar-group-tabs) .cui-button-button .cui-button-visual,
   .cui-buttonbar .cui-buttonbar-group:not(.cui-buttonbar-group-tabs) .cui-button-select .cui-button-visual {
     border: 1px solid #212121; }
@@ -3156,14 +3169,6 @@ textarea {
   .cui-buttonbar .cui-buttonbar-group .cui-button:not(:first-child):not(:last-child) .cui-button-visual,
   .cui-buttonbar .cui-buttonbar-group .cui-select:not(:first-child):not(:last-child) .cui-button-visual {
     border-radius: 0; }
-  .cui-toolbar > .cui-horizontal-layout-right > .cui-buttonbar {
-    margin-left: 0.5rem; }
-  .cui-toolbar > .cui-horizontal-layout-left > .cui-buttonbar {
-    margin-right: 0.5rem; }
-  .cui-toolbar > .cui-horizontal-layout-left:empty + .cui-horizontal-layout-center:empty + .cui-horizontal-layout-right > .cui-buttonbar:only-child {
-    margin-left: 0; }
-  .cui-buttonbar + .cui-buttonbar {
-    margin-left: 0.5rem; }
 
 .cui-buttonbar-group {
   display: -webkit-box;
@@ -4136,6 +4141,8 @@ textarea {
   .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:hover .cui-button-visual {
     background-color: transparent;
     color: rgba(33, 33, 33, 0.65); }
+  .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi > *:last-child {
+    margin-right: 0; }
 
 .cui-result-navigation-toolbar .cui-buttonbar + .cui-label {
   margin-left: 0.5rem; }
@@ -4149,6 +4156,8 @@ textarea {
   .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:hover .cui-button-visual {
     background-color: transparent;
     color: rgba(33, 33, 33, 0.65); }
+  .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group > *:last-child {
+    margin-right: 0; }
   .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-number-input {
     margin: 0 0.25rem; }
 
@@ -4730,9 +4739,6 @@ textarea {
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
   background-size: 100% 64px; }
 
-.cui-list-view-tree {
-  --tree-node-level-background: rgba(23, 162, 184, 0.05); }
-
 .cui-tree-node {
   display: -webkit-box;
   display: flex;
@@ -4894,7 +4900,7 @@ textarea {
   grid-template-rows: auto;
       grid-template-areas: 'move delete content'; }
   .cui-data-form-row:not(:last-child) {
-    margin-bottom: 1rem; }
+    margin-bottom: 0.25rem; }
   .cui-data-form-row > .cui-horizontal-layout-left {
     -ms-grid-row: 1;
     -ms-grid-column: 1;
@@ -5091,7 +5097,8 @@ textarea {
       background: #212121;
       align-self: flex-end; }
     .cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group {
-      position: relative; }
+      position: relative;
+      margin: 0; }
       .cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
         position: relative;
         border: 0; }
@@ -5220,6 +5227,8 @@ textarea {
   .cui-layer.cui-popover {
     box-shadow: inset 0 0 0 1px rgba(33, 33, 33, 0.03), 0 2px 4px 0 rgba(73, 80, 87, 0.2), 0 2px 7px 0 rgba(73, 80, 87, 0.5), 0 6px 20px 10px rgba(73, 80, 87, 0.55); }
   .cui-layer .cui-pane {
+    background-color: transparent; }
+  .cui-layer .cui-pane-header {
     background-color: transparent; }
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header:not(.cui-template-empty),
   .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-toolbar:not(.cui-template-empty) {
