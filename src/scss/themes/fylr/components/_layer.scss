@@ -150,6 +150,10 @@
 	.cui-pane {
 		background-color: transparent; // reset from cui-pane
 	}
+
+	.cui-pane-header {
+		background-color: transparent; // reset
+	}
 	
 	> .cui-pane {
 		@include layer-pane-layout();
