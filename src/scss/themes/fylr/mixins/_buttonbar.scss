@@ -10,7 +10,9 @@
 	}
 
 	// reset margin-right from the last child in the last buttonbar in a layout-right
-	.cui-horizontal-layout-right & {
+	// ! there are some buttonbars that are NOT inside a layout, so we need to reset them separately, e.g. ez5-required-message
+	.cui-horizontal-layout-right &,
+	.cui-horizontal-layout-center & {
 		&:last-child > *:last-child {
 			margin-right: 0;
 		}
