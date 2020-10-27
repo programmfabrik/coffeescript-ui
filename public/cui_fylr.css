@@ -68,7 +68,7 @@ body.dev.is-server2::after {
   --success: #7ca751;
   --info: #17a2b8;
   --warning: #d6b13a;
-  --danger: #dc3545;
+  --danger: #ff5724;
   --light: #f5f5f5;
   --dark: #343a40;
   --muted: #adb5bd;
@@ -1637,7 +1637,9 @@ label[data-label-clickable],
       color: #212121;
       background-color: transparent; }
     .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
-      height: auto; }
+      height: auto;
+      line-height: 1.5;
+      border: 0 !important; }
       .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center {
         text-decoration: underline;
         word-break: break-all; }
@@ -1952,7 +1954,9 @@ label[data-label-clickable],
   background-color: transparent; }
 
 .cui-button-href .cui-button-visual {
-  height: auto; }
+  height: auto;
+  line-height: 1.5;
+  border: 0 !important; }
   .cui-button-href .cui-button-visual .cui-button-center {
     text-decoration: underline;
     word-break: break-all; }
@@ -2153,8 +2157,8 @@ textarea {
 
 .cui-input.cui-input-has-check-input.cui-input-invalid input,
 .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual {
-  border-color: #dc3545;
-  background: rgba(220, 53, 69, 0.15); }
+  border-color: #ff5724;
+  background: rgba(255, 87, 36, 0.15); }
 
 .cui-input.cui-maximize-vertical {
   display: -webkit-box;
@@ -2576,12 +2580,12 @@ textarea {
   .cui-flex-handle-row:hover {
     background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
     background-position: 50% 50%, 50% 50%, 0 0;
-    background-size: 5px 18px, 5px 22px, 100%;
+    background-size: 5px 0, 5px 0, 100%;
     background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-pane .cui-flex-handle-row:hover {
     background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
     background-position: 50% 50%, 50% 50%, 0 0;
-    background-size: 5px 18px, 5px 22px, 100%;
+    background-size: 5px 0, 5px 0, 100%;
     background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-flex-handle-row:not(.cui-flex-handle-closed) {
     cursor: ew-resize; }
@@ -2608,12 +2612,12 @@ textarea {
   .cui-flex-handle-column:hover {
     background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
     background-position: 50% 50%, 50% 50%, 0 0;
-    background-size: 18px 5px, 22px 5px, 100%;
+    background-size: 0 5px, 0 5px, 100%;
     background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-pane .cui-flex-handle-column:hover {
     background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
     background-position: 50% 50%, 50% 50%, 0 0;
-    background-size: 18px 5px, 22px 5px, 100%;
+    background-size: 0 5px, 0 5px, 100%;
     background-repeat: no-repeat, no-repeat, no-repeat; }
   .cui-flex-handle-column.cui-flex-handle-has-label.cui-flex-handle-closed {
     margin: 0; }
@@ -3114,7 +3118,8 @@ textarea {
           flex-direction: row; }
   .cui-buttonbar > * {
     margin-right: 0.5rem; }
-  .cui-horizontal-layout-right .cui-buttonbar:last-child > *:last-child {
+  .cui-horizontal-layout-right .cui-buttonbar:last-child > *:last-child,
+  .cui-horizontal-layout-center .cui-buttonbar:last-child > *:last-child {
     margin-right: 0; }
   .cui-buttonbar .cui-buttonbar-group:not(.cui-buttonbar-group-tabs) .cui-button-button .cui-button-visual,
   .cui-buttonbar .cui-buttonbar-group:not(.cui-buttonbar-group-tabs) .cui-button-select .cui-button-visual {
@@ -3977,7 +3982,7 @@ textarea {
     padding-top: 0; }
 
 .cui-input-invalid-hint {
-  color: #dc3545; }
+  color: #ff5724; }
 
 .cui-checkbox + .cui-form-hint,
 .cui-data-field.cui-maximize-horizontal + .cui-form-hint {
