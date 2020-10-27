@@ -188,6 +188,8 @@
 
 	.cui-button-visual {
 		height: auto;
+		line-height: $line-height-base;
+		border: 0 !important;
 
 		.cui-button-center {
 			text-decoration: underline;
