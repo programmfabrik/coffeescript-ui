@@ -2,12 +2,6 @@
 .cui-progress-meter {
 	.cui-progress-meter-bar {
 		width: 100%;
-		max-width: 200px;
-		min-width: 30px;
-		height: $btn-height; // todo: do we need other height (sm | lg), see button sizes
-		line-height: $btn-height;
-		border-radius: $btn-border-radius;
-		overflow: hidden;
 		position: relative;
 
 		.cui-progress-meter-fill {
@@ -55,6 +49,12 @@
 
 	&[state='percent'] {
 		.cui-progress-meter-bar {
+			max-width: 200px;
+			min-width: 30px;		
+			overflow: hidden;			
+			height: $btn-height; // todo: do we need other height (sm | lg), see button sizes
+			line-height: $btn-height;			
+			border-radius: $btn-border-radius;
 			background: gray('500');
 			color: white;
 		}
