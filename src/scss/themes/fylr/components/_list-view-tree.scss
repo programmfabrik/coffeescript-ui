@@ -8,7 +8,7 @@
 
 // * Handle
 
-.cui-tree-node-handle,
+.cui-tree-node-handle:not(:empty),
 .cui-tree-node-spacer {
 	width: $tree-node-handle-width;
 	flex: 0 0 auto;
