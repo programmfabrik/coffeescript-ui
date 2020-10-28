@@ -191,13 +191,6 @@
 	flex: 1 1 auto;
 	display: flex;
 
-	// todo: find use-case
-	> .cui-lv-tr > .cui-lv-td {
-		border-style: none;
-		background: linear-gradient($table-even-background 50%, white 50%);
-		background-size: 100% ($list-view-data-height + 2*$table-padding-y) *2;
-	}
-
 	.cui-lv-td {
 		// leave padding-left and padding-right
 		// because its used to measure
@@ -486,10 +479,6 @@
 							}
 						}
 					}
-				}
-
-				> .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
-					background-size: 100% 64px;  // todo
 				}
 			}
 		}
