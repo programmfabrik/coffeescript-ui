@@ -9,6 +9,10 @@
 .cui-form {
 	overflow: visible;
 	background-color: $light; // todo: should we set a default background because of the white form elements ?
+
+	.cui-selected & {
+		background-color: transparent;
+	}
 	// needs to apply padding on a contextual basis
 	// padding: $spacer-sm;
 
