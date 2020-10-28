@@ -191,6 +191,10 @@
 		line-height: $line-height-base;
 		border: 0 !important;
 
+		.cui-button-left {
+			padding-left: 0 !important;
+		}
+		
 		.cui-button-center {
 			text-decoration: underline;
 			word-break: break-all;
