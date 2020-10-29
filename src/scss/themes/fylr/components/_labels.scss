@@ -166,6 +166,7 @@ label[data-label-clickable],
 	align-items: center;
 	justify-content: center;
 	padding: $spacer-xs;
+	height: 100%; // allow to grow vertically
 
 	> .cui-label-content {
 		text-align: center;
@@ -197,8 +198,10 @@ label[data-label-clickable],
 		padding-bottom: $spacer-xs;
 	}
 
-	&.cui-label-centered {
+	&.cui-label-centered {		
 		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 
 		.cui-label-icon {
 			align-self: center;
@@ -206,6 +209,7 @@ label[data-label-clickable],
 
 		.cui-label-content {
 			padding: 0 $spacer-sm;
+			flex: 0 1 auto;
 		}
 	}
 }
