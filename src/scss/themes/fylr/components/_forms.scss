@@ -64,15 +64,17 @@
 	min-width: var(--form-key-width);
 	max-width: none;
 	padding-right: $form-cell-gap;
+	text-transform: uppercase; // todo
 
 	label,
 	.cui-label {
 		display: inline-block;
-		// padding-top: 0.41em; // uncommented becasue if alignment in cui-layer-root-view-select-popover
+		padding-top: $form-key-padding;
 		white-space: normal;
 		min-width: $form-key-min-width;
 		max-width: 100%;
 		word-wrap: break-word;
+		hyphens: auto;
 		// todo:
 		color: $form-label-color;
 		font-size: $form-label-font-size;
@@ -93,6 +95,10 @@
 	// .cui-label {
 	// 	padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
 	// }
+
+	.cui-data-field-output-label {
+		padding-top: $form-key-padding;
+	}
 
 	> .cui-options {
 		margin-bottom: $spacer-sm; // todo
@@ -258,10 +264,6 @@
 	.cui-checkbox + &,
 	.cui-data-field.cui-maximize-horizontal + & {
 		max-width: 100%;
-	}
-
-	.cui-data-form + & {
-		margin-top: $spacer-sm;
 	}
 
 	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
