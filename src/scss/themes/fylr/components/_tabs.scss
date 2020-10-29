@@ -2,6 +2,13 @@
 // * Tabs
 
 /*
+	- tabs are horizontal by default
+	- the classes .cui-tabs--horizontal and .cui-tabs--vertical are not used, because we should apply tab layout on a contextual basis 
+	allowing us to switch between layouts on the fly without the need to change the template
+
+*/
+
+/*
 <div class="cui-tabs [ cui-tabs--horizontal | cui-tabs--vertical ] cui-pane cui-maximize cui-maximize-horizontal cui-maximize-vertical cui-vertical-layout">
 	<div class="cui-vertical-layout-top">
 		<div class="cui-pane-header cui-tabs-pane-header cui-toolbar cui-maximize-horizontal cui-horizontal-layout [cui-tabs-pane-header--overflow]">
@@ -222,8 +229,7 @@
 						&::after {
 							border: 1px solid $tabs-active-border-color;
 							border-bottom: 1px solid transparent;
-							border-top-left-radius: $btn-border-radius;
-							border-top-right-radius: $btn-border-radius;
+							border-radius: $btn-border-radius $btn-border-radius 0 0;
 						}
 					}
 				}
