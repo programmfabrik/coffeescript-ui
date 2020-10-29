@@ -21,6 +21,8 @@
 	--list-view-selected-row-border-width: 0;
 	--list-view-selected-row-border-color: transparent;
 	--list-view-selected-row-background: #{$list-view-selected-row-background};
+	// hover
+	--list-view-hover-row-background: #{$list-view-hover-row-background};
 
 
 	min-height: 0;
@@ -145,10 +147,6 @@
 			box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
 			background-color: var(--list-view-selected-row-background);
 		}
-	}
-
-	&.cui-lv-tree-node--is-branch {
-		@include clickable;
 	}
 }
 
@@ -359,6 +357,17 @@
 
 .cui-list-view-row-selectable {
 	@include clickable;
+}
+
+.cui-lv-tree-node--is-branch {
+	@include clickable;
+
+	&:hover,
+	&:focus {
+		> .cui-lv-tr {
+			background-color: var(--list-view-hover-row-background);
+		}
+	}
 }
 
 // Move a row via drag & drop
