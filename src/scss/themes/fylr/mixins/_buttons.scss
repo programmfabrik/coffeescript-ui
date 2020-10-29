@@ -37,8 +37,8 @@
 
 		// there are some button that have an empty center element, adjust accordingly
 		&:empty {
-			// margin-left: -0.5*$padding-x;
-			display: none; // ? why don't we hide this
+			margin-left: -0.5*$padding-x;
+			// display: none; // ! don't hide this, things will blow up
 		}
 	}
 }
