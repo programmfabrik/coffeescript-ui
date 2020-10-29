@@ -18,7 +18,8 @@
 	.cui-form-value &,
 	.cui-drag-drop-select-sortable &,
 	.drag-drop-select-helper &,
-	.ez5-field & {
+	.ez5-field &, // todo: should go into fylr-theme CSS
+	.cui-block & {
 		max-width: none;
 	}
 
