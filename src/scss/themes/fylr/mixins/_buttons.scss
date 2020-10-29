@@ -37,7 +37,8 @@
 
 		// there are some button that have an empty center element, adjust accordingly
 		&:empty {
-			margin-left: -0.5*$padding-x;
+			// margin-left: -0.5*$padding-x;
+			display: none; // ? why don't we hide this
 		}
 	}
 }
@@ -56,7 +57,6 @@
 		@include button-size($btn-height-xs, 0, $font-size-sm, 0);
 	}
 }
-
 
 @mixin button-sm() {
 	.cui-button-visual {
