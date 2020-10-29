@@ -59,3 +59,18 @@
 		}
 	}
 }
+
+@mixin data-form-field-group-indicator() {
+	position: relative;
+	padding: 0 0 $spacer-xs 0.75rem;
+	
+	&::before {
+		content: '';
+		position: absolute;
+		top: calc(#{$spacer-xs} - 1px);
+		left: 0;
+		bottom: $spacer-xs;
+		width: $data-form-field-group-border-width;
+		background-color: $data-form-field-group-border-color;
+	}
+}

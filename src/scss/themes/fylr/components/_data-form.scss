@@ -1,30 +1,55 @@
 // Data Form
 
 /*
-<div class="cui-form-value">
-	<div class="cui-data-form cui-data-form--movable-rows">
-		<div class="cui-data-form-row cui-horizontal-layout">
-			<div class="cui-horizontal-layout-left">
-				<div class="cui-drag-handle-row"></div>
-			</div>
-			<div class="cui-horizontal-layout-center">
-				<div class="cui-simple-form">
-					<div class="cui-form-container">
-						<div class="cui-form-row"> ... cui-input ... </div>
-					</div>
+<div class="cui-data-form cui-data-form--movable-rows">
+	<div class="cui-data-form-row cui-horizontal-layout">
+		<div class="cui-horizontal-layout-left">
+			<div class="cui-drag-handle-row"></div>
+		</div>
+		<div class="cui-horizontal-layout-center">
+			<div class="cui-simple-form">
+				<div class="cui-form-container">
+					<div class="cui-form-row"> ... cui-input ... </div>
 				</div>
 			</div>
-			<div class="cui-horizontal-layout-right">
-				<div class="cui-buttonbar"> ... delete button ... </div>
-			</div>
+		</div>
+		<div class="cui-horizontal-layout-right">
+			<div class="cui-buttonbar"> ... delete button ... </div>
 		</div>
 	</div>
+</div>
+
+
+<div class="cui-data-form cui-data-form--movable-rows cui-data-form--multiple-fields cui-data-form--add-button">
+	<vertical>
+		<center>
+			<div class="cui-data-form-row cui-horizontal-layout">
+				<div class="cui-horizontal-layout-left">
+					<div class="cui-drag-handle-row"></div>
+				</div>
+				<div class="cui-horizontal-layout-center">
+					<div class="cui-simple-form">
+						<div class="cui-form-container">
+							<div class="cui-form-row"> ... cui-input ... </div>
+						</div>
+					</div>
+				</div>
+				<div class="cui-horizontal-layout-right">
+					<div class="cui-buttonbar"> ... delete button ... </div>
+				</div>
+			</div>
+		</center>
+		<bottom>
+			<buttonbar>
+				<button> + </button>
+			</buttonbar>
+		</bottom>
+	</vertical>
 </div>
 */
 
 .cui-data-form {
-	// .cui-data-form--movable-rows
-	&--movable-rows {
+	&.cui-data-form--movable-rows {
 		max-width: 100%;
 
 		// todo: find use-case, commented out because of the nested-fields in the editor
@@ -33,44 +58,51 @@
 		// }
 
 		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
-			max-width: $data-field-width;
+			// max-width: $data-field-width; // ? where would we need to restrict this, shouldn't be the default
 			overflow: visible; // show focus outline
 		}
 
 		&.cui-data-form--multiple-fields {
-			> .cui-horizontal-layout > .cui-horizontal-layout-center {
+			> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
 				max-width: 100%;
 			}
 		}
 	}
 
-	&--multiple-fields {
-		> .cui-data-form-row {
+	&.cui-data-form--multiple-fields {
+		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row {
 			> .cui-horizontal-layout-center {
-				position: relative;
-				padding: $spacer-xs $spacer-xs $spacer-xs $spacer-sm;
-				border-left: 1px solid $handle-color;
+				@include data-form-field-group-indicator();
 
-				&::after,
-				&::before {
-					content: '';
-					position: absolute;
-					background: $handle-color;
-					width: 10px;
-					height: 1px;
-					left: 0;
-					top: 0;
+				.cui-form-tr:last-child {
+					margin-bottom: 0;
 				}
+			}
 
-				&::after {
-					top: auto;
-					bottom: 0;
-				}
+			&:not(:last-child) {
+				margin-bottom: $spacer;
 			}
 		}
 	}
+
+	&.cui-data-form--add-button {
+		> .cui-vertical-layout > .cui-vertical-layout-bottom {
+			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset} - #{$btn-height/2});
+			margin-top: $spacer;
+
+			.cui-button-button {
+				@include button-bordered();
+			}
+		}
+	}
+
+	+ .cui-form-hint {
+		margin-top: $spacer;
+	}
 }
 
+// ! be aware: in fylr theme the .cui-data-form-row class will be applied outside of .cui-data-form 
+// however this is also part of CUI data-form (see template above, as an example see .ez5-app-base-config-manager / _base-config.scss)
 .cui-data-form-row {
 	overflow: visible !important;
 	width: 100%; // see editor: ez5-nested
@@ -80,7 +112,7 @@
 	grid-template-areas: 'move delete content';
 
 	&:not(:last-child) {
-		margin-bottom: $spacer-xs;
+		margin-bottom: $spacer-sm;
 	}
 
 	> .cui-horizontal-layout-left {
@@ -102,8 +134,9 @@
 	> .cui-horizontal-layout-center {
 		min-width: 0;
 		grid-area: content;
-		margin-left: $data-form-content-offset;
+		margin-left: $data-form-border-offset;
 
+		// todo: move into theme _fields.scss
 		.ez5-nested-fields {
 			margin-bottom: 0 !important;
 		}
@@ -126,7 +159,8 @@
 		}
 	}
 
-	&--read-only {
+	// used only in ez5-nested-table
+	&.cui-data-form-row--read-only {
 		.cui-drag-handle-row {
 			opacity: 0 !important;
 		}

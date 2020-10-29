@@ -475,9 +475,12 @@ $form-cell-gap: 			$spacer !default; // todo: check more forms
 
 // * Data-Form
 // * ==========================================
-$data-form-utilities-column-width: 	1.15 * $spacer !default;
-$data-form-utilities-count: 		2 !default;
-$data-form-content-offset: 			$spacer-xs !default;
+$data-form-utilities-column-width: 			1.15 * $spacer !default;
+$data-form-utilities-count: 				2 !default;
+$data-form-border-offset: 					$spacer-xs !default;
+$data-form-content-offset: 					3*$spacer-xs !default;
+$data-form-field-group-border-color: 		$body-color;
+$data-form-field-group-border-width: 		2px;
 
 // * Block
 // * ==========================================
