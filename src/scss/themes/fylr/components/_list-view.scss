@@ -455,6 +455,21 @@
 // and make the filler higher
 .cui-lv--has-datafields {
 	--list-view-inner-row-min-height: #{$btn-height};
+
+	// todo: 
+	.cui-button-button,
+	.cui-buttonbar .cui-button-button,
+	.cui-buttonbar .cui-buttonbar-group .cui-button-button {
+		&:not(.cui-button-href) {
+			@include button-bordered();
+		}
+		// @include button-link();
+
+		// .cui-button-visual {
+		// 	min-height: $btn-height; // to align buttons within the row
+		// }
+	}
+
 	// its sick.. but the only known way to make sure that it doesn't affect nested elements
 	> .cui-vertical-layout-center {
 		> .cui-list-view-grid {
