@@ -13,3 +13,9 @@
 @mixin pane-margin-reset() {
 	margin: 0;
 }
+
+@mixin pane() {
+	background-color: $pane-background;
+
+	@include pane-padding();
+}
