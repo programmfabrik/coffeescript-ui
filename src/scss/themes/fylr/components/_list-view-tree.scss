@@ -59,6 +59,10 @@
 		min-width: 0;
 		flex-shrink: 1;
 	}
+
+	> .cui-form {
+		padding-top: $spacer-xs;
+	}
 }
 
 // Reserve space for tree node handle in the first column of the header row 
