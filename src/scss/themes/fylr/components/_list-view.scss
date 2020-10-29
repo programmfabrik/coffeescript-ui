@@ -164,17 +164,14 @@
 // <div class="cui-lv-tr-outer list-view-header-row">
 
 .list-view-header-row {
-	.cui-label {
-		align-items: flex-end;
-		font-weight: $headings-font-weight;
-	}
-
 	.cui-lv-tr {
 		border-bottom: var(--list-view-header-row-border-width) solid var(--list-view-header-row-border-color);
 	}
 	
 	.cui-lv-td {
 		display: flex;
+		align-items: flex-end;
+		min-height: auto; // reset min-height, so labels appear centered, when they are in fact aligned "flex-end". Flex-end is needed in case the header contains rotate-90
 
 		&:not(:last-child):not(:empty) {
 			border-color: var(--list-view-header-column-border-color);
@@ -185,6 +182,10 @@
 			overflow: hidden;
 			line-height: 1;
 		}
+	}
+
+	.cui-label {
+		font-weight: $headings-font-weight;
 	}
 }
 
@@ -275,7 +276,6 @@
 		font-weight: $headings-font-weight;
 
 		&-multiline {
-			align-self: flex-end;
 			flex-shrink: 1;
 			max-width: 100%;
 		}
@@ -286,7 +286,6 @@
 	}
 	
 	.cui-lv-td {
-		align-items: flex-end;
 		position: relative;
 		overflow: visible;
 
