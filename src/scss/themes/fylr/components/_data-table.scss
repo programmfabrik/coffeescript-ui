@@ -25,25 +25,11 @@
 		min-width: 0;
 	}
 
-	.cui-lv-tr-fill-outer {
-		> .cui-lv-tr > .cui-lv-td {
-			background-size: 100% $table-data-height*2; // todo: find use-case
-		}
-	}
+	.cui-list-view {
+		--list-view-border-width: 1px;
 
-	// Footer
-	.cui-list-view .cui-pane-footer .cui-buttonbar {
-		.cui-button {
-			@include button-sm();
-		}
-
-		input {
-			@include input-sm();
-		}
-
-		// this is semantically not necessarily a group, but it is marked up as one
-		.cui-buttonbar-group {
-			@include ungroup-visually();
+		> .cui-vertical-layout-bottom > .cui-pane-footer {
+			padding: $toolbar-padding;
 		}
 	}
 }
