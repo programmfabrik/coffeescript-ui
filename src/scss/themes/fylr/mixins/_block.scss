@@ -1,9 +1,21 @@
-@mixin block-grid() {
+/*
+	- block-grid is used within base-config
+*/
+
+@mixin block-grid($header-column-width: 200px, $content-column-width: 1fr) {
+	--block-grid-header-column-width: #{$header-column-width};
+	--block-grid-content-column-width: #{$content-column-width};
+
+	> .cui-block-header:empty {
+		display: block; // keep grid intact, see Base config > Auto Keyworder
+	}
+
 	// with border-bottom
 	&.cui-block-level-1,
 	&.cui-block-level-2,
 	&.cui-block-level-3 {
 		position: relative;
+		padding-bottom: $block-margin;
 
 		&::after {
 			content: '';
@@ -14,25 +26,37 @@
 			height: 1px;
 			background: $hr-border-color;
 		}
-
-		// &.cui-block--padded {
-		// 	&::after {
-		// 		margin: 0 $block-padding;
-		// 	}
-		// }
 	}
 
 	// Level 1
 	&.cui-block-level-1 {
-		> .cui-block-content {
-			color: theme-color('secondary');
+		margin-top: $spacer;
+
+		> .cui-block-content > .cui-label {
+			@include label-secondary();
 		}
 	}
 
 	// Level 2 = two columns
 	&.cui-block-level-2 {
 		display: grid;
-		grid-template-columns: $block-header-column-width 1fr;
-		grid-gap: 0 $spacer-xl; // todo: needs IE fix, use grid-template-areas
+		grid-template-columns: minmax(100px, var(--block-grid-header-column-width)) minmax(100px, var(--block-grid-content-column-width));
+		grid-gap: 0 2*$block-margin;
+
+		@include media-breakpoint-down(md) {
+			--block-grid-header-column-width: #{$header-column-width * 0.5};
+		}
+
+		> .cui-block-header .cui-block-title {
+			margin-bottom: 0;
+			margin-top: $spacer-xs; // align with the first form-key
+		}
 	}
+
+	// align form keys to the right by default
+	.cui-form-table {		
+		.cui-form-key {
+			text-align: right;
+		}
+	}	
 }
