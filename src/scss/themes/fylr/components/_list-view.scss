@@ -52,7 +52,6 @@
 
 	> .cui-vertical-layout-bottom > .cui-pane-footer {
 		min-height: 0;
-		padding: $spacer $list-view-padding-y 0; // adjust according to (header) rows of the list-view, see .cui-lv-td & .cui-lv-th
 		background-color: transparent;
 	}
 
