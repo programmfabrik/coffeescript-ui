@@ -27,6 +27,10 @@
 @mixin label-secondary() {
 	color: theme-color('secondary');
 	font-weight: $font-weight-light;
+
+	.cui-selected & {
+		color: gray('200');
+	}		
 }
 
 @mixin label-reset() {
@@ -47,10 +51,18 @@
 
 @mixin label-muted() {
 	color: theme-color('muted');
+
+	.cui-selected & {
+		color: gray('200');
+	}	
 }
 
 @mixin label-empty() {
 	color: theme-color('muted');
+
+	.cui-selected & {
+		color: gray('200'); // e.g. Datamodel when adding a new object type or mask in the left column
+	}
 }
 
 // Label in a field
