@@ -84,6 +84,11 @@
 	display: block;
 	width: $list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
+
+	&:not(.cui-lv-row-move-handle-column) {
+		min-width: 40px; // make sure the shortest icon-only buttons in the default size are visible in the column
+	}
+	
 	overflow: hidden;
 	flex-shrink: 0;
 	// flex: 1 0 auto; // won't work when resizing the columns
@@ -127,6 +132,10 @@
 
 	.cui-data-field-input {
 		flex-grow: 1;
+	}
+
+	.cui-button {
+		max-width: 100%; // allow button text-overflow ellipsis
 	}
 }
 
