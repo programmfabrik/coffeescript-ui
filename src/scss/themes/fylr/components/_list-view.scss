@@ -471,7 +471,9 @@
 				> .cui-lv-tr-outer {
 					> .cui-lv-tr {
 						> .cui-lv-td {
-							> .cui-label {
+							> .cui-label,
+							> .cui-output {
+								display: block; // reset to block to trigger correct aligment with padding
 								min-height: var(--list-view-inner-row-min-height);
 								padding-top: $spacer-xs;
 								padding-bottom: $spacer-xs;
@@ -480,9 +482,12 @@
 							> .cui-tree-node {
 								> .cui-tree-node-handle:not(:empty) {
 									min-height: var(--list-view-inner-row-min-height);
+									margin-top: -2px;
 								}
 
-								> .cui-tree-node-content > .cui-label {
+								> .cui-tree-node-content > .cui-label,
+								> .cui-tree-node-content > .cui-output {
+									display: block; // reset to block to trigger correct aligment with padding
 									min-height: var(--list-view-inner-row-min-height);
 									padding-top: $spacer-xs;
 									padding-bottom: $spacer-xs;
@@ -490,10 +495,7 @@
 							}
 
 							> .cui-drag-handle-row {
-								position: relative;
-								top: 50%;
-								transform: translateY(-50%);
-								margin: 0;
+								margin-top: $spacer-sm;
 							}
 
 							&.cui-lv-row-move-handle-column {
