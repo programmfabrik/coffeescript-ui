@@ -39,6 +39,11 @@ body.dev.is-server2::after {
   pointer-events: none; }
 
 /*
+	- todo: should be bordered by default
+	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
+	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
+*/
+/*
 	- block-grid is used within base-config
 */
 /* Layer pane styles for popovers and fullscreen layer
@@ -1479,8 +1484,12 @@ label[data-label-clickable],
   .cui-label.cui-label-appearance-secondary {
     color: #6c757d;
     font-weight: 300; }
+    .cui-selected .cui-label.cui-label-appearance-secondary {
+      color: #e6e9ec; }
   .cui-label.cui-label-appearance-muted {
     color: #adb5bd; }
+    .cui-selected .cui-label.cui-label-appearance-muted {
+      color: #e6e9ec; }
   .cui-label[data-type='string'] {
     color: #3e9e88; }
   .cui-label[data-type='NaN'], .cui-label[data-type='number'] {
@@ -1534,6 +1543,8 @@ label[data-label-clickable],
   margin: 0;
   cursor: default;
   color: #adb5bd; }
+  .cui-selected .cui-empty-label {
+    color: #e6e9ec; }
   .cui-empty-label .cui-label-content {
     display: inline-block; }
 
@@ -1648,8 +1659,6 @@ label[data-label-clickable],
       height: auto;
       line-height: 1.5;
       border: 0 !important; }
-      .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left {
-        padding-left: 0 !important; }
       .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center {
         text-decoration: underline;
         word-break: break-all; }
@@ -1967,8 +1976,6 @@ label[data-label-clickable],
   height: auto;
   line-height: 1.5;
   border: 0 !important; }
-  .cui-button-href .cui-button-visual .cui-button-left {
-    padding-left: 0 !important; }
   .cui-button-href .cui-button-visual .cui-button-center {
     text-decoration: underline;
     word-break: break-all; }
@@ -2866,6 +2873,8 @@ textarea {
   .cui-block .cui-block-description {
     color: #6c757d;
     font-weight: 300; }
+    .cui-selected .cui-block .cui-block-description {
+      color: #e6e9ec; }
   .cui-block > .cui-block-header > .cui-block-title {
     font-family: "Source Sans Pro", sans-serif;
     font-size: 0.875rem;
@@ -3327,6 +3336,10 @@ textarea {
     cursor: default; }
   .cui-item-list-body > .cui-label {
     padding: 0 0.75rem; }
+  .cui-item-list-body > .cui-empty-label {
+    margin-bottom: 0.5rem; }
+    .cui-item-list-body > .cui-empty-label:last-child {
+      padding-bottom: 0.25rem; }
   .cui-item-list-body .cui-options .cui-button {
     padding: 0;
     -webkit-box-flex: 1;
@@ -3371,6 +3384,8 @@ textarea {
   margin-top: 0.25rem;
   max-width: 250px;
   margin: 0.5rem 22px 1rem; }
+  .cui-selected .cui-options-order-hint {
+    color: #e6e9ec; }
 
 .cui-options-center {
   min-height: 24px; }
@@ -4016,6 +4031,12 @@ textarea {
   color: #6c757d;
   font-weight: 300;
   margin-top: 0.25rem; }
+  .cui-selected .cui-hint, .cui-selected
+  .cui-form-hint, .cui-selected
+  .cui-input-invalid-hint, .cui-selected
+  .cui-input-valid-hint, .cui-selected
+  .cui-input-empty-hint {
+    color: #e6e9ec; }
   .cui-hint .cui-label,
   .cui-form-hint .cui-label,
   .cui-input-invalid-hint .cui-label,
@@ -4537,6 +4558,10 @@ textarea {
   .cui-list-view .cui-buttonbar .cui-buttonbar-group .cui-button-button:not(.cui-button-href):not(.cui-multi-input-tag-button):focus .cui-button-visual {
     border-color: #17a2b8;
     box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important; }
+  .cui-list-view .cui-button-button.cui-button-href,
+  .cui-list-view .cui-buttonbar .cui-button-button.cui-button-href,
+  .cui-list-view .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-href {
+    height: 30px; }
 
 .cui-lv-tbody {
   display: -webkit-box;
