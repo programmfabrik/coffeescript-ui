@@ -1,3 +1,11 @@
+// * Buttons
+
+/*
+	- todo: should be bordered by default
+	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
+	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
+*/
+
 // Button sizes
 @mixin button-size($height, $padding-x, $font-size, $border-radius) {
 	height: $height;
@@ -190,10 +198,6 @@
 		height: auto;
 		line-height: $line-height-base;
 		border: 0 !important;
-
-		.cui-button-left {
-			padding-left: 0 !important;
-		}
 		
 		.cui-button-center {
 			text-decoration: underline;
