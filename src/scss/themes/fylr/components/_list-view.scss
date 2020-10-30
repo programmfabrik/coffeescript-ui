@@ -5,18 +5,22 @@
 	--list-view-border-color: #{$table-border-color};
 	--list-view-border-width: 0;
 	--list-view-background: transparent;
+	--list-view-column-border-width: 1px; // ! header columns and inner column MUST be the same width to allow correct column width calculation
+	--list-view-row-border-width: 1px;
 	// header rows & columns
 	--list-view-header-background: transparent; // #{$table-border-color};
 	--list-view-header-color: #{$body-color};
 	--list-view-header-row-border-color: #{$table-border-color};
-	--list-view-header-row-border-width: 1px;
+	--list-view-header-row-border-width: var(--list-view-row-border-width);
 	--list-view-header-column-border-color: #{$table-border-color};
-	--list-view-header-column-border-width: 1px;
+	--list-view-header-column-border-width: var(--list-view-column-border-width); // !
 	// inner rows & columns
 	--list-view-inner-border-color: #{$table-border-color};
-	--list-view-inner-row-border-width: 1px;
+	--list-view-inner-row-border-width: var(--list-view-row-border-width);
+	--list-view-inner-row-border-color: var(--list-view-inner-border-color);
 	--list-view-inner-row-min-height: #{$list-view-data-height};
-	--list-view-inner-column-border-width: 0;
+	--list-view-inner-column-border-color: transparent; // ! "hide" column border by default by making them transparent, do not set border-width to 0
+	--list-view-inner-column-border-width: var(--list-view-column-border-width); // !
 	// selected
 	--list-view-selected-row-border-width: 0;
 	--list-view-selected-row-border-color: transparent;
@@ -96,7 +100,7 @@
 	padding: $list-view-padding-y $list-view-padding-x;
 
 	&:not(:last-child) {
-		border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-border-color);
+		border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-column-border-color);
 	}
 
 	.cui-lv-td {
@@ -364,7 +368,7 @@
 	// alternatively if we did style border-top, the last element would still be .cui-lv-tr-fill-outer which could have a 0 height, leaving again a seemingly double border at the bottom
 	> .cui-lv-tr-outer {
 		> .cui-lv-tr {
-			border-bottom: var(--list-view-inner-row-border-width) solid var(--list-view-inner-border-color);
+			border-bottom: var(--list-view-inner-row-border-width) solid var(--list-view-inner-row-border-color);
 		}
 	}
 }
