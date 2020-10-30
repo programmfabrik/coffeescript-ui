@@ -59,7 +59,7 @@
 	.cui-button-button,
 	.cui-buttonbar .cui-button-button,
 	.cui-buttonbar .cui-buttonbar-group .cui-button-button {
-		&:not(.cui-button-href) {
+		&:not(.cui-button-href):not(.cui-multi-input-tag-button) {
 			@include button-bordered();
 		}
 	}
