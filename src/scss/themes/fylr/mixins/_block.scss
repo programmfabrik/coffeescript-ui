@@ -30,7 +30,7 @@
 
 	// Level 1
 	&.cui-block-level-1 {
-		margin-top: $spacer;
+		margin-top: $spacer;	
 
 		> .cui-block-content > .cui-label {
 			@include label-secondary();
@@ -41,7 +41,7 @@
 	&.cui-block-level-2 {
 		display: grid;
 		grid-template-columns: minmax(100px, var(--block-grid-header-column-width)) minmax(100px, var(--block-grid-content-column-width));
-		grid-gap: 0 2*$block-margin;
+		grid-gap: 0 4*$block-margin;
 
 		@include media-breakpoint-down(md) {
 			--block-grid-header-column-width: #{$header-column-width * 0.5};
