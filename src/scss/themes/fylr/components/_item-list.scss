@@ -81,6 +81,14 @@
 		padding: 0 $btn-padding-x;
 	}
 
+	> .cui-empty-label {
+		margin-bottom: $spacer-sm;
+
+		&:last-child {
+			padding-bottom: $spacer-xs;
+		}
+	}	
+
 	// Options within item-list
 	// --------------------------------
 	// todo: style in a real world example (these are the original styles from ng theme)
