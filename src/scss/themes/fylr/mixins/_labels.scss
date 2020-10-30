@@ -27,10 +27,11 @@
 @mixin label-secondary() {
 	color: theme-color('secondary');
 	font-weight: $font-weight-light;
+}
 
-	.cui-selected & {
-		color: theme-color('primary'); // todo: when is this ever selected?
-	}
+@mixin label-reset() {
+	color: inherit;
+	font-weight: $font-weight-normal;
 }
 
 @mixin label-title() {

@@ -60,10 +60,12 @@ label[data-label-clickable],
 		}
 	}
 
+	// todo: make obsolete
 	&.cui-label-appearance-secondary {
 		@include label-secondary();
 	}
 
+	// todo: make obsolete
 	&.cui-label-appearance-muted {
 		@include label-muted();
 	}
