@@ -45,7 +45,7 @@
 		flex-direction: column;
 		background-color: var(--list-view-background); // only apply colored background to the center (bottom might contain buttons etc.)
 
-		@include pane-padding-reset();
+		@include pane-padding-reset(); // we reset padding, because in most cases the padding will be applied by some outer parent (like cui-pane)
 	}
 
 	// nested
@@ -54,8 +54,10 @@
 		// margin: $spacer 0; // no margin to keep in line with e.g. input fields
 	}
 
-	> .cui-vertical-layout-bottom > .cui-pane-footer {
-		min-height: 0;
+	> .cui-vertical-layout-top > .cui-toolbar,
+	> .cui-vertical-layout-bottom > .cui-toolbar {	
+		padding-left: 0; 
+		padding-right: 0;
 		background-color: transparent;
 	}
 
