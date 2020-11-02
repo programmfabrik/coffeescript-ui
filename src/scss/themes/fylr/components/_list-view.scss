@@ -60,10 +60,11 @@
 	}
 
 	// todo: make all buttons bordered by default
+	// except menu-ellipsis, info button
 	.cui-button-button,
 	.cui-buttonbar .cui-button-button,
 	.cui-buttonbar .cui-buttonbar-group .cui-button-button {
-		&:not(.cui-button-href):not(.cui-multi-input-tag-button) {
+		&:not(.cui-button-href):not(.cui-multi-input-tag-button):not(.ez5-path-info-button):not([data-qa='eas-column-detail-menu-datei-button']):not([role='multi-output-tag']) {
 			@include button-bordered();
 		}
 
