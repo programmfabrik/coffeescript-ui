@@ -1,6 +1,6 @@
-@mixin tabs-vertical() {
+@mixin tabs-vertical($tab-width: 200px) {	
 	display: grid;
-	grid-template-columns: 220px 1fr;
+	grid-template-columns: $tab-width 1fr;
 	grid-template-rows: 1fr auto;
 	grid-template-areas:
 		't_header t_body'
