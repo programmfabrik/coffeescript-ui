@@ -1,9 +1,15 @@
 // * Block
-// e.g. used within base config
+// e.g. used within base config, fields-renderer--block, forms
 
 .cui-block {
+	--block-line-width: 3px;
+	--block-line-length: 10px;
+	--block-color: #{gray('900')};
+
 	flex-shrink: 0;
 	position: relative;
+	padding-bottom: $spacer;
+	padding-top: $spacer;
 
 	&:not(:last-child) {
 		margin-bottom: $block-margin;
@@ -33,7 +39,7 @@
 	// * Titles 
 	// apply to all block types (default and grid)
 	> .cui-block-header > .cui-block-title {
-		@include h6(0);
+		// @include h6(0);
 
 		+ * {
 			margin-top: $spacer-sm;
@@ -42,33 +48,89 @@
 
 	// * Level 1
 
-	&.cui-block-level-1 {
-		> .cui-block-header > .cui-block-title {
-			@include h3($spacer);
-		}
-	}
+	// &.cui-block-level-1 {
+	// 	> .cui-block-header > .cui-block-title {
+	// 		@include h2($spacer);
+	// 	}
+	// }
 
 	// * Level 2
 
-	&.cui-block-level-2 {
-		> .cui-block-header > .cui-block-title {
-			@include h5($spacer);
-		}
-	}
+	// &.cui-block-level-2 {
+	// 	> .cui-block-header > .cui-block-title {
+	// 		@include h3($spacer);
+	// 	}
+	// }
 
 	// * Level 3
 	
-	// &.cui-block-level-3 {}
+	// &.cui-block-level-3 {
+	// 	> .cui-block-header > .cui-block-title {
+	// 		@include h4($spacer);
+	// 	}
+	// }
 
 	// * Nested Blocks
 
 	.cui-block.cui-block-level-1 > .cui-block-header > .cui-block-title,
 	.cui-block.cui-block-level-2 > .cui-block-header > .cui-block-title {
-		@include h5(0);
+		// @include h5(0);
 
 		+ * {
 			margin-top: $spacer-sm;
 		}
+	}
+
+	// Block carets
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 2px;
+		right: 0;
+		bottom: 0;
+		background-position: 0 0, 0 0, 100% 0, 0 100%;
+		background-size: var(--block-line-width) 100%, 100% var(--block-line-width), var(--block-line-width) 100%, 100% var(--block-line-width);
+		background-repeat: no-repeat;
+		background-image:
+			// left
+			linear-gradient(0deg, var(--block-color, currentColor), var(--block-color, currentColor) var(--block-line-length), transparent var(--block-line-length), transparent calc(100% - #{var(--block-line-length)}), var(--block-color, currentColor) calc(100% - #{var(--block-line-length)})),
+			// top
+			linear-gradient(90deg, var(--block-color, currentColor), var(--block-color, currentColor) var(--block-line-length), transparent var(--block-line-length), transparent calc(100% - #{var(--block-line-length)}), var(--block-color, currentColor) calc(100% - #{var(--block-line-length)})),
+			// right
+			linear-gradient(180deg, var(--block-color, currentColor), var(--block-color, currentColor) var(--block-line-length), transparent var(--block-line-length), transparent calc(100% - #{var(--block-line-length)}), var(--block-color, currentColor) calc(100% - #{var(--block-line-length)})),
+			// bottom
+			linear-gradient(270deg, var(--block-color, currentColor), var(--block-color, currentColor) var(--block-line-length), transparent var(--block-line-length), transparent calc(100% - #{var(--block-line-length)}), var(--block-color, currentColor) calc(100% - #{var(--block-line-length)}));
+		pointer-events: none;
+	}
+
+	.cui-block-header,
+	.cui-block-content {
+		padding-left: $block-content-padding;
+		padding-right: $block-content-padding;
+	}
+
+	.cui-block-header {
+		@include h6(0);
+
+		margin-bottom: $spacer;
+
+		> .cui-block-title {
+			color: var(--block-color);
+		}
+	}
+
+	&.cui-block-level-1 {
+		--block-color: #{gray('900')};
+	}
+
+	&.cui-block-level-2 {
+		--block-color: #{gray('600')};
+	}
+
+	&.cui-block-level-3 {
+		--block-color: #{gray('500')};
 	}
 }
 
