@@ -13,7 +13,7 @@
 	// ! there are some buttonbars that are NOT inside a layout, so we need to reset them separately, e.g. ez5-required-message
 	// .cui-horizontal-layout-right &,
 	// .cui-horizontal-layout-center & { // exclude center becuase we might need a margin to its right to space another buttonbar or buttons that are in the right layout
-	.cui-horizontal-layout-right & {
+	.cui-horizontal-layout-right > & {
 		&:last-child > *:last-child {
 			margin-right: 0;
 		}
