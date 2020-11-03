@@ -32,3 +32,9 @@
 	}
 }
 
+@mixin list-view-highlight-first-column() {
+	.cui-lv-tbody .cui-lv-tr > .cui-lv-td.cui-tree-node-level-1 {
+		font-weight: $font-weight-bold;
+	}
+}
+
