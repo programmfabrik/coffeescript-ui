@@ -39,7 +39,7 @@
 	// * Titles 
 	// apply to all block types (default and grid)
 	> .cui-block-header > .cui-block-title {
-		// @include h6(0);
+		// @include h6(0);		
 
 		+ * {
 			margin-top: $spacer-sm;
@@ -111,12 +111,12 @@
 		padding-right: $block-content-padding;
 	}
 
-	.cui-block-header {
-		@include h6(0);
-
-		margin-bottom: $spacer;
-
+	.cui-block-header {		
 		> .cui-block-title {
+			@include h6(0);
+			
+			text-transform: uppercase;
+			margin-bottom: $spacer;
 			color: var(--block-color);
 		}
 	}

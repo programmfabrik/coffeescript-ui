@@ -67,7 +67,7 @@
 
 // Label in a field
 @mixin label-field() {
-	text-transform: uppercase;
+	text-transform: capitalize;
 	font-weight: $font-weight-bold;
 	line-height: $line-height-sm;
 }
