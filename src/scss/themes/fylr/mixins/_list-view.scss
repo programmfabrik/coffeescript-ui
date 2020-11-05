@@ -32,9 +32,13 @@
 	}
 }
 
-@mixin list-view-highlight-first-column() {
-	.cui-lv-tbody .cui-lv-tr > .cui-lv-td.cui-tree-node-level-1 {
-		font-weight: $font-weight-bold;
+@mixin list-view-highlight-first-column($levels) {
+	.cui-lv-tbody .cui-lv-tr {
+		@each $level in $levels {
+			> .cui-tree-node-level-#{$level} {
+				font-weight: $font-weight-bold;
+			}
+		}
 	}
 }
 
