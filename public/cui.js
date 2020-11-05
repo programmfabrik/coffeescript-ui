@@ -44196,6 +44196,21 @@ CUI.MultiInput = (function(superClass) {
     return this;
   };
 
+  MultiInput.prototype.updateData = function(data) {
+    var i, input, len, ref, value;
+    MultiInput.__super__.updateData.call(this, data);
+    value = this.getValue();
+    ref = this.__inputs;
+    for (i = 0, len = ref.length; i < len; i++) {
+      input = ref[i];
+      input.updateData(value);
+    }
+    this.displayValue();
+    this.__setUserSelectedData();
+    this.setInputVisibility();
+    return this;
+  };
+
   MultiInput.prototype.__initInputs = function() {
     var fn, i, idx, input, input_opts, key, len, ref, ref1;
     if (this.__inputs) {
