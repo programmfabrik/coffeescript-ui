@@ -3897,8 +3897,7 @@ textarea {
   min-width: 135px;
   min-width: var(--form-key-width);
   max-width: none;
-  padding-right: 1rem;
-  text-transform: uppercase; }
+  padding-right: 1rem; }
   .cui-form-key label,
   .cui-form-key .cui-label {
     display: inline-block;
@@ -3906,14 +3905,12 @@ textarea {
     white-space: normal;
     min-width: 100px;
     max-width: 100%;
+    font-weight: 700;
+    line-height: 1.3;
     word-wrap: break-word;
     -webkit-hyphens: auto;
         -ms-hyphens: auto;
-            hyphens: auto;
-    color: #212121;
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1.3; }
+            hyphens: auto; }
 
 .cui-form-value {
   -webkit-box-flex: 1;
