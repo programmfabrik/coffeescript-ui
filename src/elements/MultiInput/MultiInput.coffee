@@ -165,6 +165,16 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			input.displayValue()
 		@
 
+	updateData: (data) ->
+		super(data)
+		value = @getValue()
+		for input in @__inputs
+			input.updateData(value)
+		@displayValue()
+		@__setUserSelectedData()
+		@setInputVisibility()
+		return @
+
 	__initInputs: ->
 		if @__inputs
 			return

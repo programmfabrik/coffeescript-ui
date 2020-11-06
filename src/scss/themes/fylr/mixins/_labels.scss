@@ -67,9 +67,10 @@
 
 // Label in a field
 @mixin label-field() {
-	text-transform: uppercase;
 	font-weight: $font-weight-bold;
 	line-height: $line-height-sm;
+	word-wrap: break-word;
+	hyphens: auto;
 }
 
 @mixin label-field-subtitle() {

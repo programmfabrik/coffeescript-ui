@@ -124,6 +124,11 @@
 			border-radius: 0;
 			background-color: $tabs-background;
 			font-weight: $font-weight-bold;
+			text-transform: uppercase;
+
+			.cui-button-center {
+				padding: 0 $tabs-content-padding;
+			}
 		}
 		
 		&:active,

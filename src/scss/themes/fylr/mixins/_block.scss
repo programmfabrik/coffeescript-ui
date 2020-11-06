@@ -60,3 +60,10 @@
 		}
 	}
 }
+
+@mixin disble-block-style() {
+	--block-line-width: 0;
+	--block-line-length: 0;
+	// todo: do we need to reset the block color as well?
+	// --block-color: currentColor;
+}

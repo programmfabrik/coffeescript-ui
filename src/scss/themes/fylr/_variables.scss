@@ -377,7 +377,7 @@ $item-list-label-color:			$body-color !default;
 // * Panel
 // * ==========================================
 $panel-border-color: 	$body-color !default;
-$panel-content-padding: $spacer * 1.15 !default;
+$panel-content-padding: $spacer !default; // * 1.15 !default;
 
 // * Toolbar
 // * ==========================================
@@ -576,6 +576,7 @@ $digi-display-font-family: 	$font-family-monospace !default;
 $tabs-padding: 						$component-padding-base !default;
 $tabs-header-height: 				$btn-height !default; // = tab button height
 $tabs-header-height-sm:				$btn-height-sm !default; // = small tab button height
+$tabs-content-padding:				$panel-content-padding !default;
 
 $tabs-background: 					transparent !default;
 $tabs-border-color:					transparent !default;
