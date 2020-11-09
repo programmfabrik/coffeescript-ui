@@ -4647,9 +4647,6 @@ textarea {
 
 .cui-form-tr,
 .cui-form-tr-header {
-  display: -webkit-box;
-  display: flex;
-  min-height: 30px;
   margin-bottom: 1rem;
 }
 @media (max-width: 767.98px) {
@@ -4662,10 +4659,6 @@ textarea {
 .cui-form-key {
   -webkit-box-flex: 0;
           flex: 0 0 auto;
-  width: 135px;
-  width: var(--form-key-width);
-  min-width: 135px;
-  min-width: var(--form-key-width);
   max-width: none;
   padding-right: 1rem;
 }
@@ -5147,7 +5140,14 @@ textarea {
   background-color: #ffffff;
 }
 .cui-pane-header .cui-label {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.25rem;
   font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+.cui-pane-header .cui-pane-header .cui-label, .cui-toolbar .cui-pane-header .cui-label, .cui-buttonbar .cui-pane-header .cui-label {
+  margin-bottom: 0;
 }
 .cui-pane-header .cui-horizontal-layout-left .cui-label {
   margin-right: 0.5rem;
