@@ -48,6 +48,7 @@ module.exports = {
                     'responsive',
                     'variants',
                     'screen',
+                    'use'
                 ],
             },
         ],
