@@ -192,6 +192,10 @@
 }
 
 @mixin buttonbar-group-inverted($border: 0) {
+	// add background to buttonbar-group !
+	background-color: $btn-inverted-background;
+	border-radius: $btn-border-radius;
+
 	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
 	.cui-button-button.cui-button-button,
 	.cui-button-select.cui-button-select {
