@@ -32,7 +32,8 @@
 
 	// make all labels a subtitle by default
 	.cui-label {
-		@include label-subtitle();
+		// @include label-subtitle();
+		@include h3(0); // replace .h3 class in the templates
 	}
 
 	.cui-horizontal-layout-left {

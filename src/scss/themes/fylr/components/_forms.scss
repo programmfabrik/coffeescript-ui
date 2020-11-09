@@ -47,8 +47,8 @@
 
 .cui-form-tr,
 .cui-form-tr-header {
-	display: flex;
-	min-height: $form-row-height; // todo: needed?
+	// display: flex;
+	// min-height: $form-row-height; // todo: needed?
 	margin-bottom: $form-cell-gap;
 
 	@include media-breakpoint-down(sm) {
@@ -58,10 +58,10 @@
 
 .cui-form-key {
 	flex: 0 0 auto;
-	width: $form-key-width; // fallback
-	width: var(--form-key-width);
-	min-width: $form-key-width; // fallback
-	min-width: var(--form-key-width);
+	// width: $form-key-width; // fallback
+	// width: var(--form-key-width);
+	// min-width: $form-key-width; // fallback
+	// min-width: var(--form-key-width);
 	max-width: none;
 	padding-right: $form-cell-gap;
 
