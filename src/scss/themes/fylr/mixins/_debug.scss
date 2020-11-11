@@ -25,7 +25,9 @@ body.dev.is-server2 {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		border: 8px solid rgba(theme-color('primary'), 0.4);
+		border-bottom: 8px solid rgba(theme-color('primary'), 0.4);
+		border-top: 8px solid rgba(theme-color('primary'), 0.4);
 		pointer-events: none;
+		z-index: 100;
 	}
 }
