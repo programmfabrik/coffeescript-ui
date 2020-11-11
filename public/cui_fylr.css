@@ -3405,7 +3405,7 @@ textarea {
 }
 
 .cui-block {
-  --block-nested-indent: 100px;
+  --block-nested-indent: 0;
   flex-shrink: 0;
   position: relative;
 }
@@ -3435,6 +3435,9 @@ textarea {
 }
 .cui-block > .cui-block-header > .cui-block-title + * {
   margin-top: 0.5rem;
+}
+.cui-block .cui-block {
+  margin-left: var(--block-nested-indent);
 }
 .cui-block .cui-block > .cui-block-header {
   margin-top: 0.5rem;
