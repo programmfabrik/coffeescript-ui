@@ -4,7 +4,7 @@
 // use mixins whenever possible to add a specific block style (like inline or simple or bracket or ...)
 
 .cui-block {
-	--block-nested-indent: 100px;
+	--block-nested-indent: 0;
 
 	flex-shrink: 0;
 	position: relative;
@@ -66,7 +66,7 @@
 	// * Nested Blocks, indented by default ?
 
 	.cui-block {
-		// margin-left: var(--block-nested-indent);
+		margin-left: var(--block-nested-indent);
 
 		> .cui-block-header {
 			margin-top: $spacer-sm;
