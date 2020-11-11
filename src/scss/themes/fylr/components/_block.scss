@@ -1,6 +1,7 @@
 // * Block
-// basic block / section styling
+// very basic block section styling, must work anywhere
 // override specifics in ez5-fields-renderer-block or else
+// use mixins whenever possible to add a specific block style (like inline or simple or bracket or ...)
 
 .cui-block {
 	--block-nested-indent: 100px;
