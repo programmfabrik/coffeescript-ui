@@ -69,11 +69,17 @@
 		}
 	}
 
+	// nested group
 	&.cui-data-form--multiple-fields {
 		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row {
 			> .cui-horizontal-layout-center {
 				@include data-form-field-group-indicator();
 
+				.cui-form-key label, 
+				.cui-form-key .cui-label {
+					padding-top: 0;
+				}
+				
 				.cui-form-tr:last-child {
 					margin-bottom: 0;
 				}

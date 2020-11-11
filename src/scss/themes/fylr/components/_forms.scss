@@ -9,10 +9,14 @@
 .cui-form {
 	overflow: visible;
 	background-color: $light; // todo: should we set a default background because of the white form elements ?
+	width: 100%; // see datamodel >  definition > options popover
 
 	.cui-selected & {
 		background-color: transparent;
 	}
+
+	@include form-key-value-inline(); // default, override in different context using form-key-value-stacked()
+
 	// needs to apply padding on a contextual basis
 	// padding: $spacer-sm;
 
@@ -39,36 +43,18 @@
 
 .cui-form-table {
 	--form-key-width: #{$form-key-width};
-
-	.cui-form-block + & {
-		margin-top: $spacer-sm;
-	}
 }
 
 .cui-form-tr,
 .cui-form-tr-header {
-	// display: flex;
-	// min-height: $form-row-height; // todo: needed?
-	margin-bottom: $form-cell-gap;
-
-	@include media-breakpoint-down(sm) {
-		display: block;
-	}
+	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
 }
 
+// base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
 .cui-form-key {
-	flex: 0 0 auto;
-	// width: $form-key-width; // fallback
-	// width: var(--form-key-width);
-	// min-width: $form-key-width; // fallback
-	// min-width: var(--form-key-width);
-	max-width: none;
-	padding-right: $form-cell-gap;
-
 	label,
 	.cui-label {
 		display: inline-block;
-		padding-top: $form-key-padding;
 		white-space: normal;
 		min-width: $form-key-min-width;
 		max-width: 100%;
@@ -78,22 +64,6 @@
 }
 
 .cui-form-value {
-	flex: 1 1 auto;
-	min-width: 0;
-
-	input {
-		min-width: 0;
-	}
-
-	// label,
-	// .cui-label {
-	// 	padding-top: 0.28em; // see .cui-form-key label, needs to be in line, depends on the font-size
-	// }
-
-	.cui-data-field-output-label {
-		padding-top: $form-key-padding;
-	}
-
 	> .cui-options {
 		margin-bottom: $spacer-sm; // todo
 
@@ -190,8 +160,9 @@
 	flex-direction: column;
 	min-height: 0;
 
+	// ! make sure to use the same margin as for cui-form-tr
 	// :not(.cui-form-field-type--checkbox) use case see: .ez5-download-manager-confirmation-dialog
-	&:not(:last-child):not(.cui-form-field-type--checkbox) {
+	&:not(.cui-form-field-type--checkbox) {
 		margin-bottom: $form-cell-gap;
 	}
 

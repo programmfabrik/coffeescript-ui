@@ -15,6 +15,73 @@
 	z-index: 1;
 }
 
+@mixin form-key-value-inline() {
+	@include media-breakpoint-up(md) {
+		.cui-form-tr,
+		.cui-form-tr-header {
+			display: flex;
+		}
+
+		.cui-form-key {
+			flex: 0 0 auto;
+			width: var(--form-key-width, #{$form-key-width});
+			min-width: var(--form-key-width, #{$form-key-width});
+			max-width: none;
+			padding-right: $form-cell-gap;
+		
+			label,
+			.cui-label {
+				padding-top: $form-key-padding-top;
+				padding-bottom: 0;
+			}
+		}
+
+		.cui-form-value {
+			flex: 1 1 auto;
+			min-width: 0;
+		
+			input {
+				min-width: 0;
+			}
+		
+			label,
+			.cui-label,
+			.cui-data-field-output-label {
+				padding-top: $form-key-padding-top;
+				padding-bottom: 0;
+			}
+		}
+	}	
+}
+
+@mixin form-key-value-stacked() {
+	.cui-form-tr,
+	.cui-form-tr-header {
+		display: block;
+	}
+
+	.cui-form-key {
+		width: auto;
+		min-width: 0;
+		padding-right: 0;
+	
+		label,
+		.cui-label {
+			padding-top: 0;
+			padding-bottom: $form-key-padding-bottom;
+		}
+	}	
+
+	.cui-form-value {	
+		label,
+		.cui-label,
+		.cui-data-field-output-label {
+			padding-top: 0;
+			padding-bottom: $form-key-padding-bottom;
+		}
+	}	
+}
+
 @mixin form-as-grid() {
 	.cui-data-field {
 		max-width: 100%;
