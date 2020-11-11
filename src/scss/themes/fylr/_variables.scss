@@ -485,10 +485,8 @@ $data-form-field-group-border-width: 		2px;
 
 // * Block
 // * ==========================================
-$block-padding: 			$component-padding-base !default;
-$block-margin: 				2*$block-padding !default;
-$block-header-column-width:	200px !default;
-$block-content-padding: 	$panel-content-padding !default;
+$block-margin: 				$spacer !default;
+$block-bracket-padding: 	$panel-content-padding !default;
 
 // * Slider
 // * ==========================================

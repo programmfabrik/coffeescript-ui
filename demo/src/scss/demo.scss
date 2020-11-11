@@ -302,7 +302,7 @@
 }
 
 .cui-demo-block-grid {
-	@include block-grid();
+	@include block-inline();
 }
 
 
