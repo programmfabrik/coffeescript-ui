@@ -38,11 +38,17 @@
 	font-weight: $font-weight-normal;
 }
 
-@mixin label-title() {
+// horizontaler teiler, schnellzugriff block title
+@mixin label-title($letter-spacing: false) {
 	font-weight: $font-weight-bold;
 	color: gray('500');
 	text-transform: uppercase;
-	letter-spacing: 3px;
+
+	@if $letter-spacing {
+		letter-spacing: 3px;
+	} @else {
+		letter-spacing: 0.03em;
+	}
 }
 
 @mixin label-subtitle() {
