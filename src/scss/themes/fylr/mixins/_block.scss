@@ -1,7 +1,7 @@
 // * Block Simple
 // adds simple section divider
 
-@mixin block-simple() {	
+@mixin block-simple() {
 	&:not(:last-child) {
 		padding-bottom: $block-margin;
 		border-bottom: 1px solid $hr-border-color;

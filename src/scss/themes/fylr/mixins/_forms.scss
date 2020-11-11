@@ -51,7 +51,7 @@
 				padding-bottom: 0;
 			}
 		}
-	}	
+	}
 }
 
 @mixin form-key-value-stacked() {
@@ -70,16 +70,16 @@
 			padding-top: 0;
 			padding-bottom: $form-key-padding-bottom;
 		}
-	}	
+	}
 
-	.cui-form-value {	
+	.cui-form-value {
 		label,
 		.cui-label,
 		.cui-data-field-output-label {
 			padding-top: 0;
 			padding-bottom: $form-key-padding-bottom;
 		}
-	}	
+	}
 }
 
 @mixin form-as-grid() {

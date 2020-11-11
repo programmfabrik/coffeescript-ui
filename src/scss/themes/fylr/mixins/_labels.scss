@@ -46,7 +46,8 @@
 
 	@if $letter-spacing {
 		letter-spacing: 3px;
-	} @else {
+	}
+	@else {
 		letter-spacing: 0.03em;
 	}
 }
