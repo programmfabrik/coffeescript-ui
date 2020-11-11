@@ -36,6 +36,8 @@
 @mixin label-reset() {
 	color: inherit;
 	font-weight: $font-weight-normal;
+	text-transform: none;
+	letter-spacing: initial;
 }
 
 // horizontaler teiler, schnellzugriff block title
