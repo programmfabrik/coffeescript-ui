@@ -1,10 +1,19 @@
-// * Block Simple
-// adds simple section divider
+// * Block Separator
+// adds simple section divider border
 
-@mixin block-simple() {
+@mixin block-separator() {
 	&:not(:last-child) {
 		padding-bottom: $block-margin;
 		border-bottom: 1px solid $block-border-color;
+	}
+
+	.cui-block-content {
+		.cui-form-table {
+			&:not(:last-child) {
+				padding-bottom: 0.5*$block-margin; // smaller because the form rows in the form-table have a bottom margin
+				border-bottom: 1px solid $block-border-color;
+			}
+		}
 	}
 }
 
@@ -66,14 +75,14 @@
 	--block-inline-content-max-width: #{$content-max-width};
 	--block-nested-indent: 0;
 	
-	@include block-simple();
+	@include block-separator();
 
-	.cui-block-header {
-		margin-bottom: $block-margin;
-	}
-
-	.cui-block-content {
-		@include media-breakpoint-up(lg) {
+	@include media-breakpoint-up(lg) {
+		.cui-block-header {
+			margin-bottom: $block-margin;
+		}
+		
+		.cui-block-content {
 			margin-left: var(--block-inline-content-indent);
 			max-width: var(--block-inline-content-max-width);
 		}
