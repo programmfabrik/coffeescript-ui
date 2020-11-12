@@ -75,13 +75,12 @@
 			> .cui-horizontal-layout-center {
 				@include data-form-field-group-indicator();
 
+				--data-form-field-group-indicator-top: calc(#{$spacer-xs} - 1px);
+				--data-form-field-group-indicator-bottom: #{$spacer}; // = default margin-bottom of .cui-form-tr				
+
 				.cui-form-key label, 
 				.cui-form-key .cui-label {
 					padding-top: 0;
-				}
-				
-				.cui-form-tr:last-child {
-					margin-bottom: 0;
 				}
 			}
 
@@ -94,6 +93,7 @@
 	&.cui-data-form--add-button {
 		> .cui-vertical-layout > .cui-vertical-layout-bottom {
 			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset} - #{$btn-height/2});
+			margin-top: -$spacer-sm;
 		}
 	}
 
