@@ -15,12 +15,24 @@
 	}
 }
 
-@mixin list-view-without-border() {
+@mixin list-view-no-border() {
 	// border
 	--list-view-border-width: 0;
 	// header rows & columns
 	--list-view-header-row-border-width: 0;
 	--list-view-header-column-border-width: 0;
+	// inner rows & columns
+	--list-view-inner-row-border-width: 0;
+	--list-view-inner-column-border-width: 0;
+}
+
+
+@mixin list-view-only-header-border() {
+	// border
+	--list-view-border-width: 0;
+	// header rows & columns
+	--list-view-header-row-border-width: 1px;
+	--list-view-header-column-border-width: 1px;
 	// inner rows & columns
 	--list-view-inner-row-border-width: 0;
 	--list-view-inner-column-border-width: 0;
