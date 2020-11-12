@@ -305,6 +305,9 @@
 	@include block-inline();
 }
 
+.cui-demo-block-separator .cui-block {
+	@include block-separator();
+}
 
 
 /* Content Area */

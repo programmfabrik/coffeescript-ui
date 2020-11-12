@@ -15,7 +15,7 @@ class Demo.BlockDemo extends Demo
 		@demo_table.addDivider("blocks")
 
 		@demo_table.addExample("Blocks", @createBlocks() )
-		@demo_table.addExample("Blocks with line separator mixin", @createSimpleBlocks("cui-block-demo-separator") )
+		@demo_table.addExample("Blocks with line separator mixin", @createSimpleBlocks("cui-demo-block-separator") )
 		@demo_table.addExample("Blocks as grid and padded", @createSimpleBlocksWide() )
 		@demo_table.addExample("Blocks as grid and NOT padded", @createSimpleBlocksWideNotPadded() )
 
