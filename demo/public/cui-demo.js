@@ -77962,7 +77962,7 @@ Demo.BlockDemo = (function(superClass) {
     this.demo_table = new Demo.DemoTable();
     this.demo_table.addDivider("blocks");
     this.demo_table.addExample("Blocks", this.createBlocks());
-    this.demo_table.addExample("Blocks with line separator mixin", this.createSimpleBlocks("cui-block-demo-separator"));
+    this.demo_table.addExample("Blocks with line separator mixin", this.createSimpleBlocks("cui-demo-block-separator"));
     this.demo_table.addExample("Blocks as grid and padded", this.createSimpleBlocksWide());
     this.demo_table.addExample("Blocks as grid and NOT padded", this.createSimpleBlocksWideNotPadded());
     this.createWaitBlockExample();

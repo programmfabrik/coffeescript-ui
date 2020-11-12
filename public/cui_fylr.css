@@ -3427,21 +3427,22 @@ textarea {
 .cui-selected .cui-block .cui-block-description {
   color: #f5f5f5;
 }
-.cui-block > .cui-block-header > .cui-block-title {
+.cui-block .cui-block-header {
+  margin-bottom: 0.5rem;
+}
+.cui-block .cui-block-header > .cui-block-title {
   font-weight: 700;
   color: #adb5bd;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-.cui-block > .cui-block-header > .cui-block-title + * {
-  margin-top: 0.5rem;
-}
 .cui-block .cui-block {
   margin-left: var(--block-nested-indent);
 }
-.cui-block .cui-block > .cui-block-header {
-  margin-top: 0.5rem;
+.cui-block.cui-form-block--has-checkbox > .cui-block-content {
+  margin-left: 1.5rem;
 }
+
 .cui-block-content .cui-form-table {
   width: 100%;
 }
@@ -4632,6 +4633,7 @@ textarea {
 */
 .cui-form-table {
   --form-key-width: 135px;
+  --form-data-max-width: 850px;
 }
 
 .cui-form-tr,
@@ -4661,6 +4663,9 @@ textarea {
 }
 .cui-form-value > .cui-data-field {
   min-width: 0;
+}
+.cui-form-value > .cui-data-field:not(.cui-data-table) {
+  max-width: var(--form-data-max-width);
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table > tr > .cui-form-td.cui-form-value {
@@ -5933,14 +5938,16 @@ textarea {
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
-  padding: 0 0 0.25rem 0.75rem;
+  padding: 0 0 0 0.75rem;
+  --data-form-field-group-indicator-top: calc(0.25rem - 1px);
+  --data-form-field-group-indicator-bottom: 1rem;
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center::before {
   content: "";
   position: absolute;
-  top: calc(0.25rem - 1px);
+  top: var(--data-form-field-group-indicator-top, 0);
   left: 0;
-  bottom: 0.25rem;
+  bottom: var(--data-form-field-group-indicator-bottom, 0);
   width: 2px;
   background-color: #212121;
 }
@@ -5948,14 +5955,12 @@ textarea {
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key .cui-label {
   padding-top: 0;
 }
-.cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-tr:last-child {
-  margin-bottom: 0;
-}
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row:not(:last-child) {
   margin-bottom: 1rem;
 }
 .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom {
   padding-left: calc(2 * 1.15rem + 0.25rem - 15px);
+  margin-top: -0.5rem;
 }
 .cui-data-form + .cui-form-hint {
   margin-top: 1rem;
