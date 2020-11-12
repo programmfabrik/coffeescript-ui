@@ -77,7 +77,7 @@
 // Label in a field
 @mixin label-field() {
 	font-weight: $font-weight-bold;
-	line-height: $line-height-sm;
+	line-height: $line-height-sm; // line-height: 1.1; // don#t do this, not in sync with menu dots position
 	word-wrap: break-word;
 	hyphens: auto;
 }
