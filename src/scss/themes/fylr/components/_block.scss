@@ -30,52 +30,42 @@
 	}
 
 	// * Titles 
-	// apply to all block types (default and grid)
-	> .cui-block-header > .cui-block-title {
-		@include label-title(false);
+	.cui-block-header {
+		margin-bottom: $spacer-sm;
 
-		+ * {
-			margin-top: $spacer-sm;
+		> .cui-block-title {
+			@include label-title(false);
 		}
 	}
 
 	// * Level 1
 
 	// &.cui-block-level-1 {
-	// 	> .cui-block-header > .cui-block-title {
-	// 		@include h2($spacer);
-	// 	}
+	// 	> .cui-block-header > .cui-block-title {}
 	// }
 
 	// * Level 2
 
 	// &.cui-block-level-2 {
-	// 	> .cui-block-header > .cui-block-title {
-	// 		@include h3($spacer);
-	// 	}
+	// 	> .cui-block-header > .cui-block-title {}
 	// }
 
 	// * Level 3
 	
 	// &.cui-block-level-3 {
-	// 	> .cui-block-header > .cui-block-title {
-	// 		@include h4($spacer);
-	// 	}
+	// 	> .cui-block-header > .cui-block-title {}
 	// }
 
 	// * Nested Blocks, indented by default ?
 
 	.cui-block {
 		margin-left: var(--block-nested-indent);
+	}
 
-		> .cui-block-header {
-			margin-top: $spacer-sm;
-
-			> .cui-block-title {
-				// text-transform: none;
-				// color: $body-color;
-			}
-		}
+	// Special blocks
+	// see: admin > usermanagement > system rights
+	&.cui-form-block--has-checkbox > .cui-block-content {
+		margin-left: $spacer-lg;
 	}
 }
 
