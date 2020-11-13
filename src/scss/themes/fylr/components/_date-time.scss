@@ -82,7 +82,7 @@
 			@include buttonbar-group-inverted();
 			
 			.cui-button-select {
-				@include button-inverted();
+				@include button-color-inverted();
 	
 				.cui-button-center {
 					padding-left: $btn-padding-x/2 !important;

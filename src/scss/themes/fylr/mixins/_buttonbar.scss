@@ -101,6 +101,7 @@
 	}
 }
 
+// use only for buttonbars that contain plain buttons
 @mixin buttonbar-horizontal-tight() {
 	.cui-button {
 		margin: 0;

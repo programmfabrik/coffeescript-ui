@@ -39,7 +39,7 @@
 		
 		// Invert buttons
 		.cui-button {
-			@include button-inverted();
+			@include button-color-inverted();
 
 			&:not(:last-child) {
 				margin-right: 0;

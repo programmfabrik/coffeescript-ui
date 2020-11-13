@@ -4,6 +4,27 @@
 	- todo: should be bordered by default
 	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
 	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
+
+	- Button types:
+		- default: bordered, on hover change background
+		- primary: no border, orange fill, on hover change background
+		- secondary: no border, grey fill, on hover change background
+		- link: no border, underline, no outside padding, on hover change color
+		- simple: no border, no outside padding, on hover change color
+	- Button sizes:
+		- xs
+		- sm
+		- md
+		- lg
+		- icon
+		- ellipsis
+	- Button modifier
+		- inverted (default, link ?, simple ?)
+	- Button groups
+		- normal
+		- inverted
+		- tight
+		- navigation
 */
 
 // Button sizes
@@ -90,7 +111,7 @@
 	}
 }
 
-@mixin button-color($background: $btn-background, $color: $btn-color, $background-hover: $btn-hover-background, $color-hover: $btn-hover-color, $background-active: $btn-active-background, $color-active: $btn-active-color) {
+@mixin button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active) {
 	.cui-button-visual {
 		background-color: $background;
 		color: $color;
@@ -151,6 +172,7 @@
 	$color-active: $color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+	@include _button-no-border();
 }
 
 @mixin button-secondary() {
@@ -164,9 +186,10 @@
 	$color-active: $color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+	@include _button-no-border();
 }
 
-@mixin button-inverted($border: 0) {
+@mixin button-color-inverted() {
 	$background: $btn-inverted-background;
 	$color: $btn-inverted-color;
 
@@ -178,26 +201,22 @@
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	
-	@if $border == 1 {
-		.cui-button-visual {
-			border-color: $btn-inverted-border-color;
-		}
+	// invert border color
+	// if a button has no-border, the border width will be 0, so applying a color here does not matter
+	--btn-border-color: #{$btn-inverted-border-color};
 
-		&:hover {
-			.cui-button-visual {
-				border-color: $btn-inverted-hover-border-color;
-			}
-		}
+	&:hover {
+		--btn-border-color: #{$btn-inverted-hover-border-color};
 	}
 }
 
 @mixin button-link() {
 	@include button-color(transparent, $link-color, transparent, $link-color, transparent, $link-color);
+	@include _button-no-border();
 
 	.cui-button-visual {
 		height: auto;
 		line-height: $line-height-base;
-		border: 0 !important;
 		
 		.cui-button-center {
 			text-decoration: underline;
@@ -233,16 +252,31 @@
 }
 
 @mixin button-bordered($border-color: $btn-border-color) {
+	--btn-border-width: #{$btn-border-width};
+	--btn-border-color: #{$btn-border-color};
+
 	.cui-button-visual {
-		border: $btn-border-width solid $border-color;
+		border: var(--btn-border-width) solid var(--btn-border-color);
 	}
-	
-	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
 	
 	&:focus .cui-button-visual {
 		border-color: theme-color('focused');
 		box-shadow: $btn-focus-shadow !important;
 	}
+}
+
+@mixin _button-no-border() {
+	--btn-border-width: 0;
+}
+
+@mixin button-plain() {
+	@include _button-no-border();
+	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-active-background, $btn-active-color);
+}
+
+@mixin button-plain-inverted() {
+	@include _button-no-border();
+	@include button-color-inverted();
 }
 
 @mixin button-focus() {

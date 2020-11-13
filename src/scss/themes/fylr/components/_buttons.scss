@@ -43,7 +43,8 @@
 	}
 
 	@include button-md();
-	@include button-color();
+	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
+	@include button-bordered();
 
 	// Modifier
 
@@ -82,7 +83,8 @@
 }
 
 .cui-button-select {
-	@include button-color($input-background, $body-color, $input-background, $btn-hover-color, $btn-active-background, $btn-active-color);
+	// todo: add white background in forms? , adding it by default makes them idfferent from the normal buttons
+	// @include button-color($input-background, $body-color, $input-background, $btn-hover-color, $btn-active-background, $btn-active-color);
 
 	.cui-button-visual {
 		.cui-button-center {
