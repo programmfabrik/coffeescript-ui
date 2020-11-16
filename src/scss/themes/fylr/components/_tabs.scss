@@ -57,6 +57,15 @@
 		background-color: transparent; // reset cui-toolbar
 	}
 
+	// adjust for pane-padding of the parent .cui-pane .cui-vertical-layout-center padding
+	// see admin > usermanagement, admin > datamodel, admin > pollmanager etc.
+	> .cui-vertical-layout-bottom {
+		.cui-toolbar {
+			padding: $pane-padding 0;
+			margin-bottom: -$pane-padding;
+		}
+	}
+
 	> .cui-vertical-layout-center {
 		flex-grow: 1;
 		padding: 0; // reset default cui-pane padding
