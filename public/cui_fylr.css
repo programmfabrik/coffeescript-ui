@@ -5186,19 +5186,6 @@ textarea {
 
 .cui-pane-header {
   flex-wrap: nowrap;
-  padding-left: 0;
-  padding-right: 0;
-  background-color: #ffffff;
-}
-.cui-pane-header .cui-label {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0;
-}
-.cui-pane-header .cui-pane-header .cui-label, .cui-toolbar .cui-pane-header .cui-label, .cui-buttonbar .cui-pane-header .cui-label {
-  margin-bottom: 0;
 }
 .cui-pane-header .cui-horizontal-layout-left .cui-label {
   margin-right: 0.5rem;
@@ -5211,6 +5198,55 @@ textarea {
 .cui-pane-footer .cui-horizontal-layout-right {
   min-width: auto;
 }
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header {
+  flex-wrap: nowrap;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: #ffffff;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-label {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+.cui-pane-header .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-label, .cui-toolbar .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-label, .cui-buttonbar .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-label {
+  margin-bottom: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button {
+  --btn-border-width: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
+  background-color: transparent;
+  color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+  outline: none;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+  outline: none;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:active .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:focus .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:focus .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+
 .cui-simple-pane > .cui-vertical-layout-center {
   overflow: auto;
 }
@@ -5270,7 +5306,7 @@ textarea {
   background-color: #212121;
   color: #ffffff;
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -5278,7 +5314,7 @@ textarea {
   margin-bottom: 0.1em;
   margin-top: 0.1em;
 }
-.cui-pane-header .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label, .cui-toolbar .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label, .cui-buttonbar .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label {
+.cui-pane-header .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label, .cui-toolbar .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label, .cui-buttonbar .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   margin-bottom: 0;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar {
@@ -5449,38 +5485,6 @@ textarea {
 }
 .cui-list-view .cui-button-href {
   height: 30px;
-}
-.cui-list-view .ez5-filter-manager .cui-button-button {
-  --btn-border-width: 0;
-}
-.cui-list-view .ez5-filter-manager .cui-button-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-list-view .ez5-filter-manager .cui-button-button:hover .cui-button-visual, .cui-list-view .ez5-filter-manager .cui-button-button:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
-}
-.cui-list-view .ez5-filter-manager .cui-button-button:focus {
-  outline: none;
-}
-.cui-list-view .ez5-filter-manager .cui-button-button:focus .cui-button-visual {
-  outline: none;
-  border-color: #17a2b8;
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-list-view .ez5-filter-manager .cui-button-button:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
-}
-.cui-list-view .ez5-filter-manager .cui-button-button.cui-active .cui-button-visual, .cui-list-view .ez5-filter-manager .cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-list-view .ez5-filter-manager .cui-button-button.cui-active:hover .cui-button-visual, .cui-list-view .ez5-filter-manager .cui-button-button.cui-active:focus .cui-button-visual, .cui-list-view .ez5-filter-manager .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-list-view .ez5-filter-manager .cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
 }
 
 .cui-lv-tbody {
@@ -6568,7 +6572,7 @@ textarea {
   background-color: #212121;
   color: #ffffff;
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -6576,7 +6580,7 @@ textarea {
   margin-bottom: 0.1em;
   margin-top: 0.1em;
 }
-.cui-pane-header .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label, .cui-toolbar .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label, .cui-buttonbar .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left .cui-label {
+.cui-pane-header .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label, .cui-toolbar .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label, .cui-buttonbar .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   margin-bottom: 0;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar {
