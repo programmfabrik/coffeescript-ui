@@ -21,13 +21,6 @@
 	// ! end button margins
 
 	.cui-buttonbar-group {
-		&:not(.cui-buttonbar-group-tabs) {
-			.cui-button-button,
-			.cui-button-select {
-				@include button-bordered();
-			}
-		}
-		
 		.cui-button,
 		.cui-select {
 			&:not(:last-child) .cui-button-visual {

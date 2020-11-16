@@ -44,16 +44,19 @@
 
 	@include button-md();
 	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
-	@include button-bordered();
 
 	// Modifier
 
 	&.cui-button--primary {
-		@include button-primary();
+		div:not(.cui-buttonbar-group) > & {
+			@include button-primary();
+		}
 	}
 
 	&.cui-button--secondary {
-		@include button-secondary();
+		div:not(.cui-buttonbar-group) > & {
+			@include button-secondary();
+		}
 	}
 
 	// submenu indicator
@@ -99,11 +102,6 @@
 	.cui-data-field-input > & {
 		width: 100%;
 	}
-}
-
-// todo
-.cui-button-form-button {
-	@include button-bordered();
 }
 
 // todo: remove appearance-link class

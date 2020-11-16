@@ -8,16 +8,6 @@
 .cui-pane {
 	background-color: $pane-background;
 
-	// make all buttons within a TOP and BOTTOM toolbars bordered buttons by default
-	// to prevent the default style apply class="cui-toolbar--is-no-default" to the component to exclude, see ez5-search-input for example
-	> .cui-vertical-layout-top > .cui-toolbar:not(.cui-pane-header):not(.cui-toolbar--is-no-default),
-	> .cui-vertical-layout-bottom > .cui-toolbar:not(.cui-pane-footer):not(.cui-toolbar--is-no-default) {
-		.cui-button-button,
-		.cui-button-select {
-			@include button-bordered();
-		}
-	}
-
 	// todo: we should probably do this if this is the most used case, and then override if necessary
 	> .cui-vertical-layout-center {
 		padding: $pane-padding;

@@ -1,7 +1,6 @@
 // * Buttons
 
 /*
-	- todo: should be bordered by default
 	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
 	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
 
@@ -16,15 +15,13 @@
 		- sm
 		- md
 		- lg
+	- Special Plain Buttons:
 		- icon
 		- ellipsis
+		- close / close-inverted
+		- info
 	- Button modifier
 		- inverted (default, link ?, simple ?)
-	- Button groups
-		- normal
-		- inverted
-		- tight
-		- navigation
 */
 
 // Button sizes
@@ -72,18 +69,9 @@
 	}
 }
 
-@mixin button-ellipsis() {
+@mixin button-xs() {
 	.cui-button-visual {
-		@include button-size(18px, 0, 18px, $btn-border-radius-sm); // fake baseline alignment via line-height/height 
-
-		min-width: 0;
-		width: 8px;
-	}
-}
-
-@mixin button-icon() {
-	.cui-button-visual {
-		@include button-size($btn-height-xs, 0, $font-size-sm, 0);
+		@include button-size(16px, 0.25em, 12px, $btn-border-radius-sm);
 	}
 }
 
@@ -105,16 +93,94 @@
 	}
 }
 
-@mixin button-xs() {
+// * Special sizes for plain buttons
+
+// Icon button: used for plain icon buttons like trash/delete, move handle, close, start presentation
+@mixin button-plain-icon() {
+	@include button-plain();
+
 	.cui-button-visual {
-		@include button-size(16px, 0.25em, 12px, 2px);
+		@include button-size($btn-height-xs, 0, $font-size-sm, $btn-border-radius-sm);
 	}
 }
+
+// Ellipsis / 3-dot-menu button
+@mixin button-plain-ellipsis() {
+	@include button-plain();
+
+	.cui-button-visual {
+		@include button-size(18px, 0, 18px, $btn-border-radius-sm); // fake baseline alignment via line-height/height 
+
+		min-width: 0;
+		width: 8px;
+	}
+}
+
+// Info button
+@mixin button-plain-info() {
+	@include button-plain();
+	@include button-sm();
+
+	.cui-button-visual {
+		height: 1.3em;
+		min-width: 1.3em;
+		margin-left: 0.25rem;
+
+		.cui-button-left {
+			padding: 0;
+	
+			.svg-info-circle {
+				width: clamp(10px, 1em, 14px);
+				height: clamp(10px, 1em, 14px);
+			}
+		}
+	}
+
+	// reset default active styles
+	&.cui-layer-open {
+		.cui-button-visual {
+			color: inherit;
+			background-color: transparent;
+		}
+	}
+}
+
+// Close button
+@mixin button-plain-close() {
+	@include button-plain();
+	@include button-xs();
+
+	.cui-button-visual {
+		.cui-button-left {
+			.svg-close {
+				width: 9px;
+				height: 9px;
+			}
+		}
+	}
+}
+
+// Close button inverted
+@mixin button-plain-close-inverted() {
+	@include button-plain-close();
+	@include button-color(transparent, $white, transparent, $white, transparent, $white);
+
+	opacity: 0.65;
+
+	&:hover,
+	&:focus {
+		opacity: 1;
+	}
+}
+
+
+// * Button colors
 
 @mixin button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active) {
 	.cui-button-visual {
 		background-color: $background;
 		color: $color;
+		border: var(--btn-border-width, #{$btn-border-width}) solid var(--btn-border-color, #{$btn-border-color});
 	}
 
 	&:hover,
@@ -157,8 +223,13 @@
 	}
 }
 
+// Reset button colors and border to a clean slate, use if: 
+//	-- you need to style the button quite differently
+//  -- you don't want to convert the button into a plain button using button-plain(), in most cases you probably want to do button-plain() instead
+
 @mixin button-color-reset($background: transparent, $color: $body-color) {
 	@include button-color($background, $color, $background, $color, $background, $color);
+	@include button-no-border();
 }
 
 @mixin button-primary() {
@@ -172,7 +243,7 @@
 	$color-active: $color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
-	@include _button-no-border();
+	@include button-no-border();
 }
 
 @mixin button-secondary() {
@@ -186,7 +257,7 @@
 	$color-active: $color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
-	@include _button-no-border();
+	@include button-no-border();
 }
 
 @mixin button-color-inverted() {
@@ -212,7 +283,7 @@
 
 @mixin button-link() {
 	@include button-color(transparent, $link-color, transparent, $link-color, transparent, $link-color);
-	@include _button-no-border();
+	@include button-no-border();
 
 	.cui-button-visual {
 		height: auto;
@@ -251,48 +322,58 @@
 	}
 }
 
-@mixin button-bordered($border-color: $btn-border-color) {
-	--btn-border-width: #{$btn-border-width};
-	--btn-border-color: #{$btn-border-color};
+@mixin button-convert-link-into-default() {
+	@include button-md();
+	@include button-border();
+	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
 
 	.cui-button-visual {
-		border: var(--btn-border-width) solid var(--btn-border-color);
-	}
-	
-	&:focus .cui-button-visual {
-		border-color: theme-color('focused');
-		box-shadow: $btn-focus-shadow !important;
+		.cui-button-center {
+			text-decoration: none;
+			word-break: initial;
+		}
 	}
 }
 
-@mixin _button-no-border() {
+@mixin button-border() {
+	--btn-border-width: #{$btn-border-width};
+}
+
+// Mixin to remove the button border only
+// ! use carefully, in most cases you want to use button-plain() instead, which will set button colors and hover/focus states as well
+@mixin button-no-border() {
 	--btn-border-width: 0;
 }
 
 @mixin button-plain() {
-	@include _button-no-border();
+	@include button-no-border();
 	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-active-background, $btn-active-color);
 }
 
 @mixin button-plain-inverted() {
-	@include _button-no-border();
+	@include button-no-border();
 	@include button-color-inverted();
 }
 
 @mixin button-focus() {
 	outline: none;
-	box-shadow: 0 0 0 1px $input-focus-border-color, $btn-focus-shadow !important;
+	border-color: theme-color('focused');
+	box-shadow: $btn-focus-shadow !important;
 }
 
+// * Select button as "input field dropwdown", use in forms, ez5-fields
 
-@mixin disable-button-focus() {
-	box-shadow: none;
-	outline: 0;
-	z-index: 0;
+// must look like a regular input field with a white background
+@mixin button-select-as-input() {
+	@include button-plain();
+
+	background-color: $input-background; // in sync with input field background
 }
 
+// * Combobox button
 @mixin button-combobox($button-position: 'right') {
 	// applied to .cui-button-button
+	@include button-plain();
 
 	height: 100%;
 	
@@ -366,29 +447,3 @@
 	align-items: center;
 }
 
-@mixin button-info-icon() {
-	@include button-sm();
-
-	.cui-button-visual {
-		height: 1.3em;
-		min-width: 1.3em;
-		margin-left: 0.25rem;
-	}
-
-	.cui-button-left {
-		padding: 0;
-
-		.svg-info-circle {
-			width: clamp(10px, 1em, 14px);
-			height: clamp(10px, 1em, 14px);
-		}
-	}
-
-	// reset default active styles
-	&.cui-layer-open {
-		.cui-button-visual {
-			color: inherit;
-			background-color: transparent;
-		}
-	}
-}

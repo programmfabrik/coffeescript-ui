@@ -14,6 +14,8 @@
 	padding-right: $spacer-sm;
 
 	.cui-button-button {
+		@include button-color-reset();
+
 		display: flex;
 		width: auto;
 		padding: $spacer-xs 0;
