@@ -21,13 +21,6 @@
 	// ! end button margins
 
 	.cui-buttonbar-group {
-		&:not(.cui-buttonbar-group-tabs) {
-			.cui-button-button,
-			.cui-button-select {
-				@include button-bordered();
-			}
-		}
-		
 		.cui-button,
 		.cui-select {
 			&:not(:last-child) .cui-button-visual {
@@ -101,6 +94,7 @@
 	}
 }
 
+// use only for buttonbars that contain plain buttons
 @mixin buttonbar-horizontal-tight() {
 	.cui-button {
 		margin: 0;

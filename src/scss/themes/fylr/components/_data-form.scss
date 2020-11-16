@@ -94,6 +94,10 @@
 		> .cui-vertical-layout > .cui-vertical-layout-bottom {
 			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset} - #{$btn-height/2});
 			margin-top: -$spacer-sm;
+
+			.cui-button-button {
+				@include button-plain();
+			}
 		}
 	}
 
@@ -162,7 +166,7 @@
 		}
 
 		.cui-button-button {
-			@include button-icon();
+			@include button-plain-icon();
 		}
 	}
 

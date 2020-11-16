@@ -372,15 +372,29 @@ class Demo.ButtonDemo extends Demo
 		, "cui-demo-button-size-large")
 
 		@__addButton("size: \"Icon\"",
-			icon_left: new CUI.Icon(class: "fa-ellipsis-v")
-			text: ""			
-		, "cui-demo-button-size-icon")		
+			icon_left: new CUI.Icon(class: "fa-file")
+			text: ""
+			class: "cui-demo-button-size-icon"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)		
 
-		@__addButton("size: \"Icon\"",
-			icon_left: new CUI.Icon(class: "fa-trash-o")
-			text: ""			
-		, "cui-demo-button-size-icon")		
-					
+		@__addButton("size: \"Ellipsis\"",
+			icon_left: new CUI.Icon(class: "fa-ellipsis-v")
+			text: ""
+			class: "cui-demo-button-size-ellipsis"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)	
+
+		@__addButton("\"Info Icon\"",
+			icon_left: "info"
+			text: ""
+			class: "cui-demo-button-size-info"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)						
+		
 
 		@__addDivider("Buttons Inverted")	
 		inverted = new CUI.Button(
@@ -390,7 +404,7 @@ class Demo.ButtonDemo extends Demo
 		invertedBorder = new CUI.Button(
 			icon_left: new CUI.Icon(class: "fa-trash-o")
 			text: "Remove"
-			class: "with-border"
+			class: "is-plain-button"
 		)	
 		invertedClose = new CUI.Button(
 			icon_left: "close"
@@ -400,7 +414,7 @@ class Demo.ButtonDemo extends Demo
 		invertedDive = new CUI.Button(
 			icon_left: new CUI.Icon(class: "fa-angle-right")
 			text: ""
-			class: "with-border small"
+			class: "is-plain-button small"
 		)						
 		@__demo_table.addExample("Buttons Inverted", [
 			inverted.DOM, 
@@ -420,7 +434,7 @@ class Demo.ButtonDemo extends Demo
 		invertedBorder = new CUI.Button(
 			icon_left: new CUI.Icon(class: "fa-trash-o")
 			text: "Remove"
-			class: "with-border"
+			class: "is-plain-button"
 		)	
 		invertedClose = new CUI.Button(
 			icon_left: "close"
@@ -430,7 +444,7 @@ class Demo.ButtonDemo extends Demo
 		invertedDive = new CUI.Button(
 			icon_left: new CUI.Icon(class: "fa-angle-right")
 			text: ""
-			class: "with-border small"
+			class: "is-plain-button small"
 		)	
 		invertedNavigation = new CUI.Buttonbar(
 			class: "cui-demo-buttonbar-navigation-border"
@@ -980,7 +994,7 @@ class Demo.ButtonDemo extends Demo
 		, "cui-demo-buttonbar-stack-vertical")
 
 		@__addButtonbar("example 5, vertically stacked buttonbar, packed tight",
-			class: "cui-demo-buttonbar-stack-vertical cui-demo-buttonbar-tight"
+			class: "cui-demo-buttonbar-stack-vertical cui-demo-buttonbar-tight cui-demo-buttonbar-plain"
 			buttons: [
 				new CUI.Button(
 					text: "Stack"

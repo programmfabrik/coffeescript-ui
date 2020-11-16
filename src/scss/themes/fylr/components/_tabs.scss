@@ -117,6 +117,8 @@
 
 	.cui-tab-header-button,
 	.cui-tab-header-button-overflow {
+		@include button-color-reset();
+
 		margin: 0;
 
 		.cui-button-visual {

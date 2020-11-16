@@ -80,6 +80,12 @@
 			max-width: var(--form-data-max-width); // restrict data input fields so they do not run across the whole screen, especially on wide admin screens, see admin > usermanagement
 		}
 	}
+
+	.cui-select {
+		.cui-button-select {
+			@include button-select-as-input();
+		}
+	}
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center {
