@@ -5971,11 +5971,16 @@ textarea {
   width: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1.15rem)[2] 1fr;
-  grid-template-columns: repeat(2, 1.15rem) 1fr;
+  -ms-grid-columns: (0)[2] 1fr;
+  grid-template-columns: repeat(2, 0) 1fr;
   -ms-grid-rows: auto;
   grid-template-rows: auto;
       grid-template-areas: "move delete content";
+}
+.cui-data-form--movable-rows .cui-data-form-row,
+.cui-data-form-row .cui-data-form--add-button {
+  -ms-grid-columns: (1.15rem)[2] 1fr;
+  grid-template-columns: repeat(2, 1.15rem) 1fr;
 }
 .cui-data-form-row:not(:last-child) {
   margin-bottom: 0.5rem;
