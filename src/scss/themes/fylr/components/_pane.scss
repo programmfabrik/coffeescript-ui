@@ -16,15 +16,6 @@
 
 .cui-pane-header {
 	flex-wrap: nowrap;
-	padding-left: 0;
-	padding-right: 0;
-	background-color: $body-bg;
-
-	// make all labels a subtitle by default
-	.cui-label {
-		// @include label-subtitle();
-		@include h3(0); // replace .h3 class in the templates
-	}
 
 	.cui-horizontal-layout-left {
 		.cui-label {
@@ -55,9 +46,28 @@
 }
 
 
-// .cui-pane--window {} // #legacy
-// class is added in arbitrary templates, there is no Component Class that generates it, so it would be easy to just ignore this class in fylr and
-// style this pane just like the general a cui-pane
+// * Pane as window
+// .cui-pane--window are the main cui panes with a h3 pane-title
+
+.cui-pane--window {
+	&:not(.cui-layer-pane) {
+		> .cui-vertical-layout-top > .cui-pane-header {
+			flex-wrap: nowrap;
+			padding-left: 0;
+			padding-right: 0;
+			background-color: $body-bg;
+			
+			.cui-label {
+				@include h3(0); // todo: delete .h3 class in the templates
+			}
+			
+			// Default: all buttons within a direct cui-pane-header should be plain buttons
+			.cui-button {
+				@include button-plain();
+			}
+		}
+	}
+} 
 
 
 // * Simple Pane
