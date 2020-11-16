@@ -3845,6 +3845,51 @@ textarea {
   border-bottom: 1px solid #dee2e6;
 }
 
+.css-swatch {
+  width: 24px;
+  height: 12px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.14) inset;
+}
+.css-swatch.cui-swatch-color-blue {
+  background: #6bb2bb;
+}
+.css-swatch.cui-swatch-color-indigo {
+  background: #6610f2;
+}
+.css-swatch.cui-swatch-color-purple {
+  background: #6f42c1;
+}
+.css-swatch.cui-swatch-color-pink {
+  background: #b64b7c;
+}
+.css-swatch.cui-swatch-color-red {
+  background: #dc3545;
+}
+.css-swatch.cui-swatch-color-orange {
+  background: #ff5724;
+}
+.css-swatch.cui-swatch-color-yellow {
+  background: #d6b13a;
+}
+.css-swatch.cui-swatch-color-green {
+  background: #7ca751;
+}
+.css-swatch.cui-swatch-color-teal {
+  background: #3e9e88;
+}
+.css-swatch.cui-swatch-color-cyan {
+  background: #17a2b8;
+}
+.css-swatch.cui-swatch-color-white {
+  background: #ffffff;
+}
+.css-swatch.cui-swatch-color-gray {
+  background: #6c757d;
+}
+.css-swatch.cui-swatch-color-gray-dark {
+  background: #343a40;
+}
+
 .cui-buttonbar {
   display: -webkit-box;
   display: flex;
@@ -4031,6 +4076,10 @@ textarea {
 .cui-item-list-body.cui-item-list--has-button-left .cui-button-left {
   width: 1.5rem;
   margin-right: 0;
+}
+.cui-item-list-body.cui-item-list--has-button-left .cui-button-left:only-child {
+  width: auto;
+  margin-left: 0.75rem;
 }
 .cui-item-list-body.cui-item-list--has-button-left .cui-button-center:first-child {
   margin-left: 1.5rem;
@@ -6933,6 +6982,95 @@ textarea {
 .cui-tooltip > .cui-pane > .cui-vertical-layout-center {
   padding: 0;
   margin: 0;
+}
+
+.cui-google-map {
+  width: 100%;
+  height: 300px;
+}
+
+.cui-leaflet-map {
+  width: 100%;
+  height: 300px;
+  overflow: hidden !important;
+}
+.cui-leaflet-map .cui-vertical-layout-center {
+  overflow: hidden !important;
+}
+.cui-leaflet-map .leaflet-container {
+  background-color: #f2efe8;
+  background-size: 14px 14px;
+  background-position: center;
+  background-image: linear-gradient(to right, #fafafa 1px, rgba(0, 0, 0, 0) 1px), linear-gradient(to bottom, #fafafa 1px, rgba(0, 0, 0, 0) 1px);
+}
+.cui-pane-fill-screen .cui-leaflet-map .leaflet-container {
+  margin: 0 !important;
+  padding: 0.5rem !important;
+}
+
+.cui-map-zoom-buttons {
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+  display: block;
+}
+.cui-map-zoom-buttons .buttons-upper-left .cui-buttonbar {
+  position: absolute;
+  left: 0;
+}
+.cui-map-zoom-buttons .buttons-upper-right .cui-buttonbar {
+  position: absolute;
+  right: 0.5rem;
+}
+
+.cui-map-popover-options {
+  padding: 5px;
+}
+
+.leaflet-div-icon {
+  background: none !important;
+  border: none !important;
+}
+
+.cui-map-input .cui-map-icon-popover-button {
+  width: 30px;
+}
+
+.cui-icon-marker-container {
+  border: none;
+  border-radius: 14px;
+  text-align: center;
+  margin-bottom: 5px;
+  position: relative;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+.cui-icon-marker-container .cui-icon-marker-arrow {
+  position: absolute;
+  left: 50%;
+  top: 21px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  background: inherit;
+}
+.cui-icon-marker-container .cui-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  height: 100%;
+}
+.cui-icon-marker-container .cui-button:active .cui-button-visual {
+  color: inherit;
+}
+.cui-icon-marker-container .cui-button-visual {
+  height: 100%;
+  color: inherit;
 }
 
 /*# sourceMappingURL=cui_fylr.css.map*/
