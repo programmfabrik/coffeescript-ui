@@ -36,8 +36,6 @@
 	}
 
 	.cui-form-hint .cui-button-button {		
-		@include button-bordered();
-
 		margin-top: $spacer-sm;
 	}
 }
@@ -148,8 +146,8 @@
 	}
 
 	.cui-demo-button-pair {
-		.cui-first-visible-child {
-			@include button-bordered();
+		.cui-last-visible-child {
+			@include button-plain();
 		}
 
 		&.cui-demo-button-size-small .cui-button-button {
@@ -159,11 +157,19 @@
 		&.cui-demo-button-size-large .cui-button-button {
 			@include button-lg();
 		}
-
-		&.cui-demo-button-size-icon .cui-button-button {
-			@include button-icon();
-		}
 	}
+	
+	.cui-demo-button-size-icon.cui-button-button {
+		@include button-plain-icon();
+	}
+
+	.cui-demo-button-size-ellipsis.cui-button-button {
+		@include button-plain-ellipsis();
+	}	
+
+	.cui-demo-button-size-info.cui-button-button {
+		@include button-plain-info();
+	}		
 
 	.cui-demo-buttonbar-pair {
 		display: flex;
@@ -181,7 +187,7 @@
 		.cui-buttonbar:last-child > {
 			.cui-button-select,
 			.cui-button {
-				@include button-bordered();
+				@include button-plain();
 			}
 		}
 	}
@@ -216,12 +222,11 @@
 		> .cui-button-button {
 			margin-right: $spacer-sm;
 
-			@include button-inverted();
+			@include button-color-inverted();
 
-			&.with-border {
-				@include button-bordered();
-				@include button-inverted(1);
-			}
+			&.is-plain-button {
+				@include button-plain-inverted();
+			}			
 			
 			&.small {
 				@include button-sm();
@@ -262,9 +267,16 @@
 		@include button-lg();
 	}
 
-	.cui-demo-buttonbar-tight > *:first-child,
-	.cui-demo-buttonbar-tight.cui-buttonbar {
+	.cui-demo-buttonbar-tight > *:last-child {
 		@include buttonbar-horizontal-tight();
+	}
+
+	.cui-demo-buttonbar-tight.cui-demo-buttonbar-plain {
+		@include buttonbar-horizontal-tight();
+
+		.cui-button-button {
+			@include button-plain();
+		}
 	}
 }
 
