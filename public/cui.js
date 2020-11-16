@@ -27868,6 +27868,11 @@ CUI.DateTimeRangeGrammar = (function() {
     }
     dateTime = new CUI.DateTime();
     momentInput = dateTime.parseValue(inputString);
+    if (!momentInput.isValid() && inputString.startsWith(DateTimeRangeGrammar.DASH)) {
+      inputString = inputString.substring(1);
+      momentInput = dateTime.parseValue(inputString);
+      momentInput.year(-momentInput.year());
+    }
     dateTime.destroy();
     return momentInput;
   };
