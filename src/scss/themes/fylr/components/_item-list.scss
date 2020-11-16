@@ -115,6 +115,11 @@
 		.cui-button-left {
 			width: $indent;
 			margin-right: 0;
+
+			&:only-child {
+				width: auto;
+				margin-left: $btn-padding-x;
+			}
 		}
 
 		// indent all other buttons to be in line with the button that has a left side
