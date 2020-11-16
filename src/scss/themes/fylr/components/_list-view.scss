@@ -67,11 +67,6 @@
 	.cui-button-href {
 		height: $btn-height; // keep alignment in the row
 	}
-	
-	// Plain Buttons:
-	.ez5-filter-manager .cui-button-button {
-		@include button-plain();
-	}
 }
 
 // * Body
