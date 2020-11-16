@@ -28,7 +28,7 @@
 		color: $layer-header-color;
 		
 		// Title
-		.cui-horizontal-layout-left .cui-label {
+		.cui-label {
 			@include layer-title();
 		}
 
