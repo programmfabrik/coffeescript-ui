@@ -29793,6 +29793,11 @@ CUI.DateTimeRangeGrammar = (function() {
     }
     dateTime = new CUI.DateTime();
     momentInput = dateTime.parseValue(inputString);
+    if (!momentInput.isValid() && inputString.startsWith(DateTimeRangeGrammar.DASH)) {
+      inputString = inputString.substring(1);
+      momentInput = dateTime.parseValue(inputString);
+      momentInput.year(-momentInput.year());
+    }
     dateTime.destroy();
     return momentInput;
   };
@@ -79062,16 +79067,38 @@ Demo.ButtonDemo = (function(superClass) {
     }, "cui-demo-button-size-large");
     this.__addButton("size: \"Icon\"", {
       icon_left: new CUI.Icon({
+        "class": "fa-file"
+      }),
+      text: "",
+      "class": "cui-demo-button-size-icon",
+      onClick: (function(_this) {
+        return function(evt, button) {
+          return _this.log("Clicked: " + button.getText());
+        };
+      })(this)
+    });
+    this.__addButton("size: \"Ellipsis\"", {
+      icon_left: new CUI.Icon({
         "class": "fa-ellipsis-v"
       }),
-      text: ""
-    }, "cui-demo-button-size-icon");
-    this.__addButton("size: \"Icon\"", {
-      icon_left: new CUI.Icon({
-        "class": "fa-trash-o"
-      }),
-      text: ""
-    }, "cui-demo-button-size-icon");
+      text: "",
+      "class": "cui-demo-button-size-ellipsis",
+      onClick: (function(_this) {
+        return function(evt, button) {
+          return _this.log("Clicked: " + button.getText());
+        };
+      })(this)
+    });
+    this.__addButton("\"Info Icon\"", {
+      icon_left: "info",
+      text: "",
+      "class": "cui-demo-button-size-info",
+      onClick: (function(_this) {
+        return function(evt, button) {
+          return _this.log("Clicked: " + button.getText());
+        };
+      })(this)
+    });
     this.__addDivider("Buttons Inverted");
     inverted = new CUI.Button({
       icon_left: new CUI.Icon({
@@ -79084,7 +79111,7 @@ Demo.ButtonDemo = (function(superClass) {
         "class": "fa-trash-o"
       }),
       text: "Remove",
-      "class": "with-border"
+      "class": "is-plain-button"
     });
     invertedClose = new CUI.Button({
       icon_left: "close",
@@ -79096,7 +79123,7 @@ Demo.ButtonDemo = (function(superClass) {
         "class": "fa-angle-right"
       }),
       text: "",
-      "class": "with-border small"
+      "class": "is-plain-button small"
     });
     this.__demo_table.addExample("Buttons Inverted", [inverted.DOM, invertedBorder.DOM, invertedClose.DOM, invertedDive.DOM], null, "cui-demo-button-inverted");
     this.__addDivider("Buttons on Image");
@@ -79111,7 +79138,7 @@ Demo.ButtonDemo = (function(superClass) {
         "class": "fa-trash-o"
       }),
       text: "Remove",
-      "class": "with-border"
+      "class": "is-plain-button"
     });
     invertedClose = new CUI.Button({
       icon_left: "close",
@@ -79123,7 +79150,7 @@ Demo.ButtonDemo = (function(superClass) {
         "class": "fa-angle-right"
       }),
       text: "",
-      "class": "with-border small"
+      "class": "is-plain-button small"
     });
     invertedNavigation = new CUI.Buttonbar({
       "class": "cui-demo-buttonbar-navigation-border",
@@ -79872,7 +79899,7 @@ Demo.ButtonDemo = (function(superClass) {
       ]
     }, "cui-demo-buttonbar-stack-vertical");
     this.__addButtonbar("example 5, vertically stacked buttonbar, packed tight", {
-      "class": "cui-demo-buttonbar-stack-vertical cui-demo-buttonbar-tight",
+      "class": "cui-demo-buttonbar-stack-vertical cui-demo-buttonbar-tight cui-demo-buttonbar-plain",
       buttons: [
         new CUI.Button({
           text: "Stack",

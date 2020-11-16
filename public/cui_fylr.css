@@ -6243,6 +6243,10 @@ textarea {
 .cui-tabs .cui-toolbar {
   background-color: transparent;
 }
+.cui-tabs > .cui-vertical-layout-bottom .cui-toolbar {
+  padding: 0.5rem 0;
+  margin-bottom: -0.5rem;
+}
 .cui-tabs > .cui-vertical-layout-center {
   -webkit-box-flex: 1;
           flex-grow: 1;
@@ -6866,10 +6870,6 @@ textarea {
 
 .cui-layer.cui-confirmation-dialog--show-inline {
   z-index: 1;
-}
-
-.cui-confirmation-choice .cui-layer > .cui-layer-pane > .cui-vertical-layout-center {
-  max-width: 300px;
 }
 
 .cui-layer-root-toaster .cui-layer {

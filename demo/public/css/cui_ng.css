@@ -5527,6 +5527,9 @@ label[data-label-clickable],
   -webkit-box-flex: 0.2;
           flex-grow: 0.2;
   padding-right: 15px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 .cui-block.cui-block-level-2.appearance-wide > .cui-block-header .cui-block-title {
   font-size: 15px;

@@ -44,9 +44,27 @@ body.dev.is-server2::after {
 }
 
 /*
-	- todo: should be bordered by default
 	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
 	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
+
+	- Button types:
+		- default: bordered, on hover change background
+		- primary: no border, orange fill, on hover change background
+		- secondary: no border, grey fill, on hover change background
+		- link: no border, underline, no outside padding, on hover change color
+		- simple: no border, no outside padding, on hover change color
+	- Button sizes:
+		- xs
+		- sm
+		- md
+		- lg
+	- Special Plain Buttons:
+		- icon
+		- ellipsis
+		- close / close-inverted
+		- info
+	- Button modifier
+		- inverted (default, link ?, simple ?)
 */
 /* Layer pane styles for popovers and fullscreen layer
  - spacing
@@ -73,40 +91,6 @@ body.dev.is-server2::after {
 }
 .cui-form-demo-form .cui-form-hint .cui-button-button {
   margin-top: 0.5rem;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button .cui-button-visual {
-  border: 1px solid #212121;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button:hover .cui-button-visual, .cui-form-demo-form .cui-form-hint .cui-button-button:focus .cui-button-visual {
-  color: inherit;
-  background-color: rgba(230, 233, 236, 0.65);
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button:focus {
-  outline: none;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button:focus .cui-button-visual {
-  outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button:active .cui-button-visual {
-  color: inherit;
-  background-color: rgba(213, 218, 223, 0.65);
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button.cui-active .cui-button-visual, .cui-form-demo-form .cui-form-hint .cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button.cui-active:hover .cui-button-visual, .cui-form-demo-form .cui-form-hint .cui-button-button.cui-active:focus .cui-button-visual, .cui-form-demo-form .cui-form-hint .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-form-demo-form .cui-form-hint .cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-form-demo-form .cui-form-hint .cui-button-button:focus .cui-button-visual {
-  border-color: #17a2b8;
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 
 .cui-demo-data-form-demo .cui-demo-pane-center > .cui-pane {
@@ -209,82 +193,6 @@ body.dev.is-server2::after {
 .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer {
   padding-left: 0;
   padding-right: 0;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select .cui-button-visual {
-  border: 1px solid #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:hover .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus .cui-button-visual {
-  color: inherit;
-  background-color: rgba(230, 233, 236, 0.65);
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus {
-  outline: none;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus .cui-button-visual {
-  outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:active .cui-button-visual {
-  color: inherit;
-  background-color: rgba(213, 218, 223, 0.65);
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-active .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-layer-open .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-layer-open .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-layer-open .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-active:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-active:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-layer-open:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-active:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-active:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-layer-open:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-active:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-active:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus .cui-button-visual {
-  border-color: #17a2b8;
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical .cui-tabs-pane-header {
   height: 100%;
@@ -427,82 +335,6 @@ body.dev.is-server2::after {
   padding-left: 0;
   padding-right: 0;
 }
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select .cui-button-visual {
-  border: 1px solid #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:hover .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus .cui-button-visual {
-  color: inherit;
-  background-color: rgba(230, 233, 236, 0.65);
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus {
-  outline: none;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus .cui-button-visual {
-  outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:active .cui-button-visual {
-  color: inherit;
-  background-color: rgba(213, 218, 223, 0.65);
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-active .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-layer-open .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-layer-open .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-layer-open .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-active .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-active:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-active:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select.cui-layer-open:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-active:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-active:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-layer-open:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-active:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-active:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-left .cui-button-select:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-button:focus .cui-button-visual,
-.cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer > .cui-horizontal-layout-center .cui-button-select:focus .cui-button-visual {
-  border-color: #17a2b8;
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small .cui-tabs-pane-header {
   height: 100%;
   -webkit-box-align: start;
@@ -616,9 +448,13 @@ body.dev.is-server2::after {
   font-size: 0.75rem;
 }
 
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link {
+  --btn-border-width: 0;
+}
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   background-color: transparent;
   color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual {
   color: #212121;
@@ -629,7 +465,8 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:active .cui-button-visual {
   color: #212121;
@@ -646,7 +483,6 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
   height: auto;
   line-height: 1.5;
-  border: 0 !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-center {
   text-decoration: underline;
@@ -695,39 +531,37 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual .cui-button-center:empty {
   margin-left: -0.625rem;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child .cui-button-visual {
-  border: 1px solid #212121;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child {
+  --btn-border-width: 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child .cui-button-visual {
   background-color: transparent;
   color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child:focus .cui-button-visual {
-  color: inherit;
-  background-color: rgba(230, 233, 236, 0.65);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:focus .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child:focus {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:focus {
   outline: none;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child:focus .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child:active .cui-button-visual {
-  color: inherit;
-  background-color: rgba(213, 218, 223, 0.65);
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-first-visible-child:focus .cui-button-visual {
   border-color: #17a2b8;
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:active .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-layer-open .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-layer-open:focus .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual {
   height: 24px;
@@ -793,37 +627,215 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-large .cui-button-button .cui-button-visual .cui-button-center:empty {
   margin-left: -0.625rem;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button {
+  --btn-border-width: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual {
+  background-color: transparent;
+  color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:focus .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:focus .cui-button-visual {
+  outline: none;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:active .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-layer-open .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-layer-open:focus .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual {
   height: 16px;
   min-width: 17.08px;
   font-size: 0.75rem;
   line-height: 16px;
-  border-radius: 0;
+  border-radius: 2px;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-left {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-left {
   padding-left: 0;
   margin-right: 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-left:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-left:only-child {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-left:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-left:only-child {
   padding-left: 0;
   margin-right: 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-right {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-right {
   padding-right: 0;
   margin-left: 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-right:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-right:only-child {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-right:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-right:only-child {
   padding-right: 0;
   margin-left: 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-center {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-center {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-icon .cui-button-button .cui-button-visual .cui-button-center:empty {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual .cui-button-center:empty {
   margin-left: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button {
+  --btn-border-width: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual {
+  background-color: transparent;
+  color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:focus .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:focus .cui-button-visual {
+  outline: none;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:active .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-layer-open .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-layer-open:focus .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual {
+  height: 18px;
+  min-width: 19.215px;
+  font-size: 18px;
+  line-height: 18px;
+  border-radius: 2px;
+  min-width: 0;
+  width: 8px;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-left {
+  padding-left: 0;
+  margin-right: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-left:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-left:only-child {
+  padding-left: 0;
+  margin-right: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-right {
+  padding-right: 0;
+  margin-left: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-right:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-right:only-child {
+  padding-right: 0;
+  margin-left: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-center {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual .cui-button-center:empty {
+  margin-left: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button {
+  --btn-border-width: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
+  background-color: transparent;
+  color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:focus .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:focus .cui-button-visual {
+  outline: none;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:active .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open:focus .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
+  height: 24px;
+  min-width: 25.62px;
+  font-size: 0.75rem;
+  line-height: 24px;
+  border-radius: 2px;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-left {
+  padding-left: 0.5rem;
+  margin-right: -0.25rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-left:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-left:only-child {
+  padding-left: 0;
+  margin-right: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-right {
+  padding-right: 0.5rem;
+  margin-left: -0.25rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-right:empty, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-right:only-child {
+  padding-right: 0;
+  margin-left: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-center {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 0.5rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-center:empty {
+  margin-left: -0.25rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
+  height: 1.3em;
+  min-width: 1.3em;
+  margin-left: 0.25rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-left {
+  padding: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-left .svg-info-circle {
+  width: clamp(10px, 1em, 14px);
+  height: clamp(10px, 1em, 14px);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open .cui-button-visual {
+  color: inherit;
+  background-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair {
   display: -webkit-box;
@@ -838,20 +850,21 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair > *:not(:last-child) {
   margin-right: 4rem;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select .cui-button-visual,
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button .cui-button-visual {
-  border: 1px solid #212121;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select,
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button {
+  --btn-border-width: 0;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button .cui-button-visual {
   background-color: transparent;
   color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
-  color: inherit;
-  background-color: rgba(230, 233, 236, 0.65);
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus {
@@ -860,12 +873,13 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:active .cui-button-visual {
-  color: inherit;
-  background-color: rgba(213, 218, 223, 0.65);
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-layer-open .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-active .cui-button-visual,
@@ -880,11 +894,6 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-layer-open:focus .cui-button-visual {
   color: #ffffff;
   background-color: #212121;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
-  border-color: #17a2b8;
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group {
   border-radius: 2px;
@@ -1013,10 +1022,12 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button {
   margin-right: 0.5rem;
+  --btn-border-color: rgba(255, 255, 255, 0.45);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button .cui-button-visual {
   background-color: rgba(33, 33, 33, 0.6);
   color: #ffffff;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:focus .cui-button-visual {
   color: rgba(255, 255, 255, 0.65);
@@ -1027,7 +1038,8 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:active .cui-button-visual {
   color: rgba(255, 255, 255, 0.65);
@@ -1041,72 +1053,44 @@ body.dev.is-server2::after {
   color: #ffffff;
   background-color: rgba(33, 33, 33, 0.6);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border .cui-button-visual {
-  border: 1px solid #212121;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:hover {
+  --btn-border-color: rgba(255, 255, 255, 0.35);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button {
+  --btn-border-width: 0;
+  --btn-border-color: rgba(255, 255, 255, 0.45);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
-  color: inherit;
-  background-color: rgba(230, 233, 236, 0.65);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button .cui-button-visual {
+  background-color: rgba(33, 33, 33, 0.6);
+  color: #ffffff;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:focus .cui-button-visual {
+  color: rgba(255, 255, 255, 0.65);
+  background-color: rgba(33, 33, 33, 0.6);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:focus {
   outline: none;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:active .cui-button-visual {
-  color: inherit;
-  background-color: rgba(213, 218, 223, 0.65);
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
   border-color: #17a2b8;
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border .cui-button-visual {
-  background-color: rgba(33, 33, 33, 0.6);
-  color: #ffffff;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(33, 33, 33, 0.6);
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus {
-  outline: none;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:focus .cui-button-visual {
-  outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:active .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:active .cui-button-visual {
   color: rgba(255, 255, 255, 0.65);
   background-color: rgba(18, 18, 18, 0.6);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-layer-open .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-layer-open .cui-button-visual {
   color: #ffffff;
   background-color: rgba(33, 33, 33, 0.6);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border.cui-layer-open:focus .cui-button-visual {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-layer-open:focus .cui-button-visual {
   color: #ffffff;
   background-color: rgba(33, 33, 33, 0.6);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border .cui-button-visual {
-  border-color: rgba(255, 255, 255, 0.45);
-}
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.with-border:hover .cui-button-visual {
-  border-color: rgba(255, 255, 255, 0.35);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:hover {
+  --btn-border-color: rgba(255, 255, 255, 0.35);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.small .cui-button-visual {
   height: 24px;
@@ -1175,6 +1159,7 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
   background-color: transparent;
   color: #ffffff;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
@@ -1189,7 +1174,8 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
@@ -1264,6 +1250,7 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
   background-color: transparent;
   color: #ffffff;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
@@ -1278,7 +1265,8 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
   outline: none;
-  box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
@@ -1439,13 +1427,49 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-large-buttons .cui-button .cui-button-visual .cui-button-center:empty {
   margin-left: -0.625rem;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight > *:first-child .cui-button,
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-buttonbar .cui-button {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight > *:last-child .cui-button {
   margin: 0;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight > *:first-child .cui-button ~ .cui-buttonbar-group,
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-buttonbar .cui-button ~ .cui-buttonbar-group {
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight > *:last-child .cui-button ~ .cui-buttonbar-group {
   margin: 0 0.5rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button {
+  margin: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button ~ .cui-buttonbar-group {
+  margin: 0 0.5rem;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button {
+  --btn-border-width: 0;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button .cui-button-visual {
+  background-color: transparent;
+  color: #212121;
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:focus .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:focus .cui-button-visual {
+  outline: none;
+  border-color: #17a2b8;
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:active .cui-button-visual {
+  color: rgba(33, 33, 33, 0.65);
+  background-color: rgba(0, 0, 0, 0);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-layer-open .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-layer-open:focus .cui-button-visual {
+  color: #ffffff;
+  background-color: #212121;
 }
 
 .cui-demo-button-demo[data-cui-theme=ng] .cui-demo-button-pair > *:last-child,
