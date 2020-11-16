@@ -5823,6 +5823,8 @@ label[data-label-clickable],
 				width: 200px;
 				flex-grow: .2;
 				padding-right: $padding * 1.5;
+				position: sticky;
+				top: 0;
 
 				.cui-block-title {
 					font-size: 15px;
