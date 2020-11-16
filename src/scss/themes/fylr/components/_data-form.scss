@@ -108,9 +108,15 @@
 	overflow: visible !important;
 	width: 100%; // see editor: ez5-nested
 	display: grid;
-	grid-template-columns: repeat($data-form-utilities-count, $data-form-utilities-column-width) 1fr;
+	grid-template-columns: repeat(2, 0) 1fr; // default assumes neither move handle nor trashb are avaiable (example: admin > metadata > modal: ez5-metadata-profile-modal)
 	grid-template-rows: auto;
 	grid-template-areas: 'move delete content';
+
+	// only add space in the columns if we show move handle and/or trash
+	.cui-data-form--movable-rows &,
+	.cui-data-form--add-button {
+		grid-template-columns: repeat($data-form-utilities-count, $data-form-utilities-column-width) 1fr;
+	}
 
 	&:not(:last-child) {
 		margin-bottom: $spacer-sm;
