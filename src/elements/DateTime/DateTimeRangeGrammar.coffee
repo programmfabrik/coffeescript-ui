@@ -499,6 +499,8 @@ class CUI.DateTimeRangeGrammar
 		if output
 			return output
 
+
+
 		return error: "NoDateRangeFound #{input}"
 
 
@@ -648,6 +650,15 @@ class CUI.DateTimeRangeGrammar
 
 		dateTime = new CUI.DateTime()
 		momentInput = dateTime.parseValue(inputString);
+
+		if !momentInput.isValid() and inputString.startsWith(DateTimeRangeGrammar.DASH)
+		  # This is a workaround for moment.js when strings are like: "-2020-11-05T10:00:00+00:00" or "-0100-01-01"
+			# Moment js does not support negative full dates, therefore we create a moment without the negative character
+			# and then we make the year negative.
+			inputString = inputString.substring(1)
+			momentInput = dateTime.parseValue(inputString);
+			momentInput.year(-momentInput.year())
+
 		dateTime.destroy()
 		return momentInput
 
