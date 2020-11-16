@@ -5,11 +5,13 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Block extends CUI.DOM
-	constructor: (@opts={}) ->
-		super(@opts)
+CUI.Template.loadTemplateText(require('./Block.html'));
 
-		@__block = new Template
+class CUI.Block extends CUI.DOMElement
+	constructor: (opts) ->
+		super(opts)
+
+		@__block = new CUI.Template
 			name: @getTemplateName()
 			map:
 				header: true
@@ -20,57 +22,88 @@ class CUI.Block extends CUI.DOM
 		if @_header
 			@setHeader(@_header)
 		else
+			arr = []
 			if @_text or @_icon
-				@__label = new Label
+				@__label = new CUI.Label
+					class: "cui-block-title"
 					text: @_text
 					icon: @_icon
 					multiline: true
-				@setHeader(@__label)
+				arr.push(@__label)
+
+			if @_description
+				arr.push new CUI.Label
+					class: "cui-block-description"
+					text: @_description
+					markdown: true
+					multiline: true
+
+			if arr.length > 0
+				@setHeader(arr)
 
 		if @_content
 			@setContent(@_content)
 
 		@addClass("appearance-"+@_appearance)
 		@addClass("cui-block-level-"+@_level)
+		@maximizeAddClasses()
+
+		if @_padded
+			@addClass("cui-block--padded")
 
 	initOpts: ->
 		super()
 		@addOpts
 			text:
 				check: String
+			description:
+				check: String
 			header:
 				check: (v) ->
-					!!(isContent(v) or isString(v) or v?.DOM)
+					!!(CUI.util.isContent(v) or CUI.util.isString(v) or v?.DOM)
 			icon:
-				check: Icon
+				check: CUI.Icon
 			content:
 				check: (v) ->
-					!!(isContent(v) or isString(v) or v?.DOM)
+					!!(CUI.util.isContent(v) or CUI.util.isString(v) or v?.DOM)
 			level:
 				mandatory: true
 				default: 1
 				check: [1, 2, 3]
-
 			appearance:
-				deprectated: true
 				default: "normal"
 				mandatory: true
-				check: ["title","subtitle","normal"]
+				check: ["normal","wide","muted"]
+			padded:
+				check: Boolean
+				default: true
+			maximize:
+				check: Boolean
+			maximize_horizontal:
+				check: Boolean
+				default: false
+			maximize_vertical:
+				check: Boolean
+				default: false
 
 	readOpts: ->
 		super()
-		assert(not ((@_text or @_icon) and @_header), "new Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
+		CUI.util.assert(not ((@_text or @_icon) and @_header), "new CUI.Block", "opts.text and opts.header are mutually exclusive.", opts: @opts)
+		CUI.Layout::maximizeReadOpts.call(@)
 		@
+
+	maximizeAddClasses: ->
+		CUI.Layout::maximizeAddClasses.call(@)
 
 	getTemplateName: ->
 		"block"
 
 	setText: (txt) ->
-		assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
+		CUI.util.assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
 		@__label.setText(txt)
 
 	setIcon: (icon) ->
-		assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
+		CUI.util.assert(@__label, "Block.setText", "Block must not be called with opts.header and with opts.text or opts.icon.", opts: @opts)
 		@__label.setIcon(icon)
 
 	setHeader: (header) ->
@@ -79,8 +112,11 @@ class CUI.Block extends CUI.DOM
 	setContent: (content) ->
 		@__block.replace(content, "content")
 
+	getContent: ->
+		@__block.map.content
+
+	getHeader: ->
+		@__block.map.header
+
 	appendContent: (content) ->
 		@__block.append(content, "content")
-
-
-Block = CUI.Block

@@ -5,9 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class InputBlock extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+class CUI.InputBlock extends CUI.Element
+	constructor: (opts) ->
+		super(opts)
 		@__start = @_start
 		@setString(@_string)
 
@@ -17,13 +17,13 @@ class InputBlock extends CUI.Element
 			start:
 				mandatory: true
 				check: (v) ->
-					isInteger(v) and v >= 0
+					CUI.util.isInteger(v) and v >= 0
 			string:
 				mandatory: true
 				check: (v) ->
-					isString(v)
+					CUI.util.isString(v)
 	setString: (s) ->
-		assert(isString(s), "#{getObjectClass(@)}.setString", "Parameter needs to be String with a minimum length of 1.", string: s)
+		CUI.util.assert(CUI.util.isString(s), "#{CUI.util.getObjectClass(@)}.setString", "Parameter needs to be String with a minimum length of 1.", string: s)
 		@__string = s
 		@calcSizes()
 		@
@@ -46,7 +46,7 @@ class InputBlock extends CUI.Element
 
 
 	toString: ->
-		dump(
+		CUI.util.dump(
 			start: @__start
 			end: @__end
 			len: @__len

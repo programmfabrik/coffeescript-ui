@@ -1,0 +1,42 @@
+class App
+	constructor: ->
+
+		pane = new CUI.SimplePane
+			padded: true
+			content: new CUI.Label
+					text: "Content"
+			header_left: new CUI.Label
+				text: "Header left"
+			header_right: CUI.Pane.getToggleFillScreenButton()
+			header_center: new CUI.Label
+				text: "Header center"
+			footer_left: new CUI.Label
+				text: "Footer left"
+			footer_right: new CUI.Label
+				text: "Footer right"
+			force_header: true
+
+		body = new CUI.BorderLayout
+			west:
+				content: new CUI.Label
+					centered: true
+					text: "West"
+			east:
+				content: new CUI.Label
+					centered: true
+					text: "East"
+			center:
+				content: pane
+			north:
+				content: new CUI.Label
+					centered: true
+					text: "North"
+			south:
+				content: new CUI.Label
+					centered: true
+					text: "South"
+
+		CUI.dom.append(document.body, body)
+
+CUI.ready ->
+	new App()

@@ -5,33 +5,14 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MultiInputControl extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
-		@__body = $(document.body)
-		@__keys = []
+class CUI.MultiInputControl extends CUI.Element
 
-		if not @_keys
-			return
 
-		key_names = {}
-		for key, idx in @_keys
-			assert(isString(key.name) and not isEmpty(key.name), "new #{@__cls}", "opts.keys[#{idx}].name must be non-empty String.", opts: @opts, key: key)
-			assert(isString(key.tag) and not isEmpty(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag must be non-empty String.", opts: @opts, key: key)
-			assert(isUndef(key.enabled) or isBoolean(key.enabled), "new #{@__cls}", "opts.keys[#{idx}].enabled must be Boolean.", opts: @opts, key: key)
+	constructor: (opts) ->
+		super(opts)
+		@__body = document.body
 
-			if key_names.hasOwnProperty(key.name)
-				assert(false, "new #{@__cls}", "Duplicate opts.keys[#{idx}].name \"#{key.name}\", name already used in ##{idx}. Skipping.", opts: @opts, key: key)
-				continue
-
-			key_names[key.name] = idx
-
-			@__keys.push
-				name: key.name
-				tag: key.tag
-				enabled: key.enabled
-				__idx: idx
-
+		@setKeys(@_keys)
 		@setPreferredKey(@_preferred_key)
 
 	initOpts: ->
@@ -41,21 +22,48 @@ class MultiInputControl extends CUI.Element
 				check: String
 			keys:
 				check: (v) ->
-					CUI.isArray(v) and v.length > 0
+					CUI.util.isArray(v) and v.length > 0
 			user_control:
 				default: true
 				check: Boolean
 
+	setKeys: (keys) ->
+		@__keys = []
+
+		if not keys
+			return
+
+		key_names = {}
+		for key, idx in keys
+			CUI.util.assert(CUI.util.isString(key.name) and not CUI.util.isEmpty(key.name), "new #{@__cls}", "opts.keys[#{idx}].name must be non-empty String.", key: key)
+			CUI.util.assert(CUI.util.isString(key.tag) and not CUI.util.isEmpty(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag must be non-empty String.", key: key)
+			CUI.util.assert(CUI.util.isUndef(key.enabled) or CUI.util.isBoolean(key.enabled), "new #{@__cls}", "opts.keys[#{idx}].enabled must be Boolean.", key: key)
+
+			if not CUI.util.isUndef(key_names[key.name])
+				CUI.util.assert(false, "new #{@__cls}", "Duplicate opts.keys[#{idx}].name \"#{key.name}\", name already used in ##{idx}.", key: key)
+				continue
+
+			key_names[key.name] = idx
+
+			@__keys.push
+				name: key.name
+				tag: key.tag
+				enabled: key.enabled
+				tooltip: key.tooltip
+				__idx: idx
+
+		@
+
 	setPreferredKey: (key_name) ->
 		@__preferred_key = null
-		if isNull(key_name)
+		if CUI.util.isNull(key_name)
 			return @__preferred_key
 
 		for key in @__keys
 			if key.name == key_name
 				@__preferred_key = key
 
-		assert(@__preferred_key, "#{@__cls}.setPreferredKey", "key.name == \"#{key_name}\" not found in keys.", keys: @__keys)
+		CUI.util.assert(@__preferred_key, "#{@__cls}.setPreferredKey", "key.name == \"#{key_name}\" not found in keys.", keys: @__keys)
 		@__preferred_key
 
 	getPreferredKey: ->
@@ -82,33 +90,33 @@ class MultiInputControl extends CUI.Element
 				options.push
 					active: key.enabled
 					onActivate: ->
-						CUI.debug "control activate", key.tag
+						console.debug "control activate", key.tag
 						key.enabled = true
-						Events.trigger(type: "multi-input-control-update")
+						CUI.Events.trigger(type: "multi-input-control-update")
 					onDeactivate: (cb) ->
-						CUI.debug "control deactivate", key.tag
+						console.debug "control deactivate", key.tag
 						key.enabled = false
-						Events.trigger(type: "multi-input-control-update")
+						CUI.Events.trigger(type: "multi-input-control-update")
 					text: key.tag
 		options
 
 	showUserControl:  ->
-		options = new Options
+		options = new CUI.Options
 			min_checked: 1
 			options: @getUserControlOptions()
 		.start()
 
-		@popover = new Modal
+		@popover = new CUI.Modal
 			class: "cui-multi-input-control"
 			onHide: =>
 				@popover = null
 			pane:
-				footer_right: new Button
+				footer_right: new CUI.Button
 					text: "Done"
 					onClick: =>
 						@popover.destroy()
 
-				header_left: new Label(text: "MultiInputControl")
+				header_left: new CUI.Label(text: "MultiInputControl")
 				content: options
 		.show()
 

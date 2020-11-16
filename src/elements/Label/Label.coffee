@@ -5,11 +5,12 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-
+marked = require('marked')
+CUI.Template.loadTemplateText(require('./Label.html'));
 
 # @param [Object] options for {Label} creation
 # @option options [boolean] centered , label will be centered with css style 'position: absolute'.
-class CUI.Label extends CUI.DOM
+class CUI.Label extends CUI.DOMElement
 
 	@defaults:
 		manage_overflow:
@@ -17,8 +18,8 @@ class CUI.Label extends CUI.DOM
 			icon_active: "up"
 			active_css_class: ""
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 		if @_rotate_90
 			tname = "label-rotate-90"
@@ -27,7 +28,7 @@ class CUI.Label extends CUI.DOM
 		else
 			tname = "label-no-icon"
 
-		@__label = new Template
+		@__label = new CUI.Template
 			name: tname
 			map_prefix: "cui-label"
 			map:
@@ -39,15 +40,15 @@ class CUI.Label extends CUI.DOM
 		if @_icon and @_icon != true
 			@setIcon(@_icon)
 
-		if not isEmpty(@_text)
+		if not CUI.util.isEmpty(@_text)
 			@setText(@_text)
 		else
 			@setContent(@_content)
 
 		if @_tooltip
-			tt_opts = copyObject(@_tooltip)
+			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element ?= @DOM
-			@__tooltip = new Tooltip(tt_opts)
+			@__tooltip = new CUI.Tooltip(tt_opts)
 
 		if @_multiline
 			@addClass("cui-label-multiline")
@@ -61,6 +62,9 @@ class CUI.Label extends CUI.DOM
 		if @_manage_overflow
 			@addClass("cui-label-manage-overflow")
 
+		if @_padded
+			@addClass("cui-label--padded")
+
 		if @_size
 			@addClass("cui-label-size-"+@_size)
 		else if not CUI.__ng__
@@ -68,13 +72,11 @@ class CUI.Label extends CUI.DOM
 
 		if @_appearance
 			@addClass("cui-label-appearance-"+@_appearance)
-		else if not CUI.__ng__
-			@addClass("cui-label-appearance-auto cui-label-appearance-normal")
 
 		if @_manage_overflow
 
 			if @_manage_overflow == true
-				btn_opts = copyObject(CUI.defaults.class.Label.defaults.manage_overflow, true)
+				btn_opts = CUI.util.copyObject(CUI.defaults.class.Label.defaults.manage_overflow, true)
 			else
 				btn_opts = @_manage_overflow
 
@@ -100,11 +102,16 @@ class CUI.Label extends CUI.DOM
 			# push in global markup
 			@append(@__overflow_button)
 
-			Events.listen
+			# throttle the check to partially mitigate the performance bottleneck
+			# when resizing via resize handle  when a lot of "manage overflow"
+			# labels are in the DOM
+			checkOverflow = => @checkOverflowSize()
+
+			CUI.Events.listen
 				node: @DOM
 				type: "viewport-resize"
 				call: =>
-					@checkOverflowSize()
+					CUI.scheduleCallback(ms: 500, call: checkOverflow)
 		return
 
 	initOpts: ->
@@ -112,22 +119,26 @@ class CUI.Label extends CUI.DOM
 		@addOpts
 			text:
 				check: (v) ->
-					isString(v) or isNumber(v)
+					CUI.util.isString(v) or CUI.util.isNumber(v)
+			text_node_func:
+				check: Function
 			content:
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v) or v == true
+					v instanceof CUI.Icon or CUI.util.isString(v) or v == true
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
-				check: ["normal","important","title","secondary"]
+				check: ["title","secondary","muted","transparent-border"]
 			# set to true if text is markdown
 			markdown:
 				mandatory: true
 				default: false
 				check: Boolean
+			markdown_opts:
+				check: "PlainObject"
 			tooltip:
 				check: "PlainObject"
 			group:
@@ -141,50 +152,66 @@ class CUI.Label extends CUI.DOM
 			multiline:
 				default: false
 				check: Boolean
+			padded:
+				default: false
+				check: Boolean
 			manage_overflow:
 				check: (v) ->
-					CUI.isPlainObject(v) or v == true or v == false
+					CUI.util.isPlainObject(v) or v == true or v == false
 
 
 	readOpts: ->
 		super()
-		if isNull(@_text) and isNull(@_content)
+		if CUI.util.isNull(@_text) and CUI.util.isNull(@_content)
 			@_text = ""
 
 		if @_markdown
-			assert(not @_content, "new "+@__cls, "opts.markdown cannot be combined with opts.content, use opts.text instead.", opts: @opts)
+			CUI.util.assert(not @_content, "new "+@__cls, "opts.markdown cannot be combined with opts.content, use opts.text instead.", opts: @opts)
 			if not marked
-				CUI.error("new Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
+				console.error("new CUI.Label: Could not find markdown renderer 'marked'. Disabling markedown option.", opts: @opts)
 				@__markdown = false
 			else
 				@__markdown = true
 
 		@__currentText = null
-		assert(xor(isNull(@_text), isNull(@_content)), "new Label", "opts.text and opts.content cannot both be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(CUI.util.isNull(@_text), CUI.util.isNull(@_content)), "new CUI.Label", "opts.text and opts.content cannot both be set.", opts: @opts)
+
+		if @_markdown_opts
+			@__markdown_opts = CUI.util.copyObject(CUI.defaults.marked_opts, false)
+			for k, v of @_markdown_opts
+				@__markdown_opts[k] = v
+		else
+			@__markdown_opts = CUI.defaults.marked_opts
 
 		if @_manage_overflow
-			assert(@_multiline, "new Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
+			CUI.util.assert(@_multiline, "new CUI.Label", "opts.multiline needs to be set for opts.manage_overflow", opts: @opts)
 		@
 
 	setText: (@__currentText, markdown = @__markdown) ->
-		if isEmpty(@__currentText)
+		if CUI.util.isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.DOM.htmlToNodes(window.marked(@__currentText, CUI.defaults.marked_opts)))
+			@setContent(CUI.dom.htmlToNodes(marked(@__currentText, @__markdown_opts)))
 			@addClass("cui-label-markdown")
+		else if @_text_node_func
+			@setContent(@_text_node_func(@__currentText))
+			@removeClass("cui-label-markdown")
 		else
-			@setContent($text(@__currentText))
+			@setContent(CUI.dom.text(@__currentText))
 			@removeClass("cui-label-markdown")
 		@
 
 	setTextMaxChars: (max_chars) ->
-		CUI.DOM.setAttribute(@__label.map.content[0], "data-max-chars", max_chars)
+		CUI.dom.setAttribute(@__label.map.content, "data-max-chars", max_chars)
 
 	getText: ->
 		@__currentText
 
 	setContent: (content) ->
-		@replace(content, "content")
+		if CUI.util.isString(content)
+			@replace(CUI.dom.htmlToNodes(content), 'content')
+		else
+			@replace(content, "content")
 
 		if not @_manage_overflow
 			return
@@ -192,7 +219,7 @@ class CUI.Label extends CUI.DOM
 		# append overflow button to the whole thing
 		@append(@__overflow_button)
 
-		CUI.DOM.waitForDOMInsert(node: @DOM)
+		CUI.dom.waitForDOMInsert(node: @DOM)
 		.done =>
 			@checkOverflowSize()
 
@@ -209,9 +236,9 @@ class CUI.Label extends CUI.DOM
 
 		@__overflow_button.hide()
 
-		dim_div = DOM.getDimensions(@__label.map.content)
+		dim_div = CUI.dom.getDimensions(@__label.map.content)
 
-		max_height = CUI.DOM.getCSSFloatValue(dim_div.computedStyle.maxHeight)
+		max_height = CUI.dom.getCSSFloatValue(dim_div.computedStyle.maxHeight)
 		if not (max_height > 0)
 			max_height = dim_div.clientHeight
 
@@ -232,10 +259,10 @@ class CUI.Label extends CUI.DOM
 		@_group
 
 	setIcon: (icon) ->
-		if icon instanceof Icon
+		if icon instanceof CUI.Icon
 			__icon = icon
-		else if not isEmpty(icon)
-			__icon = new Icon(icon: icon)
+		else if not CUI.util.isEmpty(icon)
+			__icon = new CUI.Icon(icon: icon)
 		else
 			__icon = null
 
@@ -246,7 +273,48 @@ class CUI.Label extends CUI.DOM
 		@__tooltip?.destroy()
 		super()
 
+	# reads the input txt, parses links and returns
+	# dom notes. suitable to use as text_node_func.
+	@parseLinks: (txt) ->
+		nodes = []
+		text = []
+
+		append_text = =>
+			if text.length == 0
+				return
+			nodes.push(CUI.dom.text(text.join("")))
+			text = []
+			return
+
+		for el, idx in txt.split(/(\n| )/)
+
+			if CUI.EmailInput.regexp.exec(el)
+				a_node = CUI.dom.element("a", href: "mailto:"+el)
+			else
+				m = el.match("^(?:www\..+\..+|(http(?:s|)):\/\/)")
+				if not m
+					a_node = null
+				else
+					if not m[1]
+						prefix = "http://"
+					else
+						prefix = "" # use the given prefix
+
+					a_node = CUI.dom.element("a", target: "_blank", href: prefix+el)
+
+			if not a_node
+				text.push(el)
+				continue
+
+			# append the link
+			append_text()
+
+			a_node.textContent = el
+			nodes.push(a_node)
+
+		append_text()
+		return nodes
+
+
 
 CUI.defaults.class.Label = CUI.Label
-
-Label = CUI.Label

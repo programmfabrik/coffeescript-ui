@@ -6,8 +6,8 @@
 ###
 
 class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
-	constructor: (@opts) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__layer_root.addClass("cui-confirmation-choice")
 
 	@defaults:
@@ -27,25 +27,28 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 				mandatory: true
 				default: []
 				check: (v) ->
-					if not CUI.isArray(v)
+					if not CUI.util.isArray(v)
 						return false
 
 					for choice, idx in v
 						if not choice
 							continue
-						CUI.Element.readOpts(choice, "new ConfirmationChoice[choice#"+idx+"]", @choiceOpts)
+						CUI.Element.readOpts(choice, "new CUI.ConfirmationChoice[choice#"+idx+"]",
+							CUI.ConfirmationChoice.choiceOpts)
 					return true
 
-	choiceOpts:
+	@choiceOpts:
 		text:
 			mandatory: true
 			check: String
 		onClick:
 			check: Function
 		icon:
-			check: Icon
+			check: CUI.Icon
 		choice:
 			check: String
+		tooltip:
+			check: "PlainObject"
 		cancel:
 			default: false
 			check: Boolean
@@ -72,6 +75,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 				left: true
 				value: choice
 				disabled: choice.disabled
+				tooltip: choice.tooltip
 				onClick: (ev, btn) =>
 					@__choice = btn.getValue()
 					CUI.chainedCall(
@@ -86,17 +90,19 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 
 							@_onChoice?.call(@, ev, @__choice, @, btn)
 					).done (ret1, ret2) =>
-						# CUI.debug "chained call done", ret1, ret2, ev, @__choice
+						# console.debug "chained call done", ret1, ret2, ev, @__choice
 						if ev.isImmediatePropagationStopped() or
 							ret1 == false or
 							ret2 == false
 								return
 
+						# its possible that a previous click caused an error
+						# so @__deferred would already be unset
+						@__deferred?.resolve(@__getResolveValue(), btn, ev)
 						@destroy()
-						@__deferred.resolve(@__getResolveValue(), btn, ev)
 					return
 
-			for key of @choiceOpts
+			for key of CUI.ConfirmationChoice.choiceOpts
 				if key not in ["onClick", "cancel", "choice"]
 					btn_opts[key] = choice[key]
 
@@ -109,17 +115,29 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 		@__choice
 
 	show: ->
-		assert(false, "ConfirmationChoice.show", "Use .open to open the ConfirmationChoice")
+		CUI.util.assert(false, "ConfirmationChoice.show", "Use .open to open the ConfirmationChoice")
 
 	cancel: (ev, ret) ->
 		@hide(ev)
 		@__deferred.reject(@__choice, ret)
 
+	destroy: ->
+		@__deferred = null
+		super()
+
 	# opens the dialog and returns a promise
 	# promise fails if the user cancels
 	open: ->
+		if @__deferred
+			return @__deferred.promise()
+
 		@__deferred = new CUI.Deferred()
+
 		CUI.ConfirmationDialog::show.call(@)
+
+		@__deferred.always =>
+			@__deferred = null
+
 		return @__deferred.promise()
 
 CUI.choice = (opts=text: "CUI.ConfirmationChoice") ->

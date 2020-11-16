@@ -5,17 +5,18 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadTemplateText(require('./Buttonbar.html'));
 
 # Buttonbar groups {Button}s
-class Buttonbar extends CUI.DOM
+class CUI.Buttonbar extends CUI.DOMElement
 
 	# @param [Object] options for {Buttonbar} creation
 	# @option options [Array] buttons is an array of {Button} Objects. Use thie 'group' option in {Button} to let {Buttonbar} sort the buttons into groups.
 	# @option options [Object] tooltip is a list of options for creating a {Tooltip} for the {Buttonbar}.
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
-		@__box = new Template
+		@__box = new CUI.Template
 			name: "buttonbar"
 
 		@registerTemplate(@__box)
@@ -27,9 +28,9 @@ class Buttonbar extends CUI.DOM
 		@__groupDivs = {}
 
 		if @_tooltip
-			tt_opts = copyObject(@_tooltip)
+			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element = @__buttons
-			@__tooltip = new Tooltip(tt_opts)
+			@__tooltip = new CUI.Tooltip(tt_opts)
 
 		for btn, idx in @_buttons
 			@addButton(btn, false)
@@ -52,8 +53,8 @@ class Buttonbar extends CUI.DOM
 				check: "PlainObject"
 
 	__proxy: (func, args...) ->
-		for el in DOM.matchSelector(@__buttons, ".cui-button,.cui-select")
-			ele = DOM.data(el, "element")
+		for el in CUI.dom.matchSelector(@__buttons, ".cui-button,.cui-select")
+			ele = CUI.dom.data(el, "element")
 			ele[func].apply(ele, args)
 		@
 
@@ -63,66 +64,65 @@ class Buttonbar extends CUI.DOM
 	enable: ->
 		@__proxy("enable")
 
+	# sets classes on all children of "el"
+	# returns the number of visible children
+	__setVisibilityClasses: (el) =>
+		count = 0
+		last_visible_child = null
+		for c, idx in el.children
+			c.classList.remove("cui-first-visible-child")
+			c.classList.remove("cui-last-visible-child")
+
+			if CUI.dom.data(c, 'element')?.isHidden?() or not CUI.dom.isVisible(c)
+				continue
+
+			count++
+			last_visible_child = c
+			if count == 1
+				c.classList.add("cui-first-visible-child")
+
+		if last_visible_child
+			last_visible_child.classList.add("cui-last-visible-child")
+
+		count
+
 
 	# hide the group if no children
 	__checkVisibility: ->
-		DOM.showElement(@__buttons)
+		CUI.dom.showElement(@__buttons)
 
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
-			count = 0
-			for c, idx in d.children
-				c.classList.remove("cui-first-visible-child")
-				if CUI.DOM.isVisible(c)
-					count = count + 1
 
-				if count == 1
-					c.classList.add("cui-first-visible-child")
-
-			if count > 0
-				DOM.showElement(d)
+			if @__setVisibilityClasses(d) > 0
+				CUI.dom.showElement(d)
 			else
-				DOM.hideElement(d)
+				CUI.dom.hideElement(d)
 
-		visible = 0
-
-		# Hide the entire Buttonbar, if everything inside is hidden
-		for el in CUI.DOM.children(@__buttons)
-			# el = $(_el)
-			el.classList.remove("cui-first-visible-child")
-			if not DOM.isVisible(el)
-				continue
-
-			visible++
-			if visible == 1
-				el.classList.add("cui-first-visible-child")
-
-		# CUI.debug "Buttonbar.__checkVisibility", visible, @, @DOM[0]
-
-		if visible > 0
+		if @__setVisibilityClasses(@__buttons) > 0
 			if @__tooltip?.isShown()
 				@__tooltip.position()
 		else
-			DOM.showElement(@__buttons)
+			CUI.dom.showElement(@__buttons)
 		@
 
 	removeButtons: ->
-		DOM.empty(@__buttons)
+		CUI.dom.empty(@__buttons)
 
 	prependButton: (btn, check_visibility = true) ->
 		@addButton(btn, check_visibility, true)
 
 	addButton: (btn, check_visibility = true, prepend = false) ->
-		if isNull(btn)
+		if CUI.util.isNull(btn)
 			return
 
-		if CUI.isPlainObject(btn)
+		if CUI.util.isPlainObject(btn)
 			btn = new CUI.defaults.class.Button(btn)
 
-		if btn instanceof Button or btn instanceof DataFieldInput
+		if btn instanceof CUI.Button or btn instanceof CUI.DataFieldInput
 			btn_dom = btn.DOM
 			grp = btn.getGroup()
-		else if btn instanceof Label
+		else if btn instanceof CUI.Label
 			btn_dom = btn.DOM
 			grp = btn.getGroup()
 		else if btn?.classList?.contains("cui-button")
@@ -130,9 +130,9 @@ class Buttonbar extends CUI.DOM
 			btn_dom = btn
 			grp = btn.group or null
 		else
-			assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{getObjectClass(btn)}.", button: btn, opts: @opts)
+			CUI.util.assert(false, "new #{@__cls}", "button must be instance of Button or have class \".cui-button\" but is #{CUI.util.getObjectClass(btn)}.", button: btn, opts: @opts)
 
-		Events.listen
+		CUI.Events.listen
 			type: ["show", "hide"]
 			node: btn
 			call: (ev) =>
@@ -145,13 +145,13 @@ class Buttonbar extends CUI.DOM
 
 		if grp
 			if not @__groupDivs[grp]
-				div = $div("cui-buttonbar-group cui-buttonbar-group-#{grp}")
-				DOM.append(@__buttons, div)
+				div = CUI.dom.div("cui-buttonbar-group cui-buttonbar-group-#{grp}")
+				CUI.dom.append(@__buttons, div)
 				@__groupDivs[grp] = div
 
-			CUI.DOM[func](@__groupDivs[grp], btn_dom)
+			CUI.dom[func](@__groupDivs[grp], btn_dom)
 		else
-			CUI.DOM[func](@__buttons,btn_dom)
+			CUI.dom[func](@__buttons,btn_dom)
 
 		if check_visibility
 			@__checkVisibility()

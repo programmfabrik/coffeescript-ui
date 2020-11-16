@@ -42,5 +42,3 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 
 CUI.confirm = (opts) ->
 	new CUI.Confirm(opts).open()
-
-

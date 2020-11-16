@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewColumnRowMoveHandle extends ListViewColumn
+class CUI.ListViewColumnRowMoveHandle extends CUI.ListViewColumn
 
 	setElement: (cell) ->
 		super(cell)
@@ -16,7 +16,7 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 			return
 
 		if CUI.ListView.defaults.row_move_handle_tooltip
-			new Tooltip
+			new CUI.Tooltip
 				text: CUI.ListView.defaults.row_move_handle_tooltip
 				element: cell
 
@@ -28,5 +28,5 @@ class ListViewColumnRowMoveHandle extends ListViewColumn
 		return
 
 	render: ->
-		CUI.DOM.element("DIV", class: "cui-drag-handle-row")
+		CUI.dom.element("DIV", class: "cui-drag-handle-row")
 

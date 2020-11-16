@@ -6,13 +6,8 @@ class CUI.ListViewTreeHeaderNode extends CUI.ListViewTreeNode
 				check: (v) ->
 					v.length > 0
 
-	renderContent: ->
+	render: ->
+		@__is_rendered = true
 		for header, idx in @_headers
-			if idx == 0
-				if header.label instanceof CUI.Label
-					ret = header.label
-				else
-					ret = new CUI.defaults.class.Label(header.label)
-			else
-				@addColumn(new ListViewHeaderColumn(header))
-		ret
+			@addColumn(new CUI.ListViewHeaderColumn(header))
+		@

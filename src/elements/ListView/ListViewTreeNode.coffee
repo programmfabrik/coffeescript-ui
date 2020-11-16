@@ -23,7 +23,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	readOpts: ->
 		super()
-		@colspan = @_colspan
+		@setColspan(@_colspan)
 		if @_children
 			@children = @opts.children
 			@initChildren()
@@ -37,6 +37,17 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@html = @_html
 		@__loadingDeferred = null
 
+	setColspan: (@colspan) ->
+
+	getColspan: ->
+		@colspan
+
+	# overwrite with Method
+	getChildren: null
+
+	# overwrite with Method
+	hasChildren: null
+
 	isLeaf: ->
 		leaf = (if @children
 			false
@@ -49,12 +60,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				false
 		else
 			true)
-		# CUI.debug getObjectClass(@), "isLeaf?",leaf, @hasChildren?(), @opts.leaf, @
+		# console.debug CUI.util.getObjectClass(@), "isLeaf?",leaf, @hasChildren?(), @opts.leaf, @
 		leaf
 
 	getClass: ->
 		cls = super()
 		cls = cls + " cui-lv-tree-node"
+		if not @isLeaf()
+			cls = cls + " cui-lv-tree-node--is-branch"
 		cls
 
 	isSelectable: ->
@@ -64,11 +77,11 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@father
 
 	setFather: (new_father) ->
-		assert(new_father == null or new_father instanceof ListViewTreeNode, "#{getObjectClass(@)}.setFather", "father can only be null or instanceof ListViewTreeNode", father: new_father)
-		assert(new_father != @, "#{getObjectClass(@)}.setFather", "father cannot be self", node: @, father: new_father)
-		# CUI.debug @, new_father
+		CUI.util.assert(new_father == null or new_father instanceof CUI.ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.setFather", "father can only be null or instanceof CUI.ListViewTreeNode", father: new_father)
+		CUI.util.assert(new_father != @, "#{CUI.util.getObjectClass(@)}.setFather", "father cannot be self", node: @, father: new_father)
+		# console.debug @, new_father
 		if new_father
-			assert(@ not in new_father.getPath(true), "#{getObjectClass(@)}.setFather", "father cannot any of the node's children", node: @, father: new_father)
+			CUI.util.assert(@ not in new_father.getPath(true), "#{CUI.util.getObjectClass(@)}.setFather", "father cannot any of the node's children", node: @, father: new_father)
 
 		if not new_father and @selected
 			@setSelectedNode(null)
@@ -83,20 +96,20 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		else
 			@father = new_father
 
-		if @children
-			for c in @children
-				c.setFather(@)
+		# if @children
+		# 	for c in @children
+		# 		c.setFather(@)
 		@
 
 	isRoot: ->
 		not @father
 
 	setTree: (@tree) ->
-		assert(@isRoot(), "#{getObjectClass(@)}.setTree", "node must be root node to set tree", tree: @tree, opts: @opts)
-		assert(@tree instanceof ListViewTree, "#{getObjectClass(@)}.setTree", "tree must be instance of ListViewTree", tree: @tree, opts: @opts)
+		CUI.util.assert(@isRoot(), "#{CUI.util.getObjectClass(@)}.setTree", "node must be root node to set tree", tree: @tree, opts: @opts)
+		CUI.util.assert(@tree instanceof CUI.ListViewTree, "#{CUI.util.getObjectClass(@)}.setTree", "tree must be instance of ListViewTree", tree: @tree, opts: @opts)
 
 	getRoot: (call=0) ->
-		assert(call < 100, "ListViewTreeNode.getRoot", "Recursion detected.")
+		CUI.util.assert(call < 100, "ListViewTreeNode.getRoot", "Recursion detected.")
 		if @father
 			@father.getRoot(call+1)
 		else
@@ -118,7 +131,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@getNodeId()
 
 	getTree: (call=0) ->
-		assert(call < 100, "ListViewTreeNode.getTree", "Recursion detected.")
+		CUI.util.assert(call < 100, "ListViewTreeNode.getTree", "Recursion detected.")
 		if @isRoot()
 			@tree
 		else
@@ -144,12 +157,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			our_idx = @getChildIdx()
 			filtered_nodes.push(@)
 			father = @getFather()
-			ListViewTreeNode::remove.call(@, true, false)  # keep children array, no de-select
+			CUI.ListViewTreeNode::remove.call(@, true, false)  # keep children array, no de-select
 			for c, idx in save_children
 				father.children.splice(our_idx+idx, 0, c)
 				c.setFather(father)
 
-			# CUI.debug "removed ", @, our_idx, save_children
+			# console.debug "removed ", @, our_idx, save_children
 
 		if save_children
 			for c in save_children
@@ -158,7 +171,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		filtered_nodes
 
 	getPath: (include_self=false, path=[], call=0) ->
-		assert(call < 100, "ListViewTreeNode.getPath", "Recursion detected.")
+		CUI.util.assert(call < 100, "ListViewTreeNode.getPath", "Recursion detected.")
 
 		if @father
 			@father.getPath(true, path, call+1)
@@ -173,7 +186,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			"root"
 		else
 			ci = @father.children.indexOf(@)
-			assert(ci > -1, "#{getObjectClass(@)}.getChildIdx()", "Node not found in fathers children Array", node: @, father: @father, "father.children": @father.children)
+			CUI.util.assert(ci > -1, "#{CUI.util.getObjectClass(@)}.getChildIdx()", "Node not found in fathers children Array", node: @, father: @father, "father.children": @father.children)
 			ci
 
 	getNodeId: (include_self=true) ->
@@ -191,7 +204,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@getOpenChildNodes()
 
 	isRendered: ->
-		if (@isRoot() and @getTree()?.getGrid()) or @element
+		if (@isRoot() and @getTree()?.getGrid()) or @__is_rendered
 			true
 		else
 			false
@@ -207,12 +220,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		@
 
 	close: ->
-		assert(@father, "ListViewTreeNode.close()", "Cannot close root node", node: @)
+		CUI.util.assert(@father, "ListViewTreeNode.close()", "Cannot close root node", node: @)
 
-		assert(not @isLoading(), "ListViewTreeNode.close", "Cannot close node, during opening...", node: @, tree: @getTree())
+		CUI.util.assert(not @isLoading(), "ListViewTreeNode.close", "Cannot close node, during opening...", node: @, tree: @getTree())
 		@do_open = false
 		if @father.is_open
-			# CUI.debug "closing node", @node_element
+			# console.debug "closing node", @node_element
 			@removeFromDOM(false)
 			@replaceSelf()
 			# @getTree().layout()
@@ -223,16 +236,18 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	# remove_self == false only removs children
 	removeFromDOM: (remove_self=true) ->
 		@abortLoading()
-		# CUI.debug "remove from DOM", @getNodeId(), @is_open, @children?.length, remove_self
+		# console.debug "remove from DOM", @getNodeId(), @is_open, @children?.length, remove_self
 		if @is_open
 			@do_open = true
-			for c in @children
-				c.removeFromDOM()
+			if @children
+				for c in @children
+					c.removeFromDOM()
 		else
 			@do_open = false
 
 		if remove_self
-			if @element
+			# console.debug "removing ", @getUniqueId(), @getDOMNodes()?[0], @__is_rendered, @getRowIdx()
+			if @__is_rendered
 				tree = @getTree()
 				if tree and not tree.isDestroyed()
 					if @getRowIdx() == null
@@ -241,13 +256,13 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 					else
 						tree.removeRow(@getRowIdx())
 
-				@element = null
+				@__is_rendered = false
 
 		@is_open = false
 		@
 
-	getElement: ->
-		@element
+	# getElement: ->
+	# 	@element
 
 	# replaces node_element with a new render of ourself
 	replaceSelf: ->
@@ -256,7 +271,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				# layout_stopped = tree.stopLayout()
 				tree.replaceRow(@getRowIdx(), @render())
 				if @selected
-					tree.rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+					tree.rowAddClass(@getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 				# if layout_stopped
 				# 	tree.startLayout()
 			return CUI.resolvedPromise()
@@ -288,7 +303,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 		ret.done =>
 			promises = []
-			for child in @children
+			for child in @children or []
 				promises.push(child["#{action}Recursively"]())
 			CUI.when(promises)
 			.done(dfr.resolve)
@@ -309,32 +324,29 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if not @__loadingDeferred
 			return
 
-		console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
-		@__loadingDeferred.reject()
+		# console.error("ListViewTreeNode.abortLoading: Aborting chunk loading.")
+		if @__loadingDeferred.state == 'pending'
+			@__loadingDeferred.reject()
 		@__loadingDeferred = null
 		return
-
-	__open_counter: 0
 
 	# resolves with the opened node
 	open: ->
 
 		# we could return loading_deferred here
-		assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
+		CUI.util.assert(not @isLoading(), "ListViewTreeNode.open", "Cannot open node #{@getUniqueId()}, during opening. This can happen if the same node exists multiple times in the same tree.", node: @)
 
-		@__open_counter++
-
-		open_counter = @__open_counter
+		if @is_open or @isLeaf()
+			return CUI.resolvedPromise()
 
 		# console.error @getUniqueId(), "opening...", "is open:", @is_open, open_counter
-
-		if @is_open
-			return CUI.resolvedPromise()
 
 		@is_open = true
 		@do_open = false
 
 		dfr = @__loadingDeferred = new CUI.Deferred()
+
+		# console.warn("Start opening", @getUniqueId(), dfr.getUniqueId())
 
 		do_resolve = =>
 			if @__loadingDeferred.state() == "pending"
@@ -347,7 +359,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@__loadingDeferred = null
 
 		load_children = =>
-			assert(CUI.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
+			CUI.util.assert(CUI.util.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
 
 			# console.debug @._key, @getUniqueId(), "children loaded", @children.length
 
@@ -370,14 +382,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 						timeout: -1
 						call: (_items) =>
 							# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work"
-							if open_counter < @__open_counter
+							if dfr != @__loadingDeferred
 								# we are already in a new run, exit
 								return false
 							@__appendNode(_items[0], true) # , false, true))
 
 			.done =>
 				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work DONE"
-				if open_counter < @__open_counter
+				if dfr != @__loadingDeferred
 					return
 
 				if not @isRoot()
@@ -385,7 +397,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				do_resolve()
 			.fail =>
 				# console.error @getUniqueId(), open_counter, @__open_counter, "chunking work FAIL"
-				if open_counter < @__open_counter
+				if dfr != @__loadingDeferred
 					return
 
 				for c in @children
@@ -400,14 +412,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			func = @opts.getChildren or @getChildren
 			if func
 				ret = func.call(@)
-				if CUI.isArray(ret)
+				if CUI.util.isArray(ret)
 					@children = ret
 					load_children()
 				else
-					assert(isPromise(ret), "#{getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
+					CUI.util.assert(CUI.util.isPromise(ret), "#{CUI.util.getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
 					ret
 					.done (@children) =>
-						if open_counter < @__open_counter
+						if dfr != @__loadingDeferred
 							return
 						load_children()
 						return
@@ -436,8 +448,17 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		else
 			@father.addNode(node, idx)
 
+	setChildren: (@children) ->
+		@initChildren()
+		return
+
 	initChildren: ->
 		for node, idx in @children
+			for _node, _idx in @children
+				if idx == _idx
+					continue
+				CUI.util.assert(_node != node, "ListViewTreeNode.initChildren", "Must have every child only once.", node: @, child: node)
+
 			node.setFather(@)
 		return
 
@@ -447,12 +468,16 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	# is not yet "open".
 
 	addNode: (node, append=true) ->
-		assert(not @isLoading(), "ListViewTreeNode.addNode", "Cannot add node, during loading.", node: @)
+		CUI.util.assert(not @isLoading(), "ListViewTreeNode.addNode", "Cannot add node, during loading.", node: @)
 
 		if not @children
 			@children = []
 
-		assert(CUI.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
+		CUI.util.assert(CUI.util.isArray(@children), "Tree.addNode","Cannot add node, children needs to be an Array in node", node: @, new_node: node)
+
+		for _node in @children
+			CUI.util.assert(_node != node, "ListViewTreeNode.addNode", "Must have every child only once.", node: @, child: _node)
+
 		if append == true
 			@children.push(node)
 		else
@@ -488,10 +513,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 	# resolves with the appended node
 	__appendNode: (node, append=true) -> # , assume_open=false) ->
-		assert(node instanceof ListViewTreeNode, "ListViewTreeNode.__appendNode", "node must be instance of ListViewTreeNode", node: @, new_node: node)
-		assert(node.getFather() == @, "ListViewTreeNode.__appendNode", "node added must be child of current node", node: @, new_node: node)
+		CUI.util.assert(node instanceof CUI.ListViewTreeNode, "ListViewTreeNode.__appendNode", "node must be instance of ListViewTreeNode", node: @, new_node: node)
+		CUI.util.assert(node.getFather() == @, "ListViewTreeNode.__appendNode", "node added must be child of current node", node: @, new_node: node)
 
-		# CUI.debug ".__appendNode: father: ", @getUniqueId()+"["+@getNodeId()+"]", "child:", node.getUniqueId()+"["+node.getNodeId()+"]"
+		# console.debug ".__appendNode: father: ", @getUniqueId()+"["+@getNodeId()+"]", "child:", node.getUniqueId()+"["+node.getNodeId()+"]"
 
 		if append == false
 			append = 0
@@ -501,17 +526,17 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if tree?.isDestroyed()
 			return CUI.rejectedPromise(node)
 
-		# console.debug @._key, node._key, node.__info?.text, @isRendered()
-
 		if not @isRendered()
 			return CUI.resolvedPromise(node)
+
+		# console.warn "appendNode", @getUniqueId(), "new:", node.getUniqueId(), "father open:", @getFather()?.isOpen()
 
 		child_idx = node.getChildIdx()
 		if @isRoot()
 			if append == true or @children.length == 1 or append+1 == @children.length
 				tree.appendRow(node.render())
 			else
-				assert(@children[append+1], @__cls+".__addNode", "Node not found", children: @children, node: @, append: append)
+				CUI.util.assert(@children[append+1], @__cls+".__addNode", "Node not found", children: @children, node: @, append: append)
 				tree.insertRowBefore(@children[append+1].getRowIdx(), node.render())
 		else if child_idx == 0
 			# this means the added node is the first child, we
@@ -529,15 +554,15 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				last_node = child_nodes[child_nodes.length-1]
 
 			# if last_node.getRowIdx() == null
-			# 	CUI.error "row index is not there", tree, @is_open, @getNodeId(), child_idx, @children
+			# 	console.error "row index is not there", tree, @is_open, @getNodeId(), child_idx, @children
 			# 	_last_node = @children[child_idx-1]
-			# 	CUI.debug "last node", _last_node, _last_node.isRendered()
-			# 	CUI.debug "child nodes", child_nodes, last_node.isRendered()
+			# 	console.debug "last node", _last_node, _last_node.isRendered()
+			# 	console.debug "child nodes", child_nodes, last_node.isRendered()
 
 			tree.insertRowAfter(last_node.getRowIdx(), node.render())
 
 		if node.selected
-			tree.rowAddClass(node.getRowIdx(), ListViewRow.defaults.selected_class)
+			tree.rowAddClass(node.getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 
 		if node.do_open
 			node.open()
@@ -549,12 +574,12 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		select_after_node = null
 
 		remove_node = =>
-			# CUI.debug "remove", @getNodeId(), @father.getNodeId(), @element
+			# console.debug "remove", @getNodeId(), @father.getNodeId(), @element
 			@removeFromDOM()
 			@father?.removeChild(@, keep_children_array)
 
 			if tree = @getTree()
-				Events.trigger
+				CUI.Events.trigger
 					node: tree
 					type: "row_removed"
 
@@ -587,7 +612,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		dfr.promise()
 
 	removeChild: (child, keep_children_array=false) ->
-		removeFromArray(child, @children)
+		CUI.util.removeFromArray(child, @children)
 		if @children.length == 0 and not @isRoot()
 			@is_open = false
 			if not keep_children_array
@@ -619,10 +644,10 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		!!@selected
 
 	addSelectedClass: ->
-		@getTree().rowAddClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+		@getTree().rowAddClass(@getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 
 	removeSelectedClass: ->
-		@getTree().rowRemoveClass(@getRowIdx(), ListViewRow.defaults.selected_class)
+		@getTree().rowRemoveClass(@getRowIdx(), CUI.ListViewRow.defaults.selected_class)
 
 	setSelectedNode: (node = null, key = @getSelectedNodeKey()) ->
 		@getRoot()[@getSelectedNodeKey()] = node
@@ -633,52 +658,52 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 	getSelectedNodeKey: ->
 		"selectedNode"
 
-	select: (ev) ->
-		dfr = new CUI.Deferred()
-		if ev and @getTree?().isSelectable()
-			ev.stopPropagation?()
+	select: (event) ->
+		deferred = new CUI.Deferred()
+		if event and @getTree?().isSelectable()
+			event.stopPropagation?()
 
-		dfr.done =>
-			@getTree().triggerNodeSelect(ev, @)
+		deferred.done =>
+			@getTree().triggerNodeSelect(event, @)
 
 		if not @isSelectable()
-			# CUI.debug "row is not selectable", "row:", @, "tree:", @getTree()
-			return dfr.reject().promise()
+			# console.debug "row is not selectable", "row:", @, "tree:", @getTree()
+			return deferred.reject().promise()
 
 		if @isSelected()
-			return dfr.resolve().promise()
+			return deferred.resolve().promise()
 
-		# CUI.debug "selecting node", sel_node
+		# console.debug "selecting node", sel_node
 
 		do_select = =>
+			@getTree()._onBeforeSelect?(@)
 			@setSelectedNode(@)
-			# CUI.error "openUpwards", @getNodeId(), @is_open
+			# console.error "openUpwards", @getNodeId(), @is_open
 			@openUpwards()
 			.done =>
 				@addSelectedClass()
 				@selected = true
-				dfr.resolve()
-			.fail(dfr.reject)
+				deferred.resolve()
+			.fail(deferred.reject)
 
 		# the selected node is not us, so we ask the other
 		# node
-		sel_node = @getSelectedNode()
+		selectedNode = @getSelectedNode()
 
-		if sel_node
-			sel_node.check_deselect(ev, @)
-			.done =>
+		# If selectableRows is 'true' means that only one row can be selected at the same time, then it is deselected.
+		if selectedNode and @getTree()?.__selectableRows == true
+			selectedNode.check_deselect(event, @).done( =>
 				# don't pass event, so no check is performed
-				#CUI.debug "selected node:", sel_node
-				sel_node.deselect(null, @)
-				.done =>
+				#console.debug "selected node:", sel_node
+				selectedNode.deselect(null, @).done( =>
 					do_select()
-				.fail(dfr.reject)
-			.fail(dfr.reject)
+				).fail(deferred.reject)
+			).fail(deferred.reject)
 		else
 			do_select()
 
-		# CUI.debug "selecting node",
-		dfr.promise()
+		# console.debug "selecting node",
+		deferred.promise()
 
 	# resolves with the innermost node
 	openUpwards: (level=0) ->
@@ -732,17 +757,17 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@father.level()+1
 
 	renderContent: ->
-		if CUI.isFunction(@html)
+		if CUI.util.isFunction(@html)
 			@html.call(@opts, @)
 		else if @html
 			@html
 		else
-			new EmptyLabel(text: "<empty>").DOM
+			new CUI.EmptyLabel(text: "<empty>").DOM
 
 	update: (update_root=false) =>
-		# CUI.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
+		# console.debug "updating ", @element?[0], @children, @getFather(), update_root, @isRoot(), @getTree()
 
-		if not update_root and (not @element or @isRoot())
+		if not update_root and (not @__is_rendered or @isRoot())
 			# dont update root
 			return CUI.resolvedPromise()
 
@@ -754,8 +779,8 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				tree.startLayout()
 
 	reload: ->
-		# CUI.debug "ListViewTreeNode.reload:", @isRoot(), @is_open
-		assert(not @isLoading(), "ListViewTreeNode.reload", "Cannot reload node, during opening...", node: @, tree: @getTree())
+		# console.debug "ListViewTreeNode.reload:", @isRoot(), @is_open
+		CUI.util.assert(not @isLoading(), "ListViewTreeNode.reload", "Cannot reload node, during opening...", node: @, tree: @getTree())
 
 		if @isRoot()
 			@replaceSelf()
@@ -769,69 +794,70 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 			@update()
 
 	showSpinner: ->
-		if @element
-			@__handleDiv.empty()
-			@__handleDiv.append(new Icon(icon: "spinner").DOM)
+		if @__is_rendered
+			CUI.dom.empty(@__handleDiv)
+			CUI.dom.append(@__handleDiv, new CUI.Icon(icon: "spinner").DOM)
 		@
 
 	hideSpinner: ->
-		if @element
-			@__handleDiv.empty()
+		if @__is_rendered
+			CUI.dom.empty(@__handleDiv)
 			if @__handleIcon
-				@__handleDiv.append(new Icon(icon: @__handleIcon).DOM)
+				CUI.dom.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 			else
 		@
 
 	render: ->
-		assert(not @isRoot(), "ListViewTreeNode.render", "Unable to render root node.")
+		CUI.util.assert(not @isRoot(), "ListViewTreeNode.render", "Unable to render root node.")
 		@removeColumns()
 
-		@element = $div("cui-tree-node level-#{@level()}")
+		element = CUI.dom.div("cui-tree-node level-#{@level()}")
+		@__is_rendered = true
 
 		# Space for the left side
 		for i in [1...@level()] by 1
-			@element.append($div("cui-tree-node-spacer"))
+			CUI.dom.append(element, CUI.dom.div("cui-tree-node-spacer"))
 
 		# Handle before content
 		cls = ["cui-tree-node-handle"]
 
 		if @is_open
-			@__handleIcon = "tree_close"
+			@__handleIcon = CUI.defaults.class.ListViewTree.defaults.arrow_down
 			cls.push("cui-tree-node-is-open")
 		else if @isLeaf()
 			@__handleIcon = null
 			cls.push("cui-tree-node-is-leaf")
 		else
-			@__handleIcon = "tree_open"
+			@__handleIcon = CUI.defaults.class.ListViewTree.defaults.arrow_right
 			cls.push("cui-tree-node-is-closed")
 
 		if @children?.length == 0
 			cls.push("cui-tree-node-no-children")
 
-		@__handleDiv = $div(cls.join(" "))
+		@__handleDiv = CUI.dom.div(cls.join(" "))
 		if @__handleIcon
-			@__handleDiv.append(new Icon(icon: @__handleIcon).DOM)
+			CUI.dom.append(@__handleDiv, new CUI.Icon(icon: @__handleIcon).DOM)
 
-		@element.append(@__handleDiv)
+		CUI.dom.append(element, @__handleDiv)
 
 		# push the tree element as the first column
-		@prependColumn new ListViewColumn
-			element: @element
+		@prependColumn new CUI.ListViewColumn
+			element: element
 			class: "cui-tree-node-column cui-tree-node-level-#{@level()}"
-			colspan: @colspan
+			colspan: @getColspan()
 
 		# nodes can re-arrange the order of the columns
 		# so we call them last
 
 		# append Content
-		contentDiv = $div("cui-tree-node-content")
+		contentDiv = CUI.dom.div("cui-tree-node-content")
 		content = @renderContent()
-		if CUI.isArray(content)
+		if CUI.util.isArray(content)
 			for con in content
-				contentDiv.append(con?.DOM or content)
+				CUI.dom.append(contentDiv, con)
 		else
-			contentDiv.append(content?.DOM or content)
-		@element.append(contentDiv)
+			CUI.dom.append(contentDiv, content)
+		CUI.dom.append(element, contentDiv)
 		@
 
 
@@ -851,8 +877,3 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.resolvedPromise()
 
 	moveNodeAfter: (to_node, new_father, after) ->
-
-
-ListViewTreeNode = CUI.ListViewTreeNode
-
-

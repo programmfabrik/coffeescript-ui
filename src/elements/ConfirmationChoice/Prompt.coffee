@@ -30,13 +30,14 @@ class CUI.Prompt extends CUI.Confirm
 		@__input = null
 
 		@__data = input: @_default+""
-		@_content = new Form
+		@_content = new CUI.Form
 			fields: [
-				type: Output
+				type: CUI.Output
 				multiline: true
+				markdown: @_markdown
 				text: text
 			,
-				type: Input
+				type: CUI.Input
 				name: "input"
 				placeholder: @_placeholder
 				data: @__data
@@ -73,9 +74,5 @@ class CUI.Prompt extends CUI.Confirm
 		else
 			buttons[1].disable()
 
-
-
 CUI.prompt = (opts) ->
 	new CUI.Prompt(opts).open()
-
-

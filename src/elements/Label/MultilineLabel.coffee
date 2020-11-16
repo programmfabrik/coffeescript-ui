@@ -5,10 +5,10 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MultilineLabel extends Label
+class CUI.MultilineLabel extends CUI.Label
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-label")
 
 	initOpts: ->

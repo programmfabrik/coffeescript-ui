@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>select-pages</title>
+    <desc>Created with Sketch.</desc>
+    <g id="select-pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M3,0 L4,0 L4,1 L3,1 L3,0 Z M5,0 L6,0 L6,1 L5,1 L5,0 Z M7,0 L8,0 L8,1 L7,1 L7,0 Z M9,0 L10,0 L10,1 L9,1 L9,0 Z M13,0 L15,0 L15,2 L13,2 L13,0 Z M11,0 L12,0 L12,1 L11,1 L11,0 Z M0,0 L2,0 L2,2 L0,2 L0,0 Z M0,13 L2,13 L2,15 L0,15 L0,13 Z M3,14 L4,14 L4,15 L3,15 L3,14 Z M7,14 L8,14 L8,15 L7,15 L7,14 Z M5,14 L6,14 L6,15 L5,15 L5,14 Z M9,14 L10,14 L10,15 L9,15 L9,14 Z M11,14 L12,14 L12,15 L11,15 L11,14 Z M13,13 L15,13 L15,15 L13,15 L13,13 Z M14,3 L15,3 L15,4 L14,4 L14,3 Z M14,5 L15,5 L15,6 L14,6 L14,5 Z M14,7 L15,7 L15,8 L14,8 L14,7 Z M14,9 L15,9 L15,10 L14,10 L14,9 Z M14,11 L15,11 L15,12 L14,12 L14,11 Z M0,3 L1,3 L1,4 L0,4 L0,3 Z M0,5 L1,5 L1,6 L0,6 L0,5 Z M0,7 L1,7 L1,8 L0,8 L0,7 Z M0,9 L1,9 L1,10 L0,10 L0,9 Z M0,11 L1,11 L1,12 L0,12 L0,11 Z" id="dotted-border" fill="#023979"></path>
+        <path d="M10,5 L12,5 L12,12 L5,12 L5,10 L6,10 L6,11 L11,11 L11,6 L10,6 L10,5 Z" id="page" fill="#023979" fill-rule="nonzero"></path>
+        <path d="M3,3 L10,3 L10,10 L3,10 L3,3 Z M4,4 L4,9 L9,9 L9,4 L4,4 Z" id="page" fill="#023979" fill-rule="nonzero"></path>
+    </g>
+</svg>

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Output extends DataFieldInput
+class CUI.Output extends CUI.DataFieldInput
 	initOpts: ->
 		super()
 		@addOpts
@@ -14,7 +14,7 @@ class Output extends DataFieldInput
 				check: String
 			text:
 				check: String
-			# set to yes for placeholder and text
+			# set to yes for placeholder and text and value
 			markdown:
 				mandatory: true
 				default: false
@@ -38,7 +38,7 @@ class Output extends DataFieldInput
 		@
 
 	init: ->
-		@__textSpan = new Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
+		@__textSpan = new CUI.Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
 		@setText(@_text)
 		@__textSpan
 
@@ -49,33 +49,30 @@ class Output extends DataFieldInput
 	# enable: ->
 	# 	@removeClass("cui-data-field-disabled")
 
-	setText: (txt, markdown = null) ->
-		if isEmpty(txt)
+	setText: (txt) ->
+		if CUI.util.isEmpty(txt)
 			@__textSpan.addClass("cui-output-empty")
 			txt = @_placeholder
 		else
 			@__textSpan.removeClass("cui-output-empty")
 
-		if markdown == null
-			@__textSpan.setText(txt, @_markdown)
-		else
-			@__textSpan.setText(txt, markdown)
+		@__textSpan.setText(txt, @_markdown or false)
 
 	checkValue: ->
-		# Output does not care about values
+		# CUI.Output does not care about values
 
 	displayValue: ->
 		super()
 		if @getName()
 			ret = @getValue()
-			if not isEmpty(ret)
+			if not CUI.util.isEmpty(ret)
 				@__deleteBtn?.show()
 			else
 				@__deleteBtn?.hide()
-			if isContent(ret)
+			if CUI.util.isContent(ret)
 				@replace(ret)
 			else
-				@setText(ret, false) # don't use markdown for data driven output
+				@setText(ret)
 		@
 
 	getValue: ->
@@ -90,7 +87,7 @@ class Output extends DataFieldInput
 		@replace(@__textSpan)
 		if @_allow_delete and @hasData()
 			@addClass("cui-output--deletable")
-			@__deleteBtn = new Button
+			@__deleteBtn = new CUI.Button
 				icon: "remove"
 				appearance: "flat"
 				onClick: =>

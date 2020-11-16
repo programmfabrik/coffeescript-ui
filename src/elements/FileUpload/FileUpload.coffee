@@ -5,9 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FileUpload extends CUI.Element
-	constructor: (@opts = {}) ->
-		super(@opts)
+class CUI.FileUpload extends CUI.Element
+	constructor: (opts) ->
+		super(opts)
 		@__files = []
 		@__dropZones = []
 		@__batch_id = 0
@@ -22,11 +22,17 @@ class FileUpload extends CUI.Element
 			name:
 				default: CUI.defaults.FileUpload.name
 				check: String
+			add_filename_to_url:
+				default: false
+				mandatory: true
+				check: Boolean
 			parallel:
 				default: 2
 				check: (v) ->
 					v >= 1
 			onAdd:
+				check: Function
+			onBatchStart:
 				check: Function
 			onBatchQueued:
 				check: Function
@@ -56,7 +62,7 @@ class FileUpload extends CUI.Element
 		@setUrl(@_url)
 
 	setUrl: (@__url) ->
-		# CUI.info("FileUpload.setUrl: #{@getUrl()}.")
+		# console.info("FileUpload.setUrl: #{@getUrl()}.")
 		@__url
 
 	getUrl: ->
@@ -64,7 +70,7 @@ class FileUpload extends CUI.Element
 
 	# returns all uploaded files including completed
 	getFiles: (filter) ->
-		if isString(filter)
+		if CUI.util.isString(filter)
 			filter = [ filter ]
 
 		files = []
@@ -107,18 +113,26 @@ class FileUpload extends CUI.Element
 			all_done: all_done
 
 	getUploadFileClass: ->
-		FileUploadFile
+		CUI.FileUploadFile
 
 	queueFiles: (files) ->
 		batch = ++@__batch_id
-		# CUI.debug "FileUpload.queueFiles", files
+		# console.debug "FileUpload.queueFiles", files
+
+		locked = false
+
+		done_queuing = =>
+			@_onBatchQueued?()
+			@uploadNextFiles()
+			locked = false
 
 		idx = -1
 		next_file = =>
+			locked = true
+
 			idx++
 			if idx == files.length
-				@_onBatchQueued?()
-				@uploadNextFiles()
+				done_queuing()
 				return
 
 			file = files[idx]
@@ -155,33 +169,94 @@ class FileUpload extends CUI.Element
 				@checkBatchDone(f)
 
 			dont_queue_file = =>
-				CUI.debug("FileUpload.onAdd: Skipping file, function returned 'false'.")
-				next_file()
+				console.debug("FileUpload.onAdd: Skipping file, function returned 'false'.")
+				locked = false
+				return
 
 			queue_file = =>
 				@__files.push(f)
 
 				@_onUpdate?(f)
 				f.queue()
-				next_file()
+				locked = false
+				return
 
-			CUI.decide(@_onAdd?(f))
+			@__isQueueing = true
+
+			CUI.decide(@_onAdd?(f, idx, files.length))
 			.done =>
 				queue_file()
 			.fail =>
 				dont_queue_file()
+			.always =>
+				@__isQueueing = false
 
-		next_file()
+		@_onBatchStart?()
+
+		@__queuing = new CUI.Deferred()
+
+		interval = window.setInterval(=>
+			if locked
+				# wait
+				return
+
+			if @__stop or @__abort
+				window.clearInterval(interval)
+				dfr = @__queuing
+				delete(@__queuing)
+				if @__stop
+					delete(@__stop)
+					done_queuing()
+					dfr.resolve()
+				else
+					delete(@__abort)
+					dfr.reject()
+				return
+
+			if idx < files.length
+				# console.debug "queue", idx, files.length
+				next_file()
+			else
+				window.clearInterval(interval)
+				@__queuing.resolve()
+				delete(@__queuing)
+		,
+			1)
+
 		@
+
+	isQueuing: ->
+		!!@__queuing
+
+	stopQueuing: (abort = false) ->
+		dfr = new CUI.Deferred()
+		if @__queuing
+			if not abort
+				@__stop = true
+			else
+				@__abort = true
+			@__queuing.always(dfr.resolve)
+		else
+			dfr.resolve()
+		dfr.promise()
 
 	clear: ->
-		while file = @__files[0]
-			file.remove()
-		@
+		@stopQueuing(true)
+		.done =>
+			while file = @__files[0]
+				file.remove()
 
 	removeFile: (file) ->
-		removeFromArray(file, @__files)
+		CUI.util.removeFromArray(file, @__files)
 
+	isDone: ->
+		if @__isQueueing
+			return false
+
+		for f in @__files
+			if not f.isDone()
+				return false
+		return true
 
 	isUploading: ->
 		for f in @__files
@@ -202,12 +277,15 @@ class FileUpload extends CUI.Element
 				break
 
 		for file in files
-			# CUI.debug "uploading next file", file._file.name
+			# console.debug "uploading next file", file._file.name
 			@uploadFile(file)
 		@
 
 	uploadFile: (file) ->
-		file.upload(@getUrl(), @_name)
+		if @_add_filename_to_url
+			file.upload(@getUrl()+file.getName(), @_name)
+		else
+			file.upload(@getUrl(), @_name)
 
 	checkBatchDone: (file) ->
 		alarm = false
@@ -223,42 +301,58 @@ class FileUpload extends CUI.Element
 		return
 
 
-	initDropZone: (opts={}) ->
-		dropZone = opts.dropZone?.DOM
-		if not dropZone
-			dropZone = opts.dropZone
+	initDropZone: (_opts={}) ->
+
+		opts = CUI.Element.readOpts _opts, "FileUpload.initDropZone",
+			dropZone:
+				mandatory: true
+				check: (v) ->
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
+			multiple:
+				mandatory: true
+				default: true
+				check: (v) ->
+					v == true or v == false or v instanceof Function
+			selector:
+				check: String
+			allow_drop: (ev) =>
+				check: Function
+
+		dropZone = opts.dropZone.DOM or opts.dropZone
 
 		selector = opts.selector
-		if opts.multiple == false
-			multiple = false
-		else
-			multiple = true
+		multiple = opts.multiple
 
-		assert(isElement(dropZone) or isElement(dropZone?.DOM), "FileUpload.initDropZone", "Drop Zone needs to be instanceof HTMLElement or contain such an element in its property \"DOM\".", dropZone: dropZone)
-
-		Events.ignore
+		CUI.Events.ignore
+			node: dropZone
 			instance: @
 
 		dropZone.classList.add("cui-file-upload-drop-zone")
 
-		Events.listen
+		CUI.Events.listen
 			node: dropZone
 			type: ["dragover"]
 			instance: @
 			selector: selector
 			call: (ev) =>
-				FileUpload.setDropClassByEvent(ev)
+				if opts.allow_drop and not opts.allow_drop(ev)
+					return ev.stop()
+
+				CUI.FileUpload.setDropClassByEvent(ev)
 				ev.stopPropagation()
 				ev.preventDefault()
 				return false
 
-		Events.listen
+		CUI.Events.listen
 			node: dropZone
 			type: "drop"
 			instance: @
 			selector: selector
 			call: (ev) =>
-				FileUpload.setDropClassByEvent(ev)
+				if opts.allow_drop and not opts.allow_drop(ev)
+					return ev.stop()
+
+				CUI.FileUpload.setDropClassByEvent(ev)
 				dt = ev.getNativeEvent().dataTransfer
 
 				if dt.files?.length > 0
@@ -272,6 +366,8 @@ class FileUpload extends CUI.Element
 						files.push(file)
 						if multiple == false
 							break
+						if multiple instanceof Function and multiple() == false
+							break
 
 					if warn.length > 0
 						console.warn("Files empty or directories, not uploaded...", warn)
@@ -284,10 +380,10 @@ class FileUpload extends CUI.Element
 				return false
 
 		for dz in @__dropZones
-			if dz == dropZone[0]
+			if dz == dropZone
 				return @
 
-		@__dropZones.push(dropZone[0])
+		@__dropZones.push(dropZone)
 		@
 
 	@setDropClassByEvent: (ev) ->
@@ -316,28 +412,58 @@ class FileUpload extends CUI.Element
 				el.classList.remove("cui-file-upload-drag-over")
 		@
 
+
+	openDialog: (_opts) ->
+
+		opts = CUI.Element.readOpts _opts, "FileUpload.openDialog",
+			directory:
+				check: Boolean
+				mandatory: true
+				default: false
+			multiple:
+				check: Boolean
+				mandatory: true
+				default: false
+			fileUpload:
+				check: (v) ->
+					if v?.nodeName == "INPUT" and v.type == "file"
+						return true
+					else
+						return false
+
+		fp = @initFilePicker(opts)
+		opts.fileUpload.click()
+		return fp
+
 	initFilePicker: (opts) ->
-		# opts.directory
-		# opts.multiple
-		# opts.fileUpload (input)
+		if not opts.fileUpload
+			opts.fileUpload = document.getElementById("cui-file-upload-button")
+
+		opts.fileUpload.form.reset()
+
 		inp = opts.fileUpload
 		for k in ["webkitdirectory", "mozdirectory", "directory"]
 			if opts.directory
-				DOM.setAttribute(inp, k, true)
+				CUI.dom.setAttribute(inp, k, true)
 			else
-				DOM.removeAttribute(inp, k)
+				CUI.dom.removeAttribute(inp, k)
+
+		if opts.accept
+			CUI.dom.setAttribute(inp, "accept", opts.accept)
+		else
+			CUI.dom.removeAttribute(inp, "accept")
 
 		if opts.multiple
-			DOM.setAttribute(inp, "multiple", true)
+			CUI.dom.setAttribute(inp, "multiple", true)
 		else
-			DOM.removeAttribute(inp, "multiple")
+			CUI.dom.removeAttribute(inp, "multiple")
 
 		dfr = new CUI.Deferred()
 
-		Events.ignore
+		CUI.Events.ignore
 			node: inp
 
-		Events.listen
+		CUI.Events.listen
 			type: "change"
 			node: inp
 			call: =>
@@ -350,11 +476,11 @@ class FileUpload extends CUI.Element
 		dfr.promise()
 
 	resetDropZones: ->
-		Events.ignore
+		CUI.Events.ignore
 			instance: @
 
 		for dz in @__dropZones
-			$(dz).removeClass("cui-file-upload-drop-zone")
+			CUI.dom.removeClass(dz, "cui-file-upload-drop-zone")
 		@__dropZones = []
 		@
 

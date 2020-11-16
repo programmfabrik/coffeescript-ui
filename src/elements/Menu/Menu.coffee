@@ -6,9 +6,8 @@
 ###
 
 class CUI.Menu extends CUI.Layer
-	constructor: (@opts={}) ->
-		# @opts.role = "menu"
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		if @_itemList
 			@setItemList(@_itemList)
 
@@ -17,14 +16,14 @@ class CUI.Menu extends CUI.Layer
 		@addOpts
 			itemList:
 				check: (v) ->
-					v instanceof CUI.ItemList or CUI.isPlainObject(v)
+					v instanceof CUI.ItemList or CUI.util.isPlainObject(v)
 
 			auto_close_after_click:
 				default: true
 				check: Boolean
 
 			parent_menu:
-				check: Menu
+				check: CUI.Menu
 
 			onBeforeItemListInit:
 				check: Function
@@ -48,31 +47,70 @@ class CUI.Menu extends CUI.Layer
 		return
 
 	show: (@__event) ->
-		assert(not @isDestroyed(), "#{getObjectClass(@)}.show", "Element is already destroyed.")
+		CUI.util.assert(not @isDestroyed(), "#{CUI.util.getObjectClass(@)}.show", "Element is already destroyed.")
+
+		# It is necessary to save this status, to be able to focus again the button after the menu is closed.
+		@__openedByKeyboard = @__event?.getNativeEvent() instanceof KeyboardEvent
+
+		if @isShown()
+			@position()
+			return @
+
+		if @__loading
+			return @
+
+		# After the menu is shown, it is focused so keydown/keyup events work.
+		onShow = =>
+			if @getButton()
+				@DOM.focus()
+			return
 
 		if @__itemList
-			@__itemList.render(@, @__event)
-			.done =>
+			@__loading = true
+			@__itemList.render(@, @__event).done( =>
 				super(@__event)
-				# Events.trigger
-				# 	type: "content-resize"
-				# 	node: @__itemList
+				onShow()
+				@__loading = false
+			)
 		else
 			super(@__event)
+			onShow()
 
-		Events.listen
-			type: "keydown"
-			instance: @  # will be ignored by onHide in Layer
+		@__keyUpListener = CUI.Events.listen
+			type: "keyup"
 			node: @DOM
 			capture: true
 			call: (ev) =>
 				if ev.hasModifierKey()
 					return
 
-				if ev.keyCode() == 27
+				if ev.getKeyboardKey() in ["Esc", "Tab"]
 					@hide()
 					ev.stop()
+
+				return
+
+		@__keydownListener = CUI.Events.listen
+			type: "keydown"
+			node: @DOM
+			capture: true
+			call: (ev) =>
+				if @__itemList
+					CUI.Events.trigger
+						node: @__itemList.DOM
+						type: "item-list-keydown"
+						info:
+							event: ev
+				return
 		@
+
+	hide: ->
+		if @__openedByKeyboard
+			@getButton()?.DOM.focus()
+
+		@__keyUpListener?.destroy()
+		@__keydownListener?.destroy()
+		return super();
 
 	hasItems: (event) ->
 		@__itemList?.hasItems(event)
@@ -87,6 +125,11 @@ class CUI.Menu extends CUI.Layer
 			delete(itemList.maximize)
 			itemList.maximize_vertical = false
 			itemList.maximize_horizontal = true
+			itemList.keyboardControl = true
+
+			if not itemList.hasOwnProperty("active_item_idx")
+				# tell item list to not manage active item
+				itemList.active_item_idx = null
 
 			@__itemList = new CUI.ItemList(itemList)
 
@@ -106,11 +149,6 @@ class CUI.Menu extends CUI.Layer
 		@__itemList?.destroy()
 		super()
 
-	hide: (ev) ->
-		# ev?.preventDefault()
-		super(ev)
-		@
-
 	hideAll: (ev) ->
 		@hide(ev)
 		@_parent_menu?.hideAll(ev)
@@ -121,10 +159,7 @@ class CUI.Menu extends CUI.Layer
 		element = @getOpt("element")
 		if not element or element instanceof CUI.Button
 			return element
-		button = DOM.data(element.DOM or element, "element")
+		button = CUI.dom.data(element.DOM or element, "element")
 		if button instanceof CUI.Button
 			return button
 		null
-
-
-Menu = CUI.Menu

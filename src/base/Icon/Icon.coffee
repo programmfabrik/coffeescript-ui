@@ -6,30 +6,30 @@
 ###
 
 class CUI.Icon extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		svg_cls = ""
 		cls = ""
 		if @_icon
-			cls = @icon_map()[@_icon]
-			if isEmpty(cls)
+			cls = CUI.Icon.icon_map[@_icon]
+			if CUI.util.isEmpty(cls)
 				cls = @_icon
 
 			if cls.startsWith("svg-")
 				svg_cls = cls
 				cls = ""
 
-		if not isEmpty(@_class)
+		if not CUI.util.isEmpty(@_class)
 			cls += " "+@_class
 
 		if svg_cls
-			@DOM = CUI.DOM.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls}\"></svg>")[0]
+			@DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
 		else
-			@DOM = CUI.jQueryCompat(CUI.DOM.element("I", class: "fa "+cls))
+			@DOM = CUI.dom.element("I", class: "fa "+cls)
 
 		if @_tooltip
 			@_tooltip.element = @DOM
-			new Tooltip(@_tooltip)
+			new CUI.Tooltip(@_tooltip)
 
 	initOpts: ->
 		super()
@@ -44,24 +44,37 @@ class CUI.Icon extends CUI.Element
 				check: "PlainObject"
 
 	copy: ->
-		new Icon(@opts)
+		copyIcon = super()
+		styles = CUI.dom.getStyle(@)
+		CUI.dom.setStyle(copyIcon, styles)
+		return copyIcon
 
 	hide: ->
-		CUI.DOM.hideElement(@DOM)
+		CUI.dom.hideElement(@DOM)
 
 	show: ->
-		CUI.DOM.showElement(@DOM)
+		CUI.dom.showElement(@DOM)
 
-	icon_map: ->
+	@icon_map:
+		trash: "svg-trash"
+		reset: "svg-reset"
+		spinner: "svg-spinner cui-spin-stepped"
+		remove: "svg-close"
+		close: "svg-close"
+		folder: "svg-folder"
+		folder_shared: "svg-folder-shared"
+		folder_upload: "svg-folder-upload"
+		folder_shared_upload: "svg-folder-shared-upload"
+		info_circle: "svg-info-circle"
+		external_link: "svg-external-link"
 		crop: "fa-crop"
 		fullscreen: "fa-arrows-alt"
-		trash: if CUI.__ng__ then "svg-trash" else "fa-trash-o"
 		failed: "fa-warning"
 		no_right: "fa-slack"
-		file: if CUI.__ng__ then "fa-file" else "fa-file-o"
+		file: "fa-file"
 		filter: "fa-filter"
+		sliders: "fa-sliders"
 		refresh: "fa-refresh"
-		reset: "svg-reset"
 		zip: "fa fa-file-archive-o"
 		rotate_right: "fa-rotate-right"
 		rotate_left: "fa-rotate-left"
@@ -71,17 +84,15 @@ class CUI.Icon extends CUI.Element
 		show: "fa-question"
 		help: "fa-question"
 		question: "fa-question"
-		settings: if CUI.__ng__ then "fa-cog" else "fa-cogs"
+		settings: "fa-cog"
 		download: "fa-download"
 		export: "fa-download"
-		spinner: "fa-spinner cui-spin-stepped"
 		list: "fa-question"
 		upload: "fa-upload"
 		envelope: "fa-envelope-o"
 		envelope_active: "fa-envelope"
 		save: "fa-floppy-o"
 		heart: "fa-heart"
-		remove: "svg-close"
 		user: "fa-user"
 		clock: "fa-clock-o"
 		plus: "fa-plus"
@@ -95,28 +106,18 @@ class CUI.Icon extends CUI.Element
 		stop: "fa-stop"
 		print: "fa-print"
 		minus: "fa-minus"
-		# tree_open: "fa-plus-square-o"
-		# tree_close: "fa-minus-square-o"
-		tree_open: "fa-caret-right"
-		tree_close: "fa-caret-down"
 		ellipsis_h: "fa-ellipsis-h"
 		ellipsis_v: "fa-ellipsis-v" #used for sidemenu buttons
-		close: "svg-close"
-		folder: "svg-folder"
-		folder_shared: "svg-folder-shared"
-		folder_upload: "svg-folder-upload"
-		folder_shared_upload: "svg-folder-shared-upload"
 		menu: "fa-bars"
 		info: "fa-info-circle"
-		info_circle: "svg-info-circle"
 		bolt: "fa-bolt"
 		check: "fa-check"
 		warning: "fa-warning"
 		legal: "fa-legal"
 		cloud: "fa-cloud"
-		left: if CUI.__ng__ then "fa-angle-left" else "fa-chevron-left"
-		right: if CUI.__ng__ then "fa-angle-right" else "fa-chevron-right"
-		dive: if CUI.__ng__ then "fa-angle-right" else "fa-chevron-right"
+		left: "fa-angle-left"
+		right: "fa-angle-right"
+		dive: "fa-angle-right"
 		zoom_in: "fa-search-plus"
 		zoom_out: "fa-search-minus"
 		resize_small: "fa-compress"
@@ -134,9 +135,7 @@ class CUI.Icon extends CUI.Element
 		camera: "fa-camera"
 		expert_search: "fa-list-ul" #"fa-binoculars" #"fa-mortar-board"
 		image: "fa-picture-o"
-		external_link: "svg-external-link"
 
 
 CUI.proxyMethods(CUI.Icon, CUI.Button, ["hide", "show", "isShown","isHidden"])
 
-Icon = CUI.Icon

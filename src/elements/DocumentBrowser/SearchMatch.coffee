@@ -57,7 +57,6 @@ class CUI.DocumentBrowser.SearchMatch extends CUI.Element
 					chars[idx] = []
 				chars[idx].push(m.regExp_idx)
 
-		# console.debug "mark arr", dump(mark_arr)
 		splits = []
 
 		idx = 0
@@ -78,7 +77,7 @@ class CUI.DocumentBrowser.SearchMatch extends CUI.Element
 					chars[idx] or
 					char_id_curr
 						break
-			splits.push(toHtml(shrink(txt_chars.join(""))))
+			splits.push(CUI.util.toHtml(shrink(txt_chars.join(""))))
 
 		if char_id_curr
 			splits.push("</span>")

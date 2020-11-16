@@ -1,0 +1,39 @@
+{
+  "name": "demo-coffeescript-ui",
+  "version": "1.0.0",
+  "description": "Demo - Coffeescript",
+  "scripts": {
+    "build": "webpack --progress",
+    "build:watch": "webpack --watch --progress",
+    "start": "webpack-dev-server --host 0.0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/programmfabrik/coffeescript-ui-demo.git"
+  },
+  "keywords": [
+    "coffeescript-ui",
+    "demo"
+  ],
+  "author": "Programmfabrik GmbH",
+  "license": "MIT",
+  "homepage": "https://github.com/programmfabrik/coffeescript-ui-demo#readme",
+  "devDependencies": {
+    "base64-inline-loader": "^1.1.1",
+    "coffee": "^3.3.3",
+    "coffee-loader": "^0.7.3",
+    "coffee-script": "^1.12.7",
+    "coffeescript-ui": "1.7.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "2.1.2",
+    "html-loader": "^0.5.1",
+    "less": "^2.7.2",
+    "moment": "^2.24.0",
+    "node-sass": "4.12.0",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.7.0",
+    "webpack-dev-server": "^2.11.5"
+  }
+}

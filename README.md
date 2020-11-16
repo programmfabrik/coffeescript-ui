@@ -1,15 +1,102 @@
-# coffeescript-ui
-Coffeescript User Interface System (CUI)
+[![NPM version](https://img.shields.io/npm/v/coffeescript-ui.svg)](https://www.npmjs.com/package/coffeescript-ui)
 
-# install
+# Coffeescript User Interface System (CUI)
 
-    git clone https://github.com/programmfabrik/coffeescript-ui.git coffeescript-ui
-    git submodule init
-    git submodule update
-    make
+## Documentation
 
-In **build** the needed files can be found after the "make".
+https://programmfabrik.gitbooks.io/coffeescript-ui/
 
-# online documentation
+https://programmfabrik.github.io/coffeescript-ui/doc/index.html
 
-[http://picshare.5.easydb.de/cui/demo/#Documentation](http://picshare.5.easydb.de/cui/demo/#Documentation)
+## Installation
+
+```
+npm install --save-dev git+https://github.com/programmfabrik/coffeescript-ui.git
+```
+
+**Icons:** It is necessary to include [font-awesome](https://fontawesome.com) to be able to use icons. CUI also provides some icons which can be used with **svg-** prefix.
+
+### Versions
+
+- **cui.min.js**: Minified (default version)     
+- **cui.js**: No minified (recommended for development)
+
+### Usage 
+
+With *require*
+
+```
+require('coffeescript-ui') (uses default version)
+require('coffeescript-ui/public/cui.js')
+```
+        
+With *\<script\>* tag
+ 
+``` 
+<script src="node_modules/coffeescript-ui/public/cui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="node_modules/coffeescript-ui/public/cui.js" type="text/javascript" charset="utf-8"></script>
+```
+  
+#### Use cui.css (Optional, recommended)
+
+With CUI.CSSLoader
+
+```
+CUI.ready ->
+    new CUI.CSSLoader().load(url: 'node_modules/coffeescript-ui/public/cui.css')
+```
+
+With require
+   
+```        
+require('coffeescript-ui/public/cui.css')
+```
+    
+With *\<link\>* tag
+
+```
+<link rel="stylesheet" type="text/css" href="node_modules/coffeescript-ui/public/cui.css">
+```
+
+### Usage with webpack
+
+It's recommended to use **webpack.ProvidePlugin** to avoid "require" in each file.
+
+```
+plugins: [
+    ...
+    new webpack.ProvidePlugin({
+        'CUI': "coffeescript-ui" // or "coffeescript-ui/public/cui.js" (for development)
+    })
+    ...
+] 
+```
+  
+## Build
+
+The first step is to download all dependencies with *npm install*
+
+After that, it's necessary to run one of the following build commands 
+
+- **npm run build**: Builds the default version
+- **npm run build:minify**: Builds the minified version
+- **npm run build:all**: Builds one of each version
+- **npm run build:watch**: Builds the default version and watch for changes
+
+You will find the bundled file inside **public** folder.
+
+It's not necessary to build the project before use it, because **public** directory has always the last version.
+
+## Test
+
+To run the tests:
+
+**npm run test**
+
+## Live Demo
+
+https://programmfabrik.github.io/coffeescript-ui/demo/index.html
+
+## Live Tutorial
+
+https://programmfabrik.github.io/coffeescript-ui/tutorial/index.html  

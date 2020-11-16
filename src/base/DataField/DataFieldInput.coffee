@@ -6,9 +6,9 @@
 ###
 
 class CUI.DataFieldInput extends CUI.DataField
-	constructor: (@opts={}) ->
-		super(@opts)
-		DOM.setAttributeMap(@DOM[0], @_attr)
+	constructor: (opts) ->
+		super(opts)
+		CUI.dom.setAttributeMap(@DOM, @_attr)
 		@addClass("cui-data-field-input")
 
 	initOpts: ->
@@ -28,4 +28,3 @@ class CUI.DataFieldInput extends CUI.DataField
 	isResizable: ->
 		true
 
-DataFieldInput = CUI.DataFieldInput

@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Movable extends CUI.Draggable
 	@cls = "movable"
 
@@ -16,7 +14,7 @@ class CUI.Movable extends CUI.Draggable
 			limitRect:
 				default: {}
 				check: (v) ->
-					CUI.isPlainObject(v) or v instanceof Function
+					CUI.util.isPlainObject(v) or v instanceof Function
 			onPositioned:
 				check: Function
 			onPosition:
@@ -33,37 +31,37 @@ class CUI.Movable extends CUI.Draggable
 		@_helper = null
 
 	getLimitRect: ->
-		if CUI.isFunction(@_limitRect)
+		if CUI.util.isFunction(@_limitRect)
 			@_limitRect()
 		else
 			@_limitRect
 
 	setElementCss: (pos) ->
-		assert(CUI.isPlainObject(pos), getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
+		CUI.util.assert(CUI.util.isPlainObject(pos), CUI.util.getObjectClass(@), "opts.position must return a PlainObject containing any of x, y, w, h", pos: pos)
 		setCss = {}
-		if not isEmpty(pos.x)
+		if not CUI.util.isEmpty(pos.x)
 			setCss.left = pos.x
-		if not isEmpty(pos.y)
+		if not CUI.util.isEmpty(pos.y)
 			setCss.top = pos.y
-		if not isEmpty(pos.w)
+		if not CUI.util.isEmpty(pos.w)
 			setCss.marginBoxWidth = pos.w
-		if not isEmpty(pos.h)
+		if not CUI.util.isEmpty(pos.h)
 			setCss.marginBoxHeight = pos.h
 
-		CUI.DOM.setDimensions(@element[0], setCss)
+		CUI.dom.setDimensions(@element, setCss)
 		@_onPositioned?(pos)
 
 
 	init_drag: (ev, $target) ->
-		# CUI.debug "init_drag target", ev.getTarget(), $target[0]
-		if CUI.DOM.closest(ev.getTarget(), ".cui-resizable-handle")
+		# console.debug "init_drag target", ev.getTarget(), $target[0]
+		if CUI.dom.closest(ev.getTarget(), ".cui-resizable-handle")
 			return
-		# CUI.debug "init_drag on #{@cls}", ev, $target[0]
+		# console.debug "init_drag on #{@cls}", ev, $target[0]
 		super(ev, $target)
 
 
 	before_drag: ->
-		dim = CUI.DOM.getDimensions(@element[0])
+		dim = CUI.dom.getDimensions(@element)
 		@start =
 			x: dim.left or 0
 			y: dim.top or 0
@@ -97,6 +95,5 @@ class CUI.Movable extends CUI.Draggable
 
 	limitRect: (pos, defaults={}, limitRect = @getLimitRect()) ->
 		# !!! The order in Draggable.limitRect is different, but better
-		Draggable.limitRect(pos, limitRect, defaults)
+		CUI.Draggable.limitRect(pos, limitRect, defaults)
 
-Movable = CUI.Movable

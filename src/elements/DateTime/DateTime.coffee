@@ -5,33 +5,32 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-CUI.tz_data = {}
+CUI.Template.loadTemplateText(require('./DateTime.html'));
 
-class CUI.DateTime extends Input
-	constructor: (@opts={}) ->
-		super(@opts)
+# CUI.tz_data = {}
+moment = require('moment')
+
+class CUI.DateTime extends CUI.Input
+	constructor: (opts) ->
+		super(opts)
 		@init()
 
 	@defaults:
 		button_tooltip: "Open calendar"
+		bc_appendix: ["B.C.","BC"]
 
 	initOpts: ->
 		super()
 
-		if DateTime.__locale
-			locale = DateTime.__locale
-		else
-			for locale of DateTimeFormats
-				break
+		locale = CUI.DateTime.getLocale()
 
 		@addOpts
 			locale:
 				mandatory: true
 				default: locale
 				check: (v) ->
-					CUI.isArray(DateTimeFormats[v]?.formats)
+					CUI.util.isArray(CUI.DateTimeFormats[v]?.formats)
 			input_types:
-				default: ["date_time"]
 				check: Array
 			display_type:
 				default: "long"
@@ -42,8 +41,12 @@ class CUI.DateTime extends Input
 				check: "Integer"
 			max_year:
 				mandatory: true
-				default: 2499
+				default: 9999
 				check: "Integer"
+			store_invalid:
+				mandatory: true
+				default: false
+				check: Boolean
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
@@ -54,8 +57,8 @@ class CUI.DateTime extends Input
 	init: ->
 		@__regexpMatcher = @regexpMatcher()
 
-		@__input_formats_known = DateTimeFormats[@_locale].formats
-		@__locale_format = DateTimeFormats[@_locale]
+		@__input_formats_known = CUI.DateTimeFormats[@_locale].formats
+		@__locale_format = CUI.DateTimeFormats[@_locale]
 
 		@__input_formats = []
 		if not @_input_types?.length
@@ -67,15 +70,28 @@ class CUI.DateTime extends Input
 					if f.type == type
 						@__input_formats.push(f)
 						found = true
-				assert(found, "new DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
-		@initFormat(0)
+				CUI.util.assert(found, "new CUI.DateTime", "opts.input_types contains unknown type: #{type}", formats: @__input_formats_known, input_type: @_input_types)
+		@__default_format = @__input_formats[0]
+		for format in @__input_formats
+			if format.clock == false
+				@__input_format_no_time = format
+				@__default_format = format
+				break
+		@__input_format = @initFormat(@__default_format)
 		return
+
+	setInputFormat: (use_clock = @__input_formats[0].clock) ->
+		if use_clock == true
+			@__input_format = @initFormat(@__input_formats[0])
+		else
+			@__input_format = @initFormat(@__input_format_no_time)
+		@
 
 	initDateTimePicker: ->
 		if @__dateTimeTmpl
 			return @__dateTimeTmpl
 
-		@__dateTimeTmpl = new Template
+		@__dateTimeTmpl = new CUI.Template
 			name: "date-time"
 			map:
 				calendar: true
@@ -121,7 +137,7 @@ class CUI.DateTime extends Input
 		, "header_right")
 
 		# @__timezone_display = tmpl.map.timezone_display
-		# @__timeZone = new Select
+		# @__timeZone = new CUI.Select
 		# 	data: CUI.tz_data
 		# 	name: "tz"
 		# 	mark_changed: false
@@ -143,7 +159,7 @@ class CUI.DateTime extends Input
 
 
 	getTemplate: ->
-		new Template
+		new CUI.Template
 			name: "date-time-input"
 			map:
 				center: true
@@ -169,39 +185,34 @@ class CUI.DateTime extends Input
 		@__input_format?.__display
 
 	setCursor: (cursor) ->
-		# CUI.debug "setCursor", cursor, @__lastCursor
 		switch cursor
 			when "hour", "minute", "second", "am_pm"
 				title = @__locale_format.tab_time
-				DOM.setAttribute(@__dateTimeTmpl.DOM[0], "browser", "time")
+				CUI.dom.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
 				@setDigiClock()
 			else
 				title = @__locale_format.tab_date
-				DOM.setAttribute(@__dateTimeTmpl.DOM[0], "browser", "date")
+				CUI.dom.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
 
-		@__dateTimeTmpl.replace(new Label(text: title), "header_center")
+		@__dateTimeTmpl.replace(new CUI.Label(text: title), "header_center")
 		@
 
-	initFormat: (idx_or_format) ->
-		if isInteger(idx_or_format)
-			@__input_format = @__input_formats[idx_or_format]
-		else
-			@__input_format = idx_or_format
+	initFormat: (input_format) ->
 
 		moment.locale(@__locale_format.moment_locale or @_locale)
 
 		switch @_display_type
 			when "short"
-				@__input_format.__display = @__input_format.display_short
+				input_format.__display = input_format.display_short
 			else
-				@__input_format.__display = @__input_format.display
+				input_format.__display = input_format.display
 
-		@_invalidHint = text: @__input_format.invalid
+		@_invalidHint = text: input_format.invalid
 
 		for k, v of @__regexpMatcher
 			v.match_str = k
 
-		input = @__input_format.input
+		input = input_format.input
 		rstr = "("+Object.keys(@__regexpMatcher).join("|")+")"
 		re = new RegExp(rstr, "g")
 		s = input.split("")
@@ -211,77 +222,74 @@ class CUI.DateTime extends Input
 		while (match = re.exec(input)) != null
 			match_str = match[0]
 			match_start = match.index
-			regexp.push("("+escapeRegExp(s.slice(last_match_end, match_start).join(""))+")")
+			regexp.push("("+CUI.util.escapeRegExp(s.slice(last_match_end, match_start).join(""))+")")
 			regexp.push("("+@__regexpMatcher[match_str].regexp+")")
 			matcher.push(@__regexpMatcher[match_str])
 
 			last_match_end = match_start + match_str.length
 
-		regexp.push("("+escapeRegExp(s.slice(last_match_end).join(""))+")")
+		regexp.push("("+CUI.util.escapeRegExp(s.slice(last_match_end).join(""))+")")
 
-		# CUI.debug "regexp found", @__input_format.regexp, @__input_format.matcher
+		input_format.regexp = new RegExp("^"+regexp.join("")+"$")
+		input_format.matcher = matcher
 
-		@__input_format.regexp = new RegExp("^"+regexp.join("")+"$")
-		@__input_format.matcher = matcher
-
-		# CUI.debug "initFormat", @__input_format.input, @__input_format.regexp
-
-		# if @__current_input_format != @__input_format
-		# 	for k in ["digi_clock"]
-		# 		if @__current_input_format?[k] != @__input_format[k]
-		# 			if @__input_format[k]
-		# 				@__input_format["__#{k}"] = @__input_format[k]
-		# 			else
-		# 				@__input_format["__#{k}"] = null
-		# 			@__dateTimeTmpl.replace(@__input_format["__#{k}"], k)
-
-		# 	@popoverSetClasses()
-		# 	@pop?.position()
-		# @__current_input_format = @__input_format
-		@
+		input_format
 
 	getTemplateKeyForRender: ->
 		"center"
 
 	render: ->
 		super()
-		if isEmpty(@_placeholder)
-			@__input.prop("placeholder", @__input_formats[0].text)
+		if CUI.util.isEmpty(@_placeholder)
+			@__input.setAttribute("placeholder", @__input_formats[0].text)
 
-		btn = new CUI.defaults.class.Button
+		switch @_display_type
+			when "short"
+				display_key = "display_short"
+			else
+				display_key = "display"
+
+		attr = @__input_formats[0][display_key+'_attribute']
+
+		if not attr
+			attr = @__input_formats[0][display_key].replace(/[:, \.]/g, "-").replace(/-+/g,"-")
+
+		@DOM.setAttribute("data-cui-date-time-format", attr)
+
+		@addClass("cui-data-field--with-button")
+
+		@__calendarButton = new CUI.defaults.class.Button
 			icon: "calendar"
 			tooltip: text: CUI.DateTime.defaults.button_tooltip
 			onClick: =>
-				@openPopover(btn)
+				@openPopover(@__calendarButton)
 
-		@replace(btn, "right")
-		# @append(@__status = $div("cui-date-time-status"), "center")
+		@replace(@__calendarButton, "right")
 
-	format: (s, type="display", output_type=null) ->
-		assert(type in DateTime.formatTypes, "DateTime.format", "type must be on of \"#{DateTime.formatTypes.join(',')}\".", parm1: s, type: type)
 
-		if isEmpty(s)
-			return null
+	format: (_s, _output_format="display", output_type=null) ->
+		CUI.util.assert(_output_format in CUI.DateTime.formatTypes, "CUI.DateTime.format", "output_format must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, output_format: output_format)
 
-		if moment.isMoment(s)
-			mom = s
+		if moment.isMoment(_s)
+			mom = _s
 		else
+			s = _s?.trim()
+
+			if CUI.util.isEmpty(s)
+				return null
+
 			mom = @parse(s, @__input_formats_known)
-			if mom.isValid() and isNull(output_type)
-				output_type = @getCurrentFormat().type
+
+		if mom.isValid() and CUI.util.isNull(output_type)
+			output_type = @getCurrentFormat().type
 
 		if not mom.isValid()
 			formats_tried = []
 			for format in @__input_formats_known
-				for k in DateTime.formatTypes
+				for k in CUI.DateTime.formatTypes
 					formats_tried.push(format[k])
 
-			CUI.warn(
-				"DateTime.format: Moment is invalid:"
-				s
-				"Tried formats:"
-				formats_tried
-			)
+			console.warn("CUI.DateTime.format: Moment '#{s}' is invalid. Tried formats:", formats_tried)
 			return null
 
 		output_format = null
@@ -290,11 +298,13 @@ class CUI.DateTime extends Input
 				output_format = f
 				break
 
-		assert(output_format, "DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
+		CUI.util.assert(output_format, "CUI.DateTime.format", "output_type must be in known formats", formats: @__input_formats_known, output_type: output_type)
 
-		# CUI.debug "display format", s, output_type, dump(output_format), output_format[type], type
-
-		mom.format(output_format[type])
+		switch _output_format
+			when "store"
+				return CUI.DateTime.formatMoment(mom, output_format[_output_format])
+			else
+				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format])
 
 	regexpMatcher: ->
 		YYYY:
@@ -333,8 +343,12 @@ class CUI.DateTime extends Input
 			regexp: "(?:am|pm)"
 			inc_func: @incAMPM
 			cursor: "am_pm"
+		Y:
+			regexp: "(?:-|)[0-9]{1,}"
+			inc_func: "year"
+			cursor: "year"
 
-	incAMPM: (mom, diff) ->
+	incAMPM: (mom) ->
 		current_hour = mom.hour()
 		if current_hour < 12 # AM
 			# set PM
@@ -347,44 +361,50 @@ class CUI.DateTime extends Input
 		value = @getValue()
 		corrected_value = @parseValue(value, "store")
 		if corrected_value and corrected_value != value
-			CUI.warn("DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
+			console.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
 			@__data[@_name] = corrected_value
 		@
 
 	getValueForDisplay: ->
 		value = @getValue()?.trim?()
 
-		if isEmpty(value)
+		if CUI.util.isEmpty(value)
 			return ""
 
 		mom = @parse(value)
 
-		if mom.isValid()
-			mom.format(@getCurrentFormatDisplay())
-		else
-			value
+		if not mom.isValid()
+			return value
+
+		return CUI.DateTime.formatMomentWithBc(mom, @getCurrentFormatDisplay())
 
 	getValueForInput: (v = @getValue()) ->
-		if isEmpty(v?.trim())
+		if CUI.util.isEmpty(v?.trim())
 			return ""
 
 		mom = @parse(v)
-		if mom.isValid()
-			return mom.format(@__input_format.input)
-		else
+		if not mom.isValid()
 			return v
 
+		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input)
+
 	__checkInput: (value) ->
-		if not isEmpty(value?.trim())
+		@__calendarButton.enable()
+
+		if not CUI.util.isEmpty(value?.trim())
 			mom = @parse(value)
 			if not mom.isValid()
 				return false
+
+			if mom.bc or value.startsWith("-")
+				@__calendarButton.disable()
+
 		else
-			@initFormat(0)
+			@__input_format = @initFormat(@__default_format)
 		return true
 
 	__getInputBlocks: (v) ->
-		CUI.debug "getInputBlocks", v, @__input_format.regexp
+		# console.debug "getInputBlocks", v, @__input_format.regexp
 		match = v.match(@__input_format.regexp)
 		if not match
 			return false
@@ -395,7 +415,7 @@ class CUI.DateTime extends Input
 				continue
 
 			if idx % 2 == 0
-				blocks.push new DateTimeInputBlock
+				blocks.push new CUI.DateTimeInputBlock
 					start: pos
 					string: m
 					datetime: v
@@ -414,7 +434,13 @@ class CUI.DateTime extends Input
 	storeValue: (value, flags={}) ->
 		mom = @parse(value)
 		if mom.isValid()
-			value = mom.format(@__input_format.store)
+			if mom.bc
+				value = "-"+mom.bc
+			else
+				value = mom.format(@__input_format.store)
+
+		else if @_store_invalid and value.trim().length > 0
+			value = 'invalid'
 		else
 			value = null
 		super(value, flags)
@@ -435,13 +461,13 @@ class CUI.DateTime extends Input
 			else
 				digits.push(static: ":")
 
-		# CUI.debug digits
-		@__digiDisplay = new DigiDisplay(digits: digits)
+		# console.debug digits
+		@__digiDisplay = new CUI.DigiDisplay(digits: digits)
 
 
 	openPopover: (btn) ->
 		@initDateTimePicker()
-		@__popover = new Popover
+		@__popover = new CUI.Popover
 			element: btn
 			handle_focus: false
 			onHide: =>
@@ -464,29 +490,7 @@ class CUI.DateTime extends Input
 		# 	@__updatePopoverInterval = null
 		if @__popover
 			@__popover.destroy()
-			@__gridTable = null
 			delete(@__popover)
-		@
-
-
-	# set classes for clock visibility
-	popoverSetClasses: ->
-
-		if @__input_format.clock_seconds
-			@__dateTimeTmpl.removeClass("hide-clock-seconds")
-		else
-			@__dateTimeTmpl.addClass("hide-clock-seconds")
-
-		if @__input_format.clock
-			@__dateTimeTmpl.removeClass("hide-clock")
-		else
-			@__dateTimeTmpl.addClass("hide-clock")
-
-		# if @__input_format.timezone_display
-		# 	@__dateTimeTmpl.removeClass("hide-timezone-display")
-		# else
-		# 	@__dateTimeTmpl.addClass("hide-timezone-display")
-
 		@
 
 
@@ -500,9 +504,8 @@ class CUI.DateTime extends Input
 		# 	,
 		# 		1000*30 # update the popover every 30 seconds
 
-		CUI.debug "updating popover...", @__input_format
+		console.debug "updating popover...", @__input_format
 
-		@popoverSetClasses()
 		@drawDate()
 		# @drawHourMinute()
 		@setClock()
@@ -512,7 +515,7 @@ class CUI.DateTime extends Input
 		@
 
 	destroy: ->
-		# CUI.debug "destroying popover"
+		# console.debug "destroying popover"
 		@closePopover()
 		super()
 
@@ -526,14 +529,14 @@ class CUI.DateTime extends Input
 		minutes = minute + seconds / 60
 		hours = (hour%12) + minutes / 60
 
-		@__hour.css("transform", "rotate(" + hours * 30 + "deg)")
-		@__minute.css("transform", "rotate(" + minutes * 6 + "deg)")
-		@__second.css("transform", "rotate(" + seconds * 6 + "deg)")
+		CUI.dom.setStyleOne(@__hour, "transform", "rotate(" + hours * 30 + "deg)")
+		CUI.dom.setStyleOne(@__minute, "transform", "rotate(" + minutes * 6 + "deg)")
+		CUI.dom.setStyleOne(@__second, "transform", "rotate(" + seconds * 6 + "deg)")
 
 
 	setDigiClock: (mom = @__current_moment) ->
 		f = @__input_format.digi_clock
-		CUI.debug "setDigiClock", f, mom, mom.format(f)
+		console.debug "setDigiClock", f, mom, mom.format(f)
 		if f
 			@__digiDisplay.display(mom.format(f))
 		@
@@ -544,8 +547,9 @@ class CUI.DateTime extends Input
 
 		mom_tz = mom.clone()
 		mom_tz.tz(CUI.tz_data.tz)
-		# CUI.debug @__input_format.timezone_display, mom_tz.format(@__input_format.timezone_display)
-		@__timezone_display.empty().append(mom_tz.format(@__input_format.timezone_display))
+		# console.debug @__input_format.timezone_display, mom_tz.format(@__input_format.timezone_display)
+		CUI.dom.empty(@__timezone_display)
+		CUI.dom.append(@__timezone_display, mom_tz.format(@__input_format.timezone_display))
 
 	setTimezone: ->
 
@@ -572,7 +576,7 @@ class CUI.DateTime extends Input
 			for n in names
 				@__tz_data.push(by_name[n])
 
-			# CUI.debug "timezone data loaded", @__tz_data
+			# console.debug "timezone data loaded", @__tz_data
 
 	getTimezoneOpts: ->
 		if @__current_moment
@@ -580,12 +584,19 @@ class CUI.DateTime extends Input
 
 		opts = []
 		for tz, idx in @__tz_data
-			if not mom and tz.name != DateTimeFormats["de-DE"].timezone
+			if not mom and tz.name != CUI.DateTimeFormats["de-DE"].timezone
 				continue
+
+			if mom
+				span = CUI.dom.span("cui-timezone-offset").setAttribute("title", tz.geo)
+				span.textContent = mom.tz(tz.name).format("zZ")
+				span
+			else
+				span = null
 
 			opts.push
 				text: tz.print_name
-				right: if mom then $span("cui-timezone-offset").prop("title", tz.geo).text(mom.tz(tz.name).format("zZ")) else null
+				right: span
 				value: tz.name
 		opts
 
@@ -595,41 +606,95 @@ class CUI.DateTime extends Input
 	#              matched is not among them, init to the first check format.
 	#              these formats are the "allowed" formats, this is used in __checkInput
 
-	parse: (s, formats = @__input_formats, use_formats = formats) ->
-		if not (s?.trim?().length > 0)
+	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
+		if not (stringValue?.trim?().length > 0)
 			return moment.invalid()
 
 		for format in formats
-			mom = @__parseFormat(format, s)
+
+			mom = @__parseFormat(format, stringValue)
 			if mom
 				if format in use_formats
-					@initFormat(format)
+					@__input_format = @initFormat(format)
 				else
-					@initFormat(0)
+					@__input_format = @initFormat(@__default_format)
 				mom.locale(moment.locale())
-				# CUI.debug "parsing ok", mom, f, moment.locale()
+
+				if mom.year() > @_max_year # Year must not be greater than max year.
+					return moment.invalid()
+
+				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
-		return moment.invalid()
+		if not formats.some((format) -> format.support_bc)
+			return moment.invalid()
+
+		# Moment support not all BC dates, we get here
+		# if the year is below that, or ends with a supported
+		# appendix like "v. Chr."
+
+		# lets see if the date is below zero
+		checkBC = false
+		hasBCAppendix = false
+		if stringValue.startsWith("-")
+			checkBC = true
+			stringValue = stringValue.substring(1)
+		else
+			us = stringValue.toLocaleUpperCase()
+			for appendix in CUI.DateTime.defaults.bc_appendix
+				ua = appendix.toLocaleUpperCase()
+				if us.endsWith(" "+ua)
+					stringValue = stringValue.substring(0, stringValue.length - ua.length).trim()
+					hasBCAppendix = checkBC = true
+					break
+
+		if not checkBC
+			return moment.invalid()
+
+		# set bc to the value
+		m = stringValue.match(/^[0-9]+$/)
+		if not m
+			return moment.invalid()
+
+		# fake a moment
+		mom = moment()
+		mom.bc = parseInt(stringValue)
+		if hasBCAppendix # If it has BC appendix, means that the number value of the year is one less.
+			mom.bc--
+
+		if mom.bc < 10
+			mom.bc = "000"+mom.bc
+		else if mom.bc < 100
+			mom.bc = "00"+mom.bc
+		else if mom.bc < 1000
+			mom.bc = "0"+mom.bc
+		else
+			mom.bc = ""+mom.bc
+
+		return mom
+
 
 	# like parse, but it used all known input formats
 	# to recognize the value
 	parseValue: (value, output_format = null) ->
 		input_formats = @__input_formats.slice(0)
 		for format in @__input_formats_known
-			pushOntoArray(format, input_formats)
+			CUI.util.pushOntoArray(format, input_formats)
 		mom = @parse(value, input_formats, @__input_formats)
 		if not output_format
 			return mom
 
-		if mom.isValid()
-			mom.format(@__input_format[output_format])
+		if not mom.isValid()
+			return null
+
+		if mom.bc
+			return "-"+mom.bc
 		else
-			null
+			return mom.format(@__input_format[output_format])
 
 	__parseFormat: (f, s) ->
-		for k in DateTime.formatTypes
-			assert(f[k], "DateTime.__parseFormat", ".#{k} must be set", format: f)
+		for k in CUI.DateTime.formatTypes
+			CUI.util.assert(f[k], "CUI.DateTime.__parseFormat", ".#{k} must be set", format: f)
 			mom = moment(s, f[k], true) # true the input format
 			if mom.isValid()
 				return mom
@@ -641,22 +706,21 @@ class CUI.DateTime extends Input
 
 		return
 
-
 	setMomentFromInput: ->
-		inp = @__input0.value.trim()
+		inp = @__input.value.trim()
 		if inp.length > 0
 			@__current_moment = @parse(inp)
 
 		if inp == "" or not @__current_moment.isValid()
 			@__current_moment = moment()
 			@__current_moment.__now = true
-			@initFormat(0)
+			@__input_format = @initFormat(@__default_format)
 
 		return
 
 	setInputFromMoment: ->
 		@__clearOverwriteMonthAndYear()
-		# @__input0.value = @__current_moment.format(@__input_format.input)
+		# @__input.value = @__current_moment.format(@__input_format.input)
 		# console.error "stored value:", @__input.val()
 		# @storeValue(@__input.val())
 		@setValue(@__current_moment.format(@__input_format.input), no_trigger: false)
@@ -669,30 +733,29 @@ class CUI.DateTime extends Input
 	drawDate: (_mom) ->
 		if not _mom
 			mom = @__current_moment.clone()
+			mom.bc = @__current_moment.bc
 		else
 			mom = _mom
 
 		@updateCalendar(mom, false)
 
 	updateCalendar: (mom, update_current_moment = true) ->
-		@__calendar.empty()
+		CUI.dom.empty(@__calendar)
 
-		if CUI.__ng__
-			@__calendar.append(@getDateTimeDrawer(mom))
-			@__calendar.append(@drawMonthTable(mom))
-			@__calendar.append(@drawYearMonthsSelect(mom))
-		else
-			@__calendar.append(@drawYearMonthsSelect(mom))
-			@__calendar.append(@drawMonthTable(mom))
+		CUI.dom.append(@__calendar, @getDateTimeDrawer(mom))
+		CUI.dom.append(@__calendar, @drawMonthTable(mom))
+		CUI.dom.append(@__calendar, @drawYearMonthsSelect(mom))
 
 		if update_current_moment
 			@__current_moment = mom.clone()
+			@__current_moment.bc = mom.bc
 			@setInputFromMoment()
 
-		console.info("DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
+		console.info("CUI.DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
 
 		@markDay()
 		@
+
 
 	getDateTimeDrawer: (mom) ->
 
@@ -702,14 +765,19 @@ class CUI.DateTime extends Input
 			month: mom.month()
 			year: mom.year()
 			date: mom.date()
-			hour: mom.hour()
-			minute: mom.minute()
-			second: mom.second()
+			hour: null
+			minute: null
+			second: null
 			am_pm: null
 
-		if am_pm
-			data.am_pm = Math.floor(data.hour / 12)*12
-			data.hour = data.hour%12
+		if @__input_format.clock
+			data.hour = mom.hour()
+			data.minute = mom.minute()
+			data.second = mom.second()
+
+			if am_pm
+				data.am_pm = Math.floor(data.hour / 12)*12
+				data.hour = data.hour%12
 
 		pad0 = (n) ->
 			if n < 10
@@ -717,8 +785,9 @@ class CUI.DateTime extends Input
 			else
 				""+n
 
-		date_sel = new Select(
+		date_sel = new CUI.Select(
 			name: "date"
+			menu_class: "cui-date-time--select-menu"
 			data: data
 			group: "date"
 			onDataChanged: =>
@@ -733,8 +802,9 @@ class CUI.DateTime extends Input
 				opts
 		).start()
 
-		month_sel = new Select(
+		month_sel = new CUI.Select(
 			name: "month"
+			menu_class: "cui-date-time--select-menu"
 			data: data
 			group: "date"
 			onDataChanged: =>
@@ -749,35 +819,55 @@ class CUI.DateTime extends Input
 				opts
 		).start()
 
-		year_sel = new Select(
+		year_sel = new CUI.Select(
 			name: "year"
+			menu_class: "cui-date-time--select-menu"
 			data: data
 			group: "date"
 			onDataChanged: =>
 				@updateCalendar(mom.year(data.year))
 			options: =>
-				opts = []
-				for year in [data.year-20..data.year+20]
-					opts.push
-						text: ""+year
+				options = []
+				minYear = data.year - 20
+				if minYear < @_min_year
+					minYear = @_min_year
+
+				for year in [minYear..data.year + 20]
+					options.push
+						text: "#{year}"
 						value: year
 
-				opts
+				options
 		).start()
 
 		if @__input_formats[0].clock
 
-			hour_sel = new Select(
+			if @__input_format_no_time
+				emtpy_clock_opts = [
+					text: ''
+					value: null
+				]
+			else
+				emtpy_clock_opts = []
+
+			hour_sel = new CUI.Select(
 				name: "hour"
+				menu_class: "cui-date-time--select-menu"
 				data: data
 				group: "time"
-				onDataChanged: =>
-					if am_pm
-						@updateCalendar(mom.hour(data.hour+data.am_pm))
+				onDataChanged: (_data) =>
+					if _data.hour == null
+						@setInputFormat(false)
+						@updateCalendar(mom)
 					else
-						@updateCalendar(mom.hour(data.hour))
+						@setInputFormat(true)
+						if am_pm
+							@updateCalendar(mom.hour(data.hour+data.am_pm))
+						else
+							@updateCalendar(mom.hour(data.hour))
+					@__popover.position()
 				options: =>
-					opts = []
+					opts = emtpy_clock_opts.slice(0)
 					if am_pm
 						for hour in [1..12]
 							opts.push
@@ -791,18 +881,25 @@ class CUI.DateTime extends Input
 					opts
 			).start()
 
-			# minute_colon = new Label(text: ":")
+			# minute_colon = new CUI.Label(text: ":")
 
-			minute_sel = new Select(
+			minute_sel = new CUI.Select(
 				class: "cui-date-time-60-select"
 				name: "minute"
+				menu_class: "cui-date-time--select-menu"
 				group: "time"
 				data: data
-				onDataChanged: =>
-					@updateCalendar(mom.minute(data.minute))
+				onDataChanged: (_data) =>
+					if _data.minute == null
+						@setInputFormat(false)
+						@updateCalendar(mom)
+					else
+						@setInputFormat(true)
+						@updateCalendar(mom.minute(data.minute))
+					@__popover.position()
 				options: =>
 
-					opts = []
+					opts = emtpy_clock_opts.slice(0)
 					for minute in [0..59]
 						opts.push
 							text: pad0(minute)
@@ -812,15 +909,22 @@ class CUI.DateTime extends Input
 			).start()
 
 			if am_pm
-				am_pm_sel = new Select(
+				am_pm_sel = new CUI.Select(
 					class: "cui-date-time-am-pm-select"
 					name: "am_pm"
 					group: "time"
 					data: data
-					onDataChanged: =>
-						@updateCalendar(mom.hour(data.hour+data.am_pm))
+					onDataChanged: (_data) =>
+						if _data.am_pm == null
+							@setInputFormat(false)
+							@updateCalendar(mom)
+						else
+							@setInputFormat(true)
+							@updateCalendar(mom.hour(data.hour+data.am_pm))
+						@__popover.position()
+
 					options: =>
-						opts = []
+						opts = emtpy_clock_opts.slice(0)
 						for am_pm in ["AM", "PM"]
 							opts.push
 								text: am_pm
@@ -828,9 +932,9 @@ class CUI.DateTime extends Input
 						opts
 				).start()
 
-			# second_colon = new Label(text: ":")
+			# second_colon = new CUI.Label(text: ":")
 
-			# second_sel = new Select(
+			# second_sel = new CUI.Select(
 			# 	class: "cui-date-time-60-select"
 			# 	name: "second"
 			# 	data: data
@@ -846,7 +950,7 @@ class CUI.DateTime extends Input
 			# 		opts
 			# ).start()
 
-		new Buttonbar(
+		new CUI.Buttonbar(
 			buttons: [
 				date_sel
 				month_sel
@@ -863,6 +967,11 @@ class CUI.DateTime extends Input
 
 	drawYearMonthsSelect: (mom) ->
 
+		year = null
+
+		updateCalendar = =>
+			@updateCalendar(mom.year(year))
+
 		data =
 			month: mom.month()
 			year: mom.year()
@@ -875,18 +984,27 @@ class CUI.DateTime extends Input
 
 		now_year = moment().year()
 
+		month_label_max_chars = 0
+
+		for opt in month_opts
+			if opt.text?.length > month_label_max_chars
+				month_label_max_chars = opt.text?.length
+
+		month_label = new CUI.Label
+			text: month_opts[data.month].text
+
+		month_label.setTextMaxChars(month_label_max_chars)
+
 		##### HEADER includes YEAR and MONTH
-		header_year_month = new HorizontalLayout
+		header_year_month = new CUI.HorizontalLayout
 			maximize_vertical: false
 			maximize_horizontal: true
 			class: "cui-date-time-footer"
 			left:
-				content: new Buttonbar
+				content: new CUI.Buttonbar
 					class: "cui-date-time-header-month"
 					buttons:
 						[
-							appearance: if CUI.__ng__ then undefined else "flat"
-							size: if CUI.__ng__ then undefined else "mini"
 							icon: "left"
 							onClick: (ev) =>
 								if mom.clone().subtract(1, "months").year() < @_min_year
@@ -895,9 +1013,8 @@ class CUI.DateTime extends Input
 								mom.subtract(1, "months")
 								@drawDate(mom)
 						,
-							new Label
-								text: month_opts[data.month].text
-							# new Select(
+							month_label
+							# new CUI.Select(
 							# 	attr:
 							# 		cursor: "month"
 							# 	class: "cui-date-time-month-select"
@@ -914,8 +1031,6 @@ class CUI.DateTime extends Input
 
 							# ).start()
 						,
-							appearance: if CUI.__ng__ then undefined else "flat"
-							size: if CUI.__ng__ then undefined else "mini"
 							icon: "right"
 							onClick: (ev) =>
 								if mom.clone().add(1, "months").year() > @_max_year
@@ -925,20 +1040,19 @@ class CUI.DateTime extends Input
 								@drawDate(mom)
 						]
 			right:
-				content: new Buttonbar
+				content: new CUI.Buttonbar
 					class: "cui-date-time-header-year"
 					buttons: [
-						appearance: if CUI.__ng__ then undefined else "flat"
-						size: if CUI.__ng__ then undefined else "mini"
 						icon: "left"
-						group: if CUI.__ng__ then "year" else null
-						onClick: (ev) =>
-							if data.year-1 < @_min_year
+						group: "year"
+						onClick: =>
+							if data.year - 1 < @_min_year
 								return
+
 							mom.subtract(1, "years")
 							@drawDate(mom)
 					,
-						new NumberInput(
+						new CUI.NumberInput(
 							attr:
 								cursor: "year"
 							max: @_max_year
@@ -946,21 +1060,19 @@ class CUI.DateTime extends Input
 							placeholder: ""+now_year
 							data: data
 							name: "year"
-							group: if CUI.__ng__ then "year" else null
+							group: "year"
 							onDataChanged: (data) =>
-								if isEmpty(data.year)
+								if CUI.util.isEmpty(data.year)
 									year = now_year
 								else
 									year = data.year
-								@updateCalendar(mom.year(year))
+								CUI.scheduleCallback(ms: 500, call: updateCalendar)
 						).start()
 					,
-						appearance: if CUI.__ng__ then undefined else "flat"
-						size: if CUI.__ng__ then undefined else "mini"
 						icon: "right"
-						group: if CUI.__ng__ then "year" else null
-						onClick: (ev) =>
-							if data.year+1 > @_max_year
+						group: "year"
+						onClick: =>
+							if data.year + 1 > @_max_year
 								return
 							mom.add(1, "years")
 							@drawDate(mom)
@@ -985,18 +1097,19 @@ class CUI.DateTime extends Input
 		]) # .utc()
 
 
-		month_table = $table("cui-date-time-date")
+		month_table = CUI.dom.table("cui-date-time-date")
 
-		Events.listen
+		CUI.Events.listen
 			node: month_table
 			type: "click"
 			call: (ev) =>
 				ev.stopPropagation()
-				$target = $(ev.getTarget())
-				# CUI.debug "click on date table", ev.getTarget()
-				if $target.closest(".cui-date-time-day").length
-					data = DOM.data($target.closest("td,.cui-td")[0])
+				target = ev.getTarget()
+				# console.debug "click on date table", ev.getTarget()
+				if CUI.dom.closest(target, ".cui-date-time-day")
+					data = CUI.dom.data(CUI.dom.closest(target, "td,.cui-td"))
 
+					@__input_format = @initFormat(@__default_format)
 					# order here is important, we need to set the month
 					# before we set the date!
 					@__current_moment.year(data.year)
@@ -1004,23 +1117,27 @@ class CUI.DateTime extends Input
 					@__current_moment.date(data.date)
 
 					@updateCalendar(@__current_moment)
-					@closePopover()
+					if @__input_formats[0].clock
+						@__popover.position()
+					else
+						@closePopover()
 				return
 
 		# Wk, Mo, Tu, We, Th...
-		tr = $tr("cui-date-time-month-header").appendTo(month_table)
+		tr = CUI.dom.tr("cui-date-time-month-header")
+		CUI.dom.append(month_table, tr)
 
-		if CUI.__ng__
-			td_func = $th
-		else
-			td_func = $td
+		td_func = CUI.dom.th
 
-		tr.append(td_func("cui-date-time-week-title").append($div("cui-date-time-dow").text(@__locale_format.tab_week)))
+		tabWeekDiv = CUI.dom.div("cui-date-time-dow")
+		tabWeekDiv.textContent = @__locale_format.tab_week
+		CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), tabWeekDiv))
 		for dow in [@start_day..@start_day+6]
 			weekday = moment.weekdaysMin(dow%7)
-			day_div = $div("cui-date-time-dow").text(weekday)
-			day_div.addClass("cui-date-time-day-"+weekday.toLowerCase())
-			tr.append(td_func().append(day_div))
+			day_div = CUI.dom.div("cui-date-time-dow")
+			day_div.textContent = weekday
+			CUI.dom.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
+			CUI.dom.append(tr, CUI.dom.append(td_func(), day_div))
 
 		# Weeks
 		mom.subtract((mom.day()-@start_day+7)%7, "days")
@@ -1035,35 +1152,34 @@ class CUI.DateTime extends Input
 				if weeks ==6
 					# if ((curr_m > m and date.getUTCFullYear() == year) or date.getUTCFullYear() > year)
 					break
-				tr = $tr().appendTo(month_table)
+				tr = CUI.dom.tr()
+				CUI.dom.append(month_table, tr)
 				week_no = mom.week() #@start_day==0)
-				tr.append($td("cui-date-time-week").append($text(week_no)))
+				CUI.dom.append(tr, CUI.dom.append(CUI.dom.td("cui-date-time-week"), CUI.dom.text(week_no)))
 				weeks++
 
-			if CUI.__ng__
-				div_type = $td
-			else
-				div_type = $div
+			div_type = CUI.dom.td
 
-			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-")).text(day_no)
+			day_span = CUI.dom.span()
+			day_span.textContent = day_no
+			day_div = div_type("cui-date-time-day", cursor: "day", datestr: [curr_y, curr_m, day_no].join("-"))
+			CUI.dom.append(day_div, day_span)
 
 			if curr_m < month
-				day_div.addClass("cui-date-time-previous-month")
+				CUI.dom.addClass(day_div, "cui-date-time-previous-month")
 			else if curr_m > month
-				day_div.addClass("cui-date-time-next-month")
+				CUI.dom.addClass(day_div, "cui-date-time-next-month")
 			else
-				day_div.addClass("cui-date-time-same-month")
+				CUI.dom.addClass(day_div, "cui-date-time-same-month")
 				if year == now.year() and month == now.month() and day_no == now.date()
-					day_div.addClass("cui-date-time-now")
+					CUI.dom.addClass(day_div, "cui-date-time-now")
 
-			day_div.addClass("cui-date-time-day-"+mom.format("dd").toLowerCase())
+			CUI.dom.addClass(day_div, "cui-date-time-day-"+mom.format("dd").toLowerCase())
 
-			if CUI.__ng__
-				td = day_div.appendTo(tr)
-			else
-				td = $td().append(day_div).appendTo(tr)
+			td = day_div
+			CUI.dom.append(tr, td)
 
-			DOM.data(td[0],
+			CUI.dom.data(td,
 				date: day_no
 				month: curr_m
 				year: curr_y
@@ -1076,8 +1192,10 @@ class CUI.DateTime extends Input
 
 	markDay: ->
 
-		@__dateTimeTmpl.DOM.find(".cui-date-time-calendar .cui-date-time-selected").removeClass("cui-date-time-selected")
-		# CUI.debug "markDay", @__current_moment, @__current_moment.__now
+		for el in CUI.dom.matchSelector(@__dateTimeTmpl.DOM, ".cui-date-time-calendar .cui-date-time-selected")
+			CUI.dom.removeClass(el, "cui-date-time-selected")
+
+		# console.debug "markDay", @__current_moment, @__current_moment.__now
 		if @__current_moment.__now
 			return
 
@@ -1087,8 +1205,9 @@ class CUI.DateTime extends Input
 			@__current_moment.date()
 		].join("-")
 
-		# CUI.debug "markDay", datestr
-		@__calendar.find("[datestr=\"#{datestr}\"]").addClass("cui-date-time-selected")
+		# console.debug "markDay", datestr
+		for el in CUI.dom.matchSelector(@__calendar, "[datestr=\"#{datestr}\"]")
+			CUI.dom.addClass(el, "cui-date-time-selected")
 		return
 
 
@@ -1098,10 +1217,10 @@ class CUI.DateTime extends Input
 	# 		@markTime()
 	# 		return
 
-	# 	@__gridTable = $table("cui-date-time-day-grid")
+	# 	@__gridTable = CUI.dom.table("cui-date-time-day-grid")
 	# 	@__hour_minute.empty().append(@__gridTable)
 
-	# 	Events.listen
+	# 	CUI.Events.listen
 	# 		node: @__hour_minute
 	# 		type: "click"
 	# 		call: (ev) =>
@@ -1110,7 +1229,7 @@ class CUI.DateTime extends Input
 
 	# 			ev.stopPropagation()
 	# 			$target = $(ev.getTarget())
-	# 			# CUI.debug "clicked on ", $target
+	# 			# console.debug "clicked on ", $target
 	# 			if $target.closest(".cui-date-time-grid-hour").length
 	# 				hour = DOM.data($target.closest("td,.cui-td")[0], "hour")
 	# 				if @__input_formats[0].clock_am_pm
@@ -1158,59 +1277,59 @@ class CUI.DateTime extends Input
 
 	# 			return
 
-	# 	#$tr().appendTo(table).append(
-	# 	#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Hour"))
+	# 	#CUI.dom.tr().appendTo(table).append(
+	# 	#	CUI.dom.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.dom.text("Hour"))
 	# 	#)
 	# 	if not @__input_formats[0].clock_am_pm
 	# 		for hour in [0..23]
 	# 			if hour % 6 == 0
-	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 				tr = CUI.dom.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
-	# 				td = $td("cui-date-time-grid-hour")
-	# 				.attr("hour", hour)
-	# 				.append($text(hour))
+	# 				td = CUI.dom.td("cui-date-time-grid-hour")
+	# 				.setAttribute("hour", hour)
+	# 				.append(CUI.dom.text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
 	# 		tr.addClass("cui-date-time-grid-row-last")
 	# 	else
 	# 		for hour in [1..12]
 	# 			if (hour-1) % 6 == 0
-	# 				tr = $tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
+	# 				tr = CUI.dom.tr("cui-date-time-grid-hour-row").appendTo(@__gridTable)
 	# 			tr.append(
-	# 				td = $td("cui-date-time-grid-hour")
-	# 				.attr("hour", hour)
-	# 				.append($text(hour))
+	# 				td = CUI.dom.td("cui-date-time-grid-hour")
+	# 				.setAttribute("hour", hour)
+	# 				.append(CUI.dom.text(hour))
 	# 			)
 	# 			DOM.data(td[0], "hour", hour)
 	# 		tr.addClass("cui-date-time-grid-row-last")
 	# 		# ----------------------
-	# 		tr = $tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
+	# 		tr = CUI.dom.tr("cui-date-time-grid-am-pm-row").appendTo(@__gridTable)
 	# 		for am_pm in ["AM","PM"]
 	# 			tr.append(
-	# 				td = $td("cui-date-time-grid-am-pm")
-	# 				.attr("am_pm", am_pm)
-	# 				.append($text(am_pm))
+	# 				td = CUI.dom.td("cui-date-time-grid-am-pm")
+	# 				.setAttribute("am_pm", am_pm)
+	# 				.append(CUI.dom.text(am_pm))
 	# 			)
 	# 			DOM.data(td[0], "am_pm", am_pm)
-	# 		tr.append($td("",colspan:4))
+	# 		tr.append(CUI.dom.td("",colspan:4))
 
 	# 		tr.addClass("cui-date-time-grid-row-last")
 
-	# 	#$tr().appendTo(table).append(
-	# 	#	$td("cui-date-time-hour-minute-label", colspan: 6).append($text("Minute"))
+	# 	#CUI.dom.tr().appendTo(table).append(
+	# 	#	CUI.dom.td("cui-date-time-hour-minute-label", colspan: 6).append(CUI.dom.text("Minute"))
 	# 	#)
 
 	# 	for minute in [0..59] by 5
 	# 		if minute % 6 == 0
-	# 			tr = $tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
+	# 			tr = CUI.dom.tr("cui-date-time-grid-minute-row").appendTo(@__gridTable)
 	# 		if minute < 10
 	# 			_minute = ":0"+minute
 	# 		else
 	# 			_minute = ":"+minute
 	# 		tr.append(
-	# 			td = $td("cui-date-time-grid-minute")
-	# 			.attr("minute", minute)
-	# 			.append($text(_minute))
+	# 			td = CUI.dom.td("cui-date-time-grid-minute")
+	# 			.setAttribute("minute", minute)
+	# 			.append(CUI.dom.text(_minute))
 	# 		)
 
 	# 		DOM.data(td[0], "minute", minute)
@@ -1239,15 +1358,15 @@ class CUI.DateTime extends Input
 
 	# 	if @__input_formats[0].clock_am_pm
 	# 		for _c in @__gridTable.find("[am_pm]")
-	# 			c = $(_c)
+	# 			c = _c
 	# 			if @__current_moment.__now
 	# 				continue
 
 	# 			if @__current_moment.hour() < 12
-	# 				if c.attr("am_pm") == "AM"
+	# 				if c.getAttribute("am_pm") == "AM"
 	# 					c.addClass("cui-date-time-selected")
 	# 			else
-	# 				if c.attr("am_pm") == "PM"
+	# 				if c.getAttribute("am_pm") == "PM"
 	# 					c.addClass("cui-date-time-selected")
 	# 	return
 
@@ -1255,35 +1374,84 @@ class CUI.DateTime extends Input
 	@formatTypes: ["store", "input", "display", "display_short"]
 
 	@setLocale: (locale) ->
-		assert(DateTimeFormats[locale], "DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: DateTimeFormats)
-		DateTime.__locale = locale
+		CUI.util.assert(CUI.DateTimeFormats[locale], "CUI.DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: CUI.DateTimeFormats)
+		CUI.DateTime.__locale = locale
+
+	@getLocale: ->
+		if CUI.DateTime.__locale
+			locale = CUI.DateTime.__locale
+		else
+			for locale of CUI.DateTimeFormats
+				break
+		return locale
 
 	# format the date_str
-	# input_type "display_short", "display", "store", "input"
+	# output_format "display_short", "display", "store", "input"
 	# output_type "date_time", "date", "date_time_secons", "year_month",v "year"
-	@format: (datestr_or_moment, type, output_type) ->
-		dt = new DateTime()
-
-		str = dt.format(datestr_or_moment, type, output_type)
-		# CUI.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
+	@format: (datestr_or_moment, output_format, output_type) ->
+		dt = new CUI.DateTime()
+		str = dt.format(datestr_or_moment, output_format, output_type)
+		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
+
+	# limit output to the given types
+	# the library is very awkward here...
+	@formatWithInputTypes: (datestr, output_types, output_format) ->
+		if not datestr
+			return null
+
+		dt = new CUI.DateTime(input_types: output_types)
+		mom = dt.parseValue(datestr)
+		if not mom.isValid()
+			return null
+
+		dt.format(mom, output_format)
 
 	@display: (datestr_or_moment, opts={}) ->
 		if not opts.hasOwnProperty("input_types")
 			opts.input_types = null
 
-		dt = new DateTime(opts)
+		dt = new CUI.DateTime(opts)
 		mom = dt.parseValue(datestr_or_moment)
 
 		if not mom.isValid()
 			return null
 
-		return mom.format(dt.getCurrentFormatDisplay())
+		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay())
+
+	@formatMoment: (mom, format) ->
+		if mom.bc
+			return "-"+mom.bc
+
+		return mom.format(format)
+
+	# BC appendix always adds one year. Therefore year 0 is 1 BC.
+	@formatMomentWithBc: (mom, format) ->
+		if mom.year() == 0
+			return "1 #{CUI.DateTime.defaults.bc_appendix[0]}"
+
+		if mom.bc
+			bc = parseInt(mom.bc) + 1
+			return "#{(bc)} #{CUI.DateTime.defaults.bc_appendix[0]}"
+
+		if mom.year() > 0
+			v = mom.format(format)
+			# remove the "+"
+			return v.replace("+"+mom.year(), ""+mom.year())
+
+		mom.subtract(1, "year")
+		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
+		# remove the "-"
+		return v.replace(mom.year(), ""+(-1 * mom.year()))
 
 	@toMoment: (datestr) ->
-		if isEmpty(datestr)
+		if CUI.util.isEmpty(datestr)
 			return null
-		dt = new DateTime(input_types: null)
+		dt = new CUI.DateTime(input_types: null)
 		dt.parse(datestr)
 
-DateTime = CUI.DateTime
+	@stringToDateRange: (string) ->
+		return CUI.DateTimeRangeGrammar.stringToDateRange(string)
+
+	@dateRangeToString: (from, to) ->
+		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to)

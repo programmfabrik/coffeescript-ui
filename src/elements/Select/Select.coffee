@@ -5,7 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Select extends Checkbox
+class CUI.Select extends CUI.Checkbox
+	@defaults:
+		not_found: "- not found -"
 
 	initOpts: ->
 		super()
@@ -13,12 +15,12 @@ class Select extends Checkbox
 			empty_text:
 				check: String
 			not_found_text:
-				default: "- not found -"
+				default: CUI.Select.defaults.not_found
 				check: String
 			options:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v) or CUI.isFunction(v)
+					CUI.util.isArray(v) or CUI.util.isFunction(v)
 			#group can be used for buttonbars to specify a group css style
 			group:
 				check: String
@@ -26,11 +28,13 @@ class Select extends Checkbox
 				check: Function
 			onHide:
 				check: Function
+			menu_class:
+				check: String
 
 
 	init: ->
 		@__value = null
-		if not CUI.isFunction(@_options)
+		if not CUI.util.isFunction(@_options)
 			@__loadOptions()
 
 		# @DOM.prop("title", @getName()+":"+@__uniqueId)
@@ -81,7 +85,7 @@ class Select extends Checkbox
 
 		ret = @getArrayFromOpt("options", event, true)
 
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			@__optionsPromise = ret
 			btn = @getButton()
 
@@ -105,13 +109,13 @@ class Select extends Checkbox
 			# adjust options, so we always have a text and value
 			for opt, idx in @__options
 				opt._idx = idx
-				if isUndef(opt.text) and not isUndef(opt.value) and not opt.icon
+				if CUI.util.isUndef(opt.text) and not CUI.util.isUndef(opt.value) and not opt.icon
 					opt.text = ""+opt.value
 
-				if isUndef(opt.value) and not isUndef(opt.text)
+				if CUI.util.isUndef(opt.value) and not CUI.util.isUndef(opt.text)
 					opt.value = opt.text
 
-				if not isUndef(opt.value) and first_value_opt == undefined
+				if not CUI.util.isUndef(opt.value) and first_value_opt == undefined
 					first_value_opt = opt
 
 			# auto - select first opt, if value unset
@@ -121,14 +125,14 @@ class Select extends Checkbox
 				@default_opt = first_value_opt
 				@__value = @default_opt.value
 			else
-				CUI.warn("Select #{@getName()}: did not find a value opt and no empty text is defined.", opts: @opts)
+				console.warn("Select #{@getName()}: did not find a value opt and no empty text is defined.", opts: @opts)
 
-			# CUI.debug "load options", @__uniqueId, @__options, @default_opt
+			# console.debug "load options", @__uniqueId, @__options, @default_opt
 		@__optionsPromise
 
 	setData: (data) ->
 		super(data, false)  # dont init data, only set
-		if CUI.isFunction(@_options)
+		if CUI.util.isFunction(@_options)
 			@__loadOptions()
 			.done =>
 				@initData()
@@ -139,28 +143,17 @@ class Select extends Checkbox
 	getCheckboxClass: ->
 		"cui-button-select"
 
+	registerLabel: ->
+		# ignore
+
 	getButtonOpts: ->
 		group: @_group
 		role: "select"
 		left: true # make sure we have a "left" container for the icon
 		menu:
-			active_item_idx: @default_opt?._idx or null
-			allow_null: not isEmpty(@_empty_text)
-			class: "ez-menu-select"
-			# placements: ["c"]
-			# onPosition: (menu, vp) =>
-			# 	il = menu.getItemList()
-
-			# 	active_item = il.getBody().DOM.children[il.getActiveIdx()]
-			# 	if not active_item
-			# 		return
-
-			# 	item_top = vp.layer_pos.top - vp.dim_layer.marginTop + DOM.getDimensions(active_item).viewportTop
-			# 	adjust = vp.dim_element.viewportTop - item_top
-			# 	console.debug "adjust", adjust, item_top, vp.dim_element.viewportTop, vp.layer_pos.top, DOM.getDimensions(active_item).viewportTop
-			# 	vp.layer_pos.top = vp.layer_pos.top + adjust
-			# 	vp.layer_pos.left += 20
-
+			active_item_idx: @default_opt?._idx or -1
+			allow_null: not CUI.util.isEmpty(@_empty_text)
+			class: "cui-select-menu "+(if @_menu_class then @_menu_class else "")
 			onDeactivate: (btn, item, idx, flags) =>
 				if flags.prior_activate
 					return
@@ -180,19 +173,17 @@ class Select extends Checkbox
 				if @isDestroyed()
 					return
 				@displayValue()
-				# @DOM.trigger("list-view-resize")
 				@
 			items: (event) =>
 				@__loadOptions(event)
 				.done =>
 					# in case we have updated options
 					# we need to adjust the active idx
-					@displayValue()
+					@__displayValue()
 			has_items: true
 
-
 	getDefaultValue: ->
-		# CUI.debug "getDefaultValue", @__uniqueId, @default_opt
+		# console.debug "getDefaultValue", @__uniqueId, @default_opt
 		if @default_opt
 			@default_opt.value
 		else
@@ -208,7 +199,7 @@ class Select extends Checkbox
 		true
 
 	reload: ->
-		if CUI.isFunction(@_options)
+		if CUI.util.isFunction(@_options)
 			@__loadOptions()
 		super()
 
@@ -220,50 +211,70 @@ class Select extends Checkbox
 		@
 
 	displayValue: ->
-		DataFieldInput::displayValue.call(@)
+		CUI.DataFieldInput::displayValue.call(@)
 
-		if not @__optionsPromise and CUI.isFunction(@_options)
+		if CUI.util.isFunction(@_options) and not @__optionsPromise
 			@__loadOptions()
 
 		@__optionsPromise
 		.done =>
-			found_opt = null
-			max_chars = null
-
-			for opt, idx in @__options
-				if found_opt == null and opt.value == @getValue()
-					found_opt = opt
-
-				if opt.text?.length > max_chars
-					max_chars = opt.text?.length
-
-			# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
-			if found_opt
-				if found_opt.icon
-					@__checkbox.setIcon(found_opt.icon)
-				else
-					@__checkbox.setIcon(null)
-
-				txt = found_opt.text_selected or found_opt.text
-
-				@__checkbox.menuSetActiveIdx(found_opt._idx)
-			else
-				if @getValue() == null and not isEmpty(@_empty_text)
-					txt = @_empty_text
-				else
-					# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
-					txt = @_not_found_text+":"+@getValue()
-
-				@__checkbox.menuSetActiveIdx(null)
-
-			@__checkbox.setText(txt)
-
-			if txt?.length > max_chars
-				max_chars = txt.length
-
-			@__checkbox.setTextMaxChars(max_chars)
+			@__displayValue()
 		@
 
+	__displayValue: ->
+		found_opt = null
+		max_chars = null
+
+		for opt, idx in @__options
+			if found_opt == null and opt.value == @getValue()
+				found_opt = opt
+
+			if opt.text?.length > max_chars
+				max_chars = opt.text?.length
+
+		# console.warn "Select.displayValue", @getUniqueId(), @getData(), @getName(), @getValue()
+		if found_opt
+			if found_opt.icon
+				if found_opt.icon instanceof CUI.Icon
+					@__checkbox.setIcon(found_opt.icon.copy())
+				else
+					@__checkbox.setIcon(found_opt.icon)
+			else
+				@__checkbox.setIcon(null)
+
+			txt = found_opt.text_selected or found_opt.text
+
+			@__checkbox.menuSetActiveIdx(found_opt._idx)
+		else
+			if @getValue() == null and not CUI.util.isEmpty(@_empty_text)
+				txt = @_empty_text
+			else
+				# console.error("Select, option not found:", @getUniqueId(), @getValue(), @getData(), @getName(), "options:", @__options)
+				txt = @_not_found_text.trim()+" "+@getValue()
+
+			@__checkbox.menuSetActiveIdx(-1)
+
+		@__checkbox.setText(txt)
+
+		if txt?.length > max_chars
+			max_chars = txt.length
+
+		@__checkbox.setTextMaxChars(max_chars)
+
+	render: ->
+		super()
+
+		if button = @getButton()
+			CUI.Events.listen
+				type: "keydown"
+				node: @DOM
+				capture: true
+				call: (ev) =>
+					if ev.getKeyboardKey() not in ["Up", "Down"]
+						return
+					button.onClickAction(ev)
+					ev.stopPropagation()
+					return
 
 	getOptions: ->
 		@__options
@@ -273,7 +284,9 @@ class Select extends Checkbox
 			out_opts =
 				form: opts.form
 				text: opts.options[0].text
-			new Output(out_opts)
+			new CUI.Output(out_opts)
 		else
-			new Select(opts)
+			new CUI.Select(opts)
 
+
+CUI.defaults.class.Select = CUI.Select

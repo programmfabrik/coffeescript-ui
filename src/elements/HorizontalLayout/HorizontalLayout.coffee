@@ -5,6 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadTemplateText(require('./HorizontalLayout.html'));
 
 class CUI.HorizontalLayout extends CUI.Layout
 
@@ -46,5 +47,3 @@ class CUI.HorizontalLayout extends CUI.Layout
 
 	getSupportedPanes: ->
 		["left", "right"]
-
-HorizontalLayout = CUI.HorizontalLayout

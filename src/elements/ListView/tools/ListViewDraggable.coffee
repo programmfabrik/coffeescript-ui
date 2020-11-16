@@ -13,12 +13,12 @@ class CUI.ListViewDraggable extends CUI.Draggable
 		@addOpts
 			row:
 				mandatory: true
-				check: ListViewRow
+				check: CUI.ListViewRow
 
 	readOpts: ->
 		super()
 		@__row_i = @_row.getRowIdx()
 
 	get_marker: (cls="") ->
-		CUI.DOM.element("DIV", class: "cui-lv-draggable "+cls)
+		CUI.dom.element("DIV", class: "cui-lv-draggable "+cls)
 

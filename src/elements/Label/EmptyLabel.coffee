@@ -5,16 +5,11 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class EmptyLabel extends MultilineLabel
-	constructor: (@opts = {}) ->
-		super(@opts)
+class CUI.EmptyLabel extends CUI.MultilineLabel
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-empty-label")
 
 	readOpts: ->
-
-		#change default
-		if isUndef( @opts.appearance ) and @opts.centered
-			@opts.size = "big"
-
 		super()
 

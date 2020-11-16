@@ -16,16 +16,17 @@ class CUI.Toaster extends CUI.ConfirmationChoice
 				v >= 0
 
 	readOpts: ->
+		if @opts.show_ms == 0 and @opts.backdrop == undefined
+			@opts.backdrop = policy: "modal"
+
 		super()
-		if @_show_ms == 0
-			if not @_backdrop
-				@_backdrop =
-					policy: "modal"
-			console.error "backrop:", @_backdrop
 
 		@_choices = []
 
 	open: ->
+		if @__deferred
+			return @__deferred.promise()
+
 		# super sets a deferred
 		super()
 

@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+marked = require('marked')
+
 class CUI.DocumentBrowser extends CUI.Element
 
 	initOpts: ->
@@ -18,7 +20,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				default: {}
 				mandatory: true
 				check: (v) ->
-					if not CUI.isPlainObject(v)
+					if not CUI.util.isPlainObject(v)
 						return false
 					for _k, _v of v
 						if _k in ["image", "link"]
@@ -36,19 +38,13 @@ class CUI.DocumentBrowser extends CUI.Element
 					!!CUI.parseLocation(v)
 
 	readOpts: ->
-		super(@opts)
+		super()
 
-		@__marked_opts = copyObject(@_marked_opts)
+		@__marked_opts = CUI.util.copyObject(@_marked_opts)
 
 		if not @__marked_opts.renderer
 			@__marked_opts.renderer = new marked.Renderer()
 		renderer = @__marked_opts.renderer
-
-		for k, v of {
-			sanitize: false
-		}
-			if not @__marked_opts.hasOwnProperty(k)
-				@__marked_opts[k] = v
 
 		renderer.image = (href, title, text) =>
 			@__node.rendererImage(href, title, text)
@@ -66,7 +62,7 @@ class CUI.DocumentBrowser extends CUI.Element
 		mark = (markdown) =>
 			dfr.resolve(marked(markdown, @__marked_opts))
 		ret = @_getMarkdown(markdown)
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret
 			.done (markdown) =>
 				mark(markdown)
@@ -94,7 +90,7 @@ class CUI.DocumentBrowser extends CUI.Element
 			@loadEmpty()
 
 	loadEmpty: ->
-		@__layout.replace(new EmptyLabel(text: "No article available."), "center")
+		@__layout.replace(new CUI.EmptyLabel(text: "No article available."), "center")
 
 	loadContent: (node, search, nodeIdx) ->
 		node.loadContent()
@@ -105,12 +101,12 @@ class CUI.DocumentBrowser extends CUI.Element
 
 			scroll_node = null
 			searchQuery = new CUI.DocumentBrowser.SearchQuery(search: search)
-			nodes = CUI.DOM.htmlToNodes(@marked(node, content))
+			nodes = CUI.dom.htmlToNodes(@marked(node, content))
 
 			text_matches = []
 			text_node_idx = 0
 
-			CUI.DOM.findTextInNodes(nodes, (node, textContent) =>
+			CUI.dom.findTextInNodes(nodes, (node, textContent) =>
 
 				text_node_idx = text_node_idx + 1
 				text_match = searchQuery.match(textContent)
@@ -133,7 +129,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				if tm.__mark_all
 					html = "<span class='cui-document-browser-marked-node'>" + html + "</span>"
 
-				_node = CUI.DOM.replaceWith(tm.__node, CUI.DOM.htmlToNodes(html))
+				_node = CUI.dom.replaceWith(tm.__node, CUI.dom.htmlToNodes(html))
 				if tm.__mark_all
 					scroll_node = _node
 
@@ -143,7 +139,7 @@ class CUI.DocumentBrowser extends CUI.Element
 			@__layout.prepend(node.getMainArticleUrl(), "center")
 
 			if scroll_node
-				CUI.DOM.scrollIntoView(scroll_node)
+				CUI.dom.scrollIntoView(scroll_node)
 			else
 				@__layout.center().scrollTop = 0
 
@@ -164,7 +160,7 @@ class CUI.DocumentBrowser extends CUI.Element
 
 			if matches.length == 0
 				@__searchResult.append(
-					new Label(markdown: true, text: "Nothing found for **"+search+"**.", multiline: true),
+					new CUI.Label(markdown: true, text: "Nothing found for **"+search+"**.", multiline: true),
 				"center")
 			@showSearch(true)
 		else
@@ -192,12 +188,12 @@ class CUI.DocumentBrowser extends CUI.Element
 		if on_off
 			@__resetBtn.show()
 			@__searchBtn.hide()
-			CUI.DOM.remove(@__tree.DOM)
+			CUI.dom.remove(@__tree.DOM)
 			@__leftLayout.replace(@__searchResult, "content")
 		else
 			@__resetBtn.hide()
 			@__searchBtn.show()
-			CUI.DOM.remove(@__searchResult.DOM)
+			CUI.dom.remove(@__searchResult.DOM)
 			@__leftLayout.replace(@__tree.DOM, "content")
 
 	render: ->
@@ -207,15 +203,15 @@ class CUI.DocumentBrowser extends CUI.Element
 		do_search = =>
 			@__doSearch(data.search)
 
-		search_input = new Input
+		search_input = new CUI.Input
 			data: data
 			name: "search"
 			onDataChanged: =>
 				CUI.scheduleCallback(ms: 200, call: do_search)
 
-		@__searchResult = new VerticalList()
+		@__searchResult = new CUI.VerticalList()
 
-		@__tree = new ListViewTree
+		@__tree = new CUI.ListViewTree
 			cols: ["maximize"]
 			selectable: true
 			onSelect: (ev, info) =>
@@ -228,24 +224,24 @@ class CUI.DocumentBrowser extends CUI.Element
 				# console.error "deselect me!", info
 			root: new CUI.DocumentBrowser.RootNode(browser: @, url: @_url)
 
-		@__leftLayout = new SimplePane
+		@__leftLayout = new CUI.SimplePane
 			header_center: search_input.start()
 			header_right: [
-				@__searchBtn = new Button
+				@__searchBtn = new CUI.Button
 					icon: "search"
 					onClick: =>
 						@showSearch(true)
 			,
-				@__resetBtn = new Button
+				@__resetBtn = new CUI.Button
 					icon: "remove"
 					hidden: true
 					onClick: =>
 						@showSearch(false)
 			]
-			content: @__tree.render(false)
+			content: @__tree.render()
 
 
-		@__layout = new HorizontalLayout
+		@__layout = new CUI.HorizontalLayout
 			class: "cui-document-browser"
 			maximize: true
 			left:
@@ -255,7 +251,7 @@ class CUI.DocumentBrowser extends CUI.Element
 					hidden: false
 			center:
 				class: "cui-document-browser-center"
-				content: $text(@_url)
+				content: CUI.dom.text(@_url)
 
 		@__layout
 
@@ -268,7 +264,7 @@ class CUI.DocumentBrowser extends CUI.Element
 				@__all_words.push
 					word: word
 					count: count
-					sorted: word.toLocaleLowerCase().split("").sort((a,b) -> compareIndex(a, b)).join("")
+					sorted: word.toLocaleLowerCase().split("").sort((a,b) -> CUI.util.compareIndex(a, b)).join("")
 			@__all_words.sort (a, b) =>
 				b.count - a.count
 			console.debug "words", @__words, @__all_words

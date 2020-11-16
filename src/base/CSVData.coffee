@@ -4,7 +4,7 @@ class CUI.CSVData extends CUI.Element
 		@addOpts
 			rows:
 				check: (v) ->
-					CUI.isArray(v) and v.length > 0
+					CUI.util.isArray(v) and v.length > 0
 
 	readOpts: ->
 		super()
@@ -31,7 +31,7 @@ class CUI.CSVData extends CUI.Element
 		for row in @rows
 			if row.length < @__max_column_count
 				for idx in [row.length...@__max_column_count]
-					row[idx] = null
+					row[idx] = ""
 		return
 
 	getMaxColumnCount: ->
@@ -55,12 +55,12 @@ class CUI.CSVData extends CUI.Element
 				mandatory: true
 				default: ";"
 				check: (v) =>
-					CUI.isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 			quotechar:
 				mandatory: true
 				default: '"'
 				check: (v) =>
-					CUI.isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 			always_quote:
 				mandatory: true
 				default: true
@@ -73,7 +73,7 @@ class CUI.CSVData extends CUI.Element
 				mandatory: true
 				default: String.fromCharCode(10)
 				check: (v) =>
-					CUI.isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 
 		if opts.equal_columns
 			@giveAllRowsSameNumberOfColumns()
@@ -89,7 +89,7 @@ class CUI.CSVData extends CUI.Element
 				if idx > 0
 					_row.push(opts.delimiter)
 
-				if isEmpty(col)
+				if CUI.util.isEmpty(col)
 					str = ""
 				else
 					str = ""+col
@@ -142,6 +142,7 @@ class CUI.CSVData extends CUI.Element
 
 		lines = 0
 
+		space_chars = [' ']
 		auto_quotechars = ['"',"'"]
 		auto_delimiters = [",",";","\t"]
 		# space_chars = [" "]
@@ -166,6 +167,7 @@ class CUI.CSVData extends CUI.Element
 				columns[column_idx] = column_chars.join("")
 				column_chars.splice(0)
 				column_idx = column_idx + 1
+				return
 
 			end_row = =>
 				if columns.length > 0
@@ -174,10 +176,17 @@ class CUI.CSVData extends CUI.Element
 					columns = []
 
 				column_idx = 0
+				return
+
 
 			while (idx < len)
 				char = text.charAt(idx)
 				# console.debug "char:", idx, char, text.charCodeAt(idx)
+
+				if column_chars.length == 0 and not in_quotes and char in space_chars
+					# ignore spaces outside quotes at the beginning of a column
+					idx = idx + 1
+					continue
 
 				if quotechar == null and char in auto_quotechars
 					quotechar = char
@@ -187,7 +196,7 @@ class CUI.CSVData extends CUI.Element
 					delimiter = char
 					# console.info("CSVData.parse: detected delimiter:", delimiter)
 
-				if char == quotechar
+				if char == quotechar and (column_chars.length == 0 or in_quotes)
 					if in_quotes
 						if text[idx+1] == quotechar
 							column_chars.push(char)
@@ -219,6 +228,11 @@ class CUI.CSVData extends CUI.Element
 				# do we have a line ending
 				if charCode == 13 or charCode == 10
 
+					if (charCode == 13 and nextCharCode == 10)
+						idx = idx + 2
+					else
+						idx = idx + 1
+
 					if in_quotes
 						column_chars.push(String.fromCharCode(10))
 					else
@@ -230,12 +244,8 @@ class CUI.CSVData extends CUI.Element
 							CUI.setTimeout
 								ms: 10
 								call: do_work
-							return
 
-					if (charCode == 13 and nextCharCode == 10)
-						idx = idx + 2
-					else
-						idx = idx + 1
+							return
 
 					continue
 
@@ -262,11 +272,11 @@ class CUI.CSVData extends CUI.Element
 				call: do_work
 
 			dfr.done =>
-				@debug()
+				; # @debug()
 
 			return dfr.promise()
 		else
 			return do_work()
 
 	@quote: (str, quotechar = '"') ->
-		quotechar+str.replace(new RegExp(escapeRegExp(quotechar), "g"), quotechar+quotechar)+quotechar
+		quotechar+str.replace(new RegExp(CUI.util.escapeRegExp(quotechar), "g"), quotechar+quotechar)+quotechar

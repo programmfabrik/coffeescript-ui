@@ -5,13 +5,12 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FormPopover extends Form
-	constructor: (@opts={}) ->
-		super(@opts)
-		# CUI.debug "FormPopover", @opts
+class CUI.FormPopover extends CUI.Form
+	constructor: (opts) ->
+		super(opts)
+		# console.debug "FormPopover", @opts
 		@__old_display = null
 		@__old_render = null
-
 		@
 
 	initOpts: ->
@@ -23,7 +22,7 @@ class FormPopover extends Form
 			button:
 				default: {}
 				check: (v) ->
-					CUI.isPlainObject(v) and not v.onClick
+					CUI.util.isPlainObject(v) and not v.onClick
 			trigger_data_changed_while_open:
 				default: false
 				check: Boolean
@@ -38,10 +37,10 @@ class FormPopover extends Form
 			@__class = @_class
 			delete(@_class)
 
-		@__fields_is_func = CUI.isFunction(@_fields)
+		@__fields_is_func = CUI.util.isFunction(@_fields)
 
 		if @__fields_is_func
-			assert(@_data_not_for_others != true, "new FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
+			CUI.util.assert(@_data_not_for_others != true, "new CUI.FormPopover", "opts.data_not_for_others cannot be set to true if fields are created on open by a Function.", opts: @opts)
 
 	init: ->
 		if not @__fields_is_func
@@ -49,7 +48,7 @@ class FormPopover extends Form
 
 		@__initUndo()
 		# don't initFields here, if fields are a function
-		@setFormDepth()
+		# @setFormDepth()
 
 	setDataOnOthers: ->
 		if @__fields_is_func
@@ -70,32 +69,40 @@ class FormPopover extends Form
 		if func in [
 			"show"
 			"hide"
+			"remove"
 			"enable"
 			"disable"
 			"getFieldsByName"
+			"hasUserData"
 			"getFieldByIdx"
 			"setFormDepth"
 			"getDataFields"
 		]
 			return @__fields or []
 
-		assert(@__fields, "FormPopover.getFields("+func+")", "Fields not rendered yet. This is a programming error in CUI.")
+		CUI.util.assert(@__fields, "FormPopover.getFields("+func+")", "Fields not rendered yet. This is a programming error in CUI.")
 		return super()
 
 	# this is for the button container
 	initTemplate: ->
-		vl = new VerticalLayout
+		# @__horLayout = new CUI.HorizontalLayout
+		# 	maximize: false
+		# 	right: {}
+
+		# for now we leave a vertical layout here, the
+		# design is adjusted to this
+		@__horLayout = new CUI.VerticalLayout
 			maximize: false
 			bottom: {}
 
-		@registerTemplate(vl.getLayout())
+		@registerTemplate(@__horLayout.getLayout())
 
 	hasContentForAppend: ->
 		# FormPopver always shows a button
 		true
 
 	render: ->
-		button_opts = copyObject(@_button, true)
+		button_opts = CUI.util.copyObject(@_button, true)
 		button_opts.onClick = =>
 			@__openPopover()
 
@@ -113,19 +120,19 @@ class FormPopover extends Form
 			@addClass("cui-form-popover-has-button-text")
 		@append(@__button, "center")
 		# @append(@getChangedMarker(), "center")
-		DataField::render.call(@)
+		CUI.DataField::render.call(@)
 		@
 
 	getButton: ->
 		@__button
 
 	displayValue: ->
-		DataField::displayValue.call(@)
+		CUI.DataField::displayValue.call(@)
 		@__renderDisplay()
 
 	callOnFields: (func, args...) ->
 		for df in @getFields()
-			# CUI.debug df.getName(), func, args
+			# console.debug df.getName(), func, args
 			df[func].apply(df, args)
 		@
 
@@ -137,17 +144,17 @@ class FormPopover extends Form
 			render = @_renderDisplayButton(@, @__data)
 		else if not @__data
 			text = "Data not set."
-			display = $textEmpty(text)
+			display = CUI.dom.textEmpty(text)
 		else
 			display = text = ""
-			# CUI.debug("display", display,@__formPopover.getGroupData())
+			# console.debug("display", display,@__formPopover.getGroupData())
 
 		if @_renderDisplayButton
 			if render == false
 				@__button.deactivate()
 			else if render == true
 				@__button.activate()
-			else if render instanceof Icon
+			else if render instanceof CUI.Icon
 				@__button.setIcon(render)
 				@__button.setText()
 			else
@@ -155,36 +162,32 @@ class FormPopover extends Form
 				@__button.setText(render)
 
 			if @__old_render != null
-				# CUI.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
-				Events.trigger
+				# console.debug "FormPopover.__renderDisplay: triggering list-view-resize:", @__old_render, render
+				CUI.Events.trigger
 					type: "content-resize"
 					node: @DOM
 			@__old_render = render
 
 		else
 			if @__old_display == null or @__old_display != display
-				@replace(display, "bottom")
+				@replace(display, "bottom") # change to "right" for horLayout
 				if @__old_display != null
-					Events.trigger
+					CUI.Events.trigger
 						type: "content-resize"
 						node: @DOM
+						bubble: false
+
 				@__old_display = display
 
 		@checkChanged()
 		@
 
-	renderTable: ->
-		@table = super()
-		# in "ng" design, table is the center element of layout
-		@getLayout().addClass(@__class)
-		@table
-
 	# overwritten in FormModal
 	initPopover: (opts) ->
-		new Popover(opts)
+		new CUI.Popover(opts)
 
 	getPopoverOpts: ->
-		pop_opts = copyObject(@_popover, true)
+		pop_opts = CUI.util.copyObject(@_popover, true)
 
 		if not pop_opts.backdrop
 			pop_opts.backdrop = {}
@@ -192,16 +195,16 @@ class FormPopover extends Form
 		if not pop_opts.backdrop.policy
 			pop_opts.backdrop.policy = "click"
 
-		# pop_opts.element = @__button
 		if not pop_opts.pane
 			pop_opts.pane = {}
 
-		assert(CUI.isPlainObject(pop_opts.pane), "new FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormPopover", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.mergeMap(pop_opts.pane, padded: true)
 
-		if isEmpty(pop_opts.class)
+		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
 		pop_opts.class += " cui-form-popover-popover"
-		# CUI.debug "getPopoverOpts", pop_opts
+		# console.debug "getPopoverOpts", pop_opts
 		pop_opts
 
 	getPopover: ->
@@ -210,36 +213,34 @@ class FormPopover extends Form
 	renderAsBlock: ->
 		false
 
-	resetTableAndFields: ->
-		# console.error "resetTableAndFields", @table
+	renderTable: ->
+		super()
+		@getLayout().addClass(@__class)
+		return
+
+	removeFields: ->
 		@callOnFields("remove")
-		@unregisterTableListeners()
-		# console.error "resetTableAndFields", DOM.data(@getLayout().center())
-		if CUI.__ng__
-			CUI.DOM.empty(@table)
-		else
-			CUI.DOM.remove(@table)
-		@table = null
+
+		@__rendered = null
 		@__fields = null
 		@
 
 	__openPopover: ->
 		# console.time "FormPopover"
 
-		# console.debug "open popover", @__data, @table, @__fields
-
 		pop_opts = @getPopoverOpts()
 
 		if @__fields_is_func
 			# dynamic fields, we need to reload the form
-			if @table
-				@resetTableAndFields()
+			if @__rendered
+				@removeFields()
 
 			@initFields()
 			@callOnFields("setData", @__data)
 
-		if not @table
+		if not @__rendered
 			@renderTable()
+			@__rendered = true
 			@callOnFields("start")
 
 		if not pop_opts.hasOwnProperty("element")
@@ -259,13 +260,14 @@ class FormPopover extends Form
 
 		@__popover = @initPopover(pop_opts)
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: @__popover
 			call: (ev, info={}) =>
-				# CUI.debug("data changed on popover, render display", @_trigger_data_changed_while_open)
+				# console.debug("data changed on popover, render display", @, @_trigger_data_changed_while_open)
 				@__renderDisplay()
 				@__dataChanged = info
+
 				if @_trigger_data_changed_while_open
 					@__triggerDataChanged()
 				return
@@ -277,7 +279,7 @@ class FormPopover extends Form
 
 	__closePopover: ->
 		@removeClass("focus")
-		@getLayout().DOM.detach()
+		CUI.dom.remove(@getLayout().DOM)
 		@__popover.destroy()
 		@__popover = null
 		@__triggerDataChanged()
@@ -297,7 +299,7 @@ class FormPopover extends Form
 		@__dataChanged = null
 
 	triggerDataChanged: ->
-		Events.trigger
+		CUI.Events.trigger
 			type: "data-changed"
 			node: @__button
 			info: @__dataChanged
@@ -310,8 +312,9 @@ class FormPopover extends Form
 		super()
 		@__button?.enable()
 
-
 	destroy: ->
 		super()
 		@__popover?.destroy()
 		@__dataChanged = null
+		@__horLayout = null
+		@__button = null

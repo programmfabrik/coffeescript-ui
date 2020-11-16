@@ -4,8 +4,9 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadTemplateText(require('./BorderLayout.html'));
 
-class BorderLayout extends Layout
+class CUI.BorderLayout extends CUI.Layout
 
 	getName: ->
 		"border-layout"
@@ -25,13 +26,13 @@ class BorderLayout extends Layout
 		super()
 
 		if @_absolute
-			@getLayout().map.row.addClass("cui-absolute")
+			CUI.dom.addClass(@getLayout().map.row, "cui-absolute")
 			# we need listen to viewport resize
-			Events.listen
+			CUI.Events.listen
 				type: "viewport-resize"
 				node: @getLayout().map.row
 				call: (ev) =>
 					ev.stopPropagation()
-					Layout.setAbsolute(@getLayout().map.row)
+					CUI.Layout.setAbsolute(@getLayout().map.row)
 
 		@

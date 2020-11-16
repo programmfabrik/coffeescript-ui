@@ -5,14 +5,14 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class DataTableNode extends ListViewRow
+class CUI.DataTableNode extends CUI.ListViewRow
 
 	initOpts: ->
 		super()
 		@addOpts
 			dataTable:
 				mandatory: true
-				check: DataTable
+				check: CUI.DataTable
 			data:
 				mandatory: true
 				check: "PlainObject"
@@ -33,12 +33,16 @@ class DataTableNode extends ListViewRow
 		@__check_changed_data = @_check_changed_data
 		@__rows = @_rows
 
-		assert(@__rows.indexOf(@__data) > -1, "new #{getObjectClass(@)}", "opts.data needs to be item in opts.rows Array", opts: @opts)
+		CUI.util.assert(@__rows.indexOf(@__data) > -1, "new #{CUI.util.getObjectClass(@)}", "opts.data needs to be item in opts.rows Array", opts: @opts)
 		@__fields = []
 		for f in @__dataTable.getFieldList()
 			fopts = f.getOpts()
 			fopts.undo_support = false
-			_f = new window[f.__cls](fopts)
+			if CUI[f.getElementClass()]
+				_f = new CUI[f.getElementClass()](fopts)
+			else
+				_f = new window[f.getElementClass()](fopts)
+
 			_f.setForm(@)
 			_f.setData(@__data)
 			if f.hasData()
@@ -47,13 +51,16 @@ class DataTableNode extends ListViewRow
 				else
 					_f.setCheckChangedValue(f.getDefaultValue())
 			@__fields.push(_f)
-			@addColumn(new ListViewColumn(element: _f.DOM))
+			@addColumn(new CUI.ListViewColumn(element: _f.DOM))
 		@
 
 	remove: ->
-		super()
-		@_dataTable._onRowRemove?.call(@, @__data)
-		removeFromArray(@__data, @__rows)
+		CUI.decide(@_dataTable._onBeforeRowRemove?.call(@, @__data))
+		.done =>
+			super()
+			CUI.util.removeFromArray(@__data, @__rows)
+			@_dataTable._onRowRemove?.call(@, @__data)
+			@_dataTable.updateButtons()
 
 	getDataTable: ->
 		@_dataTable
@@ -77,8 +84,11 @@ class DataTableNode extends ListViewRow
 	getData: ->
 		@__data
 
+	reload: ->
+		for df in @__fields
+			df.reload()
+
 	addedToListView: ->
 		for df in @__fields
 			df.start()
 		@
-

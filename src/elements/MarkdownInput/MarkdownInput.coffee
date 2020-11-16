@@ -5,7 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MarkdownInput extends Input
+marked = require('marked')
+
+class CUI.MarkdownInput extends CUI.Input
 	initOpts: ->
 		super()
 
@@ -22,7 +24,7 @@ class MarkdownInput extends Input
 			renderFunction:
 				mandatory: true
 				default: (md) =>
-					window.marked(md, CUI.defaults.marked_opts)
+					marked(md, CUI.defaults.marked_opts)
 				check: Function
 
 
@@ -45,7 +47,7 @@ class MarkdownInput extends Input
 			if @hasSetOpt(k)
 				vl_opts[k] = @getSetOpt(k)
 
-		@__verticalLayout = new Pane(vl_opts)
+		@__verticalLayout = new CUI.Pane(vl_opts)
 
 
 	initTemplate: ->
@@ -125,7 +127,7 @@ class MarkdownInput extends Input
 				else
 					is_ul = null
 
-				if is_ul != null and not xor(is_ul, ul) # unsorted list
+				if is_ul != null and not CUI.util.xor(is_ul, ul) # unsorted list
 					prefix = ""
 
 				console.debug "rowcriteria.", space.length, item
@@ -155,13 +157,13 @@ class MarkdownInput extends Input
 	handleSelectionChange: (ev) ->
 		super(ev)
 		sel = @getSelection()
-		console.debug "md selection change", ev, dump(sel)
+		console.debug "md selection change", ev, CUI.util.dump(sel)
 		@checkList()
 
 
 	render: ->
 		super()
-		bb = new Toolbar
+		bb = new CUI.Toolbar
 			left:
 				content: [
 					group: "lists"
@@ -205,7 +207,7 @@ class MarkdownInput extends Input
 
 	getPreview: ->
 		if not @__preview
-			@__preview = DOM.element("div", class: "cui-markdown-input-preview")
+			@__preview = CUI.dom.element("div", class: "cui-markdown-input-preview")
 			@updatePreview()
 		@__preview
 
@@ -218,7 +220,7 @@ class MarkdownInput extends Input
 	@__escape_regexp: new RegExp('[\\'+('*-_\\![]()'.split("").join("\\"))+']','g')
 
 	@escape: (obj) ->
-		assert(typeof(obj) in ["string", "object"], "MarkdownInput.escape", "Object needs to be typof 'string' or 'object'.", obj: obj)
+		CUI.util.assert(typeof(obj) in ["string", "object"], "MarkdownInput.escape", "Object needs to be typof 'string' or 'object'.", obj: obj)
 		if typeof(obj) == "string"
 			return obj.replace(@__escape_regexp, "\\$&")
 

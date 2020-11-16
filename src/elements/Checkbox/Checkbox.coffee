@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Checkbox extends DataFieldInput
+class CUI.Checkbox extends CUI.DataFieldInput
 
 	initOpts: ->
 
@@ -19,9 +19,16 @@ class Checkbox extends DataFieldInput
 				default: false
 			text:
 				check: String
+			text_active:
+				check: String
+			text_inactive:
+				check: String
+			multiline:
+				default: false
+				check: Boolean
 			content:
 				check: (v) ->
-					!!(isElement(v) or v instanceof CUI.Element)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			active:
 				default: false
 				check: Boolean
@@ -41,10 +48,16 @@ class Checkbox extends DataFieldInput
 				default: "check"
 				mandatory: true
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_inactive:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
+
+	constructor: (opts) ->
+		super(opts)
+
+		if @_multiline
+			@addClass("cui-checkbox--multiline")
 
 	enable: ->
 		super()
@@ -53,6 +66,15 @@ class Checkbox extends DataFieldInput
 	disable: ->
 		super()
 		@__checkbox?.disable()
+
+	registerLabel: (lbl) ->
+		lbl.setAttribute('data-label-clickable', '1')
+		CUI.Events.listen
+			type: 'click'
+			node: lbl
+			call: (ev) =>
+				@getButton().onClickAction(ev)
+		@
 
 	getButton: ->
 		@__checkbox
@@ -79,7 +101,7 @@ class Checkbox extends DataFieldInput
 				return
 			@storeValue(@_value, flags)
 			ret = @_onActivate?(@, flags, event)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.fail =>
 					@storeValue(@_value_unchecked, flags)
 			ret
@@ -90,7 +112,7 @@ class Checkbox extends DataFieldInput
 
 			@storeValue(@_value_unchecked, flags)
 			ret = @_onDeactivate?(@, flags, event)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.fail =>
 					@storeValue(@_value, flags)
 			ret
@@ -105,14 +127,16 @@ class Checkbox extends DataFieldInput
 
 		for k in [
 			"text"
+			"text_active"
+			"text_inactive"
 			"radio_allow_null"
 			"active"
 		]
-			if not isUndef(btn_opts[k])
+			if not CUI.util.isUndef(btn_opts[k])
 				continue
 			btn_opts[k] = @["_#{k}"]
 
-		if isEmpty(btn_opts.text)
+		if CUI.util.isEmpty(btn_opts.text)
 			btn_opts.text = ""
 
 		btn_opts.disabled = @isDisabled()
@@ -138,6 +162,7 @@ class Checkbox extends DataFieldInput
 			"setTextMaxChars"
 			"setText"
 			"getText"
+			"getElementForLayer"
 		])
 
 		# @append(@getChangedMarker())
@@ -145,7 +170,7 @@ class Checkbox extends DataFieldInput
 
 
 	checkValue: (v, flags) ->
-		if not isBoolean(v)
+		if not CUI.util.isBoolean(v)
 			throw new Error("#{@__cls}.setValue(value): Value needs to be Boolean.")
 
 	displayValue: ->
@@ -153,7 +178,7 @@ class Checkbox extends DataFieldInput
 		if not @hasData()
 			return
 
-		# CUI.debug "Checkbox.displayValue", @DOM[0], @getName(), @opts, @getOptValue(), @getOptValueUnchecked(), @getValue()
+		# console.debug "Checkbox.displayValue", @DOM[0], @getName(), @opts, @getOptValue(), @getOptValueUnchecked(), @getValue()
 		if @getOptValue() == @getValue()
 			@__checkbox.activate(initial_activate: true)
 		else

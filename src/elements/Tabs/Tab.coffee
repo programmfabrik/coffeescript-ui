@@ -5,16 +5,18 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Tab extends CUI.DOM
-	constructor: (@opts={}) ->
-		super(@opts)
+CUI.Template.loadTemplateText(require('./Tab.html'));
 
-		if not isEmpty(@_name)
-			cls = "ez-tab-#{toClass(@_name)}"
+class CUI.Tab extends CUI.DOMElement
+	constructor: (opts) ->
+		super(opts)
+
+		if not CUI.util.isEmpty(@_name)
+			cls = "ez-tab-#{CUI.util.toClass(@_name)}"
 		else
 			cls = null
 
-		@__body = new Template
+		@__body = new CUI.Template
 			name: "tab-body"
 			class: cls
 
@@ -24,7 +26,7 @@ class CUI.Tab extends CUI.DOM
 			@append(@_content_placeholder)
 			@__has_placeholder = true
 
-		if CUI.isFunction(@_content)
+		if CUI.util.isFunction(@_content)
 			if not @_load_on_show
 				@loadContent()
 		else if @_content
@@ -33,20 +35,22 @@ class CUI.Tab extends CUI.DOM
 		@__activations = 0
 
 	initButton: (tabs) ->
-		assert(tabs instanceof CUI.Tabs, "Tab.initButton", "Parameter #1 need to be instance of Tabs.", tabs: tabs)
+		CUI.util.assert(tabs instanceof CUI.Tabs, "Tab.initButton", "Parameter #1 need to be instance of Tabs.", tabs: tabs)
 
-		@__button = new Button
+		@__button = new CUI.Button
 			role: "tab-header"
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
 			disabled: @_disabled
-			size: if CUI.__ng__ then "normal" else "big"
-			group: if CUI.__ng__ then "tabs" else null
+			qa: if @_qa then @_qa + "-button"
+			id: @_button_id
+			size: "normal"
+			group: "tabs"
 			text: @_text
 			attr:
 				tab: @_name
 			active: false
-			onActivate: (btn) =>
+			onActivate: (btn, flags, event) =>
 				@__activations++
 				if @_load_on_show and not @__content_loaded
 					@loadContent()
@@ -55,15 +59,15 @@ class CUI.Tab extends CUI.DOM
 				if @__activations == 1
 					@_onFirstActivate?(@)
 
-				@_onActivate?(@)
-				Events.trigger
+				@_onActivate?(@, flags, event)
+				CUI.Events.trigger
 					type: "tab_activate"
 					node: @DOM
 
-			onDeactivate: (btn) =>
+			onDeactivate: (btn, flags, event) =>
 				@hide()
-				@_onDeactivate?(@)
-				Events.trigger
+				@_onDeactivate?(@, flags, event)
+				CUI.Events.trigger
 					type: "tab_deactivate"
 					node: @DOM
 
@@ -72,7 +76,11 @@ class CUI.Tab extends CUI.DOM
 	initOpts: ->
 		super()
 		@addOpts
+			padded:
+				check: Boolean
 			name:
+				check: String
+			button_id:
 				check: String
 			text:
 				mandatory: true
@@ -84,7 +92,7 @@ class CUI.Tab extends CUI.DOM
 			content:
 				mandatory: true
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			onFirstActivate:
 				check: Function
 			onActivate:
@@ -93,42 +101,46 @@ class CUI.Tab extends CUI.DOM
 				check: Function
 			content_placeholder:
 				check: (v) ->
-					isContent(v)
+					CUI.util.isContent(v)
 			load_on_show:
 				check: Boolean
 
+
 	loadContent: ->
-		Panel::loadContent.call(@)
+		CUI.Panel::loadContent.call(@)
 
 	setContent: (content) ->
-		Panel::setContent.call(@, content, false)
+		CUI.Panel::setContent.call(@, content, false)
 
 	appendContent: (content) ->
-		Panel::appendContent.call(@, content, false)
+		CUI.Panel::appendContent.call(@, content, false)
 
 	getText: ->
 		@_text
 
 	hide: ->
 		# console.error "hiding tab...", @getUniqueId(), @DOM
-		@DOM.addClass("cui-tab-hidden")
+		CUI.dom.addClass(@DOM, "cui-tab-hidden")
 		@
 
 	show: ->
 		# console.error "showing tab...", @getUniqueId(), @DOM
 		# move to first position
-		@DOM.removeClass("cui-tab-hidden")
+		CUI.dom.removeClass(@DOM, "cui-tab-hidden")
 
-		if CUI.__ng__
-			Events.trigger
-				type: "viewport-resize"
-				node: @DOM
-				info:
-					tab: true
+		CUI.Events.trigger
+			type: "viewport-resize"
+			node: @DOM
+			info:
+				tab: true
+
+		CUI.Events.trigger
+			type: "content-resize"
+			node: @DOM
 		@
 
 	destroy: ->
-		Events.trigger
+		CUI.Events.trigger
 			type: "tab_destroy"
 			node: @DOM
 
@@ -162,14 +174,13 @@ class CUI.Tab extends CUI.DOM
 
 
 CUI.ready =>
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "tab_destroy"
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "tab_deactivate"
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "tab_activate"
 
 
-Tab = CUI.Tab

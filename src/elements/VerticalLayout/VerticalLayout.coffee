@@ -5,6 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadTemplateText(require('./VerticalLayout.html'));
 
 class CUI.VerticalLayout extends CUI.Layout
 
@@ -14,7 +15,7 @@ class CUI.VerticalLayout extends CUI.Layout
 			return "vertical-layout"
 
 		panes = @getPanes()
-		# CUI.debug getObjectClass(@)+".getPanes: ",panes
+		# console.debug CUI.util.getObjectClass(@)+".getPanes: ",panes
 		if panes.length == 2
 			"vertical-layout-top-center-bottom"
 		else if "top" in panes
@@ -47,4 +48,3 @@ class CUI.VerticalLayout extends CUI.Layout
 	getSupportedPanes: ->
 		["top", "bottom"]
 
-VerticalLayout = CUI.VerticalLayout

@@ -13,18 +13,10 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 		@addOpts
 			row:
 				mandatory: true
-				check: ListViewRow
+				check: CUI.ListViewRow
 			column:
 				mandatory: true
-				check: ListViewColumn
-
-		Events.listen
-			type: "dblclick"
-			node: @_element
-			instance: @
-			call: (ev) =>
-				console.debug "list view", @__listView, @__col_i, @__row_i
-				@__listView.resetColWidth(@__col_i)
+				check: CUI.ListViewColumn
 
 	readOpts: ->
 		super()
@@ -32,6 +24,16 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 		@__display_row_i = @_row.getDisplayRowIdx()
 		@__listView = @_row.getListView()
 		@__col_i = @_column.getColumnIdx()
+
+		CUI.Events.listen
+			type: "dblclick"
+			node: @_element
+			instance: @
+			call: (ev) =>
+				console.debug "list view", @__listView, @__col_i, @__row_i
+				@__listView.resetColWidth(@__col_i)
+
+		return
 
 	get_axis: ->
 		"x"
@@ -55,8 +57,8 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 	get_helper_pos: (ev, $target, diff) ->
 		helper_pos = super(ev, $target, diff)
 		# left stays
-		helper_pos.left = globalDrag.helperNodeStart.left
-		@__new_width = globalDrag.helperNodeStart.width + diff.x
+		helper_pos.left = CUI.globalDrag.helperNodeStart.left
+		@__new_width = CUI.globalDrag.helperNodeStart.width + diff.x
 		helper_pos.width = @__new_width
 
 		helper_pos
@@ -86,8 +88,9 @@ class CUI.ListViewColResize extends CUI.ListViewDraggable
 
 	end_drag: (ev) ->
 		super(ev)
+		@__listView._onColumnResize?(@_column, @__new_width)
 		@__setColWidth(@__new_width)
 
 	destroy: ->
-		Events.ignore(instance: @)
+		CUI.Events.ignore(instance: @)
 		super()

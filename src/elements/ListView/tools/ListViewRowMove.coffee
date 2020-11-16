@@ -13,7 +13,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 		@addOpts
 			row:
 				mandatory: true
-				check: ListViewRow
+				check: CUI.ListViewRow
 
 	readOpts: ->
 		super()
@@ -40,7 +40,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 
 	init_helper: ->
 		@movableTargetDiv = @get_marker("cui-lv-row-move-target")
-		CUI.DOM.append(@__listView.getGrid(), @movableTargetDiv)
+		CUI.dom.append(@__listView.getGrid(), @movableTargetDiv)
 		super()
 
 	do_drag: (ev, $target, diff) ->
@@ -63,20 +63,20 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 
 	cleanup_drag: (ev) ->
 		super(ev)
-		CUI.DOM.remove(@movableTargetDiv)
+		CUI.dom.remove(@movableTargetDiv)
 		@movableTargetDiv = null
 
 	end_drag: (ev) ->
 		super(ev)
 
-		# CUI.debug "end drag...", @target
+		# console.debug "end drag...", @target
 		if not @target
 			return
 
 		source_node = @_row
 		target_node = @__listView.getListViewRow(@target.row_i)
 
-		globalDrag.noClickKill = true
+		CUI.globalDrag.noClickKill = true
 
 		if source_node.moveRow
 			source_node.moveRow(@__listView, target_node, @target.after)
@@ -99,10 +99,10 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 				(@target.after_row_i == @__row_i and @target.before == false)
 
 			@target = null
-			CUI.DOM.hideElement(@movableTargetDiv)
+			CUI.dom.hideElement(@movableTargetDiv)
 		else
-			CUI.DOM.showElement(@movableTargetDiv)
-			CUI.DOM.setStyle @movableTargetDiv,
+			CUI.dom.showElement(@movableTargetDiv)
+			CUI.dom.setStyle @movableTargetDiv,
 				# display: "block"
 				left: @target.left
 				top: @target.top
@@ -126,7 +126,7 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 
 		diff = cell.clientY - row_rect.top_abs
 
-		# CUI.debug diff, cell.clientY, row_rect.top, row_rect.top_abs
+		# console.debug diff, cell.clientY, row_rect.top, row_rect.top_abs
 
 		# before
 		if diff < row_rect.height / 2

@@ -4,13 +4,13 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadTemplateText(require('./ProgressMeter.html'));
 
+class CUI.ProgressMeter extends CUI.DOMElement
+	constructor: (opts) ->
+		super(opts)
 
-class ProgressMeter extends CUI.DOM
-	constructor: (@opts={}) ->
-		super(@opts)
-
-		@__meter = new Template
+		@__meter = new CUI.Template
 			name: "progress-meter"
 			map:
 				icon: true
@@ -18,6 +18,7 @@ class ProgressMeter extends CUI.DOM
 				fill: true
 
 		@registerTemplate(@__meter)
+
 		if @_state
 			@setState(@_state)
 		else if @_states.length
@@ -59,7 +60,7 @@ class ProgressMeter extends CUI.DOM
 			@addOpt "icon_"+state,
 				default: CUI.defaults.ProgressMeter.states[state]
 				check: (v) =>
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 
 	getState: ->
 		@__state
@@ -69,7 +70,7 @@ class ProgressMeter extends CUI.DOM
 
 	setState: (state) ->
 
-		assert(@__checkState(state), "ProgressMeter.setState", "state needs to be "+@_states.join(",")+" or between 0 and 100.", state: state)
+		CUI.util.assert(@__checkState(state), "ProgressMeter.setState", "state needs to be "+@_states.join(",")+" or between 0 and 100.", state: state)
 		if typeof(state) == "number"
 			state = Math.round(state*100)/100
 
@@ -78,32 +79,55 @@ class ProgressMeter extends CUI.DOM
 
 		@__state = state
 		if @__state in @_states
-			icon = @["_icon_"+@__state]
-			if icon instanceof Icon
-				@__meter.replace(icon, "icon")
-			else if not isEmpty(icon)
-				@__meter.replace(new Icon(icon: icon), "icon")
+			if @__state == "spinning2"
+				@__meter.replace(@getAnimatedHourglassIcon(), "icon")
 			else
-				@__meter.empty("icon")
-			# CUI.debug icon, @__state
-			@__meter.DOM.attr("state", @__state)
+				icon = @["_icon_"+@__state]
+				if icon instanceof CUI.Icon
+					@__meter.replace(icon, "icon")
+				else if not CUI.util.isEmpty(icon)
+					@__meter.replace(new CUI.Icon(icon: icon), "icon")
+				else
+					@__meter.empty("icon")
+			
+			# console.debug icon, @__state
+			@__meter.DOM.setAttribute("state", @__state)
 			@__meter.empty("text")
 
 			fill_css = {} #display: ""
 			fill_css[@_css_property_percent] = ""
 		else
-			@__meter.DOM.attr("state", "percent")
+			@__meter.DOM.setAttribute("state", "percent")
 			@__meter.empty("icon")
 			@__meter.replace(Math.round(@__state)+"%", "text")
 			fill_css = {} #display: ""
 			fill_css[@_css_property_percent] = @__state+"%"
 
-		@__meter.map.fill.css(fill_css)
+		CUI.dom.setStyle(@__meter.map.fill, fill_css)
 		@_onUpdate?.call(@, @)
 		@
 
+	getAnimatedHourglassIcon: ->
+		hourglass_icons = [
+			"fa-hourglass-start"
+			"fa-hourglass-half"
+			"fa-hourglass-end"
+			"fa-hourglass-end"
+			"fa-hourglass-o"
+		]
+		hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack")
+
+		for i in hourglass_icons
+			icon = new CUI.Icon
+				icon: i
+				class: "fa-stack-1x"
+
+			CUI.dom.append(hourglass_container, icon.DOM)
+		
+		hourglass_container
 
 CUI.defaults.ProgressMeter =
 	states:
 		waiting: "fa-hourglass"
-		spinning: "fa-spinner cui-spin-stepped"
+		spinning: "svg-spinner cui-spin-stepped"
+		spinning2: "fa-hourglass"

@@ -6,9 +6,12 @@
 ###
 
 class CUI.Input extends CUI.DataFieldInput
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-input")
+
+		if @_textarea
+			@addClass("cui-data-field--textarea")
 
 		if @_overwrite
 			@__getCursorBlocks = @__overwriteBlocks
@@ -22,10 +25,16 @@ class CUI.Input extends CUI.DataFieldInput
 			@addClass("cui-input-required")
 
 		if @_checkInput
-			@addClass("cui-input-has-check-input")
+			@__checkInput = @_checkInput
 
 		if @_prevent_invalid_input
 			@addClass("cui-input-has-prevent-invalid-input")
+
+		if @__checkInput
+			@addClass("cui-input-has-check-input")
+
+		if @_appearance
+			@addClass("cui-input-appearance-"+@_appearance)
 
 		@__inputHints = {}
 		@__inputHintTexts = {}
@@ -37,7 +46,7 @@ class CUI.Input extends CUI.DataFieldInput
 				continue
 
 			@__inputHints[k]
-			if hint instanceof Label
+			if hint instanceof CUI.Label
 				@__inputHints[k] = hint
 			else
 				@__inputHints[k] = new CUI.defaults.class.Label(hint)
@@ -46,6 +55,9 @@ class CUI.Input extends CUI.DataFieldInput
 			@__inputHintTexts[k] = @__inputHints[k].getText()
 
 			@addClass("cui-input-has-"+k+"-hint")
+
+		@__doSetContentSize = =>
+			@__setContentSize()
 
 		return
 
@@ -71,13 +83,16 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Function
 			emptyHint:
 				check: (v) ->
-					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			invalidHint:
 				check: (v) ->
-					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			validHint:
 				check: (v) ->
-					isString(v) or v instanceof Label or CUI.isPlainObject(v)
+					CUI.util.isString(v) or v instanceof CUI.Label or CUI.util.isPlainObject(v)
+			maxLength:
+				check: (v) ->
+					v >= 0
 			onFocus:
 				check: Function
 			onClick:
@@ -102,10 +117,10 @@ class CUI.Input extends CUI.DataFieldInput
 			# takes place
 			getCursorBlocks:
 				check: (v) ->
-					CUI.isFunction(v) and not @_overwrite
+					CUI.util.isFunction(v) and not @_overwrite
 			placeholder:
 				check: (v) ->
-					CUI.isFunction(v) or isString(v)
+					CUI.util.isFunction(v) or CUI.util.isString(v)
 			readonly:
 				check: Boolean
 			readonly_select_all:
@@ -113,6 +128,14 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			textarea:
 				check: Boolean
+			min_rows:
+				check: (v) ->
+					v >= 2
+				default: 2
+			# limit the amount of rows in textarea input
+			rows:
+				check: (v) ->
+					v >= 1
 			content_size:
 				default: false
 				check: Boolean
@@ -122,38 +145,51 @@ class CUI.Input extends CUI.DataFieldInput
 			required:
 				default: false
 				check: Boolean
+			appearance:
+				check: ["code"]
 
 	readOpts: ->
-		if not isEmpty(@opts.regexp)
-			assert(not (@opts.checkInput), "new Input", "opts.regexp conflicts with opts.checkInput.")
-			assert(not @opts.hasOwnProperty("prevent_invalid_input"), "new Input", "opts.prevent_invalid_input conflicts with opts.regexp.")
 
 		if @opts.readonly
-			assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
+			CUI.util.assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new CUI.Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
 
 		if @opts.textarea
-			assert(not @opts.autocomplete, "new Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
-			assert(not @opts.incNumbers, "new Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
+			CUI.util.assert(not @opts.autocomplete, "new CUI.Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
+			CUI.util.assert(not @opts.incNumbers, "new CUI.Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
 
 		super()
 
 		if @_readonly and @_readonly_select_all
 			@_getCursorBlocks = (v) =>
-				[ new InputBlock(start: 0, string: v) ]
+				[ new CUI.InputBlock(start: 0, string: v) ]
 
 		if @_regexp
 			@__regexp = new RegExp(@_regexp, @_regexp_flags)
-			@_prevent_invalid_input = false
-			@_checkInput = @__checkInputRegexp
+			# @_prevent_invalid_input = false
+			@__checkInput = (value) =>
+				if not @__checkInputRegexp(value)
+					false
+				else if @_checkInput
+					@_checkInput(value)
+				else
+					true
 
-		if @_required and not @_checkInput
-			@_checkInput = (opts) =>
-				opts.value.trim().lengt > 0
+		if @_required
+			@__checkInput = (value) =>
+				if value.trim().length == 0
+					false
+				else if @_checkInput
+					@_checkInput(value)
+				else
+					true
 
 		if @_spellcheck == false
 			@__spellcheck = "false"
 		else
 			@__spellcheck = "default"
+
+		# if @_rows
+		# 	CUI.util.assert(@_content_size, "new CUI.Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
 
 		if @_autocomplete == true
 			@__autocomplete = "on"
@@ -170,18 +206,18 @@ class CUI.Input extends CUI.DataFieldInput
 
 	setSpellcheck: (spellcheck) ->
 		if spellcheck
-			DOM.setAttribute(@__input0, "spellcheck", "default")
+			CUI.dom.setAttribute(@__input, "spellcheck", "default")
 		else
-			DOM.setAttribute(@__input0, "spellcheck", "false")
+			CUI.dom.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
-		DOM.setAttribute(@__input[0], "placeholder", placeholder)
+		CUI.dom.setAttribute(@__input, "placeholder", placeholder)
 
 	getPlaceholder: ->
 		if not @_placeholder
 			return undefined
 
-		if CUI.isFunction(@_placeholder)
+		if CUI.util.isFunction(@_placeholder)
 			@_placeholder(@, @getData())
 		else
 			@_placeholder
@@ -190,41 +226,68 @@ class CUI.Input extends CUI.DataFieldInput
 	# - tab block advance
 	# - up/down cursor number decrement/increment
 	# - input masking
-
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
-			@__input = $element "textarea", "cui-textarea",
+			@__input = CUI.dom.$element "textarea", "cui-textarea",
 				placeholder: @getPlaceholder()
 				tabindex: "0"
+				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
-		else
-			if CUI.__ng__
-				# this is the way to make input not behave irratically
-				size = 1
-			else
-				size = undefined
+				rows: @_min_rows
+			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
 
-			@__input = $element "input", "cui-input",
+			resize = =>
+				@__input.rows = @_min_rows
+				rows = Math.ceil((@__input.scrollHeight - @__baseScrollHeight) / @__lineHeight);
+				@__input.rows = @_min_rows + rows;
+
+			calculateBaseHeight = =>
+				value = @__input.value
+				@__input.value = ""
+				@__baseScrollHeight = @__input.scrollHeight
+				@__input.value = value
+				@__lineHeight = parseInt(CUI.dom.getComputedStyle(@__input).lineHeight, 10)
+
+			CUI.Events.listen
+				node: @__input
+				type: "input"
+				call: resize
+
+			CUI.dom.waitForDOMInsert(node: @__input).done(=>
+				if @isDestroyed()
+					return
+				calculateBaseHeight()
+				resize()
+			)
+		else
+			@__input = CUI.dom.$element "input", "cui-input",
 				type: input_type
-				size: size
+				size: 1
 				placeholder: @getPlaceholder()
 				tabindex: "0"
+				maxLength: @_maxLength
 				id: "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				autocomplete: @__autocomplete
 
-		Events.listen
+		CUI.Events.listen
 			node: @__input
 			type: "dragstart"
 			call: (ev) ->
 				ev.preventDefault()
 
-		Events.listen
+		CUI.Events.listen
 			node: @__input
 			type: "keydown"
 			call: (ev) =>
-				# CUI.debug "keydown on input", ev.shiftKey, ev.which, @_incNumbers
+				# console.debug "keydown on input", ev.hasModifierKey(), ev.keyCode(), @_incNumbers
+
+				# dont return here if CTRL-Z is pressed
+				if (ev.ctrlKey() and not ev.keyCode() == 90) or ev.metaKey()
+					# console.debug "leaving keydown"
+					return
+
 				@lastKeyDownEvent = ev
 
 				if @_incNumbers and not @_textarea and not @_readonly
@@ -238,11 +301,15 @@ class CUI.Input extends CUI.DataFieldInput
 				if ev.keyCode() in [9, 16, 17, 18, 27, 33, 34, 35, 36, 38, 40]
 					return
 
+				# Select all, copy, paste, cut.
+				if (ev.ctrlKey() or ev.metaKey()) and ev.keyCode() in [65, 67, 86, 88] # 'A', 'C', 'V', 'X'
+					return
+
 				if not @_textarea and ev.keyCode() == 13
 					return
 
 				# backspace and the cursor is slim and at the beginning
-				if ev.keyCode() == 8 and 0 == @__input0.selectionStart == @__input0.selectionEnd
+				if ev.keyCode() == 8 and 0 == @__input.selectionStart == @__input.selectionEnd
 					return
 
 				# if @_content_size and @_textarea and not @preventInvalidInput()
@@ -255,7 +322,7 @@ class CUI.Input extends CUI.DataFieldInput
 				@__focusShadowInput()
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "keyup"
 			node: @__input
 			call: (ev) =>
@@ -271,6 +338,7 @@ class CUI.Input extends CUI.DataFieldInput
 						@showCursor(ev)
 
 					return
+
 				@initCursor(ev)
 				@showCursor(ev)
 
@@ -281,11 +349,11 @@ class CUI.Input extends CUI.DataFieldInput
 					@_onKeyup(@, ev)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "focus"
 			node: @__input
 			call: (ev) =>
-				# CUI.debug "input focus event", @DOM[0], "immediate:", @hasImmediateFocus(), "shadow:", @hasShadowFocus()
+				# console.debug "input focus event", @DOM[0], "immediate:", @hasImmediateFocus(), "shadow:", @hasShadowFocus()
 				if @hasShadowFocus()
 					return
 
@@ -299,45 +367,46 @@ class CUI.Input extends CUI.DataFieldInput
 
 		oldSizes = null
 
-		Events.listen
+		CUI.Events.listen
 			type: "mousedown"
 			node: @__input
 			call: (ev) =>
-				oldSizes = [@__input0.offsetWidth, @__input0.offsetHeight]
+				oldSizes = [@__input.offsetWidth, @__input.offsetHeight]
 
 				trigger = =>
-					if oldSizes[0] != @__input0.offsetWidth or
-						oldSizes[1] != @__input0.offsetHeight
-							Events.trigger
+					if oldSizes[0] != @__input.offsetWidth or
+						oldSizes[1] != @__input.offsetHeight
+							CUI.Events.trigger
 								type: "content-resize"
 								node: @__input
 
-				mev = Events.listen
+				mev = CUI.Events.listen
 					type: "mousemove"
 					call: =>
 						trigger()
 						return
 
-				Events.listen
+				CUI.Events.listen
 					type: "mouseup"
 					only_once: true
 					capture: true
 					call: (ev) =>
-						Events.ignore(mev)
+						CUI.Events.ignore(mev)
 						return
 
 
-		Events.listen
+		CUI.Events.listen
 			type: "mouseup"
 			node: @__input
 			call: (ev) =>
 				@__setCursor(ev)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "blur"
 			node: @__input
 			call: (ev) =>
+
 				if @hasShadowFocus()
 					return
 
@@ -347,26 +416,27 @@ class CUI.Input extends CUI.DataFieldInput
 				@_onBlur?(@, ev)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "input"
 			node: @__input
 			call: (ev, info) =>
-				# CUI.debug "#{@__cls}", ev.type, ev.isDefaultPrevented()
+				# console.debug "#{@__cls}", ev.type, ev.isDefaultPrevented()
 				if not ev.isDefaultPrevented()
 					# this can happen thru CTRL-X, so we need to check again
 					@checkInput()
 					@moveCursor(ev)
 					@showCursor(ev)
-					@storeValue(@__input0.value)
+					if @getValueForStore(@__input.value) != @getValue()
+						@storeValue(@__input.value)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "paste"
 			node: @__input
 			call: (ev) =>
 				@__focusShadowInput()
 
-		Events.listen
+		CUI.Events.listen
 			type: "click"
 			node: @__input
 			call: (ev) =>
@@ -374,12 +444,10 @@ class CUI.Input extends CUI.DataFieldInput
 				@_onClick?(@, ev)
 				return
 
-		@__input0 = @__input[0]
-
-		# CUI.debug "listening for dom insert on ", @__input
+		# console.debug "listening for dom insert on ", @__input
 		#
 		if @_content_size
-			DOM.waitForDOMInsert(node: @__input)
+			CUI.dom.waitForDOMInsert(node: @__input)
 			.done =>
 				if @isDestroyed()
 					return
@@ -389,13 +457,13 @@ class CUI.Input extends CUI.DataFieldInput
 		@__input
 
 	__setCursor: (ev) ->
-		# CUI.debug "setting timeout"
+		# console.debug "setting timeout"
 		CUI.setTimeout =>
-			# CUI.debug "focus?", @hasClass("focus")
+			# console.debug "focus?", @hasClass("focus")
 			@initCursor(ev)
 			if @cursor == null and
-				(s = @__input0.selectionStart) == @__input0.selectionEnd and
-				@__input0.selectionEnd != @__input0.value.length
+				(s = @__input.selectionStart) == @__input.selectionEnd and
+				@__input.selectionEnd != @__input.value.length
 					blocks = @getInputBlocks()
 					if blocks.length > 0
 						for block in blocks
@@ -407,6 +475,12 @@ class CUI.Input extends CUI.DataFieldInput
 		,
 			0
 
+	getValueForStore: (value) ->
+		value
+
+	storeValue: (value, flags={}) ->
+		super(@getValueForStore(value), flags)
+
 	handleSelectionChange: ->
 		@_onSelectionchange?.apply(@, arguments)
 
@@ -417,7 +491,7 @@ class CUI.Input extends CUI.DataFieldInput
 		"cui-input-"+@getUniqueId()
 
 	markBlock: (ev, bl) ->
-		@__input0.setSelectionRange(bl.start, bl.end)
+		@__input.setSelectionRange(bl.start, bl.end)
 		@initCursor(ev)
 
 	remove: ->
@@ -428,19 +502,19 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @__shadow
 			return
 
-		# CUI.debug "focus shadow input"
+		# console.debug "focus shadow input"
 		@__shadow_focused = true
-		@__shadow0.value = @__input0.value
-		@__shadow0.focus()
-		@__shadow0.setSelectionRange(@__input0.selectionStart, @__input0.selectionEnd)
+		@__shadow.value = @__input.value
+		@__shadow.focus()
+		@__shadow.setSelectionRange(@__input.selectionStart, @__input.selectionEnd)
 
 	__unfocusShadowInput: ->
 		if not @hasShadowFocus()
 			return
 
-		# CUI.debug "unfocus shadow input"
+		# console.debug "unfocus shadow input"
 		@setContentSize()
-		@__input0.focus()
+		@__input.focus()
 		@showCursor()
 		@__shadow_focused = false
 
@@ -454,7 +528,9 @@ class CUI.Input extends CUI.DataFieldInput
 			return @
 
 		if @__contentSize
-			@__setContentSize()
+			CUI.scheduleCallback
+				call: @__doSetContentSize
+				ms: 100
 		else
 			@__initContentSize()
 			@__setContentSize()
@@ -462,19 +538,18 @@ class CUI.Input extends CUI.DataFieldInput
 		@
 
 	__initContentSize: ->
-		# CUI.debug "initContentSize", @getUniqueId(), @__contentSize
+		# console.debug "initContentSize", @getUniqueId(), @__contentSize
 
 		if @__contentSize
 			return
 
-		@__contentSize = $element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
+		@__contentSize = CUI.dom.$element("textarea", "cui-input-shadow", tabindex: "-1", autocomplete: "off")
 
-		@__contentSize.appendTo(document.body)
-		@__contentSize0 = @__contentSize[0]
+		CUI.dom.append(document.body, @__contentSize)
 
-		style = window.getComputedStyle(@__input0)
+		style = window.getComputedStyle(@__input)
 
-		# CUI.debug style
+		# console.debug style
 
 		css = {}
 		for k in [
@@ -491,65 +566,68 @@ class CUI.Input extends CUI.DataFieldInput
 			"fontVariantLigatures"
 			"fontWeight"
 		]
-			# CUI.debug k, style[k]
+			# console.debug k, style[k]
 			css[k] = style[k]
 
 		if not @_textarea
 			css.whiteSpace = "nowrap"
 
-		@__contentSize.css(css)
-		DOM.height(@__contentSize, 1)
+		CUI.dom.setStyle(@__contentSize, css)
+		CUI.dom.height(@__contentSize, 1)
 
 		if @_textarea
-			DOM.width(@__contentSize, DOM.width(@__contentSize))
-			@__max_height = parseInt(@__input.css("max-height"))
-			@__input0.style.overflow = "hidden"
+			CUI.dom.width(@__contentSize, CUI.dom.width(@__contentSize))
+			@__max_height = parseFloat(CUI.dom.getComputedStyle(@__input)["max-height"])
+			@__input.style.overflow = "hidden"
 
 			if isNaN(@__max_height)
 				@__max_height = null
 			else
-				correct_height = parseInt(@__input.css("height")) - DOM.height(@__input)
+				correct_height = parseFloat(CUI.dom.getComputedStyle(@__input)["height"]) - CUI.dom.height(@__input)
 				@__max_height -= correct_height
 		else
-			DOM.width(@__contentSize, 1)
+			CUI.dom.width(@__contentSize, 1)
 		@
 
 	__setContentSize: ->
 
-		@__contentSize0.value = @__input0.value
+		if not @__contentSize
+			return
+
+		@__contentSize.value = @__input.value
 
 		if @hasShadowFocus()
 			# we can only do this when shadow is focused,
-			# otherwise the "blur" event on @__input0
+			# otherwise the "blur" event on @__input
 			# will remove @__contentSize and we will run into errors
-			@__contentSize0.focus()
+			@__contentSize.focus()
 
 		changed = false
 
 		if @_textarea
-			if @__input0.value.length == 0
-				@__contentSize0.value = "A" # help IE out, so we get a height
+			if @__input.value.length == 0
+				@__contentSize.value = "A" # help IE out, so we get a height
 
-			if DOM.width(@__input) != DOM.width(@__contentSize)
-				DOM.width(@__contentSize, DOM.width(@__input))
+			if CUI.dom.width(@__input) != CUI.dom.width(@__contentSize)
+				CUI.dom.width(@__contentSize, CUI.dom.width(@__input))
 
-			h = @__contentSize0.scrollHeight
+			h = @__contentSize.scrollHeight
 
 			if @__max_height == null or h <= @__max_height
-				@__input0.style.overflow = "hidden"
+				@__input.style.overflow = "hidden"
 			else
-				@__input0.style.overflow = ""
+				@__input.style.overflow = ""
 
-			previous_height = DOM.height(@__input)
-			DOM.height(@__input, h)
+			previous_height = CUI.dom.height(@__input)
+			CUI.dom.height(@__input, h)
 
-			if DOM.height(@__input) != previous_height
+			if CUI.dom.height(@__input) != previous_height
 				changed = true
 
-			# CUI.error "__setContentSize", @_textarea, @__input0.value, @__contentSize0.value, h
+			# console.error "__setContentSize", @_textarea, @__input.value, @__contentSize.value, h
 		else
-			w = @__contentSize0.scrollWidth
-			if @__contentSize0.value.length == 0
+			w = @__contentSize.scrollWidth
+			if @__contentSize.value.length == 0
 				# help IE out here, IE measures one " "
 				w = 1
 			else
@@ -557,22 +635,22 @@ class CUI.Input extends CUI.DataFieldInput
 				# Chrome measures a Textarea width different than an Input width
 				w = w + 1
 
-			if DOM.width(@__input) != w
+			if CUI.dom.width(@__input) != w
 				changed = true
 
-			DOM.width(@__input, w)
+			CUI.dom.width(@__input, w)
 
 		if changed
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				node: @__input
 		@
 
 	checkBlocks: (blocks) ->
-		if not CUI.isArray(blocks)
+		if not CUI.util.isArray(blocks)
 			return false
 		for b, idx in blocks
-			assert(b instanceof InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of InputBlock.", blocks: blocks, block: b)
+			CUI.util.assert(b instanceof CUI.InputBlock, "Input.getInputBlocks", "Block[#{idx}] needs to be instance of CUI.InputBlock.", blocks: blocks, block: b)
 			b.idx = idx
 		blocks
 
@@ -580,16 +658,16 @@ class CUI.Input extends CUI.DataFieldInput
 
 	getInputBlocks: ->
 		if @_getInputBlocks
-			blocks = @_getInputBlocks(@__input0.value)
+			blocks = @_getInputBlocks(@__input.value)
 		else if @_getCursorBlocks
-			blocks = @_getCursorBlocks(@__input0.value)
+			blocks = @_getCursorBlocks(@__input.value)
 		else
-			blocks = @__getInputBlocks(@__input0.value)
+			blocks = @__getInputBlocks(@__input.value)
 		@checkBlocks(blocks)
 
 	__getInputBlocks: (v) ->
 		blocks = []
-		v =  @__input0.value
+		v =  @__input.value
 		re = /[0-9]+/g
 		blocks = []
 		while (match = re.exec(v)) != null
@@ -609,19 +687,19 @@ class CUI.Input extends CUI.DataFieldInput
 				match_str = "-"+match_str
 				match_start -= 1
 
-			blocks.push new NumberInputBlock
+			blocks.push new CUI.NumberInputBlock
 				start: match_start
 				string: match_str
-		# CUI.debug "blocks", blocks
+		# console.debug "blocks", blocks
 		blocks
 
 	__overwriteBlocks: (v) ->
 		blocks = []
 		for i in [0...v.length]
-			blocks.push new InputBlock
+			blocks.push new CUI.InputBlock
 				start: i
 				string: v.substr(i, 1)
-		blocks.push new InputBlock
+		blocks.push new CUI.InputBlock
 			start: v.length
 			string: ""
 		blocks
@@ -633,33 +711,33 @@ class CUI.Input extends CUI.DataFieldInput
 		if blocks == false or blocks.length == 0
 			return null
 
-		s = @__input0.selectionStart
-		e = @__input0.selectionEnd
+		s = @__input.selectionStart
+		e = @__input.selectionEnd
 
 		for block, idx in blocks
-			# CUI.debug match_start, match_end, match_str
+			# console.debug match_start, match_end, match_str
 			if block.start == s and block.end == e
 				return block
 		return null
 
 	getSelection: ->
-		s = @__input0.selectionStart
-		e = @__input0.selectionEnd
+		s = @__input.selectionStart
+		e = @__input.selectionEnd
 
 		start: s
 		end: e
-		value: @__input0.value
-		before: @__input0.value.substring(0, s)
-		selected: @__input0.value.substring(s, e)
-		after: @__input0.value.substring(e)
+		value: @__input.value
+		before: @__input.value.substring(0, s)
+		selected: @__input.value.substring(s, e)
+		after: @__input.value.substring(e)
 
 	setSelection: (selection) ->
-		@__input0.selectionStart = selection.start
-		@__input0.selectionEnd = selection.end
+		@__input.selectionStart = selection.start
+		@__input.selectionEnd = selection.end
 
 	selectAll: ->
-		@__input0.selectionStart = 0
-		@__input0.selectionEnd = @__input0.value.length
+		@__input.selectionStart = 0
+		@__input.selectionEnd = @__input.value.length
 		@
 
 	updateSelection: (txt="") ->
@@ -672,8 +750,9 @@ class CUI.Input extends CUI.DataFieldInput
 		@setSelection(start: start, end: end)
 
 	setValue: (v, flags = {}) ->
+
 		if not @hasData()
-			@__input0?.value = v
+			@__input?.value = v
 			@setContentSize()
 
 		super(v, flags)
@@ -682,9 +761,9 @@ class CUI.Input extends CUI.DataFieldInput
 		if ev.keyCode() not in [38, 40, 33, 34] # not in TAB
 			return
 
-		s = @__input0.selectionStart
-		e = @__input0.selectionEnd
-		v =  @__input0.value
+		s = @__input.selectionStart
+		e = @__input.selectionEnd
+		v =  @__input.value
 
 		blocks = @getInputBlocks()
 		if blocks == false or blocks.length == 0
@@ -694,15 +773,15 @@ class CUI.Input extends CUI.DataFieldInput
 		for block, idx in blocks
 			if idx == blocks.length-1
 				break
-			# CUI.debug idx, block.end, blocks[idx+1].start
+			# console.debug idx, block.end, blocks[idx+1].start
 			parts_inbetween.push(v.substring(block.end, blocks[idx+1].start))
 
 		last_block = blocks[blocks.length-1]
 		parts_inbetween.push(v.substring(last_block.end))
 
-		# CUI.debug "blocks:", blocks
-		# CUI.debug "parts_inbetween:", parts_inbetween
-		# CUI.debug "s", s, "e", e, "v", v
+		# console.debug "blocks:", blocks
+		# console.debug "parts_inbetween:", parts_inbetween
+		# console.debug "s", s, "e", e, "v", v
 		block_move = 0
 		if ev.keyCode() in [9, 33, 34]
 			# TAB, PAGE UP/DOWN  # TAB removed (above)
@@ -713,7 +792,7 @@ class CUI.Input extends CUI.DataFieldInput
 				block_move = 1
 
 		for block, idx in blocks
-			# CUI.debug match_start, match_end, match_str
+			# console.debug match_start, match_end, match_str
 			if block.start == s and block.end == e
 				if block_move
 					block_jump_to = idx+block_move
@@ -729,7 +808,7 @@ class CUI.Input extends CUI.DataFieldInput
 
 			if (s == e or (@cursor and @cursor.start == @cursor.end)) and block.start <= s <= block.end
 				# mark block
-				# CUI.debug "cursor in block", s, e
+				# console.debug "cursor in block", s, e
 				block_jump_to = idx
 				continue
 
@@ -741,7 +820,6 @@ class CUI.Input extends CUI.DataFieldInput
 
 		if bl = blocks[block_jump_to]
 			new_str = [parts_inbetween[0]]
-			# CUI.debug "new blocks"+blocks
 			for block, idx in blocks
 				new_str.push(block.string)
 				new_str.push(parts_inbetween[idx+1])
@@ -752,63 +830,60 @@ class CUI.Input extends CUI.DataFieldInput
 				ev.preventDefault()
 				return
 
-			@__input0.value = new_value
+			@__input.value = new_value
 			@markBlock(ev, bl)
-			@storeValue(@__input0.value)
+			@storeValue(@__input.value)
 			ev.preventDefault()
 
 		return
 
 	__removeContentSize: ->
-		@__contentSize?.remove()
+		CUI.dom.remove(@__contentSize)
 		@__contentSize = null
-		@__contentSize0 = null
 		@
 
 	__removeShadowInput: ->
-		# CUI.error "removeShadowInput", @getUniqueId()
+		# console.error "removeShadowInput", @getUniqueId()
 		@__removeContentSize()
 
-		@__shadow?.remove()
+		CUI.dom.remove(@__shadow)
 		@__shadow = null
 		@__shadow_focused = false
 		@
 
 	preventInvalidInput: ->
-		if @_checkInput and @_prevent_invalid_input
+		if @__checkInput and @_prevent_invalid_input
 			true
 		else
 			false
 
 	__initShadowInput: ->
-		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput or @_readonly)
+		if not (@preventInvalidInput() or @_content_size or @_correctValueForInput or @_readonly or @_rows)
 			return
 
 		if @__shadow
 			return
 
-		# CUI.debug "initShadowInput", @getUniqueId()
+		# console.debug "initShadowInput", @getUniqueId()
 		#
 		if @_textarea
-			@__shadow = $element("textarea", "cui-input-shadow")
+			@__shadow = CUI.dom.$element("textarea", "cui-input-shadow")
 		else
-			@__shadow = $element("input", "cui-input-shadow", type: "text")
+			@__shadow = CUI.dom.$element("input", "cui-input-shadow", type: "text")
 
-		@__shadow.prop("tabindex", "-1")
-		@__shadow.prop("autocomplete", "off")
-		@__shadow.appendTo(document.body)
-		@__shadow0 = @__shadow[0]
+		@__shadow.setAttribute("tabindex", "-1")
+		@__shadow.setAttribute("autocomplete", "off")
+		CUI.dom.append(document.body, @__shadow)
 
 		if @_content_size
 			@__initContentSize()
 
-
-		Events.listen
+		CUI.Events.listen
 			type: "input"
 			node: @__shadow
 			call: (ev) =>
 				@__shadowInput(ev)
-				# CUI.debug ev.type, "unfocus shadow input"
+				# console.debug ev.type, "unfocus shadow input"
 				@__unfocusShadowInput()
 				new CUI.Event
 					type: "input"
@@ -816,20 +891,23 @@ class CUI.Input extends CUI.DataFieldInput
 				.dispatch()
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "keyup"
 			node: @__shadow
 			call: (ev) =>
-				# CUI.debug ev.type, "unfocus shadow input"
+				# console.debug ev.type, "unfocus shadow input"
 				@__unfocusShadowInput()
-				# CUI.debug "shadow", ev.type
+				# console.debug "shadow", ev.type
 				return
 
 		@
 
 
 	__shadowInput: (ev) ->
-		shadow_v = @__shadow0.value
+		shadow_v = @__shadow.value
+
+		if @_rows and shadow_v.split("\n").length > @_rows
+			return
 
 		if @preventInvalidInput() and shadow_v.length > 0
 			ret = @checkInput(@correctValueForInput(shadow_v))
@@ -838,16 +916,16 @@ class CUI.Input extends CUI.DataFieldInput
 				return
 
 		if not @_readonly
-			@__input0.value = @correctValueForInput(shadow_v)
-			@__input0.setSelectionRange(@__shadow0.selectionStart, @__shadow0.selectionEnd)
+			@__input.value = @correctValueForInput(shadow_v)
+			@__input.setSelectionRange(@__shadow.selectionStart, @__shadow.selectionEnd)
 
-		# CUI.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
+		# console.debug "shadow before init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
 		@initCursor(ev)
-		# CUI.debug "shadow after init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
+		# console.debug "shadow after init cursor", @cursor?.start.idx, "-", @cursor?.end.idx
 		return
 
 	checkValue: (v) ->
-		if not isString(v) or null
+		if not CUI.util.isString(v) or null
 			throw new Error("#{@__cls}.checkValue(value): Value needs to be String or null.")
 		@
 
@@ -885,12 +963,12 @@ class CUI.Input extends CUI.DataFieldInput
 				@addClass("cui-input-invalid")
 
 		for k in ["empty", "invalid", "valid"]
-			DOM.hideElement(@__inputHints[k]?.DOM[0])
+			CUI.dom.hideElement(@__inputHints[k]?.DOM)
 
 		if not @hasUserInput() and state == "invalid"
-			DOM.showElement(@__inputHints.empty?.DOM[0])
+			CUI.dom.showElement(@__inputHints.empty?.DOM)
 		else
-			DOM.showElement(@__inputHints[state]?.DOM[0])
+			CUI.dom.showElement(@__inputHints[state]?.DOM)
 		@
 
 	getInputState: ->
@@ -904,18 +982,18 @@ class CUI.Input extends CUI.DataFieldInput
 
 	leaveInput: ->
 		if @getInputState() != "invalid"
-			@__input0.value = @getValueForDisplay()
+			@__input.value = @getValueForDisplay()
 			@checkInput()
 		@
 
 	enterInput: ->
 		if @getInputState() != "invalid"
-			@__input0.value = @getValueForInput()
+			@__input.value = @getValueForInput()
 			@checkInput()
 		@
 
 	hasUserInput: ->
-		@__input0.value.length > 0
+		@__input.value.length > 0
 
 	checkInput: (value) ->
 		state = @__checkInputInternal(value)
@@ -923,9 +1001,9 @@ class CUI.Input extends CUI.DataFieldInput
 			@updateInputState(state)
 		state
 
-	__checkInputInternal: (value = @__input0.value) ->
-		if @_checkInput
-			@_checkInput(value)
+	__checkInputInternal: (value = @__input.value) ->
+		if @__checkInput
+			@__checkInput(value)
 		else
 			true
 
@@ -940,10 +1018,11 @@ class CUI.Input extends CUI.DataFieldInput
 
 	displayValue: ->
 		super()
-		value = @getValueForDisplay()
-		if value != @__input0.value
+		value = @getValueForDisplay() or ""
+
+		if value != @__input.value
 			# prevent focus loss if value is the same
-			@__input0.value = value
+			@__input.value = value
 		@checkInput()
 		@
 
@@ -972,22 +1051,22 @@ class CUI.Input extends CUI.DataFieldInput
 		if @hasData()
 			super()
 		else
-			@__input0?.value
+			@__input?.value
 
 	enable: ->
 		super()
-		@__input?.prop("disabled", false)
+		@__input?.removeAttribute("disabled")
 
 	disable: ->
 		super()
-		@__input?.prop("disabled", true)
+		@__input?.setAttribute("disabled", true)
 
 	focus: ->
-		@__input0?.focus()
+		@__input?.focus()
 		@
 
 	getCursorBlocks: ->
-		blocks = @__getCursorBlocks?(@__input0.value)
+		blocks = @__getCursorBlocks?(@__input.value)
 		@checkBlocks(blocks)
 
 	findBlock: (blocks, idx, cut) ->
@@ -1011,20 +1090,20 @@ class CUI.Input extends CUI.DataFieldInput
 			return
 
 		if blocks.length == 0
-			CUI.warn "initCursor: 0 cursor blocks"
+			console.warn "initCursor: 0 cursor blocks"
 			@cursor = null
 			return
 
-		# CUI.debug "initCursor", ev.type, ev.which, ev.shiftKey # , blocks
+		# console.debug "initCursor", ev.type, ev.which, ev.shiftKey # , blocks
 
 		# find block which fits the current selection
 		# positions
 		#
-		s = @__input0.selectionStart
-		e = @__input0.selectionEnd
-		len = @__input0.value.length
+		s = @__input.selectionStart
+		e = @__input.selectionEnd
+		len = @__input.value.length
 
-		# CUI.debug "requested: start: ",s, "end: ",e
+		# console.debug "requested: start: ",s, "end: ",e
 
 		@cursor =
 			shift: @cursor?.shift
@@ -1037,13 +1116,13 @@ class CUI.Input extends CUI.DataFieldInput
 		if ev.getType() == "keydown" and ev.keyCode() in [46, 8]
 			@cursor.shift = null
 
-		if isUndef(@cursor.shift)
+		if CUI.util.isUndef(@cursor.shift)
 			@cursor.shift = null
 
 		@cursor.start = @findBlock(blocks, s, "left")
 		@cursor.end = @findBlock(blocks, e, "right")
 
-		# CUI.debug "found cursors", @cursor.start, @cursor.end
+		# console.debug "found cursors", @cursor.start, @cursor.end
 
 		if @cursor.end?.idx < @cursor.start?.idx
 			@cursor.end = @cursor.start
@@ -1071,11 +1150,11 @@ class CUI.Input extends CUI.DataFieldInput
 					@cursor.start = block_right
 				else
 					@cursor.start = block_left
-			# CUI.debug "found block in dist:", dist_left, dist_right
+			# console.debug "found block in dist:", dist_left, dist_right
 
 		range = @getRangeFromCursor()
 
-		# CUI.debug "cursor", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
+		# console.debug "cursor", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
 		if not @cursor.start and not @cursor.end
 			@cursor.start = @cursor.end = blocks[blocks.length-1]
 		else if not @cursor.start
@@ -1083,19 +1162,19 @@ class CUI.Input extends CUI.DataFieldInput
 		else if not @cursor.end
 			@cursor.end = @cursor.start
 
-		# CUI.debug "cursor CLEANED", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
-		# CUI.debug "range", range
+		# console.debug "cursor CLEANED", "start:", @cursor.start?.idx, "end:", @cursor.end?.idx, range
+		# console.debug "range", range
 
 		if range[0] == s and range[1] == e
 			1
-			# CUI.debug "cursor is good"
+			# console.debug "cursor is good"
 		return
 
 	showCursor: (ev) ->
 
 		if @cursor
 			r = @getRangeFromCursor()
-			@__input0.setSelectionRange(r[0], r[1])
+			@__input.setSelectionRange(r[0], r[1])
 		@
 
 	checkSelectionChange: ->
@@ -1119,10 +1198,10 @@ class CUI.Input extends CUI.DataFieldInput
 
 		ev.preventDefault()
 
-		# CUI.debug "moveCursor", ev.type, ev.which
+		# console.debug "moveCursor", ev.type, ev.which
 		blocks = @getCursorBlocks()
 		if blocks == false or blocks.length == 0
-			# CUI.debug "no block found"
+			# console.debug "no block found"
 			@cursor = null
 			return
 
@@ -1136,13 +1215,13 @@ class CUI.Input extends CUI.DataFieldInput
 			@cursor.end = blocks[blocks.length-1]
 			return
 
-		if @lastKeyDownEvent.keyCode() == 46 # DELETE
+		if @lastKeyDownEvent?.keyCode() == 46 # DELETE
 			# dont move cursor, positioning will be down
 			# in keyup
 			@initCursor(@lastKeyDownEvent)
 			return
 
-		if @lastKeyDownEvent.keyCode() == 8 # BACKSPACE
+		if @lastKeyDownEvent?.keyCode() == 8 # BACKSPACE
 			@initCursor(@lastKeyDownEvent)
 			return
 
@@ -1153,7 +1232,7 @@ class CUI.Input extends CUI.DataFieldInput
 		e_idx = @cursor.end.idx
 
 		if not blocks[s_idx] or not blocks[e_idx]
-			CUI.warn "repositioning cursor, not executing cursor move"
+			console.warn "repositioning cursor, not executing cursor move"
 			@initCursor(ev)
 			return
 
@@ -1179,7 +1258,7 @@ class CUI.Input extends CUI.DataFieldInput
 				@cursor.start = @cursor.end
 		else
 			c_idx = @cursor.shift
-			# CUI.debug "SHIFT ME! ", "start:", s_idx, "end:", e_idx, "shift:", c_idx
+			# console.debug "SHIFT ME! ", "start:", s_idx, "end:", e_idx, "shift:", c_idx
 			if left
 				if c_idx >= e_idx
 					if s_idx > 0
@@ -1193,7 +1272,7 @@ class CUI.Input extends CUI.DataFieldInput
 					if e_idx < blocks.length-1
 						@cursor.end = blocks[e_idx+1]
 
-		#CUI.debug "moveCursor new range", @getRangeFromCursor()
+		#console.debug "moveCursor new range", @getRangeFromCursor()
 		@
 
 	destroy: ->
@@ -1201,5 +1280,3 @@ class CUI.Input extends CUI.DataFieldInput
 		super()
 
 	@uniqueId: 0
-
-Input = CUI.Input

@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class OutputContent extends DataFieldInput
+class CUI.OutputContent extends CUI.DataFieldInput
 	initOpts: ->
 		super()
 		@addOpts
@@ -14,23 +14,16 @@ class OutputContent extends DataFieldInput
 				check: String
 			content:
 				check: (v) ->
-					isElement(v) or isElement(v.DOM)
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
 			getValue:
 				check: Function
 
-	# disable: ->
-	# 	@addClass("cui-data-field-disabled")
-
-	# enable: ->
-	# 	@removeClass("cui-data-field-disabled")
-
 	setContent: (content=null) ->
-		CUI.debug "setContent", @DOM, content
 		if not content
-			@DOM.addClass("cui-output-empty")
+			CUI.dom.addClass(@DOM, "cui-output-empty")
 			@empty()
 		else
-			@DOM.removeClass("cui-output-empty")
+			CUI.dom.removeClass(@DOM, "cui-output-empty")
 			@replace(content)
 
 	displayValue: ->

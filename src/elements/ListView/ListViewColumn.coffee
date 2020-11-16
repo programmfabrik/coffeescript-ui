@@ -27,7 +27,7 @@ class CUI.ListViewColumn extends CUI.Element
 				check: "Integer"
 			element:
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			onSetElement:
 				check: Function
 
@@ -43,13 +43,13 @@ class CUI.ListViewColumn extends CUI.Element
 		@col_i
 
 	render: ->
-		if not isUndef(@_element)
+		if not CUI.util.isUndef(@_element)
 			if @_element.DOM
 				@_element.DOM
 			else
 				@_element
-		else if not isEmpty(@_text)
-			new Label(text: @_text).DOM
+		else if not CUI.util.isEmpty(@_text)
+			new CUI.Label(text: @_text).DOM
 		else
 			null
 
@@ -60,7 +60,7 @@ class CUI.ListViewColumn extends CUI.Element
 	setElement: (@__element) ->
 		@addClass(@getClass())
 		if @__attrs
-			CUI.DOM.setAttributeMap(@__element, @__attrs)
+			CUI.dom.setAttributeMap(@__element, @__attrs)
 		@_onSetElement?(@)
 		@__element
 
@@ -74,19 +74,19 @@ class CUI.ListViewColumn extends CUI.Element
 		if not @__element
 			@__cl += " "+cls
 		else if @__element instanceof HTMLElement
-			CUI.DOM.addClass(@__element, cls)
+			CUI.dom.addClass(@__element, cls)
 		@
 
 	removeClass: (cls) ->
 		if @__element instanceof HTMLElement
-			CUI.DOM.removeClass(@__element, cls)
+			CUI.dom.removeClass(@__element, cls)
 		@
 
 	setColspan: (colspan) =>
 		@_colspan = colspan
 
 	getColspan: =>
-		if CUI.isFunction(@_colspan)
+		if CUI.util.isFunction(@_colspan)
 			cp = parseInt(@_colspan())
 		else
 			cp = parseInt(@_colspan)
@@ -96,4 +96,3 @@ class CUI.ListViewColumn extends CUI.Element
 		else
 			return 1
 
-ListViewColumn = CUI.ListViewColumn

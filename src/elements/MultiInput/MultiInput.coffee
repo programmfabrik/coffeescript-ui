@@ -5,10 +5,12 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class MultiInput extends DataFieldInput
-	constructor: (@opts={}) ->
-		super(@opts)
+class CUI.MultiInput extends CUI.DataFieldInput
+	constructor: (opts) ->
+		super(opts)
 		@addClass("cui-multi-input")
+		if @_textarea
+			@addClass("cui-multi-input--textarea")
 
 	initOpts: ->
 		super()
@@ -32,14 +34,19 @@ class MultiInput extends DataFieldInput
 			control:
 				mandatory: true
 				check: (v) ->
-					v instanceof MultiInputControl
+					v instanceof CUI.MultiInputControl
 			content_size:
+				default: false
+				check: Boolean
+			user_selectable:
 				default: false
 				check: Boolean
 
 	readOpts: ->
 		super()
 		@__inputs = null
+		@__userSelectedData = {}
+		@__user_selectable = @_user_selectable
 
 	disable: ->
 		super()
@@ -47,6 +54,7 @@ class MultiInput extends DataFieldInput
 			return
 		for inp in @__inputs
 			inp.disable()
+		return
 
 	enable: ->
 		super()
@@ -54,9 +62,17 @@ class MultiInput extends DataFieldInput
 			return
 		for inp in @__inputs
 			inp.enable()
+		return
+
+	remove: ->
+		if @__inputs
+			for input in @__inputs
+				input.destroy()
+			delete @__inputs
+		return super()
 
 	initValue: ->
-		if isNull(v = @__data[@_name])
+		if CUI.util.isNull(v = @__data[@_name])
 			v = @__data[@_name] = {}
 
 		for key in @_control.getKeys()
@@ -67,12 +83,13 @@ class MultiInput extends DataFieldInput
 	setData: (data) ->
 		super(data)
 		@setDataOnInputs()
+		return
 
 	setDataOnInputs: ->
 		if not @__inputs
 			return
 
-		input_data = copyObject(@getValue(), true)
+		input_data = CUI.util.copyObject(@getValue(), true)
 		for input in @__inputs
 			input.setData(input_data)
 			if @_undo_support
@@ -82,32 +99,51 @@ class MultiInput extends DataFieldInput
 
 			input.setCheckChangedValue(v)
 
+		@__setUserSelectedData()
+		return
+
+	__setUserSelectedData: ->
+		if not @__inputs
+			return
+
+		for input in @__inputs
+			if @_undo_support
+				v = @getInitValue()[input.getName()]
+			else
+				v = @getValue()[input.getName()]
+			# All keys are selected when user_selectable option is false, otherwise the only ones with values are selected.
+			@__userSelectedData[input.getName()] = not @__user_selectable or (@__user_selectable and not CUI.util.isEmpty(v))
+
+		if not Object.values(@__userSelectedData).some((enabled) -> enabled)
+			@__userSelectedData[@_control.getKeys()[0].name] = true
+
 	setInputVisibility: ->
 		# the "append" re-orders the input, if needed
-
 		names = (key.name for key in @_control.getKeys())
 		# sort input by key
 		@__inputs.sort (a, b) =>
-			compareIndex(
+			CUI.util.compareIndex(
 				names.indexOf(a.getOpt("name"))
 				names.indexOf(b.getOpt("name"))
 			)
 
 		ok = false
 		for inp in @__inputs
-			@__multiInputDiv.append(inp.DOM)
-			if @_control.isEnabled(inp.getName())
+			CUI.dom.append(@__multiInputDiv, inp.DOM)
+			if (@_control.isEnabled(inp.getName()) and not @__user_selectable) or (@__userSelectedData[inp.getName()] and @__user_selectable)
 				inp.show()
 				ok = true
 			else
 				inp.hide()
 
 		if not ok
-			CUI.warn("MulitInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
+			console.warn("MultiInput.setInputVisibility: No input visible.", input: @__inputs, control: @_control)
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "content-resize"
-			node: inp.DOM # last one
+			node: @DOM
+
+		return
 
 	getUniqueIdForLabel: ->
 		@__initInputs()
@@ -129,29 +165,34 @@ class MultiInput extends DataFieldInput
 			input.displayValue()
 		@
 
+	updateData: (data) ->
+		super(data)
+		value = @getValue()
+		for input in @__inputs
+			input.updateData(value)
+		@displayValue()
+		@__setUserSelectedData()
+		@setInputVisibility()
+		return @
+
 	__initInputs: ->
 		if @__inputs
 			return
 
-		@__multiInputDiv = $div("cui-multi-input-container")
+		@__multiInputDiv = CUI.dom.div("cui-multi-input-container")
 
-		Events.listen
+		CUI.Events.listen
 			type: "multi-input-control-update"
 			node: @__multiInputDiv
-			call: (ev) =>
-				# CUI.debug ev.getType(), @__multiInputDiv[0], @_control.getKeys()
+			call: (_, info) =>
+				if not CUI.util.isUndef(info.user_selectable)
+					@__user_selectable = info.user_selectable
+				@__setUserSelectedData()
 				@setInputVisibility()
-
-		# DOM.registerEvent(multiInputDiv, "easydbui-multi-input-control-update")
-		# multiInputDiv.on "easydbui-multi-input-control-update", (ev)
 
 		@__inputs = []
 
 		for key, idx in @_control.getKeys()
-			assert(CUI.isPlainObject(key), "new #{@__cls}", "opts.keys[#{idx}] needs to be PlainObject.", opts: @opts)
-			assert(isString(key.name), "new #{@__cls}", "opts.keys[#{idx}].name needs to be String.", opts: @opts)
-			assert(isString(key.tag), "new #{@__cls}", "opts.keys[#{idx}].tag needs to be String.", opts: @opts)
-
 			input_opts =
 				class: "cui-multi-input-input"
 				textarea: @_textarea
@@ -164,34 +205,71 @@ class MultiInput extends DataFieldInput
 				undo_support: false
 				content_size: @_content_size
 				placeholder: @_placeholder?[key.name]
+				onDataInit: (field, data) =>
+					if @__user_selectable and CUI.util.isEmpty(data[field.getName()])
+						field.hide()
+					return
 
-			input = new MultiInputInput(input_opts)
+			input = new CUI.MultiInputInput(input_opts)
 			input.render()
 
 			do (input, key) =>
-				btn = new CUI.defaults.class.Button
+				button = new CUI.defaults.class.Button
 					text: key.tag
 					tabindex: null
-					disabled: !@_control.hasUserControl()
-					onClick: (ev, btn) =>
-						@_control.showUserControl(ev, btn, @__multiInputDiv)
+					disabled: not @_control.hasUserControl() and not @__user_selectable
 					role: "multi-input-tag"
 					class: "cui-multi-input-tag-button"
+					tooltip: key.tooltip
+					onClick: (ev) =>
+						if @__user_selectable
+							form.reload()
+							userSelectablePopover.show()
+						else
+							@_control.showUserControl(ev, button, @__multiInputDiv)
 
-				input.append(btn, "right")
+				form = new CUI.Form
+					data: @__userSelectedData
+					fields: =>
+						fields = @_control.getKeys().map((key) =>
+							type: CUI.Checkbox
+							name: key.name
+							text: key.tooltip.text
+							onRender: (field) =>
+								if CUI.util.isEmpty(@getValue()[field.getName()])
+									CUI.dom.removeClass(field, "ez-design-bold")
+								else
+									CUI.dom.addClass(field, "ez-design-bold")
+							onDataChanged: (data, field) =>
+								if Object.values(@__userSelectedData).some((val) -> val)
+									return
+								data[field.getName()] = true
+								field.reload()
+						)
+						return fields
+					onDataChanged: =>
+						@setInputVisibility()
+				form.start()
 
-				Events.listen
+				userSelectablePopover = new CUI.Popover
+					pane:
+						padded: true
+						content: form
+					element: button
+
+				input.append(button, "right")
+
+				CUI.Events.listen
 					type: "data-changed"
 					node: input
 					call: (ev) =>
-						values = copyObject(@getValue())
+						values = CUI.util.copyObject(@getValue())
 						values[key.name] = input.getValue()
 						ev.stopImmediatePropagation()
 						@storeValue(values)
 
 			@__inputs.push(input)
 		return
-
 
 	render: ->
 		super()

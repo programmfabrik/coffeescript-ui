@@ -22,6 +22,7 @@ class CUI.SimplePane extends CUI.Pane
 			"header_center"
 			"header_right"
 			"footer_left"
+			"footer_center"
 			"footer_right"
 		]
 			value = @["_#{k}"]
@@ -31,7 +32,7 @@ class CUI.SimplePane extends CUI.Pane
 			@append(value, k)
 
 		if @_title
-			@append(new Label(text: @_title), "header_left")
+			@append(new CUI.Label(text: @_title), "header_left")
 
 		if not CUI.__ng__
 			@addClass("cui-simple-pane")
@@ -44,6 +45,7 @@ class CUI.SimplePane extends CUI.Pane
 			header_center: {}
 			header_left: {}
 			footer_left: {}
+			footer_center: {}
 			footer_right: {}
 			content: {}
 			force_header:
@@ -63,21 +65,21 @@ class CUI.SimplePane extends CUI.Pane
 	readOpts: ->
 		# Skip readOpts from Pane as it sets defaults in top and bottom
 		# which is not allowed in our initOpts
-		VerticalLayout::readOpts.call(@)
+		CUI.VerticalLayout::readOpts.call(@)
 
 		if @_title
-			assert(not @_header_left, "new SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
+			CUI.util.assert(not @_header_left, "new CUI.SimplePane", "opts.header_left conflicts with opts.title", opts: @opts)
 
 		if @forceHeader() or
-			not (isUndef(@_header_left) and isUndef(@_header_center) and isUndef(@_header_right)) or
+			not (CUI.util.isUndef(@_header_left) and CUI.util.isUndef(@_header_center) and CUI.util.isUndef(@_header_right)) or
 			@_title
-				@__pane_header = new PaneHeader()
+				@__pane_header = new CUI.PaneHeader()
 
 				@_top =
 					content: @__pane_header
 
-		if @forceFooter() or not (isUndef(@_footer_left) and isUndef(@_footer_right))
-			@__pane_footer = new PaneFooter()
+		if @forceFooter() or not (CUI.util.isUndef(@_footer_left) and CUI.util.isUndef(@_footer_center) and CUI.util.isUndef(@_footer_right))
+			@__pane_footer = new CUI.PaneFooter()
 
 			@_bottom =
 				content: @__pane_footer
@@ -113,10 +115,10 @@ class CUI.SimplePane extends CUI.Pane
 			[ @getLayout(), "center" ]
 		else
 			m = key.match(/^(.*?)_(.*)$/)
-			assert(m?.length==3, "SimplePane.getPaneAndKey", "key #{key} not matched.", matched: m)
+			CUI.util.assert(m?.length==3, "SimplePane.getPaneAndKey", "key #{key} not matched.", matched: m)
 			pn = "__pane_#{m?[1]}"
 			pane = @[pn]
-			assert(pane, "SimplePane.getPaneAndKey", "pane #{pn} not found.")
+			CUI.util.assert(pane, "SimplePane.getPaneAndKey", "pane #{pn} not found.")
 
 			[ pane, m[2] ]
 
@@ -135,4 +137,3 @@ class CUI.SimplePane extends CUI.Pane
 		pane.replace(content, _key)
 		@
 
-SimplePane = CUI.SimplePane

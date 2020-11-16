@@ -6,18 +6,18 @@
 ###
 
 # this class initializes a flex handle
-class FlexHandle extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+class CUI.FlexHandle extends CUI.Element
+	constructor: (opts) ->
+		super(opts)
 
 		@__pane = null
 		children = @_element.parentNode.children
 		for c, idx in children
-			if CUI.DOM.is(c, @_pane)
+			if CUI.dom.is(c, @_pane)
 				@__pane = c
 				@__pane_idx = idx
 
-			if CUI.DOM.is(c, @_element)
+			if CUI.dom.is(c, @_element)
 				@__element_idx = idx
 
 		@__adjacent_pane = null
@@ -34,11 +34,11 @@ class FlexHandle extends CUI.Element
 		@__stretched = null
 		@__size = null
 
-		assert(@__pane, "new #{@__cls}", "pane \"#{@_pane}\" not found in parent element of cui-flex-handle element.", opts: @opts, children: children)
+		CUI.util.assert(@__pane, "new #{@__cls}", "pane \"#{@_pane}\" not found in parent element of cui-flex-handle element.", opts: @opts, children: children)
 
-		CUI.DOM.data(@__pane, "flexHandle", @)
+		CUI.dom.data(@__pane, "flexHandle", @)
 
-		CUI.DOM.setAttribute(@__pane, "flex-handled-pane", @_name)
+		CUI.dom.setAttribute(@__pane, "flex-handled-pane", @_name)
 
 	readOpts: ->
 		super()
@@ -47,7 +47,7 @@ class FlexHandle extends CUI.Element
 		else if @_direction in ["vertical", "column"]
 			@__direction = "column"
 
-		assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element[0])
+		CUI.util.assert(@__direction in ["row", "column"], "new #{@__cls}", "opts.direction needs to be set", opts: @opts, element: @_element)
 
 		if @_label
 			@addLabel(@_label)
@@ -60,7 +60,7 @@ class FlexHandle extends CUI.Element
 			element:
 				mandatory: true
 				check: (v) ->
-					isElement(v)
+					CUI.util.isElement(v)
 			pane:
 				mandatory: true
 				check: String
@@ -73,9 +73,13 @@ class FlexHandle extends CUI.Element
 				mandatory: true
 				default: false
 				check: Boolean
+			open_button_icon:
+				mandatory: false
+				check: (v) ->
+					CUI.util.isString(v) or v instanceof CUI.Icon
 			label:
 				check: (v) ->
-					v instanceof Label or CUI.isPlainObject(v)
+					v instanceof CUI.Label or CUI.util.isPlainObject(v)
 			hidden:
 				check: Boolean
 			direction:
@@ -87,12 +91,17 @@ class FlexHandle extends CUI.Element
 				check: String
 			class:
 				check: String
+			onResize:
+				check: Function
+			maxValue:
+				check: (v) ->
+					return v > 0
 
 	init: ->
 		if @isDestroyed()
 			return
 
-		DOM.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
+		CUI.dom.addClass(@_element, "cui-flex-handle cui-flex-handle-#{@__direction} cui-flex-handle-#{@_name}")
 
 		if @__closed
 			@close()
@@ -101,7 +110,7 @@ class FlexHandle extends CUI.Element
 			@hide()
 
 		if @_class
-			CUI.DOM.addClass(@_element, @_class)
+			CUI.dom.addClass(@_element, @_class)
 
 		if @__direction == "row"
 			axis = "x"
@@ -111,38 +120,39 @@ class FlexHandle extends CUI.Element
 			@__css_value = "Height"
 
 
-		Events.listen
-			type: "dblclick"
-			node: @_element
-			call: (ev) =>
-				if @__size == null # isEmpty(@__pane[0].style[@__css_value])
+		if not @_open_button_icon
+			CUI.Events.listen
+				type: "dblclick"
+				node: @_element
+				call: (ev) =>
+					if @__size == null # CUI.util.isEmpty(@__pane[0].style[@__css_value])
+						if @isClosed()
+							@open()
+						else if @_closable
+							@close()
+					else
+						@resetSize()
+
+					@storeState()
+					return
+
+			CUI.Events.listen
+				type: ["click"]
+				node: @_element
+				call: (ev) =>
+					if not @__label
+						return
 					if @isClosed()
 						@open()
-					else if @_closable
-						@close()
-				else
-					@resetSize()
-
-				@storeState()
-				return
-
-		Events.listen
-			type: ["click"]
-			node: @_element
-			call: (ev) =>
-				if not @__label
+						@storeState()
 					return
-				if @isClosed()
-					@open()
-					@storeState()
-				return
+		else
+			@_element.classList.add("cui-flex-handle-with-button-icon")
 
-
-		# CUI.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
-
+		# console.debug @_name, cursor, axis, css_value, @__pane_idx, @__element_idx
 		drag_start_size = null
 
-		new Draggable
+		new CUI.Draggable
 			element: @_element
 			axis: axis
 			support_touch: true
@@ -151,7 +161,6 @@ class FlexHandle extends CUI.Element
 					return false
 
 			# helper_remove_always: true
-
 			dragstart: (ev, gd) =>
 				if @__pane_idx < @__element_idx
 					flip = 1
@@ -159,7 +168,7 @@ class FlexHandle extends CUI.Element
 					flip = -1
 
 				get_data = (pane) =>
-					dim = DOM.getDimensions(pane)
+					dim = CUI.dom.getDimensions(pane)
 					min = dim["min"+@__css_value]
 					if min < 10
 						min = 10
@@ -174,6 +183,9 @@ class FlexHandle extends CUI.Element
 					adj_data = get_data(@__adjacent_pane)
 					max_diff = adj_data.value - adj_data.min # this is the maximum change for the adj value
 					data.max = Math.max(0, data.value+max_diff)
+
+				if @_maxValue
+					data.max = @_maxValue
 
 				drag_start_size = @__pane.style[@__css_value.toLowerCase()]
 
@@ -193,26 +205,9 @@ class FlexHandle extends CUI.Element
 				else
 					return "ns-resize"
 
-			# helper_set_pos: (gd, helper_pos) ->
-			# 	data = gd.__pane_data
-			# 	if data.axis == "x"
-			# 		key = "left"
-			# 	else
-			# 		key = "top"
-
-			# 	new_value = data.value + gd.dragDiff[data.axis] * data.flip
-			# 	if new_value < data.min
-			# 		new_value = data.min
-			# 	else if new_value > data.max
-			# 		new_value = data.max
-
-			# 	helper_pos[key] = (new_value - data.value) * data.flip + helper_pos.start[key]
-
-			# 	return
-
 			dragend: (ev, gd) =>
 				dragging(gd)
-				@__size = DOM.getDimension(@__pane, "contentBox"+@__css_value)
+				@__size = CUI.dom.getDimension(@__pane, "contentBox"+@__css_value)
 				@storeState()
 
 			dragstop: =>
@@ -239,30 +234,32 @@ class FlexHandle extends CUI.Element
 
 		if @_manage_state
 			if not @_state_name
-				console.error "new FlexHandle()", "opts.state_name missing, state will not be stored.", @opts
+				console.warn("new CUI.FlexHandle()", "opts.state_name missing, state will not be stored.", @opts)
 
 			@__state_name = @_state_name
 			@__setState()
 
 		@
 
+	getElement: ->
+		@_element
+
 	__setSize: (size) ->
-		if isNull(size)
-			DOM.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
+		if CUI.util.isNull(size)
+			CUI.dom.setStyleOne(@__pane, @__css_value.toLowerCase(), "")
 
 			if @__isAlive()
-				if DOM.getDimension(@__pane, "contentBox"+@__css_value) == 0
-					CUI.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane[0])
-					DOM.setDimension(@__pane, "contentBox"+@__css_value, 100)
+				if CUI.dom.getDimension(@__pane, "contentBox"+@__css_value) == 0
+					console.error("FlexHandle.__setSize: Pane size is 0 if unset, this needs to be fixed in CSS.", @__pane)
+					CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, 100)
 
 			@__pane.classList.remove("cui-is-manually-sized")
 			@_element.classList.remove("cui-is-manually-sized")
 			@__size = null
 		else
-			# console.debug "DOM set dimension", size, @__css_value, @__pane
 			@__pane.classList.add("cui-is-manually-sized")
 			@_element.classList.add("cui-is-manually-sized")
-			DOM.setDimension(@__pane, "contentBox"+@__css_value, size)
+			CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, size)
 			@__size = size
 
 		@__resize()
@@ -271,35 +268,32 @@ class FlexHandle extends CUI.Element
 		@__setSize(null)
 		@
 
-	__getSize: ->
+	getSize: ->
 		@__size
 
 	__isAlive: ->
-		if @isDestroyed() or not CUI.DOM.isInDOM(@_element)
+		if @isDestroyed() or not CUI.dom.isInDOM(@_element)
 			false
 		else
 			true
 
 	__resize: ->
-		# CUI.debug "FlexHandle.__resize", @__uniqueId, @isDestroyed(), @__isInDOM, @__isAlive()
+		# console.debug "FlexHandle.__resize", @__uniqueId, @isDestroyed(), @__isInDOM, @__isAlive()
 
 		if not @__isAlive()
 			return
 
-		# CUI.info "FlexHandle[#{@getName()}].resize."
-		Events.trigger
+		@_onResize?(@, @getSize())
+
+		# console.info "FlexHandle[#{@getName()}].resize."
+		CUI.Events.trigger
 			type: "viewport-resize"
 			info:
 				FlexHandle: true
 
-		# Events.trigger
-		# 	type: "viewport-resize"
-		# 	node: @_element.parent()
-
-
 	__getState: ->
 		value = CUI.getLocalStorage(@__state_name)
-		if not isNull(value)
+		if not CUI.util.isNull(value)
 			state = JSON.parse(value)
 		else
 			state = {}
@@ -311,16 +305,16 @@ class FlexHandle extends CUI.Element
 
 		state = @__getState()
 
-		if not isUndef(state.closed) and @_closable
+		if not CUI.util.isUndef(state.closed) and @_closable
 			if state.closed
 				@close()
 			else
 				@open()
 
-		if not isUndef(state.size)
+		if not CUI.util.isUndef(state.size)
 			@__setSize(state.size)
 
-		# CUI.debug "setState", state
+		# console.debug "setState", state
 		@
 
 
@@ -330,7 +324,7 @@ class FlexHandle extends CUI.Element
 
 		state =
 			closed: @isClosed()
-			size: @__getSize()
+			size: @getSize()
 
 		value = JSON.stringify(state)
 
@@ -353,9 +347,9 @@ class FlexHandle extends CUI.Element
 
 		switch direction
 			when "west", "north"
-				els = DOM.findPreviousSiblings(pane)
+				els = CUI.dom.findPreviousSiblings(pane)
 			when "east", "south"
-				els = DOM.findNextSiblings(pane)
+				els = CUI.dom.findNextSiblings(pane)
 
 		switch direction
 			when "west", "east"
@@ -368,16 +362,15 @@ class FlexHandle extends CUI.Element
 
 			# first we set all the value to explicit "px"
 			# so that the transition works
-			#
 			for el in els
 				el.classList.add("cui-flex-handle-hide-for-stretch")
 				el.classList.add("cui-flex-handle-hide-for-stretch-#{direction}")
 
-			@__pane[set]("")
+			CUI.dom[set](@__pane, "")
 
 			pane.classList.add("cui-flex-handle-stretched")
 			pane.classList.add("cui-flex-handle-stretched-#{direction}")
-			Events.trigger
+			CUI.Events.trigger
 				node: pane
 				type: "flex-stretch-start"
 
@@ -393,7 +386,7 @@ class FlexHandle extends CUI.Element
 
 			pane.classList.remove("cui-flex-handle-stretched")
 			pane.classList.remove("cui-flex-handle-stretched-#{direction}")
-			Events.trigger
+			CUI.Events.trigger
 				node: pane
 				type: "flex-stretch-end"
 			@__resize()
@@ -413,15 +406,26 @@ class FlexHandle extends CUI.Element
 
 	addLabel: (opts={}) ->
 
-		if opts instanceof Label
+		if opts instanceof CUI.Label
 			@__label = opts
 		else
 			if @__direction == "row"
 				opts.rotate_90 = true
 
 			@__label = new CUI.defaults.class.Label(opts)
-		DOM.append(@_element, @__label.DOM)
-		DOM.addClass(@_element, "cui-flex-handle-has-label")
+
+		if @_open_button_icon
+			button = new CUI.Button
+				icon: @_open_button_icon
+				onClick: =>
+					if @isClosed()
+						@open()
+						@storeState()
+					return
+			CUI.dom.append(@_element, button)
+
+		CUI.dom.append(@_element, @__label.DOM)
+		CUI.dom.addClass(@_element, "cui-flex-handle-has-label")
 
 	getName: ->
 		@_name
@@ -449,22 +453,25 @@ class FlexHandle extends CUI.Element
 		if @isClosed()
 			return @
 
-		Events.trigger
+		CUI.Events.trigger
 			node: @getPane()
 			type: "flex-close"
 
 		@_element.classList.add("cui-flex-handle-closed")
-		@__pane.css("display", "none")
+		CUI.dom.setStyleOne(@__pane, "display", "none")
 		@__resize()
 		@
 
 	open: ->
-		# CUI.debug "FlexHandle.show", @__uniqueId, @isOpen()
 		if @isOpen()
 			return @
 
+		CUI.Events.trigger
+			node: @getPane()
+			type: "flex-open"
+
 		@_element.classList.remove("cui-flex-handle-closed")
-		@__pane.css("display", "")
+		CUI.dom.setStyleOne(@__pane, "display", "")
 		delete(@__closed)
 		@__resize()
 		@
@@ -477,7 +484,6 @@ class FlexHandle extends CUI.Element
 		@
 
 	show: ->
-		# CUI.debug "FlexHandle.show", @__uniqueId, @isShown()
 		if @isShown()
 			return @
 		@_element.classList.remove("cui-flex-handle-hidden")
@@ -486,9 +492,9 @@ class FlexHandle extends CUI.Element
 		@
 
 	destroy: ->
-		DOM.removeData(@__pane, "flexHandle")
-		DOM.removeAttribute(@__pane, "flex-handled-pane")
-		DOM.remove(@_element)
+		CUI.dom.removeData(@__pane, "flexHandle")
+		CUI.dom.removeAttribute(@__pane, "flex-handled-pane")
+		CUI.dom.remove(@_element)
 		super()
 
 
@@ -499,7 +505,7 @@ class FlexHandle extends CUI.Element
 			text:
 				check: String
 			flexHandle:
-				check: FlexHandle
+				check: CUI.FlexHandle
 			button:
 				default: {}
 
@@ -522,9 +528,9 @@ class FlexHandle extends CUI.Element
 				if opts.flexHandle
 					fh = opts.flexHandle
 				else
-					fh_els = btn.DOM.closest("[flex-handled-pane]")
-					assert(fh_els.length == 1, "FlexHandle.getStretchButton", "FlexHandle not or more than one found, name: #{opts.name}.", opts: opts, flexHandles: fh_els)
-					fh = DOM.data(fh_els[0], "flexHandle")
+					fh_els = CUI.dom.closest(btn.DOM, "[flex-handled-pane]")
+					CUI.util.assert(fh_els, "FlexHandle.getStretchButton", "FlexHandle not or more than one found, name: #{opts.name}.", opts: opts, flexHandles: fh_els)
+					fh = CUI.dom.data(fh_els, "flexHandle")
 
 				if fh.isStretched()
 					fh.unstretch()
@@ -537,6 +543,5 @@ class FlexHandle extends CUI.Element
 
 
 CUI.Events.registerEvent
-	type: ["flex-stretch-start", "flex-stretch-end", "flex-close"]
+	type: ["flex-stretch-start", "flex-stretch-end", "flex-close", "flex-open"]
 	sink: true
-

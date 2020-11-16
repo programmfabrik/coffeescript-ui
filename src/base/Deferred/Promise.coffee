@@ -8,7 +8,7 @@
 
 class CUI.Promise
 	constructor: (@__deferred) ->
-		assert(@__deferred instanceof CUI.Deferred,"new Promise","parameter needs to be instanceof CUI.Deferred", parameter: @__deferred)
+		CUI.util.assert(@__deferred instanceof CUI.Deferred,"new Promise","parameter needs to be instanceof CUI.Deferred", parameter: @__deferred)
 
 	done: ->
 		@__deferred.done.apply(@__deferred, arguments)
@@ -31,3 +31,4 @@ class CUI.Promise
 
 	getUniqueId: ->
 		@__deferred.getUniqueId()
+

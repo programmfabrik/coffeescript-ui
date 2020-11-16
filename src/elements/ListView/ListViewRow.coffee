@@ -46,20 +46,20 @@ class CUI.ListViewRow extends CUI.Element
 		@listView = null
 
 	addColumn: (column) ->
-		assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof CUI.ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.push(column)
 		column.setRow(@)
 		@
 
 	setColumn: (idx, column) ->
-		assert(column instanceof ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof CUI.ListViewColumn,"ListViewRow.addColumn", "column must be instance of ListViewColumn", column: column)
 		@columns[idx] = column
 		column.setRow(@)
 		@
 
 
 	prependColumn: (column) ->
-		assert(column instanceof ListViewColumn,"ListViewRow.prependColumn", "column must be instance of ListViewColumn", column: column)
+		CUI.util.assert(column instanceof CUI.ListViewColumn,"ListViewRow.prependColumn", "column must be instance of ListViewColumn", column: column)
 		@columns.splice(0,0,column)
 		column.setRow(@)
 		@
@@ -87,7 +87,7 @@ class CUI.ListViewRow extends CUI.Element
 	moveRow: null
 
 	removeColumns: ->
-		# CUI.debug "this", @, @columns
+		# console.debug "this", @, @columns
 		for c in @columns
 			c.setRow()
 		@columns.splice(0)
@@ -99,7 +99,7 @@ class CUI.ListViewRow extends CUI.Element
 		@
 
 	getDOMNodes: ->
-		CUI.jQueryCompat(@listView?.getRow(@row_i))
+		@listView?.getRow(@row_i)
 
 	getRowIdx: ->
 		@row_i
@@ -151,32 +151,33 @@ class CUI.ListViewRow extends CUI.Element
 
 	select: (ev) ->
 		if @selected
-			CUI.debug "already selected", @
+			console.debug "already selected", @
 			return
 		if not @isSelectable()
-			CUI.debug "not selectable", @
+			console.debug "not selectable", @
 			return
 		@selected = true
 
 		if not @listView
 			return
 
-		@listView.rowAddClass(@row_i, ListViewRow.defaults.selected_class)
+		@listView.rowAddClass(@row_i, CUI.ListViewRow.defaults.selected_class)
 
 		@listView._onSelect? ev,
 			originalEvent: ev
 			listView: @listView
 			row: @
 
-		@
+		CUI.resolvedPromise()
 
 	deselect: (ev) ->
 		if not @listView.hasSelectableRows()
-			return
-		if not @selected
-			return
+			return CUI.rejectedPromise()
 
-		@listView?.rowRemoveClass(@row_i, ListViewRow.defaults.selected_class)
+		if not @selected
+			return CUI.rejectedPromise()
+
+		@listView?.rowRemoveClass(@row_i, CUI.ListViewRow.defaults.selected_class)
 		@selected = false
 
 		@listView?._onDeselect? ev,
@@ -184,7 +185,7 @@ class CUI.ListViewRow extends CUI.Element
 			listView: @listView
 			row: @
 
-		@
+		CUI.resolvedPromise()
 
 	isSelected: ->
 		!!@selected
@@ -194,6 +195,3 @@ class CUI.ListViewRow extends CUI.Element
 
 	@defaults:
 		selected_class: "cui-selected"
-
-
-ListViewRow = CUI.ListViewRow

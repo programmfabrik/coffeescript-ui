@@ -4,20 +4,99 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadTemplateText(require('./MultiOutput.html'));
 
-class MultiOutput extends Output
+class CUI.MultiOutput extends CUI.DataField
 	initOpts: ->
 		super()
 		@addOpts
 			control:
 				mandatory: true
-				check: MultiInputControl
+				check: CUI.MultiInputControl
+			showOnlyPreferredKey:
+				check: Boolean
+				default: true
+			markdown:
+				mandatory: true
+				default: false
+				check: Boolean
+			markdown_opts:
+				check: "PlainObject"
+			text_node_func:
+				check: Function
 
-
-	displayValue: ->
+	readOpts: ->
 		super()
-		key = @_control.getPreferredKey()
-		assert(key, "Output.displayValue", "MultiInputControl: no preferred key set.", control: @_control)
-		@setText(@getValue()[key.name])
-		@
+		@__keyTemplates = {}
 
+	render: ->
+		super()
+		if @_showOnlyPreferredKey
+			key = @_control.getPreferredKey()
+			CUI.util.assert(key, "Output.displayValue", "MultiInputControl: no preferred key set.", control: @_control)
+			label = @__getLabel(key.name)
+			@replace(label)
+		else
+			for key, idx in @_control.getKeys()
+				value = @getValue()[key.name]
+				if CUI.util.isEmpty(value)
+					continue
+
+				template = @__buildTemplateForKey(key)
+				@__keyTemplates[key.name] = template
+
+				@append(template)
+
+			@__updateListener = CUI.Events.listen
+				type: "multi-input-control-update"
+				node: @DOM
+				call: =>
+					@__hideShowElements()
+			@__hideShowElements()
+
+		return @
+
+	__getLabel: (name) ->
+		return new CUI.Label
+			multiline: true
+			text: @getValue()[name]
+			text_node_func: @_text_node_func
+			markdown: @_markdown
+			markdown_opts: @_markdown_opts
+
+	__buildTemplateForKey: (key) ->
+		label =  @__getLabel(key.name)
+
+		template = new CUI.Template
+			name: "data-field-multi-output"
+			map:
+				center: true
+				aside: true
+
+		template.append(label, "center")
+
+		button = new CUI.defaults.class.Button
+			text: key.tag
+			tabindex: null
+			disabled: !@_control.hasUserControl()
+			role: "multi-output-tag"
+			tooltip: key.tooltip
+			appearance: "flat"
+			onClick: (ev) =>
+				@_control.showUserControl(ev, button)
+
+		template.append(button, "aside")
+		return template
+
+	__hideShowElements: ->
+		for key, template of @__keyTemplates
+			if @_control.isEnabled(key)
+				template.show()
+			else
+				template.hide()
+
+	destroy: ->
+		@__updateListener.destroy()
+		delete @__keyTemplates
+
+		super()

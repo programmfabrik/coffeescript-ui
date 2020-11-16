@@ -1,0 +1,1 @@
+window.CUI = require('../src/base/CUI.coffee');

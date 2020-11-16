@@ -6,9 +6,6 @@
 ###
 
 class CUI.DataTable extends CUI.DataFieldInput
-	constructor: (@opts) ->
-		super(@opts)
-		@addClass("cui-padding-reset")
 
 	@defaults:
 		plus_button_tooltip: null
@@ -16,11 +13,14 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 	initOpts: ->
 		super()
+
+		# VALUE can have __class in each row, this sets a class on the tree node
+
 		@addOpts
 			fields:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v) or CUI.isFunction(v)
+					CUI.util.isArray(v) or CUI.util.isFunction(v)
 			new_rows:
 				default: "edit"
 				check: ["edit", "append", "remove_only", "none"]
@@ -32,27 +32,45 @@ class CUI.DataTable extends CUI.DataFieldInput
 			rowMove:
 				default: false
 				check: Boolean
+			# used in DataTableNode
+			onBeforeRowRemove:
+				check: Function
+			# used in DataTableNode
 			onRowRemove:
+				check: Function
+			onRowSelect:
+				check: Function
+			onRowDeselect:
 				check: Function
 			onNodeAdd:
 				check: Function
-			maximize:
-				check: Boolean
-			maximize_horizontal:
-				check: Boolean
-				default: false
-			maximize_vertical:
-				check: Boolean
-				default: false
 			footer_right:
 				check: (v) ->
-					isContent(v)
+					CUI.util.isContent(v)
 			# own buttons
 			buttons:
 				mandatory: true
 				default: []
 				check: (v) ->
-					CUI.isArray(v)
+					CUI.util.isArray(v)
+			chunk_size:
+				default: 0
+				mandatory: true
+				check: (v) ->
+					v >= 0
+			padded:
+				check: Boolean
+				default: false
+			onLoadPage:
+				check: Function
+
+	readOpts: ->
+		super()
+		@__navi_prev = null
+		@__navi_next = null
+		@__offset = 0
+		CUI.util.assert(not (@_chunk_size and @_rowMove), "new CUI.DataTable", "opts.chunk_size and opts.rowMove are mutually exclusive.", opts: @opts)
+		@
 
 	getFieldList: ->
 		@__fieldList
@@ -69,11 +87,25 @@ class CUI.DataTable extends CUI.DataFieldInput
 		super()
 		@listView?.debug()
 
+	getFieldOpts: ->
+		field_opts = []
+		for _field in @getArrayFromOpt("fields")
+			field = CUI.util.copyObject(_field, true)
+			if not field.form
+				field.form = {}
+
+			if not CUI.util.isString(field.form.label)
+				field.form.label = field.name
+
+			field_opts.push(field)
+
+		field_opts
+
 	init: ->
 		@__fieldList = []
-		for field in @getArrayFromOpt("fields")
-			_field = DataField.new(field)
-			@__fieldList.push(_field)
+		for field in @getFieldOpts()
+			@__fieldList.push(CUI.DataField.new(field))
+		@
 
 	disable: ->
 		super()
@@ -90,66 +122,30 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 	addRow: (data={}) ->
 		@rows.push(data)
-		# CUI.debug "creating new data node"
-		new_node = new DataTableNode
+		# console.debug "creating new data node"
+		new_node = new CUI.DataTableNode
 			dataTable: @
 			data: data
 			dataRowIdx: @rows.length-1
 			rows: @rows
 
 		@_onNodeAdd?(node)
-		@listView.appendRow(new_node)
-		# CUI.debug "data-changed on DataTable PLUS storing values:", dump(@rows)
-		@storeValue(copyObject(@rows, true))
+		@storeValue(CUI.util.copyObject(@rows, true))
+		if @_chunk_size > 0
+			@__offset = Math.floor((@rows.length-1) / @_chunk_size) * @_chunk_size
+			@displayValue()
+		else
+			@listView.appendRow(new_node)
+		# console.debug "data-changed on CUI.DataTable PLUS storing values:", CUI.util.dump(@rows)
 		new_node
 
-	render: ->
-		super()
-		cols = []
-		colClasses = []
-		maxis = []
+	updateButtons: ->
+		if @listView.getSelectedRows().length == 0
+			@minusButton.disable()
+		else
+			@minusButton.enable()
 
-		@headerRow = new ListViewHeaderRow()
-
-		for f, idx in @__fieldList
-			if f.getOpt("form")?.column == "maximize" or
-				f instanceof DataTable
-					maxis.push(idx)
-
-		if maxis.length == 0
-			maxis.push(0)
-
-		for f, idx in @__fieldList
-			if idxInArray(idx, maxis) > -1
-				cols.push("maximize")
-			else if f.getOpt("form")?.column
-				cols.push(f._form.column)
-			else if f.isResizable()
-				cols.push("auto")
-			else
-				cols.push("fixed")
-
-			name = f.getName()
-			label = f._form?.label
-			if isNull(label)
-				label = name
-
-			cls = []
-			if name
-				cls.push("cui-data-table-column-field-name-"+name)
-
-			cls.push("cui-data-table-column-field-type-"+toDash(f.getElementClass()))
-			if f._form?.rotate_90
-				cls.push("cui-lv-td-rotate-90")
-
-			colClasses.push(cls)
-
-			@headerRow.addColumn new ListViewHeaderColumn
-				rotate_90: f._form?.rotate_90
-				label:
-					text: label
-					multiline: true
-
+	getFooter: ->
 		buttons = @_buttons.slice(0)
 		if @_new_rows != "none"
 			if @_new_rows != "remove_only"
@@ -169,37 +165,131 @@ class CUI.DataTable extends CUI.DataFieldInput
 				onClick: =>
 					for row in @listView.getSelectedRows()
 						row.remove()
-					@storeValue(copyObject(@rows, true))
-					updateMinusButton()
+					@storeValue(CUI.util.copyObject(@rows, true))
+					@updateButtons()
+					if @_chunk_size > 0
+						@displayValue()
 					return
 
 			buttons.push(@minusButton)
 
-			updateMinusButton = =>
-				if @listView.getSelectedRows().length == 0
-					@minusButton.disable()
-				else
-					@minusButton.enable()
+		if @_chunk_size > 0
+
+			buttons.push
+				onConstruct: (btn) =>
+					@__navi_prev = btn
+				icon: "left"
+				disabled: true
+				group: "navi"
+				onClick: =>
+					@__offset = @__offset - @_chunk_size
+					@loadPage(@__offset / @_chunk_size)
+
+			page_data = {}
+
+			load_page = =>
+				@loadPage(page_data.page - 1)
+
+			@__navi_input = new CUI.NumberInput
+				group: "navi"
+				placeholder: "henk"
+				data: page_data
+				name: 'page'
+				onBlur: (input) =>
+					input.setValue(null)
+				onDataChanged: =>
+					CUI.scheduleCallback
+						ms: 1000
+						call: load_page
+					return
+
+			.start()
+
+			buttons.push(@__navi_input)
+
+			buttons.push
+				onConstruct: (btn) =>
+					@__navi_next = btn
+				icon: "right"
+				disabled: true
+				group: "navi"
+				onClick: =>
+					@__offset = @__offset + @_chunk_size
+					@loadPage(@__offset / @_chunk_size)
 
 		if buttons.length
-			footer = new Buttonbar(buttons: buttons)
+			new CUI.Buttonbar(buttons: buttons)
+		else
+			return null
 
+	render: ->
+		super()
+		cols = []
+		colClasses = []
+		maxis = []
+
+		@headerRow = new CUI.ListViewHeaderRow()
+
+		for f, idx in @__fieldList
+			if f.getOpt("form")?.column == "maximize" or
+				f instanceof CUI.DataTable
+					maxis.push(idx)
+
+		if maxis.length == 0
+			# push the last as max
+			maxis.push(@__fieldList.length-1)
+
+		for f, idx in @__fieldList
+			if CUI.util.idxInArray(idx, maxis) > -1
+				cols.push("maximize")
+			else if f.getOpt("form")?.column
+				cols.push(f._form.column)
+			else if f.isResizable()
+				cols.push("auto")
+			else
+				cols.push("fixed")
+
+			name = f.getName()
+			label = f._form.label
+
+			cls = []
+			if name
+				cls.push("cui-data-table-column-field-name-"+name)
+
+			cls.push("cui-data-table-column-field-type-"+CUI.util.toDash(f.getElementClass()))
+			if f._form?.rotate_90
+				cls.push("cui-lv-td-rotate-90")
+
+			colClasses.push(cls)
+
+			@headerRow.addColumn new CUI.ListViewHeaderColumn
+				rotate_90: f._form?.rotate_90
+				label:
+					text: label
+					multiline: true
 
 		@listView = new CUI.ListView
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
-			onSelect: updateMinusButton
-			onDeselect: updateMinusButton
+			padded: @_padded
+			onSelect: (ev, info) =>
+				@_onRowSelect?(ev, info)
+				@updateButtons()
+			onDeselect: =>
+				@_onRowDeselect?()
+				@updateButtons()
 			onRowMove: (display_from_i, display_to_i, after) =>
 				fr = @listView.fixedRowsCount
-				moveInArray(display_from_i-fr, display_to_i-fr, @rows, after)
-				Events.trigger
+				display_from_i = @__offset + display_from_i
+				display_to_i = @__offset + display_to_i
+				CUI.util.moveInArray(display_from_i-fr, display_to_i-fr, @rows, after)
+				CUI.Events.trigger
 					type: "data-changed"
 					node: @listView
 
 			cols: cols
 			fixedRows: if @_no_header then 0 else 1
-			footer_left: footer
+			footer_left: @getFooter()
 			footer_right: @_footer_right
 			fixedCols: if @_rowMove then 1 else 0
 			colResize: if @_no_header then false else true
@@ -215,7 +305,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 		@replace(@listView.render())
 
-		Events.listen
+		CUI.Events.listen
 			type: "data-changed"
 			node: @listView
 			call: (ev, info) =>
@@ -223,28 +313,71 @@ class CUI.DataTable extends CUI.DataFieldInput
 				# present us as a whole
 				ev.stopPropagation()
 				# store value triggers a new data-changed
-				# CUI.debug "data-changed on DataTable storing values:", dump(@rows)
+				# console.debug "data-changed on CUI.DataTable storing values:", CUI.util.dump(@rows)
 
-				@storeValue(copyObject(@rows, true))
+				@storeValue(CUI.util.copyObject(@rows, true))
 				return
-
 		@
 
+	loadPage: (page) ->
+		maxPage = Math.floor(@rows?.length / @_chunk_size)
+		if not CUI.util.isNumber(page) or maxPage < 0 or page > maxPage
+			page = 0
+
+		@__offset = page * @_chunk_size
+		@displayValue()
+		@_onLoadPage?(page)
+		return
 
 	displayValue: ->
 		@listView.removeAllRows()
 		if not @_no_header
 			@listView.appendRow(@headerRow)
 
-		@rows = copyObject(@getValue(), true)
+		@rows = CUI.util.copyObject(@getValue(), true)
 
-		assert(CUI.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
+		if @_chunk_size > 0
+			len = @rows.length
+
+			if @__offset >= len
+				@__offset = Math.max(@__offset - @_chunk_size)
+
+			page = Math.floor(@__offset / @_chunk_size)
+			last_page = Math.ceil(len / @_chunk_size)-1
+
+			sep = ' / '
+			placeholder = (page+1)+sep+(last_page+1)
+
+			@__navi_input.setMin(1)
+			@__navi_input.setMax(last_page+1)
+			@__navi_input.setValue(null)
+
+			@__navi_input.setPlaceholder(placeholder)
+			CUI.dom.setAttribute(@__navi_input.getElement(), "data-max-chars", (""+(last_page+1)).length*2+sep.length)
+
+			if page > 0
+				@__navi_prev.enable()
+			else
+				@__navi_prev.disable()
+
+			if page < last_page
+				@__navi_next.enable()
+			else
+				@__navi_next.disable()
+
+		CUI.util.assert(CUI.util.isArray(@rows), "DataTable.displayValue", "\"value\" needs to be Array.", data: @getData(), value: @getValue())
 
 		if @rows
-			for row, idx in @rows
-				node = new DataTableNode
+			if @_chunk_size > 0
+				rows_sliced = @rows.slice(@__offset, @__offset + @_chunk_size)
+			else
+				rows_sliced = @rows
+
+			for row, idx in rows_sliced
+				node = new CUI.DataTableNode
 					dataTable: @
 					data: row
+					class: row.__class
 					dataRowIdx: idx
 					rows: @rows
 					check_changed_data: @getInitValue()?[idx]
@@ -253,6 +386,3 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@listView.appendDeferredRows()
 
 		@
-
-
-DataTable = CUI.DataTable

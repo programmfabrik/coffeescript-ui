@@ -4,10 +4,12 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadTemplateText(require('./ButtonHref.html'));
+CUI.Template.loadTemplateText(require('./ButtonHref_ng.html'));
 
-class ButtonHref extends Button
-	constructor: (@opts={}) ->
-		super(@opts)
+class CUI.ButtonHref extends CUI.Button
+	constructor: (opts) ->
+		super(opts)
 		attr =
 			href: @_href
 			tabindex: "0"
@@ -16,7 +18,7 @@ class ButtonHref extends Button
 		if @_download
 			attr.download = "download"
 
-		@DOM.attr(attr)
+		CUI.dom.setAttributeMap(@DOM, attr)
 
 	initOpts: ->
 		super()
@@ -28,11 +30,16 @@ class ButtonHref extends Button
 			target:
 				check: String
 
-		if CUI.__ng__
-			@mergeOpt("icon_right", default: "external_link")
+	readOpts: ->
+		super()
+
+		if @_icon_right == undefined and @_appearance == "link"
+			@_icon_right = "external_link"
+
+		@
 
 	setHref: (href) ->
-		@DOM.attr("href", href)
+		CUI.dom.setAttribute(@DOM, "href", href)
 
 	getTemplateName: ->
 		# super sets @__has_left + @__has_right

@@ -41,7 +41,7 @@ class CUI.XHR extends CUI.Element
 			json_pretty:
 				default: false
 				check: (v) ->
-					v == false or v == true or isString(v)
+					v == false or v == true or CUI.util.isString(v)
 			headers:
 				mandatory: true
 				default: {}
@@ -70,7 +70,7 @@ class CUI.XHR extends CUI.Element
 		@__xhr = new XMLHttpRequest()
 		@__xhr.withCredentials = @_withCredentials
 
-		# CUI.debug "XHR.readOpts", @
+		# console.debug "XHR.readOpts", @
 		@__readyStatesSeen = [@readyState()]
 		@__registerEvents("download")
 		@__registerEvents("upload")
@@ -93,10 +93,13 @@ class CUI.XHR extends CUI.Element
 			set = set + 1
 		if @_json_data
 			set = set + 1
+			if @__headers['content-type'] == undefined
+				@__headers['content-type'] = 'application/json; charset=utf-8'
+
 		if @_body
 			set = set + 1
 
-		assert(set <= 1, "new CUI.XHR", "opts.form, opts.json_data, opts.body are mutually exclusive.")
+		CUI.util.assert(set <= 1, "new CUI.XHR", "opts.form, opts.json_data, opts.body are mutually exclusive.")
 		@
 
 	# type: xhr / upload
@@ -122,9 +125,9 @@ class CUI.XHR extends CUI.Element
 				continue
 
 			do (fn, k) =>
-				# CUI.debug "register", type, k, fn
+				# console.debug "register", type, k, fn
 				xhr.addEventListener k.toLowerCase(), (ev) =>
-					# CUI.debug ev.type, type # , ev
+					# console.debug ev.type, type # , ev
 					@[fn](ev)
 		@
 
@@ -134,27 +137,27 @@ class CUI.XHR extends CUI.Element
 
 	__download_abort: ->
 		@__setStatus(-1)
-		CUI.warn("Aborted:", @__readyStatesSeen, @)
+		# console.warn("Aborted:", @__readyStatesSeen, @)
 
 	__download_timeout: ->
 		@__setStatus(-2)
-		CUI.warn("Timeout:", @__readyStatesSeen, @)
+		# console.warn("Timeout:", @__readyStatesSeen, @)
 
 	__download_loadend: ->
-		# CUI.info("Loadend:", @__readyStatesSeen, @__status, @status())
+		# console.info("Loadend:", @__readyStatesSeen, @__status, @status())
 		if @isSuccess()
 			@__dfr.resolve(@response(), @status(), @statusText())
 		else
 			if not @status() and not @__status
 				# check ready states if we can determine a pseudo status
 				@__setStatus(-3)
-				CUI.debug "status", @__status
+				console.debug("XHR.__download_loadend", @getXHR())
 
 			@__dfr.reject(@response(), @status(), @statusText())
 		@
 
 	__download_readyStateChange: ->
-		pushOntoArray(@readyState(), @__readyStatesSeen)
+		CUI.util.pushOntoArray(@readyState(), @__readyStatesSeen)
 
 	__progress: (ev, type) ->
 		if @readyState() == "DONE"
@@ -201,13 +204,14 @@ class CUI.XHR extends CUI.Element
 			try
 				res = JSON.parse(@__xhr.response)
 			catch e
-				rest = @__xhr.response
+				res = @__xhr.response
 		else
 			res = @__xhr.response
 
 		if @_responseType == "json"
 			# be more compatible with jQuery
 			@__xhr.responseJSON = res
+
 		res
 
 	start: ->
@@ -219,11 +223,12 @@ class CUI.XHR extends CUI.Element
 		@__xhr.responseType = @_responseType
 		@__xhr.timeout = @_timeout
 
-		# CUI.debug "URL:", @__xhr.responseType, @__url, @_form, @_json_data
+		# console.debug "URL:", @__xhr.responseType, @__url, @_form, @_json_data
 		if @_form
 			data = new FormData()
 			for k, v of @_form
 				data.append(k, v)
+
 			send_data = data
 			# let the browser set the content-type
 		else if @_json_data
@@ -241,12 +246,11 @@ class CUI.XHR extends CUI.Element
 
 		@__dfr = new CUI.Deferred()
 		@__xhr.send(send_data)
-		# CUI.debug @__xhr, @getAllResponseHeaders()
+		# console.debug @__xhr, @getAllResponseHeaders()
 		@__dfr.promise()
 
 	getXHR: ->
 		@__xhr
-
 
 	getAllResponseHeaders: ->
 		headers = []
@@ -271,5 +275,3 @@ class CUI.XHR extends CUI.Element
 
 	readyState: ->
 		CUI.XHR.readyStates[@__xhr.readyState]
-
-

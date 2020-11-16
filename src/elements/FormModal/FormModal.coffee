@@ -5,10 +5,10 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FormModal extends FormPopover
-	constructor: (@opts={}) ->
-		super(@opts)
-		# CUI.debug "FormPopover", @opts
+class CUI.FormModal extends CUI.FormPopover
+	constructor: (opts) ->
+		super(opts)
+		# console.debug "FormPopover", @opts
 		@__old_text = null
 		@__old_display = null
 
@@ -24,11 +24,11 @@ class FormModal extends FormPopover
 					default:
 						text: "Ok"
 					check: (v) =>
-						CUI.isPlainObject(v)
+						CUI.util.isPlainObject(v)
 
 	initPopover: (opts) ->
 
-		btn_opts = copyObject(@_modal.apply_button, true)
+		btn_opts = CUI.util.copyObject(@_modal.apply_button, true)
 
 		onClick = btn_opts.onClick
 
@@ -46,10 +46,10 @@ class FormModal extends FormPopover
 
 		opts.pane.footer_right = btn
 
-		mod = new Modal(opts)
+		mod = new CUI.Modal(opts)
 
 		if @__orig_set_data
-			Events.listen
+			CUI.Events.listen
 				type: "data-changed"
 				node: mod
 				call: =>
@@ -61,7 +61,7 @@ class FormModal extends FormPopover
 		mod
 
 	revertData: ->
-		assert(@__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", opts: @opts)
+		CUI.util.assert(@__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", opts: @opts)
 		delete(@__data)
 		if @__orig_data
 			@__orig_set_data[@_name] = @__orig_data
@@ -70,17 +70,17 @@ class FormModal extends FormPopover
 
 		@setData(@__orig_set_data)
 
-		@resetTableAndFields()
+		@removeFields()
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "data-changed"
 			node: @getPopover()
 		@
 
 	setData: (data) ->
-		if @_name and not CUI.isFunction(data)
+		if @_name and not CUI.util.isFunction(data)
 			if data[@_name]
-				@__orig_data = copyObject(data[@_name], true)
+				@__orig_data = CUI.util.copyObject(data[@_name], true)
 			else
 				@__orig_data = undefined
 			@__orig_set_data = data
@@ -88,7 +88,7 @@ class FormModal extends FormPopover
 
 	__closePopover: ->
 		if @__orig_set_data
-			@__orig_data = copyObject(@__orig_set_data[@_name], true)
+			@__orig_data = CUI.util.copyObject(@__orig_set_data[@_name], true)
 		super()
 
 	hasChanges: ->
@@ -98,7 +98,7 @@ class FormModal extends FormPopover
 			null
 
 	getPopoverOpts: ->
-		pop_opts = copyObject(@_modal, true)
+		pop_opts = CUI.util.copyObject(@_modal, true)
 
 		if pop_opts.cancel and @__orig_set_data
 			onCancel = pop_opts.onCancel
@@ -115,14 +115,14 @@ class FormModal extends FormPopover
 				dfr.promise()
 
 		delete(pop_opts.apply_button)
-		if isEmpty(pop_opts.class)
+		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
 
 		# don't center this to an element
 		pop_opts.element = null
 		if not pop_opts.pane
 			pop_opts.pane = {}
-		assert(CUI.isPlainObject(pop_opts.pane), "new FormModal", "opts.pane must be PlainObject", opts: pop_opts)
+		CUI.util.assert(CUI.util.isPlainObject(pop_opts.pane), "new CUI.FormModal", "opts.pane must be PlainObject", opts: pop_opts)
 		pop_opts.class += " cui-form-modal-modal"
 		pop_opts
 

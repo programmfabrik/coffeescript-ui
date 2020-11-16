@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Popover extends Modal
+class CUI.Popover extends CUI.Modal
 
 	initOpts: ->
 		super()
@@ -24,6 +24,9 @@ class Popover extends Modal
 
 	knownPlacements: ["s", "e", "w", "ws", "wn", "n", "se", "ne", "es", "en", "nw", "sw"]
 
+	forceFocusOnShow: ->
+		false
+
 	# disableAllButtons: ->
 	# 	super()
 	# 	@disableBackdropClick()
@@ -31,5 +34,3 @@ class Popover extends Modal
 	# enableAllButtons: ->
 	# 	super()
 	# 	@enableBackdropClick()
-
-

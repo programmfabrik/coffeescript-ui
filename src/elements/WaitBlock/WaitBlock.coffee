@@ -4,21 +4,22 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+CUI.Template.loadTemplateText(require('./WaitBlock.html'));
 
-class WaitBlock extends Block
-	constructor: (@opts={}) ->
-		super(@opts)
+class CUI.WaitBlock extends CUI.Block
+	constructor: (opts) ->
+		super(opts)
 		if @_inactive
-			@DOM.addClass("cui-wait-block-inactive")
+			CUI.dom.addClass(@DOM, "cui-wait-block-inactive")
 
 		if @_fullscreen
-			@DOM.addClass("cui-wait-block-fullscreen")
+			CUI.dom.addClass(@DOM, "cui-wait-block-fullscreen")
 
 	initOpts: ->
 		super()
 		@mergeOpt "icon",
 			check: (v) ->
-				v instanceof Icon or isString(v)
+				v instanceof CUI.Icon or CUI.util.isString(v)
 
 		@removeOpt("header")
 		@removeOpt("content")
@@ -30,17 +31,17 @@ class WaitBlock extends Block
 				check: Boolean
 			element:
 				check: (v) ->
-					isElement(v) or isElement(v.DOM)
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
 			# use to put this wait block fullscreen
 			fullscreen:
 				check: Boolean
 
 	readOpts: ->
 		super()
-		assert(xor(@_element, @_fullscreen), "new WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
+		CUI.util.assert(CUI.util.xor(@_element, @_fullscreen), "new CUI.WaitBlock", "opts.element or opt.fullscreen needs to be set.", opts: @opts)
 
 		if @_fullscreen
-			@__element = $(document.body)
+			@__element = document.body
 		else if @_element.DOM
 			@__element = @_element.DOM
 		else
@@ -57,18 +58,17 @@ class WaitBlock extends Block
 		"wait-block"
 
 	show: ->
-		position = @__element[0].style.position
-		if not DOM.isPositioned(@__element[0])
-			@__savedPosition = @__element[0].style.position
-			@__element[0].style.position = "relative"
+		if not CUI.dom.isPositioned(@__element)
+			@__savedPosition = CUI.dom.getComputedStyle(@__element)["position"]
+			CUI.dom.setStyleOne(@__element, "position", "relative")
 		else
 			@__savedPosition = null
 
-		@__element.addClass("cui-wait-block-active")
+		CUI.dom.addClass(@__element.DOM, "cui-wait-block-active")
 		if @_fullscreen
-			@DOM.appendTo(@__element)
+			CUI.dom.append(@__element, @DOM)
 		else
-			@__element.append(@DOM)
+			CUI.dom.append(@__element, @DOM)
 		@__shown = true
 		@
 
@@ -78,11 +78,11 @@ class WaitBlock extends Block
 	hide: ->
 		if not @isShown()
 			return @
-		@DOM.detach()
+		CUI.dom.remove(@DOM)
 		if @__savedPosition != null
-			@__element[0].style.position = @__savedPosition
+			CUI.dom.setStyleOne(@__element, "position", @__savedPosition)
 
-		@__element.removeClass("cui-wait-block-active")
+		CUI.dom.removeClass(@__element, "cui-wait-block-active")
 		@__shown = false
 		@__savedPosition = null
 		@

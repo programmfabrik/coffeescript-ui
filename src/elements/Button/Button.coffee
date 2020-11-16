@@ -15,7 +15,10 @@
 #Button.DOM: the actual button object
 #Button.disable: disable button
 #Button.enable: enable button
-class CUI.Button extends CUI.DOM
+CUI.Template.loadTemplateText(require('./Button.html'));
+CUI.Template.loadTemplateText(require('./Button_ng.html'));
+
+class CUI.Button extends CUI.DOMElement
 
 	@defaults:
 		confirm_ok: "Ok"
@@ -23,9 +26,12 @@ class CUI.Button extends CUI.DOM
 		confirm_cancel: "Cancel"
 		confirm_title: "Confirmation"
 		disabled_css_class: "cui-disabled"
+		loading_css_class: "cui-loading"
 		active_css_class: "cui-active"
+		arrow_down: "fa-angle-down"
+		arrow_right: "fa-angle-right"
 
-	#Construct a new Button.
+	#Construct a new CUI.Button.
 	#
 	# @param [Object] options for button creation
 	# @option options [String] size controls the size of the button.
@@ -39,9 +45,9 @@ class CUI.Button extends CUI.DOM
 	#   "link", standard button without border and a underlined text.
 	#   "important", emphasized button , to show the user that the button is important.
 
-	constructor: (@opts={}) ->
+	constructor: (opts) ->
 
-		super(@opts)
+		super(opts)
 
 		if @_tooltip
 			if @_tooltip.text or @_tooltip.content
@@ -54,7 +60,7 @@ class CUI.Button extends CUI.DOM
 		tname = @getTemplateName()
 		# getTemplateName, also sets has_left / has_right
 
-		@__box = new Template
+		@__box = new CUI.Template
 			name: tname
 			map:
 				left: if @__has_left then ".cui-button-left" else undefined
@@ -66,32 +72,32 @@ class CUI.Button extends CUI.DOM
 
 		@__active = null
 		@__disabled = false
+		@__loading = false
 		@__hidden = false
 		@__txt =  null
 
-		if CUI.__ng__
-			@addClass("cui-button-button")
+		@addClass("cui-button-button")
 
-		if isString(@__tooltipOpts?.text)
+		if CUI.util.isString(@__tooltipOpts?.text)
 			@setAria("label", @__tooltipOpts?.text)
 			@__hasAriaLabel = true
 		else
 			@__hasAriaLabel = false
 
-		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
+		CUI.dom.setAttribute(@DOM, "tabindex", @_tabindex)
 
 		if not @_attr?.role
-			DOM.setAttribute(@DOM, "role", @_role)
+			CUI.dom.setAttribute(@DOM, "role", @_role)
 
 		if not @_left or @_left == true
 			if @_icon
-				assert(isUndef(@_icon_left), "new #{@__cls}", "opts.icon conflicts with opts.icon_left", opts: @opts)
+				CUI.util.assert(CUI.util.isUndef(@_icon_left), "new #{@__cls}", "opts.icon conflicts with opts.icon_left", opts: @opts)
 				icon_left = @_icon
 			else
 				icon_left = @_icon_left
 
 			if icon_left
-				assert(not @_icon_active and not @_icon_inactive, "new Button", "opts.icon_active or opts.icon_inactive cannot be set together with opts.icon or opts.icon_left", opts: @opts)
+				CUI.util.assert(not @_icon_active and not @_icon_inactive, "new CUI.Button", "opts.icon_active or opts.icon_inactive cannot be set together with opts.icon or opts.icon_left", opts: @opts)
 				@setIcon(icon_left)
 		else
 			@append(@_left, "left")
@@ -103,21 +109,17 @@ class CUI.Button extends CUI.DOM
 				@addClass("cui-button--has-caret")
 
 				if @_menu_parent
-					@setIconRight("fa-angle-right")
+					@setIconRight(CUI.defaults.class.Button.defaults.arrow_right)
 				else
-					@setIconRight("fa-angle-down")
+					@setIconRight(CUI.defaults.class.Button.defaults.arrow_down)
 
 		else if @_right != true
 			@append(@_right, "right")
 
-		if not CUI.__ng__ and not @_size
-			@_size='normal' #need to set normal as default for mediathek! and light
 		@setSize(@_size)
 
 		if @_appearance
 			@addClass("cui-button-appearance-"+@_appearance)
-		else if not CUI.__ng__
-			@addClass("cui-button-appearance-auto cui-button-appearance-normal")
 
 		if @_primary
 			@addClass("cui-button--primary")
@@ -129,6 +131,9 @@ class CUI.Button extends CUI.DOM
 
 		if @_disabled and (@_disabled == true or @_disabled.call(@, @))
 			@disable()
+
+		if @_loading and (@_loading == true or @_loading.call(@, @))
+			@setLoading(true)
 
 		if @_hidden and (@_hidden == true or @_hidden.call(@, @))
 			@hide()
@@ -143,18 +148,18 @@ class CUI.Button extends CUI.DOM
 		@__radio_allow_null = @_radio_allow_null
 
 		if @_radio
-			assert(isUndef(@_switch), "new Button", "opts.switch conflicts with opts.radio.", opts: @opts)
+			CUI.util.assert(CUI.util.isUndef(@_switch), "new CUI.Button", "opts.switch conflicts with opts.radio.", opts: @opts)
 			if @_radio == true
 				@__radio = "radio--"+@getUniqueId()
 			else
 				@__radio = @_radio
-		else if not isNull(@_switch)
+		else if not CUI.util.isNull(@_switch)
 			@__radio = "switch--"+@getUniqueId()
 			@__radio_allow_null = true
 
 		if @__radio
-			assert(not @_attr?.radio, "new Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
-			DOM.setAttribute(@DOM, "radio", @__radio)
+			CUI.util.assert(not @_attr?.radio, "new CUI.Button", "opts.radio conflicts with opts.attr.radio", opts: @opts)
+			CUI.dom.setAttribute(@DOM, "radio", @__radio)
 
 		@setGroup(@_group)
 
@@ -173,12 +178,11 @@ class CUI.Button extends CUI.DOM
 					else
 						itemList_opts[k] = v
 
-			if not isEmpty(@_class)
+			if not CUI.util.isEmpty(@_class)
 				if @__menu_opts.class
 					@__menu_opts.class += " "+@_class
 				else
 					@__menu_opts.class = @_class
-
 
 			if @_menu.itemList
 				@__menu_opts.itemList = @_menu.itemList
@@ -213,7 +217,7 @@ class CUI.Button extends CUI.DOM
 				@__menu_opts.parent_menu = @_menu_parent
 
 
-		Events.listen
+		CUI.Events.listen
 			type: "keydown"
 			node: @DOM
 			capture: true
@@ -236,10 +240,10 @@ class CUI.Button extends CUI.DOM
 				el = null
 
 				right = =>
-					el = DOM.findNextVisibleElement(@DOM, "[tabindex]")
+					el = CUI.dom.findNextVisibleElement(@DOM, "[tabindex]")
 
 				left = =>
-					el = DOM.findPreviousVisibleElement(@DOM, "[tabindex]")
+					el = CUI.dom.findPreviousVisibleElement(@DOM, "[tabindex]")
 
 				switch ev.keyCode()
 					when 39 # right cursor
@@ -257,20 +261,20 @@ class CUI.Button extends CUI.DOM
 
 				return
 
-		Events.listen
-			type: ["mousedown"] # , "touchstart"]
+		CUI.Events.listen
+			type: CUI.Button.clickTypesPrevent[@_click_type]
 			node: @DOM
 			call: (ev) =>
-				# don't focus element
 				ev.preventDefault()
-				ev.stopPropagation()
+				# ev.stopPropagation()
+				return
 
-		Events.listen
-			type: Button.clickTypes[@_click_type]
+		CUI.Events.listen
+			type: CUI.Button.clickTypes[@_click_type]
 			node: @DOM
 			call: (ev) =>
 
-				if window.globalDrag
+				if CUI.globalDrag
 					# ev.stop()
 					return
 
@@ -301,18 +305,22 @@ class CUI.Button extends CUI.DOM
 					call: =>
 						@getMenu().hide(ev)
 
-		if @_menu_on_hover or @__tooltipOpts
-			Events.listen
+		if @_menu_on_hover or @__tooltipOpts or @_onMouseenter
+			CUI.Events.listen
 				type: "mouseenter"
 				node: @DOM
 				call: (ev) =>
 
-					if window.globalDrag
+					if CUI.globalDrag
+						return
+
+					@_onMouseenter?(ev)
+					if ev.isImmediatePropagationStopped()
 						return
 
 					if @__tooltipOpts
 						@__initTooltip()
-						@getTooltip().showTimeout(null, ev)
+						@getTooltip().showTimeout().start()
 
 					if @_menu_on_hover
 						menu = @getMenu()
@@ -320,17 +328,17 @@ class CUI.Button extends CUI.DOM
 
 						if not @__disabled and menu.hasItems(ev)
 
-							menu_shown = CUI.DOM.data(CUI.DOM.find(".cui-button--hover-menu")[0], "element")
+							menu_shown = CUI.dom.data(CUI.dom.find(".cui-button--hover-menu")[0], "element")
 							if menu_shown and menu_shown != menu
 								menu_shown.hide(ev)
 
-							CUI.DOM.addClass(menu.DOM, "cui-button--hover-menu")
+							CUI.dom.addClass(menu.DOM, "cui-button--hover-menu")
 
-							Events.ignore
+							CUI.Events.ignore
 								instance: @
 								node: menu
 
-							Events.listen
+							CUI.Events.listen
 								type: "mouseenter"
 								node: menu
 								instance: @
@@ -338,7 +346,7 @@ class CUI.Button extends CUI.DOM
 								call: =>
 									menu_stop_hide()
 
-							Events.listen
+							CUI.Events.listen
 								type: "mouseleave"
 								node: menu
 								instance: @
@@ -350,19 +358,16 @@ class CUI.Button extends CUI.DOM
 
 					return
 
-		Events.listen
+		CUI.Events.listen
 			type: "mouseleave"
 			node: @DOM
 			call: (ev) =>
 				# @__prevent_btn_click = false
 
-				if window.globalDrag
+				if CUI.globalDrag
 					return
 
-				if not CUI.__ng__
-					@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
-
-				@getTooltip()?.hideTimeout(ev)
+				@_onMouseleave?(ev)
 
 				if @_menu_on_hover
 					menu_start_hide(ev, 100)
@@ -385,6 +390,7 @@ class CUI.Button extends CUI.DOM
 
 	onClickAction: (ev) ->
 		if @__disabled # or ev.button != 0
+			ev.preventDefault()
 			return
 
 		@getTooltip()?.hide(ev)
@@ -399,7 +405,6 @@ class CUI.Button extends CUI.DOM
 			# not (ev.ctrlKey or ev.shiftKey or ev.altKey or ev.metaKey) and
 			not @_menu_on_hover and
 			@getMenu().hasItems(ev)
-
 				@getMenu().show(ev)
 
 				# in some contexts (like FileUploadButton), this
@@ -412,63 +417,16 @@ class CUI.Button extends CUI.DOM
 		if ev.isImmediatePropagationStopped()
 			return
 
-		if not CUI.__ng__
-			@addClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+		CUI.Events.trigger
+			type: "cui-button-click"
+			node: @
+			info:
+				event: ev
 
-		remove_click_class = =>
-			if not CUI.__ng__
-				@removeClass(CUI.defaults.class.Button.defaults.pressed_css_class)
+		if ev.isImmediatePropagationStopped() or not @_onClick
 			return
 
-		do_click = =>
-			if ev.isImmediatePropagationStopped()
-				remove_click_class()
-				return
-
-			Events.trigger
-				type: "cui-button-click"
-				node: @
-				info:
-					event: ev
-
-			if ev.isImmediatePropagationStopped() or not @_onClick
-				remove_click_class()
-				return
-
-			CUI.decide(@_onClick.call(@, ev, @))
-			.always =>
-				remove_click_class()
-			return
-
-		if @_onClick and @_confirm_on_click and not ev.ctrlKey()
-			btns = []
-
-			if not isEmpty(CUI.defaults.class.Button.defaults.confirm_cancel)
-				btns.push
-					text: CUI.defaults.class.Button.defaults.confirm_cancel
-					onClick: =>
-						dialog.destroy()
-						remove_click_class()
-
-			btns.push
-				text: CUI.defaults.class.Button.defaults.confirm_ok
-				onClick: =>
-					dialog.destroy()
-					do_click()
-
-			dialog = new CUI.ConfirmationDialog
-				text: @_confirm_on_click
-				icon: CUI.defaults.class.Button.defaults.confirm_icon
-				title: CUI.defaults.class.Button.defaults.confirm_title
-				header_right:
-					icon: "close"
-					onClick: ->
-						dialog.destroy()
-				buttons: btns
-			dialog.show()
-		else
-			do_click()
-		@
+		@_onClick.call(@, ev, @)
 
 	initOpts: ->
 		super()
@@ -476,24 +434,22 @@ class CUI.Button extends CUI.DOM
 			tabindex:
 				default: 0
 				check: (v) ->
-					isInteger(v) or v == false
+					CUI.util.isInteger(v) or v == false
 			size:
 				check: ["mini","normal","big","bigger"]
 			appearance:
-				check: ["link","flat","normal","important"]
+				check: ["link","flat","normal","important","transparent-border"]
 			primary:
 				mandatory: true
 				default: false
 				check: Boolean
 			onClick:
 				check: Function
-			confirm_on_click:
-				check: String
 			click_type:
 				default: "click" # "touchend"
 				mandatory: true
 				check: (v) ->
-					!!Button.clickTypes[v]
+					!!CUI.Button.clickTypes[v]
 
 			text:
 				check: String
@@ -502,7 +458,11 @@ class CUI.Button extends CUI.DOM
 			disabled:
 				default: false
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
+			loading:
+				default: false
+				check: (v) ->
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 			active_css_class:
 				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String
@@ -511,34 +471,34 @@ class CUI.Button extends CUI.DOM
 					if v == true
 						return true
 
-					(isElement(v) or
+					(CUI.util.isElement(v) or
 						v instanceof CUI.Element or
-						isString(v)) and
+						CUI.util.isString(v)) and
 						not @_icon and
 						not @_icon_left and
 						not @_icon_active and
 						not @_icon_inactive
 			right:
 				check: (v) ->
-					(v == true or isContent(v)) and not @_icon_right
+					(v == true or CUI.util.isContent(v)) and not @_icon_right
 			center:
 				check: (v) ->
-					(isElement(v) or isString(v) or v instanceof CUI.Element)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_left:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_right:
 				check: (v) ->
-					v instanceof Icon or isString(v) or v == false
+					v instanceof CUI.Icon or CUI.util.isString(v) or v == false
 			icon_active:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			icon_inactive:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			text_active:
 				check: String
 			text_inactive:
@@ -548,16 +508,20 @@ class CUI.Button extends CUI.DOM
 				check: String
 			hidden:
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 			menu:
 				check: "PlainObject"
 			menu_on_hover:
 				check: Boolean
 			menu_parent:
-				check: Menu
+				check: CUI.Menu
 			onActivate:
 				check: Function
 			onDeactivate:
+				check: Function
+			onMouseenter:
+				check: Function
+			onMouseleave:
 				check: Function
 
 			# if set, this button belongs
@@ -567,7 +531,7 @@ class CUI.Button extends CUI.DOM
 			# on the others
 			radio:
 				check: (v) ->
-					isString(v) or v == true
+					CUI.util.isString(v) or v == true
 			# whether to allow de-select
 			# on radio buttons
 			radio_allow_null:
@@ -594,20 +558,20 @@ class CUI.Button extends CUI.DOM
 	__getIcon: (icon) ->
 		if not icon
 			null
-		else if icon instanceof Icon
+		else if icon instanceof CUI.Icon
 			icon
 		else
-			new Icon(icon: icon)
+			new CUI.Icon(icon: icon)
 
 	readOpts: ->
 
 		if @opts.switch
-			assert(isUndef(@opts.radio_allow_null), "new Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
+			CUI.util.assert(CUI.util.isUndef(@opts.radio_allow_null), "new CUI.Button", "opts.switch cannot be used together with opts.radio_allow_null", opts: @opts)
 
 		super()
 
 		if @_left
-			assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
+			CUI.util.assert(@_left == true or not (@_icon_active or @_icon_inactive or @_icon), "new CUI.Button", "opts.left != true cannot be used togeter with opts.icon*", opts: @opts)
 
 
 	getCenter: ->
@@ -625,10 +589,10 @@ class CUI.Button extends CUI.DOM
 			@__has_right = false
 
 		if @__has_left and
-			isUndef(@_text) and
-			isUndef(@_center) and
-			isUndef(@_text_active) and
-			isUndef(@_text_inactive) and
+			CUI.util.isUndef(@_text) and
+			CUI.util.isUndef(@_center) and
+			CUI.util.isUndef(@_text_active) and
+			CUI.util.isUndef(@_text_inactive) and
 			CUI.__ng__
 				@__has_center = false
 
@@ -654,8 +618,6 @@ class CUI.Button extends CUI.DOM
 		@_value
 
 	getElementForLayer: ->
-		if not CUI.__ng__
-			return @DOM
 		return @__box.map.visual
 
 	getRadioButtons: ->
@@ -670,19 +632,19 @@ class CUI.Button extends CUI.DOM
 
 	# returns other buttons
 	__getButtons: (key, value) ->
-		parents = @DOM.parents(".cui-buttonbar,.cui-form-table,.cui-tmpl-item-list-body,.cui-layer")
+		parents = CUI.dom.parents(@DOM, ".cui-buttonbar,.cui-form-table,.cui-item-list-body,.cui-layer")
 
 		if parents.length == 0
 			# buttons are not grouped by anything, so we
 			# have no other buttons, so we use the top level element
-			parents = @DOM.parents()
+			parents = CUI.dom.parents(@DOM)
 
 		if parents.length > 0
 			docElem = parents[parents.length-1]
 		else
 			return []
 
-		(DOM.data(c, "element") for c in DOM.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
+		(CUI.dom.data(c, "element") for c in CUI.dom.matchSelector(docElem, ".cui-button[#{key}=\"#{value}\"]"))
 
 
 	hasMenu: ->
@@ -698,7 +660,7 @@ class CUI.Button extends CUI.DOM
 		if @__menu
 			@__menu
 		else
-			@__menu = new Menu(@__menu_opts)
+			@__menu = new CUI.Menu(@__menu_opts)
 
 	menuSetActiveIdx: (idx) ->
 		if @__menu
@@ -725,22 +687,35 @@ class CUI.Button extends CUI.DOM
 		else
 			@deactivate(flags, event)
 
+	__callOnGroup: (call, flags, event) ->
+
+		group = @getGroup()
+		if not group or not event?.hasModifierKey() or flags.ignore_ctrl
+			return
+
+		flags.ignore_ctrl = true
+		if not event.altKey()
+			started = true
+		else
+			started = false
+
+		for btn in @getGroupButtons()
+			if btn == @
+				started = true
+				continue
+			if not started
+				continue
+			btn[call](flags, event)
+		return
+
 	activate: (flags={}, event) ->
-		# CUI.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
+		# console.error "activate", flags, @getUniqueId(), @__active, @_activate_initial
 
 		activate = =>
 			@addClass(@_active_css_class)
 			@setAria("pressed", true)
 			@__setState()
-			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl
-				return
-
-			flags.ignore_ctrl = true
-			for btn in @getGroupButtons()
-				if btn == @
-					continue
-				btn.activate(flags, event)
+			@__callOnGroup("activate", flags, event)
 			return
 
 		if @_activate_initial == false and flags.initial_activate
@@ -748,19 +723,25 @@ class CUI.Button extends CUI.DOM
 			activate()
 			return @
 
-		if @__active == true and CUI.isEmptyObject(flags)
+		if @__active == true and CUI.util.isEmptyObject(flags)
 			return @
 
 		if @__radio
+			_flags =
+				prior_activate: @
+				initial_activate: flags.initial_activate
+
 			for btn, idx in @getRadioButtons()
 				if btn == @ or not btn.isActive()
 					continue
 
-				btn.deactivate(prior_activate: true, initial_activate: flags.initial_activate)
+				# don't send the event here, since this happens
+				# code driven
+				btn.deactivate(_flags)
 
 		@__active = true
 		ret = @_onActivate?(@, flags, event)
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret.done(activate).fail =>
 				@__active = false
 			return ret
@@ -768,34 +749,28 @@ class CUI.Button extends CUI.DOM
 		activate()
 		@
 
+
 	deactivate: (flags={}, event) ->
-		# CUI.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
+		# console.error "deactivate", flags, @getUniqueId(), @__active, @_activate_initial, @_icon_inactive
 
 		deactivate = =>
 			@removeClass(@_active_css_class)
 			@setAria("pressed", false)
 			@__setState()
-			group = @getGroup()
-			if not group or not event?.ctrlKey() or flags.ignore_ctrl
-				return
-
-			flags.ignore_ctrl = true
-			for btn in @getGroupButtons()
-				if btn == @
-					continue
-				btn.deactivate(flags, event)
+			@__callOnGroup("deactivate", flags, event)
+			return
 
 		if @_activate_initial == false and flags.initial_activate
 			@__active = false
 			deactivate()
 			return @
 
-		if @__active == false and CUI.isEmptyObject(flags)
+		if @__active == false and CUI.util.isEmptyObject(flags)
 			return @
 
 		@__active = false
 		ret = @_onDeactivate?(@, flags, event)
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret.done(deactivate).fail =>
 				@__active = true
 			return ret
@@ -814,18 +789,18 @@ class CUI.Button extends CUI.DOM
 		else
 			@[key] = @__getIcon(icon)
 
-		assert(@[key] == null or @[key] == "" or @[key] instanceof Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
+		CUI.util.assert(@[key] == null or @[key] == "" or @[key] instanceof CUI.Icon, "CUI.Button.setIcon", "icon needs to be instance of Icon", icon: icon)
 
 		if @[key] == null
 			@empty(_key)
 		else if @[key] == ""
-			@replace(CUI.DOM.element("SPAN"), _key)
+			@replace(CUI.dom.element("SPAN"), _key)
 		else
 			@replace(@[key], _key)
 		@
 
 	startSpinner: ->
-		assert(@__has_left, "CUI.Button.startSpinner", "No space for Icon found, make sure the Button was created with opts.left set.", opts: @opts)
+		CUI.util.assert(@__has_left, "CUI.Button.startSpinner", "No space for Icon found, make sure the Button was created with opts.left set.", opts: @opts)
 		if @__hasSpinner
 			return
 
@@ -871,10 +846,10 @@ class CUI.Button extends CUI.DOM
 			return @
 
 		if @isActive()
-			if not isNull(@_text_active)
+			if not CUI.util.isNull(@_text_active)
 				@setText(@_text_active)
 		else
-			if not isNull(@_text_inactive)
+			if not CUI.util.isNull(@_text_inactive)
 				@setText(@_text_inactive)
 		@
 
@@ -894,30 +869,41 @@ class CUI.Button extends CUI.DOM
 		else
 			@disable()
 
+	setLoading: (on_off) ->
+		if on_off
+			CUI.dom.addClass(@DOM, CUI.defaults.class.Button.defaults.loading_css_class)
+			@__loading = true
+		else
+			CUI.dom.removeClass(@DOM, CUI.defaults.class.Button.defaults.loading_css_class)
+			@__loading = false
+
+	isLoading: ->
+		@__loading
+
 	disable: ->
-		@DOM.addClass(CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.removeAttribute(@DOM, "tabindex")
+		CUI.dom.addClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
+		CUI.dom.removeAttribute(@DOM, "tabindex")
 		@__disabled = true
 		@
 
 	enable: ->
-		@DOM.removeClass(CUI.defaults.class.Button.defaults.disabled_css_class)
-		DOM.setAttribute(@DOM, "tabindex", @_tabindex)
+		CUI.dom.removeClass(@DOM, CUI.defaults.class.Button.defaults.disabled_css_class)
+		CUI.dom.setAttribute(@DOM, "tabindex", @_tabindex)
 		@__disabled = false
 		@
 
 	setText: (@__txt) ->
-		if isEmpty(@__txt)
-			@empty("center")
-		else
-			span = $text(@__txt)
-			if not @__hasAriaLabel
-				span.id = "button-text-"+@getUniqueId()
-				@setAria("labelledby", span.id)
-			@replace(span, "center")
+		if CUI.util.isEmpty(@__txt)
+			@__txt = ''
+
+		span = CUI.dom.text(@__txt)
+		if not @__hasAriaLabel
+			span.id = "button-text-"+@getUniqueId()
+			@setAria("labelledby", span.id)
+		@replace(span, "center")
 
 	setTextMaxChars: (max_chars) ->
-		CUI.DOM.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
+		CUI.dom.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
 
 	getText: ->
 		@__txt
@@ -927,24 +913,24 @@ class CUI.Button extends CUI.DOM
 
 	setGroup: (@__group) ->
 		if @__group
-			DOM.setAttribute(@DOM, "button-group", @__group)
+			CUI.dom.setAttribute(@DOM, "button-group", @__group)
 		else
-			DOM.removeAttribute(@DOM, "button-group")
+			CUI.dom.removeAttribute(@DOM, "button-group")
 
 	__initTooltip: ->
-		if @__tooltip
+		if @__tooltip and not @__tooltip.isDestroyed()
 			return @
 
-		tt_opts = copyObject(@__tooltipOpts)
+		tt_opts = CUI.util.copyObject(@__tooltipOpts)
 
 		tt_opts.element ?= @DOM
 
 		# make sure the tooltip does not register any listeners
 		for k in ["on_hover", "on_click"]
-			assert(not tt_opts.hasOwnProperty(k), "CUI.Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
+			CUI.util.assert(not tt_opts.hasOwnProperty(k), "CUI.Button.__initTooltip", "opts.tooltip cannot contain #{k}.", opts: @opts)
 			tt_opts[k] = false
 
-		@__tooltip = new Tooltip(tt_opts)
+		@__tooltip = new CUI.Tooltip(tt_opts)
 		@
 
 	getTooltip: ->
@@ -957,7 +943,7 @@ class CUI.Button extends CUI.DOM
 		@__hidden
 
 	destroy: ->
-		# CUI.debug "destroying button", @__uniqueId, @getText()
+		# console.debug "destroying button", @__uniqueId, @getText()
 		@__menu?.destroy()
 		@__menu = null
 		@__tooltip?.destroy()
@@ -966,30 +952,32 @@ class CUI.Button extends CUI.DOM
 
 	show: ->
 		@__hidden = false
-		DOM.removeClass(@DOM, "cui-button-hidden")
-		DOM.showElement(@DOM)
-		Events.trigger
+		CUI.dom.removeClass(@DOM, "cui-button-hidden")
+		CUI.dom.showElement(@DOM)
+		CUI.Events.trigger
 			type: "show"
 			node: @DOM
 
 	hide: ->
 		@__hidden = true
-		DOM.addClass(@DOM, "cui-button-hidden")
-		DOM.hideElement(@DOM)
-		Events.trigger
+		CUI.dom.addClass(@DOM, "cui-button-hidden")
+		CUI.dom.hideElement(@DOM)
+		CUI.Events.trigger
 			type: "hide"
 			node: @DOM
 
 	@clickTypes:
-		click: ["click"]
-		mouseup: ["mouseup"]
-		dblclick: ["dblclick"]
+		click: ['click']
+		mouseup: ['mouseup']
+		dblclick: ['dblclick']
 
-
-CUI.defaults.class.Button = CUI.Button
+	@clickTypesPrevent:
+		click: ['dblclick', 'mousedown']
+		mouseup: ['mouseup', 'mousedown']
+		dblclick: ['click', 'mousedown']
 
 CUI.Events.registerEvent
 	type: ["show", "hide", "cui-button-click"]
 	bubble: true
 
-Button = CUI.Button
+CUI.defaults.class.Button = CUI.Button

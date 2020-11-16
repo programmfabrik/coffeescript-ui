@@ -5,12 +5,12 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Password extends Input
+class CUI.Password extends CUI.Input
 	__createElement: ->
 		super("password")
 
 	showPassword: ->
-		@__input.prop("type", "text")
+		CUI.dom.setAttribute(@__input, "type", "text")
 
 	hidePassword: ->
-		@__input.prop("type", "password")
+		CUI.dom.setAttribute(@__input, "type", "password")

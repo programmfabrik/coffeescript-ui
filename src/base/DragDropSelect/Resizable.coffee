@@ -5,8 +5,6 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.Resizable extends CUI.Movable
 	@cls = "resizable"
 
@@ -21,15 +19,15 @@ class CUI.Resizable extends CUI.Movable
 	init: ->
 		super()
 		for d in ["ne","nw","se","sw","s","n","e","w"]
-			@element.append(CUI.DOM.element("DIV", "cui-drag-drop-select-resizable": d, class: "cui-resizable-handle cui-resizable-handle-"+d))
+			CUI.dom.append(@element, CUI.dom.element("DIV", "cui-drag-drop-select-resizable": d, class: "cui-resizable-handle cui-resizable-handle-"+d))
 
 	before_drag: (ev, $target) ->
 		super(ev, $target)
-		globalDrag.resize = $target.attr("cui-drag-drop-select-resizable")
+		CUI.globalDrag.resize = $target.getAttribute("cui-drag-drop-select-resizable")
 
 	init_drag: (ev, $target) ->
 		#if $target.is(".cui-resizable-handle")
-		Draggable::init_drag.call(@, ev, $target)
+		CUI.Draggable::init_drag.call(@, ev, $target)
 		# else
 		# 	# ignore this
 		# 	return
@@ -49,7 +47,7 @@ class CUI.Resizable extends CUI.Movable
 	# on the resize direction
 	getResizePos: (start, diff, limitRect=@getLimitRect()) =>
 
-		switch globalDrag.resize
+		switch CUI.globalDrag.resize
 			when "se"
 				pos = w: start.w+diff.x, h: start.h+diff.y, fix: ["n","w"]
 			when "sw"

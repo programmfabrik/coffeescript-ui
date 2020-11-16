@@ -67,7 +67,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 				if not m
 					continue
 
-				# console.debug "match:", dump(m)
+				# console.debug "match:", CUI.util.dump(m)
 
 				info = m[1].split(":")
 				if m[3]
@@ -183,8 +183,8 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 			.done (content) =>
 				@_browser.marked(@, content)
 				.done (content) =>
-					@__htmlNodes = CUI.DOM.htmlToNodes(content)
-					@__texts = CUI.DOM.findTextInNodes(@__htmlNodes)
+					@__htmlNodes = CUI.dom.htmlToNodes(content)
+					@__texts = CUI.dom.findTextInNodes(@__htmlNodes)
 					@_browser.addWords(@__texts)
 					# console.debug "loaded:", filename, markdown.length, @__texts.length
 					dfr.resolve(@__content, @__htmlNodes, @__texts)
@@ -193,7 +193,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 		dfr.promise()
 
 	findContent: (searchQuery, matches = []) ->
-		assert(searchQuery instanceof CUI.DocumentBrowser.SearchQuery, "DocumentBrowserNode.findContent", "searchQuery needs to be instance of CUI.DocumentBrowser.SearchQuery.", searchQuery: searchQuery)
+		CUI.util.assert(searchQuery instanceof CUI.DocumentBrowser.SearchQuery, "DocumentBrowserNode.findContent", "searchQuery needs to be instance of CUI.DocumentBrowser.SearchQuery.", searchQuery: searchQuery)
 
 		regExpe = searchQuery.getRegExps()
 
@@ -204,7 +204,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 				return
 
 			for _match in match.getMatches()
-				removeFromArray(_match.regExp_idx, idx_hits)
+				CUI.util.removeFromArray(_match.regExp_idx, idx_hits)
 				if idx_hits.length == 0
 					return
 
@@ -332,7 +332,7 @@ class CUI.DocumentBrowser.Node extends CUI.ListViewTreeNode
 		"<img src='"+_href+"' alt='"+CUI.escapeAttribute(text)+"' title='"+CUI.escapeAttribute(title)+"'></img>"
 
 	renderContent: ->
-		new Label(text: @_title, multiline: true)
+		new CUI.Label(text: @_title, multiline: true)
 
 
 class CUI.DocumentBrowser.RootNode extends CUI.DocumentBrowser.Node

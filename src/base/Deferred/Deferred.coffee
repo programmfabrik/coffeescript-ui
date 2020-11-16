@@ -23,13 +23,14 @@ class CUI.Deferred
 		@__uniqueId
 
 	__callback: (types, args) ->
-		# CUI.error("callback:", @getUniqueId(), types, @__callbacks.length)
+		# console.error("callback:", @getUniqueId(), types, @__callbacks.length)
 		@__runningCallbacks = true
 		idx = 0
 		while idx < @__callbacks.length
 			cb = @__callbacks[idx]
 			if cb.type in types
 				# console.info @getUniqueId(), idx, cb.type, @__callbacks.length
+				#
 				cb.func.apply(@, args)
 
 				if cb.type in ["done", "always", "fail"]
@@ -40,12 +41,13 @@ class CUI.Deferred
 			idx++
 
 		@__runningCallbacks = false
-		# CUI.error("callback DONE:", @getUniqueId(), types, @__callbacks.length)
+		# console.error("callback DONE:", @getUniqueId(), types, @__callbacks.length)
 		@
 
 	__register: (type, func) ->
-		# CUI.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
+		# console.error("register:", @getUniqueId(), type, @__runningCallbacks, @__state)
 		#
+		CUI.util.assert(CUI.util.isFunction(func), "Deferred."+type+": Callback needs to be Function.", callback: func)
 		if @__state == "rejected" and type == "done"
 			# nothing to do
 			return
@@ -81,21 +83,21 @@ class CUI.Deferred
 		@
 
 	__notify: ->
-		assert(@__state == "pending", "CUI.Deferred.notify", "Cannot notify state #{@__state}.")
+		CUI.util.assert(@__state == "pending", "CUI.Deferred.notify", "Cannot notify state #{@__state}.")
 		@__callback(["progress"], arguments)
 		@
 
 	__resolve: ->
-		assert(@__state == "pending", "CUI.Deferred.resolve", "Cannot resolve state #{@__state}.")
+		CUI.util.assert(@__state == "pending", "CUI.Deferred.resolve", "Cannot resolve state #{@__state}.")
 		@__finished_args = arguments
 		# console.error "Deferred.resolve", @getUniqueId(), @__finished_args
 		@__state = "resolved"
-		# CUI.error("Deferred.resolve: calling done")
+		# console.error("Deferred.resolve: calling done")
 		@__callback(["done", "always"], arguments)
 		@
 
 	__reject: ->
-		assert(@__state == "pending", "CUI.Deferred.reject", "Cannot reject state #{@__state}.")
+		CUI.util.assert(@__state == "pending", "CUI.Deferred.reject", "Cannot reject state #{@__state}.")
 		@__finished_args = arguments
 		# console.error "Deferred.reject", @getUniqueId(), @__finished_args
 		@__state = "rejected"

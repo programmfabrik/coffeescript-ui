@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Coffeescript-UI Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>CUI</span>
+    &raquo;
+    <span class='title'>Button</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        CUI.Button
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>elements&#47;Button&#47;Button.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../class/CUI/DOMElement.html'>CUI.DOMElement</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/CUI/ButtonHref.html'>CUI.ButtonHref</a>
+        <a href='../../class/CUI/FileUploadButton.html'>CUI.FileUploadButton</a>
+      </p>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='defaults-variable'>
+    defaults
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>{
+  confirm_ok: &quot;Ok&quot;,
+  confirm_icon: &quot;question&quot;,
+  confirm_cancel: &quot;Cancel&quot;,
+  confirm_title: &quot;Confirmation&quot;,
+  disabled_css_class: &quot;cui-disabled&quot;,
+  active_css_class: &quot;cui-active&quot;
+}</code></pre>
+    
+  </dd>
+  <dt id='clickTypes-variable'>
+    clickTypes
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>{
+  click: [&#39;click&#39;],
+  mouseup: [&#39;mouseup&#39;],
+  dblclick: [&#39;dblclick&#39;]
+}</code></pre>
+    
+  </dd>
+  <dt id='clickTypesPrevent-variable'>
+    clickTypesPrevent
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>{
+  click: [&#39;dblclick&#39;, &#39;mousedown&#39;],
+  mouseup: [&#39;mouseup&#39;, &#39;mousedown&#39;],
+  dblclick: [&#39;click&#39;, &#39;mousedown&#39;]
+}</code></pre>
+    
+  </dd>
+</dl>
+      <h3 class='inherited'>
+        Variable inherited from
+        <a href='../../class/CUI/DOMElement.html'>CUI.DOMElement</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../../class/CUI/DOMElement.html#defaults-variable'>defaults</a>
+        <a href='../../class/CUI/Element.html#uniqueId-variable'>uniqueId</a>
+      </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#setSize-dynamic'>
+        #
+(void)
+<b>setSize</b><span>(size)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onClickAction-dynamic'>
+        #
+(void)
+<b>onClickAction</b><span>(ev)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initOpts-dynamic'>
+        #
+(void)
+<b>initOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__getIcon-dynamic'>
+        #
+(void)
+<b>__getIcon</b><span>(icon)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      return icon for string 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#readOpts-dynamic'>
+        #
+(void)
+<b>readOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getCenter-dynamic'>
+        #
+(void)
+<b>getCenter</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__getTemplateName-dynamic'>
+        #
+(void)
+<b>__getTemplateName</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTemplateName-dynamic'>
+        #
+(void)
+<b>getTemplateName</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getValue-dynamic'>
+        #
+(void)
+<b>getValue</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getElementForLayer-dynamic'>
+        #
+(void)
+<b>getElementForLayer</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getRadioButtons-dynamic'>
+        #
+(void)
+<b>getRadioButtons</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getGroupButtons-dynamic'>
+        #
+(void)
+<b>getGroupButtons</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__getButtons-dynamic'>
+        #
+(void)
+<b>__getButtons</b><span>(key, value)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      returns other buttons 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasMenu-dynamic'>
+        #
+(void)
+<b>hasMenu</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasLeft-dynamic'>
+        #
+(void)
+<b>hasLeft</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getMenu-dynamic'>
+        #
+(void)
+<b>getMenu</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#menuSetActiveIdx-dynamic'>
+        #
+(void)
+<b>menuSetActiveIdx</b><span>(idx)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getMenuRootButton-dynamic'>
+        #
+(void)
+<b>getMenuRootButton</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#toggle-dynamic'>
+        #
+(void)
+<b>toggle</b><span>(flags = {}, event)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      TODO rename to toggleActiveState 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setActive-dynamic'>
+        #
+(void)
+<b>setActive</b><span>(active, flags = {}, event)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__callOnGroup-dynamic'>
+        #
+(void)
+<b>__callOnGroup</b><span>(call, flags, event)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#activate-dynamic'>
+        #
+(void)
+<b>activate</b><span>(flags = {}, event)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#deactivate-dynamic'>
+        #
+(void)
+<b>deactivate</b><span>(flags = {}, event)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setIconRight-dynamic'>
+        #
+(void)
+<b>setIconRight</b><span>(icon = null)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setIcon-dynamic'>
+        #
+(void)
+<b>setIcon</b><span>(icon = null, _key = &quot;left&quot;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#startSpinner-dynamic'>
+        #
+(void)
+<b>startSpinner</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#stopSpinner-dynamic'>
+        #
+(void)
+<b>stopSpinner</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getIcon-dynamic'>
+        #
+(void)
+<b>getIcon</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getIconRight-dynamic'>
+        #
+(void)
+<b>getIconRight</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__setState-dynamic'>
+        #
+(void)
+<b>__setState</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__setIconState-dynamic'>
+        #
+(void)
+<b>__setIconState</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__setTextState-dynamic'>
+        #
+(void)
+<b>__setTextState</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isActive-dynamic'>
+        #
+(void)
+<b>isActive</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isDisabled-dynamic'>
+        #
+(void)
+<b>isDisabled</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isEnabled-dynamic'>
+        #
+(void)
+<b>isEnabled</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setEnabled-dynamic'>
+        #
+(void)
+<b>setEnabled</b><span>(enabled)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#disable-dynamic'>
+        #
+(void)
+<b>disable</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#enable-dynamic'>
+        #
+(void)
+<b>enable</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setText-dynamic'>
+        #
+(void)
+<b>setText</b><span>(__txt)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setTextMaxChars-dynamic'>
+        #
+(void)
+<b>setTextMaxChars</b><span>(max_chars)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getText-dynamic'>
+        #
+(void)
+<b>getText</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getGroup-dynamic'>
+        #
+(void)
+<b>getGroup</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setGroup-dynamic'>
+        #
+(void)
+<b>setGroup</b><span>(__group)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__initTooltip-dynamic'>
+        #
+(void)
+<b>__initTooltip</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getTooltip-dynamic'>
+        #
+(void)
+<b>getTooltip</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isShown-dynamic'>
+        #
+(void)
+<b>isShown</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isHidden-dynamic'>
+        #
+(void)
+<b>isHidden</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#destroy-dynamic'>
+        #
+(void)
+<b>destroy</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#show-dynamic'>
+        #
+(void)
+<b>show</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hide-dynamic'>
+        #
+(void)
+<b>hide</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../../class/CUI/DOMElement.html'>CUI.DOMElement</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../../class/CUI/DOMElement.html#initOpts-dynamic'>#initOpts</a>
+          <a href='../../class/CUI/DOMElement.html#registerTemplate-dynamic'>#registerTemplate</a>
+          <a href='../../class/CUI/DOMElement.html#getDOMElementClasses-dynamic'>#getDOMElementClasses</a>
+          <a href='../../class/CUI/DOMElement.html#registerDOMElement-dynamic'>#registerDOMElement</a>
+          <a href='../../class/CUI/DOMElement.html#getElementForLayer-dynamic'>#getElementForLayer</a>
+          <a href='../../class/CUI/DOMElement.html#unregisterDOMElement-dynamic'>#unregisterDOMElement</a>
+          <a href='../../class/CUI/DOMElement.html#__assertDOMElement-dynamic'>#__assertDOMElement</a>
+          <a href='../../class/CUI/DOMElement.html#__assertTemplateElement-dynamic'>#__assertTemplateElement</a>
+          <a href='../../class/CUI/DOMElement.html#addClass-dynamic'>#addClass</a>
+          <a href='../../class/CUI/DOMElement.html#setAria-dynamic'>#setAria</a>
+          <a href='../../class/CUI/DOMElement.html#removeClass-dynamic'>#removeClass</a>
+          <a href='../../class/CUI/DOMElement.html#hide-dynamic'>#hide</a>
+          <a href='../../class/CUI/DOMElement.html#show-dynamic'>#show</a>
+          <a href='../../class/CUI/DOMElement.html#hasClass-dynamic'>#hasClass</a>
+          <a href='../../class/CUI/DOMElement.html#isDestroyed-dynamic'>#isDestroyed</a>
+          <a href='../../class/CUI/DOMElement.html#empty-dynamic'>#empty</a>
+          <a href='../../class/CUI/DOMElement.html#replace-dynamic'>#replace</a>
+          <a href='../../class/CUI/DOMElement.html#append-dynamic'>#append</a>
+          <a href='../../class/CUI/DOMElement.html#prepend-dynamic'>#prepend</a>
+          <a href='../../class/CUI/DOMElement.html#text-dynamic'>#text</a>
+          <a href='../../class/CUI/DOMElement.html#get-dynamic'>#get</a>
+          <a href='../../class/CUI/DOMElement.html#getFlexHandle-dynamic'>#getFlexHandle</a>
+          <a href='../../class/CUI/DOMElement.html#destroy-dynamic'>#destroy</a>
+          <a href='../../class/CUI/Element.html#getElementClass-dynamic'>#getElementClass</a>
+          <a href='../../class/CUI/Element.html#getUniqueId-dynamic'>#getUniqueId</a>
+          <a href='../../class/CUI/Element.html#getOpts-dynamic'>#getOpts</a>
+          <a href='../../class/CUI/Element.html#getOpt-dynamic'>#getOpt</a>
+          <a href='../../class/CUI/Element.html#hasOpt-dynamic'>#hasOpt</a>
+          <a href='../../class/CUI/Element.html#getSetOpt-dynamic'>#getSetOpt</a>
+          <a href='../../class/CUI/Element.html#hasSetOpt-dynamic'>#hasSetOpt</a>
+          <a href='../../class/CUI/Element.html#copy-dynamic'>#copy</a>
+          <a href='../../class/CUI/Element.html#mergeOpt-dynamic'>#mergeOpt</a>
+          <a href='../../class/CUI/Element.html#removeOpt-dynamic'>#removeOpt</a>
+          <a href='../../class/CUI/Element.html#addOpt-dynamic'>#addOpt</a>
+          <a href='../../class/CUI/Element.html#addOpts-dynamic'>#addOpts</a>
+          <a href='../../class/CUI/Element.html#mergeOpts-dynamic'>#mergeOpts</a>
+          <a href='../../class/CUI/Element.html#__getCheckMap-dynamic'>#__getCheckMap</a>
+          <a href='../../class/CUI/Element.html#readOpts-dynamic'>#readOpts</a>
+          <a href='../../class/CUI/Element.html#readOptsFromAttr-dynamic'>#readOptsFromAttr</a>
+          <a href='../../class/CUI/Element.html#proxy-dynamic'>#proxy</a>
+          <a href='../../class/CUI/Element.html#getOptKeys-static'>.getOptKeys</a>
+        </p>
+      </h2>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(opts = {})</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='setSize-dynamic'>
+      #
+(void)
+<b>setSize</b><span>(size)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onClickAction-dynamic'>
+      #
+(void)
+<b>onClickAction</b><span>(ev)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='initOpts-dynamic'>
+      #
+(void)
+<b>initOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__getIcon-dynamic'>
+      #
+(void)
+<b>__getIcon</b><span>(icon)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>return icon for string</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='readOpts-dynamic'>
+      #
+(void)
+<b>readOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getCenter-dynamic'>
+      #
+(void)
+<b>getCenter</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__getTemplateName-dynamic'>
+      #
+(void)
+<b>__getTemplateName</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTemplateName-dynamic'>
+      #
+(void)
+<b>getTemplateName</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getValue-dynamic'>
+      #
+(void)
+<b>getValue</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getElementForLayer-dynamic'>
+      #
+(void)
+<b>getElementForLayer</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getRadioButtons-dynamic'>
+      #
+(void)
+<b>getRadioButtons</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getGroupButtons-dynamic'>
+      #
+(void)
+<b>getGroupButtons</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__getButtons-dynamic'>
+      #
+(void)
+<b>__getButtons</b><span>(key, value)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>returns other buttons</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasMenu-dynamic'>
+      #
+(void)
+<b>hasMenu</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasLeft-dynamic'>
+      #
+(void)
+<b>hasLeft</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getMenu-dynamic'>
+      #
+(void)
+<b>getMenu</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='menuSetActiveIdx-dynamic'>
+      #
+(void)
+<b>menuSetActiveIdx</b><span>(idx)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getMenuRootButton-dynamic'>
+      #
+(void)
+<b>getMenuRootButton</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='toggle-dynamic'>
+      #
+(void)
+<b>toggle</b><span>(flags = {}, event)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>TODO rename to toggleActiveState</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setActive-dynamic'>
+      #
+(void)
+<b>setActive</b><span>(active, flags = {}, event)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__callOnGroup-dynamic'>
+      #
+(void)
+<b>__callOnGroup</b><span>(call, flags, event)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='activate-dynamic'>
+      #
+(void)
+<b>activate</b><span>(flags = {}, event)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='deactivate-dynamic'>
+      #
+(void)
+<b>deactivate</b><span>(flags = {}, event)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setIconRight-dynamic'>
+      #
+(void)
+<b>setIconRight</b><span>(icon = null)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setIcon-dynamic'>
+      #
+(void)
+<b>setIcon</b><span>(icon = null, _key = &quot;left&quot;)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='startSpinner-dynamic'>
+      #
+(void)
+<b>startSpinner</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='stopSpinner-dynamic'>
+      #
+(void)
+<b>stopSpinner</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getIcon-dynamic'>
+      #
+(void)
+<b>getIcon</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getIconRight-dynamic'>
+      #
+(void)
+<b>getIconRight</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__setState-dynamic'>
+      #
+(void)
+<b>__setState</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__setIconState-dynamic'>
+      #
+(void)
+<b>__setIconState</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__setTextState-dynamic'>
+      #
+(void)
+<b>__setTextState</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isActive-dynamic'>
+      #
+(void)
+<b>isActive</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isDisabled-dynamic'>
+      #
+(void)
+<b>isDisabled</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isEnabled-dynamic'>
+      #
+(void)
+<b>isEnabled</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setEnabled-dynamic'>
+      #
+(void)
+<b>setEnabled</b><span>(enabled)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='disable-dynamic'>
+      #
+(void)
+<b>disable</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='enable-dynamic'>
+      #
+(void)
+<b>enable</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setText-dynamic'>
+      #
+(void)
+<b>setText</b><span>(__txt)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setTextMaxChars-dynamic'>
+      #
+(void)
+<b>setTextMaxChars</b><span>(max_chars)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getText-dynamic'>
+      #
+(void)
+<b>getText</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getGroup-dynamic'>
+      #
+(void)
+<b>getGroup</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setGroup-dynamic'>
+      #
+(void)
+<b>setGroup</b><span>(__group)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__initTooltip-dynamic'>
+      #
+(void)
+<b>__initTooltip</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getTooltip-dynamic'>
+      #
+(void)
+<b>getTooltip</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isShown-dynamic'>
+      #
+(void)
+<b>isShown</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isHidden-dynamic'>
+      #
+(void)
+<b>isHidden</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-dynamic'>
+      #
+(void)
+<b>destroy</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='show-dynamic'>
+      #
+(void)
+<b>show</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hide-dynamic'>
+      #
+(void)
+<b>hide</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

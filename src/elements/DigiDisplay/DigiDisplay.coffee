@@ -5,10 +5,10 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class DigiDisplay extends CUI.DOM
+class CUI.DigiDisplay extends CUI.DOMElement
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@__digitsMap = []
 		@createMarkup()
 		@registerDOMElement(@__displayDiv)
@@ -38,51 +38,52 @@ class DigiDisplay extends CUI.DOM
 			fc = info.first_div
 
 			if not info.height
-				info.height = fc.outerHeight()
-			fc.css("marginTop", "-"+(_idx*info.height)+"px")
-			fc.attr("c", c)
-			fc.attr("idx", _idx)
+				info.height = CUI.dom.getDimensions(fc).borderBoxHeight
+			CUI.dom.setStyleOne(fc, "marginTop", "-"+(_idx*info.height)+"px")
+			fc.setAttribute("c", c)
+			fc.setAttribute("idx", _idx)
 		@
 
 	createMarkup: ->
-		@__displayDiv = $div("cui-digi-display")
+		@__displayDiv = CUI.dom.div("cui-digi-display")
 
 		for digit, digit_idx in @_digits
 			if digit.static
-				@__displayDiv.append(
-					container = $div("cui-digi-display-static cui-digi-display-#{digit_idx}")
-
-				)
-				container.append($text(digit.static)).addClass(digit.class)
+				CUI.dom.append(@__displayDiv, container = CUI.dom.div("cui-digi-display-static cui-digi-display-#{digit_idx}"))
+				CUI.dom.addClass(CUI.dom.append(container, CUI.dom.text(digit.static)), digit.class)
 				if digit.attr
-					container.attr(digit.attr)
+					container.getAttribute(digit.attr)
 				continue
 			digit.__regexp = new RegExp(digit.mask)
-			@__displayDiv.append(
-				container = $div("cui-digi-display-container cui-digi-display-#{digit_idx}")
-			)
-			container.addClass(digit.class)
+			CUI.dom.append(@__displayDiv, container = CUI.dom.div("cui-digi-display-container cui-digi-display-#{digit_idx}"))
+			CUI.dom.addClass(container, digit.class)
 			if digit.attr
-				container.attr(digit.attr)
+				container.getAttribute(digit.attr)
 
 			@__digitsMap[digit_idx] = map: (map = {})
 
 			# for the "unknown character
-			container.append(fc = $div("cui-digi-display-digit").html("&nbsp;"))
+			fc = CUI.dom.div("cui-digi-display-digit")
+			fc.innerHTML = "&nbsp;"
+			CUI.dom.append(container, fc)
 			@__digitsMap[digit_idx].first_div = fc
 			idx = 1
 			matched = false
 			for i in [32..128]
 				if digit.__regexp.exec(c = String.fromCharCode(i))
 					if i == 32
-						container.append($div("cui-digi-display-digit").html("&nbsp;"))
+						div = CUI.dom.div("cui-digi-display-digit")
+						div.innerHTML = "&nbsp;"
+						CUI.dom.append(container, div)
 					else
-						container.append($div("cui-digi-display-digit").text(c))
+						div = CUI.dom.div("cui-digi-display-digit")
+						div.textContent = c
+						CUI.dom.append(container, div)
 					map[c] = idx
 					idx++
 					matched = true
 
-			assert(matched, "DigiDisplay.createMarkup", "Digit #{digit_idx} not matched against the regexp. ASCII range 32-128 is allowed.", digit: digit)
+			CUI.util.assert(matched, "DigiDisplay.createMarkup", "Digit #{digit_idx} not matched against the regexp. ASCII range 32-128 is allowed.", digit: digit)
 
-			# CUI.debug "created markup with map", map
+			# console.debug "created markup with map", map
 		@__displayDiv

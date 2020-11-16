@@ -5,9 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FileUploadFile extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+class CUI.FileUploadFile extends CUI.Element
+	constructor: (opts) ->
+		super(opts)
 
 		@__progress =
 			status: "CREATED"
@@ -17,7 +17,7 @@ class FileUploadFile extends CUI.Element
 
 		@__dfr = new CUI.Deferred()
 		# @__dfr.always =>
-		#	CUI.debug @_file.name, @getStatus()
+		#	console.debug @_file.name, @getStatus()
 		@__promise = @__dfr.promise()
 
 	initOpts: ->
@@ -26,10 +26,11 @@ class FileUploadFile extends CUI.Element
 			file:
 				mandatory: true
 				check: (v) ->
-					v instanceof File
+					# avoid instanceof, so external initializers like TestCafé work
+					typeof(v) == 'object'
 			fileUpload:
 				mandatory: true
-				check: FileUpload
+				check: CUI.FileUpload
 			batch:
 				check: (v) ->
 					v >= 0
@@ -51,7 +52,7 @@ class FileUploadFile extends CUI.Element
 		if @__imgDiv
 			return @__imgDiv
 
-		img = $img()[0]
+		img = CUI.dom.img()[0]
 		img.src = window.URL.createObjectURL(@_file)
 		img.onload = (ev) =>
 			if img.width < img.height
@@ -59,7 +60,9 @@ class FileUploadFile extends CUI.Element
 				@__imgDiv.addClass("portrait")
 			window.URL.revokeObjectURL(img.src)
 
-		@__imgDiv = $div("cui-file-upload-file-img").addClass("landscape").append($div().append(img))
+		div = CUI.dom.div("cui-file-upload-file-img")
+		CUI.dom.addClass(div, "landscape")
+		@__imgDiv = CUI.dom.append(div, CUI.dom.append(CUI.dom.div(), img))
 
 	getFile: ->
 		@_file
@@ -74,7 +77,7 @@ class FileUploadFile extends CUI.Element
 		@_batch
 
 	getName: ->
-		@_file.name
+		@_file.webkitRelativePath or @_file.name
 
 	getStatus: ->
 		@__progress.status
@@ -106,8 +109,8 @@ class FileUploadFile extends CUI.Element
 				@__progress.status = "ABORT"
 				@__dfr.reject(@)
 			when "STARTED","PROGRESS","COMPLETED"
-				CUI.debug "FileUploadFile.abort:", @__upload
-				@__upload.abort()
+				# console.debug("FileUploadFile.abort:", @__upload)
+				@__upload?.abort()
 			when "ABORT","DEQUEUED"
 				;
 				# do nothing
@@ -134,8 +137,8 @@ class FileUploadFile extends CUI.Element
 		!!@__upload
 
 	upload: (url, name) ->
-		# CUI.debug "starting upload for", @_file.name
-		assert(not @__upload, "FileUploadFile.upload", "A file can only be uploaded once.", file: @)
+		# console.debug "starting upload for", @_file.name
+		CUI.util.assert(not @__upload, "CUI.FileUploadFile.upload", "A file can only be uploaded once.", file: @)
 
 		form = {}
 		form[name] = @_file
@@ -147,13 +150,14 @@ class FileUploadFile extends CUI.Element
 			@__upload = new CUI.XHR
 				url: url
 				form: form
+
 			@__upload
 			.start()
 			.progress (type, loaded, total, percent) =>
 				if type == "download"
 					return
 
-				# CUI.debug loaded, total, percent
+				# console.debug loaded, total, percent
 				if @__progress.status == "ABORT"
 					return
 
@@ -170,7 +174,7 @@ class FileUploadFile extends CUI.Element
 				@__progress.data = data
 
 				onDone = =>
-					# CUI.debug @_file.name, "result:", @result
+					# console.debug @_file.name, "result:", @result
 					@__progress.status = "DONE"
 					@__upload = null
 					@__dfr.resolve(@)
@@ -187,7 +191,7 @@ class FileUploadFile extends CUI.Element
 
 			.fail (data, status, statusText) =>
 				# "abort" may be set by jQuery
-				console.warn("FileUploadFile.fail", status, statusText)
+				# console.warn("FileUploadFile.fail", status, statusText)
 				if statusText == "abort"
 					@__progress.status = "ABORT"
 
@@ -201,7 +205,7 @@ class FileUploadFile extends CUI.Element
 		else
 			CUI.setTimeout
 				call: =>
-					console.warn("FileUploadFile.fail, Not uploading empty file.")
+					# console.warn("FileUploadFile.fail, Not uploading empty file.")
 					@__progress.status = "FAILED"
 					@__upload = null
 					@__dfr.reject(@)
@@ -210,4 +214,3 @@ class FileUploadFile extends CUI.Element
 		@__progress.percent = 0
 		@__dfr.notify(@)
 		@__promise
-

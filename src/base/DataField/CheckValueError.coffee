@@ -5,4 +5,4 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CheckValueError extends Error
+class CUI.CheckValueError extends window.Error

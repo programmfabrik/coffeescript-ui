@@ -5,13 +5,13 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class ListViewHeaderColumn extends ListViewColumn
+class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 
 	initOpts: ->
 		super()
 
 		@removeOpt("text")
-		@removeOpt("element")
+		# @removeOpt("element")
 
 		@addOpts
 			spacer:
@@ -19,9 +19,8 @@ class ListViewHeaderColumn extends ListViewColumn
 			rotate_90:
 				check: Boolean
 			label:
-				mandatory: true
 				check: (v) ->
-					if CUI.isPlainObject(v) or v instanceof Label
+					if CUI.util.isPlainObject(v) or v instanceof CUI.Label
 						true
 					else
 						false
@@ -30,9 +29,9 @@ class ListViewHeaderColumn extends ListViewColumn
 
 	readOpts: ->
 		super()
-		if @_label instanceof Label
+		if @_label instanceof CUI.Label
 			@__label = @_label
-		else
+		else if @_label
 			@_label.rotate_90 = @_rotate_90
 			@__label = new CUI.defaults.class.Label(@_label)
 
@@ -52,22 +51,26 @@ class ListViewHeaderColumn extends ListViewColumn
 		if coldef == "fixed"
 			return @__element
 
-		move_handle = CUI.DOM.element("DIV", class: "cui-lv-col-resize-handle")
+		move_handle = CUI.dom.element("DIV", class: "cui-lv-col-resize-handle")
 
 		new CUI.ListViewColResize
 			element: move_handle
 			row: @getRow()
 			column: @
 
-		CUI.DOM.append(@__element, move_handle)
+		CUI.dom.append(@__element, move_handle)
 		@__element
 
 	render: ->
 		if @_spacer
-			arr = [ $div("cui-tree-node-spacer") ]
+			arr = [ CUI.dom.div("cui-tree-node-spacer") ]
 		else
 			arr = []
 
-		arr.push(@__label.DOM)
+		if @_element
+			arr.push(@_element)
+		else if @__label
+			arr.push(@__label)
+
 		arr
 

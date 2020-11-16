@@ -5,7 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class NumberInput extends Input
+class CUI.NumberInput extends CUI.Input
 	initOpts: ->
 		super()
 		@addOpts
@@ -15,7 +15,7 @@ class NumberInput extends Input
 
 			symbol:
 				check: (v) ->
-					isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 
 			symbol_before:
 				default: false
@@ -32,17 +32,17 @@ class NumberInput extends Input
 
 			separator:
 				check: (v) ->
-					isString(v) and v.length > 0
+					CUI.util.isString(v) and v.length > 0
 
 			min:
 				default: null
 				check: (v) ->
-					isNumber(v)
+					CUI.util.isNumber(v)
 
 			max:
 				default: null
 				check: (v) ->
-					isNumber(v)
+					CUI.util.isNumber(v)
 
 		@removeOpt("checkInput")
 		@removeOpt("getValueForDisplay")
@@ -54,10 +54,16 @@ class NumberInput extends Input
 		super()
 		@_checkInput = @__checkInput
 		@_prevent_invalid_input = true
+		@setMin(@_min)
+		@setMax(@_max)
+
+	setMin: (@__min) ->
+
+	setMax: (@__max) ->
 
 	formatValueForDisplay: (value=@getValue(), forInput = false) ->
-		assert(typeof(value) == "number" or value == null, "NumberInput.formatValueForDisplay", "value needs to be Number or null", value: value, type: typeof(value))
-		if isEmpty(value)
+		CUI.util.assert(typeof(value) == "number" or value == null, "NumberInput.formatValueForDisplay", "value needs to be Number or null", value: value, type: typeof(value))
+		if CUI.util.isEmpty(value)
 			return ""
 
 		if @_store_as_integer
@@ -104,7 +110,7 @@ class NumberInput extends Input
 		@formatValueForDisplay(@getValue())
 
 	getValueForStore: (value) ->
-		if not isString(value)
+		if not CUI.util.isString(value)
 			value = value + ""
 		number = parseFloat(value.replace(/,/,"."))
 		if isNaN(number)
@@ -114,9 +120,6 @@ class NumberInput extends Input
 			return parseInt((number * Math.pow(10, @_decimals)).toFixed(0))
 
 		return number
-
-	storeValue: (value, flags={}) ->
-		super(@getValueForStore(value), flags)
 
 	getDefaultValue: ->
 		null
@@ -128,15 +131,15 @@ class NumberInput extends Input
 	checkValue: (v) ->
 		if v == null
 			true
-		else if @_decimals > 0 and isFloat(v)
+		else if @_decimals > 0 and CUI.util.isFloat(v)
 			true
-		else if isInteger(v)
+		else if CUI.util.isInteger(v)
 			true
 		else
 			throw new Error("#{@__cls}.setValue(value): Value needs to be Number or null.")
 
 	__addSymbol: (str) ->
-		if isEmpty(@_symbol)
+		if CUI.util.isEmpty(@_symbol)
 			return str
 
 		if @_symbol_before
@@ -145,19 +148,26 @@ class NumberInput extends Input
 			str+" "+@_symbol
 
 	__addSeparator: (str) ->
-		if isEmpty(@_separator)
+		if CUI.util.isEmpty(@_separator)
 			return str
 
+		isNegative = str.startsWith("-")
+		if isNegative
+			str = str.substr(1)
 		nn = []
 		for n,idx in str.split("").reverse()
 			if idx%3 == 0 and idx > 0
 				nn.push(@_separator)
 			nn.push(n)
+
+		if isNegative
+			nn.push("-")
+
 		nn.reverse()
 		nn.join("")
 
 	correctValueForInput: (value) ->
-		value.replace(/[,\.]/, @_decimalpoint)
+		return value.replace(/[,\.]/g, @_decimalpoint)
 
 	getValueForInput: ->
 		@formatValueForDisplay(null, true)
@@ -200,22 +210,22 @@ class NumberInput extends Input
 			return false
 
 		if number.length > 0 and not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
-			# CUI.debug "number not matched", number
+			# console.debug "number not matched", number
 			return false
 
-		if not isNull(@_min)
-			if @_min >= 0 and number == "-"
+		if not CUI.util.isNull(@__min)
+			if @__min >= 0 and number == "-"
 				return false
 
-			if number < @_min
+			if number < @__min
 				return false
 
-		if not isNull(@_max)
-			if number > @_max
+		if not CUI.util.isNull(@__max)
+			if number > @__max
 				return false
 
 		if not points.match(/^([0-9]*)$/)
-			# CUI.debug "points not matched", points
+			# console.debug "points not matched", points
 			return false
 
 		if points.length > @_decimals
@@ -223,20 +233,64 @@ class NumberInput extends Input
 
 		return true # v.replace(".", @_decimalpoint)
 
-
 	@format: (v, opts={}) ->
-		if isEmpty(v)
+		if CUI.util.isEmpty(v)
 			v = null
 
 		# automatically set decimals
-		if isFloat(v) and not opts.hasOwnProperty("decimals")
+		if CUI.util.isFloat(v) and not opts.hasOwnProperty("decimals")
 			_v = v+""
 			opts.decimals = _v.length - _v.indexOf(".") - 1
 
-		ni = new NumberInput(opts)
+		ni = new CUI.NumberInput(opts)
 		ni.start()
 
 		if not ni.checkInput(v+"")
 			null
 		else
 			ni.formatValueForDisplay(v)
+
+	@parse: (string, decimals) ->
+		if isNaN(string.replace(/[,\.]/g, "")) # Remove comma to check if the input is valid.
+			return null
+
+		if isNaN(decimals)
+			decimals = 0
+
+		commaIndex = string.indexOf(",")
+		dotIndex = string.indexOf(".")
+		# Comma or dot not found, nothing to do.
+		if commaIndex == -1 and dotIndex == -1
+			return parseInt(string)
+
+		# In case both are found, we assume that the first one will be the thousand and the second one the decimal separator.
+		if dotIndex > 0 and commaIndex > 0
+			if dotIndex > commaIndex
+				thousandSeparatorRegex = /,/g
+			else
+				thousandSeparatorRegex = /\./g
+
+		# When decimal defined, we can guess the decimal separator if the input has the correct amount of decimals.
+		if not thousandSeparatorRegex and decimals > 0
+			decimal = string[string.length - 1 - decimals]
+			if decimal == ","
+				thousandSeparatorRegex = /\./g
+			else if decimal == "."
+				thousandSeparatorRegex = /,/g
+
+		# When there is no decimals it is possible to check with a regexp whether the separator is a valid thousand separator.
+		if not thousandSeparatorRegex and decimals == 0
+			if string.match(/^\d{1,3}([\.,]\d{3})+/)?[0] == string
+				if dotIndex > 0
+					thousandSeparatorRegex = /\./g
+				else
+					thousandSeparatorRegex = /,/g
+
+		if thousandSeparatorRegex
+			string = string.replace(thousandSeparatorRegex, "")
+
+		if decimals == 0
+			return parseInt(string)
+		else
+			string = string.replace(/,/, ".")
+			return parseFloat(string)

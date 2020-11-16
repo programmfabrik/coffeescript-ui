@@ -10,39 +10,41 @@
 #
 # @example Startup
 #
+
+marked = require('marked')
+
 class CUI
 
 	@__readyFuncs = []
 	@__themes = []
 
+	@__ng__: true
+
 	@start: ->
 
-		@CSS = new CUI.CSSLoader()
-
-		@getPathToScript()
 		trigger_viewport_resize = =>
-			CUI.info("CUI: trigger viewport resize.")
-			Events.trigger
+			# console.info("CUI: trigger viewport resize.")
+			CUI.Events.trigger
 				type: "viewport-resize"
 
-		Events.listen
+		CUI.Events.listen
 			type: "resize"
 			node: window
 			call: (ev, info) =>
-				console.info("CUI: caught window resize event.")
-				if CUI.__ng__ && !CUI.browser.ie
+				# console.info("CUI: caught window resize event.")
+				if !CUI.browser.ie
 					trigger_viewport_resize()
 				else
 					CUI.scheduleCallback(ms: 500, call: trigger_viewport_resize)
 				return
 
-		Events.listen
+		CUI.Events.listen
 			type: "drop"
 			node: document.documentElement
 			call: (ev) ->
 				ev.preventDefault()
 
-		Events.listen
+		CUI.Events.listen
 			type: "keyup"
 			node: window
 			capture: true
@@ -50,7 +52,7 @@ class CUI
 				if ev.getKeyboard() == "C+U+I"
 					CUI.toaster(text: "CUI!")
 
-		Events.listen
+		CUI.Events.listen
 			type: "keydown"
 			node: window
 			call: (ev) ->
@@ -59,50 +61,42 @@ class CUI
 
 				# backspace acts as "BACK" in some browser, like FF
 				if ev.keyCode() == 8
-					for node in CUI.DOM.elementsUntil(ev.getTarget(), null, document.documentElement)
+					for node in CUI.dom.elementsUntil(ev.getTarget(), null, document.documentElement)
 						if node.tagName in ["INPUT", "TEXTAREA"]
 							return
 						if node.getAttribute("contenteditable") == "true"
 							return
-					# CUI.info("swalloded BACKSPACE keydown event to prevent default")
+					# console.info("swalloded BACKSPACE keydown event to prevent default")
 					ev.preventDefault()
 				return
 
 		document.body.scrollTop=0
 
-		CUI.Template.loadFile("icons.svg")
-		.done =>
-			Template.load()
-			if not Template.nodeByName["cui-base"] # loaded in easydbui.html
-				CUI.Template.loadTemplateFile("easydbui.html")
-				.done =>
-					@ready()
-			else
-				@ready()
+		icons = require('../scss/icons/icons.svg')
+		CUI.Template.loadText(icons)
+		CUI.Template.load()
+
+		@chainedCall.apply(@, @__readyFuncs).always =>
+			@__ready = true
 		@
 
 	@getPathToScript: ->
-		if not @pathToScript
-			for s, idx in DOM.matchSelector(document.documentElement, "script")
-				if m = s.src.match("(.*)/easydbui.js")
-					@pathToScript = m[1]
-					@script = s
-					break
-			assert(@pathToScript, "easydbui", "Could not determine script path.")
+		if not @__pathToScript
+			scripts = document.getElementsByTagName('script')
+			cui_script = scripts[scripts.length - 1]
+			if m = cui_script.src.match("(.*/).*?\.js$")
+				@__pathToScript = m[1]
+			else
+				CUI.util.assert(@__pathToScript, "CUI", "Could not determine script path.")
 
-		@pathToScript
+		@__pathToScript
 
 
 	@ready: (func) ->
-		if func instanceof Function
-			if @__ready
-				func.call(@)
-			else
-				@__readyFuncs.push(func)
-		else
-			@__ready = true
-			for func in @__readyFuncs
-				func.call(@)
+		if @__ready
+			return func.call(@)
+
+		@__readyFuncs.push(func)
 
 	@defaults:
 		FileUpload:
@@ -111,13 +105,16 @@ class CUI
 
 		debug: true
 		asserts: true
+		asserts_alert: 'js' # or 'cui' or 'off' or 'debugger'
 		class: {}
 
+	# Returns a resolved CUI.Promise.
 	@resolvedPromise: ->
 		dfr = new CUI.Deferred()
 		dfr.resolve.apply(dfr, arguments)
 		dfr.promise()
 
+	# Returns a rejected CUI.Promise.
 	@rejectedPromise: ->
 		dfr = new CUI.Deferred()
 		dfr.reject.apply(dfr, arguments)
@@ -162,7 +159,7 @@ class CUI
 				return
 
 
-			if CUI.isFunction(args[idx])
+			if CUI.util.isFunction(args[idx])
 				if __this != CUI
 					ret = args[idx].call(__this)
 				else
@@ -170,11 +167,11 @@ class CUI
 			else
 				ret = args[idx]
 
-			# CUI.debug "idx", idx, "ret", ret, "state:", ret?.state?()
+			# console.debug "idx", idx, "ret", ret, "state:", ret?.state?()
 
 			idx++
 
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret
 				.done =>
 					return_values.push(get_return_value(arguments))
@@ -191,13 +188,14 @@ class CUI
 		init_next()
 		dfr.promise()
 
-
+	# Executes 'call' function in batches of 'chunk_size' for all the 'items'.
+	# It must be called with '.call(this, opts)'
 	@chunkWork: (_opts = {}) ->
 		opts = CUI.Element.readOpts _opts, "CUI.chunkWork",
 			items:
 				mandatory: true
 				check: (v) ->
-					CUI.isArray(v)
+					CUI.util.isArray(v)
 			chunk_size:
 				mandatory: true
 				default: 10
@@ -216,7 +214,7 @@ class CUI
 		chunk_size = opts.chunk_size
 		timeout = opts.timeout
 
-		assert(@ != CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.")
+		CUI.util.assert(@ != CUI, "CUI.chunkWork", "Cannot call CUI.chunkWork with 'this' not set to the caller.")
 
 		idx = 0
 		len = opts.items.length
@@ -250,7 +248,7 @@ class CUI
 				dfr.reject()
 				return
 
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				ret.fail(dfr.reject).done(go_on)
 			else
 				go_on()
@@ -281,7 +279,7 @@ class CUI
 				if dfr.state() == "rejected"
 					return
 
-				# CUI.debug idx, chunk, chunkSize, dfr.state()
+				# console.debug idx, chunk, chunkSize, dfr.state()
 				dfr.notify(objects[idx], idx)
 				if idx == objects.length-1
 					dfr.resolve()
@@ -305,7 +303,7 @@ class CUI
 
 	# proxy methods
 	@proxyMethods: (target, source, methods) ->
-		# CUI.debug target, source, methods
+		# console.debug target, source, methods
 		for k in methods
 			target.prototype[k] = source.prototype[k]
 
@@ -322,7 +320,7 @@ class CUI
 		return
 
 	@__removeTimeout: (timeout) ->
-		if removeFromArray(timeout, @__timeouts)
+		if CUI.util.removeFromArray(timeout, @__timeouts)
 			if timeout.track
 				@__callTimeoutChangeCallbacks()
 		return
@@ -332,12 +330,12 @@ class CUI
 			if timeout.id == timeoutID
 				return timeout
 
-		assert(ignoreNotFound, "CUI.__getTimeoutById", "Timeout ##{timeoutID} not found.")
+		CUI.util.assert(ignoreNotFound, "CUI.__getTimeoutById", "Timeout ##{timeoutID} not found.")
 		null
 
 	@resetTimeout: (timeoutID) ->
 		timeout = @__getTimeoutById(timeoutID)
-		assert(not timeout.__isRunning, "CUI.resetTimeout", "Timeout #{timeoutID} cannot be resetted while running.", timeout: timeout)
+		CUI.util.assert(not timeout.__isRunning, "CUI.resetTimeout", "Timeout #{timeoutID} cannot be resetted while running.", timeout: timeout)
 		timeout.onReset?(timeout)
 		window.clearTimeout(timeout.real_id)
 		old_real_id = timeout.real_id
@@ -350,7 +348,7 @@ class CUI
 
 
 	@setTimeout: (_func, ms=0, track) ->
-		if CUI.isPlainObject(_func)
+		if CUI.util.isPlainObject(_func)
 			ms = _func.ms or 0
 			track = _func.track
 			func = _func.call
@@ -359,13 +357,13 @@ class CUI
 		else
 			func = _func
 
-		if isNull(track)
+		if CUI.util.isNull(track)
 			if ms == 0
 				track = false
 			else
 				track = true
 
-		assert(CUI.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
+		CUI.util.assert(CUI.util.isFunction(func), "CUI.setTimeout", "Function needs to be a Function (opts.call)", parameter: _func)
 		timeout =
 			call: =>
 				timeout.__isRunning = true
@@ -400,12 +398,12 @@ class CUI
 			ms:
 				default: 0
 				check: (v) ->
-					isInteger(v) and v >= 0
+					CUI.util.isInteger(v) and v >= 0
 			track:
 				default: false
 				check: Boolean
 
-		idx = idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
+		idx = CUI.util.idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		if idx > -1 and CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeoutID)
 			# don't schedule the same call while it is already running, schedule
@@ -414,10 +412,10 @@ class CUI
 
 		if idx == -1
 			idx = @__scheduledCallbacks.length
-			# CUI.debug "...schedule", idx
+			# console.debug "...schedule", idx
 		else
 			# function already scheduled
-			# CUI.info("scheduleCallback, already scheduled: ", @__scheduledCallbacks[idx].timeout, CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeout))
+			# console.info("scheduleCallback, already scheduled: ", @__scheduledCallbacks[idx].timeout, CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeout))
 			CUI.resetTimeout(@__scheduledCallbacks[idx].timeoutID)
 			return @__scheduledCallbacks[idx].promise
 
@@ -439,7 +437,7 @@ class CUI
 
 		dfr.done =>
 			# remove this callback after we are done
-			removeFromArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
+			CUI.util.removeFromArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		cb.promise
 
@@ -451,10 +449,10 @@ class CUI
 				mandatory: true
 				check: Function
 
-		idx = idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
+		idx = CUI.util.idxInArray(opts.call, @__scheduledCallbacks, (v) -> v.call == opts.call)
 
 		if idx > -1 and not CUI.isTimeoutRunning(@__scheduledCallbacks[idx].timeoutID)
-			console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
+			# console.error "cancel timeout...", @__scheduledCallbacks[idx].timeoutID
 			CUI.clearTimeout(@__scheduledCallbacks[idx].timeoutID)
 			@__scheduledCallbacks.splice(idx, 1)
 			return true
@@ -470,19 +468,17 @@ class CUI
 			c = array[i++]
 			switch(c >> 4)
 				when 0, 1, 2, 3, 4, 5, 6, 7
-			        # 0xxxxxxx
-			        out.push(String.fromCharCode(c))
+					# 0xxxxxxx
+					out.push(String.fromCharCode(c))
 				when 12, 13
-			        # 110x xxxx   10xx xxxx
-			        char2 = array[i++]
-			        out.push(String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F)))
+					# 110x xxxx   10xx xxxx
+					char2 = array[i++]
+					out.push(String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F)))
 				when 14
-			        # 1110 xxxx  10xx xxxx  10xx xxxx
-			        char2 = array[i++]
-			        char3 = array[i++]
-			        out.push(String.fromCharCode(((c & 0x0F) << 12) |
-                       ((char2 & 0x3F) << 6) |
-                       ((char3 & 0x3F) << 0)))
+					# 1110 xxxx  10xx xxxx  10xx xxxx
+					char2 = array[i++]
+					char3 = array[i++]
+					out.push(String.fromCharCode(((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0)))
 		out.join("")
 
 	@__startTimeout: (timeout) ->
@@ -491,7 +487,7 @@ class CUI
 			# first time we put the real id
 			timeout.id = real_id
 		timeout.real_id = real_id
-		# CUI.error "new timeout:", timeoutID, "ms:", ms, "current timeouts:", @__timeouts.length
+		# console.error "new timeout:", timeoutID, "ms:", ms, "current timeouts:", @__timeouts.length
 		timeout.id
 
 	@countTimeouts: ->
@@ -527,16 +523,8 @@ class CUI
 	# we can hide things on the screen that should not irritate our screenshot comparison
 
 	@startWebdriverTest: ->
-		a= $("body")
-		a.addClass("cui-webdriver-test")
-
-	@mergeMap: (targetMap, mergeMap) ->
-		for k, v of mergeMap
-			if not targetMap.hasOwnProperty(k)
-				targetMap[k] = v
-			else if CUI.isPlainObject(targetMap[k]) and CUI.isPlainObject(v)
-				CUI.mergeMap(targetMap[k], v)
-		targetMap
+		a= "body"
+		CUI.dom.addClass(a, "cui-webdriver-test")
 
 	@getParameterByName: (name, search=document.location.search) ->
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
@@ -608,29 +596,36 @@ class CUI
 	@encodeUrlData: (params, replacer = null, connect = "&", connect_pair = "=") ->
 		url = []
 		if replacer
-			if CUI.isFunction(replacer)
+			if CUI.util.isFunction(replacer)
 				encode_func = replacer
 			else
-				encode_func = (v) -> CUI.stringMapReplace(v+"", replace_map)
+				encode_func = (v) -> CUI.util.stringMapReplace(v+"", replace_map)
 		else
 			encode_func = (v) -> encodeURIComponent(v)
 
 		for k, v of params
-			if CUI.isArray(v)
+			if CUI.util.isArray(v)
 				for _v in v
 					url.push(encode_func(k) + connect_pair + encode_func(_v))
-			else
+			else if not CUI.util.isEmpty(v)
 				url.push(encode_func(k) + connect_pair + encode_func(v))
+			else if v != undefined
+				url.push(encode_func(k))
 
 		url.join(connect)
 
+	# keep "," and ":" in url intact, encodeURI all other parts
 	@encodeURIComponentNicely: (str="") ->
 		s = []
-		for v in (str+"").split("")
-			if v in [",",":"]
-				s.push(v)
-			else
-				s.push(encodeURIComponent(v))
+		for v, idx in (str+"").split(",")
+			if idx > 0
+				s.push(",")
+
+			for v2, idx2 in v.split(":")
+				if idx2 > 0
+					s.push(":")
+
+				s.push(encodeURIComponent(v2))
 		s.join("")
 
 	@decodeURIComponentNicely: (v) ->
@@ -639,10 +634,10 @@ class CUI
 	@decodeUrlData: (url, replacer = null, connect = "&", connect_pair = "=", use_array=false) ->
 		params = {}
 		if replacer
-			if CUI.isFunction(replacer)
+			if CUI.util.isFunction(replacer)
 				decode_func = replacer
 			else
-				decode_func = (v) -> CUI.stringMapReplace(v+"", replacer)
+				decode_func = (v) -> CUI.util.stringMapReplace(v+"", replacer)
 		else
 			decode_func = (v) -> decodeURIComponent(v)
 
@@ -670,17 +665,27 @@ class CUI
 	@decodeUrlDataArray: (url, replace_map = null, connect = "&", connect_pair = "=") ->
 		@decodeUrlData(url, replace_map, connect, connect_pair, true)
 
+	# Deprecated -> Use CUI.util
+	@mergeMap: (targetMap, mergeMap) ->
+		for k, v of mergeMap
+			if not targetMap.hasOwnProperty(k)
+				targetMap[k] = v
+			else if CUI.util.isPlainObject(targetMap[k]) and CUI.util.isPlainObject(v)
+				CUI.util.mergeMap(targetMap[k], v)
+		targetMap
 
+	# Deprecated -> Use CUI.util
 	@revertMap: (map) ->
 		map_reverted = {}
 		for k, v of map
 			map_reverted[v] = k
 		map_reverted
 
+	# Deprecated -> Use CUI.util
 	@stringMapReplace: (s, map) ->
 		regex = []
 		for key of map
-			if isEmpty(key)
+			if CUI.util.isEmpty(key)
 				continue
 			regex.push(key.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
 
@@ -689,40 +694,53 @@ class CUI
 		else
 			s
 
+	# Deprecated -> Use CUI.util
 	@isFunction: (v) ->
 		v and typeof(v) == "function"
 
+	# Deprecated -> Use CUI.util
 	@isPlainObject: (v) ->
 		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
 
+	# Deprecated -> Use CUI.util
 	@isEmptyObject: (v) ->
 		for k of v
 			return false
 		return true
 
+	# Deprecated -> Use CUI.util
 	@isMap: (v) ->
 		@isPlainObject(v)
 
+	# Deprecated -> Use CUI.util
 	@isArray: (v) ->
 		Array.isArray(v)
 
+	# Deprecated -> Use CUI.util
+	@inArray: (value, array) ->
+		array.indexOf(value)
+
+	# Deprecated -> Use CUI.util
 	@isString: (s) ->
 		typeof(s) == "string"
 
 	@downloadData: (data, fileName) ->
 		blob = new Blob([data], type: "octet/stream")
-		url = window.URL.createObjectURL(blob)
-		@__downloadDataElement.href = url
-		@__downloadDataElement.download = fileName
-		@__downloadDataElement.click()
-		window.URL.revokeObjectURL(url)
+		if window.navigator.msSaveOrOpenBlob
+			window.navigator.msSaveOrOpenBlob(blob, fileName)
+		else
+			url = window.URL.createObjectURL(blob)
+			@__downloadDataElement.href = url
+			@__downloadDataElement.download = fileName
+			@__downloadDataElement.click()
+			window.URL.revokeObjectURL(url)
 
 
 	# https://gist.github.com/dperini/729294
 	@urlRegex: new RegExp(
 		"^" +
 		# protocol identifier
-		"(?:(?:(https?))://|)" +
+		"(?:(?:(sftp|ftp|ftps|https|http))://|)" +
 		# user:pass authentication
 		"(?:(\\S+?)(?::(\\S*))?@)?" +
 		"((?:(?:" +
@@ -736,14 +754,17 @@ class CUI
 		"(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
 		"|" +
 		# host & domain name
-		"(?:[a-z\\u00a1-\\uffff0-9-*][a-z\\u00a1-\\uffff0-9-]*\\.)*" +
+		"(?:[a-z0-9\\u00a1-\\uffff](?:|[a-z\\u00a1-\\uffff0-9-]*[a-z0-9\\u00a1-\\uffff])\\.)*" +
 		# last identifier
 		"(?:[a-z\\u00a1-\\uffff]{2,})" +
+		# hostname only
+		"|" +
+		"(?:[a-z0-9\\u00a1-\\uffff][a-z0-9-\\u00a1-\\uffff]*[a-z0-9\\u00a1-\\uffff])" +
 		"))|)" +
-	    # port number
-	    "(?::(\\d{2,5}))?" +
-	    # resource path
-	    "(?:([/?#]\\S*))?" +
+		# port number
+		"(?::(\\d{2,5}))?" +
+		# resource path
+		"(?:([/?#]\\S*))?" +
 		"$", "i"
 	)
 
@@ -765,7 +786,7 @@ class CUI
 		url
 
 	@parseLocation: (url) ->
-		if not CUI.isFunction(url?.match) or url.length == 0
+		if not CUI.util.isFunction(url?.match) or url.length == 0
 			return null
 
 		match = url.match(@urlRegex)
@@ -820,73 +841,81 @@ class CUI
 		p.url = p.url + p.path
 		p
 
-	@error: ->
-		console.error.apply(console, arguments)
-
-	@debug: ->
-		console.debug.apply(console, arguments)
-
-	@info: ->
-		console.info.apply(console, arguments)
-
-	@warn: ->
-		console.warn.apply(console, arguments)
-
-
 	@escapeAttribute: (data) ->
-		if isNull(data) or !isString(data)
+		if CUI.util.isNull(data) or !CUI.util.isString(data)
 			return ""
 
 		data = data.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")
 		data
 
+	@loadScript: (src) ->
+		deferred = new CUI.Deferred
+		script = CUI.dom.element("script", charset: "utf-8", src: src)
+
+		CUI.Events.listen
+			type: "load"
+			node: script
+			instance: script
+			call: (ev) =>
+				deferred.resolve(ev)
+				return
+
+		CUI.Events.listen
+			type: "error"
+			node: script
+			instance: script
+			call: (ev) =>
+				document.head.removeChild(script)
+				deferred.reject(ev)
+				return
+
+		deferred.always =>
+			CUI.Events.ignore(instance: script)
+
+		document.head.appendChild(script)
+		return deferred.promise()
 
 # http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-CUI.browser =
-	opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
-	firefox: `typeof InstallTrigger !== 'undefined'`
-	safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
-	ie: `/*@cc_on!@*/false || !!document.documentMode`
-	chrome: `!!window.chrome && !!window.chrome.webstore`
-
-CUI.browser.edge = `!CUI.browser.ie && !!window.StyleMedia`
-CUI.browser.blink = `(CUI.browser.chrome || CUI.browser.opera) && !!window.CSS`
+	@browser: (->
+		map =
+			opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
+			firefox: `typeof InstallTrigger !== 'undefined'`
+			safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
+			ie: `/*@cc_on!@*/false || !!document.documentMode`
+			chrome: !!window.chrome and !!window.chrome.webstore
+		map.edge = not map.ie && !!window.StyleMedia
+		map.blink = (map.chrome or map.opera) && !!window.CSS
+		map
+	)()
 
 CUI.ready =>
+
 	for k of CUI.browser
 		if CUI.browser[k]
 			document.body.classList.add("cui-browser-"+k)
 
-	if window.marked
-		CUI.defaults.marked_opts =
-			renderer: new marked.Renderer()
-			gfm: true
-			tables: true
-			breaks: false
-			pedantic: false
-			sanitize: true
-			smartLists: true
-			smartypants: false
-
-	for i in [1..9]
-		do (i) ->
-			CUI["$"+i] = ->
-				if arguments.length == 1
-					window["$"+i] = arguments[0]
-					console.debug "$"+i+" = ", arguments[0]
-					return
-
-				for arg, idx in arguments
-					window["$"+i+idx] = arg
-					console.debug "$"+i+idx+" = ", arg
-			return
+	CUI.defaults.marked_opts =
+		renderer: new marked.Renderer()
+		gfm: true
+		tables: true
+		breaks: false
+		pedantic: false
+		smartLists: true
+		smartypants: false
 
 	# initialize a markdown renderer
-	marked?.setOptions(CUI.defaults.marked_opts)
+	marked.setOptions(CUI.defaults.marked_opts)
 
-	nodes = CUI.DOM.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
+	nodes = CUI.dom.htmlToNodes("<!-- CUI.CUI --><a style='display: none;'></a><!-- /CUI.CUI -->")
 	CUI.__downloadDataElement = nodes[1]
-	CUI.DOM.append(document.body, nodes)
+	CUI.dom.append(document.body, nodes)
 
-window.addEventListener "load", =>
-	CUI.start()
+
+if not window.addEventListener
+	alert("Your browser is not supported. Please update to a current version of Google Chrome, Mozilla Firefox or Internet Explorer.")
+else
+	window.addEventListener("load", =>
+		CUI.start()
+	)
+
+module.exports = CUI

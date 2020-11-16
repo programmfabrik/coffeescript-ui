@@ -5,17 +5,22 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.DataField extends CUI.DOM
+CUI.Template.loadTemplateText(require('./DataField.html'));
+
+class CUI.DataField extends CUI.DOMElement
 
 	@changed_marker_css_class: "cui-data-field-changed-marker"
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	@defaults:
+		undo_and_changed_support: false
 
-		assertImplements(@, ["render"])
+	constructor: (opts) ->
+		super(opts)
+
+		CUI.util.assertImplements(@, ["render"])
 
 		if @_name
-			assertImplements(@, ["getDefaultValue"])
+			CUI.util.assertImplements(@, ["getDefaultValue"])
 
 		@__checkChangedValue = undefined
 
@@ -23,22 +28,21 @@ class CUI.DataField extends CUI.DOM
 
 		@addClass("cui-data-field")
 
-		Events.listen
+		@maximizeAddClasses()
+
+		CUI.Events.listen
 			type: "data-changed"
 			node: @DOM
 			call: (ev, info) =>
-				if not info?.element
-					CUI.warn("#{getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
-					return
-				@_onDataChanged?(info.element.getData(), info.element, ev, info)
+				@onDataChanged(ev, info)
 				return
 
 		if @getName()
-			@DOM.attr("cui-data-field-name", @getName())
+			@DOM.setAttribute("cui-data-field-name", @getName())
 
 		@init()
-		if @_data and not CUI.isFunction(@_data)
-			# CUI.debug "setting private data: "+@, @_data
+		if @_data and not CUI.util.isFunction(@_data)
+			# console.debug "setting private data: "+@, @_data
 			@setData(@_data)
 
 		@__initDisabled()
@@ -47,29 +51,46 @@ class CUI.DataField extends CUI.DOM
 			@hide()
 
 		if @_tooltip and (@_tooltip.text or @_tooltip.content)
-			tt_opts = copyObject(@_tooltip)
+			tt_opts = CUI.util.copyObject(@_tooltip)
 			tt_opts.element = @DOM
-			@__tooltip = new Tooltip(tt_opts)
+			@__tooltip = new CUI.Tooltip(tt_opts)
 
 		@__opacity = 1
 		@_onInit?(@)
 
-		# CUI.debug "new: "+@
+		# console.debug "new: "+@
+
+	onDataChanged: (ev, info) ->
+		if not info?.element
+			console.warn("#{CUI.util.getObjectClass(@)}[DataField].listen[data-changed]: received event with element not set.", ev, info, @)
+			return
+		@_onDataChanged?(@getData(), info.element, ev, info)
 
 	initOpts: ->
 		super()
 		@addOpts
 			name: @getNameOpt()
+			maximize:
+				check: Boolean
+			maximize_horizontal:
+				check: Boolean
+				default: false
+			maximize_vertical:
+				check: Boolean
+				default: false
+			padded:
+				check: Boolean
+				default: false
 			data:
 				check: (v) ->
-					CUI.isFunction(v?.hasOwnProperty) or CUI.isFunction(v)
+					CUI.util.isFunction(v?.hasOwnProperty) or CUI.util.isFunction(v)
 			data_not_for_others:
 				default: false
 				check: Boolean
 			disabled:
 				default: false
 				check: (v) ->
-					isBoolean(v) or CUI.isFunction(v)
+					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
 			disabled_depends_on_data:
 				check: Function
 			tooltip:
@@ -77,17 +98,17 @@ class CUI.DataField extends CUI.DOM
 			hidden:
 				check: Boolean
 			form: {}
-			undo_support:
-				default: true
-				check: Boolean
 			# set undo_support, check_changed, mark_changed all at once
 			undo_and_changed_support:
 				check: Boolean
+			undo_support:
+				default: CUI.DataField.defaults.undo_and_changed_support
+				check: Boolean
 			mark_changed:
-				default: true
+				default: CUI.DataField.defaults.undo_and_changed_support
 				check: Boolean
 			check_changed:
-				default: true
+				default: CUI.DataField.defaults.undo_and_changed_support
 				check: Boolean
 			onDataChanged:
 				check: Function
@@ -97,6 +118,9 @@ class CUI.DataField extends CUI.DOM
 				check: Function
 			onRender:
 				check: Function
+			render_as_block:
+				check: Boolean
+
 
 	readOpts: ->
 		if @opts.hasOwnProperty("undo_and_changed_support")
@@ -104,6 +128,10 @@ class CUI.DataField extends CUI.DOM
 				if not @opts.hasOwnProperty(k)
 					@opts[k] = @opts.undo_and_changed_support
 		super()
+		CUI.Layout::maximizeReadOpts.call(@)
+
+	maximizeAddClasses: ->
+		CUI.Layout::maximizeAddClasses.call(@)
 
 	getUniqueIdForLabel: ->
 		null
@@ -112,7 +140,7 @@ class CUI.DataField extends CUI.DOM
 		@registerTemplate(@getTemplate())
 
 	getTemplate: ->
-		new Template
+		new CUI.Template
 			name: "data-field"
 
 	isResizable: ->
@@ -121,12 +149,12 @@ class CUI.DataField extends CUI.DOM
 	init: ->
 
 	debug: ->
-		CUI.debug "----"+@+"----", @
+		console.debug "----"+@+"----", @
 		if @__data
-			CUI.debug "data:", @getData()
-			CUI.debug "value:", @getValue()
-			CUI.debug "init-value:", @getInitValue()
-			CUI.debug "check-changed-value:", @getCheckChangedValue()
+			console.debug "data:", @getData()
+			console.debug "value:", @getValue()
+			console.debug "init-value:", @getInitValue()
+			console.debug "check-changed-value:", @getCheckChangedValue()
 
 	toString: ->
 		"[#{@__cls}[#{@__uniqueId}, #{@_name or '<no name>'}]}"
@@ -135,6 +163,8 @@ class CUI.DataField extends CUI.DOM
 		@remove()
 		@render()
 		@displayValue()
+		@_onRender?(@)
+		@
 
 	remove: ->
 		@callOnOthers("remove")
@@ -145,11 +175,20 @@ class CUI.DataField extends CUI.DOM
 	getNameOpt: ->
 		check: String
 
+	registerLabel: (lbl) ->
+		_for = @getUniqueIdForLabel()
+		if _for
+			lbl.setAttribute('for', _for)
+		return
+
 	getLabel: ->
 		@_label
 
+	getMaximizeHorizontal: ->
+		@__maximize_horizontal
+
 	setForm: (form) ->
-		assertImplements(form, [
+		CUI.util.assertImplements(form, [
 			"getFieldsByName"
 			"getFieldByIdx"
 			"getData"
@@ -159,18 +198,25 @@ class CUI.DataField extends CUI.DOM
 		if not @getForm().getFormPath
 			return @
 
-		@setFormDepth()
+		if @__form.getMaximizeHorizontal()
+			if @getOpt("maximize_horizontal") != false
+				@addClass("cui-maximize-horizontal")
+
+		# @setFormDepth()
 		@
 
-	setFormDepth: ->
-		# update depth
-		path = @getFormPath()
-		CUI.DOM.setAttribute(@DOM, "cui-form-depth", path.length)
-		@callOnOthers("setFormDepth")
-		@
+	# getFormDepth: ->
+	# 	parseInt(CUI.dom.getAttribute(@DOM, "cui-form-depth"))
+
+	# setFormDepth: ->
+	# 	# update depth
+	# 	path = @getFormPath()
+	# 	CUI.dom.setAttribute(@DOM, "cui-form-depth", path.length)
+	# 	@callOnOthers("setFormDepth")
+	# 	path.length
 
 	getFormPath: (include_self=false, path=[], call=0) ->
-		assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
+		CUI.util.assert(call < 100, "CUI.DataField.getPath", "Recursion detected.")
 
 		if @getForm()?.getFormPath
 			@getForm().getFormPath(true, path, call+1)
@@ -190,7 +236,7 @@ class CUI.DataField extends CUI.DOM
 	getRootForm: ->
 		if @__form
 			@__form.getRootForm()
-		else if @ instanceof Form
+		else if @ instanceof CUI.Form
 			@
 		else
 			null
@@ -220,37 +266,43 @@ class CUI.DataField extends CUI.DOM
 		!@isHidden()
 
 	updateData: (data) ->
-		if CUI.isFunction(@_data)
+		if CUI.util.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 		@displayValue()
 
+	unsetData: ->
+		delete @__data
+		if @setDataOnOthers()
+			@callOnOthers("unsetData")
+		return
+
 	setData: (data, init_data=true) ->
-		if @__data and @_data and not CUI.isFunction(@_data)
-			# CUI.debug "private data already set", @_data
+		if @__data and @_data and not CUI.util.isFunction(@_data)
+			# console.debug "private data already set", @_data
 			# we have private data set, ignore a setData from
 			# e.g. a Form, as the private data is more important
 			# than the Form data
 			return
 
-		assert(not @__data, "#{@}.setData", "data is already set.", opts: @opts, data: @__data)
+		CUI.util.assert(not @__data, "#{@}.setData", "data is already set.", opts: @opts, data: @__data)
 
-		if CUI.isFunction(@_data)
+		if CUI.util.isFunction(@_data)
 			@__data = @_data.call(@, data, @)
 		else
 			@__data = data
 
-		assert(CUI.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
+		CUI.util.assert(CUI.util.isPlainObject(@__data) or @__data?.hasOwnProperty?(@getName()), "#{@}.setData", "data needs to be PlainObject or have a property \"#{@getName()}\".", data: data, opts: @opts)
 
-		# CUI.debug "initData", @__data, @__data.hasOwnProperty
+		# console.debug "initData", @__data, @__data.hasOwnProperty
 
 		if @setDataOnOthers()
 			@callOnOthers("setData", @__data, init_data)
 
 		if init_data
 			@initData()
-		# CUI.debug "setting data", @__uniqueId, @__data
+		# console.debug "setting data", @__uniqueId, @__data
 		@
 
 	setDataOnOthers: ->
@@ -260,7 +312,7 @@ class CUI.DataField extends CUI.DOM
 		@addClass("cui-data-field-hidden")
 		@callOnOthers("hide")
 		if trigger_event
-			Events.trigger
+			CUI.Events.trigger
 				type: "form-check-row-visibility"
 				node: @DOM
 				info:
@@ -271,9 +323,7 @@ class CUI.DataField extends CUI.DOM
 		@removeClass("cui-data-field-hidden")
 		@callOnOthers("show")
 		if trigger_event
-			# FIXME: too many events were triggered and I dont
-			# know where this is really
-			Events.trigger
+			CUI.Events.trigger
 				type: "form-check-row-visibility"
 				node: @DOM
 				info:
@@ -284,32 +334,31 @@ class CUI.DataField extends CUI.DOM
 		@__isRendered
 
 	render: ->
-		assert(not @__isRendered, "#{@__cls}.render", "Cannot be called when already rendered.", opts: @opts, dataField: @)
-
+		CUI.util.assert(not @__isRendered, "#{@__cls}.render", "Cannot be called when already rendered.", opts: @opts, dataField: @)
 		# for p of @__tmpl.map
 		# 	content = @["__#{p}"]
-		# 	if isNull(content)
+		# 	if CUI.util.isNull(content)
 		# 		continue
 		# 	@append(content, p)
 
 		@__isRendered = true
+		@callOnOthers("render")
 		if @isDisabled()
 			@disable()
 		if @isHidden()
-			@hide()
-		@callOnOthers("render")
+			@hide(true)
 		@_onRender?(@)
 		@
 
 	displayValue: ->
-		assert(not @isDestroyed(), "#{@__cls}.displayValue", "DataField already destroyed, cannot display value.", data_field: @)
+		CUI.util.assert(not @isDestroyed(), "#{@__cls}.displayValue", "DataField already destroyed, cannot display value.", data_field: @)
 
-		assert(@__isRendered, "#{@__cls}.displayValue", "not rendered yet, cannot display.", opts: @opts, data: @__data)
+		CUI.util.assert(@__isRendered, "#{@__cls}.displayValue", "not rendered yet, cannot display.", opts: @opts, data: @__data)
 		@checkChanged()
 		@callOnOthers("displayValue")
 
 	start: ->
-		assert(not @__isRendered, "#{@__cls}.start", "Cannot be called when already rendered.", opts: @opts, dataField: @)
+		CUI.util.assert(not @__isRendered, "#{@__cls}.start", "Cannot be called when already rendered.", opts: @opts, dataField: @)
 		@__initDisabled()
 		@render()
 		@displayValue()
@@ -324,6 +373,8 @@ class CUI.DataField extends CUI.DOM
 		@callOnOthers("getDataFields", all, data_fields)
 		data_fields
 
+	renderAsBlock: ->
+		!!@_render_as_block
 
 	isDataField: ->
 		@hasData()
@@ -337,8 +388,8 @@ class CUI.DataField extends CUI.DOM
 			other_fields = []
 
 		for df in other_fields
-			if not df or not CUI.isFunction(df[func])
-				assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
+			if not df or not CUI.util.isFunction(df[func])
+				CUI.util.assert(false, "CUI.DataField.callOnOthers", "Field found in other fields has no Function \"#{func}\".", field: df, other_fields: other_fields)
 				return @
 
 			df[func].apply(df, args)
@@ -348,13 +399,19 @@ class CUI.DataField extends CUI.DOM
 		@__data
 
 	hasData: ->
-		not isEmpty(@_name) and @__data
+		if not CUI.util.isEmpty(@_name) and @__data
+			true
+		else
+			false
+
+	hasUserData: (data) ->
+		@_name and not CUI.util.isEmpty(data[@_name])
 
 	getArrayFromOpt: (opt, event, allowDeferred=false) ->
 		v = @["_#{opt}"]
-		if CUI.isFunction(v)
+		if CUI.util.isFunction(v)
 			arr = v.call(@, @, event)
-			assert(CUI.isArray(arr) or (isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
+			CUI.util.assert(CUI.util.isArray(arr) or (CUI.util.isPromise(arr) and allowDeferred), "#{@__cls}.getArrayFromOpt", "opts.#{opt}(dataField) did not return Array or Promise.", options: arr, opts: @opts)
 		else
 			arr = v
 		return arr
@@ -387,7 +444,7 @@ class CUI.DataField extends CUI.DOM
 		try
 			@checkValue(v, flags)
 		catch e
-			if e not instanceof CheckValueError
+			if e not instanceof CUI.CheckValueError
 				throw(e)
 			throw(new Error("#{@__cls}.setValue: "+v+", Error: "+e))
 
@@ -406,6 +463,7 @@ class CUI.DataField extends CUI.DOM
 		undo.values[0]
 
 	getLastValue: ->
+		CUI.util.assert(@_undo_support, "DataField.getLastValue", "Needs opts.undo_support to be set.", opts: @opts)
 		undo = @getUndo()
 		if not undo
 			return undefined
@@ -456,11 +514,11 @@ class CUI.DataField extends CUI.DOM
 
 	goto: (idx) ->
 		if undo = @getUndo()
-			if isUndef(undo.values[idx])
+			if CUI.util.isUndef(undo.values[idx])
 				return false
 			undo.idx = idx
 			@__data[@_name] = undo.values[undo.idx]
-			# CUI.debug @__uniqueId, @__data[@_name]
+			# console.debug @__uniqueId, @__data[@_name]
 			@displayValue()
 			@triggerDataChanged
 				action: "goto"
@@ -474,18 +532,18 @@ class CUI.DataField extends CUI.DOM
 	initData: ->
 		@_onDataInit?(@, @__data)
 
-		# CUI.debug "initData", @__cls, @_name, @__data
+		# console.debug "initData", @__cls, @_name, @__data
 		if not @hasData()
 			return
 
 		@initValue()
 
 		undo = @getUndo()
-		if CUI.isPlainObject(undo) and CUI.isEmptyObject(undo)
+		if CUI.util.isPlainObject(undo) and CUI.util.isEmptyObject(undo)
 			undo.values = [ @getValue() ]
 			undo.idx = 0
 
-		if isUndef(@getCheckChangedValue())
+		if CUI.util.isUndef(@getCheckChangedValue())
 			@setCheckChangedValue(
 				if undo
 					@getInitValue()
@@ -499,13 +557,13 @@ class CUI.DataField extends CUI.DOM
 		@
 
 	initValue: ->
-		if isUndef(@__data[@_name])
-			# CUI.debug "initValue", @getName(), @__data[@_name], @getDefaultValue()
+		if CUI.util.isUndef(@__data[@_name])
+			# console.debug "initValue", @getName(), @__data[@_name], @getDefaultValue()
 			@__data[@_name] = @getDefaultValue()
 		@
 
 	setCheckChangedValue: (value) ->
-		assert(@hasData(), "#{@__cls}.setCheckChangedValue", "Cannot set without data.", opts: @opts, value: value, dataField: @)
+		CUI.util.assert(@hasData(), "#{@__cls}.setCheckChangedValue", "Cannot set without data.", opts: @opts, value: value, dataField: @)
 		if @_check_changed == false
 			return undefined
 		@__checkChangedValue = JSON.stringify(value)
@@ -513,20 +571,19 @@ class CUI.DataField extends CUI.DOM
 	getCheckChangedValue: ->
 		if @_check_changed == false
 			return undefined
-		assert(@hasData(), "#{@__cls}.getCheckChangedValue", "No data set.", opts: @opts)
+		CUI.util.assert(@hasData(), "#{@__cls}.getCheckChangedValue", "No data set.", opts: @opts)
 		@__checkChangedValue
 
 	getUndo: ->
 		if not @hasData() or @_undo_support == false
 			return false
 
-		if isUndef(@__data._undo)
+		if CUI.util.isUndef(@__data._undo)
 			@__data._undo = {}
-		# CUI.debug @__data, @__data._undo, @_name
-		if isUndef(undo = @__data._undo[@_name])
+		# console.debug @__data, @__data._undo, @_name
+		if CUI.util.isUndef(undo = @__data._undo[@_name])
 			undo = @__data._undo[@_name] = {}
 		undo
-
 
 	# stores a user changed value and
 	# manages old and new values
@@ -537,7 +594,7 @@ class CUI.DataField extends CUI.DOM
 		store_last = flags.initial_activate != true and flags.no_store != true
 
 		if store_last and (undo = @getUndo())
-			# CUI.debug(".undo[#{@_name}][#{@undo.idx}]", @__data[@_name], ">", value)
+			# console.debug(".undo[#{@_name}][#{@undo.idx}]", @__data[@_name], ">", value)
 			undo.values[++undo.idx] = value
 			# clean evertyhing after the undo idx
 			undo.values.splice(undo.idx+1)
@@ -546,7 +603,7 @@ class CUI.DataField extends CUI.DOM
 
 		@checkChanged()
 		if store_last and not flags.no_trigger
-			# CUI.debug @__cls+".storeValue: triggering data-changed: ", @
+			# console.debug @__cls+".storeValue: triggering data-changed: ", @
 			@triggerDataChanged
 				action: "store"
 				undo_idx: undo?.idx
@@ -555,7 +612,7 @@ class CUI.DataField extends CUI.DOM
 	triggerDataChanged: (info={}) ->
 		info.element = @
 
-		Events.trigger
+		CUI.Events.trigger
 			type: "data-changed"
 			node: @DOM
 			info: info
@@ -580,7 +637,7 @@ class CUI.DataField extends CUI.DOM
 		if @_mark_changed == false or @_check_changed == false
 			return
 		@checkChanged()
-		$div(CUI.DataField.changed_marker_css_class)
+		CUI.dom.div(CUI.DataField.changed_marker_css_class)
 
 	destroy: ->
 		@remove(true)
@@ -588,10 +645,10 @@ class CUI.DataField extends CUI.DOM
 		super()
 
 	@new: (field, delete_keys=[], default_data={}) ->
-		if field instanceof DataField
+		if field instanceof CUI.DataField
 			return field
 
-		assert(CUI.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
+		CUI.util.assert(CUI.util.isPlainObject(field), "CUI.DataField.new", "field needs to be PlainObject.", field: field, delete_keys: delete_keys, default_data: default_data)
 
 		field_opts = {}
 		for k, v of field
@@ -600,7 +657,7 @@ class CUI.DataField extends CUI.DOM
 				continue
 			if delete_keys.indexOf(k) > -1
 				continue
-			# if v instanceof Icon
+			# if v instanceof CUI.Icon
 			#	field_opts[k] = v.copy()
 			#	continue
 			field_opts[k] = v
@@ -610,13 +667,10 @@ class CUI.DataField extends CUI.DOM
 				continue
 			field_opts[k] = v
 
-		assert(CUI.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
+		CUI.util.assert(CUI.util.isFunction(type), "CUI.DataField.new", "type is unknown: \"#{type}\".", field: field)
 		_field = new type(field_opts)
-		assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{getObjectClass(_field)}.", field: field)
+		CUI.util.assert(_field instanceof CUI.DataField, "CUI.DataField.new", "field.type needs to be of class DataField, but is #{CUI.util.getObjectClass(_field)}.", field: field)
 		return _field
-
-DataField = CUI.DataField
-
 
 CUI.Events.registerEvent
 	type: "data-changed"

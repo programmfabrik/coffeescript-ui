@@ -36,17 +36,17 @@ class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 
 		node = @_row
 
-		# CUI.debug "moving node", @info.cell.row_i, node.getChildIdx(), node.getRowIdx()
+		# console.debug "moving node", @info.cell.row_i, node.getChildIdx(), node.getRowIdx()
 
 		if (ci = node.getChildIdx()) < node.father.children.length-1
 			@blockedBeforeRows.push(node.father.children[ci+1].getRowIdx())
 
 		if not @allowRowMove()
 			@target = null
-			CUI.DOM.hideElement(@movableTargetDiv)
+			CUI.dom.hideElement(@movableTargetDiv)
 		else
-			CUI.DOM.showElement(@movableTargetDiv)
-			CUI.DOM.setStyle @movableTargetDiv,
+			CUI.dom.showElement(@movableTargetDiv)
+			CUI.dom.setStyle @movableTargetDiv,
 				left: @target.left
 				top: @target.top
 				width: @target.width
@@ -55,7 +55,7 @@ class CUI.ListViewTreeRowMove extends CUI.ListViewRowMove
 
 	allowRowMove: ->
 		allow = true
-		# CUI.debug @target.row_i, @target.after, @blockedBeforeRows, @blockedRows, @blockedAfterRows
+		# console.debug @target.row_i, @target.after, @blockedBeforeRows, @blockedRows, @blockedAfterRows
 
 		if @target.row_i in @blockedRows or
 			(@target.row_i in @blockedAfterRows and @target.after) or

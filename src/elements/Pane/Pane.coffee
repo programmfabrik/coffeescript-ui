@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+CUI.Template.loadTemplateText(require('./Pane.html'));
+
 class CUI.Pane extends CUI.VerticalLayout
 
 	@defaults:
@@ -16,7 +18,7 @@ class CUI.Pane extends CUI.VerticalLayout
 		@__fill_screen_is_on = false
 
 		if @_padded
-			@addClass("cui-simple-pane--padded")
+			@addClass("cui-pane--padded")
 
 	initOpts: ->
 		super()
@@ -29,6 +31,12 @@ class CUI.Pane extends CUI.VerticalLayout
 		@initDefaultPanes()
 		super()
 
+	hasHeader: ->
+		!!@_top
+
+	hasFooter: ->
+		!!@_bottom
+
 	getFillScreenState: ->
 		@__fill_screen_is_on
 
@@ -39,25 +47,30 @@ class CUI.Pane extends CUI.VerticalLayout
 
 		@__fill_screen_is_on = false
 
-		if not $elementIsInDOM(@__placeholder)
+		if not CUI.util.$elementIsInDOM(@__placeholder)
 			@__fillscreenTmpl.destroy()
 			@__placeholder = null
 		else
 			end_fill_screen = =>
-				#CUI.debug "Stopping", event
-				@__placeholder.before(@DOM)
-				@__placeholder.remove()
+				#console.debug "Stopping", event
+				CUI.dom.insertBefore(@__placeholder, @DOM)
+
+				parentPopover = CUI.dom.data(CUI.dom.parent(@__placeholder), "element")
+				if parentPopover instanceof CUI.Popover
+					parentPopover.setVisible(true)
+				CUI.dom.remove(@__placeholder)
+
 				@__fillscreenTmpl.destroy()
 				delete(@__fillscreenTmpl)
-				Events.trigger
+				CUI.Events.trigger
 					type: "end-fill-screen"
 					node: @DOM
-				Events.trigger
+				CUI.Events.trigger
 					type: "viewport-resize"
 					node: @DOM
 
 			if transition
-				Events.wait
+				CUI.Events.wait
 					type: "transitionend"
 					node: @__fillscreenTmpl
 				.always =>
@@ -72,16 +85,18 @@ class CUI.Pane extends CUI.VerticalLayout
 		if @getFillScreenState()
 			return
 
-		@__fillscreenTmpl = new Template
+		document.body.style.setProperty("--layer-sidebar-width", CUI.dom.getLayerSidebarWidth()+"px")
+
+		@__fillscreenTmpl = new CUI.Template
 			name: "pane-fill-screen"
 			map:
 				inner: true
 
 		# measure DOM start position
-		rect = @DOM.rect()
+		rect = CUI.dom.getRect(@DOM)
 
-		vp = CUI.DOM.getDimensions(window)
-		@__placeholderTmpl = new Template
+		vp = CUI.dom.getDimensions(window)
+		@__placeholderTmpl = new CUI.Template
 			name: "pane-fill-screen-placeholder"
 
 		@__placeholder = @__placeholderTmpl.DOM
@@ -92,18 +107,18 @@ class CUI.Pane extends CUI.VerticalLayout
 		# for el in @DOM.parents(".cui-dom-element")
 		# 	inner.addClass(DOM.data(el, "element").getDOMElementClasses())
 
-		@__fillscreenTmpl.DOM.appendTo(document.body)
-		rect_fill = @__fillscreenTmpl.DOM.rect()
-		rect_fill_inner = inner.rect()
+		CUI.dom.append(document.body, @__fillscreenTmpl.DOM)
+		dim_fill = CUI.dom.getDimensions(@__fillscreenTmpl.DOM)
+		dim_fill_inner = CUI.dom.getDimensions(inner)
 
 		# adjust start rect, so it matches the design of the
 		# fill div
 
 		adjust =
-			left: (rect_fill_inner.left - rect_fill.left) + inner.cssEdgeSpace("left")
-			top: (rect_fill_inner.top - rect_fill.top) + inner.cssEdgeSpace("top")
-			right: (rect_fill.right - rect_fill_inner.right) + inner.cssEdgeSpace("right")
-			bottom: (rect_fill.bottom - rect_fill_inner.bottom) + inner.cssEdgeSpace("bottom")
+			left: (dim_fill_inner.clientBoundingRect.left - dim_fill.clientBoundingRect.left) + dim_fill_inner.borderLeft + dim_fill_inner.paddingLeft
+			top: (dim_fill_inner.clientBoundingRect.top - dim_fill.clientBoundingRect.top) + dim_fill_inner.borderTop + dim_fill_inner.paddingTop
+			right: (dim_fill.clientBoundingRect.right - dim_fill_inner.clientBoundingRect.right) + dim_fill_inner.borderRight + dim_fill_inner.paddingRight
+			bottom: (dim_fill.clientBoundingRect.bottom - dim_fill_inner.clientBoundingRect.bottom) + dim_fill_inner.borderBottom + dim_fill_inner.paddingBottom
 
 		start_rect =
 			top: rect.top - adjust.top
@@ -111,36 +126,40 @@ class CUI.Pane extends CUI.VerticalLayout
 			bottom: vp.height - rect.bottom - adjust.bottom
 			right: vp.width - rect.right - adjust.right
 
-		@__fillscreenTmpl.DOM.detach()
+		CUI.dom.remove(@__fillscreenTmpl.DOM)
 
-		@__fillscreenTmpl.DOM.css(start_rect)
-		@__fillscreenTmpl.DOM.appendTo(document.body)
+		CUI.dom.setStyle(@__fillscreenTmpl.DOM, start_rect)
+		CUI.dom.append(document.body, @__fillscreenTmpl.DOM)
 
 		# copy keys over for the placeholder, so that it has the
 		# same dimension as the replaced div
 		# this assumes, that the placeholder dont uses padding, border
 		# or margin!
 
-		@__placeholder.css
-			width: @DOM.outerWidth(true)
-			height: @DOM.outerHeight(true)
+		CUI.dom.setStyle(@__placeholder,
+			width: CUI.dom.getDimensions(@DOM).marginBoxWidth
+			height: CUI.dom.getDimensions(@DOM).marginBoxHeight
+		)
 
 		for key_copy in ["position", "top", "left", "right", "bottom"]
-			@__placeholder.css(key_copy, @DOM.css(key_copy))
+			CUI.dom.setStyleOne(@__placeholder, key_copy, CUI.dom.getComputedStyle(@DOM)[key_copy])
 
-		@DOM.after(@__placeholder)
+		CUI.dom.insertAfter(@DOM, @__placeholder)
+
+		parentPopover = CUI.dom.data(CUI.dom.parent(@DOM), "element")
+		if parentPopover instanceof CUI.Popover
+			parentPopover.setVisible(false)
 
 		@__fillscreenTmpl.replace(@DOM, "inner")
 
-
-		Events.wait
+		CUI.Events.wait
 			type: "transitionend"
 			node: @__fillscreenTmpl
 		.always =>
-			Events.trigger
+			CUI.Events.trigger
 				type: "start-fill-screen"
 				node: @DOM
-			Events.trigger
+			CUI.Events.trigger
 				type: "viewport-resize"
 				node: @DOM
 
@@ -153,7 +172,7 @@ class CUI.Pane extends CUI.VerticalLayout
 			if not @getFillScreenState()
 				return
 
-			if not $elementIsInDOM(@__placeholder)
+			if not CUI.util.$elementIsInDOM(@__placeholder)
 				@endFillScreen()
 
 			CUI.setTimeout(checkToggle, 50)
@@ -168,26 +187,46 @@ class CUI.Pane extends CUI.VerticalLayout
 		else
 			@startFillScreen()
 
-
 	# creates a button that can be used in paneheader (or somewhere else) to toggle fillscreen
-	@getToggleFillScreenButton: (opts={}) ->
-		for k, v of {
-			icon_inactive: new Icon(class: "fa-expand")
-			icon_active: new Icon(class: "fa-compress")
+	@getToggleFillScreenButton: (_opts={}) ->
+		opts = CUI.Element.readOpts(_opts, "Pane.getToggleFillScreenButton",
+			icon_inactive:
+				mandatory: true
+				check: (v) =>
+					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.util.isPlainObject(v)
+				default: "fa-expand"
+			icon_active:
+				mandatory: true
+				check: (v) =>
+					v instanceof CUI.Icon or CUI.util.isString(v) or CUI.util.isPlainObject(v)
+				default: "fa-compress"
+			group:
+				mandatory: false
+				check: String
+			tooltip:
+				mandatory: true
+				check: (v) =>
+					v instanceof CUI.Tooltip or CUI.util.isPlainObject(v)
+				default: CUI.Pane.defaults.button_tooltip
+		)
+
+		if CUI.util.isString(opts.icon_inactive)
+			opts.icon_inactive = new CUI.Icon(class: opts.icon_inactive)
+
+		if CUI.util.isString(opts.icon_active)
+			opts.icon_active = new CUI.Icon(class: opts.icon_active)
+
+		for key, value of {
 			switch: true
 			onClick: (ev, btn) =>
-				DOM.data(btn.DOM.closest(".cui-pane")[0], "element").toggleFillScreen()
+				paneDiv = CUI.dom.closest(btn.DOM, ".cui-pane")
+				pane = CUI.dom.data(paneDiv, "element")
+				pane.toggleFillScreen()
 		}
-			opts[k] = v
-
-		if not opts.tooltip
-			opts.tooltip = CUI.Pane.defaults.button_tooltip
+			opts[key] = value
 
 		new CUI.defaults.class.Button(opts)
-
 
 CUI.Events.registerEvent
 	type: ["start-fill-screen", "end-fill-screen"]
 	sink: true
-
-Pane = CUI.Pane

@@ -7,8 +7,8 @@
 
 class CUI.LayerPane extends CUI.Layer
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@setPane(@_pane)
 
 	initOpts: ->
@@ -17,34 +17,35 @@ class CUI.LayerPane extends CUI.Layer
 			pane:
 				mandatory: true
 				default:
-					new SimplePane()
+					new CUI.SimplePane()
 				check: (v) ->
-					v instanceof Pane or CUI.isPlainObject(v)
+					v instanceof CUI.Pane or CUI.util.isPlainObject(v)
 
 	getPane: ->
 		@__pane
 
 	setPane: (pane) ->
-		if CUI.isPlainObject(pane)
+		if CUI.util.isPlainObject(pane)
 			# for k in ["force_header", "force_footer"]
 			# 	if not pane.hasOwnProperty(k)
 			# 		pane[k] = true
 
-			@__pane = new SimplePane(pane)
-
-			if @__pane.hasHeader()
-				@__layer_root.DOM.classList.add("ez5-pane--has-header")
-
-			if @__pane.hasFooter()
-				@__layer_root.DOM.classList.add("ez5-pane--has-footer")
+			@__pane = new CUI.SimplePane(pane)
 		else
 			@__pane = pane
+
+		if @__pane.hasHeader()
+			@__layer_root.DOM.classList.add("cui-pane--has-header")
+
+		if @__pane.hasFooter()
+			@__layer_root.DOM.classList.add("cui-pane--has-footer")
+
 		@__pane.addClass("cui-layer-pane");
 		# add pane to layer, using the layers append
 		# method, so subclasses (like Modal does!) cannot interfer
 		CUI.Layer::replace.call(@, @__pane)
 
 	destroy: ->
-		# CUI.debug "destroying pane", @__pane
+		# console.debug "destroying pane", @__pane
 		@__pane.destroy()
 		super()

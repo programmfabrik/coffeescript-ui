@@ -6,7 +6,7 @@
 ###
 
 #Organizes/Layouts tools ({Button}s or other Elements) in a horizontal Toolbar
-class Toolbar extends HorizontalLayout
+class CUI.Toolbar extends CUI.HorizontalLayout
 	init: ->
 		super()
 		@addClass("cui-toolbar")
@@ -14,15 +14,14 @@ class Toolbar extends HorizontalLayout
 	initOpts: ->
 		super()
 
-		if CUI.__ng__
-			@removeOpt("maximize")
-			@removeOpt("maximize_horizontal")
-			@removeOpt("maximize_vertical")
-			@addOpts
-				maximize_horizontal:
-					default: true
-					mandatory: true
-					check: Boolean
+		@removeOpt("maximize")
+		@removeOpt("maximize_horizontal")
+		@removeOpt("maximize_vertical")
+		@addOpts
+			maximize_horizontal:
+				default: true
+				mandatory: true
+				check: Boolean
 
 	hasFlexHandles: ->
 		false

@@ -5,11 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-globalDrag = null
-
 class CUI.DragDropSelect extends CUI.Element
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 		@init()
 
 	initOpts: ->
@@ -18,68 +16,64 @@ class CUI.DragDropSelect extends CUI.Element
 			element:
 				mandatory: true
 				check: (v) ->
-					CUI.DOM.isNode(v)
+					CUI.dom.isNode(v)
 		@
 
 	readOpts: ->
 		super()
 		@cls = CUI[@__cls].cls
-		assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
+		CUI.util.assert(@cls, "new "+@__cls, @__cls+".cls is not set.", opts: @opts)
 
 		@element = @_element
-		DragDropSelect.getInstance(@element, @cls)?.destroy()
-		DOM.data(@element, "drag-drop-select-"+@cls, @)
-		DOM.addClass(@element, @__getClass())
+		CUI.DragDropSelect.getInstance(@element, @cls)?.destroy()
+		CUI.dom.data(@element, "drag-drop-select-"+@cls, @)
+		CUI.dom.addClass(@element, @getClass())
 
-	__getClass: ->
+	getClass: ->
 		"cui-drag-drop-select cui-drag-drop-select-"+@cls
 
 	destroy: ->
-		DOM.removeClass(@element, @__getClass())
-		DOM.removeData(@element, "drag-drop-select-"+@cls)
-		Events.ignore
+		CUI.dom.removeClass(@element, @getClass())
+		CUI.dom.removeData(@element, "drag-drop-select-"+@cls)
+		CUI.Events.ignore
 			instance: @
 		super()
 
 	init: ->
 		throw "overwrite Drag.init"
 
-	# makeElementRelative: (ele) ->
-	# 	if $elementIsInDOM(ele) and ele.css("position") not in ["absolute","fixed","relative"]
-	# 		ele.css(position: "relative")
-
 	@destroy: (node, cls=@cls) ->
 		inst = @getInstance(node, cls)
 		inst?.destroy()
 
 	@getInstance: (node, cls=@cls) ->
-		assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
-		DOM.data(node, "drag-drop-select-"+cls)
+		CUI.util.assert(cls != "DragDropSelect", "DragDropSelect.getInstance", "cls cannot be DragDropSelect")
+		CUI.dom.data(node, "drag-drop-select-"+cls)
 
 
 
 CUI.ready =>
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-drop"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragenter"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragend"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragleave"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "cui-dragover"
 		bubble: true
 
-	Events.registerEvent
+	CUI.Events.registerEvent
 		type: "dragover-scroll"
 		bubble: true
 		eventClass: CUI.DragoverScrollEvent
@@ -87,21 +81,21 @@ CUI.ready =>
 
 
 	# # FIXME: this does not work in Text input fields (chrome)
-	# Events.listen
+	# CUI.Events.listen
 	# 	type: "selectstart"
 	# 	node: document.documentElement
 	# 	capture: true
 	# 	call: (ev) =>
 	# 		console.debug "selectstart"
 	# 		$target = $(ev.getTarget())
-	# 		if not globalDrag and $target.closest("span,input,textarea,pre,i").length and
+	# 		if not CUI.globalDrag and $target.closest("span,input,textarea,pre,i").length and
 	# 			not $target.closest(".btn,.drag-drop-select-cursor,.no-user-select").length
 	# 				return
 	# 		ev.preventDefault()
 	# 		ev.stopPropagation()
 	# 		return false
 
-	Events.listen
+	CUI.Events.listen
 		type: "dragover-scroll"
 		node: document
 		selector: "div.cui-drag-scroll,div.cui-drag-drop-select"
@@ -114,9 +108,9 @@ CUI.ready =>
 
 			el = ev.getCurrentTarget()
 
-			dim = CUI.DOM.getDimensions(el)
+			dim = CUI.dom.getDimensions(el)
 
-			if CUI.DOM.is(el, "body,html")
+			if CUI.dom.is(el, "body,html")
 				is_body = true
 				rect =
 					top: 0
@@ -169,5 +163,5 @@ CUI.ready =>
 					originalEvent.scrollPageX = 0
 				originalEvent.scrollPageX += originalEvent.scrollLeft-oldScrollLeft
 
-				# CUI.debug ev.mousemoveEvent.originalEvent.scrollPageY
+				# console.debug ev.mousemoveEvent.originalEvent.scrollPageY
 			ev.stopPropagation()

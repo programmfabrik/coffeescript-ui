@@ -12,21 +12,21 @@
 # @example How to listen to and trigger events
 #
 # Event.listen
-#     type: [ "click", "dblclick" ]
+#   	type: [ "click", "dblclick" ]
 #     node: jQuery Element or CUI DOM Element
 #     call: (ev, info) ->
 #     selector: jQuery like path selector to filter events
 #
 #
 # Event.trigger
-#     type: "content-resize"
+#   	type: "content-resize"
 #     node: jQuery Element or CUI DOM Element
 #     bubble: set to yes if event should bubble up or down the DOM tree
 #     info: info Map, contains eventsEvent for DOMElements and
 #           the internal "waits" queue
 #
 # Event.ignore
-#     type: "<type>"
+#   	type: "<type>"
 #     node: jQuery or DOM Element
 #
 #
@@ -36,9 +36,9 @@
 #
 # All events need to be registered or a warning is output at the console.
 #
-# Events.registerEvent(options)
+# CUI.Events.registerEvent(options)
 #    options are the default options for the event
-#    type: <type>
+#  	type: <type>
 #    bubble: true|false
 #
 #
@@ -54,47 +54,50 @@ class CUI.Events extends CUI.Element
 		if node == document or node == window
 			@__listeners
 		else
-			DOM.data(node, "listeners")
+			CUI.dom.data(node, "listeners")
 
 	@__registerListener: (listener) ->
-		assert(listener instanceof CUI.Listener, "CUI.Events.__registerListener", "listener needs to be instance of Listener", listener: listener)
+		CUI.util.assert(listener instanceof CUI.Listener, "CUI.Events.__registerListener", "listener needs to be instance of Listener", listener: listener)
 
 		node = listener.getNode()
 		listeners = @__getListenersForNode(node)
 		if not listeners
 			listeners = []
-			DOM.data(node, "listeners", listeners)
+			CUI.dom.data(node, "listeners", listeners)
 
 		listeners.push(listener)
 
 		if node instanceof HTMLElement
-			node.setAttribute("cui-events-listener-element", "cui-events-listener-element")
+			node.setAttribute("data-cui-listeners", "")
 		@
 
-	@getActiveListeners: (doc=document) ->
+	@__getActiveListeners: (doc=document) ->
 		if doc == document
 			listeners = @__listeners.slice(0)
 		else
 			listeners = []
-		for el in CUI.DOM.matchSelector(doc, "[cui-events-listener-element]")
-			listeners.push.apply(listeners, DOM.data(el, "listeners"))
+			if CUI.dom.matches(doc, '[data-cui-listeners]')
+				listeners.push.apply(listeners, CUI.dom.data(doc, "listeners"))
+
+		for el in CUI.dom.matchSelector(doc, "[data-cui-listeners]")
+			listeners.push.apply(listeners, CUI.dom.data(el, "listeners"))
 		listeners
 
 	@unregisterListener: (listener) ->
 		node = listener.getNode()
 		arr = @__getListenersForNode(node)
-		assert(arr, "CUI.Events.unregisterListeners", "Listeners not found for node.", node: node, listener: listener)
-		# CUI.error "unregistring listeenr", listener.getUniqueId()
-		removeFromArray(listener, arr)
+		CUI.util.assert(arr, "CUI.Events.unregisterListeners", "Listeners not found for node.", node: node, listener: listener)
+		# console.error "unregistring listeenr", listener.getUniqueId()
+		CUI.util.removeFromArray(listener, arr)
 		if arr.length == 0 and node instanceof HTMLElement
 			node.removeAttribute("cui-events-listener-element")
-			DOM.removeData(node, "listeners")
-			# CUI.debug "removing listeners from node", node[0]
+			CUI.dom.removeData(node, "listeners")
+			# console.debug "removing listeners from node", node[0]
 		@
 
 	# wait for an event on a node
 	@wait: (_opts) ->
-		opts = CUI.Element.readOpts _opts, "Events.wait",
+		opts = CUI.Element.readOpts _opts, "CUI.Events.wait",
 			# event type
 			type:
 				mandatory: true
@@ -102,7 +105,7 @@ class CUI.Events extends CUI.Element
 			node:
 				mandatory: true
 				check: (v) ->
-					DOM.isNode(v)
+					CUI.dom.isNode(v)
 			# optionally wait for a timeout
 			# if set to <= 0, wait forever
 			maxWait:
@@ -121,10 +124,10 @@ class CUI.Events extends CUI.Element
 		dfrs = []
 		listeners = []
 
-		_node = DOM.getNode(opts.node)
+		_node = CUI.dom.getNode(opts.node)
 
 		dfr = new CUI.Deferred()
-		listeners.push Events.listen
+		listeners.push CUI.Events.listen
 			type: opts.type
 			node: _node
 			call: ->
@@ -146,13 +149,13 @@ class CUI.Events extends CUI.Element
 			master_dfr.resolve()
 
 		if opts.maxWait >= 0
-			CUI.setTimeout ->
-				for dfr in dfrs
-					if dfr.state() == "pending"
-						dfr.reject()
-				return
-			,
-				opts.maxWait
+			CUI.setTimeout
+				ms: opts.maxWait
+				call: ->
+					for dfr in dfrs
+						if dfr.state() == "pending"
+							dfr.reject()
+					return
 
 		master_dfr.promise()
 
@@ -166,21 +169,6 @@ class CUI.Events extends CUI.Element
 
 		listener
 
-	@active: (type) ->
-		llm = {}
-		for ln in @getActiveListeners()
-			types = ln.getTypes()
-			for _type in types
-				if not llm[_type]
-					llm[_type] = []
-				llm[_type].push(ln)
-
-		if type
-			for ln in llm[type]
-				CUI.debug type, ln.getNode()[0]
-			return
-		else
-			Object.keys(llm).sort()
 
 	@trigger: (_event) ->
 		event = CUI.Event.require(_event, "CUI.Events.trigger")
@@ -199,7 +187,7 @@ class CUI.Events extends CUI.Element
 		exclude = event.isExcludeSelf()
 		node = event.getNode()
 
-		# CUI.debug "trigger event", event.getType(), info, event.getUniqueId(), bubble, sink, exclude, event.isInDOM()
+		# console.debug "trigger event", event.getType(), info, event.getUniqueId(), bubble, sink, exclude, event.isInDOM()
 		if bubble or not event.isInDOM()
 			event.dispatch()
 		else
@@ -209,38 +197,38 @@ class CUI.Events extends CUI.Element
 			event.setTarget(node)
 
 		if exclude and not bubble and not sink
-			assert(false, "CUI.Events.trigger", "Unable to trigger event with bubble == false, sink == false and exclude_self == true.", event: event)
+			CUI.util.assert(false, "CUI.Events.trigger", "Unable to trigger event with bubble == false, sink == false and exclude_self == true.", event: event)
 
 		if sink or (not sink and not bubble and not exclude and event.isInDOM())
 			# if event.getType() == "toolbox"
-			# 	CUI.debug "sink event...", event.getType(), event.getNode()
+			# 	console.debug "sink event...", event.getType(), event.getNode()
 			triggerListeners = []
-			for listener, idx in @getActiveListeners()
+			for listener, idx in @__getActiveListeners()
 				if event.getType() not in listener.getTypes()
 					continue
 
 				if listener.matchesEvent(event) == null
 					continue
 
-				# CUI.error "triggering...", event.getType()
+				# console.error "triggering...", event.getType()
 
 				triggerListeners.push(listener)
 
 			# if triggerListeners.length == 0
-			# 	CUI.warn("Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
+			# 	console.warn("CUI.Events.trigger: No listeners found for Event #{event.getType()}.", event: event, activeListeners: @active())
 
 			triggerListeners.sort (a, b) ->
-				compareIndex(a.getDepthFromLastMatchedEvent(), b.getDepthFromLastMatchedEvent())
+				CUI.util.compareIndex(a.getDepthFromLastMatchedEvent(), b.getDepthFromLastMatchedEvent())
 
 			stopNodes = []
 			ev_node = event.getNode()
 
 			for listener in triggerListeners
 				listener_node = listener.getNode()
-				# CUI.debug "listener:", listener, listener.getDepthFromLastMatchedEvent()
+				# console.debug "listener:", listener, listener.getDepthFromLastMatchedEvent()
 
 				if listener_node and stopNodes.length > 0
-					listener_node_parents = DOM.parents(listener_node)
+					listener_node_parents = CUI.dom.parents(listener_node)
 					skip = false
 					for stopNode in stopNodes
 						for listener_node_parent in listener_node_parents
@@ -256,40 +244,40 @@ class CUI.Events extends CUI.Element
 				listener.handleEvent(event, "sink")
 
 				if event.isImmediatePropagationStopped()
-					# CUI.debug "immediate stopped!"
+					# console.debug "immediate stopped!"
 					break
 
 				# add to stop nodes if the depth is at least 0 meaning that
 				# the listener has a node
 				if event.isPropagationStopped() and listener_node
-					# CUI.debug "adding stop node", listener_node[0]
-					stopNodes.push(listener_node[0])
+					# console.debug "adding stop node", listener_node[0]
+					stopNodes.push(listener_node)
 
 		return CUI.when(waits)
 
 
 	@ignore: (filter, doc=document) -> # , debug=false) ->
-		# console.debug "Events.ignore", filter, filter.instance?.getUniqueId?()
-		for listener in @getActiveListeners(doc)
-			if not filter or CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
+		# console.debug "CUI.Events.ignore", filter, filter.instance?.getUniqueId?()
+		for listener in @__getActiveListeners(doc)
+			if not filter or CUI.util.isEmptyObject(filter) or listener.matchesFilter(filter)
 				# if debug
-				# 	console.debug("Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
+				# 	console.debug("CUI.Events.ignore: ignoring listener:", listener.getNode(), DOM.data(listener.getNode()).listeners?.length, filter.instance?.getUniqueId?())
 				listener.destroy()
 		@
 
 	@dump: (filter={}) ->
-		for listener in @getActiveListeners()
-			if CUI.isEmptyObject(filter) or listener.matchesFilter(filter)
+		for listener in @__getActiveListeners()
+			if CUI.util.isEmptyObject(filter) or listener.matchesFilter(filter)
 				console.debug("Listener", listener.getTypes(), (if listener.getNode() then "NODE" else "-"), listener)
 		@
 
-	# @dumpTopLevel: ->
-	# 	for listener in @__listeners
-	# 		console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
+	@dumpTopLevel: ->
+		for listener in @__listeners
+			console.debug("Listener [document, window]", listener.getTypes(), listener.getInstance())
 
-	# 	for listener in DOM.data(document.documentElement, "listeners")
-	# 		console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
-	# 	@
+		for listener in CUI.dom.data(document.documentElement, "listeners")
+			console.debug("Listener [document.documentElement]", listener.getTypes(), listener.getInstance(), listener)
+		@
 
 	@hasEventType: (type) ->
 		!!@__eventRegistry[type]
@@ -297,31 +285,31 @@ class CUI.Events extends CUI.Element
 	# returns event info by type
 	@getEventType: (type) ->
 		ev = @__eventRegistry[type]
-		assert(ev, "Unknown event type \"#{type}\". Use Events.registerEvent to register this type.")
+		CUI.util.assert(ev, "Unknown event type \"#{type}\". Use CUI.Events.registerEvent to register this type.")
 		return ev
 
 	@getEventTypeAliases: (type) ->
 		@getEventType(type).alias or [type]
 
 	@registerEvent: (event, allow_array=true) ->
-		if not CUI.isArray(event.type) or not allow_array
-			assert(isString(event?.type) and event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", event: event)
+		if not CUI.util.isArray(event.type) or not allow_array
+			CUI.util.assert(CUI.util.isString(event?.type) and event.type.length > 0, "CUI.Events.registerEvent", "event.type must be String.", event: event)
 
 		register_other_type = (_type) =>
-			_event = copyObject(event, true)
+			_event = CUI.util.copyObject(event, true)
 			_event.type = _type
 			@registerEvent(_event, false)
 
-		if CUI.isArray(event.type)
+		if CUI.util.isArray(event.type)
 			for type in event.type
 				register_other_type(type)
 		else
 			if event.hasOwnProperty("DOMEvent")
-				CUI.error("event.DOMEvent is obsolete")
+				console.error("event.DOMEvent is obsolete")
 				delete(event.DOMEvent)
 
 			if event.hasOwnProperty("CUIEvent")
-				CUI.error("event.CUIEvent is obsolete")
+				console.error("event.CUIEvent is obsolete")
 				delete(event.CUIEvent)
 
 			@__eventRegistry[event.type] = event
@@ -332,7 +320,7 @@ class CUI.Events extends CUI.Element
 						register_other_type(type)
 		@
 
-	@init: ->
+	@__init: ->
 		defaults =
 			BrowserEvents:
 				bubble: true
@@ -398,7 +386,6 @@ class CUI.Events extends CUI.Element
 				close: {}
 				popstate: {}
 				dragstart: {}
-				dragover: {}
 				dragleave: {}
 				dragenter: {}
 				message: {}
@@ -444,10 +431,9 @@ class CUI.Events extends CUI.Element
 				"viewport-resize": {}
 		}
 			for type, ev of events
-				CUI.mergeMap(ev, defaults[block])
+				CUI.util.mergeMap(ev, defaults[block])
 				ev.type = type
 				@registerEvent(ev)
 
-CUI.Events.init()
-Events = CUI.Events
+CUI.Events.__init()
 CUI.defaults.class.Events = CUI.Events

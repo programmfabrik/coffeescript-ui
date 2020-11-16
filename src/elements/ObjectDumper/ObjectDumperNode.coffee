@@ -33,9 +33,11 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 
 	setData: (data) ->
 
-		if @_parse_json and isString(data)
+		if @_parse_json and CUI.util.isString(data)
 			try
 				@__data = JSON.parse(data)
+				if CUI.util.isString(@__data)
+					@__data = data
 			catch e
 				@__data = data
 		else
@@ -54,14 +56,20 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 
 	renderContent: ->
 		if @isLeaf() or not @isOpen()
-			@addColumn(new ListViewColumn(
+			label = new CUI.Label
+				text: @__info.text
+				text_node_func: =>
+					if not @__info.cls == "String"
+						return @__info.text
+					return CUI.Label.parseLinks(@__info.text)
+				multiline: true
+			CUI.dom.setAttribute(label, "data-type", @__info.cls)
+
+			@addColumn(new CUI.ListViewColumn(
 				class: "cui-object-dumper-node-value"
-				element: new Label(
-					text: @__info.text
-					multiline: true
-				)
+				element: label
 			))
-		new Label(
+		new CUI.Label(
 			class: "cui-object-dumper-node-key"
 			text: @_key
 			multiline: true
@@ -86,20 +94,23 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 		else if data == false
 			info.cls = "boolean"
 			info.text = "false"
-		else if isNumber(data)
+		else if typeof(data) == "number" and isNaN(data)
+			info.cls = "NaN"
+			info.text = "NaN"
+		else if CUI.util.isNumber(data)
 			info.cls = "number"
 			info.text = ""+data
-		else if isString(data)
-			info.cls = "String"
-			info.text = '"'+data+'"'
+		else if CUI.util.isString(data)
+			info.cls = "string"
+			info.text = data
 		else
-			info.cls = getObjectClass(data)
+			info.cls = CUI.util.getObjectClass(data)
 
-			if CUI.isArray(data) or CUI.isPlainObject(data)
-				info.has_children = not CUI.isEmptyObject(data)
-				if CUI.isArray(data)
+			if CUI.util.isArray(data) or CUI.util.isPlainObject(data)
+				info.has_children = not CUI.util.isEmptyObject(data)
+				if CUI.util.isArray(data)
 					info.text = info.cls + " [" + data.length + "]"
-				if CUI.isPlainObject(data)
+				if CUI.util.isPlainObject(data)
 					info.text = info.cls + " {" + Object.keys(data).length + "}"
 			else
 				info.has_children = true
@@ -114,8 +125,15 @@ class CUI.ObjectDumperNode extends CUI.ListViewTreeNode
 			for idx in [0...data.length]
 				nodes.push(new CUI.ObjectDumperNode(key: idx, data: data[idx], do_open: @_do_open, parse_json: @_parse_json))
 		else
-			for k, v of data
+			keys = []
+			for k of data
+				keys.push(k)
+
+			keys.sort (a, b) ->
+				a.localeCompare(b)
+
+			for k in keys
+				v = data[k]
 				nodes.push(new CUI.ObjectDumperNode(key: k, data: v, do_open: @_do_open, parse_json: @_parse_json))
 
 		nodes
-

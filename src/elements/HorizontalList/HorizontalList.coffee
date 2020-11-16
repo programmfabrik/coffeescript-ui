@@ -20,6 +20,3 @@ class CUI.HorizontalList extends CUI.HorizontalLayout
 
 	getSupportedPanes: ->
 		[]
-
-
-HorizontalList = CUI.HorizontalList

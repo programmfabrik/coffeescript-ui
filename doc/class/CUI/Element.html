@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Coffeescript-UI Documentation</title>
+  <script src='../../javascript/application.js'></script>
+  <script src='../../javascript/search.js'></script>
+  <link rel='stylesheet' href='../../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>CUI</span>
+    &raquo;
+    <span class='title'>Element</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        CUI.Element
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>base&#47;Element.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <ul>
+<li>coffeescript-ui - Coffeescript User Interface System (CUI)</li>
+<li>Copyright (c) 2013 - 2016 Programmfabrik GmbH</li>
+<li>MIT Licence</li>
+<li><a href="https://github.com/programmfabrik/coffeescript-ui">https://github.com/programmfabrik/coffeescript-ui</a>, <a href="http://www.coffeescript-ui.org">http://www.coffeescript-ui.org</a></li>
+</ul>
+
+</div>
+<div class='tags'>
+</div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../../class/CUI/CSSLoader.html'>CUI.CSSLoader</a>
+        <a href='../../class/CUI/CSVData.html'>CUI.CSVData</a>
+        <a href='../../class/CUI/DOMElement.html'>CUI.DOMElement</a>
+        <a href='../../class/CUI/DragDropSelect.html'>CUI.DragDropSelect</a>
+        <a href='../../class/CUI/Event.html'>CUI.Event</a>
+        <a href='../../class/CUI/Events.html'>CUI.Events</a>
+        <a href='../../class/CUI/Listener.html'>CUI.Listener</a>
+        <a href='../../class/CUI/FlexHandle.html'>CUI.FlexHandle</a>
+        <a href='../../class/CUI/Icon.html'>CUI.Icon</a>
+        <a href='../../class/CUI/Template.html'>CUI.Template</a>
+        <a href='../../class/CUI/XHR.html'>CUI.XHR</a>
+        <a href='../../class/CUI/DocumentBrowser.html'>CUI.DocumentBrowser</a>
+        <a href='../../class/CUI/DocumentBrowser.NodeMatch.html'>CUI.DocumentBrowser.NodeMatch</a>
+        <a href='../../class/CUI/DocumentBrowser.SearchMatch.html'>CUI.DocumentBrowser.SearchMatch</a>
+        <a href='../../class/CUI/DocumentBrowser.SearchQuery.html'>CUI.DocumentBrowser.SearchQuery</a>
+        <a href='../../class/CUI/FileUpload.html'>CUI.FileUpload</a>
+        <a href='../../class/CUI/FileUploadFile.html'>CUI.FileUploadFile</a>
+        <a href='../../class/CUI/InputBlock.html'>CUI.InputBlock</a>
+        <a href='../../class/CUI/ListViewColumn.html'>CUI.ListViewColumn</a>
+        <a href='../../class/CUI/ListViewRow.html'>CUI.ListViewRow</a>
+        <a href='../../class/CUI/MultiInputControl.html'>CUI.MultiInputControl</a>
+        <a href='../../class/CUI/StickyHeaderControl.html'>CUI.StickyHeaderControl</a>
+      </p>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='uniqueId-variable'>
+    uniqueId
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>0</code></pre>
+    
+  </dd>
+</dl>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#getOptKeys-static'>
+        .
+(void)
+<b>getOptKeys</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      this is a hackery function to return just the opts keys for a given class
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#readOpts-static'>
+        .
+(void)
+<b>readOpts</b><span>(opts, cls, check_map, map_values)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#getElementClass-dynamic'>
+        #
+(void)
+<b>getElementClass</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getUniqueId-dynamic'>
+        #
+(void)
+<b>getUniqueId</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getOpts-dynamic'>
+        #
+(void)
+<b>getOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getOpt-dynamic'>
+        #
+(void)
+<b>getOpt</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasOpt-dynamic'>
+        #
+(void)
+<b>hasOpt</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getSetOpt-dynamic'>
+        #
+(void)
+<b>getSetOpt</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#hasSetOpt-dynamic'>
+        #
+(void)
+<b>hasSetOpt</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#initOpts-dynamic'>
+        #
+(void)
+<b>initOpts</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#copy-dynamic'>
+        #
+(void)
+<b>copy</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+      create a new instance from the same opts 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#mergeOpt-dynamic'>
+        #
+(void)
+<b>mergeOpt</b><span>(key, check_map = {})</span>
+      </a>
+    </span>
+    <span class='desc'>
+      returns the merged opt 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeOpt-dynamic'>
+        #
+(void)
+<b>removeOpt</b><span>(key)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addOpt-dynamic'>
+        #
+(void)
+<b>addOpt</b><span>(key, check_map, fn = &quot;addOpt&quot;)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addOpts-dynamic'>
+        #
+(void)
+<b>addOpts</b><span>(map)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#mergeOpts-dynamic'>
+        #
+(void)
+<b>mergeOpts</b><span>(map)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#__getCheckMap-dynamic'>
+        #
+(void)
+<b>__getCheckMap</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#readOpts-dynamic'>
+        #
+(void)
+<b>readOpts</b><span>(opts = @opts, cls = @__cls, check_map = @__check_map)</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#readOptsFromAttr-dynamic'>
+        #
+(void)
+<b>readOptsFromAttr</b><span>(str)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      read &quot;style&quot; like opts for layout 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#proxy-dynamic'>
+        #
+(void)
+<b>proxy</b><span>(element, methods)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      proxy given methods to given element 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#destroy-dynamic'>
+        #
+(void)
+<b>destroy</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#isDestroyed-dynamic'>
+        #
+(void)
+<b>isDestroyed</b><span>()</span>
+      </a>
+    </span>
+    <span class='desc'>
+    </span>
+  </li>
+</ul>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='getOptKeys-static'>
+      .
+(void)
+<b>getOptKeys</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>this is a hackery function to return just
+the opts keys for a given class</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='readOpts-static'>
+      .
+(void)
+<b>readOpts</b><span>(opts, cls, check_map, map_values)</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(opts = {})</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='getElementClass-dynamic'>
+      #
+(void)
+<b>getElementClass</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getUniqueId-dynamic'>
+      #
+(void)
+<b>getUniqueId</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getOpts-dynamic'>
+      #
+(void)
+<b>getOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getOpt-dynamic'>
+      #
+(void)
+<b>getOpt</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasOpt-dynamic'>
+      #
+(void)
+<b>hasOpt</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getSetOpt-dynamic'>
+      #
+(void)
+<b>getSetOpt</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='hasSetOpt-dynamic'>
+      #
+(void)
+<b>hasSetOpt</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='initOpts-dynamic'>
+      #
+(void)
+<b>initOpts</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='copy-dynamic'>
+      #
+(void)
+<b>copy</b><span>()</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>create a new instance from the same opts</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='mergeOpt-dynamic'>
+      #
+(void)
+<b>mergeOpt</b><span>(key, check_map = {})</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>returns the merged opt</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeOpt-dynamic'>
+      #
+(void)
+<b>removeOpt</b><span>(key)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addOpt-dynamic'>
+      #
+(void)
+<b>addOpt</b><span>(key, check_map, fn = &quot;addOpt&quot;)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addOpts-dynamic'>
+      #
+(void)
+<b>addOpts</b><span>(map)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='mergeOpts-dynamic'>
+      #
+(void)
+<b>mergeOpts</b><span>(map)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='__getCheckMap-dynamic'>
+      #
+(void)
+<b>__getCheckMap</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='readOpts-dynamic'>
+      #
+(void)
+<b>readOpts</b><span>(opts = @opts, cls = @__cls, check_map = @__check_map)</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='readOptsFromAttr-dynamic'>
+      #
+(void)
+<b>readOptsFromAttr</b><span>(str)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>read &quot;style&quot; like opts for layout</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='proxy-dynamic'>
+      #
+(void)
+<b>proxy</b><span>(element, methods)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>proxy given methods to given element</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-dynamic'>
+      #
+(void)
+<b>destroy</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='isDestroyed-dynamic'>
+      #
+(void)
+<b>isDestroyed</b><span>()</span>
+      <br>
+    </p>
+    
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

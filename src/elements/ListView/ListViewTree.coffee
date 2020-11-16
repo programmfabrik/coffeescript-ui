@@ -6,9 +6,13 @@
 ###
 
 class CUI.ListViewTree extends CUI.ListView
-	constructor: (@opts={}) ->
-		super(@opts)
-		assert(@root instanceof ListViewTreeNode, "new ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
+	@defaults:
+		arrow_down: "fa-caret-down"
+		arrow_right: "fa-caret-right"
+
+	constructor: (opts) ->
+		super(opts)
+		CUI.util.assert(@root instanceof CUI.ListViewTreeNode, "new CUI.ListViewTree", "opts.root must be instance of ListViewTreeNode", opts: @opts)
 		@root.setTree(@)
 		#
 
@@ -28,16 +32,20 @@ class CUI.ListViewTree extends CUI.ListView
 				check: Boolean
 			root:
 				check: (v) ->
-					v instanceof ListViewRow
+					v instanceof CUI.ListViewRow
 			onOpen:
 				check: Function
 			onClose:
 				check: Function
 
+			# called from ListViewTreeNode
+			onBeforeSelect:
+				check: Function
+
 	readOpts: ->
 		super()
 		if @_selectable != undefined
-			assert(@_selectableRows == undefined, "new ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
+			CUI.util.assert(@_selectableRows == undefined, "new CUI.ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
 			@__selectableRows = @_selectable
 		@
 
@@ -57,7 +65,7 @@ class CUI.ListViewTree extends CUI.ListView
 			else
 				lv_opts.children = []
 
-			@root = new ListViewTreeNode(lv_opts)
+			@root = new CUI.ListViewTreeNode(lv_opts)
 		else
 			@root = @_root
 
@@ -82,7 +90,7 @@ class CUI.ListViewTree extends CUI.ListView
 			listView: @
 
 		@_onDeselect?(ev, info)
-		Events.trigger
+		CUI.Events.trigger
 			node: @
 			type: "row_deselected"
 
@@ -93,20 +101,17 @@ class CUI.ListViewTree extends CUI.ListView
 			listView: @
 
 		@_onSelect?(ev, info)
-		Events.trigger
+		CUI.Events.trigger
 			node: @
 			type: "row_selected"
 
-	render: (do_open) ->
-		if do_open != false
-			CUI.error("ListViewTree.render called with do_open == #{do_open}, only \"false\" is supported. The automatic root.open() is deprecated and will be removed in a future version.")
-			do_open = true
+	render: ->
 
 		handle_event = (ev) =>
 
-			node = DOM.data(DOM.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
+			node = CUI.dom.data(CUI.dom.closest(ev.getCurrentTarget(), ".cui-lv-tree-node"), "listViewRow")
 
-			if node not instanceof ListViewTreeNode or node.isLoading() or node.isLeaf()
+			if node not instanceof CUI.ListViewTreeNode or node.isLoading() or node.isLeaf()
 				return
 
 			# This needs to be immediate, "super" listens on the same node
@@ -121,7 +126,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		super()
 
-		Events.listen
+		CUI.Events.listen
 			node: @DOM
 			selector: ".cui-tree-node-handle"
 			capture: true
@@ -129,25 +134,46 @@ class CUI.ListViewTree extends CUI.ListView
 			call: (ev) =>
 				handle_event(ev)
 
-		Events.listen
+		CUI.Events.listen
 			node: @DOM
 			selector: ".cui-lv-tree-node"
 			type: ["click"]
 			call: (ev) =>
 				handle_event(ev)
 
-		if do_open
-			@root.open()
-
 		if @_no_hierarchy
-			@grid.addClass("cui-list-view-tree-no-hierarchy")
+			CUI.dom.addClass(@grid, "cui-list-view-tree-no-hierarchy")
 		else
-			@grid.addClass("cui-list-view-tree-hierarchy")
+			CUI.dom.addClass(@grid, "cui-list-view-tree-hierarchy")
 
-		@DOM
+		if @__isFocusable()
+			selectorFocus = "."+@__lvClass+"-quadrant > .cui-lv-tr-outer:focus"
+
+			CUI.Events.listen
+				type: ["keydown"]
+				node: @DOM
+				selector: selectorFocus
+				call: (ev) =>
+					node = CUI.dom.data(ev.getCurrentTarget(), "listViewRow")
+					if not node.isSelectable()
+						return
+
+					focusNode = (node) =>
+						rowIdx = node.getRowIdx()
+						row = @getRow(rowIdx)[0]
+						row.focus()
+						return
+
+					if ev.getKeyboard() == "Right" and not node.isOpen()
+						node.open().done(() => focusNode(node))
+					else if ev.getKeyboard() == "Left" and node.isOpen()
+						node.close().done(() => focusNode(node))
+
+					return
+
+		return @DOM
 
 	toggleNode: (ev, node) ->
-
 		if node.isOpen()
 			@__runTrigger(ev, "close", node)
 		else
@@ -157,10 +183,11 @@ class CUI.ListViewTree extends CUI.ListView
 
 
 	__runTrigger: (ev, action, node) ->
-		if ev.ctrlKey()
+		if ev.ctrlKey() or ev.metaKey()
 			@__actionOnNode(ev, action+"Recursively", node)
 		else
 			@__actionOnNode(ev, action, node)
+
 		return
 
 
@@ -192,18 +219,30 @@ class CUI.ListViewTree extends CUI.ListView
 
 			@startLayout()
 
+			CUI.Events.trigger
+					type: "content-resize"
+					node: @DOM
+
+
+
 		return ret
 		# console.timeEnd("#{@__uniqueId}: action on node #{action}")
 
-	selectRow: (ev, row) ->
-		row.select(ev)
+	deselectRow: (ev, row, newRow) ->
+		# deselect if we allow multiple rows or the selection is a toggle
+		if @__selectableRows == "multiple" or row == newRow
+			return super(ev, row, newRow)
+
+		# we ignore this here, because our "ListViewTreeNode" handles
+		# deselect during "select".
+		return CUI.resolvedPromise()
 
 	getNodesForMove: (from_i, to_i, after) ->
 		from_node = @getListViewRow(from_i)
 		to_node = @getListViewRow(to_i)
 
-		assert(from_node, "ListViewTree.moveRow", "from_i node not found", from_i: from_i)
-		assert(to_node, "ListViewTree.moveRow", "to_i node not found", to_i: to_i)
+		CUI.util.assert(from_node, "ListViewTree.moveRow", "from_i node not found", from_i: from_i)
+		CUI.util.assert(to_node, "ListViewTree.moveRow", "to_i node not found", to_i: to_i)
 
 		if from_node.father == to_node.father and not (to_node.is_open and after)
 			new_father = null
@@ -221,14 +260,18 @@ class CUI.ListViewTree extends CUI.ListView
 		# console.error "moveRow", "from_i:", from_i, "to_i:", to_i, "after:", after, "display_from_i:", @getDisplayRowIdx(from_i), "display_to_i:", @getDisplayRowIdx(to_i)
 		[ from_node, to_node, new_father ] = @getNodesForMove(from_i, to_i, after)
 
-		promise = from_node.moveNodeBefore(to_node, new_father, after)
+		moveNodePromise = from_node.moveNodeBefore(to_node, new_father, after)
+		CUI.util.assert(CUI.util.isPromise(moveNodePromise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: moveNodePromise)
 
-		assert(isPromise(promise), "ListViewTree.moveRow", "moveNodeBefore needs to return a Promise", promise: promise)
-		promise.done =>
+		deferred = new CUI.Deferred()
+		moveNodePromise.done( =>
+			display_from_i = @getDisplayRowIdx(from_i)
+			display_to_i = @getDisplayRowIdx(to_i)
+
 			super(from_i, to_i, after, false)
 			# move row in data structure
 			if from_node.father == to_node.father and not (to_node.is_open and after)
-				moveInArray(from_node.getChildIdx(), to_node.getChildIdx(), from_node.father.children, after)
+				CUI.util.moveInArray(from_node.getChildIdx(), to_node.getChildIdx(), from_node.father.children, after)
 			else
 				from_node.father.removeChild(from_node)
 				# the node is open and we want to put it after, so
@@ -244,20 +287,25 @@ class CUI.ListViewTree extends CUI.ListView
 
 					from_node.setFather(to_node.father)
 
-			from_node.reload()
-			new_father?.reload()
+			reloadPromises = [ from_node.reload() ]
+			if new_father
+				reloadPromises.push(new_father.reload())
 
-			from_node.moveNodeAfter(to_node, new_father, after)
+			CUI.whenAll(reloadPromises).done(=>
+				@_onRowMove?(display_from_i, display_to_i, after)
 
-			Events.trigger
-				node: @grid
-				type: "row_moved"
-				info:
-					from_i: from_i
-					to_i: to_i
-					after: after
+				CUI.Events.trigger
+					node: @grid
+					type: "row_moved"
+					info:
+						from_i: from_i
+						to_i: to_i
+						after: after
 
-		promise
+				deferred.resolve()
+			).fail(deferred.reject)
+		).fail(deferred.reject)
+		deferred.promise()
 
 	getRootChildren: ->
 		@root.children
@@ -269,9 +317,9 @@ class CUI.ListViewTree extends CUI.ListView
 		@addNode(node, false)
 
 	addNode: (node, append=true) ->
-		assert(node instanceof ListViewTreeNode, "#{getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
+		CUI.util.assert(node instanceof CUI.ListViewTreeNode, "#{CUI.util.getObjectClass(@)}.addNode", "Node must be instance of ListViewTreeNode", node: node)
 		promise = @root.addNode(node, append)
-		Events.trigger
+		CUI.Events.trigger
 			node: @
 			type: "row_added"
 			info:
@@ -282,8 +330,7 @@ class CUI.ListViewTree extends CUI.ListView
 
 		row_index = @getRowIdx(index)
 		row = @getRow(row_index)
-		DOM.data(row[0], "listViewRow").open()
-
+		CUI.dom.data(row[0], "listViewRow").open()
 
 CUI.Events.registerEvent
 	bubble: true
@@ -295,5 +342,4 @@ CUI.Events.registerEvent
 		"row_deselected"
 	]
 
-
-ListViewTree = CUI.ListViewTree
+CUI.defaults.class.ListViewTree = CUI.ListViewTree

@@ -39,3 +39,11 @@ class CUI.MouseEvent extends CUI.Event
 
 		super(ev)
 
+
+	getTarget: ->
+		if CUI.browser.firefox and @getType() in ["mousemove", "mouseup"]
+			# ok, in firefox the target of the mousemove
+			# event is WRONG while dragging. we need to overwrite
+			# this with elementFromPoint, true story :(
+			return @getPointTarget()
+		return super()

@@ -5,10 +5,10 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class FormButton extends Checkbox
+class CUI.FormButton extends CUI.Checkbox
 
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
 	getButtonOpts: ->
 		opts = icon: @_icon
@@ -18,10 +18,7 @@ class FormButton extends Checkbox
 
 	render: ->
 		super()
-		if CUI.__ng__
-			# OMG, this is really f*cked up, we add this in Button, remove it in Checkbox
-			# and now add it again...
-			@__checkbox.addClass("cui-button-button")
+		@__checkbox.addClass("cui-button-button")
 		return
 
 	getCheckboxClass: ->
@@ -32,6 +29,6 @@ class FormButton extends Checkbox
 		@addOpts
 			icon:
 				check: (v) ->
-					v instanceof Icon or isString(v)
+					v instanceof CUI.Icon or CUI.util.isString(v)
 			appearance:
 				check: ["link","flat","normal","important"]

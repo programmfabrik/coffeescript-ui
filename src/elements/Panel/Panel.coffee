@@ -5,10 +5,17 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class Panel extends CUI.DOM
-	constructor: (@opts={}) ->
-		super(@opts)
-		@panel = new Template
+CUI.Template.loadTemplateText(require('./Panel.html'));
+
+class CUI.Panel extends CUI.DOMElement
+
+	@defaults:
+		arrow_down: "fa-angle-down"
+		arrow_right: "fa-angle-right"
+
+	constructor: (opts) ->
+		super(opts)
+		@panel = new CUI.Template
 			name: "panel"
 			map:
 				header: true
@@ -20,13 +27,15 @@ class Panel extends CUI.DOM
 			@append(@_content_placeholder, "content")
 			@__has_placeholder = true
 
-		if CUI.isFunction(@_content)
+		if CUI.util.isFunction(@_content)
 			if not @_load_on_open
 				@loadContent()
 		else if @_content
 			@append(@_content, "content")
 
-		@button = new Button
+		@__activations = 0
+
+		@button = new CUI.Button
 			text: @_text
 			class: "cui-panel-header-button"
 			radio: @_radio
@@ -34,11 +43,15 @@ class Panel extends CUI.DOM
 			icon_active: @_icon_opened
 			icon_inactive: @_icon_closed
 			onActivate: (btn, flags, event) =>
-				@open(not flags.initial_activate)
+				@__activations++
+				if @__activations == 1
+					@_onFirstActivate?(@, flags, event)
+
+				@__open(not flags.initial_activate)
 				@_onActivate?(btn, flags, event)
 
 			onDeactivate: (btn, flags, event) =>
-				@close(not flags.initial_activate)
+				@__close(not flags.initial_activate)
 				@_onDeactivate?(btn, flags, event)
 
 		@append(@button, "header")
@@ -58,16 +71,16 @@ class Panel extends CUI.DOM
 			content:
 				# mandatory: true
 				check: (v) ->
-					isContent(v) or isString(v)
+					CUI.util.isContent(v) or CUI.util.isString(v)
 			content_placeholder:
 				check: (v) ->
-					isContent(v)
+					CUI.util.isContent(v)
 			load_on_open:
 				check: Boolean
 			radio:
 				default: "panel-switcher"
 				check: (v) ->
-					isString(v) or v == true
+					CUI.util.isString(v) or v == true
 			radio_allow_null:
 				default: true
 				mandatory: true
@@ -76,10 +89,10 @@ class Panel extends CUI.DOM
 				default: true
 				check: Boolean
 			icon_opened:
-				default: "fa-angle-down"
+				default: CUI.defaults.class.Panel.defaults.arrow_down
 				check: String
 			icon_closed:
-				default: "fa-angle-right"
+				default: CUI.defaults.class.Panel.defaults.arrow_right
 				check: String
 			footer_right: {}
 			footer_left: {}
@@ -96,25 +109,33 @@ class Panel extends CUI.DOM
 		@
 
 	isClosed: ->
-		@DOM.hasClass("cui-panel-closed")
+		CUI.dom.hasClass(@DOM, "cui-panel-closed")
 
 	isOpen: ->
 		!@isClosed()
 
-	close: (trigger = true) ->
-		@DOM.addClass("cui-panel-closed")
+	open: ->
+		@button.activate()
+		@
+
+	close: ->
+		@button.deactivate()
+		@
+
+	__close: (trigger = true) ->
+		CUI.dom.addClass(@DOM, "cui-panel-closed")
 
 		if trigger
-			Events.trigger
+			CUI.Events.trigger
 				type: "content-resize"
 				node: @DOM
 		@
 
-	open: (trigger = true) ->
+	__open: (trigger = true) ->
 		done = =>
-			@DOM.removeClass("cui-panel-closed")
+			CUI.dom.removeClass(@DOM, "cui-panel-closed")
 			if trigger
-				Events.trigger
+				CUI.Events.trigger
 					type: "content-resize"
 					node: @DOM
 			return
@@ -126,13 +147,13 @@ class Panel extends CUI.DOM
 		@
 
 	loadContent: ->
-		if CUI.isFunction(@_content)
+		if CUI.util.isFunction(@_content)
 			ret = @_content(@)
 		else
 			ret = @_content
 
 		dfr = new CUI.Deferred()
-		if isPromise(ret)
+		if CUI.util.isPromise(ret)
 			ret.always (content) =>
 				@setContent(content)
 				dfr.resolve()
@@ -157,4 +178,4 @@ class Panel extends CUI.DOM
 			@append(content, key)
 		@
 
-
+CUI.defaults.class.Panel = CUI.Panel

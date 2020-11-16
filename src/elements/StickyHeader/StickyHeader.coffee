@@ -5,11 +5,13 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class StickyHeader extends CUI.DOM
-	constructor: (@opts={}) ->
-		super(@opts)
+CUI.Template.loadTemplateText(require('./StickyHeader.html'));
 
-		@header = new Template
+class CUI.StickyHeader extends CUI.DOMElement
+	constructor: (opts) ->
+		super(opts)
+
+		@header = new CUI.Template
 			name: "sticky-header"
 			map:
 				center: true
@@ -17,8 +19,8 @@ class StickyHeader extends CUI.DOM
 		@registerTemplate(@header)
 
 		@addClass("cui-sticky-header-level-#{@_level}")
-		if not isEmpty(@_text)
-			@replace($text(@_text), "center")
+		if not CUI.util.isEmpty(@_text)
+			@replace(CUI.dom.text(@_text), "center")
 		else
 			@replace(@_content, "center")
 
@@ -29,7 +31,7 @@ class StickyHeader extends CUI.DOM
 		@addOpts
 			control:
 				mandatory: true
-				check: StickyHeaderControl
+				check: CUI.StickyHeaderControl
 			text:
 				check: String
 			content: {}

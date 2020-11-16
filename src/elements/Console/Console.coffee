@@ -5,15 +5,14 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-class CUI.Console extends CUI.DOM
-	constructor: (@opts={}) ->
-		super(@opts)
-		@__console = CUI.DOM.element("DIV", class: "cui-console")
+class CUI.Console extends CUI.DOMElement
+	constructor: (opts) ->
+		super(opts)
+		@__console = CUI.dom.element("DIV", class: "cui-console")
 		@registerDOMElement(@__console)
 
 	initOpts: ->
 		super()
-		console.debug "init opts console"
 		@addOpts
 			markdown:
 				mandatory: true
@@ -25,5 +24,5 @@ class CUI.Console extends CUI.DOM
 
 	log: (txt, markdown = @_markdown) ->
 		lbl = new CUI.defaults.class.Label(text: txt, multiline: true, markdown: markdown)
-		@__console.appendChild(lbl.DOM[0])
+		@__console.appendChild(lbl.DOM)
 		@__console.scrollTop = @__console.scrollHeight

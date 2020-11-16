@@ -12,20 +12,45 @@ class CUI.Modal extends CUI.LayerPane
 	@defaults:
 		cancel_tooltip: text: "Close Dialog"
 
-	#Construct a new Modal.
+	#Construct a new CUI.Modal.
 	#
-	constructor: (@opts={}) ->
-		super(@opts)
+	constructor: (opts) ->
+		super(opts)
 
-		@__addHeaderButton("fill_screen_button", Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip))
+		toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip)
+		@__addHeaderButton("fill_screen_button", toggleFillScreenButton)
 
-		@__addHeaderButton "cancel",
+		do_cancel = (ev) =>
+			toggleFillScreenButton.deactivate()
+			@doCancel(ev, false, htbn)
+
+		htbn = @__addHeaderButton "cancel",
 			class: "ez5-modal-close-button"
 			icon:  "close"
 			tooltip: @_cancel_tooltip or CUI.Modal.defaults.cancel_tooltip
-			appearance: if CUI.__ng__ then "normal" else "flat"
-			onClick: (ev, btn) =>
-				@doCancel(ev, false, btn)
+			appearance: "normal"
+			onClick: (ev) =>
+				do_cancel(ev)
+
+		@getPane().addClass("cui-pane--window")
+
+		if @_onToggleFillScreen
+			CUI.Events.listen
+				type: ["start-fill-screen", "end-fill-screen"]
+				node: @getPane()
+				call: (ev) =>
+					@_onToggleFillScreen.call(@, ev, @)
+
+		if @_cancel_with_click_on_baskdrop and @_cancel and @_fill_space == "auto"
+			bd = @getBackdrop()
+			if bd
+				CUI.Events.listen
+					type: "click"
+					node: bd
+					call: (ev) =>
+						do_cancel(ev)
+
+		return
 
 	initOpts: ->
 		super()
@@ -42,6 +67,10 @@ class CUI.Modal extends CUI.LayerPane
 				check: ["destroy", "hide"]
 			cancel_tooltip:
 				check: "PlainObject"
+			cancel_with_click_on_backdrop:
+				mandatory: true
+				default: true
+				check: Boolean
 			onCancel:
 				check: Function
 			# show a fill screen button
@@ -55,26 +84,32 @@ class CUI.Modal extends CUI.LayerPane
 		@mergeOpt "placement",
 			default: "c"
 
+	readOpts: ->
+		if @opts.cancel and CUI.util.isPlainObject(@opts.pane)
+			@opts.pane.force_header = true
+
+		super()
+
 	__addHeaderButton: (pname, _btn) ->
 		if not @["_#{pname}"]
 			return
 
-		if CUI.isPlainObject(_btn)
+		if CUI.util.isPlainObject(_btn)
 			btn = new CUI.defaults.class.Button(_btn)
 		else
 			btn = _btn
 
-		assert(btn instanceof Button, "Modal.__addHeaderButton", "Button needs to be instance of Button", btn: btn)
+		CUI.util.assert(btn instanceof CUI.Button, "Modal.__addHeaderButton", "Button needs to be instance of Button", btn: btn)
 
-		assert(@__pane instanceof SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
+		CUI.util.assert(@__pane instanceof CUI.SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
 
 		@append(btn, "header_right")
-		@
+		return btn
 
 	__runOnAllButtons: (func) ->
-		for el in @__layer.DOM.find(".cui-button")
-			btn = DOM.data(el, "element")
-			if btn instanceof Button
+		for el in CUI.dom.matchSelector(@__layer.DOM, ".cui-button,.cui-data-field")
+			btn = CUI.dom.data(el, "element")
+			if btn instanceof CUI.Button or btn instanceof CUI.DataField
 				btn[func]()
 		return
 
@@ -95,7 +130,7 @@ class CUI.Modal extends CUI.LayerPane
 			super(ev)
 		else
 			ret = @_onCancel?(ev, @)
-			if isPromise(ret)
+			if CUI.util.isPromise(ret)
 				if button
 					button.disable()
 					button.startSpinner()
@@ -106,6 +141,19 @@ class CUI.Modal extends CUI.LayerPane
 			else if ret != false
 				@[@_cancel_action](ev, ret)
 		return
+
+	focusOnShow: (ev) ->
+		if ev == CUI.KeyboardEvent
+			# set focus back on hide
+			@__focused_on_show = true
+		else
+			@__focused_on_show = false
+
+		@DOM.focus()
+		@
+
+	forceFocusOnShow: ->
+		true
 
 	# PROXY some functions
 	empty: (key="center") ->
@@ -123,9 +171,11 @@ class CUI.Modal extends CUI.LayerPane
 		@position()
 		@
 
+	setContent: (content) ->
+		@getPane().replace(content, 'center')
+		@position()
+		@
+
 	hide: (ev) ->
 		@getPane().endFillScreen(false) # no transition
 		super(ev)
-
-
-Modal = CUI.Modal

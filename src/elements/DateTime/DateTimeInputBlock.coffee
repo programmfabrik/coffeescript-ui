@@ -4,8 +4,9 @@
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
+moment = require('moment')
 
-class DateTimeInputBlock extends InputBlock
+class CUI.DateTimeInputBlock extends CUI.InputBlock
 	initOpts: ->
 		super()
 		@addOpts
@@ -29,11 +30,11 @@ class DateTimeInputBlock extends InputBlock
 
 	__changeBlock: (block, blocks, diff) ->
 
-		CUI.debug "change block", block, blocks, diff, @_datetime, @_input_format.format
+		console.debug "change block", block, blocks, diff, @_datetime, @_input_format.format
 
 		mom = moment(@_datetime, @_input_format.input)
 
-		if CUI.isFunction(@_matcher.inc_func)
+		if CUI.util.isFunction(@_matcher.inc_func)
 			@_matcher.inc_func(mom, diff)
 		else
 			if diff < 0
@@ -44,5 +45,5 @@ class DateTimeInputBlock extends InputBlock
 		for bl in blocks
 			bl.setString(mom.format(bl._matcher.match_str))
 
-		# CUI.debug "inc block", @_datetime, diff, mom.toString()
+		# console.debug "inc block", @_datetime, diff, mom.toString()
 		return block
