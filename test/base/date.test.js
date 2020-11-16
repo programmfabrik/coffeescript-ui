@@ -1209,6 +1209,27 @@ describe('CUI.DateTime.stringToDateRange', () => {
         expect(output.from).toBe("2020-10-01");
         expect(output.to).toBe("2020-10-31");
     });
+
+    test("stringToDateRange :: -2020-11-05T11:00:00+01:00", () => {
+        CUI.DateTime.setLocale("de-DE")
+        const input = "-2020-11-05T11:00:00+01:00";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-2020-11-05");
+        expect(output.to).toBe("-2020-11-05");
+    });
+
+
+    test("stringToDateRange :: -0100-01-01", () => {
+        CUI.DateTime.setLocale("de-DE")
+        const input = "-0100-01-01";
+
+        const output = CUI.DateTime.stringToDateRange(input)
+
+        expect(output.from).toBe("-0100-01-01");
+        expect(output.to).toBe("-0100-01-01");
+    });
 });
 
 describe('CUI.DateTime.dateRangeToString', () => {
