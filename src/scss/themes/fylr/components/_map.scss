@@ -19,6 +19,11 @@
 		background-image:
 			linear-gradient(to right, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px),
 			linear-gradient(to bottom, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px);
+
+		.cui-pane-fill-screen & {
+			margin: 0 !important;
+			padding: $pane-padding !important;
+		}
 	}
 }
 
@@ -27,16 +32,15 @@
 	width: 100%;
 	z-index: 1000;
 	display: block;
-	margin-top: 10px;
 
 	.buttons-upper-left .cui-buttonbar {
 		position: absolute;
-		margin-left: 10px;
+		left: 0;
 	}
 
 	.buttons-upper-right .cui-buttonbar {
 		position: absolute;
-		right: 10px;
+		right: $spacer-sm;
 	}
 }
 
