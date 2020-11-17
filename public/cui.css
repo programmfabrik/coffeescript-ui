@@ -4180,7 +4180,7 @@ label[data-label-clickable],
   .cui-block.cui-block-level-2.appearance-wide {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start; }
+    align-content: flex-start; }
     .cui-block.cui-block-level-2.appearance-wide:last-child {
       flex-grow: 1; }
     .cui-block.cui-block-level-2.appearance-wide > .cui-block-header {
