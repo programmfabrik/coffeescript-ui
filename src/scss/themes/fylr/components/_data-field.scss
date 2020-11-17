@@ -35,14 +35,16 @@
 		max-width: 100%;
 		// flex-grow: 1; // breaks .ez5-quicksearch-input
 
+		// ? commented out: because this interferes with tag styles in admin, could not find use case
+		// todo: remove if obsolete
 		// see .cui-pool-selector.ez5-pool-field in the .cui-search-selector
-		.cui-label {
-			width: 100%;
+		// .cui-label {
+		// 	width: 100%;
 
-			> .cui-data-field {
-				width: 100%;
-			}
-		}
+		// 	> .cui-data-field {
+		// 		width: 100%;
+		// 	}
+		// }
 	}
 
 	&.cui-maximize-horizontal {
