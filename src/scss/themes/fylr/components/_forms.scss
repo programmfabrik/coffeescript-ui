@@ -86,6 +86,13 @@
 			@include button-select-as-input();
 		}
 	}
+
+	// these elements do not have the class cui-select, so we need to apply styles here again
+	.cui-form-field-type--select & {
+		.cui-data-field-input {
+			@include button-select-as-input();
+		}
+	}
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center {
