@@ -6065,7 +6065,7 @@ textarea {
   left: 0;
   bottom: var(--data-form-field-group-indicator-bottom, 0);
   width: 2px;
-  background-color: #212121;
+  background-color: var(--data-form-field-group-border-color, #212121);
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key label,
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key .cui-label {
@@ -6119,16 +6119,14 @@ textarea {
   width: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (0)[2] 1fr;
-  grid-template-columns: repeat(2, 0) 1fr;
+  -ms-grid-columns: (var(--data-form-utilities-column-width, 0))[2] 1fr;
+  grid-template-columns: repeat(2, var(--data-form-utilities-column-width, 0)) 1fr;
   -ms-grid-rows: auto;
   grid-template-rows: auto;
       grid-template-areas: "move delete content";
 }
-.cui-data-form--movable-rows .cui-data-form-row,
-.cui-data-form-row .cui-data-form--add-button {
-  -ms-grid-columns: (1.15rem)[2] 1fr;
-  grid-template-columns: repeat(2, 1.15rem) 1fr;
+.cui-data-form--movable-rows .cui-data-form-row, .cui-data-form--add-button .cui-data-form-row {
+  --data-form-utilities-column-width: 1.15rem;
 }
 .cui-data-form-row:not(:last-child) {
   margin-bottom: 0.5rem;
