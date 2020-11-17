@@ -138,6 +138,6 @@
 		left: 0;
 		bottom: var(--data-form-field-group-indicator-bottom, 0);
 		width: $data-form-field-group-border-width;
-		background-color: $data-form-field-group-border-color;
+		background-color: var(--data-form-field-group-border-color, #{$data-form-field-group-border-color});
 	}
 }
