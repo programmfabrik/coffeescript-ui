@@ -64,8 +64,14 @@
 
 	// Special blocks
 	// see: admin > usermanagement > system rights
-	&.cui-form-block--has-checkbox > .cui-block-content {
-		margin-left: $spacer-lg;
+	&.cui-form-block--has-checkbox {
+		> .cui-block-header {
+			margin-bottom: 0;
+		}
+		
+		> .cui-block-content {
+			margin-left: $block-has-checkbox-indent;
+		}
 	}
 }
 

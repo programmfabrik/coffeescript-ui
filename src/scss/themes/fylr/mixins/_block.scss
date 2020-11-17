@@ -78,13 +78,15 @@
 	@include block-separator();
 
 	@include media-breakpoint-up(lg) {
-		.cui-block-header {
-			margin-bottom: $block-margin;
-		}
-		
-		.cui-block-content {
-			margin-left: var(--block-inline-content-indent);
-			max-width: var(--block-inline-content-max-width);
+		&:not(.cui-form-block--has-checkbox) {
+			> .cui-block-header {
+				margin-bottom: $block-margin;
+			}
+			
+			> .cui-block-content {
+				margin-left: var(--block-inline-content-indent);
+				max-width: var(--block-inline-content-max-width);
+			}
 		}
 	}
 
