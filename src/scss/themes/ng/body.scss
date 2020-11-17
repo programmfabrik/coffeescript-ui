@@ -5812,7 +5812,7 @@ label[data-label-clickable],
 		&.appearance-wide {
 			display: flex;
 			flex-wrap: wrap;
-			align-items: flex-start;
+			align-content: flex-start;
 
 			// fill in vertical space with gray background
 			&:last-child {
