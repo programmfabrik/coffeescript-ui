@@ -85,6 +85,8 @@
 		z-index: 1;
 		height: 100%;
 
+		@include button-plain();
+
 		&:active .cui-button-visual {
 			color: inherit;
 		}
