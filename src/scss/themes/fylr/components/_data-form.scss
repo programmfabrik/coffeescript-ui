@@ -118,7 +118,7 @@
 
 	// only add space in the columns if we show move handle and/or trash
 	.cui-data-form--movable-rows &,
-	.cui-data-form--add-button {
+	.cui-data-form--add-button & {
 		grid-template-columns: repeat($data-form-utilities-count, $data-form-utilities-column-width) 1fr;
 	}
 
