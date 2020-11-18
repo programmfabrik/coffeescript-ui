@@ -34,7 +34,7 @@
 		margin-bottom: $spacer-sm;
 
 		> .cui-block-title {
-			@include label-title(false);
+			@include label-title();
 		}
 	}
 

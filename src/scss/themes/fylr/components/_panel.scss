@@ -28,13 +28,13 @@
 		}
 
 		.cui-button-visual {
+			@include label-title();
+
 			height: auto;
 			justify-content: flex-start;
 			padding: 0;
-			font-weight: $font-weight-bold;
-			text-transform: uppercase;
-			line-height: 1.2;
 			align-items: baseline;
+
 
 			.cui-button-left {
 				width: $panel-content-padding;

@@ -40,8 +40,15 @@
 	letter-spacing: initial;
 }
 
-// horizontaler teiler, schnellzugriff block title
-@mixin label-title($letter-spacing: false) {
+// Block title, panel title, tab title
+@mixin label-title() {
+	font-weight: $font-weight-bold;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+// horizontaler teiler, schnellzugriff
+@mixin label-title-light($letter-spacing: false) {
 	font-weight: $font-weight-bold;
 	color: gray('500');
 	text-transform: uppercase;

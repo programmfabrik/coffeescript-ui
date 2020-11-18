@@ -145,11 +145,11 @@
 		margin: 0;
 
 		.cui-button-visual {
+			@include label-title();
+
 			height: $tabs-header-height;
 			border-radius: 0;
 			background-color: $tabs-background;
-			font-weight: $font-weight-bold;
-			text-transform: uppercase;
 
 			.cui-button-center {
 				padding: 0 $tabs-content-padding;
