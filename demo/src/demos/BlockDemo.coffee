@@ -12,12 +12,13 @@ class Demo.BlockDemo extends Demo
 
 		@demo_table = new Demo.DemoTable()
 
-		@demo_table.addDivider("blocks")
+		@demo_table.addDivider("blocks and sections")
 
-		@demo_table.addExample("Blocks", @createBlocks() )
-		@demo_table.addExample("Blocks with line separator mixin", @createSimpleBlocks("cui-demo-block-separator") )
-		@demo_table.addExample("Blocks as grid and padded", @createSimpleBlocksWide() )
-		@demo_table.addExample("Blocks as grid and NOT padded", @createSimpleBlocksWideNotPadded() )
+		@demo_table.addExample("Section block", @createBlocks() )
+		@demo_table.addExample("Section block with line separator mixin", @createSimpleBlocks("cui-demo-block-separator") )
+		@demo_table.addExample("Section block 'inline'", @createSimpleBlocksWide() )
+		@demo_table.addExample("Section block 'base config'", @createSectionBlockBaseConfig() )
+		@demo_table.addExample("Bracket block in Editor only", @createBlockBracket() )
 
 		@createWaitBlockExample()
 
@@ -100,7 +101,7 @@ class Demo.BlockDemo extends Demo
 		list.DOM
 
 
-	createSimpleBlocksWideNotPadded: (style_class= "") ->
+	createSectionBlockBaseConfig: (style_class= "") ->
 
 		list = new CUI.VerticalList
 			maximize: true
@@ -108,10 +109,8 @@ class Demo.BlockDemo extends Demo
 			content:
 				[
 					new CUI.Block
-						text: "Wide block A - Level 1"
-						appearance: "wide"
-						class: "cui-demo-block-grid"
-						padded: false
+						text: "Admin"
+						class: "cui-demo-block-base-config"
 						level: 1
 						content: [
 							new CUI.Label
@@ -119,10 +118,8 @@ class Demo.BlockDemo extends Demo
 
 						],
 					new CUI.Block
-						text: "Wide block B - Level 2"
-						appearance: "wide"
-						class: "cui-demo-block-grid"
-						padded: false
+						text: "Some options"
+						class: "cui-demo-block-base-config"
 						level: 2
 						content: [
 							new CUI.Label
@@ -130,11 +127,9 @@ class Demo.BlockDemo extends Demo
 								multiline: true
 						],
 					new CUI.Block
-						text: "Wide block C - Level 3"
-						appearance: "wide"
-						class: "cui-demo-block-grid"
-						padded: false
-						level: 3
+						text: "Configuration options"
+						class: "cui-demo-block-base-config"
+						level: 2
 						content: [
 							new CUI.Label
 								text: "content of main block"
@@ -143,6 +138,45 @@ class Demo.BlockDemo extends Demo
 
 				]
 		list.DOM
+
+	
+	createBlockBracket: (style_class= "") ->
+
+		list = new CUI.VerticalList
+			maximize: true
+			class: style_class
+			content:
+				[
+					new CUI.Block
+						text: "Fields in a Block"
+						class: "cui-demo-block-bracket"
+						level: 1
+						content: [
+							new CUI.Label
+								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								multiline: true
+						],
+					new CUI.Block
+						text: "Other Fields in a Block"
+						class: "cui-demo-block-bracket"
+						level: 1
+						content: [
+							new CUI.Label
+								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+								multiline: true
+						],
+					new CUI.Block
+						text: "And even more Fields"
+						class: "cui-demo-block-bracket"
+						level: 1
+						content: [
+							new CUI.Label
+								text: "content of main block"
+
+						]
+
+				]
+		list.DOM		
 
 
 	createWaitBlockExample: ->

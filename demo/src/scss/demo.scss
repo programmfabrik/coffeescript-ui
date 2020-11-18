@@ -302,7 +302,7 @@
 }
 
 .cui-demo-label-title {
-	@include label-title();
+	@include label-title-light();
 }
 
 .cui-demo-label-subtitle {
@@ -315,6 +315,14 @@
 
 .cui-demo-block-grid {
 	@include block-inline();
+}
+
+.cui-demo-block-bracket {
+	@include block-bracket();
+}
+
+.cui-demo-block-base-config {
+	@include block-highlight();
 }
 
 .cui-demo-block-separator .cui-block {
