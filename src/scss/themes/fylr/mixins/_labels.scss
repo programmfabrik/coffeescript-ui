@@ -41,24 +41,24 @@
 }
 
 // Block title, panel title, tab title
-@mixin label-title() {
+@mixin label-title($letter-spacing: false) {
 	font-weight: $font-weight-bold;
 	line-height: 1.2;
 	text-transform: uppercase;
-}
-
-// horizontaler teiler, schnellzugriff
-@mixin label-title-light($letter-spacing: false) {
-	font-weight: $font-weight-bold;
-	color: gray('500');
-	text-transform: uppercase;
-
+	
 	@if $letter-spacing {
 		letter-spacing: 3px;
 	}
 	@else {
 		letter-spacing: 0.03em;
 	}
+}
+
+// horizontaler teiler, schnellzugriff
+@mixin label-title-light($letter-spacing: true) {
+	@include label-title($letter-spacing);
+	
+	color: gray('500');
 }
 
 @mixin label-subtitle() {
