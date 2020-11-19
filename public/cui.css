@@ -3057,9 +3057,6 @@ a[role="button"].cui-button-appearance-link {
     z-index: 1; }
   .cui-lv-tr-outer.cui-lv-tree-node--is-branch {
     cursor: pointer;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     touch-action: manipulation; }
 
 .cui-lv-tr {
@@ -3071,9 +3068,6 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-list-view-row-selectable {
   cursor: pointer;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   touch-action: manipulation; }
 
 .cui-lv-row-move-handle-column:after {
@@ -3498,9 +3492,6 @@ a[role="button"].cui-button-appearance-link {
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
   cursor: pointer;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   touch-action: manipulation; }
 
 .cui-form-value {
