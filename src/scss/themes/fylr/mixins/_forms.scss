@@ -10,8 +10,9 @@
 }
 
 @mixin input-focus() {
-	box-shadow: $input-focus-shadow; // see mixins/_buttons
-	border-color: $input-focus-border-color;
+	// should always win !
+	box-shadow: $input-focus-shadow !important; // see mixins/_buttons
+	border-color: $input-focus-border-color !important;
 	z-index: 1;
 }
 

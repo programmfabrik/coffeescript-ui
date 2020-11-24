@@ -357,7 +357,7 @@
 
 @mixin button-focus() {
 	outline: none;
-	border-color: theme-color('focused');
+	border-color: $btn-bordered-focus-border-color;
 	box-shadow: $btn-focus-shadow !important;
 }
 
