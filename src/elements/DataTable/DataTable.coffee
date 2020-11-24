@@ -104,7 +104,11 @@ class CUI.DataTable extends CUI.DataFieldInput
 	init: ->
 		@__fieldList = []
 		for field in @getFieldOpts()
-			@__fieldList.push(CUI.DataField.new(field))
+			if CUI.util.isFunction(field)
+				_field = CUI.DataField.new(field(@))
+			else
+				_field = CUI.DataField.new(field)
+			@__fieldList.push(_field)
 		@
 
 	disable: ->

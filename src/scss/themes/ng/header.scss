@@ -180,9 +180,9 @@ $popover-hint-background: hsl(205,20%,30%);
 
 @mixin clickable {
   cursor: pointer;
-	-webkit-user-select: none;
-	    -ms-user-select: none;
-	        user-select: none;
+  // -webkit-user-select: none;
+  //     -ms-user-select: none;
+  //         user-select: none;
   touch-action: manipulation;
 }
 
