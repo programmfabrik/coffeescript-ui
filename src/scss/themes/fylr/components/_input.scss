@@ -75,7 +75,7 @@ textarea {
 		&.cui-input-invalid {
 			input,
 			.cui-data-field-right .cui-button .cui-button-visual {
-				border-color: theme-color('danger');
+				border-color: color.scale(theme-color('danger'), $saturation: 50%, $alpha: -95%);
 				background: transparentize(theme-color('danger'), 0.85);
 			}
 		}
