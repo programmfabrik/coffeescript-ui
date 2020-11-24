@@ -342,7 +342,7 @@
 // Mixin to remove the button border only
 // ! use carefully, in most cases you want to use button-plain() instead, which will set button colors and hover/focus states as well
 @mixin button-no-border() {
-	--btn-border-width: 0;
+	--btn-border-color: transparent;
 }
 
 @mixin button-plain() {
