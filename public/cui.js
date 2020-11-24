@@ -26450,12 +26450,17 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.init = function() {
-    var field, i, len1, ref;
+    var _field, field, i, len1, ref;
     this.__fieldList = [];
     ref = this.getFieldOpts();
     for (i = 0, len1 = ref.length; i < len1; i++) {
       field = ref[i];
-      this.__fieldList.push(CUI.DataField["new"](field));
+      if (CUI.util.isFunction(field)) {
+        _field = CUI.DataField["new"](field(this));
+      } else {
+        _field = CUI.DataField["new"](field);
+      }
+      this.__fieldList.push(_field);
     }
     return this;
   };

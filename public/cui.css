@@ -4011,10 +4011,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-lv-tr-outer.cui-lv-tree-node--is-branch {
   cursor: pointer;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
   touch-action: manipulation;
 }
 
@@ -4031,10 +4027,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 
 .cui-list-view-row-selectable {
   cursor: pointer;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
   touch-action: manipulation;
 }
 
@@ -4604,10 +4596,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
   cursor: pointer;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
   touch-action: manipulation;
 }
 
@@ -5515,8 +5503,7 @@ label[data-label-clickable],
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-content: flex-start;
 }
 .cui-block.cui-block-level-2.appearance-wide:last-child {
   -webkit-box-flex: 1;
