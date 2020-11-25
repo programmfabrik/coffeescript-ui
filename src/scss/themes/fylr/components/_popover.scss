@@ -1,5 +1,5 @@
 // * Popover
 
 .cui-popover {
-	min-width: 247px;
+	// min-width: #{map-get($layer-sizes, 'min')}px;
 }

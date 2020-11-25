@@ -116,7 +116,7 @@
 // * Layer
 
 .cui-layer {
-	// todo: the sizes are not really used anywhere, but lets keep the classes for now
+	// set size attribute within the component (layer, popover etc.)
 	@each $name, $width in $layer-sizes {
 		&--size-#{$name} {
 			width: #{$width}px;
@@ -125,7 +125,7 @@
 
 	display: flex;
 	flex-direction: column;
-	min-width: 300px;
+	min-width: #{map-get($layer-sizes, 'min')}px;
 	min-height: 30px;
 	margin: $spacer-sm;
 	background-color: $layer-background;

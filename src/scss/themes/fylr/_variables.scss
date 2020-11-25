@@ -511,6 +511,7 @@ $slider-track-border-radius:		$border-radius-sm !default;
 // * Layer
 // * ==========================================
 $layer-sizes: (
+	min: 	250,
 	xs: 	400,
 	s: 		500,
 	m: 		600,
