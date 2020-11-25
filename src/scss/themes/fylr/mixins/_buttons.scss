@@ -343,6 +343,11 @@
 // ! use carefully, in most cases you want to use button-plain() instead, which will set button colors and hover/focus states as well
 @mixin button-no-border() {
 	--btn-border-color: transparent;
+
+	&:hover,
+	&:focus {
+		--btn-border-color: transparent;
+	}
 }
 
 @mixin button-plain() {
@@ -351,8 +356,8 @@
 }
 
 @mixin button-plain-inverted() {
-	@include button-no-border();
 	@include button-color-inverted();
+	@include button-no-border(); // ! order
 }
 
 @mixin button-focus() {
