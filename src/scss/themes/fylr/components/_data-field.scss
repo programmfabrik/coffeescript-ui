@@ -64,7 +64,7 @@
 		padding-bottom: 0;
 	}
 
-	&-disabled {
+	&.cui-data-field-disabled {
 		user-select: none;
 		opacity: 0.5;
 		pointer-events: none;
@@ -75,6 +75,10 @@
 
 		+ .cui-form-hint {
 			opacity: $disabled-opacity;
+		}
+
+		.cui-disabled {
+			opacity: 1; // see admin > base config > editor "aktion" > "aktualisieren" checkbox
 		}
 	}
 
@@ -155,8 +159,3 @@
 .cui-data-field-hidden {
 	display: none !important;
 }
-
-// todo: find use-case, this renders the disabled checkboxes within .cui-layer-root-view-select-popover as "enabled" checkboxes
-// .cui-data-field-disabled .cui-disabled {
-// 	opacity: 1;
-// }
