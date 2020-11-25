@@ -58,7 +58,7 @@
 @mixin label-title-light($letter-spacing: true) {
 	@include label-title($letter-spacing);
 	
-	color: gray('500');
+	color: theme-color('muted');
 }
 
 @mixin label-subtitle() {
