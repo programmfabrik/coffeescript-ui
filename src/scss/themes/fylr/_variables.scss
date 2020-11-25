@@ -83,14 +83,14 @@ $colors: map-merge(
 		'teal':       $teal,
 		'cyan':       $cyan,
 		'white':      $white,
-		'gray':       $gray-600,
+		'gray':       $gray-500,
 		'gray-dark':  $gray-800
 	),
 	$colors
 );
 
 $primary:       $orange !default;
-$secondary:     $gray-600 !default; // todo
+$secondary:     $gray-500 !default; // todo
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
