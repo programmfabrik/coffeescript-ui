@@ -26540,12 +26540,17 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.init = function() {
-    var field, i, len1, ref;
+    var _field, field, i, len1, ref;
     this.__fieldList = [];
     ref = this.getFieldOpts();
     for (i = 0, len1 = ref.length; i < len1; i++) {
       field = ref[i];
-      this.__fieldList.push(CUI.DataField["new"](field));
+      if (CUI.util.isFunction(field)) {
+        _field = CUI.DataField["new"](field(this));
+      } else {
+        _field = CUI.DataField["new"](field);
+      }
+      this.__fieldList.push(_field);
     }
     return this;
   };
@@ -77965,11 +77970,12 @@ Demo.BlockDemo = (function(superClass) {
 
   BlockDemo.prototype.display = function() {
     this.demo_table = new Demo.DemoTable();
-    this.demo_table.addDivider("blocks");
-    this.demo_table.addExample("Blocks", this.createBlocks());
-    this.demo_table.addExample("Blocks with line separator mixin", this.createSimpleBlocks("cui-demo-block-separator"));
-    this.demo_table.addExample("Blocks as grid and padded", this.createSimpleBlocksWide());
-    this.demo_table.addExample("Blocks as grid and NOT padded", this.createSimpleBlocksWideNotPadded());
+    this.demo_table.addDivider("blocks and sections");
+    this.demo_table.addExample("Section block", this.createBlocks());
+    this.demo_table.addExample("Section block with line separator mixin", this.createSimpleBlocks("cui-demo-block-separator"));
+    this.demo_table.addExample("Section block 'inline'", this.createSimpleBlocksWide());
+    this.demo_table.addExample("Section block 'base config'", this.createSectionBlockBaseConfig());
+    this.demo_table.addExample("Bracket block in Editor only", this.createBlockBracket());
     this.createWaitBlockExample();
     return this.demo_table.table;
   };
@@ -78057,7 +78063,7 @@ Demo.BlockDemo = (function(superClass) {
     return list.DOM;
   };
 
-  BlockDemo.prototype.createSimpleBlocksWideNotPadded = function(style_class) {
+  BlockDemo.prototype.createSectionBlockBaseConfig = function(style_class) {
     var list;
     if (style_class == null) {
       style_class = "";
@@ -78067,10 +78073,8 @@ Demo.BlockDemo = (function(superClass) {
       "class": style_class,
       content: [
         new CUI.Block({
-          text: "Wide block A - Level 1",
-          appearance: "wide",
-          "class": "cui-demo-block-grid",
-          padded: false,
+          text: "Admin",
+          "class": "cui-demo-block-base-config",
           level: 1,
           content: [
             new CUI.Label({
@@ -78078,10 +78082,8 @@ Demo.BlockDemo = (function(superClass) {
             })
           ]
         }), new CUI.Block({
-          text: "Wide block B - Level 2",
-          appearance: "wide",
-          "class": "cui-demo-block-grid",
-          padded: false,
+          text: "Some options",
+          "class": "cui-demo-block-base-config",
           level: 2,
           content: [
             new CUI.Label({
@@ -78090,11 +78092,53 @@ Demo.BlockDemo = (function(superClass) {
             })
           ]
         }), new CUI.Block({
-          text: "Wide block C - Level 3",
-          appearance: "wide",
-          "class": "cui-demo-block-grid",
-          padded: false,
-          level: 3,
+          text: "Configuration options",
+          "class": "cui-demo-block-base-config",
+          level: 2,
+          content: [
+            new CUI.Label({
+              text: "content of main block"
+            })
+          ]
+        })
+      ]
+    });
+    return list.DOM;
+  };
+
+  BlockDemo.prototype.createBlockBracket = function(style_class) {
+    var list;
+    if (style_class == null) {
+      style_class = "";
+    }
+    list = new CUI.VerticalList({
+      maximize: true,
+      "class": style_class,
+      content: [
+        new CUI.Block({
+          text: "Fields in a Block",
+          "class": "cui-demo-block-bracket",
+          level: 1,
+          content: [
+            new CUI.Label({
+              text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+              multiline: true
+            })
+          ]
+        }), new CUI.Block({
+          text: "Other Fields in a Block",
+          "class": "cui-demo-block-bracket",
+          level: 1,
+          content: [
+            new CUI.Label({
+              text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+              multiline: true
+            })
+          ]
+        }), new CUI.Block({
+          text: "And even more Fields",
+          "class": "cui-demo-block-bracket",
+          level: 1,
           content: [
             new CUI.Label({
               text: "content of main block"

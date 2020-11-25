@@ -88,10 +88,10 @@ body.dev.is-server2::after {
   --teal: #3e9e88;
   --cyan: #17a2b8;
   --white: #ffffff;
-  --gray: #6c757d;
+  --gray: #adb5bd;
   --gray-dark: #343a40;
   --primary: #ff5724;
-  --secondary: #6c757d;
+  --secondary: #adb5bd;
   --success: #7ca751;
   --info: #17a2b8;
   --warning: #d6b13a;
@@ -1549,7 +1549,7 @@ input[data-max-chars="40"] {
 
 .fa {
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .cui-spin-stepped {
@@ -1775,7 +1775,7 @@ label[data-label-clickable],
   padding-right: 0.25em;
 }
 .cui-label.cui-label-appearance-secondary {
-  color: #6c757d;
+  color: #adb5bd;
   font-weight: 300;
 }
 .cui-selected .cui-label.cui-label-appearance-secondary {
@@ -2783,7 +2783,7 @@ textarea {
 }
 
 .cui-output .cui-output-empty {
-  color: #6c757d;
+  color: #adb5bd;
 }
 .cui-output .cui-output--deletable {
   display: -webkit-box;
@@ -3343,7 +3343,7 @@ textarea {
   padding-top: 0;
   padding-bottom: 0;
 }
-.cui-data-field-disabled {
+.cui-data-field.cui-data-field-disabled {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -3351,11 +3351,14 @@ textarea {
   opacity: 0.5;
   pointer-events: none;
 }
-.cui-data-field-disabled .cui-data-field-disabled {
+.cui-data-field.cui-data-field-disabled .cui-data-field.cui-data-field-disabled {
   opacity: 1;
 }
-.cui-data-field-disabled + .cui-form-hint {
+.cui-data-field.cui-data-field-disabled + .cui-form-hint {
   opacity: 0.5;
+}
+.cui-data-field.cui-data-field-disabled .cui-disabled {
+  opacity: 1;
 }
 .cui-data-field--full-width {
   width: 100%;
@@ -3578,7 +3581,7 @@ textarea {
   display: none;
 }
 .cui-block .cui-block-description {
-  color: #6c757d;
+  color: #adb5bd;
   font-weight: 300;
 }
 .cui-selected .cui-block .cui-block-description {
@@ -3912,7 +3915,7 @@ textarea {
   background: #ffffff;
 }
 .css-swatch.cui-swatch-color-gray {
-  background: #6c757d;
+  background: #adb5bd;
 }
 .css-swatch.cui-swatch-color-gray-dark {
   background: #343a40;
@@ -4143,7 +4146,7 @@ textarea {
 }
 
 .cui-options-order-hint {
-  color: #6c757d;
+  color: #adb5bd;
   font-weight: 300;
   margin-top: 0.25rem;
   max-width: 250px;
@@ -5014,7 +5017,7 @@ textarea {
 .cui-input-invalid-hint,
 .cui-input-valid-hint,
 .cui-input-empty-hint {
-  color: #6c757d;
+  color: #adb5bd;
   font-weight: 300;
   margin-top: 0.25rem;
 }
