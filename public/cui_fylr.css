@@ -88,18 +88,18 @@ body.dev.is-server2::after {
   --teal: #3e9e88;
   --cyan: #17a2b8;
   --white: #ffffff;
-  --gray: #adb5bd;
+  --gray: #8b949c;
   --gray-dark: #343a40;
   --primary: #ff5724;
-  --secondary: #adb5bd;
+  --secondary: #8b949c;
   --success: #7ca751;
   --info: #17a2b8;
   --warning: #d6b13a;
   --danger: #ff5724;
   --light: #f5f5f5;
   --dark: #343a40;
-  --muted: #adb5bd;
-  --disabled: #adb5bd;
+  --muted: #8b949c;
+  --disabled: #8b949c;
   --focused: #17a2b8;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -709,23 +709,23 @@ body {
 }
 
 .cui-border {
-  border: 1px solid rgba(173, 181, 189, 0.15);
+  border: 1px solid rgba(139, 148, 156, 0.15);
 }
 
 .cui-border-top {
-  border-top: 1px solid rgba(173, 181, 189, 0.15);
+  border-top: 1px solid rgba(139, 148, 156, 0.15);
 }
 
 .cui-border-bottom {
-  border-bottom: 1px solid rgba(173, 181, 189, 0.15);
+  border-bottom: 1px solid rgba(139, 148, 156, 0.15);
 }
 
 .cui-border-right {
-  border-right: 1px solid rgba(173, 181, 189, 0.15);
+  border-right: 1px solid rgba(139, 148, 156, 0.15);
 }
 
 .cui-border-left {
-  border-left: 1px solid rgba(173, 181, 189, 0.15);
+  border-left: 1px solid rgba(139, 148, 156, 0.15);
 }
 
 .cui-border-layout-north:empty,
@@ -1775,14 +1775,13 @@ label[data-label-clickable],
   padding-right: 0.25em;
 }
 .cui-label.cui-label-appearance-secondary {
-  color: #adb5bd;
-  font-weight: 300;
+  color: #8b949c;
 }
 .cui-selected .cui-label.cui-label-appearance-secondary {
   color: #f5f5f5;
 }
 .cui-label.cui-label-appearance-muted {
-  color: #adb5bd;
+  color: #8b949c;
 }
 .cui-selected .cui-label.cui-label-appearance-muted {
   color: #e6e9ec;
@@ -1851,7 +1850,7 @@ label[data-label-clickable],
 .cui-empty-label {
   margin: 0;
   cursor: default;
-  color: #adb5bd;
+  color: #8b949c;
 }
 .cui-selected .cui-empty-label {
   color: #e6e9ec;
@@ -2123,7 +2122,7 @@ label[data-label-clickable],
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   border: 0;
-  border-top: 1px solid rgba(173, 181, 189, 0.15);
+  border-top: 1px solid rgba(139, 148, 156, 0.15);
 }
 
 .cui-button,
@@ -2525,20 +2524,20 @@ textarea {
   vertical-align: bottom;
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  color: #adb5bd;
+  color: #8b949c;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
-  color: #adb5bd;
+  color: #8b949c;
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color: #adb5bd;
+  color: #8b949c;
 }
 input::-ms-input-placeholder, textarea::-ms-input-placeholder {
-  color: #adb5bd;
+  color: #8b949c;
 }
 input::placeholder,
 textarea::placeholder {
-  color: #adb5bd;
+  color: #8b949c;
 }
 input:focus,
 textarea:focus {
@@ -2783,7 +2782,7 @@ textarea {
 }
 
 .cui-output .cui-output-empty {
-  color: #adb5bd;
+  color: #8b949c;
 }
 .cui-output .cui-output--deletable {
   display: -webkit-box;
@@ -3179,13 +3178,13 @@ textarea {
   margin: 0;
 }
 .cui-flex-handle-row:hover {
-  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(90deg, rgba(139, 148, 156, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(90deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 5px 0, 5px 0, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 .cui-pane .cui-flex-handle-row:hover {
-  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(90deg, rgba(139, 148, 156, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 5px 0, 5px 0, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -3220,13 +3219,13 @@ textarea {
   width: 100%;
 }
 .cui-flex-handle-column:hover {
-  background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(0deg, rgba(139, 148, 156, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 0 5px, 0 5px, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 .cui-pane .cui-flex-handle-column:hover {
-  background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(0deg, rgba(139, 148, 156, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 0 5px, 0 5px, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -3581,8 +3580,7 @@ textarea {
   display: none;
 }
 .cui-block .cui-block-description {
-  color: #adb5bd;
-  font-weight: 300;
+  color: #8b949c;
 }
 .cui-selected .cui-block .cui-block-description {
   color: #f5f5f5;
@@ -3619,7 +3617,7 @@ textarea {
   z-index: 1;
   display: -webkit-box;
   display: flex;
-  color: #adb5bd;
+  color: #8b949c;
 }
 
 .cui-wait-block-glass {
@@ -3915,7 +3913,7 @@ textarea {
   background: #ffffff;
 }
 .css-swatch.cui-swatch-color-gray {
-  background: #adb5bd;
+  background: #8b949c;
 }
 .css-swatch.cui-swatch-color-gray-dark {
   background: #343a40;
@@ -4012,7 +4010,7 @@ textarea {
   height: 30px;
   line-height: 30px;
   border-radius: 2px;
-  background: #adb5bd;
+  background: #8b949c;
   color: white;
 }
 .cui-progress-meter[state=percent] .cui-progress-meter-icon {
@@ -4118,7 +4116,7 @@ textarea {
 
 .cui-item-list-divider {
   height: 1px;
-  background: rgba(173, 181, 189, 0.15);
+  background: rgba(139, 148, 156, 0.15);
 }
 
 .cui-options {
@@ -4146,8 +4144,7 @@ textarea {
 }
 
 .cui-options-order-hint {
-  color: #adb5bd;
-  font-weight: 300;
+  color: #8b949c;
   margin-top: 0.25rem;
   max-width: 250px;
   margin: 0.5rem 22px 1rem;
@@ -4546,7 +4543,7 @@ textarea {
   position: relative;
   top: 4px;
   left: 2px;
-  color: #adb5bd;
+  color: #8b949c;
 }
 .cui-date-time-calendar .cui-select .cui-button-center span:empty::after {
   content: "––";
@@ -4704,7 +4701,7 @@ textarea {
 }
 .cui-date-time-date .cui-date-time-previous-month,
 .cui-date-time-date .cui-date-time-next-month {
-  color: #adb5bd;
+  color: #8b949c;
 }
 .cui-date-time-date .cui-date-time-now span {
   border: 1px solid currentColor;
@@ -5017,8 +5014,7 @@ textarea {
 .cui-input-invalid-hint,
 .cui-input-valid-hint,
 .cui-input-empty-hint {
-  color: #adb5bd;
-  font-weight: 300;
+  color: #8b949c;
   margin-top: 0.25rem;
 }
 .cui-selected .cui-hint,
@@ -6983,7 +6979,7 @@ textarea {
   color: #212121;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child {
-  border-top: 1px solid rgba(173, 181, 189, 0.15);
+  border-top: 1px solid rgba(139, 148, 156, 0.15);
   padding: 6px 0;
   margin-top: 4px;
   margin-bottom: -4px;
