@@ -23,7 +23,7 @@
 			display: inline-block;
 			background-color: $body-color;
 			color: $white;
-			padding: 0.1em 0.4em;
+			padding: 0.1em $spacer-sm;
 			// reset
 			line-height: $line-height-base;
 			text-transform: none;
