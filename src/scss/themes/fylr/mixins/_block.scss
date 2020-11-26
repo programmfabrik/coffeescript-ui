@@ -17,6 +17,24 @@
 	}
 }
 
+@mixin block-header-inverted() {
+	> .cui-block-header {
+		> .cui-block-title {
+			display: inline-block;
+			background-color: $body-color;
+			color: $white;
+			padding: 0.1em 0.4em;
+			// reset
+			line-height: $line-height-base;
+			text-transform: none;
+			letter-spacing: initial;
+		}
+	}
+
+	&:not(:first-child) > .cui-block-header {
+		margin-top: $spacer-sm;
+	}
+}
 
 // * Block Bracket
 // special block styling for ez5-fields-renderer-block 
@@ -62,6 +80,25 @@
 			text-transform: uppercase;
 			margin-bottom: $spacer;
 			color: var(--block-color);
+		}
+	}
+}
+
+// * Block as a form with form-key-value-inline()
+//
+
+@mixin block-form() {
+	&:not(.cui-form-block--has-checkbox) {
+		display: grid;
+		grid-template-columns: var(--block-form-col-left-width, #{$form-key-width}) minmax(0, var(--block-form-col-right-width, 850px));
+		gap: 0 $spacer;
+		align-items: baseline;
+	}	
+	
+	.cui-block-header {
+		> .cui-block-title {
+			text-transform: none;
+			hyphens: auto;
 		}
 	}
 }
