@@ -29,19 +29,18 @@
 		@include label-secondary();
 	}
 
+	
 	// * Titles 
 	.cui-block-header {
 		margin-bottom: $spacer-sm;
-
+		
 		> .cui-block-title {
 			@include label-title();
 		}
 	}
-
+		
 	// * Level 1
-
 	// &.cui-block-level-1 {
-	// 	> .cui-block-header > .cui-block-title {}
 	// }
 
 	// * Level 2
@@ -65,16 +64,45 @@
 	// Special blocks
 	// see: admin > usermanagement > system rights
 	&.cui-form-block--has-checkbox {
+		margin-bottom: 0;
+
 		> .cui-block-header {
 			margin-bottom: 0;
 		}
-		
+
 		> .cui-block-content {
-			margin-left: $block-has-checkbox-indent;
+			.cui-form .cui-form-tr {
+				margin-bottom: 0;
+				
+				// &.cui-form-field-type--checkbox {
+				// 	margin-bottom: 0;
+				// }
+
+				// &:not(.cui-form-field-type--checkbox) {
+				// 	margin-top: $form-cell-gap;
+				// }
+
+				&:not(:first-child) {
+					.cui-form-key label {
+						margin-top: $spacer; // doesn't work everywhere
+					}
+				}
+			}
+		}
+
+		// only indent first level
+		// &.cui-block-level-1 {
+		// }		
+		> .cui-block-content {
+			> .cui-form:not(.cui-template-empty) {
+				margin-left: $block-has-checkbox-indent;
+				margin-bottom: $spacer;
+				max-width: none;
+				width: auto;
+			}
 		}
 	}
 }
-
 
 // Content
 .cui-block-content {
