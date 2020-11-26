@@ -201,15 +201,16 @@
 
 // Radio button + Input field (like an option "other" with free text)
 .cui-form-field-type--checkbox {
-	+ .cui-form-row {
+	+ .cui-form-row {		
 		.cui-form-container.cui-form--horizontal {
 			> .cui-form-row:first-child {
 				margin-right: 0;
 			}
 		}
 
-		.cui-form.cui-data-field {
-			margin-top: $spacer-sm;
+		> .cui-form.cui-data-field,
+		> .cui-data-table.cui-data-field {
+			margin-top: $spacer-sm;  // see admin > pools > masken
 		}
 	}
 }
