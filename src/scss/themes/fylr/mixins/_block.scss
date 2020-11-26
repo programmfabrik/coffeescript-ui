@@ -96,9 +96,11 @@
 	}	
 	
 	.cui-block-header {
+		// reset 
 		> .cui-block-title {
 			text-transform: none;
 			hyphens: auto;
+			letter-spacing: initial;
 		}
 	}
 }
