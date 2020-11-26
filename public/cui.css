@@ -1714,19 +1714,17 @@ a[role="button"].cui-button-appearance-link {
     margin-top: 0;
     margin-bottom: 5px;
     min-width: 0; }
-  .cui-data-form-row > .cui-horizontal-layout-right {
-    width: 30px; }
-    .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
-      margin-top: 1px;
-      position: relative; }
-      .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden {
-        pointer-events: none; }
-        .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden .cui-button-visual {
-          opacity: 0.1; }
-    .cui-data-form-row > .cui-horizontal-layout-right .cui-button-visual {
-      min-width: 0;
-      padding: 0 5px;
-      color: rgba(115, 130, 140, 0.5); }
+  .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
+    margin-top: 1px;
+    position: relative; }
+    .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden {
+      pointer-events: none; }
+      .cui-data-form-row > .cui-horizontal-layout-right .cui-button.cui-button-hidden .cui-button-visual {
+        opacity: 0.1; }
+  .cui-data-form-row > .cui-horizontal-layout-right .cui-button-visual {
+    min-width: 0;
+    padding: 0 5px;
+    color: rgba(115, 130, 140, 0.5); }
 
 .cui-label {
   display: inline-flex;
