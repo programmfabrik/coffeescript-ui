@@ -417,10 +417,17 @@ class CUI.SimpleForm extends CUI.DataField
 				classes.push("cui-form-field-type--input")
 
 			if table_has_left
+
+				lbl =  get_label(field, true)
+				if lbl
+					classes.push("cui-form-tr--has-key")
+				else
+					classes.push("cui-form-tr--has-no-key")
+
 				tr = CUI.dom.element("DIV", class: "cui-form-tr "+classes.join(" "), "data-for-field": field.getUniqueId())
 
 				td = CUI.dom.element("DIV", class: "cui-form-td cui-form-key")
-				append(get_label(field, true), td)
+				append(lbl, td)
 				tr.appendChild(td)
 
 				td = CUI.dom.element("DIV", class: "cui-form-td cui-form-value")
