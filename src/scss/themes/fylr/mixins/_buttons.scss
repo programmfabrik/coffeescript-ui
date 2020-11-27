@@ -124,7 +124,6 @@
 	.cui-button-visual {
 		height: 1.3em;
 		min-width: 1.3em;
-		margin-left: 0.25rem;
 
 		.cui-button-left {
 			padding: 0;
@@ -141,6 +140,12 @@
 		.cui-button-visual {
 			color: inherit;
 			background-color: transparent;
+		}
+	}
+
+	.ez5-path + & {
+		.cui-button-visual {
+			margin-left: -0.5*$spacer-xs;
 		}
 	}
 }
