@@ -144,11 +144,6 @@ textarea {
 		margin-top: $spacer-xs;
 	}
 
-	&:focus,
-	&.cui-has-focus {
-		@include input-focus();
-	}
-
 	&.cui-data-field-hidden {
 		display: none !important;
 	}
