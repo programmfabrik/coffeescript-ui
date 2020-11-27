@@ -82,18 +82,13 @@
 				// 	margin-top: $form-cell-gap;
 				// }
 
-				&:not(:first-child) {
-					.cui-form-key label {
-						// margin-top: $spacer; // doesn't work everywhere
-					}
-				}
+				// &:not(:first-child) {
+				// 	.cui-form-key label {
+				// 		margin-top: $spacer; // doesn't work everywhere
+				// 	}
+				// }
 			}
-		}
 
-		// only indent first level
-		// &.cui-block-level-1 {
-		// }		
-		> .cui-block-content {
 			> .cui-form:not(.cui-template-empty) {
 				margin-left: $block-has-checkbox-indent;
 				margin-bottom: $spacer;
