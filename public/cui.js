@@ -30921,7 +30921,7 @@ CUI.SimpleForm = (function(superClass) {
     })(this);
     render_next_field = (function(_this) {
       return function() {
-        var add_hint_div, blk, cb, classes, ff, field, grid, has_left, hint_div, i, idx, left_side, level, name, ref, ref1, ref2, row, td, tr;
+        var add_hint_div, blk, cb, classes, ff, field, grid, has_left, hint_div, i, idx, lbl, left_side, level, name, ref, ref1, ref2, row, td, tr;
         field_idx = field_idx + 1;
         if (field_idx === len) {
           return;
@@ -31055,6 +31055,12 @@ CUI.SimpleForm = (function(superClass) {
           classes.push("cui-form-field-type--input");
         }
         if (table_has_left) {
+          lbl = get_label(field, true);
+          if (lbl) {
+            classes.push("cui-form-tr--has-key");
+          } else {
+            classes.push("cui-form-tr--has-no-key");
+          }
           tr = CUI.dom.element("DIV", {
             "class": "cui-form-tr " + classes.join(" "),
             "data-for-field": field.getUniqueId()
@@ -31062,7 +31068,7 @@ CUI.SimpleForm = (function(superClass) {
           td = CUI.dom.element("DIV", {
             "class": "cui-form-td cui-form-key"
           });
-          append(get_label(field, true), td);
+          append(lbl, td);
           tr.appendChild(td);
           td = CUI.dom.element("DIV", {
             "class": "cui-form-td cui-form-value"
