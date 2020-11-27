@@ -178,16 +178,16 @@
 
 @mixin button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active) {
 	.cui-button-visual {
-		background-color: $background;
-		color: $color;
+		background-color: var(--btn-background, #{$background});
+		color: var(--btn-color, #{$color});
 		border: var(--btn-border-width, #{$btn-border-width}) solid var(--btn-border-color, #{$btn-border-color});
 	}
 
 	&:hover,
 	&:focus {
 		.cui-button-visual {
-			color: $color-hover;
-			background-color: $background-hover;
+			color: var(--btn-color-hover, #{$color-hover});
+			background-color: var(--btn-background-hover, #{$background-hover});
 		}
 	}
 
@@ -201,23 +201,24 @@
 
 	&:active {
 		.cui-button-visual {
-			color: $color-hover;
-			background-color: darken($background-hover, 6%);
+			color: var(--btn-color-hover, #{$color-hover});
+			background-color: var(--btn-background-hover, #{$background-hover});
+			box-shadow: inset 0 0 0 20px rgba(#000, 0.08); // darken the background
 		}
 	}
 
 	&.cui-active,
 	&.cui-layer-open {
 		.cui-button-visual {
-			color: $color-active;
-			background-color: $background-active;
+			color: var(--btn-color-active, #{$color-active});
+			background-color: var(--btn-background-active, #{$background-active});
 		}
 
 		&:hover,
 		&:focus {
 			.cui-button-visual {
-				color: $color-active;
-				background-color: $background-active;
+				color: var(--btn-color-active, #{$color-active});
+				background-color: var(--btn-background-active, #{$background-active});
 			}
 		}
 	}
