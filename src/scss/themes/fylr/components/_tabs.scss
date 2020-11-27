@@ -188,7 +188,7 @@
 			border-top-left-radius: 0 !important;
 			border-bottom-left-radius: 0 !important;
 			border-bottom-right-radius: 0 !important;
-			border-bottom: 1px solid $tabs-active-border-color;
+			border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
 
 			.cui-button-left {
 				.fa-ellipsis-h {
@@ -224,7 +224,7 @@
 			display: block;
 			flex: 1 1 auto;
 			height: 1px;
-			background: $tabs-active-border-color;
+			background: var(--tabs-active-border-color, $tabs-active-border-color);
 			align-self: flex-end;
 		}
 
@@ -250,14 +250,14 @@
 						bottom: 0;
 						width: 100%;
 						height: 100%;
-						border-bottom: 1px solid $tabs-active-border-color;
+						border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
 					}
 				}
 				
 				&.cui-active {
 					.cui-button-visual {
 						&::after {
-							border: 1px solid $tabs-active-border-color;
+							border: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
 							border-bottom: 1px solid transparent;
 							border-radius: $btn-border-radius $btn-border-radius 0 0;
 						}
