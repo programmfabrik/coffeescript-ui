@@ -88,7 +88,7 @@ body.dev.is-server2::after {
   --teal: #3e9e88;
   --cyan: #17a2b8;
   --white: #ffffff;
-  --gray: #8b949c;
+  --gray: #adb5bd;
   --gray-dark: #343a40;
   --primary: #ff5724;
   --secondary: #8b949c;
@@ -709,23 +709,23 @@ body {
 }
 
 .cui-border {
-  border: 1px solid rgba(139, 148, 156, 0.15);
+  border: 1px solid rgba(173, 181, 189, 0.15);
 }
 
 .cui-border-top {
-  border-top: 1px solid rgba(139, 148, 156, 0.15);
+  border-top: 1px solid rgba(173, 181, 189, 0.15);
 }
 
 .cui-border-bottom {
-  border-bottom: 1px solid rgba(139, 148, 156, 0.15);
+  border-bottom: 1px solid rgba(173, 181, 189, 0.15);
 }
 
 .cui-border-right {
-  border-right: 1px solid rgba(139, 148, 156, 0.15);
+  border-right: 1px solid rgba(173, 181, 189, 0.15);
 }
 
 .cui-border-left {
-  border-left: 1px solid rgba(139, 148, 156, 0.15);
+  border-left: 1px solid rgba(173, 181, 189, 0.15);
 }
 
 .cui-border-layout-north:empty,
@@ -2122,7 +2122,7 @@ label[data-label-clickable],
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   border: 0;
-  border-top: 1px solid rgba(139, 148, 156, 0.15);
+  border-top: 1px solid rgba(173, 181, 189, 0.15);
 }
 
 .cui-button,
@@ -2638,11 +2638,6 @@ textarea {
 }
 .cui-multi-input-input + .cui-multi-input-input {
   margin-top: 0.25rem;
-}
-.cui-multi-input-input:focus, .cui-multi-input-input.cui-has-focus {
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-  border-color: rgba(23, 162, 184, 0.5) !important;
-  z-index: 1;
 }
 .cui-multi-input-input.cui-data-field-hidden {
   display: none !important;
@@ -3178,13 +3173,13 @@ textarea {
   margin: 0;
 }
 .cui-flex-handle-row:hover {
-  background-image: linear-gradient(90deg, rgba(139, 148, 156, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(90deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #ffffff, #ffffff), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 5px 0, 5px 0, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 .cui-pane .cui-flex-handle-row:hover {
-  background-image: linear-gradient(90deg, rgba(139, 148, 156, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 5px 0, 5px 0, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -3219,13 +3214,13 @@ textarea {
   width: 100%;
 }
 .cui-flex-handle-column:hover {
-  background-image: linear-gradient(0deg, rgba(139, 148, 156, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #ffffff 1px, #ffffff 2px, #ffffff 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 0 5px, 0 5px, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 .cui-pane .cui-flex-handle-column:hover {
-  background-image: linear-gradient(0deg, rgba(139, 148, 156, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(139, 148, 156, 0.8) 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, transparent, transparent 5px, rgba(139, 148, 156, 0.8) 6px, rgba(139, 148, 156, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(0deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(0deg, #f5f5f5, #f5f5f5), linear-gradient(0deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 0 5px, 0 5px, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -3597,11 +3592,20 @@ textarea {
 .cui-block .cui-block {
   margin-left: var(--block-nested-indent);
 }
+.cui-block.cui-form-block--has-checkbox {
+  margin-bottom: 0;
+}
 .cui-block.cui-form-block--has-checkbox > .cui-block-header {
   margin-bottom: 0;
 }
-.cui-block.cui-form-block--has-checkbox > .cui-block-content {
-  margin-left: 1.5rem;
+.cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr {
+  margin-bottom: 0;
+}
+.cui-block.cui-form-block--has-checkbox > .cui-block-content > .cui-form:not(.cui-template-empty) {
+  margin-left: 3rem;
+  margin-bottom: 1rem;
+  max-width: none;
+  width: auto;
 }
 
 .cui-block-content .cui-form-table {
@@ -3913,7 +3917,7 @@ textarea {
   background: #ffffff;
 }
 .css-swatch.cui-swatch-color-gray {
-  background: #8b949c;
+  background: #adb5bd;
 }
 .css-swatch.cui-swatch-color-gray-dark {
   background: #343a40;
@@ -4010,7 +4014,7 @@ textarea {
   height: 30px;
   line-height: 30px;
   border-radius: 2px;
-  background: #8b949c;
+  background: #adb5bd;
   color: white;
 }
 .cui-progress-meter[state=percent] .cui-progress-meter-icon {
@@ -4116,7 +4120,7 @@ textarea {
 
 .cui-item-list-divider {
   height: 1px;
-  background: rgba(139, 148, 156, 0.15);
+  background: rgba(173, 181, 189, 0.15);
 }
 
 .cui-options {
@@ -4701,7 +4705,7 @@ textarea {
 }
 .cui-date-time-date .cui-date-time-previous-month,
 .cui-date-time-date .cui-date-time-next-month {
-  color: #8b949c;
+  color: #adb5bd;
 }
 .cui-date-time-date .cui-date-time-now span {
   border: 1px solid currentColor;
@@ -5005,7 +5009,8 @@ textarea {
 .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-row:first-child {
   margin-right: 0;
 }
-.cui-form-field-type--checkbox + .cui-form-row .cui-form.cui-data-field {
+.cui-form-field-type--checkbox + .cui-form-row > .cui-form.cui-data-field,
+.cui-form-field-type--checkbox + .cui-form-row > .cui-data-table.cui-data-field {
   margin-top: 0.5rem;
 }
 
@@ -6979,7 +6984,7 @@ textarea {
   color: #212121;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child {
-  border-top: 1px solid rgba(139, 148, 156, 0.15);
+  border-top: 1px solid rgba(173, 181, 189, 0.15);
   padding: 6px 0;
   margin-top: 4px;
   margin-bottom: -4px;
