@@ -201,7 +201,7 @@
 
 // Radio button + Input field (like an option "other" with free text)
 .cui-form-field-type--checkbox {
-	+ .cui-form-row {		
+	+ .cui-form-row {
 		.cui-form-container.cui-form--horizontal {
 			> .cui-form-row:first-child {
 				margin-right: 0;

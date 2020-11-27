@@ -93,7 +93,7 @@
 		grid-template-columns: var(--block-form-col-left-width, #{$form-key-width}) minmax(0, var(--block-form-col-right-width, 850px));
 		gap: 0 $spacer;
 		align-items: baseline;
-	}	
+	}
 	
 	.cui-block-header {
 		// reset 
