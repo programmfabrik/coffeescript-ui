@@ -88,8 +88,8 @@
 }
 
 .svg-info-circle {
-  width: 14px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
 }
 
 .svg-inherit {
@@ -2225,9 +2225,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   margin-top: 0;
   margin-bottom: 5px;
   min-width: 0;
-}
-.cui-data-form-row > .cui-horizontal-layout-right {
-  width: 30px;
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button {
   margin-top: 1px;

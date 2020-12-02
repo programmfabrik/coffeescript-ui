@@ -452,13 +452,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:focus .cui-button-visual {
-  color: #212121;
-  background-color: transparent;
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:focus {
   outline: none;
@@ -469,16 +469,17 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:active .cui-button-visual {
-  color: #212121;
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open .cui-button-visual {
-  color: #212121;
-  background-color: transparent;
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link.cui-layer-open:focus .cui-button-visual {
-  color: #212121;
-  background-color: transparent;
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:hover, .cui-demo-button-demo[data-cui-theme=fylr] .cui-button-button.cui-demo-button-size-large-link:focus {
   --btn-border-color: transparent;
@@ -541,13 +542,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:focus {
   outline: none;
@@ -558,16 +559,21 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair .cui-last-visible-child:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-pair.cui-demo-button-size-small .cui-button-button .cui-button-visual {
   height: 24px;
@@ -640,13 +646,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:focus {
   outline: none;
@@ -657,16 +663,21 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-icon.cui-button-button .cui-button-visual {
   height: 16px;
@@ -707,13 +718,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:focus {
   outline: none;
@@ -724,16 +735,21 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-ellipsis.cui-button-button .cui-button-visual {
   height: 18px;
@@ -776,13 +792,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:focus {
   outline: none;
@@ -793,16 +809,21 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
   height: 24px;
@@ -839,7 +860,6 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
   height: 1.3em;
   min-width: 1.3em;
-  margin-left: 0.25rem;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual .cui-button-left {
   padding: 0;
@@ -851,6 +871,9 @@ body.dev.is-server2::after {
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button.cui-layer-open .cui-button-visual {
   color: inherit;
   background-color: transparent;
+}
+.ez5-path + .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-size-info.cui-button-button .cui-button-visual {
+  margin-left: -0.125rem;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair {
   display: -webkit-box;
@@ -876,15 +899,15 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:focus,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:focus {
@@ -898,34 +921,72 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-layer-open .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select.cui-layer-open:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-active:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-active:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-layer-open:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button-select:active .cui-button-visual,
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-pair .cui-buttonbar:last-child > .cui-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group {
   border-radius: 2px;
   overflow: hidden;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button-visual {
-  border: 0 !important;
-  border-radius: 0 !important;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button {
+  --btn-border-color: transparent;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:hover .cui-button-visual {
-  background-color: transparent;
-  color: rgba(33, 33, 33, 0.65);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:hover, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:focus {
+  --btn-border-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation .cui-buttonbar-group > *:last-child {
   margin-right: 0;
@@ -936,13 +997,45 @@ body.dev.is-server2::after {
   --border-color: #212121;
   position: relative;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-visual {
-  border: 0 !important;
-  border-radius: 0 !important;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button {
+  --btn-border-color: transparent;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover .cui-button-visual {
-  background-color: transparent;
-  color: rgba(33, 33, 33, 0.65);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus {
+  --btn-border-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border .cui-buttonbar-group > *:last-child {
   margin-right: 0;
@@ -965,13 +1058,45 @@ body.dev.is-server2::after {
   --border-color: #212121;
   position: relative;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button-visual {
-  border: 0 !important;
-  border-radius: 0 !important;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button {
+  --btn-border-color: transparent;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:hover .cui-button-visual {
-  background-color: transparent;
-  color: rgba(33, 33, 33, 0.65);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:hover, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:focus {
+  --btn-border-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-navigation-border-small .cui-buttonbar-group > *:last-child {
   margin-right: 0;
@@ -1045,13 +1170,13 @@ body.dev.is-server2::after {
   --btn-border-color: rgba(255, 255, 255, 0.45);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button .cui-button-visual {
-  background-color: rgba(33, 33, 33, 0.6);
-  color: #ffffff;
+  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:focus .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(33, 33, 33, 0.6);
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:focus {
   outline: none;
@@ -1062,16 +1187,17 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:active .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(18, 18, 18, 0.6);
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: rgba(33, 33, 33, 0.6);
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: rgba(33, 33, 33, 0.6);
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button:hover {
   --btn-border-color: rgba(255, 255, 255, 0.35);
@@ -1081,13 +1207,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button .cui-button-visual {
-  background-color: rgba(33, 33, 33, 0.6);
-  color: #ffffff;
+  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:focus .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(33, 33, 33, 0.6);
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:focus {
   outline: none;
@@ -1098,16 +1224,17 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:active .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(18, 18, 18, 0.6);
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: rgba(33, 33, 33, 0.6);
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: rgba(33, 33, 33, 0.6);
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content > .cui-button-button.is-plain-button:hover {
   --btn-border-color: rgba(255, 255, 255, 0.35);
@@ -1155,13 +1282,45 @@ body.dev.is-server2::after {
   background-color: rgba(33, 33, 33, 0.6);
   --border-color: rgba(255, 255, 255, 0.45);
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-visual {
-  border: 0 !important;
-  border-radius: 0 !important;
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button {
+  --btn-border-color: transparent;
 }
-.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover .cui-button-visual {
-  background-color: transparent;
-  color: rgba(33, 33, 33, 0.65);
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus {
+  --btn-border-color: transparent;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus {
+  outline: none;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group > *:last-child {
   margin-right: 0;
@@ -1180,15 +1339,15 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:focus,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:focus {
@@ -1202,22 +1361,23 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: transparent;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: transparent;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-label,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-navigation-border .cui-buttonbar-group .cui-number-input {
@@ -1271,15 +1431,15 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:focus,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:focus {
@@ -1293,22 +1453,23 @@ body.dev.is-server2::after {
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
-  color: rgba(255, 255, 255, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: transparent;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:focus .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:hover .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: transparent;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual,
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-button-inverted .cui-demo-example-content .cui-demo-buttonbar-group-inverted .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
@@ -1469,13 +1630,13 @@ body.dev.is-server2::after {
   --btn-border-color: transparent;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button .cui-button-visual {
-  background-color: transparent;
-  color: #212121;
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:focus .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: transparent;
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:focus {
   outline: none;
@@ -1486,16 +1647,21 @@ body.dev.is-server2::after {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:active .cui-button-visual {
-  color: rgba(33, 33, 33, 0.65);
-  background-color: rgba(0, 0, 0, 0);
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-active .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-layer-open .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
 }
 .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-active:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-active:focus .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button.cui-layer-open:focus .cui-button-visual {
-  color: #ffffff;
-  background-color: #212121;
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-demo-button-demo[data-cui-theme=fylr] .cui-demo-buttonbar-tight.cui-demo-buttonbar-plain .cui-button-button:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 
 .cui-demo-button-demo[data-cui-theme=ng] .cui-demo-button-pair > *:last-child,
@@ -1534,7 +1700,7 @@ body.dev.is-server2::after {
 }
 
 .cui-demo-label-muted {
-  color: #adb5bd;
+  color: #8b949c;
 }
 .cui-selected .cui-demo-label-muted {
   color: #e6e9ec;
