@@ -378,16 +378,12 @@ label[data-label-clickable],
 
 		td, th {
 			padding: $spacer-xs $spacer-sm;
-			border: 1px solid gray('200');
+			border: 1px solid $gray-200;
 		}
 
 		th {
 			font-weight: $font-weight-bold;
 			text-align: center;
-		}
-
-		tbody tr:nth-child(odd) {
-			background: gray('200');
 		}
 
 		col {
