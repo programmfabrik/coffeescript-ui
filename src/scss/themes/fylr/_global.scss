@@ -13,28 +13,6 @@ body {
 	background-color: $body-bg;
 }
 
-// * Borders
-
-.cui-border {
-	border: 1px solid $hr-border-color;
-}
-
-.cui-border-top {
-	border-top: 1px solid $hr-border-color;
-}
-
-.cui-border-bottom {
-	border-bottom: 1px solid $hr-border-color;
-}
-
-.cui-border-right {
-	border-right: 1px solid $hr-border-color;
-}
-
-.cui-border-left {
-	border-left: 1px solid $hr-border-color;
-}
-
 // * Visibilty
 
 .cui-border-layout-north,
