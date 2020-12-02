@@ -365,6 +365,13 @@
 @mixin button-plain() {
 	@include button-no-border();
 	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-active-background, $btn-active-color);
+
+	&:active {
+		.cui-button-visual {
+			text-shadow: 0 0 0 rgba(#000, 0.4); // darken the text color
+			box-shadow: none; // reset from button-color()
+		}
+	}
 }
 
 @mixin button-plain-inverted() {
