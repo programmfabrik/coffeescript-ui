@@ -22,3 +22,8 @@
 	}
 }
 
+// * Buttonbar Groupt with input field, used for navigation
+.cui-buttonbar-group-navi {
+	@include buttonbar-group-navigation();
+}
+
