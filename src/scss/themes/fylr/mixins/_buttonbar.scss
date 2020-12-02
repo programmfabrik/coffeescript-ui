@@ -23,7 +23,7 @@
 	.cui-buttonbar-group {
 		.cui-button,
 		.cui-select {
-			&:not(:last-child) .cui-button-visual {
+			&:not(:last-child):not(.cui-last-visible-child) .cui-button-visual {
 				border-right: 0 !important;
 			}
 
