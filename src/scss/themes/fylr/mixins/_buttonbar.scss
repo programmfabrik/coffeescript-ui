@@ -116,8 +116,8 @@
 }
 
 @mixin buttonbar-group-navigation($border: 0) {	
-	// use separate border to cirumvent border styles on hover for the inverted buttons
-	@include ungroup-visually(0, 0);
+	// use separate border to cirumvent border styles on hover for the inverted buttons	
+	@include ungroup-visually();
 
 	border-radius: $btn-border-radius;
 	overflow: hidden;
@@ -204,24 +204,14 @@
 }
 
 // Helper
-@mixin ungroup-visually($inverted: 0, $border-radius: $btn-border-radius) {
-	.cui-button-visual {
-		border: 0 !important;
-		border-radius: $border-radius !important;
-	}
-
-	.cui-button:hover .cui-button-visual {
-		@if $inverted == 1 {
-			background-color: $btn-inverted-hover-background;
-			color: $btn-inverted-hover-color;
-		}
-		@else {
-			background-color: $btn-hover-background;
-			color: $btn-hover-color;
-		}
+@mixin ungroup-visually() {
+	.cui-button {
+		@include button-plain();
 	}
 }
 
 @mixin ungroup-visually-inverted() {
-	@include ungroup-visually(1);
+	.cui-button {
+		@include button-plain-inverted();
+	}
 }
