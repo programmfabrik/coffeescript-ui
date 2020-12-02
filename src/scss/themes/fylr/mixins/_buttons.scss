@@ -341,10 +341,6 @@
 	}
 }
 
-@mixin button-border() {
-	--btn-border-width: #{$btn-border-width};
-}
-
 // Mixin to remove the button border only
 // ! use carefully, in most cases you want to use button-plain() instead, which will set button colors and hover/focus states as well
 @mixin button-no-border() {
@@ -353,6 +349,16 @@
 	&:hover,
 	&:focus {
 		--btn-border-color: transparent;
+	}
+}
+
+// Explicitely add back button border, only needed if it was removed before (e.g. via the button-link())
+@mixin button-border() {
+	--btn-border-color: currentColor;
+
+	&:hover,
+	&:focus {
+		--btn-border-color: currentColor;
 	}
 }
 
