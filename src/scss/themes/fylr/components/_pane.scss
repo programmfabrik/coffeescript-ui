@@ -58,7 +58,7 @@
 			background-color: $body-bg;
 			
 			.cui-label {
-				@include h3(0); // todo: delete .h3 class in the templates
+				@include h3(0);
 			}
 			
 			// Default: all buttons within a direct cui-pane-header should be plain buttons
