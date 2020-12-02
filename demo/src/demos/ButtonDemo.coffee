@@ -833,6 +833,19 @@ class Demo.ButtonDemo extends Demo
 				new CUI.Button(icon: "fa-angle-right", group: "navi")
 			]
 		)
+		
+		@__addButtonbar("navigation toolbar with no border and number input",
+			class: "cui-demo-buttonbar-navigation"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Input(
+					class: "cui-number-input"
+					data: value: ""
+					group: "navi"
+				)
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)		
 
 		@__addButtonbar("navigation toolbar with border",
 			class: "cui-demo-buttonbar-navigation-border"
