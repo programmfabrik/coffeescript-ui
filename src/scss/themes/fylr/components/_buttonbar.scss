@@ -13,17 +13,6 @@
 .cui-buttonbar-group {
 	display: flex;
 
-	&:not(.cui-buttonbar-group-tabs) {
-		.cui-button-button {
-			&:hover {
-				.cui-button-visual {
-					background-color: $btn-bordered-hover-background;
-					color: $btn-bordered-hover-color;
-				}
-			}
-		}
-	}
-
 	.cui-disabled {
 		opacity: 1;
 
