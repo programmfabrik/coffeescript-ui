@@ -42,6 +42,28 @@ body.dev.is-server2::after {
   z-index: 100;
 }
 
+.test-switcher {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px;
+  z-index: 100;
+}
+.ez5-app-user-manager .test-switcher {
+  display: block;
+}
+.ez5-modebar:not(.is-hidden) + .test-switcher {
+  top: -30px;
+}
+.test-switcher button {
+  background-color: lightgrey;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-right: 10px;
+  padding: 0 4px;
+}
+
 /*
 	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
 	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
@@ -2073,9 +2095,6 @@ label[data-label-clickable],
   font-weight: 700;
   text-align: center;
 }
-.cui-label-markdown .cui-label-content table tbody tr:nth-child(odd) {
-  background: #e6e9ec;
-}
 .cui-label-markdown .cui-label-content table col {
   width: auto;
 }
@@ -3607,13 +3626,75 @@ textarea {
 .cui-block .cui-block {
   margin-left: var(--block-nested-indent);
 }
+.cui-block:not(.ez5-collection-manager-search-panels):not(.ez5-collection-manager-col-panels):not(.ez5-fields-renderer-block):not(.ez5-facet-block):not(.cui-form-block--has-checkbox) > .cui-block-header > .cui-block-title {
+  display: inline-block;
+  background-color: #212121;
+  color: #ffffff;
+  padding: 0.1em 0.5rem;
+  line-height: 1.5;
+  text-transform: none;
+  letter-spacing: initial;
+}
+.cui-block:not(.ez5-collection-manager-search-panels):not(.ez5-collection-manager-col-panels):not(.ez5-fields-renderer-block):not(.ez5-facet-block):not(.cui-form-block--has-checkbox) > .cui-block-content .cui-block-header > .cui-block-title {
+  display: block !important;
+  background-color: transparent !important;
+  color: #212121 !important;
+  padding: 0 !important;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
 .cui-block.cui-form-block--has-checkbox {
   margin-bottom: 0;
 }
 .cui-block.cui-form-block--has-checkbox > .cui-block-header {
   margin-bottom: 0;
+  margin-top: 0;
+}
+.cui-block.cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox {
+  font-weight: 700;
 }
 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr {
+  margin-bottom: 0;
+}
+.cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key {
+  margin: 1rem 0 1rem;
+}
+.test-systemrights-v1 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key {
+  margin: 1rem 0 1rem;
+}
+.test-systemrights-v1 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key:first-child {
+  margin-top: 0;
+}
+.test-systemrights-v1 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key:last-child {
+  margin-bottom: 0;
+}
+.test-systemrights-v1 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key .cui-form-key label {
+  color: #8b949c;
+}
+.cui-selected .test-systemrights-v1 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key .cui-form-key label {
+  color: #f5f5f5;
+}
+.test-systemrights-v2 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key {
+  margin: 0.25rem 0;
+}
+.test-systemrights-v2 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key:first-child {
+  margin-top: 0;
+}
+.test-systemrights-v2 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key:last-child {
+  margin-bottom: 0;
+}
+.test-systemrights-v2 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key .cui-form-key label {
+  color: inherit;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: initial;
+}
+.test-systemrights-v2 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key .cui-form-value {
+  margin-left: 3rem;
+}
+.test-systemrights-v2 .cui-block.cui-form-block--has-checkbox > .cui-block-content .cui-form .cui-form-tr.cui-form-tr--has-key .cui-form-value > .cui-options {
   margin-bottom: 0;
 }
 .cui-block.cui-form-block--has-checkbox > .cui-block-content > .cui-form:not(.cui-template-empty) {
@@ -3953,8 +4034,8 @@ textarea {
 .cui-horizontal-layout-right > .cui-buttonbar:last-child > *:last-child {
   margin-right: 0;
 }
-.cui-buttonbar .cui-buttonbar-group .cui-button:not(:last-child) .cui-button-visual,
-.cui-buttonbar .cui-buttonbar-group .cui-select:not(:last-child) .cui-button-visual {
+.cui-buttonbar .cui-buttonbar-group .cui-button:not(:last-child):not(.cui-last-visible-child) .cui-button-visual,
+.cui-buttonbar .cui-buttonbar-group .cui-select:not(:last-child):not(.cui-last-visible-child) .cui-button-visual {
   border-right: 0 !important;
 }
 .cui-buttonbar .cui-buttonbar-group .cui-button:first-child:not(:only-child) .cui-button-visual,
@@ -4192,6 +4273,9 @@ textarea {
 .cui-options .cui-button-checkbox .cui-button-visual {
   line-height: 1.3;
 }
+.cui-options .cui-button-checkbox [data-max-chars] {
+  width: auto;
+}
 
 .cui-options-inactive:not(:empty) {
   margin-top: 0.5rem;
@@ -4265,6 +4349,10 @@ textarea {
 
 .cui-options--columns-12 .cui-checkbox {
   width: 8.3333333333% !important;
+}
+
+.cui-options--horizontal .cui-options-center .cui-checkbox {
+  margin-right: 0.5rem;
 }
 
 .cui-options--vertical .cui-button-checkbox {
