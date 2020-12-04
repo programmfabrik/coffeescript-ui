@@ -61,32 +61,75 @@
 		margin-left: var(--block-nested-indent);
 	}
 
-	// Special blocks
+	// * Inverted Block Header (default)
+	// todo: remove fylr specific classes, define inverted style as default, then override/reset per context
+	&:not(.ez5-collection-manager-search-panels):not(.ez5-collection-manager-col-panels):not(.ez5-fields-renderer-block):not(.ez5-facet-block):not(.cui-form-block--has-checkbox) {
+		@include block-header-inverted();
+	}
+
+	// * Special block with checkboxes
 	// see: admin > usermanagement > system rights
 	&.cui-form-block--has-checkbox {
 		margin-bottom: 0;
 
 		> .cui-block-header {
 			margin-bottom: 0;
+			margin-top: 0;
+
+			.cui-button-checkbox {
+				font-weight: $font-weight-bold;
+			}
 		}
 
 		> .cui-block-content {
 			.cui-form .cui-form-tr {
 				margin-bottom: 0;
-				
-				// &.cui-form-field-type--checkbox {
-				// 	margin-bottom: 0;
-				// }
 
-				// &:not(.cui-form-field-type--checkbox) {
-				// 	margin-top: $form-cell-gap;
-				// }
+				&.cui-form-tr--has-key {
+					margin: $spacer 0 $spacer;
 
-				// &:not(:first-child) {
-				// 	.cui-form-key label {
-				// 		margin-top: $spacer; // doesn't work everywhere
-				// 	}
-				// }
+					// todo: test v1
+					.test-systemrights-v1 & {
+						margin: $spacer 0 $spacer;
+	
+						&:first-child {
+							margin-top: 0;
+						}
+	
+						&:last-child {
+							margin-bottom: 0;
+						}
+	
+						.cui-form-key label {
+							@include label-secondary();
+						}
+					}
+
+					// todo: test v2
+					.test-systemrights-v2 & {
+						margin: $spacer-xs 0;
+
+						&:first-child {
+							margin-top: 0;
+						}
+	
+						&:last-child {
+							margin-bottom: 0;
+						}
+
+						.cui-form-key label {
+							@include label-reset();
+						}
+
+						.cui-form-value {
+							margin-left: 3rem; // todo
+
+							> .cui-options {
+								margin-bottom: 0;
+							}
+						}
+					}
+				}
 			}
 
 			> .cui-form:not(.cui-template-empty) {
@@ -105,6 +148,7 @@
 		width: 100%;
 	}
 }
+
 
 // * WaitBlock
 

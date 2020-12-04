@@ -18,6 +18,7 @@
 }
 
 @mixin block-header-inverted() {
+	// Level 1
 	> .cui-block-header {
 		> .cui-block-title {
 			display: inline-block;
@@ -31,8 +32,20 @@
 		}
 	}
 
-	&:not(:first-child) > .cui-block-header {
-		margin-top: $spacer-sm;
+	// Other levels
+	> .cui-block-content .cui-block-header {
+		@include block-header-inverted-reset();
+	}
+}
+
+@mixin block-header-inverted-reset() {
+	> .cui-block-title {
+		display: block !important;
+		background-color: transparent !important;
+		color: $body-color !important;
+		padding: 0 !important;
+
+		@include label-title();
 	}
 }
 
