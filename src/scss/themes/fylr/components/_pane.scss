@@ -32,6 +32,10 @@
 	.cui-select {
 		margin-right: $spacer-xs;
 	}
+
+	.cui-pane-close-button {
+		transform: translateX($spacer-sm);
+	}
 }
 
 .cui-pane-footer {
