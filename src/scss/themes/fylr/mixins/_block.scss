@@ -17,36 +17,39 @@
 	}
 }
 
-@mixin block-header-inverted() {
-	// Level 1
-	> .cui-block-header {
-		> .cui-block-title {
-			display: inline-block;
-			background-color: $body-color;
-			color: $white;
-			padding: 0.1em $spacer-sm;
-			// reset
-			line-height: $line-height-base;
-			text-transform: none;
-			letter-spacing: initial;
-		}
+@mixin block-separator-reset() {
+	&:not(:last-child) {
+		padding-bottom: 0;
+		border-bottom: 0;
 	}
 
-	// Other levels
-	> .cui-block-content .cui-block-header {
-		@include block-header-inverted-reset();
+	.cui-block-content {
+		.cui-form-table {
+			&:not(:last-child) {
+				padding-bottom: 0;
+				border-bottom: 0;
+			}
+		}
 	}
 }
 
-@mixin block-header-inverted-reset() {
-	> .cui-block-title {
-		display: block !important;
-		background-color: transparent !important;
-		color: $body-color !important;
-		padding: 0 !important;
+// * Block Header inverted
 
-		@include label-title();
-	}
+@mixin block-header-title-inverted() {
+	// ! make sure to only style cui-block-title so the styles do not interfere with other block header properties
+	display: inline-block;
+	background-color: $body-color;
+	color: $white;
+	font-weight: $font-weight-bold;
+	padding: 0.1em $spacer-sm;
+}
+
+@mixin block-header-title-inverted-reset() {
+	display: block;
+	background-color: transparent;
+	color: $body-color;
+	font-weight: $font-weight-normal;
+	padding: 0;
 }
 
 // * Block Bracket
@@ -56,6 +59,8 @@
 	--block-bracket-length: 10px;
 	--block-color: #{gray('900')};
 
+	position: relative;
+	border-bottom: 0; // reset default block border
 	padding-bottom: $block-margin;
 	padding-top: $block-margin;
 
@@ -88,6 +93,7 @@
 
 	.cui-block-header {
 		> .cui-block-title {
+			@include block-header-title-inverted-reset();
 			@include h6(0);
 			
 			text-transform: uppercase;

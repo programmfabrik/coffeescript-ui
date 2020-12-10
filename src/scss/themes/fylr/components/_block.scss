@@ -9,12 +9,14 @@
 	flex-shrink: 0;
 	position: relative;
 
+	@include block-separator();
+
 	&:not(:last-child) {
 		margin-bottom: $block-margin;
 	}
 
 	*:not(.cui-block) + & {
-		margin-top: $block-margin;
+		margin-top: $block-margin; // ? not sure we should do it globally, reset for nested blocks
 	}
 
 	.cui-block-header,
@@ -35,10 +37,12 @@
 		margin-bottom: $spacer-sm;
 		
 		> .cui-block-title {
-			@include label-title();
+			// * Inverted Block Header (default)
+			@include block-header-title-inverted();
 		}
 	}
-		
+
+	// ! we should ignore the explicit block-level classes, because they are used irregularly		
 	// * Level 1
 	// &.cui-block-level-1 {
 	// }
@@ -55,89 +59,21 @@
 	// 	> .cui-block-header > .cui-block-title {}
 	// }
 
-	// * Nested Blocks, indented by default ?
+	// ! use nested to define "level"
+	// * Nested Blocks
 
 	.cui-block {
-		margin-left: var(--block-nested-indent);
-	}
+		margin-left: var(--block-nested-indent); // ? indented by default
 
-	// * Inverted Block Header (default)
-	// todo: remove fylr specific classes, define inverted style as default, then override/reset per context
-	&:not(.ez5-collection-manager-search-panels):not(.ez5-collection-manager-col-panels):not(.ez5-fields-renderer-block):not(.ez5-facet-block):not(.cui-form-block--has-checkbox) {
-		@include block-header-inverted();
-	}
+		@include block-separator-reset(); // only blocks that are not nested within another block should have border, we need to reset border
 
-	// * Special block with checkboxes
-	// see: admin > usermanagement > system rights
-	&.cui-form-block--has-checkbox {
-		margin-bottom: 0;
-
-		> .cui-block-header {
-			margin-bottom: 0;
-			margin-top: 0;
-
-			.cui-button-checkbox {
-				font-weight: $font-weight-bold;
-			}
+		*:not(.cui-block) + .cui-block {
+			margin-top: 0; // reset
 		}
 
-		> .cui-block-content {
-			.cui-form .cui-form-tr {
-				margin-bottom: 0;
-
-				&.cui-form-tr--has-key {
-					margin: $spacer 0 $spacer;
-
-					// todo: test v1
-					.test-systemrights-v1 & {
-						margin: $spacer 0 $spacer;
-	
-						&:first-child {
-							margin-top: 0;
-						}
-	
-						&:last-child {
-							margin-bottom: 0;
-						}
-	
-						.cui-form-key label {
-							@include label-secondary();
-						}
-					}
-
-					// todo: test v2
-					.test-systemrights-v2 & {
-						margin: $spacer-xs 0;
-
-						&:first-child {
-							margin-top: 0;
-						}
-	
-						&:last-child {
-							margin-bottom: 0;
-						}
-
-						.cui-form-key label {
-							@include label-reset();
-						}
-
-						.cui-form-value {
-							margin-left: 3rem; // todo
-
-							> .cui-options {
-								margin-bottom: 0;
-							}
-						}
-					}
-				}
-			}
-
-			> .cui-form:not(.cui-template-empty) {
-				margin-left: $block-has-checkbox-indent;
-				margin-bottom: $spacer;
-				max-width: none;
-				width: auto;
-			}
+		.cui-block-header > .cui-block-title {
+			@include block-header-title-inverted-reset();
+			@include label-title();
 		}
 	}
 }
@@ -146,6 +82,29 @@
 .cui-block-content {
 	.cui-form-table {
 		width: 100%;
+	}
+}
+
+// * Checkbox Block
+
+/* see: 
+admin > usermanagement > system rights
+search > schnellzugriff > mappen > einstellungen > new user/group > optionen
+*/
+
+.cui-form-block--has-checkbox {
+	--block-nested-indent: 215px;
+
+	> .cui-block-header {
+		margin-left: calc(-1 * (#{$toggle-switch-width} + #{$checkbox-margin}));
+		margin-bottom: 0;
+
+		.cui-button-checkbox {
+			&[role='checkbox'],
+			&[role='radio'] {
+				@include checkbox-convert-to-toggle-switch();
+			}
+		}
 	}
 }
 

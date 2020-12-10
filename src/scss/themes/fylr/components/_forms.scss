@@ -49,6 +49,10 @@
 .cui-form-tr,
 .cui-form-tr-header {
 	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
+
+	&.cui-form-field-type--checkbox + .cui-form-field-type--checkbox {
+		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes, see system-rights
+	}
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
@@ -142,10 +146,6 @@
 			flex-direction: column;
 		}
 	}
-
-	.cui-form-table + & {
-		margin-top: $form-cell-gap;
-	}
 }
 
 
@@ -177,11 +177,10 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
+	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
 
-	// ! make sure to use the same margin as for cui-form-tr
-	// :not(.cui-form-field-type--checkbox) use case see: .ez5-download-manager-confirmation-dialog
-	&:not(.cui-form-field-type--checkbox) {
-		margin-bottom: $form-cell-gap;
+	&.cui-form-field-type--checkbox + .cui-form-field-type--checkbox {
+		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes, see system-rights
 	}
 
 	.cui-form-container.cui-form--horizontal > & {
