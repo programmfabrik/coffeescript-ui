@@ -5,7 +5,7 @@ const cssnanoConfig = {
 module.exports = function({ file, options }) {
   return {
     plugins: {
-      autoprefixer: { grid: true },
+      autoprefixer: { grid: false },
       cssnano: options.optimize ? cssnanoConfig : false,
     },
   };
