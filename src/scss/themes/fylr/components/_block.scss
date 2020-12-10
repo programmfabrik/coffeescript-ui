@@ -4,10 +4,9 @@
 // use mixins whenever possible to add a specific block style (like inline or simple or bracket or ...)
 
 .cui-block {
-	--block-nested-indent: 0;
-
 	flex-shrink: 0;
 	position: relative;
+	margin-left: var(--block-indent, 0);
 
 	@include block-separator();
 
@@ -63,8 +62,6 @@
 	// * Nested Blocks
 
 	.cui-block {
-		margin-left: var(--block-nested-indent); // ? indented by default
-
 		@include block-separator-reset(); // only blocks that are not nested within another block should have border, we need to reset border
 
 		*:not(.cui-block) + .cui-block {
@@ -93,9 +90,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 */
 
 .cui-form-block--has-checkbox {
-	--block-nested-indent: 215px;
+	--block-indent: 215px;
 
 	> .cui-block-header {
+		// ! be careful, this only makes sense if the toggle-switches are within a form that has key/value pairs
 		margin-left: calc(-1 * (#{$toggle-switch-width} + #{$checkbox-margin}));
 		margin-bottom: 0;
 
@@ -105,6 +103,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 				@include checkbox-convert-to-toggle-switch();
 			}
 		}
+	}
+
+	.cui-block {
+		--block-indent: 0;
 	}
 }
 

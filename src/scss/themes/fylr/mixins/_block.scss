@@ -131,7 +131,7 @@
 @mixin block-inline($content-indent: 200px, $content-max-width: 850px) {
 	--block-inline-content-indent: #{$content-indent};
 	--block-inline-content-max-width: #{$content-max-width};
-	--block-nested-indent: 0;
+	--block-indent: 0;
 	
 	@include block-separator();
 
