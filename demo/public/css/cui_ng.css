@@ -838,8 +838,7 @@ li > div {
   max-width: 100%;
 }
 .cui-vertical-layout.cui-maximize-horizontal {
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
   width: 100%;
 }
 .cui-vertical-layout.cui-maximize-vertical {
@@ -1129,8 +1128,7 @@ li > div {
 .cui-toolbar > div > .cui-maximize-horizontal {
   -webkit-box-flex: 1;
           flex: 1 1 auto;
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
   overflow: visible;
 }
 .cui-toolbar > div > .cui-maximize-horizontal > .cui-horizontal-layout-left,
@@ -1218,8 +1216,7 @@ li > div {
 .cui-toolbar .cui-label {
   flex-shrink: 1;
   min-width: 0;
-  -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
   cursor: default;
 }
 .cui-toolbar .cui-label .cui-label-content {
@@ -1630,8 +1627,7 @@ li > div {
 }
 
 .cui-button-appearance-flat {
-  -ms-grid-row-align: auto;
-      align-self: auto;
+  align-self: auto;
   vertical-align: top;
 }
 .cui-button-appearance-flat .cui-button-visual {
@@ -2572,12 +2568,10 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-buttonbar .cui-label {
   margin: 0 7px;
-  -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
 }
 .cui-buttonbar .cui-label-content {
-  -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
 }
 .cui-buttonbar > .cui-button + .cui-button,
 .cui-buttonbar > .cui-button + .cui-button-button,
@@ -2611,8 +2605,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-buttonbar-group > * {
   position: relative;
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
   margin-left: -1px;
 }
 .cui-buttonbar-group > * .cui-button-visual,
@@ -3402,8 +3395,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
           flex: 0 0 auto;
 }
 .cui-item-list-body a[role=button], .cui-item-list-body .cui-button {
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
 }
 .cui-item-list-body.cui-item-list--has-button-left .cui-button-left {
   padding-right: 10px;
@@ -3643,8 +3635,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   box-shadow: none;
 }
 .cui-toolbar .cui-tab-header-button-overflow {
-  -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
   position: relative;
   z-index: 1;
 }
@@ -3656,9 +3647,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 
 .cui-tabs--vertical {
   display: grid !important;
-  -ms-grid-columns: 200px 1fr;
   grid-template-columns: 200px 1fr;
-  -ms-grid-rows: 1fr auto;
   grid-template-rows: 1fr auto;
   height: 100%;
   display: -ms-grid !important;

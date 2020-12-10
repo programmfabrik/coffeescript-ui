@@ -766,8 +766,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   margin: 0;
 }
 .cui-label.cui-label-multiline {
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
 }
 .cui-label.cui-label-multiline:not(.cui-label-markdown) {
   white-space: pre-wrap;
@@ -847,8 +846,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
           flex-direction: column;
 }
 .cui-checkbox > .cui-button-checkbox {
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
   height: auto;
   white-space: initial;
 }
@@ -989,8 +987,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
           flex: 0 0 auto;
 }
 .cui-item-list-body a[role=button], .cui-item-list-body .cui-button {
-  -ms-grid-row-align: stretch;
-      align-self: stretch;
+  align-self: stretch;
 }
 .cui-item-list-body .cui-item-list-divider {
   height: 2px;
@@ -1060,8 +1057,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
           flex: 1 1 auto;
   -webkit-box-pack: center;
           justify-content: center;
-  -ms-grid-row-align: center;
-      align-self: center;
+  align-self: center;
 }
 .cui-wait-block .cui-wait-block-inner .cui-wait-block-header .cui-label > .cui-label-icon > i {
   font-size: 24px;

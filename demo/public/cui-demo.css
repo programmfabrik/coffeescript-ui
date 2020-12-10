@@ -43,6 +43,28 @@ body.dev.is-server2::after {
   z-index: 100;
 }
 
+.test-switcher {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px;
+  z-index: 100;
+}
+.ez5-app-user-manager .test-switcher {
+  display: block;
+}
+.ez5-modebar:not(.is-hidden) + .test-switcher {
+  top: -30px;
+}
+.test-switcher button {
+  background-color: lightgrey;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-right: 10px;
+  padding: 0 4px;
+}
+
 /*
 	- if not bordered or as link, make sure the left/right padding is correct (probably need to remove it)
 	- unbordered buttons could be within item-list / menus --> hover style will apply background color, make sure there is padding
@@ -166,28 +188,18 @@ body.dev.is-server2::after {
   margin-bottom: 3rem;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 200px 1fr;
   grid-template-columns: 200px 1fr;
-  -ms-grid-rows: 1fr auto;
   grid-template-rows: 1fr auto;
-      grid-template-areas: "t_header t_body" "t_header t_footer";
+  grid-template-areas: "t_header t_body" "t_header t_footer";
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-top {
-  -ms-grid-row: 1;
-  -ms-grid-row-span: 2;
-  -ms-grid-column: 1;
   grid-area: t_header;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-center {
-  -ms-grid-row: 1;
-  -ms-grid-column: 2;
   grid-area: t_body;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom {
-  -ms-grid-row: 2;
-  -ms-grid-column: 2;
   grid-area: t_footer;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical > .cui-vertical-layout-bottom > .cui-pane-footer {
@@ -307,28 +319,18 @@ body.dev.is-server2::after {
   font-size: 0.75rem;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 200px 1fr;
   grid-template-columns: 200px 1fr;
-  -ms-grid-rows: 1fr auto;
   grid-template-rows: 1fr auto;
-      grid-template-areas: "t_header t_body" "t_header t_footer";
+  grid-template-areas: "t_header t_body" "t_header t_footer";
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-top {
-  -ms-grid-row: 1;
-  -ms-grid-row-span: 2;
-  -ms-grid-column: 1;
   grid-area: t_header;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-center {
-  -ms-grid-row: 1;
-  -ms-grid-column: 2;
   grid-area: t_body;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom {
-  -ms-grid-row: 2;
-  -ms-grid-column: 2;
   grid-area: t_footer;
 }
 .cui-demo-tabs-demo .cui-demo-tabs-vertical-small > .cui-vertical-layout-bottom > .cui-pane-footer {
