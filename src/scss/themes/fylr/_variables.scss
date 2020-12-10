@@ -434,6 +434,17 @@ $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
 $checkbox-margin:				$checkbox-icon-size/2 !default;
 
+// * Toggle Switch
+// * ==========================================
+$toggle-switch-height: 				$checkbox-size !default;
+$toggle-switch-width: 				32px !default;
+$toggle-switch-nose-size:			0.625 * $toggle-switch-height !default;
+$toggle-switch-nose-offset:			2px !default;
+$toggle-switch-color: 				$checkbox-border-color !default;
+$toggle-switch-background: 			$checkbox-background !default;
+$toggle-switch-active-background: 	$checkbox-active-background !default;
+$toggle-switch-active-color: 		$checkbox-active-color !default;
+
 // * Table
 // * ==========================================
 $table-border-color: 	rgba(gray('400'), 0.5) !default;
