@@ -19,3 +19,19 @@
 
 	@include pane-padding();
 }
+
+@mixin pane-header() {
+	flex-wrap: nowrap;
+	padding-left: 0;
+	padding-right: 0;
+	background-color: $body-bg;
+	
+	.cui-label {
+		@include h3(0);
+	}
+	
+	// Default: all buttons within a direct cui-pane-header should be plain buttons
+	.cui-button {
+		@include button-plain();
+	}
+}
