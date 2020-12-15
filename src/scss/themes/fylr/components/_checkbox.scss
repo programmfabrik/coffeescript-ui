@@ -87,6 +87,11 @@
 		&:empty {
 			display: none;
 		}
+
+		.cui-form-tr--has-no-key &,
+		.cui-form-row & {
+			font-weight: $font-weight-bold;
+		}
 	}
 
 	&[role='radio'] {
