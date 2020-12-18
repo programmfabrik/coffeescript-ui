@@ -79,7 +79,7 @@
 	color: theme-color('muted');
 
 	.cui-selected & {
-		color: gray('200');
+		color: gray('100');
 	}
 }
 
@@ -87,7 +87,7 @@
 	color: theme-color('muted');
 
 	.cui-selected & {
-		color: gray('200'); // e.g. Datamodel when adding a new object type or mask in the left column
+		color: gray('100'); // e.g. Datamodel when adding a new object type or mask in the left column
 	}
 }
 
