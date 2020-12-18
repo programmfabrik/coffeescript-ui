@@ -5,6 +5,13 @@
 // cui-data-form
 // hint, valid/invalid
 
+/*
+	! Todo:
+	-	checkbox margins, see .cui-form-field-type--checkbox, find a solution to group fields into "fieldsets", make them independent of the form rows which are too generic
+		Example: System rights, .export-manager-modal
+	- 
+*/
+
 
 .cui-form {
 	overflow: visible;
@@ -50,8 +57,18 @@
 .cui-form-tr-header {
 	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
 
-	&.cui-form-field-type--checkbox + .cui-form-field-type--checkbox {
-		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes, see system-rights
+	&.cui-form-field-type--checkbox {
+		// ! Hot fix: fixes the negative margin below, todo: his is crap, find a better solution
+		.cui-form-hint {
+			margin-bottom: $form-cell-gap;
+		}
+		
+		// ! reset margin bottom for consecutive checkboxes, see system-rights, 
+		// todo: this is crap, we should really put checkboxes that belong together into a fieldset or group so we can style them separately from the form rows
+		// e.g. put them closer together (closer than form rows which contain more independent form fields)
+		& + .cui-form-field-type--checkbox {
+			margin-top: -$form-cell-gap;
+		}
 	}
 }
 
@@ -235,7 +252,6 @@
 	color: theme-color('danger');
 }
 
-// todo: test in the app
 .cui-form-hint {
 	// max-width: $data-field-width; // todo: do we really want to restrict the width, why?
 
