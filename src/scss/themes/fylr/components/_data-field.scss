@@ -60,10 +60,10 @@
 		min-height: 3*$table-data-height; // for when using empty lists that can get filled
 	}
 
-	.cui-lv-row-move-handle-column {
-		padding-top: 0;
-		padding-bottom: 0;
-	}
+	// .cui-lv-row-move-handle-column {
+	// padding-top: 0; // commented out because admin > pools > masken: .ez5-objecttype-list-view-item-mask-select
+	// padding-bottom: 0;
+	// }
 
 	&.cui-data-field-disabled {
 		user-select: none;

@@ -471,7 +471,7 @@
 // because input fields or buttons make the rows higher
 // and make the filler higher
 .cui-lv--has-datafields {
-	--list-view-inner-row-min-height: #{$btn-height};
+	--list-view-inner-row-min-height: #{$btn-height}; // should always have a min-height so we can better align content within (like drag handles, buttons, labels)
 
 	// its sick.. but the only known way to make sure that it doesn't affect nested elements
 	> .cui-vertical-layout-center {
@@ -487,6 +487,10 @@
 								min-height: var(--list-view-inner-row-min-height);
 								padding-top: $spacer-xs;
 								padding-bottom: $spacer-xs;
+							}
+
+							> .cui-output .cui-label {
+								padding: 0;
 							}
 
 							> .cui-tree-node {
@@ -505,7 +509,7 @@
 							}
 
 							> .cui-drag-handle-row {
-								margin-top: $spacer-sm;
+								margin-top: $spacer-sm; // needs to be aligned with text AND buttons within a row
 							}
 
 							&.cui-lv-row-move-handle-column {
