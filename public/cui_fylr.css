@@ -114,6 +114,7 @@ body.dev.is-server2::after {
   --gray-dark: #343a40;
   --primary: #ff5724;
   --secondary: #8b949c;
+  --secondary-selected: #f5f5f5;
   --success: #7ca751;
   --info: #17a2b8;
   --warning: #d6b13a;
@@ -1862,6 +1863,15 @@ label[data-label-clickable],
 .cui-empty-label .cui-label-content {
   display: inline-block;
 }
+.cui-empty-label.cui-label-centered {
+  font-size: 1.25rem;
+}
+.cui-empty-label.cui-label-centered .cui-label-icon .fa {
+  font-size: inherit;
+}
+.cui-empty-label.cui-label-centered .cui-label-content {
+  max-width: 40rem;
+}
 
 .cui-label-centered {
   -webkit-box-flex: 1;
@@ -3004,8 +3014,8 @@ textarea {
           align-items: center;
   width: 16px;
   height: 16px;
-  border: 1px solid #dee2e6;
-  background: #ffffff;
+  border: 1px solid var(--checkbox-border-color, #dee2e6);
+  background: var(--checkbox-background, #ffffff);
   font-size: 12px;
   line-height: 14px;
   border-radius: 2px;
@@ -3028,22 +3038,25 @@ textarea {
 .cui-button-checkbox .cui-button-center:empty {
   display: none;
 }
+.cui-form-tr--has-no-key .cui-button-checkbox .cui-button-center, .cui-form-row .cui-button-checkbox .cui-button-center {
+  font-weight: 700;
+}
 .cui-button-checkbox[role=radio] .cui-button-left span,
 .cui-button-checkbox[role=radio] .cui-button-left i {
   border-radius: 100%;
 }
 .cui-button-checkbox.cui-active .cui-button-left i {
-  background: #212121;
-  color: #ffffff;
-  border-color: #212121;
+  background: var(--checkbox-active-background, #212121);
+  color: var(--checkbox-active-color, #ffffff);
+  border-color: var(--checkbox-active-background, #212121);
 }
 .cui-active .cui-button-checkbox.cui-active .cui-button-left i, .cui-layer-open .cui-button-checkbox.cui-active .cui-button-left i {
   color: #f5f5f5;
 }
 .cui-button-checkbox.cui-active[role=radio] .cui-button-left i {
-  background: #212121;
+  background: var(--checkbox-active-background, #212121);
   color: transparent;
-  border-color: #212121;
+  border-color: var(--checkbox-active-background, #212121);
 }
 .cui-button-checkbox.cui-active[role=radio] .cui-button-left i::after {
   content: "";
@@ -3054,7 +3067,7 @@ textarea {
   height: 6px;
   margin: -3px 0 0 -3px;
   border-radius: 100%;
-  background: #ffffff;
+  background: var(--checkbox-active-color, #ffffff);
 }
 .cui-button-checkbox:focus {
   outline: none;
@@ -3106,7 +3119,7 @@ textarea {
           flex: 1 1 auto;
   height: 10px;
   width: 12px;
-  background: linear-gradient(#212121 1px, transparent 1px, transparent 2px);
+  background: linear-gradient(var(--handle-color, #212121) 1px, transparent 1px, transparent 2px);
   background-size: 100% 2px;
 }
 
@@ -3340,10 +3353,6 @@ textarea {
 .cui-data-field .cui-list-view-grid-quadrant-3 {
   min-height: 102px;
 }
-.cui-data-field .cui-lv-row-move-handle-column {
-  padding-top: 0;
-  padding-bottom: 0;
-}
 .cui-data-field.cui-data-field-disabled {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -3572,9 +3581,9 @@ textarea {
 }
 
 .cui-block {
-  --block-nested-indent: 0;
   flex-shrink: 0;
   position: relative;
+  margin-left: var(--block-indent, 0);
 }
 .cui-block:not(:last-child) {
   padding-bottom: 1rem;
@@ -3611,9 +3620,6 @@ textarea {
   font-weight: 700;
   padding: 0.1em 0.5rem;
 }
-.cui-block .cui-block {
-  margin-left: var(--block-nested-indent);
-}
 .cui-block .cui-block:not(:last-child) {
   padding-bottom: 0;
   border-bottom: 0;
@@ -3646,7 +3652,7 @@ admin > usermanagement > system rights
 search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 */
 .cui-form-block--has-checkbox {
-  --block-nested-indent: 215px;
+  --block-indent: 215px;
 }
 .cui-form-block--has-checkbox > .cui-block-header {
   margin-left: calc(-1 * (32px + 6px));
@@ -3695,6 +3701,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox[role=checkbox] .cui-button-left span::before, .cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox[role=radio] .cui-button-left span::before {
   left: 2px;
   background-color: #dee2e6;
+}
+.cui-form-block--has-checkbox .cui-block {
+  --block-indent: 0;
 }
 
 .cui-wait-block {
@@ -4539,7 +4548,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin: 0;
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button {
-  --btn-border-color: rgba(255, 255, 255, 0.45);
+  --btn-border-color: rgba(255, 255, 255, 0.85);
   --btn-border-color: transparent;
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button .cui-button-visual {
@@ -4573,7 +4582,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button:hover {
-  --btn-border-color: rgba(255, 255, 255, 0.35);
+  --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button:hover, .cui-date-time-calendar > .cui-buttonbar .cui-button:focus {
   --btn-border-color: transparent;
@@ -4625,7 +4634,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--btn-background-active, transparent);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select {
-  --btn-border-color: rgba(255, 255, 255, 0.45);
+  --btn-border-color: rgba(255, 255, 255, 0.85);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select .cui-button-visual {
   background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
@@ -4658,7 +4667,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:hover {
-  --btn-border-color: rgba(255, 255, 255, 0.35);
+  --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select .cui-button-center {
   padding-left: 0.375rem !important;
@@ -4956,6 +4965,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding: 0 0.15em;
 }
 
+/*
+	! Todo:
+	-	checkbox margins, see .cui-form-field-type--checkbox, find a solution to group fields into "fieldsets", make them independent of the form rows which are too generic
+		Example: System rights, .export-manager-modal
+	- 
+*/
 .cui-form {
   overflow: visible;
   background-color: #f5f5f5;
@@ -5018,6 +5033,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-form-tr,
 .cui-form-tr-header {
+  margin-bottom: 1rem;
+}
+.cui-form-tr.cui-form-field-type--checkbox .cui-form-hint,
+.cui-form-tr-header.cui-form-field-type--checkbox .cui-form-hint {
   margin-bottom: 1rem;
 }
 .cui-form-tr.cui-form-field-type--checkbox + .cui-form-field-type--checkbox,
@@ -5225,10 +5244,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-row:first-child {
   margin-right: 0;
-}
-.cui-form-field-type--checkbox + .cui-form-row > .cui-form.cui-data-field,
-.cui-form-field-type--checkbox + .cui-form-row > .cui-data-table.cui-data-field {
-  margin-top: 0.5rem;
 }
 
 .cui-hint,
@@ -5738,7 +5753,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-right: -0.5rem;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button {
-  --btn-border-color: rgba(255, 255, 255, 0.45);
+  --btn-border-color: rgba(255, 255, 255, 0.85);
   --btn-border-color: transparent;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
@@ -5772,7 +5787,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover {
-  --btn-border-color: rgba(255, 255, 255, 0.35);
+  --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
   --btn-border-color: transparent;
@@ -5876,7 +5891,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --list-view-selected-row-border-width: 0;
   --list-view-selected-row-border-color: transparent;
   --list-view-selected-row-background: rgba(206, 212, 218, 0.3);
-  --list-view-hover-row-background: rgba(206, 212, 218, 0.15);
+  --list-view-hover-row-background: #e6e9ec;
   min-height: 0;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -6155,15 +6170,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   border-bottom: var(--list-view-inner-row-border-width) solid var(--list-view-inner-row-border-color);
 }
 
-.cui-list-view-row-selectable {
-  cursor: pointer;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
-  touch-action: manipulation;
-}
-
+.cui-list-view-row-selectable,
 .cui-lv-tree-node--is-branch {
   cursor: pointer;
   -webkit-user-select: none;
@@ -6172,7 +6179,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
        user-select: none;
   touch-action: manipulation;
 }
-.cui-lv-tree-node--is-branch:hover > .cui-lv-tr, .cui-lv-tree-node--is-branch:focus > .cui-lv-tr {
+.cui-list-view-row-selectable:hover > .cui-lv-tr, .cui-list-view-row-selectable:focus > .cui-lv-tr,
+.cui-lv-tree-node--is-branch:hover > .cui-lv-tr,
+.cui-lv-tree-node--is-branch:focus > .cui-lv-tr {
   background-color: var(--list-view-hover-row-background);
 }
 
@@ -6253,6 +6262,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-height: var(--list-view-inner-row-min-height);
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+.cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-output .cui-label,
+.cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-output .cui-label {
+  padding: 0;
 }
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-handle:not(:empty),
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-handle:not(:empty) {
@@ -7034,7 +7047,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-right: -0.5rem;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button {
-  --btn-border-color: rgba(255, 255, 255, 0.45);
+  --btn-border-color: rgba(255, 255, 255, 0.85);
   --btn-border-color: transparent;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
@@ -7068,7 +7081,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover {
-  --btn-border-color: rgba(255, 255, 255, 0.35);
+  --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
   --btn-border-color: transparent;
