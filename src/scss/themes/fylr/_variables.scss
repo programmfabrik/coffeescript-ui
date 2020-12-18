@@ -469,7 +469,7 @@ $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !defau
 $list-view-selected-row-border-width:	1px !default;
 $list-view-selected-row-border-color: 	theme-color('primary') !default;
 $list-view-selected-row-background: 	rgba(gray('400'), 0.3) !default;
-$list-view-hover-row-background: 		rgba(gray('400'), 0.15) !default;
+$list-view-hover-row-background: 		gray('200') !default;
 
 // * List View Tree
 // * ==========================================

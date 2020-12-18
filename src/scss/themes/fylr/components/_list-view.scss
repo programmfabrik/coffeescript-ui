@@ -375,10 +375,7 @@
 
 // * Modifier
 
-.cui-list-view-row-selectable {
-	@include clickable;
-}
-
+.cui-list-view-row-selectable,
 .cui-lv-tree-node--is-branch {
 	@include clickable;
 
