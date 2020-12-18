@@ -91,6 +91,7 @@ $colors: map-merge(
 
 $primary:       $orange !default;
 $secondary:     $gray-600 !default; // todo
+$secondary-selected: $gray-100 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -109,6 +110,7 @@ $theme-colors: map-merge(
 	(
 		'primary':    $primary,
 		'secondary':  $secondary,
+		'secondary-selected':  $secondary-selected,
 		'success':    $success,
 		'info':       $info,
 		'warning':    $warning,

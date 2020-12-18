@@ -32,10 +32,15 @@
 	}
 }
 
+// --checkbox-border-color
+// --checkbox-background
+// --checkbox-active-background
+// --checkbox-active-color
+
 .cui-button-checkbox {
 	display: inline-flex; // so that the click area is not wider than the text
 	max-width: 100%;
-	// todo: should we realy set a min-height by default?
+	// todo: should we really set a min-height by default?
 	// pro: checkboxes will be visually more in sync with regular inputs, escpecially when they are next to each other
 	// contra: in some cases they will use more space than needed, e.g. within cui-data-field, see Admin > Base Config > Connector > > Connector > EasyDB Instanzen für Connector > Checkbox "Aktivieren"
 	min-height: $input-height; 
@@ -54,6 +59,7 @@
 	.cui-button-left {
 		min-width: $checkbox-size;
 		margin-right: $checkbox-margin;
+		
 		// empty checkbox: span
 		// filled checkbox: i
 		span,
@@ -65,8 +71,8 @@
 			align-items: center;
 			width: $checkbox-size;
 			height: $checkbox-size;
-			border: 1px solid $checkbox-border-color;
-			background: $checkbox-background;
+			border: 1px solid var(--checkbox-border-color, #{$checkbox-border-color});
+			background: var(--checkbox-background, #{$checkbox-background});
 			font-size: $checkbox-icon-size;
 			line-height: $checkbox-icon-size + 2px;
 			border-radius: $checkbox-border-radius;
@@ -93,7 +99,7 @@
 
 		.cui-form-tr--has-no-key &,
 		.cui-form-row & {
-			font-weight: $font-weight-bold;
+			font-weight: $font-weight-bold; // ? todo: not sure this is a good idea, it doesn't always work to an advantage, see .export-manager-modal, system rights
 		}
 	}
 
@@ -109,9 +115,9 @@
 	&.cui-active {
 		// checkbox
 		.cui-button-left i {
-			background: $checkbox-active-background;
-			color: $checkbox-active-color;
-			border-color: $checkbox-active-background;
+			background: var(--checkbox-active-background, #{$checkbox-active-background});
+			color: var(--checkbox-active-color, #{$checkbox-active-color});
+			border-color: var(--checkbox-active-background, #{$checkbox-active-background});
 
 			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
 			.cui-active &,
@@ -123,9 +129,9 @@
 		// radio
 		&[role='radio'] {
 			.cui-button-left i {
-				background: $checkbox-active-background;
+				background: var(--checkbox-active-background, #{$checkbox-active-background});
 				color: transparent;
-				border-color: $checkbox-active-background;
+				border-color: var(--checkbox-active-background, #{$checkbox-active-background});
 
 				&::after { // radio dot
 					content: '';
@@ -136,7 +142,7 @@
 					height: 6px;
 					margin: -3px 0 0 -3px;
 					border-radius: 100%;
-					background: $checkbox-active-color;
+					background: var(--checkbox-active-color, #{$checkbox-active-color});
 				}
 			}
 		}
