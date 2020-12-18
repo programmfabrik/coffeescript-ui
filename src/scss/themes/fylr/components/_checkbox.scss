@@ -43,7 +43,7 @@
 	// todo: should we really set a min-height by default?
 	// pro: checkboxes will be visually more in sync with regular inputs, escpecially when they are next to each other
 	// contra: in some cases they will use more space than needed, e.g. within cui-data-field, see Admin > Base Config > Connector > > Connector > EasyDB Instanzen für Connector > Checkbox "Aktivieren"
-	min-height: $input-height; 
+	min-height: $input-height;
 	line-height: $input-height;
 	cursor: pointer;
 
