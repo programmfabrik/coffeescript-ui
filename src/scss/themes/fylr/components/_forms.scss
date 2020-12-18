@@ -59,19 +59,19 @@
 .cui-form-tr-header {
 	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
 
-	&.cui-form-field-type--checkbox {
-		// ! Hot fix: fixes the negative margin below, todo: his is crap, find a better solution
-		.cui-form-hint {
-			margin-bottom: $form-cell-gap;
-		}
+	// &.cui-form-field-type--checkbox {
+	// 	// ! Hot fix: fixes the negative margin below, todo: his is crap, find a better solution
+	// 	.cui-form-hint {
+	// 		margin-bottom: $form-cell-gap;
+	// 	}
 		
-		// ! reset margin bottom for consecutive checkboxes, see system-rights, 
-		// todo: this is crap, we should really put checkboxes that belong together into a fieldset or group so we can style them separately from the form rows
-		// e.g. put them closer together (closer than form rows which contain more independent form fields)
-		& + .cui-form-field-type--checkbox {
-			margin-top: -$form-cell-gap;
-		}
-	}
+	// 	// ! reset margin bottom for consecutive checkboxes, see system-rights, 
+	// 	// todo: this is crap, we should really put checkboxes that belong together into a fieldset or group so we can style them separately from the form rows
+	// 	// e.g. put them closer together (closer than form rows which contain more independent form fields)
+	// 	& + .cui-form-field-type--checkbox {
+	// 		margin-top: -$form-cell-gap;
+	// 	}
+	// }
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
