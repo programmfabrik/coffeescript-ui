@@ -318,10 +318,10 @@ $btn-bordered-focus-border-color: 	$component-focus-border-color !default;
 // Inverted Button 
 $btn-inverted-color: 				$white !default;
 $btn-inverted-background: 			rgba(gray('900'), 0.6) !default; // need an actual background so we can use this on images as well
-$btn-inverted-border-color: 		rgba($white, 0.45) !default;
+$btn-inverted-border-color: 		rgba($white, 0.85) !default; // todo: its a compromise between black/background image and selected/orange background color, we might need to make this adaptable via CSS vars
 $btn-inverted-hover-color: 			rgba($btn-inverted-color, $btn-hover-alpha) !default;
 $btn-inverted-hover-background: 	$btn-inverted-background !default;
-$btn-inverted-hover-border-color: 	rgba($btn-inverted-border-color, 0.35) !default;
+$btn-inverted-hover-border-color: 	rgba($btn-inverted-border-color, 0.7) !default;
 
 // Button Sizes
 // We use an absolute height to define the button height instead of padding-y.
