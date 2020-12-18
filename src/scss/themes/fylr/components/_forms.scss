@@ -15,10 +15,12 @@
 
 .cui-form {
 	overflow: visible;
-	background-color: $light; // todo: should we set a default background because of the white form elements ?
+	background-color: $light; // ? we set a default background because of the default white form elements like inputs
 	width: 100%; // see datamodel >  definition > options popover
 
-	.cui-selected & {
+	.cui-selected &,
+	*:hover &,
+	*:focus & {
 		background-color: transparent;
 	}
 
