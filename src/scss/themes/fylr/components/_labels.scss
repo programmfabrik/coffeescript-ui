@@ -159,6 +159,14 @@ label[data-label-clickable],
 	.cui-label-content {
 		display: inline-block;
 	}
+
+	&.cui-label-centered {
+		@include label-xxl();
+
+		.cui-label-content {
+			max-width: 40rem;
+		}
+	}
 }
 
 // Centered

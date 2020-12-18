@@ -24,6 +24,16 @@
 	}
 }
 
+@mixin label-xxl() {
+	font-size: $font-size-xxl;
+
+	.cui-label-icon {
+		.fa {
+			font-size: inherit;
+		}
+	}	
+}
+
 @mixin label-secondary() {
 	color: theme-color('secondary');
 	// font-weight: $font-weight-light;
