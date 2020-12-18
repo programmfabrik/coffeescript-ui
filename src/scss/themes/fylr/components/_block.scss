@@ -108,6 +108,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 	.cui-block {
 		--block-indent: 0;
 	}
+
+	// stack by default
+	.cui-form {
+		@include form-key-value-stacked();
+	}
 }
 
 
