@@ -45225,7 +45225,7 @@ CUI.Select = (function(superClass) {
     ref = this.__options;
     for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
       opt = ref[idx];
-      if (found_opt === null && opt.value === this.getValue()) {
+      if (found_opt === null && CUI.util.isEqual(opt.value, this.getValue())) {
         found_opt = opt;
       }
       if (((ref1 = opt.text) != null ? ref1.length : void 0) > max_chars) {
