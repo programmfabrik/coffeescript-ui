@@ -226,7 +226,7 @@ class CUI.Select extends CUI.Checkbox
 		max_chars = null
 
 		for opt, idx in @__options
-			if found_opt == null and opt.value == @getValue()
+			if found_opt == null and CUI.util.isEqual(opt.value, @getValue())
 				found_opt = opt
 
 			if opt.text?.length > max_chars
