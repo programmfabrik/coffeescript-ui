@@ -1,6 +1,6 @@
 class CUI.CodeInput extends CUI.Input
 
-	@availableModes = ["javascript", "json", "css"]
+	@availableModes = ["html", "javascript", "json", "css"]
 
 	readOpts: ->
 		super()
