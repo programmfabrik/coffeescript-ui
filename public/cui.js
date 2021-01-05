@@ -32167,7 +32167,7 @@ CUI.CodeInput = (function(superClass) {
     return CodeInput.__super__.constructor.apply(this, arguments);
   }
 
-  CodeInput.availableModes = ["javascript", "json", "css"];
+  CodeInput.availableModes = ["html", "javascript", "json", "css"];
 
   CodeInput.prototype.readOpts = function() {
     CodeInput.__super__.readOpts.call(this);
