@@ -1,0 +1,168 @@
+// * Block
+// very basic block section styling, must work anywhere
+// override specifics in ez5-fields-renderer-block or else
+// use mixins whenever possible to add a specific block style (like inline or simple or bracket or ...)
+
+.cui-block {
+	flex-shrink: 0;
+	position: relative;
+	margin-left: var(--block-indent, 0);
+
+	@include block-separator();
+
+	&:not(:last-child) {
+		margin-bottom: $block-margin;
+	}
+
+	*:not(.cui-block) + & {
+		margin-top: $block-margin; // ? not sure we should do it globally, reset for nested blocks
+	}
+
+	.cui-block-header,
+	.cui-block-content,
+	.cui-block-description {
+		&:empty {
+			display: none;
+		}
+	}
+
+	.cui-block-description {
+		@include label-secondary();
+	}
+
+	
+	// * Titles 
+	.cui-block-header {
+		margin-bottom: $spacer-sm;
+		
+		> .cui-block-title {
+			// * Inverted Block Header (default)
+			@include block-header-title-inverted();
+		}
+	}
+
+	// ! we should ignore the explicit block-level classes, because they are used irregularly		
+	// * Level 1
+	// &.cui-block-level-1 {
+	// }
+
+	// * Level 2
+
+	// &.cui-block-level-2 {
+	// 	> .cui-block-header > .cui-block-title {}
+	// }
+
+	// * Level 3
+	
+	// &.cui-block-level-3 {
+	// 	> .cui-block-header > .cui-block-title {}
+	// }
+
+	// ! use nested to define "level"
+	// * Nested Blocks
+
+	.cui-block {
+		@include block-separator-reset(); // only blocks that are not nested within another block should have border, we need to reset border
+
+		*:not(.cui-block) + .cui-block {
+			margin-top: 0; // reset
+		}
+
+		.cui-block-header > .cui-block-title {
+			@include block-header-title-inverted-reset();
+			@include label-title();
+		}
+	}
+}
+
+// Content
+.cui-block-content {
+	.cui-form-table {
+		width: 100%;
+	}
+}
+
+// * Checkbox Block
+
+/* see: 
+admin > usermanagement > system rights
+search > schnellzugriff > mappen > einstellungen > new user/group > optionen
+*/
+
+.cui-form-block--has-checkbox {
+	--block-indent: 215px;
+
+	> .cui-block-header {
+		// ! be careful, this only makes sense if the toggle-switches are within a form that has key/value pairs
+		margin-left: calc(-1 * (#{$toggle-switch-width} + #{$checkbox-margin}));
+		margin-bottom: 0;
+
+		.cui-button-checkbox {
+			&[role='checkbox'],
+			&[role='radio'] {
+				@include checkbox-convert-to-toggle-switch();
+			}
+		}
+	}
+
+	.cui-block {
+		--block-indent: 0;
+	}
+
+	// stack by default
+	.cui-form {
+		@include form-key-value-stacked();
+	}
+}
+
+
+// * WaitBlock
+
+.cui-wait-block {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	display: flex;
+	color: theme-color('muted');
+}
+
+.cui-wait-block-glass {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0.5;
+	background: $body-bg;
+}
+
+.cui-wait-block-inner {
+	display: flex;
+	flex: 1 1 auto;
+	position: relative;
+}
+
+.cui-wait-block-header {
+	display: flex;
+	flex: 1 1 auto;
+	justify-content: center;
+	align-self: center;
+
+	.cui-label {
+		.svg-spinner {
+			height: auto;
+			width: 28px;
+		}
+
+		.cui-label-content {
+			padding-left: $spacer-sm;
+		}
+	}
+}
+
+.cui-wait-block-content {
+	display: none;
+}

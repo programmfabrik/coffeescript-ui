@@ -49,6 +49,11 @@ class Demo.LabelDemo extends Demo
 		@__addLabel("normal label+icon",label)
 
 		label = new CUI.Label
+			text: "Label with SVG icon"
+			icon: "spinner"
+		@__addLabel("Label with SVG icon",label)
+
+		label = new CUI.Label
 			text: "Label Rotated by 90deg"
 			icon: "rotate_right"
 			size: "big"
@@ -66,6 +71,7 @@ class Demo.LabelDemo extends Demo
 			text: "Label with Icon"
 			icon: "rotate_right"
 			size: "mini"
+			class: "cui-demo-label-sm"
 		@__addLabel("size: mini",label)
 
 		label = new CUI.Label
@@ -78,26 +84,41 @@ class Demo.LabelDemo extends Demo
 			text: "Label with Icon"
 			icon: "rotate_right"
 			size: "big"
+			class: "cui-demo-label-lg"
 		@__addLabel("size: big",label)
 
 		label = new CUI.Label
 			text: "Label with Icon"
 			icon: "rotate_right"
 			size: "bigger"
+			class: "cui-demo-label-xl"
 		@__addLabel("size: bigger",label)
 
 		label = new CUI.Label
 			text: "Label with Icon"
 			icon: "rotate_right"
-			appearance: "important"
-		@__addLabel("apperance: important",label)
+			appearance: "secondary"
+		@__addLabel("secondary label",label)
+
+		label = new CUI.Label
+			text: "Title Label"
+			icon: "rotate_right"
+			class: "cui-demo-label-title"
+			# appearance: "title" // legacy
+			# size: "bigger" // legacy
+		@__addLabel("title label",label)
+
+		label = new CUI.Label
+			text: "Subtitle Label"
+			icon: "rotate_right"
+			class: "cui-demo-label-subtitle"
+		@__addLabel("subtitle label",label)
 
 		label = new CUI.Label
 			text: "Label with Icon"
 			icon: "rotate_right"
-			appearance: "title"
-			size: "bigger"
-		@__addLabel("apperance: title, size: bigger",label)
+			class: "cui-demo-label-muted"
+		@__addLabel("muted label",label)
 
 		div = CUI.dom.append(CUI.dom.div("cui-label-demo-centered-label-parent"),
 			new CUI.Label
@@ -128,6 +149,33 @@ class Demo.LabelDemo extends Demo
 			icon: "rotate_left"
 		@__addLabel("multiline: true, Icon",label)
 
+		label = new CUI.Label
+			multiline: true
+			text: "A very long text that includes a veryverysuperlongword to show that it can break into lines."
+			icon: "rotate_left"
+			centered: true
+		@__addLabel("multiline: true, Icon, centered: true",label)		
+
+		label = new CUI.Label
+			multiline: true
+			manage_overflow: false
+			text: """
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			"""
+			icon: "rotate_left"
+		@__addLabel("multiline: true, manage_overflow: false, Icon", label)		
+
+		label = new CUI.Label
+			multiline: true
+			manage_overflow: true
+			text: """
+			Aaaa that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that.
+			"""
+			icon: "rotate_left"
+		@__addLabel("multiline: true, manage_overflow: true but not active, Icon", label)				
 
 		label = new CUI.Label
 			class: "cui-label-demo-multiline-with-limited-width"
@@ -145,6 +193,33 @@ class Demo.LabelDemo extends Demo
 		label = new CUI.Label
 			class: "cui-label-demo-multiline-with-limited-width"
 			multiline: true
+			manage_overflow: true
+			text: """
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			"""
+			icon: "folder"
+		@__addLabel("multiline: true, manage_overflow: true, SVG Icon", label)
+
+
+		label = new CUI.Label
+			class: "cui-label-demo-multiline-with-limited-width"
+			multiline: true
+			manage_overflow: true
+			text: """
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines. A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			"""
+			icon: "folder_upload"
+		@__addLabel("multiline: true, manage_overflow: true, SVG Icon", label)
+
+		label = new CUI.Label
+			class: "cui-label-demo-multiline-with-limited-width"
+			multiline: true
 			manage_overflow:
 				active_css_class: ""
 				text_inactive: "More..."
@@ -156,6 +231,7 @@ class Demo.LabelDemo extends Demo
 			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
 			A good and long text that includes a veryverysuperlongword to show that it can break into lines.
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
 			"""
 		@__addLabel("multiline: true, manage_overflow: text", label)
 
@@ -177,8 +253,8 @@ class Demo.LabelDemo extends Demo
 			multiline: true
 			text: "First line\nfollowed by a second.\nPlus an Icon"
 			icon: "rotate_left"
-			appearance: "important"
-		@__addLabel("multiline: true, apperance: important",label)
+			appearance: "muted"
+		@__addLabel("multiline: true, apperance: muted",label)
 
 		@__addDivider("Markdown Label")
 		label = new CUI.Label

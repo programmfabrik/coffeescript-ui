@@ -12,7 +12,7 @@ class Demo.ObjectDumperDemo extends Demo
 	display: ->
 		div = CUI.dom.div("cui-object-dumper-demo")
 
-		data = JSON.parse(require('./example2.json'))
+		data = require('./example2.json');
 
 		console.debug CUI.util.dump(data)
 		od = new CUI.ObjectDumper

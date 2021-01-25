@@ -1,0 +1,139 @@
+// * Pane
+
+// This is set by Pane.coffee to compensate an active sidebar in the fillScreen calculations
+:root {
+	--layer-sidebar-width: 0;
+}
+
+.cui-pane {
+	background-color: $pane-background;
+
+	// todo: we should probably do this if this is the most used case, and then override if necessary
+	> .cui-vertical-layout-center {
+		padding: $pane-padding;
+	}
+}
+
+.cui-pane-header {
+	flex-wrap: nowrap;
+
+	.cui-horizontal-layout-left {
+		.cui-label {
+			margin-right: $spacer-sm;
+		}
+	}
+
+	// see ez5-main-right ez5-editor pane-header: here we should not remove the margin
+	// Todo: find use-case where we needed to reset the margin
+	// .cui-buttonbar > * {
+	// 	margin-right: 0;
+	// }
+
+	.cui-select {
+		margin-right: $spacer-xs;
+	}
+
+	.cui-pane-close-button {
+		transform: translateX($spacer-sm);
+	}
+}
+
+.cui-pane-footer {
+	.cui-horizontal-layout-left,
+	.cui-horizontal-layout-right {
+		min-width: auto;
+	}
+
+	.cui-label {
+		// todo: footer label sizes and color?
+	}
+}
+
+
+// * Pane as window
+// .cui-pane--window are the main cui panes with a h3 pane-title
+
+.cui-pane--window {
+	&:not(.cui-layer-pane) {
+		> .cui-vertical-layout-top > .cui-pane-header {
+			@include pane-header();
+		}
+	}
+}
+
+
+// * Simple Pane
+
+.cui-simple-pane {
+	> .cui-vertical-layout-center {
+		overflow: auto;
+	}
+}
+
+// * Pane Fill Screen
+
+// Used when expanding a popover layer into full-screen
+
+/*
+	<div class="cui-pane-fill-screen cui-pane-fill-screen-is-on">
+		<div class="cui-pane-fill-screen">
+			<div class="cui-pane-fill-screen-inner">
+				<div class="cui-pane cui-layer-pane cui-pane--window">
+					<top>
+						<div class="cui-pane-header cui-toolbar"></div>
+						<div class="cui-toolbar"></div>
+					</top>
+					<center>
+						<div class="cui-vertical-layout">...</div>
+					</center>
+					<bottom>
+						<div class="cui-pane-toolbar cui-toolbar"></div>
+						<div class="cui-pane-footer cui-toolbar"></div>
+					</bottom>
+				</div>
+			</div>
+		</div>
+	</div>
+*/
+
+.cui-pane-fill-screen {
+	transition: top ease-out 0.5s, right ease-out 0.5s, left ease-out 0.5s, bottom ease-out 0.5s;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+
+	// Pane Fillscreen
+	.cui-pane-fill-screen {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: $body-bg;
+
+		.cui-pane-fill-screen-inner {
+			width: 100%;
+			height: 100%;
+
+			> .cui-maximize-vertical.cui-vertical-layout {
+				height: 100%;
+			}
+
+			// apply layout and style just like the popover layer
+			> .cui-pane {
+				@include layer-pane-layout();
+			}
+		}
+	}
+
+	// overwrite "style" set by code
+	&.cui-pane-fill-screen-is-on {
+		top: 0 !important;
+		left: 0 !important;
+		bottom: 0 !important;
+		right: var(--layer-sidebar-width) !important;
+	}
+}

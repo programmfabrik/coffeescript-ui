@@ -1,0 +1,163 @@
+// * Layout System with flexbox / Horizontal + Vertical Layout
+// ---------------------------------------------------------------------------
+// - container always grows if maximize
+// - center column always grows if maximize
+
+// ! If you need to add exceptions or special cases, add extra classes or
+// ! try to style the specific children within a layout element, see "Special cases" below
+// ! keep layout styles clean, simple and intuitive
+
+// ------------------- START: Basic system ------------------------------------
+
+.cui-root-layout {
+	overflow: hidden;
+}
+
+// All children need to stretch to their max size by default
+// this imitizes a "display:block"-like layout but with stretching
+.cui-horizontal-layout-left,
+.cui-horizontal-layout-center,
+.cui-horizontal-layout-right,
+.cui-vertical-layout-top,
+.cui-vertical-layout-center,
+.cui-vertical-layout-bottom {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+}
+
+// * HorizontalLayout
+
+.cui-horizontal-layout {
+	display: flex;
+	flex-direction: row;
+	align-self: flex-start;
+
+	// Container grows to max width
+	&.cui-maximize-horizontal {
+		overflow: hidden;
+		align-self: stretch;
+
+		> .cui-horizontal-layout-left,
+		> .cui-horizontal-layout-right {
+			position: relative;
+			overflow: hidden;
+		}
+
+		// Center child grows to max width
+		> .cui-horizontal-layout-center {
+			position: relative;
+			flex: 1 1 auto;
+			overflow: auto;
+		}
+	}
+
+	// Container grows to max height
+	&.cui-maximize-vertical {
+		flex: 1 1 auto;
+		overflow: hidden;
+	}
+
+	// Layout Absolute Horizontal
+	&.cui-absolute {
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		& > div {
+			position: absolute !important; // overwrite 'relative' from above
+			top: 0;
+			bottom: 0;
+			// height: 100%;
+		}
+
+		& > .cui-horizontal-layout-left {
+			left: 0;
+		}
+
+		& > .cui-horizontal-layout-center {
+			left: 0;  // overwritten by Layout.coffee
+			right: 0;  // overwritten by Layout.coffee
+		}
+
+		& > .cui-horizontal-layout-right {
+			right: 0;
+		}
+	}
+}
+
+
+// * VerticalLayout
+
+.cui-vertical-layout {
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+
+	// Container grows too max height
+	&.cui-maximize-vertical {
+		flex: 1 1 auto;
+		overflow: hidden;
+
+		> .cui-vertical-layout-top,
+		> .cui-vertical-layout-bottom {
+			position: relative;
+			overflow: hidden;
+			// overflow: auto; // better with scrollbar?
+		}
+
+		// Center grows to max height
+		> .cui-vertical-layout-center {
+			position: relative;
+			flex: 1 1 auto;
+			overflow: auto;
+		}
+	}
+
+	// Container grows too max width
+	&.cui-maximize-horizontal {
+		overflow: hidden;
+		// overflow: auto; // better with scrollbar?
+		align-self: stretch;
+	}
+
+	// Layout Absolute Vertical
+	&.cui-absolute {
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		& > div {
+			position: absolute !important; // overwrite 'relative' from above
+			left: 0;
+			right: 0;
+			width: 100%;
+		}
+
+		& > .cui-vertical-layout-top {
+			top: 0;
+		}
+
+		& > .cui-vertical-layout-center {
+			top: 0; // overwritten by Layout.coffee
+			bottom: 0; // overwritten by Layout.coffee
+		}
+
+		& > .cui-vertical-layout-bottom {
+			bottom: 0;
+		}
+	}
+}
+
+// ------------------- END: Basic system ------------------------------------
+
+// Horizontal List
+// todo: obsolete ?
+.cui-horizontal-list {
+	> .cui-horizontal-layout-center {
+		flex-direction: row;
+	}
+}
+
+// .cui-vertical-list {}
+

@@ -100,7 +100,7 @@ class Demo.RunDemo extends CUI.Element
 		@__console = new Demo.DemoConsole()
 		@registerDemos()
 
-		theme = Demo.themeNames[0]
+		theme = Demo.themeNames[2]
 		Demo.cssLoader.load(theme: theme, url: CUI.getPathToScript() + "css/cui_#{theme}.css")
 
 		CUI.Events.listen

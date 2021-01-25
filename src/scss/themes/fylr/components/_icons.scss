@@ -1,0 +1,138 @@
+
+// Icons
+.cui-icon-svg {
+	fill: currentColor;
+	vertical-align: baseline; // was: bottom
+	flex-shrink: 0;
+	transform: translateZ(0); // make em icons sharp in Firefox
+
+	use {
+		pointer-events: none;
+	}
+}
+
+.fa {
+	font-size: $icon-font-size;
+	line-height: $icon-line-height;
+}
+
+.cui-spin-stepped {
+	animation: fa-spin 1s steps(8) infinite;
+}
+
+// adjust close x size
+.fa-times-thin::before {
+	font-size: 1.58em;
+	content: '\00d7';
+	display: block;
+	margin-top: -0.09em;
+}
+
+// adjust arrow-left, arrow-right size
+.fa-angle-right,
+.fa-angle-left,
+.fa-angle-down,
+.fa-angle-double-down,
+.fa-angle-up,
+.fa-angle-double-up {
+	&::before {
+		font-size: 1.34em;
+	}
+}
+
+.fa-angle-double-down {
+	margin-top: 1px;
+}
+
+// compensate right arrow spacing
+.fa-angle-right {
+	margin-left: 1px;
+}
+
+// compensate left arrow spacing
+.fa-angle-left {
+	margin-right: 1px;
+}
+
+// compensate down arrow spacing
+.fa-angle-down {
+	margin-bottom: -1px;
+}
+
+// align with the stop button
+.fa-play {
+	margin-left: 1px;
+}
+
+//
+.fa-bank {
+	&::before {
+		font-size: 0.9em;
+	}
+}
+
+.svg-fylr-logo {
+	width: 30px;
+}
+
+.svg-info-circle {
+	width: 12px;
+	height: 12px;
+}
+
+
+// Hourglass animation
+$hourglass-animation-speed: 0.6;
+// if we want the colors to animate as well, use:
+$hourglass-colors: $gray-800, $gray-800, $gray-900, $gray-800, $gray-900;
+
+.cui-hourglass-animation {
+	opacity: 1;
+
+	$_animationSpin: hourglass-spin ($hourglass-animation-speed * 4s) ease-out infinite;
+  
+	i {
+		opacity: 0;
+		line-height: inherit; // from fa-stack, makes animation smoother
+		animation:
+			hourglass ($hourglass-animation-speed * 4s) ease-in infinite,
+			$_animationSpin;
+	}
+
+	@for $i from 1 through 4 {
+		& > i:nth-child(#{$i}) {
+			// color: nth($hourglass-colors, $i);
+			animation-delay: $hourglass-animation-speed * ($i - 1) * 1s, 0s;
+		}
+	}
+
+	& > i:nth-child(4) {
+		animation:
+			hourglass-end ($hourglass-animation-speed * 4s) ease-in infinite,
+			$_animationSpin;
+	}
+
+	& > i:nth-child(5) {
+		// color: nth($hourglass-colors, 5);
+		opacity: 1;
+		animation: $_animationSpin;
+	}
+}
+
+@keyframes hourglass {
+	0% { opacity: 1; }
+	24% { opacity: 0.9; }
+	26% { opacity: 0; }
+}
+
+@keyframes hourglass-end {
+	0% { opacity: 0; }
+	70% { opacity: 0; }
+	75% { opacity: 1; }
+	100% { opacity: 1; }
+}
+
+@keyframes hourglass-spin {
+	75% { transform: rotate(0deg); }
+	100% { transform: rotate(180deg); }
+}

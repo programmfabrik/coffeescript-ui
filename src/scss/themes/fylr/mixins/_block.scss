@@ -1,0 +1,166 @@
+// * Block Separator
+// adds simple section divider border
+
+@mixin block-separator() {
+	&:not(:last-child) {
+		padding-bottom: $block-margin;
+		border-bottom: 1px solid $block-border-color;
+	}
+
+	.cui-block-content {
+		.cui-form-table {
+			&:not(:last-child) {
+				padding-bottom: 0.5*$block-margin; // smaller because the form rows in the form-table have a bottom margin
+				border-bottom: 1px solid $block-border-color;
+			}
+		}
+	}
+}
+
+@mixin block-separator-reset() {
+	&:not(:last-child) {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+
+	.cui-block-content {
+		.cui-form-table {
+			&:not(:last-child) {
+				padding-bottom: 0;
+				border-bottom: 0;
+			}
+		}
+	}
+}
+
+// * Block Header inverted
+
+@mixin block-header-title-inverted() {
+	// ! make sure to only style cui-block-title so the styles do not interfere with other block header properties
+	display: inline-block;
+	background-color: $body-color;
+	color: $white;
+	font-weight: $font-weight-bold;
+	padding: 0.1em $spacer-sm;
+}
+
+@mixin block-header-title-inverted-reset() {
+	display: block;
+	background-color: transparent;
+	color: $body-color;
+	font-weight: $font-weight-normal;
+	padding: 0;
+}
+
+// * Block Bracket
+// special block styling for ez5-fields-renderer-block 
+
+@mixin block-bracket() {
+	--block-bracket-length: 10px;
+	--block-color: #{gray('900')};
+
+	position: relative;
+	border-bottom: 0; // reset default block border
+	padding-bottom: $block-margin;
+	padding-top: $block-margin;
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		height: var(--block-bracket-length);
+		width: 100%;
+		border: 1px solid var(--block-color, currentColor);
+	}
+	
+	&::before {
+		border-bottom: 0;
+		top: 0;
+	}
+	
+	&::after {
+		border-top: 0;
+		bottom: 0;
+	}
+
+	.cui-block-header,
+	.cui-block-content {
+		padding-left: $block-bracket-padding;
+		padding-right: $block-bracket-padding;
+	}
+
+	.cui-block-header {
+		> .cui-block-title {
+			@include block-header-title-inverted-reset();
+			@include h6(0);
+			
+			text-transform: uppercase;
+			margin-bottom: $spacer;
+			color: var(--block-color);
+		}
+	}
+}
+
+// * Block as a form with form-key-value-inline()
+//
+
+@mixin block-form() {
+	&:not(.cui-form-block--has-checkbox) {
+		display: grid;
+		grid-template-columns: var(--block-form-col-left-width, #{$form-key-width}) minmax(0, var(--block-form-col-right-width, 850px));
+		gap: 0 $spacer;
+		align-items: baseline;
+	}
+	
+	.cui-block-header {
+		// reset 
+		> .cui-block-title {
+			text-transform: none;
+			hyphens: auto;
+			letter-spacing: initial;
+		}
+	}
+}
+
+// * Block Inline
+// - block-inline is used within base-config to lay out the block vertically in the 'inline' direction
+// - use when there is enough vertical space
+
+@mixin block-inline($content-indent: 200px, $content-max-width: 850px) {
+	--block-inline-content-indent: #{$content-indent};
+	--block-inline-content-max-width: #{$content-max-width};
+	--block-indent: 0;
+	
+	@include block-separator();
+
+	@include media-breakpoint-up(lg) {
+		&:not(.cui-form-block--has-checkbox) {
+			> .cui-block-header {
+				margin-bottom: $block-margin;
+			}
+			
+			> .cui-block-content {
+				margin-left: var(--block-inline-content-indent);
+				max-width: var(--block-inline-content-max-width);
+			}
+		}
+	}
+
+	// nested
+	.cui-block {
+		--block-inline-content-indent: 0;
+	}
+
+	.cui-form {
+		@include form-key-value-stacked();
+	}
+}
+
+@mixin disable-block-bracket() {
+	&::before,
+	&::after {
+		display: none;
+	}
+}

@@ -52,6 +52,32 @@ class Demo.ButtonDemo extends Demo
 		@__buttons.push(button)
 		return button
 
+	__addButtonPair: (description, opts={}, extraClass="") ->
+		opts2 = CUI.util.copyObject(opts, true)
+		pair = [ new CUI.Button(opts), new CUI.Button(opts2) ]
+
+		for btn in pair
+			@__buttons.push(btn)
+
+		wrap = new CUI.Buttonbar(
+			buttons: pair
+			class: "cui-demo-button-pair"
+		)
+		if extraClass
+			CUI.dom.addClass(wrap, extraClass)
+
+		@__demo_table.addExample(description, [ wrap.DOM ])
+		return wrap
+
+	__addButtonbar: (description, opts={}) ->
+		bb = new CUI.Buttonbar(opts)
+		@__demo_table.addExample(description, [ bb.DOM ])
+
+	__addButtonbarPair: (description, opts={}, extraClass="") ->
+		bb1 = new CUI.Buttonbar(opts).DOM
+		bb2 = bb1.cloneNode(true)
+		@__demo_table.addExample(description, [ CUI.dom.append(CUI.dom.div("cui-demo-buttonbar-pair " + extraClass ? extraClass : ""), [bb1, bb2]) ])	
+	
 
 	__addDivider: (text) ->
 		@__demo_table.addDivider(text)
@@ -76,15 +102,12 @@ class Demo.ButtonDemo extends Demo
 
 		@__addDivider("button icons")
 
-		@__addButton( "Icon Left",
-				icon_left: new CUI.Icon(class: "fa-trash-o")
-				text: "Trash"
-				onClick: (evt,button) =>
-					@log("Clicked: "+button.getText())
-
+		@__addButtonPair( "Icon Left",
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Trash"
 		)
 
-		@__addButton( 	"Icon (with Tooltip)",
+		@__addButtonPair( "Icon (with Tooltip)",
 			icon_left: "trash"
 			tooltip:
 				text: "I am Trashy"
@@ -93,20 +116,22 @@ class Demo.ButtonDemo extends Demo
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton "Icons Left+Right",
+		@__addButtonPair("Icons Left+Right",
 			icon_left: new CUI.Icon(class: "fa-bolt")
 			icon_right: new CUI.Icon(class: "fa-filter")
 			text: "Caret"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
+		)
 
 		span = CUI.dom.span()
 		span.innerHTML = "<big>Ce</big><b>n</b>t<i>e</i>r"
-		@__addButton "With Picture & Content",
+		@__addButtonPair("With Picture & Content",
 			left: CUI.dom.div("cui-button-demo-pic")
 			center: span
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
+		)
 
 
 		@__addDivider("button functionalities")
@@ -116,38 +141,45 @@ class Demo.ButtonDemo extends Demo
 			target: "_blank"
 			href: "http://www.google.com"
 		@__buttons.push(btn)
-
 		@__demo_table.addExample("ButtonHref", btn.DOM)
 
-		@__addButton "With Small Tooltip & Confirm",
+		btn = new CUI.ButtonHref
+			text: "Open Google"
+			target: "_blank"
+			appearance: "link"
+			href: "http://www.google.com"
+		@__buttons.push(btn)
+		@__demo_table.addExample("ButtonHref with appearance: link", btn.DOM)
+
+		@__addButtonPair "With Small Tooltip & Confirm",
 			icon_left: new CUI.Icon(class: "fa-lightbulb-o")
 			left: true
 			confirm_on_click: "Are you sure?"
 			tooltip:
 				text: "Small but beautiful!"
 
-		@__addButton "With Huge Tooltip",
+		@__addButtonPair "With Huge Tooltip",
 			text: "Hover to show a tooltip"
 			tooltip:
 				text: @getBlindText()
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 
-		@__addButton("Switch",
+		@__addButtonPair("Switch",
 			switch: true
 			text: "On/Off"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton "Button with text ellipsis",
+		@__addButtonPair "Button with text ellipsis",
 			class: "cui-button-demo-limit-width"
 			text: "Button with text ellipsis"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 
 
-		@__addButton("Counter (use Shift)",
+		@__addButtonPair("Counter (use Shift)",
 			text: "1"
 			onClick: (ev, btn) ->
 				if ev.shiftKey()
@@ -205,9 +237,7 @@ class Demo.ButtonDemo extends Demo
 			)
 		]
 
-
-
-		@__addButton("With Menu (try +Alt)",
+		@__addButtonPair("With Menu (try +Alt)",
 			menu:
 				active_item_idx: 0
 				onHide: ->
@@ -229,7 +259,7 @@ class Demo.ButtonDemo extends Demo
 								text: "Bruscetta"
 							]
 					,
-						text: "A really really really long Main Course"
+						text: "A really really really long Main Course and even longer and longer"
 						appearance: "important"
 					,
 						divider: true
@@ -263,116 +293,232 @@ class Demo.ButtonDemo extends Demo
 
 		@__addDivider("Button option: appearance ")
 
-		@__addButton("appearance: \"normal\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("appearance: \"normal\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "normal"
 			text: "Normal Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("appearance: \"flat\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("appearance: \"flat\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "flat"
 			text: "Flat Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("appearance: \"link\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("appearance: \"link\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "link"
 			text: "Link Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("appearance: \"important\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("appearance: \"link\"",
+			icon_right: new CUI.Icon(class: "fa-plus")
+			appearance: "link"
+			text: "Link Button Plus"
+		)
+
+		@__addButtonPair("appearance: \"important\" (OBSOLETE ???)",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			appearance: "important"
 			text: "Important Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
+		@__addButton("primary button",
+			primary: true
+			text: "Primary Button"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)
+
+		@__addButton("secondary button",
+			secondary: true
+			text: "Secondary Button"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)
+
 		@__addDivider("Button option: size ")
 
-		@__addButton("size: \"normal\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("size: \"base\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "normal"
 			text: "Normal Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
-		@__addButton("size: \"mini\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("size: \"sm\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "mini"
 			text: "Mini Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
-		)
+		, "cui-demo-button-size-small")
 
-		@__addButton("size: \"big\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButtonPair("size: \"lg\"",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "big"
 			text: "Big Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
-		)
+		, "cui-demo-button-size-large")
 
-		@__addButton("size: \"bigger\"",
-			icon_left: new CUI.Icon(class: "fa-bank")
-			size: "bigger"
-			text: "Bigger Button"
+		@__addButton("size: \"Icon\"",
+			icon_left: new CUI.Icon(class: "fa-file")
+			text: ""
+			class: "cui-demo-button-size-icon"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
+		)		
+
+		@__addButton("size: \"Ellipsis\"",
+			icon_left: new CUI.Icon(class: "fa-ellipsis-v")
+			text: ""
+			class: "cui-demo-button-size-ellipsis"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)	
+
+		@__addButton("\"Info Icon\"",
+			icon_left: "info"
+			text: ""
+			class: "cui-demo-button-size-info"
+			onClick: (evt,button) =>
+				@log("Clicked: "+button.getText())
+		)						
+		
+
+		@__addDivider("Buttons Inverted")	
+		inverted = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+		)
+		invertedBorder = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+			class: "is-plain-button"
+		)	
+		invertedClose = new CUI.Button(
+			icon_left: "close"
+			text: ""
+			class: "small"
+		)	
+		invertedDive = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-angle-right")
+			text: ""
+			class: "is-plain-button small"
+		)						
+		@__demo_table.addExample("Buttons Inverted", [
+			inverted.DOM, 
+			invertedBorder.DOM, 
+			invertedClose.DOM, 
+			invertedDive.DOM
+			], 
+			null, 
+			"cui-demo-button-inverted"
 		)
 
+		@__addDivider("Buttons on Image")	
+		inverted = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+		)
+		invertedBorder = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-trash-o")
+			text: "Remove"
+			class: "is-plain-button"
+		)	
+		invertedClose = new CUI.Button(
+			icon_left: "close"
+			text: ""
+			class: "small"
+		)	
+		invertedDive = new CUI.Button(
+			icon_left: new CUI.Icon(class: "fa-angle-right")
+			text: ""
+			class: "is-plain-button small"
+		)	
+		invertedNavigation = new CUI.Buttonbar(
+			class: "cui-demo-buttonbar-navigation-border"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)
+		invertedButtonbarGroup = new CUI.Buttonbar(
+			class: "cui-demo-buttonbar-group-inverted"
+			buttons: [
+				new CUI.Button(icon: "fa-trash", group: "trash")
+				new CUI.Button(icon: "fa-trash", group: "trash")
+				new CUI.Button(icon: "fa-trash", group: "trash")
+			]
+		)										
+		@__demo_table.addExample("Buttons on Image", [
+			inverted.DOM, 
+			invertedBorder.DOM, 
+			invertedClose.DOM, 
+			invertedDive.DOM,
+			invertedNavigation.DOM,
+			invertedButtonbarGroup.DOM
+			], 
+			null, 
+			"cui-demo-button-on-image cui-demo-button-inverted"
+		)		
+
 		@__addDivider("Buttons with mixed options")
-		@__addButton("size: \"big\", appearance: \"link\" ",
-			icon_left: new CUI.Icon(class: "fa-bank")
+		@__addButton("Big link button",
+			icon_left: new CUI.Icon(class: "fa-cloud")
 			size: "big"
 			appearance: "link"
+			class: "cui-demo-button-size-large-link "
 			text: "Big Link Button"
 			onClick: (evt,button) =>
 				@log("Clicked: "+button.getText())
 		)
 
 
-		@__addDivider("Custom css classes")
+		# @__addDivider("Custom css classes OBSOLETE ???")
 
-		@__addButton "Centered, fixed width",
-			text: "Centered, fixed width"
-			class: "cui-button-demo-centered-fixed-width"
-			icon_left: new CUI.Icon(class: "fa-bolt")
-			icon_right: new CUI.Icon(class: "fa-filter")
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
+		# @__addButtonPair "Centered, fixed width",
+		# 	text: "Centered, fixed width"
+		# 	class: "cui-button-demo-centered-fixed-width"
+		# 	icon_left: new CUI.Icon(class: "fa-bolt")
+		# 	icon_right: new CUI.Icon(class: "fa-filter")
+		# 	onClick: (evt,button) =>
+		# 		@log("Clicked: "+button.getText())
 
-		@__addButton "Custom color class",
-			text: "My Colors A"
-			size: "big"
-			class: "cui-button-demo-custom-colors-a"
-			switch: true
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
+		# @__addButtonPair "Custom color class",
+		# 	text: "My Colors A"
+		# 	size: "big"
+		# 	class: "cui-button-demo-custom-colors-a"
+		# 	switch: true
+		# 	onClick: (evt,button) =>
+		# 		@log("Clicked: "+button.getText())
 
-		@__addButton "Custom color class",
-			text: "My Colors B"
-			size: "big"
-			class: "cui-button-demo-custom-colors-b"
-			switch: true
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
+		# @__addButtonPair "Custom color class",
+		# 	text: "My Colors B"
+		# 	size: "big"
+		# 	class: "cui-button-demo-custom-colors-b"
+		# 	switch: true
+		# 	onClick: (evt,button) =>
+		# 		@log("Clicked: "+button.getText())
 
-		@__addButton "Custom color class",
-			text: "My Colors C"
-			size: "big"
-			class: "cui-button-demo-custom-colors-c"
-			switch: true
-			onClick: (evt,button) =>
-				@log("Clicked: "+button.getText())
+		# @__addButtonPair "Custom color class",
+		# 	text: "My Colors C"
+		# 	size: "big"
+		# 	class: "cui-button-demo-custom-colors-c"
+		# 	switch: true
+		# 	onClick: (evt,button) =>
+		# 		@log("Clicked: "+button.getText())
 
 		@__addDivider("progress meter")
 
@@ -508,11 +654,8 @@ class Demo.ButtonDemo extends Demo
 			)
 		]
 
-		@__demo_table.addExample(
-			"Radio",
-			new CUI.Buttonbar(
-				buttons: buttons
-			).DOM
+		@__addButtonbar("Radio",
+			buttons: buttons
 		)
 
 		c = (ev, btn) ->
@@ -543,7 +686,7 @@ class Demo.ButtonDemo extends Demo
 
 		@__addDivider("Buttonbar with mixed controls")
 
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Buttonbar 1",
 			tooltip:
 				text: "mixed buttons and labels"
 			buttons: [
@@ -576,7 +719,7 @@ class Demo.ButtonDemo extends Demo
 			]
 		select.start()
 
-		bb2 = new CUI.Buttonbar(
+		@__addButtonbar("Buttonbar 2",
 			tooltip:
 				text: "mixed buttons and selects"
 			buttons: [
@@ -586,13 +729,9 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-
-		@__demo_table.addExample("Buttonbar", [	bb.DOM ])
-		@__demo_table.addExample("Buttonbar", [	bb2.DOM ])
-
 		@__addDivider("Buttonbar in different grouping Variations")
 
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Example 1",
 			tooltip:
 				text: "example 1"
 			buttons: [
@@ -602,9 +741,7 @@ class Demo.ButtonDemo extends Demo
 				]
 		)
 
-		@__demo_table.addExample("example 1", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
-
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Example 2",
 			tooltip:
 				text: "example 2"
 			buttons: [
@@ -614,9 +751,7 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-		@__demo_table.addExample("example 2", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
-
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Example 3",
 			tooltip:
 				text: "example 3"
 			buttons: [
@@ -626,9 +761,7 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-		@__demo_table.addExample("example 3", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
-
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Example 4",
 			tooltip:
 				text: "example 4"
 			buttons: [
@@ -638,10 +771,7 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-
-		@__demo_table.addExample("example 4", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
-
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Example 5",
 			tooltip:
 				text: "example 5"
 			buttons: [
@@ -651,9 +781,7 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-		@__demo_table.addExample("example 5", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
-
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("Example 6",
 			tooltip:
 				text: "example 6"
 			buttons: [
@@ -665,30 +793,240 @@ class Demo.ButtonDemo extends Demo
 			]
 		)
 
-		@__demo_table.addExample("example 6", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+		@__addButtonbarPair("example 7, vertical stack, no group !",
+			# stack: "vertical"
+			buttons: [
+				new CUI.Button(text: "some")
+				new CUI.Button(text: "button")
+				new CUI.Button(text: "here")
+			]
+		, "cui-demo-buttonbar-stack-vertical")
 
-		@__addDivider("Using Styles on Buttons inside buttonbar")
-
-		bb = new CUI.Buttonbar(
+		@__addButtonbar("example 1, group",
 			tooltip:
 				text: "example 1"
 			buttons: [
+				new CUI.Button(text: "Eins", group: "groupA", active: true)
+				new CUI.Button(text: "Zwei", group: "groupA")
+				new CUI.Button(text: "Dreizehn", group: "groupA")
+				new CUI.Button(text: "Vierzig", group: "groupA")
+			]
+		)
+
+		@__addButtonbarPair("example 1, no group, packed 'tight'",
+			tooltip:
+				text: "example 1"
+			buttons: [
+				new CUI.Button(text: "Eins", active: true)
+				new CUI.Button(text: "Zwei")
+				new CUI.Button(text: "Dreizehn")
+				new CUI.Button(text: "Vierzig")
+			]
+		, "cui-demo-buttonbar-tight")
+
+
+		@__addButtonbar("navigation toolbar no border (default)",
+			class: "cui-demo-buttonbar-navigation"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)
+		
+		@__addButtonbar("navigation toolbar with no border and number input",
+			class: "cui-demo-buttonbar-navigation"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Input(
+					class: "cui-number-input"
+					data: value: ""
+					group: "navi"
+				)
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)		
+
+		@__addButtonbar("navigation toolbar with border",
+			class: "cui-demo-buttonbar-navigation-border"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi", disabled: true)
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)	
+
+		@__addButtonbar("navigation toolbar with border and number input",
+			class: "cui-demo-buttonbar-navigation-border"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Input(
+					class: "cui-number-input"
+					data: value: ""
+					group: "navi"
+				)
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)
+
+		@__addButtonbar("small navigation toolbar with border",
+			class: "cui-demo-buttonbar-navigation-border-small"
+			buttons: [
+				new CUI.Button(icon: "fa-angle-left", group: "navi")
+				new CUI.Label(text: "1/3", group: "navi")
+				new CUI.Button(icon: "fa-angle-right", group: "navi")
+			]
+		)					
+
+
+		@__addButtonbar("example 1, group, vertical",
+			class: "cui-demo-buttonbar-stack-vertical"
+			tooltip:
+				text: "example 1"
+			buttons: [
+				new CUI.Button(text: "1", group: "groupA", active: true)
+				new CUI.Button(text: "2", group: "groupA")
+				new CUI.Button(text: "3", group: "groupA")
+				new CUI.Button(text: "4", group: "groupA")
+			]
+		)
+
+		@__addButtonbarPair("example 2, no group, packed tight",
+			tooltip:
+				text: "example 2, no group"
+			buttons: [
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-lightbulb-o"))
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
+			]
+		, "cui-demo-buttonbar-tight")
+
+		@__addButtonbarPair("example 3 flat, mixed, packed tight",
+			tooltip:
+				text: "example 3 flat, mixed"
+			buttons: [
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
+				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat")
+				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat")
+				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat")
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-share"))
+				new CUI.Button(appearance: "flat", icon_left: new CUI.Icon(class: "fa-refresh"))
+			]
+		, "cui-demo-buttonbar-tight")
+
+		@__addButtonbar("example 3 flat, two group with icon",
+			buttons: [
+				new CUI.Button(text: "Eins", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
+				new CUI.Button(text: "Zwei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
+				new CUI.Button(text: "Drei", group: "groupA", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"))
+				new CUI.Button(text: "Eins", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-cog"))
+				new CUI.Button(text: "Zwei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-download"))
+				new CUI.Button(text: "Drei", group: "groupB", appearance: "flat", icon_left: new CUI.Icon(class: "fa-plus"))
+			]
+		)
+
+		@__addButtonbarPair("example 4 flat, icon and optional text",
+			buttons: [
 				new CUI.Button(
-					text: "groupA", group: "groupA",
-					class: "cui-dialog"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
 				)
 				new CUI.Button(
-					text: "groupB", group: "groupB",
-					class: "cui-dialog"
-				)
-				new CUI.Button(
-					text: "groupB", group: "groupB",
-					class: "cui-dialog"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					text: "Nested"
 				)
 			]
 		)
 
-		@__demo_table.addExample("example 1", [ CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div(), CUI.dom.div("cui-buttonbar-demo-margin-testers")), bb.DOM), CUI.dom.div("cui-buttonbar-demo-margin-testers"))] )
+		@__addButtonbarPair("example 4 flat, icon and optional text, small",
+			buttons: [
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					size: "mini"
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					size: "mini",
+					text: "Nested"
+				)
+			]
+		,"cui-demo-buttonbar-small-buttons")
+
+		@__addButtonbarPair("example 4 flat, icon and optional text, large",
+			buttons: [
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					size: "big"
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+					size: "big",
+					text: "Nested"
+				)
+			]
+		,"cui-demo-buttonbar-large-buttons")
+
+		@__addButtonbarPair("example 5, vertically stacked buttonbar",
+			# stack: "vertical"
+			buttons: [
+				new CUI.Button(
+					text: "Vertical"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					text: "Stack"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					text: "Hinzufügen"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					text: "Stack"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-cog"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-cog"),
+				)
+			]
+		, "cui-demo-buttonbar-stack-vertical")
+
+		@__addButtonbar("example 5, vertically stacked buttonbar, packed tight",
+			class: "cui-demo-buttonbar-stack-vertical cui-demo-buttonbar-tight cui-demo-buttonbar-plain"
+			buttons: [
+				new CUI.Button(
+					text: "Stack"
+					appearance: "flat",
+					icon_left: new CUI.Icon(class: "fa-plus"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					text: "Now"
+					icon_left: new CUI.Icon(class: "fa-cog"),
+				)
+				new CUI.Button(
+					appearance: "flat",
+					text: "Stack"
+					icon_left: new CUI.Icon(class: "fa-cog"),
+				)
+			]
+		)
+
 		@
 
 

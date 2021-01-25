@@ -35,6 +35,7 @@ class CUI.Buttonbar extends CUI.DOMElement
 		for btn, idx in @_buttons
 			@addButton(btn, false)
 
+		# legacy, do not use
 		if @_size
 			@addClass("cui-buttonbar--size-"+@_size)
 

@@ -12,7 +12,7 @@ class Demo.ControlsDemo extends Demo
 	addControlExample: (text,control) ->
 		CUI.dom.addClass(control.DOM, "cui-control")
 
-		container_div = 
+		container_div =
 		CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.append(CUI.dom.div('cui-controls-demo-control-container'),
 		CUI.dom.div('cui-controls-demo-text-baseline-debug')), CUI.dom.div('cui-controls-demo-text-bottomline-debug')), control.DOM), CUI.dom.div('cui-controls-demo-text-bottomline-debug'))
 
@@ -188,12 +188,15 @@ class Demo.ControlsDemo extends Demo
 				name: "de-DE"
 				tag: "DE"
 				enabled: true
+				tooltip: text: "de-DE"
 			,
 				name: "en-US"
 				tag: "EN"
+				tooltip: text: "en-US"
 			,
 				name: "fr-FR"
 				tag: "FR"
+				tooltip: text: "fr-FR"
 			]
 
 		data_fields = []
@@ -248,6 +251,11 @@ class Demo.ControlsDemo extends Demo
 			type: CUI.Output
 			placeholder: "OutputPlaceholder"
 		,
+			type: CUI.Output
+			placeholder: "OutputPlaceholder Deletable"
+			name: "Deletable Output"
+			allow_delete: true
+		,
 			type: CUI.Input
 			name: "Input"
 		,
@@ -256,6 +264,9 @@ class Demo.ControlsDemo extends Demo
 		,
 			type: CUI.DateTime
 			name: "DateTime"
+		,
+			type: CUI.MapInput
+			name: "Map"	
 		,
 			type: CUI.Select
 			options: sel_opts

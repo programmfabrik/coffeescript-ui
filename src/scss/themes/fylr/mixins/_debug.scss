@@ -1,0 +1,60 @@
+@mixin debug($outline: red) {
+	.dev & {
+		outline: 1px solid $outline;
+	}
+}
+
+@mixin debug-hard($outline: red) {
+	.dev & {
+		border: 1px solid $outline;
+	}
+}
+
+@mixin debug-bg($bg: red) {
+	.dev & {
+		background: $bg;
+	}
+}
+
+body.dev.is-server2 {
+	&::after {
+		content: '';
+		display: block;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-bottom: 8px solid rgba(theme-color('primary'), 0.4);
+		border-top: 8px solid rgba(theme-color('primary'), 0.4);
+		pointer-events: none;
+		z-index: 100;
+	}
+}
+
+// for debuggin only
+// todo: remove
+.test-switcher {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 4px;
+	z-index: 100;
+
+	.ez5-app-user-manager & {
+		display: block;
+	}
+
+	.ez5-modebar:not(.is-hidden) + & {
+		top: -30px;
+	}
+
+	button {
+		background-color: lightgrey;
+		border: 1px solid black;
+		border-radius: 4px;
+		margin-right: 10px;
+		padding: 0 4px;
+	}
+}

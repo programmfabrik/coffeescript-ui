@@ -1,0 +1,280 @@
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+*/
+
+// header for "ng*"
+
+// $colors: (
+	// 'red': (
+	// 	highlight: hsl(3, 100%, 47%),
+	// 	highlight-light: hsl(3, 100%, 86%)
+	// ),
+	// 'orange': (
+	// 	highlight: hsl(35, 100%, 46%),
+	// 	highlight-light: hsl(35, 100%, 85%)
+	// ),
+	// 'yellow': (
+	// 	highlight: hsl(48, 100%, 43%),
+	// 	highlight-light: hsl(48, 100%, 75%)
+	// ),
+	// 'green': (
+	// 	highlight: hsl(104, 69%, 48%),
+	// 	highlight-light: hsl(104, 80%, 82%)
+	// ),
+	// 'blue': (
+	// 	highlight: hsl(211, 100%, 41%),
+	// 	highlight-light: hsl(211, 100%, 85%)
+	// ),
+	// 'purple': (
+	// 	highlight: hsl(289, 65%, 67%),
+	// 	highlight-light: hsl(289, 100%, 92%)
+	// ),
+	// 'pink': (
+	// 	highlight: hsl(342, 100%, 58%),
+	// 	highlight-light: hsl(342, 100%, 87%)
+	// ),
+	// 'brown': (
+	// 	highlight: hsl(34, 27%, 50%),
+	// 	highlight-light: hsl(34, 49%, 86%)
+	// ),
+	// 'graphite': (
+	// 	highlight: hsl(240, 2%, 44%),
+	// 	highlight-light: hsl(240, 5%, 85%)
+	// )
+// );
+
+// $default-color: map-get($colors, 'blue');
+
+// @mixin variableList($color) {
+// 	--highlight: #{map-get($color, 'highlight')};
+// 	--highlight-light: #{map-get($color, 'highlight-light')};
+// 	--highlight-light-transparent: #{transparentize(map-get($color, 'highlight-light'), 1)}; // needed for gradients from transparent .. highlight-light
+// 	--on-highlight-color: white;
+// 	--on-highlight-muted-color: #{desaturate(map-get($color, 'highlight-light'), 50%)};
+// 	--on-highlight-border: #{lighten(desaturate(map-get($color, 'highlight'), 17%), 28%)};
+// 	--on-highlight-light-muted-color: #{darken(desaturate(map-get($color, 'highlight-light'), 70%), 25%)};
+// 	--on-highlight-light-secondary-color: #{darken(desaturate(map-get($color, 'highlight-light'), 75%), 40%)};
+// }
+
+// $padding: 10px;
+// // compensating padding compensates for line-height
+// $compensating-padding: 7px;
+// $gap: 10px;
+// $small-gap: 7px;
+// $background: hsl(205, 2%, 97%);
+// $foreground: white;
+// $border: hsl(205, 20%, 83%);
+// $soft-border: hsl(205, 20%, 91%);
+// $light-border: hsl(205, 18%, 95%);
+// $light-border-transparent: hsla(205, 20%, 50%, 0.1);
+// $color: hsl(0, 0%, 10%);
+// $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+// $font-size: 13px;
+// $line-height: 16px;
+
+// $secondary-color: hsl(205, 5%, 45%);
+// $muted-color: hsl(205, 5%, 60%);
+// $disabled-color: hsl(205, 7%, 73%);
+// $subtle-color: hsl(205, 10%, 79%);
+
+// $header-background: hsl(205, 13%, 87%);
+// $header-border: hsl(205, 6%, 75%);
+// $header-color: hsl(205, 8%, 30%);
+// $header-weight: 500;
+
+// $label-mini: 11px;
+// $label-big: 16px;
+// $label-bigger: 18px;
+// $form-block-color: hsl(210, 11%, 35%);
+
+// $button-background: white;
+// $button-pressed: hsl(205, 10%, 91%);
+// $button-active: hsl(205, 15%, 43%);
+// $button-active-text: white;
+// $button-active-border: hsl(205, 15%, 43%);
+// $button-active-pressed: darken($button-active, 9%);
+// $button-active-pressed-text: darken($button-active-text, 9%);
+// $button-active-pressed-border: darken($button-active-pressed, 5%);
+// $button-active-disabled-text: lighten($button-active, 17%);
+// $button-color: hsl(205, 8%, 34%);
+// $button-border: hsl(205, 10%, 75%);
+// $button-radius: 4px;
+// $button-height: 24px;
+// $button-font-size: $font-size;
+
+// $input-border: hsl(205, 20%, 79%);
+// $input-radius: $button-radius;
+// $input-placeholder: hsl(205, 10%, 75%);
+// $input-shadow: 0 1px hsla(0, 0%, 0%, 0.03) inset, 0 2px hsla(0, 0%, 0%, 0.01) inset;
+// $input-width: 275px;
+// // $input-background: $foreground;
+// $input-min-width: 100px;
+
+// $multi-output-tag-width: 18px;
+
+// // Table Colors
+// $zebra-color: hsla(205, 41%, 20%, 0.04);
+// $zebra-on-foreground-color: hsl(210, 12%, 97%);
+// $table-header-border: hsl(205, 8%, 94%);
+// $table-row-border: $soft-border;
+
+// $table-data-height: 32px;
+// $table-data-padding: 4px;
+// $td-height: 18px;
+// $row-move-handle-width: $padding/2 + $table-data-padding*2+2;
+
+// $error-color: hsl(10, 90%, 52%);
+// $on-error-color: white;
+// $neutral-color: hsl(48, 100%, 58%);
+// $positive-color: hsl(100, 69%, 50%);
+
+// $item-list-color: hsl(205, 7%, 22%);
+// $item-list-hover: $button-pressed;
+// $item-list-pressed: $button-pressed;
+
+
+// todo: used in ez5 theme classes
+@mixin margin($factor: 1) {
+	margin-bottom: $spacer-sm * $factor;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@mixin margin-top($factor: 1) {
+	margin-top: $spacer-sm * $factor;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+// * obsolete
+// @mixin padding($factor: 1) {
+// 	padding: $padding * $factor;
+// }
+
+// * obsolete
+// @mixin padding-y($factor: 1) {
+// 	padding-top: $padding * $factor;
+// 	padding-bottom: $padding * $factor;
+// }
+
+// Flex for selected TABLE
+// ! obsolete ? could not find use-case
+// @mixin flex-table() {
+// 	display: flex; // yes, this is fun :)
+// 	box-sizing: border-box;
+// 	flex: 0 0 auto;
+// 	flex-direction: column;
+
+// 	> tr {
+// 		display: flex; // yes, this is fun :)
+// 		box-sizing: border-box;
+// 		flex: 1 1 auto;
+
+// 		> td {
+// 			display: flex; // yes, this is fun :)
+// 			box-sizing: border-box;
+// 			flex: 0 0 auto;
+// 			flex-direction: column;
+// 			align-items: stretch;
+// 		}
+// 	}
+// }
+
+// * obsolete
+// @mixin focus() {
+// 	box-shadow: 0 0 0 3px var(--highlight-light);
+// 	border-radius: $button-radius;
+// 	z-index: 1; // put forward to see outline
+// }
+
+// * obsolete
+// @mixin inner-focus() {
+// 	box-shadow: 0 0 0 3px var(--highlight-light) inset;
+// 	border-radius: $button-radius;
+// 	z-index: 1; // put forward to see outline
+// }
+
+// * obsolete
+// @mixin border-focus() {
+// 	box-shadow: 0 0 0 3px var(--highlight-light);
+// 	border-color: var(--highlight);
+// 	z-index: 1; // put forward to see outline
+
+// 	.cui-selected & {
+// 		box-shadow: 0 0 0 3px var(--on-highlight-border);
+// 	}
+// }
+
+// * obsolete
+// @mixin disable-focus() {
+// 	&:focus {
+// 		box-shadow: none !important;
+// 	}
+// }
+
+// * obsolete
+// @mixin outer-focus() {
+// 	box-shadow:
+// 		0 0 0 1px var(--highlight),
+// 		0 0 0 4px var(--highlight-light);
+// 	z-index: 1; // put forward to see outline
+// }
+
+
+// * obsolete, could not find use-case
+// li > div {
+// 	display: inline-flex;
+
+// // for testing:
+// 	background: red;
+// 	min-width: 400px;
+// 	height: 500px;
+// }
+
+
+// todo: obsolete ?
+// .status-2d-map {
+// 	border: 1px solid $table-border-color;
+// 	display: table;
+
+// 	.cui-block & .cui-td {
+// 		&:first-child {
+// 			padding-left: $padding;
+// 		}
+
+// 		&:last-child {
+// 			padding-right: $padding;
+// 		}
+// 	}
+
+// 	.cui-tr {
+// 		&:nth-child(odd):not(:first-child) {
+// 			background: $zebra-color;
+// 		}
+
+// 		&:first-child {
+// 			.cui-td {
+// 				border-bottom: 1px solid $table-border-color;
+// 				position: relative;
+
+// 				&:not(:last-child)::after {
+// 					content: '';
+// 					position: absolute;
+// 					right: 0;
+// 					margin: 3px 0;
+// 					top: 0;
+// 					bottom: 0;
+// 					width: 1px;
+// 					background: $table-border-color;
+// 				}
+// 			}
+// 		}
+// 	}
+// }

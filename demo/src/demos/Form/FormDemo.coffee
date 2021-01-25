@@ -17,12 +17,15 @@ class Demo.FormDemo extends Demo
 				name: "de-DE"
 				tag: "DE"
 				enabled: true
+				tooltip: text: "de-DE"
 			,
 				name: "en-US"
 				tag: "EN"
+				tooltip: text: "en-US"
 			,
 				name: "fr-FR"
 				tag: "FR"
+				tooltip: text: "fr-FR"
 			]
 
 		@tmpl = t = new CUI.Template
@@ -351,6 +354,8 @@ class Demo.FormDemo extends Demo
 					right: actionButton
 				name: "sortable_group"
 				sortable: true
+				sortable_hint: "Sort checked options, unchecked are sorted alphabetically"
+				title: "Title at the top"
 				options: [
 					value: 1
 					text: "One"
@@ -672,8 +677,6 @@ class Demo.FormDemo extends Demo
 		form2 = new CUI.Form
 			# horizontal: true
 			fields: [
-				form:
-					use_field_as_label: true
 				type: CUI.Output
 				text: "Label with Colspan"
 			,

@@ -235,7 +235,7 @@ class CUI.Layer extends CUI.DOMElement
 				check: Function
 			# add a size class
 			size:
-				check: ["xs", "s", "m", "l", "xl"]
+				check: ["xs", "s", "m", "l", "xl", "xxl", "xxxl"]
 
 			# handle focus on tab index
 			handle_focus:
@@ -725,7 +725,7 @@ class CUI.Layer extends CUI.DOMElement
 
 
 			if @__pointer and vp.dim_pointer
-
+		
 				layer_pos_right = vp.layer_pos.left + vp.layer_pos.width
 				layer_pos_bottom = vp.layer_pos.top + vp.layer_pos.height
 
@@ -999,6 +999,8 @@ class CUI.Layer extends CUI.DOMElement
 						left: vp.pointer_pos.left
 						margin: 0
 				CUI.dom.addClass(@__pointer, get_pointer_class(vp.pointer_pos.direction))
+				# todo: class should be applied BEFORE calculation of layer dimension and position
+				CUI.dom.addClass(@__layer, "has-" + get_pointer_class(vp.pointer_pos.direction))
 			else
 				CUI.dom.setStyle @__pointer,
 					display: "none"

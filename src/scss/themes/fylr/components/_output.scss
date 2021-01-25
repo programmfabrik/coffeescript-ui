@@ -1,0 +1,70 @@
+.cui-output {
+	.cui-output-empty {
+		color: theme-color('secondary');
+	}
+
+	.cui-output--deletable {
+		display: flex;
+		align-items: baseline;
+		cursor: default;
+
+		.cui-label {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+
+		.cui-button {
+			@include button-plain-icon();
+
+			.svg-close {
+				width: 10px;
+				height: 10px;
+			}
+		}
+	}
+
+	.cui-output--no-padding {
+		.cui-label {
+			padding: 0;
+		}
+	}
+}
+
+.cui-multi-output {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-auto-flow: dense;
+}
+
+// Multi Output / Languages
+.cui-data-field-multi-output {
+	display: contents;
+
+	// Language code
+	.cui-data-field-multi-output-aside {
+		grid-column: 1 / 2;
+		position: relative;
+		top: 1px;
+		margin-left: -#{$spacer-xs};
+
+		.cui-button-button {
+			@include button-plain();
+
+			.cui-button-visual {
+				font-size: 10px;
+				min-width: 22px;
+				height: 18px;
+				line-height: 18px;
+		
+				.cui-button-center {
+					padding: 0 $spacer-xs;
+				}
+			}
+		}
+	}
+
+	// Content
+	.cui-data-field-multi-output-center {
+		grid-column: 2 / 3;
+	}
+}

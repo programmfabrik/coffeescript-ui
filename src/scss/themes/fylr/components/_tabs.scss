@@ -1,0 +1,269 @@
+// todo: tabs within list-view
+// * Tabs
+
+/*
+	- tabs are horizontal by default
+	- the classes .cui-tabs--horizontal and .cui-tabs--vertical are not used, because we should apply tab layout on a contextual basis 
+	allowing us to switch between layouts on the fly without the need to change the template
+
+*/
+
+/*
+<div class="cui-tabs [ cui-tabs--horizontal | cui-tabs--vertical ] cui-pane cui-maximize cui-maximize-horizontal cui-maximize-vertical cui-vertical-layout">
+	<div class="cui-vertical-layout-top">
+		<div class="cui-pane-header cui-tabs-pane-header cui-toolbar cui-maximize-horizontal cui-horizontal-layout [cui-tabs-pane-header--overflow]">
+			<div class="cui-horizontal-layout-left"></div>
+			<div class="cui-horizontal-layout-center">
+				<div class="cui-buttonbar cui-buttonbar--stack-horizontal">
+					<div class="cui-buttonbar-group cui-buttonbar-group-tabs">
+						<div class="cui-button cui-tab-header-button cui-button-button"> ... </div>
+					</div>
+				</div>
+			</div>
+			<div class="cui-horizontal-layout-right">
+				[ <div class="cui-button cui-tab-header-button-overflow cui-button-button"> ... </div> ]
+			</div>
+		</div>
+	</div>
+	<div class="cui-vertical-layout-center">
+		<div class="cui-tabs-bodies">
+			<div class="cui-tab-body cui-tab [cui-tab-hidden]">
+				...
+			</div>
+		</div>
+	</div>
+	<div class="cui-vertical-layout-bottom">
+		<div class="cui-pane-footer cui-toolbar cui-maximize-horizontal cui-horizontal-layout">
+			<div class="cui-horizontal-layout-left"></div>
+			<div class="cui-horizontal-layout-center"></div>
+			<div class="cui-horizontal-layout-right">
+				[ <div class="cui-buttonbar cui-buttonbar--stack-horizontal"> ... </div> ]
+			</div>
+		</div>
+	</div>
+</div>
+*/
+
+// * Tab Layout
+
+.cui-tabs {
+	background-color: transparent; // reset cui-pane
+
+	&.cui-absolute > .cui-vertical-layout-center {
+		top: $toolbar-height + 1px; // todo: find use-case
+	}
+
+	.cui-toolbar {
+		background-color: transparent; // reset cui-toolbar
+	}
+
+	// adjust for pane-padding of the parent .cui-pane .cui-vertical-layout-center padding
+	// see admin > usermanagement, admin > datamodel, admin > pollmanager etc.
+	> .cui-vertical-layout-bottom {
+		.cui-toolbar {
+			padding: $pane-padding 0;
+			margin-bottom: -$pane-padding;
+		}
+	}
+
+	> .cui-vertical-layout-center {
+		flex-grow: 1;
+		padding: 0; // reset default cui-pane padding
+
+		> .cui-tabs-bodies {
+			display: flex;
+			flex: 1 1 auto;
+			overflow: hidden;
+
+			> .cui-tab-body {
+				display: flex;
+				flex-direction: column;
+				margin-left: 0 !important;
+				flex: 1 1 auto;
+				overflow: auto;
+				-webkit-overflow-scrolling: touch;
+				// padding-right: $spacer-sm; // ? space for scrollbar, uncommented because fields-render--root vs .fields-renderer im detail and editor
+
+				&.cui-tab-hidden {
+					display: none;
+				}
+
+				// todo: make obsolete
+				// &.cui-tab--padded {
+				// 	padding: $tabs-padding;
+				// }
+
+				> .cui-empty-label:only-child {
+					margin: $spacer-sm 0;
+				}
+			}
+		}
+	}
+
+	.cui-pane {
+		> .cui-vertical-layout-center {
+			@include pane-padding-reset();
+		}
+
+		> .cui-vertical-layout-top,
+		> .cui-vertical-layout-bottom {
+			.cui-toolbar {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		}
+	}
+}
+
+// * Tab Header with Buttons
+
+.cui-tabs-pane-header {
+	padding: 0; // reset .cui-toolbar
+	min-height: 0; // reset .cui-toolbar
+	margin-bottom: $spacer;
+
+	> .cui-horizontal-layout-center {
+		overflow: auto !important; //! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
+		justify-content: flex-start; // reset .cui-toolbar
+	}
+
+	// overflowing tabs
+	&.cui-tabs-pane-header--overflow {
+		> .cui-horizontal-layout-center {
+			padding-right: 0;
+			margin-right: 0;
+			overflow: hidden !important; // overwrite toolbar > center overflow visible
+		}
+	}
+
+	// * Buttons
+
+	.cui-tab-header-button,
+	.cui-tab-header-button-overflow {
+		@include button-color-reset();
+
+		margin: 0;
+
+		.cui-button-visual {
+			@include label-title();
+
+			height: $tabs-header-height;
+			border-radius: 0;
+			background-color: $tabs-background;
+
+			.cui-button-center {
+				padding: 0 $tabs-content-padding;
+			}
+		}
+		
+		&:active,
+		&.cui-active {
+			.cui-button-visual {
+				background-color: $tabs-active-background;
+				color: $tabs-active-color;
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+				// add custom focus style
+				background-color: rgba(theme-color('focused'), 0.05);
+				color: $tabs-active-color;
+				box-shadow: $btn-focus-shadow !important;
+			}
+		}
+	}
+
+	// * Overflow Button
+
+	.cui-tab-header-button-overflow {
+		align-self: center;
+		position: relative;
+		z-index: 1; // to overlap active buttons
+
+		.cui-button-visual {
+			position: relative;
+			background-color: $tabs-overflow-button-background;
+			color: $tabs-overflow-button-color;
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+			border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+
+			.cui-button-left {
+				.fa-ellipsis-h {
+					transform: translateY(4px);
+				}
+			}
+		}
+
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				background-color: $tabs-overflow-button-background-hover;
+				color: $tabs-overflow-button-color-hover;
+			}
+		}
+
+		&.cui-layer-open {
+			.cui-button-visual {
+				color: $btn-active-color;
+				background-color: $btn-active-background;
+			}
+		}
+	}
+
+	.cui-buttonbar {
+		min-width: 0;
+		width: 100%;
+		position: relative;
+
+		// tab border extension
+		&::after {
+			content: '';
+			display: block;
+			flex: 1 1 auto;
+			height: 1px;
+			background: var(--tabs-active-border-color, $tabs-active-border-color);
+			align-self: flex-end;
+		}
+
+		// Override border color
+		.cui-buttonbar-group {
+			position: relative;
+			margin: 0;
+
+			.cui-tab-header-button {
+				.cui-button-visual {
+					position: relative;
+
+					// reset border and start afresh
+					border: 0;
+
+					&::after {
+						content: '';
+						display: block;
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						width: 100%;
+						height: 100%;
+						border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+					}
+				}
+				
+				&.cui-active {
+					.cui-button-visual {
+						&::after {
+							border: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+							border-bottom: 1px solid transparent;
+							border-radius: $btn-border-radius $btn-border-radius 0 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}

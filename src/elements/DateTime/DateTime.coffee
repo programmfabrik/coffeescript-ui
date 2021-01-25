@@ -785,6 +785,11 @@ class CUI.DateTime extends CUI.Input
 			else
 				""+n
 
+		date_title = new CUI.Label(
+			text: @__locale_format.tab_date
+			class: "cui-select-date-title"
+		)
+
 		date_sel = new CUI.Select(
 			name: "date"
 			menu_class: "cui-date-time--select-menu"
@@ -849,6 +854,11 @@ class CUI.DateTime extends CUI.Input
 				]
 			else
 				emtpy_clock_opts = []
+
+			time_title = new CUI.Label(
+				text: @__locale_format.tab_time
+				class: "cui-select-time-title"
+			)				
 
 			hour_sel = new CUI.Select(
 				name: "hour"
@@ -951,10 +961,12 @@ class CUI.DateTime extends CUI.Input
 			# ).start()
 
 		new CUI.Buttonbar(
-			buttons: [
+			buttons: [	
+				date_title			
 				date_sel
 				month_sel
 				year_sel
+				time_title
 				hour_sel
 				# minute_colon
 				minute_sel

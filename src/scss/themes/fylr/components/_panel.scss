@@ -1,0 +1,77 @@
+// Panel
+.cui-panel {
+	border-bottom: 1px solid $panel-border-color;
+
+	&-closed {
+		> .cui-panel-body {
+			display: none;
+		}
+	}
+}
+
+.cui-panel-header {
+	padding-left: $spacer-sm;
+	padding-right: $spacer-sm;
+
+	.cui-button-button {
+		@include button-color-reset();
+
+		display: flex;
+		width: auto;
+		padding: $spacer-xs 0;
+		justify-content: flex-start;
+		margin: 0 -#{$spacer-sm};
+		min-height: $btn-height;
+
+		&-select {
+			max-width: 100%;
+		}
+
+		.cui-button-visual {
+			@include label-title();
+
+			height: auto;
+			justify-content: flex-start;
+			padding: 0;
+			align-items: baseline;
+
+
+			.cui-button-left {
+				width: $panel-content-padding;
+				justify-content: center;
+				padding-left: 0;
+				margin-right: 0;
+
+				.fa {
+					position: relative;
+					left: -2px;
+
+					&.fa-chevron-right {
+						top: 1px;
+					}
+				}
+			}
+
+			.cui-button-center {
+				padding-left: 0;
+
+				span {
+					white-space: normal;
+				}
+			}
+		}
+
+		&:hover,
+		&:focus,
+		&.cui-active {
+			.cui-button-visual {
+				color: $body-color;
+				background: none;
+			}
+		}
+	}
+}
+
+.cui-panel-body {
+	padding: $spacer-xs $spacer-sm $spacer $panel-content-padding; // left aligned with panel header text
+}
