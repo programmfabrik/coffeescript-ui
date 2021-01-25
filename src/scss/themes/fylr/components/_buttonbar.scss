@@ -1,0 +1,29 @@
+.cui-buttonbar {
+	display: flex;
+	align-items: center;
+
+	@include buttonbar-horizontal(); // default stack horizontally
+}
+
+
+// * Buttonbar Group
+// all buttons within a buttonbar-group are visually and functionally a unit, like radio buttons, there always have a border by default, see buttonbar mixins
+// e.g. options, radio buttons
+
+.cui-buttonbar-group {
+	display: flex;
+
+	.cui-disabled {
+		opacity: 1;
+
+		.cui-button-visual > * {
+			opacity: $disabled-opacity;
+		}
+	}
+}
+
+// * Buttonbar Groupt with input field, used for navigation
+.cui-buttonbar-group-navi {
+	@include buttonbar-group-navigation();
+}
+

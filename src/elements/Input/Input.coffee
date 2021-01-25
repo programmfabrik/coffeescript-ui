@@ -36,6 +36,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if @_appearance
 			@addClass("cui-input-appearance-"+@_appearance)
 
+
 		@__inputHints = {}
 		@__inputHintTexts = {}
 

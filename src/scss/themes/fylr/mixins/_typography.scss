@@ -1,0 +1,38 @@
+@mixin headline($size: 'h1', $margin-bottom: $headings-margin-bottom) {
+	font-family: $headings-font-family;
+	font-size: headline-size($size);
+	font-weight: $headings-font-weight;
+	line-height: $headings-line-height;
+	color: $headings-color;
+	margin-bottom: $margin-bottom;
+
+	.cui-pane-header &,
+	.cui-toolbar &,
+	.cui-buttonbar & {
+		margin-bottom: 0;
+	}
+}
+
+@mixin h1($m: $headings-margin-bottom) {
+	@include headline('h1', $m);
+}
+
+@mixin h2($m: $headings-margin-bottom) {
+	@include headline('h2', $m);
+}
+
+@mixin h3($m: $headings-margin-bottom) {
+	@include headline('h3', $m);
+}
+
+@mixin h4($m: $headings-margin-bottom) {
+	@include headline('h4', $m);
+}
+
+@mixin h5($m: $headings-margin-bottom) {
+	@include headline('h5', $m);
+}
+
+@mixin h6($m: $headings-margin-bottom) {
+	@include headline('h6', $m);
+}

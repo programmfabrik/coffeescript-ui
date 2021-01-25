@@ -80,7 +80,7 @@ class CUI.Icon extends CUI.Element
 		rotate_left: "fa-rotate-left"
 		rotate_vertical: "fa-arrows-v"
 		rotate_horizontal: "fa-arrows-h"
-		calendar: "fa-calendar"
+		calendar: "fa-calendar-plus-o"
 		show: "fa-question"
 		help: "fa-question"
 		question: "fa-question"

@@ -1,0 +1,38 @@
+// * DigiDisplay
+
+/*
+	<div class="cui-digi-display">
+		<div class="cui-digi-display-container">
+			<div class="cui-digi-display-digit">0</div>
+			...
+			<div classs="cui-digi-display-static">
+				<span>:</span>
+			</div>
+		</div>
+	</div>
+*/
+
+.cui-digi-display {
+	align-self: flex-start;
+	display: flex;
+
+	> div {
+		vertical-align: bottom;
+		height: 20px;
+		text-align: center;
+		overflow: hidden;
+		padding: 1px;
+		font-family: $digi-display-font-family;
+		font-size: $digi-display-font-size;
+		line-height: $digi-display-line-height;
+	}
+
+	.cui-digi-display-digit {
+		transition: margin-top 0.3s ease;
+		height: 18px;
+	}
+
+	.cui-digi-display-static {
+		height: 20px;
+	}
+}

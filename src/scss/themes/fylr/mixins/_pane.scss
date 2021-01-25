@@ -1,0 +1,37 @@
+@mixin pane-padding() {
+	padding: $pane-padding;
+}
+
+@mixin pane-padding-reset() {
+	padding: 0;
+}
+
+@mixin pane-padding-bottom-reset() {
+	padding-bottom: 0;
+}
+
+@mixin pane-margin-reset() {
+	margin: 0;
+}
+
+@mixin pane() {
+	background-color: $pane-background;
+
+	@include pane-padding();
+}
+
+@mixin pane-header() {
+	flex-wrap: nowrap;
+	padding-left: 0;
+	padding-right: 0;
+	background-color: $body-bg;
+	
+	.cui-label {
+		@include h3(0);
+	}
+	
+	// Default: all buttons within a direct cui-pane-header should be plain buttons
+	.cui-button {
+		@include button-plain();
+	}
+}
