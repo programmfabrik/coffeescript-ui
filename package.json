@@ -3,10 +3,10 @@
   "version": "1.7.1",
   "description": "Coffeescript User Interface System",
   "scripts": {
-    "build": "npm run rmdist && npm run svg && webpack --progress --env development",
-    "build:production": "npm run rmdist && npm run svg && webpack --progress --env production",
+    "build": "npm run rmdist && npm run svg && webpack --progress --env.development",
+    "build:production": "npm run rmdist && npm run svg && webpack --progress --env.production",
     "build:watch": "npm run rmdist && webpack --watch --progress",
-    "build:all": "npm run rmdist && npm run svg && webpack --progress --env development --env all && webpack --progress --env production --env all",
+    "build:all": "npm run rmdist && npm run svg && webpack --progress --env.development --env.all && webpack --progress --env.production --env.all",
     "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest",
