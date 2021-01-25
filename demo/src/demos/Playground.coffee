@@ -176,15 +176,10 @@ class Demo.Playground extends Demo
 								text: """# Markdown\n\nYo Test Test"""
 							footer_right:
 								text: "Ok"
-								primary: true
 								onClick: =>
 									mod.destroy()
 					mod.show()
-			])
-		)
-
-		dt.addExample("Tooltip",
-			new CUI.Buttonbar(buttons: [
+			,
 				text: "Tooltip (Short)"
 				switch: true
 				activate_initial: false
@@ -208,51 +203,6 @@ class Demo.Playground extends Demo
 						text: Playground.longText
 						on_click: false
 						on_hover: false
-					.show()
-				onDeactivate: (btn) =>
-					btn.___tt.destroy()
-					delete(btn.___tt)
-			,
-				text: "Placement West"
-				switch: true
-				activate_initial: false
-				onActivate: (btn) =>
-					btn.___tt = new CUI.Tooltip
-						element: btn
-						text: "Tooltip with short Text"
-						on_click: false
-						on_hover: false
-						placement: "w"
-					.show()
-				onDeactivate: (btn) =>
-					btn.___tt.destroy()
-					delete(btn.___tt)
-			,
-				text: "Placement East"
-				switch: true
-				activate_initial: false
-				onActivate: (btn) =>
-					btn.___tt = new CUI.Tooltip
-						element: btn
-						text: "Tooltip with short Text"
-						on_click: false
-						on_hover: false
-						placement: "e"
-					.show()
-				onDeactivate: (btn) =>
-					btn.___tt.destroy()
-					delete(btn.___tt)
-			,
-				text: "Placement SW"
-				switch: true
-				activate_initial: false
-				onActivate: (btn) =>
-					btn.___tt = new CUI.Tooltip
-						element: btn
-						text: "Tooltip with short Text Tooltip with short Text"
-						on_click: false
-						on_hover: false
-						placement: "sw"
 					.show()
 				onDeactivate: (btn) =>
 					btn.___tt.destroy()
@@ -417,15 +367,12 @@ class Demo.Playground extends Demo
 				name: "de-DE"
 				tag: "DE"
 				enabled: true
-				tooltip: text: "de-DE"
 			,
 				name: "en-US"
 				tag: "EN"
-				tooltip: text: "en-US"
 			,
 				name: "fr-FR"
 				tag: "FR"
-				tooltip: text: "fr-FR"
 			]
 
 
@@ -567,14 +514,12 @@ class Demo.Playground extends Demo
 			name: "password"
 
 		fields.push new CUI.MultiInput
-			name: "MultiInput"
 			form:
 				label: "MultiInput"
 			spellcheck: true
 			control: multi_input_control
 
 		fields.push new CUI.MultiInput
-			name: "MultiInputTextarea"
 			form:
 				label: "MultiInput [Textarea]"
 			spellcheck: true
@@ -667,165 +612,28 @@ class Demo.Playground extends Demo
 		]
 
 	getTableTab: ->
-		ttab = new Demo.DemoTable()
-
-		table = @getTableDefault()
-		ttab.addExample("Default Table with Border", table)
-
-		table = @getTableDefaultNoBorder()
-		ttab.addExample("Default Table with no border", table)		
-
-		table = @getTableZebra()
-		ttab.addExample("Zebra Table maximized", table)
-
-		table = @getTableKeyvalue()
-		ttab.addExample("Flex Table with Border and key/value", table)
-
-	getTableZebra: ->
 		table = new CUI.Table
-			class: 'cui-maximize-horizontal cui-demo-table-zebra'
 			columns: [
 				name: "a"
-				text: "alpha"
+				text: "a"
 				class: "a-class"
 			,
 				name: "b"
-				text: "beta"
+				text: "b"
 				class: "b-class"
-			,
-				name: "c"
-				text: "gamma"
-				class: "c-class"
-			,
-				name: "d"
-				text: "delta"
-				class: "d-class"
 			]
 			rows: [
 				a: "a0"
 				b: "b0"
-				c: "Hello"
-				d: "world"
 			,
 				a: "a1"
 				b: "b1"
-				c: "how"
-				d: "are you"
 			]
 
 		for i in [2..5]
 			table.addRow
 				a: "a"+i
 				b: "b"+i
-
-		table
-
-	getTableDefault: ->
-		table = new CUI.Table
-			columns: [
-				name: "a"
-				text: "alpha"
-				class: "a-class"
-			,
-				name: "b"
-				text: "beta"
-				class: "b-class"
-			,
-				name: "c"
-				text: "gamma"
-				class: "c-class"
-			,
-				name: "d"
-				text: "delta"
-				class: "d-class"
-			]
-			rows: [
-				a: "a0"
-				b: "b0"
-				c: "Hello"
-				d: "world"
-			,
-				a: "a1"
-				b: "b1"
-				c: "how"
-				d: "are you"
-			]
-
-		for i in [2..5]
-			table.addRow
-				a: "a"+i
-				b: "b"+i
-
-		table
-
-	getTableDefaultNoBorder: ->
-		table = new CUI.Table
-			class: 'cui-maximize-horizontal cui-demo-table-no-border'
-			columns: [
-				name: "a"
-				text: "alpha"
-				class: "a-class"
-			,
-				name: "b"
-				text: "beta"
-				class: "b-class"
-			,
-				name: "c"
-				text: "gamma"
-				class: "c-class"
-			,
-				name: "d"
-				text: "delta"
-				class: "d-class"
-			]
-			rows: [
-				a: "a0"
-				b: "b0"
-				c: "Hello"
-				d: "world"
-			,
-				a: "a1"
-				b: "b1"
-				c: "how"
-				d: "are you"
-			]
-
-		for i in [2..5]
-			table.addRow
-				a: "a"+i
-				b: "b"+i
-
-		table		
-
-	getTableKeyvalue: ->
-		table = new CUI.Table
-			flex: true
-			key_value: true
-
-		someInfoData = [
-			key: "compiled"
-			value: "pdf document, 3 pages, 727.5 kB"
-		,
-			key: "compiled_create_date"
-			value: "1489755602.23"
-		,
-			key: "compiled_create_date_iso8601"
-			value: "2017-03-17 T13:00:02+00:00"
-		,
-			key: "compiled_create_date_source"
-			value: "m"
-		,
-			key: "extension"
-			value: "pdf"
-		,
-			key: "fileclass"
-			value: "office"
-		]
-
-		for info in someInfoData
-			table.addRow
-				key: info.key
-				value: info.value
 
 		table
 
@@ -892,215 +700,6 @@ class Demo.Playground extends Demo
 				content: @getMultiLabel()
 		]
 
-	getIconsTab: ->
-		dt = new Demo.DemoTable()
-
-		# Font Awesome Icons
-		icons = ["play", "fa-angle-left", "fa-angle-right", "fa-angle-up", "fa-angle-down", "fa-angle-double-up", "fa-angle-double-down"]
-		dt.addExample("Single Icon",
-			new CUI.Block
-				class: "cui-demo-icons"
-				text: "Font Awesome icons that are customized"
-				content: @getIconCollection(icons)
-		)
-
-		# All Font Awesome Icons
-		icons = [
-			"fa-crop",
-			"fa-arrows-alt",
-			"fa-warning",
-			"fa-slack",
-			"fa-file",
-			"fa-filter",
-			"fa-sliders",
-			"fa-refresh",
-			"fa fa-file-archive-o",
-			"fa-rotate-right",
-			"fa-rotate-left",
-			"fa-arrows-v",
-			"fa-arrows-h",
-			"fa-calendar-plus-o",
-			"fa-question",
-			"fa-question",
-			"fa-question",
-			"fa-cog",
-			"fa-download",
-			"fa-download",
-			"fa-question",
-			"fa-upload",
-			"fa-envelope-o",
-			"fa-envelope",
-			"fa-floppy-o",
-			"fa-heart",
-			"fa-user",
-			"fa-clock-o",
-			"fa-plus",
-			"fa-pencil",
-			"fa-files-o",
-			"fa-search",
-			"fa-share",
-			"fa-play",
-			"fa-music",
-			"fa-play",
-			"fa-stop",
-			"fa-print",
-			"fa-minus",
-			"fa-caret-right",
-			"fa-caret-down",
-			"fa-ellipsis-h",
-			"fa-ellipsis-v",
-			"fa-bars",
-			"fa-info-circle",
-			"fa-bolt",
-			"fa-check",
-			"fa-warning",
-			"fa-legal",
-			"fa-cloud",
-			"fa-angle-left",
-			"fa-angle-right",
-			"fa-angle-right",
-			"fa-search-plus",
-			"fa-search-minus",
-			"fa-compress",
-			"fa-expand",
-			"fa-envelope-o",
-			"fa-file-text",
-			"fa-file-text-o",
-			"fa-bullhorn",
-			"fa-angle-left",
-			"fa-angle-right",
-			"fa-angle-down",
-			"fa-angle-up",
-			"fa-caret-up",
-			"fa-caret-down",
-			"fa-camera",
-			"fa-list-ul",
-			"fa-picture-o",
-			"fa-sitemap",
-			"fa-hourglass-half",
-		]
-		dt.addExample("Single Icon",
-			new CUI.Block
-				class: "cui-demo-icons"
-				text: "All Font Awesome icons"
-				content: @getIconCollection(icons)
-		)
-
-		# SVG Icons
-		icons = [
-			"svg-arrow-right",
-			"svg-close",
-			"svg-drupal",
-			"svg-easydb",
-			"svg-external-link",
-			"svg-falcon-io",
-			"svg-folder-shared-upload",
-			"svg-folder-shared",
-			"svg-folder-upload",
-			"svg-folder",
-			"svg-grid",
-			"svg-hierarchy",
-			"svg-info-circle",
-			"svg-multiple",
-			"svg-popup",
-			"svg-reset",
-			"svg-rows",
-			"svg-select-all",
-			"svg-select-pages",
-			"svg-spinner",
-			"svg-table",
-			"svg-tag-o",
-			"svg-trash",
-			"svg-typo3",
-			"svg-easydb",
-			"svg-fylr-logo",
-		]
-		dt.addExample("Single Icon",
-			new CUI.Block
-				class: "cui-demo-icons"
-				text: "SVG icons"
-				content: @getIconCollection(icons)
-		)
-
-		asset_icons = [
-			"svg-asset-failed",
-		]
-		
-		dt.addExample("Asset Icons",
-			new CUI.Block
-				class: "cui-demo-icons cui-demo-asset-icons"
-				text: "Asset icons"
-				content: @getIconCollection(asset_icons)
-		)
-
-		dt.addExample("Icon in Buttons",
-			new CUI.Buttonbar(buttons: @getButtons(icon: "download"))
-		)
-
-		dt.addExample("SVG Spinner",
-			new CUI.Label
-				text: "Label"
-				icon: "spinner"
-		)
-
-		dt.addExample("FA Spinner",
-			new CUI.Label
-				text: "Label"
-				icon: "fa-spinner"
-		)
-		
-		dt.addExample("Hourglass spinner",
-			new CUI.Block
-				class: "cui-demo-hourglass"
-				content: @getHourglassIcon()
-		)
-
-		dt.addExample("Times Thin, regular font icon (not FA)",
-			new CUI.Label
-				text: "Close"
-				icon: "fa-times-thin"
-		)
-
-	getHourglassIcon: ->
-		hourglass_icons = [
-			"fa-hourglass-start"
-			"fa-hourglass-half"
-			"fa-hourglass-end"
-			"fa-hourglass-end"
-			"fa-hourglass-o"
-		]
-		hourglass_container = CUI.dom.div("cui-hourglass-animation fa-stack")
-
-		for i in hourglass_icons
-			icon = new CUI.Icon
-				icon: i
-				class: "fa-stack-1x"
-
-			CUI.dom.append(hourglass_container, icon.DOM)
-		
-		hourglass_container
-
-
-	getIconCollection: (icons = []) ->
-		icon_container = CUI.dom.div("cui-demo-icon-container")
-
-		for i in icons
-			icon_wrap = CUI.dom.div("cui-demo-icon")
-			icon = new CUI.Icon
-				icon: i
-
-			new CUI.Tooltip
-				element: icon_wrap
-				show_ms: 1000
-				hide_ms: 200
-				text: i
-
-			CUI.dom.append(icon_wrap, icon.DOM)
-			CUI.dom.append(icon_container, icon_wrap)
-
-		icon_container
-
-
 	display: ->
 
 		tabs = new CUI.Tabs
@@ -1108,7 +707,6 @@ class Demo.Playground extends Demo
 			tabs: [
 				text: "Controls"
 				content: @getControlsTab()
-				class: "cui-demo-playground-tab-control"
 			,
 				text: "Inputs"
 				content: @getInputsTab()
@@ -1124,9 +722,6 @@ class Demo.Playground extends Demo
 			,
 				text: "Table"
 				content: @getTableTab()
-			,
-				text: "Icons"
-				content: @getIconsTab()
 			]
 
 

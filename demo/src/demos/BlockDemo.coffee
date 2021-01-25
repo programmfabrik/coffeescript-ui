@@ -12,15 +12,13 @@ class Demo.BlockDemo extends Demo
 
 		@demo_table = new Demo.DemoTable()
 
-		@demo_table.addDivider("blocks and sections")
+		@demo_table.addDivider("blocks")
 
-		@demo_table.addExample("Section block", @createBlocks() )
-		@demo_table.addExample("Section block with line separator mixin", @createSimpleBlocks("cui-demo-block-separator") )
-		@demo_table.addExample("Section block 'inline'", @createSimpleBlocksWide() )
-		@demo_table.addExample("Section block 'base config'", @createSectionBlockBaseConfig() )
-		@demo_table.addExample("Bracket block in Editor only", @createBlockBracket() )
+		@demo_table.addExample("Blocks", @createBlocks() )
+		@demo_table.addExample("Blocks with line separator mixin", @createSimpleBlocks("cui-block-demo-separator") )
 
 		@createWaitBlockExample()
+
 
 		@demo_table.table
 
@@ -32,7 +30,7 @@ class Demo.BlockDemo extends Demo
 			content:
 				[
 					new CUI.Block
-						text: "Title of block A1"
+						text: "Title of block A"
 						content: [
 							new CUI.Label
 								text: "content of main block"
@@ -55,128 +53,6 @@ class Demo.BlockDemo extends Demo
 
 				]
 		list.DOM
-
-
-	createSimpleBlocksWide: (style_class= "") ->
-
-		list = new CUI.VerticalList
-			maximize: true
-			class: style_class
-			content:
-				[
-					new CUI.Block
-						text: "Wide block A"
-						appearance: "wide"
-						class: "cui-demo-block-grid"
-						level: 1
-						content: [
-							new CUI.Label
-								text: "content of main block"
-
-						],
-					new CUI.Block
-						text: "Wide block B"
-						appearance: "wide"
-						class: "cui-demo-block-grid"
-						level: 2
-						content: [
-							new CUI.Label
-								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-								multiline: true
-
-						],
-					new CUI.Block
-						text: "Wide block C"
-						appearance: "wide"
-						class: "cui-demo-block-grid"
-						level: 2
-						content: [
-							new CUI.Label
-								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-								multiline: true
-
-						]
-
-				]
-		list.DOM
-
-
-	createSectionBlockBaseConfig: (style_class= "") ->
-
-		list = new CUI.VerticalList
-			maximize: true
-			class: style_class
-			content:
-				[
-					new CUI.Block
-						text: "Admin"
-						class: "cui-demo-block-base-config"
-						level: 1
-						content: [
-							new CUI.Label
-								text: "content of main block"
-
-						],
-					new CUI.Block
-						text: "Some options"
-						class: "cui-demo-block-base-config"
-						level: 2
-						content: [
-							new CUI.Label
-								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-								multiline: true
-						],
-					new CUI.Block
-						text: "Configuration options"
-						class: "cui-demo-block-base-config"
-						level: 2
-						content: [
-							new CUI.Label
-								text: "content of main block"
-
-						]
-
-				]
-		list.DOM
-
-	
-	createBlockBracket: (style_class= "") ->
-
-		list = new CUI.VerticalList
-			maximize: true
-			class: style_class
-			content:
-				[
-					new CUI.Block
-						text: "Fields in a Block"
-						class: "cui-demo-block-bracket"
-						level: 1
-						content: [
-							new CUI.Label
-								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-								multiline: true
-						],
-					new CUI.Block
-						text: "Other Fields in a Block"
-						class: "cui-demo-block-bracket"
-						level: 1
-						content: [
-							new CUI.Label
-								text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-								multiline: true
-						],
-					new CUI.Block
-						text: "And even more Fields"
-						class: "cui-demo-block-bracket"
-						level: 1
-						content: [
-							new CUI.Label
-								text: "content of main block"
-
-						]
-
-				]
-		list.DOM		
 
 
 	createWaitBlockExample: ->
@@ -214,20 +90,19 @@ class Demo.BlockDemo extends Demo
 			content:
 				[
 					new CUI.Block
-						text: "Title of main block (level 1)"
-						appearance: "normal"
-						description: "Some sort of block description text"
+						text: "Title of main block"
+						appearance: "title"
 						content: [
 							new CUI.Label
 								text: "content of main block"
 							new CUI.Block
-								text: "Subtitle of main block (level 2)"
+								text: "Subtitle of main block"
 								level: 2
 								content: [
 									new CUI.Label
 										text: "content of subtitle block"
 									new CUI.Block
-										text: "normal block header (level 3)"
+										text: "normal block header"
 										level: 3
 										content: [
 											new CUI.Label
@@ -235,20 +110,20 @@ class Demo.BlockDemo extends Demo
 										]
 								]
 							new CUI.Block
-								text: "2nd Subtitle of main block (level 2)"
+								text: "2nd Subtitle of main block"
 								level: 2
 								content: [
 									new CUI.Label
 										text: "content of subtitle block"
 									new CUI.Block
 										level: 3
-										text: "normal block header (level 3)"
+										text: "normal block header"
 										content: [
 											new CUI.Label
 												text: "content of normal block."
 										]
 									new CUI.Block
-										text: "2nd normal block header (level 3)"
+										text: "2nd normal block header"
 										level: 3
 										content: [
 											new CUI.Label

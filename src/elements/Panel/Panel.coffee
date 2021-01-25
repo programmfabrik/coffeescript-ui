@@ -10,8 +10,8 @@ CUI.Template.loadTemplateText(require('./Panel.html'));
 class CUI.Panel extends CUI.DOMElement
 
 	@defaults:
-		arrow_down: "fa-chevron-down"
-		arrow_right: "fa-chevron-right"
+		arrow_down: "fa-angle-down"
+		arrow_right: "fa-angle-right"
 
 	constructor: (opts) ->
 		super(opts)

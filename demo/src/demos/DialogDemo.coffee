@@ -49,7 +49,6 @@ class Demo.DialogDemo extends Demo
 							text: "Normal"
 						footer_right: new CUI.Button
 							text: "Ok"
-							primary: true
 							onClick: =>
 								@mod.destroy()
 						content: new CUI.Label
@@ -68,7 +67,6 @@ class Demo.DialogDemo extends Demo
 							text: "Big"
 						footer_right: new CUI.Button
 							text: "Ok"
-							# primary: true
 							onClick: =>
 								@mod.destroy()
 						content: new CUI.Label
@@ -87,7 +85,6 @@ class Demo.DialogDemo extends Demo
 							text: "Bigger"
 						footer_right: new CUI.Button
 							text: "Ok"
-							primary: true
 							onClick: =>
 								@mod.destroy()
 						content: new CUI.Label
@@ -107,7 +104,6 @@ class Demo.DialogDemo extends Demo
 							text: "Save"
 						footer_right: new CUI.Button
 							text: "Ok"
-							primary: true
 							onClick: =>
 								@mod.destroy()
 						content: new CUI.Label
@@ -129,7 +125,6 @@ class Demo.DialogDemo extends Demo
 							@mod.destroy()
 					,
 						text: "Ok"
-						primary: true
 						onClick: =>
 							@mod.destroy()
 					]
@@ -240,7 +235,6 @@ class Demo.DialogDemo extends Demo
 								new CUI.Button
 									text: "Ok"
 									class: "cui-dialog"
-									primary: true
 									onClick: =>
 										@mod.destroy()
 							]
@@ -280,7 +274,6 @@ class Demo.DialogDemo extends Demo
 								new CUI.Button
 									text: "Ok"
 									class: "cui-dialog"
-									primary: true
 									onClick: =>
 										@mod.destroy()
 							]
@@ -317,7 +310,6 @@ class Demo.DialogDemo extends Demo
 								new CUI.Button
 									text: "Ok"
 									class: "cui-dialog"
-									primary: true
 									onClick: =>
 										@mod.destroy()
 							]
@@ -458,7 +450,6 @@ class Demo.DialogDemo extends Demo
 					new CUI.Button
 						text: "Ok"
 						class: "cui-dialog"
-						primary: true
 						onClick: =>
 							@mod.destroy()
 				]

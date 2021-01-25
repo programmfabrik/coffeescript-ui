@@ -6,7 +6,6 @@ var svgmin = require('gulp-svgmin');
 var cheerio = require('gulp-cheerio');
 var through2 = require('through2');
 
-// result filename "icons.svg" is the name of base directory of the first file.
 var iconsource = ['src/scss/icons/*.svg', '!src/scss/icons/icons.svg']
 
 gulp.task('svgstore', function () {

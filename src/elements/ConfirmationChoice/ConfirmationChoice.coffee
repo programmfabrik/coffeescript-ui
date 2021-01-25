@@ -56,9 +56,6 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			mandatory: true
 			default: false
 			check: Boolean
-		secondary:
-			default: false
-			check: Boolean
 		disabled:
 			mandatory: true
 			default: false

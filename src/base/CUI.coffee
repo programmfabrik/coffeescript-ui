@@ -72,7 +72,7 @@ class CUI
 
 		document.body.scrollTop=0
 
-		icons = require('../scss/icons/icons.svg').default
+		icons = require('../scss/icons/icons.svg')
 		CUI.Template.loadText(icons)
 		CUI.Template.load()
 

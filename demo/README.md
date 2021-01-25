@@ -12,21 +12,14 @@ Then you can run different targets, with *npm run **%TARGET%***
 
 **%TARGET%** should be one of the following:
 
-- **build**: Builds the demo with CSS for development
-- **build:production**: Builds the demo with CSS for production (minimizing code, no sourcemaps)
+- **build**: Builds the demo with CSS
 - **build:watch**: Builds the demo with CSS and watch for changes
 
-As output, there will be the following files under **/public/**
-- *cui-demo.js* 
-- *cui-demo.css*
+As output, there will be two files: *cui-demo.js* and *index.html*, located in **public** directory. Open **public/index.html** too see the demo.
 
-The CSS theme files will be in **public/css**.
+## Run
 
-Open **index.html** too see the demo.
-
-## Run webpack-dev-server
-
-- npm run start
+- npm start
 - Open http://localhost:8080/
 
 ## Using **coffeescript-ui** locally

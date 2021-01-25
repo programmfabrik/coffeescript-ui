@@ -20,8 +20,6 @@ class Demo.PaneDemo extends Demo
 							content:
 								new CUI.Label
 									text: "Pane"
-									# appearance: "title"
-									class: "cui-demo-label-title"
 						center:
 							content:
 								new CUI.Label
@@ -31,10 +29,8 @@ class Demo.PaneDemo extends Demo
 								[
 									new CUI.Button
 										icon: "edit"
-										appearance: "flat"
 									new CUI.Button
 										icon: "close"
-										appearance: "flat"
 								]
 
 
@@ -187,73 +183,6 @@ class Demo.PaneDemo extends Demo
 				]
 
 		@demo_table.addExample("Pane with a toolbar that contains a mixture of buttons and labels in different sizes.",pane)
-
-
-		# pane = new CUI.Pane
-		# 	class: "cui-demo-pane-pane cui-pane--window"
-		# 	top:
-		# 		content: [
-		# 			new CUI.PaneHeader
-		# 				left:
-		# 					content: [
-		# 						new CUI.Label
-		# 							text: "Todo Window pane"
-		# 					]
-		# 				right:
-		# 					content: [
-		# 						new CUI.Button
-		# 							text: "Button"
-		# 							appearance: "flat"
-		# 					]
-		# 			new CUI.PaneToolbar
-		# 		]
-		# 	center:
-		# 		content: "center"
-		# 	bottom:
-		# 		content: [
-		# 			new CUI.PaneFooter
-		# 				left:
-		# 					content: "PaneFooter Left"
-		# 				right:
-		# 					content: [
-		# 						new CUI.Button
-		# 							text: "Button"
-		# 							appearance: "flat"
-		# 					]
-		# 		]
-
-		# @demo_table.addExample("Window Pane.",pane)
-
-		pane = new CUI.Pane
-			class: "cui-demo-pane-pane cui-pane--padded"
-			top:
-				content: [
-					new CUI.PaneHeader
-						left:
-							content: [
-								new CUI.Label
-									text: "Todo Padded pane"
-							]
-						right:
-							content: [
-								new CUI.Button
-									text: "Flat Button"
-									appearance: "flat"
-							]
-					new CUI.PaneToolbar
-				]
-			center:
-				content: "center is padded"
-			bottom:
-				content: [
-					new CUI.PaneFooter
-						left:
-							content: "PaneFooter Left"
-						right:
-							content: "PaneFooter Right"
-				]
-
-		@demo_table.addExample("Padded Pane.",pane)
 
 
 		@demo_table.table

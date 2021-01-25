@@ -247,12 +247,10 @@ class CUI.Label extends CUI.DOMElement
 		if dim_div.scrollHeight > max_height
 			# really to big, show button
 			@__overflow_button.show()
-			@__label.addClass("cui-label--has-overflow-button")
 			if @__overflow_button.isActive()
 				@__label.addClass("cui-label--show-overflow")
 		else
 			@__label.addClass("cui-label--show-overflow")
-			@__label.removeClass("cui-label--has-overflow-button")
 
 		@__label.removeClass("cui-label--measure-overflow")
 		@

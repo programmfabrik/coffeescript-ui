@@ -10,11 +10,10 @@ class Demo.ListviewDemoTable extends Demo.DemoTable
 	constructor: () ->
 		super("demo-table")
 
-	addListview: (description, listview, title = "Example") ->
+	addListview: (description, listview) ->
 		CUI.dom.addClass(listview.DOM, "cui-list-view-demo-frame")
-		lvDemo = CUI.dom.append(CUI.dom.div("cui-demo-td-abs"), listview.DOM)
-		lvDemoTitle = CUI.dom.append(CUI.dom.div("cui-demo-lv-title"), CUI.dom.text(title))
-		@addExample(description, [lvDemoTitle, lvDemo])
+		@addExample(description, CUI.dom.append(CUI.dom.div("cui-demo-td-abs"), listview.DOM))
+
 
 
 class Demo.ListViewDemo extends Demo
@@ -325,7 +324,7 @@ class Demo.ListViewDemo extends Demo
 			oversized_cells: [4,10]
 		}
 		list_view = @createListView(options)
-		demo_table.addListview(CUI.util.dump(options),list_view, "Example 1")
+		demo_table.addListview(CUI.util.dump(options),list_view)
 
 		options = {
 			maximize_column: [0]
@@ -335,7 +334,7 @@ class Demo.ListViewDemo extends Demo
 			oversized_cells: [4,10]
 		}
 		list_view = @createListView(options)
-		demo_table.addListview(CUI.util.dump(options),list_view, "Example 2")
+		demo_table.addListview(CUI.util.dump(options),list_view)
 
 		options = {
 			maximize_column: []
@@ -346,7 +345,7 @@ class Demo.ListViewDemo extends Demo
 			oversized_cells: [4,10]
 		}
 		list_view = @createListView(options)
-		demo_table.addListview(CUI.util.dump(options),list_view, "Example 3")
+		demo_table.addListview(CUI.util.dump(options),list_view)
 
 		options = {
 			maximize_column: []
@@ -358,7 +357,7 @@ class Demo.ListViewDemo extends Demo
 			oversized_cells: [4,10]
 		}
 		list_view = @createListView(options)
-		demo_table.addListview(CUI.util.dump(options),list_view, "Example 4")
+		demo_table.addListview(CUI.util.dump(options),list_view)
 
 
 
@@ -370,7 +369,7 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [4,10]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview(CUI.util.dump(options),list_view, "Example 5")
+			demo_table.addListview(CUI.util.dump(options),list_view)
 
 			options = {
 			# maximize_column: [0]
@@ -380,7 +379,7 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [4,10]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview(CUI.util.dump(options),list_view, "Example 6")
+			demo_table.addListview(CUI.util.dump(options),list_view)
 
 
 			options = {
@@ -389,7 +388,7 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview(CUI.util.dump(options),list_view, "Example 7")
+			demo_table.addListview(CUI.util.dump(options),list_view)
 
 			options = {
 				listViewOptions:
@@ -398,7 +397,7 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview("Moveable rows:"+CUI.util.dump(options),list_view, "Example 8")
+			demo_table.addListview("Moveable rows:"+CUI.util.dump(options),list_view)
 
 			options = {
 				listViewOptions:
@@ -407,7 +406,7 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview("Moveable rows:"+CUI.util.dump(options),list_view, "Example 9")
+			demo_table.addListview("Moveable rows:"+CUI.util.dump(options),list_view)
 
 			options = {
 				listViewOptions:
@@ -416,7 +415,7 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview("Moveable rows, No FixedCols: "+CUI.util.dump(options),list_view, "Example 10")
+			demo_table.addListview("Moveable rows, No FixedCols: "+CUI.util.dump(options),list_view)
 
 			options = {
 				listViewOptions:
@@ -425,17 +424,15 @@ class Demo.ListViewDemo extends Demo
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview(CUI.util.dump(options),list_view, "Example 11")
+			demo_table.addListview(CUI.util.dump(options),list_view)
 
 			options = {
 				listViewOptions:
 					cols: ["auto","fixed","auto","auto"]
-					rowMove: true
-					fixedCols: 2
 				oversized_cells: [2,4,14]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview(CUI.util.dump(options),list_view, "Example 12")
+			demo_table.addListview(CUI.util.dump(options),list_view)
 
 
 			options = {
@@ -446,7 +443,7 @@ class Demo.ListViewDemo extends Demo
 				# maximize_column: [0]
 			}
 			list_view = @createListView(options)
-			demo_table.addListview(CUI.util.dump(options),list_view, "Example 13")
+			demo_table.addListview(CUI.util.dump(options),list_view)
 
 		demo_table.table
 
@@ -1009,7 +1006,9 @@ class Demo.ListViewDemo extends Demo
 			closed: true
 			content: list_view2.DOM
 
-		demo_table.addExample("Listviews inside Panels", [p1, p2])
+		layout = CUI.dom.append(CUI.dom.append(CUI.dom.div("listview-in-panel-panels-container"), p1.DOM), p2.DOM)
+
+		demo_table.addListview("Listviews inside Panels",layout)
 
 		#----------------------
 

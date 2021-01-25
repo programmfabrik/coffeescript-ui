@@ -11,8 +11,7 @@ class Demo.ListViewTreeDemo extends Demo
 	loadFiles: ->
 		dfr = new CUI.Deferred()
 
-		# webpack will use the raw-loader to load txt file, we need to reference the default export here
-		data = require('./files.txt').default
+		data = require('./files.txt')
 
 		@files = []
 		for line in data.split("\n")
@@ -51,8 +50,7 @@ class Demo.ListViewTreeDemo extends Demo
 
 			minusButton = new CUI.Button
 				icon: new CUI.Icon(class: "fa-minus")
-				appearance: "flat"
-				size: "mini"
+				group: "plus-minus"
 				disabled: true
 				onClick: ->
 					CUI.dom.remove(_lv.getSelectedNode())
@@ -60,15 +58,13 @@ class Demo.ListViewTreeDemo extends Demo
 			bb = (new CUI.Buttonbar
 				buttons: [
 					new CUI.Button
+						group: "plus-minus"
 						icon: new CUI.Icon(class: "fa-plus")
-						appearance: "flat"
-						size: "mini"
 						onClick: =>
 							_lv.addNode(new Demo.ListViewTreeDemoDummyNode(demo: @, date: new Date()))
 					new CUI.Button
+						group: "plus-minus"
 						icon: new CUI.Icon(class: "fa-plus")
-						appearance: "flat"
-						size: "mini"
 						text: "Nested"
 						onClick: =>
 							_lv.addNode(new Demo.ListViewNestedNode(demo: @, cols: 6))
@@ -216,18 +212,11 @@ class Demo.ListViewTreeDemoDummyNode extends CUI.ListViewTreeNode
 		@columns.splice(0,0, new CUI.ListViewColumn(text: @getNodeId()))
 
 		d = CUI.dom.div()
-		# todo: in a perfect world this should be a buttonbar with stack: "vertical"
 		btn = new CUI.Button(
 			text: "More Content"
-			size: "mini"
-			appearance: "flat"
-			bordered: true
 			onClick: ->
 				b = new CUI.Button
 					text: ""+Math.random()
-					size: "mini"
-					appearance: "flat"
-					bordered: true
 					onClick: ->
 						CUI.DOM.remove(@DOM.parent())
 						@destroy()
@@ -335,9 +324,8 @@ class Demo.ListViewNestedNode extends Demo.ListViewTreeDemoNode
 			cols: ((if idx == 1 then "auto" else "auto") for c, idx in columns)
 			footer_left: new CUI.Buttonbar buttons: [
 				new CUI.Button
+					group: "plus-minus"
 					icon: new CUI.Icon(class: "fa-plus")
-					appearance: "flat"
-					size: "mini"
 					onClick: ->
 						columns = __getColumns(-> ""+Math.floor(Math.random()*1000))
 						lv.appendRow(new CUI.ListViewRow(columns: columns))
@@ -345,11 +333,10 @@ class Demo.ListViewNestedNode extends Demo.ListViewTreeDemoNode
 						lb.enable()
 
 				lb = new CUI.Button
+					group: "plus-minus"
 					disabled: true
 					icon: new CUI.Icon(class: "fa-minus")
 					text: "Last"
-					appearance: "flat"
-					size: "mini"
 					onClick: ->
 						if lv.rowsCount > 1
 							lv.removeRow(lv.getRowIdx(lv.rowsCount-1))

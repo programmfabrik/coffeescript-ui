@@ -5,6 +5,7 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
 
-@import "header.scss";
-@import "body.scss";
-@import "footer.scss";
+// header for "ng*"
+body {
+	opacity: 1 !important;
+}

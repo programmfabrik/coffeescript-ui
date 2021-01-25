@@ -127,7 +127,6 @@ class CUI.Slider extends CUI.DataField
 	displayValue: ->
 		percent = @getValue() / @_max * 100
 		CUI.dom.setStyle(@__handle, left: percent + '%')
-		CUI.dom.setStyle(@__slider, '--slider-distance': percent + '%')
 		@_onUpdate?(@, @getValue())
 
 	checkValue: (v, flags) ->

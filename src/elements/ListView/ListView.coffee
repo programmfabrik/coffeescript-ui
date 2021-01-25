@@ -91,6 +91,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		@addClass("cui-list-view")
 
+
 	initOpts: ->
 		super()
 

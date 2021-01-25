@@ -9,7 +9,7 @@ class Demo.TabsDemo extends Demo
 
 	display: ->
 		_tabs = []
-		for i, idx in ["Atlanta", "New York", "Chicago", "Minneapolis & St. Paul"]
+		for i, idx in ["Atlanta", "New York", "Chicago"]
 			_tabs.push
 				text: i
 				content: i+": "+@getBlindText(idx*2+1)
@@ -87,94 +87,16 @@ Very very short. 2
 
 		tabs3.setFooterRight(createButtonbar(tabs))
 
-		# Small tab buttons
-		tabsSmall = new CUI.Tabs
-			class: "cui-demo-tabs-small"
-			tabs: [
-				text: "Atlanta"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "New York"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Chicago"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Minneapolis"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			]
-			maximize: true
-
-		tabsSmall.setFooterRight(createButtonbar(tabs))
-
-		# Vertical tabs
-		tabsVertical = new CUI.Tabs
-			class: "cui-demo-tabs-vertical"
-			tabs: [
-				text: "Atlanta"
-				# content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-				content: @getBlindText(idx*2+1)
-			,
-				text: "New York"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Chicago"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "San Fransisco"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Detroit"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Minneapolis"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			]
-			maximize: true
-
-		# Vertical tabs
-		tabsVerticalSmall = new CUI.Tabs
-			class: "cui-demo-tabs-vertical-small"
-			tabs: [
-				text: "Atlanta"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "New York"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Chicago"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "San Fransisco"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Detroit"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			,
-				text: "Minneapolis"
-				content: new CUI.Label( text: "1 Very short test text. Very very short. 1").DOM
-			]
-			maximize: true
-
 		@demo_elements = [
 							new CUI.Label
 								text: "Tabs with height by content"
 							tabs
-							new CUI.Label
-								text: "Small Tab Buttons"
-							tabsSmall
 							new CUI.Label
 								text: "Tabs with static height"
 							tabs2
 							new CUI.Label
 								text: "Tabs not maximized"
 							tabs3
-							new CUI.Label
-								text: "Vertical Tabs"
-							tabsVertical
-							new CUI.Label
-								text: "Vertical Tabs"
-							tabsVerticalSmall
 						]
 
 		return @demo_elements

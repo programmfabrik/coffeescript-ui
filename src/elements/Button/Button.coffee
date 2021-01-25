@@ -31,7 +31,7 @@ class CUI.Button extends CUI.DOMElement
 		arrow_down: "fa-angle-down"
 		arrow_right: "fa-angle-right"
 
-	# Construct a new CUI.Button, legacy
+	#Construct a new CUI.Button.
 	#
 	# @param [Object] options for button creation
 	# @option options [String] size controls the size of the button.
@@ -123,12 +123,6 @@ class CUI.Button extends CUI.DOMElement
 
 		if @_primary
 			@addClass("cui-button--primary")
-
-		if @_secondary and not @_primary
-			@addClass("cui-button--secondary")
-
-		if @_class
-			@addClass(@_class)
 
 		if @_center
 			@append(@_center, "center")
@@ -441,24 +435,14 @@ class CUI.Button extends CUI.DOMElement
 				default: 0
 				check: (v) ->
 					CUI.util.isInteger(v) or v == false
-
-			# legacy, do not use
 			size:
 				check: ["mini","normal","big","bigger"]
-
-			# legacy, do not use
-			# link: use ButtonHref instead; important: use "primary: true" instead
 			appearance:
 				check: ["link","flat","normal","important","transparent-border"]
-
 			primary:
 				mandatory: true
 				default: false
 				check: Boolean
-
-			secondary:
-				check: Boolean
-
 			onClick:
 				check: Function
 			click_type:
@@ -479,8 +463,6 @@ class CUI.Button extends CUI.DOMElement
 				default: false
 				check: (v) ->
 					CUI.util.isBoolean(v) or CUI.util.isFunction(v)
-			class:
-				check: String
 			active_css_class:
 				default: CUI.defaults.class.Button.defaults.active_css_class
 				check: String

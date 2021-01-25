@@ -26,7 +26,6 @@ class CUI.Alert extends CUI.ConfirmationChoice
 		if not @_choices
 			@_choices = [
 				text: @_button_text_ok
-				primary: true
 			]
 
 CUI.alert = (opts=text: "CUI.alert") ->
