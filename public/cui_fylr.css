@@ -1002,6 +1002,11 @@ body {
   height: 14px;
 }
 
+.svg-info-circle-ng {
+  width: 14px;
+  height: 14px;
+}
+
 .svg-info-circle {
   width: 24px;
   height: 24px;
