@@ -14711,7 +14711,7 @@ CUI.Element = (function() {
             opts: opts
           });
         } else if (v.check === Boolean || v.check === String || v.check === Function || v.check === Array) {
-          CUI.util.assertInstanceOf.call(this, k, v.check, void 0, value);
+          CUI.util.assertInstanceOf.call(this, k, v.check, value);
         } else if (CUI.util.isFunction(v.check) && !v.check.__super__) {
           CUI.util.assert(CUI.util.isEmpty(v.check.name) || v.check.name === "check", cls, k + ".check is \"" + v.check.name + "\" but has no \"__super__\" method. Use \"extends CUI.Element\" or \"extends CUI.Dummy\" to fix that.", {
             opts: opts,
@@ -14745,7 +14745,7 @@ CUI.Element = (function() {
             opts: opts
           });
         } else {
-          CUI.util.assertInstanceOf.call(this, k, v.check, void 0, value);
+          CUI.util.assertInstanceOf.call(this, k, v.check, value);
         }
       }
       if (map_values) {
@@ -17234,8 +17234,10 @@ CUI.Icon = (function(superClass) {
     svg_cls = "";
     cls = "";
     if (this._icon) {
-      cls = CUI.Icon.icon_map[this._icon];
-      if (CUI.util.isEmpty(cls)) {
+      if (!cls) {
+        cls = CUI.Icon.icon_map[this._icon];
+      }
+      if (!cls) {
         cls = this._icon;
       }
       if (cls.startsWith("svg-")) {
@@ -17294,85 +17296,86 @@ CUI.Icon = (function(superClass) {
   };
 
   Icon.icon_map = {
-    trash: "svg-trash",
-    reset: "svg-reset",
-    spinner: "svg-spinner cui-spin-stepped",
-    remove: "svg-close",
-    close: "svg-close",
-    folder: "svg-folder",
-    folder_shared: "svg-folder-shared",
-    folder_upload: "svg-folder-upload",
-    folder_shared_upload: "svg-folder-shared-upload",
-    info_circle: "svg-info-circle",
-    external_link: "svg-external-link",
-    crop: "fa-crop",
-    fullscreen: "fa-arrows-alt",
-    failed: "fa-warning",
-    no_right: "fa-slack",
-    file: "fa-file",
-    filter: "fa-filter",
-    sliders: "fa-sliders",
-    refresh: "fa-refresh",
-    zip: "fa fa-file-archive-o",
-    rotate_right: "fa-rotate-right",
-    rotate_left: "fa-rotate-left",
-    rotate_vertical: "fa-arrows-v",
-    rotate_horizontal: "fa-arrows-h",
-    calendar: "fa-calendar-plus-o",
-    show: "fa-question",
-    help: "fa-question",
-    question: "fa-question",
-    settings: "fa-cog",
-    download: "fa-download",
-    "export": "fa-download",
-    list: "fa-question",
-    upload: "fa-upload",
-    envelope: "fa-envelope-o",
-    envelope_active: "fa-envelope",
-    save: "fa-floppy-o",
-    heart: "fa-heart",
-    user: "fa-user",
-    clock: "fa-clock-o",
-    plus: "fa-plus",
-    edit: "fa-pencil",
-    copy: "fa-files-o",
-    search: "fa-search",
-    share: "fa-share",
-    play: "fa-play",
     audio: "fa-music",
-    start: "fa-play",
-    stop: "fa-stop",
-    print: "fa-print",
-    minus: "fa-minus",
+    bolt: "fa-bolt",
+    calendar: "fa-calendar-plus-o",
+    camera: "fa-camera",
+    check: "fa-check",
+    clock: "fa-clock-o",
+    close: "svg-close",
+    cloud: "fa-cloud",
+    copy: "fa-files-o",
+    crop: "fa-crop",
+    dive: "fa-angle-right",
+    down: "fa-caret-down",
+    download: "fa-download",
+    east: "fa-angle-right",
+    edit: "fa-pencil",
     ellipsis_h: "fa-ellipsis-h",
     ellipsis_v: "fa-ellipsis-v",
-    menu: "fa-bars",
-    info: "fa-info-circle",
-    bolt: "fa-bolt",
-    check: "fa-check",
-    warning: "fa-warning",
-    legal: "fa-legal",
-    cloud: "fa-cloud",
-    left: "fa-angle-left",
-    right: "fa-angle-right",
-    dive: "fa-angle-right",
-    zoom_in: "fa-search-plus",
-    zoom_out: "fa-search-minus",
-    resize_small: "fa-compress",
-    resize_full: "fa-expand",
     email: "fa-envelope-o",
-    file_text_active: "fa-file-text",
-    file_text: "fa-file-text-o",
-    required: "fa-bullhorn",
-    west: "fa-angle-left",
-    east: "fa-angle-right",
-    south: "fa-angle-down",
-    north: "fa-angle-up",
-    up: "fa-caret-up",
-    down: "fa-caret-down",
-    camera: "fa-camera",
+    envelope_active: "fa-envelope",
+    envelope: "fa-envelope-o",
     expert_search: "fa-list-ul",
-    image: "fa-picture-o"
+    "export": "fa-download",
+    external_link: "svg-external-link",
+    failed: "fa-warning",
+    file_text: "fa-file-text-o",
+    file_text_active: "fa-file-text",
+    file: "fa-file",
+    filter: "fa-filter",
+    folder_shared_upload: "svg-folder-shared-upload",
+    folder_shared: "svg-folder-shared",
+    folder_upload: "svg-folder-upload",
+    folder: "svg-folder",
+    fullscreen: "fa-arrows-alt",
+    heart: "fa-heart",
+    help: "fa-question",
+    image: "fa-picture-o",
+    info_circle: "svg-info-circle",
+    info_circle_ng: "svg-info-circle-ng",
+    info: "fa-info-circle",
+    left: "fa-angle-left",
+    legal: "fa-legal",
+    list: "fa-question",
+    menu: "fa-bars",
+    minus: "fa-minus",
+    no_right: "fa-slack",
+    north: "fa-angle-up",
+    play: "fa-play",
+    plus: "fa-plus",
+    print: "fa-print",
+    question: "fa-question",
+    refresh: "fa-refresh",
+    remove: "svg-close",
+    required: "fa-bullhorn",
+    reset: "svg-reset",
+    resize_full: "fa-expand",
+    resize_small: "fa-compress",
+    right: "fa-angle-right",
+    rotate_horizontal: "fa-arrows-h",
+    rotate_left: "fa-rotate-left",
+    rotate_right: "fa-rotate-right",
+    rotate_vertical: "fa-arrows-v",
+    save: "fa-floppy-o",
+    search: "fa-search",
+    settings: "fa-cog",
+    share: "fa-share",
+    show: "fa-question",
+    sliders: "fa-sliders",
+    south: "fa-angle-down",
+    spinner: "svg-spinner cui-spin-stepped",
+    start: "fa-play",
+    stop: "fa-stop",
+    trash: "svg-trash",
+    up: "fa-caret-up",
+    upload: "fa-upload",
+    user: "fa-user",
+    warning: "fa-warning",
+    west: "fa-angle-left",
+    zip: "fa fa-file-archive-o",
+    zoom_in: "fa-search-plus",
+    zoom_out: "fa-search-minus"
   };
 
   return Icon;
@@ -22162,22 +22165,13 @@ CUI.util = (function() {
     });
   };
 
-  util.assertInstanceOf = function(variableName, classClass, opts, value) {
+  util.assertInstanceOf = function(variableName, classClass, value) {
     var cn, cond, fn;
-    if (value == null) {
-      value = void 0;
-    }
     if (!CUI.defaults.asserts) {
       return;
     }
     if (!CUI.util.isFunction(classClass) && !classClass === "PlainObject") {
       throw "assertInstanceOf: class is not a Function";
-    }
-    if (value === void 0) {
-      value = opts[variableName];
-      CUI.util.assert(CUI.util.isPlainObject(opts), "new " + arguments.callee.caller.name, "opts needs to be PlainObject but it is " + (CUI.util.getObjectClass(opts)) + ".", {
-        opts: opts
-      });
     }
     if (classClass === "Array") {
       cn = "Array";
@@ -22206,7 +22200,6 @@ CUI.util = (function() {
       fn = CUI.util.getObjectClass(this);
     }
     CUI.util.assert(false, "new " + fn, "opts." + variableName + " needs to be instance of " + cn + " but it is " + (CUI.util.getObjectClass(value)) + ".", {
-      opts: opts,
       value: value,
       classClass: classClass
     });
