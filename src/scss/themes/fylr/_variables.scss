@@ -21,8 +21,21 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 
 */
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,900&display=swap');
-// @import url('https://fonts.googleapis.com/css?family=Lato:200,300,400,700,900&display=swap');
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-weight: normal;
+	font-display: swap;
+	src: url('fonts/SourceSansPro-Regular.woff2') format('woff2'),
+			 url('fonts/SourceSansPro-Regular.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-weight: bold;
+	font-display: swap;
+	src: url('fonts/SourceSansPro-Bold.woff2') format('woff2'),
+			 url('fonts/SourceSansPro-Bold.woff') format('woff');
+}
 
 // * Color system
 // * ==========================================
