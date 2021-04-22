@@ -233,7 +233,7 @@ class CUI.Input extends CUI.DataFieldInput
 				placeholder: @getPlaceholder()
 				tabindex: "0"
 				maxLength: @_maxLength
-				id: "cui-input-"+@getUniqueId()
+				id: @_id or "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				rows: @_min_rows
 			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
@@ -268,7 +268,7 @@ class CUI.Input extends CUI.DataFieldInput
 				placeholder: @getPlaceholder()
 				tabindex: "0"
 				maxLength: @_maxLength
-				id: "cui-input-"+@getUniqueId()
+				id: @_id or "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				autocomplete: @__autocomplete
 

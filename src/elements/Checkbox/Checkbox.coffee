@@ -141,7 +141,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 
 		btn_opts.disabled = @isDisabled()
 		btn_opts.center = @_content
-		# btn_opts.class = @_class
+		btn_opts.id = @_id
 
 		@__checkbox = new CUI.defaults.class.Button(btn_opts)
 
