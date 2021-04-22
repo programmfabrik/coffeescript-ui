@@ -24857,6 +24857,7 @@ CUI.Checkbox = (function(superClass) {
     }
     btn_opts.disabled = this.isDisabled();
     btn_opts.center = this._content;
+    btn_opts.id = this._id;
     this.__checkbox = new CUI.defaults["class"].Button(btn_opts);
     this.__checkbox.addClass(this.getCheckboxClass());
     if (this._icon_active !== "check" || this._icon_inactive) {
@@ -34557,7 +34558,7 @@ CUI.Input = (function(superClass) {
         placeholder: this.getPlaceholder(),
         tabindex: "0",
         maxLength: this._maxLength,
-        id: "cui-input-" + this.getUniqueId(),
+        id: this._id || "cui-input-" + this.getUniqueId(),
         spellcheck: this.__spellcheck,
         rows: this._min_rows
       });
@@ -34603,7 +34604,7 @@ CUI.Input = (function(superClass) {
         placeholder: this.getPlaceholder(),
         tabindex: "0",
         maxLength: this._maxLength,
-        id: "cui-input-" + this.getUniqueId(),
+        id: this._id || "cui-input-" + this.getUniqueId(),
         spellcheck: this.__spellcheck,
         autocomplete: this.__autocomplete
       });
