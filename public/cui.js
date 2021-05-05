@@ -23158,7 +23158,7 @@ CUI.Button = (function(superClass) {
   };
 
   function Button(opts) {
-    var icon_left, itemList_opts, k, menu_start_hide, menu_stop_hide, ref, ref1, ref2, ref3, ref4, ref5, ref6, tname, v;
+    var icon_left, itemList_opts, k, menu_start_hide, menu_stop_hide, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, tname, v;
     Button.__super__.constructor.call(this, opts);
     if (this._tooltip) {
       if (this._tooltip.text || this._tooltip.content) {
@@ -23192,7 +23192,10 @@ CUI.Button = (function(superClass) {
       this.__hasAriaLabel = false;
     }
     CUI.dom.setAttribute(this.DOM, "tabindex", this._tabindex);
-    if (!((ref2 = this._attr) != null ? ref2.role : void 0)) {
+    if (this._appearance === "flat" && !((ref2 = this._attr) != null ? ref2.title : void 0)) {
+      CUI.dom.setAttribute(this.DOM, "title", this._text);
+    }
+    if (!((ref3 = this._attr) != null ? ref3.role : void 0)) {
       CUI.dom.setAttribute(this.DOM, "role", this._role);
     }
     if (!this._left || this._left === true) {
@@ -23280,7 +23283,7 @@ CUI.Button = (function(superClass) {
       this.__radio_allow_null = true;
     }
     if (this.__radio) {
-      CUI.util.assert(!((ref3 = this._attr) != null ? ref3.radio : void 0), "new CUI.Button", "opts.radio conflicts with opts.attr.radio", {
+      CUI.util.assert(!((ref4 = this._attr) != null ? ref4.radio : void 0), "new CUI.Button", "opts.radio conflicts with opts.attr.radio", {
         opts: this.opts
       });
       CUI.dom.setAttribute(this.DOM, "radio", this.__radio);
@@ -23289,9 +23292,9 @@ CUI.Button = (function(superClass) {
     if (this._menu) {
       this.__menu_opts = {};
       itemList_opts = {};
-      ref4 = this._menu;
-      for (k in ref4) {
-        v = ref4[k];
+      ref5 = this._menu;
+      for (k in ref5) {
+        v = ref5[k];
         switch (k) {
           case "onShow":
           case "onHide":
@@ -23343,7 +23346,7 @@ CUI.Button = (function(superClass) {
           policy: "click-thru"
         };
       }
-      if (!this.__menu_opts.backdrop.hasOwnProperty("blur") && ((ref5 = this._menu_parent) != null ? (ref6 = ref5.getOpt("backdrop")) != null ? ref6.blur : void 0 : void 0)) {
+      if (!this.__menu_opts.backdrop.hasOwnProperty("blur") && ((ref6 = this._menu_parent) != null ? (ref7 = ref6.getOpt("backdrop")) != null ? ref7.blur : void 0 : void 0)) {
         if (this._menu_on_hover) {
           this.__menu_opts.backdrop = {
             policy: "click-thru",
@@ -23363,11 +23366,11 @@ CUI.Button = (function(superClass) {
       capture: true,
       call: (function(_this) {
         return function(ev) {
-          var el, left, ref7, right;
+          var el, left, ref8, right;
           if (ev.hasModifierKey()) {
             return;
           }
-          if ((ref7 = ev.keyCode()) === 13 || ref7 === 32) {
+          if ((ref8 = ev.keyCode()) === 13 || ref8 === 32) {
             _this.onClickAction(ev);
             ev.stop();
             return;
