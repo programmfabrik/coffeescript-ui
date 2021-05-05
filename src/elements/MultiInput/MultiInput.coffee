@@ -201,6 +201,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				onClick: @_onClick
 				onFocus: @_onFocus
 				onKeyup: @_onKeyup
+				attr: @_attr
 				name: key.name
 				undo_support: false
 				content_size: @_content_size
