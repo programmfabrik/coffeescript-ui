@@ -44326,6 +44326,7 @@ CUI.MultiInput = (function(superClass) {
         onClick: this._onClick,
         onFocus: this._onFocus,
         onKeyup: this._onKeyup,
+        attr: this._attr,
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
