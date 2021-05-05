@@ -85,6 +85,8 @@ class CUI.Button extends CUI.DOMElement
 			@__hasAriaLabel = false
 
 		CUI.dom.setAttribute(@DOM, "tabindex", @_tabindex)
+		if @_appearance == "flat" and not @_attr?.title
+			CUI.dom.setAttribute(@DOM, "title", @_text)
 
 		if not @_attr?.role
 			CUI.dom.setAttribute(@DOM, "role", @_role)
