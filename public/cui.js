@@ -32422,6 +32422,9 @@ CUI.Form = (function(superClass) {
     if (this._padded) {
       this.addClass("cui-form--padded");
     }
+    if (this._condensed) {
+      this.addClass("cui-form--condensed");
+    }
     return;
   }
 
@@ -32431,6 +32434,10 @@ CUI.Form = (function(superClass) {
       top: {},
       bottom: {},
       padded: {
+        check: Boolean,
+        "default": false
+      },
+      condensed: {
         check: Boolean,
         "default": false
       }

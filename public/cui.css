@@ -4352,6 +4352,12 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-form--padded {
   padding: 10px;
 }
+.cui-form--condensed > .cui-vertical-layout-center > .cui-form-container > .cui-form-row {
+  margin-bottom: 5px;
+}
+.cui-form--condensed > .cui-vertical-layout-center > .cui-form-container > .cui-form-row:last-child {
+  margin-bottom: 0;
+}
 
 .cui-form--grid .cui-data-field {
   max-width: 100%;
