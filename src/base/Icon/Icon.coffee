@@ -29,7 +29,12 @@ class CUI.Icon extends CUI.Element
 		if svg_cls
 			@DOM = CUI.dom.htmlToNodes("<svg class=\"cui-icon-svg #{svg_cls} #{cls}\"><use xlink:href=\"##{svg_cls.split(" ")[0]}\"></svg>")[0]
 		else
-			@DOM = CUI.dom.element("I", class: "fa "+cls)
+			@DOM = CUI.dom.element("I", class: "fa " + cls)
+
+			if @_icon and not CUI.Icon.icon_map[@_icon]
+				span = CUI.dom.span()
+				span.textContent = @_icon[0]
+				CUI.dom.append(@DOM, span)
 
 		if @_tooltip
 			@_tooltip.element = @DOM
