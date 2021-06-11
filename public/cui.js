@@ -17229,7 +17229,7 @@ CUI.Icon = (function(superClass) {
   extend(Icon, superClass);
 
   function Icon(opts) {
-    var cls, svg_cls;
+    var cls, span, svg_cls;
     Icon.__super__.constructor.call(this, opts);
     svg_cls = "";
     cls = "";
@@ -17254,6 +17254,11 @@ CUI.Icon = (function(superClass) {
       this.DOM = CUI.dom.element("I", {
         "class": "fa " + cls
       });
+      if (this._icon && !CUI.Icon.icon_map[this._icon]) {
+        span = CUI.dom.span();
+        span.textContent = this._icon[0];
+        CUI.dom.append(this.DOM, span);
+      }
     }
     if (this._tooltip) {
       this._tooltip.element = this.DOM;
