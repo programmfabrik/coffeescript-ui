@@ -17254,7 +17254,7 @@ CUI.Icon = (function(superClass) {
       this.DOM = CUI.dom.element("I", {
         "class": "fa " + cls
       });
-      if (this._icon && !CUI.Icon.icon_map[this._icon] && !this._icon.startsWith("fa-")) {
+      if (this._icon && !CUI.Icon.icon_map[this._icon] && !this._icon.startsWith("fa-") && !this._icon.startsWith("css-swatch")) {
         span = CUI.dom.span();
         span.textContent = this._icon[0];
         CUI.dom.append(this.DOM, span);
