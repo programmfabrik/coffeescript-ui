@@ -17378,7 +17378,7 @@ CUI.Icon = (function(superClass) {
     user: "fa-user",
     warning: "fa-warning",
     west: "fa-angle-left",
-    zip: "fa fa-file-archive-o",
+    zip: "fa-file-archive-o",
     zoom_in: "fa-search-plus",
     zoom_out: "fa-search-minus"
   };
