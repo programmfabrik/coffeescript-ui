@@ -1435,6 +1435,7 @@ class CUI.DateTime extends CUI.Input
 		if mom.bc
 			return "-"+mom.bc
 
+		mom.parseZone()
 		return mom.format(format)
 
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
