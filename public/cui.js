@@ -28439,6 +28439,7 @@ CUI.DateTime = (function(superClass) {
     if (mom.bc) {
       return "-" + mom.bc;
     }
+    mom.parseZone();
     return mom.format(format);
   };
 
