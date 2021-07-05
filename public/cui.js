@@ -16725,6 +16725,26 @@ CUI.FlexHandle = (function(superClass) {
           };
         })(this)
       });
+      CUI.Events.listen({
+        type: "keydown",
+        node: this._element,
+        call: (function(_this) {
+          return function(ev) {
+            var ref;
+            if (!_this.__label) {
+              return;
+            }
+            if (!_this.isClosed()) {
+              return;
+            }
+            if ((ref = ev.getKeyboardKey()) !== "Return" && ref !== "Space") {
+              return;
+            }
+            _this.open();
+            _this.storeState();
+          };
+        })(this)
+      });
     } else {
       this._element.classList.add("cui-flex-handle-with-button-icon");
     }
@@ -17088,6 +17108,7 @@ CUI.FlexHandle = (function(superClass) {
       node: this.getPane(),
       type: "flex-close"
     });
+    CUI.dom.setAttribute(this._element, "tabindex", 0);
     this._element.classList.add("cui-flex-handle-closed");
     CUI.dom.setStyleOne(this.__pane, "display", "none");
     this.__resize();
@@ -17102,6 +17123,7 @@ CUI.FlexHandle = (function(superClass) {
       node: this.getPane(),
       type: "flex-open"
     });
+    CUI.dom.setAttribute(this._element, "tabindex");
     this._element.classList.remove("cui-flex-handle-closed");
     CUI.dom.setStyleOne(this.__pane, "display", "");
     delete this.__closed;
