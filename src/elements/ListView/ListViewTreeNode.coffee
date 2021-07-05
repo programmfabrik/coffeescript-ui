@@ -882,7 +882,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		tree = @getTree()
 
 		# Just for usability/accessibility. Use 'up' and 'down' to navigate through rows.
-		element = DOMNodes[0]
+		element = DOMNodes?[0]
 		if element
 			CUI.Events.listen
 				type: "keydown"
