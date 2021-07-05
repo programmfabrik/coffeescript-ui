@@ -41057,7 +41057,7 @@ CUI.ListViewTreeNode = (function(superClass) {
   ListViewTreeNode.prototype.addedToListView = function(DOMNodes) {
     var element, tree;
     tree = this.getTree();
-    element = DOMNodes[0];
+    element = DOMNodes != null ? DOMNodes[0] : void 0;
     if (element) {
       CUI.Events.listen({
         type: "keydown",
