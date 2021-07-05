@@ -41054,6 +41054,48 @@ CUI.ListViewTreeNode = (function(superClass) {
 
   ListViewTreeNode.prototype.moveNodeAfter = function(to_node, new_father, after) {};
 
+  ListViewTreeNode.prototype.addedToListView = function(DOMNodes) {
+    var element, tree;
+    tree = this.getTree();
+    element = DOMNodes[0];
+    if (element) {
+      CUI.Events.listen({
+        type: "keydown",
+        node: element,
+        call: (function(_this) {
+          return function(ev) {
+            var keyboardKey, nextIdx, ref, ref1, row;
+            keyboardKey = ev.getKeyboardKey();
+            if (keyboardKey !== "Up" && keyboardKey !== "Down") {
+              return;
+            }
+            nextIdx = _this.getRowIdx();
+            if (keyboardKey === "Up") {
+              if (nextIdx === 0) {
+                if ((ref = CUI.dom.findPreviousElement(element, "div[tabindex]")) != null) {
+                  ref.focus();
+                }
+                return;
+              }
+              nextIdx--;
+            } else {
+              nextIdx++;
+            }
+            row = tree.getRow(nextIdx);
+            if (!(row != null ? row[0] : void 0)) {
+              if ((ref1 = CUI.dom.findNextElement(element, "div[tabindex]")) != null) {
+                ref1.focus();
+              }
+              return;
+            }
+            row[0].focus();
+          };
+        })(this)
+      });
+    }
+    return ListViewTreeNode.__super__.addedToListView.call(this, DOMNodes);
+  };
+
   return ListViewTreeNode;
 
 })(CUI.ListViewRow);
