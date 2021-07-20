@@ -5913,6 +5913,10 @@ label[data-label-clickable],
 		.cui-block-header {
 			padding-bottom: 0;	
 		}
+
+		+ .cui-form-block--has-checkbox {
+			padding-top: 2px;
+		}
 	}
 
 	&--padded {
