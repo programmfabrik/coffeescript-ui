@@ -112,7 +112,7 @@
 	overflow: visible !important;
 	width: 100%; // see editor: ez5-nested
 	display: grid;
-	grid-template-columns: repeat($data-form-utilities-count, var(--data-form-utilities-column-width, 0)) 1fr; // default assumes neither move handle nor trash are available (example: admin > metadata > modal: ez5-metadata-profile-modal)
+	grid-template-columns: var(--data-form-utilities-column-width, 0) $data-form-utilities-column-width 1fr; // default assumes neither move handle nor trash are available (example: admin > metadata > modal: ez5-metadata-profile-modal)
 	grid-template-rows: auto;
 	grid-template-areas: 'move delete content';
 
