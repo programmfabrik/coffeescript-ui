@@ -12,17 +12,19 @@ If you use webpack we recommend you to use [webpack.ProvidePlugin](https://webpa
     {
      ...
      "devDependencies": {
-        "coffee-loader": "^0.7.3",
-        "coffee-script": "^1.12.7",
-        "coffeescript-ui": "git+https://github.com/programmfabrik/coffeescript-ui.git",
-        "css-loader": "^0.28.7",
-        "node-sass": "^4.5.3",
-        "sass-loader": "^6.0.2",
-        "style-loader": "^0.18.2",
-        "webpack": "^2.2.1"
+	    "coffee-loader": "^1.0.0",
+	    "coffee-script": "^1.12.7",
+	    "coffeescript-ui": "v1.7.1",
+	    "css-loader": "^5.0.0",
+	    "html-loader": "^1.0.0",
+	    "sass-loader": "^10.0.0",
+	    "style-loader": "^2.0.0",
+	    "webpack": "^4.41.5",
+	    "webpack-cli": "^4.5.0"
       }
     }
 ```
+**You need to install sass:** npm install -g sass
 
 ## Get started
 ### Hello world

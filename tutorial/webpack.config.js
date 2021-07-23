@@ -12,7 +12,7 @@ const config = {
         filename: 'cui-tutorial.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.coffee/,
                 loader: 'coffee-loader'
