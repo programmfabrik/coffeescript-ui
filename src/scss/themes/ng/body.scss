@@ -904,6 +904,12 @@ li > div {
 	}
 }
 
+.cui-no-icon {
+	font-family: $font-family;
+	font-size: $font-size;
+	line-height: $line-height;
+}
+
 .fa {
 	font-size: 14px;
 	// FIXME: why no pointer events? this breaks tooltips on icons
