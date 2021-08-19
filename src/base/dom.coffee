@@ -303,6 +303,9 @@ class CUI.dom
 				else
 					append_node = content
 
+		if node.hasOwnProperty('DOM') and (node.DOM instanceof Node)
+			node = node.DOM
+
 		if append
 			CUI.util.assert(append_node instanceof Node, "CUI.dom.append", "Content needs to be instanceof Node, string, boolean, or number.", node: append_node)
 			node.appendChild(append_node)
