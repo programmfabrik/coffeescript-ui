@@ -43,7 +43,7 @@ class CUI.DOMElement extends CUI.Element
 			CUI.dom.addClass(@DOM, @_class)
 
 		if @_qa and CUI.DOMElement.defaults.qa
-			CUI.dom.setAttribute(@DOM, 'data-qa', @_qa)
+			CUI.dom.setAttribute(@DOM, 'qa', @_qa)
 
 		CUI.dom.data(@DOM, "element", @)
 		@
