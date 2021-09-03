@@ -600,6 +600,10 @@ class CUI.DateTimeRangeGrammar
 		if toAddYears
 			momentInputTo.add(yearsToAdd, "year")
 
+		if not year.startsWith(CUI.DateTimeRangeGrammar.DASH)
+			momentInputFrom.parseZone()
+			momentInputTo.parseZone()
+
 		momentInputFrom.startOf("year")
 		momentInputTo.endOf("year")
 
