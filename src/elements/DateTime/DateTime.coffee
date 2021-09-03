@@ -1451,13 +1451,17 @@ class CUI.DateTime extends CUI.Input
 
 		if mom.year() > 0
 			v = mom.format(format)
-			# remove the "+"
-			return v.replace("+"+mom.year(), ""+mom.year())
+			# remove the "+" and all possible zeros.
+			replace = "^\\+?0*#{mom.year()}";
+			regexp = new RegExp(replace);
+			return v.replace(regexp, ""+mom.year())
 
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
-		# remove the "-"
-		return v.replace(mom.year(), ""+(-1 * mom.year()))
+		# remove the "-" and all possible zeros.
+		replace = "^\\-0*#{-1 * mom.year()}";
+		regexp = new RegExp(replace);
+		return v.replace(regexp, ""+(-1 * mom.year()))
 
 	@toMoment: (datestr) ->
 		if CUI.util.isEmpty(datestr)
