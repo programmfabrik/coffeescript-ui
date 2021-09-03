@@ -52,15 +52,25 @@ class CUI.FileUploadButton extends CUI.Button
 		if ev.isDefaultPrevented() or ev.isImmediatePropagationStopped()
 			return
 
-		if @_multiple instanceof Function
+		# webtest feature: if ALT+SHIFT are pressed,
+		# prevent default (so we do not open the OS file dialog)
+		webtest = ev.altKey() and ev.shiftKey()
+
+		if webtest
+			multiple = false
+		else if @_multiple instanceof Function
 			multiple = @_multiple.call(@, ev, btn) == true
 		else
 			multiple = @_multiple
 
 		@_fileUpload.initFilePicker
-			directory: ((ev.altKey() or ev.shiftKey()) and @_multiple) or @_directory
+			directory: ((ev.altKey() or ev.shiftKey()) and multiple) or @_directory
 			multiple: multiple
 			accept: @_accept
+
+		if webtest
+			console.info("Not opening file upload dialog with ALT+SHIFT pressed")
+			ev.preventDefault()
 
 		return
 
