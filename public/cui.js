@@ -31465,6 +31465,10 @@ CUI.DateTimeRangeGrammar = (function() {
       return;
     }
     if (inputString.match(CUI.DateTimeRangeGrammar.REGEXP_YEAR)) {
+      if (!inputString.startsWith(CUI.DateTimeRangeGrammar.DASH)) {
+        momentInput.add(1, "day");
+        momentInput.parseZone();
+      }
       from = to = CUI.DateTimeRangeGrammar.format(momentInput);
     } else if (inputString.match(CUI.DateTimeRangeGrammar.REGEXP_MONTH)) {
       from = CUI.DateTimeRangeGrammar.format(momentInput, false);
