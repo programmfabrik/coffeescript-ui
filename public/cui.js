@@ -31033,6 +31033,8 @@ CUI.DateTimeRangeGrammar = (function() {
       fromIsYear = true;
       fromYear = parseInt(from);
     } else if (fromMoment.isValid() && fromMoment.date() === 1 && fromMoment.month() === 0) {
+      fromMoment.add(1, "day");
+      fromMoment.parseZone();
       fromYear = fromMoment.year();
     }
     if (from === to) {
@@ -31042,6 +31044,8 @@ CUI.DateTimeRangeGrammar = (function() {
       toIsYear = true;
       toYear = parseInt(to);
     } else if (toMoment.isValid() && toMoment.date() === 31 && toMoment.month() === 11) {
+      toMoment.add(1, "day");
+      toMoment.parseZone();
       toYear = toMoment.year();
     }
     grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale];
@@ -31409,6 +31413,10 @@ CUI.DateTimeRangeGrammar = (function() {
     if (!(momentInputFrom != null ? momentInputFrom.isValid() : void 0)) {
       return;
     }
+    if (!year.startsWith(CUI.DateTimeRangeGrammar.DASH)) {
+      momentInputFrom.add(1, "day");
+      momentInputFrom.parseZone();
+    }
     if (fromAddYears || toAddYears) {
       _year = momentInputFrom.year();
       if (_year % 1000 === 0) {
@@ -31431,7 +31439,7 @@ CUI.DateTimeRangeGrammar = (function() {
       momentInputTo.add(yearsToAdd, "year");
     }
     if (!year.startsWith(CUI.DateTimeRangeGrammar.DASH)) {
-      momentInputFrom.parseZone();
+      momentInputTo.add(1, "day");
       momentInputTo.parseZone();
     }
     momentInputFrom.startOf("year");
