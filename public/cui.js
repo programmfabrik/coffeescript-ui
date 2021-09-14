@@ -12439,10 +12439,6 @@ CUI.DOMElement = (function(superClass) {
     return DOMElement.__super__.constructor.apply(this, arguments);
   }
 
-  DOMElement.defaults = {
-    qa: false
-  };
-
   DOMElement.prototype.initOpts = function() {
     DOMElement.__super__.initOpts.call(this);
     return this.addOpts({
@@ -12453,7 +12449,7 @@ CUI.DOMElement = (function(superClass) {
       id: {
         check: String
       },
-      qa: {
+      ui: {
         check: String
       },
       attr: {
@@ -12500,8 +12496,8 @@ CUI.DOMElement = (function(superClass) {
     if (this._class) {
       CUI.dom.addClass(this.DOM, this._class);
     }
-    if (this._qa && CUI.DOMElement.defaults.qa) {
-      CUI.dom.setAttribute(this.DOM, 'qa', this._qa);
+    if (this._ui) {
+      CUI.dom.setAttribute(this.DOM, 'ui', this._ui);
     }
     CUI.dom.data(this.DOM, "element", this);
     return this;
@@ -50308,7 +50304,7 @@ CUI.Tab = (function(superClass) {
       radio: "tabs--" + tabs.getUniqueId(),
       "class": "cui-tab-header-button",
       disabled: this._disabled,
-      qa: this._qa ? this._qa + "-button" : void 0,
+      ui: this._ui ? this._ui + "-button" : void 0,
       id: this._button_id,
       size: "normal",
       group: "tabs",
