@@ -624,6 +624,8 @@ class CUI.DateTime extends CUI.Input
 					return moment.invalid()
 
 				# console.debug "parsing ok", mom, f, moment.locale()
+				if mom.year() > 0
+					mom.parseZone()
 				return mom
 
 		if not formats.some((format) -> format.support_bc)
