@@ -29525,6 +29525,9 @@ CUI.DateTime = (function(superClass) {
         if (mom.year() > this._max_year) {
           return moment.invalid();
         }
+        if (mom.year() > 0) {
+          mom.parseZone();
+        }
         return mom;
       }
     }
