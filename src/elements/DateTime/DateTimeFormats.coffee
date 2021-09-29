@@ -29,6 +29,7 @@ CUI.DateTimeFormats["de-DE"] =
 		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -167,6 +168,7 @@ CUI.DateTimeFormats["it-IT"] =
 		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -223,6 +225,7 @@ CUI.DateTimeFormats["it-IT"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"Y-M-D"
 		]
 	,
 		text: "Jahr-Monat"
@@ -285,6 +288,7 @@ CUI.DateTimeFormats["es-ES"] =
 		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -341,6 +345,7 @@ CUI.DateTimeFormats["es-ES"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"Y-M-D"
 		]
 	,
 		text: "Jahr-Monat"
@@ -405,6 +410,7 @@ CUI.DateTimeFormats["en-US"] =
 		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"MM/DD/YYYY HH:mm:ss"
 			"MM/DD/YYYYTHH:mm:ss.SSSZ"
 			"MM/DD/YYYYTHH:mm:ssZ"
@@ -467,6 +473,7 @@ CUI.DateTimeFormats["en-US"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"Y-M-D"
 		]
 	,
 		text: "Jahr-Monat"
@@ -529,6 +536,7 @@ CUI.DateTimeFormats["ru-RU"] =
 		display_short_attribute: "date-time-short"
 # timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -602,6 +610,7 @@ CUI.DateTimeFormats["ru-RU"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"Y-M-D"
 			"M/D/YYYY"
 			"MM/D/YYYY"
 			"M/DD/YYYY"
@@ -667,6 +676,7 @@ CUI.DateTimeFormats["pl-PL"] =
 		display_short_attribute: "date-time-short"
 # timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -740,6 +750,7 @@ CUI.DateTimeFormats["pl-PL"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"Y-M-D"
 			"M/D/YYYY"
 			"MM/D/YYYY"
 			"M/DD/YYYY"
@@ -805,6 +816,7 @@ CUI.DateTimeFormats["cs-CZ"] =
 		display_short_attribute: "date-time-short"
 # timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -878,6 +890,7 @@ CUI.DateTimeFormats["cs-CZ"] =
 			"DD.M.YYYY"
 			"YYYYMMDD"
 			"YYYY-M-D"
+			"Y-M-D"
 			"M/D/YYYY"
 			"MM/D/YYYY"
 			"M/DD/YYYY"
