@@ -29073,13 +29073,16 @@ CUI.DateTime = (function(superClass) {
     return this.replace(this.__calendarButton, "right");
   };
 
-  DateTime.prototype.format = function(_s, _output_format, output_type) {
+  DateTime.prototype.format = function(_s, _output_format, output_type, parseZone) {
     var f, format, formats_tried, i, j, k, l, len, len1, len2, mom, output_format, ref, ref1, ref2, s;
     if (_output_format == null) {
       _output_format = "display";
     }
     if (output_type == null) {
       output_type = null;
+    }
+    if (parseZone == null) {
+      parseZone = false;
     }
     CUI.util.assert(indexOf.call(CUI.DateTime.formatTypes, _output_format) >= 0, "CUI.DateTime.format", "output_format must be on of \"" + (CUI.DateTime.formatTypes.join(',')) + "\".", {
       parm1: _s,
@@ -29126,7 +29129,7 @@ CUI.DateTime = (function(superClass) {
     });
     switch (_output_format) {
       case "store":
-        return CUI.DateTime.formatMoment(mom, output_format[_output_format]);
+        return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone);
       default:
         return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format]);
     }
@@ -29198,13 +29201,17 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.initValue = function() {
-    var corrected_value, value;
+    var _parsedValue, _value, parsedValue, value;
     DateTime.__super__.initValue.call(this);
     value = this.getValue();
-    corrected_value = this.parseValue(value, "store");
-    if (corrected_value && corrected_value !== value) {
-      console.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value);
-      this.__data[this._name] = corrected_value;
+    parsedValue = this.parseValue(value, "store");
+    if (parsedValue) {
+      _value = this.format(value);
+      _parsedValue = this.format(parsedValue);
+      if (_parsedValue !== _value) {
+        console.warn("CUI.DateTime.initValue: Corrected value in data:", parsedValue, "Original value:", value);
+        this.__data[this._name] = parsedValue;
+      }
     }
     return this;
   };
@@ -29524,9 +29531,6 @@ CUI.DateTime = (function(superClass) {
         mom.locale(moment.locale());
         if (mom.year() > this._max_year) {
           return moment.invalid();
-        }
-        if (mom.year() > 0) {
-          mom.parseZone();
         }
         return mom;
       }
@@ -30179,10 +30183,13 @@ CUI.DateTime = (function(superClass) {
     return locale;
   };
 
-  DateTime.format = function(datestr_or_moment, output_format, output_type) {
+  DateTime.format = function(datestr_or_moment, output_format, output_type, parseZone) {
     var dt, str;
+    if (parseZone == null) {
+      parseZone = false;
+    }
     dt = new CUI.DateTime();
-    str = dt.format(datestr_or_moment, output_format, output_type);
+    str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
     return str;
   };
 
@@ -30217,11 +30224,11 @@ CUI.DateTime = (function(superClass) {
     return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay());
   };
 
-  DateTime.formatMoment = function(mom, format) {
+  DateTime.formatMoment = function(mom, format, parseZone) {
     if (mom.bc) {
       return "-" + mom.bc;
     }
-    if (mom.year() > 0) {
+    if (parseZone && mom.year() > 0) {
       mom.parseZone();
     }
     return mom.format(format);
