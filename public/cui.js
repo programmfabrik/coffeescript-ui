@@ -38554,7 +38554,7 @@ CUI.ItemList = (function(superClass) {
   };
 
   ItemList.prototype.__preSelectByKeyword = function(keyword) {
-    var element, elementMatches, i, index, item, len, nextElement, nextIndex, ref, ref1;
+    var element, elementMatches, i, index, item, len, nextElement, nextIndex, ref;
     elementMatches = (function(_this) {
       return function(element) {
         var ref;
@@ -38567,9 +38567,9 @@ CUI.ItemList = (function(superClass) {
       this.__preActivateButtonByIndex(nextIndex);
       return;
     }
-    ref1 = (ref = this.__body) != null ? ref.DOM.children : void 0;
-    for (index = i = 0, len = ref1.length; i < len; index = ++i) {
-      item = ref1[index];
+    ref = this.__getButtonItems();
+    for (index = i = 0, len = ref.length; i < len; index = ++i) {
+      item = ref[index];
       element = CUI.dom.data(item, "element");
       if (elementMatches(element)) {
         this.__preActivateButtonByIndex(index);
@@ -38651,7 +38651,8 @@ CUI.ItemList = (function(superClass) {
   };
 
   ItemList.prototype.__getButtonItems = function() {
-    return Array.prototype.filter.call(this.__body.DOM.children, (function(_this) {
+    var ref;
+    return Array.prototype.filter.call((ref = this.__body) != null ? ref.DOM.children : void 0, (function(_this) {
       return function(item) {
         var element;
         element = CUI.dom.data(item, "element");
