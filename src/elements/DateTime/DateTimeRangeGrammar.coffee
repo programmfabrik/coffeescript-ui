@@ -290,6 +290,8 @@ class CUI.DateTimeRangeGrammar
 			toYear = toMoment.year()
 
 		grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale]
+		if not grammars
+			return
 		getPossibleString = (key, parameters) ->
 			for _grammar in grammars
 				if _grammar[4] == key
