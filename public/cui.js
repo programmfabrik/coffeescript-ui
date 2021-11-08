@@ -31211,6 +31211,9 @@ CUI.DateTimeRangeGrammar = (function() {
       toYear = toMoment.year();
     }
     grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale];
+    if (!grammars) {
+      return;
+    }
     getPossibleString = function(key, parameters) {
       var _grammar, grammar, i, index, j, len, len1, output, possibleString, possibleStringArray, tokenPositions, value;
       for (i = 0, len = grammars.length; i < len; i++) {
