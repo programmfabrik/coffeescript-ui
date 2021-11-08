@@ -48,9 +48,14 @@ class CUI
 			type: "keyup"
 			node: window
 			capture: true
-			call: (ev) ->
+			call: (ev) =>
 				if ev.getKeyboard() == "C+U+I"
 					CUI.toaster(text: "CUI!")
+
+				if CUI.defaults.debug
+					if ev.getKeyboard() == "Alt+Shift+U"
+						@__toggleUIElements()
+				return
 
 		CUI.Events.listen
 			type: "keydown"
@@ -887,6 +892,56 @@ class CUI
 		map.blink = (map.chrome or map.opera) && !!window.CSS
 		map
 	)()
+
+	@__toggleUIElements: ->
+		if @__uiHighlightDivs?.length > 0
+			for highlightDiv in @__uiHighlightDivs
+				CUI.dom.remove(highlightDiv)
+			delete @__uiHighlightDivs
+			return
+
+		@__uiHighlightDivs = []
+		uiElements = document.querySelectorAll("[ui]")
+		for uiElement in uiElements
+			div = CUI.dom.div()
+			@__uiHighlightDivs.push(div)
+			do(div, uiElement) =>
+				div.textContent = uiElement.getAttribute("ui")
+				CUI.dom.setStyle(div,
+					padding: "4px"
+					background: "yellow"
+					position: "absolute"
+					"white-space": "nowrap"
+					cursor: "pointer"
+				)
+				CUI.dom.append(document.body, div)
+
+				divRect = div.getBoundingClientRect();
+				uiElementRect = uiElement.getBoundingClientRect();
+
+				borderStyle = CUI.dom.getStyle(uiElement).border
+				div.addEventListener('mouseenter', =>
+					CUI.dom.setStyle(uiElement, {border: "2px solid yellow"})
+				)
+				div.addEventListener('mouseleave', =>
+					CUI.dom.setStyle(uiElement, {border: borderStyle})
+				)
+				div.addEventListener('click', =>
+					navigator.clipboard.writeText(div.textContent)
+				)
+
+				top = uiElementRect.top + uiElementRect.height / 2 - divRect.height / 2
+
+				left = uiElementRect.left - divRect.width
+				if left <= divRect.width
+					left = uiElementRect.left + uiElementRect.width
+
+				CUI.dom.setStyle(div,
+					top: top
+					left: left
+				)
+				CUI.dom.setStyle(div, "zIndex": 5, "")
+		return
 
 CUI.ready =>
 
