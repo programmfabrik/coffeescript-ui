@@ -11333,13 +11333,20 @@ CUI = (function() {
       type: "keyup",
       node: window,
       capture: true,
-      call: function(ev) {
-        if (ev.getKeyboard() === "C+U+I") {
-          return CUI.toaster({
-            text: "CUI!"
-          });
-        }
-      }
+      call: (function(_this) {
+        return function(ev) {
+          if (ev.getKeyboard() === "C+U+I") {
+            CUI.toaster({
+              text: "CUI!"
+            });
+          }
+          if (CUI.defaults.debug) {
+            if (ev.getKeyboard() === "Alt+Shift+U") {
+              _this.__toggleUIElements();
+            }
+          }
+        };
+      })(this)
     });
     CUI.Events.listen({
       type: "keydown",
@@ -12378,6 +12385,69 @@ CUI = (function() {
     map.blink = (map.chrome || map.opera) && !!window.CSS;
     return map;
   })();
+
+  CUI.__toggleUIElements = function() {
+    var div, fn, highlightDiv, j, l, len1, len2, ref, ref1, uiElement, uiElements;
+    if (((ref = this.__uiHighlightDivs) != null ? ref.length : void 0) > 0) {
+      ref1 = this.__uiHighlightDivs;
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        highlightDiv = ref1[j];
+        CUI.dom.remove(highlightDiv);
+      }
+      delete this.__uiHighlightDivs;
+      return;
+    }
+    this.__uiHighlightDivs = [];
+    uiElements = document.querySelectorAll("[ui]");
+    fn = (function(_this) {
+      return function(div, uiElement) {
+        var borderStyle, divRect, left, top, uiElementRect;
+        div.textContent = uiElement.getAttribute("ui");
+        CUI.dom.setStyle(div, {
+          padding: "4px",
+          background: "yellow",
+          position: "absolute",
+          "white-space": "nowrap",
+          cursor: "pointer"
+        });
+        CUI.dom.append(document.body, div);
+        divRect = div.getBoundingClientRect();
+        uiElementRect = uiElement.getBoundingClientRect();
+        borderStyle = CUI.dom.getStyle(uiElement).border;
+        div.addEventListener('mouseenter', function() {
+          return CUI.dom.setStyle(uiElement, {
+            border: "2px solid yellow"
+          });
+        });
+        div.addEventListener('mouseleave', function() {
+          return CUI.dom.setStyle(uiElement, {
+            border: borderStyle
+          });
+        });
+        div.addEventListener('click', function() {
+          return navigator.clipboard.writeText(div.textContent);
+        });
+        top = uiElementRect.top + uiElementRect.height / 2 - divRect.height / 2;
+        left = uiElementRect.left - divRect.width;
+        if (left <= divRect.width) {
+          left = uiElementRect.left + uiElementRect.width;
+        }
+        CUI.dom.setStyle(div, {
+          top: top,
+          left: left
+        });
+        return CUI.dom.setStyle(div, {
+          "zIndex": 5
+        }, "");
+      };
+    })(this);
+    for (l = 0, len2 = uiElements.length; l < len2; l++) {
+      uiElement = uiElements[l];
+      div = CUI.dom.div();
+      this.__uiHighlightDivs.push(div);
+      fn(div, uiElement);
+    }
+  };
 
   return CUI;
 
