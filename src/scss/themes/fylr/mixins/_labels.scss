@@ -34,6 +34,16 @@
 	}
 }
 
+@mixin label-xxxl() {
+	font-size: $font-size-xxxl;
+
+	.cui-label-icon {
+		.fa {
+			font-size: inherit;
+		}
+	}
+}
+
 @mixin label-secondary() {
 	color: theme-color('secondary');
 	// font-weight: $font-weight-light;

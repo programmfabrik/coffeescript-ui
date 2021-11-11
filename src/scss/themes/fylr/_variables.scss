@@ -232,6 +232,7 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, 'Liberati
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
+$font-size-xxxl:              1rem * 1.37 !default; // 20,
 $font-size-xxl:               1rem * 1.25 !default; // 20,  todo: do we really need this "bigger" font size
 $font-size-xl:                1rem * 1.125 !default; // 18
 $font-size-lg:                1rem !default; // 16
@@ -299,6 +300,7 @@ $icon-font-size: 		$font-size-base !default;
 $icon-font-size-lg: 	20px !default;
 $icon-font-size-xl: 	30px !default;
 $icon-font-size-xxl:	40px !default;
+$icon-font-size-xxxl:	50px !default;
 $icon-line-height: 		1.6 !default;
 
 
