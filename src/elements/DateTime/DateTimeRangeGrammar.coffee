@@ -68,7 +68,7 @@ class CUI.DateTimeRangeGrammar
 	@PARSE_GRAMMARS = {} # TODO: Add ES & IT.
 	@PARSE_GRAMMARS["de-DE"] = [
 		["DATE bis DATE", "range", [0, 2], null, "RANGE"]
-		["YEAR bis YEAR", "range", [0, 2]]
+		["YEAR bis YEAR", "range", [0, 2], null, "RANGE_YEAR"]
 		["YEAR - YEAR n. Chr.", "range", [0, 2]]
 		["YEAR bis YEAR n. Chr.", "range", [0, 2]]
 		["zwischen YEAR bis YEAR", "range", [1, 3]]
@@ -204,7 +204,7 @@ class CUI.DateTimeRangeGrammar
 	]
 	@PARSE_GRAMMARS["en-US"] = [
 		["DATE to DATE", "range", [0, 2], null, "RANGE"]
-		["YEAR to YEAR", "range", [0, 2]]
+		["YEAR to YEAR", "range", [0, 2], null, "RANGE_YEAR"]
 		["YEAR - YEAR A.D.", "range", [0, 2]]
 		["YEAR - YEAR AD", "range", [0, 2]]
 		["YEAR to YEAR A.D.", "range", [0, 2]]
@@ -416,6 +416,11 @@ class CUI.DateTimeRangeGrammar
 					if format.display_attribute == CUI.DateTimeRangeGrammar.DISPLAY_ATTRIBUTE_YEAR_MONTH
 						month = CUI.DateTimeRangeGrammar.MONTHS[locale][toMoment.month()]
 						return "#{month} #{toMoment.year()}"
+
+		if fromIsYear and toIsYear
+			possibleString = getPossibleString("RANGE_YEAR", [from, to])
+			if possibleString
+				return possibleString
 
 		if fromIsYear or toIsYear
 			if fromIsYear
