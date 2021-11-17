@@ -72,26 +72,28 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 	initNewStickyHeaders: ->
 		measure_headers = []
-		for nsh in @newStickyHeaders
-			dom = nsh.DOM
+		for newStickyHeader in @newStickyHeaders
+			dom = newStickyHeader.DOM
 
 			header =
-				stickyHeader: nsh
-				level: nsh.getLevel()
-				node: dom.cloneNode(true)
+				stickyHeader: newStickyHeader
+				level: newStickyHeader.getLevel()
+				nodeToMeasure: dom.cloneNode(true)
+				node: dom
 
 			@headers.push(header)
 
 			measure_headers.push(header)
-			header.node.style.visiblity = "hidden"
-			CUI.dom.prepend(@__control, header.node)
+			header.nodeToMeasure.style.visiblity = "hidden"
+			CUI.dom.prepend(@__control, header.nodeToMeasure)
 
 		@newStickyHeaders.splice(0)
 
 		for header in measure_headers
-			header.dimInControl = CUI.dom.getDimensions(header.node)
-			@__control.removeChild(header.node)
-			header.node.style.visiblity = ""
+			header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure)
+			@__control.removeChild(header.nodeToMeasure)
+			header.nodeToMeasure.style.visiblity = ""
+			delete header.nodeToMeasure
 		@
 
 	destroy: ->
@@ -154,7 +156,8 @@ class CUI.StickyHeaderControl extends CUI.Element
 			if slot == null
 				break
 
-			CUI.dom.prepend(@__control, slot.node)
+			nodeCloned = slot.node.cloneNode(true)
+			CUI.dom.prepend(@__control, nodeCloned)
 
 			if cut < 0 and slot.level == next_header.level
 				top += cut
@@ -164,8 +167,9 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 			@__hiddenHeaders.push(hideHeader)
 
-			slot.node.style.top = top+"px"
-			top += slot.dimInControl.marginBoxHeight
+			nodeCloned.style.top = "#{top}px"
+			dimInControl = CUI.dom.getDimensions(nodeCloned)
+			top += dimInControl.marginBoxHeight
 
 		CUI.dom.setStyle(@__control,
 			height: top
