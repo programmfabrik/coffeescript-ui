@@ -50146,28 +50146,30 @@ CUI.StickyHeaderControl = (function(superClass) {
   };
 
   StickyHeaderControl.prototype.initNewStickyHeaders = function() {
-    var dom, header, j, k, len, len1, measure_headers, nsh, ref;
+    var dom, header, j, k, len, len1, measure_headers, newStickyHeader, ref;
     measure_headers = [];
     ref = this.newStickyHeaders;
     for (j = 0, len = ref.length; j < len; j++) {
-      nsh = ref[j];
-      dom = nsh.DOM;
+      newStickyHeader = ref[j];
+      dom = newStickyHeader.DOM;
       header = {
-        stickyHeader: nsh,
-        level: nsh.getLevel(),
-        node: dom.cloneNode(true)
+        stickyHeader: newStickyHeader,
+        level: newStickyHeader.getLevel(),
+        nodeToMeasure: dom.cloneNode(true),
+        node: dom
       };
       this.headers.push(header);
       measure_headers.push(header);
-      header.node.style.visiblity = "hidden";
-      CUI.dom.prepend(this.__control, header.node);
+      header.nodeToMeasure.style.visiblity = "hidden";
+      CUI.dom.prepend(this.__control, header.nodeToMeasure);
     }
     this.newStickyHeaders.splice(0);
     for (k = 0, len1 = measure_headers.length; k < len1; k++) {
       header = measure_headers[k];
-      header.dimInControl = CUI.dom.getDimensions(header.node);
-      this.__control.removeChild(header.node);
-      header.node.style.visiblity = "";
+      header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure);
+      this.__control.removeChild(header.nodeToMeasure);
+      header.nodeToMeasure.style.visiblity = "";
+      delete header.nodeToMeasure;
     }
     return this;
   };
@@ -50183,7 +50185,7 @@ CUI.StickyHeaderControl = (function(superClass) {
   };
 
   StickyHeaderControl.prototype.position = function() {
-    var cut, extraTop, header, hiddenHeader, hideHeader, i, idx, j, k, l, len, len1, len2, len3, m, n, next_header, o, ref, ref1, ref2, ref3, ref4, scrollTop, slot, slots, top, top_space;
+    var cut, dimInControl, extraTop, header, hiddenHeader, hideHeader, i, idx, j, k, l, len, len1, len2, len3, m, n, next_header, nodeCloned, o, ref, ref1, ref2, ref3, ref4, scrollTop, slot, slots, top, top_space;
     if (!this.isInDOM()) {
       return;
     }
@@ -50240,15 +50242,17 @@ CUI.StickyHeaderControl = (function(superClass) {
       if (slot === null) {
         break;
       }
-      CUI.dom.prepend(this.__control, slot.node);
+      nodeCloned = slot.node.cloneNode(true);
+      CUI.dom.prepend(this.__control, nodeCloned);
       if (cut < 0 && slot.level === next_header.level) {
         top += cut;
       }
       hideHeader = slot.stickyHeader.DOM;
       hideHeader.style.visibility = "hidden";
       this.__hiddenHeaders.push(hideHeader);
-      slot.node.style.top = top + "px";
-      top += slot.dimInControl.marginBoxHeight;
+      nodeCloned.style.top = top + "px";
+      dimInControl = CUI.dom.getDimensions(nodeCloned);
+      top += dimInControl.marginBoxHeight;
     }
     CUI.dom.setStyle(this.__control, {
       height: top
