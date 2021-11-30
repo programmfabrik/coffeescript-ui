@@ -12408,18 +12408,33 @@ CUI = (function() {
           background: "yellow",
           position: "absolute",
           "white-space": "nowrap",
-          cursor: "pointer"
+          cursor: "pointer",
+          border: "solid 1.5px grey"
         });
+        div.title = "Click to copy!";
         CUI.dom.append(document.body, div);
         divRect = div.getBoundingClientRect();
         uiElementRect = uiElement.getBoundingClientRect();
         borderStyle = CUI.dom.getStyle(uiElement).border;
         div.addEventListener('mouseenter', function() {
+          var len3, n, otherHighlightDiv, ref2;
+          ref2 = _this.__uiHighlightDivs;
+          for (n = 0, len3 = ref2.length; n < len3; n++) {
+            otherHighlightDiv = ref2[n];
+            CUI.dom.hideElement(otherHighlightDiv);
+          }
+          CUI.dom.showElement(div);
           return CUI.dom.setStyle(uiElement, {
             border: "2px solid yellow"
           });
         });
         div.addEventListener('mouseleave', function() {
+          var len3, n, otherHighlightDiv, ref2;
+          ref2 = _this.__uiHighlightDivs;
+          for (n = 0, len3 = ref2.length; n < len3; n++) {
+            otherHighlightDiv = ref2[n];
+            CUI.dom.showElement(otherHighlightDiv);
+          }
           return CUI.dom.setStyle(uiElement, {
             border: borderStyle
           });
@@ -27093,6 +27108,7 @@ CUI.ConfirmationChoice = (function(superClass) {
       }
       btn_opts = {
         left: true,
+        ui: "confirmation.choice:" + (choice.text.toLowerCase().replace(/s+/g, '_')),
         value: choice,
         disabled: choice.disabled,
         tooltip: choice.tooltip,
