@@ -12427,10 +12427,14 @@ CUI = (function() {
         div.addEventListener('click', function() {
           return navigator.clipboard.writeText(div.textContent);
         });
-        top = uiElementRect.top + uiElementRect.height / 2 - divRect.height / 2;
-        left = uiElementRect.left - divRect.width;
-        if (left <= divRect.width) {
-          left = uiElementRect.left + uiElementRect.width;
+        top = uiElementRect.y + uiElementRect.height / 2 - divRect.height / 2;
+        if (top < 0) {
+          CUI.dom.remove(div);
+          return;
+        }
+        left = uiElementRect.x - divRect.width;
+        if (left <= 0) {
+          left = uiElementRect.x + uiElementRect.width;
         }
         CUI.dom.setStyle(div, {
           top: top,
@@ -20727,12 +20731,18 @@ CUI.Layout = (function(superClass) {
       "class": {
         check: String
       },
+      ui: {
+        check: String
+      },
       content: {},
       flexHandle: {}
     });
     this.append(opts.content, pane_name);
     if (opts["class"]) {
-      return this.__layout.addClass(opts["class"], pane_name);
+      this.__layout.addClass(opts["class"], pane_name);
+    }
+    if (opts.ui) {
+      CUI.dom.setAttribute(this.__layout.get(pane_name), "ui", opts.ui);
     }
   };
 
