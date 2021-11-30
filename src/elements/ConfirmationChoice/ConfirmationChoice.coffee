@@ -76,6 +76,7 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 
 			btn_opts =
 				left: true
+				ui: "confirmation.choice:#{choice.text.toLowerCase().replace(/s+/g, '_')}"
 				value: choice
 				disabled: choice.disabled
 				tooltip: choice.tooltip

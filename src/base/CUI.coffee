@@ -913,7 +913,9 @@ class CUI
 					position: "absolute"
 					"white-space": "nowrap"
 					cursor: "pointer"
+					border: "solid 1.5px grey"
 				)
+				div.title = "Click to copy!"
 				CUI.dom.append(document.body, div)
 
 				divRect = div.getBoundingClientRect();
@@ -921,9 +923,14 @@ class CUI
 
 				borderStyle = CUI.dom.getStyle(uiElement).border
 				div.addEventListener('mouseenter', =>
+					for otherHighlightDiv in @__uiHighlightDivs
+						CUI.dom.hideElement(otherHighlightDiv)
+					CUI.dom.showElement(div)
 					CUI.dom.setStyle(uiElement, {border: "2px solid yellow"})
 				)
 				div.addEventListener('mouseleave', =>
+					for otherHighlightDiv in @__uiHighlightDivs
+						CUI.dom.showElement(otherHighlightDiv)
 					CUI.dom.setStyle(uiElement, {border: borderStyle})
 				)
 				div.addEventListener('click', =>
