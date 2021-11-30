@@ -930,11 +930,15 @@ class CUI
 					navigator.clipboard.writeText(div.textContent)
 				)
 
-				top = uiElementRect.top + uiElementRect.height / 2 - divRect.height / 2
+				top = uiElementRect.y + uiElementRect.height / 2 - divRect.height / 2
+				if top < 0
+					# Skip not visible elements.
+					CUI.dom.remove(div)
+					return
 
-				left = uiElementRect.left - divRect.width
-				if left <= divRect.width
-					left = uiElementRect.left + uiElementRect.width
+				left = uiElementRect.x - divRect.width
+				if left <= 0
+					left = uiElementRect.x + uiElementRect.width
 
 				CUI.dom.setStyle(div,
 					top: top
