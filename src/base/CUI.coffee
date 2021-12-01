@@ -906,6 +906,9 @@ class CUI
 			div = CUI.dom.div()
 			@__uiHighlightDivs.push(div)
 			do(div, uiElement) =>
+				divRect = div.getBoundingClientRect();
+				uiElementRect = uiElement.getBoundingClientRect();
+
 				div.textContent = uiElement.getAttribute("ui")
 				CUI.dom.setStyle(div,
 					padding: "4px"
@@ -916,10 +919,10 @@ class CUI
 					border: "solid 1.5px grey"
 				)
 				div.title = "Click to copy!"
+				span = CUI.dom.span()
+				span.textContent = " [X]"
+				CUI.dom.append(div, span)
 				CUI.dom.append(document.body, div)
-
-				divRect = div.getBoundingClientRect();
-				uiElementRect = uiElement.getBoundingClientRect();
 
 				borderStyle = CUI.dom.getStyle(uiElement).border
 				div.addEventListener('mouseenter', =>
@@ -934,7 +937,15 @@ class CUI
 					CUI.dom.setStyle(uiElement, {border: borderStyle})
 				)
 				div.addEventListener('click', =>
-					navigator.clipboard.writeText(div.textContent)
+					navigator.clipboard.writeText(uiElement.getAttribute("ui"))
+				)
+				span.addEventListener('click', =>
+					CUI.dom.remove(div)
+					CUI.util.removeFromArray(div, @__uiHighlightDivs)
+					CUI.dom.setStyle(uiElement, {border: borderStyle})
+					for otherHighlightDiv in @__uiHighlightDivs
+						CUI.dom.showElement(otherHighlightDiv)
+					return
 				)
 
 				top = uiElementRect.y + uiElementRect.height / 2 - divRect.height / 2
@@ -945,7 +956,10 @@ class CUI
 
 				left = uiElementRect.x - divRect.width
 				if left <= 0
-					left = uiElementRect.x + uiElementRect.width
+					if uiElementRect.width > divRect.width
+						left = uiElementRect.x
+					else
+						left = uiElementRect.x + uiElementRect.width
 
 				CUI.dom.setStyle(div,
 					top: top
