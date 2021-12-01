@@ -74,9 +74,15 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			if not choice
 				continue
 
+			uiKey = "confirmation.choice"
+			if choice.text
+				uiKey += ":#{choice.text.toLowerCase().replace(/s+/g, '_')}"
+			else if choice.loca_key
+				uiKey += ":#{choice.loca_key}"
+
 			btn_opts =
 				left: true
-				ui: "confirmation.choice:#{choice.text.toLowerCase().replace(/s+/g, '_')}"
+				ui: uiKey
 				value: choice
 				disabled: choice.disabled
 				tooltip: choice.tooltip
