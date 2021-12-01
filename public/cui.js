@@ -27098,7 +27098,7 @@ CUI.ConfirmationChoice = (function(superClass) {
   };
 
   ConfirmationChoice.prototype.init = function() {
-    var btn_opts, choice, i, key, len, ref;
+    var btn_opts, choice, i, key, len, ref, uiKey;
     this._buttons = [];
     ref = this._choices;
     for (i = 0, len = ref.length; i < len; i++) {
@@ -27106,9 +27106,15 @@ CUI.ConfirmationChoice = (function(superClass) {
       if (!choice) {
         continue;
       }
+      uiKey = "confirmation.choice";
+      if (choice.text) {
+        uiKey += ":" + (choice.text.toLowerCase().replace(/s+/g, '_'));
+      } else if (choice.loca_key) {
+        uiKey += ":" + choice.loca_key;
+      }
       btn_opts = {
         left: true,
-        ui: "confirmation.choice:" + (choice.text.toLowerCase().replace(/s+/g, '_')),
+        ui: uiKey,
         value: choice,
         disabled: choice.disabled,
         tooltip: choice.tooltip,
