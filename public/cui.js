@@ -12401,7 +12401,9 @@ CUI = (function() {
     uiElements = document.querySelectorAll("[ui]");
     fn = (function(_this) {
       return function(div, uiElement) {
-        var borderStyle, divRect, left, top, uiElementRect;
+        var borderStyle, divRect, left, span, top, uiElementRect;
+        divRect = div.getBoundingClientRect();
+        uiElementRect = uiElement.getBoundingClientRect();
         div.textContent = uiElement.getAttribute("ui");
         CUI.dom.setStyle(div, {
           padding: "4px",
@@ -12412,9 +12414,10 @@ CUI = (function() {
           border: "solid 1.5px grey"
         });
         div.title = "Click to copy!";
+        span = CUI.dom.span();
+        span.textContent = " [X]";
+        CUI.dom.append(div, span);
         CUI.dom.append(document.body, div);
-        divRect = div.getBoundingClientRect();
-        uiElementRect = uiElement.getBoundingClientRect();
         borderStyle = CUI.dom.getStyle(uiElement).border;
         div.addEventListener('mouseenter', function() {
           var len3, n, otherHighlightDiv, ref2;
@@ -12440,7 +12443,20 @@ CUI = (function() {
           });
         });
         div.addEventListener('click', function() {
-          return navigator.clipboard.writeText(div.textContent);
+          return navigator.clipboard.writeText(uiElement.getAttribute("ui"));
+        });
+        span.addEventListener('click', function() {
+          var len3, n, otherHighlightDiv, ref2;
+          CUI.dom.remove(div);
+          CUI.util.removeFromArray(div, _this.__uiHighlightDivs);
+          CUI.dom.setStyle(uiElement, {
+            border: borderStyle
+          });
+          ref2 = _this.__uiHighlightDivs;
+          for (n = 0, len3 = ref2.length; n < len3; n++) {
+            otherHighlightDiv = ref2[n];
+            CUI.dom.showElement(otherHighlightDiv);
+          }
         });
         top = uiElementRect.y + uiElementRect.height / 2 - divRect.height / 2;
         if (top < 0) {
@@ -12449,7 +12465,11 @@ CUI = (function() {
         }
         left = uiElementRect.x - divRect.width;
         if (left <= 0) {
-          left = uiElementRect.x + uiElementRect.width;
+          if (uiElementRect.width > divRect.width) {
+            left = uiElementRect.x;
+          } else {
+            left = uiElementRect.x + uiElementRect.width;
+          }
         }
         CUI.dom.setStyle(div, {
           top: top,
@@ -50586,7 +50606,7 @@ CUI.Tab = (function(superClass) {
       radio: "tabs--" + tabs.getUniqueId(),
       "class": "cui-tab-header-button",
       disabled: this._disabled,
-      ui: this._ui ? this._ui + "-button" : void 0,
+      ui: this._ui ? this._ui + ".button" : void 0,
       id: this._button_id,
       size: "normal",
       group: "tabs",
