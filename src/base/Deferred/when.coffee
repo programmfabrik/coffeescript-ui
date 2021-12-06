@@ -19,6 +19,8 @@ CUI.when = =>
 CUI.__when = =>
 	promises = []
 	add_promise = (promise, idx) =>
+		if not promise
+			return
 		CUI.util.assert(CUI.util.isPromise(promise) or CUI.util.isDeferred(promise), "CUI.when", "arg[#{idx}] needs to be instanceof CUI.Promise or CUI.Deferred.", arg: promise)
 		promises.push(promise)
 		return

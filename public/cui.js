@@ -14023,6 +14023,9 @@ CUI.__when = (function(_this) {
     var _arg, _idx, add_promise, arg, dfr, finished_count, finished_func, finished_values, fn, i, idx, j, k, len, len1, len2, promise, promises, stop_on_failure;
     promises = [];
     add_promise = function(promise, idx) {
+      if (!promise) {
+        return;
+      }
       CUI.util.assert(CUI.util.isPromise(promise) || CUI.util.isDeferred(promise), "CUI.when", "arg[" + idx + "] needs to be instanceof CUI.Promise or CUI.Deferred.", {
         arg: promise
       });
