@@ -346,6 +346,8 @@ class CUI.Template extends CUI.Element
 			responseType: "text"
 		.start()
 		.done (data) =>
+			if data.length == 0
+				return
 			@__appendContent(data, load_templates)
 			return
 		.fail (xhr) ->
@@ -387,9 +389,9 @@ class CUI.Template extends CUI.Element
 
 			if div.children.length > 0
 				document.body.appendChild(div)
-				console.warn("Template.loadFile:", filename, "contains extra content.", div)
+				console.warn("Template.appendContent: contains extra content", div)
 
 			if count == 0
-				console.warn("Template.loadFile:", filename, "contains no Templates.")
+				console.warn("Template.appendContent: contains no Templates")
 			else
 				; # console.info("Template.loadFile:", count, "Template loaded from", filename)

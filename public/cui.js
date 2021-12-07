@@ -21467,6 +21467,9 @@ CUI.Template = (function(superClass) {
       responseType: "text"
     }).start().done((function(_this) {
       return function(data) {
+        if (data.length === 0) {
+          return;
+        }
         _this.__appendContent(data, load_templates);
       };
     })(this)).fail(function(xhr) {
@@ -21522,10 +21525,10 @@ CUI.Template = (function(superClass) {
       count = CUI.Template.load(div);
       if (div.children.length > 0) {
         document.body.appendChild(div);
-        console.warn("Template.loadFile:", filename, "contains extra content.", div);
+        console.warn("Template.appendContent: contains extra content", div);
       }
       if (count === 0) {
-        return console.warn("Template.loadFile:", filename, "contains no Templates.");
+        return console.warn("Template.appendContent: contains no Templates");
       } else {
 
       }
