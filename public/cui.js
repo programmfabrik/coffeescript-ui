@@ -21467,9 +21467,6 @@ CUI.Template = (function(superClass) {
       responseType: "text"
     }).start().done((function(_this) {
       return function(data) {
-        if (data.length === 0) {
-          return;
-        }
         _this.__appendContent(data, load_templates);
       };
     })(this)).fail(function(xhr) {
@@ -21515,6 +21512,9 @@ CUI.Template = (function(superClass) {
 
   Template.__appendContent = function(data, load_templates) {
     var count, div;
+    if (data.length === 0) {
+      return;
+    }
     div = CUI.dom.element("DIV", {
       style: "display:none;"
     });

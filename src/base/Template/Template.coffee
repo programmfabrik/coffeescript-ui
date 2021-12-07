@@ -346,8 +346,6 @@ class CUI.Template extends CUI.Element
 			responseType: "text"
 		.start()
 		.done (data) =>
-			if data.length == 0
-				return
 			@__appendContent(data, load_templates)
 			return
 		.fail (xhr) ->
@@ -380,6 +378,8 @@ class CUI.Template extends CUI.Element
 		return count
 
 	@__appendContent: (data, load_templates) ->
+		if data.length == 0
+			return
 		div = CUI.dom.element("DIV", style: "display:none;")
 		div.innerHTML = data
 		if not load_templates
