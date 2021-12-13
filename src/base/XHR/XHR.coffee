@@ -15,7 +15,7 @@ class CUI.XHR extends CUI.Element
 			method:
 				mandatory: true
 				default: "GET"
-				check: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+				check: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"]
 			url:
 				mandatory: true
 				check: String
