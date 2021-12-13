@@ -21577,7 +21577,7 @@ CUI.XHR = (function(superClass) {
       method: {
         mandatory: true,
         "default": "GET",
-        check: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+        check: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"]
       },
       url: {
         mandatory: true,
