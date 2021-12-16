@@ -14000,6 +14000,27 @@ CUI.decide = (function(_this) {
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
  */
+CUI.whenAllReject = (function(_this) {
+  return function() {
+    var args, dfr;
+    dfr = new CUI.Deferred();
+    args = [false];
+    args.push.apply(args, arguments);
+    CUI.whenAll.apply(_this, args).done(function() {
+      var i, len, promise;
+      for (i = 0, len = arguments.length; i < len; i++) {
+        promise = arguments[i];
+        if (promise.state === "rejected") {
+          dfr.reject();
+          return;
+        }
+      }
+      dfr.resolve();
+    });
+    return dfr.promise();
+  };
+})(this);
+
 CUI.whenAll = (function(_this) {
   return function() {
     var args;
