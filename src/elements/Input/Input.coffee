@@ -70,8 +70,8 @@ class CUI.Input extends CUI.DataFieldInput
 				default: false
 				check: Boolean
 			autocomplete:
-				default: false
-				check: Boolean
+				default: "off"
+				check: String
 			overwrite:
 				check: Boolean
 			checkInput:
@@ -155,7 +155,7 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.util.assert(not (@opts.getCursorBlocks or @opts.getInputBlocks or @opts.checkInput), "new CUI.Input", "opts.readonly conflicts with opts.getCursorBlocks, opts.getInputBlocks, opts.checkInput.")
 
 		if @opts.textarea
-			CUI.util.assert(not @opts.autocomplete, "new CUI.Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
+			CUI.util.assert(@opts.autocomplete != "off", "new CUI.Input", "opts.textarea does not work with opts.autocomplete", opts: @opts)
 			CUI.util.assert(not @opts.incNumbers, "new CUI.Input", "opts.textarea does not work with opts.incNumbers", opts: @opts)
 
 		super()
@@ -192,11 +192,8 @@ class CUI.Input extends CUI.DataFieldInput
 		# if @_rows
 		# 	CUI.util.assert(@_content_size, "new CUI.Input", "opts.rows can only be used with opts.content_size set.", opts: @opts)
 
-		if @_autocomplete == true
-			@__autocomplete = "on"
-		else if @_autocomplete == false
-			@__autocomplete = "off"
-
+		# Available autocomplete values here: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+		@__autocomplete = @_autocomplete
 		@
 
 	__checkInputRegexp: (value) ->
