@@ -96,6 +96,10 @@
 				> .cui-empty-label:only-child {
 					margin: $spacer-sm 0;
 				}
+
+				> .cui-vertical-layout:only-child {
+					flex-shrink: 0; // enable scrolling in tab-body
+				}
 			}
 		}
 	}
