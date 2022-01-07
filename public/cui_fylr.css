@@ -739,7 +739,6 @@ html {
 }
 
 body {
-  display: -webkit-box;
   display: flex;
   width: 100%;
   height: 100%;
@@ -816,8 +815,7 @@ body {
 
 .cui-space-flexible,
 .cui-flexible-space {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .cui-root-layout {
@@ -830,20 +828,14 @@ body {
 .cui-vertical-layout-top,
 .cui-vertical-layout-center,
 .cui-vertical-layout-bottom {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   flex-shrink: 0;
 }
 
 .cui-horizontal-layout {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
   align-self: flex-start;
 }
 .cui-horizontal-layout.cui-maximize-horizontal {
@@ -857,13 +849,11 @@ body {
 }
 .cui-horizontal-layout.cui-maximize-horizontal > .cui-horizontal-layout-center {
   position: relative;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: auto;
 }
 .cui-horizontal-layout.cui-maximize-vertical {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: hidden;
 }
 .cui-horizontal-layout.cui-absolute {
@@ -888,16 +878,12 @@ body {
 }
 
 .cui-vertical-layout {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   align-self: flex-start;
 }
 .cui-vertical-layout.cui-maximize-vertical {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: hidden;
 }
 .cui-vertical-layout.cui-maximize-vertical > .cui-vertical-layout-top,
@@ -907,8 +893,7 @@ body {
 }
 .cui-vertical-layout.cui-maximize-vertical > .cui-vertical-layout-center {
   position: relative;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: auto;
 }
 .cui-vertical-layout.cui-maximize-horizontal {
@@ -938,9 +923,7 @@ body {
 }
 
 .cui-horizontal-list > .cui-horizontal-layout-center {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
 }
 
 .svg-arrow-right {
@@ -1561,8 +1544,7 @@ input[data-max-chars="40"] {
   fill: currentColor;
   vertical-align: baseline;
   flex-shrink: 0;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
+  transform: translateZ(0);
 }
 .cui-icon-svg use {
   pointer-events: none;
@@ -1721,22 +1703,18 @@ input[data-max-chars="40"] {
 }
 @-webkit-keyframes hourglass-spin {
   75% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
+    transform: rotate(180deg);
   }
 }
 @keyframes hourglass-spin {
   75% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
+    transform: rotate(180deg);
   }
 }
 label[data-label-clickable],
@@ -1750,20 +1728,15 @@ label[data-label-clickable],
 }
 
 .cui-label {
-  display: -webkit-inline-box;
   display: inline-flex;
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
-  -webkit-box-align: center;
-          align-items: center;
+  flex: 0 0 auto;
+  align-items: center;
   max-width: 100%;
 }
 .cui-vertical-layout-center > .cui-label {
-  display: -webkit-box;
   display: flex;
 }
 .cui-label .cui-label-icon {
-  display: -webkit-box;
   display: flex;
 }
 .cui-label .cui-label-icon:empty {
@@ -1774,8 +1747,7 @@ label[data-label-clickable],
   flex-shrink: 1;
 }
 .cui-label .cui-label-content {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1835,34 +1807,25 @@ label[data-label-clickable],
   margin-top: calc(100% - 1rem);
 }
 .cui-label.cui-label-rotate-90 > .cui-label-transform {
-  display: -webkit-box;
   display: flex;
-  -webkit-transform: rotate(-90deg) translateX(-3px) translateY(100%);
-          transform: rotate(-90deg) translateX(-3px) translateY(100%);
-  -webkit-transform-origin: left bottom;
-          transform-origin: left bottom;
+  transform: rotate(-90deg) translateX(-3px) translateY(100%);
+  transform-origin: left bottom;
   clear: left;
 }
-@supports ((-webkit-writing-mode: vertical-rl) or (writing-mode: vertical-rl)) {
+@supports (writing-mode: vertical-rl) {
   .cui-label.cui-label-rotate-90 {
-    display: -webkit-inline-box;
     display: inline-flex;
   }
   .cui-label.cui-label-rotate-90::before {
     display: none;
   }
   .cui-label.cui-label-rotate-90 > .cui-label-transform {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-align: center;
-            align-items: center;
-    -webkit-writing-mode: vertical-rl;
-        -ms-writing-mode: tb-rl;
-            writing-mode: vertical-rl;
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-    -webkit-transform-origin: unset;
-            transform-origin: unset;
+    align-items: center;
+    -ms-writing-mode: tb-rl;
+        writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    transform-origin: unset;
     text-align: right;
   }
   .cui-label.cui-label-rotate-90 > .cui-label-transform .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
@@ -1896,21 +1859,16 @@ label[data-label-clickable],
 }
 
 .cui-label-centered {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  display: -webkit-box;
+  flex: 1 1 auto;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   padding: 0.25rem;
   height: 100%;
 }
 .cui-label-centered > .cui-label-content {
   text-align: center;
-  -webkit-box-flex: 0;
-          flex-grow: 0;
+  flex-grow: 0;
 }
 
 .cui-label-multiline.cui-empty-label,
@@ -1923,8 +1881,7 @@ label[data-label-clickable],
 }
 .cui-label-multiline > .cui-label-content,
 .cui-label-markdown > .cui-label-content {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
@@ -1937,13 +1894,9 @@ label[data-label-clickable],
 }
 .cui-label-multiline.cui-label-centered,
 .cui-label-markdown.cui-label-centered {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .cui-label-multiline.cui-label-centered .cui-label-icon,
 .cui-label-markdown.cui-label-centered .cui-label-icon {
@@ -1952,13 +1905,11 @@ label[data-label-clickable],
 .cui-label-multiline.cui-label-centered .cui-label-content,
 .cui-label-markdown.cui-label-centered .cui-label-content {
   padding: 0 0.5rem;
-  -webkit-box-flex: 0;
-          flex: 0 1 auto;
+  flex: 0 1 auto;
 }
 
 .cui-label-multiline {
   max-width: 100%;
-  display: -webkit-box;
   display: flex;
   line-height: 1.3;
 }
@@ -2165,26 +2116,18 @@ label[data-label-clickable],
 }
 
 .cui-button-visual {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   max-width: 100%;
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .cui-button-button,
 .cui-button-select {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  display: -webkit-inline-box;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
   display: inline-flex;
   white-space: nowrap;
   vertical-align: top;
@@ -2203,15 +2146,12 @@ label[data-label-clickable],
 .cui-button-button .cui-button-visual .cui-button-right,
 .cui-button-select .cui-button-visual .cui-button-left,
 .cui-button-select .cui-button-visual .cui-button-right {
-  display: -webkit-inline-box;
   display: inline-flex;
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 .cui-button-button .cui-button-visual .cui-button-center,
 .cui-button-select .cui-button-visual .cui-button-center {
-  -webkit-box-flex: 0;
-          flex: 0 1 auto;
+  flex: 0 1 auto;
 }
 .cui-button-button .cui-button-visual,
 .cui-button-select .cui-button-visual {
@@ -2556,21 +2496,14 @@ textarea {
   border: 1px solid transparent;
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   resize: vertical;
   vertical-align: bottom;
-}
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  color: #8b949c;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
   color: #8b949c;
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color: #8b949c;
-}
-input::-ms-input-placeholder, textarea::-ms-input-placeholder {
   color: #8b949c;
 }
 input::placeholder,
@@ -2620,11 +2553,8 @@ textarea {
   background: rgba(255, 87, 36, 0.15);
 }
 .cui-input.cui-maximize-vertical {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
 }
 .cui-input-appearance-code input,
 .cui-input-appearance-code textarea {
@@ -2650,26 +2580,19 @@ textarea {
 }
 
 .cui-multi-input .cui-multi-input-container {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: stretch;
-          align-items: stretch;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
   min-width: 100px;
 }
 
 .cui-data-field-multi-input-center {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .cui-multi-input-input {
   position: relative;
-  display: -webkit-box;
   display: flex;
   max-width: 100%;
   border-radius: 2px;
@@ -2730,11 +2653,9 @@ textarea {
   box-shadow: none;
 }
 .cui-multi-input-tag-button .cui-button-visual {
-  display: -webkit-box;
   display: flex;
   height: 100%;
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
   background-color: #ffffff;
   border: 1px solid transparent;
   border-left: var(--combobox-divider-border, 1px solid #e6e9ec);
@@ -2743,10 +2664,8 @@ textarea {
 }
 .cui-multi-input-tag-button .cui-button-visual .cui-button-left {
   min-height: 28px;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
 }
 .cui-multi-input-tag-button.cui-layer-open .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button.cui-active .cui-button-visual, .cui-multi-input-tag-button.cui-active:hover .cui-button-visual {
   background-color: #212121;
@@ -2766,10 +2685,8 @@ textarea {
 }
 .cui-multi-input-tag-button .cui-button-visual .cui-button-center {
   min-height: 28px;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   font-size: 0.75rem;
   line-height: 1;
   padding: 0 0.25rem;
@@ -2823,15 +2740,12 @@ textarea {
   color: #8b949c;
 }
 .cui-output.cui-output--deletable {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: baseline;
-          align-items: baseline;
+  align-items: baseline;
   cursor: default;
 }
 .cui-output.cui-output--deletable .cui-label {
-  -webkit-box-flex: 1;
-          flex: 1 1 0;
+  flex: 1 1 0;
   min-width: 0;
 }
 .cui-output.cui-output--deletable .cui-button {
@@ -2993,8 +2907,7 @@ textarea {
   height: 17.6px;
 }
 .cui-checkbox .cui-checkbox--multiline .cui-button-visual {
-  -webkit-box-align: baseline;
-          align-items: baseline;
+  align-items: baseline;
   white-space: initial;
 }
 .cui-checkbox .cui-checkbox--multiline .cui-button-visual .cui-button-center span {
@@ -3005,7 +2918,6 @@ textarea {
 }
 
 .cui-button-checkbox {
-  display: -webkit-inline-box;
   display: inline-flex;
   max-width: 100%;
   min-height: 30px;
@@ -3016,10 +2928,8 @@ textarea {
   text-align: inherit;
 }
 .cui-button-checkbox .cui-button-visual {
-  -webkit-box-align: baseline;
-          align-items: baseline;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  align-items: baseline;
+  justify-content: flex-start;
 }
 .cui-button-checkbox .cui-button-left {
   min-width: 16px;
@@ -3029,12 +2939,9 @@ textarea {
 .cui-button-checkbox .cui-button-left i {
   position: relative;
   top: -1px;
-  display: -webkit-inline-box;
   display: inline-flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 16px;
   height: 16px;
   border: 1px solid var(--checkbox-border-color, #dee2e6);
@@ -3050,11 +2957,9 @@ textarea {
   border-color: #f5f5f5;
 }
 .cui-button-checkbox .cui-button-center {
-  display: -webkit-box;
   display: flex;
   min-width: 0;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   padding-right: 0.5rem;
   line-height: 1.3;
 }
@@ -3138,8 +3043,7 @@ textarea {
 
 .cui-drag-handle-row {
   margin: 1px;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   height: 10px;
   width: 12px;
   background: linear-gradient(var(--handle-color, #212121) 1px, transparent 1px, transparent 2px);
@@ -3247,12 +3151,10 @@ textarea {
   margin: 0;
   background: #ffffff;
 }
-@supports ((-webkit-writing-mode: vertical-rl) or (writing-mode: vertical-rl)) {
+@supports (writing-mode: vertical-rl) {
   .cui-flex-handle-row.cui-flex-handle-has-label.cui-flex-handle-closed .cui-label.cui-label-rotate-90 {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: center;
-            justify-content: center;
+    justify-content: center;
   }
 }
 .cui-flex-handle-row.cui-flex-handle-has-label.cui-flex-handle-closed .cui-label.cui-label-rotate-90 .cui-label-transform {
@@ -3291,8 +3193,7 @@ textarea {
 }
 
 .cui-flex-handle-stretched {
-  -webkit-box-flex: 1 !important;
-          flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
 }
 
 .cui-flex-handle-hide-for-stretch {
@@ -3300,8 +3201,7 @@ textarea {
 }
 
 .cui-is-manually-sized {
-  -webkit-box-flex: 0 !important;
-          flex-grow: 0 !important;
+  flex-grow: 0 !important;
   flex-shrink: 0 !important;
 }
 .cui-is-manually-sized + .cui-flex-handle + * {
@@ -3311,10 +3211,8 @@ textarea {
 .cui-slider {
   --slider-distance: 0%;
   height: 1.25rem;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   position: relative;
 }
 .cui-slider-track-visual {
@@ -3328,8 +3226,7 @@ textarea {
   left: 0;
   right: 0;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   height: 4px;
   border-width: 0 solid transparent;
   border-radius: 2px;
@@ -3403,7 +3300,6 @@ textarea {
   min-height: auto;
 }
 .cui-data-field--with-button {
-  display: -webkit-box;
   display: flex;
 }
 .cui-data-field--with-button.cui-has-focus {
@@ -3414,9 +3310,7 @@ textarea {
 }
 
 .cui-data-field-center {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  display: -webkit-box;
+  flex: 1 1 auto;
   display: flex;
 }
 .cui-data-field-center:focus {
@@ -3433,8 +3327,7 @@ textarea {
 .cui-data-field-center input {
   position: relative;
   width: auto !important;
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .cui-data-field-left {
@@ -3482,11 +3375,9 @@ textarea {
   box-shadow: none;
 }
 .cui-data-field-left .cui-button-button .cui-button-visual {
-  display: -webkit-box;
   display: flex;
   height: 100%;
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
   background-color: #ffffff;
   border: 1px solid transparent;
   z-index: 1;
@@ -3497,10 +3388,8 @@ textarea {
 }
 .cui-data-field-left .cui-button-button .cui-button-visual .cui-button-left {
   min-height: 28px;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
 }
 .cui-data-field-left .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active:hover .cui-button-visual {
   background-color: #212121;
@@ -3564,11 +3453,9 @@ textarea {
   box-shadow: none;
 }
 .cui-data-field-right .cui-button-button .cui-button-visual {
-  display: -webkit-box;
   display: flex;
   height: 100%;
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
   background-color: #ffffff;
   border: 1px solid transparent;
   border-left: var(--combobox-divider-border, 1px solid #e6e9ec);
@@ -3577,10 +3464,8 @@ textarea {
 }
 .cui-data-field-right .cui-button-button .cui-button-visual .cui-button-left {
   min-height: 28px;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
 }
 .cui-data-field-right .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active:hover .cui-button-visual {
   background-color: #212121;
@@ -3756,7 +3641,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   right: 0;
   bottom: 0;
   z-index: 1;
-  display: -webkit-box;
   display: flex;
   color: #8b949c;
 }
@@ -3772,20 +3656,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-wait-block-inner {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   position: relative;
 }
 
 .cui-wait-block-header {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  -webkit-box-pack: center;
-          justify-content: center;
+  flex: 1 1 auto;
+  justify-content: center;
   align-self: center;
 }
 .cui-wait-block-header .cui-label .svg-spinner {
@@ -3835,30 +3714,23 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-droppable-target-helper {
-  -webkit-transition: -webkit-transform 300ms ease !important;
-  transition: -webkit-transform 300ms ease !important;
   transition: transform 300ms ease !important;
-  transition: transform 300ms ease, -webkit-transform 300ms ease !important;
 }
 
 .cui-droppable-target-helper-y--after {
-  -webkit-transform: translateY(-25%);
-          transform: translateY(-25%);
+  transform: translateY(-25%);
 }
 
 .cui-droppable-target-helper-y--before {
-  -webkit-transform: translateY(25%);
-          transform: translateY(25%);
+  transform: translateY(25%);
 }
 
 .cui-droppable-target-helper-x--after {
-  -webkit-transform: translateX(-25%);
-          transform: translateX(-25%);
+  transform: translateX(-25%);
 }
 
 .cui-droppable-target-helper-x--before {
-  -webkit-transform: translateX(25%);
-          transform: translateX(25%);
+  transform: translateX(25%);
 }
 
 .cui-drag-drop-select-movable {
@@ -3885,8 +3757,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   pointer-events: none;
   z-index: 1;
   will-change: transform;
-  -webkit-transform-origin: left top;
-          transform-origin: left top;
+  transform-origin: left top;
   opacity: 0.33;
 }
 
@@ -3981,7 +3852,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 */
 .cui-digi-display {
   align-self: flex-start;
-  display: -webkit-box;
   display: flex;
 }
 .cui-digi-display > div {
@@ -3995,7 +3865,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   line-height: 1.3;
 }
 .cui-digi-display .cui-digi-display-digit {
-  -webkit-transition: margin-top 0.3s ease;
   transition: margin-top 0.3s ease;
   height: 18px;
 }
@@ -4061,13 +3930,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-buttonbar {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  align-items: center;
+  flex-direction: row;
 }
 .cui-buttonbar > * {
   margin-right: 0.5rem;
@@ -4095,7 +3960,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-buttonbar-group {
-  display: -webkit-box;
   display: flex;
 }
 .cui-buttonbar-group .cui-disabled {
@@ -4168,18 +4032,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-text {
   display: none;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   position: relative;
 }
 .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon {
   position: relative;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 .cui-progress-meter .cui-progress-meter-bar .cui-progress-meter-icon .svg-spinner {
@@ -4203,27 +4063,20 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-progress-meter[state=percent] .cui-progress-meter-text,
 .cui-progress-meter[state=percent] .cui-progress-meter-fill {
-  display: -webkit-box;
   display: flex;
 }
 
 .cui-item-list-body {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
 }
 .cui-item-list-body > div {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 .cui-item-list-body .cui-button .cui-button-visual,
 .cui-item-list-body .cui-button-href .cui-button-visual {
-  -webkit-box-pack: start;
-          justify-content: flex-start;
-  -webkit-box-flex: 1;
-          flex: 1 0 auto;
+  justify-content: flex-start;
+  flex: 1 0 auto;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -4277,8 +4130,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-item-list-body .cui-options .cui-button {
   padding: 0;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .cui-item-list-body .cui-options .cui-button .cui-button-visual {
   padding-top: 4px;
@@ -4402,11 +4254,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   line-height: 1.3;
 }
 .cui-options--vertical .cui-options-inactive {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
 }
 .cui-options--vertical [data-max-chars] {
   width: auto !important;
@@ -4418,12 +4267,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-options-sortable-option {
-  display: -webkit-box;
   display: flex;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle {
   width: 12px;
-  display: -webkit-box;
   display: flex;
   flex-shrink: 0;
   margin: 0 8px 0 2px;
@@ -4440,8 +4287,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-options-center .cui-data-field,
 .cui-options-sortable-option .cui-data-field {
-  -webkit-box-flex: 0;
-          flex-grow: 0;
+  flex-grow: 0;
 }
 
 .cui-table {
@@ -4497,16 +4343,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   line-height: 1.3;
 }
 .cui-table--flex {
-  display: -webkit-inline-box;
   display: inline-flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-flex: 1;
-          flex: 1 0 auto;
+  flex-direction: column;
+  flex: 1 0 auto;
 }
 .cui-table--flex .cui-tr {
-  display: -webkit-box;
   display: flex;
 }
 .cui-table--flex .cui-td--key {
@@ -4515,16 +4356,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: var(--tableDataKeyWidth, 135px);
 }
 .cui-table--flex .cui-td--value {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
   width: auto;
 }
 .cui-table.cui-maximize-horizontal {
   width: 100%;
 }
 .cui-table.cui-maximize-vertical {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .cui-layer-root-cui-date-time-popover .cui-layer > .cui-pane > .cui-vertical-layout-center {
@@ -4537,8 +4376,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --calendar-background: #ffffff;
   --calendar-static-cells-background: #ffffff;
   background-color: var(--calendar-background);
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .cui-date-time-popover .cui-date-time-popover-inner .cui-date-time-header {
   display: none;
@@ -4547,17 +4385,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-left: -100%;
 }
 .cui-date-time-popover .cui-date-time-popover-inner .cui-date-time-browser {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .cui-date-time-popover .cui-date-time-popover-inner .cui-date-time-browser .cui-date-time-calendar,
 .cui-date-time-popover .cui-date-time-popover-inner .cui-date-time-browser .cui-date-time-clock {
   width: 100%;
 }
 .cui-date-time-popover .cui-date-time-popover-inner .cui-date-time-browser .cui-date-time-calendar {
-  -webkit-transition: margin-left 0.5s ease-out;
   transition: margin-left 0.5s ease-out;
 }
 
@@ -4574,8 +4409,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-date-time-calendar .cui-buttonbar {
   padding: 0.5rem;
-  -webkit-box-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
 }
 .cui-date-time-calendar > .cui-buttonbar {
   background: #212121;
@@ -4851,20 +4685,16 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   cursor: default;
 }
 .cui-date-time-footer > .cui-horizontal-layout-left {
-  -webkit-box-flex: 1;
-          flex: 1 0 auto;
+  flex: 1 0 auto;
   margin-right: 1rem;
 }
 .cui-date-time-footer > .cui-horizontal-layout-left .cui-label {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  -webkit-box-pack: center;
-          justify-content: center;
+  flex: 1 1 auto;
+  justify-content: center;
   margin: 0;
 }
 .cui-date-time-footer > .cui-horizontal-layout-center {
-  -webkit-box-flex: 0 !important;
-          flex-grow: 0 !important;
+  flex-grow: 0 !important;
 }
 .cui-date-time-footer > .cui-horizontal-layout-right {
   overflow: visible !important;
@@ -4872,12 +4702,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-date-time-date {
   width: 100%;
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 .cui-date-time-date .cui-tr {
   padding: 0;
-  display: -webkit-box;
   display: flex;
 }
 .cui-date-time-date .cui-tr:last-child .cui-td {
@@ -4903,10 +4731,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: calc((100% - 7px) / 8);
   padding: 0;
   padding-top: calc(calc((100% - 7px) / 8) * 0.95);
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   align-self: center;
   border-right: 1px solid var(--calendar-background);
   border-bottom: 1px solid var(--calendar-background);
@@ -4925,16 +4751,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-date-time-date .cui-th span,
 .cui-date-time-date .cui-th div {
   position: absolute;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   width: 28px;
   height: 28px;
   line-height: 28px;
@@ -4976,11 +4798,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-menu.cui-date-time-60-select .cui-item-list-body {
   box-sizing: content-box;
   width: 370px;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 .cui-menu.cui-date-time-60-select .cui-item-list-body > * {
@@ -4989,18 +4808,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-menu.cui-date-time-60-select .cui-item-list-body .cui-button {
   width: 37px;
   height: 30px;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   text-align: center;
 }
 
 .cui-date-time--select-menu .cui-button-button .cui-button-visual {
-  display: -webkit-box;
   display: flex;
   height: auto;
   min-height: 26px;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   border-radius: 0;
 }
 .cui-date-time--select-menu .cui-button-button .cui-button-center {
@@ -5025,12 +4841,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 @media (min-width: 768px) {
   .cui-form .cui-form-tr,
 .cui-form .cui-form-tr-header {
-    display: -webkit-box;
     display: flex;
   }
   .cui-form .cui-form-key {
-    -webkit-box-flex: 0;
-            flex: 0 0 auto;
+    flex: 0 0 auto;
     width: var(--form-key-width, 135px);
     min-width: var(--form-key-width, 135px);
     max-width: none;
@@ -5042,8 +4856,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     padding-bottom: 0;
   }
   .cui-form .cui-form-value {
-    -webkit-box-flex: 1;
-            flex: 1 1 auto;
+    flex: 1 1 auto;
     min-width: 0;
   }
   .cui-form .cui-form-value input {
@@ -5189,8 +5002,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table > tr > .cui-form-td.cui-form-value {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   width: 200px;
 }
 .cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table-vertical > .cui-tr > .cui-form-value {
@@ -5215,13 +5027,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-block.cui-maximize-vertical,
 .cui-form-block.cui-maximize-vertical > .cui-block-content, .cui-form-block.cui-maximize,
 .cui-form-block.cui-maximize > .cui-block-content {
-  -webkit-box-flex: 1;
-          flex: 1;
-  display: -webkit-box;
+  flex: 1;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
 }
 
 /*
@@ -5234,29 +5042,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 </div>
 */
 .cui-form-container {
-  -webkit-box-flex: 1;
-          flex: 1 0 auto;
-  display: -webkit-box;
+  flex: 1 0 auto;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   min-height: 0;
 }
 .cui-form-container.cui-form--horizontal {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
 }
 
 .cui-form-row {
-  -webkit-box-flex: 1;
-          flex: 1 0 auto;
-  display: -webkit-box;
+  flex: 1 0 auto;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   min-height: 0;
   margin-bottom: 1rem;
 }
@@ -5264,8 +5062,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-top: -1rem;
 }
 .cui-form-container.cui-form--horizontal > .cui-form-row {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   min-width: 0;
   margin-bottom: 0;
 }
@@ -5273,8 +5070,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-right: 1rem;
 }
 .cui-form-container.cui-form--horizontal > .cui-form-row.cui-maximize-horizontal {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-row:first-child {
@@ -5318,12 +5114,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-size: 12px;
 }
 .cui-form-hint .cui-label-multiline {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
-  display: -webkit-box;
+  flex-grow: 1;
   display: flex;
-  -webkit-box-align: start;
-          align-items: flex-start;
+  align-items: flex-start;
 }
 .cui-form-hint .cui-label-multiline .cui-label-content {
   flex-basis: 0%;
@@ -5363,12 +5156,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-panel-header .cui-button-button {
   --btn-border-color: transparent;
-  display: -webkit-box;
   display: flex;
   width: auto;
   padding: 0.25rem 0;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  justify-content: flex-start;
   margin: 0 -0.5rem;
   min-height: 30px;
 }
@@ -5414,16 +5205,13 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   text-transform: uppercase;
   letter-spacing: 0.03em;
   height: auto;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  justify-content: flex-start;
   padding: 0;
-  -webkit-box-align: baseline;
-          align-items: baseline;
+  align-items: baseline;
 }
 .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left {
   width: 1rem;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   padding-left: 0;
   margin-right: 0;
 }
@@ -5450,13 +5238,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-toolbar {
-  display: -webkit-box;
   display: flex;
   min-height: 46px;
-  -webkit-box-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   background: transparent;
   padding: 0.5rem;
   overflow: visible !important;
@@ -5470,23 +5255,17 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-toolbar > .cui-horizontal-layout-left,
 .cui-toolbar > .cui-horizontal-layout-right {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  flex-direction: row;
   min-width: 0;
   overflow: visible !important;
 }
 .cui-toolbar > .cui-horizontal-layout-center {
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
+  justify-content: center;
+  flex-direction: row;
   overflow: visible !important;
 }
 .cui-toolbar > div > .cui-maximize-horizontal {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   align-self: stretch;
   overflow: visible;
 }
@@ -5499,21 +5278,16 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   flex-shrink: 0;
 }
 .cui-toolbar .cui-data-field-input {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   min-width: 0;
 }
 .cui-toolbar .cui-data-field-input.cui-vertical-layout {
-  -webkit-box-align: stretch;
-          align-items: stretch;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: stretch;
+  justify-content: center;
 }
 .cui-toolbar .cui-data-field-input .cui-input {
-  -webkit-box-flex: 0;
-          flex-grow: 0;
+  flex-grow: 0;
 }
 .cui-toolbar .cui-button-button,
 .cui-toolbar .cui-button-select,
@@ -5649,8 +5423,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-right: 0.25rem;
 }
 .cui-pane-header .cui-pane-close-button {
-  -webkit-transform: translateX(0.5rem);
-          transform: translateX(0.5rem);
+  transform: translateX(0.5rem);
 }
 
 .cui-pane-footer .cui-horizontal-layout-left,
@@ -5740,7 +5513,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 	</div>
 */
 .cui-pane-fill-screen {
-  -webkit-transition: top ease-out 0.5s, right ease-out 0.5s, left ease-out 0.5s, bottom ease-out 0.5s;
   transition: top ease-out 0.5s, right ease-out 0.5s, left ease-out 0.5s, bottom ease-out 0.5s;
   position: fixed;
   top: 0;
@@ -5928,9 +5700,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --list-view-selected-row-background: rgba(206, 212, 218, 0.3);
   --list-view-hover-row-background: #e6e9ec;
   min-height: 0;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   background-color: transparent;
   font-size: inherit;
   line-height: 1.3;
@@ -5938,11 +5708,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-list-view > .cui-vertical-layout-center {
   flex-shrink: 1;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   background-color: var(--list-view-background);
   padding: 0;
 }
@@ -5960,11 +5727,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-lv-tbody {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   max-width: 100%;
   min-width: 0;
 }
@@ -6000,19 +5764,16 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   max-width: none !important;
 }
 .cui-lv-td-rotate-90 .cui-data-field {
-  -webkit-box-flex: 0;
-          flex-grow: 0;
+  flex-grow: 0;
 }
 .cui-lv-td-fill {
   min-height: 0;
 }
 .cui-lv-td-max {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 .cui-lv-td .cui-data-field-input {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 .cui-lv-td .cui-button {
   max-width: 100%;
@@ -6025,10 +5786,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-lv-tr-outer {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   min-width: 0;
   outline: none;
   cursor: default;
@@ -6042,10 +5801,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   border-bottom: var(--list-view-header-row-border-width) solid var(--list-view-header-row-border-color);
 }
 .list-view-header-row .cui-lv-td {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: end;
-          align-items: flex-end;
+  align-items: flex-end;
   min-height: auto;
 }
 .list-view-header-row .cui-lv-td:not(:last-child):not(:empty) {
@@ -6061,16 +5818,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-lv-tr {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  display: -webkit-box;
+  flex: 1 1 auto;
   display: flex;
 }
 
 .cui-lv-tr-fill-outer {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  display: -webkit-box;
+  flex: 1 1 auto;
   display: flex;
 }
 .cui-lv-tr-fill-outer .cui-lv-td {
@@ -6082,20 +5835,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-list-view-grid {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  display: -webkit-box;
+  flex: 1 1 auto;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   position: relative;
   overflow: hidden;
 }
 .cui-list-view-grid.cui-lv--max-last-col > div > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td:last-child,
 .cui-list-view-grid.cui-lv--max-last-col > div > .cui-list-view-grid-quadrant > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td:last-child {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 .cui-list-view-grid.cui-list-view-tree-no-hierarchy .cui-tree-node-handle,
 .cui-list-view-grid.cui-list-view-tree-no-hierarchy .cui-tree-node-spacer {
@@ -6109,10 +5857,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-list-view-grid-quadrant-0 .cui-button,
 .cui-list-view-grid-quadrant-1 .cui-button {
   height: 100%;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  -webkit-box-align: stretch;
-          align-items: stretch;
+  flex: 1 1 auto;
+  align-items: stretch;
 }
 .cui-list-view-grid-quadrant-0 .cui-button .cui-button-left,
 .cui-list-view-grid-quadrant-1 .cui-button .cui-button-left {
@@ -6120,10 +5866,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-list-view-grid-quadrant-0 .cui-button .cui-button-center,
 .cui-list-view-grid-quadrant-1 .cui-button .cui-button-center {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  flex: 1 1 auto;
+  justify-content: flex-start;
 }
 .cui-list-view-grid-quadrant-0 .cui-label,
 .cui-list-view-grid-quadrant-1 .cui-label {
@@ -6155,44 +5899,36 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-list-view-grid-quadrant-0 {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .cui-list-view-grid-quadrant-1 {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 .cui-list-view-grid-quadrant-1 .cui-lv-td:last-child::after {
   display: none;
 }
 
 .cui-list-view-grid-inner-top {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
-  display: -webkit-box;
+  flex: 0 0 auto;
   display: flex;
   background-color: var(--list-view-header-background);
   color: var(--list-view-header-color);
 }
 
 .cui-list-view-grid-inner-bottom {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
-  display: -webkit-box;
+  flex: 1 1 auto;
   display: flex;
   min-height: 0;
 }
 
 .cui-list-view-grid-quadrant-2 {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   overflow: hidden;
 }
 
 .cui-list-view-grid-quadrant-3 {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -6321,18 +6057,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-top: 0.5rem;
 }
 .cui-tree-node {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   max-width: 100%;
 }
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
   width: 16px;
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 .cui-tree-node-handle .fa-caret-right,
 .cui-tree-node-spacer .fa-caret-right {
@@ -6348,13 +6081,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-tree-node-handle {
   height: 18px;
-  display: -webkit-box;
   display: flex;
   text-align: center;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   margin-left: -4px;
   margin-right: 2px;
 }
@@ -6369,10 +6099,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-tree-node-content {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   flex-wrap: wrap;
   min-width: 50px;
 }
@@ -6392,10 +6120,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: block;
 }
 .cui-data-table.cui-maximize-vertical {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 .cui-data-table.cui-maximize {
   flex-basis: 0;
@@ -6560,8 +6286,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row {
   margin: 0.25rem 0;
-  -webkit-box-flex: 0;
-          flex-grow: 0;
+  flex-grow: 0;
   cursor: -webkit-grab;
   cursor: grab;
 }
@@ -6721,26 +6446,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-bottom: -0.5rem;
 }
 .cui-tabs > .cui-vertical-layout-center {
-  -webkit-box-flex: 1;
-          flex-grow: 1;
+  flex-grow: 1;
   padding: 0;
 }
 .cui-tabs > .cui-vertical-layout-center > .cui-tabs-bodies {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: hidden;
 }
 .cui-tabs > .cui-vertical-layout-center > .cui-tabs-bodies > .cui-tab-body {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   margin-left: 0 !important;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -6769,8 +6487,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-tabs-pane-header > .cui-horizontal-layout-center {
   overflow: auto !important;
-  -webkit-box-pack: start;
-          justify-content: flex-start;
+  justify-content: flex-start;
 }
 .cui-tabs-pane-header.cui-tabs-pane-header--overflow > .cui-horizontal-layout-center {
   padding-right: 0;
@@ -6870,8 +6587,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   border-bottom: 1px solid var(--tabs-active-border-color, #212121);
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual .cui-button-left .fa-ellipsis-h {
-  -webkit-transform: translateY(4px);
-          transform: translateY(4px);
+  transform: translateY(4px);
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow:hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
   background-color: transparent;
@@ -6889,8 +6605,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-tabs-pane-header .cui-buttonbar::after {
   content: "";
   display: block;
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   height: 1px;
   background: var(--tabs-active-border-color, #212121);
   align-self: flex-end;
@@ -6936,12 +6651,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   top: 0;
   bottom: 0;
   right: 0;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
   pointer-events: none;
 }
@@ -6972,7 +6684,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   left: 0;
   right: 0;
   bottom: 0;
-  display: -webkit-box;
   display: flex;
   z-index: -1;
 }
@@ -6980,8 +6691,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background: radial-gradient(rgba(36, 54, 66, 0.4), rgba(36, 54, 66, 0.6));
 }
 .cui-layer-backdrop > div {
-  -webkit-box-flex: 1;
-          flex: 1 1 auto;
+  flex: 1 1 auto;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -6995,8 +6705,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-layer-root.cui-layer-root-backdrop-blur > .cui-layer-backdrop {
-  -webkit-filter: blur(5px);
-          filter: blur(5px);
+  filter: blur(5px);
   overflow: hidden;
 }
 .cui-layer-root.cui-layer-root-backdrop-blur > .cui-layer {
@@ -7012,11 +6721,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-layer {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+  flex-direction: column;
   min-width: 250px;
   min-height: 30px;
   margin: 0.5rem;
@@ -7229,8 +6935,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 10px;
   height: 10px;
   background: #f5f5f5;
-  -webkit-transform: translate(-50%, -50%) rotate(45deg);
-          transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
   box-shadow: inset 0 0 0 1px rgba(73, 80, 87, 0.28), 0 0 1px 0 rgba(73, 80, 87, 0.43);
 }
 .cui-layer-pointer--n, .cui-layer-pointer--s {
@@ -7336,7 +7041,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-size: 12px;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child .cui-button-checkbox {
-  display: -webkit-box;
   display: flex;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child .cui-button-checkbox .cui-button-visual {
@@ -7488,19 +7192,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   text-align: center;
   margin-bottom: 5px;
   position: relative;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 .cui-icon-marker-container .cui-icon-marker-arrow {
   position: absolute;
   left: 50%;
   top: 21px;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform: rotate(45deg);
   background: inherit;
 }
 .cui-icon-marker-container .cui-button {
