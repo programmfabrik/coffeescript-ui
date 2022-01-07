@@ -15,6 +15,7 @@
 
 		.cui-button {
 			margin-left: #{$spacer-xs};
+
 			@include button-plain-icon();
 
 			.svg-close {
