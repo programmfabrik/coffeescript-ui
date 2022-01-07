@@ -3,7 +3,7 @@
 		color: theme-color('secondary');
 	}
 
-	.cui-output--deletable {
+	&.cui-output--deletable {
 		display: flex;
 		align-items: baseline;
 		cursor: default;
