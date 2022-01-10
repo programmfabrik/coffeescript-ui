@@ -87,7 +87,7 @@ textarea {
 	width: 100%;
 	min-width: $input-min-width;
 	font-size: inherit;
-	color: $button-color;
+	color: inherit;
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
@@ -779,7 +779,7 @@ li > div {
 	}
 
 	.cui-label {
-		color: $secondary-color;
+		color: hsl(205,5%,43%);
 		font-size: 12px;
 
 		&-size-mini {
@@ -2775,6 +2775,10 @@ a[role="button"].cui-button-appearance-link {
 			
 			.cui-toolbar {
 				background: none;
+			}
+
+			.cui-label {
+				color: $header-color;
 			}
 		}
 	}
