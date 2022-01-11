@@ -103,8 +103,45 @@ class CUI.Tooltip extends CUI.LayerPane
 			node: @_element
 			call: (ev) =>
 				@show(ev)
+
+				# For accessibility purposes we need to be able to hover the tooltip, so we need this code.
+				# Only close the tooltip when the mouse is not hovering the element or the tooltip.
+				mouseHoverTooltip = false
+				mouseHoverElement = true
+				hideTimeout = null
+				hideWhenMouseout = (ev) =>
+					CUI.clearTimeout(hideTimeout)
+					hideTimeout = CUI.setTimeout
+						ms: @_hide_ms + 100 # The default hide ms is 100ms, but we need to add extra 100ms to 'guarantee' the mouse can pass the gap.
+						call: =>
+							if mouseHoverTooltip or mouseHoverElement
+								return
+							@hide(ev)
+							return
+
 				CUI.Events.listen
-					type: ["click", "dblclick", "mouseout"]
+					type: ["mouseout", "mouseenter"]
+					capture: true
+					node: @DOM
+					call: (ev) =>
+						mouseHoverTooltip = ev.getType() == "mouseenter"
+						if not mouseHoverTooltip
+							hideWhenMouseout(ev)
+						return
+
+				CUI.Events.listen
+					type: ["mouseout", "mouseenter"]
+					capture: true
+					node: @_element
+					call: (ev) ->
+						mouseHoverElement = ev.getType() == "mouseenter"
+						if not mouseHoverElement
+							hideWhenMouseout(ev)
+						return
+
+				# Hide the tooltip when clicking on it.
+				CUI.Events.listen
+					type: ["click", "dblclick"]
 					capture: true
 					node: @_element
 					only_once: true
