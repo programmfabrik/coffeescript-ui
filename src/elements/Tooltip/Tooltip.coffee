@@ -77,7 +77,6 @@ class CUI.Tooltip extends CUI.LayerPane
 
 		if CUI.util.isUndef(@opts.backdrop)
 			@opts.backdrop = false
-		# @opts.role = "tooltip"
 		@opts.pointer = "arrow"
 		@opts.check_for_element = true
 		@opts.placement = @opts.placement or "n"
@@ -117,8 +116,20 @@ class CUI.Tooltip extends CUI.LayerPane
 
 		return @__mouseStillEvent
 
+	hide: ->
+		@__keyUpListener?.destroy()
+		return super()
 
 	show: (ev) ->
+		@__keyUpListener = CUI.Events.listen
+			type: "keyup"
+			node: window
+			capture: true
+			call: (_ev) =>
+				if _ev.getKeyboardKey() == "Esc"
+					@hide()
+				return
+
 		if @__static
 			super(ev)
 		else
@@ -148,6 +159,7 @@ class CUI.Tooltip extends CUI.LayerPane
 			if not content or @__pane.isDestroyed()
 				return dfr.reject()
 
+			CUI.dom.setAttribute(content, "role", "tooltip")
 			@__pane.replace(content, "center")
 			dfr.resolve()
 
@@ -191,6 +203,7 @@ class CUI.Tooltip extends CUI.LayerPane
 		CUI.dom.setStyleOne(@DOM, "max-width", @__viewport.width/2)
 
 	destroy: ->
+		@__keyUpListener?.destroy()
 		@__mouseStillEvent?.destroy()
 		CUI.Events.ignore(instance: @__dummyInst)
 		super()
