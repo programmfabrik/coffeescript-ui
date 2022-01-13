@@ -50672,6 +50672,9 @@ CUI.Tab = (function(superClass) {
         };
       })(this)
     });
+    if (typeof this._onInitButton === "function") {
+      this._onInitButton(this, this.__button);
+    }
     return this;
   };
 
@@ -50709,6 +50712,9 @@ CUI.Tab = (function(superClass) {
         check: Function
       },
       onDeactivate: {
+        check: Function
+      },
+      onInitButton: {
         check: Function
       },
       content_placeholder: {
