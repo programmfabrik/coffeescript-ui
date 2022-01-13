@@ -51366,9 +51366,47 @@ CUI.Tooltip = (function(superClass) {
       node: this._element,
       call: (function(_this) {
         return function(ev) {
+          var hideTimeout, hideWhenMouseout, mouseHoverElement, mouseHoverTooltip;
           _this.show(ev);
+          mouseHoverTooltip = false;
+          mouseHoverElement = true;
+          hideTimeout = null;
+          hideWhenMouseout = function(ev) {
+            CUI.clearTimeout(hideTimeout);
+            return hideTimeout = CUI.setTimeout({
+              ms: _this._hide_ms + 100,
+              call: function() {
+                if (mouseHoverTooltip || mouseHoverElement) {
+                  return;
+                }
+                _this.hide(ev);
+              }
+            });
+          };
+          CUI.Events.listen({
+            type: ["mouseout", "mouseenter"],
+            capture: true,
+            node: _this.DOM,
+            call: function(ev) {
+              mouseHoverTooltip = ev.getType() === "mouseenter";
+              if (!mouseHoverTooltip) {
+                hideWhenMouseout(ev);
+              }
+            }
+          });
+          CUI.Events.listen({
+            type: ["mouseout", "mouseenter"],
+            capture: true,
+            node: _this._element,
+            call: function(ev) {
+              mouseHoverElement = ev.getType() === "mouseenter";
+              if (!mouseHoverElement) {
+                hideWhenMouseout(ev);
+              }
+            }
+          });
           return CUI.Events.listen({
-            type: ["click", "dblclick", "mouseout"],
+            type: ["click", "dblclick"],
             capture: true,
             node: _this._element,
             only_once: true,
@@ -51387,7 +51425,27 @@ CUI.Tooltip = (function(superClass) {
     return this.__mouseStillEvent;
   };
 
+  Tooltip.prototype.hide = function() {
+    var ref;
+    if ((ref = this.__keyUpListener) != null) {
+      ref.destroy();
+    }
+    return Tooltip.__super__.hide.call(this);
+  };
+
   Tooltip.prototype.show = function(ev) {
+    this.__keyUpListener = CUI.Events.listen({
+      type: "keyup",
+      node: window,
+      capture: true,
+      call: (function(_this) {
+        return function(_ev) {
+          if (_ev.getKeyboardKey() === "Esc") {
+            _this.hide();
+          }
+        };
+      })(this)
+    });
     if (this.__static) {
       Tooltip.__super__.show.call(this, ev);
     } else {
@@ -51431,6 +51489,7 @@ CUI.Tooltip = (function(superClass) {
         if (!content || _this.__pane.isDestroyed()) {
           return dfr.reject();
         }
+        CUI.dom.setAttribute(content, "role", "tooltip");
         _this.__pane.replace(content, "center");
         return dfr.resolve();
       };
@@ -51483,9 +51542,12 @@ CUI.Tooltip = (function(superClass) {
   };
 
   Tooltip.prototype.destroy = function() {
-    var ref;
-    if ((ref = this.__mouseStillEvent) != null) {
+    var ref, ref1;
+    if ((ref = this.__keyUpListener) != null) {
       ref.destroy();
+    }
+    if ((ref1 = this.__mouseStillEvent) != null) {
+      ref1.destroy();
     }
     CUI.Events.ignore({
       instance: this.__dummyInst
