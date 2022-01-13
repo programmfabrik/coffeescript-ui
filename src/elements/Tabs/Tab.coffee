@@ -71,6 +71,7 @@ class CUI.Tab extends CUI.DOMElement
 					type: "tab_deactivate"
 					node: @DOM
 
+		@_onInitButton?(@, @__button)
 		@
 
 	initOpts: ->
@@ -98,6 +99,8 @@ class CUI.Tab extends CUI.DOMElement
 			onActivate:
 				check: Function
 			onDeactivate:
+				check: Function
+			onInitButton:
 				check: Function
 			content_placeholder:
 				check: (v) ->
