@@ -27,8 +27,11 @@ class CUI.Prompt extends CUI.Confirm
 
 		delete(@_text) # delete so the ConfirmationDialog does not warn us
 
-		@__input = null
+		ui = @_ui
+		if ui
+			ui += ":input"
 
+		@__input = null
 		@__data = input: @_default+""
 		@_content = new CUI.Form
 			fields: [
@@ -41,6 +44,7 @@ class CUI.Prompt extends CUI.Confirm
 				name: "input"
 				placeholder: @_placeholder
 				data: @__data
+				ui: ui
 				onConstruct: (@__input) =>
 				onKeyup: (inp, ev) =>
 					if ev.keyCode() == 13
