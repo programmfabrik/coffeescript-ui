@@ -27302,10 +27302,14 @@ CUI.Prompt = (function(superClass) {
   };
 
   Prompt.prototype.readOpts = function() {
-    var text;
+    var text, ui;
     Prompt.__super__.readOpts.call(this);
     text = this._text;
     delete this._text;
+    ui = this._ui;
+    if (ui) {
+      ui += ":input";
+    }
     this.__input = null;
     this.__data = {
       input: this._default + ""
@@ -27322,6 +27326,7 @@ CUI.Prompt = (function(superClass) {
           name: "input",
           placeholder: this._placeholder,
           data: this.__data,
+          ui: ui,
           onConstruct: (function(_this) {
             return function(__input) {
               _this.__input = __input;
