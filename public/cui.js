@@ -49599,6 +49599,9 @@ CUI.Select = (function(superClass) {
           if (!CUI.util.isUndef(opt.value) && first_value_opt === void 0) {
             first_value_opt = opt;
           }
+          if (_this._ui) {
+            opt.ui = _this._ui + ".option:" + opt.value;
+          }
         }
         _this._default_opt = void 0;
         if (first_value_opt) {
