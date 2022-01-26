@@ -118,6 +118,9 @@ class CUI.Select extends CUI.Checkbox
 				if not CUI.util.isUndef(opt.value) and first_value_opt == undefined
 					first_value_opt = opt
 
+				if @_ui
+					opt.ui = "#{@_ui}.option:#{opt.value}"
+
 			# auto - select first opt, if value unset
 			# and no empty text allowed
 			@_default_opt = undefined
