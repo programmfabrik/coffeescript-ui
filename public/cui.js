@@ -49583,7 +49583,7 @@ CUI.Select = (function(superClass) {
     }
     this.__optionsPromise.done((function(_this) {
       return function(__options) {
-        var first_value_opt, i, idx, len, opt, ref1;
+        var first_value_opt, i, idx, len, opt, ref1, uiValue;
         _this.__options = __options;
         first_value_opt = void 0;
         ref1 = _this.__options;
@@ -49600,7 +49600,11 @@ CUI.Select = (function(superClass) {
             first_value_opt = opt;
           }
           if (_this._ui) {
-            opt.ui = _this._ui + ".option:" + opt.value;
+            uiValue = opt.value;
+            if (CUI.util.isPlainObject(opt.value)) {
+              uiValue = idx;
+            }
+            opt.ui = _this._ui + ".option:" + uiValue;
           }
         }
         _this._default_opt = void 0;
