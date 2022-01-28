@@ -119,7 +119,10 @@ class CUI.Select extends CUI.Checkbox
 					first_value_opt = opt
 
 				if @_ui
-					opt.ui = "#{@_ui}.option:#{opt.value}"
+					uiValue = opt.value
+					if CUI.util.isPlainObject(opt.value)
+						uiValue = idx
+					opt.ui = "#{@_ui}.option:#{uiValue}"
 
 			# auto - select first opt, if value unset
 			# and no empty text allowed
