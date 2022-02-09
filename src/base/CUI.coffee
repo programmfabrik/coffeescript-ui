@@ -55,6 +55,8 @@ class CUI
 				if CUI.defaults.debug
 					if ev.getKeyboard() == "Alt+Shift+U"
 						@__toggleUIElements()
+					if ev.getKeyboard() == "Control+Shift+U"
+						@__toggleUIElements(true)
 				return
 
 		CUI.Events.listen
@@ -893,7 +895,7 @@ class CUI
 		map
 	)()
 
-	@__toggleUIElements: ->
+	@__toggleUIElements: (showAll = false) ->
 		if @__uiHighlightDivs?.length > 0
 			for highlightDiv in @__uiHighlightDivs
 				CUI.dom.remove(highlightDiv)
@@ -903,11 +905,26 @@ class CUI
 		@__uiHighlightDivs = []
 		uiElements = document.querySelectorAll("[ui]")
 		for uiElement in uiElements
+
+			if not showAll
+				# Check whether an uiElement is underneath another element, in that case we do not show the ui div.
+				uiElementRect = uiElement.getBoundingClientRect()
+				x = uiElementRect.left
+				y = uiElementRect.top
+				topElement = document.elementFromPoint(x,y)
+				if topElement
+					# Get the top level div of the element and the element that is in the x,y coordinates of the uiElement.
+					# This is the best way to check that the element is not underneath. Using 'isSameNode' does not cover all cases.
+					elementTopContainer = CUI.dom.parents(uiElement, "body > div")?[0]
+					topContainer= CUI.dom.parents(topElement, "body > div")?[0]
+					if elementTopContainer != topContainer
+						continue
+
 			div = CUI.dom.div()
 			@__uiHighlightDivs.push(div)
 			do(div, uiElement) =>
-				divRect = div.getBoundingClientRect();
-				uiElementRect = uiElement.getBoundingClientRect();
+				divRect = div.getBoundingClientRect()
+				uiElementRect = uiElement.getBoundingClientRect()
 
 				div.textContent = uiElement.getAttribute("ui")
 				CUI.dom.setStyle(div,
@@ -966,6 +983,10 @@ class CUI
 					left: left
 				)
 				CUI.dom.setStyle(div, "zIndex": 5, "")
+				CUI.dom.hideElement(div) # Hide the div element, we show all divs after passing through all uiElements.
+
+		for div in @__uiHighlightDivs
+			CUI.dom.showElement(div)
 		return
 
 CUI.ready =>
