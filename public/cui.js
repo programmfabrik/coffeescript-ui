@@ -11344,6 +11344,9 @@ CUI = (function() {
             if (ev.getKeyboard() === "Alt+Shift+U") {
               _this.__toggleUIElements();
             }
+            if (ev.getKeyboard() === "Control+Shift+U") {
+              _this.__toggleUIElements(true);
+            }
           }
         };
       })(this)
@@ -12386,8 +12389,11 @@ CUI = (function() {
     return map;
   })();
 
-  CUI.__toggleUIElements = function() {
-    var div, fn, highlightDiv, j, l, len1, len2, ref, ref1, uiElement, uiElements;
+  CUI.__toggleUIElements = function(showAll) {
+    var div, elementTopContainer, fn, highlightDiv, j, l, len1, len2, len3, n, ref, ref1, ref2, ref3, ref4, topContainer, topElement, uiElement, uiElementRect, uiElements, x, y;
+    if (showAll == null) {
+      showAll = false;
+    }
     if (((ref = this.__uiHighlightDivs) != null ? ref.length : void 0) > 0) {
       ref1 = this.__uiHighlightDivs;
       for (j = 0, len1 = ref1.length; j < len1; j++) {
@@ -12475,16 +12481,35 @@ CUI = (function() {
           top: top,
           left: left
         });
-        return CUI.dom.setStyle(div, {
+        CUI.dom.setStyle(div, {
           "zIndex": 5
         }, "");
+        return CUI.dom.hideElement(div);
       };
     })(this);
     for (l = 0, len2 = uiElements.length; l < len2; l++) {
       uiElement = uiElements[l];
+      if (!showAll) {
+        uiElementRect = uiElement.getBoundingClientRect();
+        x = uiElementRect.left;
+        y = uiElementRect.top;
+        topElement = document.elementFromPoint(x, y);
+        if (topElement) {
+          elementTopContainer = (ref2 = CUI.dom.parents(uiElement, "body > div")) != null ? ref2[0] : void 0;
+          topContainer = (ref3 = CUI.dom.parents(topElement, "body > div")) != null ? ref3[0] : void 0;
+          if (elementTopContainer !== topContainer) {
+            continue;
+          }
+        }
+      }
       div = CUI.dom.div();
       this.__uiHighlightDivs.push(div);
       fn(div, uiElement);
+    }
+    ref4 = this.__uiHighlightDivs;
+    for (n = 0, len3 = ref4.length; n < len3; n++) {
+      div = ref4[n];
+      CUI.dom.showElement(div);
     }
   };
 
