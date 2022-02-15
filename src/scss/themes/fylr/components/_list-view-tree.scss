@@ -66,12 +66,12 @@
 }
 
 // Reserve space for tree node handle in the first column of the header row 
-// .cui-list-view-tree-hierarchy {
-// 	.list-view-header-row {
-// 		.cui-lv-td:first-child::before {
-// 			content: '';
-// 			display: inline-block;
-// 			width: $tree-node-handle-width;
-// 		}
-// 	}
-// }
+.cui-list-view-tree-hierarchy {
+	.list-view-header-row {
+		.cui-lv-td:first-child::before {
+			content: '';
+			display: inline-block;
+			width: $tree-node-handle-width;
+		}
+	}
+}
