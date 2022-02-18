@@ -6112,6 +6112,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-top: 0.25rem;
 }
 
+.cui-list-view-tree-hierarchy .list-view-header-row .cui-lv-td:first-child::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+}
+
 .cui-data-table {
   flex-shrink: 1;
   display: inline-block;
