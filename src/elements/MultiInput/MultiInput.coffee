@@ -211,6 +211,9 @@ class CUI.MultiInput extends CUI.DataFieldInput
 						field.hide()
 					return
 
+			if @_ui
+				input_opts.ui = "#{@_ui}:#{key.name}"
+
 			input = new CUI.MultiInputInput(input_opts)
 			input.render()
 
