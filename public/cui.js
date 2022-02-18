@@ -46556,6 +46556,9 @@ CUI.MultiInput = (function(superClass) {
           };
         })(this)
       };
+      if (this._ui) {
+        input_opts.ui = this._ui + ":" + key.name;
+      }
       input = new CUI.MultiInputInput(input_opts);
       input.render();
       fn(input, key);
@@ -46936,17 +46939,22 @@ CUI.MultiOutput = (function(superClass) {
   };
 
   MultiOutput.prototype.__getLabel = function(name) {
-    return new CUI.Label({
+    var labelOpts;
+    labelOpts = {
       multiline: true,
       text: this.getValue()[name],
       text_node_func: this._text_node_func,
       markdown: this._markdown,
       markdown_opts: this._markdown_opts
-    });
+    };
+    if (this._ui) {
+      labelOpts.ui = this._ui + ":" + name;
+    }
+    return new CUI.Label(labelOpts);
   };
 
   MultiOutput.prototype.__buildTemplateForKey = function(key) {
-    var button, label, template;
+    var button, label, opts, template;
     label = this.__getLabel(key.name);
     template = new CUI.Template({
       name: "data-field-multi-output",
@@ -46956,7 +46964,7 @@ CUI.MultiOutput = (function(superClass) {
       }
     });
     template.append(label, "center");
-    button = new CUI.defaults["class"].Button({
+    opts = {
       text: key.tag,
       tabindex: null,
       disabled: !this._control.hasUserControl(),
@@ -46968,7 +46976,11 @@ CUI.MultiOutput = (function(superClass) {
           return _this._control.showUserControl(ev, button);
         };
       })(this)
-    });
+    };
+    if (this._ui) {
+      opts.ui = this._ui + ".button:" + key.name;
+    }
+    button = new CUI.defaults["class"].Button(opts);
     template.append(button, "aside");
     return template;
   };
