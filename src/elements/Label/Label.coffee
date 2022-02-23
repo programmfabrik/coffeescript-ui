@@ -213,6 +213,14 @@ class CUI.Label extends CUI.DOMElement
 		else
 			@replace(content, "content")
 
+		# This is used for accessibility.
+		# The role status should be on the 'span'.
+		if @_attr?.role == "status"
+			span = CUI.dom.findElement(@DOM, "span")
+			if span
+				CUI.dom.removeAttribute(@DOM, "role")
+				CUI.dom.setAttribute(span, "role", "status")
+
 		if not @_manage_overflow
 			return
 
