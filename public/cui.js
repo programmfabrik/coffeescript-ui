@@ -39280,10 +39280,18 @@ CUI.Label = (function(superClass) {
   };
 
   Label.prototype.setContent = function(content) {
+    var ref, span;
     if (CUI.util.isString(content)) {
       this.replace(CUI.dom.htmlToNodes(content), 'content');
     } else {
       this.replace(content, "content");
+    }
+    if (((ref = this._attr) != null ? ref.role : void 0) === "status") {
+      span = CUI.dom.findElement(this.DOM, "span");
+      if (span) {
+        CUI.dom.removeAttribute(this.DOM, "role");
+        CUI.dom.setAttribute(span, "role", "status");
+      }
     }
     if (!this._manage_overflow) {
       return;
