@@ -41371,6 +41371,9 @@ CUI.ListViewRow = (function(superClass) {
       },
       "class": {
         check: String
+      },
+      ui: {
+        check: String
       }
     });
   };
@@ -41496,6 +41499,9 @@ CUI.ListViewRow = (function(superClass) {
   };
 
   ListViewRow.prototype.addedToListView = function(DOMNodes) {
+    if (this._ui) {
+      CUI.dom.setAttribute(DOMNodes != null ? DOMNodes[0] : void 0, "ui", this._ui);
+    }
     return this.__addedToListView = true;
   };
 
