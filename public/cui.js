@@ -19194,6 +19194,9 @@ CUI.Icon = (function(superClass) {
         CUI.dom.append(this.DOM, span);
       }
     }
+    if (this._ui) {
+      CUI.dom.setAttribute(this.DOM, "ui", this._ui);
+    }
     if (this._tooltip) {
       this._tooltip.element = this.DOM;
       new CUI.Tooltip(this._tooltip);
@@ -19207,6 +19210,9 @@ CUI.Icon = (function(superClass) {
         check: String
       },
       icon: {
+        check: String
+      },
+      ui: {
         check: String
       },
       fixed_width: {
