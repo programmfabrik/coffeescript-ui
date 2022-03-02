@@ -36,6 +36,9 @@ class CUI.Icon extends CUI.Element
 				span.textContent = @_icon[0]
 				CUI.dom.append(@DOM, span)
 
+		if @_ui
+			CUI.dom.setAttribute(@DOM, "ui", @_ui)
+
 		if @_tooltip
 			@_tooltip.element = @DOM
 			new CUI.Tooltip(@_tooltip)
@@ -46,6 +49,8 @@ class CUI.Icon extends CUI.Element
 			class:
 				check: String
 			icon:
+				check: String
+			ui:
 				check: String
 			fixed_width:
 				check: Boolean
