@@ -48091,6 +48091,9 @@ CUI.Output = (function(superClass) {
       multiline: this._multiline,
       "class": "cui-data-field-output-label"
     });
+    if (this._ui) {
+      CUI.dom.setAttribute(this.__textSpan, "ui", this._ui);
+    }
     this.setText(this._text);
     return this.__textSpan;
   };
@@ -49874,7 +49877,8 @@ CUI.Select = (function(superClass) {
     if (opts.options.length === 1) {
       out_opts = {
         form: opts.form,
-        text: opts.options[0].text
+        text: opts.options[0].text,
+        ui: opts.ui
       };
       return new CUI.Output(out_opts);
     } else {
