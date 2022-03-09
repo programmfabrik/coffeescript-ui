@@ -290,6 +290,7 @@ class CUI.Select extends CUI.Checkbox
 			out_opts =
 				form: opts.form
 				text: opts.options[0].text
+				ui: opts.ui
 			new CUI.Output(out_opts)
 		else
 			new CUI.Select(opts)
