@@ -38,7 +38,9 @@ class CUI.Output extends CUI.DataFieldInput
 		@
 
 	init: ->
-		@__textSpan = new CUI.Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label" ) #"cui-data-field-output-label"
+		@__textSpan = new CUI.Label(markdown: @_markdown, multiline: @_multiline, class: "cui-data-field-output-label")
+		if @_ui
+			CUI.dom.setAttribute(@__textSpan, "ui", @_ui)
 		@setText(@_text)
 		@__textSpan
 

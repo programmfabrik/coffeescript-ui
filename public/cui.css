@@ -2400,23 +2400,16 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-label-manage-overflow {
   position: relative;
-  display: block;
+  flex-direction: column;
+  align-items: flex-end;
 }
 .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
   max-height: 144px;
 }
-.cui-label-manage-overflow:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
-  background: linear-gradient(transparent, white);
-}
 .cui-label-manage-overflow > .cui-label-content {
   max-height: 108px;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(black calc(100% - 32px), transparent);
 }
 .cui-label-manage-overflow.cui-label-size-mini.cui-label--measure-overflow > .cui-label-content {
   max-height: 112px;
@@ -2424,29 +2417,16 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-label-manage-overflow.cui-label-size-mini > .cui-label-content {
   max-height: 84px;
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button {
-  z-index: 1;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), white 10px);
-  padding: 0 0 0 10px !important;
-}
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
   color: var(--highlight);
   height: auto;
-  padding: 0 0 1px;
-}
-.cui-label-manage-overflow.cui-label--show-overflow:after {
-  display: none;
+  padding: 0;
+  line-height: inherit;
 }
 .cui-label-manage-overflow.cui-label--show-overflow > .cui-label-content {
   max-height: none !important;
   overflow: visible;
-}
-.cui-label-manage-overflow.cui-label--show-overflow .cui-label-manage-overflow-button {
-  position: static;
-  float: right;
+  -webkit-mask-image: none;
 }
 
 .cui-empty-label {
@@ -3760,22 +3740,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even) > .cui-lv-tr > .cui-lv-td {
   background: rgba(30, 54, 72, 0.04);
 }
-.cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow:after,
-.cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow:after {
-  background: linear-gradient(rgba(246, 247, 248, 0), #f6f7f8);
-}
-.cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow-button,
-.cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even) .cui-label-manage-overflow-button {
-  background: linear-gradient(to right, rgba(246, 247, 248, 0), #f6f7f8 10px);
-}
-.cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow:after,
-.cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow:after {
-  background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
-}
-.cui-list-view-grid-quadrant-2 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow-button,
-.cui-list-view-grid-quadrant-3 .cui-lv-tr-outer:nth-child(even).cui-selected .cui-label-manage-overflow-button {
-  background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
-}
 
 .cui-list-view-grid-quadrant-3:focus {
   outline: none;
@@ -3800,12 +3764,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-lv-tr-outer.cui-selected .cui-empty-label, .cui-lv-tr-outer.cui-selected:nth-child(even) .cui-empty-label {
   color: var(--on-highlight-light-secondary-color);
-}
-.cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow:after, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow:after {
-  background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
-}
-.cui-lv-tr-outer.cui-selected.cui-selected .cui-label-manage-overflow-button, .cui-lv-tr-outer.cui-selected:nth-child(even).cui-selected .cui-label-manage-overflow-button {
-  background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
 }
 .cui-lv-tr-outer:focus, .cui-lv-tr-outer:focus:nth-child(even) {
   box-shadow: 0 0 0 3px var(--highlight-light) inset;

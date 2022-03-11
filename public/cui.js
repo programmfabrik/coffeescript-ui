@@ -19194,6 +19194,9 @@ CUI.Icon = (function(superClass) {
         CUI.dom.append(this.DOM, span);
       }
     }
+    if (this._ui) {
+      CUI.dom.setAttribute(this.DOM, "ui", this._ui);
+    }
     if (this._tooltip) {
       this._tooltip.element = this.DOM;
       new CUI.Tooltip(this._tooltip);
@@ -19207,6 +19210,9 @@ CUI.Icon = (function(superClass) {
         check: String
       },
       icon: {
+        check: String
+      },
+      ui: {
         check: String
       },
       fixed_width: {
@@ -41379,6 +41385,9 @@ CUI.ListViewRow = (function(superClass) {
       },
       "class": {
         check: String
+      },
+      ui: {
+        check: String
       }
     });
   };
@@ -41504,6 +41513,9 @@ CUI.ListViewRow = (function(superClass) {
   };
 
   ListViewRow.prototype.addedToListView = function(DOMNodes) {
+    if (this._ui) {
+      CUI.dom.setAttribute(DOMNodes != null ? DOMNodes[0] : void 0, "ui", this._ui);
+    }
     return this.__addedToListView = true;
   };
 
@@ -48087,6 +48099,9 @@ CUI.Output = (function(superClass) {
       multiline: this._multiline,
       "class": "cui-data-field-output-label"
     });
+    if (this._ui) {
+      CUI.dom.setAttribute(this.__textSpan, "ui", this._ui);
+    }
     this.setText(this._text);
     return this.__textSpan;
   };
@@ -49870,7 +49885,8 @@ CUI.Select = (function(superClass) {
     if (opts.options.length === 1) {
       out_opts = {
         form: opts.form,
-        text: opts.options[0].text
+        text: opts.options[0].text,
+        ui: opts.ui
       };
       return new CUI.Output(out_opts);
     } else {
