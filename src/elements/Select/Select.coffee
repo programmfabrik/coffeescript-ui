@@ -120,7 +120,7 @@ class CUI.Select extends CUI.Checkbox
 
 				if @_ui
 					uiValue = opt.value
-					if CUI.util.isPlainObject(opt.value)
+					if not CUI.util.isInteger(opt.value) and not CUI.util.isString(opt.value)
 						uiValue = idx
 					opt.ui = "#{@_ui}.option:#{uiValue}"
 
