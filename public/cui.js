@@ -49661,7 +49661,7 @@ CUI.Select = (function(superClass) {
           }
           if (_this._ui) {
             uiValue = opt.value;
-            if (CUI.util.isPlainObject(opt.value)) {
+            if (!CUI.util.isInteger(opt.value) && !CUI.util.isString(opt.value)) {
               uiValue = idx;
             }
             opt.ui = _this._ui + ".option:" + uiValue;
