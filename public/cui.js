@@ -41513,8 +41513,12 @@ CUI.ListViewRow = (function(superClass) {
   };
 
   ListViewRow.prototype.addedToListView = function(DOMNodes) {
+    var domNodes, ref;
     if (this._ui) {
-      CUI.dom.setAttribute(DOMNodes != null ? DOMNodes[0] : void 0, "ui", this._ui);
+      domNodes = (ref = this.getDOMNodes()) != null ? ref[0] : void 0;
+      if (domNodes) {
+        CUI.dom.setAttribute(domNodes, "ui", this._ui);
+      }
     }
     return this.__addedToListView = true;
   };
