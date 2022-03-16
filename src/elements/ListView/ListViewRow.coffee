@@ -115,7 +115,9 @@ class CUI.ListViewRow extends CUI.Element
 
 	addedToListView: (DOMNodes) ->
 		if @_ui
-			CUI.dom.setAttribute(DOMNodes?[0], "ui", @_ui)
+			domNodes = @getDOMNodes()?[0]
+			if domNodes
+				CUI.dom.setAttribute(domNodes, "ui", @_ui)
 		@__addedToListView = true
 
 	isAddedToListView: ->
