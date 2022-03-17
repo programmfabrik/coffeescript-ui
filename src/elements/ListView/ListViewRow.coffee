@@ -16,6 +16,8 @@ class CUI.ListViewRow extends CUI.Element
 				check: Boolean
 			class:
 				check: String
+			ui:
+				check: String
 
 	readOpts: ->
 		super()
@@ -112,6 +114,10 @@ class CUI.ListViewRow extends CUI.Element
 		@listView?.getDisplayRowIdx(@row_i)
 
 	addedToListView: (DOMNodes) ->
+		if @_ui
+			domNodes = @getDOMNodes()?[0]
+			if domNodes
+				CUI.dom.setAttribute(domNodes, "ui", @_ui)
 		@__addedToListView = true
 
 	isAddedToListView: ->

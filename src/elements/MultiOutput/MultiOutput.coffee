@@ -57,12 +57,17 @@ class CUI.MultiOutput extends CUI.DataField
 		return @
 
 	__getLabel: (name) ->
-		return new CUI.Label
+		labelOpts =
 			multiline: true
 			text: @getValue()[name]
 			text_node_func: @_text_node_func
 			markdown: @_markdown
 			markdown_opts: @_markdown_opts
+
+		if @_ui
+			labelOpts.ui = "#{@_ui}:#{name}"
+
+		return new CUI.Label(labelOpts)
 
 	__buildTemplateForKey: (key) ->
 		label =  @__getLabel(key.name)
@@ -75,7 +80,7 @@ class CUI.MultiOutput extends CUI.DataField
 
 		template.append(label, "center")
 
-		button = new CUI.defaults.class.Button
+		opts =
 			text: key.tag
 			tabindex: null
 			disabled: !@_control.hasUserControl()
@@ -84,6 +89,11 @@ class CUI.MultiOutput extends CUI.DataField
 			appearance: "flat"
 			onClick: (ev) =>
 				@_control.showUserControl(ev, button)
+
+		if @_ui
+			opts.ui = "#{@_ui}.button:#{key.name}"
+
+		button = new CUI.defaults.class.Button(opts)
 
 		template.append(button, "aside")
 		return template

@@ -19194,6 +19194,9 @@ CUI.Icon = (function(superClass) {
         CUI.dom.append(this.DOM, span);
       }
     }
+    if (this._ui) {
+      CUI.dom.setAttribute(this.DOM, "ui", this._ui);
+    }
     if (this._tooltip) {
       this._tooltip.element = this.DOM;
       new CUI.Tooltip(this._tooltip);
@@ -19207,6 +19210,9 @@ CUI.Icon = (function(superClass) {
         check: String
       },
       icon: {
+        check: String
+      },
+      ui: {
         check: String
       },
       fixed_width: {
@@ -39280,10 +39286,18 @@ CUI.Label = (function(superClass) {
   };
 
   Label.prototype.setContent = function(content) {
+    var ref, span;
     if (CUI.util.isString(content)) {
       this.replace(CUI.dom.htmlToNodes(content), 'content');
     } else {
       this.replace(content, "content");
+    }
+    if (((ref = this._attr) != null ? ref.role : void 0) === "status") {
+      span = CUI.dom.findElement(this.DOM, "span");
+      if (span) {
+        CUI.dom.removeAttribute(this.DOM, "role");
+        CUI.dom.setAttribute(span, "role", "status");
+      }
     }
     if (!this._manage_overflow) {
       return;
@@ -41371,6 +41385,9 @@ CUI.ListViewRow = (function(superClass) {
       },
       "class": {
         check: String
+      },
+      ui: {
+        check: String
       }
     });
   };
@@ -41496,6 +41513,13 @@ CUI.ListViewRow = (function(superClass) {
   };
 
   ListViewRow.prototype.addedToListView = function(DOMNodes) {
+    var domNodes, ref;
+    if (this._ui) {
+      domNodes = (ref = this.getDOMNodes()) != null ? ref[0] : void 0;
+      if (domNodes) {
+        CUI.dom.setAttribute(domNodes, "ui", this._ui);
+      }
+    }
     return this.__addedToListView = true;
   };
 
@@ -46556,6 +46580,9 @@ CUI.MultiInput = (function(superClass) {
           };
         })(this)
       };
+      if (this._ui) {
+        input_opts.ui = this._ui + ":" + key.name;
+      }
       input = new CUI.MultiInputInput(input_opts);
       input.render();
       fn(input, key);
@@ -46936,17 +46963,22 @@ CUI.MultiOutput = (function(superClass) {
   };
 
   MultiOutput.prototype.__getLabel = function(name) {
-    return new CUI.Label({
+    var labelOpts;
+    labelOpts = {
       multiline: true,
       text: this.getValue()[name],
       text_node_func: this._text_node_func,
       markdown: this._markdown,
       markdown_opts: this._markdown_opts
-    });
+    };
+    if (this._ui) {
+      labelOpts.ui = this._ui + ":" + name;
+    }
+    return new CUI.Label(labelOpts);
   };
 
   MultiOutput.prototype.__buildTemplateForKey = function(key) {
-    var button, label, template;
+    var button, label, opts, template;
     label = this.__getLabel(key.name);
     template = new CUI.Template({
       name: "data-field-multi-output",
@@ -46956,7 +46988,7 @@ CUI.MultiOutput = (function(superClass) {
       }
     });
     template.append(label, "center");
-    button = new CUI.defaults["class"].Button({
+    opts = {
       text: key.tag,
       tabindex: null,
       disabled: !this._control.hasUserControl(),
@@ -46968,7 +47000,11 @@ CUI.MultiOutput = (function(superClass) {
           return _this._control.showUserControl(ev, button);
         };
       })(this)
-    });
+    };
+    if (this._ui) {
+      opts.ui = this._ui + ".button:" + key.name;
+    }
+    button = new CUI.defaults["class"].Button(opts);
     template.append(button, "aside");
     return template;
   };
@@ -48067,6 +48103,9 @@ CUI.Output = (function(superClass) {
       multiline: this._multiline,
       "class": "cui-data-field-output-label"
     });
+    if (this._ui) {
+      CUI.dom.setAttribute(this.__textSpan, "ui", this._ui);
+    }
     this.setText(this._text);
     return this.__textSpan;
   };
@@ -49626,7 +49665,7 @@ CUI.Select = (function(superClass) {
           }
           if (_this._ui) {
             uiValue = opt.value;
-            if (CUI.util.isPlainObject(opt.value)) {
+            if (!CUI.util.isInteger(opt.value) && !CUI.util.isString(opt.value)) {
               uiValue = idx;
             }
             opt.ui = _this._ui + ".option:" + uiValue;
@@ -49850,7 +49889,8 @@ CUI.Select = (function(superClass) {
     if (opts.options.length === 1) {
       out_opts = {
         form: opts.form,
-        text: opts.options[0].text
+        text: opts.options[0].text,
+        ui: opts.ui
       };
       return new CUI.Output(out_opts);
     } else {

@@ -120,7 +120,7 @@ class CUI.Select extends CUI.Checkbox
 
 				if @_ui
 					uiValue = opt.value
-					if CUI.util.isPlainObject(opt.value)
+					if not CUI.util.isInteger(opt.value) and not CUI.util.isString(opt.value)
 						uiValue = idx
 					opt.ui = "#{@_ui}.option:#{uiValue}"
 
@@ -290,6 +290,7 @@ class CUI.Select extends CUI.Checkbox
 			out_opts =
 				form: opts.form
 				text: opts.options[0].text
+				ui: opts.ui
 			new CUI.Output(out_opts)
 		else
 			new CUI.Select(opts)
