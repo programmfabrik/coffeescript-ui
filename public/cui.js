@@ -47113,7 +47113,7 @@ CUI.ObjectDumper = (function(superClass) {
           }
         ],
         check: function(v) {
-          return v.length === 2;
+          return v.length === 2 || CUI.util.isFalse(v);
         }
       },
       do_open: {
