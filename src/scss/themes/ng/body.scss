@@ -2257,7 +2257,6 @@ a[role="button"].cui-button-appearance-link {
 .cui-label-manage-overflow {
 	position: relative;
 	flex-direction: column;
-	align-items: flex-end;
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
@@ -2268,6 +2267,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-label-content {
 		max-height: 6 * 18px; // limit at 6 lines
 		overflow: hidden;
+		align-self: stretch;
 		-webkit-mask-image: linear-gradient(black calc(100% - 32px), transparent);
 	}
 
