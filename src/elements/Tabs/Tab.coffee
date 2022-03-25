@@ -42,7 +42,7 @@ class CUI.Tab extends CUI.DOMElement
 			radio: "tabs--"+tabs.getUniqueId()
 			class: "cui-tab-header-button"
 			disabled: @_disabled
-			qa: if @_qa then @_qa + "-button"
+			ui: if @_ui then @_ui + ".button"
 			id: @_button_id
 			size: "normal"
 			group: "tabs"
@@ -71,6 +71,7 @@ class CUI.Tab extends CUI.DOMElement
 					type: "tab_deactivate"
 					node: @DOM
 
+		@_onInitButton?(@, @__button)
 		@
 
 	initOpts: ->
@@ -98,6 +99,8 @@ class CUI.Tab extends CUI.DOMElement
 			onActivate:
 				check: Function
 			onDeactivate:
+				check: Function
+			onInitButton:
 				check: Function
 			content_placeholder:
 				check: (v) ->

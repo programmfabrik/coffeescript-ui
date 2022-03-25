@@ -354,7 +354,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 			@__preActivateButtonByIndex(nextIndex)
 			return
 
-		for item, index in @__body?.DOM.children
+		for item, index in @__getButtonItems()
 			element = CUI.dom.data(item, "element")
 			if elementMatches(element)
 				@__preActivateButtonByIndex(index)
@@ -411,7 +411,7 @@ class CUI.ItemList extends CUI.VerticalLayout
 		return
 
 	__getButtonItems: ->
-		return Array::filter.call(@__body.DOM.children, (item) =>
+		return Array::filter.call(@__body?.DOM.children, (item) =>
 			element = CUI.dom.data(item, "element")
 			return element instanceof CUI.Button and element.isEnabled()
 		)

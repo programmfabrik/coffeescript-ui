@@ -860,7 +860,6 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.dom.append(element, contentDiv)
 		@
 
-
 	moveToNewFather: (new_father, new_child_idx) ->
 		old_father = @father
 		old_father.removeChild(@)
@@ -877,3 +876,38 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		CUI.resolvedPromise()
 
 	moveNodeAfter: (to_node, new_father, after) ->
+
+
+	addedToListView: (DOMNodes) ->
+		tree = @getTree()
+
+		# Just for usability/accessibility. Use 'up' and 'down' to navigate through rows.
+		element = DOMNodes?[0]
+		if element
+			CUI.Events.listen
+				type: "keydown"
+				node: element
+				call: (ev) =>
+					keyboardKey = ev.getKeyboardKey()
+					if keyboardKey not in ["Up", "Down"]
+						return
+
+					nextIdx = @getRowIdx()
+					if keyboardKey == "Up"
+						if nextIdx == 0
+							CUI.dom.findPreviousElement(element, "div[tabindex]")?.focus()
+							return
+
+						nextIdx--
+					else
+						nextIdx++
+
+					row = tree.getRow(nextIdx)
+					if not row?[0]
+						CUI.dom.findNextElement(element, "div[tabindex]")?.focus()
+						return
+
+					row[0].focus()
+					return
+
+		return super(DOMNodes)

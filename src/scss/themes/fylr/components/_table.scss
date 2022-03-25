@@ -1,0 +1,100 @@
+.cui-table {
+	// specific chrome fix to allow horizontal scrollbars: `display: block` instead of `display: table` and `overflow-x: auto`
+	// display: block;
+	display: inline-table; // todo: ??
+	overflow-x: auto;
+	border: 1px solid $table-border-color;
+	border-radius: $table-border-radius;
+
+	// use .cui-table-row or .cui-table-td when styling data tables
+	// .cui-tr and .cui-td will be used in a more generic layouty way as well (without cui-table-td class)
+	.cui-tr {
+		display: table-row;
+	}
+
+	.cui-th,
+	.cui-td {
+		display: table-cell;
+		padding: $table-padding-y $table-padding-x;
+		vertical-align: top;
+
+		&[colspan] {
+			> label,
+			> .cui-label {
+				margin-bottom: $table-padding-y; // todo: find use-case
+			}
+		}
+
+		> .cui-empty-label {
+			padding: 0; // todo: find use-case
+		}
+	}
+
+	.cui-th {
+		font-weight: $headings-font-weight;
+	}
+
+	> .cui-tr + .cui-tr {
+		> .cui-table-td {
+			border-top: 1px solid $table-border-color;
+		}
+	}
+
+	.cui-table-td {
+		vertical-align: middle;
+	}
+
+	.cui-td--key {
+		word-wrap: break-word;
+		font-weight: $font-weight-bold;
+	}
+
+	.cui-td--value {
+		word-wrap: break-word;
+		word-break: break-all;
+		word-break: break-word;
+		padding-left: 0;
+	}
+
+	.cui-td--text-content {
+		vertical-align: top;
+		white-space: pre-wrap;
+	}
+
+	.cui-td--key,
+	.cui-td--value {
+		line-height: $line-height-sm;
+	}
+
+	// with --flex you can set a fixed width for .cui-td--key via --tableDataKeyWidth for an individual cui-table
+	&--flex {
+		display: inline-flex; // todo: see inline-table above
+		flex-direction: column;
+		flex: 1 0 auto;
+
+		.cui-tr {
+			display: flex;
+		}
+
+		.cui-td--key {
+			flex-shrink: 0;
+			width: $table-data-width;
+			width: var(--tableDataKeyWidth, $table-data-width);
+		}
+
+		.cui-td--value {
+			flex-grow: 1;
+			width: auto;
+		}
+	}
+
+	&.cui-maximize-horizontal {
+		width: 100%;
+		// display: table; // have to turn on table rendering again (brakes scrollbars, so use with caution) CONFLICT: turning off scrollbars is a no-go
+	}
+
+	&.cui-maximize-vertical {
+		flex-grow: 1;
+	}
+}
+

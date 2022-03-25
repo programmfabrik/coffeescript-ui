@@ -5,6 +5,22 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
+# this is like whenAll but rejects if at least
+# one of the promises failed (but all are executed)
+CUI.whenAllReject = =>
+	dfr = new CUI.Deferred()
+	args = [false]
+	args.push.apply(args, arguments)
+	CUI.whenAll.apply(@, args).done(=>
+		for promise in arguments
+			if promise.state == "rejected"
+				dfr.reject()
+				return
+		dfr.resolve()
+		return
+	)
+	return dfr.promise()
+
 # this is like when, only that it not stops on failure
 CUI.whenAll = =>
 	args = [false]
@@ -19,6 +35,8 @@ CUI.when = =>
 CUI.__when = =>
 	promises = []
 	add_promise = (promise, idx) =>
+		if not promise
+			return
 		CUI.util.assert(CUI.util.isPromise(promise) or CUI.util.isDeferred(promise), "CUI.when", "arg[#{idx}] needs to be instanceof CUI.Promise or CUI.Deferred.", arg: promise)
 		promises.push(promise)
 		return

@@ -4,6 +4,8 @@ class CUI.Form extends CUI.SimpleForm
 		super(opts)
 		if @_padded
 			@addClass("cui-form--padded")
+		if @_condensed
+			@addClass("cui-form--condensed")
 
 		return
 
@@ -13,6 +15,9 @@ class CUI.Form extends CUI.SimpleForm
 			top: {}
 			bottom: {}
 			padded:
+				check: Boolean
+				default: false
+			condensed:
 				check: Boolean
 				default: false
 

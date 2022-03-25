@@ -1,0 +1,183 @@
+// * Drag row handlle
+
+.cui-drag-handle-row {
+	margin: 1px;
+	flex: 1 1 auto;
+	height: 10px;
+	width: 12px;
+	background: linear-gradient(var(--handle-color, #{$handle-color}) 1px, transparent 1px, transparent 2px);
+	background-size: 100% 2px;
+}
+
+// * Resizable handle
+
+.cui-resizable-handle {
+	position: absolute;
+
+	&.cui-resizable-handle-se {
+		bottom: -8px;
+		right: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-nw {
+		top: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nwse-resize;
+	}
+
+	&.cui-resizable-handle-sw {
+		bottom: -8px;
+		left: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-ne {
+		right: -8px;
+		top: -8px;
+		width: 16px;
+		height: 16px;
+		cursor: nesw-resize;
+	}
+
+	&.cui-resizable-handle-s {
+		left: 8px;
+		right: 8px;
+		bottom: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-n {
+		left: 8px;
+		right: 8px;
+		top: -8px;
+		height: 16px;
+		cursor: ns-resize;
+	}
+
+	&.cui-resizable-handle-e {
+		right: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+
+	&.cui-resizable-handle-w {
+		left: -8px;
+		top: 8px;
+		bottom: 8px;
+		width: 16px;
+		cursor: ew-resize;
+	}
+}
+
+// * Flex handle
+
+.cui-flex-handle {
+	position: relative;
+	z-index: 2;
+	flex-shrink: 0;
+	user-select: none;
+
+	&.cui-flex-handle-has-label:not(.cui-flex-handle-closed) {
+		.cui-label {
+			display: none;
+		}
+	}
+}
+
+.cui-flex-handle-row {
+	width: $flex-handle-size;
+	margin: 0;
+
+	@include flex-handle-row();
+
+	.cui-pane & {
+		@include flex-handle-row($pane-background);
+	}
+
+	&:not(.cui-flex-handle-closed) {
+		cursor: ew-resize;
+	}
+
+	&.cui-flex-handle-closed {
+		cursor: pointer;
+		overflow: hidden;
+	}
+
+	// todo: obsolete class?
+	&.cui-flex-handle-manual-size {
+		// background-color: #64fdd8;
+	}
+
+	&.cui-flex-handle-has-label.cui-flex-handle-closed {
+		width: 32px;
+		margin: 0;
+		background: $body-bg;
+
+		.cui-label.cui-label-rotate-90 {
+			@supports (writing-mode: vertical-rl) {
+				display: flex;
+				justify-content: center;
+			}
+
+			.cui-label-transform {
+				line-height: $line-height-sm;
+			}
+		}
+	}
+}
+
+.cui-flex-handle-column {
+	height: $flex-handle-size;
+	margin: 0;
+	width: 100%;
+
+	@include flex-handle-column();
+
+	.cui-pane & {
+		@include flex-handle-column($pane-background);
+	}
+
+	&.cui-flex-handle-has-label.cui-flex-handle-closed {
+		margin: 0;
+	}
+
+	&:not(.cui-flex-handle-closed) {
+		cursor: ns-resize;
+	}
+
+	&.cui-flex-handle-closed {
+		cursor: pointer;
+	}
+}
+
+.cui-flex-handle-hidden {
+	display: none;
+}
+
+.cui-flex-handle-stretched {
+	flex: 1 1 auto !important;
+}
+
+.cui-flex-handle-hide-for-stretch {
+	display: none;
+}
+
+.cui-is-manually-sized {
+	flex-grow: 0 !important;
+	flex-shrink: 0 !important;
+
+	& + .cui-flex-handle + * {
+		flex-shrink: 1 !important;
+	}
+}
+

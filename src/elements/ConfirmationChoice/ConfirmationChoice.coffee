@@ -56,6 +56,9 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			mandatory: true
 			default: false
 			check: Boolean
+		secondary:
+			default: false
+			check: Boolean
 		disabled:
 			mandatory: true
 			default: false
@@ -71,8 +74,15 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			if not choice
 				continue
 
+			uiKey = "confirmation.choice"
+			if choice.text
+				uiKey += ":#{choice.text.toLowerCase().replace(/s+/g, '_')}"
+			else if choice.loca_key
+				uiKey += ":#{choice.loca_key}"
+
 			btn_opts =
 				left: true
+				ui: uiKey
 				value: choice
 				disabled: choice.disabled
 				tooltip: choice.tooltip

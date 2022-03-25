@@ -1681,7 +1681,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("1802 - 2000")
+        expect(output).toBe("1802 bis 2000")
     });
 
     test("dateRangeToString :: 1799 - 2000", () => {
@@ -1690,7 +1690,7 @@ describe('CUI.DateTime.dateRangeToString', () => {
 
         const output = CUI.DateTime.dateRangeToString(from, to)
 
-        expect(output).toBe("1799 - 2000")
+        expect(output).toBe("1799 bis 2000")
     });
 
     test("dateRangeToString :: -0099 - 0205", () => {

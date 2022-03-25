@@ -201,6 +201,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				onClick: @_onClick
 				onFocus: @_onFocus
 				onKeyup: @_onKeyup
+				attr: @_attr
 				name: key.name
 				undo_support: false
 				content_size: @_content_size
@@ -209,6 +210,9 @@ class CUI.MultiInput extends CUI.DataFieldInput
 					if @__user_selectable and CUI.util.isEmpty(data[field.getName()])
 						field.hide()
 					return
+
+			if @_ui
+				input_opts.ui = "#{@_ui}:#{key.name}"
 
 			input = new CUI.MultiInputInput(input_opts)
 			input.render()

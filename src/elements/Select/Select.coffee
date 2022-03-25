@@ -118,6 +118,12 @@ class CUI.Select extends CUI.Checkbox
 				if not CUI.util.isUndef(opt.value) and first_value_opt == undefined
 					first_value_opt = opt
 
+				if @_ui
+					uiValue = opt.value
+					if not CUI.util.isInteger(opt.value) and not CUI.util.isString(opt.value)
+						uiValue = idx
+					opt.ui = "#{@_ui}.option:#{uiValue}"
+
 			# auto - select first opt, if value unset
 			# and no empty text allowed
 			@_default_opt = undefined
@@ -226,7 +232,7 @@ class CUI.Select extends CUI.Checkbox
 		max_chars = null
 
 		for opt, idx in @__options
-			if found_opt == null and opt.value == @getValue()
+			if found_opt == null and CUI.util.isEqual(opt.value, @getValue())
 				found_opt = opt
 
 			if opt.text?.length > max_chars
@@ -284,6 +290,7 @@ class CUI.Select extends CUI.Checkbox
 			out_opts =
 				form: opts.form
 				text: opts.options[0].text
+				ui: opts.ui
 			new CUI.Output(out_opts)
 		else
 			new CUI.Select(opts)

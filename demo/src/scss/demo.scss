@@ -1,4 +1,4 @@
-/*
+/*!
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
  * MIT Licence
@@ -6,6 +6,329 @@
 */
 
 /*$font_awesome_url: '../cui/font-awesome/css/font-awesome.min.css';*/
+
+@import '../../../src/scss/themes/fylr/_functions';
+@import '../../../src/scss/themes/fylr/_variables';
+@import '../../../src/scss/themes/fylr/_mixins';
+
+
+.cui-button-demo-limit-width {
+	max-width: 150px;
+}
+
+.cui-demo-input-demo {
+	.cui-form-table {
+		margin: 10px;
+	}
+}
+
+.cui-demo-controls-demo {
+	.cui-output--deletable .cui-button {
+		display: block !important;
+	}
+}
+
+.cui-form-demo-form {
+	background-color: theme-color('light');
+
+	.cui-form-tr {
+		margin-bottom: 3rem;
+	}
+
+	.cui-form-hint .cui-button-button {		
+		margin-top: $spacer-sm;
+	}
+}
+
+.cui-demo-data-form-demo {
+	.cui-demo-pane-center {
+		> .cui-pane {
+			background-color: theme-color('light');
+		}
+	}
+}
+
+.cui-demo-list-view-demo {
+	.cui-demo-example-label {
+		font-size: 11px;
+		color: #8c8c8c;
+	}
+
+	.cui-demo-lv-title {
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+}
+
+.cui-demo-data-table-demo {
+	.cui-data-table.cui-data-field {
+		max-width: none;
+	}
+}
+
+.cui-demo-layer-demo {
+	.cui-demo-table > .cui-tr > .cui-td {
+		padding-bottom: 0;
+	}
+}
+
+.cui-demo-playground {
+	.cui-demo-icons {
+		.cui-demo-icon-container {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.cui-demo-icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			height: 38px;
+			border: 1px solid currentColor;
+			margin: -1px 0 0 -1px;
+			cursor: pointer;
+		}
+	}
+
+	.cui-demo-asset-icons {
+		.cui-demo-icon {
+			width: 100px;
+			height: 100px;
+		}
+	}
+
+	.cui-demo-table-no-border {
+		@include table-no-border();
+	}
+
+	.cui-demo-table-zebra {
+		@include table-zebra();
+	}
+
+	.cui-demo-playground-tab-control {
+		.cui-buttonbar {
+			margin-bottom: 1rem;
+		}
+	}
+}
+
+.cui-demo-tabs-demo {
+	.cui-demo-pane-center > .cui-pane {
+		overflow: visible;
+		background-color: theme-color('light');
+	}
+
+	.cui-label + .cui-tabs {
+		margin-bottom: 3rem;
+	}
+
+	.cui-demo-tabs-vertical {
+		@include tabs-vertical();
+	}
+
+	.cui-demo-tabs-small {
+		@include tabs-horizontal-sm();
+	}
+
+	.cui-demo-tabs-vertical-small {
+		@include tabs-vertical();
+		@include tabs-vertical-sm();
+	}
+}
+
+// * Button Demo
+
+.cui-demo-button-demo[data-cui-theme='fylr'] {
+	.cui-button-button.cui-demo-button-size-large-link {
+		@include button-link();
+		@include button-lg();
+	}
+
+	.cui-demo-button-pair {
+		.cui-last-visible-child {
+			@include button-plain();
+		}
+
+		&.cui-demo-button-size-small .cui-button-button {
+			@include button-sm();
+		}
+
+		&.cui-demo-button-size-large .cui-button-button {
+			@include button-lg();
+		}
+	}
+	
+	.cui-demo-button-size-icon.cui-button-button {
+		@include button-plain-icon();
+	}
+
+	.cui-demo-button-size-ellipsis.cui-button-button {
+		@include button-plain-ellipsis();
+	}	
+
+	.cui-demo-button-size-info.cui-button-button {
+		@include button-plain-info();
+	}		
+
+	.cui-demo-buttonbar-pair {
+		display: flex;
+		flex-wrap: wrap;
+
+		> * {
+			flex: 0 0 auto;
+			margin-bottom: 1rem;
+
+			&:not(:last-child) {
+				margin-right: 4rem;
+			}
+		}
+
+		.cui-buttonbar:last-child > {
+			.cui-button-select,
+			.cui-button {
+				@include button-plain();
+			}
+		}
+	}
+
+	.cui-demo-buttonbar-navigation {
+		.cui-buttonbar-group {
+			@include buttonbar-group-navigation();
+		}
+	}
+
+	.cui-demo-buttonbar-navigation-border {
+		.cui-buttonbar-group {
+			@include buttonbar-group-navigation(1);
+		}
+	}
+
+	.cui-demo-buttonbar-navigation-border-small {
+		.cui-buttonbar-group {
+			@include buttonbar-group-navigation(1);
+
+			@include buttonbar-group-navigation-sm();
+		}
+	}
+
+	.cui-demo-button-inverted .cui-demo-example-content {
+		background-color: $body-color;
+		padding: $spacer-sm;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		> .cui-button-button {
+			margin-right: $spacer-sm;
+
+			@include button-color-inverted();
+
+			&.is-plain-button {
+				@include button-plain-inverted();
+			}			
+			
+			&.small {
+				@include button-sm();
+			}
+		}
+
+		.cui-demo-buttonbar-navigation-border {
+			.cui-buttonbar-group {				
+				@include buttonbar-group-navigation-inverted(1);
+				@include buttonbar-group-navigation-sm();
+			}
+		}
+
+		.cui-demo-buttonbar-group-inverted {
+			.cui-buttonbar-group {
+			 @include buttonbar-group-inverted(1);
+			}
+		}		
+	}
+
+	.cui-demo-button-on-image .cui-demo-example-content {
+		min-height: 200px;
+		background: url('https://eas.5.easydb.de/eas/partitions-inline/319/1002/1002980000/1002980005/fcac5aeb283353c89f7e6a0d7ee5a580eff8bcfa/image/jpeg');
+		background-size: cover;
+		background-repeat: no-repeat;		
+	}	
+
+	.cui-demo-buttonbar-stack-vertical .cui-buttonbar,
+	.cui-demo-buttonbar-stack-vertical.cui-buttonbar {
+		@include buttonbar-vertical();
+	}
+
+	.cui-demo-buttonbar-small-buttons .cui-button {
+		@include button-sm();
+	}
+
+	.cui-demo-buttonbar-large-buttons .cui-button {
+		@include button-lg();
+	}
+
+	.cui-demo-buttonbar-tight > *:last-child {
+		@include buttonbar-horizontal-tight();
+	}
+
+	.cui-demo-buttonbar-tight.cui-demo-buttonbar-plain {
+		@include buttonbar-horizontal-tight();
+
+		.cui-button-button {
+			@include button-plain();
+		}
+	}
+}
+
+.cui-demo-button-demo[data-cui-theme='ng'] {
+	.cui-demo-button-pair,
+	.cui-demo-buttonbar-pair {
+		> *:last-child {
+			display: none;
+		}
+	}
+}
+
+.cui-demo-label-sm {
+	line-height: $line-height-sm;
+}
+
+.cui-demo-label-lg {
+	@include label-lg();
+}
+
+.cui-demo-label-xl {
+	@include label-xl();
+}
+
+.cui-demo-label-title {
+	@include label-title-light();
+}
+
+.cui-demo-label-subtitle {
+	@include label-subtitle();
+}
+
+.cui-demo-label-muted {
+	@include label-muted();
+}
+
+.cui-demo-block-grid {
+	@include block-inline();
+}
+
+.cui-demo-block-bracket {
+	@include block-bracket();
+}
+
+.cui-demo-block-base-config {
+	// @include block-highlight();
+}
+
+.cui-demo-block-separator .cui-block {
+	@include block-separator();
+}
+
 
 /* Content Area */
 .cui-document-browser-center {
@@ -398,6 +721,7 @@ body.cui-demo-docs {
 
 .cui-demo-table {
 	margin: 10px;
+	border: 0 !important;
 
 	> .cui-tr {
 		+ .cui-demo-divider {
@@ -408,7 +732,7 @@ body.cui-demo-docs {
 
 		> .cui-td {
 			vertical-align: top;
-			padding: 2px;
+			padding: 2px 2px 30px 2px;
 		}
 
 		&.cui-demo-full-row > .cui-td {
@@ -431,6 +755,14 @@ body.cui-demo-docs {
 
 .cui-demo-pane-center {
 	overflow: auto;
+
+	> .cui-pane {
+		// background-color: white;
+	}
+
+	.cui-demo-table > .cui-tr {
+		margin-bottom: 3rem;
+	}
 }
 
 // console pane

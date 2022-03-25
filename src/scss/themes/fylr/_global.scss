@@ -1,0 +1,82 @@
+// global styles and global utility classes
+
+html {
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	background-color: $body-bg;
+}
+
+// * Visibilty
+
+.cui-border-layout-north,
+.cui-border-layout-south,
+.cui-border-layout-west,
+.cui-border-layout-east {
+	&:empty {
+		display: none;
+	}
+}
+
+[hidden],
+.cui-tmpl,
+[data-template],
+.cui-template-empty.cui-label {
+	display: none !important;
+}
+
+.cui-disabled {
+	user-select: none;
+	opacity: $disabled-opacity;
+	pointer-events: none;
+}
+
+@keyframes nodeInserted {
+	from { opacity: 0.99; }
+	to { opacity: 1; }
+}
+
+// * Spacing
+
+.cui-space {
+	margin: $spacer;
+	display: inline-block;
+
+	&:empty {
+		margin: $spacer-sm;
+	}
+}
+
+.cui-space-sm,
+// deprecated:
+.cui-small-space {
+	margin: $spacer-sm;
+	display: inline-block;
+
+	&:empty {
+		margin: $spacer-xs;
+	}
+}
+
+.cui-space-lg,
+// deprecated:
+.cui-large-space {
+	margin: $spacer-lg;
+	display: inline-block;
+
+	&:empty {
+		margin: $spacer;
+	}
+}
+
+.cui-space-flexible,
+// deprecated:
+.cui-flexible-space {
+	flex: 1 1 auto;
+}

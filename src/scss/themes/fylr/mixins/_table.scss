@@ -1,0 +1,35 @@
+@mixin table-zebra() {
+	//.cui-table
+
+	@include table-no-border();
+
+	.cui-table-row {
+		&:nth-child(odd) .cui-table-td {
+			background: $table-odd-background;
+		}
+
+		&:nth-child(even) .cui-table-td {
+			background: $table-even-background;
+		}
+	}
+}
+
+@mixin table-row-hover() {
+	.cui-table-row {
+		&:hover {
+			.cui-table-td {
+				background-color: $table-row-hover-background;
+			}
+		}
+	}
+}
+
+@mixin table-no-border() {
+	border: 0;
+
+	> .cui-tr + .cui-tr {
+		> .cui-table-td {
+			border-top: 0;
+		}
+	}
+}

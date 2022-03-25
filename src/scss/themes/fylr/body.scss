@@ -1,66 +1,10 @@
-/*
- * coffeescript-ui - Coffeescript User Interface System (CUI)
- * Copyright (c) 2013 - 2016 Programmfabrik GmbH
- * MIT Licence
- * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
-*/
-
-@import '../../icons/_svg-dimensions.scss';
-
-// reset
-
-table {
-	border-collapse: collapse;
-}
-
-td {
-	vertical-align: top;
-	padding: 0;
-	margin: 0;
-}
-
-ul {
-	margin: 0;
-	padding-left: 3px;
-    list-style-position: inside;
-	list-position: inline;
-}
-
-a {
-	text-decoration: none;
-	color: #000000;
-}
-// basics
-
-html {
-	overflow: hidden;
-    width: 100%;
-    height: 100%;
-}
-
-body {
-	// this is to test debug / non-debug theme
-	font-family: arial;
-	font-size: 12px;
-	line-height: normal;
-	display: flex;
-	box-sizing: border-box;
-	width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-td {
-	font-size: 12px;
-	font-family: arial;
-}
+// todo: seperate out into global stylesheets or components
 
 input, textarea {
 	display: flex;
 	font-size: 12px;
 	border: 1px solid #30f121;
-	font-family: arial;
+	font-family: Arial, sans-serif;
 	padding: 2px;
 	flex: 1 1 auto;
 	// width: 100%;
@@ -69,14 +13,6 @@ input, textarea {
 
 input {
 	overflow: hidden;
-}
-
-div, a, label {
-	display: flex;
-	flex: 0 0 auto;
-	align-items: stretch;
-	box-sizing: border-box;
-	flex-direction: column;
 }
 
 label {
@@ -94,134 +30,6 @@ span {
 .cui-tr {
 	flex: 1 1 auto;
 	flex-direction: row;
-}
-
-// HorizontalLayout
-.cui-horizontal-layout {
-	&.cui-maximize-horizontal {
-		flex-direction: row;
-		overflow: hidden;
-
-		> .cui-horizontal-layout-left,
-		> .cui-horizontal-layout-right
-		{
-			position: relative;
-			overflow: hidden;
-		}
-		> .cui-horizontal-layout-center {
-			position: relative;
-			flex: 1 1 auto;
-			overflow: auto;
-		}
-	}
-
-	&.cui-maximize-vertical {
-		flex: 1 1 auto;
-		overflow: hidden;
-	}
-
-	&:not(.cui-maximize-horizontal) {
-		flex-direction: row;
-		align-self: flex-start;
-	}
-}
-
-
-// VerticalLayout
-.cui-vertical-layout {
-	&.cui-maximize-vertical {
-		flex: 1 1 auto;
-		overflow: hidden;
-
-		> .cui-vertical-layout-top,
-		> .cui-vertical-layout-bottom {
-			position: relative;
-			overflow: hidden;
-		}
-		> .cui-vertical-layout-center {
-			position: relative;
-			flex: 1 1 auto;
-			overflow: auto;
-		}
-	}
-
-	&.cui-maximize-horizontal {
-		overflow: hidden;
-	}
-
-	&:not(.cui-maximize-horizontal) {
-		align-self: flex-start;
-	}
-}
-
-.cui-horizontal-list {
-	> .cui-horizontal-layout-center {
-		flex-direction: row;
-	}
-}
-
-
-// Layout Absolute Horizontal
-.cui-horizontal-layout{
-    &.cui-absolute {
-        position: relative;
-
-        width: 100%;
-        height: 100%;
-
-        & > div {
-			position: absolute !important; // overwrite "relative" from above
-            top: 0;
-            bottom: 0;
-			// height: 100%;
-        }
-        & > .cui-horizontal-layout-left {
-            left: 0;
-        }
-        & > .cui-horizontal-layout-center {
-            left: 0;  // overwritten by Layout.coffee
-            right: 0;  // overwritten by Layout.coffee
-        }
-
-        & > .cui-horizontal-layout-right {
-            right: 0;
-        }
-    }
-}
-
-
-
-
-
-// Layout Absolute Vertical
-.cui-vertical-layout {
-	&.cui-absolute {
-		position: relative;
-
-		width: 100%;
-		height: 100%;
-
-		& > div {
-			position: absolute !important; // overwrite "relative" from above
-			left: 0;
-			right: 0;
-			width: 100%;
-		}
-
-		& > .cui-vertical-layout-top {
-			top: 0;
-		}
-
-		& > .cui-vertical-layout-center {
-			top: 0; // overwritten by Layout.coffee
-			bottom: 0; // overwritten by Layout.coffee
-		}
-
-		& > .cui-vertical-layout-bottom {
-			bottom: 0;
-		}
-
-	}
 }
 
 
@@ -242,11 +50,12 @@ span {
 .cui-flex-handle-row {
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
 		width: 20px;
+
 		.cui-label.cui-label-rotate-90 {
 			.cui-label-transform {
 				// the difference to the normal rotate-90 is that
-				// we want to touch the label the "top" and not
-				// start from the "bottom"
+				// we want to touch the label the 'top' and not
+				// start from the 'bottom'
 				transform: rotateZ(-90deg) translateY(-3px) translate(calc(-100% - 3px));
 				transform-origin: left top;
 			}
@@ -259,12 +68,15 @@ span {
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	background-color: #64b6fd;
+
 	&:not(.cui-flex-handle-closed) {
 		cursor: ew-resize;
 	}
+
 	&.cui-flex-handle-closed {
 		cursor: pointer;
 	}
+
 	&.cui-is-manually-sized {
 		background-color: #64fdd8;
 	}
@@ -285,9 +97,11 @@ span {
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	background-color: #64b6fd;
+
 	&:not(.cui-flex-handle-closed) {
 		cursor: ns-resize;
 	}
+
 	&.cui-flex-handle-closed {
 		cursor: pointer;
 	}
@@ -304,45 +118,34 @@ span {
 
 
 .cui-pane-fill-screen {
-        transition: top ease-out 0.5s,right ease-out 0.5s,left ease-out 0.5s,bottom ease-out 0.5s;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+	transition: top ease-out 0.5s, right ease-out 0.5s, left ease-out 0.5s, bottom ease-out 0.5s;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 
-		// Pane Fillscreen
-		.cui-pane-fill-screen {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: #ffffff;
-			.cui-pane-fill-screen-inner {
-				width: 100%;
-				height: 100%;
-			}
+	// Pane Fillscreen
+	.cui-pane-fill-screen {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ffffff;
+
+		.cui-pane-fill-screen-inner {
+			width: 100%;
+			height: 100%;
 		}
-		// overwrite "style" set by code
-        &.cui-pane-fill-screen-is-on {
-            top: 0 !important;
-            left: 0 !important;
-            bottom: 0 !important;
-            right: 0 !important;
-        }
-}
-
-// BorderLayout
-
-.cui-border-layout-north,
-.cui-border-layout-south {
-	background-color: #ffd890;
-}
-
-.cui-border-layout-west,
-.cui-border-layout-east {
-	background-color: #ffefd1;
+	}
+	// overwrite 'style' set by code
+	&.cui-pane-fill-screen-is-on {
+		top: 0 !important;
+		left: 0 !important;
+		bottom: 0 !important;
+		right: 0 !important;
+	}
 }
 
 // DocumentBrowser
@@ -350,6 +153,7 @@ span {
 	.cui-label-content, a {
 		display: inline;
 	}
+
 	a {
 		text-decoration: underline;
 	}
@@ -359,10 +163,13 @@ span {
 		font-size: 14px;
 		padding: 0 3px;
 	}
+
 	.cui-document-browser-list {
 		width: 250px;
+
 		li, .cui-label {
 			cursor: pointer;
+
 			&:hover {
 				background: #e0e0e0;
 			}
@@ -378,9 +185,11 @@ span {
 		border-top: 3px solid #18026f;
 		border-bottom: 2px solid #caca64;
 	}
+
 	.cui-document-browser-search-match-mark {
 		display: inline-block;
-		background-color: hsla(50%,50%,50%,0.5);
+		background-color: hsla(50%, 50%, 50%, 0.5);
+
 		&.cui-search-match--1 {
 			background-color: hsla(260, 68%, 65%, 0.5);
 		}
@@ -391,6 +200,7 @@ span {
 .cui-toolbar {
 	background-color: rgba(34, 139, 243, 0.43);
 	padding: 3px;
+
 	> div {
 		&.cui-horizontal-layout-left,
 		&.cui-horizontal-layout-right {
@@ -408,22 +218,24 @@ span {
 			// we need to overwrite this
 			flex: 1 1 auto;
 		}
+
 		> .cui-toolbar {
 			// nested toolbars do not get a padding
 			padding: 0;
 		}
 	}
+
 	&.cui-template-empty {
 		display: none;
 	}
 }
 
 // Pane
-.cui-pane:not(.cui-list-view) > .cui-vertical-layout-top > .cui-pane-header ,
-.cui-pane:not(.cui-list-view) > .cui-vertical-layout-buttom > .cui-pane-footer
-{
+.cui-pane:not(.cui-list-view) > .cui-vertical-layout-top > .cui-pane-header,
+.cui-pane:not(.cui-list-view) > .cui-vertical-layout-buttom > .cui-pane-footer {
 	background-color: #9a2424;
 	color: #ffffff;
+
 	.cui-button:not(.cui-active):not(.cui-disabled) {
 		border-color: #aaaaaa;
 		background-color: #000000;
@@ -446,10 +258,10 @@ i.fa-spinner {
 
 i.cui-spin-stepped {
 	-webkit-animation: fa-spin 1s steps(8) infinite;
-    -moz-animation: fa-spin 1s steps(8) infinite;
-    -ms-animation: fa-spin 1s steps(8) infinite;
-    -o-animation: fa-spin 1s steps(8) infinite;
-    animation: fa-spin 1s steps(8) infinite;
+	-moz-animation: fa-spin 1s steps(8) infinite;
+	-ms-animation: fa-spin 1s steps(8) infinite;
+	-o-animation: fa-spin 1s steps(8) infinite;
+	animation: fa-spin 1s steps(8) infinite;
 }
 
 .cui-button-visual {
@@ -457,21 +269,21 @@ i.cui-spin-stepped {
 	flex: 1 1 auto;
 }
 
-.fa-times-thin:before {
+.fa-times-thin::before {
 	font-size: 1.58em;
 	content: '\00d7';
 	display: block;
-  margin-top: -0.09em;
+	margin-top: -0.09em;
 }
 
 // Button / Select / Checkbox
-a[role="button"],label[role="button"],.cui-button
-{
+a[role='button'],label[role='button'],.cui-button {
 	&:not(.cui-disabled):hover {
 		opacity: 0.7;
 	}
+
 	cursor: default;
-	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
+	display: inline-flex; // if a button is not in a flex container, behave like 'inline-block'
 	overflow: hidden;
 	white-space: nowrap;
 	flex-direction: row;
@@ -484,6 +296,7 @@ a[role="button"],label[role="button"],.cui-button
 			border-color: blue;
 			border-width: 2px;
 		}
+
 		background-color: #ffdbb3;
 		border: 1px solid #b3895b;
 	}
@@ -492,6 +305,7 @@ a[role="button"],label[role="button"],.cui-button
 		opacity: 0.7;
 		// background-color: #c0c0c0;
 	}
+
 	&.cui-active {
 		background-color: #ff5200 !important;
 	}
@@ -501,53 +315,51 @@ a[role="button"],label[role="button"],.cui-button
 
 	.cui-button-left,
 	.cui-button-center,
-	.cui-button-right
-	{
+	.cui-button-right {
 		&:empty {
 			display: none;
 		}
 	}
 	// add in-between padding
-	.cui-button-left:not(:empty) + .cui-button-center:not(:empty)
-	{
+	.cui-button-left:not(:empty) + .cui-button-center:not(:empty) {
 		padding-left: 3px;
 	}
 
-	.cui-button-center:not(:empty) + .cui-button-right:not(:empty)
-	{
+	.cui-button-center:not(:empty) + .cui-button-right:not(:empty) {
 		padding-left: 3px;
 	}
 
-	.cui-button-left:not(:empty) + .cui-button-center:empty + .cui-button-right:not(:empty)
-	{
+	.cui-button-left:not(:empty) + .cui-button-center:empty + .cui-button-right:not(:empty) {
 		padding-left: 3px;
 	}
 
 
-	.cui-button-left
-	{
+	.cui-button-left {
 		text-align: center;
 		flex: 0 0 auto;
+
 		> i.fa:not(.fa-ellipsis-v) {
 			min-width: 12px;
 		}
 	}
-	.cui-button-center
-	{
+
+	.cui-button-center {
 		flex: 1 1 auto; // was 1 0
 	}
-	.cui-button-right
-	{
+
+	.cui-button-right {
 		text-align: center;
 		flex: 0 0 auto;
+
 		> i.fa:not(.fa-ellipsis-v) {
 			min-width: 12px;
 		}
 	}
 }
 
-a[role="button"].cui-button-appearance-link {
+a[role='button'].cui-button-appearance-link {
 	height: initial;
+
 	> .cui-button-center {
 		word-break: break-all;
 	}
@@ -564,15 +376,14 @@ a[role="button"].cui-button-appearance-link {
 	border: 1px solid red;
 }
 
-
-
 // Buttonbar
 .cui-buttonbar-group {
+	flex-direction: row;
 	// outside borders are from the buttongroup
 	border: 1px solid #f00;
 
 	// cui-select has a button inside a data-field
-	// so we cannot use ">" here
+	// so we cannot use '>' here
 	.cui-button, .cui-input {
 		border-style: none;
 		// make the height 2 * border lower
@@ -588,10 +399,11 @@ a[role="button"].cui-button-appearance-link {
 
 
 // Checkbox
-.cui-button[role="checkbox"],
-.cui-button[role="radio"] {
+.cui-button[role='checkbox'],
+.cui-button[role='radio'] {
 	background-color: transparent;
 	border: none;
+
 	.cui-button-left {
 		// empty checkbox: span
 		// filled checkbox: i
@@ -606,7 +418,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-button[role="radio"] {
+.cui-button[role='radio'] {
 	.cui-button-left {
 		> span, > i {
 			border-radius: 7px;
@@ -622,13 +434,15 @@ a[role="button"].cui-button-appearance-link {
 	background-color: #f3f3f3;
 }
 
-.cui-button[role="button"].cui-panel-header-button {
+.cui-button[role='button'].cui-panel-header-button {
 	border: none;
 	background-color: transparent;
+
 	.cui-button-left {
 		width: 15px;
 	}
 }
+
 .cui-panel-closed > .cui-panel-body {
 	display: none;
 }
@@ -645,6 +459,7 @@ a[role="button"].cui-button-appearance-link {
 	// align-self: flex-start;
 
 	padding: 0 3px;
+
 	&.cui-label-rotate-90 {
 		// rotate by 90 degrees
 		white-space: nowrap;
@@ -658,10 +473,12 @@ a[role="button"].cui-button-appearance-link {
 			transform-origin: left bottom;
 		}
 	}
+
 	> .cui-label-icon {
 		flex: 0 0 auto;
 		width: 20px;
 		text-align: center;
+
 		> i {
 			font-size: 16px;
 			line-height: 20px;
@@ -672,7 +489,7 @@ a[role="button"].cui-button-appearance-link {
 		padding-left: 3px;
 	}
 
-	&:not(cui-label-multiline) {
+	&:not(.cui-label-multiline) {
 		> .cui-label-content {
 			flex-direction: row;
 		}
@@ -729,6 +546,7 @@ a[role="button"].cui-button-appearance-link {
 				> .cui-label-manage-overflow-button-container {
 					height: 0;
 					align-self: flex-end;
+
 					.cui-button {
 						transform: translateY(-100%);
 						border-style: none;
@@ -738,12 +556,13 @@ a[role="button"].cui-button-appearance-link {
 					}
 				}
 			}
-
 		}
 	}
+
 	.cui-label-content:empty {
 		display: none;
 	}
+
 	.cui-label-icon:empty {
 		display: none;
 	}
@@ -753,6 +572,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-buttonbar {
 	flex-direction: row;
 	align-self: flex-start;
+
 	> div:not(:last-child) {
 		margin-right: 4px;
 	}
@@ -767,11 +587,6 @@ a[role="button"].cui-button-appearance-link {
 	margin-left: 4px;
 }
 
-.cui-buttonbar-group {
-	// display: inline-flex;
-	flex-direction: row;
-}
-
 .cui-data-field:not(.cui-form) {
 	background-color: rgba(235, 205, 255, 0.71);
 }
@@ -779,6 +594,7 @@ a[role="button"].cui-button-appearance-link {
 // Checkbox
 .cui-checkbox {
 	flex-direction: column;
+
 	> .cui-button-checkbox {
 		align-self: stretch;
 		height: auto;
@@ -831,7 +647,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 ::-ms-clear {
-    display: none;
+	display: none;
 }
 
 .cui-input-shadow {
@@ -852,10 +668,13 @@ a[role="button"].cui-button-appearance-link {
 	// overflow: hidden;
 	overflow: auto;
 	margin: 10px;
+
+	&.cui-popover {
+		border: 2px solid green;
+	}
 }
 
-.cui-layer-pointer
-{
+.cui-layer-pointer {
 	position: absolute;
 	width: 7px;
 	height: 7px;
@@ -896,13 +715,13 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-layer-backdrop
-{
+.cui-layer-backdrop {
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
+
 	> div {
 		position: absolute;
 		flex: 1 1 auto;
@@ -911,8 +730,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-layer-backdrop-body-clone
-{
+.cui-layer-backdrop-body-clone {
 	position: absolute;
 	overflow: hidden;
 
@@ -921,10 +739,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-layer-root.cui-layer-root-backdrop-blur
-{
-	> .cui-layer-backdrop
-	{
+.cui-layer-root.cui-layer-root-backdrop-blur {
+	> .cui-layer-backdrop {
 		-webkit-filter: blur(5px);
 		-moz-filter: blur(5px);
 		-ms-filter: blur(5px);
@@ -948,31 +764,30 @@ a[role="button"].cui-button-appearance-link {
 .cui-tooltip {
 	background-color: #4a4a4a;
 	color: #ffffff;
-    padding: 4px;
-    border-radius: 6px;
+	padding: 4px;
+	border-radius: 6px;
 }
-
 
 
 // Menu
 .cui-menu {
 	border: 2px solid green;
 	background-color: #bcf7bc;
+
 	.cui-item-list-body {
 		border: 2px solid yellow;
 	}
 }
 
 // ItemList
-.cui-item-list-body
-{
+.cui-item-list-body {
 	flex-direction: column;
 
 	> div {
 		flex: 0 0 auto;
 	}
-	a[role="button"],.cui-button
-	{
+
+	a[role='button'],.cui-button {
 		// stretch'em
 		align-self: stretch;
 	}
@@ -987,18 +802,20 @@ a[role="button"].cui-button-appearance-link {
 	.cui-button-center {
 		flex: 1 1 auto;
 	}
-	&.cui-item-list--has-button-left
-	{
+
+	&.cui-item-list--has-button-left {
 		// this button always has a left side
 		.cui-file-upload-button {
 			.cui-button-left {
 				display: flex;
 				width: 20px;
 			}
+
 			.cui-button-center:not(:empty) {
 				padding-left: 3px;
 			}
 		}
+
 		> .cui-button-center,
 		> .cui-button-center-right {
 			.cui-button-center {
@@ -1024,15 +841,10 @@ a[role="button"].cui-button-appearance-link {
 		max-width: 400px;
 		min-width: 200px;
 		border: 2px solid black;
+
 		&.cui-alert-problem {
 			border-color: red;
 		}
-	}
-}
-
-.cui-layer {
-	&.cui-popover {
-		border: 2px solid green;
 	}
 }
 
@@ -1053,18 +865,21 @@ a[role="button"].cui-button-appearance-link {
 		background-color: #000000;
 		opacity: 0.3;
 	}
+
 	.cui-wait-block-inner {
 		flex: 1 1 auto;
+
 		.cui-wait-block-header {
 			flex: 1 1 auto;
 			justify-content: center;
 			align-self: center;
+
 			.cui-label > .cui-label-icon > i {
 				font-size: 24px;
 				color: #000000;
 			}
-
 		}
+
 		.cui-wait-block-content {
 			display: none;
 		}
@@ -1081,19 +896,23 @@ a[role="button"].cui-button-appearance-link {
 		background: yellow;
 		transition: width 0.3s ease, left 0.3s ease;
 	}
+
 	> .cui-vertical-layout-top {
 		> .cui-pane-header {
 			background-color: #d2ffc3;
+
 			.cui-horizontal-layout-center {
 				overflow: hidden;
 			}
 		}
 	}
+
 	> .cui-vertical-layout-center {
 		> .cui-tabs-bodies {
 			flex: 1 1 auto;
 			flex-direction: row;
 			overflow: hidden;
+
 			> .cui-tab-body {
 				// disable the javascript overwrite here
 				margin-left: 0 !important;
@@ -1102,6 +921,7 @@ a[role="button"].cui-button-appearance-link {
 				background-color: #d3ffd3;
 				flex: 1 1 auto;
 				overflow: auto;
+
 				&.cui-tab-hidden {
 					display: none;
 				}
@@ -1111,13 +931,12 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-
 // ListView
 .cui-list-view {
 	background-color: #d1f6ff;
 
-	[cui-lv-quadrant="0"],
-	[cui-lv-quadrant="1"] {
+	[cui-lv-quadrant='0'],
+	[cui-lv-quadrant='1'] {
 		font-weight: bold;
 	}
 
@@ -1176,12 +995,12 @@ a[role="button"].cui-button-appearance-link {
 		flex: 0 0 auto;
 		overflow: hidden;
 	}
+
 	.cui-list-view-grid-quadrant-3 {
 		flex: 1 1 auto;
 		overflow: auto;
 		background-color: #f0f8ff;
 	}
-
 }
 
 // outside .cui-list-liew, we can use
@@ -1196,6 +1015,7 @@ a[role="button"].cui-button-appearance-link {
 	cursor: default;
 	flex-direction: row;
 	flex: 0 0 auto;
+
 	&.cui-selected {
 		background-color: #2a9cff;
 		color: #ffffff;
@@ -1217,8 +1037,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-list-view-row-move-handle-column {
 	&.cui-lv-td {
 		width: 10px;
+
 		&.cui-list-view-row-move-handle {
 			cursor: move;
+
 			> div {
 				background: yellow;
 				flex: 1 1 auto;
@@ -1235,22 +1057,29 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-lv-td {
+	width: 100px;
+
 	&.cui-lv-td-rotate-90 {
 		width: 25px;
+
 		> .cui-label-rotate-90 {
 			word-break: break-all;
 			height: 100px;
+
 			> .cui-label-transform {
 				width: 100px;
 			}
-
 		}
 	}
+
 	&:not(.cui-lv-td-fill) {
 		padding: 1px;
+		min-height: 22px;
 	}
+
 	&.cui-lv-td-fill {
 		padding: 2px;
+
 		&:not(:last-child) {
 			border-right-style: dotted;
 		}
@@ -1267,9 +1096,6 @@ a[role="button"].cui-button-appearance-link {
 	overflow: hidden;
 	flex-direction: column;
 
-	&:not(.cui-lv-td-fill) {
-		min-height: 22px;
-	}
 
 	&.cui-lv-td-max {
 		flex: 1 1 auto;
@@ -1289,13 +1115,8 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-// do this on top level, so its easier to overwrite
-.cui-lv-td {
-	width: 100px;
-}
 
 .cui-list-view-tool-col-resize-marker {
-
 	position: absolute;
 	cursor: col-resize;
 	// bigger grab area
@@ -1339,6 +1160,7 @@ a[role="button"].cui-button-appearance-link {
 			display: none;
 		}
 	}
+
 	.cui-tree-node {
 		flex-direction: row;
 		flex: 1 1 auto;
@@ -1348,13 +1170,16 @@ a[role="button"].cui-button-appearance-link {
 			width: 14px;
 			flex: 0 0 auto;
 		}
+
 		.cui-tree-node-handle {
 			text-align: center;
+
 			> i {
 				font-size: 16px;
 				line-height: 20px;
 			}
 		}
+
 		.cui-tree-node-content {
 			flex: 1 1 auto;
 		}
@@ -1373,7 +1198,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-form-table-vertical[cui-form-depth="0"] {
+.cui-form-table-vertical[cui-form-depth='0'] {
 	> .cui-form-tr {
 		border-bottom: 2px solid orange;
 		margin-bottom: 10px;
@@ -1392,16 +1217,20 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-form-tr-content-is-form-vertical {
 	flex-direction: column;
+
 	> .cui-form-left {
 		font-weight: bold;
 	}
+
 	> .cui-form-center {
 		margin-left: 10px;
 	}
-	.cui-form-table[cui-form-depth="1"] > .cui-tr > .cui-form-left {
+
+	.cui-form-table[cui-form-depth='1'] > .cui-tr > .cui-form-left {
 		width: 110px;
 	}
-	.cui-form-table[cui-form-depth="2"] > .cui-tr > .cui-form-left {
+
+	.cui-form-table[cui-form-depth='2'] > .cui-tr > .cui-form-left {
 		width: 100px;
 	}
 }
@@ -1415,6 +1244,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-form-tr-horizontal {
 		flex-wrap: wrap;
 	}
+
 	.cui-form-td {
 		width: 80px;
 	}
@@ -1422,7 +1252,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-maximize-horizontal > .cui-vertical-layout-center > .cui-form-table-vertical {
 	> .cui-tr {
-		> .cui-form-left[colspan="2"],
+		> .cui-form-left[colspan='2'],
 		> .cui-form-center {
 			flex: 1 1 auto;
 			min-width: 0;
@@ -1440,11 +1270,14 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-options-sortable-option {
 	flex-direction: row;
+
 	.cui-options-sortable-drag-handle {
 		width: 10px;
+
 		&:hover {
 			opacity: 0.8;
 		}
+
 		cursor: move;
 		background: yellow;
 	}
@@ -1454,10 +1287,10 @@ a[role="button"].cui-button-appearance-link {
 // DateTime
 .cui-date-time {
 	flex-direction: row;
+
 	.cui-date-time-input-center {
 		flex: 1 1 auto;
 	}
-
 }
 
 // DateTime Popover
@@ -1468,9 +1301,11 @@ a[role="button"].cui-button-appearance-link {
 		width: 300px;
 		flex-direction: row;
 		flex-wrap: wrap;
+
 		> * {
 			box-sizing: border-box;
 		}
+
 		.cui-button {
 			width: 30px;
 			height: 30px;
@@ -1491,7 +1326,7 @@ a[role="button"].cui-button-appearance-link {
 			display: none;
 		}
 
-		&[browser="time"] {
+		&[browser='time'] {
 			.cui-date-time-calendar {
 				margin-left: -100%;
 			}
@@ -1506,9 +1341,11 @@ a[role="button"].cui-button-appearance-link {
 			.cui-date-time-calendar {
 				transition: margin-left 0.5s ease-out;
 			}
+
 			flex-direction: row;
 			overflow: hidden;
 			flex: 1 1 auto;
+
 			.cui-number-input {
 				input {
 					width: 40px;
@@ -1522,13 +1359,16 @@ a[role="button"].cui-button-appearance-link {
 		margin: 5px 0;
 		height: 100% / 8 * 6.5;
 		border: 1px solid red;
+
 		.cui-tr:not(:first-child) > .cui-td {
 			border-top: 1px solid green;
 		}
+
 		.cui-tr.cui-date-time-month-header {
 			height: 100% / (6 * 2 + 1);
 			flex: 0 0 auto;
 		}
+
 		.cui-td, .cui-th {
 			width: 12.5%; // 8 columns
 			text-align: center;
@@ -1536,21 +1376,27 @@ a[role="button"].cui-button-appearance-link {
 			&.cui-date-time-day:hover {
 				background-color: #c0c0c0;
 			}
+
 			&.cui-date-time-previous-month,
 			&.cui-date-time-next-month {
 				color: #c9c9c9;
 			}
+
 			&.cui-date-time-selected {
 				background-color: #2a9cff !important;
 				color: #ffffff !important;
 			}
+
 			&.cui-date-time-now {
 				background-color: #cef7ce;
 			}
+
 			cursor: default;
+
 			&:not(:first-child) {
 				border-left: 1px solid green;
 			}
+
 			justify-content: center;
 		}
 	}
@@ -1566,16 +1412,19 @@ a[role="button"].cui-button-appearance-link {
 // MultiInput
 
 .cui-multi-input .cui-multi-input-container {
-    align-items: stretch;
+	align-items: stretch;
 	flex: 1 1 auto;
 
 	> .cui-multi-input-input {
 		flex-direction: row;
+
 		> .cui-data-field-multi-input-center {
 			flex: 1 1 auto;
 		}
+
 		> .cui-data-field-multi-input-right {
 			flex: 0 0  auto;
+
 			.cui-button {
 				justify-content: center;
 				width: 25px;
@@ -1588,6 +1437,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-drag-drop-select-transparent {
 	pointer-events: none !important;
+
 	* {
 		pointer-events: none !important;
 	}
@@ -1605,30 +1455,24 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-droppable-target-helper {
 	transition: transform 0.5s ease;
+	// this if for debug only
+	background: green;
 }
 
 .cui-droppable-target-helper-y--after {
-	transform: translateY(-30%)
+	transform: translateY(-30%);
 }
 
 .cui-droppable-target-helper-y--before {
-	transform: translateY(30%)
+	transform: translateY(30%);
 }
 
 .cui-droppable-target-helper-x--after {
-	transform: translateX(-30%)
+	transform: translateX(-30%);
 }
 
 .cui-droppable-target-helper-x--before {
-	transform: translateX(30%)
-}
-
-
-// this needs to take space, but also
-// be invisble
-.cui-droppable-target-helper {
-	// this if for debug only
-	background: green;
+	transform: translateX(30%);
 }
 
 .cui-droppable-drop-helper {
@@ -1738,22 +1582,25 @@ a[role="button"].cui-button-appearance-link {
 }
 
 
-
 // Block
 
 .cui-block {
 	background-color: rgba(183, 236, 236, 0.57);
+
 	&.cui-block-level-1 {
 		border: 1px solid blue;
+
 		> .cui-block-header {
 			font-size: 15px;
 		}
 	}
+
 	&.cui-block-level-2 {
 		> .cui-block-header {
 			font-size: 13px;
 		}
 	}
+
 	> .cui-block-header {
 		font-weight: bold;
 	}
@@ -1767,9 +1614,11 @@ a[role="button"].cui-button-appearance-link {
 	padding: 2px 3px;
 	margin: 10px;
 	border: 2px solid green;
+
 	&.cui-sticky-header-level-1 {
 		background-color: rgba(64, 64, 64, 0.86);
 	}
+
 	&.cui-sticky-header-level-2 {
 		background-color: rgba(64, 64, 64, 0.56);
 	}
@@ -1781,6 +1630,7 @@ a[role="button"].cui-button-appearance-link {
 	top: 0;
 	left: 0;
 	right: 0;
+
 	> .cui-sticky-header {
 		// margin-top: 2px;
 		// margin-bottom: 0;
@@ -1796,6 +1646,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-progress-meter-bar {
 		height: 20px;
 		position: relative;
+
 		.cui-progress-meter-fill-background,
 		.cui-progress-meter-fill,
 		.cui-progress-meter-text {
@@ -1805,19 +1656,23 @@ a[role="button"].cui-button-appearance-link {
 			top: 0;
 			bottom: 0;
 		}
+
 		.cui-progress-meter-fill-background {
 			background-color: #7dc3ff;
 		}
+
 		.cui-progress-meter-fill {
 			display: none;
 			background-color: blue;
 		}
+
 		.cui-progress-meter-text {
 			display: none;
 			color: #ffffff;
 			align-items: center;
 			line-height: 20px;
 		}
+
 		.cui-progress-meter-icon {
 			position: absolute;
 			left: 0;
@@ -1827,22 +1682,24 @@ a[role="button"].cui-button-appearance-link {
 			color: white;
 			align-items: center;
 		}
-
 	}
-	&[state="waiting"] {
+
+	&[state='waiting'] {
 		.cui-progress-meter-fill-background {
 			// reddish
 			background-color: #ff6054;
 		}
 	}
 
-	&[state="percent"] {
+	&[state='percent'] {
 		.cui-progress-meter-icon {
 			display: none;
 		}
+
 		.cui-progress-meter-text {
 			display: flex;
 		}
+
 		.cui-progress-meter-fill {
 			display: flex;
 		}
@@ -1860,9 +1717,11 @@ a[role="button"].cui-button-appearance-link {
 		vertical-align: bottom;
 		height: 20px;
 		border-right: 1px solid #c0c0c0;
+
 		&:last-child {
 			border-right: 0;
 		}
+
 		text-align: center;
 		overflow: hidden;
 		padding: 1px;
@@ -1879,10 +1738,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-digi-display-static {
 		height: 20px;
 	}
-
 }
-
-
 
 
 // CUI technical stuff

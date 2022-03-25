@@ -14,14 +14,14 @@
   "author": "Programmfabrik GmbH",
   "license": "MIT",
   "devDependencies": {
-    "coffee-loader": "^0.7.3",
+    "coffee-loader": "^1.0.0",
     "coffee-script": "^1.12.7",
-    "coffeescript-ui": "file:../",
-    "css-loader": "^0.28.7",
-    "html-loader": "^0.5.1",
-    "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.2",
-    "style-loader": "^0.18.2",
-    "webpack": "^2.2.1"
+    "coffeescript-ui": "v1.7.1",
+    "sass-loader": "^10.0.0",
+    "css-loader": "^5.0.0",
+    "html-loader": "^1.0.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^4.5.0"
   }
 }

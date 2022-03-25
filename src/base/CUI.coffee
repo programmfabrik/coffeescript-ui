@@ -48,9 +48,16 @@ class CUI
 			type: "keyup"
 			node: window
 			capture: true
-			call: (ev) ->
+			call: (ev) =>
 				if ev.getKeyboard() == "C+U+I"
 					CUI.toaster(text: "CUI!")
+
+				if CUI.defaults.debug
+					if ev.getKeyboard() == "Alt+Shift+U"
+						@__toggleUIElements()
+					if ev.getKeyboard() == "Control+Shift+U"
+						@__toggleUIElements(true)
+				return
 
 		CUI.Events.listen
 			type: "keydown"
@@ -72,7 +79,7 @@ class CUI
 
 		document.body.scrollTop=0
 
-		icons = require('../scss/icons/icons.svg')
+		icons = require('../scss/icons/icons.svg').default
 		CUI.Template.loadText(icons)
 		CUI.Template.load()
 
@@ -887,6 +894,100 @@ class CUI
 		map.blink = (map.chrome or map.opera) && !!window.CSS
 		map
 	)()
+
+	@__toggleUIElements: (showAll = false) ->
+		if @__uiHighlightDivs?.length > 0
+			for highlightDiv in @__uiHighlightDivs
+				CUI.dom.remove(highlightDiv)
+			delete @__uiHighlightDivs
+			return
+
+		@__uiHighlightDivs = []
+		uiElements = document.querySelectorAll("[ui]")
+		for uiElement in uiElements
+
+			if not showAll
+				# Check whether an uiElement is underneath another element, in that case we do not show the ui div.
+				uiElementRect = uiElement.getBoundingClientRect()
+				x = uiElementRect.left
+				y = uiElementRect.top
+				topElement = document.elementFromPoint(x,y)
+				if topElement
+					# Get the top level div of the element and the element that is in the x,y coordinates of the uiElement.
+					# This is the best way to check that the element is not underneath. Using 'isSameNode' does not cover all cases.
+					elementTopContainer = CUI.dom.parents(uiElement, "body > div")?[0]
+					topContainer= CUI.dom.parents(topElement, "body > div")?[0]
+					if elementTopContainer != topContainer
+						continue
+
+			div = CUI.dom.div()
+			@__uiHighlightDivs.push(div)
+			do(div, uiElement) =>
+				divRect = div.getBoundingClientRect()
+				uiElementRect = uiElement.getBoundingClientRect()
+
+				div.textContent = uiElement.getAttribute("ui")
+				CUI.dom.setStyle(div,
+					padding: "4px"
+					background: "yellow"
+					position: "absolute"
+					"white-space": "nowrap"
+					cursor: "pointer"
+					border: "solid 1.5px grey"
+				)
+				div.title = "Click to copy!"
+				span = CUI.dom.span()
+				span.textContent = " [X]"
+				CUI.dom.append(div, span)
+				CUI.dom.append(document.body, div)
+
+				borderStyle = CUI.dom.getStyle(uiElement).border
+				div.addEventListener('mouseenter', =>
+					for otherHighlightDiv in @__uiHighlightDivs
+						CUI.dom.hideElement(otherHighlightDiv)
+					CUI.dom.showElement(div)
+					CUI.dom.setStyle(uiElement, {border: "2px solid yellow"})
+				)
+				div.addEventListener('mouseleave', =>
+					for otherHighlightDiv in @__uiHighlightDivs
+						CUI.dom.showElement(otherHighlightDiv)
+					CUI.dom.setStyle(uiElement, {border: borderStyle})
+				)
+				div.addEventListener('click', =>
+					navigator.clipboard.writeText(uiElement.getAttribute("ui"))
+				)
+				span.addEventListener('click', =>
+					CUI.dom.remove(div)
+					CUI.util.removeFromArray(div, @__uiHighlightDivs)
+					CUI.dom.setStyle(uiElement, {border: borderStyle})
+					for otherHighlightDiv in @__uiHighlightDivs
+						CUI.dom.showElement(otherHighlightDiv)
+					return
+				)
+
+				top = uiElementRect.y + uiElementRect.height / 2 - divRect.height / 2
+				if top < 0
+					# Skip not visible elements.
+					CUI.dom.remove(div)
+					return
+
+				left = uiElementRect.x - divRect.width
+				if left <= 0
+					if uiElementRect.width > divRect.width
+						left = uiElementRect.x
+					else
+						left = uiElementRect.x + uiElementRect.width
+
+				CUI.dom.setStyle(div,
+					top: top
+					left: left
+				)
+				CUI.dom.setStyle(div, "zIndex": 5, "")
+				CUI.dom.hideElement(div) # Hide the div element, we show all divs after passing through all uiElements.
+
+		for div in @__uiHighlightDivs
+			CUI.dom.showElement(div)
+		return
 
 CUI.ready =>
 

@@ -221,6 +221,8 @@ class CUI.Layout extends CUI.DOMElement
 		opts = CUI.Element.readOpts(options, "new CUI.Layout.__initPane",
 			class:
 				check: String
+			ui:
+				check: String
 			content: {}
 			flexHandle: {}
 		)
@@ -230,6 +232,10 @@ class CUI.Layout extends CUI.DOMElement
 		if opts.class
 			@__layout.addClass(opts.class, pane_name)
 
+		if opts.ui
+			CUI.dom.setAttribute(@__layout.get(pane_name), "ui", opts.ui)
+
+		return
 
 	# returns true if this Layout has at least one
 	# flexHandle

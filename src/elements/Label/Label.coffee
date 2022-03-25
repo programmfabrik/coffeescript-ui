@@ -213,6 +213,14 @@ class CUI.Label extends CUI.DOMElement
 		else
 			@replace(content, "content")
 
+		# This is used for accessibility.
+		# The role status should be on the 'span'.
+		if @_attr?.role == "status"
+			span = CUI.dom.findElement(@DOM, "span")
+			if span
+				CUI.dom.removeAttribute(@DOM, "role")
+				CUI.dom.setAttribute(span, "role", "status")
+
 		if not @_manage_overflow
 			return
 
@@ -247,10 +255,12 @@ class CUI.Label extends CUI.DOMElement
 		if dim_div.scrollHeight > max_height
 			# really to big, show button
 			@__overflow_button.show()
+			@__label.addClass("cui-label--has-overflow-button")
 			if @__overflow_button.isActive()
 				@__label.addClass("cui-label--show-overflow")
 		else
 			@__label.addClass("cui-label--show-overflow")
+			@__label.removeClass("cui-label--has-overflow-button")
 
 		@__label.removeClass("cui-label--measure-overflow")
 		@

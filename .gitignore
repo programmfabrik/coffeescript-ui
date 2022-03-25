@@ -21,3 +21,5 @@ src/**.js.map
 !demo/public/cui-demo.css
 !demo/public/css
 coverage/*
+*.map
+_obsolete.scss

@@ -1,0 +1,217 @@
+@mixin buttonbar-horizontal() {
+	flex-direction: row;
+
+	// ! start button margins
+	// this is the only margin that keeps elements WITHIN a buttonbar spaced apart correctly
+	// we cannot add margins to the buttonbar directly, because in some cases we have buttons inside the buttonbar that are hidden (via display: none)
+	// then a margin that is applied to the buttonbar would still show even though there are no buttons within actually visible
+	> * {
+		margin-right: $buttonbar-gap;
+	}
+
+	// reset margin-right from the last child in the last buttonbar in a layout-right
+	// ! there are some buttonbars that are NOT inside a layout, so we need to reset them separately, e.g. ez5-required-message
+	// .cui-horizontal-layout-right &,
+	// .cui-horizontal-layout-center & { // exclude center becuase we might need a margin to its right to space another buttonbar or buttons that are in the right layout
+	.cui-horizontal-layout-right > & {
+		&:last-child > *:last-child {
+			margin-right: 0;
+		}
+	}
+	// ! end button margins
+
+	.cui-buttonbar-group {
+		.cui-button,
+		.cui-select {
+			&:not(:last-child):not(.cui-last-visible-child) .cui-button-visual {
+				border-right: 0 !important;
+			}
+
+			&:first-child:not(:only-child) .cui-button-visual {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+			&:last-child:not(:only-child) .cui-button-visual {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+
+			&:not(:first-child):not(:last-child) .cui-button-visual {
+				border-radius: 0;
+			}
+		}
+	}
+}
+
+@mixin buttonbar-vertical() {
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+
+	> * {
+		margin-right: 0; // reset 
+		
+		&:not(:last-child) {
+			margin-bottom: $buttonbar-gap;
+		}
+	}
+
+	.cui-buttonbar-group {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+
+		.cui-button,
+		.cui-select {
+			.cui-button-visual {
+				border-right: $btn-border-width solid $btn-border-color !important; // need to override the 0 reset from the default buttonbar-horizontal()
+			}
+
+			&:not(:last-child) .cui-button-visual {
+				border-bottom: 0 !important;
+			}
+
+			&:first-child:not(:only-child) .cui-button-visual {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: $btn-border-radius;
+				border-top-right-radius: $btn-border-radius;
+			}
+
+			&:last-child:not(:only-child) .cui-button-visual {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+				border-bottom-left-radius: $btn-border-radius;
+				border-bottom-right-radius: $btn-border-radius;
+			}
+
+			&:not(:first-child):not(:last-child) .cui-button-visual {
+				border-radius: 0;
+			}
+		}
+	}
+}
+
+// use only for buttonbars that contain plain buttons
+@mixin buttonbar-horizontal-tight() {
+	.cui-button {
+		margin: 0;
+
+		~ .cui-buttonbar-group {
+			margin: 0 $buttonbar-gap;
+		}
+	}
+}
+
+@mixin buttonbar-vertical-tight() {
+	.cui-button {
+		margin: 0;
+
+		~ .cui-buttonbar-group {
+			margin: $buttonbar-gap 0;
+		}
+	}
+}
+
+@mixin buttonbar-group-navigation($border: 0) {	
+	// use separate border to cirumvent border styles on hover for the inverted buttons	
+	@include ungroup-visually();
+
+	border-radius: $btn-border-radius;
+	overflow: hidden;
+
+	> *:last-child {
+		margin-right: 0;
+	}
+
+	@if $border == 1 {
+		--border-color: #{$btn-border-color};
+
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			display: block;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+			border-radius: $btn-border-radius;
+			border: 1px solid var(--border-color);
+		}
+	}
+}
+
+@mixin buttonbar-group-navigation-sm() {
+	.cui-button-button {
+		@include button-sm();
+	}
+
+	.cui-label {
+		@include label-sm();
+
+		line-height: 1;
+		padding: 0;
+	}
+
+	.cui-number-input input {
+		@include input-sm();
+	}
+}
+
+@mixin buttonbar-group-navigation-inverted($border: 0) {
+	@include buttonbar-group-navigation($border);
+
+	// add background to buttonbar-group !
+	background-color: $btn-inverted-background;
+
+	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
+	.cui-button-button.cui-button-button,
+	.cui-button-select.cui-button-select {
+		@include button-color(transparent, $btn-inverted-color, transparent, $btn-inverted-hover-color, transparent, $btn-inverted-color);
+	}
+	
+	.cui-label,
+	.cui-number-input {
+		color: $btn-inverted-color;
+	}
+
+	@if $border == 1 {
+		--border-color: #{$btn-inverted-border-color};
+	}
+}
+
+@mixin buttonbar-group-inverted($border: 0) {
+	// add background to buttonbar-group !
+	background-color: $btn-inverted-background;
+	border-radius: $btn-border-radius;
+
+	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
+	.cui-button-button.cui-button-button,
+	.cui-button-select.cui-button-select {
+		@include button-color(transparent, $btn-inverted-color, transparent, $btn-inverted-hover-color, transparent, $btn-inverted-color);
+
+		@if $border == 1 {
+			.cui-button-visual {
+				border-color: $btn-inverted-border-color;
+			}
+		}
+	}
+}
+
+// Helper
+@mixin ungroup-visually() {
+	.cui-button {
+		@include button-plain();
+	}
+}
+
+@mixin ungroup-visually-inverted() {
+	.cui-button {
+		@include button-plain-inverted();
+	}
+}

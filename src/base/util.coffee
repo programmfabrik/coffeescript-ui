@@ -84,16 +84,12 @@ class CUI.util
 		CUI.util.assert(needs.length == 0, "#{CUI.util.getObjectClass(inst)}", "Needs implementations for #{needs.join(', ')}.", instance: inst)
 		return
 
-	@assertInstanceOf: (variableName, classClass, opts, value=undefined) ->
+	@assertInstanceOf: (variableName, classClass, value) ->
 		if not CUI.defaults.asserts
 			return
 
 		if not CUI.util.isFunction(classClass) and not classClass == "PlainObject"
 			throw "assertInstanceOf: class is not a Function"
-
-		if value == undefined
-			value = opts[variableName]
-			CUI.util.assert(CUI.util.isPlainObject(opts), "new #{arguments.callee.caller.name}", "opts needs to be PlainObject but it is #{CUI.util.getObjectClass(opts)}.", opts: opts)
 
 		if classClass == "Array"
 			cn = "Array"
@@ -121,7 +117,7 @@ class CUI.util
 		if not fn
 			fn = CUI.util.getObjectClass(@)
 
-		CUI.util.assert(false, "new #{fn}", "opts.#{variableName} needs to be instance of #{cn} but it is #{CUI.util.getObjectClass(value)}.", opts: opts, value: value, classClass: classClass)
+		CUI.util.assert(false, "new #{fn}", "opts.#{variableName} needs to be instance of #{cn} but it is #{CUI.util.getObjectClass(value)}.", value: value, classClass: classClass)
 		return
 
 	@$elementIsInDOM: ($el) ->

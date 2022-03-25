@@ -1,0 +1,142 @@
+.cui-button,
+.cui-button-href {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+// Base button visual class, used in cui-button-button, cui-button-checkbox, cui-button-select...
+.cui-button-visual {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 100%;
+	flex-grow: 1;
+}
+
+// .cui-button-button includes cui-button-href, which does NOT have the class cui-button
+// almost all buttons have the class cui-button-button
+.cui-button-button,
+.cui-button-select {
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	display: inline-flex; // if a button is not in a flex container, behave like "inline-block"
+	white-space: nowrap;
+	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
+
+	.cui-button-visual {
+		font-family: $btn-font-family;
+		font-weight: $btn-font-weight;
+		vertical-align: middle;
+		user-select: none;
+
+		// Button Content
+		.cui-button-left,
+		.cui-button-right {
+			display: inline-flex;
+			flex: 0 0 auto;
+		}
+
+		.cui-button-center {
+			flex: 0 1 auto; // allow text-truncate
+		}
+	}
+
+	@include button-md();
+	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
+
+	// Modifier
+
+	&.cui-button--primary {
+		div:not(.cui-buttonbar-group) > & {
+			@include button-primary();
+		}
+	}
+
+	&.cui-button--secondary {
+		div:not(.cui-buttonbar-group) > & {
+			@include button-secondary();
+		}
+	}
+
+	// submenu indicator
+	&.cui-button--has-caret {
+		.cui-button-visual {
+			.cui-button-right {
+				margin-left: auto;
+			}
+		}
+	}
+}
+
+.cui-button-href {
+	@include button-link();
+}
+
+// Reduce space between button text and caret
+.cui-button-select,
+.cui-button-button.cui-button--has-caret {
+	&:not([role='menu-item']):not([button-group='date']):not([button-group='time']) {
+		.cui-button-visual {
+			.cui-button-center {
+				padding-right: $btn-padding-x/2;
+			}
+		}
+	}
+}
+
+.cui-button-select {
+	// todo: add white background in forms? , adding it by default makes them idfferent from the normal buttons
+	// @include button-color($input-background, $body-color, $input-background, $btn-hover-color, $btn-active-background, $btn-active-color);
+
+	.cui-button-visual {
+		.cui-button-center {
+			[data-max-chars] {
+				text-align: inherit;
+				width: auto;
+			}
+		}
+	}
+
+	// todo: should this really be the default?
+	.cui-data-field-input > & {
+		width: 100%;
+	}
+}
+
+// todo: remove appearance-link class
+a[role='button'].cui-button-appearance-link {
+	height: initial;
+
+	> .cui-button-center {
+		word-wrap: break-word;
+	}
+}
+
+// Button with default active state removes
+.cui-button-toggle-fill-screen {
+	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-background, $btn-color);
+
+	&.cui-active:hover {
+		background-color: $btn-hover-background;
+	}
+}
+
+// Loading
+.cui-button.cui-loading {
+	animation: 1.2s pulse linear alternate infinite;
+}
+
+@keyframes pulse {
+	from { opacity: 0.33; }
+	to { opacity: 1; }
+}
+
+// Hidden
+.cui-button-hidden {
+	pointer-events: none;
+
+	.cui-button-visual {
+		opacity: $disabled-opacity;
+	}
+}

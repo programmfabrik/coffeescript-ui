@@ -68,7 +68,7 @@ class CUI.DateTimeRangeGrammar
 	@PARSE_GRAMMARS = {} # TODO: Add ES & IT.
 	@PARSE_GRAMMARS["de-DE"] = [
 		["DATE bis DATE", "range", [0, 2], null, "RANGE"]
-		["YEAR bis YEAR", "range", [0, 2]]
+		["YEAR bis YEAR", "range", [0, 2], null, "RANGE_YEAR"]
 		["YEAR - YEAR n. Chr.", "range", [0, 2]]
 		["YEAR bis YEAR n. Chr.", "range", [0, 2]]
 		["zwischen YEAR bis YEAR", "range", [1, 3]]
@@ -204,7 +204,7 @@ class CUI.DateTimeRangeGrammar
 	]
 	@PARSE_GRAMMARS["en-US"] = [
 		["DATE to DATE", "range", [0, 2], null, "RANGE"]
-		["YEAR to YEAR", "range", [0, 2]]
+		["YEAR to YEAR", "range", [0, 2], null, "RANGE_YEAR"]
 		["YEAR - YEAR A.D.", "range", [0, 2]]
 		["YEAR - YEAR AD", "range", [0, 2]]
 		["YEAR to YEAR A.D.", "range", [0, 2]]
@@ -274,6 +274,8 @@ class CUI.DateTimeRangeGrammar
 			fromIsYear = true
 			fromYear = parseInt(from)
 		else if fromMoment.isValid() and fromMoment.date() == 1 and fromMoment.month() == 0 # First day of year.
+			fromMoment.add(1, "day") # This is a workaround to avoid having the wrong year after parsing the timezone.
+			fromMoment.parseZone()
 			fromYear = fromMoment.year()
 
 		if from == to
@@ -283,9 +285,13 @@ class CUI.DateTimeRangeGrammar
 			toIsYear = true
 			toYear = parseInt(to)
 		else if toMoment.isValid() and toMoment.date() == 31 and toMoment.month() == 11 # Last day of year
+			toMoment.add(1, "day")
+			toMoment.parseZone()
 			toYear = toMoment.year()
 
 		grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale]
+		if not grammars
+			return
 		getPossibleString = (key, parameters) ->
 			for _grammar in grammars
 				if _grammar[4] == key
@@ -411,6 +417,11 @@ class CUI.DateTimeRangeGrammar
 						month = CUI.DateTimeRangeGrammar.MONTHS[locale][toMoment.month()]
 						return "#{month} #{toMoment.year()}"
 
+		if fromIsYear and toIsYear
+			possibleString = getPossibleString("RANGE_YEAR", [from, to])
+			if possibleString
+				return possibleString
+
 		if fromIsYear or toIsYear
 			if fromIsYear
 				from = CUI.DateTime.format(from, "display_short")
@@ -498,11 +509,7 @@ class CUI.DateTimeRangeGrammar
 		output = CUI.DateTimeRangeGrammar.getFromTo(from)
 		if output
 			return output
-
-
-
 		return error: "NoDateRangeFound #{input}"
-
 
 	@millennium: (millennium, isBC) ->
 		if isBC
@@ -580,6 +587,10 @@ class CUI.DateTimeRangeGrammar
 		if not momentInputFrom?.isValid()
 			return
 
+		if not year.startsWith(CUI.DateTimeRangeGrammar.DASH)
+			momentInputFrom.add(1, "day") # This is a workaround to avoid having the wrong year after parsing the timezone.
+			momentInputFrom.parseZone()
+
 		if fromAddYears or toAddYears
 			_year = momentInputFrom.year()
 			if _year % 1000 == 0
@@ -600,6 +611,10 @@ class CUI.DateTimeRangeGrammar
 		if toAddYears
 			momentInputTo.add(yearsToAdd, "year")
 
+		if not year.startsWith(CUI.DateTimeRangeGrammar.DASH)
+			momentInputTo.add(1, "day")
+			momentInputTo.parseZone()
+
 		momentInputFrom.startOf("year")
 		momentInputTo.endOf("year")
 
@@ -618,6 +633,9 @@ class CUI.DateTimeRangeGrammar
 			return
 
 		if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_YEAR)
+			if not inputString.startsWith(CUI.DateTimeRangeGrammar.DASH)
+				momentInput.add(1, "day")
+				momentInput.parseZone()
 			from = to = CUI.DateTimeRangeGrammar.format(momentInput)
 		else if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_MONTH)
 			from = CUI.DateTimeRangeGrammar.format(momentInput, false)

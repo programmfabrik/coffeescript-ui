@@ -146,6 +146,21 @@ class CUI.FlexHandle extends CUI.Element
 						@open()
 						@storeState()
 					return
+
+			CUI.Events.listen
+				type: "keydown"
+				node: @_element
+				call: (ev) =>
+					if not @__label
+						return
+					if not @isClosed()
+						return
+					if ev.getKeyboardKey() not in ["Return", "Space"]
+						return
+
+					@open()
+					@storeState()
+					return
 		else
 			@_element.classList.add("cui-flex-handle-with-button-icon")
 
@@ -457,6 +472,7 @@ class CUI.FlexHandle extends CUI.Element
 			node: @getPane()
 			type: "flex-close"
 
+		CUI.dom.setAttribute(@_element, "tabindex", 0)
 		@_element.classList.add("cui-flex-handle-closed")
 		CUI.dom.setStyleOne(@__pane, "display", "none")
 		@__resize()
@@ -470,6 +486,7 @@ class CUI.FlexHandle extends CUI.Element
 			node: @getPane()
 			type: "flex-open"
 
+		CUI.dom.setAttribute(@_element, "tabindex")
 		@_element.classList.remove("cui-flex-handle-closed")
 		CUI.dom.setStyleOne(@__pane, "display", "")
 		delete(@__closed)

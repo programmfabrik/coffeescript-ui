@@ -87,7 +87,7 @@ textarea {
 	width: 100%;
 	min-width: $input-min-width;
 	font-size: inherit;
-	color: $button-color;
+	color: inherit;
 	border: 1px solid $input-border;
 	border-top-color: darken($input-border, 3%);
 	border-radius: $input-radius;
@@ -779,7 +779,7 @@ li > div {
 	}
 
 	.cui-label {
-		color: $secondary-color;
+		color: hsl(205,5%,43%);
 		font-size: 12px;
 
 		&-size-mini {
@@ -902,6 +902,12 @@ li > div {
 	use {
 		pointer-events: none;
 	}
+}
+
+.cui-no-icon {
+	font-family: $font-family;
+	font-size: $font-size;
+	line-height: $line-height;
 }
 
 .fa {
@@ -1903,7 +1909,6 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	> .cui-horizontal-layout-right {
-		width: 30px;
 
 		.cui-button {
 			margin-top: 1px;
@@ -2251,7 +2256,8 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-label-manage-overflow {
 	position: relative;
-	display: block;
+	flex-direction: column;
+	align-items: flex-end;
 
 	&.cui-label--measure-overflow {
 		> .cui-label-content {
@@ -2259,19 +2265,10 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
-	&:after {
-		content: "";
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 20px;
-		background: linear-gradient(transparent, white);
-	}
-
 	> .cui-label-content {
 		max-height: 6 * 18px; // limit at 6 lines
 		overflow: hidden;
+		-webkit-mask-image: linear-gradient(black calc(100% - 32px), transparent);
 	}
 
 	&.cui-label-size-mini { // 14px line-height
@@ -2285,33 +2282,19 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-label-manage-overflow-button {
-		z-index: 1;
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(to right, hsla(0,0%,100%,0), hsl(0,0%,100%) 10px);
-		padding: 0 0 0 10px !important;
-
 		.cui-button-visual {
 			color: var(--highlight);
 			height: auto;
-			padding: 0 0 1px;
+			padding: 0;
+			line-height: inherit;
 		}
 	}
 
 	&.cui-label--show-overflow {
-		&:after {
-			display: none;
-		}
-
 		> .cui-label-content {
 			max-height: none !important;
 			overflow: visible;
-		}
-
-		.cui-label-manage-overflow-button {
-			position: static;
-			float: right;
+			-webkit-mask-image: none;
 		}
 	}
 }
@@ -2803,6 +2786,10 @@ a[role="button"].cui-button-appearance-link {
 			
 			.cui-toolbar {
 				background: none;
+			}
+
+			.cui-label {
+				color: $header-color;
 			}
 		}
 	}
@@ -4067,24 +4054,6 @@ $layer-sizes: (
 			> .cui-lv-tr > .cui-lv-td {
 				background: $zebra-color;
 			}
-
-			.cui-label-manage-overflow:after {
-				background: linear-gradient(transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color);
-			}
-
-			.cui-label-manage-overflow-button {
-				background: linear-gradient(to right, transparentize($zebra-on-foreground-color, 1), $zebra-on-foreground-color 10px);
-			}
-
-			&.cui-selected {
-				.cui-label-manage-overflow:after {
-					background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
-				}
-
-				.cui-label-manage-overflow-button {
-					background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
-				}
-			}
 		}
 	}
 }
@@ -4120,16 +4089,6 @@ $layer-sizes: (
 
 		.cui-empty-label {
 			color: var(--on-highlight-light-secondary-color);
-		}
-
-		&.cui-selected {
-			.cui-label-manage-overflow:after {
-				background: linear-gradient(var(--highlight-light-transparent), var(--highlight-light));
-			}
-
-			.cui-label-manage-overflow-button {
-				background: linear-gradient(to right, var(--highlight-light-transparent), var(--highlight-light) 10px);
-			}
 		}
 	}
 
@@ -4576,6 +4535,16 @@ $layer-sizes: (
 	
 	&--padded {
 		padding: $padding;
+	}
+
+	&--condensed {
+		> .cui-vertical-layout-center > .cui-form-container > .cui-form-row {
+			margin-bottom: 5px;
+			
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 }
 
@@ -5219,6 +5188,11 @@ label[data-label-clickable],
 			margin-left: 0;
 		}
 	}
+
+	.cui-select-date-title,
+	.cui-select-time-title {
+		display: none;
+	}
 }
 
 .cui-buttonbar-group-date,
@@ -5845,7 +5819,7 @@ label[data-label-clickable],
 		&.appearance-wide {
 			display: flex;
 			flex-wrap: wrap;
-			align-items: flex-start;
+			align-content: flex-start;
 
 			// fill in vertical space with gray background
 			&:last-child {
@@ -5856,6 +5830,8 @@ label[data-label-clickable],
 				width: 200px;
 				flex-grow: .2;
 				padding-right: $padding * 1.5;
+				position: sticky;
+				top: 0;
 
 				.cui-block-title {
 					font-size: 15px;
@@ -5929,6 +5905,10 @@ label[data-label-clickable],
 
 		.cui-block-header {
 			padding-bottom: 0;	
+		}
+
+		+ .cui-form-block--has-checkbox {
+			padding-top: 2px;
 		}
 	}
 

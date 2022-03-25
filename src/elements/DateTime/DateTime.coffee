@@ -267,7 +267,7 @@ class CUI.DateTime extends CUI.Input
 		@replace(@__calendarButton, "right")
 
 
-	format: (_s, _output_format="display", output_type=null) ->
+	format: (_s, _output_format="display", output_type=null, parseZone = false) ->
 		CUI.util.assert(_output_format in CUI.DateTime.formatTypes, "CUI.DateTime.format", "output_format must be on of \"#{CUI.DateTime.formatTypes.join(',')}\".", parm1: _s, output_format: output_format)
 
 		if moment.isMoment(_s)
@@ -302,7 +302,7 @@ class CUI.DateTime extends CUI.Input
 
 		switch _output_format
 			when "store"
-				return CUI.DateTime.formatMoment(mom, output_format[_output_format])
+				return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone)
 			else
 				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format])
 
@@ -359,10 +359,15 @@ class CUI.DateTime extends CUI.Input
 	initValue: ->
 		super()
 		value = @getValue()
-		corrected_value = @parseValue(value, "store")
-		if corrected_value and corrected_value != value
-			console.warn("CUI.DateTime.initValue: Corrected value in data:", corrected_value, "Original value:", value)
-			@__data[@_name] = corrected_value
+		parsedValue = @parseValue(value, "store")
+		if parsedValue
+			# When the parsedValue and the value are different in a display format, it means that there is something wrong.
+			# We do not compare only the store value because they can be different but represent the same value if they have different timezones.
+			_value = @format(value)
+			_parsedValue = @format(parsedValue)
+			if _parsedValue != _value
+				console.warn("CUI.DateTime.initValue: Corrected value in data:", parsedValue, "Original value:", value)
+				@__data[@_name] = parsedValue
 		@
 
 	getValueForDisplay: ->
@@ -623,7 +628,6 @@ class CUI.DateTime extends CUI.Input
 				if mom.year() > @_max_year # Year must not be greater than max year.
 					return moment.invalid()
 
-				# console.debug "parsing ok", mom, f, moment.locale()
 				return mom
 
 		if not formats.some((format) -> format.support_bc)
@@ -785,6 +789,11 @@ class CUI.DateTime extends CUI.Input
 			else
 				""+n
 
+		date_title = new CUI.Label(
+			text: @__locale_format.tab_date
+			class: "cui-select-date-title"
+		)
+
 		date_sel = new CUI.Select(
 			name: "date"
 			menu_class: "cui-date-time--select-menu"
@@ -849,6 +858,11 @@ class CUI.DateTime extends CUI.Input
 				]
 			else
 				emtpy_clock_opts = []
+
+			time_title = new CUI.Label(
+				text: @__locale_format.tab_time
+				class: "cui-select-time-title"
+			)				
 
 			hour_sel = new CUI.Select(
 				name: "hour"
@@ -951,10 +965,12 @@ class CUI.DateTime extends CUI.Input
 			# ).start()
 
 		new CUI.Buttonbar(
-			buttons: [
+			buttons: [	
+				date_title			
 				date_sel
 				month_sel
 				year_sel
+				time_title
 				hour_sel
 				# minute_colon
 				minute_sel
@@ -1388,9 +1404,9 @@ class CUI.DateTime extends CUI.Input
 	# format the date_str
 	# output_format "display_short", "display", "store", "input"
 	# output_type "date_time", "date", "date_time_secons", "year_month",v "year"
-	@format: (datestr_or_moment, output_format, output_type) ->
+	@format: (datestr_or_moment, output_format, output_type, parseZone = false) ->
 		dt = new CUI.DateTime()
-		str = dt.format(datestr_or_moment, output_format, output_type)
+		str = dt.format(datestr_or_moment, output_format, output_type, parseZone)
 		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
 
@@ -1419,9 +1435,12 @@ class CUI.DateTime extends CUI.Input
 
 		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay())
 
-	@formatMoment: (mom, format) ->
+	@formatMoment: (mom, format, parseZone) ->
 		if mom.bc
 			return "-"+mom.bc
+
+		if parseZone and mom.year() > 0
+			mom.parseZone() # Only parseZone if necessary, in case it is wanted to keep the timezone.
 
 		return mom.format(format)
 
@@ -1436,13 +1455,17 @@ class CUI.DateTime extends CUI.Input
 
 		if mom.year() > 0
 			v = mom.format(format)
-			# remove the "+"
-			return v.replace("+"+mom.year(), ""+mom.year())
+			# remove the "+" and all possible zeros.
+			replace = "^\\+?0*#{mom.year()}";
+			regexp = new RegExp(replace);
+			return v.replace(regexp, ""+mom.year())
 
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
-		# remove the "-"
-		return v.replace(mom.year(), ""+(-1 * mom.year()))
+		# remove the "-" and all possible zeros.
+		replace = "^\\-0*#{-1 * mom.year()}";
+		regexp = new RegExp(replace);
+		return v.replace(regexp, ""+(-1 * mom.year()))
 
 	@toMoment: (datestr) ->
 		if CUI.util.isEmpty(datestr)
