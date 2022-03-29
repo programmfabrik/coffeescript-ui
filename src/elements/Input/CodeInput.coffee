@@ -1,9 +1,8 @@
-require('ace-builds')
+Ace = require('ace-builds/src-noconflict/ace')
 require('ace-builds/src-min-noconflict/mode-json')
 require('ace-builds/src-min-noconflict/mode-html')
 require('ace-builds/src-min-noconflict/mode-javascript')
 require('ace-builds/src-min-noconflict/mode-css')
-require('ace-builds/webpack-resolver')
 
 class CUI.CodeInput extends CUI.Input
 
@@ -24,12 +23,11 @@ class CUI.CodeInput extends CUI.Input
 	render: ->
 		super()
 
-		ace = window.ace
-		@__aceEditor = ace.edit(@__input,
-			mode: "ace/mode/#{@_mode}",
-			selectionStyle: "text",
+		@__aceEditor = Ace.edit(@__input,
 			useWorker: false
+			selectionStyle: "text"
 		)
+		@__aceEditor.getSession().setMode("ace/mode/#{@_mode}");
 
 		value = @__data?[@_name]
 		if value
