@@ -74,10 +74,10 @@
     "terser-webpack-plugin": "^4.2.3",
     "through2": "^0.6.5",
     "webpack": "^4.46.0",
-    "webpack-cli": "^4.8.0"
+    "webpack-cli": "^4.8.0",
+    "ace-builds": "^1.4.14"
   },
   "dependencies": {
-    "ace-builds": "^1.4.14",
     "font-awesome": "^4.7.0",
     "moment-timezone": "^0.5.33"
   }
