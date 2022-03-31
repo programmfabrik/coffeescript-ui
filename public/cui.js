@@ -48679,19 +48679,19 @@ CUI.ConfirmationChoice = (function(superClass) {
   };
 
   ConfirmationChoice.prototype.init = function() {
-    var btn_opts, choice, i, key, len, ref, uiKey;
+    var btn_opts, choice, i, index, key, len, ref, uiKey;
     this._buttons = [];
     ref = this._choices;
-    for (i = 0, len = ref.length; i < len; i++) {
-      choice = ref[i];
+    for (index = i = 0, len = ref.length; i < len; index = ++i) {
+      choice = ref[index];
       if (!choice) {
         continue;
       }
       uiKey = "confirmation.choice";
-      if (choice.text) {
-        uiKey += ":" + (choice.text.toLowerCase().replace(/s+/g, '_'));
-      } else if (choice.loca_key) {
+      if (choice.loca_key) {
         uiKey += ":" + choice.loca_key;
+      } else {
+        uiKey += ":" + index;
       }
       btn_opts = {
         left: true,
