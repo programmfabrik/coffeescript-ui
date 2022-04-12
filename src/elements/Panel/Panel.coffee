@@ -22,6 +22,9 @@ class CUI.Panel extends CUI.DOMElement
 				content: true
 
 		@registerTemplate(@panel)
+		if @_ui
+			CUI.dom.setAttribute(@panel.get("header"), "ui", "#{@_ui}:header")
+			CUI.dom.setAttribute(@panel.get("content"), "ui", "#{@_ui}:content")
 
 		if @_content_placeholder
 			@append(@_content_placeholder, "content")

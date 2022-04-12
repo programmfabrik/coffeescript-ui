@@ -70468,6 +70468,10 @@ CUI.Panel = (function(superClass) {
       }
     });
     this.registerTemplate(this.panel);
+    if (this._ui) {
+      CUI.dom.setAttribute(this.panel.get("header"), "ui", this._ui + ":header");
+      CUI.dom.setAttribute(this.panel.get("content"), "ui", this._ui + ":content");
+    }
     if (this._content_placeholder) {
       this.append(this._content_placeholder, "content");
       this.__has_placeholder = true;
