@@ -50018,6 +50018,7 @@ CUI.DataTable = (function(superClass) {
           text: CUI.DataTable.defaults.minus_button_tooltip
         },
         disabled: true,
+        ui: this._ui ? this._ui + ".minus.button" : void 0,
         onClick: (function(_this) {
           return function() {
             var i, len1, ref, row;
@@ -50046,6 +50047,7 @@ CUI.DataTable = (function(superClass) {
         icon: "left",
         disabled: true,
         group: "navi",
+        ui: this._ui ? this._ui + ".navigation.left.button" : void 0,
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset - _this._chunk_size;
@@ -50061,9 +50063,10 @@ CUI.DataTable = (function(superClass) {
       })(this);
       this.__navi_input = new CUI.NumberInput({
         group: "navi",
-        placeholder: "henk",
+        placeholder: "page",
         data: page_data,
         name: 'page',
+        ui: this._ui ? this._ui + ".navigation.input.button" : void 0,
         onBlur: (function(_this) {
           return function(input) {
             return input.setValue(null);
@@ -50088,6 +50091,7 @@ CUI.DataTable = (function(superClass) {
         icon: "right",
         disabled: true,
         group: "navi",
+        ui: this._ui ? this._ui + ".navigation.right.button" : void 0,
         onClick: (function(_this) {
           return function() {
             _this.__offset = _this.__offset + _this._chunk_size;
@@ -50157,6 +50161,7 @@ CUI.DataTable = (function(superClass) {
       "class": "cui-lv--has-datafields",
       selectableRows: this._new_rows !== "none",
       padded: this._padded,
+      ui: this._ui ? this._ui + ".list.view" : void 0,
       onSelect: (function(_this) {
         return function(ev, info) {
           if (typeof _this._onRowSelect === "function") {
@@ -64970,8 +64975,11 @@ CUI.ListViewColumnRowMoveHandle = (function(superClass) {
   };
 
   ListViewColumnRowMoveHandle.prototype.render = function() {
+    var ref, ref1, ui;
+    ui = (ref = this.getRow()) != null ? (ref1 = ref.getListView()) != null ? ref1._ui : void 0 : void 0;
     return CUI.dom.element("DIV", {
-      "class": "cui-drag-handle-row"
+      "class": "cui-drag-handle-row",
+      ui: ui ? ui + ".drag.handle" : void 0
     });
   };
 
