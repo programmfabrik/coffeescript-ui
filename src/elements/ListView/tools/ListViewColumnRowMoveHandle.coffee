@@ -28,5 +28,9 @@ class CUI.ListViewColumnRowMoveHandle extends CUI.ListViewColumn
 		return
 
 	render: ->
-		CUI.dom.element("DIV", class: "cui-drag-handle-row")
+		ui = @getRow()?.getListView()?._ui
+		return CUI.dom.element("DIV",
+			class: "cui-drag-handle-row"
+			ui: if ui then "#{ui}.drag.handle"
+		)
 
