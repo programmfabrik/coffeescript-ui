@@ -3933,12 +3933,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: flex;
   align-items: center;
   flex-direction: row;
-}
-.cui-buttonbar > * {
-  margin-right: 0.5rem;
-}
-.cui-horizontal-layout-right > .cui-buttonbar:last-child > *:last-child {
-  margin-right: 0;
+  gap: 0.5rem;
 }
 .cui-buttonbar .cui-buttonbar-group .cui-button:not(:last-child):not(.cui-last-visible-child) .cui-button-visual,
 .cui-buttonbar .cui-buttonbar-group .cui-select:not(:last-child):not(.cui-last-visible-child) .cui-button-visual {
@@ -4012,9 +4007,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
-}
-.cui-buttonbar-group-navi > *:last-child {
-  margin-right: 0;
 }
 
 .cui-progress-meter .cui-progress-meter-bar {
@@ -5245,6 +5237,20 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background: transparent;
   padding: 0.5rem;
   overflow: visible !important;
+  --toolbar-gap: 0.5rem;
+  gap: var(--toolbar-gap);
+}
+.cui-toolbar > .cui-horizontal-layout-left:empty {
+  margin-right: calc(-1 * var(--toolbar-gap));
+}
+.cui-toolbar > .cui-horizontal-layout-center:empty {
+  margin: 0 calc(-0.5 * var(--toolbar-gap));
+}
+.cui-toolbar > .cui-horizontal-layout-right:empty {
+  margin-left: calc(-1 * var(--toolbar-gap));
+}
+.cui-toolbar > [class*=cui-horizontal-layout] {
+  gap: var(--toolbar-gap);
 }
 .cui-toolbar .cui-toolbar {
   padding: 0;
@@ -5341,9 +5347,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi > *:last-child {
-  margin-right: 0;
-}
 .cui-result-navigation-toolbar .cui-buttonbar + .cui-label {
   margin-left: 0.5rem;
 }
@@ -5391,9 +5394,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group > *:last-child {
-  margin-right: 0;
 }
 .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-number-input {
   margin: 0 0.25rem;
@@ -5558,6 +5558,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar {
   margin-right: -0.5rem;
+  gap: 0;
+}
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar .cui-button ~ .cui-buttonbar-group {
+  margin: 0 0.5rem;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button {
   --btn-border-color: rgba(255, 255, 255, 0.85);
@@ -6487,6 +6491,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-tabs-pane-header {
+  --toolbar-gap: 0;
   padding: 0;
   min-height: 0;
   margin-bottom: 1rem;
@@ -6607,6 +6612,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-width: 0;
   width: 100%;
   position: relative;
+  gap: 0;
 }
 .cui-tabs-pane-header .cui-buttonbar::after {
   content: "";
@@ -6795,6 +6801,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar {
   margin-right: -0.5rem;
+  gap: 0;
+}
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header > .cui-horizontal-layout-right > .cui-buttonbar .cui-button ~ .cui-buttonbar-group {
+  margin: 0 0.5rem;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button {
   --btn-border-color: rgba(255, 255, 255, 0.85);
