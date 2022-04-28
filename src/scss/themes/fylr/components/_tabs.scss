@@ -122,6 +122,8 @@
 // * Tab Header with Buttons
 
 .cui-tabs-pane-header {
+	--toolbar-gap: 0; // reset .cui-toolbar gap
+
 	padding: 0; // reset .cui-toolbar
 	min-height: 0; // reset .cui-toolbar
 	margin-bottom: $spacer;
@@ -221,6 +223,7 @@
 		min-width: 0;
 		width: 100%;
 		position: relative;
+		gap: 0; // reset default gap
 
 		// tab border extension
 		&::after {
