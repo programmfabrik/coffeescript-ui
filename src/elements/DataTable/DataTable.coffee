@@ -160,12 +160,12 @@ class CUI.DataTable extends CUI.DataFieldInput
 					onClick: =>
 						@addRow()
 
-
 			@minusButton = new CUI.defaults.class.Button
 				icon: "minus"
 				group: "plus-minus"
 				tooltip: text: CUI.DataTable.defaults.minus_button_tooltip
 				disabled: true
+				ui: if @_ui then "#{@_ui}.minus.button"
 				onClick: =>
 					for row in @listView.getSelectedRows()
 						row.remove()
@@ -185,6 +185,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				icon: "left"
 				disabled: true
 				group: "navi"
+				ui: if @_ui then "#{@_ui}.navigation.left.button"
 				onClick: =>
 					@__offset = @__offset - @_chunk_size
 					@loadPage(@__offset / @_chunk_size)
@@ -196,9 +197,10 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 			@__navi_input = new CUI.NumberInput
 				group: "navi"
-				placeholder: "henk"
+				placeholder: "page"
 				data: page_data
 				name: 'page'
+				ui: if @_ui then "#{@_ui}.navigation.input.button"
 				onBlur: (input) =>
 					input.setValue(null)
 				onDataChanged: =>
@@ -217,6 +219,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				icon: "right"
 				disabled: true
 				group: "navi"
+				ui: if @_ui then "#{@_ui}.navigation.right.button"
 				onClick: =>
 					@__offset = @__offset + @_chunk_size
 					@loadPage(@__offset / @_chunk_size)
@@ -276,6 +279,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
 			padded: @_padded
+			ui: if @_ui then "#{@_ui}.list.view"
 			onSelect: (ev, info) =>
 				@_onRowSelect?(ev, info)
 				@updateButtons()
