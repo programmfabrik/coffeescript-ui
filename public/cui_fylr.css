@@ -793,27 +793,22 @@ body {
   margin: 0.5rem;
 }
 
-.cui-space-sm,
 .cui-small-space {
   margin: 0.5rem;
   display: inline-block;
 }
-.cui-space-sm:empty,
 .cui-small-space:empty {
   margin: 0.25rem;
 }
 
-.cui-space-lg,
 .cui-large-space {
   margin: 1.5rem;
   display: inline-block;
 }
-.cui-space-lg:empty,
 .cui-large-space:empty {
   margin: 1rem;
 }
 
-.cui-space-flexible,
 .cui-flexible-space {
   flex: 1 1 auto;
 }
