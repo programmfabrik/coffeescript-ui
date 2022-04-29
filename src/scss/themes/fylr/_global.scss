@@ -53,8 +53,6 @@ body {
 	}
 }
 
-.cui-space-sm,
-// deprecated:
 .cui-small-space {
 	margin: $spacer-sm;
 	display: inline-block;
@@ -64,8 +62,6 @@ body {
 	}
 }
 
-.cui-space-lg,
-// deprecated:
 .cui-large-space {
 	margin: $spacer-lg;
 	display: inline-block;
@@ -75,8 +71,6 @@ body {
 	}
 }
 
-.cui-space-flexible,
-// deprecated:
 .cui-flexible-space {
 	flex: 1 1 auto;
 }
