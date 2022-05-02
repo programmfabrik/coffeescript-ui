@@ -5426,6 +5426,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-width: auto;
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header {
+  --toolbar-gap: 0;
   flex-wrap: nowrap;
   padding-left: 0;
   padding-right: 0;
