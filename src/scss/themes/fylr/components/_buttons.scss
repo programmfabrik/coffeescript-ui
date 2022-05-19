@@ -113,12 +113,16 @@ a[role='button'].cui-button-appearance-link {
 	}
 }
 
-// Button with default active state removes
+// Button with default active state removed
 .cui-button-toggle-fill-screen {
-	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-background, $btn-color);
+	&.cui-active {
+		--btn-color-active: #{$body-color};
+		--btn-background-active: transparent;
 
-	&.cui-active:hover {
-		background-color: $btn-hover-background;
+		// ! beware: the cui-active state uses --btn-background-active variable as the hover color, not --btn-background-hover
+		&:hover {
+			--btn-background-active: #{$btn-bordered-hover-background};
+		}
 	}
 }
 

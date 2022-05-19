@@ -4,6 +4,9 @@
 }
 
 .cui-leaflet-map {
+	--map-leaflet-background: hsl(41, 27%, 93%);
+	--map-leaflet-grid-color: hsl(0, 0%, 98%);
+
 	width: 100%;
 	height: 300px;
 	overflow: hidden !important;
@@ -13,12 +16,12 @@
 	}
 
 	.leaflet-container {
-		background-color: hsl(41, 27%, 93%);
+		background-color: var(--map-leaflet-background);
 		background-size: 14px 14px;
 		background-position: center;
 		background-image:
-			linear-gradient(to right, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px),
-			linear-gradient(to bottom, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px);
+			linear-gradient(to right, var(--map-leaflet-grid-color) 1px, hsla(0, 0%, 0%, 0) 1px),
+			linear-gradient(to bottom, var(--map-leaflet-grid-color) 1px, hsla(0, 0%, 0%, 0) 1px);
 
 		.cui-pane-fill-screen & {
 			margin: 0 !important;
@@ -29,18 +32,34 @@
 
 .cui-map-zoom-buttons {
 	position: absolute;
-	width: 100%;
+	width: calc(100% - (2 * #{$pane-padding}));
+	height: calc(100% - (2 * #{$pane-padding}));
 	z-index: 1000;
-	display: block;
 
-	.buttons-upper-left .cui-buttonbar {
+	.cui-button {
+		@include button-sm();
+	}
+
+	.buttons-upper-left {
 		position: absolute;
 		left: 0;
 	}
 
-	.buttons-upper-right .cui-buttonbar {
+	.buttons-upper-right {
 		position: absolute;
-		right: $spacer-sm;
+		right: 0;
+	}
+
+	.buttons-bottom-left {
+		position: absolute;
+		left: 0;
+		bottom: 2rem;
+	}
+
+	.buttons-bottom-right {
+		position: absolute;
+		right: 0;
+		bottom: 2rem;
 	}
 }
 

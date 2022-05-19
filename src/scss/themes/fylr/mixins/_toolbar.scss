@@ -1,0 +1,24 @@
+@mixin toolbar-gap() {
+	--toolbar-gap: #{$spacer-sm};
+
+	// add gap between toolbar layout columns (left, center, right)
+	gap: var(--toolbar-gap);
+
+	// reset gap if a layout is empty
+	> .cui-horizontal-layout-left:empty {
+		margin-right: calc(-1 * var(--toolbar-gap));
+	}
+
+	> .cui-horizontal-layout-center:empty {
+		margin: 0 calc(-0.5 * var(--toolbar-gap));
+	}
+
+	> .cui-horizontal-layout-right:empty {
+		margin-left: calc(-1 * var(--toolbar-gap));
+	}
+
+	// spacing of the content within the layout columns (content can be buttons, labels, data-input, buttonbar, buttonbar-group etc.) 
+	> [class*='cui-horizontal-layout'] {
+		gap: var(--toolbar-gap);
+	}
+}

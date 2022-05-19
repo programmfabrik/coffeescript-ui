@@ -345,6 +345,7 @@
 // ! use carefully, in most cases you want to use button-plain() instead, which will set button colors and hover/focus states as well
 @mixin button-no-border() {
 	--btn-border-color: transparent;
+	--btn-border-width: 0;
 
 	&:hover,
 	&:focus {
