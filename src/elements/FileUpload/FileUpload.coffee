@@ -52,6 +52,8 @@ class CUI.FileUpload extends CUI.Element
 				check: Function
 			onAlways:
 				check: Function
+			shouldQueue: # Function that needs to return true/false depending whether it should continue with the queue of files.
+				check: Function
 			# callback which can be used
 			# to let the file reject or resolve
 			onBeforeDone:
@@ -116,6 +118,9 @@ class CUI.FileUpload extends CUI.Element
 		CUI.FileUploadFile
 
 	queueFiles: (files) ->
+		if @_shouldQueue and not @_shouldQueue(files)
+			return
+
 		batch = ++@__batch_id
 		# console.debug "FileUpload.queueFiles", files
 

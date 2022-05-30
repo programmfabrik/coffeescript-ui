@@ -55109,6 +55109,9 @@ CUI.FileUpload = (function(superClass) {
       onAlways: {
         check: Function
       },
+      shouldQueue: {
+        check: Function
+      },
       onBeforeDone: {
         check: Function
       }
@@ -55189,6 +55192,9 @@ CUI.FileUpload = (function(superClass) {
 
   FileUpload.prototype.queueFiles = function(files) {
     var batch, done_queuing, idx, interval, locked, next_file;
+    if (this._shouldQueue && !this._shouldQueue(files)) {
+      return;
+    }
     batch = ++this.__batch_id;
     locked = false;
     done_queuing = (function(_this) {
