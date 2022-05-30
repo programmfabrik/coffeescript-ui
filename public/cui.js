@@ -32267,23 +32267,24 @@ CUI.CSSLoader = (function(superClass) {
   };
 
   CSSLoader.prototype.getActiveCSS = function() {
-    var cssNode, i, len, ref;
+    var activeCSS, cssNode, i, len, ref;
     ref = this.__getCSSNodes();
     for (i = 0, len = ref.length; i < len; i++) {
       cssNode = ref[i];
       if (CUI.dom.getAttribute(cssNode, "data-cui-loading")) {
         continue;
       }
-      return {
+      activeCSS = {
         url: CUI.dom.getAttribute(cssNode, "data-cui-url"),
         theme: CUI.dom.getAttribute(cssNode, "data-cui-theme")
       };
+      return activeCSS;
     }
     return null;
   };
 
   CSSLoader.prototype.load = function(_opts) {
-    var active, cssNode, css_href, dfr, i, is_loading, len, oldCssNode, old_css_nodes, opts, ref, url;
+    var active, addThemeToBody, cssNode, css_href, dfr, i, is_loading, len, oldCssNode, old_css_nodes, opts, ref, url;
     if (_opts == null) {
       _opts = {};
     }
@@ -32321,6 +32322,23 @@ CUI.CSSLoader = (function(superClass) {
     } else {
       css_href = document.location.origin + url;
     }
+    addThemeToBody = function() {
+      var _class, j, len1, ref1;
+      if (!opts.theme) {
+        return;
+      }
+      CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme);
+      ref1 = document.body.classList;
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        _class = ref1[j];
+        if (!_class.startsWith("cui-theme")) {
+          continue;
+        }
+        CUI.dom.removeClass(document.body, _class);
+        break;
+      }
+      CUI.dom.addClass(document.body, "cui-theme-" + opts.theme);
+    };
     cssNode = CUI.dom.element("LINK", {
       rel: "stylesheet",
       charset: "utf-8",
@@ -32333,7 +32351,9 @@ CUI.CSSLoader = (function(superClass) {
     old_css_nodes = CUI.dom.matchSelector(document.head, "link[name='" + this.__cssName + "']");
     dfr.always((function(_this) {
       return function() {
-        return CUI.dom.removeAttribute(cssNode, "data-cui-loading");
+        CUI.dom.removeAttribute(cssNode, "data-cui-loading");
+        active = _this.getActiveCSS();
+        addThemeToBody();
       };
     })(this));
     dfr.fail((function(_this) {
@@ -32384,7 +32404,7 @@ CUI.CSSLoader = (function(superClass) {
             }
             CUI.dom.remove(css_node);
           }
-          CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme);
+          addThemeToBody();
           CUI.Events.trigger({
             type: "viewport-resize",
             info: {
