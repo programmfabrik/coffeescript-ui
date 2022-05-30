@@ -248,6 +248,10 @@
 	.cui-label {
 		padding-top: 0;
 	}
+
+	.cui-button {
+		@include button-link-sm();
+	}
 }
 
 .cui-input-invalid-hint {
