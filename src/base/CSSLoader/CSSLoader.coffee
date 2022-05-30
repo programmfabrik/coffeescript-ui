@@ -34,10 +34,10 @@ class CUI.CSSLoader extends CUI.Element
 			if CUI.dom.getAttribute(cssNode, "data-cui-loading")
 				continue
 
-			return
+			activeCSS =
 				url: CUI.dom.getAttribute(cssNode, "data-cui-url")
 				theme: CUI.dom.getAttribute(cssNode, "data-cui-theme")
-
+			return activeCSS
 		return null
 
 	load: (_opts = {}) ->
@@ -77,6 +77,18 @@ class CUI.CSSLoader extends CUI.Element
 
 		# console.error "parsing location", url, CUI.getPathToScript(), css_href
 
+		addThemeToBody = ->
+			if not opts.theme
+				return
+			CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme)
+			for _class in document.body.classList
+				if not _class.startsWith("cui-theme")
+					continue
+				CUI.dom.removeClass(document.body, _class)
+				break
+			CUI.dom.addClass(document.body, "cui-theme-#{opts.theme}")
+			return
+
 		cssNode = CUI.dom.element "LINK",
 			rel: "stylesheet"
 			charset: "utf-8"
@@ -90,6 +102,9 @@ class CUI.CSSLoader extends CUI.Element
 
 		dfr.always =>
 			CUI.dom.removeAttribute(cssNode, "data-cui-loading")
+			active = @getActiveCSS()
+			addThemeToBody()
+			return
 
 		dfr.fail (css_href) =>
 			console.error("CSSLoader: Loading failed, removing node.", css_href)
@@ -134,7 +149,7 @@ class CUI.CSSLoader extends CUI.Element
 					CUI.dom.remove(css_node)
 						# old_css_nodes.push(css_node)
 
-				CUI.dom.setAttribute(document.body, "data-cui-theme", opts.theme)
+				addThemeToBody()
 
 				# console.info("CSSLoader.loadTheme: Loading went fine: ", url, "Removing the old CSS node: ",  old_css_nodes)
 				CUI.Events.trigger
