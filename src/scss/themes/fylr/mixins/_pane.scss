@@ -23,7 +23,7 @@
 	padding-right: 0;
 	background-color: var(--pane-header-background);
 	
-	.cui-label {
+	.cui-horizontal-layout-left > .cui-label {
 		@include h3(0);
 	}
 	
