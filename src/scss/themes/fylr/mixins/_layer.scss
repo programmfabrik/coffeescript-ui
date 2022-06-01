@@ -6,6 +6,10 @@
 	margin-top: 0.1em;
 }
 
+@mixin layer-width($size: 'm') {
+	width: #{map-get($layer-sizes, $size)}px;
+}
+
 /* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
