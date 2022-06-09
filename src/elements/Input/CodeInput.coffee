@@ -31,7 +31,7 @@ class CUI.CodeInput extends CUI.Input
 
 		value = @__data?[@_name]
 		if value
-			if CUI.util.isPlainObject(value)
+			if CUI.util.isString(value)
 				try # Workaround to format/indent
 					value = JSON.parse(value)
 
