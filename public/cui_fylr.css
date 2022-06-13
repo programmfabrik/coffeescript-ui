@@ -3634,6 +3634,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-bottom: 0.25rem;
 }
 
+.label-for-cui-form-block--has-checkbox {
+  margin-left: 215px;
+}
+
 .cui-wait-block {
   position: absolute;
   top: 0;
