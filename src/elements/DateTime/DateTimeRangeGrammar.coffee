@@ -260,11 +260,10 @@ class CUI.DateTimeRangeGrammar
 		["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]
 	]
 
-	@dateRangeToString: (from = null, to = null) ->
+	@dateRangeToString: (from = null, to = null, locale = CUI.DateTime.getLocale()) ->
 		if not CUI.util.isString(from) and not CUI.util.isString(to)
 			return
 
-		locale = CUI.DateTime.getLocale()
 		fromMoment = CUI.DateTimeRangeGrammar.getMoment(from)
 		toMoment = CUI.DateTimeRangeGrammar.getMoment(to)
 

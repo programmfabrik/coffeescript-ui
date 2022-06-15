@@ -1313,6 +1313,15 @@ describe('CUI.DateTime.dateRangeToString', () => {
         expect(output).toBe("2000")
     });
 
+    test("dateRangeToString :: 2000 - ", () => {
+        const from = "2000"
+        const to = null
+
+        const output = CUI.DateTime.dateRangeToString(from, to)
+
+        expect(output).toBe("nach 2000")
+    });
+
     test("dateRangeToString :: 2000 - 2500-12-20", () => {
         const from = "2000"
         const to = "2500-12-20"
