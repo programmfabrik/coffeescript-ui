@@ -52834,7 +52834,7 @@ CUI.DateTimeRangeGrammar = (function() {
 
   DateTimeRangeGrammar.REGEXP_MONTH = /^[0-9]+[-\/.][0-9]+$/;
 
-  DateTimeRangeGrammar.REGEXP_YEAR = /^\-?[0-9]+$/;
+  DateTimeRangeGrammar.REGEXP_YEAR = /^\-?\+?[0-9]+$/;
 
   DateTimeRangeGrammar.REGEXP_YEAR_DOT = /^[0-9]+.$/;
 
@@ -52893,25 +52893,34 @@ CUI.DateTimeRangeGrammar = (function() {
 
   DateTimeRangeGrammar.PARSE_GRAMMARS = {};
 
-  DateTimeRangeGrammar.PARSE_GRAMMARS["de-DE"] = [["DATE bis DATE", "range", [0, 2], null, "RANGE"], ["YEAR bis YEAR", "range", [0, 2], null, "RANGE_YEAR"], ["YEAR - YEAR n. Chr.", "range", [0, 2]], ["YEAR bis YEAR n. Chr.", "range", [0, 2]], ["zwischen YEAR bis YEAR", "range", [1, 3]], ["zwischen YEAR und YEAR", "range", [1, 3]], ["zwischen DATE bis DATE", "range", [1, 3]], ["zwischen DATE und DATE", "range", [1, 3]], ["von YEAR bis YEAR", "range", [1, 3]], ["YEAR v. Chr. - YEAR n. Chr.", "range", [0, 4], [true]], ["YEAR - YEAR v. Chr.", "range", [0, 2], [true, true]], ["YEAR BC - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR BC - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR bc - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR bc - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR ac - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR ac - YEAR nach Chr.", "range", [0, 3], [true]], ["bis YEAR", "yearRange", [1], [false, true]], ["um YEAR", "yearRange", [1], [false, true, true], "AROUND"], ["ca. YEAR", "yearRange", [1], [false, true, true]], ["um YEAR bc", "yearRange", [1], [true, true, true]], ["um YEAR v. Chr.", "yearRange", [1], [true, true, true], "AROUND_BC"], ["ca. YEAR bc", "yearRange", [1], [true, true, true]], ["ca. YEAR v. Chr.", "yearRange", [1], [true, true, true]], ["vor YEAR", "yearRange", [1], [false, true], "BEFORE"], ["vor YEAR bc", "yearRange", [1], [true, true]], ["vor YEAR v. Chr.", "yearRange", [1], [true, true], "BEFORE_BC"], ["nach YEAR", "yearRange", [1], [false, false, true], "AFTER"], ["nach YEAR ad", "yearRange", [1], [false, false, true]], ["nach YEAR A.D.", "yearRange", [1], [false, false, true]], ["ab YEAR", "yearRange", [1], [false, false, true]], ["ab YEAR ad", "yearRange", [1], [false, false, true]], ["ab YEAR A.D.", "yearRange", [1], [false, false, true]], ["nach YEAR bc", "yearRange", [1], [true, false, true]], ["nach YEAR v. Chr.", "yearRange", [1], [true, false, true], "AFTER_BC"], ["YEAR v. Chr.", "getFromTo", [0], [true]], ["YEAR n. Chr.", "getFromTo", [0]], ["YEAR_DOT Jhd. vor Chr", "century", [0], [true]], ["YEAR_DOT Jhd. vor Chr.", "century", [0], [true]], ["YEAR_DOT Jhd. v. Chr", "century", [0], [true]], ["YEAR_DOT Jhd. v. Chr.", "century", [0], [true], "CENTURY_BC"], ["YEAR_DOT Jhd vor Chr", "century", [0], [true]], ["YEAR_DOT Jhd vor Chr.", "century", [0], [true]], ["YEAR_DOT Jhd v. Chr", "century", [0], [true]], ["YEAR_DOT Jhd v. Chr.", "century", [0], [true]], ["YEAR_DOT Jh vor Chr", "century", [0], [true]], ["YEAR_DOT Jh vor Chr.", "century", [0], [true]], ["YEAR_DOT Jh v. Chr", "century", [0], [true]], ["YEAR_DOT Jh v. Chr.", "century", [0], [true]], ["YEAR_DOT Jh. vor Chr", "century", [0], [true]], ["YEAR_DOT Jh. vor Chr.", "century", [0], [true]], ["YEAR_DOT Jh. v. Chr", "century", [0], [true]], ["YEAR_DOT Jh. v. Chr.", "century", [0], [true]], ["YEAR Jhd. vor Chr", "century", [0], [true]], ["YEAR Jhd. vor Chr.", "century", [0], [true]], ["YEAR Jhd. v. Chr", "century", [0], [true]], ["YEAR Jhd. v. Chr.", "century", [0], [true]], ["YEAR Jhd vor Chr", "century", [0], [true]], ["YEAR Jhd vor Chr.", "century", [0], [true]], ["YEAR Jhd v. Chr", "century", [0], [true]], ["YEAR Jhd v. Chr.", "century", [0], [true]], ["YEAR Jhd ac", "century", [0], [true]], ["YEAR Jh ac", "century", [0], [true]], ["YEAR Jh. ac", "century", [0], [true]], ["YEAR Jhd.", "century", [0]], ["YEAR Jhd", "century", [0]], ["YEAR Jh", "century", [0]], ["YEAR Jh.", "century", [0]], ["YEAR_DOT Jhd.", "century", [0], null, "CENTURY"], ["YEAR_DOT Jhd", "century", [0]], ["YEAR_DOT Jhd nach Chr.", "century", [0]], ["YEAR_DOT Jhd. nach Chr.", "century", [0]], ["YEAR_DOT Jhd. nach Chr", "century", [0]], ["YEAR_DOT Jhd nach Chr", "century", [0]], ["YEAR_DOT Jhd. n. Chr.", "century", [0]], ["YEAR_DOT Jhd. n. Chr", "century", [0]], ["YEAR_DOT Jhd n. Chr.", "century", [0]], ["YEAR_DOT Jhd n. Chr", "century", [0]], ["YEAR_DOT Jt. v. Chr.", "millennium", [0], [true], "MILLENNIUM_BC"], ["YEAR_DOT Jt v. Chr.", "millennium", [0], [true]], ["YEAR_DOT Jt bc", "millennium", [0], [true]], ["YEAR_DOT Jt. bc", "millennium", [0], [true]], ["YEAR_DOT Jt BC", "millennium", [0], [true]], ["YEAR_DOT Jt. BC", "millennium", [0], [true]], ["YEAR_DOT Jt.", "millennium", [0], null, "MILLENNIUM"], ["YEAR_DOT Jt.", "millennium", [0]], ["YEAR_DOT Jt", "millennium", [0]], ["YEAR Jt. v. Chr.", "millennium", [0], [true]], ["YEAR Jt v. Chr.", "millennium", [0], [true]], ["YEAR Jt bc", "millennium", [0], [true]], ["YEAR Jt. bc", "millennium", [0], [true]], ["YEAR Jt BC", "millennium", [0], [true]], ["YEAR Jt. BC", "millennium", [0], [true]], ["YEAR Jt.", "millennium", [0]], ["YEAR Jt.", "millennium", [0]], ["YEAR Jt", "millennium", [0]], ["Anfang YEAR_DOT Jhd", "earlyCentury", [1]], ["Anfang YEAR_DOT Jh", "earlyCentury", [1]], ["Anfang YEAR_DOT Jh.", "earlyCentury", [1], null, "EARLY_CENTURY"], ["Anfang YEAR_DOT Jhd v. Chr.", "earlyCentury", [1], [true]], ["Anfang YEAR_DOT Jh v. Chr.", "earlyCentury", [1], [true]], ["Anfang YEAR_DOT Jh. v. Chr.", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"], ["Ende YEAR_DOT Jhd", "lateCentury", [1]], ["Ende YEAR_DOT Jh", "lateCentury", [1]], ["Ende YEAR_DOT Jh.", "lateCentury", [1], null, "LATE_CENTURY"], ["Ende YEAR_DOT Jhd v. Chr.", "lateCentury", [1], [true]], ["Ende YEAR_DOT Jh v. Chr.", "lateCentury", [1], [true]], ["Ende YEAR_DOT Jh. v. Chr.", "lateCentury", [1], [true], "LATE_CENTURY_BC"], ["YEAR_DOT Jhd. - YEAR_DOT Jhd.", "centuryRange", [0, 3], null, "CENTURY_RANGE"], ["YEAR_DOT Jhd - YEAR_DOT Jhd", "centuryRange", [0, 3]], ["YEAR Jhd. - YEAR Jhd.", "centuryRange", [0, 3]], ["YEAR Jhd - YEAR Jhd", "centuryRange", [0, 3]], ["YEAR Jh. - YEAR Jh.", "centuryRange", [0, 3]], ["YEAR Jh - YEAR Jh", "centuryRange", [0, 3]], ["YEAR_DOT Jh. - YEAR_DOT Jh.", "centuryRange", [0, 3]], ["YEAR_DOT Jh - YEAR_DOT Jh", "centuryRange", [0, 3]], ["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd.", "centuryRange", [0, 5], [true], "CENTURY_RANGE_FROM_BC"], ["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd", "centuryRange", [0, 5], [true]], ["YEAR Jhd. v. Chr. - YEAR Jhd.", "centuryRange", [0, 5], [true]], ["YEAR Jhd v. Chr. - YEAR Jhd", "centuryRange", [0, 5], [true]], ["YEAR Jh. v. Chr. - YEAR Jh.", "centuryRange", [0, 5], [true]], ["YEAR Jh v. Chr. - YEAR Jh", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh.", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd. v. Chr.", "centuryRange", [0, 5], [true, true], "CENTURY_RANGE_BC"], ["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jhd. v. Chr. - YEAR Jhd. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jhd v. Chr. - YEAR Jhd v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jh. v. Chr. - YEAR Jh. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jh v. Chr. - YEAR Jh v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh v. Chr.", "centuryRange", [0, 5], [true, true]]];
+  DateTimeRangeGrammar.PARSE_GRAMMARS["de-DE"] = [["DATE bis DATE", "range", [0, 2], null, "RANGE"], ["YEAR bis YEAR", "range", [0, 2], null, "RANGE_YEAR"], ["YEAR - YEAR n. Chr.", "range", [0, 2]], ["YEAR bis YEAR n. Chr.", "range", [0, 2]], ["zwischen YEAR bis YEAR", "range", [1, 3]], ["zwischen YEAR und YEAR", "range", [1, 3]], ["zwischen DATE bis DATE", "range", [1, 3]], ["zwischen DATE und DATE", "range", [1, 3]], ["von YEAR bis YEAR", "range", [1, 3]], ["YEAR v. Chr. - YEAR n. Chr.", "range", [0, 4], [true]], ["YEAR - YEAR v. Chr.", "range", [0, 2], [true, true]], ["YEAR BC - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR BC - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR bc - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR bc - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR ac - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR ac - YEAR nach Chr.", "range", [0, 3], [true]], ["um YEAR", "yearRange", [1], [false, true, true], "AROUND"], ["ca. YEAR", "yearRange", [1], [false, true, true]], ["um YEAR bc", "yearRange", [1], [true, true, true]], ["um YEAR v. Chr.", "yearRange", [1], [true, true, true], "AROUND_BC"], ["ca. YEAR bc", "yearRange", [1], [true, true, true]], ["ca. YEAR v. Chr.", "yearRange", [1], [true, true, true]], ["bis YEAR", "yearOpenStart", [1], [false]], ["bis YEAR bc", "yearOpenStart", [1], [true]], ["vor YEAR", "yearOpenStart", [1], [false], "BEFORE"], ["vor YEAR bc", "yearOpenStart", [1], [true]], ["vor YEAR v. Chr.", "yearOpenStart", [1], [true], "BEFORE_BC"], ["nach YEAR", "yearOpenEnd", [1], [false], "AFTER"], ["nach YEAR ad", "yearOpenEnd", [1], [false]], ["nach YEAR A.D.", "yearOpenEnd", [1], [false]], ["ab YEAR", "yearOpenEnd", [1], [false]], ["ab YEAR ad", "yearOpenEnd", [1], [false]], ["ab YEAR A.D.", "yearOpenEnd", [1], [false]], ["nach YEAR bc", "yearOpenEnd", [1], [true]], ["nach YEAR v. Chr.", "yearOpenEnd", [1], [true], "AFTER_BC"], ["YEAR v. Chr.", "getFromTo", [0], [true]], ["YEAR n. Chr.", "getFromTo", [0]], ["YEAR_DOT Jhd. vor Chr", "century", [0], [true]], ["YEAR_DOT Jhd. vor Chr.", "century", [0], [true]], ["YEAR_DOT Jhd. v. Chr", "century", [0], [true]], ["YEAR_DOT Jhd. v. Chr.", "century", [0], [true], "CENTURY_BC"], ["YEAR_DOT Jhd vor Chr", "century", [0], [true]], ["YEAR_DOT Jhd vor Chr.", "century", [0], [true]], ["YEAR_DOT Jhd v. Chr", "century", [0], [true]], ["YEAR_DOT Jhd v. Chr.", "century", [0], [true]], ["YEAR_DOT Jh vor Chr", "century", [0], [true]], ["YEAR_DOT Jh vor Chr.", "century", [0], [true]], ["YEAR_DOT Jh v. Chr", "century", [0], [true]], ["YEAR_DOT Jh v. Chr.", "century", [0], [true]], ["YEAR_DOT Jh. vor Chr", "century", [0], [true]], ["YEAR_DOT Jh. vor Chr.", "century", [0], [true]], ["YEAR_DOT Jh. v. Chr", "century", [0], [true]], ["YEAR_DOT Jh. v. Chr.", "century", [0], [true]], ["YEAR Jhd. vor Chr", "century", [0], [true]], ["YEAR Jhd. vor Chr.", "century", [0], [true]], ["YEAR Jhd. v. Chr", "century", [0], [true]], ["YEAR Jhd. v. Chr.", "century", [0], [true]], ["YEAR Jhd vor Chr", "century", [0], [true]], ["YEAR Jhd vor Chr.", "century", [0], [true]], ["YEAR Jhd v. Chr", "century", [0], [true]], ["YEAR Jhd v. Chr.", "century", [0], [true]], ["YEAR Jhd ac", "century", [0], [true]], ["YEAR Jh ac", "century", [0], [true]], ["YEAR Jh. ac", "century", [0], [true]], ["YEAR Jhd.", "century", [0]], ["YEAR Jhd", "century", [0]], ["YEAR Jh", "century", [0]], ["YEAR Jh.", "century", [0]], ["YEAR_DOT Jhd.", "century", [0], null, "CENTURY"], ["YEAR_DOT Jhd", "century", [0]], ["YEAR_DOT Jhd nach Chr.", "century", [0]], ["YEAR_DOT Jhd. nach Chr.", "century", [0]], ["YEAR_DOT Jhd. nach Chr", "century", [0]], ["YEAR_DOT Jhd nach Chr", "century", [0]], ["YEAR_DOT Jhd. n. Chr.", "century", [0]], ["YEAR_DOT Jhd. n. Chr", "century", [0]], ["YEAR_DOT Jhd n. Chr.", "century", [0]], ["YEAR_DOT Jhd n. Chr", "century", [0]], ["YEAR_DOT Jt. v. Chr.", "millennium", [0], [true], "MILLENNIUM_BC"], ["YEAR_DOT Jt v. Chr.", "millennium", [0], [true]], ["YEAR_DOT Jt bc", "millennium", [0], [true]], ["YEAR_DOT Jt. bc", "millennium", [0], [true]], ["YEAR_DOT Jt BC", "millennium", [0], [true]], ["YEAR_DOT Jt. BC", "millennium", [0], [true]], ["YEAR_DOT Jt.", "millennium", [0], null, "MILLENNIUM"], ["YEAR_DOT Jt.", "millennium", [0]], ["YEAR_DOT Jt", "millennium", [0]], ["YEAR Jt. v. Chr.", "millennium", [0], [true]], ["YEAR Jt v. Chr.", "millennium", [0], [true]], ["YEAR Jt bc", "millennium", [0], [true]], ["YEAR Jt. bc", "millennium", [0], [true]], ["YEAR Jt BC", "millennium", [0], [true]], ["YEAR Jt. BC", "millennium", [0], [true]], ["YEAR Jt.", "millennium", [0]], ["YEAR Jt.", "millennium", [0]], ["YEAR Jt", "millennium", [0]], ["Anfang YEAR_DOT Jhd", "earlyCentury", [1]], ["Anfang YEAR_DOT Jh", "earlyCentury", [1]], ["Anfang YEAR_DOT Jh.", "earlyCentury", [1], null, "EARLY_CENTURY"], ["Anfang YEAR_DOT Jhd v. Chr.", "earlyCentury", [1], [true]], ["Anfang YEAR_DOT Jh v. Chr.", "earlyCentury", [1], [true]], ["Anfang YEAR_DOT Jh. v. Chr.", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"], ["Ende YEAR_DOT Jhd", "lateCentury", [1]], ["Ende YEAR_DOT Jh", "lateCentury", [1]], ["Ende YEAR_DOT Jh.", "lateCentury", [1], null, "LATE_CENTURY"], ["Ende YEAR_DOT Jhd v. Chr.", "lateCentury", [1], [true]], ["Ende YEAR_DOT Jh v. Chr.", "lateCentury", [1], [true]], ["Ende YEAR_DOT Jh. v. Chr.", "lateCentury", [1], [true], "LATE_CENTURY_BC"], ["YEAR_DOT Jhd. - YEAR_DOT Jhd.", "centuryRange", [0, 3], null, "CENTURY_RANGE"], ["YEAR_DOT Jhd - YEAR_DOT Jhd", "centuryRange", [0, 3]], ["YEAR Jhd. - YEAR Jhd.", "centuryRange", [0, 3]], ["YEAR Jhd - YEAR Jhd", "centuryRange", [0, 3]], ["YEAR Jh. - YEAR Jh.", "centuryRange", [0, 3]], ["YEAR Jh - YEAR Jh", "centuryRange", [0, 3]], ["YEAR_DOT Jh. - YEAR_DOT Jh.", "centuryRange", [0, 3]], ["YEAR_DOT Jh - YEAR_DOT Jh", "centuryRange", [0, 3]], ["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd.", "centuryRange", [0, 5], [true], "CENTURY_RANGE_FROM_BC"], ["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd", "centuryRange", [0, 5], [true]], ["YEAR Jhd. v. Chr. - YEAR Jhd.", "centuryRange", [0, 5], [true]], ["YEAR Jhd v. Chr. - YEAR Jhd", "centuryRange", [0, 5], [true]], ["YEAR Jh. v. Chr. - YEAR Jh.", "centuryRange", [0, 5], [true]], ["YEAR Jh v. Chr. - YEAR Jh", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh.", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd. v. Chr.", "centuryRange", [0, 5], [true, true], "CENTURY_RANGE_BC"], ["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jhd. v. Chr. - YEAR Jhd. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jhd v. Chr. - YEAR Jhd v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jh. v. Chr. - YEAR Jh. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jh v. Chr. - YEAR Jh v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh v. Chr.", "centuryRange", [0, 5], [true, true]]];
 
-  DateTimeRangeGrammar.PARSE_GRAMMARS["en-US"] = [["DATE to DATE", "range", [0, 2], null, "RANGE"], ["YEAR to YEAR", "range", [0, 2], null, "RANGE_YEAR"], ["YEAR - YEAR A.D.", "range", [0, 2]], ["YEAR - YEAR AD", "range", [0, 2]], ["YEAR to YEAR A.D.", "range", [0, 2]], ["YEAR to YEAR AD", "range", [0, 2]], ["from YEAR to YEAR", "range", [1, 3]], ["YEAR BC - YEAR A.D.", "range", [0, 3], [true]], ["YEAR BC - YEAR AD", "range", [0, 3], [true]], ["YEAR BC - YEAR CE", "range", [0, 3], [true]], ["YEAR BC - YEAR ad", "range", [0, 3], [true]], ["YEAR B.C. - YEAR A.D.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR AD", "range", [0, 3], [true]], ["YEAR B.C. - YEAR CE", "range", [0, 3], [true]], ["YEAR B.C. - YEAR ad", "range", [0, 3], [true]], ["YEAR B.C. to YEAR", "range", [0, 3], [true]], ["YEAR bc - YEAR A.D.", "range", [0, 3], [true]], ["YEAR bc - YEAR AD", "range", [0, 3], [true]], ["YEAR bc - YEAR CE", "range", [0, 3], [true]], ["YEAR bc - YEAR ad", "range", [0, 3], [true]], ["YEAR ac - YEAR A.D.", "range", [0, 3], [true]], ["YEAR ac - YEAR AD", "range", [0, 3], [true]], ["YEAR ac - YEAR CE", "range", [0, 3], [true]], ["YEAR ac - YEAR ad", "range", [0, 3], [true]], ["YEAR - YEAR BC", "range", [0, 2], [true, true]], ["YEAR - YEAR B.C.", "range", [0, 2], [true, true]], ["MONTH YEAR", "monthRange", [0, 1]], ["after YEAR", "yearRange", [1], [false, false, true], "AFTER"], ["after YEAR BC", "yearRange", [1], [true, false, true], "AFTER_BC"], ["before YEAR", "yearRange", [1], [false, true], "BEFORE"], ["before YEAR BC", "yearRange", [1], [true, true], "BEFORE_BC"], ["around YEAR", "yearRange", [1], [false, true, true], "AROUND"], ["around YEAR BC", "yearRange", [1], [true, true, true], "AROUND_BC"], ["YEAR_DOT millennium", "millennium", [0], null, "MILLENNIUM"], ["YEAR_DOT millennium BC", "millennium", [0], [true], "MILLENNIUM_BC"], ["YEAR millennium", "millennium", [0]], ["YEAR millennium BC", "millennium", [0], [true]], ["YEAR BCE", "getFromTo", [0], [true]], ["YEAR bc", "getFromTo", [0], [true]], ["YEAR BC", "getFromTo", [0], [true]], ["YEAR B.C.", "getFromTo", [0], [true]], ["YEAR AD", "getFromTo", [0]], ["YEAR A.D.", "getFromTo", [0]], ["CENTURY century", "century", [0], null, "CENTURY"], ["CENTURY century BC", "century", [0], [true], "CENTURY_BC"], ["Early CENTURY century", "earlyCentury", [1], null, "EARLY_CENTURY"], ["Early CENTURY century BC", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"], ["Late CENTURY century", "lateCentury", [1], null, "LATE_CENTURY"], ["Late CENTURY century BC", "lateCentury", [1], [true], "LATE_CENTURY_BC"], ["CENTURY century - CENTURY century", "centuryRange", [0, 3], null, "CENTURY_RANGE"], ["CENTURY century BC - CENTURY century", "centuryRange", [0, 4], [true], "CENTURY_RANGE_FROM_BC"], ["CENTURY century B.C. - CENTURY century", "centuryRange", [0, 4], [true]], ["CENTURY century BC - CENTURY century BC", "centuryRange", [0, 4], [true, true], "CENTURY_RANGE_BC"], ["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]];
+  DateTimeRangeGrammar.PARSE_GRAMMARS["en-US"] = [["DATE to DATE", "range", [0, 2], null, "RANGE"], ["YEAR to YEAR", "range", [0, 2], null, "RANGE_YEAR"], ["YEAR - YEAR A.D.", "range", [0, 2]], ["YEAR - YEAR AD", "range", [0, 2]], ["YEAR to YEAR A.D.", "range", [0, 2]], ["YEAR to YEAR AD", "range", [0, 2]], ["from YEAR to YEAR", "range", [1, 3]], ["YEAR BC - YEAR A.D.", "range", [0, 3], [true]], ["YEAR BC - YEAR AD", "range", [0, 3], [true]], ["YEAR BC - YEAR CE", "range", [0, 3], [true]], ["YEAR BC - YEAR ad", "range", [0, 3], [true]], ["YEAR B.C. - YEAR A.D.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR AD", "range", [0, 3], [true]], ["YEAR B.C. - YEAR CE", "range", [0, 3], [true]], ["YEAR B.C. - YEAR ad", "range", [0, 3], [true]], ["YEAR B.C. to YEAR", "range", [0, 3], [true]], ["YEAR bc - YEAR A.D.", "range", [0, 3], [true]], ["YEAR bc - YEAR AD", "range", [0, 3], [true]], ["YEAR bc - YEAR CE", "range", [0, 3], [true]], ["YEAR bc - YEAR ad", "range", [0, 3], [true]], ["YEAR ac - YEAR A.D.", "range", [0, 3], [true]], ["YEAR ac - YEAR AD", "range", [0, 3], [true]], ["YEAR ac - YEAR CE", "range", [0, 3], [true]], ["YEAR ac - YEAR ad", "range", [0, 3], [true]], ["YEAR - YEAR BC", "range", [0, 2], [true, true]], ["YEAR - YEAR B.C.", "range", [0, 2], [true, true]], ["MONTH YEAR", "monthRange", [0, 1]], ["after YEAR", "yearOpenEnd", [1], [false], "AFTER"], ["after YEAR BC", "yearOpenEnd", [1], [true], "AFTER_BC"], ["before YEAR", "yearOpenStart", [1], [false], "BEFORE"], ["before YEAR BC", "yearOpenStart", [1], [true], "BEFORE_BC"], ["around YEAR", "yearRange", [1], [false, true, true], "AROUND"], ["around YEAR BC", "yearRange", [1], [true, true, true], "AROUND_BC"], ["YEAR_DOT millennium", "millennium", [0], null, "MILLENNIUM"], ["YEAR_DOT millennium BC", "millennium", [0], [true], "MILLENNIUM_BC"], ["YEAR millennium", "millennium", [0]], ["YEAR millennium BC", "millennium", [0], [true]], ["YEAR BCE", "getFromTo", [0], [true]], ["YEAR bc", "getFromTo", [0], [true]], ["YEAR BC", "getFromTo", [0], [true]], ["YEAR B.C.", "getFromTo", [0], [true]], ["YEAR AD", "getFromTo", [0]], ["YEAR A.D.", "getFromTo", [0]], ["CENTURY century", "century", [0], null, "CENTURY"], ["CENTURY century BC", "century", [0], [true], "CENTURY_BC"], ["Early CENTURY century", "earlyCentury", [1], null, "EARLY_CENTURY"], ["Early CENTURY century BC", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"], ["Late CENTURY century", "lateCentury", [1], null, "LATE_CENTURY"], ["Late CENTURY century BC", "lateCentury", [1], [true], "LATE_CENTURY_BC"], ["CENTURY century - CENTURY century", "centuryRange", [0, 3], null, "CENTURY_RANGE"], ["CENTURY century BC - CENTURY century", "centuryRange", [0, 4], [true], "CENTURY_RANGE_FROM_BC"], ["CENTURY century B.C. - CENTURY century", "centuryRange", [0, 4], [true]], ["CENTURY century BC - CENTURY century BC", "centuryRange", [0, 4], [true, true], "CENTURY_RANGE_BC"], ["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]];
 
   DateTimeRangeGrammar.dateRangeToString = function(from, to) {
     var centerYear, century, format, fromCentury, fromIsYear, fromMoment, fromSplit, fromYear, getPossibleString, grammarKey, grammars, i, isBC, j, k, key, len, len1, len2, locale, millennium, month, possibleString, ref, ref1, ref2, toCentury, toIsYear, toMoment, toSplit, toYear, yearsDifference;
-    if (!CUI.util.isString(from) || !CUI.util.isString(to)) {
+    if (from == null) {
+      from = null;
+    }
+    if (to == null) {
+      to = null;
+    }
+    if (!CUI.util.isString(from) && !CUI.util.isString(to)) {
       return;
     }
     locale = CUI.DateTime.getLocale();
     fromMoment = CUI.DateTimeRangeGrammar.getMoment(from);
     toMoment = CUI.DateTimeRangeGrammar.getMoment(to);
-    if (!(fromMoment != null ? fromMoment.isValid() : void 0) || !(toMoment != null ? toMoment.isValid() : void 0)) {
+    if (!(fromMoment != null ? fromMoment.isValid() : void 0) && !CUI.util.isNull(from)) {
+      return CUI.DateTimeFormats[locale].formats[0].invalid;
+    }
+    if (!(toMoment != null ? toMoment.isValid() : void 0) && !CUI.util.isNull(to)) {
       return CUI.DateTimeFormats[locale].formats[0].invalid;
     }
     if (CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(from)) {
       fromIsYear = true;
       fromYear = parseInt(from);
-    } else if (fromMoment.isValid() && fromMoment.date() === 1 && fromMoment.month() === 0) {
+    } else if ((fromMoment != null ? fromMoment.isValid() : void 0) && fromMoment.date() === 1 && fromMoment.month() === 0) {
       fromMoment.add(1, "day");
       fromMoment.parseZone();
       fromYear = fromMoment.year();
@@ -52922,10 +52931,16 @@ CUI.DateTimeRangeGrammar = (function() {
     if (CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)) {
       toIsYear = true;
       toYear = parseInt(to);
-    } else if (toMoment.isValid() && toMoment.date() === 31 && toMoment.month() === 11) {
+    } else if ((toMoment != null ? toMoment.isValid() : void 0) && toMoment.date() === 31 && toMoment.month() === 11) {
       toMoment.add(1, "day");
       toMoment.parseZone();
       toYear = toMoment.year();
+    }
+    if (!fromIsYear && CUI.util.isNull(to)) {
+      return from;
+    }
+    if (!toIsYear && CUI.util.isNull(from)) {
+      return to;
     }
     grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale];
     if (!grammars) {
@@ -52965,10 +52980,8 @@ CUI.DateTimeRangeGrammar = (function() {
       }
       return possibleString.replace(" " + DateTimeRangeGrammar.DASH + " ", " " + DateTimeRangeGrammar.EN_DASH + " ");
     };
-    if (!CUI.util.isUndef(fromYear) && !CUI.util.isUndef(toYear)) {
-      if (fromYear === toYear) {
-        return "" + fromYear;
-      }
+    if (fromIsYear && CUI.util.isNull(to)) {
+      to = void 0;
       isBC = fromYear < 0;
       if (isBC) {
         possibleString = getPossibleString("AFTER_BC", [Math.abs(fromYear)]);
@@ -52978,6 +52991,10 @@ CUI.DateTimeRangeGrammar = (function() {
       if (possibleString) {
         return possibleString;
       }
+      return from;
+    }
+    if (toIsYear && CUI.util.isNull(from)) {
+      from = void 0;
       isBC = toYear < 0;
       if (isBC) {
         possibleString = getPossibleString("BEFORE_BC", [Math.abs(toYear)]);
@@ -52986,6 +53003,12 @@ CUI.DateTimeRangeGrammar = (function() {
       }
       if (possibleString) {
         return possibleString;
+      }
+      return to;
+    }
+    if (!CUI.util.isUndef(fromYear) && !CUI.util.isUndef(toYear)) {
+      if (fromYear === toYear) {
+        return "" + fromYear;
       }
       centerYear = (toYear + fromYear) / 2;
       isBC = centerYear <= 0;
@@ -53280,6 +53303,36 @@ CUI.DateTimeRangeGrammar = (function() {
     return {
       from: from,
       to: to
+    };
+  };
+
+  DateTimeRangeGrammar.yearOpenEnd = function(year, isBC) {
+    var yearRange;
+    if (isBC == null) {
+      isBC = false;
+    }
+    yearRange = this.yearRange(year, isBC);
+    if (!yearRange) {
+      return;
+    }
+    return {
+      from: yearRange.from,
+      to: void 0
+    };
+  };
+
+  DateTimeRangeGrammar.yearOpenStart = function(year, isBC) {
+    var yearRange;
+    if (isBC == null) {
+      isBC = false;
+    }
+    yearRange = this.yearRange(year, isBC);
+    if (!yearRange) {
+      return;
+    }
+    return {
+      from: void 0,
+      to: yearRange.to
     };
   };
 
