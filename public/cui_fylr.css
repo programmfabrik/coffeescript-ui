@@ -3634,10 +3634,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-bottom: 0.25rem;
 }
 
-.label-for-cui-form-block--has-checkbox {
-  margin-left: 215px;
-}
-
 .cui-wait-block {
   position: absolute;
   top: 0;
@@ -5059,7 +5055,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-height: 0;
   margin-bottom: 1rem;
 }
-.cui-form-row.cui-form-field-type--checkbox + .cui-form-field-type--checkbox {
+.cui-form-row.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, .cui-form-row.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
   margin-top: -1rem;
 }
 .cui-form-container.cui-form--horizontal > .cui-form-row {
@@ -6784,13 +6780,16 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: #ffffff;
   background-color: #212121;
 }
-.cui-tabs-pane-header .cui-buttonbar {
+.cui-tabs-pane-header .cui-tab-header-button-overflow + * {
+  margin-left: 1rem;
+}
+.cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar {
   min-width: 0;
   width: 100%;
   position: relative;
   gap: 0;
 }
-.cui-tabs-pane-header .cui-buttonbar::after {
+.cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar::after {
   content: "";
   display: block;
   flex: 1 1 auto;
@@ -6798,15 +6797,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background: var(--tabs-active-border-color, #212121);
   align-self: flex-end;
 }
-.cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group {
+.cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar .cui-buttonbar-group {
   position: relative;
   margin: 0;
 }
-.cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
+.cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button .cui-button-visual {
   position: relative;
   border: 0;
 }
-.cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button .cui-button-visual::after {
+.cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button .cui-button-visual::after {
   content: "";
   display: block;
   position: absolute;
@@ -6818,7 +6817,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   height: 100%;
   border-bottom: 1px solid var(--tabs-active-border-color, #212121);
 }
-.cui-tabs-pane-header .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
+.cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
   border: 1px solid var(--tabs-active-border-color, #212121);
   border-bottom: 1px solid transparent;
   border-radius: 2px 2px 0 0;
