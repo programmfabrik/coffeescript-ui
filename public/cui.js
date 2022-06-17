@@ -57939,7 +57939,9 @@ CUI.CodeInput = (function(superClass) {
           value = JSON.parse(value);
         } catch (error) {}
       }
-      value = JSON.stringify(value, null, '\t');
+      if (this._mode === "json") {
+        value = JSON.stringify(value, null, '\t');
+      }
       this.__aceEditor.setValue(value, -1);
       this.__aceEditor.clearSelection();
     }
