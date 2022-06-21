@@ -51984,12 +51984,12 @@ CUI.DateTime = (function(superClass) {
     return dt.parse(datestr);
   };
 
-  DateTime.stringToDateRange = function(string) {
-    return CUI.DateTimeRangeGrammar.stringToDateRange(string);
+  DateTime.stringToDateRange = function(string, locale) {
+    return CUI.DateTimeRangeGrammar.stringToDateRange(string, locale);
   };
 
-  DateTime.dateRangeToString = function(from, to) {
-    return CUI.DateTimeRangeGrammar.dateRangeToString(from, to);
+  DateTime.dateRangeToString = function(from, to, locale) {
+    return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale);
   };
 
   return DateTime;
@@ -52976,7 +52976,7 @@ CUI.DateTimeRangeGrammar = (function() {
         }
       }
       possibleString = possibleStringArray.join(" ");
-      output = CUI.DateTimeRangeGrammar.stringToDateRange(possibleString);
+      output = CUI.DateTimeRangeGrammar.stringToDateRange(possibleString, locale);
       if (!output || output.to !== to || output.from !== from) {
         return;
       }
@@ -53127,14 +53127,16 @@ CUI.DateTimeRangeGrammar = (function() {
     return from + " " + DateTimeRangeGrammar.EN_DASH + " " + to;
   };
 
-  DateTimeRangeGrammar.stringToDateRange = function(input) {
-    var _, extraArguments, from, grammar, grammars, i, j, len, len1, locale, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
+  DateTimeRangeGrammar.stringToDateRange = function(input, locale) {
+    var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
+    if (locale == null) {
+      locale = CUI.DateTime.getLocale();
+    }
     if (CUI.util.isEmpty(input) || !CUI.util.isString(input)) {
       return {
         error: "Input needs to be a non empty string: " + input
       };
     }
-    locale = CUI.DateTime.getLocale();
     input = input.trim();
     input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH);
     tokens = [];
