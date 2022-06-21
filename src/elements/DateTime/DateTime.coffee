@@ -1473,8 +1473,8 @@ class CUI.DateTime extends CUI.Input
 		dt = new CUI.DateTime(input_types: null)
 		dt.parse(datestr)
 
-	@stringToDateRange: (string) ->
-		return CUI.DateTimeRangeGrammar.stringToDateRange(string)
+	@stringToDateRange: (string, locale) ->
+		return CUI.DateTimeRangeGrammar.stringToDateRange(string, locale)
 
-	@dateRangeToString: (from, to) ->
-		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to)
+	@dateRangeToString: (from, to, locale) ->
+		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale)

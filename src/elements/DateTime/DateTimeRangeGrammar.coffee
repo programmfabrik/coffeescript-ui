@@ -324,7 +324,7 @@ class CUI.DateTimeRangeGrammar
 					possibleStringArray[value] = parameters[index]
 
 			possibleString = possibleStringArray.join(" ")
-			output = CUI.DateTimeRangeGrammar.stringToDateRange(possibleString)
+			output = CUI.DateTimeRangeGrammar.stringToDateRange(possibleString, locale)
 			if not output or output.to != to or output.from != from
 				return
 
@@ -457,11 +457,10 @@ class CUI.DateTimeRangeGrammar
 		return "#{from} #{DateTimeRangeGrammar.EN_DASH} #{to}"
 
 	# Main method to check against every grammar.
-	@stringToDateRange: (input) ->
+	@stringToDateRange: (input, locale = CUI.DateTime.getLocale()) ->
 		if CUI.util.isEmpty(input) or not CUI.util.isString(input)
 			return error: "Input needs to be a non empty string: #{input}"
 
-		locale = CUI.DateTime.getLocale()
 		input = input.trim()
 
 		input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH)
