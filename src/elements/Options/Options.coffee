@@ -157,14 +157,32 @@ class CUI.Options extends CUI.DataField
 		@
 
 	disableOption: (value) ->
+		if @.__getOptionByValue(value).indeterminate then @removeIndeterminate(value)
 		cb = @__getCheckboxByValue(value)
 		cb.disable()
 		@
 
 	enableOption: (value) ->
+		if @.__getOptionByValue(value).indeterminate then @removeIndeterminate(value)
 		cb = @__getCheckboxByValue(value)
 		cb.enable()
 		@
+
+	setIndeterminate : (value) ->
+		cb = @__getCheckboxByValue(value)
+		@.__getOptionByValue(value).indeterminate = true
+		cb.setIndeterminate()
+		@
+
+	removeIndeterminate: (value) ->
+		@.__getOptionByValue(value).indeterminate = false
+		cb = @__getCheckboxByValue(value)
+		cb.removeIndeterminate()
+		@
+
+	isOptionIndeterminateByValue: (value) ->
+		cb = @__getCheckboxByValue(value)
+		return cb.isIndeterminate()
 
 	__getCheckboxByValue: (value) ->
 		found = null
@@ -174,6 +192,15 @@ class CUI.Options extends CUI.DataField
 				break
 		CUI.util.assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in CUI.Options.", options: @__options)
 		@__checkboxes[found]
+
+	__getOptionByValue: (value) ->
+		found = null
+		for opt, idx in @__options
+			if opt.value == value
+				found = idx
+				break
+		CUI.util.assert(found != null, "CUI.Options.__getCheckboxByValue", "Value #{value} not found in CUI.Options.", options: @__options)
+		@__options[found]
 
 	getOptions: ->
 		@__options
@@ -316,6 +343,14 @@ class CUI.Options extends CUI.DataField
 					opt.group = "group-"+@getUniqueId()
 
 				opt.onActivate = (_cb, flags) =>
+					#With any interaction we remove indeterminate
+					_opt.indeterminate = false;
+					#If is a radio option then we remove indeterminate of all group
+					if @_radio
+						for checkbox in @__checkboxes
+							checkbox.removeIndeterminate()
+						for option in @__options
+							option.indeterminate = false;
 					if _cb.hasData()
 						if @_radio and not @__radio_use_array
 							@storeValue(_cb.getValue(), flags)
@@ -331,14 +366,23 @@ class CUI.Options extends CUI.DataField
 					return
 
 				opt.onDeactivate = (_cb, flags) =>
+					#With any interaction we remove indeterminate
+					_opt.indeterminate = false;
+					#If is a radio option then we remove indeterminate of all group
+					if @_radio
+						for checkbox in @__checkboxes
+							checkbox.removeIndeterminate()
+						for option in @__options
+							option.indeterminate = false;
 					if not @_radio
 						c = 0
-						for f in @__checkboxes
-							if f.isActive()
+						for checkbox in @__checkboxes
+							if checkbox.isActive()
 								c++
 
 						if c < @_min_checked
 							return _cb.activate()
+
 
 					if _cb.hasData()
 						if @_radio and not @__radio_use_array
@@ -367,6 +411,8 @@ class CUI.Options extends CUI.DataField
 
 					opt.data = @__options_data
 					opt.data_not_for_others = true
+
+				opt.indeterminate = _opt.indeterminate
 
 				cb = new CUI.Checkbox(opt)
 				CUI.Events.listen
