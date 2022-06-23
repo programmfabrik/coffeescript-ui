@@ -157,28 +157,30 @@ class CUI.Options extends CUI.DataField
 		@
 
 	disableOption: (value) ->
-		if @.__getOptionByValue(value).indeterminate then @removeIndeterminate(value)
+		if @__getOptionByValue(value).indeterminate
+			@removeIndeterminate(value)
 		cb = @__getCheckboxByValue(value)
 		cb.disable()
-		@
+		return @
 
 	enableOption: (value) ->
-		if @.__getOptionByValue(value).indeterminate then @removeIndeterminate(value)
+		if @__getOptionByValue(value).indeterminate
+			@removeIndeterminate(value)
 		cb = @__getCheckboxByValue(value)
 		cb.enable()
-		@
+		return @
 
 	setIndeterminate : (value) ->
 		cb = @__getCheckboxByValue(value)
-		@.__getOptionByValue(value).indeterminate = true
+		@__getOptionByValue(value).indeterminate = true
 		cb.setIndeterminate()
-		@
+		return @
 
 	removeIndeterminate: (value) ->
-		@.__getOptionByValue(value).indeterminate = false
+		@__getOptionByValue(value).indeterminate = false
 		cb = @__getCheckboxByValue(value)
 		cb.removeIndeterminate()
-		@
+		return @
 
 	isOptionIndeterminateByValue: (value) ->
 		cb = @__getCheckboxByValue(value)
