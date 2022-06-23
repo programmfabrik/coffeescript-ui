@@ -32,6 +32,9 @@ class CUI.Checkbox extends CUI.DataFieldInput
 			active:
 				default: false
 				check: Boolean
+			indeterminate:
+				default: false
+				check: Boolean
 			onActivate:
 				check: Function
 			onDeactivate:
@@ -66,6 +69,19 @@ class CUI.Checkbox extends CUI.DataFieldInput
 	disable: ->
 		super()
 		@__checkbox?.disable()
+
+	setIndeterminate: ->
+		if @_indeterminate then return
+		CUI.dom.addClass(@getButton(), "cui-indeterminate")
+		@_indeterminate = true
+
+	removeIndeterminate: ->
+		if not @_indeterminate then return
+		CUI.dom.removeClass(@getButton(), "cui-indeterminate")
+		@_indeterminate = false
+
+	isIndeterminate: ->
+		return @_indeterminate
 
 	registerLabel: (lbl) ->
 		lbl.setAttribute('data-label-clickable', '1')
@@ -104,6 +120,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 			if CUI.util.isPromise(ret)
 				ret.fail =>
 					@storeValue(@_value_unchecked, flags)
+			@removeIndeterminate()
 			ret
 
 		btn_opts.onDeactivate = (btn, flags, event) =>
@@ -115,6 +132,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 			if CUI.util.isPromise(ret)
 				ret.fail =>
 					@storeValue(@_value, flags)
+			@removeIndeterminate()
 			ret
 
 		if @_onClick
@@ -146,6 +164,9 @@ class CUI.Checkbox extends CUI.DataFieldInput
 		@__checkbox = new CUI.defaults.class.Button(btn_opts)
 
 		@__checkbox.addClass(@getCheckboxClass())
+
+		if @_indeterminate
+			CUI.dom.addClass(@getButton(), "cui-indeterminate")
 
 		if @_icon_active != "check" or @_icon_inactive
 			@addClass("cui-checkbox--icon")
