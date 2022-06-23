@@ -48198,6 +48198,10 @@ CUI.Checkbox = (function(superClass) {
         "default": false,
         check: Boolean
       },
+      indeterminate: {
+        "default": false,
+        check: Boolean
+      },
       onActivate: {
         check: Function
       },
@@ -48248,6 +48252,26 @@ CUI.Checkbox = (function(superClass) {
     var ref;
     Checkbox.__super__.disable.call(this);
     return (ref = this.__checkbox) != null ? ref.disable() : void 0;
+  };
+
+  Checkbox.prototype.setIndeterminate = function() {
+    if (this._indeterminate) {
+      return;
+    }
+    CUI.dom.addClass(this.getButton(), "cui-indeterminate");
+    return this._indeterminate = true;
+  };
+
+  Checkbox.prototype.removeIndeterminate = function() {
+    if (!this._indeterminate) {
+      return;
+    }
+    CUI.dom.removeClass(this.getButton(), "cui-indeterminate");
+    return this._indeterminate = false;
+  };
+
+  Checkbox.prototype.isIndeterminate = function() {
+    return this._indeterminate;
   };
 
   Checkbox.prototype.registerLabel = function(lbl) {
@@ -48305,6 +48329,7 @@ CUI.Checkbox = (function(superClass) {
             return _this.storeValue(_this._value_unchecked, flags);
           });
         }
+        _this.removeIndeterminate();
         return ret;
       };
     })(this);
@@ -48321,6 +48346,7 @@ CUI.Checkbox = (function(superClass) {
             return _this.storeValue(_this._value, flags);
           });
         }
+        _this.removeIndeterminate();
         return ret;
       };
     })(this);
@@ -48347,6 +48373,9 @@ CUI.Checkbox = (function(superClass) {
     btn_opts.id = this._id;
     this.__checkbox = new CUI.defaults["class"].Button(btn_opts);
     this.__checkbox.addClass(this.getCheckboxClass());
+    if (this._indeterminate) {
+      CUI.dom.addClass(this.getButton(), "cui-indeterminate");
+    }
     if (this._icon_active !== "check" || this._icon_inactive) {
       this.addClass("cui-checkbox--icon");
     }
@@ -69189,6 +69218,9 @@ CUI.Options = (function(superClass) {
 
   Options.prototype.disableOption = function(value) {
     var cb;
+    if (this.__getOptionByValue(value).indeterminate) {
+      this.removeIndeterminate(value);
+    }
     cb = this.__getCheckboxByValue(value);
     cb.disable();
     return this;
@@ -69196,9 +69228,34 @@ CUI.Options = (function(superClass) {
 
   Options.prototype.enableOption = function(value) {
     var cb;
+    if (this.__getOptionByValue(value).indeterminate) {
+      this.removeIndeterminate(value);
+    }
     cb = this.__getCheckboxByValue(value);
     cb.enable();
     return this;
+  };
+
+  Options.prototype.setIndeterminate = function(value) {
+    var cb;
+    cb = this.__getCheckboxByValue(value);
+    this.__getOptionByValue(value).indeterminate = true;
+    cb.setIndeterminate();
+    return this;
+  };
+
+  Options.prototype.removeIndeterminate = function(value) {
+    var cb;
+    this.__getOptionByValue(value).indeterminate = false;
+    cb = this.__getCheckboxByValue(value);
+    cb.removeIndeterminate();
+    return this;
+  };
+
+  Options.prototype.isOptionIndeterminateByValue = function(value) {
+    var cb;
+    cb = this.__getCheckboxByValue(value);
+    return cb.isIndeterminate();
   };
 
   Options.prototype.__getCheckboxByValue = function(value) {
@@ -69216,6 +69273,23 @@ CUI.Options = (function(superClass) {
       options: this.__options
     });
     return this.__checkboxes[found];
+  };
+
+  Options.prototype.__getOptionByValue = function(value) {
+    var found, i, idx, len, opt, ref;
+    found = null;
+    ref = this.__options;
+    for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
+      opt = ref[idx];
+      if (opt.value === value) {
+        found = idx;
+        break;
+      }
+    }
+    CUI.util.assert(found !== null, "CUI.Options.__getCheckboxByValue", "Value " + value + " not found in CUI.Options.", {
+      options: this.__options
+    });
+    return this.__options[found];
   };
 
   Options.prototype.getOptions = function() {
@@ -69412,7 +69486,20 @@ CUI.Options = (function(superClass) {
           opt.group = "group-" + _this.getUniqueId();
         }
         opt.onActivate = function(_cb, flags) {
-          var arr;
+          var arr, checkbox, j, l, len1, len2, option, ref2, ref3;
+          _opt.indeterminate = false;
+          if (_this._radio) {
+            ref2 = _this.__checkboxes;
+            for (j = 0, len1 = ref2.length; j < len1; j++) {
+              checkbox = ref2[j];
+              checkbox.removeIndeterminate();
+            }
+            ref3 = _this.__options;
+            for (l = 0, len2 = ref3.length; l < len2; l++) {
+              option = ref3[l];
+              option.indeterminate = false;
+            }
+          }
           if (_cb.hasData()) {
             if (_this._radio && !_this.__radio_use_array) {
               _this.storeValue(_cb.getValue(), flags);
@@ -69431,13 +69518,26 @@ CUI.Options = (function(superClass) {
           }
         };
         opt.onDeactivate = function(_cb, flags) {
-          var arr, c, f, j, len1, ref2;
-          if (!_this._radio) {
-            c = 0;
+          var arr, c, checkbox, j, l, len1, len2, len3, m, option, ref2, ref3, ref4;
+          _opt.indeterminate = false;
+          if (_this._radio) {
             ref2 = _this.__checkboxes;
             for (j = 0, len1 = ref2.length; j < len1; j++) {
-              f = ref2[j];
-              if (f.isActive()) {
+              checkbox = ref2[j];
+              checkbox.removeIndeterminate();
+            }
+            ref3 = _this.__options;
+            for (l = 0, len2 = ref3.length; l < len2; l++) {
+              option = ref3[l];
+              option.indeterminate = false;
+            }
+          }
+          if (!_this._radio) {
+            c = 0;
+            ref4 = _this.__checkboxes;
+            for (m = 0, len3 = ref4.length; m < len3; m++) {
+              checkbox = ref4[m];
+              if (checkbox.isActive()) {
                 c++;
               }
             }
@@ -69477,6 +69577,7 @@ CUI.Options = (function(superClass) {
           opt.data = _this.__options_data;
           opt.data_not_for_others = true;
         }
+        opt.indeterminate = _opt.indeterminate;
         cb = new CUI.Checkbox(opt);
         CUI.Events.listen({
           type: "data-changed",
