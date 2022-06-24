@@ -217,9 +217,17 @@
 				background-color: $btn-active-background;
 			}
 		}
+
+		// Very special case:
+		// there are buttons AFTER the overflow button, see export manager
+		+ * {
+			margin-left: $spacer;
+		}
 	}
 
-	.cui-buttonbar {
+	// only affect tabs in the center layout, 
+	// there could possibly be buttons that are not part of the tabs in the left or right layout, see export manager
+	> .cui-horizontal-layout-center > .cui-buttonbar {
 		min-width: 0;
 		width: 100%;
 		position: relative;
