@@ -34,8 +34,8 @@ class CUI.CodeInput extends CUI.Input
 			if CUI.util.isString(value)
 				try # Workaround to format/indent
 					value = JSON.parse(value)
-
-			value = JSON.stringify(value, null, '\t')
+			if @_mode == "json"
+				value = JSON.stringify(value, null, '\t')
 			@__aceEditor.setValue(value, -1) # -1 sets the cursor to the start
 			@__aceEditor.clearSelection()
 
