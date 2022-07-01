@@ -1570,7 +1570,7 @@ input[data-max-chars="40"] {
 .cui-no-icon {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 0.875rem;
-  line-height: 1.5;
+  font-weight: 700;
 }
 
 .fa {
