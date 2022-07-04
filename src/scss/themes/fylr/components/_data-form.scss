@@ -120,7 +120,7 @@
 	.cui-data-form--movable-rows &,
 	.cui-data-form--add-button & {
 		--data-form-utilities-move-width: #{$data-form-utilities-column-width};
-		--data-form-utilities-delete-width: #{$data-form-utilities-column-width};		
+		--data-form-utilities-delete-width: #{$data-form-utilities-column-width};
 	}
 
 	&:not(:last-child) {
