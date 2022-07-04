@@ -6450,12 +6450,13 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   overflow: visible !important;
   width: 100%;
   display: grid;
-  grid-template-columns: var(--data-form-utilities-column-width, 0) 1.15rem 1fr;
+  grid-template-columns: var(--data-form-utilities-move-width, 0) var(--data-form-utilities-delete-width, 0) 1fr;
   grid-template-rows: auto;
   grid-template-areas: "move delete content";
 }
 .cui-data-form--movable-rows .cui-data-form-row, .cui-data-form--add-button .cui-data-form-row {
-  --data-form-utilities-column-width: 1.15rem;
+  --data-form-utilities-move-width: 1.15rem;
+  --data-form-utilities-delete-width: 1.15rem;
 }
 .cui-data-form-row:not(:last-child) {
   margin-bottom: 0.5rem;
@@ -6569,7 +6570,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   opacity: 0 !important;
 }
 .cui-data-form-row.cui-data-form-row--trash > .cui-horizontal-layout-center {
-  opacity: 0.25;
+  opacity: 0.5;
 }
 
 /*
