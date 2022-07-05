@@ -40714,6 +40714,8 @@ CUI.Icon = (function(superClass) {
       if (this._icon && !CUI.Icon.icon_map[this._icon] && !this._icon.startsWith("fa-") && !this._icon.startsWith("css-swatch")) {
         span = CUI.dom.span("cui-no-icon");
         span.textContent = this._icon[0];
+        CUI.dom.removeClass(this.DOM, this._icon);
+        CUI.dom.removeClass(this.DOM, "fa");
         CUI.dom.append(this.DOM, span);
       }
     }
