@@ -52940,6 +52940,12 @@ CUI.DateTimeRangeGrammar = (function() {
     if (!CUI.util.isString(from) && !CUI.util.isString(to)) {
       return;
     }
+    if (to === "") {
+      to = null;
+    }
+    if (from === "") {
+      from = null;
+    }
     fromMoment = CUI.DateTimeRangeGrammar.getMoment(from);
     toMoment = CUI.DateTimeRangeGrammar.getMoment(to);
     if (!(fromMoment != null ? fromMoment.isValid() : void 0) && !CUI.util.isNull(from)) {
