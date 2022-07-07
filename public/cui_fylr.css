@@ -1571,6 +1571,7 @@ input[data-max-chars="40"] {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
+  font-style: normal;
 }
 
 .fa {
