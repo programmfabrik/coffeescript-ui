@@ -264,6 +264,12 @@ class CUI.DateTimeRangeGrammar
 		if not CUI.util.isString(from) and not CUI.util.isString(to)
 			return
 
+		# In case that to or from are an empty string, force it to be null, otherwise the date check will fail.
+		if to == ""
+			to = null
+		if from == ""
+			from = null
+
 		fromMoment = CUI.DateTimeRangeGrammar.getMoment(from)
 		toMoment = CUI.DateTimeRangeGrammar.getMoment(to)
 
