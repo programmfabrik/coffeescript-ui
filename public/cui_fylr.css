@@ -1572,6 +1572,7 @@ input[data-max-chars="40"] {
   font-size: 0.75rem;
   font-weight: 700;
   font-style: normal;
+  text-transform: uppercase;
 }
 
 .fa {
