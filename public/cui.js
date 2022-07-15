@@ -51257,7 +51257,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.parse = function(stringValue, formats, use_formats) {
-    var appendix, checkBC, format, hasBCAppendix, i, j, len, len1, m, mom, ref, ua, us;
+    var appendix, checkBC, format, hasBCAppendix, i, j, len, len1, longMatch, mom, ref, shortMatch, ua, us;
     if (formats == null) {
       formats = this.__input_formats;
     }
@@ -51309,8 +51309,9 @@ CUI.DateTime = (function(superClass) {
     if (!checkBC) {
       return moment.invalid();
     }
-    m = stringValue.match(/^[0-9]+$/);
-    if (!m) {
+    shortMatch = stringValue.match(/^[0-9]+$/);
+    longMatch = stringValue.match(/^[0-9]+-[0-9]+-[0-9]+/);
+    if (!shortMatch && !longMatch) {
       return moment.invalid();
     }
     mom = moment();
@@ -51999,7 +52000,7 @@ CUI.DateTime = (function(superClass) {
     }
     mom.subtract(1, "year");
     v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0];
-    replace = "^\\-0*" + (-1 * mom.year());
+    replace = "\\-0*" + (-1 * mom.year());
     regexp = new RegExp(replace);
     return v.replace(regexp, "" + (-1 * mom.year()));
   };

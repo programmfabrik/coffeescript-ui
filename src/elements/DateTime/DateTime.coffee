@@ -656,8 +656,9 @@ class CUI.DateTime extends CUI.Input
 			return moment.invalid()
 
 		# set bc to the value
-		m = stringValue.match(/^[0-9]+$/)
-		if not m
+		shortMatch = stringValue.match(/^[0-9]+$/) #Find string like 2022
+		longMatch = stringValue.match(/^[0-9]+-[0-9]+-[0-9]+/) #Find 2202-05-13
+		if not shortMatch and not longMatch
 			return moment.invalid()
 
 		# fake a moment
@@ -1463,7 +1464,7 @@ class CUI.DateTime extends CUI.Input
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
 		# remove the "-" and all possible zeros.
-		replace = "^\\-0*#{-1 * mom.year()}";
+		replace = "\\-0*#{-1 * mom.year()}";
 		regexp = new RegExp(replace);
 		return v.replace(regexp, ""+(-1 * mom.year()))
 
