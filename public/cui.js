@@ -36974,7 +36974,6 @@ CUI.Droppable = (function(superClass) {
     }
     if (!this.__selectedTarget) {
       if (this.insideSaveZone(coord)) {
-        console.info("Inside save zone...");
         return;
       }
       this.resetMargin();
@@ -36986,7 +36985,6 @@ CUI.Droppable = (function(superClass) {
         this.__dropTargetPos = null;
         this.syncDropHelper();
       } else {
-        console.info("No selected target, no dropHelper...");
         this.removeHelper();
         return true;
       }
@@ -50553,7 +50551,7 @@ CUI.DateTime = (function(superClass) {
 
   DateTime.defaults = {
     button_tooltip: "Open calendar",
-    bc_appendix: ["B.C.", "BC"]
+    bc_appendix: ["B.C.", "BC", "V. CHR.", "VCHR", "VCHR."]
   };
 
   DateTime.prototype.initOpts = function() {
@@ -51310,9 +51308,16 @@ CUI.DateTime = (function(superClass) {
       return moment.invalid();
     }
     shortMatch = stringValue.match(/^[0-9]+$/);
-    longMatch = stringValue.match(/^[0-9]+-[0-9]+-[0-9]+/);
+    longMatch = stringValue.match(/^[0-9]+[-\.][0-9]+[-\.][0-9]+/);
     if (!shortMatch && !longMatch) {
       return moment.invalid();
+    }
+    if (longMatch) {
+      mom = this.parse(stringValue);
+      if (mom != null) {
+        mom.set('y', -1 * (mom.year() - 1));
+      }
+      return mom;
     }
     mom = moment();
     mom.bc = parseInt(stringValue);
@@ -52106,7 +52111,7 @@ CUI.DateTimeFormats["de-DE"] = {
       store: "YYYY-MM-DD",
       type: "date",
       clock: false,
-      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY"]
+      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY", "Y-M-D", "D.M.Y"]
     }, {
       text: "Jahr-Monat",
       support_bc: false,

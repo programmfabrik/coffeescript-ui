@@ -106,6 +106,8 @@ CUI.DateTimeFormats["de-DE"] =
 			"M/D/YYYY"
 			"MM/D/YYYY"
 			"M/DD/YYYY"
+			"Y-M-D"
+			"D.M.Y"
 		]
 	,
 		text: "Jahr-Monat"
