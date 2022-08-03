@@ -17,7 +17,7 @@ class CUI.DateTime extends CUI.Input
 
 	@defaults:
 		button_tooltip: "Open calendar"
-		bc_appendix: ["B.C.","BC"]
+		bc_appendix: ["B.C.","BC","V. CHR.","VCHR","VCHR."]
 
 	initOpts: ->
 		super()
@@ -627,7 +627,6 @@ class CUI.DateTime extends CUI.Input
 
 				if mom.year() > @_max_year # Year must not be greater than max year.
 					return moment.invalid()
-
 				return mom
 
 		if not formats.some((format) -> format.support_bc)
@@ -655,12 +654,20 @@ class CUI.DateTime extends CUI.Input
 		if not checkBC
 			return moment.invalid()
 
-		# set bc to the value
-		m = stringValue.match(/^[0-9]+$/)
-		if not m
+		shortMatch = stringValue.match(/^[0-9]+$/) #Find string like 2022
+		longMatch = stringValue.match(/^[0-9]+[-\.][0-9]+[-\.][0-9]+/) #Find 2202-05-13
+		if not shortMatch and not longMatch
 			return moment.invalid()
 
-		# fake a moment
+		if longMatch
+			#If we have a valid long date then we can call parse again
+			mom = @parse(stringValue)
+			mom?.set('y', -1 * (mom.year()-1))
+			#We have to subtract a year and convert it to negative.
+			return mom
+
+		#We have a short bc date like  "200 bc"
+		#we create a fake mom with the bc year inside.
 		mom = moment()
 		mom.bc = parseInt(stringValue)
 		if hasBCAppendix # If it has BC appendix, means that the number value of the year is one less.
@@ -674,7 +681,6 @@ class CUI.DateTime extends CUI.Input
 			mom.bc = "0"+mom.bc
 		else
 			mom.bc = ""+mom.bc
-
 		return mom
 
 
@@ -1463,7 +1469,7 @@ class CUI.DateTime extends CUI.Input
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
 		# remove the "-" and all possible zeros.
-		replace = "^\\-0*#{-1 * mom.year()}";
+		replace = "\\-0*#{-1 * mom.year()}";
 		regexp = new RegExp(replace);
 		return v.replace(regexp, ""+(-1 * mom.year()))
 

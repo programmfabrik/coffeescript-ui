@@ -36974,7 +36974,6 @@ CUI.Droppable = (function(superClass) {
     }
     if (!this.__selectedTarget) {
       if (this.insideSaveZone(coord)) {
-        console.info("Inside save zone...");
         return;
       }
       this.resetMargin();
@@ -36986,7 +36985,6 @@ CUI.Droppable = (function(superClass) {
         this.__dropTargetPos = null;
         this.syncDropHelper();
       } else {
-        console.info("No selected target, no dropHelper...");
         this.removeHelper();
         return true;
       }
@@ -50553,7 +50551,7 @@ CUI.DateTime = (function(superClass) {
 
   DateTime.defaults = {
     button_tooltip: "Open calendar",
-    bc_appendix: ["B.C.", "BC"]
+    bc_appendix: ["B.C.", "BC", "V. CHR.", "VCHR", "VCHR."]
   };
 
   DateTime.prototype.initOpts = function() {
@@ -51257,7 +51255,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.parse = function(stringValue, formats, use_formats) {
-    var appendix, checkBC, format, hasBCAppendix, i, j, len, len1, m, mom, ref, ua, us;
+    var appendix, checkBC, format, hasBCAppendix, i, j, len, len1, longMatch, mom, ref, shortMatch, ua, us;
     if (formats == null) {
       formats = this.__input_formats;
     }
@@ -51309,9 +51307,17 @@ CUI.DateTime = (function(superClass) {
     if (!checkBC) {
       return moment.invalid();
     }
-    m = stringValue.match(/^[0-9]+$/);
-    if (!m) {
+    shortMatch = stringValue.match(/^[0-9]+$/);
+    longMatch = stringValue.match(/^[0-9]+[-\.][0-9]+[-\.][0-9]+/);
+    if (!shortMatch && !longMatch) {
       return moment.invalid();
+    }
+    if (longMatch) {
+      mom = this.parse(stringValue);
+      if (mom != null) {
+        mom.set('y', -1 * (mom.year() - 1));
+      }
+      return mom;
     }
     mom = moment();
     mom.bc = parseInt(stringValue);
@@ -51999,7 +52005,7 @@ CUI.DateTime = (function(superClass) {
     }
     mom.subtract(1, "year");
     v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0];
-    replace = "^\\-0*" + (-1 * mom.year());
+    replace = "\\-0*" + (-1 * mom.year());
     regexp = new RegExp(replace);
     return v.replace(regexp, "" + (-1 * mom.year()));
   };
@@ -52105,7 +52111,7 @@ CUI.DateTimeFormats["de-DE"] = {
       store: "YYYY-MM-DD",
       type: "date",
       clock: false,
-      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY"]
+      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY", "Y-M-D", "D.M.Y"]
     }, {
       text: "Jahr-Monat",
       support_bc: false,
