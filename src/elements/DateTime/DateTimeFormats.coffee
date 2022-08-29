@@ -32,6 +32,7 @@ CUI.DateTimeFormats["de-DE"] =
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
+			"YYYY-MM-DDTHH:mm:ss.SSSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"D.M.YYYY HH:mm:ss"
 			"DD.M.YYYY HH:mm:ss"
