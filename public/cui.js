@@ -48259,6 +48259,7 @@ CUI.Checkbox = (function(superClass) {
       return;
     }
     CUI.dom.addClass(this.getButton(), "cui-indeterminate");
+    this.getButton().setIcon("");
     return this._indeterminate = true;
   };
 
@@ -48375,6 +48376,7 @@ CUI.Checkbox = (function(superClass) {
     this.__checkbox.addClass(this.getCheckboxClass());
     if (this._indeterminate) {
       CUI.dom.addClass(this.getButton(), "cui-indeterminate");
+      this.getButton().setIcon("");
     }
     if (this._icon_active !== "check" || this._icon_inactive) {
       this.addClass("cui-checkbox--icon");
