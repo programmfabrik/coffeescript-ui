@@ -135,6 +135,18 @@
 	}
 }
 
+// special: make navigation bar tighter so it will be fully visible on very small/narrow thumbnails in the search results
+// or in the asset browser
+@mixin buttonbar-group-navigation-tight() {
+	.cui-label .cui-label-content {
+		width: auto;
+	}
+
+	.cui-button-button .cui-button-visual {
+		min-width: var(--buttonbar-group-navigation-tight-min-width, 22px);
+	}
+}
+
 @mixin buttonbar-group-navigation-inverted($border: 0) {
 	@include buttonbar-group-navigation($border);
 
