@@ -1396,7 +1396,10 @@ class CUI.DateTime extends CUI.Input
 	@formatTypes: ["store", "input", "display", "display_short"]
 
 	@setLocale: (locale) ->
-		CUI.util.assert(CUI.DateTimeFormats[locale], "CUI.DateTime.setLocale", "Locale #{locale} unknown", DateTimeFormats: CUI.DateTimeFormats)
+		if not CUI.DateTimeFormats[locale]
+			# fallback
+			console.warn("CUI.DateTime.setLocale", "Locale #{locale} unknown using de-DE", DateTimeFormats: CUI.DateTimeFormats)
+			locale = "de-DE"
 		CUI.DateTime.__locale = locale
 
 	@getLocale: ->
