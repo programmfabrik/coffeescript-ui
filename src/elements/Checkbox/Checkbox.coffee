@@ -73,6 +73,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 	setIndeterminate: ->
 		if @_indeterminate then return
 		CUI.dom.addClass(@getButton(), "cui-indeterminate")
+		@getButton().setIcon("")
 		@_indeterminate = true
 
 	removeIndeterminate: ->
@@ -167,6 +168,7 @@ class CUI.Checkbox extends CUI.DataFieldInput
 
 		if @_indeterminate
 			CUI.dom.addClass(@getButton(), "cui-indeterminate")
+			@getButton().setIcon("")
 
 		if @_icon_active != "check" or @_icon_inactive
 			@addClass("cui-checkbox--icon")

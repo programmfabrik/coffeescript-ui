@@ -390,7 +390,6 @@ CUI.DateTimeFormats["es-ES"] =
 		]
 	]
 
-
 CUI.DateTimeFormats["en-US"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "en-US"
@@ -533,13 +532,12 @@ CUI.DateTimeFormats["ru-RU"] =
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
 		clock_seconds: false
-# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
@@ -570,7 +568,7 @@ CUI.DateTimeFormats["ru-RU"] =
 		text: "Datum+Zeit+Sekunden"
 		support_bc: false
 		invalid: "Datum ungültig"
-# input: "YYYY-MM-DD HH:mm:ss"
+		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
@@ -578,10 +576,10 @@ CUI.DateTimeFormats["ru-RU"] =
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
-# digi_clock: "HH:mm:ss"
+		# digi_clock: "HH:mm:ss"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"YYYY-MM-DD HH:mm:ss"
@@ -607,7 +605,7 @@ CUI.DateTimeFormats["ru-RU"] =
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"D.M.YYYY"
@@ -631,7 +629,7 @@ CUI.DateTimeFormats["ru-RU"] =
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"MM YYYY"
@@ -652,7 +650,7 @@ CUI.DateTimeFormats["ru-RU"] =
 		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
-# digi_clock: false
+	# digi_clock: false
 		clock: false
 		parse: [
 			"Y"
@@ -673,13 +671,13 @@ CUI.DateTimeFormats["pl-PL"] =
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
 		clock_seconds: false
-# digi_clock: "HH:mm"
+		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
@@ -710,7 +708,7 @@ CUI.DateTimeFormats["pl-PL"] =
 		text: "Datum+Zeit+Sekunden"
 		support_bc: false
 		invalid: "Datum ungültig"
-# input: "YYYY-MM-DD HH:mm:ss"
+		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
@@ -718,10 +716,10 @@ CUI.DateTimeFormats["pl-PL"] =
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
-# digi_clock: "HH:mm:ss"
+		# digi_clock: "HH:mm:ss"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"YYYY-MM-DD HH:mm:ss"
@@ -747,7 +745,7 @@ CUI.DateTimeFormats["pl-PL"] =
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"D.M.YYYY"
@@ -771,7 +769,7 @@ CUI.DateTimeFormats["pl-PL"] =
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"MM YYYY"
@@ -792,7 +790,7 @@ CUI.DateTimeFormats["pl-PL"] =
 		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"Y"
@@ -813,13 +811,13 @@ CUI.DateTimeFormats["cs-CZ"] =
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
 		clock_seconds: false
-# digi_clock: "HH:mm"
+		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
@@ -850,7 +848,7 @@ CUI.DateTimeFormats["cs-CZ"] =
 		text: "Datum+Zeit+Sekunden"
 		support_bc: false
 		invalid: "Datum ungültig"
-# input: "YYYY-MM-DD HH:mm:ss"
+		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
@@ -858,10 +856,10 @@ CUI.DateTimeFormats["cs-CZ"] =
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
-# digi_clock: "HH:mm:ss"
+		# digi_clock: "HH:mm:ss"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"YYYY-MM-DD HH:mm:ss"
@@ -887,7 +885,7 @@ CUI.DateTimeFormats["cs-CZ"] =
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"D.M.YYYY"
@@ -911,7 +909,7 @@ CUI.DateTimeFormats["cs-CZ"] =
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"MM YYYY"
@@ -932,7 +930,7 @@ CUI.DateTimeFormats["cs-CZ"] =
 		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
-# digi_clock: false
+	# digi_clock: false
 		clock: false
 		parse: [
 			"Y"
@@ -953,13 +951,13 @@ CUI.DateTimeFormats["fi-FI"] =
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
 		clock_seconds: false
-# digi_clock: "HH:mm"
+		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
@@ -990,7 +988,7 @@ CUI.DateTimeFormats["fi-FI"] =
 		text: "Datum+Zeit+Sekunden"
 		support_bc: false
 		invalid: "Datum ungültig"
-# input: "YYYY-MM-DD HH:mm:ss"
+		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
@@ -998,10 +996,10 @@ CUI.DateTimeFormats["fi-FI"] =
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
-# digi_clock: "HH:mm:ss"
+		# digi_clock: "HH:mm:ss"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"YYYY-MM-DD HH:mm:ss"
@@ -1027,7 +1025,7 @@ CUI.DateTimeFormats["fi-FI"] =
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"D.M.YYYY"
@@ -1051,7 +1049,7 @@ CUI.DateTimeFormats["fi-FI"] =
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
-# digi_clock: false
+	# digi_clock: false
 		clock: false
 		parse: [
 			"MM YYYY"
@@ -1072,7 +1070,7 @@ CUI.DateTimeFormats["fi-FI"] =
 		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
-# digi_clock: false
+	# digi_clock: false
 		clock: false
 		parse: [
 			"Y"
@@ -1093,13 +1091,13 @@ CUI.DateTimeFormats["sv-SE"] =
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
 		clock_seconds: false
-# digi_clock: "HH:mm"
+		# digi_clock: "HH:mm"
 		input: "DD.MM.YYYY HH:mm"
 		display: "dd, DD.MM.YYYY HH:mm"
 		display_short: "DD.MM.YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
@@ -1130,7 +1128,7 @@ CUI.DateTimeFormats["sv-SE"] =
 		text: "Datum+Zeit+Sekunden"
 		support_bc: false
 		invalid: "Datum ungültig"
-# input: "YYYY-MM-DD HH:mm:ss"
+		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
@@ -1138,10 +1136,10 @@ CUI.DateTimeFormats["sv-SE"] =
 		display_short: "DD.MM.YYYY HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
-# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
 		clock: true
 		clock_seconds: true
-# digi_clock: "HH:mm:ss"
+		# digi_clock: "HH:mm:ss"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ssZ"
 			"YYYY-MM-DD HH:mm:ss"
@@ -1167,7 +1165,7 @@ CUI.DateTimeFormats["sv-SE"] =
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
 		type: "date"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"D.M.YYYY"
@@ -1191,7 +1189,7 @@ CUI.DateTimeFormats["sv-SE"] =
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
-# digi_clock: false
+		# digi_clock: false
 		clock: false
 		parse: [
 			"MM YYYY"
@@ -1212,7 +1210,147 @@ CUI.DateTimeFormats["sv-SE"] =
 		display_short_attribute: "year"
 		store: "YYYY"
 		type: "year"
-# digi_clock: false
+		# digi_clock: false
+		clock: false
+		parse: [
+			"Y"
+		]
+	]
+
+CUI.DateTimeFormats["da-DK"] =
+	timezone: "Europe/Berlin"
+	moment_locale: "fi-FI"
+	tab_date: "Datum"
+	tab_time: "Zeit"
+	tab_week: "Wo"
+	formats: [
+		text: "Datum+Zeit"
+		support_bc: false
+		invalid: "Datum ungültig"
+		type: "date_time"
+		clock: true
+		store: "YYYY-MM-DDTHH:mm:00Z"
+		clock_seconds: false
+		# digi_clock: "HH:mm"
+		input: "DD.MM.YYYY HH:mm"
+		display: "dd, DD.MM.YYYY HH:mm"
+		display_short: "DD.MM.YYYY HH:mm"
+		display_attribute: "date-time"
+		display_short_attribute: "date-time-short"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DD HH:mm:ss"
+			"YYYY-MM-DDTHH:mm:ss.SSSZ"
+			"YYYY-MM-DDTHH:mm:ssZ"
+			"D.M.YYYY HH:mm:ss"
+			"DD.M.YYYY HH:mm:ss"
+			"D.MM.YYYY HH:mm:ss"
+			"D.MM.YY HH:mm:ss"
+			"DD.M.YY HH:mm:ss"
+			"D.M.YYYY HH:mm"
+			"DD.M.YYYY HH:mm"
+			"D.MM.YYYY HH:mm"
+			"D.MM.YY HH:mm"
+			"DD.M.YY HH:mm"
+			"M/D/YYYY HH:DD:ss"
+			"MM/D/YYYY HH:DD:ss"
+			"M/DD/YYYY HH:DD:ss"
+			"M/DD/YY HH:DD:ss"
+			"MM/D/YY HH:DD:ss"
+			"M/D/YYYY HH:DD"
+			"MM/D/YYYY HH:DD"
+			"M/DD/YYYY HH:DD"
+			"M/DD/YY HH:DD"
+			"MM/D/YY HH:DD"
+		]
+	,
+		text: "Datum+Zeit+Sekunden"
+		support_bc: false
+		invalid: "Datum ungültig"
+		# input: "YYYY-MM-DD HH:mm:ss"
+		type: "date_time_seconds"
+		input: "DD.MM.YYYY HH:mm:ss"
+		store: "YYYY-MM-DDTHH:mm:ssZ"
+		display: "dd, DD.MM.YYYY HH:mm:ss"
+		display_short: "DD.MM.YYYY HH:mm:ss"
+		display_attribute: "date-time-seconds"
+		display_short_attribute: "date-time-seconds-short"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		clock: true
+		clock_seconds: true
+		# digi_clock: "HH:mm:ss"
+		parse: [
+			"YYYY-MM-DDTHH:mm:ssZ"
+			"YYYY-MM-DD HH:mm:ss"
+			"D.M.YYYY HH:mm:ss"
+			"DD.M.YYYY HH:mm:ss"
+			"D.MM.YYYY HH:mm:ss"
+			"D.MM.YY HH:mm:ss"
+			"DD.M.YY HH:mm:ss"
+			"M/D/YYYY HH:DD:ss"
+			"MM/D/YYYY HH:DD:ss"
+			"M/DD/YYYY HH:DD:ss"
+			"M/DD/YY HH:DD:ss"
+			"MM/D/YY HH:DD:ss"
+		]
+	,
+		text: "Datum"
+		support_bc: false
+		input: "DD.MM.YYYY"
+		invalid: "Datum ungültig"
+		display: "dd, DD.MM.YYYY"
+		display_short: "DD.MM.YYYY"
+		display_attribute: "date"
+		display_short_attribute: "date-short"
+		store: "YYYY-MM-DD"
+		type: "date"
+		# digi_clock: false
+		clock: false
+		parse: [
+			"D.M.YYYY"
+			"D.MM.YYYY"
+			"DD.M.YYYY"
+			"YYYYMMDD"
+			"YYYY-M-D"
+			"Y-M-D"
+			"M/D/YYYY"
+			"MM/D/YYYY"
+			"M/DD/YYYY"
+		]
+	,
+		text: "Jahr-Monat"
+		support_bc: false
+		input: "MM.YYYY"
+		invalid: "Datum ungültig"
+		store: "YYYY-MM"
+		display: "MMMM YYYY"
+		display_short: "MM.YYYY"
+		display_attribute: "year-month"
+		display_short_attribute: "year-month-short"
+		type: "year_month"
+		# digi_clock: false
+		clock: false
+		parse: [
+			"MM YYYY"
+			"MM/YYYY"
+			"MM.YYYY"
+			"M.YYYY"
+			"YYYY-M"
+			"YYYY-MM"
+		]
+	,
+		text: "Jahr"
+		support_bc: true
+		input: "Y"
+		invalid: "Datum ungültig"
+		display: "Y"
+		display_short: "Y"
+		display_attribute: "year"
+		display_short_attribute: "year"
+		store: "YYYY"
+		type: "year"
+		# digi_clock: false
 		clock: false
 		parse: [
 			"Y"
