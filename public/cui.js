@@ -42043,6 +42043,9 @@ CUI.ready(function() {
       for (i = layer_elements.length - 1; i >= 0; i += -1) {
         layer_element = layer_elements[i];
         if (!CUI.dom.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")) {
+          if (CUI.dom.hasClass(layer_element, "cui-layer-root-tooltip")) {
+            continue;
+          }
           return;
         }
         if (CUI.dom.hasClass(layer_element, "cui-layer-sidebar")) {
