@@ -58384,7 +58384,9 @@ CUI.Input = (function(superClass) {
       this.__regexp = new RegExp(this._regexp, this._regexp_flags);
       this.__checkInput = (function(_this) {
         return function(value) {
-          if (!_this.__checkInputRegexp(value)) {
+          if (!_this._required && value.trim().length === 0) {
+            return true;
+          } else if (!_this.__checkInputRegexp(value)) {
             return false;
           } else if (_this._checkInput) {
             return _this._checkInput(value);
@@ -58393,8 +58395,7 @@ CUI.Input = (function(superClass) {
           }
         };
       })(this);
-    }
-    if (this._required) {
+    } else if (this._required) {
       this.__checkInput = (function(_this) {
         return function(value) {
           if (value.trim().length === 0) {
