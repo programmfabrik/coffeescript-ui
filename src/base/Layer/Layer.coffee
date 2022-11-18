@@ -36,7 +36,6 @@ class CUI.Layer extends CUI.DOMElement
 			name: "layer-root"
 
 		# @__backdropClickDisabled = false
-
 		if @_backdrop
 
 			@__bd_policy = @_backdrop.policy or "click-thru"
@@ -1250,10 +1249,13 @@ CUI.ready ->
 
 			layer_elements = CUI.dom.find("body > .cui-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru")
 			target = ev.getTarget()
-
 			for layer_element in layer_elements by -1
 
 				if not CUI.dom.hasClass(layer_element, "cui-layer-backdrop-policy-click-thru")
+
+					if CUI.dom.hasClass(layer_element, "cui-layer-root-tooltip")
+						continue
+
 					return
 
 				if CUI.dom.hasClass(layer_element, "cui-layer-sidebar")

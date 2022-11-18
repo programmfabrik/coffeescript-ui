@@ -1219,22 +1219,22 @@ CUI.DateTimeFormats["sv-SE"] =
 
 CUI.DateTimeFormats["da-DK"] =
 	timezone: "Europe/Berlin"
-	moment_locale: "fi-FI"
-	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wo"
+	moment_locale: "da-DK"
+	tab_date: "Dato"
+	tab_time: "Tid"
+	tab_week: "Uge"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
-		invalid: "Datum ungültig"
+		invalid: "Dato ugyldig"
 		type: "date_time"
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
 		clock_seconds: false
 		# digi_clock: "HH:mm"
-		input: "DD.MM.YYYY HH:mm"
-		display: "dd, DD.MM.YYYY HH:mm"
-		display_short: "DD.MM.YYYY HH:mm"
+		input: "DD/MM/YYYY HH:mm"
+		display: "dd, DD/MM/YYYY HH:mm"
+		display_short: "DD/MM/YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
@@ -1267,13 +1267,13 @@ CUI.DateTimeFormats["da-DK"] =
 	,
 		text: "Datum+Zeit+Sekunden"
 		support_bc: false
-		invalid: "Datum ungültig"
+		invalid: "Dato ugyldig"
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
-		input: "DD.MM.YYYY HH:mm:ss"
+		input: "DD/MM/YYYY HH:mm:ss"
 		store: "YYYY-MM-DDTHH:mm:ssZ"
-		display: "dd, DD.MM.YYYY HH:mm:ss"
-		display_short: "DD.MM.YYYY HH:mm:ss"
+		display: "dd, DD/MM/YYYY HH:mm:ss"
+		display_short: "DD/MM/YYYY HH:mm:ss"
 		display_attribute: "date-time-seconds"
 		display_short_attribute: "date-time-seconds-short"
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
@@ -1297,10 +1297,10 @@ CUI.DateTimeFormats["da-DK"] =
 	,
 		text: "Datum"
 		support_bc: false
-		input: "DD.MM.YYYY"
-		invalid: "Datum ungültig"
-		display: "dd, DD.MM.YYYY"
-		display_short: "DD.MM.YYYY"
+		input: "DD/MM/YYYY"
+		invalid: "Dato ugyldig"
+		display: "dd, DD/MM/YYYY"
+		display_short: "DD/MM/YYYY"
 		display_attribute: "date"
 		display_short_attribute: "date-short"
 		store: "YYYY-MM-DD"
@@ -1321,11 +1321,11 @@ CUI.DateTimeFormats["da-DK"] =
 	,
 		text: "Jahr-Monat"
 		support_bc: false
-		input: "MM.YYYY"
-		invalid: "Datum ungültig"
+		input: "MM/YYYY"
+		invalid: "Dato ugyldig"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM.YYYY"
+		display_short: "MM/YYYY"
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
@@ -1343,7 +1343,7 @@ CUI.DateTimeFormats["da-DK"] =
 		text: "Jahr"
 		support_bc: true
 		input: "Y"
-		invalid: "Datum ungültig"
+		invalid: "Dato ugyldig"
 		display: "Y"
 		display_short: "Y"
 		display_attribute: "year"
