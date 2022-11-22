@@ -57,6 +57,19 @@ textarea {
 }
 
 
+//TODO: This must be refactorized, this fixed an invalid input not been shown in selected list-view-row ticket
+.cui-list-view-row-selectable:hover, .cui-list-view-row-selectable.cui-selected {
+	.cui-input.cui-input-has-check-input {
+		&.cui-input-invalid {
+			input,
+			.cui-data-field-right .cui-button .cui-button-visual {
+				background: #f6ddd5;
+			}
+		}
+	}
+}
+
+
 .cui-input {
 	// state classes:
 	// cui-input-invalid

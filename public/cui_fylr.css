@@ -2544,6 +2544,12 @@ textarea {
   line-height: 1.5;
 }
 
+.cui-list-view-row-selectable:hover .cui-input.cui-input-has-check-input.cui-input-invalid input,
+.cui-list-view-row-selectable:hover .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual, .cui-list-view-row-selectable.cui-selected .cui-input.cui-input-has-check-input.cui-input-invalid input,
+.cui-list-view-row-selectable.cui-selected .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual {
+  background: #f6ddd5;
+}
+
 .cui-input.cui-input-has-check-input.cui-input-invalid input,
 .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual {
   border-color: rgba(255, 87, 36, 0.05);
