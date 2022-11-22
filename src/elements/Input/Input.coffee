@@ -168,14 +168,16 @@ class CUI.Input extends CUI.DataFieldInput
 			@__regexp = new RegExp(@_regexp, @_regexp_flags)
 			# @_prevent_invalid_input = false
 			@__checkInput = (value) =>
-				if not @__checkInputRegexp(value)
+				if not @_required and value.trim().length == 0
+					true
+				else if not @__checkInputRegexp(value)
 					false
 				else if @_checkInput
 					@_checkInput(value)
 				else
 					true
 
-		if @_required
+		else if @_required
 			@__checkInput = (value) =>
 				if value.trim().length == 0
 					false
@@ -183,6 +185,9 @@ class CUI.Input extends CUI.DataFieldInput
 					@_checkInput(value)
 				else
 					true
+
+
+
 
 		if @_spellcheck == false
 			@__spellcheck = "false"
