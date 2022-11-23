@@ -56,20 +56,6 @@ textarea {
 	line-height: $line-height-base;
 }
 
-
-//TODO: This must be refactorized, this fixed an invalid input not been shown in selected list-view-row ticket
-.cui-list-view-row-selectable:hover, .cui-list-view-row-selectable.cui-selected {
-	.cui-input.cui-input-has-check-input {
-		&.cui-input-invalid {
-			input,
-			.cui-data-field-right .cui-button .cui-button-visual {
-				background: #f6ddd5;
-			}
-		}
-	}
-}
-
-
 .cui-input {
 	// state classes:
 	// cui-input-invalid
@@ -90,6 +76,13 @@ textarea {
 			.cui-data-field-right .cui-button .cui-button-visual {
 				border-color: color.scale(theme-color('danger'), $saturation: 50%, $alpha: -95%);
 				background: transparentize(theme-color('danger'), 0.85);
+
+
+				.cui-list-view-row-selectable:hover &, 
+				.cui-list-view-row-selectable.cui-selected & {
+					border-color: transparent;
+					background: color.scale(theme-color('danger'), $lightness: 50%);
+				}
 			}
 		}
 	}
