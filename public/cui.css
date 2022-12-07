@@ -2579,25 +2579,25 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-input input::-webkit-input-placeholder,
 .cui-input textarea::-webkit-input-placeholder {
-  color: #757575;
+  color: #cfd4d9;
 }
 .cui-input input::-moz-input-placeholder,
 .cui-input textarea::-moz-input-placeholder {
-  color: #757575;
+  color: #cfd4d9;
 }
 .cui-input input:-ms-input-placeholder,
 .cui-input textarea:-ms-input-placeholder {
-  color: #757575;
+  color: #cfd4d9;
 }
 .cui-input input::-moz-placeholder, .cui-input textarea::-moz-placeholder {
-  color: #757575;
+  color: #cfd4d9;
 }
 .cui-input input:-ms-input-placeholder, .cui-input textarea:-ms-input-placeholder {
-  color: #757575;
+  color: #cfd4d9;
 }
 .cui-input input::placeholder,
 .cui-input textarea::placeholder {
-  color: #757575;
+  color: #cfd4d9;
 }
 .cui-input textarea {
   --textarea-min-rows: 1;
