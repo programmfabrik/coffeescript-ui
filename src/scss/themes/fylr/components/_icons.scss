@@ -63,8 +63,15 @@
 }
 
 // compensate down arrow spacing
-.fa-angle-down {
-	margin-bottom: -1px;
+.fa-angle-down::before {
+	position: relative;
+	top: 1px;
+}
+
+// compensate up arrow spacing
+.fa-angle-up::before {
+	position: relative;
+	top: -1px;
 }
 
 // align with the stop button
