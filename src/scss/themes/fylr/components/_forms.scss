@@ -15,6 +15,11 @@
 
 .cui-form {
 	overflow: visible;
+	
+	&[class*='cui-maximize'] {
+		overflow: visible; // override a possible overflow: hidden that could be applied via .cui-maximize-horizontal/.cui-maximize-horizontal
+	}
+	
 	background-color: $light; // ? we set a default background because of the default white form elements like inputs
 	width: 100%; // see datamodel >  definition > options popover
 
