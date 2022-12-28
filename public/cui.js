@@ -51003,7 +51003,7 @@ CUI.DateTime = (function(superClass) {
       if (!mom.isValid()) {
         return false;
       }
-      if (mom.bc || value.startsWith("-")) {
+      if (mom.bc || value.startsWith("-") || mom.year() < 0) {
         this.__calendarButton.disable();
       }
     } else {
