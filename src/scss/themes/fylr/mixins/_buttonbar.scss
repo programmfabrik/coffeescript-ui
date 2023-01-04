@@ -23,6 +23,14 @@
 				border-radius: 0;
 			}
 		}
+
+		.cui-button-hidden + .cui-button,
+		.cui-button-hidden + .cui-select {
+			&:last-child:not(:only-child) .cui-button-visual {
+				border-top-left-radius: $btn-border-radius;
+				border-bottom-left-radius: $btn-border-radius;
+			}
+		}
 	}
 }
 
