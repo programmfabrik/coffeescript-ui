@@ -97,9 +97,10 @@
 					margin: $spacer-sm 0;
 				}
 
-				> .cui-vertical-layout:only-child {
-					flex-shrink: 0; // enable scrolling in tab-body
-				}
+				// ! commented out to fix #65541 ("buttons im datenmodell nicht immer sichtbar")
+				// > .cui-vertical-layout:only-child {
+				// 		flex-shrink: 0; // enable scrolling in tab-body
+				// }
 			}
 		}
 	}
