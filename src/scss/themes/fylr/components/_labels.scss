@@ -70,6 +70,12 @@ label[data-label-clickable],
 		@include label-muted();
 	}
 
+	&.cui-label-description {
+		@include label-secondary();
+
+		margin-bottom: $spacer;
+	}
+
 	// todo: make obsolete
 	// &.cui-label--padded {
 	// 	padding: $label-padding;
