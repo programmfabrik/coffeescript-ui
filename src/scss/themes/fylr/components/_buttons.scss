@@ -70,7 +70,9 @@
 }
 
 .cui-button-href {
-	@include button-link();
+	&:not(.cui-button--primary):not(.cui-button--secondary) {
+		@include button-link();
+	}
 }
 
 // Reduce space between button text and caret
