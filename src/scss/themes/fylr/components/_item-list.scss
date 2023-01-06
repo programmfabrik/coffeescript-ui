@@ -36,7 +36,7 @@
 		&:hover {
 			.cui-button-visual {
 				color: $item-list-hover-color;
-				background: $item-list-hover-background;
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
@@ -53,14 +53,14 @@
 		&.cui-active:hover {
 			.cui-button-visual {
 				color: $item-list-hover-color;
-				background: $item-list-hover-background;
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
 		&.cui-button-appearance-important,
 		&.cui-button--primary {
 			.cui-button-visual {
-				color: $item-list-hover-background;
+				color: var(--brand-color, #{$item-list-hover-background});
 				background: none;
 			}
 		}
