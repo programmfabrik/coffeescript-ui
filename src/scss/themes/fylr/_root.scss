@@ -1,6 +1,6 @@
 :root {
-	--brand-color: rgb(0, 128, 0);
-	--brand-color-10: rgb(0, 110, 0);
+	--brand-color: #{theme-color('primary')};
+	--brand-color-darker: #{darken(theme-color('primary'), 10%)};
 
 	// Custom variable values only support SassScript inside `#{}`.
 	@each $color, $value in $colors {
