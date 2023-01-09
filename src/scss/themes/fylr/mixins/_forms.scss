@@ -77,8 +77,10 @@
 		label,
 		.cui-label,
 		.cui-data-field-output-label {
-			padding-top: 0;
-			padding-bottom: $form-key-padding-bottom;
+			&:not(.cui-file-upload-drop-zone) {
+				padding-top: 0;
+				padding-bottom: $form-key-padding-bottom;
+			}
 		}
 	}
 }
