@@ -1,6 +1,6 @@
 :root {
 	--brand-color: #{theme-color('primary')};
-	--brand-color-darker: #{darken(theme-color('primary'), 10%)};
+	--brand-color-hover: #{darken(theme-color('primary'), 10%)};
 
 	// Custom variable values only support SassScript inside `#{}`.
 	@each $color, $value in $colors {
@@ -26,6 +26,7 @@
 	
 	// other colors
 	--body-bg: #{$body-bg};
+	--body-color: #{$body-color};
 	--top-header-background: #{$body-bg};
 	
 	// headings

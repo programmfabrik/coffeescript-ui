@@ -35,7 +35,7 @@
 		&:active,
 		&:hover {
 			.cui-button-visual {
-				color: $item-list-hover-color;
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
 				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
@@ -45,14 +45,14 @@
 		// workaround
 		&[aria-pressed='true'] {
 			.cui-button-visual {
-				color: $item-list-active-color;
+				color: var(--brand-foreground-text-color, #{$item-list-active-color});
 				background: $item-list-active-background;
 			}
 		}
 
 		&.cui-active:hover {
 			.cui-button-visual {
-				color: $item-list-hover-color;
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
 				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
