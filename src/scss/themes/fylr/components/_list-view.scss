@@ -387,6 +387,15 @@
 	}
 }
 
+// Special case, when there is a single column in the quadrant-2 that contains only the drag handle
+// we do not want it to have a hover effect, because it just looks weird when the hover effect applies to
+// the drag handle and the actual row SEPERATELY, therefore we rather hide the hover for the drag handle column
+.cui-list-view-grid-fixed-col-has-only-row-move-handle {
+	.cui-list-view-grid-quadrant-2 {
+		--list-view-hover-row-background: transparent;
+	}
+}
+
 // Move a row via drag & drop
 .cui-lv-row-move-target {
 	height: 4px;
