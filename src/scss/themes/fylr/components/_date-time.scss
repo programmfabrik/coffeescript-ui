@@ -227,7 +227,7 @@
 		&.cui-date-time-month-header {
 			position: relative;
 			background: var(--calendar-static-cells-background);
-			color: $calendar-static-cells-color;
+			color: var(--brand-color, #{$calendar-static-cells-color});
 
 			&::after {
 				content: '';
@@ -289,7 +289,7 @@
 	.cui-date-time-week {
 		font-size: $calendar-font-size * 0.8575;
 		background: var(--calendar-static-cells-background);
-		color: $calendar-static-cells-color;
+		color: var(--brand-color, #{$calendar-static-cells-color});
 	}
 
 	.cui-date-time-week-title {
@@ -301,8 +301,10 @@
 
 		&:hover {
 			span {
-				color: $body-color;
-				background-color: $calendar-date-hover-background;
+				--calendar-date-hover-background: rgb(var(--brand-color-RGB), #{$calendar-date-hover-background-opacity});
+
+				color: var(--brand-forground-text-color, #{$body-color});
+				background-color: var(--calendar-date-hover-background, #{rgba($calendar-date-active-background, $calendar-date-hover-background-opacity)});
 			}
 		}
 	}
@@ -321,8 +323,8 @@
 	.cui-date-time-selected {
 		&:hover span,
 		span {
-			color: $white;
-			background: $calendar-date-active-background;
+			color: var(--brand-foreground-text-color, #{$white});
+			background: var(--brand-color, #{$calendar-date-active-background});
 		}
 	}
 }
