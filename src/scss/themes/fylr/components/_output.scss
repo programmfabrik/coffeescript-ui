@@ -1,6 +1,6 @@
 .cui-output {
 	.cui-output-empty {
-		color: theme-color('secondary');
+		@include label-secondary();
 	}
 
 	&.cui-output--deletable {
