@@ -288,7 +288,7 @@ $component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color !default;
 $component-focus-border-color: 	rgba(theme-color('focused'), 0.5) !default;
 
 $component-selected-border-width: 1px !default;
-$component-selected-border-color: theme-color('primary') !default;
+$component-selected-border-color: var(--brand-color, #{theme-color('primary')}) !default;
 
 // * Icons
 // * ==========================================
