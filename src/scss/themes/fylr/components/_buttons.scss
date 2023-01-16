@@ -59,6 +59,12 @@
 		}
 	}
 
+	&.cui-button--danger {
+		div:not(.cui-buttonbar-group) > & {
+			@include button-danger();
+		}
+	}
+
 	// submenu indicator
 	&.cui-button--has-caret {
 		.cui-button-visual {

@@ -26,6 +26,9 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 				default: "ok"
 				check: ["ok", "cancel"]
 
+			button_danger:
+				check: ["ok", "cancel"]
+
 	readOpts: ->
 		super()
 
@@ -34,10 +37,12 @@ class CUI.Confirm extends CUI.ConfirmationChoice
 			cancel: true
 			choice: "cancel"
 			primary: @_button_primary == "cancel"
+			danger: @_button_danger == "cancel"
 		,
 			text: @_button_text_ok
 			choice: "ok"
 			primary: @_button_primary == "ok"
+			danger: @_button_danger == "ok"
 		]
 
 CUI.confirm = (opts) ->
