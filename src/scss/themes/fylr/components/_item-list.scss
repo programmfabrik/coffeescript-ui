@@ -35,8 +35,8 @@
 		&:active,
 		&:hover {
 			.cui-button-visual {
-				color: $item-list-hover-color;
-				background: $item-list-hover-background;
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
@@ -45,22 +45,22 @@
 		// workaround
 		&[aria-pressed='true'] {
 			.cui-button-visual {
-				color: $item-list-active-color;
+				color: var(--brand-foreground-text-color, #{$item-list-active-color});
 				background: $item-list-active-background;
 			}
 		}
 
 		&.cui-active:hover {
 			.cui-button-visual {
-				color: $item-list-hover-color;
-				background: $item-list-hover-background;
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
 		&.cui-button-appearance-important,
 		&.cui-button--primary {
 			.cui-button-visual {
-				color: $item-list-hover-background;
+				color: var(--brand-color, #{$item-list-hover-background});
 				background: none;
 			}
 		}

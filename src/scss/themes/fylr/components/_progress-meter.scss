@@ -6,7 +6,7 @@
 
 		.cui-progress-meter-fill {
 			display: none;
-			background: theme-color('primary');
+			background: var(--brand-color, #{theme-color('primary')});
 			position: absolute;
 			left: 0;
 			top: 0;

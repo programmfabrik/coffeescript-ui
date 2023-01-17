@@ -239,6 +239,16 @@
 }
 
 @mixin button-primary() {
+	// default
+	--btn-background: var(--brand-color);
+	--btn-color: var(--brand-foreground-text-color);
+	// hover
+	--btn-background-hover: var(--brand-color-hover); // darker or lighter by 10%
+	--btn-color-hover: var(--brand-foreground-text-color);
+	// active
+	--btn-background-active: var(--brand-color-hover);
+	--btn-color-active: var(--brand-foreground-text-color);
+
 	$background: $btn-primary-background;
 	$color: color-yiq($btn-primary-background);
 
