@@ -276,6 +276,20 @@
 	@include button-no-border();
 }
 
+@mixin button-danger() {
+	$background: $btn-danger-background;
+	$color: color-yiq($btn-danger-background);
+
+	$background-hover: darken($btn-danger-background, 10%);
+	$color-hover: $color;
+
+	$background-active: $background-hover;
+	$color-active: $color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+	@include button-no-border();
+}
+
 @mixin button-color-inverted() {
 	$background: $btn-inverted-background;
 	$color: $btn-inverted-color;
