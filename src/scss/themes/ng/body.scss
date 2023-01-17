@@ -1134,6 +1134,32 @@ li > div {
 			}
 		}
 	}
+
+	&.cui-button--danger {
+		.cui-button-visual {
+			color: white;
+			background: $negative-color;
+			border-color: hsla(0,0%,0%,.14);
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				opacity: 0.9;
+				border-color: hsla(0,0%,0%,.14);
+			}
+		}
+
+		&.cui-disabled {
+			opacity: 0.5;
+
+			&:active {
+				.cui-button-visual {
+					background: $negative-color;
+				}
+			}
+		}
+	}
 }
 
 // turns the border into a box-shadow that lets the background shine through
