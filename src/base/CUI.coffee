@@ -798,11 +798,16 @@ class CUI
 			return null
 
 		try
-			parsedUrl = new URL(url)
-			return parsedUrl
+			pUrl = new URL(url)
+			p =
+				protocol: pUrl.protocol?.replaceAll(':','') or ""
+				user: pUrl.username
+				password: pUrl.password
+				hostname: pUrl.hostname
+				port: pUrl.port
+				path: pUrl.pathname
+				origin: ""
 		catch
-
-
 			match = url.match(@urlRegex)
 			if not match
 				return null
@@ -817,43 +822,43 @@ class CUI
 				path: match[6] or ""
 				origin: ""
 
-			if p.hostname
-				if not p.protocol
-					p.protocol = "http"
-				p.origin = p.protocol+"://"+p.hostname
-				if p.port
-					p.origin += ":"+p.port
+		if p.hostname
+			if not p.protocol
+				p.protocol = "http"
+			p.origin = p.protocol+"://"+p.hostname
+			if p.port
+				p.origin += ":"+p.port
 
-				p.url = p.protocol+"://"
-				if p.user
-					p.url = p.url + p.user + ":" + p.password + "@"
-				p.url = p.url + p.hostname
-				if p.port
-					p.url = p.url + ":" + p.port
-			else
-				p.url = ""
+			p.url = p.protocol+"://"
+			if p.user
+				p.url = p.url + p.user + ":" + p.password + "@"
+			p.url = p.url + p.hostname
+			if p.port
+				p.url = p.url + ":" + p.port
+		else
+			p.url = ""
 
-			if p.path.length > 0
-				_match = p.path.match(/(.*?)(|\?.*?)(|\#.*)$/)
-				p.pathname = _match[1]
-				p.search = _match[2]
-				if p.search == "?"
-					p.search = ""
-				p.fragment = _match[3]
-			else
+		if p.path.length > 0
+			_match = p.path.match(/(.*?)(|\?.*?)(|\#.*)$/)
+			p.pathname = _match[1]
+			p.search = _match[2]
+			if p.search == "?"
 				p.search = ""
-				p.pathname = ""
-				p.fragment = ""
+			p.fragment = _match[3]
+		else
+			p.search = ""
+			p.pathname = ""
+			p.fragment = ""
 
-			p.href = p.origin+p.path
-			p.hash = p.fragment
-			if p.login
-				p.auth = btoa(p.user+":"+p.password)
+		p.href = p.origin+p.path
+		p.hash = p.fragment
+		if p.login
+			p.auth = btoa(p.user+":"+p.password)
 
-			# url includes user+password
-			p.url = p.url + p.path
+		# url includes user+password
+		p.url = p.url + p.path
 
-			p
+		p
 
 	@escapeAttribute: (data) ->
 		if CUI.util.isNull(data) or !CUI.util.isString(data)
