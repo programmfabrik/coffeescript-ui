@@ -32054,62 +32054,67 @@ CUI = (function() {
   };
 
   CUI.parseLocation = function(url) {
-    var _match, match, p;
+    var _match, match, p, parsedUrl;
     if (!CUI.util.isFunction(url != null ? url.match : void 0) || url.length === 0) {
       return null;
     }
-    match = url.match(this.urlRegex);
-    if (!match) {
-      return null;
-    }
-    p = {
-      protocol: match[1] || "",
-      user: match[2] || "",
-      password: match[3] || "",
-      hostname: match[4] || "",
-      port: match[5] || "",
-      path: match[6] || "",
-      origin: ""
-    };
-    if (p.hostname) {
-      if (!p.protocol) {
-        p.protocol = "http";
+    try {
+      parsedUrl = new URL(url);
+      return parsedUrl;
+    } catch (error) {
+      match = url.match(this.urlRegex);
+      if (!match) {
+        return null;
       }
-      p.origin = p.protocol + "://" + p.hostname;
-      if (p.port) {
-        p.origin += ":" + p.port;
+      p = {
+        protocol: match[1] || "",
+        user: match[2] || "",
+        password: match[3] || "",
+        hostname: match[4] || "",
+        port: match[5] || "",
+        path: match[6] || "",
+        origin: ""
+      };
+      if (p.hostname) {
+        if (!p.protocol) {
+          p.protocol = "http";
+        }
+        p.origin = p.protocol + "://" + p.hostname;
+        if (p.port) {
+          p.origin += ":" + p.port;
+        }
+        p.url = p.protocol + "://";
+        if (p.user) {
+          p.url = p.url + p.user + ":" + p.password + "@";
+        }
+        p.url = p.url + p.hostname;
+        if (p.port) {
+          p.url = p.url + ":" + p.port;
+        }
+      } else {
+        p.url = "";
       }
-      p.url = p.protocol + "://";
-      if (p.user) {
-        p.url = p.url + p.user + ":" + p.password + "@";
-      }
-      p.url = p.url + p.hostname;
-      if (p.port) {
-        p.url = p.url + ":" + p.port;
-      }
-    } else {
-      p.url = "";
-    }
-    if (p.path.length > 0) {
-      _match = p.path.match(/(.*?)(|\?.*?)(|\#.*)$/);
-      p.pathname = _match[1];
-      p.search = _match[2];
-      if (p.search === "?") {
+      if (p.path.length > 0) {
+        _match = p.path.match(/(.*?)(|\?.*?)(|\#.*)$/);
+        p.pathname = _match[1];
+        p.search = _match[2];
+        if (p.search === "?") {
+          p.search = "";
+        }
+        p.fragment = _match[3];
+      } else {
         p.search = "";
+        p.pathname = "";
+        p.fragment = "";
       }
-      p.fragment = _match[3];
-    } else {
-      p.search = "";
-      p.pathname = "";
-      p.fragment = "";
+      p.href = p.origin + p.path;
+      p.hash = p.fragment;
+      if (p.login) {
+        p.auth = btoa(p.user + ":" + p.password);
+      }
+      p.url = p.url + p.path;
+      return p;
     }
-    p.href = p.origin + p.path;
-    p.hash = p.fragment;
-    if (p.login) {
-      p.auth = btoa(p.user + ":" + p.password);
-    }
-    p.url = p.url + p.path;
-    return p;
   };
 
   CUI.escapeAttribute = function(data) {
