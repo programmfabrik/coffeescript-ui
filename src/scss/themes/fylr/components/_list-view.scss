@@ -206,8 +206,8 @@
 	display: flex;
 }
 
-// in quadrant 2 or 3 the class 'cui-lv-tr-fill-outer' could be added
-// todo: find out why and when (is this when a row is added by the user?)
+// in quadrant 2 or 3 a row 'cui-lv-tr-fill-outer' could be added as last child
+// Laut Martin: "das ist ein platzhalter div um rechts neben den spalte einen füller zu haben der die äußere div ausfüllt"
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	display: flex;

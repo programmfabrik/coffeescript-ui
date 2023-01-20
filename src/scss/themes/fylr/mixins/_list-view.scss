@@ -53,3 +53,13 @@
 		}
 	}
 }
+
+// hide the border-bottom of the previous row
+// sometimes necessary if --list-view-border-width >= 1
+@mixin list-view-hide-double-bottom-border() {
+	.cui-lv-tr-fill-outer {
+		min-height: 1px;
+		margin-top: -1px;
+		background-color: var(--pane-background);
+	}
+}
