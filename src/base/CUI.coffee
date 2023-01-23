@@ -793,23 +793,34 @@ class CUI
 		url
 
 	@parseLocation: (url) ->
+
 		if not CUI.util.isFunction(url?.match) or url.length == 0
 			return null
 
-		match = url.match(@urlRegex)
-		if not match
-			return null
-
-		# console.debug "CUI.parseLocation:", url, match
-
-		p =
-			protocol: match[1] or ""
-			user: match[2] or ""
-			password: match[3] or ""
-			hostname: match[4] or ""
-			port: match[5] or ""
-			path: match[6] or ""
-			origin: ""
+		try
+			pUrl = new URL(url)
+			p =
+				protocol: pUrl.protocol?.replaceAll(':','') or ""
+				user: pUrl.username
+				password: pUrl.password
+				hostname: pUrl.hostname
+				port: pUrl.port
+				path: pUrl.pathname
+				origin: ""
+		catch
+			match = url.match(@urlRegex)
+			if not match
+				return null
+			#Fallback parseUrl code
+			# console.debug "CUI.parseLocation:", url, match
+			p =
+				protocol: match[1] or ""
+				user: match[2] or ""
+				password: match[3] or ""
+				hostname: match[4] or ""
+				port: match[5] or ""
+				path: match[6] or ""
+				origin: ""
 
 		if p.hostname
 			if not p.protocol
@@ -846,6 +857,7 @@ class CUI
 
 		# url includes user+password
 		p.url = p.url + p.path
+
 		p
 
 	@escapeAttribute: (data) ->
