@@ -139,3 +139,7 @@ a[role='button'].cui-button-appearance-link {
 		opacity: $disabled-opacity;
 	}
 }
+
+.cui-button-tool-play {
+	@include button-play();
+}

@@ -20,6 +20,7 @@
 		- ellipsis
 		- close / close-inverted
 		- info
+		- play
 	- Button modifier
 		- inverted (default, link ?, simple ?)
 */
@@ -496,3 +497,20 @@
 	align-items: center;
 }
 
+
+@mixin button-play() {
+	@include button-color-inverted();
+
+	.cui-button-visual {
+		height: var(--btn-height-play, #{$btn-height-play});
+		width: var(--btn-height-play, #{$btn-height-play});
+		min-width: var(--btn-height-play, #{$btn-height-play});
+		border-radius: 50%;
+	}
+
+	.fa {
+		font-size: $icon-font-size-lg;
+		text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
+		margin-left: 3px;
+	}
+}
