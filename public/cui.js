@@ -56749,7 +56749,8 @@ CUI.Input = (function(superClass) {
         maxLength: this._maxLength,
         id: this._id || "cui-input-" + this.getUniqueId(),
         spellcheck: this.__spellcheck,
-        rows: this._min_rows
+        rows: this._min_rows,
+        dir: "auto"
       });
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
@@ -56795,7 +56796,8 @@ CUI.Input = (function(superClass) {
         maxLength: this._maxLength,
         id: this._id || "cui-input-" + this.getUniqueId(),
         spellcheck: this.__spellcheck,
-        autocomplete: this.__autocomplete
+        autocomplete: this.__autocomplete,
+        dir: "auto"
       });
     }
     CUI.Events.listen({
