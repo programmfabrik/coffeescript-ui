@@ -238,6 +238,7 @@ class CUI.Input extends CUI.DataFieldInput
 				id: @_id or "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				rows: @_min_rows
+				dir: "auto"
 			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
 
 			resize = =>
@@ -273,6 +274,7 @@ class CUI.Input extends CUI.DataFieldInput
 				id: @_id or "cui-input-"+@getUniqueId()
 				spellcheck: @__spellcheck
 				autocomplete: @__autocomplete
+				dir: "auto"
 
 		CUI.Events.listen
 			node: @__input
