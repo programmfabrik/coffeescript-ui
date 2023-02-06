@@ -319,10 +319,12 @@
 	.cui-button-visual {
 		height: auto;
 		line-height: $line-height-base;
+		align-items: baseline;
 		
 		.cui-button-center {
 			text-decoration: underline;
 			word-break: break-all;
+			white-space: normal;
 		}
 
 		.cui-button-center:first-child,
