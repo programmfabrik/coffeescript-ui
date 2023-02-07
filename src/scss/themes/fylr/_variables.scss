@@ -105,6 +105,7 @@ $colors: map-merge(
 );
 
 $primary:       $orange !default;
+$primary-bg: 	color.scale($primary, $green: 40%) !default; // a little bit more yellow
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
