@@ -88,6 +88,11 @@
 }
 
 .cui-result-navigation-toolbar {
+	// left column has the status information label, it can truncate with ...
+	> .cui-horizontal-layout-left {
+		flex: 1 1 auto;
+	}
+	
 	.cui-buttonbar .cui-buttonbar-group-navi {
 		@include buttonbar-group-navigation();
 	}
