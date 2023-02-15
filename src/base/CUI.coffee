@@ -807,6 +807,7 @@ class CUI
 				port: pUrl.port
 				path: pUrl.pathname
 				origin: ""
+				search: pUrl.search
 		catch
 			match = url.match(@urlRegex)
 			if not match
@@ -841,7 +842,8 @@ class CUI
 		if p.path.length > 0
 			_match = p.path.match(/(.*?)(|\?.*?)(|\#.*)$/)
 			p.pathname = _match[1]
-			p.search = _match[2]
+			if not p.search
+				p.search = _match[2]
 			if p.search == "?"
 				p.search = ""
 			p.fragment = _match[3]
