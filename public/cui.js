@@ -33065,7 +33065,8 @@ CUI = (function() {
         hostname: pUrl.hostname,
         port: pUrl.port,
         path: pUrl.pathname,
-        origin: ""
+        origin: "",
+        search: pUrl.search
       };
     } catch (error) {
       match = url.match(this.urlRegex);
@@ -33104,7 +33105,9 @@ CUI = (function() {
     if (p.path.length > 0) {
       _match = p.path.match(/(.*?)(|\?.*?)(|\#.*)$/);
       p.pathname = _match[1];
-      p.search = _match[2];
+      if (!p.search) {
+        p.search = _match[2];
+      }
       if (p.search === "?") {
         p.search = "";
       }
