@@ -4062,6 +4062,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
+.cui-buttonbar-group-navi .cui-button .cui-button-visual {
+  min-width: 24px;
+}
+.cui-buttonbar-group-navi .cui-number-input {
+  margin: 0 0.25rem;
+}
 
 .cui-progress-meter .cui-progress-meter-bar {
   width: 100%;
@@ -5522,103 +5528,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   flex: 1 1 auto;
   overflow: hidden;
 }
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi {
-  border-radius: 2px;
-  overflow: hidden;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button {
-  --btn-border-color: transparent;
-  --btn-border-width: 0;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:hover, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus {
-  --btn-border-color: transparent;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:hover .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus {
-  outline: none;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-active .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-active:hover .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-active:focus .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-layer-open:hover .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-layer-open:focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
-}
 .cui-result-navigation-toolbar .cui-buttonbar + .cui-label {
   margin-left: 0.5rem;
 }
 
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group {
-  border-radius: 2px;
-  overflow: hidden;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button {
-  --btn-border-color: transparent;
-  --btn-border-width: 0;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:hover, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus {
-  --btn-border-color: transparent;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:hover .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus {
-  outline: none;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-active .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-number-input {
-  margin: 0 0.25rem;
-}
 .cui-navigation-toolbar > .cui-horizontal-layout-left > .cui-label:last-child {
   margin-right: 1rem;
 }
