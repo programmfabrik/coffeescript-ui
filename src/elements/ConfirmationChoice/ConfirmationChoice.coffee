@@ -56,6 +56,9 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 			mandatory: true
 			default: false
 			check: Boolean
+		danger:
+			default: false
+			check: Boolean
 		secondary:
 			default: false
 			check: Boolean
@@ -70,15 +73,15 @@ class CUI.ConfirmationChoice extends CUI.ConfirmationDialog
 
 	init: ->
 		@_buttons = []
-		for choice in @_choices
+		for choice, index in @_choices
 			if not choice
 				continue
 
 			uiKey = "confirmation.choice"
-			if choice.text
-				uiKey += ":#{choice.text.toLowerCase().replace(/s+/g, '_')}"
-			else if choice.loca_key
+			if choice.loca_key
 				uiKey += ":#{choice.loca_key}"
+			else
+				uiKey += ":#{index}"
 
 			btn_opts =
 				left: true

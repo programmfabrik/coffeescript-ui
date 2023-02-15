@@ -24,9 +24,9 @@
 	// selected
 	--list-view-selected-row-border-width: 0;
 	--list-view-selected-row-border-color: transparent;
-	--list-view-selected-row-background: #{$list-view-selected-row-background};
+	--list-view-selected-row-background: var(--brand-color, #{$list-view-selected-row-background});
 	// hover
-	--list-view-hover-row-background: #{$list-view-hover-row-background};
+	--list-view-hover-row-background: var(--brand-color, #{$list-view-hover-row-background});
 
 
 	min-height: 0;
@@ -206,8 +206,8 @@
 	display: flex;
 }
 
-// in quadrant 2 or 3 the class 'cui-lv-tr-fill-outer' could be added
-// todo: find out why and when (is this when a row is added by the user?)
+// in quadrant 2 or 3 a row 'cui-lv-tr-fill-outer' could be added as last child
+// Laut Martin: "das ist ein platzhalter div um rechts neben den spalte einen füller zu haben der die äußere div ausfüllt"
 .cui-lv-tr-fill-outer {
 	flex: 1 1 auto;
 	display: flex;
@@ -384,6 +384,15 @@
 		> .cui-lv-tr {
 			background-color: var(--list-view-hover-row-background);
 		}
+	}
+}
+
+// Special case, when there is a single column in the quadrant-2 that contains only the drag handle
+// we do not want it to have a hover effect, because it just looks weird when the hover effect applies to
+// the drag handle and the actual row SEPERATELY, therefore we rather hide the hover for the drag handle column
+.cui-list-view-grid-fixed-col-has-only-row-move-handle {
+	.cui-list-view-grid-quadrant-2 {
+		--list-view-hover-row-background: transparent;
 	}
 }
 

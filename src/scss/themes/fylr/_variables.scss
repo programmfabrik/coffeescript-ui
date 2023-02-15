@@ -49,8 +49,8 @@ $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default; // #8b949c !default; // #adb5bd !default;
 $gray-600: #8b949c; //#777777 !default; // #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
+$gray-700: #4d5257 !default;
+$gray-800: #393c3f !default;
 $gray-900: #212121 !default;
 $black:    #000000 !default;
 
@@ -105,8 +105,6 @@ $colors: map-merge(
 );
 
 $primary:       $orange !default;
-$secondary:     $gray-600 !default; // todo
-$secondary-selected: $gray-100 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -124,8 +122,6 @@ $theme-colors: () !default;
 $theme-colors: map-merge(
 	(
 		'primary':    $primary,
-		'secondary':  $secondary,
-		'secondary-selected':  $secondary-selected,
 		'success':    $success,
 		'info':       $info,
 		'warning':    $warning,
@@ -292,7 +288,7 @@ $component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color !default;
 $component-focus-border-color: 	rgba(theme-color('focused'), 0.5) !default;
 
 $component-selected-border-width: 1px !default;
-$component-selected-border-color: theme-color('primary') !default;
+$component-selected-border-color: var(--brand-color, #{theme-color('primary')}) !default;
 
 // * Icons
 // * ==========================================
@@ -314,6 +310,7 @@ $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
 $btn-background: 			transparent !default;
 $btn-primary-background: 	theme-color('primary') !default;
 $btn-secondary-background: 	gray('200') !default;
+$btn-danger-background: 	color('red') !default;
 $btn-color: 				$body-color !default;
 $btn-color-dimmed: 			theme-color('muted') !default;
 $btn-border-width: 			1px !default;
@@ -362,7 +359,9 @@ $btn-height-lg: 			36px !default;
 $btn-font-size-lg: 			$font-size-lg !default;
 $btn-border-radius-lg:		3px !default;
 // Icon Button
-$btn-height-xs:				16px;
+$btn-height-xs:				16px !default;
+// Play Button
+$btn-height-play:			50px !default;		
 
 // * Buttonbar
 // * ==========================================
@@ -371,6 +370,7 @@ $buttonbar-gap: 	$spacer-sm !default;
 // * Labels
 // * ==========================================
 $label-padding: $spacer-sm !default;
+$label-secondary-opacity: 0.65 !default;
 
 // * Handle (Drag & Drop, Move Rows etc.)
 // * ==========================================
@@ -379,7 +379,7 @@ $handle-color: 		$body-color;
 // * Flex Handle (Resize panes etc.)
 // * ==========================================
 $flex-handle-size: 				11px; // width or height, odd number so we can put a 1px line in the very center
-$flex-handle-color: 			rgba(gray('500'), 0.8); // theme-color('primary'); // rgba(gray('400'), 0.8);
+$flex-handle-color: 			rgba(gray('500'), 0.8);
 $flex-handle-divider-color: 	$flex-handle-color;
 $flex-handle-length: 			0; // 18px;
 $flex-handle-blocker-offset: 	0; // 4px;
@@ -444,7 +444,7 @@ $data-field-width: 275px !default; // used to be: "$input-width"
 
 // * Checkbox
 // * ==========================================
-$checkbox-border-color: 		gray('300') !default;
+$checkbox-border-color: 		gray('700') !default;
 $checkbox-background: 			$white !default;
 $checkbox-active-background: 	$body-color !default;
 $checkbox-active-color: 		$white !default;
@@ -523,6 +523,8 @@ $block-margin: 				$spacer !default;
 $block-bracket-padding: 	$panel-content-padding !default;
 $block-border-color: 		$table-border-color !default;
 $block-has-checkbox-indent:	2*$spacer-lg !default;
+$block-checkbox-indent-width: 215px !default;
+
 
 // * Slider
 // * ==========================================
@@ -577,7 +579,7 @@ $calendar-background:				$white !default;
 $calendar-static-cells-background: 	$calendar-background !default;
 $calendar-static-cells-color: 		theme-color('primary') !default;
 $calendar-date-active-background:	theme-color('primary') !default;
-$calendar-date-hover-background:	rgba($calendar-date-active-background, 0.2) !default;
+$calendar-date-hover-background-opacity: 0.2 !default;
 $calendar-date-previous-color:		gray('500') !default;
 
 // * Tooltip

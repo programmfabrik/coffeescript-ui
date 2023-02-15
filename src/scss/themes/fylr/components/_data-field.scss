@@ -94,8 +94,10 @@
 		// }
 	}
 
-	.cui-object-dumper {
-		border: 1px solid $table-border-color;
+	.cui-object-dumper.cui-list-view {
+		--list-view-border-width: 1px;
+		
+		@include list-view-hide-double-bottom-border();
 
 		.cui-list-view-grid-quadrant-3 {
 			min-height: auto;

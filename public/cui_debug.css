@@ -532,7 +532,6 @@ i.fa-spinner {
 }
 
 i.cui-spin-stepped {
-  -webkit-animation: fa-spin 1s steps(8) infinite;
   animation: fa-spin 1s steps(8) infinite;
 }
 
@@ -1637,15 +1636,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 
 .cui-tmpl {
   display: none !important;
-}
-
-@-webkit-keyframes nodeInserted {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes nodeInserted {

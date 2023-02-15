@@ -37,7 +37,7 @@ class CUI.ObjectDumper extends CUI.ListViewTree
 					label: text: "value"
 				]
 				check: (v) ->
-					v.length == 2
+					v.length == 2 or CUI.util.isFalse(v)
 			do_open:
 				mandatory: true
 				default: false

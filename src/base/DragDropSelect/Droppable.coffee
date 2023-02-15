@@ -201,7 +201,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 
 		if not @__selectedTarget
 			if @insideSaveZone(coord)
-				console.info("Inside save zone...")
 				return
 
 			@resetMargin()
@@ -213,7 +212,6 @@ class CUI.Droppable extends CUI.DragDropSelect
 				@__dropTargetPos = null
 				@syncDropHelper()
 			else
-				console.info("No selected target, no dropHelper...")
 				@removeHelper()
 				# bubble
 				return true

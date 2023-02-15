@@ -6,6 +6,10 @@
 	margin-top: 0.1em;
 }
 
+@mixin layer-width($size: 'm') {
+	width: #{map-get($layer-sizes, $size)}px;
+}
+
 /* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
@@ -35,6 +39,8 @@
 		// Align buttonbar to the right because we use inverted, borderless buttons in the header
 		> .cui-horizontal-layout-right > .cui-buttonbar {
 			margin-right: -0.5*$layer-padding-x;
+
+			@include buttonbar-horizontal-tight();
 		}
 		
 		// Invert buttons

@@ -32,7 +32,7 @@
 		
 			label,
 			.cui-label {
-				padding-top: $form-key-padding-top;
+				padding-top: var(--form-key-padding-top, #{$form-key-padding-top});
 				padding-bottom: 0;
 			}
 		}
@@ -48,8 +48,14 @@
 			label,
 			.cui-label,
 			.cui-data-field-output-label {
-				padding-top: $form-key-padding-top;
+				padding-top: var(--form-key-padding-top, #{$form-key-padding-top});
 				padding-bottom: 0;
+			}
+
+			// in case there is a list-view included in the form-value we need to reset the padding-top
+			// list view will take care of spacing on its own
+			.cui-list-view {
+				--form-key-padding-top: 0;
 			}
 		}
 	}
@@ -77,8 +83,10 @@
 		label,
 		.cui-label,
 		.cui-data-field-output-label {
-			padding-top: 0;
-			padding-bottom: $form-key-padding-bottom;
+			&:not(.cui-file-upload-drop-zone) {
+				padding-top: 0;
+				padding-bottom: $form-key-padding-bottom;
+			}
 		}
 	}
 }

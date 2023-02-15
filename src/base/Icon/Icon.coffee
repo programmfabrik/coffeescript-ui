@@ -34,6 +34,8 @@ class CUI.Icon extends CUI.Element
 			if @_icon and not CUI.Icon.icon_map[@_icon] and not @_icon.startsWith("fa-") and not @_icon.startsWith("css-swatch")
 				span = CUI.dom.span("cui-no-icon")
 				span.textContent = @_icon[0]
+				CUI.dom.removeClass(@DOM, @_icon)
+				CUI.dom.removeClass(@DOM, "fa")
 				CUI.dom.append(@DOM, span)
 
 		if @_ui

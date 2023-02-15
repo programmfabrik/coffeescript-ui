@@ -2,35 +2,27 @@
 // adds simple section divider border
 
 @mixin block-separator() {
+	--block-separator-width: 1px;
+	--block-separator-margin: #{$block-margin};
+	
 	&:not(:last-child) {
-		padding-bottom: $block-margin;
-		border-bottom: 1px solid $block-border-color;
+		padding-bottom: var(--block-separator-margin);
+		border-bottom: var(--block-separator-width) solid $block-border-color;
 	}
 
 	.cui-block-content {
 		.cui-form-table {
 			&:not(:last-child) {
-				padding-bottom: 0.5*$block-margin; // smaller because the form rows in the form-table have a bottom margin
-				border-bottom: 1px solid $block-border-color;
+				padding-bottom: calc(0.5 * var(--block-separator-margin)); // smaller because the form rows in the form-table have a bottom margin
+				border-bottom: var(--block-separator-width) solid $block-border-color;
 			}
 		}
 	}
 }
 
 @mixin block-separator-reset() {
-	&:not(:last-child) {
-		padding-bottom: 0;
-		border-bottom: 0;
-	}
-
-	.cui-block-content {
-		.cui-form-table {
-			&:not(:last-child) {
-				padding-bottom: 0;
-				border-bottom: 0;
-			}
-		}
-	}
+	--block-separator-width: 0;
+	--block-separator-margin: 0;
 }
 
 // * Block Header inverted
@@ -128,12 +120,12 @@
 // - block-inline is used within base-config to lay out the block vertically in the 'inline' direction
 // - use when there is enough vertical space
 
+// .cui-block
+
 @mixin block-inline($content-indent: 200px, $content-max-width: 850px) {
 	--block-inline-content-indent: #{$content-indent};
 	--block-inline-content-max-width: #{$content-max-width};
 	--block-indent: 0;
-	
-	@include block-separator();
 
 	@include media-breakpoint-up(lg) {
 		&:not(.cui-form-block--has-checkbox) {
@@ -151,6 +143,10 @@
 	// nested
 	.cui-block {
 		--block-inline-content-indent: 0;
+	}
+
+	.cui-form-table {
+		@include block-separator-reset();
 	}
 
 	.cui-form {

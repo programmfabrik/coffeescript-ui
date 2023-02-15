@@ -20,6 +20,7 @@
 		- ellipsis
 		- close / close-inverted
 		- info
+		- play
 	- Button modifier
 		- inverted (default, link ?, simple ?)
 */
@@ -239,6 +240,16 @@
 }
 
 @mixin button-primary() {
+	// default
+	--btn-background: var(--brand-color);
+	--btn-color: var(--brand-foreground-text-color);
+	// hover
+	--btn-background-hover: var(--brand-color-hover); // darker or lighter by 10%
+	--btn-color-hover: var(--brand-foreground-text-color);
+	// active
+	--btn-background-active: var(--brand-color-hover);
+	--btn-color-active: var(--brand-foreground-text-color);
+
 	$background: $btn-primary-background;
 	$color: color-yiq($btn-primary-background);
 
@@ -257,6 +268,20 @@
 	$color: color-yiq($btn-secondary-background);
 
 	$background-hover: darken($btn-secondary-background, 5%);
+	$color-hover: $color;
+
+	$background-active: $background-hover;
+	$color-active: $color;
+
+	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
+	@include button-no-border();
+}
+
+@mixin button-danger() {
+	$background: $btn-danger-background;
+	$color: color-yiq($btn-danger-background);
+
+	$background-hover: darken($btn-danger-background, 10%);
 	$color-hover: $color;
 
 	$background-active: $background-hover;
@@ -345,6 +370,7 @@
 // ! use carefully, in most cases you want to use button-plain() instead, which will set button colors and hover/focus states as well
 @mixin button-no-border() {
 	--btn-border-color: transparent;
+	--btn-border-width: 0;
 
 	&:hover,
 	&:focus {
@@ -471,3 +497,20 @@
 	align-items: center;
 }
 
+
+@mixin button-play() {
+	@include button-color-inverted();
+
+	.cui-button-visual {
+		height: var(--btn-height-play, #{$btn-height-play});
+		width: var(--btn-height-play, #{$btn-height-play});
+		min-width: var(--btn-height-play, #{$btn-height-play});
+		border-radius: 50%;
+	}
+
+	.fa {
+		font-size: $icon-font-size-lg;
+		text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
+		margin-left: 3px;
+	}
+}

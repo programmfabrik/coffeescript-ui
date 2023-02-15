@@ -536,7 +536,11 @@ class CUI.util
 				eq = @isEqual(x[i], y[i], debug)
 				if not eq
 					if debug
-						console.debug("X: ",x, "Differs to:", y, "Key: ", i, "x:", x[i], y[i])
+						console.debug("X: ",x)
+						console.debug("Differs to Y:", y)
+						console.debug("Key differs: ", i)
+						console.debug("Value X:", x[i])
+						console.debug("Value Y:", y[i])
 					return false
 				else
 					return true

@@ -15,6 +15,11 @@
 
 .cui-form {
 	overflow: visible;
+	
+	&[class*='cui-maximize'] {
+		overflow: visible; // override a possible overflow: hidden that could be applied via .cui-maximize-horizontal/.cui-maximize-horizontal
+	}
+	
 	background-color: $light; // ? we set a default background because of the default white form elements like inputs
 	width: 100%; // see datamodel >  definition > options popover
 
@@ -198,8 +203,9 @@
 	min-height: 0;
 	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
 
-	&.cui-form-field-type--checkbox + .cui-form-field-type--checkbox {
-		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes, see system-rights
+	&.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, 		// see system-rights
+	&.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
+		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes
 	}
 
 	.cui-form-container.cui-form--horizontal > & {
@@ -247,6 +253,10 @@
 
 	.cui-label {
 		padding-top: 0;
+	}
+
+	.cui-button {
+		@include button-link-sm();
 	}
 }
 

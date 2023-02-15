@@ -129,6 +129,9 @@ class CUI.Button extends CUI.DOMElement
 		if @_secondary and not @_primary
 			@addClass("cui-button--secondary")
 
+		if @_danger
+			@addClass("cui-button--danger")
+
 		if @_class
 			@addClass(@_class)
 
@@ -459,6 +462,9 @@ class CUI.Button extends CUI.DOMElement
 				check: Boolean
 
 			secondary:
+				check: Boolean
+
+			danger:
 				check: Boolean
 
 			onClick:

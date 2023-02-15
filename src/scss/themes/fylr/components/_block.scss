@@ -90,7 +90,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 */
 
 .cui-form-block--has-checkbox {
-	--block-indent: 215px;
+	--block-indent: #{$block-checkbox-indent-width};
 
 	> .cui-block-header {
 		// ! be careful, this only makes sense if the toggle-switches are within a form that has key/value pairs
@@ -114,7 +114,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 		@include form-key-value-stacked();
 	}
 }
-
 
 // * WaitBlock
 

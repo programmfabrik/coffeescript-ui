@@ -1,5 +1,5 @@
 @mixin progress-meter-on-black() {
 	.cui-progress-meter-icon {
-		color: theme-color('primary');
+		color: var(--brand-color, #{theme-color('primary')});
 	}
 }

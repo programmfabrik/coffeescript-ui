@@ -1,24 +1,6 @@
 @mixin buttonbar-horizontal() {
 	flex-direction: row;
-
-	// ! start button margins
-	// this is the only margin that keeps elements WITHIN a buttonbar spaced apart correctly
-	// we cannot add margins to the buttonbar directly, because in some cases we have buttons inside the buttonbar that are hidden (via display: none)
-	// then a margin that is applied to the buttonbar would still show even though there are no buttons within actually visible
-	> * {
-		margin-right: $buttonbar-gap;
-	}
-
-	// reset margin-right from the last child in the last buttonbar in a layout-right
-	// ! there are some buttonbars that are NOT inside a layout, so we need to reset them separately, e.g. ez5-required-message
-	// .cui-horizontal-layout-right &,
-	// .cui-horizontal-layout-center & { // exclude center becuase we might need a margin to its right to space another buttonbar or buttons that are in the right layout
-	.cui-horizontal-layout-right > & {
-		&:last-child > *:last-child {
-			margin-right: 0;
-		}
-	}
-	// ! end button margins
+	gap: $buttonbar-gap;
 
 	.cui-buttonbar-group {
 		.cui-button,
@@ -41,6 +23,14 @@
 				border-radius: 0;
 			}
 		}
+
+		.cui-button-hidden + .cui-button,
+		.cui-button-hidden + .cui-select {
+			&:last-child:not(:only-child) .cui-button-visual {
+				border-top-left-radius: $btn-border-radius;
+				border-bottom-left-radius: $btn-border-radius;
+			}
+		}
 	}
 }
 
@@ -48,14 +38,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
-
-	> * {
-		margin-right: 0; // reset 
-		
-		&:not(:last-child) {
-			margin-bottom: $buttonbar-gap;
-		}
-	}
+	gap: $buttonbar-gap;
 
 	.cui-buttonbar-group {
 		display: flex;
@@ -94,11 +77,12 @@
 	}
 }
 
-// use only for buttonbars that contain plain buttons
+// use only for buttonbars that contain plain buttons (not bordered buttons)
+// tight = no gap between buttons
 @mixin buttonbar-horizontal-tight() {
-	.cui-button {
-		margin: 0;
+	gap: 0; // reset default gap
 
+	.cui-button {
 		~ .cui-buttonbar-group {
 			margin: 0 $buttonbar-gap;
 		}
@@ -106,9 +90,9 @@
 }
 
 @mixin buttonbar-vertical-tight() {
-	.cui-button {
-		margin: 0;
+	gap: 0; // reset default gap
 
+	.cui-button {
 		~ .cui-buttonbar-group {
 			margin: $buttonbar-gap 0;
 		}
@@ -121,10 +105,6 @@
 
 	border-radius: $btn-border-radius;
 	overflow: hidden;
-
-	> *:last-child {
-		margin-right: 0;
-	}
 
 	@if $border == 1 {
 		--border-color: #{$btn-border-color};
@@ -160,6 +140,18 @@
 
 	.cui-number-input input {
 		@include input-sm();
+	}
+}
+
+// special: make navigation bar tighter so it will be fully visible on very small/narrow thumbnails in the search results
+// or in the asset browser
+@mixin buttonbar-group-navigation-tight() {
+	.cui-label .cui-label-content {
+		width: auto;
+	}
+
+	.cui-button-button .cui-button-visual {
+		min-width: var(--buttonbar-group-navigation-tight-min-width, 22px);
 	}
 }
 

@@ -10,6 +10,8 @@
 	// box-sizing: content-box; // todo
 	overflow: visible !important;
 
+	@include toolbar-gap();
+
 	// reset if toolbar within another toolbar
 	.cui-toolbar {
 		padding: 0;

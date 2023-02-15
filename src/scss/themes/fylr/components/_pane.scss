@@ -6,7 +6,9 @@
 }
 
 .cui-pane {
-	background-color: $pane-background;
+	--pane-background: #{$pane-background};
+
+	background-color: var(--pane-background);
 
 	// todo: we should probably do this if this is the most used case, and then override if necessary
 	> .cui-vertical-layout-center {

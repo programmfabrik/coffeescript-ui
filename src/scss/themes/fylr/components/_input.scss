@@ -56,7 +56,6 @@ textarea {
 	line-height: $line-height-base;
 }
 
-
 .cui-input {
 	// state classes:
 	// cui-input-invalid
@@ -77,6 +76,13 @@ textarea {
 			.cui-data-field-right .cui-button .cui-button-visual {
 				border-color: color.scale(theme-color('danger'), $saturation: 50%, $alpha: -95%);
 				background: transparentize(theme-color('danger'), 0.85);
+
+
+				.cui-list-view-row-selectable:hover &, 
+				.cui-list-view-row-selectable.cui-selected & {
+					border-color: transparent;
+					background: color.scale(theme-color('danger'), $lightness: 50%);
+				}
 			}
 		}
 	}

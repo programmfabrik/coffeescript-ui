@@ -97,9 +97,10 @@
 					margin: $spacer-sm 0;
 				}
 
-				> .cui-vertical-layout:only-child {
-					flex-shrink: 0; // enable scrolling in tab-body
-				}
+				// ! commented out to fix #65541 ("buttons im datenmodell nicht immer sichtbar")
+				// > .cui-vertical-layout:only-child {
+				// 		flex-shrink: 0; // enable scrolling in tab-body
+				// }
 			}
 		}
 	}
@@ -122,6 +123,8 @@
 // * Tab Header with Buttons
 
 .cui-tabs-pane-header {
+	--toolbar-gap: 0; // reset .cui-toolbar gap
+
 	padding: 0; // reset .cui-toolbar
 	min-height: 0; // reset .cui-toolbar
 	margin-bottom: $spacer;
@@ -215,12 +218,21 @@
 				background-color: $btn-active-background;
 			}
 		}
+
+		// Very special case:
+		// there are buttons AFTER the overflow button, see export manager
+		+ * {
+			margin-left: $spacer;
+		}
 	}
 
-	.cui-buttonbar {
+	// only affect tabs in the center layout, 
+	// there could possibly be buttons that are not part of the tabs in the left or right layout, see export manager
+	> .cui-horizontal-layout-center > .cui-buttonbar {
 		min-width: 0;
 		width: 100%;
 		position: relative;
+		gap: 0; // reset default gap
 
 		// tab border extension
 		&::after {

@@ -908,6 +908,7 @@ li > div {
 	font-family: $font-family;
 	font-size: $font-size;
 	line-height: $line-height;
+	font-style: normal; // reset <i> default style
 }
 
 .fa {
@@ -1129,6 +1130,32 @@ li > div {
 			&:active {
 				.cui-button-visual {
 					background: var(--highlight);
+				}
+			}
+		}
+	}
+
+	&.cui-button--danger {
+		.cui-button-visual {
+			color: white;
+			background: $negative-color;
+			border-color: hsla(0,0%,0%,.14);
+		}
+
+		&.cui-layer-open,
+		&:active {
+			.cui-button-visual {
+				opacity: 0.9;
+				border-color: hsla(0,0%,0%,.14);
+			}
+		}
+
+		&.cui-disabled {
+			opacity: 0.5;
+
+			&:active {
+				.cui-button-visual {
+					background: $negative-color;
 				}
 			}
 		}
@@ -2070,6 +2097,11 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 
+	&-description {
+		color: $secondary-color;
+		margin-bottom: $padding;
+	}
+
 	&[data-type="string"] {
 		color: #50a14f;
 	}
@@ -2110,7 +2142,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	a {
-		color: var(--highlight);
+		color: var(--highlight-light);
 		text-decoration: underline;
 		word-break: break-all;
 	}
@@ -2694,39 +2726,6 @@ a[role="button"].cui-button-appearance-link {
 		pointer-events: auto;
 	}
 
-<<<<<<< HEAD
-	// centered gets placed by the browser
-	&[cui-placement="c"] {
-		.cui-layer {
-			position: static;
-			margin: $padding;
-		}
-
-		.cui-layer-pointer {
-			display: none;
-		}
-	}
-
-	&[cui-fill-space="both"] {
-		.cui-layer {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	&[cui-fill-space="horizontal"] {
-		.cui-layer {
-			width: 100%;
-		}
-	}
-
-	&[cui-fill-space="vertical"] {
-		.cui-layer {
-			height: 100%;
-		}
-	}
-=======
->>>>>>> origin/master
 }
 
 .cui-layer-backdrop-policy-modal,
@@ -4630,39 +4629,6 @@ $layer-sizes: (
 		}
 	}
 
-<<<<<<< HEAD
-       // centered gets placed by the browser
-       &[cui-placement="c"] {
-               .cui-layer {
-                       position: static;
-                       margin: $padding;
-               }
-
-               .cui-layer-pointer {
-                       display: none;
-               }
-       }
-
-       &[cui-fill-space="both"] {
-               .cui-layer {
-                       width: 100%;
-                       height: 100%;
-               }
-       }
-
-       &[cui-fill-space="horizontal"] {
-               .cui-layer {
-                       width: 100%;
-               }
-       }
-
-       &[cui-fill-space="vertical"] {
-               .cui-layer {
-                       height: 100%;
-               }
-       }
-=======
->>>>>>> origin/master
 }
 
 .cui-form-row {

@@ -88,7 +88,7 @@
 	height: 1px;
 	left: 0;
 	top: 0;
-	background-color: $drag-lasso-background;
+	background-color: var(--brand-color, #{$drag-lasso-background});
 	display: block;
 	pointer-events: none;
 	z-index: 1;
@@ -109,7 +109,7 @@
 			content: '';
 			top: 0;
 			left: #{$spacer-sm} - 1px;
-			border-right: 3px dotted $drag-lasso-background;
+			border-right: 3px dotted var(--brand-color, #{$drag-lasso-background});
 			height: 100%;
 			opacity: 0.5;
 			position: absolute;

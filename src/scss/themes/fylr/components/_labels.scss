@@ -70,6 +70,12 @@ label[data-label-clickable],
 		@include label-muted();
 	}
 
+	&.cui-label-description {
+		@include label-secondary();
+
+		margin-bottom: $spacer;
+	}
+
 	// todo: make obsolete
 	// &.cui-label--padded {
 	// 	padding: $label-padding;
@@ -204,10 +210,6 @@ label[data-label-clickable],
 		word-break: break-word;
 	}
 
-	ul li:not(:last-child) {
-		padding-bottom: $spacer-xs;
-	}
-
 	&.cui-label-centered {
 		flex-direction: column;
 		align-items: center;
@@ -260,6 +262,10 @@ label[data-label-clickable],
 	&.cui-label--has-overflow-button {
 		> .cui-label-content {
 			margin-bottom: $spacer;
+		}
+		
+		&:not(.cui-label--show-overflow) > .cui-label-content {
+			mask-image: linear-gradient(black calc(100% - 2rem), transparent);
 		}
 	}
 
@@ -339,10 +345,12 @@ label[data-label-clickable],
 
 	ul {
 		list-style-type: disc;
+		padding-left: 1rem;
 	}
 
 	ol {
 		list-style-type: decimal;
+		padding-left: 1rem;
 	}
 
 	p,
@@ -351,7 +359,7 @@ label[data-label-clickable],
 	table,
 	ul,
 	ol {
-		margin: 0 0 $paragraph-margin-bottom;
+		margin-bottom: $paragraph-margin-bottom;
 	}
 
 	& > p,
@@ -383,6 +391,10 @@ label[data-label-clickable],
 		width: 100%;
 		overflow: auto;
 		word-break: keep-all;
+
+		tbody tr:nth-child(odd) {
+			background-color: $gray-100;
+		}
 
 		td, th {
 			padding: $spacer-xs $spacer-sm;
@@ -431,7 +443,7 @@ label[data-label-clickable],
 		margin-top: $spacer-sm;
 		margin-bottom: $spacer-sm;
 		border: 0;
-		border-top: $hr-border-width solid $hr-border-color;
+		border-top: $hr-border-width solid $body-color;
 	}
 }
 

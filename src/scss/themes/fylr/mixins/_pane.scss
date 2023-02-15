@@ -14,19 +14,16 @@
 	margin: 0;
 }
 
-@mixin pane() {
-	background-color: $pane-background;
-
-	@include pane-padding();
-}
-
 @mixin pane-header() {
+	--toolbar-gap: 0; // reset default toolbar gap
+	--pane-header-background: #{$body-bg};
+
 	flex-wrap: nowrap;
 	padding-left: 0;
 	padding-right: 0;
-	background-color: $body-bg;
+	background-color: var(--pane-header-background);
 	
-	.cui-label {
+	.cui-horizontal-layout-left > .cui-label {
 		@include h3(0);
 	}
 	

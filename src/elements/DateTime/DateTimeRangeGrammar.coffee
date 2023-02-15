@@ -2,7 +2,7 @@ class CUI.DateTimeRangeGrammar
 
 	@REGEXP_DATE = /^[0-9]+[-/.][0-9]+[-/.][0-9]+$/ # Exact date
 	@REGEXP_MONTH = /^[0-9]+[-/.][0-9]+$/ # Matches if the date has Year and month (no day)
-	@REGEXP_YEAR = /^\-?[0-9]+$/ # Matches if the date has Year. (no day, no month)
+	@REGEXP_YEAR = /^\-?\+?[0-9]+$/ # Matches if the date has Year. (no day, no month)
 	@REGEXP_YEAR_DOT = /^[0-9]+.$/ # Matches Year ending with dot.
 	@REGEXP_CENTURY = /^[0-9]+th$/ # Matches Year ending with th.
 	@REGEXP_SPACE = /\s+/
@@ -86,24 +86,25 @@ class CUI.DateTimeRangeGrammar
 		["YEAR bc - YEAR nach Chr.", "range", [0, 3], [true]]
 		["YEAR ac - YEAR n. Chr.", "range", [0, 3], [true]]
 		["YEAR ac - YEAR nach Chr.", "range", [0, 3], [true]]
-		["bis YEAR", "yearRange", [1], [false, true]]
 		["um YEAR", "yearRange", [1], [false, true, true], "AROUND"]
 		["ca. YEAR", "yearRange", [1], [false, true, true]]
 		["um YEAR bc", "yearRange", [1], [true, true, true]]
 		["um YEAR v. Chr.", "yearRange", [1], [true, true, true], "AROUND_BC"]
 		["ca. YEAR bc", "yearRange", [1], [true, true, true]]
 		["ca. YEAR v. Chr.", "yearRange", [1], [true, true, true]]
-		["vor YEAR", "yearRange", [1], [false, true], "BEFORE"]
-		["vor YEAR bc", "yearRange", [1], [true, true]]
-		["vor YEAR v. Chr.", "yearRange", [1], [true, true], "BEFORE_BC"]
-		["nach YEAR", "yearRange", [1], [false, false, true], "AFTER"]
-		["nach YEAR ad", "yearRange", [1], [false, false, true]]
-		["nach YEAR A.D.", "yearRange", [1], [false, false, true]]
-		["ab YEAR", "yearRange", [1], [false, false, true]]
-		["ab YEAR ad", "yearRange", [1], [false, false, true]]
-		["ab YEAR A.D.", "yearRange", [1], [false, false, true]]
-		["nach YEAR bc", "yearRange", [1], [true, false, true]]
-		["nach YEAR v. Chr.", "yearRange", [1], [true, false, true], "AFTER_BC"]
+		["bis YEAR", "yearOpenStart", [1], [false]]
+		["bis YEAR bc", "yearOpenStart", [1], [true]]
+		["vor YEAR", "yearOpenStart", [1], [false], "BEFORE"]
+		["vor YEAR bc", "yearOpenStart", [1], [true]]
+		["vor YEAR v. Chr.", "yearOpenStart", [1], [true], "BEFORE_BC"]
+		["nach YEAR", "yearOpenEnd", [1], [false], "AFTER"]
+		["nach YEAR ad", "yearOpenEnd", [1], [false]]
+		["nach YEAR A.D.", "yearOpenEnd", [1], [false]]
+		["ab YEAR", "yearOpenEnd", [1], [false]]
+		["ab YEAR ad", "yearOpenEnd", [1], [false]]
+		["ab YEAR A.D.", "yearOpenEnd", [1], [false]]
+		["nach YEAR bc", "yearOpenEnd", [1], [true]]
+		["nach YEAR v. Chr.", "yearOpenEnd", [1], [true], "AFTER_BC"]
 		["YEAR v. Chr.", "getFromTo", [0], [true]]
 		["YEAR n. Chr.", "getFromTo", [0]]
 		["YEAR_DOT Jhd. vor Chr", "century", [0], [true]]
@@ -230,10 +231,10 @@ class CUI.DateTimeRangeGrammar
 		["YEAR - YEAR BC", "range", [0, 2], [true, true]]
 		["YEAR - YEAR B.C.", "range", [0, 2], [true, true]]
 		["MONTH YEAR", "monthRange", [0, 1]]
-		["after YEAR", "yearRange", [1], [false, false, true], "AFTER"]
-		["after YEAR BC", "yearRange", [1], [true, false, true], "AFTER_BC"]
-		["before YEAR", "yearRange", [1], [false, true], "BEFORE"]
-		["before YEAR BC", "yearRange", [1], [true, true], "BEFORE_BC"]
+		["after YEAR", "yearOpenEnd", [1], [false], "AFTER"]
+		["after YEAR BC", "yearOpenEnd", [1], [true], "AFTER_BC"]
+		["before YEAR", "yearOpenStart", [1], [false], "BEFORE"]
+		["before YEAR BC", "yearOpenStart", [1], [true], "BEFORE_BC"]
 		["around YEAR", "yearRange", [1], [false, true, true], "AROUND"]
 		["around YEAR BC", "yearRange", [1], [true, true, true], "AROUND_BC"]
 		["YEAR_DOT millennium", "millennium", [0], null, "MILLENNIUM"]
@@ -259,21 +260,29 @@ class CUI.DateTimeRangeGrammar
 		["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]
 	]
 
-	@dateRangeToString: (from, to) ->
-		if not CUI.util.isString(from) or not CUI.util.isString(to)
+	@dateRangeToString: (from = null, to = null, locale = CUI.DateTime.getLocale()) ->
+		if not CUI.util.isString(from) and not CUI.util.isString(to)
 			return
 
-		locale = CUI.DateTime.getLocale()
+		# In case that to or from are an empty string, force it to be null, otherwise the date check will fail.
+		if to == ""
+			to = null
+		if from == ""
+			from = null
+
 		fromMoment = CUI.DateTimeRangeGrammar.getMoment(from)
 		toMoment = CUI.DateTimeRangeGrammar.getMoment(to)
 
-		if not fromMoment?.isValid() or not toMoment?.isValid()
+		if not fromMoment?.isValid() and not CUI.util.isNull(from)
+			return CUI.DateTimeFormats[locale].formats[0].invalid
+
+		if not toMoment?.isValid() and not CUI.util.isNull(to)
 			return CUI.DateTimeFormats[locale].formats[0].invalid
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(from)
 			fromIsYear = true
 			fromYear = parseInt(from)
-		else if fromMoment.isValid() and fromMoment.date() == 1 and fromMoment.month() == 0 # First day of year.
+		else if fromMoment?.isValid() and fromMoment.date() == 1 and fromMoment.month() == 0 # First day of year.
 			fromMoment.add(1, "day") # This is a workaround to avoid having the wrong year after parsing the timezone.
 			fromMoment.parseZone()
 			fromYear = fromMoment.year()
@@ -284,10 +293,16 @@ class CUI.DateTimeRangeGrammar
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)
 			toIsYear = true
 			toYear = parseInt(to)
-		else if toMoment.isValid() and toMoment.date() == 31 and toMoment.month() == 11 # Last day of year
+		else if toMoment?.isValid() and toMoment.date() == 31 and toMoment.month() == 11 # Last day of year
 			toMoment.add(1, "day")
 			toMoment.parseZone()
 			toYear = toMoment.year()
+
+		if not fromIsYear and CUI.util.isNull(to)
+			return from
+
+		if not toIsYear and CUI.util.isNull(from)
+			return to
 
 		grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale]
 		if not grammars
@@ -315,16 +330,14 @@ class CUI.DateTimeRangeGrammar
 					possibleStringArray[value] = parameters[index]
 
 			possibleString = possibleStringArray.join(" ")
-			output = CUI.DateTimeRangeGrammar.stringToDateRange(possibleString)
+			output = CUI.DateTimeRangeGrammar.stringToDateRange(possibleString, locale)
 			if not output or output.to != to or output.from != from
 				return
 
 			return possibleString.replace(" #{DateTimeRangeGrammar.DASH} ", " #{DateTimeRangeGrammar.EN_DASH} ")
 
-		if not CUI.util.isUndef(fromYear) and not CUI.util.isUndef(toYear)
-			if fromYear == toYear
-				return "#{fromYear}"
-
+		if fromIsYear and CUI.util.isNull(to)
+			to = undefined
 			isBC = fromYear < 0
 			if isBC
 				possibleString = getPossibleString("AFTER_BC", [Math.abs(fromYear)])
@@ -333,7 +346,10 @@ class CUI.DateTimeRangeGrammar
 
 			if possibleString
 				return possibleString
+			return from
 
+		if toIsYear and CUI.util.isNull(from)
+			from = undefined
 			isBC = toYear < 0
 			if isBC
 				possibleString = getPossibleString("BEFORE_BC", [Math.abs(toYear)])
@@ -342,6 +358,11 @@ class CUI.DateTimeRangeGrammar
 
 			if possibleString
 				return possibleString
+			return to
+
+		if not CUI.util.isUndef(fromYear) and not CUI.util.isUndef(toYear)
+			if fromYear == toYear
+				return "#{fromYear}"
 
 			centerYear = (toYear + fromYear) / 2
 			isBC = centerYear <= 0
@@ -442,11 +463,10 @@ class CUI.DateTimeRangeGrammar
 		return "#{from} #{DateTimeRangeGrammar.EN_DASH} #{to}"
 
 	# Main method to check against every grammar.
-	@stringToDateRange: (input) ->
+	@stringToDateRange: (input, locale = CUI.DateTime.getLocale()) ->
 		if CUI.util.isEmpty(input) or not CUI.util.isString(input)
 			return error: "Input needs to be a non empty string: #{input}"
 
-		locale = CUI.DateTime.getLocale()
 		input = input.trim()
 
 		input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH)
@@ -578,6 +598,18 @@ class CUI.DateTimeRangeGrammar
 		momentDate.endOf("month")
 		to= CUI.DateTimeRangeGrammar.format(momentDate, false)
 		return from: from, to: to
+
+	@yearOpenEnd: (year, isBC = false) ->
+		yearRange = @yearRange(year, isBC)
+		if not yearRange
+			return
+		return from: yearRange.from, to: undefined
+
+	@yearOpenStart: (year, isBC = false) ->
+		yearRange = @yearRange(year, isBC)
+		if not yearRange
+			return
+		return from: undefined, to: yearRange.to
 
 	@yearRange: (year, isBC = false, fromAddYears = false, toAddYears = false) ->
 		if isBC and not year.startsWith(CUI.DateTimeRangeGrammar.DASH)

@@ -61,3 +61,10 @@
 		}
 	}
 }
+
+@mixin checkbox-inverted() {
+	--checkbox-border-color: #{$white};
+	--checkbox-background: #{$gray-100};
+	--checkbox-active-background: #{$white}; // = active border
+	--checkbox-active-color: #{$body-color};
+}

@@ -1,4 +1,7 @@
 :root {
+	--brand-color: #{theme-color('primary')};
+	--brand-color-hover: #{darken(theme-color('primary'), 10%)};
+
 	// Custom variable values only support SassScript inside `#{}`.
 	@each $color, $value in $colors {
 		--#{$color}: #{$value};
@@ -6,6 +9,10 @@
 
 	@each $color, $value in $theme-colors {
 		--#{$color}: #{$value};
+	}
+
+	@each $color, $value in $grays {
+		--gray-#{$color}: #{$value};
 	}
 
 	@each $bp, $value in $grid-breakpoints {
@@ -16,7 +23,23 @@
 	// See https://github.com/sass/sass/issues/2383#issuecomment-336349172
 	--font-family-sans-serif: #{inspect($font-family-sans-serif)};
 	--font-family-monospace: #{inspect($font-family-monospace)};
-
-	//
+	
+	// other colors
+	--body-bg: #{$body-bg};
+	--body-color: #{$body-color};
 	--top-header-background: #{$body-bg};
+	
+	// headings
+	@each $size, $value in $headline-sizes {
+		--headline-size-#{$size}: #{$value};
+	}
+
+	--headings-font-family: #{inspect($headings-font-family)};
+	--headings-font-weight: #{$headings-font-weight};
+	--headings-line-height: #{$headings-line-height};
+	--headings-color: #{$headings-color};
+
+	// spacing
+	--pane-padding: #{$pane-padding};
+	--toolbar-padding: #{$toolbar-padding};
 }

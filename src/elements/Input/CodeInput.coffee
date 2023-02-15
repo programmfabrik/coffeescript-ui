@@ -1,3 +1,9 @@
+Ace = require('ace-builds/src-noconflict/ace')
+require('ace-builds/src-min-noconflict/mode-json')
+require('ace-builds/src-min-noconflict/mode-html')
+require('ace-builds/src-min-noconflict/mode-javascript')
+require('ace-builds/src-min-noconflict/mode-css')
+
 class CUI.CodeInput extends CUI.Input
 
 	@availableModes = ["html", "javascript", "json", "css"]
@@ -5,10 +11,6 @@ class CUI.CodeInput extends CUI.Input
 	readOpts: ->
 		super()
 		@_textarea = true
-
-		if not CUI.CodeInput.loadAcePromise
-			CUI.CodeInput.loadAcePromise = @__fetchLibrary()
-
 		return @
 
 	initOpts: ->
@@ -21,40 +23,26 @@ class CUI.CodeInput extends CUI.Input
 	render: ->
 		super()
 
-		CUI.CodeInput.loadAcePromise.done( =>
-			ace = window.ace
-			@__aceEditor = ace.edit(@__input,
-				mode: "ace/mode/#{@_mode}",
-				selectionStyle: "text",
-			)
+		@__aceEditor = Ace.edit(@__input,
+			useWorker: false
+			selectionStyle: "text"
+		)
+		@__aceEditor.getSession().setMode("ace/mode/#{@_mode}");
 
-			value = @__data?[@_name]
-			if value
+		value = @__data?[@_name]
+		if value
+			if CUI.util.isString(value)
 				try # Workaround to format/indent
 					value = JSON.parse(value)
-					value = JSON.stringify(value, null, '\t')
+			if @_mode == "json"
+				value = JSON.stringify(value, null, '\t')
+			@__aceEditor.setValue(value, -1) # -1 sets the cursor to the start
+			@__aceEditor.clearSelection()
 
-				@__aceEditor.setValue(value, -1) # -1 sets the cursor to the start
-				@__aceEditor.clearSelection()
-
-			@__aceEditor.on('change', =>
-				@storeValue(@__aceEditor.getValue())
-			)
+		@__aceEditor.on('change', =>
+			@storeValue(@__aceEditor.getValue())
 		)
 
 	destroy: ->
 		@__aceEditor?.destroy()
 		return super()
-
-	__fetchLibrary: ->
-		deferred = new CUI.Deferred()
-
-		# Load library
-		CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js").done(->
-			modePromises = []
-			for mode in CUI.CodeInput.availableModes
-				modePromises.push(CUI.loadScript("https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/mode-#{mode}.js"))
-			CUI.whenAll(modePromises).done(deferred.resolve).fail(deferred.reject)
-		).fail(deferred.reject)
-
-		return deferred.promise()
