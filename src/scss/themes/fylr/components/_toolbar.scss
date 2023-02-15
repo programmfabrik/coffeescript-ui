@@ -98,10 +98,6 @@
 			overflow: hidden;
 		}
 	}
-	
-	.cui-buttonbar .cui-buttonbar-group-navi {
-		@include buttonbar-group-navigation();
-	}
 
 	.cui-buttonbar + .cui-label {
 		margin-left: $spacer-sm;
@@ -109,42 +105,10 @@
 }
 
 // Navigation Toolbar
-// todo: find use-case, replace --mini
-// use-case: editor
+// used in the group editor
+// todo: find use-case for --mini
 .cui-navigation-toolbar {
-	.cui-buttonbar .cui-buttonbar-group {
-		@include buttonbar-group-navigation();
-
-		.cui-number-input {
-			margin: 0 $spacer-xs;
-		}
-	}
-
-	// &--mini {
-	// 	background: none;
-	// 	min-height: 20px !important;
-
-	// 	.cui-horizontal-layout-left > .cui-label:first-child {
-	// 		color: theme-color('dark'); // todo
-	// 		font-weight: normal;
-	// 		padding-left: $spacer-sm;
-	// 		margin-right: 0;
-	// 	}
-
-	// 	.cui-buttonbar {
-	// 		margin-bottom: 2px;
-	// 	}
-
-	// 	.cui-button {
-	// 		padding: 0;
-	// 	}
-
-	// 	.cui-input {
-	// 		padding: 0 3px;
-	// 		font-size: 11px;
-	// 		line-height: 18px;
-	// 	}
-	// }
+	// &.cui-navigation-toolbar--mini {}	
 
 	> .cui-horizontal-layout-left {
 		> .cui-label:last-child {
