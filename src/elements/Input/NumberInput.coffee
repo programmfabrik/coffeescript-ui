@@ -85,12 +85,12 @@ class CUI.NumberInput extends CUI.Input
 				decimals = decimals + "0"
 
 		if forInput
-			if @_decimals > 0
+			if @_decimals > 0 or @_decimals == -1
 				return number + @_decimalpoint + decimals
 			else
 				return number
 
-		if @_decimals > 0
+		if @_decimals > 0 or @_decimals == -1
 			v1 = @__addSeparator(number)+@_decimalpoint+decimals
 		else
 			v1 = @__addSeparator(number)
@@ -131,7 +131,7 @@ class CUI.NumberInput extends CUI.Input
 	checkValue: (v) ->
 		if v == null
 			true
-		else if @_decimals > 0 and CUI.util.isFloat(v)
+		else if (@_decimals > 0 or @_decimals == -1) and CUI.util.isFloat(v)
 			true
 		else if CUI.util.isInteger(v)
 			true
@@ -206,7 +206,7 @@ class CUI.NumberInput extends CUI.Input
 			points = v.substring(point_idx+1)
 
 		# console.debug "v:", v, "number:", number, "points:", points, "decimalpoint", @_decimalpoint, "separator", @_separator
-		if points.length > @_decimals
+		if points.length > @_decimals and @_decimals != -1
 			return false
 
 		if number.length > 0 and not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
@@ -228,7 +228,7 @@ class CUI.NumberInput extends CUI.Input
 			# console.debug "points not matched", points
 			return false
 
-		if points.length > @_decimals
+		if points.length > @_decimals and @_decimals != -1
 			return false
 
 		return true # v.replace(".", @_decimalpoint)

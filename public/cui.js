@@ -59139,13 +59139,13 @@ CUI.NumberInput = (function(superClass) {
       }
     }
     if (forInput) {
-      if (this._decimals > 0) {
+      if (this._decimals > 0 || this._decimals === -1) {
         return number + this._decimalpoint + decimals;
       } else {
         return number;
       }
     }
-    if (this._decimals > 0) {
+    if (this._decimals > 0 || this._decimals === -1) {
       v1 = this.__addSeparator(number) + this._decimalpoint + decimals;
     } else {
       v1 = this.__addSeparator(number);
@@ -59196,7 +59196,7 @@ CUI.NumberInput = (function(superClass) {
   NumberInput.prototype.checkValue = function(v) {
     if (v === null) {
       return true;
-    } else if (this._decimals > 0 && CUI.util.isFloat(v)) {
+    } else if ((this._decimals > 0 || this._decimals === -1) && CUI.util.isFloat(v)) {
       return true;
     } else if (CUI.util.isInteger(v)) {
       return true;
@@ -59283,7 +59283,7 @@ CUI.NumberInput = (function(superClass) {
       number = v.substring(0, point_idx);
       points = v.substring(point_idx + 1);
     }
-    if (points.length > this._decimals) {
+    if (points.length > this._decimals && this._decimals !== -1) {
       return false;
     }
     if (number.length > 0 && !number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)) {
@@ -59305,7 +59305,7 @@ CUI.NumberInput = (function(superClass) {
     if (!points.match(/^([0-9]*)$/)) {
       return false;
     }
-    if (points.length > this._decimals) {
+    if (points.length > this._decimals && this._decimals !== -1) {
       return false;
     }
     return true;
