@@ -2621,6 +2621,9 @@ textarea {
   border: 1px solid transparent;
   border-radius: 2px;
 }
+.cui-code-input pre.ace_editor {
+  border: 0;
+}
 
 .cui-input-content-size textarea {
   resize: none;
