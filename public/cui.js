@@ -59059,6 +59059,10 @@ CUI.NumberInput = (function(superClass) {
         "default": false,
         check: Boolean
       },
+      json_number: {
+        "default": false,
+        check: Boolean
+      },
       decimalpoint: {
         mandatory: true,
         "default": ".",
@@ -59091,6 +59095,9 @@ CUI.NumberInput = (function(superClass) {
 
   NumberInput.prototype.readOpts = function() {
     NumberInput.__super__.readOpts.call(this);
+    if (this._json_number) {
+      this._decimals = 13;
+    }
     this._checkInput = this.__checkInput;
     this._prevent_invalid_input = true;
     this.setMin(this._min);
@@ -59133,19 +59140,19 @@ CUI.NumberInput = (function(superClass) {
       number = v0[0];
       decimals = "";
     }
-    if (this._decimals > 0) {
+    if (this._decimals > 0 && !this._json_number) {
       while (decimals.length < this._decimals) {
         decimals = decimals + "0";
       }
     }
     if (forInput) {
-      if (this._decimals > 0 || this._decimals === -1) {
+      if (this._decimals > 0 || this._json_number) {
         return number + this._decimalpoint + decimals;
       } else {
         return number;
       }
     }
-    if (this._decimals > 0 || this._decimals === -1) {
+    if (this._decimals > 0 || this._json_number) {
       v1 = this.__addSeparator(number) + this._decimalpoint + decimals;
     } else {
       v1 = this.__addSeparator(number);
@@ -59196,7 +59203,7 @@ CUI.NumberInput = (function(superClass) {
   NumberInput.prototype.checkValue = function(v) {
     if (v === null) {
       return true;
-    } else if ((this._decimals > 0 || this._decimals === -1) && CUI.util.isFloat(v)) {
+    } else if ((this._decimals > 0 || this._json_number) && CUI.util.isFloat(v)) {
       return true;
     } else if (CUI.util.isInteger(v)) {
       return true;
@@ -59283,10 +59290,10 @@ CUI.NumberInput = (function(superClass) {
       number = v.substring(0, point_idx);
       points = v.substring(point_idx + 1);
     }
-    if (points.length > this._decimals && this._decimals !== -1) {
+    if (points.length > this._decimals && !this._json_number) {
       return false;
     }
-    if (number.length > 0 && !number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)) {
+    if (number.length > 0 && !number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/) && !this._json_number) {
       return false;
     }
     if (!CUI.util.isNull(this.__min)) {
@@ -59302,10 +59309,10 @@ CUI.NumberInput = (function(superClass) {
         return false;
       }
     }
-    if (!points.match(/^([0-9]*)$/)) {
+    if (!points.match(/^([0-9]*)$/) && !this._json_number) {
       return false;
     }
-    if (points.length > this._decimals && this._decimals !== -1) {
+    if (points.length > this._decimals && !this._json_number) {
       return false;
     }
     return true;
@@ -59319,7 +59326,7 @@ CUI.NumberInput = (function(superClass) {
     if (CUI.util.isEmpty(v)) {
       v = null;
     }
-    if (CUI.util.isFloat(v) && !opts.hasOwnProperty("decimals")) {
+    if (CUI.util.isFloat(v) && !opts.hasOwnProperty("decimals") && !opts.hasOwnProperty("json_number")) {
       _v = v + "";
       opts.decimals = _v.length - _v.indexOf(".") - 1;
     }
