@@ -3347,6 +3347,8 @@ textarea {
 .cui-data-field .cui-object-dumper.cui-list-view .cui-lv-tr-fill-outer {
   min-height: 1px;
   margin-top: -1px;
+}
+.cui-data-field .cui-object-dumper.cui-list-view .cui-lv-tr-fill-outer > .cui-lv-tr {
   background-color: var(--pane-background);
 }
 .cui-data-field .cui-object-dumper.cui-list-view .cui-list-view-grid-quadrant-3 {
@@ -6290,6 +6292,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-data-table .cui-list-view .cui-lv-tr-fill-outer {
   min-height: 1px;
   margin-top: -1px;
+}
+.cui-data-table .cui-list-view .cui-lv-tr-fill-outer > .cui-lv-tr {
   background-color: var(--pane-background);
 }
 .cui-data-table .cui-list-view > .cui-vertical-layout-bottom > .cui-pane-footer {
