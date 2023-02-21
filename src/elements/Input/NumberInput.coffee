@@ -291,6 +291,8 @@ class CUI.NumberInput extends CUI.Input
 				else
 					thousandSeparatorRegex = /,/g
 
+		# If we have decimals -1 (Double) and we only have a dot or a comma then we use that as decimal separator
+
 		if thousandSeparatorRegex
 			string = string.replace(thousandSeparatorRegex, "")
 
