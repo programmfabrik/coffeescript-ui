@@ -58,8 +58,9 @@ class CUI.NumberInput extends CUI.Input
 		super()
 		if @_json_number
 			@_decimals = 13
+		else
+			@_prevent_invalid_input = true
 		@_checkInput = @__checkInput
-		@_prevent_invalid_input = true
 		@setMin(@_min)
 		@setMax(@_max)
 
@@ -91,12 +92,12 @@ class CUI.NumberInput extends CUI.Input
 				decimals = decimals + "0"
 
 		if forInput
-			if @_decimals > 0 or @_json_number
+			if @_decimals > 0 and decimals.length > 0
 				return number + @_decimalpoint + decimals
 			else
 				return number
 
-		if @_decimals > 0 or @_json_number
+		if @_decimals > 0 and decimals.length > 0
 			v1 = @__addSeparator(number)+@_decimalpoint+decimals
 		else
 			v1 = @__addSeparator(number)
@@ -235,6 +236,13 @@ class CUI.NumberInput extends CUI.Input
 
 		if points.length > @_decimals and not @_json_number
 			return false
+
+		if @_json_number
+			v = v.replace(",",".")
+			# Json number regexp with the condition that can we write 1.3234e, this prevent the input to delete the e
+			# when we are typing the number as this check is called everytime a key is pressed.
+			json_number_regexp = /^-?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/
+			return json_number_regexp.test(v)
 
 		return true # v.replace(".", @_decimalpoint)
 
