@@ -59097,9 +59097,10 @@ CUI.NumberInput = (function(superClass) {
     NumberInput.__super__.readOpts.call(this);
     if (this._json_number) {
       this._decimals = 13;
+    } else {
+      this._prevent_invalid_input = true;
     }
     this._checkInput = this.__checkInput;
-    this._prevent_invalid_input = true;
     this.setMin(this._min);
     return this.setMax(this._max);
   };
@@ -59146,13 +59147,13 @@ CUI.NumberInput = (function(superClass) {
       }
     }
     if (forInput) {
-      if (this._decimals > 0 || this._json_number) {
+      if (this._decimals > 0 && decimals.length > 0) {
         return number + this._decimalpoint + decimals;
       } else {
         return number;
       }
     }
-    if (this._decimals > 0 || this._json_number) {
+    if (this._decimals > 0 && decimals.length > 0) {
       v1 = this.__addSeparator(number) + this._decimalpoint + decimals;
     } else {
       v1 = this.__addSeparator(number);
@@ -59265,7 +59266,7 @@ CUI.NumberInput = (function(superClass) {
   };
 
   NumberInput.prototype.__checkInput = function(value) {
-    var number, point_idx, points, re, v;
+    var json_number_regexp, number, point_idx, points, re, v;
     if (!this.hasShadowFocus()) {
       v = value.replace(this._symbol, "");
     } else {
@@ -59314,6 +59315,11 @@ CUI.NumberInput = (function(superClass) {
     }
     if (points.length > this._decimals && !this._json_number) {
       return false;
+    }
+    if (this._json_number) {
+      v = v.replace(",", ".");
+      json_number_regexp = /^-?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/;
+      return json_number_regexp.test(v);
     }
     return true;
   };
