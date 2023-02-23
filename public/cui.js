@@ -59318,12 +59318,23 @@ CUI.NumberInput = (function(superClass) {
     if (this._json_number) {
       v = v.replace(",", ".");
       if (v.match(/([eE][+\-]?|\.)$/)) {
-        v = v + "0";
+        return false;
       }
       json_number_regexp = /^-?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/;
       return json_number_regexp.test(v);
     }
     return true;
+  };
+
+  NumberInput.prototype.preventInvalidInput = function() {
+    var ref, ref1, ref2, ref3, shadowValue;
+    if (this._json_number) {
+      shadowValue = (ref = this.__shadow) != null ? (ref1 = ref.value) != null ? (ref2 = ref1.trim()) != null ? ref2.replace(",", ".") : void 0 : void 0 : void 0;
+      if (shadowValue != null ? shadowValue.match(/([eE][+\-]?|\.)$/) : void 0) {
+        return !!((shadowValue != null ? (ref3 = shadowValue.match(/[eE]/gi)) != null ? ref3.length : void 0 : void 0) > 1);
+      }
+    }
+    return NumberInput.__super__.preventInvalidInput.call(this);
   };
 
   NumberInput.format = function(v, opts) {
