@@ -59097,9 +59097,8 @@ CUI.NumberInput = (function(superClass) {
     NumberInput.__super__.readOpts.call(this);
     if (this._json_number) {
       this._decimals = 13;
-    } else {
-      this._prevent_invalid_input = true;
     }
+    this._prevent_invalid_input = true;
     this._checkInput = this.__checkInput;
     this.setMin(this._min);
     return this.setMax(this._max);
@@ -59318,6 +59317,9 @@ CUI.NumberInput = (function(superClass) {
     }
     if (this._json_number) {
       v = v.replace(",", ".");
+      if (v.match(/([eE][+\-]?|\.)$/)) {
+        v = v + "0";
+      }
       json_number_regexp = /^-?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/;
       return json_number_regexp.test(v);
     }
