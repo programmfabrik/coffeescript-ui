@@ -238,18 +238,26 @@ class CUI.NumberInput extends CUI.Input
 
 		if @_json_number
 			v = v.replace(",",".")
-
-			# If we are in process of write the json number with exp we can have an incomplete number eg 2. or 2.2e
-			# we check this and add a valid end to validate the input.
 			if v.match(/([eE][+\-]?|\.)$/)
-				v = v+"0"
+				# If we receive a partial JSON number such as "2.32e", we return false to indicate an invalid input.
+ 				# However, we also allows the user to continue entering the rest of the number. In preventInvalidInput:
+				# This gives the user the flexibility to complete the number
+				return false
 
-			# Json number regexp with the condition that can we write 1.3234e, this prevent the input to delete the e
-			# when we are typing the number as this check is called everytime a key is pressed.
 			json_number_regexp = /^-?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/
 			return json_number_regexp.test(v)
 
-		return true # v.replace(".", @_decimalpoint)
+		return true
+
+	preventInvalidInput: ->
+		if @_json_number
+			# Json Number require a dynamic value for preventInvalidInput for partial json Numbers.
+			shadowValue = @__shadow?.value?.trim()?.replace(",",".")
+			if shadowValue?.match(/([eE][+\-]?|\.)$/)
+				# If we are here we want to let the user to enter the "not valid" number because we are in process of
+				# of typing the entire number. In the end we check if we only have 0 or 1 "e".
+				return !!(shadowValue?.match(/[eE]/gi)?.length > 1)
+		return super()
 
 	@format: (v, opts={}) ->
 		if CUI.util.isEmpty(v)
