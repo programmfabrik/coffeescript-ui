@@ -124,6 +124,14 @@
 			border: 1px solid var(--border-color);
 		}
 	}
+
+	.cui-button .cui-button-visual {
+		min-width: 24px;
+	}
+
+	.cui-number-input {
+		margin: 0 $spacer-xs;
+	}
 }
 
 @mixin buttonbar-group-navigation-sm() {

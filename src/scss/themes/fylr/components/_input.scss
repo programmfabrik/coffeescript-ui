@@ -117,6 +117,10 @@ textarea {
 	margin: auto;
 	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
+
+	&.ace_editor {
+		border: 0;
+	}
 }
 
 .cui-input-content-size {

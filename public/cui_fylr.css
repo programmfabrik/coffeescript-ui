@@ -111,8 +111,6 @@ body.dev.is-server2::after {
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
 :root {
-  --brand-color: #ff5724;
-  --brand-color-hover: #f03800;
   --blue: #6bb2bb;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -1954,10 +1952,12 @@ label[data-label-clickable],
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
   height: auto;
   line-height: 1.5;
+  align-items: baseline;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center {
   text-decoration: underline;
   word-break: break-all;
+  white-space: normal;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:first-child,
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left:empty + .cui-button-center {
@@ -2420,10 +2420,12 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual {
   height: auto;
   line-height: 1.5;
+  align-items: baseline;
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-center {
   text-decoration: underline;
   word-break: break-all;
+  white-space: normal;
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-center:first-child,
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-left:empty + .cui-button-center {
@@ -2618,6 +2620,9 @@ textarea {
   margin: auto;
   border: 1px solid transparent;
   border-radius: 2px;
+}
+.cui-code-input pre.ace_editor {
+  border: 0;
 }
 
 .cui-input-content-size textarea {
@@ -3345,6 +3350,8 @@ textarea {
 .cui-data-field .cui-object-dumper.cui-list-view .cui-lv-tr-fill-outer {
   min-height: 1px;
   margin-top: -1px;
+}
+.cui-data-field .cui-object-dumper.cui-list-view .cui-lv-tr-fill-outer > .cui-lv-tr {
   background-color: var(--pane-background);
 }
 .cui-data-field .cui-object-dumper.cui-list-view .cui-list-view-grid-quadrant-3 {
@@ -4059,6 +4066,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
+}
+.cui-buttonbar-group-navi .cui-button .cui-button-visual {
+  min-width: 24px;
+}
+.cui-buttonbar-group-navi .cui-number-input {
+  margin: 0 0.25rem;
 }
 
 .cui-progress-meter .cui-progress-meter-bar {
@@ -5246,6 +5259,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-input-empty-hint .cui-button .cui-button-visual {
   height: auto;
   line-height: 1.5;
+  align-items: baseline;
 }
 .cui-hint .cui-button .cui-button-visual .cui-button-center,
 .cui-form-hint .cui-button .cui-button-visual .cui-button-center,
@@ -5254,6 +5268,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-input-empty-hint .cui-button .cui-button-visual .cui-button-center {
   text-decoration: underline;
   word-break: break-all;
+  white-space: normal;
 }
 .cui-hint .cui-button .cui-button-visual .cui-button-center:first-child,
 .cui-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center,
@@ -5511,103 +5526,17 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   flex-shrink: 1;
 }
 
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi {
-  border-radius: 2px;
+.cui-result-navigation-toolbar > .cui-horizontal-layout-left {
+  flex: 0 1 auto;
+}
+.cui-result-navigation-toolbar > .cui-horizontal-layout-left > .cui-label {
+  flex: 1 1 auto;
   overflow: hidden;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button {
-  --btn-border-color: transparent;
-  --btn-border-width: 0;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:hover, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus {
-  --btn-border-color: transparent;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:hover .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus {
-  outline: none;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-active .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-active:hover .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-active:focus .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-layer-open:hover .cui-button-visual, .cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button.cui-layer-open:focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-result-navigation-toolbar .cui-buttonbar .cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
 }
 .cui-result-navigation-toolbar .cui-buttonbar + .cui-label {
   margin-left: 0.5rem;
 }
 
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group {
-  border-radius: 2px;
-  overflow: hidden;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button {
-  --btn-border-color: transparent;
-  --btn-border-width: 0;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:hover, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus {
-  --btn-border-color: transparent;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:hover .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus {
-  outline: none;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-active .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual, .cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-button:active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
-}
-.cui-navigation-toolbar .cui-buttonbar .cui-buttonbar-group .cui-number-input {
-  margin: 0 0.25rem;
-}
 .cui-navigation-toolbar > .cui-horizontal-layout-left > .cui-label:last-child {
   margin-right: 1rem;
 }
@@ -6366,6 +6295,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-data-table .cui-list-view .cui-lv-tr-fill-outer {
   min-height: 1px;
   margin-top: -1px;
+}
+.cui-data-table .cui-list-view .cui-lv-tr-fill-outer > .cui-lv-tr {
   background-color: var(--pane-background);
 }
 .cui-data-table .cui-list-view > .cui-vertical-layout-bottom > .cui-pane-footer {

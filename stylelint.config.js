@@ -16,6 +16,12 @@ module.exports = {
         'selector-list-comma-newline-after': null,
         'no-descending-specificity': null,
         'no-eol-whitespace': null,
+        'property-no-unknown': [
+            true,
+            {
+                'ignoreProperties': ['aspect-ratio', 'container-type', 'container-name'],
+            }
+        ],        
         "at-rule-empty-line-before": [
             "always",
             {
@@ -48,7 +54,8 @@ module.exports = {
                     'responsive',
                     'variants',
                     'screen',
-                    'use'
+                    'use',
+                    'container',
                 ],
             },
         ],

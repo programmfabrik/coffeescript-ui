@@ -60,6 +60,11 @@
 	.cui-lv-tr-fill-outer {
 		min-height: 1px;
 		margin-top: -1px;
-		background-color: var(--pane-background);
+		
+		// fix issue where the assigned background color of the outer-fill row would end at the viewport width, not taking overflow into account
+		// if we assign the background color to the inner child element, the background color will spread across the whole width of the overflow container
+		> .cui-lv-tr {
+			background-color: var(--pane-background);
+		}
 	}
 }
