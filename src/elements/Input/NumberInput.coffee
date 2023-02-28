@@ -25,6 +25,10 @@ class CUI.NumberInput extends CUI.Input
 				default: false
 				check: Boolean
 
+			json_number:
+				default: false
+				check: Boolean
+
 			decimalpoint:
 				mandatory: true
 				default: "."
@@ -52,8 +56,10 @@ class CUI.NumberInput extends CUI.Input
 
 	readOpts: ->
 		super()
-		@_checkInput = @__checkInput
+		if @_json_number
+			@_decimals = 13
 		@_prevent_invalid_input = true
+		@_checkInput = @__checkInput
 		@setMin(@_min)
 		@setMax(@_max)
 
@@ -80,17 +86,17 @@ class CUI.NumberInput extends CUI.Input
 			number = v0[0]
 			decimals = ""
 
-		if @_decimals > 0
+		if @_decimals > 0 and not @_json_number
 			while decimals.length < @_decimals
 				decimals = decimals + "0"
 
 		if forInput
-			if @_decimals > 0
+			if @_decimals > 0 and decimals.length > 0
 				return number + @_decimalpoint + decimals
 			else
 				return number
 
-		if @_decimals > 0
+		if @_decimals > 0 and decimals.length > 0
 			v1 = @__addSeparator(number)+@_decimalpoint+decimals
 		else
 			v1 = @__addSeparator(number)
@@ -131,7 +137,7 @@ class CUI.NumberInput extends CUI.Input
 	checkValue: (v) ->
 		if v == null
 			true
-		else if @_decimals > 0 and CUI.util.isFloat(v)
+		else if (@_decimals > 0 or @_json_number) and CUI.util.isFloat(v)
 			true
 		else if CUI.util.isInteger(v)
 			true
@@ -179,7 +185,6 @@ class CUI.NumberInput extends CUI.Input
 			return super(value)
 
 	__checkInput: (value) ->
-
 		if not @hasShadowFocus()
 			v = value.replace(@_symbol, "")
 		else
@@ -206,10 +211,10 @@ class CUI.NumberInput extends CUI.Input
 			points = v.substring(point_idx+1)
 
 		# console.debug "v:", v, "number:", number, "points:", points, "decimalpoint", @_decimalpoint, "separator", @_separator
-		if points.length > @_decimals
+		if points.length > @_decimals and not @_json_number
 			return false
 
-		if number.length > 0 and not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/)
+		if number.length > 0 and not number.match(/^((0|[1-9]+[0-9]*)|(-|-[1-9]|-[1-9][0-9]*))$/) and not @_json_number
 			# console.debug "number not matched", number
 			return false
 
@@ -224,21 +229,42 @@ class CUI.NumberInput extends CUI.Input
 			if number > @__max
 				return false
 
-		if not points.match(/^([0-9]*)$/)
+		if not points.match(/^([0-9]*)$/) and not @_json_number
 			# console.debug "points not matched", points
 			return false
 
-		if points.length > @_decimals
+		if points.length > @_decimals and not @_json_number
 			return false
 
-		return true # v.replace(".", @_decimalpoint)
+		if @_json_number
+			v = v.replace(",",".")
+			if v.match(/([eE][+\-]?|\.)$/)
+				# If we receive a partial JSON number such as "2.32e", we return false to indicate an invalid input.
+ 				# However, we also allows the user to continue entering the rest of the number. In preventInvalidInput:
+				# This gives the user the flexibility to complete the number
+				return false
+
+			json_number_regexp = /^-?(0|[1-9]\d*)(\.\d+)?([eE][-+]?\d+)?$/
+			return json_number_regexp.test(v)
+
+		return true
+
+	preventInvalidInput: ->
+		if @_json_number
+			# Json Number require a dynamic value for preventInvalidInput for partial json Numbers.
+			shadowValue = @__shadow?.value?.trim()?.replace(",",".")
+			if shadowValue?.match(/([eE][+\-]?|\.)$/)
+				# If we are here we want to let the user to enter the "not valid" number because we are in process of
+				# of typing the entire number. In the end we check if we only have 0 or 1 "e".
+				return !!(shadowValue?.match(/[eE]/gi)?.length > 1)
+		return super()
 
 	@format: (v, opts={}) ->
 		if CUI.util.isEmpty(v)
 			v = null
 
 		# automatically set decimals
-		if CUI.util.isFloat(v) and not opts.hasOwnProperty("decimals")
+		if CUI.util.isFloat(v) and not opts.hasOwnProperty("decimals") and not opts.hasOwnProperty("json_number")
 			_v = v+""
 			opts.decimals = _v.length - _v.indexOf(".") - 1
 
@@ -285,6 +311,8 @@ class CUI.NumberInput extends CUI.Input
 					thousandSeparatorRegex = /\./g
 				else
 					thousandSeparatorRegex = /,/g
+
+		# If we have decimals -1 (Double) and we only have a dot or a comma then we use that as decimal separator
 
 		if thousandSeparatorRegex
 			string = string.replace(thousandSeparatorRegex, "")
