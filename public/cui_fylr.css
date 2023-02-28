@@ -1812,7 +1812,7 @@ label[data-label-clickable],
   cursor: default;
   color: #8b949c;
 }
-.cui-selected .cui-empty-label {
+.cui-selected .cui-empty-label, .cui-list-view-row-selectable:hover .cui-empty-label {
   color: #f5f5f5;
 }
 .cui-empty-label .cui-label-content {
