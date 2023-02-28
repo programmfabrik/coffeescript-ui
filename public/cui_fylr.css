@@ -3808,10 +3808,21 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--brand-color, #ff5724);
   display: block;
   pointer-events: none;
-  z-index: 1;
+  z-index: 10;
   will-change: transform;
   transform-origin: left top;
   opacity: 0.33;
+}
+.cui-lasso::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.2;
 }
 
 .cui-drag-drop-select-lasso-element-in-lasso {
