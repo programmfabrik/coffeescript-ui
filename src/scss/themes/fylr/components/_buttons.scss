@@ -75,8 +75,11 @@
 	}
 }
 
+// type of cui-button-href that is rendered in a cui-item-list, see Asset.coffee
+// .cui-button-download {}
+
 .cui-button-href {
-	&:not(.cui-button--primary):not(.cui-button--secondary) {
+	&:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) {
 		@include button-link();
 	}
 }
