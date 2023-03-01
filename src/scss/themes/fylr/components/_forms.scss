@@ -203,6 +203,10 @@
 	min-height: 0;
 	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
 
+	&:only-child {
+		margin-bottom: 0;
+	}
+
 	&.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, 		// see system-rights
 	&.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
 		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes
