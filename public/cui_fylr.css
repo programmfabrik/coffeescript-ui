@@ -2380,62 +2380,62 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
   margin-left: auto;
 }
 
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) {
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual {
   background-color: var(--btn-background, transparent);
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):focus .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):focus {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus {
   outline: none;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):focus .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):active .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary).cui-active .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary).cui-layer-open .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary).cui-active:hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary).cui-active:focus .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary).cui-layer-open:hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary).cui-layer-open:focus .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:focus .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):hover, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):focus {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):hover, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus {
   --btn-border-color: transparent;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual {
   height: auto;
   line-height: 1.5;
   align-items: baseline;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-center {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center {
   text-decoration: underline;
   word-break: break-all;
   white-space: normal;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-center:first-child,
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-left:empty + .cui-button-center {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center:first-child,
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-left:empty + .cui-button-center {
   padding-left: 0;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-center:last-child,
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary) .cui-button-visual .cui-button-center:only-child {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center:last-child,
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):hover .cui-button-visual .cui-button-center, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):focus .cui-button-visual .cui-button-center {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):hover .cui-button-visual .cui-button-center, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus .cui-button-visual .cui-button-center {
   text-decoration: none;
 }
 
@@ -5132,6 +5132,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-height: 0;
   margin-bottom: 1rem;
 }
+.cui-form-row:only-child {
+  margin-bottom: 0;
+}
 .cui-form-row.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, .cui-form-row.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
   margin-top: -1rem;
 }
@@ -5443,7 +5446,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left .fa {
   position: relative;
-  left: -2px;
+  left: -1px;
 }
 .cui-panel-header .cui-button-button .cui-button-visual .cui-button-left .fa.fa-chevron-right {
   top: 1px;
