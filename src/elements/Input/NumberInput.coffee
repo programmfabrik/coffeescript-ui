@@ -119,6 +119,10 @@ class CUI.NumberInput extends CUI.Input
 		if not CUI.util.isString(value)
 			value = value + ""
 		number = parseFloat(value.replace(/,/,"."))
+		if @_json_number and number == Infinity
+			number = Number.MAX_VALUE
+		if @_json_number and number == -Infinity
+			number = -Number.MAX_VALUE
 		if isNaN(number)
 			return null
 
@@ -252,12 +256,33 @@ class CUI.NumberInput extends CUI.Input
 	preventInvalidInput: ->
 		if @_json_number
 			# Json Number require a dynamic value for preventInvalidInput for partial json Numbers.
-			shadowValue = @__shadow?.value?.trim()?.replace(",",".")
+
+			shadowValue = @__shadow?.value?.trim()?.replace(/,/g,".")
+			# We allow the input of a first negative symbol.
+			if shadowValue == "-"
+				return false
+
+			# Check if we try to input more than a decimal point
+			if !!(shadowValue?.split(".")?.length > 2)
+				return true
+
+			# Check if we are trying to input only a decimal point or e as a first character
+			if shadowValue == "." or shadowValue?.toLowerCase() == "e"
+				return true
+
 			if shadowValue?.match(/([eE][+\-]?|\.)$/)
-				# If we are here we want to let the user to enter the "not valid" number because we are in process of
-				# of typing the entire number. In the end we check if we only have 0 or 1 "e".
-				return !!(shadowValue?.match(/[eE]/gi)?.length > 1)
+				# Check if we have "1.e" or "3.E"
+				if /\.e|\.E/.test(shadowValue)
+					return true
+
+				# Check if we are trying to input more than one e
+				if !!(shadowValue?.match(/[eE]/gi)?.length > 1)
+					return true
+
+				return false
+
 		return super()
+
 
 	@format: (v, opts={}) ->
 		if CUI.util.isEmpty(v)
