@@ -7,7 +7,7 @@
 }
 
 @mixin layer-width($size: 'm') {
-	width: #{map-get($layer-sizes, $size)}px;
+	width: map-get($layer-sizes, $size);
 }
 
 /* Layer pane styles for popovers and fullscreen layer
