@@ -7320,6 +7320,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin: 0;
 }
 
+.ez5-developer-menu {
+  min-width: 400px;
+}
+
 .cui-google-map {
   width: 100%;
   height: 300px;
