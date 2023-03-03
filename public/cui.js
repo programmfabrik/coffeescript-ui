@@ -59179,6 +59179,12 @@ CUI.NumberInput = (function(superClass) {
       value = value + "";
     }
     number = parseFloat(value.replace(/,/, "."));
+    if (this._json_number && number === 2e308) {
+      number = Number.MAX_VALUE;
+    }
+    if (this._json_number && number === -2e308) {
+      number = -Number.MAX_VALUE;
+    }
     if (isNaN(number)) {
       return null;
     }
@@ -59327,11 +59333,26 @@ CUI.NumberInput = (function(superClass) {
   };
 
   NumberInput.prototype.preventInvalidInput = function() {
-    var ref, ref1, ref2, ref3, shadowValue;
+    var ref, ref1, ref2, ref3, ref4, shadowValue;
     if (this._json_number) {
-      shadowValue = (ref = this.__shadow) != null ? (ref1 = ref.value) != null ? (ref2 = ref1.trim()) != null ? ref2.replace(",", ".") : void 0 : void 0 : void 0;
+      shadowValue = (ref = this.__shadow) != null ? (ref1 = ref.value) != null ? (ref2 = ref1.trim()) != null ? ref2.replace(/,/g, ".") : void 0 : void 0 : void 0;
+      if (shadowValue === "-") {
+        return false;
+      }
+      if (!!((shadowValue != null ? (ref3 = shadowValue.split(".")) != null ? ref3.length : void 0 : void 0) > 2)) {
+        return true;
+      }
+      if (shadowValue === "." || (shadowValue != null ? shadowValue.toLowerCase() : void 0) === "e") {
+        return true;
+      }
       if (shadowValue != null ? shadowValue.match(/([eE][+\-]?|\.)$/) : void 0) {
-        return !!((shadowValue != null ? (ref3 = shadowValue.match(/[eE]/gi)) != null ? ref3.length : void 0 : void 0) > 1);
+        if (/\.e|\.E/.test(shadowValue)) {
+          return true;
+        }
+        if (!!((shadowValue != null ? (ref4 = shadowValue.match(/[eE]/gi)) != null ? ref4.length : void 0 : void 0) > 1)) {
+          return true;
+        }
+        return false;
       }
     }
     return NumberInput.__super__.preventInvalidInput.call(this);
