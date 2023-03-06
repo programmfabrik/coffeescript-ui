@@ -179,7 +179,6 @@
 		text-align: center;
 		position: relative;
 		padding: 0 $year-padding;
-		border-color: currentColor;
 
 		.cui-browser-ie:not(.cui-browser-edge) & {
 			width: calc(6ch + 4 * #{$year-padding});
