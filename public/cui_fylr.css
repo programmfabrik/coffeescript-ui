@@ -4437,8 +4437,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-date-time-popover .cui-date-time-popover-inner {
-  --calendar-background: #ffffff;
-  --calendar-static-cells-background: #ffffff;
+  --calendar-background: #f5f5f5;
+  --calendar-static-cells-background: #f5f5f5;
   background-color: var(--calendar-background);
   flex: 1 1 auto;
 }
@@ -4742,7 +4742,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   text-align: center;
   position: relative;
   padding: 0 0.25rem;
-  border-color: currentColor;
 }
 .cui-browser-ie:not(.cui-browser-edge) .cui-date-time-footer [cui-data-field-name=year] input {
   width: calc(6ch + 4 * 0.25rem);
@@ -7167,10 +7166,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-top: 46px;
 }
 
-.cui-browser-firefox .cui-select-menu, .cui-browser-ie .cui-select-menu {
-  overflow-y: scroll;
-}
-
 .cui-autocompletion-popup {
   background-color: #ffffff;
 }
@@ -7202,7 +7197,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   height: auto;
 }
 .cui-menu > .cui-item-list {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 .cui-menu .cui-item-list-body > .cui-label,
