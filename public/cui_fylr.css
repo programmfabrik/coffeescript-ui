@@ -7197,8 +7197,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   height: auto;
 }
 .cui-menu > .cui-item-list {
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 .cui-menu .cui-item-list-body > .cui-label,
