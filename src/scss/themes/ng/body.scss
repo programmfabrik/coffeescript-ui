@@ -2319,6 +2319,10 @@ a[role="button"].cui-button-appearance-link {
 			height: auto;
 			padding: 0;
 			line-height: inherit;
+
+			.cui-button-left {
+				display: none;
+			}
 		}
 	}
 

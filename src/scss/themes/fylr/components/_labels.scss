@@ -261,7 +261,7 @@ label[data-label-clickable],
 
 	&.cui-label--has-overflow-button {
 		> .cui-label-content {
-			margin-bottom: $spacer;
+			margin-bottom: 2*$spacer;
 		}
 		
 		&:not(.cui-label--show-overflow) > .cui-label-content {
@@ -291,12 +291,21 @@ label[data-label-clickable],
 
 		z-index: 1;
 		position: absolute;
-		left: auto;
-		right: 0;
-		bottom: 0;
+		left: 0;
+		right: auto;
+		bottom: $spacer-sm;
 
 		.cui-button-visual {
+			position: relative;
 			margin-left: auto;
+			min-width: 0;
+			align-items: center;
+
+			.cui-button-left {
+				padding-left: 0;
+				margin-right: -$spacer-sm;
+				transform: translateY(2px);
+			}
 		}
 	}
 
