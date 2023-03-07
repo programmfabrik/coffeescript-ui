@@ -2427,6 +2427,9 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   padding: 0;
   line-height: inherit;
 }
+.cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left {
+  display: none;
+}
 .cui-label-manage-overflow.cui-label--show-overflow > .cui-label-content {
   max-height: none !important;
   overflow: visible;
