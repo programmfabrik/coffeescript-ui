@@ -62,10 +62,16 @@
 		}
 
 		&:hover,
-		&:focus,
+		&:focus {
+			.cui-button-visual {
+				color: var(--btn-color-hover, #{$body-color});
+				background: none;
+			}
+		}
+
 		&.cui-active {
 			.cui-button-visual {
-				color: $body-color;
+				color: var(--btn-color-active, #{$body-color});
 				background: none;
 			}
 		}

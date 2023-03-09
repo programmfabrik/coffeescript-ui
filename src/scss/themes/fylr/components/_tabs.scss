@@ -167,7 +167,7 @@
 		&.cui-active {
 			.cui-button-visual {
 				background-color: $tabs-active-background;
-				color: $tabs-active-color;
+				color: var(--btn-color-active, #{$tabs-active-color});
 			}
 		}
 
@@ -175,7 +175,7 @@
 			.cui-button-visual {
 				// add custom focus style
 				background-color: rgba(theme-color('focused'), 0.05);
-				color: $tabs-active-color;
+				color: var(--btn-color-active, #{$tabs-active-color});
 				box-shadow: $btn-focus-shadow !important;
 			}
 		}
