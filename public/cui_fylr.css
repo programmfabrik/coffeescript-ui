@@ -5464,8 +5464,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-panel-header .cui-button-button .cui-button-visual .cui-button-center span {
   white-space: normal;
 }
-.cui-panel-header .cui-button-button:hover .cui-button-visual, .cui-panel-header .cui-button-button:focus .cui-button-visual, .cui-panel-header .cui-button-button.cui-active .cui-button-visual {
-  color: #212121;
+.cui-panel-header .cui-button-button:hover .cui-button-visual, .cui-panel-header .cui-button-button:focus .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background: none;
+}
+.cui-panel-header .cui-button-button.cui-active .cui-button-visual {
+  color: var(--btn-color-active, #212121);
   background: none;
 }
 
@@ -6749,12 +6753,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-tabs-pane-header .cui-tab-header-button-overflow:active .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active .cui-button-visual {
   background-color: transparent;
-  color: #212121;
+  color: var(--btn-color-active, #212121);
 }
 .cui-tabs-pane-header .cui-tab-header-button:focus .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
   background-color: rgba(23, 162, 184, 0.05);
-  color: #212121;
+  color: var(--btn-color-active, #212121);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow {
