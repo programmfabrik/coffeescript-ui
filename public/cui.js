@@ -56182,8 +56182,8 @@ CUI.SimpleForm = (function(superClass) {
           td = CUI.dom.element("DIV", {
             "class": "cui-form-td cui-form-value"
           });
-          append(get_append(field), td);
           append(hint_div, td);
+          append(get_append(field), td);
           tr.appendChild(td);
           CUI.dom.data(tr, "data-field", field);
           _this.__setRowVisibility(tr);
@@ -56208,9 +56208,9 @@ CUI.SimpleForm = (function(superClass) {
             "class": "cui-form-row " + classes.join(" "),
             "data-for-field": field.getUniqueId()
           });
+          append(hint_div, row);
           row.appendChild(get_append(field));
           append(get_append(field), row);
-          append(hint_div, row);
           CUI.dom.data(row, "data-field", field);
           _this.__setRowVisibility(row);
           if (grid) {
