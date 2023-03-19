@@ -1,0 +1,77 @@
+###
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2023 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+###
+
+class CUI.Socket extends CUI.Element
+  getGroup: ->
+    "Core"
+
+  initOpts: ->
+    super()
+    @addOpts
+      url:
+        mandatory: true
+        check: String
+        check: (v) ->
+          v.trim().length > 0
+
+      onmessage:
+        check: Function
+    @
+
+  @states:
+    0 : "OPENING"
+    1 : "OPEN"
+    2 : "CLOSING"
+    3 : "CLOSED"
+
+  readOpts: ->
+    super()
+
+    location = CUI.parseLocation(@_url)
+    switch location.protocol
+      when "http", "ws"
+        @__protocol = "ws"
+      when "https", "wss"
+        @__protocol = "wss"
+    @_url = @_url.replace(location.protocol, @__protocol)
+
+    return @
+
+  open: ->
+    dfr = new CUI.Deferred
+    try
+      @__webSocket = new WebSocket(@_url)
+      @__webSocket.onerror = (e) =>
+        dfr.reject(error: e)
+      @__webSocket.onopen = (ev) =>
+        @__onOpen()
+        dfr.resolve()
+    catch e
+      dfr.reject(error: e)
+
+    return dfr.promise()
+
+  __onOpen: ->
+    @__webSocket.onmessage = (evt) =>
+      data = {}
+      if not CUI.util.isEmpty(evt.data)
+        data = JSON.parse(evt.data)
+      @_onmessage(evt, data)
+
+  close: ->
+    @__webSocket.close()
+
+  send: (msg) ->
+    if @getStatus() == "OPEN"
+      @__websocket.send(msg)
+
+  getStatus: (asText = true) ->
+    status = @__websocket.readyState
+    if asText
+      return @states[status]
+    return status
+

@@ -142,5 +142,6 @@ require('./elements/Map/LeafletMap.coffee')
 require('./elements/Map/MapInput.coffee')
 require('./elements/Map/IconMarker.coffee')
 require('./base/CSVData.coffee')
+require('./base/Socket/Socket.coffee')
 
 module.exports = CUI
