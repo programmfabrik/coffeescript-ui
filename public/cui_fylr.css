@@ -128,7 +128,7 @@ body.dev.is-server2::after {
   --success: #7ca751;
   --info: #17a2b8;
   --warning: #d6b13a;
-  --danger: #ff5724;
+  --danger: #dc3545;
   --light: #f5f5f5;
   --dark: #393c3f;
   --muted: #8b949c;
@@ -2598,14 +2598,14 @@ textarea {
 
 .cui-input.cui-input-has-check-input.cui-input-invalid input,
 .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual {
-  border-color: rgba(255, 87, 36, 0.05);
-  background: rgba(255, 87, 36, 0.15);
+  border-color: rgba(238, 36, 55, 0.05);
+  background: rgba(220, 53, 69, 0.15);
 }
 .cui-list-view-row-selectable:hover .cui-input.cui-input-has-check-input.cui-input-invalid input, .cui-list-view-row-selectable.cui-selected .cui-input.cui-input-has-check-input.cui-input-invalid input,
 .cui-list-view-row-selectable:hover .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual,
 .cui-list-view-row-selectable.cui-selected .cui-input.cui-input-has-check-input.cui-input-invalid .cui-data-field-right .cui-button .cui-button-visual {
   border-color: transparent;
-  background: #ffab92;
+  background: #ee9aa2;
 }
 .cui-input.cui-maximize-vertical {
   display: flex;
@@ -5336,7 +5336,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-input-invalid-hint {
-  color: #ff5724;
+  color: #dc3545;
 }
 
 .cui-checkbox + .cui-form-hint, .cui-data-field.cui-maximize-horizontal + .cui-form-hint {
