@@ -47884,6 +47884,12 @@ CUI.Confirm = (function(superClass) {
       },
       button_danger: {
         check: ["ok", "cancel"]
+      },
+      button_icon_ok: {
+        check: CUI.Icon
+      },
+      button_icon_cancel: {
+        check: CUI.Icon
       }
     });
   };
@@ -47893,12 +47899,14 @@ CUI.Confirm = (function(superClass) {
     return this._choices = [
       {
         text: this._button_text_cancel,
+        icon: this._button_icon_cancel,
         cancel: true,
         choice: "cancel",
         primary: this._button_primary === "cancel",
         danger: this._button_danger === "cancel"
       }, {
         text: this._button_text_ok,
+        icon: this._button_icon_ok,
         choice: "ok",
         primary: this._button_primary === "ok",
         danger: this._button_danger === "ok"
