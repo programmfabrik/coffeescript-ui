@@ -41921,6 +41921,15 @@ CUI.Socket = (function(superClass) {
       },
       onmessage: {
         check: Function
+      },
+      onclose: {
+        check: Function
+      },
+      onopen: {
+        check: Function
+      },
+      onerror: {
+        check: Function
       }
     });
     return this;
@@ -41964,20 +41973,26 @@ CUI.Socket = (function(superClass) {
       })(this);
       this.__webSocket.onopen = (function(_this) {
         return function(ev) {
-          _this.__onOpen();
+          _this.__onOpen(ev);
           return dfr.resolve();
+        };
+      })(this);
+      this.__webSocket.onclose = (function(_this) {
+        return function(ev) {
+          return _this.__onClose(ev);
         };
       })(this);
     } catch (error) {
       e = error;
-      dfr.reject({
-        error: e
-      });
+      dfr.reject();
     }
     return dfr.promise();
   };
 
-  Socket.prototype.__onOpen = function() {
+  Socket.prototype.__onOpen = function(ev) {
+    if (this._onopen) {
+      this._onopen(ev);
+    }
     return this.__webSocket.onmessage = (function(_this) {
       return function(evt) {
         var data;
@@ -41988,6 +42003,12 @@ CUI.Socket = (function(superClass) {
         return _this._onmessage(evt, data);
       };
     })(this);
+  };
+
+  Socket.prototype.__onClose = function(ev) {
+    if (this._onclose) {
+      return this._onclose();
+    }
   };
 
   Socket.prototype.close = function() {
