@@ -20,6 +20,16 @@ class CUI.Socket extends CUI.Element
 
       onmessage:
         check: Function
+
+      onclose:
+        check: Function
+
+      onopen:
+        check: Function
+
+      onerror:
+        check: Function
+
     @
 
   @states:
@@ -48,19 +58,27 @@ class CUI.Socket extends CUI.Element
       @__webSocket.onerror = (e) =>
         dfr.reject(error: e)
       @__webSocket.onopen = (ev) =>
-        @__onOpen()
+        @__onOpen(ev)
         dfr.resolve()
+      @__webSocket.onclose = (ev) =>
+        @__onClose(ev)
     catch e
-      dfr.reject(error: e)
+      dfr.reject()
 
     return dfr.promise()
 
-  __onOpen: ->
+  __onOpen: (ev) ->
+    if @_onopen
+      @_onopen(ev)
     @__webSocket.onmessage = (evt) =>
       data = {}
       if not CUI.util.isEmpty(evt.data)
         data = JSON.parse(evt.data)
       @_onmessage(evt, data)
+
+  __onClose: (ev) ->
+    if @_onclose
+      @_onclose()
 
   close: ->
     @__webSocket.close()
