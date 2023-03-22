@@ -6249,7 +6249,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-tree-node-handle .svg-spinner,
 .cui-tree-node-spacer .svg-spinner {
   position: relative;
-  left: -3px;
+  left: 1px;
   width: 12px;
   height: 12px;
 }
