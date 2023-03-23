@@ -41881,6 +41881,166 @@ CUI.ready(function() {
 
 /***/ }),
 
+/***/ "./base/Socket/Socket.coffee":
+/*!***********************************!*\
+  !*** ./base/Socket/Socket.coffee ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(CUI) {
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2023 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.Socket = (function(superClass) {
+  extend(Socket, superClass);
+
+  function Socket() {
+    return Socket.__super__.constructor.apply(this, arguments);
+  }
+
+  Socket.prototype.getGroup = function() {
+    return "Core";
+  };
+
+  Socket.prototype.initOpts = function() {
+    Socket.__super__.initOpts.call(this);
+    this.addOpts({
+      url: {
+        mandatory: true,
+        check: String,
+        check: function(v) {
+          return v.trim().length > 0;
+        }
+      },
+      onmessage: {
+        check: Function
+      },
+      onclose: {
+        check: Function
+      },
+      onopen: {
+        check: Function
+      },
+      onerror: {
+        check: Function
+      }
+    });
+    return this;
+  };
+
+  Socket.states = {
+    0: "OPENING",
+    1: "OPEN",
+    2: "CLOSING",
+    3: "CLOSED"
+  };
+
+  Socket.prototype.readOpts = function() {
+    var location;
+    Socket.__super__.readOpts.call(this);
+    location = CUI.parseLocation(this._url);
+    switch (location.protocol) {
+      case "http":
+      case "ws":
+        this.__protocol = "ws";
+        break;
+      case "https":
+      case "wss":
+        this.__protocol = "wss";
+    }
+    this._url = this._url.replace(location.protocol, this.__protocol);
+    return this;
+  };
+
+  Socket.prototype.open = function() {
+    var dfr, e;
+    dfr = new CUI.Deferred;
+    try {
+      this.__webSocket = new WebSocket(this._url);
+      this.__webSocket.onerror = (function(_this) {
+        return function(e) {
+          return dfr.reject({
+            error: e
+          });
+        };
+      })(this);
+      this.__webSocket.onopen = (function(_this) {
+        return function(ev) {
+          _this.__onOpen(ev);
+          return dfr.resolve();
+        };
+      })(this);
+      this.__webSocket.onclose = (function(_this) {
+        return function(ev) {
+          return _this.__onClose(ev);
+        };
+      })(this);
+    } catch (error) {
+      e = error;
+      dfr.reject();
+    }
+    return dfr.promise();
+  };
+
+  Socket.prototype.__onOpen = function(ev) {
+    if (this._onopen) {
+      this._onopen(ev);
+    }
+    return this.__webSocket.onmessage = (function(_this) {
+      return function(evt) {
+        var data;
+        data = {};
+        if (!CUI.util.isEmpty(evt.data)) {
+          data = JSON.parse(evt.data);
+        }
+        return _this._onmessage(evt, data);
+      };
+    })(this);
+  };
+
+  Socket.prototype.__onClose = function(ev) {
+    if (this._onclose) {
+      return this._onclose();
+    }
+  };
+
+  Socket.prototype.close = function() {
+    return this.__webSocket.close();
+  };
+
+  Socket.prototype.send = function(msg) {
+    if (this.getStatus() === "OPEN") {
+      return this.__websocket.send(msg);
+    }
+  };
+
+  Socket.prototype.getStatus = function(asText) {
+    var status;
+    if (asText == null) {
+      asText = true;
+    }
+    status = this.__websocket.readyState;
+    if (asText) {
+      return this.states[status];
+    }
+    return status;
+  };
+
+  return Socket;
+
+})(CUI.Element);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee")))
+
+/***/ }),
+
 /***/ "./base/Template/Template.coffee":
 /*!***************************************!*\
   !*** ./base/Template/Template.coffee ***!
@@ -73383,6 +73543,8 @@ __webpack_require__(/*! ./elements/Map/MapInput.coffee */ "./elements/Map/MapInp
 __webpack_require__(/*! ./elements/Map/IconMarker.coffee */ "./elements/Map/IconMarker.coffee");
 
 __webpack_require__(/*! ./base/CSVData.coffee */ "./base/CSVData.coffee");
+
+__webpack_require__(/*! ./base/Socket/Socket.coffee */ "./base/Socket/Socket.coffee");
 
 module.exports = CUI;
 
