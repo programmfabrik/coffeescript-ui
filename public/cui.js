@@ -40050,7 +40050,7 @@ CUI.Icon = (function(superClass) {
     copy: "fa-files-o",
     crop: "fa-crop",
     dive: "fa-angle-right",
-    down: "fa-caret-down",
+    down: "fa-angle-down",
     download: "fa-download",
     east: "fa-angle-right",
     edit: "fa-pencil",
@@ -40111,7 +40111,7 @@ CUI.Icon = (function(superClass) {
     start: "fa-play",
     stop: "fa-stop",
     trash: "svg-trash",
-    up: "fa-caret-up",
+    up: "fa-angle-up",
     upload: "fa-upload",
     user: "fa-user",
     warning: "fa-warning",
@@ -62892,8 +62892,8 @@ CUI.ListViewTree = (function(superClass) {
   extend(ListViewTree, superClass);
 
   ListViewTree.defaults = {
-    arrow_down: "fa-caret-down",
-    arrow_right: "fa-caret-right"
+    arrow_down: "fa-angle-down",
+    arrow_right: "fa-angle-right"
   };
 
   function ListViewTree(opts) {

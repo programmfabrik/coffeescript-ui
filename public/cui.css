@@ -3885,9 +3885,19 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   width: 14px;
   flex: 0 0 auto;
 }
-.cui-tree-node-handle .fa-caret-right,
-.cui-tree-node-spacer .fa-caret-right {
-  width: 8px;
+.cui-tree-node-handle .fa,
+.cui-tree-node-spacer .fa {
+  width: 10px;
+}
+.cui-tree-node-handle .fa.fa-angle-down, .cui-tree-node-handle .fa.fa-angle-right,
+.cui-tree-node-spacer .fa.fa-angle-down,
+.cui-tree-node-spacer .fa.fa-angle-right {
+  font-weight: bold;
+}
+.cui-tree-node-handle .fa.fa-angle-down::before, .cui-tree-node-handle .fa.fa-angle-right::before,
+.cui-tree-node-spacer .fa.fa-angle-down::before,
+.cui-tree-node-spacer .fa.fa-angle-right::before {
+  font-size: 1.15em;
 }
 .cui-tree-node-handle .svg-spinner,
 .cui-tree-node-spacer .svg-spinner {
@@ -3906,9 +3916,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-tree-node-handle.cui-tree-node-is-open {
   cursor: pointer;
-}
-.cui-tree-node-handle.cui-tree-node-is-open .fa {
-  margin-top: 1px;
 }
 
 .cui-tree-node-content {
