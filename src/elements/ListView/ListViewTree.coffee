@@ -7,8 +7,8 @@
 
 class CUI.ListViewTree extends CUI.ListView
 	@defaults:
-		arrow_down: "fa-caret-down"
-		arrow_right: "fa-caret-right"
+		arrow_down: "fa-angle-down"
+		arrow_right: "fa-angle-right"
 
 	constructor: (opts) ->
 		super(opts)
