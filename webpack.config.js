@@ -1,13 +1,12 @@
 const path = require('path');
-
 const webpack = require('webpack');
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-const BUILD_DIR = path.resolve(__dirname + path.sep, 'public');
-const APP_DIR = path.resolve(__dirname + path.sep, 'src');
+const BUILD_DIR = path.resolve(__dirname, 'public');
+const APP_DIR = path.resolve(__dirname, 'src');
 
 module.exports = function (env, argv) {
 	const isProduction = !!(env && env.production);
@@ -64,11 +63,10 @@ module.exports = function (env, argv) {
             library: 'CUI'
         },
         optimization: {
-            namedChunks: true, // needed so we can use [id].css to name the extracted css files,
+            moduleIds: 'deterministic', // needed so we can use [id].css to name the extracted css files,
             minimize: isProduction,
             minimizer: [
                 new TerserPlugin({
-                    cache: true,
                     parallel: true,
                     // sourceMap: true, // Must be set to true if using source-maps in production
                     extractComments: false,
@@ -94,11 +92,25 @@ module.exports = function (env, argv) {
                     use: [
                         MiniCssExtractPlugin.loader,
                         { loader: "css-loader", options: { sourceMap: true } },
-                        { loader: "postcss-loader", options: {
-                            config: { path: __dirname, ctx: { optimize: isProduction } },
-                            sourceMap: true,
-                        }},
-                        { loader: "sass-loader", options: { sourceMap: true } },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                              postcssOptions: {
+                                config: process.cwd(),
+                                ctx: {
+                                  optimize: isProduction,
+                                },
+                              },
+                              sourceMap: true,
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                              implementation: require('sass'),
+                              sourceMap: true,
+                            },
+                        },
                     ]
                 },
                 {
@@ -108,7 +120,12 @@ module.exports = function (env, argv) {
                 {
                     test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
                     exclude: /icons\.svg/,
-                    use: 'base64-inline-loader?limit=150000&name=[name].[ext]'
+                    type: 'asset/inline',
+                    parser: {
+                        dataUrlCondition: {
+                            maxSize: 150 * 1024 // 150 KB
+                        },
+                    }        
                 },
                 {
                     test: /\.(html)$/,
