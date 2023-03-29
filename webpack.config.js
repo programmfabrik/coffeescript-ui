@@ -11,7 +11,7 @@ const APP_DIR = path.resolve(__dirname, 'src');
 module.exports = function (env, argv) {
 	const isProduction = !!(env && env.production);
 	const isBuildAll = !!(env && env.all);
-
+    
     let plugins = [
         // new HardSourceWebpackPlugin(), We comment out the plugin due to https://github.com/mzgoddard/hard-source-webpack-plugin/issues/480
 
@@ -23,7 +23,7 @@ module.exports = function (env, argv) {
 				BUILD_DIR + '/not-needed', // removes not-needed js files that are emitted from the scss only entries
 			]
 		}),
-        new MiniCssExtractPlugin({ filename: '[id]' + (isProduction && isBuildAll ? '.min' : '') + '.css' }),
+        new MiniCssExtractPlugin({ filename: '[name]' + (isProduction && isBuildAll ? '.min' : '') + '.css' }),
         new webpack.ProvidePlugin({
             'CUI': APP_DIR + '/base/CUI.coffee'
         }),
@@ -46,16 +46,14 @@ module.exports = function (env, argv) {
             cui: APP_DIR + '/scss/themes/ng/main.scss',
         },
         output: {
-            filename: (chunkData) => {
-                // we cannot prevent wp from generating a js output for each css only entry,
-                // each emitted js file must therefore have a unique filename to prevent error: "Multiple chunks emit assets to the same filename"
-                if (chunkData.chunk.id === 'main_js') {
-                    return 'cui' + (isProduction ? '.min' : '') + '.js'; // cui.min.js | cui.js will be copied into the final webfrontend build folder, see makefile
-                } else if (chunkData.chunk.id === 'cui') {
-                    // since cui.js already exists from `main_js` output, we need to create a more unique name here
-					return 'not-needed/[name]_[id].js';
+            filename: (pathData) => {
+                const chunkId = pathData.chunk.name.toString();
+                if (chunkId.includes('main_js')) {
+                    return isProduction ? 'cui.min.js' : 'cui.js';
+                } else if (chunkId.includes('cui')) {
+                    return 'not-needed/[name]_[id].js';
                 } else {
-					return 'not-needed/[name].js'
+                    return 'not-needed/[name].js';
                 }
             },
             path: BUILD_DIR,
@@ -63,7 +61,6 @@ module.exports = function (env, argv) {
             library: 'CUI'
         },
         optimization: {
-            moduleIds: 'deterministic', // needed so we can use [id].css to name the extracted css files,
             minimize: isProduction,
             minimizer: [
                 new TerserPlugin({
@@ -83,7 +80,6 @@ module.exports = function (env, argv) {
         module: {
             rules: [
                 {
-
                     test: /\.coffee/,
                     loader: 'coffee-loader'
                 },

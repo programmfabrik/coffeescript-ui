@@ -11,7 +11,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7253:
+/***/ "../node_modules/ace-builds/src-min-noconflict/mode-css.js":
 /*!*****************************************************************!*\
   !*** ../node_modules/ace-builds/src-min-noconflict/mode-css.js ***!
   \*****************************************************************/
@@ -29,7 +29,7 @@ ace.define("ace/mode/css_highlight_rules",["require","exports","module","ace/lib
 
 /***/ }),
 
-/***/ 1817:
+/***/ "../node_modules/ace-builds/src-min-noconflict/mode-html.js":
 /*!******************************************************************!*\
   !*** ../node_modules/ace-builds/src-min-noconflict/mode-html.js ***!
   \******************************************************************/
@@ -47,7 +47,7 @@ ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module",
 
 /***/ }),
 
-/***/ 1408:
+/***/ "../node_modules/ace-builds/src-min-noconflict/mode-javascript.js":
 /*!************************************************************************!*\
   !*** ../node_modules/ace-builds/src-min-noconflict/mode-javascript.js ***!
   \************************************************************************/
@@ -65,7 +65,7 @@ ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module",
 
 /***/ }),
 
-/***/ 2502:
+/***/ "../node_modules/ace-builds/src-min-noconflict/mode-json.js":
 /*!******************************************************************!*\
   !*** ../node_modules/ace-builds/src-min-noconflict/mode-json.js ***!
   \******************************************************************/
@@ -83,7 +83,7 @@ ace.define("ace/mode/json_highlight_rules",["require","exports","module","ace/li
 
 /***/ }),
 
-/***/ 8817:
+/***/ "../node_modules/ace-builds/src-noconflict/ace.js":
 /*!********************************************************!*\
   !*** ../node_modules/ace-builds/src-noconflict/ace.js ***!
   \********************************************************/
@@ -19612,13 +19612,13 @@ exports.version = exports.config.version;
 
 /***/ }),
 
-/***/ 2049:
+/***/ "./base/CSSLoader/CSSLoader.coffee":
 /*!*****************************************!*\
   !*** ./base/CSSLoader/CSSLoader.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -19832,13 +19832,13 @@ CUI.CSSLoader = (function(superClass) {
 
 /***/ }),
 
-/***/ 2543:
+/***/ "./base/CSVData.coffee":
 /*!*****************************!*\
   !*** ./base/CSVData.coffee ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
@@ -20183,7 +20183,7 @@ CUI.CSVData = (function(superClass) {
 
 /***/ }),
 
-/***/ 1903:
+/***/ "./base/CUI.coffee":
 /*!*************************!*\
   !*** ./base/CUI.coffee ***!
   \*************************/
@@ -20198,7 +20198,7 @@ CUI.CSVData = (function(superClass) {
  */
 var CUI, marked;
 
-marked = __webpack_require__(/*! marked */ 4402);
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
 
 CUI = (function() {
   function CUI() {}
@@ -20289,7 +20289,7 @@ CUI = (function() {
       }
     });
     document.body.scrollTop = 0;
-    icons = (__webpack_require__(/*! ../scss/icons/icons.svg */ 9419)["default"]);
+    icons = (__webpack_require__(/*! ../scss/icons/icons.svg */ "./scss/icons/icons.svg")["default"]);
     CUI.Template.loadText(icons);
     CUI.Template.load();
     this.chainedCall.apply(this, this.__readyFuncs).always((function(_this) {
@@ -21484,13 +21484,13 @@ module.exports = CUI;
 
 /***/ }),
 
-/***/ 6873:
+/***/ "./base/DOMElement/DOMElement.coffee":
 /*!*******************************************!*\
   !*** ./base/DOMElement/DOMElement.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -21715,13 +21715,13 @@ CUI.DOMElement = (function(superClass) {
 
 /***/ }),
 
-/***/ 245:
+/***/ "./base/DataField/CheckValueError.coffee":
 /*!***********************************************!*\
   !*** ./base/DataField/CheckValueError.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -21746,13 +21746,13 @@ CUI.CheckValueError = (function(superClass) {
 
 /***/ }),
 
-/***/ 5571:
+/***/ "./base/DataField/DataField.coffee":
 /*!*****************************************!*\
   !*** ./base/DataField/DataField.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -21764,7 +21764,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   hasProp = {}.hasOwnProperty,
   slice = [].slice;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./DataField.html */ 7566));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./DataField.html */ "./base/DataField/DataField.html"));
 
 CUI.DataField = (function(superClass) {
   extend(DataField, superClass);
@@ -22629,13 +22629,13 @@ CUI.Events.registerEvent({
 
 /***/ }),
 
-/***/ 7733:
+/***/ "./base/DataField/DataFieldInput.coffee":
 /*!**********************************************!*\
   !*** ./base/DataField/DataFieldInput.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -22683,13 +22683,13 @@ CUI.DataFieldInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 6109:
+/***/ "./base/Deferred/Deferred.coffee":
 /*!***************************************!*\
   !*** ./base/Deferred/Deferred.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -22831,13 +22831,13 @@ CUI.Deferred = (function() {
 
 /***/ }),
 
-/***/ 6974:
+/***/ "./base/Deferred/Promise.coffee":
 /*!**************************************!*\
   !*** ./base/Deferred/Promise.coffee ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -22888,13 +22888,13 @@ CUI.Promise = (function() {
 
 /***/ }),
 
-/***/ 9490:
+/***/ "./base/Deferred/decide.coffee":
 /*!*************************************!*\
   !*** ./base/Deferred/decide.coffee ***!
   \*************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -22921,13 +22921,13 @@ CUI.decide = (function(_this) {
 
 /***/ }),
 
-/***/ 3724:
+/***/ "./base/Deferred/when.coffee":
 /*!***********************************!*\
   !*** ./base/Deferred/when.coffee ***!
   \***********************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -23069,13 +23069,13 @@ CUI.__when = (function(_this) {
 
 /***/ }),
 
-/***/ 1219:
+/***/ "./base/DragDropSelect/DragDropSelect.coffee":
 /*!***************************************************!*\
   !*** ./base/DragDropSelect/DragDropSelect.coffee ***!
   \***************************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -23262,13 +23262,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 9066:
+/***/ "./base/DragDropSelect/Draggable.coffee":
 /*!**********************************************!*\
   !*** ./base/DragDropSelect/Draggable.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -23990,13 +23990,13 @@ CUI.Draggable = (function(superClass) {
 
 /***/ }),
 
-/***/ 6689:
+/***/ "./base/DragDropSelect/DragoverScrollEvent.coffee":
 /*!********************************************************!*\
   !*** ./base/DragDropSelect/DragoverScrollEvent.coffee ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -24040,13 +24040,13 @@ CUI.DragoverScrollEvent = (function(superClass) {
 
 /***/ }),
 
-/***/ 9740:
+/***/ "./base/DragDropSelect/Dragscroll.coffee":
 /*!***********************************************!*\
   !*** ./base/DragDropSelect/Dragscroll.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -24115,13 +24115,13 @@ CUI.Dragscroll = (function(superClass) {
 
 /***/ }),
 
-/***/ 7939:
+/***/ "./base/DragDropSelect/Droppable.coffee":
 /*!**********************************************!*\
   !*** ./base/DragDropSelect/Droppable.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -24454,13 +24454,13 @@ CUI.Droppable = (function(superClass) {
 
 /***/ }),
 
-/***/ 6631:
+/***/ "./base/DragDropSelect/Lasso.coffee":
 /*!******************************************!*\
   !*** ./base/DragDropSelect/Lasso.coffee ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -24681,13 +24681,13 @@ CUI.Lasso = (function(superClass) {
 
 /***/ }),
 
-/***/ 7620:
+/***/ "./base/DragDropSelect/Movable.coffee":
 /*!********************************************!*\
   !*** ./base/DragDropSelect/Movable.coffee ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -24831,13 +24831,13 @@ CUI.Movable = (function(superClass) {
 
 /***/ }),
 
-/***/ 2970:
+/***/ "./base/DragDropSelect/Resizable.coffee":
 /*!**********************************************!*\
   !*** ./base/DragDropSelect/Resizable.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -24980,13 +24980,13 @@ CUI.Resizable = (function(superClass) {
 
 /***/ }),
 
-/***/ 661:
+/***/ "./base/DragDropSelect/Sortable.coffee":
 /*!*********************************************!*\
   !*** ./base/DragDropSelect/Sortable.coffee ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -25164,13 +25164,13 @@ CUI.Sortable = (function(superClass) {
 
 /***/ }),
 
-/***/ 6256:
+/***/ "./base/Dummy.coffee":
 /*!***************************!*\
   !*** ./base/Dummy.coffee ***!
   \***************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -25203,13 +25203,13 @@ CUI.Dummy;
 
 /***/ }),
 
-/***/ 5927:
+/***/ "./base/Element.coffee":
 /*!*****************************!*\
   !*** ./base/Element.coffee ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -25581,13 +25581,13 @@ CUI.Element = (function() {
 
 /***/ }),
 
-/***/ 5426:
+/***/ "./base/Events/CUIEvent.coffee":
 /*!*************************************!*\
   !*** ./base/Events/CUIEvent.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -25612,13 +25612,13 @@ CUI.CUIEvent = (function(superClass) {
 
 /***/ }),
 
-/***/ 4251:
+/***/ "./base/Events/Event.coffee":
 /*!**********************************!*\
   !*** ./base/Events/Event.coffee ***!
   \**********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -25993,13 +25993,13 @@ CUI.Event = (function(superClass) {
 
 /***/ }),
 
-/***/ 4001:
+/***/ "./base/Events/Events.coffee":
 /*!***********************************!*\
   !*** ./base/Events/Events.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -26502,13 +26502,13 @@ CUI.defaults["class"].Events = CUI.Events;
 
 /***/ }),
 
-/***/ 4021:
+/***/ "./base/Events/KeyboardEvent.coffee":
 /*!******************************************!*\
   !*** ./base/Events/KeyboardEvent.coffee ***!
   \******************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -26693,13 +26693,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 7775:
+/***/ "./base/Events/Listener.coffee":
 /*!*************************************!*\
   !*** ./base/Events/Listener.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -27022,13 +27022,13 @@ CUI.Listener = (function(superClass) {
 
 /***/ }),
 
-/***/ 8290:
+/***/ "./base/Events/MouseEvent.coffee":
 /*!***************************************!*\
   !*** ./base/Events/MouseEvent.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -27105,13 +27105,13 @@ CUI.MouseEvent = (function(superClass) {
 
 /***/ }),
 
-/***/ 2728:
+/***/ "./base/Events/MouseIsStill.coffee":
 /*!*****************************************!*\
   !*** ./base/Events/MouseIsStill.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -27212,13 +27212,13 @@ CUI.Events.MouseIsStill = (function(superClass) {
 
 /***/ }),
 
-/***/ 7304:
+/***/ "./base/Events/TouchEvent.coffee":
 /*!***************************************!*\
   !*** ./base/Events/TouchEvent.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -27287,13 +27287,13 @@ CUI.TouchEvent = (function(superClass) {
 
 /***/ }),
 
-/***/ 7705:
+/***/ "./base/Events/WheelEvent.coffee":
 /*!***************************************!*\
   !*** ./base/Events/WheelEvent.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -27331,13 +27331,13 @@ CUI.WheelEvent = (function(superClass) {
 
 /***/ }),
 
-/***/ 8332:
+/***/ "./base/FlexHandle/FlexHandle.coffee":
 /*!*******************************************!*\
   !*** ./base/FlexHandle/FlexHandle.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -28028,13 +28028,13 @@ CUI.Events.registerEvent({
 
 /***/ }),
 
-/***/ 7248:
+/***/ "./base/Icon/Icon.coffee":
 /*!*******************************!*\
   !*** ./base/Icon/Icon.coffee ***!
   \*******************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -28220,13 +28220,13 @@ CUI.proxyMethods(CUI.Icon, CUI.Button, ["hide", "show", "isShown", "isHidden"]);
 
 /***/ }),
 
-/***/ 8025:
+/***/ "./base/Layer/Layer.coffee":
 /*!*********************************!*\
   !*** ./base/Layer/Layer.coffee ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -28238,7 +28238,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   hasProp = {}.hasOwnProperty,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Layer.html */ 4826));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Layer.html */ "./base/Layer/Layer.html"));
 
 CUI.Layer = (function(superClass) {
   extend(Layer, superClass);
@@ -29468,13 +29468,13 @@ CUI.ready(function() {
 
 /***/ }),
 
-/***/ 4501:
+/***/ "./base/Layout/Layout.coffee":
 /*!***********************************!*\
   !*** ./base/Layout/Layout.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -29957,13 +29957,13 @@ CUI.ready(function() {
 
 /***/ }),
 
-/***/ 1055:
+/***/ "./base/Socket/Socket.coffee":
 /*!***********************************!*\
   !*** ./base/Socket/Socket.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -30116,13 +30116,13 @@ CUI.Socket = (function(superClass) {
 
 /***/ }),
 
-/***/ 8695:
+/***/ "./base/Template/Template.coffee":
 /*!***************************************!*\
   !*** ./base/Template/Template.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -30630,13 +30630,13 @@ CUI.Template = (function(superClass) {
 
 /***/ }),
 
-/***/ 8661:
+/***/ "./base/XHR/XHR.coffee":
 /*!*****************************!*\
   !*** ./base/XHR/XHR.coffee ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -30988,13 +30988,13 @@ CUI.XHR = (function(superClass) {
 
 /***/ }),
 
-/***/ 8548:
+/***/ "./base/dom.coffee":
 /*!*************************!*\
   !*** ./base/dom.coffee ***!
   \*************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -33051,13 +33051,13 @@ CUI.dom = (function() {
 
 /***/ }),
 
-/***/ 5550:
+/***/ "./base/util.coffee":
 /*!**************************!*\
   !*** ./base/util.coffee ***!
   \**************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -33067,13 +33067,13 @@ CUI.dom = (function() {
  */
 var CoordinatesFormat, CoordinatesParser, marked, moment;
 
-CoordinatesParser = __webpack_require__(/*! coordinate-parser */ 6447);
+CoordinatesParser = __webpack_require__(/*! coordinate-parser */ "../node_modules/coordinate-parser/coordinates.js");
 
-CoordinatesFormat = __webpack_require__(/*! formatcoords */ 9101);
+CoordinatesFormat = __webpack_require__(/*! formatcoords */ "../node_modules/formatcoords/index.js");
 
-marked = __webpack_require__(/*! marked */ 4402);
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
 
-moment = __webpack_require__(/*! moment */ 1320);
+moment = __webpack_require__(/*! moment */ "../node_modules/moment/moment.js");
 
 CUI.util = (function() {
   function util() {}
@@ -33843,13 +33843,13 @@ RegExp.escape = function(s) {
 
 /***/ }),
 
-/***/ 3964:
+/***/ "./elements/Block/Block.coffee":
 /*!*************************************!*\
   !*** ./elements/Block/Block.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -33860,7 +33860,7 @@ RegExp.escape = function(s) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Block.html */ 1556));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Block.html */ "./elements/Block/Block.html"));
 
 CUI.Block = (function(superClass) {
   extend(Block, superClass);
@@ -34020,13 +34020,13 @@ CUI.Block = (function(superClass) {
 
 /***/ }),
 
-/***/ 5612:
+/***/ "./elements/BorderLayout/BorderLayout.coffee":
 /*!***************************************************!*\
   !*** ./elements/BorderLayout/BorderLayout.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -34037,7 +34037,7 @@ CUI.Block = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./BorderLayout.html */ 8613));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./BorderLayout.html */ "./elements/BorderLayout/BorderLayout.html"));
 
 CUI.BorderLayout = (function(superClass) {
   extend(BorderLayout, superClass);
@@ -34090,13 +34090,13 @@ CUI.BorderLayout = (function(superClass) {
 
 /***/ }),
 
-/***/ 8053:
+/***/ "./elements/Button/Button.coffee":
 /*!***************************************!*\
   !*** ./elements/Button/Button.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -34107,9 +34107,9 @@ CUI.BorderLayout = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Button.html */ 9230));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Button.html */ "./elements/Button/Button.html"));
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Button_ng.html */ 5006));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Button_ng.html */ "./elements/Button/Button_ng.html"));
 
 CUI.Button = (function(superClass) {
   extend(Button, superClass);
@@ -35287,13 +35287,13 @@ CUI.defaults["class"].Button = CUI.Button;
 
 /***/ }),
 
-/***/ 2943:
+/***/ "./elements/Button/ButtonHref.coffee":
 /*!*******************************************!*\
   !*** ./elements/Button/ButtonHref.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -35304,9 +35304,9 @@ CUI.defaults["class"].Button = CUI.Button;
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./ButtonHref.html */ 5935));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./ButtonHref.html */ "./elements/Button/ButtonHref.html"));
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./ButtonHref_ng.html */ 323));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./ButtonHref_ng.html */ "./elements/Button/ButtonHref_ng.html"));
 
 CUI.ButtonHref = (function(superClass) {
   extend(ButtonHref, superClass);
@@ -35368,13 +35368,13 @@ CUI.ButtonHref = (function(superClass) {
 
 /***/ }),
 
-/***/ 6855:
+/***/ "./elements/Button/Buttonbar.coffee":
 /*!******************************************!*\
   !*** ./elements/Button/Buttonbar.coffee ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -35387,7 +35387,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   hasProp = {}.hasOwnProperty,
   slice = [].slice;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Buttonbar.html */ 6711));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Buttonbar.html */ "./elements/Button/Buttonbar.html"));
 
 CUI.Buttonbar = (function(superClass) {
   extend(Buttonbar, superClass);
@@ -35577,13 +35577,13 @@ CUI.Buttonbar = (function(superClass) {
 
 /***/ }),
 
-/***/ 1114:
+/***/ "./elements/Checkbox/Checkbox.coffee":
 /*!*******************************************!*\
   !*** ./elements/Checkbox/Checkbox.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -35892,13 +35892,13 @@ CUI.Checkbox = (function(superClass) {
 
 /***/ }),
 
-/***/ 5220:
+/***/ "./elements/ConfirmationChoice/Alert.coffee":
 /*!**************************************************!*\
   !*** ./elements/ConfirmationChoice/Alert.coffee ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -35983,13 +35983,13 @@ CUI.problem = function(opts) {
 
 /***/ }),
 
-/***/ 1444:
+/***/ "./elements/ConfirmationChoice/Confirm.coffee":
 /*!****************************************************!*\
   !*** ./elements/ConfirmationChoice/Confirm.coffee ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36072,13 +36072,13 @@ CUI.confirm = function(opts) {
 
 /***/ }),
 
-/***/ 6731:
+/***/ "./elements/ConfirmationChoice/ConfirmationChoice.coffee":
 /*!***************************************************************!*\
   !*** ./elements/ConfirmationChoice/ConfirmationChoice.coffee ***!
   \***************************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36287,13 +36287,13 @@ CUI.defaults["class"].ConfirmationChoice = CUI.ConfirmationChoice;
 
 /***/ }),
 
-/***/ 5770:
+/***/ "./elements/ConfirmationChoice/Prompt.coffee":
 /*!***************************************************!*\
   !*** ./elements/ConfirmationChoice/Prompt.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36428,13 +36428,13 @@ CUI.prompt = function(opts) {
 
 /***/ }),
 
-/***/ 7118:
+/***/ "./elements/ConfirmationChoice/Spinner.coffee":
 /*!****************************************************!*\
   !*** ./elements/ConfirmationChoice/Spinner.coffee ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36502,13 +36502,13 @@ CUI.spinner = function(opts) {
 
 /***/ }),
 
-/***/ 9369:
+/***/ "./elements/ConfirmationChoice/Toaster.coffee":
 /*!****************************************************!*\
   !*** ./elements/ConfirmationChoice/Toaster.coffee ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36587,13 +36587,13 @@ CUI.toaster = function(opts) {
 
 /***/ }),
 
-/***/ 1508:
+/***/ "./elements/ConfirmationDialog/ConfirmationDialog.coffee":
 /*!***************************************************************!*\
   !*** ./elements/ConfirmationDialog/ConfirmationDialog.coffee ***!
   \***************************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36797,13 +36797,13 @@ CUI.ConfirmationDialog = (function(superClass) {
 
 /***/ }),
 
-/***/ 2353:
+/***/ "./elements/Console/Console.coffee":
 /*!*****************************************!*\
   !*** ./elements/Console/Console.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -36861,13 +36861,13 @@ CUI.Console = (function(superClass) {
 
 /***/ }),
 
-/***/ 4305:
+/***/ "./elements/DataForm/DataForm.coffee":
 /*!*******************************************!*\
   !*** ./elements/DataForm/DataForm.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -37263,13 +37263,13 @@ CUI.DataForm = (function(superClass) {
 
 /***/ }),
 
-/***/ 2098:
+/***/ "./elements/DataTable/DataTable.coffee":
 /*!*********************************************!*\
   !*** ./elements/DataTable/DataTable.coffee ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -37793,13 +37793,13 @@ CUI.DataTable = (function(superClass) {
 
 /***/ }),
 
-/***/ 3735:
+/***/ "./elements/DataTable/DataTableNode.coffee":
 /*!*************************************************!*\
   !*** ./elements/DataTable/DataTableNode.coffee ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -37958,13 +37958,13 @@ CUI.DataTableNode = (function(superClass) {
 
 /***/ }),
 
-/***/ 787:
+/***/ "./elements/DateTime/DateTime.coffee":
 /*!*******************************************!*\
   !*** ./elements/DateTime/DateTime.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -37977,9 +37977,9 @@ var moment,
   hasProp = {}.hasOwnProperty,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./DateTime.html */ 2173));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./DateTime.html */ "./elements/DateTime/DateTime.html"));
 
-moment = __webpack_require__(/*! moment */ 1320);
+moment = __webpack_require__(/*! moment */ "../node_modules/moment/moment.js");
 
 CUI.DateTime = (function(superClass) {
   extend(DateTime, superClass);
@@ -39479,13 +39479,13 @@ CUI.DateTime = (function(superClass) {
 
 /***/ }),
 
-/***/ 8134:
+/***/ "./elements/DateTime/DateTimeFormats.coffee":
 /*!**************************************************!*\
   !*** ./elements/DateTime/DateTimeFormats.coffee ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -40281,13 +40281,13 @@ CUI.DateTimeFormats["da-DK"] = {
 
 /***/ }),
 
-/***/ 7107:
+/***/ "./elements/DateTime/DateTimeInputBlock.coffee":
 /*!*****************************************************!*\
   !*** ./elements/DateTime/DateTimeInputBlock.coffee ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -40299,7 +40299,7 @@ var moment,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-moment = __webpack_require__(/*! moment */ 1320);
+moment = __webpack_require__(/*! moment */ "../node_modules/moment/moment.js");
 
 CUI.DateTimeInputBlock = (function(superClass) {
   extend(DateTimeInputBlock, superClass);
@@ -40363,13 +40363,13 @@ CUI.DateTimeInputBlock = (function(superClass) {
 
 /***/ }),
 
-/***/ 6928:
+/***/ "./elements/DateTime/DateTimeRangeGrammar.coffee":
 /*!*******************************************************!*\
   !*** ./elements/DateTime/DateTimeRangeGrammar.coffee ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 CUI.DateTimeRangeGrammar = (function() {
@@ -41035,14 +41035,14 @@ CUI.DateTimeRangeGrammar = (function() {
 
 /***/ }),
 
-/***/ 622:
+/***/ "./elements/DateTime/Timezone.coffee":
 /*!*******************************************!*\
   !*** ./elements/DateTime/Timezone.coffee ***!
   \*******************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
-__webpack_require__(/*! moment-timezone */ 1154);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+__webpack_require__(/*! moment-timezone */ "../node_modules/moment-timezone/index.js");
 
 CUI.Timezone = (function() {
   function Timezone() {}
@@ -41168,13 +41168,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 1885:
+/***/ "./elements/DigiDisplay/DigiDisplay.coffee":
 /*!*************************************************!*\
   !*** ./elements/DigiDisplay/DigiDisplay.coffee ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -41292,13 +41292,13 @@ CUI.DigiDisplay = (function(superClass) {
 
 /***/ }),
 
-/***/ 5715:
+/***/ "./elements/DocumentBrowser/DocumentBrowser.coffee":
 /*!*********************************************************!*\
   !*** ./elements/DocumentBrowser/DocumentBrowser.coffee ***!
   \*********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -41310,7 +41310,7 @@ var marked,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-marked = __webpack_require__(/*! marked */ 4402);
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
 
 CUI.DocumentBrowser = (function(superClass) {
   extend(DocumentBrowser, superClass);
@@ -41681,13 +41681,13 @@ CUI.DocumentBrowser = (function(superClass) {
 
 /***/ }),
 
-/***/ 5690:
+/***/ "./elements/DocumentBrowser/Node.coffee":
 /*!**********************************************!*\
   !*** ./elements/DocumentBrowser/Node.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -42116,13 +42116,13 @@ CUI.DocumentBrowser.RootNode = (function(superClass) {
 
 /***/ }),
 
-/***/ 5252:
+/***/ "./elements/DocumentBrowser/NodeMatch.coffee":
 /*!***************************************************!*\
   !*** ./elements/DocumentBrowser/NodeMatch.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -42242,13 +42242,13 @@ CUI.DocumentBrowser.NodeMatch = (function(superClass) {
 
 /***/ }),
 
-/***/ 4400:
+/***/ "./elements/DocumentBrowser/SearchMatch.coffee":
 /*!*****************************************************!*\
   !*** ./elements/DocumentBrowser/SearchMatch.coffee ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -42368,13 +42368,13 @@ CUI.DocumentBrowser.SearchMatch = (function(superClass) {
 
 /***/ }),
 
-/***/ 1771:
+/***/ "./elements/DocumentBrowser/SearchQuery.coffee":
 /*!*****************************************************!*\
   !*** ./elements/DocumentBrowser/SearchQuery.coffee ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -42461,13 +42461,13 @@ CUI.DocumentBrowser.SearchQuery = (function(superClass) {
 
 /***/ }),
 
-/***/ 4557:
+/***/ "./elements/FileUpload/FileReader.coffee":
 /*!***********************************************!*\
   !*** ./elements/FileUpload/FileReader.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -42530,13 +42530,13 @@ CUI.FileReader = (function(superClass) {
 
 /***/ }),
 
-/***/ 8444:
+/***/ "./elements/FileUpload/FileReaderFile.coffee":
 /*!***************************************************!*\
   !*** ./elements/FileUpload/FileReaderFile.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -42643,13 +42643,13 @@ CUI.FileReaderFile = (function(superClass) {
 
 /***/ }),
 
-/***/ 80:
+/***/ "./elements/FileUpload/FileUpload.coffee":
 /*!***********************************************!*\
   !*** ./elements/FileUpload/FileUpload.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -43301,13 +43301,13 @@ CUI.FileUpload = (function(superClass) {
 
 /***/ }),
 
-/***/ 4203:
+/***/ "./elements/FileUpload/FileUploadButton.coffee":
 /*!*****************************************************!*\
   !*** ./elements/FileUpload/FileUploadButton.coffee ***!
   \*****************************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -43319,7 +43319,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./FileUploadButton.html */ 1451));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./FileUploadButton.html */ "./elements/FileUpload/FileUploadButton.html"));
 
 CUI.FileUploadButton = (function(superClass) {
   extend(FileUploadButton, superClass);
@@ -43418,13 +43418,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 575:
+/***/ "./elements/FileUpload/FileUploadFile.coffee":
 /*!***************************************************!*\
   !*** ./elements/FileUpload/FileUploadFile.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -43700,13 +43700,13 @@ CUI.FileUploadFile = (function(superClass) {
 
 /***/ }),
 
-/***/ 7235:
+/***/ "./elements/Form/Form.coffee":
 /*!***********************************!*\
   !*** ./elements/Form/Form.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -43788,13 +43788,13 @@ CUI.Form = (function(superClass) {
 
 /***/ }),
 
-/***/ 2917:
+/***/ "./elements/Form/SimpleForm.coffee":
 /*!*****************************************!*\
   !*** ./elements/Form/SimpleForm.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -44621,13 +44621,13 @@ CUI.Events.registerEvent({
 
 /***/ }),
 
-/***/ 6528:
+/***/ "./elements/FormButton/FormButton.coffee":
 /*!***********************************************!*\
   !*** ./elements/FormButton/FormButton.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -44688,13 +44688,13 @@ CUI.FormButton = (function(superClass) {
 
 /***/ }),
 
-/***/ 6371:
+/***/ "./elements/FormModal/FormModal.coffee":
 /*!*********************************************!*\
   !*** ./elements/FormModal/FormModal.coffee ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -44876,13 +44876,13 @@ CUI.FormModal = (function(superClass) {
 
 /***/ }),
 
-/***/ 7054:
+/***/ "./elements/FormPopover/FormPopover.coffee":
 /*!*************************************************!*\
   !*** ./elements/FormPopover/FormPopover.coffee ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -45254,13 +45254,13 @@ CUI.FormPopover = (function(superClass) {
 
 /***/ }),
 
-/***/ 7280:
+/***/ "./elements/HorizontalLayout/HorizontalLayout.coffee":
 /*!***********************************************************!*\
   !*** ./elements/HorizontalLayout/HorizontalLayout.coffee ***!
   \***********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -45272,7 +45272,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   hasProp = {}.hasOwnProperty,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./HorizontalLayout.html */ 8798));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./HorizontalLayout.html */ "./elements/HorizontalLayout/HorizontalLayout.html"));
 
 CUI.HorizontalLayout = (function(superClass) {
   extend(HorizontalLayout, superClass);
@@ -45336,13 +45336,13 @@ CUI.HorizontalLayout = (function(superClass) {
 
 /***/ }),
 
-/***/ 3756:
+/***/ "./elements/HorizontalList/HorizontalList.coffee":
 /*!*******************************************************!*\
   !*** ./elements/HorizontalList/HorizontalList.coffee ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -45389,26 +45389,26 @@ CUI.HorizontalList = (function(superClass) {
 
 /***/ }),
 
-/***/ 1704:
+/***/ "./elements/Input/CodeInput.coffee":
 /*!*****************************************!*\
   !*** ./elements/Input/CodeInput.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var Ace,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-Ace = __webpack_require__(/*! ace-builds/src-noconflict/ace */ 8817);
+Ace = __webpack_require__(/*! ace-builds/src-noconflict/ace */ "../node_modules/ace-builds/src-noconflict/ace.js");
 
-__webpack_require__(/*! ace-builds/src-min-noconflict/mode-json */ 2502);
+__webpack_require__(/*! ace-builds/src-min-noconflict/mode-json */ "../node_modules/ace-builds/src-min-noconflict/mode-json.js");
 
-__webpack_require__(/*! ace-builds/src-min-noconflict/mode-html */ 1817);
+__webpack_require__(/*! ace-builds/src-min-noconflict/mode-html */ "../node_modules/ace-builds/src-min-noconflict/mode-html.js");
 
-__webpack_require__(/*! ace-builds/src-min-noconflict/mode-javascript */ 1408);
+__webpack_require__(/*! ace-builds/src-min-noconflict/mode-javascript */ "../node_modules/ace-builds/src-min-noconflict/mode-javascript.js");
 
-__webpack_require__(/*! ace-builds/src-min-noconflict/mode-css */ 7253);
+__webpack_require__(/*! ace-builds/src-min-noconflict/mode-css */ "../node_modules/ace-builds/src-min-noconflict/mode-css.js");
 
 CUI.CodeInput = (function(superClass) {
   extend(CodeInput, superClass);
@@ -45478,13 +45478,13 @@ CUI.CodeInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 4:
+/***/ "./elements/Input/EmailInput.coffee":
 /*!******************************************!*\
   !*** ./elements/Input/EmailInput.coffee ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -45496,7 +45496,7 @@ var EmailParser,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-EmailParser = __webpack_require__(/*! email-addresses */ 5448);
+EmailParser = __webpack_require__(/*! email-addresses */ "../node_modules/email-addresses/lib/email-addresses.js");
 
 CUI.EmailInput = (function(superClass) {
   extend(EmailInput, superClass);
@@ -45540,13 +45540,13 @@ CUI.EmailInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 2317:
+/***/ "./elements/Input/Input.coffee":
 /*!*************************************!*\
   !*** ./elements/Input/Input.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -47007,13 +47007,13 @@ CUI.Input = (function(superClass) {
 
 /***/ }),
 
-/***/ 1838:
+/***/ "./elements/Input/InputBlock.coffee":
 /*!******************************************!*\
   !*** ./elements/Input/InputBlock.coffee ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -47100,13 +47100,13 @@ CUI.InputBlock = (function(superClass) {
 
 /***/ }),
 
-/***/ 9882:
+/***/ "./elements/Input/NumberInput.coffee":
 /*!*******************************************!*\
   !*** ./elements/Input/NumberInput.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -47519,13 +47519,13 @@ CUI.NumberInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 2118:
+/***/ "./elements/Input/NumberInputBlock.coffee":
 /*!************************************************!*\
   !*** ./elements/Input/NumberInputBlock.coffee ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -47565,13 +47565,13 @@ CUI.NumberInputBlock = (function(superClass) {
 
 /***/ }),
 
-/***/ 3272:
+/***/ "./elements/ItemList/ItemList.coffee":
 /*!*******************************************!*\
   !*** ./elements/ItemList/ItemList.coffee ***!
   \*******************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -47582,7 +47582,7 @@ CUI.NumberInputBlock = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./ItemList.html */ 6440));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./ItemList.html */ "./elements/ItemList/ItemList.html"));
 
 CUI.ItemList = (function(superClass) {
   extend(ItemList, superClass);
@@ -48110,13 +48110,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 7311:
+/***/ "./elements/Label/EmptyLabel.coffee":
 /*!******************************************!*\
   !*** ./elements/Label/EmptyLabel.coffee ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -48146,13 +48146,13 @@ CUI.EmptyLabel = (function(superClass) {
 
 /***/ }),
 
-/***/ 9866:
+/***/ "./elements/Label/Label.coffee":
 /*!*************************************!*\
   !*** ./elements/Label/Label.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -48164,9 +48164,9 @@ var marked,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-marked = __webpack_require__(/*! marked */ 4402);
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Label.html */ 2712));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Label.html */ "./elements/Label/Label.html"));
 
 CUI.Label = (function(superClass) {
   extend(Label, superClass);
@@ -48561,13 +48561,13 @@ CUI.defaults["class"].Label = CUI.Label;
 
 /***/ }),
 
-/***/ 3668:
+/***/ "./elements/Label/MultilineLabel.coffee":
 /*!**********************************************!*\
   !*** ./elements/Label/MultilineLabel.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -48600,13 +48600,13 @@ CUI.MultilineLabel = (function(superClass) {
 
 /***/ }),
 
-/***/ 7182:
+/***/ "./elements/ListView/ListView.coffee":
 /*!*******************************************!*\
   !*** ./elements/ListView/ListView.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -50137,13 +50137,13 @@ CUI.ListView = (function(superClass) {
 
 /***/ }),
 
-/***/ 9435:
+/***/ "./elements/ListView/ListViewColumn.coffee":
 /*!*************************************************!*\
   !*** ./elements/ListView/ListViewColumn.coffee ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -50296,13 +50296,13 @@ CUI.ListViewColumn = (function(superClass) {
 
 /***/ }),
 
-/***/ 3369:
+/***/ "./elements/ListView/ListViewColumnEmpty.coffee":
 /*!******************************************************!*\
   !*** ./elements/ListView/ListViewColumnEmpty.coffee ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -50329,13 +50329,13 @@ CUI.ListViewColumnEmpty = (function(superClass) {
 
 /***/ }),
 
-/***/ 7808:
+/***/ "./elements/ListView/ListViewHeaderColumn.coffee":
 /*!*******************************************************!*\
   !*** ./elements/ListView/ListViewHeaderColumn.coffee ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -50435,13 +50435,13 @@ CUI.ListViewHeaderColumn = (function(superClass) {
 
 /***/ }),
 
-/***/ 2634:
+/***/ "./elements/ListView/ListViewHeaderRow.coffee":
 /*!****************************************************!*\
   !*** ./elements/ListView/ListViewHeaderRow.coffee ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -50470,13 +50470,13 @@ CUI.ListViewHeaderRow = (function(superClass) {
 
 /***/ }),
 
-/***/ 2729:
+/***/ "./elements/ListView/ListViewRow.coffee":
 /*!**********************************************!*\
   !*** ./elements/ListView/ListViewRow.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -50753,13 +50753,13 @@ CUI.ListViewRow = (function(superClass) {
 
 /***/ }),
 
-/***/ 2721:
+/***/ "./elements/ListView/ListViewTree.coffee":
 /*!***********************************************!*\
   !*** ./elements/ListView/ListViewTree.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -51183,13 +51183,13 @@ CUI.defaults["class"].ListViewTree = CUI.ListViewTree;
 
 /***/ }),
 
-/***/ 6552:
+/***/ "./elements/ListView/ListViewTreeHeaderNode.coffee":
 /*!*********************************************************!*\
   !*** ./elements/ListView/ListViewTreeHeaderNode.coffee ***!
   \*********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -51229,13 +51229,13 @@ CUI.ListViewTreeHeaderNode = (function(superClass) {
 
 /***/ }),
 
-/***/ 5717:
+/***/ "./elements/ListView/ListViewTreeNode.coffee":
 /*!***************************************************!*\
   !*** ./elements/ListView/ListViewTreeNode.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52403,13 +52403,13 @@ CUI.ListViewTreeNode = (function(superClass) {
 
 /***/ }),
 
-/***/ 6717:
+/***/ "./elements/ListView/tools/ListViewColResize.coffee":
 /*!**********************************************************!*\
   !*** ./elements/ListView/tools/ListViewColResize.coffee ***!
   \**********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52544,13 +52544,13 @@ CUI.ListViewColResize = (function(superClass) {
 
 /***/ }),
 
-/***/ 9285:
+/***/ "./elements/ListView/tools/ListViewColumnRowMoveHandle.coffee":
 /*!********************************************************************!*\
   !*** ./elements/ListView/tools/ListViewColumnRowMoveHandle.coffee ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52603,13 +52603,13 @@ CUI.ListViewColumnRowMoveHandle = (function(superClass) {
 
 /***/ }),
 
-/***/ 1792:
+/***/ "./elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee":
 /*!*******************************************************************************!*\
   !*** ./elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee ***!
   \*******************************************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52634,13 +52634,13 @@ CUI.ListViewColumnRowMoveHandlePlaceholder = (function(superClass) {
 
 /***/ }),
 
-/***/ 3397:
+/***/ "./elements/ListView/tools/ListViewDraggable.coffee":
 /*!**********************************************************!*\
   !*** ./elements/ListView/tools/ListViewDraggable.coffee ***!
   \**********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52690,13 +52690,13 @@ CUI.ListViewDraggable = (function(superClass) {
 
 /***/ }),
 
-/***/ 6897:
+/***/ "./elements/ListView/tools/ListViewRowMove.coffee":
 /*!********************************************************!*\
   !*** ./elements/ListView/tools/ListViewRowMove.coffee ***!
   \********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52842,13 +52842,13 @@ CUI.ListViewRowMove = (function(superClass) {
 
 /***/ }),
 
-/***/ 5661:
+/***/ "./elements/ListView/tools/ListViewTreeRowMove.coffee":
 /*!************************************************************!*\
   !*** ./elements/ListView/tools/ListViewTreeRowMove.coffee ***!
   \************************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -52938,18 +52938,18 @@ CUI.ListViewTreeRowMove = (function(superClass) {
 
 /***/ }),
 
-/***/ 7731:
+/***/ "./elements/Map/GoogleMap.coffee":
 /*!***************************************!*\
   !*** ./elements/Map/GoogleMap.coffee ***!
   \***************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var googleMapsApi,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-googleMapsApi = __webpack_require__(/*! load-google-maps-api */ 1465);
+googleMapsApi = __webpack_require__(/*! load-google-maps-api */ "../node_modules/load-google-maps-api/index.js");
 
 CUI.GoogleMap = (function(superClass) {
   extend(GoogleMap, superClass);
@@ -53179,13 +53179,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 5128:
+/***/ "./elements/Map/IconMarker.coffee":
 /*!****************************************!*\
   !*** ./elements/Map/IconMarker.coffee ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -53284,20 +53284,20 @@ CUI.IconMarker = (function(superClass) {
 
 /***/ }),
 
-/***/ 4350:
+/***/ "./elements/Map/LeafletMap.coffee":
 /*!****************************************!*\
   !*** ./elements/Map/LeafletMap.coffee ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var attributionHtml,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-attributionHtml = __webpack_require__(/*! ./leaflet.attribution.html */ 3979);
+attributionHtml = __webpack_require__(/*! ./leaflet.attribution.html */ "./elements/Map/leaflet.attribution.html");
 
-__webpack_require__(/*! leaflet/dist/leaflet.js */ 8304);
+__webpack_require__(/*! leaflet/dist/leaflet.js */ "../node_modules/leaflet/dist/leaflet.js");
 
 CUI.LeafletMap = (function(superClass) {
   extend(LeafletMap, superClass);
@@ -53631,17 +53631,17 @@ CUI.LeafletMap = (function(superClass) {
 
 /***/ }),
 
-/***/ 9759:
+/***/ "./elements/Map/Map.coffee":
 /*!*********************************!*\
   !*** ./elements/Map/Map.coffee ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./map.html */ 8777));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./map.html */ "./elements/Map/map.html"));
 
 CUI.Map = (function(superClass) {
   extend(Map, superClass);
@@ -54108,17 +54108,17 @@ CUI.Map = (function(superClass) {
 
 /***/ }),
 
-/***/ 8365:
+/***/ "./elements/Map/MapInput.coffee":
 /*!**************************************!*\
   !*** ./elements/Map/MapInput.coffee ***!
   \**************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./map-input.html */ 8849));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./map-input.html */ "./elements/Map/map-input.html"));
 
 CUI.MapInput = (function(superClass) {
   extend(MapInput, superClass);
@@ -54452,13 +54452,13 @@ CUI.MapInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 4904:
+/***/ "./elements/MarkdownInput/MarkdownInput.coffee":
 /*!*****************************************************!*\
   !*** ./elements/MarkdownInput/MarkdownInput.coffee ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -54470,7 +54470,7 @@ var marked,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-marked = __webpack_require__(/*! marked */ 4402);
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
 
 CUI.MarkdownInput = (function(superClass) {
   extend(MarkdownInput, superClass);
@@ -54766,13 +54766,13 @@ CUI.MarkdownInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 3316:
+/***/ "./elements/Menu/Menu.coffee":
 /*!***********************************!*\
   !*** ./elements/Menu/Menu.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -54992,13 +54992,13 @@ CUI.Menu = (function(superClass) {
 
 /***/ }),
 
-/***/ 1272:
+/***/ "./elements/Modal/Modal.coffee":
 /*!*************************************!*\
   !*** ./elements/Modal/Modal.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -55263,13 +55263,13 @@ CUI.Modal = (function(superClass) {
 
 /***/ }),
 
-/***/ 9234:
+/***/ "./elements/MultiInput/MultiInput.coffee":
 /*!***********************************************!*\
   !*** ./elements/MultiInput/MultiInput.coffee ***!
   \***********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -55680,13 +55680,13 @@ CUI.MultiInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 1305:
+/***/ "./elements/MultiInput/MultiInputControl.coffee":
 /*!******************************************************!*\
   !*** ./elements/MultiInput/MultiInputControl.coffee ***!
   \******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -55881,13 +55881,13 @@ CUI.Events.registerEvent({
 
 /***/ }),
 
-/***/ 8406:
+/***/ "./elements/MultiInput/MultiInputInput.coffee":
 /*!****************************************************!*\
   !*** ./elements/MultiInput/MultiInputInput.coffee ***!
   \****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -55898,7 +55898,7 @@ CUI.Events.registerEvent({
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./MultiInputInput.html */ 1875));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./MultiInputInput.html */ "./elements/MultiInput/MultiInputInput.html"));
 
 CUI.MultiInputInput = (function(superClass) {
   extend(MultiInputInput, superClass);
@@ -55928,13 +55928,13 @@ CUI.MultiInputInput = (function(superClass) {
 
 /***/ }),
 
-/***/ 136:
+/***/ "./elements/MultiOutput/MultiOutput.coffee":
 /*!*************************************************!*\
   !*** ./elements/MultiOutput/MultiOutput.coffee ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -55945,7 +55945,7 @@ CUI.MultiInputInput = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./MultiOutput.html */ 3708));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./MultiOutput.html */ "./elements/MultiOutput/MultiOutput.html"));
 
 CUI.MultiOutput = (function(superClass) {
   extend(MultiOutput, superClass);
@@ -56095,13 +56095,13 @@ CUI.MultiOutput = (function(superClass) {
 
 /***/ }),
 
-/***/ 1160:
+/***/ "./elements/ObjectDumper/ObjectDumper.coffee":
 /*!***************************************************!*\
   !*** ./elements/ObjectDumper/ObjectDumper.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -56223,13 +56223,13 @@ CUI.ObjectDumper = (function(superClass) {
 
 /***/ }),
 
-/***/ 5664:
+/***/ "./elements/ObjectDumper/ObjectDumperNode.coffee":
 /*!*******************************************************!*\
   !*** ./elements/ObjectDumper/ObjectDumperNode.coffee ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -56424,13 +56424,13 @@ CUI.ObjectDumperNode = (function(superClass) {
 
 /***/ }),
 
-/***/ 7573:
+/***/ "./elements/Options/Options.coffee":
 /*!*****************************************!*\
   !*** ./elements/Options/Options.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -56441,7 +56441,7 @@ CUI.ObjectDumperNode = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Options.html */ 3805));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Options.html */ "./elements/Options/Options.html"));
 
 CUI.Options = (function(superClass) {
   extend(Options, superClass);
@@ -57134,13 +57134,13 @@ CUI.Options = (function(superClass) {
 
 /***/ }),
 
-/***/ 3481:
+/***/ "./elements/Output/Output.coffee":
 /*!***************************************!*\
   !*** ./elements/Output/Output.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57287,13 +57287,13 @@ CUI.Output = (function(superClass) {
 
 /***/ }),
 
-/***/ 1864:
+/***/ "./elements/Output/OutputContent.coffee":
 /*!**********************************************!*\
   !*** ./elements/Output/OutputContent.coffee ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57372,13 +57372,13 @@ CUI.OutputContent = (function(superClass) {
 
 /***/ }),
 
-/***/ 6280:
+/***/ "./elements/Pane/LayerPane.coffee":
 /*!****************************************!*\
   !*** ./elements/Pane/LayerPane.coffee ***!
   \****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57442,13 +57442,13 @@ CUI.LayerPane = (function(superClass) {
 
 /***/ }),
 
-/***/ 1922:
+/***/ "./elements/Pane/Pane.coffee":
 /*!***********************************!*\
   !*** ./elements/Pane/Pane.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57459,7 +57459,7 @@ CUI.LayerPane = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Pane.html */ 3502));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Pane.html */ "./elements/Pane/Pane.html"));
 
 CUI.Pane = (function(superClass) {
   extend(Pane, superClass);
@@ -57732,13 +57732,13 @@ CUI.Events.registerEvent({
 
 /***/ }),
 
-/***/ 2965:
+/***/ "./elements/Pane/PaneFooter.coffee":
 /*!*****************************************!*\
   !*** ./elements/Pane/PaneFooter.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57768,13 +57768,13 @@ CUI.PaneFooter = (function(superClass) {
 
 /***/ }),
 
-/***/ 8073:
+/***/ "./elements/Pane/PaneHeader.coffee":
 /*!*****************************************!*\
   !*** ./elements/Pane/PaneHeader.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57804,13 +57804,13 @@ CUI.PaneHeader = (function(superClass) {
 
 /***/ }),
 
-/***/ 2040:
+/***/ "./elements/Pane/PaneToolbar.coffee":
 /*!******************************************!*\
   !*** ./elements/Pane/PaneToolbar.coffee ***!
   \******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -57840,13 +57840,13 @@ CUI.PaneToolbar = (function(superClass) {
 
 /***/ }),
 
-/***/ 7335:
+/***/ "./elements/Pane/SimplePane.coffee":
 /*!*****************************************!*\
   !*** ./elements/Pane/SimplePane.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -58023,13 +58023,13 @@ CUI.SimplePane = (function(superClass) {
 
 /***/ }),
 
-/***/ 9095:
+/***/ "./elements/Panel/Panel.coffee":
 /*!*************************************!*\
   !*** ./elements/Panel/Panel.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -58040,7 +58040,7 @@ CUI.SimplePane = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Panel.html */ 9379));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Panel.html */ "./elements/Panel/Panel.html"));
 
 CUI.Panel = (function(superClass) {
   extend(Panel, superClass);
@@ -58284,13 +58284,13 @@ CUI.defaults["class"].Panel = CUI.Panel;
 
 /***/ }),
 
-/***/ 8880:
+/***/ "./elements/Password/Password.coffee":
 /*!*******************************************!*\
   !*** ./elements/Password/Password.coffee ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -58327,13 +58327,13 @@ CUI.Password = (function(superClass) {
 
 /***/ }),
 
-/***/ 6361:
+/***/ "./elements/Popover/Popover.coffee":
 /*!*****************************************!*\
   !*** ./elements/Popover/Popover.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -58382,13 +58382,13 @@ CUI.Popover = (function(superClass) {
 
 /***/ }),
 
-/***/ 3982:
+/***/ "./elements/ProgressMeter/ProgressMeter.coffee":
 /*!*****************************************************!*\
   !*** ./elements/ProgressMeter/ProgressMeter.coffee ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -58400,7 +58400,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   hasProp = {}.hasOwnProperty,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./ProgressMeter.html */ 9041));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./ProgressMeter.html */ "./elements/ProgressMeter/ProgressMeter.html"));
 
 CUI.ProgressMeter = (function(superClass) {
   extend(ProgressMeter, superClass);
@@ -58561,13 +58561,13 @@ CUI.defaults.ProgressMeter = {
 
 /***/ }),
 
-/***/ 2717:
+/***/ "./elements/Select/Select.coffee":
 /*!***************************************!*\
   !*** ./elements/Select/Select.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -58970,17 +58970,17 @@ CUI.defaults["class"].Select = CUI.Select;
 
 /***/ }),
 
-/***/ 2731:
+/***/ "./elements/Slider/Slider.coffee":
 /*!***************************************!*\
   !*** ./elements/Slider/Slider.coffee ***!
   \***************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Slider.html */ 2775));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Slider.html */ "./elements/Slider/Slider.html"));
 
 CUI.Slider = (function(superClass) {
   extend(Slider, superClass);
@@ -59174,13 +59174,13 @@ CUI.Slider = (function(superClass) {
 
 /***/ }),
 
-/***/ 7782:
+/***/ "./elements/StickyHeader/StickyHeader.coffee":
 /*!***************************************************!*\
   !*** ./elements/StickyHeader/StickyHeader.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -59191,7 +59191,7 @@ CUI.Slider = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./StickyHeader.html */ 9396));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./StickyHeader.html */ "./elements/StickyHeader/StickyHeader.html"));
 
 CUI.StickyHeader = (function(superClass) {
   extend(StickyHeader, superClass);
@@ -59245,13 +59245,13 @@ CUI.StickyHeader = (function(superClass) {
 
 /***/ }),
 
-/***/ 9114:
+/***/ "./elements/StickyHeader/StickyHeaderControl.coffee":
 /*!**********************************************************!*\
   !*** ./elements/StickyHeader/StickyHeaderControl.coffee ***!
   \**********************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -59457,13 +59457,13 @@ CUI.StickyHeaderControl = (function(superClass) {
 
 /***/ }),
 
-/***/ 5184:
+/***/ "./elements/Table/Table.coffee":
 /*!*************************************!*\
   !*** ./elements/Table/Table.coffee ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -59684,13 +59684,13 @@ CUI.Table = (function(superClass) {
 
 /***/ }),
 
-/***/ 7881:
+/***/ "./elements/Tabs/Tab.coffee":
 /*!**********************************!*\
   !*** ./elements/Tabs/Tab.coffee ***!
   \**********************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -59701,7 +59701,7 @@ CUI.Table = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Tab.html */ 1541));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Tab.html */ "./elements/Tabs/Tab.html"));
 
 CUI.Tab = (function(superClass) {
   extend(Tab, superClass);
@@ -59940,13 +59940,13 @@ CUI.ready((function(_this) {
 
 /***/ }),
 
-/***/ 3062:
+/***/ "./elements/Tabs/Tabs.coffee":
 /*!***********************************!*\
   !*** ./elements/Tabs/Tabs.coffee ***!
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -59957,7 +59957,7 @@ CUI.ready((function(_this) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./Tabs.html */ 4225));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./Tabs.html */ "./elements/Tabs/Tabs.html"));
 
 CUI.Tabs = (function(superClass) {
   extend(Tabs, superClass);
@@ -60270,13 +60270,13 @@ CUI.Tabs = (function(superClass) {
 
 /***/ }),
 
-/***/ 4070:
+/***/ "./elements/Toolbar/Toolbar.coffee":
 /*!*****************************************!*\
   !*** ./elements/Toolbar/Toolbar.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -60328,13 +60328,13 @@ CUI.Toolbar = (function(superClass) {
 
 /***/ }),
 
-/***/ 7227:
+/***/ "./elements/Tooltip/Tooltip.coffee":
 /*!*****************************************!*\
   !*** ./elements/Tooltip/Tooltip.coffee ***!
   \*****************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -60657,13 +60657,13 @@ CUI.Tooltip = (function(superClass) {
 
 /***/ }),
 
-/***/ 7869:
+/***/ "./elements/VerticalLayout/VerticalLayout.coffee":
 /*!*******************************************************!*\
   !*** ./elements/VerticalLayout/VerticalLayout.coffee ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -60675,7 +60675,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   hasProp = {}.hasOwnProperty,
   indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./VerticalLayout.html */ 6075));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./VerticalLayout.html */ "./elements/VerticalLayout/VerticalLayout.html"));
 
 CUI.VerticalLayout = (function(superClass) {
   extend(VerticalLayout, superClass);
@@ -60739,13 +60739,13 @@ CUI.VerticalLayout = (function(superClass) {
 
 /***/ }),
 
-/***/ 2182:
+/***/ "./elements/VerticalList/VerticalList.coffee":
 /*!***************************************************!*\
   !*** ./elements/VerticalList/VerticalList.coffee ***!
   \***************************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -60792,13 +60792,13 @@ CUI.VerticalList = (function(superClass) {
 
 /***/ }),
 
-/***/ 5046:
+/***/ "./elements/WaitBlock/WaitBlock.coffee":
 /*!*********************************************!*\
   !*** ./elements/WaitBlock/WaitBlock.coffee ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -60809,7 +60809,7 @@ CUI.VerticalList = (function(superClass) {
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CUI.Template.loadTemplateText(__webpack_require__(/*! ./WaitBlock.html */ 3150));
+CUI.Template.loadTemplateText(__webpack_require__(/*! ./WaitBlock.html */ "./elements/WaitBlock/WaitBlock.html"));
 
 CUI.WaitBlock = (function(superClass) {
   extend(WaitBlock, superClass);
@@ -60919,7 +60919,7 @@ CUI.WaitBlock = (function(superClass) {
 
 /***/ }),
 
-/***/ 5123:
+/***/ "./index.coffee":
 /*!**********************!*\
   !*** ./index.coffee ***!
   \**********************/
@@ -60927,300 +60927,300 @@ CUI.WaitBlock = (function(superClass) {
 
 var CUI;
 
-CUI = __webpack_require__(/*! ./base/CUI.coffee */ 1903);
+CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
-__webpack_require__(/*! ./base/util.coffee */ 5550);
+__webpack_require__(/*! ./base/util.coffee */ "./base/util.coffee");
 
-__webpack_require__(/*! ./base/dom.coffee */ 8548);
+__webpack_require__(/*! ./base/dom.coffee */ "./base/dom.coffee");
 
-__webpack_require__(/*! ./base/Deferred/Deferred.coffee */ 6109);
+__webpack_require__(/*! ./base/Deferred/Deferred.coffee */ "./base/Deferred/Deferred.coffee");
 
-__webpack_require__(/*! ./base/Deferred/Promise.coffee */ 6974);
+__webpack_require__(/*! ./base/Deferred/Promise.coffee */ "./base/Deferred/Promise.coffee");
 
-__webpack_require__(/*! ./base/Deferred/when.coffee */ 3724);
+__webpack_require__(/*! ./base/Deferred/when.coffee */ "./base/Deferred/when.coffee");
 
-__webpack_require__(/*! ./base/Deferred/decide.coffee */ 9490);
+__webpack_require__(/*! ./base/Deferred/decide.coffee */ "./base/Deferred/decide.coffee");
 
-__webpack_require__(/*! ./base/Dummy.coffee */ 6256);
+__webpack_require__(/*! ./base/Dummy.coffee */ "./base/Dummy.coffee");
 
-__webpack_require__(/*! ./base/Element.coffee */ 5927);
+__webpack_require__(/*! ./base/Element.coffee */ "./base/Element.coffee");
 
-__webpack_require__(/*! ./base/XHR/XHR.coffee */ 8661);
+__webpack_require__(/*! ./base/XHR/XHR.coffee */ "./base/XHR/XHR.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/DragDropSelect.coffee */ 1219);
+__webpack_require__(/*! ./base/DragDropSelect/DragDropSelect.coffee */ "./base/DragDropSelect/DragDropSelect.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Draggable.coffee */ 9066);
+__webpack_require__(/*! ./base/DragDropSelect/Draggable.coffee */ "./base/DragDropSelect/Draggable.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Droppable.coffee */ 7939);
+__webpack_require__(/*! ./base/DragDropSelect/Droppable.coffee */ "./base/DragDropSelect/Droppable.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Lasso.coffee */ 6631);
+__webpack_require__(/*! ./base/DragDropSelect/Lasso.coffee */ "./base/DragDropSelect/Lasso.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Sortable.coffee */ 661);
+__webpack_require__(/*! ./base/DragDropSelect/Sortable.coffee */ "./base/DragDropSelect/Sortable.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Movable.coffee */ 7620);
+__webpack_require__(/*! ./base/DragDropSelect/Movable.coffee */ "./base/DragDropSelect/Movable.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Resizable.coffee */ 2970);
+__webpack_require__(/*! ./base/DragDropSelect/Resizable.coffee */ "./base/DragDropSelect/Resizable.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/Dragscroll.coffee */ 9740);
+__webpack_require__(/*! ./base/DragDropSelect/Dragscroll.coffee */ "./base/DragDropSelect/Dragscroll.coffee");
 
-__webpack_require__(/*! ./base/Events/Event.coffee */ 4251);
+__webpack_require__(/*! ./base/Events/Event.coffee */ "./base/Events/Event.coffee");
 
-__webpack_require__(/*! ./base/Events/MouseEvent.coffee */ 8290);
+__webpack_require__(/*! ./base/Events/MouseEvent.coffee */ "./base/Events/MouseEvent.coffee");
 
-__webpack_require__(/*! ./base/Events/KeyboardEvent.coffee */ 4021);
+__webpack_require__(/*! ./base/Events/KeyboardEvent.coffee */ "./base/Events/KeyboardEvent.coffee");
 
-__webpack_require__(/*! ./base/Events/TouchEvent.coffee */ 7304);
+__webpack_require__(/*! ./base/Events/TouchEvent.coffee */ "./base/Events/TouchEvent.coffee");
 
-__webpack_require__(/*! ./base/Events/CUIEvent.coffee */ 5426);
+__webpack_require__(/*! ./base/Events/CUIEvent.coffee */ "./base/Events/CUIEvent.coffee");
 
-__webpack_require__(/*! ./base/Events/Listener.coffee */ 7775);
+__webpack_require__(/*! ./base/Events/Listener.coffee */ "./base/Events/Listener.coffee");
 
-__webpack_require__(/*! ./base/Events/WheelEvent.coffee */ 7705);
+__webpack_require__(/*! ./base/Events/WheelEvent.coffee */ "./base/Events/WheelEvent.coffee");
 
-__webpack_require__(/*! ./base/Events/Events.coffee */ 4001);
+__webpack_require__(/*! ./base/Events/Events.coffee */ "./base/Events/Events.coffee");
 
-__webpack_require__(/*! ./base/Events/MouseIsStill.coffee */ 2728);
+__webpack_require__(/*! ./base/Events/MouseIsStill.coffee */ "./base/Events/MouseIsStill.coffee");
 
-__webpack_require__(/*! ./base/DragDropSelect/DragoverScrollEvent.coffee */ 6689);
+__webpack_require__(/*! ./base/DragDropSelect/DragoverScrollEvent.coffee */ "./base/DragDropSelect/DragoverScrollEvent.coffee");
 
-__webpack_require__(/*! ./base/DOMElement/DOMElement.coffee */ 6873);
+__webpack_require__(/*! ./base/DOMElement/DOMElement.coffee */ "./base/DOMElement/DOMElement.coffee");
 
-__webpack_require__(/*! ./base/CSSLoader/CSSLoader.coffee */ 2049);
+__webpack_require__(/*! ./base/CSSLoader/CSSLoader.coffee */ "./base/CSSLoader/CSSLoader.coffee");
 
-__webpack_require__(/*! ./base/Template/Template.coffee */ 8695);
+__webpack_require__(/*! ./base/Template/Template.coffee */ "./base/Template/Template.coffee");
 
-__webpack_require__(/*! ./base/FlexHandle/FlexHandle.coffee */ 8332);
+__webpack_require__(/*! ./base/FlexHandle/FlexHandle.coffee */ "./base/FlexHandle/FlexHandle.coffee");
 
-__webpack_require__(/*! ./base/Layout/Layout.coffee */ 4501);
+__webpack_require__(/*! ./base/Layout/Layout.coffee */ "./base/Layout/Layout.coffee");
 
-__webpack_require__(/*! ./base/Layer/Layer.coffee */ 8025);
+__webpack_require__(/*! ./base/Layer/Layer.coffee */ "./base/Layer/Layer.coffee");
 
-__webpack_require__(/*! ./base/DataField/DataField.coffee */ 5571);
+__webpack_require__(/*! ./base/DataField/DataField.coffee */ "./base/DataField/DataField.coffee");
 
-__webpack_require__(/*! ./base/DataField/CheckValueError.coffee */ 245);
+__webpack_require__(/*! ./base/DataField/CheckValueError.coffee */ "./base/DataField/CheckValueError.coffee");
 
-__webpack_require__(/*! ./base/DataField/DataFieldInput.coffee */ 7733);
+__webpack_require__(/*! ./base/DataField/DataFieldInput.coffee */ "./base/DataField/DataFieldInput.coffee");
 
-__webpack_require__(/*! ./elements/Button/Button.coffee */ 8053);
+__webpack_require__(/*! ./elements/Button/Button.coffee */ "./elements/Button/Button.coffee");
 
-__webpack_require__(/*! ./base/Icon/Icon.coffee */ 7248);
+__webpack_require__(/*! ./base/Icon/Icon.coffee */ "./base/Icon/Icon.coffee");
 
-__webpack_require__(/*! ./elements/Button/ButtonHref.coffee */ 2943);
+__webpack_require__(/*! ./elements/Button/ButtonHref.coffee */ "./elements/Button/ButtonHref.coffee");
 
-__webpack_require__(/*! ./elements/Button/Buttonbar.coffee */ 6855);
+__webpack_require__(/*! ./elements/Button/Buttonbar.coffee */ "./elements/Button/Buttonbar.coffee");
 
-__webpack_require__(/*! ./elements/Label/Label.coffee */ 9866);
+__webpack_require__(/*! ./elements/Label/Label.coffee */ "./elements/Label/Label.coffee");
 
-__webpack_require__(/*! ./elements/Label/MultilineLabel.coffee */ 3668);
+__webpack_require__(/*! ./elements/Label/MultilineLabel.coffee */ "./elements/Label/MultilineLabel.coffee");
 
-__webpack_require__(/*! ./elements/Label/EmptyLabel.coffee */ 7311);
+__webpack_require__(/*! ./elements/Label/EmptyLabel.coffee */ "./elements/Label/EmptyLabel.coffee");
 
-__webpack_require__(/*! ./elements/ProgressMeter/ProgressMeter.coffee */ 3982);
+__webpack_require__(/*! ./elements/ProgressMeter/ProgressMeter.coffee */ "./elements/ProgressMeter/ProgressMeter.coffee");
 
-__webpack_require__(/*! ./elements/Block/Block.coffee */ 3964);
+__webpack_require__(/*! ./elements/Block/Block.coffee */ "./elements/Block/Block.coffee");
 
-__webpack_require__(/*! ./elements/WaitBlock/WaitBlock.coffee */ 5046);
+__webpack_require__(/*! ./elements/WaitBlock/WaitBlock.coffee */ "./elements/WaitBlock/WaitBlock.coffee");
 
-__webpack_require__(/*! ./elements/BorderLayout/BorderLayout.coffee */ 5612);
+__webpack_require__(/*! ./elements/BorderLayout/BorderLayout.coffee */ "./elements/BorderLayout/BorderLayout.coffee");
 
-__webpack_require__(/*! ./elements/Console/Console.coffee */ 2353);
+__webpack_require__(/*! ./elements/Console/Console.coffee */ "./elements/Console/Console.coffee");
 
-__webpack_require__(/*! ./elements/HorizontalLayout/HorizontalLayout.coffee */ 7280);
+__webpack_require__(/*! ./elements/HorizontalLayout/HorizontalLayout.coffee */ "./elements/HorizontalLayout/HorizontalLayout.coffee");
 
-__webpack_require__(/*! ./elements/VerticalLayout/VerticalLayout.coffee */ 7869);
+__webpack_require__(/*! ./elements/VerticalLayout/VerticalLayout.coffee */ "./elements/VerticalLayout/VerticalLayout.coffee");
 
-__webpack_require__(/*! ./elements/VerticalList/VerticalList.coffee */ 2182);
+__webpack_require__(/*! ./elements/VerticalList/VerticalList.coffee */ "./elements/VerticalList/VerticalList.coffee");
 
-__webpack_require__(/*! ./elements/HorizontalList/HorizontalList.coffee */ 3756);
+__webpack_require__(/*! ./elements/HorizontalList/HorizontalList.coffee */ "./elements/HorizontalList/HorizontalList.coffee");
 
-__webpack_require__(/*! ./elements/Toolbar/Toolbar.coffee */ 4070);
+__webpack_require__(/*! ./elements/Toolbar/Toolbar.coffee */ "./elements/Toolbar/Toolbar.coffee");
 
-__webpack_require__(/*! ./elements/Pane/Pane.coffee */ 1922);
+__webpack_require__(/*! ./elements/Pane/Pane.coffee */ "./elements/Pane/Pane.coffee");
 
-__webpack_require__(/*! ./elements/Pane/LayerPane.coffee */ 6280);
+__webpack_require__(/*! ./elements/Pane/LayerPane.coffee */ "./elements/Pane/LayerPane.coffee");
 
-__webpack_require__(/*! ./elements/Pane/SimplePane.coffee */ 7335);
+__webpack_require__(/*! ./elements/Pane/SimplePane.coffee */ "./elements/Pane/SimplePane.coffee");
 
-__webpack_require__(/*! ./elements/Pane/PaneToolbar.coffee */ 2040);
+__webpack_require__(/*! ./elements/Pane/PaneToolbar.coffee */ "./elements/Pane/PaneToolbar.coffee");
 
-__webpack_require__(/*! ./elements/Pane/PaneHeader.coffee */ 8073);
+__webpack_require__(/*! ./elements/Pane/PaneHeader.coffee */ "./elements/Pane/PaneHeader.coffee");
 
-__webpack_require__(/*! ./elements/Pane/PaneFooter.coffee */ 2965);
+__webpack_require__(/*! ./elements/Pane/PaneFooter.coffee */ "./elements/Pane/PaneFooter.coffee");
 
-__webpack_require__(/*! ./elements/Tabs/Tab.coffee */ 7881);
+__webpack_require__(/*! ./elements/Tabs/Tab.coffee */ "./elements/Tabs/Tab.coffee");
 
-__webpack_require__(/*! ./elements/Tabs/Tabs.coffee */ 3062);
+__webpack_require__(/*! ./elements/Tabs/Tabs.coffee */ "./elements/Tabs/Tabs.coffee");
 
-__webpack_require__(/*! ./elements/Modal/Modal.coffee */ 1272);
+__webpack_require__(/*! ./elements/Modal/Modal.coffee */ "./elements/Modal/Modal.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationDialog/ConfirmationDialog.coffee */ 1508);
+__webpack_require__(/*! ./elements/ConfirmationDialog/ConfirmationDialog.coffee */ "./elements/ConfirmationDialog/ConfirmationDialog.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationChoice/ConfirmationChoice.coffee */ 6731);
+__webpack_require__(/*! ./elements/ConfirmationChoice/ConfirmationChoice.coffee */ "./elements/ConfirmationChoice/ConfirmationChoice.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationChoice/Alert.coffee */ 5220);
+__webpack_require__(/*! ./elements/ConfirmationChoice/Alert.coffee */ "./elements/ConfirmationChoice/Alert.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationChoice/Toaster.coffee */ 9369);
+__webpack_require__(/*! ./elements/ConfirmationChoice/Toaster.coffee */ "./elements/ConfirmationChoice/Toaster.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationChoice/Spinner.coffee */ 7118);
+__webpack_require__(/*! ./elements/ConfirmationChoice/Spinner.coffee */ "./elements/ConfirmationChoice/Spinner.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationChoice/Confirm.coffee */ 1444);
+__webpack_require__(/*! ./elements/ConfirmationChoice/Confirm.coffee */ "./elements/ConfirmationChoice/Confirm.coffee");
 
-__webpack_require__(/*! ./elements/ConfirmationChoice/Prompt.coffee */ 5770);
+__webpack_require__(/*! ./elements/ConfirmationChoice/Prompt.coffee */ "./elements/ConfirmationChoice/Prompt.coffee");
 
-__webpack_require__(/*! ./elements/Popover/Popover.coffee */ 6361);
+__webpack_require__(/*! ./elements/Popover/Popover.coffee */ "./elements/Popover/Popover.coffee");
 
-__webpack_require__(/*! ./elements/Tooltip/Tooltip.coffee */ 7227);
+__webpack_require__(/*! ./elements/Tooltip/Tooltip.coffee */ "./elements/Tooltip/Tooltip.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListView.coffee */ 7182);
+__webpack_require__(/*! ./elements/ListView/ListView.coffee */ "./elements/ListView/ListView.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewTree.coffee */ 2721);
+__webpack_require__(/*! ./elements/ListView/ListViewTree.coffee */ "./elements/ListView/ListViewTree.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewRow.coffee */ 2729);
+__webpack_require__(/*! ./elements/ListView/ListViewRow.coffee */ "./elements/ListView/ListViewRow.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewHeaderRow.coffee */ 2634);
+__webpack_require__(/*! ./elements/ListView/ListViewHeaderRow.coffee */ "./elements/ListView/ListViewHeaderRow.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewTreeNode.coffee */ 5717);
+__webpack_require__(/*! ./elements/ListView/ListViewTreeNode.coffee */ "./elements/ListView/ListViewTreeNode.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewTreeHeaderNode.coffee */ 6552);
+__webpack_require__(/*! ./elements/ListView/ListViewTreeHeaderNode.coffee */ "./elements/ListView/ListViewTreeHeaderNode.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewColumn.coffee */ 9435);
+__webpack_require__(/*! ./elements/ListView/ListViewColumn.coffee */ "./elements/ListView/ListViewColumn.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewColumnEmpty.coffee */ 3369);
+__webpack_require__(/*! ./elements/ListView/ListViewColumnEmpty.coffee */ "./elements/ListView/ListViewColumnEmpty.coffee");
 
-__webpack_require__(/*! ./elements/ListView/ListViewHeaderColumn.coffee */ 7808);
+__webpack_require__(/*! ./elements/ListView/ListViewHeaderColumn.coffee */ "./elements/ListView/ListViewHeaderColumn.coffee");
 
-__webpack_require__(/*! ./elements/ListView/tools/ListViewColumnRowMoveHandle.coffee */ 9285);
+__webpack_require__(/*! ./elements/ListView/tools/ListViewColumnRowMoveHandle.coffee */ "./elements/ListView/tools/ListViewColumnRowMoveHandle.coffee");
 
-__webpack_require__(/*! ./elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee */ 1792);
+__webpack_require__(/*! ./elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee */ "./elements/ListView/tools/ListViewColumnRowMoveHandlePlaceholder.coffee");
 
-__webpack_require__(/*! ./elements/ListView/tools/ListViewDraggable.coffee */ 3397);
+__webpack_require__(/*! ./elements/ListView/tools/ListViewDraggable.coffee */ "./elements/ListView/tools/ListViewDraggable.coffee");
 
-__webpack_require__(/*! ./elements/ListView/tools/ListViewRowMove.coffee */ 6897);
+__webpack_require__(/*! ./elements/ListView/tools/ListViewRowMove.coffee */ "./elements/ListView/tools/ListViewRowMove.coffee");
 
-__webpack_require__(/*! ./elements/ListView/tools/ListViewColResize.coffee */ 6717);
+__webpack_require__(/*! ./elements/ListView/tools/ListViewColResize.coffee */ "./elements/ListView/tools/ListViewColResize.coffee");
 
-__webpack_require__(/*! ./elements/ListView/tools/ListViewTreeRowMove.coffee */ 5661);
+__webpack_require__(/*! ./elements/ListView/tools/ListViewTreeRowMove.coffee */ "./elements/ListView/tools/ListViewTreeRowMove.coffee");
 
-__webpack_require__(/*! ./elements/ItemList/ItemList.coffee */ 3272);
+__webpack_require__(/*! ./elements/ItemList/ItemList.coffee */ "./elements/ItemList/ItemList.coffee");
 
-__webpack_require__(/*! ./elements/Menu/Menu.coffee */ 3316);
+__webpack_require__(/*! ./elements/Menu/Menu.coffee */ "./elements/Menu/Menu.coffee");
 
-__webpack_require__(/*! ./elements/Panel/Panel.coffee */ 9095);
+__webpack_require__(/*! ./elements/Panel/Panel.coffee */ "./elements/Panel/Panel.coffee");
 
-__webpack_require__(/*! ./elements/Input/Input.coffee */ 2317);
+__webpack_require__(/*! ./elements/Input/Input.coffee */ "./elements/Input/Input.coffee");
 
-__webpack_require__(/*! ./elements/MarkdownInput/MarkdownInput.coffee */ 4904);
+__webpack_require__(/*! ./elements/MarkdownInput/MarkdownInput.coffee */ "./elements/MarkdownInput/MarkdownInput.coffee");
 
-__webpack_require__(/*! ./elements/FileUpload/FileUploadFile.coffee */ 575);
+__webpack_require__(/*! ./elements/FileUpload/FileUploadFile.coffee */ "./elements/FileUpload/FileUploadFile.coffee");
 
-__webpack_require__(/*! ./elements/FileUpload/FileUploadButton.coffee */ 4203);
+__webpack_require__(/*! ./elements/FileUpload/FileUploadButton.coffee */ "./elements/FileUpload/FileUploadButton.coffee");
 
-__webpack_require__(/*! ./elements/FileUpload/FileUpload.coffee */ 80);
+__webpack_require__(/*! ./elements/FileUpload/FileUpload.coffee */ "./elements/FileUpload/FileUpload.coffee");
 
-__webpack_require__(/*! ./elements/FileUpload/FileReader.coffee */ 4557);
+__webpack_require__(/*! ./elements/FileUpload/FileReader.coffee */ "./elements/FileUpload/FileReader.coffee");
 
-__webpack_require__(/*! ./elements/FileUpload/FileReaderFile.coffee */ 8444);
+__webpack_require__(/*! ./elements/FileUpload/FileReaderFile.coffee */ "./elements/FileUpload/FileReaderFile.coffee");
 
-__webpack_require__(/*! ./elements/Input/InputBlock.coffee */ 1838);
+__webpack_require__(/*! ./elements/Input/InputBlock.coffee */ "./elements/Input/InputBlock.coffee");
 
-__webpack_require__(/*! ./elements/Input/NumberInputBlock.coffee */ 2118);
+__webpack_require__(/*! ./elements/Input/NumberInputBlock.coffee */ "./elements/Input/NumberInputBlock.coffee");
 
-__webpack_require__(/*! ./elements/Input/NumberInput.coffee */ 9882);
+__webpack_require__(/*! ./elements/Input/NumberInput.coffee */ "./elements/Input/NumberInput.coffee");
 
-__webpack_require__(/*! ./elements/Input/EmailInput.coffee */ 4);
+__webpack_require__(/*! ./elements/Input/EmailInput.coffee */ "./elements/Input/EmailInput.coffee");
 
-__webpack_require__(/*! ./elements/Input/CodeInput.coffee */ 1704);
+__webpack_require__(/*! ./elements/Input/CodeInput.coffee */ "./elements/Input/CodeInput.coffee");
 
-__webpack_require__(/*! ./elements/DateTime/DateTime.coffee */ 787);
+__webpack_require__(/*! ./elements/DateTime/DateTime.coffee */ "./elements/DateTime/DateTime.coffee");
 
-__webpack_require__(/*! ./elements/DateTime/Timezone.coffee */ 622);
+__webpack_require__(/*! ./elements/DateTime/Timezone.coffee */ "./elements/DateTime/Timezone.coffee");
 
-__webpack_require__(/*! ./elements/DateTime/DateTimeFormats.coffee */ 8134);
+__webpack_require__(/*! ./elements/DateTime/DateTimeFormats.coffee */ "./elements/DateTime/DateTimeFormats.coffee");
 
-__webpack_require__(/*! ./elements/DateTime/DateTimeRangeGrammar.coffee */ 6928);
+__webpack_require__(/*! ./elements/DateTime/DateTimeRangeGrammar.coffee */ "./elements/DateTime/DateTimeRangeGrammar.coffee");
 
-__webpack_require__(/*! ./elements/DateTime/DateTimeInputBlock.coffee */ 7107);
+__webpack_require__(/*! ./elements/DateTime/DateTimeInputBlock.coffee */ "./elements/DateTime/DateTimeInputBlock.coffee");
 
-__webpack_require__(/*! ./elements/Password/Password.coffee */ 8880);
+__webpack_require__(/*! ./elements/Password/Password.coffee */ "./elements/Password/Password.coffee");
 
-__webpack_require__(/*! ./elements/MultiInput/MultiInputControl.coffee */ 1305);
+__webpack_require__(/*! ./elements/MultiInput/MultiInputControl.coffee */ "./elements/MultiInput/MultiInputControl.coffee");
 
-__webpack_require__(/*! ./elements/MultiInput/MultiInput.coffee */ 9234);
+__webpack_require__(/*! ./elements/MultiInput/MultiInput.coffee */ "./elements/MultiInput/MultiInput.coffee");
 
-__webpack_require__(/*! ./elements/MultiInput/MultiInputInput.coffee */ 8406);
+__webpack_require__(/*! ./elements/MultiInput/MultiInputInput.coffee */ "./elements/MultiInput/MultiInputInput.coffee");
 
-__webpack_require__(/*! ./elements/Checkbox/Checkbox.coffee */ 1114);
+__webpack_require__(/*! ./elements/Checkbox/Checkbox.coffee */ "./elements/Checkbox/Checkbox.coffee");
 
-__webpack_require__(/*! ./elements/Options/Options.coffee */ 7573);
+__webpack_require__(/*! ./elements/Options/Options.coffee */ "./elements/Options/Options.coffee");
 
-__webpack_require__(/*! ./elements/ObjectDumper/ObjectDumper.coffee */ 1160);
+__webpack_require__(/*! ./elements/ObjectDumper/ObjectDumper.coffee */ "./elements/ObjectDumper/ObjectDumper.coffee");
 
-__webpack_require__(/*! ./elements/ObjectDumper/ObjectDumperNode.coffee */ 5664);
+__webpack_require__(/*! ./elements/ObjectDumper/ObjectDumperNode.coffee */ "./elements/ObjectDumper/ObjectDumperNode.coffee");
 
-__webpack_require__(/*! ./elements/Output/Output.coffee */ 3481);
+__webpack_require__(/*! ./elements/Output/Output.coffee */ "./elements/Output/Output.coffee");
 
-__webpack_require__(/*! ./elements/Output/OutputContent.coffee */ 1864);
+__webpack_require__(/*! ./elements/Output/OutputContent.coffee */ "./elements/Output/OutputContent.coffee");
 
-__webpack_require__(/*! ./elements/MultiOutput/MultiOutput.coffee */ 136);
+__webpack_require__(/*! ./elements/MultiOutput/MultiOutput.coffee */ "./elements/MultiOutput/MultiOutput.coffee");
 
-__webpack_require__(/*! ./elements/FormButton/FormButton.coffee */ 6528);
+__webpack_require__(/*! ./elements/FormButton/FormButton.coffee */ "./elements/FormButton/FormButton.coffee");
 
-__webpack_require__(/*! ./elements/Form/SimpleForm.coffee */ 2917);
+__webpack_require__(/*! ./elements/Form/SimpleForm.coffee */ "./elements/Form/SimpleForm.coffee");
 
-__webpack_require__(/*! ./elements/Form/Form.coffee */ 7235);
+__webpack_require__(/*! ./elements/Form/Form.coffee */ "./elements/Form/Form.coffee");
 
-__webpack_require__(/*! ./elements/FormPopover/FormPopover.coffee */ 7054);
+__webpack_require__(/*! ./elements/FormPopover/FormPopover.coffee */ "./elements/FormPopover/FormPopover.coffee");
 
-__webpack_require__(/*! ./elements/FormModal/FormModal.coffee */ 6371);
+__webpack_require__(/*! ./elements/FormModal/FormModal.coffee */ "./elements/FormModal/FormModal.coffee");
 
-__webpack_require__(/*! ./elements/DataTable/DataTable.coffee */ 2098);
+__webpack_require__(/*! ./elements/DataTable/DataTable.coffee */ "./elements/DataTable/DataTable.coffee");
 
-__webpack_require__(/*! ./elements/DataTable/DataTableNode.coffee */ 3735);
+__webpack_require__(/*! ./elements/DataTable/DataTableNode.coffee */ "./elements/DataTable/DataTableNode.coffee");
 
-__webpack_require__(/*! ./elements/DataForm/DataForm.coffee */ 4305);
+__webpack_require__(/*! ./elements/DataForm/DataForm.coffee */ "./elements/DataForm/DataForm.coffee");
 
-__webpack_require__(/*! ./elements/Select/Select.coffee */ 2717);
+__webpack_require__(/*! ./elements/Select/Select.coffee */ "./elements/Select/Select.coffee");
 
-__webpack_require__(/*! ./elements/StickyHeader/StickyHeader.coffee */ 7782);
+__webpack_require__(/*! ./elements/StickyHeader/StickyHeader.coffee */ "./elements/StickyHeader/StickyHeader.coffee");
 
-__webpack_require__(/*! ./elements/StickyHeader/StickyHeaderControl.coffee */ 9114);
+__webpack_require__(/*! ./elements/StickyHeader/StickyHeaderControl.coffee */ "./elements/StickyHeader/StickyHeaderControl.coffee");
 
-__webpack_require__(/*! ./elements/DigiDisplay/DigiDisplay.coffee */ 1885);
+__webpack_require__(/*! ./elements/DigiDisplay/DigiDisplay.coffee */ "./elements/DigiDisplay/DigiDisplay.coffee");
 
-__webpack_require__(/*! ./elements/Table/Table.coffee */ 5184);
+__webpack_require__(/*! ./elements/Table/Table.coffee */ "./elements/Table/Table.coffee");
 
-__webpack_require__(/*! ./elements/DocumentBrowser/DocumentBrowser.coffee */ 5715);
+__webpack_require__(/*! ./elements/DocumentBrowser/DocumentBrowser.coffee */ "./elements/DocumentBrowser/DocumentBrowser.coffee");
 
-__webpack_require__(/*! ./elements/DocumentBrowser/Node.coffee */ 5690);
+__webpack_require__(/*! ./elements/DocumentBrowser/Node.coffee */ "./elements/DocumentBrowser/Node.coffee");
 
-__webpack_require__(/*! ./elements/DocumentBrowser/NodeMatch.coffee */ 5252);
+__webpack_require__(/*! ./elements/DocumentBrowser/NodeMatch.coffee */ "./elements/DocumentBrowser/NodeMatch.coffee");
 
-__webpack_require__(/*! ./elements/DocumentBrowser/SearchMatch.coffee */ 4400);
+__webpack_require__(/*! ./elements/DocumentBrowser/SearchMatch.coffee */ "./elements/DocumentBrowser/SearchMatch.coffee");
 
-__webpack_require__(/*! ./elements/DocumentBrowser/SearchQuery.coffee */ 1771);
+__webpack_require__(/*! ./elements/DocumentBrowser/SearchQuery.coffee */ "./elements/DocumentBrowser/SearchQuery.coffee");
 
-__webpack_require__(/*! ./elements/Slider/Slider.coffee */ 2731);
+__webpack_require__(/*! ./elements/Slider/Slider.coffee */ "./elements/Slider/Slider.coffee");
 
-__webpack_require__(/*! ./elements/Map/Map.coffee */ 9759);
+__webpack_require__(/*! ./elements/Map/Map.coffee */ "./elements/Map/Map.coffee");
 
-__webpack_require__(/*! ./elements/Map/GoogleMap.coffee */ 7731);
+__webpack_require__(/*! ./elements/Map/GoogleMap.coffee */ "./elements/Map/GoogleMap.coffee");
 
-__webpack_require__(/*! ./elements/Map/LeafletMap.coffee */ 4350);
+__webpack_require__(/*! ./elements/Map/LeafletMap.coffee */ "./elements/Map/LeafletMap.coffee");
 
-__webpack_require__(/*! ./elements/Map/MapInput.coffee */ 8365);
+__webpack_require__(/*! ./elements/Map/MapInput.coffee */ "./elements/Map/MapInput.coffee");
 
-__webpack_require__(/*! ./elements/Map/IconMarker.coffee */ 5128);
+__webpack_require__(/*! ./elements/Map/IconMarker.coffee */ "./elements/Map/IconMarker.coffee");
 
-__webpack_require__(/*! ./base/CSVData.coffee */ 2543);
+__webpack_require__(/*! ./base/CSVData.coffee */ "./base/CSVData.coffee");
 
-__webpack_require__(/*! ./base/Socket/Socket.coffee */ 1055);
+__webpack_require__(/*! ./base/Socket/Socket.coffee */ "./base/Socket/Socket.coffee");
 
 module.exports = CUI;
 
 
 /***/ }),
 
-/***/ 4288:
+/***/ "../node_modules/coordinate-parser/coordinate-number.js":
 /*!**************************************************************!*\
   !*** ../node_modules/coordinate-parser/coordinate-number.js ***!
   \**************************************************************/
@@ -61338,7 +61338,7 @@ module.exports = CoordinateNumber;
 
 /***/ }),
 
-/***/ 6447:
+/***/ "../node_modules/coordinate-parser/coordinates.js":
 /*!********************************************************!*\
   !*** ../node_modules/coordinate-parser/coordinates.js ***!
   \********************************************************/
@@ -61347,9 +61347,9 @@ module.exports = CoordinateNumber;
 // Generated by CoffeeScript 2.5.1
 var CoordinateNumber, Coordinates, Validator;
 
-Validator = __webpack_require__(/*! ./validator */ 2685);
+Validator = __webpack_require__(/*! ./validator */ "../node_modules/coordinate-parser/validator.js");
 
-CoordinateNumber = __webpack_require__(/*! ./coordinate-number */ 4288);
+CoordinateNumber = __webpack_require__(/*! ./coordinate-number */ "../node_modules/coordinate-parser/coordinate-number.js");
 
 Coordinates = class Coordinates {
   constructor(coordinateString) {
@@ -61437,7 +61437,7 @@ module.exports = Coordinates;
 
 /***/ }),
 
-/***/ 2685:
+/***/ "../node_modules/coordinate-parser/validator.js":
 /*!******************************************************!*\
   !*** ../node_modules/coordinate-parser/validator.js ***!
   \******************************************************/
@@ -61517,7 +61517,7 @@ module.exports = Validator;
 
 /***/ }),
 
-/***/ 5448:
+/***/ "../node_modules/email-addresses/lib/email-addresses.js":
 /*!**************************************************************!*\
   !*** ../node_modules/email-addresses/lib/email-addresses.js ***!
   \**************************************************************/
@@ -62625,7 +62625,7 @@ if ( true && typeof module.exports !== 'undefined') {
 
 /***/ }),
 
-/***/ 9101:
+/***/ "../node_modules/formatcoords/index.js":
 /*!*********************************************!*\
   !*** ../node_modules/formatcoords/index.js ***!
   \*********************************************/
@@ -62769,7 +62769,7 @@ module.exports = formatcoords;
 
 /***/ }),
 
-/***/ 7566:
+/***/ "./base/DataField/DataField.html":
 /*!***************************************!*\
   !*** ./base/DataField/DataField.html ***!
   \***************************************/
@@ -62779,7 +62779,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 4826:
+/***/ "./base/Layer/Layer.html":
 /*!*******************************!*\
   !*** ./base/Layer/Layer.html ***!
   \*******************************/
@@ -62789,7 +62789,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 1556:
+/***/ "./elements/Block/Block.html":
 /*!***********************************!*\
   !*** ./elements/Block/Block.html ***!
   \***********************************/
@@ -62799,7 +62799,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 8613:
+/***/ "./elements/BorderLayout/BorderLayout.html":
 /*!*************************************************!*\
   !*** ./elements/BorderLayout/BorderLayout.html ***!
   \*************************************************/
@@ -62809,7 +62809,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 9230:
+/***/ "./elements/Button/Button.html":
 /*!*************************************!*\
   !*** ./elements/Button/Button.html ***!
   \*************************************/
@@ -62819,7 +62819,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 5935:
+/***/ "./elements/Button/ButtonHref.html":
 /*!*****************************************!*\
   !*** ./elements/Button/ButtonHref.html ***!
   \*****************************************/
@@ -62829,7 +62829,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 323:
+/***/ "./elements/Button/ButtonHref_ng.html":
 /*!********************************************!*\
   !*** ./elements/Button/ButtonHref_ng.html ***!
   \********************************************/
@@ -62839,7 +62839,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 5006:
+/***/ "./elements/Button/Button_ng.html":
 /*!****************************************!*\
   !*** ./elements/Button/Button_ng.html ***!
   \****************************************/
@@ -62849,7 +62849,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 6711:
+/***/ "./elements/Button/Buttonbar.html":
 /*!****************************************!*\
   !*** ./elements/Button/Buttonbar.html ***!
   \****************************************/
@@ -62859,7 +62859,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 2173:
+/***/ "./elements/DateTime/DateTime.html":
 /*!*****************************************!*\
   !*** ./elements/DateTime/DateTime.html ***!
   \*****************************************/
@@ -62869,7 +62869,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 1451:
+/***/ "./elements/FileUpload/FileUploadButton.html":
 /*!***************************************************!*\
   !*** ./elements/FileUpload/FileUploadButton.html ***!
   \***************************************************/
@@ -62879,7 +62879,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 8798:
+/***/ "./elements/HorizontalLayout/HorizontalLayout.html":
 /*!*********************************************************!*\
   !*** ./elements/HorizontalLayout/HorizontalLayout.html ***!
   \*********************************************************/
@@ -62889,7 +62889,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 6440:
+/***/ "./elements/ItemList/ItemList.html":
 /*!*****************************************!*\
   !*** ./elements/ItemList/ItemList.html ***!
   \*****************************************/
@@ -62899,7 +62899,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 2712:
+/***/ "./elements/Label/Label.html":
 /*!***********************************!*\
   !*** ./elements/Label/Label.html ***!
   \***********************************/
@@ -62909,7 +62909,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 3979:
+/***/ "./elements/Map/leaflet.attribution.html":
 /*!***********************************************!*\
   !*** ./elements/Map/leaflet.attribution.html ***!
   \***********************************************/
@@ -62919,7 +62919,7 @@ module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> 
 
 /***/ }),
 
-/***/ 8849:
+/***/ "./elements/Map/map-input.html":
 /*!*************************************!*\
   !*** ./elements/Map/map-input.html ***!
   \*************************************/
@@ -62929,7 +62929,7 @@ module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-f
 
 /***/ }),
 
-/***/ 8777:
+/***/ "./elements/Map/map.html":
 /*!*******************************!*\
   !*** ./elements/Map/map.html ***!
   \*******************************/
@@ -62939,7 +62939,7 @@ module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-zoom-but
 
 /***/ }),
 
-/***/ 1875:
+/***/ "./elements/MultiInput/MultiInputInput.html":
 /*!**************************************************!*\
   !*** ./elements/MultiInput/MultiInputInput.html ***!
   \**************************************************/
@@ -62949,7 +62949,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 3708:
+/***/ "./elements/MultiOutput/MultiOutput.html":
 /*!***********************************************!*\
   !*** ./elements/MultiOutput/MultiOutput.html ***!
   \***********************************************/
@@ -62959,7 +62959,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 3805:
+/***/ "./elements/Options/Options.html":
 /*!***************************************!*\
   !*** ./elements/Options/Options.html ***!
   \***************************************/
@@ -62969,7 +62969,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 3502:
+/***/ "./elements/Pane/Pane.html":
 /*!*********************************!*\
   !*** ./elements/Pane/Pane.html ***!
   \*********************************/
@@ -62979,7 +62979,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 9379:
+/***/ "./elements/Panel/Panel.html":
 /*!***********************************!*\
   !*** ./elements/Panel/Panel.html ***!
   \***********************************/
@@ -62989,7 +62989,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 9041:
+/***/ "./elements/ProgressMeter/ProgressMeter.html":
 /*!***************************************************!*\
   !*** ./elements/ProgressMeter/ProgressMeter.html ***!
   \***************************************************/
@@ -62999,7 +62999,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 2775:
+/***/ "./elements/Slider/Slider.html":
 /*!*************************************!*\
   !*** ./elements/Slider/Slider.html ***!
   \*************************************/
@@ -63009,7 +63009,7 @@ module.exports = "<div data-template='slider'>\n\t<div data-slot='track_visual' 
 
 /***/ }),
 
-/***/ 9396:
+/***/ "./elements/StickyHeader/StickyHeader.html":
 /*!*************************************************!*\
   !*** ./elements/StickyHeader/StickyHeader.html ***!
   \*************************************************/
@@ -63019,7 +63019,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 1541:
+/***/ "./elements/Tabs/Tab.html":
 /*!********************************!*\
   !*** ./elements/Tabs/Tab.html ***!
   \********************************/
@@ -63029,7 +63029,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 4225:
+/***/ "./elements/Tabs/Tabs.html":
 /*!*********************************!*\
   !*** ./elements/Tabs/Tabs.html ***!
   \*********************************/
@@ -63039,7 +63039,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 6075:
+/***/ "./elements/VerticalLayout/VerticalLayout.html":
 /*!*****************************************************!*\
   !*** ./elements/VerticalLayout/VerticalLayout.html ***!
   \*****************************************************/
@@ -63049,7 +63049,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 3150:
+/***/ "./elements/WaitBlock/WaitBlock.html":
 /*!*******************************************!*\
   !*** ./elements/WaitBlock/WaitBlock.html ***!
   \*******************************************/
@@ -63059,7 +63059,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 8304:
+/***/ "../node_modules/leaflet/dist/leaflet.js":
 /*!***********************************************!*\
   !*** ../node_modules/leaflet/dist/leaflet.js ***!
   \***********************************************/
@@ -63074,7 +63074,7 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 
 /***/ }),
 
-/***/ 1465:
+/***/ "../node_modules/load-google-maps-api/index.js":
 /*!*****************************************************!*\
   !*** ../node_modules/load-google-maps-api/index.js ***!
   \*****************************************************/
@@ -63131,7 +63131,7 @@ module.exports = function (options) {
 
 /***/ }),
 
-/***/ 4402:
+/***/ "../node_modules/marked/lib/marked.js":
 /*!********************************************!*\
   !*** ../node_modules/marked/lib/marked.js ***!
   \********************************************/
@@ -64841,19 +64841,19 @@ if (true) {
 
 /***/ }),
 
-/***/ 1154:
+/***/ "../node_modules/moment-timezone/index.js":
 /*!************************************************!*\
   !*** ../node_modules/moment-timezone/index.js ***!
   \************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var moment = module.exports = __webpack_require__(/*! ./moment-timezone */ 9262);
-moment.tz.load(__webpack_require__(/*! ./data/packed/latest.json */ 1565));
+var moment = module.exports = __webpack_require__(/*! ./moment-timezone */ "../node_modules/moment-timezone/moment-timezone.js");
+moment.tz.load(__webpack_require__(/*! ./data/packed/latest.json */ "../node_modules/moment-timezone/data/packed/latest.json"));
 
 
 /***/ }),
 
-/***/ 9262:
+/***/ "../node_modules/moment-timezone/moment-timezone.js":
 /*!**********************************************************!*\
   !*** ../node_modules/moment-timezone/moment-timezone.js ***!
   \**********************************************************/
@@ -64870,9 +64870,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 	/*global define*/
 	if ( true && module.exports) {
-		module.exports = factory(__webpack_require__(/*! moment */ 1320)); // Node
+		module.exports = factory(__webpack_require__(/*! moment */ "../node_modules/moment/moment.js")); // Node
 	} else if (true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! moment */ 1320)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! moment */ "../node_modules/moment/moment.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));                 // AMD
@@ -65560,7 +65560,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 3214:
+/***/ "../node_modules/moment/locale/de-at.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/de-at.js ***!
   \**********************************************/
@@ -65574,7 +65574,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -65658,7 +65658,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 4728:
+/***/ "../node_modules/moment/locale/de-ch.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/de-ch.js ***!
   \**********************************************/
@@ -65669,7 +65669,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : sschueller : https://github.com/sschueller
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -65753,7 +65753,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 8973:
+/***/ "../node_modules/moment/locale/de.js":
 /*!*******************************************!*\
   !*** ../node_modules/moment/locale/de.js ***!
   \*******************************************/
@@ -65766,7 +65766,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -65850,7 +65850,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 7876:
+/***/ "../node_modules/moment/locale/en-au.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-au.js ***!
   \**********************************************/
@@ -65861,7 +65861,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Jared Morse : https://github.com/jarcoal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -65937,7 +65937,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 7010:
+/***/ "../node_modules/moment/locale/en-ca.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-ca.js ***!
   \**********************************************/
@@ -65948,7 +65948,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66020,7 +66020,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 4239:
+/***/ "../node_modules/moment/locale/en-gb.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-gb.js ***!
   \**********************************************/
@@ -66031,7 +66031,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Chris Gedrim : https://github.com/chrisgedrim
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66107,7 +66107,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 9830:
+/***/ "../node_modules/moment/locale/en-ie.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-ie.js ***!
   \**********************************************/
@@ -66118,7 +66118,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66194,7 +66194,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 8438:
+/***/ "../node_modules/moment/locale/en-il.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-il.js ***!
   \**********************************************/
@@ -66205,7 +66205,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Chris Gedrim : https://github.com/chrisgedrim
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66277,7 +66277,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 5322:
+/***/ "../node_modules/moment/locale/en-in.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-in.js ***!
   \**********************************************/
@@ -66288,7 +66288,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Jatin Agrawal : https://github.com/jatinag22
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66364,7 +66364,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 3264:
+/***/ "../node_modules/moment/locale/en-nz.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-nz.js ***!
   \**********************************************/
@@ -66375,7 +66375,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Luke McGregor : https://github.com/lukemcgregor
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66451,7 +66451,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 5449:
+/***/ "../node_modules/moment/locale/en-sg.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/en-sg.js ***!
   \**********************************************/
@@ -66462,7 +66462,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Matthew Castrillon-Madrigal : https://github.com/techdimension
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66538,7 +66538,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 6310:
+/***/ "../node_modules/moment/locale/es-do.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/es-do.js ***!
   \**********************************************/
@@ -66548,7 +66548,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! locale : Spanish (Dominican Republic) [es-do]
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66665,7 +66665,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 7038:
+/***/ "../node_modules/moment/locale/es-mx.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/es-mx.js ***!
   \**********************************************/
@@ -66676,7 +66676,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : JC Franco : https://github.com/jcfranco
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66794,7 +66794,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 3099:
+/***/ "../node_modules/moment/locale/es-us.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/es-us.js ***!
   \**********************************************/
@@ -66806,7 +66806,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : chrisrodz : https://github.com/chrisrodz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -66923,7 +66923,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 2430:
+/***/ "../node_modules/moment/locale/es.js":
 /*!*******************************************!*\
   !*** ../node_modules/moment/locale/es.js ***!
   \*******************************************/
@@ -66934,7 +66934,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : Julio Napurí : https://github.com/julionc
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -67052,7 +67052,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 3161:
+/***/ "../node_modules/moment/locale/gom-deva.js":
 /*!*************************************************!*\
   !*** ../node_modules/moment/locale/gom-deva.js ***!
   \*************************************************/
@@ -67063,7 +67063,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : The Discoverer : https://github.com/WikiDiscoverer
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -67197,7 +67197,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 4759:
+/***/ "../node_modules/moment/locale/it-ch.js":
 /*!**********************************************!*\
   !*** ../node_modules/moment/locale/it-ch.js ***!
   \**********************************************/
@@ -67208,7 +67208,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author : xfh : https://github.com/xfh
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -67280,7 +67280,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 3467:
+/***/ "../node_modules/moment/locale/it.js":
 /*!*******************************************!*\
   !*** ../node_modules/moment/locale/it.js ***!
   \*******************************************/
@@ -67293,7 +67293,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 //! author: Marco : https://github.com/Manfre98
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ 1320)) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
    0
 }(this, (function (moment) { 'use strict';
 
@@ -67405,49 +67405,49 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 6516:
+/***/ "../node_modules/moment/locale sync recursive de%7Cen%7Ces%7Cit":
 /*!*************************************************************!*\
   !*** ../node_modules/moment/locale/ sync de%7Cen%7Ces%7Cit ***!
   \*************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
-	"./de": 8973,
-	"./de-at": 3214,
-	"./de-at.js": 3214,
-	"./de-ch": 4728,
-	"./de-ch.js": 4728,
-	"./de.js": 8973,
-	"./en-au": 7876,
-	"./en-au.js": 7876,
-	"./en-ca": 7010,
-	"./en-ca.js": 7010,
-	"./en-gb": 4239,
-	"./en-gb.js": 4239,
-	"./en-ie": 9830,
-	"./en-ie.js": 9830,
-	"./en-il": 8438,
-	"./en-il.js": 8438,
-	"./en-in": 5322,
-	"./en-in.js": 5322,
-	"./en-nz": 3264,
-	"./en-nz.js": 3264,
-	"./en-sg": 5449,
-	"./en-sg.js": 5449,
-	"./es": 2430,
-	"./es-do": 6310,
-	"./es-do.js": 6310,
-	"./es-mx": 7038,
-	"./es-mx.js": 7038,
-	"./es-us": 3099,
-	"./es-us.js": 3099,
-	"./es.js": 2430,
-	"./gom-deva": 3161,
-	"./gom-deva.js": 3161,
-	"./it": 3467,
-	"./it-ch": 4759,
-	"./it-ch.js": 4759,
-	"./it.js": 3467
+	"./de": "../node_modules/moment/locale/de.js",
+	"./de-at": "../node_modules/moment/locale/de-at.js",
+	"./de-at.js": "../node_modules/moment/locale/de-at.js",
+	"./de-ch": "../node_modules/moment/locale/de-ch.js",
+	"./de-ch.js": "../node_modules/moment/locale/de-ch.js",
+	"./de.js": "../node_modules/moment/locale/de.js",
+	"./en-au": "../node_modules/moment/locale/en-au.js",
+	"./en-au.js": "../node_modules/moment/locale/en-au.js",
+	"./en-ca": "../node_modules/moment/locale/en-ca.js",
+	"./en-ca.js": "../node_modules/moment/locale/en-ca.js",
+	"./en-gb": "../node_modules/moment/locale/en-gb.js",
+	"./en-gb.js": "../node_modules/moment/locale/en-gb.js",
+	"./en-ie": "../node_modules/moment/locale/en-ie.js",
+	"./en-ie.js": "../node_modules/moment/locale/en-ie.js",
+	"./en-il": "../node_modules/moment/locale/en-il.js",
+	"./en-il.js": "../node_modules/moment/locale/en-il.js",
+	"./en-in": "../node_modules/moment/locale/en-in.js",
+	"./en-in.js": "../node_modules/moment/locale/en-in.js",
+	"./en-nz": "../node_modules/moment/locale/en-nz.js",
+	"./en-nz.js": "../node_modules/moment/locale/en-nz.js",
+	"./en-sg": "../node_modules/moment/locale/en-sg.js",
+	"./en-sg.js": "../node_modules/moment/locale/en-sg.js",
+	"./es": "../node_modules/moment/locale/es.js",
+	"./es-do": "../node_modules/moment/locale/es-do.js",
+	"./es-do.js": "../node_modules/moment/locale/es-do.js",
+	"./es-mx": "../node_modules/moment/locale/es-mx.js",
+	"./es-mx.js": "../node_modules/moment/locale/es-mx.js",
+	"./es-us": "../node_modules/moment/locale/es-us.js",
+	"./es-us.js": "../node_modules/moment/locale/es-us.js",
+	"./es.js": "../node_modules/moment/locale/es.js",
+	"./gom-deva": "../node_modules/moment/locale/gom-deva.js",
+	"./gom-deva.js": "../node_modules/moment/locale/gom-deva.js",
+	"./it": "../node_modules/moment/locale/it.js",
+	"./it-ch": "../node_modules/moment/locale/it-ch.js",
+	"./it-ch.js": "../node_modules/moment/locale/it-ch.js",
+	"./it.js": "../node_modules/moment/locale/it.js"
 };
 
 
@@ -67468,11 +67468,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 6516;
+webpackContext.id = "../node_modules/moment/locale sync recursive de%7Cen%7Ces%7Cit";
 
 /***/ }),
 
-/***/ 1320:
+/***/ "../node_modules/moment/moment.js":
 /*!****************************************!*\
   !*** ../node_modules/moment/moment.js ***!
   \****************************************/
@@ -69579,7 +69579,7 @@ webpackContext.id = 6516;
             try {
                 oldLocale = globalLocale._abbr;
                 aliasedRequire = undefined;
-                __webpack_require__(6516)("./" + name);
+                __webpack_require__("../node_modules/moment/locale sync recursive de%7Cen%7Ces%7Cit")("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {
                 // mark as not found to avoid repeating expensive file require call causing high CPU
@@ -73167,7 +73167,7 @@ webpackContext.id = 6516;
 
 /***/ }),
 
-/***/ 9419:
+/***/ "./scss/icons/icons.svg":
 /*!******************************!*\
   !*** ./scss/icons/icons.svg ***!
   \******************************/
@@ -73182,7 +73182,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 1565:
+/***/ "../node_modules/moment-timezone/data/packed/latest.json":
 /*!***************************************************************!*\
   !*** ../node_modules/moment-timezone/data/packed/latest.json ***!
   \***************************************************************/
@@ -73284,7 +73284,7 @@ module.exports = JSON.parse('{"version":"2022e","zones":["Africa/Abidjan|LMT GMT
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(5123);
+/******/ 	var __webpack_exports__ = __webpack_require__("./index.coffee");
 /******/ 	
 /******/ 	return __webpack_exports__;
 /******/ })()
