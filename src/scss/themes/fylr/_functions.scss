@@ -43,7 +43,7 @@
 	$g: green($color);
 	$b: blue($color);
 
-	$yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+	$yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 1000);
 
 	@if ($yiq >= $yiq-contrasted-threshold) {
 		@return $dark;
@@ -69,11 +69,11 @@
 
 // Pixel to rem conversion
 @function calculate-rem($size) {
-	@return $size / 16px * 1rem;
+	@return calc($size / 16px) * 1rem;
 }
 
 @function calculate-px($size) {
-	@return $size / 1rem * 16px;
+	@return calc($size / 1rem) * 16px;
 }
 
 // Retrieve headline font-size

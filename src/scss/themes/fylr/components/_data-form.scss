@@ -92,7 +92,7 @@
 
 	&.cui-data-form--add-button {
 		> .cui-vertical-layout > .cui-vertical-layout-bottom {
-			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset} - #{$btn-height/2});
+			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset} - #{0.5 * $btn-height});
 			margin-top: -$spacer-sm;
 
 			.cui-button-button {

@@ -90,7 +90,7 @@
 	&:not([role='menu-item']):not([button-group='date']):not([button-group='time']) {
 		.cui-button-visual {
 			.cui-button-center {
-				padding-right: $btn-padding-x/2;
+				padding-right: 0.5 * $btn-padding-x;
 			}
 		}
 	}
