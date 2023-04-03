@@ -45,7 +45,7 @@
 @for $i from 2 to 13 {
 	.cui-options--columns-#{$i} {
 		.cui-checkbox {
-			width: 100% / $i !important; // have to overwrite the cui-layer data-field auto width rule
+			width: calc(100% / $i) !important; // have to overwrite the cui-layer data-field auto width rule
 		}
 	}
 }

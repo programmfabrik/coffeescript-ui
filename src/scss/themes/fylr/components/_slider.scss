@@ -47,7 +47,7 @@
 
 	&-handle {
 		position: absolute;
-		margin-top: -#{$slider-handle-size/2};
+		margin-top: -#{math.div($slider-handle-size, 2)};
 		width: $slider-handle-size;
 		height: $slider-handle-size;
 		background: $slider-handle-background;

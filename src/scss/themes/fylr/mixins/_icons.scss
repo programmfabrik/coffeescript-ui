@@ -2,7 +2,7 @@
 	content: $code;
 	display: inline-block;
 	// stylelint-disable-next-line
-	font: normal normal normal $font-size/1 'FontAwesome';
+	font: normal normal normal #{$font-size} 'FontAwesome';
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
