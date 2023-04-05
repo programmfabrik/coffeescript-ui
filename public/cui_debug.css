@@ -1,3 +1,6 @@
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/src/index.js??ruleSet[1].rules[1].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./scss/themes/debug/main.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 /*!
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -476,7 +479,7 @@ span {
   background: #e0e0e0;
 }
 .cui-document-browser .cui-document-browser-marked-node {
-  background: rgba(255, 224, 112, 0.53);
+  background: hsla(47, 100%, 72%, 0.53);
 }
 .cui-document-browser .cui-document-browser-search-match--title {
   margin-top: 10px;
@@ -485,10 +488,10 @@ span {
 }
 .cui-document-browser .cui-document-browser-search-match-mark {
   display: inline-block;
-  background-color: rgba(191, 170, 64, 0.5);
+  background-color: hsla(50, 50%, 50%, 0.5);
 }
 .cui-document-browser .cui-document-browser-search-match-mark.cui-search-match--1 {
-  background-color: rgba(146, 105, 226, 0.5);
+  background-color: hsla(260, 68%, 65%, 0.5);
 }
 
 .cui-toolbar {
@@ -532,6 +535,10 @@ i.fa-spinner {
 }
 
 i.cui-spin-stepped {
+  -webkit-animation: fa-spin 1s steps(8) infinite;
+  -moz-animation: fa-spin 1s steps(8) infinite;
+  -ms-animation: fa-spin 1s steps(8) infinite;
+  -o-animation: fa-spin 1s steps(8) infinite;
   animation: fa-spin 1s steps(8) infinite;
 }
 
@@ -802,7 +809,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   background: rgba(131, 255, 122, 0.28);
 }
 .cui-input.cui-input-has-no-user-input.cui-input-required input {
-  border-color: #ff75d7;
+  border-color: rgb(255, 117, 215);
   background: rgba(255, 117, 215, 0.28);
 }
 .cui-input input {
@@ -888,6 +895,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 
 .cui-layer-root.cui-layer-root-backdrop-blur > .cui-layer-backdrop {
+  -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px);

@@ -109,7 +109,7 @@ $primary-bg: 	color.scale($primary, $green: 40%) !default; // a little bit more 
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
-$danger:        $primary !default;
+$danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 $muted:         $gray-600 !default; // used in field-label, block description, empty label
@@ -268,7 +268,7 @@ $headline-sizes: map-merge(
 	$headline-sizes
 );
 
-$headings-margin-bottom:      $spacer / 2 !default;
+$headings-margin-bottom:      0.5 * $spacer !default;
 $headings-font-family:        $font-family-base !default;
 $headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.1 !default;
@@ -452,7 +452,7 @@ $checkbox-active-color: 		$white !default;
 $checkbox-size: 				16px !default;
 $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
-$checkbox-margin:				$checkbox-icon-size/2 !default;
+$checkbox-margin:				0.5 * $checkbox-icon-size !default;
 
 // * Toggle Switch
 // * ==========================================
@@ -474,7 +474,7 @@ $table-data-width: 		135px !default; // old: $td-width
 $table-even-background:	gray('100') !default;
 $table-odd-background:	transparent !default;
 $table-padding-x:		$component-padding-base !default;
-$table-padding-y:		$component-padding-base/2 !default;
+$table-padding-y:		0.5 * $component-padding-base !default;
 $table-row-hover-background: #f7f7f7 !default;
 
 // * List View
@@ -483,7 +483,7 @@ $list-view-font-size:					inherit !default;
 $list-view-data-height: 				1rem !default;
 $list-view-data-width: 					125px !default;
 $list-view-padding-x:					$component-padding-base !default; // was: $table-padding-x
-$list-view-padding-y:					$component-padding-base/2 !default; // was: $table-padding-y, needs to be small so the explicit height of the fixed rows will cut off the text correctly after the first line
+$list-view-padding-y:					0.5 * $component-padding-base !default; // was: $table-padding-y, needs to be small so the explicit height of the fixed rows will cut off the text correctly after the first line
 $list-view-move-handle-width:			14px !default; // ! must be explicit size in px or
 $list-view-move-target-area-background:	rgba(theme-color('focused'), 0.5) !default;
 $list-view-selected-row-border-width:	1px !default;

@@ -85,8 +85,8 @@
 				@include button-color-inverted();
 	
 				.cui-button-center {
-					padding-left: $btn-padding-x/2 !important;
-					padding-right: $btn-padding-x/2 !important;
+					padding-left: math.div($btn-padding-x, 2) !important;
+					padding-right: math.div($btn-padding-x, 2) !important;
 				}
 	
 				.cui-button-right {
@@ -100,7 +100,7 @@
 			@include layer-title();
 	
 			margin-bottom: $spacer-sm;
-			margin-left: $btn-padding-x/2;
+			margin-left: math.div($btn-padding-x, 2);
 		}
 	
 		.cui-select-date-title {

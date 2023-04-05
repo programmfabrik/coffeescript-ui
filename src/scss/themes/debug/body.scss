@@ -380,7 +380,7 @@ span {
 	}
 	.cui-document-browser-search-match-mark {
 		display: inline-block;
-		background-color: hsla(50%,50%,50%,0.5);
+		background-color: hsla(50, 50%, 50%, 0.5);
 		&.cui-search-match--1 {
 			background-color: hsla(260, 68%, 65%, 0.5);
 		}
@@ -1520,13 +1520,13 @@ a[role="button"].cui-button-appearance-link {
 
 	.cui-date-time-date {
 		margin: 5px 0;
-		height: 100% / 8 * 6.5;
+		height: calc(100% / 8 * 6.5);
 		border: 1px solid red;
 		.cui-tr:not(:first-child) > .cui-td {
 			border-top: 1px solid green;
 		}
 		.cui-tr.cui-date-time-month-header {
-			height: 100% / (6 * 2 + 1);
+			height: calc(100% / (6 * 2 + 1));
 			flex: 0 0 auto;
 		}
 		.cui-td, .cui-th {

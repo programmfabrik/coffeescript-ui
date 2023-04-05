@@ -13,13 +13,22 @@
 	width: $tree-node-handle-width;
 	flex: 0 0 auto;
 
-	.fa-caret-right {
-		width: 8px;
+	.fa {
+		width: 10px;
+
+		&.fa-angle-down,
+		&.fa-angle-right {
+			font-weight: bold;
+
+			&::before {
+				font-size: 1.15em;
+			}
+		}
 	}
 
 	.svg-spinner {
 		position: relative;
-		left: -3px;
+		left: 1px;
 		width: 12px;
 		height: 12px;
 	}
@@ -40,10 +49,6 @@
 
 	&.cui-tree-node-is-open {
 		cursor: pointer;
-
-		.fa {
-			margin-top: 1px;
-		}
 	}
 }
 

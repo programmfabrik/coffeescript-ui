@@ -5,6 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
 
+@use "sass:math";
+
 @import '../../icons/_svg-dimensions.scss';
 
 html {
@@ -140,7 +142,7 @@ textarea {
 
 	@for $i from 10 through 40 {
 		[data-max-chars="#{$i}"] {
-			width: #{$i*(1.54 - ($i - 10)/30*0.15)}ch;
+			width: #{$i * (1.54 - math.div($i - 10, 30) * 0.15)}ch;
 		}
 	}
 }
@@ -378,7 +380,7 @@ li > div {
 
 	.cui-button {
 		width: 100%;
-		padding: $padding/2 $padding/2 0;
+		padding: calc($padding / 2) calc($padding / 2) 0;
 		
 		&-left {
 			min-width: 0;
@@ -754,7 +756,7 @@ li > div {
 	}
 
 	> .cui-horizontal-layout-center {
-		margin-right: $padding/2;
+		margin-right: calc($padding / 2);
 	}
 
 	> .cui-horizontal-layout-right {
@@ -865,7 +867,7 @@ li > div {
 		.cui-horizontal-layout-left > .cui-label:first-child {
 			color: hsl(205,7%,70%);
 			font-weight: normal;
-			padding-left: $padding/2;
+			padding-left: calc($padding / 2);
 			margin-right: 0;
 		}
 
@@ -922,7 +924,7 @@ li > div {
 }
 
 .fa-download {
-	margin-top: (1em / 14); // move up by 10% of the font-size
+	margin-top: calc(1em / 14); // move up by 10% of the font-size
 }
 
 .svg-spinner {
@@ -1033,7 +1035,7 @@ li > div {
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
-	  padding: 0 $padding/2;
+	  padding: 0 calc($padding / 2);
 	  height: $button-height;
 	  font-size: $button-font-size;
 	  line-height: $button-height - 2px;
@@ -1299,7 +1301,7 @@ li > div {
 	.cui-button-visual {
 		min-width: 22px;
 		height: 20px;
-		padding: 0 $padding/4;
+		padding: 0 calc($padding / 4);
 	}
 
 	.fa {
@@ -1338,7 +1340,7 @@ li > div {
 		height: auto;
 		flex-direction: column;
 		border-width: 0;
-		padding: 1px $padding/2;
+		padding: 1px calc($padding / 2);
 	}
 
 	.cui-button-left {
@@ -1510,7 +1512,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
-			padding: 0 $padding/2;
+			padding: 0 calc($padding / 2);
 		}
 
 		&:focus {
@@ -1530,7 +1532,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
-			padding: 0 $padding/2;
+			padding: 0 calc($padding / 2);
 		}
 
 		&:focus {
@@ -1978,7 +1980,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label-rotate-90 {
 		white-space: nowrap;
-		margin: $padding/2 0;
+		margin: calc($padding / 2) 0;
 		flex-shrink: 0;
 		max-width: none;
 		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
@@ -2093,7 +2095,7 @@ a[role="button"].cui-button-appearance-link {
 		padding: $padding;
 
 		+ .cui-block > .cui-block-header {
-			padding-top: $padding/2;
+			padding-top: calc($padding / 2);
 		}
 	}
 
@@ -2404,7 +2406,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-button-button,
 	> .cui-data-field-input {
 		+ .cui-buttonbar-group {
-			margin-left: $padding/2;
+			margin-left: calc($padding / 2);
 		}
 	}
 
@@ -2415,7 +2417,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-buttonbar-group {
 		+ .cui-button,
 		+ .cui-button-href {
-			margin-left: $padding/2;
+			margin-left: calc($padding / 2);
 		}
 	}
 }
@@ -2701,7 +2703,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-input-valid-hint {
 	font-size: 11px;
-	margin-top: $padding/4;
+	margin-top: calc($padding / 4);
 }
 
 ::-ms-clear {
@@ -3126,8 +3128,8 @@ $layer-sizes: (
 
 // Tooltip
 .cui-layer-root-tooltip .cui-layer-pointer {
-	width: $padding / 2;
-	height: $padding / 2;
+	width: calc($padding / 2);
+	height: calc($padding / 2);
 
 	&:after {
 		display: none;
@@ -4259,8 +4261,17 @@ $layer-sizes: (
 	width: $tree-node-handle-width;
 	flex: 0 0 auto;
 
-	.fa-caret-right {
-		width: 8px;
+	.fa {
+		width: 10px;
+
+		&.fa-angle-down,
+		&.fa-angle-right {
+			font-weight: bold;
+
+			&::before {
+				font-size: 1.15em;
+			}
+		}		
 	}
 
 	.svg-spinner {
@@ -4282,10 +4293,6 @@ $layer-sizes: (
 
 	&.cui-tree-node-is-open {
 		cursor: pointer;
-
-		.fa {
-			margin-top: 1px;
-		}
 	}
 }
 
@@ -4422,13 +4429,13 @@ $layer-sizes: (
 .cui-th,
 .cui-td {
 	display: table-cell;
-	padding: $padding/2 $padding;
+	padding: calc($padding / 2) $padding;
 	vertical-align: top;
 
 	&[colspan]{
 		> label,
 		> .cui-label {
-			margin-bottom: $padding/2;
+			margin-bottom: calc($padding / 2);
 		}
 	}
 
@@ -4468,7 +4475,7 @@ $layer-sizes: (
 .cui-th {
 	position: relative;
 	border-bottom: 1px solid $table-header-border;
-	padding: $padding/2 - 1px $padding;
+	padding: calc($padding / 2 - 1px) $padding;
 	font-size: 0.85em;
 
 	&:after { // table-head line
@@ -4738,7 +4745,7 @@ $layer-sizes: (
 }
 
 .cui-form-td {
-	padding: $padding/2 0;
+	padding: calc($padding / 2) 0;
 	vertical-align: top;
 	
 	.cui-form-tr:first-child & {
@@ -4856,7 +4863,7 @@ label[data-label-clickable],
 		}
 
 		.cui-button {
-			margin-left: $padding/2;
+			margin-left: calc($padding / 2);
 
 			&-visual {
 				color: inherit;
@@ -5043,7 +5050,7 @@ label[data-label-clickable],
 @for $i from 2 to 13 {
 	.cui-options--columns-#{$i} {
 		.cui-checkbox {
-			width: 100% / $i !important; // have to overwrite the cui-layer data-field auto width rule
+			width: math.div(100%, $i) !important; // have to overwrite the cui-layer data-field auto width rule
 		}
 	}
 }
@@ -5166,7 +5173,7 @@ label[data-label-clickable],
 .cui-date-time-calendar .cui-buttonbar {
 	justify-content: space-between;
 	background: $header-background;
-	padding: $padding/2;
+	padding: calc($padding / 2);
 
 	[cui-data-field-name="year"] .cui-button-select .cui-button-center {
 		min-width: 39px;
@@ -5279,7 +5286,7 @@ label[data-label-clickable],
 	}
 
 	.cui-button-visual {
-		padding: 0 $padding/2;
+		padding: 0 calc($padding / 2);
 	}
 }
 
@@ -6134,16 +6141,16 @@ label[data-label-clickable],
 	display: inline-block;
 
 	&:empty {
-		margin: $padding/2;
+		margin: calc($padding / 2);
 	}
 }
 
 .cui-small-space {
-	margin: $padding/2;
+	margin: calc($padding / 2);
 	display: inline-block;
 
 	&:empty {
-		margin: $padding/4;
+		margin: calc($padding / 4);
 	}
 }
 

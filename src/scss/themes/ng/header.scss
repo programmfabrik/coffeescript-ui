@@ -132,7 +132,7 @@ $table-data-padding: 4px;
 $td-width: 135px;
 $td-min-width: 100px;
 $td-height: 18px;
-$row-move-handle-width: $padding/2 + $table-data-padding*2+2;
+$row-move-handle-width: (0.5 * $padding) + $table-data-padding*2+2;
 $tree-node-handle-width: 14px;
 
 $error-color: hsl(10,90%,52%);
