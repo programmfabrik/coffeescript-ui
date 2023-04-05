@@ -358,8 +358,8 @@ class CUI.SimpleForm extends CUI.DataField
 					level: level
 					header: left_side
 					content: [
-						get_append(field)
 						hint_div
+						get_append(field)
 					]
 
 				if cb
