@@ -32725,7 +32725,7 @@ CUI.dom = (function() {
     if (docElem.style.display !== "none") {
       docElem.__saved_display = docElem.style.display;
     }
-    docElem.style.display = "none";
+    docElem.hidden = true;
     return docElem;
   };
 
@@ -32768,6 +32768,9 @@ CUI.dom = (function() {
     }
     if (docElem.hasOwnProperty('DOM')) {
       docElem = docElem.DOM;
+    }
+    if (docElem.hidden) {
+      docElem.hidden = false;
     }
     docElem.style.display = docElem.__saved_display || "";
     delete docElem.__saved_display;
