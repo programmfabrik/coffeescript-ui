@@ -1344,7 +1344,9 @@ class CUI.dom
 
 		if docElem.style.display != "none"
 			docElem.__saved_display = docElem.style.display
-		docElem.style.display = "none"
+		#docElem.style.display = "none"
+		docElem.hidden = true
+
 		docElem
 
 	@focus: (element) ->
@@ -1374,6 +1376,9 @@ class CUI.dom
 
 		if docElem.hasOwnProperty('DOM')
 			docElem = docElem.DOM
+
+		if docElem.hidden
+			docElem.hidden = false
 
 		docElem.style.display = docElem.__saved_display or ""
 		delete(docElem.__saved_display)
