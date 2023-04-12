@@ -1,7 +1,11 @@
 @mixin form-hint() {
 	@include label-secondary();
 	
-	margin-top: $spacer-xs;
+	margin-bottom: $spacer-xs;
+
+	.cui-form-tr--has-no-key & {
+		order: 1;
+	}
 }
 
 @mixin input-sm() {
@@ -56,6 +60,10 @@
 			// list view will take care of spacing on its own
 			.cui-list-view {
 				--form-key-padding-top: 0;
+			}
+
+			.cui-form-hint {
+				order: 1;
 			}
 		}
 	}

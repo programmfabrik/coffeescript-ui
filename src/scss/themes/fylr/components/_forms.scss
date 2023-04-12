@@ -93,6 +93,9 @@
 }
 
 .cui-form-value {
+	display: flex;
+	flex-direction: column;
+	
 	> .cui-options {
 		margin-bottom: $spacer-sm; // todo
 
