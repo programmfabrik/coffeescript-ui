@@ -2684,16 +2684,16 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 
 .cui-form-hint {
   max-width: 275px;
-  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .cui-checkbox + .cui-form-hint, .cui-data-field.cui-maximize-horizontal + .cui-form-hint {
   max-width: 100%;
 }
 .cui-data-form + .cui-form-hint {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .cui-checkbox + .cui-form-hint {
-  margin-top: 0;
+  margin-bottom: 0;
 }
 .cui-form-hint .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
   padding-left: 7px;
@@ -4183,6 +4183,9 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   width: auto;
   padding-top: 0;
 }
+.cui-form--grid > div > .cui-form-table .cui-form-hint {
+  margin-top: -3px;
+}
 
 .cui-form-container {
   flex-grow: 1;
@@ -4255,10 +4258,28 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-form-tr-header {
   display: flex;
 }
+.cui-form-tr.cui-form-tr--has-no-key .cui-form-hint,
+.cui-form-tr-header.cui-form-tr--has-no-key .cui-form-hint {
+  order: 1;
+  margin-top: 5px;
+}
 @media screen and (max-width: 767px) {
   .cui-form-tr,
   .cui-form-tr-header {
     display: block;
+    margin-bottom: 15px;
+  }
+  .cui-form-tr .cui-form-td,
+  .cui-form-tr-header .cui-form-td {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .cui-form-tr.cui-form-tr--has-key .cui-form-hint,
+  .cui-form-tr-header.cui-form-tr--has-key .cui-form-hint {
+    order: 1;
+    margin-top: 5px;
   }
 }
 
@@ -4332,6 +4353,8 @@ label[data-label-clickable],
 }
 
 .cui-form-value {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   flex-shrink: 1;
   min-width: 0;

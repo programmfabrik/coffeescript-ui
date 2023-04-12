@@ -3669,6 +3669,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
+.cui-form-block--has-checkbox .cui-form .cui-form-tr--has-key .cui-form-hint {
+  order: 0;
+}
 
 .cui-wait-block {
   position: absolute;
@@ -4240,6 +4243,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-form-tr--has-no-key .cui-options-order-hint {
   order: 1;
+}
+.cui-options-order-hint + .cui-checkbox {
+  margin-bottom: -0.25rem;
+  margin-top: -0.25rem;
 }
 
 .cui-options-center {
@@ -4924,8 +4931,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   .cui-form .cui-form-value .cui-list-view {
     --form-key-padding-top: 0;
   }
-  .cui-form .cui-form-value .cui-form-hint {
+  .cui-form .cui-form-tr--has-key .cui-form-hint {
     order: 1;
+  }
+  .cui-form .cui-form-tr--has-key .cui-form-hint + .cui-checkbox {
+    margin-top: 0;
   }
 }
 
@@ -5158,6 +5168,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-tr--has-no-key .cui-input-valid-hint,
 .cui-form-tr--has-no-key .cui-input-empty-hint {
   order: 1;
+}
+.cui-hint + .cui-checkbox,
+.cui-form-hint + .cui-checkbox,
+.cui-input-invalid-hint + .cui-checkbox,
+.cui-input-valid-hint + .cui-checkbox,
+.cui-input-empty-hint + .cui-checkbox {
+  margin-bottom: -0.25rem;
+  margin-top: -0.25rem;
 }
 .cui-hint .cui-label,
 .cui-form-hint .cui-label,
