@@ -32695,6 +32695,9 @@ CUI.dom = (function() {
 
   dom.isVisible = function(docElem) {
     var style;
+    if (docElem.hidden) {
+      return false;
+    }
     style = this.getComputedStyle(docElem);
     if (style.visibility === "hidden" || style.display === "none") {
       return false;
@@ -35664,22 +35667,30 @@ CUI.Buttonbar = (function(superClass) {
   };
 
   Buttonbar.prototype.__checkVisibility = function() {
-    var d, grp, ref;
+    var buttonBarVisible, d, grp, ref;
     CUI.dom.showElement(this.__buttons);
+    buttonBarVisible = false;
     for (grp in this.__groupDivs) {
       d = this.__groupDivs[grp];
       if (this.__setVisibilityClasses(d) > 0) {
+        buttonBarVisible = true;
         CUI.dom.showElement(d);
       } else {
         CUI.dom.hideElement(d);
       }
     }
     if (this.__setVisibilityClasses(this.__buttons) > 0) {
+      buttonBarVisible = true;
       if ((ref = this.__tooltip) != null ? ref.isShown() : void 0) {
         this.__tooltip.position();
       }
     } else {
       CUI.dom.showElement(this.__buttons);
+    }
+    if (!buttonBarVisible) {
+      CUI.dom.hideElement(this);
+    } else {
+      CUI.dom.showElement(this);
     }
     return this;
   };
