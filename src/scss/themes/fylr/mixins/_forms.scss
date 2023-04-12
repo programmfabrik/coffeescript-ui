@@ -7,6 +7,12 @@
 	.cui-form-tr--has-no-key & {
 		order: 1;
 	}
+
+	// make checkbox a little tighter
+	+ .cui-checkbox {
+		margin-bottom: -$spacer-xs;
+		margin-top: -$spacer-xs;
+	}
 }
 
 @mixin input-sm() {
@@ -66,6 +72,10 @@
 
 		.cui-form-tr--has-key .cui-form-hint {
 			order: 1;
+
+			+ .cui-checkbox {
+				margin-top: 0;
+			}
 		}
 	}
 }
