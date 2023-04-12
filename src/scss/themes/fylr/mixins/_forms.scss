@@ -98,6 +98,10 @@
 			}
 		}
 	}
+
+	.cui-form-tr--has-key .cui-form-hint {
+		order: 0;
+	}
 }
 
 @mixin form-as-grid() {
