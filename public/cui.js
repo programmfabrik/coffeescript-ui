@@ -21377,7 +21377,9 @@ CUI = (function() {
         port: pUrl.port,
         path: pUrl.pathname,
         origin: "",
-        search: pUrl.search
+        search: pUrl.search,
+        hash: pUrl.hash,
+        href: pUrl.href
       };
     } catch (error) {
       match = url.match(this.urlRegex);
@@ -21428,8 +21430,12 @@ CUI = (function() {
       p.pathname = "";
       p.fragment = "";
     }
-    p.href = p.origin + p.path;
-    p.hash = p.fragment;
+    if (!p.href) {
+      p.href = p.origin + p.path;
+    }
+    if (!p.hash) {
+      p.hash = p.fragment;
+    }
     if (p.login) {
       p.auth = btoa(p.user + ":" + p.password);
     }
