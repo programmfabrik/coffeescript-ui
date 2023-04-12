@@ -1313,6 +1313,8 @@ class CUI.dom
 		@getComputedStyle(docElem).position in ["relative", "absolute", "fixed"]
 
 	@isVisible: (docElem) ->
+		if docElem.hidden
+			return false
 		style = @getComputedStyle(docElem)
 		if style.visibility == "hidden" or style.display == "none"
 			false
