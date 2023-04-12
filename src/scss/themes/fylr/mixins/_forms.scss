@@ -3,6 +3,7 @@
 	
 	margin-bottom: $spacer-xs;
 
+	// if row has no key, move hint AFTER value
 	.cui-form-tr--has-no-key & {
 		order: 1;
 	}
@@ -61,10 +62,10 @@
 			.cui-list-view {
 				--form-key-padding-top: 0;
 			}
+		}
 
-			.cui-form-hint {
-				order: 1;
-			}
+		.cui-form-tr--has-key .cui-form-hint {
+			order: 1;
 		}
 	}
 }
