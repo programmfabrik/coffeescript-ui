@@ -808,6 +808,8 @@ class CUI
 				path: pUrl.pathname
 				origin: ""
 				search: pUrl.search
+				hash: pUrl.hash
+				href: pUrl.href
 		catch
 			match = url.match(@urlRegex)
 			if not match
@@ -852,8 +854,10 @@ class CUI
 			p.pathname = ""
 			p.fragment = ""
 
-		p.href = p.origin+p.path
-		p.hash = p.fragment
+		if not p.href
+			p.href = p.origin+p.path
+		if not p.hash
+			p.hash = p.fragment
 		if p.login
 			p.auth = btoa(p.user+":"+p.password)
 

@@ -92,19 +92,27 @@ class CUI.Buttonbar extends CUI.DOMElement
 	__checkVisibility: ->
 		CUI.dom.showElement(@__buttons)
 
+		buttonBarVisible = false
 		for grp of @__groupDivs
 			d = @__groupDivs[grp]
 
 			if @__setVisibilityClasses(d) > 0
+				buttonBarVisible = true
 				CUI.dom.showElement(d)
 			else
 				CUI.dom.hideElement(d)
 
 		if @__setVisibilityClasses(@__buttons) > 0
+			buttonBarVisible = true
 			if @__tooltip?.isShown()
 				@__tooltip.position()
 		else
 			CUI.dom.showElement(@__buttons)
+
+		if not buttonBarVisible
+			CUI.dom.hideElement(@)
+		else
+			CUI.dom.showElement(@)
 		@
 
 	removeButtons: ->
