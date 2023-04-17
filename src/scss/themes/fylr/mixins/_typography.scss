@@ -15,6 +15,9 @@
 
 @mixin h1($m: $headings-margin-bottom) {
 	@include _headline('h1', $m);
+
+	text-transform: uppercase;
+	letter-spacing: 0.035em;
 }
 
 @mixin h2($m: $headings-margin-bottom) {
