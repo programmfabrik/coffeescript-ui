@@ -110,6 +110,7 @@ $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
+$danger-bg-light: lighten($danger, 39%);
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 $muted:         $gray-600 !default; // used in field-label, block description, empty label
@@ -127,6 +128,7 @@ $theme-colors: map-merge(
 		'info':       $info,
 		'warning':    $warning,
 		'danger':     $danger,
+		'danger-bg-light': $danger-bg-light,
 		'light':      $light,
 		'dark':       $dark,
 		'muted':      $muted,
