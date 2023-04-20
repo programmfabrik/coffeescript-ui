@@ -132,6 +132,7 @@ body.dev.is-server2::after {
   --info: #17a2b8;
   --warning: #d6b13a;
   --danger: #dc3545;
+  --danger-bg-light: #f9dfe1;
   --light: #f5f5f5;
   --dark: #393c3f;
   --muted: #8b949c;
