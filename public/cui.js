@@ -27915,7 +27915,7 @@ CUI.FlexHandle = (function(superClass) {
     });
     CUI.dom.setAttribute(this._element, "tabindex", 0);
     this._element.classList.add("cui-flex-handle-closed");
-    CUI.dom.setStyleOne(this.__pane, "display", "none");
+    CUI.dom.hideElement(this.__pane);
     this.__resize();
     return this;
   };
@@ -27930,7 +27930,7 @@ CUI.FlexHandle = (function(superClass) {
     });
     CUI.dom.setAttribute(this._element, "tabindex");
     this._element.classList.remove("cui-flex-handle-closed");
-    CUI.dom.setStyleOne(this.__pane, "display", "");
+    CUI.dom.showElement(this.__pane);
     delete this.__closed;
     this.__resize();
     return this;
