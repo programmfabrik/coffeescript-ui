@@ -474,7 +474,7 @@ class CUI.FlexHandle extends CUI.Element
 
 		CUI.dom.setAttribute(@_element, "tabindex", 0)
 		@_element.classList.add("cui-flex-handle-closed")
-		CUI.dom.setStyleOne(@__pane, "display", "none")
+		CUI.dom.hideElement(@__pane)
 		@__resize()
 		@
 
@@ -488,7 +488,7 @@ class CUI.FlexHandle extends CUI.Element
 
 		CUI.dom.setAttribute(@_element, "tabindex")
 		@_element.classList.remove("cui-flex-handle-closed")
-		CUI.dom.setStyleOne(@__pane, "display", "")
+		CUI.dom.showElement(@__pane)
 		delete(@__closed)
 		@__resize()
 		@

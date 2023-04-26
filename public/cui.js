@@ -21196,7 +21196,9 @@ CUI = (function() {
         port: pUrl.port,
         path: pUrl.pathname,
         origin: "",
-        search: pUrl.search
+        search: pUrl.search,
+        hash: pUrl.hash,
+        href: pUrl.href
       };
     } catch (error) {
       match = url.match(this.urlRegex);
@@ -21247,8 +21249,12 @@ CUI = (function() {
       p.pathname = "";
       p.fragment = "";
     }
-    p.href = p.origin + p.path;
-    p.hash = p.fragment;
+    if (!p.href) {
+      p.href = p.origin + p.path;
+    }
+    if (!p.hash) {
+      p.hash = p.fragment;
+    }
     if (p.login) {
       p.auth = btoa(p.user + ":" + p.password);
     }
@@ -27909,7 +27915,7 @@ CUI.FlexHandle = (function(superClass) {
     });
     CUI.dom.setAttribute(this._element, "tabindex", 0);
     this._element.classList.add("cui-flex-handle-closed");
-    CUI.dom.setStyleOne(this.__pane, "display", "none");
+    CUI.dom.hideElement(this.__pane);
     this.__resize();
     return this;
   };
@@ -27924,7 +27930,7 @@ CUI.FlexHandle = (function(superClass) {
     });
     CUI.dom.setAttribute(this._element, "tabindex");
     this._element.classList.remove("cui-flex-handle-closed");
-    CUI.dom.setStyleOne(this.__pane, "display", "");
+    CUI.dom.showElement(this.__pane);
     delete this.__closed;
     this.__resize();
     return this;
@@ -32514,6 +32520,9 @@ CUI.dom = (function() {
 
   dom.isVisible = function(docElem) {
     var style;
+    if (docElem.hidden) {
+      return false;
+    }
     style = this.getComputedStyle(docElem);
     if (style.visibility === "hidden" || style.display === "none") {
       return false;
@@ -32544,7 +32553,7 @@ CUI.dom = (function() {
     if (docElem.style.display !== "none") {
       docElem.__saved_display = docElem.style.display;
     }
-    docElem.style.display = "none";
+    docElem.hidden = true;
     return docElem;
   };
 
@@ -32587,6 +32596,9 @@ CUI.dom = (function() {
     }
     if (docElem.hasOwnProperty('DOM')) {
       docElem = docElem.DOM;
+    }
+    if (docElem.hidden) {
+      docElem.hidden = false;
     }
     docElem.style.display = docElem.__saved_display || "";
     delete docElem.__saved_display;
@@ -35480,22 +35492,30 @@ CUI.Buttonbar = (function(superClass) {
   };
 
   Buttonbar.prototype.__checkVisibility = function() {
-    var d, grp, ref;
+    var buttonBarVisible, d, grp, ref;
     CUI.dom.showElement(this.__buttons);
+    buttonBarVisible = false;
     for (grp in this.__groupDivs) {
       d = this.__groupDivs[grp];
       if (this.__setVisibilityClasses(d) > 0) {
+        buttonBarVisible = true;
         CUI.dom.showElement(d);
       } else {
         CUI.dom.hideElement(d);
       }
     }
     if (this.__setVisibilityClasses(this.__buttons) > 0) {
+      buttonBarVisible = true;
       if ((ref = this.__tooltip) != null ? ref.isShown() : void 0) {
         this.__tooltip.position();
       }
     } else {
       CUI.dom.showElement(this.__buttons);
+    }
+    if (!buttonBarVisible) {
+      CUI.dom.hideElement(this);
+    } else {
+      CUI.dom.showElement(this);
     }
     return this;
   };
