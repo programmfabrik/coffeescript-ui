@@ -453,6 +453,7 @@ $checkbox-size: 				16px !default;
 $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
 $checkbox-margin:				0.5 * $checkbox-icon-size !default;
+$checkbox-form-hint-indent: 	$checkbox-size + $checkbox-margin !default;
 
 // * Toggle Switch
 // * ==========================================

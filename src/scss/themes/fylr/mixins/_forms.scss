@@ -6,11 +6,11 @@
 	// if row has no key, move hint AFTER value
 	.cui-form-tr--has-no-key & {
 		order: 1;
+		margin-left: $checkbox-form-hint-indent;
 	}
 
 	// make checkbox a little tighter
 	+ .cui-checkbox {
-		margin-bottom: -$spacer-xs;
 		margin-top: -$spacer-xs;
 	}
 }

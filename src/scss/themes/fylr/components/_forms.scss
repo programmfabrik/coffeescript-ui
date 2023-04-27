@@ -215,6 +215,11 @@
 		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes
 	}
 
+	&.cui-form-field-type--checkbox > .cui-form-hint {
+		margin-left: $checkbox-form-hint-indent;
+		margin-top: -$spacer-xs;
+	}
+
 	.cui-form-container.cui-form--horizontal > & {
 		flex: 0 0 auto;
 		min-width: 0;
