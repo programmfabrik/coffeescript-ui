@@ -78,6 +78,10 @@
 	margin-top: -$form-cell-gap;
 }
 
+.cui-form-field-type--checkbox.cui-form-tr--has-no-key .cui-form-hint {
+	margin-left: $checkbox-form-hint-indent;
+}
+
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
 .cui-form-key {
 	label,
