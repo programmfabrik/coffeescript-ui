@@ -110,6 +110,7 @@ $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
+$danger-bg-light: lighten($danger, 39%);
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 $muted:         $gray-600 !default; // used in field-label, block description, empty label
@@ -127,6 +128,7 @@ $theme-colors: map-merge(
 		'info':       $info,
 		'warning':    $warning,
 		'danger':     $danger,
+		'danger-bg-light': $danger-bg-light,
 		'light':      $light,
 		'dark':       $dark,
 		'muted':      $muted,
@@ -247,7 +249,7 @@ $line-height-base:            1.5 !default;
 $line-height-sm:			  1.3 !default;
 
 // todo
-$h1-font-size:                1rem * 1.5 !default; 		// 24, upper case, ex: page-title
+$h1-font-size:                1rem * 1.5 !default; 		// 24, upper case, e.g. page-title
 $h2-font-size:                1rem * 1.5 !default; 		// 24, normal case
 $h3-font-size:                1rem * 1.25 !default; 	// 20, ex: pane titles (Suche), sidebar titles (Detail, Editor), applied via .h3 class in tpl
 $h4-font-size:                1rem * 1.125 !default;	// 18, ex: standard-1

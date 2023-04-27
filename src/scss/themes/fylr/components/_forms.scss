@@ -210,9 +210,19 @@
 		margin-bottom: 0;
 	}
 
-	&.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, 		// see system-rights
+	.cui-form-tr & {
+		&:last-child {
+			margin-bottom: 0; // cui-form-tr already has bottom margin
+		}
+	}
+
+	// reset margin bottom for consecutive checkboxes
+	// use negative margin-top on siblings because we only want to target form rows that are themselves checkboxes and follow a checkbox
+	// but we want to keep the bottom margin for example for form rows with a text input that are followed by a form row with a checkbox
+	// beware: the form rows could be of any type (input | select | checkbox ...) and in any order
+	&.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, 		// see admin > usermanagement > system-rights
 	&.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
-		margin-top: -$form-cell-gap; // reset margin bottom for consecutive checkboxes
+		margin-top: -$form-cell-gap;
 	}
 
 	&.cui-form-field-type--checkbox > .cui-form-hint {

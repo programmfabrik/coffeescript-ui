@@ -1,4 +1,4 @@
-@mixin headline($size: 'h1', $margin-bottom: $headings-margin-bottom) {
+@mixin _headline($size: 'h1', $margin-bottom: $headings-margin-bottom) {
 	font-family: $headings-font-family;
 	font-size: headline-size($size);
 	font-weight: $headings-font-weight;
@@ -14,25 +14,28 @@
 }
 
 @mixin h1($m: $headings-margin-bottom) {
-	@include headline('h1', $m);
+	@include _headline('h1', $m);
+
+	text-transform: uppercase;
+	letter-spacing: 0.035em;
 }
 
 @mixin h2($m: $headings-margin-bottom) {
-	@include headline('h2', $m);
+	@include _headline('h2', $m);
 }
 
 @mixin h3($m: $headings-margin-bottom) {
-	@include headline('h3', $m);
+	@include _headline('h3', $m);
 }
 
 @mixin h4($m: $headings-margin-bottom) {
-	@include headline('h4', $m);
+	@include _headline('h4', $m);
 }
 
 @mixin h5($m: $headings-margin-bottom) {
-	@include headline('h5', $m);
+	@include _headline('h5', $m);
 }
 
 @mixin h6($m: $headings-margin-bottom) {
-	@include headline('h6', $m);
+	@include _headline('h6', $m);
 }
