@@ -132,6 +132,7 @@ body.dev.is-server2::after {
   --info: #17a2b8;
   --warning: #d6b13a;
   --danger: #dc3545;
+  --danger-bg-light: #f9dfe1;
   --light: #f5f5f5;
   --dark: #393c3f;
   --muted: #8b949c;
@@ -627,6 +628,8 @@ h1, .h1 {
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
 }
 .cui-pane-header h1, .cui-toolbar h1, .cui-buttonbar h1, .cui-pane-header .h1, .cui-toolbar .h1, .cui-buttonbar .h1 {
   margin-bottom: 0;
@@ -4243,9 +4246,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-form-tr--has-no-key .cui-options-order-hint {
   order: 1;
+  margin-left: 22px;
 }
 .cui-options-order-hint + .cui-checkbox {
-  margin-bottom: -0.25rem;
   margin-top: -0.25rem;
 }
 
@@ -5135,8 +5138,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-row:only-child {
   margin-bottom: 0;
 }
+.cui-form-tr .cui-form-row:last-child {
+  margin-bottom: 0;
+}
 .cui-form-row.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, .cui-form-row.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
   margin-top: -1rem;
+}
+.cui-form-row.cui-form-field-type--checkbox > .cui-form-hint {
+  margin-left: 22px;
+  margin-top: -0.25rem;
 }
 .cui-form-container.cui-form--horizontal > .cui-form-row {
   flex: 0 0 auto;
@@ -5168,13 +5178,13 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-tr--has-no-key .cui-input-valid-hint,
 .cui-form-tr--has-no-key .cui-input-empty-hint {
   order: 1;
+  margin-left: 22px;
 }
 .cui-hint + .cui-checkbox,
 .cui-form-hint + .cui-checkbox,
 .cui-input-invalid-hint + .cui-checkbox,
 .cui-input-valid-hint + .cui-checkbox,
 .cui-input-empty-hint + .cui-checkbox {
-  margin-bottom: -0.25rem;
   margin-top: -0.25rem;
 }
 .cui-hint .cui-label,
