@@ -4948,6 +4948,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   margin-bottom: 1rem;
 }
 
+.cui-form-field-type--checkbox + .cui-form-field-type--checkbox,
+.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
+  margin-top: -1rem;
+}
+
 .cui-form-key label,
 .cui-form-key .cui-label {
   display: inline-block;
@@ -5118,8 +5123,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-row:only-child {
   margin-bottom: 0;
 }
-.cui-form-row.cui-form-field-type--checkbox + .cui-form-row.cui-form-field-type--checkbox, .cui-form-row.cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
-  margin-top: -1rem;
+.cui-form-tr .cui-form-row:last-child {
+  margin-bottom: 0;
 }
 .cui-form-container.cui-form--horizontal > .cui-form-row {
   flex: 0 0 auto;
