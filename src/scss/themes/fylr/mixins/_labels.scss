@@ -109,3 +109,10 @@
 @mixin label-field-subtitle() {
 	font-weight: $font-weight-normal;
 }
+
+@mixin label-form-hint() {
+	@include label-secondary();
+	
+	font-size: $form-hint-font-size;
+	line-height: $form-hint-line-height;
+}

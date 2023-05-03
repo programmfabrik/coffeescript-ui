@@ -27,9 +27,10 @@
 }
 
 .cui-options-order-hint {
-	@include form-hint();
+	@include label-form-hint();
 
 	max-width: 250px;
+	padding: 0 !important;
 	margin: $spacer-sm ($checkbox-size + $checkbox-margin) $spacer;
 }
 

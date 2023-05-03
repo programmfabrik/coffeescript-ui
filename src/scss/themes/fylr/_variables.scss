@@ -455,7 +455,7 @@ $checkbox-size: 				16px !default;
 $checkbox-icon-size: 			12px !default;
 $checkbox-border-radius: 		2px !default;
 $checkbox-margin:				0.5 * $checkbox-icon-size !default;
-$checkbox-form-hint-indent: 	$checkbox-size + $checkbox-margin !default;
+$checkbox-form-hint-indent: 	0 !default; // $checkbox-size + $checkbox-margin !default;
 
 // * Toggle Switch
 // * ==========================================
@@ -511,6 +511,10 @@ $form-label-color: 			$body-color !default;
 $form-label-font-weight: 	$font-weight-bold !default; // todo
 $form-label-font-size: 		$font-size-base !default; // if changed, you need to change the padding of labels in cui-form-key + cui-form-value
 $form-cell-gap: 			$spacer !default; // todo: check more forms
+$form-hint-font-size: 		13px !default;
+$form-hint-line-height: 	1.2 !default;
+$form-hint-margin-bottom: 	$spacer-sm !default; 
+
 
 // * Data-Form
 // * ==========================================
