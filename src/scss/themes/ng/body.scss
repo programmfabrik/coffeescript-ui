@@ -2563,6 +2563,11 @@ a[role="button"].cui-button-appearance-link {
 		&::placeholder {
 			color: $input-placeholder;
 		}
+		
+		// Password input placeholder should be regular body color
+		&[placeholder^='***']::placeholder {
+			color: $color;
+		}					
 	}
 
 	textarea {
