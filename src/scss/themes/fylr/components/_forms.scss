@@ -73,9 +73,12 @@
 // beware: the form rows could be of any type (input | select | checkbox ...) and in any order
 // todo: this is pretty fragile, we should really put checkboxes that belong together into a fieldset or group so we can style them separately from the form rows
 // e.g. put them closer together (closer than form rows which contain more independent form fields)
+// make sure checkboxes that wrap onto a new line have enough space inbetween them vs. their line-height
+
+// Examples: search > Table Options ("Repeat data for each row")
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox, 					// see admin > usermanagement > system-rights
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
-	margin-top: -$form-cell-gap;
+	margin-top: -0.5*$form-cell-gap;
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
