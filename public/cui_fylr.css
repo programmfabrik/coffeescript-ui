@@ -4957,7 +4957,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox,
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
-  margin-top: -1rem;
+  margin-top: -0.5rem;
 }
 
 .cui-form-key label,
@@ -7203,7 +7203,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   height: auto;
 }
 .cui-menu > .cui-item-list {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 .cui-menu .cui-item-list-body > .cui-label,
