@@ -296,8 +296,9 @@ class CUI.Label extends CUI.DOMElement
 			text = []
 			return
 
-		for el, idx in txt.split(/(\n| )/)
-
+		for el, idx in txt.split(/(\n| )/).flatMap( (el) => el.split(/(\[|\]|\(|\))/))
+			# Using the flatmap and the split we divide the elements that are inside a ( ) or [ ] so
+			# we can detect links inside this characters.
 			if CUI.EmailInput.regexp.exec(el)
 				a_node = CUI.dom.element("a", href: "mailto:"+el)
 			else
