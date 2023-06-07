@@ -48718,7 +48718,11 @@ CUI.Label = (function(superClass) {
         text = [];
       };
     })(this);
-    ref = txt.split(/(\n| )/);
+    ref = txt.split(/(\n| )/).flatMap((function(_this) {
+      return function(el) {
+        return el.split(/(\[|\]|\(|\))/);
+      };
+    })(this));
     for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
       el = ref[idx];
       if (CUI.EmailInput.regexp.exec(el)) {
