@@ -937,12 +937,14 @@ CUI.DateTimeFormats["cs-CZ"] =
 		]
 	]
 
+import 'moment/locale/fi'
+
 CUI.DateTimeFormats["fi-FI"] =
 	timezone: "Europe/Berlin"
-	moment_locale: "fi-FI"
-	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wo"
+	moment_locale: "fi"
+	tab_date: "Päivämäärä"
+	tab_time: "Aika"
+	tab_week: "Vi"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -1077,12 +1079,14 @@ CUI.DateTimeFormats["fi-FI"] =
 		]
 	]
 
+import 'moment/locale/sv'
+
 CUI.DateTimeFormats["sv-SE"] =
 	timezone: "Europe/Berlin"
-	moment_locale: "sv-SE"
+	moment_locale: "sv"
 	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wo"
+	tab_time: "Tid"
+	tab_week: "Ve"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -1097,7 +1101,7 @@ CUI.DateTimeFormats["sv-SE"] =
 		display_short: "DD.MM.YYYY HH:mm"
 		display_attribute: "date-time"
 		display_short_attribute: "date-time-short"
-		timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
 			"YYYY-MM-DD HH:mm:ss"
