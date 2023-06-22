@@ -39684,8 +39684,14 @@ CUI.DateTime = (function(superClass) {
 /*!**************************************************!*\
   !*** ./elements/DateTime/DateTimeFormats.coffee ***!
   \**************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment_locale_fi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment/locale/fi */ "../node_modules/moment/locale/fi.js");
+/* harmony import */ var moment_locale_fi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fi__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment/locale/sv */ "../node_modules/moment/locale/sv.js");
+/* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__);
 /* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
@@ -40244,12 +40250,14 @@ CUI.DateTimeFormats["cs-CZ"] = {
   ]
 };
 
+
+
 CUI.DateTimeFormats["fi-FI"] = {
   timezone: "Europe/Berlin",
-  moment_locale: "fi-FI",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  moment_locale: "fi",
+  tab_date: "Päivämäärä",
+  tab_time: "Aika",
+  tab_week: "Vi",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40322,12 +40330,14 @@ CUI.DateTimeFormats["fi-FI"] = {
   ]
 };
 
+
+
 CUI.DateTimeFormats["sv-SE"] = {
   timezone: "Europe/Berlin",
-  moment_locale: "sv-SE",
+  moment_locale: "sv",
   tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_time: "Tid",
+  tab_week: "Ve",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40342,7 +40352,6 @@ CUI.DateTimeFormats["sv-SE"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      timezone_display: "dddd, DD.MM.YYYY HH:mm zZ",
       parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
@@ -67257,6 +67266,149 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
+/***/ "../node_modules/moment/locale/fi.js":
+/*!*******************************************!*\
+  !*** ../node_modules/moment/locale/fi.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Finnish [fi]
+//! author : Tarmo Aidantausta : https://github.com/bleadof
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
+   0
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var numbersPast =
+            'nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän'.split(
+                ' '
+            ),
+        numbersFuture = [
+            'nolla',
+            'yhden',
+            'kahden',
+            'kolmen',
+            'neljän',
+            'viiden',
+            'kuuden',
+            numbersPast[7],
+            numbersPast[8],
+            numbersPast[9],
+        ];
+    function translate(number, withoutSuffix, key, isFuture) {
+        var result = '';
+        switch (key) {
+            case 's':
+                return isFuture ? 'muutaman sekunnin' : 'muutama sekunti';
+            case 'ss':
+                result = isFuture ? 'sekunnin' : 'sekuntia';
+                break;
+            case 'm':
+                return isFuture ? 'minuutin' : 'minuutti';
+            case 'mm':
+                result = isFuture ? 'minuutin' : 'minuuttia';
+                break;
+            case 'h':
+                return isFuture ? 'tunnin' : 'tunti';
+            case 'hh':
+                result = isFuture ? 'tunnin' : 'tuntia';
+                break;
+            case 'd':
+                return isFuture ? 'päivän' : 'päivä';
+            case 'dd':
+                result = isFuture ? 'päivän' : 'päivää';
+                break;
+            case 'M':
+                return isFuture ? 'kuukauden' : 'kuukausi';
+            case 'MM':
+                result = isFuture ? 'kuukauden' : 'kuukautta';
+                break;
+            case 'y':
+                return isFuture ? 'vuoden' : 'vuosi';
+            case 'yy':
+                result = isFuture ? 'vuoden' : 'vuotta';
+                break;
+        }
+        result = verbalNumber(number, isFuture) + ' ' + result;
+        return result;
+    }
+    function verbalNumber(number, isFuture) {
+        return number < 10
+            ? isFuture
+                ? numbersFuture[number]
+                : numbersPast[number]
+            : number;
+    }
+
+    var fi = moment.defineLocale('fi', {
+        months: 'tammikuu_helmikuu_maaliskuu_huhtikuu_toukokuu_kesäkuu_heinäkuu_elokuu_syyskuu_lokakuu_marraskuu_joulukuu'.split(
+            '_'
+        ),
+        monthsShort:
+            'tammi_helmi_maalis_huhti_touko_kesä_heinä_elo_syys_loka_marras_joulu'.split(
+                '_'
+            ),
+        weekdays:
+            'sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai'.split(
+                '_'
+            ),
+        weekdaysShort: 'su_ma_ti_ke_to_pe_la'.split('_'),
+        weekdaysMin: 'su_ma_ti_ke_to_pe_la'.split('_'),
+        longDateFormat: {
+            LT: 'HH.mm',
+            LTS: 'HH.mm.ss',
+            L: 'DD.MM.YYYY',
+            LL: 'Do MMMM[ta] YYYY',
+            LLL: 'Do MMMM[ta] YYYY, [klo] HH.mm',
+            LLLL: 'dddd, Do MMMM[ta] YYYY, [klo] HH.mm',
+            l: 'D.M.YYYY',
+            ll: 'Do MMM YYYY',
+            lll: 'Do MMM YYYY, [klo] HH.mm',
+            llll: 'ddd, Do MMM YYYY, [klo] HH.mm',
+        },
+        calendar: {
+            sameDay: '[tänään] [klo] LT',
+            nextDay: '[huomenna] [klo] LT',
+            nextWeek: 'dddd [klo] LT',
+            lastDay: '[eilen] [klo] LT',
+            lastWeek: '[viime] dddd[na] [klo] LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: '%s päästä',
+            past: '%s sitten',
+            s: translate,
+            ss: translate,
+            m: translate,
+            mm: translate,
+            h: translate,
+            hh: translate,
+            d: translate,
+            dd: translate,
+            M: translate,
+            MM: translate,
+            y: translate,
+            yy: translate,
+        },
+        dayOfMonthOrdinalParse: /\d{1,2}\./,
+        ordinal: '%d.',
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+    });
+
+    return fi;
+
+})));
+
+
+/***/ }),
+
 /***/ "../node_modules/moment/locale/gom-deva.js":
 /*!*************************************************!*\
   !*** ../node_modules/moment/locale/gom-deva.js ***!
@@ -67604,6 +67756,93 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     });
 
     return it;
+
+})));
+
+
+/***/ }),
+
+/***/ "../node_modules/moment/locale/sv.js":
+/*!*******************************************!*\
+  !*** ../node_modules/moment/locale/sv.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Swedish [sv]
+//! author : Jens Alm : https://github.com/ulmus
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
+   0
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var sv = moment.defineLocale('sv', {
+        months: 'januari_februari_mars_april_maj_juni_juli_augusti_september_oktober_november_december'.split(
+            '_'
+        ),
+        monthsShort: 'jan_feb_mar_apr_maj_jun_jul_aug_sep_okt_nov_dec'.split('_'),
+        weekdays: 'söndag_måndag_tisdag_onsdag_torsdag_fredag_lördag'.split('_'),
+        weekdaysShort: 'sön_mån_tis_ons_tor_fre_lör'.split('_'),
+        weekdaysMin: 'sö_må_ti_on_to_fr_lö'.split('_'),
+        longDateFormat: {
+            LT: 'HH:mm',
+            LTS: 'HH:mm:ss',
+            L: 'YYYY-MM-DD',
+            LL: 'D MMMM YYYY',
+            LLL: 'D MMMM YYYY [kl.] HH:mm',
+            LLLL: 'dddd D MMMM YYYY [kl.] HH:mm',
+            lll: 'D MMM YYYY HH:mm',
+            llll: 'ddd D MMM YYYY HH:mm',
+        },
+        calendar: {
+            sameDay: '[Idag] LT',
+            nextDay: '[Imorgon] LT',
+            lastDay: '[Igår] LT',
+            nextWeek: '[På] dddd LT',
+            lastWeek: '[I] dddd[s] LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: 'om %s',
+            past: 'för %s sedan',
+            s: 'några sekunder',
+            ss: '%d sekunder',
+            m: 'en minut',
+            mm: '%d minuter',
+            h: 'en timme',
+            hh: '%d timmar',
+            d: 'en dag',
+            dd: '%d dagar',
+            M: 'en månad',
+            MM: '%d månader',
+            y: 'ett år',
+            yy: '%d år',
+        },
+        dayOfMonthOrdinalParse: /\d{1,2}(\:e|\:a)/,
+        ordinal: function (number) {
+            var b = number % 10,
+                output =
+                    ~~((number % 100) / 10) === 1
+                        ? ':e'
+                        : b === 1
+                        ? ':a'
+                        : b === 2
+                        ? ':a'
+                        : b === 3
+                        ? ':e'
+                        : ':e';
+            return number + output;
+        },
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+    });
+
+    return sv;
 
 })));
 
@@ -73432,6 +73671,18 @@ module.exports = JSON.parse('{"version":"2023c","zones":["Africa/Abidjan|LMT GMT
 /******/ 	(() => {
 /******/ 		__webpack_require__.amdD = function () {
 /******/ 			throw new Error('define cannot be used indirect');
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
