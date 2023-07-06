@@ -53,17 +53,15 @@ class CUI.Socket extends CUI.Element
 
   open: ->
     dfr = new CUI.Deferred
-    try
-      @__webSocket = new WebSocket(@_url)
-      @__webSocket.onerror = (e) =>
-        dfr.reject(error: e)
-      @__webSocket.onopen = (ev) =>
-        @__onOpen(ev)
-        dfr.resolve()
-      @__webSocket.onclose = (ev) =>
-        @__onClose(ev)
-    catch e
+    @__webSocket = new WebSocket(@_url)
+    @__webSocket.onerror = (e) =>
       dfr.reject()
+    @__webSocket.onopen = (ev) =>
+      @__onOpen(ev)
+      dfr.resolve()
+    @__webSocket.onclose = (ev) =>
+      @__onClose(ev)
+
 
     return dfr.promise()
 
