@@ -27354,8 +27354,19 @@ CUI.Events.MouseIsStill = (function(superClass) {
   };
 
   MouseIsStill.prototype.start = function() {
+    this.__clickEvent = CUI.Events.listen({
+      type: ["click", "dblclick"],
+      capture: true,
+      node: this._element,
+      only_once: true,
+      call: (function(_this) {
+        return function(ev) {
+          return _this.stop();
+        };
+      })(this)
+    });
     this.__event = CUI.Events.listen({
-      type: "mousemove",
+      type: ["mousemove"],
       node: this._node,
       instance: this,
       call: (function(_this) {
@@ -27380,6 +27391,8 @@ CUI.Events.MouseIsStill = (function(superClass) {
     }
     if (this.__event) {
       CUI.Events.ignore(this.__event);
+      CUI.Events.ignore(this.__clickEvent);
+      this.__clickEvent = null;
       this.__event = null;
     }
   };
