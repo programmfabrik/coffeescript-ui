@@ -30236,32 +30236,25 @@ CUI.Socket = (function(superClass) {
   };
 
   Socket.prototype.open = function() {
-    var dfr, e;
+    var dfr;
     dfr = new CUI.Deferred;
-    try {
-      this.__webSocket = new WebSocket(this._url);
-      this.__webSocket.onerror = (function(_this) {
-        return function(e) {
-          return dfr.reject({
-            error: e
-          });
-        };
-      })(this);
-      this.__webSocket.onopen = (function(_this) {
-        return function(ev) {
-          _this.__onOpen(ev);
-          return dfr.resolve();
-        };
-      })(this);
-      this.__webSocket.onclose = (function(_this) {
-        return function(ev) {
-          return _this.__onClose(ev);
-        };
-      })(this);
-    } catch (error) {
-      e = error;
-      dfr.reject();
-    }
+    this.__webSocket = new WebSocket(this._url);
+    this.__webSocket.onerror = (function(_this) {
+      return function(e) {
+        return dfr.reject();
+      };
+    })(this);
+    this.__webSocket.onopen = (function(_this) {
+      return function(ev) {
+        _this.__onOpen(ev);
+        return dfr.resolve();
+      };
+    })(this);
+    this.__webSocket.onclose = (function(_this) {
+      return function(ev) {
+        return _this.__onClose(ev);
+      };
+    })(this);
     return dfr.promise();
   };
 
