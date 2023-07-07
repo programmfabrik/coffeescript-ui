@@ -30241,7 +30241,7 @@ CUI.Socket = (function(superClass) {
     this.__webSocket = new WebSocket(this._url);
     this.__webSocket.onerror = (function(_this) {
       return function(e) {
-        return dfr.reject(e);
+        return dfr.reject();
       };
     })(this);
     this.__webSocket.onopen = (function(_this) {
@@ -39698,6 +39698,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment_locale_fi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fi__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment/locale/sv */ "../node_modules/moment/locale/sv.js");
 /* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment/locale/fr */ "../node_modules/moment/locale/fr.js");
+/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fr__WEBPACK_IMPORTED_MODULE_2__);
 /* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
@@ -40422,6 +40424,86 @@ CUI.DateTimeFormats["da-DK"] = {
   tab_date: "Dato",
   tab_time: "Tid",
   tab_week: "Uge",
+  formats: [
+    {
+      text: "Datum+Zeit",
+      support_bc: false,
+      invalid: "Dato ugyldig",
+      type: "date_time",
+      clock: true,
+      store: "YYYY-MM-DDTHH:mm:00Z",
+      clock_seconds: false,
+      input: "DD/MM/YYYY HH:mm",
+      display: "dd, DD/MM/YYYY HH:mm",
+      display_short: "DD/MM/YYYY HH:mm",
+      display_attribute: "date-time",
+      display_short_attribute: "date-time-short",
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+    }, {
+      text: "Datum+Zeit+Sekunden",
+      support_bc: false,
+      invalid: "Dato ugyldig",
+      type: "date_time_seconds",
+      input: "DD/MM/YYYY HH:mm:ss",
+      store: "YYYY-MM-DDTHH:mm:ssZ",
+      display: "dd, DD/MM/YYYY HH:mm:ss",
+      display_short: "DD/MM/YYYY HH:mm:ss",
+      display_attribute: "date-time-seconds",
+      display_short_attribute: "date-time-seconds-short",
+      clock: true,
+      clock_seconds: true,
+      parse: ["YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss"]
+    }, {
+      text: "Datum",
+      support_bc: false,
+      input: "DD/MM/YYYY",
+      invalid: "Dato ugyldig",
+      display: "dd, DD/MM/YYYY",
+      display_short: "DD/MM/YYYY",
+      display_attribute: "date",
+      display_short_attribute: "date-short",
+      store: "YYYY-MM-DD",
+      type: "date",
+      clock: false,
+      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY"]
+    }, {
+      text: "Jahr-Monat",
+      support_bc: false,
+      input: "MM/YYYY",
+      invalid: "Dato ugyldig",
+      store: "YYYY-MM",
+      display: "MMMM YYYY",
+      display_short: "MM/YYYY",
+      display_attribute: "year-month",
+      display_short_attribute: "year-month-short",
+      type: "year_month",
+      clock: false,
+      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM"]
+    }, {
+      text: "Jahr",
+      support_bc: true,
+      input: "Y",
+      invalid: "Dato ugyldig",
+      display: "Y",
+      display_short: "Y",
+      display_attribute: "year",
+      display_short_attribute: "year",
+      store: "YYYY",
+      type: "year",
+      clock: false,
+      parse: ["Y"]
+    }
+  ]
+};
+
+
+
+CUI.DateTimeFormats["fr-FR"] = {
+  timezone: "Europe/Berlin",
+  moment_locale: "fr",
+  tab_date: "Date",
+  tab_time: "Temps",
+  tab_week: "Semaine",
   formats: [
     {
       text: "Datum+Zeit",
@@ -67409,6 +67491,133 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     });
 
     return fi;
+
+})));
+
+
+/***/ }),
+
+/***/ "../node_modules/moment/locale/fr.js":
+/*!*******************************************!*\
+  !*** ../node_modules/moment/locale/fr.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : French [fr]
+//! author : John Fischer : https://github.com/jfroffice
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
+   0
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var monthsStrictRegex =
+            /^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i,
+        monthsShortStrictRegex =
+            /(janv\.?|févr\.?|mars|avr\.?|mai|juin|juil\.?|août|sept\.?|oct\.?|nov\.?|déc\.?)/i,
+        monthsRegex =
+            /(janv\.?|févr\.?|mars|avr\.?|mai|juin|juil\.?|août|sept\.?|oct\.?|nov\.?|déc\.?|janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i,
+        monthsParse = [
+            /^janv/i,
+            /^févr/i,
+            /^mars/i,
+            /^avr/i,
+            /^mai/i,
+            /^juin/i,
+            /^juil/i,
+            /^août/i,
+            /^sept/i,
+            /^oct/i,
+            /^nov/i,
+            /^déc/i,
+        ];
+
+    var fr = moment.defineLocale('fr', {
+        months: 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split(
+            '_'
+        ),
+        monthsShort:
+            'janv._févr._mars_avr._mai_juin_juil._août_sept._oct._nov._déc.'.split(
+                '_'
+            ),
+        monthsRegex: monthsRegex,
+        monthsShortRegex: monthsRegex,
+        monthsStrictRegex: monthsStrictRegex,
+        monthsShortStrictRegex: monthsShortStrictRegex,
+        monthsParse: monthsParse,
+        longMonthsParse: monthsParse,
+        shortMonthsParse: monthsParse,
+        weekdays: 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
+        weekdaysShort: 'dim._lun._mar._mer._jeu._ven._sam.'.split('_'),
+        weekdaysMin: 'di_lu_ma_me_je_ve_sa'.split('_'),
+        weekdaysParseExact: true,
+        longDateFormat: {
+            LT: 'HH:mm',
+            LTS: 'HH:mm:ss',
+            L: 'DD/MM/YYYY',
+            LL: 'D MMMM YYYY',
+            LLL: 'D MMMM YYYY HH:mm',
+            LLLL: 'dddd D MMMM YYYY HH:mm',
+        },
+        calendar: {
+            sameDay: '[Aujourd’hui à] LT',
+            nextDay: '[Demain à] LT',
+            nextWeek: 'dddd [à] LT',
+            lastDay: '[Hier à] LT',
+            lastWeek: 'dddd [dernier à] LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: 'dans %s',
+            past: 'il y a %s',
+            s: 'quelques secondes',
+            ss: '%d secondes',
+            m: 'une minute',
+            mm: '%d minutes',
+            h: 'une heure',
+            hh: '%d heures',
+            d: 'un jour',
+            dd: '%d jours',
+            w: 'une semaine',
+            ww: '%d semaines',
+            M: 'un mois',
+            MM: '%d mois',
+            y: 'un an',
+            yy: '%d ans',
+        },
+        dayOfMonthOrdinalParse: /\d{1,2}(er|)/,
+        ordinal: function (number, period) {
+            switch (period) {
+                // TODO: Return 'e' when day of month > 1. Move this case inside
+                // block for masculine words below.
+                // See https://github.com/moment/moment/issues/3375
+                case 'D':
+                    return number + (number === 1 ? 'er' : '');
+
+                // Words with masculine grammatical gender: mois, trimestre, jour
+                default:
+                case 'M':
+                case 'Q':
+                case 'DDD':
+                case 'd':
+                    return number + (number === 1 ? 'er' : 'e');
+
+                // Words with feminine grammatical gender: semaine
+                case 'w':
+                case 'W':
+                    return number + (number === 1 ? 're' : 'e');
+            }
+        },
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+    });
+
+    return fr;
 
 })));
 
