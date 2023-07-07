@@ -1368,7 +1368,7 @@ CUI.DateTimeFormats["fr-FR"] =
 	moment_locale: "fr"
 	tab_date: "Date"
 	tab_time: "Temps"
-	tab_week: "Semaine"
+	tab_week: "Sem"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
