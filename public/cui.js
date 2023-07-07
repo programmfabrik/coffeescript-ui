@@ -30241,7 +30241,7 @@ CUI.Socket = (function(superClass) {
     this.__webSocket = new WebSocket(this._url);
     this.__webSocket.onerror = (function(_this) {
       return function(e) {
-        return dfr.reject();
+        return dfr.reject(e);
       };
     })(this);
     this.__webSocket.onopen = (function(_this) {
