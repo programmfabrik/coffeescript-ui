@@ -43,8 +43,16 @@ class CUI.Events.MouseIsStill extends CUI.Element
 
 
 	start: ->
+		@__clickEvent = CUI.Events.listen
+			type: ["click", "dblclick"]
+			capture: true
+			node: @_element
+			only_once: true
+			call: (ev) =>
+				@stop()
+
 		@__event = CUI.Events.listen
-			type: "mousemove"
+			type: ["mousemove"]
 			node: @_node
 			instance: @
 			call: (ev) =>
@@ -62,6 +70,8 @@ class CUI.Events.MouseIsStill extends CUI.Element
 			@__timeout = null
 		if @__event
 			CUI.Events.ignore(@__event)
+			CUI.Events.ignore(@__clickEvent)
+			@__clickEvent = null
 			@__event = null
 		return
 
