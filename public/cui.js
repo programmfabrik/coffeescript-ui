@@ -30055,25 +30055,35 @@ CUI.Socket = (function(superClass) {
   };
 
   Socket.prototype.open = function() {
-    var dfr;
+    var dfr, e, reject;
     dfr = new CUI.Deferred;
-    this.__webSocket = new WebSocket(this._url);
-    this.__webSocket.onerror = (function(_this) {
-      return function(e) {
-        return dfr.reject();
-      };
-    })(this);
-    this.__webSocket.onopen = (function(_this) {
-      return function(ev) {
-        _this.__onOpen(ev);
-        return dfr.resolve();
-      };
-    })(this);
-    this.__webSocket.onclose = (function(_this) {
-      return function(ev) {
-        return _this.__onClose(ev);
-      };
-    })(this);
+    reject = function() {
+      if (dfr.state() === "pending") {
+        dfr.reject();
+      }
+    };
+    try {
+      this.__webSocket = new WebSocket(this._url);
+      this.__webSocket.onerror = (function(_this) {
+        return function(e) {
+          return reject();
+        };
+      })(this);
+      this.__webSocket.onopen = (function(_this) {
+        return function(ev) {
+          _this.__onOpen(ev);
+          return dfr.resolve();
+        };
+      })(this);
+      this.__webSocket.onclose = (function(_this) {
+        return function(ev) {
+          return _this.__onClose(ev);
+        };
+      })(this);
+    } catch (error) {
+      e = error;
+      reject();
+    }
     return dfr.promise();
   };
 
