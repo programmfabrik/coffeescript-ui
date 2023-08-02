@@ -4,7 +4,6 @@ require("leaflet/dist/leaflet.js")
 class CUI.LeafletMap extends CUI.Map
 
 	@defaults =
-		urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
 		tileLayerUrl: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 		tileLayerOptions:
 			attribution: attributionHtml
