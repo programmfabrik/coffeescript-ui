@@ -420,6 +420,19 @@
 	@include button-plain();
 
 	background-color: $input-background; // in sync with input field background
+	
+	.cui-button-visual {
+		.cui-button-center {
+			// in sync with input field padding
+			padding-left: $input-padding-x;
+			padding-right: $input-padding-x;
+		}
+
+		.cui-button-right {
+			// reduce right padding to be more like left
+			padding-right: 0.6rem;
+		}
+	}
 }
 
 // * Combobox button
