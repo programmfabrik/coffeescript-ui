@@ -105,6 +105,8 @@
 
 	> .cui-data-field {
 		min-width: 0;
+		// make data output (cui-output, cui-multi-output, cui-data-field) at least the same height as the selects in a form
+		min-height: $btn-height;
 
 		&:not(.cui-data-table) {
 			max-width: var(--form-data-max-width); // restrict data input fields so they do not run across the whole screen, especially on wide admin screens, see admin > usermanagement
