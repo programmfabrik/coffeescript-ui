@@ -49511,7 +49511,7 @@ CUI.ListView = (function(superClass) {
     if (this.__selectableRows === true) {
       deselectAllRows();
     } else if (this.__selectableRows === "multiple") {
-      if (ev != null ? ev.ctrlKey() : void 0) {
+      if ((ev != null ? ev.ctrlKey() : void 0) || (ev != null ? ev.metaKey() : void 0)) {
         selectRowChosen();
       } else if ((ev != null ? ev.shiftKey() : void 0) && this.getSelectedRows().length > 0) {
         selectedRow = this.getSelectedRows().pop();
