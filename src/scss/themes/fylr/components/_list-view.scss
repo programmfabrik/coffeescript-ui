@@ -89,7 +89,7 @@
 	width: $list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
 
-	&:not(.cui-lv-row-move-handle-column) {
+	&:not(.cui-lv-row-move-handle-column):not(.cui-lv-td-rotate-90) {
 		min-width: 40px; // make sure the shortest icon-only buttons in the default size are visible in the column
 	}
 	
