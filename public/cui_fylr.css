@@ -6335,7 +6335,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: var(--pane-background);
 }
 .cui-data-table .cui-list-view > .cui-vertical-layout-bottom > .cui-pane-footer {
-  padding: 0.5rem;
+  padding: 0.5rem !important;
 }
 
 /*
@@ -6671,8 +6671,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-tabs .cui-pane > .cui-vertical-layout-center {
   padding: 0;
 }
-.cui-tabs .cui-pane > .cui-vertical-layout-top .cui-toolbar,
-.cui-tabs .cui-pane > .cui-vertical-layout-bottom .cui-toolbar {
+.cui-tabs .cui-pane > .cui-vertical-layout-top > .cui-toolbar,
+.cui-tabs .cui-pane > .cui-vertical-layout-bottom > .cui-toolbar {
   padding-left: 0;
   padding-right: 0;
 }
