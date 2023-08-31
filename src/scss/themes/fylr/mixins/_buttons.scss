@@ -228,6 +228,13 @@
 			}
 		}
 	}
+
+	// special case when two adjoining buttons within a button group can be active, e.g. ez5-result-manager-button-options
+	&.cui-active + .cui-active.cui-layer-open {
+		.cui-button-visual {
+			border-left-color: currentColor;
+		}
+	}
 }
 
 // Reset button colors and border to a clean slate, use if: 
