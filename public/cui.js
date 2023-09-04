@@ -50969,8 +50969,6 @@ CUI.ListViewRow = (function(superClass) {
 
   ListViewRow.prototype.__selectableClass = "cui-list-view-row-selectable";
 
-  ListViewRow.prototype.__notSelectableClass = "cui-list-view-row-not-selectable";
-
   ListViewRow.prototype.__movableClass = "cui-list-view-row-movable";
 
   ListViewRow.prototype.getClass = function() {
@@ -50978,8 +50976,6 @@ CUI.ListViewRow = (function(superClass) {
     cls = this.__class;
     if (this.isSelectable()) {
       cls = this.__selectableClass + " " + cls;
-    } else {
-      cls = this.__notSelectableClass + " " + cls;
     }
     if (this.isMovable()) {
       cls = this.__movableClass + " " + cls;
