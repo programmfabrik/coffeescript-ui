@@ -6479,7 +6479,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
-  padding: 0 0 0 0.75rem;
+  padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
   --data-form-field-group-indicator-top: calc(0.25rem - 1px);
   --data-form-field-group-indicator-bottom: 1rem;
 }
