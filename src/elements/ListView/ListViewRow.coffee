@@ -130,8 +130,6 @@ class CUI.ListViewRow extends CUI.Element
 
 	__selectableClass: "cui-list-view-row-selectable"
 
-	__notSelectableClass: "cui-list-view-row-not-selectable"
-
 	__movableClass: "cui-list-view-row-movable"
 
 	# used while node is rendered
@@ -140,8 +138,6 @@ class CUI.ListViewRow extends CUI.Element
 
 		if @isSelectable()
 			cls = @__selectableClass + " " + cls
-		else
-			cls = @__notSelectableClass + " " + cls
 
 		if @isMovable()
 			cls = @__movableClass + " " + cls
