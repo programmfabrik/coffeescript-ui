@@ -368,6 +368,8 @@
 	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
 
 	.cui-button-visual {
+		align-items: center;
+		
 		.cui-button-center {
 			text-decoration: none;
 			word-break: initial;
@@ -390,6 +392,7 @@
 // Explicitely add back button border, only needed if it was removed before (e.g. via the button-link())
 @mixin button-border() {
 	--btn-border-color: currentColor;
+	--btn-border-width: #{$btn-border-width};
 
 	&:hover,
 	&:focus {
