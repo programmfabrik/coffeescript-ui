@@ -67,7 +67,7 @@
 	}
 
 	// with --flex you can set a fixed width for .cui-td--key via --tableDataKeyWidth for an individual cui-table
-	&--flex {
+	&.cui-table--flex {
 		display: inline-flex; // todo: see inline-table above
 		flex-direction: column;
 		flex: 1 0 auto;
