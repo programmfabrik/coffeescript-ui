@@ -4440,20 +4440,23 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-table .cui-td--value {
   line-height: 1.3;
 }
-.cui-table--flex {
+.cui-table > .cui-button {
+  margin: 0.5rem;
+}
+.cui-table.cui-table--flex {
   display: inline-flex;
   flex-direction: column;
   flex: 1 0 auto;
 }
-.cui-table--flex .cui-tr {
+.cui-table.cui-table--flex .cui-tr {
   display: flex;
 }
-.cui-table--flex .cui-td--key {
+.cui-table.cui-table--flex .cui-td--key {
   flex-shrink: 0;
   width: 135px;
   width: var(--tableDataKeyWidth, 135px);
 }
-.cui-table--flex .cui-td--value {
+.cui-table.cui-table--flex .cui-td--value {
   flex-grow: 1;
   width: auto;
 }
