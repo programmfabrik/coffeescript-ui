@@ -68,3 +68,22 @@
 		}
 	}
 }
+
+// turn buttons into a clickable table header
+@mixin list-view-header-button-sortable() {
+	@include button-plain();
+
+	.cui-button-visual {
+		font-weight: $font-weight-bold;
+
+		.cui-button-center {
+			padding: 0;
+		}
+		
+		.cui-button-right {
+			// reset
+			padding-right: 0;
+			margin-left: 0;
+		}
+	}
+}
