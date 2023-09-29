@@ -39689,6 +39689,17 @@ CUI.DateTime = (function(superClass) {
     return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale);
   };
 
+  DateTime.convertTimeFormatFromGoToMoment = function(goString) {
+    var i, len, map, mapping, momentString;
+    mapping = [["2006", "YYYY"], ["06", "YY"], ["January", "MMMM"], ["Jan", "MMM"], ["01", "MM"], ["15", "HH"], ["1", "M"], ["Monday", "dddd"], ["Mon", "ddd"], ["__2", "DDD"], ["002", "DDDD"], ["_2", " D"], ["02", "DD"], ["2", "D"], ["03", "hh"], ["3", "h"], ["04", "mm"], ["4", "m"], ["05", "ss"], ["5", "s"], ["PM", "A"], ["-07:00:00", "Z"], ["-0700", "ZZ"], ["-07:00", "Z"], ["-070000", "ZZ"], ["Z0700", "[Z]ZZ"], ["Z07:00", "[Z]Z"], ["-07", "Z"], ["Z070000", "[Z]ZZ"], ["Z07:00:00", "[Z]Z"], ["Z07", "[Z]Z"]];
+    momentString = goString;
+    for (i = 0, len = mapping.length; i < len; i++) {
+      map = mapping[i];
+      momentString = momentString.replace(map[0], map[1]);
+    }
+    return momentString;
+  };
+
   return DateTime;
 
 })(CUI.Input);
