@@ -45245,6 +45245,9 @@ CUI.FormPopover = (function(superClass) {
       },
       renderDisplayContent: {
         check: Function
+      },
+      onClose: {
+        check: Function
       }
     });
   };
@@ -45512,6 +45515,9 @@ CUI.FormPopover = (function(superClass) {
     this.__popover.destroy();
     this.__popover = null;
     this.__triggerDataChanged();
+    if (this._onClose) {
+      this._onClose(this);
+    }
     return this;
   };
 

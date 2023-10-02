@@ -30,6 +30,8 @@ class CUI.FormPopover extends CUI.Form
 				check: Function
 			renderDisplayContent:
 				check: Function
+			onClose:
+				check: Function
 
 	readOpts: ->
 		super()
@@ -283,6 +285,8 @@ class CUI.FormPopover extends CUI.Form
 		@__popover.destroy()
 		@__popover = null
 		@__triggerDataChanged()
+		if @_onClose
+			@_onClose(@)
 		@
 
 	# this calls the "onHide" function
