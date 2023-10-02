@@ -47470,7 +47470,9 @@ CUI.NumberInput = (function(superClass) {
       decimalpoint: {
         mandatory: true,
         "default": ".",
-        check: [",", "."]
+        check: function(v) {
+          return CUI.util.isString(v) && v.length > 0;
+        }
       },
       separator: {
         check: function(v) {
