@@ -868,7 +868,7 @@ class CUI.DateTime extends CUI.Input
 			time_title = new CUI.Label(
 				text: @__locale_format.tab_time
 				class: "cui-select-time-title"
-			)				
+			)
 
 			hour_sel = new CUI.Select(
 				name: "hour"
@@ -971,8 +971,8 @@ class CUI.DateTime extends CUI.Input
 			# ).start()
 
 		new CUI.Buttonbar(
-			buttons: [	
-				date_title			
+			buttons: [
+				date_title
 				date_sel
 				month_sel
 				year_sel
@@ -1487,3 +1487,55 @@ class CUI.DateTime extends CUI.Input
 
 	@dateRangeToString: (from, to, locale) ->
 		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale)
+
+
+	@convertTimeFormatFromGoToMoment: (goString) ->
+		# Convert a string using go Time format to a moment string format
+		# https://golang.org/pkg/time/#pkg-constants
+		# https://momentjs.com/docs/#/displaying/format/
+		# Example:
+		# 	"2006-01-02 15:04:05" -> "YYYY-MM-DD HH:mm:ss"
+
+		# The order is important here, for that reason we use an array of objects
+		# instead a single object (on single objects properties are not ordered)
+		mapping = [
+			["2006", "YYYY"],
+			["06", "YY"],
+			["January", "MMMM"],
+			["Jan", "MMM"],
+			["01", "MM"],
+			["15", "HH"],
+			["1", "M"],
+			["Monday", "dddd"],
+			["Mon", "ddd"],
+			["__2", "DDD"],
+			["002", "DDDD"],
+			["_2", " D"],
+			["02", "DD"],
+			["2", "D"],
+			["03", "hh"],
+			["3", "h"],
+			["04", "mm"],
+			["4", "m"],
+			["05", "ss"],
+			["5", "s"],
+			["PM", "A"],
+			["-07:00:00", "Z"],
+			["-0700", "ZZ"],
+			["-07:00", "Z"],
+			["-070000", "ZZ"],
+			["Z0700", "[Z]ZZ"],
+			["Z07:00", "[Z]Z"],
+			["-07", "Z"],
+			["Z070000", "[Z]ZZ"],
+			["Z07:00:00", "[Z]Z"],
+			["Z07", "[Z]Z"]
+		]
+
+		momentString = goString
+		# Get key of mapping
+
+		for map in mapping
+			momentString = momentString.replace(map[0], map[1]);
+
+		return momentString
