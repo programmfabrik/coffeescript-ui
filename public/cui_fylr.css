@@ -1,6 +1,6 @@
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./scss/themes/fylr/main.scss ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/src/index.js??ruleSet[1].rules[1].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./scss/themes/fylr/main.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 /*!
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -245,8 +245,7 @@ a {
 abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
-  -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted; /* 2 */
+  text-decoration: underline dotted; /* 2 */
 }
 
 /**
@@ -541,9 +540,7 @@ img {
 }
 
 body[data-cursor] {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 body[data-cursor=default] * {
@@ -607,6 +604,7 @@ body[data-cursor=nesw-resize] * {
 }
 
 body[data-cursor=grabbing] * {
+  cursor: -webkit-grabbing !important;
   cursor: grabbing !important;
 }
 
@@ -756,9 +754,7 @@ body {
 }
 
 .cui-disabled {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   opacity: 0.5;
   pointer-events: none;
 }
@@ -1668,8 +1664,8 @@ label[data-label-clickable],
 .cui-label[data-label-clickable] {
   cursor: pointer;
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   touch-action: manipulation;
 }
 
@@ -1871,8 +1867,7 @@ label[data-label-clickable],
   margin-bottom: 2rem;
 }
 .cui-label-manage-overflow.cui-label--has-overflow-button:not(.cui-label--show-overflow) > .cui-label-content {
-  -webkit-mask-image: linear-gradient(black calc(100% - 2rem), transparent);
-          mask-image: linear-gradient(black calc(100% - 2rem), transparent);
+  mask-image: linear-gradient(black calc(100% - 2rem), transparent);
 }
 .cui-label-manage-overflow.cui-label--measure-overflow > .cui-label-content {
   --max-lines: 8;
@@ -2102,9 +2097,7 @@ label[data-label-clickable],
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
   vertical-align: middle;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .cui-button-button .cui-button-visual .cui-button-left,
 .cui-button-button .cui-button-visual .cui-button-right,
@@ -2537,9 +2530,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 
 input,
 textarea {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   width: 100%;
   min-width: 100px;
   max-width: 100%;
@@ -2553,15 +2544,9 @@ textarea {
   resize: vertical;
   vertical-align: bottom;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color: #8b949c;
-}
 input::placeholder,
 textarea::placeholder {
   color: #8b949c;
-}
-input[placeholder^="***"]::-moz-placeholder, textarea[placeholder^="***"]::-moz-placeholder {
-  color: #212121;
 }
 input[placeholder^="***"]::placeholder,
 textarea[placeholder^="***"]::placeholder {
@@ -3192,9 +3177,7 @@ textarea {
   position: relative;
   z-index: 2;
   flex-shrink: 0;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-label {
   display: none;
@@ -3351,9 +3334,7 @@ textarea {
   min-height: 102px;
 }
 .cui-data-field.cui-data-field-disabled {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   opacity: 0.5;
   pointer-events: none;
 }
@@ -5029,8 +5010,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
-  -webkit-hyphens: auto;
-          hyphens: auto;
+  hyphens: auto;
 }
 
 .cui-form-value > .cui-options {
@@ -6207,8 +6187,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-lv-tree-node--is-branch {
   cursor: pointer;
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   touch-action: manipulation;
 }
 .cui-list-view-row-selectable:hover > .cui-lv-tr, .cui-list-view-row-selectable:focus > .cui-lv-tr,
@@ -6250,6 +6230,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: none;
 }
 .cui-list-view-row-movable .cui-lv-row-move-handle-column {
+  cursor: -webkit-grab;
   cursor: grab;
 }
 .cui-list-view-row-movable .cui-lv-row-move-handle-column .cui-drag-handle-row {
@@ -7386,9 +7367,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: auto;
   max-width: none;
   min-width: 0;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   cursor: default;
 }
 

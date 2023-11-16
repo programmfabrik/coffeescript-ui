@@ -1,6 +1,6 @@
-/*!****************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./scss/themes/ng/main.scss ***!
-  \****************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/src/index.js??ruleSet[1].rules[1].use[2]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./scss/themes/ng/main.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 /*!
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -352,8 +352,7 @@ body {
 input,
 textarea {
   -webkit-appearance: none;
-  -moz-appearance: none;
-       appearance: none;
+  appearance: none;
   width: 100%;
   min-width: 100px;
   font-size: inherit;
@@ -708,8 +707,8 @@ input[data-max-chars] {
 
 body[data-cursor] {
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body[data-cursor=default] * {
@@ -773,6 +772,7 @@ body[data-cursor=nesw-resize] * {
 }
 
 body[data-cursor=grabbing] * {
+  cursor: -webkit-grabbing !important;
   cursor: grabbing !important;
 }
 
@@ -923,8 +923,8 @@ li > div {
   z-index: 2;
   flex-shrink: 0;
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-button,
 .cui-flex-handle.cui-flex-handle-has-label:not(.cui-flex-handle-closed) .cui-label {
@@ -1774,8 +1774,8 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-data-field-disabled {
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   opacity: 0.5;
   pointer-events: none;
 }
@@ -2141,6 +2141,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   width: 12px;
   height: 10px;
   flex-grow: 0;
+  cursor: -webkit-grab;
   cursor: grab;
 }
 .cui-data-form-row > .cui-horizontal-layout-left .cui-drag-handle-row.is-hidden {
@@ -2594,15 +2595,17 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-input textarea::-moz-input-placeholder {
   color: #cfd4d9;
 }
-.cui-input input::-moz-placeholder, .cui-input textarea::-moz-placeholder {
+.cui-input input:-ms-input-placeholder,
+.cui-input textarea:-ms-input-placeholder {
+  color: #cfd4d9;
+}
+.cui-input input::-ms-input-placeholder,
+.cui-input textarea::-ms-input-placeholder {
   color: #cfd4d9;
 }
 .cui-input input::placeholder,
 .cui-input textarea::placeholder {
   color: #cfd4d9;
-}
-.cui-input input[placeholder^="***"]::-moz-placeholder, .cui-input textarea[placeholder^="***"]::-moz-placeholder {
-  color: hsl(0, 0%, 10%);
 }
 .cui-input input[placeholder^="***"]::placeholder,
 .cui-input textarea[placeholder^="***"]::placeholder {
@@ -2643,9 +2646,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-input-appearance-code textarea:focus {
   border-color: black;
   box-shadow: 0 0 0 3px var(--highlight-light), 0 1px hsla(0, 0%, 100%, 0.3) inset, 0 2px hsla(0, 0%, 100%, 0.1) inset, 0 -1px hsla(0, 0%, 100%, 0.3) inset, 0 -2px hsla(0, 0%, 100%, 0.1) inset;
-}
-.cui-input-appearance-code input::-moz-placeholder, .cui-input-appearance-code textarea::-moz-placeholder {
-  color: hsl(115, 50%, 36%);
 }
 .cui-input-appearance-code input::placeholder,
 .cui-input-appearance-code textarea::placeholder {
@@ -2967,6 +2967,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 
 .cui-layer-root.cui-layer-root-backdrop-blur > .cui-layer-backdrop {
+  -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px);
@@ -3069,8 +3070,8 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   max-width: none;
   min-width: 0;
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   cursor: default;
 }
 .cui-layer-root-toaster .cui-layer > .cui-layer-pane > .cui-vertical-layout-center {
@@ -3807,6 +3808,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 
 .cui-list-view-row-movable .cui-lv-row-move-handle-column {
+  cursor: -webkit-grab;
   cursor: grab;
 }
 .cui-list-view-row-movable .cui-lv-row-move-handle-column .cui-drag-handle-row {
@@ -4479,6 +4481,7 @@ label[data-label-clickable],
   flex-shrink: 0;
   margin-right: 2px;
   padding: 0 4px 0 0;
+  cursor: -webkit-grab;
   cursor: grab;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle .cui-drag-handle-row {
@@ -4585,6 +4588,7 @@ label[data-label-clickable],
 
 .cui-drag-drop-select-draggable,
 .cui-drag-drop-select-sortable {
+  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -5036,6 +5040,7 @@ label[data-label-clickable],
 }
 
 .cui-drag-drop-select-movable {
+  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -5469,8 +5474,8 @@ label[data-label-clickable],
 
 .cui-disabled {
   -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   opacity: 0.5;
   pointer-events: none;
 }
