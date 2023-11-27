@@ -113,17 +113,43 @@
 		}
 	}
 
-	.cui-select {
+	// see: Base Config > Plugins: "TYPO3"
+	> .cui-select {
 		.cui-button-select {
 			@include button-select-as-input();
 		}
 	}
 
 	// these elements do not have the class cui-select, so we need to apply styles here again
+	/*
+	<cui-form-field-type--select>
+		<cui-form-value>
+			<cui-select.cui-data-field-input>
+	*/
 	.cui-form-field-type--select & {
 		.cui-data-field-input {
 			@include button-select-as-input();
 		}
+	}
+
+	// this is yet another use case
+	// see Base Config > Plugins: "Tag filter dependent presets" > Select Field "Masks"
+	/*
+		<cui-form-value>
+			<cui-form>
+				...
+				<cui-form-field-type--select>
+					<cui-select.cui-data-field-input>
+	*/
+	> .cui-form .cui-form-field-type--select > .cui-select {
+		@include button-select-as-input();
+	}
+
+	// see eventmanager > Left Pane "Search" : Type (Select Field)
+	> .cui-form-popover .cui-button--has-caret {
+		width: 100%;
+		
+		@include button-select-as-input();
 	}
 }
 
