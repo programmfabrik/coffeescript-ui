@@ -258,13 +258,13 @@
 	--btn-color-active: var(--brand-foreground-text-color);
 
 	$background: $btn-primary-background;
-	$color: color-yiq($btn-primary-background);
+	$color: $btn-primary-color;
 
-	$background-hover: darken($btn-primary-background, 10%);
-	$color-hover: $color;
+	$background-hover: $btn-primary-hover-background;
+	$color-hover: $btn-primary-hover-color;
 
-	$background-active: $background-hover;
-	$color-active: $color;
+	$background-active: $btn-primary-active-background;
+	$color-active: $btn-primary-active-background;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	@include button-no-border();
@@ -272,13 +272,13 @@
 
 @mixin button-secondary() {
 	$background: $btn-secondary-background;
-	$color: color-yiq($btn-secondary-background);
+	$color: $btn-secondary-color;
 
-	$background-hover: darken($btn-secondary-background, 5%);
-	$color-hover: $color;
+	$background-hover: $btn-secondary-hover-background;
+	$color-hover: $btn-secondary-hover-color;
 
-	$background-active: $background-hover;
-	$color-active: $color;
+	$background-active: $btn-secondary-active-background;
+	$color-active: $btn-secondary-active-color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	@include button-no-border();
@@ -286,13 +286,13 @@
 
 @mixin button-danger() {
 	$background: $btn-danger-background;
-	$color: color-yiq($btn-danger-background);
+	$color: $btn-danger-color;
 
-	$background-hover: darken($btn-danger-background, 10%);
-	$color-hover: $color;
+	$background-hover: $btn-danger-hover-background;
+	$color-hover: $btn-danger-hover-color;
 
-	$background-active: $background-hover;
-	$color-active: $color;
+	$background-active: $btn-danger-active-background;
+	$color-active: $btn-danger-active-color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	@include button-no-border();

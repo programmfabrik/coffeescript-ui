@@ -311,9 +311,6 @@ $btn-font-family: 			$font-family-base !default;
 $btn-font-weight: 			$font-weight-base !default;
 $btn-box-shadow:			0 2px 3px rgba(0, 0, 0, 0.14) !default;
 $btn-background: 			transparent !default;
-$btn-primary-background: 	theme-color('primary') !default;
-$btn-secondary-background: 	gray('200') !default;
-$btn-danger-background: 	color('red') !default;
 $btn-color: 				$body-color !default;
 $btn-color-dimmed: 			theme-color('muted') !default;
 $btn-border-width: 			1px !default;
@@ -325,6 +322,30 @@ $btn-hover-background:		transparent !default;
 $btn-active-color: 			$white !default;
 $btn-active-background: 	$body-color !default;
 $btn-focus-shadow: 			$component-focus-shadow !default;
+
+// Primary Button states
+$btn-primary-background: 		theme-color('primary') !default;
+$btn-primary-color: 			color-yiq($btn-primary-background);
+$btn-primary-hover-background: 	darken($btn-primary-background, 10%);
+$btn-primary-hover-color: 		$btn-primary-color;
+$btn-primary-active-background: $btn-primary-hover-background;
+$btn-primary-active-color: 		$btn-primary-hover-color;
+
+// Secondary Button states
+$btn-secondary-background: 			gray('200') !default;
+$btn-secondary-color: 				color-yiq($btn-secondary-background);
+$btn-secondary-hover-background: 	darken($btn-secondary-background, 5%);
+$btn-secondary-hover-color: 		$btn-secondary-color;
+$btn-secondary-active-background: 	$btn-secondary-hover-background;
+$btn-secondary-active-color: 		$btn-secondary-hover-color;
+
+// Danger Button states
+$btn-danger-background: 		color('red') !default;
+$btn-danger-color: 				color-yiq($btn-danger-background);
+$btn-danger-hover-background: 	darken($btn-danger-background, 10%);
+$btn-danger-hover-color: 		$btn-danger-color;
+$btn-danger-active-background: 	$btn-danger-hover-background;
+$btn-danger-active-color: 		$btn-danger-hover-color;
 
 // Bordered Button states = Default Button
 $btn-bordered-hover-color:			inherit !default;
