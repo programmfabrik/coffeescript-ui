@@ -1,0 +1,5 @@
+@mixin disabled() {
+	user-select: none;
+	opacity: $disabled-opacity;
+	pointer-events: none;
+}

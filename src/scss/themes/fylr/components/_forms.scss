@@ -78,10 +78,13 @@
 // but we want to keep the bottom margin for example for form rows with a text input that are followed by a form row with a checkbox
 // beware: the form rows could be of any type (input | select | checkbox ...) and in any order
 // todo: this is pretty fragile, we should really put checkboxes that belong together into a fieldset or group so we can style them separately from the form rows
-// e.g. put them closer together (closer than form rows which contain more independent form fields) or indent the hint ($checkbox-form-hint-indent)
+// e.g. put them closer together (closer than form rows which contain more independent form fields)
+// make sure checkboxes that wrap onto a new line have enough space inbetween them vs. their line-height
+
+// Examples: search > Table Options ("Repeat data for each row")
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox, 					// see admin > usermanagement > system-rights
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
-	margin-top: -$form-cell-gap;
+	margin-top: -0.5*$form-cell-gap;
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
@@ -111,23 +114,53 @@
 
 	> .cui-data-field {
 		min-width: 0;
+		// make data output (cui-output, cui-multi-output, cui-data-field) at least the same height as the selects in a form
+		min-height: $btn-height;
 
 		&:not(.cui-data-table) {
 			max-width: var(--form-data-max-width); // restrict data input fields so they do not run across the whole screen, especially on wide admin screens, see admin > usermanagement
 		}
 	}
 
-	.cui-select {
+	// see: Base Config > Plugins: "TYPO3"
+	> .cui-select {
 		.cui-button-select {
 			@include button-select-as-input();
 		}
 	}
 
 	// these elements do not have the class cui-select, so we need to apply styles here again
+
+	/*
+	<cui-form-field-type--select>
+		<cui-form-value>
+			<cui-select.cui-data-field-input>
+	*/
 	.cui-form-field-type--select & {
 		.cui-data-field-input {
 			@include button-select-as-input();
 		}
+	}
+
+	// this is yet another use case
+	// see Base Config > Plugins: "Tag filter dependent presets" > Select Field "Masks"
+
+	/*
+		<cui-form-value>
+			<cui-form>
+				...
+				<cui-form-field-type--select>
+					<cui-select.cui-data-field-input>
+	*/
+	> .cui-form .cui-form-field-type--select > .cui-select {
+		@include button-select-as-input();
+	}
+
+	// see eventmanager > Left Pane "Search" : Type (Select Field)
+	> .cui-form-popover .cui-button--has-caret {
+		width: 100%;
+		
+		@include button-select-as-input();
 	}
 }
 

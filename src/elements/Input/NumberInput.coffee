@@ -32,7 +32,8 @@ class CUI.NumberInput extends CUI.Input
 			decimalpoint:
 				mandatory: true
 				default: "."
-				check: [",","."]
+				check: (v) ->
+					CUI.util.isString(v) and v.length > 0
 
 			separator:
 				check: (v) ->

@@ -10,7 +10,8 @@
 	
 	// add overflow to item-list, so the layer-border applied to cui-menu will be fixed
 	> .cui-item-list {
-		overflow: auto;
+		overflow-x: hidden;
+		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 

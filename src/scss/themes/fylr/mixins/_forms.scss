@@ -36,7 +36,7 @@
 	&:has(+ .cui-checkbox) {
 		margin-top: 0;
 		// indentation is 0 atm because it only really makes sense visually within a group of checkboxes that all have a hint, e.g. objecttype > PDFCreator
-		margin-left: $checkbox-form-hint-indent; 
+		margin-left: $checkbox-form-hint-indent;
 	}
 }
 
@@ -182,7 +182,7 @@
 
 @mixin data-form-field-group-indicator() {
 	position: relative;
-	padding: 0 0 0 0.75rem;
+	padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
 	
 	&::before {
 		content: '';

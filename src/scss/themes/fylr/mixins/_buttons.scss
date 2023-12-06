@@ -228,6 +228,13 @@
 			}
 		}
 	}
+
+	// special case when two adjoining buttons within a button group can be active, e.g. ez5-result-manager-button-options
+	&.cui-active + .cui-active.cui-layer-open {
+		.cui-button-visual {
+			border-left-color: currentColor;
+		}
+	}
 }
 
 // Reset button colors and border to a clean slate, use if: 
@@ -251,13 +258,13 @@
 	--btn-color-active: var(--brand-foreground-text-color);
 
 	$background: $btn-primary-background;
-	$color: color-yiq($btn-primary-background);
+	$color: $btn-primary-color;
 
-	$background-hover: darken($btn-primary-background, 10%);
-	$color-hover: $color;
+	$background-hover: $btn-primary-hover-background;
+	$color-hover: $btn-primary-hover-color;
 
-	$background-active: $background-hover;
-	$color-active: $color;
+	$background-active: $btn-primary-active-background;
+	$color-active: $btn-primary-active-background;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	@include button-no-border();
@@ -265,13 +272,13 @@
 
 @mixin button-secondary() {
 	$background: $btn-secondary-background;
-	$color: color-yiq($btn-secondary-background);
+	$color: $btn-secondary-color;
 
-	$background-hover: darken($btn-secondary-background, 5%);
-	$color-hover: $color;
+	$background-hover: $btn-secondary-hover-background;
+	$color-hover: $btn-secondary-hover-color;
 
-	$background-active: $background-hover;
-	$color-active: $color;
+	$background-active: $btn-secondary-active-background;
+	$color-active: $btn-secondary-active-color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	@include button-no-border();
@@ -279,13 +286,13 @@
 
 @mixin button-danger() {
 	$background: $btn-danger-background;
-	$color: color-yiq($btn-danger-background);
+	$color: $btn-danger-color;
 
-	$background-hover: darken($btn-danger-background, 10%);
-	$color-hover: $color;
+	$background-hover: $btn-danger-hover-background;
+	$color-hover: $btn-danger-hover-color;
 
-	$background-active: $background-hover;
-	$color-active: $color;
+	$background-active: $btn-danger-active-background;
+	$color-active: $btn-danger-active-color;
 
 	@include button-color($background, $color, $background-hover, $color-hover, $background-active, $color-active);
 	@include button-no-border();
@@ -361,6 +368,8 @@
 	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
 
 	.cui-button-visual {
+		align-items: center;
+		
 		.cui-button-center {
 			text-decoration: none;
 			word-break: initial;
@@ -383,6 +392,7 @@
 // Explicitely add back button border, only needed if it was removed before (e.g. via the button-link())
 @mixin button-border() {
 	--btn-border-color: currentColor;
+	--btn-border-width: #{$btn-border-width};
 
 	&:hover,
 	&:focus {
@@ -420,6 +430,19 @@
 	@include button-plain();
 
 	background-color: $input-background; // in sync with input field background
+	
+	.cui-button-visual {
+		.cui-button-center {
+			// in sync with input field padding
+			padding-left: $input-padding-x;
+			padding-right: $input-padding-x;
+		}
+
+		.cui-button-right {
+			// reduce right padding to be more like left
+			padding-right: 0.6rem;
+		}
+	}
 }
 
 // * Combobox button
@@ -515,4 +538,8 @@
 		text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
 		margin-left: 3px;
 	}
+}
+
+@mixin button-disabled() {
+	@include disabled();
 }

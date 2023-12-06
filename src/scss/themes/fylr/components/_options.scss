@@ -5,6 +5,8 @@
 	max-width: none;
 
 	.cui-button-checkbox {
+		word-break: break-word;
+
 		@include checkbox-sm();
 
 		[data-max-chars] {
@@ -45,8 +47,14 @@
 
 @for $i from 2 to 13 {
 	.cui-options--columns-#{$i} {
-		.cui-checkbox {
-			width: calc(100% / $i) !important; // have to overwrite the cui-layer data-field auto width rule
+		> .cui-options-center {
+			columns: #{$i};
+			column-gap: $spacer;
+			
+			.cui-checkbox {
+				width: 100% !important; // have to overwrite the cui-layer data-field auto width rule
+				margin-right: 0 !important;
+			}
 		}
 	}
 }

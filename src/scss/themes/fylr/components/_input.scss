@@ -18,6 +18,11 @@ textarea {
 		color: $input-placeholder-color;
 	}
 
+	// Password input placeholder should be regular body color
+	&[placeholder^='***']::placeholder {
+		color: $body-color;
+	}
+
 	&:focus {
 		@include input-focus();
 	}
