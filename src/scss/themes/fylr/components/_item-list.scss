@@ -21,9 +21,14 @@
 			box-shadow: none;
 
 			// make sure the buttons could wrap onto new line
+			// todo: get use case			
 			height: auto;
 			min-height: $item-list-height;
 			line-height: $line-height-sm;
+
+			.cui-select-menu & {
+				padding: 0.4rem 0; // see: events > select for "Object Types"
+			}
 			
 			span {
 				white-space: normal;
