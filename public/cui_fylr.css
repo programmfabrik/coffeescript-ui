@@ -2239,7 +2239,7 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:active .c
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
+  color: var(--btn-color-active, #f03800);
   background-color: var(--btn-background-active, #f03800);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active:focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open:focus .cui-button-visual,
@@ -2247,7 +2247,7 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-activ
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active:focus .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open:hover .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open:focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
+  color: var(--btn-color-active, #f03800);
   background-color: var(--btn-background-active, #f03800);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active + .cui-active.cui-layer-open .cui-button-visual,
@@ -3700,6 +3700,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
+.cui-form-block--has-checkbox .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint {
+  order: 0;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.cui-form-block--has-checkbox .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint:has(+ .cui-checkbox) {
+  margin-bottom: 0;
+  margin-left: 0;
+}
 
 .cui-wait-block {
   position: absolute;
@@ -4167,6 +4176,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-height: 30px;
   line-height: 1.3;
 }
+.cui-select-menu .cui-item-list-body .cui-button .cui-button-visual,
+.cui-select-menu .cui-item-list-body .cui-button-href .cui-button-visual {
+  padding: 0.4rem 0;
+}
 .cui-item-list-body .cui-button .cui-button-visual span,
 .cui-item-list-body .cui-button-href .cui-button-visual span {
   white-space: normal;
@@ -4243,6 +4256,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   max-width: none;
 }
 .cui-options .cui-button-checkbox {
+  word-break: break-word;
   min-height: 24px;
   line-height: 24px;
 }
@@ -4268,8 +4282,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-options-order-hint {
   opacity: var(--label-secondary-opacity, 0.65);
-  margin-top: 0.25rem;
+  font-size: 13px;
+  line-height: 1.2;
   max-width: 250px;
+  padding: 0 !important;
   margin: 0.5rem 22px 1rem;
 }
 
@@ -4280,48 +4296,103 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-height: 0;
 }
 
-.cui-options--columns-2 .cui-checkbox {
-  width: 50% !important;
+.cui-options--columns-2 > .cui-options-center {
+  columns: 2;
+  column-gap: 1rem;
+}
+.cui-options--columns-2 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-3 .cui-checkbox {
-  width: 33.3333333333% !important;
+.cui-options--columns-3 > .cui-options-center {
+  columns: 3;
+  column-gap: 1rem;
+}
+.cui-options--columns-3 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-4 .cui-checkbox {
-  width: 25% !important;
+.cui-options--columns-4 > .cui-options-center {
+  columns: 4;
+  column-gap: 1rem;
+}
+.cui-options--columns-4 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-5 .cui-checkbox {
-  width: 20% !important;
+.cui-options--columns-5 > .cui-options-center {
+  columns: 5;
+  column-gap: 1rem;
+}
+.cui-options--columns-5 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-6 .cui-checkbox {
-  width: 16.6666666667% !important;
+.cui-options--columns-6 > .cui-options-center {
+  columns: 6;
+  column-gap: 1rem;
+}
+.cui-options--columns-6 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-7 .cui-checkbox {
-  width: 14.2857142857% !important;
+.cui-options--columns-7 > .cui-options-center {
+  columns: 7;
+  column-gap: 1rem;
+}
+.cui-options--columns-7 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-8 .cui-checkbox {
-  width: 12.5% !important;
+.cui-options--columns-8 > .cui-options-center {
+  columns: 8;
+  column-gap: 1rem;
+}
+.cui-options--columns-8 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-9 .cui-checkbox {
-  width: 11.1111111111% !important;
+.cui-options--columns-9 > .cui-options-center {
+  columns: 9;
+  column-gap: 1rem;
+}
+.cui-options--columns-9 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-10 .cui-checkbox {
-  width: 10% !important;
+.cui-options--columns-10 > .cui-options-center {
+  columns: 10;
+  column-gap: 1rem;
+}
+.cui-options--columns-10 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-11 .cui-checkbox {
-  width: 9.0909090909% !important;
+.cui-options--columns-11 > .cui-options-center {
+  columns: 11;
+  column-gap: 1rem;
+}
+.cui-options--columns-11 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
-.cui-options--columns-12 .cui-checkbox {
-  width: 8.3333333333% !important;
+.cui-options--columns-12 > .cui-options-center {
+  columns: 12;
+  column-gap: 1rem;
+}
+.cui-options--columns-12 > .cui-options-center .cui-checkbox {
+  width: 100% !important;
+  margin-right: 0 !important;
 }
 
 .cui-options--horizontal .cui-options-center .cui-checkbox {
@@ -4972,6 +5043,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   .cui-form .cui-form-value .cui-list-view {
     --form-key-padding-top: 0;
   }
+  .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint {
+    order: 1;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint:has(+ .cui-checkbox) {
+    margin-top: 0;
+    margin-left: 0;
+  }
 }
 
 /*
@@ -4995,6 +5075,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-tr-header {
   margin-bottom: 1rem;
 }
+.cui-form-tr:not(:last-child):has(.cui-panel),
+.cui-form-tr-header:not(:last-child):has(.cui-panel) {
+  margin-bottom: 0;
+}
 
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox,
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox {
@@ -5013,6 +5097,22 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   hyphens: auto;
 }
 
+.cui-form-value {
+  display: flex;
+  flex-direction: column;
+  /*
+  <cui-form-field-type--select>
+  	<cui-form-value>
+  		<cui-select.cui-data-field-input>
+  */
+  /*
+  	<cui-form-value>
+  		<cui-form>
+  			...
+  			<cui-form-field-type--select>
+  				<cui-select.cui-data-field-input>
+  */
+}
 .cui-form-value > .cui-options {
   margin-bottom: 0.5rem;
 }
@@ -5026,56 +5126,56 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-value > .cui-data-field:not(.cui-data-table) {
   max-width: var(--form-data-max-width);
 }
-.cui-form-value .cui-select .cui-button-select {
+.cui-form-value > .cui-select .cui-button-select {
   --btn-border-color: transparent;
   --btn-border-width: 0;
   background-color: #ffffff;
 }
-.cui-form-value .cui-select .cui-button-select:hover, .cui-form-value .cui-select .cui-button-select:focus {
+.cui-form-value > .cui-select .cui-button-select:hover, .cui-form-value > .cui-select .cui-button-select:focus {
   --btn-border-color: transparent;
 }
-.cui-form-value .cui-select .cui-button-select .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select .cui-button-visual {
   background-color: var(--btn-background, transparent);
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-form-value .cui-select .cui-button-select:hover .cui-button-visual, .cui-form-value .cui-select .cui-button-select:focus .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select:focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-form-value .cui-select .cui-button-select:focus {
+.cui-form-value > .cui-select .cui-button-select:focus {
   outline: none;
 }
-.cui-form-value .cui-select .cui-button-select:focus .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-form-value .cui-select .cui-button-select:active .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
-.cui-form-value .cui-select .cui-button-select.cui-active .cui-button-visual, .cui-form-value .cui-select .cui-button-select.cui-layer-open .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select.cui-active .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-form-value .cui-select .cui-button-select.cui-active:hover .cui-button-visual, .cui-form-value .cui-select .cui-button-select.cui-active:focus .cui-button-visual, .cui-form-value .cui-select .cui-button-select.cui-layer-open:hover .cui-button-visual, .cui-form-value .cui-select .cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select.cui-active:hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-active:focus .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-form-value .cui-select .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-form-value .cui-select .cui-button-select:active .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
-.cui-form-value .cui-select .cui-button-select .cui-button-visual .cui-button-center {
+.cui-form-value > .cui-select .cui-button-select .cui-button-visual .cui-button-center {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
-.cui-form-value .cui-select .cui-button-select .cui-button-visual .cui-button-right {
+.cui-form-value > .cui-select .cui-button-select .cui-button-visual .cui-button-right {
   padding-right: 0.6rem;
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input {
@@ -5128,6 +5228,111 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-right: 0.5rem;
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input .cui-button-visual .cui-button-right {
+  padding-right: 0.6rem;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select {
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  background-color: #ffffff;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:hover, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus {
+  --btn-border-color: transparent;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus {
+  outline: none;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:focus .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual .cui-button-center {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual .cui-button-right {
+  padding-right: 0.6rem;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret {
+  width: 100%;
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  background-color: #ffffff;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret:hover, .cui-form-value > .cui-form-popover .cui-button--has-caret:focus {
+  --btn-border-color: transparent;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret:hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret:focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret:focus {
+  outline: none;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret:focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret:active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:focus .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret:active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual .cui-button-center {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual .cui-button-right {
   padding-right: 0.6rem;
 }
 
@@ -5194,6 +5399,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-tr .cui-form-row:last-child {
   margin-bottom: 0;
 }
+.cui-form-row:not(:last-child):has(.cui-panel) {
+  margin-bottom: 0;
+}
 .cui-form-container.cui-form--horizontal > .cui-form-row {
   flex: 0 0 auto;
   min-width: 0;
@@ -5205,6 +5413,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-form-container.cui-form--horizontal > .cui-form-row.cui-maximize-horizontal {
   flex-grow: 1;
 }
+.cui-form-row > .cui-form-hint {
+  order: 1;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.cui-form-row > .cui-form-hint:has(+ .cui-checkbox) {
+  margin-top: 0;
+  margin-left: 0;
+}
 
 .cui-form-field-type--checkbox + .cui-form-row .cui-form-container.cui-form--horizontal > .cui-form-row:first-child {
   margin-right: 0;
@@ -5215,15 +5432,44 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-input-invalid-hint,
 .cui-input-valid-hint,
 .cui-input-empty-hint {
-  opacity: var(--label-secondary-opacity, 0.65);
-  margin-top: 0.25rem;
+  order: 0;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.cui-hint:has(+ .cui-checkbox),
+.cui-form-hint:has(+ .cui-checkbox),
+.cui-input-invalid-hint:has(+ .cui-checkbox),
+.cui-input-valid-hint:has(+ .cui-checkbox),
+.cui-input-empty-hint:has(+ .cui-checkbox) {
+  margin-bottom: 0;
+  margin-left: 0;
+}
+.cui-form-tr--has-no-key > .cui-form-value > .cui-hint,
+.cui-form-tr--has-no-key > .cui-form-value > .cui-form-hint,
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-invalid-hint,
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-valid-hint,
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-empty-hint {
+  order: 1;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.cui-form-tr--has-no-key > .cui-form-value > .cui-hint:has(+ .cui-checkbox),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-form-hint:has(+ .cui-checkbox),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-invalid-hint:has(+ .cui-checkbox),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-valid-hint:has(+ .cui-checkbox),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-empty-hint:has(+ .cui-checkbox) {
+  margin-top: 0;
+  margin-left: 0;
 }
 .cui-hint .cui-label,
 .cui-form-hint .cui-label,
 .cui-input-invalid-hint .cui-label,
 .cui-input-valid-hint .cui-label,
 .cui-input-empty-hint .cui-label {
-  padding-top: 0;
+  opacity: var(--label-secondary-opacity, 0.65);
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 0 !important;
 }
 .cui-hint .cui-button,
 .cui-form-hint .cui-button,
@@ -5995,14 +6241,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   box-sizing: border-box;
 }
 .cui-lv-td-rotate-90 {
-  width: 12px;
+  width: 18px;
 }
 .cui-lv-td-rotate-90 .cui-tree-node-spacer {
   display: none;
 }
 .cui-lv-td-rotate-90 > .cui-label-rotate-90 {
   word-wrap: break-word;
-  margin-left: -3px;
+  margin-left: 0;
   max-width: none !important;
 }
 .cui-lv-td-rotate-90 .cui-data-field {

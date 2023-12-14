@@ -358,8 +358,8 @@ class CUI.SimpleForm extends CUI.DataField
 					level: level
 					header: left_side
 					content: [
-						get_append(field)
 						hint_div
+						get_append(field)
 					]
 
 				if cb
@@ -431,8 +431,8 @@ class CUI.SimpleForm extends CUI.DataField
 				tr.appendChild(td)
 
 				td = CUI.dom.element("DIV", class: "cui-form-td cui-form-value")
-				append(get_append(field), td)
 				append(hint_div, td)
+				append(get_append(field), td)
 				tr.appendChild(td)
 
 				# used to set row visibility
@@ -459,9 +459,9 @@ class CUI.SimpleForm extends CUI.DataField
 							classes.push("cui-maximize-vertical")
 
 				row = CUI.dom.element("DIV", class: "cui-form-row "+classes.join(" "), "data-for-field": field.getUniqueId())
+				append(hint_div, row)
 				row.appendChild(get_append(field))
 				append(get_append(field), row)
-				append(hint_div, row)
 
 				# used to set row visibility
 				CUI.dom.data(row, "data-field", field)
