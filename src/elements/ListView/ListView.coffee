@@ -514,7 +514,7 @@ class CUI.ListView extends CUI.SimplePane
 			deselectAllRows()
 		else if @__selectableRows == "multiple"
 			# If CTRL key is pressed, then It is allowed to select more rows.
-			if ev?.ctrlKey()
+			if ev?.ctrlKey() or ev?.metaKey()
 				selectRowChosen()
 			# If Shift key is pressed then all next or previous rows are selected.
 			else if ev?.shiftKey() and @getSelectedRows().length > 0

@@ -2671,7 +2671,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-form-hint {
 	max-width: $input-width;
-	margin-top: 5px;
+	margin-bottom: 5px;
 	
 	.cui-checkbox + &,
 	.cui-data-field.cui-maximize-horizontal + & {
@@ -2679,11 +2679,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-data-form + & {
-		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 
 	.cui-checkbox + & {
-		margin-top: 0;
+		margin-bottom: 0;
 	}
 
 	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
@@ -4593,7 +4593,7 @@ $layer-sizes: (
 		}
 
 		.cui-form-td {
-			display: block;
+			display: block; // block will disable the change of order applied to the regular side-by-side form, see .cui-form-tr
 
 			@include xs {
 				&.cui-form-key {
@@ -4617,6 +4617,10 @@ $layer-sizes: (
 		.cui-form-value {
 			width: auto;
 			padding-top: 0;
+		}
+
+		.cui-form-hint {
+			margin-top: -3px;
 		}
 	}
 }
@@ -4711,10 +4715,32 @@ $layer-sizes: (
 
 .cui-form-tr,
 .cui-form-tr-header {
-	display: flex;
+	display: flex; // display side-by-side
 
+	// change order for hints for values that have no key
+	&.cui-form-tr--has-no-key .cui-form-hint {
+		order: 1;
+		margin-top: 5px;
+	}
+
+	// < 767
 	@include phone {
-		display: block;
+		display: block;		
+		margin-bottom: 15px;
+
+		.cui-form-td {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+	}
+
+	// >= 768
+	// change order
+	@media screen and (min-width: 768px) {
+		&.cui-form-tr--has-key .cui-form-hint {
+			order: 1;
+			margin-top: 5px;
+		}
 	}
 }
 
@@ -4797,6 +4823,8 @@ label[data-label-clickable],
 }
 
 .cui-form-value {
+	display: flex;
+	flex-direction: column;
 	flex-grow: 1;
 	flex-shrink: 1;
 	min-width: 0;

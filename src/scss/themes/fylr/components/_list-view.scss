@@ -89,7 +89,7 @@
 	width: $list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
 
-	&:not(.cui-lv-row-move-handle-column) {
+	&:not(.cui-lv-row-move-handle-column):not(.cui-lv-td-rotate-90) {
 		min-width: 40px; // make sure the shortest icon-only buttons in the default size are visible in the column
 	}
 	
@@ -108,8 +108,10 @@
 		box-sizing: border-box; // ???
 	}
 
+	// .cui-lv-td-rotate-90
+	// see datamodel > definition
 	&-rotate-90 {
-		width: 12px;
+		width: 18px;
 
 		.cui-tree-node-spacer {
 			display: none;
@@ -117,7 +119,7 @@
 
 		> .cui-label-rotate-90 {
 			word-wrap: break-word;
-			margin-left: -3px;
+			margin-left: 0;
 			max-width: none !important;
 		}
 

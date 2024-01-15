@@ -1,7 +1,43 @@
 @mixin form-hint() {
-	@include label-secondary();
-	
-	margin-top: $spacer-xs;
+	@include form-hint-before();
+
+	// if row has no key, move hint AFTER value
+	.cui-form-tr--has-no-key > .cui-form-value > & {
+		@include form-hint-after();
+	}
+}
+
+// * default = before the input (and after the key)
+// hint will be rendered in the DOM before the input/value by default
+@mixin form-hint-before() {
+	order: 0;
+	margin-top: 0;
+	margin-bottom: $form-hint-margin-bottom;
+	// color: green; // todo test
+
+	// if hint is rendered before a checkbox we reset margin and indent to 0
+	&:has(+ .cui-checkbox) {
+		margin-bottom: 0;
+		margin-left: 0; // reset $checkbox-form-hint-indent
+	}
+}
+
+// * alternative = after the input
+// hint is moved after the input in these scenarios: 
+// - a form field does not have a key
+// - the key-value pairs are rendered "inline" via form-key-value-inline(), for example in the base config on large screens
+@mixin form-hint-after() {
+	order: 1;
+	margin-top: $form-hint-margin-bottom;
+	margin-bottom: 0;
+	// color: red; // todo test
+
+	// if hint is rendered after a checkbox we reset margin to 0 and indent the hint
+	&:has(+ .cui-checkbox) {
+		margin-top: 0;
+		// indentation is 0 atm because it only really makes sense visually within a group of checkboxes that all have a hint, e.g. objecttype > PDFCreator
+		margin-left: $checkbox-form-hint-indent;
+	}
 }
 
 @mixin input-sm() {
@@ -58,6 +94,10 @@
 				--form-key-padding-top: 0;
 			}
 		}
+
+		.cui-form-tr--has-key > .cui-form-value > .cui-form-hint {
+			@include form-hint-after();
+		}
 	}
 }
 
@@ -88,6 +128,10 @@
 				padding-bottom: $form-key-padding-bottom;
 			}
 		}
+	}
+
+	.cui-form-tr--has-key > .cui-form-value > .cui-form-hint {
+		@include form-hint-before();
 	}
 }
 
@@ -138,7 +182,7 @@
 
 @mixin data-form-field-group-indicator() {
 	position: relative;
-	padding: 0 0 0 0.75rem;
+	padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
 	
 	&::before {
 		content: '';
