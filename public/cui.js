@@ -39689,6 +39689,17 @@ CUI.DateTime = (function(superClass) {
     return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale);
   };
 
+  DateTime.convertTimeFormatFromGoToMoment = function(goString) {
+    var i, len, map, mapping, momentString;
+    mapping = [["2006", "YYYY"], ["06", "YY"], ["January", "MMMM"], ["Jan", "MMM"], ["01", "MM"], ["15", "HH"], ["1", "M"], ["Monday", "dddd"], ["Mon", "ddd"], ["__2", "DDD"], ["002", "DDDD"], ["_2", " D"], ["02", "DD"], ["2", "D"], ["03", "hh"], ["3", "h"], ["04", "mm"], ["4", "m"], ["05", "ss"], ["5", "s"], ["PM", "A"], ["-07:00:00", "Z"], ["-0700", "ZZ"], ["-07:00", "Z"], ["-070000", "ZZ"], ["Z0700", "[Z]ZZ"], ["Z07:00", "[Z]Z"], ["-07", "Z"], ["Z070000", "[Z]ZZ"], ["Z07:00:00", "[Z]Z"], ["Z07", "[Z]Z"]];
+    momentString = goString;
+    for (i = 0, len = mapping.length; i < len; i++) {
+      map = mapping[i];
+      momentString = momentString.replace(map[0], map[1]);
+    }
+    return momentString;
+  };
+
   return DateTime;
 
 })(CUI.Input);
@@ -44523,7 +44534,7 @@ CUI.SimpleForm = (function(superClass) {
             "class": "cui-form-block",
             level: level,
             header: left_side,
-            content: [get_append(field), hint_div]
+            content: [hint_div, get_append(field)]
           });
           if (cb) {
             CUI.dom.addClass(blk.DOM, "cui-form-block--has-checkbox");
@@ -44596,8 +44607,8 @@ CUI.SimpleForm = (function(superClass) {
           td = CUI.dom.element("DIV", {
             "class": "cui-form-td cui-form-value"
           });
-          append(get_append(field), td);
           append(hint_div, td);
+          append(get_append(field), td);
           tr.appendChild(td);
           CUI.dom.data(tr, "data-field", field);
           _this.__setRowVisibility(tr);
@@ -44622,9 +44633,9 @@ CUI.SimpleForm = (function(superClass) {
             "class": "cui-form-row " + classes.join(" "),
             "data-for-field": field.getUniqueId()
           });
+          append(hint_div, row);
           row.appendChild(get_append(field));
           append(get_append(field), row);
-          append(hint_div, row);
           CUI.dom.data(row, "data-field", field);
           _this.__setRowVisibility(row);
           if (grid) {
@@ -45234,6 +45245,9 @@ CUI.FormPopover = (function(superClass) {
       },
       renderDisplayContent: {
         check: Function
+      },
+      onClose: {
+        check: Function
       }
     });
   };
@@ -45501,6 +45515,9 @@ CUI.FormPopover = (function(superClass) {
     this.__popover.destroy();
     this.__popover = null;
     this.__triggerDataChanged();
+    if (this._onClose) {
+      this._onClose(this);
+    }
     return this;
   };
 
@@ -47459,7 +47476,9 @@ CUI.NumberInput = (function(superClass) {
       decimalpoint: {
         mandatory: true,
         "default": ".",
-        check: [",", "."]
+        check: function(v) {
+          return CUI.util.isString(v) && v.length > 0;
+        }
       },
       separator: {
         check: function(v) {
@@ -49511,7 +49530,7 @@ CUI.ListView = (function(superClass) {
     if (this.__selectableRows === true) {
       deselectAllRows();
     } else if (this.__selectableRows === "multiple") {
-      if (ev != null ? ev.ctrlKey() : void 0) {
+      if ((ev != null ? ev.ctrlKey() : void 0) || (ev != null ? ev.metaKey() : void 0)) {
         selectRowChosen();
       } else if ((ev != null ? ev.shiftKey() : void 0) && this.getSelectedRows().length > 0) {
         selectedRow = this.getSelectedRows().pop();
