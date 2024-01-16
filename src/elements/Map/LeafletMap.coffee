@@ -1,5 +1,7 @@
 attributionHtml = require('./leaflet.attribution.html')
 require("leaflet/dist/leaflet.js")
+# add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
+require("leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.js");
 
 class CUI.LeafletMap extends CUI.Map
 
