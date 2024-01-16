@@ -77,6 +77,30 @@ module.exports = function (env, argv) {
             ],
         },
         devtool: (!isProduction ? 'source-map' : undefined),
+        resolve: {
+			alias: {
+				"./images/layers.png$": path.resolve(
+					__dirname,
+					"./node_modules/leaflet/dist/images/layers.png"
+				),
+				"./images/layers-2x.png$": path.resolve(
+					__dirname,
+					"./node_modules/leaflet/dist/images/layers-2x.png"
+				),
+				"./images/marker-icon.png$": path.resolve(
+					__dirname,
+					"./node_modules/leaflet/dist/images/marker-icon.png"
+				),
+				"./images/marker-icon-2x.png$": path.resolve(
+					__dirname,
+					"./node_modules/leaflet/dist/images/marker-icon-2x.png"
+				),
+				"./images/marker-shadow.png$": path.resolve(
+					__dirname,
+					"./node_modules/leaflet/dist/images/marker-shadow.png"
+				)
+			},
+		},        
         module: {
             rules: [
                 {
@@ -105,6 +129,11 @@ module.exports = function (env, argv) {
                             options: {
                               implementation: require('sass'),
                               sourceMap: true,
+                              sassOptions: {
+                                includePaths: [
+                                  require('path').resolve(__dirname, 'node_modules')
+                                ]
+                              }
                             },
                         },
                     ]

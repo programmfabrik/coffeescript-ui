@@ -70,12 +70,12 @@
 @import 'components/_popover'; // extends modal and layer
 @import 'components/_tooltip'; // extends layerPane and layer
 @import 'components/_developer-menu'; // extends layerPane and layer
+// not used atm
+// @import 'components/_map'; // not used atm
 
 
 // 3.) "organisms" -
 // specific screens or 'pages'
 
-
-// not used atm
-@import 'components/_map'; // not used atm
-@import '../../thirdparty/leaflet.css';
+// 4.) Third Party Components loaded from node_modules
+@import 'leaflet/dist/leaflet'; // without .css extension!
