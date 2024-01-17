@@ -80,4 +80,4 @@
 // 4.) Third Party Components loaded from node_modules
 @import 'leaflet/dist/leaflet'; // without .css extension!
 // add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
-@import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack'; // without .css extension
+@import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension

@@ -76,31 +76,7 @@ module.exports = function (env, argv) {
                 }),
             ],
         },
-        devtool: (!isProduction ? 'source-map' : undefined),
-        resolve: {
-			alias: {
-				"./images/layers.png$": path.resolve(
-					__dirname,
-					"./node_modules/leaflet/dist/images/layers.png"
-				),
-				"./images/layers-2x.png$": path.resolve(
-					__dirname,
-					"./node_modules/leaflet/dist/images/layers-2x.png"
-				),
-				"./images/marker-icon.png$": path.resolve(
-					__dirname,
-					"./node_modules/leaflet/dist/images/marker-icon.png"
-				),
-				"./images/marker-icon-2x.png$": path.resolve(
-					__dirname,
-					"./node_modules/leaflet/dist/images/marker-icon-2x.png"
-				),
-				"./images/marker-shadow.png$": path.resolve(
-					__dirname,
-					"./node_modules/leaflet/dist/images/marker-shadow.png"
-				)
-			},
-		},        
+        devtool: (!isProduction ? 'source-map' : undefined),     
         module: {
             rules: [
                 {
@@ -125,15 +101,18 @@ module.exports = function (env, argv) {
                             }
                         },
                         {
+                            // resolve fully relative paths in SCSS, especially when importing CSS from node_modules (leaflet)
+                            loader: 'resolve-url-loader',
+                            options: {
+                                sourceMap: true,
+                                // debug: true
+                            }
+                        },                        
+                        {
                             loader: 'sass-loader',
                             options: {
                               implementation: require('sass'),
-                              sourceMap: true,
-                              sassOptions: {
-                                includePaths: [
-                                  require('path').resolve(__dirname, 'node_modules')
-                                ]
-                              }
+                              sourceMap: true
                             },
                         },
                     ]
