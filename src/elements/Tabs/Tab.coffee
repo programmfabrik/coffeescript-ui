@@ -47,6 +47,7 @@ class CUI.Tab extends CUI.DOMElement
 			size: "normal"
 			group: "tabs"
 			text: @_text
+			icon: @_icon
 			attr:
 				tab: @_name
 			active: false
@@ -107,6 +108,10 @@ class CUI.Tab extends CUI.DOMElement
 					CUI.util.isContent(v)
 			load_on_show:
 				check: Boolean
+			icon:
+				mandatory: false
+				check: (v) ->
+					CUI.util.isString(v) or v instanceof CUI.Icon or v == null
 
 
 	loadContent: ->
