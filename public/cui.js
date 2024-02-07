@@ -60078,6 +60078,7 @@ CUI.Tab = (function(superClass) {
       size: "normal",
       group: "tabs",
       text: this._text,
+      icon: this._icon,
       attr: {
         tab: this._name
       },
@@ -60168,6 +60169,12 @@ CUI.Tab = (function(superClass) {
       },
       load_on_show: {
         check: Boolean
+      },
+      icon: {
+        mandatory: false,
+        check: function(v) {
+          return CUI.util.isString(v) || v instanceof CUI.Icon || v === null;
+        }
       }
     });
   };
