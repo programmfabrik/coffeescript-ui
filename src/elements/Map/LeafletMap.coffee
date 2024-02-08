@@ -1,11 +1,10 @@
 attributionHtml = require('./leaflet.attribution.html')
 require("leaflet/dist/leaflet.js")
-# add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
-require("leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.js");
 
 class CUI.LeafletMap extends CUI.Map
 
 	@defaults =
+		urlCss: "https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
 		tileLayerUrl: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 		tileLayerOptions:
 			attribution: attributionHtml

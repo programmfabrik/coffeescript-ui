@@ -70,14 +70,11 @@
 @import 'components/_popover'; // extends modal and layer
 @import 'components/_tooltip'; // extends layerPane and layer
 @import 'components/_developer-menu'; // extends layerPane and layer
-// not used atm
-// @import 'components/_map'; // not used atm
 
 
 // 3.) "organisms" -
 // specific screens or 'pages'
 
-// 4.) Third Party Components loaded from node_modules
-@import 'leaflet/dist/leaflet'; // without .css extension!
-// add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
-@import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
+
+// not used atm
+@import 'components/_map'; // not used atm
