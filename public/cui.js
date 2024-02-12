@@ -47746,6 +47746,9 @@ CUI.NumberInput = (function(superClass) {
 
   NumberInput.prototype.preventInvalidInput = function() {
     var ref, ref1, ref2, ref3, ref4, shadowValue;
+    if (this.__min && this.__min > 9) {
+      return false;
+    }
     if (this._json_number) {
       shadowValue = (ref = this.__shadow) != null ? (ref1 = ref.value) != null ? (ref2 = ref1.trim()) != null ? ref2.replace(/,/g, ".") : void 0 : void 0 : void 0;
       if (shadowValue === "-") {
