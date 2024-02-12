@@ -255,6 +255,9 @@ class CUI.NumberInput extends CUI.Input
 		return true
 
 	preventInvalidInput: ->
+		if @__min and @__min > 9
+			return false
+
 		if @_json_number
 			# Json Number require a dynamic value for preventInvalidInput for partial json Numbers.
 
