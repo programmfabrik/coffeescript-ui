@@ -7,6 +7,12 @@
 
 @use "sass:math";
 
+// Third Party Components loaded from thirdparty
+@import '../../thirdparty/leaflet/dist/leaflet'; // without .css extension!
+// add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
+@import '../../thirdparty/leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
+
+
 @import '../../icons/_svg-dimensions.scss';
 
 html {

@@ -3,15 +3,15 @@
   "version": "1.7.1",
   "description": "Coffeescript User Interface System",
   "scripts": {
-    "build": "npm run rmdist && npm run svg && webpack --progress --env development=true",
-    "build:production": "npm run rmdist && npm run svg && webpack --progress --env production=true",
+    "build": "npm run rmdist && npm run gulp && webpack --progress --env development=true",
+    "build:production": "npm run rmdist && npm run gulp && webpack --progress --env production=true",
     "build:watch": "npm run rmdist && webpack --watch --progress",
-    "build:all": "npm run rmdist && npm run svg && webpack --progress --env development=true --env all=true && webpack --progress --env production=true --env all=true",
+    "build:all": "npm run rmdist && npm run gulp && webpack --progress --env development=true --env all=true && webpack --progress --env production=true --env all=true",
     "build:min": "npm run build:production",
     "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "jest",
     "rmdist": "rimraf public/*",
-    "svg": "gulp svgstore"
+    "gulp": "gulp svgstore thirdparty"
   },
   "repository": {
     "type": "git",
