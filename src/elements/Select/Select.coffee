@@ -30,6 +30,8 @@ class CUI.Select extends CUI.Checkbox
 				check: Function
 			menu_class:
 				check: String
+			onScrollToBottom:
+				check: Function
 
 
 	init: ->
@@ -186,7 +188,18 @@ class CUI.Select extends CUI.Checkbox
 					# in case we have updated options
 					# we need to adjust the active idx
 					@__displayValue()
+					@__configureScrollCallback()
 			has_items: true
+
+	__configureScrollCallback: ->
+		if @_onScrollToBottom
+			listScroll = @getButton().getMenu().getItemList().DOM
+			CUI.Events.listen
+				type: "scroll"
+				node: listScroll
+				call: (ev) =>
+					if listScroll.scrollTop - listScroll.scrollHeight + listScroll.clientHeight > -20
+						@_onScrollToBottom?.apply(@, arguments)
 
 	getDefaultValue: ->
 		# console.debug "getDefaultValue", @__uniqueId, @default_opt
@@ -284,6 +297,10 @@ class CUI.Select extends CUI.Checkbox
 
 	getOptions: ->
 		@__options
+
+	reloadMenu: (keepScroll=false) ->
+		@getButton().getMenu().reload(keepScroll)
+
 
 	@newSelectOrOutput: (opts) ->
 		if opts.options.length == 1
