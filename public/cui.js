@@ -55278,7 +55278,15 @@ CUI.Menu = (function(superClass) {
     if (this.isShown()) {
       this.__itemList.render(this, this.__event).done((function(_this) {
         return function() {
-          return _this.position();
+          _this.position();
+          if (_this.__updateScroll) {
+            _this.__itemList.DOM.scrollTop = _this.__updateScroll;
+          }
+          if (_this.__waitBlock) {
+            _this.__waitBlock.hide();
+            _this.__waitBlock = null;
+            return delete _this.__updateScroll;
+          }
         };
       })(this));
     }
@@ -55295,6 +55303,17 @@ CUI.Menu = (function(superClass) {
       ref.destroy();
     }
     return Menu.__super__.destroy.call(this);
+  };
+
+  Menu.prototype.reload = function(keepScroll) {
+    this.__waitBlock = new CUI.WaitBlock({
+      element: this.DOM
+    });
+    if (keepScroll) {
+      this.__updateScroll = this.getItemList().DOM.scrollTop;
+    }
+    this.setItemList(this._itemList);
+    return this.__waitBlock.show();
   };
 
   Menu.prototype.hideAll = function(ev) {
@@ -58950,6 +58969,9 @@ CUI.Select = (function(superClass) {
       },
       menu_class: {
         check: String
+      },
+      onScrollToBottom: {
+        check: Function
       }
     });
   };
@@ -59156,13 +59178,33 @@ CUI.Select = (function(superClass) {
         items: (function(_this) {
           return function(event) {
             return _this.__loadOptions(event).done(function() {
-              return _this.__displayValue();
+              _this.__displayValue();
+              return _this.__configureScrollCallback();
             });
           };
         })(this),
         has_items: true
       }
     };
+  };
+
+  Select.prototype.__configureScrollCallback = function() {
+    var listScroll;
+    if (this._onScrollToBottom) {
+      listScroll = this.getButton().getMenu().getItemList().DOM;
+      return CUI.Events.listen({
+        type: "scroll",
+        node: listScroll,
+        call: (function(_this) {
+          return function(ev) {
+            var ref;
+            if (listScroll.scrollTop - listScroll.scrollHeight + listScroll.clientHeight > -20) {
+              return (ref = _this._onScrollToBottom) != null ? ref.apply(_this, arguments) : void 0;
+            }
+          };
+        })(this)
+      });
+    }
   };
 
   Select.prototype.getDefaultValue = function() {
@@ -59279,6 +59321,13 @@ CUI.Select = (function(superClass) {
 
   Select.prototype.getOptions = function() {
     return this.__options;
+  };
+
+  Select.prototype.reloadMenu = function(keepScroll) {
+    if (keepScroll == null) {
+      keepScroll = false;
+    }
+    return this.getButton().getMenu().reload(keepScroll);
   };
 
   Select.newSelectOrOutput = function(opts) {

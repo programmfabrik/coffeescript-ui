@@ -3029,9 +3029,6 @@ textarea {
 .cui-button-checkbox .cui-button-center:empty {
   display: none;
 }
-.cui-form-tr--has-no-key .cui-button-checkbox .cui-button-center, .cui-form-row .cui-button-checkbox .cui-button-center {
-  font-weight: 700;
-}
 .cui-button-checkbox[role=radio] .cui-button-left span,
 .cui-button-checkbox[role=radio] .cui-button-left i {
   border-radius: 100%;
