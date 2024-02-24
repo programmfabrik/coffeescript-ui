@@ -55898,7 +55898,8 @@ CUI.MultiInput = (function(superClass) {
       node: this.__multiInputDiv,
       call: (function(_this) {
         return function(_, info) {
-          if (!CUI.util.isUndef(info.user_selectable)) {
+          var base;
+          if (!CUI.util.isUndef(info.user_selectable) && !(typeof (base = _this._control).forceUserSelectable === "function" ? base.forceUserSelectable() : void 0)) {
             _this.__user_selectable = info.user_selectable;
           }
           _this.__setUserSelectedData();
