@@ -185,7 +185,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			type: "multi-input-control-update"
 			node: @__multiInputDiv
 			call: (_, info) =>
-				if not CUI.util.isUndef(info.user_selectable)
+				if not CUI.util.isUndef(info.user_selectable) and not @_control.forceUserSelectable?()
 					@__user_selectable = info.user_selectable
 				@__setUserSelectedData()
 				@setInputVisibility()
