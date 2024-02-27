@@ -92,9 +92,12 @@
 @mixin label-empty() {
 	color: theme-color('muted');
 
-	.cui-selected &,
-	.cui-list-view-row-selectable:hover & {
-		color: gray('100'); // e.g. Datamodel when adding a new object type or mask in the left column
+	.cui-selected & {
+		color: gray('100'); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column
+	}
+	
+	.cui-list-view-row-selectable:not(.cui-selected):hover & {
+		color: gray('800'); // e.g. Datamodel when adding a new object type or mask in the left column
 	}
 }
 
