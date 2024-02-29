@@ -3564,7 +3564,7 @@ textarea {
   --block-separator-width: 1px;
   --block-separator-margin: 1rem;
 }
-.cui-block:not(:last-child) {
+.cui-block:not(:last-child):not(:has(+ .cui-form-table)) {
   padding-bottom: var(--block-separator-margin);
   border-bottom: var(--block-separator-width) solid rgba(206, 212, 218, 0.5);
 }
