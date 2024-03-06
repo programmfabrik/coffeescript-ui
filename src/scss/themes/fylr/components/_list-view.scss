@@ -24,9 +24,9 @@
 	// selected
 	--list-view-selected-row-border-width: 0;
 	--list-view-selected-row-border-color: transparent;
-	--list-view-selected-row-background: var(--brand-color, #{$list-view-selected-row-background});
+	--list-view-selected-row-background: var(--brand-color-selected, #{$list-view-selected-row-background});
 	// hover
-	--list-view-hover-row-background: var(--brand-color, #{$list-view-hover-row-background});
+	--list-view-hover-row-background: var(--brand-color-selected, #{$list-view-hover-row-background});
 
 
 	min-height: 0;

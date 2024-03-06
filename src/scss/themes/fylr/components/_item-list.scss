@@ -40,8 +40,9 @@
 		&:active,
 		&:hover {
 			.cui-button-visual {
-				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
-				background: var(--brand-color, #{$item-list-hover-background});
+				color: var(--brand-color-selected-foreground, #{$item-list-hover-color});
+				background: var(--brand-color-selected, #{$item-list-hover-background});
+
 			}
 		}
 
@@ -57,8 +58,8 @@
 
 		&.cui-active:hover {
 			.cui-button-visual {
-				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
-				background: var(--brand-color, #{$item-list-hover-background});
+				color: var(--brand-color-selected-foreground, #{$item-list-hover-color});
+				background: var(--brand-color-selected, #{$item-list-hover-background});
 			}
 		}
 

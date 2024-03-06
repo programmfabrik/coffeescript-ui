@@ -1,8 +1,4 @@
 :root {
-	// ! don't specify brand colors as CSS colors, so we can use the fallback in var(--brand-color, FALLBACK)
-	// --brand-color: #{theme-color('primary')};
-	// --brand-color-hover: #{darken(theme-color('primary'), 10%)};
-
 	// Custom variable values only support SassScript inside `#{}`.
 	@each $color, $value in $colors {
 		--#{$color}: #{$value};
@@ -43,4 +39,10 @@
 	// spacing
 	--pane-padding: #{$pane-padding};
 	--toolbar-padding: #{$toolbar-padding};
+
+	// ! don't specify brand colors as CSS colors, so we can use the fallback in var(--brand-color, FALLBACK)
+	// --brand-color: #{theme-color('primary')};
+	// --brand-color-hover: #{darken(theme-color('primary'), 10%)};
+	// --brand-color-selected: will be set via JS, is always a lighter version of brand-color	
+	--brand-color-selected-foreground: var(--body-color);
 }
