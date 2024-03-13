@@ -1784,8 +1784,13 @@ label[data-label-clickable],
   cursor: default;
   color: #8b949c;
 }
-.cui-selected .cui-empty-label, .cui-list-view-row-selectable:hover .cui-empty-label {
-  color: #f5f5f5;
+.cui-selected .cui-empty-label {
+  color: var(--brand-foreground-text-color, #ffffff);
+  opacity: 0.8;
+}
+.cui-list-view-row-selectable:not(.cui-selected):hover .cui-empty-label {
+  color: #212121;
+  opacity: 0.8;
 }
 .cui-empty-label .cui-label-content {
   display: inline-block;
@@ -3564,7 +3569,7 @@ textarea {
   --block-separator-width: 1px;
   --block-separator-margin: 1rem;
 }
-.cui-block:not(:last-child) {
+.cui-block:not(:last-child):not(:has(+ .cui-form-table)) {
   padding-bottom: var(--block-separator-margin);
   border-bottom: var(--block-separator-width) solid rgba(206, 212, 218, 0.5);
 }
