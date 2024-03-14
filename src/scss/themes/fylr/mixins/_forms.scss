@@ -13,7 +13,6 @@
 	order: 0;
 	margin-top: 0;
 	margin-bottom: $form-hint-margin-bottom;
-	// color: green; // todo test
 
 	// if hint is rendered before a checkbox we reset margin and indent to 0
 	&:has(+ .cui-checkbox) {
@@ -30,7 +29,6 @@
 	order: 1;
 	margin-top: $form-hint-margin-bottom;
 	margin-bottom: 0;
-	// color: red; // todo test
 
 	// if hint is rendered after a checkbox we reset margin to 0 and indent the hint
 	&:has(+ .cui-checkbox) {

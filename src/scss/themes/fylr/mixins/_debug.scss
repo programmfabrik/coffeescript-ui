@@ -31,30 +31,3 @@ body.dev.is-server2 {
 		z-index: 100;
 	}
 }
-
-// for debuggin only
-// todo: remove
-.test-switcher {
-	display: none;
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 4px;
-	z-index: 100;
-
-	.ez5-app-user-manager & {
-		display: block;
-	}
-
-	.ez5-modebar:not(.is-hidden) + & {
-		top: -30px;
-	}
-
-	button {
-		background-color: lightgrey;
-		border: 1px solid black;
-		border-radius: 4px;
-		margin-right: 10px;
-		padding: 0 4px;
-	}
-}
