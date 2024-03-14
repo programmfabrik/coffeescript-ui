@@ -595,6 +595,7 @@ $layer-pointer-container-size: 	16px !default;
 $layer-pointer-background:	$layer-background !default;
 $layer-padding-x: 			$component-padding-lg !default;
 $layer-padding-y: 			$component-padding-lg !default;
+$layer-z-index:				2; // must be at least 2 to hide the app logo in the header (see .ez-config-logo in app-header.scss)
 
 // * Menu
 // * ==========================================

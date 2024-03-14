@@ -98,10 +98,13 @@
 	width: $flex-handle-size;
 	margin: 0;
 
-	@include flex-handle-row();
+	&:hover {
+		@include flex-handle-row();
 
-	.cui-pane & {
-		@include flex-handle-row($pane-background);
+		.cui-pane & {
+			// @include flex-handle-row($pane-background);
+			@include flex-handle-row($red);
+		}
 	}
 
 	&:not(.cui-flex-handle-closed) {
@@ -141,10 +144,12 @@
 	margin: 0;
 	width: 100%;
 
-	@include flex-handle-column();
-
-	.cui-pane & {
-		@include flex-handle-column($pane-background);
+	&:hover {
+		@include flex-handle-column();
+	
+		.cui-pane & {
+			@include flex-handle-column($pane-background);
+		}
 	}
 
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {

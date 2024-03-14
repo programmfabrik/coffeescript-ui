@@ -1784,8 +1784,13 @@ label[data-label-clickable],
   cursor: default;
   color: #8b949c;
 }
-.cui-selected .cui-empty-label, .cui-list-view-row-selectable:hover .cui-empty-label {
-  color: #f5f5f5;
+.cui-selected .cui-empty-label {
+  color: var(--brand-foreground-text-color, #ffffff);
+  opacity: 0.8;
+}
+.cui-list-view-row-selectable:not(.cui-selected):hover .cui-empty-label {
+  color: #212121;
+  opacity: 0.8;
 }
 .cui-empty-label .cui-label-content {
   display: inline-block;
@@ -3029,9 +3034,6 @@ textarea {
 .cui-button-checkbox .cui-button-center:empty {
   display: none;
 }
-.cui-form-tr--has-no-key .cui-button-checkbox .cui-button-center, .cui-form-row .cui-button-checkbox .cui-button-center {
-  font-weight: 700;
-}
 .cui-button-checkbox[role=radio] .cui-button-left span,
 .cui-button-checkbox[role=radio] .cui-button-left i {
   border-radius: 100%;
@@ -3194,7 +3196,7 @@ textarea {
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 .cui-pane .cui-flex-handle-row:hover {
-  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #dc3545 1px, #dc3545 2px, #dc3545 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #dc3545, #dc3545), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 5px 0, 5px 0, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -3567,7 +3569,7 @@ textarea {
   --block-separator-width: 1px;
   --block-separator-margin: 1rem;
 }
-.cui-block:not(:last-child) {
+.cui-block:not(:last-child):not(:has(+ .cui-form-table)) {
   padding-bottom: var(--block-separator-margin);
   border-bottom: var(--block-separator-width) solid rgba(206, 212, 218, 0.5);
 }
@@ -3963,10 +3965,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-size: 0.75rem;
 }
 .cui-console .cui-label-multiline {
-  margin: 0.25rem 0;
+  margin: 0.25rem 0 !important;
 }
 .cui-console .cui-label:not(:last-child) {
   border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.25rem;
 }
 
 .css-swatch {
@@ -5112,9 +5115,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   			<cui-form-field-type--select>
   				<cui-select.cui-data-field-input>
   */
-}
-.cui-form-value > .cui-options {
-  margin-bottom: 0.5rem;
 }
 .cui-form-value > .cui-options .cui-options-center {
   min-height: 0;

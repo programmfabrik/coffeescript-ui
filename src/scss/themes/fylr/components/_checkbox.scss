@@ -96,11 +96,6 @@
 		&:empty {
 			display: none;
 		}
-
-		.cui-form-tr--has-no-key &,
-		.cui-form-row & {
-			font-weight: $font-weight-bold; // ? todo: not sure this is a good idea, it doesn't always work to an advantage, see .export-manager-modal, system rights
-		}
 	}
 
 	&[role='radio'] {

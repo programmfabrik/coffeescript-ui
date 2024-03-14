@@ -5,10 +5,11 @@
 	font-size: $font-size-sm;
 
 	.cui-label-multiline {
-		margin: $spacer-xs 0;
+		margin: $spacer-xs 0 !important;
 	}
 
 	.cui-label:not(:last-child) {
 		border-bottom: 1px solid gray('300');
+		padding-bottom: $spacer-xs;
 	}
 }
