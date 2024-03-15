@@ -46,6 +46,10 @@ class CUI.MultiInput extends CUI.DataFieldInput
 		super()
 		@__inputs = null
 		@__userSelectedData = {}
+		# if control implements getUserSelectable method we can get the user selectable state from a callback
+		if @_control and @_control.getUserSelectable
+			@_user_selectable = @_control.getUserSelectable()
+
 		@__user_selectable = @_user_selectable
 
 	disable: ->
@@ -132,6 +136,8 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			CUI.dom.append(@__multiInputDiv, inp.DOM)
 			if (@_control.isEnabled(inp.getName()) and not @__user_selectable) or (@__userSelectedData[inp.getName()] and @__user_selectable)
 				inp.show()
+				if @__user_selectable and inp._controlButton
+					inp._controlButton.enable()
 				ok = true
 			else
 				inp.hide()
@@ -262,6 +268,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 					element: button
 
 				input.append(button, "right")
+				input._controlButton = button
 
 				CUI.Events.listen
 					type: "data-changed"
