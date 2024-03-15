@@ -55691,6 +55691,9 @@ CUI.MultiInput = (function(superClass) {
     MultiInput.__super__.readOpts.call(this);
     this.__inputs = null;
     this.__userSelectedData = {};
+    if (this._control && this._control.getUserSelectable) {
+      this._user_selectable = this._control.getUserSelectable();
+    }
     return this.__user_selectable = this._user_selectable;
   };
 
@@ -55819,6 +55822,9 @@ CUI.MultiInput = (function(superClass) {
       CUI.dom.append(this.__multiInputDiv, inp.DOM);
       if ((this._control.isEnabled(inp.getName()) && !this.__user_selectable) || (this.__userSelectedData[inp.getName()] && this.__user_selectable)) {
         inp.show();
+        if (this.__user_selectable && inp._controlButton) {
+          inp._controlButton.enable();
+        }
         ok = true;
       } else {
         inp.hide();
@@ -55969,6 +55975,7 @@ CUI.MultiInput = (function(superClass) {
           element: button
         });
         input.append(button, "right");
+        input._controlButton = button;
         return CUI.Events.listen({
           type: "data-changed",
           node: input,
