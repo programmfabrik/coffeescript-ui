@@ -67,6 +67,10 @@
 	.cui-button-href {
 		height: $btn-height; // keep alignment in the row
 	}
+
+	&.use-css-grid-layout {
+		@include list-view-use-css-grid-layout();
+	}
 }
 
 // * Body
@@ -337,6 +341,10 @@
 	// .cui-lv-td {
 	// 	justify-content: flex-end;
 	// }
+
+	.is-scrolling-vertically & {
+		box-shadow: $list-view-scrolling-box-shadow;
+	}
 }
 
 .cui-list-view-grid-inner-bottom {
