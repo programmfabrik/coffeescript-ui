@@ -80,7 +80,7 @@
 					top: 0;
 					background-color: var(--pane-background);
 					box-shadow: var(--box-shadow-vertical, none);
-					z-index: 1;
+					z-index: 1; // todo: make this a little higher so we have some room for other z-index styles (e.g. .cui-search-selector-input-icon)
 				}
                 
 				&.is-scrolling-vertically {
