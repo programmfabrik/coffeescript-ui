@@ -49038,6 +49038,13 @@ CUI.ListView = (function(superClass) {
         return _this.__doLayout();
       };
     })(this);
+    if (this._useCSSGridLayout) {
+      this.__useCSSGridLayout = true;
+      this.addClass("use-css-grid-layout");
+      CUI.dom.setStyle(this, {
+        "--grid-column-count": this.__cols.length
+      }, "");
+    }
     return this.addClass("cui-list-view");
   };
 
@@ -49072,6 +49079,9 @@ CUI.ListView = (function(superClass) {
         check: Boolean
       },
       colResize: {
+        check: Boolean
+      },
+      useCSSGridLayout: {
         check: Boolean
       },
       selectableRows: {
@@ -49146,6 +49156,10 @@ CUI.ListView = (function(superClass) {
 
   ListView.prototype.hasResizableColumns = function() {
     return this.__colResize;
+  };
+
+  ListView.prototype.hasCSSGridLayout = function() {
+    return this.__useCSSGridLayout;
   };
 
   ListView.prototype.hasMovableRows = function() {
@@ -49273,14 +49287,47 @@ CUI.ListView = (function(superClass) {
     on_scroll = (function(_this) {
       return function() {
         _this.__syncScrolling();
-        return typeof _this._onScroll === "function" ? _this._onScroll() : void 0;
+        if (typeof _this._onScroll === "function") {
+          _this._onScroll();
+        }
+        if (_this.quadrant[3].scrollTop > 0) {
+          CUI.dom.addClass(_this.grid, "is-scrolling-vertically");
+        } else {
+          CUI.dom.removeClass(_this.grid, "is-scrolling-vertically");
+        }
+        if (_this.quadrant[3].scrollLeft > 0) {
+          return CUI.dom.addClass(_this.grid, "is-scrolling-horizontally");
+        } else {
+          return CUI.dom.removeClass(_this.grid, "is-scrolling-horizontally");
+        }
       };
     })(this);
-    CUI.Events.listen({
-      node: this.quadrant[3],
-      type: "scroll",
-      call: on_scroll
-    });
+    if (this.__useCSSGridLayout) {
+      CUI.Events.listen({
+        node: this.grid,
+        type: "scroll",
+        call: (function(_this) {
+          return function(ev) {
+            if (_this.grid.scrollTop > 0) {
+              CUI.dom.addClass(_this.grid, "is-scrolling-vertically");
+            } else {
+              CUI.dom.removeClass(_this.grid, "is-scrolling-vertically");
+            }
+            if (_this.grid.scrollLeft > 0) {
+              return CUI.dom.addClass(_this.grid, "is-scrolling-horizontally");
+            } else {
+              return CUI.dom.removeClass(_this.grid, "is-scrolling-horizontally");
+            }
+          };
+        })(this)
+      });
+    } else {
+      CUI.Events.listen({
+        node: this.quadrant[3],
+        type: "scroll",
+        call: on_scroll
+      });
+    }
     this.__currentScroll = {
       top: 0,
       left: 0
@@ -50000,10 +50047,12 @@ CUI.ListView = (function(superClass) {
           width = width + this.__colWidths[parseInt(col_i) + i];
         }
         dim = CUI.dom.getDimensions(cell);
-        if (dim.computedStyle.boxSizing === "border-box") {
-          cell.style.setProperty("width", width + "px", "important");
-        } else {
-          cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal) + "px", "important");
+        if (!this.__useCSSGridLayout) {
+          if (dim.computedStyle.boxSizing === "border-box") {
+            cell.style.setProperty("width", width + "px", "important");
+          } else {
+            cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal) + "px", "important");
+          }
         }
       }
     }
@@ -50728,6 +50777,11 @@ CUI.ListViewHeaderColumn = (function(superClass) {
     }
     this.addClass("cui-lv-th");
     listView = this.getRow().getListView();
+    if (listView.hasCSSGridLayout() && this._colspan) {
+      CUI.dom.setStyle(this.__element, {
+        "--colspan": this._colspan
+      }, "");
+    }
     if (!listView.hasResizableColumns()) {
       return this.__element;
     }
