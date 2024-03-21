@@ -43348,10 +43348,15 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.uploadFile = function(file) {
+    var ref, url;
+    url = this.getUrl();
+    if ((ref = file._file) != null ? ref.hasOwnProperty("upload_url") : void 0) {
+      url = file._file.upload_url;
+    }
     if (this._add_filename_to_url) {
-      return file.upload(this.getUrl() + file.getName(), this._name);
+      return file.upload(url + file.getName(), this._name);
     } else {
-      return file.upload(this.getUrl(), this._name);
+      return file.upload(url, this._name);
     }
   };
 
