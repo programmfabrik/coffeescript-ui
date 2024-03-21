@@ -287,10 +287,13 @@ class CUI.FileUpload extends CUI.Element
 		@
 
 	uploadFile: (file) ->
+		url = @getUrl()
+		if file._file?.hasOwnProperty("upload_url")
+			url = file._file.upload_url
 		if @_add_filename_to_url
-			file.upload(@getUrl()+file.getName(), @_name)
+			file.upload(url+file.getName(), @_name)
 		else
-			file.upload(@getUrl(), @_name)
+			file.upload(url, @_name)
 
 	checkBatchDone: (file) ->
 		alarm = false
