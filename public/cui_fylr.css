@@ -6213,6 +6213,80 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-list-view .cui-button-href {
   height: 30px;
 }
+@supports (grid-template-columns: subgrid) {
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: var(--grid-template-column-first, max-content) repeat(calc(var(--grid-column-count) - 2), var(--grid-template-column-middle, minmax(auto, max-content))) var(--grid-template-column-last, 1fr);
+    grid-template-rows: auto;
+    overflow: auto;
+    align-content: start;
+    flex-grow: 0;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom {
+    grid-column: 1/-1;
+    display: grid;
+    grid: inherit;
+    grid-template-columns: subgrid;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td:not(.cui-lv-td-rotate-90),
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td:not(.cui-lv-td-rotate-90),
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td:not(.cui-lv-td-rotate-90),
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td:not(.cui-lv-td-rotate-90) {
+    width: auto;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td.cui-lv-td-rotate-90:last-child,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td.cui-lv-td-rotate-90:last-child,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td.cui-lv-td-rotate-90:last-child,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td.cui-lv-td-rotate-90:last-child {
+    width: auto;
+    min-width: 16px;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td:last-child .cui-lv-col-resize-handle,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td:last-child .cui-lv-col-resize-handle,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td:last-child .cui-lv-col-resize-handle,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td:last-child .cui-lv-col-resize-handle {
+    display: none;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column .cui-drag-handle-row,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column .cui-drag-handle-row,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column .cui-drag-handle-row,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column .cui-drag-handle-row {
+    width: 14px;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr {
+    grid-column: 1/-1;
+    display: grid;
+    grid: inherit;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-top .list-view-header-row > .cui-lv-tr > .cui-lv-th[colspan] {
+    grid-column: span var(--colspan);
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid .cui-list-view-grid-quadrant-0,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid .cui-list-view-grid-quadrant-1,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid .cui-list-view-grid-quadrant-2,
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid .cui-list-view-grid-quadrant-3 {
+    overflow: visible;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid.cui-list-view-grid-has-fixed-rows > .cui-list-view-grid-inner-top {
+    position: sticky;
+    top: 0;
+    background-color: var(--pane-background);
+    box-shadow: var(--box-shadow-vertical, none);
+    z-index: 1;
+  }
+  .cui-list-view.use-css-grid-layout > .cui-vertical-layout-center > .cui-list-view-grid.cui-list-view-grid-has-fixed-rows.is-scrolling-vertically {
+    --box-shadow-vertical: 0 1px 5px 0 rgba(0, 0, 0, 0.11);
+  }
+}
 
 .cui-lv-tbody {
   display: flex;
@@ -6402,6 +6476,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: flex;
   background-color: var(--list-view-header-background);
   color: var(--list-view-header-color);
+}
+.is-scrolling-vertically .cui-list-view-grid-inner-top {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.11);
 }
 
 .cui-list-view-grid-inner-bottom {
