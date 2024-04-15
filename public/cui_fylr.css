@@ -2727,6 +2727,12 @@ textarea {
   display: flex;
   align-items: center;
 }
+.cui-multi-input-tag-button .cui-button-visual .cui-button-left .fa-angle-down {
+  line-height: 1;
+}
+.cui-multi-input-tag-button .cui-button-visual .cui-button-left .fa-angle-down::before {
+  top: 0;
+}
 .cui-multi-input-tag-button.cui-layer-open .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button.cui-active .cui-button-visual, .cui-multi-input-tag-button.cui-active:hover .cui-button-visual {
   background-color: #212121;
   color: #ffffff;
@@ -2750,6 +2756,12 @@ textarea {
   font-size: 0.75rem;
   line-height: 1;
   padding: 0 0.25rem;
+}
+.cui-multi-input-tag-button .cui-button-visual .cui-button-center .fa-angle-down {
+  line-height: 1;
+}
+.cui-multi-input-tag-button .cui-button-visual .cui-button-center .fa-angle-down::before {
+  top: 0;
 }
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-input input,
@@ -3461,6 +3473,12 @@ textarea {
   display: flex;
   align-items: center;
 }
+.cui-data-field-left .cui-button-button .cui-button-visual .cui-button-left .fa-angle-down {
+  line-height: 1;
+}
+.cui-data-field-left .cui-button-button .cui-button-visual .cui-button-left .fa-angle-down::before {
+  top: 0;
+}
 .cui-data-field-left .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active:hover .cui-button-visual {
   background-color: #212121;
   color: #ffffff;
@@ -3540,6 +3558,12 @@ textarea {
   min-height: 28px;
   display: flex;
   align-items: center;
+}
+.cui-data-field-right .cui-button-button .cui-button-visual .cui-button-left .fa-angle-down {
+  line-height: 1;
+}
+.cui-data-field-right .cui-button-button .cui-button-visual .cui-button-left .fa-angle-down::before {
+  top: 0;
 }
 .cui-data-field-right .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active:hover .cui-button-visual {
   background-color: #212121;
