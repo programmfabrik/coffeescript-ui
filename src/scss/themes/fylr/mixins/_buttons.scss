@@ -520,6 +520,14 @@
 	min-height: $btn-height - 2px;
 	display: flex;
 	align-items: center;
+
+	.fa-angle-down {
+		line-height: 1;
+
+		&::before {
+			top: 0;
+		}
+	}
 }
 
 
