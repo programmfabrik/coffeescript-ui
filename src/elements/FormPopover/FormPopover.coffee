@@ -205,7 +205,10 @@ class CUI.FormPopover extends CUI.Form
 
 		if CUI.util.isEmpty(pop_opts.class)
 			pop_opts.class = ""
-		pop_opts.class += " cui-form-popover-popover"
+		pop_opts.class += " cui-form-popover-popover"	
+
+		if @__class
+			pop_opts.class += " " + @__class + "-popover"
 		# console.debug "getPopoverOpts", pop_opts
 		pop_opts
 
