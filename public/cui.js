@@ -45436,6 +45436,9 @@ CUI.FormPopover = (function(superClass) {
       pop_opts["class"] = "";
     }
     pop_opts["class"] += " cui-form-popover-popover";
+    if (this.__class) {
+      pop_opts["class"] += " " + this.__class + "-popover";
+    }
     return pop_opts;
   };
 
