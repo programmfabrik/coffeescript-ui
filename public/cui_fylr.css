@@ -756,7 +756,7 @@ body {
 .cui-disabled {
   user-select: none;
   opacity: 0.5;
-  pointer-events: none;
+  pointer-events: var(--pointer-events-when-disabled, none);
 }
 
 @keyframes nodeInserted {
@@ -1897,19 +1897,19 @@ label[data-label-clickable],
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual {
+.cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button:focus {
+.cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual {
+.cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button:active .cui-button-visual {
+.cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -1918,14 +1918,14 @@ label[data-label-clickable],
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:focus .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:focus .cui-button-visual {
+.cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button:hover, .cui-label-manage-overflow .cui-label-manage-overflow-button:focus {
+.cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):hover, .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
@@ -1946,7 +1946,7 @@ label[data-label-clickable],
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
 }
-.cui-label-manage-overflow .cui-label-manage-overflow-button:hover .cui-button-visual .cui-button-center, .cui-label-manage-overflow .cui-label-manage-overflow-button:focus .cui-button-visual .cui-button-center {
+.cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center {
   text-decoration: none;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
@@ -2162,24 +2162,24 @@ label[data-label-clickable],
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-button-button:hover .cui-button-visual, .cui-button-button:focus .cui-button-visual,
-.cui-button-select:hover .cui-button-visual,
-.cui-button-select:focus .cui-button-visual {
+.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
+.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, inherit);
   background-color: var(--btn-background-hover, rgba(230, 233, 236, 0.65));
 }
-.cui-button-button:focus,
-.cui-button-select:focus {
+.cui-button-button:not(.cui-disabled):focus,
+.cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-button-button:focus .cui-button-visual,
-.cui-button-select:focus .cui-button-visual {
+.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-button-button:active .cui-button-visual,
-.cui-button-select:active .cui-button-visual {
+.cui-button-button:not(.cui-disabled):active .cui-button-visual,
+.cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, inherit);
   background-color: var(--btn-background-hover, rgba(230, 233, 236, 0.65));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2190,11 +2190,11 @@ label[data-label-clickable],
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-button-button.cui-active:hover .cui-button-visual, .cui-button-button.cui-active:focus .cui-button-visual, .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-button-select.cui-active:hover .cui-button-visual,
-.cui-button-select.cui-active:focus .cui-button-visual,
-.cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
@@ -2219,24 +2219,24 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary .cui-butt
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #ffffff);
   background-color: var(--btn-background-hover, #f03800);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:focus,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:focus {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):focus,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):focus {
   outline: none;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:active .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:active .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):active .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #ffffff);
   background-color: var(--btn-background-hover, #f03800);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2247,11 +2247,11 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer
   color: var(--btn-color-active, #f03800);
   background-color: var(--btn-background-active, #f03800);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active:focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-active:not(.cui-disabled):focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #f03800);
   background-color: var(--btn-background-active, #f03800);
 }
@@ -2259,9 +2259,9 @@ div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary.cui-activ
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:hover, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:focus,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:hover,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:focus {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):hover, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):focus,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):hover,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary,
@@ -2275,24 +2275,24 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary .cui-bu
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, #d8dce1);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:focus,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:focus {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):focus,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):focus {
   outline: none;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:active .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:active .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):active .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, #d8dce1);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2303,11 +2303,11 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-lay
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, #d8dce1);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active:focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active:not(.cui-disabled):focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, #d8dce1);
 }
@@ -2315,9 +2315,9 @@ div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-act
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:hover, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:focus,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:hover,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:focus {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):hover, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):focus,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):hover,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger,
@@ -2331,24 +2331,24 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger .cui-butto
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #ffffff);
   background-color: var(--btn-background-hover, #bd2130);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:focus,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):focus,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):focus {
   outline: none;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:active .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:active .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):active .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #ffffff);
   background-color: var(--btn-background-hover, #bd2130);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2359,11 +2359,11 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-layer-
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #bd2130);
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-active:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-active:focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-layer-open:hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-layer-open:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-active:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-active:focus .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-layer-open:hover .cui-button-visual,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-layer-open:focus .cui-button-visual {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-active:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-active:not(.cui-disabled):focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-active:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-active:not(.cui-disabled):focus .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #bd2130);
 }
@@ -2371,9 +2371,9 @@ div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger.cui-active
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:hover, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:focus,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:hover,
-div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
+div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):hover, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):focus,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):hover,
+div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-button-button.cui-button--has-caret .cui-button-visual .cui-button-right,
@@ -2390,19 +2390,19 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus {
   outline: none;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):active .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2411,14 +2411,14 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:focus .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:focus .cui-button-visual {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):hover, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):hover, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual {
@@ -2439,7 +2439,7 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:focus {
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
 }
-.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):hover .cui-button-visual .cui-button-center, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):focus .cui-button-visual .cui-button-center {
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus .cui-button-visual .cui-button-center {
   text-decoration: none;
 }
 
@@ -2467,6 +2467,11 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   animation: 1.2s pulse linear alternate infinite;
 }
 
+.cui-button.cui-disabled {
+  --pointer-events-when-disabled: auto;
+  cursor: default;
+}
+
 @keyframes pulse {
   from {
     opacity: 0.33;
@@ -2490,19 +2495,19 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-button-tool-play:hover .cui-button-visual, .cui-button-tool-play:focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play:focus {
+.cui-button-tool-play:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-button-tool-play:focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-button-tool-play:active .cui-button-visual {
+.cui-button-tool-play:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2511,14 +2516,14 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play.cui-active:hover .cui-button-visual, .cui-button-tool-play.cui-active:focus .cui-button-visual, .cui-button-tool-play.cui-layer-open:hover .cui-button-visual, .cui-button-tool-play.cui-layer-open:focus .cui-button-visual {
+.cui-button-tool-play.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-button-tool-play.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-button-tool-play:hover {
+.cui-button-tool-play:not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 .cui-button-tool-play .cui-button-visual {
@@ -2672,7 +2677,7 @@ textarea {
   --btn-border-width: 0;
   height: 100%;
 }
-.cui-multi-input-tag-button:hover, .cui-multi-input-tag-button:focus {
+.cui-multi-input-tag-button:not(.cui-disabled):hover, .cui-multi-input-tag-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-multi-input-tag-button .cui-button-visual {
@@ -2680,19 +2685,19 @@ textarea {
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-multi-input-tag-button:hover .cui-button-visual, .cui-multi-input-tag-button:focus .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled):hover .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-multi-input-tag-button:focus {
+.cui-multi-input-tag-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-multi-input-tag-button:focus .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-multi-input-tag-button:active .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2701,14 +2706,14 @@ textarea {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-multi-input-tag-button.cui-active:hover .cui-button-visual, .cui-multi-input-tag-button.cui-active:focus .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:focus .cui-button-visual {
+.cui-multi-input-tag-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-multi-input-tag-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-multi-input-tag-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-multi-input-tag-button:active .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -2733,18 +2738,18 @@ textarea {
 .cui-multi-input-tag-button .cui-button-visual .cui-button-left .fa-angle-down::before {
   top: 0;
 }
-.cui-multi-input-tag-button.cui-layer-open .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button.cui-active .cui-button-visual, .cui-multi-input-tag-button.cui-active:hover .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled).cui-layer-open .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled).cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled).cui-active .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled).cui-active:hover .cui-button-visual {
   background-color: #212121;
   color: #ffffff;
   border-left-color: #212121 !important;
 }
-.cui-multi-input-tag-button:hover .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled):hover .cui-button-visual {
   background-color: #ffffff;
 }
-.cui-multi-input-tag-button:focus {
+.cui-multi-input-tag-button:not(.cui-disabled):focus {
   z-index: 1;
 }
-.cui-multi-input-tag-button:focus .cui-button-visual {
+.cui-multi-input-tag-button:not(.cui-disabled):focus .cui-button-visual {
   border-radius: 2px !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
@@ -2825,7 +2830,7 @@ textarea {
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-output.cui-output--deletable .cui-button:hover, .cui-output.cui-output--deletable .cui-button:focus {
+.cui-output.cui-output--deletable .cui-button:not(.cui-disabled):hover, .cui-output.cui-output--deletable .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-output.cui-output--deletable .cui-button .cui-button-visual {
@@ -2833,19 +2838,19 @@ textarea {
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-output.cui-output--deletable .cui-button:hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button:focus .cui-button-visual {
+.cui-output.cui-output--deletable .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-output.cui-output--deletable .cui-button:focus {
+.cui-output.cui-output--deletable .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-output.cui-output--deletable .cui-button:focus .cui-button-visual {
+.cui-output.cui-output--deletable .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-output.cui-output--deletable .cui-button:active .cui-button-visual {
+.cui-output.cui-output--deletable .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2854,14 +2859,14 @@ textarea {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-output.cui-output--deletable .cui-button.cui-active:hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-active:focus .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open:hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-output.cui-output--deletable .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-output.cui-output--deletable .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-output.cui-output--deletable .cui-button:active .cui-button-visual {
+.cui-output.cui-output--deletable .cui-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -2924,7 +2929,7 @@ textarea {
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:hover, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:focus {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):hover, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button .cui-button-visual {
@@ -2932,19 +2937,19 @@ textarea {
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:focus .cui-button-visual {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:focus {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:focus .cui-button-visual {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:active .cui-button-visual {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -2953,14 +2958,14 @@ textarea {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active:hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active:focus .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open:focus .cui-button-visual {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:active .cui-button-visual {
+.cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -3416,7 +3421,7 @@ textarea {
   --btn-border-width: 0;
   height: 100%;
 }
-.cui-data-field-left .cui-button-button:hover, .cui-data-field-left .cui-button-button:focus {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):hover, .cui-data-field-left .cui-button-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-data-field-left .cui-button-button .cui-button-visual {
@@ -3424,19 +3429,19 @@ textarea {
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-data-field-left .cui-button-button:hover .cui-button-visual, .cui-data-field-left .cui-button-button:focus .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-data-field-left .cui-button-button:focus {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-data-field-left .cui-button-button:focus .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-data-field-left .cui-button-button:active .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -3445,14 +3450,14 @@ textarea {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-data-field-left .cui-button-button.cui-active:hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active:focus .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:focus .cui-button-visual {
+.cui-data-field-left .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-data-field-left .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-data-field-left .cui-button-button:active .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -3479,18 +3484,18 @@ textarea {
 .cui-data-field-left .cui-button-button .cui-button-visual .cui-button-left .fa-angle-down::before {
   top: 0;
 }
-.cui-data-field-left .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active:hover .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled).cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-layer-open:hover .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-active .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-active:hover .cui-button-visual {
   background-color: #212121;
   color: #ffffff;
   border-right-color: #212121 !important;
 }
-.cui-data-field-left .cui-button-button:hover .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):hover .cui-button-visual {
   background-color: #ffffff;
 }
-.cui-data-field-left .cui-button-button:focus {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):focus {
   z-index: 1;
 }
-.cui-data-field-left .cui-button-button:focus .cui-button-visual {
+.cui-data-field-left .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   border-radius: 2px !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
@@ -3504,7 +3509,7 @@ textarea {
   --btn-border-width: 0;
   height: 100%;
 }
-.cui-data-field-right .cui-button-button:hover, .cui-data-field-right .cui-button-button:focus {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):hover, .cui-data-field-right .cui-button-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-data-field-right .cui-button-button .cui-button-visual {
@@ -3512,19 +3517,19 @@ textarea {
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-data-field-right .cui-button-button:hover .cui-button-visual, .cui-data-field-right .cui-button-button:focus .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-data-field-right .cui-button-button:focus {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-data-field-right .cui-button-button:focus .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-data-field-right .cui-button-button:active .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -3533,14 +3538,14 @@ textarea {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-data-field-right .cui-button-button.cui-active:hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active:focus .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:focus .cui-button-visual {
+.cui-data-field-right .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-data-field-right .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-data-field-right .cui-button-button:active .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -3565,18 +3570,18 @@ textarea {
 .cui-data-field-right .cui-button-button .cui-button-visual .cui-button-left .fa-angle-down::before {
   top: 0;
 }
-.cui-data-field-right .cui-button-button.cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active:hover .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled).cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-layer-open:hover .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-active .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-active:hover .cui-button-visual {
   background-color: #212121;
   color: #ffffff;
   border-left-color: #212121 !important;
 }
-.cui-data-field-right .cui-button-button:hover .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):hover .cui-button-visual {
   background-color: #ffffff;
 }
-.cui-data-field-right .cui-button-button:focus {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):focus {
   z-index: 1;
 }
-.cui-data-field-right .cui-button-button:focus .cui-button-visual {
+.cui-data-field-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   border-radius: 2px !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
@@ -4089,7 +4094,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-buttonbar-group-navi .cui-button:hover, .cui-buttonbar-group-navi .cui-button:focus {
+.cui-buttonbar-group-navi .cui-button:not(.cui-disabled):hover, .cui-buttonbar-group-navi .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-buttonbar-group-navi .cui-button .cui-button-visual {
@@ -4097,19 +4102,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-buttonbar-group-navi .cui-button:hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button:focus .cui-button-visual {
+.cui-buttonbar-group-navi .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-buttonbar-group-navi .cui-button:focus {
+.cui-buttonbar-group-navi .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-buttonbar-group-navi .cui-button:focus .cui-button-visual {
+.cui-buttonbar-group-navi .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
+.cui-buttonbar-group-navi .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -4118,14 +4123,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-buttonbar-group-navi .cui-button.cui-active:hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-active:focus .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open:hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-buttonbar-group-navi .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-buttonbar-group-navi .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-buttonbar-group-navi .cui-button:active .cui-button-visual {
+.cui-buttonbar-group-navi .cui-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -4614,19 +4619,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button:focus {
+.cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button:active .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -4635,17 +4640,17 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active:focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button:hover {
+.cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-button:hover, .cui-date-time-calendar > .cui-buttonbar .cui-button:focus {
+.cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):hover, .cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group {
@@ -4658,24 +4663,24 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):active .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -4686,11 +4691,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:hover .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:focus .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, transparent);
 }
@@ -4706,19 +4711,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:focus {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:active .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -4727,14 +4732,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active:focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open:hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:hover {
+.cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select .cui-button-center {
@@ -4810,9 +4815,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button:hover, .cui-date-time-footer .cui-date-time-header-month .cui-button:focus,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:hover,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:focus {
+.cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):hover, .cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):focus,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):hover,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-date-time-footer .cui-date-time-header-month .cui-button .cui-button-visual,
@@ -4821,24 +4826,24 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button:hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button:focus .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:hover .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+.cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):hover .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button:focus,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:focus {
+.cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):focus,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button:focus .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:focus .cui-button-visual {
+.cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button:active .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:active .cui-button-visual {
+.cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):active .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -4849,11 +4854,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active:hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active:focus .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-layer-open:hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-layer-open:focus .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active:hover .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active:focus .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open:hover .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
@@ -4861,8 +4866,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-date-time-footer .cui-date-time-header-month .cui-button:active .cui-button-visual,
-.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:active .cui-button-visual {
+.cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):active .cui-button-visual,
+.cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -5155,7 +5160,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-width: 0;
   background-color: #ffffff;
 }
-.cui-form-value > .cui-select .cui-button-select:hover, .cui-form-value > .cui-select .cui-button-select:focus {
+.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):hover, .cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-form-value > .cui-select .cui-button-select .cui-button-visual {
@@ -5163,19 +5168,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-form-value > .cui-select .cui-button-select:hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select:focus .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-form-value > .cui-select .cui-button-select:focus {
+.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-form-value > .cui-select .cui-button-select:focus .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-form-value > .cui-select .cui-button-select:active .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5184,14 +5189,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-form-value > .cui-select .cui-button-select.cui-active:hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-active:focus .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-form-value > .cui-select .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-form-value > .cui-select .cui-button-select:active .cui-button-visual {
+.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -5207,7 +5212,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-width: 0;
   background-color: #ffffff;
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:hover, .cui-form-field-type--select .cui-form-value .cui-data-field-input:focus {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):hover, .cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input .cui-button-visual {
@@ -5215,19 +5220,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input:focus .cui-button-visual {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:focus {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:focus .cui-button-visual {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:active .cui-button-visual {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5236,14 +5241,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active:hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active:focus .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open:hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open:focus .cui-button-visual {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:active .cui-button-visual {
+.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -5259,7 +5264,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-width: 0;
   background-color: #ffffff;
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:hover, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):hover, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual {
@@ -5267,19 +5272,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus .cui-button-visual {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:focus .cui-button-visual {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:active .cui-button-visual {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5288,14 +5293,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:focus .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:focus .cui-button-visual {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:active .cui-button-visual {
+.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -5312,7 +5317,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-width: 0;
   background-color: #ffffff;
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret:hover, .cui-form-value > .cui-form-popover .cui-button--has-caret:focus {
+.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):hover, .cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual {
@@ -5320,19 +5325,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret:hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret:focus .cui-button-visual {
+.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret:focus {
+.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret:focus .cui-button-visual {
+.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret:active .cui-button-visual {
+.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5341,14 +5346,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:focus .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:focus .cui-button-visual {
+.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-form-value > .cui-form-popover .cui-button--has-caret:active .cui-button-visual {
+.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -5512,39 +5517,39 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-hint .cui-button:hover .cui-button-visual, .cui-hint .cui-button:focus .cui-button-visual,
-.cui-form-hint .cui-button:hover .cui-button-visual,
-.cui-form-hint .cui-button:focus .cui-button-visual,
-.cui-input-invalid-hint .cui-button:hover .cui-button-visual,
-.cui-input-invalid-hint .cui-button:focus .cui-button-visual,
-.cui-input-valid-hint .cui-button:hover .cui-button-visual,
-.cui-input-valid-hint .cui-button:focus .cui-button-visual,
-.cui-input-empty-hint .cui-button:hover .cui-button-visual,
-.cui-input-empty-hint .cui-button:focus .cui-button-visual {
+.cui-hint .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-form-hint .cui-button:not(.cui-disabled):hover .cui-button-visual,
+.cui-form-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-hint .cui-button:focus,
-.cui-form-hint .cui-button:focus,
-.cui-input-invalid-hint .cui-button:focus,
-.cui-input-valid-hint .cui-button:focus,
-.cui-input-empty-hint .cui-button:focus {
+.cui-hint .cui-button:not(.cui-disabled):focus,
+.cui-form-hint .cui-button:not(.cui-disabled):focus,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):focus,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):focus,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-hint .cui-button:focus .cui-button-visual,
-.cui-form-hint .cui-button:focus .cui-button-visual,
-.cui-input-invalid-hint .cui-button:focus .cui-button-visual,
-.cui-input-valid-hint .cui-button:focus .cui-button-visual,
-.cui-input-empty-hint .cui-button:focus .cui-button-visual {
+.cui-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-form-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-hint .cui-button:active .cui-button-visual,
-.cui-form-hint .cui-button:active .cui-button-visual,
-.cui-input-invalid-hint .cui-button:active .cui-button-visual,
-.cui-input-valid-hint .cui-button:active .cui-button-visual,
-.cui-input-empty-hint .cui-button:active .cui-button-visual {
+.cui-hint .cui-button:not(.cui-disabled):active .cui-button-visual,
+.cui-form-hint .cui-button:not(.cui-disabled):active .cui-button-visual,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):active .cui-button-visual,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):active .cui-button-visual,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5561,23 +5566,23 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-hint .cui-button.cui-active:hover .cui-button-visual, .cui-hint .cui-button.cui-active:focus .cui-button-visual, .cui-hint .cui-button.cui-layer-open:hover .cui-button-visual, .cui-hint .cui-button.cui-layer-open:focus .cui-button-visual,
-.cui-form-hint .cui-button.cui-active:hover .cui-button-visual,
-.cui-form-hint .cui-button.cui-active:focus .cui-button-visual,
-.cui-form-hint .cui-button.cui-layer-open:hover .cui-button-visual,
-.cui-form-hint .cui-button.cui-layer-open:focus .cui-button-visual,
-.cui-input-invalid-hint .cui-button.cui-active:hover .cui-button-visual,
-.cui-input-invalid-hint .cui-button.cui-active:focus .cui-button-visual,
-.cui-input-invalid-hint .cui-button.cui-layer-open:hover .cui-button-visual,
-.cui-input-invalid-hint .cui-button.cui-layer-open:focus .cui-button-visual,
-.cui-input-valid-hint .cui-button.cui-active:hover .cui-button-visual,
-.cui-input-valid-hint .cui-button.cui-active:focus .cui-button-visual,
-.cui-input-valid-hint .cui-button.cui-layer-open:hover .cui-button-visual,
-.cui-input-valid-hint .cui-button.cui-layer-open:focus .cui-button-visual,
-.cui-input-empty-hint .cui-button.cui-active:hover .cui-button-visual,
-.cui-input-empty-hint .cui-button.cui-active:focus .cui-button-visual,
-.cui-input-empty-hint .cui-button.cui-layer-open:hover .cui-button-visual,
-.cui-input-empty-hint .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-hint .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-form-hint .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-form-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-form-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-form-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-invalid-hint .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-invalid-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-invalid-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-invalid-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-valid-hint .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-valid-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-valid-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-valid-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-empty-hint .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-empty-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-input-empty-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-input-empty-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
@@ -5588,15 +5593,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-input-empty-hint .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-hint .cui-button:hover, .cui-hint .cui-button:focus,
-.cui-form-hint .cui-button:hover,
-.cui-form-hint .cui-button:focus,
-.cui-input-invalid-hint .cui-button:hover,
-.cui-input-invalid-hint .cui-button:focus,
-.cui-input-valid-hint .cui-button:hover,
-.cui-input-valid-hint .cui-button:focus,
-.cui-input-empty-hint .cui-button:hover,
-.cui-input-empty-hint .cui-button:focus {
+.cui-hint .cui-button:not(.cui-disabled):hover, .cui-hint .cui-button:not(.cui-disabled):focus,
+.cui-form-hint .cui-button:not(.cui-disabled):hover,
+.cui-form-hint .cui-button:not(.cui-disabled):focus,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):hover,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):focus,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):hover,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):focus,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):hover,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-hint .cui-button .cui-button-visual,
@@ -5641,15 +5646,15 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-input-empty-hint .cui-button .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
 }
-.cui-hint .cui-button:hover .cui-button-visual .cui-button-center, .cui-hint .cui-button:focus .cui-button-visual .cui-button-center,
-.cui-form-hint .cui-button:hover .cui-button-visual .cui-button-center,
-.cui-form-hint .cui-button:focus .cui-button-visual .cui-button-center,
-.cui-input-invalid-hint .cui-button:hover .cui-button-visual .cui-button-center,
-.cui-input-invalid-hint .cui-button:focus .cui-button-visual .cui-button-center,
-.cui-input-valid-hint .cui-button:hover .cui-button-visual .cui-button-center,
-.cui-input-valid-hint .cui-button:focus .cui-button-visual .cui-button-center,
-.cui-input-empty-hint .cui-button:hover .cui-button-visual .cui-button-center,
-.cui-input-empty-hint .cui-button:focus .cui-button-visual .cui-button-center {
+.cui-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-hint .cui-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center,
+.cui-form-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center,
+.cui-form-hint .cui-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center,
+.cui-input-invalid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center,
+.cui-input-valid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center,
+.cui-input-empty-hint .cui-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center {
   text-decoration: none;
 }
 .cui-hint .cui-button .cui-button-visual,
@@ -5730,19 +5735,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-panel-header .cui-button-button:hover .cui-button-visual, .cui-panel-header .cui-button-button:focus .cui-button-visual {
+.cui-panel-header .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-panel-header .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-panel-header .cui-button-button:focus {
+.cui-panel-header .cui-button-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-panel-header .cui-button-button:focus .cui-button-visual {
+.cui-panel-header .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-panel-header .cui-button-button:active .cui-button-visual {
+.cui-panel-header .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5751,14 +5756,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-panel-header .cui-button-button.cui-active:hover .cui-button-visual, .cui-panel-header .cui-button-button.cui-active:focus .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open:focus .cui-button-visual {
+.cui-panel-header .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-panel-header .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-panel-header .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-panel-header .cui-button-button:hover, .cui-panel-header .cui-button-button:focus {
+.cui-panel-header .cui-button-button:not(.cui-disabled):hover, .cui-panel-header .cui-button-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-panel-header .cui-button-button-select {
@@ -5946,7 +5951,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
@@ -5954,19 +5959,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:active .cui-button-visual {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -5975,14 +5980,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:focus .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:active .cui-button-visual {
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -6073,19 +6078,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:active .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -6094,17 +6099,17 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:focus .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(:last-child) {
@@ -6120,24 +6125,24 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):active .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -6148,11 +6153,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:focus .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:hover .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:focus .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, transparent);
 }
@@ -6838,7 +6843,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:hover, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:focus {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):hover, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button .cui-button-visual {
@@ -6846,19 +6851,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:hover .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:focus .cui-button-visual {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:focus {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:focus .cui-button-visual {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:active .cui-button-visual {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -6867,14 +6872,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-active:hover .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-active:focus .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-layer-open:focus .cui-button-visual {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:active .cui-button-visual {
+.cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -6932,7 +6937,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:hover, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:focus {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):hover, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button .cui-button-visual {
@@ -6940,19 +6945,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:focus .cui-button-visual {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:focus {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:focus .cui-button-visual {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:active .cui-button-visual {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -6961,14 +6966,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active:hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active:focus .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open:focus .cui-button-visual {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:active .cui-button-visual {
+.cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
@@ -7124,24 +7129,24 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-tabs-pane-header .cui-tab-header-button:hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button:focus .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:hover .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
+.cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):hover .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-tabs-pane-header .cui-tab-header-button:focus,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:focus {
+.cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):focus,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-tabs-pane-header .cui-tab-header-button:focus .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
+.cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-tabs-pane-header .cui-tab-header-button:active .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:active .cui-button-visual {
+.cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):active .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, #212121);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -7152,11 +7157,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-tabs-pane-header .cui-tab-header-button.cui-active:hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-active:focus .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open:hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open:focus .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active:hover .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active:focus .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open:hover .cui-button-visual,
-.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open:focus .cui-button-visual {
+.cui-tabs-pane-header .cui-tab-header-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #212121);
   background-color: var(--btn-background-active, transparent);
 }
@@ -7164,9 +7169,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-tabs-pane-header .cui-tab-header-button:hover, .cui-tabs-pane-header .cui-tab-header-button:focus,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:hover,
-.cui-tabs-pane-header .cui-tab-header-button-overflow:focus {
+.cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):hover, .cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):focus,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):hover,
+.cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
@@ -7430,19 +7435,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:active .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -7451,17 +7456,17 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:focus .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:hover, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:focus {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(:last-child) {
@@ -7477,24 +7482,24 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:hover .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:focus .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:focus .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:active .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:active .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):active .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -7505,11 +7510,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, transparent);
 }
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:focus .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:focus .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:hover .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:focus .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:hover .cui-button-visual,
-.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:focus .cui-button-visual {
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, transparent);
 }
@@ -7893,7 +7898,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   --btn-border-color: transparent;
   --btn-border-width: 0;
 }
-.cui-icon-marker-container .cui-button:hover, .cui-icon-marker-container .cui-button:focus {
+.cui-icon-marker-container .cui-button:not(.cui-disabled):hover, .cui-icon-marker-container .cui-button:not(.cui-disabled):focus {
   --btn-border-color: transparent;
 }
 .cui-icon-marker-container .cui-button .cui-button-visual {
@@ -7901,19 +7906,19 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color, #212121);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-icon-marker-container .cui-button:hover .cui-button-visual, .cui-icon-marker-container .cui-button:focus .cui-button-visual {
+.cui-icon-marker-container .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-icon-marker-container .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
-.cui-icon-marker-container .cui-button:focus {
+.cui-icon-marker-container .cui-button:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-icon-marker-container .cui-button:focus .cui-button-visual {
+.cui-icon-marker-container .cui-button:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-icon-marker-container .cui-button:active .cui-button-visual {
+.cui-icon-marker-container .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
@@ -7922,14 +7927,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
-.cui-icon-marker-container .cui-button.cui-active:hover .cui-button-visual, .cui-icon-marker-container .cui-button.cui-active:focus .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open:hover .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open:focus .cui-button-visual {
+.cui-icon-marker-container .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-icon-marker-container .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, #212121);
 }
 .cui-icon-marker-container .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-icon-marker-container .cui-button:active .cui-button-visual {
+.cui-icon-marker-container .cui-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
