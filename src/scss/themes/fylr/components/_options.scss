@@ -15,10 +15,6 @@
 	}
 }
 
-.cui-options-inactive:not(:empty) {
-	margin-top: $spacer-sm;
-}
-
 .cui-options-top .cui-label span:not(:empty) {
 	padding-bottom: $spacer-xs;
 	display: inline-block;
@@ -28,12 +24,12 @@
 	font-weight: $font-weight-bold;
 }
 
-.cui-options-order-hint {
+.cui-options-hint {
 	@include label-form-hint();
 
 	max-width: 250px;
 	padding: 0 !important;
-	margin: $spacer-sm ($checkbox-size + $checkbox-margin) $spacer;
+	margin: $form-hint-margin-bottom ($checkbox-size + $checkbox-margin) $spacer 0;
 }
 
 // align options with label if there is only one option
@@ -96,10 +92,10 @@
 	display: flex;
 
 	.cui-options-sortable-drag-handle {
-		width: $checkbox-icon-size;
+		width: 16;
 		display: flex;
 		flex-shrink: 0;
-		margin: 0 8px 0 2px;
+		margin: 0 10px 0 0;
 		cursor: grab;
 
 		.cui-drag-handle-row {

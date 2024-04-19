@@ -44,6 +44,9 @@ class CUI.Options extends CUI.DataField
 			title:
 				check: String
 
+			hint:
+				check: String
+
 			activatable:
 				check: Boolean
 
@@ -431,11 +434,17 @@ class CUI.Options extends CUI.DataField
 			@__setDataOnOptions()
 
 		if @__checkboxes.length
+			hint = ""
 			if @_sortable and not CUI.util.isEmpty(@_sortable_hint)
+				hint = @_sortable_hint
+			else if not CUI.util.isEmpty(@_hint)
+				hint = @_hint
+
+			if hint
 				bottom = new CUI.Label
 					multiline: true
-					class: "cui-options-order-hint"
-					text: @_sortable_hint
+					class: "cui-options-hint"
+					text: hint
 			else
 				bottom = undefined
 
