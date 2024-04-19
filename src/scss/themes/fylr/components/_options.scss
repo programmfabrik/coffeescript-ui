@@ -29,7 +29,7 @@
 
 	max-width: 250px;
 	padding: 0 !important;
-	margin: $form-hint-margin-bottom ($checkbox-size + $checkbox-margin) $spacer 0;
+	margin: $form-hint-margin-bottom ($checkbox-size + $checkbox-margin) $form-hint-margin-bottom 0;
 }
 
 // align options with label if there is only one option
