@@ -4281,7 +4281,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-item-list-divider {
   height: 1px;
-  background: rgba(173, 181, 189, 0.15);
+  background: rgba(206, 212, 218, 0.5);
 }
 
 .cui-options {
@@ -4314,7 +4314,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   line-height: 1.2;
   max-width: 250px;
   padding: 0 !important;
-  margin: 0.25rem 22px 1rem 0;
+  margin: 0.5rem 22px 0.5rem 0;
 }
 
 .cui-options-center {
@@ -4452,7 +4452,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 16;
   display: flex;
   flex-shrink: 0;
-  margin: 0 10px 0 0px;
+  margin: 0 10px 0 0;
   cursor: grab;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle .cui-drag-handle-row {
@@ -7669,7 +7669,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: #212121;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child {
-  border-top: 1px solid rgba(173, 181, 189, 0.15);
+  border-top: 1px solid rgba(206, 212, 218, 0.5);
   padding: 6px 0;
   margin-top: 4px;
   margin-bottom: -4px;
