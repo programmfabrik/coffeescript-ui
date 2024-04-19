@@ -4299,10 +4299,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: auto;
 }
 
-.cui-options-inactive:not(:empty) {
-  margin-top: 0.5rem;
-}
-
 .cui-options-top .cui-label span:not(:empty) {
   padding-bottom: 0.25rem;
   display: inline-block;
@@ -4312,13 +4308,13 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
 }
 
-.cui-options-order-hint {
+.cui-options-hint {
   opacity: var(--label-secondary-opacity, 0.65);
   font-size: 13px;
   line-height: 1.2;
   max-width: 250px;
   padding: 0 !important;
-  margin: 0.5rem 22px 1rem;
+  margin: 0.25rem 22px 1rem 0;
 }
 
 .cui-options-center {
@@ -4453,10 +4449,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: flex;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle {
-  width: 12px;
+  width: 16;
   display: flex;
   flex-shrink: 0;
-  margin: 0 8px 0 2px;
+  margin: 0 10px 0 0px;
   cursor: grab;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle .cui-drag-handle-row {

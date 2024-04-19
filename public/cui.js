@@ -56911,6 +56911,9 @@ CUI.Options = (function(superClass) {
       title: {
         check: String
       },
+      hint: {
+        check: String
+      },
       activatable: {
         check: Boolean
       },
@@ -57195,7 +57198,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.render = function() {
-    var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
+    var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, hint, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
     Options.__super__.render.call(this);
     unsorted_options = this.getArrayFromOpt("options");
     sort_options = (function(_this) {
@@ -57444,11 +57447,17 @@ CUI.Options = (function(superClass) {
       this.__setDataOnOptions();
     }
     if (this.__checkboxes.length) {
+      hint = "";
       if (this._sortable && !CUI.util.isEmpty(this._sortable_hint)) {
+        hint = this._sortable_hint;
+      } else if (!CUI.util.isEmpty(this._hint)) {
+        hint = this._hint;
+      }
+      if (hint) {
         bottom = new CUI.Label({
           multiline: true,
-          "class": "cui-options-order-hint",
-          text: this._sortable_hint
+          "class": "cui-options-hint",
+          text: hint
         });
       } else {
         bottom = void 0;

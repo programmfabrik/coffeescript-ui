@@ -2679,12 +2679,12 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   resize: none;
 }
 
-.cui-hint, .cui-options-order-hint,
+.cui-hint, .cui-options-hint,
 .cui-form-hint {
   font-size: 12px;
   color: hsl(205, 0%, 46%);
 }
-.cui-hint .cui-label, .cui-options-order-hint .cui-label,
+.cui-hint .cui-label, .cui-options-hint .cui-label,
 .cui-form-hint .cui-label {
   line-height: 1.38;
 }
@@ -4602,7 +4602,7 @@ label[data-label-clickable],
   font-weight: bold;
 }
 
-.cui-options-order-hint {
+.cui-options-hint {
   max-width: 250px;
   margin-top: 7px;
   margin-left: 18px;
