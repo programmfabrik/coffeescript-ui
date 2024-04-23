@@ -2630,6 +2630,10 @@ textarea {
 .cui-input-appearance-code textarea:focus {
   border-color: #212121;
 }
+.cui-input:has(> .cui-input-control-element) {
+  display: inline-flex;
+  flex-direction: row;
+}
 
 .cui-code-input pre {
   height: 400px;
@@ -2816,6 +2820,22 @@ textarea {
 }
 .cui-date-time[data-cui-date-time-format=date-time-seconds] .cui-input {
   min-width: 175px;
+}
+
+.cui-input.cui-password:has(> .cui-input-control-element) {
+  position: relative;
+}
+.cui-input.cui-password > .cui-button.cui-input-control-element {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.cui-input.cui-password > .cui-button.cui-input-control-element .cui-button-visual {
+  --btn-border-width: 0;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .cui-output .cui-output-empty {

@@ -46938,6 +46938,7 @@ CUI.Input = (function(superClass) {
     Input.__super__.render.call(this);
     this.replace(this.__createElement(), this.getTemplateKeyForRender());
     if (this._controlElement) {
+      CUI.dom.addClass(this._controlElement, 'cui-input-control-element');
       this.append(this._controlElement, this.getTemplateKeyForRender());
     }
     ref = ["empty", "invalid", "valid"];
