@@ -46070,6 +46070,11 @@ CUI.Input = (function(superClass) {
       },
       appearance: {
         check: ["code"]
+      },
+      controlElement: {
+        check: function(v) {
+          return v instanceof CUI.DOMElement;
+        }
       }
     });
   };
@@ -46932,6 +46937,9 @@ CUI.Input = (function(superClass) {
     var j, k, len1, ref;
     Input.__super__.render.call(this);
     this.replace(this.__createElement(), this.getTemplateKeyForRender());
+    if (this._controlElement) {
+      this.append(this._controlElement, this.getTemplateKeyForRender());
+    }
     ref = ["empty", "invalid", "valid"];
     for (j = 0, len1 = ref.length; j < len1; j++) {
       k = ref[j];
@@ -58729,6 +58737,36 @@ CUI.Password = (function(superClass) {
   function Password() {
     return Password.__super__.constructor.apply(this, arguments);
   }
+
+  Password.prototype.initOpts = function() {
+    Password.__super__.initOpts.call(this);
+    return this.addOpts({
+      toggleButton: {
+        "default": false,
+        check: Boolean
+      }
+    });
+  };
+
+  Password.prototype.readOpts = function() {
+    Password.__super__.readOpts.call(this);
+    if (this._toggleButton) {
+      return this._controlElement = new CUI.Button({
+        icon: "fa-eye",
+        onClick: (function(_this) {
+          return function(ev, btn) {
+            if (CUI.dom.getAttribute(_this.__input, "type") === "password") {
+              btn.setIcon("fa-eye-slash");
+              return _this.showPassword();
+            } else {
+              btn.setIcon("fa-eye");
+              return _this.hidePassword();
+            }
+          };
+        })(this)
+      });
+    }
+  };
 
   Password.prototype.__createElement = function() {
     return Password.__super__.__createElement.call(this, "password");
