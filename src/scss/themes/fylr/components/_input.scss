@@ -115,6 +115,11 @@ textarea {
 			}
 		}
 	}
+
+	&:has(> .cui-input-control-element) {
+		display: inline-flex;
+		flex-direction: row;
+	}
 }
 
 .cui-code-input pre {
@@ -243,5 +248,27 @@ textarea {
 
 	&[data-cui-date-time-format='date-time-seconds'] .cui-input {
 		min-width: 175px;
+	}
+}
+
+// Password Inputs
+.cui-input.cui-password {
+	&:has(> .cui-input-control-element) {
+		position: relative;
+	}
+
+	> .cui-button.cui-input-control-element {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1;
+
+		.cui-button-visual {
+			--btn-border-width: 0;
+			
+			background: transparent !important;
+			box-shadow: none !important;
+		}
 	}
 }
