@@ -39597,12 +39597,19 @@ CUI.DateTime = (function(superClass) {
     return locale;
   };
 
-  DateTime.format = function(datestr_or_moment, output_format, output_type, parseZone) {
-    var dt, str;
+  DateTime.format = function(datestr_or_moment, output_format, output_type, parseZone, locale) {
+    var dt, opts, str;
     if (parseZone == null) {
       parseZone = false;
     }
-    dt = new CUI.DateTime();
+    if (locale == null) {
+      locale = null;
+    }
+    opts = {};
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
     str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
     return str;
   };
