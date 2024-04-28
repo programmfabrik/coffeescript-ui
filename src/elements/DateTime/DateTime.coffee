@@ -1413,8 +1413,11 @@ class CUI.DateTime extends CUI.Input
 	# format the date_str
 	# output_format "display_short", "display", "store", "input"
 	# output_type "date_time", "date", "date_time_secons", "year_month",v "year"
-	@format: (datestr_or_moment, output_format, output_type, parseZone = false) ->
-		dt = new CUI.DateTime()
+	@format: (datestr_or_moment, output_format, output_type, parseZone = false, locale = null) ->
+		opts = {}
+		if locale
+			opts.locale = locale
+		dt = new CUI.DateTime(opts)
 		str = dt.format(datestr_or_moment, output_format, output_type, parseZone)
 		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
