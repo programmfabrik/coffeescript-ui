@@ -140,6 +140,14 @@ class CUI.Menu extends CUI.Layer
 			@__itemList.render(@, @__event)
 			.done =>
 				@position()
+				# If we have a scroll position, we set it after the rendering.
+				if @__updateScroll
+					@__itemList.DOM.scrollTop = @__updateScroll
+				# If we have a wait block, we hide it after the rendering.
+				if @__waitBlock
+					@__waitBlock.hide()
+					@__waitBlock = null
+					delete(@__updateScroll)
 		@
 
 	isAutoCloseAfterClick: ->
@@ -148,6 +156,14 @@ class CUI.Menu extends CUI.Layer
 	destroy: ->
 		@__itemList?.destroy()
 		super()
+
+	reload: (keepScroll) ->
+		# We call the setItemList method to re-render the menu.
+		@__waitBlock = new CUI.WaitBlock(element: @DOM)
+		if keepScroll
+			@__updateScroll = @getItemList().DOM.scrollTop
+		@setItemList(@_itemList)
+		@__waitBlock.show()
 
 	hideAll: (ev) ->
 		@hide(ev)

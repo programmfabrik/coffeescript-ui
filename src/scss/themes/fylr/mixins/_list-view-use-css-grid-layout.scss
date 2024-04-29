@@ -1,0 +1,92 @@
+@mixin list-view-use-css-grid-layout() {
+	@supports (grid-template-columns: subgrid) {
+		> .cui-vertical-layout-center > .cui-list-view-grid {
+			display: grid;
+			width: 100%;
+			// calculate the repeat columns from the custom var --grid-column-count, we subtract by 2
+			// 1: first column is max-content by default or could be a fixed width
+			// 2: last column which should take up the rest of the grid width
+
+			grid-template-columns:
+				var(--grid-template-column-first, max-content) 
+				repeat(calc(var(--grid-column-count) - 2), var(--grid-template-column-middle, minmax(auto, max-content))) 
+				var(--grid-template-column-last, 1fr);
+			grid-template-rows: auto;
+			overflow: auto;
+			align-content: start;
+			flex-grow: 0;
+
+			> .cui-list-view-grid-inner-top,
+			> .cui-list-view-grid-inner-bottom {
+				grid-column: 1 / -1;
+				display: grid;
+				grid: inherit;
+				grid-template-columns: subgrid;
+
+				> .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td,
+				> .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
+					&:not(.cui-lv-td-rotate-90) {
+						width: auto;
+					}
+
+					&.cui-lv-td-rotate-90:last-child {
+						width: auto; // so it can stretch the whole column
+						min-width: 16px;
+					}
+
+					&:last-child .cui-lv-col-resize-handle {
+						display: none;
+					}
+
+					&.cui-lv-row-move-handle-column .cui-drag-handle-row {
+						width: $list-view-move-handle-width;
+					}
+				}
+			}
+
+			> .cui-list-view-grid-inner-top > .cui-lv-tbody,
+			> .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer,
+			> .cui-list-view-grid-inner-top > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr,
+			> .cui-list-view-grid-inner-bottom > .cui-lv-tbody,
+			> .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer,
+			> .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-outer > .cui-lv-tr,
+			> .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer,
+			> .cui-list-view-grid-inner-bottom > .cui-lv-tbody > .cui-lv-tr-fill-outer > .cui-lv-tr {
+				grid-column: 1 / -1;
+				display: grid;
+				grid: inherit;
+			}
+
+			// add colspans for header cells
+			> .cui-list-view-grid-inner-top .list-view-header-row > .cui-lv-tr > .cui-lv-th[colspan] {
+				grid-column: span var(--colspan);
+			}
+
+			// fix overflow / sticky issue
+			// we need to reset all quadrants to visible and instead do the "fixed row" behavior with position:sticky 
+			// using only overflow causes weird behavior (maybe due to subgrid?), e.g. the scrollbars disappear when resizing the browser
+			.cui-list-view-grid-quadrant-0, 
+			.cui-list-view-grid-quadrant-1,
+			.cui-list-view-grid-quadrant-2,
+			.cui-list-view-grid-quadrant-3 {
+				overflow: visible;
+			}
+
+			// re-create fixed (sticky) rows by using position: sticky
+			// https://codepen.io/neoky/pen/mGpaKN
+			&.cui-list-view-grid-has-fixed-rows {
+				> .cui-list-view-grid-inner-top {
+					position: sticky;
+					top: 0;
+					background-color: var(--pane-background);
+					box-shadow: var(--box-shadow-vertical, none);
+					z-index: 1; // todo: make this a little higher so we have some room for other z-index styles (e.g. .cui-search-selector-input-icon)
+				}
+                
+				&.is-scrolling-vertically {
+					--box-shadow-vertical: #{$list-view-scrolling-box-shadow};
+				}
+			}
+		}
+	}
+}

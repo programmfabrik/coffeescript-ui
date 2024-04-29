@@ -129,6 +129,12 @@ a[role='button'].cui-button-appearance-link {
 	animation: 1.2s pulse linear alternate infinite;
 }
 
+.cui-button.cui-disabled {
+	--pointer-events-when-disabled: auto;
+
+	cursor: default;
+}
+
 @keyframes pulse {
 	from { opacity: 0.33; }
 	to { opacity: 1; }

@@ -44,6 +44,9 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 
 		listView = @getRow().getListView()
 
+		if listView.hasCSSGridLayout() && @_colspan
+			CUI.dom.setStyle(@__element, "--colspan": @_colspan, "")
+
 		if not listView.hasResizableColumns()
 			return @__element
 

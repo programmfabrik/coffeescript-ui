@@ -173,9 +173,11 @@
 
 	opacity: 0.65;
 
-	&:hover,
-	&:focus {
-		opacity: 1;
+	&:not(.cui-disabled) {
+		&:hover,
+		&:focus {
+			opacity: 1;
+		}
 	}
 }
 
@@ -189,29 +191,32 @@
 		border: var(--btn-border-width, #{$btn-border-width}) solid var(--btn-border-color, #{$btn-border-color});
 	}
 
-	&:hover,
-	&:focus {
-		.cui-button-visual {
-			color: var(--btn-color-hover, #{$color-hover});
-			background-color: var(--btn-background-hover, #{$background-hover});
+	&:not(.cui-disabled) {
+		&:hover,
+		&:focus {
+			.cui-button-visual {
+				color: var(--btn-color-hover, #{$color-hover});
+				background-color: var(--btn-background-hover, #{$background-hover});
+			}
+		}
+	
+		&:focus {
+			outline: none;
+	
+			.cui-button-visual {
+				@include button-focus();
+			}
+		}
+	
+		&:active {
+			.cui-button-visual {
+				color: var(--btn-color-hover, #{$color-hover});
+				background-color: var(--btn-background-hover, #{$background-hover});
+				box-shadow: inset 0 0 0 20px rgba(#000, 0.08); // darken the background
+			}
 		}
 	}
 
-	&:focus {
-		outline: none;
-
-		.cui-button-visual {
-			@include button-focus();
-		}
-	}
-
-	&:active {
-		.cui-button-visual {
-			color: var(--btn-color-hover, #{$color-hover});
-			background-color: var(--btn-background-hover, #{$background-hover});
-			box-shadow: inset 0 0 0 20px rgba(#000, 0.08); // darken the background
-		}
-	}
 
 	&.cui-active,
 	&.cui-layer-open {
@@ -220,11 +225,13 @@
 			background-color: var(--btn-background-active, #{$background-active});
 		}
 
-		&:hover,
-		&:focus {
-			.cui-button-visual {
-				color: var(--btn-color-active, #{$color-active});
-				background-color: var(--btn-background-active, #{$background-active});
+		&:not(.cui-disabled) {
+			&:hover,
+			&:focus {
+				.cui-button-visual {
+					color: var(--btn-color-active, #{$color-active});
+					background-color: var(--btn-background-active, #{$background-active});
+				}
 			}
 		}
 	}
@@ -314,8 +321,10 @@
 	// if a button has no-border, the border width will be 0, so applying a color here does not matter
 	--btn-border-color: #{$btn-inverted-border-color};
 
-	&:hover {
-		--btn-border-color: #{$btn-inverted-hover-border-color};
+	&:not(.cui-disabled) {
+		&:hover {
+			--btn-border-color: #{$btn-inverted-hover-border-color};
+		}
 	}
 }
 
@@ -345,10 +354,12 @@
 		}
 	}
 
-	&:hover,
-	&:focus {
-		.cui-button-visual .cui-button-center {
-			text-decoration: none;
+	&:not(.cui-disabled) {
+		&:hover,
+		&:focus {
+			.cui-button-visual .cui-button-center {
+				text-decoration: none;
+			}
 		}
 	}
 }
@@ -383,9 +394,11 @@
 	--btn-border-color: transparent;
 	--btn-border-width: 0;
 
-	&:hover,
-	&:focus {
-		--btn-border-color: transparent;
+	&:not(.cui-disabled) {
+		&:hover,
+		&:focus {
+			--btn-border-color: transparent;
+		}
 	}
 }
 
@@ -394,9 +407,11 @@
 	--btn-border-color: currentColor;
 	--btn-border-width: #{$btn-border-width};
 
-	&:hover,
-	&:focus {
-		--btn-border-color: currentColor;
+	&:not(.cui-disabled) {
+		&:hover,
+		&:focus {
+			--btn-border-color: currentColor;
+		}
 	}
 }
 
@@ -404,10 +419,12 @@
 	@include button-no-border();
 	@include button-color($btn-background, $btn-color, $btn-hover-background, $btn-hover-color, $btn-active-background, $btn-active-color);
 
-	&:active {
-		.cui-button-visual {
-			text-shadow: 0 0 0 rgba(#000, 0.4); // darken the text color
-			box-shadow: none; // reset from button-color()
+	&:not(.cui-disabled) {
+		&:active {
+			.cui-button-visual {
+				text-shadow: 0 0 0 rgba(#000, 0.4); // darken the text color
+				box-shadow: none; // reset from button-color()
+			}
 		}
 	}
 }
@@ -478,37 +495,39 @@
 		}
 	}
 
-	&.cui-layer-open,
-	&.cui-layer-open:hover,
-	&.cui-active,
-	&.cui-active:hover {
-		.cui-button-visual {
-			background-color: $btn-active-background;
-			color: $btn-active-color;
+	&:not(.cui-disabled) {
+		&.cui-layer-open,
+		&.cui-layer-open:hover,
+		&.cui-active,
+		&.cui-active:hover {
+			.cui-button-visual {
+				background-color: $btn-active-background;
+				color: $btn-active-color;
 
-			@if $button-position == 'right' {
-				border-left-color: $btn-active-background !important;
-			}
-			@else if $button-position == 'left' {
-				border-right-color: $btn-active-background !important;
+				@if $button-position == 'right' {
+					border-left-color: $btn-active-background !important;
+				}
+				@else if $button-position == 'left' {
+					border-right-color: $btn-active-background !important;
+				}
 			}
 		}
-	}
 
-	// todo: hover
-	&:hover {
-		.cui-button-visual {
-			background-color: $input-background;
+		// todo: hover
+		&:hover {
+			.cui-button-visual {
+				background-color: $input-background;
+			}
 		}
-	}
-	
-	&:focus {
-		z-index: 1;
-	
-		.cui-button-visual {
-			border-radius: $input-border-radius !important;
-			border-color: $input-focus-border-color !important;
-			box-shadow: $btn-focus-shadow !important;
+		
+		&:focus {
+			z-index: 1;
+		
+			.cui-button-visual {
+				border-radius: $input-border-radius !important;
+				border-color: $input-focus-border-color !important;
+				box-shadow: $btn-focus-shadow !important;
+			}
 		}
 	}
 }
@@ -520,6 +539,14 @@
 	min-height: $btn-height - 2px;
 	display: flex;
 	align-items: center;
+
+	.fa-angle-down {
+		line-height: 1;
+
+		&::before {
+			top: 0;
+		}
+	}
 }
 
 
@@ -541,5 +568,7 @@
 }
 
 @mixin button-disabled() {
+	--pointer-events-when-disabled: auto;
+
 	@include disabled();
 }

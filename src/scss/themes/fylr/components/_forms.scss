@@ -105,7 +105,7 @@
 	flex-direction: column;
 	
 	> .cui-options {
-		margin-bottom: $spacer-sm; // todo
+		// margin-bottom: $spacer-sm; // todo: this adds extra margin, the parent .cui-form-tr already has a margin
 
 		.cui-options-center {
 			min-height: 0;

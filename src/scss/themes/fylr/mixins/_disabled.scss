@@ -1,5 +1,5 @@
 @mixin disabled() {
 	user-select: none;
 	opacity: $disabled-opacity;
-	pointer-events: none;
+	pointer-events: var(--pointer-events-when-disabled, none);
 }

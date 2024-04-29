@@ -89,6 +89,11 @@ class CUI.ListView extends CUI.SimplePane
 		@__doLayoutBound = =>
 			@__doLayout()
 
+		if @_useCSSGridLayout
+			@__useCSSGridLayout = true
+			@addClass("use-css-grid-layout")
+			CUI.dom.setStyle(@, "--grid-column-count": @__cols.length, "")			
+
 		@addClass("cui-list-view")
 
 	initOpts: ->
@@ -121,6 +126,8 @@ class CUI.ListView extends CUI.SimplePane
 				default: false
 				check: Boolean
 			colResize:
+				check: Boolean
+			useCSSGridLayout:
 				check: Boolean
 			selectableRows:
 				check: (v) ->
@@ -177,6 +184,9 @@ class CUI.ListView extends CUI.SimplePane
 
 	hasResizableColumns: ->
 		@__colResize
+
+	hasCSSGridLayout: ->
+		@__useCSSGridLayout
 
 	hasMovableRows: ->
 		@_rowMove
@@ -298,11 +308,36 @@ class CUI.ListView extends CUI.SimplePane
 		on_scroll = =>
 			@__syncScrolling()
 			@_onScroll?()
+			
+			if @quadrant[3].scrollTop > 0
+				CUI.dom.addClass(@grid, "is-scrolling-vertically")
+			else 
+				CUI.dom.removeClass(@grid, "is-scrolling-vertically")
 
-		CUI.Events.listen
-			node: @quadrant[3]
-			type: "scroll"
-			call: on_scroll
+			if @quadrant[3].scrollLeft > 0
+				CUI.dom.addClass(@grid, "is-scrolling-horizontally")
+			else 
+				CUI.dom.removeClass(@grid, "is-scrolling-horizontally")				
+
+		if @__useCSSGridLayout
+			CUI.Events.listen
+				node: @grid
+				type: "scroll"
+				call: (ev) =>
+					if @grid.scrollTop > 0
+						CUI.dom.addClass(@grid, "is-scrolling-vertically")
+					else 
+						CUI.dom.removeClass(@grid, "is-scrolling-vertically")
+
+					if @grid.scrollLeft > 0
+						CUI.dom.addClass(@grid, "is-scrolling-horizontally")
+					else 
+						CUI.dom.removeClass(@grid, "is-scrolling-horizontally")						
+		else 
+			CUI.Events.listen
+				node: @quadrant[3]
+				type: "scroll"
+				call: on_scroll
 
 		@__currentScroll = top: 0, left: 0
 
@@ -872,10 +907,11 @@ class CUI.ListView extends CUI.SimplePane
 					width = width + @__colWidths[parseInt(col_i)+i]
 
 				dim = CUI.dom.getDimensions(cell)
-				if dim.computedStyle.boxSizing == "border-box"
-					cell.style.setProperty("width", width+"px", "important")
-				else
-					cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal)+"px", "important")
+				if not @__useCSSGridLayout
+					if dim.computedStyle.boxSizing == "border-box"
+						cell.style.setProperty("width", width+"px", "important")
+					else
+						cell.style.setProperty("width", (width - dim.paddingHorizontal - dim.borderHorizontal)+"px", "important")
 
 		if @fixedColsCount >  0
 			# find unmeasured rows in Q2 & Q3 and set height
