@@ -40025,16 +40025,16 @@ CUI.DateTimeFormats["en-US"] = {
     }, {
       text: "Jahr-Monat",
       support_bc: false,
-      input: "MM-YYYY",
+      input: "YYYY-MM",
       invalid: "Invalid date",
       store: "YYYY-MM",
       display: "MMMM YYYY",
-      display_short: "MM-YYYY",
+      display_short: "YYYY-MM",
       display_attribute: "year-month",
       display_short_attribute: "year-month-short",
       type: "year_month",
       clock: false,
-      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM"]
+      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM", "MM-YYYY", "M-YYYY", "YYYY-M", "YYYY.M", "YYYY/M"]
     }, {
       text: "Jahr",
       support_bc: true,
