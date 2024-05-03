@@ -482,11 +482,11 @@ CUI.DateTimeFormats["en-US"] =
 	,
 		text: "Jahr-Monat"
 		support_bc: false
-		input: "MM-YYYY"
+		input: "YYYY-MM"
 		invalid: "Invalid date"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
-		display_short: "MM-YYYY"
+		display_short: "YYYY-MM"
 		display_attribute: "year-month"
 		display_short_attribute: "year-month-short"
 		type: "year_month"
@@ -499,6 +499,11 @@ CUI.DateTimeFormats["en-US"] =
 			"M.YYYY"
 			"YYYY-M"
 			"YYYY-MM"
+			"MM-YYYY"
+			"M-YYYY"
+			"YYYY-M"
+			"YYYY.M"
+			"YYYY/M"
 		]
 	,
 		text: "Jahr"
