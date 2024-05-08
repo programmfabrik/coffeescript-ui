@@ -3,10 +3,11 @@
 	width: 24px;
 	height: 12px;
 	box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.14) inset;
+	background-color: var(--custom-tag-background);
 
 	@each $color, $values in $colors {
 		&.cui-swatch-color-#{$color} {
-			background: color($color);
+			background-color: color($color);
 		}
 	}
 }
