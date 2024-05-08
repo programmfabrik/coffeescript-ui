@@ -23,4 +23,3 @@ src/**.js.map
 coverage/*
 *.map
 _obsolete.scss
-src/scss/thirdparty
