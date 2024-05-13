@@ -1733,6 +1733,9 @@ label[data-label-clickable],
   opacity: var(--label-secondary-opacity, 0.65);
   margin-bottom: 1rem;
 }
+.cui-label.cui-label-danger {
+  color: #dc3545;
+}
 .cui-label[data-type=string] {
   color: #3e9e88;
 }
