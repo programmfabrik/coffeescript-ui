@@ -6,6 +6,27 @@
 ###
 
 class CUI.Password extends CUI.Input
+
+	initOpts: ->
+		super()
+		@addOpts
+			toggleButton:
+				default: false
+				check: Boolean
+
+	readOpts: ->
+		super()
+		if @_toggleButton
+			@_controlElement = new CUI.Button
+				icon: "fa-eye"
+				onClick: (ev, btn) =>
+					if CUI.dom.getAttribute(@__input, "type") == "password"
+						btn.setIcon("fa-eye-slash")
+						@showPassword()
+					else
+						btn.setIcon("fa-eye")
+						@hidePassword()
+
 	__createElement: ->
 		super("password")
 

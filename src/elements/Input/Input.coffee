@@ -148,6 +148,8 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			appearance:
 				check: ["code"]
+			controlElement:
+				check: (v) -> v instanceof CUI.DOMElement
 
 	readOpts: ->
 
@@ -937,6 +939,10 @@ class CUI.Input extends CUI.DataFieldInput
 	render: ->
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
+
+		if @_controlElement
+			CUI.dom.addClass(@_controlElement, 'cui-input-control-element')
+			@append(@_controlElement, @getTemplateKeyForRender())
 
 		# @append(@getChangedMarker(), @getTemplateKeyForRender())
 
