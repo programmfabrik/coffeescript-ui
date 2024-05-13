@@ -1028,6 +1028,11 @@ body {
   height: 13px;
 }
 
+.svg-search-shared {
+  width: 17px;
+  height: 16px;
+}
+
 .svg-select-all {
   width: 15px;
   height: 15px;
@@ -2625,6 +2630,10 @@ textarea {
 .cui-input-appearance-code textarea:focus {
   border-color: #212121;
 }
+.cui-input:has(> .cui-input-control-element) {
+  display: inline-flex;
+  flex-direction: row;
+}
 
 .cui-code-input pre {
   height: 400px;
@@ -2811,6 +2820,22 @@ textarea {
 }
 .cui-date-time[data-cui-date-time-format=date-time-seconds] .cui-input {
   min-width: 175px;
+}
+
+.cui-input.cui-password:has(> .cui-input-control-element) {
+  position: relative;
+}
+.cui-input.cui-password > .cui-button.cui-input-control-element {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.cui-input.cui-password > .cui-button.cui-input-control-element .cui-button-visual {
+  --btn-border-width: 0;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .cui-output .cui-output-empty {
@@ -4005,45 +4030,46 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 24px;
   height: 12px;
   box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.14) inset;
+  background-color: var(--custom-tag-background);
 }
 .css-swatch.cui-swatch-color-blue {
-  background: #6bb2bb;
+  background-color: #6bb2bb;
 }
 .css-swatch.cui-swatch-color-indigo {
-  background: #6610f2;
+  background-color: #6610f2;
 }
 .css-swatch.cui-swatch-color-purple {
-  background: #6f42c1;
+  background-color: #6f42c1;
 }
 .css-swatch.cui-swatch-color-pink {
-  background: #b64b7c;
+  background-color: #b64b7c;
 }
 .css-swatch.cui-swatch-color-red {
-  background: #dc3545;
+  background-color: #dc3545;
 }
 .css-swatch.cui-swatch-color-orange {
-  background: #ff5724;
+  background-color: #ff5724;
 }
 .css-swatch.cui-swatch-color-yellow {
-  background: #d6b13a;
+  background-color: #d6b13a;
 }
 .css-swatch.cui-swatch-color-green {
-  background: #7ca751;
+  background-color: #7ca751;
 }
 .css-swatch.cui-swatch-color-teal {
-  background: #3e9e88;
+  background-color: #3e9e88;
 }
 .css-swatch.cui-swatch-color-cyan {
-  background: #17a2b8;
+  background-color: #17a2b8;
 }
 .css-swatch.cui-swatch-color-white {
-  background: #ffffff;
+  background-color: #ffffff;
 }
 .css-swatch.cui-swatch-color-gray {
-  background: #adb5bd;
+  background-color: #adb5bd;
 }
 .css-swatch.cui-swatch-color-gray-dark {
-  background: #393c3f;
+  background-color: #393c3f;
 }
 
 .cui-buttonbar {
