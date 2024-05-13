@@ -76,6 +76,10 @@ label[data-label-clickable],
 		margin-bottom: $spacer;
 	}
 
+	&.cui-label-danger {
+		@include label-danger();
+	}	
+
 	// todo: make obsolete
 	// &.cui-label--padded {
 	// 	padding: $label-padding;

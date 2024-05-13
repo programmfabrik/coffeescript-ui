@@ -89,6 +89,10 @@
 	}
 }
 
+@mixin label-danger() {
+	color: theme-color('danger');
+}
+
 @mixin label-empty() {
 	color: theme-color('muted');
 
