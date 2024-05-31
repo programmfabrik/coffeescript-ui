@@ -46052,6 +46052,11 @@ CUI.Input = (function(superClass) {
       textarea: {
         check: Boolean
       },
+      textarea_cols: {
+        check: function(v) {
+          return v >= 1;
+        }
+      },
       min_rows: {
         check: function(v) {
           return v >= 2;
@@ -46180,12 +46185,12 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__createElement = function(input_type) {
-    var calculateBaseHeight, oldSizes, resize;
+    var calculateBaseHeight, oldSizes, resize, textarea_opts;
     if (input_type == null) {
       input_type = "text";
     }
     if (this._textarea === true) {
-      this.__input = CUI.dom.$element("textarea", "cui-textarea", {
+      textarea_opts = {
         placeholder: this.getPlaceholder(),
         tabindex: "0",
         maxLength: this._maxLength,
@@ -46193,7 +46198,11 @@ CUI.Input = (function(superClass) {
         spellcheck: this.__spellcheck,
         rows: this._min_rows,
         dir: "auto"
-      });
+      };
+      if (this._textarea_cols) {
+        textarea_opts.cols = this._textarea_cols;
+      }
+      this.__input = CUI.dom.$element("textarea", "cui-textarea", textarea_opts);
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
