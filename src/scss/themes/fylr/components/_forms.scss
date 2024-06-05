@@ -162,6 +162,11 @@
 		
 		@include button-select-as-input();
 	}
+
+	// see "New Records" modal > "Field For Files" and "Metadata mapping" 
+	> .cui-data-field-proxy .cui-select {
+		@include button-select-as-input();
+	}
 }
 
 .cui-maximize-horizontal > .cui-vertical-layout-center {
