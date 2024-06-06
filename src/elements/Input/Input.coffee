@@ -129,6 +129,9 @@ class CUI.Input extends CUI.DataFieldInput
 				check: Boolean
 			textarea:
 				check: Boolean
+			textarea_cols:
+				check: (v) ->
+					v >= 1
 			min_rows:
 				check: (v) ->
 					v >= 2
@@ -233,7 +236,7 @@ class CUI.Input extends CUI.DataFieldInput
 	# - input masking
 	__createElement: (input_type="text") ->
 		if @_textarea ==  true
-			@__input = CUI.dom.$element "textarea", "cui-textarea",
+			textarea_opts =
 				placeholder: @getPlaceholder()
 				tabindex: "0"
 				maxLength: @_maxLength
@@ -241,6 +244,10 @@ class CUI.Input extends CUI.DataFieldInput
 				spellcheck: @__spellcheck
 				rows: @_min_rows
 				dir: "auto"
+			if @_textarea_cols
+				textarea_opts.cols = @_textarea_cols
+			@__input = CUI.dom.$element("textarea", "cui-textarea", textarea_opts)
+
 			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
 
 			resize = =>

@@ -39597,12 +39597,19 @@ CUI.DateTime = (function(superClass) {
     return locale;
   };
 
-  DateTime.format = function(datestr_or_moment, output_format, output_type, parseZone) {
-    var dt, str;
+  DateTime.format = function(datestr_or_moment, output_format, output_type, parseZone, locale) {
+    var dt, opts, str;
     if (parseZone == null) {
       parseZone = false;
     }
-    dt = new CUI.DateTime();
+    if (locale == null) {
+      locale = null;
+    }
+    opts = {};
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
     str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
     return str;
   };
@@ -40018,16 +40025,16 @@ CUI.DateTimeFormats["en-US"] = {
     }, {
       text: "Jahr-Monat",
       support_bc: false,
-      input: "MM-YYYY",
+      input: "YYYY-MM",
       invalid: "Invalid date",
       store: "YYYY-MM",
       display: "MMMM YYYY",
-      display_short: "MM-YYYY",
+      display_short: "YYYY-MM",
       display_attribute: "year-month",
       display_short_attribute: "year-month-short",
       type: "year_month",
       clock: false,
-      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM"]
+      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM", "MM-YYYY", "M-YYYY", "YYYY-M", "YYYY.M", "YYYY/M"]
     }, {
       text: "Jahr",
       support_bc: true,
@@ -46045,6 +46052,11 @@ CUI.Input = (function(superClass) {
       textarea: {
         check: Boolean
       },
+      textarea_cols: {
+        check: function(v) {
+          return v >= 1;
+        }
+      },
       min_rows: {
         check: function(v) {
           return v >= 2;
@@ -46173,12 +46185,12 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__createElement = function(input_type) {
-    var calculateBaseHeight, oldSizes, resize;
+    var calculateBaseHeight, oldSizes, resize, textarea_opts;
     if (input_type == null) {
       input_type = "text";
     }
     if (this._textarea === true) {
-      this.__input = CUI.dom.$element("textarea", "cui-textarea", {
+      textarea_opts = {
         placeholder: this.getPlaceholder(),
         tabindex: "0",
         maxLength: this._maxLength,
@@ -46186,7 +46198,11 @@ CUI.Input = (function(superClass) {
         spellcheck: this.__spellcheck,
         rows: this._min_rows,
         dir: "auto"
-      });
+      };
+      if (this._textarea_cols) {
+        textarea_opts.cols = this._textarea_cols;
+      }
+      this.__input = CUI.dom.$element("textarea", "cui-textarea", textarea_opts);
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
