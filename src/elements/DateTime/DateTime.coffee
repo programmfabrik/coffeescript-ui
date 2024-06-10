@@ -1424,16 +1424,23 @@ class CUI.DateTime extends CUI.Input
 
 	# limit output to the given types
 	# the library is very awkward here...
-	@formatWithInputTypes: (datestr, output_types, output_format) ->
+	@formatWithInputTypes: (datestr, output_types, output_format, locale = null) ->
 		if not datestr
 			return null
 
-		dt = new CUI.DateTime(input_types: output_types)
+		opts = {
+			input_types: output_types
+		}
+		if locale
+			opts.locale = locale
+
+		dt = new CUI.DateTime(opts)
 		mom = dt.parseValue(datestr)
+
 		if not mom.isValid()
 			return null
 
-		dt.format(mom, output_format)
+		dt.format(mom, output_format, null, false)
 
 	@display: (datestr_or_moment, opts={}) ->
 		if not opts.hasOwnProperty("input_types")
