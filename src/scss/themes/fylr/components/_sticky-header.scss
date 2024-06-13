@@ -58,11 +58,13 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		font-weight: bold;		
-		background: linear-gradient(
-			to top, 
-			var(--sticky-header-background-from, #{$sticky-header-background-body}) 30%, 
-			var(--sticky-header-background-to, #{$body-bg}) 50%);
+		font-weight: bold;
+		background:
+			linear-gradient(
+				to top,
+				var(--sticky-header-background-from, #{$sticky-header-background-body}) 30%,
+				var(--sticky-header-background-to, #{$body-bg}) 50%
+			);
 
 		.cui-pane & {
 			--sticky-header-background-from: #{$sticky-header-background-pane};
