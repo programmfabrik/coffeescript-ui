@@ -39614,19 +39614,26 @@ CUI.DateTime = (function(superClass) {
     return str;
   };
 
-  DateTime.formatWithInputTypes = function(datestr, output_types, output_format) {
-    var dt, mom;
+  DateTime.formatWithInputTypes = function(datestr, output_types, output_format, locale) {
+    var dt, mom, opts;
+    if (locale == null) {
+      locale = null;
+    }
     if (!datestr) {
       return null;
     }
-    dt = new CUI.DateTime({
+    opts = {
       input_types: output_types
-    });
+    };
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
     mom = dt.parseValue(datestr);
     if (!mom.isValid()) {
       return null;
     }
-    return dt.format(mom, output_format);
+    return dt.format(mom, output_format, null, false);
   };
 
   DateTime.display = function(datestr_or_moment, opts) {
