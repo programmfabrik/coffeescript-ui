@@ -633,7 +633,8 @@ $drag-lasso-background: 	theme-color('primary') !default;
 $sticky-header-font-size: 		$font-size-sm !default;
 $sticky-header-color: 			$body-color !default;
 $sticky-header-border-color:	$hr-border-color-dark !default;
-$sticky-header-opacity:			0.94 !default;
+$sticky-header-background-body: color.adjust($body-bg, $alpha: -0.06);
+$sticky-header-background-pane: color.adjust($pane-background, $alpha: -0.06);
 
 // * Digi Display
 // * ==========================================

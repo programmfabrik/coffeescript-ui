@@ -44,23 +44,29 @@
 }
 
 .cui-sticky-header-control {
-	position: fixed;
+	position: sticky;
 	overflow: hidden;
-	top: 0;
-	left: 0;
-	right: 0;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
 	height: 0;
+	width: 100% !important;
 	z-index: 1;
+	flex: 0 0 auto;
 
 	.cui-sticky-header {
 		position: absolute;
 		left: 0;
 		right: 0;
-		font-weight: bold;
-		background: rgba($body-bg, $sticky-header-opacity);
+		font-weight: bold;		
+		background: linear-gradient(
+			to top, 
+			var(--sticky-header-background-from, #{$sticky-header-background-body}) 30%, 
+			var(--sticky-header-background-to, #{$body-bg}) 50%);
 
 		.cui-pane & {
-			background-color: rgba($pane-background, $sticky-header-opacity);
+			--sticky-header-background-from: #{$sticky-header-background-pane};
+			--sticky-header-background-to: #{$pane-background};
 		}
 	}
 }
