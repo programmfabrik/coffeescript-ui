@@ -3954,23 +3954,26 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-sticky-header-control {
-  position: fixed;
+  position: sticky;
   overflow: hidden;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   height: 0;
+  width: 100% !important;
   z-index: 1;
+  flex: 0 0 auto;
 }
 .cui-sticky-header-control .cui-sticky-header {
   position: absolute;
   left: 0;
   right: 0;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.94);
+  background: linear-gradient(to top, var(--sticky-header-background-from, rgba(255, 255, 255, 0.94)) 30%, var(--sticky-header-background-to, #ffffff) 50%);
 }
 .cui-pane .cui-sticky-header-control .cui-sticky-header {
-  background-color: rgba(245, 245, 245, 0.94);
+  --sticky-header-background-from: rgba(245, 245, 245, 0.94);
+  --sticky-header-background-to: #f5f5f5;
 }
 
 .cui-sticky-header-level-1,
