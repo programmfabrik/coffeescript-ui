@@ -211,7 +211,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				name: key.name
 				undo_support: false
 				content_size: @_content_size
-				placeholder: @_placeholder?[key.name]
+				placeholder: @_placeholder?[key.name] or @_placeholder?["default"]
 				onDataInit: (field, data) =>
 					if @__user_selectable and CUI.util.isEmpty(data[field.getName()])
 						field.hide()

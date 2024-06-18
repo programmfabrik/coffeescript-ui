@@ -55988,7 +55988,7 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__initInputs = function() {
-    var fn, i, idx, input, input_opts, key, len, ref, ref1;
+    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2;
     if (this.__inputs) {
       return;
     }
@@ -56097,7 +56097,7 @@ CUI.MultiInput = (function(superClass) {
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
-        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0,
+        placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),
         onDataInit: (function(_this) {
           return function(field, data) {
             if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
