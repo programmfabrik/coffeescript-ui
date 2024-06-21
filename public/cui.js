@@ -45070,6 +45070,12 @@ CUI.FormModal = (function(superClass) {
             };
           })(this)
         }
+      },
+      hasChanges: {
+        check: Function
+      },
+      revertData: {
+        check: Function
       }
     });
   };
@@ -45093,7 +45099,7 @@ CUI.FormModal = (function(superClass) {
     }
     opts.pane.footer_right = btn;
     mod = new CUI.Modal(opts);
-    if (this.__orig_set_data) {
+    if (this.__orig_set_data || this._hasChanges) {
       CUI.Events.listen({
         type: "data-changed",
         node: mod,
@@ -45112,6 +45118,10 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.revertData = function() {
+    if (this._revertData) {
+      this._revertData(this);
+      return this;
+    }
     CUI.util.assert(this.__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", {
       opts: this.opts
     });
@@ -45150,6 +45160,9 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.hasChanges = function() {
+    if (this._hasChanges) {
+      return this._hasChanges(this, this.getData());
+    }
     if (this.__orig_set_data) {
       return JSON.stringify(this.__orig_data) !== JSON.stringify(this.__orig_set_data[this._name]);
     } else {
@@ -45160,7 +45173,7 @@ CUI.FormModal = (function(superClass) {
   FormModal.prototype.getPopoverOpts = function() {
     var onCancel, pop_opts;
     pop_opts = CUI.util.copyObject(this._modal, true);
-    if (pop_opts.cancel && this.__orig_set_data) {
+    if (pop_opts.cancel && (this.__orig_set_data || this._hasChanges)) {
       onCancel = pop_opts.onCancel;
       pop_opts.onCancel = (function(_this) {
         return function(ev, modal) {
