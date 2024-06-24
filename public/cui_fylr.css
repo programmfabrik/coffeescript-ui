@@ -3745,14 +3745,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-width: 0;
   padding-right: 0;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-key label,
-.cui-form-block--has-checkbox .cui-form .cui-form-key .cui-label {
+.cui-form-block--has-checkbox .cui-form .cui-form-key > label,
+.cui-form-block--has-checkbox .cui-form .cui-form-key > .cui-label {
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-value label:not(.cui-file-upload-drop-zone),
-.cui-form-block--has-checkbox .cui-form .cui-form-value .cui-label:not(.cui-file-upload-drop-zone),
-.cui-form-block--has-checkbox .cui-form .cui-form-value .cui-data-field-output-label:not(.cui-file-upload-drop-zone) {
+.cui-form-block--has-checkbox .cui-form .cui-form-value > label:not(.cui-file-upload-drop-zone),
+.cui-form-block--has-checkbox .cui-form .cui-form-value > .cui-label:not(.cui-file-upload-drop-zone),
+.cui-form-block--has-checkbox .cui-form .cui-form-value > .cui-output > .cui-data-field-output-label:not(.cui-file-upload-drop-zone) {
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
@@ -5080,8 +5080,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     max-width: none;
     padding-right: 1rem;
   }
-  .cui-form .cui-form-key label,
-  .cui-form .cui-form-key .cui-label {
+  .cui-form .cui-form-key > label,
+  .cui-form .cui-form-key > .cui-label {
     padding-top: var(--form-key-padding-top, 0.38em);
     padding-bottom: 0;
   }
@@ -5089,12 +5089,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     flex: 1 1 auto;
     min-width: 0;
   }
-  .cui-form .cui-form-value input {
+  .cui-form .cui-form-value > .cui-input > input {
     min-width: 0;
   }
-  .cui-form .cui-form-value label,
-  .cui-form .cui-form-value .cui-label,
-  .cui-form .cui-form-value .cui-data-field-output-label {
+  .cui-form .cui-form-value > label,
+  .cui-form .cui-form-value > .cui-label,
+  .cui-form .cui-form-value > .cui-output > .cui-data-field-output-label {
     padding-top: var(--form-key-padding-top, 0.38em);
     padding-bottom: 0;
   }
