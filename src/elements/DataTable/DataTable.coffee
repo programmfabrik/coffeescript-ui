@@ -44,6 +44,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 				check: Function
 			onNodeAdd:
 				check: Function
+			onNewNodeAdd:
+				check: Function
 			footer_right:
 				check: (v) ->
 					CUI.util.isContent(v)
@@ -124,7 +126,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 	getDefaultValue: ->
 		[]
 
-	addRow: (data={}) ->
+	addRow: (data={}, newRow=false) ->
 		@rows.push(data)
 		# console.debug "creating new data node"
 		new_node = new CUI.DataTableNode
@@ -133,7 +135,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			dataRowIdx: @rows.length-1
 			rows: @rows
 
-		@_onNodeAdd?(node)
+		@_onNodeAdd?(new_node)
 		@storeValue(CUI.util.copyObject(@rows, true))
 		if @_chunk_size > 0
 			@__offset = Math.floor((@rows.length-1) / @_chunk_size) * @_chunk_size
@@ -141,6 +143,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 		else
 			@listView.appendRow(new_node)
 		# console.debug "data-changed on CUI.DataTable PLUS storing values:", CUI.util.dump(@rows)
+
+		@_onNewNodeAdd?(new_node)
 		new_node
 
 	updateButtons: ->
@@ -158,7 +162,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 					tooltip: text: CUI.DataTable.defaults.plus_button_tooltip
 					group: "plus-minus"
 					onClick: =>
-						@addRow()
+						@addRow({}, true)
 
 			@minusButton = new CUI.defaults.class.Button
 				icon: "minus"
