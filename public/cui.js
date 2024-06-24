@@ -37544,6 +37544,9 @@ CUI.DataTable = (function(superClass) {
       onNodeAdd: {
         check: Function
       },
+      onNewNodeAdd: {
+        check: Function
+      },
       footer_right: {
         check: function(v) {
           return CUI.util.isContent(v);
@@ -37668,10 +37671,13 @@ CUI.DataTable = (function(superClass) {
     return [];
   };
 
-  DataTable.prototype.addRow = function(data) {
+  DataTable.prototype.addRow = function(data, newRow) {
     var new_node;
     if (data == null) {
       data = {};
+    }
+    if (newRow == null) {
+      newRow = false;
     }
     this.rows.push(data);
     new_node = new CUI.DataTableNode({
@@ -37681,7 +37687,7 @@ CUI.DataTable = (function(superClass) {
       rows: this.rows
     });
     if (typeof this._onNodeAdd === "function") {
-      this._onNodeAdd(node);
+      this._onNodeAdd(new_node);
     }
     this.storeValue(CUI.util.copyObject(this.rows, true));
     if (this._chunk_size > 0) {
@@ -37689,6 +37695,9 @@ CUI.DataTable = (function(superClass) {
       this.displayValue();
     } else {
       this.listView.appendRow(new_node);
+    }
+    if (typeof this._onNewNodeAdd === "function") {
+      this._onNewNodeAdd(new_node);
     }
     return new_node;
   };
@@ -37714,7 +37723,7 @@ CUI.DataTable = (function(superClass) {
           group: "plus-minus",
           onClick: (function(_this) {
             return function() {
-              return _this.addRow();
+              return _this.addRow({}, true);
             };
           })(this)
         });
