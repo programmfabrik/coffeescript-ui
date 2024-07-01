@@ -37544,6 +37544,9 @@ CUI.DataTable = (function(superClass) {
       onNodeAdd: {
         check: Function
       },
+      onNewNodeAdd: {
+        check: Function
+      },
       footer_right: {
         check: function(v) {
           return CUI.util.isContent(v);
@@ -37668,10 +37671,13 @@ CUI.DataTable = (function(superClass) {
     return [];
   };
 
-  DataTable.prototype.addRow = function(data) {
+  DataTable.prototype.addRow = function(data, newRow) {
     var new_node;
     if (data == null) {
       data = {};
+    }
+    if (newRow == null) {
+      newRow = false;
     }
     this.rows.push(data);
     new_node = new CUI.DataTableNode({
@@ -37681,7 +37687,7 @@ CUI.DataTable = (function(superClass) {
       rows: this.rows
     });
     if (typeof this._onNodeAdd === "function") {
-      this._onNodeAdd(node);
+      this._onNodeAdd(new_node);
     }
     this.storeValue(CUI.util.copyObject(this.rows, true));
     if (this._chunk_size > 0) {
@@ -37689,6 +37695,9 @@ CUI.DataTable = (function(superClass) {
       this.displayValue();
     } else {
       this.listView.appendRow(new_node);
+    }
+    if (typeof this._onNewNodeAdd === "function") {
+      this._onNewNodeAdd(new_node);
     }
     return new_node;
   };
@@ -37714,7 +37723,7 @@ CUI.DataTable = (function(superClass) {
           group: "plus-minus",
           onClick: (function(_this) {
             return function() {
-              return _this.addRow();
+              return _this.addRow({}, true);
             };
           })(this)
         });
@@ -39614,19 +39623,26 @@ CUI.DateTime = (function(superClass) {
     return str;
   };
 
-  DateTime.formatWithInputTypes = function(datestr, output_types, output_format) {
-    var dt, mom;
+  DateTime.formatWithInputTypes = function(datestr, output_types, output_format, locale) {
+    var dt, mom, opts;
+    if (locale == null) {
+      locale = null;
+    }
     if (!datestr) {
       return null;
     }
-    dt = new CUI.DateTime({
+    opts = {
       input_types: output_types
-    });
+    };
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
     mom = dt.parseValue(datestr);
     if (!mom.isValid()) {
       return null;
     }
-    return dt.format(mom, output_format);
+    return dt.format(mom, output_format, null, false);
   };
 
   DateTime.display = function(datestr_or_moment, opts) {
@@ -45063,6 +45079,12 @@ CUI.FormModal = (function(superClass) {
             };
           })(this)
         }
+      },
+      hasChanges: {
+        check: Function
+      },
+      revertData: {
+        check: Function
       }
     });
   };
@@ -45086,7 +45108,7 @@ CUI.FormModal = (function(superClass) {
     }
     opts.pane.footer_right = btn;
     mod = new CUI.Modal(opts);
-    if (this.__orig_set_data) {
+    if (this.__orig_set_data || this._hasChanges) {
       CUI.Events.listen({
         type: "data-changed",
         node: mod,
@@ -45105,6 +45127,10 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.revertData = function() {
+    if (this._revertData) {
+      this._revertData(this);
+      return this;
+    }
     CUI.util.assert(this.__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", {
       opts: this.opts
     });
@@ -45143,6 +45169,9 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.hasChanges = function() {
+    if (this._hasChanges) {
+      return this._hasChanges(this, this.getData());
+    }
     if (this.__orig_set_data) {
       return JSON.stringify(this.__orig_data) !== JSON.stringify(this.__orig_set_data[this._name]);
     } else {
@@ -45153,7 +45182,7 @@ CUI.FormModal = (function(superClass) {
   FormModal.prototype.getPopoverOpts = function() {
     var onCancel, pop_opts;
     pop_opts = CUI.util.copyObject(this._modal, true);
-    if (pop_opts.cancel && this.__orig_set_data) {
+    if (pop_opts.cancel && (this.__orig_set_data || this._hasChanges)) {
       onCancel = pop_opts.onCancel;
       pop_opts.onCancel = (function(_this) {
         return function(ev, modal) {
@@ -55981,7 +56010,7 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__initInputs = function() {
-    var fn, i, idx, input, input_opts, key, len, ref, ref1;
+    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2;
     if (this.__inputs) {
       return;
     }
@@ -56090,7 +56119,7 @@ CUI.MultiInput = (function(superClass) {
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
-        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0,
+        placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),
         onDataInit: (function(_this) {
           return function(field, data) {
             if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
