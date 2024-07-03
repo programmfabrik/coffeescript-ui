@@ -4508,7 +4508,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-table {
   display: inline-table;
   overflow-x: auto;
-  border: 1px solid rgba(206, 212, 218, 0.5);
+  border: 1px solid var(--table-border-color, rgba(206, 212, 218, 0.5));
   border-radius: 2px;
 }
 .cui-table .cui-tr {
@@ -4534,7 +4534,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
 }
 .cui-table > .cui-tr + .cui-tr > .cui-table-td {
-  border-top: 1px solid rgba(206, 212, 218, 0.5);
+  border-top: 1px solid var(--table-border-color, rgba(206, 212, 218, 0.5));
 }
 .cui-table .cui-table-td {
   vertical-align: middle;
