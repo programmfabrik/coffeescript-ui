@@ -303,7 +303,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			fixedRows: if @_no_header then 0 else 1
 			footer_left: @getFooter()
 			footer_right: @_footer_right
-			fixedCols: if @_rowMove then 1 else 0
+			fixedCols: 0
 			colResize: if @_no_header then false else true
 			colClasses: colClasses
 			rowMove: @_rowMove
