@@ -25,6 +25,10 @@
 	flex-shrink: 0;
 	border-bottom: 1px solid var(--sticky-header-border-color, #{$sticky-header-border-color});
 
+	> .cui-sticky-header-center {
+		@include text-truncate();
+	}
+
 	.cui-tab > & {
 		flex-basis: auto;
 	}
