@@ -37912,7 +37912,7 @@ CUI.DataTable = (function(superClass) {
       fixedRows: this._no_header ? 0 : 1,
       footer_left: this.getFooter(),
       footer_right: this._footer_right,
-      fixedCols: this._rowMove ? 1 : 0,
+      fixedCols: 0,
       colResize: this._no_header ? false : true,
       colClasses: colClasses,
       rowMove: this._rowMove,
