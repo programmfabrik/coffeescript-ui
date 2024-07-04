@@ -3943,6 +3943,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   flex-shrink: 0;
   border-bottom: 1px solid var(--sticky-header-border-color, #393c3f);
 }
+.cui-sticky-header > .cui-sticky-header-center {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .cui-tab > .cui-sticky-header {
   flex-basis: auto;
 }
@@ -3991,6 +3996,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   letter-spacing: 0.03em;
 }
 
+/*
+todo: 
+- test with collpsible header
+- make absolute positionign of the headers within control obsolete ?
+- optimize the "animation" when a new sticky header pushes out the old sticky header 
+*/
 /*
 	<div class="cui-digi-display">
 		<div class="cui-digi-display-container">
