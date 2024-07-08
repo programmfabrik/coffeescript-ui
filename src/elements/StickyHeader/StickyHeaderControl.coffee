@@ -17,14 +17,14 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		@__control = CUI.dom.div("cui-sticky-header-control")
 
-		CUI.Events.listen
-			instance: @
-			type: "viewport-resize"
-			node: @_element
-			call: =>
-				@__positionControl()
+		# CUI.Events.listen
+		# 	instance: @
+		# 	type: "viewport-resize"
+		# 	node: @_element
+		# 	call: =>
+		# 		@__positionControl()
 
-		@__positionControl()
+		# @__positionControl()
 
 		CUI.dom.append(@_element, @__control)
 
@@ -39,7 +39,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 			instance: @
 			call: (ev) =>
 				# console.time "scroll"
-				@position()
+				# @position()
 				# console.timeEnd "scroll"
 				return
 
@@ -52,14 +52,14 @@ class CUI.StickyHeaderControl extends CUI.Element
 					CUI.util.isElement(v)
 
 	__positionControl: ->
-		dim = CUI.dom.getDimensions(@_element)
-		CUI.dom.setStyle @__control,
-			left: dim.clientBoundingRect.left
-			top: dim.clientBoundingRect.top
+		# dim = CUI.dom.getDimensions(@_element)
+		# CUI.dom.setStyle @__control,
+		# 	left: dim.clientBoundingRect.left
+		# 	top: dim.clientBoundingRect.top
 
-		CUI.dom.setDimension(@__control, "marginBoxWidth", dim.clientWidth)
-		# console.error "__positionControl", @_element, @__control
-		return
+		# CUI.dom.setDimension(@__control, "marginBoxWidth", dim.clientWidth)
+		# # console.error "__positionControl", @_element, @__control
+		# return
 
 	isInDOM: ->
 		@__control and CUI.dom.isInDOM(@__control)
@@ -106,7 +106,7 @@ class CUI.StickyHeaderControl extends CUI.Element
 		@__headers = null
 		@newStickyHeaders = null
 
-	position: ->
+	position2: ->
 		if not @isInDOM()
 			return
 

@@ -24,7 +24,35 @@ class CUI.StickyHeader extends CUI.DOMElement
 		else
 			@replace(@_content, "center")
 
-		@_control.addStickyHeader(@)
+		# @_control.addStickyHeader(@)
+
+		# el = document.querySelector(@)
+
+		# todo:
+		# level-1 / level-2 probably need a rootMargin of their respective "top" value ??
+
+		@intersectionCallback = (entries) =>
+			entries.forEach((entry) =>
+				# console.log("entry.isIntersecting:", entry.isIntersecting)
+				# console.log("entry.boundingClientRect.top:" , entry.boundingClientRect.top)
+				# console.log("entry.intersectionRatio:" , entry.intersectionRatio)
+				# console.log("entry.rootBounds:" , entry.rootBounds)
+
+				if entry.boundingClientRect.top < entry.rootBounds.top
+					entry.target.classList.add("is-stuck")
+				else
+					entry.target.classList.remove("is-stuck")
+			)
+		
+		observer = new IntersectionObserver( 
+			@intersectionCallback,				
+			{ 
+				root: @_parent,
+				threshold: [1] 
+			}
+		)
+
+		observer.observe(@DOM)
 
 	initOpts: ->
 		super()
@@ -32,6 +60,7 @@ class CUI.StickyHeader extends CUI.DOMElement
 			control:
 				mandatory: true
 				check: CUI.StickyHeaderControl
+			parent: {} #todo: we nned the parent container
 			text:
 				check: String
 			content: {}
