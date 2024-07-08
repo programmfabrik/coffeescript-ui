@@ -3934,7 +3934,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 </div>
 */
 .cui-sticky-header {
-  position: relative;
   padding: 0.25rem 0;
   font-size: 0.75rem;
   font-weight: bold;
@@ -3942,6 +3941,25 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   flex-basis: 100%;
   flex-shrink: 0;
   border-bottom: 1px solid var(--sticky-header-border-color, #393c3f);
+  background: var(--sticky-header-background, #ffffff);
+  visibility: visible !important;
+  position: sticky;
+  z-index: 10;
+}
+.cui-sticky-header.is-stuck {
+  --sticky-header-background: rgba(255, 255, 255, 0.94);
+}
+.cui-sticky-header.is-stuck:has(~ .cui-sticky-header.is-stuck) {
+  opacity: 0;
+}
+.cui-sticky-header.cui-sticky-header-level-0 {
+  top: -1px;
+}
+.cui-sticky-header.cui-sticky-header-level-1 {
+  top: 26px;
+}
+.cui-sticky-header.cui-sticky-header-level-3 {
+  top: 53px;
 }
 .cui-sticky-header > .cui-sticky-header-center {
   overflow: hidden;
@@ -3969,16 +3987,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 100% !important;
   z-index: 1;
   overflow: hidden;
-  flex: 1 0 auto;
-}
-.cui-sticky-header-control:has(.cui-sticky-header) {
-  display: block;
 }
 .cui-sticky-header-control .cui-sticky-header {
   position: absolute;
   left: 0;
   right: 0;
-  background: var(--sticky-header-background, rgba(255, 255, 255, 0.94));
+  background: var(--sticky-header-background, #ffffff);
 }
 
 .cui-sticky-header-level-0 {
@@ -3998,8 +4012,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 /*
 todo: 
-- test with collpsible header
-- make absolute positionign of the headers within control obsolete ?
+- make absolute positionign of the headers within control obsolete 
+	- we could do this with flexbox and order, but drawback is that header won't be "pushed" off screen by the next header
 - optimize the "animation" when a new sticky header pushes out the old sticky header 
 */
 /*

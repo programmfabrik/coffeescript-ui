@@ -59742,6 +59742,7 @@ CUI.StickyHeader = (function(superClass) {
   extend(StickyHeader, superClass);
 
   function StickyHeader(opts) {
+    var observer;
     StickyHeader.__super__.constructor.call(this, opts);
     this.header = new CUI.Template({
       name: "sticky-header",
@@ -59756,7 +59757,22 @@ CUI.StickyHeader = (function(superClass) {
     } else {
       this.replace(this._content, "center");
     }
-    this._control.addStickyHeader(this);
+    this.intersectionCallback = (function(_this) {
+      return function(entries) {
+        return entries.forEach(function(entry) {
+          if (entry.boundingClientRect.top < entry.rootBounds.top) {
+            return entry.target.classList.add("is-stuck");
+          } else {
+            return entry.target.classList.remove("is-stuck");
+          }
+        });
+      };
+    })(this);
+    observer = new IntersectionObserver(this.intersectionCallback, {
+      root: this._parent,
+      threshold: [1]
+    });
+    observer.observe(this.DOM);
   }
 
   StickyHeader.prototype.initOpts = function() {
@@ -59766,6 +59782,7 @@ CUI.StickyHeader = (function(superClass) {
         mandatory: true,
         check: CUI.StickyHeaderControl
       },
+      parent: {},
       text: {
         check: String
       },
@@ -59818,17 +59835,6 @@ CUI.StickyHeaderControl = (function(superClass) {
     }
     CUI.dom.data(this._element, "stickyHeaderControl", this);
     this.__control = CUI.dom.div("cui-sticky-header-control");
-    CUI.Events.listen({
-      instance: this,
-      type: "viewport-resize",
-      node: this._element,
-      call: (function(_this) {
-        return function() {
-          return _this.__positionControl();
-        };
-      })(this)
-    });
-    this.__positionControl();
     CUI.dom.append(this._element, this.__control);
     this.headers = [];
     this.newStickyHeaders = [];
@@ -59839,9 +59845,7 @@ CUI.StickyHeaderControl = (function(superClass) {
       type: "scroll",
       instance: this,
       call: (function(_this) {
-        return function(ev) {
-          _this.position();
-        };
+        return function(ev) {};
       })(this)
     });
   }
@@ -59858,15 +59862,7 @@ CUI.StickyHeaderControl = (function(superClass) {
     });
   };
 
-  StickyHeaderControl.prototype.__positionControl = function() {
-    var dim;
-    dim = CUI.dom.getDimensions(this._element);
-    CUI.dom.setStyle(this.__control, {
-      left: dim.clientBoundingRect.left,
-      top: dim.clientBoundingRect.top
-    });
-    CUI.dom.setDimension(this.__control, "marginBoxWidth", dim.clientWidth);
-  };
+  StickyHeaderControl.prototype.__positionControl = function() {};
 
   StickyHeaderControl.prototype.isInDOM = function() {
     return this.__control && CUI.dom.isInDOM(this.__control);
@@ -59919,7 +59915,7 @@ CUI.StickyHeaderControl = (function(superClass) {
     return this.newStickyHeaders = null;
   };
 
-  StickyHeaderControl.prototype.position = function() {
+  StickyHeaderControl.prototype.position2 = function() {
     var cut, dimInControl, extraTop, header, hiddenHeader, hideHeader, i, idx, j, k, l, len, len1, len2, len3, m, n, next_header, nodeCloned, o, ref, ref1, ref2, ref3, ref4, scrollTop, slot, slots, top, top_space;
     if (!this.isInDOM()) {
       return;
