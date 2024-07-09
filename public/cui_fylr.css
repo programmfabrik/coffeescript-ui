@@ -3969,7 +3969,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 100% !important;
   z-index: 1;
   overflow: hidden;
-  flex: 1 0 auto;
 }
 .cui-sticky-header-control:has(.cui-sticky-header) {
   display: block;
@@ -3998,8 +3997,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 /*
 todo: 
-- test with collpsible header
-- make absolute positionign of the headers within control obsolete ?
+- make absolute positionign of the headers within control obsolete 
+	- we could do this with flexbox and order, but drawback is that header won't be "pushed" off screen by the next header
 - optimize the "animation" when a new sticky header pushes out the old sticky header 
 */
 /*
