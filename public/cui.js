@@ -37559,6 +37559,10 @@ CUI.DataTable = (function(superClass) {
           return CUI.util.isArray(v);
         }
       },
+      append_buttons: {
+        check: Boolean,
+        "default": false
+      },
       chunk_size: {
         "default": 0,
         mandatory: true,
@@ -37711,8 +37715,9 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.getFooter = function() {
-    var buttons, load_page, page_data;
-    buttons = this._buttons.slice(0);
+    var buttons, custom_buttons, load_page, page_data;
+    custom_buttons = this._buttons.slice(0);
+    buttons = [];
     if (this._new_rows !== "none") {
       if (this._new_rows !== "remove_only") {
         buttons.push({
@@ -37816,6 +37821,13 @@ CUI.DataTable = (function(superClass) {
           };
         })(this)
       });
+    }
+    if (custom_buttons.length) {
+      if (this._append_buttons) {
+        buttons = buttons.concat(custom_buttons);
+      } else {
+        buttons = custom_buttons.concat(buttons);
+      }
     }
     if (buttons.length) {
       return new CUI.Buttonbar({
