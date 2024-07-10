@@ -7770,6 +7770,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-menu-divider {
   margin: 0.25rem 0;
 }
+.cui-menu-divider + .cui-menu-divider {
+  display: none;
+}
 
 /*
 <div class="cui-layer-root cui-layer-root-layer cui-confirmation-dialog">
