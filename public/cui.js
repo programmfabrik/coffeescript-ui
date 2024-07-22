@@ -39735,23 +39735,26 @@ CUI.DateTime = (function(superClass) {
     return momentString;
   };
 
-  DateTime.formatGroupLabel = function(date, groupFormat, locale) {
+  DateTime.formatGroupLabel = function(date, groupFormat, locale, timeZone) {
     var end, mom, start;
     if (locale == null) {
       locale = null;
     }
+    if (timeZone == null) {
+      timeZone = CUI.Timezone.getTimezone();
+    }
+    mom = moment(date).tz(timeZone);
     switch (groupFormat) {
       case "year":
-        return CUI.DateTime.format(date, "display_short", "year", true, locale);
+        return CUI.DateTime.format(mom, "display_short", "year", false, locale);
       case "month":
-        return CUI.DateTime.format(date, "display_short", "year_month", true, locale);
+        return CUI.DateTime.format(mom, "display_short", "year_month", false, locale);
       case "week":
-        mom = CUI.util.moment(date);
         start = mom.clone().startOf("isoWeek");
         end = mom.clone().endOf("isoWeek");
-        return CUI.DateTime.format(start, "display_short", "date", true, locale) + " - " + CUI.DateTime.format(end, "display_short", "date", true, locale);
+        return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " + CUI.DateTime.format(end, "display_short", "date", false, locale);
       case "day":
-        return CUI.DateTime.format(date, "display_short", "date", true, locale);
+        return CUI.DateTime.format(mom, "display_short", "date", false, locale);
       default:
         return date;
     }
