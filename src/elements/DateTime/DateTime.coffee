@@ -1551,20 +1551,20 @@ class CUI.DateTime extends CUI.Input
 		return momentString
 
 	# groupFormat: "year", "month", "week", "day"
-	@formatGroupLabel: (date, groupFormat) ->
+	@formatGroupLabel: (date, groupFormat, locale = null) ->
 		switch groupFormat
 			when "year"
-				return CUI.DateTime.format(date, "display_short", "year")
+				return CUI.DateTime.format(date, "display_short", "year", true, locale)
 			when "month"
-				return CUI.DateTime.format(date, "display_short", "year_month")
+				return CUI.DateTime.format(date, "display_short", "year_month", true, locale)
 			when "week"
 				# Get the date of the first day of the week
 				mom = CUI.util.moment(date)
 				start = mom.clone().startOf("isoWeek")
 				# Get the date of the last day of the week
 				end = mom.clone().endOf("isoWeek")
-				return CUI.DateTime.format(start, "display_short", "date") + " - " +CUI.DateTime.format(end, "display_short", "date")
+				return CUI.DateTime.format(start, "display_short", "date", true, locale) + " - " +CUI.DateTime.format(end, "display_short", "date", true, locale)
 			when "day"
-				return CUI.DateTime.format(date, "display_short", "date")
+				return CUI.DateTime.format(date, "display_short", "date", true, locale)
 			else
 				return date
