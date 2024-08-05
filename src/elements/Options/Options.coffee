@@ -144,7 +144,7 @@ class CUI.Options extends CUI.DataField
 			for cb in @__checkboxes
 				opt = cb.getOptValue()
 				opt_unchecked = cb.getOptValueUnchecked()
-				if @getValue().indexOf(opt) > -1
+				if @getValue()?.indexOf(opt) > -1
 					@__options_data[cb.getName()] = opt
 				else
 					@__options_data[cb.getName()] = opt_unchecked
@@ -360,7 +360,7 @@ class CUI.Options extends CUI.DataField
 						if @_radio and not @__radio_use_array
 							@storeValue(_cb.getValue(), flags)
 						else
-							CUI.util.pushOntoArray(_cb.getOptValue(), arr = @getValue().slice(0))
+							CUI.util.pushOntoArray(_cb.getOptValue(), arr = (@getValue() or []).slice(0))
 							order_value_array(arr)
 							@storeValue(arr, flags)
 							if @_sortable
