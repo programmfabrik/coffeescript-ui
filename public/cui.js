@@ -57115,7 +57115,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.__setDataOnOptions = function(init_data) {
-    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2;
+    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2, ref3;
     if (init_data == null) {
       init_data = true;
     }
@@ -57149,7 +57149,7 @@ CUI.Options = (function(superClass) {
         cb = ref2[l];
         opt = cb.getOptValue();
         opt_unchecked = cb.getOptValueUnchecked();
-        if (this.getValue().indexOf(opt) > -1) {
+        if (((ref3 = this.getValue()) != null ? ref3.indexOf(opt) : void 0) > -1) {
           this.__options_data[cb.getName()] = opt;
         } else {
           this.__options_data[cb.getName()] = opt_unchecked;
@@ -57455,7 +57455,7 @@ CUI.Options = (function(superClass) {
             if (_this._radio && !_this.__radio_use_array) {
               _this.storeValue(_cb.getValue(), flags);
             } else {
-              CUI.util.pushOntoArray(_cb.getOptValue(), arr = _this.getValue().slice(0));
+              CUI.util.pushOntoArray(_cb.getOptValue(), arr = (_this.getValue() || []).slice(0));
               order_value_array(arr);
               _this.storeValue(arr, flags);
               if (_this._sortable) {
