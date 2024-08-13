@@ -37544,6 +37544,9 @@ CUI.DataTable = (function(superClass) {
       onNodeAdd: {
         check: Function
       },
+      onNewNodeAdd: {
+        check: Function
+      },
       footer_right: {
         check: function(v) {
           return CUI.util.isContent(v);
@@ -37555,6 +37558,10 @@ CUI.DataTable = (function(superClass) {
         check: function(v) {
           return CUI.util.isArray(v);
         }
+      },
+      append_buttons: {
+        check: Boolean,
+        "default": false
       },
       chunk_size: {
         "default": 0,
@@ -37668,10 +37675,13 @@ CUI.DataTable = (function(superClass) {
     return [];
   };
 
-  DataTable.prototype.addRow = function(data) {
+  DataTable.prototype.addRow = function(data, newRow) {
     var new_node;
     if (data == null) {
       data = {};
+    }
+    if (newRow == null) {
+      newRow = false;
     }
     this.rows.push(data);
     new_node = new CUI.DataTableNode({
@@ -37681,7 +37691,7 @@ CUI.DataTable = (function(superClass) {
       rows: this.rows
     });
     if (typeof this._onNodeAdd === "function") {
-      this._onNodeAdd(node);
+      this._onNodeAdd(new_node);
     }
     this.storeValue(CUI.util.copyObject(this.rows, true));
     if (this._chunk_size > 0) {
@@ -37689,6 +37699,9 @@ CUI.DataTable = (function(superClass) {
       this.displayValue();
     } else {
       this.listView.appendRow(new_node);
+    }
+    if (typeof this._onNewNodeAdd === "function") {
+      this._onNewNodeAdd(new_node);
     }
     return new_node;
   };
@@ -37702,8 +37715,9 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.getFooter = function() {
-    var buttons, load_page, page_data;
-    buttons = this._buttons.slice(0);
+    var buttons, custom_buttons, load_page, page_data;
+    custom_buttons = this._buttons.slice(0);
+    buttons = [];
     if (this._new_rows !== "none") {
       if (this._new_rows !== "remove_only") {
         buttons.push({
@@ -37714,7 +37728,7 @@ CUI.DataTable = (function(superClass) {
           group: "plus-minus",
           onClick: (function(_this) {
             return function() {
-              return _this.addRow();
+              return _this.addRow({}, true);
             };
           })(this)
         });
@@ -37807,6 +37821,13 @@ CUI.DataTable = (function(superClass) {
           };
         })(this)
       });
+    }
+    if (custom_buttons.length) {
+      if (this._append_buttons) {
+        buttons = buttons.concat(custom_buttons);
+      } else {
+        buttons = custom_buttons.concat(buttons);
+      }
     }
     if (buttons.length) {
       return new CUI.Buttonbar({
@@ -37903,7 +37924,7 @@ CUI.DataTable = (function(superClass) {
       fixedRows: this._no_header ? 0 : 1,
       footer_left: this.getFooter(),
       footer_right: this._footer_right,
-      fixedCols: this._rowMove ? 1 : 0,
+      fixedCols: 0,
       colResize: this._no_header ? false : true,
       colClasses: colClasses,
       rowMove: this._rowMove,
@@ -39714,6 +39735,31 @@ CUI.DateTime = (function(superClass) {
     return momentString;
   };
 
+  DateTime.formatGroupLabel = function(date, groupFormat, locale, timeZone) {
+    var end, mom, start;
+    if (locale == null) {
+      locale = null;
+    }
+    if (timeZone == null) {
+      timeZone = CUI.Timezone.getTimezone();
+    }
+    mom = moment(date).tz(timeZone);
+    switch (groupFormat) {
+      case "year":
+        return CUI.DateTime.format(mom, "display_short", "year", false, locale);
+      case "month":
+        return CUI.DateTime.format(mom, "display_short", "year_month", false, locale);
+      case "week":
+        start = mom.clone().startOf("isoWeek");
+        end = mom.clone().endOf("isoWeek");
+        return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " + CUI.DateTime.format(end, "display_short", "date", false, locale);
+      case "day":
+        return CUI.DateTime.format(mom, "display_short", "date", false, locale);
+      default:
+        return date;
+    }
+  };
+
   return DateTime;
 
 })(CUI.Input);
@@ -39733,8 +39779,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment_locale_fi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fi__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment/locale/sv */ "../node_modules/moment/locale/sv.js");
 /* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment/locale/fr */ "../node_modules/moment/locale/fr.js");
-/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fr__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment_locale_da__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment/locale/da */ "../node_modules/moment/locale/da.js");
+/* harmony import */ var moment_locale_da__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_locale_da__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment/locale/fr */ "../node_modules/moment/locale/fr.js");
+/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fr__WEBPACK_IMPORTED_MODULE_3__);
 /* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
@@ -40453,9 +40501,11 @@ CUI.DateTimeFormats["sv-SE"] = {
   ]
 };
 
+
+
 CUI.DateTimeFormats["da-DK"] = {
   timezone: "Europe/Berlin",
-  moment_locale: "da-DK",
+  moment_locale: "da",
   tab_date: "Dato",
   tab_time: "Tid",
   tab_week: "Uge",
@@ -40769,6 +40819,10 @@ CUI.DateTimeRangeGrammar = (function() {
   	 * KEY: (optional) Identifier that is used in the format method.
    */
 
+  DateTimeRangeGrammar.SUPPORTED_LOCALES = ["de-DE", "en-US"];
+
+  DateTimeRangeGrammar.DEFAULT_LOCALE = "en-US";
+
   DateTimeRangeGrammar.PARSE_GRAMMARS = {};
 
   DateTimeRangeGrammar.PARSE_GRAMMARS["de-DE"] = [["DATE bis DATE", "range", [0, 2], null, "RANGE"], ["YEAR bis YEAR", "range", [0, 2], null, "RANGE_YEAR"], ["YEAR - YEAR n. Chr.", "range", [0, 2]], ["YEAR bis YEAR n. Chr.", "range", [0, 2]], ["zwischen YEAR bis YEAR", "range", [1, 3]], ["zwischen YEAR und YEAR", "range", [1, 3]], ["zwischen DATE bis DATE", "range", [1, 3]], ["zwischen DATE und DATE", "range", [1, 3]], ["von YEAR bis YEAR", "range", [1, 3]], ["YEAR v. Chr. - YEAR n. Chr.", "range", [0, 4], [true]], ["YEAR - YEAR v. Chr.", "range", [0, 2], [true, true]], ["YEAR BC - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR BC - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR bc - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR bc - YEAR nach Chr.", "range", [0, 3], [true]], ["YEAR ac - YEAR n. Chr.", "range", [0, 3], [true]], ["YEAR ac - YEAR nach Chr.", "range", [0, 3], [true]], ["um YEAR", "yearRange", [1], [false, true, true], "AROUND"], ["ca. YEAR", "yearRange", [1], [false, true, true]], ["um YEAR bc", "yearRange", [1], [true, true, true]], ["um YEAR v. Chr.", "yearRange", [1], [true, true, true], "AROUND_BC"], ["ca. YEAR bc", "yearRange", [1], [true, true, true]], ["ca. YEAR v. Chr.", "yearRange", [1], [true, true, true]], ["bis YEAR", "yearOpenStart", [1], [false]], ["bis YEAR bc", "yearOpenStart", [1], [true]], ["vor YEAR", "yearOpenStart", [1], [false], "BEFORE"], ["vor YEAR bc", "yearOpenStart", [1], [true]], ["vor YEAR v. Chr.", "yearOpenStart", [1], [true], "BEFORE_BC"], ["nach YEAR", "yearOpenEnd", [1], [false], "AFTER"], ["nach YEAR ad", "yearOpenEnd", [1], [false]], ["nach YEAR A.D.", "yearOpenEnd", [1], [false]], ["ab YEAR", "yearOpenEnd", [1], [false]], ["ab YEAR ad", "yearOpenEnd", [1], [false]], ["ab YEAR A.D.", "yearOpenEnd", [1], [false]], ["nach YEAR bc", "yearOpenEnd", [1], [true]], ["nach YEAR v. Chr.", "yearOpenEnd", [1], [true], "AFTER_BC"], ["YEAR v. Chr.", "getFromTo", [0], [true]], ["YEAR n. Chr.", "getFromTo", [0]], ["YEAR_DOT Jhd. vor Chr", "century", [0], [true]], ["YEAR_DOT Jhd. vor Chr.", "century", [0], [true]], ["YEAR_DOT Jhd. v. Chr", "century", [0], [true]], ["YEAR_DOT Jhd. v. Chr.", "century", [0], [true], "CENTURY_BC"], ["YEAR_DOT Jhd vor Chr", "century", [0], [true]], ["YEAR_DOT Jhd vor Chr.", "century", [0], [true]], ["YEAR_DOT Jhd v. Chr", "century", [0], [true]], ["YEAR_DOT Jhd v. Chr.", "century", [0], [true]], ["YEAR_DOT Jh vor Chr", "century", [0], [true]], ["YEAR_DOT Jh vor Chr.", "century", [0], [true]], ["YEAR_DOT Jh v. Chr", "century", [0], [true]], ["YEAR_DOT Jh v. Chr.", "century", [0], [true]], ["YEAR_DOT Jh. vor Chr", "century", [0], [true]], ["YEAR_DOT Jh. vor Chr.", "century", [0], [true]], ["YEAR_DOT Jh. v. Chr", "century", [0], [true]], ["YEAR_DOT Jh. v. Chr.", "century", [0], [true]], ["YEAR Jhd. vor Chr", "century", [0], [true]], ["YEAR Jhd. vor Chr.", "century", [0], [true]], ["YEAR Jhd. v. Chr", "century", [0], [true]], ["YEAR Jhd. v. Chr.", "century", [0], [true]], ["YEAR Jhd vor Chr", "century", [0], [true]], ["YEAR Jhd vor Chr.", "century", [0], [true]], ["YEAR Jhd v. Chr", "century", [0], [true]], ["YEAR Jhd v. Chr.", "century", [0], [true]], ["YEAR Jhd ac", "century", [0], [true]], ["YEAR Jh ac", "century", [0], [true]], ["YEAR Jh. ac", "century", [0], [true]], ["YEAR Jhd.", "century", [0]], ["YEAR Jhd", "century", [0]], ["YEAR Jh", "century", [0]], ["YEAR Jh.", "century", [0]], ["YEAR_DOT Jhd.", "century", [0], null, "CENTURY"], ["YEAR_DOT Jhd", "century", [0]], ["YEAR_DOT Jhd nach Chr.", "century", [0]], ["YEAR_DOT Jhd. nach Chr.", "century", [0]], ["YEAR_DOT Jhd. nach Chr", "century", [0]], ["YEAR_DOT Jhd nach Chr", "century", [0]], ["YEAR_DOT Jhd. n. Chr.", "century", [0]], ["YEAR_DOT Jhd. n. Chr", "century", [0]], ["YEAR_DOT Jhd n. Chr.", "century", [0]], ["YEAR_DOT Jhd n. Chr", "century", [0]], ["YEAR_DOT Jt. v. Chr.", "millennium", [0], [true], "MILLENNIUM_BC"], ["YEAR_DOT Jt v. Chr.", "millennium", [0], [true]], ["YEAR_DOT Jt bc", "millennium", [0], [true]], ["YEAR_DOT Jt. bc", "millennium", [0], [true]], ["YEAR_DOT Jt BC", "millennium", [0], [true]], ["YEAR_DOT Jt. BC", "millennium", [0], [true]], ["YEAR_DOT Jt.", "millennium", [0], null, "MILLENNIUM"], ["YEAR_DOT Jt.", "millennium", [0]], ["YEAR_DOT Jt", "millennium", [0]], ["YEAR Jt. v. Chr.", "millennium", [0], [true]], ["YEAR Jt v. Chr.", "millennium", [0], [true]], ["YEAR Jt bc", "millennium", [0], [true]], ["YEAR Jt. bc", "millennium", [0], [true]], ["YEAR Jt BC", "millennium", [0], [true]], ["YEAR Jt. BC", "millennium", [0], [true]], ["YEAR Jt.", "millennium", [0]], ["YEAR Jt.", "millennium", [0]], ["YEAR Jt", "millennium", [0]], ["Anfang YEAR_DOT Jhd", "earlyCentury", [1]], ["Anfang YEAR_DOT Jh", "earlyCentury", [1]], ["Anfang YEAR_DOT Jh.", "earlyCentury", [1], null, "EARLY_CENTURY"], ["Anfang YEAR_DOT Jhd v. Chr.", "earlyCentury", [1], [true]], ["Anfang YEAR_DOT Jh v. Chr.", "earlyCentury", [1], [true]], ["Anfang YEAR_DOT Jh. v. Chr.", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"], ["Ende YEAR_DOT Jhd", "lateCentury", [1]], ["Ende YEAR_DOT Jh", "lateCentury", [1]], ["Ende YEAR_DOT Jh.", "lateCentury", [1], null, "LATE_CENTURY"], ["Ende YEAR_DOT Jhd v. Chr.", "lateCentury", [1], [true]], ["Ende YEAR_DOT Jh v. Chr.", "lateCentury", [1], [true]], ["Ende YEAR_DOT Jh. v. Chr.", "lateCentury", [1], [true], "LATE_CENTURY_BC"], ["YEAR_DOT Jhd. - YEAR_DOT Jhd.", "centuryRange", [0, 3], null, "CENTURY_RANGE"], ["YEAR_DOT Jhd - YEAR_DOT Jhd", "centuryRange", [0, 3]], ["YEAR Jhd. - YEAR Jhd.", "centuryRange", [0, 3]], ["YEAR Jhd - YEAR Jhd", "centuryRange", [0, 3]], ["YEAR Jh. - YEAR Jh.", "centuryRange", [0, 3]], ["YEAR Jh - YEAR Jh", "centuryRange", [0, 3]], ["YEAR_DOT Jh. - YEAR_DOT Jh.", "centuryRange", [0, 3]], ["YEAR_DOT Jh - YEAR_DOT Jh", "centuryRange", [0, 3]], ["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd.", "centuryRange", [0, 5], [true], "CENTURY_RANGE_FROM_BC"], ["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd", "centuryRange", [0, 5], [true]], ["YEAR Jhd. v. Chr. - YEAR Jhd.", "centuryRange", [0, 5], [true]], ["YEAR Jhd v. Chr. - YEAR Jhd", "centuryRange", [0, 5], [true]], ["YEAR Jh. v. Chr. - YEAR Jh.", "centuryRange", [0, 5], [true]], ["YEAR Jh v. Chr. - YEAR Jh", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh.", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh", "centuryRange", [0, 5], [true]], ["YEAR_DOT Jhd. v. Chr. - YEAR_DOT Jhd. v. Chr.", "centuryRange", [0, 5], [true, true], "CENTURY_RANGE_BC"], ["YEAR_DOT Jhd v. Chr. - YEAR_DOT Jhd v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jhd. v. Chr. - YEAR Jhd. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jhd v. Chr. - YEAR Jhd v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jh. v. Chr. - YEAR Jh. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR Jh v. Chr. - YEAR Jh v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR_DOT Jh. v. Chr. - YEAR_DOT Jh. v. Chr.", "centuryRange", [0, 5], [true, true]], ["YEAR_DOT Jh v. Chr. - YEAR_DOT Jh v. Chr.", "centuryRange", [0, 5], [true, true]]];
@@ -41015,6 +41069,10 @@ CUI.DateTimeRangeGrammar = (function() {
     var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
     if (locale == null) {
       locale = CUI.DateTime.getLocale();
+    }
+    if (indexOf.call(CUI.DateTimeRangeGrammar.SUPPORTED_LOCALES, locale) < 0) {
+      console.warn("Locale not supported for stringToDateRange: " + locale + ", using default locale: " + CUI.DateTimeRangeGrammar.DEFAULT_LOCALE);
+      locale = CUI.DateTimeRangeGrammar.DEFAULT_LOCALE;
     }
     if (CUI.util.isEmpty(input) || !CUI.util.isString(input)) {
       return {
@@ -45070,6 +45128,12 @@ CUI.FormModal = (function(superClass) {
             };
           })(this)
         }
+      },
+      hasChanges: {
+        check: Function
+      },
+      revertData: {
+        check: Function
       }
     });
   };
@@ -45093,7 +45157,7 @@ CUI.FormModal = (function(superClass) {
     }
     opts.pane.footer_right = btn;
     mod = new CUI.Modal(opts);
-    if (this.__orig_set_data) {
+    if (this.__orig_set_data || this._hasChanges) {
       CUI.Events.listen({
         type: "data-changed",
         node: mod,
@@ -45112,6 +45176,10 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.revertData = function() {
+    if (this._revertData) {
+      this._revertData(this);
+      return this;
+    }
     CUI.util.assert(this.__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", {
       opts: this.opts
     });
@@ -45150,6 +45218,9 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.hasChanges = function() {
+    if (this._hasChanges) {
+      return this._hasChanges(this, this.getData());
+    }
     if (this.__orig_set_data) {
       return JSON.stringify(this.__orig_data) !== JSON.stringify(this.__orig_set_data[this._name]);
     } else {
@@ -45160,7 +45231,7 @@ CUI.FormModal = (function(superClass) {
   FormModal.prototype.getPopoverOpts = function() {
     var onCancel, pop_opts;
     pop_opts = CUI.util.copyObject(this._modal, true);
-    if (pop_opts.cancel && this.__orig_set_data) {
+    if (pop_opts.cancel && (this.__orig_set_data || this._hasChanges)) {
       onCancel = pop_opts.onCancel;
       pop_opts.onCancel = (function(_this) {
         return function(ev, modal) {
@@ -55988,7 +56059,7 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__initInputs = function() {
-    var fn, i, idx, input, input_opts, key, len, ref, ref1;
+    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2;
     if (this.__inputs) {
       return;
     }
@@ -56097,7 +56168,7 @@ CUI.MultiInput = (function(superClass) {
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
-        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0,
+        placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),
         onDataInit: (function(_this) {
           return function(field, data) {
             if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
@@ -56943,6 +57014,9 @@ CUI.Options = (function(superClass) {
       title: {
         check: String
       },
+      hint: {
+        check: String
+      },
       activatable: {
         check: Boolean
       },
@@ -57041,7 +57115,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.__setDataOnOptions = function(init_data) {
-    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2;
+    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2, ref3;
     if (init_data == null) {
       init_data = true;
     }
@@ -57075,7 +57149,7 @@ CUI.Options = (function(superClass) {
         cb = ref2[l];
         opt = cb.getOptValue();
         opt_unchecked = cb.getOptValueUnchecked();
-        if (this.getValue().indexOf(opt) > -1) {
+        if (((ref3 = this.getValue()) != null ? ref3.indexOf(opt) : void 0) > -1) {
           this.__options_data[cb.getName()] = opt;
         } else {
           this.__options_data[cb.getName()] = opt_unchecked;
@@ -57227,7 +57301,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.render = function() {
-    var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
+    var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, hint, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
     Options.__super__.render.call(this);
     unsorted_options = this.getArrayFromOpt("options");
     sort_options = (function(_this) {
@@ -57381,7 +57455,7 @@ CUI.Options = (function(superClass) {
             if (_this._radio && !_this.__radio_use_array) {
               _this.storeValue(_cb.getValue(), flags);
             } else {
-              CUI.util.pushOntoArray(_cb.getOptValue(), arr = _this.getValue().slice(0));
+              CUI.util.pushOntoArray(_cb.getOptValue(), arr = (_this.getValue() || []).slice(0));
               order_value_array(arr);
               _this.storeValue(arr, flags);
               if (_this._sortable) {
@@ -57476,11 +57550,17 @@ CUI.Options = (function(superClass) {
       this.__setDataOnOptions();
     }
     if (this.__checkboxes.length) {
+      hint = "";
       if (this._sortable && !CUI.util.isEmpty(this._sortable_hint)) {
+        hint = this._sortable_hint;
+      } else if (!CUI.util.isEmpty(this._hint)) {
+        hint = this._hint;
+      }
+      if (hint) {
         bottom = new CUI.Label({
           multiline: true,
-          "class": "cui-options-order-hint",
-          text: this._sortable_hint
+          "class": "cui-options-hint",
+          text: hint
         });
       } else {
         bottom = void 0;
@@ -66077,6 +66157,78 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 	return moment;
 }));
+
+
+/***/ }),
+
+/***/ "../node_modules/moment/locale/da.js":
+/*!*******************************************!*\
+  !*** ../node_modules/moment/locale/da.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Danish [da]
+//! author : Ulrik Nielsen : https://github.com/mrbase
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
+   0
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var da = moment.defineLocale('da', {
+        months: 'januar_februar_marts_april_maj_juni_juli_august_september_oktober_november_december'.split(
+            '_'
+        ),
+        monthsShort: 'jan_feb_mar_apr_maj_jun_jul_aug_sep_okt_nov_dec'.split('_'),
+        weekdays: 'søndag_mandag_tirsdag_onsdag_torsdag_fredag_lørdag'.split('_'),
+        weekdaysShort: 'søn_man_tir_ons_tor_fre_lør'.split('_'),
+        weekdaysMin: 'sø_ma_ti_on_to_fr_lø'.split('_'),
+        longDateFormat: {
+            LT: 'HH:mm',
+            LTS: 'HH:mm:ss',
+            L: 'DD.MM.YYYY',
+            LL: 'D. MMMM YYYY',
+            LLL: 'D. MMMM YYYY HH:mm',
+            LLLL: 'dddd [d.] D. MMMM YYYY [kl.] HH:mm',
+        },
+        calendar: {
+            sameDay: '[i dag kl.] LT',
+            nextDay: '[i morgen kl.] LT',
+            nextWeek: 'på dddd [kl.] LT',
+            lastDay: '[i går kl.] LT',
+            lastWeek: '[i] dddd[s kl.] LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: 'om %s',
+            past: '%s siden',
+            s: 'få sekunder',
+            ss: '%d sekunder',
+            m: 'et minut',
+            mm: '%d minutter',
+            h: 'en time',
+            hh: '%d timer',
+            d: 'en dag',
+            dd: '%d dage',
+            M: 'en måned',
+            MM: '%d måneder',
+            y: 'et år',
+            yy: '%d år',
+        },
+        dayOfMonthOrdinalParse: /\d{1,2}\./,
+        ordinal: '%d.',
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+    });
+
+    return da;
+
+})));
 
 
 /***/ }),

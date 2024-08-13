@@ -1549,3 +1549,23 @@ class CUI.DateTime extends CUI.Input
 			momentString = momentString.replace(map[0], map[1]);
 
 		return momentString
+
+	# groupFormat: "year", "month", "week", "day"
+	@formatGroupLabel: (date, groupFormat, locale = null, timeZone = CUI.Timezone.getTimezone()) ->
+		# We convert first the date to a moment object, also we format the date to the user timezone.
+		mom = moment(date).tz(timeZone)
+		switch groupFormat
+			when "year"
+				return CUI.DateTime.format(mom, "display_short", "year", false, locale)
+			when "month"
+				return CUI.DateTime.format(mom, "display_short", "year_month", false, locale)
+			when "week"
+				# Get the date of the first day of the week
+				start = mom.clone().startOf("isoWeek")
+				# Get the date of the last day of the week
+				end = mom.clone().endOf("isoWeek")
+				return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " +CUI.DateTime.format(end, "display_short", "date", false, locale)
+			when "day"
+				return CUI.DateTime.format(mom, "display_short", "date", false, locale)
+			else
+				return date

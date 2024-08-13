@@ -1733,6 +1733,9 @@ label[data-label-clickable],
   opacity: var(--label-secondary-opacity, 0.65);
   margin-bottom: 1rem;
 }
+.cui-label.cui-label-danger {
+  color: #dc3545;
+}
 .cui-label[data-type=string] {
   color: #3e9e88;
 }
@@ -3745,14 +3748,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-width: 0;
   padding-right: 0;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-key label,
-.cui-form-block--has-checkbox .cui-form .cui-form-key .cui-label {
+.cui-form-block--has-checkbox .cui-form .cui-form-key > label,
+.cui-form-block--has-checkbox .cui-form .cui-form-key > .cui-label {
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-value label:not(.cui-file-upload-drop-zone),
-.cui-form-block--has-checkbox .cui-form .cui-form-value .cui-label:not(.cui-file-upload-drop-zone),
-.cui-form-block--has-checkbox .cui-form .cui-form-value .cui-data-field-output-label:not(.cui-file-upload-drop-zone) {
+.cui-form-block--has-checkbox .cui-form .cui-form-value > label:not(.cui-file-upload-drop-zone),
+.cui-form-block--has-checkbox .cui-form .cui-form-value > .cui-label:not(.cui-file-upload-drop-zone),
+.cui-form-block--has-checkbox .cui-form .cui-form-value > .cui-output > .cui-data-field-output-label:not(.cui-file-upload-drop-zone) {
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
@@ -4310,7 +4313,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-item-list-divider {
   height: 1px;
-  background: rgba(173, 181, 189, 0.15);
+  background: rgba(206, 212, 218, 0.5);
 }
 
 .cui-options {
@@ -4328,10 +4331,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: auto;
 }
 
-.cui-options-inactive:not(:empty) {
-  margin-top: 0.5rem;
-}
-
 .cui-options-top .cui-label span:not(:empty) {
   padding-bottom: 0.25rem;
   display: inline-block;
@@ -4341,13 +4340,13 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
 }
 
-.cui-options-order-hint {
+.cui-options-hint {
   opacity: var(--label-secondary-opacity, 0.65);
   font-size: 13px;
   line-height: 1.2;
   max-width: 250px;
   padding: 0 !important;
-  margin: 0.5rem 22px 1rem;
+  margin: 0.5rem 22px 0.5rem 0;
 }
 
 .cui-options-center {
@@ -4482,10 +4481,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: flex;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle {
-  width: 12px;
+  width: 16;
   display: flex;
   flex-shrink: 0;
-  margin: 0 8px 0 2px;
+  margin: 0 10px 0 0;
   cursor: grab;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle .cui-drag-handle-row {
@@ -4504,7 +4503,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-table {
   display: inline-table;
   overflow-x: auto;
-  border: 1px solid rgba(206, 212, 218, 0.5);
+  border: 1px solid var(--table-border-color, rgba(206, 212, 218, 0.5));
   border-radius: 2px;
 }
 .cui-table .cui-tr {
@@ -4530,7 +4529,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
 }
 .cui-table > .cui-tr + .cui-tr > .cui-table-td {
-  border-top: 1px solid rgba(206, 212, 218, 0.5);
+  border-top: 1px solid var(--table-border-color, rgba(206, 212, 218, 0.5));
 }
 .cui-table .cui-table-td {
   vertical-align: middle;
@@ -5083,8 +5082,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     max-width: none;
     padding-right: 1rem;
   }
-  .cui-form .cui-form-key label,
-  .cui-form .cui-form-key .cui-label {
+  .cui-form .cui-form-key > label,
+  .cui-form .cui-form-key > .cui-label {
     padding-top: var(--form-key-padding-top, 0.38em);
     padding-bottom: 0;
   }
@@ -5092,12 +5091,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     flex: 1 1 auto;
     min-width: 0;
   }
-  .cui-form .cui-form-value input {
+  .cui-form .cui-form-value > .cui-input > input {
     min-width: 0;
   }
-  .cui-form .cui-form-value label,
-  .cui-form .cui-form-value .cui-label,
-  .cui-form .cui-form-value .cui-data-field-output-label {
+  .cui-form .cui-form-value > label,
+  .cui-form .cui-form-value > .cui-label,
+  .cui-form .cui-form-value > .cui-output > .cui-data-field-output-label {
     padding-top: var(--form-key-padding-top, 0.38em);
     padding-bottom: 0;
   }
@@ -7754,7 +7753,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: #212121;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child {
-  border-top: 1px solid rgba(173, 181, 189, 0.15);
+  border-top: 1px solid rgba(206, 212, 218, 0.5);
   padding: 6px 0;
   margin-top: 4px;
   margin-bottom: -4px;
@@ -7773,6 +7772,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-menu-divider {
   margin: 0.25rem 0;
+}
+.cui-menu-divider + .cui-menu-divider {
+  display: none;
 }
 
 /*

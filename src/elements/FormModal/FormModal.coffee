@@ -25,6 +25,10 @@ class CUI.FormModal extends CUI.FormPopover
 						text: "Ok"
 					check: (v) =>
 						CUI.util.isPlainObject(v)
+			hasChanges:
+				check: Function
+			revertData:
+				check: Function
 
 	initPopover: (opts) ->
 
@@ -48,7 +52,7 @@ class CUI.FormModal extends CUI.FormPopover
 
 		mod = new CUI.Modal(opts)
 
-		if @__orig_set_data
+		if @__orig_set_data or @_hasChanges
 			CUI.Events.listen
 				type: "data-changed"
 				node: mod
@@ -61,6 +65,9 @@ class CUI.FormModal extends CUI.FormPopover
 		mod
 
 	revertData: ->
+		if @_revertData
+			@_revertData(@)
+			return @
 		CUI.util.assert(@__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", opts: @opts)
 		delete(@__data)
 		if @__orig_data
@@ -92,6 +99,8 @@ class CUI.FormModal extends CUI.FormPopover
 		super()
 
 	hasChanges: ->
+		if @_hasChanges
+			return @_hasChanges(@, @getData())
 		if @__orig_set_data
 			JSON.stringify(@__orig_data) != JSON.stringify(@__orig_set_data[@_name])
 		else
@@ -100,7 +109,7 @@ class CUI.FormModal extends CUI.FormPopover
 	getPopoverOpts: ->
 		pop_opts = CUI.util.copyObject(@_modal, true)
 
-		if pop_opts.cancel and @__orig_set_data
+		if pop_opts.cancel and (@__orig_set_data or @_hasChanges)
 			onCancel = pop_opts.onCancel
 			pop_opts.onCancel = (ev, modal) =>
 				dfr = new CUI.Deferred()
