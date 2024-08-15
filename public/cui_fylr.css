@@ -6798,6 +6798,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: inline-block;
   width: 16px;
 }
+.cui-list-view-tree-hierarchy:not(:has(.cui-tree-node-handle .fa)) .cui-tree-node-handle {
+  display: none;
+}
 
 .cui-data-table {
   flex-shrink: 1;
