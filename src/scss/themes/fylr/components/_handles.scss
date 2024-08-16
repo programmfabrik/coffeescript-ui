@@ -102,8 +102,7 @@
 		@include flex-handle-row();
 
 		.cui-pane & {
-			// @include flex-handle-row($pane-background);
-			@include flex-handle-row($red);
+			@include flex-handle-row($pane-background);
 		}
 	}
 
