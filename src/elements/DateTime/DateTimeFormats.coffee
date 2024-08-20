@@ -1226,9 +1226,11 @@ CUI.DateTimeFormats["sv-SE"] =
 		]
 	]
 
+import 'moment/locale/da'
+
 CUI.DateTimeFormats["da-DK"] =
 	timezone: "Europe/Berlin"
-	moment_locale: "da-DK"
+	moment_locale: "da"
 	tab_date: "Dato"
 	tab_time: "Tid"
 	tab_week: "Uge"

@@ -55,6 +55,11 @@ class CUI.DataTable extends CUI.DataFieldInput
 				default: []
 				check: (v) ->
 					CUI.util.isArray(v)
+			# if true custom buttons are appended to the default buttons
+			# if false are prepended
+			append_buttons:
+				check: Boolean
+				default: false
 			chunk_size:
 				default: 0
 				mandatory: true
@@ -154,7 +159,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 			@minusButton.enable()
 
 	getFooter: ->
-		buttons = @_buttons.slice(0)
+		custom_buttons = @_buttons.slice(0)
+		buttons = []
 		if @_new_rows != "none"
 			if @_new_rows != "remove_only"
 				buttons.push
@@ -227,6 +233,12 @@ class CUI.DataTable extends CUI.DataFieldInput
 				onClick: =>
 					@__offset = @__offset + @_chunk_size
 					@loadPage(@__offset / @_chunk_size)
+
+		if custom_buttons.length
+			if @_append_buttons
+				buttons = buttons.concat(custom_buttons)
+			else
+				buttons = custom_buttons.concat(buttons)
 
 		if buttons.length
 			new CUI.Buttonbar(buttons: buttons)
@@ -303,7 +315,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			fixedRows: if @_no_header then 0 else 1
 			footer_left: @getFooter()
 			footer_right: @_footer_right
-			fixedCols: if @_rowMove then 1 else 0
+			fixedCols: 0
 			colResize: if @_no_header then false else true
 			colClasses: colClasses
 			rowMove: @_rowMove

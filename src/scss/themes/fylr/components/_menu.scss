@@ -58,4 +58,9 @@
 
 .cui-menu-divider {
 	margin: $spacer-xs 0;
+
+	// hide the second of two succesive dividers
+	+ .cui-menu-divider {
+		display: none;
+	}
 }

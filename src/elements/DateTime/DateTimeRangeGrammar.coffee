@@ -65,6 +65,8 @@ class CUI.DateTimeRangeGrammar
 	#
 	# KEY: (optional) Identifier that is used in the format method.
 	###
+	@SUPPORTED_LOCALES = ["de-DE", "en-US"]
+	@DEFAULT_LOCALE = "en-US"
 	@PARSE_GRAMMARS = {} # TODO: Add ES & IT.
 	@PARSE_GRAMMARS["de-DE"] = [
 		["DATE bis DATE", "range", [0, 2], null, "RANGE"]
@@ -464,6 +466,11 @@ class CUI.DateTimeRangeGrammar
 
 	# Main method to check against every grammar.
 	@stringToDateRange: (input, locale = CUI.DateTime.getLocale()) ->
+
+		if locale not in CUI.DateTimeRangeGrammar.SUPPORTED_LOCALES
+			console.warn("Locale not supported for stringToDateRange: #{locale}, using default locale: #{CUI.DateTimeRangeGrammar.DEFAULT_LOCALE}")
+			locale = CUI.DateTimeRangeGrammar.DEFAULT_LOCALE
+
 		if CUI.util.isEmpty(input) or not CUI.util.isString(input)
 			return error: "Input needs to be a non empty string: #{input}"
 
