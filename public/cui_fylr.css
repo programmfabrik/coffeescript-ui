@@ -3995,10 +3995,11 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 /*
-todo: 
-- make absolute positionign of the headers within control obsolete 
-	- we could do this with flexbox and order, but drawback is that header won't be "pushed" off screen by the next header
+todo (nice-to-have): we could possibly further optimize here to reduce JS code
+- make absolute positioning of the headers within control obsolete 
+	-> we could do this with flexbox and order, but the drawback is that top header won't be "pushed" off the screen by the next header
 - optimize the "animation" when a new sticky header pushes out the old sticky header 
+- see https://tickets.programmfabrik.de/ticket/72867
 */
 /*
 	<div class="cui-digi-display">
