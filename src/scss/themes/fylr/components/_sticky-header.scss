@@ -55,6 +55,7 @@
 	width: 100% !important;
 	z-index: 1;
 	overflow: hidden;
+	flex: 0 0 auto; // make sure header is visible when placed in flex-layout (see metadata-browser)
 
 	&:has(.cui-sticky-header) {
 		display: block;
