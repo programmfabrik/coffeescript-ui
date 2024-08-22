@@ -3968,6 +3968,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 100% !important;
   z-index: 1;
   overflow: hidden;
+  flex: 0 0 auto;
 }
 .cui-sticky-header-control:has(.cui-sticky-header) {
   display: block;
