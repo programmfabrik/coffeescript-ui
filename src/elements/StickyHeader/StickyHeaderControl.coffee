@@ -89,8 +89,15 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		@newStickyHeaders.splice(0)
 
+		# TODO: Why does getDimensions() take so long???
 		for header in measure_headers
+			# getDimensions() takes so long so there is a visible delay when the first sticky header gets stuck
 			header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure)
+			# if we use static values instead, there is no delay
+			# header.dimInControl =
+			# 	marginTop: 0
+			# 	marginBoxHeight: 27
+
 			@__control.removeChild(header.nodeToMeasure)
 			header.nodeToMeasure.style.visiblity = ""
 			delete header.nodeToMeasure
