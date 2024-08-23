@@ -59951,7 +59951,6 @@ CUI.StickyHeaderControl = (function(superClass) {
     for (k = 0, len1 = measure_headers.length; k < len1; k++) {
       header = measure_headers[k];
       header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure);
-      this.__control.removeChild(header.nodeToMeasure);
       header.nodeToMeasure.style.visiblity = "";
       delete header.nodeToMeasure;
     }
