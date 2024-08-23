@@ -91,14 +91,12 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		# TODO: Why does getDimensions() take so long???
 		for header in measure_headers
-			# getDimensions() takes so long so there is a visible delay when the first sticky header gets stuck
 			header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure)
-			# if we use static values instead, there is no delay
-			# header.dimInControl =
-			# 	marginTop: 0
-			# 	marginBoxHeight: 27
-
-			@__control.removeChild(header.nodeToMeasure)
+			# the following line will trigger a visible delay/jigger when the first sticky header gets stuck 
+			# I guess this is because the forced reflow while also executing getDimensions() takes very long
+			# since we clear out the @__control anyways in position() --> CUI.dom.empty(@__control)
+			# we can comment this out
+			# @__control.removeChild(header.nodeToMeasure) 
 			header.nodeToMeasure.style.visiblity = ""
 			delete header.nodeToMeasure
 		@
