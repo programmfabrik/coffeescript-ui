@@ -634,6 +634,8 @@ $sticky-header-font-size: 		$font-size-sm !default;
 $sticky-header-color: 			$body-color !default;
 $sticky-header-border-color:	$hr-border-color-dark !default;
 $sticky-header-opacity:			0.94 !default;
+$sticky-header-background:      rgba($body-bg, $sticky-header-opacity);
+$sticky-header-background-pane: rgba($pane-background, $sticky-header-opacity);
 
 // * Digi Display
 // * ==========================================

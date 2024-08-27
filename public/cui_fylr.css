@@ -1534,7 +1534,6 @@ input[data-max-chars="40"] {
 
 .cui-no-icon {
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 0.75rem;
   font-weight: 700;
   font-style: normal;
   text-transform: uppercase;
@@ -3941,7 +3940,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: #212121;
   flex-basis: 100%;
   flex-shrink: 0;
-  border-bottom: 1px solid #393c3f;
+  border-bottom: 1px solid var(--sticky-header-border-color, #393c3f);
+}
+.cui-sticky-header > .cui-sticky-header-center {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cui-tab > .cui-sticky-header {
   flex-basis: auto;
@@ -3957,32 +3961,46 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-sticky-header-control {
-  position: fixed;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0;
+  display: none;
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   z-index: 1;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.cui-sticky-header-control:has(.cui-sticky-header) {
+  display: block;
 }
 .cui-sticky-header-control .cui-sticky-header {
   position: absolute;
   left: 0;
   right: 0;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.94);
+  background: var(--sticky-header-background, rgba(255, 255, 255, 0.94));
 }
-.cui-pane .cui-sticky-header-control .cui-sticky-header {
-  background-color: rgba(245, 245, 245, 0.94);
+
+.cui-sticky-header-level-0 {
+  font-weight: 700;
 }
 
 .cui-sticky-header-level-1,
-.cui-sticky-header-level-2,
-.cui-sticky-header-level-3,
-.cui-sticky-header-level-4 {
-  font-size: 11px;
+.cui-sticky-header-level-2 {
+  color: #656c72;
 }
 
+.cui-sticky-header-level-2 {
+  font-weight: 300;
+  color: #4d5257;
+  letter-spacing: 0.03em;
+}
+
+/*
+todo (nice-to-have): we could possibly further optimize here to reduce JS code
+- make absolute positioning of the headers within control obsolete 
+	-> we could do this with flexbox and order, but the drawback is that top header won't be "pushed" off the screen by the next header
+- see https://tickets.programmfabrik.de/ticket/72867
+*/
 /*
 	<div class="cui-digi-display">
 		<div class="cui-digi-display-container">
