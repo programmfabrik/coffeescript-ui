@@ -30,6 +30,10 @@
 		border-radius: $layer-border-radius $layer-border-radius 0 0;
 		background-color: $layer-header-background;
 		color: $layer-header-color;
+
+		.cui-horizontal-layout-left {
+			flex-shrink: 1; // allows long titles to be truncated with ...
+		}
 		
 		// Title
 		.cui-label {
