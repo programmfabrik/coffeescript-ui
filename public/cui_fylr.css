@@ -2300,7 +2300,6 @@ input[data-max-chars="40"] {
 
 .cui-no-icon {
   font-family: "Source Sans Pro", sans-serif;
-  font-size: 0.75rem;
   font-weight: 700;
   font-style: normal;
   text-transform: uppercase;
@@ -2498,6 +2497,9 @@ label[data-label-clickable],
 .cui-label.cui-label-description {
   opacity: var(--label-secondary-opacity, 0.65);
   margin-bottom: 1rem;
+}
+.cui-label.cui-label-danger {
+  color: #dc3545;
 }
 .cui-label[data-type=string] {
   color: #3e9e88;
@@ -4004,7 +4006,7 @@ textarea {
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 .cui-pane .cui-flex-handle-row:hover {
-  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #dc3545 1px, #dc3545 2px, #dc3545 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #dc3545, #dc3545), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
+  background-image: linear-gradient(90deg, rgba(173, 181, 189, 0.8) 1px, #f5f5f5 1px, #f5f5f5 2px, #f5f5f5 4px, rgba(173, 181, 189, 0.8) 4px), linear-gradient(90deg, #f5f5f5, #f5f5f5), linear-gradient(90deg, transparent, transparent 5px, rgba(173, 181, 189, 0.8) 6px, rgba(173, 181, 189, 0.8) 5px, transparent 5px);
   background-position: 50% 50%, 50% 50%, 0 0;
   background-size: 5px 0, 5px 0, 100%;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -4511,14 +4513,14 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   min-width: 0;
   padding-right: 0;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-key label,
-.cui-form-block--has-checkbox .cui-form .cui-form-key .cui-label {
+.cui-form-block--has-checkbox .cui-form .cui-form-key > label,
+.cui-form-block--has-checkbox .cui-form .cui-form-key > .cui-label {
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-value label:not(.cui-file-upload-drop-zone),
-.cui-form-block--has-checkbox .cui-form .cui-form-value .cui-label:not(.cui-file-upload-drop-zone),
-.cui-form-block--has-checkbox .cui-form .cui-form-value .cui-data-field-output-label:not(.cui-file-upload-drop-zone) {
+.cui-form-block--has-checkbox .cui-form .cui-form-value > label:not(.cui-file-upload-drop-zone),
+.cui-form-block--has-checkbox .cui-form .cui-form-value > .cui-label:not(.cui-file-upload-drop-zone),
+.cui-form-block--has-checkbox .cui-form .cui-form-value > .cui-output > .cui-data-field-output-label:not(.cui-file-upload-drop-zone) {
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
@@ -4704,7 +4706,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: #212121;
   flex-basis: 100%;
   flex-shrink: 0;
-  border-bottom: 1px solid #393c3f;
+  border-bottom: 1px solid var(--sticky-header-border-color, #393c3f);
+}
+.cui-sticky-header > .cui-sticky-header-center {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cui-tab > .cui-sticky-header {
   flex-basis: auto;
@@ -4720,32 +4727,46 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-sticky-header-control {
-  position: fixed;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0;
+  display: none;
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   z-index: 1;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.cui-sticky-header-control:has(.cui-sticky-header) {
+  display: block;
 }
 .cui-sticky-header-control .cui-sticky-header {
   position: absolute;
   left: 0;
   right: 0;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.94);
+  background: var(--sticky-header-background, rgba(255, 255, 255, 0.94));
 }
-.cui-pane .cui-sticky-header-control .cui-sticky-header {
-  background-color: rgba(245, 245, 245, 0.94);
+
+.cui-sticky-header-level-0 {
+  font-weight: 700;
 }
 
 .cui-sticky-header-level-1,
-.cui-sticky-header-level-2,
-.cui-sticky-header-level-3,
-.cui-sticky-header-level-4 {
-  font-size: 11px;
+.cui-sticky-header-level-2 {
+  color: #656c72;
 }
 
+.cui-sticky-header-level-2 {
+  font-weight: 300;
+  color: #4d5257;
+  letter-spacing: 0.03em;
+}
+
+/*
+todo (nice-to-have): we could possibly further optimize here to reduce JS code
+- make absolute positioning of the headers within control obsolete 
+	-> we could do this with flexbox and order, but the drawback is that top header won't be "pushed" off the screen by the next header
+- see https://tickets.programmfabrik.de/ticket/72867
+*/
 /*
 	<div class="cui-digi-display">
 		<div class="cui-digi-display-container">
@@ -5073,7 +5094,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-item-list-divider {
   height: 1px;
-  background: rgba(173, 181, 189, 0.15);
+  background: rgba(206, 212, 218, 0.5);
 }
 
 .cui-options {
@@ -5091,10 +5112,6 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: auto;
 }
 
-.cui-options-inactive:not(:empty) {
-  margin-top: 0.5rem;
-}
-
 .cui-options-top .cui-label span:not(:empty) {
   padding-bottom: 0.25rem;
   display: inline-block;
@@ -5104,13 +5121,13 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
 }
 
-.cui-options-order-hint {
+.cui-options-hint {
   opacity: var(--label-secondary-opacity, 0.65);
   font-size: 13px;
   line-height: 1.2;
   max-width: 250px;
   padding: 0 !important;
-  margin: 0.5rem 22px 1rem;
+  margin: 0.5rem 22px 0.5rem 0;
 }
 
 .cui-options-center {
@@ -5245,10 +5262,10 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   display: flex;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle {
-  width: 12px;
+  width: 16;
   display: flex;
   flex-shrink: 0;
-  margin: 0 8px 0 2px;
+  margin: 0 10px 0 0;
   cursor: grab;
 }
 .cui-options-sortable-option .cui-options-sortable-drag-handle .cui-drag-handle-row {
@@ -5267,7 +5284,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 .cui-table {
   display: inline-table;
   overflow-x: auto;
-  border: 1px solid rgba(206, 212, 218, 0.5);
+  border: 1px solid var(--table-border-color, rgba(206, 212, 218, 0.5));
   border-radius: 2px;
 }
 .cui-table .cui-tr {
@@ -5293,7 +5310,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   font-weight: 700;
 }
 .cui-table > .cui-tr + .cui-tr > .cui-table-td {
-  border-top: 1px solid rgba(206, 212, 218, 0.5);
+  border-top: 1px solid var(--table-border-color, rgba(206, 212, 218, 0.5));
 }
 .cui-table .cui-table-td {
   vertical-align: middle;
@@ -5846,8 +5863,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     max-width: none;
     padding-right: 1rem;
   }
-  .cui-form .cui-form-key label,
-  .cui-form .cui-form-key .cui-label {
+  .cui-form .cui-form-key > label,
+  .cui-form .cui-form-key > .cui-label {
     padding-top: var(--form-key-padding-top, 0.38em);
     padding-bottom: 0;
   }
@@ -5855,12 +5872,12 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
     flex: 1 1 auto;
     min-width: 0;
   }
-  .cui-form .cui-form-value input {
+  .cui-form .cui-form-value > .cui-input > input {
     min-width: 0;
   }
-  .cui-form .cui-form-value label,
-  .cui-form .cui-form-value .cui-label,
-  .cui-form .cui-form-value .cui-data-field-output-label {
+  .cui-form .cui-form-value > label,
+  .cui-form .cui-form-value > .cui-label,
+  .cui-form .cui-form-value > .cui-output > .cui-data-field-output-label {
     padding-top: var(--form-key-padding-top, 0.38em);
     padding-bottom: 0;
   }
@@ -6154,6 +6171,58 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-right: 0.5rem;
 }
 .cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual .cui-button-right {
+  padding-right: 0.6rem;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select {
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  background-color: #ffffff;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):hover, .cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-form-value > .cui-data-field-proxy .cui-select.cui-active .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-form-value > .cui-data-field-proxy .cui-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-form-value > .cui-data-field-proxy .cui-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select .cui-button-visual .cui-button-center {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.cui-form-value > .cui-data-field-proxy .cui-select .cui-button-visual .cui-button-right {
   padding-right: 0.6rem;
 }
 
@@ -6842,6 +6911,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: #212121;
   color: #ffffff;
 }
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left {
+  flex-shrink: 1;
+}
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
@@ -7512,6 +7584,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   content: "";
   display: inline-block;
   width: 16px;
+}
+.cui-list-view-tree-hierarchy:not(:has(.cui-tree-node-handle .fa)) .cui-tree-node-handle {
+  display: none;
 }
 
 .cui-data-table {
@@ -8199,6 +8274,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   background-color: #212121;
   color: #ffffff;
 }
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left {
+  flex-shrink: 1;
+}
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
@@ -8465,7 +8543,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   color: #212121;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child {
-  border-top: 1px solid rgba(173, 181, 189, 0.15);
+  border-top: 1px solid rgba(206, 212, 218, 0.5);
   padding: 6px 0;
   margin-top: 4px;
   margin-bottom: -4px;
@@ -8484,6 +8562,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 .cui-menu-divider {
   margin: 0.25rem 0;
+}
+.cui-menu-divider + .cui-menu-divider {
+  display: none;
 }
 
 /*

@@ -30,6 +30,11 @@ class CUI.DateTime extends CUI.Input
 				default: locale
 				check: (v) ->
 					CUI.util.isArray(CUI.DateTimeFormats[v]?.formats)
+			calendar_locale:
+				mandatory: false
+				default: locale
+				check: (v) ->
+					CUI.util.isArray(CUI.DateTimeFormats[v]?.formats)
 			input_types:
 				check: Array
 			display_type:
@@ -59,6 +64,11 @@ class CUI.DateTime extends CUI.Input
 
 		@__input_formats_known = CUI.DateTimeFormats[@_locale].formats
 		@__locale_format = CUI.DateTimeFormats[@_locale]
+		# Calendar should use the frontend locale but data can be in a different locale.
+		if @_calendar_locale
+			@__calendar_locale_format = CUI.DateTimeFormats[@_calendar_locale]
+		else
+			@__calendar_locale_format = @__locale_format
 
 		@__input_formats = []
 		if not @_input_types?.length
@@ -120,7 +130,7 @@ class CUI.DateTime extends CUI.Input
 			new CUI.defaults.class.Button(
 				class: "cui-date-time-browser-date"
 				icon_left: "left"
-				text: @__locale_format.tab_date
+				text: @__calendar_locale_format.tab_date
 				onClick: =>
 					@setCursor("day")
 			)
@@ -130,7 +140,7 @@ class CUI.DateTime extends CUI.Input
 			new CUI.defaults.class.Button(
 				class: "cui-date-time-browser-time"
 				icon_right: "right"
-				text: @__locale_format.tab_time
+				text: @__calendar_locale_format.tab_time
 				onClick: =>
 					@setCursor("hour")
 			)
@@ -187,11 +197,11 @@ class CUI.DateTime extends CUI.Input
 	setCursor: (cursor) ->
 		switch cursor
 			when "hour", "minute", "second", "am_pm"
-				title = @__locale_format.tab_time
+				title = @__calendar_locale_format.tab_time
 				CUI.dom.setAttribute(@__dateTimeTmpl.DOM, "browser", "time")
 				@setDigiClock()
 			else
-				title = @__locale_format.tab_date
+				title = @__calendar_locale_format.tab_date
 				CUI.dom.setAttribute(@__dateTimeTmpl.DOM, "browser", "date")
 
 		@__dateTimeTmpl.replace(new CUI.Label(text: title), "header_center")
@@ -796,7 +806,7 @@ class CUI.DateTime extends CUI.Input
 				""+n
 
 		date_title = new CUI.Label(
-			text: @__locale_format.tab_date
+			text: @__calendar_locale_format.tab_date
 			class: "cui-select-date-title"
 		)
 
@@ -866,7 +876,7 @@ class CUI.DateTime extends CUI.Input
 				emtpy_clock_opts = []
 
 			time_title = new CUI.Label(
-				text: @__locale_format.tab_time
+				text: @__calendar_locale_format.tab_time
 				class: "cui-select-time-title"
 			)
 
@@ -1152,10 +1162,12 @@ class CUI.DateTime extends CUI.Input
 		td_func = CUI.dom.th
 
 		tabWeekDiv = CUI.dom.div("cui-date-time-dow")
-		tabWeekDiv.textContent = @__locale_format.tab_week
+		tabWeekDiv.textContent = @__calendar_locale_format.tab_week
 		CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), tabWeekDiv))
 		for dow in [@start_day..@start_day+6]
+			moment.locale(@__calendar_locale_format.moment_locale or @_locale)
 			weekday = moment.weekdaysMin(dow%7)
+			moment.locale(@__locale_format.moment_locale or @_locale)
 			day_div = CUI.dom.div("cui-date-time-dow")
 			day_div.textContent = weekday
 			CUI.dom.addClass(day_div, "cui-date-time-day-"+weekday.toLowerCase())
@@ -1424,16 +1436,23 @@ class CUI.DateTime extends CUI.Input
 
 	# limit output to the given types
 	# the library is very awkward here...
-	@formatWithInputTypes: (datestr, output_types, output_format) ->
+	@formatWithInputTypes: (datestr, output_types, output_format, locale = null) ->
 		if not datestr
 			return null
 
-		dt = new CUI.DateTime(input_types: output_types)
+		opts = {
+			input_types: output_types
+		}
+		if locale
+			opts.locale = locale
+
+		dt = new CUI.DateTime(opts)
 		mom = dt.parseValue(datestr)
+
 		if not mom.isValid()
 			return null
 
-		dt.format(mom, output_format)
+		dt.format(mom, output_format, null, false)
 
 	@display: (datestr_or_moment, opts={}) ->
 		if not opts.hasOwnProperty("input_types")
@@ -1542,3 +1561,23 @@ class CUI.DateTime extends CUI.Input
 			momentString = momentString.replace(map[0], map[1]);
 
 		return momentString
+
+	# groupFormat: "year", "month", "week", "day"
+	@formatGroupLabel: (date, groupFormat, locale = null, timeZone = CUI.Timezone.getTimezone()) ->
+		# We convert first the date to a moment object, also we format the date to the user timezone.
+		mom = moment(date).tz(timeZone)
+		switch groupFormat
+			when "year"
+				return CUI.DateTime.format(mom, "display_short", "year", false, locale)
+			when "month"
+				return CUI.DateTime.format(mom, "display_short", "year_month", false, locale)
+			when "week"
+				# Get the date of the first day of the week
+				start = mom.clone().startOf("isoWeek")
+				# Get the date of the last day of the week
+				end = mom.clone().endOf("isoWeek")
+				return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " +CUI.DateTime.format(end, "display_short", "date", false, locale)
+			when "day"
+				return CUI.DateTime.format(mom, "display_short", "date", false, locale)
+			else
+				return date

@@ -66,8 +66,8 @@
 			max-width: none;
 			padding-right: $form-cell-gap;
 		
-			label,
-			.cui-label {
+			> label,
+			> .cui-label {
 				padding-top: var(--form-key-padding-top, #{$form-key-padding-top});
 				padding-bottom: 0;
 			}
@@ -77,13 +77,13 @@
 			flex: 1 1 auto;
 			min-width: 0;
 		
-			input {
+			> .cui-input > input {
 				min-width: 0;
 			}
 		
-			label,
-			.cui-label,
-			.cui-data-field-output-label {
+			> label,
+			> .cui-label,
+			> .cui-output > .cui-data-field-output-label {
 				padding-top: var(--form-key-padding-top, #{$form-key-padding-top});
 				padding-bottom: 0;
 			}
@@ -112,17 +112,17 @@
 		min-width: 0;
 		padding-right: 0;
 	
-		label,
-		.cui-label {
+		> label,
+		> .cui-label {
 			padding-top: 0;
 			padding-bottom: $form-key-padding-bottom;
 		}
 	}
 
 	.cui-form-value {
-		label,
-		.cui-label,
-		.cui-data-field-output-label {
+		> label,
+		> .cui-label,
+		> .cui-output > .cui-data-field-output-label {
 			&:not(.cui-file-upload-drop-zone) {
 				padding-top: 0;
 				padding-bottom: $form-key-padding-bottom;

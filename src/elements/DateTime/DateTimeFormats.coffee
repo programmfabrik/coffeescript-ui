@@ -152,9 +152,9 @@ CUI.DateTimeFormats["de-DE"] =
 CUI.DateTimeFormats["it-IT"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "de-DE"
-	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wk"
+	tab_date: "Data"
+	tab_time: "Ora"
+	tab_week: "Set"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -272,9 +272,9 @@ CUI.DateTimeFormats["it-IT"] =
 CUI.DateTimeFormats["es-ES"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "de-DE"
-	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wk"
+	tab_date: "Fecha"
+	tab_time: "Hora"
+	tab_week: "Sem"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -526,9 +526,9 @@ CUI.DateTimeFormats["en-US"] =
 CUI.DateTimeFormats["ru-RU"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "ru-RU"
-	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wo"
+	tab_date: "Дата"
+	tab_time: "Время"
+	tab_week: "Нед"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -665,9 +665,9 @@ CUI.DateTimeFormats["ru-RU"] =
 CUI.DateTimeFormats["pl-PL"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "pl-PL"
-	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wo"
+	tab_date: "Data"
+	tab_time: "Czas"
+	tab_week: "Tydz"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -806,8 +806,8 @@ CUI.DateTimeFormats["cs-CZ"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "cs-CZ"
 	tab_date: "Datum"
-	tab_time: "Zeit"
-	tab_week: "Wo"
+	tab_time: "Čas"
+	tab_week: "Týd"
 	formats: [
 		text: "Datum+Zeit"
 		support_bc: false
@@ -1226,9 +1226,11 @@ CUI.DateTimeFormats["sv-SE"] =
 		]
 	]
 
+import 'moment/locale/da'
+
 CUI.DateTimeFormats["da-DK"] =
 	timezone: "Europe/Berlin"
-	moment_locale: "da-DK"
+	moment_locale: "da"
 	tab_date: "Dato"
 	tab_time: "Tid"
 	tab_week: "Uge"
@@ -1372,7 +1374,7 @@ CUI.DateTimeFormats["fr-FR"] =
 	timezone: "Europe/Berlin"
 	moment_locale: "fr"
 	tab_date: "Date"
-	tab_time: "Temps"
+	tab_time: "Heure"
 	tab_week: "Sem"
 	formats: [
 		text: "Datum+Zeit"

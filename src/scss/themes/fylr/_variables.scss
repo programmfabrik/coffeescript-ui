@@ -75,6 +75,7 @@ $blue:    #6bb2bb !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #b64b7c !default;
+$magenta: #ee59d7 !default;
 $red:     #dc3545 !default;
 $orange:  #ff5724 !default;
 $yellow:  #d6b13a !default;
@@ -283,7 +284,7 @@ $border-radius-sm: 	2px !default;
 $border-radius: 	3px !default;
 $border-radius-lg:  4px !default;
 
-$hr-border-color:   	rgba(gray('500'), 0.15) !default; // make sure hr is visible on white and light backgrounds
+$hr-border-color:   	rgba(gray('400'), 0.5) !default; // make sure hr is visible on white and light backgrounds
 $hr-border-color-dark:  theme-color('dark') !default;
 $hr-border-width:   	1px !default;
 
@@ -633,6 +634,8 @@ $sticky-header-font-size: 		$font-size-sm !default;
 $sticky-header-color: 			$body-color !default;
 $sticky-header-border-color:	$hr-border-color-dark !default;
 $sticky-header-opacity:			0.94 !default;
+$sticky-header-background:      rgba($body-bg, $sticky-header-opacity);
+$sticky-header-background-pane: rgba($pane-background, $sticky-header-opacity);
 
 // * Digi Display
 // * ==========================================

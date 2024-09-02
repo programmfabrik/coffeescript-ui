@@ -79,4 +79,13 @@
 			width: $tree-node-handle-width;
 		}
 	}
+
+	// if none of the node-handles within the tree-hierarchy actually have a handle icon
+	// hide the handle
+	// this way we prevent seemingly odd spacing (too much space to the left of the nodes)
+	&:not(:has(.cui-tree-node-handle .fa)) {
+		.cui-tree-node-handle {
+			display: none;
+		}
+	}
 }

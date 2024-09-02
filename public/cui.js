@@ -37544,6 +37544,9 @@ CUI.DataTable = (function(superClass) {
       onNodeAdd: {
         check: Function
       },
+      onNewNodeAdd: {
+        check: Function
+      },
       footer_right: {
         check: function(v) {
           return CUI.util.isContent(v);
@@ -37555,6 +37558,10 @@ CUI.DataTable = (function(superClass) {
         check: function(v) {
           return CUI.util.isArray(v);
         }
+      },
+      append_buttons: {
+        check: Boolean,
+        "default": false
       },
       chunk_size: {
         "default": 0,
@@ -37668,10 +37675,13 @@ CUI.DataTable = (function(superClass) {
     return [];
   };
 
-  DataTable.prototype.addRow = function(data) {
+  DataTable.prototype.addRow = function(data, newRow) {
     var new_node;
     if (data == null) {
       data = {};
+    }
+    if (newRow == null) {
+      newRow = false;
     }
     this.rows.push(data);
     new_node = new CUI.DataTableNode({
@@ -37681,7 +37691,7 @@ CUI.DataTable = (function(superClass) {
       rows: this.rows
     });
     if (typeof this._onNodeAdd === "function") {
-      this._onNodeAdd(node);
+      this._onNodeAdd(new_node);
     }
     this.storeValue(CUI.util.copyObject(this.rows, true));
     if (this._chunk_size > 0) {
@@ -37689,6 +37699,9 @@ CUI.DataTable = (function(superClass) {
       this.displayValue();
     } else {
       this.listView.appendRow(new_node);
+    }
+    if (typeof this._onNewNodeAdd === "function") {
+      this._onNewNodeAdd(new_node);
     }
     return new_node;
   };
@@ -37702,8 +37715,9 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.getFooter = function() {
-    var buttons, load_page, page_data;
-    buttons = this._buttons.slice(0);
+    var buttons, custom_buttons, load_page, page_data;
+    custom_buttons = this._buttons.slice(0);
+    buttons = [];
     if (this._new_rows !== "none") {
       if (this._new_rows !== "remove_only") {
         buttons.push({
@@ -37714,7 +37728,7 @@ CUI.DataTable = (function(superClass) {
           group: "plus-minus",
           onClick: (function(_this) {
             return function() {
-              return _this.addRow();
+              return _this.addRow({}, true);
             };
           })(this)
         });
@@ -37807,6 +37821,13 @@ CUI.DataTable = (function(superClass) {
           };
         })(this)
       });
+    }
+    if (custom_buttons.length) {
+      if (this._append_buttons) {
+        buttons = buttons.concat(custom_buttons);
+      } else {
+        buttons = custom_buttons.concat(buttons);
+      }
     }
     if (buttons.length) {
       return new CUI.Buttonbar({
@@ -37903,7 +37924,7 @@ CUI.DataTable = (function(superClass) {
       fixedRows: this._no_header ? 0 : 1,
       footer_left: this.getFooter(),
       footer_right: this._footer_right,
-      fixedCols: this._rowMove ? 1 : 0,
+      fixedCols: 0,
       colResize: this._no_header ? false : true,
       colClasses: colClasses,
       rowMove: this._rowMove,
@@ -38224,6 +38245,14 @@ CUI.DateTime = (function(superClass) {
           return CUI.util.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
         }
       },
+      calendar_locale: {
+        mandatory: false,
+        "default": locale,
+        check: function(v) {
+          var ref;
+          return CUI.util.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
+        }
+      },
       input_types: {
         check: Array
       },
@@ -38258,6 +38287,11 @@ CUI.DateTime = (function(superClass) {
     this.__regexpMatcher = this.regexpMatcher();
     this.__input_formats_known = CUI.DateTimeFormats[this._locale].formats;
     this.__locale_format = CUI.DateTimeFormats[this._locale];
+    if (this._calendar_locale) {
+      this.__calendar_locale_format = CUI.DateTimeFormats[this._calendar_locale];
+    } else {
+      this.__calendar_locale_format = this.__locale_format;
+    }
     this.__input_formats = [];
     if (!((ref = this._input_types) != null ? ref.length : void 0)) {
       this.__input_formats = this.__input_formats_known.slice(0);
@@ -38333,7 +38367,7 @@ CUI.DateTime = (function(superClass) {
     this.__dateTimeTmpl.append(new CUI.defaults["class"].Button({
       "class": "cui-date-time-browser-date",
       icon_left: "left",
-      text: this.__locale_format.tab_date,
+      text: this.__calendar_locale_format.tab_date,
       onClick: (function(_this) {
         return function() {
           return _this.setCursor("day");
@@ -38343,7 +38377,7 @@ CUI.DateTime = (function(superClass) {
     this.__dateTimeTmpl.append(new CUI.defaults["class"].Button({
       "class": "cui-date-time-browser-time",
       icon_right: "right",
-      text: this.__locale_format.tab_time,
+      text: this.__calendar_locale_format.tab_time,
       onClick: (function(_this) {
         return function() {
           return _this.setCursor("hour");
@@ -38386,12 +38420,12 @@ CUI.DateTime = (function(superClass) {
       case "minute":
       case "second":
       case "am_pm":
-        title = this.__locale_format.tab_time;
+        title = this.__calendar_locale_format.tab_time;
         CUI.dom.setAttribute(this.__dateTimeTmpl.DOM, "browser", "time");
         this.setDigiClock();
         break;
       default:
-        title = this.__locale_format.tab_date;
+        title = this.__calendar_locale_format.tab_date;
         CUI.dom.setAttribute(this.__dateTimeTmpl.DOM, "browser", "date");
     }
     this.__dateTimeTmpl.replace(new CUI.Label({
@@ -39125,7 +39159,7 @@ CUI.DateTime = (function(superClass) {
       }
     };
     date_title = new CUI.Label({
-      text: this.__locale_format.tab_date,
+      text: this.__calendar_locale_format.tab_date,
       "class": "cui-select-date-title"
     });
     date_sel = new CUI.Select({
@@ -39216,7 +39250,7 @@ CUI.DateTime = (function(superClass) {
         emtpy_clock_opts = [];
       }
       time_title = new CUI.Label({
-        text: this.__locale_format.tab_time,
+        text: this.__calendar_locale_format.tab_time,
         "class": "cui-select-time-title"
       });
       hour_sel = new CUI.Select({
@@ -39496,10 +39530,12 @@ CUI.DateTime = (function(superClass) {
     CUI.dom.append(month_table, tr);
     td_func = CUI.dom.th;
     tabWeekDiv = CUI.dom.div("cui-date-time-dow");
-    tabWeekDiv.textContent = this.__locale_format.tab_week;
+    tabWeekDiv.textContent = this.__calendar_locale_format.tab_week;
     CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), tabWeekDiv));
     for (dow = i = ref = this.start_day, ref1 = this.start_day + 6; ref <= ref1 ? i <= ref1 : i >= ref1; dow = ref <= ref1 ? ++i : --i) {
+      moment.locale(this.__calendar_locale_format.moment_locale || this._locale);
       weekday = moment.weekdaysMin(dow % 7);
+      moment.locale(this.__locale_format.moment_locale || this._locale);
       day_div = CUI.dom.div("cui-date-time-dow");
       day_div.textContent = weekday;
       CUI.dom.addClass(day_div, "cui-date-time-day-" + weekday.toLowerCase());
@@ -39614,19 +39650,26 @@ CUI.DateTime = (function(superClass) {
     return str;
   };
 
-  DateTime.formatWithInputTypes = function(datestr, output_types, output_format) {
-    var dt, mom;
+  DateTime.formatWithInputTypes = function(datestr, output_types, output_format, locale) {
+    var dt, mom, opts;
+    if (locale == null) {
+      locale = null;
+    }
     if (!datestr) {
       return null;
     }
-    dt = new CUI.DateTime({
+    opts = {
       input_types: output_types
-    });
+    };
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
     mom = dt.parseValue(datestr);
     if (!mom.isValid()) {
       return null;
     }
-    return dt.format(mom, output_format);
+    return dt.format(mom, output_format, null, false);
   };
 
   DateTime.display = function(datestr_or_moment, opts) {
@@ -39707,6 +39750,31 @@ CUI.DateTime = (function(superClass) {
     return momentString;
   };
 
+  DateTime.formatGroupLabel = function(date, groupFormat, locale, timeZone) {
+    var end, mom, start;
+    if (locale == null) {
+      locale = null;
+    }
+    if (timeZone == null) {
+      timeZone = CUI.Timezone.getTimezone();
+    }
+    mom = moment(date).tz(timeZone);
+    switch (groupFormat) {
+      case "year":
+        return CUI.DateTime.format(mom, "display_short", "year", false, locale);
+      case "month":
+        return CUI.DateTime.format(mom, "display_short", "year_month", false, locale);
+      case "week":
+        start = mom.clone().startOf("isoWeek");
+        end = mom.clone().endOf("isoWeek");
+        return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " + CUI.DateTime.format(end, "display_short", "date", false, locale);
+      case "day":
+        return CUI.DateTime.format(mom, "display_short", "date", false, locale);
+      default:
+        return date;
+    }
+  };
+
   return DateTime;
 
 })(CUI.Input);
@@ -39726,8 +39794,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment_locale_fi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fi__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment/locale/sv */ "../node_modules/moment/locale/sv.js");
 /* harmony import */ var moment_locale_sv__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment_locale_sv__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment/locale/fr */ "../node_modules/moment/locale/fr.js");
-/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fr__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment_locale_da__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment/locale/da */ "../node_modules/moment/locale/da.js");
+/* harmony import */ var moment_locale_da__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment_locale_da__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment/locale/fr */ "../node_modules/moment/locale/fr.js");
+/* harmony import */ var moment_locale_fr__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment_locale_fr__WEBPACK_IMPORTED_MODULE_3__);
 /* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
 
 /*
@@ -39819,9 +39889,9 @@ CUI.DateTimeFormats["de-DE"] = {
 CUI.DateTimeFormats["it-IT"] = {
   timezone: "Europe/Berlin",
   moment_locale: "de-DE",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wk",
+  tab_date: "Data",
+  tab_time: "Ora",
+  tab_week: "Set",
   formats: [
     {
       text: "Datum+Zeit",
@@ -39897,9 +39967,9 @@ CUI.DateTimeFormats["it-IT"] = {
 CUI.DateTimeFormats["es-ES"] = {
   timezone: "Europe/Berlin",
   moment_locale: "de-DE",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wk",
+  tab_date: "Fecha",
+  tab_time: "Hora",
+  tab_week: "Sem",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40055,9 +40125,9 @@ CUI.DateTimeFormats["en-US"] = {
 CUI.DateTimeFormats["ru-RU"] = {
   timezone: "Europe/Berlin",
   moment_locale: "ru-RU",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_date: "Дата",
+  tab_time: "Время",
+  tab_week: "Нед",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40133,9 +40203,9 @@ CUI.DateTimeFormats["ru-RU"] = {
 CUI.DateTimeFormats["pl-PL"] = {
   timezone: "Europe/Berlin",
   moment_locale: "pl-PL",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_date: "Data",
+  tab_time: "Czas",
+  tab_week: "Tydz",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40212,8 +40282,8 @@ CUI.DateTimeFormats["cs-CZ"] = {
   timezone: "Europe/Berlin",
   moment_locale: "cs-CZ",
   tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_time: "Čas",
+  tab_week: "Týd",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40446,9 +40516,11 @@ CUI.DateTimeFormats["sv-SE"] = {
   ]
 };
 
+
+
 CUI.DateTimeFormats["da-DK"] = {
   timezone: "Europe/Berlin",
-  moment_locale: "da-DK",
+  moment_locale: "da",
   tab_date: "Dato",
   tab_time: "Tid",
   tab_week: "Uge",
@@ -40530,7 +40602,7 @@ CUI.DateTimeFormats["fr-FR"] = {
   timezone: "Europe/Berlin",
   moment_locale: "fr",
   tab_date: "Date",
-  tab_time: "Temps",
+  tab_time: "Heure",
   tab_week: "Sem",
   formats: [
     {
@@ -40761,6 +40833,10 @@ CUI.DateTimeRangeGrammar = (function() {
   	 *
   	 * KEY: (optional) Identifier that is used in the format method.
    */
+
+  DateTimeRangeGrammar.SUPPORTED_LOCALES = ["de-DE", "en-US"];
+
+  DateTimeRangeGrammar.DEFAULT_LOCALE = "en-US";
 
   DateTimeRangeGrammar.PARSE_GRAMMARS = {};
 
@@ -41008,6 +41084,10 @@ CUI.DateTimeRangeGrammar = (function() {
     var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
     if (locale == null) {
       locale = CUI.DateTime.getLocale();
+    }
+    if (indexOf.call(CUI.DateTimeRangeGrammar.SUPPORTED_LOCALES, locale) < 0) {
+      console.warn("Locale not supported for stringToDateRange: " + locale + ", using default locale: " + CUI.DateTimeRangeGrammar.DEFAULT_LOCALE);
+      locale = CUI.DateTimeRangeGrammar.DEFAULT_LOCALE;
     }
     if (CUI.util.isEmpty(input) || !CUI.util.isString(input)) {
       return {
@@ -45063,6 +45143,12 @@ CUI.FormModal = (function(superClass) {
             };
           })(this)
         }
+      },
+      hasChanges: {
+        check: Function
+      },
+      revertData: {
+        check: Function
       }
     });
   };
@@ -45086,7 +45172,7 @@ CUI.FormModal = (function(superClass) {
     }
     opts.pane.footer_right = btn;
     mod = new CUI.Modal(opts);
-    if (this.__orig_set_data) {
+    if (this.__orig_set_data || this._hasChanges) {
       CUI.Events.listen({
         type: "data-changed",
         node: mod,
@@ -45105,6 +45191,10 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.revertData = function() {
+    if (this._revertData) {
+      this._revertData(this);
+      return this;
+    }
     CUI.util.assert(this.__orig_set_data, "Form.revertData", "Only supported with opts.name set and opts.data PlainObject.", {
       opts: this.opts
     });
@@ -45143,6 +45233,9 @@ CUI.FormModal = (function(superClass) {
   };
 
   FormModal.prototype.hasChanges = function() {
+    if (this._hasChanges) {
+      return this._hasChanges(this, this.getData());
+    }
     if (this.__orig_set_data) {
       return JSON.stringify(this.__orig_data) !== JSON.stringify(this.__orig_set_data[this._name]);
     } else {
@@ -45153,7 +45246,7 @@ CUI.FormModal = (function(superClass) {
   FormModal.prototype.getPopoverOpts = function() {
     var onCancel, pop_opts;
     pop_opts = CUI.util.copyObject(this._modal, true);
-    if (pop_opts.cancel && this.__orig_set_data) {
+    if (pop_opts.cancel && (this.__orig_set_data || this._hasChanges)) {
       onCancel = pop_opts.onCancel;
       pop_opts.onCancel = (function(_this) {
         return function(ev, modal) {
@@ -46052,6 +46145,11 @@ CUI.Input = (function(superClass) {
       textarea: {
         check: Boolean
       },
+      textarea_cols: {
+        check: function(v) {
+          return v >= 1;
+        }
+      },
       min_rows: {
         check: function(v) {
           return v >= 2;
@@ -46180,12 +46278,12 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__createElement = function(input_type) {
-    var calculateBaseHeight, oldSizes, resize;
+    var calculateBaseHeight, oldSizes, resize, textarea_opts;
     if (input_type == null) {
       input_type = "text";
     }
     if (this._textarea === true) {
-      this.__input = CUI.dom.$element("textarea", "cui-textarea", {
+      textarea_opts = {
         placeholder: this.getPlaceholder(),
         tabindex: "0",
         maxLength: this._maxLength,
@@ -46193,7 +46291,11 @@ CUI.Input = (function(superClass) {
         spellcheck: this.__spellcheck,
         rows: this._min_rows,
         dir: "auto"
-      });
+      };
+      if (this._textarea_cols) {
+        textarea_opts.cols = this._textarea_cols;
+      }
+      this.__input = CUI.dom.$element("textarea", "cui-textarea", textarea_opts);
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
@@ -55973,7 +56075,7 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__initInputs = function() {
-    var fn, i, idx, input, input_opts, key, len, ref, ref1;
+    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2;
     if (this.__inputs) {
       return;
     }
@@ -56082,7 +56184,7 @@ CUI.MultiInput = (function(superClass) {
         name: key.name,
         undo_support: false,
         content_size: this._content_size,
-        placeholder: (ref1 = this._placeholder) != null ? ref1[key.name] : void 0,
+        placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),
         onDataInit: (function(_this) {
           return function(field, data) {
             if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
@@ -56928,6 +57030,9 @@ CUI.Options = (function(superClass) {
       title: {
         check: String
       },
+      hint: {
+        check: String
+      },
       activatable: {
         check: Boolean
       },
@@ -57026,7 +57131,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.__setDataOnOptions = function(init_data) {
-    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2;
+    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2, ref3;
     if (init_data == null) {
       init_data = true;
     }
@@ -57060,7 +57165,7 @@ CUI.Options = (function(superClass) {
         cb = ref2[l];
         opt = cb.getOptValue();
         opt_unchecked = cb.getOptValueUnchecked();
-        if (this.getValue().indexOf(opt) > -1) {
+        if (((ref3 = this.getValue()) != null ? ref3.indexOf(opt) : void 0) > -1) {
           this.__options_data[cb.getName()] = opt;
         } else {
           this.__options_data[cb.getName()] = opt_unchecked;
@@ -57212,7 +57317,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.render = function() {
-    var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
+    var _opt, bottom, cb, drag_handle, drag_handle_inner, el, find_value_in_options, fn, hint, i, idx, j, len, len1, order_options_by_value_array, order_value_array, ref, ref1, sort_options, sortable_element, sortable_selector, top, unsorted_options;
     Options.__super__.render.call(this);
     unsorted_options = this.getArrayFromOpt("options");
     sort_options = (function(_this) {
@@ -57366,7 +57471,7 @@ CUI.Options = (function(superClass) {
             if (_this._radio && !_this.__radio_use_array) {
               _this.storeValue(_cb.getValue(), flags);
             } else {
-              CUI.util.pushOntoArray(_cb.getOptValue(), arr = _this.getValue().slice(0));
+              CUI.util.pushOntoArray(_cb.getOptValue(), arr = (_this.getValue() || []).slice(0));
               order_value_array(arr);
               _this.storeValue(arr, flags);
               if (_this._sortable) {
@@ -57461,11 +57566,17 @@ CUI.Options = (function(superClass) {
       this.__setDataOnOptions();
     }
     if (this.__checkboxes.length) {
+      hint = "";
       if (this._sortable && !CUI.util.isEmpty(this._sortable_hint)) {
+        hint = this._sortable_hint;
+      } else if (!CUI.util.isEmpty(this._hint)) {
+        hint = this._hint;
+      }
+      if (hint) {
         bottom = new CUI.Label({
           multiline: true,
-          "class": "cui-options-order-hint",
-          text: this._sortable_hint
+          "class": "cui-options-hint",
+          text: hint
         });
       } else {
         bottom = void 0;
@@ -59856,7 +59967,6 @@ CUI.StickyHeaderControl = (function(superClass) {
     for (k = 0, len1 = measure_headers.length; k < len1; k++) {
       header = measure_headers[k];
       header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure);
-      this.__control.removeChild(header.nodeToMeasure);
       header.nodeToMeasure.style.visiblity = "";
       delete header.nodeToMeasure;
     }
@@ -80688,6 +80798,78 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 	return moment;
 }));
+
+
+/***/ }),
+
+/***/ "../node_modules/moment/locale/da.js":
+/*!*******************************************!*\
+  !*** ../node_modules/moment/locale/da.js ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+//! moment.js locale configuration
+//! locale : Danish [da]
+//! author : Ulrik Nielsen : https://github.com/mrbase
+
+;(function (global, factory) {
+    true ? factory(__webpack_require__(/*! ../moment */ "../node_modules/moment/moment.js")) :
+   0
+}(this, (function (moment) { 'use strict';
+
+    //! moment.js locale configuration
+
+    var da = moment.defineLocale('da', {
+        months: 'januar_februar_marts_april_maj_juni_juli_august_september_oktober_november_december'.split(
+            '_'
+        ),
+        monthsShort: 'jan_feb_mar_apr_maj_jun_jul_aug_sep_okt_nov_dec'.split('_'),
+        weekdays: 'søndag_mandag_tirsdag_onsdag_torsdag_fredag_lørdag'.split('_'),
+        weekdaysShort: 'søn_man_tir_ons_tor_fre_lør'.split('_'),
+        weekdaysMin: 'sø_ma_ti_on_to_fr_lø'.split('_'),
+        longDateFormat: {
+            LT: 'HH:mm',
+            LTS: 'HH:mm:ss',
+            L: 'DD.MM.YYYY',
+            LL: 'D. MMMM YYYY',
+            LLL: 'D. MMMM YYYY HH:mm',
+            LLLL: 'dddd [d.] D. MMMM YYYY [kl.] HH:mm',
+        },
+        calendar: {
+            sameDay: '[i dag kl.] LT',
+            nextDay: '[i morgen kl.] LT',
+            nextWeek: 'på dddd [kl.] LT',
+            lastDay: '[i går kl.] LT',
+            lastWeek: '[i] dddd[s kl.] LT',
+            sameElse: 'L',
+        },
+        relativeTime: {
+            future: 'om %s',
+            past: '%s siden',
+            s: 'få sekunder',
+            ss: '%d sekunder',
+            m: 'et minut',
+            mm: '%d minutter',
+            h: 'en time',
+            hh: '%d timer',
+            d: 'en dag',
+            dd: '%d dage',
+            M: 'en måned',
+            MM: '%d måneder',
+            y: 'et år',
+            yy: '%d år',
+        },
+        dayOfMonthOrdinalParse: /\d{1,2}\./,
+        ordinal: '%d.',
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 4, // The week that contains Jan 4th is the first week of the year.
+        },
+    });
+
+    return da;
+
+})));
 
 
 /***/ }),

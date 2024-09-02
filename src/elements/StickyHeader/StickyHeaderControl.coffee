@@ -91,7 +91,11 @@ class CUI.StickyHeaderControl extends CUI.Element
 
 		for header in measure_headers
 			header.dimInControl = CUI.dom.getDimensions(header.nodeToMeasure)
-			@__control.removeChild(header.nodeToMeasure)
+			# the following line will trigger a visible delay/jigger when the first sticky header gets stuck 
+			# I guess this is because the forced reflow while also executing getDimensions() takes very long
+			# since we clear out the @__control anyways in position() --> CUI.dom.empty(@__control)
+			# we can comment this out
+			# @__control.removeChild(header.nodeToMeasure) 
 			header.nodeToMeasure.style.visiblity = ""
 			delete header.nodeToMeasure
 		@
