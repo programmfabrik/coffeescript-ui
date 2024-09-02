@@ -6145,6 +6145,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   background-color: #212121;
   color: #ffffff;
 }
+.cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left {
+  flex-shrink: 1;
+}
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
@@ -7504,6 +7507,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   border-radius: 2px 2px 0 0;
   background-color: #212121;
   color: #ffffff;
+}
+.cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left {
+  flex-shrink: 1;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-label {
   font-family: "Source Sans Pro", sans-serif;

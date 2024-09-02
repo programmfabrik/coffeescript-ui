@@ -38245,6 +38245,14 @@ CUI.DateTime = (function(superClass) {
           return CUI.util.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
         }
       },
+      calendar_locale: {
+        mandatory: false,
+        "default": locale,
+        check: function(v) {
+          var ref;
+          return CUI.util.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
+        }
+      },
       input_types: {
         check: Array
       },
@@ -38279,6 +38287,11 @@ CUI.DateTime = (function(superClass) {
     this.__regexpMatcher = this.regexpMatcher();
     this.__input_formats_known = CUI.DateTimeFormats[this._locale].formats;
     this.__locale_format = CUI.DateTimeFormats[this._locale];
+    if (this._calendar_locale) {
+      this.__calendar_locale_format = CUI.DateTimeFormats[this._calendar_locale];
+    } else {
+      this.__calendar_locale_format = this.__locale_format;
+    }
     this.__input_formats = [];
     if (!((ref = this._input_types) != null ? ref.length : void 0)) {
       this.__input_formats = this.__input_formats_known.slice(0);
@@ -38354,7 +38367,7 @@ CUI.DateTime = (function(superClass) {
     this.__dateTimeTmpl.append(new CUI.defaults["class"].Button({
       "class": "cui-date-time-browser-date",
       icon_left: "left",
-      text: this.__locale_format.tab_date,
+      text: this.__calendar_locale_format.tab_date,
       onClick: (function(_this) {
         return function() {
           return _this.setCursor("day");
@@ -38364,7 +38377,7 @@ CUI.DateTime = (function(superClass) {
     this.__dateTimeTmpl.append(new CUI.defaults["class"].Button({
       "class": "cui-date-time-browser-time",
       icon_right: "right",
-      text: this.__locale_format.tab_time,
+      text: this.__calendar_locale_format.tab_time,
       onClick: (function(_this) {
         return function() {
           return _this.setCursor("hour");
@@ -38407,12 +38420,12 @@ CUI.DateTime = (function(superClass) {
       case "minute":
       case "second":
       case "am_pm":
-        title = this.__locale_format.tab_time;
+        title = this.__calendar_locale_format.tab_time;
         CUI.dom.setAttribute(this.__dateTimeTmpl.DOM, "browser", "time");
         this.setDigiClock();
         break;
       default:
-        title = this.__locale_format.tab_date;
+        title = this.__calendar_locale_format.tab_date;
         CUI.dom.setAttribute(this.__dateTimeTmpl.DOM, "browser", "date");
     }
     this.__dateTimeTmpl.replace(new CUI.Label({
@@ -39146,7 +39159,7 @@ CUI.DateTime = (function(superClass) {
       }
     };
     date_title = new CUI.Label({
-      text: this.__locale_format.tab_date,
+      text: this.__calendar_locale_format.tab_date,
       "class": "cui-select-date-title"
     });
     date_sel = new CUI.Select({
@@ -39237,7 +39250,7 @@ CUI.DateTime = (function(superClass) {
         emtpy_clock_opts = [];
       }
       time_title = new CUI.Label({
-        text: this.__locale_format.tab_time,
+        text: this.__calendar_locale_format.tab_time,
         "class": "cui-select-time-title"
       });
       hour_sel = new CUI.Select({
@@ -39517,10 +39530,12 @@ CUI.DateTime = (function(superClass) {
     CUI.dom.append(month_table, tr);
     td_func = CUI.dom.th;
     tabWeekDiv = CUI.dom.div("cui-date-time-dow");
-    tabWeekDiv.textContent = this.__locale_format.tab_week;
+    tabWeekDiv.textContent = this.__calendar_locale_format.tab_week;
     CUI.dom.append(tr, CUI.dom.append(td_func("cui-date-time-week-title"), tabWeekDiv));
     for (dow = i = ref = this.start_day, ref1 = this.start_day + 6; ref <= ref1 ? i <= ref1 : i >= ref1; dow = ref <= ref1 ? ++i : --i) {
+      moment.locale(this.__calendar_locale_format.moment_locale || this._locale);
       weekday = moment.weekdaysMin(dow % 7);
+      moment.locale(this.__locale_format.moment_locale || this._locale);
       day_div = CUI.dom.div("cui-date-time-dow");
       day_div.textContent = weekday;
       CUI.dom.addClass(day_div, "cui-date-time-day-" + weekday.toLowerCase());
@@ -39874,9 +39889,9 @@ CUI.DateTimeFormats["de-DE"] = {
 CUI.DateTimeFormats["it-IT"] = {
   timezone: "Europe/Berlin",
   moment_locale: "de-DE",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wk",
+  tab_date: "Data",
+  tab_time: "Ora",
+  tab_week: "Set",
   formats: [
     {
       text: "Datum+Zeit",
@@ -39952,9 +39967,9 @@ CUI.DateTimeFormats["it-IT"] = {
 CUI.DateTimeFormats["es-ES"] = {
   timezone: "Europe/Berlin",
   moment_locale: "de-DE",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wk",
+  tab_date: "Fecha",
+  tab_time: "Hora",
+  tab_week: "Sem",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40110,9 +40125,9 @@ CUI.DateTimeFormats["en-US"] = {
 CUI.DateTimeFormats["ru-RU"] = {
   timezone: "Europe/Berlin",
   moment_locale: "ru-RU",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_date: "Дата",
+  tab_time: "Время",
+  tab_week: "Нед",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40188,9 +40203,9 @@ CUI.DateTimeFormats["ru-RU"] = {
 CUI.DateTimeFormats["pl-PL"] = {
   timezone: "Europe/Berlin",
   moment_locale: "pl-PL",
-  tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_date: "Data",
+  tab_time: "Czas",
+  tab_week: "Tydz",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40267,8 +40282,8 @@ CUI.DateTimeFormats["cs-CZ"] = {
   timezone: "Europe/Berlin",
   moment_locale: "cs-CZ",
   tab_date: "Datum",
-  tab_time: "Zeit",
-  tab_week: "Wo",
+  tab_time: "Čas",
+  tab_week: "Týd",
   formats: [
     {
       text: "Datum+Zeit",
@@ -40587,7 +40602,7 @@ CUI.DateTimeFormats["fr-FR"] = {
   timezone: "Europe/Berlin",
   moment_locale: "fr",
   tab_date: "Date",
-  tab_time: "Temps",
+  tab_time: "Heure",
   tab_week: "Sem",
   formats: [
     {
