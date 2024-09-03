@@ -9,7 +9,7 @@ var through2 = require('through2');
 // result filename "icons.svg" is the name of base directory of the first file.
 var iconsource = ['src/scss/icons/*.svg', '!src/scss/icons/icons.svg']
 
-gulp.task('svgstore', function () {
+gulp.task('svgstore', function() {
   return gulp
     .src(iconsource)
     .pipe(rename({prefix: 'svg-'}))
@@ -43,6 +43,19 @@ gulp.task('svgstore', function () {
       cb();
     }))
     .pipe(gulp.dest('src/scss/icons'));
+});
+
+/**
+ * Copy thirdparty CSS modules from node_modules into a thirdparty folder
+ * this way we can @import and build them into the themes without the need to run `npm i` in CUI
+ * this was a problem because in CI we don't want to install CUI dev dependencies when building the webfrontend
+ */
+gulp.task('thirdparty', function() {
+  return gulp.src([
+    'node_modules/leaflet/dist/**/*.+(css|png)',
+    'node_modules/leaflet-defaulticon-compatibility/dist/**/*.+(css|png)',
+  ], { base: 'node_modules/' })
+  .pipe(gulp.dest('src/scss/thirdparty'));
 });
 
 gulp.task('default', function(){

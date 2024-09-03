@@ -76,7 +76,7 @@ module.exports = function (env, argv) {
                 }),
             ],
         },
-        devtool: (!isProduction ? 'source-map' : undefined),
+        devtool: (!isProduction ? 'source-map' : undefined),     
         module: {
             rules: [
                 {
@@ -101,10 +101,18 @@ module.exports = function (env, argv) {
                             }
                         },
                         {
+                            // resolve fully relative paths in SCSS, especially when importing CSS from node_modules (leaflet)
+                            loader: 'resolve-url-loader',
+                            options: {
+                                sourceMap: true,
+                                // debug: true
+                            }
+                        },                        
+                        {
                             loader: 'sass-loader',
                             options: {
                               implementation: require('sass'),
-                              sourceMap: true,
+                              sourceMap: true, // <-- IMPORTANT for resolve-url-loader!
                             },
                         },
                     ]
