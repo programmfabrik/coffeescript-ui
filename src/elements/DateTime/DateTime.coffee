@@ -17,7 +17,8 @@ class CUI.DateTime extends CUI.Input
 
 	@defaults:
 		button_tooltip: "Open calendar"
-		bc_appendix: ["B.C.","BC","V. CHR.","VCHR","VCHR."]
+		bc_appendix: ["B.C.","BC","V. CHR.","VCHR","VCHR."] # BC appendixes to recognize
+		bc_appendix_output: "B.C." # BC appendix to output
 
 	initOpts: ->
 		super()
@@ -1478,11 +1479,11 @@ class CUI.DateTime extends CUI.Input
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
 	@formatMomentWithBc: (mom, format) ->
 		if mom.year() == 0
-			return "1 #{CUI.DateTime.defaults.bc_appendix[0]}"
+			return "1 #{CUI.DateTime.defaults.bc_appendix_output}"
 
 		if mom.bc
 			bc = parseInt(mom.bc) + 1
-			return "#{(bc)} #{CUI.DateTime.defaults.bc_appendix[0]}"
+			return "#{(bc)} #{CUI.DateTime.defaults.bc_appendix_output}"
 
 		if mom.year() > 0
 			v = mom.format(format)
@@ -1492,7 +1493,7 @@ class CUI.DateTime extends CUI.Input
 			return v.replace(regexp, ""+mom.year())
 
 		mom.subtract(1, "year")
-		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0]
+		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output
 		# remove the "-" and all possible zeros.
 		replace = "\\-0*#{-1 * mom.year()}";
 		regexp = new RegExp(replace);
