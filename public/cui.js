@@ -39918,7 +39918,8 @@ CUI.DateTime = (function(superClass) {
 
   DateTime.defaults = {
     button_tooltip: "Open calendar",
-    bc_appendix: ["B.C.", "BC", "V. CHR.", "VCHR", "VCHR."]
+    bc_appendix: ["B.C.", "BC", "V. CHR.", "VCHR", "VCHR."],
+    bc_appendix_output: "B.C."
   };
 
   DateTime.prototype.initOpts = function() {
@@ -41390,11 +41391,11 @@ CUI.DateTime = (function(superClass) {
   DateTime.formatMomentWithBc = function(mom, format) {
     var bc, regexp, replace, v;
     if (mom.year() === 0) {
-      return "1 " + CUI.DateTime.defaults.bc_appendix[0];
+      return "1 " + CUI.DateTime.defaults.bc_appendix_output;
     }
     if (mom.bc) {
       bc = parseInt(mom.bc) + 1;
-      return bc + " " + CUI.DateTime.defaults.bc_appendix[0];
+      return bc + " " + CUI.DateTime.defaults.bc_appendix_output;
     }
     if (mom.year() > 0) {
       v = mom.format(format);
@@ -41403,7 +41404,7 @@ CUI.DateTime = (function(superClass) {
       return v.replace(regexp, "" + mom.year());
     }
     mom.subtract(1, "year");
-    v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix[0];
+    v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output;
     replace = "\\-0*" + (-1 * mom.year());
     regexp = new RegExp(replace);
     return v.replace(regexp, "" + (-1 * mom.year()));
