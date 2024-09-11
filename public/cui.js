@@ -41449,6 +41449,9 @@ CUI.DateTime = (function(superClass) {
       timeZone = CUI.Timezone.getTimezone();
     }
     mom = moment(date).tz(timeZone);
+    if (date.startsWith("-")) {
+      mom = date;
+    }
     switch (groupFormat) {
       case "year":
         return CUI.DateTime.format(mom, "display_short", "year", false, locale);
