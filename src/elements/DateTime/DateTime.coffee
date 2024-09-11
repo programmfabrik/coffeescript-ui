@@ -1567,6 +1567,10 @@ class CUI.DateTime extends CUI.Input
 	@formatGroupLabel: (date, groupFormat, locale = null, timeZone = CUI.Timezone.getTimezone()) ->
 		# We convert first the date to a moment object, also we format the date to the user timezone.
 		mom = moment(date).tz(timeZone)
+		if date.startsWith("-")
+			# For BC calculation we cant use directly moment library so we pass directly the date string
+			mom = date
+
 		switch groupFormat
 			when "year"
 				return CUI.DateTime.format(mom, "display_short", "year", false, locale)
