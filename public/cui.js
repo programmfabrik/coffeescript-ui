@@ -39964,6 +39964,10 @@ CUI.DateTime = (function(superClass) {
         mandatory: true,
         "default": false,
         check: Boolean
+      },
+      add_AD: {
+        "default": false,
+        check: Boolean
       }
     });
     this.removeOpt("getValueForDisplay");
@@ -40091,7 +40095,12 @@ CUI.DateTime = (function(superClass) {
   DateTime.prototype.readOpts = function() {
     DateTime.__super__.readOpts.call(this);
     this._checkInput = this.__checkInput;
-    return this._getInputBlocks = this.__getInputBlocks;
+    this._getInputBlocks = this.__getInputBlocks;
+    if (this._add_AD) {
+      if (!CUI.DateTime.defaults.ad_prefix_output) {
+        return this._add_AD = false;
+      }
+    }
   };
 
   DateTime.prototype.getCurrentFormat = function() {
@@ -41375,7 +41384,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay());
+    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), opts.add_AD);
   };
 
   DateTime.formatMoment = function(mom, format, parseZone) {
@@ -41388,8 +41397,11 @@ CUI.DateTime = (function(superClass) {
     return mom.format(format);
   };
 
-  DateTime.formatMomentWithBc = function(mom, format) {
+  DateTime.formatMomentWithBc = function(mom, format, add_AD) {
     var bc, regexp, replace, v;
+    if (add_AD == null) {
+      add_AD = false;
+    }
     if (mom.year() === 0) {
       return "1 " + CUI.DateTime.defaults.bc_appendix_output;
     }
@@ -41399,6 +41411,11 @@ CUI.DateTime = (function(superClass) {
     }
     if (mom.year() > 0) {
       v = mom.format(format);
+      if (mom.year() < 1000 && add_AD) {
+        replace = "0+" + (mom.year()) + "\\b";
+        regexp = new RegExp(replace, "g");
+        return CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s", v.replace(regexp, "" + mom.year()));
+      }
       replace = "^\\+?0*" + (mom.year());
       regexp = new RegExp(replace);
       return v.replace(regexp, "" + mom.year());
