@@ -53,6 +53,9 @@ class CUI.DateTime extends CUI.Input
 				mandatory: true
 				default: false
 				check: Boolean
+			add_AD:
+				default: false
+				check: Boolean
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
@@ -181,6 +184,12 @@ class CUI.DateTime extends CUI.Input
 		super()
 		@_checkInput = @__checkInput
 		@_getInputBlocks = @__getInputBlocks
+
+		if @_add_AD
+			# If not ad prefix is set, we do not add it.
+			if not CUI.DateTime.defaults.ad_prefix_output
+				@_add_AD = false
+
 		# @_correctValueForInput = (dateTime, value) =>
 		# 	corrected_value = @parseAndFormatValue(value, "input")
 		# 	if corrected_value
@@ -1465,7 +1474,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay())
+		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), opts.add_AD)
 
 	@formatMoment: (mom, format, parseZone) ->
 		if mom.bc
@@ -1477,7 +1486,7 @@ class CUI.DateTime extends CUI.Input
 		return mom.format(format)
 
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
-	@formatMomentWithBc: (mom, format) ->
+	@formatMomentWithBc: (mom, format, add_AD = false) ->
 		if mom.year() == 0
 			return "1 #{CUI.DateTime.defaults.bc_appendix_output}"
 
@@ -1487,6 +1496,12 @@ class CUI.DateTime extends CUI.Input
 
 		if mom.year() > 0
 			v = mom.format(format)
+			# AD prefix
+			if mom.year() < 1000 and add_AD
+				replace = "0+#{mom.year()}\\b";
+				regexp = new RegExp(replace, "g");
+				return CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s",  v.replace(regexp, ""+mom.year()))
+
 			# remove the "+" and all possible zeros.
 			replace = "^\\+?0*#{mom.year()}";
 			regexp = new RegExp(replace);
