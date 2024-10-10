@@ -1474,7 +1474,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), opts.add_AD)
+		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD)
 
 	@formatMoment: (mom, format, parseZone) ->
 		if mom.bc
