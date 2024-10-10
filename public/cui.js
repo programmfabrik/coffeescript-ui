@@ -41384,7 +41384,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), opts.add_AD);
+    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD);
   };
 
   DateTime.formatMoment = function(mom, format, parseZone) {
