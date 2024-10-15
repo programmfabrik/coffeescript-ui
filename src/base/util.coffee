@@ -607,6 +607,29 @@ class CUI.util
 		CUI.dom.remove(textarea)
 		return
 
+	# removePropertyRecursively removes a property from an object recursively
+	@removePropertyRecursively: (obj, propertyToRemove, seen = new Set()) ->
+		# If the object has already been seen, exit to avoid circular references
+		return if seen.has(obj)
+
+		# Add the current object to the set of seen objects
+		seen.add(obj)
+
+		# If the object is an array, iterate over it
+		if Array.isArray(obj)
+			for item in obj
+				CUI.util.removePropertyRecursively(item, propertyToRemove, seen)  # Recursively for each element in the array
+		# If it's an object
+		else if typeof obj is 'object' and obj isnt null
+			# Iterate over all properties of the object
+			for key, value of obj
+				# If we find the property to remove, delete it
+				if key is propertyToRemove
+					delete obj[key]
+				# If the property is another object or array, call the function recursively
+				else if typeof value is 'object'
+					CUI.util.removePropertyRecursively(value, propertyToRemove, seen)
+
 CUI.util.moment = moment
 CUI.util.marked = marked
 
