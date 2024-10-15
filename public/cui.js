@@ -34025,6 +34025,38 @@ CUI.util = (function() {
     CUI.dom.remove(textarea);
   };
 
+  util.removePropertyRecursively = function(obj, propertyToRemove, seen) {
+    var item, j, key, len, results, results1, value;
+    if (seen == null) {
+      seen = new Set();
+    }
+    if (seen.has(obj)) {
+      return;
+    }
+    seen.add(obj);
+    if (Array.isArray(obj)) {
+      results = [];
+      for (j = 0, len = obj.length; j < len; j++) {
+        item = obj[j];
+        results.push(CUI.util.removePropertyRecursively(item, propertyToRemove, seen));
+      }
+      return results;
+    } else if (typeof obj === 'object' && obj !== null) {
+      results1 = [];
+      for (key in obj) {
+        value = obj[key];
+        if (key === propertyToRemove) {
+          results1.push(delete obj[key]);
+        } else if (typeof value === 'object') {
+          results1.push(CUI.util.removePropertyRecursively(value, propertyToRemove, seen));
+        } else {
+          results1.push(void 0);
+        }
+      }
+      return results1;
+    }
+  };
+
   return util;
 
 })();
