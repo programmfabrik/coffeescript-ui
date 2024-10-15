@@ -1019,10 +1019,14 @@ class CUI.DateTime extends CUI.Input
 			year: mom.year()
 
 		month_opts = []
+
+		# For showing the month names in the select we temporarily change the locale to match calendar locale.
+		moment.locale(@__calendar_locale_format.moment_locale or @__locale_format.moment_locale or @_locale)
 		for m, idx in moment.months()
 			month_opts.push
 				text: m
 				value: idx
+		moment.locale(@__locale_format.moment_locale or @_locale)
 
 		now_year = moment().year()
 
