@@ -42108,9 +42108,9 @@ CUI.DateTimeFormats["fi-FI"] = {
   tab_week: "Vi",
   formats: [
     {
-      text: "Datum+Zeit",
+      text: "Päivämäärä + Aika",
       support_bc: false,
-      invalid: "Datum ungültig",
+      invalid: "Virheellinen päivämäärä",
       type: "date_time",
       clock: true,
       store: "YYYY-MM-DDTHH:mm:00Z",
@@ -42122,9 +42122,9 @@ CUI.DateTimeFormats["fi-FI"] = {
       display_short_attribute: "date-time-short",
       parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
-      text: "Datum+Zeit+Sekunden",
+      text: "Päivämäärä+Aika+Sekunnit",
       support_bc: false,
-      invalid: "Datum ungültig",
+      invalid: "Virheellinen päivämäärä",
       type: "date_time_seconds",
       input: "DD.MM.YYYY HH:mm:ss",
       store: "YYYY-MM-DDTHH:mm:ssZ",
@@ -42136,10 +42136,10 @@ CUI.DateTimeFormats["fi-FI"] = {
       clock_seconds: true,
       parse: ["YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss"]
     }, {
-      text: "Datum",
+      text: "Päivämäärä",
       support_bc: false,
       input: "DD.MM.YYYY",
-      invalid: "Datum ungültig",
+      invalid: "Virheellinen päivämäärä",
       display: "dd, DD.MM.YYYY",
       display_short: "DD.MM.YYYY",
       display_attribute: "date",
@@ -42149,10 +42149,10 @@ CUI.DateTimeFormats["fi-FI"] = {
       clock: false,
       parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY"]
     }, {
-      text: "Jahr-Monat",
+      text: "Vuosi-Kuu",
       support_bc: false,
       input: "MM.YYYY",
-      invalid: "Datum ungültig",
+      invalid: "Virheellinen päivämäärä",
       store: "YYYY-MM",
       display: "MMMM YYYY",
       display_short: "MM.YYYY",
@@ -42162,10 +42162,10 @@ CUI.DateTimeFormats["fi-FI"] = {
       clock: false,
       parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM"]
     }, {
-      text: "Jahr",
+      text: "Vuosi",
       support_bc: true,
       input: "Y",
-      invalid: "Datum ungültig",
+      invalid: "Virheellinen päivämäärä",
       display: "Y",
       display_short: "Y",
       display_attribute: "year",
