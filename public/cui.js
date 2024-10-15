@@ -41114,6 +41114,7 @@ CUI.DateTime = (function(superClass) {
       year: mom.year()
     };
     month_opts = [];
+    moment.locale(this.__calendar_locale_format.moment_locale || this.__locale_format.moment_locale || this._locale);
     ref = moment.months();
     for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
       m = ref[idx];
@@ -41122,6 +41123,7 @@ CUI.DateTime = (function(superClass) {
         value: idx
       });
     }
+    moment.locale(this.__locale_format.moment_locale || this._locale);
     now_year = moment().year();
     month_label_max_chars = 0;
     for (j = 0, len1 = month_opts.length; j < len1; j++) {
