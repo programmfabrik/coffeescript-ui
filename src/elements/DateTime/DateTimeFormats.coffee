@@ -951,9 +951,9 @@ CUI.DateTimeFormats["fi-FI"] =
 	tab_time: "Aika"
 	tab_week: "Vi"
 	formats: [
-		text: "Datum+Zeit"
+		text: "Päivämäärä + Aika"
 		support_bc: false
-		invalid: "Datum ungültig"
+		invalid: "Virheellinen päivämäärä"
 		type: "date_time"
 		clock: true
 		store: "YYYY-MM-DDTHH:mm:00Z"
@@ -992,9 +992,9 @@ CUI.DateTimeFormats["fi-FI"] =
 			"MM/D/YY HH:DD"
 		]
 	,
-		text: "Datum+Zeit+Sekunden"
+		text: "Päivämäärä+Aika+Sekunnit"
 		support_bc: false
-		invalid: "Datum ungültig"
+		invalid: "Virheellinen päivämäärä"
 		# input: "YYYY-MM-DD HH:mm:ss"
 		type: "date_time_seconds"
 		input: "DD.MM.YYYY HH:mm:ss"
@@ -1022,10 +1022,10 @@ CUI.DateTimeFormats["fi-FI"] =
 			"MM/D/YY HH:DD:ss"
 		]
 	,
-		text: "Datum"
+		text: "Päivämäärä"
 		support_bc: false
 		input: "DD.MM.YYYY"
-		invalid: "Datum ungültig"
+		invalid: "Virheellinen päivämäärä"
 		display: "dd, DD.MM.YYYY"
 		display_short: "DD.MM.YYYY"
 		display_attribute: "date"
@@ -1046,10 +1046,10 @@ CUI.DateTimeFormats["fi-FI"] =
 			"M/DD/YYYY"
 		]
 	,
-		text: "Jahr-Monat"
+		text: "Vuosi-Kuu"
 		support_bc: false
 		input: "MM.YYYY"
-		invalid: "Datum ungültig"
+		invalid: "Virheellinen päivämäärä"
 		store: "YYYY-MM"
 		display: "MMMM YYYY"
 		display_short: "MM.YYYY"
@@ -1067,10 +1067,10 @@ CUI.DateTimeFormats["fi-FI"] =
 			"YYYY-MM"
 		]
 	,
-		text: "Jahr"
+		text: "Vuosi"
 		support_bc: true
 		input: "Y"
-		invalid: "Datum ungültig"
+		invalid: "Virheellinen päivämäärä"
 		display: "Y"
 		display_short: "Y"
 		display_attribute: "year"
