@@ -38821,6 +38821,7 @@ CUI.DataForm = (function(superClass) {
     if (this._has_add_button) {
       this.__addButton = new CUI.Button({
         icon: "plus",
+        text: $$("dataform.add_button.label"),
         disabled: true,
         onClick: (function(_this) {
           return function() {
