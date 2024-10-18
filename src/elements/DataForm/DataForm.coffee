@@ -6,6 +6,7 @@ class CUI.DataForm extends CUI.DataTable
 		if @_has_add_button
 			@__addButton = new CUI.Button
 				icon: "plus"
+				text: $$("dataform.add_button.label")
 				disabled: true
 				onClick: =>
 					@__appendRow(_new: true)

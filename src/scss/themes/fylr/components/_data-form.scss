@@ -92,11 +92,12 @@
 
 	&.cui-data-form--add-button {
 		> .cui-vertical-layout > .cui-vertical-layout-bottom {
-			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset} - #{0.5 * $btn-height});
-			margin-top: -$spacer-sm;
+			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset});
+			margin-top: $spacer-xs;
+			margin-bottom: $spacer-sm;
 
 			.cui-button-button {
-				@include button-plain();
+				@include button-sm(); // see .ez5-nested-add-button
 			}
 		}
 	}
