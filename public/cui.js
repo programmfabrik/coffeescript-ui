@@ -33369,6 +33369,38 @@ CUI.dom = (function() {
     return false;
   };
 
+  dom.wrapWithDiv = function(element, wrapperDiv) {
+    if (wrapperDiv == null) {
+      wrapperDiv = null;
+    }
+    if (!element) {
+      return null;
+    }
+    if (element.hasOwnProperty('DOM')) {
+      element = element.DOM;
+    }
+    CUI.util.assert(element instanceof HTMLElement, "CUI.dom.wrapWithDiv", "element needs to be an instance of HTMLElement.", {
+      element: element
+    });
+    if (wrapperDiv) {
+      if (wrapperDiv.hasOwnProperty('DOM')) {
+        wrapperDiv = wrapperDiv.DOM;
+      }
+      CUI.util.assert(wrapperDiv instanceof HTMLElement, "CUI.dom.wrapWithDiv", "wrapperDiv needs to be an instance of HTMLElement.", {
+        wrapperDiv: wrapperDiv
+      });
+    } else {
+      wrapperDiv = document.createElement('div');
+    }
+    if (element.parentNode) {
+      element.parentNode.insertBefore(wrapperDiv, element);
+      wrapperDiv.appendChild(element);
+    } else {
+      wrapperDiv.appendChild(element);
+    }
+    return wrapperDiv;
+  };
+
   dom.toggleClass = function(element, cls) {
     return this.setClass(element, cls, !this.hasClass(element, cls));
   };
