@@ -7471,7 +7471,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-handle:not(:empty),
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-handle:not(:empty) {
   min-height: var(--list-view-inner-row-min-height);
-  margin-top: -2px;
+  margin-top: var(--list-view-tree-node-handle-offset, -2px);
 }
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-content > .cui-label,
 .cui-lv--has-datafields > .cui-vertical-layout-center > .cui-list-view-grid > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-td > .cui-tree-node > .cui-tree-node-content > .cui-output,
