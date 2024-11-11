@@ -53914,7 +53914,7 @@ CUI.ListViewTreeNode = (function(superClass) {
         tree = this.getTree();
         if (tree && !tree.isDestroyed()) {
           if (this.getRowIdx() === null) {
-            if (!this.isRoot()) {
+            if (!this.isRoot() && tree.__deferredRows.length > 0) {
               tree.removeDeferredRow(this);
             }
           } else {
