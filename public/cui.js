@@ -40033,6 +40033,10 @@ CUI.DateTime = (function(superClass) {
       add_AD: {
         "default": false,
         check: Boolean
+      },
+      avoid_bc_conversion: {
+        "default": false,
+        check: Boolean
       }
     });
     this.removeOpt("getValueForDisplay");
@@ -40332,7 +40336,7 @@ CUI.DateTime = (function(superClass) {
       case "store":
         return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone);
       default:
-        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format]);
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], false, this._avoid_bc_conversion);
     }
   };
 
@@ -40427,7 +40431,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return value;
     }
-    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay());
+    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay(), false, this._avoid_bc_conversion);
   };
 
   DateTime.prototype.getValueForInput = function(v) {
@@ -40442,7 +40446,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return v;
     }
-    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input);
+    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input, false, this._avoid_bc_conversion);
   };
 
   DateTime.prototype.__checkInput = function(value) {
@@ -40763,14 +40767,20 @@ CUI.DateTime = (function(superClass) {
       return moment.invalid();
     }
     shortMatch = stringValue.match(/^[0-9]+$/);
-    longMatch = stringValue.match(/^[0-9]+[-\.][0-9]+[-\.][0-9]+/);
+    longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+[-\.\/][0-9]+/);
     if (!shortMatch && !longMatch) {
       return moment.invalid();
     }
     if (longMatch) {
       mom = this.parse(stringValue);
-      if (mom != null) {
-        mom.set('y', -1 * (mom.year() - 1));
+      if (hasBCAppendix) {
+        if (mom != null) {
+          mom.set('y', -1 * (mom.year() - 1));
+        }
+      } else {
+        if (mom != null) {
+          mom.set('y', -1 * mom.year());
+        }
       }
       return mom;
     }
@@ -41451,7 +41461,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD);
+    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion);
   };
 
   DateTime.formatMoment = function(mom, format, parseZone) {
@@ -41464,10 +41474,16 @@ CUI.DateTime = (function(superClass) {
     return mom.format(format);
   };
 
-  DateTime.formatMomentWithBc = function(mom, format, add_AD) {
+  DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
     var bc, regexp, replace, v;
     if (add_AD == null) {
       add_AD = false;
+    }
+    if (avoid_bc_conversion == null) {
+      avoid_bc_conversion = false;
+    }
+    if (avoid_bc_conversion) {
+      return DateTime.formatMoment(mom, format, false);
     }
     if (mom.year() === 0) {
       return "1 " + CUI.DateTime.defaults.bc_appendix_output;

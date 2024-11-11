@@ -56,6 +56,9 @@ class CUI.DateTime extends CUI.Input
 			add_AD:
 				default: false
 				check: Boolean
+			avoid_bc_conversion:
+				default: false
+				check: Boolean
 
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
@@ -324,7 +327,7 @@ class CUI.DateTime extends CUI.Input
 			when "store"
 				return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone)
 			else
-				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format])
+				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], false, @_avoid_bc_conversion)
 
 	regexpMatcher: ->
 		YYYY:
@@ -401,7 +404,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return value
 
-		return CUI.DateTime.formatMomentWithBc(mom, @getCurrentFormatDisplay())
+		return CUI.DateTime.formatMomentWithBc(mom, @getCurrentFormatDisplay(),false, @_avoid_bc_conversion)
 
 	getValueForInput: (v = @getValue()) ->
 		if CUI.util.isEmpty(v?.trim())
@@ -411,7 +414,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return v
 
-		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input)
+		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input,false, @_avoid_bc_conversion)
 
 	__checkInput: (value) ->
 		@__calendarButton.enable()
@@ -1481,7 +1484,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD)
+		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion)
 
 	@formatMoment: (mom, format, parseZone) ->
 		if mom.bc
@@ -1493,7 +1496,10 @@ class CUI.DateTime extends CUI.Input
 		return mom.format(format)
 
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
-	@formatMomentWithBc: (mom, format, add_AD = false) ->
+	@formatMomentWithBc: (mom, format, add_AD = false, avoid_bc_conversion = false) ->
+		if avoid_bc_conversion
+			return DateTime.formatMoment(mom, format, false)
+
 		if mom.year() == 0
 			return "1 #{CUI.DateTime.defaults.bc_appendix_output}"
 
@@ -1513,7 +1519,6 @@ class CUI.DateTime extends CUI.Input
 			replace = "^\\+?0*#{mom.year()}";
 			regexp = new RegExp(replace);
 			return v.replace(regexp, ""+mom.year())
-
 
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output
