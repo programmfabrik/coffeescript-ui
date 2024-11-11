@@ -40763,14 +40763,20 @@ CUI.DateTime = (function(superClass) {
       return moment.invalid();
     }
     shortMatch = stringValue.match(/^[0-9]+$/);
-    longMatch = stringValue.match(/^[0-9]+[-\.][0-9]+[-\.][0-9]+/);
+    longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+[-\.\/][0-9]+/);
     if (!shortMatch && !longMatch) {
       return moment.invalid();
     }
     if (longMatch) {
       mom = this.parse(stringValue);
-      if (mom != null) {
-        mom.set('y', -1 * (mom.year() - 1));
+      if (hasBCAppendix) {
+        if (mom != null) {
+          mom.set('y', -1 * (mom.year() - 1));
+        }
+      } else {
+        if (mom != null) {
+          mom.set('y', -1 * mom.year());
+        }
       }
       return mom;
     }
