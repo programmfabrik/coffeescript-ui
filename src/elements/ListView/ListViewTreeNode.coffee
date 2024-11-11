@@ -251,7 +251,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				tree = @getTree()
 				if tree and not tree.isDestroyed()
 					if @getRowIdx() == null
-						if not @isRoot()
+						if not @isRoot() and tree.__deferredRows.length > 0
 							tree.removeDeferredRow(@)
 					else
 						tree.removeRow(@getRowIdx())
