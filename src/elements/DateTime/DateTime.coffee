@@ -675,15 +675,18 @@ class CUI.DateTime extends CUI.Input
 			return moment.invalid()
 
 		shortMatch = stringValue.match(/^[0-9]+$/) #Find string like 2022
-		longMatch = stringValue.match(/^[0-9]+[-\.][0-9]+[-\.][0-9]+/) #Find 2202-05-13
+		longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+[-\.\/][0-9]+/) #Find 2202-05-13
 		if not shortMatch and not longMatch
 			return moment.invalid()
 
 		if longMatch
 			#If we have a valid long date then we can call parse again
 			mom = @parse(stringValue)
-			mom?.set('y', -1 * (mom.year()-1))
-			#We have to subtract a year and convert it to negative.
+			if hasBCAppendix
+				#We have to subtract a year and convert it to negative.
+				mom?.set('y', -1 * (mom.year()-1))
+			else
+				mom?.set('y', -1 * mom.year())
 			return mom
 
 		#We have a short bc date like  "200 bc"
@@ -1510,6 +1513,7 @@ class CUI.DateTime extends CUI.Input
 			replace = "^\\+?0*#{mom.year()}";
 			regexp = new RegExp(replace);
 			return v.replace(regexp, ""+mom.year())
+
 
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output
