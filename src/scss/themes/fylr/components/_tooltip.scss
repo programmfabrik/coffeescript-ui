@@ -55,4 +55,9 @@
 		
 		margin: 0;
 	}
+
+	a {
+		--link-color: #{$tooltip-color};
+		--link-hover-color: #{$tooltip-color};
+	}
 }
