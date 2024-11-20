@@ -8604,7 +8604,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 
 .ez5-developer-menu {
-  min-width: 400px;
+  width: 400px;
 }
 
 .cui-google-map {
