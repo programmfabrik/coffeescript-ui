@@ -7745,9 +7745,6 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   grid-area: content;
   margin-left: 0.25rem;
 }
-.cui-data-form-row > .cui-horizontal-layout-center .ez5-nested-fields {
-  margin-bottom: 0 !important;
-}
 .cui-data-form-row > .cui-horizontal-layout-center > * {
   width: 100%;
 }
