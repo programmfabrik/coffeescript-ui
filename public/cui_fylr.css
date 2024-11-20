@@ -1428,11 +1428,11 @@ p {
 }
 
 a:not(.cui-button-button) {
-  color: #212121;
+  color: var(--link-color, #212121);
   text-decoration: underline;
 }
 a:not(.cui-button-button):hover, a:not(.cui-button-button):focus {
-  color: #212121;
+  color: var(--link-hover-color, #212121);
   text-decoration: none;
 }
 a:not(.cui-button-button):focus {
@@ -8600,6 +8600,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-tooltip > .cui-pane > .cui-vertical-layout-center {
   padding: 0;
   margin: 0;
+}
+.cui-tooltip a {
+  --link-color: #ffffff;
+  --link-hover-color: #ffffff;
 }
 
 .ez5-developer-menu {
