@@ -149,11 +149,6 @@
 		grid-area: content;
 		margin-left: $data-form-border-offset;
 
-		// todo: move into theme _fields.scss
-		.ez5-nested-fields {
-			margin-bottom: 0 !important;
-		}
-
 		> * {
 			width: 100%;
 		}
