@@ -1454,6 +1454,17 @@ class CUI.DateTime extends CUI.Input
 		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
 		str
 
+	@formatWithoutBC: (datestr_or_moment, output_format, output_type, parseZone = false, locale = null) ->
+		opts = {
+			avoid_bc_conversion: true
+		}
+		if locale
+			opts.locale = locale
+		dt = new CUI.DateTime(opts)
+		str = dt.format(datestr_or_moment, output_format, output_type, parseZone)
+		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
+		str
+
 	# limit output to the given types
 	# the library is very awkward here...
 	@formatWithInputTypes: (datestr, output_types, output_format, locale = null) ->
