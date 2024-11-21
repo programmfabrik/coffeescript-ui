@@ -414,8 +414,8 @@ $flex-handle-blocker-offset: 	0; // 4px;
 // * ==========================================
 $item-list-hover-color: 		$white !default;
 $item-list-hover-background:	theme-color('primary') !default;
-$item-list-active-color: 		$body-color !default;
-$item-list-active-background:	gray('200') !default;
+$item-list-active-color: 		$item-list-hover-color !default;
+$item-list-active-background:	$item-list-hover-background !default;
 $item-list-indent: 				$btn-padding-x !default;
 $item-list-height: 				$btn-height !default;
 $item-list-label-font-size:		$font-size-sm !default;
