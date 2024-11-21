@@ -444,9 +444,11 @@
 
 // must look like a regular input field with a white background
 @mixin button-select-as-input() {
-	@include button-plain();
-
-	background-color: $input-background; // in sync with input field background
+	--btn-background: #{$input-background};
+	--btn-border-color: transparent;
+	// hover
+	--btn-color-hover: #{$btn-hover-color};
+	--btn-background-hover: #{$input-background};
 	
 	.cui-button-visual {
 		.cui-button-center {
