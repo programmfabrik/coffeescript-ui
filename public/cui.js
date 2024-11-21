@@ -41426,6 +41426,25 @@ CUI.DateTime = (function(superClass) {
     return str;
   };
 
+  DateTime.formatWithoutBC = function(datestr_or_moment, output_format, output_type, parseZone, locale) {
+    var dt, opts, str;
+    if (parseZone == null) {
+      parseZone = false;
+    }
+    if (locale == null) {
+      locale = null;
+    }
+    opts = {
+      avoid_bc_conversion: true
+    };
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
+    str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
+    return str;
+  };
+
   DateTime.formatWithInputTypes = function(datestr, output_types, output_format, locale) {
     var dt, mom, opts;
     if (locale == null) {
