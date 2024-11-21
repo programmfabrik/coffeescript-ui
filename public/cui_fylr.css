@@ -5008,8 +5008,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-item-list-body .cui-button.cui-active .cui-button-visual, .cui-item-list-body .cui-button[aria-pressed=true] .cui-button-visual,
 .cui-item-list-body .cui-button-href.cui-active .cui-button-visual,
 .cui-item-list-body .cui-button-href[aria-pressed=true] .cui-button-visual {
-  color: var(--brand-foreground-text-color, #212121);
-  background: #e6e9ec;
+  color: var(--brand-foreground-text-color, #ffffff);
+  background: var(--brand-color, #ff5724);
 }
 .cui-item-list-body .cui-button.cui-active:hover .cui-button-visual,
 .cui-item-list-body .cui-button-href.cui-active:hover .cui-button-visual {
@@ -5692,7 +5692,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-date .cui-tr.cui-date-time-month-header {
   position: relative;
   background: var(--calendar-static-cells-background);
-  color: var(--brand-color, #ff5724);
+  color: var(--brand-color-on-white, #ff5724);
 }
 .cui-date-time-date .cui-tr.cui-date-time-month-header::after {
   content: "";
@@ -5748,7 +5748,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-date .cui-date-time-week {
   font-size: 0.7503125rem;
   background: var(--calendar-static-cells-background);
-  color: var(--brand-color, #ff5724);
+  color: var(--brand-color-on-white, #ff5724);
 }
 .cui-date-time-date .cui-date-time-week-title {
   font-weight: 400;
@@ -5757,7 +5757,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   cursor: pointer;
 }
 .cui-date-time-date .cui-date-time-day:hover span {
-  --calendar-date-hover-background: rgb(var(--brand-color-RGB), 0.2);
+  --calendar-date-hover-background: rgb(var(--brand-color-RGB));
   color: var(--brand-foreground-text-color, #212121);
   background-color: var(--calendar-date-hover-background, rgba(255, 87, 36, 0.2));
 }
@@ -5934,49 +5934,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   max-width: var(--form-data-max-width);
 }
 .cui-form-value > .cui-select .cui-button-select {
+  --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-border-width: 0;
-  background-color: #ffffff;
-}
-.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):hover, .cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus {
-  --btn-border-color: transparent;
-}
-.cui-form-value > .cui-select .cui-button-select .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus {
-  outline: none;
-}
-.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-form-value > .cui-select .cui-button-select.cui-active .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-select .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-select .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-select .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
-  border-left-color: currentColor;
-}
-.cui-form-value > .cui-select .cui-button-select:not(.cui-disabled):active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
+  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-select .cui-button-select .cui-button-visual .cui-button-center {
   padding-left: 0.5rem;
@@ -5986,49 +5947,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding-right: 0.6rem;
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input {
+  --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-border-width: 0;
-  background-color: #ffffff;
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):hover, .cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus {
-  --btn-border-color: transparent;
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus {
-  outline: none;
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input.cui-active + .cui-active.cui-layer-open .cui-button-visual {
-  border-left-color: currentColor;
-}
-.cui-form-field-type--select .cui-form-value .cui-data-field-input:not(.cui-disabled):active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
+  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-background-hover: #ffffff;
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input .cui-button-visual .cui-button-center {
   padding-left: 0.5rem;
@@ -6038,49 +5960,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding-right: 0.6rem;
 }
 .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select {
+  --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-border-width: 0;
-  background-color: #ffffff;
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):hover, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus {
-  --btn-border-color: transparent;
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus {
-  outline: none;
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
-  border-left-color: currentColor;
-}
-.cui-form-value > .cui-form .cui-form-field-type--select > .cui-select:not(.cui-disabled):active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
+  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual .cui-button-center {
   padding-left: 0.5rem;
@@ -6091,49 +5974,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-form-value > .cui-form-popover .cui-button--has-caret {
   width: 100%;
+  --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-border-width: 0;
-  background-color: #ffffff;
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):hover, .cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus {
-  --btn-border-color: transparent;
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus {
-  outline: none;
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-form-popover .cui-button--has-caret.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret.cui-active + .cui-active.cui-layer-open .cui-button-visual {
-  border-left-color: currentColor;
-}
-.cui-form-value > .cui-form-popover .cui-button--has-caret:not(.cui-disabled):active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
+  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual .cui-button-center {
   padding-left: 0.5rem;
@@ -6143,49 +5987,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding-right: 0.6rem;
 }
 .cui-form-value > .cui-data-field-proxy .cui-select {
+  --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-border-width: 0;
-  background-color: #ffffff;
-}
-.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):hover, .cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus {
-  --btn-border-color: transparent;
-}
-.cui-form-value > .cui-data-field-proxy .cui-select .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus {
-  outline: none;
-}
-.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):focus .cui-button-visual {
-  outline: none;
-  border-color: rgba(23, 162, 184, 0.5);
-  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
-}
-.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-form-value > .cui-data-field-proxy .cui-select.cui-active .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-data-field-proxy .cui-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-form-value > .cui-data-field-proxy .cui-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
-}
-.cui-form-value > .cui-data-field-proxy .cui-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
-  border-left-color: currentColor;
-}
-.cui-form-value > .cui-data-field-proxy .cui-select:not(.cui-disabled):active .cui-button-visual {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-  box-shadow: none;
+  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-data-field-proxy .cui-select .cui-button-visual .cui-button-center {
   padding-left: 0.5rem;
