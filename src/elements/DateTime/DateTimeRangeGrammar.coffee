@@ -262,9 +262,15 @@ class CUI.DateTimeRangeGrammar
 		["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]
 	]
 
-	@dateRangeToString: (from = null, to = null, locale = CUI.DateTime.getLocale()) ->
+	@dateRangeToString: (from = null, to = null, locale = CUI.DateTime.getLocale(), avoid_bc = false) ->
+
 		if not CUI.util.isString(from) and not CUI.util.isString(to)
 			return
+
+		if avoid_bc
+			format_fn = CUI.DateTime.formatWithoutBC
+		else
+			format_fn = CUI.DateTime.format
 
 		# In case that to or from are an empty string, force it to be null, otherwise the date check will fail.
 		if to == ""
@@ -290,7 +296,7 @@ class CUI.DateTimeRangeGrammar
 			fromYear = fromMoment.year()
 
 		if from == to
-			return CUI.DateTime.format(from, "display_short")
+			return format_fn(from, "display_short")
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)
 			toIsYear = true
@@ -328,7 +334,7 @@ class CUI.DateTimeRangeGrammar
 					else if possibleStringArray[value] == "CENTURY"
 						parameters[index] += "th"
 					else if CUI.util.isString(parameters[index])
-						parameters[index] = CUI.DateTime.format(parameters[index], "display_short")
+						parameters[index] = format_fn(parameters[index], "display_short",)
 					possibleStringArray[value] = parameters[index]
 
 			possibleString = possibleStringArray.join(" ")
@@ -447,9 +453,9 @@ class CUI.DateTimeRangeGrammar
 
 		if fromIsYear or toIsYear
 			if fromIsYear
-				from = CUI.DateTime.format(from, "display_short")
+				from = format_fn(from, "display_short")
 			if toIsYear
-				to = CUI.DateTime.format(to, "display_short")
+				to = format_fn(to, "display_short")
 
 				# Removes the 'BC' / v. Chr. from 'from' to only show it in the end. For example: 15 - 10 v. Chr.
 				fromSplit = from.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)

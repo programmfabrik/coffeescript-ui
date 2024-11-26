@@ -635,7 +635,8 @@ class CUI.DateTime extends CUI.Input
 	#              these formats are the "allowed" formats, this is used in __checkInput
 
 	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
-		if not (stringValue?.trim?().length > 0)
+		stringValue = stringValue?.trim?()
+		if not (stringValue?.length > 0)
 			return moment.invalid()
 
 		for format in formats
@@ -1547,8 +1548,8 @@ class CUI.DateTime extends CUI.Input
 	@stringToDateRange: (string, locale) ->
 		return CUI.DateTimeRangeGrammar.stringToDateRange(string, locale)
 
-	@dateRangeToString: (from, to, locale) ->
-		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale)
+	@dateRangeToString: (from, to, locale, avoid_bc = false) ->
+		return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale, avoid_bc)
 
 
 	@convertTimeFormatFromGoToMoment: (goString) ->
