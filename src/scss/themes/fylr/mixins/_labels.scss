@@ -97,7 +97,7 @@
 	color: theme-color('muted');
 
 	.cui-selected & {
-		color: var(--brand-foreground-text-color, #{$white}); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column		
+		color: gray('900'); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column		
 		opacity: 0.8;
 	}
 	
