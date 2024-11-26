@@ -4999,9 +4999,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   white-space: normal;
   overflow: hidden;
 }
-.cui-item-list-body .cui-button:active .cui-button-visual, .cui-item-list-body .cui-button:hover .cui-button-visual,
-.cui-item-list-body .cui-button-href:active .cui-button-visual,
-.cui-item-list-body .cui-button-href:hover .cui-button-visual {
+.cui-item-list-body .cui-button:active:not(.cui-disabled) .cui-button-visual, .cui-item-list-body .cui-button:hover:not(.cui-disabled) .cui-button-visual,
+.cui-item-list-body .cui-button-href:active:not(.cui-disabled) .cui-button-visual,
+.cui-item-list-body .cui-button-href:hover:not(.cui-disabled) .cui-button-visual {
   color: var(--brand-foreground-text-color, #ffffff);
   background: var(--brand-color, #ff5724);
 }
