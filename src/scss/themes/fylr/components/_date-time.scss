@@ -226,7 +226,7 @@
 		&.cui-date-time-month-header {
 			position: relative;
 			background: var(--calendar-static-cells-background);
-			color: var(--brand-color, #{$calendar-static-cells-color});
+			color: $calendar-static-cells-color;
 
 			&::after {
 				content: '';
@@ -288,11 +288,12 @@
 	.cui-date-time-week {
 		font-size: $calendar-font-size * 0.8575;
 		background: var(--calendar-static-cells-background);
-		color: var(--brand-color, #{$calendar-static-cells-color});
+		color: $calendar-week-cells-color;
 	}
 
 	.cui-date-time-week-title {
 		font-weight: $font-weight-normal;
+		color: $calendar-week-cells-color;
 	}
 
 	.cui-date-time-day {
@@ -300,7 +301,7 @@
 
 		&:hover {
 			span {
-				--calendar-date-hover-background: rgb(var(--brand-color-RGB), #{$calendar-date-hover-background-opacity});
+				--calendar-date-hover-background: rgb(var(--brand-color-RGB));
 
 				color: var(--brand-foreground-text-color, #{$body-color});
 				background-color: var(--calendar-date-hover-background, #{rgba($calendar-date-active-background, $calendar-date-hover-background-opacity)});

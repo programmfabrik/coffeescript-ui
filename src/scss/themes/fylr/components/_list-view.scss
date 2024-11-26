@@ -515,7 +515,7 @@
 							> .cui-tree-node {
 								> .cui-tree-node-handle:not(:empty) {
 									min-height: var(--list-view-inner-row-min-height);
-									margin-top: -2px;
+									margin-top: var(--list-view-tree-node-handle-offset, -2px);
 								}
 
 								> .cui-tree-node-content > .cui-label,
