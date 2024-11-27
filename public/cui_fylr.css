@@ -4999,9 +4999,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   white-space: normal;
   overflow: hidden;
 }
-.cui-item-list-body .cui-button:active:not(.cui-disabled) .cui-button-visual, .cui-item-list-body .cui-button:hover:not(.cui-disabled) .cui-button-visual,
-.cui-item-list-body .cui-button-href:active:not(.cui-disabled) .cui-button-visual,
-.cui-item-list-body .cui-button-href:hover:not(.cui-disabled) .cui-button-visual {
+.cui-item-list-body .cui-button:active .cui-button-visual, .cui-item-list-body .cui-button:hover .cui-button-visual,
+.cui-item-list-body .cui-button-href:active .cui-button-visual,
+.cui-item-list-body .cui-button-href:hover .cui-button-visual {
   color: var(--brand-foreground-text-color, #ffffff);
   background: var(--brand-color, #ff5724);
 }
@@ -5692,7 +5692,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-date .cui-tr.cui-date-time-month-header {
   position: relative;
   background: var(--calendar-static-cells-background);
-  color: #212121;
+  color: var(--brand-color-on-white, #ff5724);
 }
 .cui-date-time-date .cui-tr.cui-date-time-month-header::after {
   content: "";
@@ -5748,11 +5748,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-date .cui-date-time-week {
   font-size: 0.7503125rem;
   background: var(--calendar-static-cells-background);
-  color: #4d5257;
+  color: var(--brand-color-on-white, #ff5724);
 }
 .cui-date-time-date .cui-date-time-week-title {
   font-weight: 400;
-  color: #4d5257;
 }
 .cui-date-time-date .cui-date-time-day {
   cursor: pointer;
