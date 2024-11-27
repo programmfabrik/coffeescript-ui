@@ -39,11 +39,9 @@
 
 		&:active,
 		&:hover {
-			&:not(.cui-disabled) {
-				.cui-button-visual {
-					color: var(--brand-foreground-text-color, #{$item-list-hover-color});
-					background: var(--brand-color, #{$item-list-hover-background});
-				}
+			.cui-button-visual {
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
