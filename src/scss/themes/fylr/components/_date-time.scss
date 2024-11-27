@@ -226,7 +226,7 @@
 		&.cui-date-time-month-header {
 			position: relative;
 			background: var(--calendar-static-cells-background);
-			color: $calendar-static-cells-color;
+			color: var(--brand-color-on-white, #{$calendar-static-cells-color});
 
 			&::after {
 				content: '';
@@ -288,12 +288,11 @@
 	.cui-date-time-week {
 		font-size: $calendar-font-size * 0.8575;
 		background: var(--calendar-static-cells-background);
-		color: $calendar-week-cells-color;
+		color: var(--brand-color-on-white, #{$calendar-static-cells-color});
 	}
 
 	.cui-date-time-week-title {
 		font-weight: $font-weight-normal;
-		color: $calendar-week-cells-color;
 	}
 
 	.cui-date-time-day {
