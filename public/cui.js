@@ -40033,6 +40033,10 @@ CUI.DateTime = (function(superClass) {
       add_AD: {
         "default": false,
         check: Boolean
+      },
+      avoid_bc_conversion: {
+        "default": false,
+        check: Boolean
       }
     });
     this.removeOpt("getValueForDisplay");
@@ -40332,7 +40336,7 @@ CUI.DateTime = (function(superClass) {
       case "store":
         return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone);
       default:
-        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format]);
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], false, this._avoid_bc_conversion);
     }
   };
 
@@ -40427,7 +40431,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return value;
     }
-    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay());
+    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay(), false, this._avoid_bc_conversion);
   };
 
   DateTime.prototype.getValueForInput = function(v) {
@@ -40442,7 +40446,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return v;
     }
-    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input);
+    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input, false, this._avoid_bc_conversion);
   };
 
   DateTime.prototype.__checkInput = function(value) {
@@ -40717,7 +40721,8 @@ CUI.DateTime = (function(superClass) {
     if (use_formats == null) {
       use_formats = formats;
     }
-    if (!((stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim().length : void 0 : void 0) > 0)) {
+    stringValue = stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim() : void 0 : void 0;
+    if (!((stringValue != null ? stringValue.length : void 0) > 0)) {
       return moment.invalid();
     }
     for (i = 0, len = formats.length; i < len; i++) {
@@ -41422,6 +41427,25 @@ CUI.DateTime = (function(superClass) {
     return str;
   };
 
+  DateTime.formatWithoutBC = function(datestr_or_moment, output_format, output_type, parseZone, locale) {
+    var dt, opts, str;
+    if (parseZone == null) {
+      parseZone = false;
+    }
+    if (locale == null) {
+      locale = null;
+    }
+    opts = {
+      avoid_bc_conversion: true
+    };
+    if (locale) {
+      opts.locale = locale;
+    }
+    dt = new CUI.DateTime(opts);
+    str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
+    return str;
+  };
+
   DateTime.formatWithInputTypes = function(datestr, output_types, output_format, locale) {
     var dt, mom, opts;
     if (locale == null) {
@@ -41457,7 +41481,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD);
+    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion);
   };
 
   DateTime.formatMoment = function(mom, format, parseZone) {
@@ -41470,10 +41494,16 @@ CUI.DateTime = (function(superClass) {
     return mom.format(format);
   };
 
-  DateTime.formatMomentWithBc = function(mom, format, add_AD) {
+  DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
     var bc, regexp, replace, v;
     if (add_AD == null) {
       add_AD = false;
+    }
+    if (avoid_bc_conversion == null) {
+      avoid_bc_conversion = false;
+    }
+    if (avoid_bc_conversion) {
+      return DateTime.formatMoment(mom, format, false);
     }
     if (mom.year() === 0) {
       return "1 " + CUI.DateTime.defaults.bc_appendix_output;
@@ -41515,8 +41545,11 @@ CUI.DateTime = (function(superClass) {
     return CUI.DateTimeRangeGrammar.stringToDateRange(string, locale);
   };
 
-  DateTime.dateRangeToString = function(from, to, locale) {
-    return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale);
+  DateTime.dateRangeToString = function(from, to, locale, avoid_bc) {
+    if (avoid_bc == null) {
+      avoid_bc = false;
+    }
+    return CUI.DateTimeRangeGrammar.dateRangeToString(from, to, locale, avoid_bc);
   };
 
   DateTime.convertTimeFormatFromGoToMoment = function(goString) {
@@ -42627,8 +42660,8 @@ CUI.DateTimeRangeGrammar = (function() {
 
   DateTimeRangeGrammar.PARSE_GRAMMARS["en-US"] = [["DATE to DATE", "range", [0, 2], null, "RANGE"], ["YEAR to YEAR", "range", [0, 2], null, "RANGE_YEAR"], ["YEAR - YEAR A.D.", "range", [0, 2]], ["YEAR - YEAR AD", "range", [0, 2]], ["YEAR to YEAR A.D.", "range", [0, 2]], ["YEAR to YEAR AD", "range", [0, 2]], ["from YEAR to YEAR", "range", [1, 3]], ["YEAR BC - YEAR A.D.", "range", [0, 3], [true]], ["YEAR BC - YEAR AD", "range", [0, 3], [true]], ["YEAR BC - YEAR CE", "range", [0, 3], [true]], ["YEAR BC - YEAR ad", "range", [0, 3], [true]], ["YEAR B.C. - YEAR A.D.", "range", [0, 3], [true]], ["YEAR B.C. - YEAR AD", "range", [0, 3], [true]], ["YEAR B.C. - YEAR CE", "range", [0, 3], [true]], ["YEAR B.C. - YEAR ad", "range", [0, 3], [true]], ["YEAR B.C. to YEAR", "range", [0, 3], [true]], ["YEAR bc - YEAR A.D.", "range", [0, 3], [true]], ["YEAR bc - YEAR AD", "range", [0, 3], [true]], ["YEAR bc - YEAR CE", "range", [0, 3], [true]], ["YEAR bc - YEAR ad", "range", [0, 3], [true]], ["YEAR ac - YEAR A.D.", "range", [0, 3], [true]], ["YEAR ac - YEAR AD", "range", [0, 3], [true]], ["YEAR ac - YEAR CE", "range", [0, 3], [true]], ["YEAR ac - YEAR ad", "range", [0, 3], [true]], ["YEAR - YEAR BC", "range", [0, 2], [true, true]], ["YEAR - YEAR B.C.", "range", [0, 2], [true, true]], ["MONTH YEAR", "monthRange", [0, 1]], ["after YEAR", "yearOpenEnd", [1], [false], "AFTER"], ["after YEAR BC", "yearOpenEnd", [1], [true], "AFTER_BC"], ["before YEAR", "yearOpenStart", [1], [false], "BEFORE"], ["before YEAR BC", "yearOpenStart", [1], [true], "BEFORE_BC"], ["around YEAR", "yearRange", [1], [false, true, true], "AROUND"], ["around YEAR BC", "yearRange", [1], [true, true, true], "AROUND_BC"], ["YEAR_DOT millennium", "millennium", [0], null, "MILLENNIUM"], ["YEAR_DOT millennium BC", "millennium", [0], [true], "MILLENNIUM_BC"], ["YEAR millennium", "millennium", [0]], ["YEAR millennium BC", "millennium", [0], [true]], ["YEAR BCE", "getFromTo", [0], [true]], ["YEAR bc", "getFromTo", [0], [true]], ["YEAR BC", "getFromTo", [0], [true]], ["YEAR B.C.", "getFromTo", [0], [true]], ["YEAR AD", "getFromTo", [0]], ["YEAR A.D.", "getFromTo", [0]], ["CENTURY century", "century", [0], null, "CENTURY"], ["CENTURY century BC", "century", [0], [true], "CENTURY_BC"], ["Early CENTURY century", "earlyCentury", [1], null, "EARLY_CENTURY"], ["Early CENTURY century BC", "earlyCentury", [1], [true], "EARLY_CENTURY_BC"], ["Late CENTURY century", "lateCentury", [1], null, "LATE_CENTURY"], ["Late CENTURY century BC", "lateCentury", [1], [true], "LATE_CENTURY_BC"], ["CENTURY century - CENTURY century", "centuryRange", [0, 3], null, "CENTURY_RANGE"], ["CENTURY century BC - CENTURY century", "centuryRange", [0, 4], [true], "CENTURY_RANGE_FROM_BC"], ["CENTURY century B.C. - CENTURY century", "centuryRange", [0, 4], [true]], ["CENTURY century BC - CENTURY century BC", "centuryRange", [0, 4], [true, true], "CENTURY_RANGE_BC"], ["CENTURY century B.C. - CENTURY century B.C.", "centuryRange", [0, 4], [true, true]]];
 
-  DateTimeRangeGrammar.dateRangeToString = function(from, to, locale) {
-    var centerYear, century, format, fromCentury, fromIsYear, fromMoment, fromSplit, fromYear, getPossibleString, grammarKey, grammars, i, isBC, j, k, key, len, len1, len2, millennium, month, possibleString, ref, ref1, ref2, toCentury, toIsYear, toMoment, toSplit, toYear, yearsDifference;
+  DateTimeRangeGrammar.dateRangeToString = function(from, to, locale, avoid_bc) {
+    var centerYear, century, format, format_fn, fromCentury, fromIsYear, fromMoment, fromSplit, fromYear, getPossibleString, grammarKey, grammars, i, isBC, j, k, key, len, len1, len2, millennium, month, possibleString, ref, ref1, ref2, toCentury, toIsYear, toMoment, toSplit, toYear, yearsDifference;
     if (from == null) {
       from = null;
     }
@@ -42638,8 +42671,16 @@ CUI.DateTimeRangeGrammar = (function() {
     if (locale == null) {
       locale = CUI.DateTime.getLocale();
     }
+    if (avoid_bc == null) {
+      avoid_bc = false;
+    }
     if (!CUI.util.isString(from) && !CUI.util.isString(to)) {
       return;
+    }
+    if (avoid_bc) {
+      format_fn = CUI.DateTime.formatWithoutBC;
+    } else {
+      format_fn = CUI.DateTime.format;
     }
     if (to === "") {
       to = null;
@@ -42664,7 +42705,7 @@ CUI.DateTimeRangeGrammar = (function() {
       fromYear = fromMoment.year();
     }
     if (from === to) {
-      return CUI.DateTime.format(from, "display_short");
+      return format_fn(from, "display_short");
     }
     if (CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)) {
       toIsYear = true;
@@ -42706,7 +42747,7 @@ CUI.DateTimeRangeGrammar = (function() {
           } else if (possibleStringArray[value] === "CENTURY") {
             parameters[index] += "th";
           } else if (CUI.util.isString(parameters[index])) {
-            parameters[index] = CUI.DateTime.format(parameters[index], "display_short");
+            parameters[index] = format_fn(parameters[index], "display_short");
           }
           possibleStringArray[value] = parameters[index];
         }
@@ -42844,10 +42885,10 @@ CUI.DateTimeRangeGrammar = (function() {
     }
     if (fromIsYear || toIsYear) {
       if (fromIsYear) {
-        from = CUI.DateTime.format(from, "display_short");
+        from = format_fn(from, "display_short");
       }
       if (toIsYear) {
-        to = CUI.DateTime.format(to, "display_short");
+        to = format_fn(to, "display_short");
         fromSplit = from.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE);
         toSplit = to.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE);
         if (fromSplit[1] === toSplit[1]) {
