@@ -28,7 +28,12 @@
 	// other colors
 	--body-bg: #{$body-bg};
 	--body-color: #{$body-color};
-	--top-header-background: #{$body-bg};
+	--yiq-text-light: #{$yiq-text-light};
+	--yiq-text-dark: #{$yiq-text-dark};
+	
+	// NG only
+	--top-header-background: #{$body-bg}; 
+	// -- end
 	
 	// headings
 	@each $size, $value in $headline-sizes {
