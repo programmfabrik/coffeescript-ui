@@ -881,7 +881,7 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --gray-600: #8b949c;
   --gray-700: #4d5257;
   --gray-800: #393c3f;
-  --gray-900: #212121;
+  --gray-900: #1a1a1a;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -890,7 +890,9 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --font-family-sans-serif: "Source Sans Pro", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --body-bg: #ffffff;
-  --body-color: #212121;
+  --body-color: #1a1a1a;
+  --yiq-text-light: #ffffff;
+  --yiq-text-dark: #1a1a1a;
   --top-header-background: #ffffff;
   --headline-size-h1: 1.5rem;
   --headline-size-h2: 1.5rem;
@@ -1352,7 +1354,7 @@ body {
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: #212121;
+  color: #1a1a1a;
 }
 
 h1, .h1 {
@@ -1428,11 +1430,11 @@ p {
 }
 
 a:not(.cui-button-button) {
-  color: var(--link-color, #212121);
+  color: var(--link-color, #1a1a1a);
   text-decoration: underline;
 }
 a:not(.cui-button-button):hover, a:not(.cui-button-button):focus {
-  color: var(--link-hover-color, #212121);
+  color: var(--link-hover-color, #1a1a1a);
   text-decoration: none;
 }
 a:not(.cui-button-button):focus {
@@ -2527,11 +2529,11 @@ label[data-label-clickable],
   color: #8b949c;
 }
 .cui-selected .cui-empty-label {
-  color: var(--brand-foreground-text-color, #ffffff);
+  color: #1a1a1a;
   opacity: 0.8;
 }
 .cui-list-view-row-selectable:not(.cui-selected):hover .cui-empty-label {
-  color: #212121;
+  color: #1a1a1a;
   opacity: 0.8;
 }
 .cui-empty-label .cui-label-content {
@@ -2636,11 +2638,11 @@ label[data-label-clickable],
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus {
@@ -2652,16 +2654,16 @@ label[data-label-clickable],
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
@@ -2813,7 +2815,7 @@ label[data-label-clickable],
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   border: 0;
-  border-top: 1px solid #212121;
+  border-top: 1px solid #1a1a1a;
 }
 
 .cui-button,
@@ -2901,8 +2903,8 @@ label[data-label-clickable],
 .cui-button-button .cui-button-visual,
 .cui-button-select .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-button-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-button-select:not(.cui-disabled):hover .cui-button-visual,
@@ -2930,7 +2932,7 @@ label[data-label-clickable],
 .cui-button-select.cui-active .cui-button-visual,
 .cui-button-select.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
 .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
@@ -2938,7 +2940,7 @@ label[data-label-clickable],
 .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
 .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual,
 .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
@@ -2959,7 +2961,7 @@ div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary .cui-butt
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary .cui-button-visual {
   background-color: var(--btn-background, #ff5724);
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--primary:not(.cui-disabled):focus .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--primary:not(.cui-disabled):hover .cui-button-visual,
@@ -3014,13 +3016,13 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary {
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary .cui-button-visual {
   background-color: var(--btn-background, #e6e9ec);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):focus .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):hover .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, #d8dce1);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):focus,
@@ -3035,14 +3037,14 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cu
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary:not(.cui-disabled):active .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, #d8dce1);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, #d8dce1);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active:not(.cui-disabled):focus .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
@@ -3050,7 +3052,7 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-act
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-active:not(.cui-disabled):focus .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--secondary.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, #d8dce1);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--secondary.cui-active + .cui-active.cui-layer-open .cui-button-visual,
@@ -3071,7 +3073,7 @@ div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger .cui-butto
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger .cui-button-visual {
   background-color: var(--btn-background, #dc3545);
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):hover .cui-button-visual, div:not(.cui-buttonbar-group) > .cui-button-button.cui-button--danger:not(.cui-disabled):focus .cui-button-visual,
 div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-disabled):hover .cui-button-visual,
@@ -3129,11 +3131,11 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-d
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus {
@@ -3145,16 +3147,16 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-d
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download).cui-active + .cui-active.cui-layer-open .cui-button-visual {
@@ -3233,13 +3235,13 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   --btn-border-color: rgba(255, 255, 255, 0.85);
 }
 .cui-button-tool-play .cui-button-visual {
-  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background, rgba(26, 26, 26, 0.6));
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-button-tool-play:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
 }
 .cui-button-tool-play:not(.cui-disabled):focus {
   outline: none;
@@ -3251,16 +3253,16 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-button-tool-play:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-button-tool-play.cui-active .cui-button-visual, .cui-button-tool-play.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-button-tool-play.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-button-tool-play.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -3302,7 +3304,7 @@ textarea::placeholder {
 }
 input[placeholder^="***"]::placeholder,
 textarea[placeholder^="***"]::placeholder {
-  color: #212121;
+  color: #1a1a1a;
 }
 input:focus,
 textarea:focus {
@@ -3360,12 +3362,12 @@ textarea {
 .cui-input-appearance-code textarea {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   color: #3e9e88;
-  background: #212121;
-  border-color: #212121;
+  background: #1a1a1a;
+  border-color: #1a1a1a;
 }
 .cui-input-appearance-code input:focus,
 .cui-input-appearance-code textarea:focus {
-  border-color: #212121;
+  border-color: #1a1a1a;
 }
 .cui-input:has(> .cui-input-control-element) {
   display: inline-flex;
@@ -3428,11 +3430,11 @@ textarea {
 }
 .cui-multi-input-tag-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-multi-input-tag-button:not(.cui-disabled):hover .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-multi-input-tag-button:not(.cui-disabled):focus {
@@ -3444,17 +3446,17 @@ textarea {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-multi-input-tag-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-multi-input-tag-button.cui-active .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-multi-input-tag-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-multi-input-tag-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-multi-input-tag-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-multi-input-tag-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -3485,9 +3487,9 @@ textarea {
   top: 0;
 }
 .cui-multi-input-tag-button:not(.cui-disabled).cui-layer-open .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled).cui-layer-open:hover .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled).cui-active .cui-button-visual, .cui-multi-input-tag-button:not(.cui-disabled).cui-active:hover .cui-button-visual {
-  background-color: #212121;
+  background-color: #1a1a1a;
   color: #ffffff;
-  border-left-color: #212121 !important;
+  border-left-color: #1a1a1a !important;
 }
 .cui-multi-input-tag-button:not(.cui-disabled):hover .cui-button-visual {
   background-color: #ffffff;
@@ -3597,11 +3599,11 @@ textarea {
 }
 .cui-output.cui-output--deletable .cui-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-output.cui-output--deletable .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-output.cui-output--deletable .cui-button:not(.cui-disabled):focus {
@@ -3613,17 +3615,17 @@ textarea {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-output.cui-output--deletable .cui-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-output.cui-output--deletable .cui-button.cui-active .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-output.cui-output--deletable .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-output.cui-output--deletable .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-output.cui-output--deletable .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -3696,11 +3698,11 @@ textarea {
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):focus {
@@ -3712,17 +3714,17 @@ textarea {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -3818,17 +3820,17 @@ textarea {
   border-radius: 100%;
 }
 .cui-button-checkbox.cui-active .cui-button-left i {
-  background: var(--checkbox-active-background, #212121);
+  background: var(--checkbox-active-background, #1a1a1a);
   color: var(--checkbox-active-color, #ffffff);
-  border-color: var(--checkbox-active-background, #212121);
+  border-color: var(--checkbox-active-background, #1a1a1a);
 }
 .cui-active .cui-button-checkbox.cui-active .cui-button-left i, .cui-layer-open .cui-button-checkbox.cui-active .cui-button-left i {
   color: #f5f5f5;
 }
 .cui-button-checkbox.cui-active[role=radio] .cui-button-left i {
-  background: var(--checkbox-active-background, #212121);
+  background: var(--checkbox-active-background, #1a1a1a);
   color: transparent;
-  border-color: var(--checkbox-active-background, #212121);
+  border-color: var(--checkbox-active-background, #1a1a1a);
 }
 .cui-button-checkbox.cui-active[role=radio] .cui-button-left i::after {
   content: "";
@@ -3890,7 +3892,7 @@ textarea {
   flex: 1 1 auto;
   height: 10px;
   width: 12px;
-  background: linear-gradient(var(--handle-color, #212121) 1px, transparent 1px, transparent 2px);
+  background: linear-gradient(var(--handle-color, #1a1a1a) 1px, transparent 1px, transparent 2px);
   background-size: 100% 2px;
 }
 
@@ -4188,11 +4190,11 @@ textarea {
 }
 .cui-data-field-left .cui-button-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-data-field-left .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-data-field-left .cui-button-button:not(.cui-disabled):focus {
@@ -4204,17 +4206,17 @@ textarea {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-data-field-left .cui-button-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-data-field-left .cui-button-button.cui-active .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-field-left .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-left .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-field-left .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -4247,9 +4249,9 @@ textarea {
   top: 0;
 }
 .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-layer-open .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-layer-open:hover .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-active .cui-button-visual, .cui-data-field-left .cui-button-button:not(.cui-disabled).cui-active:hover .cui-button-visual {
-  background-color: #212121;
+  background-color: #1a1a1a;
   color: #ffffff;
-  border-right-color: #212121 !important;
+  border-right-color: #1a1a1a !important;
 }
 .cui-data-field-left .cui-button-button:not(.cui-disabled):hover .cui-button-visual {
   background-color: #ffffff;
@@ -4276,11 +4278,11 @@ textarea {
 }
 .cui-data-field-right .cui-button-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-data-field-right .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-data-field-right .cui-button-button:not(.cui-disabled):focus {
@@ -4292,17 +4294,17 @@ textarea {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-data-field-right .cui-button-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-data-field-right .cui-button-button.cui-active .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-field-right .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-field-right .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-field-right .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -4333,9 +4335,9 @@ textarea {
   top: 0;
 }
 .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-layer-open .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-layer-open:hover .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-active .cui-button-visual, .cui-data-field-right .cui-button-button:not(.cui-disabled).cui-active:hover .cui-button-visual {
-  background-color: #212121;
+  background-color: #1a1a1a;
   color: #ffffff;
-  border-left-color: #212121 !important;
+  border-left-color: #1a1a1a !important;
 }
 .cui-data-field-right .cui-button-button:not(.cui-disabled):hover .cui-button-visual {
   background-color: #ffffff;
@@ -4387,7 +4389,7 @@ textarea {
 }
 .cui-block .cui-block-header > .cui-block-title {
   display: inline-block;
-  background-color: #212121;
+  background-color: #1a1a1a;
   color: #ffffff;
   font-weight: 700;
   padding: 0.1em 0.5rem;
@@ -4402,7 +4404,7 @@ textarea {
 .cui-block .cui-block .cui-block-header > .cui-block-title {
   display: block;
   background-color: transparent;
-  color: #212121;
+  color: #1a1a1a;
   font-weight: 400;
   padding: 0;
   font-weight: 700;
@@ -4452,8 +4454,8 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   border-radius: 50%;
 }
 .cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox[role=checkbox] .cui-button-left i, .cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox[role=radio] .cui-button-left i {
-  border: 1px solid #212121;
-  background-color: #212121;
+  border: 1px solid #1a1a1a;
+  background-color: #1a1a1a;
 }
 .cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox[role=checkbox] .cui-button-left i::before, .cui-form-block--has-checkbox > .cui-block-header .cui-button-checkbox[role=radio] .cui-button-left i::before {
   right: 2px;
@@ -4672,7 +4674,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding: 0.25rem 0;
   font-size: 0.75rem;
   font-weight: bold;
-  color: #212121;
+  color: #1a1a1a;
   flex-basis: 100%;
   flex-shrink: 0;
   border-bottom: 1px solid var(--sticky-header-border-color, #393c3f);
@@ -4881,11 +4883,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-buttonbar-group-navi .cui-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-buttonbar-group-navi .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-buttonbar-group-navi .cui-button:not(.cui-disabled):focus {
@@ -4897,17 +4899,17 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-buttonbar-group-navi .cui-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-buttonbar-group-navi .cui-button.cui-active .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-buttonbar-group-navi .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-buttonbar-group-navi .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-buttonbar-group-navi .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -4952,7 +4954,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   height: 30px;
 }
 .cui-progress-meter[state=spinning] .cui-progress-meter-icon {
-  color: #212121;
+  color: #1a1a1a;
 }
 .cui-progress-meter[state=percent] .cui-progress-meter-bar {
   max-width: 200px;
@@ -4999,9 +5001,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   white-space: normal;
   overflow: hidden;
 }
-.cui-item-list-body .cui-button:active .cui-button-visual, .cui-item-list-body .cui-button:hover .cui-button-visual,
-.cui-item-list-body .cui-button-href:active .cui-button-visual,
-.cui-item-list-body .cui-button-href:hover .cui-button-visual {
+.cui-item-list-body .cui-button:active:not(.cui-disabled) .cui-button-visual, .cui-item-list-body .cui-button:hover:not(.cui-disabled) .cui-button-visual,
+.cui-item-list-body .cui-button-href:active:not(.cui-disabled) .cui-button-visual,
+.cui-item-list-body .cui-button-href:hover:not(.cui-disabled) .cui-button-visual {
   color: var(--brand-foreground-text-color, #ffffff);
   background: var(--brand-color, #ff5724);
 }
@@ -5375,7 +5377,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   justify-content: space-between;
 }
 .cui-date-time-calendar > .cui-buttonbar {
-  background: #212121;
+  background: #1a1a1a;
   color: #ffffff;
   padding: 1rem 0.5rem;
   display: grid;
@@ -5393,13 +5395,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --btn-border-width: 0;
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button .cui-button-visual {
-  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background, rgba(26, 26, 26, 0.6));
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):focus {
   outline: none;
@@ -5411,16 +5413,16 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -5432,14 +5434,14 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --btn-border-color: transparent;
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group {
-  background-color: rgba(33, 33, 33, 0.6);
+  background-color: rgba(26, 26, 26, 0.6);
   border-radius: 2px;
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual,
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
   background-color: var(--btn-background, transparent);
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
@@ -5485,13 +5487,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --btn-border-color: rgba(255, 255, 255, 0.85);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select .cui-button-visual {
-  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background, rgba(26, 26, 26, 0.6));
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):focus {
   outline: none;
@@ -5503,16 +5505,16 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-date-time-calendar > .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -5601,13 +5603,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-footer .cui-date-time-header-month .cui-button .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):hover .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):focus,
@@ -5622,7 +5624,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-date-time-footer .cui-date-time-header-month .cui-button:not(.cui-disabled):active .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
@@ -5630,7 +5632,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual,
@@ -5638,7 +5640,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-date-time-footer .cui-date-time-header-month .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual,
 .cui-date-time-footer .cui-date-time-header-year .cui-buttonbar-group .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
@@ -5692,7 +5694,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-date .cui-tr.cui-date-time-month-header {
   position: relative;
   background: var(--calendar-static-cells-background);
-  color: var(--brand-color-on-white, #ff5724);
+  color: #1a1a1a;
 }
 .cui-date-time-date .cui-tr.cui-date-time-month-header::after {
   content: "";
@@ -5748,17 +5750,18 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-date-time-date .cui-date-time-week {
   font-size: 0.7503125rem;
   background: var(--calendar-static-cells-background);
-  color: var(--brand-color-on-white, #ff5724);
+  color: #4d5257;
 }
 .cui-date-time-date .cui-date-time-week-title {
   font-weight: 400;
+  color: #4d5257;
 }
 .cui-date-time-date .cui-date-time-day {
   cursor: pointer;
 }
 .cui-date-time-date .cui-date-time-day:hover span {
   --calendar-date-hover-background: rgb(var(--brand-color-RGB));
-  color: var(--brand-foreground-text-color, #212121);
+  color: var(--brand-foreground-text-color, #1a1a1a);
   background-color: var(--calendar-date-hover-background, rgba(255, 87, 36, 0.2));
 }
 .cui-date-time-date .cui-date-time-previous-month,
@@ -5936,7 +5939,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-form-value > .cui-select .cui-button-select {
   --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-color-hover: rgba(26, 26, 26, 0.65);
   --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-select .cui-button-select .cui-button-visual .cui-button-center {
@@ -5949,7 +5952,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-form-field-type--select .cui-form-value .cui-data-field-input {
   --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-color-hover: rgba(26, 26, 26, 0.65);
   --btn-background-hover: #ffffff;
 }
 .cui-form-field-type--select .cui-form-value .cui-data-field-input .cui-button-visual .cui-button-center {
@@ -5962,7 +5965,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select {
   --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-color-hover: rgba(26, 26, 26, 0.65);
   --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-form .cui-form-field-type--select > .cui-select .cui-button-visual .cui-button-center {
@@ -5976,7 +5979,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   width: 100%;
   --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-color-hover: rgba(26, 26, 26, 0.65);
   --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-form-popover .cui-button--has-caret .cui-button-visual .cui-button-center {
@@ -5989,7 +5992,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-form-value > .cui-data-field-proxy .cui-select {
   --btn-background: #ffffff;
   --btn-border-color: transparent;
-  --btn-color-hover: rgba(33, 33, 33, 0.65);
+  --btn-color-hover: rgba(26, 26, 26, 0.65);
   --btn-background-hover: #ffffff;
 }
 .cui-form-value > .cui-data-field-proxy .cui-select .cui-button-visual .cui-button-center {
@@ -6149,8 +6152,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-valid-hint .cui-button .cui-button-visual,
 .cui-input-empty-hint .cui-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-hint .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-form-hint .cui-button:not(.cui-disabled):hover .cui-button-visual,
@@ -6161,7 +6164,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-valid-hint .cui-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-input-empty-hint .cui-button:not(.cui-disabled):hover .cui-button-visual,
 .cui-input-empty-hint .cui-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-hint .cui-button:not(.cui-disabled):focus,
@@ -6185,7 +6188,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-invalid-hint .cui-button:not(.cui-disabled):active .cui-button-visual,
 .cui-input-valid-hint .cui-button:not(.cui-disabled):active .cui-button-visual,
 .cui-input-empty-hint .cui-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
@@ -6198,7 +6201,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-valid-hint .cui-button.cui-layer-open .cui-button-visual,
 .cui-input-empty-hint .cui-button.cui-active .cui-button-visual,
 .cui-input-empty-hint .cui-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-hint .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
@@ -6218,7 +6221,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-empty-hint .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual,
 .cui-input-empty-hint .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
 .cui-input-empty-hint .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-hint .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual,
@@ -6345,7 +6348,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 
 .cui-panel {
-  border-bottom: 1px solid #212121;
+  border-bottom: 1px solid #1a1a1a;
 }
 .cui-panel-closed > .cui-panel-body {
   display: none;
@@ -6367,11 +6370,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-panel-header .cui-button-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-panel-header .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-panel-header .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-panel-header .cui-button-button:not(.cui-disabled):focus {
@@ -6383,16 +6386,16 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-panel-header .cui-button-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-panel-header .cui-button-button.cui-active .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-panel-header .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-panel-header .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-panel-header .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-panel-header .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
@@ -6434,11 +6437,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   white-space: normal;
 }
 .cui-panel-header .cui-button-button:hover .cui-button-visual, .cui-panel-header .cui-button-button:focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background: none;
 }
 .cui-panel-header .cui-button-button.cui-active .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background: none;
 }
 
@@ -6591,11 +6594,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
@@ -6607,17 +6610,17 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -6682,7 +6685,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
   border-radius: 2px 2px 0 0;
-  background-color: #212121;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left {
@@ -6712,13 +6715,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --btn-border-width: 0;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
-  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background, rgba(26, 26, 26, 0.6));
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   outline: none;
@@ -6730,16 +6733,16 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -6754,14 +6757,14 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   margin-right: 0;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group {
-  background-color: rgba(33, 33, 33, 0.6);
+  background-color: rgba(26, 26, 26, 0.6);
   border-radius: 2px;
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual,
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
   background-color: var(--btn-background, transparent);
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-pane-fill-screen .cui-pane-fill-screen .cui-pane-fill-screen-inner > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
@@ -6839,7 +6842,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --list-view-column-border-width: 1px;
   --list-view-row-border-width: 1px;
   --list-view-header-background: transparent;
-  --list-view-header-color: #212121;
+  --list-view-header-color: #1a1a1a;
   --list-view-header-row-border-color: rgba(206, 212, 218, 0.5);
   --list-view-header-row-border-width: var(--list-view-row-border-width);
   --list-view-header-column-border-color: rgba(206, 212, 218, 0.5);
@@ -6852,8 +6855,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --list-view-inner-column-border-width: var(--list-view-column-border-width);
   --list-view-selected-row-border-width: 0;
   --list-view-selected-row-border-color: transparent;
-  --list-view-selected-row-background: var(--brand-color, rgba(206, 212, 218, 0.3));
-  --list-view-hover-row-background: var(--brand-color, #e6e9ec);
+  --list-view-selected-row-background: #dee2e6;
+  --list-view-hover-row-background: #e6e9ec;
   min-height: 0;
   flex-direction: column;
   background-color: transparent;
@@ -7022,6 +7025,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   cursor: default;
 }
 .cui-lv-tr-outer.cui-selected > .cui-lv-tr {
+  box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
+  background-color: var(--list-view-selected-row-background);
+}
+.cui-lv-tr-outer.cui-selected:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:focus > .cui-lv-tr {
   box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
   background-color: var(--list-view-selected-row-background);
 }
@@ -7467,7 +7474,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   left: 0;
   bottom: var(--data-form-field-group-indicator-bottom, 0);
   width: 2px;
-  background-color: var(--data-form-field-group-border-color, #212121);
+  background-color: var(--data-form-field-group-border-color, #1a1a1a);
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key label,
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key .cui-label {
@@ -7569,11 +7576,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):focus {
@@ -7585,17 +7592,17 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-data-form-row > .cui-horizontal-layout-right .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -7753,13 +7760,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):hover .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):focus,
@@ -7774,14 +7781,14 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-tabs-pane-header .cui-tab-header-button:not(.cui-disabled):active .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
+  color: var(--btn-color-hover, #1a1a1a);
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-tabs-pane-header .cui-tab-header-button.cui-active .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-tabs-pane-header .cui-tab-header-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
@@ -7789,7 +7796,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active:not(.cui-disabled):focus .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   background-color: var(--btn-background-active, transparent);
 }
 .cui-tabs-pane-header .cui-tab-header-button.cui-active + .cui-active.cui-layer-open .cui-button-visual,
@@ -7819,12 +7826,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-tabs-pane-header .cui-tab-header-button-overflow:active .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-active .cui-button-visual {
   background-color: transparent;
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
 }
 .cui-tabs-pane-header .cui-tab-header-button:focus .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
   background-color: rgba(23, 162, 184, 0.05);
-  color: var(--btn-color-active, #212121);
+  color: var(--btn-color-active, #1a1a1a);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow {
@@ -7835,22 +7842,22 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
   position: relative;
   background-color: transparent;
-  color: #212121;
+  color: #1a1a1a;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  border-bottom: 1px solid var(--tabs-active-border-color, #212121);
+  border-bottom: 1px solid var(--tabs-active-border-color, #1a1a1a);
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual .cui-button-left .fa-ellipsis-h {
   transform: translateY(4px);
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow:hover .cui-button-visual, .cui-tabs-pane-header .cui-tab-header-button-overflow:focus .cui-button-visual {
   background-color: transparent;
-  color: rgba(33, 33, 33, 0.7);
+  color: rgba(26, 26, 26, 0.7);
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow.cui-layer-open .cui-button-visual {
   color: #ffffff;
-  background-color: #212121;
+  background-color: #1a1a1a;
 }
 .cui-tabs-pane-header .cui-tab-header-button-overflow + * {
   margin-left: 1rem;
@@ -7866,7 +7873,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   display: block;
   flex: 1 1 auto;
   height: 1px;
-  background: var(--tabs-active-border-color, #212121);
+  background: var(--tabs-active-border-color, #1a1a1a);
   align-self: flex-end;
 }
 .cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar .cui-buttonbar-group {
@@ -7887,10 +7894,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   bottom: 0;
   width: 100%;
   height: 100%;
-  border-bottom: 1px solid var(--tabs-active-border-color, #212121);
+  border-bottom: 1px solid var(--tabs-active-border-color, #1a1a1a);
 }
 .cui-tabs-pane-header > .cui-horizontal-layout-center > .cui-buttonbar .cui-buttonbar-group .cui-tab-header-button.cui-active .cui-button-visual::after {
-  border: 1px solid var(--tabs-active-border-color, #212121);
+  border: 1px solid var(--tabs-active-border-color, #1a1a1a);
   border-bottom: 1px solid transparent;
   border-radius: 2px 2px 0 0;
 }
@@ -7988,9 +7995,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   background-color: #f5f5f5;
   outline: none;
   border-radius: 2px;
-  border: 0 solid #212121;
+  border: 0 solid #1a1a1a;
   overflow: auto; /* hidden; */
-  box-shadow: inset 0 0 0 1px rgba(33, 33, 33, 0.03), 0 2px 4px 0 rgba(77, 82, 87, 0.2), 0 2px 7px 0 rgba(77, 82, 87, 0.5), 0 6px 20px 10px rgba(77, 82, 87, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.03), 0 2px 4px 0 rgba(77, 82, 87, 0.2), 0 2px 7px 0 rgba(77, 82, 87, 0.5), 0 6px 20px 10px rgba(77, 82, 87, 0.09);
 }
 .cui-layer--size-min {
   width: 250px;
@@ -8017,7 +8024,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   width: 1000px;
 }
 .cui-layer.cui-popover {
-  box-shadow: inset 0 0 0 1px rgba(33, 33, 33, 0.03), 0 2px 4px 0 rgba(77, 82, 87, 0.2), 0 2px 7px 0 rgba(77, 82, 87, 0.5), 0 6px 20px 10px rgba(77, 82, 87, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.03), 0 2px 4px 0 rgba(77, 82, 87, 0.2), 0 2px 7px 0 rgba(77, 82, 87, 0.5), 0 6px 20px 10px rgba(77, 82, 87, 0.55);
 }
 .cui-layer .cui-pane {
   background-color: transparent;
@@ -8031,7 +8038,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header {
   border-radius: 2px 2px 0 0;
-  background-color: #212121;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left {
@@ -8061,13 +8068,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --btn-border-width: 0;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button .cui-button-visual {
-  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background, rgba(26, 26, 26, 0.6));
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):focus {
   outline: none;
@@ -8079,16 +8086,16 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
-  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-hover, rgba(26, 26, 26, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+  background-color: var(--btn-background-active, rgba(26, 26, 26, 0.6));
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
@@ -8103,14 +8110,14 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   margin-right: 0;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group {
-  background-color: rgba(33, 33, 33, 0.6);
+  background-color: rgba(26, 26, 26, 0.6);
   border-radius: 2px;
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button .cui-button-visual,
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select .cui-button-visual {
   background-color: var(--btn-background, transparent);
   color: var(--btn-color, #ffffff);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-button.cui-button-button:not(.cui-disabled):focus .cui-button-visual,
 .cui-layer > .cui-pane > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar .cui-buttonbar-group .cui-button-select.cui-button-select:not(.cui-disabled):hover .cui-button-visual,
@@ -8240,7 +8247,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 
 .cui-pane--has-header .cui-layer-pointer--n::after, .cui-date-time-popover + .cui-layer-pointer--n::after {
-  background: #212121;
+  background: #1a1a1a;
 }
 
 .cui-pane--has-footer .cui-layer-pointer--e,
@@ -8300,7 +8307,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding: 0 0.75rem;
   min-height: 30px;
   font-weight: 700;
-  color: #212121;
+  color: #1a1a1a;
 }
 .cui-menu .cui-item-list-body > .cui-options:last-child {
   border-top: 1px solid rgba(206, 212, 218, 0.5);
@@ -8540,11 +8547,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-icon-marker-container .cui-button .cui-button-visual {
   background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+  color: var(--btn-color, #1a1a1a);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #1a1a1a);
 }
 .cui-icon-marker-container .cui-button:not(.cui-disabled):hover .cui-button-visual, .cui-icon-marker-container .cui-button:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
 }
 .cui-icon-marker-container .cui-button:not(.cui-disabled):focus {
@@ -8556,17 +8563,17 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
 .cui-icon-marker-container .cui-button:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  color: var(--btn-color-hover, rgba(26, 26, 26, 0.65));
   background-color: var(--btn-background-hover, transparent);
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
 .cui-icon-marker-container .cui-button.cui-active .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-icon-marker-container .cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-icon-marker-container .cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-icon-marker-container .cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
-  background-color: var(--btn-background-active, #212121);
+  background-color: var(--btn-background-active, #1a1a1a);
 }
 .cui-icon-marker-container .cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
