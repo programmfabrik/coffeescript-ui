@@ -3671,6 +3671,9 @@ textarea {
 .cui-output .cui-output--no-padding .cui-label {
   padding: 0;
 }
+.cui-output.cui-label-appearance-secondary {
+  opacity: var(--label-secondary-opacity, 0.65);
+}
 
 .cui-multi-output {
   display: grid;
