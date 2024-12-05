@@ -401,7 +401,7 @@
 // With :has() selector we can select one column and change the background whenever the related column is hovered.
 // Since we need to reference the related row by the row number, we need to generate a selector
 // for as many rows
-.cui-list-view-grid-fixed-col-has-only-row-move-handle {	
+.cui-list-view-grid-fixed-col-has-only-row-move-handle {
 	.cui-list-view-grid-inner-bottom {
 		@for $row from 1 through 100 {
 			// hover over a CONTENT column will adjust the related HANDLE column
@@ -416,7 +416,7 @@
 				.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row='#{$row}'] .cui-lv-tr {
 					background-color: var(--list-view-hover-row-background);
 				}
-			}			
+			}
 		}
 	}
 }
