@@ -397,11 +397,27 @@
 }
 
 // Special case, when there is a single column in the quadrant-2 that contains only the drag handle
-// we do not want it to have a hover effect, because it just looks weird when the hover effect applies to
-// the drag handle and the actual row SEPERATELY, therefore we rather hide the hover for the drag handle column
-.cui-list-view-grid-fixed-col-has-only-row-move-handle {
-	.cui-list-view-grid-quadrant-2 {
-		--list-view-hover-row-background: transparent;
+// --
+// With :has() selector we can select one column and change the background whenever the related column is hovered.
+// Since we need to reference the related row by the row number, we need to generate a selector
+// for as many rows
+.cui-list-view-grid-fixed-col-has-only-row-move-handle {	
+	.cui-list-view-grid-inner-bottom {
+		@for $row from 1 through 100 {
+			// hover over a CONTENT column will adjust the related HANDLE column
+			&:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row='#{$row}']:hover) {
+				.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row='#{$row}'] .cui-lv-tr {
+					background-color: var(--list-view-hover-row-background);
+				}
+			}
+
+			// hover over a HANDLE column will adjust related CONTENT column
+			&:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row='#{$row}']:hover) {
+				.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row='#{$row}'] .cui-lv-tr {
+					background-color: var(--list-view-hover-row-background);
+				}
+			}			
+		}
 	}
 }
 
