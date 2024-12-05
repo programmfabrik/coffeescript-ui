@@ -476,7 +476,13 @@
 	margin: 0 -5px;
 	width: 9px;
 	z-index: 1;
+	
+	// deactivate user resize action
+	.cui-not-user-resizable & {
+		pointer-events: none;
+	}
 }
+
 
 // Resize column ??
 // todo: find use-case
