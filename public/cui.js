@@ -52696,6 +52696,10 @@ CUI.ListViewHeaderColumn = (function(superClass) {
       rotate_90: {
         check: Boolean
       },
+      resizable: {
+        "default": true,
+        check: Boolean
+      },
       label: {
         check: function(v) {
           if (CUI.util.isPlainObject(v) || v instanceof CUI.Label) {
@@ -52724,6 +52728,9 @@ CUI.ListViewHeaderColumn = (function(superClass) {
     ListViewHeaderColumn.__super__.setElement.call(this, this.__element);
     if (this._rotate_90) {
       this.addClass("cui-lv-td-rotate-90");
+    }
+    if (!this._resizable) {
+      this.addClass("cui-not-user-resizable");
     }
     this.addClass("cui-lv-th");
     listView = this.getRow().getListView();
