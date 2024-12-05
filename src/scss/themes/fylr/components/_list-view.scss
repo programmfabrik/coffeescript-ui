@@ -112,9 +112,8 @@
 		box-sizing: border-box; // ???
 	}
 
-	// .cui-lv-td-rotate-90
 	// see datamodel > definition
-	&-rotate-90 {
+	&.cui-lv-td-rotate-90 {
 		width: 18px;
 
 		.cui-tree-node-spacer {
@@ -132,11 +131,11 @@
 		}
 	}
 
-	&-fill {
+	&.cui-lv-td-fill {
 		min-height: 0;
 	}
 
-	&-max {
+	&.cui-lv-td-max {
 		flex-grow: 1;
 	}
 
