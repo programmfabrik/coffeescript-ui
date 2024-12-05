@@ -18,6 +18,9 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 				check: Boolean
 			rotate_90:
 				check: Boolean
+			resizable:
+				default: true
+				check: Boolean
 			label:
 				check: (v) ->
 					if CUI.util.isPlainObject(v) or v instanceof CUI.Label
@@ -39,6 +42,9 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 		super(@__element)
 		if @_rotate_90
 			@addClass("cui-lv-td-rotate-90")
+
+		if not @_resizable
+			@addClass("cui-not-user-resizable")
 
 		@addClass("cui-lv-th")
 
