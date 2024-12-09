@@ -6986,6 +6986,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-lv-td.cui-lv-td-rotate-90 {
   width: 18px;
+  min-width: 18px;
 }
 .cui-lv-td.cui-lv-td-rotate-90 .cui-tree-node-spacer {
   display: none;
