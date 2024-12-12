@@ -40336,7 +40336,7 @@ CUI.DateTime = (function(superClass) {
       case "store":
         return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone);
       default:
-        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], false, this._avoid_bc_conversion);
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], this._add_AD, this._avoid_bc_conversion);
     }
   };
 
@@ -41422,6 +41422,7 @@ CUI.DateTime = (function(superClass) {
     if (locale) {
       opts.locale = locale;
     }
+    opts.add_AD = true;
     dt = new CUI.DateTime(opts);
     str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
     return str;
@@ -41495,7 +41496,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
-    var absYear, bc, regexp, replace, result, v;
+    var absYear, bc, regexp, replace, result, v, year;
     if (add_AD == null) {
       add_AD = false;
     }
@@ -41503,12 +41504,11 @@ CUI.DateTime = (function(superClass) {
       avoid_bc_conversion = false;
     }
     if (avoid_bc_conversion) {
+      year = mom.year();
+      absYear = Math.abs(year);
       result = DateTime.formatMoment(mom, format, false);
-      if (mom.year() < 0) {
-        absYear = Math.abs(mom.year());
-        regexp = new RegExp("-0+" + absYear + "\\b");
-        result = result.replace(regexp, "" + mom.year());
-      }
+      regexp = new RegExp("(-?)0+" + absYear + "\\b");
+      result = result.replace(regexp, "$1" + absYear);
       return result;
     }
     if (mom.year() === 0) {
