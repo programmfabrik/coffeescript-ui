@@ -112,10 +112,10 @@
 		box-sizing: border-box; // ???
 	}
 
-	// .cui-lv-td-rotate-90
 	// see datamodel > definition
-	&-rotate-90 {
+	&.cui-lv-td-rotate-90 {
 		width: 18px;
+		min-width: 18px;
 
 		.cui-tree-node-spacer {
 			display: none;
@@ -132,11 +132,11 @@
 		}
 	}
 
-	&-fill {
+	&.cui-lv-td-fill {
 		min-height: 0;
 	}
 
-	&-max {
+	&.cui-lv-td-max {
 		flex-grow: 1;
 	}
 
@@ -406,11 +406,27 @@
 }
 
 // Special case, when there is a single column in the quadrant-2 that contains only the drag handle
-// we do not want it to have a hover effect, because it just looks weird when the hover effect applies to
-// the drag handle and the actual row SEPERATELY, therefore we rather hide the hover for the drag handle column
+// --
+// With :has() selector we can select one column and change the background whenever the related column is hovered.
+// Since we need to reference the related row by the row number, we need to generate a selector
+// for as many rows
 .cui-list-view-grid-fixed-col-has-only-row-move-handle {
-	.cui-list-view-grid-quadrant-2 {
-		--list-view-hover-row-background: transparent;
+	.cui-list-view-grid-inner-bottom {
+		@for $row from 1 through 100 {
+			// hover over a CONTENT column will adjust the related HANDLE column
+			&:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row='#{$row}']:hover) {
+				.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row='#{$row}'] .cui-lv-tr {
+					background-color: var(--list-view-hover-row-background);
+				}
+			}
+
+			// hover over a HANDLE column will adjust related CONTENT column
+			&:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row='#{$row}']:hover) {
+				.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row='#{$row}'] .cui-lv-tr {
+					background-color: var(--list-view-hover-row-background);
+				}
+			}
+		}
 	}
 }
 
@@ -469,7 +485,13 @@
 	margin: 0 -5px;
 	width: 9px;
 	z-index: 1;
+	
+	// deactivate user resize action
+	.cui-not-user-resizable & {
+		pointer-events: none;
+	}
 }
+
 
 // Resize column ??
 // todo: find use-case

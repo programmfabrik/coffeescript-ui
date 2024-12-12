@@ -3673,6 +3673,9 @@ textarea {
 .cui-output .cui-output--no-padding .cui-label {
   padding: 0;
 }
+.cui-output.cui-label-appearance-secondary {
+  opacity: var(--label-secondary-opacity, 0.65);
+}
 
 .cui-multi-output {
   display: grid;
@@ -6984,24 +6987,25 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   max-width: 100%;
   box-sizing: border-box;
 }
-.cui-lv-td-rotate-90 {
+.cui-lv-td.cui-lv-td-rotate-90 {
   width: 18px;
+  min-width: 18px;
 }
-.cui-lv-td-rotate-90 .cui-tree-node-spacer {
+.cui-lv-td.cui-lv-td-rotate-90 .cui-tree-node-spacer {
   display: none;
 }
-.cui-lv-td-rotate-90 > .cui-label-rotate-90 {
+.cui-lv-td.cui-lv-td-rotate-90 > .cui-label-rotate-90 {
   word-wrap: break-word;
   margin-left: 0;
   max-width: none !important;
 }
-.cui-lv-td-rotate-90 .cui-data-field {
+.cui-lv-td.cui-lv-td-rotate-90 .cui-data-field {
   flex-grow: 0;
 }
-.cui-lv-td-fill {
+.cui-lv-td.cui-lv-td-fill {
   min-height: 0;
 }
-.cui-lv-td-max {
+.cui-lv-td.cui-lv-td-max {
   flex-grow: 1;
 }
 .cui-lv-td .cui-data-field-input {
@@ -7194,8 +7198,605 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   background-color: var(--list-view-hover-row-background);
 }
 
-.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-quadrant-2 {
-  --list-view-hover-row-background: transparent;
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="1"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="1"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="1"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="1"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="2"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="2"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="2"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="2"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="3"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="3"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="3"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="3"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="4"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="4"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="4"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="4"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="5"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="5"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="5"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="5"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="6"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="6"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="6"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="6"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="7"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="7"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="7"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="7"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="8"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="8"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="8"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="8"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="9"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="9"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="9"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="9"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="10"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="10"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="10"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="10"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="11"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="11"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="11"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="11"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="12"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="12"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="12"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="12"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="13"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="13"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="13"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="13"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="14"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="14"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="14"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="14"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="15"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="15"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="15"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="15"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="16"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="16"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="16"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="16"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="17"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="17"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="17"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="17"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="18"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="18"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="18"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="18"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="19"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="19"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="19"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="19"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="20"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="20"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="20"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="20"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="21"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="21"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="21"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="21"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="22"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="22"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="22"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="22"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="23"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="23"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="23"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="23"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="24"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="24"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="24"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="24"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="25"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="25"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="25"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="25"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="26"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="26"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="26"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="26"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="27"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="27"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="27"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="27"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="28"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="28"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="28"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="28"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="29"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="29"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="29"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="29"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="30"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="30"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="30"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="30"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="31"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="31"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="31"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="31"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="32"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="32"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="32"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="32"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="33"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="33"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="33"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="33"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="34"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="34"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="34"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="34"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="35"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="35"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="35"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="35"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="36"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="36"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="36"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="36"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="37"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="37"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="37"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="37"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="38"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="38"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="38"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="38"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="39"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="39"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="39"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="39"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="40"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="40"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="40"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="40"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="41"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="41"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="41"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="41"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="42"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="42"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="42"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="42"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="43"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="43"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="43"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="43"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="44"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="44"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="44"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="44"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="45"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="45"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="45"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="45"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="46"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="46"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="46"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="46"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="47"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="47"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="47"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="47"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="48"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="48"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="48"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="48"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="49"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="49"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="49"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="49"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="50"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="50"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="50"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="50"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="51"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="51"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="51"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="51"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="52"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="52"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="52"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="52"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="53"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="53"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="53"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="53"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="54"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="54"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="54"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="54"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="55"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="55"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="55"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="55"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="56"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="56"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="56"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="56"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="57"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="57"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="57"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="57"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="58"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="58"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="58"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="58"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="59"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="59"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="59"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="59"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="60"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="60"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="60"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="60"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="61"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="61"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="61"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="61"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="62"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="62"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="62"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="62"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="63"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="63"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="63"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="63"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="64"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="64"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="64"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="64"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="65"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="65"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="65"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="65"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="66"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="66"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="66"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="66"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="67"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="67"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="67"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="67"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="68"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="68"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="68"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="68"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="69"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="69"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="69"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="69"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="70"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="70"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="70"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="70"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="71"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="71"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="71"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="71"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="72"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="72"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="72"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="72"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="73"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="73"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="73"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="73"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="74"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="74"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="74"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="74"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="75"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="75"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="75"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="75"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="76"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="76"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="76"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="76"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="77"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="77"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="77"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="77"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="78"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="78"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="78"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="78"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="79"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="79"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="79"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="79"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="80"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="80"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="80"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="80"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="81"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="81"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="81"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="81"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="82"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="82"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="82"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="82"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="83"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="83"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="83"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="83"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="84"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="84"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="84"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="84"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="85"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="85"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="85"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="85"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="86"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="86"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="86"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="86"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="87"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="87"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="87"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="87"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="88"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="88"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="88"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="88"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="89"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="89"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="89"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="89"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="90"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="90"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="90"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="90"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="91"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="91"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="91"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="91"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="92"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="92"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="92"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="92"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="93"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="93"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="93"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="93"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="94"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="94"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="94"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="94"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="95"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="95"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="95"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="95"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="96"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="96"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="96"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="96"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="97"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="97"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="97"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="97"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="98"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="98"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="98"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="98"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="99"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="99"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="99"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="99"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="100"]:hover) .cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="100"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
+}
+.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-2 .cui-list-view-row-selectable[row="100"]:hover) .cui-list-view-grid-quadrant-3 .cui-list-view-row-selectable[row="100"] .cui-lv-tr {
+  background-color: var(--list-view-hover-row-background);
 }
 
 .cui-lv-row-move-target {
@@ -7245,6 +7846,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   margin: 0 -5px;
   width: 9px;
   z-index: 1;
+}
+.cui-not-user-resizable .cui-lv-col-resize-handle {
+  pointer-events: none;
 }
 
 .cui-lv-col-resize {

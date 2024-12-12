@@ -1510,7 +1510,16 @@ class CUI.DateTime extends CUI.Input
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
 	@formatMomentWithBc: (mom, format, add_AD = false, avoid_bc_conversion = false) ->
 		if avoid_bc_conversion
-			return DateTime.formatMoment(mom, format, false)
+			result = DateTime.formatMoment(mom, format, false)
+			# We are going to remove leading zeros from the year if the year is BC
+			if mom.year() < 0
+				absYear = Math.abs(mom.year())
+				# This regex matches a negative year with one or more leading zeros before the digits of the absolute year.
+				# For example, it will match "-00023" and "-0023" and so on.
+				regexp = new RegExp("-0+" + absYear + "\\b")
+				result = result.replace(regexp, "" + mom.year())
+
+			return result
 
 		if mom.year() == 0
 			return "1 #{CUI.DateTime.defaults.bc_appendix_output}"
