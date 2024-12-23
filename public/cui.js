@@ -39469,8 +39469,12 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.getFooter = function() {
-    var buttons, custom_buttons, load_page, page_data;
+    var btn, buttons, custom_buttons, i, len1, load_page, page_data;
     custom_buttons = this._buttons.slice(0);
+    for (i = 0, len1 = custom_buttons.length; i < len1; i++) {
+      btn = custom_buttons[i];
+      btn._data_table = this;
+    }
     buttons = [];
     if (this._new_rows !== "none") {
       if (this._new_rows !== "remove_only") {
@@ -39497,10 +39501,10 @@ CUI.DataTable = (function(superClass) {
         ui: this._ui ? this._ui + ".minus.button" : void 0,
         onClick: (function(_this) {
           return function() {
-            var i, len1, ref, row;
+            var j, len2, ref, row;
             ref = _this.listView.getSelectedRows();
-            for (i = 0, len1 = ref.length; i < len1; i++) {
-              row = ref[i];
+            for (j = 0, len2 = ref.length; j < len2; j++) {
+              row = ref[j];
               row.remove();
             }
             _this.storeValue(CUI.util.copyObject(_this.rows, true));
