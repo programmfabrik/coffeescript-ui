@@ -51073,6 +51073,10 @@ CUI.ListView = (function(superClass) {
       },
       onDeselect: {
         check: Function
+      },
+      ignoreKeyEvents: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -51108,6 +51112,10 @@ CUI.ListView = (function(superClass) {
 
   ListView.prototype.getListViewClass = function() {
     return this.__lvClass;
+  };
+
+  ListView.prototype.isKeyEventsEnabled = function() {
+    return !this._ignoreKeyEvents;
   };
 
   ListView.prototype.getGrid = function() {
@@ -54713,7 +54721,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     var element, tree;
     tree = this.getTree();
     element = DOMNodes != null ? DOMNodes[0] : void 0;
-    if (element) {
+    if (element && tree.isKeyEventsEnabled()) {
       CUI.Events.listen({
         type: "keydown",
         node: element,
