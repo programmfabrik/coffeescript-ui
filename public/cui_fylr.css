@@ -3777,16 +3777,16 @@ textarea {
 .cui-button-checkbox [data-max-chars] {
   text-align: inherit;
 }
-.cui-button-checkbox .cui-button-visual {
+.cui-button-checkbox > .cui-button-visual {
   align-items: baseline;
   justify-content: flex-start;
 }
-.cui-button-checkbox .cui-button-left {
+.cui-button-checkbox > .cui-button-visual > .cui-button-left {
   min-width: 16px;
   margin-right: 6px;
 }
-.cui-button-checkbox .cui-button-left span,
-.cui-button-checkbox .cui-button-left i {
+.cui-button-checkbox > .cui-button-visual > .cui-button-left span,
+.cui-button-checkbox > .cui-button-visual > .cui-button-left i {
   position: relative;
   top: -1px;
   display: inline-flex;
@@ -3801,39 +3801,39 @@ textarea {
   border-radius: 2px;
   vertical-align: middle;
 }
-.cui-active .cui-button-checkbox .cui-button-left span, .cui-layer-open .cui-button-checkbox .cui-button-left span,
-.cui-active .cui-button-checkbox .cui-button-left i,
-.cui-layer-open .cui-button-checkbox .cui-button-left i {
+.cui-active .cui-button-checkbox > .cui-button-visual > .cui-button-left span, .cui-layer-open .cui-button-checkbox > .cui-button-visual > .cui-button-left span,
+.cui-active .cui-button-checkbox > .cui-button-visual > .cui-button-left i,
+.cui-layer-open .cui-button-checkbox > .cui-button-visual > .cui-button-left i {
   border-color: #f5f5f5;
 }
-.cui-button-checkbox .cui-button-center {
+.cui-button-checkbox > .cui-button-visual > .cui-button-center {
   display: flex;
   min-width: 0;
   flex: 1 1 auto;
   padding-right: 0.5rem;
   line-height: 1.3;
 }
-.cui-button-checkbox .cui-button-center:empty {
+.cui-button-checkbox > .cui-button-visual > .cui-button-center:empty {
   display: none;
 }
-.cui-button-checkbox[role=radio] .cui-button-left span,
-.cui-button-checkbox[role=radio] .cui-button-left i {
+.cui-button-checkbox[role=radio] > .cui-button-visual > .cui-button-left span,
+.cui-button-checkbox[role=radio] > .cui-button-visual > .cui-button-left i {
   border-radius: 100%;
 }
-.cui-button-checkbox.cui-active .cui-button-left i {
+.cui-button-checkbox.cui-active > .cui-button-visual > .cui-button-left i {
   background: var(--checkbox-active-background, #212121);
   color: var(--checkbox-active-color, #ffffff);
   border-color: var(--checkbox-active-background, #212121);
 }
-.cui-active .cui-button-checkbox.cui-active .cui-button-left i, .cui-layer-open .cui-button-checkbox.cui-active .cui-button-left i {
+.cui-active .cui-button-checkbox.cui-active > .cui-button-visual > .cui-button-left i, .cui-layer-open .cui-button-checkbox.cui-active > .cui-button-visual > .cui-button-left i {
   color: #f5f5f5;
 }
-.cui-button-checkbox.cui-active[role=radio] .cui-button-left i {
+.cui-button-checkbox.cui-active[role=radio] > .cui-button-visual > .cui-button-left i {
   background: var(--checkbox-active-background, #212121);
   color: transparent;
   border-color: var(--checkbox-active-background, #212121);
 }
-.cui-button-checkbox.cui-active[role=radio] .cui-button-left i::after {
+.cui-button-checkbox.cui-active[role=radio] > .cui-button-visual > .cui-button-left i::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -3847,20 +3847,20 @@ textarea {
 .cui-button-checkbox:focus {
   outline: none;
 }
-.cui-button-checkbox:focus .cui-button-left span,
-.cui-button-checkbox:focus .cui-button-left i {
+.cui-button-checkbox:focus > .cui-button-visual > .cui-button-left span,
+.cui-button-checkbox:focus > .cui-button-visual > .cui-button-left i {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
   z-index: 1;
 }
-.cui-button-checkbox:focus.cui-active .cui-button-left span,
-.cui-button-checkbox:focus.cui-active .cui-button-left i {
+.cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left span,
+.cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left i {
   background-color: #17a2b8;
 }
-.cui-active .cui-button-checkbox.cui-indeterminate .cui-button-left span, .cui-layer-open .cui-button-checkbox.cui-indeterminate .cui-button-left span {
+.cui-active .cui-button-checkbox.cui-indeterminate > .cui-button-visual > .cui-button-left span, .cui-layer-open .cui-button-checkbox.cui-indeterminate > .cui-button-visual > .cui-button-left span {
   border-color: #f5f5f5;
 }
-.cui-button-checkbox.cui-indeterminate .cui-button-left span::after {
+.cui-button-checkbox.cui-indeterminate > .cui-button-visual > .cui-button-left span::after {
   content: "";
   position: absolute;
   left: 2px;
