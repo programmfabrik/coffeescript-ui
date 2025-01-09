@@ -9042,61 +9042,68 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding: 0.5rem !important;
 }
 
-.cui-map-zoom-buttons {
+.cui-map-buttons-top,
+.cui-map-buttons-bottom {
   position: absolute;
-  width: calc(100% - (2 * 0.5rem));
-  height: calc(100% - (2 * 0.5rem));
   z-index: 1000;
+  left: 0.5rem;
+  right: 0.5rem;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual {
+
+.cui-map-buttons-top {
+  top: 0.5rem;
+}
+.cui-map-buttons-top .cui-button .cui-button-visual {
   height: 24px;
   min-width: 25.62px;
   font-size: 0.75rem;
   line-height: 24px;
   border-radius: 2px;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-left {
+.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-left {
   padding-left: 0.5rem;
   margin-right: -0.25rem;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-left:empty, .cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-left:only-child {
+.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-left:empty, .cui-map-buttons-top .cui-button .cui-button-visual .cui-button-left:only-child {
   padding-left: 0;
   margin-right: 0;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-right {
+.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-right {
   padding-right: 0.5rem;
   margin-left: -0.25rem;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-right:empty, .cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-right:only-child {
+.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-right:empty, .cui-map-buttons-top .cui-button .cui-button-visual .cui-button-right:only-child {
   padding-right: 0;
   margin-left: 0;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-center {
+.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-center {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 0.5rem;
 }
-.cui-map-zoom-buttons .cui-button .cui-button-visual .cui-button-center:empty {
+.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-center:empty {
   margin-left: -0.25rem;
 }
-.cui-map-zoom-buttons .buttons-upper-left {
+.cui-map-buttons-top .buttons-upper-left {
   position: absolute;
   left: 0;
 }
-.cui-map-zoom-buttons .buttons-upper-right {
+.cui-map-buttons-top .buttons-upper-right {
   position: absolute;
   right: 0;
 }
-.cui-map-zoom-buttons .buttons-bottom-left {
+
+.cui-map-buttons-bottom {
   position: absolute;
-  left: 0;
-  bottom: 2rem;
+  bottom: 0.5rem;
+  display: flex;
 }
-.cui-map-zoom-buttons .buttons-bottom-right {
-  position: absolute;
-  right: 0;
-  bottom: 2rem;
+.cui-map-buttons-bottom > * {
+  flex: 1 1 auto;
+}
+.cui-map-buttons-bottom .buttons-bottom-center > * {
+  margin: 0 auto;
 }
 
 .cui-map-popover-options {
@@ -9187,102 +9194,99 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   color: inherit;
 }
 
-.cui-open-layers-map .cui-map-zoom-buttons {
-  margin: 0.5rem;
-}
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select {
   --btn-border-color: rgba(255, 255, 255, 0.85);
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual {
   height: 24px;
   min-width: 25.62px;
   font-size: 0.75rem;
   line-height: 24px;
   border-radius: 2px;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-left,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-left {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-left,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-left {
   padding-left: 0.5rem;
   margin-right: -0.25rem;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-left:empty, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-left:only-child,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-left:empty,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-left:only-child {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-left:empty, .cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-left:only-child,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-left:empty,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-left:only-child {
   padding-left: 0;
   margin-right: 0;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-right,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-right {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-right,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-right {
   padding-right: 0.5rem;
   margin-left: -0.25rem;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-right:empty, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-right:only-child,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-right:empty,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-right:only-child {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-right:empty, .cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-right:only-child,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-right:empty,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-right:only-child {
   padding-right: 0;
   margin-left: 0;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-center,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-center {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-center,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-center {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 0.5rem;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual .cui-button-center:empty,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual .cui-button-center:empty {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual .cui-button-center:empty,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual .cui-button-center:empty {
   margin-left: -0.25rem;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select .cui-button-visual {
   background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button:not(.cui-disabled):focus .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select:not(.cui-disabled):hover .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button:not(.cui-disabled):hover .cui-button-visual, .cui-open-layers-map .cui-map-buttons-top .cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select:not(.cui-disabled):hover .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button:not(.cui-disabled):focus,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select:not(.cui-disabled):focus {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button:not(.cui-disabled):focus,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select:not(.cui-disabled):focus {
   outline: none;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button:not(.cui-disabled):focus .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button:not(.cui-disabled):focus .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select:not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button:not(.cui-disabled):active .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select:not(.cui-disabled):active .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button:not(.cui-disabled):active .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select:not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-active .cui-button-visual, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-layer-open .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-active .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-layer-open .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-active .cui-button-visual, .cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-layer-open .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-active .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-active:not(.cui-disabled):hover .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-active:not(.cui-disabled):focus .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-layer-open:not(.cui-disabled):hover .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button.cui-active + .cui-active.cui-layer-open .cui-button-visual,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select.cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-button:not(.cui-disabled):hover,
-.cui-open-layers-map .cui-map-zoom-buttons .cui-button-select:not(.cui-disabled):hover {
+.cui-open-layers-map .cui-map-buttons-top .cui-button-button:not(.cui-disabled):hover,
+.cui-open-layers-map .cui-map-buttons-top .cui-button-select:not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 

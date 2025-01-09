@@ -6358,18 +6358,18 @@ label[data-label-clickable],
   background-image: linear-gradient(to right, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px), linear-gradient(to bottom, hsl(0, 0%, 98%) 1px, hsla(0, 0%, 0%, 0) 1px);
 }
 
-.cui-map-zoom-buttons {
+.cui-map-buttons-top {
   position: absolute;
   width: 100%;
   z-index: 1000;
   display: block;
   margin-top: 10px;
 }
-.cui-map-zoom-buttons .buttons-upper-left .cui-buttonbar {
+.cui-map-buttons-top .buttons-upper-left .cui-buttonbar {
   position: absolute;
   margin-left: 10px;
 }
-.cui-map-zoom-buttons .buttons-upper-right .cui-buttonbar {
+.cui-map-buttons-top .buttons-upper-right .cui-buttonbar {
   position: absolute;
   right: 10px;
 }
