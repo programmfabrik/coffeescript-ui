@@ -33,11 +33,16 @@
 }
 
 
-.cui-map-zoom-buttons {
+.cui-map-buttons-top,
+.cui-map-buttons-bottom {
 	position: absolute;
-	width: calc(100% - (2 * #{$pane-padding}));
-	height: calc(100% - (2 * #{$pane-padding}));
 	z-index: 1000;
+	left: $spacer-sm;
+	right: $spacer-sm;
+}
+
+.cui-map-buttons-top {
+	top: $spacer-sm;
 
 	.cui-button {
 		@include button-sm();
@@ -52,17 +57,21 @@
 		position: absolute;
 		right: 0;
 	}
+}
 
-	.buttons-bottom-left {
-		position: absolute;
-		left: 0;
-		bottom: 2rem;
+.cui-map-buttons-bottom {
+	position: absolute;
+	bottom: $spacer-sm;
+	display: flex;
+	
+	> * {
+		flex: 1 1 auto;
 	}
 
-	.buttons-bottom-right {
-		position: absolute;
-		right: 0;
-		bottom: 2rem;
+	.buttons-bottom-center {
+		> * {
+			margin: 0 auto;
+		}
 	}
 }
 
@@ -122,9 +131,7 @@
 
 //* OpenLayers Map
 .cui-open-layers-map {
-	.cui-map-zoom-buttons {
-		margin: $spacer-sm;
-
+	.cui-map-buttons-top {
 		.cui-button-button,
 		.cui-button-select {
 			@include button-sm();
