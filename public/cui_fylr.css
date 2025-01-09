@@ -9102,6 +9102,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-map-buttons-bottom > * {
   flex: 1 1 auto;
 }
+.cui-map-buttons-bottom .buttons-bottom-center {
+  flex: none;
+  margin: 0 auto;
+}
 .cui-map-buttons-bottom .buttons-bottom-center > * {
   margin: 0 auto;
 }
