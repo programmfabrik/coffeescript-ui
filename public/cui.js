@@ -56120,7 +56120,8 @@ CUI.Map = (function(superClass) {
         "buttons-upper-left": true,
         "buttons-upper-right": true,
         "buttons-bottom-left": true,
-        "buttons-bottom-right": true
+        "buttons-bottom-right": true,
+        "buttons-bottom-center": true
       }
     });
     this.append(this.__mapTemplate, "center");
@@ -65400,7 +65401,7 @@ module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-f
   \*******************************/
 /***/ ((module) => {
 
-module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-zoom-buttons\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div>\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
+module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-zoom-buttons\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div>\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-center\" class=\"buttons-bottom-center\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
 
 /***/ }),
 
