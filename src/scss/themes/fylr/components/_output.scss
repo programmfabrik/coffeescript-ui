@@ -30,6 +30,10 @@
 			padding: 0;
 		}
 	}
+
+	&.cui-label-appearance-secondary {
+		@include label-secondary();
+	}
 }
 
 .cui-multi-output {

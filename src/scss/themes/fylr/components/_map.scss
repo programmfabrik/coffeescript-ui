@@ -1,8 +1,10 @@
+// ? obsolete
 .cui-google-map {
 	width: 100%;
 	height: 300px;
 }
 
+// ? obsolete
 .cui-leaflet-map {
 	--map-leaflet-background: hsl(41, 27%, 93%);
 	--map-leaflet-grid-color: hsl(0, 0%, 98%);
@@ -30,11 +32,17 @@
 	}
 }
 
-.cui-map-zoom-buttons {
+
+.cui-map-buttons-top,
+.cui-map-buttons-bottom {
 	position: absolute;
-	width: calc(100% - (2 * #{$pane-padding}));
-	height: calc(100% - (2 * #{$pane-padding}));
 	z-index: 1000;
+	left: $spacer-sm;
+	right: $spacer-sm;
+}
+
+.cui-map-buttons-top {
+	top: $spacer-sm;
 
 	.cui-button {
 		@include button-sm();
@@ -49,17 +57,24 @@
 		position: absolute;
 		right: 0;
 	}
+}
 
-	.buttons-bottom-left {
-		position: absolute;
-		left: 0;
-		bottom: 2rem;
+.cui-map-buttons-bottom {
+	position: absolute;
+	bottom: $spacer-sm;
+	display: flex;
+	
+	> * {
+		flex: 1 1 auto;
 	}
 
-	.buttons-bottom-right {
-		position: absolute;
-		right: 0;
-		bottom: 2rem;
+	.buttons-bottom-center {
+		flex: none;
+		margin: 0 auto;
+
+		> * {
+			margin: 0 auto;
+		}
 	}
 }
 
@@ -113,6 +128,17 @@
 		&-visual {
 			height: 100%;
 			color: inherit;
+		}
+	}
+}
+
+//* OpenLayers Map
+.cui-open-layers-map {
+	.cui-map-buttons-top {
+		.cui-button-button,
+		.cui-button-select {
+			@include button-sm();
+			@include button-color-inverted();
 		}
 	}
 }

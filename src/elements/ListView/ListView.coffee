@@ -150,6 +150,9 @@ class CUI.ListView extends CUI.SimplePane
 				check: Function
 			onDeselect:
 				check: Function
+			ignoreKeyEvents:
+				check: Boolean
+				default: false
 
 	readOpts: ->
 		if @opts.header
@@ -178,6 +181,9 @@ class CUI.ListView extends CUI.SimplePane
 
 	getListViewClass: ->
 		@__lvClass
+
+	isKeyEventsEnabled: ->
+		!@_ignoreKeyEvents
 
 	getGrid: ->
 		@grid

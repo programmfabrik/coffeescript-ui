@@ -39469,8 +39469,12 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.getFooter = function() {
-    var buttons, custom_buttons, load_page, page_data;
+    var btn, buttons, custom_buttons, i, len1, load_page, page_data;
     custom_buttons = this._buttons.slice(0);
+    for (i = 0, len1 = custom_buttons.length; i < len1; i++) {
+      btn = custom_buttons[i];
+      btn._data_table = this;
+    }
     buttons = [];
     if (this._new_rows !== "none") {
       if (this._new_rows !== "remove_only") {
@@ -39497,10 +39501,10 @@ CUI.DataTable = (function(superClass) {
         ui: this._ui ? this._ui + ".minus.button" : void 0,
         onClick: (function(_this) {
           return function() {
-            var i, len1, ref, row;
+            var j, len2, ref, row;
             ref = _this.listView.getSelectedRows();
-            for (i = 0, len1 = ref.length; i < len1; i++) {
-              row = ref[i];
+            for (j = 0, len2 = ref.length; j < len2; j++) {
+              row = ref[j];
               row.remove();
             }
             _this.storeValue(CUI.util.copyObject(_this.rows, true));
@@ -40336,7 +40340,7 @@ CUI.DateTime = (function(superClass) {
       case "store":
         return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone);
       default:
-        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], false, this._avoid_bc_conversion);
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], this._add_AD, this._avoid_bc_conversion);
     }
   };
 
@@ -41422,6 +41426,7 @@ CUI.DateTime = (function(superClass) {
     if (locale) {
       opts.locale = locale;
     }
+    opts.add_AD = true;
     dt = new CUI.DateTime(opts);
     str = dt.format(datestr_or_moment, output_format, output_type, parseZone);
     return str;
@@ -41495,7 +41500,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
-    var bc, regexp, replace, v;
+    var absYear, bc, regexp, replace, result, v, year;
     if (add_AD == null) {
       add_AD = false;
     }
@@ -41503,7 +41508,12 @@ CUI.DateTime = (function(superClass) {
       avoid_bc_conversion = false;
     }
     if (avoid_bc_conversion) {
-      return DateTime.formatMoment(mom, format, false);
+      year = mom.year();
+      absYear = Math.abs(year);
+      result = DateTime.formatMoment(mom, format, false);
+      regexp = new RegExp("(-?)0+" + absYear + "\\b");
+      result = result.replace(regexp, "$1" + absYear);
+      return result;
     }
     if (mom.year() === 0) {
       return "1 " + CUI.DateTime.defaults.bc_appendix_output;
@@ -51063,6 +51073,10 @@ CUI.ListView = (function(superClass) {
       },
       onDeselect: {
         check: Function
+      },
+      ignoreKeyEvents: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -51098,6 +51112,10 @@ CUI.ListView = (function(superClass) {
 
   ListView.prototype.getListViewClass = function() {
     return this.__lvClass;
+  };
+
+  ListView.prototype.isKeyEventsEnabled = function() {
+    return !this._ignoreKeyEvents;
   };
 
   ListView.prototype.getGrid = function() {
@@ -52696,6 +52714,10 @@ CUI.ListViewHeaderColumn = (function(superClass) {
       rotate_90: {
         check: Boolean
       },
+      resizable: {
+        "default": true,
+        check: Boolean
+      },
       label: {
         check: function(v) {
           if (CUI.util.isPlainObject(v) || v instanceof CUI.Label) {
@@ -52724,6 +52746,9 @@ CUI.ListViewHeaderColumn = (function(superClass) {
     ListViewHeaderColumn.__super__.setElement.call(this, this.__element);
     if (this._rotate_90) {
       this.addClass("cui-lv-td-rotate-90");
+    }
+    if (!this._resizable) {
+      this.addClass("cui-not-user-resizable");
     }
     this.addClass("cui-lv-th");
     listView = this.getRow().getListView();
@@ -54696,7 +54721,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     var element, tree;
     tree = this.getTree();
     element = DOMNodes != null ? DOMNodes[0] : void 0;
-    if (element) {
+    if (element && tree.isKeyEventsEnabled()) {
       CUI.Events.listen({
         type: "keydown",
         node: element,
@@ -56095,7 +56120,8 @@ CUI.Map = (function(superClass) {
         "buttons-upper-left": true,
         "buttons-upper-right": true,
         "buttons-bottom-left": true,
-        "buttons-bottom-right": true
+        "buttons-bottom-right": true,
+        "buttons-bottom-center": true
       }
     });
     this.append(this.__mapTemplate, "center");
@@ -65375,7 +65401,7 @@ module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-f
   \*******************************/
 /***/ ((module) => {
 
-module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-zoom-buttons\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div>\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
+module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-buttons-top\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div class=\"cui-map-buttons-bottom\">\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-center\" class=\"buttons-bottom-center\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
 
 /***/ }),
 

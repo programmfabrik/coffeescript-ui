@@ -51,55 +51,55 @@
 		text-align: inherit;
 	}
 
-	.cui-button-visual {
+	> .cui-button-visual {
 		align-items: baseline;
 		justify-content: flex-start;
-	}
-
-	.cui-button-left {
-		min-width: $checkbox-size;
-		margin-right: $checkbox-margin;
 		
-		// empty checkbox: span
-		// filled checkbox: i
-		span,
-		i {
-			position: relative;
-			top: -1px;
-			display: inline-flex;
-			justify-content: center;
-			align-items: center;
-			width: $checkbox-size;
-			height: $checkbox-size;
-			border: 1px solid var(--checkbox-border-color, #{$checkbox-border-color});
-			background: var(--checkbox-background, #{$checkbox-background});
-			font-size: $checkbox-icon-size;
-			line-height: $checkbox-icon-size + 2px;
-			border-radius: $checkbox-border-radius;
-			vertical-align: middle; // keep <i> and <span> in sync
+		> .cui-button-left {
+			min-width: $checkbox-size;
+			margin-right: $checkbox-margin;
+			
+			// empty checkbox: span
+			// filled checkbox: i
+			span,
+			i {
+				position: relative;
+				top: -1px;
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
+				width: $checkbox-size;
+				height: $checkbox-size;
+				border: 1px solid var(--checkbox-border-color, #{$checkbox-border-color});
+				background: var(--checkbox-background, #{$checkbox-background});
+				font-size: $checkbox-icon-size;
+				line-height: $checkbox-icon-size + 2px;
+				border-radius: $checkbox-border-radius;
+				vertical-align: middle; // keep <i> and <span> in sync
+	
+				// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
+				.cui-active &,
+				.cui-layer-open & {
+					border-color: theme-color('light');
+				}
+			}
+		}
 
-			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
-			.cui-active &,
-			.cui-layer-open & {
-				border-color: theme-color('light');
+		> .cui-button-center {
+			display: flex; // the child span[data-max-chars] will set explicit width
+			min-width: 0;
+			flex: 1 1 auto;
+			padding-right: $spacer-sm;
+			line-height: $line-height-sm;
+	
+			&:empty {
+				display: none;
 			}
 		}
 	}
 
-	.cui-button-center {
-		display: flex; // the child span[data-max-chars] will set explicit width
-		min-width: 0;
-		flex: 1 1 auto;
-		padding-right: $spacer-sm;
-		line-height: $line-height-sm;
-
-		&:empty {
-			display: none;
-		}
-	}
-
 	&[role='radio'] {
-		.cui-button-left {
+		> .cui-button-visual > .cui-button-left {
 			span,
 			i {
 				border-radius: 100%;
@@ -109,7 +109,7 @@
 
 	&.cui-active {
 		// checkbox
-		.cui-button-left i {
+		> .cui-button-visual > .cui-button-left i {
 			background: var(--checkbox-active-background, #{$checkbox-active-background});
 			color: var(--checkbox-active-color, #{$checkbox-active-color});
 			border-color: var(--checkbox-active-background, #{$checkbox-active-background});
@@ -123,7 +123,7 @@
 
 		// radio
 		&[role='radio'] {
-			.cui-button-left i {
+			> .cui-button-visual > .cui-button-left i {
 				background: var(--checkbox-active-background, #{$checkbox-active-background});
 				color: transparent;
 				border-color: var(--checkbox-active-background, #{$checkbox-active-background});
@@ -146,21 +146,21 @@
 	&:focus {
 		outline: none;
 
-		.cui-button-left span,
-		.cui-button-left i {
+		> .cui-button-visual > .cui-button-left span,
+		> .cui-button-visual > .cui-button-left i {
 			@include input-focus();
 		}
 
 		&.cui-active {
-			.cui-button-left span,
-			.cui-button-left i {
+			> .cui-button-visual > .cui-button-left span,
+			> .cui-button-visual > .cui-button-left i {
 				background-color: theme-color('focused'); // make more prominent
 			}
 		}
 	}
 
 	&.cui-indeterminate {
-		.cui-button-left span {
+		> .cui-button-visual > .cui-button-left span {
 			// background-color: gray('200'); // looks weird on white background
 
 			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)

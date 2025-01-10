@@ -327,7 +327,7 @@ class CUI.DateTime extends CUI.Input
 			when "store"
 				return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone)
 			else
-				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], false, @_avoid_bc_conversion)
+				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], @_add_AD, @_avoid_bc_conversion)
 
 	regexpMatcher: ->
 		YYYY:
@@ -1450,6 +1450,8 @@ class CUI.DateTime extends CUI.Input
 		opts = {}
 		if locale
 			opts.locale = locale
+
+		opts.add_AD =  true
 		dt = new CUI.DateTime(opts)
 		str = dt.format(datestr_or_moment, output_format, output_type, parseZone)
 		# console.debug "DateTime.format", date, type, output_type, DateTime.__locale, str
@@ -1510,7 +1512,13 @@ class CUI.DateTime extends CUI.Input
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
 	@formatMomentWithBc: (mom, format, add_AD = false, avoid_bc_conversion = false) ->
 		if avoid_bc_conversion
-			return DateTime.formatMoment(mom, format, false)
+			# We remove the leading zeros from the year
+			year = mom.year()
+			absYear = Math.abs(year)
+			result = DateTime.formatMoment(mom, format, false)
+			regexp = new RegExp("(-?)0+" + absYear + "\\b")
+			result = result.replace(regexp, "$1" + absYear)
+			return result
 
 		if mom.year() == 0
 			return "1 #{CUI.DateTime.defaults.bc_appendix_output}"

@@ -160,6 +160,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 	getFooter: ->
 		custom_buttons = @_buttons.slice(0)
+		for btn in custom_buttons
+			btn._data_table = @
 		buttons = []
 		if @_new_rows != "none"
 			if @_new_rows != "remove_only"

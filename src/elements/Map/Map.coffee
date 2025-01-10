@@ -83,6 +83,7 @@ class CUI.Map extends CUI.Pane
 				"buttons-upper-right": true
 				"buttons-bottom-left": true
 				"buttons-bottom-right": true
+				"buttons-bottom-center": true
 
 		@append(@__mapTemplate, "center")
 
