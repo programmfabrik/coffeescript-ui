@@ -107,6 +107,7 @@ label[data-label-clickable],
 		flex-shrink: 0;
 		max-width: none;
 		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
+		line-height: 1;
 
 		&::before {
 			content: '';
