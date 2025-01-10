@@ -2485,6 +2485,7 @@ label[data-label-clickable],
   flex-shrink: 0;
   max-width: none;
   display: inline-block;
+  line-height: 1;
 }
 .cui-label.cui-label-rotate-90::before {
   content: "";
@@ -7044,7 +7045,6 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .list-view-header-row .cui-lv-td.cui-lv-td-rotate-90 {
   overflow: hidden;
-  line-height: 1;
 }
 .list-view-header-row .cui-label {
   font-weight: 700;
@@ -7128,7 +7128,6 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-list-view-grid-quadrant-0 .cui-lv-td.cui-lv-td-rotate-90,
 .cui-list-view-grid-quadrant-1 .cui-lv-td.cui-lv-td-rotate-90 {
   overflow: hidden;
-  line-height: 1;
 }
 
 .cui-list-view-grid-quadrant-0 {
