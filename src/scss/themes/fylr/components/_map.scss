@@ -41,6 +41,7 @@
 	right: $spacer-xs;
 	display: flex;
 	justify-content: space-between;
+	gap: $spacer-xs;
 	
 	> * {
 		pointer-events: all;
@@ -110,11 +111,7 @@
 }
 
 //* OpenLayers Map
-.cui-open-layers-map {
-	.cui-map-buttons-top .cui-buttonbar {
-		align-items: flex-start;
-	}
-	
+.cui-open-layers-map {	
 	.map-zoom-buttons,
 	.buttons-upper-right {
 		.cui-button-button,
