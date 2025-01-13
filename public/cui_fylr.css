@@ -9047,66 +9047,21 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   z-index: 1000;
   left: 0.25rem;
   right: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+.cui-map-buttons-top > *,
+.cui-map-buttons-bottom > * {
+  pointer-events: all;
 }
 
 .cui-map-buttons-top {
   top: 0.25rem;
 }
-.cui-map-buttons-top .cui-button .cui-button-visual {
-  height: 24px;
-  min-width: 25.62px;
-  font-size: 0.75rem;
-  line-height: 24px;
-  border-radius: 2px;
-}
-.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-left {
-  padding-left: 0.5rem;
-  margin-right: -0.25rem;
-}
-.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-left:empty, .cui-map-buttons-top .cui-button .cui-button-visual .cui-button-left:only-child {
-  padding-left: 0;
-  margin-right: 0;
-}
-.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-right {
-  padding-right: 0.5rem;
-  margin-left: -0.25rem;
-}
-.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-right:empty, .cui-map-buttons-top .cui-button .cui-button-visual .cui-button-right:only-child {
-  padding-right: 0;
-  margin-left: 0;
-}
-.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-center {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 0 0.5rem;
-}
-.cui-map-buttons-top .cui-button .cui-button-visual .cui-button-center:empty {
-  margin-left: -0.25rem;
-}
-.cui-map-buttons-top .buttons-upper-left {
-  position: absolute;
-  left: 0;
-}
-.cui-map-buttons-top .buttons-upper-right {
-  position: absolute;
-  right: 0;
-}
 
 .cui-map-buttons-bottom {
-  position: absolute;
   bottom: 0.25rem;
-  display: flex;
-}
-.cui-map-buttons-bottom > * {
-  flex: 1 1 auto;
-}
-.cui-map-buttons-bottom .buttons-bottom-center {
-  flex: none;
-  margin: 0 auto;
-}
-.cui-map-buttons-bottom .buttons-bottom-center > * {
-  margin: 0 auto;
 }
 
 .cui-map-popover-options {
@@ -9197,9 +9152,6 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   color: inherit;
 }
 
-.cui-open-layers-map .cui-buttonbar {
-  align-items: flex-start;
-}
 .cui-open-layers-map .map-zoom-buttons .cui-button-button,
 .cui-open-layers-map .map-zoom-buttons .cui-button-select,
 .cui-open-layers-map .buttons-upper-right .cui-button-button,
