@@ -37,45 +37,22 @@
 .cui-map-buttons-bottom {
 	position: absolute;
 	z-index: 1000;
-	left: $spacer-sm;
-	right: $spacer-sm;
+	left: $spacer-xs;
+	right: $spacer-xs;
+	display: flex;
+	justify-content: space-between;
+	
+	> * {
+		pointer-events: all;
+	}
 }
 
 .cui-map-buttons-top {
-	top: $spacer-sm;
-
-	.cui-button {
-		@include button-sm();
-	}
-
-	.buttons-upper-left {
-		position: absolute;
-		left: 0;
-	}
-
-	.buttons-upper-right {
-		position: absolute;
-		right: 0;
-	}
+	top: $spacer-xs;
 }
 
 .cui-map-buttons-bottom {
-	position: absolute;
-	bottom: $spacer-sm;
-	display: flex;
-	
-	> * {
-		flex: 1 1 auto;
-	}
-
-	.buttons-bottom-center {
-		flex: none;
-		margin: 0 auto;
-
-		> * {
-			margin: 0 auto;
-		}
-	}
+	bottom: $spacer-xs;
 }
 
 .cui-map-popover-options {
@@ -134,7 +111,12 @@
 
 //* OpenLayers Map
 .cui-open-layers-map {
-	.cui-map-buttons-top {
+	.cui-map-buttons-top .cui-buttonbar {
+		align-items: flex-start;
+	}
+	
+	.map-zoom-buttons,
+	.buttons-upper-right {
 		.cui-button-button,
 		.cui-button-select {
 			@include button-sm();
