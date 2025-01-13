@@ -56090,6 +56090,9 @@ CUI.Map = (function(superClass) {
       buttonsUpperLeft: {
         check: Array
       },
+      buttonsUpperCenter: {
+        check: Array
+      },
       buttonsUpperRight: {
         check: Array
       },
@@ -56119,6 +56122,7 @@ CUI.Map = (function(superClass) {
         center: true,
         "buttons-upper-left": true,
         "buttons-upper-right": true,
+        "buttons-upper-center": true,
         "buttons-bottom-left": true,
         "buttons-bottom-right": true,
         "buttons-bottom-center": true
@@ -56132,9 +56136,13 @@ CUI.Map = (function(superClass) {
       buttonsUpperLeft = buttonsUpperLeft.concat(this._buttonsUpperLeft);
     }
     buttonBar = new CUI.Buttonbar({
-      buttons: buttonsUpperLeft
+      buttons: buttonsUpperLeft,
+      "class": "map-zoom-buttons"
     });
     CUI.dom.append(this.__mapTemplate.get("buttons-upper-left"), buttonBar);
+    if (this._buttonsUpperCenter) {
+      CUI.dom.append(this.__mapTemplate.get("buttons-upper-center"), this._buttonsUpperCenter);
+    }
     buttonsUpperRight = [];
     if (this._addFullscreenButton) {
       fullscreenButtonOpts = this.__getFullscreenButtonOpts();
@@ -65401,7 +65409,7 @@ module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-f
   \*******************************/
 /***/ ((module) => {
 
-module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-buttons-top\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div class=\"cui-map-buttons-bottom\">\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-center\" class=\"buttons-bottom-center\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
+module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-buttons-top\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-center\" class=\"buttons-upper-center\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div class=\"cui-map-buttons-bottom\">\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-center\" class=\"buttons-bottom-center\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
 
 /***/ }),
 
