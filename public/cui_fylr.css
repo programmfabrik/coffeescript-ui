@@ -6642,6 +6642,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   min-width: 0;
   flex-shrink: 1;
 }
+.cui-toolbar .cui-button-button,
+.cui-toolbar .cui-button-select {
+  max-width: 250px;
+}
 
 .cui-result-navigation-toolbar > .cui-horizontal-layout-left {
   flex: 0 1 auto;
