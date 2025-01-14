@@ -4526,6 +4526,7 @@ textarea {
   color: #212121;
   font-weight: 400;
   padding: 0;
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.2;
   text-transform: uppercase;
@@ -6526,6 +6527,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   max-width: 100%;
 }
 .cui-panel-header .cui-button-button .cui-button-visual {
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.2;
   text-transform: uppercase;
@@ -8523,6 +8525,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-tabs-pane-header .cui-tab-header-button .cui-button-visual,
 .cui-tabs-pane-header .cui-tab-header-button-overflow .cui-button-visual {
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.2;
   text-transform: uppercase;
