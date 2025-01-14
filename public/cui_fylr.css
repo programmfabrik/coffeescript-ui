@@ -3281,6 +3281,123 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   margin-left: 3px;
 }
 
+.cui-button-pin {
+  width: 24px;
+  height: 18px;
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  --btn-color: #adb5bd;
+  --btn-color-hover: #212121;
+  --btn-color-active: #212121;
+  --btn-background-active: transparent;
+  --btn-through-color: #adb5bd;
+}
+.cui-button-pin:not(.cui-disabled):hover, .cui-button-pin:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-button-pin .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-button-pin:not(.cui-disabled):hover .cui-button-visual, .cui-button-pin:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-button-pin:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-button-pin:not(.cui-disabled):focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-button-pin:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-button-pin.cui-active .cui-button-visual, .cui-button-pin.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-button-pin.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-pin.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-pin.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-pin.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-button-pin.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-button-pin:not(.cui-disabled):active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+.cui-button-pin .cui-button-visual {
+  height: 16px;
+  min-width: 17.08px;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 2px;
+}
+.cui-button-pin .cui-button-visual .cui-button-left {
+  padding-left: 0.25em;
+  margin-right: -0.125em;
+}
+.cui-button-pin .cui-button-visual .cui-button-left:empty, .cui-button-pin .cui-button-visual .cui-button-left:only-child {
+  padding-left: 0;
+  margin-right: 0;
+}
+.cui-button-pin .cui-button-visual .cui-button-right {
+  padding-right: 0.25em;
+  margin-left: -0.125em;
+}
+.cui-button-pin .cui-button-visual .cui-button-right:empty, .cui-button-pin .cui-button-visual .cui-button-right:only-child {
+  padding-right: 0;
+  margin-left: 0;
+}
+.cui-button-pin .cui-button-visual .cui-button-center {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 0.25em;
+}
+.cui-button-pin .cui-button-visual .cui-button-center:empty {
+  margin-left: -0.125em;
+}
+.cui-button-pin .fa {
+  font-size: 12px;
+  line-height: 1;
+}
+.cui-button-pin .cui-button-visual {
+  position: relative;
+}
+.cui-button-pin .cui-button-visual::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 55%;
+  left: 53%;
+  width: 65%;
+  height: 2px;
+  border-bottom: 1px solid var(--btn-through-color-shadow, #ffffff);
+  transform: translateX(-50%) rotateZ(-42deg);
+  transform-origin: center;
+  background-color: var(--btn-through-color);
+  z-index: 100;
+}
+.cui-button-pin:hover .cui-button-visual::after {
+  display: none;
+}
+.cui-button-pin.cui-active {
+  --btn-through-color: var(--btn-color-active);
+}
+.cui-button-pin.cui-active .cui-button-visual::after {
+  display: none;
+}
+.cui-button-pin.cui-active:hover .cui-button-visual::after {
+  display: block;
+}
+
 input,
 textarea {
   appearance: none;
