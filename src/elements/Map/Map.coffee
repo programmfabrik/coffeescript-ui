@@ -59,6 +59,8 @@ class CUI.Map extends CUI.Pane
 				check: Function
 			buttonsUpperLeft:
 				check: Array
+			buttonsUpperCenter:
+				check: Array				
 			buttonsUpperRight:
 				check: Array
 			buttonsBottomRight:
@@ -81,6 +83,7 @@ class CUI.Map extends CUI.Pane
 				center: true
 				"buttons-upper-left": true
 				"buttons-upper-right": true
+				"buttons-upper-center": true
 				"buttons-bottom-left": true
 				"buttons-bottom-right": true
 				"buttons-bottom-center": true
@@ -96,8 +99,11 @@ class CUI.Map extends CUI.Pane
 		if @_buttonsUpperLeft
 			buttonsUpperLeft = buttonsUpperLeft.concat(@_buttonsUpperLeft)
 
-		buttonBar = new CUI.Buttonbar(buttons: buttonsUpperLeft)
+		buttonBar = new CUI.Buttonbar(buttons: buttonsUpperLeft, class: "map-zoom-buttons")
 		CUI.dom.append(@__mapTemplate.get("buttons-upper-left"), buttonBar)
+
+		if @_buttonsUpperCenter
+			CUI.dom.append(@__mapTemplate.get("buttons-upper-center"), @_buttonsUpperCenter)
 
 		# Buttons upper right
 		buttonsUpperRight = []

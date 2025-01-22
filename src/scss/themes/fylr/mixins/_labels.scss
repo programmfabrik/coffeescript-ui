@@ -58,6 +58,7 @@
 
 // Block title, panel title, tab title
 @mixin label-title($letter-spacing: false) {
+	font-size: $font-size-base;
 	font-weight: $font-weight-bold;
 	line-height: 1.2;
 	text-transform: uppercase;

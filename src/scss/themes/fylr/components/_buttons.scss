@@ -152,3 +152,63 @@ a[role='button'].cui-button-appearance-link {
 .cui-button-tool-play {
 	@include button-play();
 }
+
+// Pin Button
+// small pin icon button, with custom "strike-through"
+// used e.g. to pin the result-card in detail; to pin facet blocks in the facet-manager
+.cui-button-pin {
+	width: $btn-height-sm; // make a large enough click target and leave enough room for the strike-through (::after)
+	height: 18px;
+
+	@include button-plain();
+	@include button-xs();
+
+	--btn-color: #{$gray-500};
+	--btn-color-hover: #{$body-color};
+	--btn-color-active: #{$body-color};
+	--btn-background-active: transparent;
+	--btn-through-color: #{$gray-500};
+
+	.fa {
+		font-size: 12px;
+		line-height: 1;
+	}
+
+	.cui-button-visual {
+		position: relative;
+
+		&::after {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 55%;
+			left: 53%;
+			width: 65%;
+			height: 2px;
+			border-bottom: 1px solid var(--btn-through-color-shadow, #{$white});
+			transform: translateX(-50%) rotateZ(-42deg);
+			transform-origin: center;
+			background-color: var(--btn-through-color);
+			z-index: 100;
+		}
+	}
+
+	&:hover {
+		.cui-button-visual::after {
+			display: none;
+		}
+	}
+
+	// pinned
+	&.cui-active {
+		--btn-through-color: var(--btn-color-active);
+
+		.cui-button-visual::after {
+			display: none;
+		}
+
+		&:hover .cui-button-visual::after {
+			display: block;
+		}
+	}
+}
