@@ -59762,7 +59762,7 @@ CUI.OutputContent = (function(superClass) {
     var value;
     value = OutputContent.__super__.getValue.call(this);
     if (this._getValue) {
-      return this._getValue.call(this, value);
+      return this._getValue.call(this, value, this);
     } else {
       return value;
     }

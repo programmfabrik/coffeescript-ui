@@ -35,7 +35,7 @@ class CUI.OutputContent extends CUI.DataFieldInput
 	getValue: ->
 		value = super()
 		if @_getValue
-			@_getValue.call(@, value)
+			@_getValue.call(@, value, @)
 		else
 			value
 
