@@ -60459,6 +60459,7 @@ CUI.Panel = (function(superClass) {
   };
 
   function Panel(opts) {
+    var saved_state;
     Panel.__super__.constructor.call(this, opts);
     this.panel = new CUI.Template({
       name: "panel",
@@ -60500,17 +60501,29 @@ CUI.Panel = (function(superClass) {
             }
           }
           _this.__open(!flags.initial_activate);
+          if (!flags.initial_activate && _this._save_state) {
+            _this.__save_state(true);
+          }
           return typeof _this._onActivate === "function" ? _this._onActivate(btn, flags, event) : void 0;
         };
       })(this),
       onDeactivate: (function(_this) {
         return function(btn, flags, event) {
           _this.__close(!flags.initial_activate);
+          if (!flags.initial_activate && _this._save_state) {
+            _this.__save_state(false);
+          }
           return typeof _this._onDeactivate === "function" ? _this._onDeactivate(btn, flags, event) : void 0;
         };
       })(this)
     });
     this.append(this.button, "header");
+    if (this._save_state) {
+      saved_state = this.__get_saved_state();
+      if (saved_state !== void 0) {
+        this._closed = !saved_state;
+      }
+    }
     if (this._closed) {
       this.button.deactivate();
     } else {
@@ -60571,6 +60584,9 @@ CUI.Panel = (function(superClass) {
       },
       onDeactivate: {
         check: Function
+      },
+      save_state: {
+        check: String
       }
     });
   };
@@ -60586,6 +60602,21 @@ CUI.Panel = (function(superClass) {
 
   Panel.prototype.isOpen = function() {
     return !this.isClosed();
+  };
+
+  Panel.prototype.__get_saved_state = function() {
+    var panels_state;
+    panels_state = CUI.getLocalStorage("panels_state") || {};
+    return panels_state[this._save_state];
+  };
+
+  Panel.prototype.__save_state = function(state) {
+    var panels_state;
+    if (this._save_state) {
+      panels_state = CUI.getLocalStorage("panels_state") || {};
+      panels_state[this._save_state] = state;
+      return CUI.setLocalStorage("panels_state", panels_state);
+    }
   };
 
   Panel.prototype.open = function() {
