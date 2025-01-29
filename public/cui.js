@@ -39501,16 +39501,29 @@ CUI.DataTable = (function(superClass) {
         ui: this._ui ? this._ui + ".minus.button" : void 0,
         onClick: (function(_this) {
           return function() {
-            var j, len2, ref, row;
+            var deletePromise, finish, j, len2, promises, ref, row;
+            finish = function() {
+              _this.storeValue(CUI.util.copyObject(_this.rows, true));
+              _this.updateButtons();
+              if (_this._chunk_size > 0) {
+                return _this.displayValue();
+              }
+            };
+            promises = [];
             ref = _this.listView.getSelectedRows();
             for (j = 0, len2 = ref.length; j < len2; j++) {
               row = ref[j];
-              row.remove();
+              deletePromise = row.remove();
+              if (deletePromise && CUI.util.isPromise(deletePromise)) {
+                promises.push(deletePromise);
+              }
             }
-            _this.storeValue(CUI.util.copyObject(_this.rows, true));
-            _this.updateButtons();
-            if (_this._chunk_size > 0) {
-              _this.displayValue();
+            if (promises.length > 0) {
+              CUI.whenAll(promises).done(function() {
+                return finish();
+              });
+            } else {
+              finish();
             }
           };
         })(this)
