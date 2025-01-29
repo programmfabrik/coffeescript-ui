@@ -38932,6 +38932,13 @@ CUI.DataForm = (function(superClass) {
       has_add_button: {
         check: Boolean,
         "default": false
+      },
+      no_default_empty_row: {
+        check: Boolean,
+        "default": false
+      },
+      enableAddButton: {
+        check: Function
       }
     });
     this.removeOpt("onNodeAdd");
@@ -39024,6 +39031,12 @@ CUI.DataForm = (function(superClass) {
     })) {
       return this.__addButton.disable();
     } else {
+      if (this._enableAddButton) {
+        if (!this._enableAddButton(this, this.rows)) {
+          this.__addButton.disable();
+          return;
+        }
+      }
       return this.__addButton.enable();
     }
   };
@@ -39102,10 +39115,12 @@ CUI.DataForm = (function(superClass) {
       row = ref[i];
       this.__appendRow(row);
     }
-    if (this.rows.length > 0) {
+    if (this.rows.length > 0 || this._no_default_empty_row) {
       this.__updateAddButton();
     }
-    this.__appendNewRow();
+    if (!this._no_default_empty_row) {
+      this.__appendNewRow();
+    }
     this.__updateButtons();
   };
 
