@@ -29353,6 +29353,12 @@ CUI.FlexHandle = (function(superClass) {
         check: function(v) {
           return v > 0;
         }
+      },
+      unit: {
+        "default": "px",
+        check: function(v) {
+          return v === "px" || v === "%";
+        }
       }
     });
   };
@@ -29499,8 +29505,10 @@ CUI.FlexHandle = (function(superClass) {
       },
       dragend: (function(_this) {
         return function(ev, gd) {
+          var newSize;
           dragging(gd);
-          _this.__size = CUI.dom.getDimension(_this.__pane, "contentBox" + _this.__css_value);
+          newSize = CUI.dom.getDimension(_this.__pane, "contentBox" + _this.__css_value);
+          _this.__setSize(newSize);
           return _this.storeState();
         };
       })(this),
@@ -29548,6 +29556,7 @@ CUI.FlexHandle = (function(superClass) {
   };
 
   FlexHandle.prototype.__setSize = function(size) {
+    var parentDimension, percentValue, sizeStr;
     if (CUI.util.isNull(size)) {
       CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), "");
       if (this.__isAlive()) {
@@ -29559,6 +29568,34 @@ CUI.FlexHandle = (function(superClass) {
       this.__pane.classList.remove("cui-is-manually-sized");
       this._element.classList.remove("cui-is-manually-sized");
       this.__size = null;
+    } else if (this._unit === "%" && (this.__pane.parentNode != null)) {
+      if (typeof size === "number") {
+        parentDimension = CUI.dom.getDimension(this.__pane.parentNode, "contentBox" + this.__css_value);
+        if (parentDimension > 0) {
+          percentValue = (size / parentDimension) * 100;
+        } else {
+          percentValue = size;
+        }
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      } else if (typeof size === "string" && size.indexOf("%") !== -1) {
+        percentValue = parseFloat(size);
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      } else {
+        parentDimension = CUI.dom.getDimension(this.__pane.parentNode, "contentBox" + this.__css_value);
+        if (parentDimension > 0) {
+          percentValue = (parseFloat(size) / parentDimension) * 100;
+        } else {
+          percentValue = size;
+        }
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      }
+      this.__pane.classList.add("cui-is-manually-sized");
+      this._element.classList.add("cui-is-manually-sized");
+      CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), sizeStr);
+      this.__size = sizeStr;
     } else {
       this.__pane.classList.add("cui-is-manually-sized");
       this._element.classList.add("cui-is-manually-sized");
