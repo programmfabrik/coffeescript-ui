@@ -101,11 +101,6 @@
 		color: var(--brand-foreground-text-color, #{$white}); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column		
 		opacity: 0.8;
 	}
-	
-	.cui-list-view-row-selectable:not(.cui-selected):hover & {
-		color: gray('900'); // e.g. Datamodel when adding a new object type or mask in the left column
-		opacity: 0.8;
-	}
 }
 
 // Label in a field
