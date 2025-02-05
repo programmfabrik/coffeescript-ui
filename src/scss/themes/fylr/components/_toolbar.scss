@@ -85,6 +85,11 @@
 		min-width: 0;
 		flex-shrink: 1;
 	}
+	
+	.cui-button-button,
+	.cui-button-select {
+		max-width: 250px;
+	}
 }
 
 .cui-result-navigation-toolbar {

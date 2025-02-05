@@ -96,6 +96,9 @@ class CUI.FlexHandle extends CUI.Element
 			maxValue:
 				check: (v) ->
 					return v > 0
+			unit:
+				default: "px"
+				check: (v) -> v in ["px", "%"]
 
 	init: ->
 		if @isDestroyed()
@@ -222,7 +225,10 @@ class CUI.FlexHandle extends CUI.Element
 
 			dragend: (ev, gd) =>
 				dragging(gd)
-				@__size = CUI.dom.getDimension(@__pane, "contentBox"+@__css_value)
+				# We obtain the new size from the element, because the size might have been changed by the user
+				newSize = CUI.dom.getDimension(@__pane, "contentBox" + @__css_value)
+				# Size is in pixels, we use the setSize method to set the size, if we are using unit "%" this will convert the size to percentage
+				@__setSize(newSize)
 				@storeState()
 
 			dragstop: =>
@@ -271,7 +277,39 @@ class CUI.FlexHandle extends CUI.Element
 			@__pane.classList.remove("cui-is-manually-sized")
 			@_element.classList.remove("cui-is-manually-sized")
 			@__size = null
+
+		# If unit is set to "%" and there is a parent container
+		else if @_unit == "%" and @__pane.parentNode?
+			# If the size is a number (coming from a drag event in pixels)
+			if typeof size is "number"
+				parentDimension = CUI.dom.getDimension(@__pane.parentNode, "contentBox" + @__css_value)
+				if parentDimension > 0
+					percentValue = (size / parentDimension) * 100
+				else
+					percentValue = size
+				# Clamp the percentage between 1% and 100%
+				percentValue = Math.max(1, Math.min(percentValue, 100))
+				sizeStr = percentValue.toFixed(2) + "%"
+			else if typeof size == "string" and size.indexOf("%") != -1
+				percentValue = parseFloat(size)
+				percentValue = Math.max(1, Math.min(percentValue, 100))
+				sizeStr = percentValue.toFixed(2) + "%"
+			else
+				parentDimension = CUI.dom.getDimension(@__pane.parentNode, "contentBox" + @__css_value)
+				if parentDimension > 0
+					percentValue = (parseFloat(size) / parentDimension) * 100
+				else
+					percentValue = size
+				percentValue = Math.max(1, Math.min(percentValue, 100))
+				sizeStr = percentValue.toFixed(2) + "%"
+
+			@__pane.classList.add("cui-is-manually-sized")
+			@_element.classList.add("cui-is-manually-sized")
+			CUI.dom.setStyleOne(@__pane, @__css_value.toLowerCase(), sizeStr)
+			@__size = sizeStr
+
 		else
+			# Default behavior: use pixels
 			@__pane.classList.add("cui-is-manually-sized")
 			@_element.classList.add("cui-is-manually-sized")
 			CUI.dom.setDimension(@__pane, "contentBox"+@__css_value, size)

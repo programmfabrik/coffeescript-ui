@@ -1,11 +1,13 @@
 <div data-template="map">
-    <div class="cui-map-zoom-buttons">
+    <div class="cui-map-buttons-top">
         <div data-slot="buttons-upper-left" class="buttons-upper-left"></div>
+        <div data-slot="buttons-upper-center" class="buttons-upper-center"></div>
         <div data-slot="buttons-upper-right" class="buttons-upper-right"></div>
     </div>
     <div data-slot="center"></div>
-    <div>
+    <div class="cui-map-buttons-bottom">
         <div data-slot="buttons-bottom-left" class="buttons-bottom-left"></div>
+        <div data-slot="buttons-bottom-center" class="buttons-bottom-center"></div>
         <div data-slot="buttons-bottom-right" class="buttons-bottom-right"></div>
     </div>
 </div>

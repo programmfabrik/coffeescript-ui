@@ -29353,6 +29353,12 @@ CUI.FlexHandle = (function(superClass) {
         check: function(v) {
           return v > 0;
         }
+      },
+      unit: {
+        "default": "px",
+        check: function(v) {
+          return v === "px" || v === "%";
+        }
       }
     });
   };
@@ -29499,8 +29505,10 @@ CUI.FlexHandle = (function(superClass) {
       },
       dragend: (function(_this) {
         return function(ev, gd) {
+          var newSize;
           dragging(gd);
-          _this.__size = CUI.dom.getDimension(_this.__pane, "contentBox" + _this.__css_value);
+          newSize = CUI.dom.getDimension(_this.__pane, "contentBox" + _this.__css_value);
+          _this.__setSize(newSize);
           return _this.storeState();
         };
       })(this),
@@ -29548,6 +29556,7 @@ CUI.FlexHandle = (function(superClass) {
   };
 
   FlexHandle.prototype.__setSize = function(size) {
+    var parentDimension, percentValue, sizeStr;
     if (CUI.util.isNull(size)) {
       CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), "");
       if (this.__isAlive()) {
@@ -29559,6 +29568,34 @@ CUI.FlexHandle = (function(superClass) {
       this.__pane.classList.remove("cui-is-manually-sized");
       this._element.classList.remove("cui-is-manually-sized");
       this.__size = null;
+    } else if (this._unit === "%" && (this.__pane.parentNode != null)) {
+      if (typeof size === "number") {
+        parentDimension = CUI.dom.getDimension(this.__pane.parentNode, "contentBox" + this.__css_value);
+        if (parentDimension > 0) {
+          percentValue = (size / parentDimension) * 100;
+        } else {
+          percentValue = size;
+        }
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      } else if (typeof size === "string" && size.indexOf("%") !== -1) {
+        percentValue = parseFloat(size);
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      } else {
+        parentDimension = CUI.dom.getDimension(this.__pane.parentNode, "contentBox" + this.__css_value);
+        if (parentDimension > 0) {
+          percentValue = (parseFloat(size) / parentDimension) * 100;
+        } else {
+          percentValue = size;
+        }
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      }
+      this.__pane.classList.add("cui-is-manually-sized");
+      this._element.classList.add("cui-is-manually-sized");
+      CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), sizeStr);
+      this.__size = sizeStr;
     } else {
       this.__pane.classList.add("cui-is-manually-sized");
       this._element.classList.add("cui-is-manually-sized");
@@ -38932,6 +38969,13 @@ CUI.DataForm = (function(superClass) {
       has_add_button: {
         check: Boolean,
         "default": false
+      },
+      no_default_empty_row: {
+        check: Boolean,
+        "default": false
+      },
+      enableAddButton: {
+        check: Function
       }
     });
     this.removeOpt("onNodeAdd");
@@ -39024,6 +39068,12 @@ CUI.DataForm = (function(superClass) {
     })) {
       return this.__addButton.disable();
     } else {
+      if (this._enableAddButton) {
+        if (!this._enableAddButton(this, this.rows)) {
+          this.__addButton.disable();
+          return;
+        }
+      }
       return this.__addButton.enable();
     }
   };
@@ -39102,10 +39152,12 @@ CUI.DataForm = (function(superClass) {
       row = ref[i];
       this.__appendRow(row);
     }
-    if (this.rows.length > 0) {
+    if (this.rows.length > 0 || this._no_default_empty_row) {
       this.__updateAddButton();
     }
-    this.__appendNewRow();
+    if (!this._no_default_empty_row) {
+      this.__appendNewRow();
+    }
     this.__updateButtons();
   };
 
@@ -39469,8 +39521,12 @@ CUI.DataTable = (function(superClass) {
   };
 
   DataTable.prototype.getFooter = function() {
-    var buttons, custom_buttons, load_page, page_data;
+    var btn, buttons, custom_buttons, i, len1, load_page, page_data;
     custom_buttons = this._buttons.slice(0);
+    for (i = 0, len1 = custom_buttons.length; i < len1; i++) {
+      btn = custom_buttons[i];
+      btn._data_table = this;
+    }
     buttons = [];
     if (this._new_rows !== "none") {
       if (this._new_rows !== "remove_only") {
@@ -39497,16 +39553,29 @@ CUI.DataTable = (function(superClass) {
         ui: this._ui ? this._ui + ".minus.button" : void 0,
         onClick: (function(_this) {
           return function() {
-            var i, len1, ref, row;
+            var deletePromise, finish, j, len2, promises, ref, row;
+            finish = function() {
+              _this.storeValue(CUI.util.copyObject(_this.rows, true));
+              _this.updateButtons();
+              if (_this._chunk_size > 0) {
+                return _this.displayValue();
+              }
+            };
+            promises = [];
             ref = _this.listView.getSelectedRows();
-            for (i = 0, len1 = ref.length; i < len1; i++) {
-              row = ref[i];
-              row.remove();
+            for (j = 0, len2 = ref.length; j < len2; j++) {
+              row = ref[j];
+              deletePromise = row.remove();
+              if (deletePromise && CUI.util.isPromise(deletePromise)) {
+                promises.push(deletePromise);
+              }
             }
-            _this.storeValue(CUI.util.copyObject(_this.rows, true));
-            _this.updateButtons();
-            if (_this._chunk_size > 0) {
-              _this.displayValue();
+            if (promises.length > 0) {
+              CUI.whenAll(promises).done(function() {
+                return finish();
+              });
+            } else {
+              finish();
             }
           };
         })(this)
@@ -51069,6 +51138,10 @@ CUI.ListView = (function(superClass) {
       },
       onDeselect: {
         check: Function
+      },
+      ignoreKeyEvents: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -51104,6 +51177,10 @@ CUI.ListView = (function(superClass) {
 
   ListView.prototype.getListViewClass = function() {
     return this.__lvClass;
+  };
+
+  ListView.prototype.isKeyEventsEnabled = function() {
+    return !this._ignoreKeyEvents;
   };
 
   ListView.prototype.getGrid = function() {
@@ -54709,7 +54786,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     var element, tree;
     tree = this.getTree();
     element = DOMNodes != null ? DOMNodes[0] : void 0;
-    if (element) {
+    if (element && tree.isKeyEventsEnabled()) {
       CUI.Events.listen({
         type: "keydown",
         node: element,
@@ -56078,6 +56155,9 @@ CUI.Map = (function(superClass) {
       buttonsUpperLeft: {
         check: Array
       },
+      buttonsUpperCenter: {
+        check: Array
+      },
       buttonsUpperRight: {
         check: Array
       },
@@ -56107,8 +56187,10 @@ CUI.Map = (function(superClass) {
         center: true,
         "buttons-upper-left": true,
         "buttons-upper-right": true,
+        "buttons-upper-center": true,
         "buttons-bottom-left": true,
-        "buttons-bottom-right": true
+        "buttons-bottom-right": true,
+        "buttons-bottom-center": true
       }
     });
     this.append(this.__mapTemplate, "center");
@@ -56119,9 +56201,13 @@ CUI.Map = (function(superClass) {
       buttonsUpperLeft = buttonsUpperLeft.concat(this._buttonsUpperLeft);
     }
     buttonBar = new CUI.Buttonbar({
-      buttons: buttonsUpperLeft
+      buttons: buttonsUpperLeft,
+      "class": "map-zoom-buttons"
     });
     CUI.dom.append(this.__mapTemplate.get("buttons-upper-left"), buttonBar);
+    if (this._buttonsUpperCenter) {
+      CUI.dom.append(this.__mapTemplate.get("buttons-upper-center"), this._buttonsUpperCenter);
+    }
     buttonsUpperRight = [];
     if (this._addFullscreenButton) {
       fullscreenButtonOpts = this.__getFullscreenButtonOpts();
@@ -59741,7 +59827,7 @@ CUI.OutputContent = (function(superClass) {
     var value;
     value = OutputContent.__super__.getValue.call(this);
     if (this._getValue) {
-      return this._getValue.call(this, value);
+      return this._getValue.call(this, value, this);
     } else {
       return value;
     }
@@ -60438,6 +60524,7 @@ CUI.Panel = (function(superClass) {
   };
 
   function Panel(opts) {
+    var saved_state;
     Panel.__super__.constructor.call(this, opts);
     this.panel = new CUI.Template({
       name: "panel",
@@ -60479,17 +60566,29 @@ CUI.Panel = (function(superClass) {
             }
           }
           _this.__open(!flags.initial_activate);
+          if (!flags.initial_activate && _this._save_state) {
+            _this.__save_state(true);
+          }
           return typeof _this._onActivate === "function" ? _this._onActivate(btn, flags, event) : void 0;
         };
       })(this),
       onDeactivate: (function(_this) {
         return function(btn, flags, event) {
           _this.__close(!flags.initial_activate);
+          if (!flags.initial_activate && _this._save_state) {
+            _this.__save_state(false);
+          }
           return typeof _this._onDeactivate === "function" ? _this._onDeactivate(btn, flags, event) : void 0;
         };
       })(this)
     });
     this.append(this.button, "header");
+    if (this._save_state) {
+      saved_state = this.__get_saved_state();
+      if (saved_state !== void 0) {
+        this._closed = !saved_state;
+      }
+    }
     if (this._closed) {
       this.button.deactivate();
     } else {
@@ -60550,6 +60649,9 @@ CUI.Panel = (function(superClass) {
       },
       onDeactivate: {
         check: Function
+      },
+      save_state: {
+        check: String
       }
     });
   };
@@ -60565,6 +60667,21 @@ CUI.Panel = (function(superClass) {
 
   Panel.prototype.isOpen = function() {
     return !this.isClosed();
+  };
+
+  Panel.prototype.__get_saved_state = function() {
+    var panels_state;
+    panels_state = CUI.getLocalStorage("panels_state") || {};
+    return panels_state[this._save_state];
+  };
+
+  Panel.prototype.__save_state = function(state) {
+    var panels_state;
+    if (this._save_state) {
+      panels_state = CUI.getLocalStorage("panels_state") || {};
+      panels_state[this._save_state] = state;
+      return CUI.setLocalStorage("panels_state", panels_state);
+    }
   };
 
   Panel.prototype.open = function() {
@@ -65388,7 +65505,7 @@ module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-f
   \*******************************/
 /***/ ((module) => {
 
-module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-zoom-buttons\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div>\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
+module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-buttons-top\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-center\" class=\"buttons-upper-center\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div class=\"cui-map-buttons-bottom\">\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-center\" class=\"buttons-bottom-center\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
 
 /***/ }),
 

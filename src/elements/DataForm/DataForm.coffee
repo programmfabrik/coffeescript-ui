@@ -60,6 +60,11 @@ class CUI.DataForm extends CUI.DataTable
 			has_add_button:
 				check: Boolean
 				default: false
+			no_default_empty_row:
+				check: Boolean
+				default: false
+			enableAddButton:
+				check: Function
 
 		@removeOpt("onNodeAdd")
 		@removeOpt("footer_right")
@@ -135,6 +140,10 @@ class CUI.DataForm extends CUI.DataTable
 		if @rows.some((row) -> row._empty)
 			@__addButton.disable()
 		else
+			if @_enableAddButton
+				if not @_enableAddButton(this, @rows)
+					@__addButton.disable()
+					return
 			@__addButton.enable()
 
 	__removeEmptyRows: ->
@@ -194,9 +203,12 @@ class CUI.DataForm extends CUI.DataTable
 		for row in @rows
 			@__appendRow(row)
 
-		if @rows.length > 0
+		if @rows.length > 0 or @_no_default_empty_row
 			@__updateAddButton()
-		@__appendNewRow()
+
+		if not @_no_default_empty_row
+			@__appendNewRow()
+
 		@__updateButtons()
 		return
 
@@ -206,6 +218,7 @@ class CUI.DataForm extends CUI.DataTable
 
 		if @_has_add_button and @rows.length > 0
 			return
+
 		@__appendRow(_new: true)
 
 	__updateButtons: ->
