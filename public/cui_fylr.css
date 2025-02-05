@@ -2531,10 +2531,6 @@ label[data-label-clickable],
   color: var(--brand-foreground-text-color, #ffffff);
   opacity: 0.8;
 }
-.cui-list-view-row-selectable:not(.cui-selected):hover .cui-empty-label {
-  color: #212121;
-  opacity: 0.8;
-}
 .cui-empty-label .cui-label-content {
   display: inline-block;
 }
