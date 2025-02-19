@@ -2531,10 +2531,6 @@ label[data-label-clickable],
   color: var(--brand-foreground-text-color, #ffffff);
   opacity: 0.8;
 }
-.cui-list-view-row-selectable:not(.cui-selected):hover .cui-empty-label {
-  color: #212121;
-  opacity: 0.8;
-}
 .cui-empty-label .cui-label-content {
   display: inline-block;
 }
@@ -6979,8 +6975,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --list-view-inner-column-border-width: var(--list-view-column-border-width);
   --list-view-selected-row-border-width: 0;
   --list-view-selected-row-border-color: transparent;
-  --list-view-selected-row-background: var(--brand-color, rgba(206, 212, 218, 0.3));
-  --list-view-hover-row-background: var(--brand-color, #e6e9ec);
+  --list-view-selected-row-background: #dee2e6;
+  --list-view-hover-row-background: #e6e9ec;
   min-height: 0;
   flex-direction: column;
   background-color: transparent;
@@ -7154,7 +7150,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   outline: none;
   cursor: default;
 }
-.cui-lv-tr-outer.cui-selected > .cui-lv-tr {
+.cui-lv-tr-outer.cui-selected > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:focus > .cui-lv-tr {
   box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
   background-color: var(--list-view-selected-row-background);
 }
