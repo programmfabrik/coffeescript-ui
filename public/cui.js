@@ -37939,7 +37939,7 @@ CUI.Alert = (function(superClass) {
   };
 
   Alert.prototype.isKeyboardCancellable = function(ev) {
-    return true;
+    return this._allow_cancel;
   };
 
   Alert.prototype.readOpts = function() {
