@@ -1615,8 +1615,9 @@ class CUI.DateTime extends CUI.Input
 	@formatGroupLabel: (date, groupFormat, locale = null, timeZone = CUI.Timezone.getTimezone()) ->
 		# We convert first the date to a moment object, also we format the date to the user timezone.
 		mom = moment(date).tz(timeZone)
-		if date.startsWith("-")
+		if date.startsWith("-") and groupFormat != "week"
 			# For BC calculation we cant use directly moment library so we pass directly the date string
+			# Not in week grouping as we need to calculate the week number first
 			mom = date
 
 		switch groupFormat
@@ -1629,6 +1630,11 @@ class CUI.DateTime extends CUI.Input
 				start = mom.clone().startOf("isoWeek")
 				# Get the date of the last day of the week
 				end = mom.clone().endOf("isoWeek")
+				if date.startsWith("-")
+					# Moment cant work well with bc dates, so once we have the week start and finish we convert the dates to string with the format "-YYYY-MM-DD"
+					# CUI.DateTime.format will take care of the rest
+					start = "-"+start.format("YYYY-MM-DD")
+					end = "-"+end.format("YYYY-MM-DD")
 				return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " +CUI.DateTime.format(end, "display_short", "date", false, locale)
 			when "day"
 				return CUI.DateTime.format(mom, "display_short", "date", false, locale)

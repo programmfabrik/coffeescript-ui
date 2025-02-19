@@ -19,7 +19,7 @@ class CUI.Alert extends CUI.ConfirmationChoice
 				check: String
 
 	isKeyboardCancellable: (ev) ->
-		true
+		return @_allow_cancel
 
 	readOpts: ->
 		super()

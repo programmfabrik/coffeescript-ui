@@ -37939,7 +37939,7 @@ CUI.Alert = (function(superClass) {
   };
 
   Alert.prototype.isKeyboardCancellable = function(ev) {
-    return true;
+    return this._allow_cancel;
   };
 
   Alert.prototype.readOpts = function() {
@@ -41647,7 +41647,7 @@ CUI.DateTime = (function(superClass) {
       timeZone = CUI.Timezone.getTimezone();
     }
     mom = moment(date).tz(timeZone);
-    if (date.startsWith("-")) {
+    if (date.startsWith("-") && groupFormat !== "week") {
       mom = date;
     }
     switch (groupFormat) {
@@ -41658,6 +41658,10 @@ CUI.DateTime = (function(superClass) {
       case "week":
         start = mom.clone().startOf("isoWeek");
         end = mom.clone().endOf("isoWeek");
+        if (date.startsWith("-")) {
+          start = "-" + start.format("YYYY-MM-DD");
+          end = "-" + end.format("YYYY-MM-DD");
+        }
         return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " + CUI.DateTime.format(end, "display_short", "date", false, locale);
       case "day":
         return CUI.DateTime.format(mom, "display_short", "date", false, locale);
