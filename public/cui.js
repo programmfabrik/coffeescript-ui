@@ -47814,6 +47814,76 @@ CUI.CodeInput = (function(superClass) {
 
 /***/ }),
 
+/***/ "./elements/Input/ColorInput.coffee":
+/*!******************************************!*\
+  !*** ./elements/Input/ColorInput.coffee ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2025 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.ColorInput = (function(superClass) {
+  extend(ColorInput, superClass);
+
+  function ColorInput() {
+    return ColorInput.__super__.constructor.apply(this, arguments);
+  }
+
+  ColorInput.prototype.initOpts = function() {
+    return ColorInput.__super__.initOpts.call(this);
+  };
+
+  ColorInput.prototype.readOpts = function() {
+    this.opts.leftControlElement = new CUI.Button({
+      onClick: (function(_this) {
+        return function(ev, btn) {
+          return _this.__input.focus();
+        };
+      })(this)
+    });
+    return ColorInput.__super__.readOpts.call(this);
+  };
+
+  ColorInput.prototype.onDataChanged = function(ev, info) {
+    ColorInput.__super__.onDataChanged.call(this, ev, info);
+    return this.__toggleColor();
+  };
+
+  ColorInput.prototype.initValue = function() {
+    ColorInput.__super__.initValue.call(this);
+    if (!this.__data[this._name] || this.__data[this._name].length === 0) {
+      return this._leftControlElement.hide(true);
+    } else {
+      this._leftControlElement.DOM.style.backgroundColor = this.__data[this._name];
+      return this._leftControlElement.show(true);
+    }
+  };
+
+  ColorInput.prototype.__toggleColor = function() {
+    if (this.__input.value.length > 0 && this.__checkInputInternal()) {
+      this._leftControlElement.DOM.style.backgroundColor = this.__input.value;
+      return this._leftControlElement.show(true);
+    } else {
+      return this._leftControlElement.hide(true);
+    }
+  };
+
+  return ColorInput;
+
+})(CUI.Input);
+
+
+/***/ }),
+
 /***/ "./elements/Input/EmailInput.coffee":
 /*!******************************************!*\
   !*** ./elements/Input/EmailInput.coffee ***!
@@ -47870,6 +47940,77 @@ CUI.EmailInput = (function(superClass) {
   EmailInput.regexp = RegExp('^(?:[' + EmailInput.unicode_ranges + '\\w!#$%&\'*+\/=?^_\`{|}~-]+(?:\\.[' + EmailInput.unicode_ranges + '\\w!#$%&\'*+\/=?^_\`{|}~-]+)*|"(?:[' + EmailInput.unicode_ranges + ' \\w| \\' + EmailInput.unicode_ranges + '\w\.])*")@(?:[' + EmailInput.unicode_ranges + '\\w.-]+\\.[' + EmailInput.unicode_ranges + '\\w]{2,}|localhost)$', 'i');
 
   return EmailInput;
+
+})(CUI.Input);
+
+
+/***/ }),
+
+/***/ "./elements/Input/IconInput.coffee":
+/*!*****************************************!*\
+  !*** ./elements/Input/IconInput.coffee ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2025 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.IconInput = (function(superClass) {
+  extend(IconInput, superClass);
+
+  function IconInput() {
+    return IconInput.__super__.constructor.apply(this, arguments);
+  }
+
+  IconInput.prototype.initOpts = function() {
+    return IconInput.__super__.initOpts.call(this);
+  };
+
+  IconInput.prototype.readOpts = function() {
+    this.opts.leftControlElement = new CUI.Button({
+      icon: "fa-star",
+      onClick: (function(_this) {
+        return function(ev, btn) {
+          return _this.__input.focus();
+        };
+      })(this)
+    });
+    return IconInput.__super__.readOpts.call(this);
+  };
+
+  IconInput.prototype.onDataChanged = function(ev, info) {
+    IconInput.__super__.onDataChanged.call(this, ev, info);
+    return this.__toggleIcon();
+  };
+
+  IconInput.prototype.initValue = function() {
+    IconInput.__super__.initValue.call(this);
+    if (!this.__data[this._name] || this.__data[this._name].length === 0) {
+      return this._leftControlElement.hide(true);
+    } else {
+      return this._leftControlElement.setIcon(this.__data[this._name]);
+    }
+  };
+
+  IconInput.prototype.__toggleIcon = function() {
+    if (this.__input.value.length > 0) {
+      this._leftControlElement.setIcon(this.__input.value);
+      return this._leftControlElement.show(true);
+    } else {
+      this._leftControlElement.setIcon("");
+      return this._leftControlElement.hide(true);
+    }
+  };
+
+  return IconInput;
 
 })(CUI.Input);
 
@@ -48080,6 +48221,11 @@ CUI.Input = (function(superClass) {
         check: ["code"]
       },
       controlElement: {
+        check: function(v) {
+          return v instanceof CUI.DOMElement;
+        }
+      },
+      leftControlElement: {
         check: function(v) {
           return v instanceof CUI.DOMElement;
         }
@@ -48952,6 +49098,10 @@ CUI.Input = (function(superClass) {
     if (this._controlElement) {
       CUI.dom.addClass(this._controlElement, 'cui-input-control-element');
       this.append(this._controlElement, this.getTemplateKeyForRender());
+    }
+    if (this._leftControlElement) {
+      CUI.dom.addClass(this._leftControlElement, 'cui-input-control-element');
+      this.prepend(this._leftControlElement, this.getTemplateKeyForRender());
     }
     ref = ["empty", "invalid", "valid"];
     for (j = 0, len1 = ref.length; j < len1; j++) {
@@ -63702,6 +63852,10 @@ __webpack_require__(/*! ./elements/Input/NumberInputBlock.coffee */ "./elements/
 __webpack_require__(/*! ./elements/Input/NumberInput.coffee */ "./elements/Input/NumberInput.coffee");
 
 __webpack_require__(/*! ./elements/Input/EmailInput.coffee */ "./elements/Input/EmailInput.coffee");
+
+__webpack_require__(/*! ./elements/Input/IconInput.coffee */ "./elements/Input/IconInput.coffee");
+
+__webpack_require__(/*! ./elements/Input/ColorInput.coffee */ "./elements/Input/ColorInput.coffee");
 
 __webpack_require__(/*! ./elements/Input/CodeInput.coffee */ "./elements/Input/CodeInput.coffee");
 
