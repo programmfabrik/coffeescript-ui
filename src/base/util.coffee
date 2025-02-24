@@ -229,7 +229,7 @@ class CUI.util
 		`n===+n && n!==(n|0)`
 
 	@isInteger: (n) ->
-		`n===+n && n===(n|0)`
+		Number.isInteger(n)
 
 	@isPromise: (n) ->
 		n instanceof CUI.Promise or n instanceof CUI.Deferred
