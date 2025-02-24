@@ -35288,7 +35288,7 @@ CUI.util = (function() {
   };
 
   util.isInteger = function(n) {
-    return n===+n && n===(n|0);
+    return Number.isInteger(n);
   };
 
   util.isPromise = function(n) {
