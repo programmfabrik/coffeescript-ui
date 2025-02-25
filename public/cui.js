@@ -47844,6 +47844,7 @@ CUI.ColorInput = (function(superClass) {
 
   ColorInput.prototype.readOpts = function() {
     this.opts.leftControlElement = new CUI.Button({
+      tabindex: -1,
       onClick: (function(_this) {
         return function(ev, btn) {
           return _this.__input.focus();
@@ -47863,14 +47864,14 @@ CUI.ColorInput = (function(superClass) {
     if (!this.__data[this._name] || this.__data[this._name].length === 0) {
       return this._leftControlElement.hide(true);
     } else {
-      this._leftControlElement.DOM.style.backgroundColor = this.__data[this._name];
+      this._leftControlElement.DOM.style.setProperty("--btn-background", this.__data[this._name]);
       return this._leftControlElement.show(true);
     }
   };
 
   ColorInput.prototype.__toggleColor = function() {
     if (this.__input.value.length > 0 && this.__checkInputInternal()) {
-      this._leftControlElement.DOM.style.backgroundColor = this.__input.value;
+      this._leftControlElement.DOM.style.setProperty("--btn-background", this.__input.value);
       return this._leftControlElement.show(true);
     } else {
       return this._leftControlElement.hide(true);
@@ -47977,6 +47978,7 @@ CUI.IconInput = (function(superClass) {
   IconInput.prototype.readOpts = function() {
     this.opts.leftControlElement = new CUI.Button({
       icon: "fa-star",
+      tabindex: -1,
       onClick: (function(_this) {
         return function(ev, btn) {
           return _this.__input.focus();
