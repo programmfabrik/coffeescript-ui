@@ -13,6 +13,7 @@ class CUI.IconInput extends CUI.Input
     readOpts: ->
         @opts.leftControlElement = new CUI.Button
             icon: "fa-star"
+            tabindex: -1
             onClick: (ev, btn) =>
                 @__input.focus()
         super()

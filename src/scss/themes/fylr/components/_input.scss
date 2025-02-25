@@ -272,3 +272,28 @@ textarea {
 		}
 	}
 }
+
+// Color Input + Icon input (see Base Config > General)
+.cui-color-input,
+.cui-icon-input {
+	> .cui-button {
+		cursor: default;
+		
+		> .cui-button-visual {
+			--btn-border-width: 0;
+			--btn-background-hover: var(--btn-background);
+
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+}
+
+// Icon input 
+.cui-icon-input {
+	> .cui-button > .cui-button-visual {
+		--btn-background: #{$input-background};
+
+		border-right: 1px solid $hr-border-color;
+	}
+}

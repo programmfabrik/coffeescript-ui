@@ -12,6 +12,7 @@ class CUI.ColorInput extends CUI.Input
 
     readOpts: ->
         @opts.leftControlElement = new CUI.Button
+            tabindex: -1
             onClick: (ev, btn) =>
                 @__input.focus()
         super()
@@ -25,13 +26,13 @@ class CUI.ColorInput extends CUI.Input
         if not @__data[@_name] or @__data[@_name].length == 0
             @_leftControlElement.hide(true)
         else
-            @_leftControlElement.DOM.style.backgroundColor = @__data[@_name]
+            @_leftControlElement.DOM.style.setProperty("--btn-background", @__data[@_name]);
             @_leftControlElement.show(true)
 
     __toggleColor: ->
         if @__input.value.length > 0 and @__checkInputInternal()
             # Set the background color of the @_leftControlElement to the value of the input
-            @_leftControlElement.DOM.style.backgroundColor = @__input.value
+            @_leftControlElement.DOM.style.setProperty("--btn-background", @__input.value);
             @_leftControlElement.show(true)
         else
             @_leftControlElement.hide(true)
