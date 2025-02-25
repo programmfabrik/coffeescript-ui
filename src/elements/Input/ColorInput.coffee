@@ -24,15 +24,16 @@ class CUI.ColorInput extends CUI.Input
     initValue: ->
         super()
         if not @__data[@_name] or @__data[@_name].length == 0
-            @_leftControlElement.hide(true)
+            @_leftControlElement.addClass('is-empty')
         else
-            @_leftControlElement.DOM.style.setProperty("--btn-background", @__data[@_name]);
-            @_leftControlElement.show(true)
+            @_leftControlElement.DOM.style.setProperty("--btn-background", @__data[@_name])
+            @_leftControlElement.removeClass('is-empty')
 
     __toggleColor: ->
         if @__input.value.length > 0 and @__checkInputInternal()
             # Set the background color of the @_leftControlElement to the value of the input
-            @_leftControlElement.DOM.style.setProperty("--btn-background", @__input.value);
-            @_leftControlElement.show(true)
+            @_leftControlElement.DOM.style.setProperty("--btn-background", @__input.value)
+            @_leftControlElement.removeClass('is-empty')
         else
-            @_leftControlElement.hide(true)
+            @_leftControlElement.DOM.style.removeProperty("--btn-background");
+            @_leftControlElement.addClass('is-empty')

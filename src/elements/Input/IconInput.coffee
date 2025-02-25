@@ -12,7 +12,7 @@ class CUI.IconInput extends CUI.Input
 
     readOpts: ->
         @opts.leftControlElement = new CUI.Button
-            icon: "fa-star"
+            icon: "fa-font-awesome"
             tabindex: -1
             onClick: (ev, btn) =>
                 @__input.focus()
@@ -25,14 +25,15 @@ class CUI.IconInput extends CUI.Input
     initValue: ->
         super()
         if not @__data[@_name] or @__data[@_name].length == 0
-            @_leftControlElement.hide(true)
+            @_leftControlElement.addClass('is-empty')
         else
             @_leftControlElement.setIcon(@__data[@_name])
+            @_leftControlElement.removeClass('is-empty')
 
     __toggleIcon: ->
         if @__input.value.length > 0
             @_leftControlElement.setIcon(@__input.value)
-            @_leftControlElement.show(true)
+            @_leftControlElement.removeClass('is-empty')
         else
             @_leftControlElement.setIcon("")
-            @_leftControlElement.hide(true)
+            @_leftControlElement.addClass('is-empty')
