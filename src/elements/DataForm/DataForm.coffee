@@ -224,7 +224,7 @@ class CUI.DataForm extends CUI.DataTable
 	__updateButtons: ->
 		for row in @rows
 			info = @__findRowInfo(row)
-			info.trash?.show()
+			info.trash?.enable()
 			if @rows.length >= 2
 				CUI.dom.removeClass(info.move, 'is-hidden')
 			else
@@ -257,9 +257,11 @@ class CUI.DataForm extends CUI.DataTable
 				icon: "fa-trash-o"
 				appearance: "flat"
 				onMouseenter: =>
-					CUI.dom.addClass(hl, "cui-data-form-row--trash")
+					if not trash.isDisabled()
+						CUI.dom.addClass(hl, "cui-data-form-row--trash")
 				onMouseleave: =>
-					CUI.dom.removeClass(hl, "cui-data-form-row--trash")
+					if not trash.isDisabled()
+						CUI.dom.removeClass(hl, "cui-data-form-row--trash")
 				onClick: =>
 					CUI.decide(@_onBeforeRowRemove?.call(@, data))
 					.done =>
@@ -283,7 +285,7 @@ class CUI.DataForm extends CUI.DataTable
 
 		if data._new and not @_has_add_button
 			CUI.dom.addClass(move, 'is-hidden')
-			trash.hide()
+			trash.disable()
 
 		@__rowRegistry.push
 			data: data
