@@ -3697,10 +3697,21 @@ textarea {
 .cui-icon-input > .cui-button > .cui-button-visual {
   --btn-border-width: 0;
   --btn-background-hover: var(--btn-background);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.cui-color-input > .cui-button.is-empty > .cui-button-visual,
+.cui-icon-input > .cui-button.is-empty > .cui-button-visual {
+  --btn-background: transparent;
+  background: linear-gradient(135deg, #e6e9ec 0, #e6e9ec 50%, #dee2e6 50.01%, #dee2e6);
 }
 
 .cui-icon-input > .cui-button > .cui-button-visual {
   --btn-background: #ffffff;
+  border-right: 1px solid rgba(206, 212, 218, 0.5);
+}
+.cui-icon-input > .cui-button.is-empty > .cui-button-visual {
+  background: linear-gradient(135deg, #ffffff 49.5%, #e6e9ec 50%, #ffffff 50.5%);
 }
 
 .cui-output .cui-output-empty {

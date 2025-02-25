@@ -47862,19 +47862,20 @@ CUI.ColorInput = (function(superClass) {
   ColorInput.prototype.initValue = function() {
     ColorInput.__super__.initValue.call(this);
     if (!this.__data[this._name] || this.__data[this._name].length === 0) {
-      return this._leftControlElement.hide(true);
+      return this._leftControlElement.addClass('is-empty');
     } else {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__data[this._name]);
-      return this._leftControlElement.show(true);
+      return this._leftControlElement.removeClass('is-empty');
     }
   };
 
   ColorInput.prototype.__toggleColor = function() {
     if (this.__input.value.length > 0 && this.__checkInputInternal()) {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__input.value);
-      return this._leftControlElement.show(true);
+      return this._leftControlElement.removeClass('is-empty');
     } else {
-      return this._leftControlElement.hide(true);
+      this._leftControlElement.DOM.style.removeProperty("--btn-background");
+      return this._leftControlElement.addClass('is-empty');
     }
   };
 
@@ -47977,7 +47978,7 @@ CUI.IconInput = (function(superClass) {
 
   IconInput.prototype.readOpts = function() {
     this.opts.leftControlElement = new CUI.Button({
-      icon: "fa-star",
+      icon: "fa-font-awesome",
       tabindex: -1,
       onClick: (function(_this) {
         return function(ev, btn) {
@@ -47996,19 +47997,20 @@ CUI.IconInput = (function(superClass) {
   IconInput.prototype.initValue = function() {
     IconInput.__super__.initValue.call(this);
     if (!this.__data[this._name] || this.__data[this._name].length === 0) {
-      return this._leftControlElement.hide(true);
+      return this._leftControlElement.addClass('is-empty');
     } else {
-      return this._leftControlElement.setIcon(this.__data[this._name]);
+      this._leftControlElement.setIcon(this.__data[this._name]);
+      return this._leftControlElement.removeClass('is-empty');
     }
   };
 
   IconInput.prototype.__toggleIcon = function() {
     if (this.__input.value.length > 0) {
       this._leftControlElement.setIcon(this.__input.value);
-      return this._leftControlElement.show(true);
+      return this._leftControlElement.removeClass('is-empty');
     } else {
       this._leftControlElement.setIcon("");
-      return this._leftControlElement.hide(true);
+      return this._leftControlElement.addClass('is-empty');
     }
   };
 
