@@ -35424,6 +35424,63 @@ CUI.util = (function() {
     });
   };
 
+  util.copyObjectV2 = function(obj, deep, visited) {
+    var copy, element, j, key, len, ref, result, value;
+    if (deep == null) {
+      deep = false;
+    }
+    if (visited == null) {
+      visited = new WeakMap();
+    }
+    if (obj === null || ((ref = typeof obj) === 'string' || ref === 'number' || ref === 'boolean' || ref === 'function')) {
+      return obj;
+    }
+    if (visited.has(obj)) {
+      return visited.get(obj);
+    }
+    if (CUI.util.isNull(obj)) {
+      return obj;
+    }
+    if (obj instanceof CUI.Element) {
+      result = deep ? obj.copy() : obj;
+      visited.set(obj, result);
+      return result;
+    }
+    if (obj instanceof HTMLElement) {
+      result = obj.cloneNode ? obj.cloneNode(true) : obj;
+      visited.set(obj, result);
+      return result;
+    }
+    if (obj instanceof CUI.Dummy) {
+      visited.set(obj, obj);
+      return obj;
+    }
+    if (CUI.util.isPlainObject(obj)) {
+      copy = {};
+      visited.set(obj, copy);
+      for (key in obj) {
+        value = obj[key];
+        if (obj.hasOwnProperty(key)) {
+          copy[key] = deep ? this.copyObjectV2(value, true, visited) : value;
+        }
+      }
+      return copy;
+    }
+    if (CUI.util.isArray(obj)) {
+      copy = [];
+      visited.set(obj, copy);
+      for (j = 0, len = obj.length; j < len; j++) {
+        element = obj[j];
+        copy.push(deep ? this.copyObjectV2(element, true, visited) : element);
+      }
+      return copy;
+    }
+    return CUI.util.assert(false, "copyObjectV2", "Only plain objects, arrays, strings, booleans, numbers, and functions can be copied. Object is: " + (CUI.util.getObjectClass(obj)), {
+      obj: obj,
+      deep: deep
+    });
+  };
+
   util.dump = function(obj, space) {
     var clean_obj, e;
     if (space == null) {
