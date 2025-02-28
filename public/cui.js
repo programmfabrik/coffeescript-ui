@@ -35424,6 +35424,63 @@ CUI.util = (function() {
     });
   };
 
+  util.copyObjectV2 = function(obj, deep, visited) {
+    var copy, element, j, key, len, ref, result, value;
+    if (deep == null) {
+      deep = false;
+    }
+    if (visited == null) {
+      visited = new WeakMap();
+    }
+    if (obj === null || ((ref = typeof obj) === 'string' || ref === 'number' || ref === 'boolean' || ref === 'function')) {
+      return obj;
+    }
+    if (visited.has(obj)) {
+      return visited.get(obj);
+    }
+    if (CUI.util.isNull(obj)) {
+      return obj;
+    }
+    if (obj instanceof CUI.Element) {
+      result = deep ? obj.copy() : obj;
+      visited.set(obj, result);
+      return result;
+    }
+    if (obj instanceof HTMLElement) {
+      result = obj.cloneNode ? obj.cloneNode(true) : obj;
+      visited.set(obj, result);
+      return result;
+    }
+    if (obj instanceof CUI.Dummy) {
+      visited.set(obj, obj);
+      return obj;
+    }
+    if (CUI.util.isPlainObject(obj)) {
+      copy = {};
+      visited.set(obj, copy);
+      for (key in obj) {
+        value = obj[key];
+        if (obj.hasOwnProperty(key)) {
+          copy[key] = deep ? this.copyObjectV2(value, true, visited) : value;
+        }
+      }
+      return copy;
+    }
+    if (CUI.util.isArray(obj)) {
+      copy = [];
+      visited.set(obj, copy);
+      for (j = 0, len = obj.length; j < len; j++) {
+        element = obj[j];
+        copy.push(deep ? this.copyObjectV2(element, true, visited) : element);
+      }
+      return copy;
+    }
+    return CUI.util.assert(false, "copyObjectV2", "Only plain objects, arrays, strings, booleans, numbers, and functions can be copied. Object is: " + (CUI.util.getObjectClass(obj)), {
+      obj: obj,
+      deep: deep
+    });
+  };
+
   util.dump = function(obj, space) {
     var clean_obj, e;
     if (space == null) {
@@ -47862,19 +47919,20 @@ CUI.ColorInput = (function(superClass) {
   ColorInput.prototype.initValue = function() {
     ColorInput.__super__.initValue.call(this);
     if (!this.__data[this._name] || this.__data[this._name].length === 0) {
-      return this._leftControlElement.hide(true);
+      return this._leftControlElement.addClass('is-empty');
     } else {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__data[this._name]);
-      return this._leftControlElement.show(true);
+      return this._leftControlElement.removeClass('is-empty');
     }
   };
 
   ColorInput.prototype.__toggleColor = function() {
     if (this.__input.value.length > 0 && this.__checkInputInternal()) {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__input.value);
-      return this._leftControlElement.show(true);
+      return this._leftControlElement.removeClass('is-empty');
     } else {
-      return this._leftControlElement.hide(true);
+      this._leftControlElement.DOM.style.removeProperty("--btn-background");
+      return this._leftControlElement.addClass('is-empty');
     }
   };
 
@@ -47977,7 +48035,7 @@ CUI.IconInput = (function(superClass) {
 
   IconInput.prototype.readOpts = function() {
     this.opts.leftControlElement = new CUI.Button({
-      icon: "fa-star",
+      icon: "fa-font-awesome",
       tabindex: -1,
       onClick: (function(_this) {
         return function(ev, btn) {
@@ -47996,19 +48054,20 @@ CUI.IconInput = (function(superClass) {
   IconInput.prototype.initValue = function() {
     IconInput.__super__.initValue.call(this);
     if (!this.__data[this._name] || this.__data[this._name].length === 0) {
-      return this._leftControlElement.hide(true);
+      return this._leftControlElement.addClass('is-empty');
     } else {
-      return this._leftControlElement.setIcon(this.__data[this._name]);
+      this._leftControlElement.setIcon(this.__data[this._name]);
+      return this._leftControlElement.removeClass('is-empty');
     }
   };
 
   IconInput.prototype.__toggleIcon = function() {
     if (this.__input.value.length > 0) {
       this._leftControlElement.setIcon(this.__input.value);
-      return this._leftControlElement.show(true);
+      return this._leftControlElement.removeClass('is-empty');
     } else {
       this._leftControlElement.setIcon("");
-      return this._leftControlElement.hide(true);
+      return this._leftControlElement.addClass('is-empty');
     }
   };
 
