@@ -293,6 +293,7 @@ textarea {
 .cui-color-input {
 	> .cui-button.is-empty > .cui-button-visual {
 		--btn-background: transparent;
+
 		background: linear-gradient(135deg, $gray-200 0, $gray-200 50%, $gray-300 50.01%, $gray-300);
 	}
 }
@@ -302,6 +303,7 @@ textarea {
 	> .cui-button {
 		> .cui-button-visual {
 			--btn-background: #{$input-background};
+
 			border-right: 1px solid $hr-border-color;
 		}
 
