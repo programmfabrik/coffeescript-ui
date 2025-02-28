@@ -39439,6 +39439,10 @@ CUI.DataTable = (function(superClass) {
       },
       onLoadPage: {
         check: Function
+      },
+      useCSSGridLayout: {
+        check: Boolean,
+        "default": false
       }
     });
   };
@@ -39770,6 +39774,7 @@ CUI.DataTable = (function(superClass) {
       "class": "cui-lv--has-datafields",
       selectableRows: this._new_rows !== "none",
       padded: this._padded,
+      useCSSGridLayout: this._useCSSGridLayout,
       ui: this._ui ? this._ui + ".list.view" : void 0,
       onSelect: (function(_this) {
         return function(ev, info) {
