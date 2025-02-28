@@ -70,6 +70,9 @@ class CUI.DataTable extends CUI.DataFieldInput
 				default: false
 			onLoadPage:
 				check: Function
+			useCSSGridLayout:
+				check: Boolean		
+				default: false		
 
 	readOpts: ->
 		super()
@@ -308,6 +311,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			class: "cui-lv--has-datafields"
 			selectableRows: @_new_rows != "none"
 			padded: @_padded
+			useCSSGridLayout: @_useCSSGridLayout
 			ui: if @_ui then "#{@_ui}.list.view"
 			onSelect: (ev, info) =>
 				@_onRowSelect?(ev, info)

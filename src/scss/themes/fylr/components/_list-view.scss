@@ -68,6 +68,7 @@
 		height: $btn-height; // keep alignment in the row
 	}
 
+	// implements @_useCSSGridLayout (ListView | DataTable)
 	&.use-css-grid-layout {
 		@include list-view-use-css-grid-layout();
 	}
