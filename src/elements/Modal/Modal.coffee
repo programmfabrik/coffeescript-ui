@@ -17,6 +17,15 @@ class CUI.Modal extends CUI.LayerPane
 	constructor: (opts) ->
 		super(opts)
 
+		if @_custom_header_buttons and @_custom_header_buttons.length
+			for btn in @_custom_header_buttons
+				CUI.util.assert(btn.name, "Modal", "custom_header_button needs to have a name property", btn: btn)
+				CUI.util.assert(not @["_"+btn.name], "Modal", "custom_header_button name already exists as an internal property", btn: btn)
+				name = btn.name
+				delete btn.name
+				@["_"+name] = btn
+				@__addHeaderButton(name, btn)
+
 		toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip)
 		@__addHeaderButton("fill_screen_button", toggleFillScreenButton)
 
@@ -78,6 +87,8 @@ class CUI.Modal extends CUI.LayerPane
 				check: Boolean
 			fill_screen_button_tooltip:
 				check: "PlainObject"
+			custom_header_buttons:
+				check: Array
 			onToggleFillScreen:
 				check: Function
 
