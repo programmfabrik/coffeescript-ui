@@ -57691,8 +57691,24 @@ CUI.Modal = (function(superClass) {
   };
 
   function Modal(opts) {
-    var bd, do_cancel, htbn, toggleFillScreenButton;
+    var bd, btn, do_cancel, htbn, i, len, name, ref, toggleFillScreenButton;
     Modal.__super__.constructor.call(this, opts);
+    if (this._custom_header_buttons && this._custom_header_buttons.length) {
+      ref = this._custom_header_buttons;
+      for (i = 0, len = ref.length; i < len; i++) {
+        btn = ref[i];
+        CUI.util.assert(btn.name, "Modal", "custom_header_button needs to have a name property", {
+          btn: btn
+        });
+        CUI.util.assert(!this["_" + btn.name], "Modal", "custom_header_button name already exists as an internal property", {
+          btn: btn
+        });
+        name = btn.name;
+        delete btn.name;
+        this["_" + name] = btn;
+        this.__addHeaderButton(name, btn);
+      }
+    }
     toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton({
       tooltip: this._fill_screen_button_tooltip
     });
@@ -57776,6 +57792,9 @@ CUI.Modal = (function(superClass) {
       },
       fill_screen_button_tooltip: {
         check: "PlainObject"
+      },
+      custom_header_buttons: {
+        check: Array
       },
       onToggleFillScreen: {
         check: Function
