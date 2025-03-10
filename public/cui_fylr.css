@@ -3471,6 +3471,9 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-button-goto-top .cui-button-visual .cui-button-center:empty {
   margin-left: -0.125em;
 }
+.cui-button-goto-top .cui-button-visual {
+  min-width: 14px;
+}
 
 input,
 textarea {
