@@ -7083,6 +7083,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --list-view-selected-row-border-color: transparent;
   --list-view-selected-row-background: #dee2e6;
   --list-view-hover-row-background: #e6e9ec;
+  --list-view-invalid-row-background: #f9dfe1;
   min-height: 0;
   flex-direction: column;
   background-color: transparent;
@@ -7237,6 +7238,19 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-td .cui-button {
   max-width: 100%;
 }
+.cui-lv-td:has(.cui-label-validation) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cui-lv-td:has(.cui-label-validation) > * {
+  flex: 0 0 auto;
+}
+.cui-lv-td:has(.cui-label-validation) .cui-label-validation {
+  margin-top: auto;
+  min-height: 0;
+  padding: 0;
+}
 
 .cui-lv-th,
 .list-view-header-row .cui-lv-td {
@@ -7259,6 +7273,18 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-tr-outer.cui-selected > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:focus > .cui-lv-tr {
   box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
   background-color: var(--list-view-selected-row-background);
+}
+.cui-lv-tr-outer.cui-row-invalid {
+  position: relative;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-label-validation {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.5rem;
+  z-index: 1;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:focus > .cui-lv-tr {
+  background-color: var(--list-view-invalid-row-background);
 }
 
 .list-view-header-row .cui-lv-tr {
@@ -8037,6 +8063,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   opacity: 0.2;
 }
 
+.cui-lv-row-move-handle-column {
+  cursor: default;
+}
 .cui-lv-row-move-handle-column::after {
   display: none;
 }
@@ -8049,14 +8078,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: none;
 }
-.cui-list-view-row-movable .cui-lv-row-move-handle-column {
-  cursor: -webkit-grab;
-  cursor: grab;
-}
 .cui-list-view-row-movable .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: block;
   margin: 0;
   margin-top: 0.45em;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
 .cui-lv-col-resize-handle {
