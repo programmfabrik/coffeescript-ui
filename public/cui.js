@@ -37772,14 +37772,21 @@ CUI.Checkbox = (function(superClass) {
     return this._indeterminate;
   };
 
-  Checkbox.prototype.registerLabel = function(lbl) {
+  Checkbox.prototype.registerLabel = function(lbl, stopProp) {
+    if (stopProp == null) {
+      stopProp = false;
+    }
     lbl.setAttribute('data-label-clickable', '1');
     CUI.Events.listen({
       type: 'click',
       node: lbl,
       call: (function(_this) {
         return function(ev) {
-          return _this.getButton().onClickAction(ev);
+          _this.getButton().onClickAction(ev);
+          if (stopProp) {
+            ev.stopPropagation();
+            return console.log("stop propagation");
+          }
         };
       })(this)
     });
