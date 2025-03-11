@@ -154,14 +154,11 @@
 	cursor: default;
 	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 
-	// whenever we have rotated column labels, we can allow regular labels to overflow onto the next line
-	// no need to truncate them, because of the rotated-90 labels we have enough space vertically
-	&:has(~ .cui-lv-td-rotate-90) {
-		.cui-label:not(.cui-label-rotate-90) {
-			.cui-label-content {
-				white-space: normal;
-				line-height: 1.2;
-			}
+	// We allow regular header labels to overflow onto the next line (do not truncate)
+	.cui-label:not(.cui-label-rotate-90) {
+		.cui-label-content {
+			white-space: normal;
+			line-height: 1.2;
 		}
 	}
 }
