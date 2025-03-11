@@ -24,9 +24,9 @@
 	// selected
 	--list-view-selected-row-border-width: 0;
 	--list-view-selected-row-border-color: transparent;
-	--list-view-selected-row-background: var(--brand-color, #{$list-view-selected-row-background});
+	--list-view-selected-row-background: #{$list-view-selected-row-background};
 	// hover
-	--list-view-hover-row-background: var(--brand-color, #{$list-view-hover-row-background});
+	--list-view-hover-row-background: #{$list-view-hover-row-background};
 
 
 	min-height: 0;
@@ -154,14 +154,11 @@
 	cursor: default;
 	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 
-	// whenever we have rotated column labels, we can allow regular labels to overflow onto the next line
-	// no need to truncate them, because of the rotated-90 labels we have enough space vertically
-	&:has(~ .cui-lv-td-rotate-90) {
-		.cui-label:not(.cui-label-rotate-90) {
-			.cui-label-content {
-				white-space: normal;
-				line-height: 1.2;
-			}
+	// We allow regular header labels to overflow onto the next line (do not truncate)
+	.cui-label:not(.cui-label-rotate-90) {
+		.cui-label-content {
+			white-space: normal;
+			line-height: 1.2;
 		}
 	}
 }
@@ -180,7 +177,9 @@
 	cursor: default;
 
 	// be careful to apply a default select state, it's probably best to do this contextually in the theme
-	&.cui-selected {
+	&.cui-selected,
+	&.cui-selected:hover,
+	&.cui-selected:focus {
 		> .cui-lv-tr {
 			box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
 			background-color: var(--list-view-selected-row-background);

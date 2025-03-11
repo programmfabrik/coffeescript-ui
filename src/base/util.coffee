@@ -229,7 +229,7 @@ class CUI.util
 		`n===+n && n!==(n|0)`
 
 	@isInteger: (n) ->
-		`n===+n && n===(n|0)`
+		Number.isInteger(n)
 
 	@isPromise: (n) ->
 		n instanceof CUI.Promise or n instanceof CUI.Deferred
@@ -330,6 +330,54 @@ class CUI.util
 			return new_arr
 
 		CUI.util.assert(false, "copyObject", "Only {},[],string, boolean, and number can be copied. Object is: #{CUI.util.getObjectClass(obj)}", obj: obj, deep: deep)
+
+	@copyObjectV2 = (obj, deep = false, visited = new WeakMap()) ->
+		# Handle primitives, functions, and null values.
+		if obj is null or typeof obj in ['string', 'number', 'boolean', 'function']
+			return obj
+
+		# If the object has already been copied, return its copy to handle cyclic references.
+		if visited.has(obj)
+			return visited.get(obj)
+
+		if CUI.util.isNull(obj)
+			return obj
+
+		# Special handling for CUI.Element objects.
+		if obj instanceof CUI.Element
+			result = if deep then obj.copy() else obj
+			visited.set(obj, result)
+			return result
+
+		# Special handling for HTMLElement objects.
+		if obj instanceof HTMLElement
+			result = if obj.cloneNode then obj.cloneNode(true) else obj
+			visited.set(obj, result)
+			return result
+
+		# Special handling for CUI.Dummy objects.
+		if obj instanceof CUI.Dummy
+			visited.set(obj, obj)
+			return obj
+
+		# If the object is a plain object.
+		if CUI.util.isPlainObject(obj)
+			copy = {}
+			visited.set(obj, copy)
+			for key, value of obj when obj.hasOwnProperty(key)
+				copy[key] = if deep then @copyObjectV2(value, true, visited) else value
+			return copy
+
+		# If the object is an array.
+		if CUI.util.isArray(obj)
+			copy = []
+			visited.set(obj, copy)
+			for element in obj
+				copy.push(if deep then @copyObjectV2(element, true, visited) else element)
+			return copy
+
+		# If the object type is unsupported, throw an error.
+		CUI.util.assert false, "copyObjectV2", "Only plain objects, arrays, strings, booleans, numbers, and functions can be copied. Object is: #{CUI.util.getObjectClass(obj)}", { obj: obj, deep: deep }
 
 	@dump: (obj, space="\t") ->
 		clean_obj = (obj) ->

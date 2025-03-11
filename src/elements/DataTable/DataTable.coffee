@@ -179,12 +179,23 @@ class CUI.DataTable extends CUI.DataFieldInput
 				disabled: true
 				ui: if @_ui then "#{@_ui}.minus.button"
 				onClick: =>
+					finish = =>
+						@storeValue(CUI.util.copyObject(@rows, true))
+						@updateButtons()
+						if @_chunk_size > 0
+							@displayValue()
+
+					promises = []
 					for row in @listView.getSelectedRows()
-						row.remove()
-					@storeValue(CUI.util.copyObject(@rows, true))
-					@updateButtons()
-					if @_chunk_size > 0
-						@displayValue()
+						deletePromise = row.remove()
+						if deletePromise and CUI.util.isPromise(deletePromise)
+							promises.push(deletePromise)
+					if promises.length > 0
+						CUI.whenAll(promises).done( =>
+							finish()
+						)
+					else
+						finish()
 					return
 
 			buttons.push(@minusButton)

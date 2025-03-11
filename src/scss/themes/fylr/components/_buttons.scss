@@ -212,3 +212,14 @@ a[role='button'].cui-button-appearance-link {
 		}
 	}
 }
+
+.cui-button-goto-top {
+	@include button-plain();
+	@include button-xs();
+
+	--disabled-opacity: 0;
+
+	.cui-button-visual {
+		min-width: 14px; // vertically align under the scrollbar (Chrome)
+	}
+}

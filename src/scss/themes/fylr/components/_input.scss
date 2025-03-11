@@ -272,3 +272,43 @@ textarea {
 		}
 	}
 }
+
+// Color Input + Icon input (see Base Config > General)
+.cui-color-input,
+.cui-icon-input {
+	> .cui-button {
+		cursor: default;
+		
+		> .cui-button-visual {
+			--btn-border-width: 0;
+			--btn-background-hover: var(--btn-background);
+
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+}
+
+// Color Input
+.cui-color-input {
+	> .cui-button.is-empty > .cui-button-visual {
+		--btn-background: transparent;
+
+		background: linear-gradient(135deg, $gray-200 0, $gray-200 50%, $gray-300 50.01%, $gray-300);
+	}
+}
+
+// Icon input 
+.cui-icon-input {
+	> .cui-button {
+		> .cui-button-visual {
+			--btn-background: #{$input-background};
+
+			border-right: 1px solid $hr-border-color;
+		}
+
+		&.is-empty .cui-button-left i {
+			display: none;
+		}
+	}
+}

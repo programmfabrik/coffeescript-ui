@@ -51,13 +51,22 @@ class CUI.Panel extends CUI.DOMElement
 					@_onFirstActivate?(@, flags, event)
 
 				@__open(not flags.initial_activate)
+				if not flags.initial_activate and @_save_state
+					@__save_state(true)
 				@_onActivate?(btn, flags, event)
 
 			onDeactivate: (btn, flags, event) =>
 				@__close(not flags.initial_activate)
+				if not flags.initial_activate and @_save_state
+					@__save_state(false)
 				@_onDeactivate?(btn, flags, event)
 
 		@append(@button, "header")
+
+		if @_save_state
+			saved_state = @__get_saved_state()
+			if saved_state != undefined
+				@_closed = !saved_state
 
 		if @_closed
 			@button.deactivate()
@@ -105,6 +114,8 @@ class CUI.Panel extends CUI.DOMElement
 				check: Function
 			onDeactivate:
 				check: Function
+			save_state:
+				check: String
 		)
 
 	readOpts: ->
@@ -116,6 +127,16 @@ class CUI.Panel extends CUI.DOMElement
 
 	isOpen: ->
 		!@isClosed()
+
+	__get_saved_state: ->
+		panels_state = CUI.getLocalStorage("panels_state") or {}
+		panels_state[@_save_state]
+
+	__save_state: (state) ->
+		if @_save_state
+			panels_state = CUI.getLocalStorage("panels_state") or {}
+			panels_state[@_save_state] = state
+			CUI.setLocalStorage("panels_state", panels_state)
 
 	open: ->
 		@button.activate()

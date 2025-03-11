@@ -29353,6 +29353,12 @@ CUI.FlexHandle = (function(superClass) {
         check: function(v) {
           return v > 0;
         }
+      },
+      unit: {
+        "default": "px",
+        check: function(v) {
+          return v === "px" || v === "%";
+        }
       }
     });
   };
@@ -29499,8 +29505,10 @@ CUI.FlexHandle = (function(superClass) {
       },
       dragend: (function(_this) {
         return function(ev, gd) {
+          var newSize;
           dragging(gd);
-          _this.__size = CUI.dom.getDimension(_this.__pane, "contentBox" + _this.__css_value);
+          newSize = CUI.dom.getDimension(_this.__pane, "contentBox" + _this.__css_value);
+          _this.__setSize(newSize);
           return _this.storeState();
         };
       })(this),
@@ -29548,6 +29556,7 @@ CUI.FlexHandle = (function(superClass) {
   };
 
   FlexHandle.prototype.__setSize = function(size) {
+    var parentDimension, percentValue, sizeStr;
     if (CUI.util.isNull(size)) {
       CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), "");
       if (this.__isAlive()) {
@@ -29559,6 +29568,34 @@ CUI.FlexHandle = (function(superClass) {
       this.__pane.classList.remove("cui-is-manually-sized");
       this._element.classList.remove("cui-is-manually-sized");
       this.__size = null;
+    } else if (this._unit === "%" && (this.__pane.parentNode != null)) {
+      if (typeof size === "number") {
+        parentDimension = CUI.dom.getDimension(this.__pane.parentNode, "contentBox" + this.__css_value);
+        if (parentDimension > 0) {
+          percentValue = (size / parentDimension) * 100;
+        } else {
+          percentValue = size;
+        }
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      } else if (typeof size === "string" && size.indexOf("%") !== -1) {
+        percentValue = parseFloat(size);
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      } else {
+        parentDimension = CUI.dom.getDimension(this.__pane.parentNode, "contentBox" + this.__css_value);
+        if (parentDimension > 0) {
+          percentValue = (parseFloat(size) / parentDimension) * 100;
+        } else {
+          percentValue = size;
+        }
+        percentValue = Math.max(1, Math.min(percentValue, 100));
+        sizeStr = percentValue.toFixed(2) + "%";
+      }
+      this.__pane.classList.add("cui-is-manually-sized");
+      this._element.classList.add("cui-is-manually-sized");
+      CUI.dom.setStyleOne(this.__pane, this.__css_value.toLowerCase(), sizeStr);
+      this.__size = sizeStr;
     } else {
       this.__pane.classList.add("cui-is-manually-sized");
       this._element.classList.add("cui-is-manually-sized");
@@ -35251,7 +35288,7 @@ CUI.util = (function() {
   };
 
   util.isInteger = function(n) {
-    return n===+n && n===(n|0);
+    return Number.isInteger(n);
   };
 
   util.isPromise = function(n) {
@@ -35382,6 +35419,63 @@ CUI.util = (function() {
       return new_arr;
     }
     return CUI.util.assert(false, "copyObject", "Only {},[],string, boolean, and number can be copied. Object is: " + (CUI.util.getObjectClass(obj)), {
+      obj: obj,
+      deep: deep
+    });
+  };
+
+  util.copyObjectV2 = function(obj, deep, visited) {
+    var copy, element, j, key, len, ref, result, value;
+    if (deep == null) {
+      deep = false;
+    }
+    if (visited == null) {
+      visited = new WeakMap();
+    }
+    if (obj === null || ((ref = typeof obj) === 'string' || ref === 'number' || ref === 'boolean' || ref === 'function')) {
+      return obj;
+    }
+    if (visited.has(obj)) {
+      return visited.get(obj);
+    }
+    if (CUI.util.isNull(obj)) {
+      return obj;
+    }
+    if (obj instanceof CUI.Element) {
+      result = deep ? obj.copy() : obj;
+      visited.set(obj, result);
+      return result;
+    }
+    if (obj instanceof HTMLElement) {
+      result = obj.cloneNode ? obj.cloneNode(true) : obj;
+      visited.set(obj, result);
+      return result;
+    }
+    if (obj instanceof CUI.Dummy) {
+      visited.set(obj, obj);
+      return obj;
+    }
+    if (CUI.util.isPlainObject(obj)) {
+      copy = {};
+      visited.set(obj, copy);
+      for (key in obj) {
+        value = obj[key];
+        if (obj.hasOwnProperty(key)) {
+          copy[key] = deep ? this.copyObjectV2(value, true, visited) : value;
+        }
+      }
+      return copy;
+    }
+    if (CUI.util.isArray(obj)) {
+      copy = [];
+      visited.set(obj, copy);
+      for (j = 0, len = obj.length; j < len; j++) {
+        element = obj[j];
+        copy.push(deep ? this.copyObjectV2(element, true, visited) : element);
+      }
+      return copy;
+    }
+    return CUI.util.assert(false, "copyObjectV2", "Only plain objects, arrays, strings, booleans, numbers, and functions can be copied. Object is: " + (CUI.util.getObjectClass(obj)), {
       obj: obj,
       deep: deep
     });
@@ -37902,7 +37996,7 @@ CUI.Alert = (function(superClass) {
   };
 
   Alert.prototype.isKeyboardCancellable = function(ev) {
-    return true;
+    return this._allow_cancel;
   };
 
   Alert.prototype.readOpts = function() {
@@ -38932,6 +39026,13 @@ CUI.DataForm = (function(superClass) {
       has_add_button: {
         check: Boolean,
         "default": false
+      },
+      no_default_empty_row: {
+        check: Boolean,
+        "default": false
+      },
+      enableAddButton: {
+        check: Function
       }
     });
     this.removeOpt("onNodeAdd");
@@ -39024,6 +39125,12 @@ CUI.DataForm = (function(superClass) {
     })) {
       return this.__addButton.disable();
     } else {
+      if (this._enableAddButton) {
+        if (!this._enableAddButton(this, this.rows)) {
+          this.__addButton.disable();
+          return;
+        }
+      }
       return this.__addButton.enable();
     }
   };
@@ -39102,10 +39209,12 @@ CUI.DataForm = (function(superClass) {
       row = ref[i];
       this.__appendRow(row);
     }
-    if (this.rows.length > 0) {
+    if (this.rows.length > 0 || this._no_default_empty_row) {
       this.__updateAddButton();
     }
-    this.__appendNewRow();
+    if (!this._no_default_empty_row) {
+      this.__appendNewRow();
+    }
     this.__updateButtons();
   };
 
@@ -39501,16 +39610,29 @@ CUI.DataTable = (function(superClass) {
         ui: this._ui ? this._ui + ".minus.button" : void 0,
         onClick: (function(_this) {
           return function() {
-            var j, len2, ref, row;
+            var deletePromise, finish, j, len2, promises, ref, row;
+            finish = function() {
+              _this.storeValue(CUI.util.copyObject(_this.rows, true));
+              _this.updateButtons();
+              if (_this._chunk_size > 0) {
+                return _this.displayValue();
+              }
+            };
+            promises = [];
             ref = _this.listView.getSelectedRows();
             for (j = 0, len2 = ref.length; j < len2; j++) {
               row = ref[j];
-              row.remove();
+              deletePromise = row.remove();
+              if (deletePromise && CUI.util.isPromise(deletePromise)) {
+                promises.push(deletePromise);
+              }
             }
-            _this.storeValue(CUI.util.copyObject(_this.rows, true));
-            _this.updateButtons();
-            if (_this._chunk_size > 0) {
-              _this.displayValue();
+            if (promises.length > 0) {
+              CUI.whenAll(promises).done(function() {
+                return finish();
+              });
+            } else {
+              finish();
             }
           };
         })(this)
@@ -41582,7 +41704,7 @@ CUI.DateTime = (function(superClass) {
       timeZone = CUI.Timezone.getTimezone();
     }
     mom = moment(date).tz(timeZone);
-    if (date.startsWith("-")) {
+    if (date.startsWith("-") && groupFormat !== "week") {
       mom = date;
     }
     switch (groupFormat) {
@@ -41593,6 +41715,10 @@ CUI.DateTime = (function(superClass) {
       case "week":
         start = mom.clone().startOf("isoWeek");
         end = mom.clone().endOf("isoWeek");
+        if (date.startsWith("-")) {
+          start = "-" + start.format("YYYY-MM-DD");
+          end = "-" + end.format("YYYY-MM-DD");
+        }
         return CUI.DateTime.format(start, "display_short", "date", false, locale) + " - " + CUI.DateTime.format(end, "display_short", "date", false, locale);
       case "day":
         return CUI.DateTime.format(mom, "display_short", "date", false, locale);
@@ -47745,6 +47871,78 @@ CUI.CodeInput = (function(superClass) {
 
 /***/ }),
 
+/***/ "./elements/Input/ColorInput.coffee":
+/*!******************************************!*\
+  !*** ./elements/Input/ColorInput.coffee ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2025 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.ColorInput = (function(superClass) {
+  extend(ColorInput, superClass);
+
+  function ColorInput() {
+    return ColorInput.__super__.constructor.apply(this, arguments);
+  }
+
+  ColorInput.prototype.initOpts = function() {
+    return ColorInput.__super__.initOpts.call(this);
+  };
+
+  ColorInput.prototype.readOpts = function() {
+    this.opts.leftControlElement = new CUI.Button({
+      tabindex: -1,
+      onClick: (function(_this) {
+        return function(ev, btn) {
+          return _this.__input.focus();
+        };
+      })(this)
+    });
+    return ColorInput.__super__.readOpts.call(this);
+  };
+
+  ColorInput.prototype.onDataChanged = function(ev, info) {
+    ColorInput.__super__.onDataChanged.call(this, ev, info);
+    return this.__toggleColor();
+  };
+
+  ColorInput.prototype.initValue = function() {
+    ColorInput.__super__.initValue.call(this);
+    if (!this.__data[this._name] || this.__data[this._name].length === 0) {
+      return this._leftControlElement.addClass('is-empty');
+    } else {
+      this._leftControlElement.DOM.style.setProperty("--btn-background", this.__data[this._name]);
+      return this._leftControlElement.removeClass('is-empty');
+    }
+  };
+
+  ColorInput.prototype.__toggleColor = function() {
+    if (this.__input.value.length > 0 && this.__checkInputInternal()) {
+      this._leftControlElement.DOM.style.setProperty("--btn-background", this.__input.value);
+      return this._leftControlElement.removeClass('is-empty');
+    } else {
+      this._leftControlElement.DOM.style.removeProperty("--btn-background");
+      return this._leftControlElement.addClass('is-empty');
+    }
+  };
+
+  return ColorInput;
+
+})(CUI.Input);
+
+
+/***/ }),
+
 /***/ "./elements/Input/EmailInput.coffee":
 /*!******************************************!*\
   !*** ./elements/Input/EmailInput.coffee ***!
@@ -47801,6 +47999,79 @@ CUI.EmailInput = (function(superClass) {
   EmailInput.regexp = RegExp('^(?:[' + EmailInput.unicode_ranges + '\\w!#$%&\'*+\/=?^_\`{|}~-]+(?:\\.[' + EmailInput.unicode_ranges + '\\w!#$%&\'*+\/=?^_\`{|}~-]+)*|"(?:[' + EmailInput.unicode_ranges + ' \\w| \\' + EmailInput.unicode_ranges + '\w\.])*")@(?:[' + EmailInput.unicode_ranges + '\\w.-]+\\.[' + EmailInput.unicode_ranges + '\\w]{2,}|localhost)$', 'i');
 
   return EmailInput;
+
+})(CUI.Input);
+
+
+/***/ }),
+
+/***/ "./elements/Input/IconInput.coffee":
+/*!*****************************************!*\
+  !*** ./elements/Input/IconInput.coffee ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2025 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.IconInput = (function(superClass) {
+  extend(IconInput, superClass);
+
+  function IconInput() {
+    return IconInput.__super__.constructor.apply(this, arguments);
+  }
+
+  IconInput.prototype.initOpts = function() {
+    return IconInput.__super__.initOpts.call(this);
+  };
+
+  IconInput.prototype.readOpts = function() {
+    this.opts.leftControlElement = new CUI.Button({
+      icon: "fa-font-awesome",
+      tabindex: -1,
+      onClick: (function(_this) {
+        return function(ev, btn) {
+          return _this.__input.focus();
+        };
+      })(this)
+    });
+    return IconInput.__super__.readOpts.call(this);
+  };
+
+  IconInput.prototype.onDataChanged = function(ev, info) {
+    IconInput.__super__.onDataChanged.call(this, ev, info);
+    return this.__toggleIcon();
+  };
+
+  IconInput.prototype.initValue = function() {
+    IconInput.__super__.initValue.call(this);
+    if (!this.__data[this._name] || this.__data[this._name].length === 0) {
+      return this._leftControlElement.addClass('is-empty');
+    } else {
+      this._leftControlElement.setIcon(this.__data[this._name]);
+      return this._leftControlElement.removeClass('is-empty');
+    }
+  };
+
+  IconInput.prototype.__toggleIcon = function() {
+    if (this.__input.value.length > 0) {
+      this._leftControlElement.setIcon(this.__input.value);
+      return this._leftControlElement.removeClass('is-empty');
+    } else {
+      this._leftControlElement.setIcon("");
+      return this._leftControlElement.addClass('is-empty');
+    }
+  };
+
+  return IconInput;
 
 })(CUI.Input);
 
@@ -48011,6 +48282,11 @@ CUI.Input = (function(superClass) {
         check: ["code"]
       },
       controlElement: {
+        check: function(v) {
+          return v instanceof CUI.DOMElement;
+        }
+      },
+      leftControlElement: {
         check: function(v) {
           return v instanceof CUI.DOMElement;
         }
@@ -48883,6 +49159,10 @@ CUI.Input = (function(superClass) {
     if (this._controlElement) {
       CUI.dom.addClass(this._controlElement, 'cui-input-control-element');
       this.append(this._controlElement, this.getTemplateKeyForRender());
+    }
+    if (this._leftControlElement) {
+      CUI.dom.addClass(this._leftControlElement, 'cui-input-control-element');
+      this.prepend(this._leftControlElement, this.getTemplateKeyForRender());
     }
     ref = ["empty", "invalid", "valid"];
     for (j = 0, len1 = ref.length; j < len1; j++) {
@@ -59762,7 +60042,7 @@ CUI.OutputContent = (function(superClass) {
     var value;
     value = OutputContent.__super__.getValue.call(this);
     if (this._getValue) {
-      return this._getValue.call(this, value);
+      return this._getValue.call(this, value, this);
     } else {
       return value;
     }
@@ -60459,6 +60739,7 @@ CUI.Panel = (function(superClass) {
   };
 
   function Panel(opts) {
+    var saved_state;
     Panel.__super__.constructor.call(this, opts);
     this.panel = new CUI.Template({
       name: "panel",
@@ -60500,17 +60781,29 @@ CUI.Panel = (function(superClass) {
             }
           }
           _this.__open(!flags.initial_activate);
+          if (!flags.initial_activate && _this._save_state) {
+            _this.__save_state(true);
+          }
           return typeof _this._onActivate === "function" ? _this._onActivate(btn, flags, event) : void 0;
         };
       })(this),
       onDeactivate: (function(_this) {
         return function(btn, flags, event) {
           _this.__close(!flags.initial_activate);
+          if (!flags.initial_activate && _this._save_state) {
+            _this.__save_state(false);
+          }
           return typeof _this._onDeactivate === "function" ? _this._onDeactivate(btn, flags, event) : void 0;
         };
       })(this)
     });
     this.append(this.button, "header");
+    if (this._save_state) {
+      saved_state = this.__get_saved_state();
+      if (saved_state !== void 0) {
+        this._closed = !saved_state;
+      }
+    }
     if (this._closed) {
       this.button.deactivate();
     } else {
@@ -60571,6 +60864,9 @@ CUI.Panel = (function(superClass) {
       },
       onDeactivate: {
         check: Function
+      },
+      save_state: {
+        check: String
       }
     });
   };
@@ -60586,6 +60882,21 @@ CUI.Panel = (function(superClass) {
 
   Panel.prototype.isOpen = function() {
     return !this.isClosed();
+  };
+
+  Panel.prototype.__get_saved_state = function() {
+    var panels_state;
+    panels_state = CUI.getLocalStorage("panels_state") || {};
+    return panels_state[this._save_state];
+  };
+
+  Panel.prototype.__save_state = function(state) {
+    var panels_state;
+    if (this._save_state) {
+      panels_state = CUI.getLocalStorage("panels_state") || {};
+      panels_state[this._save_state] = state;
+      return CUI.setLocalStorage("panels_state", panels_state);
+    }
   };
 
   Panel.prototype.open = function() {
@@ -63602,6 +63913,10 @@ __webpack_require__(/*! ./elements/Input/NumberInputBlock.coffee */ "./elements/
 __webpack_require__(/*! ./elements/Input/NumberInput.coffee */ "./elements/Input/NumberInput.coffee");
 
 __webpack_require__(/*! ./elements/Input/EmailInput.coffee */ "./elements/Input/EmailInput.coffee");
+
+__webpack_require__(/*! ./elements/Input/IconInput.coffee */ "./elements/Input/IconInput.coffee");
+
+__webpack_require__(/*! ./elements/Input/ColorInput.coffee */ "./elements/Input/ColorInput.coffee");
 
 __webpack_require__(/*! ./elements/Input/CodeInput.coffee */ "./elements/Input/CodeInput.coffee");
 
