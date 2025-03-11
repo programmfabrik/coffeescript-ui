@@ -1,4 +1,4 @@
-label[data-label-clickable],
+[data-label-clickable],
 .cui-label[data-label-clickable] {
 	@include clickable;
 }
