@@ -2481,7 +2481,7 @@ label[data-label-clickable],
 }
 .cui-label.cui-label-rotate-90 {
   white-space: nowrap;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 0.25rem;
   flex-shrink: 0;
   max-width: none;
   display: inline-block;
@@ -7243,8 +7243,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   cursor: default;
   line-height: 24px;
 }
-.cui-lv-th:has(~ .cui-lv-td-rotate-90) .cui-label:not(.cui-label-rotate-90) .cui-label-content,
-.list-view-header-row .cui-lv-td:has(~ .cui-lv-td-rotate-90) .cui-label:not(.cui-label-rotate-90) .cui-label-content {
+.cui-lv-th .cui-label:not(.cui-label-rotate-90) .cui-label-content,
+.list-view-header-row .cui-lv-td .cui-label:not(.cui-label-rotate-90) .cui-label-content {
   white-space: normal;
   line-height: 1.2;
 }
