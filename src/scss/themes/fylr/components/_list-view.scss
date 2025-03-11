@@ -205,6 +205,17 @@
 		}
 	}
 
+	&.cui-row-invalid {
+		position: relative;
+
+		> .cui-label-validation {
+			position: absolute;
+			bottom: $spacer-xs;
+			left: $spacer-sm;
+			z-index: 1;
+		}
+	}
+
 	&.cui-row-invalid,
 	&.cui-row-invalid:hover,
 	&.cui-row-invalid:focus {
@@ -492,7 +503,7 @@
 		display: none;
 	}
 
-	.cui-list-view-row-movable & {		
+	.cui-list-view-row-movable & {
 		.cui-drag-handle-row {
 			display: block;
 			margin: 0;
