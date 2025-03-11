@@ -37784,8 +37784,7 @@ CUI.Checkbox = (function(superClass) {
         return function(ev) {
           _this.getButton().onClickAction(ev);
           if (stopProp) {
-            ev.stopPropagation();
-            return console.log("stop propagation");
+            return ev.stopPropagation();
           }
         };
       })(this)

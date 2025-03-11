@@ -2399,7 +2399,7 @@ input[data-max-chars="40"] {
     transform: rotate(180deg);
   }
 }
-label[data-label-clickable],
+[data-label-clickable],
 .cui-label[data-label-clickable] {
   cursor: pointer;
   -webkit-user-select: none;
