@@ -7250,7 +7250,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-lv-tr-outer.cui-row-invalid > .cui-label-validation {
   position: absolute;
-  bottom: 0.25rem;
+  top: 30px;
   left: 0.5rem;
   z-index: 1;
 }
