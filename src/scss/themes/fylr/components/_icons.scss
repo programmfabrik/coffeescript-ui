@@ -18,7 +18,7 @@
 	text-transform: uppercase;
 }
 
-.fa:not([class*="fa-stack"]) {
+.fa:not([class*='fa-stack']) {
 	font-size: $icon-font-size;
 	line-height: $icon-line-height;
 }
