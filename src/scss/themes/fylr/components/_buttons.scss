@@ -215,11 +215,13 @@ a[role='button'].cui-button-appearance-link {
 
 .cui-button-goto-top {
 	@include button-plain();
-	@include button-xs();
 
 	--disabled-opacity: 0;
+	--btn-background: #{$body-bg};
 
 	.cui-button-visual {
-		min-width: 14px; // vertically align under the scrollbar (Chrome)
+		border-radius: 45px;
+		min-width: 30px;
+		width: 30px;
 	}
 }
