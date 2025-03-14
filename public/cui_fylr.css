@@ -4306,7 +4306,7 @@ textarea {
   max-width: 700px;
 }
 .cui-data-field .cui-list-view-grid-quadrant-3 {
-  min-height: 102px;
+  min-height: var(--list-view-empty-default-min-height, 102px);
 }
 .cui-data-field.cui-data-field-disabled {
   user-select: none;
