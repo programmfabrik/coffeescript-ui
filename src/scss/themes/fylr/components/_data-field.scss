@@ -57,7 +57,7 @@
 	}
 
 	.cui-list-view-grid-quadrant-3 {
-		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+		min-height: var(--list-view-empty-default-min-height, #{3*$table-data-height}); // for when using empty lists that can get filled
 	}
 
 	// .cui-lv-row-move-handle-column {
