@@ -7209,19 +7209,6 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-td .cui-button {
   max-width: 100%;
 }
-.cui-lv-td:has(.cui-label-validation) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.cui-lv-td:has(.cui-label-validation) > * {
-  flex: 0 0 auto;
-}
-.cui-lv-td:has(.cui-label-validation) .cui-label-validation {
-  margin-top: auto;
-  min-height: 0;
-  padding: 0;
-}
 
 .cui-lv-th,
 .list-view-header-row .cui-lv-td {
@@ -7250,9 +7237,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-lv-tr-outer.cui-row-invalid > .cui-label-validation {
   position: absolute;
-  top: 30px;
+  top: 0.5rem;
   left: 0.5rem;
   z-index: 1;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+  display: none;
 }
 .cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:focus > .cui-lv-tr {
   background-color: var(--list-view-invalid-row-background);
