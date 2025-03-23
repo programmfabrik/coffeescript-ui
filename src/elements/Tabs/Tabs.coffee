@@ -248,6 +248,9 @@ class CUI.Tabs extends CUI.SimplePane
 
 		return found_tab
 
+	getActiveTabIdx: ->
+		@__tabs.indexOf(@getActiveTab())
+
 	getActiveTab: ->
 		@__active_tab
 
