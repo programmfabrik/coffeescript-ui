@@ -63030,6 +63030,10 @@ CUI.Tabs = (function(superClass) {
     return found_tab;
   };
 
+  Tabs.prototype.getActiveTabIdx = function() {
+    return this.__tabs.indexOf(this.getActiveTab());
+  };
+
   Tabs.prototype.getActiveTab = function() {
     return this.__active_tab;
   };
