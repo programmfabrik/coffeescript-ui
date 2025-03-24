@@ -55212,22 +55212,25 @@ CUI.ListViewColumnRowMoveHandle = (function(superClass) {
   }
 
   ListViewColumnRowMoveHandle.prototype.setElement = function(cell) {
-    var row;
+    var drag_handle, moveTool, ref, row;
     ListViewColumnRowMoveHandle.__super__.setElement.call(this, cell);
     row = this.getRow();
     if (!row.isMovable()) {
       return;
     }
-    if (CUI.ListView.defaults.row_move_handle_tooltip) {
-      new CUI.Tooltip({
-        text: CUI.ListView.defaults.row_move_handle_tooltip,
-        element: cell
-      });
-    }
-    row.getListView().getRowMoveTool({
+    moveTool = row.getListView().getRowMoveTool({
       row: row,
       element: cell
     });
+    if (moveTool) {
+      drag_handle = (ref = CUI.dom.children(moveTool.element)) != null ? ref[0] : void 0;
+    }
+    if (CUI.ListView.defaults.row_move_handle_tooltip && drag_handle) {
+      new CUI.Tooltip({
+        text: CUI.ListView.defaults.row_move_handle_tooltip,
+        element: drag_handle
+      });
+    }
   };
 
   ListViewColumnRowMoveHandle.prototype.render = function() {
