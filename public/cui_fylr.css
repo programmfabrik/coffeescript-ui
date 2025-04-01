@@ -3398,7 +3398,10 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   --btn-border-color: transparent;
   --btn-border-width: 0;
   --disabled-opacity: 0;
-  --btn-background: #ffffff;
+  --btn-background: #212121;
+  --btn-background-hover: #393c3f;
+  --btn-color: #ffffff;
+  --btn-color-hover: #ffffff;
 }
 .cui-button-goto-top:not(.cui-disabled):hover, .cui-button-goto-top:not(.cui-disabled):focus {
   --btn-border-color: transparent;
@@ -3444,6 +3447,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   border-radius: 45px;
   min-width: 30px;
   width: 30px;
+  aspect-ratio: 1/1;
 }
 
 input,
@@ -7054,6 +7058,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --list-view-selected-row-border-color: transparent;
   --list-view-selected-row-background: #dee2e6;
   --list-view-hover-row-background: #e6e9ec;
+  --list-view-invalid-row-background: #f9dfe1;
   min-height: 0;
   flex-direction: column;
   background-color: transparent;
@@ -7230,6 +7235,21 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-tr-outer.cui-selected > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:focus > .cui-lv-tr {
   box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
   background-color: var(--list-view-selected-row-background);
+}
+.cui-lv-tr-outer.cui-row-invalid {
+  position: relative;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-label-validation {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+  display: none;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:focus > .cui-lv-tr {
+  background-color: var(--list-view-invalid-row-background);
 }
 
 .list-view-header-row .cui-lv-tr {
@@ -8008,6 +8028,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   opacity: 0.2;
 }
 
+.cui-lv-row-move-handle-column {
+  cursor: default;
+}
 .cui-lv-row-move-handle-column::after {
   display: none;
 }
@@ -8020,14 +8043,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: none;
 }
-.cui-list-view-row-movable .cui-lv-row-move-handle-column {
-  cursor: -webkit-grab;
-  cursor: grab;
-}
 .cui-list-view-row-movable .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: block;
   margin: 0;
   margin-top: 0.45em;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
 .cui-lv-col-resize-handle {
