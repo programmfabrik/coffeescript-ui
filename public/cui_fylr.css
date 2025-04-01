@@ -3398,7 +3398,10 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   --btn-border-color: transparent;
   --btn-border-width: 0;
   --disabled-opacity: 0;
-  --btn-background: #ffffff;
+  --btn-background: #212121;
+  --btn-background-hover: #393c3f;
+  --btn-color: #ffffff;
+  --btn-color-hover: #ffffff;
 }
 .cui-button-goto-top:not(.cui-disabled):hover, .cui-button-goto-top:not(.cui-disabled):focus {
   --btn-border-color: transparent;
@@ -3444,6 +3447,7 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   border-radius: 45px;
   min-width: 30px;
   width: 30px;
+  aspect-ratio: 1/1;
 }
 
 input,
