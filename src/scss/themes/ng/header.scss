@@ -136,6 +136,7 @@ $row-move-handle-width: (0.5 * $padding) + $table-data-padding*2+2;
 $tree-node-handle-width: 14px;
 
 $error-color: hsl(10,90%,52%);
+$error-color-background: transparentize($error-color, 0.85);
 $on-error-color: white;
 $neutral-color: hsl(48,100%,58%);
 $positive-color: hsl(100,69%,50%);
