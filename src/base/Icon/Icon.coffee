@@ -133,6 +133,7 @@ class CUI.Icon extends CUI.Element
 		rotate_left: "fa-rotate-left"
 		rotate_right: "fa-rotate-right"
 		rotate_vertical: "fa-arrows-v"
+		ruler: "svg-ruler"
 		save: "fa-floppy-o"
 		search: "fa-search"
 		settings: "fa-cog"
