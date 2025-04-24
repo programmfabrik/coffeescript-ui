@@ -3236,55 +3236,95 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   opacity: 0.5;
 }
 
-.cui-button-tool-play {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) {
   --btn-border-color: rgba(255, 255, 255, 0.85);
 }
-.cui-button-tool-play .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) .cui-button-visual {
   background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-button-tool-play:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play:not(.cui-disabled):focus {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):focus {
   outline: none;
 }
-.cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-button-tool-play:not(.cui-disabled):active .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
-.cui-button-tool-play.cui-active .cui-button-visual, .cui-button-tool-play.cui-layer-open .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-button-tool-play:not(.cui-disabled):hover {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
-.cui-button-tool-play .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) .cui-button-visual {
   height: var(--btn-height-play, 50px);
   width: var(--btn-height-play, 50px);
   min-width: var(--btn-height-play, 50px);
   border-radius: 50%;
 }
-.cui-button-tool-play .fa {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) .fa {
   font-size: 20px;
   text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
   margin-left: 3px;
+}
+
+.cui-button-tool-webdvdplayer {
+  --btn-border-color: rgba(255, 255, 255, 0.85);
+}
+.cui-button-tool-webdvdplayer .cui-button-visual {
+  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  color: var(--btn-color, #ffffff);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-webdvdplayer:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-button-tool-webdvdplayer.cui-active .cui-button-visual, .cui-button-tool-webdvdplayer.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+}
+.cui-button-tool-webdvdplayer.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-webdvdplayer.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-webdvdplayer.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-webdvdplayer.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+}
+.cui-button-tool-webdvdplayer.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):hover {
+  --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 
 .cui-button-pin {
