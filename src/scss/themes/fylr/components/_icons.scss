@@ -18,7 +18,7 @@
 	text-transform: uppercase;
 }
 
-.fa {
+.fa:not([class*='fa-stack']) {
 	font-size: $icon-font-size;
 	line-height: $icon-line-height;
 }
@@ -92,6 +92,11 @@
 .svg-info-circle {
 	width: 12px;
 	height: 12px;
+}
+
+.svg-ruler {
+	width: 16px;
+	height: 16px;
 }
 
 

@@ -149,8 +149,12 @@ a[role='button'].cui-button-appearance-link {
 	}
 }
 
-.cui-button-tool-play {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) {
 	@include button-play();
+}
+
+.cui-button-tool-webdvdplayer {
+	@include button-color-inverted();
 }
 
 // Pin Button
@@ -210,5 +214,22 @@ a[role='button'].cui-button-appearance-link {
 		&:hover .cui-button-visual::after {
 			display: block;
 		}
+	}
+}
+
+.cui-button-goto-top {
+	@include button-plain();
+
+	--disabled-opacity: 0;
+	--btn-background: #{$body-color};
+	--btn-background-hover: #{$gray-800};
+	--btn-color: #{$body-bg};
+	--btn-color-hover: #{$body-bg};
+
+	.cui-button-visual {
+		border-radius: 45px;
+		min-width: 30px;
+		width: 30px;
+		aspect-ratio: 1 / 1;
 	}
 }

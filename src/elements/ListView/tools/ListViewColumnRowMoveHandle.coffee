@@ -15,15 +15,17 @@ class CUI.ListViewColumnRowMoveHandle extends CUI.ListViewColumn
 		if not row.isMovable()
 			return
 
-		if CUI.ListView.defaults.row_move_handle_tooltip
-			new CUI.Tooltip
-				text: CUI.ListView.defaults.row_move_handle_tooltip
-				element: cell
-
-
-		row.getListView().getRowMoveTool
+		moveTool = row.getListView().getRowMoveTool
 			row: row
 			element: cell
+
+		if moveTool
+			drag_handle = CUI.dom.children(moveTool.element)?[0]
+
+		if CUI.ListView.defaults.row_move_handle_tooltip and drag_handle
+			new CUI.Tooltip
+				text: CUI.ListView.defaults.row_move_handle_tooltip
+				element: drag_handle
 
 		return
 

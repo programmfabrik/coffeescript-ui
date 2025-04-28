@@ -27,6 +27,8 @@
 	--list-view-selected-row-background: #{$list-view-selected-row-background};
 	// hover
 	--list-view-hover-row-background: #{$list-view-hover-row-background};
+	// invalid
+	--list-view-invalid-row-background: #{$danger-bg-light};
 
 
 	min-height: 0;
@@ -154,14 +156,11 @@
 	cursor: default;
 	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 
-	// whenever we have rotated column labels, we can allow regular labels to overflow onto the next line
-	// no need to truncate them, because of the rotated-90 labels we have enough space vertically
-	&:has(~ .cui-lv-td-rotate-90) {
-		.cui-label:not(.cui-label-rotate-90) {
-			.cui-label-content {
-				white-space: normal;
-				line-height: 1.2;
-			}
+	// We allow regular header labels to overflow onto the next line (do not truncate)
+	.cui-label:not(.cui-label-rotate-90) {
+		.cui-label-content {
+			white-space: normal;
+			line-height: 1.2;
 		}
 	}
 }
@@ -186,6 +185,29 @@
 		> .cui-lv-tr {
 			box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
 			background-color: var(--list-view-selected-row-background);
+		}
+	}
+
+	&.cui-row-invalid {
+		position: relative;
+
+		> .cui-label-validation {
+			position: absolute;
+			top: $spacer-sm;
+			left: $spacer-sm;
+			z-index: 1;
+		}
+
+		> .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+			display: none;
+		}
+	}
+
+	&.cui-row-invalid,
+	&.cui-row-invalid:hover,
+	&.cui-row-invalid:focus {
+		> .cui-lv-tr {
+			background-color: var(--list-view-invalid-row-background);
 		}
 	}
 }
@@ -451,6 +473,8 @@
 }
 
 .cui-lv-row-move-handle-column {
+	cursor: default; // reset .cui-drag-drop-select-draggable
+
 	&::after {
 		display: none;
 	}
@@ -467,13 +491,12 @@
 	}
 
 	.cui-list-view-row-movable & {
-		cursor: -webkit-grab;
-		cursor: grab;
-
 		.cui-drag-handle-row {
 			display: block;
 			margin: 0;
 			margin-top: 0.45em;
+			cursor: -webkit-grab;
+			cursor: grab;
 		}
 	}
 }

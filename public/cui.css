@@ -916,6 +916,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   height: 13px;
 }
 
+.svg-ruler {
+  width: 256px;
+  height: 512px;
+}
+
 .svg-search-shared {
   width: 17px;
   height: 16px;
@@ -3061,6 +3066,9 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-label[data-type=boolean], .cui-label[data-type=undefined], .cui-label[data-type=null] {
   color: #0184bb;
 }
+.cui-label.cui-label-danger {
+  color: hsl(10, 90%, 52%);
+}
 
 .cui-label-markdown .cui-label-content {
   display: block;
@@ -4555,6 +4563,21 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-lv-tr-outer.cui-lv-tree-node--is-branch {
   cursor: pointer;
   touch-action: manipulation;
+}
+.cui-lv-tr-outer.cui-row-invalid {
+  position: relative;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-label-validation {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 1;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+  display: none;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:focus > .cui-lv-tr {
+  background-color: rgba(243, 59, 22, 0.15);
 }
 
 .cui-lv-tr {

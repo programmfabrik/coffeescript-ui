@@ -1490,7 +1490,7 @@ body {
 
 .cui-disabled {
   user-select: none;
-  opacity: 0.5;
+  opacity: var(--disabled-opacity, 0.5);
   pointer-events: var(--pointer-events-when-disabled, none);
 }
 
@@ -1761,6 +1761,11 @@ body {
 .svg-rows {
   width: 16px;
   height: 13px;
+}
+
+.svg-ruler {
+  width: 256px;
+  height: 512px;
 }
 
 .svg-search-shared {
@@ -2274,7 +2279,7 @@ input[data-max-chars="40"] {
   text-transform: uppercase;
 }
 
-.fa {
+.fa:not([class*=fa-stack]) {
   font-size: 0.875rem;
   line-height: 1.6;
 }
@@ -2336,6 +2341,11 @@ input[data-max-chars="40"] {
 .svg-info-circle {
   width: 12px;
   height: 12px;
+}
+
+.svg-ruler {
+  width: 16px;
+  height: 16px;
 }
 
 .cui-hourglass-animation {
@@ -2481,7 +2491,7 @@ label[data-label-clickable],
 }
 .cui-label.cui-label-rotate-90 {
   white-space: nowrap;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 0.25rem;
   flex-shrink: 0;
   max-width: none;
   display: inline-block;
@@ -3226,55 +3236,95 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   opacity: 0.5;
 }
 
-.cui-button-tool-play {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) {
   --btn-border-color: rgba(255, 255, 255, 0.85);
 }
-.cui-button-tool-play .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) .cui-button-visual {
   background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
   color: var(--btn-color, #ffffff);
   border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
 }
-.cui-button-tool-play:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play:not(.cui-disabled):focus {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):focus {
   outline: none;
 }
-.cui-button-tool-play:not(.cui-disabled):focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):focus .cui-button-visual {
   outline: none;
   border-color: rgba(23, 162, 184, 0.5);
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
 }
-.cui-button-tool-play:not(.cui-disabled):active .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):active .cui-button-visual {
   color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
   background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
   box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
 }
-.cui-button-tool-play.cui-active .cui-button-visual, .cui-button-tool-play.cui-layer-open .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-layer-open .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
   color: var(--btn-color-active, #ffffff);
   background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
 }
-.cui-button-tool-play.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer).cui-active + .cui-active.cui-layer-open .cui-button-visual {
   border-left-color: currentColor;
 }
-.cui-button-tool-play:not(.cui-disabled):hover {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer):not(.cui-disabled):hover {
   --btn-border-color: rgba(255, 255, 255, 0.7);
 }
-.cui-button-tool-play .cui-button-visual {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) .cui-button-visual {
   height: var(--btn-height-play, 50px);
   width: var(--btn-height-play, 50px);
   min-width: var(--btn-height-play, 50px);
   border-radius: 50%;
 }
-.cui-button-tool-play .fa {
+.cui-button-tool-play:not(.cui-button-tool-webdvdplayer) .fa {
   font-size: 20px;
   text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
   margin-left: 3px;
+}
+
+.cui-button-tool-webdvdplayer {
+  --btn-border-color: rgba(255, 255, 255, 0.85);
+}
+.cui-button-tool-webdvdplayer .cui-button-visual {
+  background-color: var(--btn-background, rgba(33, 33, 33, 0.6));
+  color: var(--btn-color, #ffffff);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-webdvdplayer:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(255, 255, 255, 0.65));
+  background-color: var(--btn-background-hover, rgba(33, 33, 33, 0.6));
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-button-tool-webdvdplayer.cui-active .cui-button-visual, .cui-button-tool-webdvdplayer.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+}
+.cui-button-tool-webdvdplayer.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-webdvdplayer.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-tool-webdvdplayer.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-tool-webdvdplayer.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, rgba(33, 33, 33, 0.6));
+}
+.cui-button-tool-webdvdplayer.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-button-tool-webdvdplayer:not(.cui-disabled):hover {
+  --btn-border-color: rgba(255, 255, 255, 0.7);
 }
 
 .cui-button-pin {
@@ -3392,6 +3442,62 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 .cui-button-pin.cui-active:hover .cui-button-visual::after {
   display: block;
+}
+
+.cui-button-goto-top {
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  --disabled-opacity: 0;
+  --btn-background: #212121;
+  --btn-background-hover: #393c3f;
+  --btn-color: #ffffff;
+  --btn-color-hover: #ffffff;
+}
+.cui-button-goto-top:not(.cui-disabled):hover, .cui-button-goto-top:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-button-goto-top .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-button-goto-top:not(.cui-disabled):hover .cui-button-visual, .cui-button-goto-top:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-button-goto-top:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-button-goto-top:not(.cui-disabled):focus .cui-button-visual {
+  outline: none;
+  border-color: rgba(23, 162, 184, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
+}
+.cui-button-goto-top:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-button-goto-top.cui-active .cui-button-visual, .cui-button-goto-top.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-button-goto-top.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-button-goto-top.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-button-goto-top.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-button-goto-top.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-button-goto-top.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentColor;
+}
+.cui-button-goto-top:not(.cui-disabled):active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+.cui-button-goto-top .cui-button-visual {
+  border-radius: 45px;
+  min-width: 30px;
+  width: 30px;
+  aspect-ratio: 1/1;
 }
 
 input,
@@ -4254,7 +4360,7 @@ textarea {
   max-width: 700px;
 }
 .cui-data-field .cui-list-view-grid-quadrant-3 {
-  min-height: 102px;
+  min-height: var(--list-view-empty-default-min-height, 102px);
 }
 .cui-data-field.cui-data-field-disabled {
   user-select: none;
@@ -7002,6 +7108,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   --list-view-selected-row-border-color: transparent;
   --list-view-selected-row-background: #dee2e6;
   --list-view-hover-row-background: #e6e9ec;
+  --list-view-invalid-row-background: #f9dfe1;
   min-height: 0;
   flex-direction: column;
   background-color: transparent;
@@ -7162,8 +7269,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   cursor: default;
   line-height: 24px;
 }
-.cui-lv-th:has(~ .cui-lv-td-rotate-90) .cui-label:not(.cui-label-rotate-90) .cui-label-content,
-.list-view-header-row .cui-lv-td:has(~ .cui-lv-td-rotate-90) .cui-label:not(.cui-label-rotate-90) .cui-label-content {
+.cui-lv-th .cui-label:not(.cui-label-rotate-90) .cui-label-content,
+.list-view-header-row .cui-lv-td .cui-label:not(.cui-label-rotate-90) .cui-label-content {
   white-space: normal;
   line-height: 1.2;
 }
@@ -7178,6 +7285,21 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-tr-outer.cui-selected > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-selected:focus > .cui-lv-tr {
   box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
   background-color: var(--list-view-selected-row-background);
+}
+.cui-lv-tr-outer.cui-row-invalid {
+  position: relative;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-label-validation {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+  display: none;
+}
+.cui-lv-tr-outer.cui-row-invalid > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:hover > .cui-lv-tr, .cui-lv-tr-outer.cui-row-invalid:focus > .cui-lv-tr {
+  background-color: var(--list-view-invalid-row-background);
 }
 
 .list-view-header-row .cui-lv-tr {
@@ -7956,6 +8078,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   opacity: 0.2;
 }
 
+.cui-lv-row-move-handle-column {
+  cursor: default;
+}
 .cui-lv-row-move-handle-column::after {
   display: none;
 }
@@ -7968,14 +8093,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: none;
 }
-.cui-list-view-row-movable .cui-lv-row-move-handle-column {
-  cursor: -webkit-grab;
-  cursor: grab;
-}
 .cui-list-view-row-movable .cui-lv-row-move-handle-column .cui-drag-handle-row {
   display: block;
   margin: 0;
   margin-top: 0.45em;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
 .cui-lv-col-resize-handle {

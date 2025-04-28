@@ -149,6 +149,11 @@ body {
   height: 13px;
 }
 
+.svg-ruler {
+  width: 256px;
+  height: 512px;
+}
+
 .svg-search-shared {
   width: 17px;
   height: 16px;
