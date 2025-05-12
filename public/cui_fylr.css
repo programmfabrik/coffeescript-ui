@@ -2480,6 +2480,14 @@ label[data-label-clickable],
 .cui-label.cui-label-danger {
   color: #dc3545;
 }
+.cui-label.cui-label-warning {
+  color: #6b5716;
+}
+.cui-label.cui-label-warning .cui-label-content > * {
+  display: inline;
+  background-color: rgba(239, 201, 81, 0.15);
+  line-height: 1.4;
+}
 .cui-label[data-type=string] {
   color: #3e9e88;
 }
