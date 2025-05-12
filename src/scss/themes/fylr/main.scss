@@ -19,10 +19,6 @@
 @import '_functions';
 @import '_variables';
 @import '_mixins';
-// todo: make obsolete
-// stylelint-disable
-@import 'body_ng';
-// stylelint-enable
 @import '_root';
 @import '_resets';
 @import '_cursors';
@@ -61,7 +57,7 @@
 @import 'components/_table';
 @import 'components/_date-time'; // calendar
 
-// todo: specific order needed ??
+// specific order needed ??
 @import 'components/_forms';
 @import 'components/_panel';
 @import 'components/_toolbar'; // inside of pane

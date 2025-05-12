@@ -31,13 +31,8 @@
 
 	@include form-key-value-inline(); // default, override in different context using form-key-value-stacked()
 
-	// needs to apply padding on a contextual basis
-	// padding: $spacer-sm;
-
-	// todo: make obsolete
-	// &--padded {
-	// 	padding: $form-padding;
-	// }
+	// obsolete
+	// &--padded {}
 }
 
 // * Form - Table
@@ -105,8 +100,6 @@
 	flex-direction: column;
 	
 	> .cui-options {
-		// margin-bottom: $spacer-sm; // todo: this adds extra margin, the parent .cui-form-tr already has a margin
-
 		.cui-options-center {
 			min-height: 0;
 		}
@@ -330,8 +323,6 @@
 }
 
 .cui-form-hint {
-	// max-width: $data-field-width; // todo: do we really want to restrict the width, why?
-
 	.cui-checkbox + &,
 	.cui-data-field.cui-maximize-horizontal + & {
 		max-width: 100%;

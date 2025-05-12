@@ -233,11 +233,11 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, 'Liberati
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-$font-size-xxxl:              1rem * 1.37 !default; // 20,
-$font-size-xxl:               1rem * 1.25 !default; // 20,  todo: do we really need this "bigger" font size
-$font-size-xl:                1rem * 1.125 !default; // 18
-$font-size-lg:                1rem !default; // 16
-$font-size-base:              0.875 * 1rem !default; // 14
+$font-size-xxxl:              1rem * 1.37 !default; // 22
+$font-size-xxl:               1rem * 1.25 !default; // 20
+$font-size-xl:                1rem * 1.125 !default;// 18
+$font-size-lg:                1rem !default; 		// 16
+$font-size-base:              0.875 * 1rem !default;// 14
 $font-size-sm:                1rem * 0.75 !default; // 12
 
 $font-weight-lighter:         200 !default;
@@ -250,7 +250,6 @@ $font-weight-base:            $font-weight-normal !default;
 $line-height-base:            1.5 !default;
 $line-height-sm:			  1.3 !default;
 
-// todo
 $h1-font-size:                1rem * 1.5 !default; 		// 24, upper case, e.g. page-title
 $h2-font-size:                1rem * 1.5 !default; 		// 24, normal case
 $h3-font-size:                1rem * 1.25 !default; 	// 20, ex: pane titles (Suche), sidebar titles (Detail, Editor), applied via .h3 class in tpl
@@ -360,7 +359,7 @@ $btn-bordered-focus-border-color: 	$component-focus-border-color !default;
 // Inverted Button 
 $btn-inverted-color: 				$white !default;
 $btn-inverted-background: 			rgba(gray('900'), 0.6) !default; // need an actual background so we can use this on images as well
-$btn-inverted-border-color: 		rgba($white, 0.85) !default; // todo: its a compromise between black/background image and selected/orange background color, we might need to make this adaptable via CSS vars
+$btn-inverted-border-color: 		rgba($white, 0.85) !default; // its a compromise between black/background image and selected/orange background color, we might need to make this adaptable via CSS vars
 $btn-inverted-hover-color: 			rgba($btn-inverted-color, $btn-hover-alpha) !default;
 $btn-inverted-hover-background: 	$btn-inverted-background !default;
 $btn-inverted-hover-border-color: 	rgba($btn-inverted-border-color, 0.7) !default;
@@ -446,7 +445,6 @@ $input-height-sm: 			$btn-height-sm !default;
 $input-background: 			$white !default;
 $input-background-disabled:	$input-background !default; // disabled state will add opacity:0.5 by default
 $input-border-color: 		transparent !default;
-$input-border-color-light: 	gray('300') !default; // todo: temp, test ??
 $input-border-radius: 		$btn-border-radius !default;
 $input-placeholder-color: 	theme-color('muted') !default;
 $input-min-width:			100px !default;
@@ -532,9 +530,9 @@ $form-key-padding-top: 		0.38em !default;
 $form-key-padding-bottom: 	$spacer-xs !default;
 $form-data-max-width:		850px !default;
 $form-label-color: 			$body-color !default;
-$form-label-font-weight: 	$font-weight-bold !default; // todo
-$form-label-font-size: 		$font-size-base !default; // if changed, you need to change the padding of labels in cui-form-key + cui-form-value
-$form-cell-gap: 			$spacer !default; // todo: check more forms
+$form-label-font-weight: 	$font-weight-bold !default;
+$form-label-font-size: 		$font-size-base !default; // if changed, we need to change the padding of labels in cui-form-key + cui-form-value
+$form-cell-gap: 			$spacer !default;
 $form-hint-font-size: 		13px !default;
 $form-hint-line-height: 	1.2 !default;
 $form-hint-margin-bottom: 	$spacer-sm !default; 

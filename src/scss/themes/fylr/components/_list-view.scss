@@ -35,7 +35,7 @@
 	flex-direction: column;
 	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
 	background-color: transparent; // reset from cui-pane
-	font-size: $list-view-font-size; // todo
+	font-size: $list-view-font-size;
 	line-height: $line-height-sm;
 	border: var(--list-view-border-width) solid var(--list-view-border-color);
 

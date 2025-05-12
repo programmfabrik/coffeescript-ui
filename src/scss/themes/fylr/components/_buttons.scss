@@ -97,7 +97,7 @@
 }
 
 .cui-button-select {
-	// todo: add white background in forms? , adding it by default makes them idfferent from the normal buttons
+	// todo: add white background in forms? , adding it by default makes them different from the normal buttons
 	// @include button-color($input-background, $body-color, $input-background, $btn-hover-color, $btn-active-background, $btn-active-color);
 
 	.cui-button-visual {
@@ -115,7 +115,7 @@
 	}
 }
 
-// todo: remove appearance-link class
+// deprecated, use cui-button-href
 a[role='button'].cui-button-appearance-link {
 	height: initial;
 

@@ -102,7 +102,7 @@ textarea {
 	// 	@include label-form-hint();
 	// }
 
-	&-appearance-code {
+	&.cui-input-appearance-code {
 		input,
 		textarea {
 			font-family: $font-family-monospace;
@@ -135,8 +135,6 @@ textarea {
 
 .cui-input-content-size {
 	textarea {
-		// min-height: 40px; // todo
-		// height: 40px; // todo
 		resize: none;
 	}
 }
@@ -191,7 +189,6 @@ textarea {
 	}
 }
 
-// todo: test
 .cui-browser-ie:not(.cui-browser-edge) {
 	.cui-input {
 		input,

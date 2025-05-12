@@ -52,13 +52,7 @@
 	&.cui-data-form--movable-rows {
 		max-width: 100%;
 
-		// todo: find use-case, commented out because of the nested-fields in the editor
-		// > .cui-horizontal-layout > .cui-horizontal-layout-center {
-		// 	// max-width: $data-field-width;
-		// }
-
 		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
-			// max-width: $data-field-width; // ? where would we need to restrict this, shouldn't be the default
 			overflow: visible; // show focus outline
 		}
 

@@ -1,52 +1,13 @@
 // Data Fields
 
 .cui-data-field {
-	// todo: be very careful when to apply a max-width, this class is probably too generic
-	// - get sets in DataField class, which is extended by Input, Output, Options, Checkbox, Select,
-	// FormButton, DataTable, DataForm, SimpleForm, Form, FormPopover
-	//
-	// find out when the max-width is actually needed
-	// this width should probably only be applied to input fields or else???
-	// see: demo#DataFrom: cui-data-field class is applied to several outer form containers and this might cause unexpected behaviour
-	// see: focus state of dateTime input
-	// max-width: $data-field-width;
 	margin: 0;
-
-	// todo:
-	// reset the max-width set above
-	// maybe the above max-width should be restricted to inputs by default instead
-	// .cui-form-value &,
-	// .cui-drag-drop-select-sortable &,
-	// .drag-drop-select-helper &,
-	// .ez5-field &, // todo: should go into fylr-theme CSS
-	// .cui-block & {
-	// 	max-width: none;
-	// }
 
 	&.cui-form,
 	&.cui-data-form {
-		// max-width: 100%; // or none?
 		width: 100%; // ? always stretch to fill avaiable width ?, ex: Developer Menu
 		margin: 0;
 	}
-
-	// &.cui-maximize-horizontal,
-	// &.cui-simple-form {
-	// 	max-width: 100%;
-		
-	// 	// flex-grow: 1; // breaks .ez5-quicksearch-input
-
-	// 	// ? commented out: because this interferes with tag styles in admin, could not find use case
-	// 	// todo: remove if obsolete
-	// 	// see .cui-pool-selector.ez5-pool-field in the .cui-search-selector
-	// 	// .cui-label {
-	// 	// 	width: 100%;
-
-	// 	// 	> .cui-data-field {
-	// 	// 		width: 100%;
-	// 	// 	}
-	// 	// }
-	// }
 
 	&.cui-maximize-horizontal {
 		&.cui-output {
@@ -83,15 +44,8 @@
 		}
 	}
 
-	&--full-width {
+	&.cui-data-field--full-width {
 		width: 100%;
-		// max-width: 100%;
-
-		// &.cui-select {
-		// 	> .cui-button {
-		// 		max-width: none;
-		// 	}
-		// }
 	}
 
 	.cui-object-dumper.cui-list-view {
@@ -104,7 +58,7 @@
 		}
 	}
 
-	&--with-button {
+	&.cui-data-field--with-button {
 		display: flex;
 
 		// if focused outline the whole data-field including the right button

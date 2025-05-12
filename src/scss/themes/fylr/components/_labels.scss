@@ -22,7 +22,7 @@ label[data-label-clickable],
 
 		&:not(:empty) + .cui-label-content:not(:empty) {
 			padding-left: 0.5em; // be aware that using :not(XYZ) will add class specificity
-			flex-shrink: 1; // todo: ? the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
+			flex-shrink: 1; // the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
 		}
 	}
 
@@ -46,7 +46,7 @@ label[data-label-clickable],
 
 		// highlight
 		em {
-			background: hsl(55, 100%, 60%); // todo
+			background: hsl(55, 100%, 60%);
 			font-style: normal;
 			padding: 0.05em 0.2em;
 		}
@@ -251,13 +251,6 @@ label[data-label-clickable],
 			white-space: pre-wrap;
 		}
 	}
-
-	// todo ??
-	.cui-label-content span {
-		// white-space: normal;
-		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
-		// example: collection description
-	}
 }
 
 // Manage Overflow
@@ -335,7 +328,6 @@ label[data-label-clickable],
 		margin: 0 0 $spacer-xs;
 	}
 
-	// todo: set font sizes
 	h1 {
 		font-size: $h4-font-size;
 	}
