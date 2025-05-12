@@ -92,7 +92,7 @@ class CUI.ListView extends CUI.SimplePane
 		if @_useCSSGridLayout
 			@__useCSSGridLayout = true
 			@addClass("use-css-grid-layout")
-			CUI.dom.setStyle(@, "--grid-column-count": @__cols.length, "")			
+			CUI.dom.setStyle(@, "--grid-column-count": @__cols.length, "")
 
 		@addClass("cui-list-view")
 
@@ -314,16 +314,16 @@ class CUI.ListView extends CUI.SimplePane
 		on_scroll = =>
 			@__syncScrolling()
 			@_onScroll?()
-			
+
 			if @quadrant[3].scrollTop > 0
 				CUI.dom.addClass(@grid, "is-scrolling-vertically")
-			else 
+			else
 				CUI.dom.removeClass(@grid, "is-scrolling-vertically")
 
 			if @quadrant[3].scrollLeft > 0
 				CUI.dom.addClass(@grid, "is-scrolling-horizontally")
-			else 
-				CUI.dom.removeClass(@grid, "is-scrolling-horizontally")				
+			else
+				CUI.dom.removeClass(@grid, "is-scrolling-horizontally")
 
 		if @__useCSSGridLayout
 			CUI.Events.listen
@@ -332,14 +332,14 @@ class CUI.ListView extends CUI.SimplePane
 				call: (ev) =>
 					if @grid.scrollTop > 0
 						CUI.dom.addClass(@grid, "is-scrolling-vertically")
-					else 
+					else
 						CUI.dom.removeClass(@grid, "is-scrolling-vertically")
 
 					if @grid.scrollLeft > 0
 						CUI.dom.addClass(@grid, "is-scrolling-horizontally")
-					else 
-						CUI.dom.removeClass(@grid, "is-scrolling-horizontally")						
-		else 
+					else
+						CUI.dom.removeClass(@grid, "is-scrolling-horizontally")
+		else
 			CUI.Events.listen
 				node: @quadrant[3]
 				type: "scroll"
