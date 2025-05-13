@@ -481,7 +481,7 @@
 
 	&.cui-lv-td {
 		width: $list-view-move-handle-width;
-		padding-left: 0.5*$table-padding-x;
+		padding-left: 0.5 * $table-padding-x;
 		padding-right: 0;
 		border: 0 !important; // ! column width calculation will be off otherwise
 	}

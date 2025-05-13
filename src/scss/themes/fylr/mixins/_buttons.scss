@@ -35,7 +35,7 @@
 
 	.cui-button-left {
 		padding-left: $padding-x;
-		margin-right: -0.5*$padding-x;
+		margin-right: -0.5 * $padding-x;
 
 		// reset, do not use :not, so we can easily override these styles if needed
 		&:empty,
@@ -47,7 +47,7 @@
 
 	.cui-button-right {
 		padding-right: $padding-x;
-		margin-left: -0.5*$padding-x;
+		margin-left: -0.5 * $padding-x;
 
 		// reset, do not use :not, so we can easily override these styles if needed
 		&:empty,
@@ -64,7 +64,7 @@
 
 		// there are some button that have an empty center element, adjust accordingly
 		&:empty {
-			margin-left: -0.5*$padding-x;
+			margin-left: -0.5 * $padding-x;
 			// display: none; // ! don't hide this, things will blow up
 		}
 	}
@@ -146,7 +146,7 @@
 
 	.ez5-path + & {
 		.cui-button-visual {
-			margin-left: -0.5*$spacer-xs;
+			margin-left: -0.5 * $spacer-xs;
 		}
 	}
 }

@@ -12,6 +12,8 @@
 	// 		}
 	// 	}
 	// }
+
+	/* stylelint-disable-next-line selector-class-pattern */
 	*:not(.customPluginEditorLayout) {
 		[class*='cui-horizontal-layout'],
 		[class*='cui-vertical-layout'] {
@@ -21,6 +23,7 @@
 
 	[class*='cui-horizontal-layout'],
 	[class*='cui-vertical-layout'] {
+		/* stylelint-disable-next-line selector-class-pattern */
 		&:not(.customPluginEditorLayout) {
 			overflow: visible;
 		}

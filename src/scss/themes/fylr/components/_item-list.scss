@@ -113,7 +113,7 @@
 	// --------------------------------
 	// see Menu.coffee, RootMenu.coffee (root has pretty much its own custom styling)
 	&.cui-item-list--has-button-left {
-		$indent: 1.5*$spacer;
+		$indent: 1.5 * $spacer;
 
 		// this button always has a left side
 		.cui-button-left {

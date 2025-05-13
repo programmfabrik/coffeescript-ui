@@ -42,7 +42,7 @@
 
 		// Align buttonbar to the right because we use inverted, borderless buttons in the header
 		> .cui-horizontal-layout-right > .cui-buttonbar {
-			margin-right: -0.5*$layer-padding-x;
+			margin-right: -0.5 * $layer-padding-x;
 
 			@include buttonbar-horizontal-tight();
 		}

@@ -5,7 +5,7 @@
 	max-width: none;
 
 	.cui-button-checkbox {
-		word-break: break-word;
+		overflow-wrap: break-word;
 
 		@include checkbox-sm();
 

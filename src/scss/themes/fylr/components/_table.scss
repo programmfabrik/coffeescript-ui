@@ -52,7 +52,7 @@
 	.cui-td--value {
 		word-wrap: break-word;
 		word-break: break-all;
-		word-break: break-word;
+		overflow-wrap: break-word;
 		padding-left: 0;
 	}
 
@@ -70,7 +70,7 @@
 		margin: $spacer-sm;
 	}
 
-	// with --flex you can set a fixed width for .cui-td--key via --tableDataKeyWidth for an individual cui-table
+	// with --flex you can set a fixed width for .cui-td--key via --table-data-key-width for an individual cui-table
 	&.cui-table--flex {
 		display: inline-flex; // todo: see inline-table above
 		flex-direction: column;
@@ -83,7 +83,7 @@
 		.cui-td--key {
 			flex-shrink: 0;
 			width: $table-data-width;
-			width: var(--tableDataKeyWidth, $table-data-width);
+			width: var(--table-data-key-width, $table-data-width);
 		}
 
 		.cui-td--value {

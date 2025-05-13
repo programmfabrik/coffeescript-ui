@@ -79,7 +79,7 @@
 // Examples: search > Table Options ("Repeat data for each row")
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox, 					// see admin > usermanagement > system-rights
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
-	margin-top: -0.5*$form-cell-gap;
+	margin-top: -0.5 * $form-cell-gap;
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles

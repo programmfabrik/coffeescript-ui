@@ -127,7 +127,8 @@ textarea {
 	margin: auto;
 	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
-
+	
+	// stylelint-disable-next-line selector-class-pattern
 	&.ace_editor {
 		border: 0;
 	}

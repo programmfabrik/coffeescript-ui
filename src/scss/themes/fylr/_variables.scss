@@ -429,7 +429,7 @@ $panel-content-padding: $spacer !default; // * 1.15 !default;
 // * ==========================================
 $toolbar-background: 	transparent !default; // leave transparent by default and style dependent on where the toolbar is used
 $toolbar-padding: 		$component-padding-base !default;
-$toolbar-height: 		$btn-height + calculate-px(2*$toolbar-padding) !default; // make toolbar always visible, even when no buttons are displayed in it yet
+$toolbar-height: 		$btn-height + calculate-px(2 * $toolbar-padding) !default; // make toolbar always visible, even when no buttons are displayed in it yet
 
 // * Pane
 // * ==========================================
@@ -543,7 +543,7 @@ $form-hint-margin-bottom: 	$spacer-sm !default;
 $data-form-utilities-column-width: 			1.15 * $spacer !default;
 $data-form-utilities-count: 				2 !default;
 $data-form-border-offset: 					$spacer-xs !default;
-$data-form-content-offset: 					3*$spacer-xs !default;
+$data-form-content-offset: 					3 * $spacer-xs !default;
 $data-form-field-group-border-color: 		$body-color;
 $data-form-field-group-border-width: 		2px;
 
@@ -552,7 +552,7 @@ $data-form-field-group-border-width: 		2px;
 $block-margin: 				$spacer !default;
 $block-bracket-padding: 	$panel-content-padding !default;
 $block-border-color: 		$table-border-color !default;
-$block-has-checkbox-indent:	2*$spacer-lg !default;
+$block-has-checkbox-indent:	2 * $spacer-lg !default;
 $block-checkbox-indent-width: 215px !default;
 
 

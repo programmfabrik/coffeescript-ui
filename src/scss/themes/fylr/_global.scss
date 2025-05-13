@@ -35,6 +35,7 @@ body {
 	@include disabled();
 }
 
+// stylelint-disable-next-line keyframes-name-pattern
 @keyframes nodeInserted {
 	from { opacity: 0.99; }
 	to { opacity: 1; }

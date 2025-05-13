@@ -108,14 +108,14 @@ $hourglass-colors: $gray-800, $gray-800, $gray-900, $gray-800, $gray-900;
 .cui-hourglass-animation {
 	opacity: 1;
 
-	$_animationSpin: hourglass-spin ($hourglass-animation-speed * 4s) ease-out infinite;
+	$animation-spin: hourglass-spin ($hourglass-animation-speed * 4s) ease-out infinite;
   
 	i {
 		opacity: 0;
 		line-height: inherit; // from fa-stack, makes animation smoother
 		animation:
 			hourglass ($hourglass-animation-speed * 4s) ease-in infinite,
-			$_animationSpin;
+			$animation-spin;
 	}
 
 	@for $i from 1 through 4 {
@@ -128,13 +128,13 @@ $hourglass-colors: $gray-800, $gray-800, $gray-900, $gray-800, $gray-900;
 	& > i:nth-child(4) {
 		animation:
 			hourglass-end ($hourglass-animation-speed * 4s) ease-in infinite,
-			$_animationSpin;
+			$animation-spin;
 	}
 
 	& > i:nth-child(5) {
 		// color: nth($hourglass-colors, 5);
 		opacity: 1;
-		animation: $_animationSpin;
+		animation: $animation-spin;
 	}
 }
 

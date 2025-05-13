@@ -216,7 +216,7 @@ label[data-label-clickable],
 		overflow: visible;
 		text-overflow: clip;
 		word-wrap: break-word;
-		word-break: break-word;
+		overflow-wrap: break-word;
 	}
 
 	&.cui-label-centered {
@@ -263,7 +263,7 @@ label[data-label-clickable],
 
 	&.cui-label--has-overflow-button {
 		> .cui-label-content {
-			margin-bottom: 2*$spacer;
+			margin-bottom: 2 * $spacer;
 		}
 		
 		&:not(.cui-label--show-overflow) > .cui-label-content {

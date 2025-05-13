@@ -9,6 +9,19 @@ module.exports = {
         'scss/dollar-variable-empty-line-before': null,
         'scss/double-slash-comment-empty-line-before': null,
         'scss/at-mixin-argumentless-call-parentheses': 'always',
+        'scss/at-mixin-pattern': [
+            '^_?(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', // This allows kebab-case with an optional starting underscore
+            {
+                message: 'Expected mixin to be kebab-case, mixins can start with an underscore',
+            },
+        ],  
+        'selector-class-pattern': [
+			'^([a-z][a-z0-9]*)(-?-?[a-z0-9]+)*$',
+			{
+				message: (selector) => `Expected class selector "${selector}" to be kebab-case, --modifier is allowed`,
+			},
+		],
+        'scss/comment-no-empty': null,
         'no-empty-source': null,
         'color-hex-length': null,
         'declaration-block-no-redundant-longhand-properties': null,
