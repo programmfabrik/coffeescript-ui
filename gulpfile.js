@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const copy = require('gulp-copy');
 const chokidar = require('chokidar');
 const rename = require('gulp-rename');
 const svgstore = require('gulp-svgstore');
@@ -82,9 +83,8 @@ gulp.task('thirdparty', function() {
     'node_modules/leaflet/dist/**/*.+(css|png)',
     'node_modules/leaflet-defaulticon-compatibility/dist/**/*.+(css|png)',
   ], { base: 'node_modules/' })
-  .pipe(gulp.dest('src/scss/thirdparty'));
+    .pipe(copy('src/scss/thirdparty', { prefix: 1 })); // Copy with base directory
 });
-
 
 gulp.task('default', function () {
   const watcher = chokidar.watch(iconsource, {
