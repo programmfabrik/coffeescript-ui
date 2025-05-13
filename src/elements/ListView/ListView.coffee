@@ -574,10 +574,14 @@ class CUI.ListView extends CUI.SimplePane
 		dfr.promise()
 
 	getCellByTarget: ($target) ->
-		if CUI.dom.is($target, ".cui-lv-td")
+		# find the closest listview cell element of the mousemove target
+		# this is necessary when the mousemove target is a descendant of the cell and the cell element itself never gets to be the direct event target
+		target = CUI.dom.closest($target, ".cui-lv-td")
+
+		if target
 			cell =
-				col_i: parseInt($target.getAttribute("col"))
-				row_i: parseInt($target.getAttribute("row"))
+				col_i: parseInt(target.getAttribute("col"))
+				row_i: parseInt(target.getAttribute("row"))
 
 			cell.display_col_i = @getDisplayColIdx(cell.col_i)
 			cell.display_row_i = @getDisplayRowIdx(cell.row_i)
