@@ -129,7 +129,7 @@
 	}
 
 	.cui-buttonbar-group-time {
-		.cui-select:not(.cui-date-time-am-pm-select):not(:first-child)::before {
+		.cui-select:not(.cui-date-time-am-pm-select, :first-child)::before {
 			content: ':';
 			position: relative;
 			top: 4px;
@@ -315,7 +315,7 @@
 
 	.cui-date-time-now {
 		span {
-			border: 1px solid currentColor;
+			border: 1px solid currentcolor;
 		}
 	}
 

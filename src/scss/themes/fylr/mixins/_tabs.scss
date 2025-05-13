@@ -118,13 +118,13 @@
 
 @mixin tabs-horizontal-sm() {
 	.cui-tabs-pane-header {
-		@include _tabs-sm;
+		@include _tabs-sm();
 	}
 }
 
 @mixin tabs-vertical-sm() {
 	.cui-tabs-pane-header {
-		@include _tabs-sm;
+		@include _tabs-sm();
 	}
 }
 

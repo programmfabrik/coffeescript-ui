@@ -1,49 +1,76 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var rename = require('gulp-rename');
-var svgstore = require('gulp-svgstore');
-var svgmin = require('gulp-svgmin');
-var cheerio = require('gulp-cheerio');
-var through2 = require('through2');
+const gulp = require('gulp');
+const chokidar = require('chokidar');
+const rename = require('gulp-rename');
+const svgstore = require('gulp-svgstore');
+const svgmin = require('gulp-svgmin');
+const cheerio = require('cheerio');
+const through2 = require('through2');
+const Vinyl = require('vinyl'); // required if you use newer Vinyl versions
 
 // result filename "icons.svg" is the name of base directory of the first file.
-var iconsource = ['src/scss/icons/*.svg', '!src/scss/icons/icons.svg']
+const iconsource = ['src/scss/icons/*.svg', '!src/scss/icons/icons.svg']
 
-gulp.task('svgstore', function() {
+gulp.task('svgstore', function () {
   return gulp
-    .src(iconsource)
-    .pipe(rename({prefix: 'svg-'}))
-    .pipe(svgmin())
-    .pipe(cheerio({
-      run: function ($) {
-        // remove green-screen color
-        $('[fill="#023979"]').removeAttr('fill').parents('[fill="none"]').removeAttr('fill');
-        $('[fill="#50E3C2"]').attr('fill', 'currentColor').parents('[fill="none"]').removeAttr('fill');
-      },
-      parserOptions: { xmlMode: true }
-    }))
-    .pipe(svgstore())
+    .src(iconsource) // Your icons source path
+    .pipe(rename({ prefix: 'svg-' }))
+    .pipe(svgmin()) // Minifying SVGs
     .pipe(through2.obj(function (file, encoding, cb) {
-      var $ = file.cheerio;
-      var data = $('svg > symbol').map(function () {
-        var viewBox = $(this).attr('viewBox').split(" ")
-        return [
-          '.'+ $(this).attr('id') + ' {' +
-            ' width: ' + viewBox[2] + 'px;' +
-            ' height: ' + viewBox[3] + 'px; ' +
-          '}'
-        ];
+      // Load the SVG contents using Cheerio
+      const $ = cheerio.load(file.contents.toString(), { xmlMode: true });
+
+      const $svg = $('svg');
+
+      // If viewBox is missing but width & height are present, add a viewBox
+      const width = parseFloat($svg.attr('width'));
+      const height = parseFloat($svg.attr('height'));
+    
+      if (!$svg.attr('viewBox') && width && height) {
+        $svg.attr('viewBox', `0 0 ${width} ${height}`);
+      }      
+
+      // Perform your manipulation with Cheerio
+      $('[fill="#023979"]').removeAttr('fill').parents('[fill="none"]').removeAttr('fill');
+      $('[fill="#50E3C2"]').attr('fill', 'currentColor').parents('[fill="none"]').removeAttr('fill');
+
+      // Update the file contents after manipulation
+      file.contents = Buffer.from($.xml()); // Ensure it’s still in XML format
+
+      cb(null, file);
+    }))
+    .pipe(svgstore()) // Combine the SVGs into a sprite
+    .pipe(through2.obj(function (file, encoding, cb) {
+      const $ = cheerio.load(file.contents.toString(), { xmlMode: true });
+
+      // Generate CSS for the SVG symbols
+      const data = $('svg > symbol').map(function () {
+        const viewBox = $(this).attr('viewBox');
+
+        if (viewBox) {
+          const dimensions = viewBox.split(" ");
+          return [
+            '.' + $(this).attr('id') + ' {' +
+            ' width: ' + dimensions[2] + 'px;' +
+            ' height: ' + dimensions[3] + 'px; ' +
+            '}'
+          ];
+        }
       }).get();
-      var cssFile = new gutil.File({
+
+      // Create a new Vinyl file to store the generated CSS
+      const cssFile = new Vinyl({
         path: '_svg-dimensions.scss',
-        contents: new Buffer(data.join("\n"))
+        contents: Buffer.from(data.join("\n"))
       });
+
+      // Push the CSS and the original SVG sprite file
       this.push(cssFile);
       this.push(file);
       cb();
     }))
-    .pipe(gulp.dest('src/scss/icons'));
+    .pipe(gulp.dest('src/scss/icons')); // Output the generated files
 });
+
 
 /**
  * Copy thirdparty CSS modules from node_modules into a thirdparty folder
@@ -58,6 +85,24 @@ gulp.task('thirdparty', function() {
   .pipe(gulp.dest('src/scss/thirdparty'));
 });
 
-gulp.task('default', function(){
-  gulp.watch(iconsource, ['svgstore']);
+
+gulp.task('default', function () {
+  const watcher = chokidar.watch(iconsource, {
+    persistent: true,
+  });
+
+  watcher.on('change', (path) => {
+    console.log(`File ${path} changed. Running svgstore...`);
+    gulp.series('svgstore')(() => {});
+  });
+
+  watcher.on('add', (path) => {
+    console.log(`File ${path} added. Running svgstore...`);
+    gulp.series('svgstore')(() => {});
+  });
+
+  watcher.on('unlink', (path) => {
+    console.log(`File ${path} removed. Running svgstore...`);
+    gulp.series('svgstore')(() => {});
+  });
 });

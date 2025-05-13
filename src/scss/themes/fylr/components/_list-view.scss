@@ -95,7 +95,7 @@
 	width: $list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
 
-	&:not(.cui-lv-row-move-handle-column):not(.cui-lv-td-rotate-90) {
+	&:not(.cui-lv-row-move-handle-column, .cui-lv-td-rotate-90) {
 		min-width: 40px; // make sure the shortest icon-only buttons in the default size are visible in the column
 	}
 	
@@ -226,7 +226,7 @@
 		align-items: flex-end;
 		min-height: auto; // reset min-height, so labels appear centered, when they are in fact aligned "flex-end". Flex-end is needed in case the header contains rotate-90
 
-		&:not(:last-child):not(:empty) {
+		&:not(:last-child, :empty) {
 			border-color: var(--list-view-header-column-border-color);
 			border-width: var(--list-view-header-column-border-width);
 		}
@@ -341,7 +341,7 @@
 		position: relative;
 		overflow: visible;
 
-		&:not(:last-child):not(:empty) {
+		&:not(:last-child, :empty) {
 			border-color: var(--list-view-header-column-border-color);
 			border-width: var(--list-view-header-column-border-width);
 		}
@@ -420,7 +420,7 @@
 
 .cui-list-view-row-selectable,
 .cui-lv-tree-node--is-branch {
-	@include clickable;
+	@include clickable();
 
 	&:hover,
 	&:focus {
@@ -495,7 +495,7 @@
 			display: block;
 			margin: 0;
 			margin-top: 0.45em;
-			cursor: -webkit-grab;
+			cursor: grab;
 			cursor: grab;
 		}
 	}

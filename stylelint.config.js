@@ -1,21 +1,18 @@
 module.exports = {
-	'extends': 'stylelint-config-standard',
+	'extends': 'stylelint-config-standard-scss',
 	"ignoreFiles": [
-		"src/scss/themes/fylr/body_ng.scss",
-		"src/scss/themes/fylr/components/old/*.scss",
 		"src/scss/themes/debug/*.scss",
 		"src/scss/themes/ng/*.scss",
 	],
     'rules': {
-        'indentation': 'tab',
-        'string-quotes': 'single',
+        'scss/dollar-variable-colon-space-after': null,
+        'scss/dollar-variable-empty-line-before': null,
+        'scss/double-slash-comment-empty-line-before': null,
+        'scss/at-mixin-argumentless-call-parentheses': 'always',
         'no-empty-source': null,
         'color-hex-length': null,
-        'max-empty-lines': 2,
         'declaration-block-no-redundant-longhand-properties': null,
-        'selector-list-comma-newline-after': null,
         'no-descending-specificity': null,
-        'no-eol-whitespace': null,
         'property-no-unknown': [
             true,
             {

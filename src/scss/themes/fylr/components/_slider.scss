@@ -53,7 +53,7 @@
 		background: $slider-handle-background;
 		border: $slider-handle-border-width solid $slider-handle-border-color;
 		border-radius: $slider-handle-border-radius;
-		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+		box-shadow: 0 1px 3px 0 rgb(0 0 0 / 40%);
 	}
 
 	&-text {

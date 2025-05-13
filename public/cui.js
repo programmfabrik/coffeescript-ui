@@ -22068,7 +22068,7 @@ CUI.CSVData = (function(superClass) {
  */
 var CUI, marked;
 
-marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.cjs");
 
 CUI = (function() {
   function CUI() {}
@@ -35039,7 +35039,7 @@ CoordinatesParser = __webpack_require__(/*! coordinate-parser */ "../node_module
 
 CoordinatesFormat = __webpack_require__(/*! formatcoords */ "../node_modules/formatcoords/index.js");
 
-marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.cjs");
 
 moment = __webpack_require__(/*! moment */ "../node_modules/moment/moment.js");
 
@@ -43677,7 +43677,7 @@ var marked,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.cjs");
 
 CUI.DocumentBrowser = (function(superClass) {
   extend(DocumentBrowser, superClass);
@@ -50735,7 +50735,7 @@ var marked,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.cjs");
 
 CUI.Template.loadTemplateText(__webpack_require__(/*! ./Label.html */ "./elements/Label/Label.html"));
 
@@ -57127,7 +57127,7 @@ var marked,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.js");
+marked = __webpack_require__(/*! marked */ "../node_modules/marked/lib/marked.cjs");
 
 CUI.MarkdownInput = (function(superClass) {
   extend(MarkdownInput, superClass);
@@ -65570,9 +65570,25 @@ module.exports = formatcoords;
 /*!***************************************!*\
   !*** ./base/DataField/DataField.html ***!
   \***************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"data-field\"></div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="data-field"></div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65580,9 +65596,29 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*******************************!*\
   !*** ./base/Layer/Layer.html ***!
   \*******************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"layer-root\" class=\"cui-layer-root\"></div>\n<div data-template=\"layer\" class=\"cui-layer\"></div>\n<div data-template=\"layer-backdrop\" class=\"cui-layer-backdrop\"></div>\n<div data-template=\"layer-pointer\" class=\"cui-layer-pointer\"></div>\n\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="layer-root" class="cui-layer-root"></div>
+<div data-template="layer" class="cui-layer"></div>
+<div data-template="layer-backdrop" class="cui-layer-backdrop"></div>
+<div data-template="layer-pointer" class="cui-layer-pointer"></div>
+
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65590,9 +65626,27 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***********************************!*\
   !*** ./elements/Block/Block.html ***!
   \***********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"block\" class=\"cui-block\">\n\t<div class=\"cui-block-header\"></div>\n\t<div class=\"cui-block-content\"></div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="block" class="cui-block">
+	<div class="cui-block-header"></div>
+	<div class="cui-block-content"></div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65600,9 +65654,39 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*************************************************!*\
   !*** ./elements/BorderLayout/BorderLayout.html ***!
   \*************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"border-layout\" class=\"cui-vertical-layout cui-layout\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-border-layout-north cui-vertical-layout-top\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-border-layout-north; name: north; direction: column;\"  data-cui-absolute-set=\"top\"></div>\n\t<div class=\"cui-border-layout-main cui-vertical-layout-center\" data-cui-absolute-set=\"top,bottom\">\n\t\t<div class=\"cui-border-layout-row cui-horizontal-layout cui-maximize cui-maximize-vertical cui-maximize-horizontal cui-layout\" data-cui-absolute-container=\"row\" >\n\t\t\t<div class=\"cui-border-layout-west cui-horizontal-layout-left\"></div>\n\t\t\t<div data-cui-flex-handle=\"pane: .cui-border-layout-west; name: west; direction: row;\" data-cui-absolute-set=\"left\"></div>\n\t\t\t<div class=\"cui-border-layout-center cui-horizontal-layout-center\" data-cui-absolute-set=\"left,right\"></div>\n\t\t\t<div data-cui-flex-handle=\"pane: .cui-border-layout-east; name: east; direction: row;\" data-cui-absolute-set=\"right\"></div>\n\t\t\t<div class=\"cui-border-layout-east cui-horizontal-layout-right\"></div>\n\t\t</div>\n\t</div>\n\t<div data-cui-flex-handle=\"pane: .cui-border-layout-south; name: south; direction: column;\" data-cui-absolute-set=\"bottom\"></div>\n\t<div class=\"cui-border-layout-south cui-vertical-layout-bottom\" ></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="border-layout" class="cui-vertical-layout cui-layout" data-cui-absolute-container="column">
+	<div class="cui-border-layout-north cui-vertical-layout-top"></div>
+	<div data-cui-flex-handle="pane: .cui-border-layout-north; name: north; direction: column;"  data-cui-absolute-set="top"></div>
+	<div class="cui-border-layout-main cui-vertical-layout-center" data-cui-absolute-set="top,bottom">
+		<div class="cui-border-layout-row cui-horizontal-layout cui-maximize cui-maximize-vertical cui-maximize-horizontal cui-layout" data-cui-absolute-container="row" >
+			<div class="cui-border-layout-west cui-horizontal-layout-left"></div>
+			<div data-cui-flex-handle="pane: .cui-border-layout-west; name: west; direction: row;" data-cui-absolute-set="left"></div>
+			<div class="cui-border-layout-center cui-horizontal-layout-center" data-cui-absolute-set="left,right"></div>
+			<div data-cui-flex-handle="pane: .cui-border-layout-east; name: east; direction: row;" data-cui-absolute-set="right"></div>
+			<div class="cui-border-layout-east cui-horizontal-layout-right"></div>
+		</div>
+	</div>
+	<div data-cui-flex-handle="pane: .cui-border-layout-south; name: south; direction: column;" data-cui-absolute-set="bottom"></div>
+	<div class="cui-border-layout-south cui-vertical-layout-bottom" ></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65610,9 +65694,36 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*************************************!*\
   !*** ./elements/Button/Button.html ***!
   \*************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-left-center\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n</div>\n<div data-template=\"button-center-right\" class=\"cui-button-center-right\">\n    <div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</div>\n<div data-template=\"button-center\" class=\"cui-button-center\">\n    <div class=\"cui-button-center\"></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="button">
+    <div class="cui-button-left"></div><div class="cui-button-center"></div><div class="cui-button-right"></div>
+</div>
+<div data-template="button-left-center">
+    <div class="cui-button-left"></div><div class="cui-button-center"></div>
+</div>
+<div data-template="button-center-right" class="cui-button-center-right">
+    <div class="cui-button-center"></div><div class="cui-button-right"></div>
+</div>
+<div data-template="button-center" class="cui-button-center">
+    <div class="cui-button-center"></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65620,9 +65731,29 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*****************************************!*\
   !*** ./elements/Button/ButtonHref.html ***!
   \*****************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<a data-template=\"buttonHref\">\n    <div class=\"cui-button-left\"></div>\n    <div class=\"cui-button-center\"></div>\n    <div class=\"cui-button-right\"></div>\n</a>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<a data-template="buttonHref">
+    <div class="cui-button-left"></div>
+    <div class="cui-button-center"></div>
+    <div class="cui-button-right"></div>
+</a>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65630,9 +65761,31 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!********************************************!*\
   !*** ./elements/Button/ButtonHref_ng.html ***!
   \********************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<a data-template=\"buttonHref-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div>\n\t\t<div class=\"cui-button-center\"></div>\n\t\t<div class=\"cui-button-right\"></div>\n\t</div>\n</a>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<a data-template="buttonHref-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-left"></div>
+		<div class="cui-button-center"></div>
+		<div class="cui-button-right"></div>
+	</div>
+</a>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65640,9 +65793,49 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!****************************************!*\
   !*** ./elements/Button/Button_ng.html ***!
   \****************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"button-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</div>\n<div data-template=\"button-left-center-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div>\n\t</div>\n</div>\n<div data-template=\"button-left-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div>\n\t</div>\n</div>\n<div data-template=\"button-center-right-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</div>\n<div data-template=\"button-center-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-center\"></div>\n\t</div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="button-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-left"></div><div class="cui-button-center"></div><div class="cui-button-right"></div>
+	</div>
+</div>
+<div data-template="button-left-center-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-left"></div><div class="cui-button-center"></div>
+	</div>
+</div>
+<div data-template="button-left-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-left"></div>
+	</div>
+</div>
+<div data-template="button-center-right-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-center"></div><div class="cui-button-right"></div>
+	</div>
+</div>
+<div data-template="button-center-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-center"></div>
+	</div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65650,9 +65843,26 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!****************************************!*\
   !*** ./elements/Button/Buttonbar.html ***!
   \****************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"buttonbar\">\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="buttonbar">
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65660,9 +65870,62 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*****************************************!*\
   !*** ./elements/DateTime/DateTime.html ***!
   \*****************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"date-time\" class=\"cui-date-time-popover-inner\">\n\t<div class=\"cui-date-time-header\">\n\t\t<div class=\"cui-date-time-header-left\"></div>\n\t\t<div class=\"cui-date-time-header-center\"></div>\n\t\t<div class=\"cui-date-time-header-right\"></div>\n\t</div>\n\t<div class=\"cui-date-time-browser\">\n\t\t<div class=\"cui-date-time-calendar\"></div>\n\t\t<div class=\"cui-date-time-clock\">\n\t\t\t<div class=\"cui-date-time-analog-clock\">\n\t\t\t\t<div class=\"cui-date-time-face\">\n\t\t\t\t\t<div class=\"cui-date-time-hour\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-minute\"></div>\n\t\t\t\t\t<div class=\"cui-date-time-second\"></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"cui-date-time-hour-minute\"></div>\n\t\t\t<div class=\"cui-date-time-digi-clock cui-date-time-digi-clock\"></div>\n\t\t</div>\n\t</div>\n\t<!--\n\t<table class=\"cui-date-time-timezone-display-table\">\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<div class=\"cui-date-time-timezone-display\"></div>\n\t\t\t</td>\n\t\t</tr>\n\t</table>-->\n</div>\n<div data-template=\"date-time-input\">\n\t<div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n\t<div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="date-time" class="cui-date-time-popover-inner">
+	<div class="cui-date-time-header">
+		<div class="cui-date-time-header-left"></div>
+		<div class="cui-date-time-header-center"></div>
+		<div class="cui-date-time-header-right"></div>
+	</div>
+	<div class="cui-date-time-browser">
+		<div class="cui-date-time-calendar"></div>
+		<div class="cui-date-time-clock">
+			<div class="cui-date-time-analog-clock">
+				<div class="cui-date-time-face">
+					<div class="cui-date-time-hour"></div>
+					<div class="cui-date-time-minute"></div>
+					<div class="cui-date-time-second"></div>
+				</div>
+			</div>
+			<div class="cui-date-time-hour-minute"></div>
+			<div class="cui-date-time-digi-clock cui-date-time-digi-clock"></div>
+		</div>
+	</div>
+	<!--
+	<table class="cui-date-time-timezone-display-table">
+		<tr>
+			<td>
+				<div class="cui-date-time-timezone"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="cui-date-time-timezone-display"></div>
+			</td>
+		</tr>
+	</table>-->
+</div>
+<div data-template="date-time-input">
+	<div class="cui-data-field-center" data-slot="center"></div>
+	<div class="cui-data-field-right" data-slot="right"></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65670,9 +65933,32 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***************************************************!*\
   !*** ./elements/FileUpload/FileUploadButton.html ***!
   \***************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<label for=\"cui-file-upload-button\" data-template=\"file-upload-button\">\n    <div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n</label>\n<label for=\"cui-file-upload-button\" data-template=\"file-upload-button-ng\">\n\t<div class=\"cui-button-visual\">\n\t\t<div class=\"cui-button-left\"></div><div class=\"cui-button-center\"></div><div class=\"cui-button-right\"></div>\n\t</div>\n</label>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<label for="cui-file-upload-button" data-template="file-upload-button">
+    <div class="cui-button-left"></div><div class="cui-button-center"></div><div class="cui-button-right"></div>
+</label>
+<label for="cui-file-upload-button" data-template="file-upload-button-ng">
+	<div class="cui-button-visual">
+		<div class="cui-button-left"></div><div class="cui-button-center"></div><div class="cui-button-right"></div>
+	</div>
+</label>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65680,9 +65966,49 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*********************************************************!*\
   !*** ./elements/HorizontalLayout/HorizontalLayout.html ***!
   \*********************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"horizontal-layout\" data-cui-absolute-container=\"row\">\n\t<div class=\"cui-horizontal-layout-left\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-horizontal-layout-left; name: left; direction: horizontal;\" data-cui-absolute-set=\"left\"></div>\n\t<div class=\"cui-horizontal-layout-center\" data-cui-absolute-set=\"left,right\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-horizontal-layout-right; name: right; direction: horizontal;\" data-cui-absolute-set=\"right\"></div>\n\t<div class=\"cui-horizontal-layout-right\"></div>\n</div>\n<div data-template=\"horizontal-layout-left-center-right\" data-cui-absolute-container=\"row\">\n\t<div class=\"cui-horizontal-layout-left\"></div>\n\t<div class=\"cui-horizontal-layout-center\" data-cui-absolute-set=\"left,right\"></div>\n\t<div class=\"cui-horizontal-layout-right\"></div>\n</div>\n<div data-template=\"horizontal-layout-center-right\" data-cui-absolute-container=\"row\">\n\t<div class=\"cui-horizontal-layout-center\" data-cui-absolute-set=\"right\"></div>\n\t<div class=\"cui-horizontal-layout-right\"></div>\n</div>\n<div data-template=\"horizontal-layout-left-center\" data-cui-absolute-container=\"row\">\n\t<div class=\"cui-horizontal-layout-left\" data-cui-absolute-set=\"left\"></div>\n\t<div class=\"cui-horizontal-layout-center\"></div>\n</div>\n<div data-template=\"horizontal-layout-center\" data-cui-absolute-container=\"row\">\n\t<div class=\"cui-horizontal-layout-center\"></div>\n</div>\n\n\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="horizontal-layout" data-cui-absolute-container="row">
+	<div class="cui-horizontal-layout-left"></div>
+	<div data-cui-flex-handle="pane: .cui-horizontal-layout-left; name: left; direction: horizontal;" data-cui-absolute-set="left"></div>
+	<div class="cui-horizontal-layout-center" data-cui-absolute-set="left,right"></div>
+	<div data-cui-flex-handle="pane: .cui-horizontal-layout-right; name: right; direction: horizontal;" data-cui-absolute-set="right"></div>
+	<div class="cui-horizontal-layout-right"></div>
+</div>
+<div data-template="horizontal-layout-left-center-right" data-cui-absolute-container="row">
+	<div class="cui-horizontal-layout-left"></div>
+	<div class="cui-horizontal-layout-center" data-cui-absolute-set="left,right"></div>
+	<div class="cui-horizontal-layout-right"></div>
+</div>
+<div data-template="horizontal-layout-center-right" data-cui-absolute-container="row">
+	<div class="cui-horizontal-layout-center" data-cui-absolute-set="right"></div>
+	<div class="cui-horizontal-layout-right"></div>
+</div>
+<div data-template="horizontal-layout-left-center" data-cui-absolute-container="row">
+	<div class="cui-horizontal-layout-left" data-cui-absolute-set="left"></div>
+	<div class="cui-horizontal-layout-center"></div>
+</div>
+<div data-template="horizontal-layout-center" data-cui-absolute-container="row">
+	<div class="cui-horizontal-layout-center"></div>
+</div>
+
+
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65690,9 +66016,25 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*****************************************!*\
   !*** ./elements/ItemList/ItemList.html ***!
   \*****************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"item-list-body\" class=\"cui-item-list-body\"></div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="item-list-body" class="cui-item-list-body"></div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65700,9 +66042,36 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***********************************!*\
   !*** ./elements/Label/Label.html ***!
   \***********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"label\" class=\"cui-label\">\n\t<div class=\"cui-label-icon\"></div>\n\t<div class=\"cui-label-content\"></div>\n</div>\n<div data-template=\"label-no-icon\">\n\t<div class=\"cui-label-content\"></div>\n</div>\n<div data-template=\"label-rotate-90\" class=\"cui-label-rotate-90\">\n\t<div class=\"cui-label-transform\">\n\t\t<div class=\"cui-label-icon\"></div>\n\t\t<div class=\"cui-label-content\"></div>\n\t</div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="label" class="cui-label">
+	<div class="cui-label-icon"></div>
+	<div class="cui-label-content"></div>
+</div>
+<div data-template="label-no-icon">
+	<div class="cui-label-content"></div>
+</div>
+<div data-template="label-rotate-90" class="cui-label-rotate-90">
+	<div class="cui-label-transform">
+		<div class="cui-label-icon"></div>
+		<div class="cui-label-content"></div>
+	</div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65710,9 +66079,17 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***********************************************!*\
   !*** ./elements/Map/leaflet.attribution.html ***!
   \***********************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65720,9 +66097,26 @@ module.exports = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> 
 /*!*************************************!*\
   !*** ./elements/Map/map-input.html ***!
   \*************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-field-left\" data-slot=\"left\"></div>\n    <div class=\"cui-data-field-center\" data-slot=\"center\"></div>\n    <div class=\"cui-data-field-right\" data-slot=\"right\"></div>\n</div>\n\n<div class=\"cui-icon-marker-container\" data-template=\"map-div-marker\">\n    <div data-slot=\"icon\"></div>\n    <div class=\"cui-icon-marker-arrow\" data-slot=\"arrow\"></div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<div data-template="map-input">
+    <div class="cui-data-field-left" data-slot="left"></div>
+    <div class="cui-data-field-center" data-slot="center"></div>
+    <div class="cui-data-field-right" data-slot="right"></div>
+</div>
+
+<div class="cui-icon-marker-container" data-template="map-div-marker">
+    <div data-slot="icon"></div>
+    <div class="cui-icon-marker-arrow" data-slot="arrow"></div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65730,9 +66124,29 @@ module.exports = "<div data-template=\"map-input\">\n    <div class=\"cui-data-f
 /*!*******************************!*\
   !*** ./elements/Map/map.html ***!
   \*******************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-buttons-top\">\n        <div data-slot=\"buttons-upper-left\" class=\"buttons-upper-left\"></div>\n        <div data-slot=\"buttons-upper-center\" class=\"buttons-upper-center\"></div>\n        <div data-slot=\"buttons-upper-right\" class=\"buttons-upper-right\"></div>\n    </div>\n    <div data-slot=\"center\"></div>\n    <div class=\"cui-map-buttons-bottom\">\n        <div data-slot=\"buttons-bottom-left\" class=\"buttons-bottom-left\"></div>\n        <div data-slot=\"buttons-bottom-center\" class=\"buttons-bottom-center\"></div>\n        <div data-slot=\"buttons-bottom-right\" class=\"buttons-bottom-right\"></div>\n    </div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<div data-template="map">
+    <div class="cui-map-buttons-top">
+        <div data-slot="buttons-upper-left" class="buttons-upper-left"></div>
+        <div data-slot="buttons-upper-center" class="buttons-upper-center"></div>
+        <div data-slot="buttons-upper-right" class="buttons-upper-right"></div>
+    </div>
+    <div data-slot="center"></div>
+    <div class="cui-map-buttons-bottom">
+        <div data-slot="buttons-bottom-left" class="buttons-bottom-left"></div>
+        <div data-slot="buttons-bottom-center" class="buttons-bottom-center"></div>
+        <div data-slot="buttons-bottom-right" class="buttons-bottom-right"></div>
+    </div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65740,9 +66154,28 @@ module.exports = "<div data-template=\"map\">\n    <div class=\"cui-map-buttons-
 /*!**************************************************!*\
   !*** ./elements/MultiInput/MultiInputInput.html ***!
   \**************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"data-field-multi-input\">\n\t<div class=\"cui-data-field-multi-input-center\"></div>\n\t<div class=\"cui-data-field-multi-input-right\"></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="data-field-multi-input">
+	<div class="cui-data-field-multi-input-center"></div>
+	<div class="cui-data-field-multi-input-right"></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65750,9 +66183,28 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***********************************************!*\
   !*** ./elements/MultiOutput/MultiOutput.html ***!
   \***********************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div class=\"cui-data-field-multi-output\" data-template=\"data-field-multi-output\">\n\t<div class=\"cui-data-field-multi-output-center\"></div>\n\t<div class=\"cui-data-field-multi-output-aside\"></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div class="cui-data-field-multi-output" data-template="data-field-multi-output">
+	<div class="cui-data-field-multi-output-center"></div>
+	<div class="cui-data-field-multi-output-aside"></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65760,9 +66212,37 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***************************************!*\
   !*** ./elements/Options/Options.html ***!
   \***************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"options-activatable\" class=\"cui-options-activatable\">\n\t<div class=\"cui-options-top\"></div>\n\t<div class=\"cui-options-center\">\n\t\t<div class=\"cui-options-active\"></div>\n\t\t<div class=\"cui-options-inactive\"></div>\n\t</div>\n\t<div class=\"cui-options-bottom\"></div>\n</div>\n<div data-template=\"options\" class=\"cui-options\">\n\t<div class=\"cui-options-top\"></div>\n\t<div class=\"cui-options-center\"></div>\n\t<div class=\"cui-options-bottom\"></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="options-activatable" class="cui-options-activatable">
+	<div class="cui-options-top"></div>
+	<div class="cui-options-center">
+		<div class="cui-options-active"></div>
+		<div class="cui-options-inactive"></div>
+	</div>
+	<div class="cui-options-bottom"></div>
+</div>
+<div data-template="options" class="cui-options">
+	<div class="cui-options-top"></div>
+	<div class="cui-options-center"></div>
+	<div class="cui-options-bottom"></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65770,9 +66250,30 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*********************************!*\
   !*** ./elements/Pane/Pane.html ***!
   \*********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"pane-fill-screen\" class=\"cui-pane-fill-screen\">\n\t<div class=\"cui-pane-fill-screen\">\n\t\t<div class=\"cui-pane-fill-screen-inner\"><div style=\"background-color: black; height:100%;\"></div></div>\n\t</div>\n</div>\n<div data-template=\"pane-fill-screen-placeholder\">Placeholder</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="pane-fill-screen" class="cui-pane-fill-screen">
+	<div class="cui-pane-fill-screen">
+		<div class="cui-pane-fill-screen-inner"><div style="background-color: black; height:100%;"></div></div>
+	</div>
+</div>
+<div data-template="pane-fill-screen-placeholder">Placeholder</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65780,9 +66281,30 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***********************************!*\
   !*** ./elements/Panel/Panel.html ***!
   \***********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"panel\" class=\"cui-panel\">\n\t<div class=\"cui-panel-header\">\n\t</div>\n\t<div class=\"cui-panel-body\">\n\t\t<div class=\"cui-panel-content\"></div>\n\t</div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="panel" class="cui-panel">
+	<div class="cui-panel-header">
+	</div>
+	<div class="cui-panel-body">
+		<div class="cui-panel-content"></div>
+	</div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65790,9 +66312,33 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!***************************************************!*\
   !*** ./elements/ProgressMeter/ProgressMeter.html ***!
   \***************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"progress-meter\" class=\"cui-progress-meter\">\n\t<div class=\"cui-progress-meter-bar\">\n\t\t<div class=\"cui-progress-meter-fill-background\"></div>\n\t\t<div class=\"cui-progress-meter-fill\">\n\t\t\t<div class=\"cui-progress-meter-fill-inner\"></div>\n\t\t</div>\n\t\t<div class=\"cui-progress-meter-text\"></div>\n\t\t<div class=\"cui-progress-meter-icon\"></div>\n\t</div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="progress-meter" class="cui-progress-meter">
+	<div class="cui-progress-meter-bar">
+		<div class="cui-progress-meter-fill-background"></div>
+		<div class="cui-progress-meter-fill">
+			<div class="cui-progress-meter-fill-inner"></div>
+		</div>
+		<div class="cui-progress-meter-text"></div>
+		<div class="cui-progress-meter-icon"></div>
+	</div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65800,9 +66346,24 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*************************************!*\
   !*** ./elements/Slider/Slider.html ***!
   \*************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<div data-template='slider'>\n\t<div data-slot='track_visual' class='cui-slider-track-visual'></div>\n\t<div data-slot='track' class='cui-slider-track'>\n\t\t<div data-slot='handle' class='cui-slider-handle'></div>\n\t</div>\n</div>\n\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<div data-template='slider'>
+	<div data-slot='track_visual' class='cui-slider-track-visual'></div>
+	<div data-slot='track' class='cui-slider-track'>
+		<div data-slot='handle' class='cui-slider-handle'></div>
+	</div>
+</div>
+
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65810,9 +66371,26 @@ module.exports = "<div data-template='slider'>\n\t<div data-slot='track_visual' 
 /*!*************************************************!*\
   !*** ./elements/StickyHeader/StickyHeader.html ***!
   \*************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"sticky-header\" class=\"cui-sticky-header\">\n\t<div class=\"cui-sticky-header-center\"></div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="sticky-header" class="cui-sticky-header">
+	<div class="cui-sticky-header-center"></div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65820,9 +66398,25 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!********************************!*\
   !*** ./elements/Tabs/Tab.html ***!
   \********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"tab-body\" class=\"cui-tab-body\"></div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="tab-body" class="cui-tab-body"></div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65830,9 +66424,24 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*********************************!*\
   !*** ./elements/Tabs/Tabs.html ***!
   \*********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"tabs-bodies\" class=\"cui-tabs-bodies\"></div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="tabs-bodies" class="cui-tabs-bodies"></div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65840,9 +66449,47 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*****************************************************!*\
   !*** ./elements/VerticalLayout/VerticalLayout.html ***!
   \*****************************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"vertical-layout\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-vertical-layout-top\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-vertical-layout-top; name: top; direction: vertical;\" data-cui-absolute-set=\"top\"></div>\n\t<div class=\"cui-vertical-layout-center\" data-cui-absolute-set=\"top,bottom\"></div>\n\t<div data-cui-flex-handle=\"pane: .cui-vertical-layout-bottom; name: bottom; direction: vertical;\" data-cui-absolute-set=\"bottom\"></div>\n\t<div class=\"cui-vertical-layout-bottom\"></div>\n</div>\n<div data-template=\"vertical-layout-top-center-bottom\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-vertical-layout-top\"></div>\n\t<div class=\"cui-vertical-layout-center\" data-cui-absolute-set=\"top,bottom\"></div>\n\t<div class=\"cui-vertical-layout-bottom\"></div>\n</div>\n<div data-template=\"vertical-layout-top-center\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-vertical-layout-top\"></div>\n\t<div class=\"cui-vertical-layout-center\" data-cui-absolute-set=\"top\"></div>\n</div>\n<div data-template=\"vertical-layout-center-bottom\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-vertical-layout-center\" data-cui-absolute-set=\"bottom\"></div>\n\t<div class=\"cui-vertical-layout-bottom\"></div>\n</div>\n<div data-template=\"vertical-layout-center\" data-cui-absolute-container=\"column\">\n\t<div class=\"cui-vertical-layout-center\"></div>\n</div>\n";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="vertical-layout" data-cui-absolute-container="column">
+	<div class="cui-vertical-layout-top"></div>
+	<div data-cui-flex-handle="pane: .cui-vertical-layout-top; name: top; direction: vertical;" data-cui-absolute-set="top"></div>
+	<div class="cui-vertical-layout-center" data-cui-absolute-set="top,bottom"></div>
+	<div data-cui-flex-handle="pane: .cui-vertical-layout-bottom; name: bottom; direction: vertical;" data-cui-absolute-set="bottom"></div>
+	<div class="cui-vertical-layout-bottom"></div>
+</div>
+<div data-template="vertical-layout-top-center-bottom" data-cui-absolute-container="column">
+	<div class="cui-vertical-layout-top"></div>
+	<div class="cui-vertical-layout-center" data-cui-absolute-set="top,bottom"></div>
+	<div class="cui-vertical-layout-bottom"></div>
+</div>
+<div data-template="vertical-layout-top-center" data-cui-absolute-container="column">
+	<div class="cui-vertical-layout-top"></div>
+	<div class="cui-vertical-layout-center" data-cui-absolute-set="top"></div>
+</div>
+<div data-template="vertical-layout-center-bottom" data-cui-absolute-container="column">
+	<div class="cui-vertical-layout-center" data-cui-absolute-set="bottom"></div>
+	<div class="cui-vertical-layout-bottom"></div>
+</div>
+<div data-template="vertical-layout-center" data-cui-absolute-container="column">
+	<div class="cui-vertical-layout-center"></div>
+</div>
+`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -65850,9 +66497,30 @@ module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System 
 /*!*******************************************!*\
   !*** ./elements/WaitBlock/WaitBlock.html ***!
   \*******************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-module.exports = "<!--\n * coffeescript-ui - Coffeescript User Interface System (CUI)\n * Copyright (c) 2013 - 2016 Programmfabrik GmbH\n * MIT Licence\n * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org\n-->\n\n<div data-template=\"wait-block\" class=\"cui-wait-block\">\n\t<div class=\"cui-wait-block-glass\"></div>\n\t<div class=\"cui-wait-block-inner\">\n\t\t<div class=\"cui-wait-block-header\"></div>\n\t\t<div class=\"cui-wait-block-content\"></div>\n\t</div>\n</div>";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = `<!--
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+-->
+
+<div data-template="wait-block" class="cui-wait-block">
+	<div class="cui-wait-block-glass"></div>
+	<div class="cui-wait-block-inner">
+		<div class="cui-wait-block-header"></div>
+		<div class="cui-wait-block-content"></div>
+	</div>
+</div>`;
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ }),
 
@@ -80617,1716 +81285,6 @@ module.exports = function (options) {
 
 /***/ }),
 
-/***/ "../node_modules/marked/lib/marked.js":
-/*!********************************************!*\
-  !*** ../node_modules/marked/lib/marked.js ***!
-  \********************************************/
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-/**
- * marked - a markdown parser
- * Copyright (c) 2011-2018, Christopher Jeffrey. (MIT Licensed)
- * https://github.com/markedjs/marked
- */
-
-;(function(root) {
-'use strict';
-
-/**
- * Block-Level Grammar
- */
-
-var block = {
-  newline: /^\n+/,
-  code: /^( {4}[^\n]+\n*)+/,
-  fences: /^ {0,3}(`{3,}|~{3,})([^`~\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?:\n+|$)|$)/,
-  hr: /^ {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\* *){3,})(?:\n+|$)/,
-  heading: /^ {0,3}(#{1,6}) +([^\n]*?)(?: +#+)? *(?:\n+|$)/,
-  blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
-  list: /^( {0,3})(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
-  html: '^ {0,3}(?:' // optional indentation
-    + '<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
-    + '|comment[^\\n]*(\\n+|$)' // (2)
-    + '|<\\?[\\s\\S]*?\\?>\\n*' // (3)
-    + '|<![A-Z][\\s\\S]*?>\\n*' // (4)
-    + '|<!\\[CDATA\\[[\\s\\S]*?\\]\\]>\\n*' // (5)
-    + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:\\n{2,}|$)' // (6)
-    + '|<(?!script|pre|style)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:\\n{2,}|$)' // (7) open tag
-    + '|</(?!script|pre|style)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:\\n{2,}|$)' // (7) closing tag
-    + ')',
-  def: /^ {0,3}\[(label)\]: *\n? *<?([^\s>]+)>?(?:(?: +\n? *| *\n *)(title))? *(?:\n+|$)/,
-  nptable: noop,
-  table: noop,
-  lheading: /^([^\n]+)\n {0,3}(=+|-+) *(?:\n+|$)/,
-  // regex template, placeholders will be replaced according to different paragraph
-  // interruption rules of commonmark and the original markdown spec:
-  _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html)[^\n]+)*)/,
-  text: /^[^\n]+/
-};
-
-block._label = /(?!\s*\])(?:\\[\[\]]|[^\[\]])+/;
-block._title = /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/;
-block.def = edit(block.def)
-  .replace('label', block._label)
-  .replace('title', block._title)
-  .getRegex();
-
-block.bullet = /(?:[*+-]|\d{1,9}\.)/;
-block.item = /^( *)(bull) ?[^\n]*(?:\n(?!\1bull ?)[^\n]*)*/;
-block.item = edit(block.item, 'gm')
-  .replace(/bull/g, block.bullet)
-  .getRegex();
-
-block.list = edit(block.list)
-  .replace(/bull/g, block.bullet)
-  .replace('hr', '\\n+(?=\\1?(?:(?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$))')
-  .replace('def', '\\n+(?=' + block.def.source + ')')
-  .getRegex();
-
-block._tag = 'address|article|aside|base|basefont|blockquote|body|caption'
-  + '|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption'
-  + '|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe'
-  + '|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option'
-  + '|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr'
-  + '|track|ul';
-block._comment = /<!--(?!-?>)[\s\S]*?-->/;
-block.html = edit(block.html, 'i')
-  .replace('comment', block._comment)
-  .replace('tag', block._tag)
-  .replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/)
-  .getRegex();
-
-block.paragraph = edit(block._paragraph)
-  .replace('hr', block.hr)
-  .replace('heading', ' {0,3}#{1,6} +')
-  .replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
-  .replace('blockquote', ' {0,3}>')
-  .replace('fences', ' {0,3}(?:`{3,}|~{3,})[^`\\n]*\\n')
-  .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
-  .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|!--)')
-  .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
-  .getRegex();
-
-block.blockquote = edit(block.blockquote)
-  .replace('paragraph', block.paragraph)
-  .getRegex();
-
-/**
- * Normal Block Grammar
- */
-
-block.normal = merge({}, block);
-
-/**
- * GFM Block Grammar
- */
-
-block.gfm = merge({}, block.normal, {
-  nptable: /^ *([^|\n ].*\|.*)\n *([-:]+ *\|[-| :]*)(?:\n((?:.*[^>\n ].*(?:\n|$))*)\n*|$)/,
-  table: /^ *\|(.+)\n *\|?( *[-:]+[-| :]*)(?:\n((?: *[^>\n ].*(?:\n|$))*)\n*|$)/
-});
-
-/**
- * Pedantic grammar (original John Gruber's loose markdown specification)
- */
-
-block.pedantic = merge({}, block.normal, {
-  html: edit(
-    '^ *(?:comment *(?:\\n|\\s*$)'
-    + '|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)' // closed tag
-    + '|<tag(?:"[^"]*"|\'[^\']*\'|\\s[^\'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))')
-    .replace('comment', block._comment)
-    .replace(/tag/g, '(?!(?:'
-      + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub'
-      + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)'
-      + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b')
-    .getRegex(),
-  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
-  heading: /^ *(#{1,6}) *([^\n]+?) *(?:#+ *)?(?:\n+|$)/,
-  fences: noop, // fences not supported
-  paragraph: edit(block.normal._paragraph)
-    .replace('hr', block.hr)
-    .replace('heading', ' *#{1,6} *[^\n]')
-    .replace('lheading', block.lheading)
-    .replace('blockquote', ' {0,3}>')
-    .replace('|fences', '')
-    .replace('|list', '')
-    .replace('|html', '')
-    .getRegex()
-});
-
-/**
- * Block Lexer
- */
-
-function Lexer(options) {
-  this.tokens = [];
-  this.tokens.links = Object.create(null);
-  this.options = options || marked.defaults;
-  this.rules = block.normal;
-
-  if (this.options.pedantic) {
-    this.rules = block.pedantic;
-  } else if (this.options.gfm) {
-    this.rules = block.gfm;
-  }
-}
-
-/**
- * Expose Block Rules
- */
-
-Lexer.rules = block;
-
-/**
- * Static Lex Method
- */
-
-Lexer.lex = function(src, options) {
-  var lexer = new Lexer(options);
-  return lexer.lex(src);
-};
-
-/**
- * Preprocessing
- */
-
-Lexer.prototype.lex = function(src) {
-  src = src
-    .replace(/\r\n|\r/g, '\n')
-    .replace(/\t/g, '    ')
-    .replace(/\u00a0/g, ' ')
-    .replace(/\u2424/g, '\n');
-
-  return this.token(src, true);
-};
-
-/**
- * Lexing
- */
-
-Lexer.prototype.token = function(src, top) {
-  src = src.replace(/^ +$/gm, '');
-  var next,
-      loose,
-      cap,
-      bull,
-      b,
-      item,
-      listStart,
-      listItems,
-      t,
-      space,
-      i,
-      tag,
-      l,
-      isordered,
-      istask,
-      ischecked;
-
-  while (src) {
-    // newline
-    if (cap = this.rules.newline.exec(src)) {
-      src = src.substring(cap[0].length);
-      if (cap[0].length > 1) {
-        this.tokens.push({
-          type: 'space'
-        });
-      }
-    }
-
-    // code
-    if (cap = this.rules.code.exec(src)) {
-      var lastToken = this.tokens[this.tokens.length - 1];
-      src = src.substring(cap[0].length);
-      // An indented code block cannot interrupt a paragraph.
-      if (lastToken && lastToken.type === 'paragraph') {
-        lastToken.text += '\n' + cap[0].trimRight();
-      } else {
-        cap = cap[0].replace(/^ {4}/gm, '');
-        this.tokens.push({
-          type: 'code',
-          codeBlockStyle: 'indented',
-          text: !this.options.pedantic
-            ? rtrim(cap, '\n')
-            : cap
-        });
-      }
-      continue;
-    }
-
-    // fences
-    if (cap = this.rules.fences.exec(src)) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'code',
-        lang: cap[2] ? cap[2].trim() : cap[2],
-        text: cap[3] || ''
-      });
-      continue;
-    }
-
-    // heading
-    if (cap = this.rules.heading.exec(src)) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'heading',
-        depth: cap[1].length,
-        text: cap[2]
-      });
-      continue;
-    }
-
-    // table no leading pipe (gfm)
-    if (cap = this.rules.nptable.exec(src)) {
-      item = {
-        type: 'table',
-        header: splitCells(cap[1].replace(/^ *| *\| *$/g, '')),
-        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
-        cells: cap[3] ? cap[3].replace(/\n$/, '').split('\n') : []
-      };
-
-      if (item.header.length === item.align.length) {
-        src = src.substring(cap[0].length);
-
-        for (i = 0; i < item.align.length; i++) {
-          if (/^ *-+: *$/.test(item.align[i])) {
-            item.align[i] = 'right';
-          } else if (/^ *:-+: *$/.test(item.align[i])) {
-            item.align[i] = 'center';
-          } else if (/^ *:-+ *$/.test(item.align[i])) {
-            item.align[i] = 'left';
-          } else {
-            item.align[i] = null;
-          }
-        }
-
-        for (i = 0; i < item.cells.length; i++) {
-          item.cells[i] = splitCells(item.cells[i], item.header.length);
-        }
-
-        this.tokens.push(item);
-
-        continue;
-      }
-    }
-
-    // hr
-    if (cap = this.rules.hr.exec(src)) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'hr'
-      });
-      continue;
-    }
-
-    // blockquote
-    if (cap = this.rules.blockquote.exec(src)) {
-      src = src.substring(cap[0].length);
-
-      this.tokens.push({
-        type: 'blockquote_start'
-      });
-
-      cap = cap[0].replace(/^ *> ?/gm, '');
-
-      // Pass `top` to keep the current
-      // "toplevel" state. This is exactly
-      // how markdown.pl works.
-      this.token(cap, top);
-
-      this.tokens.push({
-        type: 'blockquote_end'
-      });
-
-      continue;
-    }
-
-    // list
-    if (cap = this.rules.list.exec(src)) {
-      src = src.substring(cap[0].length);
-      bull = cap[2];
-      isordered = bull.length > 1;
-
-      listStart = {
-        type: 'list_start',
-        ordered: isordered,
-        start: isordered ? +bull : '',
-        loose: false
-      };
-
-      this.tokens.push(listStart);
-
-      // Get each top-level item.
-      cap = cap[0].match(this.rules.item);
-
-      listItems = [];
-      next = false;
-      l = cap.length;
-      i = 0;
-
-      for (; i < l; i++) {
-        item = cap[i];
-
-        // Remove the list item's bullet
-        // so it is seen as the next token.
-        space = item.length;
-        item = item.replace(/^ *([*+-]|\d+\.) */, '');
-
-        // Outdent whatever the
-        // list item contains. Hacky.
-        if (~item.indexOf('\n ')) {
-          space -= item.length;
-          item = !this.options.pedantic
-            ? item.replace(new RegExp('^ {1,' + space + '}', 'gm'), '')
-            : item.replace(/^ {1,4}/gm, '');
-        }
-
-        // Determine whether the next list item belongs here.
-        // Backpedal if it does not belong in this list.
-        if (i !== l - 1) {
-          b = block.bullet.exec(cap[i + 1])[0];
-          if (bull.length > 1 ? b.length === 1
-            : (b.length > 1 || (this.options.smartLists && b !== bull))) {
-            src = cap.slice(i + 1).join('\n') + src;
-            i = l - 1;
-          }
-        }
-
-        // Determine whether item is loose or not.
-        // Use: /(^|\n)(?! )[^\n]+\n\n(?!\s*$)/
-        // for discount behavior.
-        loose = next || /\n\n(?!\s*$)/.test(item);
-        if (i !== l - 1) {
-          next = item.charAt(item.length - 1) === '\n';
-          if (!loose) loose = next;
-        }
-
-        if (loose) {
-          listStart.loose = true;
-        }
-
-        // Check for task list items
-        istask = /^\[[ xX]\] /.test(item);
-        ischecked = undefined;
-        if (istask) {
-          ischecked = item[1] !== ' ';
-          item = item.replace(/^\[[ xX]\] +/, '');
-        }
-
-        t = {
-          type: 'list_item_start',
-          task: istask,
-          checked: ischecked,
-          loose: loose
-        };
-
-        listItems.push(t);
-        this.tokens.push(t);
-
-        // Recurse.
-        this.token(item, false);
-
-        this.tokens.push({
-          type: 'list_item_end'
-        });
-      }
-
-      if (listStart.loose) {
-        l = listItems.length;
-        i = 0;
-        for (; i < l; i++) {
-          listItems[i].loose = true;
-        }
-      }
-
-      this.tokens.push({
-        type: 'list_end'
-      });
-
-      continue;
-    }
-
-    // html
-    if (cap = this.rules.html.exec(src)) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: this.options.sanitize
-          ? 'paragraph'
-          : 'html',
-        pre: !this.options.sanitizer
-          && (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
-        text: this.options.sanitize ? (this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0])) : cap[0]
-      });
-      continue;
-    }
-
-    // def
-    if (top && (cap = this.rules.def.exec(src))) {
-      src = src.substring(cap[0].length);
-      if (cap[3]) cap[3] = cap[3].substring(1, cap[3].length - 1);
-      tag = cap[1].toLowerCase().replace(/\s+/g, ' ');
-      if (!this.tokens.links[tag]) {
-        this.tokens.links[tag] = {
-          href: cap[2],
-          title: cap[3]
-        };
-      }
-      continue;
-    }
-
-    // table (gfm)
-    if (cap = this.rules.table.exec(src)) {
-      item = {
-        type: 'table',
-        header: splitCells(cap[1].replace(/^ *| *\| *$/g, '')),
-        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
-        cells: cap[3] ? cap[3].replace(/\n$/, '').split('\n') : []
-      };
-
-      if (item.header.length === item.align.length) {
-        src = src.substring(cap[0].length);
-
-        for (i = 0; i < item.align.length; i++) {
-          if (/^ *-+: *$/.test(item.align[i])) {
-            item.align[i] = 'right';
-          } else if (/^ *:-+: *$/.test(item.align[i])) {
-            item.align[i] = 'center';
-          } else if (/^ *:-+ *$/.test(item.align[i])) {
-            item.align[i] = 'left';
-          } else {
-            item.align[i] = null;
-          }
-        }
-
-        for (i = 0; i < item.cells.length; i++) {
-          item.cells[i] = splitCells(
-            item.cells[i].replace(/^ *\| *| *\| *$/g, ''),
-            item.header.length);
-        }
-
-        this.tokens.push(item);
-
-        continue;
-      }
-    }
-
-    // lheading
-    if (cap = this.rules.lheading.exec(src)) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'heading',
-        depth: cap[2].charAt(0) === '=' ? 1 : 2,
-        text: cap[1]
-      });
-      continue;
-    }
-
-    // top-level paragraph
-    if (top && (cap = this.rules.paragraph.exec(src))) {
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'paragraph',
-        text: cap[1].charAt(cap[1].length - 1) === '\n'
-          ? cap[1].slice(0, -1)
-          : cap[1]
-      });
-      continue;
-    }
-
-    // text
-    if (cap = this.rules.text.exec(src)) {
-      // Top-level should never reach here.
-      src = src.substring(cap[0].length);
-      this.tokens.push({
-        type: 'text',
-        text: cap[0]
-      });
-      continue;
-    }
-
-    if (src) {
-      throw new Error('Infinite loop on byte: ' + src.charCodeAt(0));
-    }
-  }
-
-  return this.tokens;
-};
-
-/**
- * Inline-Level Grammar
- */
-
-var inline = {
-  escape: /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,
-  autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
-  url: noop,
-  tag: '^comment'
-    + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
-    + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
-    + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
-    + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
-    + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>', // CDATA section
-  link: /^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/,
-  reflink: /^!?\[(label)\]\[(?!\s*\])((?:\\[\[\]]?|[^\[\]\\])+)\]/,
-  nolink: /^!?\[(?!\s*\])((?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]])*)\](?:\[\])?/,
-  strong: /^__([^\s_])__(?!_)|^\*\*([^\s*])\*\*(?!\*)|^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)/,
-  em: /^_([^\s_])_(?!_)|^\*([^\s*<\[])\*(?!\*)|^_([^\s<][\s\S]*?[^\s_])_(?!_|[^\spunctuation])|^_([^\s_<][\s\S]*?[^\s])_(?!_|[^\spunctuation])|^\*([^\s<"][\s\S]*?[^\s\*])\*(?!\*|[^\spunctuation])|^\*([^\s*"<\[][\s\S]*?[^\s])\*(?!\*)/,
-  code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
-  br: /^( {2,}|\\)\n(?!\s*$)/,
-  del: noop,
-  text: /^(`+|[^`])(?:[\s\S]*?(?:(?=[\\<!\[`*]|\b_|$)|[^ ](?= {2,}\n))|(?= {2,}\n))/
-};
-
-// list of punctuation marks from common mark spec
-// without ` and ] to workaround Rule 17 (inline code blocks/links)
-inline._punctuation = '!"#$%&\'()*+,\\-./:;<=>?@\\[^_{|}~';
-inline.em = edit(inline.em).replace(/punctuation/g, inline._punctuation).getRegex();
-
-inline._escapes = /\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g;
-
-inline._scheme = /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/;
-inline._email = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/;
-inline.autolink = edit(inline.autolink)
-  .replace('scheme', inline._scheme)
-  .replace('email', inline._email)
-  .getRegex();
-
-inline._attribute = /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/;
-
-inline.tag = edit(inline.tag)
-  .replace('comment', block._comment)
-  .replace('attribute', inline._attribute)
-  .getRegex();
-
-inline._label = /(?:\[[^\[\]]*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
-inline._href = /<(?:\\[<>]?|[^\s<>\\])*>|[^\s\x00-\x1f]*/;
-inline._title = /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/;
-
-inline.link = edit(inline.link)
-  .replace('label', inline._label)
-  .replace('href', inline._href)
-  .replace('title', inline._title)
-  .getRegex();
-
-inline.reflink = edit(inline.reflink)
-  .replace('label', inline._label)
-  .getRegex();
-
-/**
- * Normal Inline Grammar
- */
-
-inline.normal = merge({}, inline);
-
-/**
- * Pedantic Inline Grammar
- */
-
-inline.pedantic = merge({}, inline.normal, {
-  strong: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
-  em: /^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/,
-  link: edit(/^!?\[(label)\]\((.*?)\)/)
-    .replace('label', inline._label)
-    .getRegex(),
-  reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/)
-    .replace('label', inline._label)
-    .getRegex()
-});
-
-/**
- * GFM Inline Grammar
- */
-
-inline.gfm = merge({}, inline.normal, {
-  escape: edit(inline.escape).replace('])', '~|])').getRegex(),
-  _extended_email: /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/,
-  url: /^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,
-  _backpedal: /(?:[^?!.,:;*_~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_~)]+(?!$))+/,
-  del: /^~+(?=\S)([\s\S]*?\S)~+/,
-  text: /^(`+|[^`])(?:[\s\S]*?(?:(?=[\\<!\[`*~]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@))|(?= {2,}\n|[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@))/
-});
-
-inline.gfm.url = edit(inline.gfm.url, 'i')
-  .replace('email', inline.gfm._extended_email)
-  .getRegex();
-/**
- * GFM + Line Breaks Inline Grammar
- */
-
-inline.breaks = merge({}, inline.gfm, {
-  br: edit(inline.br).replace('{2,}', '*').getRegex(),
-  text: edit(inline.gfm.text)
-    .replace('\\b_', '\\b_| {2,}\\n')
-    .replace(/\{2,\}/g, '*')
-    .getRegex()
-});
-
-/**
- * Inline Lexer & Compiler
- */
-
-function InlineLexer(links, options) {
-  this.options = options || marked.defaults;
-  this.links = links;
-  this.rules = inline.normal;
-  this.renderer = this.options.renderer || new Renderer();
-  this.renderer.options = this.options;
-
-  if (!this.links) {
-    throw new Error('Tokens array requires a `links` property.');
-  }
-
-  if (this.options.pedantic) {
-    this.rules = inline.pedantic;
-  } else if (this.options.gfm) {
-    if (this.options.breaks) {
-      this.rules = inline.breaks;
-    } else {
-      this.rules = inline.gfm;
-    }
-  }
-}
-
-/**
- * Expose Inline Rules
- */
-
-InlineLexer.rules = inline;
-
-/**
- * Static Lexing/Compiling Method
- */
-
-InlineLexer.output = function(src, links, options) {
-  var inline = new InlineLexer(links, options);
-  return inline.output(src);
-};
-
-/**
- * Lexing/Compiling
- */
-
-InlineLexer.prototype.output = function(src) {
-  var out = '',
-      link,
-      text,
-      href,
-      title,
-      cap,
-      prevCapZero;
-
-  while (src) {
-    // escape
-    if (cap = this.rules.escape.exec(src)) {
-      src = src.substring(cap[0].length);
-      out += escape(cap[1]);
-      continue;
-    }
-
-    // tag
-    if (cap = this.rules.tag.exec(src)) {
-      if (!this.inLink && /^<a /i.test(cap[0])) {
-        this.inLink = true;
-      } else if (this.inLink && /^<\/a>/i.test(cap[0])) {
-        this.inLink = false;
-      }
-      if (!this.inRawBlock && /^<(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
-        this.inRawBlock = true;
-      } else if (this.inRawBlock && /^<\/(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
-        this.inRawBlock = false;
-      }
-
-      src = src.substring(cap[0].length);
-      out += this.options.sanitize
-        ? this.options.sanitizer
-          ? this.options.sanitizer(cap[0])
-          : escape(cap[0])
-        : cap[0];
-      continue;
-    }
-
-    // link
-    if (cap = this.rules.link.exec(src)) {
-      var lastParenIndex = findClosingBracket(cap[2], '()');
-      if (lastParenIndex > -1) {
-        var linkLen = 4 + cap[1].length + lastParenIndex;
-        cap[2] = cap[2].substring(0, lastParenIndex);
-        cap[0] = cap[0].substring(0, linkLen).trim();
-        cap[3] = '';
-      }
-      src = src.substring(cap[0].length);
-      this.inLink = true;
-      href = cap[2];
-      if (this.options.pedantic) {
-        link = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
-
-        if (link) {
-          href = link[1];
-          title = link[3];
-        } else {
-          title = '';
-        }
-      } else {
-        title = cap[3] ? cap[3].slice(1, -1) : '';
-      }
-      href = href.trim().replace(/^<([\s\S]*)>$/, '$1');
-      out += this.outputLink(cap, {
-        href: InlineLexer.escapes(href),
-        title: InlineLexer.escapes(title)
-      });
-      this.inLink = false;
-      continue;
-    }
-
-    // reflink, nolink
-    if ((cap = this.rules.reflink.exec(src))
-        || (cap = this.rules.nolink.exec(src))) {
-      src = src.substring(cap[0].length);
-      link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
-      link = this.links[link.toLowerCase()];
-      if (!link || !link.href) {
-        out += cap[0].charAt(0);
-        src = cap[0].substring(1) + src;
-        continue;
-      }
-      this.inLink = true;
-      out += this.outputLink(cap, link);
-      this.inLink = false;
-      continue;
-    }
-
-    // strong
-    if (cap = this.rules.strong.exec(src)) {
-      src = src.substring(cap[0].length);
-      out += this.renderer.strong(this.output(cap[4] || cap[3] || cap[2] || cap[1]));
-      continue;
-    }
-
-    // em
-    if (cap = this.rules.em.exec(src)) {
-      src = src.substring(cap[0].length);
-      out += this.renderer.em(this.output(cap[6] || cap[5] || cap[4] || cap[3] || cap[2] || cap[1]));
-      continue;
-    }
-
-    // code
-    if (cap = this.rules.code.exec(src)) {
-      src = src.substring(cap[0].length);
-      out += this.renderer.codespan(escape(cap[2].trim(), true));
-      continue;
-    }
-
-    // br
-    if (cap = this.rules.br.exec(src)) {
-      src = src.substring(cap[0].length);
-      out += this.renderer.br();
-      continue;
-    }
-
-    // del (gfm)
-    if (cap = this.rules.del.exec(src)) {
-      src = src.substring(cap[0].length);
-      out += this.renderer.del(this.output(cap[1]));
-      continue;
-    }
-
-    // autolink
-    if (cap = this.rules.autolink.exec(src)) {
-      src = src.substring(cap[0].length);
-      if (cap[2] === '@') {
-        text = escape(this.mangle(cap[1]));
-        href = 'mailto:' + text;
-      } else {
-        text = escape(cap[1]);
-        href = text;
-      }
-      out += this.renderer.link(href, null, text);
-      continue;
-    }
-
-    // url (gfm)
-    if (!this.inLink && (cap = this.rules.url.exec(src))) {
-      if (cap[2] === '@') {
-        text = escape(cap[0]);
-        href = 'mailto:' + text;
-      } else {
-        // do extended autolink path validation
-        do {
-          prevCapZero = cap[0];
-          cap[0] = this.rules._backpedal.exec(cap[0])[0];
-        } while (prevCapZero !== cap[0]);
-        text = escape(cap[0]);
-        if (cap[1] === 'www.') {
-          href = 'http://' + text;
-        } else {
-          href = text;
-        }
-      }
-      src = src.substring(cap[0].length);
-      out += this.renderer.link(href, null, text);
-      continue;
-    }
-
-    // text
-    if (cap = this.rules.text.exec(src)) {
-      src = src.substring(cap[0].length);
-      if (this.inRawBlock) {
-        out += this.renderer.text(this.options.sanitize ? (this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0])) : cap[0]);
-      } else {
-        out += this.renderer.text(escape(this.smartypants(cap[0])));
-      }
-      continue;
-    }
-
-    if (src) {
-      throw new Error('Infinite loop on byte: ' + src.charCodeAt(0));
-    }
-  }
-
-  return out;
-};
-
-InlineLexer.escapes = function(text) {
-  return text ? text.replace(InlineLexer.rules._escapes, '$1') : text;
-};
-
-/**
- * Compile Link
- */
-
-InlineLexer.prototype.outputLink = function(cap, link) {
-  var href = link.href,
-      title = link.title ? escape(link.title) : null;
-
-  return cap[0].charAt(0) !== '!'
-    ? this.renderer.link(href, title, this.output(cap[1]))
-    : this.renderer.image(href, title, escape(cap[1]));
-};
-
-/**
- * Smartypants Transformations
- */
-
-InlineLexer.prototype.smartypants = function(text) {
-  if (!this.options.smartypants) return text;
-  return text
-    // em-dashes
-    .replace(/---/g, '\u2014')
-    // en-dashes
-    .replace(/--/g, '\u2013')
-    // opening singles
-    .replace(/(^|[-\u2014/(\[{"\s])'/g, '$1\u2018')
-    // closing singles & apostrophes
-    .replace(/'/g, '\u2019')
-    // opening doubles
-    .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, '$1\u201c')
-    // closing doubles
-    .replace(/"/g, '\u201d')
-    // ellipses
-    .replace(/\.{3}/g, '\u2026');
-};
-
-/**
- * Mangle Links
- */
-
-InlineLexer.prototype.mangle = function(text) {
-  if (!this.options.mangle) return text;
-  var out = '',
-      l = text.length,
-      i = 0,
-      ch;
-
-  for (; i < l; i++) {
-    ch = text.charCodeAt(i);
-    if (Math.random() > 0.5) {
-      ch = 'x' + ch.toString(16);
-    }
-    out += '&#' + ch + ';';
-  }
-
-  return out;
-};
-
-/**
- * Renderer
- */
-
-function Renderer(options) {
-  this.options = options || marked.defaults;
-}
-
-Renderer.prototype.code = function(code, infostring, escaped) {
-  var lang = (infostring || '').match(/\S*/)[0];
-  if (this.options.highlight) {
-    var out = this.options.highlight(code, lang);
-    if (out != null && out !== code) {
-      escaped = true;
-      code = out;
-    }
-  }
-
-  if (!lang) {
-    return '<pre><code>'
-      + (escaped ? code : escape(code, true))
-      + '</code></pre>';
-  }
-
-  return '<pre><code class="'
-    + this.options.langPrefix
-    + escape(lang, true)
-    + '">'
-    + (escaped ? code : escape(code, true))
-    + '</code></pre>\n';
-};
-
-Renderer.prototype.blockquote = function(quote) {
-  return '<blockquote>\n' + quote + '</blockquote>\n';
-};
-
-Renderer.prototype.html = function(html) {
-  return html;
-};
-
-Renderer.prototype.heading = function(text, level, raw, slugger) {
-  if (this.options.headerIds) {
-    return '<h'
-      + level
-      + ' id="'
-      + this.options.headerPrefix
-      + slugger.slug(raw)
-      + '">'
-      + text
-      + '</h'
-      + level
-      + '>\n';
-  }
-  // ignore IDs
-  return '<h' + level + '>' + text + '</h' + level + '>\n';
-};
-
-Renderer.prototype.hr = function() {
-  return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
-};
-
-Renderer.prototype.list = function(body, ordered, start) {
-  var type = ordered ? 'ol' : 'ul',
-      startatt = (ordered && start !== 1) ? (' start="' + start + '"') : '';
-  return '<' + type + startatt + '>\n' + body + '</' + type + '>\n';
-};
-
-Renderer.prototype.listitem = function(text) {
-  return '<li>' + text + '</li>\n';
-};
-
-Renderer.prototype.checkbox = function(checked) {
-  return '<input '
-    + (checked ? 'checked="" ' : '')
-    + 'disabled="" type="checkbox"'
-    + (this.options.xhtml ? ' /' : '')
-    + '> ';
-};
-
-Renderer.prototype.paragraph = function(text) {
-  return '<p>' + text + '</p>\n';
-};
-
-Renderer.prototype.table = function(header, body) {
-  if (body) body = '<tbody>' + body + '</tbody>';
-
-  return '<table>\n'
-    + '<thead>\n'
-    + header
-    + '</thead>\n'
-    + body
-    + '</table>\n';
-};
-
-Renderer.prototype.tablerow = function(content) {
-  return '<tr>\n' + content + '</tr>\n';
-};
-
-Renderer.prototype.tablecell = function(content, flags) {
-  var type = flags.header ? 'th' : 'td';
-  var tag = flags.align
-    ? '<' + type + ' align="' + flags.align + '">'
-    : '<' + type + '>';
-  return tag + content + '</' + type + '>\n';
-};
-
-// span level renderer
-Renderer.prototype.strong = function(text) {
-  return '<strong>' + text + '</strong>';
-};
-
-Renderer.prototype.em = function(text) {
-  return '<em>' + text + '</em>';
-};
-
-Renderer.prototype.codespan = function(text) {
-  return '<code>' + text + '</code>';
-};
-
-Renderer.prototype.br = function() {
-  return this.options.xhtml ? '<br/>' : '<br>';
-};
-
-Renderer.prototype.del = function(text) {
-  return '<del>' + text + '</del>';
-};
-
-Renderer.prototype.link = function(href, title, text) {
-  href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
-  if (href === null) {
-    return text;
-  }
-  var out = '<a href="' + escape(href) + '"';
-  if (title) {
-    out += ' title="' + title + '"';
-  }
-  out += '>' + text + '</a>';
-  return out;
-};
-
-Renderer.prototype.image = function(href, title, text) {
-  href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
-  if (href === null) {
-    return text;
-  }
-
-  var out = '<img src="' + href + '" alt="' + text + '"';
-  if (title) {
-    out += ' title="' + title + '"';
-  }
-  out += this.options.xhtml ? '/>' : '>';
-  return out;
-};
-
-Renderer.prototype.text = function(text) {
-  return text;
-};
-
-/**
- * TextRenderer
- * returns only the textual part of the token
- */
-
-function TextRenderer() {}
-
-// no need for block level renderers
-
-TextRenderer.prototype.strong =
-TextRenderer.prototype.em =
-TextRenderer.prototype.codespan =
-TextRenderer.prototype.del =
-TextRenderer.prototype.text = function(text) {
-  return text;
-};
-
-TextRenderer.prototype.link =
-TextRenderer.prototype.image = function(href, title, text) {
-  return '' + text;
-};
-
-TextRenderer.prototype.br = function() {
-  return '';
-};
-
-/**
- * Parsing & Compiling
- */
-
-function Parser(options) {
-  this.tokens = [];
-  this.token = null;
-  this.options = options || marked.defaults;
-  this.options.renderer = this.options.renderer || new Renderer();
-  this.renderer = this.options.renderer;
-  this.renderer.options = this.options;
-  this.slugger = new Slugger();
-}
-
-/**
- * Static Parse Method
- */
-
-Parser.parse = function(src, options) {
-  var parser = new Parser(options);
-  return parser.parse(src);
-};
-
-/**
- * Parse Loop
- */
-
-Parser.prototype.parse = function(src) {
-  this.inline = new InlineLexer(src.links, this.options);
-  // use an InlineLexer with a TextRenderer to extract pure text
-  this.inlineText = new InlineLexer(
-    src.links,
-    merge({}, this.options, { renderer: new TextRenderer() })
-  );
-  this.tokens = src.reverse();
-
-  var out = '';
-  while (this.next()) {
-    out += this.tok();
-  }
-
-  return out;
-};
-
-/**
- * Next Token
- */
-
-Parser.prototype.next = function() {
-  this.token = this.tokens.pop();
-  return this.token;
-};
-
-/**
- * Preview Next Token
- */
-
-Parser.prototype.peek = function() {
-  return this.tokens[this.tokens.length - 1] || 0;
-};
-
-/**
- * Parse Text Tokens
- */
-
-Parser.prototype.parseText = function() {
-  var body = this.token.text;
-
-  while (this.peek().type === 'text') {
-    body += '\n' + this.next().text;
-  }
-
-  return this.inline.output(body);
-};
-
-/**
- * Parse Current Token
- */
-
-Parser.prototype.tok = function() {
-  switch (this.token.type) {
-    case 'space': {
-      return '';
-    }
-    case 'hr': {
-      return this.renderer.hr();
-    }
-    case 'heading': {
-      return this.renderer.heading(
-        this.inline.output(this.token.text),
-        this.token.depth,
-        unescape(this.inlineText.output(this.token.text)),
-        this.slugger);
-    }
-    case 'code': {
-      return this.renderer.code(this.token.text,
-        this.token.lang,
-        this.token.escaped);
-    }
-    case 'table': {
-      var header = '',
-          body = '',
-          i,
-          row,
-          cell,
-          j;
-
-      // header
-      cell = '';
-      for (i = 0; i < this.token.header.length; i++) {
-        cell += this.renderer.tablecell(
-          this.inline.output(this.token.header[i]),
-          { header: true, align: this.token.align[i] }
-        );
-      }
-      header += this.renderer.tablerow(cell);
-
-      for (i = 0; i < this.token.cells.length; i++) {
-        row = this.token.cells[i];
-
-        cell = '';
-        for (j = 0; j < row.length; j++) {
-          cell += this.renderer.tablecell(
-            this.inline.output(row[j]),
-            { header: false, align: this.token.align[j] }
-          );
-        }
-
-        body += this.renderer.tablerow(cell);
-      }
-      return this.renderer.table(header, body);
-    }
-    case 'blockquote_start': {
-      body = '';
-
-      while (this.next().type !== 'blockquote_end') {
-        body += this.tok();
-      }
-
-      return this.renderer.blockquote(body);
-    }
-    case 'list_start': {
-      body = '';
-      var ordered = this.token.ordered,
-          start = this.token.start;
-
-      while (this.next().type !== 'list_end') {
-        body += this.tok();
-      }
-
-      return this.renderer.list(body, ordered, start);
-    }
-    case 'list_item_start': {
-      body = '';
-      var loose = this.token.loose;
-      var checked = this.token.checked;
-      var task = this.token.task;
-
-      if (this.token.task) {
-        body += this.renderer.checkbox(checked);
-      }
-
-      while (this.next().type !== 'list_item_end') {
-        body += !loose && this.token.type === 'text'
-          ? this.parseText()
-          : this.tok();
-      }
-      return this.renderer.listitem(body, task, checked);
-    }
-    case 'html': {
-      // TODO parse inline content if parameter markdown=1
-      return this.renderer.html(this.token.text);
-    }
-    case 'paragraph': {
-      return this.renderer.paragraph(this.inline.output(this.token.text));
-    }
-    case 'text': {
-      return this.renderer.paragraph(this.parseText());
-    }
-    default: {
-      var errMsg = 'Token with "' + this.token.type + '" type was not found.';
-      if (this.options.silent) {
-        console.log(errMsg);
-      } else {
-        throw new Error(errMsg);
-      }
-    }
-  }
-};
-
-/**
- * Slugger generates header id
- */
-
-function Slugger() {
-  this.seen = {};
-}
-
-/**
- * Convert string to unique id
- */
-
-Slugger.prototype.slug = function(value) {
-  var slug = value
-    .toLowerCase()
-    .trim()
-    .replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, '')
-    .replace(/\s/g, '-');
-
-  if (this.seen.hasOwnProperty(slug)) {
-    var originalSlug = slug;
-    do {
-      this.seen[originalSlug]++;
-      slug = originalSlug + '-' + this.seen[originalSlug];
-    } while (this.seen.hasOwnProperty(slug));
-  }
-  this.seen[slug] = 0;
-
-  return slug;
-};
-
-/**
- * Helpers
- */
-
-function escape(html, encode) {
-  if (encode) {
-    if (escape.escapeTest.test(html)) {
-      return html.replace(escape.escapeReplace, function(ch) { return escape.replacements[ch]; });
-    }
-  } else {
-    if (escape.escapeTestNoEncode.test(html)) {
-      return html.replace(escape.escapeReplaceNoEncode, function(ch) { return escape.replacements[ch]; });
-    }
-  }
-
-  return html;
-}
-
-escape.escapeTest = /[&<>"']/;
-escape.escapeReplace = /[&<>"']/g;
-escape.replacements = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;'
-};
-
-escape.escapeTestNoEncode = /[<>"']|&(?!#?\w+;)/;
-escape.escapeReplaceNoEncode = /[<>"']|&(?!#?\w+;)/g;
-
-function unescape(html) {
-  // explicitly match decimal, hex, and named HTML entities
-  return html.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig, function(_, n) {
-    n = n.toLowerCase();
-    if (n === 'colon') return ':';
-    if (n.charAt(0) === '#') {
-      return n.charAt(1) === 'x'
-        ? String.fromCharCode(parseInt(n.substring(2), 16))
-        : String.fromCharCode(+n.substring(1));
-    }
-    return '';
-  });
-}
-
-function edit(regex, opt) {
-  regex = regex.source || regex;
-  opt = opt || '';
-  return {
-    replace: function(name, val) {
-      val = val.source || val;
-      val = val.replace(/(^|[^\[])\^/g, '$1');
-      regex = regex.replace(name, val);
-      return this;
-    },
-    getRegex: function() {
-      return new RegExp(regex, opt);
-    }
-  };
-}
-
-function cleanUrl(sanitize, base, href) {
-  if (sanitize) {
-    try {
-      var prot = decodeURIComponent(unescape(href))
-        .replace(/[^\w:]/g, '')
-        .toLowerCase();
-    } catch (e) {
-      return null;
-    }
-    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0 || prot.indexOf('data:') === 0) {
-      return null;
-    }
-  }
-  if (base && !originIndependentUrl.test(href)) {
-    href = resolveUrl(base, href);
-  }
-  try {
-    href = encodeURI(href).replace(/%25/g, '%');
-  } catch (e) {
-    return null;
-  }
-  return href;
-}
-
-function resolveUrl(base, href) {
-  if (!baseUrls[' ' + base]) {
-    // we can ignore everything in base after the last slash of its path component,
-    // but we might need to add _that_
-    // https://tools.ietf.org/html/rfc3986#section-3
-    if (/^[^:]+:\/*[^/]*$/.test(base)) {
-      baseUrls[' ' + base] = base + '/';
-    } else {
-      baseUrls[' ' + base] = rtrim(base, '/', true);
-    }
-  }
-  base = baseUrls[' ' + base];
-
-  if (href.slice(0, 2) === '//') {
-    return base.replace(/:[\s\S]*/, ':') + href;
-  } else if (href.charAt(0) === '/') {
-    return base.replace(/(:\/*[^/]*)[\s\S]*/, '$1') + href;
-  } else {
-    return base + href;
-  }
-}
-var baseUrls = {};
-var originIndependentUrl = /^$|^[a-z][a-z0-9+.-]*:|^[?#]/i;
-
-function noop() {}
-noop.exec = noop;
-
-function merge(obj) {
-  var i = 1,
-      target,
-      key;
-
-  for (; i < arguments.length; i++) {
-    target = arguments[i];
-    for (key in target) {
-      if (Object.prototype.hasOwnProperty.call(target, key)) {
-        obj[key] = target[key];
-      }
-    }
-  }
-
-  return obj;
-}
-
-function splitCells(tableRow, count) {
-  // ensure that every cell-delimiting pipe has a space
-  // before it to distinguish it from an escaped pipe
-  var row = tableRow.replace(/\|/g, function(match, offset, str) {
-        var escaped = false,
-            curr = offset;
-        while (--curr >= 0 && str[curr] === '\\') escaped = !escaped;
-        if (escaped) {
-          // odd number of slashes means | is escaped
-          // so we leave it alone
-          return '|';
-        } else {
-          // add space before unescaped |
-          return ' |';
-        }
-      }),
-      cells = row.split(/ \|/),
-      i = 0;
-
-  if (cells.length > count) {
-    cells.splice(count);
-  } else {
-    while (cells.length < count) cells.push('');
-  }
-
-  for (; i < cells.length; i++) {
-    // leading or trailing whitespace is ignored per the gfm spec
-    cells[i] = cells[i].trim().replace(/\\\|/g, '|');
-  }
-  return cells;
-}
-
-// Remove trailing 'c's. Equivalent to str.replace(/c*$/, '').
-// /c*$/ is vulnerable to REDOS.
-// invert: Remove suffix of non-c chars instead. Default falsey.
-function rtrim(str, c, invert) {
-  if (str.length === 0) {
-    return '';
-  }
-
-  // Length of suffix matching the invert condition.
-  var suffLen = 0;
-
-  // Step left until we fail to match the invert condition.
-  while (suffLen < str.length) {
-    var currChar = str.charAt(str.length - suffLen - 1);
-    if (currChar === c && !invert) {
-      suffLen++;
-    } else if (currChar !== c && invert) {
-      suffLen++;
-    } else {
-      break;
-    }
-  }
-
-  return str.substr(0, str.length - suffLen);
-}
-
-function findClosingBracket(str, b) {
-  if (str.indexOf(b[1]) === -1) {
-    return -1;
-  }
-  var level = 0;
-  for (var i = 0; i < str.length; i++) {
-    if (str[i] === '\\') {
-      i++;
-    } else if (str[i] === b[0]) {
-      level++;
-    } else if (str[i] === b[1]) {
-      level--;
-      if (level < 0) {
-        return i;
-      }
-    }
-  }
-  return -1;
-}
-
-function checkSanitizeDeprecation(opt) {
-  if (opt && opt.sanitize && !opt.silent) {
-    console.warn('marked(): sanitize and sanitizer parameters are deprecated since version 0.7.0, should not be used and will be removed in the future. Read more here: https://marked.js.org/#/USING_ADVANCED.md#options');
-  }
-}
-
-/**
- * Marked
- */
-
-function marked(src, opt, callback) {
-  // throw error in case of non string input
-  if (typeof src === 'undefined' || src === null) {
-    throw new Error('marked(): input parameter is undefined or null');
-  }
-  if (typeof src !== 'string') {
-    throw new Error('marked(): input parameter is of type '
-      + Object.prototype.toString.call(src) + ', string expected');
-  }
-
-  if (callback || typeof opt === 'function') {
-    if (!callback) {
-      callback = opt;
-      opt = null;
-    }
-
-    opt = merge({}, marked.defaults, opt || {});
-    checkSanitizeDeprecation(opt);
-
-    var highlight = opt.highlight,
-        tokens,
-        pending,
-        i = 0;
-
-    try {
-      tokens = Lexer.lex(src, opt);
-    } catch (e) {
-      return callback(e);
-    }
-
-    pending = tokens.length;
-
-    var done = function(err) {
-      if (err) {
-        opt.highlight = highlight;
-        return callback(err);
-      }
-
-      var out;
-
-      try {
-        out = Parser.parse(tokens, opt);
-      } catch (e) {
-        err = e;
-      }
-
-      opt.highlight = highlight;
-
-      return err
-        ? callback(err)
-        : callback(null, out);
-    };
-
-    if (!highlight || highlight.length < 3) {
-      return done();
-    }
-
-    delete opt.highlight;
-
-    if (!pending) return done();
-
-    for (; i < tokens.length; i++) {
-      (function(token) {
-        if (token.type !== 'code') {
-          return --pending || done();
-        }
-        return highlight(token.text, token.lang, function(err, code) {
-          if (err) return done(err);
-          if (code == null || code === token.text) {
-            return --pending || done();
-          }
-          token.text = code;
-          token.escaped = true;
-          --pending || done();
-        });
-      })(tokens[i]);
-    }
-
-    return;
-  }
-  try {
-    if (opt) opt = merge({}, marked.defaults, opt);
-    checkSanitizeDeprecation(opt);
-    return Parser.parse(Lexer.lex(src, opt), opt);
-  } catch (e) {
-    e.message += '\nPlease report this to https://github.com/markedjs/marked.';
-    if ((opt || marked.defaults).silent) {
-      return '<p>An error occurred:</p><pre>'
-        + escape(e.message + '', true)
-        + '</pre>';
-    }
-    throw e;
-  }
-}
-
-/**
- * Options
- */
-
-marked.options =
-marked.setOptions = function(opt) {
-  merge(marked.defaults, opt);
-  return marked;
-};
-
-marked.getDefaults = function() {
-  return {
-    baseUrl: null,
-    breaks: false,
-    gfm: true,
-    headerIds: true,
-    headerPrefix: '',
-    highlight: null,
-    langPrefix: 'language-',
-    mangle: true,
-    pedantic: false,
-    renderer: new Renderer(),
-    sanitize: false,
-    sanitizer: null,
-    silent: false,
-    smartLists: false,
-    smartypants: false,
-    xhtml: false
-  };
-};
-
-marked.defaults = marked.getDefaults();
-
-/**
- * Expose
- */
-
-marked.Parser = Parser;
-marked.parser = Parser.parse;
-
-marked.Renderer = Renderer;
-marked.TextRenderer = TextRenderer;
-
-marked.Lexer = Lexer;
-marked.lexer = Lexer.lex;
-
-marked.InlineLexer = InlineLexer;
-marked.inlineLexer = InlineLexer.output;
-
-marked.Slugger = Slugger;
-
-marked.parse = marked;
-
-if (true) {
-  module.exports = marked;
-} else {}
-})(this || (typeof window !== 'undefined' ? window : __webpack_require__.g));
-
-
-/***/ }),
-
 /***/ "../node_modules/moment-timezone/index.js":
 /*!************************************************!*\
   !*** ../node_modules/moment-timezone/index.js ***!
@@ -91129,7 +90087,2617 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns=\"http://www.w3.org/2000/svg\"><symbol id=\"svg-arrow-right\" viewBox=\"0 0 31.49 31.49\"><path d=\"M21.205 5.007a1.112 1.112 0 0 0-1.587 0 1.12 1.12 0 0 0 0 1.571l8.047 8.047H1.111A1.106 1.106 0 0 0 0 15.737c0 .619.492 1.127 1.111 1.127h26.554l-8.047 8.032c-.429.444-.429 1.159 0 1.587a1.112 1.112 0 0 0 1.587 0l9.952-9.952a1.093 1.093 0 0 0 0-1.571l-9.952-9.953z\" fill=\"#1e201d\"/></symbol><symbol id=\"svg-asset-failed\" viewBox=\"0 0 38.38704 38.38704\"><path d=\"M38.387 33.427L24.154 19.193 38.387 4.96 33.427 0 19.194 14.233 4.96 0 0 4.96l14.233 14.234L0 33.427l4.96 4.96 14.233-14.233 14.234 14.233 4.96-4.96z\"/></symbol><symbol id=\"svg-close\" viewBox=\"0 0 12 12\"><title>close</title><path d=\"M3.975 5.475L0 1.5S0 0 1.5 0l4.343 4.343C8.663 1.837 10.5 0 10.5 0S12 0 12 1.5L7.657 5.843C10.163 8.663 12 10.5 12 10.5s0 1.5-1.5 1.5L6.157 7.657C3.337 10.163 1.5 12 1.5 12S0 12 0 10.5l4.343-4.343z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-drupal\" viewBox=\"0 0 14 14\"><title>drupal</title><path d=\"M6.634 8.668a2.21 2.21 0 1 1 0 4.419 2.21 2.21 0 0 1 0-4.419zm2.747-.421a2.912 2.912 0 0 0 2.037-3.426c1.459 1.566 2.328 3.293 1.394 5.588-.675 1.66-2.182 3.029-4.004 3.591a3.8 3.8 0 0 0 .573-5.753zM6.886 5.45a1.69 1.69 0 1 1 3.38 0 1.69 1.69 0 0 1-3.38 0zm-3.163 7.878C1.098 11.734.2 8.684 1.196 6.218 2.681 2.54 6.698 3.99 6.316 0c.75.911 1.7 1.745 2.652 2.566A2.91 2.91 0 0 0 6.18 7.1a3.805 3.805 0 0 0-2.457 6.228z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-easydb\" viewBox=\"0 0 24 24\"><title>easydb</title><g fill-rule=\"evenodd\"><path d=\"M3 21c-1.87-2.38-3-5.539-3-10 0-2.468 1.136-5.623 3-8v18\" fill=\"currentColor\"/><path d=\"M19 17h-4V8.38L19 7v10zm-6 0H9V8.38L13 7v10zM11.3 0A11.42 11.42 0 0 0 7 .837l.002 22.328A11.43 11.43 0 0 0 11.3 24C17.762 24 23 18.627 23 12S17.762 0 11.3 0z\"/></g></symbol><symbol id=\"svg-external-link\" viewBox=\"0 0 12 12\"><title>external-link</title><g fill-rule=\"evenodd\"><path d=\"M6.707 4H1v7h7V5.293l-1 1V10H2V5h3.707l1-1z\"/><path d=\"M10 2v4.494c0 .665-.094.705-.557.242L8 5.293l-2.5 2.5L4.207 6.5l2.5-2.5-1.443-1.443C4.798 2.091 4.835 2 5.506 2H10zM2.793 6.5L5.5 9.207l2.5-2.5.736.736C9.832 8.539 11 8.046 11 6.494V1H5.506c-1.56 0-2.046 1.167-.949 2.264L5.293 4l-2.5 2.5z\" fill=\"currentColor\"/></g></symbol><symbol id=\"svg-falcon-io\" viewBox=\"0 0 14 14\"><title>falcon-io</title><path d=\"M13.69 11.43c-1.353-.296-2.558-1.153-3.496-2.395-.202.094-.903.524-2.903.393-2.336-.153-3.689-2.03-3.689-2.03 2.664.309 5.414.058 5.823.018-.056-.23-.127-.468-.156-.71-.745.014-4.039.047-6.017-.519C1.036 5.555 0 3 0 3c3.89.206 9.66 1.187 11.505 1.562.328.066.581.337.579.672-.018 3.038.947 4.8 1.839 5.895.148.187.089.386-.233.302z\" fill-rule=\"nonzero\"/></symbol><symbol id=\"svg-folder-shared-upload\" viewBox=\"0 0 15 19\"><title>folder-shared-upload</title><g fill-rule=\"evenodd\"><path d=\"M5 16H2c-1.276 0-2-.724-2-2V4c0-1.276.724-2 2-2h3c2 0 2 2 2 2h6c1.276 0 2 .724 2 2v8c0 1.276-.724 2-2 2h-3v-1h3c1 0 1-1 1-1V6c0-1-1-1-1-1H7S6 5 6 4 5 3 5 3H2S1 3 1 4v10s0 1 1 1h3v1z\"/><path d=\"M5.333 8.5h-1.86c-.5 0-.473.5-.473 1v1.692l.75-.865V9.5H4v.538L5.333 8.5zm4.334 0H11.5c.5 0 .5.5.5 1v1.693l-.75-.866V9.5H11v.539L9.666 8.5zM5 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm5 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM9 18H6v-5H3.5l4-4.5 4 4.5H9z\"/></g></symbol><symbol id=\"svg-folder-shared\" viewBox=\"0 0 15 19\"><title>folder-shared</title><g fill-rule=\"evenodd\"><path d=\"M2 2C.724 2 0 2.724 0 4v10c0 1.276.724 2 2 2h11c1.276 0 2-.724 2-2V6c0-1.276-.724-2-2-2H7s0-2-2-2H2zm0 1h3s1 0 1 1 1 1 1 1h6s1 0 1 1v8s0 1-1 1H2c-1 0-1-1-1-1V4c0-1 1-1 1-1z\"/><path d=\"M5 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-1.526.5H6.5C7 8.5 7 9 7 9.5V12h-.75V9.5H6V14h-.75v-2h-.5v2H4V9.5h-.25V12H3V9.5c0-.5-.026-1 .474-1zM10 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-1.526.5H11.5c.5 0 .5.5.5 1V12h-.75V9.5H11V14h-.75v-2h-.5v2H9V9.5h-.25V12H8V9.5c0-.5-.027-1 .473-1z\"/></g></symbol><symbol id=\"svg-folder-upload\" viewBox=\"0 0 15 19\"><title>folder-upload</title><g fill-rule=\"evenodd\"><path d=\"M5 16H2c-1.276 0-2-.724-2-2V4c0-1.276.724-2 2-2h3c2 0 2 2 2 2h6c1.276 0 2 .724 2 2v8c0 1.276-.724 2-2 2h-3v-1h3c1 0 1-1 1-1V6c0-1-1-1-1-1H7S6 5 6 4 5 3 5 3H2S1 3 1 4v10s0 1 1 1h3v1z\"/><path d=\"M9 18H6v-5H3.5l4-4.5 4 4.5H9z\"/></g></symbol><symbol id=\"svg-folder\" viewBox=\"0 0 15 19\"><title>folder</title><path d=\"M2 2C.724 2 0 2.724 0 4v10c0 1.276.724 2 2 2h11c1.276 0 2-.724 2-2V6c0-1.276-.724-2-2-2H7s0-2-2-2H2zm0 1h3s1 0 1 1 1 1 1 1h6s1 0 1 1v8s0 1-1 1H2c-1 0-1-1-1-1V4c0-1 1-1 1-1z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-fylr-logo\" viewBox=\"0 0 57.8 34.1\"><path d=\"M44.9 27.7V8.6h3.4c.3 0 .5 0 .7.1.2 0 .4.1.5.2s.2.2.3.4c.1.2.1.4.2.6l.3 1.8c.7-1.1 1.5-1.9 2.4-2.6.9-.6 1.8-.9 2.9-.9.9 0 1.6.2 2.1.6l-.8 4.2c0 .3-.1.4-.3.5-.1.1-.3.2-.6.2-.2 0-.5 0-.7-.1-.3-.1-.6-.1-1.1-.1-1.7 0-3.5 1.2-3.5 3.4v10.7h-5.8zM27.3 8.6c-.3 0-.6.1-.9.3-.3.2-.5.4-.6.7L23 17.8c-.1.4-.7 1.9-.8 2.3-.1-.4-.5-1.5-.7-2.3l-3.1-8.3c-.1-.3-.3-.5-.5-.7-.2-.2-.6-.3-1-.3H6v-.8c0-.6.1-1.1.2-1.6.1-.4.3-.7.6-1 .3-.3.6-.4 1-.5.2-.1.7-.1 1.2-.1.2 0 .3 0 .5-.1.2 0 .3-.1.5-.2l.3-.3c.1-.1.1-.3.2-.5l.1-2.8L9.4.3H8C6.8.3 5.7.5 4.8.8c-1 .4-1.8.8-2.5 1.5-.6.6-1.1 1.4-1.5 2.2-.4.9-.5 1.9-.5 3V27.7H6V12.5h7.4L19.3 26l-3.7 7.8h4.3c.5 0 .9-.1 1.2-.3.2-.2.5-.5.6-.8L32 8.6h-4.7zM40.7.3v27.4H35V.3h5.7zM27.8 30.6c-.7 0-1.4.5-1.7 1.1l-.8 2h25.3v-3.2l-22.8.1z\"/></symbol><symbol id=\"svg-grid\" viewBox=\"0 0 16 13\"><title>grid</title><path d=\"M1 1h4v3H1V1zm5 0h4v3H6V1zm5 0h4v3h-4V1zM1 5h4v3H1V5zm5 0h4v3H6V5zm5 0h4v3h-4V5zM1 9h4v3H1V9zm5 0h4v3H6V9zm5 0h4v3h-4V9z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-hierarchy\" viewBox=\"0 0 14 14\"><title>hierarchy</title><g fill-rule=\"evenodd\"><path d=\"M2 4.25a.249.249 0 0 0 .176-.074l1.75-1.75A.249.249 0 0 0 4 2.25.252.252 0 0 0 3.75 2H.25a.252.252 0 0 0-.25.25c0 .066.027.129.074.176l1.75 1.75c.047.047.11.074.176.074zM4 12.25a.249.249 0 0 0 .176-.074l1.75-1.75A.249.249 0 0 0 6 10.25a.252.252 0 0 0-.25-.25h-3.5a.252.252 0 0 0-.25.25c0 .066.027.129.074.176l1.75 1.75c.047.047.11.074.176.074zM3 8.25a.249.249 0 0 0 .176-.074l1.75-1.75A.249.249 0 0 0 5 6.25.252.252 0 0 0 4.75 6h-3.5a.252.252 0 0 0-.25.25c0 .066.027.129.074.176l1.75 1.75c.047.047.11.074.176.074zM5 2h9v2H5zM6 6h8v2H6zM7 10h7v2H7z\"/></g></symbol><symbol id=\"svg-info-circle-ng\" viewBox=\"0 0 14 14\"><title>info-circle-ng</title><g fill-rule=\"evenodd\"><path d=\"M7 13A6 6 0 1 0 7 1a6 6 0 0 0 0 12zm0 1A7 7 0 1 1 7 0a7 7 0 0 1 0 14z\" fill-rule=\"nonzero\"/><path d=\"M8 6v5H6V6h2zm0-3v2H6V3h2z\"/></g></symbol><symbol id=\"svg-info-circle\" viewBox=\"0 0 24 24\"><path d=\"M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm1-6h-2v-8h2v8zM12 5.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z\"/></symbol><symbol id=\"svg-inherit\" viewBox=\"-110 -59.7 345.5 345.5\"><style>.st0{display:none;fill:#535b6b}</style><path id=\"plus\" class=\"st0\" d=\"M62.7-59.3C-32.7-59.3-110 18-110 113.4s77.3 172.7 172.7 172.7 172.7-77.3 172.7-172.7c.1-95.3-77.3-172.7-172.7-172.7zm103.9 199.8H89.7v76.8h-54v-76.9h-76.9v-54h76.9V9.6h54v76.8h76.9v54.1z\"/><path d=\"M57 28.4L-98.7 184.1c-3.7 3.7-3.7 9.5 0 13.2s9.5 3.7 13.2 0L63.6 48.2l149.1 149.1c3.7 3.7 9.5 3.7 13.2 0 1.8-1.8 2.8-4.2 2.8-6.6 0-2.4-.9-4.8-2.8-6.6L70.2 28.4c-3.6-3.6-9.6-3.6-13.2 0z\"/></symbol><symbol id=\"svg-merge-icon\" viewBox=\"-27 -143.2 512 512\"><style>.st0,.st1{fill:#39f}.st1{display:none}</style><path class=\"st0\" d=\"M363.3 200.7c-6.2-15-15.1-28.3-26.6-39.8l-57.6-57.6c-4.6-4.6-8.2-10-10.7-16.1-2.5-6-3.8-12.4-3.8-18.9V-4.1h69.8L228-110.5 121.7-4.1h69.8v72.4c0 6.5-1.3 12.9-3.8 18.9-2.5 6-6.1 11.5-10.7 16.1l-57.6 57.6c-11.5 11.5-20.4 24.8-26.6 39.8-6.2 15-9.3 30.8-9.3 47V320h73.2v-72.4c0-6.5 1.3-12.9 3.8-19 2.5-6 6.1-11.4 10.7-16l57-56.9 56.9 56.9c4.6 4.6 8.2 10 10.7 16s3.8 12.4 3.8 19V320h73.2v-72.4c-.2-16.2-3.3-32-9.5-46.9z\"/><path class=\"st1\" d=\"M229-144.2c-141.2 0-256 114.8-256 256s114.8 256 256 256 256-114.8 256-256-114.8-256-256-256zm0 468.1c-117 0-212.1-95.2-212.1-212.1S112-100.3 229-100.3 441.1-5.2 441.1 111.8 346 323.9 229 323.9z\"/></symbol><symbol id=\"svg-multiple\" viewBox=\"0 0 10 12\"><title>multiple</title><g fill-rule=\"evenodd\"><path d=\"M8 8h2V0H4v2h1V1h4v6H8v1z\"/><path d=\"M6 10h2V2H2v2h1V3h4v6H6v1z\"/><path d=\"M1 11h4V5H1v6zM0 4h6v8H0V4z\"/></g></symbol><symbol id=\"svg-popup\" viewBox=\"0 0 15 14\"><title>popup</title><g fill-rule=\"evenodd\"><path d=\"M4 4H1v9h10v-3h-1v2H2V5h2V4z\"/><path d=\"M4 1h10v9H4V1zm1 8h8V3H5v6z\"/></g></symbol><symbol id=\"svg-presentation-play\" viewBox=\"0 0 15 14\"><title>presentation_play</title><g fill-rule=\"evenodd\"><path d=\"M1 1h13v2H1z\"/><path d=\"M2 2h1v8H2z\"/><path d=\"M2 9h11v1H2z\"/><path d=\"M7 9h1v2.5H7z\"/><path d=\"M6.086 12.208L7.5 10.794l.707.707-1.414 1.414z\"/><path d=\"M7.5 10.794l1.414 1.414-.707.707L6.793 11.5zM12 2h1v8h-1zM6.5 4l3.25 2L6.5 8z\"/></g></symbol><symbol id=\"svg-presentation\" viewBox=\"0 0 15 14\"><title>presentation</title><g fill-rule=\"evenodd\"><path d=\"M1 1h13v2H1z\"/><path d=\"M2 2h1v8H2z\"/><path d=\"M2 9h11v1H2z\"/><path d=\"M7 9h1v2.5H7z\"/><path d=\"M6.086 12.208L7.5 10.794l.707.707-1.414 1.414z\"/><path d=\"M7.5 10.794l1.414 1.414-.707.707L6.793 11.5zM12 2h1v8h-1z\"/></g></symbol><symbol id=\"svg-remove-icon\" viewBox=\"-27 -143.2 512 512\"><style>.st0{fill:#c33}</style><path class=\"st0\" d=\"M229-143.2c-141.2 0-256 114.8-256 256s114.8 256 256 256 256-114.8 256-256-114.8-256-256-256zm0 468.1c-117 0-212.1-95.2-212.1-212.1S112-99.3 229-99.3 441.1-4.2 441.1 112.8 346 324.9 229 324.9z\"/><path class=\"st0\" d=\"M328.1 13.7c-8.6-8.6-22.5-8.6-31 0l-68 68-68-68c-8.6-8.6-22.5-8.6-31 0s-8.6 22.5 0 31l68 68-68 68c-8.6 8.6-8.6 22.5 0 31 4.3 4.3 9.9 6.4 15.5 6.4s11.2-2.1 15.5-6.4l68-68 68 68c4.3 4.3 9.9 6.4 15.5 6.4s11.2-2.1 15.5-6.4c8.6-8.6 8.6-22.5 0-31l-68-68 68-68c8.5-8.5 8.5-22.4 0-31z\"/></symbol><symbol id=\"svg-reset\" viewBox=\"0 0 12 12\"><title>reset</title><path d=\"M4 0v6L0 3l4-3zm0 2h5c3 0 3 3 3 3v3c0 3-3 3-3 3H2V9h7c1 0 1-1 1-1V5c0-1-1-1-1-1H4V2z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-rows\" viewBox=\"0 0 16 13\"><title>rows</title><path d=\"M5 1h10v3H5V1zM1 1h3v3H1V1zm0 4h3v3H1V5zm0 4h3v3H1V9zm4-4h10v3H5V5zm0 4h10v3H5V9z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-ruler\" viewBox=\"0 0 256 512\"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d=\"M0 48C0 21.5 21.5 0 48 0h160c26.5 0 48 21.5 48 48v48h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48z\"/></symbol><symbol id=\"svg-search-shared\" viewBox=\"0 0 17 16\"><path stroke-width=\"0\" d=\"M11.733 12.562L9.26 10.088c.24-.347.419-.715.562-1.094H7.775c-.12.175-.257.34-.416.5-.632.631-1.393.947-2.282.947s-1.65-.316-2.283-.948-.948-1.393-.948-2.282c0-.85.297-1.58.875-2.195V2.74c-.46.24-.884.52-1.24.876a5.077 5.077 0 0 0-1.08 1.622C.132 5.866 0 6.523 0 7.211s.133 1.345.4 1.972a5.077 5.077 0 0 0 1.082 1.623c.454.454.995.815 1.623 1.081.627.267 1.284.4 1.972.4a4.938 4.938 0 0 0 2.877-.894l2.474 2.467c.173.182.39.274.649.274.25 0 .466-.092.649-.274a.887.887 0 0 0 .274-.65.884.884 0 0 0-.267-.648z\"/><g fill-rule=\"evenodd\" stroke-width=\"0\"><path d=\"M5.729 2a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-1.527.5H7.23c.5 0 .499.5.499 1V6h-.75V3.5h-.25V8h-.75V6h-.5v2h-.75V3.5h-.25V6h-.75V3.5c0-.5-.027-1 .473-1zM10.73 2a1 1 0 1 0-.001-2 1 1 0 0 0 0 2zm-1.527.5h3.027c.5 0 .5.5.5 1V6h-.75V3.5h-.25V8h-.75V6h-.5v2h-.75V3.5h-.25V6h-.75V3.5c0-.5-.027-1 .473-1z\"/></g></symbol><symbol id=\"svg-select-all\" viewBox=\"0 0 15 15\"><title>select-all</title><g fill-rule=\"evenodd\"><path d=\"M3 0h1v1H3V0zm2 0h1v1H5V0zm2 0h1v1H7V0zm2 0h1v1H9V0zm4 0h2v2h-2V0zm-2 0h1v1h-1V0zM0 0h2v2H0V0zm0 13h2v2H0v-2zm3 1h1v1H3v-1zm4 0h1v1H7v-1zm-2 0h1v1H5v-1zm4 0h1v1H9v-1zm2 0h1v1h-1v-1zm2-1h2v2h-2v-2zm1-10h1v1h-1V3zm0 2h1v1h-1V5zm0 2h1v1h-1V7zm0 2h1v1h-1V9zm0 2h1v1h-1v-1zM0 3h1v1H0V3zm0 2h1v1H0V5zm0 2h1v1H0V7zm0 2h1v1H0V9zm0 2h1v1H0v-1zM3 3h4v4H3zM8 3h4v4H8zM8 8h4v4H8zM3 8h4v4H3z\"/></g></symbol><symbol id=\"svg-select-pages\" viewBox=\"0 0 15 15\"><title>select-pages</title><g fill-rule=\"evenodd\"><path d=\"M3 0h1v1H3V0zm2 0h1v1H5V0zm2 0h1v1H7V0zm2 0h1v1H9V0zm4 0h2v2h-2V0zm-2 0h1v1h-1V0zM0 0h2v2H0V0zm0 13h2v2H0v-2zm3 1h1v1H3v-1zm4 0h1v1H7v-1zm-2 0h1v1H5v-1zm4 0h1v1H9v-1zm2 0h1v1h-1v-1zm2-1h2v2h-2v-2zm1-10h1v1h-1V3zm0 2h1v1h-1V5zm0 2h1v1h-1V7zm0 2h1v1h-1V9zm0 2h1v1h-1v-1zM0 3h1v1H0V3zm0 2h1v1H0V5zm0 2h1v1H0V7zm0 2h1v1H0V9zm0 2h1v1H0v-1z\"/><path d=\"M10 5h2v7H5v-2h1v1h5V6h-1V5z\" fill-rule=\"nonzero\"/><path d=\"M3 3h7v7H3V3zm1 1v5h5V4H4z\" fill-rule=\"nonzero\"/></g></symbol><symbol id=\"svg-spinner\" viewBox=\"0 0 14 14\"><title>spinner</title><path d=\"M4.11 10.89c0-.554-.446-1-1-1-.547 0-1 .446-1 1 0 .547.453 1 1 1 .554 0 1-.453 1-1zM8 12.5c0-.555-.445-1-1-1-.555 0-1 .445-1 1 0 .555.445 1 1 1 .555 0 1-.445 1-1zM2.5 7c0-.555-.445-1-1-1-.555 0-1 .445-1 1 0 .555.445 1 1 1 .555 0 1-.445 1-1zm9.39 3.89c0-.554-.452-1-1-1-.554 0-1 .446-1 1 0 .547.446 1 1 1 .548 0 1-.453 1-1zM4.36 3.11c0-.688-.563-1.25-1.25-1.25-.688 0-1.25.562-1.25 1.25 0 .687.562 1.25 1.25 1.25.687 0 1.25-.563 1.25-1.25zM13.5 7c0-.555-.445-1-1-1-.555 0-1 .445-1 1 0 .555.445 1 1 1 .555 0 1-.445 1-1zm-5-5.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zm4.14 1.61c0-.962-.788-1.75-1.75-1.75-.968 0-1.75.788-1.75 1.75 0 .968.782 1.75 1.75 1.75.962 0 1.75-.782 1.75-1.75z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-table\" viewBox=\"0 0 15 13\"><title>table</title><path d=\"M6 6v2h3V6H6zm0-1V3H5v2H2v1h3v2H2v1h3v2h1V9h3v2h1V9h3v3h1V3h-1v2h-3V3H9v2H6zm7 1v2h-3V6h3zM1 3h1v9H1V3zm1 8h11v1H2v-1zM1 1h13v2H1V1z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-tag-o\" viewBox=\"0 0 13 13\"><title>tag-o</title><g fill-rule=\"evenodd\"><path d=\"M1.065 1.258c.02-.064.027 2.825.027 3.112 0 .5.13 1.086.356 1.324.523.54 6.142 6.155 6.343 6.343l-.072-.061a.388.388 0 0 0-.048-.034.24.24 0 0 0 .058.017.197.197 0 0 0-.062.03c.17-.14 3.325-3.254 3.692-3.632.195-.202.573-.611.573-.611-.036.054-.13-.166-.215-.256-.167-.175-5.84-5.86-5.84-5.86a6.77 6.77 0 0 0-.48-.304c-.225-.117-.417-.179-.481-.179-.26 0-.686-.007-1.847-.027-1.133-.02-1.572-.028-1.813-.028a.978.978 0 0 0-.191.166zM4.916.054c.603 0 1.45.544 1.693.762.195.217 5.96 5.87 6.227 6.257.28.374.143 1.026 0 1.25-.13.265-4.038 4.097-4.479 4.462-.488.396-1.116.152-1.31 0-.189-.174-5.79-5.746-6.392-6.365C.055 5.789 0 4.675 0 4.352V1.088C0 .652.601 0 1.256 0c.602 0 3.061.054 3.66.054z\"/><path d=\"M3.436 3a.436.436 0 1 0-.872 0 .436.436 0 0 0 .872 0zM2 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0z\"/></g></symbol><symbol id=\"svg-trash\" viewBox=\"0 0 13 13\"><title>trash</title><g fill-rule=\"evenodd\"><path d=\"M1 11.5c0 .634.3 1.084.776 1.322.27.135.528.178.724.178h8c.634 0 1.084-.3 1.322-.776.135-.27.178-.528.178-.724V3h.5V2H.5v1H1v8.5zM2 3h9v8.5c0 .054-.02.17-.072.276-.075.15-.187.224-.428.224h-8a.702.702 0 0 1-.276-.072C2.074 11.853 2 11.74 2 11.5V3z\"/><path d=\"M4.61 1.621C4.717 1.194 4.862 1 5 1h3c.138 0 .283.194.39.621.032.127.055.256.073.379H4.537c.018-.123.041-.252.073-.379zM3.5 2.5V3h6v-.5a4.84 4.84 0 0 0-.14-1.121C9.154.556 8.737 0 8 0H5c-.737 0-1.154.556-1.36 1.379a4.84 4.84 0 0 0-.123.767A4.505 4.505 0 0 0 3.5 2.5zM7 4v7h1V4H7zm2 0v7h1V4H9zM5 4v7h1V4H5zM3 4v7h1V4H3z\"/></g></symbol><symbol id=\"svg-typo3\" viewBox=\"0 0 14 14\"><title>typo3</title><path d=\"M10.456 9.648C8.896 12.15 7 14 5.876 14 3.446 14 0 6.674 0 3.446c0-.508.109-.907.29-1.16C1.125 1.27 3.736.47 5.912.217c-.254.217-.435.471-.435 1.233 0 2.067 2.611 8.28 4.389 8.28.216 0 .382-.022.59-.083zM9.32 0c2.249 0 4.498.363 4.498 1.632 0 2.575-1.632 5.695-2.466 5.695-1.487 0-3.337-4.135-3.337-6.202C8.016.182 8.379 0 9.32 0z\" fill-rule=\"nonzero\"/></symbol></svg>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><symbol id=\"svg-arrow-right\" viewBox=\"0 0 31.49 31.49\"><g style=\"enable-background:new 0 0 31.49 31.49\"><path style=\"fill:#1e201d\" d=\"M21.205 5.007a1.112 1.112 0 0 0-1.587 0 1.12 1.12 0 0 0 0 1.571l8.047 8.047H1.111A1.106 1.106 0 0 0 0 15.737c0 .619.492 1.127 1.111 1.127h26.554l-8.047 8.032c-.429.444-.429 1.159 0 1.587a1.112 1.112 0 0 0 1.587 0l9.952-9.952a1.093 1.093 0 0 0 0-1.571l-9.952-9.953z\"/></g></symbol><symbol id=\"svg-asset-failed\" viewBox=\"0 0 38.387 38.387\"><path d=\"M38.387 33.427 24.154 19.193 38.387 4.96 33.427 0 19.194 14.233 4.96 0 0 4.96l14.233 14.234L0 33.427l4.96 4.96 14.233-14.233 14.234 14.233 4.96-4.96z\"/></symbol><symbol id=\"svg-close\" viewBox=\"0 0 12 12\"><path d=\"M3.975 5.475 0 1.5S0 0 1.5 0l4.343 4.343C8.663 1.837 10.5 0 10.5 0S12 0 12 1.5L7.657 5.843C10.163 8.663 12 10.5 12 10.5s0 1.5-1.5 1.5L6.157 7.657C3.337 10.163 1.5 12 1.5 12S0 12 0 10.5l4.343-4.343Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-drupal\" viewBox=\"0 0 14 14\"><path d=\"M6.634 8.668a2.21 2.21 0 1 1 0 4.419 2.21 2.21 0 0 1 0-4.419Zm2.747-.421a2.912 2.912 0 0 0 2.037-3.426c1.459 1.566 2.328 3.293 1.394 5.588-.675 1.66-2.182 3.029-4.004 3.591a3.8 3.8 0 0 0 .573-5.753ZM6.886 5.45a1.69 1.69 0 1 1 3.38 0 1.69 1.69 0 0 1-3.38 0Zm-3.163 7.878C1.098 11.734.2 8.684 1.196 6.218 2.681 2.54 6.698 3.99 6.316 0c.75.911 1.7 1.745 2.652 2.566A2.91 2.91 0 0 0 6.18 7.1a3.805 3.805 0 0 0-2.457 6.228Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-easydb\" viewBox=\"0 0 24 24\"><g fill-rule=\"evenodd\"><path d=\"M3 21c-1.87-2.38-3-5.539-3-10 0-2.468 1.136-5.623 3-8v18\" fill=\"currentColor\"/><path d=\"M19 17h-4V8.38L19 7v10Zm-6 0H9V8.38L13 7v10ZM11.3 0A11.42 11.42 0 0 0 7 .837l.002 22.328A11.43 11.43 0 0 0 11.3 24C17.762 24 23 18.627 23 12S17.762 0 11.3 0Z\"/></g></symbol><symbol id=\"svg-external-link\" viewBox=\"0 0 12 12\"><g fill-rule=\"evenodd\"><path d=\"M6.707 4H1v7h7V5.293l-1 1V10H2V5h3.707l1-1Z\"/><path d=\"M10 2v4.494c0 .665-.094.705-.557.242L8 5.293l-2.5 2.5L4.207 6.5l2.5-2.5-1.443-1.443C4.798 2.091 4.835 2 5.506 2H10ZM2.793 6.5 5.5 9.207l2.5-2.5.736.736C9.832 8.539 11 8.046 11 6.494V1H5.506c-1.56 0-2.046 1.167-.949 2.264L5.293 4l-2.5 2.5Z\" fill=\"currentColor\"/></g></symbol><symbol id=\"svg-falcon-io\" viewBox=\"0 0 14 14\"><path d=\"M13.69 11.43c-1.353-.296-2.558-1.153-3.496-2.395-.202.094-.903.524-2.903.393-2.336-.153-3.689-2.03-3.689-2.03 2.664.309 5.414.058 5.823.018-.056-.23-.127-.468-.156-.71-.745.014-4.039.047-6.017-.519C1.036 5.555 0 3 0 3c3.89.206 9.66 1.187 11.505 1.562.328.066.581.337.579.672-.018 3.038.947 4.8 1.839 5.895.148.187.089.386-.233.302Z\" fill-rule=\"nonzero\"/></symbol><symbol id=\"svg-folder-shared-upload\" viewBox=\"0 0 15 19\"><g fill-rule=\"evenodd\"><path d=\"M5 16H2c-1.276 0-2-.724-2-2V4c0-1.276.724-2 2-2h3c2 0 2 2 2 2h6c1.276 0 2 .724 2 2v8c0 1.276-.724 2-2 2h-3v-1h3c1 0 1-1 1-1V6c0-1-1-1-1-1H7S6 5 6 4 5 3 5 3H2S1 3 1 4v10s0 1 1 1h3v1Z\"/><path d=\"M5.333 8.5h-1.86c-.5 0-.473.5-.473 1v1.692l.75-.865V9.5H4v.538L5.333 8.5Zm4.334 0H11.5c.5 0 .5.5.5 1v1.693l-.75-.866V9.5H11v.539L9.666 8.5ZM5 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm5 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM9 18H6v-5H3.5l4-4.5 4 4.5H9z\"/></g></symbol><symbol id=\"svg-folder-shared\" viewBox=\"0 0 15 19\"><g fill-rule=\"evenodd\"><path d=\"M2 2C.724 2 0 2.724 0 4v10c0 1.276.724 2 2 2h11c1.276 0 2-.724 2-2V6c0-1.276-.724-2-2-2H7s0-2-2-2H2Zm0 1h3s1 0 1 1 1 1 1 1h6s1 0 1 1v8s0 1-1 1H2c-1 0-1-1-1-1V4c0-1 1-1 1-1Z\"/><path d=\"M5 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.526.5H6.5C7 8.5 7 9 7 9.5V12h-.75V9.5H6V14h-.75v-2h-.5v2H4V9.5h-.25V12H3V9.5c0-.5-.026-1 .474-1ZM10 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.526.5H11.5c.5 0 .5.5.5 1V12h-.75V9.5H11V14h-.75v-2h-.5v2H9V9.5h-.25V12H8V9.5c0-.5-.027-1 .473-1Z\"/></g></symbol><symbol id=\"svg-folder-upload\" viewBox=\"0 0 15 19\"><g fill-rule=\"evenodd\"><path d=\"M5 16H2c-1.276 0-2-.724-2-2V4c0-1.276.724-2 2-2h3c2 0 2 2 2 2h6c1.276 0 2 .724 2 2v8c0 1.276-.724 2-2 2h-3v-1h3c1 0 1-1 1-1V6c0-1-1-1-1-1H7S6 5 6 4 5 3 5 3H2S1 3 1 4v10s0 1 1 1h3v1Z\"/><path d=\"M9 18H6v-5H3.5l4-4.5 4 4.5H9z\"/></g></symbol><symbol id=\"svg-folder\" viewBox=\"0 0 15 19\"><path d=\"M2 2C.724 2 0 2.724 0 4v10c0 1.276.724 2 2 2h11c1.276 0 2-.724 2-2V6c0-1.276-.724-2-2-2H7s0-2-2-2H2Zm0 1h3s1 0 1 1 1 1 1 1h6s1 0 1 1v8s0 1-1 1H2c-1 0-1-1-1-1V4c0-1 1-1 1-1Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-fylr-logo\" viewBox=\"0 0 57.8 34.1\"><g style=\"enable-background:new 0 0 57.8 34.1\"><path d=\"M44.9 27.7V8.6h3.4c.3 0 .5 0 .7.1.2 0 .4.1.5.2s.2.2.3.4c.1.2.1.4.2.6l.3 1.8c.7-1.1 1.5-1.9 2.4-2.6.9-.6 1.8-.9 2.9-.9.9 0 1.6.2 2.1.6l-.8 4.2c0 .3-.1.4-.3.5-.1.1-.3.2-.6.2-.2 0-.5 0-.7-.1-.3-.1-.6-.1-1.1-.1-1.7 0-3.5 1.2-3.5 3.4v10.7h-5.8zM27.3 8.6c-.3 0-.6.1-.9.3-.3.2-.5.4-.6.7L23 17.8c-.1.4-.7 1.9-.8 2.3-.1-.4-.5-1.5-.7-2.3l-3.1-8.3c-.1-.3-.3-.5-.5-.7-.2-.2-.6-.3-1-.3H6v-.8c0-.6.1-1.1.2-1.6.1-.4.3-.7.6-1 .3-.3.6-.4 1-.5.2-.1.7-.1 1.2-.1.2 0 .3 0 .5-.1.2 0 .3-.1.5-.2l.3-.3c.1-.1.1-.3.2-.5l.1-2.8L9.4.3H8C6.8.3 5.7.5 4.8.8c-1 .4-1.8.8-2.5 1.5-.6.6-1.1 1.4-1.5 2.2-.4.9-.5 1.9-.5 3V27.7H6V12.5h7.4L19.3 26l-3.7 7.8h4.3c.5 0 .9-.1 1.2-.3.2-.2.5-.5.6-.8L32 8.6h-4.7zM40.7.3v27.4H35V.3h5.7zM27.8 30.6c-.7 0-1.4.5-1.7 1.1l-.8 2h25.3v-3.2l-22.8.1z\"/></g></symbol><symbol id=\"svg-grid\" viewBox=\"0 0 16 13\"><path d=\"M1 1h4v3H1V1Zm5 0h4v3H6V1Zm5 0h4v3h-4V1ZM1 5h4v3H1V5Zm5 0h4v3H6V5Zm5 0h4v3h-4V5ZM1 9h4v3H1V9Zm5 0h4v3H6V9Zm5 0h4v3h-4V9Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-hierarchy\" viewBox=\"0 0 14 14\"><g fill-rule=\"evenodd\"><path d=\"M2 4.25a.249.249 0 0 0 .176-.074l1.75-1.75A.249.249 0 0 0 4 2.25.252.252 0 0 0 3.75 2H.25a.252.252 0 0 0-.25.25c0 .066.027.129.074.176l1.75 1.75c.047.047.11.074.176.074ZM4 12.25a.249.249 0 0 0 .176-.074l1.75-1.75A.249.249 0 0 0 6 10.25a.252.252 0 0 0-.25-.25h-3.5a.252.252 0 0 0-.25.25c0 .066.027.129.074.176l1.75 1.75c.047.047.11.074.176.074ZM3 8.25a.249.249 0 0 0 .176-.074l1.75-1.75A.249.249 0 0 0 5 6.25.252.252 0 0 0 4.75 6h-3.5a.252.252 0 0 0-.25.25c0 .066.027.129.074.176l1.75 1.75c.047.047.11.074.176.074ZM5 2h9v2H5zM6 6h8v2H6zM7 10h7v2H7z\"/></g></symbol><symbol id=\"svg-info-circle-ng\" viewBox=\"0 0 14 14\"><g fill-rule=\"evenodd\"><path d=\"M7 13A6 6 0 1 0 7 1a6 6 0 0 0 0 12Zm0 1A7 7 0 1 1 7 0a7 7 0 0 1 0 14Z\" fill-rule=\"nonzero\"/><path d=\"M8 6v5H6V6h2Zm0-3v2H6V3h2Z\"/></g></symbol><symbol id=\"svg-info-circle\" viewBox=\"0 0 24 24\"><path d=\"M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm1-6h-2v-8h2v8zM12 5.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z\"/></symbol><symbol id=\"svg-inherit\" viewBox=\"-110 -59.7 345.5 345.5\"><g style=\"enable-background:new -110 -59.7 345.5 345.5\"><path d=\"M57 28.4-98.7 184.1c-3.7 3.7-3.7 9.5 0 13.2s9.5 3.7 13.2 0L63.6 48.2l149.1 149.1c3.7 3.7 9.5 3.7 13.2 0 1.8-1.8 2.8-4.2 2.8-6.6 0-2.4-.9-4.8-2.8-6.6L70.2 28.4c-3.6-3.6-9.6-3.6-13.2 0z\"/></g></symbol><symbol id=\"svg-merge-icon\" viewBox=\"-27 -143.2 512 512\"><g style=\"enable-background:new -27 -143.2 512 512\"><path d=\"M363.3 200.7c-6.2-15-15.1-28.3-26.6-39.8l-57.6-57.6c-4.6-4.6-8.2-10-10.7-16.1-2.5-6-3.8-12.4-3.8-18.9V-4.1h69.8L228-110.5 121.7-4.1h69.8v72.4c0 6.5-1.3 12.9-3.8 18.9-2.5 6-6.1 11.5-10.7 16.1l-57.6 57.6c-11.5 11.5-20.4 24.8-26.6 39.8-6.2 15-9.3 30.8-9.3 47V320h73.2v-72.4c0-6.5 1.3-12.9 3.8-19 2.5-6 6.1-11.4 10.7-16l57-56.9 56.9 56.9c4.6 4.6 8.2 10 10.7 16s3.8 12.4 3.8 19V320h73.2v-72.4c-.2-16.2-3.3-32-9.5-46.9z\" style=\"fill:#39f\"/></g></symbol><symbol id=\"svg-multiple\" viewBox=\"0 0 10 12\"><g fill-rule=\"evenodd\"><path d=\"M8 8h2V0H4v2h1V1h4v6H8v1Z\"/><path d=\"M6 10h2V2H2v2h1V3h4v6H6v1Z\"/><path d=\"M1 11h4V5H1v6ZM0 4h6v8H0V4Z\"/></g></symbol><symbol id=\"svg-popup\" viewBox=\"0 0 15 14\"><g fill-rule=\"evenodd\"><path d=\"M4 4H1v9h10v-3h-1v2H2V5h2V4Z\"/><path d=\"M4 1h10v9H4V1Zm1 8h8V3H5v6Z\"/></g></symbol><symbol id=\"svg-presentation-play\" viewBox=\"0 0 15 14\"><g fill-rule=\"evenodd\"><path d=\"M1 1h13v2H1z\"/><path d=\"M2 2h1v8H2z\"/><path d=\"M2 9h11v1H2z\"/><path d=\"M7 9h1v2.5H7z\"/><path d=\"M6.086 12.208 7.5 10.794l.707.707-1.414 1.414z\"/><path d=\"m7.5 10.794 1.414 1.414-.707.707L6.793 11.5zM12 2h1v8h-1zM6.5 4l3.25 2L6.5 8z\"/></g></symbol><symbol id=\"svg-presentation\" viewBox=\"0 0 15 14\"><g fill-rule=\"evenodd\"><path d=\"M1 1h13v2H1z\"/><path d=\"M2 2h1v8H2z\"/><path d=\"M2 9h11v1H2z\"/><path d=\"M7 9h1v2.5H7z\"/><path d=\"M6.086 12.208 7.5 10.794l.707.707-1.414 1.414z\"/><path d=\"m7.5 10.794 1.414 1.414-.707.707L6.793 11.5zM12 2h1v8h-1z\"/></g></symbol><symbol id=\"svg-remove-icon\" viewBox=\"-27 -143.2 512 512\"><g style=\"enable-background:new -27 -143.2 512 512\"><style>.st0{fill:#c33}</style><path class=\"st0\" d=\"M229-143.2c-141.2 0-256 114.8-256 256s114.8 256 256 256 256-114.8 256-256-114.8-256-256-256zm0 468.1c-117 0-212.1-95.2-212.1-212.1S112-99.3 229-99.3 441.1-4.2 441.1 112.8 346 324.9 229 324.9z\"/><path class=\"st0\" d=\"M328.1 13.7c-8.6-8.6-22.5-8.6-31 0l-68 68-68-68c-8.6-8.6-22.5-8.6-31 0s-8.6 22.5 0 31l68 68-68 68c-8.6 8.6-8.6 22.5 0 31 4.3 4.3 9.9 6.4 15.5 6.4s11.2-2.1 15.5-6.4l68-68 68 68c4.3 4.3 9.9 6.4 15.5 6.4s11.2-2.1 15.5-6.4c8.6-8.6 8.6-22.5 0-31l-68-68 68-68c8.5-8.5 8.5-22.4 0-31z\"/></g></symbol><symbol id=\"svg-reset\" viewBox=\"0 0 12 12\"><path d=\"M4 0v6L0 3l4-3Zm0 2h5c3 0 3 3 3 3v3c0 3-3 3-3 3H2V9h7c1 0 1-1 1-1V5c0-1-1-1-1-1H4V2Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-rows\" viewBox=\"0 0 16 13\"><path d=\"M5 1h10v3H5V1ZM1 1h3v3H1V1Zm0 4h3v3H1V5Zm0 4h3v3H1V9Zm4-4h10v3H5V5Zm0 4h10v3H5V9Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-ruler\" viewBox=\"0 0 256 512\"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d=\"M0 48C0 21.5 21.5 0 48 0h160c26.5 0 48 21.5 48 48v48h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64h-80c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48z\"/></symbol><symbol id=\"svg-search-shared\" viewBox=\"0 0 17 16\"><path d=\"M11.733 12.562 9.26 10.088c.24-.347.419-.715.562-1.094H7.775c-.12.175-.257.34-.416.5-.632.631-1.393.947-2.282.947s-1.65-.316-2.283-.948-.948-1.393-.948-2.282c0-.85.297-1.58.875-2.195V2.74c-.46.24-.884.52-1.24.876a5.077 5.077 0 0 0-1.08 1.622C.132 5.866 0 6.523 0 7.211s.133 1.345.4 1.972a5.077 5.077 0 0 0 1.082 1.623c.454.454.995.815 1.623 1.081.627.267 1.284.4 1.972.4a4.938 4.938 0 0 0 2.877-.894l2.474 2.467c.173.182.39.274.649.274.25 0 .466-.092.649-.274a.887.887 0 0 0 .274-.65.884.884 0 0 0-.267-.648Z\"/><g fill-rule=\"evenodd\"><path d=\"M5.729 2a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.527.5H7.23c.5 0 .499.5.499 1V6h-.75V3.5h-.25V8h-.75V6h-.5v2h-.75V3.5h-.25V6h-.75V3.5c0-.5-.027-1 .473-1ZM10.73 2a1 1 0 1 0-.001-2 1 1 0 0 0 0 2Zm-1.527.5h3.027c.5 0 .5.5.5 1V6h-.75V3.5h-.25V8h-.75V6h-.5v2h-.75V3.5h-.25V6h-.75V3.5c0-.5-.027-1 .473-1Z\"/></g></symbol><symbol id=\"svg-select-all\" viewBox=\"0 0 15 15\"><g fill-rule=\"evenodd\"><path d=\"M3 0h1v1H3V0Zm2 0h1v1H5V0Zm2 0h1v1H7V0Zm2 0h1v1H9V0Zm4 0h2v2h-2V0Zm-2 0h1v1h-1V0ZM0 0h2v2H0V0Zm0 13h2v2H0v-2Zm3 1h1v1H3v-1Zm4 0h1v1H7v-1Zm-2 0h1v1H5v-1Zm4 0h1v1H9v-1Zm2 0h1v1h-1v-1Zm2-1h2v2h-2v-2Zm1-10h1v1h-1V3Zm0 2h1v1h-1V5Zm0 2h1v1h-1V7Zm0 2h1v1h-1V9Zm0 2h1v1h-1v-1ZM0 3h1v1H0V3Zm0 2h1v1H0V5Zm0 2h1v1H0V7Zm0 2h1v1H0V9Zm0 2h1v1H0v-1ZM3 3h4v4H3zM8 3h4v4H8zM8 8h4v4H8zM3 8h4v4H3z\"/></g></symbol><symbol id=\"svg-select-pages\" viewBox=\"0 0 15 15\"><g fill-rule=\"evenodd\"><path d=\"M3 0h1v1H3V0Zm2 0h1v1H5V0Zm2 0h1v1H7V0Zm2 0h1v1H9V0Zm4 0h2v2h-2V0Zm-2 0h1v1h-1V0ZM0 0h2v2H0V0Zm0 13h2v2H0v-2Zm3 1h1v1H3v-1Zm4 0h1v1H7v-1Zm-2 0h1v1H5v-1Zm4 0h1v1H9v-1Zm2 0h1v1h-1v-1Zm2-1h2v2h-2v-2Zm1-10h1v1h-1V3Zm0 2h1v1h-1V5Zm0 2h1v1h-1V7Zm0 2h1v1h-1V9Zm0 2h1v1h-1v-1ZM0 3h1v1H0V3Zm0 2h1v1H0V5Zm0 2h1v1H0V7Zm0 2h1v1H0V9Zm0 2h1v1H0v-1Z\"/><path d=\"M10 5h2v7H5v-2h1v1h5V6h-1V5Z\" fill-rule=\"nonzero\"/><path d=\"M3 3h7v7H3V3Zm1 1v5h5V4H4Z\" fill-rule=\"nonzero\"/></g></symbol><symbol id=\"svg-spinner\" viewBox=\"0 0 14 14\"><path d=\"M4.11 10.89c0-.554-.446-1-1-1-.547 0-1 .446-1 1 0 .547.453 1 1 1 .554 0 1-.453 1-1ZM8 12.5c0-.555-.445-1-1-1-.555 0-1 .445-1 1 0 .555.445 1 1 1 .555 0 1-.445 1-1ZM2.5 7c0-.555-.445-1-1-1-.555 0-1 .445-1 1 0 .555.445 1 1 1 .555 0 1-.445 1-1Zm9.39 3.89c0-.554-.452-1-1-1-.554 0-1 .446-1 1 0 .547.446 1 1 1 .548 0 1-.453 1-1ZM4.36 3.11c0-.688-.563-1.25-1.25-1.25-.688 0-1.25.562-1.25 1.25 0 .687.562 1.25 1.25 1.25.687 0 1.25-.563 1.25-1.25ZM13.5 7c0-.555-.445-1-1-1-.555 0-1 .445-1 1 0 .555.445 1 1 1 .555 0 1-.445 1-1Zm-5-5.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Zm4.14 1.61c0-.962-.788-1.75-1.75-1.75-.968 0-1.75.788-1.75 1.75 0 .968.782 1.75 1.75 1.75.962 0 1.75-.782 1.75-1.75Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-table\" viewBox=\"0 0 15 13\"><path d=\"M6 6v2h3V6H6Zm0-1V3H5v2H2v1h3v2H2v1h3v2h1V9h3v2h1V9h3v3h1V3h-1v2h-3V3H9v2H6Zm7 1v2h-3V6h3ZM1 3h1v9H1V3Zm1 8h11v1H2v-1ZM1 1h13v2H1V1Z\" fill-rule=\"evenodd\"/></symbol><symbol id=\"svg-tag-o\" viewBox=\"0 0 13 13\"><g fill-rule=\"evenodd\"><path d=\"M1.065 1.258c.02-.064.027 2.825.027 3.112 0 .5.13 1.086.356 1.324.523.54 6.142 6.155 6.343 6.343l-.072-.061a.388.388 0 0 0-.048-.034.24.24 0 0 0 .058.017.197.197 0 0 0-.062.03c.17-.14 3.325-3.254 3.692-3.632.195-.202.573-.611.573-.611-.036.054-.13-.166-.215-.256-.167-.175-5.84-5.86-5.84-5.86a6.77 6.77 0 0 0-.48-.304c-.225-.117-.417-.179-.481-.179-.26 0-.686-.007-1.847-.027-1.133-.02-1.572-.028-1.813-.028a.978.978 0 0 0-.191.166ZM4.916.054c.603 0 1.45.544 1.693.762.195.217 5.96 5.87 6.227 6.257.28.374.143 1.026 0 1.25-.13.265-4.038 4.097-4.479 4.462-.488.396-1.116.152-1.31 0-.189-.174-5.79-5.746-6.392-6.365C.055 5.789 0 4.675 0 4.352V1.088C0 .652.601 0 1.256 0c.602 0 3.061.054 3.66.054Z\"/><path d=\"M3.436 3a.436.436 0 1 0-.872 0 .436.436 0 0 0 .872 0ZM2 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z\"/></g></symbol><symbol id=\"svg-trash\" viewBox=\"0 0 13 13\"><g fill-rule=\"evenodd\"><path d=\"M1 11.5c0 .634.3 1.084.776 1.322.27.135.528.178.724.178h8c.634 0 1.084-.3 1.322-.776.135-.27.178-.528.178-.724V3h.5V2H.5v1H1v8.5ZM2 3h9v8.5c0 .054-.02.17-.072.276-.075.15-.187.224-.428.224h-8a.702.702 0 0 1-.276-.072C2.074 11.853 2 11.74 2 11.5V3Z\"/><path d=\"M4.61 1.621C4.717 1.194 4.862 1 5 1h3c.138 0 .283.194.39.621.032.127.055.256.073.379H4.537c.018-.123.041-.252.073-.379ZM3.5 2.5V3h6v-.5a4.84 4.84 0 0 0-.14-1.121C9.154.556 8.737 0 8 0H5c-.737 0-1.154.556-1.36 1.379a4.84 4.84 0 0 0-.123.767A4.505 4.505 0 0 0 3.5 2.5ZM7 4v7h1V4H7Zm2 0v7h1V4H9ZM5 4v7h1V4H5ZM3 4v7h1V4H3Z\"/></g></symbol><symbol id=\"svg-typo3\" viewBox=\"0 0 14 14\"><path d=\"M10.456 9.648C8.896 12.15 7 14 5.876 14 3.446 14 0 6.674 0 3.446c0-.508.109-.907.29-1.16C1.125 1.27 3.736.47 5.912.217c-.254.217-.435.471-.435 1.233 0 2.067 2.611 8.28 4.389 8.28.216 0 .382-.022.59-.083ZM9.32 0c2.249 0 4.498.363 4.498 1.632 0 2.575-1.632 5.695-2.466 5.695-1.487 0-3.337-4.135-3.337-6.202C8.016.182 8.379 0 9.32 0Z\" fill-rule=\"nonzero\"/></symbol></svg>");
+
+/***/ }),
+
+/***/ "../node_modules/marked/lib/marked.cjs":
+/*!*********************************************!*\
+  !*** ../node_modules/marked/lib/marked.cjs ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/**
+ * marked v15.0.11 - a markdown parser
+ * Copyright (c) 2011-2025, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
+ */
+
+/**
+ * DO NOT EDIT THIS FILE
+ * The code in this file is generated from files in ./src/
+ */
+
+
+
+/**
+ * Gets the original marked default options.
+ */
+function _getDefaults() {
+    return {
+        async: false,
+        breaks: false,
+        extensions: null,
+        gfm: true,
+        hooks: null,
+        pedantic: false,
+        renderer: null,
+        silent: false,
+        tokenizer: null,
+        walkTokens: null,
+    };
+}
+exports.defaults = _getDefaults();
+function changeDefaults(newDefaults) {
+    exports.defaults = newDefaults;
+}
+
+const noopTest = { exec: () => null };
+function edit(regex, opt = '') {
+    let source = typeof regex === 'string' ? regex : regex.source;
+    const obj = {
+        replace: (name, val) => {
+            let valSource = typeof val === 'string' ? val : val.source;
+            valSource = valSource.replace(other.caret, '$1');
+            source = source.replace(name, valSource);
+            return obj;
+        },
+        getRegex: () => {
+            return new RegExp(source, opt);
+        },
+    };
+    return obj;
+}
+const other = {
+    codeRemoveIndent: /^(?: {1,4}| {0,3}\t)/gm,
+    outputLinkReplace: /\\([\[\]])/g,
+    indentCodeCompensation: /^(\s+)(?:```)/,
+    beginningSpace: /^\s+/,
+    endingHash: /#$/,
+    startingSpaceChar: /^ /,
+    endingSpaceChar: / $/,
+    nonSpaceChar: /[^ ]/,
+    newLineCharGlobal: /\n/g,
+    tabCharGlobal: /\t/g,
+    multipleSpaceGlobal: /\s+/g,
+    blankLine: /^[ \t]*$/,
+    doubleBlankLine: /\n[ \t]*\n[ \t]*$/,
+    blockquoteStart: /^ {0,3}>/,
+    blockquoteSetextReplace: /\n {0,3}((?:=+|-+) *)(?=\n|$)/g,
+    blockquoteSetextReplace2: /^ {0,3}>[ \t]?/gm,
+    listReplaceTabs: /^\t+/,
+    listReplaceNesting: /^ {1,4}(?=( {4})*[^ ])/g,
+    listIsTask: /^\[[ xX]\] /,
+    listReplaceTask: /^\[[ xX]\] +/,
+    anyLine: /\n.*\n/,
+    hrefBrackets: /^<(.*)>$/,
+    tableDelimiter: /[:|]/,
+    tableAlignChars: /^\||\| *$/g,
+    tableRowBlankLine: /\n[ \t]*$/,
+    tableAlignRight: /^ *-+: *$/,
+    tableAlignCenter: /^ *:-+: *$/,
+    tableAlignLeft: /^ *:-+ *$/,
+    startATag: /^<a /i,
+    endATag: /^<\/a>/i,
+    startPreScriptTag: /^<(pre|code|kbd|script)(\s|>)/i,
+    endPreScriptTag: /^<\/(pre|code|kbd|script)(\s|>)/i,
+    startAngleBracket: /^</,
+    endAngleBracket: />$/,
+    pedanticHrefTitle: /^([^'"]*[^\s])\s+(['"])(.*)\2/,
+    unicodeAlphaNumeric: /[\p{L}\p{N}]/u,
+    escapeTest: /[&<>"']/,
+    escapeReplace: /[&<>"']/g,
+    escapeTestNoEncode: /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/,
+    escapeReplaceNoEncode: /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/g,
+    unescapeTest: /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig,
+    caret: /(^|[^\[])\^/g,
+    percentDecode: /%25/g,
+    findPipe: /\|/g,
+    splitPipe: / \|/,
+    slashPipe: /\\\|/g,
+    carriageReturn: /\r\n|\r/g,
+    spaceLine: /^ +$/gm,
+    notSpaceStart: /^\S*/,
+    endingNewline: /\n$/,
+    listItemRegex: (bull) => new RegExp(`^( {0,3}${bull})((?:[\t ][^\\n]*)?(?:\\n|$))`),
+    nextBulletRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ \t][^\\n]*)?(?:\\n|$))`),
+    hrRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`),
+    fencesBeginRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:\`\`\`|~~~)`),
+    headingBeginRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}#`),
+    htmlBeginRegex: (indent) => new RegExp(`^ {0,${Math.min(3, indent - 1)}}<(?:[a-z].*>|!--)`, 'i'),
+};
+/**
+ * Block-Level Grammar
+ */
+const newline = /^(?:[ \t]*(?:\n|$))+/;
+const blockCode = /^((?: {4}| {0,3}\t)[^\n]+(?:\n(?:[ \t]*(?:\n|$))*)?)+/;
+const fences = /^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/;
+const hr = /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/;
+const heading = /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/;
+const bullet = /(?:[*+-]|\d{1,9}[.)])/;
+const lheadingCore = /^(?!bull |blockCode|fences|blockquote|heading|html|table)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html|table))+?)\n {0,3}(=+|-+) *(?:\n+|$)/;
+const lheading = edit(lheadingCore)
+    .replace(/bull/g, bullet) // lists can interrupt
+    .replace(/blockCode/g, /(?: {4}| {0,3}\t)/) // indented code blocks can interrupt
+    .replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/) // fenced code blocks can interrupt
+    .replace(/blockquote/g, / {0,3}>/) // blockquote can interrupt
+    .replace(/heading/g, / {0,3}#{1,6}/) // ATX heading can interrupt
+    .replace(/html/g, / {0,3}<[^\n>]+>\n/) // block html can interrupt
+    .replace(/\|table/g, '') // table not in commonmark
+    .getRegex();
+const lheadingGfm = edit(lheadingCore)
+    .replace(/bull/g, bullet) // lists can interrupt
+    .replace(/blockCode/g, /(?: {4}| {0,3}\t)/) // indented code blocks can interrupt
+    .replace(/fences/g, / {0,3}(?:`{3,}|~{3,})/) // fenced code blocks can interrupt
+    .replace(/blockquote/g, / {0,3}>/) // blockquote can interrupt
+    .replace(/heading/g, / {0,3}#{1,6}/) // ATX heading can interrupt
+    .replace(/html/g, / {0,3}<[^\n>]+>\n/) // block html can interrupt
+    .replace(/table/g, / {0,3}\|?(?:[:\- ]*\|)+[\:\- ]*\n/) // table can interrupt
+    .getRegex();
+const _paragraph = /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/;
+const blockText = /^[^\n]+/;
+const _blockLabel = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
+const def = edit(/^ {0,3}\[(label)\]: *(?:\n[ \t]*)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n[ \t]*)?| *\n[ \t]*)(title))? *(?:\n+|$)/)
+    .replace('label', _blockLabel)
+    .replace('title', /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/)
+    .getRegex();
+const list = edit(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/)
+    .replace(/bull/g, bullet)
+    .getRegex();
+const _tag = 'address|article|aside|base|basefont|blockquote|body|caption'
+    + '|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption'
+    + '|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe'
+    + '|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option'
+    + '|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title'
+    + '|tr|track|ul';
+const _comment = /<!--(?:-?>|[\s\S]*?(?:-->|$))/;
+const html = edit('^ {0,3}(?:' // optional indentation
+    + '<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
+    + '|comment[^\\n]*(\\n+|$)' // (2)
+    + '|<\\?[\\s\\S]*?(?:\\?>\\n*|$)' // (3)
+    + '|<![A-Z][\\s\\S]*?(?:>\\n*|$)' // (4)
+    + '|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)' // (5)
+    + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n[ \t]*)+\\n|$)' // (6)
+    + '|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ \t]*)+\\n|$)' // (7) open tag
+    + '|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n[ \t]*)+\\n|$)' // (7) closing tag
+    + ')', 'i')
+    .replace('comment', _comment)
+    .replace('tag', _tag)
+    .replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/)
+    .getRegex();
+const paragraph = edit(_paragraph)
+    .replace('hr', hr)
+    .replace('heading', ' {0,3}#{1,6}(?:\\s|$)')
+    .replace('|lheading', '') // setext headings don't interrupt commonmark paragraphs
+    .replace('|table', '')
+    .replace('blockquote', ' {0,3}>')
+    .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+    .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+    .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
+    .replace('tag', _tag) // pars can be interrupted by type (6) html blocks
+    .getRegex();
+const blockquote = edit(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/)
+    .replace('paragraph', paragraph)
+    .getRegex();
+/**
+ * Normal Block Grammar
+ */
+const blockNormal = {
+    blockquote,
+    code: blockCode,
+    def,
+    fences,
+    heading,
+    hr,
+    html,
+    lheading,
+    list,
+    newline,
+    paragraph,
+    table: noopTest,
+    text: blockText,
+};
+/**
+ * GFM Block Grammar
+ */
+const gfmTable = edit('^ *([^\\n ].*)\\n' // Header
+    + ' {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)' // Align
+    + '(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)') // Cells
+    .replace('hr', hr)
+    .replace('heading', ' {0,3}#{1,6}(?:\\s|$)')
+    .replace('blockquote', ' {0,3}>')
+    .replace('code', '(?: {4}| {0,3}\t)[^\\n]')
+    .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+    .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+    .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
+    .replace('tag', _tag) // tables can be interrupted by type (6) html blocks
+    .getRegex();
+const blockGfm = {
+    ...blockNormal,
+    lheading: lheadingGfm,
+    table: gfmTable,
+    paragraph: edit(_paragraph)
+        .replace('hr', hr)
+        .replace('heading', ' {0,3}#{1,6}(?:\\s|$)')
+        .replace('|lheading', '') // setext headings don't interrupt commonmark paragraphs
+        .replace('table', gfmTable) // interrupt paragraphs with table
+        .replace('blockquote', ' {0,3}>')
+        .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
+        .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+        .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
+        .replace('tag', _tag) // pars can be interrupted by type (6) html blocks
+        .getRegex(),
+};
+/**
+ * Pedantic grammar (original John Gruber's loose markdown specification)
+ */
+const blockPedantic = {
+    ...blockNormal,
+    html: edit('^ *(?:comment *(?:\\n|\\s*$)'
+        + '|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)' // closed tag
+        + '|<tag(?:"[^"]*"|\'[^\']*\'|\\s[^\'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))')
+        .replace('comment', _comment)
+        .replace(/tag/g, '(?!(?:'
+        + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub'
+        + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)'
+        + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b')
+        .getRegex(),
+    def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
+    heading: /^(#{1,6})(.*)(?:\n+|$)/,
+    fences: noopTest, // fences not supported
+    lheading: /^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,
+    paragraph: edit(_paragraph)
+        .replace('hr', hr)
+        .replace('heading', ' *#{1,6} *[^\n]')
+        .replace('lheading', lheading)
+        .replace('|table', '')
+        .replace('blockquote', ' {0,3}>')
+        .replace('|fences', '')
+        .replace('|list', '')
+        .replace('|html', '')
+        .replace('|tag', '')
+        .getRegex(),
+};
+/**
+ * Inline-Level Grammar
+ */
+const escape$1 = /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/;
+const inlineCode = /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/;
+const br = /^( {2,}|\\)\n(?!\s*$)/;
+const inlineText = /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/;
+// list of unicode punctuation marks, plus any missing characters from CommonMark spec
+const _punctuation = /[\p{P}\p{S}]/u;
+const _punctuationOrSpace = /[\s\p{P}\p{S}]/u;
+const _notPunctuationOrSpace = /[^\s\p{P}\p{S}]/u;
+const punctuation = edit(/^((?![*_])punctSpace)/, 'u')
+    .replace(/punctSpace/g, _punctuationOrSpace).getRegex();
+// GFM allows ~ inside strong and em for strikethrough
+const _punctuationGfmStrongEm = /(?!~)[\p{P}\p{S}]/u;
+const _punctuationOrSpaceGfmStrongEm = /(?!~)[\s\p{P}\p{S}]/u;
+const _notPunctuationOrSpaceGfmStrongEm = /(?:[^\s\p{P}\p{S}]|~)/u;
+// sequences em should skip over [title](link), `code`, <html>
+const blockSkip = /\[[^[\]]*?\]\((?:\\.|[^\\\(\)]|\((?:\\.|[^\\\(\)])*\))*\)|`[^`]*?`|<[^<>]*?>/g;
+const emStrongLDelimCore = /^(?:\*+(?:((?!\*)punct)|[^\s*]))|^_+(?:((?!_)punct)|([^\s_]))/;
+const emStrongLDelim = edit(emStrongLDelimCore, 'u')
+    .replace(/punct/g, _punctuation)
+    .getRegex();
+const emStrongLDelimGfm = edit(emStrongLDelimCore, 'u')
+    .replace(/punct/g, _punctuationGfmStrongEm)
+    .getRegex();
+const emStrongRDelimAstCore = '^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)' // Skip orphan inside strong
+    + '|[^*]+(?=[^*])' // Consume to delim
+    + '|(?!\\*)punct(\\*+)(?=[\\s]|$)' // (1) #*** can only be a Right Delimiter
+    + '|notPunctSpace(\\*+)(?!\\*)(?=punctSpace|$)' // (2) a***#, a*** can only be a Right Delimiter
+    + '|(?!\\*)punctSpace(\\*+)(?=notPunctSpace)' // (3) #***a, ***a can only be Left Delimiter
+    + '|[\\s](\\*+)(?!\\*)(?=punct)' // (4) ***# can only be Left Delimiter
+    + '|(?!\\*)punct(\\*+)(?!\\*)(?=punct)' // (5) #***# can be either Left or Right Delimiter
+    + '|notPunctSpace(\\*+)(?=notPunctSpace)'; // (6) a***a can be either Left or Right Delimiter
+const emStrongRDelimAst = edit(emStrongRDelimAstCore, 'gu')
+    .replace(/notPunctSpace/g, _notPunctuationOrSpace)
+    .replace(/punctSpace/g, _punctuationOrSpace)
+    .replace(/punct/g, _punctuation)
+    .getRegex();
+const emStrongRDelimAstGfm = edit(emStrongRDelimAstCore, 'gu')
+    .replace(/notPunctSpace/g, _notPunctuationOrSpaceGfmStrongEm)
+    .replace(/punctSpace/g, _punctuationOrSpaceGfmStrongEm)
+    .replace(/punct/g, _punctuationGfmStrongEm)
+    .getRegex();
+// (6) Not allowed for _
+const emStrongRDelimUnd = edit('^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)' // Skip orphan inside strong
+    + '|[^_]+(?=[^_])' // Consume to delim
+    + '|(?!_)punct(_+)(?=[\\s]|$)' // (1) #___ can only be a Right Delimiter
+    + '|notPunctSpace(_+)(?!_)(?=punctSpace|$)' // (2) a___#, a___ can only be a Right Delimiter
+    + '|(?!_)punctSpace(_+)(?=notPunctSpace)' // (3) #___a, ___a can only be Left Delimiter
+    + '|[\\s](_+)(?!_)(?=punct)' // (4) ___# can only be Left Delimiter
+    + '|(?!_)punct(_+)(?!_)(?=punct)', 'gu') // (5) #___# can be either Left or Right Delimiter
+    .replace(/notPunctSpace/g, _notPunctuationOrSpace)
+    .replace(/punctSpace/g, _punctuationOrSpace)
+    .replace(/punct/g, _punctuation)
+    .getRegex();
+const anyPunctuation = edit(/\\(punct)/, 'gu')
+    .replace(/punct/g, _punctuation)
+    .getRegex();
+const autolink = edit(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/)
+    .replace('scheme', /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/)
+    .replace('email', /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/)
+    .getRegex();
+const _inlineComment = edit(_comment).replace('(?:-->|$)', '-->').getRegex();
+const tag = edit('^comment'
+    + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
+    + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
+    + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
+    + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
+    + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>') // CDATA section
+    .replace('comment', _inlineComment)
+    .replace('attribute', /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/)
+    .getRegex();
+const _inlineLabel = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
+const link = edit(/^!?\[(label)\]\(\s*(href)(?:(?:[ \t]*(?:\n[ \t]*)?)(title))?\s*\)/)
+    .replace('label', _inlineLabel)
+    .replace('href', /<(?:\\.|[^\n<>\\])+>|[^ \t\n\x00-\x1f]*/)
+    .replace('title', /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/)
+    .getRegex();
+const reflink = edit(/^!?\[(label)\]\[(ref)\]/)
+    .replace('label', _inlineLabel)
+    .replace('ref', _blockLabel)
+    .getRegex();
+const nolink = edit(/^!?\[(ref)\](?:\[\])?/)
+    .replace('ref', _blockLabel)
+    .getRegex();
+const reflinkSearch = edit('reflink|nolink(?!\\()', 'g')
+    .replace('reflink', reflink)
+    .replace('nolink', nolink)
+    .getRegex();
+/**
+ * Normal Inline Grammar
+ */
+const inlineNormal = {
+    _backpedal: noopTest, // only used for GFM url
+    anyPunctuation,
+    autolink,
+    blockSkip,
+    br,
+    code: inlineCode,
+    del: noopTest,
+    emStrongLDelim,
+    emStrongRDelimAst,
+    emStrongRDelimUnd,
+    escape: escape$1,
+    link,
+    nolink,
+    punctuation,
+    reflink,
+    reflinkSearch,
+    tag,
+    text: inlineText,
+    url: noopTest,
+};
+/**
+ * Pedantic Inline Grammar
+ */
+const inlinePedantic = {
+    ...inlineNormal,
+    link: edit(/^!?\[(label)\]\((.*?)\)/)
+        .replace('label', _inlineLabel)
+        .getRegex(),
+    reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/)
+        .replace('label', _inlineLabel)
+        .getRegex(),
+};
+/**
+ * GFM Inline Grammar
+ */
+const inlineGfm = {
+    ...inlineNormal,
+    emStrongRDelimAst: emStrongRDelimAstGfm,
+    emStrongLDelim: emStrongLDelimGfm,
+    url: edit(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/, 'i')
+        .replace('email', /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/)
+        .getRegex(),
+    _backpedal: /(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,
+    del: /^(~~?)(?=[^\s~])((?:\\.|[^\\])*?(?:\\.|[^\s~\\]))\1(?=[^~]|$)/,
+    text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/,
+};
+/**
+ * GFM + Line Breaks Inline Grammar
+ */
+const inlineBreaks = {
+    ...inlineGfm,
+    br: edit(br).replace('{2,}', '*').getRegex(),
+    text: edit(inlineGfm.text)
+        .replace('\\b_', '\\b_| {2,}\\n')
+        .replace(/\{2,\}/g, '*')
+        .getRegex(),
+};
+/**
+ * exports
+ */
+const block = {
+    normal: blockNormal,
+    gfm: blockGfm,
+    pedantic: blockPedantic,
+};
+const inline = {
+    normal: inlineNormal,
+    gfm: inlineGfm,
+    breaks: inlineBreaks,
+    pedantic: inlinePedantic,
+};
+
+/**
+ * Helpers
+ */
+const escapeReplacements = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+};
+const getEscapeReplacement = (ch) => escapeReplacements[ch];
+function escape(html, encode) {
+    if (encode) {
+        if (other.escapeTest.test(html)) {
+            return html.replace(other.escapeReplace, getEscapeReplacement);
+        }
+    }
+    else {
+        if (other.escapeTestNoEncode.test(html)) {
+            return html.replace(other.escapeReplaceNoEncode, getEscapeReplacement);
+        }
+    }
+    return html;
+}
+function cleanUrl(href) {
+    try {
+        href = encodeURI(href).replace(other.percentDecode, '%');
+    }
+    catch {
+        return null;
+    }
+    return href;
+}
+function splitCells(tableRow, count) {
+    // ensure that every cell-delimiting pipe has a space
+    // before it to distinguish it from an escaped pipe
+    const row = tableRow.replace(other.findPipe, (match, offset, str) => {
+        let escaped = false;
+        let curr = offset;
+        while (--curr >= 0 && str[curr] === '\\')
+            escaped = !escaped;
+        if (escaped) {
+            // odd number of slashes means | is escaped
+            // so we leave it alone
+            return '|';
+        }
+        else {
+            // add space before unescaped |
+            return ' |';
+        }
+    }), cells = row.split(other.splitPipe);
+    let i = 0;
+    // First/last cell in a row cannot be empty if it has no leading/trailing pipe
+    if (!cells[0].trim()) {
+        cells.shift();
+    }
+    if (cells.length > 0 && !cells.at(-1)?.trim()) {
+        cells.pop();
+    }
+    if (count) {
+        if (cells.length > count) {
+            cells.splice(count);
+        }
+        else {
+            while (cells.length < count)
+                cells.push('');
+        }
+    }
+    for (; i < cells.length; i++) {
+        // leading or trailing whitespace is ignored per the gfm spec
+        cells[i] = cells[i].trim().replace(other.slashPipe, '|');
+    }
+    return cells;
+}
+/**
+ * Remove trailing 'c's. Equivalent to str.replace(/c*$/, '').
+ * /c*$/ is vulnerable to REDOS.
+ *
+ * @param str
+ * @param c
+ * @param invert Remove suffix of non-c chars instead. Default falsey.
+ */
+function rtrim(str, c, invert) {
+    const l = str.length;
+    if (l === 0) {
+        return '';
+    }
+    // Length of suffix matching the invert condition.
+    let suffLen = 0;
+    // Step left until we fail to match the invert condition.
+    while (suffLen < l) {
+        const currChar = str.charAt(l - suffLen - 1);
+        if (currChar === c && true) {
+            suffLen++;
+        }
+        else {
+            break;
+        }
+    }
+    return str.slice(0, l - suffLen);
+}
+function findClosingBracket(str, b) {
+    if (str.indexOf(b[1]) === -1) {
+        return -1;
+    }
+    let level = 0;
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === '\\') {
+            i++;
+        }
+        else if (str[i] === b[0]) {
+            level++;
+        }
+        else if (str[i] === b[1]) {
+            level--;
+            if (level < 0) {
+                return i;
+            }
+        }
+    }
+    if (level > 0) {
+        return -2;
+    }
+    return -1;
+}
+
+function outputLink(cap, link, raw, lexer, rules) {
+    const href = link.href;
+    const title = link.title || null;
+    const text = cap[1].replace(rules.other.outputLinkReplace, '$1');
+    lexer.state.inLink = true;
+    const token = {
+        type: cap[0].charAt(0) === '!' ? 'image' : 'link',
+        raw,
+        href,
+        title,
+        text,
+        tokens: lexer.inlineTokens(text),
+    };
+    lexer.state.inLink = false;
+    return token;
+}
+function indentCodeCompensation(raw, text, rules) {
+    const matchIndentToCode = raw.match(rules.other.indentCodeCompensation);
+    if (matchIndentToCode === null) {
+        return text;
+    }
+    const indentToCode = matchIndentToCode[1];
+    return text
+        .split('\n')
+        .map(node => {
+        const matchIndentInNode = node.match(rules.other.beginningSpace);
+        if (matchIndentInNode === null) {
+            return node;
+        }
+        const [indentInNode] = matchIndentInNode;
+        if (indentInNode.length >= indentToCode.length) {
+            return node.slice(indentToCode.length);
+        }
+        return node;
+    })
+        .join('\n');
+}
+/**
+ * Tokenizer
+ */
+class _Tokenizer {
+    options;
+    rules; // set by the lexer
+    lexer; // set by the lexer
+    constructor(options) {
+        this.options = options || exports.defaults;
+    }
+    space(src) {
+        const cap = this.rules.block.newline.exec(src);
+        if (cap && cap[0].length > 0) {
+            return {
+                type: 'space',
+                raw: cap[0],
+            };
+        }
+    }
+    code(src) {
+        const cap = this.rules.block.code.exec(src);
+        if (cap) {
+            const text = cap[0].replace(this.rules.other.codeRemoveIndent, '');
+            return {
+                type: 'code',
+                raw: cap[0],
+                codeBlockStyle: 'indented',
+                text: !this.options.pedantic
+                    ? rtrim(text, '\n')
+                    : text,
+            };
+        }
+    }
+    fences(src) {
+        const cap = this.rules.block.fences.exec(src);
+        if (cap) {
+            const raw = cap[0];
+            const text = indentCodeCompensation(raw, cap[3] || '', this.rules);
+            return {
+                type: 'code',
+                raw,
+                lang: cap[2] ? cap[2].trim().replace(this.rules.inline.anyPunctuation, '$1') : cap[2],
+                text,
+            };
+        }
+    }
+    heading(src) {
+        const cap = this.rules.block.heading.exec(src);
+        if (cap) {
+            let text = cap[2].trim();
+            // remove trailing #s
+            if (this.rules.other.endingHash.test(text)) {
+                const trimmed = rtrim(text, '#');
+                if (this.options.pedantic) {
+                    text = trimmed.trim();
+                }
+                else if (!trimmed || this.rules.other.endingSpaceChar.test(trimmed)) {
+                    // CommonMark requires space before trailing #s
+                    text = trimmed.trim();
+                }
+            }
+            return {
+                type: 'heading',
+                raw: cap[0],
+                depth: cap[1].length,
+                text,
+                tokens: this.lexer.inline(text),
+            };
+        }
+    }
+    hr(src) {
+        const cap = this.rules.block.hr.exec(src);
+        if (cap) {
+            return {
+                type: 'hr',
+                raw: rtrim(cap[0], '\n'),
+            };
+        }
+    }
+    blockquote(src) {
+        const cap = this.rules.block.blockquote.exec(src);
+        if (cap) {
+            let lines = rtrim(cap[0], '\n').split('\n');
+            let raw = '';
+            let text = '';
+            const tokens = [];
+            while (lines.length > 0) {
+                let inBlockquote = false;
+                const currentLines = [];
+                let i;
+                for (i = 0; i < lines.length; i++) {
+                    // get lines up to a continuation
+                    if (this.rules.other.blockquoteStart.test(lines[i])) {
+                        currentLines.push(lines[i]);
+                        inBlockquote = true;
+                    }
+                    else if (!inBlockquote) {
+                        currentLines.push(lines[i]);
+                    }
+                    else {
+                        break;
+                    }
+                }
+                lines = lines.slice(i);
+                const currentRaw = currentLines.join('\n');
+                const currentText = currentRaw
+                    // precede setext continuation with 4 spaces so it isn't a setext
+                    .replace(this.rules.other.blockquoteSetextReplace, '\n    $1')
+                    .replace(this.rules.other.blockquoteSetextReplace2, '');
+                raw = raw ? `${raw}\n${currentRaw}` : currentRaw;
+                text = text ? `${text}\n${currentText}` : currentText;
+                // parse blockquote lines as top level tokens
+                // merge paragraphs if this is a continuation
+                const top = this.lexer.state.top;
+                this.lexer.state.top = true;
+                this.lexer.blockTokens(currentText, tokens, true);
+                this.lexer.state.top = top;
+                // if there is no continuation then we are done
+                if (lines.length === 0) {
+                    break;
+                }
+                const lastToken = tokens.at(-1);
+                if (lastToken?.type === 'code') {
+                    // blockquote continuation cannot be preceded by a code block
+                    break;
+                }
+                else if (lastToken?.type === 'blockquote') {
+                    // include continuation in nested blockquote
+                    const oldToken = lastToken;
+                    const newText = oldToken.raw + '\n' + lines.join('\n');
+                    const newToken = this.blockquote(newText);
+                    tokens[tokens.length - 1] = newToken;
+                    raw = raw.substring(0, raw.length - oldToken.raw.length) + newToken.raw;
+                    text = text.substring(0, text.length - oldToken.text.length) + newToken.text;
+                    break;
+                }
+                else if (lastToken?.type === 'list') {
+                    // include continuation in nested list
+                    const oldToken = lastToken;
+                    const newText = oldToken.raw + '\n' + lines.join('\n');
+                    const newToken = this.list(newText);
+                    tokens[tokens.length - 1] = newToken;
+                    raw = raw.substring(0, raw.length - lastToken.raw.length) + newToken.raw;
+                    text = text.substring(0, text.length - oldToken.raw.length) + newToken.raw;
+                    lines = newText.substring(tokens.at(-1).raw.length).split('\n');
+                    continue;
+                }
+            }
+            return {
+                type: 'blockquote',
+                raw,
+                tokens,
+                text,
+            };
+        }
+    }
+    list(src) {
+        let cap = this.rules.block.list.exec(src);
+        if (cap) {
+            let bull = cap[1].trim();
+            const isordered = bull.length > 1;
+            const list = {
+                type: 'list',
+                raw: '',
+                ordered: isordered,
+                start: isordered ? +bull.slice(0, -1) : '',
+                loose: false,
+                items: [],
+            };
+            bull = isordered ? `\\d{1,9}\\${bull.slice(-1)}` : `\\${bull}`;
+            if (this.options.pedantic) {
+                bull = isordered ? bull : '[*+-]';
+            }
+            // Get next list item
+            const itemRegex = this.rules.other.listItemRegex(bull);
+            let endsWithBlankLine = false;
+            // Check if current bullet point can start a new List Item
+            while (src) {
+                let endEarly = false;
+                let raw = '';
+                let itemContents = '';
+                if (!(cap = itemRegex.exec(src))) {
+                    break;
+                }
+                if (this.rules.block.hr.test(src)) { // End list if bullet was actually HR (possibly move into itemRegex?)
+                    break;
+                }
+                raw = cap[0];
+                src = src.substring(raw.length);
+                let line = cap[2].split('\n', 1)[0].replace(this.rules.other.listReplaceTabs, (t) => ' '.repeat(3 * t.length));
+                let nextLine = src.split('\n', 1)[0];
+                let blankLine = !line.trim();
+                let indent = 0;
+                if (this.options.pedantic) {
+                    indent = 2;
+                    itemContents = line.trimStart();
+                }
+                else if (blankLine) {
+                    indent = cap[1].length + 1;
+                }
+                else {
+                    indent = cap[2].search(this.rules.other.nonSpaceChar); // Find first non-space char
+                    indent = indent > 4 ? 1 : indent; // Treat indented code blocks (> 4 spaces) as having only 1 indent
+                    itemContents = line.slice(indent);
+                    indent += cap[1].length;
+                }
+                if (blankLine && this.rules.other.blankLine.test(nextLine)) { // Items begin with at most one blank line
+                    raw += nextLine + '\n';
+                    src = src.substring(nextLine.length + 1);
+                    endEarly = true;
+                }
+                if (!endEarly) {
+                    const nextBulletRegex = this.rules.other.nextBulletRegex(indent);
+                    const hrRegex = this.rules.other.hrRegex(indent);
+                    const fencesBeginRegex = this.rules.other.fencesBeginRegex(indent);
+                    const headingBeginRegex = this.rules.other.headingBeginRegex(indent);
+                    const htmlBeginRegex = this.rules.other.htmlBeginRegex(indent);
+                    // Check if following lines should be included in List Item
+                    while (src) {
+                        const rawLine = src.split('\n', 1)[0];
+                        let nextLineWithoutTabs;
+                        nextLine = rawLine;
+                        // Re-align to follow commonmark nesting rules
+                        if (this.options.pedantic) {
+                            nextLine = nextLine.replace(this.rules.other.listReplaceNesting, '  ');
+                            nextLineWithoutTabs = nextLine;
+                        }
+                        else {
+                            nextLineWithoutTabs = nextLine.replace(this.rules.other.tabCharGlobal, '    ');
+                        }
+                        // End list item if found code fences
+                        if (fencesBeginRegex.test(nextLine)) {
+                            break;
+                        }
+                        // End list item if found start of new heading
+                        if (headingBeginRegex.test(nextLine)) {
+                            break;
+                        }
+                        // End list item if found start of html block
+                        if (htmlBeginRegex.test(nextLine)) {
+                            break;
+                        }
+                        // End list item if found start of new bullet
+                        if (nextBulletRegex.test(nextLine)) {
+                            break;
+                        }
+                        // Horizontal rule found
+                        if (hrRegex.test(nextLine)) {
+                            break;
+                        }
+                        if (nextLineWithoutTabs.search(this.rules.other.nonSpaceChar) >= indent || !nextLine.trim()) { // Dedent if possible
+                            itemContents += '\n' + nextLineWithoutTabs.slice(indent);
+                        }
+                        else {
+                            // not enough indentation
+                            if (blankLine) {
+                                break;
+                            }
+                            // paragraph continuation unless last line was a different block level element
+                            if (line.replace(this.rules.other.tabCharGlobal, '    ').search(this.rules.other.nonSpaceChar) >= 4) { // indented code block
+                                break;
+                            }
+                            if (fencesBeginRegex.test(line)) {
+                                break;
+                            }
+                            if (headingBeginRegex.test(line)) {
+                                break;
+                            }
+                            if (hrRegex.test(line)) {
+                                break;
+                            }
+                            itemContents += '\n' + nextLine;
+                        }
+                        if (!blankLine && !nextLine.trim()) { // Check if current line is blank
+                            blankLine = true;
+                        }
+                        raw += rawLine + '\n';
+                        src = src.substring(rawLine.length + 1);
+                        line = nextLineWithoutTabs.slice(indent);
+                    }
+                }
+                if (!list.loose) {
+                    // If the previous item ended with a blank line, the list is loose
+                    if (endsWithBlankLine) {
+                        list.loose = true;
+                    }
+                    else if (this.rules.other.doubleBlankLine.test(raw)) {
+                        endsWithBlankLine = true;
+                    }
+                }
+                let istask = null;
+                let ischecked;
+                // Check for task list items
+                if (this.options.gfm) {
+                    istask = this.rules.other.listIsTask.exec(itemContents);
+                    if (istask) {
+                        ischecked = istask[0] !== '[ ] ';
+                        itemContents = itemContents.replace(this.rules.other.listReplaceTask, '');
+                    }
+                }
+                list.items.push({
+                    type: 'list_item',
+                    raw,
+                    task: !!istask,
+                    checked: ischecked,
+                    loose: false,
+                    text: itemContents,
+                    tokens: [],
+                });
+                list.raw += raw;
+            }
+            // Do not consume newlines at end of final item. Alternatively, make itemRegex *start* with any newlines to simplify/speed up endsWithBlankLine logic
+            const lastItem = list.items.at(-1);
+            if (lastItem) {
+                lastItem.raw = lastItem.raw.trimEnd();
+                lastItem.text = lastItem.text.trimEnd();
+            }
+            else {
+                // not a list since there were no items
+                return;
+            }
+            list.raw = list.raw.trimEnd();
+            // Item child tokens handled here at end because we needed to have the final item to trim it first
+            for (let i = 0; i < list.items.length; i++) {
+                this.lexer.state.top = false;
+                list.items[i].tokens = this.lexer.blockTokens(list.items[i].text, []);
+                if (!list.loose) {
+                    // Check if list should be loose
+                    const spacers = list.items[i].tokens.filter(t => t.type === 'space');
+                    const hasMultipleLineBreaks = spacers.length > 0 && spacers.some(t => this.rules.other.anyLine.test(t.raw));
+                    list.loose = hasMultipleLineBreaks;
+                }
+            }
+            // Set all items to loose if list is loose
+            if (list.loose) {
+                for (let i = 0; i < list.items.length; i++) {
+                    list.items[i].loose = true;
+                }
+            }
+            return list;
+        }
+    }
+    html(src) {
+        const cap = this.rules.block.html.exec(src);
+        if (cap) {
+            const token = {
+                type: 'html',
+                block: true,
+                raw: cap[0],
+                pre: cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style',
+                text: cap[0],
+            };
+            return token;
+        }
+    }
+    def(src) {
+        const cap = this.rules.block.def.exec(src);
+        if (cap) {
+            const tag = cap[1].toLowerCase().replace(this.rules.other.multipleSpaceGlobal, ' ');
+            const href = cap[2] ? cap[2].replace(this.rules.other.hrefBrackets, '$1').replace(this.rules.inline.anyPunctuation, '$1') : '';
+            const title = cap[3] ? cap[3].substring(1, cap[3].length - 1).replace(this.rules.inline.anyPunctuation, '$1') : cap[3];
+            return {
+                type: 'def',
+                tag,
+                raw: cap[0],
+                href,
+                title,
+            };
+        }
+    }
+    table(src) {
+        const cap = this.rules.block.table.exec(src);
+        if (!cap) {
+            return;
+        }
+        if (!this.rules.other.tableDelimiter.test(cap[2])) {
+            // delimiter row must have a pipe (|) or colon (:) otherwise it is a setext heading
+            return;
+        }
+        const headers = splitCells(cap[1]);
+        const aligns = cap[2].replace(this.rules.other.tableAlignChars, '').split('|');
+        const rows = cap[3]?.trim() ? cap[3].replace(this.rules.other.tableRowBlankLine, '').split('\n') : [];
+        const item = {
+            type: 'table',
+            raw: cap[0],
+            header: [],
+            align: [],
+            rows: [],
+        };
+        if (headers.length !== aligns.length) {
+            // header and align columns must be equal, rows can be different.
+            return;
+        }
+        for (const align of aligns) {
+            if (this.rules.other.tableAlignRight.test(align)) {
+                item.align.push('right');
+            }
+            else if (this.rules.other.tableAlignCenter.test(align)) {
+                item.align.push('center');
+            }
+            else if (this.rules.other.tableAlignLeft.test(align)) {
+                item.align.push('left');
+            }
+            else {
+                item.align.push(null);
+            }
+        }
+        for (let i = 0; i < headers.length; i++) {
+            item.header.push({
+                text: headers[i],
+                tokens: this.lexer.inline(headers[i]),
+                header: true,
+                align: item.align[i],
+            });
+        }
+        for (const row of rows) {
+            item.rows.push(splitCells(row, item.header.length).map((cell, i) => {
+                return {
+                    text: cell,
+                    tokens: this.lexer.inline(cell),
+                    header: false,
+                    align: item.align[i],
+                };
+            }));
+        }
+        return item;
+    }
+    lheading(src) {
+        const cap = this.rules.block.lheading.exec(src);
+        if (cap) {
+            return {
+                type: 'heading',
+                raw: cap[0],
+                depth: cap[2].charAt(0) === '=' ? 1 : 2,
+                text: cap[1],
+                tokens: this.lexer.inline(cap[1]),
+            };
+        }
+    }
+    paragraph(src) {
+        const cap = this.rules.block.paragraph.exec(src);
+        if (cap) {
+            const text = cap[1].charAt(cap[1].length - 1) === '\n'
+                ? cap[1].slice(0, -1)
+                : cap[1];
+            return {
+                type: 'paragraph',
+                raw: cap[0],
+                text,
+                tokens: this.lexer.inline(text),
+            };
+        }
+    }
+    text(src) {
+        const cap = this.rules.block.text.exec(src);
+        if (cap) {
+            return {
+                type: 'text',
+                raw: cap[0],
+                text: cap[0],
+                tokens: this.lexer.inline(cap[0]),
+            };
+        }
+    }
+    escape(src) {
+        const cap = this.rules.inline.escape.exec(src);
+        if (cap) {
+            return {
+                type: 'escape',
+                raw: cap[0],
+                text: cap[1],
+            };
+        }
+    }
+    tag(src) {
+        const cap = this.rules.inline.tag.exec(src);
+        if (cap) {
+            if (!this.lexer.state.inLink && this.rules.other.startATag.test(cap[0])) {
+                this.lexer.state.inLink = true;
+            }
+            else if (this.lexer.state.inLink && this.rules.other.endATag.test(cap[0])) {
+                this.lexer.state.inLink = false;
+            }
+            if (!this.lexer.state.inRawBlock && this.rules.other.startPreScriptTag.test(cap[0])) {
+                this.lexer.state.inRawBlock = true;
+            }
+            else if (this.lexer.state.inRawBlock && this.rules.other.endPreScriptTag.test(cap[0])) {
+                this.lexer.state.inRawBlock = false;
+            }
+            return {
+                type: 'html',
+                raw: cap[0],
+                inLink: this.lexer.state.inLink,
+                inRawBlock: this.lexer.state.inRawBlock,
+                block: false,
+                text: cap[0],
+            };
+        }
+    }
+    link(src) {
+        const cap = this.rules.inline.link.exec(src);
+        if (cap) {
+            const trimmedUrl = cap[2].trim();
+            if (!this.options.pedantic && this.rules.other.startAngleBracket.test(trimmedUrl)) {
+                // commonmark requires matching angle brackets
+                if (!(this.rules.other.endAngleBracket.test(trimmedUrl))) {
+                    return;
+                }
+                // ending angle bracket cannot be escaped
+                const rtrimSlash = rtrim(trimmedUrl.slice(0, -1), '\\');
+                if ((trimmedUrl.length - rtrimSlash.length) % 2 === 0) {
+                    return;
+                }
+            }
+            else {
+                // find closing parenthesis
+                const lastParenIndex = findClosingBracket(cap[2], '()');
+                if (lastParenIndex === -2) {
+                    // more open parens than closed
+                    return;
+                }
+                if (lastParenIndex > -1) {
+                    const start = cap[0].indexOf('!') === 0 ? 5 : 4;
+                    const linkLen = start + cap[1].length + lastParenIndex;
+                    cap[2] = cap[2].substring(0, lastParenIndex);
+                    cap[0] = cap[0].substring(0, linkLen).trim();
+                    cap[3] = '';
+                }
+            }
+            let href = cap[2];
+            let title = '';
+            if (this.options.pedantic) {
+                // split pedantic href and title
+                const link = this.rules.other.pedanticHrefTitle.exec(href);
+                if (link) {
+                    href = link[1];
+                    title = link[3];
+                }
+            }
+            else {
+                title = cap[3] ? cap[3].slice(1, -1) : '';
+            }
+            href = href.trim();
+            if (this.rules.other.startAngleBracket.test(href)) {
+                if (this.options.pedantic && !(this.rules.other.endAngleBracket.test(trimmedUrl))) {
+                    // pedantic allows starting angle bracket without ending angle bracket
+                    href = href.slice(1);
+                }
+                else {
+                    href = href.slice(1, -1);
+                }
+            }
+            return outputLink(cap, {
+                href: href ? href.replace(this.rules.inline.anyPunctuation, '$1') : href,
+                title: title ? title.replace(this.rules.inline.anyPunctuation, '$1') : title,
+            }, cap[0], this.lexer, this.rules);
+        }
+    }
+    reflink(src, links) {
+        let cap;
+        if ((cap = this.rules.inline.reflink.exec(src))
+            || (cap = this.rules.inline.nolink.exec(src))) {
+            const linkString = (cap[2] || cap[1]).replace(this.rules.other.multipleSpaceGlobal, ' ');
+            const link = links[linkString.toLowerCase()];
+            if (!link) {
+                const text = cap[0].charAt(0);
+                return {
+                    type: 'text',
+                    raw: text,
+                    text,
+                };
+            }
+            return outputLink(cap, link, cap[0], this.lexer, this.rules);
+        }
+    }
+    emStrong(src, maskedSrc, prevChar = '') {
+        let match = this.rules.inline.emStrongLDelim.exec(src);
+        if (!match)
+            return;
+        // _ can't be between two alphanumerics. \p{L}\p{N} includes non-english alphabet/numbers as well
+        if (match[3] && prevChar.match(this.rules.other.unicodeAlphaNumeric))
+            return;
+        const nextChar = match[1] || match[2] || '';
+        if (!nextChar || !prevChar || this.rules.inline.punctuation.exec(prevChar)) {
+            // unicode Regex counts emoji as 1 char; spread into array for proper count (used multiple times below)
+            const lLength = [...match[0]].length - 1;
+            let rDelim, rLength, delimTotal = lLength, midDelimTotal = 0;
+            const endReg = match[0][0] === '*' ? this.rules.inline.emStrongRDelimAst : this.rules.inline.emStrongRDelimUnd;
+            endReg.lastIndex = 0;
+            // Clip maskedSrc to same section of string as src (move to lexer?)
+            maskedSrc = maskedSrc.slice(-1 * src.length + lLength);
+            while ((match = endReg.exec(maskedSrc)) != null) {
+                rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
+                if (!rDelim)
+                    continue; // skip single * in __abc*abc__
+                rLength = [...rDelim].length;
+                if (match[3] || match[4]) { // found another Left Delim
+                    delimTotal += rLength;
+                    continue;
+                }
+                else if (match[5] || match[6]) { // either Left or Right Delim
+                    if (lLength % 3 && !((lLength + rLength) % 3)) {
+                        midDelimTotal += rLength;
+                        continue; // CommonMark Emphasis Rules 9-10
+                    }
+                }
+                delimTotal -= rLength;
+                if (delimTotal > 0)
+                    continue; // Haven't found enough closing delimiters
+                // Remove extra characters. *a*** -> *a*
+                rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
+                // char length can be >1 for unicode characters;
+                const lastCharLength = [...match[0]][0].length;
+                const raw = src.slice(0, lLength + match.index + lastCharLength + rLength);
+                // Create `em` if smallest delimiter has odd char count. *a***
+                if (Math.min(lLength, rLength) % 2) {
+                    const text = raw.slice(1, -1);
+                    return {
+                        type: 'em',
+                        raw,
+                        text,
+                        tokens: this.lexer.inlineTokens(text),
+                    };
+                }
+                // Create 'strong' if smallest delimiter has even char count. **a***
+                const text = raw.slice(2, -2);
+                return {
+                    type: 'strong',
+                    raw,
+                    text,
+                    tokens: this.lexer.inlineTokens(text),
+                };
+            }
+        }
+    }
+    codespan(src) {
+        const cap = this.rules.inline.code.exec(src);
+        if (cap) {
+            let text = cap[2].replace(this.rules.other.newLineCharGlobal, ' ');
+            const hasNonSpaceChars = this.rules.other.nonSpaceChar.test(text);
+            const hasSpaceCharsOnBothEnds = this.rules.other.startingSpaceChar.test(text) && this.rules.other.endingSpaceChar.test(text);
+            if (hasNonSpaceChars && hasSpaceCharsOnBothEnds) {
+                text = text.substring(1, text.length - 1);
+            }
+            return {
+                type: 'codespan',
+                raw: cap[0],
+                text,
+            };
+        }
+    }
+    br(src) {
+        const cap = this.rules.inline.br.exec(src);
+        if (cap) {
+            return {
+                type: 'br',
+                raw: cap[0],
+            };
+        }
+    }
+    del(src) {
+        const cap = this.rules.inline.del.exec(src);
+        if (cap) {
+            return {
+                type: 'del',
+                raw: cap[0],
+                text: cap[2],
+                tokens: this.lexer.inlineTokens(cap[2]),
+            };
+        }
+    }
+    autolink(src) {
+        const cap = this.rules.inline.autolink.exec(src);
+        if (cap) {
+            let text, href;
+            if (cap[2] === '@') {
+                text = cap[1];
+                href = 'mailto:' + text;
+            }
+            else {
+                text = cap[1];
+                href = text;
+            }
+            return {
+                type: 'link',
+                raw: cap[0],
+                text,
+                href,
+                tokens: [
+                    {
+                        type: 'text',
+                        raw: text,
+                        text,
+                    },
+                ],
+            };
+        }
+    }
+    url(src) {
+        let cap;
+        if (cap = this.rules.inline.url.exec(src)) {
+            let text, href;
+            if (cap[2] === '@') {
+                text = cap[0];
+                href = 'mailto:' + text;
+            }
+            else {
+                // do extended autolink path validation
+                let prevCapZero;
+                do {
+                    prevCapZero = cap[0];
+                    cap[0] = this.rules.inline._backpedal.exec(cap[0])?.[0] ?? '';
+                } while (prevCapZero !== cap[0]);
+                text = cap[0];
+                if (cap[1] === 'www.') {
+                    href = 'http://' + cap[0];
+                }
+                else {
+                    href = cap[0];
+                }
+            }
+            return {
+                type: 'link',
+                raw: cap[0],
+                text,
+                href,
+                tokens: [
+                    {
+                        type: 'text',
+                        raw: text,
+                        text,
+                    },
+                ],
+            };
+        }
+    }
+    inlineText(src) {
+        const cap = this.rules.inline.text.exec(src);
+        if (cap) {
+            const escaped = this.lexer.state.inRawBlock;
+            return {
+                type: 'text',
+                raw: cap[0],
+                text: cap[0],
+                escaped,
+            };
+        }
+    }
+}
+
+/**
+ * Block Lexer
+ */
+class _Lexer {
+    tokens;
+    options;
+    state;
+    tokenizer;
+    inlineQueue;
+    constructor(options) {
+        // TokenList cannot be created in one go
+        this.tokens = [];
+        this.tokens.links = Object.create(null);
+        this.options = options || exports.defaults;
+        this.options.tokenizer = this.options.tokenizer || new _Tokenizer();
+        this.tokenizer = this.options.tokenizer;
+        this.tokenizer.options = this.options;
+        this.tokenizer.lexer = this;
+        this.inlineQueue = [];
+        this.state = {
+            inLink: false,
+            inRawBlock: false,
+            top: true,
+        };
+        const rules = {
+            other,
+            block: block.normal,
+            inline: inline.normal,
+        };
+        if (this.options.pedantic) {
+            rules.block = block.pedantic;
+            rules.inline = inline.pedantic;
+        }
+        else if (this.options.gfm) {
+            rules.block = block.gfm;
+            if (this.options.breaks) {
+                rules.inline = inline.breaks;
+            }
+            else {
+                rules.inline = inline.gfm;
+            }
+        }
+        this.tokenizer.rules = rules;
+    }
+    /**
+     * Expose Rules
+     */
+    static get rules() {
+        return {
+            block,
+            inline,
+        };
+    }
+    /**
+     * Static Lex Method
+     */
+    static lex(src, options) {
+        const lexer = new _Lexer(options);
+        return lexer.lex(src);
+    }
+    /**
+     * Static Lex Inline Method
+     */
+    static lexInline(src, options) {
+        const lexer = new _Lexer(options);
+        return lexer.inlineTokens(src);
+    }
+    /**
+     * Preprocessing
+     */
+    lex(src) {
+        src = src.replace(other.carriageReturn, '\n');
+        this.blockTokens(src, this.tokens);
+        for (let i = 0; i < this.inlineQueue.length; i++) {
+            const next = this.inlineQueue[i];
+            this.inlineTokens(next.src, next.tokens);
+        }
+        this.inlineQueue = [];
+        return this.tokens;
+    }
+    blockTokens(src, tokens = [], lastParagraphClipped = false) {
+        if (this.options.pedantic) {
+            src = src.replace(other.tabCharGlobal, '    ').replace(other.spaceLine, '');
+        }
+        while (src) {
+            let token;
+            if (this.options.extensions?.block?.some((extTokenizer) => {
+                if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    return true;
+                }
+                return false;
+            })) {
+                continue;
+            }
+            // newline
+            if (token = this.tokenizer.space(src)) {
+                src = src.substring(token.raw.length);
+                const lastToken = tokens.at(-1);
+                if (token.raw.length === 1 && lastToken !== undefined) {
+                    // if there's a single \n as a spacer, it's terminating the last line,
+                    // so move it there so that we don't get unnecessary paragraph tags
+                    lastToken.raw += '\n';
+                }
+                else {
+                    tokens.push(token);
+                }
+                continue;
+            }
+            // code
+            if (token = this.tokenizer.code(src)) {
+                src = src.substring(token.raw.length);
+                const lastToken = tokens.at(-1);
+                // An indented code block cannot interrupt a paragraph.
+                if (lastToken?.type === 'paragraph' || lastToken?.type === 'text') {
+                    lastToken.raw += '\n' + token.raw;
+                    lastToken.text += '\n' + token.text;
+                    this.inlineQueue.at(-1).src = lastToken.text;
+                }
+                else {
+                    tokens.push(token);
+                }
+                continue;
+            }
+            // fences
+            if (token = this.tokenizer.fences(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // heading
+            if (token = this.tokenizer.heading(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // hr
+            if (token = this.tokenizer.hr(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // blockquote
+            if (token = this.tokenizer.blockquote(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // list
+            if (token = this.tokenizer.list(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // html
+            if (token = this.tokenizer.html(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // def
+            if (token = this.tokenizer.def(src)) {
+                src = src.substring(token.raw.length);
+                const lastToken = tokens.at(-1);
+                if (lastToken?.type === 'paragraph' || lastToken?.type === 'text') {
+                    lastToken.raw += '\n' + token.raw;
+                    lastToken.text += '\n' + token.raw;
+                    this.inlineQueue.at(-1).src = lastToken.text;
+                }
+                else if (!this.tokens.links[token.tag]) {
+                    this.tokens.links[token.tag] = {
+                        href: token.href,
+                        title: token.title,
+                    };
+                }
+                continue;
+            }
+            // table (gfm)
+            if (token = this.tokenizer.table(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // lheading
+            if (token = this.tokenizer.lheading(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // top-level paragraph
+            // prevent paragraph consuming extensions by clipping 'src' to extension start
+            let cutSrc = src;
+            if (this.options.extensions?.startBlock) {
+                let startIndex = Infinity;
+                const tempSrc = src.slice(1);
+                let tempStart;
+                this.options.extensions.startBlock.forEach((getStartIndex) => {
+                    tempStart = getStartIndex.call({ lexer: this }, tempSrc);
+                    if (typeof tempStart === 'number' && tempStart >= 0) {
+                        startIndex = Math.min(startIndex, tempStart);
+                    }
+                });
+                if (startIndex < Infinity && startIndex >= 0) {
+                    cutSrc = src.substring(0, startIndex + 1);
+                }
+            }
+            if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
+                const lastToken = tokens.at(-1);
+                if (lastParagraphClipped && lastToken?.type === 'paragraph') {
+                    lastToken.raw += '\n' + token.raw;
+                    lastToken.text += '\n' + token.text;
+                    this.inlineQueue.pop();
+                    this.inlineQueue.at(-1).src = lastToken.text;
+                }
+                else {
+                    tokens.push(token);
+                }
+                lastParagraphClipped = cutSrc.length !== src.length;
+                src = src.substring(token.raw.length);
+                continue;
+            }
+            // text
+            if (token = this.tokenizer.text(src)) {
+                src = src.substring(token.raw.length);
+                const lastToken = tokens.at(-1);
+                if (lastToken?.type === 'text') {
+                    lastToken.raw += '\n' + token.raw;
+                    lastToken.text += '\n' + token.text;
+                    this.inlineQueue.pop();
+                    this.inlineQueue.at(-1).src = lastToken.text;
+                }
+                else {
+                    tokens.push(token);
+                }
+                continue;
+            }
+            if (src) {
+                const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
+                if (this.options.silent) {
+                    console.error(errMsg);
+                    break;
+                }
+                else {
+                    throw new Error(errMsg);
+                }
+            }
+        }
+        this.state.top = true;
+        return tokens;
+    }
+    inline(src, tokens = []) {
+        this.inlineQueue.push({ src, tokens });
+        return tokens;
+    }
+    /**
+     * Lexing/Compiling
+     */
+    inlineTokens(src, tokens = []) {
+        // String with links masked to avoid interference with em and strong
+        let maskedSrc = src;
+        let match = null;
+        // Mask out reflinks
+        if (this.tokens.links) {
+            const links = Object.keys(this.tokens.links);
+            if (links.length > 0) {
+                while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
+                    if (links.includes(match[0].slice(match[0].lastIndexOf('[') + 1, -1))) {
+                        maskedSrc = maskedSrc.slice(0, match.index)
+                            + '[' + 'a'.repeat(match[0].length - 2) + ']'
+                            + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
+                    }
+                }
+            }
+        }
+        // Mask out escaped characters
+        while ((match = this.tokenizer.rules.inline.anyPunctuation.exec(maskedSrc)) != null) {
+            maskedSrc = maskedSrc.slice(0, match.index) + '++' + maskedSrc.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);
+        }
+        // Mask out other blocks
+        while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
+            maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+        }
+        let keepPrevChar = false;
+        let prevChar = '';
+        while (src) {
+            if (!keepPrevChar) {
+                prevChar = '';
+            }
+            keepPrevChar = false;
+            let token;
+            // extensions
+            if (this.options.extensions?.inline?.some((extTokenizer) => {
+                if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
+                    src = src.substring(token.raw.length);
+                    tokens.push(token);
+                    return true;
+                }
+                return false;
+            })) {
+                continue;
+            }
+            // escape
+            if (token = this.tokenizer.escape(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // tag
+            if (token = this.tokenizer.tag(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // link
+            if (token = this.tokenizer.link(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // reflink, nolink
+            if (token = this.tokenizer.reflink(src, this.tokens.links)) {
+                src = src.substring(token.raw.length);
+                const lastToken = tokens.at(-1);
+                if (token.type === 'text' && lastToken?.type === 'text') {
+                    lastToken.raw += token.raw;
+                    lastToken.text += token.text;
+                }
+                else {
+                    tokens.push(token);
+                }
+                continue;
+            }
+            // em & strong
+            if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // code
+            if (token = this.tokenizer.codespan(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // br
+            if (token = this.tokenizer.br(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // del (gfm)
+            if (token = this.tokenizer.del(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // autolink
+            if (token = this.tokenizer.autolink(src)) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // url (gfm)
+            if (!this.state.inLink && (token = this.tokenizer.url(src))) {
+                src = src.substring(token.raw.length);
+                tokens.push(token);
+                continue;
+            }
+            // text
+            // prevent inlineText consuming extensions by clipping 'src' to extension start
+            let cutSrc = src;
+            if (this.options.extensions?.startInline) {
+                let startIndex = Infinity;
+                const tempSrc = src.slice(1);
+                let tempStart;
+                this.options.extensions.startInline.forEach((getStartIndex) => {
+                    tempStart = getStartIndex.call({ lexer: this }, tempSrc);
+                    if (typeof tempStart === 'number' && tempStart >= 0) {
+                        startIndex = Math.min(startIndex, tempStart);
+                    }
+                });
+                if (startIndex < Infinity && startIndex >= 0) {
+                    cutSrc = src.substring(0, startIndex + 1);
+                }
+            }
+            if (token = this.tokenizer.inlineText(cutSrc)) {
+                src = src.substring(token.raw.length);
+                if (token.raw.slice(-1) !== '_') { // Track prevChar before string of ____ started
+                    prevChar = token.raw.slice(-1);
+                }
+                keepPrevChar = true;
+                const lastToken = tokens.at(-1);
+                if (lastToken?.type === 'text') {
+                    lastToken.raw += token.raw;
+                    lastToken.text += token.text;
+                }
+                else {
+                    tokens.push(token);
+                }
+                continue;
+            }
+            if (src) {
+                const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
+                if (this.options.silent) {
+                    console.error(errMsg);
+                    break;
+                }
+                else {
+                    throw new Error(errMsg);
+                }
+            }
+        }
+        return tokens;
+    }
+}
+
+/**
+ * Renderer
+ */
+class _Renderer {
+    options;
+    parser; // set by the parser
+    constructor(options) {
+        this.options = options || exports.defaults;
+    }
+    space(token) {
+        return '';
+    }
+    code({ text, lang, escaped }) {
+        const langString = (lang || '').match(other.notSpaceStart)?.[0];
+        const code = text.replace(other.endingNewline, '') + '\n';
+        if (!langString) {
+            return '<pre><code>'
+                + (escaped ? code : escape(code, true))
+                + '</code></pre>\n';
+        }
+        return '<pre><code class="language-'
+            + escape(langString)
+            + '">'
+            + (escaped ? code : escape(code, true))
+            + '</code></pre>\n';
+    }
+    blockquote({ tokens }) {
+        const body = this.parser.parse(tokens);
+        return `<blockquote>\n${body}</blockquote>\n`;
+    }
+    html({ text }) {
+        return text;
+    }
+    heading({ tokens, depth }) {
+        return `<h${depth}>${this.parser.parseInline(tokens)}</h${depth}>\n`;
+    }
+    hr(token) {
+        return '<hr>\n';
+    }
+    list(token) {
+        const ordered = token.ordered;
+        const start = token.start;
+        let body = '';
+        for (let j = 0; j < token.items.length; j++) {
+            const item = token.items[j];
+            body += this.listitem(item);
+        }
+        const type = ordered ? 'ol' : 'ul';
+        const startAttr = (ordered && start !== 1) ? (' start="' + start + '"') : '';
+        return '<' + type + startAttr + '>\n' + body + '</' + type + '>\n';
+    }
+    listitem(item) {
+        let itemBody = '';
+        if (item.task) {
+            const checkbox = this.checkbox({ checked: !!item.checked });
+            if (item.loose) {
+                if (item.tokens[0]?.type === 'paragraph') {
+                    item.tokens[0].text = checkbox + ' ' + item.tokens[0].text;
+                    if (item.tokens[0].tokens && item.tokens[0].tokens.length > 0 && item.tokens[0].tokens[0].type === 'text') {
+                        item.tokens[0].tokens[0].text = checkbox + ' ' + escape(item.tokens[0].tokens[0].text);
+                        item.tokens[0].tokens[0].escaped = true;
+                    }
+                }
+                else {
+                    item.tokens.unshift({
+                        type: 'text',
+                        raw: checkbox + ' ',
+                        text: checkbox + ' ',
+                        escaped: true,
+                    });
+                }
+            }
+            else {
+                itemBody += checkbox + ' ';
+            }
+        }
+        itemBody += this.parser.parse(item.tokens, !!item.loose);
+        return `<li>${itemBody}</li>\n`;
+    }
+    checkbox({ checked }) {
+        return '<input '
+            + (checked ? 'checked="" ' : '')
+            + 'disabled="" type="checkbox">';
+    }
+    paragraph({ tokens }) {
+        return `<p>${this.parser.parseInline(tokens)}</p>\n`;
+    }
+    table(token) {
+        let header = '';
+        // header
+        let cell = '';
+        for (let j = 0; j < token.header.length; j++) {
+            cell += this.tablecell(token.header[j]);
+        }
+        header += this.tablerow({ text: cell });
+        let body = '';
+        for (let j = 0; j < token.rows.length; j++) {
+            const row = token.rows[j];
+            cell = '';
+            for (let k = 0; k < row.length; k++) {
+                cell += this.tablecell(row[k]);
+            }
+            body += this.tablerow({ text: cell });
+        }
+        if (body)
+            body = `<tbody>${body}</tbody>`;
+        return '<table>\n'
+            + '<thead>\n'
+            + header
+            + '</thead>\n'
+            + body
+            + '</table>\n';
+    }
+    tablerow({ text }) {
+        return `<tr>\n${text}</tr>\n`;
+    }
+    tablecell(token) {
+        const content = this.parser.parseInline(token.tokens);
+        const type = token.header ? 'th' : 'td';
+        const tag = token.align
+            ? `<${type} align="${token.align}">`
+            : `<${type}>`;
+        return tag + content + `</${type}>\n`;
+    }
+    /**
+     * span level renderer
+     */
+    strong({ tokens }) {
+        return `<strong>${this.parser.parseInline(tokens)}</strong>`;
+    }
+    em({ tokens }) {
+        return `<em>${this.parser.parseInline(tokens)}</em>`;
+    }
+    codespan({ text }) {
+        return `<code>${escape(text, true)}</code>`;
+    }
+    br(token) {
+        return '<br>';
+    }
+    del({ tokens }) {
+        return `<del>${this.parser.parseInline(tokens)}</del>`;
+    }
+    link({ href, title, tokens }) {
+        const text = this.parser.parseInline(tokens);
+        const cleanHref = cleanUrl(href);
+        if (cleanHref === null) {
+            return text;
+        }
+        href = cleanHref;
+        let out = '<a href="' + href + '"';
+        if (title) {
+            out += ' title="' + (escape(title)) + '"';
+        }
+        out += '>' + text + '</a>';
+        return out;
+    }
+    image({ href, title, text, tokens }) {
+        if (tokens) {
+            text = this.parser.parseInline(tokens, this.parser.textRenderer);
+        }
+        const cleanHref = cleanUrl(href);
+        if (cleanHref === null) {
+            return escape(text);
+        }
+        href = cleanHref;
+        let out = `<img src="${href}" alt="${text}"`;
+        if (title) {
+            out += ` title="${escape(title)}"`;
+        }
+        out += '>';
+        return out;
+    }
+    text(token) {
+        return 'tokens' in token && token.tokens
+            ? this.parser.parseInline(token.tokens)
+            : ('escaped' in token && token.escaped ? token.text : escape(token.text));
+    }
+}
+
+/**
+ * TextRenderer
+ * returns only the textual part of the token
+ */
+class _TextRenderer {
+    // no need for block level renderers
+    strong({ text }) {
+        return text;
+    }
+    em({ text }) {
+        return text;
+    }
+    codespan({ text }) {
+        return text;
+    }
+    del({ text }) {
+        return text;
+    }
+    html({ text }) {
+        return text;
+    }
+    text({ text }) {
+        return text;
+    }
+    link({ text }) {
+        return '' + text;
+    }
+    image({ text }) {
+        return '' + text;
+    }
+    br() {
+        return '';
+    }
+}
+
+/**
+ * Parsing & Compiling
+ */
+class _Parser {
+    options;
+    renderer;
+    textRenderer;
+    constructor(options) {
+        this.options = options || exports.defaults;
+        this.options.renderer = this.options.renderer || new _Renderer();
+        this.renderer = this.options.renderer;
+        this.renderer.options = this.options;
+        this.renderer.parser = this;
+        this.textRenderer = new _TextRenderer();
+    }
+    /**
+     * Static Parse Method
+     */
+    static parse(tokens, options) {
+        const parser = new _Parser(options);
+        return parser.parse(tokens);
+    }
+    /**
+     * Static Parse Inline Method
+     */
+    static parseInline(tokens, options) {
+        const parser = new _Parser(options);
+        return parser.parseInline(tokens);
+    }
+    /**
+     * Parse Loop
+     */
+    parse(tokens, top = true) {
+        let out = '';
+        for (let i = 0; i < tokens.length; i++) {
+            const anyToken = tokens[i];
+            // Run any renderer extensions
+            if (this.options.extensions?.renderers?.[anyToken.type]) {
+                const genericToken = anyToken;
+                const ret = this.options.extensions.renderers[genericToken.type].call({ parser: this }, genericToken);
+                if (ret !== false || !['space', 'hr', 'heading', 'code', 'table', 'blockquote', 'list', 'html', 'paragraph', 'text'].includes(genericToken.type)) {
+                    out += ret || '';
+                    continue;
+                }
+            }
+            const token = anyToken;
+            switch (token.type) {
+                case 'space': {
+                    out += this.renderer.space(token);
+                    continue;
+                }
+                case 'hr': {
+                    out += this.renderer.hr(token);
+                    continue;
+                }
+                case 'heading': {
+                    out += this.renderer.heading(token);
+                    continue;
+                }
+                case 'code': {
+                    out += this.renderer.code(token);
+                    continue;
+                }
+                case 'table': {
+                    out += this.renderer.table(token);
+                    continue;
+                }
+                case 'blockquote': {
+                    out += this.renderer.blockquote(token);
+                    continue;
+                }
+                case 'list': {
+                    out += this.renderer.list(token);
+                    continue;
+                }
+                case 'html': {
+                    out += this.renderer.html(token);
+                    continue;
+                }
+                case 'paragraph': {
+                    out += this.renderer.paragraph(token);
+                    continue;
+                }
+                case 'text': {
+                    let textToken = token;
+                    let body = this.renderer.text(textToken);
+                    while (i + 1 < tokens.length && tokens[i + 1].type === 'text') {
+                        textToken = tokens[++i];
+                        body += '\n' + this.renderer.text(textToken);
+                    }
+                    if (top) {
+                        out += this.renderer.paragraph({
+                            type: 'paragraph',
+                            raw: body,
+                            text: body,
+                            tokens: [{ type: 'text', raw: body, text: body, escaped: true }],
+                        });
+                    }
+                    else {
+                        out += body;
+                    }
+                    continue;
+                }
+                default: {
+                    const errMsg = 'Token with "' + token.type + '" type was not found.';
+                    if (this.options.silent) {
+                        console.error(errMsg);
+                        return '';
+                    }
+                    else {
+                        throw new Error(errMsg);
+                    }
+                }
+            }
+        }
+        return out;
+    }
+    /**
+     * Parse Inline Tokens
+     */
+    parseInline(tokens, renderer = this.renderer) {
+        let out = '';
+        for (let i = 0; i < tokens.length; i++) {
+            const anyToken = tokens[i];
+            // Run any renderer extensions
+            if (this.options.extensions?.renderers?.[anyToken.type]) {
+                const ret = this.options.extensions.renderers[anyToken.type].call({ parser: this }, anyToken);
+                if (ret !== false || !['escape', 'html', 'link', 'image', 'strong', 'em', 'codespan', 'br', 'del', 'text'].includes(anyToken.type)) {
+                    out += ret || '';
+                    continue;
+                }
+            }
+            const token = anyToken;
+            switch (token.type) {
+                case 'escape': {
+                    out += renderer.text(token);
+                    break;
+                }
+                case 'html': {
+                    out += renderer.html(token);
+                    break;
+                }
+                case 'link': {
+                    out += renderer.link(token);
+                    break;
+                }
+                case 'image': {
+                    out += renderer.image(token);
+                    break;
+                }
+                case 'strong': {
+                    out += renderer.strong(token);
+                    break;
+                }
+                case 'em': {
+                    out += renderer.em(token);
+                    break;
+                }
+                case 'codespan': {
+                    out += renderer.codespan(token);
+                    break;
+                }
+                case 'br': {
+                    out += renderer.br(token);
+                    break;
+                }
+                case 'del': {
+                    out += renderer.del(token);
+                    break;
+                }
+                case 'text': {
+                    out += renderer.text(token);
+                    break;
+                }
+                default: {
+                    const errMsg = 'Token with "' + token.type + '" type was not found.';
+                    if (this.options.silent) {
+                        console.error(errMsg);
+                        return '';
+                    }
+                    else {
+                        throw new Error(errMsg);
+                    }
+                }
+            }
+        }
+        return out;
+    }
+}
+
+class _Hooks {
+    options;
+    block;
+    constructor(options) {
+        this.options = options || exports.defaults;
+    }
+    static passThroughHooks = new Set([
+        'preprocess',
+        'postprocess',
+        'processAllTokens',
+    ]);
+    /**
+     * Process markdown before marked
+     */
+    preprocess(markdown) {
+        return markdown;
+    }
+    /**
+     * Process HTML after marked is finished
+     */
+    postprocess(html) {
+        return html;
+    }
+    /**
+     * Process all tokens before walk tokens
+     */
+    processAllTokens(tokens) {
+        return tokens;
+    }
+    /**
+     * Provide function to tokenize markdown
+     */
+    provideLexer() {
+        return this.block ? _Lexer.lex : _Lexer.lexInline;
+    }
+    /**
+     * Provide function to parse tokens
+     */
+    provideParser() {
+        return this.block ? _Parser.parse : _Parser.parseInline;
+    }
+}
+
+class Marked {
+    defaults = _getDefaults();
+    options = this.setOptions;
+    parse = this.parseMarkdown(true);
+    parseInline = this.parseMarkdown(false);
+    Parser = _Parser;
+    Renderer = _Renderer;
+    TextRenderer = _TextRenderer;
+    Lexer = _Lexer;
+    Tokenizer = _Tokenizer;
+    Hooks = _Hooks;
+    constructor(...args) {
+        this.use(...args);
+    }
+    /**
+     * Run callback for every token
+     */
+    walkTokens(tokens, callback) {
+        let values = [];
+        for (const token of tokens) {
+            values = values.concat(callback.call(this, token));
+            switch (token.type) {
+                case 'table': {
+                    const tableToken = token;
+                    for (const cell of tableToken.header) {
+                        values = values.concat(this.walkTokens(cell.tokens, callback));
+                    }
+                    for (const row of tableToken.rows) {
+                        for (const cell of row) {
+                            values = values.concat(this.walkTokens(cell.tokens, callback));
+                        }
+                    }
+                    break;
+                }
+                case 'list': {
+                    const listToken = token;
+                    values = values.concat(this.walkTokens(listToken.items, callback));
+                    break;
+                }
+                default: {
+                    const genericToken = token;
+                    if (this.defaults.extensions?.childTokens?.[genericToken.type]) {
+                        this.defaults.extensions.childTokens[genericToken.type].forEach((childTokens) => {
+                            const tokens = genericToken[childTokens].flat(Infinity);
+                            values = values.concat(this.walkTokens(tokens, callback));
+                        });
+                    }
+                    else if (genericToken.tokens) {
+                        values = values.concat(this.walkTokens(genericToken.tokens, callback));
+                    }
+                }
+            }
+        }
+        return values;
+    }
+    use(...args) {
+        const extensions = this.defaults.extensions || { renderers: {}, childTokens: {} };
+        args.forEach((pack) => {
+            // copy options to new object
+            const opts = { ...pack };
+            // set async to true if it was set to true before
+            opts.async = this.defaults.async || opts.async || false;
+            // ==-- Parse "addon" extensions --== //
+            if (pack.extensions) {
+                pack.extensions.forEach((ext) => {
+                    if (!ext.name) {
+                        throw new Error('extension name required');
+                    }
+                    if ('renderer' in ext) { // Renderer extensions
+                        const prevRenderer = extensions.renderers[ext.name];
+                        if (prevRenderer) {
+                            // Replace extension with func to run new extension but fall back if false
+                            extensions.renderers[ext.name] = function (...args) {
+                                let ret = ext.renderer.apply(this, args);
+                                if (ret === false) {
+                                    ret = prevRenderer.apply(this, args);
+                                }
+                                return ret;
+                            };
+                        }
+                        else {
+                            extensions.renderers[ext.name] = ext.renderer;
+                        }
+                    }
+                    if ('tokenizer' in ext) { // Tokenizer Extensions
+                        if (!ext.level || (ext.level !== 'block' && ext.level !== 'inline')) {
+                            throw new Error("extension level must be 'block' or 'inline'");
+                        }
+                        const extLevel = extensions[ext.level];
+                        if (extLevel) {
+                            extLevel.unshift(ext.tokenizer);
+                        }
+                        else {
+                            extensions[ext.level] = [ext.tokenizer];
+                        }
+                        if (ext.start) { // Function to check for start of token
+                            if (ext.level === 'block') {
+                                if (extensions.startBlock) {
+                                    extensions.startBlock.push(ext.start);
+                                }
+                                else {
+                                    extensions.startBlock = [ext.start];
+                                }
+                            }
+                            else if (ext.level === 'inline') {
+                                if (extensions.startInline) {
+                                    extensions.startInline.push(ext.start);
+                                }
+                                else {
+                                    extensions.startInline = [ext.start];
+                                }
+                            }
+                        }
+                    }
+                    if ('childTokens' in ext && ext.childTokens) { // Child tokens to be visited by walkTokens
+                        extensions.childTokens[ext.name] = ext.childTokens;
+                    }
+                });
+                opts.extensions = extensions;
+            }
+            // ==-- Parse "overwrite" extensions --== //
+            if (pack.renderer) {
+                const renderer = this.defaults.renderer || new _Renderer(this.defaults);
+                for (const prop in pack.renderer) {
+                    if (!(prop in renderer)) {
+                        throw new Error(`renderer '${prop}' does not exist`);
+                    }
+                    if (['options', 'parser'].includes(prop)) {
+                        // ignore options property
+                        continue;
+                    }
+                    const rendererProp = prop;
+                    const rendererFunc = pack.renderer[rendererProp];
+                    const prevRenderer = renderer[rendererProp];
+                    // Replace renderer with func to run extension, but fall back if false
+                    renderer[rendererProp] = (...args) => {
+                        let ret = rendererFunc.apply(renderer, args);
+                        if (ret === false) {
+                            ret = prevRenderer.apply(renderer, args);
+                        }
+                        return ret || '';
+                    };
+                }
+                opts.renderer = renderer;
+            }
+            if (pack.tokenizer) {
+                const tokenizer = this.defaults.tokenizer || new _Tokenizer(this.defaults);
+                for (const prop in pack.tokenizer) {
+                    if (!(prop in tokenizer)) {
+                        throw new Error(`tokenizer '${prop}' does not exist`);
+                    }
+                    if (['options', 'rules', 'lexer'].includes(prop)) {
+                        // ignore options, rules, and lexer properties
+                        continue;
+                    }
+                    const tokenizerProp = prop;
+                    const tokenizerFunc = pack.tokenizer[tokenizerProp];
+                    const prevTokenizer = tokenizer[tokenizerProp];
+                    // Replace tokenizer with func to run extension, but fall back if false
+                    // @ts-expect-error cannot type tokenizer function dynamically
+                    tokenizer[tokenizerProp] = (...args) => {
+                        let ret = tokenizerFunc.apply(tokenizer, args);
+                        if (ret === false) {
+                            ret = prevTokenizer.apply(tokenizer, args);
+                        }
+                        return ret;
+                    };
+                }
+                opts.tokenizer = tokenizer;
+            }
+            // ==-- Parse Hooks extensions --== //
+            if (pack.hooks) {
+                const hooks = this.defaults.hooks || new _Hooks();
+                for (const prop in pack.hooks) {
+                    if (!(prop in hooks)) {
+                        throw new Error(`hook '${prop}' does not exist`);
+                    }
+                    if (['options', 'block'].includes(prop)) {
+                        // ignore options and block properties
+                        continue;
+                    }
+                    const hooksProp = prop;
+                    const hooksFunc = pack.hooks[hooksProp];
+                    const prevHook = hooks[hooksProp];
+                    if (_Hooks.passThroughHooks.has(prop)) {
+                        // @ts-expect-error cannot type hook function dynamically
+                        hooks[hooksProp] = (arg) => {
+                            if (this.defaults.async) {
+                                return Promise.resolve(hooksFunc.call(hooks, arg)).then(ret => {
+                                    return prevHook.call(hooks, ret);
+                                });
+                            }
+                            const ret = hooksFunc.call(hooks, arg);
+                            return prevHook.call(hooks, ret);
+                        };
+                    }
+                    else {
+                        // @ts-expect-error cannot type hook function dynamically
+                        hooks[hooksProp] = (...args) => {
+                            let ret = hooksFunc.apply(hooks, args);
+                            if (ret === false) {
+                                ret = prevHook.apply(hooks, args);
+                            }
+                            return ret;
+                        };
+                    }
+                }
+                opts.hooks = hooks;
+            }
+            // ==-- Parse WalkTokens extensions --== //
+            if (pack.walkTokens) {
+                const walkTokens = this.defaults.walkTokens;
+                const packWalktokens = pack.walkTokens;
+                opts.walkTokens = function (token) {
+                    let values = [];
+                    values.push(packWalktokens.call(this, token));
+                    if (walkTokens) {
+                        values = values.concat(walkTokens.call(this, token));
+                    }
+                    return values;
+                };
+            }
+            this.defaults = { ...this.defaults, ...opts };
+        });
+        return this;
+    }
+    setOptions(opt) {
+        this.defaults = { ...this.defaults, ...opt };
+        return this;
+    }
+    lexer(src, options) {
+        return _Lexer.lex(src, options ?? this.defaults);
+    }
+    parser(tokens, options) {
+        return _Parser.parse(tokens, options ?? this.defaults);
+    }
+    parseMarkdown(blockType) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const parse = (src, options) => {
+            const origOpt = { ...options };
+            const opt = { ...this.defaults, ...origOpt };
+            const throwError = this.onError(!!opt.silent, !!opt.async);
+            // throw error if an extension set async to true but parse was called with async: false
+            if (this.defaults.async === true && origOpt.async === false) {
+                return throwError(new Error('marked(): The async option was set to true by an extension. Remove async: false from the parse options object to return a Promise.'));
+            }
+            // throw error in case of non string input
+            if (typeof src === 'undefined' || src === null) {
+                return throwError(new Error('marked(): input parameter is undefined or null'));
+            }
+            if (typeof src !== 'string') {
+                return throwError(new Error('marked(): input parameter is of type '
+                    + Object.prototype.toString.call(src) + ', string expected'));
+            }
+            if (opt.hooks) {
+                opt.hooks.options = opt;
+                opt.hooks.block = blockType;
+            }
+            const lexer = opt.hooks ? opt.hooks.provideLexer() : (blockType ? _Lexer.lex : _Lexer.lexInline);
+            const parser = opt.hooks ? opt.hooks.provideParser() : (blockType ? _Parser.parse : _Parser.parseInline);
+            if (opt.async) {
+                return Promise.resolve(opt.hooks ? opt.hooks.preprocess(src) : src)
+                    .then(src => lexer(src, opt))
+                    .then(tokens => opt.hooks ? opt.hooks.processAllTokens(tokens) : tokens)
+                    .then(tokens => opt.walkTokens ? Promise.all(this.walkTokens(tokens, opt.walkTokens)).then(() => tokens) : tokens)
+                    .then(tokens => parser(tokens, opt))
+                    .then(html => opt.hooks ? opt.hooks.postprocess(html) : html)
+                    .catch(throwError);
+            }
+            try {
+                if (opt.hooks) {
+                    src = opt.hooks.preprocess(src);
+                }
+                let tokens = lexer(src, opt);
+                if (opt.hooks) {
+                    tokens = opt.hooks.processAllTokens(tokens);
+                }
+                if (opt.walkTokens) {
+                    this.walkTokens(tokens, opt.walkTokens);
+                }
+                let html = parser(tokens, opt);
+                if (opt.hooks) {
+                    html = opt.hooks.postprocess(html);
+                }
+                return html;
+            }
+            catch (e) {
+                return throwError(e);
+            }
+        };
+        return parse;
+    }
+    onError(silent, async) {
+        return (e) => {
+            e.message += '\nPlease report this to https://github.com/markedjs/marked.';
+            if (silent) {
+                const msg = '<p>An error occurred:</p><pre>'
+                    + escape(e.message + '', true)
+                    + '</pre>';
+                if (async) {
+                    return Promise.resolve(msg);
+                }
+                return msg;
+            }
+            if (async) {
+                return Promise.reject(e);
+            }
+            throw e;
+        };
+    }
+}
+
+const markedInstance = new Marked();
+function marked(src, opt) {
+    return markedInstance.parse(src, opt);
+}
+/**
+ * Sets the default options.
+ *
+ * @param options Hash of options
+ */
+marked.options =
+    marked.setOptions = function (options) {
+        markedInstance.setOptions(options);
+        marked.defaults = markedInstance.defaults;
+        changeDefaults(marked.defaults);
+        return marked;
+    };
+/**
+ * Gets the original marked default options.
+ */
+marked.getDefaults = _getDefaults;
+marked.defaults = exports.defaults;
+/**
+ * Use Extension
+ */
+marked.use = function (...args) {
+    markedInstance.use(...args);
+    marked.defaults = markedInstance.defaults;
+    changeDefaults(marked.defaults);
+    return marked;
+};
+/**
+ * Run callback for every token
+ */
+marked.walkTokens = function (tokens, callback) {
+    return markedInstance.walkTokens(tokens, callback);
+};
+/**
+ * Compiles markdown to HTML without enclosing `p` tag.
+ *
+ * @param src String of markdown source to be compiled
+ * @param options Hash of options
+ * @return String of compiled HTML
+ */
+marked.parseInline = markedInstance.parseInline;
+/**
+ * Expose
+ */
+marked.Parser = _Parser;
+marked.parser = _Parser.parse;
+marked.Renderer = _Renderer;
+marked.TextRenderer = _TextRenderer;
+marked.Lexer = _Lexer;
+marked.lexer = _Lexer.lex;
+marked.Tokenizer = _Tokenizer;
+marked.Hooks = _Hooks;
+marked.parse = marked;
+const options = marked.options;
+const setOptions = marked.setOptions;
+const use = marked.use;
+const walkTokens = marked.walkTokens;
+const parseInline = marked.parseInline;
+const parse = marked;
+const parser = _Parser.parse;
+const lexer = _Lexer.lex;
+
+exports.Hooks = _Hooks;
+exports.Lexer = _Lexer;
+exports.Marked = Marked;
+exports.Parser = _Parser;
+exports.Renderer = _Renderer;
+exports.TextRenderer = _TextRenderer;
+exports.Tokenizer = _Tokenizer;
+exports.getDefaults = _getDefaults;
+exports.lexer = lexer;
+exports.marked = marked;
+exports.options = options;
+exports.parse = parse;
+exports.parseInline = parseInline;
+exports.parser = parser;
+exports.setOptions = setOptions;
+exports.use = use;
+exports.walkTokens = walkTokens;
+//# sourceMappingURL=marked.cjs.map
+
 
 /***/ }),
 
@@ -91203,18 +92771,6 @@ module.exports = /*#__PURE__*/JSON.parse('{"version":"2024a","zones":["Africa/Ab
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

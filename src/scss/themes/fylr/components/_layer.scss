@@ -71,7 +71,7 @@
 	z-index: -1;
 
 	&--visible {
-		background: radial-gradient(hsla(205, 30%, 20%, 0.4), hsla(205, 30%, 20%, 0.6));
+		background: radial-gradient(hsl(205deg 30% 20% / 40%), hsl(205deg 30% 20% / 60%));
 	}
 
 	> div {

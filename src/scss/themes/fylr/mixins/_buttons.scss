@@ -239,7 +239,7 @@
 	// special case when two adjoining buttons within a button group can be active, e.g. ez5-result-manager-button-options
 	&.cui-active + .cui-active.cui-layer-open {
 		.cui-button-visual {
-			border-left-color: currentColor;
+			border-left-color: currentcolor;
 		}
 	}
 }
@@ -418,13 +418,13 @@
 
 // Explicitely add back button border, only needed if it was removed before (e.g. via the button-link())
 @mixin button-border() {
-	--btn-border-color: currentColor;
+	--btn-border-color: currentcolor;
 	--btn-border-width: #{$btn-border-width};
 
 	&:not(.cui-disabled) {
 		&:hover,
 		&:focus {
-			--btn-border-color: currentColor;
+			--btn-border-color: currentcolor;
 		}
 	}
 }
@@ -496,8 +496,7 @@
 			border-left: var(--combobox-divider-border, #{$combobox-divider-border});
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
-		}
-		@else if $button-position == 'left' {
+		} @else if $button-position == 'left' {
 			z-index: 1;
 			position: relative;
 			border-right: var(--combobox-divider-border, #{$combobox-divider-border});
@@ -522,8 +521,7 @@
 
 				@if $button-position == 'right' {
 					border-left-color: $btn-active-background !important;
-				}
-				@else if $button-position == 'left' {
+				} @else if $button-position == 'left' {
 					border-right-color: $btn-active-background !important;
 				}
 			}
@@ -578,7 +576,7 @@
 
 	.fa {
 		font-size: $icon-font-size-lg;
-		text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
+		text-shadow: 0 1px 7px rgb(0 0 0 / 20%);
 		margin-left: 3px;
 	}
 }

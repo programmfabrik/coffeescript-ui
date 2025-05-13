@@ -1,6 +1,6 @@
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
-	@include clickable;
+	@include clickable();
 }
 
 .cui-label {
@@ -46,7 +46,7 @@ label[data-label-clickable],
 
 		// highlight
 		em {
-			background: hsl(55, 100%, 60%);
+			background: hsl(55deg 100% 60%);
 			font-style: normal;
 			padding: 0.05em 0.2em;
 		}
