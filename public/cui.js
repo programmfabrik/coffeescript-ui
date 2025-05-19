@@ -51853,11 +51853,12 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.getCellByTarget = function($target) {
-    var cell;
-    if (CUI.dom.is($target, ".cui-lv-td")) {
+    var cell, target;
+    target = CUI.dom.closest($target, ".cui-lv-td");
+    if (target) {
       cell = {
-        col_i: parseInt($target.getAttribute("col")),
-        row_i: parseInt($target.getAttribute("row"))
+        col_i: parseInt(target.getAttribute("col")),
+        row_i: parseInt(target.getAttribute("row"))
       };
       cell.display_col_i = this.getDisplayColIdx(cell.col_i);
       cell.display_row_i = this.getDisplayRowIdx(cell.row_i);
