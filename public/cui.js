@@ -51127,6 +51127,36 @@ CUI.Label = (function(superClass) {
     return nodes;
   };
 
+  Label.parseWithRegex = function(text, regexp, getElement) {
+    var lastIndex, match, matchIndex, matchText, node, nodes, preText, tail;
+    nodes = [];
+    lastIndex = 0;
+    if (!regexp.global) {
+      throw new Error("RegExp must have the /g flag");
+    }
+    regexp.lastIndex = 0;
+    while (match = regexp.exec(text)) {
+      matchText = match[0];
+      matchIndex = match.index;
+      if (matchIndex > lastIndex) {
+        preText = text.substring(lastIndex, matchIndex);
+        nodes.push(CUI.dom.text(preText));
+      }
+      node = getElement(matchText, matchIndex, text);
+      if (node != null) {
+        nodes.push(node);
+      } else {
+        nodes.push(CUI.dom.text(matchText));
+      }
+      lastIndex = regexp.lastIndex;
+    }
+    if (lastIndex < text.length) {
+      tail = text.substring(lastIndex);
+      nodes.push(CUI.dom.text(tail));
+    }
+    return nodes;
+  };
+
   return Label;
 
 })(CUI.DOMElement);
