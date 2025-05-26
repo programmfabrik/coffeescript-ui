@@ -2480,6 +2480,14 @@ label[data-label-clickable],
 .cui-label.cui-label-danger {
   color: #dc3545;
 }
+.cui-label.cui-label-warning {
+  color: #6b5716;
+}
+.cui-label.cui-label-warning .cui-label-content > * {
+  display: inline;
+  background-color: rgba(239, 201, 81, 0.15);
+  line-height: 1.4;
+}
 .cui-label[data-type=string] {
   color: #3e9e88;
 }
@@ -2681,6 +2689,7 @@ label[data-label-clickable],
   height: auto;
   line-height: 1.5;
   align-items: baseline;
+  min-width: 0;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center {
   text-decoration: underline;
@@ -2694,6 +2703,14 @@ label[data-label-clickable],
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:last-child,
 .cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
+}
+.cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty {
+  margin: 0;
+  padding: 0;
+}
+.cui-label-manage-overflow .cui-label-manage-overflow-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right {
+  padding-right: 0;
+  margin-left: 0;
 }
 .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-label-manage-overflow .cui-label-manage-overflow-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center {
   text-decoration: none;
@@ -3174,6 +3191,7 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-d
   height: auto;
   line-height: 1.5;
   align-items: baseline;
+  min-width: 0;
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center {
   text-decoration: underline;
@@ -3187,6 +3205,14 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-d
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center:last-child,
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
+}
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-left:empty + .cui-button-center:empty {
+  margin: 0;
+  padding: 0;
+}
+.cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right {
+  padding-right: 0;
+  margin-left: 0;
 }
 .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-button-href:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download):not(.cui-disabled):focus .cui-button-visual .cui-button-center {
   text-decoration: none;
@@ -6496,6 +6522,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   height: auto;
   line-height: 1.5;
   align-items: baseline;
+  min-width: 0;
 }
 .cui-hint .cui-button .cui-button-visual .cui-button-center,
 .cui-form-hint .cui-button .cui-button-visual .cui-button-center,
@@ -6529,6 +6556,22 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-empty-hint .cui-button .cui-button-visual .cui-button-center:last-child,
 .cui-input-empty-hint .cui-button .cui-button-visual .cui-button-center:only-child {
   padding-right: 0;
+}
+.cui-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty,
+.cui-form-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty,
+.cui-input-invalid-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty,
+.cui-input-valid-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty,
+.cui-input-empty-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty {
+  margin: 0;
+  padding: 0;
+}
+.cui-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right,
+.cui-form-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right,
+.cui-input-invalid-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right,
+.cui-input-valid-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right,
+.cui-input-empty-hint .cui-button .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right {
+  padding-right: 0;
+  margin-left: 0;
 }
 .cui-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-hint .cui-button:not(.cui-disabled):focus .cui-button-visual .cui-button-center,
 .cui-form-hint .cui-button:not(.cui-disabled):hover .cui-button-visual .cui-button-center,
@@ -6879,6 +6922,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button:not(.cui-disabled):active .cui-button-visual {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar {
+  gap: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar:has(.cui-button:nth-child(2)) .cui-button-visual {
+  min-width: 28px;
 }
 
 .cui-simple-pane > .cui-vertical-layout-center {

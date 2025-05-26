@@ -80,6 +80,10 @@ label[data-label-clickable],
 		@include label-danger();
 	}
 
+	&.cui-label-warning {
+		@include label-warning();
+	}
+
 	// todo: make obsolete
 	// &.cui-label--padded {
 	// 	padding: $label-padding;

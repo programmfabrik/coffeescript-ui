@@ -94,6 +94,16 @@
 	color: theme-color('danger');
 }
 
+@mixin label-warning() {
+	color: darken(theme-color('warning'), 28%);
+
+	.cui-label-content > * {
+		display: inline;
+		background-color: color.scale(theme-color('warning'), $saturation: 50%, $lightness: 20%, $alpha: -85%);
+		line-height: 1.4;
+	}
+}
+
 @mixin label-empty() {
 	color: theme-color('muted');
 
