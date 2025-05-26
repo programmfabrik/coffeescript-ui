@@ -39721,7 +39721,6 @@ CUI.DataTable = (function(superClass) {
 
   DataTable.prototype.render = function() {
     var cls, colClasses, cols, f, i, idx, j, label, len1, len2, maxis, name, ref, ref1, ref2, ref3, ref4, ref5;
-    DataTable.__super__.render.call(this);
     cols = [];
     colClasses = [];
     maxis = [];
@@ -39827,7 +39826,7 @@ CUI.DataTable = (function(superClass) {
         };
       })(this)
     });
-    return this;
+    return DataTable.__super__.render.call(this);
   };
 
   DataTable.prototype.loadPage = function(page) {
